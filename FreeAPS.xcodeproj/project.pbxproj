@@ -11,6 +11,9 @@
 		388E595E25AD948C0019842D /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 388E595D25AD948C0019842D /* ContentView.swift */; };
 		388E596025AD948E0019842D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 388E595F25AD948E0019842D /* Assets.xcassets */; };
 		388E596325AD948E0019842D /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 388E596225AD948E0019842D /* Preview Assets.xcassets */; };
+		388E596C25AD95110019842D /* OpenAPS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 388E596B25AD95110019842D /* OpenAPS.swift */; };
+		388E596F25AD96040019842D /* javascript in Resources */ = {isa = PBXBuildFile; fileRef = 388E596E25AD96040019842D /* javascript */; };
+		388E597225AD9CF10019842D /* json in Resources */ = {isa = PBXBuildFile; fileRef = 388E597125AD9CF10019842D /* json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -20,6 +23,9 @@
 		388E595F25AD948E0019842D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		388E596225AD948E0019842D /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		388E596425AD948E0019842D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		388E596B25AD95110019842D /* OpenAPS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenAPS.swift; sourceTree = "<group>"; };
+		388E596E25AD96040019842D /* javascript */ = {isa = PBXFileReference; lastKnownFileType = folder; path = javascript; sourceTree = "<group>"; };
+		388E597125AD9CF10019842D /* json */ = {isa = PBXFileReference; lastKnownFileType = folder; path = json; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -37,6 +43,8 @@
 			isa = PBXGroup;
 			children = (
 				388E595A25AD948C0019842D /* FreeAPS */,
+				388E596E25AD96040019842D /* javascript */,
+				388E597125AD9CF10019842D /* json */,
 				388E595925AD948C0019842D /* Products */,
 			);
 			sourceTree = "<group>";
@@ -57,6 +65,7 @@
 				388E595F25AD948E0019842D /* Assets.xcassets */,
 				388E596425AD948E0019842D /* Info.plist */,
 				388E596125AD948E0019842D /* Preview Content */,
+				388E596B25AD95110019842D /* OpenAPS.swift */,
 			);
 			path = FreeAPS;
 			sourceTree = "<group>";
@@ -128,6 +137,8 @@
 			files = (
 				388E596325AD948E0019842D /* Preview Assets.xcassets in Resources */,
 				388E596025AD948E0019842D /* Assets.xcassets in Resources */,
+				388E597225AD9CF10019842D /* json in Resources */,
+				388E596F25AD96040019842D /* javascript in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -138,6 +149,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				388E596C25AD95110019842D /* OpenAPS.swift in Sources */,
 				388E595E25AD948C0019842D /* ContentView.swift in Sources */,
 				388E595C25AD948C0019842D /* FreeAPSApp.swift in Sources */,
 			);
