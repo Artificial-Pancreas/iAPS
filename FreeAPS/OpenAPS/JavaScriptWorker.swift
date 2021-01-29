@@ -34,4 +34,12 @@ final class JavaScriptWorker {
     subscript(key: String) -> JSValue! {
         context.objectForKeyedSubscript(key)
     }
+
+    func stringify(_ string: String) -> JSON {
+        evaluate(string: "JSON.stringify(\(string));")!.toString()!
+    }
+
+    func setValue(_ value: JSON, forEnvKey key: String) {
+        evaluate(string: "freeaps.\(key) = \(value.toString());")
+    }
 }

@@ -35,10 +35,12 @@ final class OpenAPS {
         let autosensData = Autosens(ratio: 1.0).toString()
         let mealData = loadJSON(name: "meal")
 
-        jsWorker.evaluate(string: "var glucoseStatus = getLastGlucose(\(glucose));")
-        let result = jsWorker.evaluate(string: "determine_basal(glucoseStatus, \(currentTemp), \(iobData), \(profile), \(autosensData), \(mealData), tempBasalFunctions, true, 100, 1527924300000);")
-        print(result!.toDictionary()!)
+        let glucoseStatus = jsWorker.stringify("getLastGlucose(\(glucose))")
+        jsWorker.setValue(glucoseStatus, forEnvKey: "glucoseStatus")
+        let result = jsWorker.stringify("determine_basal(freeaps.glucoseStatus, \(currentTemp), \(iobData), \(profile), \(autosensData), \(mealData), tempBasalFunctions, true, 100, 1527924300000)")
+        print(result)
         print(jsWorker["logError"]!.toString()!)
+        
     }
 
     private func loadJSON(name: String) -> String {

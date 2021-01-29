@@ -26,3 +26,8 @@ extension JSON {
         self = object
     }
 }
+
+extension String: JSON {
+    func toString() -> String { self }
+    init?(from: String) { self = from }
+}
