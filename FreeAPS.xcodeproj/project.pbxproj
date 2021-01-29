@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		384E803425C385E60086DB71 /* JavaScriptWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 384E803325C385E60086DB71 /* JavaScriptWorker.swift */; };
+		384E803825C388640086DB71 /* Script.swift in Sources */ = {isa = PBXBuildFile; fileRef = 384E803725C388640086DB71 /* Script.swift */; };
 		388E595C25AD948C0019842D /* FreeAPSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 388E595B25AD948C0019842D /* FreeAPSApp.swift */; };
 		388E595E25AD948C0019842D /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 388E595D25AD948C0019842D /* ContentView.swift */; };
 		388E596025AD948E0019842D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 388E595F25AD948E0019842D /* Assets.xcassets */; };
@@ -14,9 +16,14 @@
 		388E596C25AD95110019842D /* OpenAPS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 388E596B25AD95110019842D /* OpenAPS.swift */; };
 		388E596F25AD96040019842D /* javascript in Resources */ = {isa = PBXBuildFile; fileRef = 388E596E25AD96040019842D /* javascript */; };
 		388E597225AD9CF10019842D /* json in Resources */ = {isa = PBXBuildFile; fileRef = 388E597125AD9CF10019842D /* json */; };
+		388E5A5C25B6F0770019842D /* JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 388E5A5B25B6F0770019842D /* JSON.swift */; };
+		388E5A6025B6F2310019842D /* Autosens.swift in Sources */ = {isa = PBXBuildFile; fileRef = 388E5A5F25B6F2310019842D /* Autosens.swift */; };
+		3895E4C625B9E00D00214B37 /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3895E4C525B9E00D00214B37 /* Profile.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		384E803325C385E60086DB71 /* JavaScriptWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JavaScriptWorker.swift; sourceTree = "<group>"; };
+		384E803725C388640086DB71 /* Script.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Script.swift; sourceTree = "<group>"; };
 		388E595825AD948C0019842D /* FreeAPS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FreeAPS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		388E595B25AD948C0019842D /* FreeAPSApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FreeAPSApp.swift; sourceTree = "<group>"; };
 		388E595D25AD948C0019842D /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -26,6 +33,9 @@
 		388E596B25AD95110019842D /* OpenAPS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenAPS.swift; sourceTree = "<group>"; };
 		388E596E25AD96040019842D /* javascript */ = {isa = PBXFileReference; lastKnownFileType = folder; path = javascript; sourceTree = "<group>"; };
 		388E597125AD9CF10019842D /* json */ = {isa = PBXFileReference; lastKnownFileType = folder; path = json; sourceTree = "<group>"; };
+		388E5A5B25B6F0770019842D /* JSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSON.swift; sourceTree = "<group>"; };
+		388E5A5F25B6F2310019842D /* Autosens.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Autosens.swift; sourceTree = "<group>"; };
+		3895E4C525B9E00D00214B37 /* Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,12 +70,14 @@
 		388E595A25AD948C0019842D /* FreeAPS */ = {
 			isa = PBXGroup;
 			children = (
+				388E5A5A25B6F05F0019842D /* Helpers */,
+				388E5A5925B6F0250019842D /* Models */,
+				388E5A5825B6F0070019842D /* OpenAPS */,
 				388E595B25AD948C0019842D /* FreeAPSApp.swift */,
 				388E595D25AD948C0019842D /* ContentView.swift */,
 				388E595F25AD948E0019842D /* Assets.xcassets */,
 				388E596425AD948E0019842D /* Info.plist */,
 				388E596125AD948E0019842D /* Preview Content */,
-				388E596B25AD95110019842D /* OpenAPS.swift */,
 			);
 			path = FreeAPS;
 			sourceTree = "<group>";
@@ -76,6 +88,33 @@
 				388E596225AD948E0019842D /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		388E5A5825B6F0070019842D /* OpenAPS */ = {
+			isa = PBXGroup;
+			children = (
+				388E596B25AD95110019842D /* OpenAPS.swift */,
+				384E803325C385E60086DB71 /* JavaScriptWorker.swift */,
+				384E803725C388640086DB71 /* Script.swift */,
+			);
+			path = OpenAPS;
+			sourceTree = "<group>";
+		};
+		388E5A5925B6F0250019842D /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				388E5A5F25B6F2310019842D /* Autosens.swift */,
+				3895E4C525B9E00D00214B37 /* Profile.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		388E5A5A25B6F05F0019842D /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				388E5A5B25B6F0770019842D /* JSON.swift */,
+			);
+			path = Helpers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -149,9 +188,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				388E5A6025B6F2310019842D /* Autosens.swift in Sources */,
+				3895E4C625B9E00D00214B37 /* Profile.swift in Sources */,
 				388E596C25AD95110019842D /* OpenAPS.swift in Sources */,
 				388E595E25AD948C0019842D /* ContentView.swift in Sources */,
+				384E803825C388640086DB71 /* Script.swift in Sources */,
 				388E595C25AD948C0019842D /* FreeAPSApp.swift in Sources */,
+				388E5A5C25B6F0770019842D /* JSON.swift in Sources */,
+				384E803425C385E60086DB71 /* JavaScriptWorker.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
