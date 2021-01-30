@@ -29,14 +29,14 @@ final class OpenAPS {
         let profile = loadJSON(name: "profile")
         let autosensData = Autosens(ratio: 1.0)
         let mealData = loadJSON(name: "meal")
-        let tempBasalFunctions = "tempBasalFunctions"
+        let tempBasalFunctions: OpenAPSName = .tempBasalFunctions
         let microBolusAllowed = true
         let reservoir = 100
         let tsMilliseconds = 1527924300000
 
-        let glucoseStatus = jsWorker.call(function: "getLastGlucose", with: [glucose])
+        let glucoseStatus = jsWorker.call(function: .getLastGlucose, with: [glucose])
         let result = jsWorker.call(
-            function: "determine_basal",
+            function: .determineBasal,
             with: [
                 glucoseStatus,
                 currentTemp,
@@ -57,5 +57,17 @@ final class OpenAPS {
 
     private func loadJSON(name: String) -> String {
         try! String(contentsOf: Bundle.main.url(forResource: "json/\(name)", withExtension: "json")!)
+    }
+}
+
+enum OpenAPSName: String {
+    case tempBasalFunctions
+    case getLastGlucose
+    case determineBasal = "determine_basal"
+}
+
+extension JavaScriptWorker {
+    func call(function: OpenAPSName, with arguments: [JSON]) -> JSON {
+        call(function: function.string, with: arguments)
     }
 }
