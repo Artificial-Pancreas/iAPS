@@ -16,8 +16,10 @@ final class JavaScriptWorker {
     init() {
         virtualMachine = processQueue.sync { JSVirtualMachine()! }
         context = JSContext(virtualMachine: virtualMachine)!
-        context.exceptionHandler = { context, exception in
-            print(exception!.toString()!)
+        context.exceptionHandler = { _, exception in
+            if let error = exception?.toString() {
+                print(error)
+            }
         }
     }
 
@@ -35,11 +37,16 @@ final class JavaScriptWorker {
         context.objectForKeyedSubscript(key)
     }
 
-    func stringify(_ string: String) -> JSON {
+    func json(for string: String) -> JSON {
         evaluate(string: "JSON.stringify(\(string));")!.toString()!
     }
 
-    func setValue(_ value: JSON, forEnvKey key: String) {
-        evaluate(string: "freeaps.\(key) = \(value.toString());")
+    func call(function: String, with arguments: [JSON]) -> JSON {
+        let joined = arguments.map(\.string).joined(separator: ",")
+        return json(for: "\(function)(\(joined))")
+    }
+
+    func setEnviromentValue(_ value: JSON, forKey key: String) {
+        evaluate(string: "freeaps.\(key) = \(value.string);")
     }
 }

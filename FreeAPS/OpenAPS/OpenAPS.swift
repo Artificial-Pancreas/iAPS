@@ -10,13 +10,10 @@ import JavaScriptCore
 
 final class OpenAPS {
     private let vmQueue = DispatchQueue(label: "DispatchQueue.JSVirtualMachine")
-    private let jsWorker = JavaScriptWorker()
 
-    init() {
-        loadScripts()
-    }
+    func determineBasal() {
+        let jsWorker = JavaScriptWorker()
 
-    private func loadScripts() {
         let scripts = [
             Script(name: "prepare"),
             Script(name: "basal-set-temp"),
@@ -25,19 +22,34 @@ final class OpenAPS {
         ]
 
         scripts.forEach { jsWorker.evaluate(script: $0) }
-    }
 
-    func determineBasal() {
         let glucose = loadJSON(name: "glucose")
         let currentTemp = loadJSON(name: "temp_basal")
         let iobData = loadJSON(name: "iob")
         let profile = loadJSON(name: "profile")
-        let autosensData = Autosens(ratio: 1.0).toString()
+        let autosensData = Autosens(ratio: 1.0)
         let mealData = loadJSON(name: "meal")
+        let tempBasalFunctions = "tempBasalFunctions"
+        let microBolusAllowed = true
+        let reservoir = 100
+        let tsMilliseconds = 1527924300000
 
-        let glucoseStatus = jsWorker.stringify("getLastGlucose(\(glucose))")
-        jsWorker.setValue(glucoseStatus, forEnvKey: "glucoseStatus")
-        let result = jsWorker.stringify("determine_basal(freeaps.glucoseStatus, \(currentTemp), \(iobData), \(profile), \(autosensData), \(mealData), tempBasalFunctions, true, 100, 1527924300000)")
+        let glucoseStatus = jsWorker.call(function: "getLastGlucose", with: [glucose])
+        let result = jsWorker.call(
+            function: "determine_basal",
+            with: [
+                glucoseStatus,
+                currentTemp,
+                iobData,
+                profile,
+                autosensData,
+                mealData,
+                tempBasalFunctions,
+                microBolusAllowed,
+                reservoir,
+                tsMilliseconds
+            ]
+        )
         print(result)
         print(jsWorker["logError"]!.toString()!)
         

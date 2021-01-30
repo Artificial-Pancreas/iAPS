@@ -9,12 +9,12 @@ import Foundation
 
 
 protocol JSON: Codable {
-    func toString() -> String
+    var string: String { get }
     init?(from: String)
 }
 
 extension JSON {
-    func toString() -> String {
+    var string: String {
         String(data: try! JSONEncoder().encode(self), encoding: .utf8)!
     }
 
@@ -28,6 +28,13 @@ extension JSON {
 }
 
 extension String: JSON {
-    func toString() -> String { self }
+    var string: String { self }
     init?(from: String) { self = from }
 }
+
+extension Double: JSON {}
+
+extension Int: JSON {}
+
+extension Bool: JSON {}
+
