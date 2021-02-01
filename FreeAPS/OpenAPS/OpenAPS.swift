@@ -11,6 +11,33 @@ import JavaScriptCore
 final class OpenAPS {
     private let vmQueue = DispatchQueue(label: "DispatchQueue.JSVirtualMachine")
 
+//    func iob() {
+//
+//    }
+//
+    func meal() {
+        let jsWorker = JavaScriptWorker()
+
+        let pumphistory = loadJSON(name: "pumphistory")
+        let profile = loadJSON(name: "profile")
+        let clock = loadJSON(name: "clock")
+        let glucose = loadJSON(name: "glucose")
+        let basalProfile = loadJSON(name: "basal_profile")
+        let carbhistory = loadJSON(name: "carbhistory")
+
+
+        jsWorker.evaluate(script: Script(name:"lib-meal-index-bundle"))
+        let result = jsWorker.call(function: "MEAL_JS_GENERATE", with: [
+            pumphistory,
+            profile,
+            clock,
+            glucose,
+            basalProfile,
+            carbhistory
+        ])
+        print(result)
+    }
+
     func determineBasal() {
         let jsWorker = JavaScriptWorker()
 
@@ -52,8 +79,6 @@ final class OpenAPS {
         )
         print(jsWorker.log)
         print(result)
-
-        
     }
 
     private func loadJSON(name: String) -> String {

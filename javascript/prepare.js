@@ -3,7 +3,9 @@
 //};
 
 var exports = {};
-var module = {};
+var module = {
+    exports: {}
+};
 var freeaps = {
     log: ""
 };

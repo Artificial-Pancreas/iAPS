@@ -12,7 +12,8 @@ struct ContentView: View {
         Text("Hello, world!")
             .padding()
             .onAppear {
-                OpenAPS().determineBasal()
+                OpenAPS().meal()
+//                OpenAPS().determineBasal()
             }
     }
 }
