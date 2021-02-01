@@ -50,8 +50,9 @@ final class OpenAPS {
                 tsMilliseconds
             ]
         )
+        print(jsWorker.log)
         print(result)
-        print(jsWorker["logError"]!.toString()!)
+
         
     }
 

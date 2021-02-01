@@ -23,6 +23,10 @@ final class JavaScriptWorker {
         }
     }
 
+//    lazy var require: @convention(block) (String) -> (JSValue?) = { path in
+//        return nil
+//    }
+
     @discardableResult
     func evaluate(script: Script) -> JSValue! {
         context.evaluateScript(script.body)
@@ -48,5 +52,9 @@ final class JavaScriptWorker {
 
     func setEnviromentValue(_ value: JSON, forKey key: String) {
         evaluate(string: "freeaps.\(key) = \(value.string);")
+    }
+
+    var log: String {
+        context.objectForKeyedSubscript("freeaps")!.objectForKeyedSubscript("log")!.toString()!
     }
 }
