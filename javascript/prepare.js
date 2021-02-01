@@ -1,7 +1,8 @@
-var require = function(arg) {
-    return function(basal, profile) { return basal; };
-};
+//var require = function(arg) {
+//    return function(basal, profile) { return basal; };
+//};
 
+var exports = {};
 var module = {};
 var freeaps = {
     log: ""

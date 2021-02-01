@@ -21,11 +21,23 @@ final class JavaScriptWorker {
                 print(error)
             }
         }
+
+        context.setObject(require, forKeyedSubscript: "require" as NSString)
+
     }
 
-//    lazy var require: @convention(block) (String) -> (JSValue?) = { path in
-//        return nil
-//    }
+    private lazy var require: @convention(block) (String) -> (JSValue?) = { path in
+        switch path {
+        case "../round-basal", "./round-basal":
+            self.evaluate(script: Script(name: "oref0/lib/round-basal"))
+        case "lodash/endsWith":
+            self.evaluate(script: Script(name: "lodash"))
+        default:
+            return nil
+        }
+
+        return self.context.objectForKeyedSubscript("module")?.objectForKeyedSubscript("exports")
+    }
 
     @discardableResult
     func evaluate(script: Script) -> JSValue! {
@@ -57,4 +69,18 @@ final class JavaScriptWorker {
     var log: String {
         context.objectForKeyedSubscript("freeaps")!.objectForKeyedSubscript("log")!.toString()!
     }
+
+//    func recursivePathsForResources(type: String, in directoryPath: String) -> [String] {
+//        // Enumerators are recursive
+//        let enumerator = FileManager.default.enumerator(atPath: directoryPath)
+//        var filePaths: [String] = []
+//
+//        while let filePath = enumerator?.nextObject() as? String {
+//
+//            if URL(fileURLWithPath: filePath).pathExtension == type {
+//                filePaths.append(directoryPath.byAppending(pathComponent: filePath))
+//            }
+//        }
+//        return filePaths
+//    }
 }
