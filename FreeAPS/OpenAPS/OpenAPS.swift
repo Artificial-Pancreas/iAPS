@@ -18,22 +18,15 @@ final class OpenAPS {
     func meal() {
         let jsWorker = JavaScriptWorker()
 
-        let pumphistory = loadJSON(name: "pumphistory")
-        let profile = loadJSON(name: "profile")
-        let clock = loadJSON(name: "clock")
-        let glucose = loadJSON(name: "glucose")
-        let basalProfile = loadJSON(name: "basal_profile")
-        let carbhistory = loadJSON(name: "carbhistory")
-
-
-        jsWorker.evaluate(script: Script(name:"lib-meal-index-bundle"))
-        let result = jsWorker.call(function: "MEAL_JS_GENERATE", with: [
-            pumphistory,
-            profile,
-            clock,
-            glucose,
-            basalProfile,
-            carbhistory
+        jsWorker.evaluate(script: Script(name:"lib-meal-bundle"))
+        jsWorker.evaluate(script: Script(name:"prepare-meal"))
+        let result = jsWorker.call(function: "generate", with: [
+            loadJSON(name: "pumphistory"),
+            loadJSON(name: "profile"),
+            loadJSON(name: "basal_profile"),
+            loadJSON(name: "clock"),
+            loadJSON(name: "carbhistory"),
+            loadJSON(name: "glucose")
         ])
         print(result)
     }

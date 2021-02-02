@@ -1,7 +1,3 @@
-//var require = function(arg) {
-//    return function(basal, profile) { return basal; };
-//};
-
 var exports = {};
 var module = {
     exports: {}

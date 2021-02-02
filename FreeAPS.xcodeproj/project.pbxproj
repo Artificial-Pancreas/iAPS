@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3811DDFF25C9593400A708ED /* MealInputs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3811DDFE25C9593400A708ED /* MealInputs.swift */; };
 		384E803425C385E60086DB71 /* JavaScriptWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 384E803325C385E60086DB71 /* JavaScriptWorker.swift */; };
 		384E803825C388640086DB71 /* Script.swift in Sources */ = {isa = PBXBuildFile; fileRef = 384E803725C388640086DB71 /* Script.swift */; };
 		388E595C25AD948C0019842D /* FreeAPSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 388E595B25AD948C0019842D /* FreeAPSApp.swift */; };
@@ -22,6 +23,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3811DDFE25C9593400A708ED /* MealInputs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealInputs.swift; sourceTree = "<group>"; };
 		384E803325C385E60086DB71 /* JavaScriptWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JavaScriptWorker.swift; sourceTree = "<group>"; };
 		384E803725C388640086DB71 /* Script.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Script.swift; sourceTree = "<group>"; };
 		388E595825AD948C0019842D /* FreeAPS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FreeAPS.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -105,6 +107,7 @@
 			children = (
 				388E5A5F25B6F2310019842D /* Autosens.swift */,
 				3895E4C525B9E00D00214B37 /* Profile.swift */,
+				3811DDFE25C9593400A708ED /* MealInputs.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -189,6 +192,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				388E5A6025B6F2310019842D /* Autosens.swift in Sources */,
+				3811DDFF25C9593400A708ED /* MealInputs.swift in Sources */,
 				3895E4C625B9E00D00214B37 /* Profile.swift in Sources */,
 				388E596C25AD95110019842D /* OpenAPS.swift in Sources */,
 				388E595E25AD948C0019842D /* ContentView.swift in Sources */,
