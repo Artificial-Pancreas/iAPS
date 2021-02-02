@@ -37,7 +37,3 @@ extension Double: JSON {}
 extension Int: JSON {}
 
 extension Bool: JSON {}
-
-extension OpenAPSName: JSON {
-    var string: String { rawValue }
-}

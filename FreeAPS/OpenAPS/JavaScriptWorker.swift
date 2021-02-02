@@ -21,22 +21,6 @@ final class JavaScriptWorker {
                 print(error)
             }
         }
-
-        context.setObject(require, forKeyedSubscript: "require" as NSString)
-
-    }
-
-    private lazy var require: @convention(block) (String) -> (JSValue?) = { path in
-        switch path {
-        case "../round-basal", "./round-basal":
-            self.evaluate(script: Script(name: "oref0/lib/round-basal"))
-        case "lodash/endsWith":
-            self.evaluate(script: Script(name: "lodash"))
-        default:
-            return nil
-        }
-
-        return self.context.objectForKeyedSubscript("module")?.objectForKeyedSubscript("exports")
     }
 
     @discardableResult
@@ -50,8 +34,14 @@ final class JavaScriptWorker {
     }
 
     subscript(key: String) -> JSValue! {
-        context.objectForKeyedSubscript(key)
+        get {
+            context.objectForKeyedSubscript(key)
+        }
+        set(newValue) {
+            context.setObject(newValue, forKeyedSubscript: key as NSString)
+        }
     }
+
 
     func json(for string: String) -> JSON {
         evaluate(string: "JSON.stringify(\(string));")!.toString()!
@@ -67,20 +57,6 @@ final class JavaScriptWorker {
     }
 
     var log: String {
-        context.objectForKeyedSubscript("freeaps")!.objectForKeyedSubscript("log")!.toString()!
+        context.objectForKeyedSubscript("freeapsLog")!.toString()!
     }
-
-//    func recursivePathsForResources(type: String, in directoryPath: String) -> [String] {
-//        // Enumerators are recursive
-//        let enumerator = FileManager.default.enumerator(atPath: directoryPath)
-//        var filePaths: [String] = []
-//
-//        while let filePath = enumerator?.nextObject() as? String {
-//
-//            if URL(fileURLWithPath: filePath).pathExtension == type {
-//                filePaths.append(directoryPath.byAppending(pathComponent: filePath))
-//            }
-//        }
-//        return filePaths
-//    }
 }

@@ -1,11 +1,11 @@
 function generate(pumphistory_data, profile_data, basalprofile_data, clock_data, carb_data, glucose_data) {
     var inputs = {
-        history: pumphistory_data
-    , profile: profile_data
-    , basalprofile: basalprofile_data
-    , clock: clock_data
-    , carbs: carb_data
-    , glucose: glucose_data
+        history: pumphistory_data,
+        profile: profile_data,
+        basalprofile: basalprofile_data,
+        clock: clock_data,
+        carbs: carb_data,
+        glucose: glucose_data
     };
 
     var recentCarbs = freeaps(inputs);
