@@ -229,7 +229,8 @@ extension HTTPResponseStatus: Equatable {
         switch (lhs, rhs) {
         case let (.custom(lcode, lreason), .custom(rcode, rreason)):
             return lcode == rcode && lreason == rreason
-        case (.custom, _), (_, .custom):
+        case (_, .custom),
+             (.custom, _):
             return false
         default:
             return lhs.code == rhs.code
@@ -237,9 +238,9 @@ extension HTTPResponseStatus: Equatable {
     }
 }
 
-extension HTTPResponseStatus {
+public extension HTTPResponseStatus {
     /// The numerical status code for a given HTTP response status.
-    public var code: UInt {
+    var code: UInt {
         switch self {
         case .continue:
             return 100
@@ -367,7 +368,7 @@ extension HTTPResponseStatus {
     }
 
     /// The string reason phrase for a given HTTP response status.
-    public var reasonPhrase: String {
+    var reasonPhrase: String {
         switch self {
         case .continue:
             return "Continue"

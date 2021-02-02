@@ -1,10 +1,3 @@
-//
-//  OpenAPS.swift
-//  FreeAPS
-//
-//  Created by Ivan Valkou on 12.01.2021.
-//
-
 import Foundation
 import JavaScriptCore
 
@@ -24,7 +17,7 @@ final class OpenAPS {
             let glucose = self.loadJSON(name: "glucose")
             let currentTemp = self.loadJSON(name: "temp_basal")
             let reservoir = 100
-            let tsMilliseconds: Double = 1527924300000
+            let tsMilliseconds: Double = 1_527_924_300_000
 
             let autosensResult = self.autosense(
                 pumpHistory: pumphistory,
@@ -79,8 +72,8 @@ final class OpenAPS {
     private func iob(pumphistory: JSON, profile: JSON, clock: JSON, autosens: JSON, pumphistory24: JSON) -> JSON {
         dispatchPrecondition(condition: .onQueue(processQueue))
         return jsWorker.inCommonContext { worker in
-            worker.evaluate(script: Script(name:"iob-bundle"))
-            worker.evaluate(script: Script(name:"prepare-iob"))
+            worker.evaluate(script: Script(name: "iob-bundle"))
+            worker.evaluate(script: Script(name: "prepare-iob"))
             return worker.call(function: "generate", with: [
                 pumphistory,
                 profile,
@@ -94,8 +87,8 @@ final class OpenAPS {
     private func meal(pumphistory: JSON, profile: JSON, basalProfile: JSON, clock: JSON, carbs: JSON, glucose: JSON) -> JSON {
         dispatchPrecondition(condition: .onQueue(processQueue))
         return jsWorker.inCommonContext { worker in
-            worker.evaluate(script: Script(name:"meal-bundle"))
-            worker.evaluate(script: Script(name:"prepare-meal"))
+            worker.evaluate(script: Script(name: "meal-bundle"))
+            worker.evaluate(script: Script(name: "prepare-meal"))
             return worker.call(function: "generate", with: [
                 pumphistory,
                 profile,
@@ -110,7 +103,7 @@ final class OpenAPS {
     private func glucoseGetLast(glucose: JSON) -> JSON {
         dispatchPrecondition(condition: .onQueue(processQueue))
         return jsWorker.inCommonContext { worker in
-            worker.evaluate(script: Script(name:"glucose-get-last-bundle"))
+            worker.evaluate(script: Script(name: "glucose-get-last-bundle"))
             return worker.call(function: "freeaps", with: [glucose])
         }
     }
@@ -128,10 +121,10 @@ final class OpenAPS {
     ) -> JSON {
         dispatchPrecondition(condition: .onQueue(processQueue))
         return jsWorker.inCommonContext { worker in
-            worker.evaluate(script: Script(name:"basal-set-temp-bundle"))
-            worker.evaluate(script: Script(name:"prepare-determine-basal"))
+            worker.evaluate(script: Script(name: "basal-set-temp-bundle"))
+            worker.evaluate(script: Script(name: "prepare-determine-basal"))
             let funcKey = "tempBasalFunctions"
-            worker.evaluate(script: Script(name:"determine-basal-bundle"))
+            worker.evaluate(script: Script(name: "determine-basal-bundle"))
 
             return worker.call(
                 function: "freeaps",
@@ -161,8 +154,8 @@ final class OpenAPS {
     ) -> JSON {
         dispatchPrecondition(condition: .onQueue(processQueue))
         return jsWorker.inCommonContext { worker in
-            worker.evaluate(script: Script(name:"autosens-bundle"))
-            worker.evaluate(script: Script(name:"prepare-autosens"))
+            worker.evaluate(script: Script(name: "autosens-bundle"))
+            worker.evaluate(script: Script(name: "prepare-autosens"))
 
             return worker.call(
                 function: "generate",

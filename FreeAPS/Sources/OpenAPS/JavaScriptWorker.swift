@@ -1,10 +1,3 @@
-//
-//  JavaScriptWorker.swift
-//  FreeAPS
-//
-//  Created by Ivan Valkou on 29.01.2021.
-//
-
 import Foundation
 import JavaScriptCore
 
@@ -29,8 +22,7 @@ final class JavaScriptWorker {
         return context
     }
 
-    @discardableResult
-    func evaluate(script: Script) -> JSValue! {
+    @discardableResult func evaluate(script: Script) -> JSValue! {
         evaluate(string: script.body)
     }
 
@@ -48,7 +40,7 @@ final class JavaScriptWorker {
         return json(for: "\(function)(\(joined))")
     }
 
-    func inCommonContext<Value>(execute: (JavaScriptWorker) -> Value) -> Value{
+    func inCommonContext<Value>(execute: (JavaScriptWorker) -> Value) -> Value {
         commonContext = createContext()
         defer {
             commonContext = nil

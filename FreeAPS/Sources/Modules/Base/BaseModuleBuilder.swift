@@ -7,7 +7,8 @@ protocol ModuleBuilder {
 }
 
 class BaseModuleBuilder<View: BaseView, ViewModel: ObservableObject, Provider: FreeAPS.Provider>: ModuleBuilder
-    where ViewModel: BaseViewModel<Provider>, View.ViewModel == ViewModel {
+    where ViewModel: BaseViewModel<Provider>, View.ViewModel == ViewModel
+{
     let resolver: Resolver
     lazy var viewModel: ViewModel = { buildViewModel() }()
 

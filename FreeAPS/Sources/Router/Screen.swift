@@ -47,7 +47,10 @@ extension Screen {
                 image: Image(systemName: "gear"),
                 text: Text("Settings")
             )
-        case .onboarding, .login, .requestPermissions, .authorizedRoot:
+        case .authorizedRoot,
+             .login,
+             .onboarding,
+             .requestPermissions:
             fatalError("Tab for this screen \(self) did not specified")
         }
     }

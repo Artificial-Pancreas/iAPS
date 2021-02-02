@@ -1,5 +1,5 @@
-import SwiftUI
 import AuthenticationServices
+import SwiftUI
 
 extension Login {
     struct RootView: BaseView {
@@ -14,7 +14,6 @@ extension Login {
                 }
                 onCompletion: { result in
                     switch result {
-
                     case let .success(authorisation):
                         viewModel.credentials = authorisation.credential as? ASAuthorizationAppleIDCredential
                     case .failure:

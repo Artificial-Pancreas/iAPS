@@ -34,10 +34,8 @@
 		3811DE4E25C9D4B800A708ED /* AuthotizedRootRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3811DE4925C9D4B800A708ED /* AuthotizedRootRootView.swift */; };
 		3811DE4F25C9D4B800A708ED /* AuthotizedRootDataFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3811DE4A25C9D4B800A708ED /* AuthotizedRootDataFlow.swift */; };
 		3811DE5025C9D4B800A708ED /* AuthotizedRootProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3811DE4B25C9D4B800A708ED /* AuthotizedRootProvider.swift */; };
-		3811DE5A25C9D4D500A708ED /* CheckBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3811DE5225C9D4D500A708ED /* CheckBox.swift */; };
 		3811DE5C25C9D4D500A708ED /* Formatters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3811DE5425C9D4D500A708ED /* Formatters.swift */; };
 		3811DE5D25C9D4D500A708ED /* Publisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3811DE5525C9D4D500A708ED /* Publisher.swift */; };
-		3811DE5E25C9D4D500A708ED /* FlowStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3811DE5625C9D4D500A708ED /* FlowStack.swift */; };
 		3811DE5F25C9D4D500A708ED /* ProgressBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3811DE5725C9D4D500A708ED /* ProgressBar.swift */; };
 		3811DE6125C9D4D500A708ED /* ViewModifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3811DE5925C9D4D500A708ED /* ViewModifiers.swift */; };
 		3811DE6A25C9D62600A708ED /* OnboardingBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3811DE6425C9D62600A708ED /* OnboardingBuilder.swift */; };
@@ -116,10 +114,8 @@
 		3811DE4925C9D4B800A708ED /* AuthotizedRootRootView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthotizedRootRootView.swift; sourceTree = "<group>"; };
 		3811DE4A25C9D4B800A708ED /* AuthotizedRootDataFlow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthotizedRootDataFlow.swift; sourceTree = "<group>"; };
 		3811DE4B25C9D4B800A708ED /* AuthotizedRootProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthotizedRootProvider.swift; sourceTree = "<group>"; };
-		3811DE5225C9D4D500A708ED /* CheckBox.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheckBox.swift; sourceTree = "<group>"; };
 		3811DE5425C9D4D500A708ED /* Formatters.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Formatters.swift; sourceTree = "<group>"; };
 		3811DE5525C9D4D500A708ED /* Publisher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Publisher.swift; sourceTree = "<group>"; };
-		3811DE5625C9D4D500A708ED /* FlowStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlowStack.swift; sourceTree = "<group>"; };
 		3811DE5725C9D4D500A708ED /* ProgressBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProgressBar.swift; sourceTree = "<group>"; };
 		3811DE5925C9D4D500A708ED /* ViewModifiers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewModifiers.swift; sourceTree = "<group>"; };
 		3811DE6425C9D62600A708ED /* OnboardingBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingBuilder.swift; sourceTree = "<group>"; };
@@ -550,8 +546,6 @@
 			isa = PBXGroup;
 			children = (
 				3811DEE325CA063400A708ED /* PropertyWrappers */,
-				3811DE5225C9D4D500A708ED /* CheckBox.swift */,
-				3811DE5625C9D4D500A708ED /* FlowStack.swift */,
 				3811DE5425C9D4D500A708ED /* Formatters.swift */,
 				3811DE5725C9D4D500A708ED /* ProgressBar.swift */,
 				3811DE5525C9D4D500A708ED /* Publisher.swift */,
@@ -568,6 +562,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 388E596725AD948E0019842D /* Build configuration list for PBXNativeTarget "FreeAPS" */;
 			buildPhases = (
+				3811DEF525CA169200A708ED /* Swiftformat */,
 				388E595425AD948C0019842D /* Sources */,
 				388E595525AD948C0019842D /* Frameworks */,
 				388E595625AD948C0019842D /* Resources */,
@@ -635,6 +630,27 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		3811DEF525CA169200A708ED /* Swiftformat */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = Swiftformat;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "source \"${SRCROOT}\"/scripts/swiftformat.sh\n\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		388E595425AD948C0019842D /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -684,7 +700,6 @@
 				3811DE5D25C9D4D500A708ED /* Publisher.swift in Sources */,
 				3811DEAE25C9D88300A708ED /* Cache.swift in Sources */,
 				3811DEAD25C9D88300A708ED /* UserDefaults+Cache.swift in Sources */,
-				3811DE5A25C9D4D500A708ED /* CheckBox.swift in Sources */,
 				3811DE2225C9D48300A708ED /* MainProvider.swift in Sources */,
 				3811DE0C25C9D32F00A708ED /* BaseProvider.swift in Sources */,
 				3811DE5C25C9D4D500A708ED /* Formatters.swift in Sources */,
@@ -692,7 +707,6 @@
 				3811DEC525C9D99900A708ED /* StorageContainer.swift in Sources */,
 				3811DE7F25C9D6D300A708ED /* LoginBuilder.swift in Sources */,
 				3811DE3525C9D49500A708ED /* HomeRootView.swift in Sources */,
-				3811DE5E25C9D4D500A708ED /* FlowStack.swift in Sources */,
 				3811DEC325C9D99900A708ED /* UIContainer.swift in Sources */,
 				3811DE6125C9D4D500A708ED /* ViewModifiers.swift in Sources */,
 				3811DEAC25C9D88300A708ED /* NetworkManager.swift in Sources */,

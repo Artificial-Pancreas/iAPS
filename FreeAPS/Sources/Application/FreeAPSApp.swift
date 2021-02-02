@@ -1,15 +1,7 @@
-//
-//  FreeAPSApp.swift
-//  FreeAPS
-//
-//  Created by Ivan Valkou on 12.01.2021.
-//
-
 import SwiftUI
 import Swinject
 
-@main
-struct FreeAPSApp: App {
+@main struct FreeAPSApp: App {
     private let resolver = Container(defaultObjectScope: .container) { container in
         UIContainer.register(container: container)
         StorageContainer.register(container: container)

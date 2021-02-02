@@ -1,10 +1,3 @@
-//
-//  Profile.swift
-//  FreeAPS
-//
-//  Created by Ivan Valkou on 21.01.2021.
-//
-
 import Foundation
 
 struct Profile: JSON {
@@ -148,43 +141,43 @@ extension Profile {
         case highTemptargetRaisesSensitivity = "high_temptarget_raises_sensitivity"
         case lowTemptargetLowersSensitivity = "low_temptarget_lowers_sensitivity"
         case sensitivityRaisesTarget = "sensitivity_raises_target"
-        case resistanceLowersTarget = "resistanceLowersTarget"
+        case resistanceLowersTarget
         case advTargetAdjustments = "adv_target_adjustments"
         case exerciseMode = "exercise_mode"
         case halfBasalExerciseTarget = "half_basal_exercise_target"
-        case maxCOB = "maxCOB"
+        case maxCOB
         case wideBGTargetRange = "wide_bg_target_range"
         case skipNeutralTemps = "skip_neutral_temps"
         case unsuspendIfNoTemp = "unsuspend_if_no_temp"
         case bolusSnoozeDIADivisor = "bolussnooze_dia_divisor"
         case min5mCarbimpact = "min_5m_carbimpact"
         case autotuneISFAdjustmentFraction = "autotune_isf_adjustmentFraction"
-        case remainingCarbsFraction = "remainingCarbsFraction"
-        case remainingCarbsCap = "remainingCarbsCap"
-        case enableUAM = "enableUAM"
+        case remainingCarbsFraction
+        case remainingCarbsCap
+        case enableUAM
         case a52RiskEnable = "A52_risk_enable"
         case enableSMBWithCOB = "enableSMB_with_COB"
         case enableSMBWithTemptarget = "enableSMB_with_temptarget"
         case enableSMBAlways = "enableSMB_always"
         case enableSMBAfterCarbs = "enableSMB_after_carbs"
         case allowSMBWithHighTemptarget = "allowSMB_with_high_temptarget"
-        case maxSMBBasalMinutes = "maxSMBBasalMinutes"
-        case maxUAMSMBBasalMinutes = "maxUAMSMBBasalMinutes"
+        case maxSMBBasalMinutes
+        case maxUAMSMBBasalMinutes
         case smbInterval = "SMBInterval"
         case bolusIncrement = "bolus_increment"
-        case curve = "curve"
-        case useCustomPeakTime = "useCustomPeakTime"
-        case insulinPeakTime = "insulinPeakTime"
-        case carbsReqThreshold = "carbsReqThreshold"
+        case curve
+        case useCustomPeakTime
+        case insulinPeakTime
+        case carbsReqThreshold
         case offlineHotspot = "offline_hotspot"
-        case noisyCGMTargetMultiplier = "noisyCGMTargetMultiplier"
+        case noisyCGMTargetMultiplier
         case suspendZerosIOB = "suspend_zeros_iob"
-        case enableEnliteBgproxy = "enableEnliteBgproxy"
+        case enableEnliteBgproxy
     }
 }
 
 enum InsulinCurve: String, Codable {
     case rapidActing = "rapid-acting"
     case ultraRapid = "ultra-rapid"
-    case bilinear = "bilinear"
+    case bilinear
 }

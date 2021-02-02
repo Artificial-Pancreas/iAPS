@@ -1,12 +1,4 @@
-//
-//  JSON.swift
-//  FreeAPS
-//
-//  Created by Ivan Valkou on 19.01.2021.
-//
-
 import Foundation
-
 
 protocol JSON: Codable {
     var string: String { get }
@@ -20,7 +12,8 @@ extension JSON {
 
     init?(from: String) {
         guard let data = from.data(using: .utf8),
-            let object = try? JSONDecoder().decode(Self.self, from: data) else {
+              let object = try? JSONDecoder().decode(Self.self, from: data)
+        else {
             return nil
         }
         self = object

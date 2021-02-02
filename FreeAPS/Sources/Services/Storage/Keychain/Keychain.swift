@@ -13,10 +13,8 @@ protocol Keychain: KeyValueStorage {
     func getData(forKey key: String) -> Result<Data?, KeychainError>
     func getValue<T: Decodable>(_ type: T.Type, forKey key: String) -> Result<T?, KeychainError>
 
-    @discardableResult
-    func setData(_ value: Data, forKey key: String) -> Result<Void, KeychainError>
-    @discardableResult
-    func setValue<T: Encodable>(_ maybeValue: T?, forKey key: String) -> Result<Void, KeychainError>
+    @discardableResult func setData(_ value: Data, forKey key: String) -> Result<Void, KeychainError>
+    @discardableResult func setValue<T: Encodable>(_ maybeValue: T?, forKey key: String) -> Result<Void, KeychainError>
 
     func removeObject(forKey key: String) -> Result<Void, KeychainError>
     func removeAllKeys() -> Result<Void, KeychainError>

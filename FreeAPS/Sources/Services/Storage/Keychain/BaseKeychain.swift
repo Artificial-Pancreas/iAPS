@@ -91,7 +91,8 @@ final class BaseKeychain: Keychain {
 
             for item in array {
                 if let keyData = item[SecAttrAccount] as? Data,
-                    let key = String(data: keyData, encoding: .utf8) {
+                   let key = String(data: keyData, encoding: .utf8)
+                {
                     keys.update(with: key)
                 }
             }
@@ -128,8 +129,8 @@ final class BaseKeychain: Keychain {
 
         if status == errSecSuccess {
             if let resultsDictionary = result as? [String: AnyObject],
-                let accessibilityAttrValue = resultsDictionary[SecAttrAccessible] as? String,
-                let mappedValue = KeychainItemAccessibility.accessibilityForAttributeValue(accessibilityAttrValue as CFString)
+               let accessibilityAttrValue = resultsDictionary[SecAttrAccessible] as? String,
+               let mappedValue = KeychainItemAccessibility.accessibilityForAttributeValue(accessibilityAttrValue as CFString)
             {
                 return .success(mappedValue)
             }
@@ -186,8 +187,7 @@ final class BaseKeychain: Keychain {
 
     // MARK: Public Setters
 
-    @discardableResult
-    func setData(_ value: Data, forKey key: String) -> Result<Void, KeychainError> {
+    @discardableResult func setData(_ value: Data, forKey key: String) -> Result<Void, KeychainError> {
         var keychainQueryDictionary: [String: Any] = setupKeychainQueryDictionary(
             forKey: key,
             synchronizable: defaultSynchronizable.keychainFlag,
@@ -209,8 +209,7 @@ final class BaseKeychain: Keychain {
         }
     }
 
-    @discardableResult
-    func setValue<T: Encodable>(_ maybeValue: T?, forKey key: String) -> Result<Void, KeychainError> {
+    @discardableResult func setValue<T: Encodable>(_ maybeValue: T?, forKey key: String) -> Result<Void, KeychainError> {
         if let value = maybeValue {
             let wrapper = EncodableWrapper(v: value)
             let encoder = JSONEncoder()
@@ -245,8 +244,7 @@ final class BaseKeychain: Keychain {
         }
     }
 
-    @discardableResult
-    func removeObject(forKey key: String) -> Result<Void, KeychainError> {
+    @discardableResult func removeObject(forKey key: String) -> Result<Void, KeychainError> {
         removeObject(forKey: key, withAccessibility: defaultAccessibilityLevel)
     }
 
@@ -290,8 +288,7 @@ final class BaseKeychain: Keychain {
     /// Remove all items for a given Keychain Item Class
     ///
     ///
-    @discardableResult
-    private class func deleteKeychainSecClass(_ secClass: AnyObject) -> Result<Void, KeychainError> {
+    @discardableResult private class func deleteKeychainSecClass(_ secClass: AnyObject) -> Result<Void, KeychainError> {
         let query = [SecClass: secClass]
         let status = SecItemDelete(query as CFDictionary)
 

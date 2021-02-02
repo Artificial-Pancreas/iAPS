@@ -23,6 +23,7 @@ consecutiveSpaces,\
 duplicateImports,\
 elseOnSameLine,\
 emptyBraces,\
+enumNamespaces,\
 fileHeader,\
 hoistPatternLet,\
 indent,\
@@ -30,7 +31,9 @@ isEmpty,\
 leadingDelimiters,\
 linebreakAtEndOfFile,\
 linebreaks,\
+modifierOrder,\
 numberFormatting,\
+preferKeyPath,\
 redundantBackticks,\
 redundantBreak,\
 redundantExtensionACL,\
@@ -46,9 +49,11 @@ redundantPattern,\
 redundantRawValues,\
 redundantReturn,\
 redundantSelf,\
+redundantType,\
 redundantVoidReturnType,\
 semicolons,\
 sortedImports,\
+sortedSwitchCases,\
 spaceAroundBraces,\
 spaceAroundBrackets,\
 spaceAroundComments,\
@@ -60,9 +65,8 @@ spaceInsideBrackets,\
 spaceInsideComments,\
 spaceInsideGenerics,\
 spaceInsideParens,\
-specifiers,\
-strongifiedSelf,\
 strongOutlets,\
+strongifiedSelf,\
 todos,\
 trailingCommas,\
 trailingSpace,\
@@ -70,11 +74,14 @@ typeSugar,\
 unusedArguments,\
 void,\
 wrap,\
-wrapArguments \
+wrapArguments,\
+wrapAttributes,\
+wrapEnumCases,\
+wrapMultilineStatementBraces,\
+wrapSwitchCases \
 --disable braces,\
 trailingClosures \
 --commas inline \
---empty void \
 --exponentcase uppercase \
 --header strip \
 --hexliteralcase uppercase \
@@ -86,5 +93,8 @@ trailingClosures \
 --trimwhitespace always \
 --maxwidth 130 \
 --wraparguments before-first \
+--funcattributes same-line \
+--typeattributes same-line \
+--varattributes same-line \
 --wrapcollections before-first \
 --exclude Pods,Generated,R.generated.swift,fastlane/swift
