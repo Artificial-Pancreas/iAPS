@@ -51,12 +51,4 @@ final class JavaScriptWorker {
         let joined = arguments.map(\.string).joined(separator: ",")
         return json(for: "\(function)(\(joined))")
     }
-
-    func setEnviromentValue(_ value: JSON, forKey key: String) {
-        evaluate(string: "freeaps.\(key) = \(value.string);")
-    }
-
-    var log: String {
-        context.objectForKeyedSubscript("freeapsLog")!.toString()!
-    }
 }

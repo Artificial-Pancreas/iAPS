@@ -17,16 +17,24 @@ final class OpenAPS {
         let carbs = loadJSON(name: "carbhistory")
         let glucose = loadJSON(name: "glucose")
         let currentTemp = loadJSON(name: "temp_basal")
-        let autosens = Autosens(ratio: 1)
         let reservoir = 100
         let tsMilliseconds: Double = 1527924300000
 
+        let autosensResult = autosense(
+            pumpHistory: pumphistory,
+            profile: profile,
+            carbs: carbs,
+            glucose: glucose,
+            basalprofile: basalProfile,
+            temptargets: "null"
+        )
+        print("AUTOSENS: \(autosensResult)")
 
         let iobResult = iob(
             pumphistory: pumphistory,
             profile: profile,
             clock: clock,
-            autosens: autosens,
+            autosens: autosensResult,
             pumphistory24: "null"
         )
         print("IOB: \(iobResult)")
@@ -50,13 +58,12 @@ final class OpenAPS {
             currentTemp: currentTemp,
             iob: iobResult,
             profile: profile,
-            aurosens: autosens,
+            aurosens: autosensResult,
             meal: mealResult,
             microBolusAllowed: true,
             reservoir: reservoir,
             tsMilliseconds: tsMilliseconds
         )
-
         print("SUGGESTED: \(suggested)")
     }
 
@@ -124,6 +131,31 @@ final class OpenAPS {
                 microBolusAllowed,
                 reservoir,
                 tsMilliseconds
+            ]
+        )
+    }
+
+    func autosense(
+        pumpHistory: JSON,
+        profile: JSON,
+        carbs: JSON,
+        glucose: JSON,
+        basalprofile: JSON,
+        temptargets: JSON
+    ) -> JSON {
+        let jsWorker = JavaScriptWorker()
+        jsWorker.evaluate(script: Script(name:"autosens-bundle"))
+        jsWorker.evaluate(script: Script(name:"prepare-autosens"))
+
+        return jsWorker.call(
+            function: "generate",
+            with: [
+                pumpHistory,
+                profile,
+                carbs,
+                glucose,
+                basalprofile,
+                temptargets
             ]
         )
     }
