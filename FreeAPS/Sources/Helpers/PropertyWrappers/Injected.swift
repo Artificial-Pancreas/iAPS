@@ -4,8 +4,7 @@ protocol Injectable {
     func injectServices(_ resolver: Resolver)
 }
 
-@propertyWrapper
-final class Injected<Resolve, Service>: Resolvable {
+@propertyWrapper final class Injected<Resolve, Service>: Resolvable {
     var wrappedValue: Service!
 
     init(as _: Resolve.Type) {}

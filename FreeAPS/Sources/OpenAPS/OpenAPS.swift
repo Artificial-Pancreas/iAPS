@@ -9,98 +9,113 @@ import Foundation
 import JavaScriptCore
 
 final class OpenAPS {
+    private let jsWorker = JavaScriptWorker()
+    private let processQueue = DispatchQueue(label: "OpenAPS.processQueue", qos: .utility)
+
     func test() {
-        let pumphistory = loadJSON(name: "pumphistory")
-        let profile = loadJSON(name: "profile")
-        let basalProfile = loadJSON(name: "basal_profile")
-        let clock = loadJSON(name: "clock")
-        let carbs = loadJSON(name: "carbhistory")
-        let glucose = loadJSON(name: "glucose")
-        let currentTemp = loadJSON(name: "temp_basal")
-        let reservoir = 100
-        let tsMilliseconds: Double = 1527924300000
+        processQueue.async {
+            let now = Date()
+            print("START at \(now)")
+            let pumphistory = self.loadJSON(name: "pumphistory")
+            let profile = self.loadJSON(name: "profile")
+            let basalProfile = self.loadJSON(name: "basal_profile")
+            let clock = self.loadJSON(name: "clock")
+            let carbs = self.loadJSON(name: "carbhistory")
+            let glucose = self.loadJSON(name: "glucose")
+            let currentTemp = self.loadJSON(name: "temp_basal")
+            let reservoir = 100
+            let tsMilliseconds: Double = 1527924300000
 
-        let autosensResult = autosense(
-            pumpHistory: pumphistory,
-            profile: profile,
-            carbs: carbs,
-            glucose: glucose,
-            basalprofile: basalProfile,
-            temptargets: "null"
-        )
-        print("AUTOSENS: \(autosensResult)")
+            let autosensResult = self.autosense(
+                pumpHistory: pumphistory,
+                profile: profile,
+                carbs: carbs,
+                glucose: glucose,
+                basalprofile: basalProfile,
+                temptargets: "null"
+            )
+            print("AUTOSENS: \(autosensResult)")
 
-        let iobResult = iob(
-            pumphistory: pumphistory,
-            profile: profile,
-            clock: clock,
-            autosens: autosensResult,
-            pumphistory24: "null"
-        )
-        print("IOB: \(iobResult)")
+            let iobResult = self.iob(
+                pumphistory: pumphistory,
+                profile: profile,
+                clock: clock,
+                autosens: autosensResult,
+                pumphistory24: "null"
+            )
+            print("IOB: \(iobResult)")
 
-        let mealResult = meal(
-            pumphistory: pumphistory,
-            profile: profile,
-            basalProfile: basalProfile,
-            clock: clock,
-            carbs: carbs,
-            glucose: glucose
-        )
+            let mealResult = self.meal(
+                pumphistory: pumphistory,
+                profile: profile,
+                basalProfile: basalProfile,
+                clock: clock,
+                carbs: carbs,
+                glucose: glucose
+            )
 
-        print("MEAL: \(mealResult)")
+            print("MEAL: \(mealResult)")
 
-        let glucoseStatus = glucoseGetLast(glucose: glucose)
-        print("GLUCOSE STATUS: \(glucoseStatus)")
+            let glucoseStatus = self.glucoseGetLast(glucose: glucose)
+            print("GLUCOSE STATUS: \(glucoseStatus)")
 
-        let suggested = determineBasal(
-            glucoseStatus: glucoseStatus,
-            currentTemp: currentTemp,
-            iob: iobResult,
-            profile: profile,
-            aurosens: autosensResult,
-            meal: mealResult,
-            microBolusAllowed: true,
-            reservoir: reservoir,
-            tsMilliseconds: tsMilliseconds
-        )
-        print("SUGGESTED: \(suggested)")
+            let suggested = self.determineBasal(
+                glucoseStatus: glucoseStatus,
+                currentTemp: currentTemp,
+                iob: iobResult,
+                profile: profile,
+                aurosens: autosensResult,
+                meal: mealResult,
+                microBolusAllowed: true,
+                reservoir: reservoir,
+                tsMilliseconds: tsMilliseconds
+            )
+            print("SUGGESTED: \(suggested)")
+            let finishDate = Date()
+            print("FINISH at \(finishDate), duration \(finishDate.timeIntervalSince(now)) s")
+        }
     }
 
-    func iob(pumphistory: JSON, profile: JSON, clock: JSON, autosens: JSON, pumphistory24: JSON) -> JSON {
-        let jsWorker = JavaScriptWorker()
-        jsWorker.evaluate(script: Script(name:"iob-bundle"))
-        jsWorker.evaluate(script: Script(name:"prepare-iob"))
-        return jsWorker.call(function: "generate", with: [
-            pumphistory,
-            profile,
-            clock,
-            autosens,
-            pumphistory24
-        ])
+    private func iob(pumphistory: JSON, profile: JSON, clock: JSON, autosens: JSON, pumphistory24: JSON) -> JSON {
+        dispatchPrecondition(condition: .onQueue(processQueue))
+        return jsWorker.inCommonContext { worker in
+            worker.evaluate(script: Script(name:"iob-bundle"))
+            worker.evaluate(script: Script(name:"prepare-iob"))
+            return worker.call(function: "generate", with: [
+                pumphistory,
+                profile,
+                clock,
+                autosens,
+                pumphistory24
+            ])
+        }
     }
 
-    func meal(pumphistory: JSON, profile: JSON, basalProfile: JSON, clock: JSON, carbs: JSON, glucose: JSON) -> JSON {
-        let jsWorker = JavaScriptWorker()
-        jsWorker.evaluate(script: Script(name:"meal-bundle"))
-        jsWorker.evaluate(script: Script(name:"prepare-meal"))
-        return jsWorker.call(function: "generate", with: [
-            pumphistory,
-            profile,
-            basalProfile,
-            clock,
-            carbs,
-            glucose
-        ])
+    private func meal(pumphistory: JSON, profile: JSON, basalProfile: JSON, clock: JSON, carbs: JSON, glucose: JSON) -> JSON {
+        dispatchPrecondition(condition: .onQueue(processQueue))
+        return jsWorker.inCommonContext { worker in
+            worker.evaluate(script: Script(name:"meal-bundle"))
+            worker.evaluate(script: Script(name:"prepare-meal"))
+            return worker.call(function: "generate", with: [
+                pumphistory,
+                profile,
+                basalProfile,
+                clock,
+                carbs,
+                glucose
+            ])
+        }
     }
 
-    func glucoseGetLast(glucose: JSON) -> JSON {
-        let jsWorker = JavaScriptWorker()
-        jsWorker.evaluate(script: Script(name:"glucose-get-last-bundle"))
-        return jsWorker.call(function: "freeaps", with: [glucose])
+    private func glucoseGetLast(glucose: JSON) -> JSON {
+        dispatchPrecondition(condition: .onQueue(processQueue))
+        return jsWorker.inCommonContext { worker in
+            worker.evaluate(script: Script(name:"glucose-get-last-bundle"))
+            return worker.call(function: "freeaps", with: [glucose])
+        }
     }
 
-    func determineBasal(
+    private func determineBasal(
         glucoseStatus: JSON,
         currentTemp: JSON,
         iob: JSON,
@@ -111,31 +126,32 @@ final class OpenAPS {
         reservoir: Int,
         tsMilliseconds: Double
     ) -> JSON {
-        let jsWorker = JavaScriptWorker()
+        dispatchPrecondition(condition: .onQueue(processQueue))
+        return jsWorker.inCommonContext { worker in
+            worker.evaluate(script: Script(name:"basal-set-temp-bundle"))
+            worker.evaluate(script: Script(name:"prepare-determine-basal"))
+            let funcKey = "tempBasalFunctions"
+            worker.evaluate(script: Script(name:"determine-basal-bundle"))
 
-        jsWorker.evaluate(script: Script(name:"basal-set-temp-bundle"))
-        jsWorker.evaluate(script: Script(name:"prepare-determine-basal"))
-        let funcKey = "tempBasalFunctions"
-        jsWorker.evaluate(script: Script(name:"determine-basal-bundle"))
-
-        return jsWorker.call(
-            function: "freeaps",
-            with: [
-                glucoseStatus,
-                currentTemp,
-                iob,
-                profile,
-                aurosens,
-                meal,
-                funcKey,
-                microBolusAllowed,
-                reservoir,
-                tsMilliseconds
-            ]
-        )
+            return worker.call(
+                function: "freeaps",
+                with: [
+                    glucoseStatus,
+                    currentTemp,
+                    iob,
+                    profile,
+                    aurosens,
+                    meal,
+                    funcKey,
+                    microBolusAllowed,
+                    reservoir,
+                    tsMilliseconds
+                ]
+            )
+        }
     }
 
-    func autosense(
+    private func autosense(
         pumpHistory: JSON,
         profile: JSON,
         carbs: JSON,
@@ -143,21 +159,23 @@ final class OpenAPS {
         basalprofile: JSON,
         temptargets: JSON
     ) -> JSON {
-        let jsWorker = JavaScriptWorker()
-        jsWorker.evaluate(script: Script(name:"autosens-bundle"))
-        jsWorker.evaluate(script: Script(name:"prepare-autosens"))
+        dispatchPrecondition(condition: .onQueue(processQueue))
+        return jsWorker.inCommonContext { worker in
+            worker.evaluate(script: Script(name:"autosens-bundle"))
+            worker.evaluate(script: Script(name:"prepare-autosens"))
 
-        return jsWorker.call(
-            function: "generate",
-            with: [
-                pumpHistory,
-                profile,
-                carbs,
-                glucose,
-                basalprofile,
-                temptargets
-            ]
-        )
+            return worker.call(
+                function: "generate",
+                with: [
+                    pumpHistory,
+                    profile,
+                    carbs,
+                    glucose,
+                    basalprofile,
+                    temptargets
+                ]
+            )
+        }
     }
 
     private func loadJSON(name: String) -> String {

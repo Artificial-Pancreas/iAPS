@@ -8,16 +8,5 @@ enum StorageContainer {
         }
 
         container.register(Keychain.self) { _ in BaseKeychain() }
-
-        container.register(IsDrinkImageFileStorage.self) { r in BaseImageFileStorage(resolver: r, name: "IsDrink")
-        }
-        container
-            .register(DrinkTypeImageFileStorage.self) { r in BaseImageFileStorage(resolver: r, name: "DrinkType")
-            }
     }
 }
-
-protocol IsDrinkImageFileStorage: ImageFileStorage {}
-protocol DrinkTypeImageFileStorage: ImageFileStorage {}
-extension BaseImageFileStorage: IsDrinkImageFileStorage {}
-extension BaseImageFileStorage: DrinkTypeImageFileStorage {}
