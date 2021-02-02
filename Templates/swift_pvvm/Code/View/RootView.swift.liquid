@@ -1,0 +1,13 @@
+import SwiftUI
+
+extension {{ module_info.name }} {
+    struct RootView: BaseView {
+        @EnvironmentObject var viewModel: ViewModel<Provider>
+
+        var body: some View {
+            Text("{{ module_info.name }} screen")
+                .navigationBarTitle("{{ module_info.name }}")
+                .navigationBarItems(leading: Button("Close", action: viewModel.hideModal))
+        }
+    }
+}
