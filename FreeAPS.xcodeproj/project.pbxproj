@@ -75,6 +75,10 @@
 		3811DEEA25CA063400A708ED /* SyncAccess.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3811DEE625CA063400A708ED /* SyncAccess.swift */; };
 		3811DEEB25CA063400A708ED /* PersistedProperty.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3811DEE725CA063400A708ED /* PersistedProperty.swift */; };
 		3811DF0225CA9FEA00A708ED /* Credentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3811DF0125CA9FEA00A708ED /* Credentials.swift */; };
+		3811DF0525CAA62600A708ED /* DependeciesContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3811DF0425CAA62600A708ED /* DependeciesContainer.swift */; };
+		3811DF0825CAAA4700A708ED /* ServiceContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3811DF0725CAAA4700A708ED /* ServiceContainer.swift */; };
+		3811DF0C25CAAABD00A708ED /* APSManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3811DF0B25CAAABD00A708ED /* APSManager.swift */; };
+		3811DF1025CAAAE200A708ED /* BaseAPSManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3811DF0F25CAAAE200A708ED /* BaseAPSManager.swift */; };
 		384E803425C385E60086DB71 /* JavaScriptWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 384E803325C385E60086DB71 /* JavaScriptWorker.swift */; };
 		384E803825C388640086DB71 /* Script.swift in Sources */ = {isa = PBXBuildFile; fileRef = 384E803725C388640086DB71 /* Script.swift */; };
 		388E595C25AD948C0019842D /* FreeAPSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 388E595B25AD948C0019842D /* FreeAPSApp.swift */; };
@@ -161,6 +165,10 @@
 		3811DEE625CA063400A708ED /* SyncAccess.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SyncAccess.swift; sourceTree = "<group>"; };
 		3811DEE725CA063400A708ED /* PersistedProperty.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersistedProperty.swift; sourceTree = "<group>"; };
 		3811DF0125CA9FEA00A708ED /* Credentials.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Credentials.swift; sourceTree = "<group>"; };
+		3811DF0425CAA62600A708ED /* DependeciesContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DependeciesContainer.swift; sourceTree = "<group>"; };
+		3811DF0725CAAA4700A708ED /* ServiceContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceContainer.swift; sourceTree = "<group>"; };
+		3811DF0B25CAAABD00A708ED /* APSManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APSManager.swift; sourceTree = "<group>"; };
+		3811DF0F25CAAAE200A708ED /* BaseAPSManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseAPSManager.swift; sourceTree = "<group>"; };
 		384E803325C385E60086DB71 /* JavaScriptWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JavaScriptWorker.swift; sourceTree = "<group>"; };
 		384E803725C388640086DB71 /* Script.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Script.swift; sourceTree = "<group>"; };
 		388E595825AD948C0019842D /* FreeAPS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FreeAPS.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -400,6 +408,7 @@
 		3811DE9125C9D88200A708ED /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				3811DF0A25CAAAA500A708ED /* APS */,
 				3811DE9225C9D88200A708ED /* Appearance */,
 				3811DE9425C9D88200A708ED /* Network */,
 				3811DE9825C9D88300A708ED /* Storage */,
@@ -475,10 +484,12 @@
 		3811DEBD25C9D99900A708ED /* Containers */ = {
 			isa = PBXGroup;
 			children = (
+				3811DF0425CAA62600A708ED /* DependeciesContainer.swift */,
 				3811DEBE25C9D99900A708ED /* SecurityContainer.swift */,
 				3811DEBF25C9D99900A708ED /* UIContainer.swift */,
 				3811DEC025C9D99900A708ED /* NetworkContainer.swift */,
 				3811DEC125C9D99900A708ED /* StorageContainer.swift */,
+				3811DF0725CAAA4700A708ED /* ServiceContainer.swift */,
 			);
 			path = Containers;
 			sourceTree = "<group>";
@@ -511,6 +522,15 @@
 				3811DEE725CA063400A708ED /* PersistedProperty.swift */,
 			);
 			path = PropertyWrappers;
+			sourceTree = "<group>";
+		};
+		3811DF0A25CAAAA500A708ED /* APS */ = {
+			isa = PBXGroup;
+			children = (
+				3811DF0B25CAAABD00A708ED /* APSManager.swift */,
+				3811DF0F25CAAAE200A708ED /* BaseAPSManager.swift */,
+			);
+			path = APS;
 			sourceTree = "<group>";
 		};
 		388E594F25AD948C0019842D = {
@@ -696,6 +716,7 @@
 				3811DE8B25C9D6DD00A708ED /* RequestPermissionsBuilder.swift in Sources */,
 				3811DE4C25C9D4B800A708ED /* AuthotizedRootBuilder.swift in Sources */,
 				3811DE8F25C9D80400A708ED /* User.swift in Sources */,
+				3811DF0C25CAAABD00A708ED /* APSManager.swift in Sources */,
 				3811DEB225C9D88300A708ED /* KeychainItemAccessibility.swift in Sources */,
 				3811DE6B25C9D62600A708ED /* OnboardingProvider.swift in Sources */,
 				3811DEC225C9D99900A708ED /* SecurityContainer.swift in Sources */,
@@ -703,6 +724,8 @@
 				3811DE6E25C9D62600A708ED /* OnboardingViewModel.swift in Sources */,
 				3811DE6D25C9D62600A708ED /* OnboardingRootView.swift in Sources */,
 				3811DE3025C9D49500A708ED /* HomeViewModel.swift in Sources */,
+				3811DF0525CAA62600A708ED /* DependeciesContainer.swift in Sources */,
+				3811DF1025CAAAE200A708ED /* BaseAPSManager.swift in Sources */,
 				3811DE0A25C9D32F00A708ED /* BaseModuleBuilder.swift in Sources */,
 				3811DE1725C9D40400A708ED /* Screen.swift in Sources */,
 				388E596C25AD95110019842D /* OpenAPS.swift in Sources */,
@@ -758,6 +781,7 @@
 				3811DE2425C9D48300A708ED /* MainViewModel.swift in Sources */,
 				3811DE3F25C9D4A100A708ED /* SettingsViewModel.swift in Sources */,
 				3811DEB725C9D88300A708ED /* AuthorizationManager.swift in Sources */,
+				3811DF0825CAAA4700A708ED /* ServiceContainer.swift in Sources */,
 				3811DEB025C9D88300A708ED /* BaseKeychain.swift in Sources */,
 				3811DE4D25C9D4B800A708ED /* AuthotizedRootViewModel.swift in Sources */,
 				3811DE6A25C9D62600A708ED /* OnboardingBuilder.swift in Sources */,

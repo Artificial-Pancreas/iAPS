@@ -1,7 +1,9 @@
 import Foundation
 import Swinject
 
-enum StorageContainer {
+private let resolver = FreeAPSApp.resolver
+
+enum StorageContainer: DependeciesContainer {
     static func register(container: Container) {
         container.register(FileManager.self) { _ in
             Foundation.FileManager.default
