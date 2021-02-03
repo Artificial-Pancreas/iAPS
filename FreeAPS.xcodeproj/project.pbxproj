@@ -249,7 +249,7 @@
 				388E5A5A25B6F05F0019842D /* Helpers */,
 				388E5A5925B6F0250019842D /* Models */,
 				3811DE0325C9D31700A708ED /* Modules */,
-				388E5A5825B6F0070019842D /* OpenAPS */,
+				3811DF0A25CAAAA500A708ED /* APS */,
 				3811DE1425C9D40400A708ED /* Router */,
 				3811DE9125C9D88200A708ED /* Services */,
 			);
@@ -408,7 +408,6 @@
 		3811DE9125C9D88200A708ED /* Services */ = {
 			isa = PBXGroup;
 			children = (
-				3811DF0A25CAAAA500A708ED /* APS */,
 				3811DE9225C9D88200A708ED /* Appearance */,
 				3811DE9425C9D88200A708ED /* Network */,
 				3811DE9825C9D88300A708ED /* Storage */,
@@ -529,6 +528,7 @@
 			children = (
 				3811DF0B25CAAABD00A708ED /* APSManager.swift */,
 				3811DF0F25CAAAE200A708ED /* BaseAPSManager.swift */,
+				388E5A5825B6F0070019842D /* OpenAPS */,
 			);
 			path = APS;
 			sourceTree = "<group>";
