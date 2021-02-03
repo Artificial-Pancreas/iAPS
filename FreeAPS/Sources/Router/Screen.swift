@@ -8,6 +8,7 @@ enum Screen: Identifiable {
     case authorizedRoot
     case login
     case requestPermissions
+    case configEditor
 
     var id: Int { String(reflecting: self).hashValue }
 }
@@ -27,6 +28,8 @@ extension Screen {
             return Login.Builder(resolver: resolver).buildView().asAny()
         case .requestPermissions:
             return RequestPermissions.Builder(resolver: resolver).buildView().asAny()
+        case .configEditor:
+            return ConfigEditor.Builder(resolver: resolver).buildView().asAny()
         }
     }
 
@@ -48,6 +51,7 @@ extension Screen {
                 text: Text("Settings")
             )
         case .authorizedRoot,
+             .configEditor,
              .login,
              .onboarding,
              .requestPermissions:

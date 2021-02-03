@@ -84,7 +84,12 @@
 		388E597225AD9CF10019842D /* json in Resources */ = {isa = PBXBuildFile; fileRef = 388E597125AD9CF10019842D /* json */; };
 		388E5A5C25B6F0770019842D /* JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 388E5A5B25B6F0770019842D /* JSON.swift */; };
 		388E5A6025B6F2310019842D /* Autosens.swift in Sources */ = {isa = PBXBuildFile; fileRef = 388E5A5F25B6F2310019842D /* Autosens.swift */; };
-		3895E4C625B9E00D00214B37 /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3895E4C525B9E00D00214B37 /* Profile.swift */; };
+		3895E4C625B9E00D00214B37 /* Preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3895E4C525B9E00D00214B37 /* Preferences.swift */; };
+		45252C95D220E796FDB3B022 /* ConfigEditorDataFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F8A87AA037BD079BA3528BA /* ConfigEditorDataFlow.swift */; };
+		45717281F743594AA9D87191 /* ConfigEditorRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 920DDB21E5D0EB813197500D /* ConfigEditorRootView.swift */; };
+		72F1BD388F42FCA6C52E4500 /* ConfigEditorProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44080E4709E3AE4B73054563 /* ConfigEditorProvider.swift */; };
+		E102DE9C3E9C8AEDCB3C61BB /* ConfigEditorBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = E492D5B2EEF2119977EA2CE4 /* ConfigEditorBuilder.swift */; };
+		E39E418C56A5A46B61D960EE /* ConfigEditorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D5B4F8B4194BB7E260EF251 /* ConfigEditorViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -166,7 +171,12 @@
 		388E597125AD9CF10019842D /* json */ = {isa = PBXFileReference; lastKnownFileType = folder; path = json; sourceTree = "<group>"; };
 		388E5A5B25B6F0770019842D /* JSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSON.swift; sourceTree = "<group>"; };
 		388E5A5F25B6F2310019842D /* Autosens.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Autosens.swift; sourceTree = "<group>"; };
-		3895E4C525B9E00D00214B37 /* Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
+		3895E4C525B9E00D00214B37 /* Preferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Preferences.swift; sourceTree = "<group>"; };
+		3F8A87AA037BD079BA3528BA /* ConfigEditorDataFlow.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ConfigEditorDataFlow.swift; sourceTree = "<group>"; };
+		44080E4709E3AE4B73054563 /* ConfigEditorProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ConfigEditorProvider.swift; sourceTree = "<group>"; };
+		5D5B4F8B4194BB7E260EF251 /* ConfigEditorViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ConfigEditorViewModel.swift; sourceTree = "<group>"; };
+		920DDB21E5D0EB813197500D /* ConfigEditorRootView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ConfigEditorRootView.swift; sourceTree = "<group>"; };
+		E492D5B2EEF2119977EA2CE4 /* ConfigEditorBuilder.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ConfigEditorBuilder.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -182,6 +192,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0610F7D6D2EC00E3BA1569F0 /* ConfigEditor */ = {
+			isa = PBXGroup;
+			children = (
+				E492D5B2EEF2119977EA2CE4 /* ConfigEditorBuilder.swift */,
+				3F8A87AA037BD079BA3528BA /* ConfigEditorDataFlow.swift */,
+				44080E4709E3AE4B73054563 /* ConfigEditorProvider.swift */,
+				5D5B4F8B4194BB7E260EF251 /* ConfigEditorViewModel.swift */,
+				4E8C7B59F8065047ECE20965 /* View */,
+			);
+			path = ConfigEditor;
+			sourceTree = "<group>";
+		};
 		3811DE0325C9D31700A708ED /* Modules */ = {
 			isa = PBXGroup;
 			children = (
@@ -193,6 +215,7 @@
 				3811DE6325C9D62600A708ED /* Onboarding */,
 				3811DE8125C9D6DD00A708ED /* RequestPermissions */,
 				3811DE3825C9D4A100A708ED /* Settings */,
+				0610F7D6D2EC00E3BA1569F0 /* ConfigEditor */,
 			);
 			path = Modules;
 			sourceTree = "<group>";
@@ -537,7 +560,7 @@
 			children = (
 				3811DE8E25C9D80400A708ED /* User.swift */,
 				388E5A5F25B6F2310019842D /* Autosens.swift */,
-				3895E4C525B9E00D00214B37 /* Profile.swift */,
+				3895E4C525B9E00D00214B37 /* Preferences.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -553,6 +576,14 @@
 				388E5A5B25B6F0770019842D /* JSON.swift */,
 			);
 			path = Helpers;
+			sourceTree = "<group>";
+		};
+		4E8C7B59F8065047ECE20965 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				920DDB21E5D0EB813197500D /* ConfigEditorRootView.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -665,7 +696,7 @@
 				3811DEB225C9D88300A708ED /* KeychainItemAccessibility.swift in Sources */,
 				3811DE6B25C9D62600A708ED /* OnboardingProvider.swift in Sources */,
 				3811DEC225C9D99900A708ED /* SecurityContainer.swift in Sources */,
-				3895E4C625B9E00D00214B37 /* Profile.swift in Sources */,
+				3895E4C625B9E00D00214B37 /* Preferences.swift in Sources */,
 				3811DE6E25C9D62600A708ED /* OnboardingViewModel.swift in Sources */,
 				3811DE6D25C9D62600A708ED /* OnboardingRootView.swift in Sources */,
 				3811DE3025C9D49500A708ED /* HomeViewModel.swift in Sources */,
@@ -728,6 +759,11 @@
 				3811DE6A25C9D62600A708ED /* OnboardingBuilder.swift in Sources */,
 				3811DEC425C9D99900A708ED /* NetworkContainer.swift in Sources */,
 				3811DE4325C9D4A100A708ED /* SettingsProvider.swift in Sources */,
+				E102DE9C3E9C8AEDCB3C61BB /* ConfigEditorBuilder.swift in Sources */,
+				45252C95D220E796FDB3B022 /* ConfigEditorDataFlow.swift in Sources */,
+				72F1BD388F42FCA6C52E4500 /* ConfigEditorProvider.swift in Sources */,
+				E39E418C56A5A46B61D960EE /* ConfigEditorViewModel.swift in Sources */,
+				45717281F743594AA9D87191 /* ConfigEditorRootView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

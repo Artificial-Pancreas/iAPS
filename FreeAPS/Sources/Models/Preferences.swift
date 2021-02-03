@@ -1,11 +1,11 @@
 import Foundation
 
-struct Profile: JSON {
-    var maxIOB: Double
-    var maxDailySafetyMultiplier: Double
-    var currentBasalSafetyMultiplier: Double
-    var autosensMax: Double
-    var autosensMin: Double
+struct Preferences: JSON {
+    var maxIOB: Decimal
+    var maxDailySafetyMultiplier: Decimal
+    var currentBasalSafetyMultiplier: Decimal
+    var autosensMax: Decimal
+    var autosensMin: Decimal
     var rewindResetsAutosens: Bool
     var highTemptargetRaisesSensitivity: Bool
     var lowTemptargetLowersSensitivity: Bool
@@ -13,16 +13,16 @@ struct Profile: JSON {
     var resistanceLowersTarget: Bool
     var advTargetAdjustments: Bool
     var exerciseMode: Bool
-    var halfBasalExerciseTarget: Double
-    var maxCOB: Double
+    var halfBasalExerciseTarget: Decimal
+    var maxCOB: Decimal
     var wideBGTargetRange: Bool
     var skipNeutralTemps: Bool
     var unsuspendIfNoTemp: Bool
-    var bolusSnoozeDIADivisor: Double
-    var min5mCarbimpact: Double
-    var autotuneISFAdjustmentFraction: Double
-    var remainingCarbsFraction: Double
-    var remainingCarbsCap: Double
+    var bolusSnoozeDIADivisor: Decimal
+    var min5mCarbimpact: Decimal
+    var autotuneISFAdjustmentFraction: Decimal
+    var remainingCarbsFraction: Decimal
+    var remainingCarbsCap: Decimal
     var enableUAM: Bool
     var a52RiskEnable: Bool
     var enableSMBWithCOB: Bool
@@ -30,25 +30,25 @@ struct Profile: JSON {
     var enableSMBAlways: Bool
     var enableSMBAfterCarbs: Bool
     var allowSMBWithHighTemptarget: Bool
-    var maxSMBBasalMinutes: Double
-    var maxUAMSMBBasalMinutes: Double
-    var smbInterval: Double
-    var bolusIncrement: Double
+    var maxSMBBasalMinutes: Decimal
+    var maxUAMSMBBasalMinutes: Decimal
+    var smbInterval: Decimal
+    var bolusIncrement: Decimal
     var curve: InsulinCurve
     var useCustomPeakTime: Bool
-    var insulinPeakTime: Double
-    var carbsReqThreshold: Double
+    var insulinPeakTime: Decimal
+    var carbsReqThreshold: Decimal
     var offlineHotspot: Bool // unused, for compatibility
-    var noisyCGMTargetMultiplier: Double
+    var noisyCGMTargetMultiplier: Decimal
     var suspendZerosIOB: Bool
     var enableEnliteBgproxy: Bool // unused, for compatibility
 
     init(
-        maxIOB: Double = 0,
-        maxDailySafetyMultiplier: Double = 3,
-        currentBasalSafetyMultiplier: Double = 4,
-        autosensMax: Double = 1.2,
-        autosensMin: Double = 0.7,
+        maxIOB: Decimal = 0,
+        maxDailySafetyMultiplier: Decimal = 3,
+        currentBasalSafetyMultiplier: Decimal = 4,
+        autosensMax: Decimal = 1.2,
+        autosensMin: Decimal = 0.7,
         rewindResetsAutosens: Bool = true,
         highTemptargetRaisesSensitivity: Bool = false,
         lowTemptargetLowersSensitivity: Bool = false,
@@ -56,16 +56,16 @@ struct Profile: JSON {
         resistanceLowersTarget: Bool = false,
         advTargetAdjustments: Bool = false,
         exerciseMode: Bool = false,
-        halfBasalExerciseTarget: Double = 160,
-        maxCOB: Double = 120,
+        halfBasalExerciseTarget: Decimal = 160,
+        maxCOB: Decimal = 120,
         wideBGTargetRange: Bool = false,
         skipNeutralTemps: Bool = false,
         unsuspendIfNoTemp: Bool = false,
-        bolusSnoozeDIADivisor: Double = 2,
-        min5mCarbimpact: Double = 8,
-        autotuneISFAdjustmentFraction: Double = 1.0,
-        remainingCarbsFraction: Double = 1.0,
-        remainingCarbsCap: Double = 90,
+        bolusSnoozeDIADivisor: Decimal = 2,
+        min5mCarbimpact: Decimal = 8,
+        autotuneISFAdjustmentFraction: Decimal = 1.0,
+        remainingCarbsFraction: Decimal = 1.0,
+        remainingCarbsCap: Decimal = 90,
         enableUAM: Bool = false,
         a52RiskEnable: Bool = false,
         enableSMBWithCOB: Bool = false,
@@ -73,16 +73,16 @@ struct Profile: JSON {
         enableSMBAlways: Bool = false,
         enableSMBAfterCarbs: Bool = false,
         allowSMBWithHighTemptarget: Bool = false,
-        maxSMBBasalMinutes: Double = 30,
-        maxUAMSMBBasalMinutes: Double = 30,
-        smbInterval: Double = 3,
-        bolusIncrement: Double = 0.1,
+        maxSMBBasalMinutes: Decimal = 30,
+        maxUAMSMBBasalMinutes: Decimal = 30,
+        smbInterval: Decimal = 3,
+        bolusIncrement: Decimal = 0.1,
         curve: InsulinCurve = .rapidActing,
         useCustomPeakTime: Bool = false,
-        insulinPeakTime: Double = 75,
-        carbsReqThreshold: Double = 1,
+        insulinPeakTime: Decimal = 75,
+        carbsReqThreshold: Decimal = 1,
         offlineHotspot: Bool = false, // unused, for compatibility
-        noisyCGMTargetMultiplier: Double = 1.3,
+        noisyCGMTargetMultiplier: Decimal = 1.3,
         suspendZerosIOB: Bool = true,
         enableEnliteBgproxy: Bool = false // unused, for compatibility
     ) {
@@ -130,7 +130,7 @@ struct Profile: JSON {
     }
 }
 
-extension Profile {
+extension Preferences {
     private enum CodingKeys: String, CodingKey {
         case maxIOB = "max_iob"
         case maxDailySafetyMultiplier = "max_daily_safety_multiplier"
@@ -180,4 +180,12 @@ enum InsulinCurve: String, Codable {
     case rapidActing = "rapid-acting"
     case ultraRapid = "ultra-rapid"
     case bilinear
+}
+
+extension Preferences {
+    var prettyPrinted: String {
+        let encoder = JSONEncoder()
+        encoder.outputFormatting = .prettyPrinted
+        return String(data: try! encoder.encode(self), encoding: .utf8)!
+    }
 }
