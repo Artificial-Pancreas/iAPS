@@ -16,7 +16,7 @@ extension Home {
                 Spacer()
             }
             .padding()
-            .navigationBarTitle("Home")
+            .toolbar { ToolbarItem(placement: .principal) { Text("Home") } }
         }
     }
 }

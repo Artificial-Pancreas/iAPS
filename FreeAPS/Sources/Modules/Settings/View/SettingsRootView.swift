@@ -10,7 +10,7 @@ extension Settings {
                 Spacer()
             }
             .padding()
-            .navigationBarTitle("Settings")
+            .toolbar { ToolbarItem(placement: .principal) { Text("Settings") } }
         }
     }
 }

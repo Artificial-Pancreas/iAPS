@@ -6,7 +6,7 @@ extension {{ module_info.name }} {
 
         var body: some View {
             Text("{{ module_info.name }} screen")
-                .navigationBarTitle("{{ module_info.name }}")
+            	.toolbar { ToolbarItem(placement: .principal) { Text("{{ module_info.name }}") } }
                 .navigationBarItems(leading: Button("Close", action: viewModel.hideModal))
         }
     }
