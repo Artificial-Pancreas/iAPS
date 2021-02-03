@@ -34,12 +34,12 @@ extension Bool: JSON {}
 extension Date: JSON {
     var string: String {
         let formatter = ISO8601DateFormatter()
-        formatter.formatOptions = [.withColonSeparatorInTimeZone]
         return formatter.string(from: self)
     }
 
     init?(from: String) {
         let dateFormatter = ISO8601DateFormatter()
+        dateFormatter.formatOptions.insert(.withFractionalSeconds)
         let string = from.replacingOccurrences(of: "\"", with: "")
         if let date = dateFormatter.date(from: string) {
             self = date
