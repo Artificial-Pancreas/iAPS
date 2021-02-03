@@ -1,4 +1,3 @@
-import AuthenticationServices
 import SwiftUI
 
 extension Login {
@@ -7,22 +6,14 @@ extension Login {
 
         var body: some View {
             VStack {
-                Text("FreeAPS").font(.largeTitle)
+                Text("Disclaimer").font(.title)
                 Spacer()
-                SignInWithAppleButton(.signIn) { request in
-                    request.requestedScopes = [.fullName, .email]
+                Button(action: viewModel.login) {
+                    Text("Continue")
+                        .frame(maxWidth: .infinity)
+                        .foregroundColor(.white)
+                        .buttonBackground()
                 }
-                onCompletion: { result in
-                    switch result {
-                    case let .success(authorisation):
-                        viewModel.credentials = authorisation.credential as? ASAuthorizationAppleIDCredential
-                    case .failure:
-                        viewModel.credentials = nil
-                    }
-                }
-                .frame(width: 300, height: 50)
-                .signInWithAppleButtonStyle(.whiteOutline)
-                Spacer()
             }.padding()
         }
     }

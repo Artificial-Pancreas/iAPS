@@ -8,6 +8,7 @@ extension {{ module_info.name }} {
             Text("{{ module_info.name }} screen")
             	.toolbar { ToolbarItem(placement: .principal) { Text("{{ module_info.name }}") } }
                 .navigationBarItems(leading: Button("Close", action: viewModel.hideModal))
+                .navigationBarTitleDisplayMode(.inline)
         }
     }
 }

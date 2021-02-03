@@ -3,7 +3,7 @@ import SwiftUI
 
 extension Login {
     class ViewModel<Provider>: BaseViewModel<Provider>, ObservableObject where Provider: LoginProvider {
-        @Published var credentials: ASAuthorizationAppleIDCredential?
+        @Published var credentials: Credentials?
 
         override func subscribe() {
             credentials = provider.credentials
@@ -12,6 +12,10 @@ extension Login {
                 .compactMap { $0 }
                 .sink { self.provider.authorize(credentials: $0) }
                 .store(in: &lifetime)
+        }
+
+        func login() {
+            credentials = Credentials()
         }
     }
 }

@@ -74,6 +74,7 @@
 		3811DEE825CA063400A708ED /* Injected.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3811DEE425CA063400A708ED /* Injected.swift */; };
 		3811DEEA25CA063400A708ED /* SyncAccess.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3811DEE625CA063400A708ED /* SyncAccess.swift */; };
 		3811DEEB25CA063400A708ED /* PersistedProperty.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3811DEE725CA063400A708ED /* PersistedProperty.swift */; };
+		3811DF0225CA9FEA00A708ED /* Credentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3811DF0125CA9FEA00A708ED /* Credentials.swift */; };
 		384E803425C385E60086DB71 /* JavaScriptWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 384E803325C385E60086DB71 /* JavaScriptWorker.swift */; };
 		384E803825C388640086DB71 /* Script.swift in Sources */ = {isa = PBXBuildFile; fileRef = 384E803725C388640086DB71 /* Script.swift */; };
 		388E595C25AD948C0019842D /* FreeAPSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 388E595B25AD948C0019842D /* FreeAPSApp.swift */; };
@@ -159,6 +160,7 @@
 		3811DEE425CA063400A708ED /* Injected.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Injected.swift; sourceTree = "<group>"; };
 		3811DEE625CA063400A708ED /* SyncAccess.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SyncAccess.swift; sourceTree = "<group>"; };
 		3811DEE725CA063400A708ED /* PersistedProperty.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersistedProperty.swift; sourceTree = "<group>"; };
+		3811DF0125CA9FEA00A708ED /* Credentials.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Credentials.swift; sourceTree = "<group>"; };
 		384E803325C385E60086DB71 /* JavaScriptWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JavaScriptWorker.swift; sourceTree = "<group>"; };
 		384E803725C388640086DB71 /* Script.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Script.swift; sourceTree = "<group>"; };
 		388E595825AD948C0019842D /* FreeAPS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FreeAPS.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -561,6 +563,7 @@
 				3811DE8E25C9D80400A708ED /* User.swift */,
 				388E5A5F25B6F2310019842D /* Autosens.swift */,
 				3895E4C525B9E00D00214B37 /* Preferences.swift */,
+				3811DF0125CA9FEA00A708ED /* Credentials.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -717,6 +720,7 @@
 				3811DE8C25C9D6DD00A708ED /* RequestPermissionsViewModel.swift in Sources */,
 				3811DE3125C9D49500A708ED /* HomeProvider.swift in Sources */,
 				388E5A5C25B6F0770019842D /* JSON.swift in Sources */,
+				3811DF0225CA9FEA00A708ED /* Credentials.swift in Sources */,
 				3811DEB625C9D88300A708ED /* UnlockManager.swift in Sources */,
 				3811DE1825C9D40400A708ED /* Router.swift in Sources */,
 				3811DEE825CA063400A708ED /* Injected.swift in Sources */,

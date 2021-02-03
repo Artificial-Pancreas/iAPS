@@ -5,7 +5,7 @@ import Swinject
 protocol AuthorizationManager {
     var isAuthorized: Bool { get }
     var authorizationPublisher: AnyPublisher<Bool, Never> { get }
-    func authorize(credentials: ASAuthorizationAppleIDCredential) -> AnyPublisher<Void, Never>
+    func authorize(credentials: Credentials) -> AnyPublisher<Void, Never>
     func logout()
 }
 
@@ -23,9 +23,8 @@ final class BaseAuthorizationManager: AuthorizationManager, Injectable {
         injectServices(resolver)
     }
 
-    func authorize(credentials _: ASAuthorizationAppleIDCredential) -> AnyPublisher<Void, Never> {
+    func authorize(credentials _: Credentials) -> AnyPublisher<Void, Never> {
         isAuthorizedSubject.send(true)
-        // TODO: send data to server
         return Just(()).eraseToAnyPublisher()
     }
 
