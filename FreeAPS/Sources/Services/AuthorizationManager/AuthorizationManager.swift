@@ -5,6 +5,7 @@ import Swinject
 protocol AuthorizationManager {
     var isAuthorized: Bool { get }
     var authorizationPublisher: AnyPublisher<Bool, Never> { get }
+    var credentials: CurrentValueSubject<Credentials?, Never> { get }
     func authorize(credentials: Credentials) -> AnyPublisher<Void, Never>
     func logout()
 }
@@ -15,6 +16,8 @@ final class BaseAuthorizationManager: AuthorizationManager, Injectable {
     var authorizationPublisher: AnyPublisher<Bool, Never> { isAuthorizedSubject.eraseToAnyPublisher() }
     var isAuthorized: Bool { isAuthorizedSubject.value }
 
+    let credentials = CurrentValueSubject<Credentials?, Never>(nil)
+
     private var lifetime = Set<AnyCancellable>()
 
     @Injected() private var keychain: Keychain!
@@ -23,8 +26,9 @@ final class BaseAuthorizationManager: AuthorizationManager, Injectable {
         injectServices(resolver)
     }
 
-    func authorize(credentials _: Credentials) -> AnyPublisher<Void, Never> {
+    func authorize(credentials: Credentials) -> AnyPublisher<Void, Never> {
         isAuthorizedSubject.send(true)
+        self.credentials.send(credentials)
         return Just(()).eraseToAnyPublisher()
     }
 
@@ -33,6 +37,7 @@ final class BaseAuthorizationManager: AuthorizationManager, Injectable {
             .sink(
                 receiveCompletion: { _ in
                     self.isAuthorizedSubject.send(false)
+                    self.credentials.send(nil)
                 },
                 receiveValue: {}
             )

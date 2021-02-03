@@ -10,20 +10,22 @@ protocol Provider {
 class BaseProvider: Provider, Injectable {
     let user = CurrentValueSubject<User?, Never>(nil)
     var lifetime = Set<AnyCancellable>()
+    @Injected() var authorizationManager: AuthorizationManager!
+
     required init(resolver: Resolver) {
         injectServices(resolver)
-        makeTestUser()
+        subscribe()
     }
-}
 
-extension BaseProvider {
-    func makeTestUser() {
-        let user = User(
-            id: UUID(),
-            name: "Vasiliy",
-            email: "example@mail.ru"
-        )
-
-        self.user.send(user)
+    private func subscribe() {
+        authorizationManager.credentials
+            .map { credentials -> User? in
+                guard let credentials = credentials else { return nil }
+                return User(id: credentials.id)
+            }
+            .sink { user in
+                self.user.send(user)
+            }
+            .store(in: &lifetime)
     }
 }

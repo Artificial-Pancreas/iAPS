@@ -1,5 +1,3 @@
 extension AuthotizedRoot {
-    final class Provider: BaseProvider, AuthotizedRootProvider {
-        @Injected() var authorizationManager: AuthorizationManager!
-    }
+    final class Provider: BaseProvider, AuthotizedRootProvider {}
 }
