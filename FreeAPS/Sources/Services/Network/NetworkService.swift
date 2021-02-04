@@ -1,18 +1,27 @@
 import Combine
 import Foundation
 
-struct NetworkService {
-    struct Response<T> {
-        let value: T
-        let response: URLResponse
-    }
+enum NetworkError: Error, LocalizedError {
+    case badStatusCode(HTTPResponseStatus)
 
-    func run<T: Decodable>(_ request: URLRequest, decoder: JSONDecoder = JSONDecoder()) -> AnyPublisher<Response<T>, Error> {
+    var errorDescription: String? {
+        switch self {
+        case let .badStatusCode(code):
+            return code.reasonPhrase
+        }
+    }
+}
+
+struct NetworkService {
+    func run(_ request: URLRequest) -> AnyPublisher<Data, Error> {
         URLSession.shared
             .dataTaskPublisher(for: request)
-            .tryMap { result -> Response<T> in
-                let value = try decoder.decode(T.self, from: result.data)
-                return Response(value: value, response: result.response)
+            .tryMap { data, response in
+                let code = (response as! HTTPURLResponse).statusCode
+                guard 200 ..< 300 ~= code else {
+                    throw NetworkError.badStatusCode(.init(statusCode: code))
+                }
+                return data
             }
             .eraseToAnyPublisher()
     }

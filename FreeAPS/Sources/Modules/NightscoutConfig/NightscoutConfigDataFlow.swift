@@ -1,3 +1,6 @@
+import Combine
+import Foundation
+
 enum NightscoutConfig {
     enum Config {
         static let urlKey = "NightscoutConfig.url"
@@ -5,4 +8,6 @@ enum NightscoutConfig {
     }
 }
 
-protocol NightscoutConfigProvider: Provider {}
+protocol NightscoutConfigProvider: Provider {
+    func checkConnection(url: URL, secret: String) -> AnyPublisher<Void, Error>
+}
