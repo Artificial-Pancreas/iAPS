@@ -83,6 +83,23 @@ struct AdaptsToSoftwareKeyboard: ViewModifier {
     }
 }
 
+struct ClearButton: ViewModifier
+{
+    @Binding var text: String
+    func body(content: Content) -> some View {
+        HStack {
+            content
+            if !text.isEmpty {
+                Button { self.text = "" }
+                label: {
+                    Image(systemName: "delete.left")
+                        .foregroundColor(.gray)
+                }
+            }
+        }
+    }
+}
+
 extension View {
     func roundedBackground() -> some View {
         modifier(RoundedBackground())

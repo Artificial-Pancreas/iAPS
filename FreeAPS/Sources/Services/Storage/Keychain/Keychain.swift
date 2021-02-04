@@ -16,8 +16,8 @@ protocol Keychain: KeyValueStorage {
     @discardableResult func setData(_ value: Data, forKey key: String) -> Result<Void, KeychainError>
     @discardableResult func setValue<T: Encodable>(_ maybeValue: T?, forKey key: String) -> Result<Void, KeychainError>
 
-    func removeObject(forKey key: String) -> Result<Void, KeychainError>
-    func removeAllKeys() -> Result<Void, KeychainError>
+    @discardableResult func removeObject(forKey key: String) -> Result<Void, KeychainError>
+    @discardableResult func removeAllKeys() -> Result<Void, KeychainError>
 
     static func wipeKeychain()
 }

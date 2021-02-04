@@ -5,17 +5,10 @@ extension Settings {
         @EnvironmentObject var viewModel: ViewModel<Provider>
 
         var body: some View {
-            VStack {
-                Text("Settings screen")
-                Button(action: viewModel.openProfileEditor) {
-                    Text("Open Editor")
-                        .frame(maxWidth: .infinity)
-                        .foregroundColor(.white)
-                        .buttonBackground()
-                }
-                Spacer()
+            Form {
+                Text("Open Editor").modal(for: .configEditor, from: self)
+                Text("Nightscout").modal(for: .nighscoutConfig, from: self)
             }
-            .padding()
             .toolbar { ToolbarItem(placement: .principal) { Text("Settings") } }
         }
     }

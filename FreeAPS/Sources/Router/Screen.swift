@@ -9,6 +9,7 @@ enum Screen: Identifiable {
     case login
     case requestPermissions
     case configEditor
+    case nighscoutConfig
 
     var id: Int { String(reflecting: self).hashValue }
 }
@@ -17,19 +18,21 @@ extension Screen {
     func view(resolver: Resolver) -> AnyView {
         switch self {
         case .home:
-            return Home.Builder(resolver: resolver).buildView().asAny()
+            return Home.Builder(resolver: resolver).buildView()
         case .settings:
-            return Settings.Builder(resolver: resolver).buildView().asAny()
+            return Settings.Builder(resolver: resolver).buildView()
         case .onboarding:
-            return Onboarding.Builder(resolver: resolver).buildView().asAny()
+            return Onboarding.Builder(resolver: resolver).buildView()
         case .authorizedRoot:
-            return AuthotizedRoot.Builder(resolver: resolver).buildView().asAny()
+            return AuthotizedRoot.Builder(resolver: resolver).buildView()
         case .login:
-            return Login.Builder(resolver: resolver).buildView().asAny()
+            return Login.Builder(resolver: resolver).buildView()
         case .requestPermissions:
-            return RequestPermissions.Builder(resolver: resolver).buildView().asAny()
+            return RequestPermissions.Builder(resolver: resolver).buildView()
         case .configEditor:
-            return ConfigEditor.Builder(resolver: resolver).buildView().asAny()
+            return ConfigEditor.Builder(resolver: resolver).buildView()
+        case .nighscoutConfig:
+            return NightscoutConfig.Builder(resolver: resolver).buildView()
         }
     }
 
@@ -53,6 +56,7 @@ extension Screen {
         case .authorizedRoot,
              .configEditor,
              .login,
+             .nighscoutConfig,
              .onboarding,
              .requestPermissions:
             fatalError("Tab for this screen \(self) did not specified")

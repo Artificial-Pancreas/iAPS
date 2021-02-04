@@ -3,7 +3,7 @@ import Swinject
 
 protocol ModuleBuilder {
     associatedtype View: SwiftUI.View
-    func buildView() -> View
+    func buildView() -> AnyView
 }
 
 class BaseModuleBuilder<View: BaseView, ViewModel: ObservableObject, Provider: FreeAPS.Provider>: ModuleBuilder
@@ -20,7 +20,7 @@ class BaseModuleBuilder<View: BaseView, ViewModel: ObservableObject, Provider: F
         ViewModel(provider: Provider(resolver: resolver), resolver: resolver)
     }
 
-    func buildView() -> some SwiftUI.View {
-        View().environmentObject(viewModel)
+    func buildView() -> AnyView {
+        View().environmentObject(viewModel).asAny()
     }
 }
