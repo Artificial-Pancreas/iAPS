@@ -9,6 +9,8 @@ enum StorageContainer: DependeciesContainer {
             Foundation.FileManager.default
         }
 
+        container.register(FileStorage.self) { _ in BaseFileStorage() }
+
         container.register(Keychain.self) { _ in BaseKeychain() }
     }
 }

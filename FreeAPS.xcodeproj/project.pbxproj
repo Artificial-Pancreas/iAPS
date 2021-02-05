@@ -77,6 +77,8 @@
 		3811DF0825CAAA4700A708ED /* ServiceContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3811DF0725CAAA4700A708ED /* ServiceContainer.swift */; };
 		3811DF0C25CAAABD00A708ED /* APSManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3811DF0B25CAAABD00A708ED /* APSManager.swift */; };
 		3811DF1025CAAAE200A708ED /* BaseAPSManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3811DF0F25CAAAE200A708ED /* BaseAPSManager.swift */; };
+		383948D325CD4D6D00E91849 /* Disk in Frameworks */ = {isa = PBXBuildFile; productRef = 383948D225CD4D6D00E91849 /* Disk */; };
+		383948D625CD4D8900E91849 /* FileStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 383948D525CD4D8900E91849 /* FileStorage.swift */; };
 		384E803425C385E60086DB71 /* JavaScriptWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 384E803325C385E60086DB71 /* JavaScriptWorker.swift */; };
 		384E803825C388640086DB71 /* Script.swift in Sources */ = {isa = PBXBuildFile; fileRef = 384E803725C388640086DB71 /* Script.swift */; };
 		388E595C25AD948C0019842D /* FreeAPSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 388E595B25AD948C0019842D /* FreeAPSApp.swift */; };
@@ -175,6 +177,7 @@
 		3811DF0725CAAA4700A708ED /* ServiceContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceContainer.swift; sourceTree = "<group>"; };
 		3811DF0B25CAAABD00A708ED /* APSManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APSManager.swift; sourceTree = "<group>"; };
 		3811DF0F25CAAAE200A708ED /* BaseAPSManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseAPSManager.swift; sourceTree = "<group>"; };
+		383948D525CD4D8900E91849 /* FileStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileStorage.swift; sourceTree = "<group>"; };
 		384E803325C385E60086DB71 /* JavaScriptWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JavaScriptWorker.swift; sourceTree = "<group>"; };
 		384E803725C388640086DB71 /* Script.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Script.swift; sourceTree = "<group>"; };
 		388E595825AD948C0019842D /* FreeAPS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FreeAPS.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -206,6 +209,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3811DE1025C9D37700A708ED /* Swinject in Frameworks */,
+				383948D325CD4D6D00E91849 /* Disk in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -450,8 +454,9 @@
 		3811DE9825C9D88300A708ED /* Storage */ = {
 			isa = PBXGroup;
 			children = (
-				3811DE9925C9D88300A708ED /* Cache */,
+				383948D525CD4D8900E91849 /* FileStorage.swift */,
 				3811DE9C25C9D88300A708ED /* KeyValueStorage.swift */,
+				3811DE9925C9D88300A708ED /* Cache */,
 				3811DE9D25C9D88300A708ED /* Keychain */,
 			);
 			path = Storage;
@@ -660,6 +665,7 @@
 			name = FreeAPS;
 			packageProductDependencies = (
 				3811DE0F25C9D37700A708ED /* Swinject */,
+				383948D225CD4D6D00E91849 /* Disk */,
 			);
 			productName = FreeAPS;
 			productReference = 388E595825AD948C0019842D /* FreeAPS.app */;
@@ -690,6 +696,7 @@
 			mainGroup = 388E594F25AD948C0019842D;
 			packageReferences = (
 				3811DE0E25C9D37700A708ED /* XCRemoteSwiftPackageReference "Swinject" */,
+				383948D125CD4D6D00E91849 /* XCRemoteSwiftPackageReference "Disk" */,
 			);
 			productRefGroup = 388E595925AD948C0019842D /* Products */;
 			projectDirPath = "";
@@ -763,6 +770,7 @@
 				3811DE0925C9D32F00A708ED /* BaseViewModel.swift in Sources */,
 				3811DEB125C9D88300A708ED /* Keychain.swift in Sources */,
 				3811DE7B25C9D6D300A708ED /* LoginProvider.swift in Sources */,
+				383948D625CD4D8900E91849 /* FileStorage.swift in Sources */,
 				3811DE4125C9D4A100A708ED /* SettingsRootView.swift in Sources */,
 				388E595C25AD948C0019842D /* FreeAPSApp.swift in Sources */,
 				3811DE8925C9D6DD00A708ED /* RequestPermissionsProvider.swift in Sources */,
@@ -1028,6 +1036,14 @@
 				minimumVersion = 2.7.1;
 			};
 		};
+		383948D125CD4D6D00E91849 /* XCRemoteSwiftPackageReference "Disk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/saoudrizwan/Disk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.6.4;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1035,6 +1051,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 3811DE0E25C9D37700A708ED /* XCRemoteSwiftPackageReference "Swinject" */;
 			productName = Swinject;
+		};
+		383948D225CD4D6D00E91849 /* Disk */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 383948D125CD4D6D00E91849 /* XCRemoteSwiftPackageReference "Disk" */;
+			productName = Disk;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
