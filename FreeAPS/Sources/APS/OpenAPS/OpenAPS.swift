@@ -64,6 +64,25 @@ final class OpenAPS {
                 tsMilliseconds: tsMilliseconds
             )
             print("SUGGESTED: \(suggested)")
+
+            let autotunePreppedGlucose = self.autotunePrepare(
+                pumphistory: pumphistory,
+                profile: profile,
+                glucose: glucose,
+                pumpprofile: profile,
+                categorizeUamAsBasal: true,
+                tuneInsulinCurve: false
+            )
+            print("AUTOTUNE PREP: \(autotunePreppedGlucose)")
+
+            let autotuneResult = self.autotuneRun(
+                autotuneprepareddata: autotunePreppedGlucose,
+                previousautotuneresult: profile,
+                pumpprofile: profile
+            )
+
+            print("AUTOTUNE RESULT: \(autotuneResult)")
+
             let finishDate = Date()
             print("FINISH at \(finishDate), duration \(finishDate.timeIntervalSince(now)) s")
         }
@@ -96,6 +115,44 @@ final class OpenAPS {
                 clock,
                 carbs,
                 glucose
+            ])
+        }
+    }
+
+    private func autotunePrepare(
+        pumphistory: JSON,
+        profile: JSON,
+        glucose: JSON,
+        pumpprofile: JSON,
+        categorizeUamAsBasal: Bool,
+        tuneInsulinCurve: Bool
+    ) -> JSON {
+        dispatchPrecondition(condition: .onQueue(processQueue))
+        return jsWorker.inCommonContext { worker in
+            worker.evaluate(script: Script(name: "bundle/autotune-prep"))
+            return worker.call(function: "freeaps", with: [
+                pumphistory,
+                profile,
+                glucose,
+                pumpprofile,
+                categorizeUamAsBasal,
+                tuneInsulinCurve
+            ])
+        }
+    }
+
+    private func autotuneRun(
+        autotuneprepareddata: JSON,
+        previousautotuneresult: JSON,
+        pumpprofile: JSON
+    ) -> JSON {
+        dispatchPrecondition(condition: .onQueue(processQueue))
+        return jsWorker.inCommonContext { worker in
+            worker.evaluate(script: Script(name: "bundle/autotune-core"))
+            return worker.call(function: "freeaps", with: [
+                autotuneprepareddata,
+                previousautotuneresult,
+                pumpprofile
             ])
         }
     }
