@@ -79,6 +79,7 @@
 		3811DF1025CAAAE200A708ED /* BaseAPSManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3811DF0F25CAAAE200A708ED /* BaseAPSManager.swift */; };
 		383948D325CD4D6D00E91849 /* Disk in Frameworks */ = {isa = PBXBuildFile; productRef = 383948D225CD4D6D00E91849 /* Disk */; };
 		383948D625CD4D8900E91849 /* FileStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 383948D525CD4D8900E91849 /* FileStorage.swift */; };
+		383948DA25CD64D500E91849 /* Glucose.swift in Sources */ = {isa = PBXBuildFile; fileRef = 383948D925CD64D500E91849 /* Glucose.swift */; };
 		384E803425C385E60086DB71 /* JavaScriptWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 384E803325C385E60086DB71 /* JavaScriptWorker.swift */; };
 		384E803825C388640086DB71 /* Script.swift in Sources */ = {isa = PBXBuildFile; fileRef = 384E803725C388640086DB71 /* Script.swift */; };
 		388E595C25AD948C0019842D /* FreeAPSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 388E595B25AD948C0019842D /* FreeAPSApp.swift */; };
@@ -178,6 +179,7 @@
 		3811DF0B25CAAABD00A708ED /* APSManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APSManager.swift; sourceTree = "<group>"; };
 		3811DF0F25CAAAE200A708ED /* BaseAPSManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseAPSManager.swift; sourceTree = "<group>"; };
 		383948D525CD4D8900E91849 /* FileStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileStorage.swift; sourceTree = "<group>"; };
+		383948D925CD64D500E91849 /* Glucose.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Glucose.swift; sourceTree = "<group>"; };
 		384E803325C385E60086DB71 /* JavaScriptWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JavaScriptWorker.swift; sourceTree = "<group>"; };
 		384E803725C388640086DB71 /* Script.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Script.swift; sourceTree = "<group>"; };
 		388E595825AD948C0019842D /* FreeAPS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FreeAPS.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -601,6 +603,7 @@
 				388E5A5F25B6F2310019842D /* Autosens.swift */,
 				3895E4C525B9E00D00214B37 /* Preferences.swift */,
 				3811DF0125CA9FEA00A708ED /* Credentials.swift */,
+				383948D925CD64D500E91849 /* Glucose.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -765,6 +768,7 @@
 				3811DF1025CAAAE200A708ED /* BaseAPSManager.swift in Sources */,
 				3811DE0A25C9D32F00A708ED /* BaseModuleBuilder.swift in Sources */,
 				3811DE1725C9D40400A708ED /* Screen.swift in Sources */,
+				383948DA25CD64D500E91849 /* Glucose.swift in Sources */,
 				388E596C25AD95110019842D /* OpenAPS.swift in Sources */,
 				384E803825C388640086DB71 /* Script.swift in Sources */,
 				3811DE0925C9D32F00A708ED /* BaseViewModel.swift in Sources */,
