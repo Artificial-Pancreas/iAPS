@@ -149,7 +149,8 @@ final class OpenAPS {
         dispatchPrecondition(condition: .onQueue(processQueue))
         return jsWorker.inCommonContext { worker in
             worker.evaluate(script: Script(name: "bundle/autotune-core"))
-            return worker.call(function: "freeaps", with: [
+            worker.evaluate(script: Script(name: "prepare/autotune-core"))
+            return worker.call(function: "generate", with: [
                 autotuneprepareddata,
                 previousautotuneresult,
                 pumpprofile
