@@ -19,6 +19,10 @@ final class OpenAPS {
             let reservoir = 100
             let tsMilliseconds: Double = 1_527_924_300_000
 
+            let preferences = self.exportDefaultPreferences()
+
+            print("DEFAULT PREFERENCES: \(preferences)")
+
             let autosensResult = self.autosense(
                 pumpHistory: pumphistory,
                 profile: profile,
@@ -225,6 +229,48 @@ final class OpenAPS {
                     glucose,
                     basalprofile,
                     temptargets
+                ]
+            )
+        }
+    }
+
+    private func exportDefaultPreferences() -> JSON {
+        dispatchPrecondition(condition: .onQueue(processQueue))
+        return jsWorker.inCommonContext { worker in
+            worker.evaluate(script: Script(name: "bundle/profile"))
+            worker.evaluate(script: Script(name: "prepare/profile"))
+            return worker.call(function: "exportDefaults", with: [])
+        }
+    }
+
+    private func makeProfile(
+        preferences: JSON,
+        pumpSettings: JSON,
+        bgTargets: JSON,
+        basalProfile: JSON,
+        isf: JSON,
+        carbRatio: JSON,
+        tempTargets: JSON,
+        model: JSON,
+        autotune: JSON
+    ) -> JSON {
+        dispatchPrecondition(condition: .onQueue(processQueue))
+        return jsWorker.inCommonContext { worker in
+            worker.evaluate(script: Script(name: "bundle/profile"))
+            worker.evaluate(script: Script(name: "prepare/profile"))
+
+            return worker.call(
+                function: "generate",
+                with: [
+                    preferences,
+                    pumpSettings,
+                    bgTargets,
+                    basalProfile,
+                    isf,
+                    carbRatio,
+                    tempTargets,
+                    model,
+                    autotune
                 ]
             )
         }
