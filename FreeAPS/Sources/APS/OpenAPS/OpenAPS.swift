@@ -5,6 +5,12 @@ final class OpenAPS {
     private let jsWorker = JavaScriptWorker()
     private let processQueue = DispatchQueue(label: "OpenAPS.processQueue", qos: .utility)
 
+    private let storage: FileStorage
+
+    init(storage: FileStorage) {
+        self.storage = storage
+    }
+
     func test() {
         processQueue.async {
             let now = Date()
@@ -79,11 +85,15 @@ final class OpenAPS {
             )
             print("AUTOTUNE PREP: \(autotunePreppedGlucose)")
 
+            let previousAutotune = try? self.storage.retrieve("autotune.json", as: RawJSON.self)
+
             let autotuneResult = self.autotuneRun(
-                autotuneprepareddata: autotunePreppedGlucose,
-                previousautotuneresult: profile,
-                pumpprofile: profile
+                autotunePreparedData: autotunePreppedGlucose,
+                previousAutotuneResult: previousAutotune ?? profile,
+                pumpProfile: profile
             )
+
+            try? self.storage.save(autotuneResult, as: "autotune.json")
 
             print("AUTOTUNE RESULT: \(autotuneResult)")
 
@@ -92,7 +102,7 @@ final class OpenAPS {
         }
     }
 
-    private func iob(pumphistory: JSON, profile: JSON, clock: JSON, autosens: JSON, pumphistory24: JSON) -> JSON {
+    private func iob(pumphistory: JSON, profile: JSON, clock: JSON, autosens: JSON, pumphistory24: JSON) -> RawJSON {
         dispatchPrecondition(condition: .onQueue(processQueue))
         return jsWorker.inCommonContext { worker in
             worker.evaluate(script: Script(name: "bundle/iob"))
@@ -107,7 +117,7 @@ final class OpenAPS {
         }
     }
 
-    private func meal(pumphistory: JSON, profile: JSON, basalProfile: JSON, clock: JSON, carbs: JSON, glucose: JSON) -> JSON {
+    private func meal(pumphistory: JSON, profile: JSON, basalProfile: JSON, clock: JSON, carbs: JSON, glucose: JSON) -> RawJSON {
         dispatchPrecondition(condition: .onQueue(processQueue))
         return jsWorker.inCommonContext { worker in
             worker.evaluate(script: Script(name: "bundle/meal"))
@@ -130,7 +140,7 @@ final class OpenAPS {
         pumpprofile: JSON,
         categorizeUamAsBasal: Bool,
         tuneInsulinCurve: Bool
-    ) -> JSON {
+    ) -> RawJSON {
         dispatchPrecondition(condition: .onQueue(processQueue))
         return jsWorker.inCommonContext { worker in
             worker.evaluate(script: Script(name: "bundle/autotune-prep"))
@@ -147,23 +157,23 @@ final class OpenAPS {
     }
 
     private func autotuneRun(
-        autotuneprepareddata: JSON,
-        previousautotuneresult: JSON,
-        pumpprofile: JSON
-    ) -> JSON {
+        autotunePreparedData: JSON,
+        previousAutotuneResult: JSON,
+        pumpProfile: JSON
+    ) -> RawJSON {
         dispatchPrecondition(condition: .onQueue(processQueue))
         return jsWorker.inCommonContext { worker in
             worker.evaluate(script: Script(name: "bundle/autotune-core"))
             worker.evaluate(script: Script(name: "prepare/autotune-core"))
             return worker.call(function: "generate", with: [
-                autotuneprepareddata,
-                previousautotuneresult,
-                pumpprofile
+                autotunePreparedData,
+                previousAutotuneResult,
+                pumpProfile
             ])
         }
     }
 
-    private func glucoseGetLast(glucose: JSON) -> JSON {
+    private func glucoseGetLast(glucose: JSON) -> RawJSON {
         dispatchPrecondition(condition: .onQueue(processQueue))
         return jsWorker.inCommonContext { worker in
             worker.evaluate(script: Script(name: "bundle/glucose-get-last"))
@@ -181,7 +191,7 @@ final class OpenAPS {
         microBolusAllowed: Bool,
         reservoir: Int,
         tsMilliseconds: Double
-    ) -> JSON {
+    ) -> RawJSON {
         dispatchPrecondition(condition: .onQueue(processQueue))
         return jsWorker.inCommonContext { worker in
             worker.evaluate(script: Script(name: "bundle/basal-set-temp"))
@@ -214,7 +224,7 @@ final class OpenAPS {
         glucose: JSON,
         basalprofile: JSON,
         temptargets: JSON
-    ) -> JSON {
+    ) -> RawJSON {
         dispatchPrecondition(condition: .onQueue(processQueue))
         return jsWorker.inCommonContext { worker in
             worker.evaluate(script: Script(name: "bundle/autosens"))
@@ -234,7 +244,7 @@ final class OpenAPS {
         }
     }
 
-    private func exportDefaultPreferences() -> JSON {
+    private func exportDefaultPreferences() -> RawJSON {
         dispatchPrecondition(condition: .onQueue(processQueue))
         return jsWorker.inCommonContext { worker in
             worker.evaluate(script: Script(name: "bundle/profile"))
@@ -253,7 +263,7 @@ final class OpenAPS {
         tempTargets: JSON,
         model: JSON,
         autotune: JSON
-    ) -> JSON {
+    ) -> RawJSON {
         dispatchPrecondition(condition: .onQueue(processQueue))
         return jsWorker.inCommonContext { worker in
             worker.evaluate(script: Script(name: "bundle/profile"))

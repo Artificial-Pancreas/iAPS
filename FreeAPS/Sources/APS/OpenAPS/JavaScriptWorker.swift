@@ -31,11 +31,11 @@ final class JavaScriptWorker {
         return ctx.evaluateScript(string)
     }
 
-    private func json(for string: String) -> JSON {
+    private func json(for string: String) -> RawJSON {
         evaluate(string: "JSON.stringify(\(string));")!.toString()!
     }
 
-    func call(function: String, with arguments: [JSON]) -> JSON {
+    func call(function: String, with arguments: [JSON]) -> RawJSON {
         let joined = arguments.map(\.string).joined(separator: ",")
         return json(for: "\(function)(\(joined))")
     }

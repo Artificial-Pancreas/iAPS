@@ -48,3 +48,5 @@ extension Date: JSON {
         }
     }
 }
+
+typealias RawJSON = String
