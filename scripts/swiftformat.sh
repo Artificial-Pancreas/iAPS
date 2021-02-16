@@ -97,4 +97,4 @@ trailingClosures \
 --typeattributes same-line \
 --varattributes same-line \
 --wrapcollections before-first \
---exclude Pods,Generated,R.generated.swift,fastlane/swift
+--exclude Pods,Generated,R.generated.swift,fastlane/swift,LoopKit
