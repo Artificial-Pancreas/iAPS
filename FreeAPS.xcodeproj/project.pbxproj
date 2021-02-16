@@ -77,7 +77,6 @@
 		3811DF0825CAAA4700A708ED /* ServiceContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3811DF0725CAAA4700A708ED /* ServiceContainer.swift */; };
 		3811DF0C25CAAABD00A708ED /* APSManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3811DF0B25CAAABD00A708ED /* APSManager.swift */; };
 		3811DF1025CAAAE200A708ED /* BaseAPSManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3811DF0F25CAAAE200A708ED /* BaseAPSManager.swift */; };
-		3821ED3925DC762D00BC42AD /* GlucoseRangeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3821ED3825DC762D00BC42AD /* GlucoseRangeView.swift */; };
 		3821ED4525DC785200BC42AD /* LoopKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3821ECEC25DC723100BC42AD /* LoopKit.framework */; };
 		3821ED4625DC785200BC42AD /* LoopKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 3821ECEC25DC723100BC42AD /* LoopKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		3821ED4725DC785700BC42AD /* LoopKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3821ECF225DC723100BC42AD /* LoopKitUI.framework */; };
@@ -258,7 +257,6 @@
 		3811DF0B25CAAABD00A708ED /* APSManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APSManager.swift; sourceTree = "<group>"; };
 		3811DF0F25CAAAE200A708ED /* BaseAPSManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseAPSManager.swift; sourceTree = "<group>"; };
 		3821ECDE25DC723100BC42AD /* LoopKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = LoopKit.xcodeproj; path = LoopKit/LoopKit.xcodeproj; sourceTree = "<group>"; };
-		3821ED3825DC762D00BC42AD /* GlucoseRangeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlucoseRangeView.swift; sourceTree = "<group>"; };
 		383948D525CD4D8900E91849 /* FileStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileStorage.swift; sourceTree = "<group>"; };
 		383948D925CD64D500E91849 /* Glucose.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Glucose.swift; sourceTree = "<group>"; };
 		384E803325C385E60086DB71 /* JavaScriptWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JavaScriptWorker.swift; sourceTree = "<group>"; };
@@ -421,7 +419,6 @@
 			isa = PBXGroup;
 			children = (
 				3811DE3C25C9D4A100A708ED /* SettingsRootView.swift */,
-				3821ED3825DC762D00BC42AD /* GlucoseRangeView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -964,7 +961,6 @@
 				3811DE1825C9D40400A708ED /* Router.swift in Sources */,
 				3811DEE825CA063400A708ED /* Injected.swift in Sources */,
 				3811DEAF25C9D88300A708ED /* KeyValueStorage.swift in Sources */,
-				3821ED3925DC762D00BC42AD /* GlucoseRangeView.swift in Sources */,
 				38FE826D25CC8461001FF17A /* NightscoutAPI.swift in Sources */,
 				3811DE4E25C9D4B800A708ED /* AuthotizedRootRootView.swift in Sources */,
 				3811DE7D25C9D6D300A708ED /* LoginRootView.swift in Sources */,
