@@ -85,7 +85,7 @@ final class OpenAPS {
             )
             print("AUTOTUNE PREP: \(autotunePreppedGlucose)")
 
-            let previousAutotune = try? self.storage.retrieve("autotune.json", as: RawJSON.self)
+            let previousAutotune = try? self.storage.retrieve(Settings.autotune, as: RawJSON.self)
 
             let autotuneResult = self.autotuneRun(
                 autotunePreparedData: autotunePreppedGlucose,
@@ -93,7 +93,7 @@ final class OpenAPS {
                 pumpProfile: profile
             )
 
-            try? self.storage.save(autotuneResult, as: "autotune.json")
+            try? self.storage.save(autotuneResult, as: Settings.autotune)
 
             print("AUTOTUNE RESULT: \(autotuneResult)")
 
@@ -105,9 +105,9 @@ final class OpenAPS {
     private func iob(pumphistory: JSON, profile: JSON, clock: JSON, autosens: JSON, pumphistory24: JSON) -> RawJSON {
         dispatchPrecondition(condition: .onQueue(processQueue))
         return jsWorker.inCommonContext { worker in
-            worker.evaluate(script: Script(name: "bundle/iob"))
-            worker.evaluate(script: Script(name: "prepare/iob"))
-            return worker.call(function: "generate", with: [
+            worker.evaluate(script: Script(name: Bundle.iob))
+            worker.evaluate(script: Script(name: Prepare.iob))
+            return worker.call(function: Function.generate, with: [
                 pumphistory,
                 profile,
                 clock,
@@ -120,9 +120,9 @@ final class OpenAPS {
     private func meal(pumphistory: JSON, profile: JSON, basalProfile: JSON, clock: JSON, carbs: JSON, glucose: JSON) -> RawJSON {
         dispatchPrecondition(condition: .onQueue(processQueue))
         return jsWorker.inCommonContext { worker in
-            worker.evaluate(script: Script(name: "bundle/meal"))
-            worker.evaluate(script: Script(name: "prepare/meal"))
-            return worker.call(function: "generate", with: [
+            worker.evaluate(script: Script(name: Bundle.meal))
+            worker.evaluate(script: Script(name: Prepare.meal))
+            return worker.call(function: Function.generate, with: [
                 pumphistory,
                 profile,
                 basalProfile,
@@ -143,9 +143,9 @@ final class OpenAPS {
     ) -> RawJSON {
         dispatchPrecondition(condition: .onQueue(processQueue))
         return jsWorker.inCommonContext { worker in
-            worker.evaluate(script: Script(name: "bundle/autotune-prep"))
-            worker.evaluate(script: Script(name: "prepare/autotune-prep"))
-            return worker.call(function: "generate", with: [
+            worker.evaluate(script: Script(name: Bundle.autotunePrep))
+            worker.evaluate(script: Script(name: Prepare.autotunePrep))
+            return worker.call(function: Function.generate, with: [
                 pumphistory,
                 profile,
                 glucose,
@@ -163,9 +163,9 @@ final class OpenAPS {
     ) -> RawJSON {
         dispatchPrecondition(condition: .onQueue(processQueue))
         return jsWorker.inCommonContext { worker in
-            worker.evaluate(script: Script(name: "bundle/autotune-core"))
-            worker.evaluate(script: Script(name: "prepare/autotune-core"))
-            return worker.call(function: "generate", with: [
+            worker.evaluate(script: Script(name: Bundle.autotuneCore))
+            worker.evaluate(script: Script(name: Prepare.autotuneCore))
+            return worker.call(function: Function.generate, with: [
                 autotunePreparedData,
                 previousAutotuneResult,
                 pumpProfile
@@ -176,8 +176,8 @@ final class OpenAPS {
     private func glucoseGetLast(glucose: JSON) -> RawJSON {
         dispatchPrecondition(condition: .onQueue(processQueue))
         return jsWorker.inCommonContext { worker in
-            worker.evaluate(script: Script(name: "bundle/glucose-get-last"))
-            return worker.call(function: "freeaps", with: [glucose])
+            worker.evaluate(script: Script(name: Bundle.getLastGlucose))
+            return worker.call(function: Function.freeaps, with: [glucose])
         }
     }
 
@@ -194,13 +194,12 @@ final class OpenAPS {
     ) -> RawJSON {
         dispatchPrecondition(condition: .onQueue(processQueue))
         return jsWorker.inCommonContext { worker in
-            worker.evaluate(script: Script(name: "bundle/basal-set-temp"))
-            worker.evaluate(script: Script(name: "prepare/determine-basal"))
-            let funcKey = "tempBasalFunctions"
-            worker.evaluate(script: Script(name: "bundle/determine-basal"))
+            worker.evaluate(script: Script(name: Bundle.basalSetTemp))
+            worker.evaluate(script: Script(name: Prepare.determineBasal))
+            worker.evaluate(script: Script(name: Bundle.determineBasal))
 
             return worker.call(
-                function: "freeaps",
+                function: Function.freeaps,
                 with: [
                     glucoseStatus,
                     currentTemp,
@@ -208,7 +207,7 @@ final class OpenAPS {
                     profile,
                     aurosens,
                     meal,
-                    funcKey,
+                    Function.tempBasalFunctions,
                     microBolusAllowed,
                     reservoir,
                     tsMilliseconds
@@ -227,11 +226,11 @@ final class OpenAPS {
     ) -> RawJSON {
         dispatchPrecondition(condition: .onQueue(processQueue))
         return jsWorker.inCommonContext { worker in
-            worker.evaluate(script: Script(name: "bundle/autosens"))
-            worker.evaluate(script: Script(name: "prepare/autosens"))
+            worker.evaluate(script: Script(name: Bundle.autosens))
+            worker.evaluate(script: Script(name: Prepare.autosens))
 
             return worker.call(
-                function: "generate",
+                function: Function.generate,
                 with: [
                     pumpHistory,
                     profile,
@@ -247,9 +246,9 @@ final class OpenAPS {
     private func exportDefaultPreferences() -> RawJSON {
         dispatchPrecondition(condition: .onQueue(processQueue))
         return jsWorker.inCommonContext { worker in
-            worker.evaluate(script: Script(name: "bundle/profile"))
-            worker.evaluate(script: Script(name: "prepare/profile"))
-            return worker.call(function: "exportDefaults", with: [])
+            worker.evaluate(script: Script(name: Bundle.profile))
+            worker.evaluate(script: Script(name: Prepare.profile))
+            return worker.call(function: Function.exportDefaults, with: [])
         }
     }
 
@@ -266,11 +265,11 @@ final class OpenAPS {
     ) -> RawJSON {
         dispatchPrecondition(condition: .onQueue(processQueue))
         return jsWorker.inCommonContext { worker in
-            worker.evaluate(script: Script(name: "bundle/profile"))
-            worker.evaluate(script: Script(name: "prepare/profile"))
+            worker.evaluate(script: Script(name: Bundle.profile))
+            worker.evaluate(script: Script(name: Prepare.profile))
 
             return worker.call(
-                function: "generate",
+                function: Function.generate,
                 with: [
                     preferences,
                     pumpSettings,
@@ -287,6 +286,41 @@ final class OpenAPS {
     }
 
     private func loadJSON(name: String) -> String {
-        try! String(contentsOf: Bundle.main.url(forResource: "json/\(name)", withExtension: "json")!)
+        try! String(contentsOf: Foundation.Bundle.main.url(forResource: "json/\(name)", withExtension: "json")!)
+    }
+}
+
+extension OpenAPS {
+    private enum Bundle {
+        static let iob = "bundle/iob"
+        static let meal = "bundle/meal"
+        static let autotunePrep = "bundle/autotune-prep"
+        static let autotuneCore = "bundle/autotune-core"
+        static let getLastGlucose = "bundle/glucose-get-last"
+        static let basalSetTemp = "bundle/basal-set-temp"
+        static let determineBasal = "bundle/determine-basal"
+        static let autosens = "bundle/autosens"
+        static let profile = "bundle/profile"
+    }
+
+    private enum Prepare {
+        static let iob = "prepare/iob"
+        static let meal = "prepare/meal"
+        static let autotunePrep = "prepare/autotune-prep"
+        static let autotuneCore = "prepare/autotune-core"
+        static let determineBasal = "prepare/determine-basal"
+        static let autosens = "prepare/autosens"
+        static let profile = "prepare/profile"
+    }
+
+    private enum Settings {
+        static let autotune = "settings/autotune.json"
+    }
+
+    private enum Function {
+        static let freeaps = "freeaps"
+        static let generate = "generate"
+        static let tempBasalFunctions = "tempBasalFunctions"
+        static let exportDefaults = "exportDefaults"
     }
 }
