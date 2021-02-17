@@ -20,34 +20,6 @@
                ReferencedContainer = "container:FreeAPS.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
-         <BuildActionEntry
-            buildForTesting = "YES"
-            buildForRunning = "YES"
-            buildForProfiling = "YES"
-            buildForArchiving = "YES"
-            buildForAnalyzing = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "43D8FDCA1C728FDF0073BE78"
-               BuildableName = "LoopKit.framework"
-               BlueprintName = "LoopKit"
-               ReferencedContainer = "container:LoopKit/LoopKit.xcodeproj">
-            </BuildableReference>
-         </BuildActionEntry>
-         <BuildActionEntry
-            buildForTesting = "YES"
-            buildForRunning = "YES"
-            buildForProfiling = "YES"
-            buildForArchiving = "YES"
-            buildForAnalyzing = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "43BA7153201E484D0058961E"
-               BuildableName = "LoopKitUI.framework"
-               BlueprintName = "LoopKitUI"
-               ReferencedContainer = "container:LoopKit/LoopKit.xcodeproj">
-            </BuildableReference>
-         </BuildActionEntry>
       </BuildActionEntries>
    </BuildAction>
    <TestAction
