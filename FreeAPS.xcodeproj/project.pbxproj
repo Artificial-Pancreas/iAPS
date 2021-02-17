@@ -897,18 +897,10 @@
 			path = APS;
 			sourceTree = "<group>";
 		};
-		3821ECCD25DC703C00BC42AD /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
 		388E594F25AD948C0019842D = {
 			isa = PBXGroup;
 			children = (
 				38B17AAD25DD69DF005CAE3D /* Dependecies */,
-				3821ECCD25DC703C00BC42AD /* Frameworks */,
 				388E595A25AD948C0019842D /* FreeAPS */,
 				388E595925AD948C0019842D /* Products */,
 			);
