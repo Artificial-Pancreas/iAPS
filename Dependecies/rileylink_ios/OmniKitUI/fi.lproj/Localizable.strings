@@ -1,0 +1,259 @@
+/* Format string for delivered insulin. (1: The localized amount)
+   Format string for insulin remaining in reservoir. (1: The localized amount) */
+"%@ U" = "%@ U";
+
+/* Format string for bolus progress when finished. (1: The localized amount) */
+"%@ U (Finished)" = "%@ U (valmis)";
+
+/* Format string for bolus progress. (1: The delivered amount) (2: The programmed amount) (3: the percent progress) */
+"%@ U of %@ U (%@)" = "%1$@ U of %2$@ U (%3$@)";
+
+/* Format string for temp basal rate. (1: The localized amount) */
+"%@ U/hour" = "%@ U/tunti";
+
+/* Appends a full-stop to a statement */
+"%@." = "%@.";
+
+/* Format string for bolus percent progress. (1: Percent progress) */
+"%@%%" = "%@%%";
+
+/* Format string for reservoir reading when above or equal to maximum reading. (1: The localized amount) */
+"%@+ U" = "%@+ U";
+
+/* Format string for reservoir volume. (1: The localized volume) */
+"%@U" = "%@U";
+
+/* Accessibility format string for (1: localized volume)(2: time) */
+"%1$@ units remaining at %2$@" = "%1$@ yksikköä jäljellä %2$@";
+
+/* Format string providing instructions for replacing pod due to a fault. (1: The fault description) */
+"%1$@. Insulin delivery has stopped. Please deactivate and remove pod." = "%1$@. Insuliinin annostelu on loppunut. Deaktivoi ja poista pumppu.";
+
+/* The format string for displaying an offset from a time zone: (1: GMT)(2: -)(3: 4:00) */
+"%1$@%2$@%3$@" = "%1$@%2$@%3$@";
+
+/* The title of the cell showing the pod activated at time */
+"Active Time" = "Aktiivinen aika";
+
+/* The title of the cell showing alarm status */
+"Alarms" = "Hälytykset";
+
+/* Confirmation message for shutting down a pod */
+"Are you sure you want to shutdown this pod?" = "Haluatko varmasti sammuttaa tämän pumpun?";
+
+/* Confirmation message for removing Omnipod PumpManager */
+"Are you sure you want to stop using Omnipod?" = "Haluatko varmasti lopettaa Omnipodin käytön?";
+
+/* The title text for the address assigned to the pod */
+"Assigned Address" = "Määritetty osoite";
+
+/* The title of the cell showing pod basal status */
+"Basal Delivery" = "Basaali";
+
+/* The title text for the basal rate schedule */
+"Basal Rates" = "Basaalitasot";
+
+/* The title of the cell showing pod bolus status */
+"Bolus Delivery" = "Bolus";
+
+/* The title of the cancel action in an action sheet */
+"Cancel" = "Kumoa";
+
+/* The title of the command to change pump time zone */
+"Change Time Zone" = "Muuta aikavyöhyke";
+
+/* Progress message for changing pod time. */
+"Changing time…" = "Muutetaan aikaa…";
+
+/* The title of the configuration section in settings */
+"Configuration" = "Määritykset";
+
+/* The title of the continue action in an action sheet */
+"Continue" = "Jatka";
+
+/* Button title to deactivate pod because of fault during setup */
+"Deactivate" = "Deaktivoi";
+
+/* Button title for pod deactivation
+   Button title to deactivate pod */
+"Deactivate Pod" = "Deaktivoi pumppu";
+
+/* Button title to delete Omnipod PumpManager */
+"Delete Omnipod" = "Poista Omnipod";
+
+/* Title text for delivery limits */
+"Delivery Limits" = "Annostelurajat";
+
+/* The title of the device information section in settings */
+"Device Information" = "Laitteen tiedot";
+
+/* Title text for button to disable bolus beeps */
+"Disable Bolus Beeps" = "Laita bolusäänet pois";
+
+/* Title text for button to disable confirmation beeps */
+"Disable Confirmation Beeps" = "Laita vahvistusäänet pois";
+
+/* Title text for button to enable bolus beeps */
+"Enable Bolus Beeps" = "Laita bolusäänet päälle";
+
+/* Title text for button to enable confirmation beeps */
+"Enable Confirmation Beeps" = "Laita vahvistusäänet päälle";
+
+/* The alert title for disable bolus beeps error */
+"Error disabling bolus beeps" = "Virhe laitettaessa bolusäänet pois päältä";
+
+/* The alert title for disable confirmation beeps error */
+"Error disabling confirmation beeps" = "Virhe laitettaessa vahvistusäänet pois päältä";
+
+/* The alert title for emitting completion beep error */
+"Error emitting completion confirmation beep" = "Virhe lähetettäessä valmistumisen vahvistusääni";
+
+/* The alert title for enable bolus beeps error */
+"Error enabling bolus beeps" = "Virhe laitettaessa bolusäänet päälle";
+
+/* The alert title for enable confirmation beeps error */
+"Error enabling confirmation beeps" = "Virhe laitettaessa vahvistusäänet päälle";
+
+/* The alert title for a resume error */
+"Error Resuming" = "Virhe jatkamisessa";
+
+/* The alert title for a suspend error */
+"Error Suspending" = "Virhe pysäytyksessä";
+
+/* The title of the cell showing the pod expiration reminder date */
+"Expiration Reminder" = "Vanhenemismuistutus";
+
+/* The title of the cell showing the pod expiration after expiry */
+"Expired" = "Vanhentunut";
+
+/* The title of the cell showing the pod expiration */
+"Expires" = "Vanhenee";
+
+/* Pod life HUD view label */
+"Fault" = "Virhe";
+
+/* The title of the command to finish pod setup */
+"Finish pod setup" = "Lopeta pumpun asennus";
+
+/* Accessibility format string for (1: localized volume)(2: time) */
+"Greater than %1$@ units remaining at %2$@" = "Enemmän kuin %1$@ yksikköä jäljellä klo %2$@";
+
+/* Instructions when deactivating pod that has been paired, but not attached. */
+"Incompletely set up pod must be deactivated before pairing with a new one. Please deactivate and discard pod." = "Puutteellisesti asennettu pumppu täytyy deaktivoida ennen kuin uusi pumppu voidaan yhdistää. Deaktivoi ja hylkää pumppu.";
+
+/* Instructions when deactivating pod that has been paired and possibly attached. */
+"Incompletely set up pod must be deactivated before pairing with a new one. Please deactivate and remove pod." = "Puutteellisesti asennettu pumppu täytyy deaktivoida ennen kuin uusi pumppu voidaan yhdistää. Deaktivoi ja poista pumppu.";
+
+/* Button title to insert cannula during setup */
+"Insert Cannula" = "Aseta kanyyli";
+
+/* The title of the cell showing delivered insulin */
+"Insulin Delivered" = "Annosteltu insuliini";
+
+/* The error message shown when Loop's basal schedule has an unsupported rate */
+"Invalid entry" = "Virheellinen merkintä";
+
+/* The title of the cell showing the pod lot id */
+"Lot" = "Lot";
+
+/* The detail text for bolus delivery when no bolus is being delivered */
+"None" = "Ei mitään";
+
+/* Button title to pair with pod during setup */
+"Pair" = "Yhdistä";
+
+/* The title of the command to pair new pod */
+"Pair New Pod" = "Yhdistä uusi pumppu";
+
+/* The text of the loading label when pairing */
+"Pairing…" = "Yhdistetään…";
+
+/* The title of the cell showing the pod pi version */
+"PI Version" = "PI-versio";
+
+/* The title of the command to play test beeps */
+"Play Test Beeps" = "Soita testiäänet";
+
+/* Progress message for play test beeps. */
+"Play Test Beeps…" = "Soitetaan testiäänet…";
+
+/* The title of the cell showing the pod pm version */
+"PM Version" = "PM-versio";
+
+/* Label describing pod age view */
+"Pod Age" = "Pumpun ikä";
+
+/* Title of the pod settings view controller */
+"Pod Settings" = "Pumpun asetukset";
+
+/* The text of the loading label when pod is primed */
+"Primed" = "Alustettu";
+
+/* The text of the loading label when priming */
+"Priming…" = "Alustetaan…";
+
+/* The title of the command to read the pod status */
+"Read Pod Status" = "Lue pumpun tila";
+
+/* Progress message for reading Pod status. */
+"Read Pod Status…" = "Luetaan pumpun tilaa…";
+
+/* The title of the command to read the pulse log */
+"Read Pulse Log" = "Lue pulssiloki";
+
+/* Progress message for reading pulse log. */
+"Reading Pulse Log…" = "Luetaan pulssilokia…";
+
+/* Label describing time remaining view */
+"Remaining" = "Jäljellä";
+
+/* Label indicating pod replacement necessary
+   The title of the command to replace pod */
+"Replace Pod" = "Vaihda pumppu";
+
+/* The title of the command to replace pod when there is a pod fault */
+"Replace Pod Now" = "Vaihda pumppu nyt";
+
+/* The title of the cell showing reservoir status */
+"Reservoir" = "Säiliö";
+
+/* Button title for retrying pod deactivation */
+"Retry Pod Deactivation" = "Deaktivoi pumppu uudelleen";
+
+/* Title of button to save delivery limit settings
+   Title of button to sync basal profile when no pod paired */
+"Save" = "Tallenna";
+
+/* The detail text of the basal row when pod is running scheduled basal */
+"Schedule" = "Ohjelmoitu";
+
+/* The title of the status section in settings */
+"Status" = "Tila";
+
+/* A message indicating a command succeeded */
+"Succeeded" = "Onnistui";
+
+/* The detail text of the basal row when pod is suspended */
+"Suspended" = "Pysäytetty";
+
+/* Title text for the button to delete Omnipod PumpManager */
+"Switch from Omnipod Pumps" = "Lopeta Omnipodin käyttö";
+
+/* Title of button to sync basal profile from pod */
+"Sync With Pod" = "Synkronoi pumpun kanssa";
+
+/* The title of the command to run the test command */
+"Test Command" = "Testikomento";
+
+/* Progress message for testing commands. */
+"Testing Commands…" = "Testataan komentoja…";
+
+/* The error message shown when Loop's basal schedule has more entries than the pod can support */
+"Too many entries" = "Liian monta basaalitasoa määritetty";
+
+/* Instructions when pod cannot be deactivated */
+"Unable to deactivate pod. Please continue and pair a new one." = "Pumpun deaktivointi ei onnistunut. Jatka ja yhdistä uusi pumppu.";
+
+/* The detail text for delivered insulin when no measurement is available */
+"Unknown" = "Tuntematon";
+

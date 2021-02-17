@@ -1,0 +1,68 @@
+/* Class = "UITableViewSection"; headerTitle = "Remove POD"; ObjectID = "1LF-te-Bdd"; */
+"1LF-te-Bdd.headerTitle" = "移除 POD";
+
+/* Class = "UINavigationItem"; title = "RileyLink Setup"; ObjectID = "3HH-eJ-lRh"; */
+"3HH-eJ-lRh.title" = "设置RileyLink";
+
+/* Class = "UITableViewController"; title = "Pod Settings"; ObjectID = "6vo-Ov-UpE"; */
+"6vo-Ov-UpE.title" = "设置Pod";
+
+/* Class = "UITableViewController"; title = "Pump Setup"; ObjectID = "91O-Un-vKc"; */
+"91O-Un-vKc.title" = "设置泵";
+
+/* Class = "UITableViewSection"; footerTitle = "NOTE: Do not remove the pod's needle cap at this time."; ObjectID = "EUt-xk-Rmp"; */
+"EUt-xk-Rmp.footerTitle" = "注意: 此刻请勿移除针帽.";
+
+/* Class = "UITableViewSection"; headerTitle = "Prepare Pod"; ObjectID = "EUt-xk-Rmp"; */
+"EUt-xk-Rmp.headerTitle" = "预备Pod";
+
+/* Class = "UILabel"; text = "Loop will remind you to change your pod before it expires. You can change this to a time convenient for you."; ObjectID = "Eng-IY-fQ7"; */
+"Eng-IY-fQ7.text" = "Loop会在Pod到期前发出提醒.你也可以自行设定到期提醒时间";
+
+/* Class = "UILabel"; text = "Please deactivate the pod. When deactivation is complete, remove pod from body."; ObjectID = "GK7-jb-tyY"; */
+"GK7-jb-tyY.text" = "请先解绑Pod,解绑完成后将Pod从身体上摘除.";
+
+/* Class = "UINavigationItem"; title = "Insert Cannula"; ObjectID = "HwT-30-f0y"; */
+"HwT-30-f0y.title" = "植入管路";
+
+/* Class = "UILabel"; text = "Prepare site. Remove the pod's needle cap and adhesive backing. If pod is OK, apply to site."; ObjectID = "Iuv-5M-bDH"; */
+"Iuv-5M-bDH.text" = "清洁植入部位. 移除Pod针帽并撕下胶布,然后将Pod敷贴在身上.";
+
+/* Class = "UITableViewController"; title = "Pump Setup"; ObjectID = "aNg-mm-Uuy"; */
+"aNg-mm-Uuy.title" = "设置泵";
+
+/* Class = "UITableViewController"; title = "Pump Setup"; ObjectID = "ack-ra-XH6"; */
+"ack-ra-XH6.title" = "设置泵";
+
+/* Class = "UILabel"; text = "Your Pod is ready for use."; ObjectID = "bJ5-iH-fnF"; */
+"bJ5-iH-fnF.text" = "Pod已经可以正常使用.";
+
+/* Class = "UILabel"; text = "Reminder"; ObjectID = "ePA-6p-q8C"; */
+"ePA-6p-q8C.text" = "提醒";
+
+/* Class = "UINavigationItem"; title = "Pod Pairing"; ObjectID = "jVO-Ut-MhL"; */
+"jVO-Ut-MhL.title" = "Pod配对中";
+
+/* Class = "UITableViewController"; title = "Pump Setup"; ObjectID = "k1Y-x4-m0a"; */
+"k1Y-x4-m0a.title" = "设置泵";
+
+/* Class = "UILabel"; text = "Review your settings below. They will be programmed into the pod during pairing. You can change these settings at any time in Loopʼs Settings screen."; ObjectID = "kLL-SQ-K0a"; */
+"kLL-SQ-K0a.text" = "请查看以下设置,设置将会在配对过程中同步到Pod中. 这些设置也可以在配对完成后在Loop的设置中进行修改.";
+
+/* Class = "UINavigationItem"; title = "Setup Complete"; ObjectID = "nDb-R5-e02"; */
+"nDb-R5-e02.title" = "设置已完成";
+
+/* Class = "UITableViewSection"; footerTitle = "NOTE: If cannula sticks out, press cancel."; ObjectID = "rcC-ke-lUP"; */
+"rcC-ke-lUP.footerTitle" = "注意: 如果管路已经突出, 点击取消.";
+
+/* Class = "UITableViewSection"; headerTitle = "Apply POD"; ObjectID = "rcC-ke-lUP"; */
+"rcC-ke-lUP.headerTitle" = "使用POD";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "vEc-Km-ewe"; */
+"vEc-Km-ewe.text" = "标签";
+
+/* Class = "UILabel"; text = "Fill a new pod with insulin. Listen for 2 beeps from the pod during filling. Keep RileyLink adjacent to the pod during pairing."; ObjectID = "vmF-Dc-3DS"; */
+"vmF-Dc-3DS.text" = "为新Pod注入胰岛素. 注入过程中会听到两声“滴滴. 配对过程中,请将Pod靠近Rileylink.";
+
+/* Class = "UINavigationItem"; title = "Replace Pod"; ObjectID = "yy1-xf-HdR"; */
+"yy1-xf-HdR.title" = "更换Pod";

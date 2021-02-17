@@ -1,0 +1,69 @@
+
+/* Class = "UITableViewSection"; headerTitle = "Remove POD"; ObjectID = "1LF-te-Bdd"; */
+"1LF-te-Bdd.headerTitle" = "Fjern POD";
+
+/* Class = "UINavigationItem"; title = "RileyLink Setup"; ObjectID = "3HH-eJ-lRh"; */
+"3HH-eJ-lRh.title" = "RileyLink-oppsett";
+
+/* Class = "UITableViewController"; title = "Pod Settings"; ObjectID = "6vo-Ov-UpE"; */
+"6vo-Ov-UpE.title" = "Pod-innstillinger";
+
+/* Class = "UITableViewController"; title = "Pump Setup"; ObjectID = "91O-Un-vKc"; */
+"91O-Un-vKc.title" = "Pumpe-oppsett";
+
+/* Class = "UITableViewSection"; footerTitle = "NOTE: Do not remove the pod's needle cap at this time."; ObjectID = "EUt-xk-Rmp"; */
+"EUt-xk-Rmp.footerTitle" = "MERK: Fjern ikke beskyttelsen over kanylen på dette tidspunktet.";
+
+/* Class = "UITableViewSection"; headerTitle = "Prepare Pod"; ObjectID = "EUt-xk-Rmp"; */
+"EUt-xk-Rmp.headerTitle" = "Klargjør Pod";
+
+/* Class = "UILabel"; text = "Loop will remind you to change your pod before it expires. You can change this to a time convenient for you."; ObjectID = "Eng-IY-fQ7"; */
+"Eng-IY-fQ7.text" = "Loop vil minne deg på å bytte pod før den er oppbrukt. Du kan endre dette tidspunktet til det som passer best for deg.";
+
+/* Class = "UILabel"; text = "Please deactivate the pod. When deactivation is complete, remove pod from body."; ObjectID = "GK7-jb-tyY"; */
+"GK7-jb-tyY.text" = "Vennligst deaktiver pod. Når den er deaktivert, fjern så pod fra kroppen.";
+
+/* Class = "UINavigationItem"; title = "Insert Cannula"; ObjectID = "HwT-30-f0y"; */
+"HwT-30-f0y.title" = "Sett inn kanyle";
+
+/* Class = "UILabel"; text = "Prepare site. Remove the pod's needle cap and adhesive backing. If pod is OK, apply to site."; ObjectID = "Iuv-5M-bDH"; */
+"Iuv-5M-bDH.text" = "Klargjør området. Fjern kanylebeskyttelse og beskyttelse for tape. Om pod er ok, sett den på plass.";
+
+/* Class = "UITableViewController"; title = "Pump Setup"; ObjectID = "aNg-mm-Uuy"; */
+"aNg-mm-Uuy.title" = "Pumpeoppsett";
+
+/* Class = "UITableViewController"; title = "Pump Setup"; ObjectID = "ack-ra-XH6"; */
+"ack-ra-XH6.title" = "Pumpeoppsett";
+
+/* Class = "UILabel"; text = "Your Pod is ready for use."; ObjectID = "bJ5-iH-fnF"; */
+"bJ5-iH-fnF.text" = "Din Pod er nå klar til bruk.";
+
+/* Class = "UILabel"; text = "Reminder"; ObjectID = "ePA-6p-q8C"; */
+"ePA-6p-q8C.text" = "Påminnelse";
+
+/* Class = "UINavigationItem"; title = "Pod Pairing"; ObjectID = "jVO-Ut-MhL"; */
+"jVO-Ut-MhL.title" = "Pod-sammenkobling";
+
+/* Class = "UITableViewController"; title = "Pump Setup"; ObjectID = "k1Y-x4-m0a"; */
+"k1Y-x4-m0a.title" = "Pumpeoppsett";
+
+/* Class = "UILabel"; text = "Review your settings below. They will be programmed into the pod during pairing. You can change these settings at any time in Loopʼs Settings screen."; ObjectID = "kLL-SQ-K0a"; */
+"kLL-SQ-K0a.text" = "Se over innstillinger under. Disse blir programmert inn i pod ved sammenkobling. Du kan når som helst endre disse på skjermbildet for innstillinger i Loop.";
+    
+/* Class = "UINavigationItem"; title = "Setup Complete"; ObjectID = "nDb-R5-e02"; */
+"nDb-R5-e02.title" = "Oppsett ferdig.";
+
+/* Class = "UITableViewSection"; footerTitle = "NOTE: If cannula sticks out, press cancel."; ObjectID = "rcC-ke-lUP"; */
+"rcC-ke-lUP.footerTitle" = "MERK: Hvis kanylen stikker ut, trykk avbryt.";
+
+/* Class = "UITableViewSection"; headerTitle = "Apply POD"; ObjectID = "rcC-ke-lUP"; */
+"rcC-ke-lUP.headerTitle" = "Påfør POD";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "vEc-Km-ewe"; */
+"vEc-Km-ewe.text" = "Etikett";
+
+/* Class = "UILabel"; text = "Fill a new pod with insulin. Listen for 2 beeps from the pod during filling. Keep RileyLink adjacent to the pod during pairing."; ObjectID = "vmF-Dc-3DS"; */
+"vmF-Dc-3DS.text" = "Fyll en ny pod med insulin. Lytt etter 2 pip mens du fyller. Hold RileyLink i nærheten under sammenkobling.";
+
+/* Class = "UINavigationItem"; title = "Replace Pod"; ObjectID = "yy1-xf-HdR"; */
+"yy1-xf-HdR.title" = "Bytt Pod";

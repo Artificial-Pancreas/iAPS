@@ -1,0 +1,30 @@
+/* Write size limit exceeded error description (1: size limit) */
+"Data exceeded maximum size of %@ bytes" = "Data overschrijdt maximale grootte van %@ bytes";
+
+/* Invalid input error description (1: input) */
+"Input %@ is invalid" = "Invoer %@ is ongeldig";
+
+/* Recovery suggestion for unknown peripheral characteristic */
+"Make sure the device is nearby, and the issue should resolve automatically" = "Zorg ervoor dat het apparaat in de buurt is en het probleem zal automatisch worden opgelost.";
+
+/* Timeout error description */
+"Peripheral did not respond in time" = "Apparaat reageerde niet op tijd";
+
+/* Not ready error description */
+"Peripheral isnʼt connected" = "Apparaat is niet verbonden";
+
+/* Response timeout error description */
+"Pump did not respond in time" = "Pomp reageerde niet op tijd";
+
+/* Invalid response error description (1: response) */
+"Response %@ is invalid" = "Antwoord %@ is ongeldig";
+
+/* Unsupported command error description */
+"RileyLink firmware does not support the %@ command" = "De RileyLink firmware ondersteund niet het %@ commando";
+
+/* Failure reason: unknown peripheral characteristic */
+"The RileyLink was temporarily disconnected" = "The RileyLink was tijdelijk niet verbonden";
+
+/* Error description */
+"Unknown characteristic" = "Onbekende eigenschap";
+

@@ -1,0 +1,179 @@
+/* Description for auto-off alarm */
+"Auto-off alarm" = "Alarmă Auto-off";
+
+/* Pod state when running below fifty units */
+"Below 50 units" = "Sub 50 de unități";
+
+/* Error message shown when operation could not be completed due to existing bolus in progress */
+"Bolus in progress" = "Bolus în derulare";
+
+/* The format string describing a bolus. (1: The amount delivered)(2: Start time of the dose)(3: duration)(4: scheduled certainty) */
+"Bolus: %1$@U %2$@ %3$@ %4$@" = "Bolus: %1$@U %2$@ %3$@ %4$@";
+
+/* Delivery status when bolusing */
+"Bolusing" = "Bolus în derulare";
+
+/* Delivery status when bolusing and temp basal is running */
+"Bolusing with temp basal" = "Bolus în derulare cu bazală temporară";
+
+/* Pod state when inserting cannula */
+"Cannula inserting" = "Se inserează canula";
+
+/* String describing a dose that was certainly scheduled */
+"Certain" = "Doză confirmată";
+
+/* Pod state when pod has been deactivated */
+"Deactivated" = "Dezactivat";
+
+/* Description for Empty reservoir pod fault */
+"Empty reservoir" = "Rezervor gol";
+
+/* Error message shown when empty response from pod was received */
+"Empty response from pod" = "Răspuns gol primit de la Pod";
+
+/* Pod state error event logged shutting down */
+"Error event logged, shutting down" = "Eroare înregistrată în jurnal, se oprește";
+
+/* Description for expiration alert */
+"Expiration alert" = "Alertă expirare";
+
+/* Description for finish setup */
+"Finish setup " = "Finalizare setare";
+
+/* Pod inititialized */
+"Initialized" = "Inițializat";
+
+/* The format string for Internal pod fault (1: The fault code value) */
+"Internal pod fault %1$03d" = "Defecțiune Pod internă %1$03d";
+
+/* The format string describing a bolus that was interrupted. (1: The amount delivered)(2: The amount scheduled)(3: Start time of the dose)(4: duration)(5: scheduled certainty) */
+"InterruptedBolus: %1$@ U (%2$@ U scheduled) %3$@ %4$@ %5$@" = "BolusÎntrerupt: %1$@ U (%2$@ U planificat) %3$@ %4$@ %5$@";
+
+/* Description for low reservoir alarm */
+"Low reservoir advisory alarm" = "Alarmă nivel scăzut rezervor";
+
+/* Recovery suggestion when no RileyLink is available */
+"Make sure your RileyLink is nearby and powered on" = "Asigurați-vă că RileyLink este pornit și situat în apropriere";
+
+/* Pod alert state when no alerts are active */
+"No alerts" = "Nicio alertă";
+
+/* Error message shown when no pod is paired */
+"No pod paired" = "Niciun Pod asociat";
+
+/* Error message shown when no response from pod was received */
+"No response from pod" = "Nu s-a primit răspuns de la Pod";
+
+/* Error message shown when no response from pod was received */
+"No RileyLink available" = "Nu există un RileyLink disponibil";
+
+/* Delivery status when basal is running
+   Pod state when running above fifty units */
+"Normal" = "Normal";
+
+/* Description for Occlusion detected pod fault */
+"Occlusion detected" = "Ocluziune detectată";
+
+/* Generic title of the omnipod pump manager */
+"Omnipod" = "Omnipod";
+
+/* Pod status after pairing */
+"Paired" = "Asociat";
+
+/* Recovery suggestion when no response is received from pod */
+"Please bring your pod closer to the RileyLink and try again" = "Apropiați Pod-ul de RileyLink și încercați din nou";
+
+/* Recover suggestion shown when no pod is paired */
+"Please pair a new pod" = "Asociați un Pod nou";
+
+/* Error message shown when user cannot pair because pod is already paired */
+"Pod already paired" = "Pod deja asociat";
+
+/* Error message shown when prime is attempted, but pod is already primed */
+"Pod already primed" = "Pod deja amorsat";
+
+/* Description for expiration advisory alarm */
+"Pod expiration advisory alarm" = "Alarmă expirare Pod";
+
+/* The title for pod expiration notification */
+"Pod Expiration Notice" = "Notificare expirare Pod";
+
+/* Description for Pod expired pod fault */
+"Pod expired" = "Pod expirat";
+
+/* Format string for pod fault code */
+"Pod Fault: %1$@" = "Defecțiune Pod: %1$@";
+
+/* Error message when cannula insertion fails because the pod is in an unexpected state */
+"Pod is not in a state ready for cannula insertion." = "Pod-ul nu este pregătit pentru inserarea canulei.";
+
+/* Error message when prime fails because the pod is in an unexpected state */
+"Pod is not in a state ready for priming." = "Pod nu este pregătit pentru amorsare.";
+
+/* Error message action could not be performed because pod is suspended */
+"Pod is suspended" = "Pod-ul este suspendat";
+
+/* Pod state when prime or cannula insertion has not completed in the time allotted */
+"Pod setup window expired" = "Intervalul de timp în care se poate seta Pod-ul a expirat";
+
+/* Delivery status when pod is priming
+   Pod status when priming */
+"Priming" = "Se amorsează";
+
+/* Pod state when ready for basal programming */
+"Ready for basal programming" = "Pregătit pentru programarea bazalelor";
+
+/* Pod state when ready for cannula insertion */
+"Ready to insert cannula" = "Pregătit pentru inserarea canulei";
+
+/* The format string describing a resume. (1: Time)(2: Scheduled certainty */
+"Resume: %1$@ %2$@" = "Reluare: %1$@ %2$@";
+
+/* Delivery status when basal is running */
+"Scheduled Basal" = "Bazală planificată";
+
+/* Description for shutdown imminent alarm */
+"Shutdown imminent alarm" = "Alarmă de oprire iminentă";
+
+/* The format string describing a suspend. (1: Time)(2: Scheduled certainty */
+"Suspend: %1$@ %2$@" = "Suspendare: %1$@ %2$@";
+
+/* Delivery status when insulin delivery is suspended */
+"Suspended" = "Suspendat";
+
+/* Pod tank fill completed */
+"Tank fill completed" = "Umplere rezervor completă";
+
+/* Pod power to motor activated */
+"Tank power activated" = "Putere motor rezervor activată";
+
+/* Error message shown when temp basal could not be set due to existing temp basal in progress */
+"Temp basal in progress" = "Bazală temporară în curs de rulare";
+
+/* Delivery status when temp basal is running */
+"Temp basal running" = "Bazala temporară este în curs de rulare";
+
+/* The format string describing a temp basal. (1: The rate)(2: Start time)(3: duration)(4: volume)(5: scheduled certainty */
+"TempBasal: %1$@ U/hour %2$@ %3$@ %4$@ U %5$@" = "BasalăTemporară: %1$@ U/oră %2$@ %3$@ %4$@ U %5$@";
+
+/* The format string for pod expiration notification body (1: time until expiration) */
+"Time to replace your pod! Your pod will expire in %1$@" = "E timpul să înlocuiți Pod-ul! Acesta va expira în %1$@";
+
+/* String describing a dose that was possibly scheduled */
+"Uncertain" = "Doză neconfirmată";
+
+/* Error message shown when empty response from pod was received */
+"Unexpected response from pod" = "Răspuns neașteptat de la Pod";
+
+/* The format string for Unknown pod fault (1: The fault code value) */
+"Unknown pod fault %1$03d" = "Defecțiune Pod neidentificată %1$03d";
+
+/* Recovery suggestion when operation could not be completed due to existing bolus in progress */
+"Wait for existing bolus to finish, or cancel bolus" = "Așteptați finalizarea bolusului curent sau opriți bolusul";
+
+/* Recovery suggestion when operation could not be completed due to existing temp basal in progress */
+"Wait for existing temp basal to finish, or suspend to cancel" = "Așteptați finalizarea bazalei temporare curente sau suspendați pentru oprirea ei";
+
+/* Description waiting for pairing reminder */
+"Waiting for pairing reminder" = "Se așteaptă reamintirea de asociere";
+

@@ -1,0 +1,29 @@
+/* Write size limit exceeded error description (1: size limit) */
+"Data exceeded maximum size of %@ bytes" = "Data overskred den maksimale størrelse på %@ bytes";
+
+/* Invalid input error description (1: input) */
+"Input %@ is invalid" = "Input %@ er ugyldigt";
+
+/* Recovery suggestion for unknown peripheral characteristic */
+"Make sure the device is nearby, and the issue should resolve automatically" = "Sørg for at det eksterne apparat (eks. Rileylink) er tæt på, så bør problemet blive løst automatisk";
+
+/* Timeout error description */
+"Peripheral did not respond in time" = "Eksternt apparat (eks. Rileylink) svarede ikke i tide";
+
+/* Not ready error description */
+"Peripheral isnʼt connected" = "Eksternt apparat (eks. Rileylink) er ikke forbundet";
+
+/* Response timeout error description */
+"Pump did not respond in time" = "Pumpe svarede ikke i tide";
+
+/* Invalid response error description (1: response) */
+"Response %@ is invalid" = "Svaret %@ er ugyldigt";
+
+/* Unsupported command error description */
+"RileyLink firmware does not support the %@ command" = "RileyLink firmware understøtter ikke %@ kommandoen";
+
+/* Failure reason: unknown peripheral characteristic */
+"The RileyLink was temporarily disconnected" = "RileyLinket var midlertidigt afbrudt";
+
+/* Error description */
+"Unknown characteristic" = "Ukendt karakteristika";

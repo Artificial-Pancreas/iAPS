@@ -1,0 +1,68 @@
+/* Class = "UITableViewSection"; headerTitle = "Remove POD"; ObjectID = "1LF-te-Bdd"; */
+"1LF-te-Bdd.headerTitle" = "Elimină POD";
+
+/* Class = "UINavigationItem"; title = "RileyLink Setup"; ObjectID = "3HH-eJ-lRh"; */
+"3HH-eJ-lRh.title" = "Setare RileyLink";
+
+/* Class = "UITableViewController"; title = "Pod Settings"; ObjectID = "6vo-Ov-UpE"; */
+"6vo-Ov-UpE.title" = "Setări Pod";
+
+/* Class = "UITableViewController"; title = "Pump Setup"; ObjectID = "91O-Un-vKc"; */
+"91O-Un-vKc.title" = "Setare pompă";
+
+/* Class = "UITableViewSection"; footerTitle = "NOTE: Do not remove the pod's needle cap at this time."; ObjectID = "EUt-xk-Rmp"; */
+"EUt-xk-Rmp.footerTitle" = "NOTĂ: Nu îndepărtați capacul acului din Pod la acest moment.";
+
+/* Class = "UITableViewSection"; headerTitle = "Prepare Pod"; ObjectID = "EUt-xk-Rmp"; */
+"EUt-xk-Rmp.headerTitle" = "Pregătire Pod";
+
+/* Class = "UILabel"; text = "Loop will remind you to change your pod before it expires. You can change this to a time convenient for you."; ObjectID = "Eng-IY-fQ7"; */
+"Eng-IY-fQ7.text" = "Loop vă va reaminti să schimbați Pod-ul înainte de expirare. Puteți modifica aceasta la un moment convenabil pentru dvs.";
+
+/* Class = "UILabel"; text = "Please deactivate the pod. When deactivation is complete, remove pod from body."; ObjectID = "GK7-jb-tyY"; */
+"GK7-jb-tyY.text" = "Dezactivați Pod-ul. Când dezactivarea este completă, îndepărtați Pod-ul de pe corp.";
+
+/* Class = "UINavigationItem"; title = "Insert Cannula"; ObjectID = "HwT-30-f0y"; */
+"HwT-30-f0y.title" = "Inserează canula";
+
+/* Class = "UILabel"; text = "Prepare site. Remove the pod's needle cap and adhesive backing. If pod is OK, apply to site."; ObjectID = "Iuv-5M-bDH"; */
+"Iuv-5M-bDH.text" = "Pregătiți suprafața de aplicare. Îndepărtați capacul acului din Pod și folia de protecție a adezivului. Dacă Pod-ul este OK, aplicați-l pe corp";
+
+/* Class = "UITableViewController"; title = "Pump Setup"; ObjectID = "aNg-mm-Uuy"; */
+"aNg-mm-Uuy.title" = "Setare pompă";
+
+/* Class = "UITableViewController"; title = "Pump Setup"; ObjectID = "ack-ra-XH6"; */
+"ack-ra-XH6.title" = "Setare pompă";
+
+/* Class = "UILabel"; text = "Your Pod is ready for use."; ObjectID = "bJ5-iH-fnF"; */
+"bJ5-iH-fnF.text" = "Pod-ul este gata de utilizare.";
+
+/* Class = "UILabel"; text = "Reminder"; ObjectID = "ePA-6p-q8C"; */
+"ePA-6p-q8C.text" = "Reamintire";
+
+/* Class = "UINavigationItem"; title = "Pod Pairing"; ObjectID = "jVO-Ut-MhL"; */
+"jVO-Ut-MhL.title" = "Asociere Pod";
+
+/* Class = "UITableViewController"; title = "Pump Setup"; ObjectID = "k1Y-x4-m0a"; */
+"k1Y-x4-m0a.title" = "Setare pompă";
+
+/* Class = "UILabel"; text = "Review your settings below. They will be programmed into the pod during pairing. You can change these settings at any time in Loopʼs Settings screen."; ObjectID = "kLL-SQ-K0a"; */
+"kLL-SQ-K0a.text" = "Verificați setările de mai jos. Acestea vor fi salvate în Pod în timpul asocierii. Puteți modifica ulterior aceste setări din ecranul de setări Loop.";
+
+/* Class = "UINavigationItem"; title = "Setup Complete"; ObjectID = "nDb-R5-e02"; */
+"nDb-R5-e02.title" = "Setare completă";
+
+/* Class = "UITableViewSection"; footerTitle = "NOTE: If cannula sticks out, press cancel."; ObjectID = "rcC-ke-lUP"; */
+"rcC-ke-lUP.footerTitle" = "NOTĂ: În cazul în care observați canula ieșită în afară, apăsați Renunță.";
+
+/* Class = "UITableViewSection"; headerTitle = "Apply POD"; ObjectID = "rcC-ke-lUP"; */
+"rcC-ke-lUP.headerTitle" = "Aplică POD";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "vEc-Km-ewe"; */
+"vEc-Km-ewe.text" = "Etichetă";
+
+/* Class = "UILabel"; text = "Fill a new pod with insulin. Listen for 2 beeps from the pod during filling. Keep RileyLink adjacent to the pod during pairing."; ObjectID = "vmF-Dc-3DS"; */
+"vmF-Dc-3DS.text" = "Umpleți un Pod nou cu insulină. Urmăriți ca Pod-ul să emită 2 beep-uri în timpul umplerii.";
+
+/* Class = "UINavigationItem"; title = "Replace Pod"; ObjectID = "yy1-xf-HdR"; */
+"yy1-xf-HdR.title" = "Înlocuiește Pod";

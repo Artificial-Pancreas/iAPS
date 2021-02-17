@@ -1,0 +1,210 @@
+/* The format string for displaying a frequency tune trial. Extra spaces added for emphesis: (1: frequency in MHz)(2: success count)(3: total count)(4: average RSSI) */
+"%1$@  %2$@/%3$@  %4$@" = "%1$@  %2$@/%3$@  %4$@";
+
+/* The format string describing number of basal schedule entries: (1: number of entries) */
+"%1$@ basal schedule entries\n" = "%1$@ intervale de insulină bazală\n";
+
+/* The format string describing units of insulin remaining: (1: number of units) */
+"%1$@ Units of insulin remaining\n" = "%1$@ Unități de insulină rămase\n";
+
+/* The format string for displaying an offset from a time zone: (1: GMT)(2: -)(3: 4:00) */
+"%1$@%2$@%3$@" = "%1$@%2$@%3$@";
+
+/* Instructions on selecting battery chemistry type */
+"Alkaline and Lithium batteries decay at differing rates. Alkaline tend to have a linear voltage drop over time whereas lithium cell batteries tend to maintain voltage until halfway through their lifespan. Under normal usage in a Non-MySentry compatible Minimed (x22/x15) insulin pump running Loop, Alkaline batteries last approximately 4 to 5 days. Lithium batteries last between 1-2 weeks. This selection will use different battery voltage decay rates for each of the battery chemistry types and alert the user when a battery is approximately 8 to 10 hours from failure." = "Baterii alcaline și cele cu litiu se descarcă diferit. La cele alcaline, tensiunea scade proporțional cu descărcare, pe când cele cu litiu mențin tensiunea normală pană aproape de descărcare completă. În condiții normale pe pompele Minimed care nu sunt compatibile cu MySentry (x22/x15), rulând Loop, bateriile alcaline durează 4-5 zile. Bateriile cu litiu durează aproximativ 1-2 săptămâni. Prin această opțiune se alege modul de calcul al descărcării bateriilor în funcție de tipul lor, astfel încât utilizatorul să fie anunțat cu 8-10 ore înainte de descărcare completă.";
+
+/* Confirmation message for deleting a pump */
+"Are you sure you want to delete this pump?" = "Sigur vreți să ștergeți această pompă?";
+
+/* The title of the cell describing an awake radio */
+"Awake Until" = "Activ până la";
+
+/* The title text for the basal rate schedule */
+"Basal Rates" = "Rate bazale";
+
+/* The format string describing pump battery voltage: (1: battery voltage) */
+"Battery: %1$@ volts\n" = "Baterie: %1$@ volți\n";
+
+/* The label indicating the best radio frequency */
+"Best Frequency" = "Frecvența optimă";
+
+/* The format string describing pump bolusing state: (1: bolusing) */
+"Bolusing: %1$@\n" = "Se livrează: %1$@\n";
+
+/* The title of the cancel action in an action sheet */
+"Cancel" = "Anulare";
+
+/* The title of the command to change pump time */
+"Change Time" = "Ajustarea ceasului";
+
+/* The title of the command to change pump time zone */
+"Change Time Zone" = "Schimbarea fusului orar";
+
+/* Progress message for changing pump time. */
+"Changing time…" = "Se ajusteaza ceasul…";
+
+/* The title of the section describing commands */
+"Commands" = "Comenzi";
+
+/* The title of the configuration section in settings */
+"Configuration" = "Configurare";
+
+/* Button title to connect to pump during setup */
+"Connect" = "Conectare";
+
+/* The title of the cell showing BLE connection state */
+"Connection State" = "Starea conexiunii";
+
+/* Button title to delete pump
+   Title text for the button to remove a pump from Loop */
+"Delete Pump" = "Elimină pompa";
+
+/* Title text for delivery limits */
+"Delivery Limits" = "Limitarea livrării";
+
+/* The title of the section describing the device */
+"Device" = "Dispozitiv";
+
+/* The title of the command to discover commands */
+"Discover Commands" = "Descoperă comenzi";
+
+/* Progress message for discovering commands. */
+"Discovering commands…" = "Descoperirea comenzilor…";
+
+/* The title of the command to enable diagnostic LEDs */
+"Enable Diagnostic LEDs" = "Aprinde LED-urile de diagnoză";
+
+/* Progress message for enabling diagnostic LEDs */
+"Enabled Diagnostic LEDs" = "LED-urile de diagnoza pornite";
+
+/* The alert title for a resume error */
+"Error Resuming" = "Eroare la reluare livrării";
+
+/* The alert title for a suspend error */
+"Error Suspending" = "Eroare la suspendarea livrării";
+
+/* The title of the command to fetch recent glucose */
+"Fetch Enlite Glucose" = "Obține datelor de la Enlite";
+
+/* The title of the command to fetch recent history */
+"Fetch Recent History" = "Obține istoricul recent";
+
+/* Progress message for fetching pump glucose. */
+"Fetching glucose…" = "Obținerea glicemiei…";
+
+/* Progress message for fetching pump history. */
+"Fetching history…" = "Obținerea istoricului…";
+
+/* Progress message for fetching pump model. */
+"Fetching pump model…" = "Obținerea modelului pompei…";
+
+/* The title of the cell showing firmware version */
+"Firmware" = "Firmware";
+
+/* The title of the cell showing the pump firmware version */
+"Firmware Version" = "Versiunea Firmware";
+
+/* The title of the command to get pump model */
+"Get Pump Model" = "Obține modelul pompei";
+
+/* Progress message for getting statistics. */
+"Get Statistics…" = "Obținerea statisticelor…";
+
+/* Instructions on selecting an insulin data source */
+"Insulin delivery can be determined from the pump by either interpreting the event history or comparing the reservoir volume over time. Reading event history allows for a more accurate status graph and uploading up-to-date treatment data to Nightscout, at the cost of faster pump battery drain and the possibility of a higher radio error rate compared to reading only reservoir volume. If the selected source cannot be used for any reason, the system will attempt to fall back to the other option." = "Livrarea insulinei poate fi determinată din interpretarea istoricului citit din pompă sau analizând nivelul rezervorului în timp. Citirea istoricului de evenimente permite o construcție mai exacta a graficului și uploadarea datelor actualizate în Nightscout cu prețul descărcării mai rapide a bateriei pompei si a probabilității mai mari de erori de transmisie radio, comparând cu citire numai a nivelului rezervorului. Dacă dintr-o cauză sau alta sistemul nu va reuși să folosească opțiunea aleasă, se va încerca revenirea la cealaltă posibilitate.";
+
+/* The title of the cell describing an awake radio */
+"Last Awake" = "Ultima activitate";
+
+/* The title of the cell describing no radio awake data */
+"Listening Off" = "Ascultare oprită";
+
+/* The title of the command to pair with mysentry */
+"MySentry Pair" = "Conectare MySentry";
+
+/* The title of the cell showing device name */
+"Name" = "Denumire";
+
+/* Message display when no response from tuning pump */
+"No response" = "Nici un raspuns";
+
+/* The title of the cell showing the last idle */
+"On Idle" = "în așteptare";
+
+/* Pump find device instruction */
+"On your pump, go to the Find Device screen and select \"Find Device\".\n\nMain Menu >\nUtilities >\nConnect Devices >\nOther Devices >\nOn >\nFind Device" = "Pe pompa, mergeți la ecranul \"Find Device\" și selectați \"Find Device\".\n\nMain Menu >\nUtilities >\nConnect Devices >\nOther Devices >\nOn >\nFind Device";
+
+/* The title text for the preferred insulin data source config */
+"Preferred Data Source" = "Sursa de date preferată";
+
+/* The title of the section describing the pump */
+"Pump" = "Pompa";
+
+/* The title text for the battery type value */
+"Pump Battery Type" = "Tipul bateriei pompei";
+
+/* The title of the cell showing pump ID
+   The title text for the pump ID config value */
+"Pump ID" = "ID-ul pompei";
+
+/* The title of the cell showing the pump model number */
+"Pump Model" = "Modelul pompei";
+
+/* Title of the pump settings view controller */
+"Pump Settings" = "Setările pompei";
+
+/* The title of the command to read basal schedule */
+"Read Basal Schedule" = "Citirea programului bazalelor";
+
+/* The title of the command to read pump status */
+"Read Pump Status" = "Citirea stării pompei";
+
+/* Progress message for reading basal schedule */
+"Reading basal schedule…" = "Se citește programul bazalelor…";
+
+/* Progress message for reading pump status */
+"Reading pump status…" = "Se citește starea pompei…";
+
+/* The title of the cell showing the pump region */
+"Region" = "Regiune";
+
+/* Button title to retry sentry setup */
+"Retry" = "Reîncearcă";
+
+/* The title of the command to fetch RileyLink statistics */
+"RileyLink Statistics" = "Statisticile RileyLink-ului";
+
+/* Title of button to save basal profile to pump
+   Title of button to save delivery limit settings to pump */
+"Save to Pump…" = "Se salvează în pompă…";
+
+/* The title of the command to send a button press */
+"Send Button Press" = "Trimite apăsarea butonului";
+
+/* Progress message for sending button press to pump. */
+"Sending button press…" = "Se trimite apăsarea butonului…";
+
+/* The title of the cell showing BLE signal strength (RSSI) */
+"Signal Strength" = "Puterea semnalului";
+
+/* A message indicating a command succeeded */
+"Succeeded" = "Succeeded";
+
+/* The format string describing pump suspended state: (1: suspended) */
+"Suspended: %1$@\n" = "Suspendat: %1$@\n";
+
+/* The label indicating the results of each frequency trial */
+"Trials" = "Încercări";
+
+/* The title of the command to re-tune the radio */
+"Tune Radio Frequency" = "Ajustarea frecvenței radio";
+
+/* Progress message for tuning radio */
+"Tuning radio…" = "Se ajustează frecvența…";
+
+/* The detail text for an unknown pump model */
+"Unknown" = "Necunoscut";
+
+/* The title of the cell showing uptime */
+"Uptime" = "Timp în funcțiune";
+

@@ -106,6 +106,331 @@
 		E39E418C56A5A46B61D960EE /* ConfigEditorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D5B4F8B4194BB7E260EF251 /* ConfigEditorViewModel.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		38B17AB525DD69FA005CAE3D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 38B17AAE25DD69FA005CAE3D /* SwiftCharts.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 06405DA61B8AA74700A689FF;
+			remoteInfo = SwiftCharts;
+		};
+		38B17AB725DD69FA005CAE3D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 38B17AAE25DD69FA005CAE3D /* SwiftCharts.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 06342AC11B8AAD7F001C9F5D;
+			remoteInfo = Examples;
+		};
+		38B17AB925DD69FA005CAE3D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 38B17AAE25DD69FA005CAE3D /* SwiftCharts.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 22E7020F1BF5B8EC00C19675;
+			remoteInfo = "SwiftCharts tvOS";
+		};
+		38B17ABE25DD6A0A005CAE3D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 38B17AAE25DD69FA005CAE3D /* SwiftCharts.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 06405DA51B8AA74700A689FF;
+			remoteInfo = SwiftCharts;
+		};
+		38B17ACE25DD6A40005CAE3D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 38B17AC025DD6A40005CAE3D /* LoopKit.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 430157F71C7EC03B00B64B63;
+			remoteInfo = "LoopKit Example";
+		};
+		38B17AD025DD6A40005CAE3D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 38B17AC025DD6A40005CAE3D /* LoopKit.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 43D8FDCB1C728FDF0073BE78;
+			remoteInfo = LoopKit;
+		};
+		38B17AD225DD6A40005CAE3D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 38B17AC025DD6A40005CAE3D /* LoopKit.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = A9E675F022713F4700E25293;
+			remoteInfo = "LoopKit-watchOS";
+		};
+		38B17AD425DD6A40005CAE3D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 38B17AC025DD6A40005CAE3D /* LoopKit.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 43D8FDD51C728FDF0073BE78;
+			remoteInfo = LoopKitTests;
+		};
+		38B17AD625DD6A40005CAE3D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 38B17AC025DD6A40005CAE3D /* LoopKit.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 1DEE230124A676A300693C32;
+			remoteInfo = LoopKitHostedTests;
+		};
+		38B17AD825DD6A40005CAE3D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 38B17AC025DD6A40005CAE3D /* LoopKit.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 43BA7154201E484D0058961E;
+			remoteInfo = LoopKitUI;
+		};
+		38B17ADA25DD6A40005CAE3D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 38B17AC025DD6A40005CAE3D /* LoopKit.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 89D2047221CC7BD7001238CC;
+			remoteInfo = MockKit;
+		};
+		38B17ADC25DD6A40005CAE3D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 38B17AC025DD6A40005CAE3D /* LoopKit.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = B4CEE2E0257129780093111B;
+			remoteInfo = MockKitTests;
+		};
+		38B17ADE25DD6A40005CAE3D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 38B17AC025DD6A40005CAE3D /* LoopKit.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 89D2048F21CC7C12001238CC;
+			remoteInfo = MockKitUI;
+		};
+		38B17AE025DD6A40005CAE3D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 38B17AC025DD6A40005CAE3D /* LoopKit.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 892A5D34222F03CB008961AB;
+			remoteInfo = LoopTestingKit;
+		};
+		38B17AEC25DD6A60005CAE3D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 38B17AC025DD6A40005CAE3D /* LoopKit.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 43D8FDCA1C728FDF0073BE78;
+			remoteInfo = LoopKit;
+		};
+		38B17AEE25DD6A60005CAE3D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 38B17AC025DD6A40005CAE3D /* LoopKit.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 43BA7153201E484D0058961E;
+			remoteInfo = LoopKitUI;
+		};
+		38B17AF425DD6AE6005CAE3D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 38B17AF025DD6AE6005CAE3D /* MKRingProgressView.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 5085266E1E52FDC000D611F4;
+			remoteInfo = MKRingProgressView;
+		};
+		38B17AF725DD6AF0005CAE3D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 38B17AF025DD6AE6005CAE3D /* MKRingProgressView.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 5085266D1E52FDC000D611F4;
+			remoteInfo = MKRingProgressView;
+		};
+		38B17B0D25DD6BBE005CAE3D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 38B17AF925DD6BBD005CAE3D /* RileyLink.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = C12EA237198B436800309FA4;
+			remoteInfo = RileyLink;
+		};
+		38B17B0F25DD6BBE005CAE3D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 38B17AF925DD6BBD005CAE3D /* RileyLink.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 43C246931D8918AE0031F8D1;
+			remoteInfo = Crypto;
+		};
+		38B17B1125DD6BBE005CAE3D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 38B17AF925DD6BBD005CAE3D /* RileyLink.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 431CE76F1F98564100255374;
+			remoteInfo = RileyLinkBLEKit;
+		};
+		38B17B1325DD6BBE005CAE3D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 38B17AF925DD6BBD005CAE3D /* RileyLink.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 431CE7771F98564200255374;
+			remoteInfo = RileyLinkBLEKitTests;
+		};
+		38B17B1525DD6BBE005CAE3D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 38B17AF925DD6BBD005CAE3D /* RileyLink.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 43722FAE1CB9F7630038B7F2;
+			remoteInfo = RileyLinkKit;
+		};
+		38B17B1725DD6BBE005CAE3D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 38B17AF925DD6BBD005CAE3D /* RileyLink.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 43D5E78E1FAF7BFB004ACDB7;
+			remoteInfo = RileyLinkKitUI;
+		};
+		38B17B1925DD6BBE005CAE3D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 38B17AF925DD6BBD005CAE3D /* RileyLink.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = C1B3830B1CD0665D00CE7782;
+			remoteInfo = NightscoutUploadKit;
+		};
+		38B17B1B25DD6BBE005CAE3D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 38B17AF925DD6BBD005CAE3D /* RileyLink.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = C1B383141CD0665D00CE7782;
+			remoteInfo = NightscoutUploadKitTests;
+		};
+		38B17B1D25DD6BBE005CAE3D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 38B17AF925DD6BBD005CAE3D /* RileyLink.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = C10D9BC11C8269D500378342;
+			remoteInfo = MinimedKit;
+		};
+		38B17B1F25DD6BBE005CAE3D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 38B17AF925DD6BBD005CAE3D /* RileyLink.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 4352A72520DEC9B700CAC200;
+			remoteInfo = MinimedKitUI;
+		};
+		38B17B2125DD6BBE005CAE3D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 38B17AF925DD6BBD005CAE3D /* RileyLink.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = C10D9BCA1C8269D500378342;
+			remoteInfo = MinimedKitTests;
+		};
+		38B17B2325DD6BBE005CAE3D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 38B17AF925DD6BBD005CAE3D /* RileyLink.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = C136AA5E231187B0008A320D;
+			remoteInfo = MinimedKitPlugin;
+		};
+		38B17B2525DD6BBE005CAE3D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 38B17AF925DD6BBD005CAE3D /* RileyLink.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = C1FFAF78213323CC00C50C1D;
+			remoteInfo = OmniKit;
+		};
+		38B17B2725DD6BBE005CAE3D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 38B17AF925DD6BBD005CAE3D /* RileyLink.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = C1FFAF80213323CC00C50C1D;
+			remoteInfo = OmniKitTests;
+		};
+		38B17B2925DD6BBE005CAE3D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 38B17AF925DD6BBD005CAE3D /* RileyLink.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = C1FFAFD9213323F900C50C1D;
+			remoteInfo = OmniKitUI;
+		};
+		38B17B2B25DD6BBE005CAE3D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 38B17AF925DD6BBD005CAE3D /* RileyLink.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = C136AA2A23116E32008A320D;
+			remoteInfo = OmniKitPlugin;
+		};
+		38B17B2D25DD6BBE005CAE3D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 38B17AF925DD6BBD005CAE3D /* RileyLink.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = C1BB128521CB5603009A29B5;
+			remoteInfo = OmniKitPacketParser;
+		};
+		38B17B3F25DD6BE0005CAE3D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 38B17AF925DD6BBD005CAE3D /* RileyLink.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 43C246921D8918AE0031F8D1;
+			remoteInfo = Crypto;
+		};
+		38B17B4125DD6BE0005CAE3D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 38B17AF925DD6BBD005CAE3D /* RileyLink.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = C10D9BC01C8269D500378342;
+			remoteInfo = MinimedKit;
+		};
+		38B17B4325DD6BE0005CAE3D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 38B17AF925DD6BBD005CAE3D /* RileyLink.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = C136AA5D231187B0008A320D;
+			remoteInfo = MinimedKitPlugin;
+		};
+		38B17B4525DD6BE0005CAE3D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 38B17AF925DD6BBD005CAE3D /* RileyLink.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 4352A72420DEC9B700CAC200;
+			remoteInfo = MinimedKitUI;
+		};
+		38B17B4725DD6BE0005CAE3D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 38B17AF925DD6BBD005CAE3D /* RileyLink.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = C1B3830A1CD0665D00CE7782;
+			remoteInfo = NightscoutUploadKit;
+		};
+		38B17B4925DD6BE0005CAE3D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 38B17AF925DD6BBD005CAE3D /* RileyLink.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = C1FFAF77213323CC00C50C1D;
+			remoteInfo = OmniKit;
+		};
+		38B17B4B25DD6BE0005CAE3D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 38B17AF925DD6BBD005CAE3D /* RileyLink.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = C136AA2923116E32008A320D;
+			remoteInfo = OmniKitPlugin;
+		};
+		38B17B4D25DD6BE0005CAE3D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 38B17AF925DD6BBD005CAE3D /* RileyLink.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = C1FFAFD8213323F900C50C1D;
+			remoteInfo = OmniKitUI;
+		};
+		38B17B4F25DD6BE0005CAE3D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 38B17AF925DD6BBD005CAE3D /* RileyLink.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 431CE76E1F98564100255374;
+			remoteInfo = RileyLinkBLEKit;
+		};
+		38B17B5125DD6BE0005CAE3D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 38B17AF925DD6BBD005CAE3D /* RileyLink.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 43722FAD1CB9F7630038B7F2;
+			remoteInfo = RileyLinkKit;
+		};
+		38B17B5325DD6BE0005CAE3D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 38B17AF925DD6BBD005CAE3D /* RileyLink.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 43D5E78D1FAF7BFB004ACDB7;
+			remoteInfo = RileyLinkKitUI;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXCopyFilesBuildPhase section */
 		3821ECD025DC703C00BC42AD /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
@@ -208,6 +533,10 @@
 		388E5A5B25B6F0770019842D /* JSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSON.swift; sourceTree = "<group>"; };
 		388E5A5F25B6F2310019842D /* Autosens.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Autosens.swift; sourceTree = "<group>"; };
 		3895E4C525B9E00D00214B37 /* Preferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Preferences.swift; sourceTree = "<group>"; };
+		38B17AAE25DD69FA005CAE3D /* SwiftCharts.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SwiftCharts.xcodeproj; path = SwiftCharts/SwiftCharts.xcodeproj; sourceTree = "<group>"; };
+		38B17AC025DD6A40005CAE3D /* LoopKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = LoopKit.xcodeproj; path = LoopKit/LoopKit.xcodeproj; sourceTree = "<group>"; };
+		38B17AF025DD6AE6005CAE3D /* MKRingProgressView.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = MKRingProgressView.xcodeproj; path = MKRingProgressView/MKRingProgressView.xcodeproj; sourceTree = "<group>"; };
+		38B17AF925DD6BBD005CAE3D /* RileyLink.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RileyLink.xcodeproj; path = rileylink_ios/RileyLink.xcodeproj; sourceTree = "<group>"; };
 		38FE826925CC82DB001FF17A /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		38FE826C25CC8461001FF17A /* NightscoutAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NightscoutAPI.swift; sourceTree = "<group>"; };
 		3BF768BD6264FF7D71D66767 /* NightscoutConfigProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NightscoutConfigProvider.swift; sourceTree = "<group>"; };
@@ -276,6 +605,7 @@
 		3811DE1325C9D39E00A708ED /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				38B17B5F25DD6E38005CAE3D /* RileyLink */,
 				3811DEDE25C9E2DD00A708ED /* Application */,
 				3811DF0A25CAAAA500A708ED /* APS */,
 				3811DEBD25C9D99900A708ED /* Containers */,
@@ -577,6 +907,7 @@
 		388E594F25AD948C0019842D = {
 			isa = PBXGroup;
 			children = (
+				38B17AAD25DD69DF005CAE3D /* Dependecies */,
 				3821ECCD25DC703C00BC42AD /* Frameworks */,
 				388E595A25AD948C0019842D /* FreeAPS */,
 				388E595925AD948C0019842D /* Products */,
@@ -645,6 +976,83 @@
 			path = Helpers;
 			sourceTree = "<group>";
 		};
+		38B17AAD25DD69DF005CAE3D /* Dependecies */ = {
+			isa = PBXGroup;
+			children = (
+				38B17AF925DD6BBD005CAE3D /* RileyLink.xcodeproj */,
+				38B17AF025DD6AE6005CAE3D /* MKRingProgressView.xcodeproj */,
+				38B17AC025DD6A40005CAE3D /* LoopKit.xcodeproj */,
+				38B17AAE25DD69FA005CAE3D /* SwiftCharts.xcodeproj */,
+			);
+			path = Dependecies;
+			sourceTree = "<group>";
+		};
+		38B17AAF25DD69FA005CAE3D /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				38B17AB625DD69FA005CAE3D /* SwiftCharts.framework */,
+				38B17AB825DD69FA005CAE3D /* Examples.app */,
+				38B17ABA25DD69FA005CAE3D /* SwiftCharts.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		38B17AC125DD6A40005CAE3D /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				38B17ACF25DD6A40005CAE3D /* LoopKit Example.app */,
+				38B17AD125DD6A40005CAE3D /* LoopKit.framework */,
+				38B17AD325DD6A40005CAE3D /* LoopKit.framework */,
+				38B17AD525DD6A40005CAE3D /* LoopKitTests.xctest */,
+				38B17AD725DD6A40005CAE3D /* LoopKitHostedTests.xctest */,
+				38B17AD925DD6A40005CAE3D /* LoopKitUI.framework */,
+				38B17ADB25DD6A40005CAE3D /* MockKit.framework */,
+				38B17ADD25DD6A40005CAE3D /* MockKitTests.xctest */,
+				38B17ADF25DD6A40005CAE3D /* MockKitUI.framework */,
+				38B17AE125DD6A40005CAE3D /* LoopTestingKit.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		38B17AF125DD6AE6005CAE3D /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				38B17AF525DD6AE6005CAE3D /* MKRingProgressView.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		38B17AFA25DD6BBD005CAE3D /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				38B17B0E25DD6BBE005CAE3D /* RileyLink.app */,
+				38B17B1025DD6BBE005CAE3D /* Crypto.framework */,
+				38B17B1225DD6BBE005CAE3D /* RileyLinkBLEKit.framework */,
+				38B17B1425DD6BBE005CAE3D /* RileyLinkBLEKitTests.xctest */,
+				38B17B1625DD6BBE005CAE3D /* RileyLinkKit.framework */,
+				38B17B1825DD6BBE005CAE3D /* RileyLinkKitUI.framework */,
+				38B17B1A25DD6BBE005CAE3D /* NightscoutUploadKit.framework */,
+				38B17B1C25DD6BBE005CAE3D /* NightscoutUploadKitTests.xctest */,
+				38B17B1E25DD6BBE005CAE3D /* MinimedKit.framework */,
+				38B17B2025DD6BBE005CAE3D /* MinimedKitUI.framework */,
+				38B17B2225DD6BBE005CAE3D /* MinimedKitTests.xctest */,
+				38B17B2425DD6BBE005CAE3D /* MinimedKitPlugin.loopplugin */,
+				38B17B2625DD6BBE005CAE3D /* OmniKit.framework */,
+				38B17B2825DD6BBE005CAE3D /* OmniKitTests.xctest */,
+				38B17B2A25DD6BBE005CAE3D /* OmniKitUI.framework */,
+				38B17B2C25DD6BBE005CAE3D /* OmniKitPlugin.loopplugin */,
+				38B17B2E25DD6BBE005CAE3D /* OmniKitPacketParser */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		38B17B5F25DD6E38005CAE3D /* RileyLink */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = RileyLink;
+			sourceTree = "<group>";
+		};
 		4E8C7B59F8065047ECE20965 /* View */ = {
 			isa = PBXGroup;
 			children = (
@@ -689,6 +1097,21 @@
 			buildRules = (
 			);
 			dependencies = (
+				38B17B4025DD6BE0005CAE3D /* PBXTargetDependency */,
+				38B17B4225DD6BE0005CAE3D /* PBXTargetDependency */,
+				38B17B4425DD6BE0005CAE3D /* PBXTargetDependency */,
+				38B17B4625DD6BE0005CAE3D /* PBXTargetDependency */,
+				38B17B4825DD6BE0005CAE3D /* PBXTargetDependency */,
+				38B17B4A25DD6BE0005CAE3D /* PBXTargetDependency */,
+				38B17B4C25DD6BE0005CAE3D /* PBXTargetDependency */,
+				38B17B4E25DD6BE0005CAE3D /* PBXTargetDependency */,
+				38B17B5025DD6BE0005CAE3D /* PBXTargetDependency */,
+				38B17B5225DD6BE0005CAE3D /* PBXTargetDependency */,
+				38B17B5425DD6BE0005CAE3D /* PBXTargetDependency */,
+				38B17AF825DD6AF0005CAE3D /* PBXTargetDependency */,
+				38B17ABF25DD6A0A005CAE3D /* PBXTargetDependency */,
+				38B17AED25DD6A60005CAE3D /* PBXTargetDependency */,
+				38B17AEF25DD6A60005CAE3D /* PBXTargetDependency */,
 			);
 			name = FreeAPS;
 			packageProductDependencies = (
@@ -728,12 +1151,250 @@
 			);
 			productRefGroup = 388E595925AD948C0019842D /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 38B17AC125DD6A40005CAE3D /* Products */;
+					ProjectRef = 38B17AC025DD6A40005CAE3D /* LoopKit.xcodeproj */;
+				},
+				{
+					ProductGroup = 38B17AF125DD6AE6005CAE3D /* Products */;
+					ProjectRef = 38B17AF025DD6AE6005CAE3D /* MKRingProgressView.xcodeproj */;
+				},
+				{
+					ProductGroup = 38B17AFA25DD6BBD005CAE3D /* Products */;
+					ProjectRef = 38B17AF925DD6BBD005CAE3D /* RileyLink.xcodeproj */;
+				},
+				{
+					ProductGroup = 38B17AAF25DD69FA005CAE3D /* Products */;
+					ProjectRef = 38B17AAE25DD69FA005CAE3D /* SwiftCharts.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				388E595725AD948C0019842D /* FreeAPS */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		38B17AB625DD69FA005CAE3D /* SwiftCharts.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = SwiftCharts.framework;
+			remoteRef = 38B17AB525DD69FA005CAE3D /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		38B17AB825DD69FA005CAE3D /* Examples.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = Examples.app;
+			remoteRef = 38B17AB725DD69FA005CAE3D /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		38B17ABA25DD69FA005CAE3D /* SwiftCharts.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = SwiftCharts.framework;
+			remoteRef = 38B17AB925DD69FA005CAE3D /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		38B17ACF25DD6A40005CAE3D /* LoopKit Example.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = "LoopKit Example.app";
+			remoteRef = 38B17ACE25DD6A40005CAE3D /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		38B17AD125DD6A40005CAE3D /* LoopKit.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = LoopKit.framework;
+			remoteRef = 38B17AD025DD6A40005CAE3D /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		38B17AD325DD6A40005CAE3D /* LoopKit.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = LoopKit.framework;
+			remoteRef = 38B17AD225DD6A40005CAE3D /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		38B17AD525DD6A40005CAE3D /* LoopKitTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = LoopKitTests.xctest;
+			remoteRef = 38B17AD425DD6A40005CAE3D /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		38B17AD725DD6A40005CAE3D /* LoopKitHostedTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = LoopKitHostedTests.xctest;
+			remoteRef = 38B17AD625DD6A40005CAE3D /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		38B17AD925DD6A40005CAE3D /* LoopKitUI.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = LoopKitUI.framework;
+			remoteRef = 38B17AD825DD6A40005CAE3D /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		38B17ADB25DD6A40005CAE3D /* MockKit.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = MockKit.framework;
+			remoteRef = 38B17ADA25DD6A40005CAE3D /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		38B17ADD25DD6A40005CAE3D /* MockKitTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = MockKitTests.xctest;
+			remoteRef = 38B17ADC25DD6A40005CAE3D /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		38B17ADF25DD6A40005CAE3D /* MockKitUI.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = MockKitUI.framework;
+			remoteRef = 38B17ADE25DD6A40005CAE3D /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		38B17AE125DD6A40005CAE3D /* LoopTestingKit.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = LoopTestingKit.framework;
+			remoteRef = 38B17AE025DD6A40005CAE3D /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		38B17AF525DD6AE6005CAE3D /* MKRingProgressView.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = MKRingProgressView.framework;
+			remoteRef = 38B17AF425DD6AE6005CAE3D /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		38B17B0E25DD6BBE005CAE3D /* RileyLink.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = RileyLink.app;
+			remoteRef = 38B17B0D25DD6BBE005CAE3D /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		38B17B1025DD6BBE005CAE3D /* Crypto.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = Crypto.framework;
+			remoteRef = 38B17B0F25DD6BBE005CAE3D /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		38B17B1225DD6BBE005CAE3D /* RileyLinkBLEKit.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = RileyLinkBLEKit.framework;
+			remoteRef = 38B17B1125DD6BBE005CAE3D /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		38B17B1425DD6BBE005CAE3D /* RileyLinkBLEKitTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = RileyLinkBLEKitTests.xctest;
+			remoteRef = 38B17B1325DD6BBE005CAE3D /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		38B17B1625DD6BBE005CAE3D /* RileyLinkKit.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = RileyLinkKit.framework;
+			remoteRef = 38B17B1525DD6BBE005CAE3D /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		38B17B1825DD6BBE005CAE3D /* RileyLinkKitUI.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = RileyLinkKitUI.framework;
+			remoteRef = 38B17B1725DD6BBE005CAE3D /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		38B17B1A25DD6BBE005CAE3D /* NightscoutUploadKit.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = NightscoutUploadKit.framework;
+			remoteRef = 38B17B1925DD6BBE005CAE3D /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		38B17B1C25DD6BBE005CAE3D /* NightscoutUploadKitTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = NightscoutUploadKitTests.xctest;
+			remoteRef = 38B17B1B25DD6BBE005CAE3D /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		38B17B1E25DD6BBE005CAE3D /* MinimedKit.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = MinimedKit.framework;
+			remoteRef = 38B17B1D25DD6BBE005CAE3D /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		38B17B2025DD6BBE005CAE3D /* MinimedKitUI.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = MinimedKitUI.framework;
+			remoteRef = 38B17B1F25DD6BBE005CAE3D /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		38B17B2225DD6BBE005CAE3D /* MinimedKitTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = MinimedKitTests.xctest;
+			remoteRef = 38B17B2125DD6BBE005CAE3D /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		38B17B2425DD6BBE005CAE3D /* MinimedKitPlugin.loopplugin */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = MinimedKitPlugin.loopplugin;
+			remoteRef = 38B17B2325DD6BBE005CAE3D /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		38B17B2625DD6BBE005CAE3D /* OmniKit.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = OmniKit.framework;
+			remoteRef = 38B17B2525DD6BBE005CAE3D /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		38B17B2825DD6BBE005CAE3D /* OmniKitTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = OmniKitTests.xctest;
+			remoteRef = 38B17B2725DD6BBE005CAE3D /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		38B17B2A25DD6BBE005CAE3D /* OmniKitUI.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = OmniKitUI.framework;
+			remoteRef = 38B17B2925DD6BBE005CAE3D /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		38B17B2C25DD6BBE005CAE3D /* OmniKitPlugin.loopplugin */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = OmniKitPlugin.loopplugin;
+			remoteRef = 38B17B2B25DD6BBE005CAE3D /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		38B17B2E25DD6BBE005CAE3D /* OmniKitPacketParser */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = OmniKitPacketParser;
+			remoteRef = 38B17B2D25DD6BBE005CAE3D /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		388E595625AD948C0019842D /* Resources */ = {
@@ -870,6 +1531,84 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		38B17ABF25DD6A0A005CAE3D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = SwiftCharts;
+			targetProxy = 38B17ABE25DD6A0A005CAE3D /* PBXContainerItemProxy */;
+		};
+		38B17AED25DD6A60005CAE3D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = LoopKit;
+			targetProxy = 38B17AEC25DD6A60005CAE3D /* PBXContainerItemProxy */;
+		};
+		38B17AEF25DD6A60005CAE3D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = LoopKitUI;
+			targetProxy = 38B17AEE25DD6A60005CAE3D /* PBXContainerItemProxy */;
+		};
+		38B17AF825DD6AF0005CAE3D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = MKRingProgressView;
+			targetProxy = 38B17AF725DD6AF0005CAE3D /* PBXContainerItemProxy */;
+		};
+		38B17B4025DD6BE0005CAE3D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = Crypto;
+			targetProxy = 38B17B3F25DD6BE0005CAE3D /* PBXContainerItemProxy */;
+		};
+		38B17B4225DD6BE0005CAE3D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = MinimedKit;
+			targetProxy = 38B17B4125DD6BE0005CAE3D /* PBXContainerItemProxy */;
+		};
+		38B17B4425DD6BE0005CAE3D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = MinimedKitPlugin;
+			targetProxy = 38B17B4325DD6BE0005CAE3D /* PBXContainerItemProxy */;
+		};
+		38B17B4625DD6BE0005CAE3D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = MinimedKitUI;
+			targetProxy = 38B17B4525DD6BE0005CAE3D /* PBXContainerItemProxy */;
+		};
+		38B17B4825DD6BE0005CAE3D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = NightscoutUploadKit;
+			targetProxy = 38B17B4725DD6BE0005CAE3D /* PBXContainerItemProxy */;
+		};
+		38B17B4A25DD6BE0005CAE3D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = OmniKit;
+			targetProxy = 38B17B4925DD6BE0005CAE3D /* PBXContainerItemProxy */;
+		};
+		38B17B4C25DD6BE0005CAE3D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = OmniKitPlugin;
+			targetProxy = 38B17B4B25DD6BE0005CAE3D /* PBXContainerItemProxy */;
+		};
+		38B17B4E25DD6BE0005CAE3D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = OmniKitUI;
+			targetProxy = 38B17B4D25DD6BE0005CAE3D /* PBXContainerItemProxy */;
+		};
+		38B17B5025DD6BE0005CAE3D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = RileyLinkBLEKit;
+			targetProxy = 38B17B4F25DD6BE0005CAE3D /* PBXContainerItemProxy */;
+		};
+		38B17B5225DD6BE0005CAE3D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = RileyLinkKit;
+			targetProxy = 38B17B5125DD6BE0005CAE3D /* PBXContainerItemProxy */;
+		};
+		38B17B5425DD6BE0005CAE3D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = RileyLinkKitUI;
+			targetProxy = 38B17B5325DD6BE0005CAE3D /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		388E596525AD948E0019842D /* Debug */ = {

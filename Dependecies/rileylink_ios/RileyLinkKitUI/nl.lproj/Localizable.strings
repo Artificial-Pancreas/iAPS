@@ -1,0 +1,41 @@
+/* The title of the section describing commands */
+"Commands" = "Commando's";
+
+/* The connected state */
+"Connected" = "Verbonden";
+
+/* The in-progress connecting state */
+"Connecting" = "Verbinden";
+
+/* The title of the cell showing BLE connection state */
+"Connection State" = "Verbindingsstatus";
+
+/* The title of the section describing the device */
+"Device" = "Apparaat";
+
+/* The title of the devices table section in RileyLink settings */
+"Devices" = "Apparaten";
+
+/* The disconnected state */
+"Disconnected" = "Ontkoppeld";
+
+/* The in-progress disconnecting state */
+"Disconnecting" = "Ontkoppelen";
+
+/* The title of the cell showing firmware version */
+"Firmware" = "Firmware";
+
+/* The title of the cell showing current rileylink frequency */
+"Frequency" = "Frequency";
+
+/* The title of the cell showing device name */
+"Name" = "Naam";
+
+/* RileyLink setup description */
+"RileyLink allows for communication with the pump over Bluetooth Low Energy." = "RileyLink staat verbinding met de pomp toe via Bluetooth Low Energy (BLE of Bluetooth Smart).";
+
+/* The title of the cell showing BLE signal strength (RSSI) */
+"Signal Strength" = "Signaalsterkte";
+
+/* The title of the cell showing uptime */
+"Uptime" = "Uptime";

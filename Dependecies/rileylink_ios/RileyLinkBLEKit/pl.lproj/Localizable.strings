@@ -1,0 +1,30 @@
+/* Write size limit exceeded error description (1: size limit) */
+"Data exceeded maximum size of %@ bytes" = "Dane przekraczają maksymalną pojemność %@ bajtów";
+
+/* Invalid input error description (1: input) */
+"Input %@ is invalid" = "Wprowadzona %@ jest nieprawidłowa";
+
+/* Recovery suggestion for unknown peripheral characteristic */
+"Make sure the device is nearby, and the issue should resolve automatically" = "Upewnij się, że urządzenie jest w pobliżu; problem powinien rozwiązać się automatycznie";
+
+/* Timeout error description */
+"Peripheral did not respond in time" = "Urz. peryferyjne nie odpowiada";
+
+/* Not ready error description */
+"Peripheral isnʼt connected" = "Urz. peryferyjne jest niepodłączone";
+
+/* Response timeout error description */
+"Pump did not respond in time" = "Czas oczekiwania na odpowiedź pompy został przekroczony";
+
+/* Invalid response error description (1: response) */
+"Response %@ is invalid" = "Odpowiedź %@ jest nieprawidłowa";
+
+/* Unsupported command error description */
+"RileyLink firmware does not support the %@ command" = "Oprogramowanie RileyLink nie obsługuje polecenia %@";
+
+/* Failure reason: unknown peripheral characteristic */
+"The RileyLink was temporarily disconnected" = "RileyLink został tymczasowo rozłączony";
+
+/* Error description */
+"Unknown characteristic" = "Nieznany błąd";
+

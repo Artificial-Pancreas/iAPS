@@ -1,0 +1,209 @@
+/* The format string for displaying a frequency tune trial. Extra spaces added for emphesis: (1: frequency in MHz)(2: success count)(3: total count)(4: average RSSI) */
+"%1$@  %2$@/%3$@  %4$@" = "%1$@  %2$@/%3$@  %4$@";
+
+/* The format string describing number of basal schedule entries: (1: number of entries) */
+"%1$@ basal schedule entries\n" = "%1$@ inserimento basale\n";
+
+/* The format string describing units of insulin remaining: (1: number of units) */
+"%1$@ Units of insulin remaining\n" = "%1$@ Unità insulina residua\n";
+
+/* The format string for displaying an offset from a time zone: (1: GMT)(2: -)(3: 4:00) */
+"%1$@%2$@%3$@" = "%1$@%2$@%3$@";
+
+/* Instructions on selecting battery chemistry type */
+"Alkaline and Lithium batteries decay at differing rates. Alkaline tend to have a linear voltage drop over time whereas lithium cell batteries tend to maintain voltage until halfway through their lifespan. Under normal usage in a Non-MySentry compatible Minimed (x22/x15) insulin pump running Loop, Alkaline batteries last approximately 4 to 5 days. Lithium batteries last between 1-2 weeks. This selection will use different battery voltage decay rates for each of the battery chemistry types and alert the user when a battery is approximately 8 to 10 hours from failure." = "Le batterie alcaline e al litio decadono a velocità diverse. Le batterie alcaline tendono ad avere una caduta di tensione lineare nel tempo mentre le batterie al litio tendono a mantenere la tensione fino a metà della loro durata. In condizioni di utilizzo normali con in esecuzione Loop, in un microinfusore d'insulina non compatibile con MySentry (x22/x15), le batterie alcaline durano dai 4 ai 5 giorni circa. Le batterie al litio durano tra 1-2 settimane. Questa selezione utilizzerà diverse velocità di decadimento della tensione della batteria per ciascuno dei tipi di chimica della batteria e avviserà l'utente quando una batteria si trova a circa 8-10 ore dall'esaurimento.";
+
+/* Confirmation message for deleting a pump */
+"Are you sure you want to delete this pump?" = "Sei sicuro di voler eliminare questo microinfusore?";
+
+/* The title of the cell describing an awake radio */
+"Awake Until" = "Attivo sino";
+
+/* The title text for the basal rate schedule */
+"Basal Rates" = "Quantita' Basali";
+
+/* The format string describing pump battery voltage: (1: battery voltage) */
+"Battery: %1$@ volts\n" = "Batteria: %1$@ volts\n";
+
+/* The label indicating the best radio frequency */
+"Best Frequency" = "La migliore Frequenza";
+
+/* The format string describing pump bolusing state: (1: bolusing) */
+"Bolusing: %1$@\n" = "Bolo in corso: %1$@\n";
+
+/* The title of the cancel action in an action sheet */
+"Cancel" = "Cancella";
+
+/* The title of the command to change pump time */
+"Change Time" = "Cambia Orario";
+
+/* The title of the command to change pump time zone */
+"Change Time Zone" = "Cambia Fuso Orario";
+
+/* Progress message for changing pump time. */
+"Changing time…" = "Modifica Orario…";
+
+/* The title of the section describing commands */
+"Commands" = "Comandi";
+
+/* The title of the configuration section in settings */
+"Configuration" = "Configurazione";
+
+/* Button title to connect to pump during setup */
+"Connect" = "Collegarsi";
+
+/* The title of the cell showing BLE connection state */
+"Connection State" = "Stato di Connessione";
+
+/* Button title to delete pump
+   Title text for the button to remove a pump from Loop */
+"Delete Pump" = "Elimina Microinfusore";
+
+/* Title text for delivery limits */
+"Delivery Limits" = "Limiti di Consegna";
+
+/* The title of the section describing the device */
+"Device" = "Dispositivo";
+
+/* The title of the command to discover commands */
+"Discover Commands" = "Scopri i Comandi";
+
+/* Progress message for discovering commands. */
+"Discovering commands…" = "Scoperta dei comandi…";
+
+/* The title of the command to enable diagnostic LEDs */
+"Enable Diagnostic LEDs" = "Abilita LED Diagnostici";
+
+/* Progress message for enabling diagnostic LEDs */
+"Enabled Diagnostic LEDs" = "LED Diagnostici Abilitati";
+
+/* The alert title for a resume error */
+"Error Resuming" = "Errore durante la ripresa";
+
+/* The alert title for a suspend error */
+"Error Suspending" = "Errore durante la sospensione";
+
+/* The title of the command to fetch recent glucose */
+"Fetch Enlite Glucose" = "Sincronizzare Glicemie Enlite";
+
+/* The title of the command to fetch recent history */
+"Fetch Recent History" = "Sincronizzare Storia Recente";
+
+/* Progress message for fetching pump glucose. */
+"Fetching glucose…" = "Recupero glicemie…";
+
+/* Progress message for fetching pump history. */
+"Fetching history…" = "Recupero della cronologia…";
+
+/* Progress message for fetching pump model. */
+"Fetching pump model…" = "Recupero modello microinfusore…";
+
+/* The title of the cell showing firmware version */
+"Firmware" = "Firmware";
+
+/* The title of the cell showing the pump firmware version */
+"Firmware Version" = "Firmware Version";
+
+/* The title of the command to get pump model */
+"Get Pump Model" = "Ottieni Modello del Microinfusore";
+
+/* Progress message for getting statistics. */
+"Get Statistics…" = "Ottieni Statistiche…";
+
+/* Instructions on selecting an insulin data source */
+"Insulin delivery can be determined from the pump by either interpreting the event history or comparing the reservoir volume over time. Reading event history allows for a more accurate status graph and uploading up-to-date treatment data to Nightscout, at the cost of faster pump battery drain and the possibility of a higher radio error rate compared to reading only reservoir volume. If the selected source cannot be used for any reason, the system will attempt to fall back to the other option." = "L'insulina somministrata può essere determinata dalla pompa sia interpretando la cronologia eventi o confrontando il volume del serbatoio nel tempo. La lettura della cronologia degli eventi consente una statistica più accurata e trasmette dati sempre aggiornati a Nightscout, a discapito di un maggiore consumo di batteria e con la possibilità di incorrere in un maggior tasso di errore di comunicazione rispetto alla sola lettura del volume del serbatoio. Se la sorgente selezionata non può essere utilizzata per qualsiasi ragione, il sistema tenterà di ripiegare sull'altra opzione.";
+
+/* The title of the cell describing an awake radio */
+"Last Awake" = "Ultimo risveglio";
+
+/* The title of the cell describing no radio awake data */
+"Listening Off" = "Ricevendo";
+
+/* The title of the command to pair with mysentry */
+"MySentry Pair" = "Accoppia MySentry";
+
+/* The title of the cell showing device name */
+"Name" = "Nome";
+
+/* Message display when no response from tuning pump */
+"No response" = "Nessuna risposta";
+
+/* The title of the cell showing the last idle */
+"On Idle" = "Inattivo";
+
+/* Pump find device instruction */
+"On your pump, go to the Find Device screen and select \"Find Device\".\n\nMain Menu >\nUtilities >\nConnect Devices >\nOther Devices >\nOn >\nFind Device" = "On your pump, go to the Find Device screen and select \"Find Device\".\n\nMain Menu >\nUtilities >\nConnect Devices >\nOther Devices >\nOn >\nFind Device";
+
+/* The title text for the preferred insulin data source config */
+"Preferred Data Source" = "Fonte Dati";
+
+/* The title of the section describing the pump */
+"Pump" = "Microinfusore";
+
+/* The title text for the battery type value */
+"Pump Battery Type" = "Tipo Batteria Microinfusore";
+
+/* The title of the cell showing pump ID
+   The title text for the pump ID config value */
+"Pump ID" = "ID microinfusore";
+
+/* The title of the cell showing the pump model number */
+"Pump Model" = "Modello Microinfusore";
+
+/* Title of the pump settings view controller */
+"Pump Settings" = "Impostazioni Microinfusore";
+
+/* The title of the command to read basal schedule */
+"Read Basal Schedule" = "Leggi programma basale";
+
+/* The title of the command to read pump status */
+"Read Pump Status" = "Leggi stato microinfusore";
+
+/* Progress message for reading basal schedule */
+"Reading basal schedule…" = "Lettura programma basale…";
+
+/* Progress message for reading pump status */
+"Reading pump status…" = "Lettura stato microinfusore…";
+
+/* The title of the cell showing the pump region */
+"Region" = "Region";
+
+/* Button title to retry sentry setup */
+"Retry" = "Riprova";
+
+/* The title of the command to fetch RileyLink statistics */
+"RileyLink Statistics" = "Statistiche RileyLink";
+
+/* Title of button to save basal profile to pump
+   Title of button to save delivery limit settings to pump */
+"Save to Pump…" = "Salva su Microinfusore…";
+
+/* The title of the command to send a button press */
+"Send Button Press" = "Invia prova pressione Pulsante";
+
+/* Progress message for sending button press to pump. */
+"Sending button press…" = "Inviando prova pressione pulsante…";
+
+/* The title of the cell showing BLE signal strength (RSSI) */
+"Signal Strength" = "Potenza Segnale";
+
+/* A message indicating a command succeeded */
+"Succeeded" = "Operazione eseguita con successo";
+
+/* The format string describing pump suspended state: (1: suspended) */
+"Suspended: %1$@\n" = "Sospeso: %1$@\n";
+
+/* The label indicating the results of each frequency trial */
+"Trials" = "Prove";
+
+/* The title of the command to re-tune the radio */
+"Tune Radio Frequency" = "Sintonizzare la frequenza radio";
+
+/* Progress message for tuning radio */
+"Tuning radio…" = "Sintonizzazione radio…";
+
+/* The detail text for an unknown pump model */
+"Unknown" = "Sconosciuto";
+
+/* The title of the cell showing uptime */
+"Uptime" = "Uptime";

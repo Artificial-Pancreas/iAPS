@@ -1,0 +1,209 @@
+/* The format string for displaying a frequency tune trial. Extra spaces added for emphesis: (1: frequency in MHz)(2: success count)(3: total count)(4: average RSSI) */
+"%1$@  %2$@/%3$@  %4$@" = "%1$@  %2$@/%3$@  %4$@";
+
+/* The format string describing number of basal schedule entries: (1: number of entries) */
+"%1$@ basal schedule entries\n" = "%1$@ planlagt basal \n";
+
+/* The format string describing units of insulin remaining: (1: number of units) */
+"%1$@ Units of insulin remaining\n" = "%1$@ Udestående enheder insulin\n";
+
+/* The format string for displaying an offset from a time zone: (1: GMT)(2: -)(3: 4:00) */
+"%1$@%2$@%3$@" = "%1$@%2$@%3$@";
+
+/* Instructions on selecting battery chemistry type */
+"Alkaline and Lithium batteries decay at differing rates. Alkaline tend to have a linear voltage drop over time whereas lithium cell batteries tend to maintain voltage until halfway through their lifespan. Under normal usage in a Non-MySentry compatible Minimed (x22/x15) insulin pump running Loop, Alkaline batteries last approximately 4 to 5 days. Lithium batteries last between 1-2 weeks. This selection will use different battery voltage decay rates for each of the battery chemistry types and alert the user when a battery is approximately 8 to 10 hours from failure." = "Alkaline og Lithium batterier henfalder med forskellige satser. Alkaline har tendens til at have et lineært fald over tid, hvor Lithium batteri celler typisk opretholder deres spænding indtil halvejen i deres levetid. Ved normalt brug i en ikke-MySentry kompatibel Minimed (x22/x15) insulin pumpe, som kører Loop vil alkaline batterier holde cirka 4 til 5 dage. Lithium batterier holder mellem 1 til 2 uger. Denne indstilling bruger forskellige batteri henfalds satser for hver kemiske  batteritype og alarmere brugeren når et batteri er cirka 8 til 10 timer fra at løbe tør.";
+
+/* Confirmation message for deleting a pump */
+"Are you sure you want to delete this pump?" = "Er du sikker på at du vil fjerne denne pumpe?";
+
+/* The title of the cell describing an awake radio */
+"Awake Until" = "Vågen indtil";
+
+/* The title text for the basal rate schedule */
+"Basal Rates" = "Basal rater";
+
+/* The format string describing pump battery voltage: (1: battery voltage) */
+"Battery: %1$@ volts\n" = "Batteri: %1$@ volt\n";
+
+/* The label indicating the best radio frequency */
+"Best Frequency" = "Bedste frekvens";
+
+/* The format string describing pump bolusing state: (1: bolusing) */
+"Bolusing: %1$@\n" = "Giver bolus: %1$@\n";
+
+/* The title of the cancel action in an action sheet */
+"Cancel" = "Afbryd";
+
+/* The title of the command to change pump time */
+"Change Time" = "Ændre klokkeslæt";
+
+/* The title of the command to change pump time zone */
+"Change Time Zone" = "Ændre tidszone";
+
+/* Progress message for changing pump time. */
+"Changing time…" = "Ændre tid...";
+
+/* The title of the section describing commands */
+"Commands" = "Kommandoer";
+
+/* The title of the configuration section in settings */
+"Configuration" = "Konfiguration";
+
+/* Button title to connect to pump during setup */
+"Connect" = "Forbind";
+
+/* The title of the cell showing BLE connection state */
+"Connection State" = "Status på forbindelse";
+
+/* Button title to delete pump
+   Title text for the button to remove a pump from Loop */
+"Delete Pump" = "Fjern pumpe";
+
+/* Title text for delivery limits */
+"Delivery Limits" = "Mængdebegrænsning";
+
+/* The title of the section describing the device */
+"Device" = "Enhed";
+
+/* The title of the command to discover commands */
+"Discover Commands" = "Opdag kommandoer";
+
+/* Progress message for discovering commands. */
+"Discovering commands…" = "Opdager kommandoer...";
+
+/* The title of the command to enable diagnostic LEDs */
+"Enable Diagnostic LEDs" = "Slå diagnoserings LED’er til";
+
+/* Progress message for enabling diagnostic LEDs */
+"Enabled Diagnostic LEDs" = "Diagnoserings LED’er aktiveret";
+
+/* The alert title for a resume error */
+"Error Resuming" = "Fejl i genoptagelse";
+
+/* The alert title for a suspend error */
+"Error Suspending" = "Fejl i suspendering";
+
+/* The title of the command to fetch recent glucose */
+"Fetch Enlite Glucose" = "Hent seneste glukose";
+
+/* The title of the command to fetch recent history */
+"Fetch Recent History" = "Hent seneste historie";
+
+/* Progress message for fetching pump glucose. */
+"Fetching glucose…" = "Henter glukose...";
+
+/* Progress message for fetching pump history. */
+"Fetching history…" = "Henter histoik...";
+
+/* Progress message for fetching pump model. */
+"Fetching pump model…" = "Henter pumpe model...";
+
+/* The title of the cell showing firmware version */
+"Firmware" = "Firmware";
+
+/* The title of the cell showing the pump firmware version */
+"Firmware Version" = "Firmware version";
+
+/* The title of the command to get pump model */
+"Get Pump Model" = "Hent pumpe model";
+
+/* Progress message for getting statistics. */
+"Get Statistics…" = "Hent statistik";
+
+/* Instructions on selecting an insulin data source */
+"Insulin delivery can be determined from the pump by either interpreting the event history or comparing the reservoir volume over time. Reading event history allows for a more accurate status graph and uploading up-to-date treatment data to Nightscout, at the cost of faster pump battery drain and the possibility of a higher radio error rate compared to reading only reservoir volume. If the selected source cannot be used for any reason, the system will attempt to fall back to the other option." = "Levering af insulin kan blive bestemt fra pumpen ved enten at tolke på begivenheds historikken eller ved at sammenligne volumen af reservoiret over tid. Aflæsning af begivenheds historik kan give mere præcise status grafer og uploading af up-to-date behandlings data til Nightscout, ved bekostning af hurtigere dræning af pumpe batteriet, risiko for højere fejlrate i radiokommunikation i forhold til aflæsning af volumen af reservoiret. Hvis den valgte kilde ikke kan anvendes, af en eller anden grund, så vil systemet falde tilbage på den anden mulighed.";
+
+/* The title of the cell describing an awake radio */
+"Last Awake" = "Senest vågen";
+
+/* The title of the cell describing no radio awake data */
+"Listening Off" = "Aflytning slået fra";
+
+/* The title of the command to pair with mysentry */
+"MySentry Pair" = "MySentry parring";
+
+/* The title of the cell showing device name */
+"Name" = "Navn";
+
+/* Message display when no response from tuning pump */
+"No response" = "Intet svar";
+
+/* The title of the cell showing the last idle */
+"On Idle" = "Slumre";
+
+/* Pump find device instruction */
+"On your pump, go to the Find Device screen and select \"Find Device\".\n\nMain Menu >\nUtilities >\nConnect Devices >\nOther Devices >\nOn >\nFind Device" ="On your pump, go to the Find Device screen and select \"Find Device\".\n\nMain Menu >\nUtilities >\nConnect Devices >\nOther Devices >\nOn >\nFind Device";
+
+/* The title text for the preferred insulin data source config */
+"Preferred Data Source" = "Foretrukne data kilde";
+
+/* The title of the section describing the pump */
+"Pump" = "Pumpe";
+
+/* The title text for the battery type value */
+"Pump Battery Type" = "Pumpe batteritype";
+
+/* The title of the cell showing pump ID
+   The title text for the pump ID config value */
+"Pump ID" = "Pumpe ID";
+
+/* The title of the cell showing the pump model number */
+"Pump Model" = "Pumpe model";
+
+/* Title of the pump settings view controller */
+"Pump Settings" = "Pumpe indstillinger";
+
+/* The title of the command to read basal schedule */
+"Read Basal Schedule" = "Læs basal plan";
+
+/* The title of the command to read pump status */
+"Read Pump Status" = "Læs pumpe status";
+
+/* Progress message for reading basal schedule */
+"Reading basal schedule…" = "Læser basal plan...";
+
+/* Progress message for reading pump status */
+"Reading pump status…" = "Læser pumpe status...";
+
+/* The title of the cell showing the pump region */
+"Region" = "Region";
+
+/* Button title to retry sentry setup */
+"Retry" = "Prøv igen";
+
+/* The title of the command to fetch RileyLink statistics */
+"RileyLink Statistics" = "RileyLink Statistik";
+
+/* Title of button to save basal profile to pump
+   Title of button to save delivery limit settings to pump */
+"Save to Pump…" = "Gem på pumpen";
+
+/* The title of the command to send a button press */
+"Send Button Press" = "Send knappe tryk";
+
+/* Progress message for sending button press to pump. */
+"Sending button press…" = "Sender knappe tryk ";
+
+/* The title of the cell showing BLE signal strength (RSSI) */
+"Signal Strength" = "Signal styrke";
+
+/* A message indicating a command succeeded */
+"Succeeded" = "Lykkedes";
+
+/* The format string describing pump suspended state: (1: suspended) */
+"Suspended: %1$@\n" = "Suspenderet: %1$@\n";
+
+/* The label indicating the results of each frequency trial */
+"Trials" = "Forsøg";
+
+/* The title of the command to re-tune the radio */
+"Tune Radio Frequency" = "Indstil radio frekvens";
+
+/* Progress message for tuning radio */
+"Tuning radio…" = "Indstiller radio frekvens...";
+
+/* The detail text for an unknown pump model */
+"Unknown" = "Ukendt";
+
+/* The title of the cell showing uptime */
+"Uptime" = "Oppetid";

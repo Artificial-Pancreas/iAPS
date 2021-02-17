@@ -1,0 +1,27 @@
+/* Invalid input error description (1: input) */
+"Input %@ is invalid" = "L’entrée %@ n’est pas valide";
+
+/* Recovery suggestion for unknown peripheral characteristic */
+"Make sure the device is nearby, and the issue should resolve automatically" = "Assurez-vous que le périphérique est à proximité et que le problème doit être résolu automatiquement";
+
+/* Timeout error description */
+"Peripheral did not respond in time" = "Le périphérique n’a pas répondu à temps";
+
+/* Not ready error description */
+"Peripheral isnʼt connected" = "Le périphérique n’est pas connecté";
+
+/* Response timeout error description */
+"Pump did not respond in time" = "La pompe n’a pas répondu à temps";
+
+/* Invalid response error description (1: response) */
+"Response %@ is invalid" = "Réponse %@ n’est pas valide";
+
+/* Unsupported command error description */
+"RileyLink firmware does not support the %@ command" = "Le firmware de RileyLink ne prend pas en charge la commande %@";
+
+/* Failure reason: unknown peripheral characteristic */
+"The RileyLink was temporarily disconnected" = "Le RileyLink a été temporairement déconnecté";
+
+/* Error description */
+"Unknown characteristic" = "Caractéristique inconnue";
+

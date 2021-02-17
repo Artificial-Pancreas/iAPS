@@ -1,0 +1,68 @@
+/* Class = "UITableViewSection"; headerTitle = "Remove POD"; ObjectID = "1LF-te-Bdd"; */
+"1LF-te-Bdd.headerTitle" = "Rimuovi POD";
+
+/* Class = "UINavigationItem"; title = "RileyLink Setup"; ObjectID = "3HH-eJ-lRh"; */
+"3HH-eJ-lRh.title" = "Configurazione RileyLink";
+
+/* Class = "UITableViewController"; title = "Pod Settings"; ObjectID = "6vo-Ov-UpE"; */
+"6vo-Ov-UpE.title" = "Impostazioni Pod";
+
+/* Class = "UITableViewController"; title = "Pump Setup"; ObjectID = "91O-Un-vKc"; */
+"91O-Un-vKc.title" = "Configurazione pompa";
+
+/* Class = "UITableViewSection"; footerTitle = "NOTE: Do not remove the pod's needle cap at this time."; ObjectID = "EUt-xk-Rmp"; */
+"EUt-xk-Rmp.footerTitle" = "ATTENZIONE: non rimuovere il tappo dell’ago di Pod in questo momento.";
+
+/* Class = "UITableViewSection"; headerTitle = "Prepare Pod"; ObjectID = "EUt-xk-Rmp"; */
+"EUt-xk-Rmp.headerTitle" = "Prepara Pod";
+
+/* Class = "UILabel"; text = "Loop will remind you to change your pod before it expires. You can change this to a time convenient for you."; ObjectID = "Eng-IY-fQ7"; */
+"Eng-IY-fQ7.text" = "Loop ti ricorderà di cambiare Pod prima della sua scadenza. Puoi modificare questa data a tuo piacimento.";
+
+/* Class = "UILabel"; text = "Please deactivate the pod. When deactivation is complete, remove pod from body."; ObjectID = "GK7-jb-tyY"; */
+"GK7-jb-tyY.text" = "Disattiva Pod. Al termine della procedura, rimuovi Pod dal corpo.";
+
+/* Class = "UINavigationItem"; title = "Insert Cannula"; ObjectID = "HwT-30-f0y"; */
+"HwT-30-f0y.title" = "Inserisci cannula";
+
+/* Class = "UILabel"; text = "Prepare site. Remove the pod's needle cap and adhesive backing. If pod is OK, apply to site."; ObjectID = "Iuv-5M-bDH"; */
+"Iuv-5M-bDH.text" = "Prepara la zona. Rimuovi il tappo dell’ago di Pod e la protezione adesiva. Se Pod è in buono stato, applicalo sulla zona.";
+
+/* Class = "UITableViewController"; title = "Pump Setup"; ObjectID = "aNg-mm-Uuy"; */
+"aNg-mm-Uuy.title" = "Configurazione pompa";
+
+/* Class = "UITableViewController"; title = "Pump Setup"; ObjectID = "ack-ra-XH6"; */
+"ack-ra-XH6.title" = "Configurazione pompa";
+
+/* Class = "UILabel"; text = "Your Pod is ready for use."; ObjectID = "bJ5-iH-fnF"; */
+"bJ5-iH-fnF.text" = "Pod pronto per l’uso.";
+
+/* Class = "UILabel"; text = "Reminder"; ObjectID = "ePA-6p-q8C"; */
+"ePA-6p-q8C.text" = "Promemoria";
+
+/* Class = "UINavigationItem"; title = "Pod Pairing"; ObjectID = "jVO-Ut-MhL"; */
+"jVO-Ut-MhL.title" = "Abbinamento Pod";
+
+/* Class = "UITableViewController"; title = "Pump Setup"; ObjectID = "k1Y-x4-m0a"; */
+"k1Y-x4-m0a.title" = "Configurazione pompa";
+
+/* Class = "UILabel"; text = "Review your settings below. They will be programmed into the pod during pairing. You can change these settings at any time in Loopʼs Settings screen."; ObjectID = "kLL-SQ-K0a"; */
+"kLL-SQ-K0a.text" = "Controlla le impostazioni qui sotto. Queste saranno programmate all’interno di Pod durante l'abbinamento. Puoi modificarle in qualsiasi momento dalla schermata Impostazioni Loop.";
+
+/* Class = "UINavigationItem"; title = "Setup Complete"; ObjectID = "nDb-R5-e02"; */
+"nDb-R5-e02.title" = "Configurazione terminata";
+
+/* Class = "UITableViewSection"; footerTitle = "NOTE: If cannula sticks out, press cancel."; ObjectID = "rcC-ke-lUP"; */
+"rcC-ke-lUP.footerTitle" = "ATTENZIONE: Se la cannula sporge, fai clic su Annulla.";
+
+/* Class = "UITableViewSection"; headerTitle = "Apply POD"; ObjectID = "rcC-ke-lUP"; */
+"rcC-ke-lUP.headerTitle" = "Applica POD";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "vEc-Km-ewe"; */
+"vEc-Km-ewe.text" = "Etichetta";
+
+/* Class = "UILabel"; text = "Fill a new pod with insulin. Listen for 2 beeps from the pod during filling. Keep RileyLink adjacent to the pod during pairing."; ObjectID = "vmF-Dc-3DS"; */
+"vmF-Dc-3DS.text" = "Riempi un nuovo Pod di insulina. Pod emetterà 2 bip durante il riempimento. Mantieni RileyLink accanto a Pod durante l'abbinamento.";
+
+/* Class = "UINavigationItem"; title = "Replace Pod"; ObjectID = "yy1-xf-HdR"; */
+"yy1-xf-HdR.title" = "Sostituisci Pod";

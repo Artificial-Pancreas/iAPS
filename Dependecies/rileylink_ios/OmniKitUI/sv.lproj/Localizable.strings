@@ -1,0 +1,231 @@
+/* Accessibility format string for (1: localized volume)(2: time) */
+"%1$@ units remaining at %2$@" = "%1$@ enheter återstår kl. %2$@";
+
+/* The format string for displaying an offset from a time zone: (1: GMT)(2: -)(3: 4:00) */
+"%1$@%2$@%3$@" = "%1$@%2$@%3$@";
+
+/* Format string providing instructions for replacing pod due to a fault. (1: The fault description) */
+"%1$@. Insulin delivery has stopped. Please deactivate and remove pod." = "%1$@. Insulintillförseln har avbrutits. Inaktivera podden och byt till en ny podd.";
+
+/* Format string for delivered insulin. (1: The localized amount)
+   Format string for insulin remaining in reservoir. (1: The localized amount) */
+"%@ U" = "%@ E";
+
+/* Format string for bolus progress when finished. (1: The localized amount) */
+"%@ U (Finished)" = "%@ E (Klar)";
+
+/* Format string for bolus progress. (1: The delivered amount) (2: The programmed amount) (3: the percent progress) */
+"%@ U of %@ U (%@)" = "%@ E av %@ E (%@)";
+
+/* Format string for temp basal rate. (1: The localized amount) */
+"%@ U/hour" = "%@ E/h";
+
+/* Format string for bolus percent progress. (1: Percent progress) */
+"%@%%" = "%@%%";
+
+/* Format string for reservoir reading when above or equal to maximum reading. (1: The localized amount) */
+"%@+ U" = "%@+ E";
+
+/* Appends a full-stop to a statement */
+"%@." = "%@.";
+
+/* Format string for reservoir volume. (1: The localized volume) */
+"%@U" = "%@E";
+
+/* The title of the cell showing the pod activated at time */
+"Active Time" = "Aktiv tid";
+
+/* The title of the cell showing alarm status */
+"Alarms" = "Larm";
+
+/* Confirmation message for shutting down a pod */
+"Are you sure you want to shutdown this pod?" = "Är du säker att du vill stänga av denna podd?";
+
+/* Confirmation message for removing Omnipod PumpManager */
+"Are you sure you want to stop using Omnipod?" = "Är du säker att du vill sluta använda Omnipod?";
+
+/* The title text for the address assigned to the pod */
+"Assigned Address" = "Tilldelad adress";
+
+/* The title of the cell showing pod basal status */
+"Basal Delivery" = "Basaldos";
+
+/* The title text for the basal rate schedule */
+"Basal Rates" = "Basaldoser";
+
+/* The title of the cell showing pod bolus status */
+"Bolus Delivery" = "Bolusdos";
+
+/* The title of the cancel action in an action sheet */
+"Cancel" = "Avbryt";
+
+/* The title of the command to change pump time zone */
+"Change Time Zone" = "Ändra tidszon";
+
+/* Progress message for changing pod time. */
+"Changing time…" = "Ändra tid…";
+
+/* The title of the configuration section in settings */
+"Configuration" = "Konfiguration";
+
+/* The title of the continue action in an action sheet */
+"Continue" = "Fortsätt";
+
+/* Button title to deactivate pod because of fault during setup */
+"Deactivate" = "Inaktivera";
+
+/* Button title for pod deactivation
+   Button title to deactivate pod */
+"Deactivate Pod" = "Inaktivera podd";
+
+/* Button title to delete Omnipod PumpManager */
+"Delete Omnipod" = "Radera Omnipod";
+
+/* Title text for delivery limits */
+"Delivery Limits" = "Maxdosvärde";
+
+/* The title of the device information section in settings */
+"Device Information" = "Enhetsinformation";
+
+/* Title text for button to disable bolus beeps */
+"Disable Bolus Beeps" = "Stäng av bolusljud";
+
+/* Title text for button to enable bolus beeps */
+"Enable Bolus Beeps" = "Slå på bolusljud";
+
+/* The alert title for disable bolus beeps error */
+"Error disabling bolus beeps" = "Fel vid avstängning av bolusljud";
+
+/* The alert title for enable bolus beeps error */
+"Error enabling bolus beeps" = "Fel vid aktivering av bolusljud";
+
+/* The alert title for a resume error */
+"Error Resuming" = "Fel vid återupptagande";
+
+/* The alert title for a suspend error */
+"Error Suspending" = "Fel vid försök till paus";
+
+/* The title of the cell showing the pod expiration reminder date */
+"Expiration Reminder" = "Påminnelse om utgångsdatum";
+
+/* The title of the cell showing the pod expiration after expiry */
+"Expired" = "Utgått";
+
+/* The title of the cell showing the pod expiration */
+"Expires" = "Utgår";
+
+/* Pod life HUD view label */
+"Fault" = "Fel";
+
+/* The title of the command to finish pod setup */
+"Finish pod setup" = "Gör färdigt poddinställningen";
+
+/* Accessibility format string for (1: localized volume)(2: time) */
+"Greater than %1$@ units remaining at %2$@" = "Fler än %1$@ enheter återstår kl. %2$@";
+
+/* Instructions when deactivating pod that has been paired, but not attached. */
+"Incompletely set up pod must be deactivated before pairing with a new one. Please deactivate and discard pod." = "Ofullständigt inställd podd måste inaktiveras före parkoppling av ny podd. Inaktivera och kasta den gamla podden.";
+
+/* Instructions when deactivating pod that has been paired and possibly attached. */
+"Incompletely set up pod must be deactivated before pairing with a new one. Please deactivate and remove pod." = "Ofullständigt inställd podd måste inaktiveras före parkoppling av ny podd. Inaktivera och kasta den gamla podden.";
+
+/* Button title to insert cannula during setup */
+"Insert Cannula" = "För in kanyl";
+
+/* The title of the cell showing delivered insulin */
+"Insulin Delivered" = "Insulin doserat";
+
+/* The error message shown when Loop's basal schedule has an unsupported rate */
+"Invalid entry" = "Ogiltig inmatning";
+
+/* The title of the cell showing the pod lot id */
+"Lot" = "Lot";
+
+/* The detail text for bolus delivery when no bolus is being delivered */
+"None" = "Ingen";
+
+/* Button title to pair with pod during setup */
+"Pair" = "Parkoppla";
+
+/* The title of the command to pair new pod */
+"Pair New Pod" = "Parkoppla ny podd";
+
+/* The text of the loading label when pairing */
+"Pairing…" = "Parkopplar…";
+
+/* The title of the cell showing the pod pi version */
+"PI Version" = "PI-version";
+
+/* The title of the command to play test beeps */
+"Play Test Beeps" = "Spela upp testljud";
+
+/* Progress message for play test beeps. */
+"Play Test Beeps…" = "Spelar upp testljud…";
+
+/* The title of the cell showing the pod pm version */
+"PM Version" = "PM-version";
+
+/* Label describing pod age view */
+"Pod Age" = "Poddålder";
+
+/* Title of the pod settings view controller */
+"Pod Settings" = "Poddinställningar";
+
+/* The text of the loading label when pod is primed */
+"Primed" = "Podden är fylld";
+
+/* The text of the loading label when priming */
+"Priming…" = "Podden fylls...";
+
+/* Label describing time remaining view */
+"Remaining" = "Återstår";
+
+/* Label indicating pod replacement necessary
+   The title of the command to replace pod */
+"Replace Pod" = "Byt podd";
+
+/* The title of the command to replace pod when there is a pod fault */
+"Replace Pod Now" = "Byt podd nu";
+
+/* The title of the cell showing reservoir status */
+"Reservoir" = "Reservoar";
+
+/* Button title for retrying pod deactivation */
+"Retry Pod Deactivation" = "Försök inaktivera podden igen";
+
+/* Title of button to save delivery limit settings
+   Title of button to sync basal profile when no pod paired */
+"Save" = "Spara";
+
+/* The detail text of the basal row when pod is running scheduled basal */
+"Schedule" = "Schema";
+
+/* The title of the status section in settings */
+"Status" = "Status";
+
+/* A message indicating a command succeeded */
+"Succeeded" = "Lyckades";
+
+/* The detail text of the basal row when pod is suspended */
+"Suspended" = "Pausad";
+
+/* Title text for the button to delete Omnipod PumpManager */
+"Switch from Omnipod Pumps" = "Byt från Omnipod-pumpar";
+
+/* Title of button to sync basal profile from pod */
+"Sync With Pod" = "Synkronisera med podd";
+
+/* The title of the command to run the test command */
+"Test Command" = "Kommandotest";
+
+/* Progress message for testing commands. */
+"Testing Commands…" = "Testar att skicka kommandon…";
+
+/* The error message shown when Loop's basal schedule has more entries than the pod can support */
+"Too many entries" = "För många inmatningar";
+
+/* Instructions when pod cannot be deactivated */
+"Unable to deactivate pod. Please continue and pair a new one." = "Kunde inte deaktivera podden. Var god fortsätt genom att parkoppla en ny podd.";
+
+/* The detail text for delivered insulin when no measurement is available */
+"Unknown" = "Okänd";
