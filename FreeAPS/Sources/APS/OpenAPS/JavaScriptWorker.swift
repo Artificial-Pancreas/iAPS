@@ -32,7 +32,7 @@ final class JavaScriptWorker {
     }
 
     private func json(for string: String) -> RawJSON {
-        evaluate(string: "JSON.stringify(\(string));")!.toString()!
+        evaluate(string: "JSON.stringify(\(string), null, 4);")!.toString()!
     }
 
     func call(function: String, with arguments: [JSON]) -> RawJSON {

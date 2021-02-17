@@ -6,7 +6,8 @@ extension Settings {
 
         var body: some View {
             Form {
-                Text("Open Editor").modal(for: .configEditor, from: self)
+                Text("Preferences").modal(for: .configEditor(file: OpenAPS.Settings.preferences), from: self)
+                Text("Autosense").modal(for: .configEditor(file: OpenAPS.Settings.autosense), from: self)
                 Text("Nightscout").modal(for: .nighscoutConfig, from: self)
             }
             .toolbar { ToolbarItem(placement: .principal) { Text("Settings") } }

@@ -38,6 +38,7 @@ final class OpenAPS {
                 temptargets: "null"
             )
             print("AUTOSENS: \(autosensResult)")
+            try? self.storage.save(autosensResult, as: Settings.autosense)
 
             let iobResult = self.iob(
                 pumphistory: pumphistory,
@@ -287,40 +288,5 @@ final class OpenAPS {
 
     private func loadJSON(name: String) -> String {
         try! String(contentsOf: Foundation.Bundle.main.url(forResource: "json/\(name)", withExtension: "json")!)
-    }
-}
-
-extension OpenAPS {
-    private enum Bundle {
-        static let iob = "bundle/iob"
-        static let meal = "bundle/meal"
-        static let autotunePrep = "bundle/autotune-prep"
-        static let autotuneCore = "bundle/autotune-core"
-        static let getLastGlucose = "bundle/glucose-get-last"
-        static let basalSetTemp = "bundle/basal-set-temp"
-        static let determineBasal = "bundle/determine-basal"
-        static let autosens = "bundle/autosens"
-        static let profile = "bundle/profile"
-    }
-
-    private enum Prepare {
-        static let iob = "prepare/iob"
-        static let meal = "prepare/meal"
-        static let autotunePrep = "prepare/autotune-prep"
-        static let autotuneCore = "prepare/autotune-core"
-        static let determineBasal = "prepare/determine-basal"
-        static let autosens = "prepare/autosens"
-        static let profile = "prepare/profile"
-    }
-
-    private enum Settings {
-        static let autotune = "settings/autotune.json"
-    }
-
-    private enum Function {
-        static let freeaps = "freeaps"
-        static let generate = "generate"
-        static let tempBasalFunctions = "tempBasalFunctions"
-        static let exportDefaults = "exportDefaults"
     }
 }

@@ -10,7 +10,7 @@ extension ConfigEditor {
                 .allowsTightening(true)
                 .autocapitalization(.none)
                 .disableAutocorrection(true)
-                .toolbar { ToolbarItem(placement: .principal) { Text("preferences.json") } }
+                .toolbar { ToolbarItem(placement: .principal) { Text(viewModel.file) } }
                 .navigationBarItems(
                     leading: Button("Close", action: viewModel.hideModal),
                     trailing: Button("Save", action: viewModel.save)

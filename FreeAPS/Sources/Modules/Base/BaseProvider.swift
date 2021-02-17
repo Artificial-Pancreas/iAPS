@@ -28,4 +28,11 @@ class BaseProvider: Provider, Injectable {
             }
             .store(in: &lifetime)
     }
+
+    func defaults(for file: String) -> RawJSON {
+        guard let url = Foundation.Bundle.main.url(forResource: "json/defaults/\(file)", withExtension: "") else {
+            return ""
+        }
+        return (try? String(contentsOf: url)) ?? ""
+    }
 }

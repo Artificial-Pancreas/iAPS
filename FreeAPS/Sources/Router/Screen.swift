@@ -8,7 +8,7 @@ enum Screen: Identifiable {
     case authorizedRoot
     case login
     case requestPermissions
-    case configEditor
+    case configEditor(file: String)
     case nighscoutConfig
 
     var id: Int { String(reflecting: self).hashValue }
@@ -29,8 +29,8 @@ extension Screen {
             return Login.Builder(resolver: resolver).buildView()
         case .requestPermissions:
             return RequestPermissions.Builder(resolver: resolver).buildView()
-        case .configEditor:
-            return ConfigEditor.Builder(resolver: resolver).buildView()
+        case let .configEditor(file):
+            return ConfigEditor.Builder(resolver: resolver, file: file).buildView()
         case .nighscoutConfig:
             return NightscoutConfig.Builder(resolver: resolver).buildView()
         }

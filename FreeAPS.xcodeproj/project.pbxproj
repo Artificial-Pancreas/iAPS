@@ -81,6 +81,7 @@
 		3821ED4625DC785200BC42AD /* LoopKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 3821ECEC25DC723100BC42AD /* LoopKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		3821ED4725DC785700BC42AD /* LoopKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3821ECF225DC723100BC42AD /* LoopKitUI.framework */; };
 		3821ED4825DC785700BC42AD /* LoopKitUI.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 3821ECF225DC723100BC42AD /* LoopKitUI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		3821ED4C25DD18BA00BC42AD /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3821ED4B25DD18BA00BC42AD /* Constants.swift */; };
 		383948D325CD4D6D00E91849 /* Disk in Frameworks */ = {isa = PBXBuildFile; productRef = 383948D225CD4D6D00E91849 /* Disk */; };
 		383948D625CD4D8900E91849 /* FileStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 383948D525CD4D8900E91849 /* FileStorage.swift */; };
 		383948DA25CD64D500E91849 /* Glucose.swift in Sources */ = {isa = PBXBuildFile; fileRef = 383948D925CD64D500E91849 /* Glucose.swift */; };
@@ -257,6 +258,7 @@
 		3811DF0B25CAAABD00A708ED /* APSManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APSManager.swift; sourceTree = "<group>"; };
 		3811DF0F25CAAAE200A708ED /* BaseAPSManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseAPSManager.swift; sourceTree = "<group>"; };
 		3821ECDE25DC723100BC42AD /* LoopKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = LoopKit.xcodeproj; path = LoopKit/LoopKit.xcodeproj; sourceTree = "<group>"; };
+		3821ED4B25DD18BA00BC42AD /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		383948D525CD4D8900E91849 /* FileStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileStorage.swift; sourceTree = "<group>"; };
 		383948D925CD64D500E91849 /* Glucose.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Glucose.swift; sourceTree = "<group>"; };
 		384E803325C385E60086DB71 /* JavaScriptWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JavaScriptWorker.swift; sourceTree = "<group>"; };
@@ -697,6 +699,7 @@
 				388E596B25AD95110019842D /* OpenAPS.swift */,
 				384E803325C385E60086DB71 /* JavaScriptWorker.swift */,
 				384E803725C388640086DB71 /* Script.swift */,
+				3821ED4B25DD18BA00BC42AD /* Constants.swift */,
 			);
 			path = OpenAPS;
 			sourceTree = "<group>";
@@ -967,6 +970,7 @@
 				3811DE4025C9D4A100A708ED /* SettingsBuilder.swift in Sources */,
 				3811DE0B25C9D32F00A708ED /* BaseView.swift in Sources */,
 				3811DE3225C9D49500A708ED /* HomeDataFlow.swift in Sources */,
+				3821ED4C25DD18BA00BC42AD /* Constants.swift in Sources */,
 				384E803425C385E60086DB71 /* JavaScriptWorker.swift in Sources */,
 				3811DE7A25C9D6D300A708ED /* LoginDataFlow.swift in Sources */,
 				3811DE5D25C9D4D500A708ED /* Publisher.swift in Sources */,
