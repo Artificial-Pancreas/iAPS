@@ -92,6 +92,35 @@
 		388E5A5C25B6F0770019842D /* JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 388E5A5B25B6F0770019842D /* JSON.swift */; };
 		388E5A6025B6F2310019842D /* Autosens.swift in Sources */ = {isa = PBXBuildFile; fileRef = 388E5A5F25B6F2310019842D /* Autosens.swift */; };
 		3895E4C625B9E00D00214B37 /* Preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3895E4C525B9E00D00214B37 /* Preferences.swift */; };
+		38A504A425DD9C4000C5B9E8 /* UserDefaultsExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38A5049125DD9C4000C5B9E8 /* UserDefaultsExtensions.swift */; };
+		38A504A525DD9FDA00C5B9E8 /* OmniKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38B17B2625DD6BBE005CAE3D /* OmniKit.framework */; };
+		38A504A625DD9FDA00C5B9E8 /* OmniKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 38B17B2625DD6BBE005CAE3D /* OmniKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		38A504A725DD9FDA00C5B9E8 /* OmniKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38B17B2A25DD6BBE005CAE3D /* OmniKitUI.framework */; };
+		38A504A825DD9FDA00C5B9E8 /* OmniKitUI.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 38B17B2A25DD6BBE005CAE3D /* OmniKitUI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		38B17B6325DD8B5B005CAE3D /* DeviceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38B17B6225DD8B5B005CAE3D /* DeviceManager.swift */; };
+		38B17B6625DD90E0005CAE3D /* SwiftDate in Frameworks */ = {isa = PBXBuildFile; productRef = 38B17B6525DD90E0005CAE3D /* SwiftDate */; };
+		38B17B8625DD93BA005CAE3D /* LoopKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38B17AD125DD6A40005CAE3D /* LoopKit.framework */; };
+		38B17B8725DD93BA005CAE3D /* LoopKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 38B17AD125DD6A40005CAE3D /* LoopKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		38B17B8825DD93BA005CAE3D /* LoopKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38B17AD925DD6A40005CAE3D /* LoopKitUI.framework */; };
+		38B17B8925DD93BA005CAE3D /* LoopKitUI.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 38B17AD925DD6A40005CAE3D /* LoopKitUI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		38B17B8A25DD93F1005CAE3D /* MKRingProgressView.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38B17AF525DD6AE6005CAE3D /* MKRingProgressView.framework */; };
+		38B17B8B25DD93F1005CAE3D /* MKRingProgressView.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 38B17AF525DD6AE6005CAE3D /* MKRingProgressView.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		38B17B8C25DD9404005CAE3D /* SwiftCharts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38B17AB625DD69FA005CAE3D /* SwiftCharts.framework */; };
+		38B17B8D25DD9404005CAE3D /* SwiftCharts.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 38B17AB625DD69FA005CAE3D /* SwiftCharts.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		38B17B8E25DD9419005CAE3D /* Crypto.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38B17B1025DD6BBE005CAE3D /* Crypto.framework */; };
+		38B17B8F25DD9419005CAE3D /* Crypto.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 38B17B1025DD6BBE005CAE3D /* Crypto.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		38B17B9025DD9419005CAE3D /* MinimedKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38B17B1E25DD6BBE005CAE3D /* MinimedKit.framework */; };
+		38B17B9125DD9419005CAE3D /* MinimedKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 38B17B1E25DD6BBE005CAE3D /* MinimedKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		38B17B9225DD9419005CAE3D /* MinimedKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38B17B2025DD6BBE005CAE3D /* MinimedKitUI.framework */; };
+		38B17B9325DD9419005CAE3D /* MinimedKitUI.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 38B17B2025DD6BBE005CAE3D /* MinimedKitUI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		38B17B9425DD941A005CAE3D /* RileyLinkBLEKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38B17B1225DD6BBE005CAE3D /* RileyLinkBLEKit.framework */; };
+		38B17B9525DD941A005CAE3D /* RileyLinkBLEKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 38B17B1225DD6BBE005CAE3D /* RileyLinkBLEKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		38B17B9625DD941A005CAE3D /* RileyLinkKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38B17B1625DD6BBE005CAE3D /* RileyLinkKit.framework */; };
+		38B17B9725DD941A005CAE3D /* RileyLinkKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 38B17B1625DD6BBE005CAE3D /* RileyLinkKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		38B17B9825DD941A005CAE3D /* RileyLinkKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38B17B1825DD6BBE005CAE3D /* RileyLinkKitUI.framework */; };
+		38B17B9925DD941A005CAE3D /* RileyLinkKitUI.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 38B17B1825DD6BBE005CAE3D /* RileyLinkKitUI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		38B17BED25DD987B005CAE3D /* NightscoutUploadKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38B17B1A25DD6BBE005CAE3D /* NightscoutUploadKit.framework */; };
+		38B17BEE25DD987B005CAE3D /* NightscoutUploadKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 38B17B1A25DD6BBE005CAE3D /* NightscoutUploadKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		38FE826A25CC82DB001FF17A /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38FE826925CC82DB001FF17A /* NetworkService.swift */; };
 		38FE826D25CC8461001FF17A /* NightscoutAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38FE826C25CC8461001FF17A /* NightscoutAPI.swift */; };
 		45252C95D220E796FDB3B022 /* ConfigEditorDataFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F8A87AA037BD079BA3528BA /* ConfigEditorDataFlow.swift */; };
@@ -438,6 +467,19 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				38B17B9725DD941A005CAE3D /* RileyLinkKit.framework in Embed Frameworks */,
+				38B17B9925DD941A005CAE3D /* RileyLinkKitUI.framework in Embed Frameworks */,
+				38B17B8725DD93BA005CAE3D /* LoopKit.framework in Embed Frameworks */,
+				38B17B9125DD9419005CAE3D /* MinimedKit.framework in Embed Frameworks */,
+				38A504A625DD9FDA00C5B9E8 /* OmniKit.framework in Embed Frameworks */,
+				38B17BEE25DD987B005CAE3D /* NightscoutUploadKit.framework in Embed Frameworks */,
+				38B17B8F25DD9419005CAE3D /* Crypto.framework in Embed Frameworks */,
+				38B17B9525DD941A005CAE3D /* RileyLinkBLEKit.framework in Embed Frameworks */,
+				38B17B8B25DD93F1005CAE3D /* MKRingProgressView.framework in Embed Frameworks */,
+				38B17B8925DD93BA005CAE3D /* LoopKitUI.framework in Embed Frameworks */,
+				38A504A825DD9FDA00C5B9E8 /* OmniKitUI.framework in Embed Frameworks */,
+				38B17B9325DD9419005CAE3D /* MinimedKitUI.framework in Embed Frameworks */,
+				38B17B8D25DD9404005CAE3D /* SwiftCharts.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -533,10 +575,12 @@
 		388E5A5B25B6F0770019842D /* JSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSON.swift; sourceTree = "<group>"; };
 		388E5A5F25B6F2310019842D /* Autosens.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Autosens.swift; sourceTree = "<group>"; };
 		3895E4C525B9E00D00214B37 /* Preferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Preferences.swift; sourceTree = "<group>"; };
+		38A5049125DD9C4000C5B9E8 /* UserDefaultsExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDefaultsExtensions.swift; sourceTree = "<group>"; };
 		38B17AAE25DD69FA005CAE3D /* SwiftCharts.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SwiftCharts.xcodeproj; path = SwiftCharts/SwiftCharts.xcodeproj; sourceTree = "<group>"; };
 		38B17AC025DD6A40005CAE3D /* LoopKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = LoopKit.xcodeproj; path = LoopKit/LoopKit.xcodeproj; sourceTree = "<group>"; };
 		38B17AF025DD6AE6005CAE3D /* MKRingProgressView.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = MKRingProgressView.xcodeproj; path = MKRingProgressView/MKRingProgressView.xcodeproj; sourceTree = "<group>"; };
 		38B17AF925DD6BBD005CAE3D /* RileyLink.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RileyLink.xcodeproj; path = rileylink_ios/RileyLink.xcodeproj; sourceTree = "<group>"; };
+		38B17B6225DD8B5B005CAE3D /* DeviceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceManager.swift; sourceTree = "<group>"; };
 		38FE826925CC82DB001FF17A /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		38FE826C25CC8461001FF17A /* NightscoutAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NightscoutAPI.swift; sourceTree = "<group>"; };
 		3BF768BD6264FF7D71D66767 /* NightscoutConfigProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NightscoutConfigProvider.swift; sourceTree = "<group>"; };
@@ -554,8 +598,22 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				38B17BED25DD987B005CAE3D /* NightscoutUploadKit.framework in Frameworks */,
+				38B17B8C25DD9404005CAE3D /* SwiftCharts.framework in Frameworks */,
+				38B17B9825DD941A005CAE3D /* RileyLinkKitUI.framework in Frameworks */,
 				3811DE1025C9D37700A708ED /* Swinject in Frameworks */,
 				383948D325CD4D6D00E91849 /* Disk in Frameworks */,
+				38B17B9425DD941A005CAE3D /* RileyLinkBLEKit.framework in Frameworks */,
+				38B17B8825DD93BA005CAE3D /* LoopKitUI.framework in Frameworks */,
+				38A504A525DD9FDA00C5B9E8 /* OmniKit.framework in Frameworks */,
+				38A504A725DD9FDA00C5B9E8 /* OmniKitUI.framework in Frameworks */,
+				38B17B9025DD9419005CAE3D /* MinimedKit.framework in Frameworks */,
+				38B17B6625DD90E0005CAE3D /* SwiftDate in Frameworks */,
+				38B17B8E25DD9419005CAE3D /* Crypto.framework in Frameworks */,
+				38B17B8A25DD93F1005CAE3D /* MKRingProgressView.framework in Frameworks */,
+				38B17B9625DD941A005CAE3D /* RileyLinkKit.framework in Frameworks */,
+				38B17B8625DD93BA005CAE3D /* LoopKit.framework in Frameworks */,
+				38B17B9225DD9419005CAE3D /* MinimedKitUI.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -605,13 +663,13 @@
 		3811DE1325C9D39E00A708ED /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				38B17B5F25DD6E38005CAE3D /* RileyLink */,
 				3811DEDE25C9E2DD00A708ED /* Application */,
 				3811DF0A25CAAAA500A708ED /* APS */,
 				3811DEBD25C9D99900A708ED /* Containers */,
 				388E5A5A25B6F05F0019842D /* Helpers */,
 				388E5A5925B6F0250019842D /* Models */,
 				3811DE0325C9D31700A708ED /* Modules */,
+				38B17B5F25DD6E38005CAE3D /* RileyLink */,
 				3811DE1425C9D40400A708ED /* Router */,
 				3811DE9125C9D88200A708ED /* Services */,
 			);
@@ -903,6 +961,7 @@
 				38B17AAD25DD69DF005CAE3D /* Dependecies */,
 				388E595A25AD948C0019842D /* FreeAPS */,
 				388E595925AD948C0019842D /* Products */,
+				38B17B8525DD93BA005CAE3D /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -966,6 +1025,14 @@
 				388E5A5B25B6F0770019842D /* JSON.swift */,
 			);
 			path = Helpers;
+			sourceTree = "<group>";
+		};
+		38A504F625DDA0E200C5B9E8 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				38A5049125DD9C4000C5B9E8 /* UserDefaultsExtensions.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 		38B17AAD25DD69DF005CAE3D /* Dependecies */ = {
@@ -1041,8 +1108,17 @@
 		38B17B5F25DD6E38005CAE3D /* RileyLink */ = {
 			isa = PBXGroup;
 			children = (
+				38A504F625DDA0E200C5B9E8 /* Extensions */,
+				38B17B6225DD8B5B005CAE3D /* DeviceManager.swift */,
 			);
 			path = RileyLink;
+			sourceTree = "<group>";
+		};
+		38B17B8525DD93BA005CAE3D /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		4E8C7B59F8065047ECE20965 /* View */ = {
@@ -1109,6 +1185,7 @@
 			packageProductDependencies = (
 				3811DE0F25C9D37700A708ED /* Swinject */,
 				383948D225CD4D6D00E91849 /* Disk */,
+				38B17B6525DD90E0005CAE3D /* SwiftDate */,
 			);
 			productName = FreeAPS;
 			productReference = 388E595825AD948C0019842D /* FreeAPS.app */;
@@ -1140,6 +1217,7 @@
 			packageReferences = (
 				3811DE0E25C9D37700A708ED /* XCRemoteSwiftPackageReference "Swinject" */,
 				383948D125CD4D6D00E91849 /* XCRemoteSwiftPackageReference "Disk" */,
+				38B17B6425DD90E0005CAE3D /* XCRemoteSwiftPackageReference "SwiftDate" */,
 			);
 			productRefGroup = 388E595925AD948C0019842D /* Products */;
 			projectDirPath = "";
@@ -1481,6 +1559,7 @@
 				3811DEAE25C9D88300A708ED /* Cache.swift in Sources */,
 				3811DEAD25C9D88300A708ED /* UserDefaults+Cache.swift in Sources */,
 				3811DE2225C9D48300A708ED /* MainProvider.swift in Sources */,
+				38B17B6325DD8B5B005CAE3D /* DeviceManager.swift in Sources */,
 				3811DE0C25C9D32F00A708ED /* BaseProvider.swift in Sources */,
 				3811DE5C25C9D4D500A708ED /* Formatters.swift in Sources */,
 				3811DEC525C9D99900A708ED /* StorageContainer.swift in Sources */,
@@ -1498,6 +1577,7 @@
 				3811DEEA25CA063400A708ED /* SyncAccess.swift in Sources */,
 				3811DE4F25C9D4B800A708ED /* AuthotizedRootDataFlow.swift in Sources */,
 				3811DE5025C9D4B800A708ED /* AuthotizedRootProvider.swift in Sources */,
+				38A504A425DD9C4000C5B9E8 /* UserDefaultsExtensions.swift in Sources */,
 				38FE826A25CC82DB001FF17A /* NetworkService.swift in Sources */,
 				3811DE6C25C9D62600A708ED /* OnboardingDataFlow.swift in Sources */,
 				3811DE2425C9D48300A708ED /* MainViewModel.swift in Sources */,
@@ -1805,6 +1885,14 @@
 				minimumVersion = 0.6.4;
 			};
 		};
+		38B17B6425DD90E0005CAE3D /* XCRemoteSwiftPackageReference "SwiftDate" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/malcommac/SwiftDate";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 6.3.1;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1817,6 +1905,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 383948D125CD4D6D00E91849 /* XCRemoteSwiftPackageReference "Disk" */;
 			productName = Disk;
+		};
+		38B17B6525DD90E0005CAE3D /* SwiftDate */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 38B17B6425DD90E0005CAE3D /* XCRemoteSwiftPackageReference "SwiftDate" */;
+			productName = SwiftDate;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
