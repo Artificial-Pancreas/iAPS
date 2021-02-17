@@ -97,7 +97,7 @@
 		38A504A625DD9FDA00C5B9E8 /* OmniKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 38B17B2625DD6BBE005CAE3D /* OmniKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		38A504A725DD9FDA00C5B9E8 /* OmniKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38B17B2A25DD6BBE005CAE3D /* OmniKitUI.framework */; };
 		38A504A825DD9FDA00C5B9E8 /* OmniKitUI.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 38B17B2A25DD6BBE005CAE3D /* OmniKitUI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		38B17B6325DD8B5B005CAE3D /* DeviceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38B17B6225DD8B5B005CAE3D /* DeviceManager.swift */; };
+		38B17B6325DD8B5B005CAE3D /* DeviceDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38B17B6225DD8B5B005CAE3D /* DeviceDataManager.swift */; };
 		38B17B6625DD90E0005CAE3D /* SwiftDate in Frameworks */ = {isa = PBXBuildFile; productRef = 38B17B6525DD90E0005CAE3D /* SwiftDate */; };
 		38B17B8625DD93BA005CAE3D /* LoopKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38B17AD125DD6A40005CAE3D /* LoopKit.framework */; };
 		38B17B8725DD93BA005CAE3D /* LoopKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 38B17AD125DD6A40005CAE3D /* LoopKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -580,7 +580,7 @@
 		38B17AC025DD6A40005CAE3D /* LoopKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = LoopKit.xcodeproj; path = LoopKit/LoopKit.xcodeproj; sourceTree = "<group>"; };
 		38B17AF025DD6AE6005CAE3D /* MKRingProgressView.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = MKRingProgressView.xcodeproj; path = MKRingProgressView/MKRingProgressView.xcodeproj; sourceTree = "<group>"; };
 		38B17AF925DD6BBD005CAE3D /* RileyLink.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RileyLink.xcodeproj; path = rileylink_ios/RileyLink.xcodeproj; sourceTree = "<group>"; };
-		38B17B6225DD8B5B005CAE3D /* DeviceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceManager.swift; sourceTree = "<group>"; };
+		38B17B6225DD8B5B005CAE3D /* DeviceDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceDataManager.swift; sourceTree = "<group>"; };
 		38FE826925CC82DB001FF17A /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		38FE826C25CC8461001FF17A /* NightscoutAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NightscoutAPI.swift; sourceTree = "<group>"; };
 		3BF768BD6264FF7D71D66767 /* NightscoutConfigProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NightscoutConfigProvider.swift; sourceTree = "<group>"; };
@@ -1109,7 +1109,7 @@
 			isa = PBXGroup;
 			children = (
 				38A504F625DDA0E200C5B9E8 /* Extensions */,
-				38B17B6225DD8B5B005CAE3D /* DeviceManager.swift */,
+				38B17B6225DD8B5B005CAE3D /* DeviceDataManager.swift */,
 			);
 			path = RileyLink;
 			sourceTree = "<group>";
@@ -1559,7 +1559,7 @@
 				3811DEAE25C9D88300A708ED /* Cache.swift in Sources */,
 				3811DEAD25C9D88300A708ED /* UserDefaults+Cache.swift in Sources */,
 				3811DE2225C9D48300A708ED /* MainProvider.swift in Sources */,
-				38B17B6325DD8B5B005CAE3D /* DeviceManager.swift in Sources */,
+				38B17B6325DD8B5B005CAE3D /* DeviceDataManager.swift in Sources */,
 				3811DE0C25C9D32F00A708ED /* BaseProvider.swift in Sources */,
 				3811DE5C25C9D4D500A708ED /* Formatters.swift in Sources */,
 				3811DEC525C9D99900A708ED /* StorageContainer.swift in Sources */,
