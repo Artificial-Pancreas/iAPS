@@ -1,3 +1,4 @@
+import Combine
 import LoopKit
 import MinimedKit
 import RileyLinkBLEKit
@@ -8,15 +9,19 @@ final class BaseAPSManager: APSManager, Injectable {
     private var openAPS: OpenAPS!
     @Injected() var deviceDataManager: DeviceDataManager!
 
+    let rileyDisplayStates = CurrentValueSubject<[RileyDisplayState], Never>([])
+
     private(set) var devices: [RileyLinkDevice] = [] {
         didSet {
             print("Devices: \(devices)")
+            updateDisplayStates()
         }
     }
 
     private var deviceRSSI: [UUID: Int] = [:] {
         didSet {
             print("RSSI: \(deviceRSSI)")
+            updateDisplayStates()
         }
     }
 
@@ -45,6 +50,17 @@ final class BaseAPSManager: APSManager, Injectable {
             repeats: true
         )
         updateRSSI()
+    }
+
+    private func updateDisplayStates() {
+        rileyDisplayStates.value = devices.map {
+            RileyDisplayState(
+                id: $0.peripheralIdentifier,
+                name: $0.name ?? "unknown",
+                rssi: self.deviceRSSI[$0.peripheralIdentifier],
+                connected: false
+            )
+        }
     }
 
     private func registerNotifications() {

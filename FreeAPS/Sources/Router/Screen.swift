@@ -10,6 +10,7 @@ enum Screen: Identifiable {
     case requestPermissions
     case configEditor(file: String)
     case nighscoutConfig
+    case pumpConfig
 
     var id: Int { String(reflecting: self).hashValue }
 }
@@ -33,6 +34,8 @@ extension Screen {
             return ConfigEditor.Builder(resolver: resolver, file: file).buildView()
         case .nighscoutConfig:
             return NightscoutConfig.Builder(resolver: resolver).buildView()
+        case .pumpConfig:
+            return PumpConfig.Builder(resolver: resolver).buildView()
         }
     }
 
@@ -53,12 +56,7 @@ extension Screen {
                 image: Image(systemName: "gear"),
                 text: Text("Settings")
             )
-        case .authorizedRoot,
-             .configEditor,
-             .login,
-             .nighscoutConfig,
-             .onboarding,
-             .requestPermissions:
+        default:
             fatalError("Tab for this screen \(self) did not specified")
         }
     }

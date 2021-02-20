@@ -9,6 +9,7 @@ extension Settings {
                 Text("Preferences").modal(for: .configEditor(file: OpenAPS.Settings.preferences), from: self)
                 Text("Autosense").modal(for: .configEditor(file: OpenAPS.Settings.autosense), from: self)
                 Text("Nightscout").modal(for: .nighscoutConfig, from: self)
+                Text("Pump").modal(for: .pumpConfig, from: self)
             }
             .toolbar { ToolbarItem(placement: .principal) { Text("Settings") } }
         }
