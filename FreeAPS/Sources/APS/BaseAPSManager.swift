@@ -11,6 +11,10 @@ final class BaseAPSManager: APSManager, Injectable {
 
     let rileyDisplayStates = CurrentValueSubject<[RileyDisplayState], Never>([])
 
+    var deviceProvider: RileyLinkDeviceProvider {
+        deviceDataManager.rileyLinkConnectionManager.deviceProvider
+    }
+
     private(set) var devices: [RileyLinkDevice] = [] {
         didSet {
             print("Devices: \(devices)")

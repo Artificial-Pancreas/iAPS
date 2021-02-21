@@ -19,13 +19,21 @@ extension PumpConfig {
                 }
 
                 Section(header: Text("Pump")) {
-                    Button("Add Medtronic") {}
-                    Button("Add Omnipod") {}
+                    Button("Add Medtronic") { viewModel.addPump(.minimed) }
+                    Button("Add Omnipod") { viewModel.addPump(.omnipod) }
                 }
             }
             .toolbar { ToolbarItem(placement: .principal) { Text("Pump Config") } }
             .navigationBarItems(leading: Button("Close", action: viewModel.hideModal))
             .navigationBarTitleDisplayMode(.inline)
+            .popover(isPresented: $viewModel.setupPump) {
+                PumpSetupView(
+                    pumpType: viewModel.setupPumpType,
+                    deviceProvider: viewModel.provider.deviceProvider,
+                    completionDelegate: viewModel,
+                    setupDelegate: nil
+                )
+            }
         }
     }
 }

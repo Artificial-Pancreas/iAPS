@@ -22,5 +22,6 @@ class RileyDisplayState: ObservableObject, Identifiable {
 
 protocol APSManager {
     var rileyDisplayStates: CurrentValueSubject<[RileyDisplayState], Never> { get }
+    var deviceProvider: RileyLinkDeviceProvider { get }
     func runTest()
 }
