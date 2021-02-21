@@ -53,13 +53,21 @@ final class BaseAPSManager: APSManager, Injectable {
     }
 
     private func updateDisplayStates() {
-        rileyDisplayStates.value = devices.map {
-            RileyDisplayState(
-                id: $0.peripheralIdentifier,
-                name: $0.name ?? "unknown",
-                rssi: self.deviceRSSI[$0.peripheralIdentifier],
-                connected: false
-            )
+        rileyDisplayStates.value = devices.map { device in
+            let connected = rileyLinkPumpManager.rileyLinkConnectionManager?
+                .shouldConnect(to: device.peripheralIdentifier.uuidString) ?? false
+            return RileyDisplayState(
+                id: device.peripheralIdentifier,
+                name: device.name ?? "unknown",
+                rssi: self.deviceRSSI[device.peripheralIdentifier],
+                connected: connected
+            ) { [weak self] connect in
+                if connect {
+                    self?.rileyLinkPumpManager.connectToRileyLink(device)
+                } else {
+                    self?.rileyLinkPumpManager.disconnectFromRileyLink(device)
+                }
+            }
         }
     }
 
@@ -82,7 +90,6 @@ final class BaseAPSManager: APSManager, Injectable {
         rileyLinkPumpManager.rileyLinkDeviceProvider.getDevices { devices in
             DispatchQueue.main.async { [weak self] in
                 self?.devices = devices
-                devices.forEach { self?.rileyLinkPumpManager.connectToRileyLink($0) }
             }
         }
     }

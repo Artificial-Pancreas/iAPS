@@ -92,6 +92,7 @@
 		388E5A5C25B6F0770019842D /* JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 388E5A5B25B6F0770019842D /* JSON.swift */; };
 		388E5A6025B6F2310019842D /* Autosens.swift in Sources */ = {isa = PBXBuildFile; fileRef = 388E5A5F25B6F2310019842D /* Autosens.swift */; };
 		3895E4C625B9E00D00214B37 /* Preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3895E4C525B9E00D00214B37 /* Preferences.swift */; };
+		38A13D3225E28B4B00EAA382 /* PumpHystoryEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38A13D3125E28B4B00EAA382 /* PumpHystoryEvent.swift */; };
 		38A504A425DD9C4000C5B9E8 /* UserDefaultsExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38A5049125DD9C4000C5B9E8 /* UserDefaultsExtensions.swift */; };
 		38A504A525DD9FDA00C5B9E8 /* OmniKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38B17B2625DD6BBE005CAE3D /* OmniKit.framework */; };
 		38A504A625DD9FDA00C5B9E8 /* OmniKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 38B17B2625DD6BBE005CAE3D /* OmniKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -121,6 +122,7 @@
 		38B17B9925DD941A005CAE3D /* RileyLinkKitUI.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 38B17B1825DD6BBE005CAE3D /* RileyLinkKitUI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		38B17BED25DD987B005CAE3D /* NightscoutUploadKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38B17B1A25DD6BBE005CAE3D /* NightscoutUploadKit.framework */; };
 		38B17BEE25DD987B005CAE3D /* NightscoutUploadKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 38B17B1A25DD6BBE005CAE3D /* NightscoutUploadKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		38B4F3AF25E2979F00E76A18 /* IndexedCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38B4F3AE25E2979F00E76A18 /* IndexedCollection.swift */; };
 		38FE826A25CC82DB001FF17A /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38FE826925CC82DB001FF17A /* NetworkService.swift */; };
 		38FE826D25CC8461001FF17A /* NightscoutAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38FE826C25CC8461001FF17A /* NightscoutAPI.swift */; };
 		45252C95D220E796FDB3B022 /* ConfigEditorDataFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F8A87AA037BD079BA3528BA /* ConfigEditorDataFlow.swift */; };
@@ -579,12 +581,14 @@
 		388E5A5B25B6F0770019842D /* JSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSON.swift; sourceTree = "<group>"; };
 		388E5A5F25B6F2310019842D /* Autosens.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Autosens.swift; sourceTree = "<group>"; };
 		3895E4C525B9E00D00214B37 /* Preferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Preferences.swift; sourceTree = "<group>"; };
+		38A13D3125E28B4B00EAA382 /* PumpHystoryEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PumpHystoryEvent.swift; sourceTree = "<group>"; };
 		38A5049125DD9C4000C5B9E8 /* UserDefaultsExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDefaultsExtensions.swift; sourceTree = "<group>"; };
 		38B17AAE25DD69FA005CAE3D /* SwiftCharts.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SwiftCharts.xcodeproj; path = SwiftCharts/SwiftCharts.xcodeproj; sourceTree = "<group>"; };
 		38B17AC025DD6A40005CAE3D /* LoopKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = LoopKit.xcodeproj; path = LoopKit/LoopKit.xcodeproj; sourceTree = "<group>"; };
 		38B17AF025DD6AE6005CAE3D /* MKRingProgressView.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = MKRingProgressView.xcodeproj; path = MKRingProgressView/MKRingProgressView.xcodeproj; sourceTree = "<group>"; };
 		38B17AF925DD6BBD005CAE3D /* RileyLink.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RileyLink.xcodeproj; path = rileylink_ios/RileyLink.xcodeproj; sourceTree = "<group>"; };
 		38B17B6225DD8B5B005CAE3D /* DeviceDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceDataManager.swift; sourceTree = "<group>"; };
+		38B4F3AE25E2979F00E76A18 /* IndexedCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndexedCollection.swift; sourceTree = "<group>"; };
 		38FE826925CC82DB001FF17A /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		38FE826C25CC8461001FF17A /* NightscoutAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NightscoutAPI.swift; sourceTree = "<group>"; };
 		3BF768BD6264FF7D71D66767 /* NightscoutConfigProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NightscoutConfigProvider.swift; sourceTree = "<group>"; };
@@ -1010,6 +1014,7 @@
 				3895E4C525B9E00D00214B37 /* Preferences.swift */,
 				3811DF0125CA9FEA00A708ED /* Credentials.swift */,
 				383948D925CD64D500E91849 /* Glucose.swift */,
+				38A13D3125E28B4B00EAA382 /* PumpHystoryEvent.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -1023,6 +1028,7 @@
 				3811DE5525C9D4D500A708ED /* Publisher.swift */,
 				3811DE5925C9D4D500A708ED /* ViewModifiers.swift */,
 				388E5A5B25B6F0770019842D /* JSON.swift */,
+				38B4F3AE25E2979F00E76A18 /* IndexedCollection.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -1562,6 +1568,7 @@
 				388E5A5C25B6F0770019842D /* JSON.swift in Sources */,
 				3811DF0225CA9FEA00A708ED /* Credentials.swift in Sources */,
 				3811DEB625C9D88300A708ED /* UnlockManager.swift in Sources */,
+				38A13D3225E28B4B00EAA382 /* PumpHystoryEvent.swift in Sources */,
 				3811DE1825C9D40400A708ED /* Router.swift in Sources */,
 				3811DEE825CA063400A708ED /* Injected.swift in Sources */,
 				3811DEAF25C9D88300A708ED /* KeyValueStorage.swift in Sources */,
@@ -1575,6 +1582,7 @@
 				384E803425C385E60086DB71 /* JavaScriptWorker.swift in Sources */,
 				3811DE7A25C9D6D300A708ED /* LoginDataFlow.swift in Sources */,
 				3811DE5D25C9D4D500A708ED /* Publisher.swift in Sources */,
+				38B4F3AF25E2979F00E76A18 /* IndexedCollection.swift in Sources */,
 				3811DEAE25C9D88300A708ED /* Cache.swift in Sources */,
 				3811DEAD25C9D88300A708ED /* UserDefaults+Cache.swift in Sources */,
 				3811DE2225C9D48300A708ED /* MainProvider.swift in Sources */,

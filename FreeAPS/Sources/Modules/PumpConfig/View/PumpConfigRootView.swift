@@ -7,11 +7,13 @@ extension PumpConfig {
         var body: some View {
             Form {
                 Section(header: Text("Devices")) {
-                    ForEach(viewModel.rileyDisplayStates) { state in
-                        HStack {
-                            Text(state.name)
-                            Spacer()
-                            Text(state.rssi.map { "\($0) " } ?? "")
+                    ForEach(viewModel.rileyDisplayStates.indexed(), id: \.1.id) { index, state in
+                        Toggle(isOn: self.$viewModel.rileyDisplayStates[index].connected) {
+                            HStack {
+                                Text(state.name)
+                                Spacer()
+                                Text(state.rssi.map { "\($0) " } ?? "").foregroundColor(.secondary)
+                            }
                         }
                     }
                 }
