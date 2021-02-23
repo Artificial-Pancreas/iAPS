@@ -6,7 +6,11 @@ extension PumpConfig {
 
         var body: some View {
             Form {
-                Section(header: Text("Devices")) {
+                Section(header: HStack {
+                    Text("Devices")
+                    Spacer()
+                    ProgressView()
+                }) {
                     ForEach(viewModel.rileyDisplayStates.indexed(), id: \.1.id) { index, state in
                         Toggle(isOn: self.$viewModel.rileyDisplayStates[index].connected) {
                             HStack {
@@ -31,7 +35,7 @@ extension PumpConfig {
                     pumpType: viewModel.setupPumpType,
                     deviceProvider: viewModel.provider.deviceProvider,
                     completionDelegate: viewModel,
-                    setupDelegate: nil
+                    setupDelegate: viewModel.provider.setupDelegate
                 )
             }
         }

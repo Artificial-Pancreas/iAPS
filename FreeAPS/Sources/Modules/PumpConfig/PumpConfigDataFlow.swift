@@ -1,4 +1,5 @@
 import Combine
+import LoopKitUI
 
 enum PumpConfig {
     enum Config {}
@@ -11,4 +12,5 @@ enum PumpConfig {
 
 protocol PumpConfigProvider: Provider {
     func rileyDisplayStates() -> AnyPublisher<[RileyDisplayState], Never>
+    var setupDelegate: PumpManagerSetupViewControllerDelegate { get }
 }

@@ -13,6 +13,7 @@ import UserNotifications
 
 protocol DeviceDataManager {
     var rileyLinkConnectionManager: RileyLinkConnectionManager! { get }
+    var pumpManager: PumpManagerUI? { get set }
 }
 
 final class BaseDeviceManager: DeviceDataManager {

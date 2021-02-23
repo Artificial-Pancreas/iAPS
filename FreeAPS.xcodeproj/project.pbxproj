@@ -661,15 +661,15 @@
 			children = (
 				3811DE4525C9D4B800A708ED /* AuthotizedRoot */,
 				3811DE0425C9D32E00A708ED /* Base */,
+				0610F7D6D2EC00E3BA1569F0 /* ConfigEditor */,
 				3811DE2725C9D49500A708ED /* Home */,
 				3811DE7025C9D6D300A708ED /* Login */,
 				3811DE1A25C9D48300A708ED /* Main */,
+				D533BF261CDC1C3F871E7BFD /* NightscoutConfig */,
 				3811DE6325C9D62600A708ED /* Onboarding */,
+				99C01B871ACAB3F32CE755C7 /* PumpConfig */,
 				3811DE8125C9D6DD00A708ED /* RequestPermissions */,
 				3811DE3825C9D4A100A708ED /* Settings */,
-				0610F7D6D2EC00E3BA1569F0 /* ConfigEditor */,
-				D533BF261CDC1C3F871E7BFD /* NightscoutConfig */,
-				99C01B871ACAB3F32CE755C7 /* PumpConfig */,
 			);
 			path = Modules;
 			sourceTree = "<group>";

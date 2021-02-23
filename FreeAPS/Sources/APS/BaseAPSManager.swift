@@ -1,5 +1,6 @@
 import Combine
 import LoopKit
+import LoopKitUI
 import MinimedKit
 import RileyLinkBLEKit
 import RileyLinkKit
@@ -15,6 +16,8 @@ final class BaseAPSManager: APSManager, Injectable {
     var deviceProvider: RileyLinkDeviceProvider {
         deviceDataManager.rileyLinkConnectionManager.deviceProvider
     }
+
+    private var pumpManager: PumpManagerUI? { deviceDataManager.pumpManager }
 
     private(set) var devices: [RileyLinkDevice] = [] {
         didSet {
@@ -77,7 +80,6 @@ final class BaseAPSManager: APSManager, Injectable {
     }
 
     private func registerNotifications() {
-        // Register for manager notifications
         notificationCenter.addObserver(
             self,
             selector: #selector(reloadDevices),
@@ -85,7 +87,6 @@ final class BaseAPSManager: APSManager, Injectable {
             object: rileyLinkPumpManager.rileyLinkDeviceProvider
         )
 
-        // Register for device notifications
         for name in [.DeviceConnectionStateDidChange, .DeviceRSSIDidChange, .DeviceNameDidChange] as [Notification.Name] {
             notificationCenter.addObserver(self, selector: #selector(deviceDidUpdate(_:)), name: name, object: nil)
         }
@@ -117,5 +118,11 @@ final class BaseAPSManager: APSManager, Injectable {
 
     func runTest() {
         openAPS.test()
+    }
+}
+
+extension BaseAPSManager: PumpManagerSetupViewControllerDelegate {
+    func pumpManagerSetupViewController(_: PumpManagerSetupViewController, didSetUpPumpManager pumpManager: PumpManagerUI) {
+        deviceDataManager.pumpManager = pumpManager
     }
 }

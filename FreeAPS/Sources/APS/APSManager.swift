@@ -1,4 +1,5 @@
 import Combine
+import LoopKitUI
 import RileyLinkBLEKit
 
 class RileyDisplayState: ObservableObject, Identifiable {
@@ -20,7 +21,7 @@ class RileyDisplayState: ObservableObject, Identifiable {
     }
 }
 
-protocol APSManager {
+protocol APSManager: PumpManagerSetupViewControllerDelegate {
     var rileyDisplayStates: CurrentValueSubject<[RileyDisplayState], Never> { get }
     var deviceProvider: RileyLinkDeviceProvider { get }
     func runTest()
