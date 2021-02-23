@@ -124,6 +124,11 @@
 		38B17BEE25DD987B005CAE3D /* NightscoutUploadKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 38B17B1A25DD6BBE005CAE3D /* NightscoutUploadKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		38B4F3AF25E2979F00E76A18 /* IndexedCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38B4F3AE25E2979F00E76A18 /* IndexedCollection.swift */; };
 		38B4F3C325E2A20B00E76A18 /* PumpSetupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38B4F3C225E2A20B00E76A18 /* PumpSetupView.swift */; };
+		38B4F3C625E5017E00E76A18 /* NotificationCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38B4F3C525E5017E00E76A18 /* NotificationCenter.swift */; };
+		38B4F3CA25E502E200E76A18 /* SwiftNotificationCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38B4F3C825E502E100E76A18 /* SwiftNotificationCenter.swift */; };
+		38B4F3CB25E502E200E76A18 /* WeakObjectSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38B4F3C925E502E100E76A18 /* WeakObjectSet.swift */; };
+		38B4F3CD25E5031100E76A18 /* Broadcaster.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38B4F3CC25E5031100E76A18 /* Broadcaster.swift */; };
+		38B4F3CF25E5041600E76A18 /* APSContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38B4F3CE25E5041600E76A18 /* APSContainer.swift */; };
 		38FE826A25CC82DB001FF17A /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38FE826925CC82DB001FF17A /* NetworkService.swift */; };
 		38FE826D25CC8461001FF17A /* NightscoutAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38FE826C25CC8461001FF17A /* NightscoutAPI.swift */; };
 		45252C95D220E796FDB3B022 /* ConfigEditorDataFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F8A87AA037BD079BA3528BA /* ConfigEditorDataFlow.swift */; };
@@ -591,6 +596,11 @@
 		38B17B6225DD8B5B005CAE3D /* DeviceDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceDataManager.swift; sourceTree = "<group>"; };
 		38B4F3AE25E2979F00E76A18 /* IndexedCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndexedCollection.swift; sourceTree = "<group>"; };
 		38B4F3C225E2A20B00E76A18 /* PumpSetupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PumpSetupView.swift; sourceTree = "<group>"; };
+		38B4F3C525E5017E00E76A18 /* NotificationCenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationCenter.swift; sourceTree = "<group>"; };
+		38B4F3C825E502E100E76A18 /* SwiftNotificationCenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftNotificationCenter.swift; sourceTree = "<group>"; };
+		38B4F3C925E502E100E76A18 /* WeakObjectSet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeakObjectSet.swift; sourceTree = "<group>"; };
+		38B4F3CC25E5031100E76A18 /* Broadcaster.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Broadcaster.swift; sourceTree = "<group>"; };
+		38B4F3CE25E5041600E76A18 /* APSContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APSContainer.swift; sourceTree = "<group>"; };
 		38FE826925CC82DB001FF17A /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		38FE826C25CC8461001FF17A /* NightscoutAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NightscoutAPI.swift; sourceTree = "<group>"; };
 		3BF768BD6264FF7D71D66767 /* NightscoutConfigProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NightscoutConfigProvider.swift; sourceTree = "<group>"; };
@@ -842,6 +852,7 @@
 		3811DE9125C9D88200A708ED /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				38B4F3C425E5016800E76A18 /* Notifications */,
 				3811DE9225C9D88200A708ED /* Appearance */,
 				3811DE9425C9D88200A708ED /* Network */,
 				3811DE9825C9D88300A708ED /* Storage */,
@@ -925,6 +936,7 @@
 				3811DEC025C9D99900A708ED /* NetworkContainer.swift */,
 				3811DEC125C9D99900A708ED /* StorageContainer.swift */,
 				3811DF0725CAAA4700A708ED /* ServiceContainer.swift */,
+				38B4F3CE25E5041600E76A18 /* APSContainer.swift */,
 			);
 			path = Containers;
 			sourceTree = "<group>";
@@ -1127,6 +1139,25 @@
 			children = (
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		38B4F3C425E5016800E76A18 /* Notifications */ = {
+			isa = PBXGroup;
+			children = (
+				38B4F3CC25E5031100E76A18 /* Broadcaster.swift */,
+				38B4F3C525E5017E00E76A18 /* NotificationCenter.swift */,
+				38B4F3C725E502C000E76A18 /* SwiftNotificationCenter */,
+			);
+			path = Notifications;
+			sourceTree = "<group>";
+		};
+		38B4F3C725E502C000E76A18 /* SwiftNotificationCenter */ = {
+			isa = PBXGroup;
+			children = (
+				38B4F3C825E502E100E76A18 /* SwiftNotificationCenter.swift */,
+				38B4F3C925E502E100E76A18 /* WeakObjectSet.swift */,
+			);
+			path = SwiftNotificationCenter;
 			sourceTree = "<group>";
 		};
 		4E8C7B59F8065047ECE20965 /* View */ = {
@@ -1544,9 +1575,12 @@
 				3811DEB225C9D88300A708ED /* KeychainItemAccessibility.swift in Sources */,
 				3811DE6B25C9D62600A708ED /* OnboardingProvider.swift in Sources */,
 				38B4F3C325E2A20B00E76A18 /* PumpSetupView.swift in Sources */,
+				38B4F3CA25E502E200E76A18 /* SwiftNotificationCenter.swift in Sources */,
 				3811DEC225C9D99900A708ED /* SecurityContainer.swift in Sources */,
+				38B4F3CF25E5041600E76A18 /* APSContainer.swift in Sources */,
 				3895E4C625B9E00D00214B37 /* Preferences.swift in Sources */,
 				3811DE6E25C9D62600A708ED /* OnboardingViewModel.swift in Sources */,
+				38B4F3CD25E5031100E76A18 /* Broadcaster.swift in Sources */,
 				3811DE6D25C9D62600A708ED /* OnboardingRootView.swift in Sources */,
 				3811DE3025C9D49500A708ED /* HomeViewModel.swift in Sources */,
 				3811DF0525CAA62600A708ED /* DependeciesContainer.swift in Sources */,
@@ -1571,6 +1605,7 @@
 				3811DE3125C9D49500A708ED /* HomeProvider.swift in Sources */,
 				388E5A5C25B6F0770019842D /* JSON.swift in Sources */,
 				3811DF0225CA9FEA00A708ED /* Credentials.swift in Sources */,
+				38B4F3C625E5017E00E76A18 /* NotificationCenter.swift in Sources */,
 				3811DEB625C9D88300A708ED /* UnlockManager.swift in Sources */,
 				38A13D3225E28B4B00EAA382 /* PumpHystoryEvent.swift in Sources */,
 				3811DE1825C9D40400A708ED /* Router.swift in Sources */,
@@ -1613,6 +1648,7 @@
 				3811DE6C25C9D62600A708ED /* OnboardingDataFlow.swift in Sources */,
 				3811DE2425C9D48300A708ED /* MainViewModel.swift in Sources */,
 				3811DE3F25C9D4A100A708ED /* SettingsViewModel.swift in Sources */,
+				38B4F3CB25E502E200E76A18 /* WeakObjectSet.swift in Sources */,
 				3811DEB725C9D88300A708ED /* AuthorizationManager.swift in Sources */,
 				3811DF0825CAAA4700A708ED /* ServiceContainer.swift in Sources */,
 				3811DEB025C9D88300A708ED /* BaseKeychain.swift in Sources */,

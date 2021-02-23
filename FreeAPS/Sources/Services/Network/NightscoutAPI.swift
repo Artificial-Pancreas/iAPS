@@ -13,7 +13,7 @@ extension NightscoutAPI {
         struct Check: Codable, Equatable {
             var eventType = "Note"
             var enteredBy = "feeaps-x://"
-            var notes = "FreeAPS connected"
+            var notes = "FreeAPS X connected"
         }
         let check = Check()
         var request = URLRequest(url: url.appendingPathComponent("api/v1/treatments.json"))

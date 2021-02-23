@@ -3,6 +3,7 @@ import Swinject
 
 private let dependencies: [DependeciesContainer.Type] = [
     ServiceContainer.self,
+    APSContainer.self,
     UIContainer.self,
     StorageContainer.self,
     NetworkContainer.self,

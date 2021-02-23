@@ -63,12 +63,12 @@ struct AdaptsToSoftwareKeyboard: ViewModifier {
             .onAppear(perform: subscribeToKeyboardChanges)
     }
 
-    private let keyboardHeightOnOpening = NotificationCenter.default
+    private let keyboardHeightOnOpening = Foundation.NotificationCenter.default
         .publisher(for: UIResponder.keyboardWillShowNotification)
         .map { $0.userInfo![UIResponder.keyboardFrameEndUserInfoKey] as! CGRect }
         .map(\.height)
 
-    private let keyboardHeightOnHiding = NotificationCenter.default
+    private let keyboardHeightOnHiding = Foundation.NotificationCenter.default
         .publisher(for: UIResponder.keyboardWillHideNotification)
         .map { _ in CGFloat(0) }
 

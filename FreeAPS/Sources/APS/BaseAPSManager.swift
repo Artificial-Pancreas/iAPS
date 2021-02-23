@@ -7,7 +7,8 @@ import Swinject
 
 final class BaseAPSManager: APSManager, Injectable {
     private var openAPS: OpenAPS!
-    @Injected() var deviceDataManager: DeviceDataManager!
+    @Injected() private var deviceDataManager: DeviceDataManager!
+    @Injected() private var notificationCenter: NotificationCenter!
 
     let rileyDisplayStates = CurrentValueSubject<[RileyDisplayState], Never>([])
 
@@ -77,7 +78,7 @@ final class BaseAPSManager: APSManager, Injectable {
 
     private func registerNotifications() {
         // Register for manager notifications
-        NotificationCenter.default.addObserver(
+        notificationCenter.addObserver(
             self,
             selector: #selector(reloadDevices),
             name: .ManagerDevicesDidChange,
@@ -86,7 +87,7 @@ final class BaseAPSManager: APSManager, Injectable {
 
         // Register for device notifications
         for name in [.DeviceConnectionStateDidChange, .DeviceRSSIDidChange, .DeviceNameDidChange] as [Notification.Name] {
-            NotificationCenter.default.addObserver(self, selector: #selector(deviceDidUpdate(_:)), name: name, object: nil)
+            notificationCenter.addObserver(self, selector: #selector(deviceDidUpdate(_:)), name: name, object: nil)
         }
     }
 

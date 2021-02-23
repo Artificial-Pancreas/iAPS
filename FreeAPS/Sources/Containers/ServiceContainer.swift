@@ -5,7 +5,7 @@ private let resolver = FreeAPSApp.resolver
 
 enum ServiceContainer: DependeciesContainer {
     static func register(container: Container) {
-        container.register(DeviceDataManager.self) { _ in BaseDeviceManager() }
-        container.register(APSManager.self) { _ in BaseAPSManager(resolver: resolver) }
+        container.register(NotificationCenter.self) { _ in Foundation.NotificationCenter.default }
+        container.register(Broadcaster.self) { _ in BaseBroadcaster() }
     }
 }
