@@ -83,13 +83,21 @@ extension BaseAPSManager: PumpManagerDelegate {
         UserDefaults.standard.pumpManagerRawValue = pumpManager.rawValue
     }
 
-    func pumpManagerBLEHeartbeatDidFire(_: PumpManager) {}
+    func pumpManagerBLEHeartbeatDidFire(_ pumpManager: PumpManager) {
+        print("[APSManager] Pump Heartbeat")
+        pumpManager.ensureCurrentPumpData {
+            print("[APSManager] Pump Data updated")
+        }
+    }
 
     func pumpManagerMustProvideBLEHeartbeat(_: PumpManager) -> Bool {
         true
     }
 
-    func pumpManager(_: PumpManager, didUpdate _: PumpManagerStatus, oldStatus _: PumpManagerStatus) {}
+    func pumpManager(_: PumpManager, didUpdate status: PumpManagerStatus, oldStatus _: PumpManagerStatus) {
+        print("[APSManager] new pump status Bolus: \(status.bolusState)")
+        print("[APSManager] new pump status Basal: \(String(describing: status.basalDeliveryState))")
+    }
 
     func pumpManagerWillDeactivate(_: PumpManager) {
         pumpManager = nil
@@ -97,28 +105,43 @@ extension BaseAPSManager: PumpManagerDelegate {
 
     func pumpManager(_: PumpManager, didUpdatePumpRecordsBasalProfileStartEvents _: Bool) {}
 
-    func pumpManager(_: PumpManager, didError _: PumpManagerError) {
-//        log.error("pumpManager didError %@", String(describing: error))
+    func pumpManager(_: PumpManager, didError error: PumpManagerError) {
+        print("[APSManager] error: \(error.localizedDescription)")
     }
 
     func pumpManager(
         _: PumpManager,
-        hasNewPumpEvents _: [NewPumpEvent],
+        hasNewPumpEvents events: [NewPumpEvent],
         lastReconciliation _: Date?,
-        completion _: @escaping (_ error: Error?) -> Void
-    ) {}
+        completion: @escaping (_ error: Error?) -> Void
+    ) {
+        print("[APSManager] new pump events: \(events.compactMap(\.dose?.type))")
+        completion(nil)
+    }
 
     func pumpManager(
         _: PumpManager,
-        didReadReservoirValue _: Double,
-        at _: Date,
-        completion _: @escaping (Result<
+        didReadReservoirValue units: Double,
+        at date: Date,
+        completion: @escaping (Result<
             (newValue: ReservoirValue, lastValue: ReservoirValue?, areStoredValuesContinuous: Bool),
             Error
         >) -> Void
-    ) {}
+    ) {
+        print("[APSManager] Reservoir Value \(units), at: \(date)")
+        completion(.success((
+            newValue: Reservoir(startDate: Date(), unitVolume: units),
+            lastValue: nil,
+            areStoredValuesContinuous: true
+        )))
+    }
 
-    func pumpManagerRecommendsLoop(_: PumpManager) {}
+    func pumpManagerRecommendsLoop(_: PumpManager) {
+        print("[APSManager] recomends loop")
+//        pumpManager.enactBolus(units: 0.1, automatic: true) { _ in
+//            print("[APSManager] Bolus done")
+//        }
+    }
 
     func startDateToFilterNewPumpEvents(for _: PumpManager) -> Date {
         Date().addingTimeInterval(-2.hours.timeInterval)
