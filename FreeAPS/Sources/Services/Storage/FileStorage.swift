@@ -10,15 +10,27 @@ protocol FileStorage {
     func retrievePublisher<Value: JSON>(_: String, as type: Value.Type) -> AnyPublisher<Value, Error>
 
     func append<Value: JSON>(_ newValue: Value, to name: String) throws
+    func append<Value: JSON>(_ newValue: [Value], to name: String) throws
     func appendPublisher<Value: JSON>(_: Value, to name: String) -> AnyPublisher<Void, Error>
+    func appendPublisher<Value: JSON>(_ newValue: [Value], to name: String) -> AnyPublisher<Void, Error>
 }
 
 final class BaseFileStorage: FileStorage {
     private let processQueue = DispatchQueue(label: "BaseFileStorage.processQueue")
-
-    func save<Value: JSON>(_ value: Value, as name: String) throws {
+    private var encoder: JSONEncoder {
         let encoder = JSONEncoder()
         encoder.outputFormatting = .prettyPrinted
+        encoder.dateEncodingStrategy = .iso8601
+        return encoder
+    }
+
+    private var decoder: JSONDecoder {
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .iso8601
+        return decoder
+    }
+
+    func save<Value: JSON>(_ value: Value, as name: String) throws {
         try Disk.save(value, to: .documents, as: name, encoder: encoder)
     }
 
@@ -37,7 +49,7 @@ final class BaseFileStorage: FileStorage {
     }
 
     func retrieve<Value: JSON>(_ name: String, as type: Value.Type) throws -> Value {
-        try Disk.retrieve(name, from: .documents, as: type)
+        try Disk.retrieve(name, from: .documents, as: type, decoder: decoder)
     }
 
     func retrievePublisher<Value: JSON>(_ name: String, as type: Value.Type) -> AnyPublisher<Value, Error> {
@@ -55,7 +67,11 @@ final class BaseFileStorage: FileStorage {
     }
 
     func append<Value: JSON>(_ newValue: Value, to name: String) throws {
-        try Disk.append(newValue, to: name, in: .documents)
+        try Disk.append(newValue, to: name, in: .documents, encoder: encoder)
+    }
+
+    func append<Value: JSON>(_ newValue: [Value], to name: String) throws {
+        try Disk.append(newValue, to: name, in: .documents, encoder: encoder)
     }
 
     func appendPublisher<Value: JSON>(_ newValue: Value, to name: String) -> AnyPublisher<Void, Error> {
@@ -64,6 +80,32 @@ final class BaseFileStorage: FileStorage {
                 do {
                     try self.append(newValue, to: name)
                     promise(.success(()))
+                } catch {
+                    promise(.failure(error))
+                }
+            }
+        }
+        .eraseToAnyPublisher()
+    }
+
+    func appendPublisher<Value: JSON>(_ newValue: [Value], to name: String) -> AnyPublisher<Void, Error> {
+        Future { promise in
+            self.processQueue.async {
+                do { func appendPublisher<Value: JSON>(_ newValue: Value, to name: String) -> AnyPublisher<Void, Error> {
+                    Future { promise in
+                        self.processQueue.async {
+                            do {
+                                try self.append(newValue, to: name)
+                                promise(.success(()))
+                            } catch {
+                                promise(.failure(error))
+                            }
+                        }
+                    }
+                    .eraseToAnyPublisher()
+                }
+                try self.append(newValue, to: name)
+                promise(.success(()))
                 } catch {
                     promise(.failure(error))
                 }

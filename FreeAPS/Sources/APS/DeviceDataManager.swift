@@ -17,6 +17,8 @@ private let staticPumpManagersByIdentifier: [String: PumpManagerUI.Type] = stati
 }
 
 final class DeviceDataManager {
+    private let storage: FileStorage
+
     var pumpManager: PumpManagerUI? {
         didSet {
             pumpManager?.pumpManagerDelegate = self
@@ -31,7 +33,8 @@ final class DeviceDataManager {
 
     let pumpDisplayState = CurrentValueSubject<PumpDisplayState?, Never>(nil)
 
-    init() {
+    init(storage: FileStorage) {
+        self.storage = storage
         setupPumpManager()
     }
 
@@ -57,6 +60,40 @@ final class DeviceDataManager {
         }
 
         return staticPumpManagersByIdentifier[managerIdentifier]
+    }
+
+    private func storePumpEvents(_ events: [NewPumpEvent]) {
+        print(
+            "[DeviceDataManager] new pump events: \(events.compactMap(\.type))"
+        )
+
+        let numberFormatter = NumberFormatter()
+        numberFormatter.numberStyle = .decimal
+
+        let eventsToStore = events.flatMap { event -> [PumpHystoryEvent] in
+            switch event.type {
+            case .bolus:
+                guard let dose = event.dose else { return [] }
+                let decimal = Decimal(string: dose.unitsInDeliverableIncrements.description)
+                return [PumpHystoryEvent(
+                    type: .bolus,
+                    timestamp: event.date,
+                    amount: decimal,
+                    duration: nil,
+                    durationMin: nil,
+                    rate: nil,
+                    temp: nil
+                )]
+            default:
+                return []
+            }
+        }
+
+        do {
+            try storage.append(eventsToStore, to: OpenAPS.Monitor.pumpHistory)
+        } catch {
+            try? storage.save(eventsToStore, as: OpenAPS.Monitor.pumpHistory)
+        }
     }
 }
 
@@ -101,7 +138,7 @@ extension DeviceDataManager: PumpManagerDelegate {
         lastReconciliation _: Date?,
         completion: @escaping (_ error: Error?) -> Void
     ) {
-        print("[DeviceDataManager] new pump events: \(events.compactMap(\.dose?.type))")
+        storePumpEvents(events)
         completion(nil)
     }
 

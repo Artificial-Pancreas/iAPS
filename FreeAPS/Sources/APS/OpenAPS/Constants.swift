@@ -27,6 +27,10 @@ extension OpenAPS {
         static let autosense = "settings/autosense.json"
     }
 
+    enum Monitor {
+        static let pumpHistory = "monitor/pumphistory.json"
+    }
+
     enum Function {
         static let freeaps = "freeaps"
         static let generate = "generate"

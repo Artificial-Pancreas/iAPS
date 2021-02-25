@@ -4,8 +4,9 @@ import LoopKitUI
 import Swinject
 
 final class BaseAPSManager: APSManager, Injectable {
+    @Injected() var storage: FileStorage!
     private var openAPS: OpenAPS!
-    private let deviceDataManager = DeviceDataManager()
+    private var deviceDataManager: DeviceDataManager!
 
     var pumpManager: PumpManagerUI? {
         get {
@@ -20,7 +21,8 @@ final class BaseAPSManager: APSManager, Injectable {
 
     init(resolver: Resolver) {
         injectServices(resolver)
-        openAPS = OpenAPS(storage: resolver.resolve(FileStorage.self)!)
+        deviceDataManager = DeviceDataManager(storage: storage)
+        openAPS = OpenAPS(storage: storage)
     }
 
     func runTest() {

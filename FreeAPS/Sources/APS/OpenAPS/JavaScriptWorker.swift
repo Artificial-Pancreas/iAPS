@@ -36,7 +36,7 @@ final class JavaScriptWorker {
     }
 
     func call(function: String, with arguments: [JSON]) -> RawJSON {
-        let joined = arguments.map(\.string).joined(separator: ",")
+        let joined = arguments.map(\.rawJSON).joined(separator: ",")
         return json(for: "\(function)(\(joined))")
     }
 

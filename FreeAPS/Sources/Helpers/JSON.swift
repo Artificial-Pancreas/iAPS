@@ -1,18 +1,23 @@
 import Foundation
 
 protocol JSON: Codable {
-    var string: String { get }
+    var rawJSON: String { get }
     init?(from: String)
 }
 
 extension JSON {
-    var string: String {
-        String(data: try! JSONEncoder().encode(self), encoding: .utf8)!
+    var rawJSON: RawJSON {
+        let encoder = JSONEncoder()
+        encoder.outputFormatting = .prettyPrinted
+        encoder.dateEncodingStrategy = .iso8601
+        return String(data: try! encoder.encode(self), encoding: .utf8)!
     }
 
     init?(from: String) {
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .iso8601
         guard let data = from.data(using: .utf8),
-              let object = try? JSONDecoder().decode(Self.self, from: data)
+              let object = try? decoder.decode(Self.self, from: data)
         else {
             return nil
         }
@@ -21,7 +26,7 @@ extension JSON {
 }
 
 extension String: JSON {
-    var string: String { self }
+    var rawJSON: String { self }
     init?(from: String) { self = from }
 }
 
@@ -32,7 +37,7 @@ extension Int: JSON {}
 extension Bool: JSON {}
 
 extension Date: JSON {
-    var string: String {
+    var rawJSON: String {
         let formatter = ISO8601DateFormatter()
         return formatter.string(from: self)
     }
@@ -50,3 +55,9 @@ extension Date: JSON {
 }
 
 typealias RawJSON = String
+typealias AnyJSON = AnyCodable
+
+extension AnyJSON: JSON {}
+
+extension Array: JSON where Element: JSON {}
+extension Dictionary: JSON where Key: JSON, Value: JSON {}
