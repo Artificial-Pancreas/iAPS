@@ -39,7 +39,6 @@ redundantBreak,\
 redundantExtensionACL,\
 redundantFileprivate,\
 redundantGet,\
-redundantInit,\
 redundantLet,\
 redundantLetError,\
 redundantNilInit,\
@@ -80,6 +79,7 @@ wrapEnumCases,\
 wrapMultilineStatementBraces,\
 wrapSwitchCases \
 --disable braces,\
+redundantInit,\
 trailingClosures \
 --commas inline \
 --exponentcase uppercase \

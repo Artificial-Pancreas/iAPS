@@ -2,6 +2,7 @@ import LoopKit
 import LoopKitUI
 import MinimedKit
 import MinimedKitUI
+import OmniKit
 import OmniKitUI
 import RileyLinkBLEKit
 import RileyLinkKit
@@ -12,7 +13,7 @@ import UIKit
 extension PumpConfig {
     struct PumpSetupView: UIViewControllerRepresentable {
         let pumpType: PumpType
-        let deviceProvider: RileyLinkDeviceProvider
+        let pumpInitialSettings: PumpInitialSettings
         weak var completionDelegate: CompletionDelegate?
         weak var setupDelegate: PumpManagerSetupViewControllerDelegate?
 
@@ -21,22 +22,24 @@ extension PumpConfig {
 
             switch pumpType {
             case .minimed:
-                setupViewController = UIStoryboard(
-                    name: "MinimedPumpManager",
-                    bundle: Bundle(for: MinimedPumpManagerSetupViewController.self)
-                ).instantiateViewController(withIdentifier: "DevelopmentPumpSetup") as! MinimedPumpManagerSetupViewController
+                setupViewController = MinimedPumpManager.setupViewController(
+                    insulinTintColor: .accentColor,
+                    guidanceColors: GuidanceColors(acceptable: .green, warning: .orange, critical: .red),
+                    allowedInsulinTypes: [.apidra, .fiasp, .humalog, .novolog]
+                )
             case .omnipod:
-                setupViewController = UIStoryboard(
-                    name: "OmnipodPumpManager",
-                    bundle: Bundle(for: OmnipodPumpManagerSetupViewController.self)
-                ).instantiateViewController(withIdentifier: "DevelopmentPumpSetup") as! OmnipodPumpManagerSetupViewController
+                setupViewController = OmnipodPumpManager.setupViewController(
+                    insulinTintColor: .accentColor,
+                    guidanceColors: GuidanceColors(acceptable: .green, warning: .orange, critical: .red),
+                    allowedInsulinTypes: [.apidra, .fiasp, .humalog, .novolog]
+                )
             }
-            if let rileyLinkManagerViewController = setupViewController as? RileyLinkManagerSetupViewController {
-                rileyLinkManagerViewController
-                    .rileyLinkPumpManager = RileyLinkPumpManager(rileyLinkDeviceProvider: deviceProvider)
-            }
+
             setupViewController.setupDelegate = setupDelegate
             setupViewController.completionDelegate = completionDelegate
+            setupViewController.maxBolusUnits = pumpInitialSettings.maxBolusUnits
+            setupViewController.maxBasalRateUnitsPerHour = pumpInitialSettings.maxBasalRateUnitsPerHour
+            setupViewController.basalSchedule = pumpInitialSettings.basalSchedule
             return setupViewController
         }
 

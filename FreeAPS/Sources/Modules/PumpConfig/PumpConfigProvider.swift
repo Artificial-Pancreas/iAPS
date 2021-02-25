@@ -6,11 +6,8 @@ extension PumpConfig {
     final class Provider: BaseProvider, PumpConfigProvider {
         @Injected() var apsManager: APSManager!
 
-        var deviceProvider: RileyLinkDeviceProvider { apsManager.deviceProvider }
-        var setupDelegate: PumpManagerSetupViewControllerDelegate { apsManager }
-
-        func rileyDisplayStates() -> AnyPublisher<[RileyDisplayState], Never> {
-            apsManager.rileyDisplayStates.eraseToAnyPublisher()
+        func setPumpManager(_ manager: PumpManagerUI) {
+            apsManager.setPumpManager(manager)
         }
     }
 }

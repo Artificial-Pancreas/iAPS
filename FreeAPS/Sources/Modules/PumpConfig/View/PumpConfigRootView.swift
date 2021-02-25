@@ -6,22 +6,6 @@ extension PumpConfig {
 
         var body: some View {
             Form {
-                Section(header: HStack {
-                    Text("Devices")
-                    Spacer()
-                    ProgressView()
-                }) {
-                    ForEach(viewModel.rileyDisplayStates.indexed(), id: \.1.id) { index, state in
-                        Toggle(isOn: self.$viewModel.rileyDisplayStates[index].connected) {
-                            HStack {
-                                Text(state.name)
-                                Spacer()
-                                Text(state.rssi.map { "\($0) " } ?? "").foregroundColor(.secondary)
-                            }
-                        }
-                    }
-                }
-
                 Section(header: Text("Pump")) {
                     Button("Add Medtronic") { viewModel.addPump(.minimed) }
                     Button("Add Omnipod") { viewModel.addPump(.omnipod) }
@@ -33,9 +17,9 @@ extension PumpConfig {
             .popover(isPresented: $viewModel.setupPump) {
                 PumpSetupView(
                     pumpType: viewModel.setupPumpType,
-                    deviceProvider: viewModel.provider.deviceProvider,
+                    pumpInitialSettings: .default,
                     completionDelegate: viewModel,
-                    setupDelegate: viewModel.provider.setupDelegate
+                    setupDelegate: viewModel
                 )
             }
         }

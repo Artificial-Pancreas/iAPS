@@ -1,128 +1,201 @@
 import Combine
+import Foundation
 import LoopKit
 import LoopKitUI
 import MinimedKit
+import MinimedKitUI
+import NightscoutUploadKit
+import OmniKit
 import RileyLinkBLEKit
 import RileyLinkKit
+import RileyLinkKitUI
+import SwiftDate
 import Swinject
+import UserNotifications
+
+private let staticPumpManagers: [PumpManagerUI.Type] = [
+    MinimedPumpManager.self,
+    OmnipodPumpManager.self
+]
+
+private let staticPumpManagersByIdentifier: [String: PumpManagerUI.Type] = staticPumpManagers.reduce(into: [:]) { map, Type in
+    map[Type.managerIdentifier] = Type
+}
 
 final class BaseAPSManager: APSManager, Injectable {
     private var openAPS: OpenAPS!
-    @Injected() private var deviceDataManager: DeviceDataManager!
-    @Injected() private var notificationCenter: NotificationCenter!
 
-    let rileyDisplayStates = CurrentValueSubject<[RileyDisplayState], Never>([])
-
-    var deviceProvider: RileyLinkDeviceProvider {
-        deviceDataManager.rileyLinkConnectionManager.deviceProvider
-    }
-
-    private var pumpManager: PumpManagerUI? { deviceDataManager.pumpManager }
-
-    private(set) var devices: [RileyLinkDevice] = [] {
+    var pumpManager: PumpManagerUI? {
         didSet {
-            print("Devices: \(devices)")
-            updateDisplayStates()
-        }
-    }
-
-    private var deviceRSSI: [UUID: Int] = [:] {
-        didSet {
-            print("RSSI: \(deviceRSSI)")
-            updateDisplayStates()
-        }
-    }
-
-    private(set) var rileyLinkPumpManager: RileyLinkPumpManager!
-
-    private var rssiFetchTimer: Timer? {
-        willSet {
-            rssiFetchTimer?.invalidate()
+            pumpManager?.pumpManagerDelegate = self
+            UserDefaults.standard.pumpManagerRawValue = pumpManager?.rawValue
         }
     }
 
     init(resolver: Resolver) {
         injectServices(resolver)
         openAPS = OpenAPS(storage: resolver.resolve(FileStorage.self)!)
-        rileyLinkPumpManager = RileyLinkPumpManager(
-            rileyLinkDeviceProvider: deviceDataManager.rileyLinkConnectionManager.deviceProvider,
-            rileyLinkConnectionManager: deviceDataManager.rileyLinkConnectionManager
-        )
-        registerNotifications()
-        reloadDevices()
-        rssiFetchTimer = Timer.scheduledTimer(
-            timeInterval: 3,
-            target: self,
-            selector: #selector(updateRSSI),
-            userInfo: nil,
-            repeats: true
-        )
-        updateRSSI()
-    }
 
-    private func updateDisplayStates() {
-        rileyDisplayStates.value = devices.map { device in
-            let connected = rileyLinkPumpManager.rileyLinkConnectionManager?
-                .shouldConnect(to: device.peripheralIdentifier.uuidString) ?? false
-            return RileyDisplayState(
-                id: device.peripheralIdentifier,
-                name: device.name ?? "unknown",
-                rssi: self.deviceRSSI[device.peripheralIdentifier],
-                connected: connected
-            ) { [weak self] connect in
-                if connect {
-                    self?.rileyLinkPumpManager.connectToRileyLink(device)
-                } else {
-                    self?.rileyLinkPumpManager.disconnectFromRileyLink(device)
-                }
-            }
-        }
-    }
-
-    private func registerNotifications() {
-        notificationCenter.addObserver(
-            self,
-            selector: #selector(reloadDevices),
-            name: .ManagerDevicesDidChange,
-            object: rileyLinkPumpManager.rileyLinkDeviceProvider
-        )
-
-        for name in [.DeviceConnectionStateDidChange, .DeviceRSSIDidChange, .DeviceNameDidChange] as [Notification.Name] {
-            notificationCenter.addObserver(self, selector: #selector(deviceDidUpdate(_:)), name: name, object: nil)
-        }
-    }
-
-    @objc private func reloadDevices() {
-        rileyLinkPumpManager.rileyLinkDeviceProvider.getDevices { devices in
-            DispatchQueue.main.async { [weak self] in
-                self?.devices = devices
-            }
-        }
-    }
-
-    @objc private func deviceDidUpdate(_ note: Notification) {
-        DispatchQueue.main.async {
-            if let device = note.object as? RileyLinkDevice {
-                if let rssi = note.userInfo?[RileyLinkDevice.notificationRSSIKey] as? Int {
-                    self.deviceRSSI[device.peripheralIdentifier] = rssi
-                }
-            }
-        }
-    }
-
-    @objc public func updateRSSI() {
-        for device in devices {
-            device.readRSSI()
+        if let pumpManagerRawValue = UserDefaults.standard.pumpManagerRawValue {
+            pumpManager = pumpManagerFromRawValue(pumpManagerRawValue)
         }
     }
 
     func runTest() {
         openAPS.test()
     }
+
+    func setPumpManager(_ manager: PumpManagerUI) {
+        pumpManager = manager
+    }
+
+    private func pumpManagerFromRawValue(_ rawValue: [String: Any]) -> PumpManagerUI? {
+        guard let rawState = rawValue["state"] as? PumpManager.RawStateValue,
+              let Manager = pumpManagerTypeFromRawValue(rawValue)
+        else {
+            return nil
+        }
+
+        return Manager.init(rawState: rawState) as? PumpManagerUI
+    }
+
+    private func pumpManagerTypeFromRawValue(_ rawValue: [String: Any]) -> PumpManager.Type? {
+        guard let managerIdentifier = rawValue["managerIdentifier"] as? String else {
+            return nil
+        }
+
+        return staticPumpManagersByIdentifier[managerIdentifier]
+    }
 }
 
-extension BaseAPSManager: PumpManagerSetupViewControllerDelegate {
-    func pumpManagerSetupViewController(_: PumpManagerSetupViewController, didSetUpPumpManager pumpManager: PumpManagerUI) {
-        deviceDataManager.pumpManager = pumpManager
+extension BaseAPSManager: PumpManagerDelegate {
+    func pumpManager(_: PumpManager, didAdjustPumpClockBy _: TimeInterval) {
+//        log.debug("didAdjustPumpClockBy %@", adjustment)
+    }
+
+    func pumpManagerDidUpdateState(_ pumpManager: PumpManager) {
+        UserDefaults.standard.pumpManagerRawValue = pumpManager.rawValue
+    }
+
+    func pumpManagerBLEHeartbeatDidFire(_: PumpManager) {}
+
+    func pumpManagerMustProvideBLEHeartbeat(_: PumpManager) -> Bool {
+        true
+    }
+
+    func pumpManager(_: PumpManager, didUpdate _: PumpManagerStatus, oldStatus _: PumpManagerStatus) {}
+
+    func pumpManagerWillDeactivate(_: PumpManager) {
+        pumpManager = nil
+    }
+
+    func pumpManager(_: PumpManager, didUpdatePumpRecordsBasalProfileStartEvents _: Bool) {}
+
+    func pumpManager(_: PumpManager, didError _: PumpManagerError) {
+//        log.error("pumpManager didError %@", String(describing: error))
+    }
+
+    func pumpManager(
+        _: PumpManager,
+        hasNewPumpEvents _: [NewPumpEvent],
+        lastReconciliation _: Date?,
+        completion _: @escaping (_ error: Error?) -> Void
+    ) {}
+
+    func pumpManager(
+        _: PumpManager,
+        didReadReservoirValue _: Double,
+        at _: Date,
+        completion _: @escaping (Result<
+            (newValue: ReservoirValue, lastValue: ReservoirValue?, areStoredValuesContinuous: Bool),
+            Error
+        >) -> Void
+    ) {}
+
+    func pumpManagerRecommendsLoop(_: PumpManager) {}
+
+    func startDateToFilterNewPumpEvents(for _: PumpManager) -> Date {
+        Date().addingTimeInterval(-2.hours.timeInterval)
+    }
+}
+
+// MARK: - DeviceManagerDelegate
+
+extension BaseAPSManager: DeviceManagerDelegate {
+    func scheduleNotification(
+        for _: DeviceManager,
+        identifier: String,
+        content: UNNotificationContent,
+        trigger: UNNotificationTrigger?
+    ) {
+        let request = UNNotificationRequest(
+            identifier: identifier,
+            content: content,
+            trigger: trigger
+        )
+
+        DispatchQueue.main.async {
+            UNUserNotificationCenter.current().add(request)
+        }
+    }
+
+    func clearNotification(for _: DeviceManager, identifier: String) {
+        DispatchQueue.main.async {
+            UNUserNotificationCenter.current().removeDeliveredNotifications(withIdentifiers: [identifier])
+        }
+    }
+
+    func removeNotificationRequests(for _: DeviceManager, identifiers: [String]) {
+        DispatchQueue.main.async {
+            UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: identifiers)
+        }
+    }
+
+    func deviceManager(
+        _: DeviceManager,
+        logEventForDeviceIdentifier _: String?,
+        type _: DeviceLogEntryType,
+        message _: String,
+        completion _: ((Error?) -> Void)?
+    ) {}
+}
+
+// MARK: - AlertPresenter
+
+extension BaseAPSManager: AlertPresenter {
+    func issueAlert(_: Alert) {}
+
+    func retractAlert(identifier _: Alert.Identifier) {}
+}
+
+extension PumpManager {
+    var rawValue: [String: Any] {
+        [
+            "managerIdentifier": type(of: self).managerIdentifier,
+            "state": rawState
+        ]
+    }
+}
+
+func PumpManagerFromRawValue(_ rawValue: [String: Any], rileyLinkDeviceProvider: RileyLinkDeviceProvider) -> PumpManager? {
+    guard let managerIdentifier = rawValue["managerIdentifier"] as? String,
+          let rawState = rawValue["state"] as? PumpManager.RawStateValue
+    else {
+        return nil
+    }
+
+    switch managerIdentifier {
+    case MinimedPumpManager.managerIdentifier:
+        guard let state = MinimedPumpManagerState(rawValue: rawState) else {
+            return nil
+        }
+        return MinimedPumpManager(state: state, rileyLinkDeviceProvider: rileyLinkDeviceProvider)
+    case OmnipodPumpManager.managerIdentifier:
+        guard let state = OmnipodPumpManagerState(rawValue: rawState) else {
+            return nil
+        }
+        return OmnipodPumpManager(state: state, rileyLinkDeviceProvider: rileyLinkDeviceProvider)
+    default:
+        return nil
     }
 }
