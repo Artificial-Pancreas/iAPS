@@ -131,6 +131,7 @@
 		38BF021725E7CBBC00579895 /* PumpManagerExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38BF021625E7CBBC00579895 /* PumpManagerExtensions.swift */; };
 		38BF021B25E7D06400579895 /* PumpSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38BF021A25E7D06400579895 /* PumpSettingsView.swift */; };
 		38BF021D25E7E3AF00579895 /* Reservoir.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38BF021C25E7E3AF00579895 /* Reservoir.swift */; };
+		38BF021F25E7F0DE00579895 /* DeviceDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38BF021E25E7F0DE00579895 /* DeviceDataManager.swift */; };
 		38FE826A25CC82DB001FF17A /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38FE826925CC82DB001FF17A /* NetworkService.swift */; };
 		38FE826D25CC8461001FF17A /* NightscoutAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38FE826C25CC8461001FF17A /* NightscoutAPI.swift */; };
 		45252C95D220E796FDB3B022 /* ConfigEditorDataFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F8A87AA037BD079BA3528BA /* ConfigEditorDataFlow.swift */; };
@@ -605,6 +606,7 @@
 		38BF021625E7CBBC00579895 /* PumpManagerExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PumpManagerExtensions.swift; sourceTree = "<group>"; };
 		38BF021A25E7D06400579895 /* PumpSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PumpSettingsView.swift; sourceTree = "<group>"; };
 		38BF021C25E7E3AF00579895 /* Reservoir.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reservoir.swift; sourceTree = "<group>"; };
+		38BF021E25E7F0DE00579895 /* DeviceDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceDataManager.swift; sourceTree = "<group>"; };
 		38FE826925CC82DB001FF17A /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		38FE826C25CC8461001FF17A /* NightscoutAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NightscoutAPI.swift; sourceTree = "<group>"; };
 		3BF768BD6264FF7D71D66767 /* NightscoutConfigProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NightscoutConfigProvider.swift; sourceTree = "<group>"; };
@@ -980,6 +982,7 @@
 			children = (
 				3811DF0B25CAAABD00A708ED /* APSManager.swift */,
 				3811DF0F25CAAAE200A708ED /* BaseAPSManager.swift */,
+				38BF021E25E7F0DE00579895 /* DeviceDataManager.swift */,
 				38A504F625DDA0E200C5B9E8 /* Extensions */,
 				388E5A5825B6F0070019842D /* OpenAPS */,
 			);
@@ -1642,6 +1645,7 @@
 				38BF021B25E7D06400579895 /* PumpSettingsView.swift in Sources */,
 				3811DEEA25CA063400A708ED /* SyncAccess.swift in Sources */,
 				3811DE4F25C9D4B800A708ED /* AuthotizedRootDataFlow.swift in Sources */,
+				38BF021F25E7F0DE00579895 /* DeviceDataManager.swift in Sources */,
 				3811DE5025C9D4B800A708ED /* AuthotizedRootProvider.swift in Sources */,
 				38A504A425DD9C4000C5B9E8 /* UserDefaultsExtensions.swift in Sources */,
 				38FE826A25CC82DB001FF17A /* NetworkService.swift in Sources */,
