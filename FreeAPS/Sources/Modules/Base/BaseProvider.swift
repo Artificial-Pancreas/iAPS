@@ -35,4 +35,13 @@ class BaseProvider: Provider, Injectable {
         }
         return (try? String(contentsOf: url)) ?? ""
     }
+
+    func type(for file: String) -> JSON.Type {
+        switch file {
+        case OpenAPS.Monitor.pumpHistory:
+            return [PumpHistoryEvent].self
+        default:
+            return RawJSON.self
+        }
+    }
 }

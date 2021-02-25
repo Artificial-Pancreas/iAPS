@@ -70,12 +70,12 @@ final class DeviceDataManager {
         let numberFormatter = NumberFormatter()
         numberFormatter.numberStyle = .decimal
 
-        let eventsToStore = events.flatMap { event -> [PumpHystoryEvent] in
+        let eventsToStore = events.flatMap { event -> [PumpHistoryEvent] in
             switch event.type {
             case .bolus:
                 guard let dose = event.dose else { return [] }
                 let decimal = Decimal(string: dose.unitsInDeliverableIncrements.description)
-                return [PumpHystoryEvent(
+                return [PumpHistoryEvent(
                     type: .bolus,
                     timestamp: event.date,
                     amount: decimal,

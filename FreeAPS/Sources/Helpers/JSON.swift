@@ -55,9 +55,6 @@ extension Date: JSON {
 }
 
 typealias RawJSON = String
-typealias AnyJSON = AnyCodable
-
-extension AnyJSON: JSON {}
 
 extension Array: JSON where Element: JSON {}
 extension Dictionary: JSON where Key: JSON, Value: JSON {}

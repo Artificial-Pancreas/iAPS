@@ -5,7 +5,7 @@ extension ConfigEditor {
         func load(file: String) -> RawJSON {
             if let value = try? storage.retrieve(file, as: RawJSON.self) {
                 return value
-            } else if let value = try? storage.retrieve(file, as: [AnyJSON].self) {
+            } else if let value = try? storage.retrieve(file, as: [PumpHistoryEvent].self) {
                 return value.rawJSON
             }
             return defaults(for: file)
