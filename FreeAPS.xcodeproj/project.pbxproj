@@ -128,6 +128,7 @@
 		38B4F3CB25E502E200E76A18 /* WeakObjectSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38B4F3C925E502E100E76A18 /* WeakObjectSet.swift */; };
 		38B4F3CD25E5031100E76A18 /* Broadcaster.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38B4F3CC25E5031100E76A18 /* Broadcaster.swift */; };
 		38B4F3CF25E5041600E76A18 /* APSContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38B4F3CE25E5041600E76A18 /* APSContainer.swift */; };
+		38BF021725E7CBBC00579895 /* PumpManagerExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38BF021625E7CBBC00579895 /* PumpManagerExtensions.swift */; };
 		38FE826A25CC82DB001FF17A /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38FE826925CC82DB001FF17A /* NetworkService.swift */; };
 		38FE826D25CC8461001FF17A /* NightscoutAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38FE826C25CC8461001FF17A /* NightscoutAPI.swift */; };
 		45252C95D220E796FDB3B022 /* ConfigEditorDataFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F8A87AA037BD079BA3528BA /* ConfigEditorDataFlow.swift */; };
@@ -599,6 +600,7 @@
 		38B4F3C925E502E100E76A18 /* WeakObjectSet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeakObjectSet.swift; sourceTree = "<group>"; };
 		38B4F3CC25E5031100E76A18 /* Broadcaster.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Broadcaster.swift; sourceTree = "<group>"; };
 		38B4F3CE25E5041600E76A18 /* APSContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APSContainer.swift; sourceTree = "<group>"; };
+		38BF021625E7CBBC00579895 /* PumpManagerExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PumpManagerExtensions.swift; sourceTree = "<group>"; };
 		38FE826925CC82DB001FF17A /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		38FE826C25CC8461001FF17A /* NightscoutAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NightscoutAPI.swift; sourceTree = "<group>"; };
 		3BF768BD6264FF7D71D66767 /* NightscoutConfigProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NightscoutConfigProvider.swift; sourceTree = "<group>"; };
@@ -1049,6 +1051,7 @@
 			isa = PBXGroup;
 			children = (
 				38A5049125DD9C4000C5B9E8 /* UserDefaultsExtensions.swift */,
+				38BF021625E7CBBC00579895 /* PumpManagerExtensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1573,6 +1576,7 @@
 				3811DE6D25C9D62600A708ED /* OnboardingRootView.swift in Sources */,
 				3811DE3025C9D49500A708ED /* HomeViewModel.swift in Sources */,
 				3811DF0525CAA62600A708ED /* DependeciesContainer.swift in Sources */,
+				38BF021725E7CBBC00579895 /* PumpManagerExtensions.swift in Sources */,
 				3811DF1025CAAAE200A708ED /* BaseAPSManager.swift in Sources */,
 				3811DE0A25C9D32F00A708ED /* BaseModuleBuilder.swift in Sources */,
 				3811DE1725C9D40400A708ED /* Screen.swift in Sources */,

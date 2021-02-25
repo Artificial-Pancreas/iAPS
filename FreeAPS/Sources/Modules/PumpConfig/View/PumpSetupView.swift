@@ -22,17 +22,9 @@ extension PumpConfig {
 
             switch pumpType {
             case .minimed:
-                setupViewController = MinimedPumpManager.setupViewController(
-                    insulinTintColor: .accentColor,
-                    guidanceColors: GuidanceColors(acceptable: .green, warning: .orange, critical: .red),
-                    allowedInsulinTypes: [.apidra, .fiasp, .humalog, .novolog]
-                )
+                setupViewController = MinimedPumpManager.setupViewController()
             case .omnipod:
-                setupViewController = OmnipodPumpManager.setupViewController(
-                    insulinTintColor: .accentColor,
-                    guidanceColors: GuidanceColors(acceptable: .green, warning: .orange, critical: .red),
-                    allowedInsulinTypes: [.apidra, .fiasp, .humalog, .novolog]
-                )
+                setupViewController = OmnipodPumpManager.setupViewController()
             }
 
             setupViewController.setupDelegate = setupDelegate

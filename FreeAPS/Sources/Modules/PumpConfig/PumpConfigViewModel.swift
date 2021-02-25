@@ -5,8 +5,14 @@ extension PumpConfig {
     class ViewModel<Provider>: BaseViewModel<Provider>, ObservableObject where Provider: PumpConfigProvider {
         @Published var setupPump = false
         private(set) var setupPumpType: PumpType = .minimed
+        @Published var pumpState: PumpDisplayState?
 
-        override func subscribe() {}
+        override func subscribe() {
+            provider.pumpDisplayState
+                .receive(on: DispatchQueue.main)
+                .assign(to: \.pumpState, on: self)
+                .store(in: &lifetime)
+        }
 
         func addPump(_ type: PumpType) {
             setupPump = true

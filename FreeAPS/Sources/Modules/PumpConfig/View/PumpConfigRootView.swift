@@ -7,8 +7,15 @@ extension PumpConfig {
         var body: some View {
             Form {
                 Section(header: Text("Pump")) {
-                    Button("Add Medtronic") { viewModel.addPump(.minimed) }
-                    Button("Add Omnipod") { viewModel.addPump(.omnipod) }
+                    if let pumpState = viewModel.pumpState {
+                        HStack {
+                            Image(uiImage: pumpState.image ?? UIImage()).padding()
+                            Text(pumpState.name)
+                        }
+                    } else {
+                        Button("Add Medtronic") { viewModel.addPump(.minimed) }
+                        Button("Add Omnipod") { viewModel.addPump(.omnipod) }
+                    }
                 }
             }
             .toolbar { ToolbarItem(placement: .principal) { Text("Pump Config") } }

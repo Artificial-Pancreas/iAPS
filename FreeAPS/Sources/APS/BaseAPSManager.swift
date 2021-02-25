@@ -29,13 +29,23 @@ final class BaseAPSManager: APSManager, Injectable {
         didSet {
             pumpManager?.pumpManagerDelegate = self
             UserDefaults.standard.pumpManagerRawValue = pumpManager?.rawValue
+            if let pumpManager = pumpManager {
+                pumpDisplayState.value = PumpDisplayState(name: pumpManager.localizedTitle, image: pumpManager.smallImage)
+            } else {
+                pumpDisplayState.value = nil
+            }
         }
     }
+
+    let pumpDisplayState = CurrentValueSubject<PumpDisplayState?, Never>(nil)
 
     init(resolver: Resolver) {
         injectServices(resolver)
         openAPS = OpenAPS(storage: resolver.resolve(FileStorage.self)!)
+        setupPumpManager()
+    }
 
+    private func setupPumpManager() {
         if let pumpManagerRawValue = UserDefaults.standard.pumpManagerRawValue {
             pumpManager = pumpManagerFromRawValue(pumpManagerRawValue)
         }
@@ -166,36 +176,4 @@ extension BaseAPSManager: AlertPresenter {
     func issueAlert(_: Alert) {}
 
     func retractAlert(identifier _: Alert.Identifier) {}
-}
-
-extension PumpManager {
-    var rawValue: [String: Any] {
-        [
-            "managerIdentifier": type(of: self).managerIdentifier,
-            "state": rawState
-        ]
-    }
-}
-
-func PumpManagerFromRawValue(_ rawValue: [String: Any], rileyLinkDeviceProvider: RileyLinkDeviceProvider) -> PumpManager? {
-    guard let managerIdentifier = rawValue["managerIdentifier"] as? String,
-          let rawState = rawValue["state"] as? PumpManager.RawStateValue
-    else {
-        return nil
-    }
-
-    switch managerIdentifier {
-    case MinimedPumpManager.managerIdentifier:
-        guard let state = MinimedPumpManagerState(rawValue: rawState) else {
-            return nil
-        }
-        return MinimedPumpManager(state: state, rileyLinkDeviceProvider: rileyLinkDeviceProvider)
-    case OmnipodPumpManager.managerIdentifier:
-        guard let state = OmnipodPumpManagerState(rawValue: rawState) else {
-            return nil
-        }
-        return OmnipodPumpManager(state: state, rileyLinkDeviceProvider: rileyLinkDeviceProvider)
-    default:
-        return nil
-    }
 }

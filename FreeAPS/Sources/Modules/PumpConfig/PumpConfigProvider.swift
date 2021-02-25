@@ -9,5 +9,9 @@ extension PumpConfig {
         func setPumpManager(_ manager: PumpManagerUI) {
             apsManager.setPumpManager(manager)
         }
+
+        var pumpDisplayState: AnyPublisher<PumpDisplayState?, Never> {
+            apsManager.pumpDisplayState.eraseToAnyPublisher()
+        }
     }
 }

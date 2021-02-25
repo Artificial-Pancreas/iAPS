@@ -23,6 +23,12 @@ enum PumpConfig {
     }
 }
 
+struct PumpDisplayState {
+    let name: String
+    let image: UIImage?
+}
+
 protocol PumpConfigProvider: Provider {
     func setPumpManager(_: PumpManagerUI)
+    var pumpDisplayState: AnyPublisher<PumpDisplayState?, Never> { get }
 }
