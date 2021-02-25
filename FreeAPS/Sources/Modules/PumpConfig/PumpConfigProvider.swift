@@ -7,7 +7,7 @@ extension PumpConfig {
         @Injected() var apsManager: APSManager!
 
         func setPumpManager(_ manager: PumpManagerUI) {
-            apsManager.setPumpManager(manager)
+            apsManager.pumpManager = manager
         }
 
         var pumpDisplayState: AnyPublisher<PumpDisplayState?, Never> {

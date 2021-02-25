@@ -8,9 +8,13 @@ extension PumpConfig {
             Form {
                 Section(header: Text("Pump")) {
                     if let pumpState = viewModel.pumpState {
-                        HStack {
-                            Image(uiImage: pumpState.image ?? UIImage()).padding()
-                            Text(pumpState.name)
+                        Button {
+                            viewModel.setupPump = true
+                        } label: {
+                            HStack {
+                                Image(uiImage: pumpState.image ?? UIImage()).padding()
+                                Text(pumpState.name)
+                            }
                         }
                     } else {
                         Button("Add Medtronic") { viewModel.addPump(.minimed) }
@@ -22,12 +26,16 @@ extension PumpConfig {
             .navigationBarItems(leading: Button("Close", action: viewModel.hideModal))
             .navigationBarTitleDisplayMode(.inline)
             .popover(isPresented: $viewModel.setupPump) {
-                PumpSetupView(
-                    pumpType: viewModel.setupPumpType,
-                    pumpInitialSettings: .default,
-                    completionDelegate: viewModel,
-                    setupDelegate: viewModel
-                )
+                if let pumpManager = viewModel.provider.apsManager.pumpManager {
+                    PumpSettingsView(pumpManager: pumpManager, completionDelegate: viewModel)
+                } else {
+                    PumpSetupView(
+                        pumpType: viewModel.setupPumpType,
+                        pumpInitialSettings: .default,
+                        completionDelegate: viewModel,
+                        setupDelegate: viewModel
+                    )
+                }
             }
         }
     }

@@ -19,11 +19,15 @@ extension PumpManagerUI {
         )
     }
 
-    func settingsViewController() -> UIViewController {
+    func settingsViewController() -> UIViewController & CompletionNotifying {
         settingsViewController(
             insulinTintColor: .accentColor,
             guidanceColors: GuidanceColors(acceptable: .green, warning: .orange, critical: .red),
             allowedInsulinTypes: [.apidra, .humalog, .novolog, .fiasp]
         )
     }
+}
+
+protocol PumpSettingsBuilder {
+    func settingsViewController() -> UIViewController & CompletionNotifying
 }

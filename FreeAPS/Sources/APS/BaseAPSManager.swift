@@ -55,10 +55,6 @@ final class BaseAPSManager: APSManager, Injectable {
         openAPS.test()
     }
 
-    func setPumpManager(_ manager: PumpManagerUI) {
-        pumpManager = manager
-    }
-
     private func pumpManagerFromRawValue(_ rawValue: [String: Any]) -> PumpManagerUI? {
         guard let rawState = rawValue["state"] as? PumpManager.RawStateValue,
               let Manager = pumpManagerTypeFromRawValue(rawValue)
