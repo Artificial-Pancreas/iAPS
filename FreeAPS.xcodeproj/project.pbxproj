@@ -133,6 +133,7 @@
 		38BF021D25E7E3AF00579895 /* Reservoir.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38BF021C25E7E3AF00579895 /* Reservoir.swift */; };
 		38BF021F25E7F0DE00579895 /* DeviceDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38BF021E25E7F0DE00579895 /* DeviceDataManager.swift */; };
 		38FCF3D625E8FDF40078B0D1 /* MD5.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38FCF3D525E8FDF40078B0D1 /* MD5.swift */; };
+		38FCF3F925E902C20078B0D1 /* FileStorageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38FCF3F825E902C20078B0D1 /* FileStorageTests.swift */; };
 		38FE826A25CC82DB001FF17A /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38FE826925CC82DB001FF17A /* NetworkService.swift */; };
 		38FE826D25CC8461001FF17A /* NightscoutAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38FE826C25CC8461001FF17A /* NightscoutAPI.swift */; };
 		45252C95D220E796FDB3B022 /* ConfigEditorDataFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F8A87AA037BD079BA3528BA /* ConfigEditorDataFlow.swift */; };
@@ -474,6 +475,13 @@
 			remoteGlobalIDString = 43D5E78D1FAF7BFB004ACDB7;
 			remoteInfo = RileyLinkKitUI;
 		};
+		38FCF3F225E9028E0078B0D1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 388E595025AD948C0019842D /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 388E595725AD948C0019842D;
+			remoteInfo = FreeAPS;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -609,6 +617,9 @@
 		38BF021C25E7E3AF00579895 /* Reservoir.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reservoir.swift; sourceTree = "<group>"; };
 		38BF021E25E7F0DE00579895 /* DeviceDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceDataManager.swift; sourceTree = "<group>"; };
 		38FCF3D525E8FDF40078B0D1 /* MD5.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MD5.swift; sourceTree = "<group>"; };
+		38FCF3ED25E9028E0078B0D1 /* FreeAPSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FreeAPSTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		38FCF3F125E9028E0078B0D1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		38FCF3F825E902C20078B0D1 /* FileStorageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileStorageTests.swift; sourceTree = "<group>"; };
 		38FE826925CC82DB001FF17A /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		38FE826C25CC8461001FF17A /* NightscoutAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NightscoutAPI.swift; sourceTree = "<group>"; };
 		3BF768BD6264FF7D71D66767 /* NightscoutConfigProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NightscoutConfigProvider.swift; sourceTree = "<group>"; };
@@ -646,6 +657,13 @@
 				38B17B9625DD941A005CAE3D /* RileyLinkKit.framework in Frameworks */,
 				38B17B8625DD93BA005CAE3D /* LoopKit.framework in Frameworks */,
 				38B17B9225DD9419005CAE3D /* MinimedKitUI.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		38FCF3EA25E9028E0078B0D1 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -996,6 +1014,7 @@
 			children = (
 				38B17AAD25DD69DF005CAE3D /* Dependecies */,
 				388E595A25AD948C0019842D /* FreeAPS */,
+				38FCF3EE25E9028E0078B0D1 /* FreeAPSTests */,
 				388E595925AD948C0019842D /* Products */,
 				38B17B8525DD93BA005CAE3D /* Frameworks */,
 			);
@@ -1005,6 +1024,7 @@
 			isa = PBXGroup;
 			children = (
 				388E595825AD948C0019842D /* FreeAPS.app */,
+				38FCF3ED25E9028E0078B0D1 /* FreeAPSTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1163,6 +1183,15 @@
 			path = SwiftNotificationCenter;
 			sourceTree = "<group>";
 		};
+		38FCF3EE25E9028E0078B0D1 /* FreeAPSTests */ = {
+			isa = PBXGroup;
+			children = (
+				38FCF3F125E9028E0078B0D1 /* Info.plist */,
+				38FCF3F825E902C20078B0D1 /* FileStorageTests.swift */,
+			);
+			path = FreeAPSTests;
+			sourceTree = "<group>";
+		};
 		4E8C7B59F8065047ECE20965 /* View */ = {
 			isa = PBXGroup;
 			children = (
@@ -1255,17 +1284,39 @@
 			productReference = 388E595825AD948C0019842D /* FreeAPS.app */;
 			productType = "com.apple.product-type.application";
 		};
+		38FCF3EC25E9028E0078B0D1 /* FreeAPSTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 38FCF3F425E9028E0078B0D1 /* Build configuration list for PBXNativeTarget "FreeAPSTests" */;
+			buildPhases = (
+				38FCF3E925E9028E0078B0D1 /* Sources */,
+				38FCF3EA25E9028E0078B0D1 /* Frameworks */,
+				38FCF3EB25E9028E0078B0D1 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				38FCF3F325E9028E0078B0D1 /* PBXTargetDependency */,
+			);
+			name = FreeAPSTests;
+			productName = FreeAPSTests;
+			productReference = 38FCF3ED25E9028E0078B0D1 /* FreeAPSTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
 		388E595025AD948C0019842D /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1230;
+				LastSwiftUpdateCheck = 1240;
 				LastUpgradeCheck = 1230;
 				TargetAttributes = {
 					388E595725AD948C0019842D = {
 						CreatedOnToolsVersion = 12.3;
+					};
+					38FCF3EC25E9028E0078B0D1 = {
+						CreatedOnToolsVersion = 12.4;
+						TestTargetID = 388E595725AD948C0019842D;
 					};
 				};
 			};
@@ -1306,6 +1357,7 @@
 			projectRoot = "";
 			targets = (
 				388E595725AD948C0019842D /* FreeAPS */,
+				38FCF3EC25E9028E0078B0D1 /* FreeAPSTests */,
 			);
 		};
 /* End PBXProject section */
@@ -1541,6 +1593,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		38FCF3EB25E9028E0078B0D1 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
@@ -1682,6 +1741,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		38FCF3E925E9028E0078B0D1 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				38FCF3F925E902C20078B0D1 /* FileStorageTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -1759,6 +1826,11 @@
 			isa = PBXTargetDependency;
 			name = RileyLinkKitUI;
 			targetProxy = 38B17B5325DD6BE0005CAE3D /* PBXContainerItemProxy */;
+		};
+		38FCF3F325E9028E0078B0D1 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 388E595725AD948C0019842D /* FreeAPS */;
+			targetProxy = 38FCF3F225E9028E0078B0D1 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -1925,6 +1997,48 @@
 			};
 			name = Release;
 		};
+		38FCF3F525E9028E0078B0D1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = BA7ZHP4963;
+				INFOPLIST_FILE = FreeAPSTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = ru.artpancreas.FreeAPSTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/FreeAPS.app/FreeAPS";
+			};
+			name = Debug;
+		};
+		38FCF3F625E9028E0078B0D1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = BA7ZHP4963;
+				INFOPLIST_FILE = FreeAPSTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = ru.artpancreas.FreeAPSTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/FreeAPS.app/FreeAPS";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -1942,6 +2056,15 @@
 			buildConfigurations = (
 				388E596825AD948E0019842D /* Debug */,
 				388E596925AD948E0019842D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		38FCF3F425E9028E0078B0D1 /* Build configuration list for PBXNativeTarget "FreeAPSTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				38FCF3F525E9028E0078B0D1 /* Debug */,
+				38FCF3F625E9028E0078B0D1 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
