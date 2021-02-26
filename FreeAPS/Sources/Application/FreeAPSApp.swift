@@ -27,6 +27,7 @@ private extension Swinject.Resolver {
 
     private static func loadServices() {
         resolver.resolve(AppearanceManager.self)!.setupGlobalAppearance()
+        _ = resolver.resolve(DeviceDataManager.self)!
         _ = resolver.resolve(APSManager.self)!
     }
 

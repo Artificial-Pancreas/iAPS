@@ -5,7 +5,13 @@ import LoopKitUI
 import MinimedKit
 import OmniKit
 import SwiftDate
+import Swinject
 import UserNotifications
+
+protocol DeviceDataManager {
+    var pumpManager: PumpManagerUI? { get set }
+    var pumpDisplayState: CurrentValueSubject<PumpDisplayState?, Never> { get }
+}
 
 private let staticPumpManagers: [PumpManagerUI.Type] = [
     MinimedPumpManager.self,
@@ -16,8 +22,8 @@ private let staticPumpManagersByIdentifier: [String: PumpManagerUI.Type] = stati
     map[Type.managerIdentifier] = Type
 }
 
-final class DeviceDataManager {
-    private let storage: FileStorage
+final class BaseDeviceDataManager: DeviceDataManager, Injectable {
+    @Injected() private var pumpHistoryStorage: PumpHistoryStorage!
 
     var pumpManager: PumpManagerUI? {
         didSet {
@@ -33,8 +39,8 @@ final class DeviceDataManager {
 
     let pumpDisplayState = CurrentValueSubject<PumpDisplayState?, Never>(nil)
 
-    init(storage: FileStorage) {
-        self.storage = storage
+    init(resolver: Resolver) {
+        injectServices(resolver)
         setupPumpManager()
     }
 
@@ -61,44 +67,9 @@ final class DeviceDataManager {
 
         return staticPumpManagersByIdentifier[managerIdentifier]
     }
-
-    private func storePumpEvents(_ events: [NewPumpEvent]) {
-        print(
-            "[DeviceDataManager] new pump events: \(events.map(\.title))"
-        )
-
-        let numberFormatter = NumberFormatter()
-        numberFormatter.numberStyle = .decimal
-
-        let eventsToStore = events.flatMap { event -> [PumpHistoryEvent] in
-            switch event.type {
-            case .bolus:
-                guard let dose = event.dose else { return [] }
-                let decimal = Decimal(string: dose.unitsInDeliverableIncrements.description)
-                return [PumpHistoryEvent(
-                    id: event.raw.md5String,
-                    type: .bolus,
-                    timestamp: event.date,
-                    amount: decimal,
-                    duration: nil,
-                    durationMin: nil,
-                    rate: nil,
-                    temp: nil
-                )]
-            default:
-                return []
-            }
-        }
-
-        do {
-            try storage.append(eventsToStore, to: OpenAPS.Monitor.pumpHistory, uniqBy: \.id)
-        } catch {
-            try? storage.save(eventsToStore, as: OpenAPS.Monitor.pumpHistory)
-        }
-    }
 }
 
-extension DeviceDataManager: PumpManagerDelegate {
+extension BaseDeviceDataManager: PumpManagerDelegate {
     func pumpManager(_: PumpManager, didAdjustPumpClockBy _: TimeInterval) {
 //        log.debug("didAdjustPumpClockBy %@", adjustment)
     }
@@ -139,7 +110,7 @@ extension DeviceDataManager: PumpManagerDelegate {
         lastReconciliation _: Date?,
         completion: @escaping (_ error: Error?) -> Void
     ) {
-        storePumpEvents(events)
+        pumpHistoryStorage.storePumpEvents(events)
         completion(nil)
     }
 
@@ -174,7 +145,7 @@ extension DeviceDataManager: PumpManagerDelegate {
 
 // MARK: - DeviceManagerDelegate
 
-extension DeviceDataManager: DeviceManagerDelegate {
+extension BaseDeviceDataManager: DeviceManagerDelegate {
     func scheduleNotification(
         for _: DeviceManager,
         identifier: String,
@@ -215,7 +186,7 @@ extension DeviceDataManager: DeviceManagerDelegate {
 
 // MARK: - AlertPresenter
 
-extension DeviceDataManager: AlertPresenter {
+extension BaseDeviceDataManager: AlertPresenter {
     func issueAlert(_: Alert) {}
 
     func retractAlert(identifier _: Alert.Identifier) {}

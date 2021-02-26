@@ -10,10 +10,12 @@ protocol FileStorage {
     func append<Value: JSON, T: Equatable>(_ newValues: [Value], to name: String, uniqBy keyPath: KeyPath<Value, T>) throws
     func remove(_ name: String) throws
     func rename(_ name: String, to newName: String) throws
+    func transaction(_ exec: (FileStorage) throws -> Void) throws
 }
 
 final class BaseFileStorage: FileStorage {
-    private let processQueue = DispatchQueue(label: "BaseFileStorage.processQueue")
+    private let processQueue = DispatchQueue.markedQueue(label: "BaseFileStorage.processQueue", qos: .utility)
+
     private var encoder: JSONEncoder {
         let encoder = JSONEncoder()
         encoder.outputFormatting = .prettyPrinted
@@ -28,25 +30,25 @@ final class BaseFileStorage: FileStorage {
     }
 
     func save<Value: JSON>(_ value: Value, as name: String) throws {
-        try processQueue.sync {
+        try processQueue.safeSync {
             try Disk.save(value, to: .documents, as: name, encoder: self.encoder)
         }
     }
 
     func retrieve<Value: JSON>(_ name: String, as type: Value.Type) throws -> Value {
-        try processQueue.sync {
+        try processQueue.safeSync {
             try Disk.retrieve(name, from: .documents, as: type, decoder: decoder)
         }
     }
 
     func append<Value: JSON>(_ newValue: Value, to name: String) throws {
-        try processQueue.sync {
+        try processQueue.safeSync {
             try Disk.append(newValue, to: name, in: .documents, decoder: decoder, encoder: encoder)
         }
     }
 
     func append<Value: JSON>(_ newValues: [Value], to name: String) throws {
-        try processQueue.sync {
+        try processQueue.safeSync {
             try Disk.append(newValues, to: name, in: .documents, decoder: decoder, encoder: encoder)
         }
     }
@@ -85,14 +87,20 @@ final class BaseFileStorage: FileStorage {
     }
 
     func remove(_ name: String) throws {
-        try processQueue.sync {
+        try processQueue.safeSync {
             try Disk.remove(name, from: .documents)
         }
     }
 
     func rename(_ name: String, to newName: String) throws {
-        try processQueue.sync {
+        try processQueue.safeSync {
             try Disk.rename(name, in: .documents, to: newName)
+        }
+    }
+
+    func transaction(_ exec: (FileStorage) throws -> Void) throws {
+        try processQueue.safeSync {
+            try exec(self)
         }
     }
 }
