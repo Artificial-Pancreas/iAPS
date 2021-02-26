@@ -24,12 +24,13 @@ final class BasePumpHistoryStorage: PumpHistoryStorage, Injectable {
                     print("[PUMP EVENT] Bolus event:\n\(event.title))")
                     guard let dose = event.dose else { return [] }
                     let amount = Decimal(string: dose.unitsInDeliverableIncrements.description)
+                    let minutes = Int((dose.endDate - dose.startDate).timeInterval / 60)
                     return [PumpHistoryEvent(
                         id: id,
                         type: .bolus,
                         timestamp: event.date,
                         amount: amount,
-                        duration: nil,
+                        duration: minutes,
                         durationMin: nil,
                         rate: nil,
                         temp: nil

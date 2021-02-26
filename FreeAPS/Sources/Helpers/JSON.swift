@@ -36,6 +36,8 @@ extension Int: JSON {}
 
 extension Bool: JSON {}
 
+extension Decimal: JSON {}
+
 extension Date: JSON {
     var rawJSON: String {
         let formatter = ISO8601DateFormatter()

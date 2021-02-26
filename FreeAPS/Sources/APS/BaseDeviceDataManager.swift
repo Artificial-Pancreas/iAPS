@@ -24,6 +24,7 @@ private let staticPumpManagersByIdentifier: [String: PumpManagerUI.Type] = stati
 
 final class BaseDeviceDataManager: DeviceDataManager, Injectable {
     @Injected() private var pumpHistoryStorage: PumpHistoryStorage!
+    @Injected() private var storage: FileStorage!
 
     var pumpManager: PumpManagerUI? {
         didSet {
@@ -90,8 +91,8 @@ extension BaseDeviceDataManager: PumpManagerDelegate {
     }
 
     func pumpManager(_: PumpManager, didUpdate status: PumpManagerStatus, oldStatus _: PumpManagerStatus) {
-        print("[DeviceDataManager] new pump status Bolus: \(status.bolusState)")
-        print("[DeviceDataManager] new pump status Basal: \(String(describing: status.basalDeliveryState))")
+        print("[DeviceDataManager] New pump status Bolus: \(status.bolusState)")
+        print("[DeviceDataManager] New pump status Basal: \(String(describing: status.basalDeliveryState))")
     }
 
     func pumpManagerWillDeactivate(_: PumpManager) {
@@ -124,6 +125,7 @@ extension BaseDeviceDataManager: PumpManagerDelegate {
         >) -> Void
     ) {
         print("[DeviceDataManager] Reservoir Value \(units), at: \(date)")
+        try? storage.save(Decimal(units), as: OpenAPS.Monitor.reservoir)
         completion(.success((
             newValue: Reservoir(startDate: Date(), unitVolume: units),
             lastValue: nil,
