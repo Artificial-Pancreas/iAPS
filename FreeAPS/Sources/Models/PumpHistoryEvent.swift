@@ -1,6 +1,7 @@
 import Foundation
 
 struct PumpHistoryEvent: JSON {
+    let id: String
     let type: PumpHistoryEventType
     let timestamp: Date
     let amount: Decimal?
@@ -31,6 +32,7 @@ enum PumpHistoryTempType: String, JSON {
 
 extension PumpHistoryEvent {
     private enum CodingKeys: String, CodingKey {
+        case id = "_id"
         case type = "_type"
         case timestamp
         case amount

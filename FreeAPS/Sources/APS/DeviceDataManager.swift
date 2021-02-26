@@ -64,7 +64,7 @@ final class DeviceDataManager {
 
     private func storePumpEvents(_ events: [NewPumpEvent]) {
         print(
-            "[DeviceDataManager] new pump events: \(events.compactMap(\.type))"
+            "[DeviceDataManager] new pump events: \(events.map(\.title))"
         )
 
         let numberFormatter = NumberFormatter()
@@ -76,6 +76,7 @@ final class DeviceDataManager {
                 guard let dose = event.dose else { return [] }
                 let decimal = Decimal(string: dose.unitsInDeliverableIncrements.description)
                 return [PumpHistoryEvent(
+                    id: event.raw.md5String,
                     type: .bolus,
                     timestamp: event.date,
                     amount: decimal,
@@ -90,7 +91,7 @@ final class DeviceDataManager {
         }
 
         do {
-            try storage.append(eventsToStore, to: OpenAPS.Monitor.pumpHistory)
+            try storage.append(eventsToStore, to: OpenAPS.Monitor.pumpHistory, uniqBy: \.id)
         } catch {
             try? storage.save(eventsToStore, as: OpenAPS.Monitor.pumpHistory)
         }

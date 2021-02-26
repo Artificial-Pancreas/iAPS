@@ -29,6 +29,7 @@ extension OpenAPS {
 
     enum Monitor {
         static let pumpHistory = "monitor/pumphistory.json"
+        static let reservoir = "monitor/reservoir.json"
     }
 
     enum Function {

@@ -1,18 +1,15 @@
-import Combine
 import Disk
 import Foundation
 
 protocol FileStorage {
     func save<Value: JSON>(_ value: Value, as name: String) throws
-    func savePublisher<Value: JSON>(_: Value, as name: String) -> AnyPublisher<Void, Error>
-
     func retrieve<Value: JSON>(_ name: String, as type: Value.Type) throws -> Value
-    func retrievePublisher<Value: JSON>(_: String, as type: Value.Type) -> AnyPublisher<Value, Error>
-
     func append<Value: JSON>(_ newValue: Value, to name: String) throws
-    func append<Value: JSON>(_ newValue: [Value], to name: String) throws
-    func appendPublisher<Value: JSON>(_: Value, to name: String) -> AnyPublisher<Void, Error>
-    func appendPublisher<Value: JSON>(_ newValue: [Value], to name: String) -> AnyPublisher<Void, Error>
+    func append<Value: JSON>(_ newValues: [Value], to name: String) throws
+    func append<Value: JSON, T: Equatable>(_ newValue: Value, to name: String, uniqBy keyPath: KeyPath<Value, T>) throws
+    func append<Value: JSON, T: Equatable>(_ newValues: [Value], to name: String, uniqBy keyPath: KeyPath<Value, T>) throws
+    func remove(_ name: String) throws
+    func rename(_ name: String, to newName: String) throws
 }
 
 final class BaseFileStorage: FileStorage {
@@ -31,86 +28,71 @@ final class BaseFileStorage: FileStorage {
     }
 
     func save<Value: JSON>(_ value: Value, as name: String) throws {
-        try Disk.save(value, to: .documents, as: name, encoder: encoder)
-    }
-
-    func savePublisher<Value: JSON>(_ value: Value, as name: String) -> AnyPublisher<Void, Error> {
-        Future { promise in
-            self.processQueue.async {
-                do {
-                    try self.save(value, as: name)
-                    promise(.success(()))
-                } catch {
-                    promise(.failure(error))
-                }
-            }
+        try processQueue.sync {
+            try Disk.save(value, to: .documents, as: name, encoder: self.encoder)
         }
-        .eraseToAnyPublisher()
     }
 
     func retrieve<Value: JSON>(_ name: String, as type: Value.Type) throws -> Value {
-        try Disk.retrieve(name, from: .documents, as: type, decoder: decoder)
-    }
-
-    func retrievePublisher<Value: JSON>(_ name: String, as type: Value.Type) -> AnyPublisher<Value, Error> {
-        Future { promise in
-            self.processQueue.async {
-                do {
-                    let value = try self.retrieve(name, as: type)
-                    promise(.success(value))
-                } catch {
-                    promise(.failure(error))
-                }
-            }
+        try processQueue.sync {
+            try Disk.retrieve(name, from: .documents, as: type, decoder: decoder)
         }
-        .eraseToAnyPublisher()
     }
 
     func append<Value: JSON>(_ newValue: Value, to name: String) throws {
-        try Disk.append(newValue, to: name, in: .documents, encoder: encoder)
-    }
-
-    func append<Value: JSON>(_ newValue: [Value], to name: String) throws {
-        try Disk.append(newValue, to: name, in: .documents, encoder: encoder)
-    }
-
-    func appendPublisher<Value: JSON>(_ newValue: Value, to name: String) -> AnyPublisher<Void, Error> {
-        Future { promise in
-            self.processQueue.async {
-                do {
-                    try self.append(newValue, to: name)
-                    promise(.success(()))
-                } catch {
-                    promise(.failure(error))
-                }
-            }
+        try processQueue.sync {
+            try Disk.append(newValue, to: name, in: .documents, decoder: decoder, encoder: encoder)
         }
-        .eraseToAnyPublisher()
     }
 
-    func appendPublisher<Value: JSON>(_ newValue: [Value], to name: String) -> AnyPublisher<Void, Error> {
-        Future { promise in
-            self.processQueue.async {
-                do { func appendPublisher<Value: JSON>(_ newValue: Value, to name: String) -> AnyPublisher<Void, Error> {
-                    Future { promise in
-                        self.processQueue.async {
-                            do {
-                                try self.append(newValue, to: name)
-                                promise(.success(()))
-                            } catch {
-                                promise(.failure(error))
-                            }
-                        }
-                    }
-                    .eraseToAnyPublisher()
-                }
-                try self.append(newValue, to: name)
-                promise(.success(()))
-                } catch {
-                    promise(.failure(error))
-                }
-            }
+    func append<Value: JSON>(_ newValues: [Value], to name: String) throws {
+        try processQueue.sync {
+            try Disk.append(newValues, to: name, in: .documents, decoder: decoder, encoder: encoder)
         }
-        .eraseToAnyPublisher()
+    }
+
+    func append<Value: JSON, T: Equatable>(_ newValue: Value, to name: String, uniqBy keyPath: KeyPath<Value, T>) throws {
+        if let value = try? retrieve(name, as: Value.self) {
+            if value[keyPath: keyPath] != newValue[keyPath: keyPath] {
+                try append(newValue, to: name)
+            }
+        } else if let values = try? retrieve(name, as: [Value].self) {
+            guard values.first(where: { $0[keyPath: keyPath] == newValue[keyPath: keyPath] }) == nil else {
+                return
+            }
+            try append(newValue, to: name)
+        } else {
+            try save(newValue, as: name)
+        }
+    }
+
+    func append<Value: JSON, T: Equatable>(_ newValues: [Value], to name: String, uniqBy keyPath: KeyPath<Value, T>) throws {
+        if let value = try? retrieve(name, as: Value.self) {
+            guard newValues.first(where: { $0[keyPath: keyPath] == value[keyPath: keyPath] }) == nil else {
+                return
+            }
+            try append(newValues, to: name)
+        } else if let values = try? retrieve(name, as: [Value].self) {
+            try newValues.forEach { newValue in
+                guard values.first(where: { $0[keyPath: keyPath] == newValue[keyPath: keyPath] }) == nil else {
+                    return
+                }
+                try append(newValue, to: name)
+            }
+        } else {
+            try save(newValues, as: name)
+        }
+    }
+
+    func remove(_ name: String) throws {
+        try processQueue.sync {
+            try Disk.remove(name, from: .documents)
+        }
+    }
+
+    func rename(_ name: String, to newName: String) throws {
+        try processQueue.sync {
+            try Disk.rename(name, in: .documents, to: newName)
+        }
     }
 }
