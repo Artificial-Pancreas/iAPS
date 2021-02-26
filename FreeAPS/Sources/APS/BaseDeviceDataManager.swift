@@ -26,6 +26,8 @@ final class BaseDeviceDataManager: DeviceDataManager, Injectable {
     @Injected() private var pumpHistoryStorage: PumpHistoryStorage!
     @Injected() private var storage: FileStorage!
 
+    @Persisted(key: "BaseDeviceDataManager.lastEventDate") var lastEventDate: Date? = nil
+
     var pumpManager: PumpManagerUI? {
         didSet {
             pumpManager?.pumpManagerDelegate = self
@@ -112,6 +114,7 @@ extension BaseDeviceDataManager: PumpManagerDelegate {
         completion: @escaping (_ error: Error?) -> Void
     ) {
         pumpHistoryStorage.storePumpEvents(events)
+        lastEventDate = events.last?.date
         completion(nil)
     }
 
@@ -141,7 +144,7 @@ extension BaseDeviceDataManager: PumpManagerDelegate {
     }
 
     func startDateToFilterNewPumpEvents(for _: PumpManager) -> Date {
-        Date().addingTimeInterval(-2.hours.timeInterval)
+        lastEventDate ?? Date().addingTimeInterval(-2.hours.timeInterval)
     }
 }
 
