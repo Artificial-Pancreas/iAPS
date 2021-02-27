@@ -11,6 +11,8 @@ protocol FileStorage {
     func remove(_ name: String) throws
     func rename(_ name: String, to newName: String) throws
     func transaction(_ exec: (FileStorage) throws -> Void) throws
+
+    func urlFor(file: String) -> URL?
 }
 
 final class BaseFileStorage: FileStorage {
@@ -102,5 +104,9 @@ final class BaseFileStorage: FileStorage {
         try processQueue.safeSync {
             try exec(self)
         }
+    }
+
+    func urlFor(file: String) -> URL? {
+        try? Disk.url(for: file, in: .documents)
     }
 }

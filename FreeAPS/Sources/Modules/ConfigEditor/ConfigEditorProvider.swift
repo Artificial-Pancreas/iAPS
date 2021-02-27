@@ -1,3 +1,5 @@
+import Foundation
+
 extension ConfigEditor {
     final class Provider: BaseProvider, ConfigEditorProvider {
         @Injected() private var storage: FileStorage!
@@ -9,6 +11,10 @@ extension ConfigEditor {
                 return value.rawJSON
             }
             return defaults(for: file)
+        }
+
+        func urlFor(file: String) -> URL? {
+            storage.urlFor(file: file)
         }
 
         func save(_ value: RawJSON, as file: String) {
