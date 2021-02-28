@@ -9,7 +9,7 @@ class NightscoutAPI {
     }
 
     private enum Config {
-        static let entriesPath = "/api/v1/entries.json"
+        static let entriesPath = "/api/v1/entries/sgv.json"
         static let retryCount = 5
     }
 
@@ -22,12 +22,6 @@ class NightscoutAPI {
     let secret: String?
 
     private let service = NetworkService()
-
-    private lazy var decoder: JSONDecoder = {
-        let decoder = JSONDecoder()
-        decoder.dateDecodingStrategy = .millisecondsSince1970
-        return decoder
-    }()
 }
 
 extension NightscoutAPI {
@@ -69,8 +63,15 @@ extension NightscoutAPI {
                 }
                 return output.data
             }
-            .decode(type: [BloodGlucose].self, decoder: decoder)
-            .map { $0.filter { $0.isStateValid } }
+            .decode(type: [BloodGlucose].self, decoder: JSONCoding.decoder)
+            .map {
+                $0.filter { $0.isStateValid }
+                    .map {
+                        var reading = $0
+                        reading.glucose = $0.sgv
+                        return reading
+                    }
+            }
             .eraseToAnyPublisher()
     }
 }

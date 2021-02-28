@@ -39,10 +39,6 @@ extension Bool: JSON {}
 extension Decimal: JSON {}
 
 extension Date: JSON {
-    var rawJSON: String {
-        Formatter.iso8601withFractionalSeconds.string(from: self)
-    }
-
     init?(from: String) {
         let dateFormatter = Formatter.iso8601withFractionalSeconds
         let string = from.replacingOccurrences(of: "\"", with: "")
@@ -62,3 +58,18 @@ extension RawJSON {
 
 extension Array: JSON where Element: JSON {}
 extension Dictionary: JSON where Key: JSON, Value: JSON {}
+
+enum JSONCoding {
+    static var encoder: JSONEncoder {
+        let encoder = JSONEncoder()
+        encoder.outputFormatting = .prettyPrinted
+        encoder.dateEncodingStrategy = .customISO8601
+        return encoder
+    }
+
+    static var decoder: JSONDecoder {
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .customISO8601
+        return decoder
+    }
+}

@@ -37,6 +37,7 @@ final class BaseAPSManager: APSManager, Injectable {
     }
 
     func makeMeal() {
+        openAPS.makeClock()
         openAPS.makeMeal()
     }
 

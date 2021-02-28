@@ -104,12 +104,18 @@ final class OpenAPS {
         }
     }
 
+    func makeClock() {
+        processQueue.async {
+            try? self.storage.save(Date(), as: Monitor.clock)
+        }
+    }
+
     func makeMeal() {
         processQueue.async {
             let pumphistory = self.loadFileFromStorage(name: Monitor.pumpHistory)
             let profile = self.loadFileFromStorage(name: Settings.profile)
             let basalProfile = self.loadFileFromStorage(name: Settings.basalProfile)
-            let clock = Date().rawJSON
+            let clock = self.loadFileFromStorage(name: Monitor.clock)
             let carbs = self.loadFileFromStorage(name: Monitor.carbHistory)
             let glucose = self.loadFileFromStorage(name: Monitor.glucose)
 

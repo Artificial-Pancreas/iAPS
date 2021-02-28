@@ -19,32 +19,19 @@ protocol FileStorage {
 final class BaseFileStorage: FileStorage {
     private let processQueue = DispatchQueue.markedQueue(label: "BaseFileStorage.processQueue", qos: .utility)
 
-    private var encoder: JSONEncoder {
-        let encoder = JSONEncoder()
-        encoder.outputFormatting = .prettyPrinted
-        encoder.dateEncodingStrategy = .customISO8601
-        return encoder
-    }
-
-    private var decoder: JSONDecoder {
-        let decoder = JSONDecoder()
-        decoder.dateDecodingStrategy = .customISO8601
-        return decoder
-    }
-
     func save<Value: JSON>(_ value: Value, as name: String) throws {
         try processQueue.safeSync {
             if let value = value as? RawJSON, let data = value.data(using: .utf8) {
                 try Disk.save(data, to: .documents, as: name)
             } else {
-                try Disk.save(value, to: .documents, as: name, encoder: self.encoder)
+                try Disk.save(value, to: .documents, as: name, encoder: JSONCoding.encoder)
             }
         }
     }
 
     func retrieve<Value: JSON>(_ name: String, as type: Value.Type) throws -> Value {
         try processQueue.safeSync {
-            try Disk.retrieve(name, from: .documents, as: type, decoder: decoder)
+            try Disk.retrieve(name, from: .documents, as: type, decoder: JSONCoding.decoder)
         }
     }
 
@@ -59,13 +46,13 @@ final class BaseFileStorage: FileStorage {
 
     func append<Value: JSON>(_ newValue: Value, to name: String) throws {
         try processQueue.safeSync {
-            try Disk.append(newValue, to: name, in: .documents, decoder: decoder, encoder: encoder)
+            try Disk.append(newValue, to: name, in: .documents, decoder: JSONCoding.decoder, encoder: JSONCoding.encoder)
         }
     }
 
     func append<Value: JSON>(_ newValues: [Value], to name: String) throws {
         try processQueue.safeSync {
-            try Disk.append(newValues, to: name, in: .documents, decoder: decoder, encoder: encoder)
+            try Disk.append(newValues, to: name, in: .documents, decoder: JSONCoding.decoder, encoder: JSONCoding.encoder)
         }
     }
 

@@ -18,11 +18,12 @@ struct BloodGlucose: JSON {
 
     var sgv: Int?
     let direction: Direction?
-    let date: Date
+    let date: UInt64
+    let dateString: Date
     let filtered: Double?
     let noise: Int?
 
-    var glucose: Int { sgv ?? 0 }
+    var glucose: Int?
 
-    var isStateValid: Bool { glucose >= 39 && noise ?? 1 != 4 }
+    var isStateValid: Bool { sgv ?? 0 >= 39 && noise ?? 1 != 4 }
 }
