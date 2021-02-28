@@ -134,6 +134,7 @@
 		38BF021F25E7F0DE00579895 /* BaseDeviceDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38BF021E25E7F0DE00579895 /* BaseDeviceDataManager.swift */; };
 		38C4D33725E9A1A300D30B77 /* DispatchQueue+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38C4D33625E9A1A200D30B77 /* DispatchQueue+Extensions.swift */; };
 		38C4D33A25E9A1ED00D30B77 /* NSObject+AssociatedValues.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38C4D33925E9A1ED00D30B77 /* NSObject+AssociatedValues.swift */; };
+		38D0B3B625EBE24900CB6E88 /* Battery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38D0B3B525EBE24900CB6E88 /* Battery.swift */; };
 		38FCF3D625E8FDF40078B0D1 /* MD5.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38FCF3D525E8FDF40078B0D1 /* MD5.swift */; };
 		38FCF3F925E902C20078B0D1 /* FileStorageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38FCF3F825E902C20078B0D1 /* FileStorageTests.swift */; };
 		38FCF3FD25E997A80078B0D1 /* PumpHistoryStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38FCF3FC25E997A80078B0D1 /* PumpHistoryStorage.swift */; };
@@ -621,6 +622,7 @@
 		38BF021E25E7F0DE00579895 /* BaseDeviceDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseDeviceDataManager.swift; sourceTree = "<group>"; };
 		38C4D33625E9A1A200D30B77 /* DispatchQueue+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DispatchQueue+Extensions.swift"; sourceTree = "<group>"; };
 		38C4D33925E9A1ED00D30B77 /* NSObject+AssociatedValues.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSObject+AssociatedValues.swift"; sourceTree = "<group>"; };
+		38D0B3B525EBE24900CB6E88 /* Battery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Battery.swift; sourceTree = "<group>"; };
 		38FCF3D525E8FDF40078B0D1 /* MD5.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MD5.swift; sourceTree = "<group>"; };
 		38FCF3ED25E9028E0078B0D1 /* FreeAPSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FreeAPSTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		38FCF3F125E9028E0078B0D1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -1066,6 +1068,7 @@
 				383948D925CD64D500E91849 /* Glucose.swift */,
 				38A13D3125E28B4B00EAA382 /* PumpHistoryEvent.swift */,
 				38BF021C25E7E3AF00579895 /* Reservoir.swift */,
+				38D0B3B525EBE24900CB6E88 /* Battery.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -1646,6 +1649,7 @@
 				3811DF0C25CAAABD00A708ED /* APSManager.swift in Sources */,
 				3811DEB225C9D88300A708ED /* KeychainItemAccessibility.swift in Sources */,
 				38FCF3FD25E997A80078B0D1 /* PumpHistoryStorage.swift in Sources */,
+				38D0B3B625EBE24900CB6E88 /* Battery.swift in Sources */,
 				38C4D33725E9A1A300D30B77 /* DispatchQueue+Extensions.swift in Sources */,
 				3811DE6B25C9D62600A708ED /* OnboardingProvider.swift in Sources */,
 				38B4F3C325E2A20B00E76A18 /* PumpSetupView.swift in Sources */,

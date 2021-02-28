@@ -10,7 +10,7 @@ extension Settings {
                     Group {
                         Text("Preferences").chevronCell()
                             .modal(for: .configEditor(file: OpenAPS.Settings.preferences), from: self)
-                        Text("Settings").chevronCell().modal(for: .configEditor(file: OpenAPS.Settings.settings), from: self)
+                        Text("Pump Settings").chevronCell().modal(for: .configEditor(file: OpenAPS.Settings.settings), from: self)
                         Text("Autosense").chevronCell().modal(for: .configEditor(file: OpenAPS.Settings.autosense), from: self)
                         Text("Pump History").chevronCell()
                             .modal(for: .configEditor(file: OpenAPS.Monitor.pumpHistory), from: self)
