@@ -59,6 +59,7 @@ final class OpenAPS {
             )
 
             print("MEAL: \(mealResult)")
+            try? self.storage.save(mealResult, as: Monitor.meal)
 
             let glucoseStatus = self.glucoseGetLast(glucose: glucose)
             print("GLUCOSE STATUS: \(glucoseStatus)")
@@ -100,6 +101,29 @@ final class OpenAPS {
 
             let finishDate = Date()
             print("FINISH at \(finishDate), duration \(finishDate.timeIntervalSince(now)) s")
+        }
+    }
+
+    func makeMeal() {
+        processQueue.async {
+            let pumphistory = self.loadFileFromStorage(name: Monitor.pumpHistory)
+            let profile = self.loadFileFromStorage(name: Settings.profile)
+            let basalProfile = self.loadFileFromStorage(name: Settings.basalProfile)
+            let clock = Date().rawJSON
+            let carbs = self.loadFileFromStorage(name: Monitor.carbHistory)
+            let glucose = self.loadFileFromStorage(name: Monitor.glucose)
+
+            let mealResult = self.meal(
+                pumphistory: pumphistory,
+                profile: profile,
+                basalProfile: basalProfile,
+                clock: clock,
+                carbs: carbs,
+                glucose: glucose
+            )
+
+            print("MEAL: \(mealResult)")
+            try? self.storage.save(mealResult, as: Monitor.meal)
         }
     }
 
@@ -326,7 +350,7 @@ final class OpenAPS {
     }
 
     private func loadFileFromStorage(name: String) -> RawJSON {
-        (try? storage.retrieve(name, as: RawJSON.self)) ?? OpenAPS.defaults(for: name)
+        storage.retrieveRaw(name) ?? OpenAPS.defaults(for: name)
     }
 
     static func defaults(for file: String) -> RawJSON {

@@ -5,6 +5,7 @@ import Swinject
 
 protocol PumpHistoryStorage {
     func storePumpEvents(_ events: [NewPumpEvent])
+    func storeBolusWizardCarbs(_ carbs: Int)
 }
 
 final class BasePumpHistoryStorage: PumpHistoryStorage, Injectable {
@@ -33,7 +34,8 @@ final class BasePumpHistoryStorage: PumpHistoryStorage, Injectable {
                         duration: minutes,
                         durationMin: nil,
                         rate: nil,
-                        temp: nil
+                        temp: nil,
+                        carbInput: nil
                     )]
                 case .tempBasal:
                     print("[PUMP EVENT] Temp basal event:\n\(event.title))")
@@ -49,7 +51,8 @@ final class BasePumpHistoryStorage: PumpHistoryStorage, Injectable {
                             duration: nil,
                             durationMin: minutes,
                             rate: rate,
-                            temp: nil
+                            temp: nil,
+                            carbInput: nil
                         ),
                         PumpHistoryEvent(
                             id: "_" + id,
@@ -59,7 +62,8 @@ final class BasePumpHistoryStorage: PumpHistoryStorage, Injectable {
                             duration: nil,
                             durationMin: nil,
                             rate: rate,
-                            temp: .absolute
+                            temp: .absolute,
+                            carbInput: nil
                         )
                     ]
                 case .suspend:
@@ -73,7 +77,8 @@ final class BasePumpHistoryStorage: PumpHistoryStorage, Injectable {
                             duration: nil,
                             durationMin: nil,
                             rate: nil,
-                            temp: nil
+                            temp: nil,
+                            carbInput: nil
                         )
                     ]
                 case .resume:
@@ -87,7 +92,8 @@ final class BasePumpHistoryStorage: PumpHistoryStorage, Injectable {
                             duration: nil,
                             durationMin: nil,
                             rate: nil,
-                            temp: nil
+                            temp: nil,
+                            carbInput: nil
                         )
                     ]
                 case .rewind:
@@ -101,7 +107,8 @@ final class BasePumpHistoryStorage: PumpHistoryStorage, Injectable {
                             duration: nil,
                             durationMin: nil,
                             rate: nil,
-                            temp: nil
+                            temp: nil,
+                            carbInput: nil
                         )
                     ]
                 case .prime:
@@ -115,7 +122,8 @@ final class BasePumpHistoryStorage: PumpHistoryStorage, Injectable {
                             duration: nil,
                             durationMin: nil,
                             rate: nil,
-                            temp: nil
+                            temp: nil,
+                            carbInput: nil
                         )
                     ]
                 default:
@@ -123,6 +131,25 @@ final class BasePumpHistoryStorage: PumpHistoryStorage, Injectable {
                 }
             }
 
+            self.processNewEvents(eventsToStore)
+        }
+    }
+
+    func storeBolusWizardCarbs(_ carbs: Int) {
+        processQueue.async {
+            let eventsToStore = [
+                PumpHistoryEvent(
+                    id: UUID().uuidString,
+                    type: .bolusWizard,
+                    timestamp: Date(),
+                    amount: nil,
+                    duration: nil,
+                    durationMin: nil,
+                    rate: nil,
+                    temp: nil,
+                    carbInput: carbs
+                )
+            ]
             self.processNewEvents(eventsToStore)
         }
     }

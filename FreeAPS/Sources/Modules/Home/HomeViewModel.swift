@@ -11,5 +11,13 @@ extension Home {
         func makeProfiles() {
             apsManager.makeProfiles()
         }
+
+        func fetchGlucose() {
+            apsManager.fetchLastGlucose()
+        }
+
+        func makeMeal() {
+            apsManager.makeMeal()
+        }
     }
 }

@@ -44,6 +44,8 @@ extension OpenAPS {
         static let clock = "monitor/clock-zoned.json"
         static let status = "monitor/status.json"
         static let tempBasal = "monitor/temp_basal.json"
+        static let meal = "monitor/meal.json"
+        static let glucose = "monitor/glucose.json"
     }
 
     enum Function {

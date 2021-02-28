@@ -9,6 +9,7 @@ struct PumpHistoryEvent: JSON {
     let durationMin: Int?
     let rate: Decimal?
     let temp: PumpHistoryTempType?
+    let carbInput: Int?
 }
 
 enum PumpHistoryEventType: String, JSON {
@@ -40,5 +41,6 @@ extension PumpHistoryEvent {
         case durationMin = "duration (min)"
         case rate
         case temp
+        case carbInput = "carb_input"
     }
 }

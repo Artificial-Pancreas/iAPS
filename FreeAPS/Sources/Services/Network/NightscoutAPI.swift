@@ -2,14 +2,36 @@ import Combine
 import CommonCrypto
 import Foundation
 
-struct NightscoutAPI {
+class NightscoutAPI {
+    init(url: URL, secret: String? = nil) {
+        self.url = url
+        self.secret = secret
+    }
+
+    private enum Config {
+        static let entriesPath = "/api/v1/entries.json"
+        static let retryCount = 5
+    }
+
+    enum Error: LocalizedError {
+        case badStatusCode
+        case missingURL
+    }
+
     let url: URL
-    let secret: String
+    let secret: String?
+
     private let service = NetworkService()
+
+    private lazy var decoder: JSONDecoder = {
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .millisecondsSince1970
+        return decoder
+    }()
 }
 
 extension NightscoutAPI {
-    func checkConnection() -> AnyPublisher<Void, Error> {
+    func checkConnection() -> AnyPublisher<Void, Swift.Error> {
         struct Check: Codable, Equatable {
             var eventType = "Note"
             var enteredBy = "feeaps-x://"
@@ -19,10 +41,36 @@ extension NightscoutAPI {
         var request = URLRequest(url: url.appendingPathComponent("api/v1/treatments.json"))
         request.httpMethod = "POST"
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.addValue(secret.sha1(), forHTTPHeaderField: "api-secret")
+        if let secret = secret {
+            request.addValue(secret.sha1(), forHTTPHeaderField: "api-secret")
+        }
         request.httpBody = try! JSONEncoder().encode(check)
         return service.run(request)
             .map { _ in () }
+            .eraseToAnyPublisher()
+    }
+
+    func fetchLast(_ count: Int) -> AnyPublisher<[BloodGlucose], Swift.Error> {
+        var components = URLComponents()
+        components.scheme = url.scheme
+        components.host = url.host
+        components.port = url.port
+        components.path = Config.entriesPath
+        components.queryItems = [URLQueryItem(name: "count", value: "\(count)")]
+
+        var request = URLRequest(url: components.url!)
+        request.allowsConstrainedNetworkAccess = false
+
+        return URLSession.shared.dataTaskPublisher(for: request)
+            .retry(Config.retryCount)
+            .tryMap { output in
+                guard let response = output.response as? HTTPURLResponse, response.statusCode == 200 else {
+                    throw Error.badStatusCode
+                }
+                return output.data
+            }
+            .decode(type: [BloodGlucose].self, decoder: decoder)
+            .map { $0.filter { $0.isStateValid } }
             .eraseToAnyPublisher()
     }
 }

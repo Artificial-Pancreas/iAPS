@@ -4,6 +4,7 @@ import Foundation
 protocol FileStorage {
     func save<Value: JSON>(_ value: Value, as name: String) throws
     func retrieve<Value: JSON>(_ name: String, as type: Value.Type) throws -> Value
+    func retrieveRaw(_ name: String) -> RawJSON?
     func append<Value: JSON>(_ newValue: Value, to name: String) throws
     func append<Value: JSON>(_ newValues: [Value], to name: String) throws
     func append<Value: JSON, T: Equatable>(_ newValue: Value, to name: String, uniqBy keyPath: KeyPath<Value, T>) throws
@@ -33,13 +34,26 @@ final class BaseFileStorage: FileStorage {
 
     func save<Value: JSON>(_ value: Value, as name: String) throws {
         try processQueue.safeSync {
-            try Disk.save(value, to: .documents, as: name, encoder: self.encoder)
+            if let value = value as? RawJSON, let data = value.data(using: .utf8) {
+                try Disk.save(data, to: .documents, as: name)
+            } else {
+                try Disk.save(value, to: .documents, as: name, encoder: self.encoder)
+            }
         }
     }
 
     func retrieve<Value: JSON>(_ name: String, as type: Value.Type) throws -> Value {
         try processQueue.safeSync {
             try Disk.retrieve(name, from: .documents, as: type, decoder: decoder)
+        }
+    }
+
+    func retrieveRaw(_ name: String) -> RawJSON? {
+        processQueue.safeSync {
+            guard let data = try? Disk.retrieve(name, from: .documents, as: Data.self) else {
+                return nil
+            }
+            return String(data: data, encoding: .utf8)
         }
     }
 

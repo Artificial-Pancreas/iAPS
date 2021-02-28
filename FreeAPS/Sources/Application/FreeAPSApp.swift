@@ -2,10 +2,10 @@ import SwiftUI
 import Swinject
 
 private let dependencies: [DependeciesContainer.Type] = [
+    StorageContainer.self,
     ServiceContainer.self,
     APSContainer.self,
     UIContainer.self,
-    StorageContainer.self,
     NetworkContainer.self,
     SecurityContainer.self
 ]

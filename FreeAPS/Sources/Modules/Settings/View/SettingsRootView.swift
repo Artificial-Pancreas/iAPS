@@ -25,6 +25,8 @@ extension Settings {
                     Text("Temp targets").chevronCell().modal(for: .configEditor(file: OpenAPS.Settings.tempTargets), from: self)
                     Text("Pump profile").chevronCell().modal(for: .configEditor(file: OpenAPS.Settings.pumpProfile), from: self)
                     Text("Profile").chevronCell().modal(for: .configEditor(file: OpenAPS.Settings.profile), from: self)
+                    Text("Glucose").chevronCell().modal(for: .configEditor(file: OpenAPS.Monitor.glucose), from: self)
+                    Text("Meal").chevronCell().modal(for: .configEditor(file: OpenAPS.Monitor.meal), from: self)
                 }
 
                 Section(header: Text("Services")) {

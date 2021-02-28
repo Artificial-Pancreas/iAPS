@@ -6,4 +6,6 @@ protocol APSManager {
     func makeProfiles()
     var pumpManager: PumpManagerUI? { get set }
     var pumpDisplayState: CurrentValueSubject<PumpDisplayState?, Never> { get }
+    func fetchLastGlucose()
+    func makeMeal()
 }

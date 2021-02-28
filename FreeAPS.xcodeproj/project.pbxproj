@@ -84,6 +84,7 @@
 		383948DA25CD64D500E91849 /* Glucose.swift in Sources */ = {isa = PBXBuildFile; fileRef = 383948D925CD64D500E91849 /* Glucose.swift */; };
 		384E803425C385E60086DB71 /* JavaScriptWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 384E803325C385E60086DB71 /* JavaScriptWorker.swift */; };
 		384E803825C388640086DB71 /* Script.swift in Sources */ = {isa = PBXBuildFile; fileRef = 384E803725C388640086DB71 /* Script.swift */; };
+		3870FF4725EC187A0088248F /* BloodGlucose.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3870FF4225EC13F40088248F /* BloodGlucose.swift */; };
 		388E595C25AD948C0019842D /* FreeAPSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 388E595B25AD948C0019842D /* FreeAPSApp.swift */; };
 		388E596025AD948E0019842D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 388E595F25AD948E0019842D /* Assets.xcassets */; };
 		388E596C25AD95110019842D /* OpenAPS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 388E596B25AD95110019842D /* OpenAPS.swift */; };
@@ -135,6 +136,7 @@
 		38C4D33725E9A1A300D30B77 /* DispatchQueue+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38C4D33625E9A1A200D30B77 /* DispatchQueue+Extensions.swift */; };
 		38C4D33A25E9A1ED00D30B77 /* NSObject+AssociatedValues.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38C4D33925E9A1ED00D30B77 /* NSObject+AssociatedValues.swift */; };
 		38D0B3B625EBE24900CB6E88 /* Battery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38D0B3B525EBE24900CB6E88 /* Battery.swift */; };
+		38D0B3D925EC07C400CB6E88 /* CarbHystoryEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38D0B3D825EC07C400CB6E88 /* CarbHystoryEntry.swift */; };
 		38FCF3D625E8FDF40078B0D1 /* MD5.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38FCF3D525E8FDF40078B0D1 /* MD5.swift */; };
 		38FCF3F925E902C20078B0D1 /* FileStorageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38FCF3F825E902C20078B0D1 /* FileStorageTests.swift */; };
 		38FCF3FD25E997A80078B0D1 /* PumpHistoryStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38FCF3FC25E997A80078B0D1 /* PumpHistoryStorage.swift */; };
@@ -593,6 +595,7 @@
 		383948D925CD64D500E91849 /* Glucose.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Glucose.swift; sourceTree = "<group>"; };
 		384E803325C385E60086DB71 /* JavaScriptWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JavaScriptWorker.swift; sourceTree = "<group>"; };
 		384E803725C388640086DB71 /* Script.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Script.swift; sourceTree = "<group>"; };
+		3870FF4225EC13F40088248F /* BloodGlucose.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BloodGlucose.swift; sourceTree = "<group>"; };
 		388E595825AD948C0019842D /* FreeAPS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FreeAPS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		388E595B25AD948C0019842D /* FreeAPSApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FreeAPSApp.swift; sourceTree = "<group>"; };
 		388E595F25AD948E0019842D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -623,6 +626,7 @@
 		38C4D33625E9A1A200D30B77 /* DispatchQueue+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DispatchQueue+Extensions.swift"; sourceTree = "<group>"; };
 		38C4D33925E9A1ED00D30B77 /* NSObject+AssociatedValues.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSObject+AssociatedValues.swift"; sourceTree = "<group>"; };
 		38D0B3B525EBE24900CB6E88 /* Battery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Battery.swift; sourceTree = "<group>"; };
+		38D0B3D825EC07C400CB6E88 /* CarbHystoryEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarbHystoryEntry.swift; sourceTree = "<group>"; };
 		38FCF3D525E8FDF40078B0D1 /* MD5.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MD5.swift; sourceTree = "<group>"; };
 		38FCF3ED25E9028E0078B0D1 /* FreeAPSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FreeAPSTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		38FCF3F125E9028E0078B0D1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -1069,6 +1073,8 @@
 				38A13D3125E28B4B00EAA382 /* PumpHistoryEvent.swift */,
 				38BF021C25E7E3AF00579895 /* Reservoir.swift */,
 				38D0B3B525EBE24900CB6E88 /* Battery.swift */,
+				38D0B3D825EC07C400CB6E88 /* CarbHystoryEntry.swift */,
+				3870FF4225EC13F40088248F /* BloodGlucose.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -1664,6 +1670,7 @@
 				3811DF0525CAA62600A708ED /* DependeciesContainer.swift in Sources */,
 				38BF021725E7CBBC00579895 /* PumpManagerExtensions.swift in Sources */,
 				3811DF1025CAAAE200A708ED /* BaseAPSManager.swift in Sources */,
+				3870FF4725EC187A0088248F /* BloodGlucose.swift in Sources */,
 				3811DE0A25C9D32F00A708ED /* BaseModuleBuilder.swift in Sources */,
 				3811DE1725C9D40400A708ED /* Screen.swift in Sources */,
 				383948DA25CD64D500E91849 /* Glucose.swift in Sources */,
@@ -1714,6 +1721,7 @@
 				3811DEAC25C9D88300A708ED /* NetworkManager.swift in Sources */,
 				3811DE3325C9D49500A708ED /* HomeBuilder.swift in Sources */,
 				3811DEA925C9D88300A708ED /* AppearanceManager.swift in Sources */,
+				38D0B3D925EC07C400CB6E88 /* CarbHystoryEntry.swift in Sources */,
 				3811DE2125C9D48300A708ED /* MainBuilder.swift in Sources */,
 				38FCF3D625E8FDF40078B0D1 /* MD5.swift in Sources */,
 				3811DE7925C9D6D300A708ED /* LoginViewModel.swift in Sources */,

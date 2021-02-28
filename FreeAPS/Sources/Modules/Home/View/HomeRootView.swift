@@ -19,6 +19,18 @@ extension Home {
                         .foregroundColor(.white)
                         .buttonBackground()
                 }
+                Button(action: viewModel.fetchGlucose) {
+                    Text("Fetch glucose")
+                        .frame(maxWidth: .infinity)
+                        .foregroundColor(.white)
+                        .buttonBackground()
+                }
+                Button(action: viewModel.makeMeal) {
+                    Text("Make meal")
+                        .frame(maxWidth: .infinity)
+                        .foregroundColor(.white)
+                        .buttonBackground()
+                }
                 Spacer()
             }
             .padding()
