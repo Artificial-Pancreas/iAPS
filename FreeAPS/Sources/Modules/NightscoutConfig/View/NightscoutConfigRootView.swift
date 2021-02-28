@@ -35,9 +35,8 @@ extension NightscoutConfig {
                     Button("Delete") { viewModel.delete() }.foregroundColor(.red).disabled(viewModel.connecting)
                 }
             }
-            .toolbar { ToolbarItem(placement: .principal) { Text("Nightscout Config") } }
+            .navigationBarTitle("Nightscout Config", displayMode: .automatic)
             .navigationBarItems(leading: Button("Close", action: viewModel.hideModal))
-            .navigationBarTitleDisplayMode(.inline)
         }
     }
 }

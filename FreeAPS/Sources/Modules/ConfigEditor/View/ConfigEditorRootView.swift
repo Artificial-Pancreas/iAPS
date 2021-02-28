@@ -19,7 +19,6 @@ extension ConfigEditor {
                             Image(systemName: "square.and.arrow.up")
                         }
                     }
-                    ToolbarItem(placement: .principal) { Text(viewModel.file) }
                 }
                 .navigationBarItems(
                     leading: Button("Close", action: viewModel.hideModal),
@@ -28,6 +27,7 @@ extension ConfigEditor {
                 .sheet(isPresented: $showShareSheet) {
                     ShareSheet(activityItems: [viewModel.provider.urlFor(file: viewModel.file)!])
                 }
+                .navigationTitle(viewModel.file)
                 .navigationBarTitleDisplayMode(.inline)
                 .padding()
         }

@@ -32,7 +32,7 @@ enum PumpHistoryTempType: String, JSON {
 
 extension PumpHistoryEvent {
     private enum CodingKeys: String, CodingKey {
-        case id = "_id"
+        case id
         case type = "_type"
         case timestamp
         case amount

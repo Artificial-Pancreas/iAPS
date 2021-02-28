@@ -7,5 +7,9 @@ extension Home {
         func runOpenAPS() {
             apsManager.runTest()
         }
+
+        func makeProfiles() {
+            apsManager.makeProfiles()
+        }
     }
 }

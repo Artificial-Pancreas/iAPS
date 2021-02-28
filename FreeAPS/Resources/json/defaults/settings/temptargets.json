@@ -1,0 +1,15 @@
+[
+    {
+        "_id": "601bf716211b34b896be0e24",
+        "eventType": "Temporary Target",
+        "entededBy": "Automagic",
+        "reason": "Manual",
+        "targetTop": 126,
+        "targetBottom": 126,
+        "duration": 300,
+        "created_at": "2021-02-04T13:31:02.076Z",
+        "utcOffset": 0,
+        "carbs": null,
+        "insulin": null
+    }
+]

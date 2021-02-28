@@ -8,6 +8,7 @@ extension Main {
             viewModel.view(for: viewModel.scene.screen)
                 .sheet(isPresented: $viewModel.isModalPresented) {
                     NavigationView { self.viewModel.modal!.view }
+                        .navigationViewStyle(StackNavigationViewStyle())
                 }
         }
     }

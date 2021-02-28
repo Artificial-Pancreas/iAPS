@@ -83,8 +83,7 @@ struct AdaptsToSoftwareKeyboard: ViewModifier {
     }
 }
 
-struct ClearButton: ViewModifier
-{
+struct ClearButton: ViewModifier {
     @Binding var text: String
     func body(content: Content) -> some View {
         HStack {
@@ -97,6 +96,16 @@ struct ClearButton: ViewModifier
                 }
             }
         }
+    }
+}
+
+struct ChevronCell: ViewModifier {
+    func body(content: Content) -> some View {
+        HStack {
+            content
+            Spacer()
+            Image(systemName: "chevron.forward").foregroundColor(.secondary)
+        }.contentShape(Rectangle())
     }
 }
 
@@ -124,4 +133,8 @@ extension View {
     }
 
     func asAny() -> AnyView { .init(self) }
+
+    func chevronCell() -> some View {
+        modifier(ChevronCell())
+    }
 }

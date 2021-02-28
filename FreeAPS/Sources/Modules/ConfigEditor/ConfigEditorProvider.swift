@@ -10,7 +10,7 @@ extension ConfigEditor {
             } else if let value = try? storage.retrieve(file, as: [PumpHistoryEvent].self) {
                 return value.rawJSON
             }
-            return defaults(for: file)
+            return OpenAPS.defaults(for: file)
         }
 
         func urlFor(file: String) -> URL? {

@@ -35,7 +35,7 @@ final class OpenAPS {
                 carbs: carbs,
                 glucose: glucose,
                 basalprofile: basalProfile,
-                temptargets: "null"
+                temptargets: RawJSON.null
             )
             print("AUTOSENS: \(autosensResult)")
             try? self.storage.save(autosensResult, as: Settings.autosense)
@@ -45,7 +45,7 @@ final class OpenAPS {
                 profile: profile,
                 clock: clock,
                 autosens: autosensResult,
-                pumphistory24: "null"
+                pumphistory24: RawJSON.null
             )
             print("IOB: \(iobResult)")
 
@@ -100,6 +100,41 @@ final class OpenAPS {
 
             let finishDate = Date()
             print("FINISH at \(finishDate), duration \(finishDate.timeIntervalSince(now)) s")
+        }
+    }
+
+    func makeProfile(autotuned: Bool) {
+        processQueue.async {
+            print("MAKE PROFILE autotuned \(autotuned)")
+            let preferences = self.loadFileFromStorage(name: Settings.preferences)
+            let pumpSettings = self.loadFileFromStorage(name: Settings.settings)
+            let bgTargets = self.loadFileFromStorage(name: Settings.bgTargets)
+            let basalProfile = self.loadFileFromStorage(name: Settings.basalProfile)
+            let isf = self.loadFileFromStorage(name: Settings.insulinSensitivities)
+            let cr = self.loadFileFromStorage(name: Settings.carbRatios)
+            let tempTargets = self.loadFileFromStorage(name: Settings.tempTargets)
+            let model = self.loadFileFromStorage(name: Settings.model)
+            let autotune = self.loadFileFromStorage(name: Settings.autotune)
+
+            let profile = self.makeProfile(
+                preferences: preferences,
+                pumpSettings: pumpSettings,
+                bgTargets: bgTargets,
+                basalProfile: basalProfile,
+                isf: isf,
+                carbRatio: cr,
+                tempTargets: tempTargets,
+                model: model,
+                autotune: autotuned ? autotune : .null
+            )
+
+            print("PROFILE RESULT \n\(profile)")
+
+            if autotuned {
+                try? self.storage.save(profile, as: Settings.profile)
+            } else {
+                try? self.storage.save(profile, as: Settings.pumpProfile)
+            }
         }
     }
 
@@ -288,5 +323,16 @@ final class OpenAPS {
 
     private func loadJSON(name: String) -> String {
         try! String(contentsOf: Foundation.Bundle.main.url(forResource: "json/\(name)", withExtension: "json")!)
+    }
+
+    private func loadFileFromStorage(name: String) -> RawJSON {
+        (try? storage.retrieve(name, as: RawJSON.self)) ?? OpenAPS.defaults(for: name)
+    }
+
+    static func defaults(for file: String) -> RawJSON {
+        guard let url = Foundation.Bundle.main.url(forResource: "json/defaults/\(file)", withExtension: "") else {
+            return ""
+        }
+        return (try? String(contentsOf: url)) ?? ""
     }
 }

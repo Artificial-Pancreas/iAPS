@@ -13,10 +13,17 @@ extension Home {
                         .foregroundColor(.white)
                         .buttonBackground()
                 }
+                Button(action: viewModel.makeProfiles) {
+                    Text("Make profiles")
+                        .frame(maxWidth: .infinity)
+                        .foregroundColor(.white)
+                        .buttonBackground()
+                }
                 Spacer()
             }
             .padding()
-            .toolbar { ToolbarItem(placement: .principal) { Text("Home") } }
+            .navigationTitle("Home")
+            .navigationBarTitleDisplayMode(.automatic)
         }
     }
 }

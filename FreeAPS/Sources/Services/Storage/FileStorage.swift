@@ -21,13 +21,13 @@ final class BaseFileStorage: FileStorage {
     private var encoder: JSONEncoder {
         let encoder = JSONEncoder()
         encoder.outputFormatting = .prettyPrinted
-        encoder.dateEncodingStrategy = .iso8601
+        encoder.dateEncodingStrategy = .customISO8601
         return encoder
     }
 
     private var decoder: JSONDecoder {
         let decoder = JSONDecoder()
-        decoder.dateDecodingStrategy = .iso8601
+        decoder.dateDecodingStrategy = .customISO8601
         return decoder
     }
 

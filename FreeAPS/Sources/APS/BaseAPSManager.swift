@@ -27,4 +27,9 @@ final class BaseAPSManager: APSManager, Injectable {
     func runTest() {
         openAPS.test()
     }
+
+    func makeProfiles() {
+        openAPS.makeProfile(autotuned: false)
+        openAPS.makeProfile(autotuned: true)
+    }
 }
