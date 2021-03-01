@@ -160,7 +160,7 @@ final class OpenAPS {
                 currentTemp: currentTemp,
                 iob: iobResult,
                 profile: profile,
-                aurosens: autosensResult,
+                autosens: autosensResult,
                 meal: mealResult,
                 microBolusAllowed: true,
                 reservoir: reservoir
