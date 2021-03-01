@@ -76,8 +76,7 @@
 		3811DF0225CA9FEA00A708ED /* Credentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3811DF0125CA9FEA00A708ED /* Credentials.swift */; };
 		3811DF0525CAA62600A708ED /* DependeciesContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3811DF0425CAA62600A708ED /* DependeciesContainer.swift */; };
 		3811DF0825CAAA4700A708ED /* ServiceContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3811DF0725CAAA4700A708ED /* ServiceContainer.swift */; };
-		3811DF0C25CAAABD00A708ED /* APSManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3811DF0B25CAAABD00A708ED /* APSManager.swift */; };
-		3811DF1025CAAAE200A708ED /* BaseAPSManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3811DF0F25CAAAE200A708ED /* BaseAPSManager.swift */; };
+		3811DF1025CAAAE200A708ED /* APSManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3811DF0F25CAAAE200A708ED /* APSManager.swift */; };
 		3821ED4C25DD18BA00BC42AD /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3821ED4B25DD18BA00BC42AD /* Constants.swift */; };
 		383948D325CD4D6D00E91849 /* Disk in Frameworks */ = {isa = PBXBuildFile; productRef = 383948D225CD4D6D00E91849 /* Disk */; };
 		383948D625CD4D8900E91849 /* FileStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 383948D525CD4D8900E91849 /* FileStorage.swift */; };
@@ -93,6 +92,7 @@
 		388E5A5C25B6F0770019842D /* JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 388E5A5B25B6F0770019842D /* JSON.swift */; };
 		388E5A6025B6F2310019842D /* Autosens.swift in Sources */ = {isa = PBXBuildFile; fileRef = 388E5A5F25B6F2310019842D /* Autosens.swift */; };
 		3895E4C625B9E00D00214B37 /* Preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3895E4C525B9E00D00214B37 /* Preferences.swift */; };
+		38A0363B25ECF07E00FCBB52 /* GlucoseStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38A0363A25ECF07E00FCBB52 /* GlucoseStorage.swift */; };
 		38A13D3225E28B4B00EAA382 /* PumpHistoryEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38A13D3125E28B4B00EAA382 /* PumpHistoryEvent.swift */; };
 		38A504A425DD9C4000C5B9E8 /* UserDefaultsExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38A5049125DD9C4000C5B9E8 /* UserDefaultsExtensions.swift */; };
 		38A504A525DD9FDA00C5B9E8 /* OmniKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38B17B2625DD6BBE005CAE3D /* OmniKit.framework */; };
@@ -132,7 +132,7 @@
 		38BF021725E7CBBC00579895 /* PumpManagerExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38BF021625E7CBBC00579895 /* PumpManagerExtensions.swift */; };
 		38BF021B25E7D06400579895 /* PumpSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38BF021A25E7D06400579895 /* PumpSettingsView.swift */; };
 		38BF021D25E7E3AF00579895 /* Reservoir.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38BF021C25E7E3AF00579895 /* Reservoir.swift */; };
-		38BF021F25E7F0DE00579895 /* BaseDeviceDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38BF021E25E7F0DE00579895 /* BaseDeviceDataManager.swift */; };
+		38BF021F25E7F0DE00579895 /* DeviceDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38BF021E25E7F0DE00579895 /* DeviceDataManager.swift */; };
 		38C4D33725E9A1A300D30B77 /* DispatchQueue+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38C4D33625E9A1A200D30B77 /* DispatchQueue+Extensions.swift */; };
 		38C4D33A25E9A1ED00D30B77 /* NSObject+AssociatedValues.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38C4D33925E9A1ED00D30B77 /* NSObject+AssociatedValues.swift */; };
 		38D0B3B625EBE24900CB6E88 /* Battery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38D0B3B525EBE24900CB6E88 /* Battery.swift */; };
@@ -588,8 +588,7 @@
 		3811DF0125CA9FEA00A708ED /* Credentials.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Credentials.swift; sourceTree = "<group>"; };
 		3811DF0425CAA62600A708ED /* DependeciesContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DependeciesContainer.swift; sourceTree = "<group>"; };
 		3811DF0725CAAA4700A708ED /* ServiceContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceContainer.swift; sourceTree = "<group>"; };
-		3811DF0B25CAAABD00A708ED /* APSManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APSManager.swift; sourceTree = "<group>"; };
-		3811DF0F25CAAAE200A708ED /* BaseAPSManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseAPSManager.swift; sourceTree = "<group>"; };
+		3811DF0F25CAAAE200A708ED /* APSManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APSManager.swift; sourceTree = "<group>"; };
 		3821ED4B25DD18BA00BC42AD /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		383948D525CD4D8900E91849 /* FileStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileStorage.swift; sourceTree = "<group>"; };
 		383948D925CD64D500E91849 /* Glucose.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Glucose.swift; sourceTree = "<group>"; };
@@ -606,6 +605,7 @@
 		388E5A5B25B6F0770019842D /* JSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSON.swift; sourceTree = "<group>"; };
 		388E5A5F25B6F2310019842D /* Autosens.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Autosens.swift; sourceTree = "<group>"; };
 		3895E4C525B9E00D00214B37 /* Preferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Preferences.swift; sourceTree = "<group>"; };
+		38A0363A25ECF07E00FCBB52 /* GlucoseStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlucoseStorage.swift; sourceTree = "<group>"; };
 		38A13D3125E28B4B00EAA382 /* PumpHistoryEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PumpHistoryEvent.swift; sourceTree = "<group>"; };
 		38A5049125DD9C4000C5B9E8 /* UserDefaultsExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDefaultsExtensions.swift; sourceTree = "<group>"; };
 		38B17AAE25DD69FA005CAE3D /* SwiftCharts.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SwiftCharts.xcodeproj; path = SwiftCharts/SwiftCharts.xcodeproj; sourceTree = "<group>"; };
@@ -622,7 +622,7 @@
 		38BF021625E7CBBC00579895 /* PumpManagerExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PumpManagerExtensions.swift; sourceTree = "<group>"; };
 		38BF021A25E7D06400579895 /* PumpSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PumpSettingsView.swift; sourceTree = "<group>"; };
 		38BF021C25E7E3AF00579895 /* Reservoir.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reservoir.swift; sourceTree = "<group>"; };
-		38BF021E25E7F0DE00579895 /* BaseDeviceDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseDeviceDataManager.swift; sourceTree = "<group>"; };
+		38BF021E25E7F0DE00579895 /* DeviceDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceDataManager.swift; sourceTree = "<group>"; };
 		38C4D33625E9A1A200D30B77 /* DispatchQueue+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DispatchQueue+Extensions.swift"; sourceTree = "<group>"; };
 		38C4D33925E9A1ED00D30B77 /* NSObject+AssociatedValues.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSObject+AssociatedValues.swift"; sourceTree = "<group>"; };
 		38D0B3B525EBE24900CB6E88 /* Battery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Battery.swift; sourceTree = "<group>"; };
@@ -1012,12 +1012,11 @@
 		3811DF0A25CAAAA500A708ED /* APS */ = {
 			isa = PBXGroup;
 			children = (
-				3811DF0B25CAAABD00A708ED /* APSManager.swift */,
-				3811DF0F25CAAAE200A708ED /* BaseAPSManager.swift */,
-				38BF021E25E7F0DE00579895 /* BaseDeviceDataManager.swift */,
-				38FCF3FC25E997A80078B0D1 /* PumpHistoryStorage.swift */,
+				3811DF0F25CAAAE200A708ED /* APSManager.swift */,
+				38BF021E25E7F0DE00579895 /* DeviceDataManager.swift */,
 				38A504F625DDA0E200C5B9E8 /* Extensions */,
 				388E5A5825B6F0070019842D /* OpenAPS */,
+				38A0362725ECF05300FCBB52 /* Storage */,
 			);
 			path = APS;
 			sourceTree = "<group>";
@@ -1094,6 +1093,15 @@
 				3811DEE325CA063400A708ED /* PropertyWrappers */,
 			);
 			path = Helpers;
+			sourceTree = "<group>";
+		};
+		38A0362725ECF05300FCBB52 /* Storage */ = {
+			isa = PBXGroup;
+			children = (
+				38FCF3FC25E997A80078B0D1 /* PumpHistoryStorage.swift */,
+				38A0363A25ECF07E00FCBB52 /* GlucoseStorage.swift */,
+			);
+			path = Storage;
 			sourceTree = "<group>";
 		};
 		38A504F625DDA0E200C5B9E8 /* Extensions */ = {
@@ -1652,7 +1660,6 @@
 				3811DE8B25C9D6DD00A708ED /* RequestPermissionsBuilder.swift in Sources */,
 				3811DE4C25C9D4B800A708ED /* AuthotizedRootBuilder.swift in Sources */,
 				3811DE8F25C9D80400A708ED /* User.swift in Sources */,
-				3811DF0C25CAAABD00A708ED /* APSManager.swift in Sources */,
 				3811DEB225C9D88300A708ED /* KeychainItemAccessibility.swift in Sources */,
 				38FCF3FD25E997A80078B0D1 /* PumpHistoryStorage.swift in Sources */,
 				38D0B3B625EBE24900CB6E88 /* Battery.swift in Sources */,
@@ -1669,7 +1676,7 @@
 				3811DE3025C9D49500A708ED /* HomeViewModel.swift in Sources */,
 				3811DF0525CAA62600A708ED /* DependeciesContainer.swift in Sources */,
 				38BF021725E7CBBC00579895 /* PumpManagerExtensions.swift in Sources */,
-				3811DF1025CAAAE200A708ED /* BaseAPSManager.swift in Sources */,
+				3811DF1025CAAAE200A708ED /* APSManager.swift in Sources */,
 				3870FF4725EC187A0088248F /* BloodGlucose.swift in Sources */,
 				3811DE0A25C9D32F00A708ED /* BaseModuleBuilder.swift in Sources */,
 				3811DE1725C9D40400A708ED /* Screen.swift in Sources */,
@@ -1695,6 +1702,7 @@
 				3811DEB625C9D88300A708ED /* UnlockManager.swift in Sources */,
 				38A13D3225E28B4B00EAA382 /* PumpHistoryEvent.swift in Sources */,
 				3811DE1825C9D40400A708ED /* Router.swift in Sources */,
+				38A0363B25ECF07E00FCBB52 /* GlucoseStorage.swift in Sources */,
 				3811DEE825CA063400A708ED /* Injected.swift in Sources */,
 				3811DEAF25C9D88300A708ED /* KeyValueStorage.swift in Sources */,
 				38FE826D25CC8461001FF17A /* NightscoutAPI.swift in Sources */,
@@ -1731,7 +1739,7 @@
 				38BF021B25E7D06400579895 /* PumpSettingsView.swift in Sources */,
 				3811DEEA25CA063400A708ED /* SyncAccess.swift in Sources */,
 				3811DE4F25C9D4B800A708ED /* AuthotizedRootDataFlow.swift in Sources */,
-				38BF021F25E7F0DE00579895 /* BaseDeviceDataManager.swift in Sources */,
+				38BF021F25E7F0DE00579895 /* DeviceDataManager.swift in Sources */,
 				3811DE5025C9D4B800A708ED /* AuthotizedRootProvider.swift in Sources */,
 				38A504A425DD9C4000C5B9E8 /* UserDefaultsExtensions.swift in Sources */,
 				38FE826A25CC82DB001FF17A /* NetworkService.swift in Sources */,
