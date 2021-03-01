@@ -25,8 +25,14 @@ extension Home {
                         .foregroundColor(.white)
                         .buttonBackground()
                 }
-                Button(action: viewModel.makeMeal) {
-                    Text("Make meal")
+                Button(action: viewModel.addCarbs) {
+                    Text("Add 15 g carbs")
+                        .frame(maxWidth: .infinity)
+                        .foregroundColor(.white)
+                        .buttonBackground()
+                }
+                Button(action: viewModel.runLoop) {
+                    Text("Run loop")
                         .frame(maxWidth: .infinity)
                         .foregroundColor(.white)
                         .buttonBackground()

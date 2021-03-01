@@ -139,8 +139,17 @@ extension BaseDeviceDataManager: PumpManagerDelegate {
         )))
     }
 
-    func pumpManagerRecommendsLoop(_: PumpManager) {
-        print("[DeviceDataManager] recomends loop")
+    func pumpManagerRecommendsLoop(_ pumpManager: PumpManager) {
+        print("[DeviceDataManager] Recomends loop")
+
+        pumpManager.enactTempBasal(unitsPerHour: 0.75, for: 60.minutes.timeInterval) { result in
+            switch result {
+            case let .success(dose):
+                print("[DeviceDataManager] Temp basal OK: \(dose)")
+            case let .failure(error):
+                print("[DeviceDataManager] Temp basal FAIL: \(error.localizedDescription)")
+            }
+        }
 //        pumpManager.enactBolus(units: 0.1, automatic: true) { _ in
 //            print("[DeviceDataManager] Bolus done")
 //        }

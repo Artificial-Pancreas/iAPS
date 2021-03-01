@@ -7,6 +7,7 @@ extension ConfigEditor {
 
         var body: some View {
             TextEditor(text: $viewModel.configText)
+                .keyboardType(.asciiCapable)
                 .font(.system(.subheadline, design: .monospaced))
                 .allowsTightening(true)
                 .autocapitalization(.none)

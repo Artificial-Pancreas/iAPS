@@ -3,6 +3,7 @@ import SwiftUI
 extension Home {
     class ViewModel<Provider>: BaseViewModel<Provider>, ObservableObject where Provider: HomeProvider {
         @Injected() var apsManager: APSManager!
+        @Injected() var history: PumpHistoryStorage!
 
         func runOpenAPS() {
             apsManager.runTest()
@@ -16,8 +17,12 @@ extension Home {
             apsManager.fetchLastGlucose()
         }
 
-        func makeMeal() {
-            apsManager.makeMeal()
+        func addCarbs() {
+            history.storeJournalCarbs(15)
+        }
+
+        func runLoop() {
+            apsManager.loop()
         }
     }
 }

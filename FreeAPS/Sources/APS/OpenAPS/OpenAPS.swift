@@ -11,6 +11,107 @@ final class OpenAPS {
         self.storage = storage
     }
 
+    func loop() {
+        processQueue.async {
+            // status
+            // check it before
+
+            // profile
+            let preferences = self.loadFileFromStorage(name: Settings.preferences)
+            let pumpSettings = self.loadFileFromStorage(name: Settings.settings)
+            let bgTargets = self.loadFileFromStorage(name: Settings.bgTargets)
+            let basalProfile = self.loadFileFromStorage(name: Settings.basalProfile)
+            let isf = self.loadFileFromStorage(name: Settings.insulinSensitivities)
+            let cr = self.loadFileFromStorage(name: Settings.carbRatios)
+            let tempTargets = self.loadFileFromStorage(name: Settings.tempTargets)
+            let model = self.loadFileFromStorage(name: Settings.model)
+            let autotune = self.loadFileFromStorage(name: Settings.autotune)
+
+            let pumpProfile = self.makeProfile(
+                preferences: preferences,
+                pumpSettings: pumpSettings,
+                bgTargets: bgTargets,
+                basalProfile: basalProfile,
+                isf: isf,
+                carbRatio: cr,
+                tempTargets: tempTargets,
+                model: model,
+                autotune: RawJSON.null
+            )
+
+            let profile = self.makeProfile(
+                preferences: preferences,
+                pumpSettings: pumpSettings,
+                bgTargets: bgTargets,
+                basalProfile: basalProfile,
+                isf: isf,
+                carbRatio: cr,
+                tempTargets: tempTargets,
+                model: model,
+                autotune: autotune.isEmpty ? .null : autotune
+            )
+
+            try? self.storage.save(pumpProfile, as: Settings.pumpProfile)
+            try? self.storage.save(profile, as: Settings.profile)
+
+            // clock
+            try? self.storage.save(Date(), as: Monitor.clock)
+
+            // temp_basal
+            let tempBasal = self.loadFileFromStorage(name: Monitor.tempBasal)
+
+            // meal
+            let pumpHistory = self.loadFileFromStorage(name: OpenAPS.Monitor.pumpHistory)
+            let carbs = self.loadFileFromStorage(name: Monitor.carbHistory)
+            let glucose = self.loadFileFromStorage(name: Monitor.glucose)
+            let clock = self.loadFileFromStorage(name: Monitor.clock)
+
+            let meal = self.meal(
+                pumphistory: pumpHistory,
+                profile: profile,
+                basalProfile: basalProfile,
+                clock: clock,
+                carbs: carbs,
+                glucose: glucose
+            )
+
+            try? self.storage.save(meal, as: Monitor.meal)
+
+            // iob
+            let autosens = self.loadFileFromStorage(name: Settings.autosense)
+            let iob = self.iob(
+                pumphistory: pumpHistory,
+                profile: profile,
+                clock: clock,
+                autosens: autosens.isEmpty ? .null : autosens,
+                pumphistory24: RawJSON.null
+            )
+
+            try? self.storage.save(iob, as: Monitor.iob)
+
+            // determine-basal
+            let glucoseStatus = self.glucoseGetLast(glucose: glucose)
+            let reservoir = self.loadFileFromStorage(name: Monitor.reservoir)
+
+            let ms = (Date(clock.rawJSON) ?? Date()).timeIntervalSince1970 * 1000
+
+            let suggested = self.determineBasal(
+                glucoseStatus: glucoseStatus,
+                currentTemp: tempBasal,
+                iob: iob,
+                profile: profile,
+                aurosens: autosens.isEmpty ? .null : autosens,
+                meal: meal,
+                microBolusAllowed: true,
+                reservoir: reservoir,
+                tsMilliseconds: ms
+            )
+            print("SUGGESTED: \(suggested)")
+
+            try? self.storage.save(suggested, as: Enact.suggested)
+        }
+    }
+
     func test() {
         processQueue.async {
             let now = Date()
@@ -255,7 +356,7 @@ final class OpenAPS {
         aurosens: JSON,
         meal: JSON,
         microBolusAllowed: Bool,
-        reservoir: Int,
+        reservoir: JSON,
         tsMilliseconds: Double
     ) -> RawJSON {
         dispatchPrecondition(condition: .onQueue(processQueue))

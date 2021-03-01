@@ -4,6 +4,7 @@ import LoopKitUI
 import Swinject
 
 protocol APSManager {
+    func loop()
     func runTest()
     func makeProfiles()
     var pumpManager: PumpManagerUI? { get set }
@@ -36,6 +37,10 @@ final class BaseAPSManager: APSManager, Injectable {
     init(resolver: Resolver) {
         injectServices(resolver)
         openAPS = OpenAPS(storage: storage)
+    }
+
+    func loop() {
+        openAPS.loop()
     }
 
     func runTest() {

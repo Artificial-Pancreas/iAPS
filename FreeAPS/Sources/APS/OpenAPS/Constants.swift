@@ -46,6 +46,12 @@ extension OpenAPS {
         static let tempBasal = "monitor/temp_basal.json"
         static let meal = "monitor/meal.json"
         static let glucose = "monitor/glucose.json"
+        static let iob = "monitor/iob.json"
+    }
+
+    enum Enact {
+        static let suggested = "enact/suggested.json"
+        static let enacted = "enact/enacted.json"
     }
 
     enum Function {
