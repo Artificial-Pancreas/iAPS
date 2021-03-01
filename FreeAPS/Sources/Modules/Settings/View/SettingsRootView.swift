@@ -6,6 +6,14 @@ extension Settings {
 
         var body: some View {
             Form {
+                Section(header: Text("Devices")) {
+                    Text("Pump").chevronCell().modal(for: .pumpConfig, from: self)
+                }
+
+                Section(header: Text("Services")) {
+                    Text("Nightscout").chevronCell().modal(for: .nighscoutConfig, from: self)
+                }
+
                 Section(header: Text("Config files")) {
                     Group {
                         Text("Preferences").chevronCell()
@@ -20,21 +28,17 @@ extension Settings {
                         Text("Carb ratios").chevronCell().modal(for: .configEditor(file: OpenAPS.Settings.carbRatios), from: self)
                         Text("Insulin sensitivities").chevronCell()
                             .modal(for: .configEditor(file: OpenAPS.Settings.carbRatios), from: self)
+                        Text("Temp targets").chevronCell()
+                            .modal(for: .configEditor(file: OpenAPS.Settings.tempTargets), from: self)
+                        Text("Pump profile").chevronCell()
+                            .modal(for: .configEditor(file: OpenAPS.Settings.pumpProfile), from: self)
                     }
 
-                    Text("Temp targets").chevronCell().modal(for: .configEditor(file: OpenAPS.Settings.tempTargets), from: self)
-                    Text("Pump profile").chevronCell().modal(for: .configEditor(file: OpenAPS.Settings.pumpProfile), from: self)
-                    Text("Profile").chevronCell().modal(for: .configEditor(file: OpenAPS.Settings.profile), from: self)
-                    Text("Glucose").chevronCell().modal(for: .configEditor(file: OpenAPS.Monitor.glucose), from: self)
-                    Text("Meal").chevronCell().modal(for: .configEditor(file: OpenAPS.Monitor.meal), from: self)
-                }
-
-                Section(header: Text("Services")) {
-                    Text("Nightscout").chevronCell().modal(for: .nighscoutConfig, from: self)
-                }
-
-                Section(header: Text("Devices")) {
-                    Text("Pump").chevronCell().modal(for: .pumpConfig, from: self)
+                    Group {
+                        Text("Profile").chevronCell().modal(for: .configEditor(file: OpenAPS.Settings.profile), from: self)
+                        Text("Glucose").chevronCell().modal(for: .configEditor(file: OpenAPS.Monitor.glucose), from: self)
+                        Text("Meal").chevronCell().modal(for: .configEditor(file: OpenAPS.Monitor.meal), from: self)
+                    }
                 }
             }
             .navigationTitle("Settings")

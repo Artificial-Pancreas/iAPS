@@ -22,7 +22,6 @@ final class BasePumpHistoryStorage: PumpHistoryStorage, Injectable {
                 let id = event.raw.md5String
                 switch event.type {
                 case .bolus:
-                    print("[PUMP EVENT] Bolus event:\n\(event.title))")
                     guard let dose = event.dose else { return [] }
                     let amount = Decimal(string: dose.unitsInDeliverableIncrements.description)
                     let minutes = Int((dose.endDate - dose.startDate).timeInterval / 60)
@@ -38,7 +37,6 @@ final class BasePumpHistoryStorage: PumpHistoryStorage, Injectable {
                         carbInput: nil
                     )]
                 case .tempBasal:
-                    print("[PUMP EVENT] Temp basal event:\n\(event.title))")
                     guard let dose = event.dose else { return [] }
                     let rate = Decimal(string: dose.unitsPerHour.description)
                     let minutes = Int((dose.endDate - dose.startDate).timeInterval / 60)
@@ -67,7 +65,6 @@ final class BasePumpHistoryStorage: PumpHistoryStorage, Injectable {
                         )
                     ]
                 case .suspend:
-                    print("[PUMP EVENT] Suspend event:\n\(event.title))")
                     return [
                         PumpHistoryEvent(
                             id: id,
@@ -82,7 +79,6 @@ final class BasePumpHistoryStorage: PumpHistoryStorage, Injectable {
                         )
                     ]
                 case .resume:
-                    print("[PUMP EVENT] Resume event:\n\(event.title))")
                     return [
                         PumpHistoryEvent(
                             id: id,
@@ -97,7 +93,6 @@ final class BasePumpHistoryStorage: PumpHistoryStorage, Injectable {
                         )
                     ]
                 case .rewind:
-                    print("[PUMP EVENT] Rewind event:\n\(event.title))")
                     return [
                         PumpHistoryEvent(
                             id: id,
@@ -112,7 +107,6 @@ final class BasePumpHistoryStorage: PumpHistoryStorage, Injectable {
                         )
                     ]
                 case .prime:
-                    print("[PUMP EVENT] Prime event:\n\(event.title))")
                     return [
                         PumpHistoryEvent(
                             id: id,
@@ -156,13 +150,13 @@ final class BasePumpHistoryStorage: PumpHistoryStorage, Injectable {
 
     private func processNewEvents(_ events: [PumpHistoryEvent]) {
         dispatchPrecondition(condition: .onQueue(processQueue))
+        let file = OpenAPS.Monitor.pumpHistory
         try? storage.transaction { storage in
-            try storage.append(events, to: OpenAPS.Monitor.pumpHistory, uniqBy: \.id)
-            let uniqEvents = try storage.retrieve(OpenAPS.Monitor.pumpHistory, as: [PumpHistoryEvent].self)
+            try storage.append(events, to: file, uniqBy: \.id)
+            let uniqEvents = try storage.retrieve(file, as: [PumpHistoryEvent].self)
                 .filter { $0.timestamp.addingTimeInterval(1.days.timeInterval) > Date() }
                 .sorted { $0.timestamp > $1.timestamp }
-            print("[HISTORY] New Events\n\(uniqEvents)")
-            try storage.save(Array(uniqEvents), as: OpenAPS.Monitor.pumpHistory)
+            try storage.save(Array(uniqEvents), as: file)
         }
     }
 }

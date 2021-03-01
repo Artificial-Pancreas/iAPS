@@ -85,6 +85,8 @@
 		384E803825C388640086DB71 /* Script.swift in Sources */ = {isa = PBXBuildFile; fileRef = 384E803725C388640086DB71 /* Script.swift */; };
 		3870FF4725EC187A0088248F /* BloodGlucose.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3870FF4225EC13F40088248F /* BloodGlucose.swift */; };
 		3871F38725ED661C0013ECB5 /* Suggestion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3871F38625ED661C0013ECB5 /* Suggestion.swift */; };
+		3871F39C25ED892B0013ECB5 /* TempTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3871F39B25ED892B0013ECB5 /* TempTarget.swift */; };
+		3871F39F25ED895A0013ECB5 /* Decimal+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3871F39E25ED895A0013ECB5 /* Decimal+Extensions.swift */; };
 		388E595C25AD948C0019842D /* FreeAPSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 388E595B25AD948C0019842D /* FreeAPSApp.swift */; };
 		388E596025AD948E0019842D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 388E595F25AD948E0019842D /* Assets.xcassets */; };
 		388E596C25AD95110019842D /* OpenAPS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 388E596B25AD95110019842D /* OpenAPS.swift */; };
@@ -139,6 +141,7 @@
 		38C4D33A25E9A1ED00D30B77 /* NSObject+AssociatedValues.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38C4D33925E9A1ED00D30B77 /* NSObject+AssociatedValues.swift */; };
 		38D0B3B625EBE24900CB6E88 /* Battery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38D0B3B525EBE24900CB6E88 /* Battery.swift */; };
 		38D0B3D925EC07C400CB6E88 /* CarbHystoryEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38D0B3D825EC07C400CB6E88 /* CarbHystoryEntry.swift */; };
+		38F3B2EF25ED8E2A005C48AA /* TempTargetsStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38F3B2EE25ED8E2A005C48AA /* TempTargetsStorage.swift */; };
 		38FCF3D625E8FDF40078B0D1 /* MD5.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38FCF3D525E8FDF40078B0D1 /* MD5.swift */; };
 		38FCF3F925E902C20078B0D1 /* FileStorageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38FCF3F825E902C20078B0D1 /* FileStorageTests.swift */; };
 		38FCF3FD25E997A80078B0D1 /* PumpHistoryStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38FCF3FC25E997A80078B0D1 /* PumpHistoryStorage.swift */; };
@@ -598,6 +601,8 @@
 		384E803725C388640086DB71 /* Script.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Script.swift; sourceTree = "<group>"; };
 		3870FF4225EC13F40088248F /* BloodGlucose.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BloodGlucose.swift; sourceTree = "<group>"; };
 		3871F38625ED661C0013ECB5 /* Suggestion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Suggestion.swift; sourceTree = "<group>"; };
+		3871F39B25ED892B0013ECB5 /* TempTarget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TempTarget.swift; sourceTree = "<group>"; };
+		3871F39E25ED895A0013ECB5 /* Decimal+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Decimal+Extensions.swift"; sourceTree = "<group>"; };
 		388E595825AD948C0019842D /* FreeAPS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FreeAPS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		388E595B25AD948C0019842D /* FreeAPSApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FreeAPSApp.swift; sourceTree = "<group>"; };
 		388E595F25AD948E0019842D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -631,6 +636,7 @@
 		38C4D33925E9A1ED00D30B77 /* NSObject+AssociatedValues.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSObject+AssociatedValues.swift"; sourceTree = "<group>"; };
 		38D0B3B525EBE24900CB6E88 /* Battery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Battery.swift; sourceTree = "<group>"; };
 		38D0B3D825EC07C400CB6E88 /* CarbHystoryEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarbHystoryEntry.swift; sourceTree = "<group>"; };
+		38F3B2EE25ED8E2A005C48AA /* TempTargetsStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TempTargetsStorage.swift; sourceTree = "<group>"; };
 		38FCF3D525E8FDF40078B0D1 /* MD5.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MD5.swift; sourceTree = "<group>"; };
 		38FCF3ED25E9028E0078B0D1 /* FreeAPSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FreeAPSTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		38FCF3F125E9028E0078B0D1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -1080,6 +1086,7 @@
 				3870FF4225EC13F40088248F /* BloodGlucose.swift */,
 				38A0364125ED069400FCBB52 /* TempBasal.swift */,
 				3871F38625ED661C0013ECB5 /* Suggestion.swift */,
+				3871F39B25ED892B0013ECB5 /* TempTarget.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -1087,6 +1094,7 @@
 		388E5A5A25B6F05F0019842D /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				3871F39E25ED895A0013ECB5 /* Decimal+Extensions.swift */,
 				38C4D33625E9A1A200D30B77 /* DispatchQueue+Extensions.swift */,
 				3811DE5425C9D4D500A708ED /* Formatters.swift */,
 				38B4F3AE25E2979F00E76A18 /* IndexedCollection.swift */,
@@ -1106,6 +1114,7 @@
 			children = (
 				38FCF3FC25E997A80078B0D1 /* PumpHistoryStorage.swift */,
 				38A0363A25ECF07E00FCBB52 /* GlucoseStorage.swift */,
+				38F3B2EE25ED8E2A005C48AA /* TempTargetsStorage.swift */,
 			);
 			path = Storage;
 			sourceTree = "<group>";
@@ -1682,6 +1691,7 @@
 				3811DE3025C9D49500A708ED /* HomeViewModel.swift in Sources */,
 				3811DF0525CAA62600A708ED /* DependeciesContainer.swift in Sources */,
 				38BF021725E7CBBC00579895 /* PumpManagerExtensions.swift in Sources */,
+				38F3B2EF25ED8E2A005C48AA /* TempTargetsStorage.swift in Sources */,
 				3811DF1025CAAAE200A708ED /* APSManager.swift in Sources */,
 				3870FF4725EC187A0088248F /* BloodGlucose.swift in Sources */,
 				3811DE0A25C9D32F00A708ED /* BaseModuleBuilder.swift in Sources */,
@@ -1729,6 +1739,7 @@
 				3811DE0C25C9D32F00A708ED /* BaseProvider.swift in Sources */,
 				3811DE5C25C9D4D500A708ED /* Formatters.swift in Sources */,
 				3811DEC525C9D99900A708ED /* StorageContainer.swift in Sources */,
+				3871F39F25ED895A0013ECB5 /* Decimal+Extensions.swift in Sources */,
 				3811DE7F25C9D6D300A708ED /* LoginBuilder.swift in Sources */,
 				3811DE3525C9D49500A708ED /* HomeRootView.swift in Sources */,
 				3811DEC325C9D99900A708ED /* UIContainer.swift in Sources */,
@@ -1740,6 +1751,7 @@
 				3811DE2125C9D48300A708ED /* MainBuilder.swift in Sources */,
 				38FCF3D625E8FDF40078B0D1 /* MD5.swift in Sources */,
 				3811DE7925C9D6D300A708ED /* LoginViewModel.swift in Sources */,
+				3871F39C25ED892B0013ECB5 /* TempTarget.swift in Sources */,
 				3811DEAB25C9D88300A708ED /* HTTPResponseStatus.swift in Sources */,
 				3811DE5F25C9D4D500A708ED /* ProgressBar.swift in Sources */,
 				38BF021D25E7E3AF00579895 /* Reservoir.swift in Sources */,

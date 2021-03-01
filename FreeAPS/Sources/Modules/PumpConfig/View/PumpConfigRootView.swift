@@ -6,7 +6,7 @@ extension PumpConfig {
 
         var body: some View {
             Form {
-                Section(header: Text("Pump")) {
+                Section(header: Text("Model")) {
                     if let pumpState = viewModel.pumpState {
                         Button {
                             viewModel.setupPump = true
@@ -22,9 +22,9 @@ extension PumpConfig {
                     }
                 }
             }
-            .toolbar { ToolbarItem(placement: .principal) { Text("Pump Config") } }
+            .navigationTitle("Pump config")
+            .navigationBarTitleDisplayMode(.automatic)
             .navigationBarItems(leading: Button("Close", action: viewModel.hideModal))
-            .navigationBarTitleDisplayMode(.inline)
             .popover(isPresented: $viewModel.setupPump) {
                 if let pumpManager = viewModel.provider.apsManager.pumpManager {
                     PumpSettingsView(pumpManager: pumpManager, completionDelegate: viewModel)
