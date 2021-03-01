@@ -43,9 +43,7 @@ final class BaseAPSManager: APSManager, Injectable {
         openAPS = OpenAPS(storage: storage)
     }
 
-    func loop() {
-        glucoseCancellable = fetchLastGlucose()
-    }
+    func loop() {}
 
     func determineBasal() {
         let now = Date()
