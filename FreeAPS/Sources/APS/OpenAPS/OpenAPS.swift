@@ -1,3 +1,4 @@
+import Combine
 import Foundation
 import JavaScriptCore
 
@@ -11,61 +12,65 @@ final class OpenAPS {
         self.storage = storage
     }
 
-    func determineBasal(currentTemp: TempBasal, clock: Date = Date()) {
-        processQueue.async {
-            // clock
-            try? self.storage.save(clock, as: Monitor.clock)
+    func determineBasal(currentTemp: TempBasal, clock: Date = Date()) -> AnyPublisher<Void, Never> {
+        Future { promise in
+            self.processQueue.async {
+                // clock
+                try? self.storage.save(clock, as: Monitor.clock)
 
-            // temp_basal
-            let tempBasal = currentTemp.rawJSON
-            try? self.storage.save(tempBasal, as: Monitor.tempBasal)
+                // temp_basal
+                let tempBasal = currentTemp.rawJSON
+                try? self.storage.save(tempBasal, as: Monitor.tempBasal)
 
-            // meal
-            let pumpHistory = self.loadFileFromStorage(name: OpenAPS.Monitor.pumpHistory)
-            let carbs = self.loadFileFromStorage(name: Monitor.carbHistory)
-            let glucose = self.loadFileFromStorage(name: Monitor.glucose)
-            let profile = self.loadFileFromStorage(name: Settings.profile)
-            let basalProfile = self.loadFileFromStorage(name: Settings.basalProfile)
+                // meal
+                let pumpHistory = self.loadFileFromStorage(name: OpenAPS.Monitor.pumpHistory)
+                let carbs = self.loadFileFromStorage(name: Monitor.carbHistory)
+                let glucose = self.loadFileFromStorage(name: Monitor.glucose)
+                let profile = self.loadFileFromStorage(name: Settings.profile)
+                let basalProfile = self.loadFileFromStorage(name: Settings.basalProfile)
 
-            let meal = self.meal(
-                pumphistory: pumpHistory,
-                profile: profile,
-                basalProfile: basalProfile,
-                clock: clock,
-                carbs: carbs,
-                glucose: glucose
-            )
+                let meal = self.meal(
+                    pumphistory: pumpHistory,
+                    profile: profile,
+                    basalProfile: basalProfile,
+                    clock: clock,
+                    carbs: carbs,
+                    glucose: glucose
+                )
 
-            try? self.storage.save(meal, as: Monitor.meal)
+                try? self.storage.save(meal, as: Monitor.meal)
 
-            // iob
-            let autosens = self.loadFileFromStorage(name: Settings.autosense)
-            let iob = self.iob(
-                pumphistory: pumpHistory,
-                profile: profile,
-                clock: clock,
-                autosens: autosens.isEmpty ? .null : autosens
-            )
+                // iob
+                let autosens = self.loadFileFromStorage(name: Settings.autosense)
+                let iob = self.iob(
+                    pumphistory: pumpHistory,
+                    profile: profile,
+                    clock: clock,
+                    autosens: autosens.isEmpty ? .null : autosens
+                )
 
-            try? self.storage.save(iob, as: Monitor.iob)
+                try? self.storage.save(iob, as: Monitor.iob)
 
-            // determine-basal
-            let reservoir = self.loadFileFromStorage(name: Monitor.reservoir)
+                // determine-basal
+                let reservoir = self.loadFileFromStorage(name: Monitor.reservoir)
 
-            let suggested = self.determineBasal(
-                glucose: glucose,
-                currentTemp: tempBasal,
-                iob: iob,
-                profile: profile,
-                autosens: autosens.isEmpty ? .null : autosens,
-                meal: meal,
-                microBolusAllowed: true,
-                reservoir: reservoir
-            )
-            print("SUGGESTED: \(suggested)")
+                let suggested = self.determineBasal(
+                    glucose: glucose,
+                    currentTemp: tempBasal,
+                    iob: iob,
+                    profile: profile,
+                    autosens: autosens.isEmpty ? .null : autosens,
+                    meal: meal,
+                    microBolusAllowed: true,
+                    reservoir: reservoir
+                )
+                print("SUGGESTED: \(suggested)")
 
-            try? self.storage.save(suggested, as: Enact.suggested)
-        }
+                try? self.storage.save(suggested, as: Enact.suggested)
+
+                promise(.success(()))
+            }
+        }.eraseToAnyPublisher()
     }
 
     func autosense() {

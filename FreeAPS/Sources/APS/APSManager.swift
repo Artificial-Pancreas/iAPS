@@ -1,5 +1,6 @@
 import Combine
 import Foundation
+import LoopKit
 import LoopKitUI
 import Swinject
 
@@ -23,6 +24,8 @@ final class BaseAPSManager: APSManager, Injectable {
     private var openAPS: OpenAPS!
 
     private var glucoseCancellable: AnyCancellable?
+    private var determineBasalCancellable: AnyCancellable?
+    private var enactCancellable: AnyCancellable?
 
     var pumpManager: PumpManagerUI? {
         get {
@@ -40,12 +43,25 @@ final class BaseAPSManager: APSManager, Injectable {
         openAPS = OpenAPS(storage: storage)
     }
 
+    func loop() {
+        glucoseCancellable = fetchLastGlucose()
+    }
+
     func determineBasal() {
         let now = Date()
         guard let temp = currentTemp(date: now) else {
             return
         }
-        openAPS.determineBasal(currentTemp: temp, clock: now)
+        determineBasalCancellable = openAPS
+            .determineBasal(currentTemp: temp, clock: now)
+            .sink { [weak self] in
+                guard let self = self,
+                      let suggested = try? self.storage.retrieve(OpenAPS.Enact.suggested, as: Suggestion.self)
+                else {
+                    return
+                }
+                self.enact(suggested: suggested)
+            }
     }
 
     func runTest() {
@@ -97,5 +113,54 @@ final class BaseAPSManager: APSManager, Injectable {
             }
         default: return nil
         }
+    }
+
+    private func enact(suggested: Suggestion) {
+        guard let pump = pumpManager else { return }
+
+        enactCancellable = pump.enactTempBasal(
+            unitsPerHour: Double(truncating: suggested.rate as NSNumber),
+            for: TimeInterval(suggested.duration * 60)
+        )
+        .flatMap { dose -> AnyPublisher<DoseEntry, Error> in
+            let units = suggested.units.map { Double(truncating: $0 as NSNumber) } ?? 0
+            guard units > 0 else { return Just(dose).setFailureType(to: Error.self).eraseToAnyPublisher() }
+            return pump.enactBolus(units: units, automatic: true)
+        }
+        .sink { completion in
+            if case let .failure(error) = completion {
+                print("Loop failed with error: \(error.localizedDescription)")
+            }
+        } receiveValue: { _ in
+            print("Loop failed succeses")
+        }
+    }
+}
+
+private extension PumpManager {
+    func enactTempBasal(unitsPerHour: Double, for duration: TimeInterval) -> AnyPublisher<DoseEntry, Error> {
+        Future { promise in
+            self.enactTempBasal(unitsPerHour: unitsPerHour, for: duration) { result in
+                switch result {
+                case let .success(dose):
+                    promise(.success(dose))
+                case let .failure(error):
+                    promise(.failure(error))
+                }
+            }
+        }.eraseToAnyPublisher()
+    }
+
+    func enactBolus(units: Double, automatic: Bool) -> AnyPublisher<DoseEntry, Error> {
+        Future { promise in
+            self.enactBolus(units: units, automatic: automatic) { result in
+                switch result {
+                case let .success(dose):
+                    promise(.success(dose))
+                case let .failure(error):
+                    promise(.failure(error))
+                }
+            }
+        }.eraseToAnyPublisher()
     }
 }
