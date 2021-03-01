@@ -11,60 +11,21 @@ final class OpenAPS {
         self.storage = storage
     }
 
-    func loop() {
+    func determineBasal(currentTemp: TempBasal, clock: Date = Date()) {
         processQueue.async {
-            // status
-            // check it before
-
-            // profile
-            let preferences = self.loadFileFromStorage(name: Settings.preferences)
-            let pumpSettings = self.loadFileFromStorage(name: Settings.settings)
-            let bgTargets = self.loadFileFromStorage(name: Settings.bgTargets)
-            let basalProfile = self.loadFileFromStorage(name: Settings.basalProfile)
-            let isf = self.loadFileFromStorage(name: Settings.insulinSensitivities)
-            let cr = self.loadFileFromStorage(name: Settings.carbRatios)
-            let tempTargets = self.loadFileFromStorage(name: Settings.tempTargets)
-            let model = self.loadFileFromStorage(name: Settings.model)
-            let autotune = self.loadFileFromStorage(name: Settings.autotune)
-
-            let pumpProfile = self.makeProfile(
-                preferences: preferences,
-                pumpSettings: pumpSettings,
-                bgTargets: bgTargets,
-                basalProfile: basalProfile,
-                isf: isf,
-                carbRatio: cr,
-                tempTargets: tempTargets,
-                model: model,
-                autotune: RawJSON.null
-            )
-
-            let profile = self.makeProfile(
-                preferences: preferences,
-                pumpSettings: pumpSettings,
-                bgTargets: bgTargets,
-                basalProfile: basalProfile,
-                isf: isf,
-                carbRatio: cr,
-                tempTargets: tempTargets,
-                model: model,
-                autotune: autotune.isEmpty ? .null : autotune
-            )
-
-            try? self.storage.save(pumpProfile, as: Settings.pumpProfile)
-            try? self.storage.save(profile, as: Settings.profile)
-
             // clock
-            try? self.storage.save(Date(), as: Monitor.clock)
+            try? self.storage.save(clock, as: Monitor.clock)
 
             // temp_basal
-            let tempBasal = self.loadFileFromStorage(name: Monitor.tempBasal)
+            let tempBasal = currentTemp.rawJSON
+            try? self.storage.save(tempBasal, as: Monitor.tempBasal)
 
             // meal
             let pumpHistory = self.loadFileFromStorage(name: OpenAPS.Monitor.pumpHistory)
             let carbs = self.loadFileFromStorage(name: Monitor.carbHistory)
             let glucose = self.loadFileFromStorage(name: Monitor.glucose)
-            let clock = self.loadFileFromStorage(name: Monitor.clock)
+            let profile = self.loadFileFromStorage(name: Settings.profile)
+            let basalProfile = self.loadFileFromStorage(name: Settings.basalProfile)
 
             let meal = self.meal(
                 pumphistory: pumpHistory,
@@ -104,6 +65,95 @@ final class OpenAPS {
             print("SUGGESTED: \(suggested)")
 
             try? self.storage.save(suggested, as: Enact.suggested)
+        }
+    }
+
+    func autosense() {
+        processQueue.async {
+            let pumpHistory = self.loadFileFromStorage(name: OpenAPS.Monitor.pumpHistory)
+            let carbs = self.loadFileFromStorage(name: Monitor.carbHistory)
+            let glucose = self.loadFileFromStorage(name: Monitor.glucose)
+            let profile = self.loadFileFromStorage(name: Settings.profile)
+            let basalProfile = self.loadFileFromStorage(name: Settings.basalProfile)
+
+            let autosensResult = self.autosense(
+                pumpHistory: pumpHistory,
+                profile: profile,
+                carbs: carbs,
+                glucose: glucose,
+                basalprofile: basalProfile,
+                temptargets: RawJSON.null
+            )
+
+            print("AUTOSENS: \(autosensResult)")
+            try? self.storage.save(autosensResult, as: Settings.autosense)
+        }
+    }
+
+    func autotune(categorizeUamAsBasal: Bool = false, tuneInsulinCurve: Bool = false) {
+        processQueue.async {
+            let pumpHistory = self.loadFileFromStorage(name: OpenAPS.Monitor.pumpHistory)
+            let glucose = self.loadFileFromStorage(name: Monitor.glucose)
+            let profile = self.loadFileFromStorage(name: Settings.profile)
+
+            let autotunePreppedGlucose = self.autotunePrepare(
+                pumphistory: pumpHistory,
+                profile: profile,
+                glucose: glucose,
+                pumpprofile: profile,
+                categorizeUamAsBasal: categorizeUamAsBasal,
+                tuneInsulinCurve: tuneInsulinCurve
+            )
+            print("AUTOTUNE PREP: \(autotunePreppedGlucose)")
+
+            let previousAutotune = try? self.storage.retrieve(Settings.autotune, as: RawJSON.self)
+
+            let autotuneResult = self.autotuneRun(
+                autotunePreparedData: autotunePreppedGlucose,
+                previousAutotuneResult: previousAutotune ?? profile,
+                pumpProfile: profile
+            )
+
+            try? self.storage.save(autotuneResult, as: Settings.autotune)
+
+            print("AUTOTUNE RESULT: \(autotuneResult)")
+        }
+    }
+
+    func makeProfile(autotuned: Bool) {
+        processQueue.async {
+            print("MAKE PROFILE autotuned \(autotuned)")
+            let preferences = self.loadFileFromStorage(name: Settings.preferences)
+            let pumpSettings = self.loadFileFromStorage(name: Settings.settings)
+            let bgTargets = self.loadFileFromStorage(name: Settings.bgTargets)
+            let basalProfile = self.loadFileFromStorage(name: Settings.basalProfile)
+            let isf = self.loadFileFromStorage(name: Settings.insulinSensitivities)
+            let cr = self.loadFileFromStorage(name: Settings.carbRatios)
+            let tempTargets = self.loadFileFromStorage(name: Settings.tempTargets)
+            let model = self.loadFileFromStorage(name: Settings.model)
+            let autotune = self.loadFileFromStorage(name: Settings.autotune)
+
+            let aututune = autotuned ? (autotune.isEmpty ? .null : autotune) : .null
+
+            let profile = self.makeProfile(
+                preferences: preferences,
+                pumpSettings: pumpSettings,
+                bgTargets: bgTargets,
+                basalProfile: basalProfile,
+                isf: isf,
+                carbRatio: cr,
+                tempTargets: tempTargets,
+                model: model,
+                autotune: aututune
+            )
+
+            print("PROFILE RESULT \n\(profile)")
+
+            if autotuned {
+                try? self.storage.save(profile, as: Settings.profile)
+            } else {
+                try? self.storage.save(profile, as: Settings.pumpProfile)
+            }
         }
     }
 
@@ -194,69 +244,7 @@ final class OpenAPS {
         }
     }
 
-    func makeClock() {
-        processQueue.async {
-            try? self.storage.save(Date(), as: Monitor.clock)
-        }
-    }
-
-    func makeMeal() {
-        processQueue.async {
-            let pumphistory = self.loadFileFromStorage(name: Monitor.pumpHistory)
-            let profile = self.loadFileFromStorage(name: Settings.profile)
-            let basalProfile = self.loadFileFromStorage(name: Settings.basalProfile)
-            let clock = self.loadFileFromStorage(name: Monitor.clock)
-            let carbs = self.loadFileFromStorage(name: Monitor.carbHistory)
-            let glucose = self.loadFileFromStorage(name: Monitor.glucose)
-
-            let mealResult = self.meal(
-                pumphistory: pumphistory,
-                profile: profile,
-                basalProfile: basalProfile,
-                clock: clock,
-                carbs: carbs,
-                glucose: glucose
-            )
-
-            print("MEAL: \(mealResult)")
-            try? self.storage.save(mealResult, as: Monitor.meal)
-        }
-    }
-
-    func makeProfile(autotuned: Bool) {
-        processQueue.async {
-            print("MAKE PROFILE autotuned \(autotuned)")
-            let preferences = self.loadFileFromStorage(name: Settings.preferences)
-            let pumpSettings = self.loadFileFromStorage(name: Settings.settings)
-            let bgTargets = self.loadFileFromStorage(name: Settings.bgTargets)
-            let basalProfile = self.loadFileFromStorage(name: Settings.basalProfile)
-            let isf = self.loadFileFromStorage(name: Settings.insulinSensitivities)
-            let cr = self.loadFileFromStorage(name: Settings.carbRatios)
-            let tempTargets = self.loadFileFromStorage(name: Settings.tempTargets)
-            let model = self.loadFileFromStorage(name: Settings.model)
-            let autotune = self.loadFileFromStorage(name: Settings.autotune)
-
-            let profile = self.makeProfile(
-                preferences: preferences,
-                pumpSettings: pumpSettings,
-                bgTargets: bgTargets,
-                basalProfile: basalProfile,
-                isf: isf,
-                carbRatio: cr,
-                tempTargets: tempTargets,
-                model: model,
-                autotune: autotuned ? autotune : .null
-            )
-
-            print("PROFILE RESULT \n\(profile)")
-
-            if autotuned {
-                try? self.storage.save(profile, as: Settings.profile)
-            } else {
-                try? self.storage.save(profile, as: Settings.pumpProfile)
-            }
-        }
-    }
+    // MARK: - Private
 
     private func iob(pumphistory: JSON, profile: JSON, clock: JSON, autosens: JSON) -> RawJSON {
         dispatchPrecondition(condition: .onQueue(processQueue))

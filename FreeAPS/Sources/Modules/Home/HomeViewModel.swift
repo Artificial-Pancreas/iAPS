@@ -22,7 +22,7 @@ extension Home {
         }
 
         func runLoop() {
-            apsManager.loop()
+            apsManager.determineBasal()
         }
     }
 }

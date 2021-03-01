@@ -4,13 +4,14 @@ import LoopKitUI
 import Swinject
 
 protocol APSManager {
-    func loop()
+    func determineBasal()
     func runTest()
     func makeProfiles()
+    func fetchLastGlucose()
+    func autosense()
+    func autotune()
     var pumpManager: PumpManagerUI? { get set }
     var pumpDisplayState: CurrentValueSubject<PumpDisplayState?, Never> { get }
-    func fetchLastGlucose()
-    func makeMeal()
 }
 
 final class BaseAPSManager: APSManager, Injectable {
@@ -39,8 +40,12 @@ final class BaseAPSManager: APSManager, Injectable {
         openAPS = OpenAPS(storage: storage)
     }
 
-    func loop() {
-        openAPS.loop()
+    func determineBasal() {
+        let now = Date()
+        guard let temp = currentTemp(date: now) else {
+            return
+        }
+        openAPS.determineBasal(currentTemp: temp, clock: now)
     }
 
     func runTest() {
@@ -52,11 +57,6 @@ final class BaseAPSManager: APSManager, Injectable {
         openAPS.makeProfile(autotuned: true)
     }
 
-    func makeMeal() {
-        openAPS.makeClock()
-        openAPS.makeMeal()
-    }
-
     func fetchLastGlucose() {
         if let urlString = keychain.getValue(String.self, forKey: NightscoutConfig.Config.urlKey),
            let url = URL(string: urlString)
@@ -66,6 +66,36 @@ final class BaseAPSManager: APSManager, Injectable {
             receiveValue: { glucose in
                 self.glucoseStorage.storeGlucose(glucose)
             }
+        }
+    }
+
+    func autosense() {
+        openAPS.autosense()
+    }
+
+    func autotune() {
+        openAPS.autotune()
+    }
+
+    private func currentTemp(date: Date) -> TempBasal? {
+        guard let state = pumpManager?.status.basalDeliveryState else { return nil }
+        guard let lastTemp = try? storage.retrieve(OpenAPS.Monitor.tempBasal, as: TempBasal.self) else {
+            return TempBasal(duration: 0, rate: 0, temp: .absolute, updatedAt: date)
+        }
+
+        switch state {
+        case .active:
+            return TempBasal(duration: 0, rate: 0, temp: .absolute, updatedAt: date)
+        case let .tempBasal(dose):
+            let doseRate = Decimal(dose.unitsPerHour)
+            if doseRate == lastTemp.rate {
+                let durationMin = Int((date.timeIntervalSince1970 - lastTemp.updatedAt.timeIntervalSince1970) / 60)
+                return TempBasal(duration: durationMin, rate: lastTemp.rate, temp: .absolute, updatedAt: date)
+            } else {
+                let durationMin = Int((date.timeIntervalSince1970 - dose.startDate.timeIntervalSince1970) / 60)
+                return TempBasal(duration: durationMin, rate: doseRate, temp: .absolute, updatedAt: date)
+            }
+        default: return nil
         }
     }
 }
