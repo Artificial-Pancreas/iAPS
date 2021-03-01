@@ -6,6 +6,6 @@ struct Suggestion: JSON {
     let insulinReq: Decimal
     let eventualBG: Int
     let sensitivityRatio: Decimal
-    let rate: Decimal
-    let duration: Int
+    let rate: Decimal?
+    let duration: Int?
 }

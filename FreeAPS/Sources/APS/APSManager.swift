@@ -106,22 +106,33 @@ final class BaseAPSManager: APSManager, Injectable {
             return
         }
 
-        enactCancellable = pump.enactTempBasal(
-            unitsPerHour: Double(suggested.rate),
-            for: TimeInterval(suggested.duration * 60)
-        )
-        .flatMap { dose -> AnyPublisher<DoseEntry, Error> in
-            let units = suggested.units.map { Double($0) } ?? 0
-            guard units > 0 else { return Just(dose).setFailureType(to: Error.self).eraseToAnyPublisher() }
-            return pump.enactBolus(units: units, automatic: true)
-        }
-        .sink { completion in
-            if case let .failure(error) = completion {
-                print("Loop failed with error: \(error.localizedDescription)")
+        let basalPublisher: AnyPublisher<Void, Error> = {
+            guard let rate = suggested.rate, let duration = suggested.duration else {
+                return Just(()).setFailureType(to: Error.self)
+                    .eraseToAnyPublisher()
             }
-        } receiveValue: { _ in
-            print("Loop failed succeses")
-        }
+            return pump.enactTempBasal(unitsPerHour: Double(rate), for: TimeInterval(duration * 60)).map { _ in () }
+                .eraseToAnyPublisher()
+        }()
+
+        let bolusPublisher: AnyPublisher<Void, Error> = {
+            guard let units = suggested.units else {
+                return Just(()).setFailureType(to: Error.self)
+                    .eraseToAnyPublisher()
+            }
+            return pump.enactBolus(units: Double(units), automatic: true).map { _ in () }
+                .eraseToAnyPublisher()
+        }()
+
+        enactCancellable = basalPublisher
+            .flatMap { _ in bolusPublisher }
+            .sink { completion in
+                if case let .failure(error) = completion {
+                    print("Loop failed with error: \(error.localizedDescription)")
+                }
+            } receiveValue: {
+                print("Loop succeeded")
+            }
     }
 }
 
