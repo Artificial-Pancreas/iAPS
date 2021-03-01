@@ -8,7 +8,7 @@ struct PumpHistoryEvent: JSON {
     let duration: Int?
     let durationMin: Int?
     let rate: Decimal?
-    let temp: PumpHistoryTempType?
+    let temp: TempType?
     let carbInput: Int?
 }
 
@@ -27,7 +27,7 @@ enum PumpHistoryEventType: String, JSON {
     case journalCarbs = "JournalEntryMealMarker"
 }
 
-enum PumpHistoryTempType: String, JSON {
+enum TempType: String, JSON {
     case absolute
     case percent
 }
