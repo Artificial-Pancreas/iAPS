@@ -1,4 +1,7 @@
 //для enact/smb-suggested.json параметры: monitor/iob.json monitor/temp_basal.json monitor/glucose.json settings/profile.json settings/autosens.json --meal monitor/meal.json --microbolus --reservoir monitor/reservoir.json
+var printLog = function(...args) {};
+var process = { stderr: { write: printLog } };
+
 
 function generate(iob_data, currenttemp, glucose_data, profile, autosens_input = false, meal_input = false, microbolus = false, reservoir_input = false){
     var glucose_status = freeaps_glucoseGetLast(glucose_data);
