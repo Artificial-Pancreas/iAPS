@@ -83,28 +83,23 @@ final class OpenAPS {
                 pumphistory: pumpHistory,
                 profile: profile,
                 clock: clock,
-                autosens: autosens.isEmpty ? .null : autosens,
-                pumphistory24: RawJSON.null
+                autosens: autosens.isEmpty ? .null : autosens
             )
 
             try? self.storage.save(iob, as: Monitor.iob)
 
             // determine-basal
-            let glucoseStatus = self.glucoseGetLast(glucose: glucose)
             let reservoir = self.loadFileFromStorage(name: Monitor.reservoir)
 
-            let ms = (Date(clock.rawJSON) ?? Date()).timeIntervalSince1970 * 1000
-
             let suggested = self.determineBasal(
-                glucoseStatus: glucoseStatus,
+                glucose: glucose,
                 currentTemp: tempBasal,
                 iob: iob,
                 profile: profile,
-                aurosens: autosens.isEmpty ? .null : autosens,
+                autosens: autosens.isEmpty ? .null : autosens,
                 meal: meal,
                 microBolusAllowed: true,
-                reservoir: reservoir,
-                tsMilliseconds: ms
+                reservoir: reservoir
             )
             print("SUGGESTED: \(suggested)")
 
@@ -124,7 +119,6 @@ final class OpenAPS {
             let glucose = self.loadJSON(name: "glucose")
             let currentTemp = self.loadJSON(name: "temp_basal")
             let reservoir = 100
-            let tsMilliseconds: Double = 1_527_924_300_000
 
             let preferences = self.exportDefaultPreferences()
 
@@ -145,8 +139,7 @@ final class OpenAPS {
                 pumphistory: pumphistory,
                 profile: profile,
                 clock: clock,
-                autosens: autosensResult,
-                pumphistory24: RawJSON.null
+                autosens: autosensResult
             )
             print("IOB: \(iobResult)")
 
@@ -162,19 +155,15 @@ final class OpenAPS {
             print("MEAL: \(mealResult)")
             try? self.storage.save(mealResult, as: Monitor.meal)
 
-            let glucoseStatus = self.glucoseGetLast(glucose: glucose)
-            print("GLUCOSE STATUS: \(glucoseStatus)")
-
             let suggested = self.determineBasal(
-                glucoseStatus: glucoseStatus,
+                glucose: glucose,
                 currentTemp: currentTemp,
                 iob: iobResult,
                 profile: profile,
                 aurosens: autosensResult,
                 meal: mealResult,
                 microBolusAllowed: true,
-                reservoir: reservoir,
-                tsMilliseconds: tsMilliseconds
+                reservoir: reservoir
             )
             print("SUGGESTED: \(suggested)")
 
@@ -269,7 +258,7 @@ final class OpenAPS {
         }
     }
 
-    private func iob(pumphistory: JSON, profile: JSON, clock: JSON, autosens: JSON, pumphistory24: JSON) -> RawJSON {
+    private func iob(pumphistory: JSON, profile: JSON, clock: JSON, autosens: JSON) -> RawJSON {
         dispatchPrecondition(condition: .onQueue(processQueue))
         return jsWorker.inCommonContext { worker in
             worker.evaluate(script: Script(name: Bundle.iob))
@@ -278,8 +267,7 @@ final class OpenAPS {
                 pumphistory,
                 profile,
                 clock,
-                autosens,
-                pumphistory24
+                autosens
             ])
         }
     }
@@ -292,10 +280,10 @@ final class OpenAPS {
             return worker.call(function: Function.generate, with: [
                 pumphistory,
                 profile,
-                basalProfile,
                 clock,
-                carbs,
-                glucose
+                glucose,
+                basalProfile,
+                carbs
             ])
         }
     }
@@ -340,44 +328,33 @@ final class OpenAPS {
         }
     }
 
-    private func glucoseGetLast(glucose: JSON) -> RawJSON {
-        dispatchPrecondition(condition: .onQueue(processQueue))
-        return jsWorker.inCommonContext { worker in
-            worker.evaluate(script: Script(name: Bundle.getLastGlucose))
-            return worker.call(function: Function.freeaps, with: [glucose])
-        }
-    }
-
     private func determineBasal(
-        glucoseStatus: JSON,
+        glucose: JSON,
         currentTemp: JSON,
         iob: JSON,
         profile: JSON,
-        aurosens: JSON,
+        autosens: JSON,
         meal: JSON,
         microBolusAllowed: Bool,
-        reservoir: JSON,
-        tsMilliseconds: Double
+        reservoir: JSON
     ) -> RawJSON {
         dispatchPrecondition(condition: .onQueue(processQueue))
         return jsWorker.inCommonContext { worker in
             worker.evaluate(script: Script(name: Bundle.basalSetTemp))
-            worker.evaluate(script: Script(name: Prepare.determineBasal))
+            worker.evaluate(script: Script(name: Bundle.getLastGlucose))
             worker.evaluate(script: Script(name: Bundle.determineBasal))
-
+            worker.evaluate(script: Script(name: Prepare.determineBasal))
             return worker.call(
-                function: Function.freeaps,
+                function: Function.generate,
                 with: [
-                    glucoseStatus,
-                    currentTemp,
                     iob,
+                    currentTemp,
+                    glucose,
                     profile,
-                    aurosens,
+                    autosens,
                     meal,
-                    Function.tempBasalFunctions,
                     microBolusAllowed,
-                    reservoir,
-                    tsMilliseconds
+                    reservoir
                 ]
             )
         }
@@ -434,15 +411,14 @@ final class OpenAPS {
         return jsWorker.inCommonContext { worker in
             worker.evaluate(script: Script(name: Bundle.profile))
             worker.evaluate(script: Script(name: Prepare.profile))
-
             return worker.call(
                 function: Function.generate,
                 with: [
-                    preferences,
                     pumpSettings,
                     bgTargets,
-                    basalProfile,
                     isf,
+                    basalProfile,
+                    preferences,
                     carbRatio,
                     tempTargets,
                     model,
