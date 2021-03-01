@@ -5,6 +5,7 @@ import Swinject
 
 final class BaseAPSManager: APSManager, Injectable {
     @Injected() private var storage: FileStorage!
+    @Injected() private var pumpHistory: PumpHistoryStorage!
     @Injected() private var keychain: Keychain!
     @Injected() private var deviceDataManager: DeviceDataManager!
     private var openAPS: OpenAPS!

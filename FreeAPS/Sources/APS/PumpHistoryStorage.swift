@@ -5,7 +5,7 @@ import Swinject
 
 protocol PumpHistoryStorage {
     func storePumpEvents(_ events: [NewPumpEvent])
-    func storeBolusWizardCarbs(_ carbs: Int)
+    func storeJournalCarbs(_ carbs: Int)
 }
 
 final class BasePumpHistoryStorage: PumpHistoryStorage, Injectable {
@@ -135,12 +135,12 @@ final class BasePumpHistoryStorage: PumpHistoryStorage, Injectable {
         }
     }
 
-    func storeBolusWizardCarbs(_ carbs: Int) {
+    func storeJournalCarbs(_ carbs: Int) {
         processQueue.async {
             let eventsToStore = [
                 PumpHistoryEvent(
                     id: UUID().uuidString,
-                    type: .bolusWizard,
+                    type: .journalCarbs,
                     timestamp: Date(),
                     amount: nil,
                     duration: nil,
