@@ -125,13 +125,14 @@ final class BaseAPSManager: APSManager, Injectable {
         }()
 
         enactCancellable = basalPublisher
-            .flatMap { _ in bolusPublisher }
+            .flatMap { bolusPublisher }
             .sink { completion in
                 if case let .failure(error) = completion {
                     print("Loop failed with error: \(error.localizedDescription)")
                 }
-            } receiveValue: {
+            } receiveValue: { [weak self] in
                 print("Loop succeeded")
+                try? self?.storage.save(suggested, as: OpenAPS.Enact.enacted)
             }
     }
 }
