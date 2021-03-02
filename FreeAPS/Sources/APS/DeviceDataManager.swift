@@ -3,6 +3,7 @@ import Foundation
 import LoopKit
 import LoopKitUI
 import MinimedKit
+import MockKit
 import OmniKit
 import SwiftDate
 import Swinject
@@ -15,7 +16,8 @@ protocol DeviceDataManager {
 
 private let staticPumpManagers: [PumpManagerUI.Type] = [
     MinimedPumpManager.self,
-    OmnipodPumpManager.self
+    OmnipodPumpManager.self,
+    MockPumpManager.self
 ]
 
 private let staticPumpManagersByIdentifier: [String: PumpManagerUI.Type] = staticPumpManagers.reduce(into: [:]) { map, Type in

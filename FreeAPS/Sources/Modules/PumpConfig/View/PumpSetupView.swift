@@ -2,11 +2,10 @@ import LoopKit
 import LoopKitUI
 import MinimedKit
 import MinimedKitUI
+import MockKit
+import MockKitUI
 import OmniKit
 import OmniKitUI
-import RileyLinkBLEKit
-import RileyLinkKit
-import RileyLinkKitUI
 import SwiftUI
 import UIKit
 
@@ -25,6 +24,8 @@ extension PumpConfig {
                 setupViewController = MinimedPumpManager.setupViewController()
             case .omnipod:
                 setupViewController = OmnipodPumpManager.setupViewController()
+            case .simulator:
+                setupViewController = MockPumpManager.setupViewController()
             }
 
             setupViewController.setupDelegate = setupDelegate

@@ -73,180 +73,107 @@ final class OpenAPS {
         }.eraseToAnyPublisher()
     }
 
-    func autosense() {
-        processQueue.async {
-            let pumpHistory = self.loadFileFromStorage(name: OpenAPS.Monitor.pumpHistory)
-            let carbs = self.loadFileFromStorage(name: Monitor.carbHistory)
-            let glucose = self.loadFileFromStorage(name: Monitor.glucose)
-            let profile = self.loadFileFromStorage(name: Settings.profile)
-            let basalProfile = self.loadFileFromStorage(name: Settings.basalProfile)
+    func autosense() -> AnyPublisher<Void, Never> {
+        Future { promise in
+            self.processQueue.async {
+                let pumpHistory = self.loadFileFromStorage(name: OpenAPS.Monitor.pumpHistory)
+                let carbs = self.loadFileFromStorage(name: Monitor.carbHistory)
+                let glucose = self.loadFileFromStorage(name: Monitor.glucose)
+                let profile = self.loadFileFromStorage(name: Settings.profile)
+                let basalProfile = self.loadFileFromStorage(name: Settings.basalProfile)
 
-            let autosensResult = self.autosense(
-                pumpHistory: pumpHistory,
-                profile: profile,
-                carbs: carbs,
-                glucose: glucose,
-                basalprofile: basalProfile,
-                temptargets: RawJSON.null
-            )
+                let autosensResult = self.autosense(
+                    pumpHistory: pumpHistory,
+                    profile: profile,
+                    carbs: carbs,
+                    glucose: glucose,
+                    basalprofile: basalProfile,
+                    temptargets: RawJSON.null
+                )
 
-            print("AUTOSENS: \(autosensResult)")
-            try? self.storage.save(autosensResult, as: Settings.autosense)
-        }
-    }
-
-    func autotune(categorizeUamAsBasal: Bool = false, tuneInsulinCurve: Bool = false) {
-        processQueue.async {
-            let pumpHistory = self.loadFileFromStorage(name: OpenAPS.Monitor.pumpHistory)
-            let glucose = self.loadFileFromStorage(name: Monitor.glucose)
-            let profile = self.loadFileFromStorage(name: Settings.profile)
-
-            let autotunePreppedGlucose = self.autotunePrepare(
-                pumphistory: pumpHistory,
-                profile: profile,
-                glucose: glucose,
-                pumpprofile: profile,
-                categorizeUamAsBasal: categorizeUamAsBasal,
-                tuneInsulinCurve: tuneInsulinCurve
-            )
-            print("AUTOTUNE PREP: \(autotunePreppedGlucose)")
-
-            let previousAutotune = try? self.storage.retrieve(Settings.autotune, as: RawJSON.self)
-
-            let autotuneResult = self.autotuneRun(
-                autotunePreparedData: autotunePreppedGlucose,
-                previousAutotuneResult: previousAutotune ?? profile,
-                pumpProfile: profile
-            )
-
-            try? self.storage.save(autotuneResult, as: Settings.autotune)
-
-            print("AUTOTUNE RESULT: \(autotuneResult)")
-        }
-    }
-
-    func makeProfile(autotuned: Bool) {
-        processQueue.async {
-            print("MAKE PROFILE autotuned \(autotuned)")
-            let preferences = self.loadFileFromStorage(name: Settings.preferences)
-            let pumpSettings = self.loadFileFromStorage(name: Settings.settings)
-            let bgTargets = self.loadFileFromStorage(name: Settings.bgTargets)
-            let basalProfile = self.loadFileFromStorage(name: Settings.basalProfile)
-            let isf = self.loadFileFromStorage(name: Settings.insulinSensitivities)
-            let cr = self.loadFileFromStorage(name: Settings.carbRatios)
-            let tempTargets = self.loadFileFromStorage(name: Settings.tempTargets)
-            let model = self.loadFileFromStorage(name: Settings.model)
-            let autotune = self.loadFileFromStorage(name: Settings.autotune)
-
-            let aututune = autotuned ? (autotune.isEmpty ? .null : autotune) : .null
-
-            let profile = self.makeProfile(
-                preferences: preferences,
-                pumpSettings: pumpSettings,
-                bgTargets: bgTargets,
-                basalProfile: basalProfile,
-                isf: isf,
-                carbRatio: cr,
-                tempTargets: tempTargets,
-                model: model,
-                autotune: aututune
-            )
-
-            print("PROFILE RESULT \n\(profile)")
-
-            if autotuned {
-                try? self.storage.save(profile, as: Settings.profile)
-            } else {
-                try? self.storage.save(profile, as: Settings.pumpProfile)
+                print("AUTOSENS: \(autosensResult)")
+                try? self.storage.save(autosensResult, as: Settings.autosense)
+                promise(.success(()))
             }
-        }
+        }.eraseToAnyPublisher()
     }
 
-    func test() {
-        processQueue.async {
-            let now = Date()
-            print("START at \(now)")
-            let pumphistory = self.loadJSON(name: "pumphistory")
-            let profile = self.loadJSON(name: "profile")
-            let basalProfile = self.loadJSON(name: "basal_profile")
-            let clock = self.loadJSON(name: "clock")
-            let carbs = self.loadJSON(name: "carbhistory")
-            let glucose = self.loadJSON(name: "glucose")
-            let currentTemp = self.loadJSON(name: "temp_basal")
-            let reservoir = 100
+    func autotune(categorizeUamAsBasal: Bool = false, tuneInsulinCurve: Bool = false) -> AnyPublisher<Void, Never> {
+        Future { promise in
+            self.processQueue.async {
+                let pumpHistory = self.loadFileFromStorage(name: OpenAPS.Monitor.pumpHistory)
+                let glucose = self.loadFileFromStorage(name: Monitor.glucose)
+                let profile = self.loadFileFromStorage(name: Settings.profile)
 
-            let preferences = self.exportDefaultPreferences()
+                let autotunePreppedGlucose = self.autotunePrepare(
+                    pumphistory: pumpHistory,
+                    profile: profile,
+                    glucose: glucose,
+                    pumpprofile: profile,
+                    categorizeUamAsBasal: categorizeUamAsBasal,
+                    tuneInsulinCurve: tuneInsulinCurve
+                )
+                print("AUTOTUNE PREP: \(autotunePreppedGlucose)")
 
-            print("DEFAULT PREFERENCES: \(preferences)")
+                let previousAutotune = try? self.storage.retrieve(Settings.autotune, as: RawJSON.self)
 
-            let autosensResult = self.autosense(
-                pumpHistory: pumphistory,
-                profile: profile,
-                carbs: carbs,
-                glucose: glucose,
-                basalprofile: basalProfile,
-                temptargets: RawJSON.null
-            )
-            print("AUTOSENS: \(autosensResult)")
-            try? self.storage.save(autosensResult, as: Settings.autosense)
+                let autotuneResult = self.autotuneRun(
+                    autotunePreparedData: autotunePreppedGlucose,
+                    previousAutotuneResult: previousAutotune ?? profile,
+                    pumpProfile: profile
+                )
 
-            let iobResult = self.iob(
-                pumphistory: pumphistory,
-                profile: profile,
-                clock: clock,
-                autosens: autosensResult
-            )
-            print("IOB: \(iobResult)")
+                try? self.storage.save(autotuneResult, as: Settings.autotune)
 
-            let mealResult = self.meal(
-                pumphistory: pumphistory,
-                profile: profile,
-                basalProfile: basalProfile,
-                clock: clock,
-                carbs: carbs,
-                glucose: glucose
-            )
+                print("AUTOTUNE RESULT: \(autotuneResult)")
+                promise(.success(()))
+            }
+        }.eraseToAnyPublisher()
+    }
 
-            print("MEAL: \(mealResult)")
-            try? self.storage.save(mealResult, as: Monitor.meal)
+    func makeProfiles() -> AnyPublisher<Void, Never> {
+        Future { promise in
+            self.processQueue.async {
+                let preferences = self.loadFileFromStorage(name: Settings.preferences)
+                let pumpSettings = self.loadFileFromStorage(name: Settings.settings)
+                let bgTargets = self.loadFileFromStorage(name: Settings.bgTargets)
+                let basalProfile = self.loadFileFromStorage(name: Settings.basalProfile)
+                let isf = self.loadFileFromStorage(name: Settings.insulinSensitivities)
+                let cr = self.loadFileFromStorage(name: Settings.carbRatios)
+                let tempTargets = self.loadFileFromStorage(name: Settings.tempTargets)
+                let model = self.loadFileFromStorage(name: Settings.model)
+                let autotune = self.loadFileFromStorage(name: Settings.autotune)
 
-            let suggested = self.determineBasal(
-                glucose: glucose,
-                currentTemp: currentTemp,
-                iob: iobResult,
-                profile: profile,
-                autosens: autosensResult,
-                meal: mealResult,
-                microBolusAllowed: true,
-                reservoir: reservoir
-            )
-            print("SUGGESTED: \(suggested)")
+                let pumpProfile = self.makeProfile(
+                    preferences: preferences,
+                    pumpSettings: pumpSettings,
+                    bgTargets: bgTargets,
+                    basalProfile: basalProfile,
+                    isf: isf,
+                    carbRatio: cr,
+                    tempTargets: tempTargets,
+                    model: model,
+                    autotune: RawJSON.null
+                )
 
-            let autotunePreppedGlucose = self.autotunePrepare(
-                pumphistory: pumphistory,
-                profile: profile,
-                glucose: glucose,
-                pumpprofile: profile,
-                categorizeUamAsBasal: true,
-                tuneInsulinCurve: false
-            )
-            print("AUTOTUNE PREP: \(autotunePreppedGlucose)")
+                let profile = self.makeProfile(
+                    preferences: preferences,
+                    pumpSettings: pumpSettings,
+                    bgTargets: bgTargets,
+                    basalProfile: basalProfile,
+                    isf: isf,
+                    carbRatio: cr,
+                    tempTargets: tempTargets,
+                    model: model,
+                    autotune: autotune.isEmpty ? .null : autotune
+                )
 
-            let previousAutotune = try? self.storage.retrieve(Settings.autotune, as: RawJSON.self)
+                try? self.storage.save(pumpProfile, as: Settings.pumpProfile)
+                try? self.storage.save(profile, as: Settings.profile)
 
-            let autotuneResult = self.autotuneRun(
-                autotunePreparedData: autotunePreppedGlucose,
-                previousAutotuneResult: previousAutotune ?? profile,
-                pumpProfile: profile
-            )
-
-            try? self.storage.save(autotuneResult, as: Settings.autotune)
-
-            print("AUTOTUNE RESULT: \(autotuneResult)")
-
-            let finishDate = Date()
-            print("FINISH at \(finishDate), duration \(finishDate.timeIntervalSince(now)) s")
-        }
+                promise(.success(()))
+            }
+        }.eraseToAnyPublisher()
     }
 
     // MARK: - Private

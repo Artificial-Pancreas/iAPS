@@ -6,8 +6,6 @@ import Swinject
 
 protocol APSManager {
     func determineBasal()
-    func runTest()
-    func makeProfiles()
     func fetchLastGlucose()
     func autosense()
     func autotune()
@@ -45,22 +43,20 @@ final class BaseAPSManager: APSManager, Injectable {
     func loop() {}
 
     func determineBasal() {
+        guard let glucose = try? storage.retrieve(OpenAPS.Monitor.glucose, as: [BloodGlucose].self), glucose.count >= 36 else {
+            print("Not enough glucose data")
+            return
+        }
+
         let now = Date()
         guard let temp = currentTemp(date: now) else { return }
-        determineBasalCancellable = openAPS
-            .determineBasal(currentTemp: temp, clock: now)
+        determineBasalCancellable = openAPS.makeProfiles()
+            .flatMap { _ in
+                self.openAPS.determineBasal(currentTemp: temp, clock: now)
+            }
             .sink { [weak self] in
                 self?.enactSuggested()
             }
-    }
-
-    func runTest() {
-        openAPS.test()
-    }
-
-    func makeProfiles() {
-        openAPS.makeProfile(autotuned: false)
-        openAPS.makeProfile(autotuned: true)
     }
 
     func fetchLastGlucose() {
@@ -76,11 +72,11 @@ final class BaseAPSManager: APSManager, Injectable {
     }
 
     func autosense() {
-        openAPS.autosense()
+        _ = openAPS.autosense()
     }
 
     func autotune() {
-        openAPS.autotune()
+        _ = openAPS.autotune()
     }
 
     private func currentTemp(date: Date) -> TempBasal? {

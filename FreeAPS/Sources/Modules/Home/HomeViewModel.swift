@@ -4,14 +4,7 @@ extension Home {
     class ViewModel<Provider>: BaseViewModel<Provider>, ObservableObject where Provider: HomeProvider {
         @Injected() var apsManager: APSManager!
         @Injected() var history: PumpHistoryStorage!
-
-        func runOpenAPS() {
-            apsManager.runTest()
-        }
-
-        func makeProfiles() {
-            apsManager.makeProfiles()
-        }
+        @Injected() var temps: TempTargetsStorage!
 
         func fetchGlucose() {
             apsManager.fetchLastGlucose()
@@ -23,6 +16,28 @@ extension Home {
 
         func runLoop() {
             apsManager.determineBasal()
+        }
+
+        func addHighTempTarget() {
+            temps
+                .storeTempTargets([TempTarget(
+                    id: UUID().uuidString,
+                    createdAt: Date(),
+                    targetTop: 126,
+                    targetBottom: 126,
+                    duration: 10
+                )])
+        }
+
+        func addLowTempTarget() {
+            temps
+                .storeTempTargets([TempTarget(
+                    id: UUID().uuidString,
+                    createdAt: Date(),
+                    targetTop: 81,
+                    targetBottom: 81,
+                    duration: 10
+                )])
         }
     }
 }

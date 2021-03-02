@@ -83,6 +83,10 @@
 		383948DA25CD64D500E91849 /* Glucose.swift in Sources */ = {isa = PBXBuildFile; fileRef = 383948D925CD64D500E91849 /* Glucose.swift */; };
 		384E803425C385E60086DB71 /* JavaScriptWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 384E803325C385E60086DB71 /* JavaScriptWorker.swift */; };
 		384E803825C388640086DB71 /* Script.swift in Sources */ = {isa = PBXBuildFile; fileRef = 384E803725C388640086DB71 /* Script.swift */; };
+		386ED25E25EE48B500820A49 /* MockKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38B17ADB25DD6A40005CAE3D /* MockKit.framework */; };
+		386ED25F25EE48B500820A49 /* MockKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 38B17ADB25DD6A40005CAE3D /* MockKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		386ED26025EE48B500820A49 /* MockKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38B17ADF25DD6A40005CAE3D /* MockKitUI.framework */; };
+		386ED26125EE48B500820A49 /* MockKitUI.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 38B17ADF25DD6A40005CAE3D /* MockKitUI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		3870FF4725EC187A0088248F /* BloodGlucose.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3870FF4225EC13F40088248F /* BloodGlucose.swift */; };
 		3871F38725ED661C0013ECB5 /* Suggestion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3871F38625ED661C0013ECB5 /* Suggestion.swift */; };
 		3871F39C25ED892B0013ECB5 /* TempTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3871F39B25ED892B0013ECB5 /* TempTarget.swift */; };
@@ -164,6 +168,20 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		386ED26C25EE48D600820A49 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 38B17AC025DD6A40005CAE3D /* LoopKit.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 89D2047121CC7BD7001238CC;
+			remoteInfo = MockKit;
+		};
+		386ED26E25EE48D600820A49 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 38B17AC025DD6A40005CAE3D /* LoopKit.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 89D2048E21CC7C12001238CC;
+			remoteInfo = MockKitUI;
+		};
 		38B17AB525DD69FA005CAE3D /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 38B17AAE25DD69FA005CAE3D /* SwiftCharts.xcodeproj */;
@@ -505,11 +523,13 @@
 				38B17B9725DD941A005CAE3D /* RileyLinkKit.framework in Embed Frameworks */,
 				38B17B9925DD941A005CAE3D /* RileyLinkKitUI.framework in Embed Frameworks */,
 				38B17B8725DD93BA005CAE3D /* LoopKit.framework in Embed Frameworks */,
+				386ED25F25EE48B500820A49 /* MockKit.framework in Embed Frameworks */,
 				38B17B9125DD9419005CAE3D /* MinimedKit.framework in Embed Frameworks */,
 				38A504A625DD9FDA00C5B9E8 /* OmniKit.framework in Embed Frameworks */,
 				38B17BEE25DD987B005CAE3D /* NightscoutUploadKit.framework in Embed Frameworks */,
 				38B17B8F25DD9419005CAE3D /* Crypto.framework in Embed Frameworks */,
 				38B17B9525DD941A005CAE3D /* RileyLinkBLEKit.framework in Embed Frameworks */,
+				386ED26125EE48B500820A49 /* MockKitUI.framework in Embed Frameworks */,
 				38B17B8B25DD93F1005CAE3D /* MKRingProgressView.framework in Embed Frameworks */,
 				38B17B8925DD93BA005CAE3D /* LoopKitUI.framework in Embed Frameworks */,
 				38A504A825DD9FDA00C5B9E8 /* OmniKitUI.framework in Embed Frameworks */,
@@ -666,11 +686,13 @@
 				38B17BED25DD987B005CAE3D /* NightscoutUploadKit.framework in Frameworks */,
 				38B17B8C25DD9404005CAE3D /* SwiftCharts.framework in Frameworks */,
 				38B17B9825DD941A005CAE3D /* RileyLinkKitUI.framework in Frameworks */,
+				386ED25E25EE48B500820A49 /* MockKit.framework in Frameworks */,
 				3811DE1025C9D37700A708ED /* Swinject in Frameworks */,
 				383948D325CD4D6D00E91849 /* Disk in Frameworks */,
 				38B17B9425DD941A005CAE3D /* RileyLinkBLEKit.framework in Frameworks */,
 				38B17B8825DD93BA005CAE3D /* LoopKitUI.framework in Frameworks */,
 				38A504A525DD9FDA00C5B9E8 /* OmniKit.framework in Frameworks */,
+				386ED26025EE48B500820A49 /* MockKitUI.framework in Frameworks */,
 				38A504A725DD9FDA00C5B9E8 /* OmniKitUI.framework in Frameworks */,
 				38B17B9025DD9419005CAE3D /* MinimedKit.framework in Frameworks */,
 				38B17B6625DD90E0005CAE3D /* SwiftDate in Frameworks */,
@@ -1299,6 +1321,8 @@
 			buildRules = (
 			);
 			dependencies = (
+				386ED26D25EE48D600820A49 /* PBXTargetDependency */,
+				386ED26F25EE48D600820A49 /* PBXTargetDependency */,
 				38B17B4025DD6BE0005CAE3D /* PBXTargetDependency */,
 				38B17B4225DD6BE0005CAE3D /* PBXTargetDependency */,
 				38B17B4425DD6BE0005CAE3D /* PBXTargetDependency */,
@@ -1804,6 +1828,16 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		386ED26D25EE48D600820A49 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = MockKit;
+			targetProxy = 386ED26C25EE48D600820A49 /* PBXContainerItemProxy */;
+		};
+		386ED26F25EE48D600820A49 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = MockKitUI;
+			targetProxy = 386ED26E25EE48D600820A49 /* PBXContainerItemProxy */;
+		};
 		38B17ABF25DD6A0A005CAE3D /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = SwiftCharts;

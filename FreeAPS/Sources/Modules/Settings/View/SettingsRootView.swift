@@ -30,14 +30,12 @@ extension Settings {
                             .modal(for: .configEditor(file: OpenAPS.Settings.carbRatios), from: self)
                         Text("Temp targets").chevronCell()
                             .modal(for: .configEditor(file: OpenAPS.Settings.tempTargets), from: self)
-                        Text("Pump profile").chevronCell()
-                            .modal(for: .configEditor(file: OpenAPS.Settings.pumpProfile), from: self)
                     }
 
                     Group {
-                        Text("Profile").chevronCell().modal(for: .configEditor(file: OpenAPS.Settings.profile), from: self)
                         Text("Glucose").chevronCell().modal(for: .configEditor(file: OpenAPS.Monitor.glucose), from: self)
-                        Text("Meal").chevronCell().modal(for: .configEditor(file: OpenAPS.Monitor.meal), from: self)
+                        Text("Suggested").chevronCell()
+                            .modal(for: .configEditor(file: OpenAPS.Enact.suggested), from: self)
                     }
                 }
             }

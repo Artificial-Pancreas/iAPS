@@ -7,18 +7,6 @@ extension Home {
         var body: some View {
             VStack {
                 Spacer()
-                Button(action: viewModel.runOpenAPS) {
-                    Text("Run test")
-                        .frame(maxWidth: .infinity)
-                        .foregroundColor(.white)
-                        .buttonBackground()
-                }
-                Button(action: viewModel.makeProfiles) {
-                    Text("Make profiles")
-                        .frame(maxWidth: .infinity)
-                        .foregroundColor(.white)
-                        .buttonBackground()
-                }
                 Button(action: viewModel.fetchGlucose) {
                     Text("Fetch glucose")
                         .frame(maxWidth: .infinity)
@@ -27,6 +15,18 @@ extension Home {
                 }
                 Button(action: viewModel.addCarbs) {
                     Text("Add 15 g carbs")
+                        .frame(maxWidth: .infinity)
+                        .foregroundColor(.white)
+                        .buttonBackground()
+                }
+                Button(action: viewModel.addHighTempTarget) {
+                    Text("Temp target 7.0 mmol/L for 10 min")
+                        .frame(maxWidth: .infinity)
+                        .foregroundColor(.white)
+                        .buttonBackground()
+                }
+                Button(action: viewModel.addLowTempTarget) {
+                    Text("Temp target 4.5 mmol/L for 10 min")
                         .frame(maxWidth: .infinity)
                         .foregroundColor(.white)
                         .buttonBackground()

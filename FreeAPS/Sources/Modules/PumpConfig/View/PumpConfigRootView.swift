@@ -19,6 +19,7 @@ extension PumpConfig {
                     } else {
                         Button("Add Medtronic") { viewModel.addPump(.minimed) }
                         Button("Add Omnipod") { viewModel.addPump(.omnipod) }
+                        Button("Add Simulator") { viewModel.addPump(.simulator) }
                     }
                 }
             }
