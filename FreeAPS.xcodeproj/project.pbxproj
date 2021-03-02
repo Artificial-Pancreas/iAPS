@@ -87,6 +87,10 @@
 		386ED25F25EE48B500820A49 /* MockKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 38B17ADB25DD6A40005CAE3D /* MockKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		386ED26025EE48B500820A49 /* MockKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38B17ADF25DD6A40005CAE3D /* MockKitUI.framework */; };
 		386ED26125EE48B500820A49 /* MockKitUI.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 38B17ADF25DD6A40005CAE3D /* MockKitUI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		386ED27125EE526D00820A49 /* MockKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38B17ADB25DD6A40005CAE3D /* MockKit.framework */; };
+		386ED27225EE526E00820A49 /* MockKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38B17ADF25DD6A40005CAE3D /* MockKitUI.framework */; };
+		386ED27425EE528300820A49 /* LoopTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38B17AE125DD6A40005CAE3D /* LoopTestingKit.framework */; };
+		386ED27525EE528300820A49 /* LoopTestingKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 38B17AE125DD6A40005CAE3D /* LoopTestingKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		3870FF4725EC187A0088248F /* BloodGlucose.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3870FF4225EC13F40088248F /* BloodGlucose.swift */; };
 		3871F38725ED661C0013ECB5 /* Suggestion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3871F38625ED661C0013ECB5 /* Suggestion.swift */; };
 		3871F39C25ED892B0013ECB5 /* TempTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3871F39B25ED892B0013ECB5 /* TempTarget.swift */; };
@@ -524,6 +528,7 @@
 				38B17B9925DD941A005CAE3D /* RileyLinkKitUI.framework in Embed Frameworks */,
 				38B17B8725DD93BA005CAE3D /* LoopKit.framework in Embed Frameworks */,
 				386ED25F25EE48B500820A49 /* MockKit.framework in Embed Frameworks */,
+				386ED27525EE528300820A49 /* LoopTestingKit.framework in Embed Frameworks */,
 				38B17B9125DD9419005CAE3D /* MinimedKit.framework in Embed Frameworks */,
 				38A504A625DD9FDA00C5B9E8 /* OmniKit.framework in Embed Frameworks */,
 				38B17BEE25DD987B005CAE3D /* NightscoutUploadKit.framework in Embed Frameworks */,
@@ -686,6 +691,7 @@
 				38B17BED25DD987B005CAE3D /* NightscoutUploadKit.framework in Frameworks */,
 				38B17B8C25DD9404005CAE3D /* SwiftCharts.framework in Frameworks */,
 				38B17B9825DD941A005CAE3D /* RileyLinkKitUI.framework in Frameworks */,
+				386ED27425EE528300820A49 /* LoopTestingKit.framework in Frameworks */,
 				386ED25E25EE48B500820A49 /* MockKit.framework in Frameworks */,
 				3811DE1025C9D37700A708ED /* Swinject in Frameworks */,
 				383948D325CD4D6D00E91849 /* Disk in Frameworks */,
@@ -700,7 +706,9 @@
 				38B17B8A25DD93F1005CAE3D /* MKRingProgressView.framework in Frameworks */,
 				38B17B9625DD941A005CAE3D /* RileyLinkKit.framework in Frameworks */,
 				38B17B8625DD93BA005CAE3D /* LoopKit.framework in Frameworks */,
+				386ED27125EE526D00820A49 /* MockKit.framework in Frameworks */,
 				38B17B9225DD9419005CAE3D /* MinimedKitUI.framework in Frameworks */,
+				386ED27225EE526E00820A49 /* MockKitUI.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
