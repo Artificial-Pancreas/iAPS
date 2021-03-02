@@ -1,27 +1,48 @@
 import Foundation
 
-protocol JSON: Codable {
+@dynamicMemberLookup protocol JSON: Codable {
     var rawJSON: String { get }
     init?(from: String)
 }
 
+private func encoder() -> JSONEncoder {
+    let encoder = JSONEncoder()
+    encoder.outputFormatting = .prettyPrinted
+    encoder.dateEncodingStrategy = .iso8601
+    return encoder
+}
+
+private func decoder() -> JSONDecoder {
+    let decoder = JSONDecoder()
+    decoder.dateDecodingStrategy = .iso8601
+    return decoder
+}
+
 extension JSON {
     var rawJSON: RawJSON {
-        let encoder = JSONEncoder()
-        encoder.outputFormatting = .prettyPrinted
-        encoder.dateEncodingStrategy = .iso8601
-        return String(data: try! encoder.encode(self), encoding: .utf8)!
+        String(data: try! encoder().encode(self), encoding: .utf8)!
     }
 
     init?(from: String) {
-        let decoder = JSONDecoder()
-        decoder.dateDecodingStrategy = .iso8601
         guard let data = from.data(using: .utf8),
-              let object = try? decoder.decode(Self.self, from: data)
+              let object = try? decoder().decode(Self.self, from: data)
         else {
             return nil
         }
         self = object
+    }
+
+    var dictionaryRepresentation: [String: Any]? {
+        guard let data = rawJSON.data(using: .utf8),
+              let dict = try? JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
+        else {
+            return nil
+        }
+        return dict
+    }
+
+    subscript(dynamicMember string: String) -> Any? {
+        dictionaryRepresentation?[string]
     }
 }
 
@@ -58,6 +79,13 @@ extension RawJSON {
 
 extension Array: JSON where Element: JSON {}
 extension Dictionary: JSON where Key: JSON, Value: JSON {}
+
+extension Dictionary where Key == String {
+    var rawJSON: RawJSON? {
+        guard let data = try? JSONSerialization.data(withJSONObject: self, options: .prettyPrinted) else { return nil }
+        return RawJSON(data: data, encoding: .utf8)
+    }
+}
 
 enum JSONCoding {
     static var encoder: JSONEncoder {

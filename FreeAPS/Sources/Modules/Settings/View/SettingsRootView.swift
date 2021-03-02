@@ -14,6 +14,10 @@ extension Settings {
                     Text("Nightscout").chevronCell().modal(for: .nighscoutConfig, from: self)
                 }
 
+                Section(header: Text("Configuration")) {
+                    Text("Pump settings").chevronCell().modal(for: .pumpSettingsEditor, from: self)
+                }
+
                 Section(header: Text("Config files")) {
                     Group {
                         Text("Preferences").chevronCell()

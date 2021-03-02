@@ -11,6 +11,7 @@ enum Screen: Identifiable {
     case configEditor(file: String)
     case nighscoutConfig
     case pumpConfig
+    case pumpSettingsEditor
 
     var id: Int { String(reflecting: self).hashValue }
 }
@@ -36,6 +37,8 @@ extension Screen {
             return NightscoutConfig.Builder(resolver: resolver).buildView()
         case .pumpConfig:
             return PumpConfig.Builder(resolver: resolver).buildView()
+        case .pumpSettingsEditor:
+            return PumpSettingsEditor.Builder(resolver: resolver).buildView()
         }
     }
 
