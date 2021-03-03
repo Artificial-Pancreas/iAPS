@@ -3,8 +3,6 @@
     "user_preferred_units": "mmol/L",
     "sensitivities": [
         {
-            "i": 0,
-            "x": 0,
             "sensitivity": 72.0,
             "offset": 0,
             "start": "00:00:00"

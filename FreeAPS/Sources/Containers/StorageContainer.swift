@@ -12,6 +12,7 @@ enum StorageContainer: DependeciesContainer {
         container.register(PumpHistoryStorage.self) { _ in BasePumpHistoryStorage(resolver: resolver) }
         container.register(GlucoseStorage.self) { _ in BaseGlucoseStorage(resolver: resolver) }
         container.register(TempTargetsStorage.self) { _ in BaseTempTargetsStorage(resolver: resolver) }
+        container.register(SettingsManager.self) { _ in BaseFSettingsManager(resolver: resolver) }
 
         container.register(Keychain.self) { _ in BaseKeychain() }
     }

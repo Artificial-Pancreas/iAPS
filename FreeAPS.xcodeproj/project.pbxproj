@@ -120,6 +120,8 @@
 		38A504A725DD9FDA00C5B9E8 /* OmniKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38B17B2A25DD6BBE005CAE3D /* OmniKitUI.framework */; };
 		38A504A825DD9FDA00C5B9E8 /* OmniKitUI.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 38B17B2A25DD6BBE005CAE3D /* OmniKitUI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		38A9260525F012D8009E3739 /* CarbRatios.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38A9260425F012D8009E3739 /* CarbRatios.swift */; };
+		38AEE73D25F0200C0013F05B /* FreeAPSSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38AEE73C25F0200C0013F05B /* FreeAPSSettings.swift */; };
+		38AEE75225F022080013F05B /* SettingsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38AEE75125F022080013F05B /* SettingsManager.swift */; };
 		38B17B6625DD90E0005CAE3D /* SwiftDate in Frameworks */ = {isa = PBXBuildFile; productRef = 38B17B6525DD90E0005CAE3D /* SwiftDate */; };
 		38B17B8625DD93BA005CAE3D /* LoopKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38B17AD125DD6A40005CAE3D /* LoopKit.framework */; };
 		38B17B8725DD93BA005CAE3D /* LoopKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 38B17AD125DD6A40005CAE3D /* LoopKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -687,6 +689,8 @@
 		38A13D3125E28B4B00EAA382 /* PumpHistoryEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PumpHistoryEvent.swift; sourceTree = "<group>"; };
 		38A5049125DD9C4000C5B9E8 /* UserDefaultsExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDefaultsExtensions.swift; sourceTree = "<group>"; };
 		38A9260425F012D8009E3739 /* CarbRatios.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarbRatios.swift; sourceTree = "<group>"; };
+		38AEE73C25F0200C0013F05B /* FreeAPSSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FreeAPSSettings.swift; sourceTree = "<group>"; };
+		38AEE75125F022080013F05B /* SettingsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsManager.swift; sourceTree = "<group>"; };
 		38B17AAE25DD69FA005CAE3D /* SwiftCharts.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SwiftCharts.xcodeproj; path = SwiftCharts/SwiftCharts.xcodeproj; sourceTree = "<group>"; };
 		38B17AC025DD6A40005CAE3D /* LoopKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = LoopKit.xcodeproj; path = LoopKit/LoopKit.xcodeproj; sourceTree = "<group>"; };
 		38B17AF025DD6AE6005CAE3D /* MKRingProgressView.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = MKRingProgressView.xcodeproj; path = MKRingProgressView/MKRingProgressView.xcodeproj; sourceTree = "<group>"; };
@@ -1021,6 +1025,7 @@
 		3811DE9125C9D88200A708ED /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				38AEE75025F021F10013F05B /* SettingsManager */,
 				38B4F3C425E5016800E76A18 /* Notifications */,
 				3811DE9225C9D88200A708ED /* Appearance */,
 				3811DE9425C9D88200A708ED /* Network */,
@@ -1204,22 +1209,23 @@
 		388E5A5925B6F0250019842D /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				3811DE8E25C9D80400A708ED /* User.swift */,
 				388E5A5F25B6F2310019842D /* Autosens.swift */,
-				3895E4C525B9E00D00214B37 /* Preferences.swift */,
-				3811DF0125CA9FEA00A708ED /* Credentials.swift */,
-				383948D925CD64D500E91849 /* Glucose.swift */,
-				38A13D3125E28B4B00EAA382 /* PumpHistoryEvent.swift */,
-				38BF021C25E7E3AF00579895 /* Reservoir.swift */,
-				38D0B3B525EBE24900CB6E88 /* Battery.swift */,
-				38D0B3D825EC07C400CB6E88 /* CarbHystoryEntry.swift */,
-				3870FF4225EC13F40088248F /* BloodGlucose.swift */,
-				38A0364125ED069400FCBB52 /* TempBasal.swift */,
-				3871F38625ED661C0013ECB5 /* Suggestion.swift */,
-				3871F39B25ED892B0013ECB5 /* TempTarget.swift */,
-				3883583325EEB38000E024B2 /* PumpSettings.swift */,
 				388358C725EEF6D200E024B2 /* BasalProfileEntry.swift */,
+				38D0B3B525EBE24900CB6E88 /* Battery.swift */,
+				3870FF4225EC13F40088248F /* BloodGlucose.swift */,
+				38D0B3D825EC07C400CB6E88 /* CarbHystoryEntry.swift */,
 				38A9260425F012D8009E3739 /* CarbRatios.swift */,
+				3811DF0125CA9FEA00A708ED /* Credentials.swift */,
+				38AEE73C25F0200C0013F05B /* FreeAPSSettings.swift */,
+				383948D925CD64D500E91849 /* Glucose.swift */,
+				3895E4C525B9E00D00214B37 /* Preferences.swift */,
+				38A13D3125E28B4B00EAA382 /* PumpHistoryEvent.swift */,
+				3883583325EEB38000E024B2 /* PumpSettings.swift */,
+				38BF021C25E7E3AF00579895 /* Reservoir.swift */,
+				3871F38625ED661C0013ECB5 /* Suggestion.swift */,
+				38A0364125ED069400FCBB52 /* TempBasal.swift */,
+				3871F39B25ED892B0013ECB5 /* TempTarget.swift */,
+				3811DE8E25C9D80400A708ED /* User.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -1258,6 +1264,14 @@
 				38BF021625E7CBBC00579895 /* PumpManagerExtensions.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		38AEE75025F021F10013F05B /* SettingsManager */ = {
+			isa = PBXGroup;
+			children = (
+				38AEE75125F022080013F05B /* SettingsManager.swift */,
+			);
+			path = SettingsManager;
 			sourceTree = "<group>";
 		};
 		38B17AAD25DD69DF005CAE3D /* Dependecies */ = {
@@ -1914,6 +1928,7 @@
 				3811DE4C25C9D4B800A708ED /* AuthotizedRootBuilder.swift in Sources */,
 				3811DE8F25C9D80400A708ED /* User.swift in Sources */,
 				3811DEB225C9D88300A708ED /* KeychainItemAccessibility.swift in Sources */,
+				38AEE73D25F0200C0013F05B /* FreeAPSSettings.swift in Sources */,
 				38FCF3FD25E997A80078B0D1 /* PumpHistoryStorage.swift in Sources */,
 				38D0B3B625EBE24900CB6E88 /* Battery.swift in Sources */,
 				38C4D33725E9A1A300D30B77 /* DispatchQueue+Extensions.swift in Sources */,
@@ -1921,6 +1936,7 @@
 				38B4F3C325E2A20B00E76A18 /* PumpSetupView.swift in Sources */,
 				38B4F3CA25E502E200E76A18 /* SwiftNotificationCenter.swift in Sources */,
 				3811DEC225C9D99900A708ED /* SecurityContainer.swift in Sources */,
+				38AEE75225F022080013F05B /* SettingsManager.swift in Sources */,
 				38B4F3CF25E5041600E76A18 /* APSContainer.swift in Sources */,
 				3895E4C625B9E00D00214B37 /* Preferences.swift in Sources */,
 				3811DE6E25C9D62600A708ED /* OnboardingViewModel.swift in Sources */,
