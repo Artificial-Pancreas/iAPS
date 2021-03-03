@@ -17,6 +17,10 @@ extension Settings {
                 Section(header: Text("Configuration")) {
                     Text("Pump settings").chevronCell().modal(for: .pumpSettingsEditor, from: self)
                     Text("Basal settings").chevronCell().modal(for: .basalProfileEditor, from: self)
+                    Text("Insulin Sensitivities").chevronCell().modal(for: .isfEditor, from: self)
+                    Text("Carb Ratios").chevronCell().modal(for: .crEditor, from: self)
+                    Text("Targets").chevronCell().modal(for: .targetsEditor, from: self)
+                    Text("Preferences").chevronCell().modal(for: .preferencesEditor, from: self)
                 }
 
                 Section(header: Text("Config files")) {
