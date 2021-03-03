@@ -5,8 +5,7 @@ import LoopKitUI
 import Swinject
 
 protocol APSManager {
-    func determineBasal()
-    func fetchLastGlucose()
+    func loop()
     func autosense()
     func autotune()
     var pumpManager: PumpManagerUI? { get set }
@@ -18,12 +17,13 @@ final class BaseAPSManager: APSManager, Injectable {
     @Injected() private var pumpHistoryStorage: PumpHistoryStorage!
     @Injected() private var glucoseStorage: GlucoseStorage!
     @Injected() private var tempTargetsStorage: TempTargetsStorage!
-    @Injected() private var keychain: Keychain!
     @Injected() private var deviceDataManager: DeviceDataManager!
+    @Injected() private var networkManager: NetworkManager!
+    @Injected() private var settingsManager: SettingsManager!
     private var openAPS: OpenAPS!
 
-    private var glucoseCancellable: AnyCancellable?
-    private var determineBasalCancellable: AnyCancellable?
+    private var loopCancellable: AnyCancellable?
+    private var pumpCancellable: AnyCancellable?
     private var enactCancellable: AnyCancellable?
 
     var pumpManager: PumpManagerUI? {
@@ -35,40 +35,57 @@ final class BaseAPSManager: APSManager, Injectable {
         deviceDataManager.pumpDisplayState
     }
 
+    var settings: FreeAPSSettings {
+        get { settingsManager.settings }
+        set { settingsManager.settings = newValue }
+    }
+
     init(resolver: Resolver) {
         injectServices(resolver)
         openAPS = OpenAPS(storage: storage)
+        subscribe()
     }
 
-    func loop() {}
+    private func subscribe() {
+        pumpCancellable = deviceDataManager.recommendsLoop
+            .sink { [weak self] in
+                self?.loop()
+            }
+    }
 
-    func determineBasal() {
+    func loop() {
+        loopCancellable = networkManager
+            .fetchGlucose()
+            .flatMap { [weak self] glucose -> AnyPublisher<Bool, Never> in
+                guard let self = self else { return Just(false).eraseToAnyPublisher() }
+                self.glucoseStorage.storeGlucose(glucose)
+                return self.determineBasal()
+            }
+            .sink { _ in } receiveValue: { [weak self] ok in
+                guard let self = self else { return }
+                if ok, self.settings.closedLoop {
+                    self.enactSuggested()
+                }
+            }
+    }
+
+    func determineBasal() -> AnyPublisher<Bool, Never> {
         guard let glucose = try? storage.retrieve(OpenAPS.Monitor.glucose, as: [BloodGlucose].self), glucose.count >= 36 else {
             print("Not enough glucose data")
-            return
+            return Just(false).eraseToAnyPublisher()
         }
 
         let now = Date()
-        guard let temp = currentTemp(date: now) else { return }
-        determineBasalCancellable = openAPS.makeProfiles()
+        guard let temp = currentTemp(date: now) else {
+            return Just(false).eraseToAnyPublisher()
+        }
+
+        return openAPS.makeProfiles()
             .flatMap { _ in
                 self.openAPS.determineBasal(currentTemp: temp, clock: now)
             }
-            .sink { [weak self] in
-                self?.enactSuggested()
-            }
-    }
-
-    func fetchLastGlucose() {
-        if let urlString = keychain.getValue(String.self, forKey: NightscoutConfig.Config.urlKey),
-           let url = URL(string: urlString)
-        {
-            glucoseCancellable = NightscoutAPI(url: url).fetchLast(288)
-                .sink { _ in }
-            receiveValue: { glucose in
-                self.glucoseStorage.storeGlucose(glucose)
-            }
-        }
+            .map { true }
+            .eraseToAnyPublisher()
     }
 
     func autosense() {
@@ -128,7 +145,9 @@ final class BaseAPSManager: APSManager, Injectable {
                 }
             } receiveValue: { [weak self] in
                 print("Loop succeeded")
-                try? self?.storage.save(suggested, as: OpenAPS.Enact.enacted)
+                if let rawSuggested = self?.storage.retrieveRaw(OpenAPS.Enact.suggested) {
+                    try? self?.storage.save(rawSuggested, as: OpenAPS.Enact.enacted)
+                }
             }
     }
 }

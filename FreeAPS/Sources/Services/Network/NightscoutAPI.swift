@@ -10,7 +10,7 @@ class NightscoutAPI {
 
     private enum Config {
         static let entriesPath = "/api/v1/entries/sgv.json"
-        static let retryCount = 5
+        static let retryCount = 2
     }
 
     enum Error: LocalizedError {
@@ -54,6 +54,7 @@ extension NightscoutAPI {
 
         var request = URLRequest(url: components.url!)
         request.allowsConstrainedNetworkAccess = false
+        request.timeoutInterval = 10
 
         return URLSession.shared.dataTaskPublisher(for: request)
             .retry(Config.retryCount)

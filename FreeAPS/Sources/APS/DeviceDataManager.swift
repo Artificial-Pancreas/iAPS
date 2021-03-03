@@ -12,6 +12,7 @@ import UserNotifications
 protocol DeviceDataManager {
     var pumpManager: PumpManagerUI? { get set }
     var pumpDisplayState: CurrentValueSubject<PumpDisplayState?, Never> { get }
+    var recommendsLoop: PassthroughSubject<Void, Never> { get }
 }
 
 private let staticPumpManagers: [PumpManagerUI.Type] = [
@@ -29,6 +30,8 @@ final class BaseDeviceDataManager: DeviceDataManager, Injectable {
     @Injected() private var storage: FileStorage!
 
     @Persisted(key: "BaseDeviceDataManager.lastEventDate") var lastEventDate: Date? = nil
+
+    let recommendsLoop = PassthroughSubject<Void, Never>()
 
     var pumpManager: PumpManagerUI? {
         didSet {
@@ -143,6 +146,7 @@ extension BaseDeviceDataManager: PumpManagerDelegate {
 
     func pumpManagerRecommendsLoop(_: PumpManager) {
         print("[DeviceDataManager] Recomends loop")
+        recommendsLoop.send()
     }
 
     func startDateToFilterNewPumpEvents(for _: PumpManager) -> Date {

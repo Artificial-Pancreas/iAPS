@@ -12,7 +12,7 @@ final class OpenAPS {
         self.storage = storage
     }
 
-    func determineBasal(currentTemp: TempBasal, clock: Date = Date()) -> AnyPublisher<Void, Never> {
+    func determineBasal(currentTemp: TempBasal, clock: Date = Date()) -> Future<Void, Never> {
         Future { promise in
             self.processQueue.async {
                 // clock
@@ -70,10 +70,10 @@ final class OpenAPS {
 
                 promise(.success(()))
             }
-        }.eraseToAnyPublisher()
+        }
     }
 
-    func autosense() -> AnyPublisher<Void, Never> {
+    func autosense() -> Future<Void, Never> {
         Future { promise in
             self.processQueue.async {
                 let pumpHistory = self.loadFileFromStorage(name: OpenAPS.Monitor.pumpHistory)
@@ -95,10 +95,10 @@ final class OpenAPS {
                 try? self.storage.save(autosensResult, as: Settings.autosense)
                 promise(.success(()))
             }
-        }.eraseToAnyPublisher()
+        }
     }
 
-    func autotune(categorizeUamAsBasal: Bool = false, tuneInsulinCurve: Bool = false) -> AnyPublisher<Void, Never> {
+    func autotune(categorizeUamAsBasal: Bool = false, tuneInsulinCurve: Bool = false) -> Future<Void, Never> {
         Future { promise in
             self.processQueue.async {
                 let pumpHistory = self.loadFileFromStorage(name: OpenAPS.Monitor.pumpHistory)
@@ -128,10 +128,10 @@ final class OpenAPS {
                 print("AUTOTUNE RESULT: \(autotuneResult)")
                 promise(.success(()))
             }
-        }.eraseToAnyPublisher()
+        }
     }
 
-    func makeProfiles() -> AnyPublisher<Void, Never> {
+    func makeProfiles() -> Future<Void, Never> {
         Future { promise in
             self.processQueue.async {
                 let preferences = self.loadFileFromStorage(name: Settings.preferences)
@@ -173,7 +173,7 @@ final class OpenAPS {
 
                 promise(.success(()))
             }
-        }.eraseToAnyPublisher()
+        }
     }
 
     // MARK: - Private

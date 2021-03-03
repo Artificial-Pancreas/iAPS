@@ -6,6 +6,10 @@ extension Settings {
 
         var body: some View {
             Form {
+                Section(header: Text("FreeAPS X")) {
+                    Toggle("Closed loop", isOn: $viewModel.closedLoop)
+                }
+
                 Section(header: Text("Devices")) {
                     Text("Pump").chevronCell().modal(for: .pumpConfig, from: self)
                 }
@@ -48,6 +52,8 @@ extension Settings {
                         Text("Glucose").chevronCell().modal(for: .configEditor(file: OpenAPS.Monitor.glucose), from: self)
                         Text("Suggested").chevronCell()
                             .modal(for: .configEditor(file: OpenAPS.Enact.suggested), from: self)
+                        Text("Enacted").chevronCell()
+                            .modal(for: .configEditor(file: OpenAPS.Enact.enacted), from: self)
                     }
                 }
             }

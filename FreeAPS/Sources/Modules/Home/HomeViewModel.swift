@@ -6,16 +6,12 @@ extension Home {
         @Injected() var history: PumpHistoryStorage!
         @Injected() var temps: TempTargetsStorage!
 
-        func fetchGlucose() {
-            apsManager.fetchLastGlucose()
-        }
-
         func addCarbs() {
             history.storeJournalCarbs(15)
         }
 
         func runLoop() {
-            apsManager.determineBasal()
+            apsManager.loop()
         }
 
         func addHighTempTarget() {

@@ -7,12 +7,6 @@ extension Home {
         var body: some View {
             VStack {
                 Spacer()
-                Button(action: viewModel.fetchGlucose) {
-                    Text("Fetch glucose")
-                        .frame(maxWidth: .infinity)
-                        .foregroundColor(.white)
-                        .buttonBackground()
-                }
                 Button(action: viewModel.addCarbs) {
                     Text("Add 15 g carbs")
                         .frame(maxWidth: .infinity)
