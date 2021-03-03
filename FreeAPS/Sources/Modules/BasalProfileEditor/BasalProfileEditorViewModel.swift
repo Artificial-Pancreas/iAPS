@@ -2,13 +2,10 @@ import SwiftUI
 
 extension BasalProfileEditor {
     class ViewModel<Provider>: BaseViewModel<Provider>, ObservableObject where Provider: BasalProfileEditorProvider {
-        @Injected() var devicemanager: DeviceDataManager!
         @Published var syncInProgress = false
         @Published var items: [Item] = []
 
-        var timeValues: [TimeInterval] {
-            stride(from: 0.0, to: 1.days.timeInterval, by: 30.minutes.timeInterval).map { $0 }
-        }
+        let timeValues = stride(from: 0.0, to: 1.days.timeInterval, by: 30.minutes.timeInterval).map { $0 }
 
         private(set) var rateValues: [Double] = []
 
@@ -41,14 +38,14 @@ extension BasalProfileEditor {
 
         func save() {
             syncInProgress = true
-            let profile = items.enumerated().map { index, item -> BasalProfileEntry in
+            let profile = items.map { item -> BasalProfileEntry in
                 let fotmatter = DateFormatter()
                 fotmatter.timeZone = TimeZone(secondsFromGMT: 0)
                 fotmatter.dateFormat = "HH:mm:ss"
                 let date = Date(timeIntervalSince1970: self.timeValues[item.timeIndex])
                 let minutes = Int(date.timeIntervalSince1970 / 60)
                 let rate = Decimal(self.rateValues[item.rateIndex])
-                return BasalProfileEntry(i: index, start: fotmatter.string(from: date), minutes: minutes, rate: rate)
+                return BasalProfileEntry(start: fotmatter.string(from: date), minutes: minutes, rate: rate)
             }
             provider.saveProfile(profile)
                 .receive(on: DispatchQueue.main)

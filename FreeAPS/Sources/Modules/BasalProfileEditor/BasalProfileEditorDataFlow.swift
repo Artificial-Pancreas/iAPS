@@ -1,11 +1,8 @@
 import Combine
 import Foundation
-import SwiftDate
 
 enum BasalProfileEditor {
-    enum Config {
-        static let maxItemsCount = 48
-    }
+    enum Config {}
 
     class Item: Identifiable, Hashable, Equatable {
         let id = UUID()

@@ -119,6 +119,7 @@
 		38A504A625DD9FDA00C5B9E8 /* OmniKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 38B17B2625DD6BBE005CAE3D /* OmniKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		38A504A725DD9FDA00C5B9E8 /* OmniKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38B17B2A25DD6BBE005CAE3D /* OmniKitUI.framework */; };
 		38A504A825DD9FDA00C5B9E8 /* OmniKitUI.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 38B17B2A25DD6BBE005CAE3D /* OmniKitUI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		38A9260525F012D8009E3739 /* CarbRatios.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38A9260425F012D8009E3739 /* CarbRatios.swift */; };
 		38B17B6625DD90E0005CAE3D /* SwiftDate in Frameworks */ = {isa = PBXBuildFile; productRef = 38B17B6525DD90E0005CAE3D /* SwiftDate */; };
 		38B17B8625DD93BA005CAE3D /* LoopKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38B17AD125DD6A40005CAE3D /* LoopKit.framework */; };
 		38B17B8725DD93BA005CAE3D /* LoopKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 38B17AD125DD6A40005CAE3D /* LoopKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -685,6 +686,7 @@
 		38A0364125ED069400FCBB52 /* TempBasal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TempBasal.swift; sourceTree = "<group>"; };
 		38A13D3125E28B4B00EAA382 /* PumpHistoryEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PumpHistoryEvent.swift; sourceTree = "<group>"; };
 		38A5049125DD9C4000C5B9E8 /* UserDefaultsExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDefaultsExtensions.swift; sourceTree = "<group>"; };
+		38A9260425F012D8009E3739 /* CarbRatios.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarbRatios.swift; sourceTree = "<group>"; };
 		38B17AAE25DD69FA005CAE3D /* SwiftCharts.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SwiftCharts.xcodeproj; path = SwiftCharts/SwiftCharts.xcodeproj; sourceTree = "<group>"; };
 		38B17AC025DD6A40005CAE3D /* LoopKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = LoopKit.xcodeproj; path = LoopKit/LoopKit.xcodeproj; sourceTree = "<group>"; };
 		38B17AF025DD6AE6005CAE3D /* MKRingProgressView.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = MKRingProgressView.xcodeproj; path = MKRingProgressView/MKRingProgressView.xcodeproj; sourceTree = "<group>"; };
@@ -1217,6 +1219,7 @@
 				3871F39B25ED892B0013ECB5 /* TempTarget.swift */,
 				3883583325EEB38000E024B2 /* PumpSettings.swift */,
 				388358C725EEF6D200E024B2 /* BasalProfileEntry.swift */,
+				38A9260425F012D8009E3739 /* CarbRatios.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -1985,6 +1988,7 @@
 				3811DE3325C9D49500A708ED /* HomeBuilder.swift in Sources */,
 				3811DEA925C9D88300A708ED /* AppearanceManager.swift in Sources */,
 				38D0B3D925EC07C400CB6E88 /* CarbHystoryEntry.swift in Sources */,
+				38A9260525F012D8009E3739 /* CarbRatios.swift in Sources */,
 				3811DE2125C9D48300A708ED /* MainBuilder.swift in Sources */,
 				38FCF3D625E8FDF40078B0D1 /* MD5.swift in Sources */,
 				3811DE7925C9D6D300A708ED /* LoginViewModel.swift in Sources */,
