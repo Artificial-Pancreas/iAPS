@@ -26,7 +26,7 @@ extension BasalProfileEditor {
 
         func add() {
             var selected = 0
-            var rate = 1
+            var rate = 0
             if let last = items.last {
                 selected = last.timeIndex + 1
                 rate = last.rateIndex
@@ -39,7 +39,7 @@ extension BasalProfileEditor {
 
         func save() {}
 
-        func itemsDidChange() {
+        func validate() {
             DispatchQueue.main.async {
                 let uniq = Array(Set(self.items))
                 let sorted = uniq.sorted { $0.timeIndex < $1.timeIndex }
