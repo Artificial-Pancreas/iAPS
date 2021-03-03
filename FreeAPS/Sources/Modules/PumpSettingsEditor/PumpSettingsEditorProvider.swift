@@ -5,8 +5,6 @@ import LoopKitUI
 extension PumpSettingsEditor {
     final class Provider: BaseProvider, PumpSettingsEditorProvider {
         private let processQueue = DispatchQueue(label: "PumpSettingsEditorProvider.processQueue")
-        @Injected() var deviceManager: DeviceDataManager!
-        @Injected() var storage: FileStorage!
 
         func settings() -> PumpSettings {
             (try? storage.retrieve(OpenAPS.Settings.settings, as: PumpSettings.self))

@@ -11,6 +11,8 @@ class BaseProvider: Provider, Injectable {
     let user = CurrentValueSubject<User?, Never>(nil)
     var lifetime = Set<AnyCancellable>()
     @Injected() var authorizationManager: AuthorizationManager!
+    @Injected() var deviceManager: DeviceDataManager!
+    @Injected() var storage: FileStorage!
 
     required init(resolver: Resolver) {
         injectServices(resolver)

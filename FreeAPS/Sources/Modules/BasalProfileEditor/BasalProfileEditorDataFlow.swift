@@ -1,5 +1,6 @@
+import Combine
+import Foundation
 import SwiftDate
-import SwiftUI
 
 enum BasalProfileEditor {
     enum Config {
@@ -26,4 +27,8 @@ enum BasalProfileEditor {
     }
 }
 
-protocol BasalProfileEditorProvider: Provider {}
+protocol BasalProfileEditorProvider: Provider {
+    var profile: [BasalProfileEntry] { get }
+    var supportedBasalRates: [Double]? { get }
+    func saveProfile(_ profile: [BasalProfileEntry]) -> AnyPublisher<Void, Error>
+}

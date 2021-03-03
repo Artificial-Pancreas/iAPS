@@ -31,11 +31,16 @@ extension PumpSettingsEditor {
                 }
 
                 Section {
-                    Button { viewModel.save() }
-                    label: {
-                        Text(viewModel.syncInProgress ? "Saving..." : "Save on Pump")
+                    HStack {
+                        if viewModel.syncInProgress {
+                            ProgressView().padding(.trailing, 10)
+                        }
+                        Button { viewModel.save() }
+                        label: {
+                            Text(viewModel.syncInProgress ? "Saving..." : "Save on Pump")
+                        }
+                        .disabled(viewModel.syncInProgress)
                     }
-                    .disabled(viewModel.syncInProgress)
                 }
             }
             .navigationTitle("Pump Settings")

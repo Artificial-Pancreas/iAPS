@@ -5,13 +5,12 @@ extension BasalProfileEditor {
         @Injected() var devicemanager: DeviceDataManager!
         @Published var syncInProgress = false
         @Published var items: [Item] = []
-        private var maxBasal = 2
 
         var timeValues: [TimeInterval] {
             stride(from: 0.0, to: 1.days.timeInterval, by: 30.minutes.timeInterval).map { $0 }
         }
 
-        private(set) var rateValues: [Double] = stride(from: 0.05, to: 10.01, by: 0.05).map { $0 }
+        private(set) var rateValues: [Double] = []
 
         var canAdd: Bool {
             guard let lastItem = items.last else { return true }
@@ -19,8 +18,11 @@ extension BasalProfileEditor {
         }
 
         override func subscribe() {
-            if let pump = devicemanager.pumpManager {
-                rateValues = pump.supportedBasalRates
+            rateValues = provider.supportedBasalRates ?? stride(from: 0.05, to: 10.01, by: 0.05).map { $0 }
+            items = provider.profile.map { value in
+                let timeIndex = timeValues.firstIndex(of: Double(value.minutes * 60)) ?? 0
+                let rateIndex = rateValues.firstIndex(of: Double(value.rate)) ?? 0
+                return Item(rateIndex: rateIndex, selectedIndex: timeIndex)
             }
         }
 
@@ -37,7 +39,24 @@ extension BasalProfileEditor {
             items.append(newItem)
         }
 
-        func save() {}
+        func save() {
+            syncInProgress = true
+            let profile = items.enumerated().map { index, item -> BasalProfileEntry in
+                let fotmatter = DateFormatter()
+                fotmatter.timeZone = TimeZone(secondsFromGMT: 0)
+                fotmatter.dateFormat = "HH:mm:ss"
+                let date = Date(timeIntervalSince1970: self.timeValues[item.timeIndex])
+                let minutes = Int(date.timeIntervalSince1970 / 60)
+                let rate = Decimal(self.rateValues[item.rateIndex])
+                return BasalProfileEntry(i: index, start: fotmatter.string(from: date), minutes: minutes, rate: rate)
+            }
+            provider.saveProfile(profile)
+                .receive(on: DispatchQueue.main)
+                .sink { _ in
+                    self.syncInProgress = false
+                } receiveValue: {}
+                .store(in: &lifetime)
+        }
 
         func validate() {
             DispatchQueue.main.async {

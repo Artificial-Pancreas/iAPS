@@ -21,33 +21,20 @@ extension BasalProfileEditor {
         var body: some View {
             Form {
                 Section(header: Text("Schedule")) {
-                    List {
-                        ForEach(viewModel.items.indexed(), id: \.1.id) { index, item in
-                            NavigationLink(destination: pickers(for: index)) {
-                                HStack {
-                                    Text("Rate").foregroundColor(.secondary)
-                                    Text(
-                                        "\(rateFormatter.string(from: viewModel.rateValues[item.rateIndex] as NSNumber) ?? "0") U/h"
-                                    )
-                                    Spacer()
-                                    Text("starts at").foregroundColor(.secondary)
-                                    Text(
-                                        "\(dateFormatter.string(from: Date(timeIntervalSince1970: viewModel.timeValues[item.timeIndex])))"
-                                    )
-                                }
-                            }
-                            .moveDisabled(true)
-                        }
-                        .onDelete(perform: onDelete)
-                    }
+                    list
                     addButton
                 }
                 Section {
-                    Button { viewModel.save() }
-                    label: {
-                        Text(viewModel.syncInProgress ? "Saving..." : "Save on Pump")
+                    HStack {
+                        if viewModel.syncInProgress {
+                            ProgressView().padding(.trailing, 10)
+                        }
+                        Button { viewModel.save() }
+                        label: {
+                            Text(viewModel.syncInProgress ? "Saving..." : "Save on Pump")
+                        }
+                        .disabled(viewModel.syncInProgress || viewModel.items.isEmpty)
                     }
-                    .disabled(viewModel.syncInProgress || viewModel.items.isEmpty)
                 }
             }
             .navigationTitle("Basal Profile")
@@ -98,6 +85,28 @@ extension BasalProfileEditor {
                         .clipped()
                     }
                 }
+            }
+        }
+
+        private var list: some View {
+            List {
+                ForEach(viewModel.items.indexed(), id: \.1.id) { index, item in
+                    NavigationLink(destination: pickers(for: index)) {
+                        HStack {
+                            Text("Rate").foregroundColor(.secondary)
+                            Text(
+                                "\(rateFormatter.string(from: viewModel.rateValues[item.rateIndex] as NSNumber) ?? "0") U/h"
+                            )
+                            Spacer()
+                            Text("starts at").foregroundColor(.secondary)
+                            Text(
+                                "\(dateFormatter.string(from: Date(timeIntervalSince1970: viewModel.timeValues[item.timeIndex])))"
+                            )
+                        }
+                    }
+                    .moveDisabled(true)
+                }
+                .onDelete(perform: onDelete)
             }
         }
 
