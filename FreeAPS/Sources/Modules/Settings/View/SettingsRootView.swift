@@ -16,6 +16,7 @@ extension Settings {
 
                 Section(header: Text("Configuration")) {
                     Text("Pump settings").chevronCell().modal(for: .pumpSettingsEditor, from: self)
+                    Text("Basal settings").chevronCell().modal(for: .basalProfileEditor, from: self)
                 }
 
                 Section(header: Text("Config files")) {

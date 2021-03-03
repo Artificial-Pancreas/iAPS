@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1D086541F369D339A74893AC /* BasalProfileEditorBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA56D2DCAB9E0A8AF24D984 /* BasalProfileEditorBuilder.swift */; };
 		25548F1F0AA8E42FF5F96DBA /* PumpSettingsEditorBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10CAE3534904CDCA0F367017 /* PumpSettingsEditorBuilder.swift */; };
 		2BE9A6FA20875F6F4F9CD461 /* PumpSettingsEditorProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = D97F14812C1AFED3621165A5 /* PumpSettingsEditorProvider.swift */; };
 		3340E0D14D4701342D459C95 /* PumpConfigBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = E01C416A0792696C6911C1D7 /* PumpConfigBuilder.swift */; };
@@ -99,6 +100,7 @@
 		3871F39F25ED895A0013ECB5 /* Decimal+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3871F39E25ED895A0013ECB5 /* Decimal+Extensions.swift */; };
 		3883581C25EE79BB00E024B2 /* DecimalTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3883581B25EE79BB00E024B2 /* DecimalTextField.swift */; };
 		3883583425EEB38000E024B2 /* PumpSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3883583325EEB38000E024B2 /* PumpSettings.swift */; };
+		388358C825EEF6D200E024B2 /* BasalProfileEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 388358C725EEF6D200E024B2 /* BasalProfileEntry.swift */; };
 		388E595C25AD948C0019842D /* FreeAPSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 388E595B25AD948C0019842D /* FreeAPSApp.swift */; };
 		388E596025AD948E0019842D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 388E595F25AD948E0019842D /* Assets.xcassets */; };
 		388E596C25AD95110019842D /* OpenAPS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 388E596B25AD95110019842D /* OpenAPS.swift */; };
@@ -164,18 +166,22 @@
 		45717281F743594AA9D87191 /* ConfigEditorRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 920DDB21E5D0EB813197500D /* ConfigEditorRootView.swift */; };
 		53F2382465BF74DB1A967C8B /* PumpConfigProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8630D58BDAD6D9C650B9B39 /* PumpConfigProvider.swift */; };
 		5D16287A969E64D18CE40E44 /* PumpConfigViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F60E97100041040446F44E7 /* PumpConfigViewModel.swift */; };
+		63E890B4D951EAA91C071D5C /* BasalProfileEditorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAFF91130F2FCCC7EBBA11AD /* BasalProfileEditorViewModel.swift */; };
 		642F76A05A4FF530463A9FD0 /* NightscoutConfigRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8782B44544F38F2B2D82C38E /* NightscoutConfigRootView.swift */; };
 		6B9625766B697D1C98E455A2 /* PumpSettingsEditorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72778B68C3004F71F6E79BDC /* PumpSettingsEditorViewModel.swift */; };
 		72F1BD388F42FCA6C52E4500 /* ConfigEditorProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44080E4709E3AE4B73054563 /* ConfigEditorProvider.swift */; };
+		8B759CFCF47B392BB365C251 /* BasalProfileEditorDataFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67F94DD2853CF42BA4E30616 /* BasalProfileEditorDataFlow.swift */; };
 		9825E5E923F0B8FA80C8C7C7 /* NightscoutConfigViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0A48AE3AC813A49A517846A /* NightscoutConfigViewModel.swift */; };
 		A0B8EC8CC5CD1DD237D1BCD2 /* PumpSettingsEditorRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8C7F882606FF83A21BE00D8 /* PumpSettingsEditorRootView.swift */; };
 		AD3D2CD42CD01B9EB8F26522 /* PumpConfigDataFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF65DA88F972B56090AD6AC3 /* PumpConfigDataFlow.swift */; };
 		BD2B464E0745FBE7B79913F4 /* NightscoutConfigProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BF768BD6264FF7D71D66767 /* NightscoutConfigProvider.swift */; };
+		CA370FC152BC98B3D1832968 /* BasalProfileEditorRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8BCB0C37DEB5EC377B9612 /* BasalProfileEditorRootView.swift */; };
 		CDB87FA71A93F3739D3D338E /* NightscoutConfigBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 111579A6E3AC6BFA79C4DD43 /* NightscoutConfigBuilder.swift */; };
 		D6DEC113821A7F1056C4AA1E /* NightscoutConfigDataFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F2A13DF0EDEEEDC4106AA2A /* NightscoutConfigDataFlow.swift */; };
 		E102DE9C3E9C8AEDCB3C61BB /* ConfigEditorBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = E492D5B2EEF2119977EA2CE4 /* ConfigEditorBuilder.swift */; };
 		E39E418C56A5A46B61D960EE /* ConfigEditorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D5B4F8B4194BB7E260EF251 /* ConfigEditorViewModel.swift */; };
 		E974172296125A5AE99E634C /* PumpConfigRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AD22C985B79A2F0D2EA3D9D /* PumpConfigRootView.swift */; };
+		FA630397F76B582C8D8681A7 /* BasalProfileEditorProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42369F66CF91F30624C0B3A6 /* BasalProfileEditorProvider.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -639,6 +645,7 @@
 		3871F39E25ED895A0013ECB5 /* Decimal+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Decimal+Extensions.swift"; sourceTree = "<group>"; };
 		3883581B25EE79BB00E024B2 /* DecimalTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecimalTextField.swift; sourceTree = "<group>"; };
 		3883583325EEB38000E024B2 /* PumpSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PumpSettings.swift; sourceTree = "<group>"; };
+		388358C725EEF6D200E024B2 /* BasalProfileEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasalProfileEntry.swift; sourceTree = "<group>"; };
 		388E595825AD948C0019842D /* FreeAPS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FreeAPS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		388E595B25AD948C0019842D /* FreeAPSApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FreeAPSApp.swift; sourceTree = "<group>"; };
 		388E595F25AD948E0019842D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -683,15 +690,20 @@
 		3BF768BD6264FF7D71D66767 /* NightscoutConfigProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NightscoutConfigProvider.swift; sourceTree = "<group>"; };
 		3F60E97100041040446F44E7 /* PumpConfigViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PumpConfigViewModel.swift; sourceTree = "<group>"; };
 		3F8A87AA037BD079BA3528BA /* ConfigEditorDataFlow.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ConfigEditorDataFlow.swift; sourceTree = "<group>"; };
+		42369F66CF91F30624C0B3A6 /* BasalProfileEditorProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = BasalProfileEditorProvider.swift; sourceTree = "<group>"; };
 		44080E4709E3AE4B73054563 /* ConfigEditorProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ConfigEditorProvider.swift; sourceTree = "<group>"; };
 		5D5B4F8B4194BB7E260EF251 /* ConfigEditorViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ConfigEditorViewModel.swift; sourceTree = "<group>"; };
+		67F94DD2853CF42BA4E30616 /* BasalProfileEditorDataFlow.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = BasalProfileEditorDataFlow.swift; sourceTree = "<group>"; };
+		6BA56D2DCAB9E0A8AF24D984 /* BasalProfileEditorBuilder.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = BasalProfileEditorBuilder.swift; sourceTree = "<group>"; };
 		72778B68C3004F71F6E79BDC /* PumpSettingsEditorViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PumpSettingsEditorViewModel.swift; sourceTree = "<group>"; };
 		8782B44544F38F2B2D82C38E /* NightscoutConfigRootView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NightscoutConfigRootView.swift; sourceTree = "<group>"; };
 		920DDB21E5D0EB813197500D /* ConfigEditorRootView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ConfigEditorRootView.swift; sourceTree = "<group>"; };
 		A0A48AE3AC813A49A517846A /* NightscoutConfigViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NightscoutConfigViewModel.swift; sourceTree = "<group>"; };
 		A8630D58BDAD6D9C650B9B39 /* PumpConfigProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PumpConfigProvider.swift; sourceTree = "<group>"; };
+		AAFF91130F2FCCC7EBBA11AD /* BasalProfileEditorViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = BasalProfileEditorViewModel.swift; sourceTree = "<group>"; };
 		AF65DA88F972B56090AD6AC3 /* PumpConfigDataFlow.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PumpConfigDataFlow.swift; sourceTree = "<group>"; };
 		B8C7F882606FF83A21BE00D8 /* PumpSettingsEditorRootView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PumpSettingsEditorRootView.swift; sourceTree = "<group>"; };
+		BF8BCB0C37DEB5EC377B9612 /* BasalProfileEditorRootView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = BasalProfileEditorRootView.swift; sourceTree = "<group>"; };
 		D97F14812C1AFED3621165A5 /* PumpSettingsEditorProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PumpSettingsEditorProvider.swift; sourceTree = "<group>"; };
 		E01C416A0792696C6911C1D7 /* PumpConfigBuilder.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PumpConfigBuilder.swift; sourceTree = "<group>"; };
 		E492D5B2EEF2119977EA2CE4 /* ConfigEditorBuilder.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ConfigEditorBuilder.swift; sourceTree = "<group>"; };
@@ -748,10 +760,19 @@
 			path = ConfigEditor;
 			sourceTree = "<group>";
 		};
+		18B49BC9587A59E3A347C1CD /* View */ = {
+			isa = PBXGroup;
+			children = (
+				BF8BCB0C37DEB5EC377B9612 /* BasalProfileEditorRootView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		3811DE0325C9D31700A708ED /* Modules */ = {
 			isa = PBXGroup;
 			children = (
 				3811DE4525C9D4B800A708ED /* AuthotizedRoot */,
+				A42F1FEDFFD0DDE00AAD54D3 /* BasalProfileEditor */,
 				3811DE0425C9D32E00A708ED /* Base */,
 				0610F7D6D2EC00E3BA1569F0 /* ConfigEditor */,
 				3811DE2725C9D49500A708ED /* Home */,
@@ -1143,6 +1164,7 @@
 				3871F38625ED661C0013ECB5 /* Suggestion.swift */,
 				3871F39B25ED892B0013ECB5 /* TempTarget.swift */,
 				3883583325EEB38000E024B2 /* PumpSettings.swift */,
+				388358C725EEF6D200E024B2 /* BasalProfileEntry.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -1332,6 +1354,18 @@
 				510CCF29FD3216C5BBC49A15 /* View */,
 			);
 			path = PumpConfig;
+			sourceTree = "<group>";
+		};
+		A42F1FEDFFD0DDE00AAD54D3 /* BasalProfileEditor */ = {
+			isa = PBXGroup;
+			children = (
+				6BA56D2DCAB9E0A8AF24D984 /* BasalProfileEditorBuilder.swift */,
+				67F94DD2853CF42BA4E30616 /* BasalProfileEditorDataFlow.swift */,
+				42369F66CF91F30624C0B3A6 /* BasalProfileEditorProvider.swift */,
+				AAFF91130F2FCCC7EBBA11AD /* BasalProfileEditorViewModel.swift */,
+				18B49BC9587A59E3A347C1CD /* View */,
+			);
+			path = BasalProfileEditor;
 			sourceTree = "<group>";
 		};
 		D533BF261CDC1C3F871E7BFD /* NightscoutConfig */ = {
@@ -1804,6 +1838,7 @@
 				3811DE4E25C9D4B800A708ED /* AuthotizedRootRootView.swift in Sources */,
 				3811DE7D25C9D6D300A708ED /* LoginRootView.swift in Sources */,
 				3811DE4025C9D4A100A708ED /* SettingsBuilder.swift in Sources */,
+				388358C825EEF6D200E024B2 /* BasalProfileEntry.swift in Sources */,
 				3811DE0B25C9D32F00A708ED /* BaseView.swift in Sources */,
 				3811DE3225C9D49500A708ED /* HomeDataFlow.swift in Sources */,
 				3821ED4C25DD18BA00BC42AD /* Constants.swift in Sources */,
@@ -1874,6 +1909,11 @@
 				2BE9A6FA20875F6F4F9CD461 /* PumpSettingsEditorProvider.swift in Sources */,
 				6B9625766B697D1C98E455A2 /* PumpSettingsEditorViewModel.swift in Sources */,
 				A0B8EC8CC5CD1DD237D1BCD2 /* PumpSettingsEditorRootView.swift in Sources */,
+				1D086541F369D339A74893AC /* BasalProfileEditorBuilder.swift in Sources */,
+				8B759CFCF47B392BB365C251 /* BasalProfileEditorDataFlow.swift in Sources */,
+				FA630397F76B582C8D8681A7 /* BasalProfileEditorProvider.swift in Sources */,
+				63E890B4D951EAA91C071D5C /* BasalProfileEditorViewModel.swift in Sources */,
+				CA370FC152BC98B3D1832968 /* BasalProfileEditorRootView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

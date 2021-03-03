@@ -27,3 +27,8 @@ struct BloodGlucose: JSON {
 
     var isStateValid: Bool { sgv ?? 0 >= 39 && noise ?? 1 != 4 }
 }
+
+enum GlucoseUnit: String, JSON {
+    case mgdL = "mg/dL"
+    case mmolL = "mmol/L"
+}
