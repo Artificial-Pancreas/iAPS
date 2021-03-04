@@ -1,6 +1,6 @@
 import Foundation
 
 struct FreeAPSSettings: JSON {
-    var units: GlucoseUnit
+    var units: GlucoseUnits
     var closedLoop: Bool
 }

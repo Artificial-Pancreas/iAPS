@@ -40,7 +40,7 @@ extension Settings {
                         Text("BG targets").chevronCell().modal(for: .configEditor(file: OpenAPS.Settings.bgTargets), from: self)
                         Text("Carb ratios").chevronCell().modal(for: .configEditor(file: OpenAPS.Settings.carbRatios), from: self)
                         Text("Insulin sensitivities").chevronCell()
-                            .modal(for: .configEditor(file: OpenAPS.Settings.carbRatios), from: self)
+                            .modal(for: .configEditor(file: OpenAPS.Settings.insulinSensitivities), from: self)
                         Text("Temp targets").chevronCell()
                             .modal(for: .configEditor(file: OpenAPS.Settings.tempTargets), from: self)
                     }

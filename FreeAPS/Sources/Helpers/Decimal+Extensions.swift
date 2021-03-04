@@ -5,3 +5,9 @@ extension Double {
         self.init(truncating: decimal as NSNumber)
     }
 }
+
+extension Int {
+    init(_ decimal: Decimal) {
+        self.init(Double(decimal))
+    }
+}

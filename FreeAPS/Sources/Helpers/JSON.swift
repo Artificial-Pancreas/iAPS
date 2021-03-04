@@ -77,7 +77,7 @@ extension Dictionary where Key == String {
 enum JSONCoding {
     static var encoder: JSONEncoder {
         let encoder = JSONEncoder()
-        encoder.outputFormatting = .prettyPrinted
+        encoder.outputFormatting = [.prettyPrinted, .withoutEscapingSlashes]
         encoder.dateEncodingStrategy = .customISO8601
         return encoder
     }
