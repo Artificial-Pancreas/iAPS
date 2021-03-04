@@ -50,6 +50,7 @@ extension Settings {
                             .modal(for: .configEditor(file: OpenAPS.Settings.pumpProfile), from: self)
                         Text("Profile").chevronCell().modal(for: .configEditor(file: OpenAPS.Settings.profile), from: self)
                         Text("Glucose").chevronCell().modal(for: .configEditor(file: OpenAPS.Monitor.glucose), from: self)
+                        Text("Carbs").chevronCell().modal(for: .configEditor(file: OpenAPS.Monitor.carbHistory), from: self)
                         Text("Suggested").chevronCell()
                             .modal(for: .configEditor(file: OpenAPS.Enact.suggested), from: self)
                         Text("Enacted").chevronCell()

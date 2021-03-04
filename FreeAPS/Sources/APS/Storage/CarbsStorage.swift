@@ -2,25 +2,25 @@ import Foundation
 import SwiftDate
 import Swinject
 
-protocol TempTargetsStorage {
-    func storeTempTargets(_ targets: [TempTarget])
+protocol CarbsStorage {
+    func storeCarbs(_ carbs: [CarbsEntry])
     func syncDate() -> Date
 }
 
-final class BaseTempTargetsStorage: TempTargetsStorage, Injectable {
-    private let processQueue = DispatchQueue(label: "BaseTempTargetsStorage.processQueue")
+final class BaseCarbsStorage: CarbsStorage, Injectable {
+    private let processQueue = DispatchQueue(label: "BaseCarbsStorage.processQueue")
     @Injected() private var storage: FileStorage!
 
     init(resolver: Resolver) {
         injectServices(resolver)
     }
 
-    func storeTempTargets(_ targets: [TempTarget]) {
+    func storeCarbs(_ carbs: [CarbsEntry]) {
         processQueue.sync {
-            let file = OpenAPS.Settings.tempTargets
+            let file = OpenAPS.Monitor.carbHistory
             try? self.storage.transaction { storage in
-                try storage.append(targets, to: file, uniqBy: \.createdAt)
-                let uniqEvents = try storage.retrieve(file, as: [TempTarget].self)
+                try storage.append(carbs, to: file, uniqBy: \.createdAt)
+                let uniqEvents = try storage.retrieve(file, as: [CarbsEntry].self)
                     .filter { $0.createdAt.addingTimeInterval(1.days.timeInterval) > Date() }
                     .sorted { $0.createdAt > $1.createdAt }
                 try storage.save(Array(uniqEvents), as: file)
@@ -29,7 +29,7 @@ final class BaseTempTargetsStorage: TempTargetsStorage, Injectable {
     }
 
     func syncDate() -> Date {
-        guard let events = try? storage.retrieve(OpenAPS.Settings.tempTargets, as: [TempTarget].self),
+        guard let events = try? storage.retrieve(OpenAPS.Monitor.carbHistory, as: [CarbsEntry].self),
               let recent = events.first
         else {
             return Date().addingTimeInterval(-1.days.timeInterval)

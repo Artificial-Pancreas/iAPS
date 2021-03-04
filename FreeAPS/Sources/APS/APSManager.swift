@@ -17,8 +17,9 @@ final class BaseAPSManager: APSManager, Injectable {
     @Injected() private var pumpHistoryStorage: PumpHistoryStorage!
     @Injected() private var glucoseStorage: GlucoseStorage!
     @Injected() private var tempTargetsStorage: TempTargetsStorage!
+    @Injected() private var carbsStorage: CarbsStorage!
     @Injected() private var deviceDataManager: DeviceDataManager!
-    @Injected() private var networkManager: NetworkManager!
+    @Injected() private var nightscout: NightscoutManager!
     @Injected() private var settingsManager: SettingsManager!
     private var openAPS: OpenAPS!
 
@@ -54,13 +55,11 @@ final class BaseAPSManager: APSManager, Injectable {
     }
 
     func loop() {
-        loopCancellable = networkManager
+        loopCancellable = nightscout
             .fetchGlucose()
-            .flatMap { [weak self] glucose -> AnyPublisher<Bool, Never> in
-                guard let self = self else { return Just(false).eraseToAnyPublisher() }
-                self.glucoseStorage.storeGlucose(glucose)
-                return self.determineBasal()
-            }
+            .flatMap { self.nightscout.fetchCarbs() }
+            .flatMap { self.nightscout.fetchTempTargets() }
+            .flatMap { self.determineBasal() }
             .sink { _ in } receiveValue: { [weak self] ok in
                 guard let self = self else { return }
                 if ok, self.settings.closedLoop {

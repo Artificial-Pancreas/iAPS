@@ -4,6 +4,7 @@ import Swinject
 
 protocol GlucoseStorage {
     func storeGlucose(_ glucose: [BloodGlucose])
+    func syncDate() -> Date
 }
 
 final class BaseGlucoseStorage: GlucoseStorage, Injectable {
@@ -15,7 +16,7 @@ final class BaseGlucoseStorage: GlucoseStorage, Injectable {
     }
 
     func storeGlucose(_ glucose: [BloodGlucose]) {
-        processQueue.async {
+        processQueue.sync {
             let file = OpenAPS.Monitor.glucose
             try? self.storage.transaction { storage in
                 try storage.append(glucose, to: file, uniqBy: \.dateString)
@@ -25,5 +26,14 @@ final class BaseGlucoseStorage: GlucoseStorage, Injectable {
                 try storage.save(Array(uniqEvents), as: file)
             }
         }
+    }
+
+    func syncDate() -> Date {
+        guard let events = try? storage.retrieve(OpenAPS.Monitor.glucose, as: [BloodGlucose].self),
+              let recent = events.first
+        else {
+            return Date().addingTimeInterval(-1.days.timeInterval)
+        }
+        return recent.dateString.addingTimeInterval(-6.minutes.timeInterval)
     }
 }

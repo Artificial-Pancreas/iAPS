@@ -62,7 +62,7 @@
 		3811DE8F25C9D80400A708ED /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3811DE8E25C9D80400A708ED /* User.swift */; };
 		3811DEA925C9D88300A708ED /* AppearanceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3811DE9325C9D88200A708ED /* AppearanceManager.swift */; };
 		3811DEAB25C9D88300A708ED /* HTTPResponseStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3811DE9625C9D88300A708ED /* HTTPResponseStatus.swift */; };
-		3811DEAC25C9D88300A708ED /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3811DE9725C9D88300A708ED /* NetworkManager.swift */; };
+		3811DEAC25C9D88300A708ED /* NightscoutManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3811DE9725C9D88300A708ED /* NightscoutManager.swift */; };
 		3811DEAD25C9D88300A708ED /* UserDefaults+Cache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3811DE9A25C9D88300A708ED /* UserDefaults+Cache.swift */; };
 		3811DEAE25C9D88300A708ED /* Cache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3811DE9B25C9D88300A708ED /* Cache.swift */; };
 		3811DEAF25C9D88300A708ED /* KeyValueStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3811DE9C25C9D88300A708ED /* KeyValueStorage.swift */; };
@@ -122,6 +122,7 @@
 		38A9260525F012D8009E3739 /* CarbRatios.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38A9260425F012D8009E3739 /* CarbRatios.swift */; };
 		38AEE73D25F0200C0013F05B /* FreeAPSSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38AEE73C25F0200C0013F05B /* FreeAPSSettings.swift */; };
 		38AEE75225F022080013F05B /* SettingsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38AEE75125F022080013F05B /* SettingsManager.swift */; };
+		38AEE75725F0F18E0013F05B /* CarbsStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38AEE75625F0F18E0013F05B /* CarbsStorage.swift */; };
 		38B17B6625DD90E0005CAE3D /* SwiftDate in Frameworks */ = {isa = PBXBuildFile; productRef = 38B17B6525DD90E0005CAE3D /* SwiftDate */; };
 		38B17B8625DD93BA005CAE3D /* LoopKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38B17AD125DD6A40005CAE3D /* LoopKit.framework */; };
 		38B17B8725DD93BA005CAE3D /* LoopKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 38B17AD125DD6A40005CAE3D /* LoopKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -159,7 +160,7 @@
 		38C4D33725E9A1A300D30B77 /* DispatchQueue+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38C4D33625E9A1A200D30B77 /* DispatchQueue+Extensions.swift */; };
 		38C4D33A25E9A1ED00D30B77 /* NSObject+AssociatedValues.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38C4D33925E9A1ED00D30B77 /* NSObject+AssociatedValues.swift */; };
 		38D0B3B625EBE24900CB6E88 /* Battery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38D0B3B525EBE24900CB6E88 /* Battery.swift */; };
-		38D0B3D925EC07C400CB6E88 /* CarbHystoryEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38D0B3D825EC07C400CB6E88 /* CarbHystoryEntry.swift */; };
+		38D0B3D925EC07C400CB6E88 /* CarbsEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38D0B3D825EC07C400CB6E88 /* CarbsEntry.swift */; };
 		38F3B2EF25ED8E2A005C48AA /* TempTargetsStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38F3B2EE25ED8E2A005C48AA /* TempTargetsStorage.swift */; };
 		38FCF3D625E8FDF40078B0D1 /* MD5.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38FCF3D525E8FDF40078B0D1 /* MD5.swift */; };
 		38FCF3F925E902C20078B0D1 /* FileStorageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38FCF3F825E902C20078B0D1 /* FileStorageTests.swift */; };
@@ -641,7 +642,7 @@
 		3811DE8E25C9D80400A708ED /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		3811DE9325C9D88200A708ED /* AppearanceManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppearanceManager.swift; sourceTree = "<group>"; };
 		3811DE9625C9D88300A708ED /* HTTPResponseStatus.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTPResponseStatus.swift; sourceTree = "<group>"; };
-		3811DE9725C9D88300A708ED /* NetworkManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
+		3811DE9725C9D88300A708ED /* NightscoutManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NightscoutManager.swift; sourceTree = "<group>"; };
 		3811DE9A25C9D88300A708ED /* UserDefaults+Cache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UserDefaults+Cache.swift"; sourceTree = "<group>"; };
 		3811DE9B25C9D88300A708ED /* Cache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Cache.swift; sourceTree = "<group>"; };
 		3811DE9C25C9D88300A708ED /* KeyValueStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyValueStorage.swift; sourceTree = "<group>"; };
@@ -691,6 +692,7 @@
 		38A9260425F012D8009E3739 /* CarbRatios.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarbRatios.swift; sourceTree = "<group>"; };
 		38AEE73C25F0200C0013F05B /* FreeAPSSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FreeAPSSettings.swift; sourceTree = "<group>"; };
 		38AEE75125F022080013F05B /* SettingsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsManager.swift; sourceTree = "<group>"; };
+		38AEE75625F0F18E0013F05B /* CarbsStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarbsStorage.swift; sourceTree = "<group>"; };
 		38B17AAE25DD69FA005CAE3D /* SwiftCharts.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SwiftCharts.xcodeproj; path = SwiftCharts/SwiftCharts.xcodeproj; sourceTree = "<group>"; };
 		38B17AC025DD6A40005CAE3D /* LoopKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = LoopKit.xcodeproj; path = LoopKit/LoopKit.xcodeproj; sourceTree = "<group>"; };
 		38B17AF025DD6AE6005CAE3D /* MKRingProgressView.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = MKRingProgressView.xcodeproj; path = MKRingProgressView/MKRingProgressView.xcodeproj; sourceTree = "<group>"; };
@@ -709,7 +711,7 @@
 		38C4D33625E9A1A200D30B77 /* DispatchQueue+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DispatchQueue+Extensions.swift"; sourceTree = "<group>"; };
 		38C4D33925E9A1ED00D30B77 /* NSObject+AssociatedValues.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSObject+AssociatedValues.swift"; sourceTree = "<group>"; };
 		38D0B3B525EBE24900CB6E88 /* Battery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Battery.swift; sourceTree = "<group>"; };
-		38D0B3D825EC07C400CB6E88 /* CarbHystoryEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarbHystoryEntry.swift; sourceTree = "<group>"; };
+		38D0B3D825EC07C400CB6E88 /* CarbsEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarbsEntry.swift; sourceTree = "<group>"; };
 		38F3B2EE25ED8E2A005C48AA /* TempTargetsStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TempTargetsStorage.swift; sourceTree = "<group>"; };
 		38FCF3D525E8FDF40078B0D1 /* MD5.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MD5.swift; sourceTree = "<group>"; };
 		38FCF3ED25E9028E0078B0D1 /* FreeAPSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FreeAPSTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1048,7 +1050,7 @@
 			isa = PBXGroup;
 			children = (
 				3811DE9625C9D88300A708ED /* HTTPResponseStatus.swift */,
-				3811DE9725C9D88300A708ED /* NetworkManager.swift */,
+				3811DE9725C9D88300A708ED /* NightscoutManager.swift */,
 				38FE826925CC82DB001FF17A /* NetworkService.swift */,
 				38FE826C25CC8461001FF17A /* NightscoutAPI.swift */,
 			);
@@ -1213,7 +1215,7 @@
 				388358C725EEF6D200E024B2 /* BasalProfileEntry.swift */,
 				38D0B3B525EBE24900CB6E88 /* Battery.swift */,
 				3870FF4225EC13F40088248F /* BloodGlucose.swift */,
-				38D0B3D825EC07C400CB6E88 /* CarbHystoryEntry.swift */,
+				38D0B3D825EC07C400CB6E88 /* CarbsEntry.swift */,
 				38A9260425F012D8009E3739 /* CarbRatios.swift */,
 				3811DF0125CA9FEA00A708ED /* Credentials.swift */,
 				38AEE73C25F0200C0013F05B /* FreeAPSSettings.swift */,
@@ -1253,6 +1255,7 @@
 				38FCF3FC25E997A80078B0D1 /* PumpHistoryStorage.swift */,
 				38A0363A25ECF07E00FCBB52 /* GlucoseStorage.swift */,
 				38F3B2EE25ED8E2A005C48AA /* TempTargetsStorage.swift */,
+				38AEE75625F0F18E0013F05B /* CarbsStorage.swift */,
 			);
 			path = Storage;
 			sourceTree = "<group>";
@@ -1934,6 +1937,7 @@
 				38C4D33725E9A1A300D30B77 /* DispatchQueue+Extensions.swift in Sources */,
 				3811DE6B25C9D62600A708ED /* OnboardingProvider.swift in Sources */,
 				38B4F3C325E2A20B00E76A18 /* PumpSetupView.swift in Sources */,
+				38AEE75725F0F18E0013F05B /* CarbsStorage.swift in Sources */,
 				38B4F3CA25E502E200E76A18 /* SwiftNotificationCenter.swift in Sources */,
 				3811DEC225C9D99900A708ED /* SecurityContainer.swift in Sources */,
 				38AEE75225F022080013F05B /* SettingsManager.swift in Sources */,
@@ -2000,10 +2004,10 @@
 				3811DE3525C9D49500A708ED /* HomeRootView.swift in Sources */,
 				3811DEC325C9D99900A708ED /* UIContainer.swift in Sources */,
 				3811DE6125C9D4D500A708ED /* ViewModifiers.swift in Sources */,
-				3811DEAC25C9D88300A708ED /* NetworkManager.swift in Sources */,
+				3811DEAC25C9D88300A708ED /* NightscoutManager.swift in Sources */,
 				3811DE3325C9D49500A708ED /* HomeBuilder.swift in Sources */,
 				3811DEA925C9D88300A708ED /* AppearanceManager.swift in Sources */,
-				38D0B3D925EC07C400CB6E88 /* CarbHystoryEntry.swift in Sources */,
+				38D0B3D925EC07C400CB6E88 /* CarbsEntry.swift in Sources */,
 				38A9260525F012D8009E3739 /* CarbRatios.swift in Sources */,
 				3811DE2125C9D48300A708ED /* MainBuilder.swift in Sources */,
 				38FCF3D625E8FDF40078B0D1 /* MD5.swift in Sources */,

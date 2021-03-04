@@ -5,27 +5,14 @@ import Foundation
     init?(from: String)
 }
 
-private func encoder() -> JSONEncoder {
-    let encoder = JSONEncoder()
-    encoder.outputFormatting = .prettyPrinted
-    encoder.dateEncodingStrategy = .iso8601
-    return encoder
-}
-
-private func decoder() -> JSONDecoder {
-    let decoder = JSONDecoder()
-    decoder.dateDecodingStrategy = .iso8601
-    return decoder
-}
-
 extension JSON {
     var rawJSON: RawJSON {
-        String(data: try! encoder().encode(self), encoding: .utf8)!
+        String(data: try! JSONCoding.encoder.encode(self), encoding: .utf8)!
     }
 
     init?(from: String) {
         guard let data = from.data(using: .utf8),
-              let object = try? decoder().decode(Self.self, from: data)
+              let object = try? JSONCoding.decoder.decode(Self.self, from: data)
         else {
             return nil
         }
