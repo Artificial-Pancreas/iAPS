@@ -24,8 +24,8 @@ extension ISFEditor {
         private(set) var units: GlucoseUnits = .mmolL
 
         override func subscribe() {
-            units = settingsManager.settings.units
             let profile = provider.profile
+            units = profile.units
             items = profile.sensitivities.map { value in
                 let timeIndex = timeValues.firstIndex(of: Double(value.offset * 60)) ?? 0
                 let rateIndex = rateValues.firstIndex(of: Double(value.sensitivity)) ?? 0
@@ -56,7 +56,11 @@ extension ISFEditor {
                 let rate = Decimal(self.rateValues[item.rateIndex])
                 return InsulinSensitivityEntry(sensitivity: rate, offset: minutes, start: fotmatter.string(from: date))
             }
-            let profile = InsulinSensitivities(units: units, userPrefferedUnits: units, sensitivities: sensitivities)
+            let profile = InsulinSensitivities(
+                units: units,
+                userPrefferedUnits: settingsManager.settings.units,
+                sensitivities: sensitivities
+            )
             provider.saveProfile(profile)
         }
 
@@ -66,6 +70,10 @@ extension ISFEditor {
                 let sorted = uniq.sorted { $0.timeIndex < $1.timeIndex }
                 sorted.first?.timeIndex = 0
                 self.items = sorted
+
+                if self.items.isEmpty {
+                    self.units = self.settingsManager.settings.units
+                }
             }
         }
     }

@@ -24,8 +24,8 @@ extension TargetsEditor {
         private(set) var units: GlucoseUnits = .mmolL
 
         override func subscribe() {
-            units = settingsManager.settings.units
             let profile = provider.profile
+            units = profile.units
             items = profile.targets.map { value in
                 let timeIndex = timeValues.firstIndex(of: Double(value.offset * 60)) ?? 0
                 let lowIndex = rateValues.firstIndex(of: Double(value.low)) ?? 0
@@ -60,7 +60,7 @@ extension TargetsEditor {
                 let high = Decimal(self.rateValues[item.highIndex])
                 return BGTargetEntry(low: low, high: high, start: fotmatter.string(from: date), offset: minutes)
             }
-            let profile = BGTargets(units: units, userPrefferedUnits: units, targets: targets)
+            let profile = BGTargets(units: units, userPrefferedUnits: settingsManager.settings.units, targets: targets)
             provider.saveProfile(profile)
         }
 
@@ -74,6 +74,10 @@ extension TargetsEditor {
                     }
                 sorted.first?.timeIndex = 0
                 self.items = sorted
+
+                if self.items.isEmpty {
+                    self.units = self.settingsManager.settings.units
+                }
             }
         }
     }

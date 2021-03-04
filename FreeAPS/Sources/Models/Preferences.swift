@@ -1,133 +1,45 @@
 import Foundation
 
 struct Preferences: JSON {
-    var maxIOB: Decimal
-    var maxDailySafetyMultiplier: Decimal
-    var currentBasalSafetyMultiplier: Decimal
-    var autosensMax: Decimal
-    var autosensMin: Decimal
-    var rewindResetsAutosens: Bool
-    var highTemptargetRaisesSensitivity: Bool
-    var lowTemptargetLowersSensitivity: Bool
-    var sensitivityRaisesTarget: Bool
-    var resistanceLowersTarget: Bool
-    var advTargetAdjustments: Bool
-    var exerciseMode: Bool
-    var halfBasalExerciseTarget: Decimal
-    var maxCOB: Decimal
-    var wideBGTargetRange: Bool
-    var skipNeutralTemps: Bool
-    var unsuspendIfNoTemp: Bool
-    var bolusSnoozeDIADivisor: Decimal
-    var min5mCarbimpact: Decimal
-    var autotuneISFAdjustmentFraction: Decimal
-    var remainingCarbsFraction: Decimal
-    var remainingCarbsCap: Decimal
-    var enableUAM: Bool
-    var a52RiskEnable: Bool
-    var enableSMBWithCOB: Bool
-    var enableSMBWithTemptarget: Bool
-    var enableSMBAlways: Bool
-    var enableSMBAfterCarbs: Bool
-    var allowSMBWithHighTemptarget: Bool
-    var maxSMBBasalMinutes: Decimal
-    var maxUAMSMBBasalMinutes: Decimal
-    var smbInterval: Decimal
-    var bolusIncrement: Decimal
-    var curve: InsulinCurve
-    var useCustomPeakTime: Bool
-    var insulinPeakTime: Decimal
-    var carbsReqThreshold: Decimal
-    var offlineHotspot: Bool // unused, for compatibility
-    var noisyCGMTargetMultiplier: Decimal
-    var suspendZerosIOB: Bool
-    var enableEnliteBgproxy: Bool // unused, for compatibility
-
-    init(
-        maxIOB: Decimal = 0,
-        maxDailySafetyMultiplier: Decimal = 3,
-        currentBasalSafetyMultiplier: Decimal = 4,
-        autosensMax: Decimal = 1.2,
-        autosensMin: Decimal = 0.7,
-        rewindResetsAutosens: Bool = true,
-        highTemptargetRaisesSensitivity: Bool = false,
-        lowTemptargetLowersSensitivity: Bool = false,
-        sensitivityRaisesTarget: Bool = true,
-        resistanceLowersTarget: Bool = false,
-        advTargetAdjustments: Bool = false,
-        exerciseMode: Bool = false,
-        halfBasalExerciseTarget: Decimal = 160,
-        maxCOB: Decimal = 120,
-        wideBGTargetRange: Bool = false,
-        skipNeutralTemps: Bool = false,
-        unsuspendIfNoTemp: Bool = false,
-        bolusSnoozeDIADivisor: Decimal = 2,
-        min5mCarbimpact: Decimal = 8,
-        autotuneISFAdjustmentFraction: Decimal = 1.0,
-        remainingCarbsFraction: Decimal = 1.0,
-        remainingCarbsCap: Decimal = 90,
-        enableUAM: Bool = false,
-        a52RiskEnable: Bool = false,
-        enableSMBWithCOB: Bool = false,
-        enableSMBWithTemptarget: Bool = false,
-        enableSMBAlways: Bool = false,
-        enableSMBAfterCarbs: Bool = false,
-        allowSMBWithHighTemptarget: Bool = false,
-        maxSMBBasalMinutes: Decimal = 30,
-        maxUAMSMBBasalMinutes: Decimal = 30,
-        smbInterval: Decimal = 3,
-        bolusIncrement: Decimal = 0.1,
-        curve: InsulinCurve = .rapidActing,
-        useCustomPeakTime: Bool = false,
-        insulinPeakTime: Decimal = 75,
-        carbsReqThreshold: Decimal = 1,
-        offlineHotspot: Bool = false, // unused, for compatibility
-        noisyCGMTargetMultiplier: Decimal = 1.3,
-        suspendZerosIOB: Bool = true,
-        enableEnliteBgproxy: Bool = false // unused, for compatibility
-    ) {
-        self.maxIOB = maxIOB
-        self.maxDailySafetyMultiplier = maxDailySafetyMultiplier
-        self.currentBasalSafetyMultiplier = currentBasalSafetyMultiplier
-        self.autosensMax = autosensMax
-        self.autosensMin = autosensMin
-        self.rewindResetsAutosens = rewindResetsAutosens
-        self.highTemptargetRaisesSensitivity = highTemptargetRaisesSensitivity
-        self.lowTemptargetLowersSensitivity = lowTemptargetLowersSensitivity
-        self.sensitivityRaisesTarget = sensitivityRaisesTarget
-        self.resistanceLowersTarget = resistanceLowersTarget
-        self.advTargetAdjustments = advTargetAdjustments
-        self.exerciseMode = exerciseMode
-        self.halfBasalExerciseTarget = halfBasalExerciseTarget
-        self.maxCOB = maxCOB
-        self.wideBGTargetRange = wideBGTargetRange
-        self.skipNeutralTemps = skipNeutralTemps
-        self.unsuspendIfNoTemp = unsuspendIfNoTemp
-        self.bolusSnoozeDIADivisor = bolusSnoozeDIADivisor
-        self.min5mCarbimpact = min5mCarbimpact
-        self.autotuneISFAdjustmentFraction = autotuneISFAdjustmentFraction
-        self.remainingCarbsFraction = remainingCarbsFraction
-        self.remainingCarbsCap = remainingCarbsCap
-        self.enableUAM = enableUAM
-        self.a52RiskEnable = a52RiskEnable
-        self.enableSMBWithCOB = enableSMBWithCOB
-        self.enableSMBWithTemptarget = enableSMBWithTemptarget
-        self.enableSMBAlways = enableSMBAlways
-        self.enableSMBAfterCarbs = enableSMBAfterCarbs
-        self.allowSMBWithHighTemptarget = allowSMBWithHighTemptarget
-        self.maxSMBBasalMinutes = maxSMBBasalMinutes
-        self.maxUAMSMBBasalMinutes = maxUAMSMBBasalMinutes
-        self.smbInterval = smbInterval
-        self.bolusIncrement = bolusIncrement
-        self.curve = curve
-        self.useCustomPeakTime = useCustomPeakTime
-        self.insulinPeakTime = insulinPeakTime
-        self.carbsReqThreshold = carbsReqThreshold
-        self.offlineHotspot = offlineHotspot
-        self.noisyCGMTargetMultiplier = noisyCGMTargetMultiplier
-        self.suspendZerosIOB = suspendZerosIOB
-        self.enableEnliteBgproxy = enableEnliteBgproxy
-    }
+    var maxIOB: Decimal = 0
+    var maxDailySafetyMultiplier: Decimal = 3
+    var currentBasalSafetyMultiplier: Decimal = 4
+    var autosensMax: Decimal = 1.2
+    var autosensMin: Decimal = 0.7
+    var rewindResetsAutosens: Bool = true
+    var highTemptargetRaisesSensitivity: Bool = false
+    var lowTemptargetLowersSensitivity: Bool = false
+    var sensitivityRaisesTarget: Bool = true
+    var resistanceLowersTarget: Bool = false
+    var advTargetAdjustments: Bool = false
+    var exerciseMode: Bool = false
+    var halfBasalExerciseTarget: Decimal = 160
+    var maxCOB: Decimal = 120
+    var wideBGTargetRange: Bool = false
+    var skipNeutralTemps: Bool = false
+    var unsuspendIfNoTemp: Bool = true
+    var bolusSnoozeDIADivisor: Decimal = 2
+    var min5mCarbimpact: Decimal = 8
+    var autotuneISFAdjustmentFraction: Decimal = 1.0
+    var remainingCarbsFraction: Decimal = 1.0
+    var remainingCarbsCap: Decimal = 90
+    var enableUAM: Bool = false
+    var a52RiskEnable: Bool = false
+    var enableSMBWithCOB: Bool = false
+    var enableSMBWithTemptarget: Bool = false
+    var enableSMBAlways: Bool = false
+    var enableSMBAfterCarbs: Bool = false
+    var allowSMBWithHighTemptarget: Bool = false
+    var maxSMBBasalMinutes: Decimal = 30
+    var maxUAMSMBBasalMinutes: Decimal = 30
+    var smbInterval: Decimal = 3
+    var bolusIncrement: Decimal = 0.1
+    var curve: InsulinCurve = .rapidActing
+    var useCustomPeakTime: Bool = false
+    var insulinPeakTime: Decimal = 75
+    var carbsReqThreshold: Decimal = 1.0
+    var noisyCGMTargetMultiplier: Decimal = 1.3
+    var suspendZerosIOB: Bool = true
 }
 
 extension Preferences {
@@ -169,23 +81,15 @@ extension Preferences {
         case useCustomPeakTime
         case insulinPeakTime
         case carbsReqThreshold
-        case offlineHotspot = "offline_hotspot"
         case noisyCGMTargetMultiplier
         case suspendZerosIOB = "suspend_zeros_iob"
-        case enableEnliteBgproxy
     }
 }
 
-enum InsulinCurve: String, Codable {
+enum InsulinCurve: String, JSON, Identifiable, CaseIterable {
     case rapidActing = "rapid-acting"
     case ultraRapid = "ultra-rapid"
     case bilinear
-}
 
-extension Preferences {
-    var prettyPrinted: String {
-        let encoder = JSONEncoder()
-        encoder.outputFormatting = .prettyPrinted
-        return String(data: try! encoder.encode(self), encoding: .utf8)!
-    }
+    var id: InsulinCurve { self }
 }

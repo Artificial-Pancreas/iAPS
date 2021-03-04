@@ -2,12 +2,12 @@ import SwiftUI
 
 struct DecimalTextField: UIViewRepresentable {
     private var placeholder: String
-    @Binding var value: Double
+    @Binding var value: Decimal
     private var formatter: NumberFormatter
 
     init(
         _ placeholder: String,
-        value: Binding<Double>,
+        value: Binding<Decimal>,
         formatter: NumberFormatter
     ) {
         self.placeholder = placeholder
@@ -93,7 +93,7 @@ struct DecimalTextField: UIViewRepresentable {
 
                 // Set Value
                 let double = number.doubleValue
-                parent.value = double
+                parent.value = Decimal(double)
             }
 
             return isNumber || withDecimal
