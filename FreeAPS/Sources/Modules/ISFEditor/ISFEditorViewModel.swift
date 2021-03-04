@@ -29,25 +29,25 @@ extension ISFEditor {
             items = profile.sensitivities.map { value in
                 let timeIndex = timeValues.firstIndex(of: Double(value.offset * 60)) ?? 0
                 let rateIndex = rateValues.firstIndex(of: Double(value.sensitivity)) ?? 0
-                return Item(rateIndex: rateIndex, selectedIndex: timeIndex)
+                return Item(rateIndex: rateIndex, timeIndex: timeIndex)
             }
         }
 
         func add() {
-            var selected = 0
+            var time = 0
             var rate = 0
             if let last = items.last {
-                selected = last.timeIndex + 1
+                time = last.timeIndex + 1
                 rate = last.rateIndex
             }
 
-            let newItem = Item(rateIndex: rate, selectedIndex: selected)
+            let newItem = Item(rateIndex: rate, timeIndex: time)
 
             items.append(newItem)
         }
 
         func save() {
-            let sensitivities = items.enumerated().map { _, item -> InsulinSensitivityEntry in
+            let sensitivities = items.map { item -> InsulinSensitivityEntry in
                 let fotmatter = DateFormatter()
                 fotmatter.timeZone = TimeZone(secondsFromGMT: 0)
                 fotmatter.dateFormat = "HH:mm:ss"

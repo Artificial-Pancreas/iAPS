@@ -19,19 +19,19 @@ extension BasalProfileEditor {
             items = provider.profile.map { value in
                 let timeIndex = timeValues.firstIndex(of: Double(value.minutes * 60)) ?? 0
                 let rateIndex = rateValues.firstIndex(of: Double(value.rate)) ?? 0
-                return Item(rateIndex: rateIndex, selectedIndex: timeIndex)
+                return Item(rateIndex: rateIndex, timeIndex: timeIndex)
             }
         }
 
         func add() {
-            var selected = 0
+            var time = 0
             var rate = 0
             if let last = items.last {
-                selected = last.timeIndex + 1
+                time = last.timeIndex + 1
                 rate = last.rateIndex
             }
 
-            let newItem = Item(rateIndex: rate, selectedIndex: selected)
+            let newItem = Item(rateIndex: rate, timeIndex: time)
 
             items.append(newItem)
         }

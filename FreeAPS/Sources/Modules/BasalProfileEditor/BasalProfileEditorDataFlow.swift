@@ -9,9 +9,9 @@ enum BasalProfileEditor {
         var rateIndex = 0
         var timeIndex = 0
 
-        init(rateIndex: Int, selectedIndex: Int) {
+        init(rateIndex: Int, timeIndex: Int) {
             self.rateIndex = rateIndex
-            timeIndex = selectedIndex
+            self.timeIndex = timeIndex
         }
 
         static func == (lhs: Item, rhs: Item) -> Bool {

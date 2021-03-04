@@ -6,7 +6,7 @@ extension ISFEditor {
                 ?? InsulinSensitivities(
                     units: .mmolL,
                     userPrefferedUnits: .mmolL,
-                    sensitivities: [InsulinSensitivityEntry(sensitivity: 3.0, offset: 0, start: "00:00:00")]
+                    sensitivities: []
                 )
         }
 

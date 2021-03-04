@@ -19,11 +19,11 @@ extension Settings {
                 }
 
                 Section(header: Text("Configuration")) {
-                    Text("Pump settings").chevronCell().modal(for: .pumpSettingsEditor, from: self)
-                    Text("Basal settings").chevronCell().modal(for: .basalProfileEditor, from: self)
+                    Text("Pump Settings").chevronCell().modal(for: .pumpSettingsEditor, from: self)
+                    Text("Basal Profile").chevronCell().modal(for: .basalProfileEditor, from: self)
                     Text("Insulin Sensitivities").chevronCell().modal(for: .isfEditor, from: self)
                     Text("Carb Ratios").chevronCell().modal(for: .crEditor, from: self)
-                    Text("Targets").chevronCell().modal(for: .targetsEditor, from: self)
+                    Text("Target Ranges").chevronCell().modal(for: .targetsEditor, from: self)
                     Text("Preferences").chevronCell().modal(for: .preferencesEditor, from: self)
                 }
 
@@ -37,7 +37,8 @@ extension Settings {
                             .modal(for: .configEditor(file: OpenAPS.Monitor.pumpHistory), from: self)
                         Text("Basal profile").chevronCell()
                             .modal(for: .configEditor(file: OpenAPS.Settings.basalProfile), from: self)
-                        Text("BG targets").chevronCell().modal(for: .configEditor(file: OpenAPS.Settings.bgTargets), from: self)
+                        Text("Targets ranges").chevronCell()
+                            .modal(for: .configEditor(file: OpenAPS.Settings.bgTargets), from: self)
                         Text("Carb ratios").chevronCell().modal(for: .configEditor(file: OpenAPS.Settings.carbRatios), from: self)
                         Text("Insulin sensitivities").chevronCell()
                             .modal(for: .configEditor(file: OpenAPS.Settings.insulinSensitivities), from: self)

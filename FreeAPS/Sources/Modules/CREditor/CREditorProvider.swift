@@ -5,7 +5,7 @@ extension CREditor {
         var profile: CarbRatios {
             (try? storage.retrieve(OpenAPS.Settings.carbRatios, as: CarbRatios.self))
                 ?? CarbRatios(from: OpenAPS.defaults(for: OpenAPS.Settings.carbRatios))
-                ?? CarbRatios(units: .grams, schedule: [CarbRatioEntry(start: "00:00:00", offset: 0, ratio: 10)])
+                ?? CarbRatios(units: .grams, schedule: [])
         }
 
         func saveProfile(_ profile: CarbRatios) {
