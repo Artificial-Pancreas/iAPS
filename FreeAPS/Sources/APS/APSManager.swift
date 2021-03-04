@@ -55,17 +55,18 @@ final class BaseAPSManager: APSManager, Injectable {
     }
 
     func loop() {
-        loopCancellable = nightscout
-            .fetchGlucose()
-            .flatMap { self.nightscout.fetchCarbs() }
-            .flatMap { self.nightscout.fetchTempTargets() }
-            .flatMap { self.determineBasal() }
-            .sink { _ in } receiveValue: { [weak self] ok in
-                guard let self = self else { return }
-                if ok, self.settings.closedLoop {
-                    self.enactSuggested()
-                }
+        loopCancellable = Publishers.CombineLatest3(
+            nightscout.fetchGlucose(),
+            nightscout.fetchCarbs(),
+            nightscout.fetchTempTargets()
+        )
+        .flatMap { _ in self.determineBasal() }
+        .sink { _ in } receiveValue: { [weak self] ok in
+            guard let self = self else { return }
+            if ok, self.settings.closedLoop {
+                self.enactSuggested()
             }
+        }
     }
 
     func determineBasal() -> AnyPublisher<Bool, Never> {
