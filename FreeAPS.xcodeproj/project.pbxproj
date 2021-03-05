@@ -178,8 +178,10 @@
 		45252C95D220E796FDB3B022 /* ConfigEditorDataFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F8A87AA037BD079BA3528BA /* ConfigEditorDataFlow.swift */; };
 		45717281F743594AA9D87191 /* ConfigEditorRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 920DDB21E5D0EB813197500D /* ConfigEditorRootView.swift */; };
 		460745235E45CA6311C98613 /* AddCarbsBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCB9EC17A17E1D371673E7F0 /* AddCarbsBuilder.swift */; };
+		46159F33C01CDBF822B4F1F8 /* AddTempTargetBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 073A69402BBB977D7E902997 /* AddTempTargetBuilder.swift */; };
 		5075C1608E6249A51495C422 /* TargetsEditorProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BDEA2DC60EDE0A3CA54DC73 /* TargetsEditorProvider.swift */; };
 		53F2382465BF74DB1A967C8B /* PumpConfigProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8630D58BDAD6D9C650B9B39 /* PumpConfigProvider.swift */; };
+		5BFA1C2208114643B77F8CEB /* AddTempTargetProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEE53A13D26F101B332EFFC8 /* AddTempTargetProvider.swift */; };
 		5D16287A969E64D18CE40E44 /* PumpConfigViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F60E97100041040446F44E7 /* PumpConfigViewModel.swift */; };
 		63E890B4D951EAA91C071D5C /* BasalProfileEditorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAFF91130F2FCCC7EBBA11AD /* BasalProfileEditorViewModel.swift */; };
 		642F76A05A4FF530463A9FD0 /* NightscoutConfigRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8782B44544F38F2B2D82C38E /* NightscoutConfigRootView.swift */; };
@@ -190,6 +192,8 @@
 		7F7017AA5C69838FB7E6FECE /* TargetsEditorBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3409A5984BB4171EC484266B /* TargetsEditorBuilder.swift */; };
 		88AB39B23C9552BD6E0C9461 /* ISFEditorRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBB3BAE7494CB771ABAC7B8B /* ISFEditorRootView.swift */; };
 		8B759CFCF47B392BB365C251 /* BasalProfileEditorDataFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67F94DD2853CF42BA4E30616 /* BasalProfileEditorDataFlow.swift */; };
+		8BC2F5A29AD1ED08AC0EE013 /* AddTempTargetRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9AAB83FB6C3B41EFD1846A0 /* AddTempTargetRootView.swift */; };
+		919DBD08F13BAFB180DF6F47 /* AddTempTargetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C3B5FD881CA45DFDEE0EDA9 /* AddTempTargetViewModel.swift */; };
 		9702FF92A09C53942F20D7EA /* TargetsEditorRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DD795BA46B193644D48138C /* TargetsEditorRootView.swift */; };
 		97C1388354C7133C1D5ED72A /* PreferencesEditorBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = E08D9D69E5B052E5C9E8BD32 /* PreferencesEditorBuilder.swift */; };
 		9825E5E923F0B8FA80C8C7C7 /* NightscoutConfigViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0A48AE3AC813A49A517846A /* NightscoutConfigViewModel.swift */; };
@@ -202,6 +206,7 @@
 		BD2B464E0745FBE7B79913F4 /* NightscoutConfigProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BF768BD6264FF7D71D66767 /* NightscoutConfigProvider.swift */; };
 		CA370FC152BC98B3D1832968 /* BasalProfileEditorRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8BCB0C37DEB5EC377B9612 /* BasalProfileEditorRootView.swift */; };
 		CDB87FA71A93F3739D3D338E /* NightscoutConfigBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 111579A6E3AC6BFA79C4DD43 /* NightscoutConfigBuilder.swift */; };
+		D2165E9D78EFF692C1DED1C6 /* AddTempTargetDataFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B8A42073A2D03A278914448 /* AddTempTargetDataFlow.swift */; };
 		D6DEC113821A7F1056C4AA1E /* NightscoutConfigDataFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F2A13DF0EDEEEDC4106AA2A /* NightscoutConfigDataFlow.swift */; };
 		DBA5254DBB2586C98F61220C /* ISFEditorProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F9F137F126D9F8DEB799F26 /* ISFEditorProvider.swift */; };
 		DD399FB31EACB9343C944C4C /* PreferencesEditorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CA3E609094E064C99A4752C /* PreferencesEditorViewModel.swift */; };
@@ -593,6 +598,7 @@
 
 /* Begin PBXFileReference section */
 		0274EE6439B1C3ED70730D41 /* PumpSettingsEditorDataFlow.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PumpSettingsEditorDataFlow.swift; sourceTree = "<group>"; };
+		073A69402BBB977D7E902997 /* AddTempTargetBuilder.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AddTempTargetBuilder.swift; sourceTree = "<group>"; };
 		0CA3E609094E064C99A4752C /* PreferencesEditorViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PreferencesEditorViewModel.swift; sourceTree = "<group>"; };
 		10CAE3534904CDCA0F367017 /* PumpSettingsEditorBuilder.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PumpSettingsEditorBuilder.swift; sourceTree = "<group>"; };
 		111579A6E3AC6BFA79C4DD43 /* NightscoutConfigBuilder.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NightscoutConfigBuilder.swift; sourceTree = "<group>"; };
@@ -741,6 +747,7 @@
 		44080E4709E3AE4B73054563 /* ConfigEditorProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ConfigEditorProvider.swift; sourceTree = "<group>"; };
 		4DD795BA46B193644D48138C /* TargetsEditorRootView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = TargetsEditorRootView.swift; sourceTree = "<group>"; };
 		505E09DC17A0C3D0AF4B66FE /* ISFEditorViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ISFEditorViewModel.swift; sourceTree = "<group>"; };
+		5B8A42073A2D03A278914448 /* AddTempTargetDataFlow.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AddTempTargetDataFlow.swift; sourceTree = "<group>"; };
 		5D5B4F8B4194BB7E260EF251 /* ConfigEditorViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ConfigEditorViewModel.swift; sourceTree = "<group>"; };
 		5F48C3AC770D4CCD0EA2B0C2 /* AddCarbsDataFlow.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AddCarbsDataFlow.swift; sourceTree = "<group>"; };
 		618E62C9757B2F95431B5DC0 /* AddCarbsProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AddCarbsProvider.swift; sourceTree = "<group>"; };
@@ -754,12 +761,14 @@
 		86FC1CFD647CF34508AF9A3B /* AddCarbsRootView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AddCarbsRootView.swift; sourceTree = "<group>"; };
 		8782B44544F38F2B2D82C38E /* NightscoutConfigRootView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NightscoutConfigRootView.swift; sourceTree = "<group>"; };
 		8A965332F237348B119FB858 /* PreferencesEditorRootView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PreferencesEditorRootView.swift; sourceTree = "<group>"; };
+		8C3B5FD881CA45DFDEE0EDA9 /* AddTempTargetViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AddTempTargetViewModel.swift; sourceTree = "<group>"; };
 		920DDB21E5D0EB813197500D /* ConfigEditorRootView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ConfigEditorRootView.swift; sourceTree = "<group>"; };
 		9C8D5F457B5AFF763F8CF3DF /* CREditorProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CREditorProvider.swift; sourceTree = "<group>"; };
 		9F9F137F126D9F8DEB799F26 /* ISFEditorProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ISFEditorProvider.swift; sourceTree = "<group>"; };
 		A0A48AE3AC813A49A517846A /* NightscoutConfigViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NightscoutConfigViewModel.swift; sourceTree = "<group>"; };
 		A8630D58BDAD6D9C650B9B39 /* PumpConfigProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PumpConfigProvider.swift; sourceTree = "<group>"; };
 		AAFF91130F2FCCC7EBBA11AD /* BasalProfileEditorViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = BasalProfileEditorViewModel.swift; sourceTree = "<group>"; };
+		AEE53A13D26F101B332EFFC8 /* AddTempTargetProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AddTempTargetProvider.swift; sourceTree = "<group>"; };
 		AF65DA88F972B56090AD6AC3 /* PumpConfigDataFlow.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PumpConfigDataFlow.swift; sourceTree = "<group>"; };
 		B8C7F882606FF83A21BE00D8 /* PumpSettingsEditorRootView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PumpSettingsEditorRootView.swift; sourceTree = "<group>"; };
 		BA49538D56989D8DA6FCF538 /* TargetsEditorDataFlow.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = TargetsEditorDataFlow.swift; sourceTree = "<group>"; };
@@ -769,6 +778,7 @@
 		E01C416A0792696C6911C1D7 /* PumpConfigBuilder.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PumpConfigBuilder.swift; sourceTree = "<group>"; };
 		E08D9D69E5B052E5C9E8BD32 /* PreferencesEditorBuilder.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PreferencesEditorBuilder.swift; sourceTree = "<group>"; };
 		E492D5B2EEF2119977EA2CE4 /* ConfigEditorBuilder.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ConfigEditorBuilder.swift; sourceTree = "<group>"; };
+		E9AAB83FB6C3B41EFD1846A0 /* AddTempTargetRootView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AddTempTargetRootView.swift; sourceTree = "<group>"; };
 		FBB3BAE7494CB771ABAC7B8B /* ISFEditorRootView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ISFEditorRootView.swift; sourceTree = "<group>"; };
 		FCB9EC17A17E1D371673E7F0 /* AddCarbsBuilder.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AddCarbsBuilder.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -844,6 +854,7 @@
 			isa = PBXGroup;
 			children = (
 				6DC5D590658EF8B8DF94F9F5 /* AddCarbs */,
+				A9A4C88374496B3C89058A89 /* AddTempTarget */,
 				3811DE4525C9D4B800A708ED /* AuthotizedRoot */,
 				A42F1FEDFFD0DDE00AAD54D3 /* BasalProfileEditor */,
 				3811DE0425C9D32E00A708ED /* Base */,
@@ -1414,6 +1425,14 @@
 			path = PreferencesEditor;
 			sourceTree = "<group>";
 		};
+		3F8670D63672AF88E2E9B09E /* View */ = {
+			isa = PBXGroup;
+			children = (
+				E9AAB83FB6C3B41EFD1846A0 /* AddTempTargetRootView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		4E8C7B59F8065047ECE20965 /* View */ = {
 			isa = PBXGroup;
 			children = (
@@ -1518,6 +1537,18 @@
 				18B49BC9587A59E3A347C1CD /* View */,
 			);
 			path = BasalProfileEditor;
+			sourceTree = "<group>";
+		};
+		A9A4C88374496B3C89058A89 /* AddTempTarget */ = {
+			isa = PBXGroup;
+			children = (
+				073A69402BBB977D7E902997 /* AddTempTargetBuilder.swift */,
+				5B8A42073A2D03A278914448 /* AddTempTargetDataFlow.swift */,
+				AEE53A13D26F101B332EFFC8 /* AddTempTargetProvider.swift */,
+				8C3B5FD881CA45DFDEE0EDA9 /* AddTempTargetViewModel.swift */,
+				3F8670D63672AF88E2E9B09E /* View */,
+			);
+			path = AddTempTarget;
 			sourceTree = "<group>";
 		};
 		D533BF261CDC1C3F871E7BFD /* NightscoutConfig */ = {
@@ -2130,6 +2161,11 @@
 				A6F097A14CAAE0CE0D11BE1B /* AddCarbsProvider.swift in Sources */,
 				33E198D3039045D98C3DC5D4 /* AddCarbsViewModel.swift in Sources */,
 				28089E07169488CF6DCC2A31 /* AddCarbsRootView.swift in Sources */,
+				46159F33C01CDBF822B4F1F8 /* AddTempTargetBuilder.swift in Sources */,
+				D2165E9D78EFF692C1DED1C6 /* AddTempTargetDataFlow.swift in Sources */,
+				5BFA1C2208114643B77F8CEB /* AddTempTargetProvider.swift in Sources */,
+				919DBD08F13BAFB180DF6F47 /* AddTempTargetViewModel.swift in Sources */,
+				8BC2F5A29AD1ED08AC0EE013 /* AddTempTargetRootView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

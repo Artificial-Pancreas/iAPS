@@ -1,11 +1,14 @@
 import Foundation
 
 struct TempTarget: JSON {
-    let id: String
+    var id = UUID().uuidString
     let createdAt: Date
-    let targetTop: Int
-    let targetBottom: Int
-    let duration: Int
+    let targetTop: Decimal
+    let targetBottom: Decimal
+    let duration: Decimal
+    let enteredBy: String?
+
+    static let manual = "freeaps-x://manual"
 }
 
 extension TempTarget {
@@ -15,5 +18,6 @@ extension TempTarget {
         case targetTop
         case targetBottom
         case duration
+        case enteredBy
     }
 }

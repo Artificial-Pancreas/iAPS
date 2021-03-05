@@ -18,6 +18,7 @@ enum Screen: Identifiable {
     case targetsEditor
     case preferencesEditor
     case addCarbs
+    case addTempTarget
 
     var id: Int { String(reflecting: self).hashValue }
 }
@@ -57,6 +58,8 @@ extension Screen {
             return PreferencesEditor.Builder(resolver: resolver).buildView()
         case .addCarbs:
             return AddCarbs.Builder(resolver: resolver).buildView()
+        case .addTempTarget:
+            return AddTempTarget.Builder(resolver: resolver).buildView()
         }
     }
 

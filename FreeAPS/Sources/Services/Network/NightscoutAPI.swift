@@ -121,7 +121,10 @@ extension NightscoutAPI {
         components.host = url.host
         components.port = url.port
         components.path = Config.treatmentsPath
-        components.queryItems = [URLQueryItem(name: "find[eventType]", value: "Temporary+Target")]
+        components.queryItems = [
+            URLQueryItem(name: "find[eventType]", value: "Temporary+Target"),
+            URLQueryItem(name: "find[enteredBy][$ne]", value: TempTarget.manual)
+        ]
         if let date = sinceDate {
             let dateItem = URLQueryItem(
                 name: "find[created_at][$gte]",

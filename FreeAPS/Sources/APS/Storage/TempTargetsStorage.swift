@@ -30,7 +30,7 @@ final class BaseTempTargetsStorage: TempTargetsStorage, Injectable {
 
     func syncDate() -> Date {
         guard let events = try? storage.retrieve(OpenAPS.Settings.tempTargets, as: [TempTarget].self),
-              let recent = events.first
+              let recent = events.filter({ $0.enteredBy != TempTarget.manual }).first
         else {
             return Date().addingTimeInterval(-1.days.timeInterval)
         }

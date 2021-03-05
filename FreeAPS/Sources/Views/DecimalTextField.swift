@@ -4,15 +4,21 @@ struct DecimalTextField: UIViewRepresentable {
     private var placeholder: String
     @Binding var value: Decimal
     private var formatter: NumberFormatter
+    private var autofocus: Bool
+    private var cleanInput: Bool
 
     init(
         _ placeholder: String,
         value: Binding<Decimal>,
-        formatter: NumberFormatter
+        formatter: NumberFormatter,
+        autofocus: Bool = false,
+        cleanInput: Bool = false
     ) {
         self.placeholder = placeholder
         _value = value
         self.formatter = formatter
+        self.autofocus = autofocus
+        self.cleanInput = cleanInput
     }
 
     func makeUIView(context: Context) -> UITextField {
@@ -20,7 +26,7 @@ struct DecimalTextField: UIViewRepresentable {
         textfield.keyboardType = .decimalPad
         textfield.delegate = context.coordinator
         textfield.placeholder = placeholder
-        textfield.text = formatter.string(for: value) ?? placeholder
+        textfield.text = cleanInput ? "" : formatter.string(for: value) ?? placeholder
         textfield.textAlignment = .right
 
         let toolBar = UIToolbar(frame: CGRect(
@@ -48,11 +54,14 @@ struct DecimalTextField: UIViewRepresentable {
         )
         toolBar.setItems([clearButton, space, doneButton], animated: true)
         textfield.inputAccessoryView = toolBar
+        if autofocus {
+            textfield.becomeFirstResponder()
+        }
         return textfield
     }
 
     func updateUIView(_: UITextField, context _: Context) {
-        // Do nothing, needed for protocol
+//        textField.text = formatter.string(for: value)
     }
 
     func makeCoordinator() -> Coordinator {

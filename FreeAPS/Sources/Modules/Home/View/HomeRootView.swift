@@ -13,14 +13,8 @@ extension Home {
                         .foregroundColor(.white)
                         .buttonBackground()
                 }
-                Button(action: viewModel.addHighTempTarget) {
-                    Text("Temp target 7.0 mmol/L for 10 min")
-                        .frame(maxWidth: .infinity)
-                        .foregroundColor(.white)
-                        .buttonBackground()
-                }
-                Button(action: viewModel.addLowTempTarget) {
-                    Text("Temp target 4.5 mmol/L for 10 min")
+                Button(action: viewModel.addTempTarget) {
+                    Text("Add temp target")
                         .frame(maxWidth: .infinity)
                         .foregroundColor(.white)
                         .buttonBackground()

@@ -14,26 +14,8 @@ extension Home {
             apsManager.loop()
         }
 
-        func addHighTempTarget() {
-            temps
-                .storeTempTargets([TempTarget(
-                    id: UUID().uuidString,
-                    createdAt: Date(),
-                    targetTop: 126,
-                    targetBottom: 126,
-                    duration: 10
-                )])
-        }
-
-        func addLowTempTarget() {
-            temps
-                .storeTempTargets([TempTarget(
-                    id: UUID().uuidString,
-                    createdAt: Date(),
-                    targetTop: 81,
-                    targetBottom: 81,
-                    duration: 10
-                )])
+        func addTempTarget() {
+            showModal(for: .addTempTarget)
         }
     }
 }

@@ -7,7 +7,7 @@ extension AddCarbs {
         private var formatter: NumberFormatter {
             let formatter = NumberFormatter()
             formatter.numberStyle = .decimal
-            formatter.allowsFloats = false
+            formatter.maximumFractionDigits = 0
             return formatter
         }
 
@@ -17,7 +17,7 @@ extension AddCarbs {
                     HStack {
                         Text("Amount")
                         Spacer()
-                        DecimalTextField("0", value: $viewModel.carbs, formatter: formatter)
+                        DecimalTextField("0", value: $viewModel.carbs, formatter: formatter, autofocus: true, cleanInput: true)
                         Text("grams").foregroundColor(.secondary)
                     }
                     DatePicker("Date", selection: $viewModel.date)
