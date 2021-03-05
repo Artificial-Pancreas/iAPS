@@ -7,7 +7,7 @@ extension Home {
         @Injected() var temps: TempTargetsStorage!
 
         func addCarbs() {
-            history.storeJournalCarbs(15)
+            showModal(for: .addCarbs)
         }
 
         func runLoop() {

@@ -89,7 +89,10 @@ extension NightscoutAPI {
         components.host = url.host
         components.port = url.port
         components.path = Config.treatmentsPath
-        components.queryItems = [URLQueryItem(name: "find[carbs][$exists]", value: "true")]
+        components.queryItems = [
+            URLQueryItem(name: "find[carbs][$exists]", value: "true"),
+            URLQueryItem(name: "find[enteredBy][$ne]", value: CarbsEntry.manual)
+        ]
         if let date = sinceDate {
             let dateItem = URLQueryItem(
                 name: "find[created_at][$gte]",

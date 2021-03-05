@@ -55,6 +55,12 @@ extension OpenAPS {
         static let enacted = "enact/enacted.json"
     }
 
+    enum Upload {
+        static let nsStatus = "upload/ns-status.json"
+        static let latestTreatments = "upload/latest-treatments.json"
+        static let recentPumphistory = "upload/recent-pumphistory.json"
+    }
+
     enum Function {
         static let freeaps = "freeaps"
         static let generate = "generate"

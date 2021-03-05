@@ -6,6 +6,7 @@ protocol NightscoutManager {
     func fetchGlucose() -> AnyPublisher<Void, Never>
     func fetchCarbs() -> AnyPublisher<Void, Never>
     func fetchTempTargets() -> AnyPublisher<Void, Never>
+    func upload()
 }
 
 final class BaseNightscoutManager: NightscoutManager, Injectable {
@@ -72,4 +73,12 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
                 return ()
             }.eraseToAnyPublisher()
     }
+
+    func upload() {}
+
+    private func uploadStatus() {}
+
+    private func uploadTreatments() {}
+
+    private func uploadPumphistory() {}
 }

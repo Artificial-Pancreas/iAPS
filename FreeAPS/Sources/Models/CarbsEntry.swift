@@ -2,8 +2,10 @@ import Foundation
 
 struct CarbsEntry: JSON {
     let createdAt: Date
-    let carbs: Int
+    let carbs: Decimal
     let enteredBy: String?
+
+    static let manual = "freeaps-x://manual"
 }
 
 extension CarbsEntry {

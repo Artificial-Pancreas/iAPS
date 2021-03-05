@@ -11,8 +11,10 @@
 		1BBB001DAD60F3B8CEA4B1C7 /* ISFEditorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505E09DC17A0C3D0AF4B66FE /* ISFEditorViewModel.swift */; };
 		1D086541F369D339A74893AC /* BasalProfileEditorBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA56D2DCAB9E0A8AF24D984 /* BasalProfileEditorBuilder.swift */; };
 		25548F1F0AA8E42FF5F96DBA /* PumpSettingsEditorBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10CAE3534904CDCA0F367017 /* PumpSettingsEditorBuilder.swift */; };
+		28089E07169488CF6DCC2A31 /* AddCarbsRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86FC1CFD647CF34508AF9A3B /* AddCarbsRootView.swift */; };
 		2BE9A6FA20875F6F4F9CD461 /* PumpSettingsEditorProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = D97F14812C1AFED3621165A5 /* PumpSettingsEditorProvider.swift */; };
 		3340E0D14D4701342D459C95 /* PumpConfigBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = E01C416A0792696C6911C1D7 /* PumpConfigBuilder.swift */; };
+		33E198D3039045D98C3DC5D4 /* AddCarbsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39E7C997E56DAF8D28D09014 /* AddCarbsViewModel.swift */; };
 		3811DE0925C9D32F00A708ED /* BaseViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3811DE0525C9D32E00A708ED /* BaseViewModel.swift */; };
 		3811DE0A25C9D32F00A708ED /* BaseModuleBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3811DE0625C9D32E00A708ED /* BaseModuleBuilder.swift */; };
 		3811DE0B25C9D32F00A708ED /* BaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3811DE0725C9D32E00A708ED /* BaseView.swift */; };
@@ -90,6 +92,7 @@
 		383948DA25CD64D500E91849 /* Glucose.swift in Sources */ = {isa = PBXBuildFile; fileRef = 383948D925CD64D500E91849 /* Glucose.swift */; };
 		384E803425C385E60086DB71 /* JavaScriptWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 384E803325C385E60086DB71 /* JavaScriptWorker.swift */; };
 		384E803825C388640086DB71 /* Script.swift in Sources */ = {isa = PBXBuildFile; fileRef = 384E803725C388640086DB71 /* Script.swift */; };
+		385CEA8225F23DFD002D6D5B /* NightscoutStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 385CEA8125F23DFD002D6D5B /* NightscoutStatus.swift */; };
 		386ED25E25EE48B500820A49 /* MockKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38B17ADB25DD6A40005CAE3D /* MockKit.framework */; };
 		386ED25F25EE48B500820A49 /* MockKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 38B17ADB25DD6A40005CAE3D /* MockKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		386ED26025EE48B500820A49 /* MockKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38B17ADF25DD6A40005CAE3D /* MockKitUI.framework */; };
@@ -174,6 +177,7 @@
 		448B6FCB252BD4796E2960C0 /* PumpSettingsEditorDataFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0274EE6439B1C3ED70730D41 /* PumpSettingsEditorDataFlow.swift */; };
 		45252C95D220E796FDB3B022 /* ConfigEditorDataFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F8A87AA037BD079BA3528BA /* ConfigEditorDataFlow.swift */; };
 		45717281F743594AA9D87191 /* ConfigEditorRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 920DDB21E5D0EB813197500D /* ConfigEditorRootView.swift */; };
+		460745235E45CA6311C98613 /* AddCarbsBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCB9EC17A17E1D371673E7F0 /* AddCarbsBuilder.swift */; };
 		5075C1608E6249A51495C422 /* TargetsEditorProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BDEA2DC60EDE0A3CA54DC73 /* TargetsEditorProvider.swift */; };
 		53F2382465BF74DB1A967C8B /* PumpConfigProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8630D58BDAD6D9C650B9B39 /* PumpConfigProvider.swift */; };
 		5D16287A969E64D18CE40E44 /* PumpConfigViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F60E97100041040446F44E7 /* PumpConfigViewModel.swift */; };
@@ -193,6 +197,7 @@
 		A0B8EC8CC5CD1DD237D1BCD2 /* PumpSettingsEditorRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8C7F882606FF83A21BE00D8 /* PumpSettingsEditorRootView.swift */; };
 		A228DF96647338139F152B15 /* PreferencesEditorDataFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12204445D7632AF09264A979 /* PreferencesEditorDataFlow.swift */; };
 		A33352ED40476125EBAC6EE0 /* CREditorDataFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E22146D3DF4853786C78132 /* CREditorDataFlow.swift */; };
+		A6F097A14CAAE0CE0D11BE1B /* AddCarbsProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 618E62C9757B2F95431B5DC0 /* AddCarbsProvider.swift */; };
 		AD3D2CD42CD01B9EB8F26522 /* PumpConfigDataFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF65DA88F972B56090AD6AC3 /* PumpConfigDataFlow.swift */; };
 		BD2B464E0745FBE7B79913F4 /* NightscoutConfigProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BF768BD6264FF7D71D66767 /* NightscoutConfigProvider.swift */; };
 		CA370FC152BC98B3D1832968 /* BasalProfileEditorRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8BCB0C37DEB5EC377B9612 /* BasalProfileEditorRootView.swift */; };
@@ -204,6 +209,7 @@
 		E13B7DAB2A435F57066AF02E /* TargetsEditorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36F58DDD71F0E795464FA3F0 /* TargetsEditorViewModel.swift */; };
 		E39E418C56A5A46B61D960EE /* ConfigEditorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D5B4F8B4194BB7E260EF251 /* ConfigEditorViewModel.swift */; };
 		E4984C5262A90469788754BB /* PreferencesEditorProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F8BA8533F56BC55748CA877 /* PreferencesEditorProvider.swift */; };
+		E97285ED9B814CD5253C6658 /* AddCarbsDataFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F48C3AC770D4CCD0EA2B0C2 /* AddCarbsDataFlow.swift */; };
 		E974172296125A5AE99E634C /* PumpConfigRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AD22C985B79A2F0D2EA3D9D /* PumpConfigRootView.swift */; };
 		F215CAB49BA4B5A01C3BC6B6 /* ISFEditorBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3239D795F77DEB5676F9427A /* ISFEditorBuilder.swift */; };
 		F5F7E6C1B7F098F59EB67EC5 /* TargetsEditorDataFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA49538D56989D8DA6FCF538 /* TargetsEditorDataFlow.swift */; };
@@ -672,6 +678,7 @@
 		383948D925CD64D500E91849 /* Glucose.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Glucose.swift; sourceTree = "<group>"; };
 		384E803325C385E60086DB71 /* JavaScriptWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JavaScriptWorker.swift; sourceTree = "<group>"; };
 		384E803725C388640086DB71 /* Script.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Script.swift; sourceTree = "<group>"; };
+		385CEA8125F23DFD002D6D5B /* NightscoutStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NightscoutStatus.swift; sourceTree = "<group>"; };
 		3870FF4225EC13F40088248F /* BloodGlucose.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BloodGlucose.swift; sourceTree = "<group>"; };
 		3871F38625ED661C0013ECB5 /* Suggestion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Suggestion.swift; sourceTree = "<group>"; };
 		3871F39B25ED892B0013ECB5 /* TempTarget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TempTarget.swift; sourceTree = "<group>"; };
@@ -724,6 +731,7 @@
 		38FCF3FC25E997A80078B0D1 /* PumpHistoryStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PumpHistoryStorage.swift; sourceTree = "<group>"; };
 		38FE826925CC82DB001FF17A /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		38FE826C25CC8461001FF17A /* NightscoutAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NightscoutAPI.swift; sourceTree = "<group>"; };
+		39E7C997E56DAF8D28D09014 /* AddCarbsViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AddCarbsViewModel.swift; sourceTree = "<group>"; };
 		3BDEA2DC60EDE0A3CA54DC73 /* TargetsEditorProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = TargetsEditorProvider.swift; sourceTree = "<group>"; };
 		3BF768BD6264FF7D71D66767 /* NightscoutConfigProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NightscoutConfigProvider.swift; sourceTree = "<group>"; };
 		3F60E97100041040446F44E7 /* PumpConfigViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PumpConfigViewModel.swift; sourceTree = "<group>"; };
@@ -734,6 +742,8 @@
 		4DD795BA46B193644D48138C /* TargetsEditorRootView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = TargetsEditorRootView.swift; sourceTree = "<group>"; };
 		505E09DC17A0C3D0AF4B66FE /* ISFEditorViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ISFEditorViewModel.swift; sourceTree = "<group>"; };
 		5D5B4F8B4194BB7E260EF251 /* ConfigEditorViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ConfigEditorViewModel.swift; sourceTree = "<group>"; };
+		5F48C3AC770D4CCD0EA2B0C2 /* AddCarbsDataFlow.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AddCarbsDataFlow.swift; sourceTree = "<group>"; };
+		618E62C9757B2F95431B5DC0 /* AddCarbsProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AddCarbsProvider.swift; sourceTree = "<group>"; };
 		64AA5E04A2761F6EEA6568E1 /* CREditorViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CREditorViewModel.swift; sourceTree = "<group>"; };
 		67F94DD2853CF42BA4E30616 /* BasalProfileEditorDataFlow.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = BasalProfileEditorDataFlow.swift; sourceTree = "<group>"; };
 		6BA56D2DCAB9E0A8AF24D984 /* BasalProfileEditorBuilder.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = BasalProfileEditorBuilder.swift; sourceTree = "<group>"; };
@@ -741,6 +751,7 @@
 		72778B68C3004F71F6E79BDC /* PumpSettingsEditorViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PumpSettingsEditorViewModel.swift; sourceTree = "<group>"; };
 		79BDA519C9B890FD9A5DFCF3 /* ISFEditorDataFlow.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ISFEditorDataFlow.swift; sourceTree = "<group>"; };
 		7E22146D3DF4853786C78132 /* CREditorDataFlow.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CREditorDataFlow.swift; sourceTree = "<group>"; };
+		86FC1CFD647CF34508AF9A3B /* AddCarbsRootView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AddCarbsRootView.swift; sourceTree = "<group>"; };
 		8782B44544F38F2B2D82C38E /* NightscoutConfigRootView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NightscoutConfigRootView.swift; sourceTree = "<group>"; };
 		8A965332F237348B119FB858 /* PreferencesEditorRootView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PreferencesEditorRootView.swift; sourceTree = "<group>"; };
 		920DDB21E5D0EB813197500D /* ConfigEditorRootView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ConfigEditorRootView.swift; sourceTree = "<group>"; };
@@ -759,6 +770,7 @@
 		E08D9D69E5B052E5C9E8BD32 /* PreferencesEditorBuilder.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PreferencesEditorBuilder.swift; sourceTree = "<group>"; };
 		E492D5B2EEF2119977EA2CE4 /* ConfigEditorBuilder.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ConfigEditorBuilder.swift; sourceTree = "<group>"; };
 		FBB3BAE7494CB771ABAC7B8B /* ISFEditorRootView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ISFEditorRootView.swift; sourceTree = "<group>"; };
+		FCB9EC17A17E1D371673E7F0 /* AddCarbsBuilder.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AddCarbsBuilder.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -831,6 +843,7 @@
 		3811DE0325C9D31700A708ED /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				6DC5D590658EF8B8DF94F9F5 /* AddCarbs */,
 				3811DE4525C9D4B800A708ED /* AuthotizedRoot */,
 				A42F1FEDFFD0DDE00AAD54D3 /* BasalProfileEditor */,
 				3811DE0425C9D32E00A708ED /* Base */,
@@ -1226,6 +1239,7 @@
 				38AEE73C25F0200C0013F05B /* FreeAPSSettings.swift */,
 				383948D925CD64D500E91849 /* Glucose.swift */,
 				382C133625F13A1E00715CE1 /* InsulinSensitivities.swift */,
+				385CEA8125F23DFD002D6D5B /* NightscoutStatus.swift */,
 				3895E4C525B9E00D00214B37 /* Preferences.swift */,
 				38A13D3125E28B4B00EAA382 /* PumpHistoryEvent.swift */,
 				3883583325EEB38000E024B2 /* PumpSettings.swift */,
@@ -1416,6 +1430,14 @@
 			path = View;
 			sourceTree = "<group>";
 		};
+		50E85421406582CF9D321A20 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				86FC1CFD647CF34508AF9A3B /* AddCarbsRootView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		510CCF29FD3216C5BBC49A15 /* View */ = {
 			isa = PBXGroup;
 			children = (
@@ -1452,6 +1474,18 @@
 				34CA4DF169B53D67EF18ED8A /* View */,
 			);
 			path = TargetsEditor;
+			sourceTree = "<group>";
+		};
+		6DC5D590658EF8B8DF94F9F5 /* AddCarbs */ = {
+			isa = PBXGroup;
+			children = (
+				FCB9EC17A17E1D371673E7F0 /* AddCarbsBuilder.swift */,
+				5F48C3AC770D4CCD0EA2B0C2 /* AddCarbsDataFlow.swift */,
+				618E62C9757B2F95431B5DC0 /* AddCarbsProvider.swift */,
+				39E7C997E56DAF8D28D09014 /* AddCarbsViewModel.swift */,
+				50E85421406582CF9D321A20 /* View */,
+			);
+			path = AddCarbs;
 			sourceTree = "<group>";
 		};
 		833DA2F9E47E64E305F92F9D /* View */ = {
@@ -2069,6 +2103,7 @@
 				8B759CFCF47B392BB365C251 /* BasalProfileEditorDataFlow.swift in Sources */,
 				FA630397F76B582C8D8681A7 /* BasalProfileEditorProvider.swift in Sources */,
 				63E890B4D951EAA91C071D5C /* BasalProfileEditorViewModel.swift in Sources */,
+				385CEA8225F23DFD002D6D5B /* NightscoutStatus.swift in Sources */,
 				CA370FC152BC98B3D1832968 /* BasalProfileEditorRootView.swift in Sources */,
 				F215CAB49BA4B5A01C3BC6B6 /* ISFEditorBuilder.swift in Sources */,
 				6632A0DC746872439A858B44 /* ISFEditorDataFlow.swift in Sources */,
@@ -2090,6 +2125,11 @@
 				E4984C5262A90469788754BB /* PreferencesEditorProvider.swift in Sources */,
 				DD399FB31EACB9343C944C4C /* PreferencesEditorViewModel.swift in Sources */,
 				44190F0BBA464D74B857D1FB /* PreferencesEditorRootView.swift in Sources */,
+				460745235E45CA6311C98613 /* AddCarbsBuilder.swift in Sources */,
+				E97285ED9B814CD5253C6658 /* AddCarbsDataFlow.swift in Sources */,
+				A6F097A14CAAE0CE0D11BE1B /* AddCarbsProvider.swift in Sources */,
+				33E198D3039045D98C3DC5D4 /* AddCarbsViewModel.swift in Sources */,
+				28089E07169488CF6DCC2A31 /* AddCarbsRootView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

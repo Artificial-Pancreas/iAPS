@@ -30,7 +30,7 @@ final class BaseCarbsStorage: CarbsStorage, Injectable {
 
     func syncDate() -> Date {
         guard let events = try? storage.retrieve(OpenAPS.Monitor.carbHistory, as: [CarbsEntry].self),
-              let recent = events.first
+              let recent = events.filter({ $0.enteredBy != CarbsEntry.manual }).first
         else {
             return Date().addingTimeInterval(-1.days.timeInterval)
         }

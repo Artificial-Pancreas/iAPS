@@ -8,7 +8,7 @@ extension Home {
             VStack {
                 Spacer()
                 Button(action: viewModel.addCarbs) {
-                    Text("Add 15 g carbs")
+                    Text("Add carbs")
                         .frame(maxWidth: .infinity)
                         .foregroundColor(.white)
                         .buttonBackground()

@@ -1,0 +1,36 @@
+import SwiftUI
+
+extension AddCarbs {
+    struct RootView: BaseView {
+        @EnvironmentObject var viewModel: ViewModel<Provider>
+
+        private var formatter: NumberFormatter {
+            let formatter = NumberFormatter()
+            formatter.numberStyle = .decimal
+            formatter.allowsFloats = false
+            return formatter
+        }
+
+        var body: some View {
+            Form {
+                Section {
+                    HStack {
+                        Text("Amount")
+                        Spacer()
+                        DecimalTextField("0", value: $viewModel.carbs, formatter: formatter)
+                        Text("grams").foregroundColor(.secondary)
+                    }
+                    DatePicker("Date", selection: $viewModel.date)
+                }
+
+                Section {
+                    Button { viewModel.add() }
+                    label: { Text("Continue") }
+                }
+            }
+            .navigationTitle("Add Carbs")
+            .navigationBarTitleDisplayMode(.automatic)
+            .navigationBarItems(leading: Button("Close", action: viewModel.hideModal))
+        }
+    }
+}
