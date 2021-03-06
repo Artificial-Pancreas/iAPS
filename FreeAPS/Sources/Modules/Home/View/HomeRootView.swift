@@ -7,6 +7,9 @@ extension Home {
         var body: some View {
             Form {
                 GlucoseChartView(glucose: $viewModel.glucose, suggestion: $viewModel.suggestion).frame(height: 150)
+                if let reason = viewModel.suggestion?.reason {
+                    Text(reason).font(.caption)
+                }
                 Button(action: viewModel.addCarbs) {
                     Text("Add carbs")
                 }
