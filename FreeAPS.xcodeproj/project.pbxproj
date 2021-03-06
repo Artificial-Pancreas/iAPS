@@ -122,6 +122,8 @@
 		388E5A5C25B6F0770019842D /* JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 388E5A5B25B6F0770019842D /* JSON.swift */; };
 		388E5A6025B6F2310019842D /* Autosens.swift in Sources */ = {isa = PBXBuildFile; fileRef = 388E5A5F25B6F2310019842D /* Autosens.swift */; };
 		3895E4C625B9E00D00214B37 /* Preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3895E4C525B9E00D00214B37 /* Preferences.swift */; };
+		389FE32725F3ABE6002E92E0 /* CareKitUI in Frameworks */ = {isa = PBXBuildFile; productRef = 389FE32625F3ABE6002E92E0 /* CareKitUI */; };
+		389FE32A25F3AC44002E92E0 /* GlucoseChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 389FE32925F3AC44002E92E0 /* GlucoseChartView.swift */; };
 		38A0363B25ECF07E00FCBB52 /* GlucoseStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38A0363A25ECF07E00FCBB52 /* GlucoseStorage.swift */; };
 		38A0364225ED069400FCBB52 /* TempBasal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38A0364125ED069400FCBB52 /* TempBasal.swift */; };
 		38A13D3225E28B4B00EAA382 /* PumpHistoryEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38A13D3125E28B4B00EAA382 /* PumpHistoryEvent.swift */; };
@@ -713,6 +715,7 @@
 		388E5A5B25B6F0770019842D /* JSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSON.swift; sourceTree = "<group>"; };
 		388E5A5F25B6F2310019842D /* Autosens.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Autosens.swift; sourceTree = "<group>"; };
 		3895E4C525B9E00D00214B37 /* Preferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Preferences.swift; sourceTree = "<group>"; };
+		389FE32925F3AC44002E92E0 /* GlucoseChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlucoseChartView.swift; sourceTree = "<group>"; };
 		38A0363A25ECF07E00FCBB52 /* GlucoseStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlucoseStorage.swift; sourceTree = "<group>"; };
 		38A0364125ED069400FCBB52 /* TempBasal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TempBasal.swift; sourceTree = "<group>"; };
 		38A13D3125E28B4B00EAA382 /* PumpHistoryEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PumpHistoryEvent.swift; sourceTree = "<group>"; };
@@ -818,6 +821,7 @@
 				38B17B6625DD90E0005CAE3D /* SwiftDate in Frameworks */,
 				38B17B8E25DD9419005CAE3D /* Crypto.framework in Frameworks */,
 				38B17B8A25DD93F1005CAE3D /* MKRingProgressView.framework in Frameworks */,
+				389FE32725F3ABE6002E92E0 /* CareKitUI in Frameworks */,
 				38B17B9625DD941A005CAE3D /* RileyLinkKit.framework in Frameworks */,
 				38B17B8625DD93BA005CAE3D /* LoopKit.framework in Frameworks */,
 				386ED27125EE526D00820A49 /* MockKit.framework in Frameworks */,
@@ -963,6 +967,7 @@
 			isa = PBXGroup;
 			children = (
 				3811DE2E25C9D49500A708ED /* HomeRootView.swift */,
+				389FE32925F3AC44002E92E0 /* GlucoseChartView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1683,6 +1688,7 @@
 				3811DE0F25C9D37700A708ED /* Swinject */,
 				383948D225CD4D6D00E91849 /* Disk */,
 				38B17B6525DD90E0005CAE3D /* SwiftDate */,
+				389FE32625F3ABE6002E92E0 /* CareKitUI */,
 			);
 			productName = FreeAPS;
 			productReference = 388E595825AD948C0019842D /* FreeAPS.app */;
@@ -1737,6 +1743,7 @@
 				3811DE0E25C9D37700A708ED /* XCRemoteSwiftPackageReference "Swinject" */,
 				383948D125CD4D6D00E91849 /* XCRemoteSwiftPackageReference "Disk" */,
 				38B17B6425DD90E0005CAE3D /* XCRemoteSwiftPackageReference "SwiftDate" */,
+				389FE32525F3ABE6002E92E0 /* XCRemoteSwiftPackageReference "CareKit" */,
 			);
 			productRefGroup = 388E595925AD948C0019842D /* Products */;
 			projectDirPath = "";
@@ -2074,6 +2081,7 @@
 				382C133725F13A1E00715CE1 /* InsulinSensitivities.swift in Sources */,
 				3811DE7B25C9D6D300A708ED /* LoginProvider.swift in Sources */,
 				383948D625CD4D8900E91849 /* FileStorage.swift in Sources */,
+				389FE32A25F3AC44002E92E0 /* GlucoseChartView.swift in Sources */,
 				3811DE4125C9D4A100A708ED /* SettingsRootView.swift in Sources */,
 				388E595C25AD948C0019842D /* FreeAPSApp.swift in Sources */,
 				3811DE8925C9D6DD00A708ED /* RequestPermissionsProvider.swift in Sources */,
@@ -2570,6 +2578,14 @@
 				minimumVersion = 0.6.4;
 			};
 		};
+		389FE32525F3ABE6002E92E0 /* XCRemoteSwiftPackageReference "CareKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/carekit-apple/CareKit";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.1;
+			};
+		};
 		38B17B6425DD90E0005CAE3D /* XCRemoteSwiftPackageReference "SwiftDate" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/malcommac/SwiftDate";
@@ -2590,6 +2606,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 383948D125CD4D6D00E91849 /* XCRemoteSwiftPackageReference "Disk" */;
 			productName = Disk;
+		};
+		389FE32625F3ABE6002E92E0 /* CareKitUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 389FE32525F3ABE6002E92E0 /* XCRemoteSwiftPackageReference "CareKit" */;
+			productName = CareKitUI;
 		};
 		38B17B6525DD90E0005CAE3D /* SwiftDate */ = {
 			isa = XCSwiftPackageProductDependency;

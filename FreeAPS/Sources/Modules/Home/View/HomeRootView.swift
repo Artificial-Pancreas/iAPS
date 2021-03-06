@@ -5,37 +5,23 @@ extension Home {
         @EnvironmentObject var viewModel: ViewModel<Provider>
 
         var body: some View {
-            VStack {
-                Spacer()
+            Form {
+                GlucoseChartView(glucose: $viewModel.glucose).frame(height: 150)
                 Button(action: viewModel.addCarbs) {
                     Text("Add carbs")
-                        .frame(maxWidth: .infinity)
-                        .foregroundColor(.white)
-                        .buttonBackground()
                 }
                 Button(action: viewModel.addTempTarget) {
                     Text("Add temp target")
-                        .frame(maxWidth: .infinity)
-                        .foregroundColor(.white)
-                        .buttonBackground()
                 }
                 Button(action: viewModel.bolus) {
                     Text("Bolus")
-                        .frame(maxWidth: .infinity)
-                        .foregroundColor(.white)
-                        .buttonBackground()
                 }
                 Button(action: viewModel.runLoop) {
                     Text("Run loop")
-                        .frame(maxWidth: .infinity)
-                        .foregroundColor(.white)
-                        .buttonBackground()
                 }
-                Spacer()
             }
-            .padding()
             .navigationTitle("Home")
-            .navigationBarTitleDisplayMode(.automatic)
+            .navigationBarHidden(true)
         }
     }
 }

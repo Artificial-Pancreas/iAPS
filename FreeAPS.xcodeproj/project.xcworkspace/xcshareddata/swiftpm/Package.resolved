@@ -2,6 +2,15 @@
   "object": {
     "pins": [
       {
+        "package": "CareKit",
+        "repositoryURL": "https://github.com/carekit-apple/CareKit",
+        "state": {
+          "branch": null,
+          "revision": "51cef0b8e88b3c47c183fe36e8afc1f695bae44f",
+          "version": "2.0.1"
+        }
+      },
+      {
         "package": "Disk",
         "repositoryURL": "https://github.com/saoudrizwan/Disk",
         "state": {
