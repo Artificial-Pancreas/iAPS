@@ -27,6 +27,10 @@ extension Home {
             showModal(for: .addTempTarget)
         }
 
+        func manualTampBasal() {
+            showModal(for: .manualTempBasal)
+        }
+
         func bolus() {
             showModal(for: .bolus)
         }

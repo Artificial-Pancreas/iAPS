@@ -11,6 +11,7 @@ protocol APSManager {
     func enactBolus(amount: Double)
     var pumpManager: PumpManagerUI? { get set }
     var pumpDisplayState: CurrentValueSubject<PumpDisplayState?, Never> { get }
+    func enactTempBasal(rate: Double, duration: TimeInterval)
 }
 
 final class BaseAPSManager: APSManager, Injectable {
@@ -126,6 +127,20 @@ final class BaseAPSManager: APSManager, Injectable {
                 print("Bolus succeeded")
             case let .failure(error):
                 print("Bolus failed with error: \(error.localizedDescription)")
+            }
+        }
+    }
+
+    func enactTempBasal(rate: Double, duration: TimeInterval) {
+        guard let pump = pumpManager else { return }
+
+        let roundedAmout = pump.roundToSupportedBasalRate(unitsPerHour: rate)
+        pump.enactTempBasal(unitsPerHour: roundedAmout, for: duration) { result in
+            switch result {
+            case .success:
+                print("Temp Basal succeeded")
+            case let .failure(error):
+                print("Temp Basal failed with error: \(error.localizedDescription)")
             }
         }
     }

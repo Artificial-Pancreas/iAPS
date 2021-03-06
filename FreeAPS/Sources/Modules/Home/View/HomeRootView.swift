@@ -19,6 +19,9 @@ extension Home {
                 Button(action: viewModel.bolus) {
                     Text("Bolus")
                 }
+                Button(action: viewModel.manualTampBasal) {
+                    Text("Manual temp basal")
+                }
                 Button(action: viewModel.runLoop) {
                     Text("Run loop now")
                 }
