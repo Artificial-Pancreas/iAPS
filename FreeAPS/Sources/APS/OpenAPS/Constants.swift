@@ -22,7 +22,6 @@ extension OpenAPS {
     }
 
     enum Settings {
-        static let freeAPSSettings = "freeaps_settings.json"
         static let preferences = "preferences.json"
         static let autotune = "settings/autotune.json"
         static let autosense = "settings/autosense.json"
@@ -66,5 +65,11 @@ extension OpenAPS {
         static let generate = "generate"
         static let tempBasalFunctions = "tempBasalFunctions"
         static let exportDefaults = "exportDefaults"
+    }
+
+    enum FreeAPS {
+        static let settings = "freeaps/freeaps_settings.json"
+        static let announcements = "freeaps/announcements.json"
+        static let announcementsEnacted = "freeaps/announcements_enacted.json"
     }
 }

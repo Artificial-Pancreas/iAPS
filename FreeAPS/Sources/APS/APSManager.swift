@@ -5,7 +5,7 @@ import LoopKitUI
 import Swinject
 
 protocol APSManager {
-    func loop()
+    func fetchAndLoop()
     func autosense()
     func autotune()
     var pumpManager: PumpManagerUI? { get set }
@@ -18,6 +18,7 @@ final class BaseAPSManager: APSManager, Injectable {
     @Injected() private var glucoseStorage: GlucoseStorage!
     @Injected() private var tempTargetsStorage: TempTargetsStorage!
     @Injected() private var carbsStorage: CarbsStorage!
+    @Injected() private var announcementsStorage: AnnouncementsStorage!
     @Injected() private var deviceDataManager: DeviceDataManager!
     @Injected() private var nightscout: NightscoutManager!
     @Injected() private var settingsManager: SettingsManager!
@@ -26,6 +27,7 @@ final class BaseAPSManager: APSManager, Injectable {
     private var loopCancellable: AnyCancellable?
     private var pumpCancellable: AnyCancellable?
     private var enactCancellable: AnyCancellable?
+    private var remoteCancellable: AnyCancellable?
 
     var pumpManager: PumpManagerUI? {
         get { deviceDataManager.pumpManager }
@@ -50,11 +52,22 @@ final class BaseAPSManager: APSManager, Injectable {
     private func subscribe() {
         pumpCancellable = deviceDataManager.recommendsLoop
             .sink { [weak self] in
-                self?.loop()
+                self?.fetchAndLoop()
             }
     }
 
-    func loop() {
+    func fetchAndLoop() {
+        remoteCancellable = nightscout.fetchAnnouncements()
+            .sink { [weak self] in
+                if let recent = self?.announcementsStorage.recent(), recent.action != nil {
+                    self?.enactAnnouncement(recent)
+                } else {
+                    self?.loop()
+                }
+            }
+    }
+
+    private func loop() {
         loopCancellable = Publishers.CombineLatest3(
             nightscout.fetchGlucose(),
             nightscout.fetchCarbs(),
@@ -69,7 +82,7 @@ final class BaseAPSManager: APSManager, Injectable {
         }
     }
 
-    func determineBasal() -> AnyPublisher<Bool, Never> {
+    private func determineBasal() -> AnyPublisher<Bool, Never> {
         guard let glucose = try? storage.retrieve(OpenAPS.Monitor.glucose, as: [BloodGlucose].self), glucose.count >= 36 else {
             print("Not enough glucose data")
             return Just(false).eraseToAnyPublisher()
@@ -94,6 +107,43 @@ final class BaseAPSManager: APSManager, Injectable {
 
     func autotune() {
         _ = openAPS.autotune()
+    }
+
+    private func enactAnnouncement(_ announcement: Announcement) {
+        guard let action = announcement.action else {
+            print("Invalid Announcement action")
+            return
+        }
+        switch action {
+        case let .bolus(amount):
+            pumpManager?.enactBolus(units: Double(amount), automatic: false) { result in
+                switch result {
+                case .success:
+                    print("Announcement Bolus succeeded")
+                case let .failure(error):
+                    print("Announcement Bolus failed with error: \(error.localizedDescription)")
+                }
+            }
+        case let .pump(pumpAction):
+            switch pumpAction {
+            case .suspend:
+                pumpManager?.suspendDelivery { error in
+                    if let error = error {
+                        print("Pump not suspended by Announcement: \(error.localizedDescription)")
+                    } else {
+                        print("Pump suspended by Announcement")
+                    }
+                }
+            case .resume:
+                pumpManager?.resumeDelivery { error in
+                    if let error = error {
+                        print("Pump not resumed by Announcement: \(error.localizedDescription)")
+                    } else {
+                        print("Pump resumed by Announcement")
+                    }
+                }
+            }
+        }
     }
 
     private func currentTemp(date: Date) -> TempBasal? {

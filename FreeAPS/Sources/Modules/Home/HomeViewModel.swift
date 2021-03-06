@@ -11,7 +11,7 @@ extension Home {
         }
 
         func runLoop() {
-            apsManager.loop()
+            apsManager.fetchAndLoop()
         }
 
         func addTempTarget() {

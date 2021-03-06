@@ -56,6 +56,10 @@ extension Settings {
                             .modal(for: .configEditor(file: OpenAPS.Enact.suggested), from: self)
                         Text("Enacted").chevronCell()
                             .modal(for: .configEditor(file: OpenAPS.Enact.enacted), from: self)
+                        Text("Announcements").chevronCell()
+                            .modal(for: .configEditor(file: OpenAPS.FreeAPS.announcements), from: self)
+                        Text("Enacted announcements").chevronCell()
+                            .modal(for: .configEditor(file: OpenAPS.FreeAPS.announcementsEnacted), from: self)
                     }
                 }
             }

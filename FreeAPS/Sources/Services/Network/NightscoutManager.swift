@@ -6,6 +6,7 @@ protocol NightscoutManager {
     func fetchGlucose() -> AnyPublisher<Void, Never>
     func fetchCarbs() -> AnyPublisher<Void, Never>
     func fetchTempTargets() -> AnyPublisher<Void, Never>
+    func fetchAnnouncements() -> AnyPublisher<Void, Never>
     func upload()
 }
 
@@ -14,6 +15,7 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
     @Injected() private var glucoseStorage: GlucoseStorage!
     @Injected() private var tempTargetsStorage: TempTargetsStorage!
     @Injected() private var carbsStorage: CarbsStorage!
+    @Injected() private var announcementsStorage: AnnouncementsStorage!
 
     private let processQueue = DispatchQueue(label: "BaseNetworkManager.processQueue")
 
@@ -70,6 +72,20 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
             .replaceError(with: [])
             .map {
                 self.tempTargetsStorage.storeTempTargets($0)
+                return ()
+            }.eraseToAnyPublisher()
+    }
+
+    func fetchAnnouncements() -> AnyPublisher<Void, Never> {
+        guard let nightscout = nightscoutAPI else {
+            return Just(()).eraseToAnyPublisher()
+        }
+
+        let since = announcementsStorage.syncDate()
+        return nightscout.fetchAnnouncement(sinceDate: since)
+            .replaceError(with: [])
+            .map {
+                self.announcementsStorage.storeAnnouncements($0, enacted: false)
                 return ()
             }.eraseToAnyPublisher()
     }
