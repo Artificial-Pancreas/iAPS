@@ -17,5 +17,9 @@ extension Home {
         func addTempTarget() {
             showModal(for: .addTempTarget)
         }
+
+        func bolus() {
+            showModal(for: .bolus)
+        }
     }
 }

@@ -19,6 +19,12 @@ extension Home {
                         .foregroundColor(.white)
                         .buttonBackground()
                 }
+                Button(action: viewModel.bolus) {
+                    Text("Bolus")
+                        .frame(maxWidth: .infinity)
+                        .foregroundColor(.white)
+                        .buttonBackground()
+                }
                 Button(action: viewModel.runLoop) {
                     Text("Run loop")
                         .frame(maxWidth: .infinity)

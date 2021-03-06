@@ -8,6 +8,7 @@ protocol APSManager {
     func fetchAndLoop()
     func autosense()
     func autotune()
+    func enactBolus(amount: Double)
     var pumpManager: PumpManagerUI? { get set }
     var pumpDisplayState: CurrentValueSubject<PumpDisplayState?, Never> { get }
 }
@@ -104,6 +105,20 @@ final class BaseAPSManager: APSManager, Injectable {
             }
             .map { true }
             .eraseToAnyPublisher()
+    }
+
+    func enactBolus(amount: Double) {
+        guard let pump = pumpManager else { return }
+
+        let roundedAmout = pump.roundToSupportedBolusVolume(units: amount)
+        pump.enactBolus(units: roundedAmout, automatic: false) { result in
+            switch result {
+            case .success:
+                print("Bolus succeeded")
+            case let .failure(error):
+                print("Bolus failed with error: \(error.localizedDescription)")
+            }
+        }
     }
 
     func autosense() {
