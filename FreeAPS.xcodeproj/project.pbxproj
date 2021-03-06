@@ -954,10 +954,10 @@
 		3811DE2725C9D49500A708ED /* Home */ = {
 			isa = PBXGroup;
 			children = (
-				3811DE2825C9D49500A708ED /* HomeViewModel.swift */,
-				3811DE2925C9D49500A708ED /* HomeProvider.swift */,
-				3811DE2A25C9D49500A708ED /* HomeDataFlow.swift */,
 				3811DE2B25C9D49500A708ED /* HomeBuilder.swift */,
+				3811DE2A25C9D49500A708ED /* HomeDataFlow.swift */,
+				3811DE2925C9D49500A708ED /* HomeProvider.swift */,
+				3811DE2825C9D49500A708ED /* HomeViewModel.swift */,
 				3811DE2C25C9D49500A708ED /* View */,
 			);
 			path = Home;

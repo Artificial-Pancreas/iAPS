@@ -6,7 +6,7 @@ extension Home {
 
         var body: some View {
             Form {
-                GlucoseChartView(glucose: $viewModel.glucose).frame(height: 150)
+                GlucoseChartView(glucose: $viewModel.glucose, suggestion: $viewModel.suggestion).frame(height: 150)
                 Button(action: viewModel.addCarbs) {
                     Text("Add carbs")
                 }

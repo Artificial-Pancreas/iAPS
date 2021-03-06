@@ -8,12 +8,17 @@ extension Home {
         @Injected() var temps: TempTargetsStorage!
         @Injected() var glucoseStorage: GlucoseStorage!
         @Injected() var broadcaster: Broadcaster!
+        @Injected() var storage: FileStorage!
 
         @Published var glucose: [BloodGlucose] = []
 
+        @Published var suggestion: Suggestion?
+
         override func subscribe() {
             glucose = filteredGlucose(glucoseStorage.recent())
+            suggestion = try? storage.retrieve(OpenAPS.Enact.suggested, as: Suggestion.self)
             broadcaster.register(GlucoseObserver.self, observer: self)
+            broadcaster.register(SuggestionObserver.self, observer: self)
         }
 
         func addCarbs() {
@@ -40,8 +45,12 @@ extension Home {
     }
 }
 
-extension Home.ViewModel: GlucoseObserver {
+extension Home.ViewModel: GlucoseObserver, SuggestionObserver {
     func glucoseDidUpdate(_ glucose: [BloodGlucose]) {
         self.glucose = filteredGlucose(glucose)
+    }
+
+    func suggestionDidUpdate(_ suggestion: Suggestion) {
+        self.suggestion = suggestion
     }
 }

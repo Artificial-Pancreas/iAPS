@@ -23,6 +23,7 @@ final class BaseAPSManager: APSManager, Injectable {
     @Injected() private var deviceDataManager: DeviceDataManager!
     @Injected() private var nightscout: NightscoutManager!
     @Injected() private var settingsManager: SettingsManager!
+    @Injected() private var broadcaster: Broadcaster!
     private var openAPS: OpenAPS!
 
     private var loopCancellable: AnyCancellable?
@@ -82,6 +83,14 @@ final class BaseAPSManager: APSManager, Injectable {
         .flatMap { _ in self.determineBasal() }
         .sink { _ in } receiveValue: { [weak self] ok in
             guard let self = self else { return }
+            if ok, let suggested = try? self.storage.retrieve(OpenAPS.Enact.suggested, as: Suggestion.self) {
+                DispatchQueue.main.async {
+                    self.broadcaster.notify(SuggestionObserver.self, on: .main) {
+                        $0.suggestionDidUpdate(suggested)
+                    }
+                }
+            }
+
             if ok, self.settings.closedLoop {
                 self.enactSuggested()
             }
