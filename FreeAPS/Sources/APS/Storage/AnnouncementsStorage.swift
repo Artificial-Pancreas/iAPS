@@ -9,6 +9,10 @@ protocol AnnouncementsStorage {
 }
 
 final class BaseAnnouncementsStorage: AnnouncementsStorage, Injectable {
+    enum Config {
+        static let recentInterval = 10.minutes.timeInterval
+    }
+
     private let processQueue = DispatchQueue(label: "BaseAnnouncementsStorage.processQueue")
     @Injected() private var storage: FileStorage!
 
@@ -39,14 +43,25 @@ final class BaseAnnouncementsStorage: AnnouncementsStorage, Injectable {
     }
 
     func recent() -> Announcement? {
-        guard let events = try? storage.retrieve(OpenAPS.FreeAPS.announcements, as: [Announcement].self) else { return nil }
+        guard let events = try? storage.retrieve(OpenAPS.FreeAPS.announcements, as: [Announcement].self)
+        else {
+            return nil
+        }
         guard let recent = events
-            .filter({ $0.enteredBy != Announcement.remote && $0.createdAt.addingTimeInterval(10.minutes.timeInterval) > Date() })
-            .first else { return nil }
+            .filter({
+                $0.enteredBy == Announcement.remote && $0.createdAt.addingTimeInterval(Config.recentInterval) > Date()
+            })
+            .first
+        else {
+            return nil
+        }
         guard let enactedEvents = try? storage.retrieve(OpenAPS.FreeAPS.announcementsEnacted, as: [Announcement].self)
-        else { return recent }
+        else {
+            return recent
+        }
 
-        guard enactedEvents.first(where: { $0.createdAt == recent.createdAt }) == nil else {
+        guard enactedEvents.first(where: { $0.createdAt == recent.createdAt }) == nil
+        else {
             return nil
         }
         return recent

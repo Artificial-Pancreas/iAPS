@@ -12,14 +12,25 @@ struct Announcement: JSON {
         guard components.count == 2 else {
             return nil
         }
-
-        switch String(components[0]) {
+        let command = String(components[0])
+        let arguments = String(components[1])
+        switch command {
         case "bolus":
-            guard let amount = Decimal(from: String(components[1])) else { return nil }
+            guard let amount = Decimal(from: arguments) else { return nil }
             return .bolus(amount)
         case "pump":
-            guard let action = PumpAction(rawValue: String(components[1])) else { return nil }
+            guard let action = PumpAction(rawValue: arguments) else { return nil }
             return .pump(action)
+        case "looping":
+            guard let looping = Bool(from: arguments) else { return nil }
+            return .looping(looping)
+        case "tempbasal":
+            let basalComponents = arguments.split(separator: ",")
+            guard basalComponents.count == 2 else { return nil }
+            let rateArg = String(basalComponents[0])
+            let durationArg = String(basalComponents[1])
+            guard let rate = Decimal(from: rateArg), let duration = Decimal(from: durationArg) else { return nil }
+            return .tempbasal(rate: rate, duration: duration)
         default: return nil
         }
     }
@@ -36,6 +47,8 @@ extension Announcement {
 enum AnnouncementAction {
     case bolus(Decimal)
     case pump(PumpAction)
+    case looping(Bool)
+    case tempbasal(rate: Decimal, duration: Decimal)
 }
 
 enum PumpAction: String {

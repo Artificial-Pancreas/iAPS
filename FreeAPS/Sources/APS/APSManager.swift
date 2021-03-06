@@ -57,6 +57,11 @@ final class BaseAPSManager: APSManager, Injectable {
     }
 
     func fetchAndLoop() {
+        guard pumpManager != nil else {
+            loop()
+            return
+        }
+
         remoteCancellable = nightscout.fetchAnnouncements()
             .sink { [weak self] in
                 if let recent = self?.announcementsStorage.recent(), recent.action != nil {
@@ -120,6 +125,7 @@ final class BaseAPSManager: APSManager, Injectable {
                 switch result {
                 case .success:
                     print("Announcement Bolus succeeded")
+                    self.announcementsStorage.storeAnnouncements([announcement], enacted: true)
                 case let .failure(error):
                     print("Announcement Bolus failed with error: \(error.localizedDescription)")
                 }
@@ -132,6 +138,7 @@ final class BaseAPSManager: APSManager, Injectable {
                         print("Pump not suspended by Announcement: \(error.localizedDescription)")
                     } else {
                         print("Pump suspended by Announcement")
+                        self.announcementsStorage.storeAnnouncements([announcement], enacted: true)
                     }
                 }
             case .resume:
@@ -140,7 +147,22 @@ final class BaseAPSManager: APSManager, Injectable {
                         print("Pump not resumed by Announcement: \(error.localizedDescription)")
                     } else {
                         print("Pump resumed by Announcement")
+                        self.announcementsStorage.storeAnnouncements([announcement], enacted: true)
                     }
+                }
+            }
+        case let .looping(closedLoop):
+            settings.closedLoop = closedLoop
+            print("Closed loop \(closedLoop) by Announcement")
+            announcementsStorage.storeAnnouncements([announcement], enacted: true)
+        case let .tempbasal(rate, duration):
+            pumpManager?.enactTempBasal(unitsPerHour: Double(rate), for: TimeInterval(duration) * 60) { result in
+                switch result {
+                case .success:
+                    print("Announcement TempBasal succeeded")
+                    self.announcementsStorage.storeAnnouncements([announcement], enacted: true)
+                case let .failure(error):
+                    print("Announcement TempBasal failed with error: \(error.localizedDescription)")
                 }
             }
         }
