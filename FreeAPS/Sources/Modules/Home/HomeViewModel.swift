@@ -3,20 +3,14 @@ import SwiftUI
 
 extension Home {
     class ViewModel<Provider>: BaseViewModel<Provider>, ObservableObject where Provider: HomeProvider {
-        @Injected() var apsManager: APSManager!
-        @Injected() var history: PumpHistoryStorage!
-        @Injected() var temps: TempTargetsStorage!
-        @Injected() var glucoseStorage: GlucoseStorage!
         @Injected() var broadcaster: Broadcaster!
-        @Injected() var storage: FileStorage!
 
         @Published var glucose: [BloodGlucose] = []
-
         @Published var suggestion: Suggestion?
 
         override func subscribe() {
-            glucose = filteredGlucose(glucoseStorage.recent())
-            suggestion = try? storage.retrieve(OpenAPS.Enact.suggested, as: Suggestion.self)
+            glucose = provider.filteredGlucose()
+            suggestion = provider.suggestion
             broadcaster.register(GlucoseObserver.self, observer: self)
             broadcaster.register(SuggestionObserver.self, observer: self)
         }
@@ -26,7 +20,7 @@ extension Home {
         }
 
         func runLoop() {
-            apsManager.fetchAndLoop()
+            provider.fetchAndLoop()
         }
 
         func addTempTarget() {
@@ -36,18 +30,12 @@ extension Home {
         func bolus() {
             showModal(for: .bolus)
         }
-
-        private func filteredGlucose(_ glucose: [BloodGlucose]) -> [BloodGlucose] {
-            glucose.filter {
-                $0.dateString.addingTimeInterval(3.hours.timeInterval) > Date()
-            }
-        }
     }
 }
 
 extension Home.ViewModel: GlucoseObserver, SuggestionObserver {
-    func glucoseDidUpdate(_ glucose: [BloodGlucose]) {
-        self.glucose = filteredGlucose(glucose)
+    func glucoseDidUpdate(_: [BloodGlucose]) {
+        glucose = provider.filteredGlucose()
     }
 
     func suggestionDidUpdate(_ suggestion: Suggestion) {

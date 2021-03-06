@@ -17,7 +17,7 @@ extension Home {
                     Text("Bolus")
                 }
                 Button(action: viewModel.runLoop) {
-                    Text("Run loop")
+                    Text("Run loop now")
                 }
             }
             .navigationTitle("Home")
