@@ -11,7 +11,9 @@ extension PreferencesEditor {
 
         func savePreferences(_ preferences: Preferences) {
             processQueue.async {
-                try? self.storage.save(preferences, as: OpenAPS.Settings.preferences)
+                var prefs = preferences
+                prefs.timestamp = Date()
+                try? self.storage.save(prefs, as: OpenAPS.Settings.preferences)
             }
         }
     }

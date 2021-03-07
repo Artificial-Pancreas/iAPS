@@ -40,6 +40,7 @@ struct Preferences: JSON {
     var carbsReqThreshold: Decimal = 1.0
     var noisyCGMTargetMultiplier: Decimal = 1.3
     var suspendZerosIOB: Bool = true
+    var timestamp: Date?
 }
 
 extension Preferences {

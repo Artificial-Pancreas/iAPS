@@ -50,6 +50,8 @@ extension Settings {
                     }
 
                     Group {
+                        Text("IOB").chevronCell()
+                            .navigationLink(to: .configEditor(file: OpenAPS.Monitor.iob), from: self)
                         Text("Pump profile").chevronCell()
                             .navigationLink(to: .configEditor(file: OpenAPS.Settings.pumpProfile), from: self)
                         Text("Profile").chevronCell()

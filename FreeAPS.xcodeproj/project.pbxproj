@@ -115,6 +115,7 @@
 		3883581C25EE79BB00E024B2 /* DecimalTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3883581B25EE79BB00E024B2 /* DecimalTextField.swift */; };
 		3883583425EEB38000E024B2 /* PumpSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3883583325EEB38000E024B2 /* PumpSettings.swift */; };
 		388358C825EEF6D200E024B2 /* BasalProfileEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 388358C725EEF6D200E024B2 /* BasalProfileEntry.swift */; };
+		38887CCE25F5725200944304 /* IOBEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38887CCD25F5725200944304 /* IOBEntry.swift */; };
 		388E595C25AD948C0019842D /* FreeAPSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 388E595B25AD948C0019842D /* FreeAPSApp.swift */; };
 		388E596025AD948E0019842D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 388E595F25AD948E0019842D /* Assets.xcassets */; };
 		388E596C25AD95110019842D /* OpenAPS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 388E596B25AD95110019842D /* OpenAPS.swift */; };
@@ -719,6 +720,7 @@
 		3883581B25EE79BB00E024B2 /* DecimalTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecimalTextField.swift; sourceTree = "<group>"; };
 		3883583325EEB38000E024B2 /* PumpSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PumpSettings.swift; sourceTree = "<group>"; };
 		388358C725EEF6D200E024B2 /* BasalProfileEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasalProfileEntry.swift; sourceTree = "<group>"; };
+		38887CCD25F5725200944304 /* IOBEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IOBEntry.swift; sourceTree = "<group>"; };
 		388E595825AD948C0019842D /* FreeAPS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FreeAPS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		388E595B25AD948C0019842D /* FreeAPSApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FreeAPSApp.swift; sourceTree = "<group>"; };
 		388E595F25AD948E0019842D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -1302,16 +1304,17 @@
 				38AEE73C25F0200C0013F05B /* FreeAPSSettings.swift */,
 				383948D925CD64D500E91849 /* Glucose.swift */,
 				382C133625F13A1E00715CE1 /* InsulinSensitivities.swift */,
+				38887CCD25F5725200944304 /* IOBEntry.swift */,
 				385CEA8125F23DFD002D6D5B /* NightscoutStatus.swift */,
 				3895E4C525B9E00D00214B37 /* Preferences.swift */,
 				38A13D3125E28B4B00EAA382 /* PumpHistoryEvent.swift */,
 				3883583325EEB38000E024B2 /* PumpSettings.swift */,
+				38E989DC25F5021400C0CED0 /* PumpStatus.swift */,
 				38BF021C25E7E3AF00579895 /* Reservoir.swift */,
 				3871F38625ED661C0013ECB5 /* Suggestion.swift */,
 				38A0364125ED069400FCBB52 /* TempBasal.swift */,
 				3871F39B25ED892B0013ECB5 /* TempTarget.swift */,
 				3811DE8E25C9D80400A708ED /* User.swift */,
-				38E989DC25F5021400C0CED0 /* PumpStatus.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -2270,6 +2273,7 @@
 				FA630397F76B582C8D8681A7 /* BasalProfileEditorProvider.swift in Sources */,
 				63E890B4D951EAA91C071D5C /* BasalProfileEditorViewModel.swift in Sources */,
 				385CEA8225F23DFD002D6D5B /* NightscoutStatus.swift in Sources */,
+				38887CCE25F5725200944304 /* IOBEntry.swift in Sources */,
 				38E98A2425F52C9300C0CED0 /* Logger.swift in Sources */,
 				CA370FC152BC98B3D1832968 /* BasalProfileEditorRootView.swift in Sources */,
 				F215CAB49BA4B5A01C3BC6B6 /* ISFEditorBuilder.swift in Sources */,

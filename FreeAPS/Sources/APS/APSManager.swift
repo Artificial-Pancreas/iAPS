@@ -161,7 +161,7 @@ final class BaseAPSManager: APSManager, Injectable {
             switch result {
             case .success:
                 debug(.apsManager, "Temp Basal succeeded")
-                let temp = TempBasal(duration: Int(duration / 60), rate: Decimal(rate), temp: .absolute, updatedAt: Date())
+                let temp = TempBasal(duration: Int(duration / 60), rate: Decimal(rate), temp: .absolute, timestamp: Date())
                 try? self.storage.save(temp, as: OpenAPS.Monitor.tempBasal)
             case let .failure(error):
                 debug(.apsManager, "Temp Basal failed with error: \(error.localizedDescription)")
@@ -170,11 +170,11 @@ final class BaseAPSManager: APSManager, Injectable {
     }
 
     func autosense() {
-        _ = openAPS.autosense()
+        openAPS.autosense().sink {}.store(in: &lifetime)
     }
 
     func autotune() {
-        _ = openAPS.autotune()
+        openAPS.autotune().sink {}.store(in: &lifetime)
     }
 
     private func enactAnnouncement(_ announcement: Announcement) {
@@ -243,21 +243,21 @@ final class BaseAPSManager: APSManager, Injectable {
     private func currentTemp(date: Date) -> TempBasal {
         let defaultTemp = { () -> TempBasal in
             guard let temp = try? storage.retrieve(OpenAPS.Monitor.tempBasal, as: TempBasal.self) else {
-                return TempBasal(duration: 0, rate: 0, temp: .absolute, updatedAt: Date())
+                return TempBasal(duration: 0, rate: 0, temp: .absolute, timestamp: Date())
             }
-            let delta = Int((date.timeIntervalSince1970 - temp.updatedAt.timeIntervalSince1970) / 60)
+            let delta = Int((date.timeIntervalSince1970 - temp.timestamp.timeIntervalSince1970) / 60)
             let duration = max(0, temp.duration - delta)
-            return TempBasal(duration: duration, rate: temp.rate, temp: .absolute, updatedAt: date)
+            return TempBasal(duration: duration, rate: temp.rate, temp: .absolute, timestamp: date)
         }()
 
         guard let state = pumpManager?.status.basalDeliveryState else { return defaultTemp }
         switch state {
         case .active:
-            return TempBasal(duration: 0, rate: 0, temp: .absolute, updatedAt: date)
+            return TempBasal(duration: 0, rate: 0, temp: .absolute, timestamp: date)
         case let .tempBasal(dose):
             let rate = Decimal(dose.unitsPerHour)
             let durationMin = max(0, Int((dose.endDate.timeIntervalSince1970 - date.timeIntervalSince1970) / 60))
-            return TempBasal(duration: durationMin, rate: rate, temp: .absolute, updatedAt: date)
+            return TempBasal(duration: durationMin, rate: rate, temp: .absolute, timestamp: date)
         default:
             return defaultTemp
         }
@@ -283,7 +283,7 @@ final class BaseAPSManager: APSManager, Injectable {
                     .eraseToAnyPublisher()
             }
             return pump.enactTempBasal(unitsPerHour: Double(rate), for: TimeInterval(duration * 60)).map { _ in
-                let temp = TempBasal(duration: duration, rate: rate, temp: .absolute, updatedAt: Date())
+                let temp = TempBasal(duration: duration, rate: rate, temp: .absolute, timestamp: Date())
                 try? self.storage.save(temp, as: OpenAPS.Monitor.tempBasal)
                 return ()
             }
@@ -307,9 +307,9 @@ final class BaseAPSManager: APSManager, Injectable {
                 }
             } receiveValue: { [weak self] in
                 debug(.apsManager, "Loop succeeded")
-                if let rawSuggested = self?.storage.retrieveRaw(OpenAPS.Enact.suggested) {
-                    try? self?.storage.save(rawSuggested, as: OpenAPS.Enact.enacted)
-                }
+                var enacted = suggested
+                enacted.timestamp = Date()
+                try? self?.storage.save(enacted, as: OpenAPS.Enact.enacted)
             }.store(in: &lifetime)
     }
 }
@@ -377,6 +377,6 @@ extension PumpManagerStatus {
         let bolusing = bolusState != .noBolus
         let suspended = basalDeliveryState?.isSuspended ?? true
         let type = suspended ? StatusType.suspended : (bolusing ? .bolusing : .normal)
-        return PumpStatus(status: type, bolusing: bolusing, suspended: suspended)
+        return PumpStatus(status: type, bolusing: bolusing, suspended: suspended, timestamp: Date())
     }
 }

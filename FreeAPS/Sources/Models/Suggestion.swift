@@ -10,7 +10,14 @@ struct Suggestion: JSON {
     let duration: Int?
     let iob: Decimal?
     let cob: Decimal?
-    let predictions: Predictions?
+    var predictions: Predictions?
+    let deliverAt: Date?
+    let carbsReq: Decimal?
+    let temp: TempType?
+    let bg: Int?
+    let tick: String?
+    let reservoir: Decimal?
+    var timestamp: Date?
 }
 
 struct Predictions: JSON {
@@ -32,6 +39,13 @@ extension Suggestion {
         case iob = "IOB"
         case cob = "COB"
         case predictions = "predBGs"
+        case deliverAt
+        case carbsReq
+        case temp
+        case bg
+        case tick
+        case reservoir
+        case timestamp
     }
 }
 

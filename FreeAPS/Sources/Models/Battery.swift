@@ -1,7 +1,8 @@
 import Foundation
 
 struct Battery: JSON {
-    let percent: Int
+    let percent: Int?
+    let voltage: Decimal?
     let string: BatteryState
 }
 

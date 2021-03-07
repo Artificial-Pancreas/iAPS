@@ -34,10 +34,10 @@ extension ManualTempBasal {
                 }
 
                 Section {
-                    Button { viewModel.cancel() }
-                    label: { Text("Cancel Temp Basal") }
                     Button { viewModel.enact() }
                     label: { Text("Enact") }
+                    Button { viewModel.cancel() }
+                    label: { Text("Cancel Temp Basal") }
                 }
             }
             .navigationTitle("Manual Temp Basal")

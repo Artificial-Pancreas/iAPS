@@ -90,11 +90,12 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
             }.eraseToAnyPublisher()
     }
 
-    func upload() {}
+    func upload() {
+        uploadStatus()
+        uploadTreatments()
+    }
 
     private func uploadStatus() {}
 
     private func uploadTreatments() {}
-
-    private func uploadPumphistory() {}
 }
