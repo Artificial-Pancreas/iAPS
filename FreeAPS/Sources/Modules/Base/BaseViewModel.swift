@@ -29,10 +29,10 @@ class BaseViewModel<Provider>: ViewModel, Injectable where Provider: FreeAPS.Pro
     }
 
     func showModal(for screen: Screen?) {
-        router.modalScreen.send(screen)
+        router.mainModalScreen.send(screen)
     }
 
     func hideModal() {
-        router.modalScreen.send(nil)
+        router.mainModalScreen.send(nil)
     }
 }

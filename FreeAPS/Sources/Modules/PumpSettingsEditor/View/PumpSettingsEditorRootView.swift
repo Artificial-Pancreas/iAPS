@@ -45,7 +45,6 @@ extension PumpSettingsEditor {
             }
             .navigationTitle("Pump Settings")
             .navigationBarTitleDisplayMode(.automatic)
-            .navigationBarItems(leading: Button("Close", action: viewModel.hideModal))
         }
     }
 }

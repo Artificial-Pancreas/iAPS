@@ -25,7 +25,6 @@ extension PumpConfig {
             }
             .navigationTitle("Pump config")
             .navigationBarTitleDisplayMode(.automatic)
-            .navigationBarItems(leading: Button("Close", action: viewModel.hideModal))
             .popover(isPresented: $viewModel.setupPump) {
                 if let pumpManager = viewModel.provider.apsManager.pumpManager {
                     PumpSettingsView(pumpManager: pumpManager, completionDelegate: viewModel)

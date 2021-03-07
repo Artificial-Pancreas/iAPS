@@ -5,26 +5,55 @@ extension Home {
         @EnvironmentObject var viewModel: ViewModel<Provider>
 
         var body: some View {
-            Form {
-                GlucoseChartView(glucose: $viewModel.glucose, suggestion: $viewModel.suggestion).frame(height: 150)
-                if let reason = viewModel.suggestion?.reason {
-                    Text(reason).font(.caption)
+            GeometryReader { geo in
+                VStack {
+                    Group {
+                        Text("Header")
+                    }
+                    ScrollView(.vertical, showsIndicators: false) {
+                        GlucoseChartView(glucose: $viewModel.glucose, suggestion: $viewModel.suggestion).frame(height: 150)
+                        if let reason = viewModel.suggestion?.reason {
+                            Text(reason).font(.caption).padding()
+                        }
+                        Button(action: viewModel.runLoop) {
+                            Text("Run loop now").buttonBackground().padding()
+                        }.foregroundColor(.white)
+                    }
+
+                    ZStack {
+                        Rectangle().fill(Color.gray.opacity(0.2)).frame(height: 50 + geo.safeAreaInsets.bottom)
+
+                        HStack {
+                            Button { viewModel.showModal(for: .addCarbs) }
+                            label: {
+                                Image(systemName: "circlebadge.2.fill")
+                            }.foregroundColor(.green)
+                            Spacer()
+                            Button { viewModel.showModal(for: .addTempTarget) }
+                            label: {
+                                Image(systemName: "target")
+                            }.foregroundColor(.green)
+                            Spacer()
+                            Button { viewModel.showModal(for: .bolus) }
+                            label: {
+                                Image(systemName: "drop.fill")
+                            }.foregroundColor(.orange)
+                            Spacer()
+                            Button { viewModel.showModal(for: .manualTempBasal) }
+                            label: {
+                                Image(systemName: "circle.bottomhalf.fill")
+                            }.foregroundColor(.blue)
+                            Spacer()
+                            Button { viewModel.showModal(for: .settings) }
+                            label: {
+                                Image(systemName: "gearshape")
+                            }.foregroundColor(.gray)
+                        }
+                        .padding(.horizontal, 24)
+                        .padding(.bottom, geo.safeAreaInsets.bottom)
+                    }
                 }
-                Button(action: viewModel.addCarbs) {
-                    Text("Add carbs")
-                }
-                Button(action: viewModel.addTempTarget) {
-                    Text("Add temp target")
-                }
-                Button(action: viewModel.bolus) {
-                    Text("Bolus")
-                }
-                Button(action: viewModel.manualTampBasal) {
-                    Text("Manual temp basal")
-                }
-                Button(action: viewModel.runLoop) {
-                    Text("Run loop now")
-                }
+                .edgesIgnoringSafeArea(.bottom)
             }
             .navigationTitle("Home")
             .navigationBarHidden(true)

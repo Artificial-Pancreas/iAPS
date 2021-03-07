@@ -40,7 +40,6 @@ extension PreferencesEditor {
             }
             .navigationTitle("Preferences")
             .navigationBarTitleDisplayMode(.automatic)
-            .navigationBarItems(leading: Button("Close", action: viewModel.hideModal))
         }
     }
 }

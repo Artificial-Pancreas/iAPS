@@ -34,6 +34,10 @@ extension Home {
         func bolus() {
             showModal(for: .bolus)
         }
+
+        func settings() {
+            showModal(for: .settings)
+        }
     }
 }
 

@@ -36,7 +36,6 @@ extension NightscoutConfig {
                 }
             }
             .navigationBarTitle("Nightscout Config", displayMode: .automatic)
-            .navigationBarItems(leading: Button("Close", action: viewModel.hideModal))
         }
     }
 }

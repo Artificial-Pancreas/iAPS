@@ -16,7 +16,7 @@ extension Main {
         }
 
         override func subscribe() {
-            router.modalScreen
+            router.mainModalScreen
                 .map { $0?.modal(resolver: self.resolver) }
                 .removeDuplicates { $0?.id == $1?.id }
                 .receive(on: RunLoop.main)
@@ -41,7 +41,7 @@ extension Main {
             $isModalPresented
                 .filter { !$0 }
                 .sink { _ in
-                    self.router.modalScreen.send(nil)
+                    self.router.mainModalScreen.send(nil)
                 }
                 .store(in: &lifetime)
         }

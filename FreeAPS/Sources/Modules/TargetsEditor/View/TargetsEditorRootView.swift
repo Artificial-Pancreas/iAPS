@@ -35,7 +35,6 @@ extension TargetsEditor {
             .navigationTitle("Target Ranges")
             .navigationBarTitleDisplayMode(.automatic)
             .navigationBarItems(
-                leading: Button("Close", action: viewModel.hideModal),
                 trailing: EditButton()
             )
             .environment(\.editMode, $editMode)

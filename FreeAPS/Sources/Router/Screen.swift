@@ -69,28 +69,6 @@ extension Screen {
         }
     }
 
-    func tab(resolver: Resolver) -> AuthotizedRoot.Tab {
-        let tabView = view(resolver: resolver)
-        switch self {
-        case .home:
-            return .init(
-                rootScreen: self,
-                view: tabView,
-                image: Image(systemName: "house"),
-                text: Text("Home")
-            )
-        case .settings:
-            return .init(
-                rootScreen: self,
-                view: tabView,
-                image: Image(systemName: "gear"),
-                text: Text("Settings")
-            )
-        default:
-            fatalError("Tab for this screen \(self) did not specified")
-        }
-    }
-
     func modal(resolver: Resolver) -> Main.Modal {
         .init(screen: self, view: view(resolver: resolver))
     }

@@ -11,59 +11,65 @@ extension Settings {
                 }
 
                 Section(header: Text("Devices")) {
-                    Text("Pump").chevronCell().modal(for: .pumpConfig, from: self)
+                    Text("Pump").chevronCell().navigationLink(to: .pumpConfig, from: self)
                 }
 
                 Section(header: Text("Services")) {
-                    Text("Nightscout").chevronCell().modal(for: .nighscoutConfig, from: self)
+                    Text("Nightscout").chevronCell().navigationLink(to: .nighscoutConfig, from: self)
                 }
 
                 Section(header: Text("Configuration")) {
-                    Text("Pump Settings").chevronCell().modal(for: .pumpSettingsEditor, from: self)
-                    Text("Basal Profile").chevronCell().modal(for: .basalProfileEditor, from: self)
-                    Text("Insulin Sensitivities").chevronCell().modal(for: .isfEditor, from: self)
-                    Text("Carb Ratios").chevronCell().modal(for: .crEditor, from: self)
-                    Text("Target Ranges").chevronCell().modal(for: .targetsEditor, from: self)
-                    Text("Preferences").chevronCell().modal(for: .preferencesEditor, from: self)
+                    Text("Pump Settings").chevronCell().navigationLink(to: .pumpSettingsEditor, from: self)
+                    Text("Basal Profile").chevronCell().navigationLink(to: .basalProfileEditor, from: self)
+                    Text("Insulin Sensitivities").chevronCell().navigationLink(to: .isfEditor, from: self)
+                    Text("Carb Ratios").chevronCell().navigationLink(to: .crEditor, from: self)
+                    Text("Target Ranges").chevronCell().navigationLink(to: .targetsEditor, from: self)
+                    Text("Preferences").chevronCell().navigationLink(to: .preferencesEditor, from: self)
                 }
 
                 Section(header: Text("Config files")) {
                     Group {
                         Text("Preferences").chevronCell()
-                            .modal(for: .configEditor(file: OpenAPS.Settings.preferences), from: self)
-                        Text("Pump Settings").chevronCell().modal(for: .configEditor(file: OpenAPS.Settings.settings), from: self)
-                        Text("Autosense").chevronCell().modal(for: .configEditor(file: OpenAPS.Settings.autosense), from: self)
+                            .navigationLink(to: .configEditor(file: OpenAPS.Settings.preferences), from: self)
+                        Text("Pump Settings").chevronCell()
+                            .navigationLink(to: .configEditor(file: OpenAPS.Settings.settings), from: self)
+                        Text("Autosense").chevronCell()
+                            .navigationLink(to: .configEditor(file: OpenAPS.Settings.autosense), from: self)
                         Text("Pump History").chevronCell()
-                            .modal(for: .configEditor(file: OpenAPS.Monitor.pumpHistory), from: self)
+                            .navigationLink(to: .configEditor(file: OpenAPS.Monitor.pumpHistory), from: self)
                         Text("Basal profile").chevronCell()
-                            .modal(for: .configEditor(file: OpenAPS.Settings.basalProfile), from: self)
+                            .navigationLink(to: .configEditor(file: OpenAPS.Settings.basalProfile), from: self)
                         Text("Targets ranges").chevronCell()
-                            .modal(for: .configEditor(file: OpenAPS.Settings.bgTargets), from: self)
-                        Text("Carb ratios").chevronCell().modal(for: .configEditor(file: OpenAPS.Settings.carbRatios), from: self)
+                            .navigationLink(to: .configEditor(file: OpenAPS.Settings.bgTargets), from: self)
+                        Text("Carb ratios").chevronCell()
+                            .navigationLink(to: .configEditor(file: OpenAPS.Settings.carbRatios), from: self)
                         Text("Insulin sensitivities").chevronCell()
-                            .modal(for: .configEditor(file: OpenAPS.Settings.insulinSensitivities), from: self)
+                            .navigationLink(to: .configEditor(file: OpenAPS.Settings.insulinSensitivities), from: self)
                         Text("Temp targets").chevronCell()
-                            .modal(for: .configEditor(file: OpenAPS.Settings.tempTargets), from: self)
+                            .navigationLink(to: .configEditor(file: OpenAPS.Settings.tempTargets), from: self)
                     }
 
                     Group {
                         Text("Pump profile").chevronCell()
-                            .modal(for: .configEditor(file: OpenAPS.Settings.pumpProfile), from: self)
-                        Text("Profile").chevronCell().modal(for: .configEditor(file: OpenAPS.Settings.profile), from: self)
-                        Text("Glucose").chevronCell().modal(for: .configEditor(file: OpenAPS.Monitor.glucose), from: self)
-                        Text("Carbs").chevronCell().modal(for: .configEditor(file: OpenAPS.Monitor.carbHistory), from: self)
+                            .navigationLink(to: .configEditor(file: OpenAPS.Settings.pumpProfile), from: self)
+                        Text("Profile").chevronCell()
+                            .navigationLink(to: .configEditor(file: OpenAPS.Settings.profile), from: self)
+                        Text("Glucose").chevronCell().navigationLink(to: .configEditor(file: OpenAPS.Monitor.glucose), from: self)
+                        Text("Carbs").chevronCell()
+                            .navigationLink(to: .configEditor(file: OpenAPS.Monitor.carbHistory), from: self)
                         Text("Suggested").chevronCell()
-                            .modal(for: .configEditor(file: OpenAPS.Enact.suggested), from: self)
+                            .navigationLink(to: .configEditor(file: OpenAPS.Enact.suggested), from: self)
                         Text("Enacted").chevronCell()
-                            .modal(for: .configEditor(file: OpenAPS.Enact.enacted), from: self)
+                            .navigationLink(to: .configEditor(file: OpenAPS.Enact.enacted), from: self)
                         Text("Announcements").chevronCell()
-                            .modal(for: .configEditor(file: OpenAPS.FreeAPS.announcements), from: self)
+                            .navigationLink(to: .configEditor(file: OpenAPS.FreeAPS.announcements), from: self)
                         Text("Enacted announcements").chevronCell()
-                            .modal(for: .configEditor(file: OpenAPS.FreeAPS.announcementsEnacted), from: self)
+                            .navigationLink(to: .configEditor(file: OpenAPS.FreeAPS.announcementsEnacted), from: self)
                     }
                 }
             }
             .navigationTitle("Settings")
+            .navigationBarItems(leading: Button("Close", action: viewModel.hideModal))
             .navigationBarTitleDisplayMode(.automatic)
         }
     }

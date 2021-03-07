@@ -22,7 +22,6 @@ extension ConfigEditor {
                     }
                 }
                 .navigationBarItems(
-                    leading: Button("Close", action: viewModel.hideModal),
                     trailing: Button("Save", action: viewModel.save)
                 )
                 .sheet(isPresented: $showShareSheet) {

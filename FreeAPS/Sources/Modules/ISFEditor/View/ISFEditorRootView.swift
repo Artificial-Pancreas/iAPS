@@ -35,7 +35,6 @@ extension ISFEditor {
             .navigationTitle("Insulin Sensitivities")
             .navigationBarTitleDisplayMode(.automatic)
             .navigationBarItems(
-                leading: Button("Close", action: viewModel.hideModal),
                 trailing: EditButton()
             )
             .environment(\.editMode, $editMode)

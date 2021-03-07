@@ -40,7 +40,6 @@ extension BasalProfileEditor {
             .navigationTitle("Basal Profile")
             .navigationBarTitleDisplayMode(.automatic)
             .navigationBarItems(
-                leading: Button("Close", action: viewModel.hideModal),
                 trailing: EditButton()
             )
             .environment(\.editMode, $editMode)

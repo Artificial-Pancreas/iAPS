@@ -3,22 +3,14 @@ import SwiftUI
 import Swinject
 
 protocol Router {
-    var selectTab: PassthroughSubject<Int, Never> { get }
-    var modalScreen: CurrentValueSubject<Screen?, Never> { get }
-    var tabs: [Screen] { get }
+    var mainModalScreen: CurrentValueSubject<Screen?, Never> { get }
     func view(for screen: Screen) -> AnyView
 }
 
 final class BaseRouter: Router {
-    let selectTab = PassthroughSubject<Int, Never>()
-    let modalScreen = CurrentValueSubject<Screen?, Never>(nil)
+    let mainModalScreen = CurrentValueSubject<Screen?, Never>(nil)
 
     private let resolver: Resolver
-
-    let tabs: [Screen] = [
-        .home,
-        .settings
-    ]
 
     private var screens: [Screen.ID: AnyView] = [:]
 
