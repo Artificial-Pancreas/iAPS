@@ -183,6 +183,7 @@
 		38E98A2925F52C9300C0CED0 /* Error+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38E98A2225F52C9300C0CED0 /* Error+Extensions.swift */; };
 		38E98A2D25F52DC400C0CED0 /* NSLocking+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38E98A2C25F52DC400C0CED0 /* NSLocking+Extensions.swift */; };
 		38E98A3025F52FF700C0CED0 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38E98A2F25F52FF700C0CED0 /* Config.swift */; };
+		38E98A3725F5509500C0CED0 /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38E98A3625F5509500C0CED0 /* String+Extensions.swift */; };
 		38F3B2EF25ED8E2A005C48AA /* TempTargetsStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38F3B2EE25ED8E2A005C48AA /* TempTargetsStorage.swift */; };
 		38FCF3D625E8FDF40078B0D1 /* MD5.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38FCF3D525E8FDF40078B0D1 /* MD5.swift */; };
 		38FCF3F925E902C20078B0D1 /* FileStorageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38FCF3F825E902C20078B0D1 /* FileStorageTests.swift */; };
@@ -764,6 +765,7 @@
 		38E98A2225F52C9300C0CED0 /* Error+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Error+Extensions.swift"; sourceTree = "<group>"; };
 		38E98A2C25F52DC400C0CED0 /* NSLocking+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSLocking+Extensions.swift"; sourceTree = "<group>"; };
 		38E98A2F25F52FF700C0CED0 /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
+		38E98A3625F5509500C0CED0 /* String+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
 		38F3B2EE25ED8E2A005C48AA /* TempTargetsStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TempTargetsStorage.swift; sourceTree = "<group>"; };
 		38FCF3D525E8FDF40078B0D1 /* MD5.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MD5.swift; sourceTree = "<group>"; };
 		38FCF3ED25E9028E0078B0D1 /* FreeAPSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FreeAPSTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1317,16 +1319,17 @@
 		388E5A5A25B6F05F0019842D /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
-				38E98A2C25F52DC400C0CED0 /* NSLocking+Extensions.swift */,
 				3871F39E25ED895A0013ECB5 /* Decimal+Extensions.swift */,
 				38C4D33625E9A1A200D30B77 /* DispatchQueue+Extensions.swift */,
 				3811DE5425C9D4D500A708ED /* Formatters.swift */,
 				38B4F3AE25E2979F00E76A18 /* IndexedCollection.swift */,
 				388E5A5B25B6F0770019842D /* JSON.swift */,
 				38FCF3D525E8FDF40078B0D1 /* MD5.swift */,
+				38E98A2C25F52DC400C0CED0 /* NSLocking+Extensions.swift */,
 				38C4D33925E9A1ED00D30B77 /* NSObject+AssociatedValues.swift */,
 				3811DE5725C9D4D500A708ED /* ProgressBar.swift */,
 				3811DE5525C9D4D500A708ED /* Publisher.swift */,
+				38E98A3625F5509500C0CED0 /* String+Extensions.swift */,
 				3811DEE325CA063400A708ED /* PropertyWrappers */,
 			);
 			path = Helpers;
@@ -2260,6 +2263,7 @@
 				2BE9A6FA20875F6F4F9CD461 /* PumpSettingsEditorProvider.swift in Sources */,
 				6B9625766B697D1C98E455A2 /* PumpSettingsEditorViewModel.swift in Sources */,
 				A0B8EC8CC5CD1DD237D1BCD2 /* PumpSettingsEditorRootView.swift in Sources */,
+				38E98A3725F5509500C0CED0 /* String+Extensions.swift in Sources */,
 				1D086541F369D339A74893AC /* BasalProfileEditorBuilder.swift in Sources */,
 				385CEAC125F2EA52002D6D5B /* Announcement.swift in Sources */,
 				8B759CFCF47B392BB365C251 /* BasalProfileEditorDataFlow.swift in Sources */,

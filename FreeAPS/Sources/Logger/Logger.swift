@@ -108,8 +108,8 @@ final class Logger {
     static let service = Logger(category: .service, reporter: baseReporter)
     static let businessLogic = Logger(category: .businessLogic, reporter: baseReporter)
     static let openAPS = Logger(category: .openAPS, reporter: baseReporter)
-    static let deviceManager = Logger(category: .openAPS, reporter: baseReporter)
-    static let apsManager = Logger(category: .openAPS, reporter: baseReporter)
+    static let deviceManager = Logger(category: .deviceManager, reporter: baseReporter)
+    static let apsManager = Logger(category: .apsManager, reporter: baseReporter)
 
     enum Category: String {
         case `default`
@@ -120,7 +120,7 @@ final class Logger {
         case apsManager
 
         var name: String {
-            rawValue.capitalized
+            rawValue.capitalizingFirstLetter()
         }
 
         var logger: Logger {
