@@ -28,10 +28,7 @@ final class BaseAPSManager: APSManager, Injectable {
     @Injected() private var broadcaster: Broadcaster!
     private var openAPS: OpenAPS!
 
-    private var loopCancellable: AnyCancellable?
-    private var pumpCancellable: AnyCancellable?
-    private var enactCancellable: AnyCancellable?
-    private var remoteCancellable: AnyCancellable?
+    private var lifetime = Set<AnyCancellable>()
 
     var pumpManager: PumpManagerUI? {
         get { deviceDataManager.pumpManager }
@@ -54,10 +51,11 @@ final class BaseAPSManager: APSManager, Injectable {
     }
 
     private func subscribe() {
-        pumpCancellable = deviceDataManager.recommendsLoop
+        deviceDataManager.recommendsLoop
             .sink { [weak self] in
                 self?.fetchAndLoop()
             }
+            .store(in: &lifetime)
         pumpManager?.addStatusObserver(self, queue: processQueue)
     }
 
@@ -67,18 +65,18 @@ final class BaseAPSManager: APSManager, Injectable {
             return
         }
 
-        remoteCancellable = nightscout.fetchAnnouncements()
+        nightscout.fetchAnnouncements()
             .sink { [weak self] in
                 if let recent = self?.announcementsStorage.recent(), recent.action != nil {
                     self?.enactAnnouncement(recent)
                 } else {
                     self?.loop()
                 }
-            }
+            }.store(in: &lifetime)
     }
 
     private func loop() {
-        loopCancellable = Publishers.CombineLatest3(
+        Publishers.CombineLatest3(
             nightscout.fetchGlucose(),
             nightscout.fetchCarbs(),
             nightscout.fetchTempTargets()
@@ -97,7 +95,7 @@ final class BaseAPSManager: APSManager, Injectable {
             if ok, self.settings.closedLoop {
                 self.enactSuggested()
             }
-        }
+        }.store(in: &lifetime)
     }
 
     private func verifyStatus() -> Bool {
@@ -113,7 +111,7 @@ final class BaseAPSManager: APSManager, Injectable {
 
     private func determineBasal() -> AnyPublisher<Bool, Never> {
         guard let glucose = try? storage.retrieve(OpenAPS.Monitor.glucose, as: [BloodGlucose].self), glucose.count >= 36 else {
-            print("Not enough glucose data")
+            debug(.apsManager, "Not enough glucose data")
             return Just(false).eraseToAnyPublisher()
         }
 
@@ -148,9 +146,9 @@ final class BaseAPSManager: APSManager, Injectable {
         pump.enactBolus(units: roundedAmout, automatic: false) { result in
             switch result {
             case .success:
-                print("Bolus succeeded")
+                debug(.apsManager, "Bolus succeeded")
             case let .failure(error):
-                print("Bolus failed with error: \(error.localizedDescription)")
+                debug(.apsManager, "Bolus failed with error: \(error.localizedDescription)")
             }
         }
     }
@@ -162,11 +160,11 @@ final class BaseAPSManager: APSManager, Injectable {
         pump.enactTempBasal(unitsPerHour: roundedAmout, for: duration) { result in
             switch result {
             case .success:
-                print("Temp Basal succeeded")
+                debug(.apsManager, "Temp Basal succeeded")
                 let temp = TempBasal(duration: Int(duration / 60), rate: Decimal(rate), temp: .absolute, updatedAt: Date())
                 try? self.storage.save(temp, as: OpenAPS.Monitor.tempBasal)
             case let .failure(error):
-                print("Temp Basal failed with error: \(error.localizedDescription)")
+                debug(.apsManager, "Temp Basal failed with error: \(error.localizedDescription)")
             }
         }
     }
@@ -181,7 +179,7 @@ final class BaseAPSManager: APSManager, Injectable {
 
     private func enactAnnouncement(_ announcement: Announcement) {
         guard let action = announcement.action else {
-            print("Invalid Announcement action")
+            debug(.apsManager, "Invalid Announcement action")
             return
         }
         switch action {
@@ -192,10 +190,10 @@ final class BaseAPSManager: APSManager, Injectable {
             pumpManager?.enactBolus(units: Double(amount), automatic: false) { result in
                 switch result {
                 case .success:
-                    print("Announcement Bolus succeeded")
+                    debug(.apsManager, "Announcement Bolus succeeded")
                     self.announcementsStorage.storeAnnouncements([announcement], enacted: true)
                 case let .failure(error):
-                    print("Announcement Bolus failed with error: \(error.localizedDescription)")
+                    debug(.apsManager, "Announcement Bolus failed with error: \(error.localizedDescription)")
                 }
             }
         case let .pump(pumpAction):
@@ -206,25 +204,25 @@ final class BaseAPSManager: APSManager, Injectable {
                 }
                 pumpManager?.suspendDelivery { error in
                     if let error = error {
-                        print("Pump not suspended by Announcement: \(error.localizedDescription)")
+                        debug(.apsManager, "Pump not suspended by Announcement: \(error.localizedDescription)")
                     } else {
-                        print("Pump suspended by Announcement")
+                        debug(.apsManager, "Pump suspended by Announcement")
                         self.announcementsStorage.storeAnnouncements([announcement], enacted: true)
                     }
                 }
             case .resume:
                 pumpManager?.resumeDelivery { error in
                     if let error = error {
-                        print("Pump not resumed by Announcement: \(error.localizedDescription)")
+                        debug(.apsManager, "Pump not resumed by Announcement: \(error.localizedDescription)")
                     } else {
-                        print("Pump resumed by Announcement")
+                        debug(.apsManager, "Pump resumed by Announcement")
                         self.announcementsStorage.storeAnnouncements([announcement], enacted: true)
                     }
                 }
             }
         case let .looping(closedLoop):
             settings.closedLoop = closedLoop
-            print("Closed loop \(closedLoop) by Announcement")
+            debug(.apsManager, "Closed loop \(closedLoop) by Announcement")
             announcementsStorage.storeAnnouncements([announcement], enacted: true)
         case let .tempbasal(rate, duration):
             guard verifyStatus() else {
@@ -233,10 +231,10 @@ final class BaseAPSManager: APSManager, Injectable {
             pumpManager?.enactTempBasal(unitsPerHour: Double(rate), for: TimeInterval(duration) * 60) { result in
                 switch result {
                 case .success:
-                    print("Announcement TempBasal succeeded")
+                    debug(.apsManager, "Announcement TempBasal succeeded")
                     self.announcementsStorage.storeAnnouncements([announcement], enacted: true)
                 case let .failure(error):
-                    print("Announcement TempBasal failed with error: \(error.localizedDescription)")
+                    debug(.apsManager, "Announcement TempBasal failed with error: \(error.localizedDescription)")
                 }
             }
         }
@@ -301,18 +299,18 @@ final class BaseAPSManager: APSManager, Injectable {
                 .eraseToAnyPublisher()
         }()
 
-        enactCancellable = basalPublisher
+        basalPublisher
             .flatMap { bolusPublisher }
             .sink { completion in
                 if case let .failure(error) = completion {
-                    print("Loop failed with error: \(error.localizedDescription)")
+                    debug(.apsManager, "Loop failed with error: \(error.localizedDescription)")
                 }
             } receiveValue: { [weak self] in
-                print("Loop succeeded")
+                debug(.apsManager, "Loop succeeded")
                 if let rawSuggested = self?.storage.retrieveRaw(OpenAPS.Enact.suggested) {
                     try? self?.storage.save(rawSuggested, as: OpenAPS.Enact.enacted)
                 }
-            }
+            }.store(in: &lifetime)
     }
 }
 
@@ -338,6 +336,18 @@ private extension PumpManager {
                     promise(.success(dose))
                 case let .failure(error):
                     promise(.failure(error))
+                }
+            }
+        }.eraseToAnyPublisher()
+    }
+
+    func suspendDelivery() -> AnyPublisher<Void, Error> {
+        Future { promise in
+            self.suspendDelivery { error in
+                if let error = error {
+                    promise(.failure(error))
+                } else {
+                    promise(.success(()))
                 }
             }
         }.eraseToAnyPublisher()

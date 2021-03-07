@@ -64,7 +64,7 @@ final class OpenAPS {
                     microBolusAllowed: true,
                     reservoir: reservoir
                 )
-                print("SUGGESTED: \(suggested)")
+                debug(.openAPS, "SUGGESTED: \(suggested)")
 
                 try? self.storage.save(suggested, as: Enact.suggested)
 
@@ -91,7 +91,7 @@ final class OpenAPS {
                     temptargets: RawJSON.null
                 )
 
-                print("AUTOSENS: \(autosensResult)")
+                debug(.openAPS, "AUTOSENS: \(autosensResult)")
                 try? self.storage.save(autosensResult, as: Settings.autosense)
                 promise(.success(()))
             }
@@ -113,7 +113,7 @@ final class OpenAPS {
                     categorizeUamAsBasal: categorizeUamAsBasal,
                     tuneInsulinCurve: tuneInsulinCurve
                 )
-                print("AUTOTUNE PREP: \(autotunePreppedGlucose)")
+                debug(.openAPS, "AUTOTUNE PREP: \(autotunePreppedGlucose)")
 
                 let previousAutotune = try? self.storage.retrieve(Settings.autotune, as: RawJSON.self)
 
@@ -125,7 +125,7 @@ final class OpenAPS {
 
                 try? self.storage.save(autotuneResult, as: Settings.autotune)
 
-                print("AUTOTUNE RESULT: \(autotuneResult)")
+                debug(.openAPS, "AUTOTUNE RESULT: \(autotuneResult)")
                 promise(.success(()))
             }
         }

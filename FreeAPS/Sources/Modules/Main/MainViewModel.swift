@@ -7,8 +7,9 @@ extension Main {
         @Published private(set) var isAuthotized = false
         private(set) var modal: Modal?
         @Published var isModalPresented = false
+        @Published var isAlertPresented = false
+        @Published var alertMessage = ""
         @Published private(set) var scene: Scene!
-        private var nextModal: Modal?
 
         required init(provider: Provider, resolver: Resolver) {
             super.init(provider: provider, resolver: resolver)
@@ -42,6 +43,14 @@ extension Main {
                 .filter { !$0 }
                 .sink { _ in
                     self.router.mainModalScreen.send(nil)
+                }
+                .store(in: &lifetime)
+
+            router.alertMessage
+                .receive(on: DispatchQueue.main)
+                .sink { message in
+                    self.isAlertPresented = true
+                    self.alertMessage = message
                 }
                 .store(in: &lifetime)
         }

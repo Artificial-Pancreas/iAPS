@@ -176,6 +176,13 @@
 		38D0B3B625EBE24900CB6E88 /* Battery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38D0B3B525EBE24900CB6E88 /* Battery.swift */; };
 		38D0B3D925EC07C400CB6E88 /* CarbsEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38D0B3D825EC07C400CB6E88 /* CarbsEntry.swift */; };
 		38E989DD25F5021400C0CED0 /* PumpStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38E989DC25F5021400C0CED0 /* PumpStatus.swift */; };
+		38E98A2325F52C9300C0CED0 /* Signpost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38E98A1B25F52C9300C0CED0 /* Signpost.swift */; };
+		38E98A2425F52C9300C0CED0 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38E98A1C25F52C9300C0CED0 /* Logger.swift */; };
+		38E98A2525F52C9300C0CED0 /* IssueReporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38E98A1E25F52C9300C0CED0 /* IssueReporter.swift */; };
+		38E98A2725F52C9300C0CED0 /* CollectionIssueReporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38E98A2025F52C9300C0CED0 /* CollectionIssueReporter.swift */; };
+		38E98A2925F52C9300C0CED0 /* Error+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38E98A2225F52C9300C0CED0 /* Error+Extensions.swift */; };
+		38E98A2D25F52DC400C0CED0 /* NSLocking+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38E98A2C25F52DC400C0CED0 /* NSLocking+Extensions.swift */; };
+		38E98A3025F52FF700C0CED0 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38E98A2F25F52FF700C0CED0 /* Config.swift */; };
 		38F3B2EF25ED8E2A005C48AA /* TempTargetsStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38F3B2EE25ED8E2A005C48AA /* TempTargetsStorage.swift */; };
 		38FCF3D625E8FDF40078B0D1 /* MD5.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38FCF3D525E8FDF40078B0D1 /* MD5.swift */; };
 		38FCF3F925E902C20078B0D1 /* FileStorageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38FCF3F825E902C20078B0D1 /* FileStorageTests.swift */; };
@@ -750,6 +757,13 @@
 		38D0B3B525EBE24900CB6E88 /* Battery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Battery.swift; sourceTree = "<group>"; };
 		38D0B3D825EC07C400CB6E88 /* CarbsEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarbsEntry.swift; sourceTree = "<group>"; };
 		38E989DC25F5021400C0CED0 /* PumpStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PumpStatus.swift; sourceTree = "<group>"; };
+		38E98A1B25F52C9300C0CED0 /* Signpost.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Signpost.swift; sourceTree = "<group>"; };
+		38E98A1C25F52C9300C0CED0 /* Logger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
+		38E98A1E25F52C9300C0CED0 /* IssueReporter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueReporter.swift; sourceTree = "<group>"; };
+		38E98A2025F52C9300C0CED0 /* CollectionIssueReporter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionIssueReporter.swift; sourceTree = "<group>"; };
+		38E98A2225F52C9300C0CED0 /* Error+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Error+Extensions.swift"; sourceTree = "<group>"; };
+		38E98A2C25F52DC400C0CED0 /* NSLocking+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSLocking+Extensions.swift"; sourceTree = "<group>"; };
+		38E98A2F25F52FF700C0CED0 /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
 		38F3B2EE25ED8E2A005C48AA /* TempTargetsStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TempTargetsStorage.swift; sourceTree = "<group>"; };
 		38FCF3D525E8FDF40078B0D1 /* MD5.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MD5.swift; sourceTree = "<group>"; };
 		38FCF3ED25E9028E0078B0D1 /* FreeAPSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FreeAPSTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -924,8 +938,10 @@
 			children = (
 				3811DEDE25C9E2DD00A708ED /* Application */,
 				3811DF0A25CAAAA500A708ED /* APS */,
+				38E98A3225F5300800C0CED0 /* Config */,
 				3811DEBD25C9D99900A708ED /* Containers */,
 				388E5A5A25B6F05F0019842D /* Helpers */,
+				38E98A1A25F52C9300C0CED0 /* Logger */,
 				388E5A5925B6F0250019842D /* Models */,
 				3811DE0325C9D31700A708ED /* Modules */,
 				3811DE1425C9D40400A708ED /* Router */,
@@ -1301,6 +1317,7 @@
 		388E5A5A25B6F05F0019842D /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				38E98A2C25F52DC400C0CED0 /* NSLocking+Extensions.swift */,
 				3871F39E25ED895A0013ECB5 /* Decimal+Extensions.swift */,
 				38C4D33625E9A1A200D30B77 /* DispatchQueue+Extensions.swift */,
 				3811DE5425C9D4D500A708ED /* Formatters.swift */,
@@ -1438,6 +1455,34 @@
 				38B4F3C925E502E100E76A18 /* WeakObjectSet.swift */,
 			);
 			path = SwiftNotificationCenter;
+			sourceTree = "<group>";
+		};
+		38E98A1A25F52C9300C0CED0 /* Logger */ = {
+			isa = PBXGroup;
+			children = (
+				38E98A1B25F52C9300C0CED0 /* Signpost.swift */,
+				38E98A1C25F52C9300C0CED0 /* Logger.swift */,
+				38E98A1D25F52C9300C0CED0 /* IssueReporter */,
+				38E98A2225F52C9300C0CED0 /* Error+Extensions.swift */,
+			);
+			path = Logger;
+			sourceTree = "<group>";
+		};
+		38E98A1D25F52C9300C0CED0 /* IssueReporter */ = {
+			isa = PBXGroup;
+			children = (
+				38E98A1E25F52C9300C0CED0 /* IssueReporter.swift */,
+				38E98A2025F52C9300C0CED0 /* CollectionIssueReporter.swift */,
+			);
+			path = IssueReporter;
+			sourceTree = "<group>";
+		};
+		38E98A3225F5300800C0CED0 /* Config */ = {
+			isa = PBXGroup;
+			children = (
+				38E98A2F25F52FF700C0CED0 /* Config.swift */,
+			);
+			path = Config;
 			sourceTree = "<group>";
 		};
 		38FCF3EE25E9028E0078B0D1 /* FreeAPSTests */ = {
@@ -2132,6 +2177,7 @@
 				38A13D3225E28B4B00EAA382 /* PumpHistoryEvent.swift in Sources */,
 				3811DE1825C9D40400A708ED /* Router.swift in Sources */,
 				38A0363B25ECF07E00FCBB52 /* GlucoseStorage.swift in Sources */,
+				38E98A2725F52C9300C0CED0 /* CollectionIssueReporter.swift in Sources */,
 				3811DEE825CA063400A708ED /* Injected.swift in Sources */,
 				3811DEAF25C9D88300A708ED /* KeyValueStorage.swift in Sources */,
 				38FE826D25CC8461001FF17A /* NightscoutAPI.swift in Sources */,
@@ -2156,6 +2202,7 @@
 				3811DE7F25C9D6D300A708ED /* LoginBuilder.swift in Sources */,
 				3811DE3525C9D49500A708ED /* HomeRootView.swift in Sources */,
 				3811DEC325C9D99900A708ED /* UIContainer.swift in Sources */,
+				38E98A2925F52C9300C0CED0 /* Error+Extensions.swift in Sources */,
 				3811DE6125C9D4D500A708ED /* ViewModifiers.swift in Sources */,
 				3811DEAC25C9D88300A708ED /* NightscoutManager.swift in Sources */,
 				3811DE3325C9D49500A708ED /* HomeBuilder.swift in Sources */,
@@ -2183,6 +2230,7 @@
 				38B4F3CB25E502E200E76A18 /* WeakObjectSet.swift in Sources */,
 				3811DEB725C9D88300A708ED /* AuthorizationManager.swift in Sources */,
 				38E989DD25F5021400C0CED0 /* PumpStatus.swift in Sources */,
+				38E98A2525F52C9300C0CED0 /* IssueReporter.swift in Sources */,
 				3811DF0825CAAA4700A708ED /* ServiceContainer.swift in Sources */,
 				3811DEB025C9D88300A708ED /* BaseKeychain.swift in Sources */,
 				3811DE4D25C9D4B800A708ED /* AuthotizedRootViewModel.swift in Sources */,
@@ -2198,6 +2246,7 @@
 				45717281F743594AA9D87191 /* ConfigEditorRootView.swift in Sources */,
 				CDB87FA71A93F3739D3D338E /* NightscoutConfigBuilder.swift in Sources */,
 				D6DEC113821A7F1056C4AA1E /* NightscoutConfigDataFlow.swift in Sources */,
+				38E98A3025F52FF700C0CED0 /* Config.swift in Sources */,
 				BD2B464E0745FBE7B79913F4 /* NightscoutConfigProvider.swift in Sources */,
 				9825E5E923F0B8FA80C8C7C7 /* NightscoutConfigViewModel.swift in Sources */,
 				642F76A05A4FF530463A9FD0 /* NightscoutConfigRootView.swift in Sources */,
@@ -2217,6 +2266,7 @@
 				FA630397F76B582C8D8681A7 /* BasalProfileEditorProvider.swift in Sources */,
 				63E890B4D951EAA91C071D5C /* BasalProfileEditorViewModel.swift in Sources */,
 				385CEA8225F23DFD002D6D5B /* NightscoutStatus.swift in Sources */,
+				38E98A2425F52C9300C0CED0 /* Logger.swift in Sources */,
 				CA370FC152BC98B3D1832968 /* BasalProfileEditorRootView.swift in Sources */,
 				F215CAB49BA4B5A01C3BC6B6 /* ISFEditorBuilder.swift in Sources */,
 				6632A0DC746872439A858B44 /* ISFEditorDataFlow.swift in Sources */,
@@ -2229,6 +2279,7 @@
 				69B9A368029F7EB39F525422 /* CREditorViewModel.swift in Sources */,
 				98641AF4F92123DA668AB931 /* CREditorRootView.swift in Sources */,
 				7F7017AA5C69838FB7E6FECE /* TargetsEditorBuilder.swift in Sources */,
+				38E98A2325F52C9300C0CED0 /* Signpost.swift in Sources */,
 				F5F7E6C1B7F098F59EB67EC5 /* TargetsEditorDataFlow.swift in Sources */,
 				5075C1608E6249A51495C422 /* TargetsEditorProvider.swift in Sources */,
 				E13B7DAB2A435F57066AF02E /* TargetsEditorViewModel.swift in Sources */,
@@ -2251,6 +2302,7 @@
 				19434C14DF3F4816F4E4BF2E /* BolusBuilder.swift in Sources */,
 				041D1E995A6AE92E9289DC49 /* BolusDataFlow.swift in Sources */,
 				23888883D4EA091C88480FF2 /* BolusProvider.swift in Sources */,
+				38E98A2D25F52DC400C0CED0 /* NSLocking+Extensions.swift in Sources */,
 				69A31254F2451C20361D172F /* BolusViewModel.swift in Sources */,
 				0CEA2EA070AB041AF3E3745B /* BolusRootView.swift in Sources */,
 				1FF95E8F785B28961EFDE5A9 /* ManualTempBasalBuilder.swift in Sources */,

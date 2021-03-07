@@ -87,9 +87,9 @@ extension BaseDeviceDataManager: PumpManagerDelegate {
     }
 
     func pumpManagerBLEHeartbeatDidFire(_ pumpManager: PumpManager) {
-        print("[DeviceDataManager] Pump Heartbeat")
+        debug(.deviceManager, "Pump Heartbeat")
         pumpManager.ensureCurrentPumpData {
-            print("[DeviceDataManager] Pump Data updated")
+            debug(.deviceManager, "Pump Data updated")
         }
     }
 
@@ -98,8 +98,8 @@ extension BaseDeviceDataManager: PumpManagerDelegate {
     }
 
     func pumpManager(_: PumpManager, didUpdate status: PumpManagerStatus, oldStatus _: PumpManagerStatus) {
-        print("[DeviceDataManager] New pump status Bolus: \(status.bolusState)")
-        print("[DeviceDataManager] New pump status Basal: \(String(describing: status.basalDeliveryState))")
+        debug(.deviceManager, "New pump status Bolus: \(status.bolusState)")
+        debug(.deviceManager, "New pump status Basal: \(String(describing: status.basalDeliveryState))")
     }
 
     func pumpManagerWillDeactivate(_: PumpManager) {
@@ -109,7 +109,7 @@ extension BaseDeviceDataManager: PumpManagerDelegate {
     func pumpManager(_: PumpManager, didUpdatePumpRecordsBasalProfileStartEvents _: Bool) {}
 
     func pumpManager(_: PumpManager, didError error: PumpManagerError) {
-        print("[DeviceDataManager] error: \(error.localizedDescription)")
+        info(.deviceManager, "error: \(error.localizedDescription)")
     }
 
     func pumpManager(
@@ -132,7 +132,7 @@ extension BaseDeviceDataManager: PumpManagerDelegate {
             Error
         >) -> Void
     ) {
-        print("[DeviceDataManager] Reservoir Value \(units), at: \(date)")
+        debug(.deviceManager, "Reservoir Value \(units), at: \(date)")
         try? storage.save(Decimal(units), as: OpenAPS.Monitor.reservoir)
         let batteryPercent = Int((pumpManager?.status.pumpBatteryChargeRemaining ?? 1) * 100)
         let battery = Battery(percent: batteryPercent, string: batteryPercent >= 10 ? .normal : .low)
@@ -145,7 +145,7 @@ extension BaseDeviceDataManager: PumpManagerDelegate {
     }
 
     func pumpManagerRecommendsLoop(_: PumpManager) {
-        print("[DeviceDataManager] Recomends loop")
+        debug(.deviceManager, "Recomends loop")
         recommendsLoop.send()
     }
 

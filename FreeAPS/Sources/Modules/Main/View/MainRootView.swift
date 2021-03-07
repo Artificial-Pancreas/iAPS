@@ -10,6 +10,13 @@ extension Main {
                     NavigationView { self.viewModel.modal!.view }
                         .navigationViewStyle(StackNavigationViewStyle())
                 }
+                .alert(isPresented: $viewModel.isAlertPresented) {
+                    Alert(
+                        title: Text("Important message"),
+                        message: Text(viewModel.alertMessage),
+                        dismissButton: .default(Text("Dismiss"))
+                    )
+                }
         }
     }
 }
