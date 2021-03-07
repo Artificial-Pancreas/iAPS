@@ -2,11 +2,11 @@ import Foundation
 
 extension PreferencesEditor {
     final class Provider: BaseProvider, PreferencesEditorProvider {
+        @Injected() private var settingsManager: SettingsManager!
         private let processQueue = DispatchQueue(label: "PreferencesEditorProvider.processQueue")
+
         var preferences: Preferences {
-            (try? storage.retrieve(OpenAPS.Settings.preferences, as: Preferences.self))
-                ?? Preferences(from: OpenAPS.defaults(for: OpenAPS.Settings.preferences))
-                ?? Preferences()
+            settingsManager.preferences
         }
 
         func savePreferences(_ preferences: Preferences) {

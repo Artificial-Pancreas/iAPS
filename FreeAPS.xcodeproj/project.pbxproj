@@ -175,6 +175,7 @@
 		38C4D33A25E9A1ED00D30B77 /* NSObject+AssociatedValues.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38C4D33925E9A1ED00D30B77 /* NSObject+AssociatedValues.swift */; };
 		38D0B3B625EBE24900CB6E88 /* Battery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38D0B3B525EBE24900CB6E88 /* Battery.swift */; };
 		38D0B3D925EC07C400CB6E88 /* CarbsEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38D0B3D825EC07C400CB6E88 /* CarbsEntry.swift */; };
+		38E989DD25F5021400C0CED0 /* PumpStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38E989DC25F5021400C0CED0 /* PumpStatus.swift */; };
 		38F3B2EF25ED8E2A005C48AA /* TempTargetsStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38F3B2EE25ED8E2A005C48AA /* TempTargetsStorage.swift */; };
 		38FCF3D625E8FDF40078B0D1 /* MD5.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38FCF3D525E8FDF40078B0D1 /* MD5.swift */; };
 		38FCF3F925E902C20078B0D1 /* FileStorageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38FCF3F825E902C20078B0D1 /* FileStorageTests.swift */; };
@@ -748,6 +749,7 @@
 		38C4D33925E9A1ED00D30B77 /* NSObject+AssociatedValues.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSObject+AssociatedValues.swift"; sourceTree = "<group>"; };
 		38D0B3B525EBE24900CB6E88 /* Battery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Battery.swift; sourceTree = "<group>"; };
 		38D0B3D825EC07C400CB6E88 /* CarbsEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarbsEntry.swift; sourceTree = "<group>"; };
+		38E989DC25F5021400C0CED0 /* PumpStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PumpStatus.swift; sourceTree = "<group>"; };
 		38F3B2EE25ED8E2A005C48AA /* TempTargetsStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TempTargetsStorage.swift; sourceTree = "<group>"; };
 		38FCF3D525E8FDF40078B0D1 /* MD5.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MD5.swift; sourceTree = "<group>"; };
 		38FCF3ED25E9028E0078B0D1 /* FreeAPSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FreeAPSTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1291,6 +1293,7 @@
 				38A0364125ED069400FCBB52 /* TempBasal.swift */,
 				3871F39B25ED892B0013ECB5 /* TempTarget.swift */,
 				3811DE8E25C9D80400A708ED /* User.swift */,
+				38E989DC25F5021400C0CED0 /* PumpStatus.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -2179,6 +2182,7 @@
 				3811DE3F25C9D4A100A708ED /* SettingsViewModel.swift in Sources */,
 				38B4F3CB25E502E200E76A18 /* WeakObjectSet.swift in Sources */,
 				3811DEB725C9D88300A708ED /* AuthorizationManager.swift in Sources */,
+				38E989DD25F5021400C0CED0 /* PumpStatus.swift in Sources */,
 				3811DF0825CAAA4700A708ED /* ServiceContainer.swift in Sources */,
 				3811DEB025C9D88300A708ED /* BaseKeychain.swift in Sources */,
 				3811DE4D25C9D4B800A708ED /* AuthotizedRootViewModel.swift in Sources */,

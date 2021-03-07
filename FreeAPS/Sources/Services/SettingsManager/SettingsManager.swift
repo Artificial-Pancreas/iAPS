@@ -3,6 +3,7 @@ import Swinject
 
 protocol SettingsManager {
     var settings: FreeAPSSettings { get set }
+    var preferences: Preferences { get }
 }
 
 protocol SettingsObserver {
@@ -35,5 +36,11 @@ final class BaseSettingsManager: SettingsManager, Injectable {
 
     private func save() {
         try? storage.save(settings, as: OpenAPS.FreeAPS.settings)
+    }
+
+    var preferences: Preferences {
+        (try? storage.retrieve(OpenAPS.Settings.preferences, as: Preferences.self))
+            ?? Preferences(from: OpenAPS.defaults(for: OpenAPS.Settings.preferences))
+            ?? Preferences()
     }
 }

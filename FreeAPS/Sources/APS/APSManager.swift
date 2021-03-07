@@ -15,6 +15,7 @@ protocol APSManager {
 }
 
 final class BaseAPSManager: APSManager, Injectable {
+    private let processQueue = DispatchQueue(label: "BaseAPSManager.processQueue")
     @Injected() private var storage: FileStorage!
     @Injected() private var pumpHistoryStorage: PumpHistoryStorage!
     @Injected() private var glucoseStorage: GlucoseStorage!
@@ -57,6 +58,7 @@ final class BaseAPSManager: APSManager, Injectable {
             .sink { [weak self] in
                 self?.fetchAndLoop()
             }
+        pumpManager?.addStatusObserver(self, queue: processQueue)
     }
 
     func fetchAndLoop() {
@@ -98,6 +100,17 @@ final class BaseAPSManager: APSManager, Injectable {
         }
     }
 
+    private func verifyStatus() -> Bool {
+        guard let pump = pumpManager else {
+            return false
+        }
+        let status = pump.status.pumpStatus
+
+        guard !status.bolusing, !status.suspended else { return false }
+
+        return true
+    }
+
     private func determineBasal() -> AnyPublisher<Bool, Never> {
         guard let glucose = try? storage.retrieve(OpenAPS.Monitor.glucose, as: [BloodGlucose].self), glucose.count >= 36 else {
             print("Not enough glucose data")
@@ -105,20 +118,31 @@ final class BaseAPSManager: APSManager, Injectable {
         }
 
         let now = Date()
-        guard let temp = currentTemp(date: now) else {
-            return Just(false).eraseToAnyPublisher()
-        }
+        let temp = currentTemp(date: now)
 
-        return openAPS.makeProfiles()
+        let mainPublisher = openAPS.makeProfiles()
             .flatMap { _ in
                 self.openAPS.determineBasal(currentTemp: temp, clock: now)
             }
             .map { true }
             .eraseToAnyPublisher()
+
+        if temp.duration == 0,
+           settings.closedLoop,
+           settingsManager.preferences.unsuspendIfNoTemp,
+           let pump = pumpManager
+        {
+            return pump.resumeDelivery()
+                .flatMap { _ in mainPublisher }
+                .replaceError(with: false)
+                .eraseToAnyPublisher()
+        }
+
+        return mainPublisher
     }
 
     func enactBolus(amount: Double) {
-        guard let pump = pumpManager else { return }
+        guard let pump = pumpManager, verifyStatus() else { return }
 
         let roundedAmout = pump.roundToSupportedBolusVolume(units: amount)
         pump.enactBolus(units: roundedAmout, automatic: false) { result in
@@ -132,13 +156,15 @@ final class BaseAPSManager: APSManager, Injectable {
     }
 
     func enactTempBasal(rate: Double, duration: TimeInterval) {
-        guard let pump = pumpManager else { return }
+        guard let pump = pumpManager, verifyStatus() else { return }
 
         let roundedAmout = pump.roundToSupportedBasalRate(unitsPerHour: rate)
         pump.enactTempBasal(unitsPerHour: roundedAmout, for: duration) { result in
             switch result {
             case .success:
                 print("Temp Basal succeeded")
+                let temp = TempBasal(duration: Int(duration / 60), rate: Decimal(rate), temp: .absolute, updatedAt: Date())
+                try? self.storage.save(temp, as: OpenAPS.Monitor.tempBasal)
             case let .failure(error):
                 print("Temp Basal failed with error: \(error.localizedDescription)")
             }
@@ -160,6 +186,9 @@ final class BaseAPSManager: APSManager, Injectable {
         }
         switch action {
         case let .bolus(amount):
+            guard verifyStatus() else {
+                return
+            }
             pumpManager?.enactBolus(units: Double(amount), automatic: false) { result in
                 switch result {
                 case .success:
@@ -172,6 +201,9 @@ final class BaseAPSManager: APSManager, Injectable {
         case let .pump(pumpAction):
             switch pumpAction {
             case .suspend:
+                guard verifyStatus() else {
+                    return
+                }
                 pumpManager?.suspendDelivery { error in
                     if let error = error {
                         print("Pump not suspended by Announcement: \(error.localizedDescription)")
@@ -195,6 +227,9 @@ final class BaseAPSManager: APSManager, Injectable {
             print("Closed loop \(closedLoop) by Announcement")
             announcementsStorage.storeAnnouncements([announcement], enacted: true)
         case let .tempbasal(rate, duration):
+            guard verifyStatus() else {
+                return
+            }
             pumpManager?.enactTempBasal(unitsPerHour: Double(rate), for: TimeInterval(duration) * 60) { result in
                 switch result {
                 case .success:
@@ -207,20 +242,34 @@ final class BaseAPSManager: APSManager, Injectable {
         }
     }
 
-    private func currentTemp(date: Date) -> TempBasal? {
-        guard let state = pumpManager?.status.basalDeliveryState else { return nil }
+    private func currentTemp(date: Date) -> TempBasal {
+        let defaultTemp = { () -> TempBasal in
+            guard let temp = try? storage.retrieve(OpenAPS.Monitor.tempBasal, as: TempBasal.self) else {
+                return TempBasal(duration: 0, rate: 0, temp: .absolute, updatedAt: Date())
+            }
+            let delta = Int((date.timeIntervalSince1970 - temp.updatedAt.timeIntervalSince1970) / 60)
+            let duration = max(0, temp.duration - delta)
+            return TempBasal(duration: duration, rate: temp.rate, temp: .absolute, updatedAt: date)
+        }()
+
+        guard let state = pumpManager?.status.basalDeliveryState else { return defaultTemp }
         switch state {
         case .active:
-            return TempBasal(duration: 0, rate: 0, temp: .absolute)
+            return TempBasal(duration: 0, rate: 0, temp: .absolute, updatedAt: date)
         case let .tempBasal(dose):
             let rate = Decimal(dose.unitsPerHour)
             let durationMin = max(0, Int((dose.endDate.timeIntervalSince1970 - date.timeIntervalSince1970) / 60))
-            return TempBasal(duration: durationMin, rate: rate, temp: .absolute)
-        default: return nil
+            return TempBasal(duration: durationMin, rate: rate, temp: .absolute, updatedAt: date)
+        default:
+            return defaultTemp
         }
     }
 
     private func enactSuggested() {
+        guard verifyStatus() else {
+            return
+        }
+
         guard let pump = pumpManager,
               let suggested = try? storage.retrieve(
                   OpenAPS.Enact.suggested,
@@ -235,8 +284,12 @@ final class BaseAPSManager: APSManager, Injectable {
                 return Just(()).setFailureType(to: Error.self)
                     .eraseToAnyPublisher()
             }
-            return pump.enactTempBasal(unitsPerHour: Double(rate), for: TimeInterval(duration * 60)).map { _ in () }
-                .eraseToAnyPublisher()
+            return pump.enactTempBasal(unitsPerHour: Double(rate), for: TimeInterval(duration * 60)).map { _ in
+                let temp = TempBasal(duration: duration, rate: rate, temp: .absolute, updatedAt: Date())
+                try? self.storage.save(temp, as: OpenAPS.Monitor.tempBasal)
+                return ()
+            }
+            .eraseToAnyPublisher()
         }()
 
         let bolusPublisher: AnyPublisher<Void, Error> = {
@@ -288,5 +341,32 @@ private extension PumpManager {
                 }
             }
         }.eraseToAnyPublisher()
+    }
+
+    func resumeDelivery() -> AnyPublisher<Void, Error> {
+        Future { promise in
+            self.resumeDelivery { error in
+                if let error = error {
+                    promise(.failure(error))
+                } else {
+                    promise(.success(()))
+                }
+            }
+        }.eraseToAnyPublisher()
+    }
+}
+
+extension BaseAPSManager: PumpManagerStatusObserver {
+    func pumpManager(_: PumpManager, didUpdate status: PumpManagerStatus, oldStatus _: PumpManagerStatus) {
+        try? storage.save(status.pumpStatus, as: OpenAPS.Monitor.status)
+    }
+}
+
+extension PumpManagerStatus {
+    var pumpStatus: PumpStatus {
+        let bolusing = bolusState != .noBolus
+        let suspended = basalDeliveryState?.isSuspended ?? true
+        let type = suspended ? StatusType.suspended : (bolusing ? .bolusing : .normal)
+        return PumpStatus(status: type, bolusing: bolusing, suspended: suspended)
     }
 }
