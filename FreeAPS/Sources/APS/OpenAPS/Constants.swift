@@ -67,6 +67,10 @@ extension OpenAPS {
         static let exportDefaults = "exportDefaults"
     }
 
+    enum Nightscout {
+        static let uploadedPumphistory = "upload/uploaded-pumphistory.json"
+    }
+
     enum FreeAPS {
         static let settings = "freeaps/freeaps_settings.json"
         static let announcements = "freeaps/announcements.json"

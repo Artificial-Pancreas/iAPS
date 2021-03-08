@@ -7,7 +7,6 @@ protocol NightscoutManager {
     func fetchCarbs() -> AnyPublisher<Void, Never>
     func fetchTempTargets() -> AnyPublisher<Void, Never>
     func fetchAnnouncements() -> AnyPublisher<Void, Never>
-    func upload()
 }
 
 final class BaseNightscoutManager: NightscoutManager, Injectable {
@@ -15,9 +14,14 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
     @Injected() private var glucoseStorage: GlucoseStorage!
     @Injected() private var tempTargetsStorage: TempTargetsStorage!
     @Injected() private var carbsStorage: CarbsStorage!
+    @Injected() private var pumpHistoryStorage: PumpHistoryStorage!
+    @Injected() private var storage: FileStorage!
     @Injected() private var announcementsStorage: AnnouncementsStorage!
+    @Injected() private var broadcaster: Broadcaster!
 
     private let processQueue = DispatchQueue(label: "BaseNetworkManager.processQueue")
+
+    private var lifetime = Set<AnyCancellable>()
 
     private var nightscoutAPI: NightscoutAPI? {
         guard let urlString = keychain.getValue(String.self, forKey: NightscoutConfig.Config.urlKey),
@@ -31,6 +35,11 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
 
     init(resolver: Resolver) {
         injectServices(resolver)
+        subscribe()
+    }
+
+    private func subscribe() {
+        broadcaster.register(PumpHistoryObserver.self, observer: self)
     }
 
     func fetchGlucose() -> AnyPublisher<Void, Never> {
@@ -90,12 +99,30 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
             }.eraseToAnyPublisher()
     }
 
-    func upload() {
-        uploadStatus()
-        uploadTreatments()
-    }
-
     private func uploadStatus() {}
 
-    private func uploadTreatments() {}
+    private func uploadPumpHistory(_ treatments: [NigtscoutTreatment]) {
+        guard !treatments.isEmpty, let nightscout = nightscoutAPI else {
+            return
+        }
+
+        processQueue.async {
+            nightscout.uploadTreatments(treatments)
+                .sink { completion in
+                    switch completion {
+                    case .finished:
+                        try? self.storage.save(treatments, as: OpenAPS.Nightscout.uploadedPumphistory)
+                    case let .failure(error):
+                        debug(.nightscout, error.localizedDescription)
+                    }
+                } receiveValue: {}
+                .store(in: &self.lifetime)
+        }
+    }
+}
+
+extension BaseNightscoutManager: PumpHistoryObserver {
+    func pumpHistoryDidUpdate(_: [PumpHistoryEvent]) {
+        uploadPumpHistory(pumpHistoryStorage.nightscoutTretmentsNotUploaded())
+    }
 }

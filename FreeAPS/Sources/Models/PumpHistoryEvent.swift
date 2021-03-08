@@ -25,6 +25,8 @@ enum PumpHistoryEventType: String, JSON {
     case rewind = "Rewind"
     case prime = "Prime"
     case journalCarbs = "JournalEntryMealMarker"
+
+    case nsTempBasal = "Temp Basal"
 }
 
 enum TempType: String, JSON {

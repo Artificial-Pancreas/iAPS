@@ -11,8 +11,8 @@ class NightscoutAPI {
     private enum Config {
         static let entriesPath = "/api/v1/entries/sgv.json"
         static let treatmentsPath = "/api/v1/treatments.json"
-        static let retryCount = 2
-        static let timeout: TimeInterval = 2
+        static let retryCount = 1
+        static let timeout: TimeInterval = 30
     }
 
     enum Error: LocalizedError {
@@ -40,7 +40,7 @@ extension NightscoutAPI {
         if let secret = secret {
             request.addValue(secret.sha1(), forHTTPHeaderField: "api-secret")
         }
-        request.httpBody = try! JSONEncoder().encode(check)
+        request.httpBody = try! JSONCoding.encoder.encode(check)
         return service.run(request)
             .map { _ in () }
             .eraseToAnyPublisher()
@@ -91,7 +91,8 @@ extension NightscoutAPI {
         components.path = Config.treatmentsPath
         components.queryItems = [
             URLQueryItem(name: "find[carbs][$exists]", value: "true"),
-            URLQueryItem(name: "find[enteredBy][$ne]", value: CarbsEntry.manual)
+            URLQueryItem(name: "find[enteredBy][$ne]", value: CarbsEntry.manual),
+            URLQueryItem(name: "find[enteredBy][$ne]", value: NigtscoutTreatment.local)
         ]
         if let date = sinceDate {
             let dateItem = URLQueryItem(
@@ -176,6 +177,30 @@ extension NightscoutAPI {
         return service.run(request)
             .retry(Config.retryCount)
             .decode(type: [Announcement].self, decoder: JSONCoding.decoder)
+            .eraseToAnyPublisher()
+    }
+
+    func uploadTreatments(_ treatments: [NigtscoutTreatment]) -> AnyPublisher<Void, Swift.Error> {
+        var components = URLComponents()
+        components.scheme = url.scheme
+        components.host = url.host
+        components.port = url.port
+        components.path = Config.treatmentsPath
+
+        var request = URLRequest(url: components.url!)
+        request.allowsConstrainedNetworkAccess = false
+        request.timeoutInterval = Config.timeout
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+
+        if let secret = secret {
+            request.addValue(secret.sha1(), forHTTPHeaderField: "api-secret")
+        }
+        request.httpBody = try! JSONCoding.encoder.encode(treatments)
+        request.httpMethod = "POST"
+
+        return service.run(request)
+            .retry(Config.retryCount)
+            .map { _ in () }
             .eraseToAnyPublisher()
     }
 }

@@ -3,14 +3,21 @@ import LoopKit
 import SwiftDate
 import Swinject
 
+protocol PumpHistoryObserver {
+    func pumpHistoryDidUpdate(_ events: [PumpHistoryEvent])
+}
+
 protocol PumpHistoryStorage {
     func storePumpEvents(_ events: [NewPumpEvent])
     func storeJournalCarbs(_ carbs: Int)
+    func recent() -> [PumpHistoryEvent]
+    func nightscoutTretmentsNotUploaded() -> [NigtscoutTreatment]
 }
 
 final class BasePumpHistoryStorage: PumpHistoryStorage, Injectable {
     private let processQueue = DispatchQueue(label: "BasePumpHistoryStorage.processQueue")
     @Injected() private var storage: FileStorage!
+    @Injected() private var broadcaster: Broadcaster!
 
     init(resolver: Resolver) {
         injectServices(resolver)
@@ -48,7 +55,7 @@ final class BasePumpHistoryStorage: PumpHistoryStorage, Injectable {
                             amount: nil,
                             duration: nil,
                             durationMin: minutes,
-                            rate: rate,
+                            rate: nil,
                             temp: nil,
                             carbInput: nil
                         ),
@@ -151,12 +158,82 @@ final class BasePumpHistoryStorage: PumpHistoryStorage, Injectable {
     private func processNewEvents(_ events: [PumpHistoryEvent]) {
         dispatchPrecondition(condition: .onQueue(processQueue))
         let file = OpenAPS.Monitor.pumpHistory
+        var uniqEvents: [PumpHistoryEvent] = []
         try? storage.transaction { storage in
             try storage.append(events, to: file, uniqBy: \.id)
-            let uniqEvents = try storage.retrieve(file, as: [PumpHistoryEvent].self)
+            uniqEvents = try storage.retrieve(file, as: [PumpHistoryEvent].self)
                 .filter { $0.timestamp.addingTimeInterval(1.days.timeInterval) > Date() }
                 .sorted { $0.timestamp > $1.timestamp }
             try storage.save(Array(uniqEvents), as: file)
         }
+        broadcaster.notify(PumpHistoryObserver.self, on: processQueue) {
+            $0.pumpHistoryDidUpdate(uniqEvents)
+        }
+    }
+
+    func recent() -> [PumpHistoryEvent] {
+        (try? storage.retrieve(OpenAPS.Monitor.pumpHistory, as: [PumpHistoryEvent].self))?.reversed() ?? []
+    }
+
+    func nightscoutTretmentsNotUploaded() -> [NigtscoutTreatment] {
+        let events = recent()
+        guard !events.isEmpty else { return [] }
+
+        let temps: [NigtscoutTreatment] = events.reduce([]) { result, event in
+            var result = result
+            switch event.type {
+            case .tempBasal:
+                result.append(NigtscoutTreatment(
+                    duration: nil,
+                    rawDuration: nil,
+                    rawRate: event,
+                    absolute: event.rate,
+                    rate: event.rate,
+                    eventType: .nsTempBasal,
+                    createdAt: event.timestamp,
+                    entededBy: NigtscoutTreatment.local,
+                    bolus: nil,
+                    insulin: nil,
+                    notes: nil,
+                    carbs: nil
+                ))
+            case .tempBasalDuration:
+                if var last = result.popLast(), last.eventType == .nsTempBasal, last.createdAt == event.timestamp {
+                    last.duration = event.durationMin
+                    last.rawDuration = event
+                    result.append(last)
+                }
+            default: break
+            }
+            return result
+        }
+
+        let boluses = events.compactMap { event -> NigtscoutTreatment? in
+            switch event.type {
+            case .bolus:
+                return NigtscoutTreatment(
+                    duration: event.duration,
+                    rawDuration: nil,
+                    rawRate: nil,
+                    absolute: nil,
+                    rate: nil,
+                    eventType: .bolus,
+                    createdAt: event.timestamp,
+                    entededBy: NigtscoutTreatment.local,
+                    bolus: event,
+                    insulin: event.amount,
+                    notes: nil,
+                    carbs: nil
+                )
+            default: return nil
+            }
+        }
+
+        let uploaded = (try? storage.retrieve(OpenAPS.Nightscout.uploadedPumphistory, as: [NigtscoutTreatment].self)) ?? []
+
+        let treatments = Array(Set([boluses, temps].flatMap { $0 }).subtracting(Set(uploaded)))
+
+        return treatments.sorted { $0.createdAt! > $1.createdAt! }
+//            .filter { $0.createdAt!.addingTimeInterval(3.hours.timeInterval) > Date() }
     }
 }
