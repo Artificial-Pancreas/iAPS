@@ -208,7 +208,7 @@ final class BasePumpHistoryStorage: PumpHistoryStorage, Injectable {
             return result
         }
 
-        let boluses = events.compactMap { event -> NigtscoutTreatment? in
+        let bolusesAndCarbs = events.compactMap { event -> NigtscoutTreatment? in
             switch event.type {
             case .bolus:
                 return NigtscoutTreatment(
@@ -225,15 +225,29 @@ final class BasePumpHistoryStorage: PumpHistoryStorage, Injectable {
                     notes: nil,
                     carbs: nil
                 )
+            case .journalCarbs:
+                return NigtscoutTreatment(
+                    duration: nil,
+                    rawDuration: nil,
+                    rawRate: nil,
+                    absolute: nil,
+                    rate: nil,
+                    eventType: .nsCarbCorrection,
+                    createdAt: event.timestamp,
+                    entededBy: NigtscoutTreatment.local,
+                    bolus: nil,
+                    insulin: nil,
+                    notes: nil,
+                    carbs: Decimal(event.carbInput ?? 0)
+                )
             default: return nil
             }
         }
 
         let uploaded = (try? storage.retrieve(OpenAPS.Nightscout.uploadedPumphistory, as: [NigtscoutTreatment].self)) ?? []
 
-        let treatments = Array(Set([boluses, temps].flatMap { $0 }).subtracting(Set(uploaded)))
+        let treatments = Array(Set([bolusesAndCarbs, temps].flatMap { $0 }).subtracting(Set(uploaded)))
 
         return treatments.sorted { $0.createdAt! > $1.createdAt! }
-//            .filter { $0.createdAt!.addingTimeInterval(3.hours.timeInterval) > Date() }
     }
 }

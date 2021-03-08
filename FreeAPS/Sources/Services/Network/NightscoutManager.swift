@@ -40,6 +40,7 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
 
     private func subscribe() {
         broadcaster.register(PumpHistoryObserver.self, observer: self)
+        broadcaster.register(CarbsObserver.self, observer: self)
     }
 
     func fetchGlucose() -> AnyPublisher<Void, Never> {
@@ -101,7 +102,7 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
 
     private func uploadStatus() {}
 
-    private func uploadPumpHistory(_ treatments: [NigtscoutTreatment]) {
+    private func uploadPumpHistory(_ treatments: [NigtscoutTreatment], fileToSave: String) {
         guard !treatments.isEmpty, let nightscout = nightscoutAPI else {
             return
         }
@@ -111,7 +112,7 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
                 .sink { completion in
                     switch completion {
                     case .finished:
-                        try? self.storage.save(treatments, as: OpenAPS.Nightscout.uploadedPumphistory)
+                        try? self.storage.save(treatments, as: fileToSave)
                     case let .failure(error):
                         debug(.nightscout, error.localizedDescription)
                     }
@@ -123,6 +124,12 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
 
 extension BaseNightscoutManager: PumpHistoryObserver {
     func pumpHistoryDidUpdate(_: [PumpHistoryEvent]) {
-        uploadPumpHistory(pumpHistoryStorage.nightscoutTretmentsNotUploaded())
+        uploadPumpHistory(pumpHistoryStorage.nightscoutTretmentsNotUploaded(), fileToSave: OpenAPS.Nightscout.uploadedPumphistory)
+    }
+}
+
+extension BaseNightscoutManager: CarbsObserver {
+    func carbsDidUpdate(_: [CarbsEntry]) {
+        uploadPumpHistory(carbsStorage.nightscoutTretmentsNotUploaded(), fileToSave: OpenAPS.Nightscout.uploadedCarbs)
     }
 }
