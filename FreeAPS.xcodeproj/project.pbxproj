@@ -100,14 +100,6 @@
 		385CEA8225F23DFD002D6D5B /* NightscoutStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 385CEA8125F23DFD002D6D5B /* NightscoutStatus.swift */; };
 		385CEAC125F2EA52002D6D5B /* Announcement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 385CEAC025F2EA52002D6D5B /* Announcement.swift */; };
 		385CEAC425F2F154002D6D5B /* AnnouncementsStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 385CEAC325F2F154002D6D5B /* AnnouncementsStorage.swift */; };
-		386ED25E25EE48B500820A49 /* MockKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38B17ADB25DD6A40005CAE3D /* MockKit.framework */; };
-		386ED25F25EE48B500820A49 /* MockKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 38B17ADB25DD6A40005CAE3D /* MockKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		386ED26025EE48B500820A49 /* MockKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38B17ADF25DD6A40005CAE3D /* MockKitUI.framework */; };
-		386ED26125EE48B500820A49 /* MockKitUI.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 38B17ADF25DD6A40005CAE3D /* MockKitUI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		386ED27125EE526D00820A49 /* MockKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38B17ADB25DD6A40005CAE3D /* MockKit.framework */; };
-		386ED27225EE526E00820A49 /* MockKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38B17ADF25DD6A40005CAE3D /* MockKitUI.framework */; };
-		386ED27425EE528300820A49 /* LoopTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38B17AE125DD6A40005CAE3D /* LoopTestingKit.framework */; };
-		386ED27525EE528300820A49 /* LoopTestingKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 38B17AE125DD6A40005CAE3D /* LoopTestingKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		3870FF4725EC187A0088248F /* BloodGlucose.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3870FF4225EC13F40088248F /* BloodGlucose.swift */; };
 		3871F38725ED661C0013ECB5 /* Suggestion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3871F38625ED661C0013ECB5 /* Suggestion.swift */; };
 		3871F39C25ED892B0013ECB5 /* TempTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3871F39B25ED892B0013ECB5 /* TempTarget.swift */; };
@@ -116,6 +108,39 @@
 		3883583425EEB38000E024B2 /* PumpSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3883583325EEB38000E024B2 /* PumpSettings.swift */; };
 		388358C825EEF6D200E024B2 /* BasalProfileEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 388358C725EEF6D200E024B2 /* BasalProfileEntry.swift */; };
 		38887CCE25F5725200944304 /* IOBEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38887CCD25F5725200944304 /* IOBEntry.swift */; };
+		38887DE025F61F7500944304 /* LoopKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38887DD025F61F7500944304 /* LoopKit.framework */; };
+		38887DE125F61F7500944304 /* LoopKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 38887DD025F61F7500944304 /* LoopKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		38887DE225F61F7500944304 /* LoopKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38887DD125F61F7500944304 /* LoopKitUI.framework */; };
+		38887DE325F61F7500944304 /* LoopKitUI.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 38887DD125F61F7500944304 /* LoopKitUI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		38887DE425F61F7500944304 /* LoopTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38887DD225F61F7500944304 /* LoopTestingKit.framework */; };
+		38887DE525F61F7500944304 /* LoopTestingKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 38887DD225F61F7500944304 /* LoopTestingKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		38887DE625F61F7500944304 /* MockKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38887DD325F61F7500944304 /* MockKit.framework */; };
+		38887DE725F61F7500944304 /* MockKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 38887DD325F61F7500944304 /* MockKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		38887DE825F61F7500944304 /* MockKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38887DD425F61F7500944304 /* MockKitUI.framework */; };
+		38887DE925F61F7500944304 /* MockKitUI.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 38887DD425F61F7500944304 /* MockKitUI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		38887DEA25F61F7500944304 /* MKRingProgressView.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38887DD525F61F7500944304 /* MKRingProgressView.framework */; };
+		38887DEB25F61F7500944304 /* MKRingProgressView.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 38887DD525F61F7500944304 /* MKRingProgressView.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		38887DEC25F61F7500944304 /* Crypto.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38887DD625F61F7500944304 /* Crypto.framework */; };
+		38887DED25F61F7500944304 /* Crypto.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 38887DD625F61F7500944304 /* Crypto.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		38887DEE25F61F7500944304 /* MinimedKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38887DD725F61F7500944304 /* MinimedKit.framework */; };
+		38887DEF25F61F7500944304 /* MinimedKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 38887DD725F61F7500944304 /* MinimedKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		38887DF025F61F7500944304 /* MinimedKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38887DD825F61F7500944304 /* MinimedKitUI.framework */; };
+		38887DF125F61F7500944304 /* MinimedKitUI.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 38887DD825F61F7500944304 /* MinimedKitUI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		38887DF225F61F7500944304 /* NightscoutUploadKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38887DD925F61F7500944304 /* NightscoutUploadKit.framework */; };
+		38887DF325F61F7600944304 /* NightscoutUploadKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 38887DD925F61F7500944304 /* NightscoutUploadKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		38887DF425F61F7600944304 /* OmniKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38887DDA25F61F7500944304 /* OmniKit.framework */; };
+		38887DF525F61F7600944304 /* OmniKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 38887DDA25F61F7500944304 /* OmniKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		38887DF625F61F7600944304 /* OmniKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38887DDB25F61F7500944304 /* OmniKitUI.framework */; };
+		38887DF725F61F7600944304 /* OmniKitUI.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 38887DDB25F61F7500944304 /* OmniKitUI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		38887DF825F61F7600944304 /* RileyLinkBLEKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38887DDC25F61F7500944304 /* RileyLinkBLEKit.framework */; };
+		38887DF925F61F7600944304 /* RileyLinkBLEKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 38887DDC25F61F7500944304 /* RileyLinkBLEKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		38887DFA25F61F7600944304 /* RileyLinkKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38887DDD25F61F7500944304 /* RileyLinkKit.framework */; };
+		38887DFB25F61F7600944304 /* RileyLinkKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 38887DDD25F61F7500944304 /* RileyLinkKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		38887DFC25F61F7600944304 /* RileyLinkKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38887DDE25F61F7500944304 /* RileyLinkKitUI.framework */; };
+		38887DFD25F61F7600944304 /* RileyLinkKitUI.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 38887DDE25F61F7500944304 /* RileyLinkKitUI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		38887DFE25F61F7600944304 /* SwiftCharts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38887DDF25F61F7500944304 /* SwiftCharts.framework */; };
+		38887DFF25F61F7600944304 /* SwiftCharts.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 38887DDF25F61F7500944304 /* SwiftCharts.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		38887E2125F6209B00944304 /* SwiftCharts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38887E2025F6209B00944304 /* SwiftCharts.framework */; };
 		388E595C25AD948C0019842D /* FreeAPSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 388E595B25AD948C0019842D /* FreeAPSApp.swift */; };
 		388E596025AD948E0019842D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 388E595F25AD948E0019842D /* Assets.xcassets */; };
 		388E596C25AD95110019842D /* OpenAPS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 388E596B25AD95110019842D /* OpenAPS.swift */; };
@@ -130,37 +155,11 @@
 		38A0364225ED069400FCBB52 /* TempBasal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38A0364125ED069400FCBB52 /* TempBasal.swift */; };
 		38A13D3225E28B4B00EAA382 /* PumpHistoryEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38A13D3125E28B4B00EAA382 /* PumpHistoryEvent.swift */; };
 		38A504A425DD9C4000C5B9E8 /* UserDefaultsExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38A5049125DD9C4000C5B9E8 /* UserDefaultsExtensions.swift */; };
-		38A504A525DD9FDA00C5B9E8 /* OmniKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38B17B2625DD6BBE005CAE3D /* OmniKit.framework */; };
-		38A504A625DD9FDA00C5B9E8 /* OmniKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 38B17B2625DD6BBE005CAE3D /* OmniKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		38A504A725DD9FDA00C5B9E8 /* OmniKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38B17B2A25DD6BBE005CAE3D /* OmniKitUI.framework */; };
-		38A504A825DD9FDA00C5B9E8 /* OmniKitUI.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 38B17B2A25DD6BBE005CAE3D /* OmniKitUI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		38A9260525F012D8009E3739 /* CarbRatios.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38A9260425F012D8009E3739 /* CarbRatios.swift */; };
 		38AEE73D25F0200C0013F05B /* FreeAPSSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38AEE73C25F0200C0013F05B /* FreeAPSSettings.swift */; };
 		38AEE75225F022080013F05B /* SettingsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38AEE75125F022080013F05B /* SettingsManager.swift */; };
 		38AEE75725F0F18E0013F05B /* CarbsStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38AEE75625F0F18E0013F05B /* CarbsStorage.swift */; };
 		38B17B6625DD90E0005CAE3D /* SwiftDate in Frameworks */ = {isa = PBXBuildFile; productRef = 38B17B6525DD90E0005CAE3D /* SwiftDate */; };
-		38B17B8625DD93BA005CAE3D /* LoopKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38B17AD125DD6A40005CAE3D /* LoopKit.framework */; };
-		38B17B8725DD93BA005CAE3D /* LoopKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 38B17AD125DD6A40005CAE3D /* LoopKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		38B17B8825DD93BA005CAE3D /* LoopKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38B17AD925DD6A40005CAE3D /* LoopKitUI.framework */; };
-		38B17B8925DD93BA005CAE3D /* LoopKitUI.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 38B17AD925DD6A40005CAE3D /* LoopKitUI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		38B17B8A25DD93F1005CAE3D /* MKRingProgressView.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38B17AF525DD6AE6005CAE3D /* MKRingProgressView.framework */; };
-		38B17B8B25DD93F1005CAE3D /* MKRingProgressView.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 38B17AF525DD6AE6005CAE3D /* MKRingProgressView.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		38B17B8C25DD9404005CAE3D /* SwiftCharts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38B17AB625DD69FA005CAE3D /* SwiftCharts.framework */; };
-		38B17B8D25DD9404005CAE3D /* SwiftCharts.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 38B17AB625DD69FA005CAE3D /* SwiftCharts.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		38B17B8E25DD9419005CAE3D /* Crypto.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38B17B1025DD6BBE005CAE3D /* Crypto.framework */; };
-		38B17B8F25DD9419005CAE3D /* Crypto.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 38B17B1025DD6BBE005CAE3D /* Crypto.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		38B17B9025DD9419005CAE3D /* MinimedKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38B17B1E25DD6BBE005CAE3D /* MinimedKit.framework */; };
-		38B17B9125DD9419005CAE3D /* MinimedKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 38B17B1E25DD6BBE005CAE3D /* MinimedKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		38B17B9225DD9419005CAE3D /* MinimedKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38B17B2025DD6BBE005CAE3D /* MinimedKitUI.framework */; };
-		38B17B9325DD9419005CAE3D /* MinimedKitUI.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 38B17B2025DD6BBE005CAE3D /* MinimedKitUI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		38B17B9425DD941A005CAE3D /* RileyLinkBLEKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38B17B1225DD6BBE005CAE3D /* RileyLinkBLEKit.framework */; };
-		38B17B9525DD941A005CAE3D /* RileyLinkBLEKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 38B17B1225DD6BBE005CAE3D /* RileyLinkBLEKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		38B17B9625DD941A005CAE3D /* RileyLinkKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38B17B1625DD6BBE005CAE3D /* RileyLinkKit.framework */; };
-		38B17B9725DD941A005CAE3D /* RileyLinkKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 38B17B1625DD6BBE005CAE3D /* RileyLinkKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		38B17B9825DD941A005CAE3D /* RileyLinkKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38B17B1825DD6BBE005CAE3D /* RileyLinkKitUI.framework */; };
-		38B17B9925DD941A005CAE3D /* RileyLinkKitUI.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 38B17B1825DD6BBE005CAE3D /* RileyLinkKitUI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		38B17BED25DD987B005CAE3D /* NightscoutUploadKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38B17B1A25DD6BBE005CAE3D /* NightscoutUploadKit.framework */; };
-		38B17BEE25DD987B005CAE3D /* NightscoutUploadKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 38B17B1A25DD6BBE005CAE3D /* NightscoutUploadKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		38B4F3AF25E2979F00E76A18 /* IndexedCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38B4F3AE25E2979F00E76A18 /* IndexedCollection.swift */; };
 		38B4F3C325E2A20B00E76A18 /* PumpSetupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38B4F3C225E2A20B00E76A18 /* PumpSetupView.swift */; };
 		38B4F3C625E5017E00E76A18 /* NotificationCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38B4F3C525E5017E00E76A18 /* NotificationCenter.swift */; };
@@ -246,342 +245,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		386ED26C25EE48D600820A49 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 38B17AC025DD6A40005CAE3D /* LoopKit.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 89D2047121CC7BD7001238CC;
-			remoteInfo = MockKit;
-		};
-		386ED26E25EE48D600820A49 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 38B17AC025DD6A40005CAE3D /* LoopKit.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 89D2048E21CC7C12001238CC;
-			remoteInfo = MockKitUI;
-		};
-		38B17AB525DD69FA005CAE3D /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 38B17AAE25DD69FA005CAE3D /* SwiftCharts.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 06405DA61B8AA74700A689FF;
-			remoteInfo = SwiftCharts;
-		};
-		38B17AB725DD69FA005CAE3D /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 38B17AAE25DD69FA005CAE3D /* SwiftCharts.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 06342AC11B8AAD7F001C9F5D;
-			remoteInfo = Examples;
-		};
-		38B17AB925DD69FA005CAE3D /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 38B17AAE25DD69FA005CAE3D /* SwiftCharts.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 22E7020F1BF5B8EC00C19675;
-			remoteInfo = "SwiftCharts tvOS";
-		};
-		38B17ABE25DD6A0A005CAE3D /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 38B17AAE25DD69FA005CAE3D /* SwiftCharts.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 06405DA51B8AA74700A689FF;
-			remoteInfo = SwiftCharts;
-		};
-		38B17ACE25DD6A40005CAE3D /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 38B17AC025DD6A40005CAE3D /* LoopKit.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 430157F71C7EC03B00B64B63;
-			remoteInfo = "LoopKit Example";
-		};
-		38B17AD025DD6A40005CAE3D /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 38B17AC025DD6A40005CAE3D /* LoopKit.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 43D8FDCB1C728FDF0073BE78;
-			remoteInfo = LoopKit;
-		};
-		38B17AD225DD6A40005CAE3D /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 38B17AC025DD6A40005CAE3D /* LoopKit.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = A9E675F022713F4700E25293;
-			remoteInfo = "LoopKit-watchOS";
-		};
-		38B17AD425DD6A40005CAE3D /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 38B17AC025DD6A40005CAE3D /* LoopKit.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 43D8FDD51C728FDF0073BE78;
-			remoteInfo = LoopKitTests;
-		};
-		38B17AD625DD6A40005CAE3D /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 38B17AC025DD6A40005CAE3D /* LoopKit.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 1DEE230124A676A300693C32;
-			remoteInfo = LoopKitHostedTests;
-		};
-		38B17AD825DD6A40005CAE3D /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 38B17AC025DD6A40005CAE3D /* LoopKit.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 43BA7154201E484D0058961E;
-			remoteInfo = LoopKitUI;
-		};
-		38B17ADA25DD6A40005CAE3D /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 38B17AC025DD6A40005CAE3D /* LoopKit.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 89D2047221CC7BD7001238CC;
-			remoteInfo = MockKit;
-		};
-		38B17ADC25DD6A40005CAE3D /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 38B17AC025DD6A40005CAE3D /* LoopKit.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = B4CEE2E0257129780093111B;
-			remoteInfo = MockKitTests;
-		};
-		38B17ADE25DD6A40005CAE3D /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 38B17AC025DD6A40005CAE3D /* LoopKit.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 89D2048F21CC7C12001238CC;
-			remoteInfo = MockKitUI;
-		};
-		38B17AE025DD6A40005CAE3D /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 38B17AC025DD6A40005CAE3D /* LoopKit.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 892A5D34222F03CB008961AB;
-			remoteInfo = LoopTestingKit;
-		};
-		38B17AEC25DD6A60005CAE3D /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 38B17AC025DD6A40005CAE3D /* LoopKit.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 43D8FDCA1C728FDF0073BE78;
-			remoteInfo = LoopKit;
-		};
-		38B17AEE25DD6A60005CAE3D /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 38B17AC025DD6A40005CAE3D /* LoopKit.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 43BA7153201E484D0058961E;
-			remoteInfo = LoopKitUI;
-		};
-		38B17AF425DD6AE6005CAE3D /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 38B17AF025DD6AE6005CAE3D /* MKRingProgressView.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 5085266E1E52FDC000D611F4;
-			remoteInfo = MKRingProgressView;
-		};
-		38B17AF725DD6AF0005CAE3D /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 38B17AF025DD6AE6005CAE3D /* MKRingProgressView.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 5085266D1E52FDC000D611F4;
-			remoteInfo = MKRingProgressView;
-		};
-		38B17B0D25DD6BBE005CAE3D /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 38B17AF925DD6BBD005CAE3D /* RileyLink.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = C12EA237198B436800309FA4;
-			remoteInfo = RileyLink;
-		};
-		38B17B0F25DD6BBE005CAE3D /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 38B17AF925DD6BBD005CAE3D /* RileyLink.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 43C246931D8918AE0031F8D1;
-			remoteInfo = Crypto;
-		};
-		38B17B1125DD6BBE005CAE3D /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 38B17AF925DD6BBD005CAE3D /* RileyLink.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 431CE76F1F98564100255374;
-			remoteInfo = RileyLinkBLEKit;
-		};
-		38B17B1325DD6BBE005CAE3D /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 38B17AF925DD6BBD005CAE3D /* RileyLink.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 431CE7771F98564200255374;
-			remoteInfo = RileyLinkBLEKitTests;
-		};
-		38B17B1525DD6BBE005CAE3D /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 38B17AF925DD6BBD005CAE3D /* RileyLink.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 43722FAE1CB9F7630038B7F2;
-			remoteInfo = RileyLinkKit;
-		};
-		38B17B1725DD6BBE005CAE3D /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 38B17AF925DD6BBD005CAE3D /* RileyLink.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 43D5E78E1FAF7BFB004ACDB7;
-			remoteInfo = RileyLinkKitUI;
-		};
-		38B17B1925DD6BBE005CAE3D /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 38B17AF925DD6BBD005CAE3D /* RileyLink.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = C1B3830B1CD0665D00CE7782;
-			remoteInfo = NightscoutUploadKit;
-		};
-		38B17B1B25DD6BBE005CAE3D /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 38B17AF925DD6BBD005CAE3D /* RileyLink.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = C1B383141CD0665D00CE7782;
-			remoteInfo = NightscoutUploadKitTests;
-		};
-		38B17B1D25DD6BBE005CAE3D /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 38B17AF925DD6BBD005CAE3D /* RileyLink.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = C10D9BC11C8269D500378342;
-			remoteInfo = MinimedKit;
-		};
-		38B17B1F25DD6BBE005CAE3D /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 38B17AF925DD6BBD005CAE3D /* RileyLink.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 4352A72520DEC9B700CAC200;
-			remoteInfo = MinimedKitUI;
-		};
-		38B17B2125DD6BBE005CAE3D /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 38B17AF925DD6BBD005CAE3D /* RileyLink.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = C10D9BCA1C8269D500378342;
-			remoteInfo = MinimedKitTests;
-		};
-		38B17B2325DD6BBE005CAE3D /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 38B17AF925DD6BBD005CAE3D /* RileyLink.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = C136AA5E231187B0008A320D;
-			remoteInfo = MinimedKitPlugin;
-		};
-		38B17B2525DD6BBE005CAE3D /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 38B17AF925DD6BBD005CAE3D /* RileyLink.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = C1FFAF78213323CC00C50C1D;
-			remoteInfo = OmniKit;
-		};
-		38B17B2725DD6BBE005CAE3D /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 38B17AF925DD6BBD005CAE3D /* RileyLink.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = C1FFAF80213323CC00C50C1D;
-			remoteInfo = OmniKitTests;
-		};
-		38B17B2925DD6BBE005CAE3D /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 38B17AF925DD6BBD005CAE3D /* RileyLink.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = C1FFAFD9213323F900C50C1D;
-			remoteInfo = OmniKitUI;
-		};
-		38B17B2B25DD6BBE005CAE3D /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 38B17AF925DD6BBD005CAE3D /* RileyLink.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = C136AA2A23116E32008A320D;
-			remoteInfo = OmniKitPlugin;
-		};
-		38B17B2D25DD6BBE005CAE3D /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 38B17AF925DD6BBD005CAE3D /* RileyLink.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = C1BB128521CB5603009A29B5;
-			remoteInfo = OmniKitPacketParser;
-		};
-		38B17B3F25DD6BE0005CAE3D /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 38B17AF925DD6BBD005CAE3D /* RileyLink.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 43C246921D8918AE0031F8D1;
-			remoteInfo = Crypto;
-		};
-		38B17B4125DD6BE0005CAE3D /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 38B17AF925DD6BBD005CAE3D /* RileyLink.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = C10D9BC01C8269D500378342;
-			remoteInfo = MinimedKit;
-		};
-		38B17B4325DD6BE0005CAE3D /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 38B17AF925DD6BBD005CAE3D /* RileyLink.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = C136AA5D231187B0008A320D;
-			remoteInfo = MinimedKitPlugin;
-		};
-		38B17B4525DD6BE0005CAE3D /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 38B17AF925DD6BBD005CAE3D /* RileyLink.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 4352A72420DEC9B700CAC200;
-			remoteInfo = MinimedKitUI;
-		};
-		38B17B4725DD6BE0005CAE3D /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 38B17AF925DD6BBD005CAE3D /* RileyLink.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = C1B3830A1CD0665D00CE7782;
-			remoteInfo = NightscoutUploadKit;
-		};
-		38B17B4925DD6BE0005CAE3D /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 38B17AF925DD6BBD005CAE3D /* RileyLink.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = C1FFAF77213323CC00C50C1D;
-			remoteInfo = OmniKit;
-		};
-		38B17B4B25DD6BE0005CAE3D /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 38B17AF925DD6BBD005CAE3D /* RileyLink.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = C136AA2923116E32008A320D;
-			remoteInfo = OmniKitPlugin;
-		};
-		38B17B4D25DD6BE0005CAE3D /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 38B17AF925DD6BBD005CAE3D /* RileyLink.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = C1FFAFD8213323F900C50C1D;
-			remoteInfo = OmniKitUI;
-		};
-		38B17B4F25DD6BE0005CAE3D /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 38B17AF925DD6BBD005CAE3D /* RileyLink.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 431CE76E1F98564100255374;
-			remoteInfo = RileyLinkBLEKit;
-		};
-		38B17B5125DD6BE0005CAE3D /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 38B17AF925DD6BBD005CAE3D /* RileyLink.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 43722FAD1CB9F7630038B7F2;
-			remoteInfo = RileyLinkKit;
-		};
-		38B17B5325DD6BE0005CAE3D /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 38B17AF925DD6BBD005CAE3D /* RileyLink.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 43D5E78D1FAF7BFB004ACDB7;
-			remoteInfo = RileyLinkKitUI;
-		};
 		38FCF3F225E9028E0078B0D1 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 388E595025AD948C0019842D /* Project object */;
@@ -598,22 +261,22 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				38B17B9725DD941A005CAE3D /* RileyLinkKit.framework in Embed Frameworks */,
-				38B17B9925DD941A005CAE3D /* RileyLinkKitUI.framework in Embed Frameworks */,
-				38B17B8725DD93BA005CAE3D /* LoopKit.framework in Embed Frameworks */,
-				386ED25F25EE48B500820A49 /* MockKit.framework in Embed Frameworks */,
-				386ED27525EE528300820A49 /* LoopTestingKit.framework in Embed Frameworks */,
-				38B17B9125DD9419005CAE3D /* MinimedKit.framework in Embed Frameworks */,
-				38A504A625DD9FDA00C5B9E8 /* OmniKit.framework in Embed Frameworks */,
-				38B17BEE25DD987B005CAE3D /* NightscoutUploadKit.framework in Embed Frameworks */,
-				38B17B8F25DD9419005CAE3D /* Crypto.framework in Embed Frameworks */,
-				38B17B9525DD941A005CAE3D /* RileyLinkBLEKit.framework in Embed Frameworks */,
-				386ED26125EE48B500820A49 /* MockKitUI.framework in Embed Frameworks */,
-				38B17B8B25DD93F1005CAE3D /* MKRingProgressView.framework in Embed Frameworks */,
-				38B17B8925DD93BA005CAE3D /* LoopKitUI.framework in Embed Frameworks */,
-				38A504A825DD9FDA00C5B9E8 /* OmniKitUI.framework in Embed Frameworks */,
-				38B17B9325DD9419005CAE3D /* MinimedKitUI.framework in Embed Frameworks */,
-				38B17B8D25DD9404005CAE3D /* SwiftCharts.framework in Embed Frameworks */,
+				38887DED25F61F7500944304 /* Crypto.framework in Embed Frameworks */,
+				38887DE525F61F7500944304 /* LoopTestingKit.framework in Embed Frameworks */,
+				38887DE125F61F7500944304 /* LoopKit.framework in Embed Frameworks */,
+				38887DFF25F61F7600944304 /* SwiftCharts.framework in Embed Frameworks */,
+				38887DEF25F61F7500944304 /* MinimedKit.framework in Embed Frameworks */,
+				38887DF325F61F7600944304 /* NightscoutUploadKit.framework in Embed Frameworks */,
+				38887DFB25F61F7600944304 /* RileyLinkKit.framework in Embed Frameworks */,
+				38887DFD25F61F7600944304 /* RileyLinkKitUI.framework in Embed Frameworks */,
+				38887DE325F61F7500944304 /* LoopKitUI.framework in Embed Frameworks */,
+				38887DE725F61F7500944304 /* MockKit.framework in Embed Frameworks */,
+				38887DF125F61F7500944304 /* MinimedKitUI.framework in Embed Frameworks */,
+				38887DF725F61F7600944304 /* OmniKitUI.framework in Embed Frameworks */,
+				38887DF925F61F7600944304 /* RileyLinkBLEKit.framework in Embed Frameworks */,
+				38887DEB25F61F7500944304 /* MKRingProgressView.framework in Embed Frameworks */,
+				38887DF525F61F7600944304 /* OmniKit.framework in Embed Frameworks */,
+				38887DE925F61F7500944304 /* MockKitUI.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -721,6 +384,23 @@
 		3883583325EEB38000E024B2 /* PumpSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PumpSettings.swift; sourceTree = "<group>"; };
 		388358C725EEF6D200E024B2 /* BasalProfileEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasalProfileEntry.swift; sourceTree = "<group>"; };
 		38887CCD25F5725200944304 /* IOBEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IOBEntry.swift; sourceTree = "<group>"; };
+		38887DD025F61F7500944304 /* LoopKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = LoopKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		38887DD125F61F7500944304 /* LoopKitUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = LoopKitUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		38887DD225F61F7500944304 /* LoopTestingKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = LoopTestingKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		38887DD325F61F7500944304 /* MockKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = MockKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		38887DD425F61F7500944304 /* MockKitUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = MockKitUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		38887DD525F61F7500944304 /* MKRingProgressView.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = MKRingProgressView.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		38887DD625F61F7500944304 /* Crypto.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Crypto.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		38887DD725F61F7500944304 /* MinimedKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = MinimedKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		38887DD825F61F7500944304 /* MinimedKitUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = MinimedKitUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		38887DD925F61F7500944304 /* NightscoutUploadKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = NightscoutUploadKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		38887DDA25F61F7500944304 /* OmniKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = OmniKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		38887DDB25F61F7500944304 /* OmniKitUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = OmniKitUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		38887DDC25F61F7500944304 /* RileyLinkBLEKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = RileyLinkBLEKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		38887DDD25F61F7500944304 /* RileyLinkKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = RileyLinkKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		38887DDE25F61F7500944304 /* RileyLinkKitUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = RileyLinkKitUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		38887DDF25F61F7500944304 /* SwiftCharts.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SwiftCharts.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		38887E2025F6209B00944304 /* SwiftCharts.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SwiftCharts.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		388E595825AD948C0019842D /* FreeAPS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FreeAPS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		388E595B25AD948C0019842D /* FreeAPSApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FreeAPSApp.swift; sourceTree = "<group>"; };
 		388E595F25AD948E0019842D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -740,10 +420,6 @@
 		38AEE73C25F0200C0013F05B /* FreeAPSSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FreeAPSSettings.swift; sourceTree = "<group>"; };
 		38AEE75125F022080013F05B /* SettingsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsManager.swift; sourceTree = "<group>"; };
 		38AEE75625F0F18E0013F05B /* CarbsStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarbsStorage.swift; sourceTree = "<group>"; };
-		38B17AAE25DD69FA005CAE3D /* SwiftCharts.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SwiftCharts.xcodeproj; path = SwiftCharts/SwiftCharts.xcodeproj; sourceTree = "<group>"; };
-		38B17AC025DD6A40005CAE3D /* LoopKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = LoopKit.xcodeproj; path = LoopKit/LoopKit.xcodeproj; sourceTree = "<group>"; };
-		38B17AF025DD6AE6005CAE3D /* MKRingProgressView.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = MKRingProgressView.xcodeproj; path = MKRingProgressView/MKRingProgressView.xcodeproj; sourceTree = "<group>"; };
-		38B17AF925DD6BBD005CAE3D /* RileyLink.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RileyLink.xcodeproj; path = rileylink_ios/RileyLink.xcodeproj; sourceTree = "<group>"; };
 		38B4F3AE25E2979F00E76A18 /* IndexedCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndexedCollection.swift; sourceTree = "<group>"; };
 		38B4F3C225E2A20B00E76A18 /* PumpSetupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PumpSetupView.swift; sourceTree = "<group>"; };
 		38B4F3C525E5017E00E76A18 /* NotificationCenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationCenter.swift; sourceTree = "<group>"; };
@@ -835,28 +511,27 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				38B17BED25DD987B005CAE3D /* NightscoutUploadKit.framework in Frameworks */,
-				38B17B8C25DD9404005CAE3D /* SwiftCharts.framework in Frameworks */,
-				38B17B9825DD941A005CAE3D /* RileyLinkKitUI.framework in Frameworks */,
-				386ED27425EE528300820A49 /* LoopTestingKit.framework in Frameworks */,
-				386ED25E25EE48B500820A49 /* MockKit.framework in Frameworks */,
+				38887DF225F61F7500944304 /* NightscoutUploadKit.framework in Frameworks */,
+				38887DE825F61F7500944304 /* MockKitUI.framework in Frameworks */,
 				3811DE1025C9D37700A708ED /* Swinject in Frameworks */,
 				383948D325CD4D6D00E91849 /* Disk in Frameworks */,
-				38B17B9425DD941A005CAE3D /* RileyLinkBLEKit.framework in Frameworks */,
-				38B17B8825DD93BA005CAE3D /* LoopKitUI.framework in Frameworks */,
-				38A504A525DD9FDA00C5B9E8 /* OmniKit.framework in Frameworks */,
-				386ED26025EE48B500820A49 /* MockKitUI.framework in Frameworks */,
-				38A504A725DD9FDA00C5B9E8 /* OmniKitUI.framework in Frameworks */,
-				38B17B9025DD9419005CAE3D /* MinimedKit.framework in Frameworks */,
+				38887DF825F61F7600944304 /* RileyLinkBLEKit.framework in Frameworks */,
+				38887DEC25F61F7500944304 /* Crypto.framework in Frameworks */,
 				38B17B6625DD90E0005CAE3D /* SwiftDate in Frameworks */,
-				38B17B8E25DD9419005CAE3D /* Crypto.framework in Frameworks */,
-				38B17B8A25DD93F1005CAE3D /* MKRingProgressView.framework in Frameworks */,
+				38887DEA25F61F7500944304 /* MKRingProgressView.framework in Frameworks */,
+				38887DF425F61F7600944304 /* OmniKit.framework in Frameworks */,
+				38887DFA25F61F7600944304 /* RileyLinkKit.framework in Frameworks */,
+				38887DF625F61F7600944304 /* OmniKitUI.framework in Frameworks */,
+				38887DE425F61F7500944304 /* LoopTestingKit.framework in Frameworks */,
+				38887DFC25F61F7600944304 /* RileyLinkKitUI.framework in Frameworks */,
+				38887DEE25F61F7500944304 /* MinimedKit.framework in Frameworks */,
+				38887DE025F61F7500944304 /* LoopKit.framework in Frameworks */,
+				38887E2125F6209B00944304 /* SwiftCharts.framework in Frameworks */,
+				38887DFE25F61F7600944304 /* SwiftCharts.framework in Frameworks */,
 				389FE32725F3ABE6002E92E0 /* CareKitUI in Frameworks */,
-				38B17B9625DD941A005CAE3D /* RileyLinkKit.framework in Frameworks */,
-				38B17B8625DD93BA005CAE3D /* LoopKit.framework in Frameworks */,
-				386ED27125EE526D00820A49 /* MockKit.framework in Frameworks */,
-				38B17B9225DD9419005CAE3D /* MinimedKitUI.framework in Frameworks */,
-				386ED27225EE526E00820A49 /* MockKitUI.framework in Frameworks */,
+				38887DE225F61F7500944304 /* LoopKitUI.framework in Frameworks */,
+				38887DE625F61F7500944304 /* MockKit.framework in Frameworks */,
+				38887DF025F61F7500944304 /* MinimedKitUI.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1252,7 +927,6 @@
 		388E594F25AD948C0019842D = {
 			isa = PBXGroup;
 			children = (
-				38B17AAD25DD69DF005CAE3D /* Dependecies */,
 				388E595A25AD948C0019842D /* FreeAPS */,
 				38FCF3EE25E9028E0078B0D1 /* FreeAPSTests */,
 				388E595925AD948C0019842D /* Products */,
@@ -1367,79 +1041,26 @@
 			path = SettingsManager;
 			sourceTree = "<group>";
 		};
-		38B17AAD25DD69DF005CAE3D /* Dependecies */ = {
-			isa = PBXGroup;
-			children = (
-				38B17AF925DD6BBD005CAE3D /* RileyLink.xcodeproj */,
-				38B17AF025DD6AE6005CAE3D /* MKRingProgressView.xcodeproj */,
-				38B17AC025DD6A40005CAE3D /* LoopKit.xcodeproj */,
-				38B17AAE25DD69FA005CAE3D /* SwiftCharts.xcodeproj */,
-			);
-			path = Dependecies;
-			sourceTree = "<group>";
-		};
-		38B17AAF25DD69FA005CAE3D /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				38B17AB625DD69FA005CAE3D /* SwiftCharts.framework */,
-				38B17AB825DD69FA005CAE3D /* Examples.app */,
-				38B17ABA25DD69FA005CAE3D /* SwiftCharts.framework */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		38B17AC125DD6A40005CAE3D /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				38B17ACF25DD6A40005CAE3D /* LoopKit Example.app */,
-				38B17AD125DD6A40005CAE3D /* LoopKit.framework */,
-				38B17AD325DD6A40005CAE3D /* LoopKit.framework */,
-				38B17AD525DD6A40005CAE3D /* LoopKitTests.xctest */,
-				38B17AD725DD6A40005CAE3D /* LoopKitHostedTests.xctest */,
-				38B17AD925DD6A40005CAE3D /* LoopKitUI.framework */,
-				38B17ADB25DD6A40005CAE3D /* MockKit.framework */,
-				38B17ADD25DD6A40005CAE3D /* MockKitTests.xctest */,
-				38B17ADF25DD6A40005CAE3D /* MockKitUI.framework */,
-				38B17AE125DD6A40005CAE3D /* LoopTestingKit.framework */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		38B17AF125DD6AE6005CAE3D /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				38B17AF525DD6AE6005CAE3D /* MKRingProgressView.framework */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		38B17AFA25DD6BBD005CAE3D /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				38B17B0E25DD6BBE005CAE3D /* RileyLink.app */,
-				38B17B1025DD6BBE005CAE3D /* Crypto.framework */,
-				38B17B1225DD6BBE005CAE3D /* RileyLinkBLEKit.framework */,
-				38B17B1425DD6BBE005CAE3D /* RileyLinkBLEKitTests.xctest */,
-				38B17B1625DD6BBE005CAE3D /* RileyLinkKit.framework */,
-				38B17B1825DD6BBE005CAE3D /* RileyLinkKitUI.framework */,
-				38B17B1A25DD6BBE005CAE3D /* NightscoutUploadKit.framework */,
-				38B17B1C25DD6BBE005CAE3D /* NightscoutUploadKitTests.xctest */,
-				38B17B1E25DD6BBE005CAE3D /* MinimedKit.framework */,
-				38B17B2025DD6BBE005CAE3D /* MinimedKitUI.framework */,
-				38B17B2225DD6BBE005CAE3D /* MinimedKitTests.xctest */,
-				38B17B2425DD6BBE005CAE3D /* MinimedKitPlugin.loopplugin */,
-				38B17B2625DD6BBE005CAE3D /* OmniKit.framework */,
-				38B17B2825DD6BBE005CAE3D /* OmniKitTests.xctest */,
-				38B17B2A25DD6BBE005CAE3D /* OmniKitUI.framework */,
-				38B17B2C25DD6BBE005CAE3D /* OmniKitPlugin.loopplugin */,
-				38B17B2E25DD6BBE005CAE3D /* OmniKitPacketParser */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		38B17B8525DD93BA005CAE3D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				38887E2025F6209B00944304 /* SwiftCharts.framework */,
+				38887DD025F61F7500944304 /* LoopKit.framework */,
+				38887DD125F61F7500944304 /* LoopKitUI.framework */,
+				38887DD225F61F7500944304 /* LoopTestingKit.framework */,
+				38887DD325F61F7500944304 /* MockKit.framework */,
+				38887DD425F61F7500944304 /* MockKitUI.framework */,
+				38887DD525F61F7500944304 /* MKRingProgressView.framework */,
+				38887DD625F61F7500944304 /* Crypto.framework */,
+				38887DD725F61F7500944304 /* MinimedKit.framework */,
+				38887DD825F61F7500944304 /* MinimedKitUI.framework */,
+				38887DD925F61F7500944304 /* NightscoutUploadKit.framework */,
+				38887DDA25F61F7500944304 /* OmniKit.framework */,
+				38887DDB25F61F7500944304 /* OmniKitUI.framework */,
+				38887DDC25F61F7500944304 /* RileyLinkBLEKit.framework */,
+				38887DDD25F61F7500944304 /* RileyLinkKit.framework */,
+				38887DDE25F61F7500944304 /* RileyLinkKitUI.framework */,
+				38887DDF25F61F7500944304 /* SwiftCharts.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -1750,23 +1371,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				386ED26D25EE48D600820A49 /* PBXTargetDependency */,
-				386ED26F25EE48D600820A49 /* PBXTargetDependency */,
-				38B17B4025DD6BE0005CAE3D /* PBXTargetDependency */,
-				38B17B4225DD6BE0005CAE3D /* PBXTargetDependency */,
-				38B17B4425DD6BE0005CAE3D /* PBXTargetDependency */,
-				38B17B4625DD6BE0005CAE3D /* PBXTargetDependency */,
-				38B17B4825DD6BE0005CAE3D /* PBXTargetDependency */,
-				38B17B4A25DD6BE0005CAE3D /* PBXTargetDependency */,
-				38B17B4C25DD6BE0005CAE3D /* PBXTargetDependency */,
-				38B17B4E25DD6BE0005CAE3D /* PBXTargetDependency */,
-				38B17B5025DD6BE0005CAE3D /* PBXTargetDependency */,
-				38B17B5225DD6BE0005CAE3D /* PBXTargetDependency */,
-				38B17B5425DD6BE0005CAE3D /* PBXTargetDependency */,
-				38B17AF825DD6AF0005CAE3D /* PBXTargetDependency */,
-				38B17ABF25DD6A0A005CAE3D /* PBXTargetDependency */,
-				38B17AED25DD6A60005CAE3D /* PBXTargetDependency */,
-				38B17AEF25DD6A60005CAE3D /* PBXTargetDependency */,
 			);
 			name = FreeAPS;
 			packageProductDependencies = (
@@ -1804,7 +1408,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1240;
-				LastUpgradeCheck = 1230;
+				LastUpgradeCheck = 1240;
 				TargetAttributes = {
 					388E595725AD948C0019842D = {
 						CreatedOnToolsVersion = 12.3;
@@ -1832,24 +1436,6 @@
 			);
 			productRefGroup = 388E595925AD948C0019842D /* Products */;
 			projectDirPath = "";
-			projectReferences = (
-				{
-					ProductGroup = 38B17AC125DD6A40005CAE3D /* Products */;
-					ProjectRef = 38B17AC025DD6A40005CAE3D /* LoopKit.xcodeproj */;
-				},
-				{
-					ProductGroup = 38B17AF125DD6AE6005CAE3D /* Products */;
-					ProjectRef = 38B17AF025DD6AE6005CAE3D /* MKRingProgressView.xcodeproj */;
-				},
-				{
-					ProductGroup = 38B17AFA25DD6BBD005CAE3D /* Products */;
-					ProjectRef = 38B17AF925DD6BBD005CAE3D /* RileyLink.xcodeproj */;
-				},
-				{
-					ProductGroup = 38B17AAF25DD69FA005CAE3D /* Products */;
-					ProjectRef = 38B17AAE25DD69FA005CAE3D /* SwiftCharts.xcodeproj */;
-				},
-			);
 			projectRoot = "";
 			targets = (
 				388E595725AD948C0019842D /* FreeAPS */,
@@ -1857,226 +1443,6 @@
 			);
 		};
 /* End PBXProject section */
-
-/* Begin PBXReferenceProxy section */
-		38B17AB625DD69FA005CAE3D /* SwiftCharts.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = SwiftCharts.framework;
-			remoteRef = 38B17AB525DD69FA005CAE3D /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		38B17AB825DD69FA005CAE3D /* Examples.app */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.application;
-			path = Examples.app;
-			remoteRef = 38B17AB725DD69FA005CAE3D /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		38B17ABA25DD69FA005CAE3D /* SwiftCharts.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = SwiftCharts.framework;
-			remoteRef = 38B17AB925DD69FA005CAE3D /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		38B17ACF25DD6A40005CAE3D /* LoopKit Example.app */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.application;
-			path = "LoopKit Example.app";
-			remoteRef = 38B17ACE25DD6A40005CAE3D /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		38B17AD125DD6A40005CAE3D /* LoopKit.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = LoopKit.framework;
-			remoteRef = 38B17AD025DD6A40005CAE3D /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		38B17AD325DD6A40005CAE3D /* LoopKit.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = LoopKit.framework;
-			remoteRef = 38B17AD225DD6A40005CAE3D /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		38B17AD525DD6A40005CAE3D /* LoopKitTests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = LoopKitTests.xctest;
-			remoteRef = 38B17AD425DD6A40005CAE3D /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		38B17AD725DD6A40005CAE3D /* LoopKitHostedTests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = LoopKitHostedTests.xctest;
-			remoteRef = 38B17AD625DD6A40005CAE3D /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		38B17AD925DD6A40005CAE3D /* LoopKitUI.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = LoopKitUI.framework;
-			remoteRef = 38B17AD825DD6A40005CAE3D /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		38B17ADB25DD6A40005CAE3D /* MockKit.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = MockKit.framework;
-			remoteRef = 38B17ADA25DD6A40005CAE3D /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		38B17ADD25DD6A40005CAE3D /* MockKitTests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = MockKitTests.xctest;
-			remoteRef = 38B17ADC25DD6A40005CAE3D /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		38B17ADF25DD6A40005CAE3D /* MockKitUI.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = MockKitUI.framework;
-			remoteRef = 38B17ADE25DD6A40005CAE3D /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		38B17AE125DD6A40005CAE3D /* LoopTestingKit.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = LoopTestingKit.framework;
-			remoteRef = 38B17AE025DD6A40005CAE3D /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		38B17AF525DD6AE6005CAE3D /* MKRingProgressView.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = MKRingProgressView.framework;
-			remoteRef = 38B17AF425DD6AE6005CAE3D /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		38B17B0E25DD6BBE005CAE3D /* RileyLink.app */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.application;
-			path = RileyLink.app;
-			remoteRef = 38B17B0D25DD6BBE005CAE3D /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		38B17B1025DD6BBE005CAE3D /* Crypto.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = Crypto.framework;
-			remoteRef = 38B17B0F25DD6BBE005CAE3D /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		38B17B1225DD6BBE005CAE3D /* RileyLinkBLEKit.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = RileyLinkBLEKit.framework;
-			remoteRef = 38B17B1125DD6BBE005CAE3D /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		38B17B1425DD6BBE005CAE3D /* RileyLinkBLEKitTests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = RileyLinkBLEKitTests.xctest;
-			remoteRef = 38B17B1325DD6BBE005CAE3D /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		38B17B1625DD6BBE005CAE3D /* RileyLinkKit.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = RileyLinkKit.framework;
-			remoteRef = 38B17B1525DD6BBE005CAE3D /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		38B17B1825DD6BBE005CAE3D /* RileyLinkKitUI.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = RileyLinkKitUI.framework;
-			remoteRef = 38B17B1725DD6BBE005CAE3D /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		38B17B1A25DD6BBE005CAE3D /* NightscoutUploadKit.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = NightscoutUploadKit.framework;
-			remoteRef = 38B17B1925DD6BBE005CAE3D /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		38B17B1C25DD6BBE005CAE3D /* NightscoutUploadKitTests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = NightscoutUploadKitTests.xctest;
-			remoteRef = 38B17B1B25DD6BBE005CAE3D /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		38B17B1E25DD6BBE005CAE3D /* MinimedKit.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = MinimedKit.framework;
-			remoteRef = 38B17B1D25DD6BBE005CAE3D /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		38B17B2025DD6BBE005CAE3D /* MinimedKitUI.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = MinimedKitUI.framework;
-			remoteRef = 38B17B1F25DD6BBE005CAE3D /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		38B17B2225DD6BBE005CAE3D /* MinimedKitTests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = MinimedKitTests.xctest;
-			remoteRef = 38B17B2125DD6BBE005CAE3D /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		38B17B2425DD6BBE005CAE3D /* MinimedKitPlugin.loopplugin */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = MinimedKitPlugin.loopplugin;
-			remoteRef = 38B17B2325DD6BBE005CAE3D /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		38B17B2625DD6BBE005CAE3D /* OmniKit.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = OmniKit.framework;
-			remoteRef = 38B17B2525DD6BBE005CAE3D /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		38B17B2825DD6BBE005CAE3D /* OmniKitTests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = OmniKitTests.xctest;
-			remoteRef = 38B17B2725DD6BBE005CAE3D /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		38B17B2A25DD6BBE005CAE3D /* OmniKitUI.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = OmniKitUI.framework;
-			remoteRef = 38B17B2925DD6BBE005CAE3D /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		38B17B2C25DD6BBE005CAE3D /* OmniKitPlugin.loopplugin */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = OmniKitPlugin.loopplugin;
-			remoteRef = 38B17B2B25DD6BBE005CAE3D /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		38B17B2E25DD6BBE005CAE3D /* OmniKitPacketParser */ = {
-			isa = PBXReferenceProxy;
-			fileType = "compiled.mach-o.executable";
-			path = OmniKitPacketParser;
-			remoteRef = 38B17B2D25DD6BBE005CAE3D /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		388E595625AD948C0019842D /* Resources */ = {
@@ -2332,91 +1698,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		386ED26D25EE48D600820A49 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = MockKit;
-			targetProxy = 386ED26C25EE48D600820A49 /* PBXContainerItemProxy */;
-		};
-		386ED26F25EE48D600820A49 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = MockKitUI;
-			targetProxy = 386ED26E25EE48D600820A49 /* PBXContainerItemProxy */;
-		};
-		38B17ABF25DD6A0A005CAE3D /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = SwiftCharts;
-			targetProxy = 38B17ABE25DD6A0A005CAE3D /* PBXContainerItemProxy */;
-		};
-		38B17AED25DD6A60005CAE3D /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = LoopKit;
-			targetProxy = 38B17AEC25DD6A60005CAE3D /* PBXContainerItemProxy */;
-		};
-		38B17AEF25DD6A60005CAE3D /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = LoopKitUI;
-			targetProxy = 38B17AEE25DD6A60005CAE3D /* PBXContainerItemProxy */;
-		};
-		38B17AF825DD6AF0005CAE3D /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = MKRingProgressView;
-			targetProxy = 38B17AF725DD6AF0005CAE3D /* PBXContainerItemProxy */;
-		};
-		38B17B4025DD6BE0005CAE3D /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = Crypto;
-			targetProxy = 38B17B3F25DD6BE0005CAE3D /* PBXContainerItemProxy */;
-		};
-		38B17B4225DD6BE0005CAE3D /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = MinimedKit;
-			targetProxy = 38B17B4125DD6BE0005CAE3D /* PBXContainerItemProxy */;
-		};
-		38B17B4425DD6BE0005CAE3D /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = MinimedKitPlugin;
-			targetProxy = 38B17B4325DD6BE0005CAE3D /* PBXContainerItemProxy */;
-		};
-		38B17B4625DD6BE0005CAE3D /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = MinimedKitUI;
-			targetProxy = 38B17B4525DD6BE0005CAE3D /* PBXContainerItemProxy */;
-		};
-		38B17B4825DD6BE0005CAE3D /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = NightscoutUploadKit;
-			targetProxy = 38B17B4725DD6BE0005CAE3D /* PBXContainerItemProxy */;
-		};
-		38B17B4A25DD6BE0005CAE3D /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = OmniKit;
-			targetProxy = 38B17B4925DD6BE0005CAE3D /* PBXContainerItemProxy */;
-		};
-		38B17B4C25DD6BE0005CAE3D /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = OmniKitPlugin;
-			targetProxy = 38B17B4B25DD6BE0005CAE3D /* PBXContainerItemProxy */;
-		};
-		38B17B4E25DD6BE0005CAE3D /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = OmniKitUI;
-			targetProxy = 38B17B4D25DD6BE0005CAE3D /* PBXContainerItemProxy */;
-		};
-		38B17B5025DD6BE0005CAE3D /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = RileyLinkBLEKit;
-			targetProxy = 38B17B4F25DD6BE0005CAE3D /* PBXContainerItemProxy */;
-		};
-		38B17B5225DD6BE0005CAE3D /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = RileyLinkKit;
-			targetProxy = 38B17B5125DD6BE0005CAE3D /* PBXContainerItemProxy */;
-		};
-		38B17B5425DD6BE0005CAE3D /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = RileyLinkKitUI;
-			targetProxy = 38B17B5325DD6BE0005CAE3D /* PBXContainerItemProxy */;
-		};
 		38FCF3F325E9028E0078B0D1 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 388E595725AD948C0019842D /* FreeAPS */;

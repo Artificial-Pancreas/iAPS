@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workspace
+   version = "1.0">
+   <FileRef
+      location = "group:FreeAPS.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:Dependecies/SwiftCharts/SwiftCharts.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:Dependecies/MKRingProgressView/MKRingProgressView.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:Dependecies/LoopKit/LoopKit.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:Dependecies/rileylink_ios/RileyLink.xcodeproj">
+   </FileRef>
+</Workspace>
