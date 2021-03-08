@@ -195,7 +195,9 @@ final class BasePumpHistoryStorage: PumpHistoryStorage, Injectable {
                     bolus: nil,
                     insulin: nil,
                     notes: nil,
-                    carbs: nil
+                    carbs: nil,
+                    targetTop: nil,
+                    targetBottom: nil
                 ))
             case .tempBasalDuration:
                 if var last = result.popLast(), last.eventType == .nsTempBasal, last.createdAt == event.timestamp {
@@ -223,7 +225,9 @@ final class BasePumpHistoryStorage: PumpHistoryStorage, Injectable {
                     bolus: event,
                     insulin: event.amount,
                     notes: nil,
-                    carbs: nil
+                    carbs: nil,
+                    targetTop: nil,
+                    targetBottom: nil
                 )
             case .journalCarbs:
                 return NigtscoutTreatment(
@@ -238,7 +242,9 @@ final class BasePumpHistoryStorage: PumpHistoryStorage, Injectable {
                     bolus: nil,
                     insulin: nil,
                     notes: nil,
-                    carbs: Decimal(event.carbInput ?? 0)
+                    carbs: Decimal(event.carbInput ?? 0),
+                    targetTop: nil,
+                    targetBottom: nil
                 )
             default: return nil
             }

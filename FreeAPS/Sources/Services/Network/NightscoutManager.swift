@@ -41,6 +41,7 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
     private func subscribe() {
         broadcaster.register(PumpHistoryObserver.self, observer: self)
         broadcaster.register(CarbsObserver.self, observer: self)
+        broadcaster.register(TempTargetsObserver.self, observer: self)
     }
 
     func fetchGlucose() -> AnyPublisher<Void, Never> {
@@ -102,7 +103,19 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
 
     private func uploadStatus() {}
 
-    private func uploadPumpHistory(_ treatments: [NigtscoutTreatment], fileToSave: String) {
+    private func uploadPumpHistory() {
+        uploadTreatments(pumpHistoryStorage.nightscoutTretmentsNotUploaded(), fileToSave: OpenAPS.Nightscout.uploadedPumphistory)
+    }
+
+    private func uploadCarbs() {
+        uploadTreatments(carbsStorage.nightscoutTretmentsNotUploaded(), fileToSave: OpenAPS.Nightscout.uploadedCarbs)
+    }
+
+    private func uploadTempTargets() {
+        uploadTreatments(tempTargetsStorage.nightscoutTretmentsNotUploaded(), fileToSave: OpenAPS.Nightscout.uploadedTempTargets)
+    }
+
+    private func uploadTreatments(_ treatments: [NigtscoutTreatment], fileToSave: String) {
         guard !treatments.isEmpty, let nightscout = nightscoutAPI else {
             return
         }
@@ -124,12 +137,18 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
 
 extension BaseNightscoutManager: PumpHistoryObserver {
     func pumpHistoryDidUpdate(_: [PumpHistoryEvent]) {
-        uploadPumpHistory(pumpHistoryStorage.nightscoutTretmentsNotUploaded(), fileToSave: OpenAPS.Nightscout.uploadedPumphistory)
+        uploadPumpHistory()
     }
 }
 
 extension BaseNightscoutManager: CarbsObserver {
     func carbsDidUpdate(_: [CarbsEntry]) {
-        uploadPumpHistory(carbsStorage.nightscoutTretmentsNotUploaded(), fileToSave: OpenAPS.Nightscout.uploadedCarbs)
+        uploadCarbs()
+    }
+}
+
+extension BaseNightscoutManager: TempTargetsObserver {
+    func tempTargetsDidUpdate(_: [TempTarget]) {
+        uploadTempTargets()
     }
 }

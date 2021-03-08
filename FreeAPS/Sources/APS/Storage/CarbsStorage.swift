@@ -9,6 +9,7 @@ protocol CarbsObserver {
 protocol CarbsStorage {
     func storeCarbs(_ carbs: [CarbsEntry])
     func syncDate() -> Date
+    func recent() -> [CarbsEntry]
     func nightscoutTretmentsNotUploaded() -> [NigtscoutTreatment]
 }
 
@@ -68,7 +69,9 @@ final class BaseCarbsStorage: CarbsStorage, Injectable {
                 bolus: nil,
                 insulin: nil,
                 notes: nil,
-                carbs: $0.carbs
+                carbs: $0.carbs,
+                targetTop: nil,
+                targetBottom: nil
             )
         }
         return Array(Set(treatments).subtracting(Set(uploaded)))

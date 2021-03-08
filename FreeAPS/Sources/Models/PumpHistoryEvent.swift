@@ -2,7 +2,7 @@ import Foundation
 
 struct PumpHistoryEvent: JSON {
     let id: String
-    let type: PumpHistoryEventType
+    let type: EventType
     let timestamp: Date
     let amount: Decimal?
     let duration: Int?
@@ -12,7 +12,7 @@ struct PumpHistoryEvent: JSON {
     let carbInput: Int?
 }
 
-enum PumpHistoryEventType: String, JSON {
+enum EventType: String, JSON {
     case bolus = "Bolus"
     case mealBulus = "Meal Bolus"
     case correctionBolus = "Correction Bolus"
@@ -28,6 +28,7 @@ enum PumpHistoryEventType: String, JSON {
 
     case nsTempBasal = "Temp Basal"
     case nsCarbCorrection = "Carb Correction"
+    case nsTempTarget = "Temporary Target"
 }
 
 enum TempType: String, JSON {

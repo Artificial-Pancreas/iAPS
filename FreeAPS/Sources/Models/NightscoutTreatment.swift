@@ -6,13 +6,15 @@ struct NigtscoutTreatment: JSON, Hashable, Equatable {
     var rawRate: PumpHistoryEvent?
     var absolute: Decimal?
     var rate: Decimal?
-    var eventType: PumpHistoryEventType
+    var eventType: EventType
     var createdAt: Date?
     var entededBy: String?
     var bolus: PumpHistoryEvent?
     var insulin: Decimal?
     var notes: String?
     var carbs: Decimal?
+    let targetTop: Decimal?
+    let targetBottom: Decimal?
 
     static let local = "freeaps-x://local"
 
@@ -41,5 +43,7 @@ extension NigtscoutTreatment {
         case insulin
         case notes
         case carbs
+        case targetTop
+        case targetBottom
     }
 }
