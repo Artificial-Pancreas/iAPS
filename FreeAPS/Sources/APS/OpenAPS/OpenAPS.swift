@@ -83,14 +83,14 @@ final class OpenAPS {
                 let glucose = self.loadFileFromStorage(name: Monitor.glucose)
                 let profile = self.loadFileFromStorage(name: Settings.profile)
                 let basalProfile = self.loadFileFromStorage(name: Settings.basalProfile)
-
+                let tempTargets = self.loadFileFromStorage(name: Settings.tempTargets)
                 let autosensResult = self.autosense(
+                    glucose: glucose,
                     pumpHistory: pumpHistory,
+                    basalprofile: basalProfile,
                     profile: profile,
                     carbs: carbs,
-                    glucose: glucose,
-                    basalprofile: basalProfile,
-                    temptargets: RawJSON.null
+                    temptargets: tempTargets
                 )
 
                 debug(.openAPS, "AUTOSENS: \(autosensResult)")
@@ -283,26 +283,25 @@ final class OpenAPS {
     }
 
     private func autosense(
+        glucose: JSON,
         pumpHistory: JSON,
+        basalprofile: JSON,
         profile: JSON,
         carbs: JSON,
-        glucose: JSON,
-        basalprofile: JSON,
         temptargets: JSON
     ) -> RawJSON {
         dispatchPrecondition(condition: .onQueue(processQueue))
         return jsWorker.inCommonContext { worker in
             worker.evaluate(script: Script(name: Bundle.autosens))
             worker.evaluate(script: Script(name: Prepare.autosens))
-
             return worker.call(
                 function: Function.generate,
                 with: [
+                    glucose,
                     pumpHistory,
+                    basalprofile,
                     profile,
                     carbs,
-                    glucose,
-                    basalprofile,
                     temptargets
                 ]
             )
