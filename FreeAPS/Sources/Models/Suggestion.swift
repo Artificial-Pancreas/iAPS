@@ -15,7 +15,6 @@ struct Suggestion: JSON {
     let carbsReq: Decimal?
     let temp: TempType?
     let bg: Int?
-    let tick: String?
     let reservoir: Decimal?
     var timestamp: Date?
     var recieved: Bool?
@@ -44,7 +43,6 @@ extension Suggestion {
         case carbsReq
         case temp
         case bg
-        case tick
         case reservoir
         case timestamp
         case recieved
