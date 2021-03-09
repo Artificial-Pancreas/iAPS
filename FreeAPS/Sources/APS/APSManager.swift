@@ -90,6 +90,7 @@ final class BaseAPSManager: APSManager, Injectable {
                         $0.suggestionDidUpdate(suggested)
                     }
                 }
+                self.nightscout.uploadStatus()
             }
 
             if ok, self.settings.closedLoop {
@@ -309,7 +310,9 @@ final class BaseAPSManager: APSManager, Injectable {
                 debug(.apsManager, "Loop succeeded")
                 var enacted = suggested
                 enacted.timestamp = Date()
+                enacted.recieved = true
                 try? self?.storage.save(enacted, as: OpenAPS.Enact.enacted)
+                self?.nightscout.uploadStatus()
             }.store(in: &lifetime)
     }
 }
@@ -369,6 +372,9 @@ private extension PumpManager {
 extension BaseAPSManager: PumpManagerStatusObserver {
     func pumpManager(_: PumpManager, didUpdate status: PumpManagerStatus, oldStatus _: PumpManagerStatus) {
         try? storage.save(status.pumpStatus, as: OpenAPS.Monitor.status)
+        let percent = Int((status.pumpBatteryChargeRemaining ?? 1) * 100)
+        let battery = Battery(percent: percent, voltage: nil, string: percent > 10 ? .normal : .low)
+        try? storage.save(battery, as: OpenAPS.Monitor.battery)
     }
 }
 

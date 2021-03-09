@@ -18,6 +18,7 @@ struct Suggestion: JSON {
     let tick: String?
     let reservoir: Decimal?
     var timestamp: Date?
+    var recieved: Bool?
 }
 
 struct Predictions: JSON {
@@ -46,6 +47,7 @@ extension Suggestion {
         case tick
         case reservoir
         case timestamp
+        case recieved
     }
 }
 

@@ -1,12 +1,14 @@
 import Combine
 import Foundation
 import Swinject
+import UIKit
 
 protocol NightscoutManager {
     func fetchGlucose() -> AnyPublisher<Void, Never>
     func fetchCarbs() -> AnyPublisher<Void, Never>
     func fetchTempTargets() -> AnyPublisher<Void, Never>
     func fetchAnnouncements() -> AnyPublisher<Void, Never>
+    func uploadStatus()
 }
 
 final class BaseNightscoutManager: NightscoutManager, Injectable {
@@ -17,6 +19,7 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
     @Injected() private var pumpHistoryStorage: PumpHistoryStorage!
     @Injected() private var storage: FileStorage!
     @Injected() private var announcementsStorage: AnnouncementsStorage!
+    @Injected() private var settingsManager: SettingsManager!
     @Injected() private var broadcaster: Broadcaster!
 
     private let processQueue = DispatchQueue(label: "BaseNetworkManager.processQueue")
@@ -101,7 +104,63 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
             }.eraseToAnyPublisher()
     }
 
-    private func uploadStatus() {}
+    func uploadStatus() {
+        let iob = (try? storage.retrieve(OpenAPS.Monitor.iob, as: [IOBEntry].self))?.first
+        var suggested = try? storage.retrieve(OpenAPS.Enact.suggested, as: Suggestion.self)
+        var enacted = try? storage.retrieve(OpenAPS.Enact.enacted, as: Suggestion.self)
+
+        if (suggested?.timestamp ?? .distantPast) > (enacted?.timestamp ?? .distantPast) {
+            enacted?.predictions = nil
+        } else {
+            suggested?.predictions = nil
+        }
+
+        let openapsStatus = OpenAPSStatus(
+            iob: iob,
+            suggested: suggested,
+            enacted: enacted,
+            version: "0.7.0"
+        )
+
+        let battery = try? storage.retrieve(OpenAPS.Monitor.battery, as: Battery.self)
+        let reservoir = Decimal(from: storage.retrieveRaw(OpenAPS.Monitor.reservoir) ?? "0")
+        let pumpStatus = try? storage.retrieve(OpenAPS.Monitor.status, as: PumpStatus.self)
+
+        let pump = NSPumpStatus(clock: Date(), battery: battery, reservoir: reservoir, status: pumpStatus)
+
+        let preferences = settingsManager.preferences
+
+        let device = UIDevice.current
+
+        let uploader = Uploader(batteryVoltage: nil, battery: Int(device.batteryLevel * 100))
+
+        let status = NightscoutStatus(
+            device: "freeaps-x://" + device.name,
+            openaps: openapsStatus,
+            pump: pump,
+            preferences: preferences,
+            uploader: uploader
+        )
+
+        try? storage.save(status, as: OpenAPS.Upload.nsStatus)
+
+        guard let nightscout = nightscoutAPI else {
+            return
+        }
+
+        processQueue.async {
+            nightscout.uploadStatus(status)
+                .sink { completion in
+                    switch completion {
+                    case .finished:
+                        debug(.nightscout, "Status uploaded")
+                    case let .failure(error):
+                        debug(.nightscout, error.localizedDescription)
+                    }
+                } receiveValue: {}
+                .store(in: &self.lifetime)
+        }
+    }
 
     private func uploadPumpHistory() {
         uploadTreatments(pumpHistoryStorage.nightscoutTretmentsNotUploaded(), fileToSave: OpenAPS.Nightscout.uploadedPumphistory)

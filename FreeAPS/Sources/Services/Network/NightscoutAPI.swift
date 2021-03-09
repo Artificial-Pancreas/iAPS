@@ -11,6 +11,7 @@ class NightscoutAPI {
     private enum Config {
         static let entriesPath = "/api/v1/entries/sgv.json"
         static let treatmentsPath = "/api/v1/treatments.json"
+        static let statusPath = "/api/v1/devicestatus.json"
         static let retryCount = 1
         static let timeout: TimeInterval = 30
     }
@@ -212,6 +213,30 @@ extension NightscoutAPI {
             request.addValue(secret.sha1(), forHTTPHeaderField: "api-secret")
         }
         request.httpBody = try! JSONCoding.encoder.encode(treatments)
+        request.httpMethod = "POST"
+
+        return service.run(request)
+            .retry(Config.retryCount)
+            .map { _ in () }
+            .eraseToAnyPublisher()
+    }
+
+    func uploadStatus(_ status: NightscoutStatus) -> AnyPublisher<Void, Swift.Error> {
+        var components = URLComponents()
+        components.scheme = url.scheme
+        components.host = url.host
+        components.port = url.port
+        components.path = Config.statusPath
+
+        var request = URLRequest(url: components.url!)
+        request.allowsConstrainedNetworkAccess = false
+        request.timeoutInterval = Config.timeout
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+
+        if let secret = secret {
+            request.addValue(secret.sha1(), forHTTPHeaderField: "api-secret")
+        }
+        request.httpBody = try! JSONCoding.encoder.encode(status)
         request.httpMethod = "POST"
 
         return service.run(request)

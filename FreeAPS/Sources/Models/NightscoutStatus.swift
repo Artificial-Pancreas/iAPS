@@ -9,17 +9,17 @@ struct NightscoutStatus: JSON {
 }
 
 struct OpenAPSStatus: JSON {
-    let iob: IOBEntry
-    let suggested: Suggestion
-    let enacted: Suggestion
+    let iob: IOBEntry?
+    let suggested: Suggestion?
+    let enacted: Suggestion?
     let version: String
 }
 
 struct NSPumpStatus: JSON {
     let clock: Date
-    let battery: Battery
-    let reservoir: Decimal
-    let status: PumpStatus
+    let battery: Battery?
+    let reservoir: Decimal?
+    let status: PumpStatus?
 }
 
 struct Uploader: JSON {
