@@ -370,11 +370,14 @@ private extension PumpManager {
 }
 
 extension BaseAPSManager: PumpManagerStatusObserver {
-    func pumpManager(_: PumpManager, didUpdate status: PumpManagerStatus, oldStatus _: PumpManagerStatus) {
-        try? storage.save(status.pumpStatus, as: OpenAPS.Monitor.status)
-        let percent = Int((status.pumpBatteryChargeRemaining ?? 1) * 100)
-        let battery = Battery(percent: percent, voltage: nil, string: percent > 10 ? .normal : .low)
-        try? storage.save(battery, as: OpenAPS.Monitor.battery)
+    func pumpManager(_: PumpManager, didUpdate status: PumpManagerStatus, oldStatus: PumpManagerStatus) {
+        if oldStatus.pumpStatus != status.pumpStatus {
+            let percent = Int((status.pumpBatteryChargeRemaining ?? 1) * 100)
+            let battery = Battery(percent: percent, voltage: nil, string: percent > 10 ? .normal : .low)
+            try? storage.save(battery, as: OpenAPS.Monitor.battery)
+            try? storage.save(status.pumpStatus, as: OpenAPS.Monitor.status)
+            nightscout.uploadStatus()
+        }
     }
 }
 

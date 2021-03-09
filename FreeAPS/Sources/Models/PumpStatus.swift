@@ -1,6 +1,6 @@
 import Foundation
 
-struct PumpStatus: JSON {
+struct PumpStatus: JSON, Equatable {
     let status: StatusType
     let bolusing: Bool
     let suspended: Bool
