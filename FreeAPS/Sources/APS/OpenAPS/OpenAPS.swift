@@ -83,14 +83,14 @@ final class OpenAPS {
                 let glucose = self.loadFileFromStorage(name: Monitor.glucose)
                 let profile = self.loadFileFromStorage(name: Settings.profile)
                 let basalProfile = self.loadFileFromStorage(name: Settings.basalProfile)
-
+                let tempTargets = self.loadFileFromStorage(name: Settings.tempTargets)
                 let autosensResult = self.autosense(
+                    glucose: glucose,
                     pumpHistory: pumpHistory,
+                    basalprofile: basalProfile,
                     profile: profile,
                     carbs: carbs,
-                    glucose: glucose,
-                    basalprofile: basalProfile,
-                    temptargets: RawJSON.null
+                    temptargets: tempTargets
                 )
 
                 debug(.openAPS, "AUTOSENS: \(autosensResult)")
