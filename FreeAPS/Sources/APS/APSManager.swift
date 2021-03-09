@@ -123,7 +123,7 @@ final class BaseAPSManager: APSManager, Injectable {
             .flatMap { _ in
                 self.openAPS.determineBasal(currentTemp: temp, clock: now)
             }
-            .map { true }
+            .map { $0 != nil }
             .eraseToAnyPublisher()
 
         if temp.duration == 0,

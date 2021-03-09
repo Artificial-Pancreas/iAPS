@@ -12,7 +12,7 @@ final class OpenAPS {
         self.storage = storage
     }
 
-    func determineBasal(currentTemp: TempBasal, clock: Date = Date()) -> Future<Void, Never> {
+    func determineBasal(currentTemp: TempBasal, clock: Date = Date()) -> Future<Suggestion?, Never> {
         Future { promise in
             self.processQueue.async {
                 // clock
@@ -69,8 +69,10 @@ final class OpenAPS {
                 if var suggestion = Suggestion(from: suggested) {
                     suggestion.timestamp = clock
                     try? self.storage.save(suggestion, as: Enact.suggested)
+                    promise(.success(suggestion))
+                } else {
+                    promise(.success(nil))
                 }
-                promise(.success(()))
             }
         }
     }
