@@ -283,26 +283,25 @@ final class OpenAPS {
     }
 
     private func autosense(
+        glucose: JSON,
         pumpHistory: JSON,
+        basalprofile: JSON,
         profile: JSON,
         carbs: JSON,
-        glucose: JSON,
-        basalprofile: JSON,
         temptargets: JSON
     ) -> RawJSON {
         dispatchPrecondition(condition: .onQueue(processQueue))
         return jsWorker.inCommonContext { worker in
             worker.evaluate(script: Script(name: Bundle.autosens))
             worker.evaluate(script: Script(name: Prepare.autosens))
-
             return worker.call(
                 function: Function.generate,
                 with: [
+                    glucose,
                     pumpHistory,
+                    basalprofile,
                     profile,
                     carbs,
-                    glucose,
-                    basalprofile,
                     temptargets
                 ]
             )
