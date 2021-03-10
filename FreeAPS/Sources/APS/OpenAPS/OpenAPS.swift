@@ -77,7 +77,7 @@ final class OpenAPS {
         }
     }
 
-    func autosense() -> Future<Void, Never> {
+    func autosense() -> Future<Autosens?, Never> {
         Future { promise in
             self.processQueue.async {
                 let pumpHistory = self.loadFileFromStorage(name: OpenAPS.Monitor.pumpHistory)
@@ -96,8 +96,13 @@ final class OpenAPS {
                 )
 
                 debug(.openAPS, "AUTOSENS: \(autosensResult)")
-                try? self.storage.save(autosensResult, as: Settings.autosense)
-                promise(.success(()))
+                if var autosens = Autosens(from: autosensResult) {
+                    autosens.timestamp = Date()
+                    try? self.storage.save(autosens, as: Settings.autosense)
+                    promise(.success(autosens))
+                } else {
+                    promise(.success(nil))
+                }
             }
         }
     }

@@ -6,7 +6,6 @@ import Swinject
 
 protocol APSManager {
     func fetchAndLoop()
-    func autosense()
     func autotune()
     func enactBolus(amount: Double)
     var pumpManager: PumpManagerUI? { get set }
@@ -85,6 +84,7 @@ final class BaseAPSManager: APSManager, Injectable {
             nightscout.fetchCarbs(),
             nightscout.fetchTempTargets()
         )
+        .flatMap { _ in self.autosens() }
         .flatMap { _ in self.determineBasal() }
         .sink { _ in } receiveValue: { [weak self] ok in
             guard let self = self else { return }
@@ -110,6 +110,18 @@ final class BaseAPSManager: APSManager, Injectable {
         guard !status.bolusing, !status.suspended else { return false }
 
         return true
+    }
+
+    private func autosens() -> AnyPublisher<Bool, Never> {
+        guard let autosens = try? storage.retrieve(OpenAPS.Settings.autosense, as: Autosens.self),
+              (autosens.timestamp ?? .distantPast).addingTimeInterval(30.minutes.timeInterval) > Date()
+        else {
+            return openAPS.autosense()
+                .map { $0 != nil }
+                .eraseToAnyPublisher()
+        }
+
+        return Just(true).eraseToAnyPublisher()
     }
 
     private func determineBasal() -> AnyPublisher<Bool, Never> {
@@ -170,10 +182,6 @@ final class BaseAPSManager: APSManager, Injectable {
                 debug(.apsManager, "Temp Basal failed with error: \(error.localizedDescription)")
             }
         }
-    }
-
-    func autosense() {
-        openAPS.autosense().sink {}.store(in: &lifetime)
     }
 
     func autotune() {
