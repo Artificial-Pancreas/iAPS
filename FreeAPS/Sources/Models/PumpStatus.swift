@@ -4,7 +4,7 @@ struct PumpStatus: JSON, Equatable {
     let status: StatusType
     let bolusing: Bool
     let suspended: Bool
-    let timestamp: Date?
+    var timestamp: Date?
 }
 
 enum StatusType: String, JSON {

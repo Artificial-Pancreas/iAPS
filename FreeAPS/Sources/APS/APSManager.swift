@@ -386,6 +386,6 @@ extension PumpManagerStatus {
         let bolusing = bolusState != .noBolus
         let suspended = basalDeliveryState?.isSuspended ?? true
         let type = suspended ? StatusType.suspended : (bolusing ? .bolusing : .normal)
-        return PumpStatus(status: type, bolusing: bolusing, suspended: suspended, timestamp: Date())
+        return PumpStatus(status: type, bolusing: bolusing, suspended: suspended, timestamp: nil)
     }
 }

@@ -50,6 +50,7 @@ final class BaseDeviceDataManager: DeviceDataManager, Injectable {
     init(resolver: Resolver) {
         injectServices(resolver)
         setupPumpManager()
+        UIDevice.current.isBatteryMonitoringEnabled = true
     }
 
     func setupPumpManager() {
