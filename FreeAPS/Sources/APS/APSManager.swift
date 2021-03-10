@@ -59,20 +59,20 @@ final class BaseAPSManager: APSManager, Injectable {
     }
 
     func fetchAndLoop() {
-        guard pumpManager != nil else {
-            loop()
-            return
-        }
-
         if settings.allowAnnouncements {
             nightscout.fetchAnnouncements()
                 .sink { [weak self] in
-                    if let recent = self?.announcementsStorage.recent(), recent.action != nil {
-                        self?.enactAnnouncement(recent)
-                    } else {
-                        self?.loop()
+                    guard let self = self else { return }
+                    guard self.pumpManager != nil,
+                          let recent = self.announcementsStorage.recent(),
+                          recent.action != nil
+                    else {
+                        self.loop()
+                        return
                     }
-                }.store(in: &lifetime)
+                    self.enactAnnouncement(recent)
+                }
+                .store(in: &lifetime)
         } else {
             loop()
         }
