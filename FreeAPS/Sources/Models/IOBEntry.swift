@@ -6,10 +6,10 @@ struct IOBEntry: JSON {
     let basaliob: Decimal
     let bolusiob: Decimal
     let netbasalinsulin: Decimal
-    let bolusinulin: Decimal
-    let iobWithZeroTemp: WithZeroTemp
-    let lastBolusTime: UInt64
-    let lastTemp: LastTemp
+    let bolusinsulin: Decimal
+    let iobWithZeroTemp: WithZeroTemp?
+    let lastBolusTime: UInt64?
+    let lastTemp: LastTemp?
     var timestamp: Date?
 
     struct WithZeroTemp: JSON {
@@ -18,7 +18,7 @@ struct IOBEntry: JSON {
         let basaliob: Decimal
         let bolusiob: Decimal
         let netbasalinsulin: Decimal
-        let bolusinulin: Decimal
+        let bolusinsulin: Decimal
         let time: Date
     }
 

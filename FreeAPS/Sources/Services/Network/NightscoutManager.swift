@@ -105,7 +105,7 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
     }
 
     func uploadStatus() {
-        let iob = (try? storage.retrieve(OpenAPS.Monitor.iob, as: [IOBEntry].self))?.first
+        let iob = try? storage.retrieve(OpenAPS.Monitor.iob, as: [IOBEntry].self)
         var suggested = try? storage.retrieve(OpenAPS.Enact.suggested, as: Suggestion.self)
         var enacted = try? storage.retrieve(OpenAPS.Enact.enacted, as: Suggestion.self)
 
@@ -116,7 +116,7 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
         }
 
         let openapsStatus = OpenAPSStatus(
-            iob: iob,
+            iob: iob?.first,
             suggested: suggested,
             enacted: enacted,
             version: "0.7.0"
