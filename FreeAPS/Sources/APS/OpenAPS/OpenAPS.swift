@@ -67,7 +67,7 @@ final class OpenAPS {
                 debug(.openAPS, "SUGGESTED: \(suggested)")
 
                 if var suggestion = Suggestion(from: suggested) {
-                    suggestion.timestamp = clock
+                    suggestion.timestamp = suggestion.deliverAt
                     try? self.storage.save(suggestion, as: Enact.suggested)
                     promise(.success(suggestion))
                 } else {

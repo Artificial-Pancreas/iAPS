@@ -88,17 +88,15 @@ final class BaseAPSManager: APSManager, Injectable {
         .flatMap { _ in self.determineBasal() }
         .sink { _ in } receiveValue: { [weak self] ok in
             guard let self = self else { return }
-            if ok, let suggested = try? self.storage.retrieve(OpenAPS.Enact.suggested, as: Suggestion.self) {
-                DispatchQueue.main.async {
-                    self.broadcaster.notify(SuggestionObserver.self, on: .main) {
-                        $0.suggestionDidUpdate(suggested)
-                    }
-                }
-                self.reportEnacted(suggestion: suggested, received: false)
+            guard let suggested = try? self.storage.retrieve(OpenAPS.Enact.suggested, as: Suggestion.self) else {
+                return
             }
 
             if ok, self.settings.closedLoop {
+                self.nightscout.uploadStatus()
                 self.enactSuggested()
+            } else {
+                self.reportEnacted(suggestion: suggested, received: false)
             }
         }.store(in: &lifetime)
     }
@@ -269,16 +267,10 @@ final class BaseAPSManager: APSManager, Injectable {
     }
 
     private func enactSuggested() {
-        guard let pump = pumpManager,
-              let suggested = try? storage.retrieve(
-                  OpenAPS.Enact.suggested,
-                  as: Suggestion.self
-              )
-        else {
-            return
-        }
+        guard let suggested = try? storage.retrieve(OpenAPS.Enact.suggested, as: Suggestion.self) else { return }
 
-        guard verifyStatus() else {
+        guard let pump = pumpManager, verifyStatus() else {
+            reportEnacted(suggestion: suggested, received: false)
             return
         }
 
@@ -306,9 +298,10 @@ final class BaseAPSManager: APSManager, Injectable {
 
         basalPublisher
             .flatMap { bolusPublisher }
-            .sink { completion in
+            .sink { [weak self] completion in
                 if case let .failure(error) = completion {
                     debug(.apsManager, "Loop failed with error: \(error.localizedDescription)")
+                    self?.reportEnacted(suggestion: suggested, received: true)
                 }
             } receiveValue: { [weak self] in
                 debug(.apsManager, "Loop succeeded")
@@ -378,15 +371,15 @@ private extension PumpManager {
 }
 
 extension BaseAPSManager: PumpManagerStatusObserver {
-    func pumpManager(_: PumpManager, didUpdate status: PumpManagerStatus, oldStatus: PumpManagerStatus) {
+    func pumpManager(_: PumpManager, didUpdate status: PumpManagerStatus, oldStatus _: PumpManagerStatus) {
         let percent = Int((status.pumpBatteryChargeRemaining ?? 1) * 100)
         let battery = Battery(percent: percent, voltage: nil, string: percent > 10 ? .normal : .low)
         try? storage.save(battery, as: OpenAPS.Monitor.battery)
         try? storage.save(status.pumpStatus, as: OpenAPS.Monitor.status)
-        if oldStatus.pumpStatus.status != status.pumpStatus.status {
-            debug(.apsManager, "Pump status did change: \(status.pumpStatus)")
-            nightscout.uploadStatus()
-        }
+//        if oldStatus.pumpStatus.status != status.pumpStatus.status {
+//            debug(.apsManager, "Pump status did change: \(status.pumpStatus)")
+//            nightscout.uploadStatus()
+//        }
     }
 }
 
