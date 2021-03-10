@@ -265,16 +265,17 @@ final class BaseAPSManager: APSManager, Injectable {
     }
 
     private func enactSuggested() {
-        guard verifyStatus() else {
-            return
-        }
-
         guard let pump = pumpManager,
               let suggested = try? storage.retrieve(
                   OpenAPS.Enact.suggested,
                   as: Suggestion.self
               )
         else {
+            return
+        }
+
+        guard verifyStatus() else {
+            reportEnacted(suggestion: suggested, received: false)
             return
         }
 
@@ -308,12 +309,16 @@ final class BaseAPSManager: APSManager, Injectable {
                 }
             } receiveValue: { [weak self] in
                 debug(.apsManager, "Loop succeeded")
-                var enacted = suggested
-                enacted.timestamp = Date()
-                enacted.recieved = true
-                try? self?.storage.save(enacted, as: OpenAPS.Enact.enacted)
-                self?.nightscout.uploadStatus()
+                self?.reportEnacted(suggestion: suggested, received: true)
             }.store(in: &lifetime)
+    }
+
+    private func reportEnacted(suggestion: Suggestion, received: Bool) {
+        var enacted = suggestion
+        enacted.timestamp = Date()
+        enacted.recieved = received
+        try? storage.save(enacted, as: OpenAPS.Enact.enacted)
+        nightscout.uploadStatus()
     }
 }
 
@@ -371,11 +376,12 @@ private extension PumpManager {
 
 extension BaseAPSManager: PumpManagerStatusObserver {
     func pumpManager(_: PumpManager, didUpdate status: PumpManagerStatus, oldStatus: PumpManagerStatus) {
-        if oldStatus.pumpStatus != status.pumpStatus {
-            let percent = Int((status.pumpBatteryChargeRemaining ?? 1) * 100)
-            let battery = Battery(percent: percent, voltage: nil, string: percent > 10 ? .normal : .low)
-            try? storage.save(battery, as: OpenAPS.Monitor.battery)
-            try? storage.save(status.pumpStatus, as: OpenAPS.Monitor.status)
+        let percent = Int((status.pumpBatteryChargeRemaining ?? 1) * 100)
+        let battery = Battery(percent: percent, voltage: nil, string: percent > 10 ? .normal : .low)
+        try? storage.save(battery, as: OpenAPS.Monitor.battery)
+        try? storage.save(status.pumpStatus, as: OpenAPS.Monitor.status)
+        if oldStatus.pumpStatus.status != status.pumpStatus.status {
+            debug(.apsManager, "Pump status did change: \(status.pumpStatus)")
             nightscout.uploadStatus()
         }
     }
@@ -386,6 +392,6 @@ extension PumpManagerStatus {
         let bolusing = bolusState != .noBolus
         let suspended = basalDeliveryState?.isSuspended ?? true
         let type = suspended ? StatusType.suspended : (bolusing ? .bolusing : .normal)
-        return PumpStatus(status: type, bolusing: bolusing, suspended: suspended, timestamp: nil)
+        return PumpStatus(status: type, bolusing: bolusing, suspended: suspended, timestamp: Date())
     }
 }
