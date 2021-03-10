@@ -8,6 +8,8 @@ extension PreferencesEditor {
         @Injected() var settingsManager: SettingsManager!
         private(set) var preferences = Preferences()
         @Published var unitsIndex = 1
+        @Published var allowAnnouncements = false
+
         @Published var decimalFields: [Field<Decimal>] = []
         @Published var boolFields: [Field<Bool>] = []
         @Published var insulinCirveField = Field<InsulinCurve>(
@@ -19,12 +21,19 @@ extension PreferencesEditor {
         override func subscribe() {
             preferences = provider.preferences
             unitsIndex = settingsManager.settings.units == .mgdL ? 0 : 1
+            allowAnnouncements = settingsManager.settings.allowAnnouncements
             insulinCirveField.value = preferences.curve
             insulinCirveField.settable = self
 
             $unitsIndex
                 .sink { [weak self] index in
                     self?.settingsManager.settings.units = index == 0 ? .mgdL : .mmolL
+                }
+                .store(in: &lifetime)
+
+            $allowAnnouncements
+                .sink { [weak self] allow in
+                    self?.settingsManager.settings.allowAnnouncements = allow
                 }
                 .store(in: &lifetime)
 

@@ -65,14 +65,18 @@ final class BaseAPSManager: APSManager, Injectable {
             return
         }
 
-        nightscout.fetchAnnouncements()
-            .sink { [weak self] in
-                if let recent = self?.announcementsStorage.recent(), recent.action != nil {
-                    self?.enactAnnouncement(recent)
-                } else {
-                    self?.loop()
-                }
-            }.store(in: &lifetime)
+        if settings.allowAnnouncements {
+            nightscout.fetchAnnouncements()
+                .sink { [weak self] in
+                    if let recent = self?.announcementsStorage.recent(), recent.action != nil {
+                        self?.enactAnnouncement(recent)
+                    } else {
+                        self?.loop()
+                    }
+                }.store(in: &lifetime)
+        } else {
+            loop()
+        }
     }
 
     private func loop() {
@@ -90,7 +94,7 @@ final class BaseAPSManager: APSManager, Injectable {
                         $0.suggestionDidUpdate(suggested)
                     }
                 }
-                self.nightscout.uploadStatus()
+                self.reportEnacted(suggestion: suggested, received: false)
             }
 
             if ok, self.settings.closedLoop {
@@ -275,7 +279,6 @@ final class BaseAPSManager: APSManager, Injectable {
         }
 
         guard verifyStatus() else {
-            reportEnacted(suggestion: suggested, received: false)
             return
         }
 

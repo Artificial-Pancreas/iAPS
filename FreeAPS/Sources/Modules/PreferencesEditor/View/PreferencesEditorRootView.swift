@@ -17,6 +17,8 @@ extension PreferencesEditor {
                         Text("mg/dL").tag(0)
                         Text("mmol/L").tag(1)
                     }
+
+                    Toggle("Remote control", isOn: $viewModel.allowAnnouncements)
                 }
 
                 Section(header: Text("OpenAPS")) {
