@@ -88,15 +88,10 @@ final class BaseAPSManager: APSManager, Injectable {
         .flatMap { _ in self.determineBasal() }
         .sink { _ in } receiveValue: { [weak self] ok in
             guard let self = self else { return }
-            guard let suggested = try? self.storage.retrieve(OpenAPS.Enact.suggested, as: Suggestion.self) else {
-                return
-            }
 
             if ok, self.settings.closedLoop {
                 self.nightscout.uploadStatus()
                 self.enactSuggested()
-            } else {
-                self.reportEnacted(suggestion: suggested, received: false)
             }
         }.store(in: &lifetime)
     }
@@ -278,7 +273,6 @@ final class BaseAPSManager: APSManager, Injectable {
         guard let suggested = try? storage.retrieve(OpenAPS.Enact.suggested, as: Suggestion.self) else { return }
 
         guard let pump = pumpManager, verifyStatus() else {
-            reportEnacted(suggestion: suggested, received: false)
             return
         }
 
@@ -309,22 +303,23 @@ final class BaseAPSManager: APSManager, Injectable {
             .sink { [weak self] completion in
                 if case let .failure(error) = completion {
                     debug(.apsManager, "Loop failed with error: \(error.localizedDescription)")
+                    self?.reportEnacted(suggestion: suggested, received: false)
+                } else {
                     self?.reportEnacted(suggestion: suggested, received: true)
                 }
-            } receiveValue: { [weak self] in
+            } receiveValue: {
                 debug(.apsManager, "Loop succeeded")
-                self?.reportEnacted(suggestion: suggested, received: true)
             }.store(in: &lifetime)
     }
 
     private func reportEnacted(suggestion: Suggestion, received: Bool) {
-        if received, suggestion.deliverAt != nil {
+        if suggestion.deliverAt != nil, suggestion.rate != nil || suggestion.units != nil {
             var enacted = suggestion
             enacted.timestamp = Date()
             enacted.recieved = received
             try? storage.save(enacted, as: OpenAPS.Enact.enacted)
+            nightscout.uploadStatus()
         }
-        nightscout.uploadStatus()
     }
 }
 
