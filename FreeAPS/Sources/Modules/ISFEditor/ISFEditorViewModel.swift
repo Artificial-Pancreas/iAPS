@@ -33,7 +33,7 @@ extension ISFEditor {
                 return Item(rateIndex: rateIndex, timeIndex: timeIndex)
             }
 
-            if let newISF = provider.autosense.newISF, provider.autosense.ratio != 1 {
+            if let newISF = provider.autosense.newisf, provider.autosense.ratio != 1 {
                 switch units {
                 case .mgdL:
                     autosensISF = Double(newISF)

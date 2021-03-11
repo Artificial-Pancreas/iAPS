@@ -24,9 +24,9 @@ extension ISFEditor {
                 if let newISF = viewModel.autosensISF {
                     Section(header: Text("Autosens")) {
                         HStack {
-                            Text("New ISF")
+                            Text("Calculated ISF").foregroundColor(.secondary)
                             Spacer()
-                            Text(rateFormatter.string(from: newISF as NSNumber) ?? "0" + " \(viewModel.units)/U")
+                            Text((rateFormatter.string(from: newISF as NSNumber) ?? "0") + " \(viewModel.units.rawValue)/U")
                         }
                     }
                 }

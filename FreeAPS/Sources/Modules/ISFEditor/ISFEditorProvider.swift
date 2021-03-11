@@ -17,7 +17,7 @@ extension ISFEditor {
         var autosense: Autosens {
             (try? storage.retrieve(OpenAPS.Settings.autosense, as: Autosens.self))
                 ?? Autosens(from: OpenAPS.defaults(for: OpenAPS.Settings.autosense))
-                ?? Autosens(ratio: 1, newISF: nil, timestamp: nil)
+                ?? Autosens(ratio: 1, newisf: nil, timestamp: nil)
         }
     }
 }
