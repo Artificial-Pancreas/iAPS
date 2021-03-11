@@ -89,9 +89,11 @@ final class BaseAPSManager: APSManager, Injectable {
         .sink { _ in } receiveValue: { [weak self] ok in
             guard let self = self else { return }
 
-            if ok, self.settings.closedLoop {
+            if ok {
                 self.nightscout.uploadStatus()
-                self.enactSuggested()
+                if self.settings.closedLoop {
+                    self.enactSuggested()
+                }
             }
         }.store(in: &lifetime)
     }
