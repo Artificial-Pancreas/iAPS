@@ -9,24 +9,29 @@ extension AddTempTarget {
         @Published var high: Decimal = 0
         @Published var duration: Decimal = 0
         @Published var date = Date()
+        @Published var newPresetName = ""
+        @Published var presets: [TempTarget] = []
 
         private(set) var units: GlucoseUnits = .mmolL
 
         override func subscribe() {
             units = settingsManager.settings.units
+            presets = storage.presets()
         }
 
-        func add() {
+        func enact() {
             var lowTarget = low
             var highTarget = high
 
+            highTarget = max(highTarget, lowTarget)
+
             if units == .mmolL {
-                lowTarget = Decimal(Int(lowTarget / GlucoseUnits.exchangeRate))
-                highTarget = Decimal(Int(highTarget / GlucoseUnits.exchangeRate))
+                lowTarget = lowTarget.asMgdL
+                highTarget = highTarget.asMgdL
             }
 
-            highTarget = max(highTarget, lowTarget)
             let entry = TempTarget(
+                name: TempTarget.custom,
                 createdAt: date,
                 targetTop: highTarget,
                 targetBottom: lowTarget,
@@ -36,6 +41,57 @@ extension AddTempTarget {
             storage.storeTempTargets([entry])
 
             showModal(for: nil)
+        }
+
+        func cancel() {
+            let entry = TempTarget(
+                name: TempTarget.cancel,
+                createdAt: Date(),
+                targetTop: 0,
+                targetBottom: 0,
+                duration: 0,
+                enteredBy: TempTarget.manual
+            )
+            storage.storeTempTargets([entry])
+
+            showModal(for: nil)
+        }
+
+        func save() {
+            var lowTarget = low
+            var highTarget = high
+
+            highTarget = max(highTarget, lowTarget)
+
+            if units == .mmolL {
+                lowTarget = lowTarget.asMgdL
+                highTarget = highTarget.asMgdL
+            }
+
+            let entry = TempTarget(
+                name: newPresetName.isEmpty ? TempTarget.custom : newPresetName,
+                createdAt: Date(),
+                targetTop: highTarget,
+                targetBottom: lowTarget,
+                duration: duration,
+                enteredBy: TempTarget.manual
+            )
+
+            presets.append(entry)
+            storage.storePresets(presets)
+        }
+
+        func enactPreset(id: String) {
+            if var preset = presets.first(where: { $0.id == id }) {
+                preset.createdAt = Date()
+                storage.storeTempTargets([preset])
+                showModal(for: nil)
+            }
+        }
+
+        func removePreset(id: String) {
+            presets = presets.filter { $0.id != id }
+            storage.storePresets(presets)
         }
     }
 }

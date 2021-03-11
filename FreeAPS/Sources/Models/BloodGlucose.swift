@@ -34,3 +34,29 @@ enum GlucoseUnits: String, JSON {
 
     static let exchangeRate: Decimal = 0.0555
 }
+
+extension Int {
+    var asMmolL: Decimal {
+        Decimal(self) * GlucoseUnits.exchangeRate
+    }
+}
+
+extension Decimal {
+    var asMmolL: Decimal {
+        self * GlucoseUnits.exchangeRate
+    }
+
+    var asMgdL: Decimal {
+        self / GlucoseUnits.exchangeRate
+    }
+}
+
+extension Double {
+    var asMmolL: Decimal {
+        Decimal(self) * GlucoseUnits.exchangeRate
+    }
+
+    var asMgdL: Decimal {
+        Decimal(self) / GlucoseUnits.exchangeRate
+    }
+}

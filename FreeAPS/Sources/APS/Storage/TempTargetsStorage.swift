@@ -11,6 +11,8 @@ protocol TempTargetsStorage {
     func syncDate() -> Date
     func recent() -> [TempTarget]
     func nightscoutTretmentsNotUploaded() -> [NigtscoutTreatment]
+    func storePresets(_ targets: [TempTarget])
+    func presets() -> [TempTarget]
 }
 
 final class BaseTempTargetsStorage: TempTargetsStorage, Injectable {
@@ -23,13 +25,20 @@ final class BaseTempTargetsStorage: TempTargetsStorage, Injectable {
     }
 
     func storeTempTargets(_ targets: [TempTarget]) {
+        storeTempTargets(targets, isPresets: false)
+    }
+
+    private func storeTempTargets(_ targets: [TempTarget], isPresets: Bool) {
         processQueue.sync {
-            let file = OpenAPS.Settings.tempTargets
+            let file = isPresets ? OpenAPS.FreeAPS.tempTargetsPresets : OpenAPS.Settings.tempTargets
             var uniqEvents: [TempTarget] = []
             try? self.storage.transaction { storage in
                 try storage.append(targets, to: file, uniqBy: \.createdAt)
                 uniqEvents = try storage.retrieve(file, as: [TempTarget].self)
-                    .filter { $0.createdAt.addingTimeInterval(1.days.timeInterval) > Date() }
+                    .filter {
+                        guard !isPresets else { return true }
+                        return $0.createdAt.addingTimeInterval(1.days.timeInterval) > Date()
+                    }
                     .sorted { $0.createdAt > $1.createdAt }
                 try storage.save(Array(uniqEvents), as: file)
             }
@@ -75,5 +84,14 @@ final class BaseTempTargetsStorage: TempTargetsStorage, Injectable {
             )
         }
         return Array(Set(treatments).subtracting(Set(uploaded)))
+    }
+
+    func storePresets(_ targets: [TempTarget]) {
+        try? storage.remove(OpenAPS.FreeAPS.tempTargetsPresets)
+        storeTempTargets(targets, isPresets: true)
+    }
+
+    func presets() -> [TempTarget] {
+        (try? storage.retrieve(OpenAPS.FreeAPS.tempTargetsPresets, as: [TempTarget].self))?.reversed() ?? []
     }
 }
