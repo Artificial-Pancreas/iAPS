@@ -39,11 +39,13 @@ extension Home {
                                 Image(systemName: "drop.fill")
                             }.foregroundColor(.orange)
                             Spacer()
-                            Button { viewModel.showModal(for: .manualTempBasal) }
-                            label: {
-                                Image(systemName: "circle.bottomhalf.fill")
-                            }.foregroundColor(.blue)
-                            Spacer()
+                            if viewModel.allowManualTemp {
+                                Button { viewModel.showModal(for: .manualTempBasal) }
+                                label: {
+                                    Image(systemName: "circle.bottomhalf.fill")
+                                }.foregroundColor(.blue)
+                                Spacer()
+                            }
                             Button { viewModel.showModal(for: .settings) }
                             label: {
                                 Image(systemName: "gearshape")

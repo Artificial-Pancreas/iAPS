@@ -27,7 +27,7 @@ extension Bolus {
                     label: { Text("Enact") }
                 }
             }
-            .navigationTitle("Bolus")
+            .navigationTitle("Enact Bolus")
             .navigationBarTitleDisplayMode(.automatic)
             .navigationBarItems(leading: Button("Close", action: viewModel.hideModal))
         }

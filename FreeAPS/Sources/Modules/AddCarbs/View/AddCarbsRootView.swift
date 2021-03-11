@@ -25,7 +25,7 @@ extension AddCarbs {
 
                 Section {
                     Button { viewModel.add() }
-                    label: { Text("Continue") }
+                    label: { Text("Add") }
                 }
             }
             .navigationTitle("Add Carbs")
