@@ -1274,11 +1274,12 @@
 		6610F96E25FAD534004781D7 /* Charts */ = {
 			isa = PBXGroup;
 			children = (
-				6610F96F25FAD534004781D7 /* Sample Data */,
-				6610F97125FAD534004781D7 /* Models */,
-				6610F97B25FAD534004781D7 /* Extensions */,
 				6610F98125FAD535004781D7 /* Views */,
+				6610F98825FAD535004781D7 /* ChartsConfig.swift */,
+				6610F97125FAD534004781D7 /* Models */,
 				6610F98C25FAD535004781D7 /* Helpers */,
+				6610F97B25FAD534004781D7 /* Extensions */,
+				6610F96F25FAD534004781D7 /* Sample Data */,
 			);
 			path = Charts;
 			sourceTree = "<group>";
@@ -1324,7 +1325,6 @@
 			children = (
 				6610F98225FAD535004781D7 /* Charts */,
 				6610F98425FAD535004781D7 /* Components */,
-				6610F98825FAD535004781D7 /* ChartsConfig.swift */,
 				6610F98925FAD535004781D7 /* Points */,
 			);
 			path = Views;
