@@ -4,6 +4,7 @@ extension ISFEditor {
     class ViewModel<Provider>: BaseViewModel<Provider>, ObservableObject where Provider: ISFEditorProvider {
         @Injected() var settingsManager: SettingsManager!
         @Published var items: [Item] = []
+        private(set) var autosensISF: Double?
 
         let timeValues = stride(from: 0.0, to: 1.days.timeInterval, by: 30.minutes.timeInterval).map { $0 }
 
@@ -30,6 +31,15 @@ extension ISFEditor {
                 let timeIndex = timeValues.firstIndex(of: Double(value.offset * 60)) ?? 0
                 let rateIndex = rateValues.firstIndex(of: Double(value.sensitivity)) ?? 0
                 return Item(rateIndex: rateIndex, timeIndex: timeIndex)
+            }
+
+            if let newISF = provider.autosense.newISF, provider.autosense.ratio != 1 {
+                switch units {
+                case .mgdL:
+                    autosensISF = Double(newISF)
+                case .mmolL:
+                    autosensISF = round(Double(newISF * GlucoseUnits.exchangeRate) * 10) / 10
+                }
             }
         }
 

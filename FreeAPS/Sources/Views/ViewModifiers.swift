@@ -37,15 +37,26 @@ struct CapsulaBackground: ViewModifier {
     }
 }
 
+struct NavigationLazyView<Content: View>: View {
+    let build: () -> Content
+    init(_ build: @autoclosure @escaping () -> Content) {
+        self.build = build
+    }
+
+    var body: Content {
+        build()
+    }
+}
+
 struct Link<T>: ViewModifier where T: View {
-    private let destination: T
-    init(destination: T) {
+    private let destination: () -> T
+    init(destination: @autoclosure @escaping () -> T) {
         self.destination = destination
     }
 
     func body(content: Content) -> some View {
         ZStack {
-            NavigationLink(destination: destination) {
+            NavigationLink(destination: NavigationLazyView(destination())) {
                 EmptyView()
             }.hidden()
             content

@@ -15,11 +15,21 @@ extension ISFEditor {
         private var rateFormatter: NumberFormatter {
             let formatter = NumberFormatter()
             formatter.numberStyle = .decimal
+            formatter.maximumFractionDigits = 1
             return formatter
         }
 
         var body: some View {
             Form {
+                if let newISF = viewModel.autosensISF {
+                    Section(header: Text("Autosens")) {
+                        HStack {
+                            Text("New ISF")
+                            Spacer()
+                            Text(rateFormatter.string(from: newISF as NSNumber) ?? "0" + " \(viewModel.units)/U")
+                        }
+                    }
+                }
                 Section(header: Text("Schedule")) {
                     list
                     addButton

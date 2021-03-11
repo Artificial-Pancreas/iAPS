@@ -318,10 +318,12 @@ final class BaseAPSManager: APSManager, Injectable {
     }
 
     private func reportEnacted(suggestion: Suggestion, received: Bool) {
-        var enacted = suggestion
-        enacted.timestamp = Date()
-        enacted.recieved = received
-        try? storage.save(enacted, as: OpenAPS.Enact.enacted)
+        if received, suggestion.deliverAt != nil {
+            var enacted = suggestion
+            enacted.timestamp = Date()
+            enacted.recieved = received
+            try? storage.save(enacted, as: OpenAPS.Enact.enacted)
+        }
         nightscout.uploadStatus()
     }
 }
