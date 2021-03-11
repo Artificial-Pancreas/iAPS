@@ -14,17 +14,11 @@ final class BaseRouter: Router {
 
     private let resolver: Resolver
 
-    private var screens: [Screen.ID: AnyView] = [:]
-
     init(resolver: Resolver) {
         self.resolver = resolver
     }
 
     func view(for screen: Screen) -> AnyView {
-        if let view = screens[screen.id] {
-            return view
-        }
-        screens[screen.id] = screen.view(resolver: resolver).asAny()
-        return screens[screen.id]!
+        screen.view(resolver: resolver).asAny()
     }
 }
