@@ -1,14 +1,18 @@
 import SwiftUI
 
-func getPredictionColor(for type: PredictionType) -> Color {
+func getPredictionColor(for type: PredictionType, value: Int?) -> Color {
+    let color: Color
+    
     switch type {
     case .IOB:
-        return Color(.systemTeal)
+        color = Color(.systemTeal)
     case .COB:
-        return Color(.systemOrange)
+        color = Color(.systemOrange)
     case .ZT:
-        return Color(.systemPink)
+        color = Color(.systemPink)
     case .UAM:
-        return Color(.systemIndigo)
+        color = Color(.systemIndigo)
     }
+    
+    return color.opacity(value != nil ? 1 : 0)
 }

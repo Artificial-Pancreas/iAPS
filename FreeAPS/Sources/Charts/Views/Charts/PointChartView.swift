@@ -6,18 +6,6 @@ struct PointChartView<PointEntry: View>: View {
     let glucoseData: [BloodGlucose]
     let pointEntry: (_: Int?) -> PointEntry
 
-    public init(
-        width: CGFloat,
-        showHours: Int,
-        glucoseData: [BloodGlucose],
-        point: @escaping (_: Int?) -> PointEntry
-    ) {
-        self.width = width
-        self.showHours = showHours
-        self.glucoseData = glucoseData
-        pointEntry = point
-    }
-
     public var body: some View {
         GeometryReader { geometry in
             ForEach(
@@ -32,7 +20,7 @@ struct PointChartView<PointEntry: View>: View {
                     .position(x: point.xPosition, y: point.yPosition ?? 0)
             }
         }
-        .frame(width: 100000)
+        .frame(width: 1000)
     }
 }
 

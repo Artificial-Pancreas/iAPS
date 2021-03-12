@@ -7,7 +7,9 @@
 
 import Foundation
 
-struct BloodGlucose {
+struct BloodGlucose: Identifiable, Hashable {
+    var id = UUID()
+    
     enum Direction: String {
         case tripleUp = "TripleUp"
         case doubleUp = "DoubleUp"
