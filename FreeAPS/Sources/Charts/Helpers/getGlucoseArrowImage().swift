@@ -1,18 +1,41 @@
 import SwiftUI
 
-func getGlucoseArrowImage(for delta: Double) -> Image {
-    let arrowName: String
+func getGlucoseArrowImage(for delta: BloodGlucose.Direction) -> Image {
+    let arrow: String
+    
+    let up = "arrow.up"
+    let upForward = "arrow.up.forward"
+    let forward = "arrow.forward"
+    let downForward = "arrow.down.forward"
+    let down = "arrow.down"
+    let error = "arrow.left.arrow.right"
+    
     switch delta {
-    case ..<(-0.6):
-        arrowName = "arrow.down"
-    case -0.6 ... (-0.1):
-        arrowName = "arrow.down.forward"
-    case 0.1 ..< 0.6:
-        arrowName = "arrow.up.forward"
-    case 0.6...:
-        arrowName = "arrow.up"
-    default:
-        arrowName = "arrow.forward"
+    case .tripleUp:
+        arrow = up
+    case .doubleUp:
+        arrow = up
+    case .singleUp:
+        arrow = up
+    case .fortyFiveUp:
+        arrow = upForward
+    case .flat:
+        arrow = forward
+    case .fortyFiveDown:
+        arrow = downForward
+    case .singleDown:
+        arrow = down
+    case .doubleDown:
+        arrow = down
+    case .tripleDown:
+        arrow = down
+    case .none:
+        arrow = error
+    case .notComputable:
+        arrow = error
+    case .rateOutOfRange:
+        arrow = error
     }
-    return Image(systemName: arrowName)
+    
+    return Image(systemName: arrow)
 }

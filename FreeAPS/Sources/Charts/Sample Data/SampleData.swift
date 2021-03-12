@@ -44,7 +44,7 @@ enum SampleData {
         
         let glucose = mediumUp + fastUp + fastDown + mediumDown + slowUp
         let normalTime = (0 ... 278).map{ generateDate(baseDateComponents: baseComponents, minutes: $0 * 5) }
-        let tenMinutes = (279 ... 288).map{ generateDate(baseDateComponents: baseComponents, minutes: $0 * 10) }
+        let tenMinutes = (279 ... 288).map{ generateDate(baseDateComponents: baseComponents, minutes: $0 * 30) }
         let time = normalTime + tenMinutes
         
         

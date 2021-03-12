@@ -1,16 +1,10 @@
 import SwiftUI
 
 public struct GlucoseArrowView: View {
-    public init(value: Double, delta: Double) {
-        self.value = value
-        self.delta = delta
-    }
-
-    let value: Double
-    let delta: Double
+    let direction: BloodGlucose.Direction
 
     public var body: some View {
-        getGlucoseArrowImage(for: delta)
+        getGlucoseArrowImage(for: direction)
             .foregroundColor(Color(.systemBlue))
             .informationBarEntryStyle()
     }
@@ -18,11 +12,11 @@ public struct GlucoseArrowView: View {
 
 struct GlucoseArrowView_Previews: PreviewProvider {
     static var previews: some View {
-        GlucoseArrowView(value: 11.5, delta: 0.9)
+        GlucoseArrowView(direction: .fortyFiveDown)
             .frame(
-                width: /*@START_MENU_TOKEN@*/100/*@END_MENU_TOKEN@*/,
-                height: /*@START_MENU_TOKEN@*/100/*@END_MENU_TOKEN@*/,
-                alignment: /*@START_MENU_TOKEN@*/ .center/*@END_MENU_TOKEN@*/
+                width: 100,
+                height: 100,
+                alignment:  .center
             )
             .preferredColorScheme(/*@START_MENU_TOKEN@*/ .dark/*@END_MENU_TOKEN@*/)
     }

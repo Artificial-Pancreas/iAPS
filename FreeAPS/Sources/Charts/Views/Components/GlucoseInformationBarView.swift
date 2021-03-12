@@ -4,12 +4,7 @@ public struct GlucoseInformationBarView: View {
     let data: [InformationBarEntryData]
     let glucoseValue: Double
     let glucoseDelta: Double
-
-    public init(data: [InformationBarEntryData], glucoseValue: Double, glucoseDelta: Double) {
-        self.data = data
-        self.glucoseValue = glucoseValue
-        self.glucoseDelta = glucoseDelta
-    }
+    let direction: BloodGlucose.Direction
 
     public var body: some View {
         let halvedEntryData = data.halve()
@@ -38,7 +33,7 @@ public struct GlucoseInformationBarView: View {
                     .foregroundColor(Color(.systemBlue))
                     .informationBarEntryStyle()
             VStack {
-                GlucoseArrowView(value: glucoseValue, delta: glucoseDelta)
+                GlucoseArrowView(direction: direction)
                     .padding(.bottom, 1)
                     Text(APSDataFormatter.format(inputValue: glucoseDelta, to: .delta))
                         .informationBarEntryStyle()
@@ -54,12 +49,12 @@ struct GlucoseInformationBarView_Previews: PreviewProvider {
         InformationBarEntryData(label: "COB: ", type: .cob, value: 33),
         InformationBarEntryData(label: "COB: ", type: .cob, value: 33),
         InformationBarEntryData(label: "COB: ", type: .cob, value: 33),
-        InformationBarEntryData(label: "COB: ", type: .cob, value: 33),
-        InformationBarEntryData(label: "COB: ", type: .cob, value: 33)
+//        InformationBarEntryData(label: "COB: ", type: .cob, value: 33),
     ]
     static var previews: some View {
-        GlucoseInformationBarView(data: data, glucoseValue: 5.5, glucoseDelta: -0.2)
+        GlucoseInformationBarView(data: data, glucoseValue: 5.5, glucoseDelta: -0.2, direction: .fortyFiveDown)
             .preferredColorScheme(.dark)
             .frame(height: 200)
+            .padding(.horizontal)
     }
 }
