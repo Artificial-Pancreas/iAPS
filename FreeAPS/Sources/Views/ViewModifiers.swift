@@ -37,26 +37,40 @@ struct CapsulaBackground: ViewModifier {
     }
 }
 
-struct NavigationLazyView<Content: View>: View {
-    let build: () -> Content
-    init(_ build: @autoclosure @escaping () -> Content) {
+private let navigationCache = LRUCache<Screen.ID, AnyView>(capacity: 10)
+
+struct NavigationLazyView: View {
+    let build: () -> AnyView
+    let screen: Screen
+
+    init(_ build: @autoclosure @escaping () -> AnyView, screen: Screen) {
         self.build = build
+        self.screen = screen
     }
 
-    var body: Content {
-        build()
+    var body: AnyView {
+        if navigationCache[screen.id] == nil {
+            navigationCache[screen.id] = build()
+        }
+        return navigationCache[screen.id]!
+            .onDisappear {
+                navigationCache[screen.id] = nil
+            }.asAny()
     }
 }
 
 struct Link<T>: ViewModifier where T: View {
     private let destination: () -> T
-    init(destination: @autoclosure @escaping () -> T) {
+    let screen: Screen
+
+    init(destination: @autoclosure @escaping () -> T, screen: Screen) {
         self.destination = destination
+        self.screen = screen
     }
 
     func body(content: Content) -> some View {
         ZStack {
-            NavigationLink(destination: NavigationLazyView(destination())) {
+            NavigationLink(destination: NavigationLazyView(destination().asAny(), screen: screen)) {
                 EmptyView()
             }.hidden()
             content
@@ -130,7 +144,7 @@ extension View {
     }
 
     func navigationLink<V: BaseView>(to screen: Screen, from view: V) -> some View {
-        modifier(Link(destination: view.viewModel.view(for: screen)))
+        modifier(Link(destination: view.viewModel.view(for: screen), screen: screen))
     }
 
     func adaptsToSoftwareKeyboard() -> some View {

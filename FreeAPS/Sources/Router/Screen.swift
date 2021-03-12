@@ -21,6 +21,7 @@ enum Screen: Identifiable {
     case addTempTarget
     case bolus
     case manualTempBasal
+    case autotuneConfig
 
     var id: Int { String(reflecting: self).hashValue }
 }
@@ -66,6 +67,8 @@ extension Screen {
             return Bolus.Builder(resolver: resolver).buildView()
         case .manualTempBasal:
             return ManualTempBasal.Builder(resolver: resolver).buildView()
+        case .autotuneConfig:
+            return AutotuneConfig.Builder(resolver: resolver).buildView()
         }
     }
 

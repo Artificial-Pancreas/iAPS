@@ -5,7 +5,6 @@ import Swinject
 protocol AuthorizationManager {
     var isAuthorized: Bool { get }
     var authorizationPublisher: AnyPublisher<Bool, Never> { get }
-    var credentials: CurrentValueSubject<Credentials?, Never> { get }
     func authorize(credentials: Credentials) -> AnyPublisher<Void, Never>
     func logout()
 }

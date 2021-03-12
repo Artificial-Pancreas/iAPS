@@ -26,12 +26,14 @@ extension PreferencesEditor {
             insulinCirveField.settable = self
 
             $unitsIndex
+                .removeDuplicates()
                 .sink { [weak self] index in
                     self?.settingsManager.settings.units = index == 0 ? .mgdL : .mmolL
                 }
                 .store(in: &lifetime)
 
             $allowAnnouncements
+                .removeDuplicates()
                 .sink { [weak self] allow in
                     self?.settingsManager.settings.allowAnnouncements = allow
                 }
