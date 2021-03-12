@@ -5,6 +5,7 @@ extension ISFEditor {
         @Injected() var settingsManager: SettingsManager!
         @Published var items: [Item] = []
         private(set) var autosensISF: Double?
+        private(set) var autosensRatio: Double = 0
 
         let timeValues = stride(from: 0.0, to: 1.days.timeInterval, by: 30.minutes.timeInterval).map { $0 }
 
@@ -41,6 +42,8 @@ extension ISFEditor {
                     autosensISF = round(Double(newISF * GlucoseUnits.exchangeRate) * 10) / 10
                 }
             }
+
+            autosensRatio = Double(provider.autosense.ratio)
         }
 
         func add() {
