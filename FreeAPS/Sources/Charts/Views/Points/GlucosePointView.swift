@@ -2,7 +2,7 @@ import SwiftUI
 
 struct GlucosePointView: View {
     let value: Int?
-    
+
     var body: some View {
         Circle()
             .foregroundColor(
@@ -10,7 +10,6 @@ struct GlucosePointView: View {
             )
             .frame(width: ChartsConfig.glucosePointSize, height: ChartsConfig.glucosePointSize)
             .opacity(value != nil ? 1 : 0)
-            
     }
 }
 

@@ -1,6 +1,6 @@
 import Foundation
 
-struct BloodGlucose: JSON {
+struct BloodGlucose: JSON, Identifiable, Hashable {
     enum Direction: String, JSON {
         case tripleUp = "TripleUp"
         case doubleUp = "DoubleUp"
@@ -16,6 +16,7 @@ struct BloodGlucose: JSON {
         case rateOutOfRange = "RATE OUT OF RANGE"
     }
 
+    var id = UUID().uuidString
     var sgv: Int?
     let direction: Direction?
     let date: UInt64

@@ -16,7 +16,7 @@ struct GlucoseArrowView_Previews: PreviewProvider {
             .frame(
                 width: 100,
                 height: 100,
-                alignment:  .center
+                alignment: .center
             )
             .preferredColorScheme(/*@START_MENU_TOKEN@*/ .dark/*@END_MENU_TOKEN@*/)
     }

@@ -13,7 +13,7 @@ public struct PredictionsChartView: View {
                         width: 500,
                         showHours: 1,
                         glucoseData: predictionLine.values
-                    )  { value in
+                    ) { value in
                         PredictionPointView(predictionType: predictionLine.type, value: value)
                     }
                 }
@@ -25,21 +25,21 @@ public struct PredictionsChartView: View {
 struct PredictionsChartView_Previews: PreviewProvider {
     static let data = [
         PredictionLineData(
-            type: .COB,
-            values: Array(SampleData.sampleData[0...10])
+            type: .iob,
+            values: Array(SampleData.sampleData[0 ... 10])
         ),
-        PredictionLineData(type: .IOB, values: Array(SampleData.sampleData[1...20])),
+        PredictionLineData(type: .cob, values: Array(SampleData.sampleData[1 ... 20])),
         PredictionLineData(
-            type: .UAM,
-            values: Array(SampleData.sampleData[21...30])
+            type: .uam,
+            values: Array(SampleData.sampleData[21 ... 30])
         ),
-        PredictionLineData(type: .ZT, values: Array(SampleData.sampleData[31...40]))
+        PredictionLineData(type: .zt, values: Array(SampleData.sampleData[31 ... 40]))
     ]
 
     static var previews: some View {
         ScrollView(.horizontal) {
-        PredictionsChartView(data: data, width: 400, showHours: 1)
+            PredictionsChartView(data: data, width: 400, showHours: 1)
         }
-            .preferredColorScheme(/*@START_MENU_TOKEN@*/ .dark/*@END_MENU_TOKEN@*/)
+        .preferredColorScheme(/*@START_MENU_TOKEN@*/ .dark/*@END_MENU_TOKEN@*/)
     }
 }

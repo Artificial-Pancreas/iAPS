@@ -13,31 +13,30 @@ public struct GlucoseInformationBarView: View {
                 ForEach(halvedEntryData, id: \.self) { half in
                     HStack {
                         ForEach(half, id: \.self) { dataEntry in
-                                Text(
-                                    dataEntry.label + "\n" +
-                                        APSDataFormatter.format(
-                                            inputValue: dataEntry.value,
-                                            to: dataEntry.type
-                                        )
-                                    
-                                )
-                                .font(.footnote)
-                                .informationBarEntryStyle()
-                                .padding(.bottom, 1)
+                            Text(
+                                dataEntry.label + "\n" +
+                                    APSDataFormatter.format(
+                                        inputValue: dataEntry.value,
+                                        to: dataEntry.type
+                                    )
+                            )
+                            .font(.footnote)
+                            .informationBarEntryStyle()
+                            .padding(.bottom, 1)
                         }
                     }
                 }
             }
-                Text(APSDataFormatter.format(inputValue: glucoseValue, to: .glucose))
-                    .font(.largeTitle)
-                    .foregroundColor(Color(.systemBlue))
-                    .informationBarEntryStyle()
+            Text(APSDataFormatter.format(inputValue: glucoseValue, to: .glucose))
+                .font(.largeTitle)
+                .foregroundColor(Color(.systemBlue))
+                .informationBarEntryStyle()
             VStack {
                 GlucoseArrowView(direction: direction)
                     .padding(.bottom, 1)
-                    Text(APSDataFormatter.format(inputValue: glucoseDelta, to: .delta))
-                        .informationBarEntryStyle()
-                .padding(.bottom, 1)
+                Text(APSDataFormatter.format(inputValue: glucoseDelta, to: .delta))
+                    .informationBarEntryStyle()
+                    .padding(.bottom, 1)
             }
         }
         .padding(.bottom, -1)
@@ -46,9 +45,9 @@ public struct GlucoseInformationBarView: View {
 
 struct GlucoseInformationBarView_Previews: PreviewProvider {
     static let data = [
-        InformationBarEntryData(label: "COB: ", type: .cob, value: 33),
-        InformationBarEntryData(label: "COB: ", type: .cob, value: 33),
-        InformationBarEntryData(label: "COB: ", type: .cob, value: 33),
+        InformationBarEntryData(label: "COB: ", value: 33, type: .cob),
+        InformationBarEntryData(label: "COB: ", value: 33, type: .cob),
+        InformationBarEntryData(label: "COB: ", value: 33, type: .cob)
 //        InformationBarEntryData(label: "COB: ", type: .cob, value: 33),
     ]
     static var previews: some View {

@@ -205,7 +205,6 @@
 		63E890B4D951EAA91C071D5C /* BasalProfileEditorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAFF91130F2FCCC7EBBA11AD /* BasalProfileEditorViewModel.swift */; };
 		642F76A05A4FF530463A9FD0 /* NightscoutConfigRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8782B44544F38F2B2D82C38E /* NightscoutConfigRootView.swift */; };
 		6610FA1525FAED29004781D7 /* SampleData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6610F9F325FAED29004781D7 /* SampleData.swift */; };
-		6610FA1625FAED29004781D7 /* BloodGlucose.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6610F9F525FAED29004781D7 /* BloodGlucose.swift */; };
 		6610FA1725FAED29004781D7 /* PointData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6610F9F625FAED29004781D7 /* PointData.swift */; };
 		6610FA1825FAED29004781D7 /* BoundTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6610F9F725FAED29004781D7 /* BoundTypes.swift */; };
 		6610FA1925FAED29004781D7 /* InformationBarEntryData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6610F9F825FAED29004781D7 /* InformationBarEntryData.swift */; };
@@ -497,7 +496,6 @@
 		618E62C9757B2F95431B5DC0 /* AddCarbsProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AddCarbsProvider.swift; sourceTree = "<group>"; };
 		64AA5E04A2761F6EEA6568E1 /* CREditorViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CREditorViewModel.swift; sourceTree = "<group>"; };
 		6610F9F325FAED29004781D7 /* SampleData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SampleData.swift; sourceTree = "<group>"; };
-		6610F9F525FAED29004781D7 /* BloodGlucose.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BloodGlucose.swift; sourceTree = "<group>"; };
 		6610F9F625FAED29004781D7 /* PointData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PointData.swift; sourceTree = "<group>"; };
 		6610F9F725FAED29004781D7 /* BoundTypes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BoundTypes.swift; sourceTree = "<group>"; };
 		6610F9F825FAED29004781D7 /* InformationBarEntryData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InformationBarEntryData.swift; sourceTree = "<group>"; };
@@ -1296,7 +1294,6 @@
 		6610F9F425FAED29004781D7 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				6610F9F525FAED29004781D7 /* BloodGlucose.swift */,
 				6610F9F625FAED29004781D7 /* PointData.swift */,
 				6610F9F725FAED29004781D7 /* BoundTypes.swift */,
 				6610F9F825FAED29004781D7 /* InformationBarEntryData.swift */,
@@ -1703,7 +1700,6 @@
 				6610FA2A25FAED29004781D7 /* GlucosePointView.swift in Sources */,
 				3811DE8925C9D6DD00A708ED /* RequestPermissionsProvider.swift in Sources */,
 				6610FA1D25FAED29004781D7 /* PredictionLineData.swift in Sources */,
-				6610FA1625FAED29004781D7 /* BloodGlucose.swift in Sources */,
 				3811DE4225C9D4A100A708ED /* SettingsDataFlow.swift in Sources */,
 				3811DE8825C9D6DD00A708ED /* RequestPermissionsDataFlow.swift in Sources */,
 				3811DE8A25C9D6DD00A708ED /* RequestPermissionsRootView.swift in Sources */,

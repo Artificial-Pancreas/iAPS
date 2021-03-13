@@ -3,6 +3,7 @@ import SwiftUI
 extension Home {
     struct RootView: BaseView {
         @EnvironmentObject var viewModel: ViewModel<Provider>
+        @State var showHours = 1
 
         var body: some View {
             GeometryReader { geo in
@@ -11,7 +12,18 @@ extension Home {
                         Text("Header")
                     }
                     ScrollView(.vertical, showsIndicators: false) {
-                        GlucoseChartView(glucose: $viewModel.glucose, suggestion: $viewModel.suggestion).frame(height: 150)
+                        HoursPickerView(selectedHour: $showHours)
+                        ScrollView(.horizontal, showsIndicators: false) {
+                            PointChartView(
+                                width: geo.size.width,
+                                showHours: showHours,
+                                glucoseData: SampleData.sampleData
+                            ) { value in
+                                GlucosePointView(value: value)
+                            }
+                        }.frame(height: 300)
+
+                        // GlucoseChartView(glucose: $viewModel.glucose, suggestion: $viewModel.suggestion).frame(height: 150)
                         if let reason = viewModel.suggestion?.reason {
                             Text(reason).font(.caption).padding()
                         }

@@ -13,14 +13,15 @@ struct PointChartView<PointEntry: View>: View {
                     data: glucoseData,
                     height: geometry.size.height,
                     width: width,
-                    showHours: showHours),
+                    showHours: showHours
+                ),
                 id: \.self
             ) { point in
                 pointEntry(point.value)
                     .position(x: point.xPosition, y: point.yPosition ?? 0)
             }
         }
-        .frame(width: 1000)
+        .frame(width: 10000)
     }
 }
 
@@ -30,14 +31,14 @@ private func getGlucosePoints(
     width: CGFloat,
     showHours: Int
 ) -> [GlucosePointData] {
-    let values = data.compactMap { $0.sgv }
-    
+    let values = data.compactMap(\.sgv)
+
     let maxValue = values.max() ?? 180
     let minValue = values.min() ?? 60
     let firstEntryTime = data
-        .compactMap { $0.date }
+        .map(\.date)
         .first ?? UInt64(Date().timeIntervalSince1970)
-    
+
     let pointSize: CGFloat = ChartsConfig.glucosePointSize / 2
 
     /// y = mx + b where m = scalingFactor, b = addendum, x = value, y = mapped value
@@ -47,12 +48,14 @@ private func getGlucosePoints(
 
     return data.map { glucose in
         let xPositionIndex = CGFloat(glucose.date - firstEntryTime) / CGFloat(300 * showHours)
-        
+
         let xPosition = (xPositionIndex * width / CGFloat(Double(showHours) * hoursMultiplier)) + pointSize
-        
+
         guard let value = glucose.sgv else {
             return GlucosePointData(
-                xPosition: xPosition
+                value: nil,
+                xPosition: xPosition,
+                yPosition: nil
             )
         }
         return GlucosePointData(
@@ -64,16 +67,15 @@ private func getGlucosePoints(
 }
 
 struct PointChartView_Previews: PreviewProvider {
-    
     static let sampleData = Array(SampleData.sampleData)
-    
+
     static let testingData = [
-        BloodGlucose(sgv: 3, direction: nil, date: 1615179600, dateString: Date(), filtered: nil, noise: nil, glucose: nil),
-        BloodGlucose(sgv: 4, direction: nil, date: 1615179900, dateString: Date(), filtered: nil, noise: nil, glucose: nil),
-        BloodGlucose(sgv: 5, direction: nil, date: 1615180200, dateString: Date(), filtered: nil, noise: nil, glucose: nil),
-        BloodGlucose(sgv: 6, direction: nil, date: 1615180200, dateString: Date(), filtered: nil, noise: nil, glucose: nil),
-        BloodGlucose(sgv: 7, direction: nil, date: 1615180800, dateString: Date(), filtered: nil, noise: nil, glucose: nil),
-        BloodGlucose(sgv: 8, direction: nil, date: 1615181300, dateString: Date(), filtered: nil, noise: nil, glucose: nil),
+        BloodGlucose(sgv: 3, direction: nil, date: 1_615_179_600, dateString: Date(), filtered: nil, noise: nil, glucose: nil),
+        BloodGlucose(sgv: 4, direction: nil, date: 1_615_179_900, dateString: Date(), filtered: nil, noise: nil, glucose: nil),
+        BloodGlucose(sgv: 5, direction: nil, date: 1_615_180_200, dateString: Date(), filtered: nil, noise: nil, glucose: nil),
+        BloodGlucose(sgv: 6, direction: nil, date: 1_615_180_200, dateString: Date(), filtered: nil, noise: nil, glucose: nil),
+        BloodGlucose(sgv: 7, direction: nil, date: 1_615_180_800, dateString: Date(), filtered: nil, noise: nil, glucose: nil),
+        BloodGlucose(sgv: 8, direction: nil, date: 1_615_181_300, dateString: Date(), filtered: nil, noise: nil, glucose: nil)
     ]
 
     static var previews: some View {
@@ -88,7 +90,7 @@ struct PointChartView_Previews: PreviewProvider {
                 }
             }
             .padding(.vertical)
-            
+
             .preferredColorScheme(/*@START_MENU_TOKEN@*/ .dark/*@END_MENU_TOKEN@*/)
         }
     }

@@ -1,8 +1,8 @@
 import SwiftUI
 
 public enum PredictionType: String {
-    case IOB
-    case COB
-    case ZT
-    case UAM
+    case iob
+    case cob
+    case zt
+    case uam
 }
