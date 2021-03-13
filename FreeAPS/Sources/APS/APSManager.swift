@@ -2,11 +2,12 @@ import Combine
 import Foundation
 import LoopKit
 import LoopKitUI
+import SwiftDate
 import Swinject
 
 protocol APSManager {
     func fetchAndLoop()
-    func autotune()
+    func autotune() -> AnyPublisher<Autotune?, Never>
     func enactBolus(amount: Double)
     var pumpManager: PumpManagerUI? { get set }
     var pumpDisplayState: CurrentValueSubject<PumpDisplayState?, Never> { get }
@@ -25,6 +26,8 @@ final class BaseAPSManager: APSManager, Injectable {
     @Injected() private var nightscout: NightscoutManager!
     @Injected() private var settingsManager: SettingsManager!
     @Injected() private var broadcaster: Broadcaster!
+    @Persisted(key: "lastAutotuneDate") private var lastAutotuneDate: Date = .distantPast
+
     private var openAPS: OpenAPS!
 
     private var lifetime = Set<AnyCancellable>()
@@ -84,6 +87,7 @@ final class BaseAPSManager: APSManager, Injectable {
             nightscout.fetchCarbs(),
             nightscout.fetchTempTargets()
         )
+        .flatMap { _ in self.daylyAutotune() }
         .flatMap { _ in self.autosens() }
         .flatMap { _ in self.determineBasal() }
         .sink { _ in } receiveValue: { [weak self] ok in
@@ -181,8 +185,23 @@ final class BaseAPSManager: APSManager, Injectable {
         }
     }
 
-    func autotune() {
-        openAPS.autotune().sink {}.store(in: &lifetime)
+    func daylyAutotune() -> AnyPublisher<Bool, Never> {
+        guard settings.useAutotune else {
+            return Just(false).eraseToAnyPublisher()
+        }
+
+        let now = Date()
+
+        guard lastAutotuneDate.isBeforeDate(now, granularity: .day) else {
+            return Just(false).eraseToAnyPublisher()
+        }
+        lastAutotuneDate = now
+
+        return autotune().map { $0 != nil }.eraseToAnyPublisher()
+    }
+
+    func autotune() -> AnyPublisher<Autotune?, Never> {
+        openAPS.autotune().eraseToAnyPublisher()
     }
 
     private func enactAnnouncement(_ announcement: Announcement) {

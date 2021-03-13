@@ -107,7 +107,7 @@ final class OpenAPS {
         }
     }
 
-    func autotune(categorizeUamAsBasal: Bool = false, tuneInsulinCurve: Bool = false) -> Future<Void, Never> {
+    func autotune(categorizeUamAsBasal: Bool = false, tuneInsulinCurve: Bool = false) -> Future<Autotune?, Never> {
         Future { promise in
             self.processQueue.async {
                 let pumpHistory = self.loadFileFromStorage(name: OpenAPS.Monitor.pumpHistory)
@@ -132,10 +132,14 @@ final class OpenAPS {
                     pumpProfile: profile
                 )
 
-                try? self.storage.save(autotuneResult, as: Settings.autotune)
-
                 debug(.openAPS, "AUTOTUNE RESULT: \(autotuneResult)")
-                promise(.success(()))
+
+                if let autotune = Autotune(from: autotuneResult) {
+                    try? self.storage.save(autotuneResult, as: Settings.autotune)
+                    promise(.success(autotune))
+                } else {
+                    promise(.success(nil))
+                }
             }
         }
     }

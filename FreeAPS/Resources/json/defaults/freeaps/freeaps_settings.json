@@ -1,5 +1,6 @@
 {
     "units": "mmol/L",
-    "closedLoop": false
-    "allowAnnouncements": false
+    "closedLoop": false,
+    "allowAnnouncements": false,
+    "useAutotune": false
 }

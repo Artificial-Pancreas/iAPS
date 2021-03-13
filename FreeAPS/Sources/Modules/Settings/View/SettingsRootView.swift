@@ -25,6 +25,7 @@ extension Settings {
                     Text("Carb Ratios").chevronCell().navigationLink(to: .crEditor, from: self)
                     Text("Target Ranges").chevronCell().navigationLink(to: .targetsEditor, from: self)
                     Text("Preferences").chevronCell().navigationLink(to: .preferencesEditor, from: self)
+                    Text("Autotune").chevronCell().navigationLink(to: .autotuneConfig, from: self)
                 }
 
                 Section(header: Text("Config files")) {
@@ -67,6 +68,8 @@ extension Settings {
                             .navigationLink(to: .configEditor(file: OpenAPS.FreeAPS.announcements), from: self)
                         Text("Enacted announcements").chevronCell()
                             .navigationLink(to: .configEditor(file: OpenAPS.FreeAPS.announcementsEnacted), from: self)
+                        Text("Autotune").chevronCell()
+                            .navigationLink(to: .configEditor(file: OpenAPS.Settings.autotune), from: self)
                     }
                 }
             }

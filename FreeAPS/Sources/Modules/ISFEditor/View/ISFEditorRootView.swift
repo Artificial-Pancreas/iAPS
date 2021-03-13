@@ -15,7 +15,7 @@ extension ISFEditor {
         private var rateFormatter: NumberFormatter {
             let formatter = NumberFormatter()
             formatter.numberStyle = .decimal
-            formatter.maximumFractionDigits = 1
+            formatter.maximumFractionDigits = 2
             return formatter
         }
 
@@ -23,6 +23,11 @@ extension ISFEditor {
             Form {
                 if let newISF = viewModel.autosensISF {
                     Section(header: Text("Autosens")) {
+                        HStack {
+                            Text("Sensitivity Ratio").foregroundColor(.secondary)
+                            Spacer()
+                            Text(rateFormatter.string(from: viewModel.autosensRatio as NSNumber) ?? "1")
+                        }
                         HStack {
                             Text("Calculated ISF").foregroundColor(.secondary)
                             Spacer()
