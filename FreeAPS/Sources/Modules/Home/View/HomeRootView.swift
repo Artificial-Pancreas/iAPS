@@ -11,7 +11,7 @@ extension Home {
                         Text("Header")
                     }
                     ScrollView(.vertical, showsIndicators: false) {
-                        GlucoseChartView(glucose: $viewModel.glucose, suggestion: $viewModel.suggestion).frame(height: 150)
+                        GlucoseChartView(glucose: $viewModel.glucose, suggestion: $viewModel.suggestion).frame(height: 300)
                         if let reason = viewModel.suggestion?.reason {
                             Text(reason).font(.caption).padding()
                         }
