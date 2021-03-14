@@ -102,6 +102,7 @@ extension Home {
             }
             .navigationTitle("Home")
             .navigationBarHidden(true)
+            .ignoresSafeArea(.keyboard)
         }
     }
 }
