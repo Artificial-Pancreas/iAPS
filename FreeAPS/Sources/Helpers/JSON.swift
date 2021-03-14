@@ -62,6 +62,7 @@ typealias RawJSON = String
 
 extension RawJSON {
     static let null = "null"
+    static let empty = ""
 }
 
 extension Array: JSON where Element: JSON {}

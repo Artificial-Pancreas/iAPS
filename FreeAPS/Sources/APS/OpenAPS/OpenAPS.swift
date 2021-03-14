@@ -144,7 +144,7 @@ final class OpenAPS {
         }
     }
 
-    func makeProfiles() -> Future<Void, Never> {
+    func makeProfiles(useAutotune: Bool) -> Future<Void, Never> {
         Future { promise in
             self.processQueue.async {
                 let preferences = self.loadFileFromStorage(name: Settings.preferences)
@@ -155,7 +155,7 @@ final class OpenAPS {
                 let cr = self.loadFileFromStorage(name: Settings.carbRatios)
                 let tempTargets = self.loadFileFromStorage(name: Settings.tempTargets)
                 let model = self.loadFileFromStorage(name: Settings.model)
-                let autotune = self.loadFileFromStorage(name: Settings.autotune)
+                let autotune = useAutotune ? self.loadFileFromStorage(name: Settings.autotune) : .empty
 
                 let pumpProfile = self.makeProfile(
                     preferences: preferences,

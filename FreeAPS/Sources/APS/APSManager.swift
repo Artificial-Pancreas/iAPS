@@ -134,7 +134,7 @@ final class BaseAPSManager: APSManager, Injectable {
         let now = Date()
         let temp = currentTemp(date: now)
 
-        let mainPublisher = openAPS.makeProfiles()
+        let mainPublisher = openAPS.makeProfiles(useAutotune: settings.useAutotune)
             .flatMap { _ in
                 self.openAPS.determineBasal(currentTemp: temp, clock: now)
             }
