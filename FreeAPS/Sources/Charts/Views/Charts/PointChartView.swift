@@ -3,7 +3,7 @@ import SwiftUI
 struct PointChartView<PointEntry: View>: View {
     let minValue: Int
     let maxValue: Int
-    let width: CGFloat
+    let maxWidth: CGFloat
     let showHours: Int
     let glucoseData: [BloodGlucose]
     let pointEntry: (_: Int?) -> PointEntry
@@ -15,12 +15,12 @@ struct PointChartView<PointEntry: View>: View {
         let firstEntryTime = glucoseData
             .map(\.date)
             .first ?? UInt64(Date().timeIntervalSince1970)
-        
+
         var width: CGFloat = 0
         if let lastGlucose = glucoseData.last {
             width = calculateXPosition(glucose: lastGlucose, firstEntryTime: firstEntryTime)
         }
-        
+
         return GeometryReader { geometry in
             ForEach(
                 getGlucosePoints(
@@ -39,7 +39,7 @@ struct PointChartView<PointEntry: View>: View {
 extension PointChartView {
     func calculateXPosition(glucose: BloodGlucose, firstEntryTime: UInt64) -> CGFloat {
         let xPositionIndex = CGFloat(glucose.date - firstEntryTime) / CGFloat(300 * showHours)
-        return (xPositionIndex * width / CGFloat(Double(showHours) * hoursMultiplier)) + pointSize
+        return (xPositionIndex * maxWidth / CGFloat(Double(showHours) * hoursMultiplier)) + pointSize
     }
 
     func getGlucosePoints(
@@ -88,7 +88,7 @@ struct PointChartView_Previews: PreviewProvider {
                 PointChartView(
                     minValue: 3,
                     maxValue: 8,
-                    width: 500,
+                    maxWidth: 500,
                     showHours: 1,
                     glucoseData: testingData
                 ) { value in

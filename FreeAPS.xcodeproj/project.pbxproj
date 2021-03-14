@@ -234,6 +234,7 @@
 		6610FA2E25FAED29004781D7 /* APSDataFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6610FA1325FAED29004781D7 /* APSDataFormatter.swift */; };
 		6610FA2F25FAED29004781D7 /* getChartWidth().swift in Sources */ = {isa = PBXBuildFile; fileRef = 6610FA1425FAED29004781D7 /* getChartWidth().swift */; };
 		6632A0DC746872439A858B44 /* ISFEditorDataFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79BDA519C9B890FD9A5DFCF3 /* ISFEditorDataFlow.swift */; };
+		66C5083C25FD97FA00E4D76A /* MainChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C5083B25FD97FA00E4D76A /* MainChartView.swift */; };
 		69A31254F2451C20361D172F /* BolusViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 223EC0494F55A91E3EA69EF4 /* BolusViewModel.swift */; };
 		69B9A368029F7EB39F525422 /* CREditorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64AA5E04A2761F6EEA6568E1 /* CREditorViewModel.swift */; };
 		6B9625766B697D1C98E455A2 /* PumpSettingsEditorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72778B68C3004F71F6E79BDC /* PumpSettingsEditorViewModel.swift */; };
@@ -530,6 +531,7 @@
 		6610FA1225FAED29004781D7 /* getGlucoseArrowImage().swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "getGlucoseArrowImage().swift"; sourceTree = "<group>"; };
 		6610FA1325FAED29004781D7 /* APSDataFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APSDataFormatter.swift; sourceTree = "<group>"; };
 		6610FA1425FAED29004781D7 /* getChartWidth().swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "getChartWidth().swift"; sourceTree = "<group>"; };
+		66C5083B25FD97FA00E4D76A /* MainChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainChartView.swift; sourceTree = "<group>"; };
 		67F94DD2853CF42BA4E30616 /* BasalProfileEditorDataFlow.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = BasalProfileEditorDataFlow.swift; sourceTree = "<group>"; };
 		680C4420C9A345D46D90D06C /* ManualTempBasalProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ManualTempBasalProvider.swift; sourceTree = "<group>"; };
 		6BA56D2DCAB9E0A8AF24D984 /* BasalProfileEditorBuilder.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = BasalProfileEditorBuilder.swift; sourceTree = "<group>"; };
@@ -1359,6 +1361,7 @@
 			children = (
 				6610FA0625FAED29004781D7 /* PredictionsChartView.swift */,
 				6610FA0725FAED29004781D7 /* PointChartView.swift */,
+				66C5083B25FD97FA00E4D76A /* MainChartView.swift */,
 			);
 			path = Charts;
 			sourceTree = "<group>";
@@ -1902,6 +1905,7 @@
 				BF1667ADE69E4B5B111CECAE /* ManualTempBasalProvider.swift in Sources */,
 				C967DACD3B1E638F8B43BE06 /* ManualTempBasalViewModel.swift in Sources */,
 				7BCFACB97C821041BA43A114 /* ManualTempBasalRootView.swift in Sources */,
+				66C5083C25FD97FA00E4D76A /* MainChartView.swift in Sources */,
 				38A00B2325FC2B55006BC0B0 /* LRUCache.swift in Sources */,
 				91732A8060347C0E67024D80 /* AutotuneConfigBuilder.swift in Sources */,
 				3083261C4B268E353F36CD0B /* AutotuneConfigDataFlow.swift in Sources */,

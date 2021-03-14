@@ -18,7 +18,7 @@ extension Home {
                             PointChartView(
                                 minValue: 20,
                                 maxValue: 300,
-                                width: geo.size.width,
+                                maxWidth: geo.size.width,
                                 showHours: showHours,
                                 glucoseData: SampleData.sampleData
                             ) { value in
