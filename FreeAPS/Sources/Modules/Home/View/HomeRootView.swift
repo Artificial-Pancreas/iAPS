@@ -5,6 +5,22 @@ extension Home {
         @EnvironmentObject var viewModel: ViewModel<Provider>
         @State var showHours = 1
 
+        var chart: some View {
+            GeometryReader { geo in
+                ScrollView(.horizontal, showsIndicators: false) {
+                    PointChartView(
+                        minValue: 20,
+                        maxValue: 300,
+                        maxWidth: geo.size.width,
+                        showHours: $showHours,
+                        glucoseData: $viewModel.glucose
+                    ) { value in
+                        GlucosePointView(value: value)
+                    }
+                }
+            }
+        }
+
         var body: some View {
             viewModel.setFilteredGlucoseHours(hours: 24)
             return GeometryReader { geo in
@@ -13,20 +29,8 @@ extension Home {
                         Text("Header")
                     }
                     ScrollView(.vertical, showsIndicators: false) {
-                        HoursPickerView(selectedHour: $showHours)
-                        ScrollView(.horizontal, showsIndicators: false) {
-                            PointChartView(
-                                minValue: 20,
-                                maxValue: 300,
-                                maxWidth: geo.size.width,
-                                showHours: showHours,
-                                glucoseData: SampleData.sampleData
-                            ) { value in
-                                GlucosePointView(value: value)
-                            }
-                        }.frame(height: 300)
-
-                        // GlucoseChartView(glucose: $viewModel.glucose, suggestion: $viewModel.suggestion).frame(height: 150)
+                        // chart.frame(height: 300)
+                        GlucoseChartView(glucose: $viewModel.glucose, suggestion: $viewModel.suggestion).frame(height: 150)
                         if let reason = viewModel.suggestion?.reason {
                             Text(reason).font(.caption).padding()
                         }

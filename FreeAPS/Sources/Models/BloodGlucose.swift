@@ -16,7 +16,11 @@ struct BloodGlucose: JSON, Identifiable, Hashable {
         case rateOutOfRange = "RATE OUT OF RANGE"
     }
 
-    var id = UUID().uuidString
+    var _id = UUID().uuidString
+    var id: String {
+        _id
+    }
+
     var sgv: Int?
     let direction: Direction?
     let date: UInt64

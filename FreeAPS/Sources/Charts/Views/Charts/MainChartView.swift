@@ -4,7 +4,7 @@ struct MainChartView: View {
     let maxWidth: CGFloat
     @Binding var showHours: Int
     @Binding var glucoseData: [BloodGlucose]
-    @Binding var predictionsData: [PredictionLineData]?
+    @Binding var predictionsData: [PredictionLineData]
     var body: some View {
         let allValues = getAllValues()
         let minValue = allValues.min() ?? 40
@@ -41,34 +41,38 @@ extension MainChartView {
     }
 
     func getPredictionValues() -> [Int]? {
-        if let predictions = predictionsData {
-            return predictions.flatMap { prediction in
-                prediction.values.compactMap(\.sgv)
-            }
+        guard !predictionsData.isEmpty else {
+            return nil
         }
-        return nil
+        return predictionsData.flatMap { prediction in
+            prediction.values.compactMap(\.sgv)
+        }
     }
 }
 
-struct MainChartView_Previews: PreviewProvider {
-    static let glucoseData = Array(SampleData.sampleData[0 ... 70])
-    static let predictionsData = [
-        PredictionLineData(
-            type: .iob,
-            values: Array(SampleData.sampleData[0 ... 10])
-        ),
-        PredictionLineData(type: .cob, values: Array(SampleData.sampleData[1 ... 21])),
-        PredictionLineData(
-            type: .uam,
-            values: Array(SampleData.sampleData[21 ... 30])
-        ),
-        PredictionLineData(type: .zt, values: Array(SampleData.sampleData[31 ... 40]))
-    ]
-
-    static var previews: some View {
-        ScrollView(.horizontal) {
-            MainChartView(maxWidth: 400, showHours: 1, glucoseData: glucoseData, predictionsData: predictionsData)
-        }
-        .preferredColorScheme(/*@START_MENU_TOKEN@*/ .dark/*@END_MENU_TOKEN@*/)
-    }
-}
+// struct MainChartView_Previews: PreviewProvider {
+//    static let glucoseData = Array(SampleData.sampleData[0 ... 70])
+//
+//    static let predictionsData = [
+//        PredictionLineData(
+//            type: .iob,
+//            values: Array(SampleData.sampleData[0 ... 10])
+//        ),
+//
+//        PredictionLineData(type: .cob, values: Array(SampleData.sampleData[1 ... 21])),
+//
+//        PredictionLineData(
+//            type: .uam,
+//            values: Array(SampleData.sampleData[21 ... 30])
+//        ),
+//
+//        PredictionLineData(type: .zt, values: Array(SampleData.sampleData[31 ... 40]))
+//    ]
+//
+//    static var previews: some View {
+//        ScrollView(.horizontal) {
+//            MainChartView(maxWidth: 400, showHours: 1, glucoseData: glucoseData, predictionsData: predictionsData)
+//        }
+//        .preferredColorScheme(/*@START_MENU_TOKEN@*/ .dark/*@END_MENU_TOKEN@*/)
+//    }
+// }

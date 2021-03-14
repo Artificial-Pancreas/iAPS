@@ -73,8 +73,8 @@ extension NightscoutAPI {
         return service.run(request)
             .retry(Config.retryCount)
             .decode(type: [BloodGlucose].self, decoder: JSONCoding.decoder)
-            .map {
-                $0.filter { $0.isStateValid }
+            .map { glucose in
+                glucose
                     .map {
                         var reading = $0
                         reading.glucose = $0.sgv
