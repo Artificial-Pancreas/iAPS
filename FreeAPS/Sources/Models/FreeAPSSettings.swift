@@ -5,4 +5,5 @@ struct FreeAPSSettings: JSON {
     var closedLoop: Bool
     var allowAnnouncements: Bool
     var useAutotune: Bool
+    var isUploadEnabled: Bool?
 }

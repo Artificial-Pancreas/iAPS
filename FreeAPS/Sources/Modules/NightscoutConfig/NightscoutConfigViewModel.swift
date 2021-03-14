@@ -4,15 +4,23 @@ import SwiftUI
 extension NightscoutConfig {
     class ViewModel<Provider>: BaseViewModel<Provider>, ObservableObject where Provider: NightscoutConfigProvider {
         @Injected() var keychain: Keychain!
+        @Injected() var settingsManager: SettingsManager!
 
         @Published var url = ""
         @Published var secret = ""
         @Published var message = ""
         @Published var connecting = false
+        @Published var isUploadEnabled = false
 
         override func subscribe() {
             url = keychain.getValue(String.self, forKey: Config.urlKey) ?? ""
             secret = keychain.getValue(String.self, forKey: Config.secretKey) ?? ""
+            isUploadEnabled = settingsManager.settings.isUploadEnabled ?? false
+            $isUploadEnabled
+                .removeDuplicates()
+                .sink { [weak self] enabled in
+                    self?.settingsManager.settings.isUploadEnabled = enabled
+                }.store(in: &lifetime)
         }
 
         func connect() {

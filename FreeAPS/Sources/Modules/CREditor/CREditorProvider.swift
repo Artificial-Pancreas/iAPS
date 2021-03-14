@@ -11,5 +11,9 @@ extension CREditor {
         func saveProfile(_ profile: CarbRatios) {
             try? storage.save(profile, as: OpenAPS.Settings.carbRatios)
         }
+
+        var autotune: Autotune? {
+            try? storage.retrieve(OpenAPS.Settings.autotune, as: Autotune.self)
+        }
     }
 }

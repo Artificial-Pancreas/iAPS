@@ -19,5 +19,9 @@ extension ISFEditor {
                 ?? Autosens(from: OpenAPS.defaults(for: OpenAPS.Settings.autosense))
                 ?? Autosens(ratio: 1, newisf: nil, timestamp: nil)
         }
+
+        var autotune: Autotune? {
+            try? storage.retrieve(OpenAPS.Settings.autotune, as: Autotune.self)
+        }
     }
 }

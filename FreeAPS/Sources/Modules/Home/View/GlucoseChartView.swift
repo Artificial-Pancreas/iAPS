@@ -25,6 +25,10 @@ struct GlucoseChartView: UIViewRepresentable {
     }
 
     private func makeDataPointsFor(view: LineChartView) {
+        guard !glucose.isEmpty else {
+            return
+        }
+
         let dataPoints = glucose.map {
             ChartDataEntry(x: $0.dateString.timeIntervalSince1970, y: Double($0.sgv ?? 0))
         }
