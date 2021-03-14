@@ -26,4 +26,5 @@ enum CREditor {
 protocol CREditorProvider: Provider {
     var profile: CarbRatios { get }
     func saveProfile(_ profile: CarbRatios)
+    var autotune: Autotune? { get }
 }

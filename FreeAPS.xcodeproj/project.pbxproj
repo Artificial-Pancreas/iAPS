@@ -139,9 +139,6 @@
 		38887DFB25F61F7600944304 /* RileyLinkKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 38887DDD25F61F7500944304 /* RileyLinkKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		38887DFC25F61F7600944304 /* RileyLinkKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38887DDE25F61F7500944304 /* RileyLinkKitUI.framework */; };
 		38887DFD25F61F7600944304 /* RileyLinkKitUI.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 38887DDE25F61F7500944304 /* RileyLinkKitUI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		38887DFE25F61F7600944304 /* SwiftCharts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38887DDF25F61F7500944304 /* SwiftCharts.framework */; };
-		38887DFF25F61F7600944304 /* SwiftCharts.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 38887DDF25F61F7500944304 /* SwiftCharts.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		38887E2125F6209B00944304 /* SwiftCharts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38887E2025F6209B00944304 /* SwiftCharts.framework */; };
 		388E595C25AD948C0019842D /* FreeAPSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 388E595B25AD948C0019842D /* FreeAPSApp.swift */; };
 		388E596025AD948E0019842D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 388E595F25AD948E0019842D /* Assets.xcassets */; };
 		388E596C25AD95110019842D /* OpenAPS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 388E596B25AD95110019842D /* OpenAPS.swift */; };
@@ -151,10 +148,10 @@
 		388E5A6025B6F2310019842D /* Autosens.swift in Sources */ = {isa = PBXBuildFile; fileRef = 388E5A5F25B6F2310019842D /* Autosens.swift */; };
 		389442CB25F65F7100FA1F27 /* NightscoutTreatment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 389442CA25F65F7100FA1F27 /* NightscoutTreatment.swift */; };
 		3895E4C625B9E00D00214B37 /* Preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3895E4C525B9E00D00214B37 /* Preferences.swift */; };
-		389FE32725F3ABE6002E92E0 /* CareKitUI in Frameworks */ = {isa = PBXBuildFile; productRef = 389FE32625F3ABE6002E92E0 /* CareKitUI */; };
 		389FE32A25F3AC44002E92E0 /* GlucoseChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 389FE32925F3AC44002E92E0 /* GlucoseChartView.swift */; };
 		38A00B1F25FC00F7006BC0B0 /* Autotune.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38A00B1E25FC00F7006BC0B0 /* Autotune.swift */; };
 		38A00B2325FC2B55006BC0B0 /* LRUCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38A00B2225FC2B55006BC0B0 /* LRUCache.swift */; };
+		38A00B2E25FCD582006BC0B0 /* Charts in Frameworks */ = {isa = PBXBuildFile; productRef = 38A00B2D25FCD582006BC0B0 /* Charts */; };
 		38A0363B25ECF07E00FCBB52 /* GlucoseStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38A0363A25ECF07E00FCBB52 /* GlucoseStorage.swift */; };
 		38A0364225ED069400FCBB52 /* TempBasal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38A0364125ED069400FCBB52 /* TempBasal.swift */; };
 		38A13D3225E28B4B00EAA382 /* PumpHistoryEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38A13D3125E28B4B00EAA382 /* PumpHistoryEvent.swift */; };
@@ -296,7 +293,6 @@
 				38887DED25F61F7500944304 /* Crypto.framework in Embed Frameworks */,
 				38887DE525F61F7500944304 /* LoopTestingKit.framework in Embed Frameworks */,
 				38887DE125F61F7500944304 /* LoopKit.framework in Embed Frameworks */,
-				38887DFF25F61F7600944304 /* SwiftCharts.framework in Embed Frameworks */,
 				38887DEF25F61F7500944304 /* MinimedKit.framework in Embed Frameworks */,
 				38887DF325F61F7600944304 /* NightscoutUploadKit.framework in Embed Frameworks */,
 				38887DFB25F61F7600944304 /* RileyLinkKit.framework in Embed Frameworks */,
@@ -580,6 +576,7 @@
 				3811DE1025C9D37700A708ED /* Swinject in Frameworks */,
 				383948D325CD4D6D00E91849 /* Disk in Frameworks */,
 				38887DF825F61F7600944304 /* RileyLinkBLEKit.framework in Frameworks */,
+				38A00B2E25FCD582006BC0B0 /* Charts in Frameworks */,
 				38887DEC25F61F7500944304 /* Crypto.framework in Frameworks */,
 				38B17B6625DD90E0005CAE3D /* SwiftDate in Frameworks */,
 				38887DEA25F61F7500944304 /* MKRingProgressView.framework in Frameworks */,
@@ -590,9 +587,6 @@
 				38887DFC25F61F7600944304 /* RileyLinkKitUI.framework in Frameworks */,
 				38887DEE25F61F7500944304 /* MinimedKit.framework in Frameworks */,
 				38887DE025F61F7500944304 /* LoopKit.framework in Frameworks */,
-				38887E2125F6209B00944304 /* SwiftCharts.framework in Frameworks */,
-				38887DFE25F61F7600944304 /* SwiftCharts.framework in Frameworks */,
-				389FE32725F3ABE6002E92E0 /* CareKitUI in Frameworks */,
 				38887DE225F61F7500944304 /* LoopKitUI.framework in Frameworks */,
 				38887DE625F61F7500944304 /* MockKit.framework in Frameworks */,
 				38887DF025F61F7500944304 /* MinimedKitUI.framework in Frameworks */,
@@ -1553,7 +1547,7 @@
 				3811DE0F25C9D37700A708ED /* Swinject */,
 				383948D225CD4D6D00E91849 /* Disk */,
 				38B17B6525DD90E0005CAE3D /* SwiftDate */,
-				389FE32625F3ABE6002E92E0 /* CareKitUI */,
+				38A00B2D25FCD582006BC0B0 /* Charts */,
 			);
 			productName = FreeAPS;
 			productReference = 388E595825AD948C0019842D /* FreeAPS.app */;
@@ -1608,7 +1602,7 @@
 				3811DE0E25C9D37700A708ED /* XCRemoteSwiftPackageReference "Swinject" */,
 				383948D125CD4D6D00E91849 /* XCRemoteSwiftPackageReference "Disk" */,
 				38B17B6425DD90E0005CAE3D /* XCRemoteSwiftPackageReference "SwiftDate" */,
-				389FE32525F3ABE6002E92E0 /* XCRemoteSwiftPackageReference "CareKit" */,
+				38A00B2C25FCD581006BC0B0 /* XCRemoteSwiftPackageReference "Charts" */,
 			);
 			productRefGroup = 388E595925AD948C0019842D /* Products */;
 			projectDirPath = "";
@@ -2038,7 +2032,7 @@
 				CODE_SIGN_ENTITLEMENTS = FreeAPS/Resources/FreeAPS.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "";
-				DEVELOPMENT_TEAM = DZTZ7KUUBK;
+				DEVELOPMENT_TEAM = BA7ZHP4963;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = FreeAPS/Resources/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
@@ -2061,7 +2055,7 @@
 				CODE_SIGN_ENTITLEMENTS = FreeAPS/Resources/FreeAPS.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "";
-				DEVELOPMENT_TEAM = DZTZ7KUUBK;
+				DEVELOPMENT_TEAM = BA7ZHP4963;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = FreeAPS/Resources/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
@@ -2167,12 +2161,12 @@
 				minimumVersion = 0.6.4;
 			};
 		};
-		389FE32525F3ABE6002E92E0 /* XCRemoteSwiftPackageReference "CareKit" */ = {
+		38A00B2C25FCD581006BC0B0 /* XCRemoteSwiftPackageReference "Charts" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/carekit-apple/CareKit";
+			repositoryURL = "https://github.com/danielgindi/Charts";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 2.0.1;
+				minimumVersion = 4.0.1;
 			};
 		};
 		38B17B6425DD90E0005CAE3D /* XCRemoteSwiftPackageReference "SwiftDate" */ = {
@@ -2196,10 +2190,10 @@
 			package = 383948D125CD4D6D00E91849 /* XCRemoteSwiftPackageReference "Disk" */;
 			productName = Disk;
 		};
-		389FE32625F3ABE6002E92E0 /* CareKitUI */ = {
+		38A00B2D25FCD582006BC0B0 /* Charts */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 389FE32525F3ABE6002E92E0 /* XCRemoteSwiftPackageReference "CareKit" */;
-			productName = CareKitUI;
+			package = 38A00B2C25FCD581006BC0B0 /* XCRemoteSwiftPackageReference "Charts" */;
+			productName = Charts;
 		};
 		38B17B6525DD90E0005CAE3D /* SwiftDate */ = {
 			isa = XCSwiftPackageProductDependency;

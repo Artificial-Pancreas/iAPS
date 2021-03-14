@@ -21,17 +21,32 @@ extension ISFEditor {
 
         var body: some View {
             Form {
+                if let autotune = viewModel.autotune {
+                    Section(header: Text("Autotune")) {
+                        HStack {
+                            Text("Calculated Sensitivity")
+                            Spacer()
+                            if viewModel.units == .mmolL {
+                                Text(rateFormatter.string(from: autotune.sensitivity.asMmolL as NSNumber) ?? "0")
+                            } else {
+                                Text(rateFormatter.string(from: autotune.sensitivity as NSNumber) ?? "0")
+                            }
+                            Text(viewModel.units.rawValue + "/U").foregroundColor(.secondary)
+                        }
+                    }
+                }
                 if let newISF = viewModel.autosensISF {
                     Section(header: Text("Autosens")) {
                         HStack {
-                            Text("Sensitivity Ratio").foregroundColor(.secondary)
+                            Text("Sensitivity Ratio")
                             Spacer()
                             Text(rateFormatter.string(from: viewModel.autosensRatio as NSNumber) ?? "1")
                         }
                         HStack {
-                            Text("Calculated ISF").foregroundColor(.secondary)
+                            Text("Calculated Sensitivity")
                             Spacer()
-                            Text((rateFormatter.string(from: newISF as NSNumber) ?? "0") + " \(viewModel.units.rawValue)/U")
+                            Text(rateFormatter.string(from: newISF as NSNumber) ?? "0")
+                            Text(viewModel.units.rawValue + "/U").foregroundColor(.secondary)
                         }
                     }
                 }

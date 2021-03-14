@@ -272,34 +272,6 @@
                ReferencedContainer = "container:Dependecies/rileylink_ios/RileyLink.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
-         <BuildActionEntry
-            buildForTesting = "YES"
-            buildForRunning = "YES"
-            buildForProfiling = "YES"
-            buildForArchiving = "YES"
-            buildForAnalyzing = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "06405DA51B8AA74700A689FF"
-               BuildableName = "SwiftCharts.framework"
-               BlueprintName = "SwiftCharts"
-               ReferencedContainer = "container:Dependecies/SwiftCharts/SwiftCharts.xcodeproj">
-            </BuildableReference>
-         </BuildActionEntry>
-         <BuildActionEntry
-            buildForTesting = "YES"
-            buildForRunning = "YES"
-            buildForProfiling = "YES"
-            buildForArchiving = "YES"
-            buildForAnalyzing = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "22E7020E1BF5B8EC00C19675"
-               BuildableName = "SwiftCharts.framework"
-               BlueprintName = "SwiftCharts tvOS"
-               ReferencedContainer = "container:Dependecies/SwiftCharts/SwiftCharts.xcodeproj">
-            </BuildableReference>
-         </BuildActionEntry>
       </BuildActionEntries>
    </BuildAction>
    <TestAction

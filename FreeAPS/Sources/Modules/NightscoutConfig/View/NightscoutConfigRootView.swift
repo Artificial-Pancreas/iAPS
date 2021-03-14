@@ -34,6 +34,10 @@ extension NightscoutConfig {
                         .disabled(viewModel.url.isEmpty || viewModel.secret.isEmpty || viewModel.connecting)
                     Button("Delete") { viewModel.delete() }.foregroundColor(.red).disabled(viewModel.connecting)
                 }
+
+                Section {
+                    Toggle("Allow uploads", isOn: $viewModel.isUploadEnabled)
+                }
             }
             .navigationBarTitle("Nightscout Config", displayMode: .automatic)
         }

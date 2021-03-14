@@ -26,6 +26,10 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
 
     private var lifetime = Set<AnyCancellable>()
 
+    private var isUploadEnabled: Bool {
+        settingsManager.settings.isUploadEnabled ?? false
+    }
+
     private var nightscoutAPI: NightscoutAPI? {
         guard let urlString = keychain.getValue(String.self, forKey: NightscoutConfig.Config.urlKey),
               let url = URL(string: urlString),
@@ -148,7 +152,7 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
 
         try? storage.save(status, as: OpenAPS.Upload.nsStatus)
 
-        guard let nightscout = nightscoutAPI else {
+        guard let nightscout = nightscoutAPI, isUploadEnabled else {
             return
         }
 
@@ -179,7 +183,7 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
     }
 
     private func uploadTreatments(_ treatments: [NigtscoutTreatment], fileToSave: String) {
-        guard !treatments.isEmpty, let nightscout = nightscoutAPI else {
+        guard !treatments.isEmpty, let nightscout = nightscoutAPI, isUploadEnabled else {
             return
         }
 

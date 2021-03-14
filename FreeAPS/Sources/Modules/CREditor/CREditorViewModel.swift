@@ -3,6 +3,7 @@ import SwiftUI
 extension CREditor {
     class ViewModel<Provider>: BaseViewModel<Provider>, ObservableObject where Provider: CREditorProvider {
         @Published var items: [Item] = []
+        @Published var autotune: Autotune?
 
         let timeValues = stride(from: 0.0, to: 1.days.timeInterval, by: 30.minutes.timeInterval).map { $0 }
 
@@ -19,6 +20,8 @@ extension CREditor {
                 let rateIndex = rateValues.firstIndex(of: Double(value.ratio)) ?? 0
                 return Item(rateIndex: rateIndex, timeIndex: timeIndex)
             }
+
+            autotune = provider.autotune
         }
 
         func add() {

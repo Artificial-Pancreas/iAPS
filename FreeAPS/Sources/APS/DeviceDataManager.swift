@@ -30,6 +30,7 @@ final class BaseDeviceDataManager: DeviceDataManager, Injectable {
     @Injected() private var storage: FileStorage!
 
     @Persisted(key: "BaseDeviceDataManager.lastEventDate") var lastEventDate: Date? = nil
+    @Persisted(key: "BaseDeviceDataManager.lastHeartBeatTime") var lastHeartBeatTime: Date = .distantPast
 
     let recommendsLoop = PassthroughSubject<Void, Never>()
 
@@ -47,15 +48,32 @@ final class BaseDeviceDataManager: DeviceDataManager, Injectable {
 
     let pumpDisplayState = CurrentValueSubject<PumpDisplayState?, Never>(nil)
 
+    var heartBeat: Timer!
+
     init(resolver: Resolver) {
         injectServices(resolver)
         setupPumpManager()
         UIDevice.current.isBatteryMonitoringEnabled = true
+
+        heartBeat = Timer.scheduledTimer(withTimeInterval: 60, repeats: true) { _ in
+            debug(.deviceManager, "Timer Heartbeat")
+            self.updatePumpData()
+        }
+        updatePumpData()
     }
 
     func setupPumpManager() {
         if let pumpManagerRawValue = UserDefaults.standard.pumpManagerRawValue {
             pumpManager = pumpManagerFromRawValue(pumpManagerRawValue)
+        }
+    }
+
+    private func updatePumpData() {
+        let now = Date()
+        guard now.timeIntervalSince(lastHeartBeatTime) >= Config.loopInterval else { return }
+        pumpManager?.ensureCurrentPumpData {
+            debug(.deviceManager, "Pump Data updated")
+            self.lastHeartBeatTime = now
         }
     }
 
@@ -87,11 +105,9 @@ extension BaseDeviceDataManager: PumpManagerDelegate {
         UserDefaults.standard.pumpManagerRawValue = pumpManager.rawValue
     }
 
-    func pumpManagerBLEHeartbeatDidFire(_ pumpManager: PumpManager) {
+    func pumpManagerBLEHeartbeatDidFire(_: PumpManager) {
         debug(.deviceManager, "Pump Heartbeat")
-        pumpManager.ensureCurrentPumpData {
-            debug(.deviceManager, "Pump Data updated")
-        }
+        updatePumpData()
     }
 
     func pumpManagerMustProvideBLEHeartbeat(_: PumpManager) -> Bool {

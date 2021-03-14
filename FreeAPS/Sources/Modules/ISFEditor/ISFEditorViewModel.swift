@@ -6,6 +6,7 @@ extension ISFEditor {
         @Published var items: [Item] = []
         private(set) var autosensISF: Double?
         private(set) var autosensRatio: Double = 0
+        @Published var autotune: Autotune?
 
         let timeValues = stride(from: 0.0, to: 1.days.timeInterval, by: 30.minutes.timeInterval).map { $0 }
 
@@ -33,8 +34,9 @@ extension ISFEditor {
                 let rateIndex = rateValues.firstIndex(of: Double(value.sensitivity)) ?? 0
                 return Item(rateIndex: rateIndex, timeIndex: timeIndex)
             }
+            autotune = provider.autotune
 
-            if let newISF = provider.autosense.newisf, provider.autosense.ratio != 1 {
+            if let newISF = provider.autosense.newisf {
                 switch units {
                 case .mgdL:
                     autosensISF = Double(newISF)

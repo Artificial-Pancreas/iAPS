@@ -3,4 +3,5 @@
     "closedLoop": false,
     "allowAnnouncements": false,
     "useAutotune": false
+    "isUploadEnabled": true
 }

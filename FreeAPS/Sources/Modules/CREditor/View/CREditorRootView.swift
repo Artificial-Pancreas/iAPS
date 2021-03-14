@@ -20,6 +20,16 @@ extension CREditor {
 
         var body: some View {
             Form {
+                if let autotune = viewModel.autotune {
+                    Section(header: Text("Autotune")) {
+                        HStack {
+                            Text("Calculated Ratio")
+                            Spacer()
+                            Text(rateFormatter.string(from: autotune.carbRatio as NSNumber) ?? "0")
+                            Text("g/U").foregroundColor(.secondary)
+                        }
+                    }
+                }
                 Section(header: Text("Schedule")) {
                     list
                     addButton
