@@ -207,7 +207,6 @@
 		5D16287A969E64D18CE40E44 /* PumpConfigViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F60E97100041040446F44E7 /* PumpConfigViewModel.swift */; };
 		63E890B4D951EAA91C071D5C /* BasalProfileEditorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAFF91130F2FCCC7EBBA11AD /* BasalProfileEditorViewModel.swift */; };
 		642F76A05A4FF530463A9FD0 /* NightscoutConfigRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8782B44544F38F2B2D82C38E /* NightscoutConfigRootView.swift */; };
-		6610FA1525FAED29004781D7 /* SampleData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6610F9F325FAED29004781D7 /* SampleData.swift */; };
 		6610FA1725FAED29004781D7 /* PointData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6610F9F625FAED29004781D7 /* PointData.swift */; };
 		6610FA1825FAED29004781D7 /* BoundTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6610F9F725FAED29004781D7 /* BoundTypes.swift */; };
 		6610FA1925FAED29004781D7 /* InformationBarEntryData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6610F9F825FAED29004781D7 /* InformationBarEntryData.swift */; };
@@ -229,12 +228,10 @@
 		6610FA2925FAED29004781D7 /* ChartsConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6610FA0C25FAED29004781D7 /* ChartsConfig.swift */; };
 		6610FA2A25FAED29004781D7 /* GlucosePointView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6610FA0E25FAED29004781D7 /* GlucosePointView.swift */; };
 		6610FA2B25FAED29004781D7 /* PredictionPointView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6610FA0F25FAED29004781D7 /* PredictionPointView.swift */; };
-		6610FA2C25FAED29004781D7 /* getPredictionColor().swift in Sources */ = {isa = PBXBuildFile; fileRef = 6610FA1125FAED29004781D7 /* getPredictionColor().swift */; };
-		6610FA2D25FAED29004781D7 /* getGlucoseArrowImage().swift in Sources */ = {isa = PBXBuildFile; fileRef = 6610FA1225FAED29004781D7 /* getGlucoseArrowImage().swift */; };
 		6610FA2E25FAED29004781D7 /* APSDataFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6610FA1325FAED29004781D7 /* APSDataFormatter.swift */; };
 		6610FA2F25FAED29004781D7 /* getChartWidth().swift in Sources */ = {isa = PBXBuildFile; fileRef = 6610FA1425FAED29004781D7 /* getChartWidth().swift */; };
 		6632A0DC746872439A858B44 /* ISFEditorDataFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79BDA519C9B890FD9A5DFCF3 /* ISFEditorDataFlow.swift */; };
-		66C5083C25FD97FA00E4D76A /* MainChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C5083B25FD97FA00E4D76A /* MainChartView.swift */; };
+		66C5083C25FD97FA00E4D76A /* CombinedChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C5083B25FD97FA00E4D76A /* CombinedChartView.swift */; };
 		69A31254F2451C20361D172F /* BolusViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 223EC0494F55A91E3EA69EF4 /* BolusViewModel.swift */; };
 		69B9A368029F7EB39F525422 /* CREditorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64AA5E04A2761F6EEA6568E1 /* CREditorViewModel.swift */; };
 		6B9625766B697D1C98E455A2 /* PumpSettingsEditorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72778B68C3004F71F6E79BDC /* PumpSettingsEditorViewModel.swift */; };
@@ -505,7 +502,6 @@
 		5F48C3AC770D4CCD0EA2B0C2 /* AddCarbsDataFlow.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AddCarbsDataFlow.swift; sourceTree = "<group>"; };
 		618E62C9757B2F95431B5DC0 /* AddCarbsProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AddCarbsProvider.swift; sourceTree = "<group>"; };
 		64AA5E04A2761F6EEA6568E1 /* CREditorViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CREditorViewModel.swift; sourceTree = "<group>"; };
-		6610F9F325FAED29004781D7 /* SampleData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SampleData.swift; sourceTree = "<group>"; };
 		6610F9F625FAED29004781D7 /* PointData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PointData.swift; sourceTree = "<group>"; };
 		6610F9F725FAED29004781D7 /* BoundTypes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BoundTypes.swift; sourceTree = "<group>"; };
 		6610F9F825FAED29004781D7 /* InformationBarEntryData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InformationBarEntryData.swift; sourceTree = "<group>"; };
@@ -527,11 +523,9 @@
 		6610FA0C25FAED29004781D7 /* ChartsConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChartsConfig.swift; sourceTree = "<group>"; };
 		6610FA0E25FAED29004781D7 /* GlucosePointView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlucosePointView.swift; sourceTree = "<group>"; };
 		6610FA0F25FAED29004781D7 /* PredictionPointView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PredictionPointView.swift; sourceTree = "<group>"; };
-		6610FA1125FAED29004781D7 /* getPredictionColor().swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "getPredictionColor().swift"; sourceTree = "<group>"; };
-		6610FA1225FAED29004781D7 /* getGlucoseArrowImage().swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "getGlucoseArrowImage().swift"; sourceTree = "<group>"; };
 		6610FA1325FAED29004781D7 /* APSDataFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APSDataFormatter.swift; sourceTree = "<group>"; };
 		6610FA1425FAED29004781D7 /* getChartWidth().swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "getChartWidth().swift"; sourceTree = "<group>"; };
-		66C5083B25FD97FA00E4D76A /* MainChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainChartView.swift; sourceTree = "<group>"; };
+		66C5083B25FD97FA00E4D76A /* CombinedChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CombinedChartView.swift; sourceTree = "<group>"; };
 		67F94DD2853CF42BA4E30616 /* BasalProfileEditorDataFlow.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = BasalProfileEditorDataFlow.swift; sourceTree = "<group>"; };
 		680C4420C9A345D46D90D06C /* ManualTempBasalProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ManualTempBasalProvider.swift; sourceTree = "<group>"; };
 		6BA56D2DCAB9E0A8AF24D984 /* BasalProfileEditorBuilder.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = BasalProfileEditorBuilder.swift; sourceTree = "<group>"; };
@@ -1301,21 +1295,12 @@
 		6610F9F125FAED29004781D7 /* Charts */ = {
 			isa = PBXGroup;
 			children = (
-				6610F9F225FAED29004781D7 /* Sample Data */,
 				6610F9F425FAED29004781D7 /* Models */,
 				6610F9FE25FAED29004781D7 /* Extensions */,
 				6610FA0425FAED29004781D7 /* Views */,
 				6610FA1025FAED29004781D7 /* Helpers */,
 			);
 			path = Charts;
-			sourceTree = "<group>";
-		};
-		6610F9F225FAED29004781D7 /* Sample Data */ = {
-			isa = PBXGroup;
-			children = (
-				6610F9F325FAED29004781D7 /* SampleData.swift */,
-			);
-			path = "Sample Data";
 			sourceTree = "<group>";
 		};
 		6610F9F425FAED29004781D7 /* Models */ = {
@@ -1361,7 +1346,7 @@
 			children = (
 				6610FA0625FAED29004781D7 /* PredictionsChartView.swift */,
 				6610FA0725FAED29004781D7 /* PointChartView.swift */,
-				66C5083B25FD97FA00E4D76A /* MainChartView.swift */,
+				66C5083B25FD97FA00E4D76A /* CombinedChartView.swift */,
 			);
 			path = Charts;
 			sourceTree = "<group>";
@@ -1388,8 +1373,6 @@
 		6610FA1025FAED29004781D7 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
-				6610FA1125FAED29004781D7 /* getPredictionColor().swift */,
-				6610FA1225FAED29004781D7 /* getGlucoseArrowImage().swift */,
 				6610FA1325FAED29004781D7 /* APSDataFormatter.swift */,
 				6610FA1425FAED29004781D7 /* getChartWidth().swift */,
 			);
@@ -1730,11 +1713,9 @@
 				3883583425EEB38000E024B2 /* PumpSettings.swift in Sources */,
 				3811DEB125C9D88300A708ED /* Keychain.swift in Sources */,
 				382C133725F13A1E00715CE1 /* InsulinSensitivities.swift in Sources */,
-				6610FA2C25FAED29004781D7 /* getPredictionColor().swift in Sources */,
 				3811DE7B25C9D6D300A708ED /* LoginProvider.swift in Sources */,
 				383948D625CD4D8900E91849 /* FileStorage.swift in Sources */,
 				389FE32A25F3AC44002E92E0 /* GlucoseChartView.swift in Sources */,
-				6610FA1525FAED29004781D7 /* SampleData.swift in Sources */,
 				3811DE4125C9D4A100A708ED /* SettingsRootView.swift in Sources */,
 				388E595C25AD948C0019842D /* FreeAPSApp.swift in Sources */,
 				6610FA2A25FAED29004781D7 /* GlucosePointView.swift in Sources */,
@@ -1802,7 +1783,6 @@
 				3811DE4F25C9D4B800A708ED /* AuthotizedRootDataFlow.swift in Sources */,
 				38BF021F25E7F0DE00579895 /* DeviceDataManager.swift in Sources */,
 				3811DE5025C9D4B800A708ED /* AuthotizedRootProvider.swift in Sources */,
-				6610FA2D25FAED29004781D7 /* getGlucoseArrowImage().swift in Sources */,
 				38A504A425DD9C4000C5B9E8 /* UserDefaultsExtensions.swift in Sources */,
 				38FE826A25CC82DB001FF17A /* NetworkService.swift in Sources */,
 				3883581C25EE79BB00E024B2 /* DecimalTextField.swift in Sources */,
@@ -1905,7 +1885,7 @@
 				BF1667ADE69E4B5B111CECAE /* ManualTempBasalProvider.swift in Sources */,
 				C967DACD3B1E638F8B43BE06 /* ManualTempBasalViewModel.swift in Sources */,
 				7BCFACB97C821041BA43A114 /* ManualTempBasalRootView.swift in Sources */,
-				66C5083C25FD97FA00E4D76A /* MainChartView.swift in Sources */,
+				66C5083C25FD97FA00E4D76A /* CombinedChartView.swift in Sources */,
 				38A00B2325FC2B55006BC0B0 /* LRUCache.swift in Sources */,
 				91732A8060347C0E67024D80 /* AutotuneConfigBuilder.swift in Sources */,
 				3083261C4B268E353F36CD0B /* AutotuneConfigDataFlow.swift in Sources */,

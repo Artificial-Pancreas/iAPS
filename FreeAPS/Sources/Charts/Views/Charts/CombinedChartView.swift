@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct MainChartView: View {
+struct CombinedChartView: View {
     let maxWidth: CGFloat
     let showHours: Int
     @Binding var glucoseData: [BloodGlucose]
@@ -31,7 +31,7 @@ struct MainChartView: View {
     }
 }
 
-extension MainChartView {
+extension CombinedChartView {
     func getAllValues() -> [Int] {
         let glucoseValues = glucoseData.compactMap(\.sgv)
         guard let predictionValues = getPredictionValues() else {

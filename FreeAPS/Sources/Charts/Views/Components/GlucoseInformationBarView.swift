@@ -1,12 +1,12 @@
 import SwiftUI
 
-public struct GlucoseInformationBarView: View {
+struct GlucoseInformationBarView: View {
     let data: [InformationBarEntryData]
     let glucoseValue: Double
     let glucoseDelta: Double
     let direction: BloodGlucose.Direction
 
-    public var body: some View {
+    var body: some View {
         let halvedEntryData = data.halve()
         HStack {
             VStack {

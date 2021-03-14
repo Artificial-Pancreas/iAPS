@@ -1,6 +1,6 @@
 import Foundation
 
-public enum APSDataTypes {
+enum APSDataTypes {
     case delta
     case glucose
     case cob

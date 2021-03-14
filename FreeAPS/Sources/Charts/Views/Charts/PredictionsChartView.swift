@@ -1,6 +1,6 @@
 import SwiftUI
 
-public struct PredictionsChartView: View {
+struct PredictionsChartView: View {
     let minValue: Int
     let maxValue: Int
     let maxWidth: CGFloat
@@ -27,7 +27,7 @@ public struct PredictionsChartView: View {
         }
     }
 
-    public var body: some View {
+    var body: some View {
         ZStack {
             chartsData
         }

@@ -7,11 +7,30 @@ struct PredictionPointView: View {
     var body: some View {
         Circle()
             .strokeBorder(
-                getPredictionColor(for: predictionType, value: value),
+                predictionColor,
                 lineWidth: 1.5,
                 antialiased: true
             )
             .frame(width: ChartsConfig.glucosePointSize, height: ChartsConfig.glucosePointSize)
+    }
+}
+
+extension PredictionPointView {
+    var predictionColor: Color {
+        let color: Color
+
+        switch predictionType {
+        case .iob:
+            color = Color(.systemTeal)
+        case .cob:
+            color = Color(.systemOrange)
+        case .zt:
+            color = Color(.systemPink)
+        case .uam:
+            color = Color(.systemIndigo)
+        }
+
+        return color.opacity(value != nil ? 1 : 0)
     }
 }
 

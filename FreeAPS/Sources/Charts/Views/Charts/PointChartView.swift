@@ -13,7 +13,7 @@ struct PointChartView<PointEntry: View>: View {
     let hoursMultiplier: Double = 12
     let pointSize: CGFloat = ChartsConfig.glucosePointSize / 2
 
-    public var body: some View {
+    var body: some View {
         let firstEntryTime = glucoseData
             .map(\.dateString)
             .first ?? Date()

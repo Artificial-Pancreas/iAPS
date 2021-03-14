@@ -9,7 +9,7 @@ private struct InformationBarEntryModifier: ViewModifier {
     }
 }
 
-internal extension View {
+extension View {
     func informationBarEntryStyle() -> some View {
         modifier(InformationBarEntryModifier())
     }

@@ -11,11 +11,9 @@ func getGlucoseArrowImage(for delta: BloodGlucose.Direction) -> Image {
     let error = "arrow.left.arrow.right"
 
     switch delta {
-    case .tripleUp:
-        arrow = up
-    case .doubleUp:
-        arrow = up
-    case .singleUp:
+    case .doubleUp,
+         .singleUp,
+         .tripleUp:
         arrow = up
     case .fortyFiveUp:
         arrow = upForward
@@ -23,17 +21,13 @@ func getGlucoseArrowImage(for delta: BloodGlucose.Direction) -> Image {
         arrow = forward
     case .fortyFiveDown:
         arrow = downForward
-    case .singleDown:
+    case .doubleDown,
+         .singleDown,
+         .tripleDown:
         arrow = down
-    case .doubleDown:
-        arrow = down
-    case .tripleDown:
-        arrow = down
-    case .none:
-        arrow = error
-    case .notComputable:
-        arrow = error
-    case .rateOutOfRange:
+    case .none,
+         .notComputable,
+         .rateOutOfRange:
         arrow = error
     }
 
