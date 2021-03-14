@@ -138,7 +138,17 @@ final class BaseAPSManager: APSManager, Injectable {
             .flatMap { _ in
                 self.openAPS.determineBasal(currentTemp: temp, clock: now)
             }
-            .map { $0 != nil }
+            .map { suggestion -> Bool in
+                if let suggestion = suggestion {
+                    DispatchQueue.main.async {
+                        self.broadcaster.notify(SuggestionObserver.self, on: .main) {
+                            $0.suggestionDidUpdate(suggestion)
+                        }
+                    }
+                }
+
+                return suggestion != nil
+            }
             .eraseToAnyPublisher()
 
         if temp.duration == 0,
