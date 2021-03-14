@@ -5,18 +5,18 @@ struct PointChartView<PointEntry: View>: View {
     let maxValue: Int
     let maxWidth: CGFloat
 
-    @Binding var showHours: Int
+    let showHours: Int
     @Binding var glucoseData: [BloodGlucose]
 
     let pointEntry: (_: Int?) -> PointEntry
 
-    let hoursMultiplier: Double = 14
+    let hoursMultiplier: Double = 12
     let pointSize: CGFloat = ChartsConfig.glucosePointSize / 2
 
     public var body: some View {
         let firstEntryTime = glucoseData
-            .map(\.date)
-            .first ?? UInt64(Date().timeIntervalSince1970)
+            .map(\.dateString)
+            .first ?? Date()
 
         var width: CGFloat = 0
         if let lastGlucose = glucoseData.last {
@@ -39,14 +39,15 @@ struct PointChartView<PointEntry: View>: View {
 }
 
 extension PointChartView {
-    func calculateXPosition(glucose: BloodGlucose, firstEntryTime: UInt64) -> CGFloat {
-        let xPositionIndex = CGFloat(glucose.date - firstEntryTime) / CGFloat(300 * showHours)
+    func calculateXPosition(glucose: BloodGlucose, firstEntryTime: Date) -> CGFloat {
+        let xPositionIndex = CGFloat(DateInterval(start: firstEntryTime, end: glucose.dateString).duration) /
+            CGFloat(300)
         return (xPositionIndex * maxWidth / CGFloat(Double(showHours) * hoursMultiplier)) + pointSize
     }
 
     func getGlucosePoints(
         height: CGFloat,
-        firstEntryTime: UInt64
+        firstEntryTime: Date
     ) -> [GlucosePointData] {
         /// y = mx + b where m = scalingFactor, b = addendum, x = value, y = mapped value
         let scalingFactor = Double(height - pointSize * 2) / Double(maxValue - minValue)

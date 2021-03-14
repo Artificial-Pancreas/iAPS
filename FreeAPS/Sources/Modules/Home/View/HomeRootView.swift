@@ -8,15 +8,12 @@ extension Home {
         var chart: some View {
             GeometryReader { geo in
                 ScrollView(.horizontal, showsIndicators: false) {
-                    PointChartView(
-                        minValue: 20,
-                        maxValue: 300,
+                    MainChartView(
                         maxWidth: geo.size.width,
-                        showHours: $showHours,
-                        glucoseData: $viewModel.glucose
-                    ) { value in
-                        GlucosePointView(value: value)
-                    }
+                        showHours: showHours,
+                        glucoseData: $viewModel.glucose,
+                        predictionsData: .constant([])
+                    )
                 }
             }
         }
@@ -29,8 +26,14 @@ extension Home {
                         Text("Header")
                     }
                     ScrollView(.vertical, showsIndicators: false) {
-                        // chart.frame(height: 300)
-                        GlucoseChartView(glucose: $viewModel.glucose, suggestion: $viewModel.suggestion).frame(height: 150)
+                        HoursPickerView(selectedHour: $showHours)
+                        chart
+                            .frame(height: 300)
+                            .padding(.vertical)
+                            .background(Color(.systemGray6))
+                            .cornerRadius(20)
+                            .padding()
+                        // GlucoseChartView(glucose: $viewModel.glucose, suggestion: $viewModel.suggestion).frame(height: 150)
                         if let reason = viewModel.suggestion?.reason {
                             Text(reason).font(.caption).padding()
                         }

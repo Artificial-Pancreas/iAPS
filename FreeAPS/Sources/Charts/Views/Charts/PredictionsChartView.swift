@@ -5,7 +5,7 @@ public struct PredictionsChartView: View {
     let maxValue: Int
     let maxWidth: CGFloat
     @Binding var data: [PredictionLineData]
-    @Binding var showHours: Int
+    let showHours: Int
 
     var chartsData: some View {
         ForEach(0 ..< data.count, id: \.self) { index -> AnyView in
@@ -14,7 +14,7 @@ public struct PredictionsChartView: View {
                     minValue: minValue,
                     maxValue: maxValue,
                     maxWidth: maxWidth,
-                    showHours: $showHours,
+                    showHours: showHours,
                     glucoseData: $data[index].values
                 ) { value in
                     PredictionPointView(
