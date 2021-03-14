@@ -3,15 +3,58 @@ import SwiftUI
 extension Home {
     struct RootView: BaseView {
         @EnvironmentObject var viewModel: ViewModel<Provider>
+        @State var showHours = 1
+
+        var mainChart: some View {
+            GeometryReader { geo in
+                ScrollView(.horizontal, showsIndicators: false) {
+                    CombinedChartView(
+                        maxWidth: geo.size.width,
+                        showHours: showHours,
+                        glucoseData: $viewModel.glucose,
+                        predictionsData: .constant([])
+                    )
+                }
+            }
+            .padding(.vertical)
+            .background(Color(.systemGray6))
+            .cornerRadius(12)
+        }
+
+        var previewChart: some View {
+            GeometryReader { geo in
+                CombinedChartView(
+                    maxWidth: geo.size.width,
+                    showHours: 24,
+                    glucoseData: $viewModel.glucose,
+                    predictionsData: .constant([])
+                )
+            }
+            .frame(maxWidth: .infinity)
+            .padding(.vertical)
+            .background(Color(.systemGray6))
+            .cornerRadius(10)
+        }
 
         var body: some View {
-            GeometryReader { geo in
+            viewModel.setFilteredGlucoseHours(hours: 24)
+            return GeometryReader { geo in
                 VStack {
                     Group {
                         Text("Header")
                     }
                     ScrollView(.vertical, showsIndicators: false) {
-                        GlucoseChartView(glucose: $viewModel.glucose, suggestion: $viewModel.suggestion).frame(height: 300)
+                        HoursPickerView(selectedHour: $showHours).padding(.horizontal)
+
+                        mainChart
+                            .frame(height: geo.size.height * 0.6)
+
+                            .padding(.horizontal)
+
+                        previewChart
+                            .frame(height: 50)
+                            .padding(.horizontal)
+                        // GlucoseChartView(glucose: $viewModel.glucose, suggestion: $viewModel.suggestion).frame(height: 150)
                         if let reason = viewModel.suggestion?.reason {
                             Text(reason).font(.caption).padding()
                         }
