@@ -12,7 +12,8 @@ extension Home {
                         maxWidth: geo.size.width,
                         showHours: showHours,
                         glucoseData: $viewModel.glucose,
-                        predictionsData: .constant([])
+                        predictionsData: .constant([]),
+                        mode: .dots
                     )
                 }
             }
@@ -27,13 +28,15 @@ extension Home {
                     maxWidth: geo.size.width,
                     showHours: 24,
                     glucoseData: $viewModel.glucose,
-                    predictionsData: .constant([])
+                    predictionsData: .constant([]),
+                    mode: .line
                 )
             }
             .frame(maxWidth: .infinity)
             .padding(.vertical)
             .background(Color(.systemGray6))
             .cornerRadius(10)
+            .drawingGroup()
         }
 
         var body: some View {
@@ -48,7 +51,6 @@ extension Home {
 
                         mainChart
                             .frame(height: geo.size.height * 0.6)
-
                             .padding(.horizontal)
 
                         previewChart

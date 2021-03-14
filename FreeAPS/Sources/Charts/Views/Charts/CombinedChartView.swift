@@ -5,6 +5,8 @@ struct CombinedChartView: View {
     let showHours: Int
     @Binding var glucoseData: [BloodGlucose]
     @Binding var predictionsData: [PredictionLineData]
+    let mode: PointChartViewMode
+
     var body: some View {
         let allValues = getAllValues()
         let minValue = allValues.min() ?? 40
@@ -15,6 +17,7 @@ struct CombinedChartView: View {
                 minValue: minValue,
                 maxValue: maxValue,
                 maxWidth: maxWidth,
+                mode: mode,
                 showHours: showHours,
                 glucoseData: $glucoseData
             ) { value in

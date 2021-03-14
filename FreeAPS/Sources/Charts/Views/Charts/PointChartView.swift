@@ -1,9 +1,15 @@
 import SwiftUI
 
+enum PointChartViewMode {
+    case line
+    case dots
+}
+
 struct PointChartView<PointEntry: View>: View {
     let minValue: Int
     let maxValue: Int
     let maxWidth: CGFloat
+    let mode: PointChartViewMode
 
     let showHours: Int
     @Binding var glucoseData: [BloodGlucose]
@@ -24,14 +30,31 @@ struct PointChartView<PointEntry: View>: View {
         }
 
         return GeometryReader { geometry in
-            ForEach(
-                getGlucosePoints(
-                    height: geometry.size.height, firstEntryTime: firstEntryTime
-                ),
-                id: \.self
-            ) { point in
-                pointEntry(point.value)
-                    .position(x: point.xPosition, y: point.yPosition ?? 0)
+            switch mode {
+            case .line:
+                Path { path in
+                    let points = getGlucosePoints(
+                        height: geometry.size.height, firstEntryTime: firstEntryTime
+                    )
+
+                    for point in points {
+                        if point == points.first {
+                            path.move(to: CGPoint(x: point.xPosition, y: point.yPosition ?? 0))
+                        } else {
+                            path.addLine(to: CGPoint(x: point.xPosition, y: point.yPosition ?? 0))
+                        }
+                    }
+                }.stroke(Color.blue, lineWidth: 1)
+            case .dots:
+                ForEach(
+                    getGlucosePoints(
+                        height: geometry.size.height, firstEntryTime: firstEntryTime
+                    ),
+                    id: \.self
+                ) { point in
+                    pointEntry(point.value)
+                        .position(x: point.xPosition, y: point.yPosition ?? 0)
+                }
             }
         }
         .frame(width: width + pointSize)

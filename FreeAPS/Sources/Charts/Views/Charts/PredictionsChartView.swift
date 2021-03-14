@@ -14,6 +14,7 @@ struct PredictionsChartView: View {
                     minValue: minValue,
                     maxValue: maxValue,
                     maxWidth: maxWidth,
+                    mode: .dots,
                     showHours: showHours,
                     glucoseData: $data[index].values
                 ) { value in
