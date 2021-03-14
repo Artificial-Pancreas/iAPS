@@ -2,9 +2,9 @@ import SwiftUI
 
 struct MainChartView: View {
     let maxWidth: CGFloat
-    let showHours: Int
-    let glucoseData: [BloodGlucose]
-    var predictionsData: [PredictionLineData]?
+    @Binding var showHours: Int
+    @Binding var glucoseData: [BloodGlucose]
+    @Binding var predictionsData: [PredictionLineData]?
     var body: some View {
         let allValues = getAllValues()
         let minValue = allValues.min() ?? 40
@@ -15,8 +15,8 @@ struct MainChartView: View {
                 minValue: minValue,
                 maxValue: maxValue,
                 maxWidth: maxWidth,
-                showHours: showHours,
-                glucoseData: glucoseData
+                showHours: $showHours,
+                glucoseData: $glucoseData
             ) { value in
                 GlucosePointView(value: value)
             }
@@ -24,8 +24,8 @@ struct MainChartView: View {
                 minValue: minValue,
                 maxValue: maxValue,
                 maxWidth: maxWidth,
-                data: predictionsData,
-                showHours: showHours
+                data: $predictionsData,
+                showHours: $showHours
             )
         }
     }

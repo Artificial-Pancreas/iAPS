@@ -4,8 +4,10 @@ struct PointChartView<PointEntry: View>: View {
     let minValue: Int
     let maxValue: Int
     let maxWidth: CGFloat
-    let showHours: Int
-    let glucoseData: [BloodGlucose]
+
+    @Binding var showHours: Int
+    @Binding var glucoseData: [BloodGlucose]
+
     let pointEntry: (_: Int?) -> PointEntry
 
     let hoursMultiplier: Double = 14
@@ -66,38 +68,6 @@ extension PointChartView {
                 xPosition: xPosition,
                 yPosition: CGFloat(-scalingFactor * Double(value) + addendum) + pointSize
             )
-        }
-    }
-}
-
-struct PointChartView_Previews: PreviewProvider {
-    static let sampleData = Array(SampleData.sampleData)
-
-    static let testingData = [
-        BloodGlucose(sgv: 3, direction: nil, date: 1_615_179_600, dateString: Date(), filtered: nil, noise: nil, glucose: nil),
-        BloodGlucose(sgv: 4, direction: nil, date: 1_615_179_900, dateString: Date(), filtered: nil, noise: nil, glucose: nil),
-        BloodGlucose(sgv: 5, direction: nil, date: 1_615_180_200, dateString: Date(), filtered: nil, noise: nil, glucose: nil),
-        BloodGlucose(sgv: 6, direction: nil, date: 1_615_180_200, dateString: Date(), filtered: nil, noise: nil, glucose: nil),
-        BloodGlucose(sgv: 7, direction: nil, date: 1_615_180_800, dateString: Date(), filtered: nil, noise: nil, glucose: nil),
-        BloodGlucose(sgv: 8, direction: nil, date: 1_615_181_300, dateString: Date(), filtered: nil, noise: nil, glucose: nil)
-    ]
-
-    static var previews: some View {
-        Group {
-            ScrollView(.horizontal) {
-                PointChartView(
-                    minValue: 3,
-                    maxValue: 8,
-                    maxWidth: 500,
-                    showHours: 1,
-                    glucoseData: testingData
-                ) { value in
-                    GlucosePointView(value: value)
-                }
-            }
-            .padding(.vertical)
-
-            .preferredColorScheme(/*@START_MENU_TOKEN@*/ .dark/*@END_MENU_TOKEN@*/)
         }
     }
 }
