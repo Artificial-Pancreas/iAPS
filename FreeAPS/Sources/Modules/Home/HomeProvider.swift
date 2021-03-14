@@ -14,9 +14,9 @@ extension Home {
             apsManager.fetchAndLoop()
         }
 
-        func filteredGlucose() -> [BloodGlucose] {
+        func filteredGlucose(hours: Int) -> [BloodGlucose] {
             glucoseStorage.recent().filter {
-                $0.dateString.addingTimeInterval(3.hours.timeInterval) > Date()
+                $0.dateString.addingTimeInterval(hours.hours.timeInterval) > Date()
             }
         }
     }

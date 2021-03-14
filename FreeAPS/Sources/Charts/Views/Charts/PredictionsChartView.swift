@@ -10,6 +10,8 @@ public struct PredictionsChartView: View {
             if let data = data {
                 ForEach(data, id: \.self) { predictionLine in
                     PointChartView(
+                        minValue: 30,
+                        maxValue: 300,
                         width: 500,
                         showHours: 1,
                         glucoseData: predictionLine.values

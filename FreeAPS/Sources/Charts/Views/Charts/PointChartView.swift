@@ -1,19 +1,30 @@
 import SwiftUI
 
 struct PointChartView<PointEntry: View>: View {
+    let minValue: Int
+    let maxValue: Int
     let width: CGFloat
     let showHours: Int
     let glucoseData: [BloodGlucose]
     let pointEntry: (_: Int?) -> PointEntry
 
+    let hoursMultiplier: Double = 14
+    let pointSize: CGFloat = ChartsConfig.glucosePointSize / 2
+
     public var body: some View {
-        GeometryReader { geometry in
+        let firstEntryTime = glucoseData
+            .map(\.date)
+            .first ?? UInt64(Date().timeIntervalSince1970)
+        
+        var width: CGFloat = 0
+        if let lastGlucose = glucoseData.last {
+            width = calculateXPosition(glucose: lastGlucose, firstEntryTime: firstEntryTime)
+        }
+        
+        return GeometryReader { geometry in
             ForEach(
                 getGlucosePoints(
-                    data: glucoseData,
-                    height: geometry.size.height,
-                    width: width,
-                    showHours: showHours
+                    height: geometry.size.height, firstEntryTime: firstEntryTime
                 ),
                 id: \.self
             ) { point in
@@ -21,48 +32,41 @@ struct PointChartView<PointEntry: View>: View {
                     .position(x: point.xPosition, y: point.yPosition ?? 0)
             }
         }
-        .frame(width: 10000)
+        .frame(width: width + pointSize)
     }
 }
 
-private func getGlucosePoints(
-    data: [BloodGlucose],
-    height: CGFloat,
-    width: CGFloat,
-    showHours: Int
-) -> [GlucosePointData] {
-    let values = data.compactMap(\.sgv)
-
-    let maxValue = values.max() ?? 180
-    let minValue = values.min() ?? 60
-    let firstEntryTime = data
-        .map(\.date)
-        .first ?? UInt64(Date().timeIntervalSince1970)
-
-    let pointSize: CGFloat = ChartsConfig.glucosePointSize / 2
-
-    /// y = mx + b where m = scalingFactor, b = addendum, x = value, y = mapped value
-    let scalingFactor = Double(height - pointSize * 2) / Double(maxValue - minValue)
-    let addendum = scalingFactor * Double(maxValue)
-    let hoursMultiplier: Double = 14
-
-    return data.map { glucose in
+extension PointChartView {
+    func calculateXPosition(glucose: BloodGlucose, firstEntryTime: UInt64) -> CGFloat {
         let xPositionIndex = CGFloat(glucose.date - firstEntryTime) / CGFloat(300 * showHours)
+        return (xPositionIndex * width / CGFloat(Double(showHours) * hoursMultiplier)) + pointSize
+    }
 
-        let xPosition = (xPositionIndex * width / CGFloat(Double(showHours) * hoursMultiplier)) + pointSize
+    func getGlucosePoints(
+        height: CGFloat,
+        firstEntryTime: UInt64
+    ) -> [GlucosePointData] {
+        /// y = mx + b where m = scalingFactor, b = addendum, x = value, y = mapped value
+        let scalingFactor = Double(height - pointSize * 2) / Double(maxValue - minValue)
+        let addendum = scalingFactor * Double(maxValue)
 
-        guard let value = glucose.sgv else {
+        return glucoseData.map { glucose in
+
+            let xPosition = calculateXPosition(glucose: glucose, firstEntryTime: firstEntryTime)
+
+            guard let value = glucose.sgv else {
+                return GlucosePointData(
+                    value: nil,
+                    xPosition: xPosition,
+                    yPosition: nil
+                )
+            }
             return GlucosePointData(
-                value: nil,
+                value: value,
                 xPosition: xPosition,
-                yPosition: nil
+                yPosition: CGFloat(-scalingFactor * Double(value) + addendum) + pointSize
             )
         }
-        return GlucosePointData(
-            value: value,
-            xPosition: xPosition,
-            yPosition: CGFloat(-scalingFactor * Double(value) + addendum) + pointSize
-        )
     }
 }
 
@@ -82,6 +86,8 @@ struct PointChartView_Previews: PreviewProvider {
         Group {
             ScrollView(.horizontal) {
                 PointChartView(
+                    minValue: 3,
+                    maxValue: 8,
                     width: 500,
                     showHours: 1,
                     glucoseData: testingData

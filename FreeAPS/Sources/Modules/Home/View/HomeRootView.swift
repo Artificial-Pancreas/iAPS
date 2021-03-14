@@ -6,7 +6,8 @@ extension Home {
         @State var showHours = 1
 
         var body: some View {
-            GeometryReader { geo in
+            viewModel.setFilteredGlucoseHours(hours: 24)
+            return GeometryReader { geo in
                 VStack {
                     Group {
                         Text("Header")
@@ -15,6 +16,8 @@ extension Home {
                         HoursPickerView(selectedHour: $showHours)
                         ScrollView(.horizontal, showsIndicators: false) {
                             PointChartView(
+                                minValue: 20,
+                                maxValue: 300,
                                 width: geo.size.width,
                                 showHours: showHours,
                                 glucoseData: SampleData.sampleData

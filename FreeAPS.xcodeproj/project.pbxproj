@@ -1348,8 +1348,8 @@
 			children = (
 				6610FA0525FAED29004781D7 /* Charts */,
 				6610FA0825FAED29004781D7 /* Components */,
-				6610FA0C25FAED29004781D7 /* ChartsConfig.swift */,
 				6610FA0D25FAED29004781D7 /* Points */,
+				6610FA0C25FAED29004781D7 /* ChartsConfig.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -2054,7 +2054,7 @@
 				CODE_SIGN_ENTITLEMENTS = FreeAPS/Resources/FreeAPS.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "";
-				DEVELOPMENT_TEAM = BA7ZHP4963;
+				DEVELOPMENT_TEAM = DZTZ7KUUBK;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = FreeAPS/Resources/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
@@ -2077,7 +2077,7 @@
 				CODE_SIGN_ENTITLEMENTS = FreeAPS/Resources/FreeAPS.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "";
-				DEVELOPMENT_TEAM = BA7ZHP4963;
+				DEVELOPMENT_TEAM = DZTZ7KUUBK;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = FreeAPS/Resources/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
