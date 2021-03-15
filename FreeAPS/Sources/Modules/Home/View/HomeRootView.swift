@@ -1,69 +1,54 @@
+import SwiftDate
 import SwiftUI
 
 extension Home {
     struct RootView: BaseView {
         @EnvironmentObject var viewModel: ViewModel<Provider>
-        @State var showHours = 1
+        @State var isPopupPresented = false
 
-        var mainChart: some View {
-            GeometryReader { geo in
-                ScrollView(.horizontal, showsIndicators: false) {
-                    CombinedChartView(
-                        maxWidth: geo.size.width,
-                        showHours: showHours,
-                        glucoseData: $viewModel.glucose,
-                        predictionsData: .constant([]),
-                        mode: .dots
-                    )
-                }
-            }
-            .padding(.vertical)
-            .background(Color(.systemGray6))
-            .cornerRadius(12)
+        private var numberFormatter: NumberFormatter {
+            let formatter = NumberFormatter()
+            formatter.numberStyle = .decimal
+            return formatter
         }
 
-        var previewChart: some View {
-            GeometryReader { geo in
-                CombinedChartView(
-                    maxWidth: geo.size.width,
-                    showHours: 24,
-                    glucoseData: $viewModel.glucose,
-                    predictionsData: .constant([]),
-                    mode: .line
+        var header: some View {
+            HStack {
+                VStack(alignment: .leading) {
+                    HStack {
+                        Text("IOB").font(.caption)
+                        Text((numberFormatter.string(from: (viewModel.suggestion?.iob ?? 0) as NSNumber) ?? "0") + " U")
+                            .font(.caption2)
+                    }.padding(.top, 16)
+                    Spacer()
+                    HStack {
+                        Text("COB").font(.caption)
+                        Text((numberFormatter.string(from: (viewModel.suggestion?.cob ?? 0) as NSNumber) ?? "0") + " g")
+                            .font(.caption2)
+                    }
+                }
+                Spacer()
+                CurrentGlucoseView(
+                    recentGlucose: $viewModel.recentGlucose,
+                    delta: $viewModel.glucoseDelta,
+                    units: viewModel.units
                 )
-            }
-            .frame(maxWidth: .infinity)
-            .padding(.vertical)
-            .background(Color(.systemGray6))
-            .cornerRadius(10)
-            .drawingGroup()
+                .padding(.horizontal)
+                LoopView(suggestion: $viewModel.suggestion).onTapGesture {
+                    isPopupPresented = true
+                }.onLongPressGesture {
+                    viewModel.runLoop()
+                }
+            }.frame(maxWidth: .infinity)
         }
 
         var body: some View {
             viewModel.setFilteredGlucoseHours(hours: 24)
             return GeometryReader { geo in
                 VStack {
-                    Group {
-                        Text("Header")
-                    }
-                    ScrollView(.vertical, showsIndicators: false) {
-                        HoursPickerView(selectedHour: $showHours).padding(.horizontal)
-
-                        mainChart
-                            .frame(height: geo.size.height * 0.6)
-                            .padding(.horizontal)
-
-                        previewChart
-                            .frame(height: 50)
-                            .padding(.horizontal)
-                        // GlucoseChartView(glucose: $viewModel.glucose, suggestion: $viewModel.suggestion).frame(height: 150)
-                        if let reason = viewModel.suggestion?.reason {
-                            Text(reason).font(.caption).padding()
-                        }
-                        Button(action: viewModel.runLoop) {
-                            Text("Run loop now").buttonBackground().padding()
-                        }.foregroundColor(.white)
-                    }
+                    header.padding().frame(maxHeight: 70)
+                    GlucoseChartView(glucose: $viewModel.glucose, suggestion: $viewModel.suggestion, units: viewModel.units)
+                        .frame(maxHeight: .infinity)
 
                     ZStack {
                         Rectangle().fill(Color.gray.opacity(0.2)).frame(height: 50 + geo.safeAreaInsets.bottom)
@@ -105,6 +90,16 @@ extension Home {
             .navigationTitle("Home")
             .navigationBarHidden(true)
             .ignoresSafeArea(.keyboard)
+            .popup(isPresented: isPopupPresented, alignment: .top, direction: .top) {
+                Text(viewModel.suggestion?.reason ?? "No sugestion found").font(.caption).padding().foregroundColor(.white)
+                    .background(
+                        RoundedRectangle(cornerRadius: 8, style: .continuous)
+                            .fill(Color(UIColor.darkGray))
+                    )
+                    .onTapGesture {
+                        isPopupPresented = false
+                    }
+            }
         }
     }
 }

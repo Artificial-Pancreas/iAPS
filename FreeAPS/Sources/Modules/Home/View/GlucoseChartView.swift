@@ -9,19 +9,37 @@ extension DateFormatter: AxisValueFormatter {
     }
 }
 
+extension NumberFormatter: AxisValueFormatter {
+    public func stringForValue(_ value: Double, axis _: AxisBase?) -> String {
+        numberStyle = .decimal
+        maximumFractionDigits = 1
+        return string(from: value as NSNumber)!
+    }
+}
+
 struct GlucoseChartView: UIViewRepresentable {
     @Binding var glucose: [BloodGlucose]
     @Binding var suggestion: Suggestion?
+    let units: GlucoseUnits
 
     func makeUIView(context _: Context) -> LineChartView {
         let view = LineChartView()
         makeDataPointsFor(view: view)
         view.xAxis.valueFormatter = DateFormatter()
+        view.leftAxis.valueFormatter = NumberFormatter()
+        view.xAxis.labelPosition = .top
+        view.rightAxis.drawLabelsEnabled = false
+        view.drawBordersEnabled = true
+        view.setScaleEnabled(false)
+        view.setVisibleXRangeMaximum(6.hours.timeInterval)
+        view.xAxis.granularityEnabled = true
+        view.xAxis.granularity = 1.hours.timeInterval
         return view
     }
 
     func updateUIView(_ view: LineChartView, context _: Context) {
         makeDataPointsFor(view: view)
+        view.moveViewToX(glucose.last?.dateString.timeIntervalSince1970 ?? 0)
     }
 
     private func makeDataPointsFor(view: LineChartView) {
@@ -30,14 +48,17 @@ struct GlucoseChartView: UIViewRepresentable {
         }
 
         let dataPoints = glucose.map {
-            ChartDataEntry(x: $0.dateString.timeIntervalSince1970, y: Double($0.sgv ?? 0))
+            ChartDataEntry(
+                x: $0.dateString.timeIntervalSince1970,
+                y: Double($0.sgv ?? 0) * (units == .mmolL ? Double(GlucoseUnits.exchangeRate) : 1)
+            )
         }
 
         let data = MyLineChartDataSet(entries: dataPoints, label: "BG")
         data.drawCirclesEnabled = true
         data.circleRadius = 2
-        data.setCircleColor(.green)
-        data.setColor(.green)
+        data.setCircleColor(UIColor(named: "LoopGreen")!)
+        data.setColor(UIColor(named: "LoopGreen")!)
         data.lineWidth = 0
         data.drawValuesEnabled = false
 
@@ -49,7 +70,7 @@ struct GlucoseChartView: UIViewRepresentable {
             let dataPoints = iob.enumerated().map {
                 ChartDataEntry(
                     x: lastDate.addingTimeInterval(Double($0 * 300)).timeIntervalSince1970,
-                    y: Double($1)
+                    y: Double($1) * (units == .mmolL ? Double(GlucoseUnits.exchangeRate) : 1)
                 )
             }
             let data = MyLineChartDataSet(entries: dataPoints, label: "IOB")
@@ -66,7 +87,7 @@ struct GlucoseChartView: UIViewRepresentable {
             let dataPoints = zt.enumerated().map {
                 ChartDataEntry(
                     x: lastDate.addingTimeInterval(Double($0 * 300)).timeIntervalSince1970,
-                    y: Double($1)
+                    y: Double($1) * (units == .mmolL ? Double(GlucoseUnits.exchangeRate) : 1)
                 )
             }
             let data = MyLineChartDataSet(entries: dataPoints, label: "ZT")
@@ -83,7 +104,7 @@ struct GlucoseChartView: UIViewRepresentable {
             let dataPoints = cob.enumerated().map {
                 ChartDataEntry(
                     x: lastDate.addingTimeInterval(Double($0 * 300)).timeIntervalSince1970,
-                    y: Double($1)
+                    y: Double($1) * (units == .mmolL ? Double(GlucoseUnits.exchangeRate) : 1)
                 )
             }
             let data = MyLineChartDataSet(entries: dataPoints, label: "COB")
@@ -100,7 +121,7 @@ struct GlucoseChartView: UIViewRepresentable {
             let dataPoints = uam.enumerated().map {
                 ChartDataEntry(
                     x: lastDate.addingTimeInterval(Double($0 * 300)).timeIntervalSince1970,
-                    y: Double($1)
+                    y: Double($1) * (units == .mmolL ? Double(GlucoseUnits.exchangeRate) : 1)
                 )
             }
             let data = MyLineChartDataSet(entries: dataPoints, label: "UAM")
