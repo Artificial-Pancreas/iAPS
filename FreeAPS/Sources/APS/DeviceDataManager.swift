@@ -38,6 +38,7 @@ final class BaseDeviceDataManager: DeviceDataManager, Injectable {
     var pumpManager: PumpManagerUI? {
         didSet {
             pumpManager?.pumpManagerDelegate = self
+            pumpManager?.delegateQueue = processQueue
             UserDefaults.standard.pumpManagerRawValue = pumpManager?.rawValue
             if let pumpManager = pumpManager {
                 pumpDisplayState.value = PumpDisplayState(name: pumpManager.localizedTitle, image: pumpManager.smallImage)
@@ -138,6 +139,7 @@ extension BaseDeviceDataManager: PumpManagerDelegate {
         lastReconciliation _: Date?,
         completion: @escaping (_ error: Error?) -> Void
     ) {
+        dispatchPrecondition(condition: .onQueue(processQueue))
         pumpHistoryStorage.storePumpEvents(events)
         lastEventDate = events.last?.date
         completion(nil)
@@ -152,6 +154,7 @@ extension BaseDeviceDataManager: PumpManagerDelegate {
             Error
         >) -> Void
     ) {
+        dispatchPrecondition(condition: .onQueue(processQueue))
         debug(.deviceManager, "Reservoir Value \(units), at: \(date)")
         try? storage.save(Decimal(units), as: OpenAPS.Monitor.reservoir)
         let batteryPercent = Int((pumpManager?.status.pumpBatteryChargeRemaining ?? 1) * 100)
@@ -165,6 +168,7 @@ extension BaseDeviceDataManager: PumpManagerDelegate {
     }
 
     func pumpManagerRecommendsLoop(_: PumpManager) {
+        dispatchPrecondition(condition: .onQueue(processQueue))
         debug(.deviceManager, "Recomends loop")
         recommendsLoop.send()
     }
