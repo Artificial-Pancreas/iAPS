@@ -26,6 +26,7 @@ private let staticPumpManagersByIdentifier: [String: PumpManagerUI.Type] = stati
 }
 
 final class BaseDeviceDataManager: DeviceDataManager, Injectable {
+    private let processQueue = DispatchQueue(label: "BaseDeviceDataManager.processQueue")
     @Injected() private var pumpHistoryStorage: PumpHistoryStorage!
     @Injected() private var storage: FileStorage!
 
@@ -69,11 +70,13 @@ final class BaseDeviceDataManager: DeviceDataManager, Injectable {
     }
 
     private func updatePumpData() {
-        let now = Date()
-        guard now.timeIntervalSince(lastHeartBeatTime) >= Config.loopInterval else { return }
-        pumpManager?.ensureCurrentPumpData {
-            debug(.deviceManager, "Pump Data updated")
-            self.lastHeartBeatTime = now
+        processQueue.async {
+            let now = Date()
+            guard now.timeIntervalSince(self.lastHeartBeatTime) >= Config.loopInterval else { return }
+            self.pumpManager?.ensureCurrentPumpData {
+                debug(.deviceManager, "Pump Data updated")
+                self.lastHeartBeatTime = now
+            }
         }
     }
 
