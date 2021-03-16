@@ -10,10 +10,14 @@ private enum PredictionType: Hashable {
 }
 
 struct MainChartView: View {
+    private enum Config {
+        static let screenHours = 6
+        static let basalHeight: CGFloat = 80
+    }
+
     @Binding var glucose: [BloodGlucose]
     @Binding var suggestion: Suggestion?
     @Binding var hours: Int
-    private let screenHours = 6
 
     @State var didAppearTrigger = false
     @State private var glucoseDots: [CGRect] = []
@@ -26,24 +30,34 @@ struct MainChartView: View {
     }
 
     var body: some View {
-        GeometryReader { geo -> AnyView in
+        GeometryReader { geo in
             ScrollView(.horizontal, showsIndicators: false) {
                 ScrollViewReader { scroll in
-                    mainChart(fullSize: geo.size)
-                        .drawingGroup(opaque: false, colorMode: .nonLinear)
-                        .onChange(of: glucose) { _ in
-                            scroll.scrollTo("End")
-                        }
-                        .onAppear {
-                            scroll.scrollTo("End")
-                            // add trigger to the end of main queue
-                            DispatchQueue.main.async {
-                                didAppearTrigger = true
+                    VStack {
+                        mainChart(fullSize: geo.size)
+                            .drawingGroup(opaque: false, colorMode: .nonLinear)
+                            .onChange(of: glucose) { _ in
+                                scroll.scrollTo("End")
                             }
-                        }
+                            .onAppear {
+                                scroll.scrollTo("End")
+                                // add trigger to the end of main queue
+                                DispatchQueue.main.async {
+                                    didAppearTrigger = true
+                                }
+                            }
+                    }
                 }
-            }.asAny()
+            }
         }
+    }
+
+    private func basalChart(fullSize: CGSize) -> some View {
+        Group {
+            Text("test")
+        }
+        .frame(width: fullGlucoseWidth(viewWidth: fullSize.width) + additionalWidth(viewWidth: fullSize.width))
+        .frame(maxHeight: 80).background(Color.red)
     }
 
     private func mainChart(fullSize: CGSize) -> some View {
@@ -166,7 +180,7 @@ struct MainChartView: View {
     }
 
     private func fullGlucoseWidth(viewWidth: CGFloat) -> CGFloat {
-        viewWidth * CGFloat(hours) / CGFloat(screenHours)
+        viewWidth * CGFloat(hours) / CGFloat(Config.screenHours)
     }
 
     private func additionalWidth(viewWidth: CGFloat) -> CGFloat {
@@ -191,7 +205,29 @@ struct MainChartView: View {
     }
 
     private func oneSecondStep(viewWidth: CGFloat) -> CGFloat {
-        viewWidth / (CGFloat(screenHours) * CGFloat(1.hours.timeInterval))
+        viewWidth / (CGFloat(Config.screenHours) * CGFloat(1.hours.timeInterval))
+    }
+
+    private func maxPredValue() -> Int {
+        [
+            suggestion?.predictions?.cob ?? [],
+            suggestion?.predictions?.iob ?? [],
+            suggestion?.predictions?.zt ?? [],
+            suggestion?.predictions?.uam ?? []
+        ]
+        .flatMap { $0 }
+        .max() ?? 450
+    }
+
+    private func minPredValue() -> Int {
+        [
+            suggestion?.predictions?.cob ?? [],
+            suggestion?.predictions?.iob ?? [],
+            suggestion?.predictions?.zt ?? [],
+            suggestion?.predictions?.uam ?? []
+        ]
+        .flatMap { $0 }
+        .min() ?? 0
     }
 
     private func glucoseToCoordinate(_ glucoseEntry: BloodGlucose, fullSize: CGSize) -> CGPoint {
@@ -199,8 +235,8 @@ struct MainChartView: View {
             return .zero
         }
         let yPadding: CGFloat = 30
-        let maxValue = glucose.compactMap(\.glucose).max() ?? 0
-        let minValue = glucose.compactMap(\.glucose).min() ?? 0
+        let maxValue = max(glucose.compactMap(\.glucose).max() ?? 450, maxPredValue())
+        let minValue = min(glucose.compactMap(\.glucose).min() ?? 0, minPredValue())
         let stepYFraction = (fullSize.height - yPadding * 2) / CGFloat(maxValue - minValue)
         let yOffset = CGFloat(minValue) * stepYFraction
         let xOffset = -first.dateString.timeIntervalSince1970
@@ -216,8 +252,8 @@ struct MainChartView: View {
             return .zero
         }
         let yPadding: CGFloat = 30
-        let maxValue = glucose.compactMap(\.glucose).max() ?? 0
-        let minValue = glucose.compactMap(\.glucose).min() ?? 0
+        let maxValue = max(glucose.compactMap(\.glucose).max() ?? 450, maxPredValue())
+        let minValue = min(glucose.compactMap(\.glucose).min() ?? 0, minPredValue())
         let stepYFraction = (fullSize.height - yPadding * 2) / CGFloat(maxValue - minValue)
         let yOffset = CGFloat(minValue) * stepYFraction
         let xOffset = -first.dateString.timeIntervalSince1970
