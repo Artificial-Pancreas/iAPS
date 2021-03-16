@@ -57,10 +57,13 @@ final class BaseDeviceDataManager: DeviceDataManager, Injectable {
         setupPumpManager()
         UIDevice.current.isBatteryMonitoringEnabled = true
 
-        heartBeat = Timer.scheduledTimer(withTimeInterval: 60, repeats: true) { _ in
-            debug(.deviceManager, "Timer Heartbeat")
-            self.updatePumpData()
+        if pumpManager is MockPumpManager {
+            heartBeat = Timer.scheduledTimer(withTimeInterval: 60, repeats: true) { _ in
+                debug(.deviceManager, "Timer Heartbeat")
+                self.updatePumpData()
+            }
         }
+
         updatePumpData()
     }
 
@@ -71,13 +74,11 @@ final class BaseDeviceDataManager: DeviceDataManager, Injectable {
     }
 
     private func updatePumpData() {
-        processQueue.async {
-            let now = Date()
-            guard now.timeIntervalSince(self.lastHeartBeatTime) >= Config.loopInterval else { return }
-            self.pumpManager?.ensureCurrentPumpData {
-                debug(.deviceManager, "Pump Data updated")
-                self.lastHeartBeatTime = now
-            }
+        let now = Date()
+        guard now.timeIntervalSince(lastHeartBeatTime) >= Config.loopInterval else { return }
+        pumpManager?.ensureCurrentPumpData {
+            debug(.deviceManager, "Pump Data updated")
+            self.lastHeartBeatTime = now
         }
     }
 
