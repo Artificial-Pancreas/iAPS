@@ -50,7 +50,8 @@ extension Home {
                     MainChartView(
                         glucose: $viewModel.glucose,
                         suggestion: $viewModel.suggestion,
-                        hours: .constant(24)
+                        hours: .constant(24),
+                        units: viewModel.units
                     )
 
                     ZStack {
