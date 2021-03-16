@@ -1,6 +1,6 @@
 import Foundation
 
-struct Suggestion: JSON {
+struct Suggestion: JSON, Equatable {
     let reason: String
     let units: Decimal?
     let insulinReq: Decimal?
@@ -20,7 +20,7 @@ struct Suggestion: JSON {
     var recieved: Bool?
 }
 
-struct Predictions: JSON {
+struct Predictions: JSON, Equatable {
     let iob: [Int]?
     let zt: [Int]?
     let cob: [Int]?

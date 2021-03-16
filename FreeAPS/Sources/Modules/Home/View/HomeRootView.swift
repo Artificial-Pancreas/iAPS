@@ -47,8 +47,11 @@ extension Home {
             return GeometryReader { geo in
                 VStack {
                     header.padding().frame(maxHeight: 70)
-                    GlucoseChartView(glucose: $viewModel.glucose, suggestion: $viewModel.suggestion, units: viewModel.units)
-                        .frame(maxHeight: .infinity)
+                    MainChartView(
+                        glucose: $viewModel.glucose,
+                        suggestion: $viewModel.suggestion,
+                        hours: .constant(24)
+                    )
 
                     ZStack {
                         Rectangle().fill(Color.gray.opacity(0.2)).frame(height: 50 + geo.safeAreaInsets.bottom)

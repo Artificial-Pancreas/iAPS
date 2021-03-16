@@ -2,15 +2,6 @@
   "object": {
     "pins": [
       {
-        "package": "Charts",
-        "repositoryURL": "https://github.com/danielgindi/Charts",
-        "state": {
-          "branch": null,
-          "revision": "8d134a78bb2cb9e7a0f05ecbd5880bb05cd02863",
-          "version": "4.0.1"
-        }
-      },
-      {
         "package": "Disk",
         "repositoryURL": "https://github.com/saoudrizwan/Disk",
         "state": {
