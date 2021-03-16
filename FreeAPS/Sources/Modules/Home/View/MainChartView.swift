@@ -36,7 +36,7 @@ struct MainChartView: View {
                         }
                         .onAppear {
                             scroll.scrollTo("End")
-                            // add trigger the end of main queue
+                            // add trigger to the end of main queue
                             DispatchQueue.main.async {
                                 didAppearTrigger = true
                             }
@@ -132,48 +132,36 @@ struct MainChartView: View {
                     path.addEllipse(in: rect)
                 }
             }.stroke(Color.blue)
-                .onChange(of: suggestion) { _ in
-                    calculatePredictionDots(fullSize: fullSize, type: .iob)
-                }
-                .onChange(of: didAppearTrigger) { _ in
-                    calculatePredictionDots(fullSize: fullSize, type: .iob)
-                }
 
             Path { path in
                 for rect in predictionDots[.cob] ?? [] {
                     path.addEllipse(in: rect)
                 }
             }.stroke(Color.yellow)
-                .onChange(of: suggestion) { _ in
-                    calculatePredictionDots(fullSize: fullSize, type: .cob)
-                }
-                .onChange(of: didAppearTrigger) { _ in
-                    calculatePredictionDots(fullSize: fullSize, type: .cob)
-                }
 
             Path { path in
                 for rect in predictionDots[.zt] ?? [] {
                     path.addEllipse(in: rect)
                 }
             }.stroke(Color.purple)
-                .onChange(of: suggestion) { _ in
-                    calculatePredictionDots(fullSize: fullSize, type: .zt)
-                }
-                .onChange(of: didAppearTrigger) { _ in
-                    calculatePredictionDots(fullSize: fullSize, type: .zt)
-                }
 
             Path { path in
                 for rect in predictionDots[.uam] ?? [] {
                     path.addEllipse(in: rect)
                 }
             }.stroke(Color.orange)
-                .onChange(of: suggestion) { _ in
-                    calculatePredictionDots(fullSize: fullSize, type: .uam)
-                }
-                .onChange(of: didAppearTrigger) { _ in
-                    calculatePredictionDots(fullSize: fullSize, type: .uam)
-                }
+        }
+        .onChange(of: suggestion) { _ in
+            calculatePredictionDots(fullSize: fullSize, type: .iob)
+            calculatePredictionDots(fullSize: fullSize, type: .cob)
+            calculatePredictionDots(fullSize: fullSize, type: .zt)
+            calculatePredictionDots(fullSize: fullSize, type: .uam)
+        }
+        .onChange(of: didAppearTrigger) { _ in
+            calculatePredictionDots(fullSize: fullSize, type: .iob)
+            calculatePredictionDots(fullSize: fullSize, type: .cob)
+            calculatePredictionDots(fullSize: fullSize, type: .zt)
+            calculatePredictionDots(fullSize: fullSize, type: .uam)
         }
     }
 
