@@ -167,7 +167,7 @@ struct MainChartView: View {
         }()
 
         var index = 0
-        predictionDots[type] = values.concurrentMap { value -> CGRect in
+        predictionDots[type] = values.map { value -> CGRect in
             let position = predictionToCoordinate(value, fullSize: fullSize, index: index)
             index += 1
             return CGRect(x: position.x - 2, y: position.y - 2, width: 4, height: 4)
