@@ -26,6 +26,7 @@ extension PumpSettingsEditor {
                 .receive(on: DispatchQueue.main)
                 .sink { _ in
                     self.syncInProgress = false
+
                 } receiveValue: {}
                 .store(in: &lifetime)
         }

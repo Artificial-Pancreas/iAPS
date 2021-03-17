@@ -13,6 +13,7 @@ extension Home {
         @Published var recentGlucose: BloodGlucose?
         @Published var glucoseDelta: Int?
         @Published var basals: [PumpHistoryEvent] = []
+        @Published var maxBasal: Decimal = 2
 
         @Published var allowManualTemp = false
         private(set) var units: GlucoseUnits = .mmolL
@@ -20,6 +21,7 @@ extension Home {
         override func subscribe() {
             setupGlucose()
             setupBasals()
+            setupPumpSettings()
             suggestion = provider.suggestion
             units = settingsManager.settings.units
             allowManualTemp = !settingsManager.settings.closedLoop
@@ -27,6 +29,7 @@ extension Home {
             broadcaster.register(SuggestionObserver.self, observer: self)
             broadcaster.register(SettingsObserver.self, observer: self)
             broadcaster.register(PumpHistoryObserver.self, observer: self)
+            broadcaster.register(PumpSettingsObserver.self, observer: self)
         }
 
         func addCarbs() {
@@ -58,24 +61,34 @@ extension Home {
         }
 
         private func setupGlucose() {
-            glucose = provider.filteredGlucose(hours: filteredHours)
-            recentGlucose = glucose.last
-            if glucose.count >= 2 {
-                glucoseDelta = (recentGlucose?.glucose ?? 0) - (glucose[glucose.count - 2].glucose ?? 0)
-            } else {
-                glucoseDelta = nil
+            DispatchQueue.main.async {
+                self.glucose = self.provider.filteredGlucose(hours: self.filteredHours)
+                self.recentGlucose = self.glucose.last
+                if self.glucose.count >= 2 {
+                    self.glucoseDelta = (self.recentGlucose?.glucose ?? 0) - (self.glucose[self.glucose.count - 2].glucose ?? 0)
+                } else {
+                    self.glucoseDelta = nil
+                }
             }
         }
 
         private func setupBasals() {
-            basals = provider.pumpHistory(hours: filteredHours).filter {
-                $0.type == .tempBasal || $0.type == .tempBasalDuration
+            DispatchQueue.main.async {
+                self.basals = self.provider.pumpHistory(hours: self.filteredHours).filter {
+                    $0.type == .tempBasal || $0.type == .tempBasalDuration
+                }
+            }
+        }
+
+        private func setupPumpSettings() {
+            DispatchQueue.main.async {
+                self.maxBasal = self.provider.pumpSettings().maxBasal
             }
         }
     }
 }
 
-extension Home.ViewModel: GlucoseObserver, SuggestionObserver, SettingsObserver, PumpHistoryObserver {
+extension Home.ViewModel: GlucoseObserver, SuggestionObserver, SettingsObserver, PumpHistoryObserver, PumpSettingsObserver {
     func glucoseDidUpdate(_: [BloodGlucose]) {
         setupGlucose()
     }
@@ -90,5 +103,9 @@ extension Home.ViewModel: GlucoseObserver, SuggestionObserver, SettingsObserver,
 
     func pumpHistoryDidUpdate(_: [PumpHistoryEvent]) {
         setupBasals()
+    }
+
+    func pumpSettingsDidChange(_: PumpSettings) {
+        setupPumpSettings()
     }
 }

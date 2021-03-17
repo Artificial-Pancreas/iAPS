@@ -26,5 +26,11 @@ extension Home {
                 $0.timestamp.addingTimeInterval(hours.hours.timeInterval) > Date()
             }
         }
+
+        func pumpSettings() -> PumpSettings {
+            (try? storage.retrieve(OpenAPS.Settings.settings, as: PumpSettings.self))
+                ?? PumpSettings(from: OpenAPS.defaults(for: OpenAPS.Settings.settings))
+                ?? PumpSettings(insulinActionCurve: 5, maxBolus: 10, maxBasal: 2)
+        }
     }
 }

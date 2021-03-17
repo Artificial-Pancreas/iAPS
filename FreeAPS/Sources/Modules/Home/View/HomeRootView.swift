@@ -52,6 +52,7 @@ extension Home {
                         suggestion: $viewModel.suggestion,
                         basals: $viewModel.basals,
                         hours: .constant(viewModel.filteredHours),
+                        maxBasal: $viewModel.maxBasal,
                         units: viewModel.units
                     )
 

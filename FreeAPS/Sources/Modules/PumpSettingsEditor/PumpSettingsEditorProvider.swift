@@ -2,9 +2,14 @@ import Combine
 import LoopKit
 import LoopKitUI
 
+protocol PumpSettingsObserver {
+    func pumpSettingsDidChange(_ pumpSettings: PumpSettings)
+}
+
 extension PumpSettingsEditor {
     final class Provider: BaseProvider, PumpSettingsEditorProvider {
         private let processQueue = DispatchQueue(label: "PumpSettingsEditorProvider.processQueue")
+        @Injected() private var broadcaster: Broadcaster!
 
         func settings() -> PumpSettings {
             (try? storage.retrieve(OpenAPS.Settings.settings, as: PumpSettings.self))
@@ -13,8 +18,17 @@ extension PumpSettingsEditor {
         }
 
         func save(settings: PumpSettings) -> AnyPublisher<Void, Error> {
-            guard let pump = deviceManager?.pumpManager else {
+            func save() {
                 try? storage.save(settings, as: OpenAPS.Settings.settings)
+                processQueue.async {
+                    self.broadcaster.notify(PumpSettingsObserver.self, on: self.processQueue) {
+                        $0.pumpSettingsDidChange(settings)
+                    }
+                }
+            }
+
+            guard let pump = deviceManager?.pumpManager else {
+                save()
                 return Just(()).setFailureType(to: Error.self).eraseToAnyPublisher()
             }
             // Don't ask why 🤦‍♂️
@@ -26,7 +40,7 @@ extension PumpSettingsEditor {
                     pump.syncDeliveryLimitSettings(for: sync) { result in
                         switch result {
                         case .success:
-                            try? self.storage.save(settings, as: OpenAPS.Settings.settings)
+                            save()
                             promise(.success(()))
                         case let .failure(error):
                             promise(.failure(error))

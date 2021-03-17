@@ -9,4 +9,5 @@ protocol HomeProvider: Provider {
     func fetchAndLoop()
     func filteredGlucose(hours: Int) -> [BloodGlucose]
     func pumpHistory(hours: Int) -> [PumpHistoryEvent]
+    func pumpSettings() -> PumpSettings
 }

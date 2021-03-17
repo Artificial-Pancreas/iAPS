@@ -1,6 +1,6 @@
 import Foundation
 
-struct PumpHistoryEvent: JSON {
+struct PumpHistoryEvent: JSON, Equatable {
     let id: String
     let type: EventType
     let timestamp: Date

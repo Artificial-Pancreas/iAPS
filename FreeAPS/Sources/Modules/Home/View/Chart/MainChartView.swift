@@ -23,11 +23,14 @@ struct MainChartView: View {
     @Binding var suggestion: Suggestion?
     @Binding var basals: [PumpHistoryEvent]
     @Binding var hours: Int
+    @Binding var maxBasal: Decimal
     let units: GlucoseUnits
 
     @State var didAppearTrigger = false
     @State private var glucoseDots: [CGRect] = []
     @State private var predictionDots: [PredictionType: [CGRect]] = [:]
+    @State private var basalPoints: [CGPoint] = []
+    @State private var basalPath = Path()
 
     private var dateDormatter: DateFormatter {
         let formatter = DateFormatter()
@@ -39,6 +42,13 @@ struct MainChartView: View {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
         formatter.maximumFractionDigits = 1
+        return formatter
+    }
+
+    private var basalFormatter: NumberFormatter {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        formatter.maximumFractionDigits = 2
         return formatter
     }
 
@@ -61,14 +71,20 @@ struct MainChartView: View {
                     ScrollViewReader { scroll in
                         ZStack(alignment: .top) {
                             basalChart(fullSize: geo.size)
-                            mainChart(fullSize: geo.size)
+                            mainChart(fullSize: geo.size).id("End")
                                 .onChange(of: glucose) { _ in
-                                    scroll.scrollTo("End")
+                                    scroll.scrollTo("End", anchor: .trailing)
+                                }
+                                .onChange(of: suggestion) { _ in
+                                    scroll.scrollTo("End", anchor: .trailing)
+                                }
+                                .onChange(of: basals) { _ in
+                                    scroll.scrollTo("End", anchor: .trailing)
                                 }
                                 .onAppear {
-                                    scroll.scrollTo("End")
                                     // add trigger to the end of main queue
                                     DispatchQueue.main.async {
+                                        scroll.scrollTo("End", anchor: .trailing)
                                         didAppearTrigger = true
                                     }
                                 }
@@ -76,7 +92,7 @@ struct MainChartView: View {
                     }
                 }
                 // Y glucose labels
-                ForEach(0 ..< Config.yLinesCount) { line -> AnyView in
+                ForEach(0 ..< Config.yLinesCount + 1) { line -> AnyView in
                     let range = glucoseYRange(fullSize: geo.size)
                     let yStep = (range.maxY - range.minY) / CGFloat(Config.yLinesCount)
                     let valueStep = Double(range.maxValue - range.minValue) / Double(Config.yLinesCount)
@@ -93,11 +109,27 @@ struct MainChartView: View {
     }
 
     private func basalChart(fullSize: CGSize) -> some View {
-        Group {
-            EmptyView()
+        ZStack {
+            basalPath.fill(Color.blue)
+            basalPath.stroke(Color.blue, lineWidth: 1)
+            Text(lastBasalRateString)
+                .foregroundColor(.blue)
+                .font(.caption2)
+                .position(CGPoint(x: lastBasalPoint(fullSize: fullSize).x + 25, y: Config.basalHeight / 2))
         }
+        .drawingGroup()
         .frame(width: fullGlucoseWidth(viewWidth: fullSize.width) + additionalWidth(viewWidth: fullSize.width))
-        .frame(maxHeight: Config.basalHeight).background(Color.secondary.opacity(0.1))
+        .frame(maxHeight: Config.basalHeight)
+        .background(Color.secondary.opacity(0.1))
+        .onChange(of: basals) { _ in
+            calculateBasalPoints(fullSize: fullSize)
+        }
+        .onChange(of: maxBasal) { _ in
+            calculateBasalPoints(fullSize: fullSize)
+        }
+        .onChange(of: didAppearTrigger) { _ in
+            calculateBasalPoints(fullSize: fullSize)
+        }
     }
 
     private func mainChart(fullSize: CGSize) -> some View {
@@ -116,7 +148,7 @@ struct MainChartView: View {
                     }
                     .stroke(Color.secondary, lineWidth: 0.2)
                     glucosePath(fullSize: fullSize)
-                    predictions(fullSize: fullSize).id("End")
+                    predictions(fullSize: fullSize)
                 }
                 ZStack {
                     // X time labels
@@ -223,7 +255,52 @@ struct MainChartView: View {
         }
     }
 
-    private func calculateBasalPoints(fullSize _: CGSize) {}
+    private func calculateBasalPoints(fullSize: CGSize) {
+        basalPoints = basals.chunks(ofCount: 2).compactMap { chunk -> CGPoint? in
+            let chunk = Array(chunk)
+            guard chunk.count == 2, chunk[0].type == .tempBasal, chunk[1].type == .tempBasalDuration else { return nil }
+            let timeBegin = chunk[0].timestamp
+            let rateCost = Config.basalHeight / CGFloat(maxBasal)
+            let x = timeToXCoordinate(timeBegin.timeIntervalSince1970, fullSize: fullSize)
+            let y = Config.basalHeight - CGFloat(chunk[0].rate ?? 0) * rateCost
+            return CGPoint(x: x, y: y)
+        }
+        basalPath = Path { path in
+            var yPoint: CGFloat = Config.basalHeight
+            path.move(to: CGPoint(x: 0, y: yPoint))
+
+            for point in basalPoints {
+                path.addLine(to: CGPoint(x: point.x, y: yPoint))
+                path.addLine(to: point)
+                yPoint = point.y
+            }
+            let lastPoint = lastBasalPoint(fullSize: fullSize)
+            path.addLine(to: lastPoint)
+            path.addLine(to: CGPoint(x: lastPoint.x, y: Config.basalHeight))
+            path.addLine(to: CGPoint(x: 0, y: Config.basalHeight))
+        }
+    }
+
+    private func lastBasalPoint(fullSize: CGSize) -> CGPoint {
+        let lastBasal = Array(basals.suffix(2))
+        guard lastBasal.count == 2 else {
+            return .zero
+        }
+        let endBasalTime = lastBasal[0].timestamp.timeIntervalSince1970 + (lastBasal[1].durationMin?.minutes.timeInterval ?? 0)
+        let rateCost = Config.basalHeight / CGFloat(maxBasal)
+        let x = timeToXCoordinate(endBasalTime, fullSize: fullSize)
+        let y = Config.basalHeight - CGFloat(lastBasal[0].rate ?? 0) * rateCost
+        return CGPoint(x: x, y: y)
+    }
+
+    private var lastBasalRateString: String {
+        let lastBasal = Array(basals.suffix(2))
+        guard lastBasal.count == 2 else {
+            return ""
+        }
+        let lastRate = lastBasal[0].rate ?? 0
+        return (basalFormatter.string(from: lastRate as NSNumber) ?? "0") + " U/h"
+    }
 
     private func fullGlucoseWidth(viewWidth: CGFloat) -> CGFloat {
         viewWidth * CGFloat(hours) / CGFloat(Config.screenHours)
