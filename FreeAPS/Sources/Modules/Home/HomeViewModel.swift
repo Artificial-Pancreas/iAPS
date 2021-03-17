@@ -6,24 +6,27 @@ extension Home {
         @Injected() var broadcaster: Broadcaster!
         @Injected() var settingsManager: SettingsManager!
 
-        private(set) var filteredGlucoseHours = 24
+        private(set) var filteredHours = 24
 
         @Published var glucose: [BloodGlucose] = []
         @Published var suggestion: Suggestion?
         @Published var recentGlucose: BloodGlucose?
         @Published var glucoseDelta: Int?
+        @Published var basals: [PumpHistoryEvent] = []
 
         @Published var allowManualTemp = false
         private(set) var units: GlucoseUnits = .mmolL
 
         override func subscribe() {
             setupGlucose()
+            setupBasals()
             suggestion = provider.suggestion
             units = settingsManager.settings.units
             allowManualTemp = !settingsManager.settings.closedLoop
             broadcaster.register(GlucoseObserver.self, observer: self)
             broadcaster.register(SuggestionObserver.self, observer: self)
             broadcaster.register(SettingsObserver.self, observer: self)
+            broadcaster.register(PumpHistoryObserver.self, observer: self)
         }
 
         func addCarbs() {
@@ -51,11 +54,11 @@ extension Home {
         }
 
         func setFilteredGlucoseHours(hours: Int) {
-            filteredGlucoseHours = hours
+            filteredHours = hours
         }
 
         private func setupGlucose() {
-            glucose = provider.filteredGlucose(hours: filteredGlucoseHours)
+            glucose = provider.filteredGlucose(hours: filteredHours)
             recentGlucose = glucose.last
             if glucose.count >= 2 {
                 glucoseDelta = (recentGlucose?.glucose ?? 0) - (glucose[glucose.count - 2].glucose ?? 0)
@@ -63,10 +66,16 @@ extension Home {
                 glucoseDelta = nil
             }
         }
+
+        private func setupBasals() {
+            basals = provider.pumpHistory(hours: filteredHours).filter {
+                $0.type == .tempBasal || $0.type == .tempBasalDuration
+            }
+        }
     }
 }
 
-extension Home.ViewModel: GlucoseObserver, SuggestionObserver, SettingsObserver {
+extension Home.ViewModel: GlucoseObserver, SuggestionObserver, SettingsObserver, PumpHistoryObserver {
     func glucoseDidUpdate(_: [BloodGlucose]) {
         setupGlucose()
     }
@@ -77,5 +86,9 @@ extension Home.ViewModel: GlucoseObserver, SuggestionObserver, SettingsObserver 
 
     func settingsDidChange(_ settings: FreeAPSSettings) {
         allowManualTemp = !settings.closedLoop
+    }
+
+    func pumpHistoryDidUpdate(_: [PumpHistoryEvent]) {
+        setupBasals()
     }
 }
