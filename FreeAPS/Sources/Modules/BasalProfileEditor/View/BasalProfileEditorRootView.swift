@@ -62,7 +62,7 @@ extension BasalProfileEditor {
                                     (
                                         self.rateFormatter
                                             .string(from: viewModel.rateValues[i] as NSNumber) ?? ""
-                                    ) + " U/h"
+                                    ) + " U/hr"
                                 ).tag(i)
                             }
                         }
@@ -94,7 +94,7 @@ extension BasalProfileEditor {
                         HStack {
                             Text("Rate").foregroundColor(.secondary)
                             Text(
-                                "\(rateFormatter.string(from: viewModel.rateValues[item.rateIndex] as NSNumber) ?? "0") U/h"
+                                "\(rateFormatter.string(from: viewModel.rateValues[item.rateIndex] as NSNumber) ?? "0") U/hr"
                             )
                             Spacer()
                             Text("starts at").foregroundColor(.secondary)

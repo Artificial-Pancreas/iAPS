@@ -11,4 +11,5 @@ protocol HomeProvider: Provider {
     func pumpHistory(hours: Int) -> [PumpHistoryEvent]
     func pumpSettings() -> PumpSettings
     func basalProfile() -> [BasalProfileEntry]
+    func tempTargets(hours: Int) -> [TempTarget]
 }

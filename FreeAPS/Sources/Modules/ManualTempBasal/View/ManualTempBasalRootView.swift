@@ -18,7 +18,7 @@ extension ManualTempBasal {
                         Text("Amount")
                         Spacer()
                         DecimalTextField("0", value: $viewModel.rate, formatter: formatter, autofocus: true, cleanInput: true)
-                        Text("U/hour").foregroundColor(.secondary)
+                        Text("U/hr").foregroundColor(.secondary)
                     }
                     Picker(selection: $viewModel.durationIndex, label: Text("Duration")) {
                         ForEach(0 ..< viewModel.durationValues.count) { index in

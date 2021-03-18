@@ -17,6 +17,7 @@ struct MainChartView: View {
         static let bottomYPadding: CGFloat = 50
         static let minAdditionalWidth: CGFloat = 150
         static let maxGlucose = 450
+        static let minGlucose = 70
         static let yLinesCount = 5
     }
 
@@ -26,6 +27,7 @@ struct MainChartView: View {
     @Binding var hours: Int
     @Binding var maxBasal: Decimal
     @Binding var basalProfile: [BasalProfileEntry]
+    @Binding var tempTargets: [TempTarget]
     let units: GlucoseUnits
 
     @State var didAppearTrigger = false
@@ -33,6 +35,7 @@ struct MainChartView: View {
     @State private var predictionDots: [PredictionType: [CGRect]] = [:]
     @State private var tempBasalPath = Path()
     @State private var regularBasalPath = Path()
+    @State private var tempTargetsPath = Path()
 
     private var dateDormatter: DateFormatter {
         let formatter = DateFormatter()
@@ -72,6 +75,7 @@ struct MainChartView: View {
                 ScrollView(.horizontal, showsIndicators: false) {
                     ScrollViewReader { scroll in
                         ZStack(alignment: .top) {
+                            tempTargetsView(fullSize: geo.size)
                             basalChart(fullSize: geo.size)
                             mainChart(fullSize: geo.size).id("End")
                                 .onChange(of: glucose) { _ in
@@ -187,6 +191,22 @@ struct MainChartView: View {
         }
         .onChange(of: didAppearTrigger) { _ in
             calculateGlucoseDots(fullSize: fullSize)
+        }
+    }
+
+    private func tempTargetsView(fullSize: CGSize) -> some View {
+        ZStack {
+            tempTargetsPath
+                .fill(Color.gray.opacity(0.5))
+        }
+        .onChange(of: glucose) { _ in
+            calculateTempTargetsRects(fullSize: fullSize)
+        }
+        .onChange(of: tempTargets) { _ in
+            calculateTempTargetsRects(fullSize: fullSize)
+        }
+        .onChange(of: didAppearTrigger) { _ in
+            calculateTempTargetsRects(fullSize: fullSize)
         }
     }
 
@@ -383,7 +403,7 @@ struct MainChartView: View {
             return ""
         }
         let lastRate = lastBasal[0].rate ?? 0
-        return (basalFormatter.string(from: lastRate as NSNumber) ?? "0") + " U/h"
+        return (basalFormatter.string(from: lastRate as NSNumber) ?? "0") + " U/hr"
     }
 
     private func fullGlucoseWidth(viewWidth: CGFloat) -> CGFloat {
@@ -427,14 +447,17 @@ struct MainChartView: View {
     }
 
     private func minPredValue() -> Int {
-        [
-            suggestion?.predictions?.cob ?? [],
-            suggestion?.predictions?.iob ?? [],
-            suggestion?.predictions?.zt ?? [],
-            suggestion?.predictions?.uam ?? []
-        ]
-        .flatMap { $0 }
-        .min() ?? 0
+        let min =
+            [
+                suggestion?.predictions?.cob ?? [],
+                suggestion?.predictions?.iob ?? [],
+                suggestion?.predictions?.zt ?? [],
+                suggestion?.predictions?.uam ?? []
+            ]
+            .flatMap { $0 }
+            .min() ?? Config.minGlucose
+
+        return Swift.min(min, Config.minGlucose)
     }
 
     private func glucoseToCoordinate(_ glucoseEntry: BloodGlucose, fullSize: CGSize) -> CGPoint {
@@ -501,5 +524,38 @@ struct MainChartView: View {
         let lastDeltaTime = firstHour.timeIntervalSince(firstDate)
         let oneSecondWidth = oneSecondStep(viewWidth: viewWidth)
         return oneSecondWidth * CGFloat(lastDeltaTime)
+    }
+
+    private func calculateTempTargetsRects(fullSize: CGSize) {
+        var rects = tempTargets.map { tempTarget -> CGRect in
+            let x0 = timeToXCoordinate(tempTarget.createdAt.timeIntervalSince1970, fullSize: fullSize)
+            let y0 = glucoseToYCoordinate(Int(tempTarget.targetTop), fullSize: fullSize)
+            let x1 = timeToXCoordinate(
+                tempTarget.createdAt.timeIntervalSince1970 + Int(tempTarget.duration).minutes.timeInterval,
+                fullSize: fullSize
+            )
+            let y1 = glucoseToYCoordinate(Int(tempTarget.targetBottom), fullSize: fullSize)
+            return CGRect(
+                x: x0,
+                y: y0 - 3,
+                width: x1 - x0,
+                height: y1 - y0 + 6
+            )
+        }
+        if rects.count > 1 {
+            rects = rects.reduce([]) { result, rect -> [CGRect] in
+                guard var last = result.last else { return [rect] }
+                if last.origin.x + last.width > rect.origin.x {
+                    last.size.width = rect.origin.x - last.origin.x
+                }
+                var res = Array(result.dropLast())
+                res.append(contentsOf: [last, rect])
+                return res
+            }
+        }
+
+        tempTargetsPath = Path { path in
+            path.addRects(rects)
+        }
     }
 }

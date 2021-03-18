@@ -54,6 +54,7 @@ extension Home {
                         hours: .constant(viewModel.filteredHours),
                         maxBasal: $viewModel.maxBasal,
                         basalProfile: $viewModel.basalProfile,
+                        tempTargets: $viewModel.tempTargets,
                         units: viewModel.units
                     )
 

@@ -88,6 +88,7 @@ final class BaseTempTargetsStorage: TempTargetsStorage, Injectable {
 
     func storePresets(_ targets: [TempTarget]) {
         try? storage.remove(OpenAPS.FreeAPS.tempTargetsPresets)
+
         storeTempTargets(targets, isPresets: true)
     }
 

@@ -1,6 +1,6 @@
 import Foundation
 
-struct TempTarget: JSON, Identifiable {
+struct TempTarget: JSON, Identifiable, Equatable {
     var id = UUID().uuidString
     let name: String
     var createdAt: Date

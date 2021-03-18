@@ -19,7 +19,7 @@ extension PumpSettingsEditor {
                     }
                     HStack {
                         Text("Max Bolus")
-                        DecimalTextField("U/hour", value: $viewModel.maxBolus, formatter: formatter)
+                        DecimalTextField("U/hr", value: $viewModel.maxBolus, formatter: formatter)
                     }
                 }
 

@@ -15,6 +15,7 @@ extension Home {
         @Published var tempBasals: [PumpHistoryEvent] = []
         @Published var maxBasal: Decimal = 2
         @Published var basalProfile: [BasalProfileEntry] = []
+        @Published var tempTargets: [TempTarget] = []
 
         @Published var allowManualTemp = false
         private(set) var units: GlucoseUnits = .mmolL
@@ -24,15 +25,18 @@ extension Home {
             setupBasals()
             setupPumpSettings()
             setupBasalProfile()
+            setupTempTargets()
             suggestion = provider.suggestion
             units = settingsManager.settings.units
             allowManualTemp = !settingsManager.settings.closedLoop
+
             broadcaster.register(GlucoseObserver.self, observer: self)
             broadcaster.register(SuggestionObserver.self, observer: self)
             broadcaster.register(SettingsObserver.self, observer: self)
             broadcaster.register(PumpHistoryObserver.self, observer: self)
             broadcaster.register(PumpSettingsObserver.self, observer: self)
             broadcaster.register(BasalProfileObserver.self, observer: self)
+            broadcaster.register(TempTargetsObserver.self, observer: self)
         }
 
         func addCarbs() {
@@ -94,11 +98,23 @@ extension Home {
                 self.basalProfile = self.provider.basalProfile()
             }
         }
+
+        private func setupTempTargets() {
+            DispatchQueue.main.async {
+                self.tempTargets = self.provider.tempTargets(hours: self.filteredHours)
+            }
+        }
     }
 }
 
-extension Home.ViewModel: GlucoseObserver, SuggestionObserver, SettingsObserver, PumpHistoryObserver, PumpSettingsObserver,
-    BasalProfileObserver
+extension Home.ViewModel:
+    GlucoseObserver,
+    SuggestionObserver,
+    SettingsObserver,
+    PumpHistoryObserver,
+    PumpSettingsObserver,
+    BasalProfileObserver,
+    TempTargetsObserver
 {
     func glucoseDidUpdate(_: [BloodGlucose]) {
         setupGlucose()
@@ -122,5 +138,9 @@ extension Home.ViewModel: GlucoseObserver, SuggestionObserver, SettingsObserver,
 
     func basalProfileDidChange(_: [BasalProfileEntry]) {
         setupBasalProfile()
+    }
+
+    func tempTargetsDidUpdate(_: [TempTarget]) {
+        setupTempTargets()
     }
 }

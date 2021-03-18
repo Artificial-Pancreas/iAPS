@@ -55,7 +55,7 @@ extension AutotuneConfig {
                                 Text(autotune.basalProfile[index].start).foregroundColor(.secondary)
                                 Spacer()
                                 Text(rateFormatter.string(from: autotune.basalProfile[index].rate as NSNumber) ?? "0")
-                                Text("U/h").foregroundColor(.secondary)
+                                Text("U/hr").foregroundColor(.secondary)
                             }
                         }
                     }
