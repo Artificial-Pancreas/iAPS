@@ -1,6 +1,6 @@
 import Foundation
 
-struct Autotune: JSON {
+struct Autotune: JSON, Equatable {
     var createdAt: Date?
     let basalProfile: [BasalProfileEntry]
     let sensitivity: Decimal

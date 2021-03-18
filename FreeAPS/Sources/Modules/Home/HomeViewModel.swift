@@ -12,8 +12,9 @@ extension Home {
         @Published var suggestion: Suggestion?
         @Published var recentGlucose: BloodGlucose?
         @Published var glucoseDelta: Int?
-        @Published var basals: [PumpHistoryEvent] = []
+        @Published var tempBasals: [PumpHistoryEvent] = []
         @Published var maxBasal: Decimal = 2
+        @Published var basalProfile: [BasalProfileEntry] = []
 
         @Published var allowManualTemp = false
         private(set) var units: GlucoseUnits = .mmolL
@@ -22,6 +23,7 @@ extension Home {
             setupGlucose()
             setupBasals()
             setupPumpSettings()
+            setupBasalProfile()
             suggestion = provider.suggestion
             units = settingsManager.settings.units
             allowManualTemp = !settingsManager.settings.closedLoop
@@ -30,6 +32,7 @@ extension Home {
             broadcaster.register(SettingsObserver.self, observer: self)
             broadcaster.register(PumpHistoryObserver.self, observer: self)
             broadcaster.register(PumpSettingsObserver.self, observer: self)
+            broadcaster.register(BasalProfileObserver.self, observer: self)
         }
 
         func addCarbs() {
@@ -74,7 +77,7 @@ extension Home {
 
         private func setupBasals() {
             DispatchQueue.main.async {
-                self.basals = self.provider.pumpHistory(hours: self.filteredHours).filter {
+                self.tempBasals = self.provider.pumpHistory(hours: self.filteredHours).filter {
                     $0.type == .tempBasal || $0.type == .tempBasalDuration
                 }
             }
@@ -85,10 +88,18 @@ extension Home {
                 self.maxBasal = self.provider.pumpSettings().maxBasal
             }
         }
+
+        private func setupBasalProfile() {
+            DispatchQueue.main.async {
+                self.basalProfile = self.provider.basalProfile()
+            }
+        }
     }
 }
 
-extension Home.ViewModel: GlucoseObserver, SuggestionObserver, SettingsObserver, PumpHistoryObserver, PumpSettingsObserver {
+extension Home.ViewModel: GlucoseObserver, SuggestionObserver, SettingsObserver, PumpHistoryObserver, PumpSettingsObserver,
+    BasalProfileObserver
+{
     func glucoseDidUpdate(_: [BloodGlucose]) {
         setupGlucose()
     }
@@ -107,5 +118,9 @@ extension Home.ViewModel: GlucoseObserver, SuggestionObserver, SettingsObserver,
 
     func pumpSettingsDidChange(_: PumpSettings) {
         setupPumpSettings()
+    }
+
+    func basalProfileDidChange(_: [BasalProfileEntry]) {
+        setupBasalProfile()
     }
 }

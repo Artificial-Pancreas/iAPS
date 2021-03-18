@@ -10,4 +10,5 @@ protocol HomeProvider: Provider {
     func filteredGlucose(hours: Int) -> [BloodGlucose]
     func pumpHistory(hours: Int) -> [PumpHistoryEvent]
     func pumpSettings() -> PumpSettings
+    func basalProfile() -> [BasalProfileEntry]
 }

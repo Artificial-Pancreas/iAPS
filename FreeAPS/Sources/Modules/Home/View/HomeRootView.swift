@@ -50,9 +50,10 @@ extension Home {
                     MainChartView(
                         glucose: $viewModel.glucose,
                         suggestion: $viewModel.suggestion,
-                        basals: $viewModel.basals,
+                        tempBasals: $viewModel.tempBasals,
                         hours: .constant(viewModel.filteredHours),
                         maxBasal: $viewModel.maxBasal,
+                        basalProfile: $viewModel.basalProfile,
                         units: viewModel.units
                     )
 

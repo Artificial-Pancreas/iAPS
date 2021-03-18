@@ -15,22 +15,24 @@ struct MainChartView: View {
         static let basalHeight: CGFloat = 60
         static let topYPadding: CGFloat = 20
         static let bottomYPadding: CGFloat = 50
+        static let minAdditionalWidth: CGFloat = 150
         static let maxGlucose = 450
         static let yLinesCount = 5
     }
 
     @Binding var glucose: [BloodGlucose]
     @Binding var suggestion: Suggestion?
-    @Binding var basals: [PumpHistoryEvent]
+    @Binding var tempBasals: [PumpHistoryEvent]
     @Binding var hours: Int
     @Binding var maxBasal: Decimal
+    @Binding var basalProfile: [BasalProfileEntry]
     let units: GlucoseUnits
 
     @State var didAppearTrigger = false
     @State private var glucoseDots: [CGRect] = []
     @State private var predictionDots: [PredictionType: [CGRect]] = [:]
-    @State private var basalPoints: [CGPoint] = []
-    @State private var basalPath = Path()
+    @State private var tempBasalPath = Path()
+    @State private var regularBasalPath = Path()
 
     private var dateDormatter: DateFormatter {
         let formatter = DateFormatter()
@@ -78,7 +80,7 @@ struct MainChartView: View {
                                 .onChange(of: suggestion) { _ in
                                     scroll.scrollTo("End", anchor: .trailing)
                                 }
-                                .onChange(of: basals) { _ in
+                                .onChange(of: tempBasals) { _ in
                                     scroll.scrollTo("End", anchor: .trailing)
                                 }
                                 .onAppear {
@@ -110,18 +112,19 @@ struct MainChartView: View {
 
     private func basalChart(fullSize: CGSize) -> some View {
         ZStack {
-            basalPath.fill(Color.blue)
-            basalPath.stroke(Color.blue, lineWidth: 1)
+            tempBasalPath.fill(Color.blue)
+            tempBasalPath.stroke(Color.blue, lineWidth: 1)
+            regularBasalPath.stroke(Color.yellow, lineWidth: 1)
             Text(lastBasalRateString)
                 .foregroundColor(.blue)
                 .font(.caption2)
-                .position(CGPoint(x: lastBasalPoint(fullSize: fullSize).x + 25, y: Config.basalHeight / 2))
+                .position(CGPoint(x: lastBasalPoint(fullSize: fullSize).x + 30, y: Config.basalHeight / 2))
         }
         .drawingGroup()
         .frame(width: fullGlucoseWidth(viewWidth: fullSize.width) + additionalWidth(viewWidth: fullSize.width))
         .frame(maxHeight: Config.basalHeight)
         .background(Color.secondary.opacity(0.1))
-        .onChange(of: basals) { _ in
+        .onChange(of: tempBasals) { _ in
             calculateBasalPoints(fullSize: fullSize)
         }
         .onChange(of: maxBasal) { _ in
@@ -256,33 +259,104 @@ struct MainChartView: View {
     }
 
     private func calculateBasalPoints(fullSize: CGSize) {
-        basalPoints = basals.chunks(ofCount: 2).compactMap { chunk -> CGPoint? in
+        let dayAgoTime = Date().addingTimeInterval(-1.days.timeInterval).timeIntervalSince1970
+        let firstTempTime = (tempBasals.first?.timestamp ?? Date()).timeIntervalSince1970
+        var lastTimeEnd = firstTempTime
+        let firstRegularBasalPoints = findRegularBasalPoints(timeBegin: dayAgoTime, timeEnd: firstTempTime, fullSize: fullSize)
+        let tempBasalPoints = firstRegularBasalPoints + tempBasals.chunks(ofCount: 2).map { chunk -> [CGPoint] in
             let chunk = Array(chunk)
-            guard chunk.count == 2, chunk[0].type == .tempBasal, chunk[1].type == .tempBasalDuration else { return nil }
-            let timeBegin = chunk[0].timestamp
+            guard chunk.count == 2, chunk[0].type == .tempBasal, chunk[1].type == .tempBasalDuration else { return [] }
+            let timeBegin = chunk[0].timestamp.timeIntervalSince1970
+            let timeEnd = timeBegin + (chunk[1].durationMin ?? 0).minutes.timeInterval
             let rateCost = Config.basalHeight / CGFloat(maxBasal)
-            let x = timeToXCoordinate(timeBegin.timeIntervalSince1970, fullSize: fullSize)
-            let y = Config.basalHeight - CGFloat(chunk[0].rate ?? 0) * rateCost
-            return CGPoint(x: x, y: y)
-        }
-        basalPath = Path { path in
+            let x0 = timeToXCoordinate(timeBegin, fullSize: fullSize)
+            let y0 = Config.basalHeight - CGFloat(chunk[0].rate ?? 0) * rateCost
+            let x1 = timeToXCoordinate(timeEnd, fullSize: fullSize)
+            let y1 = Config.basalHeight
+            let regularPoints = findRegularBasalPoints(timeBegin: lastTimeEnd, timeEnd: timeBegin, fullSize: fullSize)
+            lastTimeEnd = timeEnd
+            return regularPoints + [CGPoint(x: x0, y: y0), CGPoint(x: x1, y: y1)]
+        }.flatMap { $0 }
+        tempBasalPath = Path { path in
             var yPoint: CGFloat = Config.basalHeight
             path.move(to: CGPoint(x: 0, y: yPoint))
 
-            for point in basalPoints {
+            for point in tempBasalPoints {
                 path.addLine(to: CGPoint(x: point.x, y: yPoint))
                 path.addLine(to: point)
                 yPoint = point.y
             }
             let lastPoint = lastBasalPoint(fullSize: fullSize)
-            path.addLine(to: lastPoint)
             path.addLine(to: CGPoint(x: lastPoint.x, y: Config.basalHeight))
             path.addLine(to: CGPoint(x: 0, y: Config.basalHeight))
         }
+
+        let regularBasalPoints = findRegularBasalPoints(
+            timeBegin: dayAgoTime,
+            timeEnd: dayAgoTime + 1.days.timeInterval + 6.hours.timeInterval,
+            fullSize: fullSize
+        )
+
+        regularBasalPath = Path { path in
+            var yPoint: CGFloat = Config.basalHeight
+            path.move(to: CGPoint(x: 0, y: yPoint))
+
+            for point in regularBasalPoints {
+                path.addLine(to: CGPoint(x: point.x, y: yPoint))
+                path.addLine(to: point)
+                yPoint = point.y
+            }
+        }
+    }
+
+    private func findRegularBasalPoints(timeBegin: TimeInterval, timeEnd: TimeInterval, fullSize: CGSize) -> [CGPoint] {
+        guard timeBegin < timeEnd else {
+            return []
+        }
+        let beginDate = Date(timeIntervalSince1970: timeBegin)
+        let calendar = Calendar.current
+        let startOfDay = calendar.startOfDay(for: beginDate)
+
+        let basalNormalized = basalProfile.map {
+            (
+                time: startOfDay.addingTimeInterval($0.minutes.minutes.timeInterval).timeIntervalSince1970,
+                rate: $0.rate
+            )
+        } + basalProfile.map {
+            (
+                time: startOfDay.addingTimeInterval($0.minutes.minutes.timeInterval + 1.days.timeInterval).timeIntervalSince1970,
+                rate: $0.rate
+            )
+        }
+
+        let basalTruncatedPoints = basalNormalized.windows(ofCount: 2)
+            .compactMap { window -> CGPoint? in
+                let window = Array(window)
+                if window[0].time < timeBegin, window[1].time < timeBegin {
+                    return nil
+                }
+
+                let rateCost = Config.basalHeight / CGFloat(maxBasal)
+                if window[0].time < timeBegin, window[1].time >= timeBegin {
+                    let x = timeToXCoordinate(timeBegin, fullSize: fullSize)
+                    let y = Config.basalHeight - CGFloat(window[0].rate) * rateCost
+                    return CGPoint(x: x, y: y)
+                }
+
+                if window[0].time >= timeBegin, window[0].time < timeEnd {
+                    let x = timeToXCoordinate(window[0].time, fullSize: fullSize)
+                    let y = Config.basalHeight - CGFloat(window[0].rate) * rateCost
+                    return CGPoint(x: x, y: y)
+                }
+
+                return nil
+            }
+
+        return basalTruncatedPoints
     }
 
     private func lastBasalPoint(fullSize: CGSize) -> CGPoint {
-        let lastBasal = Array(basals.suffix(2))
+        let lastBasal = Array(tempBasals.suffix(2))
         guard lastBasal.count == 2 else {
             return .zero
         }
@@ -294,7 +368,7 @@ struct MainChartView: View {
     }
 
     private var lastBasalRateString: String {
-        let lastBasal = Array(basals.suffix(2))
+        let lastBasal = Array(tempBasals.suffix(2))
         guard lastBasal.count == 2 else {
             return ""
         }
@@ -311,7 +385,7 @@ struct MainChartView: View {
               let deliveredAt = suggestion?.deliverAt,
               let last = glucose.last
         else {
-            return 0
+            return Config.minAdditionalWidth
         }
 
         let iob = predictions.iob?.count ?? 0
@@ -324,7 +398,7 @@ struct MainChartView: View {
         let additionalTime = CGFloat(TimeInterval(max) * 5.minutes.timeInterval - lastDeltaTime)
         let oneSecondWidth = oneSecondStep(viewWidth: viewWidth)
 
-        return additionalTime * oneSecondWidth
+        return Swift.max(additionalTime * oneSecondWidth, Config.minAdditionalWidth)
     }
 
     private func oneSecondStep(viewWidth: CGFloat) -> CGFloat {

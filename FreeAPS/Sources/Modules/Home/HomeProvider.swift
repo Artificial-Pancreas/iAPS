@@ -32,5 +32,11 @@ extension Home {
                 ?? PumpSettings(from: OpenAPS.defaults(for: OpenAPS.Settings.settings))
                 ?? PumpSettings(insulinActionCurve: 5, maxBolus: 10, maxBasal: 2)
         }
+
+        func basalProfile() -> [BasalProfileEntry] {
+            (try? storage.retrieve(OpenAPS.Settings.profile, as: Autotune.self))?.basalProfile
+                ?? (try? storage.retrieve(OpenAPS.Settings.pumpProfile, as: Autotune.self))?.basalProfile
+                ?? [BasalProfileEntry(start: "00:00", minutes: 0, rate: 1)]
+        }
     }
 }
