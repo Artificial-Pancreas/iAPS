@@ -12,6 +12,7 @@ protocol APSManager {
     var pumpManager: PumpManagerUI? { get set }
     var pumpDisplayState: CurrentValueSubject<PumpDisplayState?, Never> { get }
     func enactTempBasal(rate: Double, duration: TimeInterval)
+    func makeProfiles() -> AnyPublisher<Bool, Never>
 }
 
 final class BaseAPSManager: APSManager, Injectable {
@@ -134,7 +135,7 @@ final class BaseAPSManager: APSManager, Injectable {
         let now = Date()
         let temp = currentTemp(date: now)
 
-        let mainPublisher = openAPS.makeProfiles(useAutotune: settings.useAutotune)
+        let mainPublisher = makeProfiles()
             .flatMap { _ in
                 self.openAPS.determineBasal(currentTemp: temp, clock: now)
             }
@@ -163,6 +164,22 @@ final class BaseAPSManager: APSManager, Injectable {
         }
 
         return mainPublisher
+    }
+
+    func makeProfiles() -> AnyPublisher<Bool, Never> {
+        openAPS.makeProfiles(useAutotune: settings.useAutotune)
+            .map { tunedProfile in
+                if let basalProfile = tunedProfile?.basalProfile {
+                    self.processQueue.async {
+                        self.broadcaster.notify(BasalProfileObserver.self, on: self.processQueue) {
+                            $0.basalProfileDidChange(basalProfile)
+                        }
+                    }
+                }
+
+                return tunedProfile != nil
+            }
+            .eraseToAnyPublisher()
     }
 
     func enactBolus(amount: Double) {

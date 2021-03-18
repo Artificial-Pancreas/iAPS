@@ -1,8 +1,10 @@
+import Combine
 import SwiftUI
 
 extension AutotuneConfig {
     class ViewModel<Provider>: BaseViewModel<Provider>, ObservableObject where Provider: AutotuneConfigProvider {
         @Injected() var settingsManager: SettingsManager!
+        @Injected() var apsManager: APSManager!
         @Published var useAutotune = false
         @Published var autotune: Autotune?
         private(set) var units: GlucoseUnits = .mmolL
@@ -14,18 +16,22 @@ extension AutotuneConfig {
 
             $useAutotune
                 .removeDuplicates()
-                .sink { [weak self] use in
-                    self?.settingsManager.settings.useAutotune = use
+                .flatMap { use -> AnyPublisher<Bool, Never> in
+                    self.settingsManager.settings.useAutotune = use
+                    return self.apsManager.makeProfiles()
                 }
+                .sink { _ in }
                 .store(in: &lifetime)
         }
 
         func run() {
             provider.runAutotune()
                 .receive(on: DispatchQueue.main)
-                .sink { [weak self] result in
-                    self?.autotune = result
-                }.store(in: &lifetime)
+                .flatMap { result -> AnyPublisher<Bool, Never> in
+                    self.autotune = result
+                    return self.apsManager.makeProfiles()
+                }
+                .sink { _ in }.store(in: &lifetime)
         }
 
         func delete() {

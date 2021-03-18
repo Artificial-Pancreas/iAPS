@@ -130,6 +130,9 @@ struct MainChartView: View {
         .onChange(of: maxBasal) { _ in
             calculateBasalPoints(fullSize: fullSize)
         }
+        .onChange(of: basalProfile) { _ in
+            calculateBasalPoints(fullSize: fullSize)
+        }
         .onChange(of: didAppearTrigger) { _ in
             calculateBasalPoints(fullSize: fullSize)
         }
@@ -291,21 +294,23 @@ struct MainChartView: View {
             path.addLine(to: CGPoint(x: 0, y: Config.basalHeight))
         }
 
+        let endDateTime = dayAgoTime + 1.days.timeInterval + 6.hours.timeInterval
         let regularBasalPoints = findRegularBasalPoints(
             timeBegin: dayAgoTime,
-            timeEnd: dayAgoTime + 1.days.timeInterval + 6.hours.timeInterval,
+            timeEnd: endDateTime,
             fullSize: fullSize
         )
 
         regularBasalPath = Path { path in
             var yPoint: CGFloat = Config.basalHeight
-            path.move(to: CGPoint(x: 0, y: yPoint))
+            path.move(to: CGPoint(x: -50, y: yPoint))
 
             for point in regularBasalPoints {
                 path.addLine(to: CGPoint(x: point.x, y: yPoint))
                 path.addLine(to: point)
                 yPoint = point.y
             }
+            path.addLine(to: CGPoint(x: timeToXCoordinate(endDateTime, fullSize: fullSize), y: yPoint))
         }
     }
 
@@ -325,6 +330,11 @@ struct MainChartView: View {
         } + basalProfile.map {
             (
                 time: startOfDay.addingTimeInterval($0.minutes.minutes.timeInterval + 1.days.timeInterval).timeIntervalSince1970,
+                rate: $0.rate
+            )
+        } + basalProfile.map {
+            (
+                time: startOfDay.addingTimeInterval($0.minutes.minutes.timeInterval + 2.days.timeInterval).timeIntervalSince1970,
                 rate: $0.rate
             )
         }

@@ -144,7 +144,7 @@ final class OpenAPS {
         }
     }
 
-    func makeProfiles(useAutotune: Bool) -> Future<Void, Never> {
+    func makeProfiles(useAutotune: Bool) -> Future<Autotune?, Never> {
         Future { promise in
             self.processQueue.async {
                 let preferences = self.loadFileFromStorage(name: Settings.preferences)
@@ -184,7 +184,12 @@ final class OpenAPS {
                 try? self.storage.save(pumpProfile, as: Settings.pumpProfile)
                 try? self.storage.save(profile, as: Settings.profile)
 
-                promise(.success(()))
+                if let tunedProfile = Autotune(from: profile) {
+                    promise(.success(tunedProfile))
+                    return
+                }
+
+                promise(.success(nil))
             }
         }
     }
