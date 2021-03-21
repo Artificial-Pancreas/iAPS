@@ -20,7 +20,7 @@ struct MainChartView: View {
         static let minGlucose = 70
         static let yLinesCount = 5
         static let bolusSize: CGFloat = 8
-        static let bolusScale: CGFloat = 10
+        static let bolusScale: CGFloat = 8
     }
 
     @Binding var glucose: [BloodGlucose]
@@ -218,7 +218,7 @@ struct MainChartView: View {
                 .stroke(Color.primary, lineWidth: 0.5)
 
             ForEach(bolusDots.indexed(), id: \.1.minX) { index, rect -> AnyView in
-                let position = CGPoint(x: rect.midX, y: rect.maxY + 6)
+                let position = CGPoint(x: rect.midX, y: rect.maxY + 8)
                 return Text(bolusFormatter.string(from: (boluses[index].amount ?? 0) as NSNumber)!).font(.caption2)
                     .position(position)
                     .asAny()
@@ -562,7 +562,8 @@ struct MainChartView: View {
         let x = timeToXCoordinate(time, fullSize: fullSize)
 
         guard nextIndex > 0 else {
-            return CGPoint(x: x, y: Config.topYPadding + Config.basalHeight)
+            let lastY = glucoseToYCoordinate(glucose.last?.glucose ?? 0, fullSize: fullSize)
+            return CGPoint(x: x, y: lastY)
         }
 
         let prevX = timeToXCoordinate(glucose[nextIndex - 1].dateString.timeIntervalSince1970, fullSize: fullSize)
