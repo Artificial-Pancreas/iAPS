@@ -51,6 +51,7 @@ extension Home {
                         glucose: $viewModel.glucose,
                         suggestion: $viewModel.suggestion,
                         tempBasals: $viewModel.tempBasals,
+                        boluses: $viewModel.boluses,
                         hours: .constant(viewModel.filteredHours),
                         maxBasal: $viewModel.maxBasal,
                         basalProfile: $viewModel.basalProfile,

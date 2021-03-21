@@ -11,7 +11,7 @@ private enum PredictionType: Hashable {
 
 struct MainChartView: View {
     private enum Config {
-        static let screenHours = 6
+        static let screenHours = 5
         static let basalHeight: CGFloat = 60
         static let topYPadding: CGFloat = 20
         static let bottomYPadding: CGFloat = 50
@@ -19,11 +19,14 @@ struct MainChartView: View {
         static let maxGlucose = 450
         static let minGlucose = 70
         static let yLinesCount = 5
+        static let bolusSize: CGFloat = 8
+        static let bolusScale: CGFloat = 10
     }
 
     @Binding var glucose: [BloodGlucose]
     @Binding var suggestion: Suggestion?
     @Binding var tempBasals: [PumpHistoryEvent]
+    @Binding var boluses: [PumpHistoryEvent]
     @Binding var hours: Int
     @Binding var maxBasal: Decimal
     @Binding var basalProfile: [BasalProfileEntry]
@@ -33,6 +36,9 @@ struct MainChartView: View {
     @State var didAppearTrigger = false
     @State private var glucoseDots: [CGRect] = []
     @State private var predictionDots: [PredictionType: [CGRect]] = [:]
+    @State private var bolusDots: [CGRect] = []
+    @State private var bolusPath = Path()
+    @State private var bolusLabels = AnyView(EmptyView())
     @State private var tempBasalPath = Path()
     @State private var regularBasalPath = Path()
     @State private var tempTargetsPath = Path()
@@ -54,6 +60,15 @@ struct MainChartView: View {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
         formatter.maximumFractionDigits = 2
+        return formatter
+    }
+
+    private var bolusFormatter: NumberFormatter {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        formatter.minimumIntegerDigits = 0
+        formatter.maximumFractionDigits = 2
+        formatter.decimalSeparator = "."
         return formatter
     }
 
@@ -157,6 +172,7 @@ struct MainChartView: View {
                         }
                     }
                     .stroke(Color.secondary, lineWidth: 0.2)
+                    bolusView(fullSize: fullSize)
                     glucosePath(fullSize: fullSize)
                     predictions(fullSize: fullSize)
                 }
@@ -191,6 +207,28 @@ struct MainChartView: View {
         }
         .onChange(of: didAppearTrigger) { _ in
             calculateGlucoseDots(fullSize: fullSize)
+        }
+    }
+
+    private func bolusView(fullSize: CGSize) -> some View {
+        ZStack {
+            bolusPath
+                .fill(Color.blue)
+            bolusPath
+                .stroke(Color.primary, lineWidth: 0.5)
+
+            ForEach(bolusDots.indexed(), id: \.1.minX) { index, rect -> AnyView in
+                let position = CGPoint(x: rect.midX, y: rect.maxY + 6)
+                return Text(bolusFormatter.string(from: (boluses[index].amount ?? 0) as NSNumber)!).font(.caption2)
+                    .position(position)
+                    .asAny()
+            }
+        }
+        .onChange(of: boluses) { _ in
+            calculateBolusDots(fullSize: fullSize)
+        }
+        .onChange(of: didAppearTrigger) { _ in
+            calculateBolusDots(fullSize: fullSize)
         }
     }
 
@@ -256,6 +294,19 @@ struct MainChartView: View {
         glucoseDots = glucose.concurrentMap { value -> CGRect in
             let position = glucoseToCoordinate(value, fullSize: fullSize)
             return CGRect(x: position.x - 2, y: position.y - 2, width: 4, height: 4)
+        }
+    }
+
+    private func calculateBolusDots(fullSize: CGSize) {
+        bolusDots = boluses.map { value -> CGRect in
+            let center = timeToInterpolatedPoint(value.timestamp.timeIntervalSince1970, fullSize: fullSize)
+            let size = Config.bolusSize + CGFloat(value.amount ?? 0) * Config.bolusScale
+            return CGRect(x: center.x - size / 2, y: center.y - size / 2, width: size, height: size)
+        }
+        bolusPath = Path { path in
+            for rect in bolusDots {
+                path.addEllipse(in: rect)
+            }
         }
     }
 
@@ -498,6 +549,30 @@ struct MainChartView: View {
         let yOffset = CGFloat(minValue) * stepYFraction
         let y = fullSize.height - CGFloat(glucoseValue) * stepYFraction + yOffset - bottomYPadding
         return y
+    }
+
+    private func timeToInterpolatedPoint(_ time: TimeInterval, fullSize: CGSize) -> CGPoint {
+        var nextIndex = 0
+        for (index, value) in glucose.enumerated() {
+            if value.dateString.timeIntervalSince1970 > time {
+                nextIndex = index
+                break
+            }
+        }
+        let x = timeToXCoordinate(time, fullSize: fullSize)
+
+        guard nextIndex > 0 else {
+            return CGPoint(x: x, y: Config.topYPadding + Config.basalHeight)
+        }
+
+        let prevX = timeToXCoordinate(glucose[nextIndex - 1].dateString.timeIntervalSince1970, fullSize: fullSize)
+        let prevY = glucoseToYCoordinate(glucose[nextIndex - 1].glucose ?? 0, fullSize: fullSize)
+        let nextX = timeToXCoordinate(glucose[nextIndex].dateString.timeIntervalSince1970, fullSize: fullSize)
+        let nextY = glucoseToYCoordinate(glucose[nextIndex].glucose ?? 0, fullSize: fullSize)
+        let delta = nextX - prevX
+        let fraction = (x - prevX) / delta
+
+        return pointInLine(CGPoint(x: prevX, y: prevY), CGPoint(x: nextX, y: nextY), fraction)
     }
 
     private func glucoseYRange(fullSize: CGSize) -> (minValue: Int, minY: CGFloat, maxValue: Int, maxY: CGFloat) {

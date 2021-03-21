@@ -13,6 +13,7 @@ extension Home {
         @Published var recentGlucose: BloodGlucose?
         @Published var glucoseDelta: Int?
         @Published var tempBasals: [PumpHistoryEvent] = []
+        @Published var boluses: [PumpHistoryEvent] = []
         @Published var maxBasal: Decimal = 2
         @Published var basalProfile: [BasalProfileEntry] = []
         @Published var tempTargets: [TempTarget] = []
@@ -23,6 +24,7 @@ extension Home {
         override func subscribe() {
             setupGlucose()
             setupBasals()
+            setupBoluses()
             setupPumpSettings()
             setupBasalProfile()
             setupTempTargets()
@@ -87,6 +89,14 @@ extension Home {
             }
         }
 
+        private func setupBoluses() {
+            DispatchQueue.main.async {
+                self.boluses = self.provider.pumpHistory(hours: self.filteredHours).filter {
+                    $0.type == .bolus
+                }
+            }
+        }
+
         private func setupPumpSettings() {
             DispatchQueue.main.async {
                 self.maxBasal = self.provider.pumpSettings().maxBasal
@@ -130,6 +140,7 @@ extension Home.ViewModel:
 
     func pumpHistoryDidUpdate(_: [PumpHistoryEvent]) {
         setupBasals()
+        setupBoluses()
     }
 
     func pumpSettingsDidChange(_: PumpSettings) {
