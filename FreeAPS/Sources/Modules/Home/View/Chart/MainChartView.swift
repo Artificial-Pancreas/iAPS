@@ -322,7 +322,7 @@ struct MainChartView: View {
             calculatePredictionDots(fullSize: fullSize, type: .uam)
             calculateGlucoseDots(fullSize: fullSize)
             calculateBolusDots(fullSize: fullSize)
-            calculateBolusDots(fullSize: fullSize)
+            calculateCarbsDots(fullSize: fullSize)
         }
         .onChange(of: didAppearTrigger) { _ in
             calculatePredictionDots(fullSize: fullSize, type: .iob)
@@ -331,7 +331,7 @@ struct MainChartView: View {
             calculatePredictionDots(fullSize: fullSize, type: .uam)
             calculateGlucoseDots(fullSize: fullSize)
             calculateBolusDots(fullSize: fullSize)
-            calculateBolusDots(fullSize: fullSize)
+            calculateCarbsDots(fullSize: fullSize)
         }
     }
 
