@@ -1,6 +1,6 @@
 import Foundation
 
-struct CarbsEntry: JSON {
+struct CarbsEntry: JSON, Equatable {
     let createdAt: Date
     let carbs: Decimal
     let enteredBy: String?

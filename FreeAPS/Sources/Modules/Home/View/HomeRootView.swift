@@ -56,6 +56,7 @@ extension Home {
                         maxBasal: $viewModel.maxBasal,
                         basalProfile: $viewModel.basalProfile,
                         tempTargets: $viewModel.tempTargets,
+                        carbs: $viewModel.carbs,
                         units: viewModel.units
                     )
 

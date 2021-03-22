@@ -17,6 +17,7 @@ extension Home {
         @Published var maxBasal: Decimal = 2
         @Published var basalProfile: [BasalProfileEntry] = []
         @Published var tempTargets: [TempTarget] = []
+        @Published var carbs: [CarbsEntry] = []
 
         @Published var allowManualTemp = false
         private(set) var units: GlucoseUnits = .mmolL
@@ -28,6 +29,8 @@ extension Home {
             setupPumpSettings()
             setupBasalProfile()
             setupTempTargets()
+            setupCarbs()
+
             suggestion = provider.suggestion
             units = settingsManager.settings.units
             allowManualTemp = !settingsManager.settings.closedLoop
@@ -39,6 +42,7 @@ extension Home {
             broadcaster.register(PumpSettingsObserver.self, observer: self)
             broadcaster.register(BasalProfileObserver.self, observer: self)
             broadcaster.register(TempTargetsObserver.self, observer: self)
+            broadcaster.register(CarbsObserver.self, observer: self)
         }
 
         func addCarbs() {
@@ -114,6 +118,12 @@ extension Home {
                 self.tempTargets = self.provider.tempTargets(hours: self.filteredHours)
             }
         }
+
+        private func setupCarbs() {
+            DispatchQueue.main.async {
+                self.carbs = self.provider.carbs(hours: self.filteredHours)
+            }
+        }
     }
 }
 
@@ -124,7 +134,8 @@ extension Home.ViewModel:
     PumpHistoryObserver,
     PumpSettingsObserver,
     BasalProfileObserver,
-    TempTargetsObserver
+    TempTargetsObserver,
+    CarbsObserver
 {
     func glucoseDidUpdate(_: [BloodGlucose]) {
         setupGlucose()
@@ -153,5 +164,9 @@ extension Home.ViewModel:
 
     func tempTargetsDidUpdate(_: [TempTarget]) {
         setupTempTargets()
+    }
+
+    func carbsDidUpdate(_: [CarbsEntry]) {
+        setupCarbs()
     }
 }

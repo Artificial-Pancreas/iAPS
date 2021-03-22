@@ -21,6 +21,8 @@ struct MainChartView: View {
         static let yLinesCount = 5
         static let bolusSize: CGFloat = 8
         static let bolusScale: CGFloat = 8
+        static let carbsSize: CGFloat = 10
+        static let carbsScale: CGFloat = 0.5
     }
 
     @Binding var glucose: [BloodGlucose]
@@ -31,6 +33,7 @@ struct MainChartView: View {
     @Binding var maxBasal: Decimal
     @Binding var basalProfile: [BasalProfileEntry]
     @Binding var tempTargets: [TempTarget]
+    @Binding var carbs: [CarbsEntry]
     let units: GlucoseUnits
 
     @State var didAppearTrigger = false
@@ -38,10 +41,11 @@ struct MainChartView: View {
     @State private var predictionDots: [PredictionType: [CGRect]] = [:]
     @State private var bolusDots: [CGRect] = []
     @State private var bolusPath = Path()
-    @State private var bolusLabels = AnyView(EmptyView())
     @State private var tempBasalPath = Path()
     @State private var regularBasalPath = Path()
     @State private var tempTargetsPath = Path()
+    @State private var carbsDots: [CGRect] = []
+    @State private var carbsPath = Path()
 
     private var dateDormatter: DateFormatter {
         let formatter = DateFormatter()
@@ -72,6 +76,13 @@ struct MainChartView: View {
         return formatter
     }
 
+    private var carbsFormatter: NumberFormatter {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        formatter.maximumFractionDigits = 0
+        return formatter
+    }
+
     // MARK: - Views
 
     var body: some View {
@@ -91,8 +102,8 @@ struct MainChartView: View {
                     ScrollViewReader { scroll in
                         ZStack(alignment: .top) {
                             tempTargetsView(fullSize: geo.size)
-                            basalChart(fullSize: geo.size)
-                            mainChart(fullSize: geo.size).id("End")
+                            basalView(fullSize: geo.size)
+                            mainView(fullSize: geo.size).id("End")
                                 .onChange(of: glucose) { _ in
                                     scroll.scrollTo("End", anchor: .trailing)
                                 }
@@ -129,7 +140,7 @@ struct MainChartView: View {
         }
     }
 
-    private func basalChart(fullSize: CGSize) -> some View {
+    private func basalView(fullSize: CGSize) -> some View {
         ZStack {
             tempBasalPath.fill(Color.blue)
             tempBasalPath.stroke(Color.blue, lineWidth: 1)
@@ -157,7 +168,7 @@ struct MainChartView: View {
         }
     }
 
-    private func mainChart(fullSize: CGSize) -> some View {
+    private func mainView(fullSize: CGSize) -> some View {
         Group {
             VStack {
                 ZStack {
@@ -172,9 +183,10 @@ struct MainChartView: View {
                         }
                     }
                     .stroke(Color.secondary, lineWidth: 0.2)
+                    carbsView(fullSize: fullSize)
                     bolusView(fullSize: fullSize)
-                    glucosePath(fullSize: fullSize)
-                    predictions(fullSize: fullSize)
+                    glucoseView(fullSize: fullSize)
+                    predictionsView(fullSize: fullSize)
                 }
                 ZStack {
                     // X time labels
@@ -195,7 +207,7 @@ struct MainChartView: View {
         .frame(width: fullGlucoseWidth(viewWidth: fullSize.width) + additionalWidth(viewWidth: fullSize.width))
     }
 
-    private func glucosePath(fullSize: CGSize) -> some View {
+    private func glucoseView(fullSize: CGSize) -> some View {
         Path { path in
             for rect in glucoseDots {
                 path.addEllipse(in: rect)
@@ -232,6 +244,28 @@ struct MainChartView: View {
         }
     }
 
+    private func carbsView(fullSize: CGSize) -> some View {
+        ZStack {
+            carbsPath
+                .fill(Color.orange)
+            carbsPath
+                .stroke(Color.primary, lineWidth: 0.5)
+
+            ForEach(carbsDots.indexed(), id: \.1.minX) { index, rect -> AnyView in
+                let position = CGPoint(x: rect.midX, y: rect.minY - 8)
+                return Text(carbsFormatter.string(from: carbs[index].carbs as NSNumber)!).font(.caption2)
+                    .position(position)
+                    .asAny()
+            }
+        }
+        .onChange(of: carbs) { _ in
+            calculateCarbsDots(fullSize: fullSize)
+        }
+        .onChange(of: didAppearTrigger) { _ in
+            calculateCarbsDots(fullSize: fullSize)
+        }
+    }
+
     private func tempTargetsView(fullSize: CGSize) -> some View {
         ZStack {
             tempTargetsPath
@@ -248,7 +282,7 @@ struct MainChartView: View {
         }
     }
 
-    private func predictions(fullSize: CGSize) -> some View {
+    private func predictionsView(fullSize: CGSize) -> some View {
         Group {
             Path { path in
                 for rect in predictionDots[.iob] ?? [] {
@@ -305,6 +339,19 @@ struct MainChartView: View {
         }
         bolusPath = Path { path in
             for rect in bolusDots {
+                path.addEllipse(in: rect)
+            }
+        }
+    }
+
+    private func calculateCarbsDots(fullSize: CGSize) {
+        carbsDots = carbs.map { value -> CGRect in
+            let center = timeToInterpolatedPoint(value.createdAt.timeIntervalSince1970, fullSize: fullSize)
+            let size = Config.carbsSize + CGFloat(value.carbs) * Config.carbsScale
+            return CGRect(x: center.x - size / 2, y: center.y - size / 2, width: size, height: size)
+        }
+        carbsPath = Path { path in
+            for rect in carbsDots {
                 path.addEllipse(in: rect)
             }
         }

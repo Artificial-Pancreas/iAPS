@@ -7,6 +7,7 @@ extension Home {
         @Injected() var glucoseStorage: GlucoseStorage!
         @Injected() var pumpHistoryStorage: PumpHistoryStorage!
         @Injected() var tempTargetsStorage: TempTargetsStorage!
+        @Injected() var carbsStorage: CarbsStorage!
 
         var suggestion: Suggestion? {
             try? storage.retrieve(OpenAPS.Enact.suggested, as: Suggestion.self)
@@ -30,6 +31,12 @@ extension Home {
 
         func tempTargets(hours: Int) -> [TempTarget] {
             tempTargetsStorage.recent().filter {
+                $0.createdAt.addingTimeInterval(hours.hours.timeInterval) > Date()
+            }
+        }
+
+        func carbs(hours: Int) -> [CarbsEntry] {
+            carbsStorage.recent().filter {
                 $0.createdAt.addingTimeInterval(hours.hours.timeInterval) > Date()
             }
         }
