@@ -13,6 +13,10 @@ extension Home {
             try? storage.retrieve(OpenAPS.Enact.suggested, as: Suggestion.self)
         }
 
+        var enactedSuggestion: Suggestion? {
+            try? storage.retrieve(OpenAPS.Enact.enacted, as: Suggestion.self)
+        }
+
         func fetchAndLoop() {
             apsManager.fetchAndLoop()
         }

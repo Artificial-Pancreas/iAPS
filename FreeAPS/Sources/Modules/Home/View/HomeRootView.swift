@@ -4,7 +4,7 @@ import SwiftUI
 extension Home {
     struct RootView: BaseView {
         @EnvironmentObject var viewModel: ViewModel<Provider>
-        @State var isPopupPresented = false
+        @State var isStatusPopupPresented = false
 
         private var numberFormatter: NumberFormatter {
             let formatter = NumberFormatter()
@@ -34,8 +34,14 @@ extension Home {
                     units: viewModel.units
                 )
                 .padding(.horizontal)
-                LoopView(suggestion: $viewModel.suggestion).onTapGesture {
-                    isPopupPresented = true
+                LoopView(
+                    suggestion: $viewModel.suggestion,
+                    enactedSuggestion: $viewModel.enactedSuggestion,
+                    closedLoop: $viewModel.closedLoop,
+                    timerDate: $viewModel.timerDate,
+                    isLooping: $viewModel.isLooping
+                ).onTapGesture {
+                    isStatusPopupPresented = true
                 }.onLongPressGesture {
                     viewModel.runLoop()
                 }
@@ -100,15 +106,21 @@ extension Home {
             .navigationTitle("Home")
             .navigationBarHidden(true)
             .ignoresSafeArea(.keyboard)
-            .popup(isPresented: isPopupPresented, alignment: .top, direction: .top) {
-                Text(viewModel.suggestion?.reason ?? "No sugestion found").font(.caption).padding().foregroundColor(.white)
-                    .background(
-                        RoundedRectangle(cornerRadius: 8, style: .continuous)
-                            .fill(Color(UIColor.darkGray))
-                    )
-                    .onTapGesture {
-                        isPopupPresented = false
-                    }
+            .popup(isPresented: isStatusPopupPresented, alignment: .top, direction: .top) {
+                VStack(alignment: .leading) {
+                    Text(viewModel.statusTitle).foregroundColor(.white)
+                        .padding(.bottom, 4)
+                    Text(viewModel.suggestion?.reason ?? "No sugestion found").font(.caption).foregroundColor(.white)
+                }
+                .padding()
+
+                .background(
+                    RoundedRectangle(cornerRadius: 8, style: .continuous)
+                        .fill(Color(UIColor.darkGray))
+                )
+                .onTapGesture {
+                    isStatusPopupPresented = false
+                }
             }
         }
     }

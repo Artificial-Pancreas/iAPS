@@ -16,6 +16,7 @@ struct DotInfo {
 
 struct MainChartView: View {
     private enum Config {
+        static let endID = "End"
         static let screenHours = 5
         static let basalHeight: CGFloat = 60
         static let topYPadding: CGFloat = 20
@@ -95,55 +96,65 @@ struct MainChartView: View {
     var body: some View {
         GeometryReader { geo in
             ZStack(alignment: .leading) {
-                // Y grid
-                Path { path in
-                    let range = glucoseYRange(fullSize: geo.size)
-                    let step = (range.maxY - range.minY) / CGFloat(Config.yLinesCount)
-                    for line in 0 ... Config.yLinesCount {
-                        path.move(to: CGPoint(x: 0, y: range.minY + CGFloat(line) * step))
-                        path.addLine(to: CGPoint(x: geo.size.width, y: range.minY + CGFloat(line) * step))
-                    }
-                }.stroke(Color.secondary, lineWidth: 0.2)
+                yGridView(fullSize: geo.size)
+                mainScrollView(fullSize: geo.size)
+                glucoseLabelsView(fullSize: geo.size)
+            }
+        }
+    }
 
-                ScrollView(.horizontal, showsIndicators: false) {
-                    ScrollViewReader { scroll in
-                        ZStack(alignment: .top) {
-                            tempTargetsView(fullSize: geo.size)
-                            basalView(fullSize: geo.size)
-                            mainView(fullSize: geo.size).id("End")
-                                .onChange(of: glucose) { _ in
-                                    scroll.scrollTo("End", anchor: .trailing)
-                                }
-                                .onChange(of: suggestion) { _ in
-                                    scroll.scrollTo("End", anchor: .trailing)
-                                }
-                                .onChange(of: tempBasals) { _ in
-                                    scroll.scrollTo("End", anchor: .trailing)
-                                }
-                                .onAppear {
-                                    // add trigger to the end of main queue
-                                    DispatchQueue.main.async {
-                                        scroll.scrollTo("End", anchor: .trailing)
-                                        didAppearTrigger = true
-                                    }
-                                }
+    private func mainScrollView(fullSize: CGSize) -> some View {
+        ScrollView(.horizontal, showsIndicators: false) {
+            ScrollViewReader { scroll in
+                ZStack(alignment: .top) {
+                    tempTargetsView(fullSize: fullSize)
+                    basalView(fullSize: fullSize)
+
+                    mainView(fullSize: fullSize).id(Config.endID)
+                        .onChange(of: glucose) { _ in
+                            scroll.scrollTo(Config.endID, anchor: .trailing)
                         }
-                    }
-                }
-                // Y glucose labels
-                ForEach(0 ..< Config.yLinesCount + 1) { line -> AnyView in
-                    let range = glucoseYRange(fullSize: geo.size)
-                    let yStep = (range.maxY - range.minY) / CGFloat(Config.yLinesCount)
-                    let valueStep = Double(range.maxValue - range.minValue) / Double(Config.yLinesCount)
-                    let value = round(Double(range.maxValue) - Double(line) * valueStep) *
-                        (units == .mmolL ? Double(GlucoseUnits.exchangeRate) : 1)
-
-                    return Text(glucoseFormatter.string(from: value as NSNumber)!)
-                        .position(CGPoint(x: geo.size.width - 12, y: range.minY + CGFloat(line) * yStep))
-                        .font(.caption2)
-                        .asAny()
+                        .onChange(of: suggestion) { _ in
+                            scroll.scrollTo(Config.endID, anchor: .trailing)
+                        }
+                        .onChange(of: tempBasals) { _ in
+                            scroll.scrollTo(Config.endID, anchor: .trailing)
+                        }
+                        .onAppear {
+                            // add trigger to the end of main queue
+                            DispatchQueue.main.async {
+                                scroll.scrollTo(Config.endID, anchor: .trailing)
+                                didAppearTrigger = true
+                            }
+                        }
                 }
             }
+        }
+    }
+
+    private func yGridView(fullSize: CGSize) -> some View {
+        Path { path in
+            let range = glucoseYRange(fullSize: fullSize)
+            let step = (range.maxY - range.minY) / CGFloat(Config.yLinesCount)
+            for line in 0 ... Config.yLinesCount {
+                path.move(to: CGPoint(x: 0, y: range.minY + CGFloat(line) * step))
+                path.addLine(to: CGPoint(x: fullSize.width, y: range.minY + CGFloat(line) * step))
+            }
+        }.stroke(Color.secondary, lineWidth: 0.2)
+    }
+
+    private func glucoseLabelsView(fullSize: CGSize) -> some View {
+        ForEach(0 ..< Config.yLinesCount + 1) { line -> AnyView in
+            let range = glucoseYRange(fullSize: fullSize)
+            let yStep = (range.maxY - range.minY) / CGFloat(Config.yLinesCount)
+            let valueStep = Double(range.maxValue - range.minValue) / Double(Config.yLinesCount)
+            let value = round(Double(range.maxValue) - Double(line) * valueStep) *
+                (units == .mmolL ? Double(GlucoseUnits.exchangeRate) : 1)
+
+            return Text(glucoseFormatter.string(from: value as NSNumber)!)
+                .position(CGPoint(x: fullSize.width - 12, y: range.minY + CGFloat(line) * yStep))
+                .font(.caption2)
+                .asAny()
         }
     }
 
@@ -152,7 +163,7 @@ struct MainChartView: View {
             tempBasalPath.fill(Color.blue)
             tempBasalPath.stroke(Color.blue, lineWidth: 1)
             regularBasalPath.stroke(Color.yellow, lineWidth: 1)
-            Text(lastBasalRateString)
+            Text(lastBasalRateString())
                 .foregroundColor(.blue)
                 .font(.caption2)
                 .position(CGPoint(x: lastBasalPoint(fullSize: fullSize).x + 30, y: Config.basalHeight / 2))
@@ -179,39 +190,46 @@ struct MainChartView: View {
         Group {
             VStack {
                 ZStack {
-                    // X grid
-                    Path { path in
-                        for hour in 0 ..< hours + hours {
-                            let x = firstHourPosition(viewWidth: fullSize.width) +
-                                oneSecondStep(viewWidth: fullSize.width) *
-                                CGFloat(hour) * CGFloat(1.hours.timeInterval)
-                            path.move(to: CGPoint(x: x, y: 0))
-                            path.addLine(to: CGPoint(x: x, y: fullSize.height - 20))
-                        }
-                    }
-                    .stroke(Color.secondary, lineWidth: 0.2)
+                    xGridView(fullSize: fullSize)
                     carbsView(fullSize: fullSize)
                     bolusView(fullSize: fullSize)
                     glucoseView(fullSize: fullSize)
                     predictionsView(fullSize: fullSize)
                 }
-                ZStack {
-                    // X time labels
-                    ForEach(0 ..< hours + hours) { hour in
-                        Text(dateDormatter.string(from: firstHourDate().addingTimeInterval(hour.hours.timeInterval)))
-                            .font(.caption)
-                            .position(
-                                x: firstHourPosition(viewWidth: fullSize.width) +
-                                    oneSecondStep(viewWidth: fullSize.width) *
-                                    CGFloat(hour) * CGFloat(1.hours.timeInterval),
-                                y: 10.0
-                            )
-                            .foregroundColor(.secondary)
-                    }
-                }.frame(maxHeight: 20)
+                timeLabelsView(fullSize: fullSize)
             }
         }
         .frame(width: fullGlucoseWidth(viewWidth: fullSize.width) + additionalWidth(viewWidth: fullSize.width))
+    }
+
+    private func xGridView(fullSize: CGSize) -> some View {
+        Path { path in
+            for hour in 0 ..< hours + hours {
+                let x = firstHourPosition(viewWidth: fullSize.width) +
+                    oneSecondStep(viewWidth: fullSize.width) *
+                    CGFloat(hour) * CGFloat(1.hours.timeInterval)
+                path.move(to: CGPoint(x: x, y: 0))
+                path.addLine(to: CGPoint(x: x, y: fullSize.height - 20))
+            }
+        }
+        .stroke(Color.secondary, lineWidth: 0.2)
+    }
+
+    private func timeLabelsView(fullSize: CGSize) -> some View {
+        ZStack {
+            // X time labels
+            ForEach(0 ..< hours + hours) { hour in
+                Text(dateDormatter.string(from: firstHourDate().addingTimeInterval(hour.hours.timeInterval)))
+                    .font(.caption)
+                    .position(
+                        x: firstHourPosition(viewWidth: fullSize.width) +
+                            oneSecondStep(viewWidth: fullSize.width) *
+                            CGFloat(hour) * CGFloat(1.hours.timeInterval),
+                        y: 10.0
+                    )
+                    .foregroundColor(.secondary)
+            }
+        }.frame(maxHeight: 20)
     }
 
     private func glucoseView(fullSize: CGSize) -> some View {
@@ -334,9 +352,11 @@ struct MainChartView: View {
             calculateCarbsDots(fullSize: fullSize)
         }
     }
+}
 
-    // MARK: - Calculations
+// MARK: - Calculations
 
+extension MainChartView {
     private func calculateGlucoseDots(fullSize: CGSize) {
         calculationQueue.async {
             let dots = glucose.concurrentMap { value -> CGRect in
@@ -587,7 +607,7 @@ struct MainChartView: View {
         return CGPoint(x: x, y: y)
     }
 
-    private var lastBasalRateString: String {
+    private func lastBasalRateString() -> String {
         let lastBasal = Array(tempBasals.suffix(2))
         guard lastBasal.count == 2 else {
             return ""

@@ -61,3 +61,7 @@ extension Predictions {
 protocol SuggestionObserver {
     func suggestionDidUpdate(_ suggestion: Suggestion)
 }
+
+protocol EnactedSuggestionObserver {
+    func enactedSuggestionDidUpdate(_ suggestion: Suggestion)
+}

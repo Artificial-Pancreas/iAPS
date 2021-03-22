@@ -6,6 +6,7 @@ enum Home {
 
 protocol HomeProvider: Provider {
     var suggestion: Suggestion? { get }
+    var enactedSuggestion: Suggestion? { get }
     func fetchAndLoop()
     func filteredGlucose(hours: Int) -> [BloodGlucose]
     func pumpHistory(hours: Int) -> [PumpHistoryEvent]

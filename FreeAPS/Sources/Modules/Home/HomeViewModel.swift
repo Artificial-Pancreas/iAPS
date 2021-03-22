@@ -5,11 +5,13 @@ extension Home {
     class ViewModel<Provider>: BaseViewModel<Provider>, ObservableObject where Provider: HomeProvider {
         @Injected() var broadcaster: Broadcaster!
         @Injected() var settingsManager: SettingsManager!
-
+        @Injected() var apsManager: APSManager!
+        private let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
         private(set) var filteredHours = 24
 
         @Published var glucose: [BloodGlucose] = []
         @Published var suggestion: Suggestion?
+        @Published var enactedSuggestion: Suggestion?
         @Published var recentGlucose: BloodGlucose?
         @Published var glucoseDelta: Int?
         @Published var tempBasals: [PumpHistoryEvent] = []
@@ -18,6 +20,10 @@ extension Home {
         @Published var basalProfile: [BasalProfileEntry] = []
         @Published var tempTargets: [TempTarget] = []
         @Published var carbs: [CarbsEntry] = []
+        @Published var timerDate = Date()
+        @Published var closedLoop = false
+        @Published var isLooping = false
+        @Published var statusTitle = ""
 
         @Published var allowManualTemp = false
         private(set) var units: GlucoseUnits = .mmolL
@@ -32,8 +38,11 @@ extension Home {
             setupCarbs()
 
             suggestion = provider.suggestion
+            enactedSuggestion = provider.enactedSuggestion
             units = settingsManager.settings.units
             allowManualTemp = !settingsManager.settings.closedLoop
+            closedLoop = settingsManager.settings.closedLoop
+            setStatusTitle()
 
             broadcaster.register(GlucoseObserver.self, observer: self)
             broadcaster.register(SuggestionObserver.self, observer: self)
@@ -43,6 +52,15 @@ extension Home {
             broadcaster.register(BasalProfileObserver.self, observer: self)
             broadcaster.register(TempTargetsObserver.self, observer: self)
             broadcaster.register(CarbsObserver.self, observer: self)
+            broadcaster.register(EnactedSuggestionObserver.self, observer: self)
+
+            timer.assign(to: \.timerDate, on: self)
+                .store(in: &lifetime)
+
+            apsManager.isLooping
+                .receive(on: DispatchQueue.main)
+                .assign(to: \.isLooping, on: self)
+                .store(in: &lifetime)
         }
 
         func addCarbs() {
@@ -124,6 +142,21 @@ extension Home {
                 self.carbs = self.provider.carbs(hours: self.filteredHours)
             }
         }
+
+        private func setStatusTitle() {
+            guard let suggestion = suggestion else {
+                statusTitle = "No suggestion"
+                return
+            }
+
+            if closedLoop,
+               enactedSuggestion?.deliverAt == suggestion.deliverAt || (suggestion.rate == nil && suggestion.units == nil)
+            {
+                statusTitle = "Enacted"
+            } else {
+                statusTitle = "Suggested"
+            }
+        }
     }
 }
 
@@ -135,7 +168,8 @@ extension Home.ViewModel:
     PumpSettingsObserver,
     BasalProfileObserver,
     TempTargetsObserver,
-    CarbsObserver
+    CarbsObserver,
+    EnactedSuggestionObserver
 {
     func glucoseDidUpdate(_: [BloodGlucose]) {
         setupGlucose()
@@ -143,10 +177,12 @@ extension Home.ViewModel:
 
     func suggestionDidUpdate(_ suggestion: Suggestion) {
         self.suggestion = suggestion
+        setStatusTitle()
     }
 
     func settingsDidChange(_ settings: FreeAPSSettings) {
         allowManualTemp = !settings.closedLoop
+        closedLoop = settingsManager.settings.closedLoop
     }
 
     func pumpHistoryDidUpdate(_: [PumpHistoryEvent]) {
@@ -168,5 +204,10 @@ extension Home.ViewModel:
 
     func carbsDidUpdate(_: [CarbsEntry]) {
         setupCarbs()
+    }
+
+    func enactedSuggestionDidUpdate(_ suggestion: Suggestion) {
+        enactedSuggestion = suggestion
+        setStatusTitle()
     }
 }

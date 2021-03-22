@@ -11,6 +11,7 @@ protocol APSManager {
     func enactBolus(amount: Double)
     var pumpManager: PumpManagerUI? { get set }
     var pumpDisplayState: CurrentValueSubject<PumpDisplayState?, Never> { get }
+    var isLooping: CurrentValueSubject<Bool, Never> { get }
     func enactTempBasal(rate: Double, duration: TimeInterval)
     func makeProfiles() -> AnyPublisher<Bool, Never>
 }
@@ -37,6 +38,8 @@ final class BaseAPSManager: APSManager, Injectable {
         get { deviceDataManager.pumpManager }
         set { deviceDataManager.pumpManager = newValue }
     }
+
+    let isLooping = CurrentValueSubject<Bool, Never>(false)
 
     var pumpDisplayState: CurrentValueSubject<PumpDisplayState?, Never> {
         deviceDataManager.pumpDisplayState
@@ -83,6 +86,7 @@ final class BaseAPSManager: APSManager, Injectable {
     }
 
     private func loop() {
+        isLooping.send(true)
         Publishers.CombineLatest3(
             nightscout.fetchGlucose(),
             nightscout.fetchCarbs(),
@@ -98,7 +102,11 @@ final class BaseAPSManager: APSManager, Injectable {
                 self.nightscout.uploadStatus()
                 if self.settings.closedLoop {
                     self.enactSuggested()
+                } else {
+                    self.isLooping.send(false)
                 }
+            } else {
+                self.isLooping.send(false)
             }
         }.store(in: &lifetime)
     }
@@ -318,9 +326,13 @@ final class BaseAPSManager: APSManager, Injectable {
     }
 
     private func enactSuggested() {
-        guard let suggested = try? storage.retrieve(OpenAPS.Enact.suggested, as: Suggestion.self) else { return }
+        guard let suggested = try? storage.retrieve(OpenAPS.Enact.suggested, as: Suggestion.self) else {
+            isLooping.send(false)
+            return
+        }
 
         guard let pump = pumpManager, verifyStatus() else {
+            isLooping.send(false)
             return
         }
 
@@ -355,6 +367,7 @@ final class BaseAPSManager: APSManager, Injectable {
                 } else {
                     self?.reportEnacted(suggestion: suggested, received: true)
                 }
+                self?.isLooping.send(false)
             } receiveValue: {
                 debug(.apsManager, "Loop succeeded")
             }.store(in: &lifetime)
@@ -366,6 +379,12 @@ final class BaseAPSManager: APSManager, Injectable {
             enacted.timestamp = Date()
             enacted.recieved = received
             try? storage.save(enacted, as: OpenAPS.Enact.enacted)
+            debug(.apsManager, "Suggestion enacted")
+            DispatchQueue.main.async {
+                self.broadcaster.notify(EnactedSuggestionObserver.self, on: .main) {
+                    $0.enactedSuggestionDidUpdate(enacted)
+                }
+            }
             nightscout.uploadStatus()
         }
     }
