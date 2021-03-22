@@ -9,6 +9,11 @@ private enum PredictionType: Hashable {
     case uam
 }
 
+struct DotInfo {
+    let rect: CGRect
+    let value: Decimal
+}
+
 struct MainChartView: View {
     private enum Config {
         static let screenHours = 5
@@ -39,13 +44,15 @@ struct MainChartView: View {
     @State var didAppearTrigger = false
     @State private var glucoseDots: [CGRect] = []
     @State private var predictionDots: [PredictionType: [CGRect]] = [:]
-    @State private var bolusDots: [CGRect] = []
+    @State private var bolusDots: [DotInfo] = []
     @State private var bolusPath = Path()
     @State private var tempBasalPath = Path()
     @State private var regularBasalPath = Path()
     @State private var tempTargetsPath = Path()
-    @State private var carbsDots: [CGRect] = []
+    @State private var carbsDots: [DotInfo] = []
     @State private var carbsPath = Path()
+
+    private let calculationQueue = DispatchQueue(label: "MainChartView.calculationQueue")
 
     private var dateDormatter: DateFormatter {
         let formatter = DateFormatter()
@@ -229,9 +236,9 @@ struct MainChartView: View {
             bolusPath
                 .stroke(Color.primary, lineWidth: 0.5)
 
-            ForEach(bolusDots.indexed(), id: \.1.minX) { index, rect -> AnyView in
-                let position = CGPoint(x: rect.midX, y: rect.maxY + 8)
-                return Text(bolusFormatter.string(from: (boluses[index].amount ?? 0) as NSNumber)!).font(.caption2)
+            ForEach(bolusDots, id: \.rect.minX) { info -> AnyView in
+                let position = CGPoint(x: info.rect.midX, y: info.rect.maxY + 8)
+                return Text(bolusFormatter.string(from: info.value as NSNumber)!).font(.caption2)
                     .position(position)
                     .asAny()
             }
@@ -251,9 +258,9 @@ struct MainChartView: View {
             carbsPath
                 .stroke(Color.primary, lineWidth: 0.5)
 
-            ForEach(carbsDots.indexed(), id: \.1.minX) { index, rect -> AnyView in
-                let position = CGPoint(x: rect.midX, y: rect.minY - 8)
-                return Text(carbsFormatter.string(from: carbs[index].carbs as NSNumber)!).font(.caption2)
+            ForEach(carbsDots, id: \.rect.minX) { info -> AnyView in
+                let position = CGPoint(x: info.rect.midX, y: info.rect.minY - 8)
+                return Text(carbsFormatter.string(from: info.value as NSNumber)!).font(.caption2)
                     .position(position)
                     .asAny()
             }
@@ -313,122 +320,164 @@ struct MainChartView: View {
             calculatePredictionDots(fullSize: fullSize, type: .cob)
             calculatePredictionDots(fullSize: fullSize, type: .zt)
             calculatePredictionDots(fullSize: fullSize, type: .uam)
+            calculateGlucoseDots(fullSize: fullSize)
         }
         .onChange(of: didAppearTrigger) { _ in
             calculatePredictionDots(fullSize: fullSize, type: .iob)
             calculatePredictionDots(fullSize: fullSize, type: .cob)
             calculatePredictionDots(fullSize: fullSize, type: .zt)
             calculatePredictionDots(fullSize: fullSize, type: .uam)
+            calculateGlucoseDots(fullSize: fullSize)
         }
     }
 
     // MARK: - Calculations
 
     private func calculateGlucoseDots(fullSize: CGSize) {
-        glucoseDots = glucose.concurrentMap { value -> CGRect in
-            let position = glucoseToCoordinate(value, fullSize: fullSize)
-            return CGRect(x: position.x - 2, y: position.y - 2, width: 4, height: 4)
+        calculationQueue.async {
+            let dots = glucose.concurrentMap { value -> CGRect in
+                let position = glucoseToCoordinate(value, fullSize: fullSize)
+                return CGRect(x: position.x - 2, y: position.y - 2, width: 4, height: 4)
+            }
+
+            DispatchQueue.main.async {
+                glucoseDots = dots
+            }
         }
     }
 
     private func calculateBolusDots(fullSize: CGSize) {
-        bolusDots = boluses.map { value -> CGRect in
-            let center = timeToInterpolatedPoint(value.timestamp.timeIntervalSince1970, fullSize: fullSize)
-            let size = Config.bolusSize + CGFloat(value.amount ?? 0) * Config.bolusScale
-            return CGRect(x: center.x - size / 2, y: center.y - size / 2, width: size, height: size)
-        }
-        bolusPath = Path { path in
-            for rect in bolusDots {
-                path.addEllipse(in: rect)
+        calculationQueue.async {
+            let dots = boluses.map { value -> DotInfo in
+                let center = timeToInterpolatedPoint(value.timestamp.timeIntervalSince1970, fullSize: fullSize)
+                let size = Config.bolusSize + CGFloat(value.amount ?? 0) * Config.bolusScale
+                let rect = CGRect(x: center.x - size / 2, y: center.y - size / 2, width: size, height: size)
+                return DotInfo(rect: rect, value: value.amount ?? 0)
+            }
+
+            let path = Path { path in
+                for dot in dots {
+                    path.addEllipse(in: dot.rect)
+                }
+            }
+
+            DispatchQueue.main.async {
+                bolusDots = dots
+                bolusPath = path
             }
         }
     }
 
     private func calculateCarbsDots(fullSize: CGSize) {
-        carbsDots = carbs.map { value -> CGRect in
-            let center = timeToInterpolatedPoint(value.createdAt.timeIntervalSince1970, fullSize: fullSize)
-            let size = Config.carbsSize + CGFloat(value.carbs) * Config.carbsScale
-            return CGRect(x: center.x - size / 2, y: center.y - size / 2, width: size, height: size)
-        }
-        carbsPath = Path { path in
-            for rect in carbsDots {
-                path.addEllipse(in: rect)
+        calculationQueue.async {
+            let dots = carbs.map { value -> DotInfo in
+                let center = timeToInterpolatedPoint(value.createdAt.timeIntervalSince1970, fullSize: fullSize)
+                let size = Config.carbsSize + CGFloat(value.carbs) * Config.carbsScale
+                let rect = CGRect(x: center.x - size / 2, y: center.y - size / 2, width: size, height: size)
+                return DotInfo(rect: rect, value: value.carbs)
+            }
+
+            let path = Path { path in
+                for dot in dots {
+                    path.addEllipse(in: dot.rect)
+                }
+            }
+
+            DispatchQueue.main.async {
+                carbsDots = dots
+                carbsPath = path
             }
         }
     }
 
     private func calculatePredictionDots(fullSize: CGSize, type: PredictionType) {
-        let values: [Int] = { () -> [Int] in
-            switch type {
-            case .iob:
-                return suggestion?.predictions?.iob ?? []
-            case .cob:
-                return suggestion?.predictions?.cob ?? []
-            case .zt:
-                return suggestion?.predictions?.zt ?? []
-            case .uam:
-                return suggestion?.predictions?.uam ?? []
-            }
-        }()
+        calculationQueue.async {
+            let values: [Int] = { () -> [Int] in
+                switch type {
+                case .iob:
+                    return suggestion?.predictions?.iob ?? []
+                case .cob:
+                    return suggestion?.predictions?.cob ?? []
+                case .zt:
+                    return suggestion?.predictions?.zt ?? []
+                case .uam:
+                    return suggestion?.predictions?.uam ?? []
+                }
+            }()
 
-        var index = 0
-        predictionDots[type] = values.map { value -> CGRect in
-            let position = predictionToCoordinate(value, fullSize: fullSize, index: index)
-            index += 1
-            return CGRect(x: position.x - 2, y: position.y - 2, width: 4, height: 4)
+            var index = 0
+            let dots = values.map { value -> CGRect in
+                let position = predictionToCoordinate(value, fullSize: fullSize, index: index)
+                index += 1
+                return CGRect(x: position.x - 2, y: position.y - 2, width: 4, height: 4)
+            }
+            DispatchQueue.main.async {
+                predictionDots[type] = dots
+            }
         }
     }
 
     private func calculateBasalPoints(fullSize: CGSize) {
-        let dayAgoTime = Date().addingTimeInterval(-1.days.timeInterval).timeIntervalSince1970
-        let firstTempTime = (tempBasals.first?.timestamp ?? Date()).timeIntervalSince1970
-        var lastTimeEnd = firstTempTime
-        let firstRegularBasalPoints = findRegularBasalPoints(timeBegin: dayAgoTime, timeEnd: firstTempTime, fullSize: fullSize)
-        let tempBasalPoints = firstRegularBasalPoints + tempBasals.chunks(ofCount: 2).map { chunk -> [CGPoint] in
-            let chunk = Array(chunk)
-            guard chunk.count == 2, chunk[0].type == .tempBasal, chunk[1].type == .tempBasalDuration else { return [] }
-            let timeBegin = chunk[0].timestamp.timeIntervalSince1970
-            let timeEnd = timeBegin + (chunk[1].durationMin ?? 0).minutes.timeInterval
-            let rateCost = Config.basalHeight / CGFloat(maxBasal)
-            let x0 = timeToXCoordinate(timeBegin, fullSize: fullSize)
-            let y0 = Config.basalHeight - CGFloat(chunk[0].rate ?? 0) * rateCost
-            let x1 = timeToXCoordinate(timeEnd, fullSize: fullSize)
-            let y1 = Config.basalHeight
-            let regularPoints = findRegularBasalPoints(timeBegin: lastTimeEnd, timeEnd: timeBegin, fullSize: fullSize)
-            lastTimeEnd = timeEnd
-            return regularPoints + [CGPoint(x: x0, y: y0), CGPoint(x: x1, y: y1)]
-        }.flatMap { $0 }
-        tempBasalPath = Path { path in
-            var yPoint: CGFloat = Config.basalHeight
-            path.move(to: CGPoint(x: 0, y: yPoint))
+        calculationQueue.async {
+            let dayAgoTime = Date().addingTimeInterval(-1.days.timeInterval).timeIntervalSince1970
+            let firstTempTime = (tempBasals.first?.timestamp ?? Date()).timeIntervalSince1970
+            var lastTimeEnd = firstTempTime
+            let firstRegularBasalPoints = findRegularBasalPoints(
+                timeBegin: dayAgoTime,
+                timeEnd: firstTempTime,
+                fullSize: fullSize
+            )
+            let tempBasalPoints = firstRegularBasalPoints + tempBasals.chunks(ofCount: 2).map { chunk -> [CGPoint] in
+                let chunk = Array(chunk)
+                guard chunk.count == 2, chunk[0].type == .tempBasal, chunk[1].type == .tempBasalDuration else { return [] }
+                let timeBegin = chunk[0].timestamp.timeIntervalSince1970
+                let timeEnd = timeBegin + (chunk[1].durationMin ?? 0).minutes.timeInterval
+                let rateCost = Config.basalHeight / CGFloat(maxBasal)
+                let x0 = timeToXCoordinate(timeBegin, fullSize: fullSize)
+                let y0 = Config.basalHeight - CGFloat(chunk[0].rate ?? 0) * rateCost
+                let x1 = timeToXCoordinate(timeEnd, fullSize: fullSize)
+                let y1 = Config.basalHeight
+                let regularPoints = findRegularBasalPoints(timeBegin: lastTimeEnd, timeEnd: timeBegin, fullSize: fullSize)
+                lastTimeEnd = timeEnd
+                return regularPoints + [CGPoint(x: x0, y: y0), CGPoint(x: x1, y: y1)]
+            }.flatMap { $0 }
+            let tempBasalPath = Path { path in
+                var yPoint: CGFloat = Config.basalHeight
+                path.move(to: CGPoint(x: 0, y: yPoint))
 
-            for point in tempBasalPoints {
-                path.addLine(to: CGPoint(x: point.x, y: yPoint))
-                path.addLine(to: point)
-                yPoint = point.y
+                for point in tempBasalPoints {
+                    path.addLine(to: CGPoint(x: point.x, y: yPoint))
+                    path.addLine(to: point)
+                    yPoint = point.y
+                }
+                let lastPoint = lastBasalPoint(fullSize: fullSize)
+                path.addLine(to: CGPoint(x: lastPoint.x, y: Config.basalHeight))
+                path.addLine(to: CGPoint(x: 0, y: Config.basalHeight))
             }
-            let lastPoint = lastBasalPoint(fullSize: fullSize)
-            path.addLine(to: CGPoint(x: lastPoint.x, y: Config.basalHeight))
-            path.addLine(to: CGPoint(x: 0, y: Config.basalHeight))
-        }
 
-        let endDateTime = dayAgoTime + 1.days.timeInterval + 6.hours.timeInterval
-        let regularBasalPoints = findRegularBasalPoints(
-            timeBegin: dayAgoTime,
-            timeEnd: endDateTime,
-            fullSize: fullSize
-        )
+            let endDateTime = dayAgoTime + 1.days.timeInterval + 6.hours.timeInterval
+            let regularBasalPoints = findRegularBasalPoints(
+                timeBegin: dayAgoTime,
+                timeEnd: endDateTime,
+                fullSize: fullSize
+            )
 
-        regularBasalPath = Path { path in
-            var yPoint: CGFloat = Config.basalHeight
-            path.move(to: CGPoint(x: -50, y: yPoint))
+            let regularBasalPath = Path { path in
+                var yPoint: CGFloat = Config.basalHeight
+                path.move(to: CGPoint(x: -50, y: yPoint))
 
-            for point in regularBasalPoints {
-                path.addLine(to: CGPoint(x: point.x, y: yPoint))
-                path.addLine(to: point)
-                yPoint = point.y
+                for point in regularBasalPoints {
+                    path.addLine(to: CGPoint(x: point.x, y: yPoint))
+                    path.addLine(to: point)
+                    yPoint = point.y
+                }
+                path.addLine(to: CGPoint(x: timeToXCoordinate(endDateTime, fullSize: fullSize), y: yPoint))
             }
-            path.addLine(to: CGPoint(x: timeToXCoordinate(endDateTime, fullSize: fullSize), y: yPoint))
+
+            DispatchQueue.main.async {
+                self.tempBasalPath = tempBasalPath
+                self.regularBasalPath = regularBasalPath
+            }
         }
     }
 
