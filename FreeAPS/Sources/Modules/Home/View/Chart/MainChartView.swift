@@ -485,6 +485,45 @@ struct MainChartView: View {
         }
     }
 
+    private func calculateTempTargetsRects(fullSize: CGSize) {
+        calculationQueue.async {
+            var rects = tempTargets.map { tempTarget -> CGRect in
+                let x0 = timeToXCoordinate(tempTarget.createdAt.timeIntervalSince1970, fullSize: fullSize)
+                let y0 = glucoseToYCoordinate(Int(tempTarget.targetTop), fullSize: fullSize)
+                let x1 = timeToXCoordinate(
+                    tempTarget.createdAt.timeIntervalSince1970 + Int(tempTarget.duration).minutes.timeInterval,
+                    fullSize: fullSize
+                )
+                let y1 = glucoseToYCoordinate(Int(tempTarget.targetBottom), fullSize: fullSize)
+                return CGRect(
+                    x: x0,
+                    y: y0 - 3,
+                    width: x1 - x0,
+                    height: y1 - y0 + 6
+                )
+            }
+            if rects.count > 1 {
+                rects = rects.reduce([]) { result, rect -> [CGRect] in
+                    guard var last = result.last else { return [rect] }
+                    if last.origin.x + last.width > rect.origin.x {
+                        last.size.width = rect.origin.x - last.origin.x
+                    }
+                    var res = Array(result.dropLast())
+                    res.append(contentsOf: [last, rect])
+                    return res
+                }
+            }
+
+            let path = Path { path in
+                path.addRects(rects)
+            }
+
+            DispatchQueue.main.async {
+                tempTargetsPath = path
+            }
+        }
+    }
+
     private func findRegularBasalPoints(timeBegin: TimeInterval, timeEnd: TimeInterval, fullSize: CGSize) -> [CGPoint] {
         guard timeBegin < timeEnd else {
             return []
@@ -700,38 +739,5 @@ struct MainChartView: View {
         let lastDeltaTime = firstHour.timeIntervalSince(firstDate)
         let oneSecondWidth = oneSecondStep(viewWidth: viewWidth)
         return oneSecondWidth * CGFloat(lastDeltaTime)
-    }
-
-    private func calculateTempTargetsRects(fullSize: CGSize) {
-        var rects = tempTargets.map { tempTarget -> CGRect in
-            let x0 = timeToXCoordinate(tempTarget.createdAt.timeIntervalSince1970, fullSize: fullSize)
-            let y0 = glucoseToYCoordinate(Int(tempTarget.targetTop), fullSize: fullSize)
-            let x1 = timeToXCoordinate(
-                tempTarget.createdAt.timeIntervalSince1970 + Int(tempTarget.duration).minutes.timeInterval,
-                fullSize: fullSize
-            )
-            let y1 = glucoseToYCoordinate(Int(tempTarget.targetBottom), fullSize: fullSize)
-            return CGRect(
-                x: x0,
-                y: y0 - 3,
-                width: x1 - x0,
-                height: y1 - y0 + 6
-            )
-        }
-        if rects.count > 1 {
-            rects = rects.reduce([]) { result, rect -> [CGRect] in
-                guard var last = result.last else { return [rect] }
-                if last.origin.x + last.width > rect.origin.x {
-                    last.size.width = rect.origin.x - last.origin.x
-                }
-                var res = Array(result.dropLast())
-                res.append(contentsOf: [last, rect])
-                return res
-            }
-        }
-
-        tempTargetsPath = Path { path in
-            path.addRects(rects)
-        }
     }
 }
