@@ -6,7 +6,7 @@ extension Home {
         @Injected() var broadcaster: Broadcaster!
         @Injected() var settingsManager: SettingsManager!
         @Injected() var apsManager: APSManager!
-        private let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
+        private let timer = Timer.publish(every: 5, on: .main, in: .common).autoconnect()
         private(set) var filteredHours = 24
 
         @Published var glucose: [BloodGlucose] = []
