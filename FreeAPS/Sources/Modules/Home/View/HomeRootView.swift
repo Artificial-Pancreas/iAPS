@@ -73,17 +73,26 @@ extension Home {
                         HStack {
                             Button { viewModel.showModal(for: .addCarbs) }
                             label: {
-                                Image(systemName: "circlebadge.2.fill")
+                                Image("carbs")
+                                    .renderingMode(.template)
+                                    .resizable()
+                                    .frame(width: 24, height: 24)
                             }.foregroundColor(.green)
                             Spacer()
                             Button { viewModel.showModal(for: .addTempTarget) }
                             label: {
-                                Image(systemName: "target")
+                                Image("target")
+                                    .renderingMode(.template)
+                                    .resizable()
+                                    .frame(width: 24, height: 24)
                             }.foregroundColor(.green)
                             Spacer()
                             Button { viewModel.showModal(for: .bolus) }
                             label: {
-                                Image(systemName: "drop.fill")
+                                Image("bolus")
+                                    .renderingMode(.template)
+                                    .resizable()
+                                    .frame(width: 24, height: 24)
                             }.foregroundColor(.orange)
                             Spacer()
                             if viewModel.allowManualTemp {
@@ -95,7 +104,10 @@ extension Home {
                             }
                             Button { viewModel.showModal(for: .settings) }
                             label: {
-                                Image(systemName: "gearshape")
+                                Image("settings1")
+                                    .renderingMode(.template)
+                                    .resizable()
+                                    .frame(width: 24, height: 24)
                             }.foregroundColor(.gray)
                         }
                         .padding(.horizontal, 24)
