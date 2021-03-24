@@ -12,6 +12,7 @@ struct LoopView: View {
     @Binding var closedLoop: Bool
     @Binding var timerDate: Date
     @Binding var isLooping: Bool
+    @Binding var lastLoopDate: Date
 
     private var dateFormatter: DateFormatter {
         let formatter = DateFormatter()
@@ -35,8 +36,8 @@ struct LoopView: View {
             Spacer()
             if isLooping {
                 Text("looping").font(.caption2)
-            } else if let date = actualSuggestion?.timestamp {
-                Text("\(Int((timerDate.timeIntervalSince(date) - Config.lag) / 60) + 1) min").font(.caption)
+            } else if actualSuggestion?.timestamp != nil {
+                Text("\(Int((timerDate.timeIntervalSince(lastLoopDate) - Config.lag) / 60) + 1) min").font(.caption)
             } else {
                 Text("--").font(.caption)
             }
@@ -44,10 +45,10 @@ struct LoopView: View {
     }
 
     private var color: Color {
-        guard let lastDate = actualSuggestion?.timestamp else {
+        guard actualSuggestion?.timestamp != nil else {
             return Color(UIColor(named: "LoopGray")!)
         }
-        let delta = timerDate.timeIntervalSince(lastDate) - Config.lag
+        let delta = timerDate.timeIntervalSince(lastLoopDate) - Config.lag
 
         if delta <= 5.minutes.timeInterval {
             return Color(UIColor(named: "LoopGreen")!)

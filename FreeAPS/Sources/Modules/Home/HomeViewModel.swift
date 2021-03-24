@@ -24,6 +24,7 @@ extension Home {
         @Published var closedLoop = false
         @Published var isLooping = false
         @Published var statusTitle = ""
+        @Published var lastLoopDate: Date = .distantPast
 
         @Published var allowManualTemp = false
         private(set) var units: GlucoseUnits = .mmolL
@@ -44,6 +45,14 @@ extension Home {
             closedLoop = settingsManager.settings.closedLoop
             setStatusTitle()
 
+            if closedLoop,
+               enactedSuggestion?.deliverAt == suggestion?.deliverAt || (suggestion?.rate == nil && suggestion?.units == nil)
+            {
+                lastLoopDate = enactedSuggestion?.timestamp ?? .distantPast
+            } else {
+                lastLoopDate = suggestion?.timestamp ?? .distantPast
+            }
+
             broadcaster.register(GlucoseObserver.self, observer: self)
             broadcaster.register(SuggestionObserver.self, observer: self)
             broadcaster.register(SettingsObserver.self, observer: self)
@@ -60,6 +69,11 @@ extension Home {
             apsManager.isLooping
                 .receive(on: DispatchQueue.main)
                 .assign(to: \.isLooping, on: self)
+                .store(in: &lifetime)
+
+            apsManager.lastLoopDate
+                .receive(on: DispatchQueue.main)
+                .assign(to: \.lastLoopDate, on: self)
                 .store(in: &lifetime)
         }
 

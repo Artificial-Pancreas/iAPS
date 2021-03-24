@@ -12,8 +12,10 @@ protocol APSManager {
     var pumpManager: PumpManagerUI? { get set }
     var pumpDisplayState: CurrentValueSubject<PumpDisplayState?, Never> { get }
     var isLooping: CurrentValueSubject<Bool, Never> { get }
+    var lastLoopDate: PassthroughSubject<Date, Never> { get }
     func enactTempBasal(rate: Double, duration: TimeInterval)
     func makeProfiles() -> AnyPublisher<Bool, Never>
+    func determineBasal() -> AnyPublisher<Bool, Never>
 }
 
 final class BaseAPSManager: APSManager, Injectable {
@@ -40,6 +42,7 @@ final class BaseAPSManager: APSManager, Injectable {
     }
 
     let isLooping = CurrentValueSubject<Bool, Never>(false)
+    let lastLoopDate = PassthroughSubject<Date, Never>()
 
     var pumpDisplayState: CurrentValueSubject<PumpDisplayState?, Never> {
         deviceDataManager.pumpDisplayState
@@ -92,7 +95,7 @@ final class BaseAPSManager: APSManager, Injectable {
             nightscout.fetchCarbs(),
             nightscout.fetchTempTargets()
         )
-        .flatMap { _ in self.daylyAutotune() }
+        .flatMap { _ in self.dailyAutotune() }
         .flatMap { _ in self.autosens() }
         .flatMap { _ in self.determineBasal() }
         .sink { _ in } receiveValue: { [weak self] ok in
@@ -104,6 +107,7 @@ final class BaseAPSManager: APSManager, Injectable {
                     self.enactSuggested()
                 } else {
                     self.isLooping.send(false)
+                    self.lastLoopDate.send(Date())
                 }
             } else {
                 self.isLooping.send(false)
@@ -134,7 +138,7 @@ final class BaseAPSManager: APSManager, Injectable {
         return Just(true).eraseToAnyPublisher()
     }
 
-    private func determineBasal() -> AnyPublisher<Bool, Never> {
+    func determineBasal() -> AnyPublisher<Bool, Never> {
         guard let glucose = try? storage.retrieve(OpenAPS.Monitor.glucose, as: [BloodGlucose].self), glucose.count >= 36 else {
             debug(.apsManager, "Not enough glucose data")
             return Just(false).eraseToAnyPublisher()
@@ -198,6 +202,7 @@ final class BaseAPSManager: APSManager, Injectable {
             switch result {
             case .success:
                 debug(.apsManager, "Bolus succeeded")
+                _ = self.determineBasal()
             case let .failure(error):
                 debug(.apsManager, "Bolus failed with error: \(error.localizedDescription)")
             }
@@ -220,7 +225,7 @@ final class BaseAPSManager: APSManager, Injectable {
         }
     }
 
-    func daylyAutotune() -> AnyPublisher<Bool, Never> {
+    func dailyAutotune() -> AnyPublisher<Bool, Never> {
         guard settings.useAutotune else {
             return Just(false).eraseToAnyPublisher()
         }
@@ -328,11 +333,19 @@ final class BaseAPSManager: APSManager, Injectable {
     private func enactSuggested() {
         guard let suggested = try? storage.retrieve(OpenAPS.Enact.suggested, as: Suggestion.self) else {
             isLooping.send(false)
+            debug(.apsManager, "Suggestion not found")
+            return
+        }
+
+        guard Date().timeIntervalSince(suggested.deliverAt ?? .distantPast) < Config.eхpirationInterval else {
+            isLooping.send(false)
+            debug(.apsManager, "Suggestion expired")
             return
         }
 
         guard let pump = pumpManager, verifyStatus() else {
             isLooping.send(false)
+            debug(.apsManager, "Invalid pump status")
             return
         }
 
@@ -370,6 +383,7 @@ final class BaseAPSManager: APSManager, Injectable {
                 self?.isLooping.send(false)
             } receiveValue: {
                 debug(.apsManager, "Loop succeeded")
+                self.lastLoopDate.send(Date())
             }.store(in: &lifetime)
     }
 

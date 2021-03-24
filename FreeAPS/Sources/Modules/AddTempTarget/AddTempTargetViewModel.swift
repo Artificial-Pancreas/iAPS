@@ -4,6 +4,7 @@ extension AddTempTarget {
     class ViewModel<Provider>: BaseViewModel<Provider>, ObservableObject where Provider: AddTempTargetProvider {
         @Injected() private var storage: TempTargetsStorage!
         @Injected() private var settingsManager: SettingsManager!
+        @Injected() var apsManager: APSManager!
 
         @Published var low: Decimal = 0
         @Published var high: Decimal = 0
@@ -39,6 +40,7 @@ extension AddTempTarget {
                 enteredBy: TempTarget.manual
             )
             storage.storeTempTargets([entry])
+            apsManager.determineBasal().sink { _ in }.store(in: &lifetime)
 
             showModal(for: nil)
         }
@@ -53,6 +55,7 @@ extension AddTempTarget {
                 enteredBy: TempTarget.manual
             )
             storage.storeTempTargets([entry])
+            apsManager.determineBasal().sink { _ in }.store(in: &lifetime)
 
             showModal(for: nil)
         }
@@ -85,6 +88,7 @@ extension AddTempTarget {
             if var preset = presets.first(where: { $0.id == id }) {
                 preset.createdAt = Date()
                 storage.storeTempTargets([preset])
+                apsManager.determineBasal().sink { _ in }.store(in: &lifetime)
                 showModal(for: nil)
             }
         }

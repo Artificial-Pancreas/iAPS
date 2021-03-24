@@ -5,4 +5,5 @@ enum Config {
     static let treatWarningsAsErrors = true
     static let withSignPosts = false
     static let loopInterval = 5.minutes.timeInterval
+    static let eхpirationInterval = 10.minutes.timeInterval
 }

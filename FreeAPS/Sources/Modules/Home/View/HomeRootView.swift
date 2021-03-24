@@ -39,7 +39,8 @@ extension Home {
                     enactedSuggestion: $viewModel.enactedSuggestion,
                     closedLoop: $viewModel.closedLoop,
                     timerDate: $viewModel.timerDate,
-                    isLooping: $viewModel.isLooping
+                    isLooping: $viewModel.isLooping,
+                    lastLoopDate: $viewModel.lastLoopDate
                 ).onTapGesture {
                     isStatusPopupPresented = true
                 }.onLongPressGesture {
