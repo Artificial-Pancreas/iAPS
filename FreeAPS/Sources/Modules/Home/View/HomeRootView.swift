@@ -26,14 +26,14 @@ extension Home {
                         Text((numberFormatter.string(from: (viewModel.suggestion?.cob ?? 0) as NSNumber) ?? "0") + " g")
                             .font(.caption2)
                     }
-                }
+                }.frame(minWidth: 0, maxWidth: .infinity)
                 Spacer()
                 CurrentGlucoseView(
                     recentGlucose: $viewModel.recentGlucose,
                     delta: $viewModel.glucoseDelta,
                     units: viewModel.units
-                )
-                .padding(.horizontal)
+                ).frame(minWidth: 0, maxWidth: .infinity)
+                Spacer()
                 LoopView(
                     suggestion: $viewModel.suggestion,
                     enactedSuggestion: $viewModel.enactedSuggestion,
@@ -45,7 +45,7 @@ extension Home {
                     isStatusPopupPresented = true
                 }.onLongPressGesture {
                     viewModel.runLoop()
-                }
+                }.frame(minWidth: 0, maxWidth: .infinity)
             }.frame(maxWidth: .infinity)
         }
 
@@ -53,7 +53,7 @@ extension Home {
             viewModel.setFilteredGlucoseHours(hours: 24)
             return GeometryReader { geo in
                 VStack {
-                    header.padding().frame(maxHeight: 70)
+                    header.padding(.vertical).frame(maxHeight: 70)
                     MainChartView(
                         glucose: $viewModel.glucose,
                         suggestion: $viewModel.suggestion,
@@ -98,7 +98,10 @@ extension Home {
                             if viewModel.allowManualTemp {
                                 Button { viewModel.showModal(for: .manualTempBasal) }
                                 label: {
-                                    Image(systemName: "circle.bottomhalf.fill")
+                                    Image("bolus1")
+                                        .renderingMode(.template)
+                                        .resizable()
+                                        .frame(width: 24, height: 24)
                                 }.foregroundColor(.blue)
                                 Spacer()
                             }

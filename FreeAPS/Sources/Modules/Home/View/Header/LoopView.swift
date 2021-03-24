@@ -37,7 +37,7 @@ struct LoopView: View {
             if isLooping {
                 Text("looping").font(.caption2)
             } else if actualSuggestion?.timestamp != nil {
-                Text("\(Int((timerDate.timeIntervalSince(lastLoopDate) - Config.lag) / 60) + 1) min").font(.caption)
+                Text("\(Int((timerDate.timeIntervalSince(lastLoopDate) - Config.lag) / 60) + 1) min ago").font(.caption)
             } else {
                 Text("--").font(.caption)
             }

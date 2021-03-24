@@ -8,7 +8,11 @@ struct CurrentGlucoseView: View {
     private var glucoseFormatter: NumberFormatter {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
-        formatter.maximumFractionDigits = 1
+        formatter.maximumFractionDigits = 0
+        if units == .mgdL {
+            formatter.minimumFractionDigits = 1
+            formatter.maximumFractionDigits = 1
+        }
         return formatter
     }
 
@@ -52,7 +56,7 @@ struct CurrentGlucoseView: View {
                 ).font(.caption)
                 Text("\(units.rawValue)").font(.caption2)
             }
-        }.frame(minWidth: 120)
+        }
     }
 
     var image: Image {
