@@ -43,7 +43,7 @@ struct CurrentGlucoseView: View {
                 Text(
                     recentGlucose.map { dateFormatter.string(from: $0.dateString) } ?? "--"
                 ).font(.caption)
-            }
+            }.padding(.leading, 4)
             VStack {
                 Spacer()
                 image.padding(.bottom, 2)

@@ -11,8 +11,10 @@ protocol APSManager {
     func enactBolus(amount: Double)
     var pumpManager: PumpManagerUI? { get set }
     var pumpDisplayState: CurrentValueSubject<PumpDisplayState?, Never> { get }
+    var pumpName: CurrentValueSubject<String, Never> { get }
     var isLooping: CurrentValueSubject<Bool, Never> { get }
     var lastLoopDate: PassthroughSubject<Date, Never> { get }
+    var pumpExpiresAtDate: CurrentValueSubject<Date?, Never> { get }
     func enactTempBasal(rate: Double, duration: TimeInterval)
     func makeProfiles() -> AnyPublisher<Bool, Never>
     func determineBasal() -> AnyPublisher<Bool, Never>
@@ -46,6 +48,14 @@ final class BaseAPSManager: APSManager, Injectable {
 
     var pumpDisplayState: CurrentValueSubject<PumpDisplayState?, Never> {
         deviceDataManager.pumpDisplayState
+    }
+
+    var pumpName: CurrentValueSubject<String, Never> {
+        deviceDataManager.pumpName
+    }
+
+    var pumpExpiresAtDate: CurrentValueSubject<Date?, Never> {
+        deviceDataManager.pumpExpiresAtDate
     }
 
     var settings: FreeAPSSettings {
@@ -459,13 +469,14 @@ private extension PumpManager {
 extension BaseAPSManager: PumpManagerStatusObserver {
     func pumpManager(_: PumpManager, didUpdate status: PumpManagerStatus, oldStatus _: PumpManagerStatus) {
         let percent = Int((status.pumpBatteryChargeRemaining ?? 1) * 100)
-        let battery = Battery(percent: percent, voltage: nil, string: percent > 10 ? .normal : .low)
+        let battery = Battery(
+            percent: percent,
+            voltage: nil,
+            string: percent > 10 ? .normal : .low,
+            display: status.pumpBatteryChargeRemaining != nil
+        )
         storage.save(battery, as: OpenAPS.Monitor.battery)
         storage.save(status.pumpStatus, as: OpenAPS.Monitor.status)
-//        if oldStatus.pumpStatus.status != status.pumpStatus.status {
-//            debug(.apsManager, "Pump status did change: \(status.pumpStatus)")
-//            nightscout.uploadStatus()
-//        }
     }
 }
 

@@ -41,7 +41,7 @@ struct LoopView: View {
             } else {
                 Text("--").font(.caption)
             }
-        }
+        }.padding(.trailing)
     }
 
     private var color: Color {

@@ -13,6 +13,8 @@ protocol DeviceDataManager {
     var pumpManager: PumpManagerUI? { get set }
     var pumpDisplayState: CurrentValueSubject<PumpDisplayState?, Never> { get }
     var recommendsLoop: PassthroughSubject<Void, Never> { get }
+    var pumpName: CurrentValueSubject<String, Never> { get }
+    var pumpExpiresAtDate: CurrentValueSubject<Date?, Never> { get }
 }
 
 private let staticPumpManagers: [PumpManagerUI.Type] = [
@@ -29,6 +31,7 @@ final class BaseDeviceDataManager: DeviceDataManager, Injectable {
     private let processQueue = DispatchQueue(label: "BaseDeviceDataManager.processQueue")
     @Injected() private var pumpHistoryStorage: PumpHistoryStorage!
     @Injected() private var storage: FileStorage!
+    @Injected() private var broadcaster: Broadcaster!
 
     @Persisted(key: "BaseDeviceDataManager.lastEventDate") var lastEventDate: Date? = nil
     @Persisted(key: "BaseDeviceDataManager.lastHeartBeatTime") var lastHeartBeatTime: Date = .distantPast
@@ -42,6 +45,16 @@ final class BaseDeviceDataManager: DeviceDataManager, Injectable {
             UserDefaults.standard.pumpManagerRawValue = pumpManager?.rawValue
             if let pumpManager = pumpManager {
                 pumpDisplayState.value = PumpDisplayState(name: pumpManager.localizedTitle, image: pumpManager.smallImage)
+                pumpName.send(pumpManager.localizedTitle)
+
+                if let omnipod = pumpManager as? OmnipodPumpManager {
+                    guard let endTime = omnipod.state.podState?.expiresAt else {
+                        pumpExpiresAtDate.send(nil)
+                        return
+                    }
+                    pumpExpiresAtDate.send(endTime)
+                }
+
             } else {
                 pumpDisplayState.value = nil
             }
@@ -49,6 +62,8 @@ final class BaseDeviceDataManager: DeviceDataManager, Injectable {
     }
 
     let pumpDisplayState = CurrentValueSubject<PumpDisplayState?, Never>(nil)
+    let pumpExpiresAtDate = CurrentValueSubject<Date?, Never>(nil)
+    let pumpName = CurrentValueSubject<String, Never>("Pump")
 
     var heartBeat: Timer!
 
@@ -102,12 +117,13 @@ final class BaseDeviceDataManager: DeviceDataManager, Injectable {
 }
 
 extension BaseDeviceDataManager: PumpManagerDelegate {
-    func pumpManager(_: PumpManager, didAdjustPumpClockBy _: TimeInterval) {
-//        log.debug("didAdjustPumpClockBy %@", adjustment)
+    func pumpManager(_: PumpManager, didAdjustPumpClockBy adjustment: TimeInterval) {
+        debug(.deviceManager, "didAdjustPumpClockBy \(adjustment)")
     }
 
     func pumpManagerDidUpdateState(_ pumpManager: PumpManager) {
         UserDefaults.standard.pumpManagerRawValue = pumpManager.rawValue
+        pumpName.send(pumpManager.localizedTitle)
     }
 
     func pumpManagerBLEHeartbeatDidFire(_: PumpManager) {
@@ -122,6 +138,26 @@ extension BaseDeviceDataManager: PumpManagerDelegate {
     func pumpManager(_: PumpManager, didUpdate status: PumpManagerStatus, oldStatus _: PumpManagerStatus) {
         debug(.deviceManager, "New pump status Bolus: \(status.bolusState)")
         debug(.deviceManager, "New pump status Basal: \(String(describing: status.basalDeliveryState))")
+
+        let batteryPercent = Int((status.pumpBatteryChargeRemaining ?? 1) * 100)
+        let battery = Battery(
+            percent: batteryPercent,
+            voltage: nil,
+            string: batteryPercent >= 10 ? .normal : .low,
+            display: pumpManager?.status.pumpBatteryChargeRemaining != nil
+        )
+        storage.save(battery, as: OpenAPS.Monitor.battery)
+        broadcaster.notify(PumpBatteryObserver.self, on: processQueue) {
+            $0.pumpBatteryDidChange(battery)
+        }
+
+        if let omnipod = pumpManager as? OmnipodPumpManager {
+            guard let endTime = omnipod.state.podState?.expiresAt else {
+                pumpExpiresAtDate.send(nil)
+                return
+            }
+            pumpExpiresAtDate.send(endTime)
+        }
     }
 
     func pumpManagerWillDeactivate(_: PumpManager) {
@@ -158,9 +194,10 @@ extension BaseDeviceDataManager: PumpManagerDelegate {
         dispatchPrecondition(condition: .onQueue(processQueue))
         debug(.deviceManager, "Reservoir Value \(units), at: \(date)")
         storage.save(Decimal(units), as: OpenAPS.Monitor.reservoir)
-        let batteryPercent = Int((pumpManager?.status.pumpBatteryChargeRemaining ?? 1) * 100)
-        let battery = Battery(percent: batteryPercent, voltage: nil, string: batteryPercent >= 10 ? .normal : .low)
-        storage.save(battery, as: OpenAPS.Monitor.battery)
+        broadcaster.notify(PumpReservoirObserver.self, on: processQueue) {
+            $0.pumpReservoirDidChange(Decimal(units))
+        }
+
         completion(.success((
             newValue: Reservoir(startDate: Date(), unitVolume: units),
             lastValue: nil,
@@ -226,4 +263,14 @@ extension BaseDeviceDataManager: AlertPresenter {
     func issueAlert(_: Alert) {}
 
     func retractAlert(identifier _: Alert.Identifier) {}
+}
+
+// MARK: Others
+
+protocol PumpReservoirObserver {
+    func pumpReservoirDidChange(_ reservoir: Decimal)
+}
+
+protocol PumpBatteryObserver {
+    func pumpBatteryDidChange(_ battery: Battery)
 }

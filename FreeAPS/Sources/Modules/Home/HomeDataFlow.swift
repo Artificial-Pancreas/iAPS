@@ -14,4 +14,6 @@ protocol HomeProvider: Provider {
     func basalProfile() -> [BasalProfileEntry]
     func tempTargets(hours: Int) -> [TempTarget]
     func carbs(hours: Int) -> [CarbsEntry]
+    func pumpBattery() -> Battery?
+    func pumpReservoir() -> Decimal?
 }

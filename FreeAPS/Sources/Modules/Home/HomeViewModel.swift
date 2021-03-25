@@ -26,6 +26,10 @@ extension Home {
         @Published var statusTitle = ""
         @Published var lastLoopDate: Date = .distantPast
         @Published var tempRate: Decimal?
+        @Published var battery: Battery?
+        @Published var reservoir: Decimal?
+        @Published var pumpName = "Pump"
+        @Published var pumpExpiresAtDate: Date?
 
         @Published var allowManualTemp = false
         private(set) var units: GlucoseUnits = .mmolL
@@ -38,6 +42,8 @@ extension Home {
             setupBasalProfile()
             setupTempTargets()
             setupCarbs()
+            setupBattery()
+            setupReservoir()
 
             suggestion = provider.suggestion
             enactedSuggestion = provider.enactedSuggestion
@@ -63,6 +69,8 @@ extension Home {
             broadcaster.register(TempTargetsObserver.self, observer: self)
             broadcaster.register(CarbsObserver.self, observer: self)
             broadcaster.register(EnactedSuggestionObserver.self, observer: self)
+            broadcaster.register(PumpBatteryObserver.self, observer: self)
+            broadcaster.register(PumpReservoirObserver.self, observer: self)
 
             timer.assign(to: \.timerDate, on: self)
                 .store(in: &lifetime)
@@ -75,6 +83,17 @@ extension Home {
             apsManager.lastLoopDate
                 .receive(on: DispatchQueue.main)
                 .assign(to: \.lastLoopDate, on: self)
+                .store(in: &lifetime)
+
+            apsManager.pumpName
+                .receive(on: DispatchQueue.main)
+                .assign(to: \.pumpName, on: self)
+                .store(in: &lifetime)
+
+//            pumpExpiresAtDate = Date().addingTimeInterval(2.days.timeInterval + 3.hours.timeInterval)
+            apsManager.pumpExpiresAtDate
+                .receive(on: DispatchQueue.main)
+                .assign(to: \.pumpExpiresAtDate, on: self)
                 .store(in: &lifetime)
         }
 
@@ -188,6 +207,18 @@ extension Home {
                 statusTitle = "Suggested"
             }
         }
+
+        private func setupReservoir() {
+            DispatchQueue.main.async {
+                self.reservoir = self.provider.pumpReservoir()
+            }
+        }
+
+        private func setupBattery() {
+            DispatchQueue.main.async {
+                self.battery = self.provider.pumpBattery()
+            }
+        }
     }
 }
 
@@ -200,7 +231,9 @@ extension Home.ViewModel:
     BasalProfileObserver,
     TempTargetsObserver,
     CarbsObserver,
-    EnactedSuggestionObserver
+    EnactedSuggestionObserver,
+    PumpBatteryObserver,
+    PumpReservoirObserver
 {
     func glucoseDidUpdate(_: [BloodGlucose]) {
         setupGlucose()
@@ -240,5 +273,13 @@ extension Home.ViewModel:
     func enactedSuggestionDidUpdate(_ suggestion: Suggestion) {
         enactedSuggestion = suggestion
         setStatusTitle()
+    }
+
+    func pumpBatteryDidChange(_: Battery) {
+        setupBattery()
+    }
+
+    func pumpReservoirDidChange(_: Decimal) {
+        setupReservoir()
     }
 }

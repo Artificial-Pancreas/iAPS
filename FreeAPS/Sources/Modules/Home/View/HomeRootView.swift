@@ -14,9 +14,13 @@ extension Home {
 
         var header: some View {
             HStack {
-                VStack(alignment: .leading) {
-                    Text("PUMP").font(.caption)
-                }.frame(minWidth: 0, maxWidth: .infinity)
+                PumpView(
+                    reservoir: $viewModel.reservoir,
+                    battery: $viewModel.battery,
+                    name: $viewModel.pumpName,
+                    expiresAtDate: $viewModel.pumpExpiresAtDate,
+                    timerDate: $viewModel.timerDate
+                )
                 Spacer()
                 CurrentGlucoseView(
                     recentGlucose: $viewModel.recentGlucose,
@@ -35,7 +39,7 @@ extension Home {
                     isStatusPopupPresented = true
                 }.onLongPressGesture {
                     viewModel.runLoop()
-                }.frame(minWidth: 0, maxWidth: .infinity)
+                }
             }.frame(maxWidth: .infinity)
         }
 

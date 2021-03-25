@@ -51,6 +51,14 @@ extension Home {
                 ?? PumpSettings(insulinActionCurve: 5, maxBolus: 10, maxBasal: 2)
         }
 
+        func pumpBattery() -> Battery? {
+            storage.retrieve(OpenAPS.Monitor.battery, as: Battery.self)
+        }
+
+        func pumpReservoir() -> Decimal? {
+            storage.retrieve(OpenAPS.Monitor.reservoir, as: Decimal.self)
+        }
+
         func basalProfile() -> [BasalProfileEntry] {
             storage.retrieve(OpenAPS.Settings.profile, as: Autotune.self)?.basalProfile
                 ?? storage.retrieve(OpenAPS.Settings.pumpProfile, as: Autotune.self)?.basalProfile

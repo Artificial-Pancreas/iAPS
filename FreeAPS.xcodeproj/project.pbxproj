@@ -182,6 +182,7 @@
 		38C4D33A25E9A1ED00D30B77 /* NSObject+AssociatedValues.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38C4D33925E9A1ED00D30B77 /* NSObject+AssociatedValues.swift */; };
 		38D0B3B625EBE24900CB6E88 /* Battery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38D0B3B525EBE24900CB6E88 /* Battery.swift */; };
 		38D0B3D925EC07C400CB6E88 /* CarbsEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38D0B3D825EC07C400CB6E88 /* CarbsEntry.swift */; };
+		38DAB280260CBB7F00F74C1A /* PumpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38DAB27F260CBB7F00F74C1A /* PumpView.swift */; };
 		38E989DD25F5021400C0CED0 /* PumpStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38E989DC25F5021400C0CED0 /* PumpStatus.swift */; };
 		38E98A2325F52C9300C0CED0 /* Signpost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38E98A1B25F52C9300C0CED0 /* Signpost.swift */; };
 		38E98A2425F52C9300C0CED0 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38E98A1C25F52C9300C0CED0 /* Logger.swift */; };
@@ -454,6 +455,7 @@
 		38C4D33925E9A1ED00D30B77 /* NSObject+AssociatedValues.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSObject+AssociatedValues.swift"; sourceTree = "<group>"; };
 		38D0B3B525EBE24900CB6E88 /* Battery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Battery.swift; sourceTree = "<group>"; };
 		38D0B3D825EC07C400CB6E88 /* CarbsEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarbsEntry.swift; sourceTree = "<group>"; };
+		38DAB27F260CBB7F00F74C1A /* PumpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PumpView.swift; sourceTree = "<group>"; };
 		38E989DC25F5021400C0CED0 /* PumpStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PumpStatus.swift; sourceTree = "<group>"; };
 		38E98A1B25F52C9300C0CED0 /* Signpost.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Signpost.swift; sourceTree = "<group>"; };
 		38E98A1C25F52C9300C0CED0 /* Logger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
@@ -952,6 +954,7 @@
 			children = (
 				383420D525FFE38C002D46C1 /* LoopView.swift */,
 				38AAF85425FFF846004AF583 /* CurrentGlucoseView.swift */,
+				38DAB27F260CBB7F00F74C1A /* PumpView.swift */,
 			);
 			path = Header;
 			sourceTree = "<group>";
@@ -1597,6 +1600,7 @@
 				384E803825C388640086DB71 /* Script.swift in Sources */,
 				3811DE0925C9D32F00A708ED /* BaseViewModel.swift in Sources */,
 				3883583425EEB38000E024B2 /* PumpSettings.swift in Sources */,
+				38DAB280260CBB7F00F74C1A /* PumpView.swift in Sources */,
 				3811DEB125C9D88300A708ED /* Keychain.swift in Sources */,
 				382C133725F13A1E00715CE1 /* InsulinSensitivities.swift in Sources */,
 				3811DE7B25C9D6D300A708ED /* LoginProvider.swift in Sources */,
