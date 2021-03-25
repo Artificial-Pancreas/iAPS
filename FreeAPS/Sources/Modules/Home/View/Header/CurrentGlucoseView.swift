@@ -9,7 +9,7 @@ struct CurrentGlucoseView: View {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
         formatter.maximumFractionDigits = 0
-        if units == .mgdL {
+        if units == .mmolL {
             formatter.minimumFractionDigits = 1
             formatter.maximumFractionDigits = 1
         }
