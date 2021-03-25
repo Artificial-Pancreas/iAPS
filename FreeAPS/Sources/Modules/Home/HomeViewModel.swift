@@ -25,6 +25,7 @@ extension Home {
         @Published var isLooping = false
         @Published var statusTitle = ""
         @Published var lastLoopDate: Date = .distantPast
+        @Published var tempRate: Decimal?
 
         @Published var allowManualTemp = false
         private(set) var units: GlucoseUnits = .mmolL
@@ -122,6 +123,22 @@ extension Home {
                 self.tempBasals = self.provider.pumpHistory(hours: self.filteredHours).filter {
                     $0.type == .tempBasal || $0.type == .tempBasalDuration
                 }
+                let lastTempBasal = Array(self.tempBasals.suffix(2))
+                guard lastTempBasal.count == 2 else {
+                    self.tempRate = nil
+                    return
+                }
+
+                guard let lastRate = lastTempBasal[0].rate, let lastDuration = lastTempBasal[1].durationMin else {
+                    self.tempRate = nil
+                    return
+                }
+                let lastDate = lastTempBasal[0].timestamp
+                guard Date().timeIntervalSince(lastDate.addingTimeInterval(lastDuration.minutes.timeInterval)) < 0 else {
+                    self.tempRate = nil
+                    return
+                }
+                self.tempRate = lastRate
             }
         }
 

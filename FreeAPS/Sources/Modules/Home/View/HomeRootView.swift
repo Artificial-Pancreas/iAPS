@@ -15,17 +15,7 @@ extension Home {
         var header: some View {
             HStack {
                 VStack(alignment: .leading) {
-                    HStack {
-                        Text("IOB").font(.caption)
-                        Text((numberFormatter.string(from: (viewModel.suggestion?.iob ?? 0) as NSNumber) ?? "0") + " U")
-                            .font(.caption2)
-                    }.padding(.top, 16)
-                    Spacer()
-                    HStack {
-                        Text("COB").font(.caption)
-                        Text((numberFormatter.string(from: (viewModel.suggestion?.cob ?? 0) as NSNumber) ?? "0") + " g")
-                            .font(.caption2)
-                    }
+                    Text("PUMP").font(.caption)
                 }.frame(minWidth: 0, maxWidth: .infinity)
                 Spacer()
                 CurrentGlucoseView(
@@ -49,11 +39,34 @@ extension Home {
             }.frame(maxWidth: .infinity)
         }
 
+        var infoPanal: some View {
+            HStack(alignment: .firstTextBaseline) {
+                Text("IOB").font(.caption)
+                    .padding(.leading)
+                Text((numberFormatter.string(from: (viewModel.suggestion?.iob ?? 0) as NSNumber) ?? "0") + " U")
+                    .font(.caption)
+
+                Text("COB").font(.caption)
+                Text((numberFormatter.string(from: (viewModel.suggestion?.cob ?? 0) as NSNumber) ?? "0") + " g")
+                    .font(.caption)
+                if let tempRate = viewModel.tempRate {
+                    Text("Temp basal").font(.caption).foregroundColor(.blue)
+                    Text((numberFormatter.string(from: tempRate as NSNumber) ?? "0") + " U/hr")
+                        .font(.caption).foregroundColor(.blue)
+                }
+
+                Spacer()
+
+            }.frame(maxWidth: .infinity, maxHeight: 30)
+                .background(Rectangle().fill(Color.gray.opacity(0.2)))
+        }
+
         var body: some View {
             viewModel.setFilteredGlucoseHours(hours: 24)
             return GeometryReader { geo in
-                VStack {
+                VStack(spacing: 0) {
                     header.padding(.vertical).frame(maxHeight: 70)
+                    infoPanal
                     MainChartView(
                         glucose: $viewModel.glucose,
                         suggestion: $viewModel.suggestion,
@@ -66,6 +79,7 @@ extension Home {
                         carbs: $viewModel.carbs,
                         units: viewModel.units
                     )
+                    .padding(.bottom)
 
                     ZStack {
                         Rectangle().fill(Color.gray.opacity(0.2)).frame(height: 50 + geo.safeAreaInsets.bottom)
@@ -77,7 +91,7 @@ extension Home {
                                     .renderingMode(.template)
                                     .resizable()
                                     .frame(width: 24, height: 24)
-                            }.foregroundColor(.green)
+                            }.foregroundColor(.orange)
                             Spacer()
                             Button { viewModel.showModal(for: .addTempTarget) }
                             label: {
@@ -85,7 +99,7 @@ extension Home {
                                     .renderingMode(.template)
                                     .resizable()
                                     .frame(width: 24, height: 24)
-                            }.foregroundColor(.green)
+                            }.foregroundColor(.primary)
                             Spacer()
                             Button { viewModel.showModal(for: .bolus) }
                             label: {
@@ -93,7 +107,7 @@ extension Home {
                                     .renderingMode(.template)
                                     .resizable()
                                     .frame(width: 24, height: 24)
-                            }.foregroundColor(.orange)
+                            }.foregroundColor(.blue)
                             Spacer()
                             if viewModel.allowManualTemp {
                                 Button { viewModel.showModal(for: .manualTempBasal) }

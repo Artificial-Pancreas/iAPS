@@ -68,13 +68,6 @@ struct MainChartView: View {
         return formatter
     }
 
-    private var basalFormatter: NumberFormatter {
-        let formatter = NumberFormatter()
-        formatter.numberStyle = .decimal
-        formatter.maximumFractionDigits = 2
-        return formatter
-    }
-
     private var bolusFormatter: NumberFormatter {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
@@ -163,10 +156,6 @@ struct MainChartView: View {
             tempBasalPath.fill(Color.blue)
             tempBasalPath.stroke(Color.blue, lineWidth: 1)
             regularBasalPath.stroke(Color.yellow, lineWidth: 1)
-            Text(lastBasalRateString())
-                .foregroundColor(.blue)
-                .font(.caption2)
-                .position(CGPoint(x: lastBasalPoint(fullSize: fullSize).x + 30, y: Config.basalHeight / 2))
         }
         .drawingGroup()
         .frame(width: fullGlucoseWidth(viewWidth: fullSize.width) + additionalWidth(viewWidth: fullSize.width))
@@ -459,11 +448,9 @@ extension MainChartView {
                 let rateCost = Config.basalHeight / CGFloat(maxBasal)
                 let x0 = timeToXCoordinate(timeBegin, fullSize: fullSize)
                 let y0 = Config.basalHeight - CGFloat(chunk[0].rate ?? 0) * rateCost
-                let x1 = timeToXCoordinate(timeEnd, fullSize: fullSize)
-                let y1 = Config.basalHeight
                 let regularPoints = findRegularBasalPoints(timeBegin: lastTimeEnd, timeEnd: timeBegin, fullSize: fullSize)
                 lastTimeEnd = timeEnd
-                return regularPoints + [CGPoint(x: x0, y: y0), CGPoint(x: x1, y: y1)]
+                return regularPoints + [CGPoint(x: x0, y: y0)]
             }.flatMap { $0 }
             let tempBasalPath = Path { path in
                 var yPoint: CGFloat = Config.basalHeight
@@ -606,15 +593,6 @@ extension MainChartView {
         let x = timeToXCoordinate(endBasalTime, fullSize: fullSize)
         let y = Config.basalHeight - CGFloat(lastBasal[0].rate ?? 0) * rateCost
         return CGPoint(x: x, y: y)
-    }
-
-    private func lastBasalRateString() -> String {
-        let lastBasal = Array(tempBasals.suffix(2))
-        guard lastBasal.count == 2 else {
-            return ""
-        }
-        let lastRate = lastBasal[0].rate ?? 0
-        return (basalFormatter.string(from: lastRate as NSNumber) ?? "0") + " U/hr"
     }
 
     private func fullGlucoseWidth(viewWidth: CGFloat) -> CGFloat {
