@@ -28,6 +28,8 @@ private let staticPumpManagersByIdentifier: [String: PumpManagerUI.Type] = stati
     map[Type.managerIdentifier] = Type
 }
 
+private let accessLock = NSRecursiveLock(label: "BaseDeviceDataManager.accessLock")
+
 final class BaseDeviceDataManager: DeviceDataManager, Injectable {
     private let processQueue = DispatchQueue(label: "BaseDeviceDataManager.processQueue")
     @Injected() private var pumpHistoryStorage: PumpHistoryStorage!
@@ -35,7 +37,8 @@ final class BaseDeviceDataManager: DeviceDataManager, Injectable {
     @Injected() private var broadcaster: Broadcaster!
 
     @Persisted(key: "BaseDeviceDataManager.lastEventDate") var lastEventDate: Date? = nil
-    @Persisted(key: "BaseDeviceDataManager.lastHeartBeatTime") var lastHeartBeatTime: Date = .distantPast
+    @SyncAccess(lock: accessLock) @Persisted(key: "BaseDeviceDataManager.lastHeartBeatTime") var lastHeartBeatTime: Date =
+        .distantPast
 
     let recommendsLoop = PassthroughSubject<Void, Never>()
 
@@ -97,10 +100,16 @@ final class BaseDeviceDataManager: DeviceDataManager, Injectable {
         heartbeat()
     }
 
+    @SyncAccess(lock: accessLock) private var pumpUpdateInProgress = false
+
     func heartbeat() {
+        guard !pumpUpdateInProgress else { return }
+
+        pumpUpdateInProgress = true
         lastHeartBeatTime = Date()
         pumpManager?.ensureCurrentPumpData {
             debug(.deviceManager, "Pump Data updated")
+            self.pumpUpdateInProgress = false
         }
     }
 
