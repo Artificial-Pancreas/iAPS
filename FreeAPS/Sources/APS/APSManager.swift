@@ -6,7 +6,7 @@ import SwiftDate
 import Swinject
 
 protocol APSManager {
-    func fetchAndLoop()
+    func heartbeatNow()
     func autotune() -> AnyPublisher<Autotune?, Never>
     func enactBolus(amount: Double)
     var pumpManager: PumpManagerUI? { get set }
@@ -76,15 +76,13 @@ final class BaseAPSManager: APSManager, Injectable {
             }
             .store(in: &lifetime)
         pumpManager?.addStatusObserver(self, queue: processQueue)
-
-        lastLoopDate
-            .sink { date in
-                self.deviceDataManager.lastLoopDate = date
-            }
-            .store(in: &lifetime)
     }
 
-    func fetchAndLoop() {
+    func heartbeatNow() {
+        deviceDataManager.heartbeat()
+    }
+
+    private func fetchAndLoop() {
         if settings.allowAnnouncements {
             nightscout.fetchAnnouncements()
                 .sink { [weak self] in

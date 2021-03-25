@@ -102,7 +102,7 @@ extension Home {
         }
 
         func runLoop() {
-            provider.fetchAndLoop()
+            provider.heartbeatNow()
         }
 
         func addTempTarget() {

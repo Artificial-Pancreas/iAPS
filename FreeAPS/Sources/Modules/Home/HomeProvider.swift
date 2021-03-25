@@ -17,8 +17,8 @@ extension Home {
             storage.retrieve(OpenAPS.Enact.enacted, as: Suggestion.self)
         }
 
-        func fetchAndLoop() {
-            apsManager.fetchAndLoop()
+        func heartbeatNow() {
+            apsManager.heartbeatNow()
         }
 
         func filteredGlucose(hours: Int) -> [BloodGlucose] {

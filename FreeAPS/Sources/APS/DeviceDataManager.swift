@@ -15,7 +15,7 @@ protocol DeviceDataManager {
     var recommendsLoop: PassthroughSubject<Void, Never> { get }
     var pumpName: CurrentValueSubject<String, Never> { get }
     var pumpExpiresAtDate: CurrentValueSubject<Date?, Never> { get }
-    var lastLoopDate: Date? { get set }
+    func heartbeat() 
 }
 
 private let staticPumpManagers: [PumpManagerUI.Type] = [
@@ -38,7 +38,6 @@ final class BaseDeviceDataManager: DeviceDataManager, Injectable {
     @Persisted(key: "BaseDeviceDataManager.lastHeartBeatTime") var lastHeartBeatTime: Date = .distantPast
 
     let recommendsLoop = PassthroughSubject<Void, Never>()
-    var lastLoopDate: Date?
 
     var pumpManager: PumpManagerUI? {
         didSet {
@@ -94,12 +93,10 @@ final class BaseDeviceDataManager: DeviceDataManager, Injectable {
         let now = Date()
         var updateInterval: TimeInterval = 5.minutes.timeInterval
 
-        switch lastLoopDate?.timeIntervalSince(now) {
-        case .none:
+        switch lastHeartBeatTime.timeIntervalSince(now) {
+        case let interval where interval < -10.minutes.timeInterval:
             break
-        case let interval? where interval < -10.minutes.timeInterval:
-            break
-        case let interval? where interval < -5.minutes.timeInterval:
+        case let interval where interval < -5.minutes.timeInterval:
             updateInterval = 1.minutes.timeInterval
         default:
             return
@@ -107,8 +104,11 @@ final class BaseDeviceDataManager: DeviceDataManager, Injectable {
 
         guard now.timeIntervalSince(lastHeartBeatTime) >= updateInterval else { return }
 
-        lastHeartBeatTime = now
+        heartbeat()
+    }
 
+    func heartbeat() {
+        lastHeartBeatTime = Date()
         pumpManager?.ensureCurrentPumpData {
             debug(.deviceManager, "Pump Data updated")
         }
