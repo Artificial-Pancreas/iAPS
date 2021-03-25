@@ -55,7 +55,7 @@ final class BaseDeviceDataManager: DeviceDataManager, Injectable {
                     }
                     pumpExpiresAtDate.send(endTime)
                 }
-
+                pumpManager.setMustProvideBLEHeartbeat(true)
             } else {
                 pumpDisplayState.value = nil
             }
