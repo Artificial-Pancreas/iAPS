@@ -76,6 +76,12 @@ final class BaseAPSManager: APSManager, Injectable {
             }
             .store(in: &lifetime)
         pumpManager?.addStatusObserver(self, queue: processQueue)
+
+        lastLoopDate
+            .sink { date in
+                self.deviceDataManager.lastLoopDate = date
+            }
+            .store(in: &lifetime)
     }
 
     func fetchAndLoop() {

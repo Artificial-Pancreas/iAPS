@@ -199,10 +199,16 @@ extension Home {
                 return
             }
 
+            let dateFormatter = DateFormatter()
+            dateFormatter.timeStyle = .short
             if closedLoop,
-               enactedSuggestion?.deliverAt == suggestion.deliverAt || (suggestion.rate == nil && suggestion.units == nil)
+               let enactedSuggestion = enactedSuggestion,
+               let timestamp = enactedSuggestion.timestamp,
+               enactedSuggestion.deliverAt == suggestion.deliverAt, suggestion.rate != nil || suggestion.units != nil
             {
-                statusTitle = "Enacted"
+                statusTitle = "Enacted at \(dateFormatter.string(from: timestamp))"
+            } else if let suggestedDate = suggestion.deliverAt {
+                statusTitle = "Suggested at \(dateFormatter.string(from: suggestedDate))"
             } else {
                 statusTitle = "Suggested"
             }
