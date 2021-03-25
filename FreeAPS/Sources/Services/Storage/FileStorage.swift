@@ -2,16 +2,16 @@ import Disk
 import Foundation
 
 protocol FileStorage {
-    func save<Value: JSON>(_ value: Value, as name: String) throws
-    func retrieve<Value: JSON>(_ name: String, as type: Value.Type) throws -> Value
+    func save<Value: JSON>(_ value: Value, as name: String)
+    func retrieve<Value: JSON>(_ name: String, as type: Value.Type) -> Value?
     func retrieveRaw(_ name: String) -> RawJSON?
-    func append<Value: JSON>(_ newValue: Value, to name: String) throws
-    func append<Value: JSON>(_ newValues: [Value], to name: String) throws
-    func append<Value: JSON, T: Equatable>(_ newValue: Value, to name: String, uniqBy keyPath: KeyPath<Value, T>) throws
-    func append<Value: JSON, T: Equatable>(_ newValues: [Value], to name: String, uniqBy keyPath: KeyPath<Value, T>) throws
-    func remove(_ name: String) throws
-    func rename(_ name: String, to newName: String) throws
-    func transaction(_ exec: (FileStorage) throws -> Void) throws
+    func append<Value: JSON>(_ newValue: Value, to name: String)
+    func append<Value: JSON>(_ newValues: [Value], to name: String)
+    func append<Value: JSON, T: Equatable>(_ newValue: Value, to name: String, uniqBy keyPath: KeyPath<Value, T>)
+    func append<Value: JSON, T: Equatable>(_ newValues: [Value], to name: String, uniqBy keyPath: KeyPath<Value, T>)
+    func remove(_ name: String)
+    func rename(_ name: String, to newName: String)
+    func transaction(_ exec: (FileStorage) -> Void)
 
     func urlFor(file: String) -> URL?
 }
@@ -19,19 +19,19 @@ protocol FileStorage {
 final class BaseFileStorage: FileStorage {
     private let processQueue = DispatchQueue.markedQueue(label: "BaseFileStorage.processQueue", qos: .utility)
 
-    func save<Value: JSON>(_ value: Value, as name: String) throws {
-        try processQueue.safeSync {
+    func save<Value: JSON>(_ value: Value, as name: String) {
+        processQueue.safeSync {
             if let value = value as? RawJSON, let data = value.data(using: .utf8) {
-                try Disk.save(data, to: .documents, as: name)
+                try? Disk.save(data, to: .documents, as: name)
             } else {
-                try Disk.save(value, to: .documents, as: name, encoder: JSONCoding.encoder)
+                try? Disk.save(value, to: .documents, as: name, encoder: JSONCoding.encoder)
             }
         }
     }
 
-    func retrieve<Value: JSON>(_ name: String, as type: Value.Type) throws -> Value {
-        try processQueue.safeSync {
-            try Disk.retrieve(name, from: .documents, as: type, decoder: JSONCoding.decoder)
+    func retrieve<Value: JSON>(_ name: String, as type: Value.Type) -> Value? {
+        processQueue.safeSync {
+            try? Disk.retrieve(name, from: .documents, as: type, decoder: JSONCoding.decoder)
         }
     }
 
@@ -44,66 +44,66 @@ final class BaseFileStorage: FileStorage {
         }
     }
 
-    func append<Value: JSON>(_ newValue: Value, to name: String) throws {
-        try processQueue.safeSync {
-            try Disk.append(newValue, to: name, in: .documents, decoder: JSONCoding.decoder, encoder: JSONCoding.encoder)
+    func append<Value: JSON>(_ newValue: Value, to name: String) {
+        processQueue.safeSync {
+            try? Disk.append(newValue, to: name, in: .documents, decoder: JSONCoding.decoder, encoder: JSONCoding.encoder)
         }
     }
 
-    func append<Value: JSON>(_ newValues: [Value], to name: String) throws {
-        try processQueue.safeSync {
-            try Disk.append(newValues, to: name, in: .documents, decoder: JSONCoding.decoder, encoder: JSONCoding.encoder)
+    func append<Value: JSON>(_ newValues: [Value], to name: String) {
+        processQueue.safeSync {
+            try? Disk.append(newValues, to: name, in: .documents, decoder: JSONCoding.decoder, encoder: JSONCoding.encoder)
         }
     }
 
-    func append<Value: JSON, T: Equatable>(_ newValue: Value, to name: String, uniqBy keyPath: KeyPath<Value, T>) throws {
-        if let value = try? retrieve(name, as: Value.self) {
+    func append<Value: JSON, T: Equatable>(_ newValue: Value, to name: String, uniqBy keyPath: KeyPath<Value, T>) {
+        if let value = retrieve(name, as: Value.self) {
             if value[keyPath: keyPath] != newValue[keyPath: keyPath] {
-                try append(newValue, to: name)
+                append(newValue, to: name)
             }
-        } else if let values = try? retrieve(name, as: [Value].self) {
+        } else if let values = retrieve(name, as: [Value].self) {
             guard values.first(where: { $0[keyPath: keyPath] == newValue[keyPath: keyPath] }) == nil else {
                 return
             }
-            try append(newValue, to: name)
+            append(newValue, to: name)
         } else {
-            try save(newValue, as: name)
+            save(newValue, as: name)
         }
     }
 
-    func append<Value: JSON, T: Equatable>(_ newValues: [Value], to name: String, uniqBy keyPath: KeyPath<Value, T>) throws {
-        if let value = try? retrieve(name, as: Value.self) {
+    func append<Value: JSON, T: Equatable>(_ newValues: [Value], to name: String, uniqBy keyPath: KeyPath<Value, T>) {
+        if let value = retrieve(name, as: Value.self) {
             guard newValues.first(where: { $0[keyPath: keyPath] == value[keyPath: keyPath] }) == nil else {
                 return
             }
-            try append(newValues, to: name)
-        } else if let values = try? retrieve(name, as: [Value].self) {
-            try newValues.forEach { newValue in
+            append(newValues, to: name)
+        } else if let values = retrieve(name, as: [Value].self) {
+            newValues.forEach { newValue in
                 guard values.first(where: { $0[keyPath: keyPath] == newValue[keyPath: keyPath] }) == nil else {
                     return
                 }
-                try append(newValue, to: name)
+                append(newValue, to: name)
             }
         } else {
-            try save(newValues, as: name)
+            save(newValues, as: name)
         }
     }
 
-    func remove(_ name: String) throws {
-        try processQueue.safeSync {
-            try Disk.remove(name, from: .documents)
+    func remove(_ name: String) {
+        processQueue.safeSync {
+            try? Disk.remove(name, from: .documents)
         }
     }
 
-    func rename(_ name: String, to newName: String) throws {
-        try processQueue.safeSync {
-            try Disk.rename(name, in: .documents, to: newName)
+    func rename(_ name: String, to newName: String) {
+        processQueue.safeSync {
+            try? Disk.rename(name, in: .documents, to: newName)
         }
     }
 
-    func transaction(_ exec: (FileStorage) throws -> Void) throws {
-        try processQueue.safeSync {
-            try exec(self)
+    func transaction(_ exec: (FileStorage) -> Void) {
+        processQueue.safeSync {
+            exec(self)
         }
     }
 

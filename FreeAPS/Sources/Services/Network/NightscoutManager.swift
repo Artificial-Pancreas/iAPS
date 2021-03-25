@@ -113,9 +113,9 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
     }
 
     func uploadStatus() {
-        let iob = try? storage.retrieve(OpenAPS.Monitor.iob, as: [IOBEntry].self)
-        var suggested = try? storage.retrieve(OpenAPS.Enact.suggested, as: Suggestion.self)
-        var enacted = try? storage.retrieve(OpenAPS.Enact.enacted, as: Suggestion.self)
+        let iob = storage.retrieve(OpenAPS.Monitor.iob, as: [IOBEntry].self)
+        var suggested = storage.retrieve(OpenAPS.Enact.suggested, as: Suggestion.self)
+        var enacted = storage.retrieve(OpenAPS.Enact.enacted, as: Suggestion.self)
 
         if (suggested?.timestamp ?? .distantPast) > (enacted?.timestamp ?? .distantPast) {
             enacted?.predictions = nil
@@ -130,9 +130,9 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
             version: "0.7.0"
         )
 
-        let battery = try? storage.retrieve(OpenAPS.Monitor.battery, as: Battery.self)
+        let battery = storage.retrieve(OpenAPS.Monitor.battery, as: Battery.self)
         let reservoir = Decimal(from: storage.retrieveRaw(OpenAPS.Monitor.reservoir) ?? "0")
-        let pumpStatus = try? storage.retrieve(OpenAPS.Monitor.status, as: PumpStatus.self)
+        let pumpStatus = storage.retrieve(OpenAPS.Monitor.status, as: PumpStatus.self)
 
         let pump = NSPumpStatus(clock: Date(), battery: battery, reservoir: reservoir, status: pumpStatus)
 
@@ -150,7 +150,7 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
             uploader: uploader
         )
 
-        try? storage.save(status, as: OpenAPS.Upload.nsStatus)
+        storage.save(status, as: OpenAPS.Upload.nsStatus)
 
         guard let nightscout = nightscoutAPI, isUploadEnabled else {
             return
@@ -192,7 +192,7 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
                 .sink { completion in
                     switch completion {
                     case .finished:
-                        try? self.storage.save(treatments, as: fileToSave)
+                        self.storage.save(treatments, as: fileToSave)
                     case let .failure(error):
                         debug(.nightscout, error.localizedDescription)
                     }

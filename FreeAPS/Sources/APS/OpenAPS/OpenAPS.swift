@@ -16,11 +16,11 @@ final class OpenAPS {
         Future { promise in
             self.processQueue.async {
                 // clock
-                try? self.storage.save(clock, as: Monitor.clock)
+                self.storage.save(clock, as: Monitor.clock)
 
                 // temp_basal
                 let tempBasal = currentTemp.rawJSON
-                try? self.storage.save(tempBasal, as: Monitor.tempBasal)
+                self.storage.save(tempBasal, as: Monitor.tempBasal)
 
                 // meal
                 let pumpHistory = self.loadFileFromStorage(name: OpenAPS.Monitor.pumpHistory)
@@ -38,7 +38,7 @@ final class OpenAPS {
                     glucose: glucose
                 )
 
-                try? self.storage.save(meal, as: Monitor.meal)
+                self.storage.save(meal, as: Monitor.meal)
 
                 // iob
                 let autosens = self.loadFileFromStorage(name: Settings.autosense)
@@ -49,7 +49,7 @@ final class OpenAPS {
                     autosens: autosens.isEmpty ? .null : autosens
                 )
 
-                try? self.storage.save(iob, as: Monitor.iob)
+                self.storage.save(iob, as: Monitor.iob)
 
                 // determine-basal
                 let reservoir = self.loadFileFromStorage(name: Monitor.reservoir)
@@ -68,7 +68,7 @@ final class OpenAPS {
 
                 if var suggestion = Suggestion(from: suggested) {
                     suggestion.timestamp = suggestion.deliverAt ?? clock
-                    try? self.storage.save(suggestion, as: Enact.suggested)
+                    self.storage.save(suggestion, as: Enact.suggested)
                     promise(.success(suggestion))
                 } else {
                     promise(.success(nil))
@@ -98,7 +98,7 @@ final class OpenAPS {
                 debug(.openAPS, "AUTOSENS: \(autosensResult)")
                 if var autosens = Autosens(from: autosensResult) {
                     autosens.timestamp = Date()
-                    try? self.storage.save(autosens, as: Settings.autosense)
+                    self.storage.save(autosens, as: Settings.autosense)
                     promise(.success(autosens))
                 } else {
                     promise(.success(nil))
@@ -124,7 +124,7 @@ final class OpenAPS {
                 )
                 debug(.openAPS, "AUTOTUNE PREP: \(autotunePreppedGlucose)")
 
-                let previousAutotune = try? self.storage.retrieve(Settings.autotune, as: RawJSON.self)
+                let previousAutotune = self.storage.retrieve(Settings.autotune, as: RawJSON.self)
 
                 let autotuneResult = self.autotuneRun(
                     autotunePreparedData: autotunePreppedGlucose,
@@ -135,7 +135,7 @@ final class OpenAPS {
                 debug(.openAPS, "AUTOTUNE RESULT: \(autotuneResult)")
 
                 if let autotune = Autotune(from: autotuneResult) {
-                    try? self.storage.save(autotuneResult, as: Settings.autotune)
+                    self.storage.save(autotuneResult, as: Settings.autotune)
                     promise(.success(autotune))
                 } else {
                     promise(.success(nil))
@@ -181,8 +181,8 @@ final class OpenAPS {
                     autotune: autotune.isEmpty ? .null : autotune
                 )
 
-                try? self.storage.save(pumpProfile, as: Settings.pumpProfile)
-                try? self.storage.save(profile, as: Settings.profile)
+                self.storage.save(pumpProfile, as: Settings.pumpProfile)
+                self.storage.save(profile, as: Settings.profile)
 
                 if let tunedProfile = Autotune(from: profile) {
                     promise(.success(tunedProfile))

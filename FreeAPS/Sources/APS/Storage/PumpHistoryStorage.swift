@@ -159,12 +159,12 @@ final class BasePumpHistoryStorage: PumpHistoryStorage, Injectable {
         dispatchPrecondition(condition: .onQueue(processQueue))
         let file = OpenAPS.Monitor.pumpHistory
         var uniqEvents: [PumpHistoryEvent] = []
-        try? storage.transaction { storage in
-            try storage.append(events, to: file, uniqBy: \.id)
-            uniqEvents = try storage.retrieve(file, as: [PumpHistoryEvent].self)
+        storage.transaction { storage in
+            storage.append(events, to: file, uniqBy: \.id)
+            uniqEvents = storage.retrieve(file, as: [PumpHistoryEvent].self)?
                 .filter { $0.timestamp.addingTimeInterval(1.days.timeInterval) > Date() }
-                .sorted { $0.timestamp > $1.timestamp }
-            try storage.save(Array(uniqEvents), as: file)
+                .sorted { $0.timestamp > $1.timestamp } ?? []
+            storage.save(Array(uniqEvents), as: file)
         }
         broadcaster.notify(PumpHistoryObserver.self, on: processQueue) {
             $0.pumpHistoryDidUpdate(uniqEvents)
@@ -172,7 +172,7 @@ final class BasePumpHistoryStorage: PumpHistoryStorage, Injectable {
     }
 
     func recent() -> [PumpHistoryEvent] {
-        (try? storage.retrieve(OpenAPS.Monitor.pumpHistory, as: [PumpHistoryEvent].self))?.reversed() ?? []
+        storage.retrieve(OpenAPS.Monitor.pumpHistory, as: [PumpHistoryEvent].self)?.reversed() ?? []
     }
 
     func nightscoutTretmentsNotUploaded() -> [NigtscoutTreatment] {
@@ -250,7 +250,7 @@ final class BasePumpHistoryStorage: PumpHistoryStorage, Injectable {
             }
         }
 
-        let uploaded = (try? storage.retrieve(OpenAPS.Nightscout.uploadedPumphistory, as: [NigtscoutTreatment].self)) ?? []
+        let uploaded = storage.retrieve(OpenAPS.Nightscout.uploadedPumphistory, as: [NigtscoutTreatment].self) ?? []
 
         let treatments = Array(Set([bolusesAndCarbs, temps].flatMap { $0 }).subtracting(Set(uploaded)))
 

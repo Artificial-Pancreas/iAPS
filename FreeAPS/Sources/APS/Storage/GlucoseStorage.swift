@@ -20,13 +20,13 @@ final class BaseGlucoseStorage: GlucoseStorage, Injectable {
     func storeGlucose(_ glucose: [BloodGlucose]) {
         processQueue.sync {
             let file = OpenAPS.Monitor.glucose
-            try? self.storage.transaction { storage in
-                try storage.append(glucose, to: file, uniqBy: \.dateString)
-                let uniqEvents = try storage.retrieve(file, as: [BloodGlucose].self)
+            self.storage.transaction { storage in
+                storage.append(glucose, to: file, uniqBy: \.dateString)
+                let uniqEvents = storage.retrieve(file, as: [BloodGlucose].self)?
                     .filter { $0.dateString.addingTimeInterval(1.days.timeInterval) > Date() }
-                    .sorted { $0.dateString > $1.dateString }
+                    .sorted { $0.dateString > $1.dateString } ?? []
                 let glucose = Array(uniqEvents)
-                try storage.save(glucose, as: file)
+                storage.save(glucose, as: file)
 
                 DispatchQueue.main.async {
                     self.broadcaster.notify(GlucoseObserver.self, on: .main) {
@@ -38,7 +38,7 @@ final class BaseGlucoseStorage: GlucoseStorage, Injectable {
     }
 
     func syncDate() -> Date {
-        guard let events = try? storage.retrieve(OpenAPS.Monitor.glucose, as: [BloodGlucose].self),
+        guard let events = storage.retrieve(OpenAPS.Monitor.glucose, as: [BloodGlucose].self),
               let recent = events.first
         else {
             return Date().addingTimeInterval(-1.days.timeInterval)
@@ -47,7 +47,7 @@ final class BaseGlucoseStorage: GlucoseStorage, Injectable {
     }
 
     func recent() -> [BloodGlucose] {
-        (try? storage.retrieve(OpenAPS.Monitor.glucose, as: [BloodGlucose].self))?.reversed() ?? []
+        storage.retrieve(OpenAPS.Monitor.glucose, as: [BloodGlucose].self)?.reversed() ?? []
     }
 }
 

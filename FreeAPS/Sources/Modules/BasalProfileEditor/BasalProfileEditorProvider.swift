@@ -7,7 +7,7 @@ extension BasalProfileEditor {
         private let processQueue = DispatchQueue(label: "BasalProfileEditorProvider.processQueue")
 
         var profile: [BasalProfileEntry] {
-            (try? storage.retrieve(OpenAPS.Settings.basalProfile, as: [BasalProfileEntry].self))
+            storage.retrieve(OpenAPS.Settings.basalProfile, as: [BasalProfileEntry].self)
                 ?? [BasalProfileEntry](from: OpenAPS.defaults(for: OpenAPS.Settings.basalProfile))
                 ?? []
         }
@@ -18,7 +18,7 @@ extension BasalProfileEditor {
 
         func saveProfile(_ profile: [BasalProfileEntry]) -> AnyPublisher<Void, Error> {
             guard let pump = deviceManager?.pumpManager else {
-                try? storage.save(profile, as: OpenAPS.Settings.basalProfile)
+                storage.save(profile, as: OpenAPS.Settings.basalProfile)
                 return Just(()).setFailureType(to: Error.self).eraseToAnyPublisher()
             }
 
@@ -30,7 +30,7 @@ extension BasalProfileEditor {
                 pump.syncBasalRateSchedule(items: syncValues) { result in
                     switch result {
                     case .success:
-                        try? self.storage.save(profile, as: OpenAPS.Settings.basalProfile)
+                        self.storage.save(profile, as: OpenAPS.Settings.basalProfile)
                         promise(.success(()))
                     case let .failure(error):
                         promise(.failure(error))

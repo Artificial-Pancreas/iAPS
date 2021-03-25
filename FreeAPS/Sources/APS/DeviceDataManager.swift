@@ -157,10 +157,10 @@ extension BaseDeviceDataManager: PumpManagerDelegate {
     ) {
         dispatchPrecondition(condition: .onQueue(processQueue))
         debug(.deviceManager, "Reservoir Value \(units), at: \(date)")
-        try? storage.save(Decimal(units), as: OpenAPS.Monitor.reservoir)
+        storage.save(Decimal(units), as: OpenAPS.Monitor.reservoir)
         let batteryPercent = Int((pumpManager?.status.pumpBatteryChargeRemaining ?? 1) * 100)
         let battery = Battery(percent: batteryPercent, voltage: nil, string: batteryPercent >= 10 ? .normal : .low)
-        try? storage.save(battery, as: OpenAPS.Monitor.battery)
+        storage.save(battery, as: OpenAPS.Monitor.battery)
         completion(.success((
             newValue: Reservoir(startDate: Date(), unitVolume: units),
             lastValue: nil,

@@ -127,7 +127,7 @@ final class BaseAPSManager: APSManager, Injectable {
     }
 
     private func autosens() -> AnyPublisher<Bool, Never> {
-        guard let autosens = try? storage.retrieve(OpenAPS.Settings.autosense, as: Autosens.self),
+        guard let autosens = storage.retrieve(OpenAPS.Settings.autosense, as: Autosens.self),
               (autosens.timestamp ?? .distantPast).addingTimeInterval(30.minutes.timeInterval) > Date()
         else {
             return openAPS.autosense()
@@ -139,7 +139,7 @@ final class BaseAPSManager: APSManager, Injectable {
     }
 
     func determineBasal() -> AnyPublisher<Bool, Never> {
-        guard let glucose = try? storage.retrieve(OpenAPS.Monitor.glucose, as: [BloodGlucose].self), glucose.count >= 36 else {
+        guard let glucose = storage.retrieve(OpenAPS.Monitor.glucose, as: [BloodGlucose].self), glucose.count >= 36 else {
             debug(.apsManager, "Not enough glucose data")
             return Just(false).eraseToAnyPublisher()
         }
@@ -218,7 +218,7 @@ final class BaseAPSManager: APSManager, Injectable {
             case .success:
                 debug(.apsManager, "Temp Basal succeeded")
                 let temp = TempBasal(duration: Int(duration / 60), rate: Decimal(rate), temp: .absolute, timestamp: Date())
-                try? self.storage.save(temp, as: OpenAPS.Monitor.tempBasal)
+                self.storage.save(temp, as: OpenAPS.Monitor.tempBasal)
             case let .failure(error):
                 debug(.apsManager, "Temp Basal failed with error: \(error.localizedDescription)")
             }
@@ -309,7 +309,7 @@ final class BaseAPSManager: APSManager, Injectable {
 
     private func currentTemp(date: Date) -> TempBasal {
         let defaultTemp = { () -> TempBasal in
-            guard let temp = try? storage.retrieve(OpenAPS.Monitor.tempBasal, as: TempBasal.self) else {
+            guard let temp = storage.retrieve(OpenAPS.Monitor.tempBasal, as: TempBasal.self) else {
                 return TempBasal(duration: 0, rate: 0, temp: .absolute, timestamp: Date())
             }
             let delta = Int((date.timeIntervalSince1970 - temp.timestamp.timeIntervalSince1970) / 60)
@@ -331,7 +331,7 @@ final class BaseAPSManager: APSManager, Injectable {
     }
 
     private func enactSuggested() {
-        guard let suggested = try? storage.retrieve(OpenAPS.Enact.suggested, as: Suggestion.self) else {
+        guard let suggested = storage.retrieve(OpenAPS.Enact.suggested, as: Suggestion.self) else {
             isLooping.send(false)
             debug(.apsManager, "Suggestion not found")
             return
@@ -356,7 +356,7 @@ final class BaseAPSManager: APSManager, Injectable {
             }
             return pump.enactTempBasal(unitsPerHour: Double(rate), for: TimeInterval(duration * 60)).map { _ in
                 let temp = TempBasal(duration: duration, rate: rate, temp: .absolute, timestamp: Date())
-                try? self.storage.save(temp, as: OpenAPS.Monitor.tempBasal)
+                self.storage.save(temp, as: OpenAPS.Monitor.tempBasal)
                 return ()
             }
             .eraseToAnyPublisher()
@@ -392,7 +392,7 @@ final class BaseAPSManager: APSManager, Injectable {
             var enacted = suggestion
             enacted.timestamp = Date()
             enacted.recieved = received
-            try? storage.save(enacted, as: OpenAPS.Enact.enacted)
+            storage.save(enacted, as: OpenAPS.Enact.enacted)
             debug(.apsManager, "Suggestion enacted")
             DispatchQueue.main.async {
                 self.broadcaster.notify(EnactedSuggestionObserver.self, on: .main) {
@@ -460,8 +460,8 @@ extension BaseAPSManager: PumpManagerStatusObserver {
     func pumpManager(_: PumpManager, didUpdate status: PumpManagerStatus, oldStatus _: PumpManagerStatus) {
         let percent = Int((status.pumpBatteryChargeRemaining ?? 1) * 100)
         let battery = Battery(percent: percent, voltage: nil, string: percent > 10 ? .normal : .low)
-        try? storage.save(battery, as: OpenAPS.Monitor.battery)
-        try? storage.save(status.pumpStatus, as: OpenAPS.Monitor.status)
+        storage.save(battery, as: OpenAPS.Monitor.battery)
+        storage.save(status.pumpStatus, as: OpenAPS.Monitor.status)
 //        if oldStatus.pumpStatus.status != status.pumpStatus.status {
 //            debug(.apsManager, "Pump status did change: \(status.pumpStatus)")
 //            nightscout.uploadStatus()

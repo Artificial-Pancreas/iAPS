@@ -13,7 +13,7 @@ extension PreferencesEditor {
             processQueue.async {
                 var prefs = preferences
                 prefs.timestamp = Date()
-                try? self.storage.save(prefs, as: OpenAPS.Settings.preferences)
+                self.storage.save(prefs, as: OpenAPS.Settings.preferences)
             }
         }
     }

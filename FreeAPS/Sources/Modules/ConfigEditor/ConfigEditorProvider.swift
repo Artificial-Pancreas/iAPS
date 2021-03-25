@@ -11,7 +11,7 @@ extension ConfigEditor {
         }
 
         func save(_ value: RawJSON, as file: String) {
-            try? storage.save(value, as: file)
+            storage.save(value, as: file)
         }
     }
 }

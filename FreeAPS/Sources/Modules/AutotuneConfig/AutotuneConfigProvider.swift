@@ -5,7 +5,7 @@ extension AutotuneConfig {
         @Injected() private var apsManager: APSManager!
 
         var autotune: Autotune? {
-            try? storage.retrieve(OpenAPS.Settings.autotune, as: Autotune.self)
+            storage.retrieve(OpenAPS.Settings.autotune, as: Autotune.self)
         }
 
         func runAutotune() -> AnyPublisher<Autotune?, Never> {
@@ -13,7 +13,7 @@ extension AutotuneConfig {
         }
 
         func deleteAutotune() {
-            try? storage.remove(OpenAPS.Settings.autotune)
+            storage.remove(OpenAPS.Settings.autotune)
         }
     }
 }

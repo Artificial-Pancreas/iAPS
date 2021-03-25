@@ -23,18 +23,18 @@ final class BaseAnnouncementsStorage: AnnouncementsStorage, Injectable {
     func storeAnnouncements(_ announcements: [Announcement], enacted: Bool) {
         processQueue.sync {
             let file = enacted ? OpenAPS.FreeAPS.announcementsEnacted : OpenAPS.FreeAPS.announcements
-            try? self.storage.transaction { storage in
-                try storage.append(announcements, to: file, uniqBy: \.createdAt)
-                let uniqEvents = try storage.retrieve(file, as: [Announcement].self)
+            self.storage.transaction { storage in
+                storage.append(announcements, to: file, uniqBy: \.createdAt)
+                let uniqEvents = storage.retrieve(file, as: [Announcement].self)?
                     .filter { $0.createdAt.addingTimeInterval(1.days.timeInterval) > Date() }
-                    .sorted { $0.createdAt > $1.createdAt }
-                try storage.save(Array(uniqEvents), as: file)
+                    .sorted { $0.createdAt > $1.createdAt } ?? []
+                storage.save(Array(uniqEvents), as: file)
             }
         }
     }
 
     func syncDate() -> Date {
-        guard let events = try? storage.retrieve(OpenAPS.FreeAPS.announcements, as: [Announcement].self),
+        guard let events = storage.retrieve(OpenAPS.FreeAPS.announcements, as: [Announcement].self),
               let recent = events.filter({ $0.enteredBy != Announcement.remote }).first
         else {
             return Date().addingTimeInterval(-1.days.timeInterval)
@@ -43,7 +43,7 @@ final class BaseAnnouncementsStorage: AnnouncementsStorage, Injectable {
     }
 
     func recent() -> Announcement? {
-        guard let events = try? storage.retrieve(OpenAPS.FreeAPS.announcements, as: [Announcement].self)
+        guard let events = storage.retrieve(OpenAPS.FreeAPS.announcements, as: [Announcement].self)
         else {
             return nil
         }
@@ -55,7 +55,7 @@ final class BaseAnnouncementsStorage: AnnouncementsStorage, Injectable {
         else {
             return nil
         }
-        guard let enactedEvents = try? storage.retrieve(OpenAPS.FreeAPS.announcementsEnacted, as: [Announcement].self)
+        guard let enactedEvents = storage.retrieve(OpenAPS.FreeAPS.announcementsEnacted, as: [Announcement].self)
         else {
             return recent
         }

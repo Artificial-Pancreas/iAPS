@@ -26,12 +26,12 @@ final class BaseCarbsStorage: CarbsStorage, Injectable {
         processQueue.sync {
             let file = OpenAPS.Monitor.carbHistory
             var uniqEvents: [CarbsEntry] = []
-            try? self.storage.transaction { storage in
-                try storage.append(carbs, to: file, uniqBy: \.createdAt)
-                uniqEvents = try storage.retrieve(file, as: [CarbsEntry].self)
+            self.storage.transaction { storage in
+                storage.append(carbs, to: file, uniqBy: \.createdAt)
+                uniqEvents = storage.retrieve(file, as: [CarbsEntry].self)?
                     .filter { $0.createdAt.addingTimeInterval(1.days.timeInterval) > Date() }
-                    .sorted { $0.createdAt > $1.createdAt }
-                try storage.save(Array(uniqEvents), as: file)
+                    .sorted { $0.createdAt > $1.createdAt } ?? []
+                storage.save(Array(uniqEvents), as: file)
             }
             broadcaster.notify(CarbsObserver.self, on: processQueue) {
                 $0.carbsDidUpdate(uniqEvents)
@@ -40,7 +40,7 @@ final class BaseCarbsStorage: CarbsStorage, Injectable {
     }
 
     func syncDate() -> Date {
-        guard let events = try? storage.retrieve(OpenAPS.Monitor.carbHistory, as: [CarbsEntry].self),
+        guard let events = storage.retrieve(OpenAPS.Monitor.carbHistory, as: [CarbsEntry].self),
               let recent = events.filter({ $0.enteredBy != CarbsEntry.manual }).first
         else {
             return Date().addingTimeInterval(-1.days.timeInterval)
@@ -49,11 +49,11 @@ final class BaseCarbsStorage: CarbsStorage, Injectable {
     }
 
     func recent() -> [CarbsEntry] {
-        (try? storage.retrieve(OpenAPS.Monitor.carbHistory, as: [CarbsEntry].self))?.reversed() ?? []
+        storage.retrieve(OpenAPS.Monitor.carbHistory, as: [CarbsEntry].self)?.reversed() ?? []
     }
 
     func nightscoutTretmentsNotUploaded() -> [NigtscoutTreatment] {
-        let uploaded = (try? storage.retrieve(OpenAPS.Nightscout.uploadedPumphistory, as: [NigtscoutTreatment].self)) ?? []
+        let uploaded = storage.retrieve(OpenAPS.Nightscout.uploadedPumphistory, as: [NigtscoutTreatment].self) ?? []
 
         let eventsManual = recent().filter { $0.enteredBy == CarbsEntry.manual }
         let treatments = eventsManual.map {
