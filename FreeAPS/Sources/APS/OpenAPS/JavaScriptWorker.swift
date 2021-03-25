@@ -16,7 +16,7 @@ final class JavaScriptWorker {
         let context = JSContext(virtualMachine: virtualMachine)!
         context.exceptionHandler = { _, exception in
             if let error = exception?.toString() {
-                print(error)
+                warning(.openAPS, "JavaScript Error: \(error)")
             }
         }
         return context

@@ -475,6 +475,7 @@ extension MainChartView {
                     yPoint = point.y
                 }
                 let lastPoint = lastBasalPoint(fullSize: fullSize)
+                path.addLine(to: CGPoint(x: lastPoint.x, y: yPoint))
                 path.addLine(to: CGPoint(x: lastPoint.x, y: Config.basalHeight))
                 path.addLine(to: CGPoint(x: 0, y: Config.basalHeight))
             }
@@ -598,7 +599,7 @@ extension MainChartView {
     private func lastBasalPoint(fullSize: CGSize) -> CGPoint {
         let lastBasal = Array(tempBasals.suffix(2))
         guard lastBasal.count == 2 else {
-            return .zero
+            return CGPoint(x: timeToXCoordinate(Date().timeIntervalSince1970, fullSize: fullSize), y: Config.basalHeight)
         }
         let endBasalTime = lastBasal[0].timestamp.timeIntervalSince1970 + (lastBasal[1].durationMin?.minutes.timeInterval ?? 0)
         let rateCost = Config.basalHeight / CGFloat(maxBasal)
