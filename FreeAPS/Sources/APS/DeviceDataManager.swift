@@ -15,7 +15,7 @@ protocol DeviceDataManager {
     var recommendsLoop: PassthroughSubject<Void, Never> { get }
     var pumpName: CurrentValueSubject<String, Never> { get }
     var pumpExpiresAtDate: CurrentValueSubject<Date?, Never> { get }
-    func heartbeat() 
+    func heartbeat()
 }
 
 private let staticPumpManagers: [PumpManagerUI.Type] = [
@@ -66,20 +66,10 @@ final class BaseDeviceDataManager: DeviceDataManager, Injectable {
     let pumpExpiresAtDate = CurrentValueSubject<Date?, Never>(nil)
     let pumpName = CurrentValueSubject<String, Never>("Pump")
 
-    var heartBeat: Timer!
-
     init(resolver: Resolver) {
         injectServices(resolver)
         setupPumpManager()
         UIDevice.current.isBatteryMonitoringEnabled = true
-
-        if pumpManager is MockPumpManager {
-            heartBeat = Timer.scheduledTimer(withTimeInterval: 60, repeats: true) { _ in
-                debug(.deviceManager, "Timer Heartbeat")
-                self.updatePumpData()
-            }
-        }
-
         updatePumpData()
     }
 

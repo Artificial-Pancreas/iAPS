@@ -29,6 +29,7 @@ private extension Swinject.Resolver {
         resolver.resolve(AppearanceManager.self)!.setupGlobalAppearance()
         _ = resolver.resolve(DeviceDataManager.self)!
         _ = resolver.resolve(APSManager.self)!
+        _ = resolver.resolve(GlucoseManager.self)!
     }
 
     var body: some Scene {

@@ -14,7 +14,8 @@ enum NetworkError: Error, LocalizedError {
 
 struct NetworkService {
     func run(_ request: URLRequest) -> AnyPublisher<Data, Error> {
-        URLSession.shared
+        debug(.nightscout, "Request at \(request.url!.absoluteString)")
+        return URLSession.shared
             .dataTaskPublisher(for: request)
             .tryMap { data, response in
                 let code = (response as! HTTPURLResponse).statusCode

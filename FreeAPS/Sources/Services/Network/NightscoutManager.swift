@@ -4,7 +4,7 @@ import Swinject
 import UIKit
 
 protocol NightscoutManager {
-    func fetchGlucose() -> AnyPublisher<Void, Never>
+    func fetchGlucose() -> AnyPublisher<[BloodGlucose], Never>
     func fetchCarbs() -> AnyPublisher<Void, Never>
     func fetchTempTargets() -> AnyPublisher<Void, Never>
     func fetchAnnouncements() -> AnyPublisher<Void, Never>
@@ -51,9 +51,9 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
         broadcaster.register(TempTargetsObserver.self, observer: self)
     }
 
-    func fetchGlucose() -> AnyPublisher<Void, Never> {
+    func fetchGlucose() -> AnyPublisher<[BloodGlucose], Never> {
         guard let nightscout = nightscoutAPI else {
-            return Just(()).eraseToAnyPublisher()
+            return Just([]).eraseToAnyPublisher()
         }
 
         let since = glucoseStorage.syncDate()
@@ -65,7 +65,7 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
             .replaceError(with: [])
             .map {
                 self.glucoseStorage.storeGlucose($0)
-                return ()
+                return $0
             }
             .eraseToAnyPublisher()
     }

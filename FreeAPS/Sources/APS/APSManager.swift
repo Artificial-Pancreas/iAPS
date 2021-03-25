@@ -104,8 +104,7 @@ final class BaseAPSManager: APSManager, Injectable {
 
     private func loop() {
         isLooping.send(true)
-        Publishers.CombineLatest3(
-            nightscout.fetchGlucose(),
+        Publishers.CombineLatest(
             nightscout.fetchCarbs(),
             nightscout.fetchTempTargets()
         )

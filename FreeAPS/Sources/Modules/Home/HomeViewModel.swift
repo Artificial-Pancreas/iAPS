@@ -53,7 +53,7 @@ extension Home {
             setStatusTitle()
 
             if closedLoop,
-               enactedSuggestion?.deliverAt == suggestion?.deliverAt || (suggestion?.rate == nil && suggestion?.units == nil)
+               enactedSuggestion?.deliverAt == suggestion?.deliverAt, suggestion?.rate != nil || suggestion?.units != nil
             {
                 lastLoopDate = enactedSuggestion?.timestamp ?? .distantPast
             } else {

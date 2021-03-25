@@ -7,5 +7,6 @@ enum APSContainer: DependeciesContainer {
     static func register(container: Container) {
         container.register(DeviceDataManager.self) { _ in BaseDeviceDataManager(resolver: resolver) }
         container.register(APSManager.self) { _ in BaseAPSManager(resolver: resolver) }
+        container.register(GlucoseManager.self) { _ in BaseGlucoseManager(resolver: resolver) }
     }
 }

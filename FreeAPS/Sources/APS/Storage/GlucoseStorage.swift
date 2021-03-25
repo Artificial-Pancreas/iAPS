@@ -43,7 +43,7 @@ final class BaseGlucoseStorage: GlucoseStorage, Injectable {
         else {
             return Date().addingTimeInterval(-1.days.timeInterval)
         }
-        return recent.dateString.addingTimeInterval(-6.minutes.timeInterval)
+        return recent.dateString.addingTimeInterval(1.minutes.timeInterval)
     }
 
     func recent() -> [BloodGlucose] {
