@@ -52,7 +52,14 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
     }
 
     func fetchGlucose() -> AnyPublisher<[BloodGlucose], Never> {
-        guard let nightscout = nightscoutAPI else {
+        let useLocal = (settingsManager.settings.useLocalGlucoseSource ?? false) && settingsManager.settings
+            .localGlucosePort != nil
+
+        let maybeNightscout = useLocal
+            ? NightscoutAPI(url: URL(string: "http://127.0.0.1:\(settingsManager.settings.localGlucosePort!)")!)
+            : nightscoutAPI
+
+        guard let nightscout = maybeNightscout else {
             return Just([]).eraseToAnyPublisher()
         }
 

@@ -4,6 +4,12 @@ extension NightscoutConfig {
     struct RootView: BaseView {
         @EnvironmentObject var viewModel: ViewModel<Provider>
 
+        private var portFormater: NumberFormatter {
+            let formatter = NumberFormatter()
+            formatter.allowsFloats = false
+            return formatter
+        }
+
         var body: some View {
             Form {
                 Section {
@@ -37,6 +43,14 @@ extension NightscoutConfig {
 
                 Section {
                     Toggle("Allow uploads", isOn: $viewModel.isUploadEnabled)
+                }
+
+                Section(header: Text("Local glucose source")) {
+                    Toggle("Use local glucose server", isOn: $viewModel.useLocalSource)
+                    HStack {
+                        Text("Port")
+                        DecimalTextField("", value: $viewModel.localPort, formatter: portFormater)
+                    }
                 }
             }
             .navigationBarTitle("Nightscout Config", displayMode: .automatic)

@@ -6,4 +6,6 @@ struct FreeAPSSettings: JSON {
     var allowAnnouncements: Bool
     var useAutotune: Bool
     var isUploadEnabled: Bool?
+    var useLocalGlucoseSource: Bool?
+    var localGlucosePort: Int?
 }
