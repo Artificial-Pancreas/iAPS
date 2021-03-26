@@ -155,6 +155,14 @@ extension Home {
                 .onTapGesture {
                     isStatusPopupPresented = false
                 }
+                .gesture(
+                    DragGesture(minimumDistance: 10, coordinateSpace: .local)
+                        .onEnded { value in
+                            if value.translation.height < 0 {
+                                isStatusPopupPresented = false
+                            }
+                        }
+                )
             }
         }
     }
