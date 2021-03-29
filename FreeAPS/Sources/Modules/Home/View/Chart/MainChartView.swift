@@ -283,7 +283,7 @@ struct MainChartView: View {
     private func tempTargetsView(fullSize: CGSize) -> some View {
         ZStack {
             tempTargetsPath
-                .fill(Color.tempBasal)
+                .fill(Color.tempBasal.opacity(0.5))
         }
         .onChange(of: glucose) { _ in
             calculateTempTargetsRects(fullSize: fullSize)
