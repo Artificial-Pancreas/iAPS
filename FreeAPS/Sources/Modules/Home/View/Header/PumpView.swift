@@ -10,7 +10,7 @@ struct PumpView: View {
     private var reservoirFormatter: NumberFormatter {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
-        formatter.maximumFractionDigits = 1
+        formatter.maximumFractionDigits = 0
         return formatter
     }
 
@@ -21,9 +21,7 @@ struct PumpView: View {
     }
 
     var body: some View {
-        VStack(alignment: .leading) {
-            Text(name).font(.caption)
-                .minimumScaleFactor(0.01)
+        VStack(alignment: .leading, spacing: 12) {
             if let reservoir = reservoir {
                 HStack {
                     Image(systemName: "drop.fill")
@@ -31,10 +29,9 @@ struct PumpView: View {
                         .aspectRatio(contentMode: .fit)
                         .frame(height: 8)
                         .foregroundColor(reservoirColor)
-                    Text(reservoirFormatter.string(from: reservoir as NSNumber)! + " U").font(.caption2)
+                    Text(reservoirFormatter.string(from: reservoir as NSNumber)! + " U").font(.system(size: 12, weight: .bold))
                 }
             }
-
             if let battery = battery, battery.display ?? false, expiresAtDate == nil {
                 HStack {
                     Image(systemName: "battery.100")
@@ -42,7 +39,7 @@ struct PumpView: View {
                         .aspectRatio(contentMode: .fit)
                         .frame(height: 8)
                         .foregroundColor(batteryColor)
-                    Text("\(Int(battery.percent ?? 100)) %").font(.caption2)
+                    Text("\(Int(battery.percent ?? 100)) %").font(.system(size: 12, weight: .bold))
                 }
             }
 
@@ -53,11 +50,10 @@ struct PumpView: View {
                         .aspectRatio(contentMode: .fit)
                         .frame(height: 8)
                         .foregroundColor(timerColor)
-                    Text(remainingTimeString(time: date.timeIntervalSince(timerDate))).font(.caption2)
+                    Text(remainingTimeString(time: date.timeIntervalSince(timerDate))).font(.system(size: 12, weight: .bold))
                 }
             }
-
-        }.padding(.leading)
+        }
     }
 
     private func remainingTimeString(time: TimeInterval) -> String {
@@ -86,11 +82,11 @@ struct PumpView: View {
 
         switch percent {
         case ...10:
-            return .red
+            return .loopRed
         case ...20:
-            return .orange
+            return .loopYellow
         default:
-            return .green
+            return .loopGreen
         }
     }
 
@@ -101,11 +97,11 @@ struct PumpView: View {
 
         switch reservoir {
         case ...10:
-            return .red
+            return .loopRed
         case ...30:
-            return .orange
+            return .loopYellow
         default:
-            return .blue
+            return .insulin
         }
     }
 

@@ -30,6 +30,7 @@ extension Home {
         @Published var reservoir: Decimal?
         @Published var pumpName = "Pump"
         @Published var pumpExpiresAtDate: Date?
+        @Published var tempTargetName: String?
 
         @Published var allowManualTemp = false
         private(set) var units: GlucoseUnits = .mmolL
@@ -60,6 +61,8 @@ extension Home {
                 lastLoopDate = suggestion?.timestamp ?? .distantPast
             }
 
+            tempTargetName = provider.tempTarget()?.name
+
             broadcaster.register(GlucoseObserver.self, observer: self)
             broadcaster.register(SuggestionObserver.self, observer: self)
             broadcaster.register(SettingsObserver.self, observer: self)
@@ -72,7 +75,11 @@ extension Home {
             broadcaster.register(PumpBatteryObserver.self, observer: self)
             broadcaster.register(PumpReservoirObserver.self, observer: self)
 
-            timer.assign(to: \.timerDate, on: self)
+            timer
+                .sink { date in
+                    self.timerDate = date
+                    self.tempTargetName = self.provider.tempTarget()?.name
+                }
                 .store(in: &lifetime)
 
             apsManager.isLooping
@@ -90,7 +97,6 @@ extension Home {
                 .assign(to: \.pumpName, on: self)
                 .store(in: &lifetime)
 
-//            pumpExpiresAtDate = Date().addingTimeInterval(2.days.timeInterval + 3.hours.timeInterval)
             apsManager.pumpExpiresAtDate
                 .receive(on: DispatchQueue.main)
                 .assign(to: \.pumpExpiresAtDate, on: self)
@@ -119,10 +125,6 @@ extension Home {
 
         func settings() {
             showModal(for: .settings)
-        }
-
-        func setFilteredGlucoseHours(hours: Int) {
-            filteredHours = hours
         }
 
         private func setupGlucose() {

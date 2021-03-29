@@ -39,6 +39,10 @@ extension Home {
             }
         }
 
+        func tempTarget() -> TempTarget? {
+            tempTargetsStorage.current()
+        }
+
         func carbs(hours: Int) -> [CarbsEntry] {
             carbsStorage.recent().filter {
                 $0.createdAt.addingTimeInterval(hours.hours.timeInterval) > Date()

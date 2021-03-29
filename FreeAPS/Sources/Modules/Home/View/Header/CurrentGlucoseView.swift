@@ -31,30 +31,30 @@ struct CurrentGlucoseView: View {
     }
 
     var body: some View {
-        HStack(spacing: 0) {
-            VStack {
+        VStack(alignment: .center, spacing: 6) {
+            HStack(spacing: 8) {
                 Text(
                     recentGlucose?.glucose
-                        .map { glucoseFormatter.string(from: Double(units == .mmolL ? $0.asMmolL : Decimal($0)) as NSNumber)! } ??
-                        "--"
+                        .map {
+                            glucoseFormatter
+                                .string(from: Double(units == .mmolL ? $0.asMmolL : Decimal($0)) as NSNumber)! }
+                        ?? "--"
                 )
-                .font(.largeTitle)
-                Spacer()
+                .font(.system(size: 24, weight: .bold))
+                image.padding(.bottom, 2)
+
+            }.padding(.leading, 4)
+            HStack(spacing: 2) {
                 Text(
                     recentGlucose.map { dateFormatter.string(from: $0.dateString) } ?? "--"
-                ).font(.caption)
-            }.padding(.leading, 4)
-            VStack {
-                Spacer()
-                image.padding(.bottom, 2)
+                ).font(.caption2).foregroundColor(.secondary)
                 Text(
                     delta
                         .map { deltaFormatter.string(from: Double(units == .mmolL ? $0.asMmolL : Decimal($0)) as NSNumber)!
                         } ??
                         "--"
 
-                ).font(.caption)
-                Text("\(units.rawValue)").font(.caption2)
+                ).font(.caption2).foregroundColor(.secondary)
             }
         }
     }

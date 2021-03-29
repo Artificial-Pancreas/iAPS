@@ -9,11 +9,33 @@ extension Home {
         private var numberFormatter: NumberFormatter {
             let formatter = NumberFormatter()
             formatter.numberStyle = .decimal
+            formatter.maximumFractionDigits = 2
             return formatter
         }
 
         var header: some View {
-            HStack {
+            HStack(alignment: .bottom) {
+                VStack(alignment: .leading, spacing: 12) {
+                    HStack {
+                        Text("IOB").font(.caption2).foregroundColor(.secondary)
+                        Text((numberFormatter.string(from: (viewModel.suggestion?.iob ?? 0) as NSNumber) ?? "0") + " U")
+                            .font(.system(size: 12, weight: .bold))
+                    }
+                    HStack {
+                        Text("COB").font(.caption2).foregroundColor(.secondary)
+                        Text((numberFormatter.string(from: (viewModel.suggestion?.cob ?? 0) as NSNumber) ?? "0") + " g")
+                            .font(.system(size: 12, weight: .bold))
+                    }
+                }
+                .padding(.leading, 4)
+                Spacer()
+
+                CurrentGlucoseView(
+                    recentGlucose: $viewModel.recentGlucose,
+                    delta: $viewModel.glucoseDelta,
+                    units: viewModel.units
+                )
+                Spacer()
                 PumpView(
                     reservoir: $viewModel.reservoir,
                     battery: $viewModel.battery,
@@ -21,12 +43,6 @@ extension Home {
                     expiresAtDate: $viewModel.pumpExpiresAtDate,
                     timerDate: $viewModel.timerDate
                 )
-                Spacer()
-                CurrentGlucoseView(
-                    recentGlucose: $viewModel.recentGlucose,
-                    delta: $viewModel.glucoseDelta,
-                    units: viewModel.units
-                ).frame(minWidth: 0, maxWidth: .infinity)
                 Spacer()
                 LoopView(
                     suggestion: $viewModel.suggestion,
@@ -45,31 +61,28 @@ extension Home {
 
         var infoPanal: some View {
             HStack(alignment: .firstTextBaseline) {
-                Text("IOB").font(.caption)
-                    .padding(.leading)
-                Text((numberFormatter.string(from: (viewModel.suggestion?.iob ?? 0) as NSNumber) ?? "0") + " U")
-                    .font(.caption)
-
-                Text("COB").font(.caption)
-                Text((numberFormatter.string(from: (viewModel.suggestion?.cob ?? 0) as NSNumber) ?? "0") + " g")
-                    .font(.caption)
                 if let tempRate = viewModel.tempRate {
-                    Text("Temp basal").font(.caption).foregroundColor(.blue)
                     Text((numberFormatter.string(from: tempRate as NSNumber) ?? "0") + " U/hr")
-                        .font(.caption).foregroundColor(.blue)
+                        .font(.system(size: 12, weight: .bold)).foregroundColor(.insulin)
+                        .padding(.leading, 4)
                 }
 
+                if let tepmTargetName = viewModel.tempTargetName {
+                    Text(tepmTargetName).font(.caption).foregroundColor(.secondary)
+                }
                 Spacer()
-
-            }.frame(maxWidth: .infinity, maxHeight: 30)
-                .background(Rectangle().fill(Color.gray.opacity(0.2)))
+            }
+            .frame(maxWidth: .infinity, maxHeight: 30)
         }
 
         var body: some View {
-            viewModel.setFilteredGlucoseHours(hours: 24)
-            return GeometryReader { geo in
+            GeometryReader { geo in
                 VStack(spacing: 0) {
-                    header.padding(.vertical).frame(maxHeight: 70)
+                    header
+                        .frame(maxHeight: 70)
+                        .padding(.top, geo.safeAreaInsets.top)
+                        .background(Color.gray.opacity(0.2))
+
                     infoPanal
                     MainChartView(
                         glucose: $viewModel.glucose,
@@ -95,7 +108,7 @@ extension Home {
                                     .renderingMode(.template)
                                     .resizable()
                                     .frame(width: 24, height: 24)
-                            }.foregroundColor(.orange)
+                            }.foregroundColor(.loopGreen)
                             Spacer()
                             Button { viewModel.showModal(for: .addTempTarget) }
                             label: {
@@ -103,7 +116,7 @@ extension Home {
                                     .renderingMode(.template)
                                     .resizable()
                                     .frame(width: 24, height: 24)
-                            }.foregroundColor(.primary)
+                            }.foregroundColor(.loopYellow)
                             Spacer()
                             Button { viewModel.showModal(for: .bolus) }
                             label: {
@@ -111,7 +124,7 @@ extension Home {
                                     .renderingMode(.template)
                                     .resizable()
                                     .frame(width: 24, height: 24)
-                            }.foregroundColor(.blue)
+                            }.foregroundColor(.insulin)
                             Spacer()
                             if viewModel.allowManualTemp {
                                 Button { viewModel.showModal(for: .manualTempBasal) }
@@ -120,7 +133,7 @@ extension Home {
                                         .renderingMode(.template)
                                         .resizable()
                                         .frame(width: 24, height: 24)
-                                }.foregroundColor(.blue)
+                                }.foregroundColor(.insulin)
                                 Spacer()
                             }
                             Button { viewModel.showModal(for: .settings) }
@@ -129,13 +142,13 @@ extension Home {
                                     .renderingMode(.template)
                                     .resizable()
                                     .frame(width: 24, height: 24)
-                            }.foregroundColor(.gray)
+                            }.foregroundColor(.loopGray)
                         }
                         .padding(.horizontal, 24)
                         .padding(.bottom, geo.safeAreaInsets.bottom)
                     }
                 }
-                .edgesIgnoringSafeArea(.bottom)
+                .edgesIgnoringSafeArea(.vertical)
             }
             .navigationTitle("Home")
             .navigationBarHidden(true)

@@ -20,7 +20,7 @@ struct LoopView: View {
         return formatter
     }
 
-    private let rect = CGRect(x: 0, y: 0, width: 38, height: 38)
+    private let rect = CGRect(x: 0, y: 0, width: 32, height: 32)
     var body: some View {
         VStack(alignment: .center) {
             ZStack {
@@ -32,30 +32,29 @@ struct LoopView: View {
                     ProgressView()
                 }
             }
-
-            Spacer()
             if isLooping {
                 Text("looping").font(.caption2)
             } else if actualSuggestion?.timestamp != nil {
-                Text("\(Int((timerDate.timeIntervalSince(lastLoopDate) - Config.lag) / 60) + 1) min ago").font(.caption)
+                Text("\(Int((timerDate.timeIntervalSince(lastLoopDate) - Config.lag) / 60) + 1) min ago").font(.caption2)
+                    .foregroundColor(.secondary)
             } else {
-                Text("--").font(.caption)
+                Text("--").font(.caption2).foregroundColor(.secondary)
             }
-        }.padding(.trailing)
+        }.padding(.trailing, 4)
     }
 
     private var color: Color {
         guard actualSuggestion?.timestamp != nil else {
-            return Color(UIColor(named: "LoopGray")!)
+            return .loopGray
         }
         let delta = timerDate.timeIntervalSince(lastLoopDate) - Config.lag
 
         if delta <= 5.minutes.timeInterval {
-            return Color(UIColor(named: "LoopGreen")!)
+            return .loopGreen
         } else if delta <= 10.minutes.timeInterval {
-            return Color(UIColor(named: "LoopYellow")!)
+            return .loopYellow
         } else {
-            return Color(UIColor(named: "LoopRed")!)
+            return .loopRed
         }
     }
 

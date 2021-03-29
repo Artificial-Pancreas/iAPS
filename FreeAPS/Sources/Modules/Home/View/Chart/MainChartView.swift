@@ -153,9 +153,9 @@ struct MainChartView: View {
 
     private func basalView(fullSize: CGSize) -> some View {
         ZStack {
-            tempBasalPath.fill(Color.blue)
-            tempBasalPath.stroke(Color.blue, lineWidth: 1)
-            regularBasalPath.stroke(Color.yellow, lineWidth: 1)
+            tempBasalPath.fill(Color.tempBasal)
+            tempBasalPath.stroke(Color.tempBasal, lineWidth: 1)
+            regularBasalPath.stroke(Color.basal, lineWidth: 1)
         }
         .drawingGroup()
         .frame(width: fullGlucoseWidth(viewWidth: fullSize.width) + additionalWidth(viewWidth: fullSize.width))
@@ -227,7 +227,7 @@ struct MainChartView: View {
                 path.addEllipse(in: rect)
             }
         }
-        .fill(Color.green)
+        .fill(Color.loopGreen)
         .onChange(of: glucose) { _ in
             calculateGlucoseDots(fullSize: fullSize)
         }
@@ -239,7 +239,7 @@ struct MainChartView: View {
     private func bolusView(fullSize: CGSize) -> some View {
         ZStack {
             bolusPath
-                .fill(Color.blue)
+                .fill(Color.insulin)
             bolusPath
                 .stroke(Color.primary, lineWidth: 0.5)
 
@@ -261,7 +261,7 @@ struct MainChartView: View {
     private func carbsView(fullSize: CGSize) -> some View {
         ZStack {
             carbsPath
-                .fill(Color.orange)
+                .fill(Color.loopYellow)
             carbsPath
                 .stroke(Color.primary, lineWidth: 0.5)
 
@@ -283,7 +283,7 @@ struct MainChartView: View {
     private func tempTargetsView(fullSize: CGSize) -> some View {
         ZStack {
             tempTargetsPath
-                .fill(Color.gray.opacity(0.5))
+                .fill(Color.tempBasal)
         }
         .onChange(of: glucose) { _ in
             calculateTempTargetsRects(fullSize: fullSize)
@@ -302,25 +302,25 @@ struct MainChartView: View {
                 for rect in predictionDots[.iob] ?? [] {
                     path.addEllipse(in: rect)
                 }
-            }.stroke(Color.blue)
+            }.fill(Color.insulin)
 
             Path { path in
                 for rect in predictionDots[.cob] ?? [] {
                     path.addEllipse(in: rect)
                 }
-            }.stroke(Color.yellow)
+            }.fill(Color.loopYellow)
 
             Path { path in
                 for rect in predictionDots[.zt] ?? [] {
                     path.addEllipse(in: rect)
                 }
-            }.stroke(Color.purple)
+            }.fill(Color.zt)
 
             Path { path in
                 for rect in predictionDots[.uam] ?? [] {
                     path.addEllipse(in: rect)
                 }
-            }.stroke(Color.orange)
+            }.fill(Color.uam)
         }
         .onChange(of: suggestion) { _ in
             calculatePredictionDots(fullSize: fullSize, type: .iob)

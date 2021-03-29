@@ -13,6 +13,7 @@ protocol TempTargetsStorage {
     func nightscoutTretmentsNotUploaded() -> [NigtscoutTreatment]
     func storePresets(_ targets: [TempTarget])
     func presets() -> [TempTarget]
+    func current() -> TempTarget?
 }
 
 final class BaseTempTargetsStorage: TempTargetsStorage, Injectable {
@@ -59,6 +60,16 @@ final class BaseTempTargetsStorage: TempTargetsStorage, Injectable {
 
     func recent() -> [TempTarget] {
         storage.retrieve(OpenAPS.Settings.tempTargets, as: [TempTarget].self)?.reversed() ?? []
+    }
+
+    func current() -> TempTarget? {
+        guard let last = recent().last else {
+            return nil
+        }
+        guard last.createdAt.addingTimeInterval(Int(last.duration).minutes.timeInterval) > Date() else {
+            return nil
+        }
+        return last
     }
 
     func nightscoutTretmentsNotUploaded() -> [NigtscoutTreatment] {
