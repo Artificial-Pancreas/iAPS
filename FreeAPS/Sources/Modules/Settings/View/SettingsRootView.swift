@@ -49,6 +49,8 @@ extension Settings {
                                 .navigationLink(to: .configEditor(file: OpenAPS.Settings.insulinSensitivities), from: self)
                             Text("Temp targets").chevronCell()
                                 .navigationLink(to: .configEditor(file: OpenAPS.Settings.tempTargets), from: self)
+                            Text("Meal").chevronCell()
+                                .navigationLink(to: .configEditor(file: OpenAPS.Monitor.meal), from: self)
                         }
 
                         Group {
