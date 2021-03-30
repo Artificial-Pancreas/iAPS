@@ -139,7 +139,10 @@ extension BaseDeviceDataManager: PumpManagerDelegate {
     }
 
     func pumpManagerDidUpdateState(_ pumpManager: PumpManager) {
-        self.pumpManager = pumpManager as? PumpManagerUI
+        UserDefaults.standard.pumpManagerRawValue = pumpManager.rawValue
+        if self.pumpManager == nil, let newPumpManager = pumpManager as? PumpManagerUI {
+            self.pumpManager = newPumpManager
+        }
         pumpName.send(pumpManager.localizedTitle)
     }
 
