@@ -10,7 +10,7 @@ struct TempTarget: JSON, Identifiable, Equatable {
     let enteredBy: String?
 
     static let manual = "freeaps-x://manual"
-    static let custom = "Custom"
+    static let custom = "Custom temp target"
     static let cancel = "Cancel"
 }
 

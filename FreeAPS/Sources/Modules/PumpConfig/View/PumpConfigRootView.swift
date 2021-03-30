@@ -31,7 +31,7 @@ extension PumpConfig {
                 } else {
                     PumpSetupView(
                         pumpType: viewModel.setupPumpType,
-                        pumpInitialSettings: .default,
+                        pumpInitialSettings: viewModel.initialSettings,
                         completionDelegate: viewModel,
                         setupDelegate: viewModel
                     )

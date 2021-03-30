@@ -1049,6 +1049,7 @@
 		388E5A5A25B6F05F0019842D /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				38F37827261260DC009DB701 /* Color+Extensions.swift */,
 				389ECE042601144100D86C4F /* ConcurrentMap.swift */,
 				3871F39E25ED895A0013ECB5 /* Decimal+Extensions.swift */,
 				38C4D33625E9A1A200D30B77 /* DispatchQueue+Extensions.swift */,
@@ -1064,7 +1065,6 @@
 				3811DE5525C9D4D500A708ED /* Publisher.swift */,
 				38E98A3625F5509500C0CED0 /* String+Extensions.swift */,
 				3811DEE325CA063400A708ED /* PropertyWrappers */,
-				38F37827261260DC009DB701 /* Color+Extensions.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";

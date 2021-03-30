@@ -43,6 +43,14 @@ extension Home {
                     expiresAtDate: $viewModel.pumpExpiresAtDate,
                     timerDate: $viewModel.timerDate
                 )
+                .onTapGesture {
+                    viewModel.setupPump = true
+                }
+                .popover(isPresented: $viewModel.setupPump) {
+                    if let pumpManager = viewModel.provider.apsManager.pumpManager {
+                        PumpConfig.PumpSettingsView(pumpManager: pumpManager, completionDelegate: viewModel)
+                    }
+                }
                 Spacer()
                 LoopView(
                     suggestion: $viewModel.suggestion,

@@ -1,3 +1,4 @@
+import LoopKitUI
 import SwiftDate
 import SwiftUI
 
@@ -31,6 +32,7 @@ extension Home {
         @Published var pumpName = "Pump"
         @Published var pumpExpiresAtDate: Date?
         @Published var tempTargetName: String?
+        @Published var setupPump = false
 
         @Published var allowManualTemp = false
         private(set) var units: GlucoseUnits = .mmolL
@@ -289,5 +291,11 @@ extension Home.ViewModel:
 
     func pumpReservoirDidChange(_: Decimal) {
         setupReservoir()
+    }
+}
+
+extension Home.ViewModel: CompletionDelegate {
+    func completionNotifyingDidComplete(_: CompletionNotifying) {
+        setupPump = false
     }
 }
