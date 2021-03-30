@@ -34,7 +34,7 @@ final class BaseSettingsManager: SettingsManager, Injectable {
                 closedLoop: false,
                 allowAnnouncements: false,
                 useAutotune: false,
-                isUploadEnabled: true,
+                isUploadEnabled: false,
                 useLocalGlucoseSource: false,
                 localGlucosePort: nil,
                 debugOptions: false
