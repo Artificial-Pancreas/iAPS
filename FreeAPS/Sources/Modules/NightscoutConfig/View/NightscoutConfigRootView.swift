@@ -37,7 +37,7 @@ extension NightscoutConfig {
 
                 Section {
                     Button("Connect") { viewModel.connect() }
-                        .disabled(viewModel.url.isEmpty || viewModel.secret.isEmpty || viewModel.connecting)
+                        .disabled(viewModel.url.isEmpty || viewModel.connecting)
                     Button("Delete") { viewModel.delete() }.foregroundColor(.red).disabled(viewModel.connecting)
                 }
 

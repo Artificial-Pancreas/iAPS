@@ -48,7 +48,7 @@ extension NightscoutConfig {
             }
             connecting = true
             message = ""
-            provider.checkConnection(url: url, secret: secret)
+            provider.checkConnection(url: url, secret: secret.isEmpty ? nil : secret)
                 .receive(on: DispatchQueue.main)
                 .sink { completion in
                     switch completion {

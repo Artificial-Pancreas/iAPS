@@ -36,12 +36,16 @@ extension NightscoutAPI {
         }
         let check = Check()
         var request = URLRequest(url: url.appendingPathComponent(Config.treatmentsPath))
-        request.httpMethod = "POST"
-        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+
         if let secret = secret {
+            request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+            request.httpMethod = "POST"
             request.addValue(secret.sha1(), forHTTPHeaderField: "api-secret")
+            request.httpBody = try! JSONCoding.encoder.encode(check)
+        } else {
+            request.httpMethod = "GET"
         }
-        request.httpBody = try! JSONCoding.encoder.encode(check)
+
         return service.run(request)
             .map { _ in () }
             .eraseToAnyPublisher()
