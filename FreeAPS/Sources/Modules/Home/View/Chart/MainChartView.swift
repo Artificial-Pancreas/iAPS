@@ -115,7 +115,7 @@ struct MainChartView: View {
                         }
                         .onAppear {
                             // add trigger to the end of main queue
-                            DispatchQueue.main.async {
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
                                 scroll.scrollTo(Config.endID, anchor: .trailing)
                                 didAppearTrigger = true
                             }
