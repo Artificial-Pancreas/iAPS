@@ -211,14 +211,26 @@ guard var buildInfoPlist = InfoPlist(fromFileAtURL: URL(fileURLWithPath: "\(targ
     exit(1)
 }
 
+guard let scrRoot = ProcessInfo.processInfo.environment["SRCROOT"], !targetBuildDir.isEmpty else {
+    print("error: SRCROOT environment variable is empty!")
+    exit(1)
+}
+
+guard var sourceInfoPlist = InfoPlist(fromFileAtURL: URL(fileURLWithPath: "\(scrRoot)/FreeAPS/Resources/Info.plist")) else {
+    print("error: Source Info Plist cannot be load!")
+    exit(1)
+}
+
 switch currentBranch {
 case let .Release(version):
     buildInfoPlist.version = version
     buildInfoPlist.build = commitsCount
+    sourceInfoPlist.build = commitsCount
 default:
     buildInfoPlist.build = "\(commitsCount)"
 }
 
 buildInfoPlist.save()
+sourceInfoPlist.save()
 
 checkdSYM(buildNumber: buildInfoPlist.build)
