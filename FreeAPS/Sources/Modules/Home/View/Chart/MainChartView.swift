@@ -14,6 +14,8 @@ struct DotInfo {
     let value: Decimal
 }
 
+typealias GlucoseYRange = (minValue: Int, minY: CGFloat, maxValue: Int, maxY: CGFloat)
+
 struct MainChartView: View {
     private enum Config {
         static let endID = "End"
@@ -52,6 +54,7 @@ struct MainChartView: View {
     @State private var tempTargetsPath = Path()
     @State private var carbsDots: [DotInfo] = []
     @State private var carbsPath = Path()
+    @State private var glucoseYGange: GlucoseYRange = (0, 0, 0, 0)
 
     private let calculationQueue = DispatchQueue(label: "MainChartView.calculationQueue")
 
@@ -115,7 +118,7 @@ struct MainChartView: View {
                         }
                         .onAppear {
                             // add trigger to the end of main queue
-                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                            DispatchQueue.main.async {
                                 scroll.scrollTo(Config.endID, anchor: .trailing)
                                 didAppearTrigger = true
                             }
@@ -127,7 +130,7 @@ struct MainChartView: View {
 
     private func yGridView(fullSize: CGSize) -> some View {
         Path { path in
-            let range = glucoseYRange(fullSize: fullSize)
+            let range = glucoseYGange
             let step = (range.maxY - range.minY) / CGFloat(Config.yLinesCount)
             for line in 0 ... Config.yLinesCount {
                 path.move(to: CGPoint(x: 0, y: range.minY + CGFloat(line) * step))
@@ -138,7 +141,7 @@ struct MainChartView: View {
 
     private func glucoseLabelsView(fullSize: CGSize) -> some View {
         ForEach(0 ..< Config.yLinesCount + 1) { line -> AnyView in
-            let range = glucoseYRange(fullSize: fullSize)
+            let range = glucoseYGange
             let yStep = (range.maxY - range.minY) / CGFloat(Config.yLinesCount)
             let valueStep = Double(range.maxValue - range.minValue) / Double(Config.yLinesCount)
             let value = round(Double(range.maxValue) - Double(line) * valueStep) *
@@ -353,7 +356,10 @@ extension MainChartView {
                 return CGRect(x: position.x - 2, y: position.y - 2, width: 4, height: 4)
             }
 
+            let range = self.getGlucoseYRange(fullSize: fullSize)
+
             DispatchQueue.main.async {
+                glucoseYGange = range
                 glucoseDots = dots
             }
         }
@@ -624,7 +630,7 @@ extension MainChartView {
         viewWidth / (CGFloat(Config.screenHours) * CGFloat(1.hours.timeInterval))
     }
 
-    private func maxPredValue() -> Int {
+    private func maxPredValue() -> Int? {
         [
             suggestion?.predictions?.cob ?? [],
             suggestion?.predictions?.iob ?? [],
@@ -632,21 +638,18 @@ extension MainChartView {
             suggestion?.predictions?.uam ?? []
         ]
         .flatMap { $0 }
-        .max() ?? Config.maxGlucose
+        .max()
     }
 
-    private func minPredValue() -> Int {
-        let min =
-            [
-                suggestion?.predictions?.cob ?? [],
-                suggestion?.predictions?.iob ?? [],
-                suggestion?.predictions?.zt ?? [],
-                suggestion?.predictions?.uam ?? []
-            ]
-            .flatMap { $0 }
-            .min() ?? Config.minGlucose
-
-        return Swift.min(min, Config.minGlucose)
+    private func minPredValue() -> Int? {
+        [
+            suggestion?.predictions?.cob ?? [],
+            suggestion?.predictions?.iob ?? [],
+            suggestion?.predictions?.zt ?? [],
+            suggestion?.predictions?.uam ?? []
+        ]
+        .flatMap { $0 }
+        .min()
     }
 
     private func glucoseToCoordinate(_ glucoseEntry: BloodGlucose, fullSize: CGSize) -> CGPoint {
@@ -681,8 +684,14 @@ extension MainChartView {
     private func glucoseToYCoordinate(_ glucoseValue: Int, fullSize: CGSize) -> CGFloat {
         let topYPaddint = Config.topYPadding + Config.basalHeight
         let bottomYPadding = Config.bottomYPadding
-        let maxValue = max(glucose.compactMap(\.glucose).max() ?? Config.maxGlucose, maxPredValue())
-        let minValue = min(glucose.compactMap(\.glucose).min() ?? 0, minPredValue())
+        var maxValue = glucose.compactMap(\.glucose).max() ?? Config.maxGlucose
+        if let maxPredValue = maxPredValue() {
+            maxValue = max(maxValue, maxPredValue)
+        }
+        var minValue = glucose.compactMap(\.glucose).min() ?? Config.minGlucose
+        if let minPredValue = minPredValue() {
+            minValue = min(minValue, minPredValue)
+        }
         let stepYFraction = (fullSize.height - topYPaddint - bottomYPadding) / CGFloat(maxValue - minValue)
         let yOffset = CGFloat(minValue) * stepYFraction
         let y = fullSize.height - CGFloat(glucoseValue) * stepYFraction + yOffset - bottomYPadding
@@ -714,11 +723,17 @@ extension MainChartView {
         return pointInLine(CGPoint(x: prevX, y: prevY), CGPoint(x: nextX, y: nextY), fraction)
     }
 
-    private func glucoseYRange(fullSize: CGSize) -> (minValue: Int, minY: CGFloat, maxValue: Int, maxY: CGFloat) {
+    private func getGlucoseYRange(fullSize: CGSize) -> GlucoseYRange {
         let topYPaddint = Config.topYPadding + Config.basalHeight
         let bottomYPadding = Config.bottomYPadding
-        let maxValue = max(glucose.compactMap(\.glucose).max() ?? Config.maxGlucose, maxPredValue())
-        let minValue = min(glucose.compactMap(\.glucose).min() ?? 0, minPredValue())
+        var maxValue = glucose.compactMap(\.glucose).max() ?? Config.maxGlucose
+        if let maxPredValue = maxPredValue() {
+            maxValue = max(maxValue, maxPredValue)
+        }
+        var minValue = glucose.compactMap(\.glucose).min() ?? Config.minGlucose
+        if let minPredValue = minPredValue() {
+            minValue = min(minValue, minPredValue)
+        }
         let stepYFraction = (fullSize.height - topYPaddint - bottomYPadding) / CGFloat(maxValue - minValue)
         let yOffset = CGFloat(minValue) * stepYFraction
         let maxY = fullSize.height - CGFloat(minValue) * stepYFraction + yOffset - bottomYPadding
