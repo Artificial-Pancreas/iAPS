@@ -92,10 +92,14 @@ final class BaseDeviceDataManager: DeviceDataManager, Injectable {
         case let interval where interval < -5.minutes.timeInterval:
             updateInterval = 1.minutes.timeInterval
         default:
-            return
+            break
         }
 
-        guard now.timeIntervalSince(lastHeartBeatTime) >= updateInterval else { return }
+        let interval = now.timeIntervalSince(lastHeartBeatTime)
+        guard interval >= updateInterval else {
+            debug(.deviceManager, "Last hearbeat \(interval / 60) min ago, skip updating the pump data")
+            return
+        }
 
         heartbeat()
     }
@@ -103,9 +107,15 @@ final class BaseDeviceDataManager: DeviceDataManager, Injectable {
     @SyncAccess(lock: accessLock) private var pumpUpdateInProgress = false
 
     func heartbeat() {
-        guard let pumpManager = pumpManager else { return }
-        guard !pumpUpdateInProgress else { return }
-
+        guard let pumpManager = pumpManager else {
+            debug(.deviceManager, "Pump is not set, skip updating")
+            return
+        }
+        guard !pumpUpdateInProgress else {
+            debug(.deviceManager, "Pump update in progress, skip updating")
+            return
+        }
+        debug(.deviceManager, "Start updating the pump data")
         pumpUpdateInProgress = true
         lastHeartBeatTime = Date()
         pumpManager.ensureCurrentPumpData {
@@ -227,6 +237,7 @@ extension BaseDeviceDataManager: PumpManagerDelegate {
 
     func pumpManagerRecommendsLoop(_: PumpManager) {
         dispatchPrecondition(condition: .onQueue(processQueue))
+        pumpUpdateInProgress = false
         debug(.deviceManager, "Recomends loop")
         recommendsLoop.send()
     }
