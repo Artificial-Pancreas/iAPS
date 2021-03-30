@@ -27,7 +27,7 @@ To control an insulin you need to have a [RileyLink](https://getrileylink.org), 
 
 FreeAPS X is in an active development state
 
-**We do not recomment to use the system for everyday control of blood glucose**
+**We do not recommend to use the system for everyday control of blood glucose**
 
 If you want to test it, there is a beta-version available
 
