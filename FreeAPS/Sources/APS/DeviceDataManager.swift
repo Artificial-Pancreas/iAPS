@@ -103,11 +103,12 @@ final class BaseDeviceDataManager: DeviceDataManager, Injectable {
     @SyncAccess(lock: accessLock) private var pumpUpdateInProgress = false
 
     func heartbeat() {
+        guard let pumpManager = pumpManager else { return }
         guard !pumpUpdateInProgress else { return }
 
         pumpUpdateInProgress = true
         lastHeartBeatTime = Date()
-        pumpManager?.ensureCurrentPumpData {
+        pumpManager.ensureCurrentPumpData {
             debug(.deviceManager, "Pump Data updated")
             self.pumpUpdateInProgress = false
         }
@@ -138,7 +139,7 @@ extension BaseDeviceDataManager: PumpManagerDelegate {
     }
 
     func pumpManagerDidUpdateState(_ pumpManager: PumpManager) {
-        UserDefaults.standard.pumpManagerRawValue = pumpManager.rawValue
+        self.pumpManager = pumpManager as? PumpManagerUI
         pumpName.send(pumpManager.localizedTitle)
     }
 

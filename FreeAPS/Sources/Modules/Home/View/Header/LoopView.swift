@@ -40,7 +40,7 @@ struct LoopView: View {
             } else {
                 Text("--").font(.caption2).foregroundColor(.secondary)
             }
-        }.padding(.trailing, 4)
+        }
     }
 
     private var color: Color {
@@ -68,7 +68,7 @@ struct LoopView: View {
 
     private var actualSuggestion: Suggestion? {
         if closedLoop, suggestion?.rate != nil || suggestion?.units != nil {
-            return enactedSuggestion
+            return enactedSuggestion ?? suggestion
         } else {
             return suggestion
         }

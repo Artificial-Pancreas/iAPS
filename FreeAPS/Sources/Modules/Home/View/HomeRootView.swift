@@ -15,6 +15,7 @@ extension Home {
 
         var header: some View {
             HStack(alignment: .bottom) {
+                Spacer()
                 VStack(alignment: .leading, spacing: 12) {
                     HStack {
                         Text("IOB").font(.caption2).foregroundColor(.secondary)
@@ -27,7 +28,6 @@ extension Home {
                             .font(.system(size: 12, weight: .bold))
                     }
                 }
-                .padding(.leading, 4)
                 Spacer()
 
                 CurrentGlucoseView(
@@ -64,6 +64,7 @@ extension Home {
                 }.onLongPressGesture {
                     viewModel.runLoop()
                 }
+                Spacer()
             }.frame(maxWidth: .infinity)
         }
 
@@ -72,7 +73,7 @@ extension Home {
                 if let tempRate = viewModel.tempRate {
                     Text((numberFormatter.string(from: tempRate as NSNumber) ?? "0") + " U/hr")
                         .font(.system(size: 12, weight: .bold)).foregroundColor(.insulin)
-                        .padding(.leading, 4)
+                        .padding(.leading, 8)
                 }
 
                 if let tepmTargetName = viewModel.tempTargetName {
