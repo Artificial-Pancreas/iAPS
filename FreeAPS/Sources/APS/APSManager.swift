@@ -130,11 +130,20 @@ final class BaseAPSManager: APSManager, Injectable {
 
     private func verifyStatus() -> Bool {
         guard let pump = pumpManager else {
+            debug(.apsManager, "Pump is not set")
             return false
         }
         let status = pump.status.pumpStatus
 
-        guard !status.bolusing, !status.suspended else { return false }
+        guard !status.bolusing, !status.suspended else {
+            debug(.apsManager, "Pump is bolusing or suspended")
+            return false
+        }
+
+        guard let reservoir = storage.retrieve(OpenAPS.Monitor.reservoir, as: Decimal.self), reservoir > 0 else {
+            debug(.apsManager, "Reservoir is empty")
+            return false
+        }
 
         return true
     }
