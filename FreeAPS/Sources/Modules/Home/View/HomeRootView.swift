@@ -35,6 +35,9 @@ extension Home {
                     delta: $viewModel.glucoseDelta,
                     units: viewModel.units
                 )
+                .onTapGesture {
+                    viewModel.openCGM()
+                }
                 Spacer()
                 PumpView(
                     reservoir: $viewModel.reservoir,

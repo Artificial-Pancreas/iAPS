@@ -7,6 +7,7 @@ extension Home {
         @Injected() var broadcaster: Broadcaster!
         @Injected() var settingsManager: SettingsManager!
         @Injected() var apsManager: APSManager!
+        @Injected() var nightscoutManager: NightscoutManager!
         private let timer = Timer.publish(every: 5, on: .main, in: .common).autoconnect()
         private(set) var filteredHours = 24
 
@@ -228,6 +229,19 @@ extension Home {
             DispatchQueue.main.async {
                 self.battery = self.provider.pumpBattery()
             }
+        }
+
+        func openCGM() {
+            guard var url = nightscoutManager.cgmURL else { return }
+
+            switch url.absoluteString {
+            case "http://127.0.0.1:1979":
+                url = URL(string: "spikeapp://")!
+            case "http://127.0.0.1:17580":
+                url = URL(string: "diabox://")!
+            default: break
+            }
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
         }
     }
 }
