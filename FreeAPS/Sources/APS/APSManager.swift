@@ -108,7 +108,6 @@ final class BaseAPSManager: APSManager, Injectable {
             nightscout.fetchCarbs(),
             nightscout.fetchTempTargets()
         )
-        .flatMap { _ in self.dailyAutotune() }
         .flatMap { _ in self.determineBasal() }
         .sink { _ in } receiveValue: { [weak self] ok in
             guard let self = self else { return }
@@ -171,6 +170,7 @@ final class BaseAPSManager: APSManager, Injectable {
 
         let mainPublisher = makeProfiles()
             .flatMap { _ in self.autosens() }
+            .flatMap { _ in self.dailyAutotune() }
             .flatMap { _ in self.openAPS.determineBasal(currentTemp: temp, clock: now) }
             .map { suggestion -> Bool in
                 if let suggestion = suggestion {

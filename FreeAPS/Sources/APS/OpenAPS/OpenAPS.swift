@@ -147,7 +147,10 @@ final class OpenAPS {
     func makeProfiles(useAutotune: Bool) -> Future<Autotune?, Never> {
         Future { promise in
             self.processQueue.async {
-                let preferences = self.loadFileFromStorage(name: Settings.preferences)
+                var preferences = self.loadFileFromStorage(name: Settings.preferences)
+                if preferences.isEmpty {
+                    preferences = Preferences().rawJSON
+                }
                 let pumpSettings = self.loadFileFromStorage(name: Settings.settings)
                 let bgTargets = self.loadFileFromStorage(name: Settings.bgTargets)
                 let basalProfile = self.loadFileFromStorage(name: Settings.basalProfile)
