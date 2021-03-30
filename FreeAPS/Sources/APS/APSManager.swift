@@ -83,7 +83,7 @@ final class BaseAPSManager: APSManager, Injectable {
     }
 
     private func fetchAndLoop() {
-        if settings.allowAnnouncements {
+        if settings.allowAnnouncements ?? false {
             nightscout.fetchAnnouncements()
                 .sink { [weak self] in
                     guard let self = self else { return }

@@ -12,7 +12,7 @@ extension ConfigEditor {
         }
 
         required init(provider _: Provider, resolver _: Resolver) {
-            fatalError("init(provider:resolver:) has not been implemented")
+            error(.default, "init(provider:resolver:) has not been implemented")
         }
 
         override func subscribe() {

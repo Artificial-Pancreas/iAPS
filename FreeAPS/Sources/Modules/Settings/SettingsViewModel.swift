@@ -6,8 +6,11 @@ extension Settings {
         @Injected() private var broadcaster: Broadcaster!
         @Published var closedLoop = false
 
+        @Published var debugOptions = false
+
         override func subscribe() {
             closedLoop = settingsManager.settings.closedLoop
+            debugOptions = settingsManager.settings.debugOptions ?? false
 
             $closedLoop
                 .removeDuplicates()
@@ -23,5 +26,6 @@ extension Settings {
 extension Settings.ViewModel: SettingsObserver {
     func settingsDidChange(_ settings: FreeAPSSettings) {
         closedLoop = settings.closedLoop
+        debugOptions = settings.debugOptions ?? false
     }
 }

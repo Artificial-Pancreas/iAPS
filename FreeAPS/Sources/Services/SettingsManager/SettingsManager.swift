@@ -12,6 +12,8 @@ protocol SettingsObserver {
 
 final class BaseSettingsManager: SettingsManager, Injectable {
     @Injected() var broadcaster: Broadcaster!
+    @Injected() var storage: FileStorage!
+
     var settings: FreeAPSSettings {
         didSet {
             save()
@@ -23,13 +25,11 @@ final class BaseSettingsManager: SettingsManager, Injectable {
         }
     }
 
-    @Injected() var storage: FileStorage!
-
     init(resolver: Resolver) {
         let storage = resolver.resolve(FileStorage.self)!
         settings = storage.retrieve(OpenAPS.FreeAPS.settings, as: FreeAPSSettings.self)
             ?? FreeAPSSettings(from: OpenAPS.defaults(for: OpenAPS.FreeAPS.settings))
-            ?? FreeAPSSettings(units: .mmolL, closedLoop: false, allowAnnouncements: false, useAutotune: false)
+            ?? FreeAPSSettings(units: .mmolL, closedLoop: false, allowAnnouncements: false, useAutotune: true, isUploadEnabled: true, useLocalGlucoseSource: false, localGlucosePort: nil, debugOptions: false)
 
         injectServices(resolver)
     }

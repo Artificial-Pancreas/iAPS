@@ -11,6 +11,10 @@ extension ConfigEditor {
         }
 
         func save(_ value: RawJSON, as file: String) {
+            guard let data = value.data(using: .utf8), (try? JSONSerialization.jsonObject(with: data, options: [])) != nil else {
+                warning(.service, "Invalid JSON")
+                return
+            }
             storage.save(value, as: file)
         }
     }
