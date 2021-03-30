@@ -57,6 +57,10 @@ struct PumpView: View {
     }
 
     private func remainingTimeString(time: TimeInterval) -> String {
+        guard time > 0 else {
+            return "Replace pod"
+        }
+
         var time = time
         let days = Int(time / 1.days.timeInterval)
         time -= days.days.timeInterval

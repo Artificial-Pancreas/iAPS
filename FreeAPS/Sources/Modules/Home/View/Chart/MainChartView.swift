@@ -333,6 +333,7 @@ struct MainChartView: View {
             calculateGlucoseDots(fullSize: fullSize)
             calculateBolusDots(fullSize: fullSize)
             calculateCarbsDots(fullSize: fullSize)
+            calculateTempTargetsRects(fullSize: fullSize)
         }
         .onChange(of: didAppearTrigger) { _ in
             calculatePredictionDots(fullSize: fullSize, type: .iob)
@@ -342,6 +343,7 @@ struct MainChartView: View {
             calculateGlucoseDots(fullSize: fullSize)
             calculateBolusDots(fullSize: fullSize)
             calculateCarbsDots(fullSize: fullSize)
+            calculateTempTargetsRects(fullSize: fullSize)
         }
     }
 }
