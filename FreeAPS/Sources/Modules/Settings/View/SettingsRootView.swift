@@ -6,7 +6,7 @@ extension Settings {
 
         var body: some View {
             Form {
-                Section(header: Text("FreeAPS X")) {
+                Section(header: Text("FreeAPS X \(viewModel.appVersion) (\(viewModel.buildNumber))")) {
                     Toggle("Closed loop", isOn: $viewModel.closedLoop)
                 }
 
