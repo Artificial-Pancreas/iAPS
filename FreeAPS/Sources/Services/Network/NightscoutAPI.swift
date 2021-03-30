@@ -51,13 +51,13 @@ extension NightscoutAPI {
             .eraseToAnyPublisher()
     }
 
-    func fetchLastGlucose(_ count: Int, sinceDate: Date? = nil) -> AnyPublisher<[BloodGlucose], Swift.Error> {
+    func fetchLastGlucose(sinceDate: Date? = nil) -> AnyPublisher<[BloodGlucose], Swift.Error> {
         var components = URLComponents()
         components.scheme = url.scheme
         components.host = url.host
         components.port = url.port
         components.path = Config.entriesPath
-        components.queryItems = [URLQueryItem(name: "count", value: "\(count)")]
+        components.queryItems = [URLQueryItem(name: "count", value: "\(2000)")]
         if let date = sinceDate {
             let dateItem = URLQueryItem(
                 name: "find[dateString][$gte]",

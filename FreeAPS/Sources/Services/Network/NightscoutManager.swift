@@ -76,7 +76,7 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
         }
 
         let since = glucoseStorage.syncDate()
-        return nightscout.fetchLastGlucose(288, sinceDate: since)
+        return nightscout.fetchLastGlucose(sinceDate: since)
             .tryCatch({ (error) -> AnyPublisher<[BloodGlucose], Error> in
                 print(error.localizedDescription)
                 return Just([]).setFailureType(to: Error.self).eraseToAnyPublisher()
