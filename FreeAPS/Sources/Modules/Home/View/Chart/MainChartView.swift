@@ -55,6 +55,7 @@ struct MainChartView: View {
     @State private var carbsDots: [DotInfo] = []
     @State private var carbsPath = Path()
     @State private var glucoseYGange: GlucoseYRange = (0, 0, 0, 0)
+    @State private var offset: CGFloat = 0
 
     private let calculationQueue = DispatchQueue(label: "MainChartView.calculationQueue")
 
@@ -232,10 +233,10 @@ struct MainChartView: View {
         }
         .fill(Color.loopGreen)
         .onChange(of: glucose) { _ in
-            calculateGlucoseDots(fullSize: fullSize)
+            update(fullSize: fullSize)
         }
         .onChange(of: didAppearTrigger) { _ in
-            calculateGlucoseDots(fullSize: fullSize)
+            update(fullSize: fullSize)
         }
     }
 
@@ -326,24 +327,10 @@ struct MainChartView: View {
             }.fill(Color.uam)
         }
         .onChange(of: suggestion) { _ in
-            calculatePredictionDots(fullSize: fullSize, type: .iob)
-            calculatePredictionDots(fullSize: fullSize, type: .cob)
-            calculatePredictionDots(fullSize: fullSize, type: .zt)
-            calculatePredictionDots(fullSize: fullSize, type: .uam)
-            calculateGlucoseDots(fullSize: fullSize)
-            calculateBolusDots(fullSize: fullSize)
-            calculateCarbsDots(fullSize: fullSize)
-            calculateTempTargetsRects(fullSize: fullSize)
+            update(fullSize: fullSize)
         }
         .onChange(of: didAppearTrigger) { _ in
-            calculatePredictionDots(fullSize: fullSize, type: .iob)
-            calculatePredictionDots(fullSize: fullSize, type: .cob)
-            calculatePredictionDots(fullSize: fullSize, type: .zt)
-            calculatePredictionDots(fullSize: fullSize, type: .uam)
-            calculateGlucoseDots(fullSize: fullSize)
-            calculateBolusDots(fullSize: fullSize)
-            calculateCarbsDots(fullSize: fullSize)
-            calculateTempTargetsRects(fullSize: fullSize)
+            update(fullSize: fullSize)
         }
     }
 }
@@ -351,6 +338,18 @@ struct MainChartView: View {
 // MARK: - Calculations
 
 extension MainChartView {
+    private func update(fullSize: CGSize) {
+        calculatePredictionDots(fullSize: fullSize, type: .iob)
+        calculatePredictionDots(fullSize: fullSize, type: .cob)
+        calculatePredictionDots(fullSize: fullSize, type: .zt)
+        calculatePredictionDots(fullSize: fullSize, type: .uam)
+        calculateGlucoseDots(fullSize: fullSize)
+        calculateBolusDots(fullSize: fullSize)
+        calculateCarbsDots(fullSize: fullSize)
+        calculateTempTargetsRects(fullSize: fullSize)
+        calculateTempTargetsRects(fullSize: fullSize)
+    }
+
     private func calculateGlucoseDots(fullSize: CGSize) {
         calculationQueue.async {
             let dots = glucose.concurrentMap { value -> CGRect in

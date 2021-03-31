@@ -12,7 +12,7 @@ final class BaseGlucoseManager: GlucoseManager, Injectable {
     @Injected() var apsManager: APSManager!
 
     private var lifetime = Set<AnyCancellable>()
-    private let timer = Timer.publish(every: 10, on: .main, in: .common).autoconnect()
+    private let timer = DispatchTimer(timeInterval: 10)
 
     init(resolver: Resolver) {
         injectServices(resolver)
@@ -20,7 +20,7 @@ final class BaseGlucoseManager: GlucoseManager, Injectable {
     }
 
     private func subscribe() {
-        timer
+        timer.publisher
             .receive(on: processQueue)
             .flatMap { date -> AnyPublisher<[BloodGlucose], Never> in
                 guard self.glucoseStogare.syncDate().timeIntervalSince1970 + 4.minutes.timeInterval <= date.timeIntervalSince1970
@@ -35,5 +35,6 @@ final class BaseGlucoseManager: GlucoseManager, Injectable {
                 }
             }
             .store(in: &lifetime)
+        timer.resume()
     }
 }

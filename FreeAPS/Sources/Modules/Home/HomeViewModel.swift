@@ -8,7 +8,7 @@ extension Home {
         @Injected() var settingsManager: SettingsManager!
         @Injected() var apsManager: APSManager!
         @Injected() var nightscoutManager: NightscoutManager!
-        private let timer = Timer.publish(every: 5, on: .main, in: .common).autoconnect()
+        private let timer = DispatchTimer(timeInterval: 5)
         private(set) var filteredHours = 24
 
         @Published var glucose: [BloodGlucose] = []
@@ -78,12 +78,13 @@ extension Home {
             broadcaster.register(PumpBatteryObserver.self, observer: self)
             broadcaster.register(PumpReservoirObserver.self, observer: self)
 
-            timer
-                .sink { date in
-                    self.timerDate = date
+            timer.eventHandler = {
+                DispatchQueue.main.async {
+                    self.timerDate = Date()
                     self.tempTargetName = self.provider.tempTarget()?.name
                 }
-                .store(in: &lifetime)
+            }
+            timer.resume()
 
             apsManager.isLooping
                 .receive(on: DispatchQueue.main)

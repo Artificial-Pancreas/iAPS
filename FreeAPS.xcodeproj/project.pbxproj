@@ -150,6 +150,7 @@
 		388E5A5C25B6F0770019842D /* JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 388E5A5B25B6F0770019842D /* JSON.swift */; };
 		388E5A6025B6F2310019842D /* Autosens.swift in Sources */ = {isa = PBXBuildFile; fileRef = 388E5A5F25B6F2310019842D /* Autosens.swift */; };
 		389442CB25F65F7100FA1F27 /* NightscoutTreatment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 389442CA25F65F7100FA1F27 /* NightscoutTreatment.swift */; };
+		3894873A2614928B004DF424 /* DispatchTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 389487392614928B004DF424 /* DispatchTimer.swift */; };
 		3895E4C625B9E00D00214B37 /* Preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3895E4C525B9E00D00214B37 /* Preferences.swift */; };
 		389A572026079BAA00BC102F /* Interpolation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 389A571F26079BAA00BC102F /* Interpolation.swift */; };
 		389ECDFE2601061500D86C4F /* View+Snapshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 389ECDFD2601061500D86C4F /* View+Snapshot.swift */; };
@@ -426,6 +427,7 @@
 		388E5A5B25B6F0770019842D /* JSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSON.swift; sourceTree = "<group>"; };
 		388E5A5F25B6F2310019842D /* Autosens.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Autosens.swift; sourceTree = "<group>"; };
 		389442CA25F65F7100FA1F27 /* NightscoutTreatment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NightscoutTreatment.swift; sourceTree = "<group>"; };
+		389487392614928B004DF424 /* DispatchTimer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DispatchTimer.swift; sourceTree = "<group>"; };
 		3895E4C525B9E00D00214B37 /* Preferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Preferences.swift; sourceTree = "<group>"; };
 		389A571F26079BAA00BC102F /* Interpolation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Interpolation.swift; sourceTree = "<group>"; };
 		389ECDFD2601061500D86C4F /* View+Snapshot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Snapshot.swift"; sourceTree = "<group>"; };
@@ -1051,6 +1053,7 @@
 		388E5A5A25B6F05F0019842D /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				389487392614928B004DF424 /* DispatchTimer.swift */,
 				38F37827261260DC009DB701 /* Color+Extensions.swift */,
 				389ECE042601144100D86C4F /* ConcurrentMap.swift */,
 				3871F39E25ED895A0013ECB5 /* Decimal+Extensions.swift */,
@@ -1607,6 +1610,7 @@
 				38B4F3CA25E502E200E76A18 /* SwiftNotificationCenter.swift in Sources */,
 				3811DEC225C9D99900A708ED /* SecurityContainer.swift in Sources */,
 				38AEE75225F022080013F05B /* SettingsManager.swift in Sources */,
+				3894873A2614928B004DF424 /* DispatchTimer.swift in Sources */,
 				38B4F3CF25E5041600E76A18 /* APSContainer.swift in Sources */,
 				3895E4C625B9E00D00214B37 /* Preferences.swift in Sources */,
 				3811DE6E25C9D62600A708ED /* OnboardingViewModel.swift in Sources */,
