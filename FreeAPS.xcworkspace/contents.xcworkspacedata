@@ -5,9 +5,6 @@
       location = "group:FreeAPS.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:Dependecies/MKRingProgressView/MKRingProgressView.xcodeproj">
-   </FileRef>
-   <FileRef
       location = "group:Dependecies/LoopKit/LoopKit.xcodeproj">
    </FileRef>
    <FileRef

@@ -122,8 +122,6 @@
 		38887DE725F61F7500944304 /* MockKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 38887DD325F61F7500944304 /* MockKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		38887DE825F61F7500944304 /* MockKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38887DD425F61F7500944304 /* MockKitUI.framework */; };
 		38887DE925F61F7500944304 /* MockKitUI.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 38887DD425F61F7500944304 /* MockKitUI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		38887DEA25F61F7500944304 /* MKRingProgressView.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38887DD525F61F7500944304 /* MKRingProgressView.framework */; };
-		38887DEB25F61F7500944304 /* MKRingProgressView.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 38887DD525F61F7500944304 /* MKRingProgressView.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		38887DEC25F61F7500944304 /* Crypto.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38887DD625F61F7500944304 /* Crypto.framework */; };
 		38887DED25F61F7500944304 /* Crypto.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 38887DD625F61F7500944304 /* Crypto.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		38887DEE25F61F7500944304 /* MinimedKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38887DD725F61F7500944304 /* MinimedKit.framework */; };
@@ -288,7 +286,6 @@
 				38887DF125F61F7500944304 /* MinimedKitUI.framework in Embed Frameworks */,
 				38887DF725F61F7600944304 /* OmniKitUI.framework in Embed Frameworks */,
 				38887DF925F61F7600944304 /* RileyLinkBLEKit.framework in Embed Frameworks */,
-				38887DEB25F61F7500944304 /* MKRingProgressView.framework in Embed Frameworks */,
 				38887DF525F61F7600944304 /* OmniKit.framework in Embed Frameworks */,
 				38887DE925F61F7500944304 /* MockKitUI.framework in Embed Frameworks */,
 			);
@@ -551,7 +548,6 @@
 				38887DF825F61F7600944304 /* RileyLinkBLEKit.framework in Frameworks */,
 				38887DEC25F61F7500944304 /* Crypto.framework in Frameworks */,
 				38B17B6625DD90E0005CAE3D /* SwiftDate in Frameworks */,
-				38887DEA25F61F7500944304 /* MKRingProgressView.framework in Frameworks */,
 				38887DF425F61F7600944304 /* OmniKit.framework in Frameworks */,
 				38887DFA25F61F7600944304 /* RileyLinkKit.framework in Frameworks */,
 				38887DF625F61F7600944304 /* OmniKitUI.framework in Frameworks */,

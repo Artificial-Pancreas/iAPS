@@ -17,7 +17,7 @@
 	<key>CFBundleShortVersionString</key>
 	<string>$(MARKETING_VERSION)</string>
 	<key>CFBundleVersion</key>
-	<string>243</string>
+	<string>244</string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>dexcomg6</string>
