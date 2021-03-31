@@ -156,7 +156,7 @@ final class BaseAPSManager: APSManager, Injectable {
                 .eraseToAnyPublisher()
         }
 
-        return Just(true).eraseToAnyPublisher()
+        return Just(false).eraseToAnyPublisher()
     }
 
     func determineBasal() -> AnyPublisher<Bool, Never> {
