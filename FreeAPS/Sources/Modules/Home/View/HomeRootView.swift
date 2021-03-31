@@ -13,6 +13,13 @@ extension Home {
             return formatter
         }
 
+        private var targetFormatter: NumberFormatter {
+            let formatter = NumberFormatter()
+            formatter.numberStyle = .decimal
+            formatter.maximumFractionDigits = 1
+            return formatter
+        }
+
         var header: some View {
             HStack(alignment: .bottom) {
                 Spacer()
@@ -79,8 +86,38 @@ extension Home {
                         .padding(.leading, 8)
                 }
 
-                if let tepmTargetName = viewModel.tempTargetName {
-                    Text(tepmTargetName).font(.caption).foregroundColor(.secondary)
+                if let tepmTarget = viewModel.tempTarget {
+                    Text(tepmTarget.name).font(.caption).foregroundColor(.secondary)
+                    if viewModel.units == .mmolL {
+                        Text(
+                            targetFormatter
+                                .string(from: tepmTarget.targetBottom.asMmolL as NSNumber)! + " \(viewModel.units.rawValue)"
+                        )
+                        .font(.caption)
+                        .foregroundColor(.secondary)
+                        if tepmTarget.targetBottom != tepmTarget.targetTop {
+                            Text("-").font(.caption)
+                                .foregroundColor(.secondary)
+                            Text(
+                                targetFormatter
+                                    .string(from: tepmTarget.targetTop.asMmolL as NSNumber)! + " \(viewModel.units.rawValue)"
+                            )
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+                        }
+
+                    } else {
+                        Text(targetFormatter.string(from: tepmTarget.targetBottom as NSNumber)! + " \(viewModel.units.rawValue)")
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+                        if tepmTarget.targetBottom != tepmTarget.targetTop {
+                            Text("-").font(.caption)
+                                .foregroundColor(.secondary)
+                            Text(targetFormatter.string(from: tepmTarget.targetTop as NSNumber)! + " \(viewModel.units.rawValue)")
+                                .font(.caption)
+                                .foregroundColor(.secondary)
+                        }
+                    }
                 }
                 Spacer()
             }

@@ -32,7 +32,7 @@ extension Home {
         @Published var reservoir: Decimal?
         @Published var pumpName = "Pump"
         @Published var pumpExpiresAtDate: Date?
-        @Published var tempTargetName: String?
+        @Published var tempTarget: TempTarget?
         @Published var setupPump = false
 
         @Published var allowManualTemp = false
@@ -64,7 +64,7 @@ extension Home {
                 lastLoopDate = suggestion?.timestamp ?? .distantPast
             }
 
-            tempTargetName = provider.tempTarget()?.name
+            setupCurrentTempTarget()
 
             broadcaster.register(GlucoseObserver.self, observer: self)
             broadcaster.register(SuggestionObserver.self, observer: self)
@@ -81,7 +81,7 @@ extension Home {
             timer.eventHandler = {
                 DispatchQueue.main.async {
                     self.timerDate = Date()
-                    self.tempTargetName = self.provider.tempTarget()?.name
+                    self.setupCurrentTempTarget()
                 }
             }
             timer.resume()
@@ -230,6 +230,10 @@ extension Home {
             DispatchQueue.main.async {
                 self.battery = self.provider.pumpBattery()
             }
+        }
+
+        private func setupCurrentTempTarget() {
+            tempTarget = provider.tempTarget()
         }
 
         func openCGM() {
