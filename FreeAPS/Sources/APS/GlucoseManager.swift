@@ -23,14 +23,14 @@ final class BaseGlucoseManager: GlucoseManager, Injectable {
         timer.publisher
             .receive(on: processQueue)
             .flatMap { date -> AnyPublisher<[BloodGlucose], Never> in
-                guard self.glucoseStogare.syncDate().timeIntervalSince1970 + 4.minutes.timeInterval <= date.timeIntervalSince1970
+                guard self.glucoseStogare.syncDate().timeIntervalSince1970 <= date.timeIntervalSince1970
                 else {
                     return Just([]).eraseToAnyPublisher()
                 }
                 return self.nightscoutManager.fetchGlucose()
             }
             .sink { glucose in
-                if !glucose.isEmpty {
+                if !self.glucoseStogare.filterTooFrequentGlucose(glucose).isEmpty {
                     self.apsManager.heartbeatNow()
                 }
             }

@@ -6,12 +6,17 @@ protocol GlucoseStorage {
     func storeGlucose(_ glucose: [BloodGlucose])
     func recent() -> [BloodGlucose]
     func syncDate() -> Date
+    func filterTooFrequentGlucose(_ glucose: [BloodGlucose]) -> [BloodGlucose]
 }
 
 final class BaseGlucoseStorage: GlucoseStorage, Injectable {
     private let processQueue = DispatchQueue(label: "BaseGlucoseStorage.processQueue")
     @Injected() private var storage: FileStorage!
     @Injected() private var broadcaster: Broadcaster!
+
+    private enum Config {
+        static let filterTime: TimeInterval = 4.75 * 60
+    }
 
     init(resolver: Resolver) {
         injectServices(resolver)
@@ -44,20 +49,19 @@ final class BaseGlucoseStorage: GlucoseStorage, Injectable {
         else {
             return Date().addingTimeInterval(-1.days.timeInterval)
         }
-        return recent.dateString.addingTimeInterval(1.minutes.timeInterval)
+        return recent.dateString.addingTimeInterval(Config.filterTime)
     }
 
     func recent() -> [BloodGlucose] {
         storage.retrieve(OpenAPS.Monitor.glucose, as: [BloodGlucose].self)?.reversed() ?? []
     }
 
-    private func filterTooFrequentGlucose(_ glucose: [BloodGlucose]) -> [BloodGlucose] {
+    func filterTooFrequentGlucose(_ glucose: [BloodGlucose]) -> [BloodGlucose] {
         var lastDate = recent().first?.dateString ?? .distantPast
-        let filterTime: TimeInterval = 4.75 * 60
         var filtered: [BloodGlucose] = []
 
         for entry in glucose.reversed() {
-            guard entry.dateString.addingTimeInterval(-filterTime) > lastDate else {
+            guard entry.dateString.addingTimeInterval(-Config.filterTime) > lastDate else {
                 continue
             }
             filtered.append(entry)
