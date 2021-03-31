@@ -165,7 +165,7 @@ extension BaseDeviceDataManager: PumpManagerDelegate {
         true
     }
 
-    func pumpManager(_: PumpManager, didUpdate status: PumpManagerStatus, oldStatus _: PumpManagerStatus) {
+    func pumpManager(_ pumpManager: PumpManager, didUpdate status: PumpManagerStatus, oldStatus _: PumpManagerStatus) {
         debug(.deviceManager, "New pump status Bolus: \(status.bolusState)")
         debug(.deviceManager, "New pump status Basal: \(String(describing: status.basalDeliveryState))")
 
@@ -174,7 +174,7 @@ extension BaseDeviceDataManager: PumpManagerDelegate {
             percent: batteryPercent,
             voltage: nil,
             string: batteryPercent >= 10 ? .normal : .low,
-            display: pumpManager?.status.pumpBatteryChargeRemaining != nil
+            display: pumpManager.status.pumpBatteryChargeRemaining != nil
         )
         storage.save(battery, as: OpenAPS.Monitor.battery)
         broadcaster.notify(PumpBatteryObserver.self, on: processQueue) {
@@ -182,6 +182,13 @@ extension BaseDeviceDataManager: PumpManagerDelegate {
         }
 
         if let omnipod = pumpManager as? OmnipodPumpManager {
+            let reservoir = omnipod.state.podState?.lastInsulinMeasurements?.reservoirLevel ?? 0xDEAD_BEEF
+
+            storage.save(Decimal(reservoir), as: OpenAPS.Monitor.reservoir)
+            broadcaster.notify(PumpReservoirObserver.self, on: processQueue) {
+                $0.pumpReservoirDidChange(Decimal(reservoir))
+            }
+
             guard let endTime = omnipod.state.podState?.expiresAt else {
                 pumpExpiresAtDate.send(nil)
                 return

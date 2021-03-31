@@ -29,7 +29,12 @@ struct PumpView: View {
                         .aspectRatio(contentMode: .fit)
                         .frame(height: 8)
                         .foregroundColor(reservoirColor)
-                    Text(reservoirFormatter.string(from: reservoir as NSNumber)! + " U").font(.system(size: 12, weight: .bold))
+                    if reservoir == 0xDEAD_BEEF {
+                        Text("50+ U").font(.system(size: 12, weight: .bold))
+                    } else {
+                        Text(reservoirFormatter.string(from: reservoir as NSNumber)! + " U")
+                            .font(.system(size: 12, weight: .bold))
+                    }
                 }
             }
             if let battery = battery, battery.display ?? false, expiresAtDate == nil {
@@ -118,11 +123,11 @@ struct PumpView: View {
 
         switch time {
         case ...8.hours.timeInterval:
-            return .red
+            return .loopRed
         case ...1.days.timeInterval:
-            return .orange
+            return .loopYellow
         default:
-            return .green
+            return .loopGreen
         }
     }
 }
