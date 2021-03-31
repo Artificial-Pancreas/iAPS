@@ -30,7 +30,7 @@ struct MainChartView: View {
         static let bolusSize: CGFloat = 8
         static let bolusScale: CGFloat = 3
         static let carbsSize: CGFloat = 10
-        static let carbsScale: CGFloat = 0.5
+        static let carbsScale: CGFloat = 0.3
     }
 
     @Binding var glucose: [BloodGlucose]
@@ -104,10 +104,11 @@ struct MainChartView: View {
         ScrollView(.horizontal, showsIndicators: false) {
             ScrollViewReader { scroll in
                 ZStack(alignment: .top) {
-                    tempTargetsView(fullSize: fullSize)
-                    basalView(fullSize: fullSize)
+                    tempTargetsView(fullSize: fullSize).drawingGroup()
+                    basalView(fullSize: fullSize).drawingGroup()
 
                     mainView(fullSize: fullSize).id(Config.endID)
+                        .drawingGroup()
                         .onChange(of: glucose) { _ in
                             scroll.scrollTo(Config.endID, anchor: .trailing)
                         }
@@ -161,7 +162,6 @@ struct MainChartView: View {
             tempBasalPath.stroke(Color.tempBasal, lineWidth: 1)
             regularBasalPath.stroke(Color.basal, lineWidth: 1)
         }
-        .drawingGroup()
         .frame(width: fullGlucoseWidth(viewWidth: fullSize.width) + additionalWidth(viewWidth: fullSize.width))
         .frame(maxHeight: Config.basalHeight)
         .background(Color.secondary.opacity(0.1))

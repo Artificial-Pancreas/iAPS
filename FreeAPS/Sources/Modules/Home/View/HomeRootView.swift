@@ -87,6 +87,32 @@ extension Home {
             .frame(maxWidth: .infinity, maxHeight: 30)
         }
 
+        var legendPanal: some View {
+            HStack(alignment: .firstTextBaseline) {
+                Circle().fill(Color.loopGreen).frame(width: 8, height: 8)
+                    .padding(.leading, 8)
+                Text("BG")
+                    .font(.system(size: 12, weight: .bold)).foregroundColor(.loopGreen)
+                Circle().fill(Color.insulin).frame(width: 8, height: 8)
+                    .padding(.leading, 8)
+                Text("IOB")
+                    .font(.system(size: 12, weight: .bold)).foregroundColor(.insulin)
+                Circle().fill(Color.zt).frame(width: 8, height: 8)
+                    .padding(.leading, 8)
+                Text("ZT")
+                    .font(.system(size: 12, weight: .bold)).foregroundColor(.zt)
+                Circle().fill(Color.loopYellow).frame(width: 8, height: 8)
+                    .padding(.leading, 8)
+                Text("COB")
+                    .font(.system(size: 12, weight: .bold)).foregroundColor(.loopYellow)
+                Circle().fill(Color.uam).frame(width: 8, height: 8)
+                    .padding(.leading, 8)
+                Text("UAM")
+                    .font(.system(size: 12, weight: .bold)).foregroundColor(.uam)
+            }
+            .frame(maxWidth: .infinity, maxHeight: 30)
+        }
+
         var body: some View {
             GeometryReader { geo in
                 VStack(spacing: 0) {
@@ -109,6 +135,7 @@ extension Home {
                         units: viewModel.units
                     )
                     .padding(.bottom)
+                    legendPanal
 
                     ZStack {
                         Rectangle().fill(Color.gray.opacity(0.2)).frame(height: 50 + geo.safeAreaInsets.bottom)
