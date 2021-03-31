@@ -14,7 +14,7 @@ struct Suggestion: JSON, Equatable {
     let deliverAt: Date?
     let carbsReq: Decimal?
     let temp: TempType?
-    let bg: Int?
+    let bg: Decimal?
     let reservoir: Decimal?
     var timestamp: Date?
     var recieved: Bool?

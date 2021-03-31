@@ -9,5 +9,5 @@ enum NightscoutConfig {
 }
 
 protocol NightscoutConfigProvider: Provider {
-    func checkConnection(url: URL, secret: String) -> AnyPublisher<Void, Error>
+    func checkConnection(url: URL, secret: String?) -> AnyPublisher<Void, Error>
 }

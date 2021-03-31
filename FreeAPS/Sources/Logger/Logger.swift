@@ -266,7 +266,6 @@ final class Logger {
     }
 
     private func showAlert(_ message: String) {
-//        let category = self.category
         DispatchQueue.main.async {
             router.alertMessage.send(message)
         }

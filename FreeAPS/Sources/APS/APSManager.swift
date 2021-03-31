@@ -108,8 +108,6 @@ final class BaseAPSManager: APSManager, Injectable {
             nightscout.fetchCarbs(),
             nightscout.fetchTempTargets()
         )
-        .flatMap { _ in self.dailyAutotune() }
-        .flatMap { _ in self.autosens() }
         .flatMap { _ in self.determineBasal() }
         .sink { _ in } receiveValue: { [weak self] ok in
             guard let self = self else { return }
@@ -130,11 +128,21 @@ final class BaseAPSManager: APSManager, Injectable {
 
     private func verifyStatus() -> Bool {
         guard let pump = pumpManager else {
+            debug(.apsManager, "Pump is not set")
             return false
         }
         let status = pump.status.pumpStatus
 
-        guard !status.bolusing, !status.suspended else { return false }
+        guard !status.bolusing, !status.suspended else {
+            debug(.apsManager, "Pump is bolusing or suspended")
+            return false
+        }
+
+        let reservoir = storage.retrieve(OpenAPS.Monitor.reservoir, as: Decimal.self) ?? 100
+        guard reservoir > 0 else {
+            debug(.apsManager, "Reservoir is empty")
+            return false
+        }
 
         return true
     }
@@ -161,9 +169,9 @@ final class BaseAPSManager: APSManager, Injectable {
         let temp = currentTemp(date: now)
 
         let mainPublisher = makeProfiles()
-            .flatMap { _ in
-                self.openAPS.determineBasal(currentTemp: temp, clock: now)
-            }
+            .flatMap { _ in self.autosens() }
+            .flatMap { _ in self.dailyAutotune() }
+            .flatMap { _ in self.openAPS.determineBasal(currentTemp: temp, clock: now) }
             .map { suggestion -> Bool in
                 if let suggestion = suggestion {
                     DispatchQueue.main.async {

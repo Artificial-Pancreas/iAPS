@@ -9,6 +9,7 @@ protocol NightscoutManager {
     func fetchTempTargets() -> AnyPublisher<Void, Never>
     func fetchAnnouncements() -> AnyPublisher<Void, Never>
     func uploadStatus()
+    var cgmURL: URL? { get }
 }
 
 final class BaseNightscoutManager: NightscoutManager, Injectable {
@@ -51,6 +52,17 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
         broadcaster.register(TempTargetsObserver.self, observer: self)
     }
 
+    var cgmURL: URL? {
+        let useLocal = (settingsManager.settings.useLocalGlucoseSource ?? false) && settingsManager.settings
+            .localGlucosePort != nil
+
+        let maybeNightscout = useLocal
+            ? NightscoutAPI(url: URL(string: "http://127.0.0.1:\(settingsManager.settings.localGlucosePort!)")!)
+            : nightscoutAPI
+
+        return maybeNightscout?.url
+    }
+
     func fetchGlucose() -> AnyPublisher<[BloodGlucose], Never> {
         let useLocal = (settingsManager.settings.useLocalGlucoseSource ?? false) && settingsManager.settings
             .localGlucosePort != nil
@@ -64,7 +76,7 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
         }
 
         let since = glucoseStorage.syncDate()
-        return nightscout.fetchLastGlucose(288, sinceDate: since)
+        return nightscout.fetchLastGlucose(sinceDate: since)
             .tryCatch({ (error) -> AnyPublisher<[BloodGlucose], Error> in
                 print(error.localizedDescription)
                 return Just([]).setFailureType(to: Error.self).eraseToAnyPublisher()
@@ -138,7 +150,10 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
         )
 
         let battery = storage.retrieve(OpenAPS.Monitor.battery, as: Battery.self)
-        let reservoir = Decimal(from: storage.retrieveRaw(OpenAPS.Monitor.reservoir) ?? "0")
+        var reservoir = Decimal(from: storage.retrieveRaw(OpenAPS.Monitor.reservoir) ?? "0")
+        if reservoir == 0xDEAD_BEEF {
+            reservoir = nil
+        }
         let pumpStatus = storage.retrieve(OpenAPS.Monitor.status, as: PumpStatus.self)
 
         let pump = NSPumpStatus(clock: Date(), battery: battery, reservoir: reservoir, status: pumpStatus)

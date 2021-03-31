@@ -92,10 +92,14 @@ final class BaseDeviceDataManager: DeviceDataManager, Injectable {
         case let interval where interval < -5.minutes.timeInterval:
             updateInterval = 1.minutes.timeInterval
         default:
-            return
+            break
         }
 
-        guard now.timeIntervalSince(lastHeartBeatTime) >= updateInterval else { return }
+        let interval = now.timeIntervalSince(lastHeartBeatTime)
+        guard interval >= updateInterval else {
+            debug(.deviceManager, "Last hearbeat \(interval / 60) min ago, skip updating the pump data")
+            return
+        }
 
         heartbeat()
     }
@@ -103,11 +107,18 @@ final class BaseDeviceDataManager: DeviceDataManager, Injectable {
     @SyncAccess(lock: accessLock) private var pumpUpdateInProgress = false
 
     func heartbeat() {
-        guard !pumpUpdateInProgress else { return }
-
+        guard let pumpManager = pumpManager else {
+            debug(.deviceManager, "Pump is not set, skip updating")
+            return
+        }
+        guard !pumpUpdateInProgress else {
+            debug(.deviceManager, "Pump update in progress, skip updating")
+            return
+        }
+        debug(.deviceManager, "Start updating the pump data")
         pumpUpdateInProgress = true
         lastHeartBeatTime = Date()
-        pumpManager?.ensureCurrentPumpData {
+        pumpManager.ensureCurrentPumpData {
             debug(.deviceManager, "Pump Data updated")
             self.pumpUpdateInProgress = false
         }
@@ -139,6 +150,9 @@ extension BaseDeviceDataManager: PumpManagerDelegate {
 
     func pumpManagerDidUpdateState(_ pumpManager: PumpManager) {
         UserDefaults.standard.pumpManagerRawValue = pumpManager.rawValue
+        if self.pumpManager == nil, let newPumpManager = pumpManager as? PumpManagerUI {
+            self.pumpManager = newPumpManager
+        }
         pumpName.send(pumpManager.localizedTitle)
     }
 
@@ -151,7 +165,7 @@ extension BaseDeviceDataManager: PumpManagerDelegate {
         true
     }
 
-    func pumpManager(_: PumpManager, didUpdate status: PumpManagerStatus, oldStatus _: PumpManagerStatus) {
+    func pumpManager(_ pumpManager: PumpManager, didUpdate status: PumpManagerStatus, oldStatus _: PumpManagerStatus) {
         debug(.deviceManager, "New pump status Bolus: \(status.bolusState)")
         debug(.deviceManager, "New pump status Basal: \(String(describing: status.basalDeliveryState))")
 
@@ -160,7 +174,7 @@ extension BaseDeviceDataManager: PumpManagerDelegate {
             percent: batteryPercent,
             voltage: nil,
             string: batteryPercent >= 10 ? .normal : .low,
-            display: pumpManager?.status.pumpBatteryChargeRemaining != nil
+            display: pumpManager.status.pumpBatteryChargeRemaining != nil
         )
         storage.save(battery, as: OpenAPS.Monitor.battery)
         broadcaster.notify(PumpBatteryObserver.self, on: processQueue) {
@@ -168,6 +182,13 @@ extension BaseDeviceDataManager: PumpManagerDelegate {
         }
 
         if let omnipod = pumpManager as? OmnipodPumpManager {
+            let reservoir = omnipod.state.podState?.lastInsulinMeasurements?.reservoirLevel ?? 0xDEAD_BEEF
+
+            storage.save(Decimal(reservoir), as: OpenAPS.Monitor.reservoir)
+            broadcaster.notify(PumpReservoirObserver.self, on: processQueue) {
+                $0.pumpReservoirDidChange(Decimal(reservoir))
+            }
+
             guard let endTime = omnipod.state.podState?.expiresAt else {
                 pumpExpiresAtDate.send(nil)
                 return
@@ -223,6 +244,7 @@ extension BaseDeviceDataManager: PumpManagerDelegate {
 
     func pumpManagerRecommendsLoop(_: PumpManager) {
         dispatchPrecondition(condition: .onQueue(processQueue))
+        pumpUpdateInProgress = false
         debug(.deviceManager, "Recomends loop")
         recommendsLoop.send()
     }

@@ -1,3 +1,4 @@
+import LoopKitUI
 import SwiftDate
 import SwiftUI
 
@@ -6,7 +7,8 @@ extension Home {
         @Injected() var broadcaster: Broadcaster!
         @Injected() var settingsManager: SettingsManager!
         @Injected() var apsManager: APSManager!
-        private let timer = Timer.publish(every: 5, on: .main, in: .common).autoconnect()
+        @Injected() var nightscoutManager: NightscoutManager!
+        private let timer = DispatchTimer(timeInterval: 5)
         private(set) var filteredHours = 24
 
         @Published var glucose: [BloodGlucose] = []
@@ -30,7 +32,8 @@ extension Home {
         @Published var reservoir: Decimal?
         @Published var pumpName = "Pump"
         @Published var pumpExpiresAtDate: Date?
-        @Published var tempTargetName: String?
+        @Published var tempTarget: TempTarget?
+        @Published var setupPump = false
 
         @Published var allowManualTemp = false
         private(set) var units: GlucoseUnits = .mmolL
@@ -61,7 +64,7 @@ extension Home {
                 lastLoopDate = suggestion?.timestamp ?? .distantPast
             }
 
-            tempTargetName = provider.tempTarget()?.name
+            setupCurrentTempTarget()
 
             broadcaster.register(GlucoseObserver.self, observer: self)
             broadcaster.register(SuggestionObserver.self, observer: self)
@@ -75,12 +78,13 @@ extension Home {
             broadcaster.register(PumpBatteryObserver.self, observer: self)
             broadcaster.register(PumpReservoirObserver.self, observer: self)
 
-            timer
-                .sink { date in
-                    self.timerDate = date
-                    self.tempTargetName = self.provider.tempTarget()?.name
+            timer.eventHandler = {
+                DispatchQueue.main.async {
+                    self.timerDate = Date()
+                    self.setupCurrentTempTarget()
                 }
-                .store(in: &lifetime)
+            }
+            timer.resume()
 
             apsManager.isLooping
                 .receive(on: DispatchQueue.main)
@@ -227,6 +231,23 @@ extension Home {
                 self.battery = self.provider.pumpBattery()
             }
         }
+
+        private func setupCurrentTempTarget() {
+            tempTarget = provider.tempTarget()
+        }
+
+        func openCGM() {
+            guard var url = nightscoutManager.cgmURL else { return }
+
+            switch url.absoluteString {
+            case "http://127.0.0.1:1979":
+                url = URL(string: "spikeapp://")!
+            case "http://127.0.0.1:17580":
+                url = URL(string: "diabox://")!
+            default: break
+            }
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        }
     }
 }
 
@@ -289,5 +310,11 @@ extension Home.ViewModel:
 
     func pumpReservoirDidChange(_: Decimal) {
         setupReservoir()
+    }
+}
+
+extension Home.ViewModel: CompletionDelegate {
+    func completionNotifyingDidComplete(_: CompletionNotifying) {
+        setupPump = false
     }
 }

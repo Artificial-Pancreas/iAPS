@@ -100,12 +100,12 @@ extension PreferencesEditor {
                     value: preferences.enableUAM,
                     settable: self
                 ),
-                Field(
-                    displayName: "A52 Risk Enable",
-                    keypath: \.a52RiskEnable,
-                    value: preferences.a52RiskEnable,
-                    settable: self
-                ),
+//                Field(
+//                    displayName: "A52 Risk Enable",
+//                    keypath: \.a52RiskEnable,
+//                    value: preferences.a52RiskEnable,
+//                    settable: self
+//                ),
                 Field(
                     displayName: "Enable SMB With COB",
                     keypath: \.enableSMBWithCOB,

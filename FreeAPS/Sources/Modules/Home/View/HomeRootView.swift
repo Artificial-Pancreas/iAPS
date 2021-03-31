@@ -13,8 +13,16 @@ extension Home {
             return formatter
         }
 
+        private var targetFormatter: NumberFormatter {
+            let formatter = NumberFormatter()
+            formatter.numberStyle = .decimal
+            formatter.maximumFractionDigits = 1
+            return formatter
+        }
+
         var header: some View {
             HStack(alignment: .bottom) {
+                Spacer()
                 VStack(alignment: .leading, spacing: 12) {
                     HStack {
                         Text("IOB").font(.caption2).foregroundColor(.secondary)
@@ -27,7 +35,6 @@ extension Home {
                             .font(.system(size: 12, weight: .bold))
                     }
                 }
-                .padding(.leading, 4)
                 Spacer()
 
                 CurrentGlucoseView(
@@ -35,6 +42,9 @@ extension Home {
                     delta: $viewModel.glucoseDelta,
                     units: viewModel.units
                 )
+                .onTapGesture {
+                    viewModel.openCGM()
+                }
                 Spacer()
                 PumpView(
                     reservoir: $viewModel.reservoir,
@@ -43,6 +53,14 @@ extension Home {
                     expiresAtDate: $viewModel.pumpExpiresAtDate,
                     timerDate: $viewModel.timerDate
                 )
+                .onTapGesture {
+                    viewModel.setupPump = true
+                }
+                .popover(isPresented: $viewModel.setupPump) {
+                    if let pumpManager = viewModel.provider.apsManager.pumpManager {
+                        PumpConfig.PumpSettingsView(pumpManager: pumpManager, completionDelegate: viewModel)
+                    }
+                }
                 Spacer()
                 LoopView(
                     suggestion: $viewModel.suggestion,
@@ -56,6 +74,7 @@ extension Home {
                 }.onLongPressGesture {
                     viewModel.runLoop()
                 }
+                Spacer()
             }.frame(maxWidth: .infinity)
         }
 
@@ -64,13 +83,69 @@ extension Home {
                 if let tempRate = viewModel.tempRate {
                     Text((numberFormatter.string(from: tempRate as NSNumber) ?? "0") + " U/hr")
                         .font(.system(size: 12, weight: .bold)).foregroundColor(.insulin)
-                        .padding(.leading, 4)
+                        .padding(.leading, 8)
                 }
 
-                if let tepmTargetName = viewModel.tempTargetName {
-                    Text(tepmTargetName).font(.caption).foregroundColor(.secondary)
+                if let tepmTarget = viewModel.tempTarget {
+                    Text(tepmTarget.name).font(.caption).foregroundColor(.secondary)
+                    if viewModel.units == .mmolL {
+                        Text(
+                            targetFormatter
+                                .string(from: tepmTarget.targetBottom.asMmolL as NSNumber)! + " \(viewModel.units.rawValue)"
+                        )
+                        .font(.caption)
+                        .foregroundColor(.secondary)
+                        if tepmTarget.targetBottom != tepmTarget.targetTop {
+                            Text("-").font(.caption)
+                                .foregroundColor(.secondary)
+                            Text(
+                                targetFormatter
+                                    .string(from: tepmTarget.targetTop.asMmolL as NSNumber)! + " \(viewModel.units.rawValue)"
+                            )
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+                        }
+
+                    } else {
+                        Text(targetFormatter.string(from: tepmTarget.targetBottom as NSNumber)! + " \(viewModel.units.rawValue)")
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+                        if tepmTarget.targetBottom != tepmTarget.targetTop {
+                            Text("-").font(.caption)
+                                .foregroundColor(.secondary)
+                            Text(targetFormatter.string(from: tepmTarget.targetTop as NSNumber)! + " \(viewModel.units.rawValue)")
+                                .font(.caption)
+                                .foregroundColor(.secondary)
+                        }
+                    }
                 }
                 Spacer()
+            }
+            .frame(maxWidth: .infinity, maxHeight: 30)
+        }
+
+        var legendPanal: some View {
+            HStack(alignment: .firstTextBaseline) {
+                Circle().fill(Color.loopGreen).frame(width: 8, height: 8)
+                    .padding(.leading, 8)
+                Text("BG")
+                    .font(.system(size: 12, weight: .bold)).foregroundColor(.loopGreen)
+                Circle().fill(Color.insulin).frame(width: 8, height: 8)
+                    .padding(.leading, 8)
+                Text("IOB")
+                    .font(.system(size: 12, weight: .bold)).foregroundColor(.insulin)
+                Circle().fill(Color.zt).frame(width: 8, height: 8)
+                    .padding(.leading, 8)
+                Text("ZT")
+                    .font(.system(size: 12, weight: .bold)).foregroundColor(.zt)
+                Circle().fill(Color.loopYellow).frame(width: 8, height: 8)
+                    .padding(.leading, 8)
+                Text("COB")
+                    .font(.system(size: 12, weight: .bold)).foregroundColor(.loopYellow)
+                Circle().fill(Color.uam).frame(width: 8, height: 8)
+                    .padding(.leading, 8)
+                Text("UAM")
+                    .font(.system(size: 12, weight: .bold)).foregroundColor(.uam)
             }
             .frame(maxWidth: .infinity, maxHeight: 30)
         }
@@ -97,6 +172,7 @@ extension Home {
                         units: viewModel.units
                     )
                     .padding(.bottom)
+                    legendPanal
 
                     ZStack {
                         Rectangle().fill(Color.gray.opacity(0.2)).frame(height: 50 + geo.safeAreaInsets.bottom)

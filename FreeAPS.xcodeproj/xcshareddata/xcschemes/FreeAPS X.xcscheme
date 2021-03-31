@@ -112,20 +112,6 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "5085266D1E52FDC000D611F4"
-               BuildableName = "MKRingProgressView.framework"
-               BlueprintName = "MKRingProgressView"
-               ReferencedContainer = "container:Dependecies/MKRingProgressView/MKRingProgressView.xcodeproj">
-            </BuildableReference>
-         </BuildActionEntry>
-         <BuildActionEntry
-            buildForTesting = "YES"
-            buildForRunning = "YES"
-            buildForProfiling = "YES"
-            buildForArchiving = "YES"
-            buildForAnalyzing = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
                BlueprintIdentifier = "43C246921D8918AE0031F8D1"
                BuildableName = "Crypto.framework"
                BlueprintName = "Crypto"

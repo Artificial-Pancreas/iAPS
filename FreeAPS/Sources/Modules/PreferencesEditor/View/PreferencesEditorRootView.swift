@@ -39,6 +39,11 @@ extension PreferencesEditor {
                         }
                     }
                 }
+
+                Section {
+                    Text("Edit settings json").chevronCell()
+                        .navigationLink(to: .configEditor(file: OpenAPS.FreeAPS.settings), from: self)
+                }
             }
             .navigationTitle("Preferences")
             .navigationBarTitleDisplayMode(.automatic)

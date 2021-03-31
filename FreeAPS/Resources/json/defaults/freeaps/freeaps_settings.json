@@ -3,7 +3,8 @@
     "closedLoop": false,
     "allowAnnouncements": false,
     "useAutotune": false
-    "isUploadEnabled": true,
+    "isUploadEnabled": false,
     "useLocalGlucoseSource": false,
-    "localGlucosePort": 8080
+    "localGlucosePort": 8080,
+    "debugOptions": false
 }

@@ -8,4 +8,5 @@ struct FreeAPSSettings: JSON {
     var isUploadEnabled: Bool?
     var useLocalGlucoseSource: Bool?
     var localGlucosePort: Int?
+    var debugOptions: Bool?
 }

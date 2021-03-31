@@ -9,6 +9,7 @@ extension Bolus {
         override func subscribe() {}
 
         func add() {
+            guard amount > 0 else { return }
             unlockmanager.unlock()
                 .sink { _ in } receiveValue: {
                     self.apsManager.enactBolus(amount: Double(self.amount))

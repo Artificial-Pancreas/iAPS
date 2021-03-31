@@ -62,7 +62,8 @@ final class OpenAPS {
                     autosens: autosens.isEmpty ? .null : autosens,
                     meal: meal,
                     microBolusAllowed: true,
-                    reservoir: reservoir
+                    reservoir: reservoir,
+                    clock: clock
                 )
                 debug(.openAPS, "SUGGESTED: \(suggested)")
 
@@ -147,7 +148,10 @@ final class OpenAPS {
     func makeProfiles(useAutotune: Bool) -> Future<Autotune?, Never> {
         Future { promise in
             self.processQueue.async {
-                let preferences = self.loadFileFromStorage(name: Settings.preferences)
+                var preferences = self.loadFileFromStorage(name: Settings.preferences)
+                if preferences.isEmpty {
+                    preferences = Preferences().rawJSON
+                }
                 let pumpSettings = self.loadFileFromStorage(name: Settings.settings)
                 let bgTargets = self.loadFileFromStorage(name: Settings.bgTargets)
                 let basalProfile = self.loadFileFromStorage(name: Settings.basalProfile)
@@ -274,7 +278,8 @@ final class OpenAPS {
         autosens: JSON,
         meal: JSON,
         microBolusAllowed: Bool,
-        reservoir: JSON
+        reservoir: JSON,
+        clock: JSON
     ) -> RawJSON {
         dispatchPrecondition(condition: .onQueue(processQueue))
         return jsWorker.inCommonContext { worker in
@@ -292,7 +297,8 @@ final class OpenAPS {
                     autosens,
                     meal,
                     microBolusAllowed,
-                    reservoir
+                    reservoir,
+                    clock
                 ]
             )
         }
