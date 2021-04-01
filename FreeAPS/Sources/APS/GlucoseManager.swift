@@ -36,6 +36,8 @@ final class BaseGlucoseManager: GlucoseManager, Injectable {
                 if !filtered.isEmpty {
                     debug(.nightscout, "New glucose found")
                     self.apsManager.heartbeat(force: true)
+                } else {
+                    self.apsManager.heartbeat(force: false)
                 }
             }
             .store(in: &lifetime)
