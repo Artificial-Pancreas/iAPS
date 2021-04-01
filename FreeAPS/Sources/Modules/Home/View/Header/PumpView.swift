@@ -73,11 +73,11 @@ struct PumpView: View {
         time -= hours.hours.timeInterval
         let minutes = Int(time / 1.minutes.timeInterval)
 
-        if days > 1 {
+        if days >= 1 {
             return "\(days)d \(hours)h"
         }
 
-        if hours > 1 {
+        if hours >= 1 {
             return "\(hours)h"
         }
 
