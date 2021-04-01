@@ -158,11 +158,12 @@ extension BaseDeviceDataManager: PumpManagerDelegate {
 
     func pumpManagerBLEHeartbeatDidFire(_: PumpManager) {
         debug(.deviceManager, "Pump Heartbeat")
-        heartbeat(force: false)
+        // TODO: call it for Medtronic CGM
+//        heartbeat(force: false)
     }
 
     func pumpManagerMustProvideBLEHeartbeat(_: PumpManager) -> Bool {
-        false // set it true for Medtronic CGM
+        true
     }
 
     func pumpManager(_ pumpManager: PumpManager, didUpdate status: PumpManagerStatus, oldStatus _: PumpManagerStatus) {
