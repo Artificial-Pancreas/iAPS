@@ -3,7 +3,7 @@ var printLog = function(...args) {};
 var process = { stderr: { write: printLog } };
 
 
-function generate(iob_data, currenttemp, glucose_data, profile, autosens_input = false, meal_input = false, microbolus = false, reservoir_input = false, clock = null){
+function generate(iob_data, currenttemp, glucose_data, profile, autosens_input = false, meal_input = false, microbolus = false, reservoir_input = false, clock = new Date()){
     var glucose_status = freeaps_glucoseGetLast(glucose_data);
     var autosens_data = null;
 
