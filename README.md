@@ -60,8 +60,8 @@ If you want to test it, there is a beta-version available
 
 *In progress*
 
-
 ## Community
 
 - [English Telegram group](https://t.me/freeapsx_eng)
 - [Russian Telegram group](https://t.me/freeapsx)
+
