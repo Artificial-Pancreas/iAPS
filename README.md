@@ -31,7 +31,7 @@ FreeAPS X is in an active development state
 
 If you want to test it, there is a beta-version available
 
-## Implemented in version 0.1.0 (Beta)
+## Implemented
 
 - All base functions of oref0
 - All base functions of oref1 (SMB, UAM and others)
@@ -60,3 +60,8 @@ If you want to test it, there is a beta-version available
 
 *In progress*
 
+
+## Community
+
+- [English Telegram group](https://t.me/freeapsx_eng)
+- [Russian Telegram group](https://t.me/freeapsx)
