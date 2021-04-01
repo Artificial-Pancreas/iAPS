@@ -12,7 +12,7 @@ final class BaseGlucoseManager: GlucoseManager, Injectable {
     @Injected() var apsManager: APSManager!
 
     private var lifetime = Set<AnyCancellable>()
-    private let timer = DispatchTimer(timeInterval: 10)
+    private let timer = DispatchTimer(timeInterval: 1.minutes.timeInterval)
 
     init(resolver: Resolver) {
         injectServices(resolver)
@@ -22,16 +22,18 @@ final class BaseGlucoseManager: GlucoseManager, Injectable {
     private func subscribe() {
         timer.publisher
             .receive(on: processQueue)
-            .flatMap { date -> AnyPublisher<[BloodGlucose], Never> in
-                guard self.glucoseStogare.syncDate().timeIntervalSince1970 <= date.timeIntervalSince1970
-                else {
-                    return Just([]).eraseToAnyPublisher()
-                }
+            .flatMap { _ -> AnyPublisher<[BloodGlucose], Never> in
+                debug(.nightscout, "Glucose manager heartbeat")
+                debug(.nightscout, "Start fetching glucose")
                 return self.nightscoutManager.fetchGlucose()
             }
             .sink { glucose in
-                if !self.glucoseStogare.filterTooFrequentGlucose(glucose).isEmpty {
-                    self.apsManager.heartbeatNow()
+                let filtered = self.glucoseStogare.filterTooFrequentGlucose(glucose)
+                if !filtered.isEmpty {
+                    debug(.nightscout, "New glucose found")
+                    self.apsManager.heartbeat(force: true)
+                } else {
+                    self.apsManager.heartbeat(force: false)
                 }
             }
             .store(in: &lifetime)

@@ -39,8 +39,8 @@ struct CurrentGlucoseView: View {
                             glucoseFormatter
                                 .string(from: Double(units == .mmolL ? $0.asMmolL : Decimal($0)) as NSNumber)! }
                         ?? "--"
-                )
-                .font(.system(size: 24, weight: .bold))
+                ).minimumScaleFactor(0.2)
+                    .font(.system(size: 24, weight: .bold))
                 image.padding(.bottom, 2)
 
             }.padding(.leading, 4)
