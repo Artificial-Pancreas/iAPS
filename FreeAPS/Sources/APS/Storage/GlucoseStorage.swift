@@ -58,7 +58,7 @@ final class BaseGlucoseStorage: GlucoseStorage, Injectable {
     }
 
     func lastGlucoseDate() -> Date {
-        recent().first?.dateString ?? .distantPast
+        recent().last?.dateString ?? .distantPast
     }
 
     func filterTooFrequentGlucose(_ glucose: [BloodGlucose]) -> [BloodGlucose] {

@@ -8,7 +8,6 @@ extension Settings {
 
         @Published var debugOptions = false
 
-        private(set) var appVersion = ""
         private(set) var buildNumber = ""
 
         override func subscribe() {
@@ -23,7 +22,6 @@ extension Settings {
 
             broadcaster.register(SettingsObserver.self, observer: self)
 
-            appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "Unknown"
             buildNumber = Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? "Unknown"
         }
     }

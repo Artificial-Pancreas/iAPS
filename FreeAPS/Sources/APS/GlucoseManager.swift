@@ -32,7 +32,6 @@ final class BaseGlucoseManager: GlucoseManager, Injectable {
                 // Because of Spike dosn't respect a date query
                 let filteredByDate = glucose.filter { $0.dateString > syncDate }
                 let filtered = self.glucoseStogare.filterTooFrequentGlucose(filteredByDate)
-                print("ASDF \(glucose.count) filtered: \(filtered.count)")
                 if !filtered.isEmpty {
                     debug(.nightscout, "New glucose found")
                     self.apsManager.heartbeat(force: true)
