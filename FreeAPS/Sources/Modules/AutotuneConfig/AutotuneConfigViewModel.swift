@@ -37,6 +37,9 @@ extension AutotuneConfig {
         func delete() {
             provider.deleteAutotune()
             autotune = nil
+            apsManager.makeProfiles()
+                .sink { _ in }
+                .store(in: &lifetime)
         }
     }
 }
