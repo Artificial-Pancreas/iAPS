@@ -50,6 +50,9 @@ struct LoopView: View {
         let delta = timerDate.timeIntervalSince(lastLoopDate) - Config.lag
 
         if delta <= 5.minutes.timeInterval {
+            guard actualSuggestion?.deliverAt != nil else {
+                return .loopYellow
+            }
             return .loopGreen
         } else if delta <= 10.minutes.timeInterval {
             return .loopYellow
