@@ -238,6 +238,9 @@ struct MainChartView: View {
         .onChange(of: didAppearTrigger) { _ in
             update(fullSize: fullSize)
         }
+        .onReceive(Foundation.NotificationCenter.default.publisher(for: UIApplication.willEnterForegroundNotification)) { _ in
+            update(fullSize: fullSize)
+        }
     }
 
     private func bolusView(fullSize: CGSize) -> some View {
@@ -327,9 +330,6 @@ struct MainChartView: View {
             }.fill(Color.uam)
         }
         .onChange(of: suggestion) { _ in
-            update(fullSize: fullSize)
-        }
-        .onChange(of: didAppearTrigger) { _ in
             update(fullSize: fullSize)
         }
     }

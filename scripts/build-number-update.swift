@@ -177,13 +177,13 @@ func checkdSYM(buildNumber: String?) {
 // MARK: Implementation
 
 guard let currentBranch = execute(command: "/usr/bin/git", args: ["rev-parse", "--abbrev-ref", "HEAD"]).map(Branch.init) else {
-    print("error: Can't determine current branch!")
-    exit(1)
+    print("Can't determine current branch! Skiping...")
+    exit(0)
 }
 
 guard let commitsCount = execute(command: "/usr/bin/git", args: ["rev-list", "--count", "HEAD"]), !commitsCount.isEmpty else {
-    print("error: Can't determine commits count!")
-    exit(1)
+    print("Can't determine commits count! Skiping..")
+    exit(0)
 }
 
 guard let targetBuildDir = ProcessInfo.processInfo.environment["TARGET_BUILD_DIR"], !targetBuildDir.isEmpty else {

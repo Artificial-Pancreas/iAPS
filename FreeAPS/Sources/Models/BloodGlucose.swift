@@ -23,7 +23,7 @@ struct BloodGlucose: JSON, Identifiable, Hashable {
 
     var sgv: Int?
     let direction: Direction?
-    let date: UInt64
+    let date: Decimal
     let dateString: Date
     let filtered: Double?
     let noise: Int?
