@@ -57,7 +57,7 @@ extension NightscoutAPI {
         components.host = url.host
         components.port = url.port
         components.path = Config.entriesPath
-        components.queryItems = [URLQueryItem(name: "count", value: "\(2000)")]
+        components.queryItems = [URLQueryItem(name: "count", value: "\(1600)")]
         if let date = sinceDate {
             let dateItem = URLQueryItem(
                 name: "find[dateString][$gte]",

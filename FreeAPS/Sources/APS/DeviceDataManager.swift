@@ -15,7 +15,7 @@ protocol DeviceDataManager {
     var recommendsLoop: PassthroughSubject<Void, Never> { get }
     var pumpName: CurrentValueSubject<String, Never> { get }
     var pumpExpiresAtDate: CurrentValueSubject<Date?, Never> { get }
-    func heartbeat()
+    func heartbeat(force: Bool)
 }
 
 private let staticPumpManagers: [PumpManagerUI.Type] = [
@@ -73,7 +73,6 @@ final class BaseDeviceDataManager: DeviceDataManager, Injectable {
         injectServices(resolver)
         setupPumpManager()
         UIDevice.current.isBatteryMonitoringEnabled = true
-        updatePumpData()
     }
 
     func setupPumpManager() {
@@ -82,7 +81,15 @@ final class BaseDeviceDataManager: DeviceDataManager, Injectable {
         }
     }
 
-    private func updatePumpData() {
+    @SyncAccess(lock: accessLock) private var pumpUpdateInProgress = false
+
+    func heartbeat(force: Bool) {
+        if force {
+            lastHeartBeatTime = Date()
+            updatePumpData()
+            return
+        }
+
         let now = Date()
         var updateInterval: TimeInterval = 5.minutes.timeInterval
 
@@ -101,12 +108,11 @@ final class BaseDeviceDataManager: DeviceDataManager, Injectable {
             return
         }
 
-        heartbeat()
+        lastHeartBeatTime = Date()
+        updatePumpData()
     }
 
-    @SyncAccess(lock: accessLock) private var pumpUpdateInProgress = false
-
-    func heartbeat() {
+    private func updatePumpData() {
         guard let pumpManager = pumpManager else {
             debug(.deviceManager, "Pump is not set, skip updating")
             return
@@ -117,7 +123,7 @@ final class BaseDeviceDataManager: DeviceDataManager, Injectable {
         }
         debug(.deviceManager, "Start updating the pump data")
         pumpUpdateInProgress = true
-        lastHeartBeatTime = Date()
+
         pumpManager.ensureCurrentPumpData {
             debug(.deviceManager, "Pump Data updated")
             self.pumpUpdateInProgress = false
@@ -158,7 +164,7 @@ extension BaseDeviceDataManager: PumpManagerDelegate {
 
     func pumpManagerBLEHeartbeatDidFire(_: PumpManager) {
         debug(.deviceManager, "Pump Heartbeat")
-        updatePumpData()
+//        heartbeat(force: false)
     }
 
     func pumpManagerMustProvideBLEHeartbeat(_: PumpManager) -> Bool {
