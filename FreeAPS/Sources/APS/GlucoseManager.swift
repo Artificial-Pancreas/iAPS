@@ -22,18 +22,20 @@ final class BaseGlucoseManager: GlucoseManager, Injectable {
     private func subscribe() {
         timer.publisher
             .receive(on: processQueue)
-            .flatMap { _ -> AnyPublisher<[BloodGlucose], Never> in
+            .flatMap { _ -> AnyPublisher<(Date, [BloodGlucose]), Never> in
                 debug(.nightscout, "Glucose manager heartbeat")
                 debug(.nightscout, "Start fetching glucose")
-                return self.nightscoutManager.fetchGlucose()
+                return Publishers.CombineLatest(Just(self.glucoseStogare.syncDate()), self.nightscoutManager.fetchGlucose())
+                    .eraseToAnyPublisher()
             }
-            .sink { glucose in
-                let filtered = self.glucoseStogare.filterTooFrequentGlucose(glucose)
+            .sink { syncDate, glucose in
+                // Because of Spike dosn't respect a date query
+                let filteredByDate = glucose.filter { $0.dateString > syncDate }
+                let filtered = self.glucoseStogare.filterTooFrequentGlucose(filteredByDate)
+                print("ASDF \(glucose.count) filtered: \(filtered.count)")
                 if !filtered.isEmpty {
                     debug(.nightscout, "New glucose found")
                     self.apsManager.heartbeat(force: true)
-                } else {
-                    self.apsManager.heartbeat(force: false)
                 }
             }
             .store(in: &lifetime)

@@ -84,6 +84,11 @@ final class BaseDeviceDataManager: DeviceDataManager, Injectable {
     @SyncAccess(lock: accessLock) private var pumpUpdateInProgress = false
 
     func heartbeat(force: Bool) {
+        if force {
+            updatePumpData()
+            return
+        }
+
         let now = Date()
         var updateInterval: TimeInterval = 5.minutes.timeInterval
 
@@ -97,7 +102,7 @@ final class BaseDeviceDataManager: DeviceDataManager, Injectable {
         }
 
         let interval = now.timeIntervalSince(lastHeartBeatTime)
-        guard force || interval >= updateInterval else {
+        guard interval >= updateInterval else {
             debug(.deviceManager, "Last hearbeat \(interval / 60) min ago, skip updating the pump data")
             return
         }
@@ -158,7 +163,6 @@ extension BaseDeviceDataManager: PumpManagerDelegate {
 
     func pumpManagerBLEHeartbeatDidFire(_: PumpManager) {
         debug(.deviceManager, "Pump Heartbeat")
-        // TODO: call it for Medtronic CGM
 //        heartbeat(force: false)
     }
 

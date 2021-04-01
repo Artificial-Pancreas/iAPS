@@ -7,6 +7,7 @@ protocol GlucoseStorage {
     func recent() -> [BloodGlucose]
     func syncDate() -> Date
     func filterTooFrequentGlucose(_ glucose: [BloodGlucose]) -> [BloodGlucose]
+    func lastGlucoseDate() -> Date
 }
 
 final class BaseGlucoseStorage: GlucoseStorage, Injectable {
@@ -56,8 +57,12 @@ final class BaseGlucoseStorage: GlucoseStorage, Injectable {
         storage.retrieve(OpenAPS.Monitor.glucose, as: [BloodGlucose].self)?.reversed() ?? []
     }
 
+    func lastGlucoseDate() -> Date {
+        recent().first?.dateString ?? .distantPast
+    }
+
     func filterTooFrequentGlucose(_ glucose: [BloodGlucose]) -> [BloodGlucose] {
-        var lastDate = recent().first?.dateString ?? .distantPast
+        var lastDate = lastGlucoseDate()
         var filtered: [BloodGlucose] = []
 
         for entry in glucose.reversed() {
