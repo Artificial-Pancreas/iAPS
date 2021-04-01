@@ -85,6 +85,7 @@ final class BaseDeviceDataManager: DeviceDataManager, Injectable {
 
     func heartbeat(force: Bool) {
         if force {
+            lastHeartBeatTime = Date()
             updatePumpData()
             return
         }
