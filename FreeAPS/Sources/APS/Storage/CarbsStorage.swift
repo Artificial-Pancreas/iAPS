@@ -65,7 +65,7 @@ final class BaseCarbsStorage: CarbsStorage, Injectable {
                 rate: nil,
                 eventType: .nsCarbCorrection,
                 createdAt: $0.createdAt,
-                entededBy: CarbsEntry.manual,
+                enteredBy: CarbsEntry.manual,
                 bolus: nil,
                 insulin: nil,
                 notes: nil,
