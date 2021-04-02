@@ -91,7 +91,7 @@ extension Home {
                     if viewModel.units == .mmolL {
                         Text(
                             targetFormatter
-                                .string(from: tepmTarget.targetBottom.asMmolL as NSNumber)! + " \(viewModel.units.rawValue)"
+                                .string(from: tepmTarget.targetBottom.asMmolL as NSNumber)!
                         )
                         .font(.caption)
                         .foregroundColor(.secondary)
@@ -104,10 +104,13 @@ extension Home {
                             )
                             .font(.caption)
                             .foregroundColor(.secondary)
+                        } else {
+                            Text(viewModel.units.rawValue).font(.caption)
+                                .foregroundColor(.secondary)
                         }
 
                     } else {
-                        Text(targetFormatter.string(from: tepmTarget.targetBottom as NSNumber)! + " \(viewModel.units.rawValue)")
+                        Text(targetFormatter.string(from: tepmTarget.targetBottom as NSNumber)!)
                             .font(.caption)
                             .foregroundColor(.secondary)
                         if tepmTarget.targetBottom != tepmTarget.targetTop {
@@ -115,6 +118,9 @@ extension Home {
                                 .foregroundColor(.secondary)
                             Text(targetFormatter.string(from: tepmTarget.targetTop as NSNumber)! + " \(viewModel.units.rawValue)")
                                 .font(.caption)
+                                .foregroundColor(.secondary)
+                        } else {
+                            Text(viewModel.units.rawValue).font(.caption)
                                 .foregroundColor(.secondary)
                         }
                     }

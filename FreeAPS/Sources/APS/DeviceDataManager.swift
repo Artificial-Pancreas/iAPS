@@ -86,7 +86,6 @@ final class BaseDeviceDataManager: DeviceDataManager, Injectable {
 
     func heartbeat(date: Date, force: Bool) {
         if force {
-            lastHeartBeatTime = date
             updatePumpData()
             return
         }
@@ -164,9 +163,7 @@ extension BaseDeviceDataManager: PumpManagerDelegate {
 
     func pumpManagerBLEHeartbeatDidFire(_: PumpManager) {
         debug(.deviceManager, "Pump Heartbeat")
-        if glucoseStorage.isGlucoseFresh() {
-            heartbeat(date: Date(), force: false)
-        }
+        heartbeat(date: Date(), force: false)
     }
 
     func pumpManagerMustProvideBLEHeartbeat(_: PumpManager) -> Bool {
