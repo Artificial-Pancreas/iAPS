@@ -4,18 +4,18 @@ extension ISFEditor {
     class ViewModel<Provider>: BaseViewModel<Provider>, ObservableObject where Provider: ISFEditorProvider {
         @Injected() var settingsManager: SettingsManager!
         @Published var items: [Item] = []
-        private(set) var autosensISF: Double?
-        private(set) var autosensRatio: Double = 0
+        private(set) var autosensISF: Decimal?
+        private(set) var autosensRatio: Decimal = 0
         @Published var autotune: Autotune?
 
         let timeValues = stride(from: 0.0, to: 1.days.timeInterval, by: 30.minutes.timeInterval).map { $0 }
 
-        var rateValues: [Double] {
+        var rateValues: [Decimal] {
             switch units {
             case .mgdL:
                 return stride(from: 9, to: 540.01, by: 1.0).map { $0 }
             case .mmolL:
-                return stride(from: 0.5, to: 30.01, by: 0.1).map { $0 }
+                return stride(from: 0.1, to: 30.01, by: 0.1).map { $0 }
             }
         }
 
@@ -31,7 +31,7 @@ extension ISFEditor {
             units = profile.units
             items = profile.sensitivities.map { value in
                 let timeIndex = timeValues.firstIndex(of: Double(value.offset * 60)) ?? 0
-                let rateIndex = rateValues.firstIndex(of: Double(value.sensitivity)) ?? 0
+                let rateIndex = rateValues.firstIndex(of: value.sensitivity) ?? 0
                 return Item(rateIndex: rateIndex, timeIndex: timeIndex)
             }
             autotune = provider.autotune
@@ -39,13 +39,13 @@ extension ISFEditor {
             if let newISF = provider.autosense.newisf {
                 switch units {
                 case .mgdL:
-                    autosensISF = Double(newISF)
+                    autosensISF = newISF
                 case .mmolL:
-                    autosensISF = round(Double(newISF * GlucoseUnits.exchangeRate) * 10) / 10
+                    autosensISF = newISF * GlucoseUnits.exchangeRate
                 }
             }
 
-            autosensRatio = Double(provider.autosense.ratio)
+            autosensRatio = provider.autosense.ratio
         }
 
         func add() {
@@ -68,7 +68,7 @@ extension ISFEditor {
                 fotmatter.dateFormat = "HH:mm:ss"
                 let date = Date(timeIntervalSince1970: self.timeValues[item.timeIndex])
                 let minutes = Int(date.timeIntervalSince1970 / 60)
-                let rate = Decimal(self.rateValues[item.rateIndex])
+                let rate = self.rateValues[item.rateIndex]
                 return InsulinSensitivityEntry(sensitivity: rate, offset: minutes, start: fotmatter.string(from: date))
             }
             let profile = InsulinSensitivities(
