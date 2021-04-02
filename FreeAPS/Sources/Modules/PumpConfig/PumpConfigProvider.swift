@@ -15,7 +15,7 @@ extension PumpConfig {
         }
 
         func basalProfile() -> [BasalProfileEntry] {
-            storage.retrieve(OpenAPS.Settings.profile, as: Autotune.self)?.basalProfile
+            storage.retrieve(OpenAPS.Settings.pumpProfile, as: Autotune.self)?.basalProfile
                 ?? storage.retrieve(OpenAPS.Settings.pumpProfile, as: Autotune.self)?.basalProfile
                 ?? [BasalProfileEntry(start: "00:00", minutes: 0, rate: 1)]
         }
