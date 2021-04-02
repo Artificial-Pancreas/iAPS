@@ -348,6 +348,7 @@ extension MainChartView {
         calculateCarbsDots(fullSize: fullSize)
         calculateTempTargetsRects(fullSize: fullSize)
         calculateTempTargetsRects(fullSize: fullSize)
+        calculateBasalPoints(fullSize: fullSize)
     }
 
     private func calculateGlucoseDots(fullSize: CGSize) {

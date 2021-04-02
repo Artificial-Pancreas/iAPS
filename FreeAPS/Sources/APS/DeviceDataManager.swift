@@ -15,7 +15,7 @@ protocol DeviceDataManager {
     var recommendsLoop: PassthroughSubject<Void, Never> { get }
     var pumpName: CurrentValueSubject<String, Never> { get }
     var pumpExpiresAtDate: CurrentValueSubject<Date?, Never> { get }
-    func heartbeat(force: Bool)
+    func heartbeat(date: Date, force: Bool)
 }
 
 private let staticPumpManagers: [PumpManagerUI.Type] = [
@@ -35,6 +35,7 @@ final class BaseDeviceDataManager: DeviceDataManager, Injectable {
     @Injected() private var pumpHistoryStorage: PumpHistoryStorage!
     @Injected() private var storage: FileStorage!
     @Injected() private var broadcaster: Broadcaster!
+    @Injected() private var glucoseStorage: GlucoseStorage!
 
     @Persisted(key: "BaseDeviceDataManager.lastEventDate") var lastEventDate: Date? = nil
     @SyncAccess(lock: accessLock) @Persisted(key: "BaseDeviceDataManager.lastHeartBeatTime") var lastHeartBeatTime: Date =
@@ -83,17 +84,16 @@ final class BaseDeviceDataManager: DeviceDataManager, Injectable {
 
     @SyncAccess(lock: accessLock) private var pumpUpdateInProgress = false
 
-    func heartbeat(force: Bool) {
+    func heartbeat(date: Date, force: Bool) {
         if force {
-            lastHeartBeatTime = Date()
+            lastHeartBeatTime = date
             updatePumpData()
             return
         }
 
-        let now = Date()
         var updateInterval: TimeInterval = 5.minutes.timeInterval
 
-        switch lastHeartBeatTime.timeIntervalSince(now) {
+        switch lastHeartBeatTime.timeIntervalSince(date) {
         case let interval where interval < -10.minutes.timeInterval:
             break
         case let interval where interval < -5.minutes.timeInterval:
@@ -102,13 +102,13 @@ final class BaseDeviceDataManager: DeviceDataManager, Injectable {
             break
         }
 
-        let interval = now.timeIntervalSince(lastHeartBeatTime)
+        let interval = date.timeIntervalSince(lastHeartBeatTime)
         guard interval >= updateInterval else {
             debug(.deviceManager, "Last hearbeat \(interval / 60) min ago, skip updating the pump data")
             return
         }
 
-        lastHeartBeatTime = Date()
+        lastHeartBeatTime = date
         updatePumpData()
     }
 
@@ -164,7 +164,9 @@ extension BaseDeviceDataManager: PumpManagerDelegate {
 
     func pumpManagerBLEHeartbeatDidFire(_: PumpManager) {
         debug(.deviceManager, "Pump Heartbeat")
-//        heartbeat(force: false)
+        if glucoseStorage.isGlucoseFresh() {
+            heartbeat(date: Date(), force: false)
+        }
     }
 
     func pumpManagerMustProvideBLEHeartbeat(_: PumpManager) -> Bool {
