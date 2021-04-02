@@ -93,6 +93,13 @@ extension RileyLinkDevice {
         manager.setCustomName(name)
     }
     
+    public func getBatterylevel() -> String {
+        do {
+            return try! manager.readBatteryLevel(timeout: 1)
+        } catch {
+        }
+    }
+       
     public func enableBLELEDs() {
         manager.setLEDMode(mode: .on)
     }
