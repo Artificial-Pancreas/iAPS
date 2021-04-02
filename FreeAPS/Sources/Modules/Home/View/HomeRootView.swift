@@ -86,21 +86,21 @@ extension Home {
                         .padding(.leading, 8)
                 }
 
-                if let tepmTarget = viewModel.tempTarget {
-                    Text(tepmTarget.name).font(.caption).foregroundColor(.secondary)
+                if let tempTarget = viewModel.tempTarget {
+                    Text(tempTarget.name).font(.caption).foregroundColor(.secondary)
                     if viewModel.units == .mmolL {
                         Text(
                             targetFormatter
-                                .string(from: tepmTarget.targetBottom.asMmolL as NSNumber)!
+                                .string(from: tempTarget.targetBottom.asMmolL as NSNumber)!
                         )
                         .font(.caption)
                         .foregroundColor(.secondary)
-                        if tepmTarget.targetBottom != tepmTarget.targetTop {
+                        if tempTarget.targetBottom != tempTarget.targetTop {
                             Text("-").font(.caption)
                                 .foregroundColor(.secondary)
                             Text(
                                 targetFormatter
-                                    .string(from: tepmTarget.targetTop.asMmolL as NSNumber)! + " \(viewModel.units.rawValue)"
+                                    .string(from: tempTarget.targetTop.asMmolL as NSNumber)! + " \(viewModel.units.rawValue)"
                             )
                             .font(.caption)
                             .foregroundColor(.secondary)
@@ -110,13 +110,13 @@ extension Home {
                         }
 
                     } else {
-                        Text(targetFormatter.string(from: tepmTarget.targetBottom as NSNumber)!)
+                        Text(targetFormatter.string(from: tempTarget.targetBottom as NSNumber)!)
                             .font(.caption)
                             .foregroundColor(.secondary)
-                        if tepmTarget.targetBottom != tepmTarget.targetTop {
+                        if tempTarget.targetBottom != tempTarget.targetTop {
                             Text("-").font(.caption)
                                 .foregroundColor(.secondary)
-                            Text(targetFormatter.string(from: tepmTarget.targetTop as NSNumber)! + " \(viewModel.units.rawValue)")
+                            Text(targetFormatter.string(from: tempTarget.targetTop as NSNumber)! + " \(viewModel.units.rawValue)")
                                 .font(.caption)
                                 .foregroundColor(.secondary)
                         } else {
