@@ -654,6 +654,14 @@ extension MainChartView {
         .min()
     }
 
+    private func maxTargetValue() -> Int? {
+        tempTargets.map(\.targetTop).filter { $0 > 0 }.max().map(Int.init)
+    }
+
+    private func minTargetValue() -> Int? {
+        tempTargets.map(\.targetBottom).filter { $0 > 0 }.min().map(Int.init)
+    }
+
     private func glucoseToCoordinate(_ glucoseEntry: BloodGlucose, fullSize: CGSize) -> CGPoint {
         let x = timeToXCoordinate(glucoseEntry.dateString.timeIntervalSince1970, fullSize: fullSize)
         let y = glucoseToYCoordinate(glucoseEntry.glucose ?? 0, fullSize: fullSize)
@@ -686,14 +694,7 @@ extension MainChartView {
     private func glucoseToYCoordinate(_ glucoseValue: Int, fullSize: CGSize) -> CGFloat {
         let topYPaddint = Config.topYPadding + Config.basalHeight
         let bottomYPadding = Config.bottomYPadding
-        var maxValue = glucose.compactMap(\.glucose).max() ?? Config.maxGlucose
-        if let maxPredValue = maxPredValue() {
-            maxValue = max(maxValue, maxPredValue)
-        }
-        var minValue = glucose.compactMap(\.glucose).min() ?? Config.minGlucose
-        if let minPredValue = minPredValue() {
-            minValue = min(minValue, minPredValue)
-        }
+        let (minValue, maxValue) = minMaxYValues()
         let stepYFraction = (fullSize.height - topYPaddint - bottomYPadding) / CGFloat(maxValue - minValue)
         let yOffset = CGFloat(minValue) * stepYFraction
         let y = fullSize.height - CGFloat(glucoseValue) * stepYFraction + yOffset - bottomYPadding
@@ -725,17 +726,29 @@ extension MainChartView {
         return pointInLine(CGPoint(x: prevX, y: prevY), CGPoint(x: nextX, y: nextY), fraction)
     }
 
-    private func getGlucoseYRange(fullSize: CGSize) -> GlucoseYRange {
-        let topYPaddint = Config.topYPadding + Config.basalHeight
-        let bottomYPadding = Config.bottomYPadding
+    private func minMaxYValues() -> (min: Int, max: Int) {
         var maxValue = glucose.compactMap(\.glucose).max() ?? Config.maxGlucose
         if let maxPredValue = maxPredValue() {
             maxValue = max(maxValue, maxPredValue)
+        }
+        if let maxTargetValue = maxTargetValue() {
+            maxValue = max(maxValue, maxTargetValue)
         }
         var minValue = glucose.compactMap(\.glucose).min() ?? Config.minGlucose
         if let minPredValue = minPredValue() {
             minValue = min(minValue, minPredValue)
         }
+        if let minTargetValue = minTargetValue() {
+            minValue = min(minValue, minTargetValue)
+        }
+
+        return (min: minValue, max: maxValue)
+    }
+
+    private func getGlucoseYRange(fullSize: CGSize) -> GlucoseYRange {
+        let topYPaddint = Config.topYPadding + Config.basalHeight
+        let bottomYPadding = Config.bottomYPadding
+        let (minValue, maxValue) = minMaxYValues()
         let stepYFraction = (fullSize.height - topYPaddint - bottomYPadding) / CGFloat(maxValue - minValue)
         let yOffset = CGFloat(minValue) * stepYFraction
         let maxY = fullSize.height - CGFloat(minValue) * stepYFraction + yOffset - bottomYPadding
