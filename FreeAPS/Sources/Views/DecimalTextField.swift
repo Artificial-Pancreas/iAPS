@@ -55,7 +55,9 @@ struct DecimalTextField: UIViewRepresentable {
         toolBar.setItems([clearButton, space, doneButton], animated: true)
         textfield.inputAccessoryView = toolBar
         if autofocus {
-            textfield.becomeFirstResponder()
+            DispatchQueue.main.async {
+                textfield.becomeFirstResponder()
+            }
         }
         return textfield
     }
