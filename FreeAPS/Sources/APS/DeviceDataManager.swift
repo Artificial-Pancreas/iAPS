@@ -163,6 +163,7 @@ extension BaseDeviceDataManager: PumpManagerDelegate {
 
     func pumpManagerBLEHeartbeatDidFire(_: PumpManager) {
         debug(.deviceManager, "Pump Heartbeat")
+        pumpUpdateInProgress = false
         heartbeat(date: Date(), force: false)
     }
 
