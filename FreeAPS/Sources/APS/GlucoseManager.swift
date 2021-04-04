@@ -7,7 +7,7 @@ protocol GlucoseManager {}
 
 final class BaseGlucoseManager: GlucoseManager, Injectable {
     private let processQueue = DispatchQueue(label: "BaseGlucoseManager.processQueue")
-    @Injected() var glucoseStogare: GlucoseStorage!
+    @Injected() var glucoseStorage: GlucoseStorage!
     @Injected() var nightscoutManager: NightscoutManager!
     @Injected() var apsManager: APSManager!
 
@@ -27,7 +27,7 @@ final class BaseGlucoseManager: GlucoseManager, Injectable {
                 debug(.nightscout, "Start fetching glucose")
                 return Publishers.CombineLatest3(
                     Just(date),
-                    Just(self.glucoseStogare.syncDate()),
+                    Just(self.glucoseStorage.syncDate()),
                     Publishers.CombineLatest(
                         self.nightscoutManager.fetchGlucose(),
                         self.fetchGlucoseFromSgaredGroup()
@@ -40,9 +40,10 @@ final class BaseGlucoseManager: GlucoseManager, Injectable {
             .sink { date, syncDate, glucose in
                 // Because of Spike dosn't respect a date query
                 let filteredByDate = glucose.filter { $0.dateString > syncDate }
-                let filtered = self.glucoseStogare.filterTooFrequentGlucose(filteredByDate, at: syncDate)
+                let filtered = self.glucoseStorage.filterTooFrequentGlucose(filteredByDate, at: syncDate)
                 if !filtered.isEmpty {
                     debug(.nightscout, "New glucose found")
+                    self.glucoseStorage.storeGlucose(filtered)
                     self.apsManager.heartbeat(date: date, force: true)
                 }
             }

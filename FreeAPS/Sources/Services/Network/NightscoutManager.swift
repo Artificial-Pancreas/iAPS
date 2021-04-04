@@ -83,10 +83,6 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
                 return Just([]).setFailureType(to: Error.self).eraseToAnyPublisher()
             })
             .replaceError(with: [])
-            .map {
-                self.glucoseStorage.storeGlucose($0)
-                return $0
-            }
             .eraseToAnyPublisher()
     }
 
