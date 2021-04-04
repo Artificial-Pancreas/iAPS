@@ -178,6 +178,8 @@ extension Home {
                         units: viewModel.units
                     )
                     .padding(.bottom)
+                    .modal(for: .dataTable, from: self)
+
                     legendPanal
 
                     ZStack {

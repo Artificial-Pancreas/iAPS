@@ -8,6 +8,7 @@ protocol NightscoutManager {
     func fetchCarbs() -> AnyPublisher<Void, Never>
     func fetchTempTargets() -> AnyPublisher<Void, Never>
     func fetchAnnouncements() -> AnyPublisher<Void, Never>
+    func deleteCarbs(at date: Date)
     func uploadStatus()
     var cgmURL: URL? { get }
 }
@@ -129,6 +130,25 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
                 self.announcementsStorage.storeAnnouncements($0, enacted: false)
                 return ()
             }.eraseToAnyPublisher()
+    }
+
+    func deleteCarbs(at date: Date) {
+        guard let nightscout = nightscoutAPI, isUploadEnabled else {
+            carbsStorage.deleteCarbs(at: date)
+            return
+        }
+
+        nightscout.deleteCarbs(at: date)
+            .sink { completion in
+                switch completion {
+                case .finished:
+                    self.carbsStorage.deleteCarbs(at: date)
+                    debug(.nightscout, "Carbs deleted")
+                case let .failure(error):
+                    debug(.nightscout, error.localizedDescription)
+                }
+            } receiveValue: {}
+            .store(in: &lifetime)
     }
 
     func uploadStatus() {
