@@ -26,10 +26,9 @@ final class BaseGlucoseStorage: GlucoseStorage, Injectable {
 
     func storeGlucose(_ glucose: [BloodGlucose]) {
         processQueue.sync {
-            let filtered = self.filterTooFrequentGlucose(glucose, at: self.lastGlucoseDate())
             let file = OpenAPS.Monitor.glucose
             self.storage.transaction { storage in
-                storage.append(filtered, to: file, uniqBy: \.dateString)
+                storage.append(glucose, to: file, uniqBy: \.dateString)
                 let uniqEvents = storage.retrieve(file, as: [BloodGlucose].self)?
                     .filter { $0.dateString.addingTimeInterval(1.days.timeInterval) > Date() }
                     .sorted { $0.dateString > $1.dateString } ?? []
