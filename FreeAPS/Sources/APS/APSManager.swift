@@ -105,26 +105,22 @@ final class BaseAPSManager: APSManager, Injectable {
     private func loop() {
         debug(.apsManager, "Starting loop")
         isLooping.send(true)
-        Publishers.CombineLatest(
-            nightscout.fetchCarbs(),
-            nightscout.fetchTempTargets()
-        )
-        .flatMap { _ in self.determineBasal() }
-        .sink { _ in } receiveValue: { [weak self] ok in
-            guard let self = self else { return }
+        determineBasal()
+            .sink { _ in } receiveValue: { [weak self] ok in
+                guard let self = self else { return }
 
-            if ok {
-                self.nightscout.uploadStatus()
-                if self.settings.closedLoop {
-                    self.enactSuggested()
+                if ok {
+                    self.nightscout.uploadStatus()
+                    if self.settings.closedLoop {
+                        self.enactSuggested()
+                    } else {
+                        self.isLooping.send(false)
+                        self.lastLoopDate.send(Date())
+                    }
                 } else {
                     self.isLooping.send(false)
-                    self.lastLoopDate.send(Date())
                 }
-            } else {
-                self.isLooping.send(false)
-            }
-        }.store(in: &lifetime)
+            }.store(in: &lifetime)
     }
 
     private func verifyStatus() -> Bool {

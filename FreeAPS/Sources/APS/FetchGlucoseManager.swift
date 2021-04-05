@@ -3,9 +3,9 @@ import Foundation
 import SwiftDate
 import Swinject
 
-protocol GlucoseManager {}
+protocol FetchGlucoseManager {}
 
-final class BaseGlucoseManager: GlucoseManager, Injectable {
+final class BaseFetchGlucoseManager: FetchGlucoseManager, Injectable {
     private let processQueue = DispatchQueue(label: "BaseGlucoseManager.processQueue")
     @Injected() var glucoseStorage: GlucoseStorage!
     @Injected() var nightscoutManager: NightscoutManager!
@@ -23,7 +23,7 @@ final class BaseGlucoseManager: GlucoseManager, Injectable {
         timer.publisher
             .receive(on: processQueue)
             .flatMap { date -> AnyPublisher<(Date, Date, [BloodGlucose]), Never> in
-                debug(.nightscout, "Glucose manager heartbeat")
+                debug(.nightscout, "FetchGlucoseManager heartbeat")
                 debug(.nightscout, "Start fetching glucose")
                 return Publishers.CombineLatest3(
                     Just(date),

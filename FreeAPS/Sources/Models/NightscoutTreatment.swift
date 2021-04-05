@@ -16,7 +16,7 @@ struct NigtscoutTreatment: JSON, Hashable, Equatable {
     let targetTop: Decimal?
     let targetBottom: Decimal?
 
-    static let local = "freeaps-x://local"
+    static let local = "freeaps-x"
 
     static let empty = NigtscoutTreatment(from: "{}")!
 
