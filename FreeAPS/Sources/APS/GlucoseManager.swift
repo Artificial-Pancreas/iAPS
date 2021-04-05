@@ -30,7 +30,7 @@ final class BaseGlucoseManager: GlucoseManager, Injectable {
                     Just(self.glucoseStorage.syncDate()),
                     Publishers.CombineLatest(
                         self.nightscoutManager.fetchGlucose(),
-                        self.fetchGlucoseFromSgaredGroup()
+                        self.fetchGlucoseFromSharedGroup()
                     )
                     .map { [$0, $1].flatMap { $0 } }
                     .eraseToAnyPublisher()
@@ -51,7 +51,7 @@ final class BaseGlucoseManager: GlucoseManager, Injectable {
         timer.resume()
     }
 
-    private func fetchGlucoseFromSgaredGroup() -> AnyPublisher<[BloodGlucose], Never> {
+    private func fetchGlucoseFromSharedGroup() -> AnyPublisher<[BloodGlucose], Never> {
         guard let suiteName = Bundle.main.appGroupSuiteName,
               let sharedDefaults = UserDefaults(suiteName: suiteName)
         else {
