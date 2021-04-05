@@ -87,7 +87,7 @@ extension Home {
                 }
 
                 if let tempTarget = viewModel.tempTarget {
-                    Text(tempTarget.name).font(.caption).foregroundColor(.secondary)
+                    Text(tempTarget.displayName).font(.caption).foregroundColor(.secondary)
                     if viewModel.units == .mmolL {
                         Text(
                             targetFormatter
