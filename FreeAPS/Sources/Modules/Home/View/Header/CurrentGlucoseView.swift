@@ -41,7 +41,7 @@ struct CurrentGlucoseView: View {
                         ?? "--"
                 )
                 .font(.system(size: 24, weight: .bold))
-                .minimumScaleFactor(0.5)
+                .fixedSize()
                 image.padding(.bottom, 2)
 
             }.padding(.leading, 4)
