@@ -92,6 +92,8 @@
 		3811DF0525CAA62600A708ED /* DependeciesContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3811DF0425CAA62600A708ED /* DependeciesContainer.swift */; };
 		3811DF0825CAAA4700A708ED /* ServiceContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3811DF0725CAAA4700A708ED /* ServiceContainer.swift */; };
 		3811DF1025CAAAE200A708ED /* APSManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3811DF0F25CAAAE200A708ED /* APSManager.swift */; };
+		38192E01261B826A0094D973 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 38192E00261B826A0094D973 /* Alamofire */; };
+		38192E04261B82FA0094D973 /* ReachabilityManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38192E03261B82FA0094D973 /* ReachabilityManager.swift */; };
 		3821ED4C25DD18BA00BC42AD /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3821ED4B25DD18BA00BC42AD /* Constants.swift */; };
 		382C133725F13A1E00715CE1 /* InsulinSensitivities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 382C133625F13A1E00715CE1 /* InsulinSensitivities.swift */; };
 		382C134B25F14E3700715CE1 /* BGTargets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 382C134A25F14E3700715CE1 /* BGTargets.swift */; };
@@ -382,6 +384,7 @@
 		3811DF0425CAA62600A708ED /* DependeciesContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DependeciesContainer.swift; sourceTree = "<group>"; };
 		3811DF0725CAAA4700A708ED /* ServiceContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceContainer.swift; sourceTree = "<group>"; };
 		3811DF0F25CAAAE200A708ED /* APSManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APSManager.swift; sourceTree = "<group>"; };
+		38192E03261B82FA0094D973 /* ReachabilityManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReachabilityManager.swift; sourceTree = "<group>"; };
 		3821ED4B25DD18BA00BC42AD /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		382C133625F13A1E00715CE1 /* InsulinSensitivities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsulinSensitivities.swift; sourceTree = "<group>"; };
 		382C134A25F14E3700715CE1 /* BGTargets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BGTargets.swift; sourceTree = "<group>"; };
@@ -554,6 +557,7 @@
 				38887DF225F61F7500944304 /* NightscoutUploadKit.framework in Frameworks */,
 				38887DE825F61F7500944304 /* MockKitUI.framework in Frameworks */,
 				3811DE1025C9D37700A708ED /* Swinject in Frameworks */,
+				38192E01261B826A0094D973 /* Alamofire in Frameworks */,
 				383948D325CD4D6D00E91849 /* Disk in Frameworks */,
 				38887DF825F61F7600944304 /* RileyLinkBLEKit.framework in Frameworks */,
 				38887DEC25F61F7500944304 /* Crypto.framework in Frameworks */,
@@ -853,6 +857,7 @@
 		3811DE9425C9D88200A708ED /* Network */ = {
 			isa = PBXGroup;
 			children = (
+				38192E03261B82FA0094D973 /* ReachabilityManager.swift */,
 				3811DE9625C9D88300A708ED /* HTTPResponseStatus.swift */,
 				3811DE9725C9D88300A708ED /* NightscoutManager.swift */,
 				38FE826925CC82DB001FF17A /* NetworkService.swift */,
@@ -1487,6 +1492,7 @@
 				383948D225CD4D6D00E91849 /* Disk */,
 				38B17B6525DD90E0005CAE3D /* SwiftDate */,
 				3833B46C26012030003021B3 /* Algorithms */,
+				38192E00261B826A0094D973 /* Alamofire */,
 			);
 			productName = FreeAPS;
 			productReference = 388E595825AD948C0019842D /* FreeAPS.app */;
@@ -1542,6 +1548,7 @@
 				383948D125CD4D6D00E91849 /* XCRemoteSwiftPackageReference "Disk" */,
 				38B17B6425DD90E0005CAE3D /* XCRemoteSwiftPackageReference "SwiftDate" */,
 				3833B46B26012030003021B3 /* XCRemoteSwiftPackageReference "swift-algorithms" */,
+				38192DFF261B826A0094D973 /* XCRemoteSwiftPackageReference "Alamofire" */,
 			);
 			productRefGroup = 388E595925AD948C0019842D /* Products */;
 			projectDirPath = "";
@@ -1645,6 +1652,7 @@
 				3811DE7B25C9D6D300A708ED /* LoginProvider.swift in Sources */,
 				383948D625CD4D8900E91849 /* FileStorage.swift in Sources */,
 				3811DE4125C9D4A100A708ED /* SettingsRootView.swift in Sources */,
+				38192E04261B82FA0094D973 /* ReachabilityManager.swift in Sources */,
 				388E595C25AD948C0019842D /* FreeAPSApp.swift in Sources */,
 				3811DE8925C9D6DD00A708ED /* RequestPermissionsProvider.swift in Sources */,
 				3811DE4225C9D4A100A708ED /* SettingsDataFlow.swift in Sources */,
@@ -2093,6 +2101,14 @@
 				minimumVersion = 2.7.1;
 			};
 		};
+		38192DFF261B826A0094D973 /* XCRemoteSwiftPackageReference "Alamofire" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Alamofire/Alamofire";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.4.2;
+			};
+		};
 		3833B46B26012030003021B3 /* XCRemoteSwiftPackageReference "swift-algorithms" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/apple/swift-algorithms";
@@ -2124,6 +2140,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 3811DE0E25C9D37700A708ED /* XCRemoteSwiftPackageReference "Swinject" */;
 			productName = Swinject;
+		};
+		38192E00261B826A0094D973 /* Alamofire */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 38192DFF261B826A0094D973 /* XCRemoteSwiftPackageReference "Alamofire" */;
+			productName = Alamofire;
 		};
 		3833B46C26012030003021B3 /* Algorithms */ = {
 			isa = XCSwiftPackageProductDependency;

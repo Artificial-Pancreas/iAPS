@@ -23,10 +23,15 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
     @Injected() private var announcementsStorage: AnnouncementsStorage!
     @Injected() private var settingsManager: SettingsManager!
     @Injected() private var broadcaster: Broadcaster!
+    @Injected() private var reachabilityManager: ReachabilityManager!
 
     private let processQueue = DispatchQueue(label: "BaseNetworkManager.processQueue")
 
     private var lifetime = Set<AnyCancellable>()
+
+    private var isNetworkReachable: Bool {
+        reachabilityManager.isReachable
+    }
 
     private var isUploadEnabled: Bool {
         settingsManager.settings.isUploadEnabled ?? false
@@ -87,7 +92,7 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
     }
 
     func fetchCarbs() -> AnyPublisher<Void, Never> {
-        guard let nightscout = nightscoutAPI else {
+        guard let nightscout = nightscoutAPI, isNetworkReachable else {
             return Just(()).eraseToAnyPublisher()
         }
 
@@ -101,7 +106,7 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
     }
 
     func fetchTempTargets() -> AnyPublisher<Void, Never> {
-        guard let nightscout = nightscoutAPI else {
+        guard let nightscout = nightscoutAPI, isNetworkReachable else {
             return Just(()).eraseToAnyPublisher()
         }
 
@@ -115,7 +120,7 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
     }
 
     func fetchAnnouncements() -> AnyPublisher<Void, Never> {
-        guard let nightscout = nightscoutAPI else {
+        guard let nightscout = nightscoutAPI, isNetworkReachable else {
             return Just(()).eraseToAnyPublisher()
         }
 
