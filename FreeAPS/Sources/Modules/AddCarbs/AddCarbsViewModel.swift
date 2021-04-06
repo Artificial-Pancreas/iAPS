@@ -10,11 +10,15 @@ extension AddCarbs {
         override func subscribe() {}
 
         func add() {
+            guard carbs > 0 else {
+                showModal(for: nil)
+                return
+            }
+
             carbsStorage.storeCarbs([
                 CarbsEntry(createdAt: date, carbs: carbs, enteredBy: CarbsEntry.manual)
             ])
-            apsManager.determineBasal().sink { _ in }.store(in: &lifetime)
-            showModal(for: nil)
+            showModal(for: .bolus)
         }
     }
 }

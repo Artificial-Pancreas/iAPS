@@ -107,7 +107,7 @@ extension NightscoutAPI {
         ]
         if let date = sinceDate {
             let dateItem = URLQueryItem(
-                name: "find[created_at][$gte]",
+                name: "find[created_at][$gt]",
                 value: Formatter.iso8601withFractionalSeconds.string(from: date)
             )
             components.queryItems?.append(dateItem)
@@ -176,7 +176,7 @@ extension NightscoutAPI {
         ]
         if let date = sinceDate {
             let dateItem = URLQueryItem(
-                name: "find[created_at][$gte]",
+                name: "find[created_at][$gt]",
                 value: Formatter.iso8601withFractionalSeconds.string(from: date)
             )
             components.queryItems?.append(dateItem)
