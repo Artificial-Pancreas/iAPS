@@ -31,11 +31,13 @@ final class BaseFetchTreatmentsManager: FetchTreatmentsManager, Injectable {
                 ).eraseToAnyPublisher()
             }
             .sink { carbs, targets in
-                if carbs.isNotEmpty {
-                    self.carbsStorage.storeCarbs(carbs)
+                let filteredCarbs = carbs.filter { !($0.enteredBy?.contains(CarbsEntry.manual) ?? false) }
+                if filteredCarbs.isNotEmpty {
+                    self.carbsStorage.storeCarbs(filteredCarbs)
                 }
-                if targets.isNotEmpty {
-                    self.tempTargetsStorage.storeTempTargets(targets)
+                let filteredTargets = targets.filter { !($0.enteredBy?.contains(TempTarget.manual) ?? false) }
+                if filteredTargets.isNotEmpty {
+                    self.tempTargetsStorage.storeTempTargets(filteredTargets)
                 }
             }
             .store(in: &lifetime)

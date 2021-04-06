@@ -293,10 +293,12 @@ extension Home.ViewModel:
 
     func tempTargetsDidUpdate(_: [TempTarget]) {
         setupTempTargets()
+        apsManager.determineBasal().sink { _ in }.store(in: &lifetime)
     }
 
     func carbsDidUpdate(_: [CarbsEntry]) {
         setupCarbs()
+        apsManager.determineBasal().sink { _ in }.store(in: &lifetime)
     }
 
     func enactedSuggestionDidUpdate(_ suggestion: Suggestion) {

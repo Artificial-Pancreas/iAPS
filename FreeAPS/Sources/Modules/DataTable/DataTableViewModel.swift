@@ -51,7 +51,7 @@ extension DataTable {
                             units: units,
                             type: .tempTarget,
                             date: $0.createdAt,
-                            amount: $0.targetBottom,
+                            amount: $0.targetBottom ?? 0,
                             secondAmount: $0.targetTop,
                             duration: $0.duration
                         )

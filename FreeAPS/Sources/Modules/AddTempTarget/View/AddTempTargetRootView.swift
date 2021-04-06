@@ -78,8 +78,8 @@ extension AddTempTarget {
             var low = preset.targetBottom
             var high = preset.targetTop
             if viewModel.units == .mmolL {
-                low = low.asMmolL
-                high = high.asMmolL
+                low = low?.asMmolL
+                high = high?.asMmolL
             }
             return HStack {
                 VStack {
@@ -89,7 +89,7 @@ extension AddTempTarget {
                     }
                     HStack {
                         Text(
-                            "\(formatter.string(from: low as NSNumber)!) - \(formatter.string(from: high as NSNumber)!)"
+                            "\(formatter.string(from: (low ?? 0) as NSNumber)!) - \(formatter.string(from: (high ?? 0) as NSNumber)!)"
                         )
                         .foregroundColor(.secondary)
                         .font(.caption)

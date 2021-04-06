@@ -91,7 +91,7 @@ extension Home {
                     if viewModel.units == .mmolL {
                         Text(
                             targetFormatter
-                                .string(from: tempTarget.targetBottom.asMmolL as NSNumber)!
+                                .string(from: (tempTarget.targetBottom?.asMmolL ?? 0) as NSNumber)!
                         )
                         .font(.caption)
                         .foregroundColor(.secondary)
@@ -100,7 +100,8 @@ extension Home {
                                 .foregroundColor(.secondary)
                             Text(
                                 targetFormatter
-                                    .string(from: tempTarget.targetTop.asMmolL as NSNumber)! + " \(viewModel.units.rawValue)"
+                                    .string(from: (tempTarget.targetTop?.asMmolL ?? 0) as NSNumber)! +
+                                    " \(viewModel.units.rawValue)"
                             )
                             .font(.caption)
                             .foregroundColor(.secondary)
@@ -110,15 +111,18 @@ extension Home {
                         }
 
                     } else {
-                        Text(targetFormatter.string(from: tempTarget.targetBottom as NSNumber)!)
+                        Text(targetFormatter.string(from: (tempTarget.targetBottom ?? 0) as NSNumber)!)
                             .font(.caption)
                             .foregroundColor(.secondary)
                         if tempTarget.targetBottom != tempTarget.targetTop {
                             Text("-").font(.caption)
                                 .foregroundColor(.secondary)
-                            Text(targetFormatter.string(from: tempTarget.targetTop as NSNumber)! + " \(viewModel.units.rawValue)")
-                                .font(.caption)
-                                .foregroundColor(.secondary)
+                            Text(
+                                targetFormatter
+                                    .string(from: (tempTarget.targetTop ?? 0) as NSNumber)! + " \(viewModel.units.rawValue)"
+                            )
+                            .font(.caption)
+                            .foregroundColor(.secondary)
                         } else {
                             Text(viewModel.units.rawValue).font(.caption)
                                 .foregroundColor(.secondary)

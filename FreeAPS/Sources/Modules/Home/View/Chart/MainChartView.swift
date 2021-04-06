@@ -515,12 +515,12 @@ extension MainChartView {
         calculationQueue.async {
             var rects = tempTargets.map { tempTarget -> CGRect in
                 let x0 = timeToXCoordinate(tempTarget.createdAt.timeIntervalSince1970, fullSize: fullSize)
-                let y0 = glucoseToYCoordinate(Int(tempTarget.targetTop), fullSize: fullSize)
+                let y0 = glucoseToYCoordinate(Int(tempTarget.targetTop ?? 0), fullSize: fullSize)
                 let x1 = timeToXCoordinate(
                     tempTarget.createdAt.timeIntervalSince1970 + Int(tempTarget.duration).minutes.timeInterval,
                     fullSize: fullSize
                 )
-                let y1 = glucoseToYCoordinate(Int(tempTarget.targetBottom), fullSize: fullSize)
+                let y1 = glucoseToYCoordinate(Int(tempTarget.targetBottom ?? 0), fullSize: fullSize)
                 return CGRect(
                     x: x0,
                     y: y0 - 3,
@@ -665,11 +665,11 @@ extension MainChartView {
     }
 
     private func maxTargetValue() -> Int? {
-        tempTargets.map(\.targetTop).filter { $0 > 0 }.max().map(Int.init)
+        tempTargets.map { $0.targetTop ?? 0 }.filter { $0 > 0 }.max().map(Int.init)
     }
 
     private func minTargetValue() -> Int? {
-        tempTargets.map(\.targetBottom).filter { $0 > 0 }.min().map(Int.init)
+        tempTargets.map { $0.targetBottom ?? 0 }.filter { $0 > 0 }.min().map(Int.init)
     }
 
     private func glucoseToCoordinate(_ glucoseEntry: BloodGlucose, fullSize: CGSize) -> CGPoint {
