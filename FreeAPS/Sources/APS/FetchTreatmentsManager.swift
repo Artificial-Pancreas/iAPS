@@ -31,8 +31,12 @@ final class BaseFetchTreatmentsManager: FetchTreatmentsManager, Injectable {
                 ).eraseToAnyPublisher()
             }
             .sink { carbs, targets in
-                self.carbsStorage.storeCarbs(carbs)
-                self.tempTargetsStorage.storeTempTargets(targets)
+                if carbs.isNotEmpty {
+                    self.carbsStorage.storeCarbs(carbs)
+                }
+                if targets.isNotEmpty {
+                    self.tempTargetsStorage.storeTempTargets(targets)
+                }
             }
             .store(in: &lifetime)
         timer.resume()
