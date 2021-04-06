@@ -115,22 +115,6 @@ extension Home {
             provider.heartbeatNow()
         }
 
-        func addTempTarget() {
-            showModal(for: .addTempTarget)
-        }
-
-        func manualTampBasal() {
-            showModal(for: .manualTempBasal)
-        }
-
-        func bolus() {
-            showModal(for: .bolus)
-        }
-
-        func settings() {
-            showModal(for: .settings)
-        }
-
         private func setupGlucose() {
             DispatchQueue.main.async {
                 self.glucose = self.provider.filteredGlucose(hours: self.filteredHours)
@@ -293,10 +277,12 @@ extension Home.ViewModel:
 
     func tempTargetsDidUpdate(_: [TempTarget]) {
         setupTempTargets()
+        apsManager.determineBasal().sink { _ in }.store(in: &lifetime)
     }
 
     func carbsDidUpdate(_: [CarbsEntry]) {
         setupCarbs()
+        apsManager.determineBasal().sink { _ in }.store(in: &lifetime)
     }
 
     func enactedSuggestionDidUpdate(_ suggestion: Suggestion) {

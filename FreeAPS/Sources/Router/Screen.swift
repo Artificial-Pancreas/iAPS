@@ -19,7 +19,7 @@ enum Screen: Identifiable {
     case preferencesEditor
     case addCarbs
     case addTempTarget
-    case bolus
+    case bolus(waitForDuggestion: Bool)
     case manualTempBasal
     case autotuneConfig
     case dataTable
@@ -64,8 +64,8 @@ extension Screen {
             return AddCarbs.Builder(resolver: resolver).buildView()
         case .addTempTarget:
             return AddTempTarget.Builder(resolver: resolver).buildView()
-        case .bolus:
-            return Bolus.Builder(resolver: resolver).buildView()
+        case let .bolus(waitForSuggestion):
+            return Bolus.Builder(resolver: resolver, waitForSuggestion: waitForSuggestion).buildView()
         case .manualTempBasal:
             return ManualTempBasal.Builder(resolver: resolver).buildView()
         case .autotuneConfig:

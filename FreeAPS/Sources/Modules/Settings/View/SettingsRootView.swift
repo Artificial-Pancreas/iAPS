@@ -75,6 +75,11 @@ extension Settings {
                             Text("Autotune").chevronCell()
                                 .navigationLink(to: .configEditor(file: OpenAPS.Settings.autotune), from: self)
                         }
+
+                        Group {
+                            Text("Target presets").chevronCell()
+                                .navigationLink(to: .configEditor(file: OpenAPS.FreeAPS.tempTargetsPresets), from: self)
+                        }
                     }
                 }
             }

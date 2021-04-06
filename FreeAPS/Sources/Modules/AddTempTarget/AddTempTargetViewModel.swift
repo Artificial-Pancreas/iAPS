@@ -41,7 +41,6 @@ extension AddTempTarget {
                 reason: TempTarget.custom
             )
             storage.storeTempTargets([entry])
-            apsManager.determineBasal().sink { _ in }.store(in: &lifetime)
 
             showModal(for: nil)
         }
@@ -57,7 +56,6 @@ extension AddTempTarget {
                 reason: TempTarget.cancel
             )
             storage.storeTempTargets([entry])
-            apsManager.determineBasal().sink { _ in }.store(in: &lifetime)
 
             showModal(for: nil)
         }
@@ -91,7 +89,6 @@ extension AddTempTarget {
             if var preset = presets.first(where: { $0.id == id }) {
                 preset.createdAt = Date()
                 storage.storeTempTargets([preset])
-                apsManager.determineBasal().sink { _ in }.store(in: &lifetime)
                 showModal(for: nil)
             }
         }

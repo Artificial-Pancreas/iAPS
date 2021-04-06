@@ -8,7 +8,7 @@ import Swinject
 protocol APSManager {
     func heartbeat(date: Date, force: Bool)
     func autotune() -> AnyPublisher<Autotune?, Never>
-    func enactBolus(amount: Double)
+    func enactBolus(amount: Double, isSMB: Bool)
     var pumpManager: PumpManagerUI? { get set }
     var pumpDisplayState: CurrentValueSubject<PumpDisplayState?, Never> { get }
     var pumpName: CurrentValueSubject<String, Never> { get }
@@ -18,6 +18,7 @@ protocol APSManager {
     func enactTempBasal(rate: Double, duration: TimeInterval)
     func makeProfiles() -> AnyPublisher<Bool, Never>
     func determineBasal() -> AnyPublisher<Bool, Never>
+    func roundBolus(amount: Decimal) -> Decimal
 }
 
 final class BaseAPSManager: APSManager, Injectable {
@@ -218,7 +219,12 @@ final class BaseAPSManager: APSManager, Injectable {
             .eraseToAnyPublisher()
     }
 
-    func enactBolus(amount: Double) {
+    func roundBolus(amount: Decimal) -> Decimal {
+        guard let pump = pumpManager, verifyStatus() else { return amount }
+        return Decimal(pump.roundToSupportedBolusVolume(units: Double(amount)))
+    }
+
+    func enactBolus(amount: Double, isSMB: Bool) {
         guard let pump = pumpManager, verifyStatus() else { return }
 
         let roundedAmout = pump.roundToSupportedBolusVolume(units: amount)
@@ -226,7 +232,9 @@ final class BaseAPSManager: APSManager, Injectable {
             switch result {
             case .success:
                 debug(.apsManager, "Bolus succeeded")
-                _ = self.determineBasal()
+                if !isSMB {
+                    self.determineBasal().sink { _ in }.store(in: &self.lifetime)
+                }
             case let .failure(error):
                 debug(.apsManager, "Bolus failed with error: \(error.localizedDescription)")
             }

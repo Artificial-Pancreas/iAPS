@@ -51,11 +51,11 @@ final class BaseTempTargetsStorage: TempTargetsStorage, Injectable {
 
     func syncDate() -> Date {
         guard let events = storage.retrieve(OpenAPS.Settings.tempTargets, as: [TempTarget].self),
-              let recent = events.filter({ $0.enteredBy != TempTarget.manual }).first
+              let recent = events.filter({ !($0.enteredBy?.contains(TempTarget.manual) ?? false) }).first
         else {
             return Date().addingTimeInterval(-1.days.timeInterval)
         }
-        return recent.createdAt.addingTimeInterval(-6.minutes.timeInterval)
+        return recent.createdAt
     }
 
     func recent() -> [TempTarget] {
@@ -75,7 +75,7 @@ final class BaseTempTargetsStorage: TempTargetsStorage, Injectable {
     func nightscoutTretmentsNotUploaded() -> [NigtscoutTreatment] {
         let uploaded = storage.retrieve(OpenAPS.Nightscout.uploadedTempTargets, as: [NigtscoutTreatment].self) ?? []
 
-        let eventsManual = recent().filter { $0.enteredBy == CarbsEntry.manual }
+        let eventsManual = recent().filter { $0.enteredBy == TempTarget.manual }
         let treatments = eventsManual.map {
             NigtscoutTreatment(
                 duration: Int($0.duration),

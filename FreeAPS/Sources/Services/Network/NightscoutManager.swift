@@ -225,7 +225,17 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
         }
 
         processQueue.async {
-            nightscout.uploadTreatments(treatments)
+            treatments.chunks(ofCount: 100)
+                .map { chunk -> AnyPublisher<Void, Error> in
+                    nightscout.uploadTreatments(Array(chunk))
+                }
+                .reduce(
+                    Just(()).setFailureType(to: Error.self)
+                        .eraseToAnyPublisher()
+                ) { (result, next) -> AnyPublisher<Void, Error> in
+                    Publishers.Concatenate(prefix: result, suffix: next).eraseToAnyPublisher()
+                }
+                .dropFirst()
                 .sink { completion in
                     switch completion {
                     case .finished:

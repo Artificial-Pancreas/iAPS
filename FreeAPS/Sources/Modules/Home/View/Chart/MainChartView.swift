@@ -42,6 +42,7 @@ struct MainChartView: View {
     @Binding var basalProfile: [BasalProfileEntry]
     @Binding var tempTargets: [TempTarget]
     @Binding var carbs: [CarbsEntry]
+    @Binding var timerDate: Date
     let units: GlucoseUnits
 
     @State var didAppearTrigger = false
@@ -196,16 +197,25 @@ struct MainChartView: View {
     }
 
     private func xGridView(fullSize: CGSize) -> some View {
-        Path { path in
-            for hour in 0 ..< hours + hours {
-                let x = firstHourPosition(viewWidth: fullSize.width) +
-                    oneSecondStep(viewWidth: fullSize.width) *
-                    CGFloat(hour) * CGFloat(1.hours.timeInterval)
+        ZStack {
+            Path { path in
+                for hour in 0 ..< hours + hours {
+                    let x = firstHourPosition(viewWidth: fullSize.width) +
+                        oneSecondStep(viewWidth: fullSize.width) *
+                        CGFloat(hour) * CGFloat(1.hours.timeInterval)
+                    path.move(to: CGPoint(x: x, y: 0))
+                    path.addLine(to: CGPoint(x: x, y: fullSize.height - 20))
+                }
+            }
+            .stroke(Color.secondary, lineWidth: 0.2)
+
+            Path { path in
+                let x = timeToXCoordinate(timerDate.timeIntervalSince1970, fullSize: fullSize)
                 path.move(to: CGPoint(x: x, y: 0))
                 path.addLine(to: CGPoint(x: x, y: fullSize.height - 20))
             }
+            .stroke(Color.secondary, style: StrokeStyle(lineWidth: 0.2, dash: [5]))
         }
-        .stroke(Color.secondary, lineWidth: 0.2)
     }
 
     private func timeLabelsView(fullSize: CGSize) -> some View {
@@ -505,12 +515,12 @@ extension MainChartView {
         calculationQueue.async {
             var rects = tempTargets.map { tempTarget -> CGRect in
                 let x0 = timeToXCoordinate(tempTarget.createdAt.timeIntervalSince1970, fullSize: fullSize)
-                let y0 = glucoseToYCoordinate(Int(tempTarget.targetTop), fullSize: fullSize)
+                let y0 = glucoseToYCoordinate(Int(tempTarget.targetTop ?? 0), fullSize: fullSize)
                 let x1 = timeToXCoordinate(
                     tempTarget.createdAt.timeIntervalSince1970 + Int(tempTarget.duration).minutes.timeInterval,
                     fullSize: fullSize
                 )
-                let y1 = glucoseToYCoordinate(Int(tempTarget.targetBottom), fullSize: fullSize)
+                let y1 = glucoseToYCoordinate(Int(tempTarget.targetBottom ?? 0), fullSize: fullSize)
                 return CGRect(
                     x: x0,
                     y: y0 - 3,
@@ -655,11 +665,11 @@ extension MainChartView {
     }
 
     private func maxTargetValue() -> Int? {
-        tempTargets.map(\.targetTop).filter { $0 > 0 }.max().map(Int.init)
+        tempTargets.map { $0.targetTop ?? 0 }.filter { $0 > 0 }.max().map(Int.init)
     }
 
     private func minTargetValue() -> Int? {
-        tempTargets.map(\.targetBottom).filter { $0 > 0 }.min().map(Int.init)
+        tempTargets.map { $0.targetBottom ?? 0 }.filter { $0 > 0 }.min().map(Int.init)
     }
 
     private func glucoseToCoordinate(_ glucoseEntry: BloodGlucose, fullSize: CGSize) -> CGPoint {
