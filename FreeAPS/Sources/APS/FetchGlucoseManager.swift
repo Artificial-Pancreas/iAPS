@@ -3,9 +3,9 @@ import Foundation
 import SwiftDate
 import Swinject
 
-protocol GlucoseManager {}
+protocol FetchGlucoseManager {}
 
-final class BaseGlucoseManager: GlucoseManager, Injectable {
+final class BaseFetchGlucoseManager: FetchGlucoseManager, Injectable {
     private let processQueue = DispatchQueue(label: "BaseGlucoseManager.processQueue")
     @Injected() var glucoseStorage: GlucoseStorage!
     @Injected() var nightscoutManager: NightscoutManager!
@@ -23,14 +23,14 @@ final class BaseGlucoseManager: GlucoseManager, Injectable {
         timer.publisher
             .receive(on: processQueue)
             .flatMap { date -> AnyPublisher<(Date, Date, [BloodGlucose]), Never> in
-                debug(.nightscout, "Glucose manager heartbeat")
+                debug(.nightscout, "FetchGlucoseManager heartbeat")
                 debug(.nightscout, "Start fetching glucose")
                 return Publishers.CombineLatest3(
                     Just(date),
                     Just(self.glucoseStorage.syncDate()),
                     Publishers.CombineLatest(
                         self.nightscoutManager.fetchGlucose(),
-                        self.fetchGlucoseFromSgaredGroup()
+                        self.fetchGlucoseFromSharedGroup()
                     )
                     .map { [$0, $1].flatMap { $0 } }
                     .eraseToAnyPublisher()
@@ -51,7 +51,7 @@ final class BaseGlucoseManager: GlucoseManager, Injectable {
         timer.resume()
     }
 
-    private func fetchGlucoseFromSgaredGroup() -> AnyPublisher<[BloodGlucose], Never> {
+    private func fetchGlucoseFromSharedGroup() -> AnyPublisher<[BloodGlucose], Never> {
         guard let suiteName = Bundle.main.appGroupSuiteName,
               let sharedDefaults = UserDefaults(suiteName: suiteName)
         else {

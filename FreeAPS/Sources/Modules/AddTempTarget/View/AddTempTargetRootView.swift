@@ -84,7 +84,7 @@ extension AddTempTarget {
             return HStack {
                 VStack {
                     HStack {
-                        Text(preset.name)
+                        Text(preset.displayName)
                         Spacer()
                     }
                     HStack {
@@ -114,7 +114,7 @@ extension AddTempTarget {
                     .onTapGesture {
                         removeAlert = Alert(
                             title: Text("A you sure?"),
-                            message: Text("Delete preset \"\(preset.name)\""),
+                            message: Text("Delete preset \"\(preset.displayName)\""),
                             primaryButton: .destructive(Text("Delete"), action: { viewModel.removePreset(id: preset.id) }),
                             secondaryButton: .cancel()
                         )

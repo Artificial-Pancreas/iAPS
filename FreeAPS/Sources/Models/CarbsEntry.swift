@@ -5,7 +5,7 @@ struct CarbsEntry: JSON, Equatable {
     let carbs: Decimal
     let enteredBy: String?
 
-    static let manual = "freeaps-x://manual"
+    static let manual = "freeaps-x"
 }
 
 extension CarbsEntry {

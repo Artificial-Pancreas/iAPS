@@ -31,7 +31,7 @@ extension NightscoutAPI {
     func checkConnection() -> AnyPublisher<Void, Swift.Error> {
         struct Check: Codable, Equatable {
             var eventType = "Note"
-            var enteredBy = "freeaps-x://"
+            var enteredBy = "freeaps-x"
             var notes = "FreeAPS X connected"
         }
         let check = Check()
@@ -171,7 +171,8 @@ extension NightscoutAPI {
             URLQueryItem(
                 name: "find[enteredBy][$ne]",
                 value: NigtscoutTreatment.local.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)
-            )
+            ),
+            URLQueryItem(name: "find[duration][$exists]", value: "true")
         ]
         if let date = sinceDate {
             let dateItem = URLQueryItem(
