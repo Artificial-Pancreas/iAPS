@@ -207,7 +207,7 @@ extension Home {
                                     .frame(width: 24, height: 24)
                             }.foregroundColor(.loopYellow)
                             Spacer()
-                            Button { viewModel.showModal(for: .bolus) }
+                            Button { viewModel.showModal(for: .bolus(waitForDuggestion: false)) }
                             label: {
                                 Image("bolus")
                                     .renderingMode(.template)

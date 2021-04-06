@@ -1,21 +1,61 @@
 import SwiftUI
+import Swinject
 
 extension Bolus {
     class ViewModel<Provider>: BaseViewModel<Provider>, ObservableObject where Provider: BolusProvider {
         @Injected() var unlockmanager: UnlockManager!
         @Injected() var apsManager: APSManager!
+        @Injected() var broadcaster: Broadcaster!
+        @Injected() var settingsManager: SettingsManager!
         @Published var amount: Decimal = 0
+        @Published var inslinRecommended: Decimal = 0
+        @Published var inslinRequired: Decimal = 0
+        @Published var waitForSuggestion: Bool
+        let waitForSuggestionInitial: Bool
 
-        override func subscribe() {}
+        init(provider: Provider, resolver: Resolver, waitForSuggestion: Bool) {
+            self.waitForSuggestion = waitForSuggestion
+            waitForSuggestionInitial = waitForSuggestion
+            super.init(provider: provider, resolver: resolver)
+        }
+
+        required init(provider _: Provider, resolver _: Resolver) {
+            error(.default, "init(provider:resolver:) has not been implemented")
+        }
+
+        override func subscribe() {
+            setupInsulinRequired()
+            broadcaster.register(SuggestionObserver.self, observer: self)
+        }
 
         func add() {
-            guard amount > 0 else { return }
+            guard amount > 0 else {
+                showModal(for: nil)
+                return
+            }
             unlockmanager.unlock()
                 .sink { _ in } receiveValue: {
-                    self.apsManager.enactBolus(amount: Double(self.amount))
+                    self.apsManager.enactBolus(amount: Double(self.amount), isSMB: false)
                     self.showModal(for: nil)
                 }
                 .store(in: &lifetime)
         }
+
+        func setupInsulinRequired() {
+            DispatchQueue.main.async {
+                self.inslinRequired = self.provider.suggestion?.insulinReq ?? 0
+                self.inslinRecommended = self.apsManager
+                    .roundBolus(amount: max(self.inslinRequired * (self.settingsManager.settings.insulinReqFraction ?? 0.7), 0))
+            }
+        }
+    }
+}
+
+extension Bolus.ViewModel: SuggestionObserver {
+    func suggestionDidUpdate(_: Suggestion) {
+        DispatchQueue.main.async {
+            self.waitForSuggestion = false
+        }
+        setupInsulinRequired()
     }
 }

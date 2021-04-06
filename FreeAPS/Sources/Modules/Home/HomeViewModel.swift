@@ -115,22 +115,6 @@ extension Home {
             provider.heartbeatNow()
         }
 
-        func addTempTarget() {
-            showModal(for: .addTempTarget)
-        }
-
-        func manualTampBasal() {
-            showModal(for: .manualTempBasal)
-        }
-
-        func bolus() {
-            showModal(for: .bolus)
-        }
-
-        func settings() {
-            showModal(for: .settings)
-        }
-
         private func setupGlucose() {
             DispatchQueue.main.async {
                 self.glucose = self.provider.filteredGlucose(hours: self.filteredHours)

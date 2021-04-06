@@ -18,7 +18,7 @@ extension AddCarbs {
             carbsStorage.storeCarbs([
                 CarbsEntry(createdAt: date, carbs: carbs, enteredBy: CarbsEntry.manual)
             ])
-            showModal(for: .bolus)
+            showModal(for: .bolus(waitForDuggestion: true))
         }
     }
 }

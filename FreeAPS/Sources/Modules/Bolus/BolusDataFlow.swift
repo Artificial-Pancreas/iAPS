@@ -2,4 +2,6 @@ enum Bolus {
     enum Config {}
 }
 
-protocol BolusProvider: Provider {}
+protocol BolusProvider: Provider {
+    var suggestion: Suggestion? { get }
+}

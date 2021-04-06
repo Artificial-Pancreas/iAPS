@@ -62,8 +62,10 @@ struct DecimalTextField: UIViewRepresentable {
         return textfield
     }
 
-    func updateUIView(_: UITextField, context _: Context) {
-//        textField.text = formatter.string(for: value)
+    func updateUIView(_ textField: UITextField, context _: Context) {
+        if value != 0 {
+            textField.text = formatter.string(for: value)
+        }
     }
 
     func makeCoordinator() -> Coordinator {
