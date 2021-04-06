@@ -175,6 +175,7 @@ extension Home {
                         basalProfile: $viewModel.basalProfile,
                         tempTargets: $viewModel.tempTargets,
                         carbs: $viewModel.carbs,
+                        timerDate: $viewModel.timerDate,
                         units: viewModel.units
                     )
                     .padding(.bottom)
