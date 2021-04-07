@@ -1,6 +1,6 @@
 import Foundation
 
-struct TempTarget: JSON, Identifiable, Equatable {
+struct TempTarget: JSON, Identifiable, Equatable, Hashable {
     var id = UUID().uuidString
     let name: String?
     var createdAt: Date
@@ -16,6 +16,14 @@ struct TempTarget: JSON, Identifiable, Equatable {
 
     var displayName: String {
         name ?? reason ?? TempTarget.custom
+    }
+
+    static func == (lhs: TempTarget, rhs: TempTarget) -> Bool {
+        lhs.createdAt == rhs.createdAt
+    }
+
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(createdAt)
     }
 }
 
