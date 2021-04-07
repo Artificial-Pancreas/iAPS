@@ -210,7 +210,7 @@ extension BaseDeviceDataManager: PumpManagerDelegate {
     func pumpManager(_: PumpManager, didUpdatePumpRecordsBasalProfileStartEvents _: Bool) {}
 
     func pumpManager(_: PumpManager, didError error: PumpManagerError) {
-        info(.deviceManager, "error: \(error.localizedDescription)")
+        debug(.deviceManager, "error: \(error.localizedDescription)")
         pumpUpdateInProgress = false
     }
 
