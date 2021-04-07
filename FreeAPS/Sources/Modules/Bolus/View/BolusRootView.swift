@@ -65,7 +65,7 @@ extension Bolus {
                             label: { Text("Continue without bolus") }
                         } else {
                             Button { viewModel.addWithoutBolus() }
-                            label: { Text("Add insulin without actual bolusing") }
+                            label: { Text("Add insulin without actually bolusing") }
                         }
                     }
                 }
