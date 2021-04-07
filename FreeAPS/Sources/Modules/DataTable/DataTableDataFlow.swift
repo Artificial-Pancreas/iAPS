@@ -9,6 +9,8 @@ enum DataTable {
         case bolus
         case tempBasal
         case tempTarget
+        case suspend
+        case resume
 
         var name: String {
             switch self {
@@ -20,6 +22,10 @@ enum DataTable {
                 return "Temp Basal"
             case .tempTarget:
                 return "Temp Target"
+            case .suspend:
+                return "Suspend"
+            case .resume:
+                return "Resume"
             }
         }
     }
@@ -29,7 +35,7 @@ enum DataTable {
         let units: GlucoseUnits
         let type: DataType
         let date: Date
-        let amount: Decimal
+        let amount: Decimal?
         let secondAmount: Decimal?
         let duration: Decimal?
 
@@ -44,7 +50,7 @@ enum DataTable {
             units: GlucoseUnits,
             type: DataType,
             date: Date,
-            amount: Decimal,
+            amount: Decimal? = nil,
             secondAmount: Decimal? = nil,
             duration: Decimal? = nil
         ) {
@@ -65,6 +71,10 @@ enum DataTable {
         }
 
         var amountText: String {
+            guard let amount = amount else {
+                return ""
+            }
+
             switch type {
             case .carbs:
                 return numberFormater.string(from: amount as NSNumber)! + " g"
@@ -87,6 +97,9 @@ enum DataTable {
 
                 return numberFormater.string(from: converted as NSNumber)! + " - " + numberFormater
                     .string(from: secondAmount as NSNumber)! + " \(units.rawValue)"
+            case .resume,
+                 .suspend:
+                return type.name
             }
         }
 
@@ -98,7 +111,9 @@ enum DataTable {
                 return .insulin
             case .tempBasal:
                 return Color.insulin.opacity(0.5)
-            case .tempTarget:
+            case .resume,
+                 .suspend,
+                 .tempTarget:
                 return .loopGray
             }
         }
