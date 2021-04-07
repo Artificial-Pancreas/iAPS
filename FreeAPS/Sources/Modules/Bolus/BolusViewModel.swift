@@ -7,6 +7,7 @@ extension Bolus {
         @Injected() var apsManager: APSManager!
         @Injected() var broadcaster: Broadcaster!
         @Injected() var settingsManager: SettingsManager!
+        @Injected() var pumpHistotyStorage: PumpHistoryStorage!
         @Published var amount: Decimal = 0
         @Published var inslinRecommended: Decimal = 0
         @Published var inslinRequired: Decimal = 0
@@ -26,6 +27,10 @@ extension Bolus {
         override func subscribe() {
             setupInsulinRequired()
             broadcaster.register(SuggestionObserver.self, observer: self)
+
+            if waitForSuggestionInitial {
+                apsManager.determineBasal().sink { _ in }.store(in: &lifetime)
+            }
         }
 
         func add() {
@@ -39,6 +44,30 @@ extension Bolus {
                     self.showModal(for: nil)
                 }
                 .store(in: &lifetime)
+        }
+
+        func addWithoutBolus() {
+            guard amount > 0 else {
+                showModal(for: nil)
+                return
+            }
+
+            pumpHistotyStorage.storeEvents(
+                [
+                    PumpHistoryEvent(
+                        id: UUID().uuidString,
+                        type: .bolus,
+                        timestamp: Date(),
+                        amount: amount,
+                        duration: nil,
+                        durationMin: nil,
+                        rate: nil,
+                        temp: nil,
+                        carbInput: nil
+                    )
+                ]
+            )
+            showModal(for: nil)
         }
 
         func setupInsulinRequired() {

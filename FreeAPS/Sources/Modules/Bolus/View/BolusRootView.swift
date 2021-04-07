@@ -63,6 +63,9 @@ extension Bolus {
                         if viewModel.waitForSuggestionInitial {
                             Button { viewModel.showModal(for: nil) }
                             label: { Text("Continue without bolus") }
+                        } else {
+                            Button { viewModel.addWithoutBolus() }
+                            label: { Text("Add insulin without actual bolusing") }
                         }
                     }
                 }

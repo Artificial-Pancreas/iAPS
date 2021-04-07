@@ -214,7 +214,7 @@ struct MainChartView: View {
                 path.move(to: CGPoint(x: x, y: 0))
                 path.addLine(to: CGPoint(x: x, y: fullSize.height - 20))
             }
-            .stroke(Color.secondary, style: StrokeStyle(lineWidth: 0.2, dash: [5]))
+            .stroke(Color.secondary, style: StrokeStyle(lineWidth: 0.5, dash: [5]))
         }
     }
 

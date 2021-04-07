@@ -210,7 +210,7 @@ extension BaseDeviceDataManager: PumpManagerDelegate {
     func pumpManager(_: PumpManager, didUpdatePumpRecordsBasalProfileStartEvents _: Bool) {}
 
     func pumpManager(_: PumpManager, didError error: PumpManagerError) {
-        info(.deviceManager, "error: \(error.localizedDescription)")
+        debug(.deviceManager, "error: \(error.localizedDescription)")
         pumpUpdateInProgress = false
     }
 
@@ -257,7 +257,7 @@ extension BaseDeviceDataManager: PumpManagerDelegate {
     }
 
     func startDateToFilterNewPumpEvents(for _: PumpManager) -> Date {
-        lastEventDate ?? Date().addingTimeInterval(-2.hours.timeInterval)
+        lastEventDate?.addingTimeInterval(-15.minutes.timeInterval) ?? Date().addingTimeInterval(-2.hours.timeInterval)
     }
 }
 
