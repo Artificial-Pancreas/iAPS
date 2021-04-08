@@ -20,6 +20,12 @@ extension Home {
             return formatter
         }
 
+        private var dateFormatter: DateFormatter {
+            let dateFormatter = DateFormatter()
+            dateFormatter.timeStyle = .short
+            return dateFormatter
+        }
+
         var header: some View {
             HStack(alignment: .bottom) {
                 Spacer()
@@ -130,6 +136,11 @@ extension Home {
                     }
                 }
                 Spacer()
+                if let progress = viewModel.bolusProgress {
+                    Text("Bolus " + (numberFormatter.string(from: progress * 100 as NSNumber)!) + "%")
+                        .font(.system(size: 12, weight: .bold)).foregroundColor(.insulin)
+                        .padding(.trailing, 8)
+                }
             }
             .frame(maxWidth: .infinity, maxHeight: 30)
         }
@@ -247,6 +258,13 @@ extension Home {
                     Text(viewModel.statusTitle).foregroundColor(.white)
                         .padding(.bottom, 4)
                     Text(viewModel.suggestion?.reason ?? "No sugestion found").font(.caption).foregroundColor(.white)
+
+                    if let errorMessage = viewModel.errorMessage, let date = viewModel.errorDate {
+                        Text("Error at \(dateFormatter.string(from: date))").foregroundColor(.white)
+                            .padding(.bottom, 4)
+                            .padding(.top, 8)
+                        Text(errorMessage).font(.caption).foregroundColor(.white)
+                    }
                 }
                 .padding()
 

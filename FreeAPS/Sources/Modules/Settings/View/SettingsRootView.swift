@@ -3,6 +3,7 @@ import SwiftUI
 extension Settings {
     struct RootView: BaseView {
         @EnvironmentObject var viewModel: ViewModel<Provider>
+        @State private var showShareSheet = false
 
         var body: some View {
             Form {
@@ -82,6 +83,16 @@ extension Settings {
                         }
                     }
                 }
+
+                Section {
+                    Text("Share logs").chevronCell()
+                        .onTapGesture {
+                            showShareSheet = true
+                        }
+                }
+            }
+            .sheet(isPresented: $showShareSheet) {
+                ShareSheet(activityItems: viewModel.logItems())
             }
             .navigationTitle("Settings")
             .navigationBarItems(leading: Button("Close", action: viewModel.hideModal))

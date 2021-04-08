@@ -4,6 +4,7 @@ extension Settings {
     class ViewModel<Provider>: BaseViewModel<Provider>, ObservableObject where Provider: SettingsProvider {
         @Injected() private var settingsManager: SettingsManager!
         @Injected() private var broadcaster: Broadcaster!
+        @Injected() private var fileManager: FileManager!
         @Published var closedLoop = false
 
         @Published var debugOptions = false
@@ -23,6 +24,20 @@ extension Settings {
             broadcaster.register(SettingsObserver.self, observer: self)
 
             buildNumber = Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? "Unknown"
+        }
+
+        func logItems() -> [URL] {
+            var items: [URL] = []
+
+            if fileManager.fileExists(atPath: SimpleLogReporter.logFile) {
+                items.append(URL(fileURLWithPath: SimpleLogReporter.logFile))
+            }
+
+            if fileManager.fileExists(atPath: SimpleLogReporter.logFilePrev) {
+                items.append(URL(fileURLWithPath: SimpleLogReporter.logFilePrev))
+            }
+
+            return items
         }
     }
 }
