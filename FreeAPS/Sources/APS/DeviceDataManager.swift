@@ -17,6 +17,7 @@ protocol DeviceDataManager {
     var pumpName: CurrentValueSubject<String, Never> { get }
     var pumpExpiresAtDate: CurrentValueSubject<Date?, Never> { get }
     func heartbeat(date: Date, force: Bool)
+    func createBolusProgressReporter() -> DoseProgressReporter?
 }
 
 private let staticPumpManagers: [PumpManagerUI.Type] = [
@@ -85,6 +86,10 @@ final class BaseDeviceDataManager: DeviceDataManager, Injectable {
     }
 
     @SyncAccess(lock: accessLock) private var pumpUpdateInProgress = false
+
+    func createBolusProgressReporter() -> DoseProgressReporter? {
+        pumpManager?.createBolusProgressReporter(reportingOn: processQueue)
+    }
 
     func heartbeat(date: Date, force: Bool) {
         if force {

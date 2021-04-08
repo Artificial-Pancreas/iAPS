@@ -136,6 +136,11 @@ extension Home {
                     }
                 }
                 Spacer()
+                if let progress = viewModel.bolusProgress {
+                    Text("Bolus " + (numberFormatter.string(from: progress * 100 as NSNumber)!) + "%")
+                        .font(.system(size: 12, weight: .bold)).foregroundColor(.insulin)
+                        .padding(.trailing, 8)
+                }
             }
             .frame(maxWidth: .infinity, maxHeight: 30)
         }

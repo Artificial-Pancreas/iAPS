@@ -36,6 +36,7 @@ extension Home {
         @Published var setupPump = false
         @Published var errorMessage: String? = nil
         @Published var errorDate: Date? = nil
+        @Published var bolusProgress: Decimal?
 
         @Published var allowManualTemp = false
         private(set) var units: GlucoseUnits = .mmolL
@@ -108,6 +109,11 @@ extension Home {
                     return error?.localizedDescription
                 }
                 .assign(to: \.errorMessage, on: self)
+                .store(in: &lifetime)
+
+            apsManager.bolusProgress
+                .receive(on: DispatchQueue.main)
+                .assign(to: \.bolusProgress, on: self)
                 .store(in: &lifetime)
         }
 

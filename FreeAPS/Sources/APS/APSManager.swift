@@ -15,6 +15,7 @@ protocol APSManager {
     var isLooping: CurrentValueSubject<Bool, Never> { get }
     var lastLoopDate: Date { get }
     var lastLoopDateSubject: PassthroughSubject<Date, Never> { get }
+    var bolusProgress: CurrentValueSubject<Decimal?, Never> { get }
     var pumpExpiresAtDate: CurrentValueSubject<Date?, Never> { get }
     func enactTempBasal(rate: Double, duration: TimeInterval)
     func makeProfiles() -> AnyPublisher<Bool, Never>
@@ -74,6 +75,8 @@ final class BaseAPSManager: APSManager, Injectable {
     let isLooping = CurrentValueSubject<Bool, Never>(false)
     let lastLoopDateSubject = PassthroughSubject<Date, Never>()
     let lastError = CurrentValueSubject<Error?, Never>(nil)
+
+    let bolusProgress = CurrentValueSubject<Decimal?, Never>(nil)
 
     var pumpDisplayState: CurrentValueSubject<PumpDisplayState?, Never> {
         deviceDataManager.pumpDisplayState
@@ -266,22 +269,28 @@ final class BaseAPSManager: APSManager, Injectable {
         return Decimal(pump.roundToSupportedBolusVolume(units: Double(amount)))
     }
 
+    private var bolusReporter: DoseProgressReporter?
+
     func enactBolus(amount: Double, isSMB: Bool) {
         guard let pump = pumpManager, verifyStatus() else { return }
 
         let roundedAmout = pump.roundToSupportedBolusVolume(units: amount)
-        pump.enactBolus(units: roundedAmout, automatic: false) { result in
-            switch result {
-            case .success:
+
+        pump.enactBolus(units: roundedAmout, automatic: isSMB).sink { completion in
+            if case let .failure(error) = completion {
+                debug(.apsManager, "Bolus failed with error: \(error.localizedDescription)")
+                self.processError(APSError.pumpError(error))
+            } else {
                 debug(.apsManager, "Bolus succeeded")
                 if !isSMB {
                     self.determineBasal().sink { _ in }.store(in: &self.lifetime)
                 }
-            case let .failure(error):
-                debug(.apsManager, "Bolus failed with error: \(error.localizedDescription)")
-                self.processError(APSError.pumpError(error))
             }
-        }
+
+            self.bolusReporter = pump.createBolusProgressReporter(reportingOn: self.processQueue)
+            self.bolusReporter?.addObserver(self)
+        } receiveValue: { _ in }
+            .store(in: &lifetime)
     }
 
     func enactTempBasal(rate: Double, duration: TimeInterval) {
@@ -553,6 +562,17 @@ extension BaseAPSManager: PumpManagerStatusObserver {
         )
         storage.save(battery, as: OpenAPS.Monitor.battery)
         storage.save(status.pumpStatus, as: OpenAPS.Monitor.status)
+    }
+}
+
+extension BaseAPSManager: DoseProgressObserver {
+    func doseProgressReporterDidUpdate(_ doseProgressReporter: DoseProgressReporter) {
+        bolusProgress.send(Decimal(doseProgressReporter.progress.percentComplete))
+        if doseProgressReporter.progress.isComplete {
+            bolusReporter?.removeObserver(self)
+            bolusReporter = nil
+            bolusProgress.send(nil)
+        }
     }
 }
 
