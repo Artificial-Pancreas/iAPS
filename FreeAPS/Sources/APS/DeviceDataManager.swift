@@ -13,9 +13,11 @@ protocol DeviceDataManager {
     var pumpManager: PumpManagerUI? { get set }
     var pumpDisplayState: CurrentValueSubject<PumpDisplayState?, Never> { get }
     var recommendsLoop: PassthroughSubject<Void, Never> { get }
+    var errorSubject: PassthroughSubject<Error, Never> { get }
     var pumpName: CurrentValueSubject<String, Never> { get }
     var pumpExpiresAtDate: CurrentValueSubject<Date?, Never> { get }
     func heartbeat(date: Date, force: Bool)
+    func createBolusProgressReporter() -> DoseProgressReporter?
 }
 
 private let staticPumpManagers: [PumpManagerUI.Type] = [
@@ -42,6 +44,7 @@ final class BaseDeviceDataManager: DeviceDataManager, Injectable {
         .distantPast
 
     let recommendsLoop = PassthroughSubject<Void, Never>()
+    let errorSubject = PassthroughSubject<Error, Never>()
 
     var pumpManager: PumpManagerUI? {
         didSet {
@@ -83,6 +86,10 @@ final class BaseDeviceDataManager: DeviceDataManager, Injectable {
     }
 
     @SyncAccess(lock: accessLock) private var pumpUpdateInProgress = false
+
+    func createBolusProgressReporter() -> DoseProgressReporter? {
+        pumpManager?.createBolusProgressReporter(reportingOn: processQueue)
+    }
 
     func heartbeat(date: Date, force: Bool) {
         if force {
@@ -210,7 +217,8 @@ extension BaseDeviceDataManager: PumpManagerDelegate {
     func pumpManager(_: PumpManager, didUpdatePumpRecordsBasalProfileStartEvents _: Bool) {}
 
     func pumpManager(_: PumpManager, didError error: PumpManagerError) {
-        debug(.deviceManager, "error: \(error.localizedDescription)")
+        debug(.deviceManager, "error: \(error.localizedDescription), reason: \(String(describing: error.failureReason))")
+        errorSubject.send(error)
         pumpUpdateInProgress = false
     }
 
@@ -297,9 +305,11 @@ extension BaseDeviceDataManager: DeviceManagerDelegate {
         _: DeviceManager,
         logEventForDeviceIdentifier _: String?,
         type _: DeviceLogEntryType,
-        message _: String,
+        message: String,
         completion _: ((Error?) -> Void)?
-    ) {}
+    ) {
+        debug(.deviceManager, message)
+    }
 }
 
 // MARK: - AlertPresenter
