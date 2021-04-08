@@ -34,6 +34,8 @@ extension Home {
         @Published var pumpExpiresAtDate: Date?
         @Published var tempTarget: TempTarget?
         @Published var setupPump = false
+        @Published var errorMessage: String? = nil
+        @Published var errorDate: Date? = nil
 
         @Published var allowManualTemp = false
         private(set) var units: GlucoseUnits = .mmolL
@@ -54,16 +56,9 @@ extension Home {
             units = settingsManager.settings.units
             allowManualTemp = !settingsManager.settings.closedLoop
             closedLoop = settingsManager.settings.closedLoop
+            lastLoopDate = apsManager.lastLoopDate
+
             setStatusTitle()
-
-            if closedLoop,
-               enactedSuggestion?.deliverAt == suggestion?.deliverAt, suggestion?.rate != nil || suggestion?.units != nil
-            {
-                lastLoopDate = enactedSuggestion?.timestamp ?? .distantPast
-            } else {
-                lastLoopDate = suggestion?.timestamp ?? .distantPast
-            }
-
             setupCurrentTempTarget()
 
             broadcaster.register(GlucoseObserver.self, observer: self)
@@ -91,7 +86,7 @@ extension Home {
                 .assign(to: \.isLooping, on: self)
                 .store(in: &lifetime)
 
-            apsManager.lastLoopDate
+            apsManager.lastLoopDateSubject
                 .receive(on: DispatchQueue.main)
                 .assign(to: \.lastLoopDate, on: self)
                 .store(in: &lifetime)
@@ -104,6 +99,15 @@ extension Home {
             apsManager.pumpExpiresAtDate
                 .receive(on: DispatchQueue.main)
                 .assign(to: \.pumpExpiresAtDate, on: self)
+                .store(in: &lifetime)
+
+            apsManager.lastError
+                .receive(on: DispatchQueue.main)
+                .map { error in
+                    self.errorDate = error == nil ? nil : Date()
+                    return error?.localizedDescription
+                }
+                .assign(to: \.errorMessage, on: self)
                 .store(in: &lifetime)
         }
 

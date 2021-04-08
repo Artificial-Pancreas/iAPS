@@ -20,6 +20,12 @@ extension Home {
             return formatter
         }
 
+        private var dateFormatter: DateFormatter {
+            let dateFormatter = DateFormatter()
+            dateFormatter.timeStyle = .short
+            return dateFormatter
+        }
+
         var header: some View {
             HStack(alignment: .bottom) {
                 Spacer()
@@ -247,6 +253,13 @@ extension Home {
                     Text(viewModel.statusTitle).foregroundColor(.white)
                         .padding(.bottom, 4)
                     Text(viewModel.suggestion?.reason ?? "No sugestion found").font(.caption).foregroundColor(.white)
+
+                    if let errorMessage = viewModel.errorMessage, let date = viewModel.errorDate {
+                        Text("Error at \(dateFormatter.string(from: date))").foregroundColor(.white)
+                            .padding(.bottom, 4)
+                            .padding(.top, 8)
+                        Text(errorMessage).font(.caption).foregroundColor(.white)
+                    }
                 }
                 .padding()
 
