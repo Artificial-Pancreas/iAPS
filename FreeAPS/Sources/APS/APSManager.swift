@@ -22,6 +22,7 @@ protocol APSManager {
     func determineBasal() -> AnyPublisher<Bool, Never>
     func roundBolus(amount: Decimal) -> Decimal
     var lastError: CurrentValueSubject<Error?, Never> { get }
+    func cancelBolus()
 }
 
 enum APSError: LocalizedError {
@@ -286,6 +287,8 @@ final class BaseAPSManager: APSManager, Injectable {
 
         let roundedAmout = pump.roundToSupportedBolusVolume(units: amount)
 
+        debug(.apsManager, "Enact bolus \(roundedAmout), manual \(!isSMB)")
+
         pump.enactBolus(units: roundedAmout, automatic: isSMB).sink { completion in
             if case let .failure(error) = completion {
                 debug(.apsManager, "Bolus failed with error: \(error.localizedDescription)")
@@ -300,8 +303,27 @@ final class BaseAPSManager: APSManager, Injectable {
             .store(in: &lifetime)
     }
 
+    func cancelBolus() {
+        guard let pump = pumpManager else { return }
+        debug(.apsManager, "Cancel bolus")
+        pump.cancelBolus().sink { completion in
+            if case let .failure(error) = completion {
+                debug(.apsManager, "Bolus cancellation failed with error: \(error.localizedDescription)")
+                self.processError(APSError.pumpError(error))
+            } else {
+                debug(.apsManager, "Bolus cancelled")
+            }
+
+            self.bolusReporter?.removeObserver(self)
+            self.bolusReporter = nil
+            self.bolusProgress.send(nil)
+        } receiveValue: { _ in }
+            .store(in: &lifetime)
+    }
+
     func enactTempBasal(rate: Double, duration: TimeInterval) {
         guard let pump = pumpManager, verifyStatus() else { return }
+        debug(.apsManager, "Enact temp basal \(rate) - \(duration)")
 
         let roundedAmout = pump.roundToSupportedBasalRate(unitsPerHour: rate)
         pump.enactTempBasal(unitsPerHour: roundedAmout, for: duration) { result in
@@ -536,6 +558,20 @@ private extension PumpManager {
                 }
             }
         }.eraseToAnyPublisher()
+    }
+
+    func cancelBolus() -> AnyPublisher<DoseEntry?, Error> {
+        Future { promise in
+            self.cancelBolus { result in
+                switch result {
+                case let .success(dose):
+                    promise(.success(dose))
+                case let .failure(error):
+                    promise(.failure(error))
+                }
+            }
+        }
+        .eraseToAnyPublisher()
     }
 
     func suspendDelivery() -> AnyPublisher<Void, Error> {

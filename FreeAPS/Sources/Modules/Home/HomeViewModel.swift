@@ -125,6 +125,10 @@ extension Home {
             provider.heartbeatNow()
         }
 
+        func cancelBolus() {
+            apsManager.cancelBolus()
+        }
+
         private func setupGlucose() {
             DispatchQueue.main.async {
                 self.glucose = self.provider.filteredGlucose(hours: self.filteredHours)

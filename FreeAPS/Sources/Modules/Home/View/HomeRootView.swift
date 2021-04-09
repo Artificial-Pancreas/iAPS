@@ -142,6 +142,9 @@ extension Home {
                     ProgressView(value: Double(progress))
                         .progressViewStyle(BolusProgressViewStyle())
                         .padding(.trailing, 8)
+                        .onTapGesture {
+                            viewModel.cancelBolus()
+                        }
                 }
             }
             .frame(maxWidth: .infinity, maxHeight: 30)
