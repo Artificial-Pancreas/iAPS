@@ -289,11 +289,10 @@ final class BaseAPSManager: APSManager, Injectable {
                     self.determineBasal().sink { _ in }.store(in: &self.lifetime)
                 }
             }
-
-            self.bolusReporter = pump.createBolusProgressReporter(reportingOn: self.processQueue)
-            self.bolusReporter?.addObserver(self)
-        } receiveValue: { _ in }
-            .store(in: &lifetime)
+        } receiveValue: { _ in
+            self.createBolusReporter()
+        }
+        .store(in: &lifetime)
     }
 
     func enactTempBasal(rate: Double, duration: TimeInterval) {
@@ -458,8 +457,11 @@ final class BaseAPSManager: APSManager, Injectable {
                 return Just(()).setFailureType(to: Error.self)
                     .eraseToAnyPublisher()
             }
-            return pump.enactBolus(units: Double(units), automatic: true).map { _ in () }
-                .eraseToAnyPublisher()
+            return pump.enactBolus(units: Double(units), automatic: true).map { _ in
+                self.createBolusReporter()
+                return ()
+            }
+            .eraseToAnyPublisher()
         }()
 
         basalPublisher
@@ -499,6 +501,11 @@ final class BaseAPSManager: APSManager, Injectable {
     private func processError(_ error: Error) {
         debug(.apsManager, "\(error.localizedDescription)")
         lastError.send(error)
+    }
+
+    private func createBolusReporter() {
+        bolusReporter = pumpManager?.createBolusProgressReporter(reportingOn: processQueue)
+        bolusReporter?.addObserver(self)
     }
 }
 
