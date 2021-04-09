@@ -11,7 +11,7 @@ public struct BolusProgressViewStyle: ProgressViewStyle {
 
             Circle()
                 .trim(from: 0.0, to: CGFloat(configuration.fractionCompleted ?? 0))
-                .stroke(style: StrokeStyle(lineWidth: 6.0, lineCap: .round, lineJoin: .round))
+                .stroke(style: StrokeStyle(lineWidth: 6.0, lineCap: .butt, lineJoin: .round))
                 .foregroundColor(.insulin)
                 .rotationEffect(Angle(degrees: -90))
                 .frame(width: 16, height: 16)

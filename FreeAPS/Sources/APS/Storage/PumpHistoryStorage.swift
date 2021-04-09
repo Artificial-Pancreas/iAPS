@@ -33,6 +33,8 @@ final class BasePumpHistoryStorage: PumpHistoryStorage, Injectable {
                     guard let dose = event.dose else { return [] }
                     let amount = Decimal(string: dose.unitsInDeliverableIncrements.description)
                     let minutes = Int((dose.endDate - dose.startDate).timeInterval / 60)
+
+//                    print("ASDF: \(String(describing: amount)) - \(String(describing: dose.deliveredUnits))")
                     return [PumpHistoryEvent(
                         id: id,
                         type: .bolus,

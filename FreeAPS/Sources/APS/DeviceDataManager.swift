@@ -235,7 +235,7 @@ extension BaseDeviceDataManager: PumpManagerDelegate {
         completion: @escaping (_ error: Error?) -> Void
     ) {
         dispatchPrecondition(condition: .onQueue(processQueue))
-        debug(.deviceManager, "New pump events: \(events)")
+        debug(.deviceManager, "New pump events:\n\(events.map(\.title).joined(separator: "\n"))")
         pumpHistoryStorage.storePumpEvents(events)
         lastEventDate = events.last?.date
         completion(nil)
