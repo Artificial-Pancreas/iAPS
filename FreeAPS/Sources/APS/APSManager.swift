@@ -120,6 +120,13 @@ final class BaseAPSManager: APSManager, Injectable {
                 self.processError($0)
             }
             .store(in: &lifetime)
+
+        deviceDataManager.bolusTrigger
+            .receive(on: processQueue)
+            .sink {
+                self.createBolusReporter()
+            }
+            .store(in: &lifetime)
     }
 
     func heartbeat(date: Date, force: Bool) {
@@ -289,10 +296,8 @@ final class BaseAPSManager: APSManager, Injectable {
                     self.determineBasal().sink { _ in }.store(in: &self.lifetime)
                 }
             }
-        } receiveValue: { _ in
-            self.createBolusReporter()
-        }
-        .store(in: &lifetime)
+        } receiveValue: { _ in }
+            .store(in: &lifetime)
     }
 
     func enactTempBasal(rate: Double, duration: TimeInterval) {
@@ -457,11 +462,8 @@ final class BaseAPSManager: APSManager, Injectable {
                 return Just(()).setFailureType(to: Error.self)
                     .eraseToAnyPublisher()
             }
-            return pump.enactBolus(units: Double(units), automatic: true).map { _ in
-                self.createBolusReporter()
-                return ()
-            }
-            .eraseToAnyPublisher()
+            return pump.enactBolus(units: Double(units), automatic: true).map { _ in () }
+                .eraseToAnyPublisher()
         }()
 
         basalPublisher
