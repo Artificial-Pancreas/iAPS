@@ -29,17 +29,20 @@ enum APSError: LocalizedError {
     case invalidPumpState(message: String)
     case glucoseError(message: String)
     case apsError(message: String)
+    case deviceSyncError(message: String)
 
     var errorDescription: String? {
         switch self {
         case let .pumpError(error):
             return "Pump error: \(error.localizedDescription)"
         case let .invalidPumpState(message):
-            return "Invalid Pump State: \(message)"
+            return "Error: Invalid Pump State: \(message)"
         case let .glucoseError(message):
-            return "Invalid glucose: \(message)"
+            return "Error: Invalid glucose: \(message)"
         case let .apsError(message):
             return "APS error: \(message)"
+        case let .deviceSyncError(message):
+            return "Sync error: \(message)"
         }
     }
 }

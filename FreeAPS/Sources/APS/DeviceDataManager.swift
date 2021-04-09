@@ -250,6 +250,10 @@ extension BaseDeviceDataManager: PumpManagerDelegate {
             $0.pumpReservoirDidChange(Decimal(units))
         }
 
+        guard !pumpUpdateInProgress else {
+            completion(.failure(APSError.deviceSyncError(message: "Trying to update pump data while already updating")))
+            return
+        }
         completion(.success((
             newValue: Reservoir(startDate: Date(), unitVolume: units),
             lastValue: nil,
