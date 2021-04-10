@@ -248,7 +248,8 @@ final class BaseAPSManager: APSManager, Injectable {
         if temp.duration == 0,
            settings.closedLoop,
            settingsManager.preferences.unsuspendIfNoTemp,
-           let pump = pumpManager
+           let pump = pumpManager,
+           pump.status.pumpStatus.suspended
         {
             return pump.resumeDelivery()
                 .flatMap { _ in mainPublisher }
