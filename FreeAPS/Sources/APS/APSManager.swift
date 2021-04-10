@@ -22,6 +22,7 @@ protocol APSManager {
     func determineBasal() -> AnyPublisher<Bool, Never>
     func roundBolus(amount: Decimal) -> Decimal
     var lastError: CurrentValueSubject<Error?, Never> { get }
+    func cancelBolus()
 }
 
 enum APSError: LocalizedError {
@@ -29,17 +30,20 @@ enum APSError: LocalizedError {
     case invalidPumpState(message: String)
     case glucoseError(message: String)
     case apsError(message: String)
+    case deviceSyncError(message: String)
 
     var errorDescription: String? {
         switch self {
         case let .pumpError(error):
             return "Pump error: \(error.localizedDescription)"
         case let .invalidPumpState(message):
-            return "Invalid Pump State: \(message)"
+            return "Error: Invalid Pump State: \(message)"
         case let .glucoseError(message):
-            return "Invalid glucose: \(message)"
+            return "Error: Invalid glucose: \(message)"
         case let .apsError(message):
             return "APS error: \(message)"
+        case let .deviceSyncError(message):
+            return "Sync error: \(message)"
         }
     }
 }
@@ -115,6 +119,13 @@ final class BaseAPSManager: APSManager, Injectable {
             .map { APSError.pumpError($0) }
             .sink {
                 self.processError($0)
+            }
+            .store(in: &lifetime)
+
+        deviceDataManager.bolusTrigger
+            .receive(on: processQueue)
+            .sink {
+                self.createBolusReporter()
             }
             .store(in: &lifetime)
     }
@@ -237,7 +248,8 @@ final class BaseAPSManager: APSManager, Injectable {
         if temp.duration == 0,
            settings.closedLoop,
            settingsManager.preferences.unsuspendIfNoTemp,
-           let pump = pumpManager
+           let pump = pumpManager,
+           pump.status.pumpStatus.suspended
         {
             return pump.resumeDelivery()
                 .flatMap { _ in mainPublisher }
@@ -276,6 +288,8 @@ final class BaseAPSManager: APSManager, Injectable {
 
         let roundedAmout = pump.roundToSupportedBolusVolume(units: amount)
 
+        debug(.apsManager, "Enact bolus \(roundedAmout), manual \(!isSMB)")
+
         pump.enactBolus(units: roundedAmout, automatic: isSMB).sink { completion in
             if case let .failure(error) = completion {
                 debug(.apsManager, "Bolus failed with error: \(error.localizedDescription)")
@@ -286,15 +300,31 @@ final class BaseAPSManager: APSManager, Injectable {
                     self.determineBasal().sink { _ in }.store(in: &self.lifetime)
                 }
             }
+        } receiveValue: { _ in }
+            .store(in: &lifetime)
+    }
 
-            self.bolusReporter = pump.createBolusProgressReporter(reportingOn: self.processQueue)
-            self.bolusReporter?.addObserver(self)
+    func cancelBolus() {
+        guard let pump = pumpManager else { return }
+        debug(.apsManager, "Cancel bolus")
+        pump.cancelBolus().sink { completion in
+            if case let .failure(error) = completion {
+                debug(.apsManager, "Bolus cancellation failed with error: \(error.localizedDescription)")
+                self.processError(APSError.pumpError(error))
+            } else {
+                debug(.apsManager, "Bolus cancelled")
+            }
+
+            self.bolusReporter?.removeObserver(self)
+            self.bolusReporter = nil
+            self.bolusProgress.send(nil)
         } receiveValue: { _ in }
             .store(in: &lifetime)
     }
 
     func enactTempBasal(rate: Double, duration: TimeInterval) {
         guard let pump = pumpManager, verifyStatus() else { return }
+        debug(.apsManager, "Enact temp basal \(rate) - \(duration)")
 
         let roundedAmout = pump.roundToSupportedBasalRate(unitsPerHour: rate)
         pump.enactTempBasal(unitsPerHour: roundedAmout, for: duration) { result in
@@ -497,6 +527,11 @@ final class BaseAPSManager: APSManager, Injectable {
         debug(.apsManager, "\(error.localizedDescription)")
         lastError.send(error)
     }
+
+    private func createBolusReporter() {
+        bolusReporter = pumpManager?.createBolusProgressReporter(reportingOn: processQueue)
+        bolusReporter?.addObserver(self)
+    }
 }
 
 private extension PumpManager {
@@ -524,6 +559,20 @@ private extension PumpManager {
                 }
             }
         }.eraseToAnyPublisher()
+    }
+
+    func cancelBolus() -> AnyPublisher<DoseEntry?, Error> {
+        Future { promise in
+            self.cancelBolus { result in
+                switch result {
+                case let .success(dose):
+                    promise(.success(dose))
+                case let .failure(error):
+                    promise(.failure(error))
+                }
+            }
+        }
+        .eraseToAnyPublisher()
     }
 
     func suspendDelivery() -> AnyPublisher<Void, Error> {

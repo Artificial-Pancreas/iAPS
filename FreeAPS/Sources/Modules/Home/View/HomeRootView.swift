@@ -85,7 +85,7 @@ extension Home {
         }
 
         var infoPanal: some View {
-            HStack(alignment: .firstTextBaseline) {
+            HStack(alignment: .center) {
                 if let tempRate = viewModel.tempRate {
                     Text((numberFormatter.string(from: tempRate as NSNumber) ?? "0") + " U/hr")
                         .font(.system(size: 12, weight: .bold)).foregroundColor(.insulin)
@@ -137,9 +137,14 @@ extension Home {
                 }
                 Spacer()
                 if let progress = viewModel.bolusProgress {
-                    Text("Bolus " + (numberFormatter.string(from: progress * 100 as NSNumber)!) + "%")
+                    Text("Bolusing")
                         .font(.system(size: 12, weight: .bold)).foregroundColor(.insulin)
+                    ProgressView(value: Double(progress))
+                        .progressViewStyle(BolusProgressViewStyle())
                         .padding(.trailing, 8)
+                        .onTapGesture {
+                            viewModel.cancelBolus()
+                        }
                 }
             }
             .frame(maxWidth: .infinity, maxHeight: 30)
