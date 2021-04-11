@@ -163,10 +163,10 @@ struct MainChartView: View {
 
     private func basalView(fullSize: CGSize) -> some View {
         ZStack {
-            tempBasalPath.fill(Color.tempBasal)
-            tempBasalPath.stroke(Color.tempBasal, lineWidth: 1)
-            suspensionsPath.fill(Color.loopGray)
-            regularBasalPath.stroke(Color.basal, lineWidth: 1)
+            tempBasalPath.fill(Color.tempBasal.opacity(0.5)).scaleEffect(x: 1, y: -1)
+            tempBasalPath.stroke(Color.tempBasal, lineWidth: 1).scaleEffect(x: 1, y: -1)
+            regularBasalPath.stroke(Color.tempBasal, style: StrokeStyle(lineWidth: 1, dash: [3])).scaleEffect(x: 1, y: -1)
+//           regularBasalPath.stroke(style: StrokeStyle(lineWidth: 1, dash: [3]))
         }
         .frame(width: fullGlucoseWidth(viewWidth: fullSize.width) + additionalWidth(viewWidth: fullSize.width))
         .frame(maxHeight: Config.basalHeight)
