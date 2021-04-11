@@ -73,16 +73,19 @@ final class BaseFileStorage: FileStorage {
 
     func append<Value: JSON, T: Equatable>(_ newValues: [Value], to name: String, uniqBy keyPath: KeyPath<Value, T>) {
         if let value = retrieve(name, as: Value.self) {
-            guard newValues.first(where: { $0[keyPath: keyPath] == value[keyPath: keyPath] }) == nil else {
+            if newValues.firstIndex(where: { $0[keyPath: keyPath] == value[keyPath: keyPath] }) != nil {
+                save(newValues, as: name)
                 return
             }
             append(newValues, to: name)
-        } else if let values = retrieve(name, as: [Value].self) {
-            newValues.forEach { newValue in
-                guard values.first(where: { $0[keyPath: keyPath] == newValue[keyPath: keyPath] }) == nil else {
-                    return
+        } else if var values = retrieve(name, as: [Value].self) {
+            for newValue in newValues {
+                if let index = values.firstIndex(where: { $0[keyPath: keyPath] == newValue[keyPath: keyPath] }) {
+                    values[index] = newValue
+                } else {
+                    values.append(newValue)
                 }
-                append(newValue, to: name)
+                save(values, as: name)
             }
         } else {
             save(newValues, as: name)

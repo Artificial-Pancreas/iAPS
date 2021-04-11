@@ -13,6 +13,7 @@ protocol DeviceDataManager {
     var pumpManager: PumpManagerUI? { get set }
     var pumpDisplayState: CurrentValueSubject<PumpDisplayState?, Never> { get }
     var recommendsLoop: PassthroughSubject<Void, Never> { get }
+    var bolusTrigger: PassthroughSubject<Void, Never> { get }
     var errorSubject: PassthroughSubject<Error, Never> { get }
     var pumpName: CurrentValueSubject<String, Never> { get }
     var pumpExpiresAtDate: CurrentValueSubject<Date?, Never> { get }
@@ -44,6 +45,7 @@ final class BaseDeviceDataManager: DeviceDataManager, Injectable {
         .distantPast
 
     let recommendsLoop = PassthroughSubject<Void, Never>()
+    let bolusTrigger = PassthroughSubject<Void, Never>()
     let errorSubject = PassthroughSubject<Error, Never>()
 
     var pumpManager: PumpManagerUI? {
@@ -182,6 +184,10 @@ extension BaseDeviceDataManager: PumpManagerDelegate {
         debug(.deviceManager, "New pump status Bolus: \(status.bolusState)")
         debug(.deviceManager, "New pump status Basal: \(String(describing: status.basalDeliveryState))")
 
+        if case .inProgress = status.bolusState {
+            bolusTrigger.send()
+        }
+
         let batteryPercent = Int((status.pumpBatteryChargeRemaining ?? 1) * 100)
         let battery = Battery(
             percent: batteryPercent,
@@ -229,6 +235,7 @@ extension BaseDeviceDataManager: PumpManagerDelegate {
         completion: @escaping (_ error: Error?) -> Void
     ) {
         dispatchPrecondition(condition: .onQueue(processQueue))
+        debug(.deviceManager, "New pump events:\n\(events.map(\.title).joined(separator: "\n"))")
         pumpHistoryStorage.storePumpEvents(events)
         lastEventDate = events.last?.date
         completion(nil)
