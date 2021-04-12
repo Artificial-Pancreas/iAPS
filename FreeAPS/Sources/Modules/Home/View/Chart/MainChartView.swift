@@ -160,7 +160,7 @@ struct MainChartView: View {
     private func basalView(fullSize: CGSize) -> some View {
         ZStack {
             tempBasalPath.fill(Color.tempBasal.opacity(0.5)).scaleEffect(x: 1, y: -1)
-            tempBasalPath.stroke(Color.tempBasal, lineWidth: 1).scaleEffect(x: 1, y: -1)
+//            tempBasalPath.stroke(Color.tempBasal, lineWidth: 1).scaleEffect(x: 1, y: -1)          // removed the Y=0 line, not needed when having icicles
             regularBasalPath.stroke(Color.tempBasal, style: StrokeStyle(lineWidth: 1, dash: [3])).scaleEffect(x: 1, y: -1)
         }
         .frame(width: fullGlucoseWidth(viewWidth: fullSize.width) + additionalWidth(viewWidth: fullSize.width))
@@ -216,8 +216,9 @@ struct MainChartView: View {
                 path.move(to: CGPoint(x: x, y: 0))
                 path.addLine(to: CGPoint(x: x, y: fullSize.height - 20))
             }
-            .stroke(colorScheme == .dark ? Color.white : Color.black,                             // current time as vertical line
-            style: StrokeStyle(lineWidth: 0.5, dash: [2])
+            .stroke(
+                colorScheme == .dark ? Color.white : Color.black, // current time as vertical line
+                style: StrokeStyle(lineWidth: 0.5, dash: [2])
             )
         }
     }
