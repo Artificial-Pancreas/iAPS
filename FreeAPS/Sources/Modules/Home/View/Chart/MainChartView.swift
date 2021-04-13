@@ -57,6 +57,7 @@ struct MainChartView: View {
     @State private var carbsPath = Path()
     @State private var glucoseYGange: GlucoseYRange = (0, 0, 0, 0)
     @State private var offset: CGFloat = 0
+    @State private var cachedMaxBasalRate: Decimal?
 
     private let calculationQueue = DispatchQueue(label: "MainChartView.calculationQueue")
 
@@ -450,6 +451,7 @@ extension MainChartView {
 
     private func calculateBasalPoints(fullSize: CGSize) {
         calculationQueue.async {
+            self.cachedMaxBasalRate = nil
             let dayAgoTime = Date().addingTimeInterval(-1.days.timeInterval).timeIntervalSince1970
             let firstTempTime = (tempBasals.first?.timestamp ?? Date()).timeIntervalSince1970
             var lastTimeEnd = firstTempTime
@@ -463,7 +465,7 @@ extension MainChartView {
                 guard chunk.count == 2, chunk[0].type == .tempBasal, chunk[1].type == .tempBasalDuration else { return [] }
                 let timeBegin = chunk[0].timestamp.timeIntervalSince1970
                 let timeEnd = timeBegin + (chunk[1].durationMin ?? 0).minutes.timeInterval
-                let rateCost = Config.basalHeight / CGFloat(maxBasal)
+                let rateCost = Config.basalHeight / CGFloat(maxBasalRate())
                 let x0 = timeToXCoordinate(timeBegin, fullSize: fullSize)
                 let y0 = Config.basalHeight - CGFloat(chunk[0].rate ?? 0) * rateCost
                 let regularPoints = findRegularBasalPoints(timeBegin: lastTimeEnd, timeEnd: timeBegin, fullSize: fullSize)
@@ -509,6 +511,14 @@ extension MainChartView {
                 self.regularBasalPath = regularBasalPath
             }
         }
+    }
+
+    private func maxBasalRate() -> Decimal {
+        if let cached = cachedMaxBasalRate {
+            return cached
+        }
+        cachedMaxBasalRate = tempBasals.compactMap(\.rate).max() ?? maxBasal
+        return cachedMaxBasalRate!
     }
 
     private func calculateTempTargetsRects(fullSize: CGSize) {
@@ -582,7 +592,7 @@ extension MainChartView {
                     return nil
                 }
 
-                let rateCost = Config.basalHeight / CGFloat(maxBasal)
+                let rateCost = Config.basalHeight / CGFloat(maxBasalRate())
                 if window[0].time < timeBegin, window[1].time >= timeBegin {
                     let x = timeToXCoordinate(timeBegin, fullSize: fullSize)
                     let y = Config.basalHeight - CGFloat(window[0].rate) * rateCost
@@ -607,7 +617,7 @@ extension MainChartView {
             return CGPoint(x: timeToXCoordinate(Date().timeIntervalSince1970, fullSize: fullSize), y: Config.basalHeight)
         }
         let endBasalTime = lastBasal[0].timestamp.timeIntervalSince1970 + (lastBasal[1].durationMin?.minutes.timeInterval ?? 0)
-        let rateCost = Config.basalHeight / CGFloat(maxBasal)
+        let rateCost = Config.basalHeight / CGFloat(maxBasalRate())
         let x = timeToXCoordinate(endBasalTime, fullSize: fullSize)
         let y = Config.basalHeight - CGFloat(lastBasal[0].rate ?? 0) * rateCost
         return CGPoint(x: x, y: y)
