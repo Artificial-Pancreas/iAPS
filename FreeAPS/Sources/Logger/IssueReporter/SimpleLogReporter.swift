@@ -36,6 +36,7 @@ final class SimpleLogReporter: IssueReporter {
             if let attributes = try? fileManager.attributesOfItem(atPath: SimpleLogReporter.logFile),
                let creationDate = attributes[.creationDate] as? Date, creationDate < startOfDay
             {
+                try? fileManager.removeItem(atPath: SimpleLogReporter.logFilePrev)
                 try? fileManager.moveItem(atPath: SimpleLogReporter.logFile, toPath: SimpleLogReporter.logFilePrev)
                 createFile(at: startOfDay)
             }
