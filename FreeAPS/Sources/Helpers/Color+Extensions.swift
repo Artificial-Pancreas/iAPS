@@ -10,4 +10,5 @@ extension Color {
     static let zt = Color("ZT")
     static let tempBasal = Color("TempBasal")
     static let basal = Color("Basal")
+    static let backgroundColor = Color("Background")
 }
