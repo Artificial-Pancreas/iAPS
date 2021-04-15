@@ -20,7 +20,7 @@ struct MainChartView: View {
     private enum Config {
         static let endID = "End"
         static let screenHours = 5
-        static let basalHeight: CGFloat = 120
+        static let basalHeight: CGFloat = 100
         static let topYPadding: CGFloat = 20
         static let bottomYPadding: CGFloat = 50
         static let minAdditionalWidth: CGFloat = 150
@@ -166,7 +166,7 @@ struct MainChartView: View {
         }
         .frame(width: fullGlucoseWidth(viewWidth: fullSize.width) + additionalWidth(viewWidth: fullSize.width))
         .frame(maxHeight: Config.basalHeight)
-//        .background(Color.secondary.opacity(0.1))
+        // .background(Color.secondary.opacity(0.1))
         .onChange(of: tempBasals) { _ in
             calculateBasalPoints(fullSize: fullSize)
         }
