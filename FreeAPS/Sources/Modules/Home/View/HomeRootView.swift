@@ -197,6 +197,7 @@ extension Home {
                         suspensions: $viewModel.suspensions,
                         hours: .constant(viewModel.filteredHours),
                         maxBasal: $viewModel.maxBasal,
+                        autotunedBasalProfile: $viewModel.autotunedBasalProfile,
                         basalProfile: $viewModel.basalProfile,
                         tempTargets: $viewModel.tempTargets,
                         carbs: $viewModel.carbs,

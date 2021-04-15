@@ -12,6 +12,7 @@ protocol HomeProvider: Provider {
     func filteredGlucose(hours: Int) -> [BloodGlucose]
     func pumpHistory(hours: Int) -> [PumpHistoryEvent]
     func pumpSettings() -> PumpSettings
+    func autotunedBasalProfile() -> [BasalProfileEntry]
     func basalProfile() -> [BasalProfileEntry]
     func tempTargets(hours: Int) -> [TempTarget]
     func carbs(hours: Int) -> [CarbsEntry]

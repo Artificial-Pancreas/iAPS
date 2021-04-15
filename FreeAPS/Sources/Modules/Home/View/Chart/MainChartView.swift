@@ -40,6 +40,7 @@ struct MainChartView: View {
     @Binding var suspensions: [PumpHistoryEvent]
     @Binding var hours: Int
     @Binding var maxBasal: Decimal
+    @Binding var autotunedBasalProfile: [BasalProfileEntry]
     @Binding var basalProfile: [BasalProfileEntry]
     @Binding var tempTargets: [TempTarget]
     @Binding var carbs: [CarbsEntry]
@@ -179,7 +180,7 @@ struct MainChartView: View {
         .onChange(of: maxBasal) { _ in
             calculateBasalPoints(fullSize: fullSize)
         }
-        .onChange(of: basalProfile) { _ in
+        .onChange(of: autotunedBasalProfile) { _ in
             calculateBasalPoints(fullSize: fullSize)
         }
         .onChange(of: didAppearTrigger) { _ in
@@ -465,7 +466,8 @@ extension MainChartView {
             let firstRegularBasalPoints = findRegularBasalPoints(
                 timeBegin: dayAgoTime,
                 timeEnd: firstTempTime,
-                fullSize: fullSize
+                fullSize: fullSize,
+                autotuned: false
             )
             let tempBasalPoints = firstRegularBasalPoints + tempBasals.chunks(ofCount: 2).map { chunk -> [CGPoint] in
                 let chunk = Array(chunk)
@@ -475,7 +477,12 @@ extension MainChartView {
                 let rateCost = Config.basalHeight / CGFloat(maxBasalRate())
                 let x0 = timeToXCoordinate(timeBegin, fullSize: fullSize)
                 let y0 = Config.basalHeight - CGFloat(chunk[0].rate ?? 0) * rateCost
-                let regularPoints = findRegularBasalPoints(timeBegin: lastTimeEnd, timeEnd: timeBegin, fullSize: fullSize)
+                let regularPoints = findRegularBasalPoints(
+                    timeBegin: lastTimeEnd,
+                    timeEnd: timeBegin,
+                    fullSize: fullSize,
+                    autotuned: false
+                )
                 lastTimeEnd = timeEnd
                 return regularPoints + [CGPoint(x: x0, y: y0)]
             }.flatMap { $0 }
@@ -495,17 +502,18 @@ extension MainChartView {
             }
 
             let endDateTime = dayAgoTime + 1.days.timeInterval + 6.hours.timeInterval
-            let regularBasalPoints = findRegularBasalPoints(
+            let autotunedBasalPoints = findRegularBasalPoints(
                 timeBegin: dayAgoTime,
                 timeEnd: endDateTime,
-                fullSize: fullSize
+                fullSize: fullSize,
+                autotuned: true
             )
 
-            let regularBasalPath = Path { path in
+            let autotunedBasalPath = Path { path in
                 var yPoint: CGFloat = Config.basalHeight
                 path.move(to: CGPoint(x: -50, y: yPoint))
 
-                for point in regularBasalPoints {
+                for point in autotunedBasalPoints {
                     path.addLine(to: CGPoint(x: point.x, y: yPoint))
                     path.addLine(to: point)
                     yPoint = point.y
@@ -515,7 +523,7 @@ extension MainChartView {
 
             DispatchQueue.main.async {
                 self.tempBasalPath = tempBasalPath
-                self.regularBasalPath = regularBasalPath
+                self.regularBasalPath = autotunedBasalPath
             }
         }
     }
@@ -602,7 +610,12 @@ extension MainChartView {
         }
     }
 
-    private func findRegularBasalPoints(timeBegin: TimeInterval, timeEnd: TimeInterval, fullSize: CGSize) -> [CGPoint] {
+    private func findRegularBasalPoints(
+        timeBegin: TimeInterval,
+        timeEnd: TimeInterval,
+        fullSize: CGSize,
+        autotuned: Bool
+    ) -> [CGPoint] {
         guard timeBegin < timeEnd else {
             return []
         }
@@ -610,17 +623,19 @@ extension MainChartView {
         let calendar = Calendar.current
         let startOfDay = calendar.startOfDay(for: beginDate)
 
-        let basalNormalized = basalProfile.map {
+        let profile = autotuned ? autotunedBasalProfile : basalProfile
+
+        let basalNormalized = profile.map {
             (
                 time: startOfDay.addingTimeInterval($0.minutes.minutes.timeInterval).timeIntervalSince1970,
                 rate: $0.rate
             )
-        } + basalProfile.map {
+        } + profile.map {
             (
                 time: startOfDay.addingTimeInterval($0.minutes.minutes.timeInterval + 1.days.timeInterval).timeIntervalSince1970,
                 rate: $0.rate
             )
-        } + basalProfile.map {
+        } + profile.map {
             (
                 time: startOfDay.addingTimeInterval($0.minutes.minutes.timeInterval + 2.days.timeInterval).timeIntervalSince1970,
                 rate: $0.rate

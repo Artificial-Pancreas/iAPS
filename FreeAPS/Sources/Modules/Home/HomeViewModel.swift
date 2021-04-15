@@ -20,6 +20,7 @@ extension Home {
         @Published var boluses: [PumpHistoryEvent] = []
         @Published var suspensions: [PumpHistoryEvent] = []
         @Published var maxBasal: Decimal = 2
+        @Published var autotunedBasalProfile: [BasalProfileEntry] = []
         @Published var basalProfile: [BasalProfileEntry] = []
         @Published var tempTargets: [TempTarget] = []
         @Published var carbs: [CarbsEntry] = []
@@ -193,6 +194,7 @@ extension Home {
 
         private func setupBasalProfile() {
             DispatchQueue.main.async {
+                self.autotunedBasalProfile = self.provider.autotunedBasalProfile()
                 self.basalProfile = self.provider.basalProfile()
             }
         }
