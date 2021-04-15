@@ -292,7 +292,7 @@ final class BaseAPSManager: APSManager, Injectable {
 
         pump.enactBolus(units: roundedAmout, automatic: isSMB).sink { completion in
             if case let .failure(error) = completion {
-                debug(.apsManager, "Bolus failed with error: \(error.localizedDescription)")
+                warning(.apsManager, "Bolus failed with error: \(error.localizedDescription)")
                 self.processError(APSError.pumpError(error))
             } else {
                 debug(.apsManager, "Bolus succeeded")
@@ -524,7 +524,7 @@ final class BaseAPSManager: APSManager, Injectable {
     }
 
     private func processError(_ error: Error) {
-        debug(.apsManager, "\(error.localizedDescription)")
+        warning(.apsManager, "\(error.localizedDescription)")
         lastError.send(error)
     }
 

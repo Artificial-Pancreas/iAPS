@@ -77,6 +77,10 @@ extension NightscoutAPI {
         return service.run(request)
             .retry(Config.retryCount)
             .decode(type: [BloodGlucose].self, decoder: JSONCoding.decoder)
+            .catch { error -> AnyPublisher<[BloodGlucose], Swift.Error> in
+                warning(.nightscout, "Glucose fetching error: \(error.localizedDescription)")
+                return Just([]).setFailureType(to: Swift.Error.self).eraseToAnyPublisher()
+            }
             .map { glucose in
                 glucose
                     .map {
@@ -124,6 +128,10 @@ extension NightscoutAPI {
         return service.run(request)
             .retry(Config.retryCount)
             .decode(type: [CarbsEntry].self, decoder: JSONCoding.decoder)
+            .catch { error -> AnyPublisher<[CarbsEntry], Swift.Error> in
+                warning(.nightscout, "Carbs fetching error: \(error.localizedDescription)")
+                return Just([]).setFailureType(to: Swift.Error.self).eraseToAnyPublisher()
+            }
             .eraseToAnyPublisher()
     }
 
@@ -193,6 +201,10 @@ extension NightscoutAPI {
         return service.run(request)
             .retry(Config.retryCount)
             .decode(type: [TempTarget].self, decoder: JSONCoding.decoder)
+            .catch { error -> AnyPublisher<[TempTarget], Swift.Error> in
+                warning(.nightscout, "TempTarget fetching error: \(error.localizedDescription)")
+                return Just([]).setFailureType(to: Swift.Error.self).eraseToAnyPublisher()
+            }
             .eraseToAnyPublisher()
     }
 

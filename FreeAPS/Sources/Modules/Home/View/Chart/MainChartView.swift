@@ -37,6 +37,7 @@ struct MainChartView: View {
     @Binding var suggestion: Suggestion?
     @Binding var tempBasals: [PumpHistoryEvent]
     @Binding var boluses: [PumpHistoryEvent]
+    @Binding var suspensions: [PumpHistoryEvent]
     @Binding var hours: Int
     @Binding var maxBasal: Decimal
     @Binding var basalProfile: [BasalProfileEntry]
@@ -53,6 +54,7 @@ struct MainChartView: View {
     @State private var tempBasalPath = Path()
     @State private var regularBasalPath = Path()
     @State private var tempTargetsPath = Path()
+    @State private var suspensionsPath = Path()
     @State private var carbsDots: [DotInfo] = []
     @State private var carbsPath = Path()
     @State private var glucoseYGange: GlucoseYRange = (0, 0, 0, 0)
@@ -162,6 +164,7 @@ struct MainChartView: View {
         ZStack {
             tempBasalPath.fill(Color.tempBasal)
             tempBasalPath.stroke(Color.tempBasal, lineWidth: 1)
+            suspensionsPath.fill(Color.loopGray)
             regularBasalPath.stroke(Color.basal, lineWidth: 1)
         }
         .frame(width: fullGlucoseWidth(viewWidth: fullSize.width) + additionalWidth(viewWidth: fullSize.width))
@@ -169,6 +172,9 @@ struct MainChartView: View {
         .background(Color.secondary.opacity(0.1))
         .onChange(of: tempBasals) { _ in
             calculateBasalPoints(fullSize: fullSize)
+        }
+        .onChange(of: suspensions) { _ in
+            calculateSuspensions(fullSize: fullSize)
         }
         .onChange(of: maxBasal) { _ in
             calculateBasalPoints(fullSize: fullSize)
@@ -360,6 +366,7 @@ extension MainChartView {
         calculateTempTargetsRects(fullSize: fullSize)
         calculateTempTargetsRects(fullSize: fullSize)
         calculateBasalPoints(fullSize: fullSize)
+        calculateSuspensions(fullSize: fullSize)
     }
 
     private func calculateGlucoseDots(fullSize: CGSize) {
@@ -509,6 +516,41 @@ extension MainChartView {
             DispatchQueue.main.async {
                 self.tempBasalPath = tempBasalPath
                 self.regularBasalPath = regularBasalPath
+            }
+        }
+    }
+
+    private func calculateSuspensions(fullSize: CGSize) {
+        calculationQueue.async {
+            var rects = suspensions.windows(ofCount: 2).map { window -> CGRect? in
+                let window = Array(window)
+                guard window[0].type == .pumpSuspend, window[1].type == .pumpResume else { return nil }
+                let x0 = self.timeToXCoordinate(window[0].timestamp.timeIntervalSince1970, fullSize: fullSize)
+                let x1 = self.timeToXCoordinate(window[1].timestamp.timeIntervalSince1970, fullSize: fullSize)
+                return CGRect(x: x0, y: 0, width: x1 - x0, height: Config.basalHeight)
+            }
+
+            let firstRec = self.suspensions.first.flatMap { event -> CGRect? in
+                guard event.type == .pumpResume else { return nil }
+                let width = self.timeToXCoordinate(event.timestamp.timeIntervalSince1970, fullSize: fullSize)
+                return CGRect(x: 0, y: 0, width: width, height: Config.basalHeight)
+            }
+
+            let lastRec = self.suspensions.last.flatMap { event -> CGRect? in
+                guard event.type == .pumpSuspend else { return nil }
+                let x0 = self.timeToXCoordinate(event.timestamp.timeIntervalSince1970, fullSize: fullSize)
+                let x1 = self.fullGlucoseWidth(viewWidth: fullSize.width) + self.additionalWidth(viewWidth: fullSize.width)
+                return CGRect(x: x0, y: 0, width: x1 - x0, height: Config.basalHeight)
+            }
+            rects.append(firstRec)
+            rects.append(lastRec)
+
+            let path = Path { path in
+                path.addRects(rects.compactMap { $0 })
+            }
+
+            DispatchQueue.main.async {
+                suspensionsPath = path
             }
         }
     }
