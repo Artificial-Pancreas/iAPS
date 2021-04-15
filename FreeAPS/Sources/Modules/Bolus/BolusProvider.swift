@@ -3,5 +3,11 @@ extension Bolus {
         var suggestion: Suggestion? {
             storage.retrieve(OpenAPS.Enact.suggested, as: Suggestion.self)
         }
+
+        func pumpSettings() -> PumpSettings {
+            storage.retrieve(OpenAPS.Settings.settings, as: PumpSettings.self)
+                ?? PumpSettings(from: OpenAPS.defaults(for: OpenAPS.Settings.settings))
+                ?? PumpSettings(insulinActionCurve: 5, maxBolus: 10, maxBasal: 2)
+        }
     }
 }

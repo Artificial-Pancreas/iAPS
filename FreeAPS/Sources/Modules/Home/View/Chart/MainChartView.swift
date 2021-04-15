@@ -37,8 +37,10 @@ struct MainChartView: View {
     @Binding var suggestion: Suggestion?
     @Binding var tempBasals: [PumpHistoryEvent]
     @Binding var boluses: [PumpHistoryEvent]
+    @Binding var suspensions: [PumpHistoryEvent]
     @Binding var hours: Int
     @Binding var maxBasal: Decimal
+    @Binding var autotunedBasalProfile: [BasalProfileEntry]
     @Binding var basalProfile: [BasalProfileEntry]
     @Binding var tempTargets: [TempTarget]
     @Binding var carbs: [CarbsEntry]
@@ -53,6 +55,7 @@ struct MainChartView: View {
     @State private var tempBasalPath = Path()
     @State private var regularBasalPath = Path()
     @State private var tempTargetsPath = Path()
+    @State private var suspensionsPath = Path()
     @State private var carbsDots: [DotInfo] = []
     @State private var carbsPath = Path()
     @State private var glucoseYGange: GlucoseYRange = (0, 0, 0, 0)
@@ -170,10 +173,13 @@ struct MainChartView: View {
         .onChange(of: tempBasals) { _ in
             calculateBasalPoints(fullSize: fullSize)
         }
+        .onChange(of: suspensions) { _ in
+            calculateSuspensions(fullSize: fullSize)
+        }
         .onChange(of: maxBasal) { _ in
             calculateBasalPoints(fullSize: fullSize)
         }
-        .onChange(of: basalProfile) { _ in
+        .onChange(of: autotunedBasalProfile) { _ in
             calculateBasalPoints(fullSize: fullSize)
         }
         .onChange(of: didAppearTrigger) { _ in
@@ -365,6 +371,7 @@ extension MainChartView {
         calculateTempTargetsRects(fullSize: fullSize)
         calculateTempTargetsRects(fullSize: fullSize)
         calculateBasalPoints(fullSize: fullSize)
+        calculateSuspensions(fullSize: fullSize)
     }
 
     private func calculateGlucoseDots(fullSize: CGSize) {
@@ -463,7 +470,8 @@ extension MainChartView {
             let firstRegularBasalPoints = findRegularBasalPoints(
                 timeBegin: dayAgoTime,
                 timeEnd: firstTempTime,
-                fullSize: fullSize
+                fullSize: fullSize,
+                autotuned: false
             )
             let tempBasalPoints = firstRegularBasalPoints + tempBasals.chunks(ofCount: 2).map { chunk -> [CGPoint] in
                 let chunk = Array(chunk)
@@ -473,7 +481,12 @@ extension MainChartView {
                 let rateCost = Config.basalHeight / CGFloat(maxBasalRate())
                 let x0 = timeToXCoordinate(timeBegin, fullSize: fullSize)
                 let y0 = Config.basalHeight - CGFloat(chunk[0].rate ?? 0) * rateCost
-                let regularPoints = findRegularBasalPoints(timeBegin: lastTimeEnd, timeEnd: timeBegin, fullSize: fullSize)
+                let regularPoints = findRegularBasalPoints(
+                    timeBegin: lastTimeEnd,
+                    timeEnd: timeBegin,
+                    fullSize: fullSize,
+                    autotuned: false
+                )
                 lastTimeEnd = timeEnd
                 return regularPoints + [CGPoint(x: x0, y: y0)]
             }.flatMap { $0 }
@@ -493,17 +506,18 @@ extension MainChartView {
             }
 
             let endDateTime = dayAgoTime + 1.days.timeInterval + 6.hours.timeInterval
-            let regularBasalPoints = findRegularBasalPoints(
+            let autotunedBasalPoints = findRegularBasalPoints(
                 timeBegin: dayAgoTime,
                 timeEnd: endDateTime,
-                fullSize: fullSize
+                fullSize: fullSize,
+                autotuned: true
             )
 
-            let regularBasalPath = Path { path in
+            let autotunedBasalPath = Path { path in
                 var yPoint: CGFloat = Config.basalHeight
                 path.move(to: CGPoint(x: -50, y: yPoint))
 
-                for point in regularBasalPoints {
+                for point in autotunedBasalPoints {
                     path.addLine(to: CGPoint(x: point.x, y: yPoint))
                     path.addLine(to: point)
                     yPoint = point.y
@@ -513,7 +527,42 @@ extension MainChartView {
 
             DispatchQueue.main.async {
                 self.tempBasalPath = tempBasalPath
-                self.regularBasalPath = regularBasalPath
+                self.regularBasalPath = autotunedBasalPath
+            }
+        }
+    }
+
+    private func calculateSuspensions(fullSize: CGSize) {
+        calculationQueue.async {
+            var rects = suspensions.windows(ofCount: 2).map { window -> CGRect? in
+                let window = Array(window)
+                guard window[0].type == .pumpSuspend, window[1].type == .pumpResume else { return nil }
+                let x0 = self.timeToXCoordinate(window[0].timestamp.timeIntervalSince1970, fullSize: fullSize)
+                let x1 = self.timeToXCoordinate(window[1].timestamp.timeIntervalSince1970, fullSize: fullSize)
+                return CGRect(x: x0, y: 0, width: x1 - x0, height: Config.basalHeight)
+            }
+
+            let firstRec = self.suspensions.first.flatMap { event -> CGRect? in
+                guard event.type == .pumpResume else { return nil }
+                let width = self.timeToXCoordinate(event.timestamp.timeIntervalSince1970, fullSize: fullSize)
+                return CGRect(x: 0, y: 0, width: width, height: Config.basalHeight)
+            }
+
+            let lastRec = self.suspensions.last.flatMap { event -> CGRect? in
+                guard event.type == .pumpSuspend else { return nil }
+                let x0 = self.timeToXCoordinate(event.timestamp.timeIntervalSince1970, fullSize: fullSize)
+                let x1 = self.fullGlucoseWidth(viewWidth: fullSize.width) + self.additionalWidth(viewWidth: fullSize.width)
+                return CGRect(x: x0, y: 0, width: x1 - x0, height: Config.basalHeight)
+            }
+            rects.append(firstRec)
+            rects.append(lastRec)
+
+            let path = Path { path in
+                path.addRects(rects.compactMap { $0 })
+            }
+
+            DispatchQueue.main.async {
+                suspensionsPath = path
             }
         }
     }
@@ -565,7 +614,12 @@ extension MainChartView {
         }
     }
 
-    private func findRegularBasalPoints(timeBegin: TimeInterval, timeEnd: TimeInterval, fullSize: CGSize) -> [CGPoint] {
+    private func findRegularBasalPoints(
+        timeBegin: TimeInterval,
+        timeEnd: TimeInterval,
+        fullSize: CGSize,
+        autotuned: Bool
+    ) -> [CGPoint] {
         guard timeBegin < timeEnd else {
             return []
         }
@@ -573,17 +627,19 @@ extension MainChartView {
         let calendar = Calendar.current
         let startOfDay = calendar.startOfDay(for: beginDate)
 
-        let basalNormalized = basalProfile.map {
+        let profile = autotuned ? autotunedBasalProfile : basalProfile
+
+        let basalNormalized = profile.map {
             (
                 time: startOfDay.addingTimeInterval($0.minutes.minutes.timeInterval).timeIntervalSince1970,
                 rate: $0.rate
             )
-        } + basalProfile.map {
+        } + profile.map {
             (
                 time: startOfDay.addingTimeInterval($0.minutes.minutes.timeInterval + 1.days.timeInterval).timeIntervalSince1970,
                 rate: $0.rate
             )
-        } + basalProfile.map {
+        } + profile.map {
             (
                 time: startOfDay.addingTimeInterval($0.minutes.minutes.timeInterval + 2.days.timeInterval).timeIntervalSince1970,
                 rate: $0.rate

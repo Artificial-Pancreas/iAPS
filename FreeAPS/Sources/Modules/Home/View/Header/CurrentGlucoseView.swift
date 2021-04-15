@@ -54,8 +54,8 @@ struct CurrentGlucoseView: View {
                         .map { deltaFormatter.string(from: Double(units == .mmolL ? $0.asMmolL : Decimal($0)) as NSNumber)!
                         } ??
                         "--"
-                    
-                ).font(.caption2).foregroundColor(.secondary)
+
+                ).font(.system(size: 12, weight: .bold))
             }
         }
     }
