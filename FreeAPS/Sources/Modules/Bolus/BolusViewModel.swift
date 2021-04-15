@@ -39,7 +39,7 @@ extension Bolus {
                 return
             }
 
-            let maxAmount = Double(max(amount, provider.pumpSettings().maxBolus))
+            let maxAmount = Double(min(amount, provider.pumpSettings().maxBolus))
 
             unlockmanager.unlock()
                 .sink { _ in } receiveValue: {
