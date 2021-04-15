@@ -38,9 +38,12 @@ extension Bolus {
                 showModal(for: nil)
                 return
             }
+
+            let maxAmount = Double(max(amount, provider.pumpSettings().maxBolus))
+
             unlockmanager.unlock()
                 .sink { _ in } receiveValue: {
-                    self.apsManager.enactBolus(amount: Double(self.amount), isSMB: false)
+                    self.apsManager.enactBolus(amount: maxAmount, isSMB: false)
                     self.showModal(for: nil)
                 }
                 .store(in: &lifetime)
