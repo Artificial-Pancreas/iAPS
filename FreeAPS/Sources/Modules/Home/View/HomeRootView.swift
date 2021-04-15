@@ -86,7 +86,11 @@ extension Home {
 
         var infoPanal: some View {
             HStack(alignment: .center) {
-                if let tempRate = viewModel.tempRate {
+                if viewModel.pumpSuspended {
+                    Text("Pump suspended")
+                        .font(.system(size: 12, weight: .bold)).foregroundColor(.loopGray)
+                        .padding(.leading, 8)
+                } else if let tempRate = viewModel.tempRate {
                     Text((numberFormatter.string(from: tempRate as NSNumber) ?? "0") + " U/hr")
                         .font(.system(size: 12, weight: .bold)).foregroundColor(.insulin)
                         .padding(.leading, 8)
@@ -190,8 +194,10 @@ extension Home {
                         suggestion: $viewModel.suggestion,
                         tempBasals: $viewModel.tempBasals,
                         boluses: $viewModel.boluses,
+                        suspensions: $viewModel.suspensions,
                         hours: .constant(viewModel.filteredHours),
                         maxBasal: $viewModel.maxBasal,
+                        autotunedBasalProfile: $viewModel.autotunedBasalProfile,
                         basalProfile: $viewModel.basalProfile,
                         tempTargets: $viewModel.tempTargets,
                         carbs: $viewModel.carbs,

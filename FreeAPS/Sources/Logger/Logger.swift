@@ -246,7 +246,6 @@ final class Logger {
         reporter.log(category.name, message, file: file, function: function, line: line)
         if !LoggerTestMode, maybeError?.shouldReportNonFatalIssue ?? true {
             reporter.reportNonFatalIssue(withError: loggerError.asNSError())
-            showAlert(message)
         }
     }
 

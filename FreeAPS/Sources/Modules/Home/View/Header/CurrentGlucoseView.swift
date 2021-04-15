@@ -55,7 +55,7 @@ struct CurrentGlucoseView: View {
                         } ??
                         "--"
 
-                ).font(.caption2).foregroundColor(.secondary)
+                ).font(.system(size: 12, weight: .bold))
             }
         }
     }

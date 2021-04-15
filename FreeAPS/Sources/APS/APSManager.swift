@@ -292,7 +292,7 @@ final class BaseAPSManager: APSManager, Injectable {
 
         pump.enactBolus(units: roundedAmout, automatic: isSMB).sink { completion in
             if case let .failure(error) = completion {
-                debug(.apsManager, "Bolus failed with error: \(error.localizedDescription)")
+                warning(.apsManager, "Bolus failed with error: \(error.localizedDescription)")
                 self.processError(APSError.pumpError(error))
             } else {
                 debug(.apsManager, "Bolus succeeded")
@@ -463,7 +463,7 @@ final class BaseAPSManager: APSManager, Injectable {
         guard let pump = pumpManager, verifyStatus() else {
             isLooping.send(false)
             debug(.apsManager, "Invalid pump state")
-            processError(APSError.invalidPumpState(message: "Pump is bolusing or suspended"))
+            processError(APSError.invalidPumpState(message: "Pump is busy, suspended or not set"))
             return
         }
 
@@ -493,7 +493,7 @@ final class BaseAPSManager: APSManager, Injectable {
             .flatMap { bolusPublisher }
             .sink { [weak self] completion in
                 if case let .failure(error) = completion {
-                    debug(.apsManager, "Loop failed with error: \(error.localizedDescription)")
+                    warning(.apsManager, "Loop failed with error: \(error.localizedDescription)")
                     self?.reportEnacted(suggestion: suggested, received: false)
                     self?.processError(APSError.pumpError(error))
                 } else {
@@ -524,7 +524,7 @@ final class BaseAPSManager: APSManager, Injectable {
     }
 
     private func processError(_ error: Error) {
-        debug(.apsManager, "\(error.localizedDescription)")
+        warning(.apsManager, "\(error.localizedDescription)")
         lastError.send(error)
     }
 

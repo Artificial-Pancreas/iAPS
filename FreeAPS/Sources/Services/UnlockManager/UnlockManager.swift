@@ -23,7 +23,7 @@ final class BaseUnlockManager: UnlockManager {
                 }
             }
 
-            let reason = "We need to unlock your data."
+            let reason = "We need to make sure you are the owner of the device."
 
             if context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &error) {
                 context.evaluatePolicy(

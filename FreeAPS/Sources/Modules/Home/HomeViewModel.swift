@@ -18,12 +18,15 @@ extension Home {
         @Published var glucoseDelta: Int?
         @Published var tempBasals: [PumpHistoryEvent] = []
         @Published var boluses: [PumpHistoryEvent] = []
+        @Published var suspensions: [PumpHistoryEvent] = []
         @Published var maxBasal: Decimal = 2
+        @Published var autotunedBasalProfile: [BasalProfileEntry] = []
         @Published var basalProfile: [BasalProfileEntry] = []
         @Published var tempTargets: [TempTarget] = []
         @Published var carbs: [CarbsEntry] = []
         @Published var timerDate = Date()
         @Published var closedLoop = false
+        @Published var pumpSuspended = false
         @Published var isLooping = false
         @Published var statusTitle = ""
         @Published var lastLoopDate: Date = .distantPast
@@ -45,6 +48,7 @@ extension Home {
             setupGlucose()
             setupBasals()
             setupBoluses()
+            setupSuspensions()
             setupPumpSettings()
             setupBasalProfile()
             setupTempTargets()
@@ -173,6 +177,15 @@ extension Home {
             }
         }
 
+        private func setupSuspensions() {
+            DispatchQueue.main.async {
+                self.suspensions = self.provider.pumpHistory(hours: self.filteredHours).filter {
+                    $0.type == .pumpSuspend || $0.type == .pumpResume
+                }
+                self.pumpSuspended = self.suspensions.last?.type == .pumpSuspend
+            }
+        }
+
         private func setupPumpSettings() {
             DispatchQueue.main.async {
                 self.maxBasal = self.provider.pumpSettings().maxBasal
@@ -181,6 +194,7 @@ extension Home {
 
         private func setupBasalProfile() {
             DispatchQueue.main.async {
+                self.autotunedBasalProfile = self.provider.autotunedBasalProfile()
                 self.basalProfile = self.provider.basalProfile()
             }
         }
@@ -279,6 +293,7 @@ extension Home.ViewModel:
     func pumpHistoryDidUpdate(_: [PumpHistoryEvent]) {
         setupBasals()
         setupBoluses()
+        setupSuspensions()
     }
 
     func pumpSettingsDidChange(_: PumpSettings) {
