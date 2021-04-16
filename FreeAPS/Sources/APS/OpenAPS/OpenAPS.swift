@@ -15,6 +15,7 @@ final class OpenAPS {
     func determineBasal(currentTemp: TempBasal, clock: Date = Date()) -> Future<Suggestion?, Never> {
         Future { promise in
             self.processQueue.async {
+                debug(.openAPS, "Start determineBasal")
                 // clock
                 self.storage.save(clock, as: Monitor.clock)
 
@@ -80,6 +81,7 @@ final class OpenAPS {
     func autosense() -> Future<Autosens?, Never> {
         Future { promise in
             self.processQueue.async {
+                debug(.openAPS, "Start autosens")
                 let pumpHistory = self.loadFileFromStorage(name: OpenAPS.Monitor.pumpHistory)
                 let carbs = self.loadFileFromStorage(name: Monitor.carbHistory)
                 let glucose = self.loadFileFromStorage(name: Monitor.glucose)
@@ -110,6 +112,7 @@ final class OpenAPS {
     func autotune(categorizeUamAsBasal: Bool = false, tuneInsulinCurve: Bool = false) -> Future<Autotune?, Never> {
         Future { promise in
             self.processQueue.async {
+                debug(.openAPS, "Start autotune")
                 let pumpHistory = self.loadFileFromStorage(name: OpenAPS.Monitor.pumpHistory)
                 let glucose = self.loadFileFromStorage(name: Monitor.glucose)
                 let profile = self.loadFileFromStorage(name: Settings.profile)
@@ -146,6 +149,7 @@ final class OpenAPS {
 
     func makeProfiles(useAutotune: Bool) -> Future<Autotune?, Never> {
         Future { promise in
+            debug(.openAPS, "Start makeProfiles")
             self.processQueue.async {
                 var preferences = self.loadFileFromStorage(name: Settings.preferences)
                 if preferences.isEmpty {

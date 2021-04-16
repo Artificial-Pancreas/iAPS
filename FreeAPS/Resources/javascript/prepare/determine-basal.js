@@ -1,5 +1,9 @@
 //для enact/smb-suggested.json параметры: monitor/iob.json monitor/temp_basal.json monitor/glucose.json settings/profile.json settings/autosens.json --meal monitor/meal.json --microbolus --reservoir monitor/reservoir.json
-var printLog = function(...args) {};
+var console = {
+    log: function(...args) { _consoleLog(args); },
+    error: function(...args) { _consoleLog(args); }
+};
+var printLog = function(...args) { console.log(args); };
 var process = { stderr: { write: printLog } };
 
 
