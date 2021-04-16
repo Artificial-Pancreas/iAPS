@@ -3,7 +3,7 @@
 function generate(iob, currenttemp, glucose, profile, autosens = null, meal = null, microbolusAllowed = false, reservoir = null, clock = new Date()) {
 
     try {
-        middleware(iob, currenttemp, glucose, profile, autosens, meal, microbolusAllowed, reservoir, clock);
+        middleware(iob, currenttemp, glucose, profile, autosens, meal, reservoir, clock);
     } catch (error) {
         console.log("Invalid middleware: " + error)
     }

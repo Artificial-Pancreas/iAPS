@@ -1,3 +1,3 @@
-function middleware(iob, currenttemp, glucose, profile, autosens, meal, microbolusAllowed, reservoir, clock) {
+function middleware(iob, currenttemp, glucose, profile, autosens, meal, reservoir, clock) {
     // modify anything
 }
