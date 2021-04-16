@@ -1,8 +1,4 @@
 //для monitor/iob.json параметры: monitor/pumphistory-24h-zoned.json settings/profile.json monitor/clock-zoned.json settings/autosens.json
-var console = {
-    log: function(...args) { _consoleLog(args); },
-    error: function(...args) { _consoleLog(args); }
-};
 
 function generate(pumphistory_data, profile_data, clock_data, autosens_data = null){
     var inputs = {

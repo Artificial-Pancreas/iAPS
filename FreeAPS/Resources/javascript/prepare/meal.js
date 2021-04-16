@@ -1,8 +1,4 @@
 //для monitor/meal.json параметры: monitor/pumphistory-24h-zoned.json settings/profile.json monitor/clock-zoned.json monitor/glucose.json settings/basal_profile.json monitor/carbhistory.json
-var console = {
-    log: function(...args) { _consoleLog(args); },
-    error: function(...args) { _consoleLog(args); }
-};
 
 function generate(pumphistory_data, profile_data, clock_data, glucose_data, basalprofile_data, carbhistory = false){
     if ( typeof(profile_data.carb_ratio) === 'undefined' || profile_data.carb_ratio < 3 ) {

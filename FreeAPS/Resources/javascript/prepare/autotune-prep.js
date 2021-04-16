@@ -1,8 +1,3 @@
-var console = {
-    log: function(...args) { _consoleLog(args); },
-    error: function(...args) { _consoleLog(args); }
-};
-
 function generate(pumphistory_data,profile_data,glucose_data,pumpprofile_data,carb_data={ },categorize_uam_as_basal=false,tune_insulin_curve=false){
     if ( typeof(profile_data.carb_ratio) === 'undefined' || profile_data.carb_ratio < 2 ) {
         if ( typeof(pumpprofile_data.carb_ratio) === 'undefined' || pumpprofile_data.carb_ratio < 2 ) {

@@ -1,8 +1,3 @@
-var console = {
-    log: function(...args) { _consoleLog(args); },
-    error: function(...args) { _consoleLog(args); }
-};
-
 function generate(prepped_glucose_data,previous_autotune_data,pumpprofile_data){
   if (!pumpprofile_data.useCustomPeakTime) {
       previous_autotune_data.dia = pumpprofile_data.dia;
