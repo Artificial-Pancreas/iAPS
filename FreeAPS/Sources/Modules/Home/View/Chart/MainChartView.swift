@@ -64,7 +64,7 @@ struct MainChartView: View {
 
     private let calculationQueue = DispatchQueue(label: "MainChartView.calculationQueue")
 
-    private var dateDormatter: DateFormatter {
+    private var dateFormatter: DateFormatter {
         let formatter = DateFormatter()
         formatter.timeStyle = .short
         return formatter
@@ -230,7 +230,7 @@ struct MainChartView: View {
         ZStack {
             // X time labels
             ForEach(0 ..< hours + hours) { hour in
-                Text(dateDormatter.string(from: firstHourDate().addingTimeInterval(hour.hours.timeInterval)))
+                Text(dateFormatter.string(from: firstHourDate().addingTimeInterval(hour.hours.timeInterval)))
                     .font(.caption)
                     .position(
                         x: firstHourPosition(viewWidth: fullSize.width) +
