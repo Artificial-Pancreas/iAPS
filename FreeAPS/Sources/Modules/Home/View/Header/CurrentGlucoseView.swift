@@ -30,25 +30,13 @@ struct CurrentGlucoseView: View {
         return formatter
     }
 
-    var latestGlucose: BloodGlucose?
-
     var colorOfGlucose: Color {
         var glucoseString =
             " \(recentGlucose?.glucose.map { glucoseFormatter.string(from: Double(units == .mmolL ? $0.asMmolL : Decimal($0)) as NSNumber)! })"
 
-        var glucoseStringClipped = String(glucoseString.dropFirst(11)) // Drop first 11 characters
+        var glucoseStringWithoutSuffix = String(glucoseString.dropFirst(11)) // Drop first 11 characters
 
-        var numberOfCharactersToDrop = 3
-
-        if glucoseStringClipped.prefix(2).contains(",") {
-            numberOfCharactersToDrop = 2
-        } else {
-            numberOfCharactersToDrop = 3
-        }
-
-        var glucoseStringTrimmed = String(glucoseStringClipped.dropLast(3)) // Drop last 3 characters
-
-        print(glucoseStringTrimmed)
+        var glucoseStringTrimmed = String(glucoseStringWithoutSuffix.dropLast(3)) // Drop last 3 characters
 
         switch glucoseStringTrimmed {
         case "10",
