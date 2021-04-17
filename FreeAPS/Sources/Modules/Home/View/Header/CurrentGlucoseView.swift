@@ -31,35 +31,14 @@ struct CurrentGlucoseView: View {
     }
 
     var colorOfGlucose: Color {
-        var glucoseString =
+        let glucoseString =
             " \(recentGlucose?.glucose.map { glucoseFormatter.string(from: Double(units == .mmolL ? $0.asMmolL : Decimal($0)) as NSNumber)! })"
 
-        var glucoseStringWithoutSuffix = String(glucoseString.dropFirst(11)) // Drop first 11 characters
+        let glucoseStringWithoutSuffix = String(glucoseString.dropFirst(11)) // Drop first 11 characters
 
-        var glucoseStringTrimmed = String(glucoseStringWithoutSuffix.dropLast(3)) // Drop last 3 characters
+        let glucoseStringTrimmed = String(glucoseStringWithoutSuffix.dropLast(3)) // Drop last 3 characters
 
         switch glucoseStringTrimmed {
-        case "10",
-             "11",
-             "12",
-             "13",
-             "14",
-             "15",
-             "16",
-             "17",
-             "18",
-             "19",
-             "20",
-             "21",
-             "22",
-             "23",
-             "24",
-             "25":
-            return .loopRed
-        case "1,",
-             "2,",
-             "3,":
-            return .loopRed
         case "4,",
              "5,",
              "6,",
@@ -69,7 +48,7 @@ struct CurrentGlucoseView: View {
              "9,":
             return .loopYellow
         default:
-            return .white
+            return .loopRed
         }
     }
 
