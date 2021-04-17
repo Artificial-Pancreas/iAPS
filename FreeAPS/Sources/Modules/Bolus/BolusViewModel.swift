@@ -29,7 +29,15 @@ extension Bolus {
             broadcaster.register(SuggestionObserver.self, observer: self)
 
             if waitForSuggestionInitial {
-                apsManager.determineBasal().sink { _ in }.store(in: &lifetime)
+                apsManager.determineBasal()
+                    .receive(on: DispatchQueue.main)
+                    .sink { ok in
+                        if !ok {
+                            self.waitForSuggestion = false
+                            self.inslinRequired = 0
+                            self.inslinRecommended = 0
+                        }
+                    }.store(in: &lifetime)
             }
         }
 

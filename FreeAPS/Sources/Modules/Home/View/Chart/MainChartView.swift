@@ -64,7 +64,7 @@ struct MainChartView: View {
 
     private let calculationQueue = DispatchQueue(label: "MainChartView.calculationQueue")
 
-    private var dateDormatter: DateFormatter {
+    private var dateFormatter: DateFormatter {
         let formatter = DateFormatter()
         formatter.timeStyle = .short
         return formatter
@@ -230,7 +230,7 @@ struct MainChartView: View {
         ZStack {
             // X time labels
             ForEach(0 ..< hours + hours) { hour in
-                Text(dateDormatter.string(from: firstHourDate().addingTimeInterval(hour.hours.timeInterval)))
+                Text(dateFormatter.string(from: firstHourDate().addingTimeInterval(hour.hours.timeInterval)))
                     .font(.caption)
                     .position(
                         x: firstHourPosition(viewWidth: fullSize.width) +
@@ -546,8 +546,13 @@ extension MainChartView {
 
             let lastRec = self.suspensions.last.flatMap { event -> CGRect? in
                 guard event.type == .pumpSuspend else { return nil }
+                let tbrTimeX = self.tempBasals.first { $0.timestamp > event.timestamp }
+                    .map { self.timeToXCoordinate($0.timestamp.timeIntervalSince1970, fullSize: fullSize) }
                 let x0 = self.timeToXCoordinate(event.timestamp.timeIntervalSince1970, fullSize: fullSize)
-                let x1 = self.fullGlucoseWidth(viewWidth: fullSize.width) + self.additionalWidth(viewWidth: fullSize.width)
+
+                let x1 = tbrTimeX ?? self.fullGlucoseWidth(viewWidth: fullSize.width) + self
+                    .additionalWidth(viewWidth: fullSize.width)
+
                 return CGRect(x: x0, y: 0, width: x1 - x0, height: Config.basalHeight)
             }
             rects.append(firstRec)

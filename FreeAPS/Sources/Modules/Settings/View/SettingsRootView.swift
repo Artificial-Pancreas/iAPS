@@ -80,6 +80,8 @@ extension Settings {
                         Group {
                             Text("Target presets").chevronCell()
                                 .navigationLink(to: .configEditor(file: OpenAPS.FreeAPS.tempTargetsPresets), from: self)
+                            Text("Middleware").chevronCell()
+                                .navigationLink(to: .configEditor(file: OpenAPS.Middleware.determineBasal), from: self)
                         }
                     }
                 }

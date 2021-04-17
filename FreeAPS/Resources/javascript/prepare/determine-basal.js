@@ -1,25 +1,30 @@
 //для enact/smb-suggested.json параметры: monitor/iob.json monitor/temp_basal.json monitor/glucose.json settings/profile.json settings/autosens.json --meal monitor/meal.json --microbolus --reservoir monitor/reservoir.json
-var printLog = function(...args) {};
-var process = { stderr: { write: printLog } };
 
+function generate(iob, currenttemp, glucose, profile, autosens = null, meal = null, microbolusAllowed = false, reservoir = null, clock = new Date()) {
 
-function generate(iob_data, currenttemp, glucose_data, profile, autosens_input = false, meal_input = false, microbolus = false, reservoir_input = false, clock = new Date()){
-    var glucose_status = freeaps_glucoseGetLast(glucose_data);
+    try {
+        var middlewareReason = middleware(iob, currenttemp, glucose, profile, autosens, meal, reservoir, clock);
+        console.log("Middleware reason: " + (middlewareReason || "Nothing changed"));
+    } catch (error) {
+        console.log("Invalid middleware: " + error);
+    }
+
+    var glucose_status = freeaps_glucoseGetLast(glucose);
     var autosens_data = null;
 
-    if (autosens_input) {
-        autosens_data = autosens_input;
+    if (autosens) {
+        autosens_data = autosens;
     }
 
     var reservoir_data = null;
-    if (reservoir_input) {
-        reservoir_data = reservoir_input;
+    if (reservoir) {
+        reservoir_data = reservoir;
     }
 
-    var meal_data = { };
-    if (meal_input) {
-        meal_data = meal_input;
+    var meal_data = {};
+    if (meal) {
+        meal_data = meal;
     }
 
-    return freeaps_determineBasal(glucose_status, currenttemp, iob_data, profile, autosens_data, meal_data, freeaps_basalSetTemp, microbolus, reservoir_data, clock);
+    return freeaps_determineBasal(glucose_status, currenttemp, iob, profile, autosens_data, meal_data, freeaps_basalSetTemp, microbolusAllowed, reservoir_data, clock);
 }

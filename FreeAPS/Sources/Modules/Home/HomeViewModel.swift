@@ -182,7 +182,11 @@ extension Home {
                 self.suspensions = self.provider.pumpHistory(hours: self.filteredHours).filter {
                     $0.type == .pumpSuspend || $0.type == .pumpResume
                 }
-                self.pumpSuspended = self.suspensions.last?.type == .pumpSuspend
+
+                let last = self.suspensions.last
+                let tbr = self.tempBasals.first { $0.timestamp > (last?.timestamp ?? .distantPast) }
+
+                self.pumpSuspended = tbr == nil && last?.type == .pumpSuspend
             }
         }
 

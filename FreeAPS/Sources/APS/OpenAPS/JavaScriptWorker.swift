@@ -19,6 +19,14 @@ final class JavaScriptWorker {
                 warning(.openAPS, "JavaScript Error: \(error)")
             }
         }
+        let consoleLog: @convention(block) (String) -> Void = { message in
+            debug(.openAPS, "JavaScript log: \(message)")
+        }
+
+        context.setObject(
+            consoleLog,
+            forKeyedSubscript: "_consoleLog" as NSString
+        )
         return context
     }
 
