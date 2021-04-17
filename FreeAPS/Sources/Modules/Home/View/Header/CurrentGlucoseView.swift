@@ -30,6 +30,61 @@ struct CurrentGlucoseView: View {
         return formatter
     }
 
+    var latestGlucose: BloodGlucose?
+
+    var colorOfGlucose: Color {
+        var glucoseString =
+            " \(recentGlucose?.glucose.map { glucoseFormatter.string(from: Double(units == .mmolL ? $0.asMmolL : Decimal($0)) as NSNumber)! })"
+
+        var glucoseStringClipped = String(glucoseString.dropFirst(11)) // Drop first 11 characters
+
+        var numberOfCharactersToDrop = 3
+
+        if glucoseStringClipped.prefix(2).contains(",") {
+            numberOfCharactersToDrop = 2
+        } else {
+            numberOfCharactersToDrop = 3
+        }
+
+        var glucoseStringTrimmed = String(glucoseStringClipped.dropLast(3)) // Drop last 3 characters
+
+        print(glucoseStringTrimmed)
+
+        switch glucoseStringTrimmed {
+        case "10",
+             "11",
+             "12",
+             "13",
+             "14",
+             "15",
+             "16",
+             "17",
+             "18",
+             "19",
+             "20",
+             "21",
+             "22",
+             "23",
+             "24",
+             "25":
+            return .loopRed
+        case "1,",
+             "2,",
+             "3,":
+            return .loopRed
+        case "4,",
+             "5,",
+             "6,",
+             "7,":
+            return .loopGreen
+        case "8,",
+             "9,":
+            return .loopYellow
+        default:
+            return .white
+        }
+    }
+
     var body: some View {
         VStack(alignment: .center, spacing: 6) {
             HStack(spacing: 8) {
@@ -42,6 +97,7 @@ struct CurrentGlucoseView: View {
                 )
                 .font(.system(size: 24, weight: .bold))
                 .fixedSize()
+                .foregroundColor(colorOfGlucose)
                 image.padding(.bottom, 2)
 
             }.padding(.leading, 4)
