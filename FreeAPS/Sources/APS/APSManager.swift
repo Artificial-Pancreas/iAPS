@@ -60,7 +60,7 @@ final class BaseAPSManager: APSManager, Injectable {
     @Injected() private var nightscout: NightscoutManager!
     @Injected() private var settingsManager: SettingsManager!
     @Injected() private var broadcaster: Broadcaster!
-    @Persisted(key: "lastAutotuneDate") private var lastAutotuneDate: Date = .distantPast
+    @Persisted(key: "lastAutotuneDate") private var lastAutotuneDate = Date()
     @Persisted(key: "lastLoopDate") var lastLoopDate: Date = .distantPast {
         didSet {
             lastLoopDateSubject.send(lastLoopDate)
