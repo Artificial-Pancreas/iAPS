@@ -33,9 +33,7 @@ struct CurrentGlucoseView: View {
     var colorOfGlucose: Color {
         let glucoseString =
             " \(recentGlucose?.glucose.map { glucoseFormatter.string(from: Double(units == .mmolL ? $0.asMmolL : Decimal($0)) as NSNumber)! })"
-
         let glucoseStringWithoutSuffix = String(glucoseString.dropFirst(11)) // Drop first 11 characters
-
         let glucoseStringTrimmed = String(glucoseStringWithoutSuffix.dropLast(3)) // Drop last 3 characters
 
         switch glucoseStringTrimmed {
