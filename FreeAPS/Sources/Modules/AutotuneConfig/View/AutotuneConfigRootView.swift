@@ -18,6 +18,13 @@ extension AutotuneConfig {
             return formatter
         }
 
+        private var dateFormatter: DateFormatter {
+            let formatter = DateFormatter()
+            formatter.dateStyle = .medium
+            formatter.timeStyle = .short
+            return formatter
+        }
+
         var body: some View {
             Form {
                 Section {
@@ -25,6 +32,11 @@ extension AutotuneConfig {
                 }
 
                 Section {
+                    HStack {
+                        Text("Last run")
+                        Spacer()
+                        Text(dateFormatter.string(from: viewModel.publishedDate))
+                    }
                     Button { viewModel.run() }
                     label: { Text("Run now") }
                 }

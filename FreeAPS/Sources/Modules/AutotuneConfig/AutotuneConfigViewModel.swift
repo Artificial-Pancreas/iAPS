@@ -8,11 +8,18 @@ extension AutotuneConfig {
         @Published var useAutotune = false
         @Published var autotune: Autotune?
         private(set) var units: GlucoseUnits = .mmolL
+        @Published var publishedDate = Date()
+        @Persisted(key: "lastAutotuneDate") private var lastAutotuneDate = Date() {
+            didSet {
+                publishedDate = lastAutotuneDate
+            }
+        }
 
         override func subscribe() {
             autotune = provider.autotune
             units = settingsManager.settings.units
             useAutotune = settingsManager.settings.useAutotune
+            publishedDate = lastAutotuneDate
 
             $useAutotune
                 .removeDuplicates()
@@ -31,7 +38,9 @@ extension AutotuneConfig {
                     self.autotune = result
                     return self.apsManager.makeProfiles()
                 }
-                .sink { _ in }.store(in: &lifetime)
+                .sink { _ in
+                    self.lastAutotuneDate = Date()
+                }.store(in: &lifetime)
         }
 
         func delete() {

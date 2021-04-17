@@ -1,6 +1,4 @@
 // для settings/autosens.json параметры: monitor/glucose.json monitor/pumphistory-24h-zoned.json settings/basal_profile.json settings/profile.json monitor/carbhistory.json settings/temptargets.json
-var printLog = function(...args) {};
-var process = { stderr: { write: printLog } };
 
 function generate(glucose_data, pumphistory_data, basalprofile, profile_data, carb_data = {}, temptarget_data = {}) {
     if (glucose_data.length < 72) {

@@ -6,6 +6,11 @@ struct Script {
 
     init(name: String) {
         self.name = name
-        body = try! String(contentsOf: Bundle.main.url(forResource: "javascript/\(name)", withExtension: "js")!)
+        body = try! String(contentsOf: Bundle.main.url(forResource: "javascript/\(name)", withExtension: "")!)
+    }
+
+    init(name: String, body: String) {
+        self.name = name
+        self.body = body
     }
 }

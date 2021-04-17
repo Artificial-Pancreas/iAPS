@@ -80,6 +80,12 @@ extension PreferencesEditor {
                     settable: self
                 ),
                 Field(
+                    displayName: "Advanced Target Adjustments",
+                    keypath: \.advTargetAdjustments,
+                    value: preferences.advTargetAdjustments,
+                    settable: self
+                ),
+                Field(
                     displayName: "Exercise Mode",
                     keypath: \.exerciseMode,
                     value: preferences.exerciseMode,

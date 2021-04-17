@@ -15,6 +15,7 @@ final class OpenAPS {
     func determineBasal(currentTemp: TempBasal, clock: Date = Date()) -> Future<Suggestion?, Never> {
         Future { promise in
             self.processQueue.async {
+                debug(.openAPS, "Start determineBasal")
                 // clock
                 self.storage.save(clock, as: Monitor.clock)
 
@@ -80,6 +81,7 @@ final class OpenAPS {
     func autosense() -> Future<Autosens?, Never> {
         Future { promise in
             self.processQueue.async {
+                debug(.openAPS, "Start autosens")
                 let pumpHistory = self.loadFileFromStorage(name: OpenAPS.Monitor.pumpHistory)
                 let carbs = self.loadFileFromStorage(name: Monitor.carbHistory)
                 let glucose = self.loadFileFromStorage(name: Monitor.glucose)
@@ -110,6 +112,7 @@ final class OpenAPS {
     func autotune(categorizeUamAsBasal: Bool = false, tuneInsulinCurve: Bool = false) -> Future<Autotune?, Never> {
         Future { promise in
             self.processQueue.async {
+                debug(.openAPS, "Start autotune")
                 let pumpHistory = self.loadFileFromStorage(name: OpenAPS.Monitor.pumpHistory)
                 let glucose = self.loadFileFromStorage(name: Monitor.glucose)
                 let profile = self.loadFileFromStorage(name: Settings.profile)
@@ -146,6 +149,7 @@ final class OpenAPS {
 
     func makeProfiles(useAutotune: Bool) -> Future<Autotune?, Never> {
         Future { promise in
+            debug(.openAPS, "Start makeProfiles")
             self.processQueue.async {
                 var preferences = self.loadFileFromStorage(name: Settings.preferences)
                 if preferences.isEmpty {
@@ -202,6 +206,7 @@ final class OpenAPS {
     private func iob(pumphistory: JSON, profile: JSON, clock: JSON, autosens: JSON) -> RawJSON {
         dispatchPrecondition(condition: .onQueue(processQueue))
         return jsWorker.inCommonContext { worker in
+            worker.evaluate(script: Script(name: Prepare.log))
             worker.evaluate(script: Script(name: Bundle.iob))
             worker.evaluate(script: Script(name: Prepare.iob))
             return worker.call(function: Function.generate, with: [
@@ -216,6 +221,7 @@ final class OpenAPS {
     private func meal(pumphistory: JSON, profile: JSON, basalProfile: JSON, clock: JSON, carbs: JSON, glucose: JSON) -> RawJSON {
         dispatchPrecondition(condition: .onQueue(processQueue))
         return jsWorker.inCommonContext { worker in
+            worker.evaluate(script: Script(name: Prepare.log))
             worker.evaluate(script: Script(name: Bundle.meal))
             worker.evaluate(script: Script(name: Prepare.meal))
             return worker.call(function: Function.generate, with: [
@@ -239,6 +245,7 @@ final class OpenAPS {
     ) -> RawJSON {
         dispatchPrecondition(condition: .onQueue(processQueue))
         return jsWorker.inCommonContext { worker in
+            worker.evaluate(script: Script(name: Prepare.log))
             worker.evaluate(script: Script(name: Bundle.autotunePrep))
             worker.evaluate(script: Script(name: Prepare.autotunePrep))
             return worker.call(function: Function.generate, with: [
@@ -259,6 +266,7 @@ final class OpenAPS {
     ) -> RawJSON {
         dispatchPrecondition(condition: .onQueue(processQueue))
         return jsWorker.inCommonContext { worker in
+            worker.evaluate(script: Script(name: Prepare.log))
             worker.evaluate(script: Script(name: Bundle.autotuneCore))
             worker.evaluate(script: Script(name: Prepare.autotuneCore))
             return worker.call(function: Function.generate, with: [
@@ -281,10 +289,16 @@ final class OpenAPS {
     ) -> RawJSON {
         dispatchPrecondition(condition: .onQueue(processQueue))
         return jsWorker.inCommonContext { worker in
+            worker.evaluate(script: Script(name: Prepare.log))
+            worker.evaluate(script: Script(name: Prepare.determineBasal))
             worker.evaluate(script: Script(name: Bundle.basalSetTemp))
             worker.evaluate(script: Script(name: Bundle.getLastGlucose))
             worker.evaluate(script: Script(name: Bundle.determineBasal))
-            worker.evaluate(script: Script(name: Prepare.determineBasal))
+
+            if let middleware = self.middlewareScript(name: OpenAPS.Middleware.determineBasal) {
+                worker.evaluate(script: middleware)
+            }
+
             return worker.call(
                 function: Function.generate,
                 with: [
@@ -311,6 +325,7 @@ final class OpenAPS {
     ) -> RawJSON {
         dispatchPrecondition(condition: .onQueue(processQueue))
         return jsWorker.inCommonContext { worker in
+            worker.evaluate(script: Script(name: Prepare.log))
             worker.evaluate(script: Script(name: Bundle.autosens))
             worker.evaluate(script: Script(name: Prepare.autosens))
             return worker.call(
@@ -330,6 +345,7 @@ final class OpenAPS {
     private func exportDefaultPreferences() -> RawJSON {
         dispatchPrecondition(condition: .onQueue(processQueue))
         return jsWorker.inCommonContext { worker in
+            worker.evaluate(script: Script(name: Prepare.log))
             worker.evaluate(script: Script(name: Bundle.profile))
             worker.evaluate(script: Script(name: Prepare.profile))
             return worker.call(function: Function.exportDefaults, with: [])
@@ -349,6 +365,7 @@ final class OpenAPS {
     ) -> RawJSON {
         dispatchPrecondition(condition: .onQueue(processQueue))
         return jsWorker.inCommonContext { worker in
+            worker.evaluate(script: Script(name: Prepare.log))
             worker.evaluate(script: Script(name: Bundle.profile))
             worker.evaluate(script: Script(name: Prepare.profile))
             return worker.call(
@@ -376,8 +393,21 @@ final class OpenAPS {
         storage.retrieveRaw(name) ?? OpenAPS.defaults(for: name)
     }
 
+    private func middlewareScript(name: String) -> Script? {
+        if let body = storage.retrieveRaw(name) {
+            return Script(name: "Middleware", body: body)
+        }
+
+        if let url = Foundation.Bundle.main.url(forResource: "js/\(name)", withExtension: "") {
+            return Script(name: "Middleware", body: try! String(contentsOf: url))
+        }
+
+        return nil
+    }
+
     static func defaults(for file: String) -> RawJSON {
-        guard let url = Foundation.Bundle.main.url(forResource: "json/defaults/\(file)", withExtension: "") else {
+        let prefix = file.hasSuffix(".json") ? "json/defaults" : "javascript"
+        guard let url = Foundation.Bundle.main.url(forResource: "\(prefix)/\(file)", withExtension: "") else {
             return ""
         }
         return (try? String(contentsOf: url)) ?? ""
