@@ -57,15 +57,16 @@ struct CurrentGlucoseView: View {
         let diff = Int(glucoseDate.timeIntervalSince1970 - now.timeIntervalSince1970)
         let hoursDiff = diff / 3600
         var minutesDiff = (diff - hoursDiff * 3600) / 60
+        minutesDiff.negate() // Remove "-" sign
         return minutesDiff
     }
 
     func colorOfMinutesAgo(_ minutes: Int) -> Color {
         print("number of minutes ago: \(minutesAgo)")
         switch minutes {
-        case -5 ... 0:
+        case 0 ... 5:
             return .loopGray
-        case -9 ... -6:
+        case 6 ... 9:
             return .loopYellow
         default:
             return .loopRed
@@ -90,7 +91,7 @@ struct CurrentGlucoseView: View {
             }.padding(.leading, 4)
             HStack(alignment: .lastTextBaseline, spacing: 2) {
                 Text(
-                    "\(minutesAgo)m  "
+                    "\(minutesAgo)min "
                 ).font(.caption2).foregroundColor(colorOfMinutesAgo(minutesAgo))
                 Text(
                     delta
