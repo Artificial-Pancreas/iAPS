@@ -20,6 +20,7 @@ protocol APSManager {
     func enactTempBasal(rate: Double, duration: TimeInterval)
     func makeProfiles() -> AnyPublisher<Bool, Never>
     func determineBasal() -> AnyPublisher<Bool, Never>
+    func determineBasalSync()
     func roundBolus(amount: Decimal) -> Decimal
     var lastError: CurrentValueSubject<Error?, Never> { get }
     func cancelBolus()
@@ -264,6 +265,10 @@ final class BaseAPSManager: APSManager, Injectable {
         }
 
         return mainPublisher
+    }
+
+    func determineBasalSync() {
+        determineBasal().sink { _ in }.store(in: &lifetime)
     }
 
     func makeProfiles() -> AnyPublisher<Bool, Never> {
