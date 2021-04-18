@@ -55,17 +55,18 @@ struct CurrentGlucoseView: View {
         let glucoseDate = Date(lastGlucoseDate) ?? Date()
         let now = Date()
         let diff = Int(glucoseDate.timeIntervalSince1970 - now.timeIntervalSince1970)
-        let hours = diff / 3600
-        var minutes = (diff - hours * 3600) / 60
-        return minutes
+        let hoursDiff = diff / 3600
+        var minutesDiff = (diff - hoursDiff * 3600) / 60
+        return minutesDiff
     }
 
     func colorOfMinutes(_ minutes: Int) -> Color {
+        print("number of minutes ago: \(minutesAgo)")
         switch minutes {
-        case 6 ... 9:
-            return .loopYellow
-        case 0 ... 5:
+        case -5 ... 0:
             return .loopGray
+        case -9 ... -6:
+            return .loopYellow
         default:
             return .loopRed
         }
