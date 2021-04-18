@@ -9,6 +9,7 @@ protocol GlucoseStorage {
     func filterTooFrequentGlucose(_ glucose: [BloodGlucose], at: Date) -> [BloodGlucose]
     func lastGlucoseDate() -> Date
     func isGlucoseFresh() -> Bool
+    func isGlucoseNotFlat() -> Bool
 }
 
 final class BaseGlucoseStorage: GlucoseStorage, Injectable {
@@ -78,6 +79,13 @@ final class BaseGlucoseStorage: GlucoseStorage, Injectable {
         }
 
         return filtered
+    }
+
+    func isGlucoseNotFlat() -> Bool {
+        let last3 = recent().suffix(3)
+        guard last3.count == 3 else { return true }
+
+        return Array(last3.compactMap { $0.filtered ?? Decimal($0.sgv ?? 0) }.uniqued()).count > 1
     }
 }
 

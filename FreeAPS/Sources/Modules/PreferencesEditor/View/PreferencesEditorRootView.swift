@@ -24,6 +24,8 @@ extension PreferencesEditor {
                         Text("Recommended Insulin Fraction")
                         DecimalTextField("", value: $viewModel.insulinReqFraction, formatter: formatter)
                     }
+
+                    Toggle("Skip Bolus screen after carbs", isOn: $viewModel.skipBolusScreenAfterCarbs)
                 }
 
                 Section(header: Text("OpenAPS")) {

@@ -20,6 +20,7 @@ protocol APSManager {
     func enactTempBasal(rate: Double, duration: TimeInterval)
     func makeProfiles() -> AnyPublisher<Bool, Never>
     func determineBasal() -> AnyPublisher<Bool, Never>
+    func determineBasalSync()
     func roundBolus(amount: Decimal) -> Decimal
     var lastError: CurrentValueSubject<Error?, Never> { get }
     func cancelBolus()
@@ -225,6 +226,12 @@ final class BaseAPSManager: APSManager, Injectable {
             return Just(false).eraseToAnyPublisher()
         }
 
+        guard glucoseStorage.isGlucoseNotFlat() else {
+            debug(.apsManager, "Glucose data is too flat")
+            processError(APSError.glucoseError(message: "Glucose data is too flat"))
+            return Just(false).eraseToAnyPublisher()
+        }
+
         let now = Date()
         let temp = currentTemp(date: now)
 
@@ -260,6 +267,10 @@ final class BaseAPSManager: APSManager, Injectable {
         return mainPublisher
     }
 
+    func determineBasalSync() {
+        determineBasal().sink { _ in }.store(in: &lifetime)
+    }
+
     func makeProfiles() -> AnyPublisher<Bool, Never> {
         openAPS.makeProfiles(useAutotune: settings.useAutotune)
             .map { tunedProfile in
@@ -284,7 +295,7 @@ final class BaseAPSManager: APSManager, Injectable {
     private var bolusReporter: DoseProgressReporter?
 
     func enactBolus(amount: Double, isSMB: Bool) {
-        guard let pump = pumpManager, verifyStatus() else { return }
+        guard let pump = pumpManager, verifyStatus(), bolusReporter == nil else { return }
 
         let roundedAmout = pump.roundToSupportedBolusVolume(units: amount)
 
@@ -460,10 +471,10 @@ final class BaseAPSManager: APSManager, Injectable {
             return
         }
 
-        guard let pump = pumpManager, verifyStatus() else {
+        guard let pump = pumpManager, verifyStatus(), bolusReporter == nil else {
             isLooping.send(false)
             debug(.apsManager, "Invalid pump state")
-            processError(APSError.invalidPumpState(message: "Pump is busy, suspended or not set"))
+            processError(APSError.invalidPumpState(message: "Pump is bolusing, suspended or not set"))
             return
         }
 

@@ -20,7 +20,7 @@ struct MainChartView: View {
     private enum Config {
         static let endID = "End"
         static let screenHours = 5
-        static let basalHeight: CGFloat = 60
+        static let basalHeight: CGFloat = 70
         static let topYPadding: CGFloat = 20
         static let bottomYPadding: CGFloat = 50
         static let minAdditionalWidth: CGFloat = 150
@@ -28,7 +28,7 @@ struct MainChartView: View {
         static let minGlucose = 70
         static let yLinesCount = 5
         static let bolusSize: CGFloat = 8
-        static let bolusScale: CGFloat = 3
+        static let bolusScale: CGFloat = 2.5
         static let carbsSize: CGFloat = 10
         static let carbsScale: CGFloat = 0.3
     }
@@ -572,7 +572,18 @@ extension MainChartView {
         if let cached = cachedMaxBasalRate {
             return cached
         }
-        cachedMaxBasalRate = tempBasals.compactMap(\.rate).max() ?? maxBasal
+
+        let maxRegularBasalRate = max(
+            basalProfile.map(\.rate).max() ?? maxBasal,
+            autotunedBasalProfile.map(\.rate).max() ?? maxBasal
+        )
+
+        var maxTempBasalRate = tempBasals.compactMap(\.rate).max() ?? maxRegularBasalRate
+        if maxTempBasalRate == 0 {
+            maxTempBasalRate = maxRegularBasalRate
+        }
+
+        cachedMaxBasalRate = max(maxTempBasalRate, maxRegularBasalRate)
         return cachedMaxBasalRate!
     }
 

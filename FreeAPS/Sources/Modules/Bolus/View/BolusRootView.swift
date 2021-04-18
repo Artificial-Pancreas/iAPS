@@ -3,6 +3,7 @@ import SwiftUI
 extension Bolus {
     struct RootView: BaseView {
         @EnvironmentObject var viewModel: ViewModel<Provider>
+        @State private var isAddInsulinAlertPresented = false
 
         private var formatter: NumberFormatter {
             let formatter = NumberFormatter()
@@ -59,16 +60,34 @@ extension Bolus {
                     Section {
                         Button { viewModel.add() }
                         label: { Text("Enact bolus") }
+                            .disabled(viewModel.amount <= 0)
 
                         if viewModel.waitForSuggestionInitial {
                             Button { viewModel.showModal(for: nil) }
                             label: { Text("Continue without bolus") }
-                        } else {
-                            Button { viewModel.addWithoutBolus() }
+                        }
+                    }
+
+                    Section {
+                        if !viewModel.waitForSuggestionInitial {
+                            Button { isAddInsulinAlertPresented = true }
                             label: { Text("Add insulin without actually bolusing") }
+                                .disabled(viewModel.amount <= 0)
                         }
                     }
                 }
+            }
+            .alert(isPresented: $isAddInsulinAlertPresented) {
+                let amount = formatter.string(from: viewModel.amount as NSNumber)! + " U"
+                return Alert(
+                    title: Text("Are your sure?"),
+                    message: Text("Add \(amount) without bolusing"),
+                    primaryButton: .destructive(
+                        Text("Add"),
+                        action: { viewModel.addWithoutBolus() }
+                    ),
+                    secondaryButton: .cancel()
+                )
             }
             .navigationTitle("Enact Bolus")
             .navigationBarTitleDisplayMode(.automatic)
