@@ -225,6 +225,12 @@ final class BaseAPSManager: APSManager, Injectable {
             return Just(false).eraseToAnyPublisher()
         }
 
+        guard glucoseStorage.isGlucoseNotFlat() else {
+            debug(.apsManager, "Glucose data is stale")
+            processError(APSError.glucoseError(message: "Glucose data is too flat"))
+            return Just(false).eraseToAnyPublisher()
+        }
+
         let now = Date()
         let temp = currentTemp(date: now)
 
