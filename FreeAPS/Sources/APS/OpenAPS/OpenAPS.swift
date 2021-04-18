@@ -398,7 +398,7 @@ final class OpenAPS {
             return Script(name: "Middleware", body: body)
         }
 
-        if let url = Foundation.Bundle.main.url(forResource: "js/\(name)", withExtension: "") {
+        if let url = Foundation.Bundle.main.url(forResource: "javascript/\(name)", withExtension: "") {
             return Script(name: "Middleware", body: try! String(contentsOf: url))
         }
 
