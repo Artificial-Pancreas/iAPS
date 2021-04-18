@@ -32,11 +32,11 @@ struct CurrentGlucoseView: View {
 
     var colorOfGlucose: Color {
         let glucoseString =
-            " \(recentGlucose?.glucose.map { glucoseFormatter.string(from: Double(units == .mmolL ? $0.asMmolL : Decimal($0)) as NSNumber)! })"
-        let glucoseStringWithoutSuffix = String(glucoseString.dropFirst(11)) // Drop first 11 characters "Conditional"
-        let glucoseStringTrimmed = String(glucoseStringWithoutSuffix.dropLast(3)) // Drop last 3 characters "x")"
+            recentGlucose?.glucose
+                .map { glucoseFormatter.string(from: Double(units == .mmolL ? $0.asMmolL : Decimal($0)) as NSNumber)! } ?? "--"
+        let glucoseStringFirstTwoCharacters = String(glucoseString.dropLast(1))
 
-        switch glucoseStringTrimmed {
+        switch glucoseStringFirstTwoCharacters {
         case "4,",
              "5,",
              "6,",
@@ -45,6 +45,27 @@ struct CurrentGlucoseView: View {
         case "8,",
              "9,":
             return .loopYellow
+        default:
+            return .loopRed
+        }
+    }
+
+    var minutesAgo: Int {
+        let lastGlucoseDate = recentGlucose.map { dateFormatter.string(from: $0.dateString) } ?? "--"
+        let glucoseDate = Date(lastGlucoseDate) ?? Date()
+        let now = Date()
+        let diff = Int(glucoseDate.timeIntervalSince1970 - now.timeIntervalSince1970)
+        let hours = diff / 3600
+        var minutes = (diff - hours * 3600) / 60
+        return minutes
+    }
+
+    func colorOfMinutes(_ minutes: Int) -> Color {
+        switch minutes {
+        case 6 ... 9:
+            return .loopYellow
+        case 0 ... 5:
+            return .loopGray
         default:
             return .loopRed
         }
@@ -68,8 +89,8 @@ struct CurrentGlucoseView: View {
             }.padding(.leading, 4)
             HStack(spacing: 2) {
                 Text(
-                    recentGlucose.map { dateFormatter.string(from: $0.dateString) } ?? "--"
-                ).font(.caption2).foregroundColor(.secondary)
+                    "\(minutesAgo) min "
+                ).font(.caption2).foregroundColor(colorOfMinutes(minutesAgo))
                 Text(
                     delta
                         .map { deltaFormatter.string(from: Double(units == .mmolL ? $0.asMmolL : Decimal($0)) as NSNumber)!
