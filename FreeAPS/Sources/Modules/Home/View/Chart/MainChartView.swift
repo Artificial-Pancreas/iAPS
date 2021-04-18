@@ -573,6 +573,9 @@ extension MainChartView {
             return cached
         }
         cachedMaxBasalRate = tempBasals.compactMap(\.rate).max() ?? maxBasal
+        if cachedMaxBasalRate == 0 {
+            cachedMaxBasalRate = maxBasal
+        }
         return cachedMaxBasalRate!
     }
 
