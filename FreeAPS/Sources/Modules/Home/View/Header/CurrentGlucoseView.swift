@@ -60,7 +60,7 @@ struct CurrentGlucoseView: View {
         return minutesDiff
     }
 
-    func colorOfMinutes(_ minutes: Int) -> Color {
+    func colorOfMinutesAgo(_ minutes: Int) -> Color {
         print("number of minutes ago: \(minutesAgo)")
         switch minutes {
         case -5 ... 0:
@@ -91,7 +91,7 @@ struct CurrentGlucoseView: View {
             HStack(spacing: 2) {
                 Text(
                     "\(minutesAgo) min "
-                ).font(.caption2).foregroundColor(colorOfMinutes(minutesAgo))
+                ).font(.caption2).foregroundColor(colorOfMinutesAgo(minutesAgo))
                 Text(
                     delta
                         .map { deltaFormatter.string(from: Double(units == .mmolL ? $0.asMmolL : Decimal($0)) as NSNumber)!
