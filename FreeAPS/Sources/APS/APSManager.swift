@@ -284,7 +284,7 @@ final class BaseAPSManager: APSManager, Injectable {
     private var bolusReporter: DoseProgressReporter?
 
     func enactBolus(amount: Double, isSMB: Bool) {
-        guard let pump = pumpManager, verifyStatus() else { return }
+        guard let pump = pumpManager, verifyStatus(), bolusReporter == nil else { return }
 
         let roundedAmout = pump.roundToSupportedBolusVolume(units: amount)
 
@@ -460,10 +460,10 @@ final class BaseAPSManager: APSManager, Injectable {
             return
         }
 
-        guard let pump = pumpManager, verifyStatus() else {
+        guard let pump = pumpManager, verifyStatus(), bolusReporter == nil else {
             isLooping.send(false)
             debug(.apsManager, "Invalid pump state")
-            processError(APSError.invalidPumpState(message: "Pump is busy, suspended or not set"))
+            processError(APSError.invalidPumpState(message: "Pump is bolusing, suspended or not set"))
             return
         }
 
