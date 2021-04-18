@@ -226,7 +226,7 @@ final class BaseAPSManager: APSManager, Injectable {
         }
 
         guard glucoseStorage.isGlucoseNotFlat() else {
-            debug(.apsManager, "Glucose data is stale")
+            debug(.apsManager, "Glucose data is too flat")
             processError(APSError.glucoseError(message: "Glucose data is too flat"))
             return Just(false).eraseToAnyPublisher()
         }
