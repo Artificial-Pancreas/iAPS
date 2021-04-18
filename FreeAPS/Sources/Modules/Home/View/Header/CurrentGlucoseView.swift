@@ -51,8 +51,8 @@ struct CurrentGlucoseView: View {
     }
 
     var minutesAgo: Int {
-        let lastGlucoseDate = recentGlucose.map { dateFormatter.string(from: $0.dateString) } ?? "--"
-        let glucoseDate = Date(lastGlucoseDate) ?? Date()
+        let lastGlucoseDateString = recentGlucose.map { dateFormatter.string(from: $0.dateString) } ?? "--"
+        let glucoseDate = Date(lastGlucoseDateString) ?? Date()
         let now = Date()
         let diff = Int(glucoseDate.timeIntervalSince1970 - now.timeIntervalSince1970)
         let hoursDiff = diff / 3600
@@ -62,7 +62,6 @@ struct CurrentGlucoseView: View {
     }
 
     func colorOfMinutesAgo(_ minutes: Int) -> Color {
-        print("number of minutes ago: \(minutesAgo)")
         switch minutes {
         case 0 ... 5:
             return .loopGray
