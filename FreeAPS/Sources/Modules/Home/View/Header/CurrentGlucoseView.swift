@@ -19,7 +19,7 @@ struct CurrentGlucoseView: View {
     private var deltaFormatter: NumberFormatter {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
-        formatter.maximumFractionDigits = 2
+        formatter.maximumFractionDigits = 1
         formatter.positivePrefix = "+"
         return formatter
     }
@@ -97,9 +97,7 @@ struct CurrentGlucoseView: View {
                         .map { deltaFormatter.string(from: Double(units == .mmolL ? $0.asMmolL : Decimal($0)) as NSNumber)!
                         } ??
                         "--"
-
-                ).font(.system(size: 12, weight: .bold))
-            }
+                ).font(.system(size: 12, weight: .bold)) }
         }
     }
 
