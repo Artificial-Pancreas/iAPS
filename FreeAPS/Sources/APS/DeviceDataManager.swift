@@ -218,6 +218,7 @@ extension BaseDeviceDataManager: PumpManagerDelegate {
 
     func pumpManagerWillDeactivate(_: PumpManager) {
         pumpManager = nil
+        pumpUpdateInProgress = false
     }
 
     func pumpManager(_: PumpManager, didUpdatePumpRecordsBasalProfileStartEvents _: Bool) {}
@@ -315,7 +316,7 @@ extension BaseDeviceDataManager: DeviceManagerDelegate {
         message: String,
         completion _: ((Error?) -> Void)?
     ) {
-        debug(.deviceManager, message)
+        debug(.deviceManager, "Device message: \(message)")
     }
 }
 
@@ -323,7 +324,6 @@ extension BaseDeviceDataManager: DeviceManagerDelegate {
 
 extension BaseDeviceDataManager: AlertPresenter {
     func issueAlert(_: Alert) {}
-
     func retractAlert(identifier _: Alert.Identifier) {}
 }
 
