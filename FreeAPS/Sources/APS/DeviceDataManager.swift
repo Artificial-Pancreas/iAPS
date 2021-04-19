@@ -47,6 +47,7 @@ final class BaseDeviceDataManager: DeviceDataManager, Injectable {
     let recommendsLoop = PassthroughSubject<Void, Never>()
     let bolusTrigger = PassthroughSubject<Bool, Never>()
     let errorSubject = PassthroughSubject<Error, Never>()
+    let pumpNewStatus = PassthroughSubject<Void, Never>()
 
     var pumpManager: PumpManagerUI? {
         didSet {
