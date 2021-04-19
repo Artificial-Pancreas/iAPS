@@ -85,7 +85,12 @@ final class BaseGlucoseStorage: GlucoseStorage, Injectable {
         let last3 = recent().suffix(3)
         guard last3.count == 3 else { return true }
 
-        return Array(last3.compactMap { $0.filtered ?? Decimal($0.sgv ?? 0) }.uniqued()).count > 1
+        return Array(
+            last3
+                .compactMap { $0.filtered ?? Decimal($0.sgv ?? 0) }
+                .filter { $0 != 0 }
+                .uniqued()
+        ).count != 1
     }
 }
 
