@@ -28,6 +28,7 @@ enum PreferencesEditor {
 protocol PreferencesEditorProvider: Provider {
     var preferences: Preferences { get }
     func savePreferences(_ preferences: Preferences)
+    func migrateUnits()
 }
 
 protocol PreferencesSettable: AnyObject {
