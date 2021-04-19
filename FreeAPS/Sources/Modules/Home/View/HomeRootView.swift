@@ -46,7 +46,7 @@ extension Home {
                 CurrentGlucoseView(
                     recentGlucose: $viewModel.recentGlucose,
                     delta: $viewModel.glucoseDelta,
-                    units: viewModel.units
+                    units: $viewModel.units
                 )
                 .onTapGesture {
                     viewModel.openCGM()
@@ -202,7 +202,7 @@ extension Home {
                         tempTargets: $viewModel.tempTargets,
                         carbs: $viewModel.carbs,
                         timerDate: $viewModel.timerDate,
-                        units: viewModel.units
+                        units: $viewModel.units
                     )
                     .padding(.bottom)
                     .modal(for: .dataTable, from: self)

@@ -34,12 +34,12 @@ final class BaseAnnouncementsStorage: AnnouncementsStorage, Injectable {
     }
 
     func syncDate() -> Date {
-        guard let events = storage.retrieve(OpenAPS.FreeAPS.announcements, as: [Announcement].self),
-              let recent = events.filter({ $0.enteredBy != Announcement.remote }).first
+        guard let events = storage.retrieve(OpenAPS.FreeAPS.announcementsEnacted, as: [Announcement].self),
+              let recentEnacted = events.filter({ $0.enteredBy == Announcement.remote }).first
         else {
-            return Date().addingTimeInterval(-1.days.timeInterval)
+            return Date().addingTimeInterval(-Config.recentInterval)
         }
-        return recent.createdAt.addingTimeInterval(-6.minutes.timeInterval)
+        return recentEnacted.createdAt.addingTimeInterval(Config.recentInterval)
     }
 
     func recent() -> Announcement? {

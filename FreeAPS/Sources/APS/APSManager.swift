@@ -24,6 +24,7 @@ protocol APSManager {
     func roundBolus(amount: Decimal) -> Decimal
     var lastError: CurrentValueSubject<Error?, Never> { get }
     func cancelBolus()
+    func enactAnnouncement(_ announcement: Announcement)
 }
 
 enum APSError: LocalizedError {
@@ -110,7 +111,7 @@ final class BaseAPSManager: APSManager, Injectable {
         deviceDataManager.recommendsLoop
             .receive(on: processQueue)
             .sink { [weak self] in
-                self?.fetchAndLoop()
+                self?.loop()
             }
             .store(in: &lifetime)
         pumpManager?.addStatusObserver(self, queue: processQueue)
@@ -125,34 +126,18 @@ final class BaseAPSManager: APSManager, Injectable {
 
         deviceDataManager.bolusTrigger
             .receive(on: processQueue)
-            .sink {
-                self.createBolusReporter()
+            .sink { bolusing in
+                if bolusing {
+                    self.createBolusReporter()
+                } else {
+                    self.clearBolusReporter()
+                }
             }
             .store(in: &lifetime)
     }
 
     func heartbeat(date: Date, force: Bool) {
         deviceDataManager.heartbeat(date: date, force: force)
-    }
-
-    private func fetchAndLoop() {
-        if settings.allowAnnouncements {
-            nightscout.fetchAnnouncements()
-                .sink { [weak self] in
-                    guard let self = self else { return }
-                    guard self.pumpManager != nil,
-                          let recent = self.announcementsStorage.recent(),
-                          recent.action != nil
-                    else {
-                        self.loop()
-                        return
-                    }
-                    self.enactAnnouncement(recent)
-                }
-                .store(in: &lifetime)
-        } else {
-            loop()
-        }
     }
 
     private func loop() {
@@ -370,46 +355,60 @@ final class BaseAPSManager: APSManager, Injectable {
         openAPS.autotune().eraseToAnyPublisher()
     }
 
-    private func enactAnnouncement(_ announcement: Announcement) {
+    func enactAnnouncement(_ announcement: Announcement) {
         guard let action = announcement.action else {
-            debug(.apsManager, "Invalid Announcement action")
+            warning(.apsManager, "Invalid Announcement action")
             return
         }
+
+        guard let pump = pumpManager else {
+            warning(.apsManager, "Pump is not set")
+            return
+        }
+
+        debug(.apsManager, "Start enact announcement: \(action)")
+
         switch action {
         case let .bolus(amount):
             guard verifyStatus() else {
                 return
             }
-            pumpManager?.enactBolus(units: Double(amount), automatic: false) { result in
+            let roundedAmount = pump.roundToSupportedBolusVolume(units: Double(amount))
+            pump.enactBolus(units: roundedAmount, automatic: false) { result in
                 switch result {
                 case .success:
                     debug(.apsManager, "Announcement Bolus succeeded")
                     self.announcementsStorage.storeAnnouncements([announcement], enacted: true)
                 case let .failure(error):
-                    debug(.apsManager, "Announcement Bolus failed with error: \(error.localizedDescription)")
+                    warning(.apsManager, "Announcement Bolus failed with error: \(error.localizedDescription)")
                 }
             }
         case let .pump(pumpAction):
             switch pumpAction {
             case .suspend:
-                guard verifyStatus() else {
+                guard verifyStatus(), !pump.status.pumpStatus.suspended else {
                     return
                 }
-                pumpManager?.suspendDelivery { error in
+                pump.suspendDelivery { error in
                     if let error = error {
                         debug(.apsManager, "Pump not suspended by Announcement: \(error.localizedDescription)")
                     } else {
                         debug(.apsManager, "Pump suspended by Announcement")
                         self.announcementsStorage.storeAnnouncements([announcement], enacted: true)
+                        self.nightscout.uploadStatus()
                     }
                 }
             case .resume:
-                pumpManager?.resumeDelivery { error in
+                guard pump.status.pumpStatus.suspended else {
+                    return
+                }
+                pump.resumeDelivery { error in
                     if let error = error {
-                        debug(.apsManager, "Pump not resumed by Announcement: \(error.localizedDescription)")
+                        warning(.apsManager, "Pump not resumed by Announcement: \(error.localizedDescription)")
                     } else {
                         debug(.apsManager, "Pump resumed by Announcement")
                         self.announcementsStorage.storeAnnouncements([announcement], enacted: true)
+                        self.nightscout.uploadStatus()
                     }
                 }
             }
@@ -418,16 +417,17 @@ final class BaseAPSManager: APSManager, Injectable {
             debug(.apsManager, "Closed loop \(closedLoop) by Announcement")
             announcementsStorage.storeAnnouncements([announcement], enacted: true)
         case let .tempbasal(rate, duration):
-            guard verifyStatus() else {
+            guard verifyStatus(), !settings.closedLoop else {
                 return
             }
-            pumpManager?.enactTempBasal(unitsPerHour: Double(rate), for: TimeInterval(duration) * 60) { result in
+            let roundedRate = pump.roundToSupportedBasalRate(unitsPerHour: Double(rate))
+            pump.enactTempBasal(unitsPerHour: roundedRate, for: TimeInterval(duration) * 60) { result in
                 switch result {
                 case .success:
                     debug(.apsManager, "Announcement TempBasal succeeded")
                     self.announcementsStorage.storeAnnouncements([announcement], enacted: true)
                 case let .failure(error):
-                    debug(.apsManager, "Announcement TempBasal failed with error: \(error.localizedDescription)")
+                    warning(.apsManager, "Announcement TempBasal failed with error: \(error.localizedDescription)")
                 }
             }
         }
@@ -543,6 +543,12 @@ final class BaseAPSManager: APSManager, Injectable {
         bolusReporter = pumpManager?.createBolusProgressReporter(reportingOn: processQueue)
         bolusReporter?.addObserver(self)
     }
+
+    private func clearBolusReporter() {
+        bolusReporter?.removeObserver(self)
+        bolusReporter = nil
+        bolusProgress.send(nil)
+    }
 }
 
 private extension PumpManager {
@@ -629,9 +635,7 @@ extension BaseAPSManager: DoseProgressObserver {
     func doseProgressReporterDidUpdate(_ doseProgressReporter: DoseProgressReporter) {
         bolusProgress.send(Decimal(doseProgressReporter.progress.percentComplete))
         if doseProgressReporter.progress.isComplete {
-            bolusReporter?.removeObserver(self)
-            bolusReporter = nil
-            bolusProgress.send(nil)
+            clearBolusReporter()
         }
     }
 }

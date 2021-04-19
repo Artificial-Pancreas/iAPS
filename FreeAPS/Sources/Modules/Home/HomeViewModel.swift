@@ -42,7 +42,7 @@ extension Home {
         @Published var bolusProgress: Decimal?
 
         @Published var allowManualTemp = false
-        private(set) var units: GlucoseUnits = .mmolL
+        @Published var units: GlucoseUnits = .mmolL
 
         override func subscribe() {
             setupGlucose()
@@ -292,6 +292,7 @@ extension Home.ViewModel:
     func settingsDidChange(_ settings: FreeAPSSettings) {
         allowManualTemp = !settings.closedLoop
         closedLoop = settingsManager.settings.closedLoop
+        units = settingsManager.settings.units
     }
 
     func pumpHistoryDidUpdate(_: [PumpHistoryEvent]) {

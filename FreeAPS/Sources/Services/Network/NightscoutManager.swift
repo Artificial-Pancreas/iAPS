@@ -7,7 +7,7 @@ protocol NightscoutManager {
     func fetchGlucose() -> AnyPublisher<[BloodGlucose], Never>
     func fetchCarbs() -> AnyPublisher<[CarbsEntry], Never>
     func fetchTempTargets() -> AnyPublisher<[TempTarget], Never>
-    func fetchAnnouncements() -> AnyPublisher<Void, Never>
+    func fetchAnnouncements() -> AnyPublisher<[Announcement], Never>
     func deleteCarbs(at date: Date)
     func uploadStatus()
     var cgmURL: URL? { get }
@@ -113,18 +113,15 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
             .eraseToAnyPublisher()
     }
 
-    func fetchAnnouncements() -> AnyPublisher<Void, Never> {
+    func fetchAnnouncements() -> AnyPublisher<[Announcement], Never> {
         guard let nightscout = nightscoutAPI, isNetworkReachable else {
-            return Just(()).eraseToAnyPublisher()
+            return Just([]).eraseToAnyPublisher()
         }
 
         let since = announcementsStorage.syncDate()
         return nightscout.fetchAnnouncement(sinceDate: since)
             .replaceError(with: [])
-            .map {
-                self.announcementsStorage.storeAnnouncements($0, enacted: false)
-                return ()
-            }.eraseToAnyPublisher()
+            .eraseToAnyPublisher()
     }
 
     func deleteCarbs(at date: Date) {
