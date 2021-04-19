@@ -88,7 +88,7 @@ struct CurrentGlucoseView: View {
                 image.padding(.bottom, 2)
 
             }.padding(.leading, 4)
-            HStack(spacing: 2) {
+            HStack(alignment: .lastTextBaseline, spacing: 2) {
                 Text(
                     "\(minutesAgo)m "
                 ).font(.caption2).foregroundColor(colorOfMinutesAgo(minutesAgo))

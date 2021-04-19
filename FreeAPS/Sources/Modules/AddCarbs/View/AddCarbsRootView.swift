@@ -26,6 +26,7 @@ extension AddCarbs {
                 Section {
                     Button { viewModel.add() }
                     label: { Text("Add") }
+                        .disabled(viewModel.carbs <= 0)
                 }
             }
             .navigationTitle("Add Carbs")

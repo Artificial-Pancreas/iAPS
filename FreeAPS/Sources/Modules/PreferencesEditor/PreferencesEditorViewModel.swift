@@ -10,6 +10,7 @@ extension PreferencesEditor {
         @Published var unitsIndex = 1
         @Published var allowAnnouncements = false
         @Published var insulinReqFraction: Decimal = 0.7
+        @Published var skipBolusScreenAfterCarbs = false
 
         @Published var decimalFields: [Field<Decimal>] = []
         @Published var boolFields: [Field<Bool>] = []
@@ -26,6 +27,7 @@ extension PreferencesEditor {
             insulinCurveField.value = preferences.curve
             insulinCurveField.settable = self
             insulinReqFraction = settingsManager.settings.insulinReqFraction ?? 0.7
+            skipBolusScreenAfterCarbs = settingsManager.settings.skipBolusScreenAfterCarbs ?? false
 
             $unitsIndex
                 .removeDuplicates()
@@ -45,6 +47,13 @@ extension PreferencesEditor {
                 .removeDuplicates()
                 .sink { [weak self] fraction in
                     self?.settingsManager.settings.insulinReqFraction = fraction
+                }
+                .store(in: &lifetime)
+
+            $skipBolusScreenAfterCarbs
+                .removeDuplicates()
+                .sink { [weak self] skip in
+                    self?.settingsManager.settings.skipBolusScreenAfterCarbs = skip
                 }
                 .store(in: &lifetime)
 
