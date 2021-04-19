@@ -45,7 +45,7 @@ struct MainChartView: View {
     @Binding var tempTargets: [TempTarget]
     @Binding var carbs: [CarbsEntry]
     @Binding var timerDate: Date
-    let units: GlucoseUnits
+    @Binding var units: GlucoseUnits
 
     @State var didAppearTrigger = false
     @State private var glucoseDots: [CGRect] = []

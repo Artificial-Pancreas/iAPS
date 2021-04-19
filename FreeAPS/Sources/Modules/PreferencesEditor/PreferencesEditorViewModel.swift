@@ -33,6 +33,7 @@ extension PreferencesEditor {
                 .removeDuplicates()
                 .sink { [weak self] index in
                     self?.settingsManager.settings.units = index == 0 ? .mgdL : .mmolL
+                    self?.provider.migrateUnits()
                 }
                 .store(in: &lifetime)
 

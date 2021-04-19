@@ -3,7 +3,7 @@ import SwiftUI
 struct CurrentGlucoseView: View {
     @Binding var recentGlucose: BloodGlucose?
     @Binding var delta: Int?
-    let units: GlucoseUnits
+    @Binding var units: GlucoseUnits
 
     private var glucoseFormatter: NumberFormatter {
         let formatter = NumberFormatter()
