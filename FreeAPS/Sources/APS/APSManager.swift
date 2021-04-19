@@ -125,8 +125,12 @@ final class BaseAPSManager: APSManager, Injectable {
 
         deviceDataManager.bolusTrigger
             .receive(on: processQueue)
-            .sink {
-                self.createBolusReporter()
+            .sink { bolusing in
+                if bolusing {
+                    self.createBolusReporter()
+                } else {
+                    self.clearBolusReporter()
+                }
             }
             .store(in: &lifetime)
     }
@@ -543,6 +547,12 @@ final class BaseAPSManager: APSManager, Injectable {
         bolusReporter = pumpManager?.createBolusProgressReporter(reportingOn: processQueue)
         bolusReporter?.addObserver(self)
     }
+
+    private func clearBolusReporter() {
+        bolusReporter?.removeObserver(self)
+        bolusReporter = nil
+        bolusProgress.send(nil)
+    }
 }
 
 private extension PumpManager {
@@ -629,9 +639,7 @@ extension BaseAPSManager: DoseProgressObserver {
     func doseProgressReporterDidUpdate(_ doseProgressReporter: DoseProgressReporter) {
         bolusProgress.send(Decimal(doseProgressReporter.progress.percentComplete))
         if doseProgressReporter.progress.isComplete {
-            bolusReporter?.removeObserver(self)
-            bolusReporter = nil
-            bolusProgress.send(nil)
+            clearBolusReporter()
         }
     }
 }

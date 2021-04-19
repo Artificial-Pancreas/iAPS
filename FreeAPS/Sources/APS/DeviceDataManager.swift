@@ -13,7 +13,7 @@ protocol DeviceDataManager {
     var pumpManager: PumpManagerUI? { get set }
     var pumpDisplayState: CurrentValueSubject<PumpDisplayState?, Never> { get }
     var recommendsLoop: PassthroughSubject<Void, Never> { get }
-    var bolusTrigger: PassthroughSubject<Void, Never> { get }
+    var bolusTrigger: PassthroughSubject<Bool, Never> { get }
     var errorSubject: PassthroughSubject<Error, Never> { get }
     var pumpName: CurrentValueSubject<String, Never> { get }
     var pumpExpiresAtDate: CurrentValueSubject<Date?, Never> { get }
@@ -45,7 +45,7 @@ final class BaseDeviceDataManager: DeviceDataManager, Injectable {
         .distantPast
 
     let recommendsLoop = PassthroughSubject<Void, Never>()
-    let bolusTrigger = PassthroughSubject<Void, Never>()
+    let bolusTrigger = PassthroughSubject<Bool, Never>()
     let errorSubject = PassthroughSubject<Error, Never>()
 
     var pumpManager: PumpManagerUI? {
@@ -185,7 +185,9 @@ extension BaseDeviceDataManager: PumpManagerDelegate {
         debug(.deviceManager, "New pump status Basal: \(String(describing: status.basalDeliveryState))")
 
         if case .inProgress = status.bolusState {
-            bolusTrigger.send()
+            bolusTrigger.send(true)
+        } else {
+            bolusTrigger.send(false)
         }
 
         let batteryPercent = Int((status.pumpBatteryChargeRemaining ?? 1) * 100)
