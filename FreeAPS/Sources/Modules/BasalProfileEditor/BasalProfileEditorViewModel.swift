@@ -7,7 +7,7 @@ extension BasalProfileEditor {
 
         let timeValues = stride(from: 0.0, to: 1.days.timeInterval, by: 30.minutes.timeInterval).map { $0 }
 
-        private(set) var rateValues: [Double] = []
+        private(set) var rateValues: [Decimal] = []
 
         var canAdd: Bool {
             guard let lastItem = items.last else { return true }
@@ -15,10 +15,10 @@ extension BasalProfileEditor {
         }
 
         override func subscribe() {
-            rateValues = provider.supportedBasalRates ?? stride(from: 0.05, to: 10.01, by: 0.05).map { $0 }
+            rateValues = provider.supportedBasalRates ?? stride(from: 0.05, to: 10.01, by: 0.05).map { Decimal($0) }
             items = provider.profile.map { value in
                 let timeIndex = timeValues.firstIndex(of: Double(value.minutes * 60)) ?? 0
-                let rateIndex = rateValues.firstIndex(of: Double(value.rate)) ?? 0
+                let rateIndex = rateValues.firstIndex(of: value.rate) ?? 0
                 return Item(rateIndex: rateIndex, timeIndex: timeIndex)
             }
         }
@@ -44,7 +44,7 @@ extension BasalProfileEditor {
                 fotmatter.dateFormat = "HH:mm:ss"
                 let date = Date(timeIntervalSince1970: self.timeValues[item.timeIndex])
                 let minutes = Int(date.timeIntervalSince1970 / 60)
-                let rate = Decimal(self.rateValues[item.rateIndex])
+                let rate = self.rateValues[item.rateIndex]
                 return BasalProfileEntry(start: fotmatter.string(from: date), minutes: minutes, rate: rate)
             }
             provider.saveProfile(profile)
