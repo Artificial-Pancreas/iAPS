@@ -37,13 +37,9 @@ struct CurrentGlucoseView: View {
         recentBG /= 18 // convert to mmol/l for calculation
 
         switch recentBG {
-        case 4,
-             5,
-             6,
-             7:
+        case 4 ... 7:
             return .loopGreen
-        case 8,
-             9:
+        case 8 ... 9:
             return .loopYellow
         default:
             return .loopRed
