@@ -31,19 +31,19 @@ struct CurrentGlucoseView: View {
     }
 
     var colorOfGlucose: Color {
-        let glucoseString =
-            recentGlucose?.glucose
-                .map { glucoseFormatter.string(from: Double(units == .mmolL ? $0.asMmolL : Decimal($0)) as NSNumber)! } ?? "--"
-        let glucoseStringFirstTwoCharacters = String(glucoseString.dropLast(1))
+        guard var recentBG = recentGlucose?.glucose
+        else { return .loopYellow }
 
-        switch glucoseStringFirstTwoCharacters {
-        case "4,",
-             "5,",
-             "6,",
-             "7,":
+        recentBG /= 18 // convert to mmol/l for calculation
+
+        switch recentBG {
+        case 4,
+             5,
+             6,
+             7:
             return .loopGreen
-        case "8,",
-             "9,":
+        case 8,
+             9:
             return .loopYellow
         default:
             return .loopRed
@@ -52,12 +52,11 @@ struct CurrentGlucoseView: View {
 
     var minutesAgo: Int {
         let lastGlucoseDateString = recentGlucose.map { dateFormatter.string(from: $0.dateString) } ?? "--"
-        let glucoseDate = Date(lastGlucoseDateString) ?? Date()
+        let LastGlucoseDate = Date(lastGlucoseDateString) ?? Date()
         let now = Date()
-        let diff = Int(glucoseDate.timeIntervalSince1970 - now.timeIntervalSince1970)
+        let diff = Int(now.timeIntervalSince1970 - LastGlucoseDate.timeIntervalSince1970)
         let hoursDiff = diff / 3600
-        var minutesDiff = (diff - hoursDiff * 3600) / 60
-        minutesDiff.negate() // Remove "-" sign
+        let minutesDiff = (diff - hoursDiff * 3600) / 60
         return minutesDiff
     }
 
