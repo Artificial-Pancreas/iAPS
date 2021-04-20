@@ -31,7 +31,8 @@ extension Bolus {
             if waitForSuggestionInitial {
                 apsManager.determineBasal()
                     .receive(on: DispatchQueue.main)
-                    .sink { ok in
+                    .sink { [weak self] ok in
+                        guard let self = self else { return }
                         if !ok {
                             self.waitForSuggestion = false
                             self.inslinRequired = 0
