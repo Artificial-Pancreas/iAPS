@@ -5,7 +5,7 @@ import Foundation
 class NightscoutAPI {
     init(url: URL, secret: String? = nil) {
         self.url = url
-        self.secret = secret
+        self.secret = secret?.nonEmpty
     }
 
     private enum Config {

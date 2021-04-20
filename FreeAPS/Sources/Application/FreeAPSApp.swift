@@ -41,9 +41,11 @@ private extension Swinject.Resolver {
         FreeAPSApp.loadServices()
     }
 
+    private let mainView = Main.Builder(resolver: FreeAPSApp.resolver).buildView()
+
     var body: some Scene {
         WindowGroup {
-            Main.Builder(resolver: FreeAPSApp.resolver).buildView()
+            mainView
         }
         .onChange(of: scenePhase) { newScenePhase in
             switch newScenePhase {

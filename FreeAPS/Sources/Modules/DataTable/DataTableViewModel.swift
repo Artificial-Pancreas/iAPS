@@ -15,7 +15,7 @@ extension DataTable {
         }
 
         private func setupItems() {
-            DispatchQueue.main.async {
+            DispatchQueue.global().async {
                 let units = self.settingsManager.settings.units
 
                 let carbs = self.provider.carbs().map {
@@ -69,9 +69,11 @@ extension DataTable {
                         Item(units: units, type: .resume, date: $0.timestamp)
                     }
 
-                self.items = [carbs, boluses, tempBasals, tempTargets, suspend, resume]
-                    .flatMap { $0 }
-                    .sorted { $0.date > $1.date }
+                DispatchQueue.main.async {
+                    self.items = [carbs, boluses, tempBasals, tempTargets, suspend, resume]
+                        .flatMap { $0 }
+                        .sorted { $0.date > $1.date }
+                }
             }
         }
 

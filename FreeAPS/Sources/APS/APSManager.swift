@@ -141,6 +141,11 @@ final class BaseAPSManager: APSManager, Injectable {
     }
 
     private func loop() {
+        guard !isLooping.value else {
+            warning(.apsManager, "Already looping, skip")
+            return
+        }
+
         debug(.apsManager, "Starting loop")
         isLooping.send(true)
         determineBasal()
@@ -198,6 +203,7 @@ final class BaseAPSManager: APSManager, Injectable {
     }
 
     func determineBasal() -> AnyPublisher<Bool, Never> {
+        debug(.apsManager, "Start determine basal")
         guard let glucose = storage.retrieve(OpenAPS.Monitor.glucose, as: [BloodGlucose].self), glucose.count >= 36 else {
             debug(.apsManager, "Not enough glucose data")
             processError(APSError.glucoseError(message: "Not enough glucose data"))
