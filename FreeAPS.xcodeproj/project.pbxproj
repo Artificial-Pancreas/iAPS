@@ -1101,9 +1101,9 @@
 				38E98A2C25F52DC400C0CED0 /* NSLocking+Extensions.swift */,
 				38C4D33925E9A1ED00D30B77 /* NSObject+AssociatedValues.swift */,
 				3811DE5725C9D4D500A708ED /* ProgressBar.swift */,
-				3811DEE325CA063400A708ED /* PropertyWrappers */,
 				3811DE5525C9D4D500A708ED /* Publisher.swift */,
 				38E98A3625F5509500C0CED0 /* String+Extensions.swift */,
+				3811DEE325CA063400A708ED /* PropertyWrappers */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
