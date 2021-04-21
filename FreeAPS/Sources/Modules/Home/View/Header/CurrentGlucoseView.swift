@@ -30,6 +30,35 @@ struct CurrentGlucoseView: View {
         return formatter
     }
 
+    var body: some View {
+        VStack(alignment: .center, spacing: 6) {
+            HStack(spacing: 8) {
+                Text(
+                    recentGlucose?.glucose
+                        .map {
+                            glucoseFormatter
+                                .string(from: Double(units == .mmolL ? $0.asMmolL : Decimal($0)) as NSNumber)! }
+                        ?? "--"
+                )
+                .font(.system(size: 24, weight: .bold))
+                .fixedSize()
+                .foregroundColor(colorOfGlucose)
+                image.padding(.bottom, 2)
+
+            }.padding(.leading, 4)
+            HStack(alignment: .lastTextBaseline, spacing: 2) {
+                Text(
+                    "\(minutesAgo)m "
+                ).font(.caption2).foregroundColor(colorOfMinutesAgo(minutesAgo))
+                Text(
+                    delta
+                        .map { deltaFormatter.string(from: Double(units == .mmolL ? $0.asMmolL : Decimal($0)) as NSNumber)!
+                        } ??
+                        "--"
+                ).font(.system(size: 12, weight: .bold)) }
+        }
+    }
+
     var colorOfGlucose: Color {
         guard var recentBG = recentGlucose?.glucose
         else { return .loopYellow }
@@ -59,40 +88,11 @@ struct CurrentGlucoseView: View {
     func colorOfMinutesAgo(_ minutes: Int) -> Color {
         switch minutes {
         case 0 ... 5:
-            return .loopGray
+            return .loopGreen
         case 6 ... 9:
             return .loopYellow
         default:
             return .loopRed
-        }
-    }
-
-    var body: some View {
-        VStack(alignment: .center, spacing: 6) {
-            HStack(spacing: 8) {
-                Text(
-                    recentGlucose?.glucose
-                        .map {
-                            glucoseFormatter
-                                .string(from: Double(units == .mmolL ? $0.asMmolL : Decimal($0)) as NSNumber)! }
-                        ?? "--"
-                )
-                .font(.system(size: 24, weight: .bold))
-                .fixedSize()
-                .foregroundColor(colorOfGlucose)
-                image.padding(.bottom, 2)
-
-            }.padding(.leading, 4)
-            HStack(alignment: .lastTextBaseline, spacing: 2) {
-                Text(
-                    "\(minutesAgo)m "
-                ).font(.caption2).foregroundColor(colorOfMinutesAgo(minutesAgo))
-                Text(
-                    delta
-                        .map { deltaFormatter.string(from: Double(units == .mmolL ? $0.asMmolL : Decimal($0)) as NSNumber)!
-                        } ??
-                        "--"
-                ).font(.system(size: 12, weight: .bold)) }
         }
     }
 
