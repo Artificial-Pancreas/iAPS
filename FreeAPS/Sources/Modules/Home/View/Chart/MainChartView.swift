@@ -584,7 +584,7 @@ extension MainChartView {
         }
 
         cachedMaxBasalRate = max(maxTempBasalRate, maxRegularBasalRate)
-        return cachedMaxBasalRate!
+        return cachedMaxBasalRate ?? maxBasal
     }
 
     private func calculateTempTargetsRects(fullSize: CGSize) {
