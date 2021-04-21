@@ -83,7 +83,7 @@ final class BaseGlucoseStorage: GlucoseStorage, Injectable {
 
     func isGlucoseNotFlat() -> Bool {
         let last5 = recent().suffix(5)
-        guard last5.count == 3 else { return true }
+        guard last5.count == 5 else { return true }
 
         return Array(
             last5
