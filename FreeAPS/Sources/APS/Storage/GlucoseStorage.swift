@@ -82,12 +82,12 @@ final class BaseGlucoseStorage: GlucoseStorage, Injectable {
     }
 
     func isGlucoseNotFlat() -> Bool {
-        let last3 = recent().suffix(3)
-        guard last3.count == 3 else { return true }
+        let last5 = recent().suffix(5)
+        guard last5.count == 3 else { return true }
 
         return Array(
-            last3
-                .compactMap { $0.filtered ?? 0 }
+            last5
+                .compactMap { $0.filtered ?? Decimal($0.sgv ?? 0) }
                 .filter { $0 != 0 }
                 .uniqued()
         ).count != 1
