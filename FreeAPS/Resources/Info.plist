@@ -5,7 +5,9 @@
 	<key>LSSupportsOpeningDocumentsInPlace</key>
 	<true/>
 	<key>AppGroupID</key>
-	<string>$(APP_GROUP_ID)</string>
+	<string>group.com.T7VZ6LU6H3.xdripswift.JBMgroup</string>
+	<key>AppGroupIdentifier</key>
+	<string>$(APP_GROUP_IDENTIFIER)</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleExecutable</key>
