@@ -44,7 +44,7 @@ final class BaseFetchGlucoseManager: FetchGlucoseManager, Injectable {
                 if !filtered.isEmpty {
                     debug(.nightscout, "New glucose found")
                     self.glucoseStorage.storeGlucose(filtered)
-                    self.apsManager.heartbeat(date: date, force: true)
+                    self.apsManager.heartbeat(date: date, force: false)
                 }
             }
             .store(in: &lifetime)
