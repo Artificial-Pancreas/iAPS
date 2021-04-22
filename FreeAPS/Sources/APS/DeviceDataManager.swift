@@ -34,7 +34,7 @@ private let staticPumpManagersByIdentifier: [String: PumpManagerUI.Type] = stati
 private let accessLock = NSRecursiveLock(label: "BaseDeviceDataManager.accessLock")
 
 final class BaseDeviceDataManager: DeviceDataManager, Injectable {
-    private let processQueue = DispatchQueue(label: "BaseDeviceDataManager.processQueue")
+    private let processQueue = DispatchQueue.markedQueue(label: "BaseDeviceDataManager.processQueue")
     @Injected() private var pumpHistoryStorage: PumpHistoryStorage!
     @Injected() private var storage: FileStorage!
     @Injected() private var broadcaster: Broadcaster!
@@ -95,30 +95,32 @@ final class BaseDeviceDataManager: DeviceDataManager, Injectable {
     }
 
     func heartbeat(date: Date, force: Bool) {
-        if force {
+        processQueue.safeSync {
+            if force {
+                updatePumpData()
+                return
+            }
+
+            var updateInterval: TimeInterval = 5.minutes.timeInterval
+
+            switch lastHeartBeatTime.timeIntervalSince(date) {
+            case let interval where interval < -10.minutes.timeInterval:
+                break
+            case let interval where interval < -5.minutes.timeInterval:
+                updateInterval = 1.minutes.timeInterval
+            default:
+                break
+            }
+
+            let interval = date.timeIntervalSince(lastHeartBeatTime)
+            guard interval >= updateInterval else {
+                debug(.deviceManager, "Last hearbeat \(interval / 60) min ago, skip updating the pump data")
+                return
+            }
+
+            lastHeartBeatTime = date
             updatePumpData()
-            return
         }
-
-        var updateInterval: TimeInterval = 5.minutes.timeInterval
-
-        switch lastHeartBeatTime.timeIntervalSince(date) {
-        case let interval where interval < -10.minutes.timeInterval:
-            break
-        case let interval where interval < -5.minutes.timeInterval:
-            updateInterval = 1.minutes.timeInterval
-        default:
-            break
-        }
-
-        let interval = date.timeIntervalSince(lastHeartBeatTime)
-        guard interval >= updateInterval else {
-            debug(.deviceManager, "Last hearbeat \(interval / 60) min ago, skip updating the pump data")
-            return
-        }
-
-        lastHeartBeatTime = date
-        updatePumpData()
     }
 
     private func updatePumpData() {
@@ -182,6 +184,7 @@ extension BaseDeviceDataManager: PumpManagerDelegate {
     }
 
     func pumpManager(_ pumpManager: PumpManager, didUpdate status: PumpManagerStatus, oldStatus _: PumpManagerStatus) {
+        dispatchPrecondition(condition: .onQueue(processQueue))
         debug(.deviceManager, "New pump status Bolus: \(status.bolusState)")
         debug(.deviceManager, "New pump status Basal: \(String(describing: status.basalDeliveryState))")
 
@@ -220,6 +223,7 @@ extension BaseDeviceDataManager: PumpManagerDelegate {
     }
 
     func pumpManagerWillDeactivate(_: PumpManager) {
+        dispatchPrecondition(condition: .onQueue(processQueue))
         pumpManager = nil
         pumpUpdateInProgress = false
     }
@@ -227,6 +231,7 @@ extension BaseDeviceDataManager: PumpManagerDelegate {
     func pumpManager(_: PumpManager, didUpdatePumpRecordsBasalProfileStartEvents _: Bool) {}
 
     func pumpManager(_: PumpManager, didError error: PumpManagerError) {
+        dispatchPrecondition(condition: .onQueue(processQueue))
         debug(.deviceManager, "error: \(error.localizedDescription), reason: \(String(describing: error.failureReason))")
         errorSubject.send(error)
         pumpUpdateInProgress = false
