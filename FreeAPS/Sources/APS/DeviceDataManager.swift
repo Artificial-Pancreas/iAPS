@@ -11,6 +11,7 @@ import UserNotifications
 
 protocol DeviceDataManager {
     var pumpManager: PumpManagerUI? { get set }
+    var hasBLEHeartbeat: Bool { get }
     var pumpDisplayState: CurrentValueSubject<PumpDisplayState?, Never> { get }
     var recommendsLoop: PassthroughSubject<Void, Never> { get }
     var bolusTrigger: PassthroughSubject<Bool, Never> { get }
@@ -70,6 +71,10 @@ final class BaseDeviceDataManager: DeviceDataManager, Injectable {
                 pumpDisplayState.value = nil
             }
         }
+    }
+
+    var hasBLEHeartbeat: Bool {
+        (pumpManager as? MockPumpManager) == nil
     }
 
     let pumpDisplayState = CurrentValueSubject<PumpDisplayState?, Never>(nil)

@@ -42,6 +42,7 @@ final class BaseFetchAnnouncementsManager: FetchAnnouncementsManager, Injectable
                 }
             }
             .store(in: &lifetime)
+        timer.fire()
         timer.resume()
     }
 }

@@ -41,6 +41,7 @@ final class BaseFetchTreatmentsManager: FetchTreatmentsManager, Injectable {
                 }
             }
             .store(in: &lifetime)
+        timer.fire()
         timer.resume()
     }
 }
