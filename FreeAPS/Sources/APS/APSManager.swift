@@ -10,7 +10,6 @@ protocol APSManager {
     func autotune() -> AnyPublisher<Autotune?, Never>
     func enactBolus(amount: Double, isSMB: Bool)
     var pumpManager: PumpManagerUI? { get set }
-    var hasBLEHeartbeat: Bool { get }
     var pumpDisplayState: CurrentValueSubject<PumpDisplayState?, Never> { get }
     var pumpName: CurrentValueSubject<String, Never> { get }
     var isLooping: CurrentValueSubject<Bool, Never> { get }
@@ -78,8 +77,6 @@ final class BaseAPSManager: APSManager, Injectable {
         get { deviceDataManager.pumpManager }
         set { deviceDataManager.pumpManager = newValue }
     }
-
-    var hasBLEHeartbeat: Bool { deviceDataManager.hasBLEHeartbeat }
 
     let isLooping = CurrentValueSubject<Bool, Never>(false)
     let lastLoopDateSubject = PassthroughSubject<Date, Never>()
