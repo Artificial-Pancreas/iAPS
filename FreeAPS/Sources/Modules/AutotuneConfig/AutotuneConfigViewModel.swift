@@ -27,7 +27,7 @@ extension AutotuneConfig {
                     self.settingsManager.settings.useAutotune = use
                     return self.apsManager.makeProfiles()
                 }
-                .sink { _ in }
+                .cancellable()
                 .store(in: &lifetime)
         }
 
@@ -47,7 +47,7 @@ extension AutotuneConfig {
             provider.deleteAutotune()
             autotune = nil
             apsManager.makeProfiles()
-                .sink { _ in }
+                .cancellable()
                 .store(in: &lifetime)
         }
     }

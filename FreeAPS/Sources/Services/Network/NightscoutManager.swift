@@ -27,7 +27,7 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
 
     private let processQueue = DispatchQueue(label: "BaseNetworkManager.processQueue")
 
-    private var lifetime = Set<AnyCancellable>()
+    private var lifetime = Lifetime()
 
     private var isNetworkReachable: Bool {
         reachabilityManager.isReachable

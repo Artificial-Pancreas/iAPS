@@ -11,7 +11,7 @@ final class BaseFetchGlucoseManager: FetchGlucoseManager, Injectable {
     @Injected() var nightscoutManager: NightscoutManager!
     @Injected() var apsManager: APSManager!
 
-    private var lifetime = Set<AnyCancellable>()
+    private var lifetime = Lifetime()
     private let timer = DispatchTimer(timeInterval: 1.minutes.timeInterval)
 
     init(resolver: Resolver) {
@@ -48,6 +48,7 @@ final class BaseFetchGlucoseManager: FetchGlucoseManager, Injectable {
                 }
             }
             .store(in: &lifetime)
+        timer.fire()
         timer.resume()
     }
 

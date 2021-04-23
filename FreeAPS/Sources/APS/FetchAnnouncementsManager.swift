@@ -12,7 +12,7 @@ final class BaseFetchAnnouncementsManager: FetchAnnouncementsManager, Injectable
     @Injected() var apsManager: APSManager!
     @Injected() var settingsManager: SettingsManager!
 
-    private var lifetime = Set<AnyCancellable>()
+    private var lifetime = Lifetime()
     private let timer = DispatchTimer(timeInterval: 1.minutes.timeInterval)
 
     init(resolver: Resolver) {
@@ -42,6 +42,7 @@ final class BaseFetchAnnouncementsManager: FetchAnnouncementsManager, Injectable
                 }
             }
             .store(in: &lifetime)
+        timer.fire()
         timer.resume()
     }
 }

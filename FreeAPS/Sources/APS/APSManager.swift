@@ -71,7 +71,7 @@ final class BaseAPSManager: APSManager, Injectable {
 
     private var openAPS: OpenAPS!
 
-    private var lifetime = Set<AnyCancellable>()
+    private var lifetime = Lifetime()
 
     var pumpManager: PumpManagerUI? {
         get { deviceDataManager.pumpManager }
@@ -174,9 +174,15 @@ final class BaseAPSManager: APSManager, Injectable {
         }
         let status = pump.status.pumpStatus
 
-        guard !status.bolusing, !status.suspended else {
-            debug(.apsManager, "Pump is bolusing or suspended")
-            processError(APSError.invalidPumpState(message: "Pump is bolusing or suspended"))
+        guard !status.bolusing else {
+            debug(.apsManager, "Pump is bolusing")
+            processError(APSError.invalidPumpState(message: "Pump is bolusing"))
+            return false
+        }
+
+        guard !status.suspended else {
+            debug(.apsManager, "Pump suspended")
+            processError(APSError.invalidPumpState(message: "Pump suspended"))
             return false
         }
 
@@ -259,7 +265,7 @@ final class BaseAPSManager: APSManager, Injectable {
     }
 
     func determineBasalSync() {
-        determineBasal().sink { _ in }.store(in: &lifetime)
+        determineBasal().cancellable().store(in: &lifetime)
     }
 
     func makeProfiles() -> AnyPublisher<Bool, Never> {
@@ -480,7 +486,6 @@ final class BaseAPSManager: APSManager, Injectable {
         guard let pump = pumpManager, verifyStatus(), bolusReporter == nil else {
             isLooping.send(false)
             debug(.apsManager, "Invalid pump state")
-            processError(APSError.invalidPumpState(message: "Pump is bolusing, suspended or not set"))
             return
         }
 

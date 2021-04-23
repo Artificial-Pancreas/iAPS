@@ -17,7 +17,7 @@ final class BaseAuthorizationManager: AuthorizationManager, Injectable {
 
     let credentials = CurrentValueSubject<Credentials?, Never>(nil)
 
-    private var lifetime = Set<AnyCancellable>()
+    private var lifetime = Lifetime()
 
     @Injected() private var keychain: Keychain!
 
