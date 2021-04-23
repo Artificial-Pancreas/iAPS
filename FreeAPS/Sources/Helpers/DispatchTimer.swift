@@ -19,12 +19,12 @@ class DispatchTimer {
         let timer = DispatchSource.makeTimerSource(queue: queue)
         timer.schedule(deadline: .now() + timeInterval, repeating: timeInterval)
         timer.setEventHandler(handler: { [weak self] in
-            self?.fireEvent()
+            self?.fire()
         })
         return timer
     }()
 
-    private func fireEvent() {
+    func fire() {
         subject.send(Date())
         eventHandler?()
     }

@@ -11,7 +11,7 @@ final class BaseFetchTreatmentsManager: FetchTreatmentsManager, Injectable {
     @Injected() var tempTargetsStorage: TempTargetsStorage!
     @Injected() var carbsStorage: CarbsStorage!
 
-    private var lifetime = Set<AnyCancellable>()
+    private var lifetime = Lifetime()
     private let timer = DispatchTimer(timeInterval: 1.minutes.timeInterval)
 
     init(resolver: Resolver) {
@@ -41,6 +41,7 @@ final class BaseFetchTreatmentsManager: FetchTreatmentsManager, Injectable {
                 }
             }
             .store(in: &lifetime)
+        timer.fire()
         timer.resume()
     }
 }

@@ -11,7 +11,7 @@ final class BaseFetchGlucoseManager: FetchGlucoseManager, Injectable {
     @Injected() var nightscoutManager: NightscoutManager!
     @Injected() var apsManager: APSManager!
 
-    private var lifetime = Set<AnyCancellable>()
+    private var lifetime = Lifetime()
     private let timer = DispatchTimer(timeInterval: 1.minutes.timeInterval)
 
     init(resolver: Resolver) {
@@ -44,10 +44,11 @@ final class BaseFetchGlucoseManager: FetchGlucoseManager, Injectable {
                 if !filtered.isEmpty {
                     debug(.nightscout, "New glucose found")
                     self.glucoseStorage.storeGlucose(filtered)
-                    self.apsManager.heartbeat(date: date, force: true)
+                    self.apsManager.heartbeat(date: date, force: false)
                 }
             }
             .store(in: &lifetime)
+        timer.fire()
         timer.resume()
     }
 

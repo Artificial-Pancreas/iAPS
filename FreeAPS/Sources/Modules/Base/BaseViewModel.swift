@@ -12,7 +12,7 @@ protocol ViewModel {
 class BaseViewModel<Provider>: ViewModel, Injectable where Provider: FreeAPS.Provider {
     let resolver: Resolver
     let provider: Provider
-    var lifetime = Set<AnyCancellable>()
+    var lifetime = Lifetime()
     @Injected() var router: Router!
 
     required init(provider: Provider, resolver: Resolver) {
