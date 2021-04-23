@@ -71,7 +71,7 @@ final class BaseAPSManager: APSManager, Injectable {
 
     private var openAPS: OpenAPS!
 
-    private var lifetime = Set<AnyCancellable>()
+    private var lifetime = Lifetime()
 
     var pumpManager: PumpManagerUI? {
         get { deviceDataManager.pumpManager }
@@ -259,7 +259,7 @@ final class BaseAPSManager: APSManager, Injectable {
     }
 
     func determineBasalSync() {
-        determineBasal().sink { _ in }.store(in: &lifetime)
+        determineBasal().cancellable().store(in: &lifetime)
     }
 
     func makeProfiles() -> AnyPublisher<Bool, Never> {
