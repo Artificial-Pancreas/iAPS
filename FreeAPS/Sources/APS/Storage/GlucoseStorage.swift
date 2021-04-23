@@ -87,7 +87,7 @@ final class BaseGlucoseStorage: GlucoseStorage, Injectable {
 
         return Array(
             last3
-                .compactMap { $0.filtered ?? Decimal($0.sgv ?? 0) }
+                .compactMap { $0.filtered ?? 0 }
                 .filter { $0 != 0 }
                 .uniqued()
         ).count != 1
