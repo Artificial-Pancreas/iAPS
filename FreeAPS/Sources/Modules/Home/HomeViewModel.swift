@@ -40,6 +40,7 @@ extension Home {
         @Published var errorMessage: String? = nil
         @Published var errorDate: Date? = nil
         @Published var bolusProgress: Decimal?
+        @Published var eventualBG: Int?
 
         @Published var allowManualTemp = false
         @Published var units: GlucoseUnits = .mmolL
@@ -234,6 +235,8 @@ extension Home {
             } else {
                 statusTitle = "Suggested"
             }
+
+            eventualBG = suggestion.eventualBG
         }
 
         private func setupReservoir() {

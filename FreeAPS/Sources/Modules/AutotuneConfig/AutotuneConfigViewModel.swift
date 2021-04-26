@@ -11,7 +11,9 @@ extension AutotuneConfig {
         @Published var publishedDate = Date()
         @Persisted(key: "lastAutotuneDate") private var lastAutotuneDate = Date() {
             didSet {
-                publishedDate = lastAutotuneDate
+                DispatchQueue.main.async {
+                    self.publishedDate = self.lastAutotuneDate
+                }
             }
         }
 

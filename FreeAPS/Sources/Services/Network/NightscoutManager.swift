@@ -56,6 +56,9 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
         broadcaster.register(PumpHistoryObserver.self, observer: self)
         broadcaster.register(CarbsObserver.self, observer: self)
         broadcaster.register(TempTargetsObserver.self, observer: self)
+        _ = reachabilityManager.startListening(onQueue: processQueue) { status in
+            debug(.nightscout, "Network status: \(status)")
+        }
     }
 
     var cgmURL: URL? {
@@ -72,6 +75,12 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
     func fetchGlucose() -> AnyPublisher<[BloodGlucose], Never> {
         let useLocal = (settingsManager.settings.useLocalGlucoseSource ?? false) && settingsManager.settings
             .localGlucosePort != nil
+
+        if !useLocal {
+            guard isNetworkReachable else {
+                return Just([]).eraseToAnyPublisher()
+            }
+        }
 
         let maybeNightscout = useLocal
             ? NightscoutAPI(url: URL(string: "http://127.0.0.1:\(settingsManager.settings.localGlucosePort!)")!)

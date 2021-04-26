@@ -155,27 +155,45 @@ extension Home {
         }
 
         var legendPanal: some View {
-            HStack(alignment: .firstTextBaseline) {
-                Circle().fill(Color.loopGreen).frame(width: 8, height: 8)
-                    .padding(.leading, 8)
-                Text("BG")
-                    .font(.system(size: 12, weight: .bold)).foregroundColor(.loopGreen)
-                Circle().fill(Color.insulin).frame(width: 8, height: 8)
-                    .padding(.leading, 8)
-                Text("IOB")
-                    .font(.system(size: 12, weight: .bold)).foregroundColor(.insulin)
-                Circle().fill(Color.zt).frame(width: 8, height: 8)
-                    .padding(.leading, 8)
-                Text("ZT")
-                    .font(.system(size: 12, weight: .bold)).foregroundColor(.zt)
-                Circle().fill(Color.loopYellow).frame(width: 8, height: 8)
-                    .padding(.leading, 8)
-                Text("COB")
-                    .font(.system(size: 12, weight: .bold)).foregroundColor(.loopYellow)
-                Circle().fill(Color.uam).frame(width: 8, height: 8)
-                    .padding(.leading, 8)
-                Text("UAM")
-                    .font(.system(size: 12, weight: .bold)).foregroundColor(.uam)
+            HStack(alignment: .center) {
+                Group {
+                    Circle().fill(Color.loopGreen).frame(width: 8, height: 8)
+                    Text("BG")
+                        .font(.system(size: 12, weight: .bold)).foregroundColor(.loopGreen)
+                }
+                Group {
+                    Circle().fill(Color.insulin).frame(width: 8, height: 8)
+                        .padding(.leading, 8)
+                    Text("IOB")
+                        .font(.system(size: 12, weight: .bold)).foregroundColor(.insulin)
+                }
+                Group {
+                    Circle().fill(Color.zt).frame(width: 8, height: 8)
+                        .padding(.leading, 8)
+                    Text("ZT")
+                        .font(.system(size: 12, weight: .bold)).foregroundColor(.zt)
+                }
+                Group {
+                    Circle().fill(Color.loopYellow).frame(width: 8, height: 8)
+                        .padding(.leading, 8)
+                    Text("COB")
+                        .font(.system(size: 12, weight: .bold)).foregroundColor(.loopYellow)
+                }
+                Group {
+                    Circle().fill(Color.uam).frame(width: 8, height: 8)
+                        .padding(.leading, 8)
+                    Text("UAM")
+                        .font(.system(size: 12, weight: .bold)).foregroundColor(.uam)
+                }
+
+                if let eventualBG = viewModel.eventualBG {
+                    Text(
+                        "⇢ " + numberFormatter.string(
+                            from: (viewModel.units == .mmolL ? eventualBG.asMmolL : Decimal(eventualBG)) as NSNumber
+                        )!
+                    )
+                    .font(.system(size: 12, weight: .bold)).foregroundColor(.secondary)
+                }
             }
             .frame(maxWidth: .infinity, maxHeight: 30)
         }

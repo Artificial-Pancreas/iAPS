@@ -116,12 +116,15 @@ final class OpenAPS {
                 let pumpHistory = self.loadFileFromStorage(name: OpenAPS.Monitor.pumpHistory)
                 let glucose = self.loadFileFromStorage(name: Monitor.glucose)
                 let profile = self.loadFileFromStorage(name: Settings.profile)
+                let pumpProfile = self.loadFileFromStorage(name: Settings.pumpProfile)
+                let carbs = self.loadFileFromStorage(name: Monitor.carbHistory)
 
                 let autotunePreppedGlucose = self.autotunePrepare(
                     pumphistory: pumpHistory,
                     profile: profile,
                     glucose: glucose,
-                    pumpprofile: profile,
+                    pumpprofile: pumpProfile,
+                    carbs: carbs,
                     categorizeUamAsBasal: categorizeUamAsBasal,
                     tuneInsulinCurve: tuneInsulinCurve
                 )
@@ -132,7 +135,7 @@ final class OpenAPS {
                 let autotuneResult = self.autotuneRun(
                     autotunePreparedData: autotunePreppedGlucose,
                     previousAutotuneResult: previousAutotune ?? profile,
-                    pumpProfile: profile
+                    pumpProfile: pumpProfile
                 )
 
                 debug(.openAPS, "AUTOTUNE RESULT: \(autotuneResult)")
@@ -240,6 +243,7 @@ final class OpenAPS {
         profile: JSON,
         glucose: JSON,
         pumpprofile: JSON,
+        carbs: JSON,
         categorizeUamAsBasal: Bool,
         tuneInsulinCurve: Bool
     ) -> RawJSON {
@@ -253,6 +257,7 @@ final class OpenAPS {
                 profile,
                 glucose,
                 pumpprofile,
+                carbs,
                 categorizeUamAsBasal,
                 tuneInsulinCurve
             ])
