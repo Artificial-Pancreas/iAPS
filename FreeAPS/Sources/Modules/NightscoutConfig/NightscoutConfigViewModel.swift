@@ -14,6 +14,7 @@ extension NightscoutConfig {
 
         @Published var useLocalSource = false
         @Published var localPort: Decimal = 0
+        @Published var dontShowNS = false
 
         override func subscribe() {
             url = keychain.getValue(String.self, forKey: Config.urlKey) ?? ""
@@ -21,6 +22,7 @@ extension NightscoutConfig {
             isUploadEnabled = settingsManager.settings.isUploadEnabled ?? false
             useLocalSource = settingsManager.settings.useLocalGlucoseSource ?? false
             localPort = Decimal(settingsManager.settings.localGlucosePort ?? 8080)
+            dontShowNS = settingsManager.settings.dontShowNS
 
             $isUploadEnabled
                 .removeDuplicates()
@@ -38,6 +40,12 @@ extension NightscoutConfig {
                 .removeDuplicates()
                 .sink { [weak self] port in
                     self?.settingsManager.settings.localGlucosePort = Int(port)
+                }.store(in: &lifetime)
+
+            $dontShowNS
+                .removeDuplicates()
+                .sink { [weak self] enabled in
+                    self?.settingsManager.settings.dontShowNS = enabled
                 }.store(in: &lifetime)
         }
 

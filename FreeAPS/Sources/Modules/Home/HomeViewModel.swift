@@ -253,6 +253,12 @@ extension Home {
         }
 
         func openCGM() {
+            guard !settingsManager.settings.dontShowNS else {
+                var url = URL(string: "xdripswift://")!
+                UIApplication.shared.open(url, options: [:], completionHandler: nil)
+                return
+            }
+
             guard var url = nightscoutManager.cgmURL else { return }
 
             switch url.absoluteString {

@@ -7,6 +7,7 @@ struct FreeAPSSettings: JSON {
     var useAutotune: Bool
     var isUploadEnabled: Bool?
     var useLocalGlucoseSource: Bool?
+    var dontShowNS: Bool
     var localGlucosePort: Int?
     var debugOptions: Bool?
     var insulinReqFraction: Decimal?
