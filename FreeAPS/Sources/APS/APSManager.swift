@@ -292,7 +292,7 @@ final class BaseAPSManager: APSManager, Injectable {
     private var bolusReporter: DoseProgressReporter?
 
     func enactBolus(amount: Double, isSMB: Bool) {
-        guard let pump = pumpManager, verifyStatus(), bolusReporter == nil else { return }
+        guard let pump = pumpManager, verifyStatus() else { return }
 
         let roundedAmout = pump.roundToSupportedBolusVolume(units: amount)
 
@@ -471,21 +471,21 @@ final class BaseAPSManager: APSManager, Injectable {
     private func enactSuggested() {
         guard let suggested = storage.retrieve(OpenAPS.Enact.suggested, as: Suggestion.self) else {
             isLooping.send(false)
-            debug(.apsManager, "Suggestion not found")
+            warning(.apsManager, "Suggestion not found")
             processError(APSError.apsError(message: "Suggestion not found"))
             return
         }
 
         guard Date().timeIntervalSince(suggested.deliverAt ?? .distantPast) < Config.eхpirationInterval else {
             isLooping.send(false)
-            debug(.apsManager, "Suggestion expired")
+            warning(.apsManager, "Suggestion expired")
             processError(APSError.apsError(message: "Suggestion expired"))
             return
         }
 
-        guard let pump = pumpManager, verifyStatus(), bolusReporter == nil else {
+        guard let pump = pumpManager, verifyStatus() else {
             isLooping.send(false)
-            debug(.apsManager, "Invalid pump state")
+            warning(.apsManager, "Invalid pump state")
             return
         }
 
