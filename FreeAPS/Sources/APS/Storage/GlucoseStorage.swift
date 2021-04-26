@@ -18,7 +18,7 @@ final class BaseGlucoseStorage: GlucoseStorage, Injectable {
     @Injected() private var broadcaster: Broadcaster!
 
     private enum Config {
-        static let filterTime: TimeInterval = 2.75 * 60         // Test to see if this works with Libre 2 or not... Before edit this was 4.75
+        static let filterTime: TimeInterval = 2.75 * 60 //Before edit this was 4.75
     }
 
     init(resolver: Resolver) {
@@ -87,7 +87,7 @@ final class BaseGlucoseStorage: GlucoseStorage, Injectable {
 
         return Array(
             last5
-                .compactMap { $0.filtered ?? Decimal($0.sgv ?? 0) }
+                .compactMap { $0.filtered ?? 0 }
                 .filter { $0 != 0 }
                 .uniqued()
         ).count != 1
