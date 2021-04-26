@@ -64,8 +64,10 @@ struct CurrentGlucoseView: View {
         else { return .loopYellow }
 
         recentBG = Int(recentBG.asMmolL) // convert to mmol/l for calculation
-        
+
         switch recentBG {
+        case 3 ... 4:
+            return .loopOrange
         case 4 ... 7:
             return .loopGreen
         case 8 ... 9:
