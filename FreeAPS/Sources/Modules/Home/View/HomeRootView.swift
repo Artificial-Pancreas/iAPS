@@ -46,8 +46,7 @@ extension Home {
                 CurrentGlucoseView(
                     recentGlucose: $viewModel.recentGlucose,
                     delta: $viewModel.glucoseDelta,
-                    units: $viewModel.units,
-                    eventualBG: $viewModel.eventualBG
+                    units: $viewModel.units
                 )
                 .onTapGesture {
                     viewModel.openCGM()
@@ -159,7 +158,6 @@ extension Home {
             HStack(alignment: .center) {
                 Group {
                     Circle().fill(Color.loopGreen).frame(width: 8, height: 8)
-                        .padding(.leading, 8)
                     Text("BG")
                         .font(.system(size: 12, weight: .bold)).foregroundColor(.loopGreen)
                 }
@@ -186,6 +184,15 @@ extension Home {
                         .padding(.leading, 8)
                     Text("UAM")
                         .font(.system(size: 12, weight: .bold)).foregroundColor(.uam)
+                }
+
+                if let eventualBG = viewModel.eventualBG {
+                    Text(
+                        "⇢ " + numberFormatter.string(
+                            from: (viewModel.units == .mmolL ? eventualBG.asMmolL : Decimal(eventualBG)) as NSNumber
+                        )!
+                    )
+                    .font(.system(size: 12, weight: .bold)).foregroundColor(.secondary)
                 }
             }
             .frame(maxWidth: .infinity, maxHeight: 30)

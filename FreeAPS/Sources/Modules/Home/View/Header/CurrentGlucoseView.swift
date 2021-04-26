@@ -4,7 +4,6 @@ struct CurrentGlucoseView: View {
     @Binding var recentGlucose: BloodGlucose?
     @Binding var delta: Int?
     @Binding var units: GlucoseUnits
-    @Binding var eventualBG: Int?
 
     private var glucoseFormatter: NumberFormatter {
         let formatter = NumberFormatter()
@@ -43,20 +42,7 @@ struct CurrentGlucoseView: View {
                 )
                 .font(.system(size: 24, weight: .bold))
                 .fixedSize()
-                VStack {
-                    image
-                    if let eventualBG = eventualBG {
-                        if units == .mmolL {
-                            Text(
-                                glucoseFormatter
-                                    .string(from: Decimal(eventualBG).asMmolL as NSNumber)!
-                            )
-                            .font(.system(size: 10, weight: .regular)).foregroundColor(.secondary)
-                        } else {
-                            Text("\(eventualBG)").font(.system(size: 10, weight: .regular)).foregroundColor(.secondary)
-                        }
-                    }
-                }
+                image.padding(.bottom, 2)
 
             }.padding(.leading, 4)
             HStack(alignment: .lastTextBaseline, spacing: 2) {
