@@ -60,18 +60,20 @@ struct CurrentGlucoseView: View {
     }
 
     var colorOfGlucose: Color {
-        guard var recentBG = recentGlucose?.glucose
+        guard let recentBG = recentGlucose?.glucose
         else { return .loopYellow }
 
-        recentBG = Int(recentBG.asMmolL) // convert to mmol/l for calculation
+//        recentBG = Int(recentBG.asMmolL) // convert to mmol/l for calculation
 
         switch recentBG {
-        case 3 ... 4:
+        case 63 ... 72:
             return .loopOrange
-        case 4 ... 7:
+        case 73 ... 142:
             return .loopGreen
-        case 8 ... 9:
+        case 143 ... 180:
             return .loopYellow
+        case 181 ... 207:
+            return .loopOrange
         default:
             return .loopRed
         }
