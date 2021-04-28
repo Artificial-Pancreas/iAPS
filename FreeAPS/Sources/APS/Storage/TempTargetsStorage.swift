@@ -58,13 +58,20 @@ final class BaseTempTargetsStorage: TempTargetsStorage, Injectable {
     }
 
     func current() -> TempTarget? {
-        guard let last = recent().last else {
+        guard let currentTarget = recent()
+            .last(where: {
+                $0.createdAt.addingTimeInterval(Int($0.duration).minutes.timeInterval) > Date()
+                    && $0.createdAt <= Date()
+            })
+        else {
             return nil
         }
-        guard last.createdAt.addingTimeInterval(Int(last.duration).minutes.timeInterval) > Date() else {
+
+        if let cancel = recent().last(where: { $0.createdAt <= Date() }), cancel.duration == 0 {
             return nil
         }
-        return last
+
+        return currentTarget
     }
 
     func nightscoutTretmentsNotUploaded() -> [NigtscoutTreatment] {
