@@ -61,15 +61,13 @@ extension Bolus {
                         Button { viewModel.add() }
                         label: { Text("Enact bolus") }
                             .disabled(viewModel.amount <= 0)
-
-                        if viewModel.waitForSuggestionInitial {
-                            Button { viewModel.showModal(for: nil) }
-                            label: { Text("Continue without bolus") }
-                        }
                     }
 
                     Section {
-                        if !viewModel.waitForSuggestionInitial {
+                        if viewModel.waitForSuggestionInitial {
+                            Button { viewModel.showModal(for: nil) }
+                            label: { Text("Continue without bolus") }
+                        } else {
                             Button { isAddInsulinAlertPresented = true }
                             label: { Text("Add insulin without actually bolusing") }
                                 .disabled(viewModel.amount <= 0)
