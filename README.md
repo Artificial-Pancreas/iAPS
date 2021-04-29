@@ -39,20 +39,21 @@ If you want to test it, there is a beta-version available
 - Autosens
 - Nightscout BG data source as a CGM (Online)
 - Applications that mimic Nightscout as a CGM (apps like Spike and Diabox) (Offline)
+- xDrip4iOS data source as a CGM via shared app gpoup (Offline)
 - System state upload to Nightscout
 - Remote carbs enter and temporary targets through Nightscout
+- Remote bolusing and insulin pump control
 
 ## Not implemented (plans for future)
 
 - Open loop mode
-- Phone notifications of the system state
-- Bolus cancelation possibility
+- Phone notifications of the system and connected devices state
 - Profile upload to Nightscout
 - Desktop widget
 - Apple Watch app
-- Remote bolusing and insulin pump control
 - Plugins
 - Dexcom support
+- Enlite support
 - Apple Health support
 - Detailed functions description inside the app
 

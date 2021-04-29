@@ -3,7 +3,7 @@
 ## How to get the Medtronic pump ready?
 
 - Set your temporary basal to units (not percents!).
-- Turn on the remote control with any ID (for example 000000).
+- Turn on the remote control with any ID (for example 00000).
 
 ## Can I use Bolus assistant on a Medtronic pump?
 
@@ -20,13 +20,9 @@
 
 - Yes. For that you need to open the loop in settings and the button will appear on the main screen.
 
-## how to run the loop on demand manually?
+## How to run the loop on demand manually?
 
 - There is no way of doing that. You can force the data update by long-tapping the loop icon. If this actions gets any new data, loop will be recalculated.
-
-## How to change BG units?
-
-- Preferences -> Glucose units. You will then have to set targets and insulin sensitivity and restart the application.
 
 ## How to get BG values from Spike/Diabox?
 
@@ -35,5 +31,6 @@
 ## How to see raw data that is used inside the app?
 
 - Preferences -> Edit settings json. Set "debugOptions": true, and restart the app.
+- In Files application on iPhone.
 - You can also download all the data to your computer through iTunes or Finder.
 

@@ -15,7 +15,7 @@ extension BasalProfileEditor {
         }
 
         override func subscribe() {
-            rateValues = provider.supportedBasalRates ?? stride(from: 0.05, to: 10.01, by: 0.05).map { Decimal($0) }
+            rateValues = provider.supportedBasalRates ?? stride(from: Decimal(0.05), to: 10.01, by: 0.05).map { $0 }
             items = provider.profile.map { value in
                 let timeIndex = timeValues.firstIndex(of: Double(value.minutes * 60)) ?? 0
                 let rateIndex = rateValues.firstIndex(of: value.rate) ?? 0
