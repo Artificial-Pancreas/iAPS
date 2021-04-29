@@ -204,10 +204,11 @@ extension Home {
                     header
                         .frame(maxHeight: 70)
                         .padding(.top, geo.safeAreaInsets.top)
-//                        .background(Color.gray.opacity(0.2))
+                        .background(Color.gray.opacity(0.05))
+                    //  .background(Color.gray.opacity(0.2))
 
                     infoPanal
-                        .background(Color.gray.opacity(0.2))
+                        .background(Color.backgroundColor)
                     MainChartView(
                         glucose: $viewModel.glucose,
                         suggestion: $viewModel.suggestion,
@@ -223,13 +224,14 @@ extension Home {
                         timerDate: $viewModel.timerDate,
                         units: $viewModel.units
                     )
+                    .background(Color.gray.opacity(0.05))
                     .padding(.bottom)
                     .modal(for: .dataTable, from: self)
 
                     legendPanal
-                        .background(Color.gray.opacity(0.2))
+                        .background(Color.backgroundColor)
                     ZStack {
-                        Rectangle().fill(Color.backgroundColor).frame(height: 50 + geo.safeAreaInsets.bottom)
+                        Rectangle().fill(Color.gray.opacity(0.05)).frame(height: 50 + geo.safeAreaInsets.bottom)
                         HStack {
                             Button { viewModel.showModal(for: .addCarbs) }
                             label: {
