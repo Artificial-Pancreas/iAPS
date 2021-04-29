@@ -16,10 +16,12 @@ final class BaseSettingsManager: SettingsManager, Injectable {
 
     var settings: FreeAPSSettings {
         didSet {
-            save()
-            DispatchQueue.main.async {
-                self.broadcaster.notify(SettingsObserver.self, on: .main) {
-                    $0.settingsDidChange(self.settings)
+            if oldValue != settings {
+                save()
+                DispatchQueue.main.async {
+                    self.broadcaster.notify(SettingsObserver.self, on: .main) {
+                        $0.settingsDidChange(self.settings)
+                    }
                 }
             }
         }
