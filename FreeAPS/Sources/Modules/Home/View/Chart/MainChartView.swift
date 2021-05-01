@@ -19,16 +19,16 @@ typealias GlucoseYRange = (minValue: Int, minY: CGFloat, maxValue: Int, maxY: CG
 struct MainChartView: View {
     private enum Config {
         static let endID = "End"
-        static let screenHours = 5
+        static let screenHours = 6
         static let basalHeight: CGFloat = 100
-        static let topYPadding: CGFloat = 20
+        static let topYPadding: CGFloat = 50
         static let bottomYPadding: CGFloat = 50
         static let minAdditionalWidth: CGFloat = 150
-        static let maxGlucose = 450
+        static let maxGlucose = 300 // 450
         static let minGlucose = 70
-        static let yLinesCount = 5
+        static let yLinesCount = 4 // Test
         static let bolusSize: CGFloat = 8
-        static let bolusScale: CGFloat = 3
+        static let bolusScale: CGFloat = 2.5
         static let carbsSize: CGFloat = 10
         static let carbsScale: CGFloat = 0.3
     }
@@ -143,7 +143,7 @@ struct MainChartView: View {
                 path.move(to: CGPoint(x: 0, y: range.minY + CGFloat(line) * step))
                 path.addLine(to: CGPoint(x: fullSize.width, y: range.minY + CGFloat(line) * step))
             }
-        }.stroke(Color.secondary, lineWidth: 0.2)
+        }.stroke(Color.secondary, lineWidth: 0.1)
     }
 
     private func glucoseLabelsView(fullSize: CGSize) -> some View {
@@ -169,7 +169,7 @@ struct MainChartView: View {
         }
         .frame(width: fullGlucoseWidth(viewWidth: fullSize.width) + additionalWidth(viewWidth: fullSize.width))
         .frame(maxHeight: Config.basalHeight)
-//        .background(Color.secondary.opacity(0.1))
+        .background(Color.secondary.opacity(0.1))
         .onChange(of: tempBasals) { _ in
             calculateBasalPoints(fullSize: fullSize)
         }
@@ -216,7 +216,7 @@ struct MainChartView: View {
                     path.addLine(to: CGPoint(x: x, y: fullSize.height - 20))
                 }
             }
-            .stroke(Color.secondary, lineWidth: 0.2)
+            .stroke(Color.secondary, lineWidth: 0)
 
             Path { path in
                 let x = timeToXCoordinate(timerDate.timeIntervalSince1970, fullSize: fullSize)
@@ -225,7 +225,7 @@ struct MainChartView: View {
             }
             .stroke(
                 colorScheme == .dark ? Color.white : Color.black, // current time as vertical line
-                style: StrokeStyle(lineWidth: 0.5, dash: [2])
+                style: StrokeStyle(lineWidth: 1, dash: [2])
             )
         }
     }
