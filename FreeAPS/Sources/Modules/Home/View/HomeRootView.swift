@@ -30,16 +30,16 @@ extension Home {
             HStack(alignment: .bottom) {
                 Spacer()
                 VStack(alignment: .leading, spacing: 12) {
-                    HStack {
-                        Text("IOB").font(.caption2).foregroundColor(.secondary)
-                        Text((numberFormatter.string(from: (viewModel.suggestion?.iob ?? 0) as NSNumber) ?? "0") + " U")
-                            .font(.system(size: 12, weight: .bold))
-                    }
-                    HStack {
-                        Text("COB").font(.caption2).foregroundColor(.secondary)
-                        Text((numberFormatter.string(from: (viewModel.suggestion?.cob ?? 0) as NSNumber) ?? "0") + " g")
-                            .font(.system(size: 12, weight: .bold))
-                    }
+                    // HStack {
+                    // Text("").font(.caption2).foregroundColor(.secondary) // Was "IOB"
+                    Text((numberFormatter.string(from: (viewModel.suggestion?.iob ?? 0) as NSNumber) ?? "0") + " U")
+                        .font(.system(size: 12, weight: .bold))
+                    // }
+                    // HStack {
+                    // Text("").font(.caption2).foregroundColor(.secondary) // Was "COB"
+                    Text((numberFormatter.string(from: (viewModel.suggestion?.cob ?? 0) as NSNumber) ?? "0") + " g")
+                        .font(.system(size: 12, weight: .bold))
+                    // }
                 }
                 Spacer()
 
@@ -204,10 +204,12 @@ extension Home {
                     header
                         .frame(maxHeight: 70)
                         .padding(.top, geo.safeAreaInsets.top)
-//                        .background(Color.gray.opacity(0.2))
-
+                        .background(Color.backgroundColor)
+                    //  .background(Color.gray.opacity(0.2))
+                    Divider().background(Color.gray) // Added 29/4
                     infoPanal
-                        .background(Color.gray.opacity(0.2))
+                        .background(Color.backgroundColor)
+                    // Divider().background(Color.gray) // Added 29/4
                     MainChartView(
                         glucose: $viewModel.glucose,
                         suggestion: $viewModel.suggestion,
@@ -223,13 +225,16 @@ extension Home {
                         timerDate: $viewModel.timerDate,
                         units: $viewModel.units
                     )
-                    .padding(.bottom)
+                    .background(Color.gray.opacity(0.05)) // Prevoious own color: Color.gray.opacity(0.05)
+                    // .padding(.bottom)
                     .modal(for: .dataTable, from: self)
-
+                    Divider().background(Color.gray) // Added 29/4
                     legendPanal
-                        .background(Color.gray.opacity(0.2))
+                        .background(Color.secondary.opacity(0.1))
+                    Divider().background(Color.gray) // Added 29/4
                     ZStack {
-                        Rectangle().fill(Color.backgroundColor).frame(height: 50 + geo.safeAreaInsets.bottom)
+                        Rectangle().fill(Color.backgroundColor)
+                            .frame(height: 50 + geo.safeAreaInsets.bottom)
                         HStack {
                             Button { viewModel.showModal(for: .addCarbs) }
                             label: {
