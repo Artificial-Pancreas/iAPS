@@ -225,7 +225,7 @@ extension Home {
                         timerDate: $viewModel.timerDate,
                         units: $viewModel.units
                     )
-                    .background(Color.gray.opacity(0.05)) // Prevoious own color: Color.gray.opacity(0.05)
+                    .background(Color.gray.opacity(0.05))
                     // .padding(.bottom)
                     .modal(for: .dataTable, from: self)
                     Divider().background(Color.gray) // Added 29/4
