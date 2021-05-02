@@ -208,7 +208,7 @@ extension Home {
                     //  .background(Color.gray.opacity(0.2))
                     Divider().background(Color.gray) // Added 29/4
                     infoPanal
-                        .background(Color.secondary.opacity(0.1))
+                        .background(Color.secondary.opacity(0.05))
                     // Divider().background(Color.gray) // Added 29/4
                     MainChartView(
                         glucose: $viewModel.glucose,
@@ -230,7 +230,7 @@ extension Home {
                     .modal(for: .dataTable, from: self)
                     Divider().background(Color.gray) // Added 29/4
                     legendPanal
-                        .background(Color.secondary.opacity(0.1))
+                        .background(Color.secondary.opacity(0.05))
                     Divider().background(Color.gray) // Added 29/4
                     ZStack {
                         Rectangle().fill(Color.backgroundColor)
