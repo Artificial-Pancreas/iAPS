@@ -156,7 +156,7 @@ struct MainChartView: View {
 
             return Text(glucoseFormatter.string(from: value as NSNumber)!)
                 .position(CGPoint(x: fullSize.width - 12, y: range.minY + CGFloat(line) * yStep))
-                .font(.caption2)
+                .font(.caption) // Before: .font(.caption2)
                 .asAny()
         }
     }
