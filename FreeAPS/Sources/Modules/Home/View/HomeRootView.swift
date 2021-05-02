@@ -208,7 +208,7 @@ extension Home {
                     //  .background(Color.gray.opacity(0.2))
                     Divider().background(Color.gray) // Added 29/4
                     infoPanal
-                        .background(Color.backgroundColor)
+                        .background(Color.secondary.opacity(0.1))
                     // Divider().background(Color.gray) // Added 29/4
                     MainChartView(
                         glucose: $viewModel.glucose,
