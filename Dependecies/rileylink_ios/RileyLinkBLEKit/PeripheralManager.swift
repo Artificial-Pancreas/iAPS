@@ -51,6 +51,8 @@ class PeripheralManager: NSObject {
 
     // Confined to `queue`
     private var needsConfiguration = true
+    
+    var logString = ""
 
     weak var delegate: PeripheralManagerDelegate? {
         didSet {
@@ -59,6 +61,8 @@ class PeripheralManager: NSObject {
             }
         }
     }
+    
+    var setDatas: [UInt8] = [0xdd, 0x02, 0x00, 0x00]
 
     // Called from RileyLinkDeviceManager.managerQueue
     init(peripheral: CBPeripheral, configuration: Configuration, centralManager: CBCentralManager, queue: DispatchQueue) {
@@ -95,6 +99,8 @@ extension PeripheralManager {
 
 protocol PeripheralManagerDelegate: class {
     func peripheralManager(_ manager: PeripheralManager, didUpdateValueFor characteristic: CBCharacteristic)
+    
+    func peripheralManager(_ manager: PeripheralManager, didUpdateNotificationStateFor characteristic: CBCharacteristic)
 
     func peripheralManager(_ manager: PeripheralManager, didReadRSSI RSSI: NSNumber, error: Error?)
 
@@ -167,7 +173,10 @@ extension PeripheralManager {
                 throw PeripheralManagerError.unknownCharacteristic
             }
 
+            add(log: "serviceUUID: \(serviceUUID.uuidString)")
+            
             for characteristicUUID in characteristicUUIDs {
+                add(log: "characteristicUUID: \(characteristicUUID.uuidString)")
                 guard let characteristic = service.characteristics?.itemWithUUID(characteristicUUID) else {
                     throw PeripheralManagerError.unknownCharacteristic
                 }
@@ -266,6 +275,7 @@ extension PeripheralManager {
 
     /// - Throws: PeripheralManagerError
     func setNotifyValue(_ enabled: Bool, for characteristic: CBCharacteristic, timeout: TimeInterval) throws {
+        add(log: "setNotifyValue: \(characteristic.uuid.uuidString)")
         try runCommand(timeout: timeout) {
             addCondition(.notificationStateUpdate(characteristic: characteristic, enabled: enabled))
 
@@ -374,6 +384,7 @@ extension PeripheralManager: CBPeripheralDelegate {
         }
 
         commandLock.unlock()
+        delegate?.peripheralManager(self, didUpdateNotificationStateFor: characteristic)
     }
 
     func peripheral(_ peripheral: CBPeripheral, didWriteValueFor characteristic: CBCharacteristic, error: Error?) {
@@ -417,7 +428,7 @@ extension PeripheralManager: CBPeripheralDelegate {
             }
         } else if let macro = configuration.valueUpdateMacros[characteristic.uuid] {
             macro(self)
-        } else if commandConditions.isEmpty {
+        } else {
             notifyDelegate = true // execute after the unlock
         }
 
@@ -461,10 +472,20 @@ extension PeripheralManager: CBCentralManagerDelegate {
 
 
 extension PeripheralManager {
+    
+    func add(log: String) {
+        print("LLLLLL: \(log)")
+        logString += "\(Date())\n\(log)\n"
+        if logString.count > 10000 {
+            logString.removeFirst(1000)
+        }
+    }
+    
     public override var debugDescription: String {
         var items = [
             "## PeripheralManager",
             "peripheral: \(peripheral)",
+            "log: \(logString)"
         ]
         queue.sync {
             items.append("needsConfiguration: \(needsConfiguration)")

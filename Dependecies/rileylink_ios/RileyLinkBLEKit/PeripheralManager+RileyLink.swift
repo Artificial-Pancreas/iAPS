@@ -12,13 +12,15 @@ import os.log
 protocol CBUUIDRawValue: RawRepresentable {}
 extension CBUUIDRawValue where RawValue == String {
     var cbUUID: CBUUID {
-        return CBUUID(string: rawValue)
+        return CBUUID(string: rawValue.uppercased())
     }
 }
 
 
 enum RileyLinkServiceUUID: String, CBUUIDRawValue {
-    case main = "0235733B-99C5-4197-B856-69219C2A3845"
+    case main    = "0235733B-99C5-4197-B856-69219C2A3845"
+    case battery = "180F"
+    case orange  = "6E400001-B5A3-F393-E0A9-E50E24DCCA9E"
 }
 
 enum MainServiceCharacteristicUUID: String, CBUUIDRawValue {
@@ -28,6 +30,24 @@ enum MainServiceCharacteristicUUID: String, CBUUIDRawValue {
     case timerTick       = "6E6C7910-B89E-43A5-78AF-50C5E2B86F7E"
     case firmwareVersion = "30D99DC9-7C91-4295-A051-0A104D238CF2"
     case ledMode         = "C6D84241-F1A7-4F9C-A25F-FCE16732F14E"
+}
+
+enum BatteryServiceCharacteristicUUID: String, CBUUIDRawValue {
+    case battery_level   = "2A19"
+}
+
+enum OrangeServiceCharacteristicUUID: String, CBUUIDRawValue {
+    case orange         = "6E400002-B5A3-F393-E0A9-E50E24DCCA9E"
+    case orangeNotif    = "6E400003-B5A3-F393-E0A9-E50E24DCCA9E"
+}
+
+enum RileyLinkOrangeMode: UInt8 {
+    case yellow  = 0x1
+    case red   = 0x2
+    case off = 0x3
+    case shake = 0x4
+    case shakeOff = 0x5
+    case fw_hw = 0x9
 }
 
 enum RileyLinkLEDMode: UInt8 {
@@ -48,12 +68,21 @@ extension PeripheralManager.Configuration {
                     MainServiceCharacteristicUUID.timerTick.cbUUID,
                     MainServiceCharacteristicUUID.firmwareVersion.cbUUID,
                     MainServiceCharacteristicUUID.ledMode.cbUUID
+                ],
+                RileyLinkServiceUUID.battery.cbUUID: [
+                    BatteryServiceCharacteristicUUID.battery_level.cbUUID
+                ],
+                RileyLinkServiceUUID.orange.cbUUID: [
+                    OrangeServiceCharacteristicUUID.orange.cbUUID,
+                    OrangeServiceCharacteristicUUID.orangeNotif.cbUUID,
                 ]
             ],
             notifyingCharacteristics: [
                 RileyLinkServiceUUID.main.cbUUID: [
                     MainServiceCharacteristicUUID.responseCount.cbUUID
-                    // TODO: Should timer tick default to on?
+                ],
+                RileyLinkServiceUUID.orange.cbUUID: [
+                    OrangeServiceCharacteristicUUID.orangeNotif.cbUUID,
                 ]
             ],
             valueUpdateMacros: [
@@ -74,6 +103,26 @@ extension PeripheralManager.Configuration {
 
 fileprivate extension CBPeripheral {
     func getCharacteristicWithUUID(_ uuid: MainServiceCharacteristicUUID, serviceUUID: RileyLinkServiceUUID = .main) -> CBCharacteristic? {
+        guard let service = services?.itemWithUUID(serviceUUID.cbUUID) else {
+            return nil
+        }
+
+        return service.characteristics?.itemWithUUID(uuid.cbUUID)
+    }
+}
+
+fileprivate extension CBPeripheral {
+    func getBatteryCharacteristic(_ uuid: BatteryServiceCharacteristicUUID, serviceUUID: RileyLinkServiceUUID = .battery) -> CBCharacteristic? {
+        guard let service = services?.itemWithUUID(serviceUUID.cbUUID) else {
+            return nil
+        }
+
+        return service.characteristics?.itemWithUUID(uuid.cbUUID)
+    }
+}
+
+fileprivate extension CBPeripheral {
+    func getOrangeCharacteristic(_ uuid: OrangeServiceCharacteristicUUID, serviceUUID: RileyLinkServiceUUID = .orange) -> CBCharacteristic? {
         guard let service = services?.itemWithUUID(serviceUUID.cbUUID) else {
             return nil
         }
@@ -295,7 +344,146 @@ extension PeripheralManager {
 
 // MARK: - Lower-level helper operations
 extension PeripheralManager {
-
+    
+    func readBatteryLevel(timeout: TimeInterval) throws -> String {
+        guard let characteristic = peripheral.getBatteryCharacteristic(.battery_level) else {
+            throw RileyLinkDeviceError.peripheralManagerError(.unknownCharacteristic)
+        }
+        
+        do {
+            guard let data = try readValue(for: characteristic, timeout: timeout) else {
+                // TODO: This is an "unknown value" issue, not a timeout
+                throw RileyLinkDeviceError.peripheralManagerError(.timeout)
+            }
+            
+            let battery_level = "\(data[0])"
+            
+            return battery_level
+        } catch let error as PeripheralManagerError {
+            throw RileyLinkDeviceError.peripheralManagerError(error)
+        }
+    }
+    
+    func setOrangeNotifyOn() throws {
+        perform { [self] (manager) in
+            guard let characteristicNotif = peripheral.getOrangeCharacteristic(.orangeNotif) else {
+                return
+            }
+            
+            add(log: "setOrangeNotifyOn: \(characteristicNotif.uuid.uuidString)")
+            do {
+                try setNotifyValue(true, for: characteristicNotif, timeout: 2)
+            } catch {
+                add(log: "setOrangeNotifyOn Error: \(error.localizedDescription)")
+            }
+        }
+    }
+    
+    func orangeAction(mode: RileyLinkOrangeMode) {
+        if mode != .off, mode != .shakeOff {
+            orangeWritePwd()
+        }
+        perform { [self] (manager) in
+            do {
+                guard let characteristic = peripheral.getOrangeCharacteristic(.orange) else {
+                    throw PeripheralManagerError.unknownCharacteristic
+                }
+                let value = Data([0xbb, mode.rawValue])
+                add(log: "write: \(value.hexadecimalString)")
+                try writeValue(value, for: characteristic, type: .withResponse, timeout: PeripheralManager.expectedMaxBLELatency)
+            } catch (_) {
+                add(log: "orangeAction failed")
+            }
+        }
+        if mode == .off, mode == .shakeOff {
+            orangeClose()
+        }
+    }
+    
+    
+    
+    func setAction(index: Int, open: Bool) {
+        perform { [self] (manager) in
+            do {
+                guard let characteristic = peripheral.getOrangeCharacteristic(.orange) else {
+                    throw PeripheralManagerError.unknownCharacteristic
+                }
+                if index == 0 {
+                    setDatas[2] = 0
+                    setDatas[3] = open ? 1 : 0
+                } else if index == 1 {
+                    setDatas[2] = 1
+                    setDatas[3] = open ? 1 : 0
+                }
+                let value = Data(setDatas)
+                add(log: "write: \(value.hexadecimalString)")
+                try writeValue(value, for: characteristic, type: .withResponse, timeout: PeripheralManager.expectedMaxBLELatency)
+            } catch (_) {
+                add(log: "setAction failed")
+            }
+        }
+    }
+    
+    func orangeWritePwd() {
+        perform { [self] (manager) in
+            do {
+                guard let characteristic = peripheral.getOrangeCharacteristic(.orange) else {
+                    throw PeripheralManagerError.unknownCharacteristic
+                }
+                let value = Data([0xAA])
+                add(log: "write: \(value.hexadecimalString)")
+                try writeValue(value, for: characteristic, type: .withResponse, timeout: PeripheralManager.expectedMaxBLELatency)
+            } catch (_) {
+                add(log: "orangeWritePwd failed")
+            }
+        }
+    }
+    
+    func orangeReadSet() {
+        perform { [self] (manager) in
+            do {
+                guard let characteristic = peripheral.getOrangeCharacteristic(.orange) else {
+                    throw PeripheralManagerError.unknownCharacteristic
+                }
+                let value = Data([0xdd, 0x01])
+                add(log: "write: \(value.hexadecimalString)")
+                try writeValue(value, for: characteristic, type: .withResponse, timeout: PeripheralManager.expectedMaxBLELatency)
+            } catch (_) {
+                add(log: "orangeReadSet failed")
+            }
+        }
+    }
+    
+    func orangeReadVDC() {
+        perform { [self] (manager) in
+            do {
+                guard let characteristic = peripheral.getOrangeCharacteristic(.orange) else {
+                    throw PeripheralManagerError.unknownCharacteristic
+                }
+                let value = Data([0xdd, 0x03])
+                add(log: "write: \(value.hexadecimalString)")
+                try writeValue(value, for: characteristic, type: .withResponse, timeout: PeripheralManager.expectedMaxBLELatency)
+            } catch (_) {
+                add(log: "orangeReadSet failed")
+            }
+        }
+    }
+    
+    func orangeClose() {
+        perform { [self] (manager) in
+            do {
+                guard let characteristic = peripheral.getOrangeCharacteristic(.orange) else {
+                    throw PeripheralManagerError.unknownCharacteristic
+                }
+                let value = Data([0xcc])
+                add(log: "write: \(value.hexadecimalString)")
+                try writeValue(value, for: characteristic, type: .withResponse, timeout: PeripheralManager.expectedMaxBLELatency)
+            } catch (_) {
+                add(log: "orangeClose failed")
+            }
+        }
+    }
+    
     /// Writes command data expecting a single response
     ///
     /// - Parameters:
