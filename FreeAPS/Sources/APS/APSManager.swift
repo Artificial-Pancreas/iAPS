@@ -307,13 +307,14 @@ final class BaseAPSManager: APSManager, Injectable {
                 if !isSMB {
                     self.determineBasal().sink { _ in }.store(in: &self.lifetime)
                 }
+                self.bolusProgress.send(0)
             }
         } receiveValue: { _ in }
             .store(in: &lifetime)
     }
 
     func cancelBolus() {
-        guard let pump = pumpManager else { return }
+        guard let pump = pumpManager, pump.status.pumpStatus.bolusing else { return }
         debug(.apsManager, "Cancel bolus")
         pump.cancelBolus().sink { completion in
             if case let .failure(error) = completion {
@@ -391,6 +392,7 @@ final class BaseAPSManager: APSManager, Injectable {
                 case .success:
                     debug(.apsManager, "Announcement Bolus succeeded")
                     self.announcementsStorage.storeAnnouncements([announcement], enacted: true)
+                    self.bolusProgress.send(0)
                 case let .failure(error):
                     warning(.apsManager, "Announcement Bolus failed with error: \(error.localizedDescription)")
                 }
@@ -507,8 +509,11 @@ final class BaseAPSManager: APSManager, Injectable {
                 return Just(()).setFailureType(to: Error.self)
                     .eraseToAnyPublisher()
             }
-            return pump.enactBolus(units: Double(units), automatic: true).map { _ in () }
-                .eraseToAnyPublisher()
+            return pump.enactBolus(units: Double(units), automatic: true).map { _ in
+                self.bolusProgress.send(0)
+                return ()
+            }
+            .eraseToAnyPublisher()
         }()
 
         basalPublisher
@@ -558,7 +563,9 @@ final class BaseAPSManager: APSManager, Injectable {
     private func clearBolusReporter() {
         bolusReporter?.removeObserver(self)
         bolusReporter = nil
-        bolusProgress.send(nil)
+        processQueue.asyncAfter(deadline: .now() + 1) {
+            self.bolusProgress.send(nil)
+        }
     }
 }
 
