@@ -1,8 +1,8 @@
 import SwiftUI
 import Swinject
 
-extension AuthotizedRoot {
-    class ViewModel<Provider>: BaseViewModel<Provider>, ObservableObject where Provider: AuthotizedRootProvider {
+extension AuthorizedRoot {
+    class ViewModel<Provider>: BaseViewModel<Provider>, ObservableObject where Provider: AuthorizedRootProvider {
         override func subscribe() {}
 
         var rootView: some View {

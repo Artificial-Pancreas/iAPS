@@ -1,6 +1,6 @@
 import SwiftUI
 
-extension AuthotizedRoot {
+extension AuthorizedRoot {
     struct RootView: BaseView {
         @EnvironmentObject var viewModel: ViewModel<Provider>
 

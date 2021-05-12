@@ -40,7 +40,7 @@ extension Screen {
         case .onboarding:
             return Onboarding.Builder(resolver: resolver).buildView()
         case .authorizedRoot:
-            return AuthotizedRoot.Builder(resolver: resolver).buildView()
+            return AuthorizedRoot.Builder(resolver: resolver).buildView()
         case .login:
             return Login.Builder(resolver: resolver).buildView()
         case .requestPermissions:
