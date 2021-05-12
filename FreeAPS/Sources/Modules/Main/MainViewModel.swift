@@ -9,12 +9,7 @@ extension Main {
         @Published var isModalPresented = false
         @Published var isAlertPresented = false
         @Published var alertMessage = ""
-        @Published private(set) var scene: Scene!
-
-        required init(provider: Provider, resolver: Resolver) {
-            super.init(provider: provider, resolver: resolver)
-            scene = isAuthotized ? .authorized : .onboarding
-        }
+        @Published private(set) var scene: Scene = .loading
 
         override func subscribe() {
             router.mainModalScreen
