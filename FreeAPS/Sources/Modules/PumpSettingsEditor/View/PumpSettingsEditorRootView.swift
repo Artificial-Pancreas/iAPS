@@ -15,11 +15,11 @@ extension PumpSettingsEditor {
                 Section(header: Text("Delivery limits")) {
                     HStack {
                         Text("Max Basal")
-                        DecimalTextField("hours", value: $viewModel.maxBasal, formatter: formatter)
+                        DecimalTextField("U/hr", value: $viewModel.maxBasal, formatter: formatter)
                     }
                     HStack {
                         Text("Max Bolus")
-                        DecimalTextField("U/hr", value: $viewModel.maxBolus, formatter: formatter)
+                        DecimalTextField("U", value: $viewModel.maxBolus, formatter: formatter)
                     }
                 }
 
