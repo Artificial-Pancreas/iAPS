@@ -13,6 +13,15 @@ extension AddCarbs {
 
         var body: some View {
             Form {
+                if let carbsReq = viewModel.carbsRequired {
+                    Section {
+                        HStack {
+                            Text("Carbs required")
+                            Spacer()
+                            Text(formatter.string(from: carbsReq as NSNumber)! + " g")
+                        }
+                    }
+                }
                 Section {
                     HStack {
                         Text("Amount")
