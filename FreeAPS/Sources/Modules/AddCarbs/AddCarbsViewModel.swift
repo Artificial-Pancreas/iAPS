@@ -7,8 +7,11 @@ extension AddCarbs {
         @Injected() var apsManager: APSManager!
         @Published var carbs: Decimal = 0
         @Published var date = Date()
+        @Published var carbsRequired: Decimal?
 
-        override func subscribe() {}
+        override func subscribe() {
+            carbsRequired = provider.suggestion?.carbsReq
+        }
 
         func add() {
             guard carbs > 0 else {

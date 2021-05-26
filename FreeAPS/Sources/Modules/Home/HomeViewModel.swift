@@ -41,7 +41,7 @@ extension Home {
         @Published var errorDate: Date? = nil
         @Published var bolusProgress: Decimal?
         @Published var eventualBG: Int?
-
+        @Published var carbsRequired: Decimal?
         @Published var allowManualTemp = false
         @Published var units: GlucoseUnits = .mmolL
 
@@ -63,6 +63,7 @@ extension Home {
             allowManualTemp = !settingsManager.settings.closedLoop
             closedLoop = settingsManager.settings.closedLoop
             lastLoopDate = apsManager.lastLoopDate
+            carbsRequired = suggestion?.carbsReq
 
             setStatusTitle()
             setupCurrentTempTarget()
@@ -295,6 +296,7 @@ extension Home.ViewModel:
 
     func suggestionDidUpdate(_ suggestion: Suggestion) {
         self.suggestion = suggestion
+        carbsRequired = suggestion.carbsReq
         setStatusTitle()
     }
 
