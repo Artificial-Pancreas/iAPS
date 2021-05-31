@@ -46,7 +46,7 @@
 "Disclaimer Description" = "FreeAPS X is in an active development state. We do not recommend to use the system for everyday control of blood glucose! Use it for testing purposes only at your own risk. We are not responsible for your decisions and actions.";
 
 /* No comment provided by engineer. */
-"%d min ago" = "%d min ago";
+"%d min ago" = " %d min ago";
 
 /* Enacted at a date */
 "Enacted at %@" = "Enacted at %@";
