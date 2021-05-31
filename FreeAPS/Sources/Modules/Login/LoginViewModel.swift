@@ -10,7 +10,9 @@ extension Login {
 
             $credentials
                 .compactMap { $0 }
-                .sink { self.provider.authorize(credentials: $0) }
+                .sink { [weak self] in
+                    self?.provider.authorize(credentials: $0)
+                }
                 .store(in: &lifetime)
         }
 

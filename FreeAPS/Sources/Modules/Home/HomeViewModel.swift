@@ -41,7 +41,7 @@ extension Home {
         @Published var errorDate: Date? = nil
         @Published var bolusProgress: Decimal?
         @Published var eventualBG: Int?
-
+        @Published var carbsRequired: Decimal?
         @Published var allowManualTemp = false
         @Published var units: GlucoseUnits = .mmolL
 
@@ -63,6 +63,7 @@ extension Home {
             allowManualTemp = !settingsManager.settings.closedLoop
             closedLoop = settingsManager.settings.closedLoop
             lastLoopDate = apsManager.lastLoopDate
+            carbsRequired = suggestion?.carbsReq
 
             setStatusTitle()
             setupCurrentTempTarget()
@@ -89,22 +90,22 @@ extension Home {
 
             apsManager.isLooping
                 .receive(on: DispatchQueue.main)
-                .assign(to: \.isLooping, on: self)
+                .weakAssign(to: \.isLooping, on: self)
                 .store(in: &lifetime)
 
             apsManager.lastLoopDateSubject
                 .receive(on: DispatchQueue.main)
-                .assign(to: \.lastLoopDate, on: self)
+                .weakAssign(to: \.lastLoopDate, on: self)
                 .store(in: &lifetime)
 
             apsManager.pumpName
                 .receive(on: DispatchQueue.main)
-                .assign(to: \.pumpName, on: self)
+                .weakAssign(to: \.pumpName, on: self)
                 .store(in: &lifetime)
 
             apsManager.pumpExpiresAtDate
                 .receive(on: DispatchQueue.main)
-                .assign(to: \.pumpExpiresAtDate, on: self)
+                .weakAssign(to: \.pumpExpiresAtDate, on: self)
                 .store(in: &lifetime)
 
             apsManager.lastError
@@ -113,12 +114,12 @@ extension Home {
                     self.errorDate = error == nil ? nil : Date()
                     return error?.localizedDescription
                 }
-                .assign(to: \.errorMessage, on: self)
+                .weakAssign(to: \.errorMessage, on: self)
                 .store(in: &lifetime)
 
             apsManager.bolusProgress
                 .receive(on: DispatchQueue.main)
-                .assign(to: \.bolusProgress, on: self)
+                .weakAssign(to: \.bolusProgress, on: self)
                 .store(in: &lifetime)
         }
 
@@ -289,6 +290,7 @@ extension Home.ViewModel:
 
     func suggestionDidUpdate(_ suggestion: Suggestion) {
         self.suggestion = suggestion
+        carbsRequired = suggestion.carbsReq
         setStatusTitle()
     }
 

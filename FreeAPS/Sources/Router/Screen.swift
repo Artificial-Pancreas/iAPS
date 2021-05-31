@@ -2,6 +2,7 @@ import SwiftUI
 import Swinject
 
 enum Screen: Identifiable {
+    case loading
     case home
     case settings
     case onboarding
@@ -30,6 +31,8 @@ enum Screen: Identifiable {
 extension Screen {
     func view(resolver: Resolver) -> AnyView {
         switch self {
+        case .loading:
+            return ProgressView().asAny()
         case .home:
             return Home.Builder(resolver: resolver).buildView()
         case .settings:
@@ -37,7 +40,7 @@ extension Screen {
         case .onboarding:
             return Onboarding.Builder(resolver: resolver).buildView()
         case .authorizedRoot:
-            return AuthotizedRoot.Builder(resolver: resolver).buildView()
+            return AuthorizedRoot.Builder(resolver: resolver).buildView()
         case .login:
             return Login.Builder(resolver: resolver).buildView()
         case .requestPermissions:

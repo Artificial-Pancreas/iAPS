@@ -12,8 +12,8 @@ struct Announcement: JSON {
         guard components.count == 2 else {
             return nil
         }
-        let command = String(components[0])
-        let arguments = String(components[1])
+        let command = String(components[0]).lowercased()
+        let arguments = String(components[1]).lowercased()
         switch command {
         case "bolus":
             guard let amount = Decimal(from: arguments) else { return nil }

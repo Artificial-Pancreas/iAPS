@@ -2,9 +2,13 @@
 
 FreeAPS X - an artificial pancreas system for iOS based on [OpenAPS Reference](https://github.com/openaps/oref0) algorithms
 
-[OpenAPS documentation](https://openaps.readthedocs.io/en/latest/)
-
 FreeAPS X uses original JavaScript files of oref0 and provides a user interface (UI) to control and set up the system
+
+## Documentation
+
+[Overview on Loop&Learn](https://www.loopandlearn.org/freeaps-x/)
+
+[OpenAPS documentation](https://openaps.readthedocs.io/en/latest/)
 
 ## Smartphone requirements
 
@@ -21,15 +25,33 @@ To control an insulin pump FreeAPS X uses modified [rileylink_ios](https://githu
 - Medtronic Canadian/Australian Veo 554 or 754 (firmware 2.7A or lower)
 - Omnipod "Eros" pods
 
-To control an insulin you need to have a [RileyLink](https://getrileylink.org), oRange, Pickle, GNARL, Emalink or similar device
+To control an insulin you need to have a [RileyLink](https://getrileylink.org), OrangeLink, Pickle, GNARL, Emalink or similar device
 
 ## Current state of FreeAPS X
 
-FreeAPS X is in an active development state
+FreeAPS X is in an active development state and changes frequently.
 
-**We do not recommend to use the system for everyday control of blood glucose**
+You can find a description of versions on the [releases page](https://github.com/ivalkou/freeaps/releases).
 
-If you want to test it, there is a beta-version available
+### Stable versions
+
+A stable version means that it has been tested for a long time and does not contain critical bugs. We consider it ready for everyday use.
+
+Stable version numbers end in .0 and the code can be found in the [master branch](https://github.com/ivalkou/freeaps/tree/master).
+
+The current stable version is 0.2.0.
+
+### Beta versions
+
+Beta versions are the first to introduce new functionality. They are designed to test and identify issues and bugs.
+
+**Beta versions are not recommended for daily use for blood glucose control!**
+
+Beta numbers end with a number greater than 0, and the code can be found in the [dev brunch](https://github.com/ivalkou/freeaps/tree/dev).
+
+Pull requests are accepted on the dev branch.
+
+Bug reports and feature requests are accepted on the [Issues page](https://github.com/ivalkou/freeaps/issues).
 
 ## Implemented
 
@@ -56,10 +78,6 @@ If you want to test it, there is a beta-version available
 - Enlite support
 - Apple Health support
 - Detailed functions description inside the app
-
-## Documentation
-
-*In progress*
 
 ## Community
 

@@ -5,6 +5,7 @@ extension Settings {
         @Injected() private var settingsManager: SettingsManager!
         @Injected() private var broadcaster: Broadcaster!
         @Injected() private var fileManager: FileManager!
+        @Injected() private var authorizationManager: AuthorizationManager!
         @Published var closedLoop = false
 
         @Published var debugOptions = false
@@ -38,6 +39,11 @@ extension Settings {
             }
 
             return items
+        }
+
+        func logout() {
+            authorizationManager.logout()
+            showModal(for: nil)
         }
     }
 }
