@@ -91,6 +91,10 @@ extension Settings {
                         .onTapGesture {
                             showShareSheet = true
                         }
+//                    Text("Read disclaimer").chevronCell()
+//                        .onTapGesture {
+//                            viewModel.logout()
+//                        }
                 }
             }
             .sheet(isPresented: $showShareSheet) {

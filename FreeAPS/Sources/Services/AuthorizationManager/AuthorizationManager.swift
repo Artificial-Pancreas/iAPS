@@ -3,17 +3,15 @@ import Combine
 import Swinject
 
 protocol AuthorizationManager {
-    var isAuthorized: Bool { get }
     var authorizationPublisher: AnyPublisher<Bool, Never> { get }
     func authorize(credentials: Credentials) -> AnyPublisher<Void, Never>
     func logout()
 }
 
 final class BaseAuthorizationManager: AuthorizationManager, Injectable {
-    private let isAuthorizedSubject = CurrentValueSubject<Bool, Never>(false)
+    private let isAuthorizedSubject = CurrentValueSubject<Bool?, Never>(nil)
 
-    var authorizationPublisher: AnyPublisher<Bool, Never> { isAuthorizedSubject.eraseToAnyPublisher() }
-    var isAuthorized: Bool { isAuthorizedSubject.value }
+    var authorizationPublisher: AnyPublisher<Bool, Never> { isAuthorizedSubject.ignoreNil().eraseToAnyPublisher() }
 
     let credentials = CurrentValueSubject<Credentials?, Never>(nil)
 
@@ -23,6 +21,12 @@ final class BaseAuthorizationManager: AuthorizationManager, Injectable {
 
     init(resolver: Resolver) {
         injectServices(resolver)
+        if let creds = keychain.getValue(Credentials.self, forKey: Login.Config.credentialsKey) {
+            credentials.send(creds)
+            isAuthorizedSubject.send(true)
+        } else {
+            isAuthorizedSubject.send(false)
+        }
     }
 
     func authorize(credentials: Credentials) -> AnyPublisher<Void, Never> {

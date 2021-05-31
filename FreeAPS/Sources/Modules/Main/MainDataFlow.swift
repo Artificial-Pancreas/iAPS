@@ -11,11 +11,14 @@ enum Main {
     }
 
     enum Scene {
+        case loading
         case authorized
         case onboarding
 
         var screen: Screen {
             switch self {
+            case .loading:
+                return .loading
             case .authorized:
                 return .authorizedRoot
             case .onboarding:

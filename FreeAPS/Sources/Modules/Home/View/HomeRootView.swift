@@ -233,11 +233,22 @@ extension Home {
                         HStack {
                             Button { viewModel.showModal(for: .addCarbs) }
                             label: {
-                                Image("carbs")
-                                    .renderingMode(.template)
-                                    .resizable()
-                                    .frame(width: 24, height: 24)
-                            }.foregroundColor(.loopGreen)
+                                ZStack(alignment: Alignment(horizontal: .trailing, vertical: .bottom)) {
+                                    Image("carbs")
+                                        .renderingMode(.template)
+                                        .resizable()
+                                        .frame(width: 24, height: 24)
+                                        .foregroundColor(.loopGreen)
+                                        .padding(8)
+                                    if let carbsReq = viewModel.carbsRequired {
+                                        Text(numberFormatter.string(from: carbsReq as NSNumber)!)
+                                            .font(.caption)
+                                            .foregroundColor(.white)
+                                            .padding(4)
+                                            .background(Capsule().fill(Color.red))
+                                    }
+                                }
+                            }
                             Spacer()
                             Button { viewModel.showModal(for: .addTempTarget) }
                             label: {
@@ -245,6 +256,7 @@ extension Home {
                                     .renderingMode(.template)
                                     .resizable()
                                     .frame(width: 24, height: 24)
+                                    .padding(8)
                             }.foregroundColor(.loopYellow)
                             Spacer()
                             Button { viewModel.showModal(for: .bolus(waitForDuggestion: false)) }
@@ -253,6 +265,7 @@ extension Home {
                                     .renderingMode(.template)
                                     .resizable()
                                     .frame(width: 24, height: 24)
+                                    .padding(8)
                             }.foregroundColor(.insulin)
                             Spacer()
                             if viewModel.allowManualTemp {
@@ -262,6 +275,7 @@ extension Home {
                                         .renderingMode(.template)
                                         .resizable()
                                         .frame(width: 24, height: 24)
+                                        .padding(8)
                                 }.foregroundColor(.insulin)
                                 Spacer()
                             }
@@ -271,6 +285,7 @@ extension Home {
                                     .renderingMode(.template)
                                     .resizable()
                                     .frame(width: 24, height: 24)
+                                    .padding(8)
                             }.foregroundColor(.loopGray)
                         }
                         .padding(.horizontal, 24)

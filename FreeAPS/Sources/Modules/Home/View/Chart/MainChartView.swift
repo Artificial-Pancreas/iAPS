@@ -540,8 +540,18 @@ extension MainChartView {
 
             let firstRec = self.suspensions.first.flatMap { event -> CGRect? in
                 guard event.type == .pumpResume else { return nil }
-                let width = self.timeToXCoordinate(event.timestamp.timeIntervalSince1970, fullSize: fullSize)
-                return CGRect(x: 0, y: 0, width: width, height: Config.basalHeight)
+                let tbrTime = self.tempBasals.last { $0.timestamp < event.timestamp }
+                    .map { $0.timestamp.timeIntervalSince1970 + TimeInterval($0.durationMin ?? 0) * 60 } ?? Date()
+                    .addingTimeInterval(-1.days.timeInterval).timeIntervalSince1970
+
+                let x0 = self.timeToXCoordinate(tbrTime, fullSize: fullSize)
+                let x1 = self.timeToXCoordinate(event.timestamp.timeIntervalSince1970, fullSize: fullSize)
+                return CGRect(
+                    x: x0,
+                    y: 0,
+                    width: x1 - x0,
+                    height: Config.basalHeight
+                )
             }
 
             let lastRec = self.suspensions.last.flatMap { event -> CGRect? in
