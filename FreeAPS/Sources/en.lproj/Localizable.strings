@@ -1,0 +1,370 @@
+/*
+  Localizable.strings
+  FreeAPS X
+
+*/
+/* Add insulin without actually bolusing */
+"Add insulin without actually bolusing" = "Add insulin without actually bolusing";
+
+/* Amount */
+"Amount Bolus" = "Amount Bolus";
+
+/* Bolus */
+"Bolus" = "Bolus";
+
+/* Close */
+"Close" = "Close";
+
+/* Continue without bolus */
+"Continue without bolus" = "Continue without bolus";
+
+/* Enact Bolus */
+"Enact bolus" = "Enact bolus";
+
+/* Enact Bolus title */
+"Enact Bolus Title" = "Enact Bolus";
+
+/* Insulin recommended */
+"Insulin recommended" = "Insulin recommended";
+
+/* Insulin required */
+"Insulin required" = "Insulin required";
+
+/* StringRecommendation */
+"Recommendation" = "Recommendation";
+
+/* Wait please */
+"Wait please" = "Wait please";
+
+/* Agree and continue */
+"Agree and Continue" = "Agree and Continue";
+
+/* Disclaimer */
+"Disclaimer" = "Disclaimer";
+
+/* Disclaimer Description */
+"Disclaimer Description" = "FreeAPS X is in an active development state. We do not recommend to use the system for everyday control of blood glucose! Use it for testing purposes only at your own risk. We are not responsible for your decisions and actions.";
+
+/* No comment provided by engineer. */
+"%d min ago" = "%d min ago";
+
+/* Enacted at a date */
+"Enacted at %@" = "Enacted at %@";
+
+/* Home title */
+"Home" = "Home";
+
+/* Looping in progress */
+"looping" = "looping";
+
+/* Status Title : No Suggestion */
+"No suggestion" = "No suggestion";
+
+/* Replace pod */
+"Replace pod" = "Replace pod";
+
+/* Status Title : Suggest */
+"Suggested" = "Suggested";
+
+/* Suggested at a date */
+"Suggested at %@" = "Suggested at %@";
+
+/* Add Carbs */
+"Add Carbs" = "Add Carbs";
+
+/* Add Carbs Title */
+"Add Carbs Title" = "Add Carbs Title";
+
+/* Amount Carbs */
+"Amount Carbs" = "Amount Carbs";
+
+/* Grams unit */
+"grams" = "grams";
+
+/* A you sure delete preset? */
+"A you sure?" = "A you sure?";
+
+/* Bottom target temp */
+"Bottom target" = "Bottom target";
+
+/* Cancel preset name */
+"Cancel" = "Cancel";
+
+/* Cancel temp target */
+"Cancel temp target" = "Cancel temp target";
+
+/* Custom target temp */
+"Custom" = "Custom";
+
+/* Date */
+"Date" = "Date";
+
+/* Delete */
+"Delete" = "Delete";
+
+/* Delete preset %@ */
+"Delete preset %@" = "Delete preset %@";
+
+/* Duration target temp */
+"Duration" = "Duration";
+
+/* Enact temp target */
+"Enact temp target" = "Enact temp target";
+
+/* Enter preset name */
+"Enter preset name" = "Enter preset name";
+
+/* minutes target temp */
+"minutes" = "minutes";
+
+/* Presets title */
+"Presets" = "Presets";
+
+/* Save preset name */
+"Save" = "Save";
+
+/* Save as preset */
+"Save as preset" = "Save as preset";
+
+/* Top target temp */
+"Top target" = "Top target";
+
+/* Autotune Title */
+"Autotune" = "Autotune";
+
+/* Basal profile */
+"Basal profile" = "Basal profile";
+
+/* Carb ratio */
+"Carb ratio" = "Carb ratio";
+
+/* Delete autotune data */
+"Delete autotune data" = "Delete autotune data";
+
+/* Run now */
+"Run now" = "Run now";
+
+/* Sensitivity */
+"Sensitivity" = "Sensitivity";
+
+/* Use Autotune */
+"Use Autotune" = "use Autotune";
+
+/* Add profile basal */
+"Add" = "Add";
+
+/* Basal Profile */
+"Basal Profile" = "Basal Profile";
+
+/* Rate basal profile */
+"Rate" = "Rate";
+
+/* Save on Pump */
+"Save on Pump" = "Save on Pump";
+
+/* Saving... */
+"Saving..." = "Saving...";
+
+/* Schedule */
+"Schedule" = "Schedule";
+
+/* starts at */
+"starts at" = "starts at";
+
+/* Time basal profile */
+"Time" = "Time";
+
+/* Calculated Ratio */
+"Calculated Ratio" = "Calculated Ratio";
+
+/* Carb Ratios Title */
+"Carb Ratios" = "Carb Ratios";
+
+/* Ratio Carb */
+"Ratio" = "Ratio";
+
+/* Autosens */
+"Autosens" = "Autosens";
+
+/* Calculated Sensitivity */
+"Calculated Sensitivity" = "Calculated Sensitivity";
+
+/* Insulin Sensitivities */
+"Insulin Sensitivities" = "Insulin Sensitivities";
+
+/* Sensitivity Ratio */
+"Sensitivity Ratio" = "Sensitivity Ratio";
+
+/* Dismiss */
+"Dismiss" = "Dismiss";
+
+/* Important message */
+"Important message" = "Important message";
+
+/* Amount */
+"Amount" = "Amount";
+
+/* Cancel Temp Basal */
+"Cancel Temp Basal" = "Cancel Temp Basal";
+
+/* Duration */
+"Duration" = "Duration";
+
+/* Enact temp Basal*/
+"Enact" = "Enact";
+
+/* Manual Temp Basal */
+"Manual Temp Basal" = "Manual Temp Basal";
+
+/* Allow uploads */
+"Allow uploads" = "Allow uploads";
+
+/* API secret */
+"API secret" = "API secret";
+
+/* Connect */
+"Connect" = "Connect";
+
+/* Connected! */
+"Connected!" = "Connected!";
+
+/* Connecting... */
+"Connecting..." = "Connecting...";
+
+/* Invalid URL */
+"Invalid URL" = "Invalid URL";
+
+/* Local glucose source */
+"Local glucose source" = "Local glucose source";
+
+/* Nightscout Config */
+"Nightscout Config" = "Nightscout Config";
+
+/* Port */
+"Port" = "Port";
+
+/* URL */
+"URL" = "URL";
+
+/* Use local glucose server */
+"Use local glucose server" = "Use local glucose server";
+
+/* Edit settings json */
+"Edit settings json" = "Edit settings json";
+
+/* Glucose units */
+"Glucose units" = "Glucose units";
+
+/* Preferences */
+"Preferences" = "Preferences";
+
+/* Recommended Insulin Fraction */
+"Recommended Insulin Fraction" = "Recommended Insulin Fraction";
+
+/* Remote control */
+"Remote control" = "Remote control";
+
+/* Add Medtronic */
+"Add Medtronic" = "Add Medtronic";
+
+/* Add Omnipod */
+"Add Omnipod" = "Add Omnipod";
+
+/* Add Simulator */
+"Add Simulator" = "Add Simulator";
+
+/* Model */
+"Model" = "Model";
+
+/* Pump config */
+"Pump config" = "Pump config";
+
+/* Delivery limits */
+"Delivery limits" = "Delivery limits";
+
+/* Duration of Insulin Action */
+"Duration of Insulin Action" = "Duration of Insulin Action";
+
+/* hours */
+"hours" = "hours";
+
+/* Max Basal */
+"Max Basal" = "Max Basal";
+
+/* Max Bolus */
+"Max Bolus" = "Max Bolus";
+
+/* Pump Settings */
+"Pump Settings" = "Pump Settings";
+
+/* Save on Pump */
+"Save on Pump" = "Save on Pump";
+
+/* U/hr */
+"U/hr" = "U/hr";
+
+/* RequestPermissions */
+"RequestPermissions" = "RequestPermissions";
+
+/* RequestPermissions screen */
+"RequestPermissions screen" = "RequestPermissions screen";
+
+/* Autotune */
+"Autotune Conf" = "Autotune";
+
+/* Basal Profile */
+"Basal Profile Conf" = "Basal Profile";
+
+/* Carb Ratios */
+"Carb Ratios Conf" = "Carb Ratios";
+
+/* Closed loop */
+"Closed loop" = "Closed loop";
+
+/* Configuration */
+"Configuration" = "Configuration";
+
+/* Devices */
+"Devices" = "Devices";
+
+/* Insulin Sensitivities */
+"Insulin Sensitivities Conf" = "Insulin Sensitivities";
+
+/* Preferences */
+"Preferences Conf" = "Preferences";
+
+/* Pump */
+"Pump" = "Pump";
+
+/* Pump Settings */
+"Pump Settings Conf" = "Pump Settings";
+
+/* Services */
+"Services" = "Services";
+
+/* Settings */
+"Settings" = "Settings";
+
+/* Share logs */
+"Share logs" = "Share logs";
+
+/* Target Ranges */
+"Target Ranges Conf" = "Target Ranges";
+
+/* High target */
+"High target" = "High target";
+
+/* Low target */
+"Low target" = "Low target";
+
+/* Target Ranges */
+"Target Ranges" = "Target Ranges";
+
+/* Bolusing.. */
+"Bolusing" = "Bolusing";
+
+/* Pump suspended */
+"Pump suspended" = "Pump suspended";
+
+/* middleware */
+"Middleware" = "Middleware";
