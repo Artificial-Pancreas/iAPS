@@ -267,6 +267,9 @@
 /* Recommended Insulin Fraction in preferences */
 "Recommended Insulin Fraction" = "Kvot av rekommenderad mängd insulin";
 
+/* Do you want to show bolus screen after added carbs? */
+"Skip Bolus screen after carbs" = "Hoppa över Bolus-skärmen vid tillagda kolhydrater";
+
 /* Remote control */
 "Remote control" = "Fjärrstyrning";
 
@@ -368,6 +371,3 @@
 
 /* middleware */
 "Middleware" = "Middleware";
-
-/* Do you want to show bolus screen after added carbs? */
-"Skip Bolus screen after carbs" = "Skip Bolus screen after carbs";
