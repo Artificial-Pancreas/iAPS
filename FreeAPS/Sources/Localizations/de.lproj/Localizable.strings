@@ -3,10 +3,10 @@
   FreeAPS X
 */
 /* Add insulin without actually bolusing */
-"Add insulin without actually bolusing" = "Insulin hinzufügen ohne Insulin Abgabe";
+"Add insulin without actually bolusing" = "Insulin nur erfassen ohne tatsächliche Abgabe";
 
 /* Amount */
-"Amount Bolus" = "Bolus Menge";
+"Amount Bolus" = "Bolus IE";
 
 /* Bolus */
 "Bolus" = "Bolus";
@@ -18,10 +18,10 @@
 "Continue without bolus" = "Ohne Bolus Abgabe fortfahren";
 
 /* Enact Bolus */
-"Enact Bolus" = "Bolus eingeben";
+"Enact Bolus" = "Bolus abgeben";
 
 /* Enact bolus */
-"Enact bolus" = "Bolus eingeben";
+"Enact bolus" = "Bolus abgeben";
 
 /* Insulin recommended */
 "Insulin recommended" = "Empfohlenes Insulin";
@@ -46,7 +46,7 @@
 
 /* %d min ago
 %d min ago */
-"%d min ago" = "vor %d Minute";
+"%d min ago" = "vor %d min";
 
 /* Enacted at a date */
 "Enacted at %@" = "Ausgelöst bei %@";
@@ -88,7 +88,7 @@
 "Cancel" = "Abbrechen";
 
 /* Cancel Temp Target */
-"Cancel Temp Target" = "Temporäre Basalrate abbrechen";
+"Cancel Temp Target" = "Temporäres Ziel (TT) abbrechen";
 
 /* Custom target temp */
 "Custom" = "Benutzerdefiniert";
@@ -100,7 +100,7 @@
 "Delete" = "Löschen";
 
 /* Delete preset %@ */
-"Delete preset %@" = "Vorlage %@ löschen";
+"Delete preset \"%@\"" = "Delete preset \"%@\"";
 
 /* Duration target temp */
 "Duration" = "Dauer";
@@ -121,13 +121,13 @@
 "Save" = "Speichern";
 
 /* Save as preset */
-"Save as preset" = "Als Vorlage speichern";
+"Save as preset" = "Als Voreinstellung speichern";
 
 /* Top target temp */
 "Top target" = "Obergrenze";
 
 /* Autotune Title */
-"Autotune" = "Automatische Feinabstimmung";
+"Autotune" = "Autotune";
 
 /* Basal profile */
 "Basal profile" = "Basalraten-Profil";
@@ -205,10 +205,10 @@
 "Cancel Temp Basal" = "Temporäre Basalrate abbrechen";
 
 /* Duration */
-"Duration" = "Duration";
+"Duration" = "Dauer";
 
 /* Enact temp Basal*/
-"Enact" = "geben";
+"Enact" = "Starte";
 
 /* Manual Temp Basal */
 "Manual Temp Basal" = "Manuelle Temporäre Basalrate";
@@ -217,7 +217,7 @@
 "Allow uploads" = "Erlaube Hochladen von Dateien";
 
 /* API secret */
-"API secret" = "Geheime API";
+"API secret" = "API secret";
 
 /* Connect */
 "Connect" = "verbinden";
@@ -295,37 +295,37 @@
 "Pump Settings" = "Pumpeneinstellungen";
 
 /* Save on Pump */
-"Save on Pump" = "Save on Pump";
+"Save on Pump" = "Auf Pumpe speichern";
 
 /* U/hr */
-"U/hr" = "U/hr";
+"U/hr" = "IE/Std";
 
 /* Autotune */
-"Autotune Conf" = "Autotune";
+"Autotune Conf" = "Automatische Feinabstimmung";
 
 /* Basal Profile */
-"Basal Profile Conf" = "Basal Profile";
+"Basal Profile Conf" = "Basalraten-Profile";
 
 /* Carb Ratios */
-"Carb Ratios Conf" = "Carb Ratios";
+"Carb Ratios Conf" = "Kohlenhydratfaktoren";
 
 /* Closed loop */
-"Closed loop" = "Closed loop";
+"Closed loop" = "Geschlossener Loop";
 
 /* Configuration */
-"Configuration" = "Configuration";
+"Configuration" = "Konfiguration";
 
 /* Devices */
-"Devices" = "Devices";
+"Devices" = "Geräte";
 
 /* Insulin Sensitivities */
-"Insulin Sensitivities Conf" = "Insulin Sensitivities";
+"Insulin Sensitivities Conf" = "Insulinempfindlichkeit";
 
 /* Preferences */
-"Preferences Conf" = "Preferences";
+"Preferences Conf" = "Einstellungen";
 
 /* Pump */
-"Pump" = "Pump";
+"Pump" = "Pumpe";
 
 /* Pump Settings */
 "Pump Settings Conf" = "Pumpeneinstellungen";

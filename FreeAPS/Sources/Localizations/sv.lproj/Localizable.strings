@@ -208,7 +208,7 @@
 "Duration" = "Duration";
 
 /* Enact temp Basal*/
-"Enact" = "Ge";
+"Enact" = "Utför";
 
 /* Manual Temp Basal */
 "Manual Temp Basal" = "Manuell temporär basal";
@@ -295,7 +295,7 @@
 "Pump Settings" = "Pumpinställningar";
 
 /* Save on Pump */
-"Save on Pump" = "Save on Pump";
+"Save on Pump" = "Spara på pump";
 
 /* U/hr */
 "U/hr" = "E/h";
