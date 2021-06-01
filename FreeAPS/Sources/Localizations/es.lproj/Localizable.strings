@@ -12,7 +12,7 @@
 "Bolus" = "Bolo";
 
 /* Close */
-"Close" = "Close";
+"Close" = "Cerrar";
 
 /* Continue without bolus */
 "Continue without bolus" = "Continuar sin administrar bolo";
@@ -30,7 +30,7 @@
 "Insulin required" = "Insulina requerida";
 
 /* StringRecommendation */
-"Recommendation" = "Recommendation";
+"Recommendation" = "Recomendación";
 
 /* Wait please */
 "Wait please" = "Wait please";
@@ -98,7 +98,8 @@
 
 /* Delete */
 "Delete" = "Borrar";
-/* Delete preset "%@" */
+
+/* Delete preset %@ */
 "Delete preset \"%@\"" = "Delete preset \"%@\"";
 
 /* Duration target temp */
@@ -156,10 +157,10 @@
 "Rate" = "Rate";
 
 /* Save on Pump */
-"Save on Pump" = "Save on Pump";
+"Save on Pump" = "Guardar en Bomba";
 
 /* Saving... */
-"Saving..." = "Saving...";
+"Saving..." = "Guardando...";
 
 /* Schedule */
 "Schedule" = "Schedule";
@@ -171,10 +172,10 @@
 "Time" = "Time";
 
 /* Calculated Ratio */
-"Calculated Ratio" = "Calculated Ratio";
+"Calculated Ratio" = "Ratio Calculado";
 
 /* Carb Ratios Title */
-"Carb Ratios" = "Carb Ratios";
+"Carb Ratios" = "Ratios de Carbohidratos";
 
 /* Ratio Carb */
 "Ratio" = "Ratio";
@@ -183,7 +184,7 @@
 "Autosens" = "Autosens";
 
 /* Calculated Sensitivity */
-"Calculated Sensitivity" = "Calculated Sensitivity";
+"Calculated Sensitivity" = "Sensibilidad Calculada";
 
 /* Insulin Sensitivities */
 "Insulin Sensitivities" = "Insulin Sensitivities";
@@ -198,13 +199,13 @@
 "Important message" = "Important message";
 
 /* Amount */
-"Amount" = "Amount";
+"Amount" = "Cantidad";
 
 /* Cancel Temp Basal */
 "Cancel Temp Basal" = "Cancel Temp Basal";
 
 /* Duration */
-"Duration" = "Duration";
+"Duration" = "Duración";
 
 /* Enact temp Basal*/
 "Enact" = "Enact";
@@ -213,31 +214,31 @@
 "Manual Temp Basal" = "Manual Temp Basal";
 
 /* Allow uploads */
-"Allow uploads" = "Allow uploads";
+"Allow uploads" = "Permitir subida de datos";
 
 /* API secret */
 "API secret" = "API secret";
 
 /* Connect */
-"Connect" = "Connect";
+"Connect" = "Conectar";
 
 /* Connected! */
-"Connected!" = "Connected!";
+"Connected!" = "Conectado!";
 
 /* Connecting... */
-"Connecting..." = "Connecting...";
+"Connecting..." = "Conectando...";
 
 /* Invalid URL */
-"Invalid URL" = "Invalid URL";
+"Invalid URL" = "URL inválida";
 
 /* Local glucose source */
 "Local glucose source" = "Local glucose source";
 
 /* Nightscout Config */
-"Nightscout Config" = "Nightscout Config";
+"Nightscout Config" = "Configuración de Nightscout";
 
 /* Port */
-"Port" = "Port";
+"Port" = "Puerto";
 
 /* URL */
 "URL" = "URL";
@@ -249,16 +250,16 @@
 "Edit settings json" = "Edit settings json";
 
 /* Glucose units */
-"Glucose units" = "Glucose units";
+"Glucose units" = "Unidades de glucosa";
 
 /* Preferences */
-"Preferences" = "Preferences";
+"Preferences" = "Preferencias";
 
 /* Recommended Insulin Fraction */
-"Recommended Insulin Fraction" = "Recommended Insulin Fraction";
+"Recommended Insulin Fraction" = "Fracción de insulina recomendada";
 
 /* Remote control */
-"Remote control" = "Remote control";
+"Remote control" = "Control a distancia";
 
 /* Add Medtronic */
 "Add Medtronic" = "Add Medtronic";
@@ -282,79 +283,79 @@
 "Duration of Insulin Action" = "Duration of Insulin Action";
 
 /* hours */
-"hours" = "hours";
+"hours" = "horas";
 
 /* Max Basal */
-"Max Basal" = "Max Basal";
+"Max Basal" = "Basal máxima";
 
 /* Max Bolus */
-"Max Bolus" = "Max Bolus";
+"Max Bolus" = "Bolo máximo";
 
 /* Pump Settings */
-"Pump Settings" = "Pump Settings";
+"Pump Settings" = "Configuración de la bomba";
 
 /* Save on Pump */
-"Save on Pump" = "Save on Pump";
+"Save on Pump" = "Guardar en Bomba";
 
 /* U/hr */
-"U/hr" = "U/hr";
+"U/hr" = "U/h";
 
 /* Autotune */
 "Autotune Conf" = "Autotune";
 
 /* Basal Profile */
-"Basal Profile Conf" = "Basal Profile";
+"Basal Profile Conf" = "Perfil Basal";
 
 /* Carb Ratios */
-"Carb Ratios Conf" = "Carb Ratios";
+"Carb Ratios Conf" = "Ratios de Carbohidratos";
 
 /* Closed loop */
 "Closed loop" = "Closed loop";
 
 /* Configuration */
-"Configuration" = "Configuration";
+"Configuration" = "Configuracion";
 
 /* Devices */
-"Devices" = "Devices";
+"Devices" = "Dispositivos";
 
 /* Insulin Sensitivities */
 "Insulin Sensitivities Conf" = "Insulin Sensitivities";
 
 /* Preferences */
-"Preferences Conf" = "Preferences";
+"Preferences Conf" = "Preferencias";
 
 /* Pump */
-"Pump" = "Pump";
+"Pump" = "Bomba";
 
 /* Pump Settings */
-"Pump Settings Conf" = "Pump Settings";
+"Pump Settings Conf" = "Configuración de la bomba";
 
 /* Services */
-"Services" = "Services";
+"Services" = "Servicios";
 
 /* Settings */
-"Settings" = "Settings";
+"Settings" = "Ajustes";
 
 /* Share logs */
-"Share logs" = "Share logs";
+"Share logs" = "Compartir registros";
 
 /* Target Ranges */
-"Target Ranges Conf" = "Target Ranges";
+"Target Ranges Conf" = "Rango Objetivo";
 
 /* High target */
-"High target" = "High target";
+"High target" = "Objetivo Alto";
 
 /* Low target */
-"Low target" = "Low target";
+"Low target" = "Objectivo Bajo";
 
 /* Target Ranges */
-"Target Ranges" = "Target Ranges";
+"Target Ranges" = "Rango Objetivo";
 
 /* Bolusing.. */
-"Bolusing" = "Bolusing";
+"Bolusing" = "Administrando Bolo";
 
 /* Pump suspended */
-"Pump suspended" = "Pump suspended";
+"Pump suspended" = "Bomba suspendida";
 
 /* middleware */
 "Middleware" = "Middleware";
@@ -363,4 +364,4 @@
 "Clear" = "Clear";
 
 /* Done */
-"Done" = "Done";
+"Done" = "Hecho";

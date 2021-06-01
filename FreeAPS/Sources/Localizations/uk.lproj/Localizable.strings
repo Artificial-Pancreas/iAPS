@@ -70,10 +70,10 @@
 "Suggested at %@" = "Рекомендовано в %@";
 
 /* Add Carbs */
-"Add Carbs" = "Додати Вуглеводів";
+"Add Carbs" = "Додати Вуглеводи";
 
 /* Amount Carbs */
-"Amount Carbs" = "Кількість Вуглеводів";
+"Amount Carbs" = "Кількість Вуглеводи";
 
 /* Grams unit */
 "grams" = "грами";
@@ -98,7 +98,8 @@
 
 /* Delete */
 "Delete" = "Видалити";
-/* Delete preset "%@" */
+
+/* Delete preset %@ */
 "Delete preset \"%@\"" = "Видалити шаблон \"%@\"";
 
 /* Duration target temp */
@@ -123,7 +124,7 @@
 "Save as preset" = "Зберегти як шаблон";
 
 /* Top target temp */
-"Top target" = "Нижня ціль";
+"Top target" = "Верхня ціль";
 
 /* Autotune Title */
 "Autotune" = "Автотюн";
@@ -138,7 +139,7 @@
 "Delete autotune data" = "Видалити дані автотюну";
 
 /* Run now */
-"Run now" = "Виконати зараз";
+"Run now" = "Виконати";
 
 /* Sensitivity */
 "Sensitivity" = "Чутливість";

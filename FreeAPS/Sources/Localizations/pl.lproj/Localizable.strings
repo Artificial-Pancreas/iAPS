@@ -33,20 +33,20 @@
 "Recommendation" = "Recommendation";
 
 /* Wait please */
-"Wait please" = "Wait please";
+"Wait please" = "Proszę czekać";
 
 /* Agree and continue */
-"Agree and continue" = "Agree and Continue";
+"Agree and continue" = "Zaakceptuj i kontynuuj";
 
 /* Disclaimer */
 "Disclaimer" = "Disclaimer";
 
 /* Disclaimer Description */
-"FreeAPS X is in an active development state. We do not recommend to use the system for everyday control of blood glucose! Use it for testing purposes only at your own risk. We are not responsible for your decisions and actions." = "FreeAPS X is in an active development state. We do not recommend to use the system for everyday control of blood glucose! Use it for testing purposes only at your own risk. We are not responsible for your decisions and actions.";
+"FreeAPS X is in an active development state. We do not recommend to use the system for everyday control of blood glucose! Use it for testing purposes only at your own risk. We are not responsible for your decisions and actions." = "FreeAPS X jest w fazie aktywnego rozwoju. Nie zalecamy używania systemu do codziennej kontroli poziomów glukozy we krwi. System może być użyty w celach testowych tylko na własne ryzyko. Nie ponosimy odpowiedzialności za twoje decyzje i działania.";
 
 /* %d min ago
 %d min ago */
-"%d min ago" = "%d min ago";
+"%d min ago" = "%d minut temu";
 
 /* Enacted at a date */
 "Enacted at %@" = "Enacted at %@";
@@ -58,10 +58,10 @@
 "looping" = "looping";
 
 /* Status Title : No Suggestion */
-"No suggestion" = "No suggestion";
+"No suggestion" = "Brak sugestii";
 
 /* Replace pod */
-"Replace pod" = "Replace pod";
+"Replace pod" = "Wymień Pod";
 
 /* Status Title : Suggest */
 "Suggested" = "Suggested";
@@ -70,7 +70,7 @@
 "Suggested at %@" = "Suggested at %@";
 
 /* Add Carbs */
-"Add Carbs" = "Add Carbs";
+"Add Carbs" = "Dodaj węglowodany";
 
 /* Amount Carbs */
 "Amount Carbs" = "Amount Carbs";

@@ -98,7 +98,8 @@
 
 /* Delete */
 "Delete" = "Löschen";
-/* Delete preset "%@" */
+
+/* Delete preset %@ */
 "Delete preset \"%@\"" = "Voreinstellung \"%@\" löschen";
 
 /* Duration target temp */
