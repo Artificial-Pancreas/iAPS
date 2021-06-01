@@ -100,7 +100,7 @@
 "Delete" = "Удалить";
 
 /* Delete preset %@ */
-"Delete preset \"%@\"" = "Delete preset \"%@\"";
+"Delete preset \"%@\"" = "Удалить шаблон \"%@\"";
 
 /* Duration target temp */
 "Duration" = "Длительность";
@@ -349,7 +349,7 @@
 "Low target" = "Нижняя цель";
 
 /* Target Ranges */
-"Target Ranges" = "Целевой диапазон";
+"Target Ranges" = "Целевой Диапазон";
 
 /* Bolusing.. */
 "Bolusing" = "Подается болюс";
