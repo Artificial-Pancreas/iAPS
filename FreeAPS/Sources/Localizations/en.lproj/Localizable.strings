@@ -371,3 +371,6 @@
 
 /* middleware */
 "Middleware" = "Middleware";
+
+/* History header */
+"History" = "History";
