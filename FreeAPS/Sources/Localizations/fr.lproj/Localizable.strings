@@ -98,7 +98,8 @@
 
 /* Delete */
 "Delete" = "Supprimer";
-/* Delete preset "%@" */
+
+/* Delete preset %@ */
 "Delete preset \"%@\"" = "Supprimer le préréglage \"%@\"";
 
 /* Duration target temp */
@@ -150,7 +151,7 @@
 "Add" = "Ajouter";
 
 /* Basal Profile */
-"Basal Profile" = "Définir profil basal";
+"Basal Profile" = "Profil Basal";
 
 /* Rate basal profile */
 "Rate" = "Taux";
