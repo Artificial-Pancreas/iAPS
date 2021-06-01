@@ -3,12 +3,6 @@
   FreeAPS X
 */
 
-/* clearButtonr */
-"Clear" = "Rensa";
-
-/* doneButton */
-"Done" = "Klar";
-
 /* Add insulin without actually bolusing */
 "Add insulin without actually bolusing" = "Lägg till insulin utan att ge bolus";
 
@@ -38,6 +32,12 @@
 
 /* StringRecommendation */
 "Recommendation" = "Rekommendation";
+
+/* clearButton */
+"Clear" = "Clear";
+
+/* doneButton */
+"Done" = "Done";
 
 /* Wait please */
 "Wait please" = "Vänta...";
