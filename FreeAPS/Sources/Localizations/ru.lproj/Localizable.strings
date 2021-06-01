@@ -1,4 +1,4 @@
-/*
+/* 
   Localizable.strings
   FreeAPS X
 */
@@ -103,7 +103,7 @@
 "Delete preset %@" = "Удалить цель %@";
 
 /* Duration target temp */
-"Duration" = "Продолжительность";
+"Duration" = "Длительность";
 
 /* Enact Temp Target */
 "Enact Temp Target" = "Временная цель";
@@ -205,7 +205,7 @@
 "Cancel Temp Basal" = "Отменить Вбс";
 
 /* Duration */
-"Duration" = "Длительность";
+"Duration" = "Duration";
 
 /* Enact temp Basal*/
 "Enact" = "Выполнить";
@@ -295,7 +295,7 @@
 "Pump Settings" = "Настройки помпы";
 
 /* Save on Pump */
-"Save on Pump" = "Сохранить на помпу";
+"Save on Pump" = "Save on Pump";
 
 /* U/hr */
 "U/hr" = "Ед/ч";
