@@ -2,7 +2,8 @@
   Localizable.strings
   FreeAPS X
 */
-/* Add insulin without actually bolusing */
+/* Bolus screen when adding insulin */
+
 "Add insulin without actually bolusing" = "Ajouter de l'insuline sans bolus";
 
 /* Amount */
@@ -14,13 +15,13 @@
 /* Close */
 "Close" = "Fermer";
 
-/* Continue without bolus */
+/* Continue after added carbs without bolus */
 "Continue without bolus" = "Continuer sans bonus";
 
-/* Enact Bolus */
+/* Enact Bolus Title*/
 "Enact Bolus" = "Injecter bolus";
 
-/* Enact bolus */
+/* Enact bolus button */
 "Enact bolus" = "Injecter bolus";
 
 /* Insulin recommended */
@@ -32,20 +33,25 @@
 /* StringRecommendation */
 "Recommendation" = "Recommandations";
 
+/* clearButton */
+"Clear" = "Effacer";
+
+/* doneButton */
+"Done" = "Terminé";
+
 /* Wait please */
 "Wait please" = "Merci de patienter";
 
 /* Agree and continue */
 "Agree and continue" = "Accepter et continuer";
 
-/* Disclaimer */
+/* Disclaimer when opening app for first time*/
 "Disclaimer" = "Avertissement";
 
 /* Disclaimer Description */
 "FreeAPS X is in an active development state. We do not recommend to use the system for everyday control of blood glucose! Use it for testing purposes only at your own risk. We are not responsible for your decisions and actions." = "FreeAPS X est une application en cours de développement. Nous ne recommandons pas son utilisation au quotidien pour gérer son diabète. A utiliser pour test seulement et à vos risques et périls. Nous ne sommes pas responsable de vos décisions et actions suite à l'utilisation/recommandations de l'application.";
 
-/* %d min ago
-%d min ago */
+/* %d min ago, currently not being translated, I don't know why? */
 "%d min ago" = "il y a %d min";
 
 /* Enacted at a date */
@@ -57,13 +63,13 @@
 /* Looping in progress */
 "looping" = "Boucle en cours";
 
-/* Status Title : No Suggestion */
+/* Status Title */
 "No suggestion" = "Aucune suggestion";
 
-/* Replace pod */
+/* Replace pod text in Header */
 "Replace pod" = "Remplacer le pod";
 
-/* Status Title : Suggest */
+/* Status Title */
 "Suggested" = "Suggéré";
 
 /* Suggested at a date */
@@ -78,10 +84,10 @@
 /* Grams unit */
 "grams" = "grammes";
 
-/* A you sure delete preset? */
+/* A you sure? Typo in code */
 "A you sure?" = "Êtes-vous sûr ?";
 
-/* Are you sure? Typo in code*/
+/* Are your sure? Typo in code*/
 "Are your sure?" = "Êtes-vous sûr ?";
 
 /* Bottom target temp */
@@ -93,7 +99,7 @@
 /* Cancel Temp Target */
 "Cancel Temp Target" = "Annuler la cible temporaire";
 
-/* Custom target temp */
+/* Custom temp target */
 "Custom" = "Personnalisé";
 
 /* Date */
@@ -102,10 +108,10 @@
 /* Delete */
 "Delete" = "Supprimer";
 
-/* Delete preset %@ */
+/* Delete preset temp target */
 "Delete preset \"%@\"" = "Supprimer le préréglage \"%@\"";
 
-/* Duration target temp */
+/* Duration of target temp */
 "Duration" = "Durée";
 
 /* Enact Temp Target */
@@ -114,7 +120,7 @@
 /* Enter preset name */
 "Enter preset name" = "Entrez le nom de la présélection";
 
-/* minutes target temp */
+/* minutes of target temp */
 "minutes" = "minutes";
 
 /* Presets title */
@@ -258,8 +264,11 @@
 /* Preferences */
 "Preferences" = "Préférences";
 
-/* Recommended Insulin Fraction */
+/* Recommended Insulin Fraction in preferences */
 "Recommended Insulin Fraction" = "Fraction Insuline Recommandée";
+
+/* Do you want to show bolus screen after added carbs? */
+"Skip Bolus screen after carbs" = "Skip Bolus screen after carbs";
 
 /* Remote control */
 "Remote control" = "Contrôle à distance";
@@ -362,9 +371,3 @@
 
 /* middleware */
 "Middleware" = "Middleware";
-
-/* Clear */
-"Clear" = "Effacer";
-
-/* Done */
-"Done" = "Terminé";

@@ -2,8 +2,7 @@
   Localizable.strings
   FreeAPS X
 */
-
-/* Add insulin without actually bolusing */
+/* Bolus screen when adding insulin */
 "Add insulin without actually bolusing" = "Lägg till insulin utan att ge bolus";
 
 /* Amount */
@@ -15,13 +14,13 @@
 /* Close */
 "Close" = "Stäng";
 
-/* Continue without bolus */
+/* Continue after added carbs without bolus */
 "Continue without bolus" = "Fortsätt utan bolus";
 
-/* Enact Bolus */
+/* Enact Bolus Title*/
 "Enact Bolus" = "Ge bolus";
 
-/* Enact bolus */
+/* Enact bolus button */
 "Enact bolus" = "Ge bolus";
 
 /* Insulin recommended */
@@ -34,10 +33,10 @@
 "Recommendation" = "Rekommendation";
 
 /* clearButton */
-"Clear" = "Clear";
+"Clear" = "Rensa";
 
 /* doneButton */
-"Done" = "Done";
+"Done" = "Klar";
 
 /* Wait please */
 "Wait please" = "Vänta...";
@@ -45,14 +44,13 @@
 /* Agree and continue */
 "Agree and continue" = "Godkänn och fortsätt";
 
-/* Disclaimer */
+/* Disclaimer when opening app for first time*/
 "Disclaimer" = "Varning";
 
 /* Disclaimer Description */
 "FreeAPS X is in an active development state. We do not recommend to use the system for everyday control of blood glucose! Use it for testing purposes only at your own risk. We are not responsible for your decisions and actions." = "FreeAPS X är under utveckling. Vi rekommederar inte att använda denna app för behandling av ditt blodsocker i detta tidiga skede. Använd för test och på egen risk. Vi tar inget ansvar för dina beslut eller handlingar.";
 
-/* %d min ago
-%d min ago */
+/* %d min ago, currently not being translated, I don't know why? */
 "%d min ago" = "%d min sedan";
 
 /* Enacted at a date */
@@ -64,13 +62,13 @@
 /* Looping in progress */
 "looping" = "loopar";
 
-/* Status Title : No Suggestion */
+/* Status Title */
 "No suggestion" = "Inget förslag";
 
-/* Replace pod */
+/* Replace pod text in Header */
 "Replace pod" = "Byt podd";
 
-/* Status Title : Suggest */
+/* Status Title */
 "Suggested" = "Föreslagen";
 
 /* Suggested at a date */
@@ -85,10 +83,10 @@
 /* Grams unit */
 "grams" = "gram";
 
-/* A you sure delete preset? */
+/* A you sure? Typo in code */
 "A you sure?" = "Är du säker?";
 
-/* Are you sure? Typo in code*/
+/* Are your sure? Typo in code*/
 "Are your sure?" = "Är du säker?";
 
 /* Bottom target temp */
@@ -100,7 +98,7 @@
 /* Cancel Temp Target */
 "Cancel Temp Target" = "Avbryt temporär basal";
 
-/* Custom target temp */
+/* Custom temp target */
 "Custom" = "Anpassad";
 
 /* Date */
@@ -109,10 +107,10 @@
 /* Delete */
 "Delete" = "Radera";
 
-/* Delete preset %@ */
+/* Delete preset temp target */
 "Delete preset \"%@\"" = "Ta bort förval \"%@\"";
 
-/* Duration target temp */
+/* Duration of target temp */
 "Duration" = "Duration";
 
 /* Enact Temp Target */
@@ -121,7 +119,7 @@
 /* Enter preset name */
 "Enter preset name" = "Ange namn för förval";
 
-/* minutes target temp */
+/* minutes of target temp */
 "minutes" = "minuter";
 
 /* Presets title */
@@ -265,7 +263,7 @@
 /* Preferences */
 "Preferences" = "Inställningar";
 
-/* Recommended Insulin Fraction */
+/* Recommended Insulin Fraction in preferences */
 "Recommended Insulin Fraction" = "Kvot av rekommenderad mängd insulin";
 
 /* Do you want to show bolus screen after added carbs? */

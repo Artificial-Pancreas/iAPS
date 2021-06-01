@@ -2,7 +2,8 @@
   Localizable.strings
   FreeAPS X
 */
-/* Add insulin without actually bolusing */
+/* Bolus screen when adding insulin */
+
 "Add insulin without actually bolusing" = "Добавить инсулин без болюса";
 
 /* Amount */
@@ -14,13 +15,13 @@
 /* Close */
 "Close" = "Закрыть";
 
-/* Continue without bolus */
+/* Continue after added carbs without bolus */
 "Continue without bolus" = "Продолжить без болюса";
 
-/* Enact Bolus */
+/* Enact Bolus Title*/
 "Enact Bolus" = "Ввести Болюс";
 
-/* Enact bolus */
+/* Enact bolus button */
 "Enact bolus" = "Ввести болюс";
 
 /* Insulin recommended */
@@ -32,20 +33,25 @@
 /* StringRecommendation */
 "Recommendation" = "Рекомендация";
 
+/* clearButton */
+"Clear" = "Очистить";
+
+/* doneButton */
+"Done" = "Готово";
+
 /* Wait please */
 "Wait please" = "Подождите";
 
 /* Agree and continue */
 "Agree and continue" = "Согласиться и Продолжить";
 
-/* Disclaimer */
+/* Disclaimer when opening app for first time*/
 "Disclaimer" = "Дисклеймер";
 
 /* Disclaimer Description */
 "FreeAPS X is in an active development state. We do not recommend to use the system for everyday control of blood glucose! Use it for testing purposes only at your own risk. We are not responsible for your decisions and actions." = "FreeAPS X находится в разработке. Мы не рекомендуем его для ежедневного контроля сахара в крови! Используйте только для тестирования на свой страх и риск. Мы не несём ответственности за ваши действия.";
 
-/* %d min ago
-%d min ago */
+/* %d min ago, currently not being translated, I don't know why? */
 "%d min ago" = "%d мин. назад";
 
 /* Enacted at a date */
@@ -57,13 +63,13 @@
 /* Looping in progress */
 "looping" = "выполняется";
 
-/* Status Title : No Suggestion */
+/* Status Title */
 "No suggestion" = "Нет предложений";
 
-/* Replace pod */
+/* Replace pod text in Header */
 "Replace pod" = "Замените под";
 
-/* Status Title : Suggest */
+/* Status Title */
 "Suggested" = "Предложено";
 
 /* Suggested at a date */
@@ -78,10 +84,10 @@
 /* Grams unit */
 "grams" = "грамм";
 
-/* A you sure delete preset? */
+/* A you sure? Typo in code */
 "A you sure?" = "Вы уверены?";
 
-/* Are you sure? Typo in code*/
+/* Are your sure? Typo in code*/
 "Are your sure?" = "Вы уверены?";
 
 /* Bottom target temp */
@@ -93,7 +99,7 @@
 /* Cancel Temp Target */
 "Cancel Temp Target" = "Отменить Временную Цель";
 
-/* Custom target temp */
+/* Custom temp target */
 "Custom" = "Своя";
 
 /* Date */
@@ -102,10 +108,10 @@
 /* Delete */
 "Delete" = "Удалить";
 
-/* Delete preset %@ */
+/* Delete preset temp target */
 "Delete preset \"%@\"" = "Удалить шаблон \"%@\"";
 
-/* Duration target temp */
+/* Duration of target temp */
 "Duration" = "Длительность";
 
 /* Enact Temp Target */
@@ -114,7 +120,7 @@
 /* Enter preset name */
 "Enter preset name" = "Название шаблона";
 
-/* minutes target temp */
+/* minutes of target temp */
 "minutes" = "минут";
 
 /* Presets title */
@@ -258,8 +264,11 @@
 /* Preferences */
 "Preferences" = "Настройки";
 
-/* Recommended Insulin Fraction */
+/* Recommended Insulin Fraction in preferences */
 "Recommended Insulin Fraction" = "Рекомендуемая дробь инсулина";
+
+/* Do you want to show bolus screen after added carbs? */
+"Skip Bolus screen after carbs" = "Пропустить Экран болюса после ввода углеводов";
 
 /* Remote control */
 "Remote control" = "Удаленное управление";
@@ -362,9 +371,3 @@
 
 /* middleware */
 "Middleware" = "Middleware";
-
-/* Clear */
-"Clear" = "Очистить";
-
-/* Done */
-"Done" = "Готово";

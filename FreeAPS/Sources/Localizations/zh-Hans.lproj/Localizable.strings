@@ -2,7 +2,8 @@
   Localizable.strings
   FreeAPS X
 */
-/* Add insulin without actually bolusing */
+/* Bolus screen when adding insulin */
+
 "Add insulin without actually bolusing" = "Add insulin without actually bolusing";
 
 /* Amount */
@@ -14,13 +15,13 @@
 /* Close */
 "Close" = "Close";
 
-/* Continue without bolus */
+/* Continue after added carbs without bolus */
 "Continue without bolus" = "Continue without bolus";
 
-/* Enact Bolus */
+/* Enact Bolus Title*/
 "Enact Bolus" = "Enact Bolus";
 
-/* Enact bolus */
+/* Enact bolus button */
 "Enact bolus" = "Enact bolus";
 
 /* Insulin recommended */
@@ -32,20 +33,25 @@
 /* StringRecommendation */
 "Recommendation" = "Recommendation";
 
+/* clearButton */
+"Clear" = "Clear";
+
+/* doneButton */
+"Done" = "Done";
+
 /* Wait please */
 "Wait please" = "Wait please";
 
 /* Agree and continue */
 "Agree and continue" = "Agree and Continue";
 
-/* Disclaimer */
+/* Disclaimer when opening app for first time*/
 "Disclaimer" = "Disclaimer";
 
 /* Disclaimer Description */
 "FreeAPS X is in an active development state. We do not recommend to use the system for everyday control of blood glucose! Use it for testing purposes only at your own risk. We are not responsible for your decisions and actions." = "FreeAPS X is in an active development state. We do not recommend to use the system for everyday control of blood glucose! Use it for testing purposes only at your own risk. We are not responsible for your decisions and actions.";
 
-/* %d min ago
-%d min ago */
+/* %d min ago, currently not being translated, I don't know why? */
 "%d min ago" = "%d min ago";
 
 /* Enacted at a date */
@@ -57,13 +63,13 @@
 /* Looping in progress */
 "looping" = "looping";
 
-/* Status Title : No Suggestion */
+/* Status Title */
 "No suggestion" = "No suggestion";
 
-/* Replace pod */
+/* Replace pod text in Header */
 "Replace pod" = "Replace pod";
 
-/* Status Title : Suggest */
+/* Status Title */
 "Suggested" = "Suggested";
 
 /* Suggested at a date */
@@ -78,10 +84,10 @@
 /* Grams unit */
 "grams" = "grams";
 
-/* A you sure delete preset? */
+/* A you sure? Typo in code */
 "A you sure?" = "A you sure?";
 
-/* Are you sure? Typo in code*/
+/* Are your sure? Typo in code*/
 "Are your sure?" = "Are you sure?";
 
 /* Bottom target temp */
@@ -93,7 +99,7 @@
 /* Cancel Temp Target */
 "Cancel Temp Target" = "Cancel Temp Target";
 
-/* Custom target temp */
+/* Custom temp target */
 "Custom" = "Custom";
 
 /* Date */
@@ -102,10 +108,10 @@
 /* Delete */
 "Delete" = "Delete";
 
-/* Delete preset %@ */
+/* Delete preset temp target */
 "Delete preset \"%@\"" = "Delete preset \"%@\"";
 
-/* Duration target temp */
+/* Duration of target temp */
 "Duration" = "Duration";
 
 /* Enact Temp Target */
@@ -114,7 +120,7 @@
 /* Enter preset name */
 "Enter preset name" = "Enter preset name";
 
-/* minutes target temp */
+/* minutes of target temp */
 "minutes" = "minutes";
 
 /* Presets title */
@@ -258,8 +264,11 @@
 /* Preferences */
 "Preferences" = "Preferences";
 
-/* Recommended Insulin Fraction */
+/* Recommended Insulin Fraction in preferences */
 "Recommended Insulin Fraction" = "Recommended Insulin Fraction";
+
+/* Do you want to show bolus screen after added carbs? */
+"Skip Bolus screen after carbs" = "Skip Bolus screen after carbs";
 
 /* Remote control */
 "Remote control" = "Remote control";
@@ -362,9 +371,3 @@
 
 /* middleware */
 "Middleware" = "Middleware";
-
-/* Clear */
-"Clear" = "Clear";
-
-/* Done */
-"Done" = "Done";
