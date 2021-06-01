@@ -3,37 +3,37 @@
   FreeAPS X
 */
 /* Add insulin without actually bolusing */
-"Add insulin without actually bolusing" = "Add insulin without actually bolusing";
+"Add insulin without actually bolusing" = "Aggiungi insulina senza eseguire in realtá un bolo";
 
 /* Amount */
-"Amount Bolus" = "Amount Bolus";
+"Amount Bolus" = "Quantità di bolo";
 
 /* Bolus */
-"Bolus" = "Bolus";
+"Bolus" = "Bolo";
 
 /* Close */
-"Close" = "Close";
+"Close" = "Chiuso";
 
 /* Continue without bolus */
-"Continue without bolus" = "Continue without bolus";
+"Continue without bolus" = "Continua senza eseguire un bolo";
 
 /* Enact Bolus */
-"Enact Bolus" = "Enact Bolus";
+"Enact Bolus" = "Esegui bolo";
 
 /* Enact bolus */
-"Enact bolus" = "Enact bolus";
+"Enact bolus" = "Esegui bolo";
 
 /* Insulin recommended */
-"Insulin recommended" = "Insulin recommended";
+"Insulin recommended" = "Insulina raccomandata";
 
 /* Insulin required */
-"Insulin required" = "Insulin required";
+"Insulin required" = "Insulina richiesta";
 
 /* StringRecommendation */
-"Recommendation" = "Recommendation";
+"Recommendation" = "Raccomandazione";
 
 /* Wait please */
-"Wait please" = "Wait please";
+"Wait please" = "Aspetta perfavore";
 
 /* Agree and continue */
 "Agree and continue" = "Agree and Continue";
