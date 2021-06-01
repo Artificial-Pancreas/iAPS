@@ -61,7 +61,7 @@
 "looping" = "loopar";
 
 /* %d min ago, currently not being translated, I don't know why? */
-"%d min ago" = "%d min ago";
+"%d min ago" = "%d min sedan";
 
 /* Status Title */
 "No suggestion" = "Inget förslag";
@@ -373,5 +373,4 @@
 "Middleware" = "Middleware";
 
 /* History header */
-"History" = "Historik";
-
+"History" = "History";
