@@ -1,0 +1,367 @@
+/*
+  Localizable.strings
+  FreeAPS X
+*/
+/* Add insulin without actually bolusing */
+"Add insulin without actually bolusing" = "Insulin hinzufügen ohne Insulin Abgabe";
+
+/* Amount */
+"Amount Bolus" = "Bolus Menge";
+
+/* Bolus */
+"Bolus" = "Bolus";
+
+/* Close */
+"Close" = "Schließen";
+
+/* Continue without bolus */
+"Continue without bolus" = "Ohne Bolus Abgabe fortfahren";
+
+/* Enact Bolus */
+"Enact Bolus" = "Bolus eingeben";
+
+/* Enact bolus */
+"Enact bolus" = "Bolus eingeben";
+
+/* Insulin recommended */
+"Insulin recommended" = "Empfohlenes Insulin";
+
+/* Insulin required */
+"Insulin required" = "Benötigtes Insulin";
+
+/* StringRecommendation */
+"Recommendation" = "Empfehlung";
+
+/* Wait please */
+"Wait please" = "Bitte warten";
+
+/* Agree and continue */
+"Agree and continue" = "Zustimmen und fortfahren";
+
+/* Disclaimer */
+"Disclaimer" = "Haftungsausschluss";
+
+/* Disclaimer Description */
+"FreeAPS X is in an active development state. We do not recommend to use the system for everyday control of blood glucose! Use it for testing purposes only at your own risk. We are not responsible for your decisions and actions." = "FreeAPS X befindet sich noch in der Entwicklung. Wir empfehlen das System nicht zur alltäglichen Kontrolle Ihres Blutzuckers zu verwenden. Verwendung bitte nur zu Testzwecken und auf eigenes Risiko. Wir können keine Verantwortung für Ihre Entscheidungen und Aktionen übernehmen.";
+
+/* %d min ago
+%d min ago */
+"%d min ago" = "vor %d Minute";
+
+/* Enacted at a date */
+"Enacted at %@" = "Ausgelöst bei %@";
+
+/* Home title */
+"Home" = "Startseite";
+
+/* Looping in progress */
+"looping" = "looping";
+
+/* Status Title : No Suggestion */
+"No suggestion" = "Kein Vorschlag";
+
+/* Replace pod */
+"Replace pod" = "Pod ersetzen";
+
+/* Status Title : Suggest */
+"Suggested" = "Empfohlen";
+
+/* Suggested at a date */
+"Suggested at %@" = "Empfohlen bei %@";
+
+/* Add Carbs */
+"Add Carbs" = "Kohlenhydrate hinzufügen";
+
+/* Amount Carbs */
+"Amount Carbs" = "Kohlenhydratmenge";
+
+/* Grams unit */
+"grams" = "Gramm";
+
+/* A you sure delete preset? */
+"A you sure?" = "Sind Sie sicher?";
+
+/* Bottom target temp */
+"Bottom target" = "Untergrenze";
+
+/* Cancel preset name */
+"Cancel" = "Abbrechen";
+
+/* Cancel Temp Target */
+"Cancel Temp Target" = "Temporäre Basalrate abbrechen";
+
+/* Custom target temp */
+"Custom" = "Benutzerdefiniert";
+
+/* Date */
+"Date" = "Datum";
+
+/* Delete */
+"Delete" = "Löschen";
+
+/* Delete preset %@ */
+"Delete preset %@" = "Vorlage %@ löschen";
+
+/* Duration target temp */
+"Duration" = "Dauer";
+
+/* Enact Temp Target */
+"Enact Temp Target" = "Temporäres Ziel (TT) starten";
+
+/* Enter preset name */
+"Enter preset name" = "Geben Sie einen Namen für die Voreinstellung ein";
+
+/* minutes target temp */
+"minutes" = "Minuten";
+
+/* Presets title */
+"Presets" = "Voreinstellungen";
+
+/* Save preset name */
+"Save" = "Speichern";
+
+/* Save as preset */
+"Save as preset" = "Als Vorlage speichern";
+
+/* Top target temp */
+"Top target" = "Obergrenze";
+
+/* Autotune Title */
+"Autotune" = "Automatische Feinabstimmung";
+
+/* Basal profile */
+"Basal profile" = "Basalraten-Profil";
+
+/* Carb ratio */
+"Carb ratio" = "Kohlenhydratfaktor";
+
+/* Delete autotune data */
+"Delete autotune data" = "Lösche Autotune Daten";
+
+/* Run now */
+"Run now" = "Ausführen";
+
+/* Sensitivity */
+"Sensitivity" = "Empfindlichkeit";
+
+/* Use Autotune */
+"Use Autotune" = "benutze Autotune";
+
+/* Add profile basal */
+"Add" = "Zufuegen";
+
+/* Basal Profile */
+"Basal Profile" = "Basalraten-Profil";
+
+/* Rate basal profile */
+"Rate" = "Bewerten";
+
+/* Save on Pump */
+"Save on Pump" = "Auf Pumpe speichern";
+
+/* Saving... */
+"Saving..." = "Speichern...";
+
+/* Schedule */
+"Schedule" = "Zeitplan";
+
+/* starts at */
+"starts at" = "Startet um";
+
+/* Time basal profile */
+"Time" = "Uhrzeit";
+
+/* Calculated Ratio */
+"Calculated Ratio" = "Berechnetes Verhältnis";
+
+/* Carb Ratios Title */
+"Carb Ratios" = "Kohlenhydratfaktoren";
+
+/* Ratio Carb */
+"Ratio" = "Verhältnis";
+
+/* Autosens */
+"Autosens" = "Autosens";
+
+/* Calculated Sensitivity */
+"Calculated Sensitivity" = "Berechnete Empfindlichkeit";
+
+/* Insulin Sensitivities */
+"Insulin Sensitivities" = "Insulinempfindlichkeit";
+
+/* Sensitivity Ratio */
+"Sensitivity Ratio" = "Empfindlichkeitsverhältnis";
+
+/* Dismiss */
+"Dismiss" = "Verwerfen";
+
+/* Important message */
+"Important message" = "Wichtige Nachricht";
+
+/* Amount */
+"Amount" = "Menge";
+
+/* Cancel Temp Basal */
+"Cancel Temp Basal" = "Temporäre Basalrate abbrechen";
+
+/* Duration */
+"Duration" = "Dauer";
+
+/* Enact temp Basal*/
+"Enact" = "geben";
+
+/* Manual Temp Basal */
+"Manual Temp Basal" = "Manuelle Temporäre Basalrate";
+
+/* Allow uploads */
+"Allow uploads" = "Erlaube Hochladen von Dateien";
+
+/* API secret */
+"API secret" = "Geheime API";
+
+/* Connect */
+"Connect" = "verbinden";
+
+/* Connected! */
+"Connected!" = "verbunden";
+
+/* Connecting... */
+"Connecting..." = "Verbindung wird hergestellt...";
+
+/* Invalid URL */
+"Invalid URL" = "Ungültige URL";
+
+/* Local glucose source */
+"Local glucose source" = "Lokale Glukosequelle";
+
+/* Nightscout Config */
+"Nightscout Config" = "Nightscout-Konfiguration";
+
+/* Port */
+"Port" = "Port";
+
+/* URL */
+"URL" = "URL";
+
+/* Use local glucose server */
+"Use local glucose server" = "Lokalen Glukose-Server verwenden";
+
+/* Edit settings json */
+"Edit settings json" = "Einstellungen bearbeiten";
+
+/* Glucose units */
+"Glucose units" = "Glukoseeinheiten";
+
+/* Preferences */
+"Preferences" = "Einstellungen";
+
+/* Recommended Insulin Fraction */
+"Recommended Insulin Fraction" = "Empfohlener Insulin Bruchteil";
+
+/* Remote control */
+"Remote control" = "Fernbedienung";
+
+/* Add Medtronic */
+"Add Medtronic" = "Medtronic-Pumpe hinzufügen";
+
+/* Add Omnipod */
+"Add Omnipod" = "Omnipod-Pumpe hinzufügen";
+
+/* Add Simulator */
+"Add Simulator" = "Simulator hinzufügen";
+
+/* Model */
+"Model" = "Modell";
+
+/* Pump config */
+"Pump config" = "Pumpenkonfiguration";
+
+/* Delivery limits */
+"Delivery limits" = "Verabreichungslimits";
+
+/* Duration of Insulin Action */
+"Duration of Insulin Action" = "Dauer der Insulinwirkung";
+
+/* hours */
+"hours" = "Stunden";
+
+/* Max Basal */
+"Max Basal" = "Maximale Basalrate";
+
+/* Max Bolus */
+"Max Bolus" = "Maximaler Bolus";
+
+/* Pump Settings */
+"Pump Settings" = "Pumpeneinstellungen";
+
+/* Save on Pump */
+"Save on Pump" = "Auf Pumpe speichern";
+
+/* U/hr */
+"U/hr" = "U/hr";
+
+/* Autotune */
+"Autotune Conf" = "Autotune";
+
+/* Basal Profile */
+"Basal Profile Conf" = "Basal Profile";
+
+/* Carb Ratios */
+"Carb Ratios Conf" = "Carb Ratios";
+
+/* Closed loop */
+"Closed loop" = "Closed loop";
+
+/* Configuration */
+"Configuration" = "Configuration";
+
+/* Devices */
+"Devices" = "Devices";
+
+/* Insulin Sensitivities */
+"Insulin Sensitivities Conf" = "Insulin Sensitivities";
+
+/* Preferences */
+"Preferences Conf" = "Preferences";
+
+/* Pump */
+"Pump" = "Pump";
+
+/* Pump Settings */
+"Pump Settings Conf" = "Pumpeneinstellungen";
+
+/* Services */
+"Services" = "Dienste";
+
+/* Settings */
+"Settings" = "Einstellungen";
+
+/* Share logs */
+"Share logs" = "Protokolle teilen";
+
+/* Target Ranges */
+"Target Ranges Conf" = "Zielbereich";
+
+/* High target */
+"High target" = "Höchstgrenze";
+
+/* Low target */
+"Low target" = "Untergrenze";
+
+/* Target Ranges */
+"Target Ranges" = "Zielbereich";
+
+/* Bolusing.. */
+"Bolusing" = "Bolusabgabe";
+
+/* Pump suspended */
+"Pump suspended" = "Pumpe pausiert";
+
+/* middleware */
+"Middleware" = "Software Zwischenschicht";
+
+/* Clear */
+"Clear" = "Zurücksetzen";
+
+/* Done */
+"Done" = "Abgeschlossen";
