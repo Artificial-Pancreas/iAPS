@@ -1,4 +1,4 @@
-/*
+/* 
   Localizable.strings
   FreeAPS X
 */
@@ -205,7 +205,7 @@
 "Cancel Temp Basal" = "Temporäre Basalrate abbrechen";
 
 /* Duration */
-"Duration" = "Dauer";
+"Duration" = "Duration";
 
 /* Enact temp Basal*/
 "Enact" = "geben";
@@ -295,7 +295,7 @@
 "Pump Settings" = "Pumpeneinstellungen";
 
 /* Save on Pump */
-"Save on Pump" = "Auf Pumpe speichern";
+"Save on Pump" = "Save on Pump";
 
 /* U/hr */
 "U/hr" = "U/hr";

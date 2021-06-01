@@ -1,4 +1,4 @@
-/*
+/* 
   Localizable.strings
   FreeAPS X
 */
@@ -295,7 +295,7 @@
 "Pump Settings" = "Pumpinställningar";
 
 /* Save on Pump */
-"Save on Pump" = "Spara på pump";
+"Save on Pump" = "Save on Pump";
 
 /* U/hr */
 "U/hr" = "E/h";
