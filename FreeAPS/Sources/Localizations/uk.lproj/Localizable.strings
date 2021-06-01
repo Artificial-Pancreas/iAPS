@@ -81,6 +81,9 @@
 /* A you sure delete preset? */
 "A you sure?" = "Ви впевнені?";
 
+/* Are you sure? Typo in code*/
+"Are your sure?" = "Ви впевнені?";
+
 /* Bottom target temp */
 "Bottom target" = "Нижня ціль";
 

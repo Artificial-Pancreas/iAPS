@@ -81,6 +81,9 @@
 /* A you sure delete preset? */
 "A you sure?" = "Sind Sie sicher?";
 
+/* Are you sure? Typo in code*/
+"Are your sure?" = "Sind Sie sicher?";
+
 /* Bottom target temp */
 "Bottom target" = "Untergrenze";
 
@@ -295,7 +298,7 @@
 "Pump Settings" = "Pumpeneinstellungen";
 
 /* Save on Pump */
-"Save on Pump" = "Auf Pumpe speichern";
+"Save on Pump" = "In Pumpe speichern";
 
 /* U/hr */
 "U/hr" = "IE/Std";

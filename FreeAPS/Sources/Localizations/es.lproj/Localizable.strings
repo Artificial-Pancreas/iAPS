@@ -81,6 +81,9 @@
 /* A you sure delete preset? */
 "A you sure?" = "¿Estás seguro?";
 
+/* Are you sure? Typo in code*/
+"Are your sure?" = "Are you sure?";
+
 /* Bottom target temp */
 "Bottom target" = "Objetivo Inferior";
 
