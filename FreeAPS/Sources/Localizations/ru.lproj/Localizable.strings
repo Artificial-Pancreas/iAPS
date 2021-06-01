@@ -6,7 +6,7 @@
 "Add insulin without actually bolusing" = "Добавить инсулин без болюса";
 
 /* Amount */
-"Amount Bolus" = "Значение болюса";
+"Amount Bolus" = "Объем Болюса";
 
 /* Bolus */
 "Bolus" = "Болюс";
@@ -18,13 +18,13 @@
 "Continue without bolus" = "Продолжить без болюса";
 
 /* Enact Bolus */
-"Enact Bolus" = "Ввести болюс";
+"Enact Bolus" = "Ввести Болюс";
 
 /* Enact bolus */
 "Enact bolus" = "Ввести болюс";
 
 /* Insulin recommended */
-"Insulin recommended" = "Рекомендуется";
+"Insulin recommended" = "Рекомендуется инсулина";
 
 /* Insulin required */
 "Insulin required" = "Необходимо инсулина";
@@ -36,10 +36,10 @@
 "Wait please" = "Подождите";
 
 /* Agree and continue */
-"Agree and continue" = "Согласен и продолжить";
+"Agree and continue" = "Согласиться и Продолжить";
 
 /* Disclaimer */
-"Disclaimer" = "Отказ от ответственности";
+"Disclaimer" = "Дисклеймер";
 
 /* Disclaimer Description */
 "FreeAPS X is in an active development state. We do not recommend to use the system for everyday control of blood glucose! Use it for testing purposes only at your own risk. We are not responsible for your decisions and actions." = "FreeAPS X находится в разработке. Мы не рекомендуем его для ежедневного контроля сахара в крови! Используйте только для тестирования на свой страх и риск. Мы не несём ответственности за ваши действия.";
@@ -52,10 +52,10 @@
 "Enacted at %@" = "Введено в %@";
 
 /* Home title */
-"Home" = "Домой";
+"Home" = "Главная";
 
 /* Looping in progress */
-"looping" = "В работе";
+"looping" = "выполняется";
 
 /* Status Title : No Suggestion */
 "No suggestion" = "Нет предложений";
@@ -64,13 +64,13 @@
 "Replace pod" = "Замените под";
 
 /* Status Title : Suggest */
-"Suggested" = "Рекомендуется";
+"Suggested" = "Предложено";
 
 /* Suggested at a date */
 "Suggested at %@" = "Предложено в %@";
 
 /* Add Carbs */
-"Add Carbs" = "Ввод углеводов";
+"Add Carbs" = "Ввод Углеводов";
 
 /* Amount Carbs */
 "Amount Carbs" = "Кол-во углеводов";
@@ -88,10 +88,10 @@
 "Cancel" = "Отмена";
 
 /* Cancel Temp Target */
-"Cancel Temp Target" = "Отменить временную цель";
+"Cancel Temp Target" = "Отменить Временную Цель";
 
 /* Custom target temp */
-"Custom" = "Пользовательская";
+"Custom" = "Своя";
 
 /* Date */
 "Date" = "Дата";
@@ -100,28 +100,28 @@
 "Delete" = "Удалить";
 
 /* Delete preset %@ */
-"Delete preset %@" = "Удалить цель %@";
+"Delete preset \"%@\"" = "Delete preset \"%@\"";
 
 /* Duration target temp */
 "Duration" = "Длительность";
 
 /* Enact Temp Target */
-"Enact Temp Target" = "Временная цель";
+"Enact Temp Target" = "Запустить Временную Цель";
 
 /* Enter preset name */
-"Enter preset name" = "Название цели";
+"Enter preset name" = "Название шаблона";
 
 /* minutes target temp */
 "minutes" = "минут";
 
 /* Presets title */
-"Presets" = "Предустановки";
+"Presets" = "Шаблоны";
 
 /* Save preset name */
 "Save" = "Сохранить";
 
 /* Save as preset */
-"Save as preset" = "Сохранить предустановку";
+"Save as preset" = "Сохранить как шаблон";
 
 /* Top target temp */
 "Top target" = "Верхняя граница";
@@ -133,7 +133,7 @@
 "Basal profile" = "Базальный профиль";
 
 /* Carb ratio */
-"Carb ratio" = "Соотношения углеводов";
+"Carb ratio" = "Углеводный коефициент";
 
 /* Delete autotune data */
 "Delete autotune data" = "Удалить данные автотюна";
@@ -157,7 +157,7 @@
 "Rate" = "Rate";
 
 /* Save on Pump */
-"Save on Pump" = "Сохранить на помпу";
+"Save on Pump" = "Сохранить на Помпу";
 
 /* Saving... */
 "Saving..." = "Сохранение...";
@@ -175,22 +175,22 @@
 "Calculated Ratio" = "Рассчитанное соотношение";
 
 /* Carb Ratios Title */
-"Carb Ratios" = "Соотношения углеводов";
+"Carb Ratios" = "Углеводные Коэфициенты";
 
 /* Ratio Carb */
-"Ratio" = "Соотношение";
+"Ratio" = "Коэфициент";
 
 /* Autosens */
 "Autosens" = "Автосенс";
 
 /* Calculated Sensitivity */
-"Calculated Sensitivity" = "Рассчитанная чувствительность";
+"Calculated Sensitivity" = "Рассчитанная Чувствительность";
 
 /* Insulin Sensitivities */
-"Insulin Sensitivities" = "Факторы чувствительности инсулина";
+"Insulin Sensitivities" = "Факторы Чувствительности к Инсулину";
 
 /* Sensitivity Ratio */
-"Sensitivity Ratio" = "Коэффициент чувствительности";
+"Sensitivity Ratio" = "Коэффициент Чувствительности";
 
 /* Dismiss */
 "Dismiss" = "Отклонить";
@@ -199,22 +199,22 @@
 "Important message" = "Важное сообщение";
 
 /* Amount */
-"Amount" = "Значение";
+"Amount" = "Количество";
 
 /* Cancel Temp Basal */
-"Cancel Temp Basal" = "Отменить Вбс";
+"Cancel Temp Basal" = "Отменить ВБС";
 
 /* Duration */
 "Duration" = "Длительность";
 
 /* Enact temp Basal*/
-"Enact" = "Выполнить";
+"Enact" = "Запустить";
 
 /* Manual Temp Basal */
 "Manual Temp Basal" = "Ручная Вбс";
 
 /* Allow uploads */
-"Allow uploads" = "Разрешить загрузку";
+"Allow uploads" = "Разрешить выгрузку";
 
 /* API secret */
 "API secret" = "API секрет";
@@ -229,7 +229,7 @@
 "Connecting..." = "Подключение...";
 
 /* Invalid URL */
-"Invalid URL" = "Неверная ссылка";
+"Invalid URL" = "Неверный URL";
 
 /* Local glucose source */
 "Local glucose source" = "Локальный источник глюкозы";
@@ -247,7 +247,7 @@
 "Use local glucose server" = "Использовать локальный сервер глюкозы";
 
 /* Edit settings json */
-"Edit settings json" = "Редактировать json файл настроек";
+"Edit settings json" = "Редактировать json настроек";
 
 /* Glucose units */
 "Glucose units" = "Единицы измерения глюкозы";
@@ -268,7 +268,7 @@
 "Add Omnipod" = "Добавить Omnipod";
 
 /* Add Simulator */
-"Add Simulator" = "Добавить симулятор";
+"Add Simulator" = "Добавить Cимулятор";
 
 /* Model */
 "Model" = "Модель";
@@ -280,16 +280,16 @@
 "Delivery limits" = "Предел подачи";
 
 /* Duration of Insulin Action */
-"Duration of Insulin Action" = "Продолжительность действия инсулина";
+"Duration of Insulin Action" = "Продолжительность Действия Инсулина";
 
 /* hours */
 "hours" = "часов";
 
 /* Max Basal */
-"Max Basal" = "Максимальный базал";
+"Max Basal" = "Макс. Базал";
 
 /* Max Bolus */
-"Max Bolus" = "Максимальный болюс";
+"Max Bolus" = "Макс. Болюс";
 
 /* Pump Settings */
 "Pump Settings" = "Настройки помпы";
@@ -307,10 +307,10 @@
 "Basal Profile Conf" = "Базальный профиль";
 
 /* Carb Ratios */
-"Carb Ratios Conf" = "Соотношения углеводов";
+"Carb Ratios Conf" = "Углеводные Коэфициенты";
 
 /* Closed loop */
-"Closed loop" = "Закрытая петля";
+"Closed loop" = "Замкнутая петля";
 
 /* Configuration */
 "Configuration" = "Настройка";
@@ -319,7 +319,7 @@
 "Devices" = "Устройства";
 
 /* Insulin Sensitivities */
-"Insulin Sensitivities Conf" = "Факторы чувствительности инсулина";
+"Insulin Sensitivities Conf" = "Факторы Чувствительности к Инсулина";
 
 /* Preferences */
 "Preferences Conf" = "Настройки";
@@ -328,7 +328,7 @@
 "Pump" = "Помпа";
 
 /* Pump Settings */
-"Pump Settings Conf" = "Настройки помпы";
+"Pump Settings Conf" = "Настройки Помпы";
 
 /* Services */
 "Services" = "Службы";
@@ -340,7 +340,7 @@
 "Share logs" = "Отправить журнал";
 
 /* Target Ranges */
-"Target Ranges Conf" = "Целевой диапазон";
+"Target Ranges Conf" = "Целевой Диапазон";
 
 /* High target */
 "High target" = "Верхняя цель";
