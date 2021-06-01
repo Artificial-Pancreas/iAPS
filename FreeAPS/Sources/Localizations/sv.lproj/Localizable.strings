@@ -100,7 +100,7 @@
 "Delete" = "Radera";
 
 /* Delete preset %@ */
-"Delete preset %@" = "Ta bort förval %@";
+"Delete preset \"%@\"" = "Ta bort förval \"%@\"";
 
 /* Duration target temp */
 "Duration" = "Duration";
