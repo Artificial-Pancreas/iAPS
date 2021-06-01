@@ -64,46 +64,45 @@
 "Replace pod" = "Replace pod";
 
 /* Status Title : Suggest */
-"Suggested" = "Suggested";
+"Suggested" = "Sugerido";
 
 /* Suggested at a date */
 "Suggested at %@" = "Suggested at %@";
 
 /* Add Carbs */
-"Add Carbs" = "Add Carbs";
+"Add Carbs" = "Añadir Carbohidratos";
 
 /* Amount Carbs */
-"Amount Carbs" = "Amount Carbs";
+"Amount Carbs" = "Cantidad de Carbohidratos";
 
 /* Grams unit */
-"grams" = "grams";
+"grams" = "gramos";
 
 /* A you sure delete preset? */
-"A you sure?" = "A you sure?";
+"A you sure?" = "¿Estás seguro?";
 
 /* Bottom target temp */
-"Bottom target" = "Bottom target";
+"Bottom target" = "Objetivo Inferior";
 
 /* Cancel preset name */
-"Cancel" = "Cancel";
+"Cancel" = "Cancelar";
 
 /* Cancel Temp Target */
 "Cancel Temp Target" = "Cancel Temp Target";
 
 /* Custom target temp */
-"Custom" = "Custom";
+"Custom" = "Personalizado";
 
 /* Date */
-"Date" = "Date";
+"Date" = "Fecha";
 
 /* Delete */
-"Delete" = "Delete";
-
-/* Delete preset %@ */
+"Delete" = "Borrar";
+/* Delete preset "%@" */
 "Delete preset \"%@\"" = "Delete preset \"%@\"";
 
 /* Duration target temp */
-"Duration" = "Duration";
+"Duration" = "Duración";
 
 /* Enact Temp Target */
 "Enact Temp Target" = "Enact Temp Target";
@@ -112,46 +111,46 @@
 "Enter preset name" = "Enter preset name";
 
 /* minutes target temp */
-"minutes" = "minutes";
+"minutes" = "minutos";
 
 /* Presets title */
-"Presets" = "Presets";
+"Presets" = "Ajustes por defecto";
 
 /* Save preset name */
-"Save" = "Save";
+"Save" = "Guardar";
 
 /* Save as preset */
-"Save as preset" = "Save as preset";
+"Save as preset" = "Guardar como preestablecido";
 
 /* Top target temp */
-"Top target" = "Top target";
+"Top target" = "Objetivo Superior";
 
 /* Autotune Title */
 "Autotune" = "Autotune";
 
 /* Basal profile */
-"Basal profile" = "Basal profile";
+"Basal profile" = "Perfil Basal";
 
 /* Carb ratio */
-"Carb ratio" = "Carb ratio";
+"Carb ratio" = "Ratio de carbohidratos";
 
 /* Delete autotune data */
-"Delete autotune data" = "Delete autotune data";
+"Delete autotune data" = "Eliminar datos autotune";
 
 /* Run now */
-"Run now" = "Run now";
+"Run now" = "Ejecutar Ahora";
 
 /* Sensitivity */
-"Sensitivity" = "Sensitivity";
+"Sensitivity" = "Sensibilidad";
 
 /* Use Autotune */
-"Use Autotune" = "use Autotune";
+"Use Autotune" = "Usar Autotune";
 
 /* Add profile basal */
-"Add" = "Add";
+"Add" = "Añadir";
 
 /* Basal Profile */
-"Basal Profile" = "Basal Profile";
+"Basal Profile" = "Perfil Basal";
 
 /* Rate basal profile */
 "Rate" = "Rate";

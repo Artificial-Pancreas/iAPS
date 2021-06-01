@@ -98,8 +98,7 @@
 
 /* Delete */
 "Delete" = "Удалить";
-
-/* Delete preset %@ */
+/* Delete preset "%@" */
 "Delete preset \"%@\"" = "Удалить шаблон \"%@\"";
 
 /* Duration target temp */
