@@ -4,46 +4,46 @@
 */
 /* Bolus screen when adding insulin */
 
-"Add insulin without actually bolusing" = "Add insulin without actually bolusing";
+"Add insulin without actually bolusing" = "Insuline toevoegen zonder daadwerkelijke bolus";
 
 /* Amount */
-"Amount Bolus" = "Amount Bolus";
+"Amount Bolus" = "Bolus hoeveelheid";
 
 /* Bolus */
 "Bolus" = "Bolus";
 
 /* Close */
-"Close" = "Close";
+"Close" = "Sluiten";
 
 /* Continue after added carbs without bolus */
-"Continue without bolus" = "Continue without bolus";
+"Continue without bolus" = "Verdergaan zonder bolus";
 
 /* Enact Bolus Title*/
-"Enact Bolus" = "Enact Bolus";
+"Enact Bolus" = "Bolus geven";
 
 /* Enact bolus button */
-"Enact bolus" = "Enact bolus";
+"Enact bolus" = "Bolus geven";
 
 /* Insulin recommended */
-"Insulin recommended" = "Insulin recommended";
+"Insulin recommended" = "Voorgestelde insuline";
 
 /* Insulin required */
-"Insulin required" = "Insulin required";
+"Insulin required" = "Benodigde insuline";
 
 /* StringRecommendation */
-"Recommendation" = "Recommendation";
+"Recommendation" = "Advies";
 
 /* clearButton */
-"Clear" = "Clear";
+"Clear" = "Wissen";
 
 /* doneButton */
-"Done" = "Done";
+"Done" = "Bevestig";
 
 /* Wait please */
-"Wait please" = "Wait please";
+"Wait please" = "Wachten";
 
 /* Agree and continue */
-"Agree and continue" = "Agree and Continue";
+"Agree and continue" = "Akkoord en verder";
 
 /* Disclaimer when opening app for first time*/
 "Disclaimer" = "Disclaimer";
