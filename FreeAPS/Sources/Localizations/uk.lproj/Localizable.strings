@@ -2,14 +2,8 @@
   Localizable.strings
   FreeAPS X
 */
-/* clearButton */
-
-"Clear" = "Очистити";
-
-/* doneButton */
-"Done" = "Готово";
-
 /* Bolus screen when adding insulin */
+
 "Add insulin without actually bolusing" = "Додати інсулін без подачі болюсу";
 
 /* Amount */
@@ -38,6 +32,12 @@
 
 /* StringRecommendation */
 "Recommendation" = "Рекомендація";
+
+/* clearButton */
+"Clear" = "Очистити";
+
+/* doneButton */
+"Done" = "Готово";
 
 /* Wait please */
 "Wait please" = "Зачекайте";
