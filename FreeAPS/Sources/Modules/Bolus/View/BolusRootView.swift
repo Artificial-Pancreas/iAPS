@@ -78,7 +78,7 @@ extension Bolus {
             .alert(isPresented: $isAddInsulinAlertPresented) {
                 let amount = formatter.string(from: viewModel.amount as NSNumber)! + " U"
                 return Alert(
-                    title: Text("Are your sure?"),
+                    title: Text("Are you sure?"),
                     message: Text("Add \(amount) without bolusing"),
                     primaryButton: .destructive(
                         Text("Add"),
