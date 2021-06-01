@@ -91,7 +91,7 @@
 "Are your sure?" = "Är du säker?";
 
 /* Bottom target temp */
-"Bottom target" = "Nedre mål";
+"Bottom target" = "Nedre målvärde";
 
 /* Cancel preset name */
 "Cancel" = "Avbryt";
@@ -115,7 +115,7 @@
 "Duration" = "Duration";
 
 /* Enact Temp Target */
-"Enact Temp Target" = "Starta tillfälligt mål";
+"Enact Temp Target" = "Starta tillfälligt målvärde";
 
 /* Enter preset name */
 "Enter preset name" = "Ange namn för förval";
@@ -124,7 +124,7 @@
 "minutes" = "minuter";
 
 /* Presets title */
-"Presets" = "Förinställningar";
+"Presets" = "Förval";
 
 /* Save preset name */
 "Save" = "Spara";
@@ -133,7 +133,7 @@
 "Save as preset" = "Spara som förval";
 
 /* Top target temp */
-"Top target" = "Övre mål";
+"Top target" = "Övre målvärde";
 
 /* Autotune Title */
 "Autotune" = "Autotune";
@@ -145,7 +145,7 @@
 "Carb ratio" = "Insulinkvoter";
 
 /* Delete autotune data */
-"Delete autotune data" = "Rensa autotune-data";
+"Delete autotune data" = "Rensa Autotune-data";
 
 /* Run now */
 "Run now" = "Kör nu";
@@ -226,7 +226,7 @@
 "Allow uploads" = "Tillåt uppladdning";
 
 /* API secret */
-"API secret" = "API-hemlighet";
+"API secret" = "API-lösen";
 
 /* Connect */
 "Connect" = "Anslut";
@@ -268,7 +268,7 @@
 "Recommended Insulin Fraction" = "Kvot av rekommenderad mängd insulin";
 
 /* Do you want to show bolus screen after added carbs? */
-"Skip Bolus screen after carbs" = "Hoppa över Bolus-skärmen vid tillagda kolhydrater";
+"Skip Bolus screen after carbs" = "Hoppa över Bolusfönster vid tillagda kolhydrater";
 
 /* Remote control */
 "Remote control" = "Fjärrstyrning";
@@ -352,7 +352,7 @@
 "Share logs" = "Dela loggar";
 
 /* Target Ranges */
-"Target Ranges Conf" = "Målområde";
+"Target Ranges Conf" = "Målområden";
 
 /* High target */
 "High target" = "Övre målvärde";
