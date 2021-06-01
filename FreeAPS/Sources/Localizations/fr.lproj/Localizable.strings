@@ -100,7 +100,7 @@
 "Delete" = "Supprimer";
 
 /* Delete preset %@ */
-"Delete preset %@" = "Supprimer le préréglage %@";
+"Delete preset \"%@\"" = "Delete preset \"%@\"";
 
 /* Duration target temp */
 "Duration" = "Durée";
