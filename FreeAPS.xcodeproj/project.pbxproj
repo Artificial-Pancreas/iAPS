@@ -328,6 +328,7 @@
 		19A9A70826663475005378EB /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
 		19A9A7092666347E005378EB /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = sv.lproj/Localizable.strings; sourceTree = "<group>"; };
 		19A9A70A26663484005378EB /* uk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uk; path = uk.lproj/Localizable.strings; sourceTree = "<group>"; };
+		19A9A70B26664B53005378EB /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/Localizable.strings; sourceTree = "<group>"; };
 		223EC0494F55A91E3EA69EF4 /* BolusViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = BolusViewModel.swift; sourceTree = "<group>"; };
 		2AD22C985B79A2F0D2EA3D9D /* PumpConfigRootView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PumpConfigRootView.swift; sourceTree = "<group>"; };
 		2F2A13DF0EDEEEDC4106AA2A /* NightscoutConfigDataFlow.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NightscoutConfigDataFlow.swift; sourceTree = "<group>"; };
@@ -1591,6 +1592,7 @@
 				es,
 				sv,
 				uk,
+				it,
 			);
 			mainGroup = 388E594F25AD948C0019842D;
 			packageReferences = (
@@ -1918,6 +1920,7 @@
 				19A9A70826663475005378EB /* es */,
 				19A9A7092666347E005378EB /* sv */,
 				19A9A70A26663484005378EB /* uk */,
+				19A9A70B26664B53005378EB /* it */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
