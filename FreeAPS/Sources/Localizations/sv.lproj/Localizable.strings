@@ -2,6 +2,13 @@
   Localizable.strings
   FreeAPS X
 */
+
+/* clearButtonr */
+"Clear" = "Rensa";
+
+/* doneButton */
+"Done" = "Klar";
+
 /* Add insulin without actually bolusing */
 "Add insulin without actually bolusing" = "Lägg till insulin utan att ge bolus";
 
@@ -261,6 +268,9 @@
 /* Recommended Insulin Fraction */
 "Recommended Insulin Fraction" = "Kvot av rekommenderad mängd insulin";
 
+/* Do you want to show bolus screen after added carbs? */
+"Skip Bolus screen after carbs" = "Hoppa över bolusfönster vid tillagda kolhydrater";
+
 /* Remote control */
 "Remote control" = "Fjärrstyrning";
 
@@ -362,9 +372,3 @@
 
 /* middleware */
 "Middleware" = "Middleware";
-
-/* Clear */
-"Clear" = "Rensa";
-
-/* Done */
-"Done" = "Klar";
