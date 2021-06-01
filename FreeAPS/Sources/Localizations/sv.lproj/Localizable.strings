@@ -81,6 +81,9 @@
 /* A you sure delete preset? */
 "A you sure?" = "Är du säker?";
 
+/* Are you sure? Typo in code*/
+"Are your sure?" = "Är du säker?";
+
 /* Bottom target temp */
 "Bottom target" = "Nedre mål";
 
