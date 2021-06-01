@@ -267,6 +267,9 @@
 /* Recommended Insulin Fraction in preferences */
 "Recommended Insulin Fraction" = "Рекомендуемая дробь инсулина";
 
+/* Do you want to show bolus screen after added carbs? */
+"Skip Bolus screen after carbs" = "Пропустить Экран болюса после ввода углеводов";
+
 /* Remote control */
 "Remote control" = "Удаленное управление";
 
@@ -368,6 +371,3 @@
 
 /* middleware */
 "Middleware" = "Middleware";
-
-/* Do you want to show bolus screen after added carbs? */
-"Skip Bolus screen after carbs" = "Skip Bolus screen after carbs";
