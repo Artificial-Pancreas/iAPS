@@ -100,7 +100,7 @@
 "Delete" = "Видалити";
 
 /* Delete preset %@ */
-"Delete preset %@" = "Видалити шаблон %@";
+"Delete preset \"%@\"" = "Delete preset \"%@\"";
 
 /* Duration target temp */
 "Duration" = "Тривалість";
@@ -154,7 +154,7 @@
 "Basal Profile" = "Базальний Профіль";
 
 /* Rate basal profile */
-"Rate" = "Rate";
+"Rate" = "Коефіцієнт";
 
 /* Save on Pump */
 "Save on Pump" = "Зберегти на Помпі";
@@ -361,7 +361,7 @@
 "Middleware" = "Проміжний код";
 
 /* Clear */
-"Clear" = "Clear";
+"Clear" = "Очистити";
 
 /* Done */
-"Done" = "Done";
+"Done" = "Готово";
