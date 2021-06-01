@@ -49,7 +49,7 @@
 "Disclaimer" = "Varning";
 
 /* Disclaimer Description */
-"FreeAPS X is in an active development state. We do not recommend to use the system for everyday control of blood glucose! Use it for testing purposes only at your own risk. We are not responsible for your decisions and actions." = "FreeAPS X är under utveckling. Vi rekommederar inte att använda denna app för behandling av ditt blodsocker i detta tidiga skede. Använd för test och på egen risk. Vi tar inget ansvar för dina beslut eller handlingar.";
+"FreeAPS X is in an active development state. We do not recommend to use the system for everyday control of blood glucose! Use it for testing purposes only at your own risk. We are not responsible for your decisions and actions." = "FreeAPS X är under utveckling. Vi rekommenderar inte att använda denna app för behandling av ditt blodsocker i detta tidiga skede. Använd för test och på egen risk. Vi tar inget ansvar för dina beslut eller handlingar.";
 
 /* %d min ago, currently not being translated, I don't know why? */
 "%d min ago" = "%d min sedan";
