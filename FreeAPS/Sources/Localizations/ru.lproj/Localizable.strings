@@ -81,6 +81,9 @@
 /* A you sure delete preset? */
 "A you sure?" = "Вы уверены?";
 
+/* Are you sure? Typo in code*/
+"Are your sure?" = "Вы уверены?";
+
 /* Bottom target temp */
 "Bottom target" = "Нижняя граница";
 
@@ -154,10 +157,10 @@
 "Basal Profile" = "Базальный профиль";
 
 /* Rate basal profile */
-"Rate" = "Rate";
+"Rate" = "Скорость";
 
 /* Save on Pump */
-"Save on Pump" = "Сохранить на Помпу";
+"Save on Pump" = "Сохранить на помпе";
 
 /* Saving... */
 "Saving..." = "Сохранение...";
