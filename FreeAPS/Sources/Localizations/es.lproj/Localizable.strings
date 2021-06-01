@@ -3,7 +3,7 @@
   FreeAPS X
 */
 /* Add insulin without actually bolusing */
-"Add insulin without actually bolusing" = "Añadir insulinar sin administrar bolo";
+"Add insulin without actually bolusing" = "Añadir insulina sin administrar bolo";
 
 /* Amount */
 "Amount Bolus" = "Bolo (unidades)";
@@ -33,7 +33,7 @@
 "Recommendation" = "Recomendación";
 
 /* Wait please */
-"Wait please" = "Wait please";
+"Wait please" = "Espere por favor";
 
 /* Agree and continue */
 "Agree and continue" = "Aceptar y continuar";
@@ -58,10 +58,10 @@
 "looping" = "looping";
 
 /* Status Title : No Suggestion */
-"No suggestion" = "No suggestion";
+"No suggestion" = "No hay sugerencias";
 
 /* Replace pod */
-"Replace pod" = "Replace pod";
+"Replace pod" = "Reemplazar Pod";
 
 /* Status Title : Suggest */
 "Suggested" = "Sugerido";
@@ -88,7 +88,7 @@
 "Cancel" = "Cancelar";
 
 /* Cancel Temp Target */
-"Cancel Temp Target" = "Cancel Temp Target";
+"Cancel Temp Target" = "Cancelar objetivo temporal";
 
 /* Custom target temp */
 "Custom" = "Personalizado";
@@ -106,7 +106,7 @@
 "Duration" = "Duración";
 
 /* Enact Temp Target */
-"Enact Temp Target" = "Enact Temp Target";
+"Enact Temp Target" = "Iniciar objetivo temporal";
 
 /* Enter preset name */
 "Enter preset name" = "Enter preset name";
@@ -169,7 +169,7 @@
 "starts at" = "starts at";
 
 /* Time basal profile */
-"Time" = "Time";
+"Time" = "Tiempo";
 
 /* Calculated Ratio */
 "Calculated Ratio" = "Ratio Calculado";
@@ -187,7 +187,7 @@
 "Calculated Sensitivity" = "Sensibilidad Calculada";
 
 /* Insulin Sensitivities */
-"Insulin Sensitivities" = "Insulin Sensitivities";
+"Insulin Sensitivities" = "Sensibilidades a la insulina";
 
 /* Sensitivity Ratio */
 "Sensitivity Ratio" = "Sensitivity Ratio";
@@ -196,13 +196,13 @@
 "Dismiss" = "Dismiss";
 
 /* Important message */
-"Important message" = "Important message";
+"Important message" = "Mensaje importante";
 
 /* Amount */
 "Amount" = "Cantidad";
 
 /* Cancel Temp Basal */
-"Cancel Temp Basal" = "Cancel Temp Basal";
+"Cancel Temp Basal" = "Cancelar basal temporal";
 
 /* Duration */
 "Duration" = "Duración";
@@ -211,13 +211,13 @@
 "Enact" = "Enact";
 
 /* Manual Temp Basal */
-"Manual Temp Basal" = "Manual Temp Basal";
+"Manual Temp Basal" = "Basal temporal manual";
 
 /* Allow uploads */
 "Allow uploads" = "Permitir subida de datos";
 
 /* API secret */
-"API secret" = "API secret";
+"API secret" = "API Secret";
 
 /* Connect */
 "Connect" = "Conectar";
@@ -232,7 +232,7 @@
 "Invalid URL" = "URL inválida";
 
 /* Local glucose source */
-"Local glucose source" = "Local glucose source";
+"Local glucose source" = "Fuente local de glucosa";
 
 /* Nightscout Config */
 "Nightscout Config" = "Configuración de Nightscout";
@@ -247,7 +247,7 @@
 "Use local glucose server" = "Use local glucose server";
 
 /* Edit settings json */
-"Edit settings json" = "Edit settings json";
+"Edit settings json" = "Editar configuración json";
 
 /* Glucose units */
 "Glucose units" = "Unidades de glucosa";
@@ -262,25 +262,25 @@
 "Remote control" = "Control a distancia";
 
 /* Add Medtronic */
-"Add Medtronic" = "Add Medtronic";
+"Add Medtronic" = "Añadir Medtronic";
 
 /* Add Omnipod */
-"Add Omnipod" = "Add Omnipod";
+"Add Omnipod" = "Añadir Omnipod";
 
 /* Add Simulator */
-"Add Simulator" = "Add Simulator";
+"Add Simulator" = "Añadir simulador";
 
 /* Model */
-"Model" = "Model";
+"Model" = "Modelo";
 
 /* Pump config */
-"Pump config" = "Pump config";
+"Pump config" = "Configuración de la bomba";
 
 /* Delivery limits */
-"Delivery limits" = "Delivery limits";
+"Delivery limits" = "Límites de Dosificación";
 
 /* Duration of Insulin Action */
-"Duration of Insulin Action" = "Duration of Insulin Action";
+"Duration of Insulin Action" = "Duración de la insulina activa";
 
 /* hours */
 "hours" = "horas";
@@ -310,7 +310,7 @@
 "Carb Ratios Conf" = "Ratios de Carbohidratos";
 
 /* Closed loop */
-"Closed loop" = "Closed loop";
+"Closed loop" = "Lazo cerrado";
 
 /* Configuration */
 "Configuration" = "Configuracion";
@@ -319,7 +319,7 @@
 "Devices" = "Dispositivos";
 
 /* Insulin Sensitivities */
-"Insulin Sensitivities Conf" = "Insulin Sensitivities";
+"Insulin Sensitivities Conf" = "Sensibilidad a la insulina";
 
 /* Preferences */
 "Preferences Conf" = "Preferencias";
@@ -361,7 +361,7 @@
 "Middleware" = "Middleware";
 
 /* Clear */
-"Clear" = "Clear";
+"Clear" = "Limpiar";
 
 /* Done */
 "Done" = "Hecho";
