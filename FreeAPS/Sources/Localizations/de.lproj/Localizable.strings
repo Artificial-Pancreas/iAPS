@@ -88,7 +88,7 @@
 "Cancel" = "Abbrechen";
 
 /* Cancel Temp Target */
-"Cancel Temp Target" = "Temporäre Basalrate abbrechen";
+"Cancel Temp Target" = "Temporäres Ziel (TT) abbrechen";
 
 /* Custom target temp */
 "Custom" = "Benutzerdefiniert";
@@ -100,7 +100,7 @@
 "Delete" = "Löschen";
 
 /* Delete preset %@ */
-"Delete preset %@" = "Vorlage %@ löschen";
+"Delete preset \"%@\"" = "Delete preset \"%@\"";
 
 /* Duration target temp */
 "Duration" = "Dauer";
@@ -121,13 +121,13 @@
 "Save" = "Speichern";
 
 /* Save as preset */
-"Save as preset" = "Als Vorlage speichern";
+"Save as preset" = "Als Voreinstellung speichern";
 
 /* Top target temp */
 "Top target" = "Obergrenze";
 
 /* Autotune Title */
-"Autotune" = "Automatische Feinabstimmung";
+"Autotune" = "Autotune";
 
 /* Basal profile */
 "Basal profile" = "Basalraten-Profil";
@@ -208,7 +208,7 @@
 "Duration" = "Dauer";
 
 /* Enact temp Basal*/
-"Enact" = "geben";
+"Enact" = "Starte";
 
 /* Manual Temp Basal */
 "Manual Temp Basal" = "Manuelle Temporäre Basalrate";
@@ -217,7 +217,7 @@
 "Allow uploads" = "Erlaube Hochladen von Dateien";
 
 /* API secret */
-"API secret" = "Geheime API";
+"API secret" = "API secret";
 
 /* Connect */
 "Connect" = "verbinden";
