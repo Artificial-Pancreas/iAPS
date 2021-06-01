@@ -24,7 +24,7 @@
 "Enact bolus" = "Bolus abgeben";
 
 /* Insulin recommended */
-"Insulin recommended" = "Empfohlenes Insulin";
+"Insulin recommended" = "Empfohlene Insulinmenge";
 
 /* Insulin required */
 "Insulin required" = "Benötigtes Insulin";
@@ -100,7 +100,7 @@
 "Delete" = "Löschen";
 
 /* Delete preset %@ */
-"Delete preset \"%@\"" = "Delete preset \"%@\"";
+"Delete preset \"%@\"" = "Voreinstellung \"%@\" löschen";
 
 /* Duration target temp */
 "Duration" = "Dauer";
