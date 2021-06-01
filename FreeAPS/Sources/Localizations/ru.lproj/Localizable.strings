@@ -100,7 +100,7 @@
 "Delete" = "Удалить";
 
 /* Delete preset %@ */
-"Delete preset \"%@\"" = "Delete preset \"%@\"";
+"Delete preset \"%@\"" = "Удалить цель \"%@\"";
 
 /* Duration target temp */
 "Duration" = "Длительность";

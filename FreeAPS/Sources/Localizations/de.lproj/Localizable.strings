@@ -100,7 +100,7 @@
 "Delete" = "Löschen";
 
 /* Delete preset %@ */
-"Delete preset \"%@\"" = "Delete preset \"%@\"";
+"Delete preset \"%@\"" = "Vorlage \"%@\" löschen";
 
 /* Duration target temp */
 "Duration" = "Dauer";
