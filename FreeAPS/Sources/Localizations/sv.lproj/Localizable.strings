@@ -3,6 +3,7 @@
   FreeAPS X
 */
 /* Bolus screen when adding insulin */
+
 "Add insulin without actually bolusing" = "Lägg till insulin utan att ge bolus";
 
 /* Amount */
@@ -267,7 +268,7 @@
 "Recommended Insulin Fraction" = "Kvot av rekommenderad mängd insulin";
 
 /* Do you want to show bolus screen after added carbs? */
-"Skip Bolus screen after carbs" = "Hoppa över bolusfönster vid tillagda kolhydrater";
+"Skip Bolus screen after carbs" = "Hoppa över Bolus-skärmen vid tillagda kolhydrater";
 
 /* Remote control */
 "Remote control" = "Fjärrstyrning";
