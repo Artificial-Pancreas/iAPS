@@ -163,7 +163,7 @@
 "Saving..." = "Сохранение...";
 
 /* Schedule */
-"Schedule" = "Schedule";
+"Schedule" = "График";
 
 /* starts at */
 "starts at" = "начинается в";
@@ -205,7 +205,7 @@
 "Cancel Temp Basal" = "Отменить Вбс";
 
 /* Duration */
-"Duration" = "Duration";
+"Duration" = "Длительность";
 
 /* Enact temp Basal*/
 "Enact" = "Выполнить";
@@ -256,7 +256,7 @@
 "Preferences" = "Настройки";
 
 /* Recommended Insulin Fraction */
-"Recommended Insulin Fraction" = "Recommended Insulin Fraction";
+"Recommended Insulin Fraction" = "Рекомендуемая дробь инсулина";
 
 /* Remote control */
 "Remote control" = "Удаленное управление";
@@ -295,7 +295,7 @@
 "Pump Settings" = "Настройки помпы";
 
 /* Save on Pump */
-"Save on Pump" = "Save on Pump";
+"Save on Pump" = "Сохранить на помпу";
 
 /* U/hr */
 "U/hr" = "Ед/ч";
