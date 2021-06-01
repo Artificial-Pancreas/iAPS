@@ -3,6 +3,7 @@
   FreeAPS X
 */
 /* Bolus screen when adding insulin */
+
 "Add insulin without actually bolusing" = "Lägg till insulin utan att ge bolus";
 
 /* Amount */
@@ -48,7 +49,7 @@
 "Disclaimer" = "Varning";
 
 /* Disclaimer Description */
-"FreeAPS X is in an active development state. We do not recommend to use the system for everyday control of blood glucose! Use it for testing purposes only at your own risk. We are not responsible for your decisions and actions." = "FreeAPS X är under utveckling. Vi rekommederar inte att använda denna app för behandling av ditt blodsocker i detta tidiga skede. Använd för test och på egen risk. Vi tar inget ansvar för dina beslut eller handlingar.";
+"FreeAPS X is in an active development state. We do not recommend to use the system for everyday control of blood glucose! Use it for testing purposes only at your own risk. We are not responsible for your decisions and actions." = "FreeAPS X är under utveckling. Vi rekommenderar inte att använda denna app för behandling av ditt blodsocker i detta tidiga skede. Använd för test och på egen risk. Vi tar inget ansvar för dina beslut eller handlingar.";
 
 /* Enacted at a date */
 "Enacted at %@" = "Gavs kl %@";
@@ -90,7 +91,7 @@
 "Are your sure?" = "Är du säker?";
 
 /* Bottom target temp */
-"Bottom target" = "Nedre mål";
+"Bottom target" = "Nedre målvärde";
 
 /* Cancel preset name */
 "Cancel" = "Avbryt";
@@ -114,7 +115,7 @@
 "Duration" = "Duration";
 
 /* Enact Temp Target */
-"Enact Temp Target" = "Starta tillfälligt mål";
+"Enact Temp Target" = "Starta tillfälligt målvärde";
 
 /* Enter preset name */
 "Enter preset name" = "Ange namn för förval";
@@ -123,7 +124,7 @@
 "minutes" = "minuter";
 
 /* Presets title */
-"Presets" = "Förinställningar";
+"Presets" = "Förval";
 
 /* Save preset name */
 "Save" = "Spara";
@@ -132,7 +133,7 @@
 "Save as preset" = "Spara som förval";
 
 /* Top target temp */
-"Top target" = "Övre mål";
+"Top target" = "Övre målvärde";
 
 /* Autotune Title */
 "Autotune" = "Autotune";
@@ -144,7 +145,7 @@
 "Carb ratio" = "Insulinkvoter";
 
 /* Delete autotune data */
-"Delete autotune data" = "Rensa autotune-data";
+"Delete autotune data" = "Rensa Autotune-data";
 
 /* Run now */
 "Run now" = "Kör nu";
@@ -225,7 +226,7 @@
 "Allow uploads" = "Tillåt uppladdning";
 
 /* API secret */
-"API secret" = "API-hemlighet";
+"API secret" = "API-lösen";
 
 /* Connect */
 "Connect" = "Anslut";
@@ -267,7 +268,7 @@
 "Recommended Insulin Fraction" = "Kvot av rekommenderad mängd insulin";
 
 /* Do you want to show bolus screen after added carbs? */
-"Skip Bolus screen after carbs" = "Hoppa över bolusfönster vid tillagda kolhydrater";
+"Skip Bolus screen after carbs" = "Hoppa över Bolusfönster vid tillagda kolhydrater";
 
 /* Remote control */
 "Remote control" = "Fjärrstyrning";
@@ -351,7 +352,7 @@
 "Share logs" = "Dela loggar";
 
 /* Target Ranges */
-"Target Ranges Conf" = "Målområde";
+"Target Ranges Conf" = "Målområden";
 
 /* High target */
 "High target" = "Övre målvärde";
