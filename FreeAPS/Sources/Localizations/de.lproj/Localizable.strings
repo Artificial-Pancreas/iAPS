@@ -67,7 +67,7 @@
 "Suggested" = "Empfohlen";
 
 /* Suggested at a date */
-"Suggested at %@" = "Empfohlen bei %@";
+"Suggested at %@" = "Empfohlen am %@";
 
 /* Add Carbs */
 "Add Carbs" = "Kohlenhydrate hinzufügen";
@@ -157,7 +157,7 @@
 "Rate" = "Bewerten";
 
 /* Save on Pump */
-"Save on Pump" = "Auf Pumpe speichern";
+"Save on Pump" = "In Pumpe speichern";
 
 /* Saving... */
 "Saving..." = "Speichern...";
@@ -232,7 +232,7 @@
 "Invalid URL" = "Ungültige URL";
 
 /* Local glucose source */
-"Local glucose source" = "Lokale Glukosequelle";
+"Local glucose source" = "Lokale BZ-Quelle";
 
 /* Nightscout Config */
 "Nightscout Config" = "Nightscout-Konfiguration";
@@ -244,28 +244,28 @@
 "URL" = "URL";
 
 /* Use local glucose server */
-"Use local glucose server" = "Lokalen Glukose-Server verwenden";
+"Use local glucose server" = "Lokalen BZ-Server verwenden";
 
 /* Edit settings json */
 "Edit settings json" = "Einstellungen bearbeiten";
 
 /* Glucose units */
-"Glucose units" = "Glukoseeinheiten";
+"Glucose units" = "BZ Einheiten";
 
 /* Preferences */
 "Preferences" = "Einstellungen";
 
 /* Recommended Insulin Fraction */
-"Recommended Insulin Fraction" = "Empfohlener Insulin Bruchteil";
+"Recommended Insulin Fraction" = "Empfohlener Insulin Anteil";
 
 /* Remote control */
-"Remote control" = "Fernbedienung";
+"Remote control" = "Remote control";
 
 /* Add Medtronic */
 "Add Medtronic" = "Medtronic-Pumpe hinzufügen";
 
 /* Add Omnipod */
-"Add Omnipod" = "Omnipod-Pumpe hinzufügen";
+"Add Omnipod" = "Omnipod hinzufügen";
 
 /* Add Simulator */
 "Add Simulator" = "Simulator hinzufügen";
@@ -277,7 +277,7 @@
 "Pump config" = "Pumpenkonfiguration";
 
 /* Delivery limits */
-"Delivery limits" = "Verabreichungslimits";
+"Delivery limits" = "Verabreichungsgrenzen";
 
 /* Duration of Insulin Action */
 "Duration of Insulin Action" = "Dauer der Insulinwirkung";
@@ -337,7 +337,7 @@
 "Settings" = "Einstellungen";
 
 /* Share logs */
-"Share logs" = "Protokolle teilen";
+"Share logs" = "Logs teilen";
 
 /* Target Ranges */
 "Target Ranges Conf" = "Zielbereich";
@@ -358,10 +358,10 @@
 "Pump suspended" = "Pumpe pausiert";
 
 /* middleware */
-"Middleware" = "Software Zwischenschicht";
+"Middleware" = "Middleware";
 
 /* Clear */
 "Clear" = "Zurücksetzen";
 
 /* Done */
-"Done" = "Abgeschlossen";
+"Done" = "Fertig";
