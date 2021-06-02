@@ -49,7 +49,7 @@
 "Disclaimer" = "Avertissement";
 
 /* Disclaimer Description */
-"FreeAPS X is in an active development state. We do not recommend to use the system for everyday control of blood glucose! Use it for testing purposes only at your own risk. We are not responsible for your decisions and actions." = "FreeAPS X est une application en cours de développement. Nous ne recommandons pas son utilisation au quotidien pour gérer son diabète. A utiliser pour test seulement et à vos risques et périls. Nous ne sommes pas responsable de vos décisions et actions suite à l'utilisation/recommandations de l'application.";
+"FreeAPS X is in an active development state. We do not recommend to use the system for everyday control of blood glucose! Use it for testing purposes only at your own risk. We are not responsible for your decisions and actions." = "FreeAPS X est une application en cours de développement. Nous ne recommandons pas son utilisation au quotidien pour gérer son diabète. A utiliser uniquement dans un cadre de test et à vos risques et périls. Nous ne sommes pas responsable de vos décisions et actions suite à l'utilisation/recommandations de l'application.";
 
 /* Enacted at a date */
 "Enacted at %@" = "Injection à %@";
@@ -91,7 +91,7 @@
 "Are your sure?" = "Êtes-vous sûr ?";
 
 /* Bottom target temp */
-"Bottom target" = "Cible inférieure";
+"Bottom target" = "Cible basse";
 
 /* Cancel preset name */
 "Cancel" = "Annuler";
@@ -118,13 +118,13 @@
 "Enact Temp Target" = "Activer la cible temporaire";
 
 /* Enter preset name */
-"Enter preset name" = "Entrez le nom de la présélection";
+"Enter preset name" = "Entrer le nom du préréglage";
 
 /* minutes of target temp */
 "minutes" = "minutes";
 
 /* Presets title */
-"Presets" = "Présélections";
+"Presets" = "Préréglages";
 
 /* Save preset name */
 "Save" = "Sauvegarder";
@@ -172,7 +172,7 @@
 "Saving..." = "Sauvegarde...";
 
 /* Schedule */
-"Schedule" = "Horaires";
+"Schedule" = "Programme";
 
 /* starts at */
 "starts at" = "commence à";
@@ -184,7 +184,7 @@
 "Calculated Ratio" = "Ratio calculé";
 
 /* Carb Ratios Title */
-"Carb Ratios" = "Ratios Glucides";
+"Carb Ratios" = "Ratios de glucides";
 
 /* Ratio Carb */
 "Ratio" = "Ratio";
@@ -196,7 +196,7 @@
 "Calculated Sensitivity" = "Sensibilité calculée";
 
 /* Insulin Sensitivities */
-"Insulin Sensitivities" = "Facteurs de sensibilité à l'insuline";
+"Insulin Sensitivities" = "Sensibilité à l'Insuline";
 
 /* Sensitivity Ratio */
 "Sensitivity Ratio" = "Ratio de sensibilité";
@@ -211,7 +211,7 @@
 "Amount" = "Quantité";
 
 /* Cancel Temp Basal */
-"Cancel Temp Basal" = "Annuler Basal Temp";
+"Cancel Temp Basal" = "Annuler le Basal Temporaire";
 
 /* Duration */
 "Duration" = "Durée";
@@ -265,10 +265,10 @@
 "Preferences" = "Préférences";
 
 /* Recommended Insulin Fraction in preferences */
-"Recommended Insulin Fraction" = "Fraction Insuline Recommandée";
+"Recommended Insulin Fraction" = "Fraction d’Insuline Recommandée";
 
 /* Do you want to show bolus screen after added carbs? */
-"Skip Bolus screen after carbs" = "Skip Bolus screen after carbs";
+"Skip Bolus screen after carbs" = "Ignorer l'écran du Bolus après les glucides";
 
 /* Remote control */
 "Remote control" = "Contrôle à distance";
@@ -331,7 +331,7 @@
 "Devices" = "Appareils";
 
 /* Insulin Sensitivities */
-"Insulin Sensitivities Conf" = "Facteurs de sensibilité à l'insuline";
+"Insulin Sensitivities Conf" = "Sensibilité à l'Insuline";
 
 /* Preferences */
 "Preferences Conf" = "Préférences";
@@ -373,4 +373,4 @@
 "Middleware" = "Middleware";
 
 /* History header */
-"History" = "History";
+"History" = "Historique";
