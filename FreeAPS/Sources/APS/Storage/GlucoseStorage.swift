@@ -18,7 +18,7 @@ final class BaseGlucoseStorage: GlucoseStorage, Injectable {
     @Injected() private var broadcaster: Broadcaster!
 
     private enum Config {
-        static let filterTime: TimeInterval = 2.75 * 60 // Before edit this was 4.75
+        static let filterTime: TimeInterval = 4.75 * 60
     }
 
     init(resolver: Resolver) {
@@ -82,13 +82,11 @@ final class BaseGlucoseStorage: GlucoseStorage, Injectable {
     }
 
     func isGlucoseNotFlat() -> Bool {
-        return true // To completely avoid more "To Flat" errors (I don't understand Why I still get them?
-
-        let last5 = recent().suffix(5)
-        guard last5.count == 5 else { return true }
+        let last3 = recent().suffix(3)
+        guard last3.count == 3 else { return true }
 
         return Array(
-            last5
+            last3
                 .compactMap { $0.filtered ?? 0 }
                 .filter { $0 != 0 }
                 .uniqued()

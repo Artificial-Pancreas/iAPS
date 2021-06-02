@@ -19,7 +19,7 @@ struct CurrentGlucoseView: View {
     private var deltaFormatter: NumberFormatter {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
-        formatter.maximumFractionDigits = 1
+        formatter.maximumFractionDigits = 2
         formatter.positivePrefix = "+"
         return formatter
     }
@@ -42,61 +42,21 @@ struct CurrentGlucoseView: View {
                 )
                 .font(.system(size: 24, weight: .bold))
                 .fixedSize()
-                .foregroundColor(colorOfGlucose)
                 image.padding(.bottom, 2)
 
             }.padding(.leading, 4)
             HStack(alignment: .lastTextBaseline, spacing: 2) {
                 Text(
-                    "\(minutesAgo)m "
-                ).font(.caption2).foregroundColor(colorOfMinutesAgo(minutesAgo))
+                    recentGlucose.map { dateFormatter.string(from: $0.dateString) } ?? "--"
+                ).font(.caption2).foregroundColor(.secondary)
                 Text(
                     delta
                         .map { deltaFormatter.string(from: Double(units == .mmolL ? $0.asMmolL : Decimal($0)) as NSNumber)!
                         } ??
                         "--"
-                ).font(.system(size: 12, weight: .bold)) }
-        }
-    }
 
-    var colorOfGlucose: Color {
-        guard let recentBG = recentGlucose?.glucose
-        else { return .loopYellow }
-
-//        recentBG = Int(recentBG.asMmolL) // convert to mmol/l for calculation
-
-        switch recentBG {
-        case 73 ... 144:
-            return .loopGreen
-        case 63 ... 72,
-             145 ... 180:
-            return .loopYellow
-        case 54 ... 62,
-             181 ... 207:
-            return .loopOrange
-        default:
-            return .loopRed
-        }
-    }
-
-    var minutesAgo: Int {
-        let lastGlucoseDateString = recentGlucose.map { dateFormatter.string(from: $0.dateString) } ?? "--"
-        let LastGlucoseDate = Date(lastGlucoseDateString) ?? Date()
-        let now = Date()
-        let diff = Int(now.timeIntervalSince1970 - LastGlucoseDate.timeIntervalSince1970)
-        let hoursDiff = diff / 3600
-        let minutesDiff = (diff - hoursDiff * 3600) / 60
-        return minutesDiff
-    }
-
-    func colorOfMinutesAgo(_ minutes: Int) -> Color {
-        switch minutes {
-        case 0 ... 5:
-            return .loopGreen
-        case 6 ... 9:
-            return .loopYellow
-        default:
-            return .loopRed
+                ).font(.system(size: 12, weight: .bold))
+            }
         }
     }
 
