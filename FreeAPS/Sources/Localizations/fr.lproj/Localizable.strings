@@ -51,9 +51,6 @@
 /* Disclaimer Description */
 "FreeAPS X is in an active development state. We do not recommend to use the system for everyday control of blood glucose! Use it for testing purposes only at your own risk. We are not responsible for your decisions and actions." = "FreeAPS X est une application en cours de développement. Nous ne recommandons pas son utilisation au quotidien pour gérer son diabète. A utiliser pour test seulement et à vos risques et périls. Nous ne sommes pas responsable de vos décisions et actions suite à l'utilisation/recommandations de l'application.";
 
-/* %d min ago, currently not being translated, I don't know why? */
-"%d min ago" = "il y a %d min";
-
 /* Enacted at a date */
 "Enacted at %@" = "Injection à %@";
 
@@ -62,6 +59,9 @@
 
 /* Looping in progress */
 "looping" = "Boucle en cours";
+
+/* %d min ago, currently not being translated, I don't know why? */
+"%d min ago" = "il y a %d min";
 
 /* Status Title */
 "No suggestion" = "Aucune suggestion";
@@ -371,3 +371,6 @@
 
 /* middleware */
 "Middleware" = "Middleware";
+
+/* History header */
+"History" = "History";
