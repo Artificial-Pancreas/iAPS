@@ -5,6 +5,7 @@
     "useAutotune": false
     "isUploadEnabled": false,
     "useLocalGlucoseSource": false,
+    "dontShowNS": false,
     "localGlucosePort": 8080,
     "debugOptions": false,
     "insulinReqFraction": 0.7,

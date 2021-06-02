@@ -52,6 +52,10 @@ extension NightscoutConfig {
                         DecimalTextField("", value: $viewModel.localPort, formatter: portFormater)
                     }
                 }
+
+                Section(header: Text("Show xDrip4iOS or other CGM instead of NS")) {
+                    Toggle("Don't show NS", isOn: $viewModel.dontShowNS)
+                }
             }
             .navigationBarTitle("Nightscout Config", displayMode: .automatic)
         }
