@@ -34,7 +34,7 @@
 "Recommendation" = "Empfehlung";
 
 /* clearButton */
-"Clear" = "Zurücksetzen";
+"Clear" = "Eingabe löschen";
 
 /* doneButton */
 "Done" = "Fertig";
@@ -268,10 +268,10 @@
 "Recommended Insulin Fraction" = "Empfohlener Insulin Anteil";
 
 /* Do you want to show bolus screen after added carbs? */
-"Skip Bolus screen after carbs" = "Überspring Bolus-Vorschlag nach Kohlenhydrateingabe";
+"Skip Bolus screen after carbs" = "Überspringe Bolus-Vorschlag nach Kohlenhydrateingabe";
 
 /* Remote control */
-"Remote control" = "Remote control";
+"Remote control" = "Fernbedienung";
 
 /* Add Medtronic */
 "Add Medtronic" = "Medtronic-Pumpe hinzufügen";
@@ -322,7 +322,7 @@
 "Carb Ratios Conf" = "Kohlenhydratfaktoren";
 
 /* Closed loop */
-"Closed loop" = "Closed Loop";
+"Closed loop" = "Geschlossener Loop";
 
 /* Configuration */
 "Configuration" = "Konfiguration";
