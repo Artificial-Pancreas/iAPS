@@ -172,7 +172,7 @@
 "Saving..." = "Sauvegarde...";
 
 /* Schedule */
-"Schedule" = "Horaires";
+"Schedule" = "Programme";
 
 /* starts at */
 "starts at" = "commence à";
@@ -184,7 +184,7 @@
 "Calculated Ratio" = "Ratio calculé";
 
 /* Carb Ratios Title */
-"Carb Ratios" = "Ratios Glucides";
+"Carb Ratios" = "Ratios de glucides";
 
 /* Ratio Carb */
 "Ratio" = "Ratio";
@@ -196,7 +196,7 @@
 "Calculated Sensitivity" = "Sensibilité calculée";
 
 /* Insulin Sensitivities */
-"Insulin Sensitivities" = "Facteurs de sensibilité à l'insuline";
+"Insulin Sensitivities" = "Sensibilité à l'Insuline";
 
 /* Sensitivity Ratio */
 "Sensitivity Ratio" = "Ratio de sensibilité";
@@ -211,7 +211,7 @@
 "Amount" = "Quantité";
 
 /* Cancel Temp Basal */
-"Cancel Temp Basal" = "Annuler Basal Temp";
+"Cancel Temp Basal" = "Annuler le Basal Temporaire";
 
 /* Duration */
 "Duration" = "Durée";
@@ -265,7 +265,7 @@
 "Preferences" = "Préférences";
 
 /* Recommended Insulin Fraction in preferences */
-"Recommended Insulin Fraction" = "Fraction Insuline Recommandée";
+"Recommended Insulin Fraction" = "Fraction d’Insuline Recommandée";
 
 /* Do you want to show bolus screen after added carbs? */
 "Skip Bolus screen after carbs" = "Ignorer l'écran du Bolus après les glucides";
@@ -331,7 +331,7 @@
 "Devices" = "Appareils";
 
 /* Insulin Sensitivities */
-"Insulin Sensitivities Conf" = "Facteurs de sensibilité à l'insuline";
+"Insulin Sensitivities Conf" = "Sensibilité à l'Insuline";
 
 /* Preferences */
 "Preferences Conf" = "Préférences";
