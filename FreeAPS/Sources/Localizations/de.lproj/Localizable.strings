@@ -4,7 +4,7 @@
 */
 /* Bolus screen when adding insulin */
 
-"Add insulin without actually bolusing" = "Insulin nur erfassen ohne tatsächliche Abgabe";
+"Add insulin without actually bolusing" = "Insulin erfassen, ohne tatsächliche Bolusabgabe";
 
 /* Amount */
 "Amount Bolus" = "Bolus IE";
@@ -51,9 +51,6 @@
 /* Disclaimer Description */
 "FreeAPS X is in an active development state. We do not recommend to use the system for everyday control of blood glucose! Use it for testing purposes only at your own risk. We are not responsible for your decisions and actions." = "FreeAPS X befindet sich noch in der Entwicklung. Wir empfehlen das System nicht zur alltäglichen Kontrolle Ihres Blutzuckers zu verwenden. Verwendung bitte nur zu Testzwecken und auf eigenes Risiko. Wir können keine Verantwortung für Ihre Entscheidungen und Aktionen übernehmen.";
 
-/* %d min ago, currently not being translated, I don't know why? */
-"%d min ago" = "vor %d min";
-
 /* Enacted at a date */
 "Enacted at %@" = "Ausgelöst bei %@";
 
@@ -62,6 +59,9 @@
 
 /* Looping in progress */
 "looping" = "looping";
+
+/* %d min ago, currently not being translated, I don't know why? */
+"%d min ago" = "vor %d min";
 
 /* Status Title */
 "No suggestion" = "Kein Vorschlag";
@@ -145,7 +145,7 @@
 "Carb ratio" = "Kohlenhydratfaktor";
 
 /* Delete autotune data */
-"Delete autotune data" = "Lösche Autotune Daten";
+"Delete autotune data" = "Autotune Daten löschen";
 
 /* Run now */
 "Run now" = "Ausführen";
@@ -154,16 +154,16 @@
 "Sensitivity" = "Empfindlichkeit";
 
 /* Use Autotune */
-"Use Autotune" = "benutze Autotune";
+"Use Autotune" = "Autotune verwenden";
 
 /* Add profile basal */
-"Add" = "Zufügen";
+"Add" = "Hinzufügen";
 
 /* Basal Profile */
 "Basal Profile" = "Basalraten-Profil";
 
 /* Rate basal profile */
-"Rate" = "Bewerten";
+"Rate" = "BR";
 
 /* Save on Pump */
 "Save on Pump" = "In Pumpe speichern";
@@ -229,10 +229,10 @@
 "API secret" = "API secret";
 
 /* Connect */
-"Connect" = "verbinden";
+"Connect" = "Verbinden";
 
 /* Connected! */
-"Connected!" = "verbunden";
+"Connected!" = "Verbunden!";
 
 /* Connecting... */
 "Connecting..." = "Verbindung wird hergestellt...";
@@ -313,7 +313,7 @@
 "U/hr" = "IE/Std";
 
 /* Autotune */
-"Autotune Conf" = "Automatische Feinabstimmung";
+"Autotune Conf" = "Autotune";
 
 /* Basal Profile */
 "Basal Profile Conf" = "Basalraten-Profile";
@@ -322,7 +322,7 @@
 "Carb Ratios Conf" = "Kohlenhydratfaktoren";
 
 /* Closed loop */
-"Closed loop" = "Geschlossener Loop";
+"Closed loop" = "Closed Loop";
 
 /* Configuration */
 "Configuration" = "Konfiguration";
@@ -352,16 +352,16 @@
 "Share logs" = "Logs teilen";
 
 /* Target Ranges */
-"Target Ranges Conf" = "Zielbereich";
+"Target Ranges Conf" = "Zielbereiche";
 
 /* High target */
-"High target" = "Höchstgrenze";
+"High target" = "Obere Grenze";
 
 /* Low target */
-"Low target" = "Untergrenze";
+"Low target" = "Untere Grenze";
 
 /* Target Ranges */
-"Target Ranges" = "Zielbereich";
+"Target Ranges" = "Zielbereiche";
 
 /* Bolusing.. */
 "Bolusing" = "Bolusabgabe";
@@ -371,3 +371,6 @@
 
 /* middleware */
 "Middleware" = "Middleware";
+
+/* History header */
+"History" = "History";
