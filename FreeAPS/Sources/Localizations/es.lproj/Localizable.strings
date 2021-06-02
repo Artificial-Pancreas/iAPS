@@ -4,7 +4,7 @@
 */
 /* Bolus screen when adding insulin */
 
-"Add insulin without actually bolusing" = "Añadir insulina sin administrar bolo";
+"Add insulin without actually bolusing" = "Añadir insulinar sin administrar bolo";
 
 /* Amount */
 "Amount Bolus" = "Bolo (unidades)";
@@ -19,10 +19,10 @@
 "Continue without bolus" = "Continuar sin administrar bolo";
 
 /* Enact Bolus Title*/
-"Enact Bolus" = "Enact Bolus";
+"Enact Bolus" = "Administrar Bolo";
 
 /* Enact bolus button */
-"Enact bolus" = "Enact bolus";
+"Enact bolus" = "Administrar Bolo";
 
 /* Insulin recommended */
 "Insulin recommended" = "Insulina recomendada";
@@ -88,7 +88,7 @@
 "A you sure?" = "¿Estás seguro?";
 
 /* Are your sure? Typo in code*/
-"Are your sure?" = "Are you sure?";
+"Are your sure?" = "¿Estás seguro?";
 
 /* Bottom target temp */
 "Bottom target" = "Objetivo Inferior";
@@ -109,7 +109,7 @@
 "Delete" = "Borrar";
 
 /* Delete preset temp target */
-"Delete preset \"%@\"" = "Delete preset \"%@\"";
+"Delete preset \"%@\"" = "Eliminar ajuste predefinido \"%@\"";
 
 /* Duration of target temp */
 "Duration" = "Duración";
@@ -118,7 +118,7 @@
 "Enact Temp Target" = "Iniciar objetivo temporal";
 
 /* Enter preset name */
-"Enter preset name" = "Enter preset name";
+"Enter preset name" = "Introduzca nombre del predef";
 
 /* minutes of target temp */
 "minutes" = "minutos";
@@ -373,4 +373,4 @@
 "Middleware" = "Middleware";
 
 /* History header */
-"History" = "History";
+"History" = "Historial";
