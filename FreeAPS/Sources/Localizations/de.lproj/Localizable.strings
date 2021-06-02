@@ -4,7 +4,7 @@
 */
 /* Bolus screen when adding insulin */
 
-"Add insulin without actually bolusing" = "Insulin erfassen, ohne tatsächliche Bolusabgabe";
+"Add insulin without actually bolusing" = "Insulin ohne tatsächliche Bolusabgabe erfassen";
 
 /* Amount */
 "Amount Bolus" = "Bolus IE";
@@ -223,7 +223,7 @@
 "Manual Temp Basal" = "Manuelle Temporäre Basalrate";
 
 /* Allow uploads */
-"Allow uploads" = "Erlaube Hochladen von Dateien";
+"Allow uploads" = "Erlaube Hochladen von Daten";
 
 /* API secret */
 "API secret" = "API secret";
