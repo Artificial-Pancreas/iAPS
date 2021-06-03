@@ -291,7 +291,7 @@
 /*  */
 "Duration of Insulin Action" = "Durée d'Action de l'Insuline";
 
-/* hours of duration of insuin activity */
+/* hours of duration of insulin activity */
 "hours" = "heures";
 
 /* Max setting */
@@ -357,7 +357,7 @@
 /* Lower target */
 "Low target" = "Cible basse";
 
-/* Target Ranges */
+/*  */
 "Target Ranges" = "Zone cible";
 
 /* When bolusing */
