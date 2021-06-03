@@ -66,9 +66,6 @@
 /* Replace pod text in Header */
 "Replace pod" = "Замените под";
 
-/* Status Title */
-"Suggested" = "Предложено";
-
 /* Suggested at a date */
 "Suggested at %@" = "Предложено в %@";
 
