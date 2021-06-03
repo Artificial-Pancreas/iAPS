@@ -66,11 +66,8 @@
 /* Replace pod text in Header */
 "Replace pod" = "Byt podd";
 
-/* Status Title */
-"Suggested" = "Föreslagen";
-
 /* Suggested at a date */
-"Suggested at %@" = "Föreslagen kl %@";
+"Suggested at %@" = "Föreslaget kl %@";
 
 /* Add carbs screen */
 "Add Carbs" = "Lägg till kolhydrater";
