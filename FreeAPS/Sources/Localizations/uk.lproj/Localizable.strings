@@ -21,10 +21,10 @@
 /* Button */
 "Enact bolus" = "Подати болюс";
 
-/*  */
+/* Bolus screen */
 "Insulin recommended" = "Рекомендовано інсуліну";
 
-/*  */
+/* Bolus screen */
 "Insulin required" = "Потрібно інсуліну";
 
 /* Bolus screen */
@@ -157,7 +157,7 @@
 "Basal Profile" = "Базальний Профіль";
 
 /* Rate basal profile */
-"Rate" = "Коефіцієнт";
+"Rate" = "Коеф.";
 
 /*  */
 "Save on Pump" = "Зберегти на Помпі";
@@ -366,5 +366,5 @@
 /* */
 "Middleware" = "Проміжний код";
 
-/* Header */
+/* History header */
 "History" = "Історія";
