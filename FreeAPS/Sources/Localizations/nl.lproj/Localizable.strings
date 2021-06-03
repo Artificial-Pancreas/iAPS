@@ -6,43 +6,40 @@
 
 "Add insulin without actually bolusing" = "Insuline toevoegen zonder daadwerkelijke bolus";
 
-/* Amount */
 "Amount Bolus" = "Bolus hoeveelheid";
 
-/* Bolus */
 "Bolus" = "Bolus";
 
-/* Close */
 "Close" = "Sluiten";
 
 /* Continue after added carbs without bolus */
 "Continue without bolus" = "Verdergaan zonder bolus";
 
-/* Enact Bolus Title*/
+/* Header */
 "Enact Bolus" = "Bolus geven";
 
-/* Enact bolus button */
+/* Button */
 "Enact bolus" = "Bolus geven";
 
-/* Insulin recommended */
+/* Bolus screen */
 "Insulin recommended" = "Voorgestelde insuline";
 
-/* Insulin required */
+/* Bolus screen */
 "Insulin required" = "Benodigde insuline";
 
-/* StringRecommendation */
+/* Bolus screen */
 "Recommendation" = "Advies";
 
-/* clearButton */
+/* Button */
 "Clear" = "Wissen";
 
-/* doneButton */
+/* Button */
 "Done" = "Bevestig";
 
-/* Wait please */
+/*  */
 "Wait please" = "Wachten";
 
-/* Agree and continue */
+/*  */
 "Agree and continue" = "Akkoord en doorgaan";
 
 /* Disclaimer when opening app for first time*/
@@ -75,10 +72,10 @@
 /* Suggested at a date */
 "Suggested at %@" = "Voorgesteld %@";
 
-/* Add Carbs */
+/* Add carbs screen */
 "Add Carbs" = "Koolhydraten toevoegen";
 
-/* Amount Carbs */
+/*  */
 "Amount Carbs" = "Hoeveelheid koolhydraten";
 
 /* Grams unit */
@@ -96,16 +93,16 @@
 /* Cancel preset name */
 "Cancel" = "Annuleer";
 
-/* Cancel Temp Target */
+/*  */
 "Cancel Temp Target" = "Annuleer tijdelijk doel";
 
 /* Custom temp target */
 "Custom" = "Aangepast";
 
-/* Date */
+/*  */
 "Date" = "Datum";
 
-/* Delete */
+/*  */
 "Delete" = "Verwijderen";
 
 /* Delete preset temp target */
@@ -114,154 +111,154 @@
 /* Duration of target temp */
 "Duration" = "Duur";
 
-/* Enact Temp Target */
+/*  */
 "Enact Temp Target" = "Start tijdelijk doel";
 
-/* Enter preset name */
+/*  */
 "Enter preset name" = "Voer naam voorinstelling in";
 
 /* minutes of target temp */
 "minutes" = "minuten";
 
-/* Presets title */
+/*  */
 "Presets" = "Voorkeursinstellingen";
 
 /* Save preset name */
 "Save" = "Opslaan";
 
-/* Save as preset */
+/*  */
 "Save as preset" = "Opslaan als tijdelijk programma";
 
-/* Top target temp */
+/* Upper temp target limit */
 "Top target" = "Bovengrens doel";
 
-/* Autotune Title */
+/*  */
 "Autotune" = "Autotune";
 
-/* Basal profile */
+/*  */
 "Basal profile" = "Basaal profiel";
 
-/* Carb ratio */
+/*  */
 "Carb ratio" = "Koolhydraten ratio";
 
-/* Delete autotune data */
+/*  */
 "Delete autotune data" = "Verwijder autotune-gegevens";
 
-/* Run now */
+/*  */
 "Run now" = "Nu uitvoeren";
 
-/* Sensitivity */
+/*  */
 "Sensitivity" = "Gevoeligheid";
 
-/* Use Autotune */
+/*  */
 "Use Autotune" = "Autotune gebruiken";
 
 /* Add profile basal */
 "Add" = "Toevoegen";
 
-/* Basal Profile */
+/*  */
 "Basal Profile" = "Basaal profiel";
 
 /* Rate basal profile */
 "Rate" = "Waarde";
 
-/* Save on Pump */
+/*  */
 "Save on Pump" = "Opslaan op pomp";
 
-/* Saving... */
+/*  */
 "Saving..." = "Opslaan...";
 
-/* Schedule */
+/*  */
 "Schedule" = "Schema";
 
-/* starts at */
+/*  */
 "starts at" = "Begint om";
 
 /* Time basal profile */
 "Time" = "Tijd";
 
-/* Calculated Ratio */
+/* */
 "Calculated Ratio" = "Gecalculeerde ratio";
 
-/* Carb Ratios Title */
+/* Carb Ratios header */
 "Carb Ratios" = "Koolhydraten ratio's";
 
-/* Ratio Carb */
+/*  */
 "Ratio" = "Ratio";
 
-/* Autosens */
+/*  */
 "Autosens" = "Gevoeligheidsdetectie (Autosens)";
 
-/* Calculated Sensitivity */
+/*  */
 "Calculated Sensitivity" = "Berekende gevoeligheid";
 
-/* Insulin Sensitivities */
+/*  */
 "Insulin Sensitivities" = "Insuline gevoeligheden";
 
-/* Sensitivity Ratio */
+/* */
 "Sensitivity Ratio" = "Gevoeligheid ratio";
 
-/* Dismiss */
+/*  */
 "Dismiss" = "Negeren";
 
-/* Important message */
+/*  */
 "Important message" = "Belangrijk bericht";
 
-/* Amount */
+/*  */
 "Amount" = "Hoeveelheid";
 
-/* Cancel Temp Basal */
+/* */
 "Cancel Temp Basal" = "Annuleer tijdelijke basaal";
 
-/* Duration */
+/*  */
 "Duration" = "Duur";
 
 /* Enact temp Basal*/
 "Enact" = "Uitvoeren";
 
-/* Manual Temp Basal */
+/* */
 "Manual Temp Basal" = "Handmatige tijdelijke basaal";
 
-/* Allow uploads */
+/* Allow uploads tp NS */
 "Allow uploads" = "Uploaden toestaan";
 
-/* API secret */
+/* API secret in NS */
 "API secret" = "API code";
 
-/* Connect */
+/* Connect to NS */
 "Connect" = "Verbinden";
 
-/* Connected! */
+/* Connected to NS */
 "Connected!" = "Verbonden!";
 
-/* Connecting... */
+/* Connecting to NS */
 "Connecting..." = "Verbinden...";
 
-/* Invalid URL */
+/*  */
 "Invalid URL" = "Ongeldige URL";
 
-/* Local glucose source */
+/*  */
 "Local glucose source" = "Lokale glucose bron";
 
-/* Nightscout Config */
+/* Header */
 "Nightscout Config" = "Nightscout configuratie";
 
-/* Port */
+/*  */
 "Port" = "Poort";
 
-/* URL */
+/*  */
 "URL" = "URL";
 
-/* Use local glucose server */
+/**/
 "Use local glucose server" = "Lokale glucose server gebruiken";
 
-/* Edit settings json */
+/*  */
 "Edit settings json" = "Bewerk instellingen json";
 
-/* Glucose units */
+/* */
 "Glucose units" = "Glucose eenheid";
 
-/* Preferences */
+/*  */
 "Preferences" = "Voorkeuren";
 
 /* Recommended Insulin Fraction in preferences */
@@ -270,106 +267,106 @@
 /* Do you want to show bolus screen after added carbs? */
 "Skip Bolus screen after carbs" = "Sla bolus scherm over na koolhydraten";
 
-/* Remote control */
+/* Allow remote control from NS */
 "Remote control" = "Controle op afstand";
 
-/* Add Medtronic */
+/* Add Medtronic pump */
 "Add Medtronic" = "Medtronic toevoegen";
 
-/* Add Omnipod */
+/* Add Omnipod pump */
 "Add Omnipod" = "Omnipod toevoegen";
 
-/* Add Simulator */
+/* Add Simulator pump */
 "Add Simulator" = "Simulator toevoegen";
 
-/* Model */
+/* Insulin model */
 "Model" = "Model";
 
-/* Pump config */
+/*  */
 "Pump config" = "Pomp configuratie";
 
-/* Delivery limits */
+/*  */
 "Delivery limits" = "Toediening limieten";
 
-/* Duration of Insulin Action */
+/*  */
 "Duration of Insulin Action" = "DIA (Duur van Insuline Activiteit)";
 
-/* hours */
+/* hours of duration of insuin activity */
 "hours" = "uur";
 
-/* Max Basal */
+/* Max setting */
 "Max Basal" = "Max Basaal";
 
-/* Max Bolus */
+/* Max setting */
 "Max Bolus" = "Max. bolus";
 
-/* Pump Settings */
+/* */
 "Pump Settings" = "Pomp instellingen";
 
-/* Save on Pump */
+/*  */
 "Save on Pump" = "Opslaan op pomp";
 
-/* U/hr */
+/*  */
 "U/hr" = "E/uur";
 
-/* Autotune */
+/* */
 "Autotune Conf" = "Autotune";
 
-/* Basal Profile */
+/*  */
 "Basal Profile Conf" = "Basaal profiel";
 
-/* Carb Ratios */
+/*  */
 "Carb Ratios Conf" = "Koolhydraten ratio's";
 
-/* Closed loop */
+/*  */
 "Closed loop" = "Gesloten loop";
 
-/* Configuration */
+/* */
 "Configuration" = "Instellingen";
 
-/* Devices */
+/* */
 "Devices" = "Apparaten";
 
-/* Insulin Sensitivities */
+/* */
 "Insulin Sensitivities Conf" = "Insuline gevoeligheden";
 
-/* Preferences */
+/* */
 "Preferences Conf" = "Instellingen";
 
-/* Pump */
+/*  */
 "Pump" = "Pomp";
 
-/* Pump Settings */
+/*  */
 "Pump Settings Conf" = "Pomp instellingen";
 
-/* Services */
+/*  */
 "Services" = "Diensten";
 
-/* Settings */
+/*  */
 "Settings" = "Instellingen";
 
-/* Share logs */
+/* 2 log files to share */
 "Share logs" = "Deel Log";
 
-/* Target Ranges */
+/*  */
 "Target Ranges Conf" = "Streefdoel";
 
-/* High target */
+/* Upper target */
 "High target" = "Bovengrens doel";
 
-/* Low target */
+/* Lower target */
 "Low target" = "Ondergrens doel";
 
 /* Target Ranges */
 "Target Ranges" = "Streefdoel";
 
-/* Bolusing.. */
+/* When bolusing */
 "Bolusing" = "Bolussen";
 
-/* Pump suspended */
+/* */
 "Pump suspended" = "Pomp uitgeschakeld";
 
-/* middleware */
+/* */
 "Middleware" = "Middleware";
 
 /* History header */

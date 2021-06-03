@@ -6,43 +6,40 @@
 
 "Add insulin without actually bolusing" = "Lägg till insulin utan att ge bolus";
 
-/* Amount */
 "Amount Bolus" = "Mängd insulin";
 
-/* Bolus */
 "Bolus" = "Bolus";
 
-/* Close */
 "Close" = "Stäng";
 
 /* Continue after added carbs without bolus */
 "Continue without bolus" = "Fortsätt utan bolus";
 
-/* Enact Bolus Title*/
+/* Header */
 "Enact Bolus" = "Ge bolus";
 
-/* Enact bolus button */
+/* Button */
 "Enact bolus" = "Ge bolus";
 
-/* Insulin recommended */
+/* Bolus screen */
 "Insulin recommended" = "Rekommenderad insulindos";
 
-/* Insulin required */
+/* Bolus screen */
 "Insulin required" = "Insulin som krävs";
 
-/* StringRecommendation */
+/* Bolus screen */
 "Recommendation" = "Rekommendation";
 
-/* clearButton */
+/* Button */
 "Clear" = "Rensa";
 
-/* doneButton */
+/* Button */
 "Done" = "Klar";
 
-/* Wait please */
+/*  */
 "Wait please" = "Vänta...";
 
-/* Agree and continue */
+/*  */
 "Agree and continue" = "Godkänn och fortsätt";
 
 /* Disclaimer when opening app for first time*/
@@ -75,10 +72,10 @@
 /* Suggested at a date */
 "Suggested at %@" = "Föreslagen kl %@";
 
-/* Add Carbs */
+/* Add carbs screen */
 "Add Carbs" = "Lägg till kolhydrater";
 
-/* Amount Carbs */
+/*  */
 "Amount Carbs" = "Mängd kolhydrater";
 
 /* Grams unit */
@@ -96,16 +93,16 @@
 /* Cancel preset name */
 "Cancel" = "Avbryt";
 
-/* Cancel Temp Target */
+/*  */
 "Cancel Temp Target" = "Avbryt temporär basal";
 
 /* Custom temp target */
 "Custom" = "Anpassad";
 
-/* Date */
+/*  */
 "Date" = "Datum";
 
-/* Delete */
+/*  */
 "Delete" = "Radera";
 
 /* Delete preset temp target */
@@ -114,154 +111,154 @@
 /* Duration of target temp */
 "Duration" = "Duration";
 
-/* Enact Temp Target */
+/*  */
 "Enact Temp Target" = "Starta tillfälligt målvärde";
 
-/* Enter preset name */
+/*  */
 "Enter preset name" = "Ange namn för förval";
 
 /* minutes of target temp */
 "minutes" = "minuter";
 
-/* Presets title */
+/*  */
 "Presets" = "Förval";
 
 /* Save preset name */
 "Save" = "Spara";
 
-/* Save as preset */
+/*  */
 "Save as preset" = "Spara som förval";
 
-/* Top target temp */
+/* Upper temp target limit */
 "Top target" = "Övre målvärde";
 
-/* Autotune Title */
+/*  */
 "Autotune" = "Autotune";
 
-/* Basal profile */
+/*  */
 "Basal profile" = "Basalinställningar";
 
-/* Carb ratio */
+/*  */
 "Carb ratio" = "Insulinkvoter";
 
-/* Delete autotune data */
+/*  */
 "Delete autotune data" = "Rensa Autotune-data";
 
-/* Run now */
+/*  */
 "Run now" = "Kör nu";
 
-/* Sensitivity */
+/*  */
 "Sensitivity" = "Insulinkänslighet";
 
-/* Use Autotune */
+/*  */
 "Use Autotune" = "använd Autotune";
 
 /* Add profile basal */
 "Add" = "Lägg till";
 
-/* Basal Profile */
+/*  */
 "Basal Profile" = "Basalinställningar";
 
 /* Rate basal profile */
 "Rate" = "Värde";
 
-/* Save on Pump */
+/*  */
 "Save on Pump" = "Spara på pump";
 
-/* Saving... */
+/*  */
 "Saving..." = "Sparar...";
 
-/* Schedule */
+/*  */
 "Schedule" = "Schema";
 
-/* starts at */
+/*  */
 "starts at" = "startar kl";
 
 /* Time basal profile */
 "Time" = "Tid";
 
-/* Calculated Ratio */
+/* */
 "Calculated Ratio" = "Beräknad kvot";
 
-/* Carb Ratios Title */
+/* Carb Ratios header */
 "Carb Ratios" = "Insulinkvoter";
 
-/* Ratio Carb */
+/*  */
 "Ratio" = "Kvot";
 
-/* Autosens */
+/*  */
 "Autosens" = "Autosens";
 
-/* Calculated Sensitivity */
+/*  */
 "Calculated Sensitivity" = "Beräknad känslighet";
 
-/* Insulin Sensitivities */
+/*  */
 "Insulin Sensitivities" = "Insulinkänslighet";
 
-/* Sensitivity Ratio */
+/* */
 "Sensitivity Ratio" = "Insulinkänslighetskvot";
 
-/* Dismiss */
+/*  */
 "Dismiss" = "Avfärda";
 
-/* Important message */
+/*  */
 "Important message" = "Viktigt meddelande";
 
-/* Amount */
+/*  */
 "Amount" = "Mängd";
 
-/* Cancel Temp Basal */
+/* */
 "Cancel Temp Basal" = "Avbryt temporär basal";
 
-/* Duration */
+/*  */
 "Duration" = "Duration";
 
 /* Enact temp Basal*/
 "Enact" = "Utför";
 
-/* Manual Temp Basal */
+/* */
 "Manual Temp Basal" = "Manuell temporär basal";
 
-/* Allow uploads */
+/* Allow uploads tp NS */
 "Allow uploads" = "Tillåt uppladdning";
 
-/* API secret */
+/* API secret in NS */
 "API secret" = "API-lösen";
 
-/* Connect */
+/* Connect to NS */
 "Connect" = "Anslut";
 
-/* Connected! */
+/* Connected to NS */
 "Connected!" = "Ansluten!";
 
-/* Connecting... */
+/* Connecting to NS */
 "Connecting..." = "Ansluter...";
 
-/* Invalid URL */
+/*  */
 "Invalid URL" = "Ogiltig URL";
 
-/* Local glucose source */
+/*  */
 "Local glucose source" = "Lokal glukoskälla";
 
-/* Nightscout Config */
+/* Header */
 "Nightscout Config" = "Ställ in Nightscout";
 
-/* Port */
+/*  */
 "Port" = "Port";
 
-/* URL */
+/*  */
 "URL" = "URL";
 
-/* Use local glucose server */
+/**/
 "Use local glucose server" = "Använd lokal server som glukoskälla";
 
-/* Edit settings json */
+/*  */
 "Edit settings json" = "Ändra inställningar för json";
 
-/* Glucose units */
+/* */
 "Glucose units" = "Glukosenheter";
 
-/* Preferences */
+/*  */
 "Preferences" = "Inställningar";
 
 /* Recommended Insulin Fraction in preferences */
@@ -270,106 +267,106 @@
 /* Do you want to show bolus screen after added carbs? */
 "Skip Bolus screen after carbs" = "Hoppa över Bolusfönster vid tillagda kolhydrater";
 
-/* Remote control */
+/* Allow remote control from NS */
 "Remote control" = "Fjärrstyrning";
 
-/* Add Medtronic */
+/* Add Medtronic pump */
 "Add Medtronic" = "Lägg till Medtronic";
 
-/* Add Omnipod */
+/* Add Omnipod pump */
 "Add Omnipod" = "Lägg till Omnipod";
 
-/* Add Simulator */
+/* Add Simulator pump */
 "Add Simulator" = "Lägg till simulator";
 
-/* Model */
+/* Insulin model */
 "Model" = "Modell";
 
-/* Pump config */
+/*  */
 "Pump config" = "Pumpkonfiguration";
 
-/* Delivery limits */
+/*  */
 "Delivery limits" = "Maxdoser";
 
-/* Duration of Insulin Action */
+/*  */
 "Duration of Insulin Action" = "Insulinets verkningstid";
 
-/* hours */
+/* hours of duration of insuin activity */
 "hours" = "timmar";
 
-/* Max Basal */
+/* Max setting */
 "Max Basal" = "Max basal";
 
-/* Max Bolus */
+/* Max setting */
 "Max Bolus" = "Max bolus";
 
-/* Pump Settings */
+/* */
 "Pump Settings" = "Pumpinställningar";
 
-/* Save on Pump */
+/*  */
 "Save on Pump" = "Spara på pump";
 
-/* U/hr */
+/*  */
 "U/hr" = "E/h";
 
-/* Autotune */
+/* */
 "Autotune Conf" = "Autotune";
 
-/* Basal Profile */
+/*  */
 "Basal Profile Conf" = "Basalinställningar";
 
-/* Carb Ratios */
+/*  */
 "Carb Ratios Conf" = "Insulinkvoter";
 
-/* Closed loop */
+/*  */
 "Closed loop" = "Sluten loop";
 
-/* Configuration */
+/* */
 "Configuration" = "Konfiguration";
 
-/* Devices */
+/* */
 "Devices" = "Enheter";
 
-/* Insulin Sensitivities */
+/* */
 "Insulin Sensitivities Conf" = "Insulinkänslighet";
 
-/* Preferences */
+/* */
 "Preferences Conf" = "Inställningar";
 
-/* Pump */
+/*  */
 "Pump" = "Pump";
 
-/* Pump Settings */
+/*  */
 "Pump Settings Conf" = "Pumpinställningar";
 
-/* Services */
+/*  */
 "Services" = "Tjänster";
 
-/* Settings */
+/*  */
 "Settings" = "Inställningar";
 
-/* Share logs */
+/* 2 log files to share */
 "Share logs" = "Dela loggar";
 
-/* Target Ranges */
+/*  */
 "Target Ranges Conf" = "Målområden";
 
-/* High target */
+/* Upper target */
 "High target" = "Övre målvärde";
 
-/* Low target */
+/* Lower target */
 "Low target" = "Undre målvärde";
 
 /* Target Ranges */
 "Target Ranges" = "Målområden";
 
-/* Bolusing.. */
+/* When bolusing */
 "Bolusing" = "Ger bolus";
 
-/* Pump suspended */
+/* */
 "Pump suspended" = "Pump pausad";
 
-/* middleware */
+/* */
 "Middleware" = "Middleware";
 
 /* History header */
