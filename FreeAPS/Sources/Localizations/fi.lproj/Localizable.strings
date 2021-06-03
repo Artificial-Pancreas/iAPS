@@ -21,10 +21,10 @@
 /* Button */
 "Enact bolus" = "Enact bolus";
 
-/* Bolus screen */
+/*  */
 "Insulin recommended" = "Insulin recommended";
 
-/* Bolus screen */
+/*  */
 "Insulin required" = "Insulin required";
 
 /* Bolus screen */
@@ -366,5 +366,5 @@
 /* */
 "Middleware" = "Middleware";
 
-/* History header */
+/* Header */
 "History" = "History";
