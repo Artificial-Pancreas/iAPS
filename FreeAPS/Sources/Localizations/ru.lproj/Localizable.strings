@@ -21,10 +21,10 @@
 /* Button */
 "Enact bolus" = "Ввести болюс";
 
-/* Bolus screen */
+/*  */
 "Insulin recommended" = "Рекомендуется инсулина";
 
-/* Bolus screen */
+/*  */
 "Insulin required" = "Необходимо инсулина";
 
 /* Bolus screen */
@@ -366,5 +366,5 @@
 /* */
 "Middleware" = "Middleware";
 
-/* History header */
+/* Header */
 "History" = "История";
