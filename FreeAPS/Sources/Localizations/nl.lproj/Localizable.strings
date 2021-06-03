@@ -66,9 +66,6 @@
 /* Replace pod text in Header */
 "Replace pod" = "Vervang Pod";
 
-/* Status Title */
-"Suggested" = "Voorgesteld";
-
 /* Suggested at a date */
 "Suggested at %@" = "Voorgesteld %@";
 
