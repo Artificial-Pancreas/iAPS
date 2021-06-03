@@ -291,7 +291,7 @@
 /*  */
 "Duration of Insulin Action" = "Тривалість Дії Інсуліну";
 
-/* hours of duration of insuin activity */
+/* hours of duration of insulin activity */
 "hours" = "годин";
 
 /* Max setting */
@@ -357,7 +357,7 @@
 /* Lower target */
 "Low target" = "Низька ціль";
 
-/* Target Ranges */
+/*  */
 "Target Ranges" = "Цільові Діапазони";
 
 /* When bolusing */
