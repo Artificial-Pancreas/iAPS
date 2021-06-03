@@ -291,7 +291,7 @@
 /*  */
 "Duration of Insulin Action" = "DIA (Duur van Insuline Activiteit)";
 
-/* hours of duration of insuin activity */
+/* hours of duration of insulin activity */
 "hours" = "uur";
 
 /* Max setting */
@@ -357,7 +357,7 @@
 /* Lower target */
 "Low target" = "Ondergrens doel";
 
-/* Target Ranges */
+/*  */
 "Target Ranges" = "Streefdoel";
 
 /* When bolusing */
