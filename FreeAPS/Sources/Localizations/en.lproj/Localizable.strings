@@ -2,8 +2,8 @@
   Localizable.strings
   FreeAPS X
 */
-
 /* Bolus screen when adding insulin */
+
 "Add insulin without actually bolusing" = "Add insulin without actually bolusing";
 
 "Amount Bolus" = "Amount Bolus";
@@ -65,9 +65,6 @@
 
 /* Replace pod text in Header */
 "Replace pod" = "Replace pod";
-
-/* Status Title */
-"Suggested" = "Suggested";
 
 /* Suggested at a date */
 "Suggested at %@" = "Suggested at %@";
