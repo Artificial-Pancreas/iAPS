@@ -204,12 +204,11 @@ extension Home {
                     header
                         .frame(maxHeight: 70)
                         .padding(.top, geo.safeAreaInsets.top)
-                        .background(Color.backgroundColor)
-                    //  .background(Color.gray.opacity(0.2))
+                        .background(Color.gray.opacity(0.05))
+                        //  .background(Color.gray.opacity(0.2))
                     Divider().background(Color.gray) // Added 29/4
                     infoPanal
-                        .background(Color.secondary.opacity(0.05))
-                    // Divider().background(Color.gray) // Added 29/4
+                        .background(Color.backgroundColor)
                     MainChartView(
                         glucose: $viewModel.glucose,
                         suggestion: $viewModel.suggestion,
@@ -230,11 +229,10 @@ extension Home {
                     .modal(for: .dataTable, from: self)
                     Divider().background(Color.gray) // Added 29/4
                     legendPanal
-                        .background(Color.secondary.opacity(0.05))
-                    Divider().background(Color.gray) // Added 29/4
+                        .background(Color.backgroundColor)
+                    Divider().background(Color.gray)
                     ZStack {
-                        Rectangle().fill(Color.backgroundColor)
-                            .frame(height: 50 + geo.safeAreaInsets.bottom)
+                        Rectangle().fill(Color.gray.opacity(0.05)).frame(height: 50 + geo.safeAreaInsets.bottom)
                         HStack {
                             Button { viewModel.showModal(for: .addCarbs) }
                             label: {
