@@ -66,16 +66,16 @@ struct CurrentGlucoseView: View {
 //        recentBG = Int(recentBG.asMmolL) // convert to mmol/l for calculation
 
         switch recentBG {
-            case 73 ... 144:
-                return .loopGreen
-            case 63 ... 72,
-                 145 ... 180:
-                return .loopYellow
-            case 54 ... 62,
-                 181 ... 207:
-                return .loopOrange
-            default:
-                return .loopRed
+        case 73 ... 144:
+            return .loopGreen
+        case 63 ... 72,
+             145 ... 180:
+            return .loopYellow
+        case 54 ... 62,
+             181 ... 207:
+            return .loopOrange
+        default:
+            return .loopRed
         }
     }
 
