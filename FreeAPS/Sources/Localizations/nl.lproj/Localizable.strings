@@ -21,10 +21,10 @@
 /* Button */
 "Enact bolus" = "Bolus geven";
 
-/*  */
+/* Bolus screen */
 "Insulin recommended" = "Voorgestelde insuline";
 
-/*  */
+/* Bolus screen */
 "Insulin required" = "Benodigde insuline";
 
 /* Bolus screen */
@@ -366,5 +366,5 @@
 /* */
 "Middleware" = "Middleware";
 
-/* Header */
+/* History header */
 "History" = "History";

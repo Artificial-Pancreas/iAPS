@@ -21,10 +21,10 @@
 /* Button */
 "Enact bolus" = "Ge bolus";
 
-/*  */
+/* Bolus screen */
 "Insulin recommended" = "Rekommenderad insulindos";
 
-/*  */
+/* Bolus screen */
 "Insulin required" = "Insulin som krävs";
 
 /* Bolus screen */
@@ -366,5 +366,5 @@
 /* */
 "Middleware" = "Middleware";
 
-/* Header */
+/* History header */
 "History" = "Historik";
