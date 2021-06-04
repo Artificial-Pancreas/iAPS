@@ -90,12 +90,6 @@ extension PreferencesEditor {
                     settable: self
                 ),
                 Field(
-                    displayName: "Enable Auto ISF",
-                    keypath: \.autoisf,
-                    value: preferences.autoisf,
-                    settable: self
-                ),
-                Field(
                     displayName: "Advanced Target Adjustments",
                     keypath: \.advTargetAdjustments,
                     value: preferences.advTargetAdjustments,
@@ -178,10 +172,40 @@ extension PreferencesEditor {
                     keypath: \.suspendZerosIOB,
                     value: preferences.suspendZerosIOB,
                     settable: self
+                ),
+                Field(
+                    displayName: "Enable Auto ISF",
+                    keypath: \.autoisf,
+                    value: preferences.autoisf,
+                    settable: self
                 )
             ]
 
             decimalFields = [
+                Field(
+                    displayName: "Auto ISF Hourly Max Change",
+                    keypath: \.autoISFhourlyChange,
+                    value: preferences.autoISFhourlyChange,
+                    settable: self
+                ),
+                Field(
+                    displayName: "Auto ISF Max",
+                    keypath: \.autoISFmax,
+                    value: preferences.autoISFmax,
+                    settable: self
+                ),
+                Field(
+                    displayName: "SMB Max Range Extension",
+                    keypath: \.smbMaxRangeExtension,
+                    value: preferences.smbMaxRangeExtension,
+                    settable: self
+                ),
+                Field(
+                    displayName: "SMB Delivery Ratio",
+                    keypath: \.smbDeliveryRatio,
+                    value: preferences.smbDeliveryRatio,
+                    settable: self
+                ),
                 Field(
                     displayName: "Max IOB",
                     keypath: \.maxIOB,
@@ -210,30 +234,6 @@ extension PreferencesEditor {
                     displayName: "Autosens Min",
                     keypath: \.autosensMin,
                     value: preferences.autosensMin,
-                    settable: self
-                ),
-                Field(
-                    displayName: "Auto ISF Hourly Max Change",
-                    keypath: \.autoISFhourlyChange,
-                    value: preferences.autoISFhourlyChange,
-                    settable: self
-                ),
-                Field(
-                    displayName: "Auto ISF Max",
-                    keypath: \.autoISFmax,
-                    value: preferences.autoISFmax,
-                    settable: self
-                ),
-                Field(
-                    displayName: "SMB Max Range Extension",
-                    keypath: \.smbMaxRangeExtension,
-                    value: preferences.smbMaxRangeExtension,
-                    settable: self
-                ),
-                Field(
-                    displayName: "SMB Delivery Ratio",
-                    keypath: \.smbDeliveryRatio,
-                    value: preferences.smbDeliveryRatio,
                     settable: self
                 ),
                 Field(
