@@ -174,7 +174,7 @@ extension PreferencesEditor {
                     settable: self
                 ),
                 Field(
-                    displayName: "Enable Auto ISF",
+                    displayName: "Enable AutoISF",
                     keypath: \.autoisf,
                     value: preferences.autoisf,
                     settable: self
@@ -183,25 +183,25 @@ extension PreferencesEditor {
 
             decimalFields = [
                 Field(
-                    displayName: "Auto ISF Hourly Max Change",
+                    displayName: "AutoISF HourlyMaxChange",
                     keypath: \.autoISFhourlyChange,
                     value: preferences.autoISFhourlyChange,
                     settable: self
                 ),
                 Field(
-                    displayName: "Auto ISF Max",
+                    displayName: "AutoISF Max",
                     keypath: \.autoISFmax,
                     value: preferences.autoISFmax,
                     settable: self
                 ),
                 Field(
-                    displayName: "SMB Max Range Extension",
+                    displayName: "SMB Max RangeExtension",
                     keypath: \.smbMaxRangeExtension,
                     value: preferences.smbMaxRangeExtension,
                     settable: self
                 ),
                 Field(
-                    displayName: "SMB Delivery Ratio",
+                    displayName: "SMB DeliveryRatio",
                     keypath: \.smbDeliveryRatio,
                     value: preferences.smbDeliveryRatio,
                     settable: self
