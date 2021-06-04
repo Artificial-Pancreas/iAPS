@@ -58,7 +58,7 @@ extension Preferences {
         case autoisf = "auto_isf"
         case autoISFhourlyChange = "autoisf_hourlychange"
         case autoISFmax = "autoisf_max"
-        case smbDeliveryRatio = "sms_delivery_ratio"
+        case smbDeliveryRatio = "smb_delivery_ratio"
         case smbMaxRangeExtension = "smb_max_range_extension"
         case rewindResetsAutosens = "rewind_resets_autosens"
         case highTemptargetRaisesSensitivity = "high_temptarget_raises_sensitivity"
