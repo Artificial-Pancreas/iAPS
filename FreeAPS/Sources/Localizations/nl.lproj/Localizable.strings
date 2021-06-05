@@ -206,7 +206,7 @@
 "Cancel Temp Basal" = "Annuleer tijdelijke basaal";
 
 /*  */
-"Duration" = "Duration";
+"Duration" = "Duur";
 
 /* Enact temp Basal*/
 "Enact" = "Uitvoeren";
@@ -297,9 +297,6 @@
 
 /* */
 "Pump Settings" = "Pomp instellingen";
-
-/*  */
-"Save on Pump" = "Save on Pump";
 
 /*  */
 "U/hr" = "E/uur";
