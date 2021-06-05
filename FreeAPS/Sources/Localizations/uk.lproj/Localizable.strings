@@ -206,7 +206,7 @@
 "Cancel Temp Basal" = "Відмінити ТБШ";
 
 /*  */
-"Duration" = "Тривалість";
+"Duration" = "Duration";
 
 /* Enact temp Basal*/
 "Enact" = "Запустити";
@@ -299,7 +299,7 @@
 "Pump Settings" = "Налаштування Помпи";
 
 /*  */
-"Save on Pump" = "Зберегти на Помпі";
+"Save on Pump" = "Save on Pump";
 
 /*  */
 "U/hr" = "Од/год";
