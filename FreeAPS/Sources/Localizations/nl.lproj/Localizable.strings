@@ -1,368 +1,368 @@
-/*
+/* 
   Localizable.strings
   FreeAPS X
 */
 /* Bolus screen when adding insulin */
 
-"Add insulin without actually bolusing" = "Add insulin without actually bolusing";
+"Add insulin without actually bolusing" = "Insuline toevoegen zonder daadwerkelijke bolus";
 
 "Bolus" = "Bolus";
 
-"Close" = "Close";
+"Close" = "Sluiten";
 
 /* Continue after added carbs without bolus */
-"Continue without bolus" = "Continue without bolus";
+"Continue without bolus" = "Verdergaan zonder bolus";
 
 /* Header */
-"Enact Bolus" = "Enact Bolus";
+"Enact Bolus" = "Bolus geven";
 
 /* Button */
-"Enact bolus" = "Enact bolus";
+"Enact bolus" = "Bolus geven";
 
 /*  */
-"Insulin recommended" = "Insulin recommended";
+"Insulin recommended" = "Voorgestelde insuline";
 
 /*  */
-"Insulin required" = "Insulin required";
+"Insulin required" = "Benodigde insuline";
 
 /* Bolus screen */
-"Recommendation" = "Recommendation";
+"Recommendation" = "Advies";
 
 /* Button */
-"Clear" = "Clear";
+"Clear" = "Wissen";
 
 /* Button */
-"Done" = "Done";
+"Done" = "Bevestig";
 
 /*  */
-"Wait please" = "Wait please";
+"Wait please" = "Wachten";
 
 /*  */
-"Agree and continue" = "Agree and Continue";
+"Agree and continue" = "Akkoord en doorgaan";
 
 /* Disclaimer when opening app for first time*/
 "Disclaimer" = "Disclaimer";
 
 /* Disclaimer Description */
-"FreeAPS X is in an active development state. We do not recommend to use the system for everyday control of blood glucose! Use it for testing purposes only at your own risk. We are not responsible for your decisions and actions." = "FreeAPS X is in an active development state. We do not recommend to use the system for everyday control of blood glucose! Use it for testing purposes only at your own risk. We are not responsible for your decisions and actions.";
+"FreeAPS X is in an active development state. We do not recommend to use the system for everyday control of blood glucose! Use it for testing purposes only at your own risk. We are not responsible for your decisions and actions." = "FreeAPS X is momenteel in ontwikkeling. Dagelijks gebruik om de bloedglucose te beheren isniet verstandig. Gebruik FreeAPS X alleen voor test doeleinden en op eigen risico. Wij zijn niet verantwoordelijk voor jouw beslissingen en gedragingen.";
 
 /* Enacted at a date */
-"Enacted at %@" = "Enacted at %@";
+"Enacted at %@" = "Toegediend op %@";
 
 /* Home title */
-"Home" = "Home";
+"Home" = "Hoofdmenu";
 
 /* Looping in progress */
-"looping" = "looping";
+"looping" = "Loopen";
 
 /* %d min ago, currently not being translated, I don't know why? */
-"%d min ago" = "%d min ago";
+"%d min ago" = "%d minuten geleden";
 
 /* Status Title */
-"No suggestion" = "No suggestion";
+"No suggestion" = "Geen suggestie";
 
 /* Replace pod text in Header */
-"Replace pod" = "Replace pod";
+"Replace pod" = "Vervang Pod";
 
 /* Suggested at a date */
-"Suggested at %@" = "Suggested at %@";
+"Suggested at %@" = "Voorgesteld %@";
 
 /* Add carbs screen */
-"Add Carbs" = "Add Carbs";
+"Add Carbs" = "Koolhydraten toevoegen";
 
 /*  */
-"Amount Carbs" = "Amount Carbs";
+"Amount Carbs" = "Hoeveelheid koolhydraten";
 
 /* Grams unit */
-"grams" = "grams";
+"grams" = "gram";
 
 /* A you sure? Typo in code */
-"A you sure?" = "A you sure?";
+"A you sure?" = "Weet u het zeker?";
 
 /* Are your sure? Typo in code*/
-"Are your sure?" = "Are you sure?";
+"Are your sure?" = "Weet u het zeker?";
 
 /* Bottom target temp */
-"Bottom target" = "Bottom target";
+"Bottom target" = "Ondergrens doel";
 
 /* Cancel preset name */
-"Cancel" = "Cancel";
+"Cancel" = "Annuleer";
 
 /*  */
-"Cancel Temp Target" = "Cancel Temp Target";
+"Cancel Temp Target" = "Annuleer tijdelijk doel";
 
 /* Custom temp target */
-"Custom" = "Custom";
+"Custom" = "Aangepast";
 
 /*  */
-"Date" = "Date";
+"Date" = "Datum";
 
 /*  */
-"Delete" = "Delete";
+"Delete" = "Verwijderen";
 
 /* Delete preset temp target */
-"Delete preset \"%@\"" = "Delete preset \"%@\"";
+"Delete preset \"%@\"" = "Voorinstelling \"%@\" verwijderen";
 
 /* Duration of target temp */
-"Duration" = "Duration";
+"Duration" = "Duur";
 
 /*  */
-"Enact Temp Target" = "Enact Temp Target";
+"Enact Temp Target" = "Start tijdelijk doel";
 
 /*  */
-"Enter preset name" = "Enter preset name";
+"Enter preset name" = "Voer naam voorinstelling in";
 
 /* minutes of target temp */
-"minutes" = "minutes";
+"minutes" = "minuten";
 
 /*  */
-"Presets" = "Presets";
+"Presets" = "Voorkeursinstellingen";
 
 /* Save preset name */
-"Save" = "Save";
+"Save" = "Opslaan";
 
 /*  */
-"Save as preset" = "Save as preset";
+"Save as preset" = "Opslaan als tijdelijk programma";
 
 /* Upper temp target limit */
-"Top target" = "Top target";
+"Top target" = "Bovengrens doel";
 
 /*  */
 "Autotune" = "Autotune";
 
 /*  */
-"Basal profile" = "Basal profile";
+"Basal profile" = "Basaal profiel";
 
 /*  */
-"Carb ratio" = "Carb ratio";
+"Carb ratio" = "Koolhydraten ratio";
 
 /*  */
-"Delete autotune data" = "Delete autotune data";
+"Delete autotune data" = "Verwijder autotune-gegevens";
 
 /*  */
-"Run now" = "Run now";
+"Run now" = "Nu uitvoeren";
 
 /*  */
-"Sensitivity" = "Sensitivity";
+"Sensitivity" = "Gevoeligheid";
 
 /*  */
-"Use Autotune" = "use Autotune";
+"Use Autotune" = "Autotune gebruiken";
 
 /* Add profile basal */
-"Add" = "Add";
+"Add" = "Toevoegen";
 
 /*  */
-"Basal Profile" = "Basal Profile";
+"Basal Profile" = "Basaal profiel";
 
 /* Rate basal profile */
-"Rate" = "Rate";
+"Rate" = "Waarde";
 
 /*  */
-"Save on Pump" = "Save on Pump";
+"Save on Pump" = "Opslaan op pomp";
 
 /*  */
-"Saving..." = "Saving...";
+"Saving..." = "Opslaan...";
 
 /*  */
-"Schedule" = "Schedule";
+"Schedule" = "Schema";
 
 /*  */
-"starts at" = "starts at";
+"starts at" = "Begint om";
 
 /* Time basal profile */
-"Time" = "Time";
+"Time" = "Tijd";
 
 /* */
-"Calculated Ratio" = "Calculated Ratio";
+"Calculated Ratio" = "Gecalculeerde ratio";
 
 /* Carb Ratios header */
-"Carb Ratios" = "Carb Ratios";
+"Carb Ratios" = "Koolhydraten ratio's";
 
 /*  */
 "Ratio" = "Ratio";
 
 /*  */
-"Autosens" = "Autosens";
+"Autosens" = "Gevoeligheidsdetectie (Autosens)";
 
 /*  */
-"Calculated Sensitivity" = "Calculated Sensitivity";
+"Calculated Sensitivity" = "Berekende gevoeligheid";
 
 /*  */
-"Insulin Sensitivities" = "Insulin Sensitivities";
+"Insulin Sensitivities" = "Insuline gevoeligheden";
 
 /* */
-"Sensitivity Ratio" = "Sensitivity Ratio";
+"Sensitivity Ratio" = "Gevoeligheid ratio";
 
 /*  */
-"Dismiss" = "Dismiss";
+"Dismiss" = "Negeren";
 
 /*  */
-"Important message" = "Important message";
+"Important message" = "Belangrijk bericht";
 
 /*  */
-"Amount" = "Amount";
+"Amount" = "Hoeveelheid";
 
 /* */
-"Cancel Temp Basal" = "Cancel Temp Basal";
+"Cancel Temp Basal" = "Annuleer tijdelijke basaal";
 
 /*  */
-"Duration" = "Duration";
+"Duration" = "Duur";
 
 /* Enact temp Basal*/
-"Enact" = "Enact";
+"Enact" = "Uitvoeren";
 
 /* */
-"Manual Temp Basal" = "Manual Temp Basal";
+"Manual Temp Basal" = "Handmatige tijdelijke basaal";
 
 /* Allow uploads tp NS */
-"Allow uploads" = "Allow uploads";
+"Allow uploads" = "Uploaden toestaan";
 
 /* API secret in NS */
-"API secret" = "API secret";
+"API secret" = "API code";
 
 /* Connect to NS */
-"Connect" = "Connect";
+"Connect" = "Verbinden";
 
 /* Connected to NS */
-"Connected!" = "Connected!";
+"Connected!" = "Verbonden!";
 
 /* Connecting to NS */
-"Connecting..." = "Connecting...";
+"Connecting..." = "Verbinden...";
 
 /*  */
-"Invalid URL" = "Invalid URL";
+"Invalid URL" = "Ongeldige URL";
 
 /*  */
-"Local glucose source" = "Local glucose source";
+"Local glucose source" = "Lokale glucose bron";
 
 /* Header */
-"Nightscout Config" = "Nightscout Config";
+"Nightscout Config" = "Nightscout configuratie";
 
 /*  */
-"Port" = "Port";
+"Port" = "Poort";
 
 /*  */
 "URL" = "URL";
 
 /**/
-"Use local glucose server" = "Use local glucose server";
+"Use local glucose server" = "Lokale glucose server gebruiken";
 
 /*  */
-"Edit settings json" = "Edit settings json";
+"Edit settings json" = "Bewerk instellingen json";
 
 /* */
-"Glucose units" = "Glucose units";
+"Glucose units" = "Glucose eenheid";
 
 /*  */
-"Preferences" = "Preferences";
+"Preferences" = "Voorkeuren";
 
 /* Recommended Insulin Fraction in preferences */
-"Recommended Insulin Fraction" = "Recommended Insulin Fraction";
+"Recommended Insulin Fraction" = "Aanbevolen insuline fractie";
 
 /* Do you want to show bolus screen after added carbs? */
-"Skip Bolus screen after carbs" = "Skip Bolus screen after carbs";
+"Skip Bolus screen after carbs" = "Sla bolus scherm over na koolhydraten";
 
 /* Allow remote control from NS */
-"Remote control" = "Remote control";
+"Remote control" = "Controle op afstand";
 
 /* Add Medtronic pump */
-"Add Medtronic" = "Add Medtronic";
+"Add Medtronic" = "Medtronic toevoegen";
 
 /* Add Omnipod pump */
-"Add Omnipod" = "Add Omnipod";
+"Add Omnipod" = "Omnipod toevoegen";
 
 /* Add Simulator pump */
-"Add Simulator" = "Add Simulator";
+"Add Simulator" = "Simulator toevoegen";
 
 /* Insulin model */
 "Model" = "Model";
 
 /*  */
-"Pump config" = "Pump config";
+"Pump config" = "Pomp configuratie";
 
 /*  */
-"Delivery limits" = "Delivery limits";
+"Delivery limits" = "Toediening limieten";
 
 /*  */
-"Duration of Insulin Action" = "Duration of Insulin Action";
+"Duration of Insulin Action" = "DIA (Duur van Insuline Activiteit)";
 
 /* hours of duration of insulin activity */
-"hours" = "hours";
+"hours" = "uur";
 
 /* Max setting */
-"Max Basal" = "Max Basal";
+"Max Basal" = "Max Basaal";
 
 /* Max setting */
-"Max Bolus" = "Max Bolus";
+"Max Bolus" = "Max. bolus";
 
 /* */
-"Pump Settings" = "Pump Settings";
+"Pump Settings" = "Pomp instellingen";
 
 /*  */
-"Save on Pump" = "Save on Pump";
+"Save on Pump" = "Opslaan op pomp";
 
 /*  */
-"U/hr" = "U/hr";
+"U/hr" = "E/uur";
 
 /* */
 "Autotune Conf" = "Autotune";
 
 /*  */
-"Basal Profile Conf" = "Basal Profile";
+"Basal Profile Conf" = "Basaal profiel";
 
 /*  */
-"Carb Ratios Conf" = "Carb Ratios";
+"Carb Ratios Conf" = "Koolhydraten ratio's";
 
 /*  */
-"Closed loop" = "Closed loop";
+"Closed loop" = "Gesloten loop";
 
 /* */
-"Configuration" = "Configuration";
+"Configuration" = "Instellingen";
 
 /* */
-"Devices" = "Devices";
+"Devices" = "Apparaten";
 
 /* */
-"Insulin Sensitivities Conf" = "Insulin Sensitivities";
+"Insulin Sensitivities Conf" = "Insuline gevoeligheden";
 
 /* */
-"Preferences Conf" = "Preferences";
+"Preferences Conf" = "Instellingen";
 
 /*  */
-"Pump" = "Pump";
+"Pump" = "Pomp";
 
 /*  */
-"Pump Settings Conf" = "Pump Settings";
+"Pump Settings Conf" = "Pomp instellingen";
 
 /*  */
-"Services" = "Services";
+"Services" = "Diensten";
 
 /*  */
-"Settings" = "Settings";
+"Settings" = "Instellingen";
 
 /* 2 log files to share */
-"Share logs" = "Share logs";
+"Share logs" = "Deel Log";
 
 /*  */
-"Target Ranges Conf" = "Target Ranges";
+"Target Ranges Conf" = "Streefdoel";
 
 /* Upper target */
-"High target" = "High target";
+"High target" = "Bovengrens doel";
 
 /* Lower target */
-"Low target" = "Low target";
+"Low target" = "Ondergrens doel";
 
 /*  */
-"Target Ranges" = "Target Ranges";
+"Target Ranges" = "Streefdoel";
 
 /* When bolusing */
-"Bolusing" = "Bolusing";
+"Bolusing" = "Bolussen";
 
 /* */
-"Pump suspended" = "Pump suspended";
+"Pump suspended" = "Pomp uitgeschakeld";
 
 /* */
 "Middleware" = "Middleware";
 
 /* Header */
-"History" = "History";
+"History" = "Geschiedenis";
