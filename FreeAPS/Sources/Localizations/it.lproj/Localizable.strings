@@ -206,7 +206,7 @@
 "Cancel Temp Basal" = "Cancella basale temporanea";
 
 /*  */
-"Duration" = "Duration";
+"Duration" = "Durata";
 
 /* Enact temp Basal*/
 "Enact" = "Attiva";
@@ -297,9 +297,6 @@
 
 /* */
 "Pump Settings" = "Impostazioni del microinfusore";
-
-/*  */
-"Save on Pump" = "Save on Pump";
 
 /*  */
 "U/hr" = "Unità/ora";
