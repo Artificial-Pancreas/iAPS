@@ -1,242 +1,242 @@
-/*
+/* 
   Localizable.strings
   FreeAPS X
 */
 /* Bolus screen when adding insulin */
 
-"Add insulin without actually bolusing" = "Add insulin without actually bolusing";
+"Add insulin without actually bolusing" = "Lägg till insulin utan att ge bolus";
 
 "Bolus" = "Bolus";
 
-"Close" = "Close";
+"Close" = "Stäng";
 
 /* Continue after added carbs without bolus */
-"Continue without bolus" = "Continue without bolus";
+"Continue without bolus" = "Fortsätt utan bolus";
 
 /* Header */
-"Enact Bolus" = "Enact Bolus";
+"Enact Bolus" = "Ge bolus";
 
 /* Button */
-"Enact bolus" = "Enact bolus";
+"Enact bolus" = "Ge bolus";
 
 /*  */
-"Insulin recommended" = "Insulin recommended";
+"Insulin recommended" = "Rekommenderad insulindos";
 
 /*  */
-"Insulin required" = "Insulin required";
+"Insulin required" = "Insulin som krävs";
 
 /* Bolus screen */
-"Recommendation" = "Recommendation";
+"Recommendation" = "Rekommendation";
 
 /* Button */
-"Clear" = "Clear";
+"Clear" = "Rensa";
 
 /* Button */
-"Done" = "Done";
+"Done" = "Klar";
 
 /*  */
-"Wait please" = "Wait please";
+"Wait please" = "Vänta...";
 
 /*  */
-"Agree and continue" = "Agree and Continue";
+"Agree and continue" = "Godkänn och fortsätt";
 
 /* Disclaimer when opening app for first time*/
-"Disclaimer" = "Disclaimer";
+"Disclaimer" = "Varning";
 
 /* Disclaimer Description */
-"FreeAPS X is in an active development state. We do not recommend to use the system for everyday control of blood glucose! Use it for testing purposes only at your own risk. We are not responsible for your decisions and actions." = "FreeAPS X is in an active development state. We do not recommend to use the system for everyday control of blood glucose! Use it for testing purposes only at your own risk. We are not responsible for your decisions and actions.";
+"FreeAPS X is in an active development state. We do not recommend to use the system for everyday control of blood glucose! Use it for testing purposes only at your own risk. We are not responsible for your decisions and actions." = "FreeAPS X är under utveckling. Vi rekommenderar inte att använda denna app för behandling av ditt blodsocker i detta tidiga skede. Använd för test och på egen risk. Vi tar inget ansvar för dina beslut eller handlingar.";
 
 /* Enacted at a date */
-"Enacted at %@" = "Enacted at %@";
+"Enacted at %@" = "Utfört kl %@";
 
 /* Home title */
-"Home" = "Home";
+"Home" = "Hem";
 
 /* Looping in progress */
-"looping" = "looping";
+"looping" = "loopar";
 
 /* %d min ago, currently not being translated, I don't know why? */
-"%d min ago" = "%d min ago";
+"%d min ago" = "%d min sedan";
 
 /* Status Title */
-"No suggestion" = "No suggestion";
+"No suggestion" = "Inget förslag";
 
 /* Replace pod text in Header */
-"Replace pod" = "Replace pod";
+"Replace pod" = "Byt podd";
 
 /* Suggested at a date */
-"Suggested at %@" = "Suggested at %@";
+"Suggested at %@" = "Föreslaget kl %@";
 
 /* Add carbs screen */
-"Add Carbs" = "Add Carbs";
+"Add Carbs" = "Lägg till kolhydrater";
 
 /*  */
-"Amount Carbs" = "Amount Carbs";
+"Amount Carbs" = "Mängd kolhydrater";
 
 /* Grams unit */
-"grams" = "grams";
+"grams" = "gram";
 
 /* A you sure? Typo in code */
-"A you sure?" = "A you sure?";
+"A you sure?" = "Är du säker?";
 
 /* Are your sure? Typo in code*/
-"Are your sure?" = "Are you sure?";
+"Are your sure?" = "Är du säker?";
 
 /* Bottom target temp */
-"Bottom target" = "Bottom target";
+"Bottom target" = "Nedre målvärde";
 
 /* Cancel preset name */
-"Cancel" = "Cancel";
+"Cancel" = "Avbryt";
 
 /*  */
-"Cancel Temp Target" = "Cancel Temp Target";
+"Cancel Temp Target" = "Avbryt temporär basal";
 
 /* Custom temp target */
-"Custom" = "Custom";
+"Custom" = "Anpassad";
 
 /*  */
-"Date" = "Date";
+"Date" = "Datum";
 
 /*  */
-"Delete" = "Delete";
+"Delete" = "Radera";
 
 /* Delete preset temp target */
-"Delete preset \"%@\"" = "Delete preset \"%@\"";
+"Delete preset \"%@\"" = "Ta bort förval \"%@\"";
 
 /* Duration of target temp */
 "Duration" = "Duration";
 
 /*  */
-"Enact Temp Target" = "Enact Temp Target";
+"Enact Temp Target" = "Starta tillfälligt målvärde";
 
 /*  */
-"Enter preset name" = "Enter preset name";
+"Enter preset name" = "Ange namn för förval";
 
 /* minutes of target temp */
-"minutes" = "minutes";
+"minutes" = "minuter";
 
 /*  */
-"Presets" = "Presets";
+"Presets" = "Förval";
 
 /* Save preset name */
-"Save" = "Save";
+"Save" = "Spara";
 
 /*  */
-"Save as preset" = "Save as preset";
+"Save as preset" = "Spara som förval";
 
 /* Upper temp target limit */
-"Top target" = "Top target";
+"Top target" = "Övre målvärde";
 
 /*  */
 "Autotune" = "Autotune";
 
 /*  */
-"Basal profile" = "Basal profile";
+"Basal profile" = "Basalinställningar";
 
 /*  */
-"Carb ratio" = "Carb ratio";
+"Carb ratio" = "Insulinkvoter";
 
 /*  */
-"Delete autotune data" = "Delete autotune data";
+"Delete autotune data" = "Rensa Autotune-data";
 
 /*  */
-"Run now" = "Run now";
+"Run now" = "Kör nu";
 
 /*  */
-"Sensitivity" = "Sensitivity";
+"Sensitivity" = "Insulinkänslighet";
 
 /*  */
-"Use Autotune" = "use Autotune";
+"Use Autotune" = "använd Autotune";
 
 /* Add profile basal */
-"Add" = "Add";
+"Add" = "Lägg till";
 
 /*  */
-"Basal Profile" = "Basal Profile";
+"Basal Profile" = "Basalinställningar";
 
 /* Rate basal profile */
-"Rate" = "Rate";
+"Rate" = "Värde";
 
 /*  */
-"Save on Pump" = "Save on Pump";
+"Save on Pump" = "Spara på pump";
 
 /*  */
-"Saving..." = "Saving...";
+"Saving..." = "Sparar...";
 
 /*  */
-"Schedule" = "Schedule";
+"Schedule" = "Schema";
 
 /*  */
-"starts at" = "starts at";
+"starts at" = "startar kl";
 
 /* Time basal profile */
-"Time" = "Time";
+"Time" = "Tid";
 
 /* */
-"Calculated Ratio" = "Calculated Ratio";
+"Calculated Ratio" = "Beräknad kvot";
 
 /* Carb Ratios header */
-"Carb Ratios" = "Carb Ratios";
+"Carb Ratios" = "Insulinkvoter";
 
 /*  */
-"Ratio" = "Ratio";
+"Ratio" = "Kvot";
 
 /*  */
 "Autosens" = "Autosens";
 
 /*  */
-"Calculated Sensitivity" = "Calculated Sensitivity";
+"Calculated Sensitivity" = "Beräknad känslighet";
 
 /*  */
-"Insulin Sensitivities" = "Insulin Sensitivities";
+"Insulin Sensitivities" = "Insulinkänslighet";
 
 /* */
-"Sensitivity Ratio" = "Sensitivity Ratio";
+"Sensitivity Ratio" = "Insulinkänslighetskvot";
 
 /*  */
-"Dismiss" = "Dismiss";
+"Dismiss" = "Avfärda";
 
 /*  */
-"Important message" = "Important message";
+"Important message" = "Viktigt meddelande";
 
 /*  */
-"Amount" = "Amount";
+"Amount" = "Mängd";
 
 /* */
-"Cancel Temp Basal" = "Cancel Temp Basal";
+"Cancel Temp Basal" = "Avbryt temporär basal";
 
 /*  */
 "Duration" = "Duration";
 
 /* Enact temp Basal*/
-"Enact" = "Enact";
+"Enact" = "Utför";
 
 /* */
-"Manual Temp Basal" = "Manual Temp Basal";
+"Manual Temp Basal" = "Manuell temporär basal";
 
 /* Allow uploads tp NS */
-"Allow uploads" = "Allow uploads";
+"Allow uploads" = "Tillåt uppladdning";
 
 /* API secret in NS */
-"API secret" = "API secret";
+"API secret" = "API-lösen";
 
 /* Connect to NS */
-"Connect" = "Connect";
+"Connect" = "Anslut";
 
 /* Connected to NS */
-"Connected!" = "Connected!";
+"Connected!" = "Ansluten!";
 
 /* Connecting to NS */
-"Connecting..." = "Connecting...";
+"Connecting..." = "Ansluter...";
 
 /*  */
-"Invalid URL" = "Invalid URL";
+"Invalid URL" = "Ogiltig URL";
 
 /*  */
-"Local glucose source" = "Local glucose source";
+"Local glucose source" = "Lokal glukoskälla";
 
 /* Header */
-"Nightscout Config" = "Nightscout Config";
+"Nightscout Config" = "Ställ in Nightscout";
 
 /*  */
 "Port" = "Port";
@@ -245,124 +245,124 @@
 "URL" = "URL";
 
 /**/
-"Use local glucose server" = "Use local glucose server";
+"Use local glucose server" = "Använd lokal server som glukoskälla";
 
 /*  */
-"Edit settings json" = "Edit settings json";
+"Edit settings json" = "Ändra inställningar för json";
 
 /* */
-"Glucose units" = "Glucose units";
+"Glucose units" = "Glukosenheter";
 
 /*  */
-"Preferences" = "Preferences";
+"Preferences" = "Inställningar";
 
 /* Recommended Insulin Fraction in preferences */
-"Recommended Insulin Fraction" = "Recommended Insulin Fraction";
+"Recommended Insulin Fraction" = "Kvot av rekommenderad mängd insulin";
 
 /* Do you want to show bolus screen after added carbs? */
-"Skip Bolus screen after carbs" = "Skip Bolus screen after carbs";
+"Skip Bolus screen after carbs" = "Hoppa över Bolusfönster vid tillagda kolhydrater";
 
 /* Allow remote control from NS */
-"Remote control" = "Remote control";
+"Remote control" = "Fjärrstyrning";
 
 /* Add Medtronic pump */
-"Add Medtronic" = "Add Medtronic";
+"Add Medtronic" = "Lägg till Medtronic";
 
 /* Add Omnipod pump */
-"Add Omnipod" = "Add Omnipod";
+"Add Omnipod" = "Lägg till Omnipod";
 
 /* Add Simulator pump */
-"Add Simulator" = "Add Simulator";
+"Add Simulator" = "Lägg till simulator";
 
 /* Insulin model */
-"Model" = "Model";
+"Model" = "Modell";
 
 /*  */
-"Pump config" = "Pump config";
+"Pump config" = "Pumpkonfiguration";
 
 /*  */
-"Delivery limits" = "Delivery limits";
+"Delivery limits" = "Maxdoser";
 
 /*  */
-"Duration of Insulin Action" = "Duration of Insulin Action";
+"Duration of Insulin Action" = "Insulinets verkningstid";
 
 /* hours of duration of insulin activity */
-"hours" = "hours";
+"hours" = "timmar";
 
 /* Max setting */
-"Max Basal" = "Max Basal";
+"Max Basal" = "Max basal";
 
 /* Max setting */
-"Max Bolus" = "Max Bolus";
+"Max Bolus" = "Max bolus";
 
 /* */
-"Pump Settings" = "Pump Settings";
+"Pump Settings" = "Pumpinställningar";
 
 /*  */
-"Save on Pump" = "Save on Pump";
+"Save on Pump" = "Spara på pump";
 
 /*  */
-"U/hr" = "U/hr";
+"U/hr" = "E/h";
 
 /* */
 "Autotune Conf" = "Autotune";
 
 /*  */
-"Basal Profile Conf" = "Basal Profile";
+"Basal Profile Conf" = "Basalinställningar";
 
 /*  */
-"Carb Ratios Conf" = "Carb Ratios";
+"Carb Ratios Conf" = "Insulinkvoter";
 
 /*  */
-"Closed loop" = "Closed loop";
+"Closed loop" = "Sluten loop";
 
 /* */
-"Configuration" = "Configuration";
+"Configuration" = "Konfiguration";
 
 /* */
-"Devices" = "Devices";
+"Devices" = "Enheter";
 
 /* */
-"Insulin Sensitivities Conf" = "Insulin Sensitivities";
+"Insulin Sensitivities Conf" = "Insulinkänslighet";
 
 /* */
-"Preferences Conf" = "Preferences";
+"Preferences Conf" = "Inställningar";
 
 /*  */
 "Pump" = "Pump";
 
 /*  */
-"Pump Settings Conf" = "Pump Settings";
+"Pump Settings Conf" = "Pumpinställningar";
 
 /*  */
-"Services" = "Services";
+"Services" = "Tjänster";
 
 /*  */
-"Settings" = "Settings";
+"Settings" = "Inställningar";
 
 /* 2 log files to share */
-"Share logs" = "Share logs";
+"Share logs" = "Dela loggar";
 
 /*  */
-"Target Ranges Conf" = "Target Ranges";
+"Target Ranges Conf" = "Målområden";
 
 /* Upper target */
-"High target" = "High target";
+"High target" = "Övre målvärde";
 
 /* Lower target */
-"Low target" = "Low target";
+"Low target" = "Undre målvärde";
 
 /*  */
-"Target Ranges" = "Target Ranges";
+"Target Ranges" = "Målområden";
 
 /* When bolusing */
-"Bolusing" = "Bolusing";
+"Bolusing" = "Ger bolus";
 
 /* */
-"Pump suspended" = "Pump suspended";
+"Pump suspended" = "Pump pausad";
 
 /* */
 "Middleware" = "Middleware";
 
 /* Header */
-"History" = "History";
+"History" = "Historik";
