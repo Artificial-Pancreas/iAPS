@@ -206,7 +206,7 @@
 "Cancel Temp Basal" = "Cancelar basal temporal";
 
 /*  */
-"Duration" = "Duration";
+"Duration" = "Duración";
 
 /* Enact temp Basal*/
 "Enact" = "Ejecutar";
@@ -297,9 +297,6 @@
 
 /* */
 "Pump Settings" = "Configuración de la bomba";
-
-/*  */
-"Save on Pump" = "Save on Pump";
 
 /*  */
 "U/hr" = "U/h";
