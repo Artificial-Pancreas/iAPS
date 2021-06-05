@@ -1,4 +1,4 @@
-/* 
+/*
   Localizable.strings
   FreeAPS X
 */
@@ -206,7 +206,7 @@
 "Cancel Temp Basal" = "Cancella basale temporanea";
 
 /*  */
-"Duration" = "Durata";
+"Duration" = "Duration";
 
 /* Enact temp Basal*/
 "Enact" = "Attiva";
@@ -299,7 +299,7 @@
 "Pump Settings" = "Impostazioni del microinfusore";
 
 /*  */
-"Save on Pump" = "Salva sul microinfusore";
+"Save on Pump" = "Save on Pump";
 
 /*  */
 "U/hr" = "Unità/ora";
