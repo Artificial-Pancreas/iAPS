@@ -1,4 +1,4 @@
-/* 
+/*
   Localizable.strings
   FreeAPS X
 */
@@ -297,9 +297,6 @@
 
 /* */
 "Pump Settings" = "Pomp instellingen";
-
-/*  */
-"Save on Pump" = "Opslaan op pomp";
 
 /*  */
 "U/hr" = "E/uur";
