@@ -206,7 +206,7 @@
 "Cancel Temp Basal" = "Отменить ВБС";
 
 /*  */
-"Duration" = "Duration";
+"Duration" = "Длительность";
 
 /* Enact temp Basal*/
 "Enact" = "Запустить";
@@ -297,9 +297,6 @@
 
 /* */
 "Pump Settings" = "Настройки помпы";
-
-/*  */
-"Save on Pump" = "Save on Pump";
 
 /*  */
 "U/hr" = "Ед/ч";
