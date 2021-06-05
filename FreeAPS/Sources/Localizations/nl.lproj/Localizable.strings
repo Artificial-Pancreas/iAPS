@@ -1,4 +1,4 @@
-/* 
+/*
   Localizable.strings
   FreeAPS X
 */
@@ -206,7 +206,7 @@
 "Cancel Temp Basal" = "Annuleer tijdelijke basaal";
 
 /*  */
-"Duration" = "Duur";
+"Duration" = "Duration";
 
 /* Enact temp Basal*/
 "Enact" = "Uitvoeren";
@@ -299,7 +299,7 @@
 "Pump Settings" = "Pomp instellingen";
 
 /*  */
-"Save on Pump" = "Opslaan op pomp";
+"Save on Pump" = "Save on Pump";
 
 /*  */
 "U/hr" = "E/uur";
