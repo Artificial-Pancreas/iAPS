@@ -137,13 +137,14 @@ extension PreferencesEditor {
                     infoText: "With this option enabled, the SMB algorithm can recognize unannounced meals. This is helpful, if you forget to tell AndroidAPS about your carbs or estimate your carbs wrong and the amount of entered carbs is wrong or if a meal with lots of fat and protein has a longer duration than expected. Without any carb entry, UAM can recognize fast glucose increasments caused by carbs, adrenaline, etc, and tries to adjust it with SMBs. This also works the opposite way: if there is a fast glucose decreasement, it can stop SMBs earlier.",
                     settable: self
                 ),
-//                Field(
-//                    displayName: "A52 Risk Enable",
-//                    keypath: \.a52RiskEnable,
-//                    value: preferences.a52RiskEnable,
-//                infoText: "Defaults to false. Using the pump bolus wizard to enter carbs will prevent SMBs from being enabled for COB as long as those carbs are active. Using the pump bolus wizard will prevent SMBs from being enabled for up to 6 hours by the “after carbs” or “always” preferences. If anyone wants to get around that, they can add A52_risk_enable (with the capital A) to preferences and set it to “true” to acknowledge and intentionally use that approach, which we know leads to increased A52 errors.\n\n(the recommended method for using SMBs is to enter carbs via NS and easy bolus any desired up-front insulin (generally less than the full amount that would be recommended by the bolus wizard) and then let SMB fill in the rest as it is safe to do so. For situations where the bolus wizard is preferred, such as for carb entry by inexperienced caregivers, or for offline use, we feel that it is safer for OpenAPS to disable SMBs and fall back to AMA until the next meal. In addition to reducing the risk of A52 errors, disabling SMBs when the bolus wizard is in use leads to more predictable AMA behavior (instead of SMB zero-temping) for untrained caregivers in an environment that is usually more prone to walk-away pump communication issues.)",
-//                    settable: self
-//                ),
+                /*
+                    Field(
+                        displayName: "A52 Risk Enable",
+                        keypath: \.a52RiskEnable,
+                        value: preferences.a52RiskEnable,
+                    infoText: "Defaults to false. Using the pump bolus wizard to enter carbs will prevent SMBs from being enabled for COB as long as those carbs are active. Using the pump bolus wizard will prevent SMBs from being enabled for up to 6 hours by the “after carbs” or “always” preferences. If anyone wants to get around that, they can add A52_risk_enable (with the capital A) to preferences and set it to “true” to acknowledge and intentionally use that approach, which we know leads to increased A52 errors.\n\n(the recommended method for using SMBs is to enter carbs via NS and easy bolus any desired up-front insulin (generally less than the full amount that would be recommended by the bolus wizard) and then let SMB fill in the rest as it is safe to do so. For situations where the bolus wizard is preferred, such as for carb entry by inexperienced caregivers, or for offline use, we feel that it is safer for OpenAPS to disable SMBs and fall back to AMA until the next meal. In addition to reducing the risk of A52 errors, disabling SMBs when the bolus wizard is in use leads to more predictable AMA behavior (instead of SMB zero-temping) for untrained caregivers in an environment that is usually more prone to walk-away pump communication issues.)",
+                    settable: self
+                     ),*/
                 Field(
                     displayName: "Enable SMB With COB",
                     keypath: \.enableSMBWithCOB,

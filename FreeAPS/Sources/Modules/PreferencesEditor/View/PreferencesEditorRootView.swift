@@ -3,6 +3,7 @@ import SwiftUI
 struct DescriptionString: Identifiable {
     var id: String { name }
     let name: String
+    let nameOfVariable: String
 }
 
 extension PreferencesEditor {
@@ -45,14 +46,14 @@ extension PreferencesEditor {
                     ForEach(viewModel.boolFields.indexed(), id: \.1.id) { index, field in
                         HStack {
                             Button("ⓘ", action: {
-                                infoButtonPressed = DescriptionString(name: field.infoText)
+                                infoButtonPressed = DescriptionString(name: field.infoText, nameOfVariable: field.displayName)
                             })
                             Toggle(field.displayName, isOn: self.$viewModel.boolFields[index].value)
                         }
                     }
                     .alert(item: $infoButtonPressed) { iButton in
                         Alert(
-                            title: Text("Description"),
+                            title: Text(iButton.nameOfVariable),
                             message: Text(iButton.name),
                             dismissButton: .default(Text("Got it!"))
                         )
@@ -61,7 +62,7 @@ extension PreferencesEditor {
                     ForEach(viewModel.decimalFields.indexed(), id: \.1.id) { index, field in
                         HStack {
                             Button("ⓘ", action: {
-                                infoButtonPressed = DescriptionString(name: field.infoText)
+                                infoButtonPressed = DescriptionString(name: field.infoText, nameOfVariable: field.displayName)
                             })
                             Text(field.displayName)
                             DecimalTextField("0", value: self.$viewModel.decimalFields[index].value, formatter: formatter)
@@ -69,7 +70,7 @@ extension PreferencesEditor {
                     }
                     .alert(item: $infoButtonPressed) { iButton in
                         Alert(
-                            title: Text("Description"),
+                            title: Text(iButton.nameOfVariable),
                             message: Text(iButton.name),
                             dismissButton: .default(Text("Got it!"))
                         )
