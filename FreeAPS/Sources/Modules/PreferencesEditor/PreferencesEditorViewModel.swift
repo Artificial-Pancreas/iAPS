@@ -197,33 +197,37 @@ extension PreferencesEditor {
                     displayName: "Enable AutoISF",
                     keypath: \.autoisf,
                     value: preferences.autoisf,
+                    infoText: "Defaults to false.",
                     settable: self
                 )
             ]
-
             decimalFields = [
                 Field(
                     displayName: "AutoISF HourlyMaxChange",
                     keypath: \.autoISFhourlyChange,
                     value: preferences.autoISFhourlyChange,
+                    infoText: "Defaults to false. Rate at which autoISF grows per hour assuming bg is twice target. When value = 1.0, ISF is reduced to 50% after 1 hour of BG at 2x target.",
                     settable: self
                 ),
                 Field(
                     displayName: "AutoISF Max",
                     keypath: \.autoISFmax,
                     value: preferences.autoISFmax,
+                    infoText: "Multiplier cap on how high the autoISF ratio can be and therefore how low it can adjust ISF.",
                     settable: self
                 ),
                 Field(
                     displayName: "SMB Max RangeExtension",
                     keypath: \.smbMaxRangeExtension,
                     value: preferences.smbMaxRangeExtension,
+                    infoText: "Default value: 1 This is another key OpenAPS safety cap, and specifies by what factor you can exceed the regular 120 maxSMB/maxUAM minutes. Increase this experimental value slowly and with caution.",
                     settable: self
                 ),
                 Field(
                     displayName: "SMB DeliveryRatio",
                     keypath: \.smbDeliveryRatio,
                     value: preferences.smbDeliveryRatio,
+                    infoText: "Default value: 0.5 This is another key OpenAPS safety cap, and specifies what share of the total insulin required can be delivered as SMB. This is to prevent people from getting into dangerous territory by setting SMB requests from the caregivers phone at the same time. Increase this experimental value slowly and with caution.",
                     settable: self
                 ),
                 Field(
