@@ -198,7 +198,7 @@ extension PreferencesEditor {
                     displayName: "Enable AutoISF",
                     keypath: \.autoisf,
                     value: preferences.autoisf,
-                    infoText: "Defaults to false. Adapt ISF when glucose is stuck at high levels, only works without COB. Read up on https://github.com/ga-zelle/autoISF/tree/2.8.2",
+                    infoText: "\nDefaults to false. Adapt ISF when glucose is stuck at high levels, only works without COB.\n\nRead up on: https://github.com/ga-zelle/autoISF/tree/2.8.2",
                     settable: self
                 )
             ]
