@@ -45,7 +45,7 @@ extension PreferencesEditor {
 
                     ForEach(viewModel.boolFields.indexed(), id: \.1.id) { index, field in
                         HStack {
-                            Button("ⓘ", action: {
+                            Button("", action: {
                                 infoButtonPressed = DescriptionString(name: field.infoText, nameOfVariable: field.displayName)
                             })
                             Toggle(field.displayName, isOn: self.$viewModel.boolFields[index].value)
@@ -55,13 +55,13 @@ extension PreferencesEditor {
                         Alert(
                             title: Text(iButton.nameOfVariable),
                             message: Text(iButton.name),
-                            dismissButton: .default(Text("Got it!"))
+                            dismissButton: .default(Text("OK"))
                         )
                     }
 
                     ForEach(viewModel.decimalFields.indexed(), id: \.1.id) { index, field in
                         HStack {
-                            Button("ⓘ", action: {
+                            Button("", action: {
                                 infoButtonPressed = DescriptionString(name: field.infoText, nameOfVariable: field.displayName)
                             })
                             Text(field.displayName)
@@ -72,7 +72,7 @@ extension PreferencesEditor {
                         Alert(
                             title: Text(iButton.nameOfVariable),
                             message: Text(iButton.name),
-                            dismissButton: .default(Text("Got it!"))
+                            dismissButton: .default(Text("OK"))
                         )
                     }
                 }
