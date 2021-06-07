@@ -198,7 +198,7 @@ extension PreferencesEditor {
                     displayName: "Enable AutoISF",
                     keypath: \.autoisf,
                     value: preferences.autoisf,
-                    infoText: "Defaults to false.",
+                    infoText: "Defaults to false. Adapt ISF when glucose is stuck at high levels, only works without COB.",
                     settable: self
                 )
             ]
