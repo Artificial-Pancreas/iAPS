@@ -4,7 +4,7 @@
 */
 /* Bolus screen when adding insulin */
 
-"Add insulin without actually bolusing" = "Insulin ohne tatsächliche Bolusabgabe erfassen";
+"Add insulin without actually bolusing" = "Insulin nur erfassen, keine Abgabe";
 
 "Bolus" = "Bolus";
 
@@ -47,7 +47,7 @@
 "FreeAPS X is in an active development state. We do not recommend to use the system for everyday control of blood glucose! Use it for testing purposes only at your own risk. We are not responsible for your decisions and actions." = "FreeAPS X befindet sich noch in der Entwicklung. Wir empfehlen das System nicht zur alltäglichen Kontrolle Ihres Blutzuckers zu verwenden. Verwendung bitte nur zu Testzwecken und auf eigenes Risiko. Wir können keine Verantwortung für Ihre Entscheidungen und Aktionen übernehmen.";
 
 /* Enacted at a date */
-"Enacted at %@" = "Ausgelöst bei %@";
+"Enacted at %@" = "Gestartet um %@";
 
 /* Home title */
 "Home" = "Startseite";
@@ -65,7 +65,7 @@
 "Replace pod" = "Pod ersetzen";
 
 /* Suggested at a date */
-"Suggested at %@" = "Empfohlen am %@";
+"Suggested at %@" = "Empfohlen um %@";
 
 /* Add carbs screen */
 "Add Carbs" = "Kohlenhydrate hinzufügen";
@@ -101,7 +101,7 @@
 "Delete" = "Löschen";
 
 /* Delete preset temp target */
-"Delete preset \"%@\"" = "Voreinstellung \"%@\" löschen";
+"Delete preset \"%@\"" = "Preset \"%@\" löschen";
 
 /* Duration of target temp */
 "Duration" = "Dauer";
@@ -110,19 +110,19 @@
 "Enact Temp Target" = "Temporäres Ziel (TT) starten";
 
 /*  */
-"Enter preset name" = "Geben Sie einen Namen für die Voreinstellung ein";
+"Enter preset name" = "Geben Sie einen Namen für das Preset ein";
 
 /* minutes of target temp */
 "minutes" = "Minuten";
 
 /*  */
-"Presets" = "Voreinstellungen";
+"Presets" = "Presets";
 
 /* Save preset name */
 "Save" = "Speichern";
 
 /*  */
-"Save as preset" = "Als Voreinstellung speichern";
+"Save as preset" = "Als Preset speichern";
 
 /* Upper temp target limit */
 "Top target" = "Obergrenze";
@@ -236,7 +236,7 @@
 "Local glucose source" = "Lokale BZ-Quelle";
 
 /* Header */
-"Nightscout Config" = "Nightscout-Konfiguration";
+"Nightscout Config" = "Nightscout Konfiguration";
 
 /*  */
 "Port" = "Port";

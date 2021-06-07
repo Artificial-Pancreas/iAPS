@@ -8,10 +8,10 @@
 
 "Bolus" = "Bolus";
 
-"Close" = "Close";
+"Close" = "Zamknij";
 
 /* Continue after added carbs without bolus */
-"Continue without bolus" = "Continue without bolus";
+"Continue without bolus" = "Kontynuuj bez bolusa";
 
 /* Header */
 "Enact Bolus" = "Enact Bolus";
@@ -20,16 +20,16 @@
 "Enact bolus" = "Enact bolus";
 
 /*  */
-"Insulin recommended" = "Insulin recommended";
+"Insulin recommended" = "Zalecana ilość insuliny";
 
 /*  */
-"Insulin required" = "Insulin required";
+"Insulin required" = "Potrzebna ilość insuliny";
 
 /* Bolus screen */
 "Recommendation" = "Recommendation";
 
 /* Button */
-"Clear" = "Clear";
+"Clear" = "Usuń";
 
 /* Button */
 "Done" = "Done";
@@ -74,37 +74,37 @@
 "Amount Carbs" = "Amount Carbs";
 
 /* Grams unit */
-"grams" = "grams";
+"grams" = "gramy";
 
 /* A you sure? Typo in code */
-"A you sure?" = "A you sure?";
+"A you sure?" = "Czy jesteś pewien?";
 
 /* Are your sure? Typo in code*/
-"Are your sure?" = "Are you sure?";
+"Are your sure?" = "Czy jesteś pewien?";
 
 /* Bottom target temp */
 "Bottom target" = "Bottom target";
 
 /* Cancel preset name */
-"Cancel" = "Cancel";
+"Cancel" = "Anuluj";
 
 /*  */
-"Cancel Temp Target" = "Cancel Temp Target";
+"Cancel Temp Target" = "Anuluj tymczasowy cel";
 
 /* Custom temp target */
 "Custom" = "Custom";
 
 /*  */
-"Date" = "Date";
+"Date" = "Data";
 
 /*  */
-"Delete" = "Delete";
+"Delete" = "Usuń";
 
 /* Delete preset temp target */
 "Delete preset \"%@\"" = "Delete preset \"%@\"";
 
 /* Duration of target temp */
-"Duration" = "Duration";
+"Duration" = "Czas trwania";
 
 /*  */
 "Enact Temp Target" = "Enact Temp Target";
@@ -113,13 +113,13 @@
 "Enter preset name" = "Enter preset name";
 
 /* minutes of target temp */
-"minutes" = "minutes";
+"minutes" = "minut";
 
 /*  */
 "Presets" = "Presets";
 
 /* Save preset name */
-"Save" = "Save";
+"Save" = "Zapisz";
 
 /*  */
 "Save as preset" = "Save as preset";
@@ -131,7 +131,7 @@
 "Autotune" = "Autotune";
 
 /*  */
-"Basal profile" = "Basal profile";
+"Basal profile" = "Profil bazy";
 
 /*  */
 "Carb ratio" = "Carb ratio";
@@ -140,16 +140,16 @@
 "Delete autotune data" = "Delete autotune data";
 
 /*  */
-"Run now" = "Run now";
+"Run now" = "Uruchom teraz";
 
 /*  */
-"Sensitivity" = "Sensitivity";
+"Sensitivity" = "Wrażliwość";
 
 /*  */
 "Use Autotune" = "use Autotune";
 
 /* Add profile basal */
-"Add" = "Add";
+"Add" = "Dodaj";
 
 /*  */
 "Basal Profile" = "Basal Profile";
@@ -158,7 +158,7 @@
 "Rate" = "Rate";
 
 /*  */
-"Save on Pump" = "Save on Pump";
+"Save on Pump" = "Zapisz na pompie";
 
 /*  */
 "Saving..." = "Saving...";
