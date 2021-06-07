@@ -198,7 +198,7 @@ extension PreferencesEditor {
                     displayName: "Enable AutoISF",
                     keypath: \.autoisf,
                     value: preferences.autoisf,
-                    infoText: "\nDefaults to false. Adapt ISF when glucose is stuck at high levels, only works without COB.\n\nRead up on:\nhttps://github.com/ga-zelle/autoISF/tree/2.8.2",
+                    infoText: "Defaults to false. Adapt ISF when glucose is stuck at high levels, only works without COB.\n\nRead up on:\nhttps://github.com/ga-zelle/autoISF/tree/2.8.2",
                     settable: self
                 )
             ]
@@ -221,7 +221,7 @@ extension PreferencesEditor {
                     displayName: "SMB Max RangeExtension",
                     keypath: \.smbMaxRangeExtension,
                     value: preferences.smbMaxRangeExtension,
-                    infoText: "Default value: 1 This is another key OpenAPS safety cap, and specifies by what factor you can exceed the regular 120 maxSMB/maxUAM minutes. Increase this experimental value slowly and with caution.",
+                    infoText: "Default value: 1. This is another key OpenAPS safety cap, and specifies by what factor you can exceed the regular 120 maxSMB/maxUAM minutes. Increase this experimental value slowly and with caution.",
                     settable: self
                 ),
                 Field(
