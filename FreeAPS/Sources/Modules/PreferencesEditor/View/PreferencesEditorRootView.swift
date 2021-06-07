@@ -1,9 +1,9 @@
 import SwiftUI
 
-struct DescriptionString: Identifiable {
+struct InfoText: Identifiable {
     var id: String { name }
     let name: String
-    let nameOfVariable: String
+    let oref0Variable: String
 }
 
 extension PreferencesEditor {
@@ -16,7 +16,7 @@ extension PreferencesEditor {
             return formatter
         }
 
-        @State private var infoButtonPressed: DescriptionString?
+        @State private var infoButtonPressed: InfoText?
 
         var body: some View {
             Form {
@@ -46,15 +46,15 @@ extension PreferencesEditor {
                     ForEach(viewModel.boolFields.indexed(), id: \.1.id) { index, field in
                         HStack {
                             Button("", action: {
-                                infoButtonPressed = DescriptionString(name: field.infoText, nameOfVariable: field.displayName)
+                                infoButtonPressed = InfoText(name: field.infoText, oref0Variable: field.displayName)
                             })
                             Toggle(field.displayName, isOn: self.$viewModel.boolFields[index].value)
                         }
                     }
-                    .alert(item: $infoButtonPressed) { iButton in
+                    .alert(item: $infoButtonPressed) { infoButton in
                         Alert(
-                            title: Text(iButton.nameOfVariable),
-                            message: Text(iButton.name),
+                            title: Text(infoButton.oref0Variable),
+                            message: Text(infoButton.name),
                             dismissButton: .default(Text("OK"))
                         )
                     }
@@ -62,16 +62,16 @@ extension PreferencesEditor {
                     ForEach(viewModel.decimalFields.indexed(), id: \.1.id) { index, field in
                         HStack {
                             Button("", action: {
-                                infoButtonPressed = DescriptionString(name: field.infoText, nameOfVariable: field.displayName)
+                                infoButtonPressed = InfoText(name: field.infoText, oref0Variable: field.displayName)
                             })
                             Text(field.displayName)
                             DecimalTextField("0", value: self.$viewModel.decimalFields[index].value, formatter: formatter)
                         }
                     }
-                    .alert(item: $infoButtonPressed) { iButton in
+                    .alert(item: $infoButtonPressed) { infoButton in
                         Alert(
-                            title: Text(iButton.nameOfVariable),
-                            message: Text(iButton.name),
+                            title: Text(infoButton.oref0Variable),
+                            message: Text(infoButton.name),
                             dismissButton: .default(Text("OK"))
                         )
                     }
