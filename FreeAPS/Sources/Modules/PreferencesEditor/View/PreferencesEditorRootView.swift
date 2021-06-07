@@ -51,13 +51,6 @@ extension PreferencesEditor {
                             Toggle(field.displayName, isOn: self.$viewModel.boolFields[index].value)
                         }
                     }
-                    .alert(item: $infoButtonPressed) { infoButton in
-                        Alert(
-                            title: Text(infoButton.oref0Variable),
-                            message: Text(infoButton.description),
-                            dismissButton: .default(Text("OK"))
-                        )
-                    }
 
                     ForEach(viewModel.decimalFields.indexed(), id: \.1.id) { index, field in
                         HStack {
@@ -68,15 +61,7 @@ extension PreferencesEditor {
                             DecimalTextField("0", value: self.$viewModel.decimalFields[index].value, formatter: formatter)
                         }
                     }
-                    .alert(item: $infoButtonPressed) { infoButton in
-                        Alert(
-                            title: Text(infoButton.oref0Variable),
-                            message: Text(infoButton.description),
-                            dismissButton: .default(Text("OK"))
-                        )
-                    }
                 }
-
                 Section {
                     Text("Edit settings json").chevronCell()
                         .navigationLink(to: .configEditor(file: OpenAPS.FreeAPS.settings), from: self)
@@ -84,6 +69,14 @@ extension PreferencesEditor {
             }
             .navigationTitle("Preferences")
             .navigationBarTitleDisplayMode(.automatic)
+
+            .alert(item: $infoButtonPressed) { infoButton in
+                Alert(
+                    title: Text(infoButton.oref0Variable),
+                    message: Text(infoButton.description),
+                    dismissButton: .default(Text("OK"))
+                )
+            }
         }
     }
 }
