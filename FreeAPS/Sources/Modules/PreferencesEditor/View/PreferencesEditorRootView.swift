@@ -69,11 +69,10 @@ extension PreferencesEditor {
             }
             .navigationTitle("Preferences")
             .navigationBarTitleDisplayMode(.automatic)
-
             .alert(item: $infoButtonPressed) { infoButton in
                 Alert(
                     title: Text(infoButton.oref0Variable),
-                    message: Text(infoButton.description),
+                    message: Text("\n" + infoButton.description + "\n"),
                     dismissButton: .default(Text("OK"))
                 )
             }
