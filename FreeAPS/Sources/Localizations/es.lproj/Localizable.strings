@@ -298,7 +298,7 @@
 /* */
 "Pump Settings" = "Configuración de la bomba";
 
-/*  */
+/* Insulin unit per hour */
 "U/hr" = "U/h";
 
 /* Unit in number of units delivered (keep the space character!) */
@@ -309,6 +309,15 @@
 
 /* Insulin unit */
 "U" = "U";
+
+/* Unit per hour with space */
+" U/hr" = " U/hr";
+
+/* Number of units per hour*/
+"%@ U/hr" = "%@ U/hr";
+
+/* Number of units insulin delivered */
+"%@ U" = "%@ U";
 
 /* */
 "Autotune Conf" = "Autotune";

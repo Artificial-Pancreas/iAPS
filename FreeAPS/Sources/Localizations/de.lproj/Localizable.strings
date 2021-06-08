@@ -298,17 +298,26 @@
 /* */
 "Pump Settings" = "Pumpeneinstellungen";
 
-/*  */
+/* Insulin unit per hour */
 "U/hr" = "IE/Std";
 
 /* Unit in number of units delivered (keep the space character!) */
-" U" = " U";
+" U" = "IE";
 
 /* /Insulin unit */
-"/U" = "/U";
+"/U" = "/IE";
 
 /* Insulin unit */
-"U" = "U";
+"U" = "IE";
+
+/* Unit per hour with space */
+" U/hr" = "IE/h";
+
+/* Number of units per hour*/
+"%@ U/hr" = "%@ IE/h";
+
+/* Number of units insulin delivered */
+"%@ U" = "%@ IE";
 
 /* */
 "Autotune Conf" = "Autotune";
