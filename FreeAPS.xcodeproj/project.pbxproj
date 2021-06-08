@@ -640,10 +640,26 @@
 			path = View;
 			sourceTree = "<group>";
 		};
-		19A9A6F9266632A8005378EB /* Localizations */ = {
+		199D0ABC267031DC00D24E2B /* Main */ = {
 			isa = PBXGroup;
 			children = (
 				19A9A6FE2666335E005378EB /* Localizable.strings */,
+			);
+			path = Main;
+			sourceTree = "<group>";
+		};
+		199D0ABD267031F200D24E2B /* Descriptions */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Descriptions;
+			sourceTree = "<group>";
+		};
+		19A9A6F9266632A8005378EB /* Localizations */ = {
+			isa = PBXGroup;
+			children = (
+				199D0ABD267031F200D24E2B /* Descriptions */,
+				199D0ABC267031DC00D24E2B /* Main */,
 			);
 			path = Localizations;
 			sourceTree = "<group>";
