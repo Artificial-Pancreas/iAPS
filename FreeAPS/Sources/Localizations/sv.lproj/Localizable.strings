@@ -299,7 +299,16 @@
 "Pump Settings" = "Pumpinställningar";
 
 /*  */
-"U/hr" = "E/h";
+"U/hr" = "IE/h";
+
+/* Unit in number of units delivered (keep the space character!) */
+" U" = " IE";
+
+/* /Insulin unit */
+"/U" = "/IE";
+
+/* Insulin unit */
+"U" = "IE";
 
 /* */
 "Autotune Conf" = "Autotune";

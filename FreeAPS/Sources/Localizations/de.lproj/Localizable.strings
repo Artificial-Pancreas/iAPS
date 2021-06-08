@@ -301,6 +301,15 @@
 /*  */
 "U/hr" = "IE/Std";
 
+/* Unit in number of units delivered (keep the space character!) */
+" U" = " U";
+
+/* /Insulin unit */
+"/U" = "/U";
+
+/* Insulin unit */
+"U" = "U";
+
 /* */
 "Autotune Conf" = "Autotune";
 
