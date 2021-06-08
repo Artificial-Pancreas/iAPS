@@ -76,6 +76,9 @@
 /* Grams unit */
 "grams" = "grams";
 
+/*  */
+"Carbs required" = "Carbs required";
+
 /* A you sure? Typo in code */
 "A you sure?" = "A you sure?";
 
