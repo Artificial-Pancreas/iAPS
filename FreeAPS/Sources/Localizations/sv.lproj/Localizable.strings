@@ -76,6 +76,9 @@
 /* Grams unit */
 "grams" = "gram";
 
+/*  */
+"Carbs required" = "Kolhydrater som krävs";
+
 /* A you sure? Typo in code */
 "A you sure?" = "Är du säker?";
 
@@ -318,6 +321,9 @@
 
 /* Number of units insulin delivered */
 "%@ U" = "%@ IE";
+
+/*Carb ratio unit */
+"g/U" = "g/IE";
 
 /* */
 "Autotune Conf" = "Autotune";
