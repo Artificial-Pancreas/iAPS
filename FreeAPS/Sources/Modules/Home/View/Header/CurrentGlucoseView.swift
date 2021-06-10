@@ -83,9 +83,8 @@ struct CurrentGlucoseView: View {
         let lastGlucoseDateString = recentGlucose.map { dateFormatter.string(from: $0.dateString) } ?? "--"
         let LastGlucoseDate = Date(lastGlucoseDateString) ?? Date()
         let now = Date()
-        let diff = Int(now.timeIntervalSince1970 - LastGlucoseDate.timeIntervalSince1970)
-        let hoursDiff = diff / 3600
-        let minutesDiff = (diff - hoursDiff * 3600) / 60
+        let diffs = Calendar.current.dateComponents([.hour, .minute], from: LastGlucoseDate, to: now)
+        let minutesDiff = diffs.minute!
         return minutesDiff
     }
 
