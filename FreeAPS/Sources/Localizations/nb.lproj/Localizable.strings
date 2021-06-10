@@ -4,113 +4,110 @@
 */
 /* Bolus screen when adding insulin */
 
-"Add insulin without actually bolusing" = "Add insulin without actually bolusing";
+"Add insulin without actually bolusing" = "Legg til insulin uten å gi bolus";
 
 "Bolus" = "Bolus";
 
-"Close" = "Close";
+"Close" = "Lukk";
 
 /* Continue after added carbs without bolus */
-"Continue without bolus" = "Continue without bolus";
+"Continue without bolus" = "Fortsett uten å gi bolus";
 
 /* Header */
-"Enact Bolus" = "Enact Bolus";
+"Enact Bolus" = "Gi bolus";
 
 /* Button */
-"Enact bolus" = "Enact bolus";
+"Enact bolus" = "Gi bolus";
 
 /*  */
-"Insulin recommended" = "Insulin recommended";
+"Insulin recommended" = "Anbefalt insulindose";
 
 /*  */
-"Insulin required" = "Insulin required";
+"Insulin required" = "Insulinbehov";
 
 /* Bolus screen */
-"Recommendation" = "Recommendation";
+"Recommendation" = "Anbefaling";
 
 /* Button */
-"Clear" = "Clear";
+"Clear" = "Fjern";
 
 /* Button */
-"Done" = "Done";
+"Done" = "Ferdig";
 
 /*  */
-"Wait please" = "Wait please";
+"Wait please" = "Vennligst vent";
 
 /*  */
-"Agree and continue" = "Agree and Continue";
+"Agree and continue" = "Godta og fortsett";
 
 /* Disclaimer when opening app for first time*/
-"Disclaimer" = "Disclaimer";
+"Disclaimer" = "Ansvarsfraskrivelse";
 
 /* Disclaimer Description */
-"FreeAPS X is in an active development state. We do not recommend to use the system for everyday control of blood glucose! Use it for testing purposes only at your own risk. We are not responsible for your decisions and actions." = "FreeAPS X is in an active development state. We do not recommend to use the system for everyday control of blood glucose! Use it for testing purposes only at your own risk. We are not responsible for your decisions and actions.";
+"FreeAPS X is in an active development state. We do not recommend to use the system for everyday control of blood glucose! Use it for testing purposes only at your own risk. We are not responsible for your decisions and actions." = "FreeAPS X er under utvikling. Vi anbefaler ikke å bruke systemet for daglig blodsukkerregulering! Bruk det for testformål og på egen risiko. Vi er ikke ansvarlige for dine beslutninger og handlinger.";
 
 /* Enacted at a date */
-"Enacted at %@" = "Enacted at %@";
+"Enacted at %@" = "Utført kl. %@";
 
 /* Home title */
-"Home" = "Home";
+"Home" = "Hjem";
 
 /* Looping in progress */
-"looping" = "looping";
+"looping" = "looper";
 
 /* %d min ago, currently not being translated, I don't know why? */
-"%d min ago" = "%d min ago";
+"%d min ago" = "%d min siden";
 
 /* Status Title */
-"No suggestion" = "No suggestion";
+"No suggestion" = "Ingen forslag";
 
 /* Replace pod text in Header */
-"Replace pod" = "Replace pod";
+"Replace pod" = "Bytt pod";
 
 /* Suggested at a date */
-"Suggested at %@" = "Suggested at %@";
+"Suggested at %@" = "Foreslått kl. %@";
 
 /* Add carbs screen */
-"Add Carbs" = "Add Carbs";
+"Add Carbs" = "Legg til karbohydrater";
 
 /*  */
-"Amount Carbs" = "Amount Carbs";
+"Amount Carbs" = "Mengde karbo";
 
 /* Grams unit */
-"grams" = "grams";
-
-/*  */
-"Carbs required" = "Carbs required";
+"grams" = "gram";
 
 /* A you sure? Typo in code */
-"A you sure?" = "A you sure?";
+"A you sure?" = "Er du sikker?";
 
 /* Are your sure? Typo in code*/
-"Are your sure?" = "Are you sure?";
+"Are your sure?" = "Er du sikker?";
 
 /* Bottom target temp */
-"Bottom target" = "Bottom target";
+"Bottom target" = "Nedre mål";
 
 /* Cancel preset name */
-"Cancel" = "Cancel";
+"Cancel" = "Avbryt";
 
 /*  */
-"Cancel Temp Target" = "Cancel Temp Target";
+"Cancel Temp Target" = "Avbryt midlertidig mål";
 
 /* Custom temp target */
-"Custom" = "Custom";
+"Custom" = "Egendefinert";
 
 /*  */
-"Date" = "Date";
+"Date" = "Dato";
 
 /*  */
-"Delete" = "Delete";
+"Delete" = "Slett";
 
 /* Delete preset temp target */
-"Delete preset \"%@\"" = "Delete preset \"%@\"";
+"Delete preset \"%@\"" = "Slett forhåndsinnstilling \"%@\"";
 
 /* Duration of target temp */
-"Duration" = "Duration";
+"Duration" = "Varighet";
 
 /*  */
-"Enact Temp Target" = "Enact Temp Target";
+"Enact Temp Target" = "Start midlertidig mål";
 
 /*  */
 "Enter preset name" = "Enter preset name";
@@ -301,7 +298,10 @@
 /* */
 "Pump Settings" = "Pump Settings";
 
-/* Insulin unit per hour */
+/*  */
+"Save on Pump" = "Save on Pump";
+
+/*  */
 "U/hr" = "U/hr";
 
 /* Unit in number of units delivered (keep the space character!) */
