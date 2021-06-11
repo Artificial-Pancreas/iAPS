@@ -55,7 +55,7 @@
 /* Looping in progress */
 "looping" = "в процесі";
 
-/* %d min ago, currently not being translated, I don't know why? */
+/* %d min ago, Time since last loop */
 "%d min ago" = "%d хв тому";
 
 /* Status Title */
@@ -106,7 +106,7 @@
 /* Delete preset temp target */
 "Delete preset \"%@\"" = "Видалити шаблон \"%@\"";
 
-/* Duration of target temp */
+/* Duration of target temp or temp basal */
 "Duration" = "Тривалість";
 
 /*  */
@@ -207,9 +207,6 @@
 
 /* */
 "Cancel Temp Basal" = "Відмінити ТБШ";
-
-/*  */
-"Duration" = "Тривалість";
 
 /* Enact temp Basal*/
 "Enact" = "Запустити";

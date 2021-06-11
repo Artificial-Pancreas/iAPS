@@ -55,7 +55,7 @@
 /* Looping in progress */
 "looping" = "Boucle en cours";
 
-/* %d min ago, currently not being translated, I don't know why? */
+/* %d min ago, Time since last loop */
 "%d min ago" = "il y a %d min";
 
 /* Status Title */
@@ -106,7 +106,7 @@
 /* Delete preset temp target */
 "Delete preset \"%@\"" = "Supprimer le préréglage \"%@\"";
 
-/* Duration of target temp */
+/* Duration of target temp or temp basal */
 "Duration" = "Durée";
 
 /*  */
@@ -207,9 +207,6 @@
 
 /* */
 "Cancel Temp Basal" = "Annuler le Basal Temporaire";
-
-/*  */
-"Duration" = "Durée";
 
 /* Enact temp Basal*/
 "Enact" = "Injecter";

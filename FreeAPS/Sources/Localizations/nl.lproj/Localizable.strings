@@ -55,7 +55,7 @@
 /* Looping in progress */
 "looping" = "Loopen";
 
-/* %d min ago, currently not being translated, I don't know why? */
+/* %d min ago, Time since last loop */
 "%d min ago" = "%d minuten geleden";
 
 /* Status Title */
@@ -106,7 +106,7 @@
 /* Delete preset temp target */
 "Delete preset \"%@\"" = "Voorinstelling \"%@\" verwijderen";
 
-/* Duration of target temp */
+/* Duration of target temp or temp basal */
 "Duration" = "Duur";
 
 /*  */
@@ -207,9 +207,6 @@
 
 /* */
 "Cancel Temp Basal" = "Annuleer tijdelijke basaal";
-
-/*  */
-"Duration" = "Duur";
 
 /* Enact temp Basal*/
 "Enact" = "Uitvoeren";

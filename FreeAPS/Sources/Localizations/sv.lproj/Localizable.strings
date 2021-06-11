@@ -55,7 +55,7 @@
 /* Looping in progress */
 "looping" = "loopar";
 
-/* %d min ago, currently not being translated, I don't know why? */
+/* %d min ago, Time since last loop */
 "%d min ago" = "%d min sedan";
 
 /* Status Title */
@@ -106,7 +106,7 @@
 /* Delete preset temp target */
 "Delete preset \"%@\"" = "Ta bort förval \"%@\"";
 
-/* Duration of target temp */
+/* Duration of target temp or temp basal */
 "Duration" = "Duration";
 
 /*  */
@@ -207,9 +207,6 @@
 
 /* */
 "Cancel Temp Basal" = "Avbryt temporär basal";
-
-/*  */
-"Duration" = "Duration";
 
 /* Enact temp Basal*/
 "Enact" = "Utför";

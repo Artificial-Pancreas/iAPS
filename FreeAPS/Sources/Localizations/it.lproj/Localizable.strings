@@ -55,7 +55,7 @@
 /* Looping in progress */
 "looping" = "loop attivo";
 
-/* %d min ago, currently not being translated, I don't know why? */
+/* %d min ago, Time since last loop */
 "%d min ago" = "%d minuti fa";
 
 /* Status Title */
@@ -106,7 +106,7 @@
 /* Delete preset temp target */
 "Delete preset \"%@\"" = "Cancella preset \"%@\"";
 
-/* Duration of target temp */
+/* Duration of target temp or temp basal */
 "Duration" = "Durata";
 
 /*  */
@@ -207,9 +207,6 @@
 
 /* */
 "Cancel Temp Basal" = "Cancella basale temporanea";
-
-/*  */
-"Duration" = "Durata";
 
 /* Enact temp Basal*/
 "Enact" = "Attiva";
