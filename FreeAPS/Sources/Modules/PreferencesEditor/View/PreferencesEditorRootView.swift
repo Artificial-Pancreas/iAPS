@@ -71,8 +71,8 @@ extension PreferencesEditor {
             .navigationBarTitleDisplayMode(.automatic)
             .alert(item: $infoButtonPressed) { infoButton in
                 Alert(
-                    title: Text(infoButton.oref0Variable),
-                    message: Text("\n" + infoButton.description + "\n"),
+                    title: Text("\(infoButton.oref0Variable)"),
+                    message: Text("\(infoButton.description)"),
                     dismissButton: .default(Text("OK"))
                 )
             }
