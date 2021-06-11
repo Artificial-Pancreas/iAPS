@@ -55,7 +55,7 @@
 /* Looping in progress */
 "looping" = "looping";
 
-/* %d min ago, currently not being translated, I don't know why? */
+/* %d min ago, Time since last loop */
 "%d min ago" = "%d min ago";
 
 /* Status Title */
