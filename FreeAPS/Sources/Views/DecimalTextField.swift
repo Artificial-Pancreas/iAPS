@@ -36,13 +36,13 @@ struct DecimalTextField: UIViewRepresentable {
             height: 44
         ))
         let clearButton = UIBarButtonItem(
-            title: "Clear",
+            title: NSLocalizedString("Clear", comment: "Clear button"),
             style: .plain,
             target: self,
             action: #selector(textfield.clearButtonTapped(button:))
         )
         let doneButton = UIBarButtonItem(
-            title: "Done",
+            title: NSLocalizedString("Done", comment: "Done button"),
             style: .done,
             target: self,
             action: #selector(textfield.doneButtonTapped(button:))
