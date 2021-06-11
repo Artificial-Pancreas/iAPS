@@ -212,7 +212,10 @@ extension PreferencesEditor {
                     displayName: "Enable SMB After Carbs",
                     keypath: \.enableSMBAfterCarbs,
                     value: preferences.enableSMBAfterCarbs,
-                    infoText: NSLocalizedString("Defaults to false. When true, enables supermicrobolus (SMB) for 6h after carbs, even with 0 carbs on board (COB).", comment: "Enable SMB After Carbs"),
+                    infoText: NSLocalizedString(
+                        "Defaults to false. When true, enables supermicrobolus (SMB) for 6h after carbs, even with 0 carbs on board (COB).",
+                        comment: "Enable SMB After Carbs"
+                    ),
                     settable: self
                 ),
                 Field(
