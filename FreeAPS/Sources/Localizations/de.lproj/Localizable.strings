@@ -4,7 +4,7 @@
 */
 /* Bolus screen when adding insulin */
 
-"Add insulin without actually bolusing" = "Insulin nur erfassen, keine Abgabe";
+"Add insulin without actually bolusing" = "Bolus nur erfassen, keine Abgabe";
 
 "Bolus" = "Bolus";
 
@@ -20,7 +20,7 @@
 "Enact bolus" = "Bolus abgeben";
 
 /*  */
-"Insulin recommended" = "Empfohlene Insulinmenge";
+"Insulin recommended" = "Empfohlener Bolus";
 
 /*  */
 "Insulin required" = "Benötigtes Insulin";
@@ -320,7 +320,7 @@
 "%@ U" = "%@ IE";
 
 /*Carb ratio unit */
-"g/U" = "g/U";
+"g/U" = "g/IE";
 
 /* */
 "Autotune Conf" = "Autotune";
