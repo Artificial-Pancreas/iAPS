@@ -77,7 +77,7 @@
 "grams" = "gram";
 
 /*  */
-"Carbs required" = "Carbs required";
+"Carbs required" = "Karbo nødvendig";
 
 /* A you sure? Typo in code */
 "A you sure?" = "Er du sikker?";
@@ -113,130 +113,130 @@
 "Enact Temp Target" = "Start midlertidig mål";
 
 /*  */
-"Enter preset name" = "Enter preset name";
+"Enter preset name" = "Angi navn på forhåndsinnstilling";
 
 /* minutes of target temp */
-"minutes" = "minutes";
+"minutes" = "minutter";
 
 /*  */
-"Presets" = "Presets";
+"Presets" = "Forhåndsinnstillinger";
 
 /* Save preset name */
-"Save" = "Save";
+"Save" = "Lagre";
 
 /*  */
-"Save as preset" = "Save as preset";
+"Save as preset" = "Lagre som forhåndsinnstilling";
 
 /* Upper temp target limit */
-"Top target" = "Top target";
+"Top target" = "Øvre mål";
 
 /*  */
 "Autotune" = "Autotune";
 
 /*  */
-"Basal profile" = "Basal profile";
+"Basal profile" = "Basalprofil";
 
 /*  */
-"Carb ratio" = "Carb ratio";
+"Carb ratio" = "Karbohydratforhold";
 
 /*  */
-"Delete autotune data" = "Delete autotune data";
+"Delete autotune data" = "Slett autotune data";
 
 /*  */
-"Run now" = "Run now";
+"Run now" = "Kjør nå";
 
 /*  */
-"Sensitivity" = "Sensitivity";
+"Sensitivity" = "Insulinfølsomhet";
 
 /*  */
-"Use Autotune" = "use Autotune";
+"Use Autotune" = "Bruk Autotune";
 
 /* Add profile basal */
-"Add" = "Add";
+"Add" = "Legg til";
 
 /*  */
-"Basal Profile" = "Basal Profile";
+"Basal Profile" = "Basalprofil";
 
 /* Rate basal profile */
 "Rate" = "Rate";
 
 /*  */
-"Save on Pump" = "Save on Pump";
+"Save on Pump" = "Lagre på pumpen";
 
 /*  */
-"Saving..." = "Saving...";
+"Saving..." = "Lagrer...";
 
 /*  */
-"Schedule" = "Schedule";
+"Schedule" = "Tidsplan";
 
 /*  */
-"starts at" = "starts at";
+"starts at" = "starter kl.";
 
 /* Time basal profile */
-"Time" = "Time";
+"Time" = "Tidspunkt";
 
 /* */
-"Calculated Ratio" = "Calculated Ratio";
+"Calculated Ratio" = "Beregnet karbohydratforhold";
 
 /* Carb Ratios header */
-"Carb Ratios" = "Carb Ratios";
+"Carb Ratios" = "Karbohydratforhold";
 
 /*  */
-"Ratio" = "Ratio";
+"Ratio" = "Forhold";
 
 /*  */
 "Autosens" = "Autosens";
 
 /*  */
-"Calculated Sensitivity" = "Calculated Sensitivity";
+"Calculated Sensitivity" = "Beregnet insulinfølsomhet";
 
 /*  */
-"Insulin Sensitivities" = "Insulin Sensitivities";
+"Insulin Sensitivities" = "Insulinfølsomhet";
 
 /* */
-"Sensitivity Ratio" = "Sensitivity Ratio";
+"Sensitivity Ratio" = "Sensitivitetsratio";
 
 /*  */
-"Dismiss" = "Dismiss";
+"Dismiss" = "Avskjedige";
 
 /*  */
-"Important message" = "Important message";
+"Important message" = "Viktig melding";
 
 /*  */
-"Amount" = "Amount";
+"Amount" = "Mengde";
 
 /* */
-"Cancel Temp Basal" = "Cancel Temp Basal";
+"Cancel Temp Basal" = "Avbryt midlertidig basal";
 
 /* Enact temp Basal*/
-"Enact" = "Enact";
+"Enact" = "Start midlertidig mål";
 
 /* */
-"Manual Temp Basal" = "Manual Temp Basal";
+"Manual Temp Basal" = "Manuell midlertidig basal";
 
 /* Allow uploads tp NS */
-"Allow uploads" = "Allow uploads";
+"Allow uploads" = "Tillat opplastinger";
 
 /* API secret in NS */
 "API secret" = "API secret";
 
 /* Connect to NS */
-"Connect" = "Connect";
+"Connect" = "Koble til";
 
 /* Connected to NS */
-"Connected!" = "Connected!";
+"Connected!" = "Tilkoblet!";
 
 /* Connecting to NS */
-"Connecting..." = "Connecting...";
+"Connecting..." = "Kobler til...";
 
 /*  */
-"Invalid URL" = "Invalid URL";
+"Invalid URL" = "Ugyldig nettadresse (URL)";
 
 /*  */
-"Local glucose source" = "Local glucose source";
+"Local glucose source" = "Lokal glukosekilde";
 
 /* Header */
-"Nightscout Config" = "Nightscout Config";
+"Nightscout Config" = "Nightscout";
 
 /*  */
 "Port" = "Port";
@@ -245,142 +245,142 @@
 "URL" = "URL";
 
 /**/
-"Use local glucose server" = "Use local glucose server";
+"Use local glucose server" = "Bruk lokal glukoseserver";
 
 /*  */
-"Edit settings json" = "Edit settings json";
+"Edit settings json" = "Rediger \"freeaps_settings.json\"";
 
 /* */
-"Glucose units" = "Glucose units";
+"Glucose units" = "Glukoseenheter";
 
 /*  */
-"Preferences" = "Preferences";
+"Preferences" = "Innstillinger";
 
 /* Recommended Insulin Fraction in preferences */
-"Recommended Insulin Fraction" = "Recommended Insulin Fraction";
+"Recommended Insulin Fraction" = "Anbefalt insulin-fraksjon";
 
 /* Do you want to show bolus screen after added carbs? */
-"Skip Bolus screen after carbs" = "Skip Bolus screen after carbs";
+"Skip Bolus screen after carbs" = "Hopp over Bolus-skjerm etter karbo";
 
 /* Allow remote control from NS */
-"Remote control" = "Remote control";
+"Remote control" = "Fjernstyring";
 
 /* Add Medtronic pump */
-"Add Medtronic" = "Add Medtronic";
+"Add Medtronic" = "Legge til Medtronic";
 
 /* Add Omnipod pump */
-"Add Omnipod" = "Add Omnipod";
+"Add Omnipod" = "Legg til Omnipod";
 
 /* Add Simulator pump */
-"Add Simulator" = "Add Simulator";
+"Add Simulator" = "Legg til Simulator";
 
 /* Insulin model */
-"Model" = "Model";
+"Model" = "Modell";
 
 /*  */
-"Pump config" = "Pump config";
+"Pump config" = "Pumpe";
 
 /*  */
-"Delivery limits" = "Delivery limits";
+"Delivery limits" = "Leveringsgrenser";
 
 /*  */
-"Duration of Insulin Action" = "Duration of Insulin Action";
+"Duration of Insulin Action" = "Varighet av insulinaktivitet (DIA)";
 
 /* hours of duration of insulin activity */
-"hours" = "hours";
+"hours" = "timer";
 
 /* Max setting */
-"Max Basal" = "Max Basal";
+"Max Basal" = "Maks basal";
 
 /* Max setting */
-"Max Bolus" = "Max Bolus";
+"Max Bolus" = "Maks bolus";
 
 /* */
-"Pump Settings" = "Pump Settings";
+"Pump Settings" = "Pumpeinnstillinger";
 
 /* Insulin unit per hour */
-"U/hr" = "U/hr";
+"U/hr" = "E/t";
 
 /* Unit in number of units delivered (keep the space character!) */
-" U" = " U";
+" U" = " E";
 
 /* /Insulin unit */
-"/U" = "/U";
+"/U" = "/E";
 
 /* Insulin unit */
-"U" = "U";
+"U" = "E";
 
 /* Unit per hour with space */
-" U/hr" = " U/hr";
+" U/hr" = " E/t";
 
 /* Number of units per hour*/
-"%@ U/hr" = "%@ U/hr";
+"%@ U/hr" = "%@ E/t";
 
 /* Number of units insulin delivered */
-"%@ U" = "%@ U";
+"%@ U" = "%@ E";
 
 /*Carb ratio unit */
-"g/U" = "g/U";
+"g/U" = "g/E";
 
 /* */
 "Autotune Conf" = "Autotune";
 
 /*  */
-"Basal Profile Conf" = "Basal Profile";
+"Basal Profile Conf" = "Basalprofil";
 
 /*  */
-"Carb Ratios Conf" = "Carb Ratios";
+"Carb Ratios Conf" = "Karbohydratforhold";
 
 /*  */
-"Closed loop" = "Closed loop";
+"Closed loop" = "Lukket loop";
 
 /* */
-"Configuration" = "Configuration";
+"Configuration" = "Oppsett";
 
 /* */
-"Devices" = "Devices";
+"Devices" = "Enheter";
 
 /* */
-"Insulin Sensitivities Conf" = "Insulin Sensitivities";
+"Insulin Sensitivities Conf" = "Insulinfølsomhet";
 
 /* */
-"Preferences Conf" = "Preferences";
+"Preferences Conf" = "Innstillinger";
 
 /*  */
-"Pump" = "Pump";
+"Pump" = "Pumpe";
 
 /*  */
-"Pump Settings Conf" = "Pump Settings";
+"Pump Settings Conf" = "Pumpeinnstillinger";
 
 /*  */
-"Services" = "Services";
+"Services" = "Tjenester";
 
 /*  */
-"Settings" = "Settings";
+"Settings" = "Innstillinger";
 
 /* 2 log files to share */
-"Share logs" = "Share logs";
+"Share logs" = "Del logger";
 
 /*  */
-"Target Ranges Conf" = "Target Ranges";
+"Target Ranges Conf" = "Målområder";
 
 /* Upper target */
-"High target" = "High target";
+"High target" = "Øvre mål";
 
 /* Lower target */
-"Low target" = "Low target";
+"Low target" = "Nedre mål";
 
 /*  */
-"Target Ranges" = "Target Ranges";
+"Target Ranges" = "Målområder";
 
 /* When bolusing */
-"Bolusing" = "Bolusing";
+"Bolusing" = "Leverer bolus";
 
 /* */
-"Pump suspended" = "Pump suspended";
+"Pump suspended" = "Pumpe satt på pause";
 
 /* */
 "Middleware" = "Middleware";
 
 /* Header */
-"History" = "History";
+"History" = "Historikk";
