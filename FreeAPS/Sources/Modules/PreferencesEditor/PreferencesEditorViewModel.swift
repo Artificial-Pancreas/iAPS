@@ -75,7 +75,7 @@ extension PreferencesEditor {
                     keypath: \.highTemptargetRaisesSensitivity,
                     value: preferences.highTemptargetRaisesSensitivity,
                     infoText: NSLocalizedString(
-                        "Defaults to false. When set to true, raises sensitivity (lower sensitivity ratio) for temp targets set to >= 111. Synonym for exercise_mode. The higher your temp target above 110 will result in more sensitive (lower) ratios, e.g., temp target of 120 results in sensitivy ratio of 0.75, while 140 results in 0.6 (with default halfBasalTarget of 160).",
+                        "Defaults to false. When set to true, raises sensitivity (lower sensitivity ratio) for temp targets set to >= 111. Synonym for exercise_mode. The higher your temp target above 110 will result in more sensitive (lower) ratios, e.g., temp target of 120 results in sensitivity ratio of 0.75, while 140 results in 0.6 (with default halfBasalTarget of 160).",
                         comment: "High Temptarget Raises Sensitivity"
                     ),
                     settable: self
@@ -85,7 +85,7 @@ extension PreferencesEditor {
                     keypath: \.lowTemptargetLowersSensitivity,
                     value: preferences.lowTemptargetLowersSensitivity,
                     infoText: NSLocalizedString(
-                        "Defaults to false. When set to true, can lower sensitivity (higher sensitivity ratio) for temptargets <= 99. The lower your temp target below 100 will result in less sensitive (higher) ratios, e.g., temp target of 95 results in sensitivy ratio of 1.09, while 85 results in 1.33 (with default halfBasalTarget of 160).",
+                        "Defaults to false. When set to true, can lower sensitivity (higher sensitivity ratio) for temptargets <= 99. The lower your temp target below 100 will result in less sensitive (higher) ratios, e.g., temp target of 95 results in sensitivity ratio of 1.09, while 85 results in 1.33 (with default halfBasalTarget of 160).",
                         comment: "Low Temptarget Lowers Sensitivity"
                     ),
                     settable: self
@@ -252,7 +252,7 @@ extension PreferencesEditor {
                     keypath: \.autoisf,
                     value: preferences.autoisf,
                     infoText: NSLocalizedString(
-                        "Defaults to false. Adapt ISF when glucose is stuck at high levels, only works without COB. Read up on:\nhttps://github.com/ga-zelle/autoISF/tree/2.8.2",
+                        "Defaults to false. Adapt ISF when glucose is stuck at high levels, only works without COB.\n\nRead up on:\nhttps://github.com/ga-zelle/autoISF/tree/2.8.2",
                         comment: "Enable AutoISF"
                     ),
                     settable: self
@@ -450,7 +450,7 @@ extension PreferencesEditor {
                     displayName: "Bolus Increment",
                     keypath: \.bolusIncrement,
                     value: preferences.bolusIncrement,
-                    infoText: NSLocalizedString("Smallest bolus amount enacted", comment: "Bolus Increment"),
+                    infoText: NSLocalizedString("Smallest possible bolus amount", comment: "Bolus Increment"),
                     settable: self
                 ),
                 Field(
