@@ -79,11 +79,8 @@
 /*  */
 "Carbs required" = "Kohlenhydrate erforderlich";
 
-/* A you sure? Typo in code */
-"A you sure?" = "Sind Sie sicher?";
-
-/* Are your sure? Typo in code*/
-"Are your sure?" = "Sind Sie sicher?";
+/* */
+"Are you sure?" = "Sind Sie sicher?";
 
 /* Bottom target temp */
 "Bottom target" = "Untergrenze";

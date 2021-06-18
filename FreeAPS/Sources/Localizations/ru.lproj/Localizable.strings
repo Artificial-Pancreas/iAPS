@@ -79,11 +79,8 @@
 /*  */
 "Carbs required" = "Carbs required";
 
-/* A you sure? Typo in code */
-"A you sure?" = "Вы уверены?";
-
-/* Are your sure? Typo in code*/
-"Are your sure?" = "Вы уверены?";
+/* */
+"Are you sure?" = "Вы уверены?";
 
 /* Bottom target temp */
 "Bottom target" = "Нижняя граница";

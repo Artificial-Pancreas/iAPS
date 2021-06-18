@@ -77,13 +77,10 @@
 "grams" = "gram";
 
 /*  */
-"Carbs required" = "Kolhydrater som krävs";
+"Carbs required" = "Kolhydrater krävs";
 
-/* A you sure? Typo in code */
-"A you sure?" = "Är du säker?";
-
-/* Are your sure? Typo in code*/
-"Are your sure?" = "Är du säker?";
+/* */
+"Are you sure?" = "Är du säker?";
 
 /* Bottom target temp */
 "Bottom target" = "Nedre målvärde";

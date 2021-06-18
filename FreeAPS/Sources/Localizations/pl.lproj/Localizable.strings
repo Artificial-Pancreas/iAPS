@@ -79,11 +79,8 @@
 /*  */
 "Carbs required" = "Carbs required";
 
-/* A you sure? Typo in code */
-"A you sure?" = "Czy jesteś pewien?";
-
-/* Are your sure? Typo in code*/
-"Are your sure?" = "Czy jesteś pewien?";
+/* */
+"Are you sure?" = "Czy jesteś pewien?";
 
 /* Bottom target temp */
 "Bottom target" = "Bottom target";
