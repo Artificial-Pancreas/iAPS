@@ -316,7 +316,6 @@
 		10CAE3534904CDCA0F367017 /* PumpSettingsEditorBuilder.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PumpSettingsEditorBuilder.swift; sourceTree = "<group>"; };
 		111579A6E3AC6BFA79C4DD43 /* NightscoutConfigBuilder.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NightscoutConfigBuilder.swift; sourceTree = "<group>"; };
 		12204445D7632AF09264A979 /* PreferencesEditorDataFlow.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PreferencesEditorDataFlow.swift; sourceTree = "<group>"; };
-		198C700B26703D7C00DDDAF0 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		198C700C26703D8600DDDAF0 /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/Localizable.strings; sourceTree = "<group>"; };
 		198C700F26703E6200DDDAF0 /* el */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = el; path = el.lproj/Descriptions.strings; sourceTree = "<group>"; };
 		199D0AC12670351400D24E2B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Descriptions.strings; sourceTree = "<group>"; };
@@ -347,6 +346,11 @@
 		19A9A70A26663484005378EB /* uk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uk; path = uk.lproj/Localizable.strings; sourceTree = "<group>"; };
 		19A9A70B26664B53005378EB /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/Localizable.strings; sourceTree = "<group>"; };
 		19A9A70C26666667005378EB /* pl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pl; path = pl.lproj/Localizable.strings; sourceTree = "<group>"; };
+		19BB36C8267CA5EA00F2481C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		19BB36C9267CA61B00F2481C /* he */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = he; path = he.lproj/Descriptions.strings; sourceTree = "<group>"; };
+		19BB36CA267CA61B00F2481C /* he */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = he; path = he.lproj/Localizable.strings; sourceTree = "<group>"; };
+		19BB36CB267CA62400F2481C /* ca */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ca; path = ca.lproj/Descriptions.strings; sourceTree = "<group>"; };
+		19BB36CC267CA62500F2481C /* ca */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ca; path = ca.lproj/Localizable.strings; sourceTree = "<group>"; };
 		19CD3E8A2673996C00446879 /* el */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = el; path = el.lproj/Localizable.strings; sourceTree = "<group>"; };
 		223EC0494F55A91E3EA69EF4 /* BolusViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = BolusViewModel.swift; sourceTree = "<group>"; };
 		2AD22C985B79A2F0D2EA3D9D /* PumpConfigRootView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PumpConfigRootView.swift; sourceTree = "<group>"; };
@@ -1631,6 +1635,8 @@
 				pl,
 				Base,
 				el,
+				he,
+				ca,
 			);
 			mainGroup = 388E594F25AD948C0019842D;
 			packageReferences = (
@@ -1962,6 +1968,8 @@
 				199D0ACF2670352500D24E2B /* sv */,
 				199D0AD02670352600D24E2B /* uk */,
 				198C700F26703E6200DDDAF0 /* el */,
+				19BB36C9267CA61B00F2481C /* he */,
+				19BB36CB267CA62400F2481C /* ca */,
 			);
 			name = Descriptions.strings;
 			sourceTree = "<group>";
@@ -1982,9 +1990,11 @@
 				19A9A70A26663484005378EB /* uk */,
 				19A9A70B26664B53005378EB /* it */,
 				19A9A70C26666667005378EB /* pl */,
-				198C700B26703D7C00DDDAF0 /* en */,
 				198C700C26703D8600DDDAF0 /* ar */,
 				19CD3E8A2673996C00446879 /* el */,
+				19BB36C8267CA5EA00F2481C /* en */,
+				19BB36CA267CA61B00F2481C /* he */,
+				19BB36CC267CA62500F2481C /* ca */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
