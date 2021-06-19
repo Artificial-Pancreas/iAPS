@@ -89,7 +89,7 @@
 "Cancel" = "Avbryt";
 
 /*  */
-"Cancel Temp Target" = "Avbryt temporär basal";
+"Cancel Temp Target" = "Avbryt tillfälligt målvärde";
 
 /* Custom temp target */
 "Custom" = "Anpassad";
@@ -107,7 +107,7 @@
 "Duration" = "Duration";
 
 /*  */
-"Enact Temp Target" = "Starta tillfälligt målvärde";
+"Enact Temp Target" = "Tillfälliga målvärden";
 
 /*  */
 "Enter preset name" = "Ange namn för förval";
