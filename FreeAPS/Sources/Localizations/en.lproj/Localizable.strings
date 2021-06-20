@@ -322,6 +322,12 @@
 /*Carb ratio unit */
 "g/U" = "g/U";
 
+/* grams */
+" g" = " g";
+
+/* when 0 U/hr */
+"0 U/hr" = "0 U/hr";
+
 /* */
 "Autotune Conf" = "Autotune";
 
