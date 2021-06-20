@@ -6,6 +6,9 @@
 
 "Add insulin without actually bolusing" = "Insulin ohne tatsächliche Bolusabgabe erfassen";
 
+/* Add insulin from source outside of pump */
+"Add %@ without bolusing" = " %@ Insulin ohne abgabe erfassen";
+
 "Amount Bolus" = "Bolus IE";
 
 "Bolus" = "Bolus";
@@ -305,6 +308,27 @@
 
 /*  */
 "U/hr" = "IE/Std";
+
+/*  */
+" U" = " IE";
+
+/*  */
+"U" = "IE";
+
+/*  */
+"%@ U" = "%@ IE";
+
+/*  */
+" U/hr" = " IE/Std";
+
+/*  */
+"%@ U/hr" = "%@ IE/Std";
+
+/*  */
+" g" = " g";
+
+/*  */
+"0 U/hr" = "0 IE/Std";
 
 /* */
 "Autotune Conf" = "Autotune";
