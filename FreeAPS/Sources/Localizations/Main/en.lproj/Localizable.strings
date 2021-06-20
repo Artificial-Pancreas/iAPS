@@ -12,8 +12,10 @@
 /*  */
 "Amount Bolus" = "Amount Bolus";
 
+/*  */
 "Bolus" = "Bolus";
 
+/*  */
 "Close" = "Close";
 
 /* Continue after added carbs without bolus */
@@ -30,6 +32,9 @@
 
 /*  */
 "Insulin required" = "Insulin required";
+
+/*  */
+"Carbs required" = "Carbs required";
 
 /* Bolus screen */
 "Recommendation" = "Recommendation";
@@ -309,6 +314,27 @@
 
 /*  */
 "U/hr" = "U/hr";
+
+/*  */
+" U" = " U";
+
+/*  */
+"U" = "U";
+
+/*  */
+"%@ U" = "%@ U";
+
+/*  */
+" U/hr" = " U/hr";
+
+/*  */
+"%@ U/hr" = "%@ U/hr";
+
+/*  */
+" g" = " g";
+
+/*  */
+"0 U/hr" = "0 U/hr";
 
 /* */
 "Autotune Conf" = "Autotune";

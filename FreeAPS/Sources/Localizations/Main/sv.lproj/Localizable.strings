@@ -12,8 +12,10 @@
 /* */
 "Amount Bolus" = "Mängd insulin";
 
+/* */
 "Bolus" = "Bolus";
 
+/* */
 "Close" = "Stäng";
 
 /* Continue after added carbs without bolus */
@@ -30,6 +32,9 @@
 
 /*  */
 "Insulin required" = "Insulin som krävs";
+
+/*  */
+"Carbs required" = "Kolhydrater krävs";
 
 /* Bolus screen */
 "Recommendation" = "Rekommendation";
@@ -308,7 +313,28 @@
 "Save on Pump" = "Spara på pump";
 
 /*  */
-"U/hr" = "E/h";
+"U/hr" = "IE/h";
+
+/*  */
+" U" = " IE";
+
+/*  */
+"U" = "IE";
+
+/*  */
+"%@ U" = "%@ IE";
+
+/*  */
+" U/hr" = " IE/h";
+
+/*  */
+"%@ U/hr" = "%@ IE/h";
+
+/*  */
+" g" = " g";
+
+/*  */
+"0 U/hr" = "0 IE/h";
 
 /* */
 "Autotune Conf" = "Autotune";
