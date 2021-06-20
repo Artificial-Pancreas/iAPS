@@ -328,6 +328,15 @@
 /* when 0 U/hr */
 "0 U/hr" = "0 U/hr";
 
+/* abbreviation for days */
+ "d" = "d";
+
+ /* abbreviation for hours */
+ "h" = "h";
+
+ /* abbreviation for minutes */
+ "m" = "m";
+
 /* */
 "Autotune Conf" = "Autotune";
 
