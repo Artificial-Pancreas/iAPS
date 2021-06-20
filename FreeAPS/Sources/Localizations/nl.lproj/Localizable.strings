@@ -77,7 +77,7 @@
 "grams" = "gram";
 
 /*  */
-"Carbs required" = "Carbs required";
+"Carbs required" = "Koolhydraten benodigd";
 
 /* */
 "Are you sure?" = "Weet u het zeker?";
@@ -299,25 +299,25 @@
 "U/hr" = "E/uur";
 
 /* Unit in number of units delivered (keep the space character!) */
-" U" = " U";
+" U" = " E";
 
 /* /Insulin unit */
-"/U" = "/U";
+"/U" = "/E";
 
 /* Insulin unit */
-"U" = "U";
+"U" = "E";
 
 /* Unit per hour with space */
-" U/hr" = " U/hr";
+" U/hr" = " E/uur";
 
 /* Number of units per hour*/
-"%@ U/hr" = "%@ U/hr";
+"%@ U/hr" = "%@ E/uur";
 
 /* Number of units insulin delivered */
-"%@ U" = "%@ U";
+"%@ U" = "%@ E";
 
 /*Carb ratio unit */
-"g/U" = "g/U";
+"g/U" = "g/E";
 
 /* */
 "Autotune Conf" = "Autotune";
