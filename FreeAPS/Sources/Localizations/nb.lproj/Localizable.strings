@@ -332,7 +332,7 @@
 "d" = "d";
 
 /* abbreviation for hours */
-"h" = "h";
+"h" = "t";
 
 /* abbreviation for minutes */
 "m" = "m";
