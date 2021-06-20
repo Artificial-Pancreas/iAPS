@@ -91,7 +91,7 @@ extension Home {
                         .font(.system(size: 12, weight: .bold)).foregroundColor(.loopGray)
                         .padding(.leading, 8)
                 } else if let tempRate = viewModel.tempRate {
-                    Text((numberFormatter.string(from: tempRate as NSNumber) ?? "0") + " U/hr")
+                    Text("\(numberFormatter.string(from: tempRate as NSNumber) ?? "0") U/hr")
                         .font(.system(size: 12, weight: .bold)).foregroundColor(.insulin)
                         .padding(.leading, 8)
                 }
