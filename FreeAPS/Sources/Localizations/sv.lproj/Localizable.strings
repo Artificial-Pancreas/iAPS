@@ -326,7 +326,7 @@
 " g" = " g";
 
 /* when 0 U/hr */
-"0 U/hr" = "0 U/hr";
+"0 U/hr" = "0 IE/h";
 
 /* */
 "Autotune Conf" = "Autotune";
