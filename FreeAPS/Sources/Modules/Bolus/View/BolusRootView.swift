@@ -76,7 +76,8 @@ extension Bolus {
                 }
             }
             .alert(isPresented: $isAddInsulinAlertPresented) {
-                let amount = formatter.string(from: viewModel.amount as NSNumber)! + " U"
+                let amount = formatter
+                    .string(from: viewModel.amount as NSNumber)! + NSLocalizedString(" U", comment: "Insulin unit")
                 return Alert(
                     title: Text("Are you sure?"),
                     message: Text("Add \(amount) without bolusing"),
