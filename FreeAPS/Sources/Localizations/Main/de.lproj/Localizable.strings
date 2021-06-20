@@ -4,10 +4,10 @@
 */
 /* Bolus screen when adding insulin */
 
-"Add insulin without actually bolusing" = "Insulin ohne tatsächliche Bolusabgabe erfassen";
+"Add insulin without actually bolusing" = "Insulin nur erfassen, keine Abgabe";
 
 /* Add insulin from source outside of pump */
-"Add %@ without bolusing" = " %@ Insulin ohne abgabe erfassen";
+"Add %@ without bolusing" = " %@ Insulin ohne Abgabe erfassen";
 
 "Amount Bolus" = "Bolus IE";
 
