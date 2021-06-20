@@ -329,13 +329,13 @@
 "0 U/hr" = "0 IE/h";
 
 /* abbreviation for days */
- "d" = "d";
+"d" = "d";
 
- /* abbreviation for hours */
- "h" = "h";
+/* abbreviation for hours */
+"h" = "h";
 
- /* abbreviation for minutes */
- "m" = "m";
+/* abbreviation for minutes */
+"m" = "m";
 
 /* */
 "Autotune Conf" = "Autotune";

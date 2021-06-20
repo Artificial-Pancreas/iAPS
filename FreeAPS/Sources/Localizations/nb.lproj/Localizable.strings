@@ -7,7 +7,7 @@
 "Add insulin without actually bolusing" = "Legg til insulin uten å gi bolus";
 
 /* Add insulin from source outside of pump */
-"Add %@ without bolusing" = "Add %@ without bolusing";
+"Add %@ without bolusing" = "Registrer %@ uten å gi bolus";
 
 "Bolus" = "Bolus";
 
@@ -326,7 +326,16 @@
 " g" = " g";
 
 /* when 0 U/hr */
-"0 U/hr" = "0 U/hr";
+"0 U/hr" = "0 E/t";
+
+/* abbreviation for days */
+"d" = "d";
+
+/* abbreviation for hours */
+"h" = "h";
+
+/* abbreviation for minutes */
+"m" = "m";
 
 /* */
 "Autotune Conf" = "Autotune";
