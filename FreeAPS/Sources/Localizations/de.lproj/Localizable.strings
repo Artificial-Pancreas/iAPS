@@ -7,7 +7,7 @@
 "Add insulin without actually bolusing" = "Insulin nur erfassen, keine Abgabe";
 
 /* Add insulin from source outside of pump */
-"Add %@ without bolusing" = "Add %@ without bolusing";
+"Add %@ without bolusing" = "Erfasse %@ ohne Bolusabgabe";
 
 "Bolus" = "Bolus";
 
@@ -326,7 +326,7 @@
 " g" = " g";
 
 /* when 0 U/hr */
-"0 U/hr" = "0 U/hr";
+"0 U/hr" = "0 IE/h";
 
 /* abbreviation for days */
 "d" = "d";
