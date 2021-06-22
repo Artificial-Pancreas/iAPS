@@ -7,7 +7,7 @@
 "Add insulin without actually bolusing" = "Add insulin without actually bolusing";
 
 /* Add insulin from source outside of pump */
-"Add %@ without bolusing" = "Add %@ without bolusing";
+"Add %@ without bolusing" = "Dodaj %@ bez bolusa";
 
 "Bolus" = "Bolus";
 
@@ -95,7 +95,7 @@
 "Cancel Temp Target" = "Anuluj tymczasowy cel";
 
 /* Custom temp target */
-"Custom" = "Custom";
+"Custom" = "Dostosuj";
 
 /*  */
 "Date" = "Data";
@@ -104,7 +104,7 @@
 "Delete" = "Usuń";
 
 /* Delete preset temp target */
-"Delete preset \"%@\"" = "Delete preset \"%@\"";
+"Delete preset \"%@\"" = "Usuń profil %@";
 
 /* Duration of target temp or temp basal */
 "Duration" = "Czas trwania";
@@ -113,22 +113,22 @@
 "Enact Temp Target" = "Enact Temp Target";
 
 /*  */
-"Enter preset name" = "Enter preset name";
+"Enter preset name" = "Wpisz nazwę profilu";
 
 /* minutes of target temp */
 "minutes" = "minut";
 
 /*  */
-"Presets" = "Presets";
+"Presets" = "Profile";
 
 /* Save preset name */
 "Save" = "Zapisz";
 
 /*  */
-"Save as preset" = "Save as preset";
+"Save as preset" = "Zapisz jako profil";
 
 /* Upper temp target limit */
-"Top target" = "Top target";
+"Top target" = "Górna wartość docelowa";
 
 /*  */
 "Autotune" = "Autotune";
@@ -140,7 +140,7 @@
 "Carb ratio" = "Carb ratio";
 
 /*  */
-"Delete autotune data" = "Delete autotune data";
+"Delete autotune data" = "Usuń dane autotune";
 
 /*  */
 "Run now" = "Uruchom teraz";
@@ -149,13 +149,13 @@
 "Sensitivity" = "Wrażliwość";
 
 /*  */
-"Use Autotune" = "use Autotune";
+"Use Autotune" = "użyj autotune";
 
 /* Add profile basal */
 "Add" = "Dodaj";
 
 /*  */
-"Basal Profile" = "Basal Profile";
+"Basal Profile" = "Profil bazy";
 
 /* Rate basal profile */
 "Rate" = "Rate";
@@ -164,7 +164,7 @@
 "Save on Pump" = "Zapisz na pompie";
 
 /*  */
-"Saving..." = "Saving...";
+"Saving..." = "Zapisywanie...";
 
 /*  */
 "Schedule" = "Schedule";
@@ -173,7 +173,7 @@
 "starts at" = "starts at";
 
 /* Time basal profile */
-"Time" = "Time";
+"Time" = "Czas";
 
 /* */
 "Calculated Ratio" = "Calculated Ratio";
@@ -188,16 +188,16 @@
 "Autosens" = "Autosens";
 
 /*  */
-"Calculated Sensitivity" = "Calculated Sensitivity";
+"Calculated Sensitivity" = "Obliczona wrażliwość";
 
 /*  */
-"Insulin Sensitivities" = "Insulin Sensitivities";
+"Insulin Sensitivities" = "Wrażliwość na insulinę";
 
 /* */
-"Sensitivity Ratio" = "Sensitivity Ratio";
+"Sensitivity Ratio" = "Współczynnik wrażliwości";
 
 /*  */
-"Dismiss" = "Dismiss";
+"Dismiss" = "Zignoruj";
 
 /*  */
 "Important message" = "Important message";
@@ -206,9 +206,10 @@
 "Amount" = "Amount";
 
 /* */
-"Cancel Temp Basal" = "Cancel Temp Basal";
+"Cancel Temp Basal" = "Anuluj bazę tymczasową";
 
-/* Enact temp Basal*/
+/* Enact
+Enact a temp Basal or a temp target */
 "Enact" = "Enact";
 
 /* */
@@ -221,22 +222,24 @@
 "API secret" = "API secret";
 
 /* Connect to NS */
-"Connect" = "Connect";
+"Connect" = "Połącz";
 
 /* Connected to NS */
-"Connected!" = "Connected!";
+"Connected!" = "Połączono
+Połączono z Nightscout!";
 
 /* Connecting to NS */
-"Connecting..." = "Connecting...";
+"Connecting..." = "Łączenie...
+Łączenie z Nightscout...";
 
 /*  */
-"Invalid URL" = "Invalid URL";
+"Invalid URL" = "Nieprawidłowy adres URL";
 
 /*  */
 "Local glucose source" = "Local glucose source";
 
 /* Header */
-"Nightscout Config" = "Nightscout Config";
+"Nightscout Config" = "Konfiguracja Nightscout";
 
 /*  */
 "Port" = "Port";
@@ -314,10 +317,10 @@
 " U/hr" = " U/hr";
 
 /* Number of units per hour*/
-"%@ U/hr" = "%@ U/hr";
+"%@ U/hr" = "%@ j./godz";
 
 /* Number of units insulin delivered */
-"%@ U" = "%@ U";
+"%@ U" = "%@ j.";
 
 /*Carb ratio unit */
 "g/U" = "g/U";
@@ -332,10 +335,10 @@
 "d" = "d";
 
 /* abbreviation for hours */
-"h" = "h";
+"h" = "godz";
 
 /* abbreviation for minutes */
-"m" = "m";
+"m" = "min.";
 
 /* */
 "Autotune Conf" = "Autotune";
