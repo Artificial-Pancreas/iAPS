@@ -71,7 +71,7 @@
 "Suggested at %@" = "Foreslått kl. %@";
 
 /* Add carbs screen */
-"Add Carbs" = "Legg til karbohydrater";
+"Add Carbs" = "Legg til karbo";
 
 /*  */
 "Amount Carbs" = "Mengde karbo";
@@ -209,10 +209,10 @@
 "Cancel Temp Basal" = "Avbryt midlertidig basal";
 
 /* Enact temp Basal*/
-"Enact" = "Start midlertidig mål";
+"Enact" = "Start";
 
 /* */
-"Manual Temp Basal" = "Manuell midlertidig basal";
+"Manual Temp Basal" = "Manuell basal";
 
 /* Allow uploads tp NS */
 "Allow uploads" = "Tillat opplastinger";

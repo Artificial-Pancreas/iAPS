@@ -56,7 +56,7 @@
 "Home" = "Inicio";
 
 /* Looping in progress */
-"looping" = "looping";
+"looping" = "En bucle";
 
 /* %d min ago, Time since last loop */
 "%d min ago" = "Hace %d mins";
@@ -80,7 +80,7 @@
 "grams" = "gramos";
 
 /*  */
-"Carbs required" = "Carbs required";
+"Carbs required" = "Se requieren carbohidratos";
 
 /* */
 "Are you sure?" = "¿Estás seguro?";
@@ -170,7 +170,7 @@
 "Schedule" = "Programación";
 
 /*  */
-"starts at" = "starts at";
+"starts at" = "comienza a las";
 
 /* Time basal profile */
 "Time" = "Tiempo";
@@ -260,7 +260,7 @@
 "Recommended Insulin Fraction" = "Fracción de insulina recomendada";
 
 /* Do you want to show bolus screen after added carbs? */
-"Skip Bolus screen after carbs" = "Skip Bolus screen after carbs";
+"Skip Bolus screen after carbs" = "Saltar pantalla de bolo después de carbohidratos";
 
 /* Allow remote control from NS */
 "Remote control" = "Control a distancia";
@@ -311,10 +311,10 @@
 "U" = "U";
 
 /* Unit per hour with space */
-" U/hr" = " U/hr";
+" U/hr" = " U/hora";
 
 /* Number of units per hour*/
-"%@ U/hr" = "%@ U/hr";
+"%@ U/hr" = "%@ U/hora";
 
 /* Number of units insulin delivered */
 "%@ U" = "%@ U";
@@ -326,7 +326,7 @@
 " g" = " g";
 
 /* when 0 U/hr */
-"0 U/hr" = "0 U/hr";
+"0 U/hr" = "0 U/hora";
 
 /* abbreviation for days */
 "d" = "d";
@@ -335,7 +335,7 @@
 "h" = "h";
 
 /* abbreviation for minutes */
-"m" = "m";
+"m" = "mn";
 
 /* */
 "Autotune Conf" = "Autotune";
