@@ -97,9 +97,12 @@ extension Home {
                         .font(.system(size: 12, weight: .bold)).foregroundColor(.loopGray)
                         .padding(.leading, 8)
                 } else if let tempRate = viewModel.tempRate {
-                    Text("\(numberFormatter.string(from: tempRate as NSNumber) ?? "0") U/hr")
-                        .font(.system(size: 12, weight: .bold)).foregroundColor(.insulin)
-                        .padding(.leading, 8)
+                    Text(
+                        (numberFormatter.string(from: tempRate as NSNumber) ?? "0") +
+                            NSLocalizedString(" U/hr", comment: "Unit per hour with space")
+                    )
+                    .font(.system(size: 12, weight: .bold)).foregroundColor(.insulin)
+                    .padding(.leading, 8)
                 }
 
                 if let tempTarget = viewModel.tempTarget {
