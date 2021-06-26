@@ -208,7 +208,8 @@
 /* */
 "Cancel Temp Basal" = "Cancel Temp Basal";
 
-/* Enact temp Basal*/
+/* Enact
+Enact a temp Basal or a temp target */
 "Enact" = "Enact";
 
 /* */

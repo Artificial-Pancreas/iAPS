@@ -208,7 +208,8 @@
 /* */
 "Cancel Temp Basal" = "Отменить ВБС";
 
-/* Enact temp Basal*/
+/* Enact
+Enact a temp Basal or a temp target */
 "Enact" = "Запустить";
 
 /* */

@@ -208,7 +208,8 @@
 /* */
 "Cancel Temp Basal" = "Avbryt midlertidig basal";
 
-/* Enact temp Basal*/
+/* Enact
+Enact a temp Basal or a temp target */
 "Enact" = "Start";
 
 /* */

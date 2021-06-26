@@ -208,7 +208,8 @@
 /* */
 "Cancel Temp Basal" = "Cancelar basal temporal";
 
-/* Enact temp Basal*/
+/* Enact
+Enact a temp Basal or a temp target */
 "Enact" = "Ejecutar";
 
 /* */

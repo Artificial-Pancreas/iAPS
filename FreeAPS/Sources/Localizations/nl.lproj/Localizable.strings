@@ -208,7 +208,8 @@
 /* */
 "Cancel Temp Basal" = "Annuleer tijdelijke basaal";
 
-/* Enact temp Basal*/
+/* Enact
+Enact a temp Basal or a temp target */
 "Enact" = "Uitvoeren";
 
 /* */
