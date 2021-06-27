@@ -18,7 +18,7 @@ final class BaseGlucoseStorage: GlucoseStorage, Injectable {
     @Injected() private var broadcaster: Broadcaster!
 
     private enum Config {
-        static let filterTime: TimeInterval = 2.75 * 60 // Before edit this was 4.75
+        static let filterTime: TimeInterval = 1 * 60 // Before edit this was 4.75
     }
 
     init(resolver: Resolver) {
