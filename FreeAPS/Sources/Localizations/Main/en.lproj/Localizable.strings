@@ -408,6 +408,12 @@
 /* Header */
 "History" = "History";
 
+/* Modification, show xDrip4iOS instead of NS */
+"Show xDrip4iOS or other CGM instead of NS" = "Show xDrip4iOS or other CGM instead of NS";
+
+"Don't show NS" = "Don't show NS";
+
+
 /*
   Infotexts from openaps.docs and androidaps.docs
   FreeAPS
