@@ -25,9 +25,6 @@
 /* The title of the cell showing firmware version */
 "Firmware" = "Firmware";
 
-/* The title of the cell showing current rileylink frequency */
-"Frequency" = "Frekvens";
-
 /* The title of the cell showing device name */
 "Name" = "Namn";
 
@@ -39,3 +36,42 @@
 
 /* The title of the cell showing uptime */
 "Uptime" = "Körs sedan";
+
+/* The title of the cell showing current rileylink frequency */
+"Frequency" = "Frekvens";
+
+/* The title of the cell showing battery level */
+"Battery level" = "Batterinivå";
+
+/* The title of the cell showing ORL */
+"ORL" = "ORL";
+
+/* The title of the cell showing Voltage */
+"Voltage" = "Spänning";
+
+/* The title of the cell showing voltage level */
+"Low Battery Alert" = "Varning för låg batterinivå";
+
+/* The title of the cell showing Lighten Yellow LED */
+"Lighten Yellow LED" = "Ljusare gul LED";
+
+/* The title of the cell showing Lighten Red LED */
+"Lighten Red LED" = "Ljusare röd LED";
+
+/* The title of the cell showing Test Vibrator */
+"Test Vibrator" = "Testa vibrator";
+
+/* he title of the cell showing Connection LED */
+"Enable Connection State LED" = "Visa LED för anslutningsstatus";
+
+/* he title of the cell showing Stop Vibrator */
+"Enable Connection State Vibrator" = "Vibrera för anslutningsstatus";
+
+/* The title of the section describing commands */
+"Test Commands" = "Testkommandon";
+
+/* The title of the section describing commands */
+"Configure Commands" = "Inställningar för OrangeLink";
+
+/* The title of the section describing commands */
+"Alert" = "Varningar";
