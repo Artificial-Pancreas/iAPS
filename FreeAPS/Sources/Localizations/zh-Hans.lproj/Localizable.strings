@@ -14,7 +14,7 @@
 "Close" = "关闭";
 
 /* Continue after added carbs without bolus */
-"Continue without bolus" = "Continue without bolus";
+"Continue without bolus" = "不输注胰岛素并继续";
 
 /* Header */
 "Enact Bolus" = "执行大剂量";
@@ -101,143 +101,143 @@
 "Date" = "日期";
 
 /*  */
-"Delete" = "Delete";
+"Delete" = "删除";
 
 /* Delete preset temp target */
 "Delete preset \"%@\"" = "删除预设\"\"%@\"";
 
 /* Duration of target temp or temp basal */
-"Duration" = "Duration";
+"Duration" = "持续时间";
 
 /*  */
-"Enact Temp Target" = "Enact Temp Target";
+"Enact Temp Target" = "设置临时目标";
 
 /*  */
-"Enter preset name" = "Enter preset name";
+"Enter preset name" = "输入预设名称";
 
 /* minutes of target temp */
-"minutes" = "minutes";
+"minutes" = "分钟";
 
 /*  */
-"Presets" = "Presets";
+"Presets" = "预设";
 
 /* Save preset name */
-"Save" = "Save";
+"Save" = "保存​​";
 
 /*  */
-"Save as preset" = "Save as preset";
+"Save as preset" = "保存为预设";
 
 /* Upper temp target limit */
-"Top target" = "Top target";
+"Top target" = "血糖上限";
 
 /*  */
 "Autotune" = "Autotune";
 
 /*  */
-"Basal profile" = "Basal profile";
+"Basal profile" = "基础率配置文件";
 
 /*  */
-"Carb ratio" = "Carb ratio";
+"Carb ratio" = "碳水化合物系数";
 
 /*  */
-"Delete autotune data" = "Delete autotune data";
+"Delete autotune data" = "删除自动调谐数据";
 
 /*  */
-"Run now" = "Run now";
+"Run now" = "马上执行";
 
 /*  */
-"Sensitivity" = "Sensitivity";
+"Sensitivity" = "胰岛素敏感系数";
 
 /*  */
-"Use Autotune" = "use Autotune";
+"Use Autotune" = "使用自动调谐";
 
 /* Add profile basal */
-"Add" = "Add";
+"Add" = "添加";
 
 /*  */
-"Basal Profile" = "Basal Profile";
+"Basal Profile" = "基础率配置文件";
 
 /* Rate basal profile */
-"Rate" = "Rate";
+"Rate" = "输注率";
 
 /*  */
-"Save on Pump" = "Save on Pump";
+"Save on Pump" = "在泵上保存";
 
 /*  */
-"Saving..." = "Saving...";
+"Saving..." = "正在保存...";
 
 /*  */
-"Schedule" = "Schedule";
+"Schedule" = "设定时间";
 
 /*  */
-"starts at" = "starts at";
+"starts at" = "开始于";
 
 /* Time basal profile */
-"Time" = "Time";
+"Time" = "时间";
 
 /* */
-"Calculated Ratio" = "Calculated Ratio";
+"Calculated Ratio" = "计算的比率";
 
 /* Carb Ratios header */
-"Carb Ratios" = "Carb Ratios";
+"Carb Ratios" = "碳水化合物系数";
 
 /*  */
-"Ratio" = "Ratio";
+"Ratio" = "比率";
 
 /*  */
 "Autosens" = "Autosens";
 
 /*  */
-"Calculated Sensitivity" = "Calculated Sensitivity";
+"Calculated Sensitivity" = "计算的敏感系数";
 
 /*  */
-"Insulin Sensitivities" = "Insulin Sensitivities";
+"Insulin Sensitivities" = "胰岛素敏感系数";
 
 /* */
 "Sensitivity Ratio" = "Sensitivity Ratio";
 
 /*  */
-"Dismiss" = "Dismiss";
+"Dismiss" = "忽略";
 
 /*  */
-"Important message" = "Important message";
+"Important message" = "重要信息";
 
 /*  */
-"Amount" = "Amount";
+"Amount" = "数量";
 
 /* */
-"Cancel Temp Basal" = "Cancel Temp Basal";
+"Cancel Temp Basal" = "取消临时基础率";
 
 /* Enact
 Enact a temp Basal or a temp target */
-"Enact" = "Enact";
+"Enact" = "执行";
 
 /* */
-"Manual Temp Basal" = "Manual Temp Basal";
+"Manual Temp Basal" = "手动设置临时基础";
 
 /* Allow uploads tp NS */
-"Allow uploads" = "Allow uploads";
+"Allow uploads" = "允许上传";
 
 /* API secret in NS */
 "API secret" = "API secret";
 
 /* Connect to NS */
-"Connect" = "Connect";
+"Connect" = "连接";
 
 /* Connected to NS */
-"Connected!" = "Connected!";
+"Connected!" = "已连接";
 
 /* Connecting to NS */
-"Connecting..." = "Connecting...";
+"Connecting..." = "正在连接...";
 
 /*  */
-"Invalid URL" = "Invalid URL";
+"Invalid URL" = "网址不正确";
 
 /*  */
-"Local glucose source" = "Local glucose source";
+"Local glucose source" = "本地血糖数据源";
 
 /* Header */
-"Nightscout Config" = "Nightscout Config";
+"Nightscout Config" = "Nightscout配置";
 
 /*  */
 "Port" = "Port";
@@ -246,61 +246,61 @@ Enact a temp Basal or a temp target */
 "URL" = "URL";
 
 /**/
-"Use local glucose server" = "Use local glucose server";
+"Use local glucose server" = "使用本地端口获取血糖";
 
 /*  */
-"Edit settings json" = "Edit settings json";
+"Edit settings json" = "编辑设置文件";
 
 /* */
-"Glucose units" = "Glucose units";
+"Glucose units" = "血糖单位";
 
 /*  */
-"Preferences" = "Preferences";
+"Preferences" = "选项";
 
 /* Recommended Insulin Fraction in preferences */
 "Recommended Insulin Fraction" = "Recommended Insulin Fraction";
 
 /* Do you want to show bolus screen after added carbs? */
-"Skip Bolus screen after carbs" = "Skip Bolus screen after carbs";
+"Skip Bolus screen after carbs" = "添加碳水后跳过大剂量操作";
 
 /* Allow remote control from NS */
-"Remote control" = "Remote control";
+"Remote control" = "远程控制";
 
 /* Add Medtronic pump */
-"Add Medtronic" = "Add Medtronic";
+"Add Medtronic" = "添加美敦力泵";
 
 /* Add Omnipod pump */
-"Add Omnipod" = "Add Omnipod";
+"Add Omnipod" = "添加Omnipod";
 
 /* Add Simulator pump */
-"Add Simulator" = "Add Simulator";
+"Add Simulator" = "添加模拟器";
 
 /* Insulin model */
-"Model" = "Model";
+"Model" = "模型";
 
 /*  */
-"Pump config" = "Pump config";
+"Pump config" = "泵配置";
 
 /*  */
-"Delivery limits" = "Delivery limits";
+"Delivery limits" = "输注限制";
 
 /*  */
-"Duration of Insulin Action" = "Duration of Insulin Action";
+"Duration of Insulin Action" = "胰岛素作用时间（DIA）";
 
 /* hours of duration of insulin activity */
-"hours" = "hours";
+"hours" = "小时";
 
 /* Max setting */
-"Max Basal" = "Max Basal";
+"Max Basal" = "最大基础率";
 
 /* Max setting */
-"Max Bolus" = "Max Bolus";
+"Max Bolus" = "最大大剂量";
 
 /* */
-"Pump Settings" = "Pump Settings";
+"Pump Settings" = "泵设置";
 
 /* Insulin unit per hour */
-"U/hr" = "U/hr";
+"U/hr" = "U/小时";
 
 /* Unit in number of units delivered (keep the space character!) */
 " U" = " U";
@@ -312,91 +312,91 @@ Enact a temp Basal or a temp target */
 "U" = "U";
 
 /* Unit per hour with space */
-" U/hr" = " U/hr";
+" U/hr" = " U/小时";
 
 /* Number of units per hour*/
-"%@ U/hr" = "%@ U/hr";
+"%@ U/hr" = "%@ U/小时";
 
 /* Number of units insulin delivered */
 "%@ U" = "%@ U";
 
 /*Carb ratio unit */
-"g/U" = "g/U";
+"g/U" = "克/U";
 
 /* grams */
-" g" = " g";
+" g" = " 克";
 
 /* when 0 U/hr */
-"0 U/hr" = "0 U/hr";
+"0 U/hr" = "0 U/小时";
 
 /* abbreviation for days */
-"d" = "d";
+"d" = "天";
 
 /* abbreviation for hours */
-"h" = "h";
+"h" = "时";
 
 /* abbreviation for minutes */
-"m" = "m";
+"m" = "分";
 
 /* */
 "Autotune Conf" = "Autotune";
 
 /*  */
-"Basal Profile Conf" = "Basal Profile";
+"Basal Profile Conf" = "基础率配置文件";
 
 /*  */
-"Carb Ratios Conf" = "Carb Ratios";
+"Carb Ratios Conf" = "碳水化合物系数";
 
 /*  */
-"Closed loop" = "Closed loop";
+"Closed loop" = "启动闭环";
 
 /* */
-"Configuration" = "Configuration";
+"Configuration" = "配置";
 
 /* */
-"Devices" = "Devices";
+"Devices" = "设备";
 
 /* */
-"Insulin Sensitivities Conf" = "Insulin Sensitivities";
+"Insulin Sensitivities Conf" = "胰岛素敏感系数";
 
 /* */
-"Preferences Conf" = "Preferences";
+"Preferences Conf" = "选项";
 
 /*  */
-"Pump" = "Pump";
+"Pump" = "胰岛素泵";
 
 /*  */
-"Pump Settings Conf" = "Pump Settings";
+"Pump Settings Conf" = "泵设置";
 
 /*  */
-"Services" = "Services";
+"Services" = "服务";
 
 /*  */
-"Settings" = "Settings";
+"Settings" = "设置";
 
 /* 2 log files to share */
-"Share logs" = "Share logs";
+"Share logs" = "分享日志";
 
 /*  */
-"Target Ranges Conf" = "Target Ranges";
+"Target Ranges Conf" = "目标范围：";
 
 /* Upper target */
-"High target" = "High target";
+"High target" = "高目标";
 
 /* Lower target */
-"Low target" = "Low target";
+"Low target" = "血糖低目标";
 
 /*  */
-"Target Ranges" = "Target Ranges";
+"Target Ranges" = "目标范围：";
 
 /* When bolusing */
-"Bolusing" = "Bolusing";
+"Bolusing" = "注射中";
 
 /* */
-"Pump suspended" = "Pump suspended";
+"Pump suspended" = "泵已暂停输注";
 
 /* */
 "Middleware" = "Middleware";
 
 /* Header */
-"History" = "History";
+"History" = "历史";
