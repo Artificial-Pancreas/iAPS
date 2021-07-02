@@ -4,107 +4,107 @@
 */
 /* Bolus screen when adding insulin */
 
-"Add insulin without actually bolusing" = "Add insulin without actually bolusing";
+"Add insulin without actually bolusing" = "仅添加胰岛素 没有实际注射";
 
 /* Add insulin from source outside of pump */
-"Add %@ without bolusing" = "Add %@ without bolusing";
+"Add %@ without bolusing" = "添加 %@ 不是通过胰岛素泵注射的剂量";
 
-"Bolus" = "Bolus";
+"Bolus" = "大剂量";
 
-"Close" = "Close";
+"Close" = "关闭";
 
 /* Continue after added carbs without bolus */
 "Continue without bolus" = "Continue without bolus";
 
 /* Header */
-"Enact Bolus" = "Enact Bolus";
+"Enact Bolus" = "执行大剂量";
 
 /* Button */
-"Enact bolus" = "Enact bolus";
+"Enact bolus" = "执行大剂量";
 
 /*  */
-"Insulin recommended" = "Insulin recommended";
+"Insulin recommended" = "推荐剂量";
 
 /*  */
-"Insulin required" = "Insulin required";
+"Insulin required" = "所需剂量";
 
 /* Bolus screen */
-"Recommendation" = "Recommendation";
+"Recommendation" = "推荐";
 
 /* Button */
-"Clear" = "Clear";
+"Clear" = "清除";
 
 /* Button */
-"Done" = "Done";
+"Done" = "完成";
 
 /*  */
-"Wait please" = "Wait please";
+"Wait please" = "请稍候";
 
 /*  */
-"Agree and continue" = "Agree and Continue";
+"Agree and continue" = "同意并继续";
 
 /* Disclaimer when opening app for first time*/
-"Disclaimer" = "Disclaimer";
+"Disclaimer" = "声明";
 
 /* Disclaimer Description */
-"FreeAPS X is in an active development state. We do not recommend to use the system for everyday control of blood glucose! Use it for testing purposes only at your own risk. We are not responsible for your decisions and actions." = "FreeAPS X is in an active development state. We do not recommend to use the system for everyday control of blood glucose! Use it for testing purposes only at your own risk. We are not responsible for your decisions and actions.";
+"FreeAPS X is in an active development state. We do not recommend to use the system for everyday control of blood glucose! Use it for testing purposes only at your own risk. We are not responsible for your decisions and actions." = "FreeAPS X正处于快发开发状态。我们不建议将该系统用于日常的血糖控制! 仅用于测试目的，风险自负。我们对您的决定和行为不负责任。";
 
 /* Enacted at a date */
-"Enacted at %@" = "Enacted at %@";
+"Enacted at %@" = "运行于 %@";
 
 /* Home title */
-"Home" = "Home";
+"Home" = "主页";
 
 /* Looping in progress */
-"looping" = "looping";
+"looping" = "闭环中";
 
 /* %d min ago, Time since last loop */
-"%d min ago" = "%d min ago";
+"%d min ago" = "%d 分钟前";
 
 /* Status Title */
-"No suggestion" = "No suggestion";
+"No suggestion" = "暂无建议";
 
 /* Replace pod text in Header */
-"Replace pod" = "Replace pod";
+"Replace pod" = "更换Pod";
 
 /* Suggested at a date */
-"Suggested at %@" = "Suggested at %@";
+"Suggested at %@" = "建议于%@";
 
 /* Add carbs screen */
-"Add Carbs" = "Add Carbs";
+"Add Carbs" = "添加碳水化合物";
 
 /*  */
-"Amount Carbs" = "Amount Carbs";
+"Amount Carbs" = "碳水化合物含量";
 
 /* Grams unit */
-"grams" = "grams";
+"grams" = "克";
 
 /*  */
-"Carbs required" = "Carbs required";
+"Carbs required" = "所需碳水化合物";
 
 /* */
-"Are you sure?" = "Are you sure?";
+"Are you sure?" = "确定？";
 
 /* Bottom target temp */
-"Bottom target" = "Bottom target";
+"Bottom target" = "血糖下限";
 
 /* Cancel preset name */
-"Cancel" = "Cancel";
+"Cancel" = "取消";
 
 /*  */
-"Cancel Temp Target" = "Cancel Temp Target";
+"Cancel Temp Target" = "取消临时目标";
 
 /* Custom temp target */
-"Custom" = "Custom";
+"Custom" = "自定义";
 
 /*  */
-"Date" = "Date";
+"Date" = "日期";
 
 /*  */
 "Delete" = "Delete";
 
 /* Delete preset temp target */
-"Delete preset \"%@\"" = "Delete preset \"%@\"";
+"Delete preset \"%@\"" = "删除预设\"\"%@\"";
 
 /* Duration of target temp or temp basal */
 "Duration" = "Duration";
