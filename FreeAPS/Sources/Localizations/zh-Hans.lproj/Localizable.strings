@@ -194,7 +194,7 @@
 "Insulin Sensitivities" = "胰岛素敏感系数";
 
 /* */
-"Sensitivity Ratio" = "Sensitivity Ratio";
+"Sensitivity Ratio" = "敏感率";
 
 /*  */
 "Dismiss" = "忽略";
@@ -258,7 +258,7 @@ Enact a temp Basal or a temp target */
 "Preferences" = "选项";
 
 /* Recommended Insulin Fraction in preferences */
-"Recommended Insulin Fraction" = "Recommended Insulin Fraction";
+"Recommended Insulin Fraction" = "建议胰岛素比率";
 
 /* Do you want to show bolus screen after added carbs? */
 "Skip Bolus screen after carbs" = "添加碳水后跳过大剂量操作";
