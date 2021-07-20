@@ -48,7 +48,7 @@ struct LoopView: View {
         if minAgo > 1440 {
             return "--"
         }
-        return NSLocalizedString("\(minAgo) min ago", comment: "Minutes ago since last loop")
+        return "\(minAgo) " + NSLocalizedString("min ago", comment: "Minutes ago since last loop")
     }
 
     private var color: Color {
