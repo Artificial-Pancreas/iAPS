@@ -25,7 +25,11 @@ extension Bolus {
                         HStack {
                             Text("Insulin required").foregroundColor(.secondary)
                             Spacer()
-                            Text(formatter.string(from: viewModel.inslinRequired as NSNumber)! + " U").foregroundColor(.secondary)
+                            Text(
+                                formatter
+                                    .string(from: viewModel.inslinRequired as NSNumber)! +
+                                    NSLocalizedString(" U", comment: "Insulin unit")
+                            ).foregroundColor(.secondary)
                         }.contentShape(Rectangle())
                             .onTapGesture {
                                 viewModel.amount = viewModel.inslinRecommended
@@ -33,7 +37,11 @@ extension Bolus {
                         HStack {
                             Text("Insulin recommended")
                             Spacer()
-                            Text(formatter.string(from: viewModel.inslinRecommended as NSNumber)! + " U")
+                            Text(
+                                formatter
+                                    .string(from: viewModel.inslinRequired as NSNumber)! +
+                                    NSLocalizedString(" U", comment: "Insulin unit")
+                            ).foregroundColor(.secondary)
                         }.contentShape(Rectangle())
                             .onTapGesture {
                                 viewModel.amount = viewModel.inslinRecommended
@@ -76,7 +84,8 @@ extension Bolus {
                 }
             }
             .alert(isPresented: $isAddInsulinAlertPresented) {
-                let amount = formatter.string(from: viewModel.amount as NSNumber)! + " U"
+                let amount = formatter
+                    .string(from: viewModel.amount as NSNumber)! + NSLocalizedString(" U", comment: "Insulin unit")
                 return Alert(
                     title: Text("Are you sure?"),
                     message: Text("Add \(amount) without bolusing"),

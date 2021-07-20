@@ -32,13 +32,19 @@ extension Home {
                 VStack(alignment: .leading, spacing: 12) {
                     HStack {
                         Text("IOB").font(.caption2).foregroundColor(.secondary)
-                        Text((numberFormatter.string(from: (viewModel.suggestion?.iob ?? 0) as NSNumber) ?? "0") + " U")
-                            .font(.system(size: 12, weight: .bold))
+                        Text(
+                            (numberFormatter.string(from: (viewModel.suggestion?.iob ?? 0) as NSNumber) ?? "0") +
+                                NSLocalizedString(" U", comment: "Insulin unit")
+                        )
+                        .font(.system(size: 12, weight: .bold))
                     }
                     HStack {
                         Text("COB").font(.caption2).foregroundColor(.secondary)
-                        Text((numberFormatter.string(from: (viewModel.suggestion?.cob ?? 0) as NSNumber) ?? "0") + " g")
-                            .font(.system(size: 12, weight: .bold))
+                        Text(
+                            (numberFormatter.string(from: (viewModel.suggestion?.cob ?? 0) as NSNumber) ?? "0") +
+                                NSLocalizedString(" g", comment: "gram of carbs")
+                        )
+                        .font(.system(size: 12, weight: .bold))
                     }
                 }
                 Spacer()
@@ -91,9 +97,12 @@ extension Home {
                         .font(.system(size: 12, weight: .bold)).foregroundColor(.loopGray)
                         .padding(.leading, 8)
                 } else if let tempRate = viewModel.tempRate {
-                    Text((numberFormatter.string(from: tempRate as NSNumber) ?? "0") + " U/hr")
-                        .font(.system(size: 12, weight: .bold)).foregroundColor(.insulin)
-                        .padding(.leading, 8)
+                    Text(
+                        (numberFormatter.string(from: tempRate as NSNumber) ?? "0") +
+                            NSLocalizedString(" U/hr", comment: "Unit per hour with space")
+                    )
+                    .font(.system(size: 12, weight: .bold)).foregroundColor(.insulin)
+                    .padding(.leading, 8)
                 }
 
                 if let tempTarget = viewModel.tempTarget {

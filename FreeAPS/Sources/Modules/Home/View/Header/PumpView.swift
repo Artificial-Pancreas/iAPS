@@ -30,9 +30,9 @@ struct PumpView: View {
                         .frame(height: 8)
                         .foregroundColor(reservoirColor)
                     if reservoir == 0xDEAD_BEEF {
-                        Text("50+ U").font(.system(size: 12, weight: .bold))
+                        Text("50+ " + NSLocalizedString("U", comment: "Insulin unit")).font(.system(size: 12, weight: .bold))
                     } else {
-                        Text(reservoirFormatter.string(from: reservoir as NSNumber)! + " U")
+                        Text(reservoirFormatter.string(from: reservoir as NSNumber)! + NSLocalizedString(" U", comment: "Insulin unit"))
                             .font(.system(size: 12, weight: .bold))
                     }
                 }
@@ -74,14 +74,15 @@ struct PumpView: View {
         let minutes = Int(time / 1.minutes.timeInterval)
 
         if days >= 1 {
-            return "\(days)d \(hours)h"
+            return "\(days)" + NSLocalizedString("d", comment: "abbreviation for days") + " \(hours)" +
+            NSLocalizedString("h", comment: "abbreviation for hours")
         }
 
         if hours >= 1 {
-            return "\(hours)h"
+            return "\(hours)" + NSLocalizedString("h", comment: "abbreviation for hours")
         }
 
-        return "\(minutes)m"
+        return "\(minutes)" + NSLocalizedString("m", comment: "abbreviation for minutes")
     }
 
     private var batteryColor: Color {
