@@ -12,6 +12,7 @@
 		0D9A5E34A899219C5C4CDFAF /* DataTableViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9455FA2D92E77A6C4AFED8A3 /* DataTableViewModel.swift */; };
 		17A9D0899046B45E87834820 /* CREditorProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C8D5F457B5AFF763F8CF3DF /* CREditorProvider.swift */; };
 		19434C14DF3F4816F4E4BF2E /* BolusBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77FAEF7B34EEC71B3A7B800C /* BolusBuilder.swift */; };
+		19BE6CBA2674132500624F4A /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 19BE6CBC2674132500624F4A /* Localizable.strings */; };
 		1BBB001DAD60F3B8CEA4B1C7 /* ISFEditorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505E09DC17A0C3D0AF4B66FE /* ISFEditorViewModel.swift */; };
 		1D086541F369D339A74893AC /* BasalProfileEditorBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA56D2DCAB9E0A8AF24D984 /* BasalProfileEditorBuilder.swift */; };
 		1D845DF2E3324130E1D95E67 /* DataTableProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60744C3E9BB3652895C908CC /* DataTableProvider.swift */; };
@@ -314,6 +315,24 @@
 		10CAE3534904CDCA0F367017 /* PumpSettingsEditorBuilder.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PumpSettingsEditorBuilder.swift; sourceTree = "<group>"; };
 		111579A6E3AC6BFA79C4DD43 /* NightscoutConfigBuilder.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NightscoutConfigBuilder.swift; sourceTree = "<group>"; };
 		12204445D7632AF09264A979 /* PreferencesEditorDataFlow.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PreferencesEditorDataFlow.swift; sourceTree = "<group>"; };
+		19BE6CBD2674152700624F4A /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/Localizable.strings; sourceTree = "<group>"; };
+		19BE6CBE2674152D00624F4A /* ca */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ca; path = ca.lproj/Localizable.strings; sourceTree = "<group>"; };
+		19BE6CBF2674153200624F4A /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		19BE6CC02674153800624F4A /* da */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = da; path = da.lproj/Localizable.strings; sourceTree = "<group>"; };
+		19BE6CC12674153C00624F4A /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = nl.lproj/Localizable.strings; sourceTree = "<group>"; };
+		19BE6CC22674154300624F4A /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
+		19BE6CC42674155000624F4A /* fi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fi; path = fi.lproj/Localizable.strings; sourceTree = "<group>"; };
+		19BE6CC52674155A00624F4A /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
+		19BE6CC62674156100624F4A /* el */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = el; path = el.lproj/Localizable.strings; sourceTree = "<group>"; };
+		19BE6CC72674156600624F4A /* he */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = he; path = he.lproj/Localizable.strings; sourceTree = "<group>"; };
+		19BE6CC82674156E00624F4A /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/Localizable.strings; sourceTree = "<group>"; };
+		19BE6CC92674157400624F4A /* nb */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nb; path = nb.lproj/Localizable.strings; sourceTree = "<group>"; };
+		19BE6CCA2674158400624F4A /* pl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pl; path = pl.lproj/Localizable.strings; sourceTree = "<group>"; };
+		19BE6CCB2674158900624F4A /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
+		19BE6CCC2674158F00624F4A /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = sv.lproj/Localizable.strings; sourceTree = "<group>"; };
+		19BE6CCD2674159600624F4A /* uk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uk; path = uk.lproj/Localizable.strings; sourceTree = "<group>"; };
+		19BE6CCE2674159C00624F4A /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
+		19BE6CCF267559A100624F4A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		223EC0494F55A91E3EA69EF4 /* BolusViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = BolusViewModel.swift; sourceTree = "<group>"; };
 		2AD22C985B79A2F0D2EA3D9D /* PumpConfigRootView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PumpConfigRootView.swift; sourceTree = "<group>"; };
 		2F2A13DF0EDEEEDC4106AA2A /* NightscoutConfigDataFlow.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NightscoutConfigDataFlow.swift; sourceTree = "<group>"; };
@@ -624,6 +643,22 @@
 			path = View;
 			sourceTree = "<group>";
 		};
+		19BE6CB6267412C200624F4A /* Localizations */ = {
+			isa = PBXGroup;
+			children = (
+				19BE6CB7267412CF00624F4A /* Main */,
+			);
+			path = Localizations;
+			sourceTree = "<group>";
+		};
+		19BE6CB7267412CF00624F4A /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				19BE6CBC2674132500624F4A /* Localizable.strings */,
+			);
+			path = Main;
+			sourceTree = "<group>";
+		};
 		34CA4DF169B53D67EF18ED8A /* View */ = {
 			isa = PBXGroup;
 			children = (
@@ -676,6 +711,7 @@
 		3811DE1325C9D39E00A708ED /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				19BE6CB6267412C200624F4A /* Localizations */,
 				3811DEDE25C9E2DD00A708ED /* Application */,
 				3811DF0A25CAAAA500A708ED /* APS */,
 				38E98A3225F5300800C0CED0 /* Config */,
@@ -1556,6 +1592,23 @@
 			knownRegions = (
 				en,
 				Base,
+				ar,
+				ca,
+				"zh-Hans",
+				da,
+				nl,
+				fr,
+				fi,
+				de,
+				el,
+				he,
+				it,
+				nb,
+				pl,
+				ru,
+				sv,
+				uk,
+				es,
 			);
 			mainGroup = 388E594F25AD948C0019842D;
 			packageReferences = (
@@ -1581,6 +1634,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				388E596025AD948E0019842D /* Assets.xcassets in Resources */,
+				19BE6CBA2674132500624F4A /* Localizable.strings in Resources */,
 				388E597225AD9CF10019842D /* json in Resources */,
 				388E596F25AD96040019842D /* javascript in Resources */,
 			);
@@ -1865,12 +1919,41 @@
 		};
 /* End PBXTargetDependency section */
 
+/* Begin PBXVariantGroup section */
+		19BE6CBC2674132500624F4A /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				19BE6CBD2674152700624F4A /* ar */,
+				19BE6CBE2674152D00624F4A /* ca */,
+				19BE6CBF2674153200624F4A /* zh-Hans */,
+				19BE6CC02674153800624F4A /* da */,
+				19BE6CC12674153C00624F4A /* nl */,
+				19BE6CC22674154300624F4A /* fr */,
+				19BE6CC42674155000624F4A /* fi */,
+				19BE6CC52674155A00624F4A /* de */,
+				19BE6CC62674156100624F4A /* el */,
+				19BE6CC72674156600624F4A /* he */,
+				19BE6CC82674156E00624F4A /* it */,
+				19BE6CC92674157400624F4A /* nb */,
+				19BE6CCA2674158400624F4A /* pl */,
+				19BE6CCB2674158900624F4A /* ru */,
+				19BE6CCC2674158F00624F4A /* sv */,
+				19BE6CCD2674159600624F4A /* uk */,
+				19BE6CCE2674159C00624F4A /* es */,
+				19BE6CCF267559A100624F4A /* en */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
 /* Begin XCBuildConfiguration section */
 		388E596525AD948E0019842D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 38F3783A2613555C009DB701 /* Config.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -1934,6 +2017,7 @@
 			baseConfigurationReference = 38F3783A2613555C009DB701 /* Config.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
