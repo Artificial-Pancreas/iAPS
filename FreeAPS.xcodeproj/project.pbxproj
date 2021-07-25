@@ -315,6 +315,7 @@
 		10CAE3534904CDCA0F367017 /* PumpSettingsEditorBuilder.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PumpSettingsEditorBuilder.swift; sourceTree = "<group>"; };
 		111579A6E3AC6BFA79C4DD43 /* NightscoutConfigBuilder.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NightscoutConfigBuilder.swift; sourceTree = "<group>"; };
 		12204445D7632AF09264A979 /* PreferencesEditorDataFlow.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PreferencesEditorDataFlow.swift; sourceTree = "<group>"; };
+		1918333A26ADA46800F45722 /* fi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fi; path = fi.lproj/Localizable.strings; sourceTree = "<group>"; };
 		198377D3266BFFF6004DE65E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		198377D5266C0A05004DE65E /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/Localizable.strings; sourceTree = "<group>"; };
 		198377D6266C0A0A004DE65E /* ca */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ca; path = ca.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -1599,6 +1600,7 @@
 				sv,
 				tr,
 				uk,
+				fi,
 			);
 			mainGroup = 388E594F25AD948C0019842D;
 			packageReferences = (
@@ -1930,6 +1932,7 @@
 				198377E2266C0AC8004DE65E /* sv */,
 				198377E3266C0ADC004DE65E /* tr */,
 				198377E4266C13D2004DE65E /* uk */,
+				1918333A26ADA46800F45722 /* fi */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
