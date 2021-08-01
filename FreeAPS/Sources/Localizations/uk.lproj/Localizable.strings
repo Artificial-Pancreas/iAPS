@@ -58,8 +58,8 @@
 /* Looping in progress */
 "looping" = "в процесі";
 
-/* %d min ago, Time since last loop */
-"%d min ago" = "%d хв тому";
+/* min ago since last loop */
+"min ago" = "хв тому";
 
 /* Status Title */
 "No suggestion" = "Нема рекомендацій";

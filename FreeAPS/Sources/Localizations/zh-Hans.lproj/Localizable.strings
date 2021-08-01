@@ -58,8 +58,8 @@
 /* Looping in progress */
 "looping" = "闭环中";
 
-/* %d min ago, Time since last loop */
-"%d min ago" = "%d 分钟前";
+/* min ago since last loop */
+"min ago" = "分钟前";
 
 /* Status Title */
 "No suggestion" = "暂无建议";

@@ -58,8 +58,8 @@
 /* Looping in progress */
 "looping" = "выполняется";
 
-/* %d min ago, Time since last loop */
-"%d min ago" = "%d мин. назад";
+/* min ago since last loop */
+"min ago" = "мин. назад";
 
 /* Status Title */
 "No suggestion" = "Нет предложений";

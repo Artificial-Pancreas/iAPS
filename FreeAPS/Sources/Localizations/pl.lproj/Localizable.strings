@@ -58,8 +58,8 @@
 /* Looping in progress */
 "looping" = "looping";
 
-/* %d min ago, Time since last loop */
-"%d min ago" = "%d minut temu";
+/* min ago since last loop */
+"min ago" = "minut temu";
 
 /* Status Title */
 "No suggestion" = "Brak sugestii";
