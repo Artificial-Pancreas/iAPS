@@ -646,9 +646,17 @@
 		198377CF266BFEDE004DE65E /* Localizations */ = {
 			isa = PBXGroup;
 			children = (
-				198377D4266BFFF6004DE65E /* Localizable.strings */,
+				19D440A926B6FEBD008DA6C8 /* Main */,
 			);
 			path = Localizations;
+			sourceTree = "<group>";
+		};
+		19D440A926B6FEBD008DA6C8 /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				198377D4266BFFF6004DE65E /* Localizable.strings */,
+			);
+			path = Main;
 			sourceTree = "<group>";
 		};
 		34CA4DF169B53D67EF18ED8A /* View */ = {
