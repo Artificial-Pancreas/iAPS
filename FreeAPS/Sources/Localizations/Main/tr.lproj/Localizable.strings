@@ -4,240 +4,239 @@
 */
 /* Bolus screen when adding insulin */
 
-"Add insulin without actually bolusing" = "Insulin nur erfassen, keine Abgabe";
-
-/* Add insulin from source outside of pump */
-"Add %@ without bolusing" = "Erfasse %@ ohne Bolusabgabe";
+"Add insulin without actually bolusing" = "Add insulin without actually bolusing";
 
 "Bolus" = "Bolus";
 
-"Close" = "Schließen";
+"Close" = "Close";
 
 /* Continue after added carbs without bolus */
-"Continue without bolus" = "Ohne Abgabe eines Bolus fortfahren";
+"Continue without bolus" = "Continue without bolus";
 
 /* Header */
-"Enact Bolus" = "Bolus abgeben";
+"Enact Bolus" = "Enact Bolus";
 
 /* Button */
-"Enact bolus" = "Bolus abgeben";
+"Enact bolus" = "Enact bolus";
 
 /*  */
-"Insulin recommended" = "Empfohlener Bolus";
+"Insulin recommended" = "Insulin recommended";
 
 /*  */
-"Insulin required" = "Benötigtes Insulin";
+"Insulin required" = "Insulin required";
 
 /* Bolus screen */
-"Recommendation" = "Empfehlung";
+"Recommendation" = "Recommendation";
 
 /* Button */
-"Clear" = "Eingabe löschen";
+"Clear" = "Clear";
 
 /* Button */
-"Done" = "Fertig";
+"Done" = "Done";
 
 /*  */
-"Wait please" = "Bitte warten";
+"Wait please" = "Wait please";
 
 /*  */
-"Agree and continue" = "Zustimmen und fortfahren";
+"Agree and continue" = "Agree and Continue";
 
 /* Disclaimer when opening app for first time*/
-"Disclaimer" = "Haftungsausschluss";
+"Disclaimer" = "Disclaimer";
 
 /* Disclaimer Description */
-"FreeAPS X is in an active development state. We do not recommend to use the system for everyday control of blood glucose! Use it for testing purposes only at your own risk. We are not responsible for your decisions and actions." = "FreeAPS X befindet sich noch in der Entwicklung. Wir empfehlen das System nicht zur alltäglichen Kontrolle Ihres Blutzuckers zu verwenden. Verwendung bitte nur zu Testzwecken und auf eigenes Risiko. Wir können keine Verantwortung für Ihre Entscheidungen und Aktionen übernehmen.";
+"FreeAPS X is in an active development state. We do not recommend to use the system for everyday control of blood glucose! Use it for testing purposes only at your own risk. We are not responsible for your decisions and actions." = "FreeAPS X is in an active development state. We do not recommend to use the system for everyday control of blood glucose! Use it for testing purposes only at your own risk. We are not responsible for your decisions and actions.";
 
 /* Enacted at a date */
-"Enacted at %@" = "Gestartet um %@";
+"Enacted at %@" = "Enacted at %@";
 
 /* Home title */
-"Home" = "Startseite";
+"Home" = "Home";
 
 /* Looping in progress */
 "looping" = "looping";
 
-/* min ago since last loop */
-"min ago" = "min ago";
+/* %d min ago, currently not being translated, I don't know why? */
+"%d min ago" = "%d min ago";
 
 /* Status Title */
-"No suggestion" = "Kein Vorschlag";
+"No suggestion" = "No suggestion";
 
 /* Replace pod text in Header */
-"Replace pod" = "Pod ersetzen";
+"Replace pod" = "Replace pod";
 
 /* Suggested at a date */
-"Suggested at %@" = "Empfohlen um %@";
+"Suggested at %@" = "Suggested at %@";
 
 /* Add carbs screen */
-"Add Carbs" = "Kohlenhydrate hinzufügen";
+"Add Carbs" = "Add Carbs";
 
 /*  */
-"Amount Carbs" = "Kohlenhydratmenge";
+"Amount Carbs" = "Amount Carbs";
 
 /* Grams unit */
-"grams" = "Gramm";
+"grams" = "grams";
 
-/*  */
-"Carbs required" = "Kohlenhydrate erforderlich";
+/* A you sure? Typo in code */
+"A you sure?" = "A you sure?";
 
-/* */
-"Are you sure?" = "Sind Sie sicher?";
+/* Are your sure? Typo in code*/
+"Are your sure?" = "Are you sure?";
 
 /* Bottom target temp */
-"Bottom target" = "Untergrenze";
+"Bottom target" = "Bottom target";
 
 /* Cancel preset name */
-"Cancel" = "Abbrechen";
+"Cancel" = "Cancel";
 
 /*  */
-"Cancel Temp Target" = "Temporäres Ziel (TT) abbrechen";
+"Cancel Temp Target" = "Cancel Temp Target";
 
 /* Custom temp target */
-"Custom" = "Benutzerdefiniert";
+"Custom" = "Custom";
 
 /*  */
-"Date" = "Datum";
+"Date" = "Date";
 
 /*  */
-"Delete" = "Löschen";
+"Delete" = "Delete";
 
 /* Delete preset temp target */
-"Delete preset \"%@\"" = "Preset \"%@\" löschen";
+"Delete preset \"%@\"" = "Delete preset \"%@\"";
 
-/* Duration of target temp or temp basal */
-"Duration" = "Dauer";
-
-/*  */
-"Enact Temp Target" = "Temporäres Ziel (TT) starten";
+/* Duration of target temp */
+"Duration" = "Duration";
 
 /*  */
-"Enter preset name" = "Geben Sie einen Namen für das Preset ein";
+"Enact Temp Target" = "Enact Temp Target";
+
+/*  */
+"Enter preset name" = "Enter preset name";
 
 /* minutes of target temp */
-"minutes" = "Minuten";
+"minutes" = "minutes";
 
 /*  */
 "Presets" = "Presets";
 
 /* Save preset name */
-"Save" = "Speichern";
+"Save" = "Save";
 
 /*  */
-"Save as preset" = "Als Preset speichern";
+"Save as preset" = "Save as preset";
 
 /* Upper temp target limit */
-"Top target" = "Obergrenze";
+"Top target" = "Top target";
 
 /*  */
 "Autotune" = "Autotune";
 
 /*  */
-"Basal profile" = "Basalraten-Profil";
+"Basal profile" = "Basal profile";
 
 /*  */
-"Carb ratio" = "Kohlenhydratfaktor";
+"Carb ratio" = "Carb ratio";
 
 /*  */
-"Delete autotune data" = "Autotune Daten löschen";
+"Delete autotune data" = "Delete autotune data";
 
 /*  */
-"Run now" = "Ausführen";
+"Run now" = "Run now";
 
 /*  */
-"Sensitivity" = "Empfindlichkeit";
+"Sensitivity" = "Sensitivity";
 
 /*  */
-"Use Autotune" = "Autotune verwenden";
+"Use Autotune" = "use Autotune";
 
 /* Add profile basal */
-"Add" = "Hinzufügen";
+"Add" = "Add";
 
 /*  */
-"Basal Profile" = "Basalraten-Profil";
+"Basal Profile" = "Basal Profile";
 
 /* Rate basal profile */
-"Rate" = "BR";
+"Rate" = "Rate";
 
 /*  */
-"Save on Pump" = "In Pumpe speichern";
+"Save on Pump" = "Save on Pump";
 
 /*  */
-"Saving..." = "Speichern...";
+"Saving..." = "Saving...";
 
 /*  */
-"Schedule" = "Zeitplan";
+"Schedule" = "Schedule";
 
 /*  */
-"starts at" = "Startet um";
+"starts at" = "starts at";
 
 /* Time basal profile */
-"Time" = "Uhrzeit";
+"Time" = "Time";
 
 /* */
-"Calculated Ratio" = "Berechnetes Verhältnis";
+"Calculated Ratio" = "Calculated Ratio";
 
 /* Carb Ratios header */
-"Carb Ratios" = "Kohlenhydratfaktoren";
+"Carb Ratios" = "Carb Ratios";
 
 /*  */
-"Ratio" = "Verhältnis";
+"Ratio" = "Ratio";
 
 /*  */
 "Autosens" = "Autosens";
 
 /*  */
-"Calculated Sensitivity" = "Berechnete Empfindlichkeit";
+"Calculated Sensitivity" = "Calculated Sensitivity";
 
 /*  */
-"Insulin Sensitivities" = "Insulinempfindlichkeit";
+"Insulin Sensitivities" = "Insulin Sensitivities";
 
 /* */
-"Sensitivity Ratio" = "Empfindlichkeitsverhältnis";
+"Sensitivity Ratio" = "Sensitivity Ratio";
 
 /*  */
-"Dismiss" = "Verwerfen";
+"Dismiss" = "Dismiss";
 
 /*  */
-"Important message" = "Wichtige Nachricht";
+"Important message" = "Important message";
 
 /*  */
-"Amount" = "Menge";
+"Amount" = "Amount";
 
 /* */
-"Cancel Temp Basal" = "Temporäre Basalrate abbrechen";
+"Cancel Temp Basal" = "Cancel Temp Basal";
 
-/* Enact
-Enact a temp Basal or a temp target */
-"Enact" = "Starte";
+/*  */
+"Duration" = "Duration";
+
+/* Enact temp Basal*/
+"Enact" = "Enact";
 
 /* */
-"Manual Temp Basal" = "Manuelle Temporäre Basalrate";
+"Manual Temp Basal" = "Manual Temp Basal";
 
 /* Allow uploads tp NS */
-"Allow uploads" = "Erlaube Hochladen von Daten";
+"Allow uploads" = "Allow uploads";
 
 /* API secret in NS */
 "API secret" = "API secret";
 
 /* Connect to NS */
-"Connect" = "Verbinden";
+"Connect" = "Connect";
 
 /* Connected to NS */
-"Connected!" = "Verbunden!";
+"Connected!" = "Connected!";
 
 /* Connecting to NS */
-"Connecting..." = "Verbindung wird hergestellt...";
+"Connecting..." = "Connecting...";
 
 /*  */
-"Invalid URL" = "Ungültige URL";
+"Invalid URL" = "Invalid URL";
 
 /*  */
-"Local glucose source" = "Lokale BZ-Quelle";
+"Local glucose source" = "Local glucose source";
 
 /* Header */
-"Nightscout Config" = "Nightscout Konfiguration";
+"Nightscout Config" = "Nightscout Config";
 
 /*  */
 "Port" = "Port";
@@ -246,160 +245,127 @@ Enact a temp Basal or a temp target */
 "URL" = "URL";
 
 /**/
-"Use local glucose server" = "Lokalen BZ-Server verwenden";
+"Use local glucose server" = "Use local glucose server";
 
 /*  */
-"Edit settings json" = "Einstellungen bearbeiten";
+"Edit settings json" = "Edit settings json";
 
 /* */
-"Glucose units" = "BZ Einheiten";
+"Glucose units" = "Glucose units";
 
 /*  */
-"Preferences" = "Einstellungen";
+"Preferences" = "Preferences";
 
 /* Recommended Insulin Fraction in preferences */
-"Recommended Insulin Fraction" = "Empfohlener Insulin Anteil";
+"Recommended Insulin Fraction" = "Recommended Insulin Fraction";
 
 /* Do you want to show bolus screen after added carbs? */
-"Skip Bolus screen after carbs" = "Überspringe Bolus-Vorschlag nach Kohlenhydrateingabe";
+"Skip Bolus screen after carbs" = "Skip Bolus screen after carbs";
 
 /* Allow remote control from NS */
-"Remote control" = "Fernbedienung";
+"Remote control" = "Remote control";
 
 /* Add Medtronic pump */
-"Add Medtronic" = "Medtronic-Pumpe hinzufügen";
+"Add Medtronic" = "Add Medtronic";
 
 /* Add Omnipod pump */
-"Add Omnipod" = "Omnipod hinzufügen";
+"Add Omnipod" = "Add Omnipod";
 
 /* Add Simulator pump */
-"Add Simulator" = "Simulator hinzufügen";
+"Add Simulator" = "Add Simulator";
 
 /* Insulin model */
-"Model" = "Modell";
+"Model" = "Model";
 
 /*  */
-"Pump config" = "Pumpenkonfiguration";
+"Pump config" = "Pump config";
 
 /*  */
-"Delivery limits" = "Verabreichungsgrenzen";
+"Delivery limits" = "Delivery limits";
 
 /*  */
-"Duration of Insulin Action" = "Dauer der Insulinwirkung";
+"Duration of Insulin Action" = "Duration of Insulin Action";
 
 /* hours of duration of insulin activity */
-"hours" = "Stunden";
+"hours" = "hours";
 
 /* Max setting */
-"Max Basal" = "Maximale Basalrate";
+"Max Basal" = "Max Basal";
 
 /* Max setting */
-"Max Bolus" = "Maximaler Bolus";
+"Max Bolus" = "Max Bolus";
 
 /* */
-"Pump Settings" = "Pumpeneinstellungen";
+"Pump Settings" = "Pump Settings";
 
-/* Insulin unit per hour */
-"U/hr" = "IE/Std";
+/*  */
+"Save on Pump" = "Save on Pump";
 
-/* Unit in number of units delivered (keep the space character!) */
-" U" = "IE";
-
-/* /Insulin unit */
-"/U" = "/IE";
-
-/* Insulin unit */
-"U" = "IE";
-
-/* Unit per hour with space */
-" U/hr" = "IE/h";
-
-/* Number of units per hour*/
-"%@ U/hr" = "%@ IE/h";
-
-/* Number of units insulin delivered */
-"%@ U" = "%@ IE";
-
-/*Carb ratio unit */
-"g/U" = "g/IE";
-
-/* grams */
-" g" = " g";
-
-/* when 0 U/hr */
-"0 U/hr" = "0 IE/h";
-
-/* abbreviation for days */
-"d" = "d";
-
-/* abbreviation for hours */
-"h" = "h";
-
-/* abbreviation for minutes */
-"m" = "m";
+/*  */
+"U/hr" = "U/hr";
 
 /* */
 "Autotune Conf" = "Autotune";
 
 /*  */
-"Basal Profile Conf" = "Basalraten-Profile";
+"Basal Profile Conf" = "Basal Profile";
 
 /*  */
-"Carb Ratios Conf" = "Kohlenhydratfaktoren";
+"Carb Ratios Conf" = "Carb Ratios";
 
 /*  */
-"Closed loop" = "Geschlossener Loop";
+"Closed loop" = "Closed loop";
 
 /* */
-"Configuration" = "Konfiguration";
+"Configuration" = "Configuration";
 
 /* */
-"Devices" = "Geräte";
+"Devices" = "Devices";
 
 /* */
-"Insulin Sensitivities Conf" = "Insulinempfindlichkeit";
+"Insulin Sensitivities Conf" = "Insulin Sensitivities";
 
 /* */
-"Preferences Conf" = "Einstellungen";
+"Preferences Conf" = "Preferences";
 
 /*  */
-"Pump" = "Pumpe";
+"Pump" = "Pump";
 
 /*  */
-"Pump Settings Conf" = "Pumpeneinstellungen";
+"Pump Settings Conf" = "Pump Settings";
 
 /*  */
-"Services" = "Dienste";
+"Services" = "Services";
 
 /*  */
-"Settings" = "Einstellungen";
+"Settings" = "Settings";
 
 /* 2 log files to share */
-"Share logs" = "Logs teilen";
+"Share logs" = "Share logs";
 
 /*  */
-"Target Ranges Conf" = "Zielbereiche";
+"Target Ranges Conf" = "Target Ranges";
 
 /* Upper target */
-"High target" = "Obere Grenze";
+"High target" = "High target";
 
 /* Lower target */
-"Low target" = "Untere Grenze";
+"Low target" = "Low target";
 
 /*  */
-"Target Ranges" = "Zielbereiche";
+"Target Ranges" = "Target Ranges";
 
 /* When bolusing */
-"Bolusing" = "Bolusabgabe";
+"Bolusing" = "Bolusing";
 
 /* */
-"Pump suspended" = "Pumpe pausiert";
+"Pump suspended" = "Pump suspended";
 
 /* */
 "Middleware" = "Middleware";
 
 /* Header */
-"History" = "Verlauf";
+"History" = "History";
 
 /*
   Infotexts from openaps.docs and androidaps.docs
@@ -456,7 +422,7 @@ Enact a temp Basal or a temp target */
 "Defaults to false. When true, allows supermicrobolus (if otherwise enabled) even with high temp targets." = "Defaults to false. When true, allows supermicrobolus (if otherwise enabled) even with high temp targets.";
 
 /* "Use Custom Peak Time” */
-"Defaults to false. Setting to true allows changing insulinPeakTime" = "Ist standardmäßig auf aus. Wenn eingeschaltet erlaubt dies freies Einstellen des Wirkungshochs des Insulins";
+"Defaults to false. Setting to true allows changing insulinPeakTime" = "Defaults to false. Setting to true allows changing insulinPeakTime";
 
 /* "Suspend Zeros IOB” */
 "Many people occasionally forget to resume / unsuspend their pump after reconnecting it. If you’re one of them, and you are willing to reliably set a zero temp basal whenever suspending and disconnecting your pump, this feature has your back. If enabled, it will automatically resume / unsuspend the pump if you forget to do so before your zero temp expires. As long as the zero temp is still running, it will leave the pump suspended." = " Default is false. Any existing temp basals during times the pump was suspended will be deleted and 0 temp basals to negate the profile basal rates during times pump is suspended will be added.";
@@ -494,7 +460,7 @@ Enact a temp Basal or a temp target */
 "This is the fraction of carbs we’ll assume will absorb over 4h if we don’t yet see carb absorption." = "This is the fraction of carbs we’ll assume will absorb over 4h if we don’t yet see carb absorption.";
 
 /* "Remaining Carbs Cap" */
-"This is the amount of the maximum number of carbs we’ll assume will absorb over 4h if we don’t yet see carb absorption." = "Dies ist die maximale Anzahl der geschätzt abgebauten Kohlenhydrate in 4 Stunden, wenn keine Kohlenhydratabbau ersichtlich ist.";
+"This is the amount of the maximum number of carbs we’ll assume will absorb over 4h if we don’t yet see carb absorption." = "This is the amount of the maximum number of carbs we’ll assume will absorb over 4h if we don’t yet see carb absorption.";
 
 /* ”Max SMB Basal Minutes" */
 "Defaults to start at 30. This is the maximum minutes of basal that can be delivered as a single SMB with uncovered COB. This gives the ability to make SMB more aggressive if you choose. It is recommended that the value is set to start at 30, in line with the default, and if you choose to increase this value, do so in no more than 15 minute increments, keeping a close eye on the effects of the changes. It is not recommended to set this value higher than 90 mins, as this may affect the ability for the algorithm to safely zero temp. It is also recommended that pushover is used when setting the value to be greater than default, so that alerts are generated for any predicted lows or highs." = "Defaults to start at 30. This is the maximum minutes of basal that can be delivered as a single SMB with uncovered COB. This gives the ability to make SMB more aggressive if you choose. It is recommended that the value is set to start at 30, in line with the default, and if you choose to increase this value, do so in no more than 15 minute increments, keeping a close eye on the effects of the changes. It is not recommended to set this value higher than 90 mins, as this may affect the ability for the algorithm to safely zero temp. It is also recommended that pushover is used when setting the value to be greater than default, so that alerts are generated for any predicted lows or highs.";
@@ -503,16 +469,16 @@ Enact a temp Basal or a temp target */
 "Defaults to start at 30. This is the maximum minutes of basal that can be delivered by UAM as a single SMB when IOB exceeds COB. This gives the ability to make UAM more or less aggressive if you choose. It is recommended that the value is set to start at 30, in line with the default, and if you choose to increase this value, do so in no more than 15 minute increments, keeping a close eye on the effects of the changes. Reducing the value will cause UAM to dose less insulin for each SMB. It is not recommended to set this value higher than 60 mins, as this may affect the ability for the algorithm to safely zero temp. It is also recommended that pushover is used when setting the value to be greater than default, so that alerts are generated for any predicted lows or highs." = "Defaults to start at 30. This is the maximum minutes of basal that can be delivered by UAM as a single SMB when IOB exceeds COB. This gives the ability to make UAM more or less aggressive if you choose. It is recommended that the value is set to start at 30, in line with the default, and if you choose to increase this value, do so in no more than 15 minute increments, keeping a close eye on the effects of the changes. Reducing the value will cause UAM to dose less insulin for each SMB. It is not recommended to set this value higher than 60 mins, as this may affect the ability for the algorithm to safely zero temp. It is also recommended that pushover is used when setting the value to be greater than default, so that alerts are generated for any predicted lows or highs.";
 
 /* "SMB Interval" */
-"Minimum duration in minutes between two enacted SMBs" = "Minimale Zeit die zwischen zwei SMBs verlaufen darf, in Minuten";
+"Minimum duration in minutes between two enacted SMBs" = "Minimum duration in minutes between two enacted SMBs";
 
 /* "Bolus Increment" */
-"Smallest possible bolus amount" = "Kleinste mögliche Bolusmenge";
+"Smallest possible bolus amount" = "Smallest possible bolus amount";
 
 /* "Insulin Peak Time" */
-"Maximun blood glucose lowering effect of insulin, in minutes" = "Das Wirkungshoch des Insulins, in Minuten";
+"Maximun blood glucose lowering effect of insulin, in minutes" = "Maximun blood glucose lowering effect of insulin, in minutes";
 
 /* "Carbs Req Threshold" */
 "Grams of carbsReq to trigger a pushover. Defaults to 1 (for 1 gram of carbohydrate). Can be increased if you only want to get Pushover for carbsReq at X threshold." = "Grams of carbsReq to trigger a pushover. Defaults to 1 (for 1 gram of carbohydrate). Can be increased if you only want to get Pushover for carbsReq at X threshold.";
 
 /* "Noisy CGM Target Multiplier" */
-"Nothing here yet..." = "Bis jetzt noch nicht hier...";
+"Nothing here yet..." = "Nothing here yet...";
