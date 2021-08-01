@@ -412,10 +412,13 @@ Enact a temp Basal or a temp target */
 /* ”High Temptarget Raises Sensitivity" */
 "Defaults to false. When set to true, raises sensitivity (lower sensitivity ratio) for temp targets set to >= 111. Synonym for exercise_mode. The higher your temp target above 110 will result in more sensitive (lower) ratios, e.g., temp target of 120 results in sensitivity ratio of 0.75, while 140 results in 0.6 (with default halfBasalTarget of 160)." = "
 默认禁用。当设置为 \"true \"时，对设置为>=111的临时目标提高敏感系数（降低灵敏度比率）。与exercise_mode同义。你的临时目标越高于110，将导致更低的敏感系数，例如，临时目标为120，导致敏感系数为0.75，而140导致0.6（默认halfBasalTarget为160）。";
+
 /* ”Low Temptarget Lowers Sensitivity" */
 "Defaults to false. When set to true, can lower sensitivity (higher sensitivity ratio) for temptargets <= 99. The lower your temp target below 100 will result in less sensitive (higher) ratios, e.g., temp target of 95 results in sensitivity ratio of 1.09, while 85 results in 1.33 (with default halfBasalTarget of 160)." = "默认禁用。当设置为 \"true \"时，当临时目标<=99时会降低敏感系数（较高的灵敏度比率）。血糖低于100mg/dL时,临时目标越低，会导致较高的敏感系数，例如，温度目标为95会导致敏感系数为1.09，而85会导致1.33（默认halfBasalTarget为160）。";
+
 /* ”Sensitivity Raises Target" */
 "When true, raises BG target when autosens detects sensitivity" = "当启用时，当Autosens检测到敏感度变大时，会提高血糖目标。";
+
 /* ”Resistance Lowers Target" */
 "Defaults to false. When true, will lower BG target when autosens detects resistance" = "默认禁用。当启用时，当Autosens检测到抵抗时，将降低血糖目标。";
 
