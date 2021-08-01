@@ -242,7 +242,7 @@ extension PreferencesEditor {
                     keypath: \.suspendZerosIOB,
                     value: preferences.suspendZerosIOB,
                     infoText: NSLocalizedString(
-                        "Many people occasionally forget to resume / unsuspend their pump after reconnecting it. If you’re one of them, and you are willing to reliably set a zero temp basal whenever suspending and disconnecting your pump, this feature has your back. If enabled, it will automatically resume / unsuspend the pump if you forget to do so before your zero temp expires. As long as the zero temp is still running, it will leave the pump suspended.",
+                        "Default is false. Any existing temp basals during times the pump was suspended will be deleted and 0 temp basals to negate the profile basal rates during times pump is suspended will be added.",
                         comment: "Suspend Zeros IOB"
                     ),
                     settable: self
