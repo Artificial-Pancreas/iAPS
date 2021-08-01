@@ -2,8 +2,8 @@
   Localizable.strings
   FreeAPS X
 */
-
 /* Bolus screen when adding insulin */
+
 "Add insulin without actually bolusing" = "Lägg till insulin utan att ge bolus";
 
 /* Add insulin from source outside of pump */
@@ -405,8 +405,8 @@ Enact a temp Basal or a temp target */
   Infotexts from openaps.docs and androidaps.docs
   FreeAPS
 */
-
 /* ”Rewind Resets Autosens” */
+
 "This feature, enabled by default, resets the autosens ratio to neutral when you rewind your pump, on the assumption that this corresponds to a probable site change. Autosens will begin learning sensitivity anew from the time of the rewind, which may take up to 6 hours. If you usually rewind your pump independently of site changes, you may want to consider disabling this feature." = "Denna funktion, på som förval, återställer 'autosens' kvot till neutralt läge vid reservoarbyten, då det antas att du vid detta tillfälle även byter infusionskanyl. 'Autosens' kommer nu börja lära sig din insulinkänslighet på nytt, vilket kan ta upp till 6 timmar. Om du vanligtvis gör reservoarbyten oberoende av kanylbyten, kanske du ska överväga att inaktivera denna funktion.";
 
 /* ”High Temptarget Raises Sensitivity" */
@@ -434,7 +434,7 @@ Enact a temp Basal or a temp target */
 "Defaults to false, so that OpenAPS will set temps whenever it can, so it will be easier to see if the system is working, even when you are offline. This means OpenAPS will set a “neutral” temp (same as your default basal) if no adjustments are needed. If you are a light sleeper and the “on the hour” buzzing or beeping wakes you up (even in vibrate mode), you may want to turn this to “true” to skip setting neutral temps. However, we recommend leaving neutral temps enabled for most people who will be using this system on the go and out of constant connectivity.\n\nNote: if set to true, in order to reduce notifications at the top of the hour, it will also attempt to cancel temp basals (unless BG or minGuardBG is below threshold and a zero-temp is needed) prior to the top of the hour. Normally a new temp basal will be set (if still needed) after the top of the hour, but that may be delayed if the rig has issues connecting to the pump. People who want to minimize the ‘on the hour’ temp basal notification beeps/vibrations may choose to accept that risk and choose to set skip_neutral_temps to true." = "Av som förval, så att FreeAPS X kan ställa in temporära basaldoser närhelst den kan, vilket gör det lättare att se ifall systemet fungerar, även när du är offline. Detta innebär att FreeAPS X kommer att ställa in en ”neutral” temp (samma som din ordinarie basal) när inga justeringar behövs. Gammal inställning från OpenAPS för att minska ljud och notiser mitt i natten från dessa 'rigs'. Vi rekommenderar att man lämnar neutrala temporära basaler aktiverade. ";
 
 /* "Unsuspend If No Temp” */
-"Many people occasionally forget to resume / unsuspend their pump after reconnecting it. If you’re one of them, and you are willing to reliably set a zero temp basal whenever suspending and disconnecting your pump, this feature has your back. If enabled, it will automatically resume / unsuspend the pump if you forget to do so before your zero temp expires. As long as the zero temp is still running, it will leave the pump suspended." = "Vissa glömmer ibland att återuppta sin insulintillförsel efter att ha pausat den. För dessa, som är villiga att ställa in en temporär basal på noll vid paus av pump, kan denna funktion vara till hjälp. Om aktiverad återupptas pumpen, om du skulle glömma att göra detta själv innan temp basalen på 0 IE/h går ut. Så länge temp. basalen på 0 är igång kommer pumpen att vara avstängd.";
+"Many people occasionally forget to resume / unsuspend their pump after reconnecting it. If you’re one of them, and you are willing to reliably set a zero temp basal whenever suspending and disconnecting your pump, this feature has your back. If enabled, it will automatically resume / unsuspend the pump if you forget to do so before your zero temp expires. As long as the zero temp is still running, it will leave the pump suspended." = " Standardvärde Av för denna inställning. Alla eventuella temporära basaler som pågått under tider pumpen varit pausad kommer att raderas, dessutom kommer de ordinarie basaldoserna ersättas med temporära basaler på 0 IE/h.";
 
 /* "Enable UAM" */
 "With this option enabled, the SMB algorithm can recognize unannounced meals. This is helpful, if you forget to tell AndroidAPS about your carbs or estimate your carbs wrong and the amount of entered carbs is wrong or if a meal with lots of fat and protein has a longer duration than expected. Without any carb entry, UAM can recognize fast glucose increasments caused by carbs, adrenaline, etc, and tries to adjust it with SMBs. This also works the opposite way: if there is a fast glucose decreasement, it can stop SMBs earlier." = "Med denna inställning på kan SMB-algoritmen upptäcka kolhydrater som inte matats in. Detta kan vara till hjälp, om du glömmer att mata in eller uppskattar dina kolhydrater fel, fel eller vid måltider med mycket fett och protein, som har en längre verkan än förväntat. Utan inlagda kolhydrater kan UAM känna igen snabba glukosförändringar orsakade av kolhydrater, adrenalin, etc, och försöker justera dessa med SMBs. Detta fungerar också omvänt: vid snabb glukosminskning stoppas SMB:s tidigare.";
@@ -458,7 +458,8 @@ Enact a temp Basal or a temp target */
 /* "Use Custom Peak Time” */
 "Defaults to false. Setting to true allows changing insulinPeakTime" = "Av som förval. Läge på tillåter ändring av 'insulinPeakTime'";
 
-/* "Suspend Zeros IOB” */
+/*  Default is false. Any existing temp basals during times the pump was suspended will be deleted and 0 temp basals to negate the profile basal rates during times pump is suspended will be added.
+"Suspend Zeros IOB” */
 "Many people occasionally forget to resume / unsuspend their pump after reconnecting it. If you’re one of them, and you are willing to reliably set a zero temp basal whenever suspending and disconnecting your pump, this feature has your back. If enabled, it will automatically resume / unsuspend the pump if you forget to do so before your zero temp expires. As long as the zero temp is still running, it will leave the pump suspended." = " Standardvärde Av för denna inställning. Alla eventuella temporära basaler som pågått under tider pumpen varit pausad kommer att raderas, dessutom kommer de ordinarie basaldoserna ersättas med temporära basaler på 0 IE/h.";
 
 /* "Max IOB" */

@@ -2,8 +2,8 @@
   Localizable.strings
   FreeAPS X
 */
-
 /* Bolus screen when adding insulin */
+
 "Add insulin without actually bolusing" = "仅添加胰岛素 没有实际注射";
 
 /* Add insulin from source outside of pump */
@@ -405,8 +405,8 @@ Enact a temp Basal or a temp target */
   Infotexts from openaps.docs and androidaps.docs
   FreeAPS
 */
-
 /* ”Rewind Resets Autosens” */
+
 "This feature, enabled by default, resets the autosens ratio to neutral when you rewind your pump, on the assumption that this corresponds to a probable site change. Autosens will begin learning sensitivity anew from the time of the rewind, which may take up to 6 hours. If you usually rewind your pump independently of site changes, you may want to consider disabling this feature." = "该功能默认启用，当复位胰岛素泵时，Autosens参数会重置为中性，这基于复位胰岛素泵是您会更换管路部位的假设。Autosens将会在胰岛素泵复位后开始重新学习灵敏度，这可能需要6个小时。如果你通常复位泵时并没有同时更换部位，你可能要考虑禁用这一功能。";
 
 /* ”High Temptarget Raises Sensitivity" */
@@ -460,7 +460,8 @@ Enact a temp Basal or a temp target */
 /* "Use Custom Peak Time” */
 "Defaults to false. Setting to true allows changing insulinPeakTime" = "默认禁用，如果启用则可以调整模拟胰岛素达峰时间";
 
-/* "Suspend Zeros IOB” */
+/*  Default is false. Any existing temp basals during times the pump was suspended will be deleted and 0 temp basals to negate the profile basal rates during times pump is suspended will be added.
+"Suspend Zeros IOB” */
 "Many people occasionally forget to resume / unsuspend their pump after reconnecting it. If you’re one of them, and you are willing to reliably set a zero temp basal whenever suspending and disconnecting your pump, this feature has your back. If enabled, it will automatically resume / unsuspend the pump if you forget to do so before your zero temp expires. As long as the zero temp is still running, it will leave the pump suspended." = " 默认为false。在泵被暂停期间，任何现有的临时基础率将被删除，并以空的基础率来抵消配置基础率。";
 
 /* "Max IOB" */
