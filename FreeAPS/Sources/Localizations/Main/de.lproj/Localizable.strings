@@ -59,7 +59,7 @@
 "looping" = "looping";
 
 /* min ago since last loop */
-"min ago" = "min ago";
+"min ago" = "min";
 
 /* Status Title */
 "No suggestion" = "Kein Vorschlag";
@@ -119,7 +119,7 @@
 "minutes" = "Minuten";
 
 /*  */
-"Presets" = "Presets";
+"Presets" = "Voreinstellungen";
 
 /* Save preset name */
 "Save" = "Speichern";
@@ -185,7 +185,7 @@
 "Ratio" = "Verhältnis";
 
 /*  */
-"Autosens" = "Autosens";
+"Autosens" = "Autosense";
 
 /*  */
 "Calculated Sensitivity" = "Berechnete Empfindlichkeit";
@@ -324,7 +324,7 @@ Enact a temp Basal or a temp target */
 "g/U" = "g/IE";
 
 /* grams */
-" g" = " g";
+" g" = "g";
 
 /* when 0 U/hr */
 "0 U/hr" = "0 IE/h";
