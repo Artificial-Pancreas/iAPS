@@ -4,303 +4,303 @@
 */
 /* Bolus screen when adding insulin */
 
-"Add insulin without actually bolusing" = "Додати інсулін без подачі болюсу";
+"Add insulin without actually bolusing" = "Add insulin without actually bolusing";
 
 /* Add insulin from source outside of pump */
 "Add %@ without bolusing" = "Add %@ without bolusing";
 
-"Bolus" = "Болюс";
+"Bolus" = "Bolus";
 
-"Close" = "Закрити";
+"Close" = "Close";
 
 /* Continue after added carbs without bolus */
-"Continue without bolus" = "Продовжити без болюсу";
+"Continue without bolus" = "Continue without bolus";
 
 /* Header */
-"Enact Bolus" = "Подати Болюс";
+"Enact Bolus" = "Enact Bolus";
 
 /* Button */
-"Enact bolus" = "Подати болюс";
+"Enact bolus" = "Enact bolus";
 
 /*  */
-"Insulin recommended" = "Рекомендовано інсуліну";
+"Insulin recommended" = "Insulin recommended";
 
 /*  */
-"Insulin required" = "Потрібно інсуліну";
+"Insulin required" = "Insulin required";
 
 /* Bolus screen */
-"Recommendation" = "Рекомендація";
+"Recommendation" = "Recommendation";
 
 /* Button */
-"Clear" = "Очистити";
+"Clear" = "Clear";
 
 /* Button */
-"Done" = "Готово";
+"Done" = "Done";
 
 /*  */
-"Wait please" = "Зачекайте";
+"Wait please" = "Wait please";
 
 /*  */
-"Agree and continue" = "Прийняти і Продовжити";
+"Agree and continue" = "Agree and Continue";
 
 /* Disclaimer when opening app for first time*/
-"Disclaimer" = "Дисклеймер";
+"Disclaimer" = "Disclaimer";
 
 /* Disclaimer Description */
-"FreeAPS X is in an active development state. We do not recommend to use the system for everyday control of blood glucose! Use it for testing purposes only at your own risk. We are not responsible for your decisions and actions." = "FreeAPS X перебуває в активній розробці. Ми не рекомендуємо використовувати цю систему для постійного контролю за глюкозою в крові! Використовуйте її тільки для тестування на власний ризик. Ми не несемо відповідальності за ваші рішення та дії.";
+"FreeAPS X is in an active development state. We do not recommend to use the system for everyday control of blood glucose! Use it for testing purposes only at your own risk. We are not responsible for your decisions and actions." = "FreeAPS X is in an active development state. We do not recommend to use the system for everyday control of blood glucose! Use it for testing purposes only at your own risk. We are not responsible for your decisions and actions.";
 
 /* Enacted at a date */
-"Enacted at %@" = "Подано в %@";
+"Enacted at %@" = "Enacted at %@";
 
 /* Home title */
-"Home" = "Головна";
+"Home" = "Home";
 
 /* Looping in progress */
-"looping" = "в процесі";
+"looping" = "looping";
 
 /* min ago since last loop */
-"min ago" = "хв тому";
+"min ago" = "min ago";
 
 /* Status Title */
-"No suggestion" = "Нема рекомендацій";
+"No suggestion" = "No suggestion";
 
 /* Replace pod text in Header */
-"Replace pod" = "Замініть под";
+"Replace pod" = "Replace pod";
 
 /* Suggested at a date */
-"Suggested at %@" = "Рекомендовано в %@";
+"Suggested at %@" = "Suggested at %@";
 
 /* Add carbs screen */
-"Add Carbs" = "Додати Вуглеводи";
+"Add Carbs" = "Add Carbs";
 
 /*  */
-"Amount Carbs" = "Кількість Вуглеводи";
+"Amount Carbs" = "Amount Carbs";
 
 /* Grams unit */
-"grams" = "грами";
+"grams" = "grams";
 
 /*  */
 "Carbs required" = "Carbs required";
 
 /* */
-"Are you sure?" = "Ви впевнені?";
+"Are you sure?" = "Are you sure?";
 
 /* Bottom target temp */
-"Bottom target" = "Нижня ціль";
+"Bottom target" = "Bottom target";
 
 /* Cancel preset name */
-"Cancel" = "Відмінити";
+"Cancel" = "Cancel";
 
 /*  */
-"Cancel Temp Target" = "Відмінити тимчасову ціль";
+"Cancel Temp Target" = "Cancel Temp Target";
 
 /* Custom temp target */
-"Custom" = "Своя";
+"Custom" = "Custom";
 
 /*  */
-"Date" = "Дата";
+"Date" = "Date";
 
 /*  */
-"Delete" = "Видалити";
+"Delete" = "Delete";
 
 /* Delete preset temp target */
-"Delete preset \"%@\"" = "Видалити шаблон \"%@\"";
+"Delete preset \"%@\"" = "Delete preset \"%@\"";
 
 /* Duration of target temp or temp basal */
-"Duration" = "Тривалість";
+"Duration" = "Duration";
 
 /*  */
-"Enact Temp Target" = "Запустити тимчасову ціль";
+"Enact Temp Target" = "Enact Temp Target";
 
 /*  */
-"Enter preset name" = "Введіть ім'я шаблону";
+"Enter preset name" = "Enter preset name";
 
 /* minutes of target temp */
-"minutes" = "хвилин";
+"minutes" = "minutes";
 
 /*  */
-"Presets" = "Шаблони";
+"Presets" = "Presets";
 
 /* Save preset name */
-"Save" = "Зберегти";
+"Save" = "Save";
 
 /*  */
-"Save as preset" = "Зберегти як шаблон";
+"Save as preset" = "Save as preset";
 
 /* Upper temp target limit */
-"Top target" = "Верхня ціль";
+"Top target" = "Top target";
 
 /*  */
-"Autotune" = "Автотюн";
+"Autotune" = "Autotune";
 
 /*  */
-"Basal profile" = "Базальний профіль";
+"Basal profile" = "Basal profile";
 
 /*  */
-"Carb ratio" = "Вуглеводний коефіцієнт";
+"Carb ratio" = "Carb ratio";
 
 /*  */
-"Delete autotune data" = "Видалити дані автотюну";
+"Delete autotune data" = "Delete autotune data";
 
 /*  */
-"Run now" = "Виконати";
+"Run now" = "Run now";
 
 /*  */
-"Sensitivity" = "Чутливість";
+"Sensitivity" = "Sensitivity";
 
 /*  */
-"Use Autotune" = "використовувати Автотюн";
+"Use Autotune" = "use Autotune";
 
 /* Add profile basal */
-"Add" = "Додати";
+"Add" = "Add";
 
 /*  */
-"Basal Profile" = "Базальний Профіль";
+"Basal Profile" = "Basal Profile";
 
 /* Rate basal profile */
-"Rate" = "Коеф.";
+"Rate" = "Rate";
 
 /*  */
-"Save on Pump" = "Зберегти на Помпі";
+"Save on Pump" = "Save on Pump";
 
 /*  */
-"Saving..." = "Збереження...";
+"Saving..." = "Saving...";
 
 /*  */
-"Schedule" = "Розклад";
+"Schedule" = "Schedule";
 
 /*  */
-"starts at" = "починається об";
+"starts at" = "starts at";
 
 /* Time basal profile */
-"Time" = "Час";
+"Time" = "Time";
 
 /* */
-"Calculated Ratio" = "Розрахований Коефіцієнт";
+"Calculated Ratio" = "Calculated Ratio";
 
 /* Carb Ratios header */
-"Carb Ratios" = "Вуглеводні Коефіцієнти";
+"Carb Ratios" = "Carb Ratios";
 
 /*  */
-"Ratio" = "Коефіцієнт";
+"Ratio" = "Ratio";
 
 /*  */
-"Autosens" = "Автосенс";
+"Autosens" = "Autosens";
 
 /*  */
-"Calculated Sensitivity" = "Розрахована Чутливість";
+"Calculated Sensitivity" = "Calculated Sensitivity";
 
 /*  */
-"Insulin Sensitivities" = "Чутливості до Інсуліну";
+"Insulin Sensitivities" = "Insulin Sensitivities";
 
 /* */
-"Sensitivity Ratio" = "Коефіцієнт Чутливості";
+"Sensitivity Ratio" = "Sensitivity Ratio";
 
 /*  */
-"Dismiss" = "Відхилити";
+"Dismiss" = "Dismiss";
 
 /*  */
-"Important message" = "Важливе повідомлення";
+"Important message" = "Important message";
 
 /*  */
-"Amount" = "Об'єм";
+"Amount" = "Amount";
 
 /* */
-"Cancel Temp Basal" = "Відмінити ТБШ";
+"Cancel Temp Basal" = "Cancel Temp Basal";
 
 /* Enact
 Enact a temp Basal or a temp target */
-"Enact" = "Запустити";
+"Enact" = "Enact";
 
 /* */
-"Manual Temp Basal" = "Ручний ТБШ";
+"Manual Temp Basal" = "Manual Temp Basal";
 
 /* Allow uploads tp NS */
-"Allow uploads" = "Дозволити вивантаження";
+"Allow uploads" = "Allow uploads";
 
 /* API secret in NS */
-"API secret" = "API секрет";
+"API secret" = "API secret";
 
 /* Connect to NS */
-"Connect" = "Підключити";
+"Connect" = "Connect";
 
 /* Connected to NS */
-"Connected!" = "Підключено!";
+"Connected!" = "Connected!";
 
 /* Connecting to NS */
-"Connecting..." = "Підключення...";
+"Connecting..." = "Connecting...";
 
 /*  */
-"Invalid URL" = "Невірний URL";
+"Invalid URL" = "Invalid URL";
 
 /*  */
-"Local glucose source" = "Локальне джерело глюкози";
+"Local glucose source" = "Local glucose source";
 
 /* Header */
-"Nightscout Config" = "Налаштування Nightscout";
+"Nightscout Config" = "Nightscout Config";
 
 /*  */
-"Port" = "Порт";
+"Port" = "Port";
 
 /*  */
 "URL" = "URL";
 
 /**/
-"Use local glucose server" = "Використовувати локальний сервер";
+"Use local glucose server" = "Use local glucose server";
 
 /*  */
-"Edit settings json" = "Редагувати json налаштувань";
+"Edit settings json" = "Edit settings json";
 
 /* */
-"Glucose units" = "Одиниці виміру глюкози";
+"Glucose units" = "Glucose units";
 
 /*  */
-"Preferences" = "Параметри";
+"Preferences" = "Preferences";
 
 /* Recommended Insulin Fraction in preferences */
-"Recommended Insulin Fraction" = "Рекомендований коефіцієнт інсуліну";
+"Recommended Insulin Fraction" = "Recommended Insulin Fraction";
 
 /* Do you want to show bolus screen after added carbs? */
-"Skip Bolus screen after carbs" = "Пропустити Екран болюсу після вводу вуглеводів";
+"Skip Bolus screen after carbs" = "Skip Bolus screen after carbs";
 
 /* Allow remote control from NS */
-"Remote control" = "Віддалене керування";
+"Remote control" = "Remote control";
 
 /* Add Medtronic pump */
-"Add Medtronic" = "Додати Medtronic";
+"Add Medtronic" = "Add Medtronic";
 
 /* Add Omnipod pump */
-"Add Omnipod" = "Додати Omnipod";
+"Add Omnipod" = "Add Omnipod";
 
 /* Add Simulator pump */
-"Add Simulator" = "Додати Симулятор";
+"Add Simulator" = "Add Simulator";
 
 /* Insulin model */
-"Model" = "Модель";
+"Model" = "Model";
 
 /*  */
-"Pump config" = "Конфігурація помпи";
+"Pump config" = "Pump config";
 
 /*  */
-"Delivery limits" = "Обмеження подачі";
+"Delivery limits" = "Delivery limits";
 
 /*  */
-"Duration of Insulin Action" = "Тривалість Дії Інсуліну";
+"Duration of Insulin Action" = "Duration of Insulin Action";
 
 /* hours of duration of insulin activity */
-"hours" = "годин";
+"hours" = "hours";
 
 /* Max setting */
-"Max Basal" = "Макс Базал";
+"Max Basal" = "Max Basal";
 
 /* Max setting */
-"Max Bolus" = "Макс Болюс";
+"Max Bolus" = "Max Bolus";
 
 /* */
-"Pump Settings" = "Налаштування Помпи";
+"Pump Settings" = "Pump Settings";
 
 /* Insulin unit per hour */
-"U/hr" = "Од/год";
+"U/hr" = "U/hr";
 
 /* Unit in number of units delivered (keep the space character!) */
 " U" = " U";
@@ -339,74 +339,74 @@ Enact a temp Basal or a temp target */
 "m" = "m";
 
 /* */
-"Autotune Conf" = "Автотюн";
+"Autotune Conf" = "Autotune";
 
 /*  */
-"Basal Profile Conf" = "Базальний Профіль";
+"Basal Profile Conf" = "Basal Profile";
 
 /*  */
-"Carb Ratios Conf" = "Вуглеводні Коефіцієнти";
+"Carb Ratios Conf" = "Carb Ratios";
 
 /*  */
-"Closed loop" = "Замкнена петля";
+"Closed loop" = "Closed loop";
 
 /* */
-"Configuration" = "Налаштування";
+"Configuration" = "Configuration";
 
 /* */
-"Devices" = "Пристрої";
+"Devices" = "Devices";
 
 /* */
-"Insulin Sensitivities Conf" = "Чутливості до Інсуліну";
+"Insulin Sensitivities Conf" = "Insulin Sensitivities";
 
 /* */
-"Preferences Conf" = "Параметри";
+"Preferences Conf" = "Preferences";
 
 /*  */
-"Pump" = "Помпа";
+"Pump" = "Pump";
 
 /*  */
-"Pump Settings Conf" = "Налаштування Помпи";
+"Pump Settings Conf" = "Pump Settings";
 
 /*  */
-"Services" = "Сервіси";
+"Services" = "Services";
 
 /*  */
-"Settings" = "Налаштування";
+"Settings" = "Settings";
 
 /* 2 log files to share */
-"Share logs" = "Поділитися логом";
+"Share logs" = "Share logs";
 
 /*  */
-"Target Ranges Conf" = "Цільові Діапазони";
+"Target Ranges Conf" = "Target Ranges";
 
 /* Upper target */
-"High target" = "Висока ціль";
+"High target" = "High target";
 
 /* Lower target */
-"Low target" = "Низька ціль";
+"Low target" = "Low target";
 
 /*  */
-"Target Ranges" = "Цільові Діапазони";
+"Target Ranges" = "Target Ranges";
 
 /* When bolusing */
-"Bolusing" = "Подаю болюс";
+"Bolusing" = "Bolusing";
 
 /* */
-"Pump suspended" = "Помпу призупинено";
+"Pump suspended" = "Pump suspended";
 
 /* */
-"Middleware" = "Проміжний код";
+"Middleware" = "Middleware";
 
 /* Header */
-"History" = "Історія";
+"History" = "History";
 
 /*
   Infotexts from openaps.docs and androidaps.docs
   FreeAPS
 */
-/* ”Rewind Resets Autosens” */
 
+/* ”Rewind Resets Autosens” */
 "This feature, enabled by default, resets the autosens ratio to neutral when you rewind your pump, on the assumption that this corresponds to a probable site change. Autosens will begin learning sensitivity anew from the time of the rewind, which may take up to 6 hours. If you usually rewind your pump independently of site changes, you may want to consider disabling this feature." = "This feature, enabled by default, resets the autosens ratio to neutral when you rewind your pump, on the assumption that this corresponds to a probable site change. Autosens will begin learning sensitivity anew from the time of the rewind, which may take up to 6 hours. If you usually rewind your pump independently of site changes, you may want to consider disabling this feature.";
 
 /* ”High Temptarget Raises Sensitivity" */
@@ -459,13 +459,14 @@ Enact a temp Basal or a temp target */
 "Defaults to false. Setting to true allows changing insulinPeakTime" = "Defaults to false. Setting to true allows changing insulinPeakTime";
 
 /* "Suspend Zeros IOB” */
-"Default is false. Any existing temp basals during times the pump was suspended will be deleted and 0 temp basals to negate the profile basal rates during times pump is suspended will be added." = "Default is false. Any existing temp basals during times the pump was suspended will be deleted and 0 temp basals to negate the profile basal rates during times pump is suspended will be added.";
+"Many people occasionally forget to resume / unsuspend their pump after reconnecting it. If you’re one of them, and you are willing to reliably set a zero temp basal whenever suspending and disconnecting your pump, this feature has your back. If enabled, it will automatically resume / unsuspend the pump if you forget to do so before your zero temp expires. As long as the zero temp is still running, it will leave the pump suspended." = " Default is false. Any existing temp basals during times the pump was suspended will be deleted and 0 temp basals to negate the profile basal rates during times pump is suspended will be added.";
 
 /* "Max IOB" */
 "Max IOB is the maximum amount of insulin on board from all sources – both basal (or SMB correction) and bolus insulin – that your loop is allowed to accumulate to treat higher-than-target BG. Unlike the other two OpenAPS safety settings (max_daily_safety_multiplier and current_basal_safety_multiplier), max_iob is set as a fixed number of units of insulin. As of now manual boluses are NOT limited by this setting. \n\n To test your basal rates during nighttime, you can modify the Max IOB setting to zero while in Closed Loop. This will enable low glucose suspend mode while testing your basal rates settings\n\n(Tip from https://www.loopandlearn.org/freeaps-x/#open-loop)." = "Max IOB is the maximum amount of insulin on board from all sources – both basal (or SMB correction) and bolus insulin – that your loop is allowed to accumulate to treat higher-than-target BG. Unlike the other two OpenAPS safety settings (max_daily_safety_multiplier and current_basal_safety_multiplier), max_iob is set as a fixed number of units of insulin. As of now manual boluses are NOT limited by this setting. \n\n To test your basal rates during nighttime, you can modify the Max IOB setting to zero while in Closed Loop. This will enable low glucose suspend mode while testing your basal rates settings\n\n(Tip from https://www.loopandlearn.org/freeaps-x/#open-loop).";
 
 /* "Max Daily Safety Multiplier" */
 "This is an important OpenAPS safety limit. The default setting (which is unlikely to need adjusting) is 3. This means that OpenAPS will never be allowed to set a temporary basal rate that is more than 3x the highest hourly basal rate programmed in a user’s pump, or, if enabled, determined by autotune." = "This is an important OpenAPS safety limit. The default setting (which is unlikely to need adjusting) is 3. This means that OpenAPS will never be allowed to set a temporary basal rate that is more than 3x the highest hourly basal rate programmed in a user’s pump, or, if enabled, determined by autotune.";
+
 /* "Current Basal Safety Multiplier" */
 "This is another important OpenAPS safety limit. The default setting (which is also unlikely to need adjusting) is 4. This means that OpenAPS will never be allowed to set a temporary basal rate that is more than 4x the current hourly basal rate programmed in a user’s pump, or, if enabled, determined by autotune." = "This is another important OpenAPS safety limit. The default setting (which is also unlikely to need adjusting) is 4. This means that OpenAPS will never be allowed to set a temporary basal rate that is more than 4x the current hourly basal rate programmed in a user’s pump, or, if enabled, determined by autotune.";
 

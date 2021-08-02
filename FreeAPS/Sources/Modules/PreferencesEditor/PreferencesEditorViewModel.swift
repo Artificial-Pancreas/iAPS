@@ -242,7 +242,7 @@ extension PreferencesEditor {
                     keypath: \.suspendZerosIOB,
                     value: preferences.suspendZerosIOB,
                     infoText: NSLocalizedString(
-                        "Many people occasionally forget to resume / unsuspend their pump after reconnecting it. If you’re one of them, and you are willing to reliably set a zero temp basal whenever suspending and disconnecting your pump, this feature has your back. If enabled, it will automatically resume / unsuspend the pump if you forget to do so before your zero temp expires. As long as the zero temp is still running, it will leave the pump suspended.",
+                        "Default is false. Any existing temp basals during times the pump was suspended will be deleted and 0 temp basals to negate the profile basal rates during times pump is suspended will be added.",
                         comment: "Suspend Zeros IOB"
                     ),
                     settable: self
@@ -254,7 +254,7 @@ extension PreferencesEditor {
                     keypath: \.maxIOB,
                     value: preferences.maxIOB,
                     infoText: NSLocalizedString(
-                        "Max IOB is the maximum amount of insulin on board from all sources – basal, SMBs and bolus insulin – that your loop is allowed to accumulate to treat higher-than-target BG. Unlike the other two OpenAPS safety settings (Max Daily Safety Multiplier and Current Basal Safety Multiplier), Max IOB is set as a fixed number of units of insulin. As of now manual boluses are NOT limited by this setting. \n\n To test your basal rates during nighttime, you can modify the Max IOB setting to zero while in Closed Loop. This will enable low glucose suspend mode while testing your basal rates settings\n\n(Tip from https://www.loopandlearn.org/freeaps-x/#open-loop).",
+                        "Max IOB is the maximum amount of insulin on board from all sources – both basal (or SMB correction) and bolus insulin – that your loop is allowed to accumulate to treat higher-than-target BG. Unlike the other two OpenAPS safety settings (max_daily_safety_multiplier and current_basal_safety_multiplier), max_iob is set as a fixed number of units of insulin. As of now manual boluses are NOT limited by this setting. \n\n To test your basal rates during nighttime, you can modify the Max IOB setting to zero while in Closed Loop. This will enable low glucose suspend mode while testing your basal rates settings\n\n(Tip from https://www.loopandlearn.org/freeaps-x/#open-loop).",
                         comment: "Max IOB"
                     ),
                     settable: self

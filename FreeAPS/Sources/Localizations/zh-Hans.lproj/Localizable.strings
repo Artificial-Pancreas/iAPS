@@ -131,7 +131,7 @@
 "Top target" = "血糖上限";
 
 /*  */
-"Autotune" = "自动调谐";
+"Autotune" = "Autotune";
 
 /*  */
 "Basal profile" = "基础率配置文件";
@@ -185,7 +185,7 @@
 "Ratio" = "比率";
 
 /*  */
-"Autosens" = "自动传输";
+"Autosens" = "Autosens";
 
 /*  */
 "Calculated Sensitivity" = "计算的敏感系数";
@@ -219,7 +219,7 @@ Enact a temp Basal or a temp target */
 "Allow uploads" = "允许上传";
 
 /* API secret in NS */
-"API secret" = "API密钥";
+"API secret" = "API secret";
 
 /* Connect to NS */
 "Connect" = "连接";
@@ -240,10 +240,10 @@ Enact a temp Basal or a temp target */
 "Nightscout Config" = "Nightscout配置";
 
 /*  */
-"Port" = "端口";
+"Port" = "Port";
 
 /*  */
-"URL" = "网址：";
+"URL" = "URL";
 
 /**/
 "Use local glucose server" = "使用本地端口获取血糖";
@@ -303,7 +303,7 @@ Enact a temp Basal or a temp target */
 "U/hr" = "U/小时";
 
 /* Unit in number of units delivered (keep the space character!) */
-" U" = "U";
+" U" = " U";
 
 /* /Insulin unit */
 "/U" = "/U";
@@ -405,8 +405,8 @@ Enact a temp Basal or a temp target */
   Infotexts from openaps.docs and androidaps.docs
   FreeAPS
 */
-/* ”Rewind Resets Autosens” */
 
+/* ”Rewind Resets Autosens” */
 "This feature, enabled by default, resets the autosens ratio to neutral when you rewind your pump, on the assumption that this corresponds to a probable site change. Autosens will begin learning sensitivity anew from the time of the rewind, which may take up to 6 hours. If you usually rewind your pump independently of site changes, you may want to consider disabling this feature." = "该功能默认启用，当复位胰岛素泵时，Autosens参数会重置为中性，这基于复位胰岛素泵是您会更换管路部位的假设。Autosens将会在胰岛素泵复位后开始重新学习灵敏度，这可能需要6个小时。如果你通常复位泵时并没有同时更换部位，你可能要考虑禁用这一功能。";
 
 /* ”High Temptarget Raises Sensitivity" */
@@ -435,7 +435,7 @@ Enact a temp Basal or a temp target */
 "Defaults to false, so that OpenAPS will set temps whenever it can, so it will be easier to see if the system is working, even when you are offline. This means OpenAPS will set a “neutral” temp (same as your default basal) if no adjustments are needed. If you are a light sleeper and the “on the hour” buzzing or beeping wakes you up (even in vibrate mode), you may want to turn this to “true” to skip setting neutral temps. However, we recommend leaving neutral temps enabled for most people who will be using this system on the go and out of constant connectivity.\n\nNote: if set to true, in order to reduce notifications at the top of the hour, it will also attempt to cancel temp basals (unless BG or minGuardBG is below threshold and a zero-temp is needed) prior to the top of the hour. Normally a new temp basal will be set (if still needed) after the top of the hour, but that may be delayed if the rig has issues connecting to the pump. People who want to minimize the ‘on the hour’ temp basal notification beeps/vibrations may choose to accept that risk and choose to set skip_neutral_temps to true." = "默认禁用，这样FreeAPS X就会在任何时候设置临时目标，这样就会更容易看到系统是否在工作，即使你不在线。这意味着如果不需要调整，OpenAPS将设置一个 \"中性 \"临时基础（与你的默认基础相同）。这是OpenAPS的一个旧设置，可以选择最大限度地减少 \"设备 \"的声音和通知，这些声音和通知可能会在夜间吵醒你。";
 
 /* "Unsuspend If No Temp” */
-"Many people occasionally forget to resume / unsuspend their pump after reconnecting it. If you’re one of them, and you are willing to reliably set a zero temp basal whenever suspending and disconnecting your pump, this feature has your back. If enabled, it will automatically resume / unsuspend the pump if you forget to do so before your zero temp expires. As long as the zero temp is still running, it will leave the pump suspended." = " 默认为false。在泵被暂停期间，任何现有的临时基础率将被删除，并以空的基础率来抵消配置基础率。";
+"Many people occasionally forget to resume / unsuspend their pump after reconnecting it. If you’re one of them, and you are willing to reliably set a zero temp basal whenever suspending and disconnecting your pump, this feature has your back. If enabled, it will automatically resume / unsuspend the pump if you forget to do so before your zero temp expires. As long as the zero temp is still running, it will leave the pump suspended." = "许多人在重新连接他们的泵后，偶尔会忘记恢复/解除暂停状态。如果你是其中之一，并且你愿意在暂停和断开泵的时候可靠地设置零温度基础，那么这个功能就是你的后盾。如果启用，它将自动恢复/取消暂停泵，如果你在零温度过期前忘记这样做。只要零度温度仍在运行，它就会让泵暂停。";
 
 /* "Enable UAM" */
 "With this option enabled, the SMB algorithm can recognize unannounced meals. This is helpful, if you forget to tell AndroidAPS about your carbs or estimate your carbs wrong and the amount of entered carbs is wrong or if a meal with lots of fat and protein has a longer duration than expected. Without any carb entry, UAM can recognize fast glucose increasments caused by carbs, adrenaline, etc, and tries to adjust it with SMBs. This also works the opposite way: if there is a fast glucose decreasement, it can stop SMBs earlier." = "启用该选项后，SMB算法可以识别未宣布的膳食。这很有帮助，如果你忘记告诉AndroidAPS你的碳水化合物，或者估计错误，输入的碳水化合物的数量是错误的，或者如果一餐有大量脂肪和蛋白质的时间比预期的长。在没有任何碳水化合物输入的情况下，UAM可以识别由碳水化合物、肾上腺素等引起的快速葡萄糖增量，并尝试用SMB进行调整。这也有相反的作用：如果有快速的葡萄糖递减，它可以提前停止SMBs。";
@@ -461,7 +461,7 @@ Enact a temp Basal or a temp target */
 "Defaults to false. Setting to true allows changing insulinPeakTime" = "默认禁用，如果启用则可以调整模拟胰岛素达峰时间";
 
 /* "Suspend Zeros IOB” */
-"Default is false. Any existing temp basals during times the pump was suspended will be deleted and 0 temp basals to negate the profile basal rates during times pump is suspended will be added." = " 默认为false。在泵被暂停期间，任何现有的临时基础率将被删除，并以空的基础率来抵消配置基础率。";
+"Many people occasionally forget to resume / unsuspend their pump after reconnecting it. If you’re one of them, and you are willing to reliably set a zero temp basal whenever suspending and disconnecting your pump, this feature has your back. If enabled, it will automatically resume / unsuspend the pump if you forget to do so before your zero temp expires. As long as the zero temp is still running, it will leave the pump suspended." = " 默认为false。在泵被暂停期间，任何现有的临时基础率将被删除，并以空的基础率来抵消配置基础率。";
 
 /* "Max IOB" */
 "Max IOB is the maximum amount of insulin on board from all sources – both basal (or SMB correction) and bolus insulin – that your loop is allowed to accumulate to treat higher-than-target BG. Unlike the other two OpenAPS safety settings (max_daily_safety_multiplier and current_basal_safety_multiplier), max_iob is set as a fixed number of units of insulin. As of now manual boluses are NOT limited by this setting. \n\n To test your basal rates during nighttime, you can modify the Max IOB setting to zero while in Closed Loop. This will enable low glucose suspend mode while testing your basal rates settings\n\n(Tip from https://www.loopandlearn.org/freeaps-x/#open-loop)." = "“Max IOB是所有来源(基础胰岛素、smb胰岛素和大剂量胰岛素)的最大胰岛素量，你的循环允许积累以治疗高于目标的BG。不同于其他两个OpenAPS安全设置(最大每日安全倍增器和当前基础安全倍增器)，最大IOB设置为固定数量的胰岛素单位。到目前为止，手动大剂量不受此设置的限制。为了在夜间测试你的基础率，你可以在闭环中将最大IOB设置为零。这将打开低血糖时暂停模式，同时测试您的基础率设置(提示：来自 https://www.loopandlearn.org/freeaps-x/#open-loop)。";
