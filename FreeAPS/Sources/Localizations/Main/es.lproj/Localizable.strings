@@ -59,7 +59,7 @@
 "looping" = "En bucle";
 
 /* min ago since last loop */
-"min ago" = "min ago";
+"min ago" = "min";
 
 /* Status Title */
 "No suggestion" = "No hay sugerencias";
