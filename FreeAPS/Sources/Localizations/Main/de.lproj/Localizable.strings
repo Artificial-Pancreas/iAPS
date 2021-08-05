@@ -323,8 +323,8 @@ Enact a temp Basal or a temp target */
 /*Carb ratio unit */
 "g/U" = "g/IE";
 
-/* grams */
-" g" = "g";
+/* grams *
+" g" = " g";
 
 /* when 0 U/hr */
 "0 U/hr" = "0 IE/h";
