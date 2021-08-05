@@ -339,7 +339,7 @@ Enact a temp Basal or a temp target */
 "m" = "分";
 
 /* */
-"Autotune Conf" = "Autotune";
+"Autotune Conf" = "自动调谐";
 
 /*  */
 "Basal Profile Conf" = "基础率配置文件";
