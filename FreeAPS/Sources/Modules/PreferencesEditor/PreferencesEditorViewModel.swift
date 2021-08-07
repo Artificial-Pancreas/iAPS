@@ -427,7 +427,10 @@ extension PreferencesEditor {
                     displayName: "Noisy CGM Target Multiplier",
                     keypath: \.noisyCGMTargetMultiplier,
                     value: preferences.noisyCGMTargetMultiplier,
-                    infoText: NSLocalizedString("Nothing here yet...", comment: "Noisy CGM Target Multiplier"),
+                    infoText: NSLocalizedString(
+                        "Defaults to 1.3. Increase target by this amount when looping off raw/noisy CGM data",
+                        comment: "Noisy CGM Target Multiplier"
+                    ),
                     settable: self
                 )
             ]
