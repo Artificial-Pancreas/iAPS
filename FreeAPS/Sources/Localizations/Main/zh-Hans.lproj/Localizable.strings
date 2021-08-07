@@ -517,4 +517,4 @@ Enact a temp Basal or a temp target */
 "Grams of carbsReq to trigger a pushover. Defaults to 1 (for 1 gram of carbohydrate). Can be increased if you only want to get Pushover for carbsReq at X threshold." = "触发Pushover的碳水化合物的克数。默认为1（对于1克碳水化合物）。如果你只想在X阈值时得到碳水化合物需求的Pushover通知，可以增加。";
 
 /* "Noisy CGM Target Multiplier" */
-"Nothing here yet..." = "未完待续……";
+"Defaults to 1.3. Increase target by this amount when looping off raw/noisy CGM data" = "Defaults to 1.3. Increase target by this amount when looping off raw/noisy CGM data";
