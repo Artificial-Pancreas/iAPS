@@ -2,8 +2,8 @@
   Localizable.strings
   FreeAPS X
 */
-
 /* Bolus screen when adding insulin */
+
 "Add insulin without actually bolusing" = "Add insulin without actually bolusing";
 
 /* Add insulin from source outside of pump */

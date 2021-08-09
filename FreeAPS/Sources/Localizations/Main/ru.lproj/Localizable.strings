@@ -327,19 +327,19 @@ Enact a temp Basal or a temp target */
 "g/U" = "g/U";
 
 /* grams */
-" g" = " g";
+" g" = " г";
 
 /* when 0 U/hr */
-"0 U/hr" = "0 U/hr";
+"0 U/hr" = "0 Ед/час";
 
 /* abbreviation for days */
-"d" = "d";
+"d" = "дн";
 
 /* abbreviation for hours */
-"h" = "h";
+"h" = "час";
 
 /* abbreviation for minutes */
-"m" = "m";
+"m" = "мин";
 
 /* */
 "Autotune Conf" = "Автотюн";
