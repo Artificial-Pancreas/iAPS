@@ -1,5 +1,22 @@
+"export_languages": [                                   
+    "ar", 
+    "ca",
+    "da",
+    "nl",
+    "fi",
+    "fr",
+    "de",
+    "he",
+    "it",
+    "nb",
+    "po",
+    "ru",
+    "es",
+    "sv",
+    "tr",
+    "uk",
+    "zh-Hans"
+  ]
 files:
-  - source: /FreeAPS/Sources/Localizations/Main/en.lproj/Localizable.strings
-    ignore:
-      - /FreeAPS/Sources/Localizations/Main/xx.lproj/Localizable.strings
+  - source: /FreeAPS/Sources/Localizations/Main/en.lproj/Localizable.strings,
     translation: /FreeAPS/Sources/Localizations/Main/%osx_locale%.lproj/Localizable.strings
