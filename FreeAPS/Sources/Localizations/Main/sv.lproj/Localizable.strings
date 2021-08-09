@@ -115,6 +115,9 @@
 /*  */
 "Enter preset name" = "Ange namn för förval";
 
+/* Preset name */
+"Name" = "Namn";
+
 /* minutes of target temp */
 "minutes" = "minuter";
 

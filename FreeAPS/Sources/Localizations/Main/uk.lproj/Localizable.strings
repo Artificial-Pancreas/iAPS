@@ -115,6 +115,9 @@
 /*  */
 "Enter preset name" = "Введіть ім'я шаблону";
 
+/* Preset name */
+"Name" = "Name";
+
 /* minutes of target temp */
 "minutes" = "хвилин";
 
