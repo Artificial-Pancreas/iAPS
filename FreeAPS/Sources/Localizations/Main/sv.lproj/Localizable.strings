@@ -252,7 +252,7 @@ Enact a temp Basal or a temp target */
 "Use local glucose server" = "Använd lokal server som glukoskälla";
 
 /*  */
-"Edit settings json" = "Ändra inställningar för json";
+"Edit settings json" = "Ändra debug-inställningar";
 
 /* */
 "Glucose units" = "Glukosenheter";
