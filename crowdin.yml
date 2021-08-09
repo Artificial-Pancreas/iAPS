@@ -17,6 +17,9 @@
     "uk",
     "zh-Hans"
   ]
-files:
-  - source: /FreeAPS/Sources/Localizations/Main/en.lproj/Localizable.strings,
-    translation: /FreeAPS/Sources/Localizations/Main/%osx_locale%.lproj/Localizable.strings
+files: [
+  {
+  source: /FreeAPS/Sources/Localizations/Main/en.lproj/Localizable.strings, 
+  translation: /FreeAPS/Sources/Localizations/Main/%osx_locale%.lproj/Localizable.strings
+}
+]
