@@ -2,8 +2,8 @@
   Localizable.strings
   FreeAPS X
 */
-/* Bolus screen when adding insulin */
 
+/* Bolus screen when adding insulin */
 "Add insulin without actually bolusing" = "Add insulin without actually bolusing";
 
 /* Add insulin from source outside of pump */
@@ -114,6 +114,9 @@
 
 /*  */
 "Enter preset name" = "Enter preset name";
+
+/* Preset name */
+"Name" = "Name";
 
 /* minutes of target temp */
 "minutes" = "minutes";

@@ -115,6 +115,9 @@
 /*  */
 "Enter preset name" = "Enter preset name";
 
+/* Preset name */
+"Name" = "Name";
+
 /* minutes of target temp */
 "minutes" = "minutes";
 
