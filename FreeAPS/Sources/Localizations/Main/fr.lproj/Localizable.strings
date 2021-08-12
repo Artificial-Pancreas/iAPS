@@ -7,7 +7,7 @@
 "Add insulin without actually bolusing" = "Ajouter de l'insuline sans bolus";
 
 /* Add insulin from source outside of pump */
-"Add %@ without bolusing" = "Add %@ without bolusing";
+"Add %@ without bolusing" = "Ajouter %@ sans injection de bolus";
 
 "Bolus" = "Bolus";
 
@@ -80,7 +80,7 @@
 "grams" = "grammes";
 
 /*  */
-"Carbs required" = "Carbs required";
+"Carbs required" = "Glucides requis";
 
 /* */
 "Are you sure?" = "Êtes-vous sûr ?";
@@ -110,13 +110,13 @@
 "Duration" = "Durée";
 
 /*  */
-"Enact Temp Target" = "Activer la cible temporaire";
+"Enact Temp Target" = "Activer cible temp";
 
 /*  */
 "Enter preset name" = "Entrer le nom du préréglage";
 
 /* Preset name */
-"Name" = "Name";
+"Name" = "Nom";
 
 /* minutes of target temp */
 "minutes" = "minutes";
@@ -213,7 +213,7 @@
 
 /* Enact
 Enact a temp Basal or a temp target */
-"Enact" = "Injecter";
+"Enact" = "Activer";
 
 /* */
 "Manual Temp Basal" = "Basal temporaire manuel";
@@ -315,10 +315,10 @@ Enact a temp Basal or a temp target */
 "U" = "U";
 
 /* Unit per hour with space */
-" U/hr" = " U/hr";
+" U/hr" = " U/h";
 
 /* Number of units per hour*/
-"%@ U/hr" = "%@ U/hr";
+"%@ U/hr" = "%@ U/h";
 
 /* Number of units insulin delivered */
 "%@ U" = "%@ U";
@@ -330,10 +330,10 @@ Enact a temp Basal or a temp target */
 " g" = " g";
 
 /* when 0 U/hr */
-"0 U/hr" = "0 U/hr";
+"0 U/hr" = "0 U/h";
 
 /* abbreviation for days */
-"d" = "d";
+"d" = "j";
 
 /* abbreviation for hours */
 "h" = "h";
@@ -410,19 +410,19 @@ Enact a temp Basal or a temp target */
 */
 /* ”Rewind Resets Autosens” */
 
-"This feature, enabled by default, resets the autosens ratio to neutral when you rewind your pump, on the assumption that this corresponds to a probable site change. Autosens will begin learning sensitivity anew from the time of the rewind, which may take up to 6 hours. If you usually rewind your pump independently of site changes, you may want to consider disabling this feature." = "This feature, enabled by default, resets the autosens ratio to neutral when you rewind your pump, on the assumption that this corresponds to a probable site change. Autosens will begin learning sensitivity anew from the time of the rewind, which may take up to 6 hours. If you usually rewind your pump independently of site changes, you may want to consider disabling this feature.";
+"This feature, enabled by default, resets the autosens ratio to neutral when you rewind your pump, on the assumption that this corresponds to a probable site change. Autosens will begin learning sensitivity anew from the time of the rewind, which may take up to 6 hours. If you usually rewind your pump independently of site changes, you may want to consider disabling this feature." = "Cette fonctionnalité, activée par défaut, réinitialise le ratio autosens à neutre lorsque vous changez votre pompe/site en se basant sur l'hypothèse que cela correspond à un changement probable de site. L’Autosens reprendra l’apprentissage de la sensibilité à partir du changement de site, ce qui peut prendre jusqu’à 6 heures. Si vous ré-initialisez votre pompe indépendamment d'un changement de site, vous pouvez envisager de désactiver cette fonctionnalité.";
 
 /* ”High Temptarget Raises Sensitivity" */
-"Defaults to false. When set to true, raises sensitivity (lower sensitivity ratio) for temp targets set to >= 111. Synonym for exercise_mode. The higher your temp target above 110 will result in more sensitive (lower) ratios, e.g., temp target of 120 results in sensitivity ratio of 0.75, while 140 results in 0.6 (with default halfBasalTarget of 160)." = "Defaults to false. When set to true, raises sensitivity (lower sensitivity ratio) for temp targets set to >= 111. Synonym for exercise_mode. The higher your temp target above 110 will result in more sensitive (lower) ratios, e.g., temp target of 120 results in sensitivity ratio of 0.75, while 140 results in 0.6 (with default halfBasalTarget of 160).";
+"Defaults to false. When set to true, raises sensitivity (lower sensitivity ratio) for temp targets set to >= 111. Synonym for exercise_mode. The higher your temp target above 110 will result in more sensitive (lower) ratios, e.g., temp target of 120 results in sensitivity ratio of 0.75, while 140 results in 0.6 (with default halfBasalTarget of 160)." = "Valeur par défaut à faux. Lorsqu'elle est définie à vrai, augmente la sensibilité (ratio de sensibilité inférieure) pour les cibles temporaires à >= 111. Synonyme du mode exercice. Plus votre cible temporaire est élevée, plus les ratios (inférieurs) seront sensibles, par ex. la cible temp de 120 résulte en un ratio de sensibilité de 0,75 tandis que 140 donne 0,6 (avec halfBasalTarget par défaut de 160).";
 
 /* ”Low Temptarget Lowers Sensitivity" */
-"Defaults to false. When set to true, can lower sensitivity (higher sensitivity ratio) for temptargets <= 99. The lower your temp target below 100 will result in less sensitive (higher) ratios, e.g., temp target of 95 results in sensitivity ratio of 1.09, while 85 results in 1.33 (with default halfBasalTarget of 160)." = "Defaults to false. When set to true, can lower sensitivity (higher sensitivity ratio) for temptargets <= 99. The lower your temp target below 100 will result in less sensitive (higher) ratios, e.g., temp target of 95 results in sensitivity ratio of 1.09, while 85 results in 1.33 (with default halfBasalTarget of 160).";
+"Defaults to false. When set to true, can lower sensitivity (higher sensitivity ratio) for temptargets <= 99. The lower your temp target below 100 will result in less sensitive (higher) ratios, e.g., temp target of 95 results in sensitivity ratio of 1.09, while 85 results in 1.33 (with default halfBasalTarget of 160)." = "Valeur par défaut à faux. Lorsqu'elle est définie à vrai, augmente la sensibilité (ratio de sensibilité inférieur) pour les cibles temporaires à <= 99. Plus votre cible temporaire est élevée, plus les ratios (inférieurs) seront sensibles, par ex. la cible temp de 95 résulte en un ratio de sensibilité de 1,09 tandis que 85 donne 1,33 (avec halfBasalTarget par défaut de 160).";
 
 /* ”Sensitivity Raises Target" */
-"When true, raises BG target when autosens detects sensitivity" = "When true, raises BG target when autosens detects sensitivity";
+"When true, raises BG target when autosens detects sensitivity" = "Quand vrai, augmente la cible Glycémie lorsque l'autosens détecte une plus grande sensibilité";
 
 /* ”Resistance Lowers Target" */
-"Defaults to false. When true, will lower BG target when autosens detects resistance" = "Defaults to false. When true, will lower BG target when autosens detects resistance";
+"Defaults to false. When true, will lower BG target when autosens detects resistance" = "Faux par défaut. Quand vrai, réduira la cible de glycémie lorsque l'autosens détecte une résistance à l'insuline";
 
 /* ”Advanced Target Adjustments" */
 "This feature was previously enabled by default but will now default to false (will NOT be enabled automatically) in oref0 0.6.0 and beyond. (There is no need for this with 0.6.0). This feature lowers oref0’s target BG automatically when current BG and eventualBG are high. This helps prevent and mitigate high BG, but automatically switches to low-temping to ensure that BG comes down smoothly toward your actual target. If you find this behavior too aggressive, you can disable this feature. If you do so, please let us know so we can better understand what settings work best for everyone." = "This feature was previously enabled by default but will now default to false (will NOT be enabled automatically) in oref0 0.6.0 and beyond. (There is no need for this with 0.6.0). This feature lowers oref0’s target BG automatically when current BG and eventualBG are high. This helps prevent and mitigate high BG, but automatically switches to low-temping to ensure that BG comes down smoothly toward your actual target. If you find this behavior too aggressive, you can disable this feature. If you do so, please let us know so we can better understand what settings work best for everyone.";
@@ -485,7 +485,7 @@ Enact a temp Basal or a temp target */
 "This defaults maxCOB to 120 because that’s the most a typical body can absorb over 4 hours. (If someone enters more carbs or stacks more; OpenAPS will just truncate dosing based on 120. Essentially, this just limits AMA as a safety cap against weird COB calculations due to fluky data.)" = "This defaults maxCOB to 120 because that’s the most a typical body can absorb over 4 hours. (If someone enters more carbs or stacks more; OpenAPS will just truncate dosing based on 120. Essentially, this just limits AMA as a safety cap against weird COB calculations due to fluky data.)";
 
 /* "Bolus Snooze DIA Divisor" */
-"Bolus snooze is enacted after you do a meal bolus, so the loop won’t counteract with low temps when you’ve just eaten. The example here and default is 2, so a 3 hour DIA means that bolus snooze will be gradually phased out over 1.5 hours (3DIA/2)." = "Bolus snooze is enacted after you do a meal bolus, so the loop won’t counteract with low temps when you’ve just eaten. The example here and default is 2, so a 3 hour DIA means that bolus snooze will be gradually phased out over 1.5 hours (3DIA/2).";
+"Bolus snooze is enacted after you do a meal bolus, so the loop won’t counteract with low temps when you’ve just eaten. The example here and default is 2; so a 3 hour DIA means that bolus snooze will be gradually phased out over 1.5 hours (3DIA/2)." = "Bolus snooze est activé apres votre bolus de repas, la boucle ne réagira pas avec des valeurs basses temporaire quand vous venez juste de manger. L’exemple ici et la valeur par défaut est 2 ; donc avec une Durée d'Action (DIA) de 3 heures signifie que snooze bolus sera graduellement éliminé après 1,5 heures (3DIA/2).";
 
 /* "Min 5m Carbimpact" */
 "This is a setting for default carb absorption impact per 5 minutes. The default is an expected 8 mg/dL/5min. This affects how fast COB is decayed in situations when carb absorption is not visible in BG deviations. The default of 8 mg/dL/5min corresponds to a minimum carb absorption rate of 24g/hr at a CSF of 4 mg/dL/g." = "This is a setting for default carb absorption impact per 5 minutes. The default is an expected 8 mg/dL/5min. This affects how fast COB is decayed in situations when carb absorption is not visible in BG deviations. The default of 8 mg/dL/5min corresponds to a minimum carb absorption rate of 24g/hr at a CSF of 4 mg/dL/g.";
@@ -506,7 +506,7 @@ Enact a temp Basal or a temp target */
 "Defaults to start at 30. This is the maximum minutes of basal that can be delivered by UAM as a single SMB when IOB exceeds COB. This gives the ability to make UAM more or less aggressive if you choose. It is recommended that the value is set to start at 30, in line with the default, and if you choose to increase this value, do so in no more than 15 minute increments, keeping a close eye on the effects of the changes. Reducing the value will cause UAM to dose less insulin for each SMB. It is not recommended to set this value higher than 60 mins, as this may affect the ability for the algorithm to safely zero temp. It is also recommended that pushover is used when setting the value to be greater than default, so that alerts are generated for any predicted lows or highs." = "Defaults to start at 30. This is the maximum minutes of basal that can be delivered by UAM as a single SMB when IOB exceeds COB. This gives the ability to make UAM more or less aggressive if you choose. It is recommended that the value is set to start at 30, in line with the default, and if you choose to increase this value, do so in no more than 15 minute increments, keeping a close eye on the effects of the changes. Reducing the value will cause UAM to dose less insulin for each SMB. It is not recommended to set this value higher than 60 mins, as this may affect the ability for the algorithm to safely zero temp. It is also recommended that pushover is used when setting the value to be greater than default, so that alerts are generated for any predicted lows or highs.";
 
 /* "SMB Interval" */
-"Minimum duration in minutes between two enacted SMBs" = "Minimum duration in minutes between two enacted SMBs";
+"Minimum duration in minutes between two enacted SMBs" = "Durée minimale en minutes entre deux SMB activés";
 
 /* "Bolus Increment" */
 "Smallest possible bolus amount" = "Smallest possible bolus amount";
