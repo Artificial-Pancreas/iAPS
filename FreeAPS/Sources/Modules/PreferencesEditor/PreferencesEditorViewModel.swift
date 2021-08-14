@@ -408,7 +408,7 @@ extension PreferencesEditor {
                     keypath: \.insulinPeakTime,
                     value: preferences.insulinPeakTime,
                     infoText: NSLocalizedString(
-                        "Maximun blood glucose lowering effect of insulin, in minutes",
+                        "Time of maximum blood glucose lowering effect of insulin, in minutes",
                         comment: "Insulin Peak Time"
                     ),
                     settable: self
