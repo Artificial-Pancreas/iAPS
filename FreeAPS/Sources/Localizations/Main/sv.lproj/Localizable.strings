@@ -416,7 +416,7 @@ Enact a temp Basal or a temp target */
 "Defaults to false. When set to true, raises sensitivity (lower sensitivity ratio) for temp targets set to >= 111. Synonym for exercise_mode. The higher your temp target above 110 will result in more sensitive (lower) ratios, e.g., temp target of 120 results in sensitivity ratio of 0.75, while 140 results in 0.6 (with default halfBasalTarget of 160)." = "Av som förval. Höjer insulinkänsligheten (lägre 'sensitivity ratio') för temporära målvärden >= 6.2 mmol/l. Synonymt med träningsläge, 'Exercise Mode '. Ju högre ditt temporära mål över 6,2 är desto mer kommer det att resultera i en känsligare (lägre) kvot, t.ex. kommer ett temp målvärde på 6.7 mmol/l att resultera i ett 'sensitivity ratio' på 0,75, medan 7,8 mmol/l resulterar i 0,6 (med 'halfBasalTarget' på 8,9 mmol/l på som förval).";
 
 /* ”Low Temptarget Lowers Sensitivity" */
-"Defaults to false. When set to true, can lower sensitivity (higher sensitivity ratio) for temptargets <= 99. The lower your temp target below 100 will result in less sensitive (higher) ratios, e.g., temp target of 95 results in sensitivity ratio of 1.09, while 85 results in 1.33 (with default halfBasalTarget of 160)." = "Av som förval. Sänker insulinkänsligheten (högre 'sensitivity ratio') för temporära målvärden <= 5,5 mmol/l. Ju lägre ditt temporära målvärde under 5,6 mmol/l är, desto mer kommer det att resultera i en mindre känslig (högre) kvot, t.ex. kommer ett temp målvärde på 5,3 mmol/l att resultera i ett 'sensitivity ratio' på 1,09, medan 4.7 mmol/l resulterar i 1,33 (med förvalt 'halfBasalTarget' på 160 (8,9 mol/l)).";
+"Defaults to false. When set to true, can lower sensitivity (higher sensitivity ratio) for temptargets <= 99. The lower your temp target below 100 will result in less sensitive (higher) ratios, e.g., temp target of 95 results in sensitivity ratio of 1.09, while 85 results in 1.33 (with default halfBasalTarget of 160)." = "Av som förval. Sänker insulinkänsligheten för temporära målvärden <= 5,5 mmol/l. Ju lägre ditt temporära målvärde under 5,6 mmol/l är, desto mer kommer det att resultera i en mindre känslig (högre) kvot. T.ex. kommer ett temp målvärde på 5,3 mmol/l att resultera i en kvot ('sensitivity ratio') på 1,09, medan 4.7 mmol/l ger en kvot på 1,33 (med ett 'Half Basal Exercise Target' på 160 (8,9 mmol/l)).";
 
 /* ”Sensitivity Raises Target" */
 "When true, raises BG target when autosens detects sensitivity" = "Höjer målvärde för blodsocker när 'autosens' upptäcker ökad insulinkänslighet";
@@ -447,7 +447,7 @@ Enact a temp Basal or a temp target */
 "This enables supermicrobolus (SMB) while carbs on board (COB) are positive." = "Detta tillåter supermikrobolusar (SMB) medan det finns aktiva kolhydrater (COB).";
 
 /* "Enable SMB With Temptarget” */
-"This enables supermicrobolus (SMB) with eating soon / low temp targets. With this feature enabled, any temporary target below 100mg/dL, such as a temp target of 99 (or 80, the typical eating soon target) will enable SMB." = "Detta tillåter supermikrobolusar (SMB) vid 'äter snart'/låga temp mål. Med denna funktion aktiverad, kommer alla tillfälliga mål under 100mg/dL (5,6 mmol/l), såsom ett temporärt målvärde på 5,5 (eller 4,4 mmol/l, det typiska 'äter snart - målvärdet') att möjliggöra SMB.";
+"This enables supermicrobolus (SMB) with eating soon / low temp targets. With this feature enabled, any temporary target below 100mg/dL, such as a temp target of 99 (or 80, the typical eating soon target) will enable SMB." = "Detta tillåter supermikrobolusar (SMB) vid 'äter snart'/låga tillfälliga målvärden. Med denna funktion aktiverad, kommer SMB vara aktiva även vid tillfälliga målvärden under 100mg/dL (5,6 mmol/l).";
 
 /* "Enable SMB Always" */
 "Defaults to false. When true, always enable supermicrobolus (unless disabled by high temptarget)." = "Av som förval. Vid läge på, tillåts alltid supermikrobolusar (SMB) (om inte inaktiverat av högt målvärde).";
@@ -516,7 +516,7 @@ Enact a temp Basal or a temp target */
 "Time of maximum blood glucose lowering effect of insulin, in minutes" = "Tid för maximal blodsockersänkande effekt av insulin, i minuter";
 
 /* "Carbs Req Threshold" */
-"Grams of carbsReq to trigger a pushover. Defaults to 1 (for 1 gram of carbohydrate). Can be increased if you only want to get Pushover for carbsReq at X threshold." = "Antal kolhydrater som krävs för att utlösa en pushover-notis, av det totala antal kolhydrater som krävs för att undvika ett lågt BS-värde. Standardvärde är 1 (1 gram kolhydrat). Kan ökas om du bara vill få en Pushover-notis för denna mängd kolhydrater.";
+"Grams of carbsReq to trigger a pushover. Defaults to 1 (for 1 gram of carbohydrate). Can be increased if you only want to get Pushover for carbsReq at X threshold." = "Antal kolhydrater för att utlösa en pushover-notis, av det totala antal kolhydrater nödvändiga för at undvika ett lågt blodsockervärde (carbsReq). Standardvärde är 1 (gram kolhydrater). Kan ökas om du bara vill få en Pushover-notis vid en större mängd nödvändiga kolhydrater.";
 
 /* "Noisy CGM Target Multiplier" */
 "Defaults to 1.3. Increase target by this amount when looping off raw/noisy CGM data" = "Standardvärde 1,3. Öka målvärdet med denna multipel när du loopar med ofiltrerad CGM-data med mycket brus";
