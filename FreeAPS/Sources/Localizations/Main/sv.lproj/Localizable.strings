@@ -459,7 +459,7 @@ Enact a temp Basal or a temp target */
 "Defaults to false. When true, allows supermicrobolus (if otherwise enabled) even with high temp targets." = "Av som standard. När läge på, tillåts SMB:ar även vid höga temporära målvärden.";
 
 /* "Use Custom Peak Time” */
-"Defaults to false. Setting to true allows changing insulinPeakTime" = "Av som standard. Läge på tillåter ändring av 'insulinPeakTime', dvs tiden i minuter när insulinet har som störst insulinsänkande effekt.";
+"Defaults to false. Setting to true allows changing insulinPeakTime" = "Av som standard. Läge på tillåter ändring av 'insulinPeakTime', dvs tiden i minuter när insulinet har som störst blodsockersänkande effekt.";
 
 /* "Suspend Zeros IOB” */
 "Default is false. Any existing temp basals during times the pump was suspended will be deleted and 0 temp basals to negate the profile basal rates during times pump is suspended will be added." = "Av som standard. Alla eventuella temporära basaler som pågått under tider pumpen varit pausad kommer att raderas, dessutom kommer de ordinarie basaldoserna ersättas med temporära basaler på 0 IE/h.";
@@ -469,7 +469,6 @@ Enact a temp Basal or a temp target */
 
 /* "Max Daily Safety Multiplier" */
 "This is an important OpenAPS safety limit. The default setting (which is unlikely to need adjusting) is 3. This means that OpenAPS will never be allowed to set a temporary basal rate that is more than 3x the highest hourly basal rate programmed in a user’s pump, or, if enabled, determined by autotune." = "Detta är en viktig säkerhetsgräns för FreeAPS X. Standardinställningen (som sannolikt inte behöver justeras) är 3. Detta innebär att FreeAPS X aldrig kommer att tillåtas att ställa in en temporär basaldos som är mer än 3x den högsta basaldosen inställd i pumpen, eller, om aktiverad, den som är inställd av 'Autotune'.";
-
 /* "Current Basal Safety Multiplier" */
 "This is another important OpenAPS safety limit. The default setting (which is also unlikely to need adjusting) is 4. This means that OpenAPS will never be allowed to set a temporary basal rate that is more than 4x the current hourly basal rate programmed in a user’s pump, or, if enabled, determined by autotune." = "Detta är en viktig säkerhetsgräns i FreeAPS X. Standardinställningen (som sannolikt inte behöver justeras) är 4, vilket innebär att det aldrig kommer att tillåtas att ställa in en temporär basaldos som är mer än 4x den högsta ordinarie basaldosen, sparad i pumpen, eller, om aktiverad, den som är ställts in av 'Autotune'.";
 
@@ -513,7 +512,7 @@ Enact a temp Basal or a temp target */
 "Smallest possible bolus amount" = "Minsta möjliga bolusdos";
 
 /* "Insulin Peak Time" */
-"Time of maximum blood glucose lowering effect of insulin, in minutes" = "Tid i minuter för när insulinet har högst blodsockersänkande effekt";
+"Time of maximum blood glucose lowering effect of insulin, in minutes" = "Tid i minuter för när insulinet har som störst blodsockersänkande effekt";
 
 /* "Carbs Req Threshold" */
 "Grams of carbsReq to trigger a pushover. Defaults to 1 (for 1 gram of carbohydrate). Can be increased if you only want to get Pushover for carbsReq at X threshold." = "Antal kolhydrater för att utlösa en pushover-notis, av det totala antal kolhydrater nödvändiga för at undvika ett lågt blodsockervärde (carbsReq) som krävs. Standardvärde är 1 (gram kolhydrater). Kan ökas om du bara vill få en Pushover-notis vid en större mängd nödvändiga kolhydrater.";
