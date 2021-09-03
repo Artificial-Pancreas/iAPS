@@ -80,7 +80,7 @@
 "grams" = "grammi";
 
 /*  */
-"Carbs required" = "Carbs required";
+"Carbs required" = "Carboidrati necessari";
 
 /* */
 "Are you sure?" = "Sei sicuro?";
@@ -222,7 +222,7 @@ Enact a temp Basal or a temp target */
 "Allow uploads" = "Permetti upload";
 
 /* API secret in NS */
-"API secret" = "API secret";
+"API secret" = "API segreta";
 
 /* Connect to NS */
 "Connect" = "Connetti";
@@ -264,7 +264,7 @@ Enact a temp Basal or a temp target */
 "Recommended Insulin Fraction" = "Frazione di insulina raccomandata";
 
 /* Do you want to show bolus screen after added carbs? */
-"Skip Bolus screen after carbs" = "Skip Bolus screen after carbs";
+"Skip Bolus screen after carbs" = "Salta la schermata del Bolo dopo i carboidrati";
 
 /* Allow remote control from NS */
 "Remote control" = "Controllo remoto";
@@ -333,7 +333,7 @@ Enact a temp Basal or a temp target */
 "0 U/hr" = "0 U/hr";
 
 /* abbreviation for days */
-"d" = "d";
+"d" = "gg";
 
 /* abbreviation for hours */
 "h" = "h";
