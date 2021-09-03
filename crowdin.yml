@@ -1,25 +1,21 @@
-"export_languages": [                                   
-    "ar", 
-    "ca",
-    "da",
-    "es",
-    "nl",
-    "fi",
-    "fr",
-    "de",
-    "he",
-    "it",
-    "nb",
-    "po",
-    "ru",
-    "sv-SE",
-    "tr",
-    "uk",
-    "zh-CN"
-  ]
-files: [
-  {
-  source: /FreeAPS/Sources/Localizations/Main/en.lproj/Localizable.strings, 
-  translation: /FreeAPS/Sources/Localizations/Main/%osx_locale%.lproj/Localizable.strings
-}
-]
+export_languages:
+  - ar
+  - ca
+  - da
+  - es
+  - nl
+  - fi
+  - fr
+  - de
+  - he
+  - it
+  - nb
+  - po
+  - ru
+  - sv-SE
+  - tr
+  - uk
+  - zh-CN
+files:
+  - source: /FreeAPS/Sources/Localizations/Main/en.lproj/Localizable.strings
+    translation: /FreeAPS/Sources/Localizations/Main/%osx_locale%.lproj/Localizable.strings
