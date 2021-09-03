@@ -471,6 +471,7 @@ Enact a temp Basal or a temp target */
 
 /* "Max Daily Safety Multiplier" */
 "This is an important OpenAPS safety limit. The default setting (which is unlikely to need adjusting) is 3. This means that OpenAPS will never be allowed to set a temporary basal rate that is more than 3x the highest hourly basal rate programmed in a user’s pump, or, if enabled, determined by autotune." = "这是一个重要的OpenAPS安全限制。这意味着OpenAPS永远不会被允许设置一个超过用户泵中最高基础速率3倍的临时基础速率(一般不需要修改)。如果启用，由会由AutoSens决定。";
+
 /* "Current Basal Safety Multiplier" */
 "This is another important OpenAPS safety limit. The default setting (which is also unlikely to need adjusting) is 4. This means that OpenAPS will never be allowed to set a temporary basal rate that is more than 4x the current hourly basal rate programmed in a user’s pump, or, if enabled, determined by autotune." = "这是另一个重要的OpenAPS安全限制。默认设置（也不太可能需要调整）是4。这意味着OpenAPS永远不会被允许设置一个临时的基础代谢率超过用户泵中当前每小时基础代谢率的4倍，或者，如果启用，由Autosens决定。";
 
