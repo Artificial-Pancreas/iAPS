@@ -2,7 +2,7 @@ export_languages:
   - ar
   - ca
   - da
-  - es
+  - es-ES
   - nl
   - fi
   - fr
@@ -10,7 +10,7 @@ export_languages:
   - he
   - it
   - nb
-  - po
+  - pl
   - ru
   - sv-SE
   - tr
