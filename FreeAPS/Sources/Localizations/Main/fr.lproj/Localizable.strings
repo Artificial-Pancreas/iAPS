@@ -510,7 +510,7 @@ Enact a temp Basal or a temp target */
 "Minimum duration in minutes between two enacted SMBs" = "Durée minimale en minutes entre deux SMB activés";
 
 /* "Bolus Increment" */
-"Smallest possible bolus amount" = "Smallest possible bolus amount";
+"Smallest possible bolus amount" = "Plus petite quantité de bolus possible";
 
 /* "Insulin Peak Time" */
 "Time of maximum blood glucose lowering effect of insulin, in minutes" = "Time of maximum blood glucose lowering effect of insulin, in minutes";
@@ -519,4 +519,4 @@ Enact a temp Basal or a temp target */
 "Grams of carbsReq to trigger a pushover. Defaults to 1 (for 1 gram of carbohydrate). Can be increased if you only want to get Pushover for carbsReq at X threshold." = "Grams of carbsReq to trigger a pushover. Defaults to 1 (for 1 gram of carbohydrate). Can be increased if you only want to get Pushover for carbsReq at X threshold.";
 
 /* "Noisy CGM Target Multiplier" */
-"Defaults to 1.3. Increase target by this amount when looping off raw/noisy CGM data" = "Defaults to 1.3. Increase target by this amount when looping off raw/noisy CGM data";
+"Defaults to 1.3. Increase target by this amount when looping off raw/noisy CGM data" = "La valeur par défaut est 1.3. Augmente la cible de ce ratio lorsque le bouclage s'appuie sur des données brutes/non filtrées";
