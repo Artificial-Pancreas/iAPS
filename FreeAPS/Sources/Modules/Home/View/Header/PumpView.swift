@@ -32,8 +32,11 @@ struct PumpView: View {
                     if reservoir == 0xDEAD_BEEF {
                         Text("50+ " + NSLocalizedString("U", comment: "Insulin unit")).font(.system(size: 12, weight: .bold))
                     } else {
-                        Text(reservoirFormatter.string(from: reservoir as NSNumber)! + NSLocalizedString(" U", comment: "Insulin unit"))
-                            .font(.system(size: 12, weight: .bold))
+                        Text(
+                            reservoirFormatter
+                                .string(from: reservoir as NSNumber)! + NSLocalizedString(" U", comment: "Insulin unit")
+                        )
+                        .font(.system(size: 12, weight: .bold))
                     }
                 }
             }
@@ -75,7 +78,7 @@ struct PumpView: View {
 
         if days >= 1 {
             return "\(days)" + NSLocalizedString("d", comment: "abbreviation for days") + " \(hours)" +
-            NSLocalizedString("h", comment: "abbreviation for hours")
+                NSLocalizedString("h", comment: "abbreviation for hours")
         }
 
         if hours >= 1 {
