@@ -63,7 +63,7 @@ extension PreferencesEditor {
                     }
                 }
                 Section {
-                    Text("Edit settings json").chevronCell()
+                    Text("Edit settings json")
                         .navigationLink(to: .configEditor(file: OpenAPS.FreeAPS.settings), from: self)
                 }
             }
