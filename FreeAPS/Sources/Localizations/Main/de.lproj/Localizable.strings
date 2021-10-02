@@ -4,7 +4,7 @@
 */
 /* Bolus screen when adding insulin */
 
-"Add insulin without actually bolusing" = "Insulin nur erfassen, keine Abgabe";
+"Add insulin without actually bolusing" = "Insulin nur erfassen ohne tatsächliche Abgabe";
 
 /* Add insulin from source outside of pump */
 "Add %@ without bolusing" = "Erfasse %@ ohne Bolusabgabe";
@@ -56,7 +56,7 @@
 "Home" = "Startseite";
 
 /* Looping in progress */
-"looping" = "looping";
+"looping" = "Loop An";
 
 /* min ago since last loop */
 "min ago" = "min";
