@@ -4,17 +4,17 @@
 */
 /* Bolus screen when adding insulin */
 
-"Add insulin without actually bolusing" = "Insulin nur erfassen ohne tatsächliche Abgabe";
+"Add insulin without actually bolusing" = "Insulin ohne tatsächliche Bolusabgabe erfassen";
 
 /* Add insulin from source outside of pump */
-"Add %@ without bolusing" = "Erfasse %@ ohne Bolusabgabe";
+"Add %@ without bolusing" = "Erfasse %@ ohne tatsächliche Bolusabgabe";
 
 "Bolus" = "Bolus";
 
 "Close" = "Schließen";
 
 /* Continue after added carbs without bolus */
-"Continue without bolus" = "Ohne Abgabe eines Bolus fortfahren";
+"Continue without bolus" = "Ohne Bolusabgabe fortfahren";
 
 /* Header */
 "Enact Bolus" = "Bolus abgeben";
