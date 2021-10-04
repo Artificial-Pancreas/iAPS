@@ -62,6 +62,10 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
     }
 
     var cgmURL: URL? {
+        if settingsManager.settings.cgm == .xdrip {
+            return URL(string: "xdripswift://")!
+        }
+
         let useLocal = (settingsManager.settings.useLocalGlucoseSource ?? false) && settingsManager.settings
             .localGlucosePort != nil
 
