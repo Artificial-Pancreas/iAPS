@@ -1,7 +1,7 @@
 import SwiftUI
 import Swinject
 
-enum Screen: Identifiable {
+enum Screen: Identifiable, Hashable {
     case loading
     case home
     case settings
