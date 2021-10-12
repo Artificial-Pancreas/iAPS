@@ -39,7 +39,7 @@ extension Bolus {
                             Spacer()
                             Text(
                                 formatter
-                                    .string(from: viewModel.inslinRequired as NSNumber)! +
+                                    .string(from: viewModel.inslinRecommended as NSNumber)! +
                                     NSLocalizedString(" U", comment: "Insulin unit")
                             ).foregroundColor(.secondary)
                         }.contentShape(Rectangle())
