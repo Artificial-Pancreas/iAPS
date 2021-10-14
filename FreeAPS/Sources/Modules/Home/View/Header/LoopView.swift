@@ -78,7 +78,7 @@ struct LoopView: View {
     }
 
     private var actualSuggestion: Suggestion? {
-        if closedLoop, suggestion?.rate != nil || suggestion?.units != nil {
+        if closedLoop, suggestion?.rate != nil || suggestion?.units != nil || suggestion?.isNoTempRequired ?? false {
             return enactedSuggestion ?? suggestion
         } else {
             return suggestion
