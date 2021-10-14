@@ -53,13 +53,13 @@
 "Enacted at %@" = "Gestartet um %@";
 
 /* Home title */
-"Home" = "Startseite";
+"Home" = "Start";
 
 /* Looping in progress */
 "looping" = "Loop An";
 
 /* min ago since last loop */
-"min ago" = "min";
+"min ago" = "min her";
 
 /* Status Title */
 "No suggestion" = "Kein Vorschlag";
@@ -74,7 +74,7 @@
 "Add Carbs" = "Kohlenhydrate hinzufügen";
 
 /*  */
-"Amount Carbs" = "Kohlenhydratmenge";
+"Amount Carbs" = "Kohlenhydratsmenge";
 
 /* Grams unit */
 "grams" = "Gramm";
@@ -92,7 +92,7 @@
 "Cancel" = "Abbrechen";
 
 /*  */
-"Cancel Temp Target" = "Temporäres Ziel (TT) abbrechen";
+"Cancel Temp Target" = "Temporäres Ziel abbrechen";
 
 /* Custom temp target */
 "Custom" = "Benutzerdefiniert";
@@ -110,13 +110,13 @@
 "Duration" = "Dauer";
 
 /*  */
-"Enact Temp Target" = "Temporäres Ziel (TT) starten";
+"Enact Temp Target" = "Temporäres Ziel starten";
 
 /*  */
 "Enter preset name" = "Geben Sie einen Namen für das Preset ein";
 
 /* Preset name */
-"Name" = "Preset Name";
+"Name" = "Name";
 
 /* minutes of target temp */
 "minutes" = "Minuten";
@@ -137,7 +137,7 @@
 "Autotune" = "Autotune";
 
 /*  */
-"Basal profile" = "Basalraten-Profil";
+"Basal profile" = "Basal-Profil";
 
 /*  */
 "Carb ratio" = "Kohlenhydratfaktor";
@@ -146,7 +146,7 @@
 "Delete autotune data" = "Autotune Daten löschen";
 
 /*  */
-"Run now" = "Ausführen";
+"Run now" = "Jetzt ausführen";
 
 /*  */
 "Sensitivity" = "Empfindlichkeit";
@@ -158,13 +158,13 @@
 "Add" = "Hinzufügen";
 
 /*  */
-"Basal Profile" = "Basalraten-Profil";
+"Basal Profile" = "Basal-Profil";
 
 /* Rate basal profile */
 "Rate" = "BR";
 
 /*  */
-"Save on Pump" = "In Pumpe speichern";
+"Save on Pump" = "Auf Pumpe speichern";
 
 /*  */
 "Saving..." = "Speichern...";
