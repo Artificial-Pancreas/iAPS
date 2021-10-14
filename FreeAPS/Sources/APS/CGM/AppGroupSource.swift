@@ -39,7 +39,8 @@ struct AppGroupSource: GlucoseSource {
                     dateString: date,
                     filtered: nil,
                     noise: nil,
-                    glucose: glucose
+                    glucose: glucose,
+                    type: "sgv"
                 )
             )
         }
