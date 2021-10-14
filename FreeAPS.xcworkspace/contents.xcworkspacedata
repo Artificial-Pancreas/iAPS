@@ -5,6 +5,9 @@
       location = "group:FreeAPS.xcodeproj">
    </FileRef>
    <FileRef
+      location = "group:Dependecies/CGMBLEKit/CGMBLEKit.xcodeproj">
+   </FileRef>
+   <FileRef
       location = "group:Dependecies/LoopKit/LoopKit.xcodeproj">
    </FileRef>
    <FileRef

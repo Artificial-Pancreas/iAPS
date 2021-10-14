@@ -10,6 +10,7 @@ protocol GlucoseStorage {
     func lastGlucoseDate() -> Date
     func isGlucoseFresh() -> Bool
     func isGlucoseNotFlat() -> Bool
+    func nightscoutGlucoseNotUploaded() -> [BloodGlucose]
 }
 
 final class BaseGlucoseStorage: GlucoseStorage, Injectable {
@@ -91,6 +92,13 @@ final class BaseGlucoseStorage: GlucoseStorage, Injectable {
                 .filter { $0 != 0 }
                 .uniqued()
         ).count != 1
+    }
+
+    func nightscoutGlucoseNotUploaded() -> [BloodGlucose] {
+        let uploaded = storage.retrieve(OpenAPS.Nightscout.uploadedGlucose, as: [BloodGlucose].self) ?? []
+        let recentGlucose = recent()
+
+        return Array(Set(recentGlucose).subtracting(Set(uploaded)))
     }
 }
 

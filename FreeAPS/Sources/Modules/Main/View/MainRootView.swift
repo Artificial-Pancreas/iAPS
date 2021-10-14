@@ -4,8 +4,12 @@ extension Main {
     struct RootView: BaseView {
         @EnvironmentObject var viewModel: ViewModel<Provider>
 
+        @ViewBuilder func presentedView() -> some View {
+            viewModel.cachedView(for: viewModel.scene.screen)
+        }
+
         var body: some View {
-            viewModel.view(for: viewModel.scene.screen)
+            presentedView()
                 .sheet(isPresented: $viewModel.isModalPresented) {
                     NavigationView { self.viewModel.modal!.view }
                         .navigationViewStyle(StackNavigationViewStyle())

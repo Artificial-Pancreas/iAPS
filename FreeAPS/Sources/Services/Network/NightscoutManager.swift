@@ -3,13 +3,14 @@ import Foundation
 import Swinject
 import UIKit
 
-protocol NightscoutManager {
+protocol NightscoutManager: GlucoseSource {
     func fetchGlucose() -> AnyPublisher<[BloodGlucose], Never>
     func fetchCarbs() -> AnyPublisher<[CarbsEntry], Never>
     func fetchTempTargets() -> AnyPublisher<[TempTarget], Never>
     func fetchAnnouncements() -> AnyPublisher<[Announcement], Never>
     func deleteCarbs(at date: Date)
     func uploadStatus()
+    func uploadGlucose()
     var cgmURL: URL? { get }
 }
 
@@ -37,6 +38,10 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
         settingsManager.settings.isUploadEnabled ?? false
     }
 
+    private var isUploadGlucoseEnabled: Bool {
+        settingsManager.settings.uploadGlucose ?? false
+    }
+
     private var nightscoutAPI: NightscoutAPI? {
         guard let urlString = keychain.getValue(String.self, forKey: NightscoutConfig.Config.urlKey),
               let url = URL(string: urlString),
@@ -62,6 +67,10 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
     }
 
     var cgmURL: URL? {
+        if let url = settingsManager.settings.cgm?.appURL {
+            return url
+        }
+
         let useLocal = (settingsManager.settings.useLocalGlucoseSource ?? false) && settingsManager.settings
             .localGlucosePort != nil
 
@@ -98,6 +107,10 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
             })
             .replaceError(with: [])
             .eraseToAnyPublisher()
+    }
+
+    func fetch() -> AnyPublisher<[BloodGlucose], Never> {
+        fetchGlucose()
     }
 
     func fetchCarbs() -> AnyPublisher<[CarbsEntry], Never> {
@@ -213,6 +226,10 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
         }
     }
 
+    func uploadGlucose() {
+        uploadGlucose(glucoseStorage.nightscoutGlucoseNotUploaded(), fileToSave: OpenAPS.Nightscout.uploadedGlucose)
+    }
+
     private func uploadPumpHistory() {
         uploadTreatments(pumpHistoryStorage.nightscoutTretmentsNotUploaded(), fileToSave: OpenAPS.Nightscout.uploadedPumphistory)
     }
@@ -223,6 +240,35 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
 
     private func uploadTempTargets() {
         uploadTreatments(tempTargetsStorage.nightscoutTretmentsNotUploaded(), fileToSave: OpenAPS.Nightscout.uploadedTempTargets)
+    }
+
+    private func uploadGlucose(_ glucose: [BloodGlucose], fileToSave: String) {
+        guard !glucose.isEmpty, let nightscout = nightscoutAPI, isUploadEnabled, isUploadGlucoseEnabled else {
+            return
+        }
+
+        processQueue.async {
+            glucose.chunks(ofCount: 100)
+                .map { chunk -> AnyPublisher<Void, Error> in
+                    nightscout.uploadGlucose(Array(chunk))
+                }
+                .reduce(
+                    Just(()).setFailureType(to: Error.self)
+                        .eraseToAnyPublisher()
+                ) { (result, next) -> AnyPublisher<Void, Error> in
+                    Publishers.Concatenate(prefix: result, suffix: next).eraseToAnyPublisher()
+                }
+                .dropFirst()
+                .sink { completion in
+                    switch completion {
+                    case .finished:
+                        self.storage.save(glucose, as: fileToSave)
+                    case let .failure(error):
+                        debug(.nightscout, error.localizedDescription)
+                    }
+                } receiveValue: {}
+                .store(in: &self.lifetime)
+        }
     }
 
     private func uploadTreatments(_ treatments: [NigtscoutTreatment], fileToSave: String) {
