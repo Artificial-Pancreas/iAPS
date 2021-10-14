@@ -18,6 +18,10 @@ struct Suggestion: JSON, Equatable {
     let reservoir: Decimal?
     var timestamp: Date?
     var recieved: Bool?
+
+    var isNoTempRequired: Bool {
+        reason.contains("no temp required")
+    }
 }
 
 struct Predictions: JSON, Equatable {

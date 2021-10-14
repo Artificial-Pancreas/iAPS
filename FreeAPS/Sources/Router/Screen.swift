@@ -1,7 +1,7 @@
 import SwiftUI
 import Swinject
 
-enum Screen: Identifiable {
+enum Screen: Identifiable, Hashable {
     case loading
     case home
     case settings
@@ -24,6 +24,7 @@ enum Screen: Identifiable {
     case manualTempBasal
     case autotuneConfig
     case dataTable
+    case cgm
 
     var id: Int { String(reflecting: self).hashValue }
 }
@@ -75,6 +76,8 @@ extension Screen {
             return AutotuneConfig.Builder(resolver: resolver).buildView()
         case .dataTable:
             return DataTable.Builder(resolver: resolver).buildView()
+        case .cgm:
+            return CGM.Builder(resolver: resolver).buildView()
         }
     }
 

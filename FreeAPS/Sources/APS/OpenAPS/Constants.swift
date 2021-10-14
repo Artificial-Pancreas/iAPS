@@ -76,6 +76,7 @@ extension OpenAPS {
         static let uploadedPumphistory = "upload/uploaded-pumphistory.json"
         static let uploadedCarbs = "upload/uploaded-carbs.json"
         static let uploadedTempTargets = "upload/uploaded-temptargets.json"
+        static let uploadedGlucose = "upload/uploaded-glucose.json"
     }
 
     enum FreeAPS {

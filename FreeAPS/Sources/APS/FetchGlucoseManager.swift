@@ -10,13 +10,33 @@ final class BaseFetchGlucoseManager: FetchGlucoseManager, Injectable {
     @Injected() var glucoseStorage: GlucoseStorage!
     @Injected() var nightscoutManager: NightscoutManager!
     @Injected() var apsManager: APSManager!
+    @Injected() var settingsManager: SettingsManager!
 
     private var lifetime = Lifetime()
     private let timer = DispatchTimer(timeInterval: 1.minutes.timeInterval)
 
+    private lazy var appGroupSource = AppGroupSource()
+    private lazy var dexcomSource = DexcomSource()
+
     init(resolver: Resolver) {
         injectServices(resolver)
+        updateGlucoseSource()
         subscribe()
+    }
+
+    var glucoseSource: GlucoseSource!
+
+    private func updateGlucoseSource() {
+        switch settingsManager.settings.cgm {
+        case .xdrip:
+            glucoseSource = appGroupSource
+        case .dexcomG5,
+             .dexcomG6:
+            glucoseSource = dexcomSource
+        case .nightscout,
+             .none:
+            glucoseSource = nightscoutManager
+        }
     }
 
     private func subscribe() {
@@ -25,15 +45,11 @@ final class BaseFetchGlucoseManager: FetchGlucoseManager, Injectable {
             .flatMap { date -> AnyPublisher<(Date, Date, [BloodGlucose]), Never> in
                 debug(.nightscout, "FetchGlucoseManager heartbeat")
                 debug(.nightscout, "Start fetching glucose")
+                self.updateGlucoseSource()
                 return Publishers.CombineLatest3(
                     Just(date),
                     Just(self.glucoseStorage.syncDate()),
-                    Publishers.CombineLatest(
-                        self.nightscoutManager.fetchGlucose(),
-                        self.fetchGlucoseFromSharedGroup()
-                    )
-                    .map { [$0, $1].flatMap { $0 } }
-                    .eraseToAnyPublisher()
+                    self.glucoseSource.fetch()
                 )
                 .eraseToAnyPublisher()
             }
@@ -45,74 +61,32 @@ final class BaseFetchGlucoseManager: FetchGlucoseManager, Injectable {
                     debug(.nightscout, "New glucose found")
                     self.glucoseStorage.storeGlucose(filtered)
                     self.apsManager.heartbeat(date: date, force: false)
+                    self.nightscoutManager.uploadGlucose()
                 }
             }
             .store(in: &lifetime)
         timer.fire()
         timer.resume()
-    }
 
-    private func fetchGlucoseFromSharedGroup() -> AnyPublisher<[BloodGlucose], Never> {
-        guard let suiteName = Bundle.main.appGroupSuiteName,
-              let sharedDefaults = UserDefaults(suiteName: suiteName)
-        else {
-            return Just([]).eraseToAnyPublisher()
-        }
-
-        return Just(fetchLastBGs(60, sharedDefaults)).eraseToAnyPublisher()
-    }
-
-    private func fetchLastBGs(_ count: Int, _ sharedDefaults: UserDefaults) -> [BloodGlucose] {
-        guard let sharedData = sharedDefaults.data(forKey: "latestReadings") else {
-            return []
-        }
-
-        let decoded = try? JSONSerialization.jsonObject(with: sharedData, options: [])
-        guard let sgvs = decoded as? [AnyObject] else {
-            return []
-        }
-
-        var results: [BloodGlucose] = []
-        for sgv in sgvs.prefix(count) {
-            guard
-                let glucose = sgv["Value"] as? Int,
-                let direction = sgv["direction"] as? String,
-                let timestamp = sgv["DT"] as? String,
-                let date = parseDate(timestamp)
-            else { continue }
-
-            results.append(
-                BloodGlucose(
-                    _id: UUID().uuidString,
-                    sgv: glucose,
-                    direction: BloodGlucose.Direction(rawValue: direction),
-                    date: Decimal(Int(date.timeIntervalSince1970 * 1000)),
-                    dateString: date,
-                    filtered: nil,
-                    noise: nil,
-                    glucose: glucose
-                )
-            )
-        }
-        return results
-    }
-
-    private func parseDate(_ timestamp: String) -> Date? {
-        // timestamp looks like "/Date(1462404576000)/"
-        guard let re = try? NSRegularExpression(pattern: "\\((.*)\\)"),
-              let match = re.firstMatch(in: timestamp, range: NSMakeRange(0, timestamp.count))
-        else {
-            return nil
-        }
-
-        let matchRange = match.range(at: 1)
-        let epoch = Double((timestamp as NSString).substring(with: matchRange))! / 1000
-        return Date(timeIntervalSince1970: epoch)
+        UserDefaults.standard
+            .publisher(for: \.dexcomTransmitterID)
+            .removeDuplicates()
+            .sink { id in
+                if id != self.dexcomSource.transmitterID {
+                    self.dexcomSource = DexcomSource()
+                }
+            }
+            .store(in: &lifetime)
     }
 }
 
-public extension Bundle {
-    var appGroupSuiteName: String? {
-        object(forInfoDictionaryKey: "AppGroupID") as? String
+extension UserDefaults {
+    @objc var dexcomTransmitterID: String? {
+        get {
+            string(forKey: "DexcomSource.transmitterID")?.nonEmpty
+        }
+        set {
+            set(newValue, forKey: "DexcomSource.transmitterID")
+        }
     }
 }
