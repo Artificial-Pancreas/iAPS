@@ -24,6 +24,10 @@ extension CGM {
                             .keyboardType(.asciiCapable)
                     }
                 }
+
+                Section(header: Text("Other")) {
+                    Toggle("Upload glucose to Nightscout", isOn: $viewModel.uploadGlucose)
+                }
             }
             .navigationTitle("CGM")
             .navigationBarTitleDisplayMode(.automatic)

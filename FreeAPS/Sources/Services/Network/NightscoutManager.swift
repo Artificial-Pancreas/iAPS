@@ -10,6 +10,7 @@ protocol NightscoutManager: GlucoseSource {
     func fetchAnnouncements() -> AnyPublisher<[Announcement], Never>
     func deleteCarbs(at date: Date)
     func uploadStatus()
+    func uploadGlucose()
     var cgmURL: URL? { get }
 }
 
@@ -35,6 +36,10 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
 
     private var isUploadEnabled: Bool {
         settingsManager.settings.isUploadEnabled ?? false
+    }
+
+    private var isUploadGlucoseEnabled: Bool {
+        settingsManager.settings.uploadGlucose ?? false
     }
 
     private var nightscoutAPI: NightscoutAPI? {
@@ -221,6 +226,10 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
         }
     }
 
+    func uploadGlucose() {
+        uploadGlucose(glucoseStorage.nightscoutGlucoseNotUploaded(), fileToSave: OpenAPS.Nightscout.uploadedGlucose)
+    }
+
     private func uploadPumpHistory() {
         uploadTreatments(pumpHistoryStorage.nightscoutTretmentsNotUploaded(), fileToSave: OpenAPS.Nightscout.uploadedPumphistory)
     }
@@ -231,6 +240,35 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
 
     private func uploadTempTargets() {
         uploadTreatments(tempTargetsStorage.nightscoutTretmentsNotUploaded(), fileToSave: OpenAPS.Nightscout.uploadedTempTargets)
+    }
+
+    private func uploadGlucose(_ glucose: [BloodGlucose], fileToSave: String) {
+        guard !glucose.isEmpty, let nightscout = nightscoutAPI, isUploadEnabled, isUploadGlucoseEnabled else {
+            return
+        }
+
+        processQueue.async {
+            glucose.chunks(ofCount: 100)
+                .map { chunk -> AnyPublisher<Void, Error> in
+                    nightscout.uploadGlucose(Array(chunk))
+                }
+                .reduce(
+                    Just(()).setFailureType(to: Error.self)
+                        .eraseToAnyPublisher()
+                ) { (result, next) -> AnyPublisher<Void, Error> in
+                    Publishers.Concatenate(prefix: result, suffix: next).eraseToAnyPublisher()
+                }
+                .dropFirst()
+                .sink { completion in
+                    switch completion {
+                    case .finished:
+                        self.storage.save(glucose, as: fileToSave)
+                    case let .failure(error):
+                        debug(.nightscout, error.localizedDescription)
+                    }
+                } receiveValue: {}
+                .store(in: &self.lifetime)
+        }
     }
 
     private func uploadTreatments(_ treatments: [NigtscoutTreatment], fileToSave: String) {
