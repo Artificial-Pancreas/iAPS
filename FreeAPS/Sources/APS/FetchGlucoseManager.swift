@@ -20,34 +20,32 @@ final class BaseFetchGlucoseManager: FetchGlucoseManager, Injectable {
 
     init(resolver: Resolver) {
         injectServices(resolver)
+        updateGlucoseSource()
         subscribe()
     }
 
-    var glucoseSource: GlucoseSource {
+    var glucoseSource: GlucoseSource!
+
+    private func updateGlucoseSource() {
         switch settingsManager.settings.cgm {
         case .xdrip:
-            return appGroupSource
+            glucoseSource = appGroupSource
         case .dexcomG5,
              .dexcomG6:
-            return dexcomSource
+            glucoseSource = dexcomSource
         case .nightscout,
              .none:
-            return nightscoutManager
+            glucoseSource = nightscoutManager
         }
     }
 
     private func subscribe() {
-        UserDefaults.standard
-            .publisher(for: \.dexcomTransmitterID)
-            .sink { _ in
-            }
-            .store(in: &lifetime)
-
         timer.publisher
             .receive(on: processQueue)
             .flatMap { date -> AnyPublisher<(Date, Date, [BloodGlucose]), Never> in
                 debug(.nightscout, "FetchGlucoseManager heartbeat")
                 debug(.nightscout, "Start fetching glucose")
+                self.updateGlucoseSource()
                 return Publishers.CombineLatest3(
                     Just(date),
                     Just(self.glucoseStorage.syncDate()),
@@ -68,13 +66,23 @@ final class BaseFetchGlucoseManager: FetchGlucoseManager, Injectable {
             .store(in: &lifetime)
         timer.fire()
         timer.resume()
+
+        UserDefaults.standard
+            .publisher(for: \.dexcomTransmitterID)
+            .removeDuplicates()
+            .sink { id in
+                if id != self.dexcomSource.transmitterID {
+                    self.dexcomSource = DexcomSource()
+                }
+            }
+            .store(in: &lifetime)
     }
 }
 
 extension UserDefaults {
     @objc var dexcomTransmitterID: String? {
         get {
-            string(forKey: "DexcomSource.transmitterID")
+            string(forKey: "DexcomSource.transmitterID")?.nonEmpty
         }
         set {
             set(newValue, forKey: "DexcomSource.transmitterID")

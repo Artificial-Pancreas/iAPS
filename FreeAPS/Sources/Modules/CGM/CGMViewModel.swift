@@ -5,9 +5,11 @@ extension CGM {
         @Injected() var settingsManager: SettingsManager!
 
         @Published var cgm: CGMType = .nightscout
+        @Published var transmitterID: String = ""
 
         override func subscribe() {
             cgm = settingsManager.settings.cgm ?? .nightscout
+            transmitterID = UserDefaults.standard.dexcomTransmitterID ?? ""
 
             $cgm
                 .removeDuplicates()
@@ -15,6 +17,10 @@ extension CGM {
                     self?.settingsManager.settings.cgm = value
                 }
                 .store(in: &lifetime)
+        }
+
+        func onChangeID() {
+            UserDefaults.standard.dexcomTransmitterID = transmitterID
         }
     }
 }

@@ -5,14 +5,18 @@ import Foundation
 final class DexcomSource: GlucoseSource {
     private let processQueue = DispatchQueue(label: "DexcomSource.processQueue")
 
-    @Persisted(key: "DexcomSource.transmitterID") var transmitterID: String? = nil
-
-    private let dexcomManager = TransmitterManager(state: TransmitterManagerState(transmitterID: "8MBPEY"))
+    private let dexcomManager = TransmitterManager(
+        state: TransmitterManagerState(transmitterID: UserDefaults.standard.dexcomTransmitterID ?? "8MBPEY")
+    )
 
     private var promise: Future<[BloodGlucose], Error>.Promise?
 
     init() {
         dexcomManager.delegate = self
+    }
+
+    var transmitterID: String {
+        dexcomManager.transmitter.ID
     }
 
     func fetch() -> AnyPublisher<[BloodGlucose], Never> {
@@ -23,6 +27,10 @@ final class DexcomSource: GlucoseSource {
         .timeout(60, scheduler: processQueue, options: nil, customError: nil)
         .replaceError(with: [])
         .eraseToAnyPublisher()
+    }
+
+    deinit {
+        dexcomManager.transmitter.stopScanning()
     }
 }
 
