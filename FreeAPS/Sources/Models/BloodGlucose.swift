@@ -31,6 +31,14 @@ struct BloodGlucose: JSON, Identifiable, Hashable {
     var glucose: Int?
 
     var isStateValid: Bool { sgv ?? 0 >= 39 && noise ?? 1 != 4 }
+
+    static func == (lhs: BloodGlucose, rhs: BloodGlucose) -> Bool {
+        lhs.dateString == rhs.dateString
+    }
+
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(dateString)
+    }
 }
 
 enum GlucoseUnits: String, JSON, Equatable {

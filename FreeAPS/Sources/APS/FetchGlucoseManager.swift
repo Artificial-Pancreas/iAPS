@@ -16,18 +16,26 @@ final class BaseFetchGlucoseManager: FetchGlucoseManager, Injectable {
     private let timer = DispatchTimer(timeInterval: 1.minutes.timeInterval)
 
     private lazy var appGroupSource = AppGroupSource()
+    private lazy var dexcomSource = DexcomSource()
 
     init(resolver: Resolver) {
         injectServices(resolver)
+        updateGlucoseSource()
         subscribe()
     }
 
-    var glucoseSource: AnyPublisher<[BloodGlucose], Never> {
+    var glucoseSource: GlucoseSource!
+
+    private func updateGlucoseSource() {
         switch settingsManager.settings.cgm {
         case .xdrip:
-            return appGroupSource.fetch()
-        default:
-            return nightscoutManager.fetchGlucose()
+            glucoseSource = appGroupSource
+        case .dexcomG5,
+             .dexcomG6:
+            glucoseSource = dexcomSource
+        case .nightscout,
+             .none:
+            glucoseSource = nightscoutManager
         }
     }
 
@@ -37,10 +45,11 @@ final class BaseFetchGlucoseManager: FetchGlucoseManager, Injectable {
             .flatMap { date -> AnyPublisher<(Date, Date, [BloodGlucose]), Never> in
                 debug(.nightscout, "FetchGlucoseManager heartbeat")
                 debug(.nightscout, "Start fetching glucose")
+                self.updateGlucoseSource()
                 return Publishers.CombineLatest3(
                     Just(date),
                     Just(self.glucoseStorage.syncDate()),
-                    self.glucoseSource
+                    self.glucoseSource.fetch()
                 )
                 .eraseToAnyPublisher()
             }
@@ -52,10 +61,32 @@ final class BaseFetchGlucoseManager: FetchGlucoseManager, Injectable {
                     debug(.nightscout, "New glucose found")
                     self.glucoseStorage.storeGlucose(filtered)
                     self.apsManager.heartbeat(date: date, force: false)
+                    self.nightscoutManager.uploadGlucose()
                 }
             }
             .store(in: &lifetime)
         timer.fire()
         timer.resume()
+
+        UserDefaults.standard
+            .publisher(for: \.dexcomTransmitterID)
+            .removeDuplicates()
+            .sink { id in
+                if id != self.dexcomSource.transmitterID {
+                    self.dexcomSource = DexcomSource()
+                }
+            }
+            .store(in: &lifetime)
+    }
+}
+
+extension UserDefaults {
+    @objc var dexcomTransmitterID: String? {
+        get {
+            string(forKey: "DexcomSource.transmitterID")?.nonEmpty
+        }
+        set {
+            set(newValue, forKey: "DexcomSource.transmitterID")
+        }
     }
 }

@@ -113,7 +113,7 @@ extension AddTempTarget {
                     .padding(.vertical)
                     .onTapGesture {
                         removeAlert = Alert(
-                            title: Text("A you sure?"),
+                            title: Text("Are you sure?"),
                             message: Text("Delete preset \"\(preset.displayName)\""),
                             primaryButton: .destructive(Text("Delete"), action: { viewModel.removePreset(id: preset.id) }),
                             secondaryButton: .cancel()

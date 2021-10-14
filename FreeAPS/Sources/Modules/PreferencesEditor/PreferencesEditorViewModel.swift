@@ -145,7 +145,7 @@ extension PreferencesEditor {
                     keypath: \.skipNeutralTemps,
                     value: preferences.skipNeutralTemps,
                     infoText: NSLocalizedString(
-                        "Defaults to false, so that OpenAPS will set temps whenever it can, so it will be easier to see if the system is working, even when you are offline. This means OpenAPS will set a “neutral” temp (same as your default basal) if no adjustments are needed. If you are a light sleeper and the “on the hour” buzzing or beeping wakes you up (even in vibrate mode), you may want to turn this to “true” to skip setting neutral temps. However, we recommend leaving neutral temps enabled for most people who will be using this system on the go and out of constant connectivity.\n\nNote: if set to true, in order to reduce notifications at the top of the hour, it will also attempt to cancel temp basals (unless BG or minGuardBG is below threshold and a zero-temp is needed) prior to the top of the hour. Normally a new temp basal will be set (if still needed) after the top of the hour, but that may be delayed if the rig has issues connecting to the pump. People who want to minimize the ‘on the hour’ temp basal notification beeps/vibrations may choose to accept that risk and choose to set skip_neutral_temps to true.",
+                        "Defaults to false, so that FreeAPS X will set temps whenever it can, so it will be easier to see if the system is working, even when you are offline. This means FreeAPS X will set a “neutral” temp (same as your default basal) if no adjustments are needed. This is an old setting for OpenAPS to have the options to minimise sounds and notifications from the 'rig', that may wake you up during the night.",
                         comment: "Skip Neutral Temps"
                     ),
                     settable: self
@@ -242,7 +242,7 @@ extension PreferencesEditor {
                     keypath: \.suspendZerosIOB,
                     value: preferences.suspendZerosIOB,
                     infoText: NSLocalizedString(
-                        "Many people occasionally forget to resume / unsuspend their pump after reconnecting it. If you’re one of them, and you are willing to reliably set a zero temp basal whenever suspending and disconnecting your pump, this feature has your back. If enabled, it will automatically resume / unsuspend the pump if you forget to do so before your zero temp expires. As long as the zero temp is still running, it will leave the pump suspended.",
+                        "Default is false. Any existing temp basals during times the pump was suspended will be deleted and 0 temp basals to negate the profile basal rates during times pump is suspended will be added.",
                         comment: "Suspend Zeros IOB"
                     ),
                     settable: self
@@ -304,7 +304,7 @@ extension PreferencesEditor {
                     keypath: \.maxIOB,
                     value: preferences.maxIOB,
                     infoText: NSLocalizedString(
-                        "Max IOB is the maximum amount of insulin on board from all sources – basal, SMBs and bolus insulin – that your loop is allowed to accumulate to treat higher-than-target BG. Manual boluses are NOT limited by this setting. Manual boluses are limited by setting 'Max Bolus'. Unlike the other two oref0 safety settings (Max Daily Safety Multiplier and Current Basal Safety Multiplier), Max IOB is set as a fixed number of units of insulin.\n\n To test your basal rates during nighttime, you can modify the Max IOB setting to zero while in Closed Loop. This will enable low glucose suspend mode while testing your basal rates settings.",
+                        "Max IOB is the maximum amount of insulin on board from all sources – both basal (or SMB correction) and bolus insulin – that your loop is allowed to accumulate to treat higher-than-target BG. Unlike the other two OpenAPS safety settings (max_daily_safety_multiplier and current_basal_safety_multiplier), max_iob is set as a fixed number of units of insulin. As of now manual boluses are NOT limited by this setting. \n\n To test your basal rates during nighttime, you can modify the Max IOB setting to zero while in Closed Loop. This will enable low glucose suspend mode while testing your basal rates settings\n\n(Tip from https://www.loopandlearn.org/freeaps-x/#open-loop).",
                         comment: "Max IOB"
                     ),
                     settable: self
@@ -458,7 +458,7 @@ extension PreferencesEditor {
                     keypath: \.insulinPeakTime,
                     value: preferences.insulinPeakTime,
                     infoText: NSLocalizedString(
-                        "Maximun blood glucose lowering effect of insulin, in minutes",
+                        "Time of maximum blood glucose lowering effect of insulin, in minutes",
                         comment: "Insulin Peak Time"
                     ),
                     settable: self
@@ -477,7 +477,10 @@ extension PreferencesEditor {
                     displayName: "Noisy CGM Target Multiplier",
                     keypath: \.noisyCGMTargetMultiplier,
                     value: preferences.noisyCGMTargetMultiplier,
-                    infoText: NSLocalizedString("Nothing here yet...", comment: "Noisy CGM Target Multiplier"),
+                    infoText: NSLocalizedString(
+                        "Defaults to 1.3. Increase target by this amount when looping off raw/noisy CGM data",
+                        comment: "Noisy CGM Target Multiplier"
+                    ),
                     settable: self
                 )
             ]

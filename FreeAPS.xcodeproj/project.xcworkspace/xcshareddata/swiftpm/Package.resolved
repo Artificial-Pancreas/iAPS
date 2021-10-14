@@ -2,12 +2,12 @@
   "object": {
     "pins": [
       {
-        "package": "CareKit",
-        "repositoryURL": "https://github.com/carekit-apple/CareKit",
+        "package": "Alamofire",
+        "repositoryURL": "https://github.com/Alamofire/Alamofire",
         "state": {
           "branch": null,
-          "revision": "51cef0b8e88b3c47c183fe36e8afc1f695bae44f",
-          "version": "2.0.1"
+          "revision": "f96b619bcb2383b43d898402283924b80e2c4bae",
+          "version": "5.4.3"
         }
       },
       {
@@ -17,6 +17,24 @@
           "branch": null,
           "revision": "b0cb4fdf23e51849cc2460bdc6de795c3bcca99d",
           "version": "0.6.4"
+        }
+      },
+      {
+        "package": "swift-algorithms",
+        "repositoryURL": "https://github.com/apple/swift-algorithms",
+        "state": {
+          "branch": null,
+          "revision": "2327673b0e9c7e90e6b1826376526ec3627210e4",
+          "version": "0.2.1"
+        }
+      },
+      {
+        "package": "swift-numerics",
+        "repositoryURL": "https://github.com/apple/swift-numerics",
+        "state": {
+          "branch": null,
+          "revision": "6583ac70c326c3ee080c1d42d9ca3361dca816cd",
+          "version": "0.1.0"
         }
       },
       {

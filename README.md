@@ -47,7 +47,7 @@ Beta versions are the first to introduce new functionality. They are designed to
 
 **Beta versions are not recommended for daily use for blood glucose control!**
 
-Beta numbers end with a number greater than 0, and the code can be found in the [dev brunch](https://github.com/ivalkou/freeaps/tree/dev).
+Beta numbers end with a number greater than 0, and the code can be found in the [dev branch](https://github.com/ivalkou/freeaps/tree/dev).
 
 Pull requests are accepted on the dev branch.
 

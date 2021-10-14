@@ -1,3 +1,21 @@
+export_languages:
+  - ar
+  - ca
+  - da
+  - es-ES
+  - nl
+  - fi
+  - fr
+  - de
+  - he
+  - it
+  - nb
+  - pl
+  - ru
+  - sv-SE
+  - tr
+  - uk
+  - zh-CN
 files:
-  - source: /FreeAPS/Sources/Localizations/en.lproj/Localizable.strings
-    translation: /FreeAPS/Sources/Localizations/%osx_locale%.lproj/Localizable.strings
+  - source: /FreeAPS/Sources/Localizations/Main/en.lproj/Localizable.strings
+    translation: /FreeAPS/Sources/Localizations/Main/%osx_locale%.lproj/Localizable.strings
