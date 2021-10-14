@@ -8,6 +8,11 @@
 import os.log
 import HealthKit
 
+public protocol TransmitterManagerDelegate: AnyObject {
+    func transmitterManager(_ manager: TransmitterManager, didRead glucose: [Glucose])
+    func transmitterManager(_ manager: TransmitterManager, didFailWith error: Error)
+}
+
 public struct TransmitterManagerState: Equatable {
 
     public static let version = 1
@@ -30,6 +35,8 @@ public protocol TransmitterManagerObserver: AnyObject {
 }
 
 public class TransmitterManager: TransmitterDelegate {
+    public weak var delegate: TransmitterManagerDelegate?
+
     private var state: TransmitterManagerState
 
     private let observers = WeakSynchronizedSet<TransmitterManagerObserver>()
@@ -155,6 +162,7 @@ public class TransmitterManager: TransmitterDelegate {
 
     public func transmitter(_ transmitter: Transmitter, didRead glucose: Glucose) {
         guard glucose != latestReading else {
+            delegate?.transmitterManager(self, didRead: [])
 //            updateDelegate(with: .noData)
             return
         }
@@ -165,16 +173,20 @@ public class TransmitterManager: TransmitterDelegate {
 
         guard glucose.state.hasReliableGlucose else {
             log.default("%{public}@: Unreliable glucose: %{public}@", #function, String(describing: glucose.state))
+            delegate?.transmitterManager(self, didFailWith: CalibrationError.unreliableState(glucose.state))
 //            updateDelegate(with: .error(CalibrationError.unreliableState(glucose.state)))
             return
         }
         
         guard let quantity = glucose.glucose else {
+            delegate?.transmitterManager(self, didRead: [])
 //            updateDelegate(with: .noData)
             return
         }
 
         log.default("%{public}@: New glucose", #function)
+
+        delegate?.transmitterManager(self, didRead: [glucose])
 
 //        updateDelegate(with: .newData([
 //            NewGlucoseSample(
@@ -190,21 +202,13 @@ public class TransmitterManager: TransmitterDelegate {
     }
 
     public func transmitter(_ transmitter: Transmitter, didReadBackfill glucose: [Glucose]) {
-//        let samples = glucose.compactMap { (glucose) -> NewGlucoseSample? in
-//            guard glucose != latestReading, glucose.state.hasReliableGlucose, let quantity = glucose.glucose else {
-//                return nil
-//            }
-//
-//            return NewGlucoseSample(
-//                date: glucose.readDate,
-//                quantity: quantity,
-//                trend: glucose.trendType,
-//                isDisplayOnly: glucose.isDisplayOnly,
-//                wasUserEntered: glucose.isDisplayOnly,
-//                syncIdentifier: glucose.syncIdentifier,
-//                device: device
-//            )
-//        }
+        let samples = glucose.filter { glucose -> Bool in
+            guard glucose != latestReading, glucose.state.hasReliableGlucose, glucose.glucose != nil else {
+                return false
+            }
+            return true
+        }
+        delegate?.transmitterManager(self, didRead: samples)
 //
 //        guard samples.count > 0 else {
 //            return

@@ -33,7 +33,6 @@ struct AppGroupSource: GlucoseSource {
 
             results.append(
                 BloodGlucose(
-                    _id: UUID().uuidString,
                     sgv: glucose,
                     direction: BloodGlucose.Direction(rawValue: direction),
                     date: Decimal(Int(date.timeIntervalSince1970 * 1000)),

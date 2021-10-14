@@ -9,12 +9,12 @@
 import HealthKit
 
 
-extension HKUnit {
-    static let milligramsPerDeciliter: HKUnit = {
+public extension HKUnit {
+    public static let milligramsPerDeciliter: HKUnit = {
         return HKUnit.gramUnit(with: .milli).unitDivided(by: HKUnit.literUnit(with: .deci))
     }()
 
-    static let milligramsPerDeciliterPerMinute: HKUnit = {
+    public static let milligramsPerDeciliterPerMinute: HKUnit = {
         return HKUnit.milligramsPerDeciliter.unitDivided(by: .minute())
     }()
 }

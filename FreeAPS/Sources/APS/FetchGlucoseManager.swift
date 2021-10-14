@@ -16,22 +16,33 @@ final class BaseFetchGlucoseManager: FetchGlucoseManager, Injectable {
     private let timer = DispatchTimer(timeInterval: 1.minutes.timeInterval)
 
     private lazy var appGroupSource = AppGroupSource()
+    private lazy var dexcomSource = DexcomSource()
 
     init(resolver: Resolver) {
         injectServices(resolver)
         subscribe()
     }
 
-    var glucoseSource: AnyPublisher<[BloodGlucose], Never> {
+    var glucoseSource: GlucoseSource {
         switch settingsManager.settings.cgm {
         case .xdrip:
-            return appGroupSource.fetch()
-        default:
-            return nightscoutManager.fetchGlucose()
+            return appGroupSource
+        case .dexcomG5,
+             .dexcomG6:
+            return dexcomSource
+        case .nightscout,
+             .none:
+            return nightscoutManager
         }
     }
 
     private func subscribe() {
+        UserDefaults.standard
+            .publisher(for: \.dexcomTransmitterID)
+            .sink { _ in
+            }
+            .store(in: &lifetime)
+
         timer.publisher
             .receive(on: processQueue)
             .flatMap { date -> AnyPublisher<(Date, Date, [BloodGlucose]), Never> in
@@ -40,7 +51,7 @@ final class BaseFetchGlucoseManager: FetchGlucoseManager, Injectable {
                 return Publishers.CombineLatest3(
                     Just(date),
                     Just(self.glucoseStorage.syncDate()),
-                    self.glucoseSource
+                    self.glucoseSource.fetch()
                 )
                 .eraseToAnyPublisher()
             }
@@ -57,5 +68,16 @@ final class BaseFetchGlucoseManager: FetchGlucoseManager, Injectable {
             .store(in: &lifetime)
         timer.fire()
         timer.resume()
+    }
+}
+
+extension UserDefaults {
+    @objc var dexcomTransmitterID: String? {
+        get {
+            string(forKey: "DexcomSource.transmitterID")
+        }
+        set {
+            set(newValue, forKey: "DexcomSource.transmitterID")
+        }
     }
 }

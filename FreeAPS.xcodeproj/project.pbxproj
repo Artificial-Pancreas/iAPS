@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		041D1E995A6AE92E9289DC49 /* BolusDataFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8D1A7CA8C10C4403D4BBFA7 /* BolusDataFlow.swift */; };
-		0AFC60BFFA3D9D0A80C807F4 /* CGMProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E0D51F68E37921622962DB4 /* CGMProvider.swift */; };
 		0CEA2EA070AB041AF3E3745B /* BolusRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10A0C32B0DAB52726EF9B6D9 /* BolusRootView.swift */; };
 		0D9A5E34A899219C5C4CDFAF /* DataTableViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9455FA2D92E77A6C4AFED8A3 /* DataTableViewModel.swift */; };
 		17A9D0899046B45E87834820 /* CREditorProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C8D5F457B5AFF763F8CF3DF /* CREditorProvider.swift */; };
@@ -118,6 +117,9 @@
 		385CEA8225F23DFD002D6D5B /* NightscoutStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 385CEA8125F23DFD002D6D5B /* NightscoutStatus.swift */; };
 		385CEAC125F2EA52002D6D5B /* Announcement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 385CEAC025F2EA52002D6D5B /* Announcement.swift */; };
 		385CEAC425F2F154002D6D5B /* AnnouncementsStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 385CEAC325F2F154002D6D5B /* AnnouncementsStorage.swift */; };
+		386A124C271704DA00DDC61C /* CGMBLEKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 386A124B271704DA00DDC61C /* CGMBLEKit.framework */; };
+		386A124D271704DA00DDC61C /* CGMBLEKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 386A124B271704DA00DDC61C /* CGMBLEKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		386A124F271707F000DDC61C /* DexcomSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 386A124E271707F000DDC61C /* DexcomSource.swift */; };
 		3870FF4725EC187A0088248F /* BloodGlucose.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3870FF4225EC13F40088248F /* BloodGlucose.swift */; };
 		3871F38725ED661C0013ECB5 /* Suggestion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3871F38625ED661C0013ECB5 /* Suggestion.swift */; };
 		3871F39C25ED892B0013ECB5 /* TempTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3871F39B25ED892B0013ECB5 /* TempTarget.swift */; };
@@ -300,6 +302,7 @@
 				38887DE525F61F7500944304 /* LoopTestingKit.framework in Embed Frameworks */,
 				38887DE125F61F7500944304 /* LoopKit.framework in Embed Frameworks */,
 				38887DEF25F61F7500944304 /* MinimedKit.framework in Embed Frameworks */,
+				386A124D271704DA00DDC61C /* CGMBLEKit.framework in Embed Frameworks */,
 				38887DF325F61F7600944304 /* NightscoutUploadKit.framework in Embed Frameworks */,
 				38887DFB25F61F7600944304 /* RileyLinkKit.framework in Embed Frameworks */,
 				38887DFD25F61F7600944304 /* RileyLinkKitUI.framework in Embed Frameworks */,
@@ -439,6 +442,8 @@
 		385CEA8125F23DFD002D6D5B /* NightscoutStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NightscoutStatus.swift; sourceTree = "<group>"; };
 		385CEAC025F2EA52002D6D5B /* Announcement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Announcement.swift; sourceTree = "<group>"; };
 		385CEAC325F2F154002D6D5B /* AnnouncementsStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnouncementsStorage.swift; sourceTree = "<group>"; };
+		386A124B271704DA00DDC61C /* CGMBLEKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = CGMBLEKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		386A124E271707F000DDC61C /* DexcomSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DexcomSource.swift; sourceTree = "<group>"; };
 		3870FF4225EC13F40088248F /* BloodGlucose.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BloodGlucose.swift; sourceTree = "<group>"; };
 		3871F38625ED661C0013ECB5 /* Suggestion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Suggestion.swift; sourceTree = "<group>"; };
 		3871F39B25ED892B0013ECB5 /* TempTarget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TempTarget.swift; sourceTree = "<group>"; };
@@ -610,6 +615,7 @@
 				38887DEC25F61F7500944304 /* Crypto.framework in Frameworks */,
 				38B17B6625DD90E0005CAE3D /* SwiftDate in Frameworks */,
 				38887DF425F61F7600944304 /* OmniKit.framework in Frameworks */,
+				386A124C271704DA00DDC61C /* CGMBLEKit.framework in Frameworks */,
 				38887DFA25F61F7600944304 /* RileyLinkKit.framework in Frameworks */,
 				38887DF625F61F7600944304 /* OmniKitUI.framework in Frameworks */,
 				38887DE425F61F7500944304 /* LoopTestingKit.framework in Frameworks */,
@@ -1069,6 +1075,7 @@
 			children = (
 				38569346270B5DFB0002C50D /* AppGroupSource.swift */,
 				38569344270B5DFA0002C50D /* CGMType.swift */,
+				386A124E271707F000DDC61C /* DexcomSource.swift */,
 				38569345270B5DFA0002C50D /* GlucoseSource.swift */,
 			);
 			path = CGM;
@@ -1214,6 +1221,7 @@
 		38B17B8525DD93BA005CAE3D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				386A124B271704DA00DDC61C /* CGMBLEKit.framework */,
 				38887E2025F6209B00944304 /* SwiftCharts.framework */,
 				38887DD025F61F7500944304 /* LoopKit.framework */,
 				38887DD125F61F7500944304 /* LoopKitUI.framework */,
@@ -1749,6 +1757,7 @@
 				3894873A2614928B004DF424 /* DispatchTimer.swift in Sources */,
 				38B4F3CF25E5041600E76A18 /* APSContainer.swift in Sources */,
 				3895E4C625B9E00D00214B37 /* Preferences.swift in Sources */,
+				386A124F271707F000DDC61C /* DexcomSource.swift in Sources */,
 				3811DE6E25C9D62600A708ED /* OnboardingViewModel.swift in Sources */,
 				38B4F3CD25E5031100E76A18 /* Broadcaster.swift in Sources */,
 				3811DE6D25C9D62600A708ED /* OnboardingRootView.swift in Sources */,
@@ -1956,7 +1965,6 @@
 				D6D02515BBFBE64FEBE89856 /* DataTableRootView.swift in Sources */,
 				38569349270B5DFB0002C50D /* AppGroupSource.swift in Sources */,
 				F5CA3DB1F9DC8B05792BBFAA /* CGMDataFlow.swift in Sources */,
-				0AFC60BFFA3D9D0A80C807F4 /* CGMProvider.swift in Sources */,
 				BA00D96F7B2FF169A06FB530 /* CGMViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

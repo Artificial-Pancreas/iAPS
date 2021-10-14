@@ -3,7 +3,7 @@ import Foundation
 import Swinject
 import UIKit
 
-protocol NightscoutManager {
+protocol NightscoutManager: GlucoseSource {
     func fetchGlucose() -> AnyPublisher<[BloodGlucose], Never>
     func fetchCarbs() -> AnyPublisher<[CarbsEntry], Never>
     func fetchTempTargets() -> AnyPublisher<[TempTarget], Never>
@@ -62,8 +62,8 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
     }
 
     var cgmURL: URL? {
-        if settingsManager.settings.cgm == .xdrip {
-            return URL(string: "xdripswift://")!
+        if let url = settingsManager.settings.cgm?.appURL {
+            return url
         }
 
         let useLocal = (settingsManager.settings.useLocalGlucoseSource ?? false) && settingsManager.settings
@@ -102,6 +102,10 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
             })
             .replaceError(with: [])
             .eraseToAnyPublisher()
+    }
+
+    func fetch() -> AnyPublisher<[BloodGlucose], Never> {
+        fetchGlucose()
     }
 
     func fetchCarbs() -> AnyPublisher<[CarbsEntry], Never> {
