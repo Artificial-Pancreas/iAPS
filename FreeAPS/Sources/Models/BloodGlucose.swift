@@ -27,8 +27,9 @@ struct BloodGlucose: JSON, Identifiable, Hashable {
     let dateString: Date
     let filtered: Decimal?
     let noise: Int?
-
     var glucose: Int?
+
+    let type: String?
 
     var isStateValid: Bool { sgv ?? 0 >= 39 && noise ?? 1 != 4 }
 

@@ -53,7 +53,8 @@ extension DexcomSource: TransmitterManagerDelegate {
                 dateString: glucose.readDate,
                 filtered: nil,
                 noise: nil,
-                glucose: value
+                glucose: value,
+                type: "sgv"
             )
         }
         promise?(.success(bloodGlucose))
