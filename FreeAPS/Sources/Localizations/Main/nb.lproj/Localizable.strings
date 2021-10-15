@@ -116,7 +116,7 @@
 "Enter preset name" = "Angi navn på forhåndsinnstilling";
 
 /* Preset name */
-"Name" = "Name";
+"Name" = "Navn";
 
 /* minutes of target temp */
 "minutes" = "minutter";
@@ -222,7 +222,7 @@ Enact a temp Basal or a temp target */
 "Allow uploads" = "Tillat opplastinger";
 
 /* API secret in NS */
-"API secret" = "API secret";
+"API secret" = "API nøkkel";
 
 /* Connect to NS */
 "Connect" = "Koble til";
@@ -246,7 +246,7 @@ Enact a temp Basal or a temp target */
 "Port" = "Port";
 
 /*  */
-"URL" = "URL";
+"URL" = "Nettadresse";
 
 /**/
 "Use local glucose server" = "Bruk lokal glukoseserver";
@@ -339,7 +339,7 @@ Enact a temp Basal or a temp target */
 "h" = "t";
 
 /* abbreviation for minutes */
-"m" = "m";
+"m" = "min";
 
 /* */
 "Autotune Conf" = "Autotune";
@@ -399,13 +399,13 @@ Enact a temp Basal or a temp target */
 "Pump suspended" = "Pumpe satt på pause";
 
 /* */
-"Middleware" = "Middleware";
+"Middleware" = "Middelware";
 
 /* Header */
 "History" = "Historikk";
 
 /* CGM option */
-"Upload glucose to Nightscout" = "Upload glucose to Nightscout";
+"Upload glucose to Nightscout" = "Last opp blodsukker til Nightscout";
 
 /* Type of CGM or glucose source */
 "Type" = "Type";
@@ -414,10 +414,10 @@ Enact a temp Basal or a temp target */
 "CGM" = "CGM";
 
 /* CGM Transmitter ID */
-"Transmitter ID" = "Transmitter ID";
+"Transmitter ID" = "Sender-ID";
 
 /* Other CGM setting */
-"Other" = "Other";
+"Other" = "Andre";
 
 /*
   Infotexts from openaps.docs and androidaps.docs
