@@ -413,6 +413,12 @@ Enact a temp Basal or a temp target */
 /* CGM */
 "CGM" = "CGM";
 
+/* CGM Transmitter ID */
+"TRANSMITTER ID" = "TRANSMITTER ID";
+
+/* Other CGM setting */
+"OTHER" = "OTHER";
+
 /*
   Infotexts from openaps.docs and androidaps.docs
   FreeAPS
