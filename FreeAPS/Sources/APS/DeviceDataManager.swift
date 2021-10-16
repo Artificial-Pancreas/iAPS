@@ -102,6 +102,25 @@ final class BaseDeviceDataManager: DeviceDataManager, Injectable {
                 return
             }
 
+            let content = UNMutableNotificationContent()
+            content.badge = 0
+            let lastGlucose: BloodGlucose? = self.glucoseStorage.recent().last
+            if lastGlucose != nil {
+                if date.timeIntervalSince(lastGlucose!.dateString) < 5.1 * 60 {
+                    content.badge = NSNumber(value: lastGlucose!.glucose ?? 0)
+                }
+            }
+
+            let request = UNNotificationRequest(
+                identifier: "badgeGlucose",
+                content: content,
+                trigger: nil
+            )
+
+            DispatchQueue.main.async {
+                UNUserNotificationCenter.current().add(request)
+            }
+
             var updateInterval: TimeInterval = 1.5 * 60
 
             switch date.timeIntervalSince(lastHeartBeatTime) {
