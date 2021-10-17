@@ -845,6 +845,11 @@ extension MainChartView {
             minValue = min(minValue, minTargetValue)
         }
 
+        if minValue == maxValue {
+            minValue = Config.minGlucose
+            maxValue = Config.maxGlucose
+        }
+
         return (min: minValue, max: maxValue)
     }
 
