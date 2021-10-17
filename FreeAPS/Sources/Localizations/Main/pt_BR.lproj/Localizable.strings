@@ -44,10 +44,10 @@
 "Agree and continue" = "Concordar e Continuar";
 
 /* Disclaimer when opening app for first time*/
-"Disclaimer" = "Disclaimer";
+"Disclaimer" = "Termo de responsabilidade";
 
 /* Disclaimer Description */
-"FreeAPS X is in an active development state. We do not recommend to use the system for everyday control of blood glucose! Use it for testing purposes only at your own risk. We are not responsible for your decisions and actions." = "FreeAPS X is in an active development state. We do not recommend to use the system for everyday control of blood glucose! Use it for testing purposes only at your own risk. We are not responsible for your decisions and actions.";
+"FreeAPS X is in an active development state. We do not recommend to use the system for everyday control of blood glucose! Use it for testing purposes only at your own risk. We are not responsible for your decisions and actions." = "FreeAPS X ainda está em estágio de desenvolvimento. Nós não recomendamos o uso deste aplicativo para controle diário da glicemia! Use somente para testes por sua conta e risco. Nós não somos responsáveis por suas decisões e ações.";
 
 /* Enacted at a date */
 "Enacted at %@" = "Enacted at %@";
@@ -77,19 +77,19 @@
 "Amount Carbs" = "Amount Carbs";
 
 /* Grams unit */
-"grams" = "grams";
+"grams" = "gramas";
 
 /*  */
 "Carbs required" = "Carbs required";
 
 /* */
-"Are you sure?" = "Are you sure?";
+"Are you sure?" = "Tem certeza?";
 
 /* Bottom target temp */
 "Bottom target" = "Bottom target";
 
 /* Cancel preset name */
-"Cancel" = "Cancel";
+"Cancel" = "Cancelar";
 
 /*  */
 "Cancel Temp Target" = "Cancel Temp Target";
@@ -369,19 +369,19 @@ Enact a temp Basal or a temp target */
 "Preferences Conf" = "Preferences";
 
 /*  */
-"Pump" = "Pump";
+"Pump" = "Bomba";
 
 /*  */
-"Pump Settings Conf" = "Pump Settings";
+"Pump Settings Conf" = "Configurações da Bomba";
 
 /*  */
-"Services" = "Services";
+"Services" = "Serviços";
 
 /*  */
-"Settings" = "Settings";
+"Settings" = "Configurações";
 
 /* 2 log files to share */
-"Share logs" = "Share logs";
+"Share logs" = "Compartilhar logs";
 
 /*  */
 "Target Ranges Conf" = "Target Ranges";
@@ -396,10 +396,10 @@ Enact a temp Basal or a temp target */
 "Target Ranges" = "Target Ranges";
 
 /* When bolusing */
-"Bolusing" = "Bolusing";
+"Bolusing" = "Aplicando bolus";
 
 /* */
-"Pump suspended" = "Pump suspended";
+"Pump suspended" = "Bomba suspensa";
 
 /* */
 "Middleware" = "Middleware";
@@ -408,7 +408,7 @@ Enact a temp Basal or a temp target */
 "History" = "History";
 
 /* CGM option */
-"Upload glucose to Nightscout" = "Upload glucose to Nightscout";
+"Upload glucose to Nightscout" = "Upload glicose para o Nightscout";
 
 /* Type of CGM or glucose source */
 "Type" = "Type";
