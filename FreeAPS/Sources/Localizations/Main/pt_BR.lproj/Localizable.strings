@@ -4,44 +4,44 @@
 */
 /* Bolus screen when adding insulin */
 
-"Add insulin without actually bolusing" = "Add insulin without actually bolusing";
+"Add insulin without actually bolusing" = "Adicionar insulina sem tomar bolus";
 
 /* Add insulin from source outside of pump */
-"Add %@ without bolusing" = "Add %@ without bolusing";
+"Add %@ without bolusing" = "Adicionar %@ sem tomar bolus";
 
 "Bolus" = "Bolus";
 
-"Close" = "Close";
+"Close" = "Fechar";
 
 /* Continue after added carbs without bolus */
-"Continue without bolus" = "Continue without bolus";
+"Continue without bolus" = "Continuar sem tomar bolus";
 
 /* Header */
-"Enact Bolus" = "Enact Bolus";
+"Enact Bolus" = "Aplicar Bolus";
 
 /* Button */
-"Enact bolus" = "Enact bolus";
+"Enact bolus" = "Aplicar bolus";
 
 /*  */
-"Insulin recommended" = "Insulin recommended";
+"Insulin recommended" = "Insulina recomendada";
 
 /*  */
-"Insulin required" = "Insulin required";
+"Insulin required" = "Insulina necessária";
 
 /* Bolus screen */
-"Recommendation" = "Recommendation";
+"Recommendation" = "Recomendação";
 
 /* Button */
-"Clear" = "Clear";
+"Clear" = "Apagar";
 
 /* Button */
-"Done" = "Done";
+"Done" = "Ok";
 
 /*  */
-"Wait please" = "Wait please";
+"Wait please" = "Aguarde";
 
 /*  */
-"Agree and continue" = "Agree and Continue";
+"Agree and continue" = "Concordar e Continuar";
 
 /* Disclaimer when opening app for first time*/
 "Disclaimer" = "Disclaimer";
