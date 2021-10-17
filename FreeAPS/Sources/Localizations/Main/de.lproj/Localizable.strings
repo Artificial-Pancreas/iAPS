@@ -4,17 +4,17 @@
 */
 /* Bolus screen when adding insulin */
 
-"Add insulin without actually bolusing" = "Insulin nur erfassen, keine Abgabe";
+"Add insulin without actually bolusing" = "Insulin ohne tatsächliche Bolusabgabe erfassen";
 
 /* Add insulin from source outside of pump */
-"Add %@ without bolusing" = "Erfasse %@ ohne Bolusabgabe";
+"Add %@ without bolusing" = "Erfasse %@ ohne tatsächliche Bolusabgabe";
 
 "Bolus" = "Bolus";
 
 "Close" = "Schließen";
 
 /* Continue after added carbs without bolus */
-"Continue without bolus" = "Ohne Abgabe eines Bolus fortfahren";
+"Continue without bolus" = "Ohne Bolusabgabe fortfahren";
 
 /* Header */
 "Enact Bolus" = "Bolus abgeben";
@@ -53,13 +53,13 @@
 "Enacted at %@" = "Gestartet um %@";
 
 /* Home title */
-"Home" = "Startseite";
+"Home" = "Start";
 
 /* Looping in progress */
-"looping" = "looping";
+"looping" = "Loop An";
 
 /* min ago since last loop */
-"min ago" = "min";
+"min ago" = "min her";
 
 /* Status Title */
 "No suggestion" = "Kein Vorschlag";
@@ -92,7 +92,7 @@
 "Cancel" = "Abbrechen";
 
 /*  */
-"Cancel Temp Target" = "Temporäres Ziel (TT) abbrechen";
+"Cancel Temp Target" = "Temporäres Ziel abbrechen";
 
 /* Custom temp target */
 "Custom" = "Benutzerdefiniert";
@@ -110,13 +110,13 @@
 "Duration" = "Dauer";
 
 /*  */
-"Enact Temp Target" = "Temporäres Ziel (TT) starten";
+"Enact Temp Target" = "Temporäres Ziel starten";
 
 /*  */
 "Enter preset name" = "Geben Sie einen Namen für das Preset ein";
 
 /* Preset name */
-"Name" = "Preset Name";
+"Name" = "Name";
 
 /* minutes of target temp */
 "minutes" = "Minuten";
@@ -137,7 +137,7 @@
 "Autotune" = "Autotune";
 
 /*  */
-"Basal profile" = "Basalraten-Profil";
+"Basal profile" = "Basal-Profil";
 
 /*  */
 "Carb ratio" = "Kohlenhydratfaktor";
@@ -146,7 +146,10 @@
 "Delete autotune data" = "Autotune Daten löschen";
 
 /*  */
-"Run now" = "Ausführen";
+"Run now" = "Jetzt ausführen";
+
+/*  */
+"Last run" = "Last run";
 
 /*  */
 "Sensitivity" = "Empfindlichkeit";
@@ -158,13 +161,13 @@
 "Add" = "Hinzufügen";
 
 /*  */
-"Basal Profile" = "Basalraten-Profil";
+"Basal Profile" = "Basal-Profil";
 
 /* Rate basal profile */
 "Rate" = "BR";
 
 /*  */
-"Save on Pump" = "In Pumpe speichern";
+"Save on Pump" = "Auf Pumpe speichern";
 
 /*  */
 "Saving..." = "Speichern...";
@@ -404,6 +407,21 @@ Enact a temp Basal or a temp target */
 /* Header */
 "History" = "Verlauf";
 
+/* CGM option */
+"Upload glucose to Nightscout" = "Speichern von BZ-Werten in nightscout";
+
+/* Type of CGM or glucose source */
+"Type" = "Typ";
+
+/* CGM */
+"CGM" = "CGM";
+
+/* CGM Transmitter ID */
+"Transmitter ID" = "Transmitter ID";
+
+/* Other CGM setting */
+"Other" = "Sonstiges";
+
 /*
   Infotexts from openaps.docs and androidaps.docs
   FreeAPS
@@ -413,7 +431,7 @@ Enact a temp Basal or a temp target */
 "This feature, enabled by default, resets the autosens ratio to neutral when you rewind your pump, on the assumption that this corresponds to a probable site change. Autosens will begin learning sensitivity anew from the time of the rewind, which may take up to 6 hours. If you usually rewind your pump independently of site changes, you may want to consider disabling this feature." = "Diese standardmäßig aktivierte Funktion setzt Autosense auf neutral zurück, wenn Sie Ihre Pumpen Gewindestange zurücklaufen lassen, wobei davon ausgegangen wird, dass dies einen Katheter- und Reservoirwechsel bedeutet. Autosens startet ab dem Zeitpunkt des Rücklaufes neu und es kann bis zu 6 Stunden dauern, die Sensibilität neu zu beurteilen. Wenn Sie Ihre Pumpe normalerweise unabhängig vom Resevoir- und Kathetherwechsel zurück laufen lassen, sollten Sie diese Funktion deaktivieren.";
 
 /* ”High Temptarget Raises Sensitivity" */
-"Defaults to false. When set to true, raises sensitivity (lower sensitivity ratio) for temp targets set to >= 111. Synonym for exercise_mode. The higher your temp target above 110 will result in more sensitive (lower) ratios, e.g., temp target of 120 results in sensitivity ratio of 0.75, while 140 results in 0.6 (with default halfBasalTarget of 160)." = "Defaults to false. When set to true, raises sensitivity (lower sensitivity ratio) for temp targets set to >= 111. Synonym for exercise_mode. The higher your temp target above 110 will result in more sensitive (lower) ratios, e.g., temp target of 120 results in sensitivity ratio of 0.75, while 140 results in 0.6 (with default halfBasalTarget of 160).";
+"Defaults to false. When set to true, raises sensitivity (lower sensitivity ratio) for temp targets set to >= 111. Synonym for exercise_mode. The higher your temp target above 110 will result in more sensitive (lower) ratios, e.g., temp target of 120 results in sensitivity ratio of 0.75, while 140 results in 0.6 (with default halfBasalTarget of 160)." = "Ist Standardmäßig auf aus. Wenn eingeschaltet erhöht dies die Empfindlichkeit (niedrigere Empfindlichkeitsverhältnis) für Temp-Ziele auf >= 111. Synonym für exercise_mode. Je höher dein Tempo-Ziel über 110 ist, desto empfindlicher (niedriger) Verhältnisse, z. temp Ziel von 120 resultiert im Empfindlichkeitsverhältnis von 0,75, während 140 in 0,6 (mit Standard-Halbbasalratenziel von 160).";
 
 /* ”Low Temptarget Lowers Sensitivity" */
 "Defaults to false. When set to true, can lower sensitivity (higher sensitivity ratio) for temptargets <= 99. The lower your temp target below 100 will result in less sensitive (higher) ratios, e.g., temp target of 95 results in sensitivity ratio of 1.09, while 85 results in 1.33 (with default halfBasalTarget of 160)." = "Defaults to false. When set to true, can lower sensitivity (higher sensitivity ratio) for temptargets <= 99. The lower your temp target below 100 will result in less sensitive (higher) ratios, e.g., temp target of 95 results in sensitivity ratio of 1.09, while 85 results in 1.33 (with default halfBasalTarget of 160).";
@@ -434,7 +452,7 @@ Enact a temp Basal or a temp target */
 "Defaults to false, which means by default only the low end of the pump’s BG target range is used as OpenAPS target. This is a safety feature to prevent too-wide targets and less-optimal outcomes. Therefore the higher end of the target range is used only for avoiding bolus wizard overcorrections. Use wide_bg_target_range: true to force neutral temps over a wider range of eventualBGs." = "Defaults to false, which means by default only the low end of the pump’s BG target range is used as OpenAPS target. This is a safety feature to prevent too-wide targets and less-optimal outcomes. Therefore the higher end of the target range is used only for avoiding bolus wizard overcorrections. Use wide_bg_target_range: true to force neutral temps over a wider range of eventualBGs.";
 
 /* "Skip Neutral Temps" */
-"Defaults to false, so that OpenAPS will set temps whenever it can, so it will be easier to see if the system is working, even when you are offline. This means OpenAPS will set a “neutral” temp (same as your default basal) if no adjustments are needed. If you are a light sleeper and the “on the hour” buzzing or beeping wakes you up (even in vibrate mode), you may want to turn this to “true” to skip setting neutral temps. However, we recommend leaving neutral temps enabled for most people who will be using this system on the go and out of constant connectivity.\n\nNote: if set to true, in order to reduce notifications at the top of the hour, it will also attempt to cancel temp basals (unless BG or minGuardBG is below threshold and a zero-temp is needed) prior to the top of the hour. Normally a new temp basal will be set (if still needed) after the top of the hour, but that may be delayed if the rig has issues connecting to the pump. People who want to minimize the ‘on the hour’ temp basal notification beeps/vibrations may choose to accept that risk and choose to set skip_neutral_temps to true." = "Defaults to false, so that FreeAPS X will set temps whenever it can, so it will be easier to see if the system is working, even when you are offline. This means OpenAPS will set a “neutral” temp (same as your default basal) if no adjustments are needed. This is an old setting for OpenAPS to have the options to minimise sounds and notifications form the 'rig', that may wake you up during the night. ";
+"Defaults to false, so that FreeAPS X will set temps whenever it can, so it will be easier to see if the system is working, even when you are offline. This means FreeAPS X will set a “neutral” temp (same as your default basal) if no adjustments are needed. This is an old setting for OpenAPS to have the options to minimise sounds and notifications from the 'rig', that may wake you up during the night." = "Defaults to false, so that FreeAPS X will set temps whenever it can, so it will be easier to see if the system is working, even when you are offline. This means OpenAPS will set a “neutral” temp (same as your default basal) if no adjustments are needed. This is an old setting for OpenAPS to have the options to minimise sounds and notifications form the 'rig', that may wake you up during the night. ";
 
 /* "Unsuspend If No Temp” */
 "Many people occasionally forget to resume / unsuspend their pump after reconnecting it. If you’re one of them, and you are willing to reliably set a zero temp basal whenever suspending and disconnecting your pump, this feature has your back. If enabled, it will automatically resume / unsuspend the pump if you forget to do so before your zero temp expires. As long as the zero temp is still running, it will leave the pump suspended." = "Many people occasionally forget to resume / unsuspend their pump after reconnecting it. If you’re one of them, and you are willing to reliably set a zero temp basal whenever suspending and disconnecting your pump, this feature has your back. If enabled, it will automatically resume / unsuspend the pump if you forget to do so before your zero temp expires. As long as the zero temp is still running, it will leave the pump suspended.";
@@ -507,7 +525,7 @@ Enact a temp Basal or a temp target */
 "Defaults to start at 30. This is the maximum minutes of basal that can be delivered by UAM as a single SMB when IOB exceeds COB. This gives the ability to make UAM more or less aggressive if you choose. It is recommended that the value is set to start at 30, in line with the default, and if you choose to increase this value, do so in no more than 15 minute increments, keeping a close eye on the effects of the changes. Reducing the value will cause UAM to dose less insulin for each SMB. It is not recommended to set this value higher than 60 mins, as this may affect the ability for the algorithm to safely zero temp. It is also recommended that pushover is used when setting the value to be greater than default, so that alerts are generated for any predicted lows or highs." = "Defaults to start at 30. This is the maximum minutes of basal that can be delivered by UAM as a single SMB when IOB exceeds COB. This gives the ability to make UAM more or less aggressive if you choose. It is recommended that the value is set to start at 30, in line with the default, and if you choose to increase this value, do so in no more than 15 minute increments, keeping a close eye on the effects of the changes. Reducing the value will cause UAM to dose less insulin for each SMB. It is not recommended to set this value higher than 60 mins, as this may affect the ability for the algorithm to safely zero temp. It is also recommended that pushover is used when setting the value to be greater than default, so that alerts are generated for any predicted lows or highs.";
 
 /* "SMB Interval" */
-"Minimum duration in minutes between two enacted SMBs" = "Minimale Zeit die zwischen zwei SMBs verlaufen darf, in Minuten";
+"Minimum duration in minutes between two enacted SMBs" = "Minimaler Abstand (in Minuten), der zwischen zwei SMBs liegen muss";
 
 /* "Bolus Increment" */
 "Smallest possible bolus amount" = "Kleinste mögliche Bolusmenge";

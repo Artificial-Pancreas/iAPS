@@ -149,6 +149,9 @@
 "Run now" = "Kör nu";
 
 /*  */
+"Last run" = "Kördes senast";
+
+/*  */
 "Sensitivity" = "Insulinkänslighet";
 
 /*  */
@@ -404,6 +407,21 @@ Enact a temp Basal or a temp target */
 /* Header */
 "History" = "Historik";
 
+/* CGM option */
+"Upload glucose to Nightscout" = "Ladda upp blodsocker till Nightscout";
+
+/* Type of CGM or glucose source */
+"Type" = "Typ";
+
+/* CGM */
+"CGM" = "CGM";
+
+/* CGM Transmitter ID */
+"Transmitter ID" = "Sändar-ID";
+
+/* Other CGM setting */
+"Other" = "Annan inställning";
+
 /*
   Infotexts from openaps.docs and androidaps.docs
   FreeAPS
@@ -434,7 +452,7 @@ Enact a temp Basal or a temp target */
 "Defaults to false, which means by default only the low end of the pump’s BG target range is used as OpenAPS target. This is a safety feature to prevent too-wide targets and less-optimal outcomes. Therefore the higher end of the target range is used only for avoiding bolus wizard overcorrections. Use wide_bg_target_range: true to force neutral temps over a wider range of eventualBGs." = "Av som standard, vilket innebär att endast det nedre intervallet av dina inställda målvärden kommer att användas som målvärde i FreeAPS X. Detta är en säkerhetsfunktion för att förhindra alltför omfattande målintervall med mindre optimala resultat som följd. Den övre delen av målvärdet används endast för att undvika överkorrigeringar av bolusguiden. Använd 'Wide BG Target Range' för att forcera neutrala temporära basaldoser att användas över ett bredare intervall av förväntade blodsocker.";
 
 /* "Skip Neutral Temps" */
-"Defaults to false, so that OpenAPS will set temps whenever it can, so it will be easier to see if the system is working, even when you are offline. This means OpenAPS will set a “neutral” temp (same as your default basal) if no adjustments are needed. If you are a light sleeper and the “on the hour” buzzing or beeping wakes you up (even in vibrate mode), you may want to turn this to “true” to skip setting neutral temps. However, we recommend leaving neutral temps enabled for most people who will be using this system on the go and out of constant connectivity.\n\nNote: if set to true, in order to reduce notifications at the top of the hour, it will also attempt to cancel temp basals (unless BG or minGuardBG is below threshold and a zero-temp is needed) prior to the top of the hour. Normally a new temp basal will be set (if still needed) after the top of the hour, but that may be delayed if the rig has issues connecting to the pump. People who want to minimize the ‘on the hour’ temp basal notification beeps/vibrations may choose to accept that risk and choose to set skip_neutral_temps to true." = "Av som standard, så att FreeAPS X kan ställa in temporära basaldoser närhelst den kan, vilket gör det lättare att se ifall systemet fungerar, även när du är offline. Detta innebär att FreeAPS X kommer att ställa in en ”neutral” temporär basal (samma som din ordinarie basal) när inga justeringar behövs. Gammal inställning från OpenAPS för att minska ljud och notiser mitt i natten från dessa 'rigs'. Vi rekommenderar att man lämnar neutrala temporära basaler aktiverade. ";
+"Defaults to false, so that FreeAPS X will set temps whenever it can, so it will be easier to see if the system is working, even when you are offline. This means FreeAPS X will set a “neutral” temp (same as your default basal) if no adjustments are needed. This is an old setting for OpenAPS to have the options to minimise sounds and notifications from the 'rig', that may wake you up during the night." = "Av som standard, så att FreeAPS X kan ställa in temporära basaldoser närhelst den kan, vilket gör det lättare att se ifall systemet fungerar, även när du är offline. Detta innebär att FreeAPS X kommer att ställa in en ”neutral” temporär basal (samma som din ordinarie basal) när inga justeringar behövs. Gammal inställning från OpenAPS för att minska ljud och notiser mitt i natten från dessa 'rigs'. Vi rekommenderar att man lämnar neutrala temporära basaler aktiverade. ";
 
 /* "Unsuspend If No Temp” */
 "Many people occasionally forget to resume / unsuspend their pump after reconnecting it. If you’re one of them, and you are willing to reliably set a zero temp basal whenever suspending and disconnecting your pump, this feature has your back. If enabled, it will automatically resume / unsuspend the pump if you forget to do so before your zero temp expires. As long as the zero temp is still running, it will leave the pump suspended." = "Standardvärde Av för denna inställning. Alla eventuella temporära basaler som pågått under tider pumpen varit pausad kommer att raderas, dessutom kommer de ordinarie basaldoserna ersättas med temporära basaler på 0 IE/h.";
@@ -501,7 +519,7 @@ Enact a temp Basal or a temp target */
 "This is the amount of the maximum number of carbs we’ll assume will absorb over 4h if we don’t yet see carb absorption." = "Mängd av maximala antal kolhydrater som vi antar kommer att absorberas över 4h om vi ännu inte ser 'carb absorption'.";
 
 /* ”Max SMB Basal Minutes" */
-"Defaults to start at 30. This is the maximum minutes of basal that can be delivered as a single SMB with uncovered COB. This gives the ability to make SMB more aggressive if you choose. It is recommended that the value is set to start at 30, in line with the default, and if you choose to increase this value, do so in no more than 15 minute increments, keeping a close eye on the effects of the changes. It is not recommended to set this value higher than 90 mins, as this may affect the ability for the algorithm to safely zero temp. It is also recommended that pushover is used when setting the value to be greater than default, so that alerts are generated for any predicted lows or highs." = "Standardvärde 30. Detta är det maximala antal minuter av din ordinarie basal som kommer att ges som en SMB. Denna inställning ger möjlighet att göra SMB större och behandlingen med SMB mer aggressiv. Det rekommenderas att börja med 30 minuter, och om du väljer att öka detta värde, göra det stegvis i högst 15 minuters steg, samtidigt som du noga följer effekterna av de nya inställningarna. Det rekommenderas inte att ställa in detta värde högre än 90 minuter, eftersom detta påverkar algoritmens förmåga att säkert kunna balansera med temporära balsaler på 0 IE/h. Det rekommenderas också att pushover används när värdet sätts till att vara större än standard, så att varningar och notiser kan genereras för alla förväntade blodsockerdalar eller toppar.";
+"Defaults to start at 30. This is the maximum minutes of basal that can be delivered as a single SMB with uncovered COB. This gives the ability to make SMB more aggressive if you choose. It is recommended that the value is set to start at 30, in line with the default, and if you choose to increase this value, do so in no more than 15 minute increments, keeping a close eye on the effects of the changes. It is not recommended to set this value higher than 90 mins, as this may affect the ability for the algorithm to safely zero temp. It is also recommended that pushover is used when setting the value to be greater than default, so that alerts are generated for any predicted lows or highs." = "Standardvärde 30. Detta är det maximala antal minuter av din ordinarie basal som kommer att ges som en SMB. Denna inställning ger möjlighet att göra SMB större och behandlingen med SMB mer aggressiv. Det rekommenderas att börja med 30 minuter, och om du väljer att öka detta värde, göra det stegvis i högst 15 minuters steg, samtidigt som du noga följer effekterna av de nya inställningarna. Det rekommenderas inte att ställa in detta värde högre än 90 minuter, eftersom detta påverkar algoritmens förmåga att säkert kunna balansera med temporära basaler på 0 IE/h. Det rekommenderas också att pushover används när värdet sätts till att vara större än standard, så att varningar och notiser kan genereras för alla förväntade blodsockerdalar eller toppar.";
 
 /* "Max UAM SMB Basal Minutes" */
 "Defaults to start at 30. This is the maximum minutes of basal that can be delivered by UAM as a single SMB when IOB exceeds COB. This gives the ability to make UAM more or less aggressive if you choose. It is recommended that the value is set to start at 30, in line with the default, and if you choose to increase this value, do so in no more than 15 minute increments, keeping a close eye on the effects of the changes. Reducing the value will cause UAM to dose less insulin for each SMB. It is not recommended to set this value higher than 60 mins, as this may affect the ability for the algorithm to safely zero temp. It is also recommended that pushover is used when setting the value to be greater than default, so that alerts are generated for any predicted lows or highs." = "Standardvärde 30. Detta är det maximala antal minuter av din ordinarie basal som kommer att användas för UAM för att ges som en SMB. Denna inställning ger möjlighet att göra behandlingen med UAM mer aggressiv, om du väljer att öka detta värde. Det rekommenderas att börja med 30 minuter, och om du väljer att öka detta värde, görs det stegvis i högst 15 minuters steg, samtidigt som du noga följer effekterna av nya inställningarna. En reducering av värdet leder till att UAM doserar mindre insulin med varje SMB. Det rekommenderas inte att ställa in detta värde högre än 60 minuter, eftersom detta påverkar algoritmens förmåga att säkert kunna balansera med temporära basaler på 0 IE/h. Det rekommenderas också att pushover används när värdet sätts till att vara större än standard, så att varningar och notiser kan genereras för alla förväntade blodsockerdalar eller toppar.";
@@ -516,7 +534,7 @@ Enact a temp Basal or a temp target */
 "Time of maximum blood glucose lowering effect of insulin, in minutes" = "Tid i minuter för när insulinet har som störst blodsockersänkande effekt";
 
 /* "Carbs Req Threshold" */
-"Grams of carbsReq to trigger a pushover. Defaults to 1 (for 1 gram of carbohydrate). Can be increased if you only want to get Pushover for carbsReq at X threshold." = "Antal kolhydrater för att utlösa en pushover-notis, av det totala antal kolhydrater nödvändiga för at undvika ett lågt blodsockervärde (carbsReq) som krävs. Standardvärde är 1 (gram kolhydrater). Kan ökas om du bara vill få en Pushover-notis vid en större mängd nödvändiga kolhydrater.";
+"Grams of carbsReq to trigger a pushover. Defaults to 1 (for 1 gram of carbohydrate). Can be increased if you only want to get Pushover for carbsReq at X threshold." = "Antal kolhydrater för att utlösa en pushover-notis, av det totala antal kolhydrater nödvändiga (carbsReq) för att undvika ett lågt blodsockervärde, som krävs. Standardvärde är 1 (gram kolhydrater). Kan ökas om du bara vill få en Pushover-notis vid en större mängd nödvändiga kolhydrater.";
 
 /* "Noisy CGM Target Multiplier" */
 "Defaults to 1.3. Increase target by this amount when looping off raw/noisy CGM data" = "Standardvärde 1,3. Öka målvärdet med denna multipel när du loopar med ofiltrerad CGM-data med mycket brus";

@@ -149,6 +149,9 @@
 "Run now" = "马上执行";
 
 /*  */
+"Last run" = "Last run";
+
+/*  */
 "Sensitivity" = "胰岛素敏感系数";
 
 /*  */
@@ -404,6 +407,21 @@ Enact a temp Basal or a temp target */
 /* Header */
 "History" = "历史";
 
+/* CGM option */
+"Upload glucose to Nightscout" = "Upload glucose to Nightscout";
+
+/* Type of CGM or glucose source */
+"Type" = "Type";
+
+/* CGM */
+"CGM" = "CGM";
+
+/* CGM Transmitter ID */
+"Transmitter ID" = "Transmitter ID";
+
+/* Other CGM setting */
+"Other" = "Other";
+
 /*
   Infotexts from openaps.docs and androidaps.docs
   FreeAPS
@@ -435,7 +453,7 @@ Enact a temp Basal or a temp target */
 "Defaults to false, which means by default only the low end of the pump’s BG target range is used as OpenAPS target. This is a safety feature to prevent too-wide targets and less-optimal outcomes. Therefore the higher end of the target range is used only for avoiding bolus wizard overcorrections. Use wide_bg_target_range: true to force neutral temps over a wider range of eventualBGs." = "默认禁用，这意味着默认情况下只有泵上设备的低血糖限制被用作OpenAPS目标。这是一个安全功能，以防止目标范围过宽和不理想的结果。因此，高的血糖目标范围仅用于大剂量向导的过度校正。使用 wide_bg_target_range: true使用适中的目标血糖来约束更宽的血糖控制目标。";
 
 /* "Skip Neutral Temps" */
-"Defaults to false, so that OpenAPS will set temps whenever it can, so it will be easier to see if the system is working, even when you are offline. This means OpenAPS will set a “neutral” temp (same as your default basal) if no adjustments are needed. If you are a light sleeper and the “on the hour” buzzing or beeping wakes you up (even in vibrate mode), you may want to turn this to “true” to skip setting neutral temps. However, we recommend leaving neutral temps enabled for most people who will be using this system on the go and out of constant connectivity.\n\nNote: if set to true, in order to reduce notifications at the top of the hour, it will also attempt to cancel temp basals (unless BG or minGuardBG is below threshold and a zero-temp is needed) prior to the top of the hour. Normally a new temp basal will be set (if still needed) after the top of the hour, but that may be delayed if the rig has issues connecting to the pump. People who want to minimize the ‘on the hour’ temp basal notification beeps/vibrations may choose to accept that risk and choose to set skip_neutral_temps to true." = "默认禁用，这样FreeAPS X就会在任何时候设置临时目标，这样就会更容易看到系统是否在工作，即使你不在线。这意味着如果不需要调整，OpenAPS将设置一个 \"中性 \"临时基础（与你的默认基础相同）。这是OpenAPS的一个旧设置，可以选择最大限度地减少 \"设备 \"的声音和通知，这些声音和通知可能会在夜间吵醒你。";
+"Defaults to false, so that FreeAPS X will set temps whenever it can, so it will be easier to see if the system is working, even when you are offline. This means FreeAPS X will set a “neutral” temp (same as your default basal) if no adjustments are needed. This is an old setting for OpenAPS to have the options to minimise sounds and notifications from the 'rig', that may wake you up during the night." = "默认禁用，这样FreeAPS X就会在任何时候设置临时目标，这样就会更容易看到系统是否在工作，即使你不在线。这意味着如果不需要调整，OpenAPS将设置一个 \"中性 \"临时基础（与你的默认基础相同）。这是OpenAPS的一个旧设置，可以选择最大限度地减少 \"设备 \"的声音和通知，这些声音和通知可能会在夜间吵醒你。";
 
 /* "Unsuspend If No Temp” */
 "Many people occasionally forget to resume / unsuspend their pump after reconnecting it. If you’re one of them, and you are willing to reliably set a zero temp basal whenever suspending and disconnecting your pump, this feature has your back. If enabled, it will automatically resume / unsuspend the pump if you forget to do so before your zero temp expires. As long as the zero temp is still running, it will leave the pump suspended." = " 默认为false。在泵被暂停期间，任何现有的临时基础率将被删除，并以空的基础率来抵消配置基础率。";

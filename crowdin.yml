@@ -16,6 +16,8 @@ export_languages:
   - tr
   - uk
   - zh-CN
+  - pt-PT
+  - pt-BR
 files:
   - source: /FreeAPS/Sources/Localizations/Main/en.lproj/Localizable.strings
     translation: /FreeAPS/Sources/Localizations/Main/%osx_locale%.lproj/Localizable.strings
