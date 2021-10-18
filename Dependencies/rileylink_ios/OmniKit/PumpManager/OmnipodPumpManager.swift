@@ -1408,7 +1408,7 @@ extension OmnipodPumpManager: PumpManager {
                 }
             }
 
-            var getStatusNeeded = false
+            var getStatusNeeded = true
             var finalizeFinishedDosesNeeded = false
             if let unfinalizedBolus = self.state.podState?.unfinalizedBolus {
                 if unfinalizedBolus.scheduledCertainty == .uncertain {
