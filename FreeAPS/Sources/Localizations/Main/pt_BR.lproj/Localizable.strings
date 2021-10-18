@@ -50,37 +50,37 @@
 "FreeAPS X is in an active development state. We do not recommend to use the system for everyday control of blood glucose! Use it for testing purposes only at your own risk. We are not responsible for your decisions and actions." = "FreeAPS X ainda está em estágio de desenvolvimento. Nós não recomendamos o uso deste aplicativo para controle diário da glicemia! Use somente para testes por sua conta e risco. Nós não somos responsáveis por suas decisões e ações.";
 
 /* Enacted at a date */
-"Enacted at %@" = "Enacted at %@";
+"Enacted at %@" = "Executado em %@";
 
 /* Home title */
-"Home" = "Home";
+"Home" = "Tela inicial";
 
 /* Looping in progress */
 "looping" = "looping";
 
 /* min ago since last loop */
-"min ago" = "min ago";
+"min ago" = "min atrás";
 
 /* Status Title */
-"No suggestion" = "No suggestion";
+"No suggestion" = "Sem sugestão";
 
 /* Replace pod text in Header */
-"Replace pod" = "Replace pod";
+"Replace pod" = "Substituir pod";
 
 /* Suggested at a date */
-"Suggested at %@" = "Suggested at %@";
+"Suggested at %@" = "Sugerido %@";
 
 /* Add carbs screen */
-"Add Carbs" = "Add Carbs";
+"Add Carbs" = "Adicionar carboidratos";
 
 /*  */
-"Amount Carbs" = "Amount Carbs";
+"Amount Carbs" = "Quantidade de Carboidratos";
 
 /* Grams unit */
 "grams" = "gramas";
 
 /*  */
-"Carbs required" = "Carbs required";
+"Carbs required" = "Carbos necessários";
 
 /* */
 "Are you sure?" = "Tem certeza?";
@@ -92,43 +92,43 @@
 "Cancel" = "Cancelar";
 
 /*  */
-"Cancel Temp Target" = "Cancel Temp Target";
+"Cancel Temp Target" = "Cancelar Meta Temporária";
 
 /* Custom temp target */
-"Custom" = "Custom";
+"Custom" = "Definir";
 
 /*  */
-"Date" = "Date";
+"Date" = "Data";
 
 /*  */
-"Delete" = "Delete";
+"Delete" = "Apagar";
 
 /* Delete preset temp target */
 "Delete preset \"%@\"" = "Delete preset \"%@\"";
 
 /* Duration of target temp or temp basal */
-"Duration" = "Duration";
+"Duration" = "Duração";
 
 /*  */
-"Enact Temp Target" = "Enact Temp Target";
+"Enact Temp Target" = "Executar Meta Temporária";
 
 /*  */
 "Enter preset name" = "Enter preset name";
 
 /* Preset name */
-"Name" = "Name";
+"Name" = "Nome";
 
 /* minutes of target temp */
-"minutes" = "minutes";
+"minutes" = "minutos";
 
 /*  */
-"Presets" = "Presets";
+"Presets" = "Predefinidos";
 
 /* Save preset name */
-"Save" = "Save";
+"Save" = "Salvar";
 
 /*  */
-"Save as preset" = "Save as preset";
+"Save as preset" = "Salvar como predefinido";
 
 /* Upper temp target limit */
 "Top target" = "Top target";
@@ -137,7 +137,7 @@
 "Autotune" = "Autotune";
 
 /*  */
-"Basal profile" = "Basal profile";
+"Basal profile" = "Perfil Basal";
 
 /*  */
 "Carb ratio" = "Carb ratio";
