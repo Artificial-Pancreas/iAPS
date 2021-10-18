@@ -149,7 +149,7 @@
 "Run now" = "Jetzt ausführen";
 
 /*  */
-"Last run" = "Last run";
+"Last run" = "Ltzte Berechnung";
 
 /*  */
 "Sensitivity" = "Empfindlichkeit";
@@ -222,7 +222,7 @@ Enact a temp Basal or a temp target */
 "Manual Temp Basal" = "Manuelle Temporäre Basalrate";
 
 /* Allow uploads tp NS */
-"Allow uploads" = "Erlaube Hochladen von Daten";
+"Allow uploads" = "Erlaube Uploads der Daten";
 
 /* API secret in NS */
 "API secret" = "API secret";
@@ -309,13 +309,13 @@ Enact a temp Basal or a temp target */
 "U/hr" = "IE/Std";
 
 /* Unit in number of units delivered (keep the space character!) */
-" U" = "IE";
+" U" = " IE";
 
 /* /Insulin unit */
 "/U" = "/IE";
 
 /* Insulin unit */
-"U" = "IE";
+"U" = " IE";
 
 /* Unit per hour with space */
 " U/hr" = "IE/h";
@@ -408,7 +408,7 @@ Enact a temp Basal or a temp target */
 "History" = "Verlauf";
 
 /* CGM option */
-"Upload glucose to Nightscout" = "Speichern von BZ-Werten in nightscout";
+"Upload glucose to Nightscout" = "Upload der BZ-Werte auf Nightscout";
 
 /* Type of CGM or glucose source */
 "Type" = "Typ";
