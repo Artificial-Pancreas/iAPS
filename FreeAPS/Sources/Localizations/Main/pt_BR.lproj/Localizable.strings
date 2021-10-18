@@ -152,25 +152,25 @@
 "Last run" = "Last run";
 
 /*  */
-"Sensitivity" = "Sensitivity";
+"Sensitivity" = "Fator de sensibilidade";
 
 /*  */
-"Use Autotune" = "use Autotune";
+"Use Autotune" = "usar Autotune";
 
 /* Add profile basal */
-"Add" = "Add";
+"Add" = "Adicionar";
 
 /*  */
-"Basal Profile" = "Basal Profile";
+"Basal Profile" = "Perfil Basal";
 
 /* Rate basal profile */
-"Rate" = "Rate";
+"Rate" = "Taxa";
 
 /*  */
-"Save on Pump" = "Save on Pump";
+"Save on Pump" = "Salvar na Bomba";
 
 /*  */
-"Saving..." = "Saving...";
+"Saving..." = "Salvando...";
 
 /*  */
 "Schedule" = "Schedule";
