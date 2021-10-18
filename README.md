@@ -6,7 +6,7 @@ FreeAPS X uses original JavaScript files of oref0 and provides a user interface 
 
 ## Documentation
 
-[Overview on Loop&Learn](https://www.loopandlearn.org/freeaps-x/)
+[Overview & Onboarding Tips on Loop&Learn](https://www.loopandlearn.org/freeaps-x/)
 
 [OpenAPS documentation](https://openaps.readthedocs.io/en/latest/)
 
@@ -25,7 +25,7 @@ To control an insulin pump FreeAPS X uses modified [rileylink_ios](https://githu
 - Medtronic Canadian/Australian Veo 554 or 754 (firmware 2.7A or lower)
 - Omnipod "Eros" pods
 
-To control an insulin you need to have a [RileyLink](https://getrileylink.org), OrangeLink, Pickle, GNARL, Emalink or similar device
+To control an insulin you need to have a [RileyLink](https://getrileylink.org), OrangeLink, Pickle, GNARL, Emalink, DiaLink or similar device
 
 ## Current state of FreeAPS X
 
@@ -37,19 +37,21 @@ You can find a description of versions on the [releases page](https://github.com
 
 A stable version means that it has been tested for a long time and does not contain critical bugs. We consider it ready for everyday use.
 
-Stable version numbers end in .0 and the code can be found in the [master branch](https://github.com/ivalkou/freeaps/tree/master).
+Stable version numbers end in **.0**.
 
-The current stable version is 0.2.0.
+The current stable version is 0.2.0. (**DOES NOT work on iOS 15! Use beta versions**)
 
 ### Beta versions
 
 Beta versions are the first to introduce new functionality. They are designed to test and identify issues and bugs.
 
-**Beta versions are not recommended for daily use for blood glucose control!**
+**Beta versions are less stable, use with caution!**
 
-Beta numbers end with a number greater than 0, and the code can be found in the [dev branch](https://github.com/ivalkou/freeaps/tree/dev).
+Beta numbers end with a number greater than **0**.
 
-Pull requests are accepted on the dev branch.
+## Contribution
+
+Pull requests are accepted on the [dev branch](https://github.com/ivalkou/freeaps/tree/dev).
 
 Bug reports and feature requests are accepted on the [Issues page](https://github.com/ivalkou/freeaps/issues).
 
@@ -65,6 +67,8 @@ Bug reports and feature requests are accepted on the [Issues page](https://githu
 - System state upload to Nightscout
 - Remote carbs enter and temporary targets through Nightscout
 - Remote bolusing and insulin pump control
+- Dexcom offline support (beta)
+- Detailed functions description inside the app (beta)
 
 ## Not implemented (plans for future)
 
@@ -74,10 +78,8 @@ Bug reports and feature requests are accepted on the [Issues page](https://githu
 - Desktop widget
 - Apple Watch app
 - Plugins
-- Dexcom support
 - Enlite support
 - Apple Health support
-- Detailed functions description inside the app
 
 ## Community
 
