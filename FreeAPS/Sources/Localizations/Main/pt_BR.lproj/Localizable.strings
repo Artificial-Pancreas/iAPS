@@ -140,10 +140,10 @@
 "Basal profile" = "Perfil Basal";
 
 /*  */
-"Carb ratio" = "Carb ratio";
+"Carb ratio" = "Taxas carboidratos";
 
 /*  */
-"Delete autotune data" = "Delete autotune data";
+"Delete autotune data" = "Apagar dados autotune";
 
 /*  */
 "Run now" = "Run now";
@@ -173,7 +173,7 @@
 "Saving..." = "Salvando...";
 
 /*  */
-"Schedule" = "Schedule";
+"Schedule" = "Agenda";
 
 /*  */
 "starts at" = "starts at";
@@ -182,68 +182,68 @@
 "Time" = "Time";
 
 /* */
-"Calculated Ratio" = "Calculated Ratio";
+"Calculated Ratio" = "Taxa calculada";
 
 /* Carb Ratios header */
-"Carb Ratios" = "Carb Ratios";
+"Carb Ratios" = "Taxas de carbo";
 
 /*  */
-"Ratio" = "Ratio";
+"Ratio" = "Taxa";
 
 /*  */
 "Autosens" = "Autosens";
 
 /*  */
-"Calculated Sensitivity" = "Calculated Sensitivity";
+"Calculated Sensitivity" = "Sensibilidade Calculada";
 
 /*  */
-"Insulin Sensitivities" = "Insulin Sensitivities";
+"Insulin Sensitivities" = "Sensibilidade a Insulina";
 
 /* */
-"Sensitivity Ratio" = "Sensitivity Ratio";
+"Sensitivity Ratio" = "Taxa de Sensibilidade";
 
 /*  */
-"Dismiss" = "Dismiss";
+"Dismiss" = "Ignorar";
 
 /*  */
-"Important message" = "Important message";
+"Important message" = "Mensagem importante";
 
 /*  */
-"Amount" = "Amount";
+"Amount" = "Quantidade";
 
 /* */
-"Cancel Temp Basal" = "Cancel Temp Basal";
+"Cancel Temp Basal" = "Cancelar Basal Temporária";
 
 /* Enact
 Enact a temp Basal or a temp target */
-"Enact" = "Enact";
+"Enact" = "Executar";
 
 /* */
-"Manual Temp Basal" = "Manual Temp Basal";
+"Manual Temp Basal" = "Basal Temporária Manual";
 
 /* Allow uploads tp NS */
-"Allow uploads" = "Allow uploads";
+"Allow uploads" = "Permitir uploads";
 
 /* API secret in NS */
 "API secret" = "API secret";
 
 /* Connect to NS */
-"Connect" = "Connect";
+"Connect" = "Conectar";
 
 /* Connected to NS */
-"Connected!" = "Connected!";
+"Connected!" = "Conectado!";
 
 /* Connecting to NS */
-"Connecting..." = "Connecting...";
+"Connecting..." = "Conectando...";
 
 /*  */
-"Invalid URL" = "Invalid URL";
+"Invalid URL" = "URL inválida";
 
 /*  */
 "Local glucose source" = "Local glucose source";
 
 /* Header */
-"Nightscout Config" = "Nightscout Config";
+"Nightscout Config" = "Ajustes Nightscout";
 
 /*  */
 "Port" = "Port";
