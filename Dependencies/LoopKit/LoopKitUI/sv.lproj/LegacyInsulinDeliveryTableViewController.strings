@@ -27,7 +27,7 @@
 "jSc-64-2tZ.text" = "Ingen pump är inställd";
 
 /* Class = "UILabel"; text = "U Total"; ObjectID = "kys-by-14s"; */
-"kys-by-14s.text" = "IE Total";
+"kys-by-14s.text" = "IE totalt";
 
 /* Class = "UINavigationItem"; title = "Insulin Delivery"; ObjectID = "vls-EW-uwI"; */
 "vls-EW-uwI.title" = "Insulin doserat";
