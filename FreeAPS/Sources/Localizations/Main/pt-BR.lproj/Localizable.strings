@@ -270,40 +270,40 @@ Enact a temp Basal or a temp target */
 "Skip Bolus screen after carbs" = "Skip Bolus screen after carbs";
 
 /* Allow remote control from NS */
-"Remote control" = "Remote control";
+"Remote control" = "Controle remoto";
 
 /* Add Medtronic pump */
-"Add Medtronic" = "Add Medtronic";
+"Add Medtronic" = "Adicionar Medtronic";
 
 /* Add Omnipod pump */
-"Add Omnipod" = "Add Omnipod";
+"Add Omnipod" = "Adicionar Omnipod";
 
 /* Add Simulator pump */
-"Add Simulator" = "Add Simulator";
+"Add Simulator" = "Adicionar Simulador";
 
 /* Insulin model */
-"Model" = "Model";
+"Model" = "Modelo";
 
 /*  */
-"Pump config" = "Pump config";
+"Pump config" = "Ajustes bomba";
 
 /*  */
 "Delivery limits" = "Delivery limits";
 
 /*  */
-"Duration of Insulin Action" = "Duration of Insulin Action";
+"Duration of Insulin Action" = "Duração da ação da Insulina";
 
 /* hours of duration of insulin activity */
-"hours" = "hours";
+"hours" = "horas";
 
 /* Max setting */
-"Max Basal" = "Max Basal";
+"Max Basal" = "Basal Maxima";
 
 /* Max setting */
-"Max Bolus" = "Max Bolus";
+"Max Bolus" = "Bolus Máximo";
 
 /* */
-"Pump Settings" = "Pump Settings";
+"Pump Settings" = "Ajustes Bomba";
 
 /* Insulin unit per hour */
 "U/hr" = "U/hr";
@@ -348,16 +348,16 @@ Enact a temp Basal or a temp target */
 "Autotune Conf" = "Autotune";
 
 /*  */
-"Basal Profile Conf" = "Basal Profile";
+"Basal Profile Conf" = "Perfil Basal";
 
 /*  */
-"Carb Ratios Conf" = "Carb Ratios";
+"Carb Ratios Conf" = "Taxa Carbo";
 
 /*  */
-"Closed loop" = "Closed loop";
+"Closed loop" = "Loop fechado";
 
 /* */
-"Configuration" = "Configuration";
+"Configuration" = "Ajustes";
 
 /* */
 "Devices" = "Devices";
