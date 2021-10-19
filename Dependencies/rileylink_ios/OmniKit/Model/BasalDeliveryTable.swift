@@ -212,6 +212,9 @@ public struct RateEntry {
                 remainingSegments -= 1
             } else {
                 let numSegments = min(maxSegmentsPerEntry, Int(round(remainingPulses / pulsesPerSegment)))
+                if numSegments == 0 {
+                    break // prevent infinite loop and subsequent malloc crash with certain bad rate values
+                }
                 remainingSegments -= numSegments
                 let pulseCount = pulsesPerSegment * Double(numSegments)
                 let entry = RateEntry(totalPulses: pulseCount, delayBetweenPulses: delayBetweenPulses)
