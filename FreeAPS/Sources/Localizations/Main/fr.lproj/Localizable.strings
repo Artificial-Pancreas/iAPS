@@ -216,7 +216,7 @@
 
 /* Enact
 Enact a temp Basal or a temp target */
-"Enact" = "Activer";
+"Enact" = "Injecter";
 
 /* */
 "Manual Temp Basal" = "Basal temporaire manuel";
