@@ -86,7 +86,7 @@
 "Are you sure?" = "Tem certeza?";
 
 /* Bottom target temp */
-"Bottom target" = "Bottom target";
+"Bottom target" = "Limite baixo";
 
 /* Cancel preset name */
 "Cancel" = "Cancelar";
@@ -104,7 +104,7 @@
 "Delete" = "Apagar";
 
 /* Delete preset temp target */
-"Delete preset \"%@\"" = "Delete preset \"%@\"";
+"Delete preset \"%@\"" = "Apagar predefinido \"%@\"";
 
 /* Duration of target temp or temp basal */
 "Duration" = "Duração";
@@ -113,7 +113,7 @@
 "Enact Temp Target" = "Executar Meta Temporária";
 
 /*  */
-"Enter preset name" = "Enter preset name";
+"Enter preset name" = "Nomear predefinido";
 
 /* Preset name */
 "Name" = "Nome";
@@ -131,7 +131,7 @@
 "Save as preset" = "Salvar como predefinido";
 
 /* Upper temp target limit */
-"Top target" = "Top target";
+"Top target" = "Limite alto";
 
 /*  */
 "Autotune" = "Autotune";
@@ -176,10 +176,10 @@
 "Schedule" = "Agenda";
 
 /*  */
-"starts at" = "starts at";
+"starts at" = "começa";
 
 /* Time basal profile */
-"Time" = "Time";
+"Time" = "Hora";
 
 /* */
 "Calculated Ratio" = "Taxa calculada";
@@ -252,7 +252,7 @@ Enact a temp Basal or a temp target */
 "URL" = "URL";
 
 /**/
-"Use local glucose server" = "Use local glucose server";
+"Use local glucose server" = "Usar servidor de glicose local";
 
 /*  */
 "Edit settings json" = "Edit settings json";
@@ -261,13 +261,13 @@ Enact a temp Basal or a temp target */
 "Glucose units" = "Glucose units";
 
 /*  */
-"Preferences" = "Preferences";
+"Preferences" = "Preferências";
 
 /* Recommended Insulin Fraction in preferences */
-"Recommended Insulin Fraction" = "Recommended Insulin Fraction";
+"Recommended Insulin Fraction" = "Fração de insulina recomendada";
 
 /* Do you want to show bolus screen after added carbs? */
-"Skip Bolus screen after carbs" = "Skip Bolus screen after carbs";
+"Skip Bolus screen after carbs" = "Pular tela de bolus depois de carbo";
 
 /* Allow remote control from NS */
 "Remote control" = "Controle remoto";
@@ -288,7 +288,7 @@ Enact a temp Basal or a temp target */
 "Pump config" = "Ajustes bomba";
 
 /*  */
-"Delivery limits" = "Delivery limits";
+"Delivery limits" = "Limites de entrega";
 
 /*  */
 "Duration of Insulin Action" = "Duração da ação da Insulina";
