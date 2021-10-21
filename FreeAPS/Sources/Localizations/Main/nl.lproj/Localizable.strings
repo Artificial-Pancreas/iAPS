@@ -344,15 +344,6 @@ Enact a temp Basal or a temp target */
 /* abbreviation for minutes */
 "m" = "m";
 
-/* */
-"Autotune Conf" = "Autotune";
-
-/*  */
-"Basal Profile Conf" = "Basaal profiel";
-
-/*  */
-"Carb Ratios Conf" = "Koolhydraten ratio's";
-
 /*  */
 "Closed loop" = "Gesloten loop";
 
@@ -362,17 +353,8 @@ Enact a temp Basal or a temp target */
 /* */
 "Devices" = "Apparaten";
 
-/* */
-"Insulin Sensitivities Conf" = "Insuline gevoeligheden";
-
-/* */
-"Preferences Conf" = "Instellingen";
-
 /*  */
 "Pump" = "Pomp";
-
-/*  */
-"Pump Settings Conf" = "Pomp instellingen";
 
 /*  */
 "Services" = "Diensten";
@@ -382,9 +364,6 @@ Enact a temp Basal or a temp target */
 
 /* 2 log files to share */
 "Share logs" = "Deel Log";
-
-/*  */
-"Target Ranges Conf" = "Streefdoel";
 
 /* Upper target */
 "High target" = "Bovengrens doel";
