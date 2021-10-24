@@ -351,7 +351,7 @@ Enact a temp Basal or a temp target */
 "Configuration" = "Ajustes";
 
 /* */
-"Devices" = "Devices";
+"Devices" = "Dispositivos";
 
 /*  */
 "Pump" = "Bomba";
@@ -366,13 +366,13 @@ Enact a temp Basal or a temp target */
 "Share logs" = "Compartilhar logs";
 
 /* Upper target */
-"High target" = "High target";
+"High target" = "Limite alto";
 
 /* Lower target */
-"Low target" = "Low target";
+"Low target" = "Limite baixo";
 
 /*  */
-"Target Ranges" = "Target Ranges";
+"Target Ranges" = "Limites da Meta";
 
 /* When bolusing */
 "Bolusing" = "Aplicando bolus";
@@ -384,22 +384,22 @@ Enact a temp Basal or a temp target */
 "Middleware" = "Middleware";
 
 /* Header */
-"History" = "History";
+"History" = "Histórico";
 
 /* CGM option */
 "Upload glucose to Nightscout" = "Upload glicose para o Nightscout";
 
 /* Type of CGM or glucose source */
-"Type" = "Type";
+"Type" = "Tipo";
 
 /* CGM */
-"CGM" = "CGM";
+"CGM" = "MCG";
 
 /* CGM Transmitter ID */
-"Transmitter ID" = "Transmitter ID";
+"Transmitter ID" = "ID do Transmissor";
 
 /* Other CGM setting */
-"Other" = "Other";
+"Other" = "Outros";
 
 /*
   Infotexts from openaps.docs and androidaps.docs
