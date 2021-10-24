@@ -86,7 +86,7 @@
 "Are you sure?" = "Tem certeza?";
 
 /* Bottom target temp */
-"Bottom target" = "Bottom target";
+"Bottom target" = "Limite baixo";
 
 /* Cancel preset name */
 "Cancel" = "Cancelar";
@@ -104,7 +104,7 @@
 "Delete" = "Apagar";
 
 /* Delete preset temp target */
-"Delete preset \"%@\"" = "Delete preset \"%@\"";
+"Delete preset \"%@\"" = "Apagar predefinido \"%@\"";
 
 /* Duration of target temp or temp basal */
 "Duration" = "Duração";
@@ -113,7 +113,7 @@
 "Enact Temp Target" = "Executar Meta Temporária";
 
 /*  */
-"Enter preset name" = "Enter preset name";
+"Enter preset name" = "Nomear predefinido";
 
 /* Preset name */
 "Name" = "Nome";
@@ -131,7 +131,7 @@
 "Save as preset" = "Salvar como predefinido";
 
 /* Upper temp target limit */
-"Top target" = "Top target";
+"Top target" = "Limite alto";
 
 /*  */
 "Autotune" = "Autotune";
@@ -176,10 +176,10 @@
 "Schedule" = "Agenda";
 
 /*  */
-"starts at" = "starts at";
+"starts at" = "começa";
 
 /* Time basal profile */
-"Time" = "Time";
+"Time" = "Hora";
 
 /* */
 "Calculated Ratio" = "Taxa calculada";
@@ -252,7 +252,7 @@ Enact a temp Basal or a temp target */
 "URL" = "URL";
 
 /**/
-"Use local glucose server" = "Use local glucose server";
+"Use local glucose server" = "Usar servidor de glicose local";
 
 /*  */
 "Edit settings json" = "Edit settings json";
@@ -261,49 +261,49 @@ Enact a temp Basal or a temp target */
 "Glucose units" = "Glucose units";
 
 /*  */
-"Preferences" = "Preferences";
+"Preferences" = "Preferências";
 
 /* Recommended Insulin Fraction in preferences */
-"Recommended Insulin Fraction" = "Recommended Insulin Fraction";
+"Recommended Insulin Fraction" = "Fração de insulina recomendada";
 
 /* Do you want to show bolus screen after added carbs? */
-"Skip Bolus screen after carbs" = "Skip Bolus screen after carbs";
+"Skip Bolus screen after carbs" = "Pular tela de bolus depois de carbo";
 
 /* Allow remote control from NS */
-"Remote control" = "Remote control";
+"Remote control" = "Controle remoto";
 
 /* Add Medtronic pump */
-"Add Medtronic" = "Add Medtronic";
+"Add Medtronic" = "Adicionar Medtronic";
 
 /* Add Omnipod pump */
-"Add Omnipod" = "Add Omnipod";
+"Add Omnipod" = "Adicionar Omnipod";
 
 /* Add Simulator pump */
-"Add Simulator" = "Add Simulator";
+"Add Simulator" = "Adicionar Simulador";
 
 /* Insulin model */
-"Model" = "Model";
+"Model" = "Modelo";
 
 /*  */
-"Pump config" = "Pump config";
+"Pump config" = "Ajustes bomba";
 
 /*  */
-"Delivery limits" = "Delivery limits";
+"Delivery limits" = "Limites de entrega";
 
 /*  */
-"Duration of Insulin Action" = "Duration of Insulin Action";
+"Duration of Insulin Action" = "Duração da ação da Insulina";
 
 /* hours of duration of insulin activity */
-"hours" = "hours";
+"hours" = "horas";
 
 /* Max setting */
-"Max Basal" = "Max Basal";
+"Max Basal" = "Basal Maxima";
 
 /* Max setting */
-"Max Bolus" = "Max Bolus";
+"Max Bolus" = "Bolus Máximo";
 
 /* */
-"Pump Settings" = "Pump Settings";
+"Pump Settings" = "Ajustes Bomba";
 
 /* Insulin unit per hour */
 "U/hr" = "U/hr";
@@ -344,35 +344,17 @@ Enact a temp Basal or a temp target */
 /* abbreviation for minutes */
 "m" = "m";
 
-/* */
-"Autotune Conf" = "Autotune";
-
 /*  */
-"Basal Profile Conf" = "Basal Profile";
-
-/*  */
-"Carb Ratios Conf" = "Carb Ratios";
-
-/*  */
-"Closed loop" = "Closed loop";
+"Closed loop" = "Loop fechado";
 
 /* */
-"Configuration" = "Configuration";
+"Configuration" = "Ajustes";
 
 /* */
 "Devices" = "Devices";
 
-/* */
-"Insulin Sensitivities Conf" = "Insulin Sensitivities";
-
-/* */
-"Preferences Conf" = "Preferences";
-
 /*  */
 "Pump" = "Bomba";
-
-/*  */
-"Pump Settings Conf" = "Configurações da Bomba";
 
 /*  */
 "Services" = "Serviços";
@@ -382,9 +364,6 @@ Enact a temp Basal or a temp target */
 
 /* 2 log files to share */
 "Share logs" = "Compartilhar logs";
-
-/*  */
-"Target Ranges Conf" = "Target Ranges";
 
 /* Upper target */
 "High target" = "High target";

@@ -346,15 +346,6 @@ Połączono z Nightscout!";
 /* abbreviation for minutes */
 "m" = "min.";
 
-/* */
-"Autotune Conf" = "Autotune";
-
-/*  */
-"Basal Profile Conf" = "Basal Profile";
-
-/*  */
-"Carb Ratios Conf" = "Carb Ratios";
-
 /*  */
 "Closed loop" = "Closed loop";
 
@@ -364,17 +355,8 @@ Połączono z Nightscout!";
 /* */
 "Devices" = "Devices";
 
-/* */
-"Insulin Sensitivities Conf" = "Insulin Sensitivities";
-
-/* */
-"Preferences Conf" = "Preferences";
-
 /*  */
 "Pump" = "Pump";
-
-/*  */
-"Pump Settings Conf" = "Pump Settings";
 
 /*  */
 "Services" = "Services";
@@ -384,9 +366,6 @@ Połączono z Nightscout!";
 
 /* 2 log files to share */
 "Share logs" = "Share logs";
-
-/*  */
-"Target Ranges Conf" = "Target Ranges";
 
 /* Upper target */
 "High target" = "High target";
