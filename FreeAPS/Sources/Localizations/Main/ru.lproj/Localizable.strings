@@ -7,7 +7,7 @@
 "Add insulin without actually bolusing" = "Добавить инсулин без болюса";
 
 /* Add insulin from source outside of pump */
-"Add %@ without bolusing" = "Add %@ without bolusing";
+"Add %@ without bolusing" = "Добавить %@ без болюса";
 
 "Bolus" = "Болюс";
 
@@ -80,7 +80,7 @@
 "grams" = "грамм";
 
 /*  */
-"Carbs required" = "Carbs required";
+"Carbs required" = "Требуются углеводы";
 
 /* */
 "Are you sure?" = "Вы уверены?";
@@ -116,7 +116,7 @@
 "Enter preset name" = "Название шаблона";
 
 /* Preset name */
-"Name" = "Name";
+"Name" = "Название";
 
 /* minutes of target temp */
 "minutes" = "минут";
@@ -149,7 +149,7 @@
 "Run now" = "Выполнить";
 
 /*  */
-"Last run" = "Last run";
+"Last run" = "Последний запуск";
 
 /*  */
 "Sensitivity" = "Чувствительность";
@@ -309,25 +309,25 @@ Enact a temp Basal or a temp target */
 "U/hr" = "Ед/ч";
 
 /* Unit in number of units delivered (keep the space character!) */
-" U" = " U";
+" U" = " Ед";
 
 /* /Insulin unit */
-"/U" = "/U";
+"/U" = "/Ед";
 
 /* Insulin unit */
-"U" = "U";
+"U" = "Ед";
 
 /* Unit per hour with space */
-" U/hr" = " U/hr";
+" U/hr" = " Ед/ч";
 
 /* Number of units per hour*/
-"%@ U/hr" = "%@ U/hr";
+"%@ U/hr" = "%@ Ед/ч";
 
 /* Number of units insulin delivered */
-"%@ U" = "%@ U";
+"%@ U" = "%@ Eд";
 
 /*Carb ratio unit */
-"g/U" = "g/U";
+"g/U" = "г/Eд";
 
 /* grams */
 " g" = " г";
@@ -381,25 +381,25 @@ Enact a temp Basal or a temp target */
 "Pump suspended" = "Помпа приостановлена";
 
 /* */
-"Middleware" = "Middleware";
+"Middleware" = "Связующее ПО";
 
 /* Header */
 "History" = "История";
 
 /* CGM option */
-"Upload glucose to Nightscout" = "Upload glucose to Nightscout";
+"Upload glucose to Nightscout" = "Загружать глюкозу в Nightscout";
 
 /* Type of CGM or glucose source */
-"Type" = "Type";
+"Type" = "Тип";
 
 /* CGM */
 "CGM" = "CGM";
 
 /* CGM Transmitter ID */
-"Transmitter ID" = "Transmitter ID";
+"Transmitter ID" = "ID трансмиттера";
 
 /* Other CGM setting */
-"Other" = "Other";
+"Other" = "Прочее";
 
 /*
   Infotexts from openaps.docs and androidaps.docs
