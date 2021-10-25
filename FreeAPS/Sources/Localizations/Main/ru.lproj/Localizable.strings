@@ -344,15 +344,6 @@ Enact a temp Basal or a temp target */
 /* abbreviation for minutes */
 "m" = "мин";
 
-/* */
-"Autotune Conf" = "Автотюн";
-
-/*  */
-"Basal Profile Conf" = "Базальный профиль";
-
-/*  */
-"Carb Ratios Conf" = "Углеводные Коэфициенты";
-
 /*  */
 "Closed loop" = "Замкнутая петля";
 
@@ -362,17 +353,8 @@ Enact a temp Basal or a temp target */
 /* */
 "Devices" = "Устройства";
 
-/* */
-"Insulin Sensitivities Conf" = "Факторы Чувствительности к Инсулина";
-
-/* */
-"Preferences Conf" = "Настройки";
-
 /*  */
 "Pump" = "Помпа";
-
-/*  */
-"Pump Settings Conf" = "Настройки Помпы";
 
 /*  */
 "Services" = "Службы";
@@ -382,9 +364,6 @@ Enact a temp Basal or a temp target */
 
 /* 2 log files to share */
 "Share logs" = "Отправить журнал";
-
-/*  */
-"Target Ranges Conf" = "Целевой Диапазон";
 
 /* Upper target */
 "High target" = "Верхняя цель";

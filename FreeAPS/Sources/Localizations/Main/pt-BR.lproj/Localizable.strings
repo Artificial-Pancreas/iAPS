@@ -35,7 +35,7 @@
 "Clear" = "Apagar";
 
 /* Button */
-"Done" = "Ok";
+"Done" = "OK";
 
 /*  */
 "Wait please" = "Aguarde";
@@ -146,10 +146,10 @@
 "Delete autotune data" = "Apagar dados autotune";
 
 /*  */
-"Run now" = "Run now";
+"Run now" = "Executar agora";
 
 /*  */
-"Last run" = "Last run";
+"Last run" = "Ultima execução";
 
 /*  */
 "Sensitivity" = "Fator de sensibilidade";
@@ -240,25 +240,25 @@ Enact a temp Basal or a temp target */
 "Invalid URL" = "URL inválida";
 
 /*  */
-"Local glucose source" = "Local glucose source";
+"Local glucose source" = "Glicose local";
 
 /* Header */
 "Nightscout Config" = "Ajustes Nightscout";
 
 /*  */
-"Port" = "Port";
+"Port" = "Porta";
 
 /*  */
-"URL" = "URL";
+"URL" = "Endereço da URL";
 
 /**/
 "Use local glucose server" = "Usar servidor de glicose local";
 
 /*  */
-"Edit settings json" = "Edit settings json";
+"Edit settings json" = "Editar json de configurações";
 
 /* */
-"Glucose units" = "Glucose units";
+"Glucose units" = "Unidades de glicose";
 
 /*  */
 "Preferences" = "Preferências";
@@ -344,15 +344,6 @@ Enact a temp Basal or a temp target */
 /* abbreviation for minutes */
 "m" = "m";
 
-/* */
-"Autotune Conf" = "Autotune";
-
-/*  */
-"Basal Profile Conf" = "Perfil Basal";
-
-/*  */
-"Carb Ratios Conf" = "Taxa Carbo";
-
 /*  */
 "Closed loop" = "Loop fechado";
 
@@ -362,17 +353,8 @@ Enact a temp Basal or a temp target */
 /* */
 "Devices" = "Dispositivos";
 
-/* */
-"Insulin Sensitivities Conf" = "Sensibilidades da insulina";
-
-/* */
-"Preferences Conf" = "Preferências";
-
 /*  */
 "Pump" = "Bomba";
-
-/*  */
-"Pump Settings Conf" = "Configurações da Bomba";
 
 /*  */
 "Services" = "Serviços";
@@ -383,17 +365,14 @@ Enact a temp Basal or a temp target */
 /* 2 log files to share */
 "Share logs" = "Compartilhar logs";
 
-/*  */
-"Target Ranges Conf" = "Metas";
-
 /* Upper target */
-"High target" = "Limite alto";
+"High target" = "Meta alta";
 
 /* Lower target */
-"Low target" = "Limite baixo";
+"Low target" = "Meta baixa";
 
 /*  */
-"Target Ranges" = "Limites da Meta";
+"Target Ranges" = "Limites da meta";
 
 /* When bolusing */
 "Bolusing" = "Aplicando bolus";
@@ -417,10 +396,10 @@ Enact a temp Basal or a temp target */
 "CGM" = "MCG";
 
 /* CGM Transmitter ID */
-"Transmitter ID" = "ID do Transmissor";
+"Transmitter ID" = "ID do transmissor";
 
 /* Other CGM setting */
-"Other" = "Outros";
+"Other" = "Outro";
 
 /*
   Infotexts from openaps.docs and androidaps.docs

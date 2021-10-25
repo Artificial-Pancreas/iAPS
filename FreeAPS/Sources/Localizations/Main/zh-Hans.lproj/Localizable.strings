@@ -344,15 +344,6 @@ Enact a temp Basal or a temp target */
 /* abbreviation for minutes */
 "m" = "分";
 
-/* */
-"Autotune Conf" = "自动调谐";
-
-/*  */
-"Basal Profile Conf" = "基础率配置文件";
-
-/*  */
-"Carb Ratios Conf" = "碳水化合物系数";
-
 /*  */
 "Closed loop" = "启动闭环";
 
@@ -362,17 +353,8 @@ Enact a temp Basal or a temp target */
 /* */
 "Devices" = "设备";
 
-/* */
-"Insulin Sensitivities Conf" = "胰岛素敏感系数";
-
-/* */
-"Preferences Conf" = "选项";
-
 /*  */
 "Pump" = "胰岛素泵";
-
-/*  */
-"Pump Settings Conf" = "泵设置";
 
 /*  */
 "Services" = "服务";
@@ -382,9 +364,6 @@ Enact a temp Basal or a temp target */
 
 /* 2 log files to share */
 "Share logs" = "分享日志";
-
-/*  */
-"Target Ranges Conf" = "目标范围：";
 
 /* Upper target */
 "High target" = "高目标";

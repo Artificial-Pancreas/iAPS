@@ -344,15 +344,6 @@ Enact a temp Basal or a temp target */
 /* abbreviation for minutes */
 "m" = "m";
 
-/* */
-"Autotune Conf" = "Autotune";
-
-/*  */
-"Basal Profile Conf" = "Profilo basale";
-
-/*  */
-"Carb Ratios Conf" = "Rapporti insulina-carboidrati";
-
 /*  */
 "Closed loop" = "Loop chiuso";
 
@@ -362,17 +353,8 @@ Enact a temp Basal or a temp target */
 /* */
 "Devices" = "Dispositivi";
 
-/* */
-"Insulin Sensitivities Conf" = "Sensibilità insulinica";
-
-/* */
-"Preferences Conf" = "Preferenze";
-
 /*  */
 "Pump" = "Microinfusore";
-
-/*  */
-"Pump Settings Conf" = "Configurazione microinfusore";
 
 /*  */
 "Services" = "Servizi";
@@ -382,9 +364,6 @@ Enact a temp Basal or a temp target */
 
 /* 2 log files to share */
 "Share logs" = "Condividi log file";
-
-/*  */
-"Target Ranges Conf" = "Range del target";
 
 /* Upper target */
 "High target" = "Target superiore";
