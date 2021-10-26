@@ -43,7 +43,7 @@ protocol PumpMessageSender {
     func send(_ data: Data, onChannel channel: Int, timeout: TimeInterval) throws
     
     /// - Throws: LocalizedError
-    func enableCCLEDs() throws
+    func setCCLEDMode(_ mode: RileyLinkLEDMode) throws
     
     /// - Throws: LocalizedError
     func getRileyLinkStatistics() throws -> RileyLinkStatistics

@@ -122,7 +122,7 @@ public class RileyLinkMinimedDeviceTableViewController: UITableViewController {
         device.getStatus { (status) in
             DispatchQueue.main.async {
                 self.lastIdle = status.lastIdle
-                self.firmwareVersion = status.firmwareDescription
+                self.firmwareVersion = status.version
             }
         }
     }
@@ -460,7 +460,8 @@ public class RileyLinkMinimedDeviceTableViewController: UITableViewController {
             case .readBasalSchedule:
                 vc = .readBasalSchedule(ops: ops, device: device, integerFormatter: integerFormatter)
             case .enableLED:
-                vc = .enableLEDs(ops: ops, device: device)
+//                vc = .enableLEDs(ops: ops, device: device)
+                vc = .getStatistics(ops: ops, device: device)
             case .discoverCommands:
                 vc = .discoverCommands(ops: ops, device: device)
             case .getStatistics:

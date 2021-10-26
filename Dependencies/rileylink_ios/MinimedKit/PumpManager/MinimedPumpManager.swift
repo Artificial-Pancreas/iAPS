@@ -207,6 +207,43 @@ public class MinimedPumpManager: RileyLinkPumpManager {
         }
     }
 
+    public var rileyLinkBatteryAlertLevel: Int? {
+        get {
+            return state.rileyLinkBatteryAlertLevel
+        }
+        set {
+            setState { state in
+                state.rileyLinkBatteryAlertLevel = newValue
+            }
+        }
+    }
+    
+    public override func device(_ device: RileyLinkDevice, didUpdateBattery level: Int) {
+        let repeatInterval: TimeInterval = .hours(1)
+        
+        if let alertLevel = state.rileyLinkBatteryAlertLevel,
+           level <= alertLevel,
+           state.lastRileyLinkBatteryAlertDate.addingTimeInterval(repeatInterval) < Date()
+        {
+            self.setState { state in
+                state.lastRileyLinkBatteryAlertDate = Date()
+            }
+            
+            // HACK Alert. This is temporary for the 2.2.5 release. Dev and newer releases will use the new Loop Alert facility
+            let notification = UNMutableNotificationContent()
+            notification.body = String(format: LocalizedString("\"%1$@\" has a low battery", comment: "Format string for low battery alert body for RileyLink. (1: device name)"), device.name ?? "unnamed")
+            notification.title = LocalizedString("Low RileyLink Battery", comment: "Title for RileyLink low battery alert")
+            notification.sound = .default
+            notification.categoryIdentifier = LoopNotificationCategory.loopNotRunning.rawValue
+            notification.threadIdentifier = LoopNotificationCategory.loopNotRunning.rawValue
+            let request = UNNotificationRequest(
+                identifier: "batteryalert.rileylink",
+                content: notification,
+                trigger: nil)
+            UNUserNotificationCenter.current().add(request)
+        }
+    }
+
     // MARK: - CustomDebugStringConvertible
 
     override public var debugDescription: String {

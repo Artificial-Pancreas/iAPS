@@ -109,6 +109,10 @@ public struct MinimedPumpManagerState: RawRepresentable, Equatable {
 
     public var lastReconciliation: Date?
     
+    public var rileyLinkBatteryAlertLevel: Int?
+    
+    public var lastRileyLinkBatteryAlertDate: Date = .distantPast
+
     public var insulinType: InsulinType?
 
     public init(batteryChemistry: BatteryChemistryType = .alkaline, preferredInsulinDataSource: InsulinDataSource = .pumpHistory, pumpColor: PumpColor, pumpID: String, pumpModel: PumpModel, pumpFirmwareVersion: String, pumpRegion: PumpRegion, rileyLinkConnectionManagerState: RileyLinkConnectionManagerState?, timeZone: TimeZone, suspendState: SuspendState, lastValidFrequency: Measurement<UnitFrequency>? = nil, batteryPercentage: Double? = nil, lastReservoirReading: ReservoirReading? = nil, unfinalizedBolus: UnfinalizedDose? = nil, unfinalizedTempBasal: UnfinalizedDose? = nil, pendingDoses: [UnfinalizedDose]? = nil, recentlyReconciledEvents: [Data:ReconciledDoseMapping]? = nil, lastReconciliation: Date? = nil, insulinType: InsulinType? = nil) {
@@ -289,6 +293,8 @@ public struct MinimedPumpManagerState: RawRepresentable, Equatable {
         value["unfinalizedBolus"] = unfinalizedBolus?.rawValue
         value["unfinalizedTempBasal"] = unfinalizedTempBasal?.rawValue
         value["lastReconciliation"] = lastReconciliation
+        value["rileyLinkBatteryAlertLevel"] = rileyLinkBatteryAlertLevel
+        value["lastRileyLinkBatteryAlertDate"] = lastRileyLinkBatteryAlertDate
         value["insulinType"] = insulinType?.rawValue
 
         return value
@@ -323,6 +329,8 @@ extension MinimedPumpManagerState: CustomDebugStringConvertible {
             "timeZone: \(timeZone)",
             "recentlyReconciledEvents: \(reconciliationMappings.values.map { "\($0.eventRaw.hexadecimalString) -> \($0.uuid)" })",
             "lastReconciliation: \(String(describing: lastReconciliation))",
+            "rileyLinkBatteryAlertLevel: \(String(describing: rileyLinkBatteryAlertLevel))",
+            "lastRileyLinkBatteryAlertDate \(String(describing: lastRileyLinkBatteryAlertDate))",
             "insulinType: \(String(describing: insulinType))",
             String(reflecting: rileyLinkConnectionManagerState),
         ].joined(separator: "\n")

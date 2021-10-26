@@ -15,7 +15,15 @@ extension NumberFormatter {
             return nil
         }
     }
-    
+
+    func percentString(from percent: Int?) -> String? {
+        if let percent = percent, let formatted = string(from: NSNumber(value: percent)) {
+            return String(format: LocalizedString("%@%%", comment: "Unit format string for an value in percent"), formatted)
+        } else {
+            return nil
+        }
+    }
+
     func string(from number: Double) -> String? {
         return string(from: NSNumber(value: number))
     }
