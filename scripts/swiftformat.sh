@@ -9,7 +9,7 @@ function assertEnvironment {
 
 assertEnvironment "${SRCROOT}" "Please set SRCROOT to project root folder"
 
-SDKROOT=macosx
+unset SDKROOT
 
 swift run -c release --package-path BuildTools swiftformat "${SRCROOT}" \
 --enable andOperator,\
