@@ -49,18 +49,18 @@ extension CommandResponseViewController {
         var result, str: String
 
         let formatter = DateComponentsFormatter()
-        formatter.unitsStyle = .full
-        formatter.allowedUnits = [.day, .hour, .minute]
+        formatter.allowedUnits = [.hour, .minute]
+        formatter.unitsStyle = .short
         if let timeStr = formatter.string(from: status.timeActive) {
             str = timeStr
         } else {
             str = String(format: LocalizedString("%1$@ minutes", comment: "The format string for minutes (1: number of minutes string)"), String(describing: Int(status.timeActive / 60)))
         }
-        result = String(format: LocalizedString("Pod Active: %1$@\n", comment: "The format string for Pod Active: (1: Pod active time string)"), str)
+        result = String(format: LocalizedString("Pod Active Time: %1$@\n", comment: "The format string for Pod Active Time: (1: formatted time)"), str)
 
         result += String(format: LocalizedString("Delivery Status: %1$@\n", comment: "The format string for Delivery Status: (1: delivery status string)"), String(describing: status.deliveryStatus))
 
-        result += String(format: LocalizedString("Pulse Count: %1$d\n", comment: "The format string for Pulse Count (1: pulse count)"), Int(status.totalInsulinDelivered / Pod.pulseSize))
+        result += String(format: LocalizedString("Pulse Count: %1$d\n", comment: "The format string for Pulse Count (1: pulse count)"), Int(round(status.totalInsulinDelivered / Pod.pulseSize)))
 
         result += String(format: LocalizedString("Reservoir Level: %1$@ U\n", comment: "The format string for Reservoir Level: (1: reservoir level string)"), status.reservoirLevel?.twoDecimals ?? "50+")
 

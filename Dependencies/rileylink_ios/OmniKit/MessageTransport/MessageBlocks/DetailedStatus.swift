@@ -19,7 +19,7 @@ public struct DetailedStatus : PodInfo, Equatable {
     public let podProgressStatus: PodProgressStatus
     public let deliveryStatus: DeliveryStatus
     public let bolusNotDelivered: Double
-    public let podMessageCounter: UInt8
+    public let lastProgrammingMessageSeqNum: UInt8 // updated by pod for 03, 08, $11, $19, $1A, $1C, $1E & $1F command messages
     public let totalInsulinDelivered: Double
     public let faultEventCode: FaultEventCode
     public let faultEventTimeSinceActivation: TimeInterval?
@@ -31,7 +31,7 @@ public struct DetailedStatus : PodInfo, Equatable {
     public let receiverLowGain: UInt8
     public let radioRSSI: UInt8
     public let previousPodProgressStatus: PodProgressStatus?
-    public let unknownValue: Data
+    // YYYY is uninitialized data for Eros
     public let data: Data
     
     public init(encodedData: Data) throws {
@@ -48,7 +48,7 @@ public struct DetailedStatus : PodInfo, Equatable {
         
         self.bolusNotDelivered = Pod.pulseSize * Double((Int(encodedData[3] & 0x3) << 8) | Int(encodedData[4]))
         
-        self.podMessageCounter = encodedData[5]
+        self.lastProgrammingMessageSeqNum = encodedData[5]
         
         self.totalInsulinDelivered = Pod.pulseSize * Double(encodedData[6...7].toBigEndian(UInt16.self))
         
@@ -73,7 +73,7 @@ public struct DetailedStatus : PodInfo, Equatable {
         
         self.unacknowledgedAlerts =  AlertSet(rawValue: encodedData[15])
         
-        self.faultAccessingTables = encodedData[16] == 2
+        self.faultAccessingTables = (encodedData[16] & 2) != 0
         
         if encodedData[17] == 0x00 {
            self.errorEventInfo = nil // this byte is not valid (no fault has occurred)
@@ -89,8 +89,6 @@ public struct DetailedStatus : PodInfo, Equatable {
         } else {
             self.previousPodProgressStatus = PodProgressStatus(rawValue: encodedData[19] & 0xF)!
         }
-        
-        self.unknownValue = encodedData[20...21]
         
         self.data = Data(encodedData)
     }
@@ -145,7 +143,7 @@ extension DetailedStatus: CustomDebugStringConvertible {
             "* podProgressStatus: \(podProgressStatus)",
             "* deliveryStatus: \(deliveryStatus.description)",
             "* bolusNotDelivered: \(bolusNotDelivered.twoDecimals) U",
-            "* podMessageCounter: \(podMessageCounter)",
+            "* lastProgrammingMessageSeqNum: \(lastProgrammingMessageSeqNum)",
             "* totalInsulinDelivered: \(totalInsulinDelivered.twoDecimals) U",
             "* faultEventCode: \(faultEventCode.description)",
             "* faultEventTimeSinceActivation: \(faultEventTimeSinceActivation?.stringValue ?? "none")",
@@ -157,7 +155,6 @@ extension DetailedStatus: CustomDebugStringConvertible {
             "* receiverLowGain: \(receiverLowGain)",
             "* radioRSSI: \(radioRSSI)",
             "* previousPodProgressStatus: \(previousPodProgressStatus?.description ?? "NA")",
-            "* unknownValue: 0x\(unknownValue.hexadecimalString)",
             "",
             ].joined(separator: "\n")
     }
@@ -205,14 +202,14 @@ extension Double {
 
 // Type for the ErrorEventInfo VV byte if valid
 //    a: insulin state table corruption found during error logging
-//   bb: internal 2-bit variable set and manipulated in main loop routines
+//   bb: internal 2-bit occlusion type
 //    c: immediate bolus in progress during error
 // dddd: Pod Progress at time of first logged fault event
 //
 public struct ErrorEventInfo: CustomStringConvertible, Equatable {
     let rawValue: UInt8
     let insulinStateTableCorruption: Bool // 'a' bit
-    let internalVariable: Int // 'bb' 2-bit internal variable
+    let occlusionType: Int // 'bb' 2-bit occlusion type
     let immediateBolusInProgress: Bool // 'c' bit
     let podProgressStatus: PodProgressStatus // 'dddd' bits
 
@@ -225,7 +222,7 @@ public struct ErrorEventInfo: CustomStringConvertible, Equatable {
         return [
             "rawValue: 0x\(hexString)",
             "insulinStateTableCorruption: \(insulinStateTableCorruption)",
-            "internalVariable: \(internalVariable)",
+            "occlusionType: \(occlusionType)",
             "immediateBolusInProgress: \(immediateBolusInProgress)",
             "podProgressStatus: \(podProgressStatus)",
             ].joined(separator: ", ")
@@ -234,7 +231,7 @@ public struct ErrorEventInfo: CustomStringConvertible, Equatable {
     init(rawValue: UInt8)  {
         self.rawValue = rawValue
         self.insulinStateTableCorruption = (rawValue & 0x80) != 0
-        self.internalVariable = Int((rawValue & 0x60) >> 5)
+        self.occlusionType = Int((rawValue & 0x60) >> 5)
         self.immediateBolusInProgress = (rawValue & 0x10) != 0
         self.podProgressStatus = PodProgressStatus(rawValue: rawValue & 0xF)!
     }

@@ -9,19 +9,22 @@
 import Foundation
 
 public struct Pod {
-    // Volume of insulin in one motor pulse
+    // Volume of U100 insulin in one motor pulse
+    // Must agree with value returned by pod during the pairing process.
     public static let pulseSize: Double = 0.05
 
-    // Number of pulses required to deliver one unit of insulin
+    // Number of pulses required to deliver one unit of U100 insulin
     public static let pulsesPerUnit: Double = 1 / Pod.pulseSize
 
     // Seconds per pulse for boluses
+    // Checked to verify it agrees with value returned by pod during the pairing process.
     public static let secondsPerBolusPulse: Double = 2
 
     // Units per second for boluses
     public static let bolusDeliveryRate: Double = Pod.pulseSize / Pod.secondsPerBolusPulse
 
     // Seconds per pulse for priming/cannula insertion
+    // Checked to verify it agrees with value returned by pod during the pairing process.
     public static let secondsPerPrimePulse: Double = 1
 
     // Units per second for priming/cannula insertion
@@ -37,6 +40,7 @@ public struct Pod {
     public static let endOfServiceImminentWindow = TimeInterval(hours: 1)
 
     // Total pod service time. A fault is triggered if this time is reached before pod deactivation.
+    // Checked to verify it agrees with value returned by pod during the pairing process.
     public static let serviceDuration = TimeInterval(hours: 80)
 
     // Nomimal pod life (72 hours)
@@ -57,13 +61,15 @@ public struct Pod {
     // Minimum duration of a single basal schedule entry
     public static let minimumBasalScheduleEntryDuration = TimeInterval.minutes(30)
 
-    // Amount of insulin delivered with 1 second between pulses for priming
+    // Default amount for priming bolus using secondsPerPrimePulse timing.
+    // Checked to verify it agrees with value returned by pod during the pairing process.
     public static let primeUnits = 2.6
 
-    // Amount of insulin delivered with 1 second between pulses for cannula insertion
-    public static let cannulaInsertionUnitsBase = 0.5
+    // Default amount for cannula insertion bolus using secondsPerPrimePulse timing.
+    // Checked to verify it agrees with value returned by pod during the pairing process.
+    public static let cannulaInsertionUnits = 0.5
+
     public static let cannulaInsertionUnitsExtra = 0.0 // edit to add a fixed additional amount of insulin during cannula insertion
-    public static let cannulaInsertionUnits = cannulaInsertionUnitsBase + cannulaInsertionUnitsExtra
 
     // Default and limits for expiration reminder alerts
     public static let expirationReminderAlertDefaultTimeBeforeExpiration = TimeInterval.hours(2)

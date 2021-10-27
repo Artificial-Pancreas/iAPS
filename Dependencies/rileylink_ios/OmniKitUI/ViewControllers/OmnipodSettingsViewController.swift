@@ -27,6 +27,17 @@ public class ConfirmationBeepsTableViewCell: TextButtonTableViewCell {
     }
 }
 
+public class AutoBolusBeepsTableViewCell: TextButtonTableViewCell {
+
+    public func updateTextLabel(enabled: Bool) {
+        if enabled {
+            self.textLabel?.text = LocalizedString("Disable Automatic Bolus Beeps", comment: "Title text for button to disable automatic bolus beeps")
+        } else {
+            self.textLabel?.text = LocalizedString("Enable Automatic Bolus Beeps", comment: "Title text for button to enable automatic bolus beeps")
+        }
+    }
+}
+
 class OmnipodSettingsViewController: RileyLinkSettingsViewController {
 
     let pumpManager: OmnipodPumpManager
@@ -76,6 +87,13 @@ class OmnipodSettingsViewController: RileyLinkSettingsViewController {
         return cell
     }()
     
+    lazy var autoBolusBeepsTableViewCell: AutoBolusBeepsTableViewCell = {
+        let cell = AutoBolusBeepsTableViewCell(style: .default, reuseIdentifier: nil)
+        cell.updateTextLabel(enabled: pumpManager.automaticBolusBeeps)
+        cell.isEnabled = self.pumpManager.confirmationBeeps
+        return cell
+    }()
+
     var activityIndicator: UIActivityIndicatorView!
     var refreshButton: UIButton!
 
@@ -213,19 +231,19 @@ class OmnipodSettingsViewController: RileyLinkSettingsViewController {
     
     private enum Section: Int, CaseIterable {
         case status = 0
-        case podDetails
-        case diagnostics
         case configuration
         case rileyLinks
+        case diagnostics
+        case podDetails
         case deletePumpManager
     }
     
     private class func sectionList(_ podState: PodState?) -> [Section] {
         if let podState = podState {
-            if podState.unfinishedPairing {
+            if podState.unfinishedSetup {
                 return [.configuration, .rileyLinks]
             } else {
-                return [.status, .configuration, .rileyLinks, .podDetails, .diagnostics]
+                return [.status, .configuration, .rileyLinks, .diagnostics, .podDetails]
             }
         } else {
             return [.configuration, .rileyLinks, .deletePumpManager]
@@ -252,7 +270,7 @@ class OmnipodSettingsViewController: RileyLinkSettingsViewController {
     }
     
     private var configurationRows: [ConfigurationRow] {
-        if podState == nil || podState?.unfinishedPairing == true {
+        if podState == nil || podState?.unfinishedSetup == true {
             return [.replacePod]
         } else {
             return ConfigurationRow.allCases
@@ -262,6 +280,7 @@ class OmnipodSettingsViewController: RileyLinkSettingsViewController {
     private enum ConfigurationRow: Int, CaseIterable {
         case suspendResume = 0
         case enableDisableConfirmationBeeps
+        case enableDisableAutoBolusBeeps
         case reminder
         case timeZoneOffset
         case insulinType
@@ -269,8 +288,8 @@ class OmnipodSettingsViewController: RileyLinkSettingsViewController {
     }
     
     fileprivate enum StatusRow: Int, CaseIterable {
-        case activatedAt = 0
-        case expiresAt
+        case expiresAt = 0
+        case podActiveClock
         case bolus
         case basal
         case alarms
@@ -303,16 +322,16 @@ class OmnipodSettingsViewController: RileyLinkSettingsViewController {
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         switch sections[section] {
-        case .podDetails:
-            return LocalizedString("Pod Details", comment: "The title of the device information section in settings")
-        case .diagnostics:
-            return LocalizedString("Diagnostics", comment: "The title of the configuration section in settings")
-        case .configuration:
-            return nil
         case .status:
-            return nil
+            return nil  // No title, appears below a pod picture
+        case .configuration:
+            return LocalizedString("Configuration", comment: "The title of the configuration section in settings")
         case .rileyLinks:
             return super.tableView(tableView, titleForHeaderInSection: section)
+        case .diagnostics:
+            return LocalizedString("Diagnostics", comment: "The title of the diagnostics section in settings")
+        case .podDetails:
+            return LocalizedString("Pod Details", comment: "The title of the pod details section in settings")
         case .deletePumpManager:
             return " "  // Use an empty string for more dramatic spacing
         }
@@ -329,66 +348,73 @@ class OmnipodSettingsViewController: RileyLinkSettingsViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch sections[indexPath.section] {
-        case .podDetails:
+        case .status:
             let podState = self.podState!
-            switch PodDetailsRow(rawValue: indexPath.row)! {
-            case .podAddress:
-                let cell = tableView.dequeueReusableCell(withIdentifier: SettingsTableViewCell.className, for: indexPath)
-                cell.textLabel?.text = LocalizedString("Assigned Address", comment: "The title text for the address assigned to the pod")
-                cell.detailTextLabel?.text = String(format:"%04X", podState.address)
-                return cell
-            case .podLot:
-                let cell = tableView.dequeueReusableCell(withIdentifier: SettingsTableViewCell.className, for: indexPath)
-                cell.textLabel?.text = LocalizedString("Lot", comment: "The title of the cell showing the pod lot id")
-                cell.detailTextLabel?.text = String(format:"L%d", podState.lot)
-                return cell
-            case .podTid:
-                let cell = tableView.dequeueReusableCell(withIdentifier: SettingsTableViewCell.className, for: indexPath)
-                cell.textLabel?.text = LocalizedString("TID", comment: "The title of the cell showing the pod TID")
-                cell.detailTextLabel?.text = String(format:"%07d", podState.tid)
-                return cell
-            case .piVersion:
-                let cell = tableView.dequeueReusableCell(withIdentifier: SettingsTableViewCell.className, for: indexPath)
-                cell.textLabel?.text = LocalizedString("PI Version", comment: "The title of the cell showing the pod pi version")
-                cell.detailTextLabel?.text = podState.piVersion
-                return cell
-            case .pmVersion:
-                let cell = tableView.dequeueReusableCell(withIdentifier: SettingsTableViewCell.className, for: indexPath)
-                cell.textLabel?.text = LocalizedString("PM Version", comment: "The title of the cell showing the pod pm version")
-                cell.detailTextLabel?.text = podState.pmVersion
+            let statusRow = StatusRow(rawValue: indexPath.row)!
+            if statusRow == .alarms {
+                let cell = tableView.dequeueReusableCell(withIdentifier: AlarmsTableViewCell.className, for: indexPath) as! AlarmsTableViewCell
+                cell.textLabel?.text = LocalizedString("Alarms", comment: "The title of the cell showing alarm status")
+                cell.alerts = podState.activeAlerts
                 return cell
             }
-        case .diagnostics:
-            
-            switch Diagnostics(rawValue: indexPath.row)! {
-            case .readPodStatus:
-                let cell = tableView.dequeueReusableCell(withIdentifier: SettingsTableViewCell.className, for: indexPath)
-                cell.textLabel?.text = LocalizedString("Read Pod Status", comment: "The title of the command to read the pod status")
-                cell.accessoryType = .disclosureIndicator
-                return cell
-            case .playTestBeeps:
-                let cell = tableView.dequeueReusableCell(withIdentifier: SettingsTableViewCell.className, for: indexPath)
-                cell.textLabel?.text = LocalizedString("Play Test Beeps", comment: "The title of the command to play test beeps")
-                cell.accessoryType = .disclosureIndicator
-                return cell
-            case .readPulseLog:
-                let cell = tableView.dequeueReusableCell(withIdentifier: SettingsTableViewCell.className, for: indexPath)
-                cell.textLabel?.text = LocalizedString("Read Pulse Log", comment: "The title of the command to read the pulse log")
-                cell.accessoryType = .disclosureIndicator
-                return cell
-            case .testCommand:
-                let cell = tableView.dequeueReusableCell(withIdentifier: SettingsTableViewCell.className, for: indexPath)
-                cell.textLabel?.text = LocalizedString("Test Command", comment: "The title of the command to run the test command")
-                cell.accessoryType = .disclosureIndicator
-                return cell
-            }
-        case .configuration:
+            let cell = tableView.dequeueReusableCell(withIdentifier: SettingsTableViewCell.className, for: indexPath)
 
+            switch statusRow {
+            case .expiresAt:
+                let cell = tableView.dequeueReusableCell(withIdentifier: SettingsTableViewCell.className, for: indexPath)
+                if let expiresAt = podState.expiresAt {
+                    if expiresAt.timeIntervalSinceNow > 0 {
+                        cell.textLabel?.text = LocalizedString("Expires", comment: "The title of the cell showing the pod expiration")
+                    } else {
+                        cell.textLabel?.text = LocalizedString("Expired", comment: "The title of the cell showing the pod expiration after expiry")
+                    }
+                }
+                cell.setDetailDate(podState.expiresAt, formatter: dateFormatter)
+                return cell
+            case .podActiveClock:
+                let cell = tableView.dequeueReusableCell(withIdentifier: SettingsTableViewCell.className, for: indexPath)
+                cell.textLabel?.text = LocalizedString("Pod Active Clock", comment: "The title of the cell showing the pod active clock")
+                cell.setDetailAge(podState.expiresAt?.addingTimeInterval(-Pod.nominalPodLife).timeIntervalSinceNow)
+                return cell
+            case .bolus:
+                cell.textLabel?.text = LocalizedString("Bolus Delivery", comment: "The title of the cell showing pod bolus status")
+
+                let deliveredUnits: Double?
+                if let dose = podState.unfinalizedBolus {
+                    deliveredUnits = pumpManager.roundToSupportedBolusVolume(units: dose.progress * dose.units)
+                } else {
+                    deliveredUnits = nil
+                }
+
+                cell.setDetailBolus(suspended: podState.isSuspended, dose: podState.unfinalizedBolus, deliveredUnits: deliveredUnits)
+                // TODO: This timer is in the wrong context; should be part of a custom bolus progress cell
+//              if bolusProgressTimer == nil {
+//                  bolusProgressTimer = Timer.scheduledTimer(withTimeInterval: .seconds(2), repeats: true) { [weak self] (_) in
+//                      self?.tableView.reloadRows(at: [indexPath], with: .none)
+//                  }
+//              }
+            case .basal:
+                cell.textLabel?.text = LocalizedString("Basal Delivery", comment: "The title of the cell showing pod basal status")
+                cell.setDetailBasal(suspended: podState.isSuspended, dose: podState.unfinalizedTempBasal)
+            case .reservoirLevel:
+                cell.textLabel?.text = LocalizedString("Reservoir", comment: "The title of the cell showing reservoir status")
+                cell.setReservoirDetail(podState.lastInsulinMeasurements)
+            case .deliveredInsulin:
+                cell.textLabel?.text = LocalizedString("Insulin Delivered", comment: "The title of the cell showing delivered insulin")
+                cell.setDeliveredInsulinDetail(podState.lastInsulinMeasurements)
+            default:
+                break
+            }
+            return cell
+
+        case .configuration:
             switch configurationRows[indexPath.row] {
             case .suspendResume:
                 return suspendResumeTableViewCell
             case .enableDisableConfirmationBeeps:
                 return confirmationBeepsTableViewCell
+            case .enableDisableAutoBolusBeeps:
+                return autoBolusBeepsTableViewCell
             case .reminder:
                 let cell = tableView.dequeueReusableCell(withIdentifier: ExpirationReminderDateTableViewCell.className, for: indexPath) as! ExpirationReminderDateTableViewCell
                 if let podState = podState, let reminderDate = pumpManager.expirationReminderDate {
@@ -436,7 +462,7 @@ class OmnipodSettingsViewController: RileyLinkSettingsViewController {
                     cell.textLabel?.text = LocalizedString("Pair New Pod", comment: "The title of the command to pair new pod")
                 } else if let podState = podState, podState.isFaulted {
                     cell.textLabel?.text = LocalizedString("Replace Pod Now", comment: "The title of the command to replace pod when there is a pod fault")
-                } else if let podState = podState, podState.unfinishedPairing {
+                } else if let podState = podState, podState.unfinishedSetup {
                     cell.textLabel?.text = LocalizedString("Finish pod setup", comment: "The title of the command to finish pod setup")
                 } else {
                     cell.textLabel?.text = LocalizedString("Replace Pod", comment: "The title of the command to replace pod")
@@ -447,67 +473,63 @@ class OmnipodSettingsViewController: RileyLinkSettingsViewController {
                 return cell
             }
             
-        case .status:
-            let podState = self.podState!
-            let statusRow = StatusRow(rawValue: indexPath.row)!
-            if statusRow == .alarms {
-                let cell = tableView.dequeueReusableCell(withIdentifier: AlarmsTableViewCell.className, for: indexPath) as! AlarmsTableViewCell
-                cell.textLabel?.text = LocalizedString("Alarms", comment: "The title of the cell showing alarm status")
-                cell.alerts = podState.activeAlerts
-                return cell
-            } else {
-                let cell = tableView.dequeueReusableCell(withIdentifier: SettingsTableViewCell.className, for: indexPath)
-                
-                switch statusRow {
-                case .activatedAt:
-                    let cell = tableView.dequeueReusableCell(withIdentifier: SettingsTableViewCell.className, for: indexPath)
-                    cell.textLabel?.text = LocalizedString("Active Time", comment: "The title of the cell showing the pod activated at time")
-                    cell.setDetailAge(podState.activatedAt?.timeIntervalSinceNow)
-                    return cell
-                case .expiresAt:
-                    let cell = tableView.dequeueReusableCell(withIdentifier: SettingsTableViewCell.className, for: indexPath)
-                    if let expiresAt = podState.expiresAt {
-                        if expiresAt.timeIntervalSinceNow > 0 {
-                            cell.textLabel?.text = LocalizedString("Expires", comment: "The title of the cell showing the pod expiration")
-                        } else {
-                            cell.textLabel?.text = LocalizedString("Expired", comment: "The title of the cell showing the pod expiration after expiry")
-                        }
-                    }
-                    cell.setDetailDate(podState.expiresAt, formatter: dateFormatter)
-                    return cell
-                case .bolus:
-                    cell.textLabel?.text = LocalizedString("Bolus Delivery", comment: "The title of the cell showing pod bolus status")
-
-                    let deliveredUnits: Double?
-                    if let dose = podState.unfinalizedBolus {
-                        deliveredUnits = pumpManager.roundToSupportedBolusVolume(units: dose.progress * dose.units)
-                    } else {
-                        deliveredUnits = nil
-                    }
-
-                    cell.setDetailBolus(suspended: podState.isSuspended, dose: podState.unfinalizedBolus, deliveredUnits: deliveredUnits)
-                    // TODO: This timer is in the wrong context; should be part of a custom bolus progress cell
-//                    if bolusProgressTimer == nil {
-//                        bolusProgressTimer = Timer.scheduledTimer(withTimeInterval: .seconds(2), repeats: true) { [weak self] (_) in
-//                            self?.tableView.reloadRows(at: [indexPath], with: .none)
-//                        }
-//                    }
-                case .basal:
-                    cell.textLabel?.text = LocalizedString("Basal Delivery", comment: "The title of the cell showing pod basal status")
-                    cell.setDetailBasal(suspended: podState.isSuspended, dose: podState.unfinalizedTempBasal)
-                case .reservoirLevel:
-                    cell.textLabel?.text = LocalizedString("Reservoir", comment: "The title of the cell showing reservoir status")
-                    cell.setReservoirDetail(podState.lastInsulinMeasurements)
-                case .deliveredInsulin:
-                    cell.textLabel?.text = LocalizedString("Insulin Delivered", comment: "The title of the cell showing delivered insulin")
-                    cell.setDeliveredInsulinDetail(podState.lastInsulinMeasurements)
-                default:
-                    break
-                }
-                return cell
-            }
         case .rileyLinks:
             return super.tableView(tableView, cellForRowAt: indexPath)
+
+        case .diagnostics:
+            switch Diagnostics(rawValue: indexPath.row)! {
+            case .readPodStatus:
+                let cell = tableView.dequeueReusableCell(withIdentifier: SettingsTableViewCell.className, for: indexPath)
+                cell.textLabel?.text = LocalizedString("Read Pod Status", comment: "The title of the command to read the pod status")
+                cell.accessoryType = .disclosureIndicator
+                return cell
+            case .playTestBeeps:
+                let cell = tableView.dequeueReusableCell(withIdentifier: SettingsTableViewCell.className, for: indexPath)
+                cell.textLabel?.text = LocalizedString("Play Test Beeps", comment: "The title of the command to play test beeps")
+                cell.accessoryType = .disclosureIndicator
+                return cell
+            case .readPulseLog:
+                let cell = tableView.dequeueReusableCell(withIdentifier: SettingsTableViewCell.className, for: indexPath)
+                cell.textLabel?.text = LocalizedString("Read Pulse Log", comment: "The title of the command to read the pulse log")
+                cell.accessoryType = .disclosureIndicator
+                return cell
+            case .testCommand:
+                let cell = tableView.dequeueReusableCell(withIdentifier: SettingsTableViewCell.className, for: indexPath)
+                cell.textLabel?.text = LocalizedString("Test Command", comment: "The title of the command to run the test command")
+                cell.accessoryType = .disclosureIndicator
+                return cell
+            }
+
+        case .podDetails:
+            let podState = self.podState!
+            switch PodDetailsRow(rawValue: indexPath.row)! {
+            case .podAddress:
+                let cell = tableView.dequeueReusableCell(withIdentifier: SettingsTableViewCell.className, for: indexPath)
+                cell.textLabel?.text = LocalizedString("Assigned Address", comment: "The title text for the address assigned to the pod")
+                cell.detailTextLabel?.text = String(format:"%04X", podState.address)
+                return cell
+            case .podLot:
+                let cell = tableView.dequeueReusableCell(withIdentifier: SettingsTableViewCell.className, for: indexPath)
+                cell.textLabel?.text = LocalizedString("Lot", comment: "The title of the cell showing the pod lot id")
+                cell.detailTextLabel?.text = String(format:"L%d", podState.lot)
+                return cell
+            case .podTid:
+                let cell = tableView.dequeueReusableCell(withIdentifier: SettingsTableViewCell.className, for: indexPath)
+                cell.textLabel?.text = LocalizedString("TID", comment: "The title of the cell showing the pod TID")
+                cell.detailTextLabel?.text = String(format:"%07d", podState.tid)
+                return cell
+            case .piVersion:
+                let cell = tableView.dequeueReusableCell(withIdentifier: SettingsTableViewCell.className, for: indexPath)
+                cell.textLabel?.text = LocalizedString("PI Version", comment: "The title of the cell showing the pod pi version")
+                cell.detailTextLabel?.text = podState.piVersion
+                return cell
+            case .pmVersion:
+                let cell = tableView.dequeueReusableCell(withIdentifier: SettingsTableViewCell.className, for: indexPath)
+                cell.textLabel?.text = LocalizedString("PM Version", comment: "The title of the cell showing the pod pm version")
+                cell.detailTextLabel?.text = podState.pmVersion
+                return cell
+            }
+
         case .deletePumpManager:
             let cell = tableView.dequeueReusableCell(withIdentifier: TextButtonTableViewCell.className, for: indexPath) as! TextButtonTableViewCell
             
@@ -521,8 +543,6 @@ class OmnipodSettingsViewController: RileyLinkSettingsViewController {
     
     override func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
         switch sections[indexPath.section] {
-        case .podDetails:
-            return false
         case .status:
             switch StatusRow(rawValue: indexPath.row)! {
             case .alarms:
@@ -530,11 +550,12 @@ class OmnipodSettingsViewController: RileyLinkSettingsViewController {
             default:
                 return false
             }
-        case .diagnostics, .configuration, .rileyLinks, .deletePumpManager:
+        case .configuration, .rileyLinks, .diagnostics, .deletePumpManager:
             return true
+        case .podDetails:
+            return false
         }
     }
-
 
     override func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
         if indexPath == IndexPath(row: ConfigurationRow.reminder.rawValue, section: Section.configuration.rawValue) {
@@ -547,27 +568,6 @@ class OmnipodSettingsViewController: RileyLinkSettingsViewController {
         let sender = tableView.cellForRow(at: indexPath)
         
         switch sections[indexPath.section] {
-        case .podDetails:
-            break
-        case .diagnostics:
-            switch Diagnostics(rawValue: indexPath.row)! {
-            case .readPodStatus:
-                let vc = CommandResponseViewController.readPodStatus(pumpManager: pumpManager)
-                vc.title = sender?.textLabel?.text
-                show(vc, sender: indexPath)
-            case .playTestBeeps:
-                let vc = CommandResponseViewController.playTestBeeps(pumpManager: pumpManager)
-                vc.title = sender?.textLabel?.text
-                show(vc, sender: indexPath)
-            case .readPulseLog:
-                let vc = CommandResponseViewController.readPulseLog(pumpManager: pumpManager)
-                vc.title = sender?.textLabel?.text
-                show(vc, sender: indexPath)
-            case .testCommand:
-                let vc = CommandResponseViewController.testingCommands(pumpManager: pumpManager)
-                vc.title = sender?.textLabel?.text
-                show(vc, sender: indexPath)
-            }
         case .status:
             switch StatusRow(rawValue: indexPath.row)! {
             case .alarms:
@@ -599,10 +599,12 @@ class OmnipodSettingsViewController: RileyLinkSettingsViewController {
             case .enableDisableConfirmationBeeps:
                 confirmationBeepsTapped()
                 tableView.deselectRow(at: indexPath, animated: true)
+            case .enableDisableAutoBolusBeeps:
+                autoBolusBeepsTapped()
+                tableView.deselectRow(at: indexPath, animated: true)
             case .reminder:
                 tableView.deselectRow(at: indexPath, animated: true)
                 tableView.endUpdates()
-                break
             case .timeZoneOffset:
                 let vc = CommandResponseViewController.changeTime(pumpManager: pumpManager)
                 vc.title = sender?.textLabel?.text
@@ -616,11 +618,11 @@ class OmnipodSettingsViewController: RileyLinkSettingsViewController {
                 show(vc, sender: sender)
             case .replacePod:
                 let vc: UIViewController
-                if podState == nil || podState!.setupProgress.primingNeeded {
-                    vc = PodReplacementNavigationController.instantiateNewPodFlow(pumpManager)
-                } else if let podState = podState, podState.isFaulted {
+                if let podState = podState, podState.isFaulted {
                     vc = PodReplacementNavigationController.instantiatePodReplacementFlow(pumpManager)
-                } else if let podState = podState, podState.unfinishedPairing {
+                } else if podState == nil || podState!.setupProgress.primingNeeded {
+                    vc = PodReplacementNavigationController.instantiateNewPodFlow(pumpManager)
+                } else if let podState = podState, podState.unfinishedSetup {
                     vc = PodReplacementNavigationController.instantiateInsertCannulaFlow(pumpManager)
                 } else {
                     vc = PodReplacementNavigationController.instantiatePodReplacementFlow(pumpManager)
@@ -647,6 +649,27 @@ class OmnipodSettingsViewController: RileyLinkSettingsViewController {
             )
             
             self.show(vc, sender: sender)
+        case .diagnostics:
+            switch Diagnostics(rawValue: indexPath.row)! {
+            case .readPodStatus:
+                let vc = CommandResponseViewController.readPodStatus(pumpManager: pumpManager)
+                vc.title = sender?.textLabel?.text
+                show(vc, sender: indexPath)
+            case .playTestBeeps:
+                let vc = CommandResponseViewController.playTestBeeps(pumpManager: pumpManager)
+                vc.title = sender?.textLabel?.text
+                show(vc, sender: indexPath)
+            case .readPulseLog:
+                let vc = CommandResponseViewController.readPulseLog(pumpManager: pumpManager)
+                vc.title = sender?.textLabel?.text
+                show(vc, sender: indexPath)
+            case .testCommand:
+                let vc = CommandResponseViewController.testingCommands(pumpManager: pumpManager)
+                vc.title = sender?.textLabel?.text
+                show(vc, sender: indexPath)
+            }
+        case .podDetails:
+            break
         case .deletePumpManager:
             let confirmVC = UIAlertController(pumpManagerDeletionHandler: {
                 self.pumpManager.notifyDelegateOfDeactivation {
@@ -664,23 +687,20 @@ class OmnipodSettingsViewController: RileyLinkSettingsViewController {
     
     override func tableView(_ tableView: UITableView, willDeselectRowAt indexPath: IndexPath) -> IndexPath? {
         switch sections[indexPath.section] {
-        case .podDetails, .status:
+        case .status:
             break
-        case .diagnostics:
-            switch Diagnostics(rawValue: indexPath.row)! {
-            case .readPodStatus, .playTestBeeps, .readPulseLog, .testCommand:
-                tableView.reloadRows(at: [indexPath], with: .fade)
-            }
         case .configuration:
             switch configurationRows[indexPath.row] {
-            case .suspendResume, .enableDisableConfirmationBeeps, .reminder:
+            case .suspendResume, .enableDisableConfirmationBeeps, .enableDisableAutoBolusBeeps, .reminder:
                 break
             case .timeZoneOffset, .replacePod, .insulinType:
                 tableView.reloadRows(at: [indexPath], with: .fade)
             }
         case .rileyLinks:
             break
-        case .deletePumpManager:
+        case .diagnostics:
+            tableView.reloadRows(at: [indexPath], with: .fade)
+        case .podDetails, .deletePumpManager:
             break
         }
         
@@ -712,39 +732,59 @@ class OmnipodSettingsViewController: RileyLinkSettingsViewController {
         }
     }
 
-    private func confirmationBeepsTapped() {
-        let confirmationBeeps: Bool = pumpManager.confirmationBeeps
-        
+    private func setConfirmationBeeps(confirmationBeeps: Bool) {
         func done() {
             DispatchQueue.main.async { [weak self] in
                 if let self = self {
                     self.confirmationBeepsTableViewCell.updateTextLabel(enabled: self.pumpManager.confirmationBeeps)
                     self.confirmationBeepsTableViewCell.isLoading = false
+                    self.autoBolusBeepsTableViewCell.isEnabled = self.pumpManager.confirmationBeeps
                 }
             }
         }
 
         confirmationBeepsTableViewCell.isLoading = true
-        if confirmationBeeps {
-            pumpManager.setConfirmationBeeps(enabled: false, completion: { (error) in
-                if let error = error {
-                    DispatchQueue.main.async {
-                        let title = LocalizedString("Error disabling confirmation beeps", comment: "The alert title for disable confirmation beeps error")
-                        self.present(UIAlertController(with: error, title: title), animated: true)
+        pumpManager.setConfirmationBeeps(enabled: confirmationBeeps, completion: { (error) in
+            if let error = error {
+                DispatchQueue.main.async {
+                    let title: String
+                    if confirmationBeeps {
+                        title = LocalizedString("Error enabling confirmation beeps", comment: "The alert title for enable confirmation beeps error")
+                    } else {
+                        title = LocalizedString("Error disabling confirmation beeps", comment: "The alert title for disable confirmation beeps error")
                     }
+                    self.present(UIAlertController(with: error, title: title), animated: true)
                 }
-                done()
+            }
+            done()
+        })
+    }
+
+    private func confirmationBeepsTapped() {
+        setConfirmationBeeps(confirmationBeeps: !pumpManager.confirmationBeeps)
+    }
+
+    private func autoBolusBeepsTapped() {
+        let newValue = !pumpManager.automaticBolusBeeps
+        pumpManager.automaticBolusBeeps = newValue
+
+        func done() {
+            DispatchQueue.main.async { [weak self] in
+                if let self = self {
+                    self.autoBolusBeepsTableViewCell.updateTextLabel(enabled: newValue)
+                    self.autoBolusBeepsTableViewCell.isLoading = false
+                }
+            }
+        }
+
+        // Beep if confirmation beeps are enabled else just update the value displayed
+        if pumpManager.confirmationBeeps {
+            self.autoBolusBeepsTableViewCell.isLoading = true
+            pumpManager.setConfirmationBeeps(enabled: true, completion: { (error) in
+                done() // no worries if confirmation beep fails for any reason
             })
         } else {
-            pumpManager.setConfirmationBeeps(enabled: true, completion: { (error) in
-                if let error = error {
-                    DispatchQueue.main.async {
-                        let title = LocalizedString("Error enabling confirmation beeps", comment: "The alert title for enable confirmation beeps error")
-                        self.present(UIAlertController(with: error, title: title), animated: true)
-                    }
-                }
-                done()
-            })
+            self.autoBolusBeepsTableViewCell.updateTextLabel(enabled: newValue)
         }
     }
 }
@@ -799,7 +839,7 @@ extension OmnipodSettingsViewController: PodStateObserver {
             return
         }
 
-        let reloadRows: [StatusRow] = [.bolus, .basal, .reservoirLevel, .deliveredInsulin]
+        let reloadRows: [StatusRow] = [.podActiveClock, .bolus, .basal, .reservoirLevel, .deliveredInsulin]
         self.tableView.reloadRows(at: reloadRows.map({ IndexPath(row: $0.rawValue, section: statusIdx) }), with: .none)
 
         if oldState?.activeAlerts != state?.activeAlerts,
@@ -852,13 +892,14 @@ private extension TimeInterval {
     func format(using units: NSCalendar.Unit) -> String? {
         let formatter = DateComponentsFormatter()
         formatter.allowedUnits = units
-        formatter.unitsStyle = .full
+        formatter.unitsStyle = .short
         formatter.zeroFormattingBehavior = .dropLeading
         formatter.maximumUnitCount = 2
-        
+
         return formatter.string(from: self)
     }
 }
+
 
 class AlarmsTableViewCell: LoadingTableViewCell {
     
@@ -943,7 +984,7 @@ private extension UITableViewCell {
     
     func setDetailAge(_ age: TimeInterval?) {
         if let age = age {
-            detailTextLabel?.text = fabs(age).format(using: [.day, .hour, .minute])
+            detailTextLabel?.text = fabs(age).format(using: [.hour, .minute])
         } else {
             detailTextLabel?.text = ""
         }
@@ -977,8 +1018,6 @@ private extension UITableViewCell {
                 self.detailTextLabel?.text = String(format: LocalizedString("%@ U of %@ U (%@)", comment: "Format string for bolus progress. (1: The delivered amount) (2: The programmed amount) (3: the percent progress)"), deliveredUnits, units, progressStr)
             }
         }
-
-
     }
     
     func setDeliveredInsulinDetail(_ measurements: PodInsulinMeasurements?) {

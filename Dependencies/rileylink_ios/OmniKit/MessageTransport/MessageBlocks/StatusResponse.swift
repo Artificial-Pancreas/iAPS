@@ -17,7 +17,7 @@ public struct StatusResponse : MessageBlock {
     public let reservoirLevel: Double?
     public let insulin: Double
     public let bolusNotDelivered: Double
-    public let podMessageCounter: UInt8
+    public let lastProgrammingMessageSeqNum: UInt8 // updated by pod for 03, 08, $11, $19, $1A, $1C, $1E & $1F command messages
     public let alerts: AlertSet
     
     
@@ -48,7 +48,7 @@ public struct StatusResponse : MessageBlock {
         let lowInsulinBits = Int(encodedData[4] >> 7)
         self.insulin = Double(highInsulinBits | midInsulinBits | lowInsulinBits) / Pod.pulsesPerUnit
         
-        self.podMessageCounter = (encodedData[4] >> 3) & 0xf
+        self.lastProgrammingMessageSeqNum = (encodedData[4] >> 3) & 0xf
         
         self.bolusNotDelivered = Double((Int(encodedData[4] & 0x3) << 8) | Int(encodedData[5])) / Pod.pulsesPerUnit
 
@@ -65,7 +65,7 @@ public struct StatusResponse : MessageBlock {
 
 extension StatusResponse: CustomDebugStringConvertible {
     public var debugDescription: String {
-        return "StatusResponse(deliveryStatus:\(deliveryStatus), progressStatus:\(podProgressStatus), timeActive:\(timeActive.stringValue), reservoirLevel:\(String(describing: reservoirLevel)), delivered:\(insulin), bolusNotDelivered:\(bolusNotDelivered), seq:\(podMessageCounter), alerts:\(alerts))"
+        return "StatusResponse(deliveryStatus:\(deliveryStatus), progressStatus:\(podProgressStatus), timeActive:\(timeActive.stringValue), reservoirLevel:\(String(describing: reservoirLevel)), delivered:\(insulin), bolusNotDelivered:\(bolusNotDelivered), lastProgrammingMessageSeqNum:\(lastProgrammingMessageSeqNum), alerts:\(alerts))"
     }
 }
 

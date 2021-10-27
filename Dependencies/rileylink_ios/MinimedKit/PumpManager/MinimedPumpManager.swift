@@ -11,7 +11,7 @@ import RileyLinkKit
 import RileyLinkBLEKit
 import os.log
 
-public protocol MinimedPumpManagerStateObserver: class {
+public protocol MinimedPumpManagerStateObserver: AnyObject {
     func didUpdatePumpManagerState(_ state: MinimedPumpManagerState)
 }
 
@@ -382,6 +382,8 @@ extension MinimedPumpManager {
         pumpDateComponents.timeZone = timeZone
         glucoseDateComponents?.timeZone = timeZone
 
+        checkRileyLinkBattery()
+
         // The pump sends the same message 3x, so ignore it if we've already seen it.
         guard status != recents.latestPumpStatusFromMySentry, let pumpDate = pumpDateComponents.date else {
             return
@@ -428,6 +430,14 @@ extension MinimedPumpManager {
         // Sentry packets are sent in groups of 3, 5s apart. Wait 11s before allowing the loop data to continue to avoid conflicting comms.
         device.sessionQueueAsyncAfter(deadline: .now() + .seconds(11)) { [weak self] in
             self?.updateReservoirVolume(status.reservoirRemainingUnits, at: pumpDate, withTimeLeft: TimeInterval(minutes: Double(status.reservoirRemainingMinutes)))
+        }
+    }
+
+    private func checkRileyLinkBattery() {
+        rileyLinkDeviceProvider.getDevices { devices in
+            for device in devices {
+                device.updateBatteryLevel()
+            }
         }
     }
 

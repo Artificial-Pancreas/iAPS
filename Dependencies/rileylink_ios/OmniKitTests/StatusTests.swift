@@ -38,7 +38,7 @@ class StatusTests: XCTestCase {
             XCTAssertEqual(129.45, decoded.insulin, accuracy: 0.01)
             XCTAssertEqual(46.00, decoded.reservoirLevel)
             XCTAssertEqual(2.2, decoded.bolusNotDelivered)
-            XCTAssertEqual(9, decoded.podMessageCounter)
+            XCTAssertEqual(9, decoded.lastProgrammingMessageSeqNum)
             //XCTAssert(,decoded.alarms)
         } catch (let error) {
             XCTFail("message decoding threw error: \(error)")

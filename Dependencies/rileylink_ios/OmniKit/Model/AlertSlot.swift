@@ -81,23 +81,33 @@ public enum PodAlert: CustomStringConvertible, RawRepresentable, Equatable {
     // auto-off timer; requires user input every x minutes
     case autoOffAlarm(active: Bool, countdownDuration: TimeInterval)
 
+    // pod suspended reminder, before suspendTime; short beep every 15 minutes if >= 30 min, else every 5 minutes
+    case podSuspendedReminder(active: Bool, suspendTime: TimeInterval)
+
+    // pod suspend time expired alarm, after suspendTime; 2 sets of beeps every min for 3 minutes repeated every 15 minutes
+    case suspendTimeExpired(suspendTime: TimeInterval)
+
     public var description: String {
         var alertName: String
         switch self {
         case .waitingForPairingReminder:
             return LocalizedString("Waiting for pairing reminder", comment: "Description waiting for pairing reminder")
         case .finishSetupReminder:
-            return LocalizedString("Finish setup ", comment: "Description for finish setup")
+            return LocalizedString("Finish setup reminder", comment: "Description for finish setup reminder")
         case .expirationAlert:
             alertName = LocalizedString("Expiration alert", comment: "Description for expiration alert")
         case .expirationAdvisoryAlarm:
-            alertName = LocalizedString("Pod expiration advisory alarm", comment: "Description for expiration advisory alarm")
+            alertName = LocalizedString("Expiration advisory", comment: "Description for expiration advisory")
         case .shutdownImminentAlarm:
-            alertName = LocalizedString("Shutdown imminent alarm", comment: "Description for shutdown imminent alarm")
+            alertName = LocalizedString("Shutdown imminent", comment: "Description for shutdown imminent")
         case .lowReservoirAlarm:
-            alertName = LocalizedString("Low reservoir advisory alarm", comment: "Description for low reservoir alarm")
+            alertName = LocalizedString("Low reservoir advisory", comment: "Description for low reservoir advisory")
         case .autoOffAlarm:
-            alertName = LocalizedString("Auto-off alarm", comment: "Description for auto-off alarm")
+            alertName = LocalizedString("Auto-off", comment: "Description for auto-off")
+        case .podSuspendedReminder:
+            alertName = LocalizedString("Pod suspended reminder", comment: "Description for pod suspended reminder")
+        case .suspendTimeExpired:
+            alertName = LocalizedString("Suspend time expired", comment: "Description for suspend time expired")
         }
         if self.configuration.active == false {
             alertName += LocalizedString(" (inactive)", comment: "Description for an inactive alert modifier")
@@ -125,6 +135,53 @@ public enum PodAlert: CustomStringConvertible, RawRepresentable, Equatable {
             return AlertConfiguration(alertType: .slot4, active: active, duration: 0, trigger: .unitsRemaining(units), beepRepeat: .every1MinuteFor3MinutesAndRepeatEvery60Minutes, beepType: .bipBeepBipBeepBipBeepBipBeep)
         case .autoOffAlarm(let active, let countdownDuration):
             return AlertConfiguration(alertType: .slot0, active: active, autoOffModifier: true, duration: .minutes(15), trigger: .timeUntilAlert(countdownDuration), beepRepeat: .every1MinuteFor15Minutes, beepType: .bipBeepBipBeepBipBeepBipBeep)
+        case .podSuspendedReminder(let active, let suspendTime):
+            // A suspendTime of 0 is an untimed suspend
+            let reminderInterval, duration: TimeInterval
+            let trigger: AlertTrigger
+            let beepRepeat: BeepRepeat
+            let beepType: BeepType
+            if active {
+                if suspendTime >= TimeInterval(minutes :30) {
+                    // Use 15-minute pod suspended reminder beeps for longer scheduled suspend times as per PDM.
+                    reminderInterval = TimeInterval(minutes: 15)
+                    beepRepeat = .every15Minutes
+                } else {
+                    // Use 5-minute pod suspended reminder beeps for untimed & shorter scheduled suspend times.
+                    reminderInterval = TimeInterval(minutes: 5)
+                    beepRepeat = .every5Minutes
+                }
+                if suspendTime == 0 {
+                    duration = 0 // Untimed suspend, no duration
+                } else if suspendTime > reminderInterval {
+                    duration = suspendTime - reminderInterval // End after suspendTime total time
+                } else {
+                    duration = .minutes(1) // Degenerate case, end ASAP
+                }
+                trigger = .timeUntilAlert(reminderInterval) // Start after reminderInterval has passed
+                beepType = .beep
+            } else {
+                duration = 0
+                trigger = .timeUntilAlert(.minutes(0))
+                beepRepeat = .once
+                beepType = .noBeep
+            }
+            return AlertConfiguration(alertType: .slot5, active: active, duration: duration, trigger: trigger, beepRepeat: beepRepeat, beepType: beepType)
+        case .suspendTimeExpired(let suspendTime):
+            let active = suspendTime != 0 // disable if suspendTime is 0
+            let trigger: AlertTrigger
+            let beepRepeat: BeepRepeat
+            let beepType: BeepType
+            if active {
+                trigger = .timeUntilAlert(suspendTime)
+                beepRepeat = .every1MinuteFor3MinutesAndRepeatEvery15Minutes
+                beepType = .bipBeepBipBeepBipBeepBipBeep
+            } else {
+                trigger = .timeUntilAlert(.minutes(0))
+                beepRepeat = .once
+                beepType = .noBeep
+            }
+            return AlertConfiguration(alertType: .slot6, active: active, duration: 0, trigger: trigger, beepRepeat: beepRepeat, beepType: beepType)
         }
     }
 
@@ -170,6 +227,18 @@ public enum PodAlert: CustomStringConvertible, RawRepresentable, Equatable {
                 return nil
             }
             self = .autoOffAlarm(active: active, countdownDuration: TimeInterval(countdownDuration))
+        case "podSuspendedReminder":
+            guard let active = rawValue["active"] as? Bool,
+                let suspendTime = rawValue["suspendTime"] as? Double else
+            {
+                return nil
+            }
+            self = .podSuspendedReminder(active: active, suspendTime: suspendTime)
+        case "suspendTimeExpired":
+            guard let suspendTime = rawValue["suspendTime"] as? Double else {
+                return nil
+            }
+            self = .suspendTimeExpired(suspendTime: suspendTime)
         default:
             return nil
         }
@@ -193,6 +262,10 @@ public enum PodAlert: CustomStringConvertible, RawRepresentable, Equatable {
                 return "lowReservoirAlarm"
             case .autoOffAlarm:
                 return "autoOffAlarm"
+            case .podSuspendedReminder:
+                return "podSuspendedReminder"
+            case .suspendTimeExpired:
+                return "suspendTimeExpired"
             }
         }()
 
@@ -214,6 +287,11 @@ public enum PodAlert: CustomStringConvertible, RawRepresentable, Equatable {
         case .autoOffAlarm(let active, let countdownDuration):
             rawValue["active"] = active
             rawValue["countdownDuration"] = countdownDuration
+        case .podSuspendedReminder(let active, let suspendTime):
+            rawValue["active"] = active
+            rawValue["suspendTime"] = suspendTime
+        case .suspendTimeExpired(let suspendTime):
+            rawValue["suspendTime"] = suspendTime
         default:
             break
         }
