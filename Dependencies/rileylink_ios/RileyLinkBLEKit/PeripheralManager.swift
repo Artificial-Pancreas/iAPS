@@ -52,8 +52,6 @@ class PeripheralManager: NSObject {
     // Confined to `queue`
     private var needsConfiguration = true
     
-    var logString = ""
-
     weak var delegate: PeripheralManagerDelegate? {
         didSet {
             queue.sync {
@@ -62,8 +60,6 @@ class PeripheralManager: NSObject {
         }
     }
     
-    var setDatas: [UInt8] = [0xdd, 0x02, 0x00, 0x00]
-
     // Called from RileyLinkDeviceManager.managerQueue
     init(peripheral: CBPeripheral, configuration: Configuration, centralManager: CBCentralManager, queue: DispatchQueue) {
         self.peripheral = peripheral
@@ -97,7 +93,7 @@ extension PeripheralManager {
     }
 }
 
-protocol PeripheralManagerDelegate: class {
+protocol PeripheralManagerDelegate: AnyObject {
     func peripheralManager(_ manager: PeripheralManager, didUpdateValueFor characteristic: CBCharacteristic)
     
     func peripheralManager(_ manager: PeripheralManager, didUpdateNotificationStateFor characteristic: CBCharacteristic)
@@ -114,17 +110,13 @@ protocol PeripheralManagerDelegate: class {
 extension PeripheralManager {
     func configureAndRun(_ block: @escaping (_ manager: PeripheralManager) -> Void) -> (() -> Void) {
         return {
-            // TODO: Accessing self might be a race on initialization
-            if !self.needsConfiguration && self.peripheral.services == nil {
-                self.log.error("Configured peripheral has no services. Reconfiguring…")
-            }
-            
             if self.needsConfiguration || self.peripheral.services == nil {
+                self.log.default("Configuring peripheral %{public}@, needsConfiguration=%{public}@, has services = %{public}@", self.peripheral, String(describing: self.needsConfiguration), String(describing:  self.peripheral.services != nil))
                 do {
                     try self.applyConfiguration()
-                    self.log.default("Peripheral configuration completed")
+                    self.log.default("Peripheral configuration completed: %{public}@", self.peripheral)
                 } catch let error {
-                    self.log.error("Error applying peripheral configuration: %@", String(describing: error))
+                    self.log.error("Error applying peripheral configuration: %{public}@", String(describing: error))
                     // Will retry
                 }
 
@@ -137,7 +129,7 @@ extension PeripheralManager {
                         self.log.error("No delegate set for configuration")
                     }
                 } catch let error {
-                    self.log.error("Error applying delegate configuration: %@", String(describing: error))
+                    self.log.error("Error applying delegate configuration: %{public}@", String(describing: error))
                     // Will retry
                 }
             }
@@ -151,8 +143,10 @@ extension PeripheralManager {
     }
 
     private func assertConfiguration() {
-        perform { (_) in
-            // Intentionally empty to trigger configuration if necessary
+        if peripheral.state == .connected {
+            perform { (_) in
+                // Intentionally empty to trigger configuration if necessary
+            }
         }
     }
 
@@ -161,24 +155,23 @@ extension PeripheralManager {
 
         for service in peripheral.services ?? [] {
             guard let characteristics = configuration.serviceCharacteristics[service.uuid] else {
-                // Not all services may have characteristics
+                // Not all services have characteristics
                 continue
             }
 
             try discoverCharacteristics(characteristics, for: service, timeout: discoveryTimeout)
         }
 
+        // Subscribe to notifying characteristics
         for (serviceUUID, characteristicUUIDs) in configuration.notifyingCharacteristics {
             guard let service = peripheral.services?.itemWithUUID(serviceUUID) else {
-                throw PeripheralManagerError.unknownCharacteristic
+                // Not all RL's have OrangeLink service
+                continue
             }
 
-            add(log: "serviceUUID: \(serviceUUID.uuidString)")
-            
             for characteristicUUID in characteristicUUIDs {
-                add(log: "characteristicUUID: \(characteristicUUID.uuidString)")
                 guard let characteristic = service.characteristics?.itemWithUUID(characteristicUUID) else {
-                    throw PeripheralManagerError.unknownCharacteristic
+                    throw PeripheralManagerError.unknownCharacteristic(characteristicUUID)
                 }
 
                 guard !characteristic.isNotifying else {
@@ -209,7 +202,7 @@ extension PeripheralManager {
         }
 
         guard commandConditions.isEmpty else {
-            throw PeripheralManagerError.notReady
+            throw PeripheralManagerError.busy
         }
 
         // Run
@@ -229,7 +222,7 @@ extension PeripheralManager {
         }
 
         guard signaled else {
-            throw PeripheralManagerError.timeout
+            throw PeripheralManagerError.timeout(commandConditions)
         }
 
         if let error = commandError {
@@ -275,7 +268,6 @@ extension PeripheralManager {
 
     /// - Throws: PeripheralManagerError
     func setNotifyValue(_ enabled: Bool, for characteristic: CBCharacteristic, timeout: TimeInterval) throws {
-        add(log: "setNotifyValue: \(characteristic.uuid.uuidString)")
         try runCommand(timeout: timeout) {
             addCondition(.notificationStateUpdate(characteristic: characteristic, enabled: enabled))
 
@@ -294,18 +286,6 @@ extension PeripheralManager {
         return characteristic.value
     }
 
-    /// - Throws: PeripheralManagerError
-    func wait(for characteristic: CBCharacteristic, timeout: TimeInterval) throws -> Data {
-        try runCommand(timeout: timeout) {
-            addCondition(.valueUpdate(characteristic: characteristic, matching: nil))
-        }
-
-        guard let value = characteristic.value else {
-            throw PeripheralManagerError.timeout
-        }
-
-        return value
-    }
 
     /// - Throws: PeripheralManagerError
     func writeValue(_ value: Data, for characteristic: CBCharacteristic, type: CBCharacteristicWriteType, timeout: TimeInterval) throws {
@@ -389,7 +369,7 @@ extension PeripheralManager: CBPeripheralDelegate {
 
     func peripheral(_ peripheral: CBPeripheral, didWriteValueFor characteristic: CBCharacteristic, error: Error?) {
         commandLock.lock()
-
+        
         if let index = commandConditions.firstIndex(where: { (condition) -> Bool in
             if case .write(characteristic: characteristic) = condition {
                 return true
@@ -410,7 +390,7 @@ extension PeripheralManager: CBPeripheralDelegate {
 
     func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?) {
         commandLock.lock()
-
+        
         var notifyDelegate = false
 
         if let index = commandConditions.firstIndex(where: { (condition) -> Bool in
@@ -470,22 +450,12 @@ extension PeripheralManager: CBCentralManagerDelegate {
     }
 }
 
-
 extension PeripheralManager {
-    
-    func add(log: String) {
-        print("LLLLLL: \(log)")
-        logString += "\(Date())\n\(log)\n"
-        if logString.count > 10000 {
-            logString.removeFirst(1000)
-        }
-    }
     
     public override var debugDescription: String {
         var items = [
             "## PeripheralManager",
-            "peripheral: \(peripheral)",
-            "log: \(logString)"
+            "peripheral: \(peripheral)"
         ]
         queue.sync {
             items.append("needsConfiguration: \(needsConfiguration)")

@@ -93,12 +93,6 @@
 /* Title text for button to enable bolus beeps */
 "Enable Bolus Beeps" = "Slå på bolusljud";
 
-/* Title text for button to enable confirmation beeps */
-"Enable Confirmation Beeps" = "Sätt på bekräftelseljud";
-
-/* Title text for button to disable confirmation beeps */
-"Disable Confirmation Beeps" = "Stäng av bekräftelseljud";
-
 /* The alert title for disable bolus beeps error */
 "Error disabling bolus beeps" = "Fel vid avstängning av bolusljud";
 
@@ -223,12 +217,6 @@
 
 /* The title of the command to run the test command */
 "Test Command" = "Kommandotest";
-
-/* The title of the command to read pod status */
-"Read Pod Status" = "Läs poddstatus";
-
-/* The title of the command to read the puls log */
-"Read Pulse Log" = "Läs pulslogg";
 
 /* Progress message for testing commands. */
 "Testing Commands…" = "Testar att skicka kommandon…";

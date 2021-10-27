@@ -52,6 +52,10 @@ public struct OmnipodPumpManagerState: RawRepresentable, Equatable {
     
     internal var insulinType: InsulinType
 
+    public var rileyLinkBatteryAlertLevel: Int?
+
+    public var lastRileyLinkBatteryAlertDate: Date = .distantPast
+
     // MARK: -
 
     public init(podState: PodState?, timeZone: TimeZone, basalSchedule: BasalSchedule, rileyLinkConnectionManagerState: RileyLinkConnectionManagerState?, insulinType: InsulinType) {
@@ -146,6 +150,9 @@ public struct OmnipodPumpManagerState: RawRepresentable, Equatable {
         if let pairingAttemptAddress = rawValue["pairingAttemptAddress"] as? UInt32 {
             self.pairingAttemptAddress = pairingAttemptAddress
         }
+
+        rileyLinkBatteryAlertLevel = rawValue["rileyLinkBatteryAlertLevel"] as? Int
+        lastRileyLinkBatteryAlertDate = rawValue["lastRileyLinkBatteryAlertDate"] as? Date ?? Date.distantPast
     }
     
     public var rawValue: RawValue {
@@ -174,7 +181,9 @@ public struct OmnipodPumpManagerState: RawRepresentable, Equatable {
         if let pairingAttemptAddress = pairingAttemptAddress {
             value["pairingAttemptAddress"] = pairingAttemptAddress
         }
-        
+        value["rileyLinkBatteryAlertLevel"] = rileyLinkBatteryAlertLevel
+        value["lastRileyLinkBatteryAlertDate"] = lastRileyLinkBatteryAlertDate
+
         return value
     }
 }
@@ -213,6 +222,8 @@ extension OmnipodPumpManagerState: CustomDebugStringConvertible {
             "* automaticBolusBeeps: \(String(describing: automaticBolusBeeps))",
             "* pairingAttemptAddress: \(String(describing: pairingAttemptAddress))",
             "* insulinType: \(String(describing: insulinType))",
+            "* rileyLinkBatteryAlertLevel: \(String(describing: rileyLinkBatteryAlertLevel))",
+            "* lastRileyLinkBatteryAlertDate \(String(describing: lastRileyLinkBatteryAlertDate))",
             String(reflecting: podState),
             String(reflecting: rileyLinkConnectionManagerState),
         ].joined(separator: "\n")

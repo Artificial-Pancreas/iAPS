@@ -632,7 +632,20 @@ class OmnipodSettingsViewController: RileyLinkSettingsViewController {
             }
         case .rileyLinks:
             let device = devicesDataSource.devices[indexPath.row]
-            let vc = RileyLinkDeviceTableViewController(device: device)
+            
+            guard device.hardwareType != nil else {
+                tableView.deselectRow(at: indexPath, animated: true)
+                return
+            }
+
+            let vc = RileyLinkDeviceTableViewController(
+                device: device,
+                batteryAlertLevel: pumpManager.rileyLinkBatteryAlertLevel,
+                batteryAlertLevelChanged: { [weak self] value in
+                    self?.pumpManager.rileyLinkBatteryAlertLevel = value
+                }
+            )
+            
             self.show(vc, sender: sender)
         case .deletePumpManager:
             let confirmVC = UIAlertController(pumpManagerDeletionHandler: {

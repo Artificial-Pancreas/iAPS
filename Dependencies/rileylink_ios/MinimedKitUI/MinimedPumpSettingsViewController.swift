@@ -272,10 +272,18 @@ class MinimedPumpSettingsViewController: RileyLinkSettingsViewController {
             }
         case .rileyLinks:
             let device = devicesDataSource.devices[indexPath.row]
+            
+            guard device.hardwareType != nil else {
+                tableView.deselectRow(at: indexPath, animated: true)
+                return
+            }
 
-            let vc = RileyLinkMinimedDeviceTableViewController(
+            let vc = RileyLinkDeviceTableViewController(
                 device: device,
-                pumpOps: pumpManager.pumpOps
+                batteryAlertLevel: pumpManager.rileyLinkBatteryAlertLevel,
+                batteryAlertLevelChanged: { [weak self] value in
+                    self?.pumpManager.rileyLinkBatteryAlertLevel = value
+                }
             )
 
             self.show(vc, sender: sender)

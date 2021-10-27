@@ -11,7 +11,7 @@ import LoopKit
 import RileyLinkBLEKit
 
 
-protocol PumpOpsSessionDelegate: class {
+protocol PumpOpsSessionDelegate: AnyObject {
     func pumpOpsSession(_ session: PumpOpsSession, didChange state: PumpState)
     func pumpOpsSessionDidChangeRadioConfig(_ session: PumpOpsSession)
 }
@@ -827,12 +827,8 @@ extension PumpOpsSession {
     }
 
     /// - Throws: PumpOpsError.deviceError
-    public func enableCCLEDs() throws {
-        do {
-            try session.enableCCLEDs()
-        } catch let error as LocalizedError {
-            throw PumpOpsError.deviceError(error)
-        }
+    func setCCLEDMode(_ mode: RileyLinkLEDMode) throws {
+        throw PumpOpsError.noResponse(during: "Tests")
     }
 
     /// - Throws:
