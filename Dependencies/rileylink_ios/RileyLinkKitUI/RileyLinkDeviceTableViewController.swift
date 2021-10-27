@@ -893,6 +893,6 @@ private extension UITableViewCell {
     }
     
     func setBatteryAlert(_ level: Int?, formatter: NumberFormatter) {
-        detailTextLabel?.text = formatter.percentString(from: level) ?? NSLocalizedString("Off", comment: "Detail text when battery alert disabled.")
+        detailTextLabel?.text = formatter.percentString(from: level) ?? LocalizedString("Off", comment: "Detail text when battery alert disabled.")
     }
 }
