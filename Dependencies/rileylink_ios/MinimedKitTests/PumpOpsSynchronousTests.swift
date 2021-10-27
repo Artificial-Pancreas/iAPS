@@ -377,7 +377,7 @@ class PumpMessageSenderStub: PumpMessageSender {
         throw PumpOpsError.noResponse(during: "Tests")
     }
     
-    func enableCCLEDs() throws {
+    func setCCLEDMode(_ mode: RileyLinkLEDMode) throws {
         throw PumpOpsError.noResponse(during: "Tests")
     }
     

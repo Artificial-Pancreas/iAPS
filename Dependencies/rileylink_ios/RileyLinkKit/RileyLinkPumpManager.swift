@@ -43,6 +43,8 @@ open class RileyLinkPumpManager {
 
     open func deviceTimerDidTick(_ device: RileyLinkDevice) { }
 
+    open func device(_ device: RileyLinkDevice, didUpdateBattery level: Int) { }
+
     // MARK: - CustomDebugStringConvertible
     
     open var debugDescription: String {

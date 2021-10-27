@@ -23,6 +23,9 @@ extension CGM {
                             .autocapitalization(.allCharacters)
                             .keyboardType(.asciiCapable)
                     }
+                    .onDisappear {
+                        viewModel.onChangeID()
+                    }
                 }
 
                 Section(header: Text("Other")) {

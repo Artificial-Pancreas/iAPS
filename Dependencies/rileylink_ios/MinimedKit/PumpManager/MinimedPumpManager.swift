@@ -11,7 +11,7 @@ import RileyLinkKit
 import RileyLinkBLEKit
 import os.log
 
-public protocol MinimedPumpManagerStateObserver: class {
+public protocol MinimedPumpManagerStateObserver: AnyObject {
     func didUpdatePumpManagerState(_ state: MinimedPumpManagerState)
 }
 
@@ -207,6 +207,43 @@ public class MinimedPumpManager: RileyLinkPumpManager {
         }
     }
 
+    public var rileyLinkBatteryAlertLevel: Int? {
+        get {
+            return state.rileyLinkBatteryAlertLevel
+        }
+        set {
+            setState { state in
+                state.rileyLinkBatteryAlertLevel = newValue
+            }
+        }
+    }
+    
+    public override func device(_ device: RileyLinkDevice, didUpdateBattery level: Int) {
+        let repeatInterval: TimeInterval = .hours(1)
+        
+        if let alertLevel = state.rileyLinkBatteryAlertLevel,
+           level <= alertLevel,
+           state.lastRileyLinkBatteryAlertDate.addingTimeInterval(repeatInterval) < Date()
+        {
+            self.setState { state in
+                state.lastRileyLinkBatteryAlertDate = Date()
+            }
+            
+            // HACK Alert. This is temporary for the 2.2.5 release. Dev and newer releases will use the new Loop Alert facility
+            let notification = UNMutableNotificationContent()
+            notification.body = String(format: LocalizedString("\"%1$@\" has a low battery", comment: "Format string for low battery alert body for RileyLink. (1: device name)"), device.name ?? "unnamed")
+            notification.title = LocalizedString("Low RileyLink Battery", comment: "Title for RileyLink low battery alert")
+            notification.sound = .default
+            notification.categoryIdentifier = LoopNotificationCategory.loopNotRunning.rawValue
+            notification.threadIdentifier = LoopNotificationCategory.loopNotRunning.rawValue
+            let request = UNNotificationRequest(
+                identifier: "batteryalert.rileylink",
+                content: notification,
+                trigger: nil)
+            UNUserNotificationCenter.current().add(request)
+        }
+    }
+
     // MARK: - CustomDebugStringConvertible
 
     override public var debugDescription: String {
@@ -345,6 +382,8 @@ extension MinimedPumpManager {
         pumpDateComponents.timeZone = timeZone
         glucoseDateComponents?.timeZone = timeZone
 
+        checkRileyLinkBattery()
+
         // The pump sends the same message 3x, so ignore it if we've already seen it.
         guard status != recents.latestPumpStatusFromMySentry, let pumpDate = pumpDateComponents.date else {
             return
@@ -391,6 +430,14 @@ extension MinimedPumpManager {
         // Sentry packets are sent in groups of 3, 5s apart. Wait 11s before allowing the loop data to continue to avoid conflicting comms.
         device.sessionQueueAsyncAfter(deadline: .now() + .seconds(11)) { [weak self] in
             self?.updateReservoirVolume(status.reservoirRemainingUnits, at: pumpDate, withTimeLeft: TimeInterval(minutes: Double(status.reservoirRemainingMinutes)))
+        }
+    }
+
+    private func checkRileyLinkBattery() {
+        rileyLinkDeviceProvider.getDevices { devices in
+            for device in devices {
+                device.updateBatteryLevel()
+            }
         }
     }
 

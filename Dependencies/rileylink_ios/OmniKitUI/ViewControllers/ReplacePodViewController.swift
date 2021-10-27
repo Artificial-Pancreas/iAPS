@@ -16,6 +16,7 @@ class ReplacePodViewController: SetupTableViewController {
     enum PodReplacementReason {
         case normal
         case activationTimeout
+        case podIncompatible
         case fault(_ podFault: DetailedStatus)
         case canceledPairingBeforeApplication
         case canceledPairing
@@ -29,6 +30,8 @@ class ReplacePodViewController: SetupTableViewController {
                 break // Text set in interface builder
             case .activationTimeout:
                 instructionsLabel.text = LocalizedString("Activation time exceeded. The pod must be deactivated before pairing with a new one. Please deactivate and discard pod.", comment: "Instructions when deactivating pod that didn't complete activation in time.")
+            case .podIncompatible:
+                instructionsLabel.text = LocalizedString("Unable to use incompatible pod. The pod must be deactivated before pairing with a new one. Please deactivate and discard pod.", comment: "Instructions when deactivating an incompatible pod")
             case .fault(let podFault):
                 var faultDescription = podFault.faultEventCode.localizedDescription
                 if let refString = podFault.pdmRef {
@@ -55,6 +58,10 @@ class ReplacePodViewController: SetupTableViewController {
                 } else {
                     self.replacementReason = .fault(podFault)
                 }
+            } else if podState?.setupProgress == .activationTimeout {
+                self.replacementReason = .activationTimeout
+            } else if podState?.setupProgress == .podIncompatible {
+                self.replacementReason = .podIncompatible
             } else if podState?.setupProgress.primingNeeded == true {
                 self.replacementReason = .canceledPairingBeforeApplication
             } else if podState?.setupProgress.needsCannulaInsertion == true {

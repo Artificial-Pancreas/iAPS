@@ -16,7 +16,7 @@ extension RileyLinkDevice.Status {
             manufacturer: "Medtronic",
             model: pumpModel.rawValue,
             hardwareVersion: nil,
-            firmwareVersion: radioFirmwareVersion?.description,
+            firmwareVersion: version,
             softwareVersion: String(MinimedKitVersionNumber),
             localIdentifier: pumpID,
             udiDeviceIdentifier: nil

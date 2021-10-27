@@ -251,26 +251,6 @@ extension CommandResponseViewController {
         }
     }
 
-    static func enableLEDs(ops: PumpOps?, device: RileyLinkDevice) -> T {
-        return T { (completionHandler) -> String in
-            device.enableBLELEDs()
-            ops?.runSession(withName: "Enable LEDs", using: device) { (session) in
-                let response: String
-                do {
-                    try session.enableCCLEDs()
-                    response = "OK"
-                } catch let error {
-                    response = String(describing: error)
-                }
-
-                DispatchQueue.main.async {
-                    completionHandler(response)
-                }
-            }
-
-            return LocalizedString("Enabled Diagnostic LEDs", comment: "Progress message for enabling diagnostic LEDs")
-        }
-    }
 
     static func readPumpStatus(ops: PumpOps?, device: RileyLinkDevice, measurementFormatter: MeasurementFormatter) -> T {
         return T { (completionHandler) -> String in
