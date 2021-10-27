@@ -71,34 +71,34 @@
 "Invert LED Logic" = "Inverter LED-logikk";
 
 /* The header of the cells showing test commands */
-"Test Commands" = "Test Commands";
+"Test Commands" = "Test kommandoer";
 
 /* The title of the cell showing Lighten Yellow LED */
-"Lighten Yellow LED" = "Lighten Yellow LED";
+"Lighten Yellow LED" = "Slå på gul LED";
 
 /* The title of the cell showing Lighten Yellow LED */
-"Lighten Red LED" = "Lighten Red LED";
+"Lighten Red LED" = "Slå på rød LED";
 
 /* The title of the cell showing Test Vibration */
-"Test Vibration" = "Test Vibration";
+"Test Vibration" = "Test vibrering";
 
 /* The title of the cell for sounding device finding piezo */
-"Find Device" = "Find Device";
+"Find Device" = "Finn enhet";
 
 /* The title of the cell for connection LED */
-"Connection LED" = "Connection LED";
+"Connection LED" = "LED-lys ved tilkobling";
 
 /* The title of the cell for connection vibration */
-"Connection Vibration" = "Connection Vibration";
+"Connection Vibration" = "Vibrasjon ved tilkobling";
 
 /* Detail text when battery alert disabled. */
-"Off" = "Off";
+"Off" = "Av";
 
 /* Text indicating LED Mode is on */
-"On" = "On";
+"On" = "På";
 
 /* Text indicating LED Mode is off */
-"Off" = "Off";
+"Off" = "Av";
 
 /* Text indicating LED Mode is auto */
-"Auto" = "Auto";
+"Auto" = "Automatisk";
