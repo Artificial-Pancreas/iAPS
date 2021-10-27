@@ -779,8 +779,8 @@ public class RileyLinkDeviceTableViewController: UITableViewController {
         case .alert:
             switch AlertRow(rawValue: indexPath.row)! {
             case .battery:
-                let alert = UIAlertController.init(title: "Battery level Alert", message: nil, preferredStyle: .actionSheet)
-                let action = UIAlertAction.init(title: "OFF", style: .default) { _ in
+                let alert = UIAlertController.init(title: LocalizedString("Battery level Alert", comment: "Header of list showing battery level alert options"), message: nil, preferredStyle: .actionSheet)
+                let action = UIAlertAction.init(title: LocalizedString("OFF", comment: "Battery level alert OFF in list of options"), style: .default) { _ in
                     self.batteryAlertLevel = nil
                     self.tableView.reloadData()
                 }

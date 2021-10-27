@@ -85,6 +85,12 @@
 /* The title of the cell for sounding device finding piezo */
 "Find Device" = "Find Device";
 
+/* The title of the cell for connection LED */
+"Connection LED" = "Connection LED";
+
+/* The title of the cell for connection vibration */
+"Connection Vibration" = "Connection Vibration";
+
 /* Detail text when battery alert disabled. */
 "Off" = "Off";
 
