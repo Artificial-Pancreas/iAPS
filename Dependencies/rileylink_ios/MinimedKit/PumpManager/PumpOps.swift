@@ -13,7 +13,7 @@ import os.log
 import LoopKit
 
 
-public protocol PumpOpsDelegate: class {
+public protocol PumpOpsDelegate: AnyObject {
     // TODO: Audit clients of this as its called on the session queue
     func pumpOps(_ pumpOps: PumpOps, didChange state: PumpState)
 }

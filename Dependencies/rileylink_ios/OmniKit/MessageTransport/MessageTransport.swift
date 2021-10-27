@@ -11,7 +11,7 @@ import os.log
 
 import RileyLinkBLEKit
 
-protocol MessageLogger: class {
+protocol MessageLogger: AnyObject {
     // Comms logging
     func didSend(_ message: Data)
     func didReceive(_ message: Data)
@@ -49,7 +49,7 @@ public struct MessageTransportState: Equatable, RawRepresentable {
 
 }
 
-protocol MessageTransportDelegate: class {
+protocol MessageTransportDelegate: AnyObject {
     func messageTransport(_ messageTransport: MessageTransport, didUpdate state: MessageTransportState)
 }
 

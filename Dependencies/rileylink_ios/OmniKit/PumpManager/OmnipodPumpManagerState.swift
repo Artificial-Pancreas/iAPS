@@ -166,21 +166,10 @@ public struct OmnipodPumpManagerState: RawRepresentable, Equatable {
             "insulinType": insulinType.rawValue,
         ]
         
-        if let podState = podState {
-            value["podState"] = podState.rawValue
-        }
-
-        if let expirationReminderDate = expirationReminderDate {
-            value["expirationReminderDate"] = expirationReminderDate
-        }
-        
-        if let rileyLinkConnectionManagerState = rileyLinkConnectionManagerState {
-            value["rileyLinkConnectionManagerState"] = rileyLinkConnectionManagerState.rawValue
-        }
-        
-        if let pairingAttemptAddress = pairingAttemptAddress {
-            value["pairingAttemptAddress"] = pairingAttemptAddress
-        }
+        value["podState"] = podState?.rawValue
+        value["expirationReminderDate"] = expirationReminderDate
+        value["rileyLinkConnectionManagerState"] = rileyLinkConnectionManagerState?.rawValue
+        value["pairingAttemptAddress"] = pairingAttemptAddress
         value["rileyLinkBatteryAlertLevel"] = rileyLinkBatteryAlertLevel
         value["lastRileyLinkBatteryAlertDate"] = lastRileyLinkBatteryAlertDate
 

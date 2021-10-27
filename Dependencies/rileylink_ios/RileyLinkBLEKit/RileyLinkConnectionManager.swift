@@ -8,7 +8,7 @@
 
 import Foundation
 
-public protocol RileyLinkConnectionManagerDelegate : class {
+public protocol RileyLinkConnectionManagerDelegate : AnyObject {
     func rileyLinkConnectionManager(_ rileyLinkConnectionManager: RileyLinkConnectionManager, didChange state: RileyLinkConnectionManagerState)
 }
 
@@ -85,7 +85,7 @@ public class RileyLinkConnectionManager {
     }
 }
 
-public protocol RileyLinkDeviceProvider: class {
+public protocol RileyLinkDeviceProvider: AnyObject {
     func getDevices(_ completion: @escaping (_ devices: [RileyLinkDevice]) -> Void)
     var idleListeningEnabled: Bool { get }
     var timerTickEnabled: Bool { get set }

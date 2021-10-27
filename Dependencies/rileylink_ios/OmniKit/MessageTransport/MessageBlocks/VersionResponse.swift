@@ -33,13 +33,24 @@ public struct VersionResponse : MessageBlock {
 
     public let pmVersion: FirmwareVersion
     public let piVersion: FirmwareVersion
-    public let podProgressStatus: PodProgressStatus
     public let lot: UInt32
     public let tid: UInt32
-    public let gain: UInt8? // Only in the shorter assignAddress response
-    public let rssi: UInt8? // Only in the shorter assignAddress response
     public let address: UInt32
-    
+    public let productID: UInt8                     // always 2 (for PM = PI = 2.7.0), 2nd gen Omnipod?
+    public let podProgressStatus: PodProgressStatus
+
+    // These values only included in the shorter 0x15 VersionResponse for the AssignAddress command.
+    public let gain: UInt8?                         // 2-bit value, max gain is at 0, min gain is at 2
+    public let rssi: UInt8?                         // 6-bit value, max rssi seen 61
+
+    // These values only included in the longer 0x1B VersionResponse for the SetupPod command.
+    public let pulseSize: Double?                   // VVVV / 100,000, must be 0x1388 / 100,000 = 0.05U
+    public let secondsPerBolusPulse: Double?        // BR / 8, nominally 0x10 / 8 = 2 seconds per pulse
+    public let secondsPerPrimePulse: Double?        // PR / 8, nominally 0x08 / 8 = 1 seconds per priming pulse
+    public let primeUnits: Double?                  // PP * pulseSize, nominally 0x34 * 0.05U = 2.6U
+    public let cannulaInsertionUnits: Double?       // CP * pulseSize, nominally 0x0A * 0.05U = 0.5U
+    public let serviceDuration: TimeInterval?       // PL hours, nominally 0x50 = 80 hours
+
     public let data: Data
     
     public init(encodedData: Data) throws {
@@ -48,57 +59,85 @@ public struct VersionResponse : MessageBlock {
 
         switch responseLength {
         case assignAddressVersionLength:
-            // This is the shorter 0x15 response to the 07 AssignAddress command
-            // 01 15 020700 020700 02 02 0000a377 0003ab37 9f 1f00ee87
+            // This is the shorter 0x15 response for the 07 AssignAddress command.
             // 0  1  2      5      8  9  10       14       18 19
-            // 01 LL MXMYMZ IXIYIZ 02 0J LLLLLLLL TTTTTTTT GS IIIIIIII
+            // 01 LL MXMYMZ IXIYIZ ID 0J LLLLLLLL TTTTTTTT GS IIIIIIII
+            // 01 15 020700 020700 02 02 0000a377 0003ab37 9f 1f00ee87
+            //
             // LL = 0x15 (assignAddressVersionLength)
-            // PM = MX.MY.MZ
-            // PI = IX.IY.IZ
-            // 0J = Pod progress state (typically 02, could be 01)
+            // PM MX.MY.MZ = 02.07.02 (for PM 2.7.0)
+            // PI IX.IY.IZ = 02.07.02 (for PI 2.7.0)
+            // ID = Product ID (always 02 for PM = PI = 2.7.0)
+            // 0J = Pod progress state (typically 02, but could be 01, for this particular response)
             // LLLLLLLL = Lot
             // TTTTTTTT = Tid
             // GS = ggssssss (Gain/RSSI)
-            // IIIIIIII = address
+            // IIIIIIII = connection ID address
 
             pmVersion = FirmwareVersion(encodedData: encodedData.subdata(in: 2..<5))
             piVersion = FirmwareVersion(encodedData: encodedData.subdata(in: 5..<8))
-            if let podProgress = PodProgressStatus(rawValue: encodedData[9]) {
-                self.podProgressStatus = podProgress
-            } else {
+            productID = encodedData[8]
+            guard let progressStatus = PodProgressStatus(rawValue: encodedData[9]) else {
                 throw MessageBlockError.parseError
             }
+            podProgressStatus = progressStatus
             lot = encodedData[10...].toBigEndian(UInt32.self)
             tid = encodedData[14...].toBigEndian(UInt32.self)
             gain = (encodedData[18] & 0xc0) >> 6
             rssi = encodedData[18] & 0x3f
             address = encodedData[19...].toBigEndian(UInt32.self)
             
+            // These values only included in the longer 0x1B VersionResponse for the 03 SetupPod command.
+            pulseSize = nil
+            secondsPerBolusPulse = nil
+            secondsPerPrimePulse = nil
+            primeUnits = nil
+            cannulaInsertionUnits = nil
+            serviceDuration = nil
+
         case setupPodVersionLength:
-            // This is the longer 0x1B response to the 03 SetupPod command
-            // 01 1b 13881008340a50 020700 020700 02 03 0000a62b 00044794 1f00ee87
-            // 0  1  2              9      12        16 17       21       25
-            // 01 LL 13881008340A50 MXMYMZ IXIYIZ 02 0J LLLLLLLL TTTTTTTT IIIIIIII
-            // LL = 0x1B (setupPodVersionMessageLength)
-            // PM = MX.MY.MZ
-            // PI = IX.IY.IZ
-            // 0J = Pod progress state (should always be 03)
+            // This is the longer 0x1B response for the 03 SetupPod command.
+            // 0  1  2    4  5  6  7  8  9      12     15 16 17       21       25
+            // 01 LL VVVV BR PR PP CP PL MXMYMZ IXIYIZ ID 0J LLLLLLLL TTTTTTTT IIIIIIII
+            // 01 1b 1388 10 08 34 0a 50 020700 020700 02 03 0000a62b 00044794 1f00ee87
+            //
+            // LL = 0x1b (setupPodVersionMessageLength)
+            // VVVV = 0x1388, pulse Volume in micro-units of U100 insulin per tenth of pulse (5000/100000 = 0.05U per pulse)
+            // BR = 0x10, Basic pulse Rate in # of eighth secs per pulse (16/8 = 2 seconds per pulse)
+            // PR = 0x08, Prime pulse Rate in # of eighth secs per pulse for priming boluses (8/8 = 1 second per priming pulse)
+            // PP = 0x34 = 52, # of Prime Pulses (52 pulses x 0.05U/pulse = 2.6U)
+            // CP = 0x0A = 10, # of Cannula insertion Pulses (10 pulses x 0.05U/pulse = 0.5U)
+            // PL = 0x50 = 80, # of hours maximum Pod Life
+            // PM = MX.MY.MZ = 02.07.02 (for PM 2.7.0)
+            // PI = IX.IY.IZ = 02.07.02 (for PI 2.7.0)
+            // ID = Product ID (always 02 for PM = PI = 2.7.0)
+            // 0J = Pod progress state (should be 03 for this particular response)
             // LLLLLLLL = Lot
             // TTTTTTTT = Tid
-            // IIIIIIII = address
+            // IIIIIIII = connection ID address
 
             pmVersion = FirmwareVersion(encodedData: encodedData.subdata(in: 9..<12))
             piVersion = FirmwareVersion(encodedData: encodedData.subdata(in: 12..<15))
-            if let podProgress = PodProgressStatus(rawValue: encodedData[16]) {
-                self.podProgressStatus = podProgress
-            } else {
+            productID = encodedData[15]
+            guard let progressStatus = PodProgressStatus(rawValue: encodedData[16]) else {
                 throw MessageBlockError.parseError
             }
+            podProgressStatus = progressStatus
             lot = encodedData[17...].toBigEndian(UInt32.self)
             tid = encodedData[21...].toBigEndian(UInt32.self)
-            gain = nil // No GS byte in the longer SetupPod response
-            rssi = nil // No GS byte in the longer SetupPod response
             address = encodedData[25...].toBigEndian(UInt32.self)
+
+            // These values should be verified elsewhere and appropriately handled.
+            pulseSize = Double(encodedData[2...].toBigEndian(UInt16.self)) / 100000
+            secondsPerBolusPulse = Double(encodedData[4]) / 8
+            secondsPerPrimePulse = Double(encodedData[5]) / 8
+            primeUnits = Double(encodedData[6]) * Pod.pulseSize
+            cannulaInsertionUnits = Double(encodedData[7]) * Pod.pulseSize
+            serviceDuration = TimeInterval.hours(Double(encodedData[8]))
+
+            // These values only included in the shorter 0x15 VersionResponse for the AssignAddress command.
+            gain = nil
+            rssi = nil
 
         default:
             throw MessageBlockError.parseError
@@ -116,7 +155,7 @@ public struct VersionResponse : MessageBlock {
 
 extension VersionResponse: CustomDebugStringConvertible {
     public var debugDescription: String {
-        return "VersionResponse(lot:\(lot), tid:\(tid), gain:\(gain?.description ?? "NA"), rssi:\(rssi?.description ?? "NA") address:\(Data(bigEndian: address).hexadecimalString), podProgressStatus:\(podProgressStatus), pmVersion:\(pmVersion), piVersion:\(piVersion))"
+        return "VersionResponse(lot:\(lot), tid:\(tid), address:\(Data(bigEndian: address).hexadecimalString), pmVersion:\(pmVersion), piVersion:\(piVersion), productID:\(productID), podProgressStatus:\(podProgressStatus), gain:\(gain?.description ?? "NA"), rssi:\(rssi?.description ?? "NA"), pulseSize:\(pulseSize?.description ?? "NA"), secondsPerBolusPulse:\(secondsPerBolusPulse?.description ?? "NA"), secondsPerPrimePulse:\(secondsPerPrimePulse?.description ?? "NA"), primeUnits:\(primeUnits?.description ?? "NA"), cannulaInsertionUnits:\(cannulaInsertionUnits?.description ?? "NA"), serviceDuration:\(serviceDuration?.description ?? "NA"), )"
     }
 }
 

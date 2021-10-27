@@ -35,7 +35,7 @@
 "Clear" = "Apagar";
 
 /* Button */
-"Done" = "Ok";
+"Done" = "OK";
 
 /*  */
 "Wait please" = "Aguarde";
@@ -146,10 +146,10 @@
 "Delete autotune data" = "Apagar dados autotune";
 
 /*  */
-"Run now" = "Run now";
+"Run now" = "Executar agora";
 
 /*  */
-"Last run" = "Last run";
+"Last run" = "Ultima execução";
 
 /*  */
 "Sensitivity" = "Fator de sensibilidade";
@@ -240,25 +240,25 @@ Enact a temp Basal or a temp target */
 "Invalid URL" = "URL inválida";
 
 /*  */
-"Local glucose source" = "Local glucose source";
+"Local glucose source" = "Glicose local";
 
 /* Header */
 "Nightscout Config" = "Ajustes Nightscout";
 
 /*  */
-"Port" = "Port";
+"Port" = "Porta";
 
 /*  */
-"URL" = "URL";
+"URL" = "Endereço da URL";
 
 /**/
 "Use local glucose server" = "Usar servidor de glicose local";
 
 /*  */
-"Edit settings json" = "Edit settings json";
+"Edit settings json" = "Editar json de configurações";
 
 /* */
-"Glucose units" = "Glucose units";
+"Glucose units" = "Unidades de glicose";
 
 /*  */
 "Preferences" = "Preferências";
@@ -351,7 +351,7 @@ Enact a temp Basal or a temp target */
 "Configuration" = "Ajustes";
 
 /* */
-"Devices" = "Devices";
+"Devices" = "Dispositivos";
 
 /*  */
 "Pump" = "Bomba";
@@ -366,13 +366,13 @@ Enact a temp Basal or a temp target */
 "Share logs" = "Compartilhar logs";
 
 /* Upper target */
-"High target" = "High target";
+"High target" = "Meta alta";
 
 /* Lower target */
-"Low target" = "Low target";
+"Low target" = "Meta baixa";
 
 /*  */
-"Target Ranges" = "Target Ranges";
+"Target Ranges" = "Limites da meta";
 
 /* When bolusing */
 "Bolusing" = "Aplicando bolus";
@@ -384,22 +384,22 @@ Enact a temp Basal or a temp target */
 "Middleware" = "Middleware";
 
 /* Header */
-"History" = "History";
+"History" = "Histórico";
 
 /* CGM option */
 "Upload glucose to Nightscout" = "Upload glicose para o Nightscout";
 
 /* Type of CGM or glucose source */
-"Type" = "Type";
+"Type" = "Tipo";
 
 /* CGM */
-"CGM" = "CGM";
+"CGM" = "MCG";
 
 /* CGM Transmitter ID */
-"Transmitter ID" = "Transmitter ID";
+"Transmitter ID" = "ID do transmissor";
 
 /* Other CGM setting */
-"Other" = "Other";
+"Other" = "Outro";
 
 /*
   Infotexts from openaps.docs and androidaps.docs

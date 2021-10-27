@@ -51,7 +51,7 @@ extension RileyLinkDeviceError: LocalizedError {
         case .peripheralManagerError(let error):
             return error.recoverySuggestion
         case .commandsBlocked:
-            return LocalizedString("RileyLink may need to be turned off and back on.", comment: "commandsBlocked recovery suggestion")
+            return LocalizedString("RileyLink may need to be turned off and back on", comment: "commandsBlocked recovery suggestion")
         default:
             return nil
         }

@@ -134,7 +134,17 @@ class PairPodSetupViewController: SetupTableViewController {
                 errorStrings = [lastError?.localizedDescription].compactMap { $0 }
             }
             
-            if let commsError = lastError as? PodCommsError, commsError.possibleWeakCommsCause {
+            var podCommsError: PodCommsError? = nil
+            if let pumpManagerError = lastError as? PumpManagerError {
+                switch pumpManagerError {
+                case .communication(let error):
+                    podCommsError = error as? PodCommsError
+                default:
+                    break
+                }
+            }
+
+            if let podCommsError = podCommsError, podCommsError.possibleWeakCommsCause {
                 if previouslyEncounteredWeakComms {
                     errorStrings.append(LocalizedString("If the problem persists, move to a new area and try again", comment: "Additional pairing recovery suggestion on multiple pairing failures"))
                 } else {
@@ -152,12 +162,11 @@ class PairPodSetupViewController: SetupTableViewController {
             }
             loadingText = errorText
             
-            // If we have an error, update the continue state
-            if let podCommsError = lastError as? PodCommsError {
-                switch podCommsError {
-                case .podFault, .activationTimeExceeded:
+            // If we have an error, update the continue state appropriately
+            if let podCommsError = podCommsError {
+                if podCommsError.isFaulted {
                     continueState = .fault
-                default:
+                } else {
                     continueState = .initial
                 }
             } else if lastError != nil {
