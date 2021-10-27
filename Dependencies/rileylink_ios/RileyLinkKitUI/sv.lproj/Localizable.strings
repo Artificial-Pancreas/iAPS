@@ -37,5 +37,33 @@
 /* The title of the cell showing BLE signal strength (RSSI) */
 "Signal Strength" = "Signalstyrka";
 
+/* The header of the cells showing connection monitoring */
+"Connection Monitoring" = "Anslutningsstatus";
+
 /* The title of the cell showing uptime */
 "Uptime" = "Körs sedan";
+
+/* The title of the cell showing battery level */
+"Battery level" = "Batterinivå";
+
+/* The title of the cell showing Voltage */
+"Voltage" = "Spänning (V)";
+
+/* The header of the cell showing Low Battery Alert */
+"Alert" = "Varning";
+
+/* The title of the cell showing Low Battery Alert */
+"Low Battery Alert" = "Låg batterinivå";
+
+/* The header of the cells showing test commands */
+"Test Commands" = "Testkommandon";
+
+/* The title of the cell showing Lighten Yellow LED */
+"Lighten Yellow LED" = "Ljusare gul LED";
+
+/* The title of the cell showing Lighten Yellow LED */
+"Lighten Red LED" = "Ljusare röd LED";
+
+/* The title of the cell showing Test Vibration */
+"Test Vibration" = "Testa vibration";
+
