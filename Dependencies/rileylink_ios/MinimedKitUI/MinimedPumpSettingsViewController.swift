@@ -101,6 +101,8 @@ class MinimedPumpSettingsViewController: RileyLinkSettingsViewController {
         case batteryChemistry
         case preferredInsulinDataSource
         case insulinType
+        // This should always be last so it can be omitted for non-MySentry pumps:
+        case useMySentry
     }
 
     // MARK: UITableViewDataSource
@@ -116,7 +118,8 @@ class MinimedPumpSettingsViewController: RileyLinkSettingsViewController {
         case .actions:
             return ActionsRow.allCases.count
         case .settings:
-            return SettingsRow.allCases.count
+            let settingsRowCount = pumpManager.state.pumpModel.hasMySentry ? SettingsRow.allCases.count : SettingsRow.allCases.count - 1
+            return settingsRowCount
         case .rileyLinks:
             return super.tableView(tableView, numberOfRowsInSection: section)
         case .delete:
@@ -188,6 +191,9 @@ class MinimedPumpSettingsViewController: RileyLinkSettingsViewController {
             case .preferredInsulinDataSource:
                 cell.textLabel?.text = LocalizedString("Preferred Data Source", comment: "The title text for the preferred insulin data source config")
                 cell.detailTextLabel?.text = String(describing: pumpManager.preferredInsulinDataSource)
+            case .useMySentry:
+                cell.textLabel?.text = LocalizedString("Use MySentry", comment: "The title text for the preferred MySentry setting config")
+                cell.detailTextLabel?.text = pumpManager.useMySentry ? "Yes" : "No"
             case .timeZoneOffset:
                 cell.textLabel?.text = LocalizedString("Change Time Zone", comment: "The title of the command to change pump time zone")
 
@@ -269,6 +275,11 @@ class MinimedPumpSettingsViewController: RileyLinkSettingsViewController {
                 vc.title = LocalizedString("Insulin Type", comment: "Controller title for insulin type selection screen")
                 
                 show(vc, sender: sender)
+            case .useMySentry:
+                let vc = RadioSelectionTableViewController.useMySentry(pumpManager.useMySentry)
+                vc.title = sender?.textLabel?.text
+                vc.delegate = self
+                show(vc, sender: sender)
             }
         case .rileyLinks:
             let device = devicesDataSource.devices[indexPath.row]
@@ -312,6 +323,8 @@ class MinimedPumpSettingsViewController: RileyLinkSettingsViewController {
                 break
             case .preferredInsulinDataSource:
                 break
+            case .useMySentry:
+                break
             }
         case .info, .actions, .rileyLinks, .delete:
             break
@@ -338,6 +351,10 @@ extension MinimedPumpSettingsViewController: RadioSelectionTableViewControllerDe
             case .batteryChemistry:
                 if let selectedIndex = controller.selectedIndex, let dataSource = MinimedKit.BatteryChemistryType(rawValue: selectedIndex) {
                     pumpManager.batteryChemistry = dataSource
+                }
+            case .useMySentry:
+                if let selectedIndex = controller.selectedIndex {
+                    pumpManager.useMySentry = selectedIndex == 0
                 }
             default:
                 assertionFailure()
