@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>AppGroupID</key>
-	<string>group.com.T7VZ6LU6H3.xdripswift.JBMgroup</string>
+	<string>group.com.T7VZ6LU6H3.aps.JBMgroup</string>
 	<key>AppGroupIdentifier</key>
-	<string>$(APP_GROUP_IDENTIFIER)</string>
+	<string>group.com.T7VZ6LU6H3.aps.JBMgroup</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
