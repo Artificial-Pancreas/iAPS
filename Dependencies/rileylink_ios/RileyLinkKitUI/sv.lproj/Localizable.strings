@@ -49,7 +49,7 @@
 /* The title of the cell showing Voltage */
 "Voltage" = "Spänning (V)";
 
-//* "The title of the section for alerts" */
+/* "The title of the section for alerts" */
 "Alert" = "Varning";
 
 /* The title of the cell showing Low Battery Alert */
@@ -102,4 +102,3 @@
 
 /* Text indicating LED Mode is auto */
 "Auto" = "Auto";
-
