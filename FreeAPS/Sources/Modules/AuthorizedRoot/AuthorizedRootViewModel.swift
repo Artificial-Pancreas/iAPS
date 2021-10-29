@@ -5,8 +5,6 @@ extension AuthorizedRoot {
     class ViewModel<Provider>: BaseViewModel<Provider>, ObservableObject where Provider: AuthorizedRootProvider {
         override func subscribe() {}
 
-        var rootView: some View {
-            router.view(for: .home)
-        }
+        lazy var rootView: some View = { router.view(for: .home) }()
     }
 }

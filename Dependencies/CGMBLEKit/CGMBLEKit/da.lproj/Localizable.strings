@@ -1,0 +1,39 @@
+/* CGM display title */
+"Dexcom G5" = "Dexcom G5";
+
+/* CGM display title */
+"Dexcom G6" = "Dexcom G6";
+
+/* Error description for unreliable state */
+"Glucose data is unavailable" = "Glukosedata er ikke tilgængelige";
+
+/* Describes a low battery */
+"Low Battery" = "lavt batteri";
+
+/* Describes a functioning transmitter */
+"OK" = "OK";
+
+/* Timeout error description */
+"Peripheral did not respond in time" = "Perifere reagerede ikke i tide";
+
+/* Not ready error description */
+"Peripheral isnʼt connected" = "Perifert udstyr er ikke tilsluttet";
+
+/* The description of sensor calibration state when sensor calibration is ok. */
+"Sensor calibration is OK" = "Sensorkalibrering er OK";
+
+/* The description of sensor calibration state when raw value is unknown. (1: missing data details) */
+"Sensor is in unknown state %1$d" = "Sensoren er i en ukendt tilstand %1$d";
+
+/* The description of sensor calibration state when sensor sensor is stopped. */
+"Sensor is stopped" = "Sensoren er stoppet";
+
+/* The description of sensor calibration state when sensor sensor is warming up. */
+"Sensor is warming up" = "Sensoren varmer op";
+
+/* The description of sensor calibration state when sensor needs calibration. */
+"Sensor needs calibration" = "Sensoren har brug for kalibrering";
+
+/* Error description */
+"Unknown characteristic" = "Ukendt egenskab";
+

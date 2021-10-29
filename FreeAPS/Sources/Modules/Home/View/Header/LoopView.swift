@@ -48,7 +48,7 @@ struct LoopView: View {
         if minAgo > 1440 {
             return "--"
         }
-        return "\(minAgo) min ago"
+        return "\(minAgo) " + NSLocalizedString("min ago", comment: "Minutes ago since last loop")
     }
 
     private var color: Color {
@@ -78,7 +78,7 @@ struct LoopView: View {
     }
 
     private var actualSuggestion: Suggestion? {
-        if closedLoop, suggestion?.rate != nil || suggestion?.units != nil {
+        if closedLoop, suggestion?.rate != nil || suggestion?.units != nil || suggestion?.isNoTempRequired ?? false {
             return enactedSuggestion ?? suggestion
         } else {
             return suggestion

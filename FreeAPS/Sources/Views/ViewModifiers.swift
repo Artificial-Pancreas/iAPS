@@ -69,10 +69,7 @@ struct Link<T>: ViewModifier where T: View {
     }
 
     func body(content: Content) -> some View {
-        ZStack {
-            NavigationLink(destination: NavigationLazyView(destination().asAny(), screen: screen)) {
-                EmptyView()
-            }.hidden()
+        NavigationLink(destination: NavigationLazyView(destination().asAny(), screen: screen)) {
             content
         }
     }
@@ -124,16 +121,6 @@ struct ClearButton: ViewModifier {
     }
 }
 
-struct ChevronCell: ViewModifier {
-    func body(content: Content) -> some View {
-        HStack {
-            content
-            Spacer()
-            Image(systemName: "chevron.forward").foregroundColor(.secondary)
-        }.contentShape(Rectangle())
-    }
-}
-
 extension View {
     func roundedBackground() -> some View {
         modifier(RoundedBackground())
@@ -158,8 +145,4 @@ extension View {
     }
 
     func asAny() -> AnyView { .init(self) }
-
-    func chevronCell() -> some View {
-        modifier(ChevronCell())
-    }
 }

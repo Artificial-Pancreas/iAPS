@@ -81,9 +81,9 @@ extension Home {
             broadcaster.register(PumpReservoirObserver.self, observer: self)
 
             timer.eventHandler = {
-                DispatchQueue.main.async {
-                    self.timerDate = Date()
-                    self.setupCurrentTempTarget()
+                DispatchQueue.main.async { [weak self] in
+                    self?.timerDate = Date()
+                    self?.setupCurrentTempTarget()
                 }
             }
             timer.resume()
@@ -110,8 +110,8 @@ extension Home {
 
             apsManager.lastError
                 .receive(on: DispatchQueue.main)
-                .map { error in
-                    self.errorDate = error == nil ? nil : Date()
+                .map { [weak self] error in
+                    self?.errorDate = error == nil ? nil : Date()
                     return error?.localizedDescription
                 }
                 .weakAssign(to: \.errorMessage, on: self)
@@ -136,7 +136,8 @@ extension Home {
         }
 
         private func setupGlucose() {
-            DispatchQueue.main.async {
+            DispatchQueue.main.async { [weak self] in
+                guard let self = self else { return }
                 self.glucose = self.provider.filteredGlucose(hours: self.filteredHours)
                 self.recentGlucose = self.glucose.last
                 if self.glucose.count >= 2 {
@@ -148,7 +149,8 @@ extension Home {
         }
 
         private func setupBasals() {
-            DispatchQueue.main.async {
+            DispatchQueue.main.async { [weak self] in
+                guard let self = self else { return }
                 self.tempBasals = self.provider.pumpHistory(hours: self.filteredHours).filter {
                     $0.type == .tempBasal || $0.type == .tempBasalDuration
                 }
@@ -172,7 +174,8 @@ extension Home {
         }
 
         private func setupBoluses() {
-            DispatchQueue.main.async {
+            DispatchQueue.main.async { [weak self] in
+                guard let self = self else { return }
                 self.boluses = self.provider.pumpHistory(hours: self.filteredHours).filter {
                     $0.type == .bolus
                 }
@@ -180,7 +183,8 @@ extension Home {
         }
 
         private func setupSuspensions() {
-            DispatchQueue.main.async {
+            DispatchQueue.main.async { [weak self] in
+                guard let self = self else { return }
                 self.suspensions = self.provider.pumpHistory(hours: self.filteredHours).filter {
                     $0.type == .pumpSuspend || $0.type == .pumpResume
                 }
@@ -193,26 +197,30 @@ extension Home {
         }
 
         private func setupPumpSettings() {
-            DispatchQueue.main.async {
+            DispatchQueue.main.async { [weak self] in
+                guard let self = self else { return }
                 self.maxBasal = self.provider.pumpSettings().maxBasal
             }
         }
 
         private func setupBasalProfile() {
-            DispatchQueue.main.async {
+            DispatchQueue.main.async { [weak self] in
+                guard let self = self else { return }
                 self.autotunedBasalProfile = self.provider.autotunedBasalProfile()
                 self.basalProfile = self.provider.basalProfile()
             }
         }
 
         private func setupTempTargets() {
-            DispatchQueue.main.async {
+            DispatchQueue.main.async { [weak self] in
+                guard let self = self else { return }
                 self.tempTargets = self.provider.tempTargets(hours: self.filteredHours)
             }
         }
 
         private func setupCarbs() {
-            DispatchQueue.main.async {
+            DispatchQueue.main.async { [weak self] in
+                guard let self = self else { return }
                 self.carbs = self.provider.carbs(hours: self.filteredHours)
             }
         }
@@ -241,13 +249,15 @@ extension Home {
         }
 
         private func setupReservoir() {
-            DispatchQueue.main.async {
+            DispatchQueue.main.async { [weak self] in
+                guard let self = self else { return }
                 self.reservoir = self.provider.pumpReservoir()
             }
         }
 
         private func setupBattery() {
-            DispatchQueue.main.async {
+            DispatchQueue.main.async { [weak self] in
+                guard let self = self else { return }
                 self.battery = self.provider.pumpBattery()
             }
         }

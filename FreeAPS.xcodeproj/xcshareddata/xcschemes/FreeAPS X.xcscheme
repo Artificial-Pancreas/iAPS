@@ -252,6 +252,20 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
+               BlueprintIdentifier = "43CABDF21C3506F100005705"
+               BuildableName = "CGMBLEKit.framework"
+               BlueprintName = "CGMBLEKit"
+               ReferencedContainer = "container:Dependecies/CGMBLEKit/CGMBLEKit.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
                BlueprintIdentifier = "43D5E78D1FAF7BFB004ACDB7"
                BuildableName = "RileyLinkKitUI.framework"
                BlueprintName = "RileyLinkKitUI"

@@ -11,4 +11,6 @@ struct FreeAPSSettings: JSON, Equatable {
     var debugOptions: Bool?
     var insulinReqFraction: Decimal?
     var skipBolusScreenAfterCarbs: Bool?
+    var cgm: CGMType?
+    var uploadGlucose: Bool?
 }

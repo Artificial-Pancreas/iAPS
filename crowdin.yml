@@ -1,0 +1,25 @@
+export_languages:
+  - ar
+  - ca
+  - da
+  - es-ES
+  - nl
+  - fi
+  - fr
+  - de
+  - he
+  - it
+  - nb
+  - pl
+  - ru
+  - sv-SE
+  - tr
+  - uk
+  - zh-CN
+  - pt-PT
+  - pt-BR
+files:
+  - source: /FreeAPS/Sources/Localizations/Main/en.lproj/Localizable.strings
+    translation: /FreeAPS/Sources/Localizations/Main/%osx_locale%.lproj/Localizable.strings
+  - source: /Dependencies/rileylink_ios/RileyLinkKitUI/Base.lproj/Localizable.strings
+    translation: /Dependencies/rileylink_ios/RileyLinkKitUI/%osx_locale%.lproj/Localizable.strings

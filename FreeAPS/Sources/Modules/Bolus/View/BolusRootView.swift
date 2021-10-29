@@ -19,13 +19,17 @@ extension Bolus {
                         HStack {
                             Text("Wait please").foregroundColor(.secondary)
                             Spacer()
-                            ProgressView()
+                            ActivityIndicator(isAnimating: .constant(true), style: .medium) // fix iOS 15 bug
                         }
                     } else {
                         HStack {
                             Text("Insulin required").foregroundColor(.secondary)
                             Spacer()
-                            Text(formatter.string(from: viewModel.inslinRequired as NSNumber)! + " U").foregroundColor(.secondary)
+                            Text(
+                                formatter
+                                    .string(from: viewModel.inslinRequired as NSNumber)! +
+                                    NSLocalizedString(" U", comment: "Insulin unit")
+                            ).foregroundColor(.secondary)
                         }.contentShape(Rectangle())
                             .onTapGesture {
                                 viewModel.amount = viewModel.inslinRecommended
@@ -33,7 +37,11 @@ extension Bolus {
                         HStack {
                             Text("Insulin recommended")
                             Spacer()
-                            Text(formatter.string(from: viewModel.inslinRecommended as NSNumber)! + " U")
+                            Text(
+                                formatter
+                                    .string(from: viewModel.inslinRecommended as NSNumber)! +
+                                    NSLocalizedString(" U", comment: "Insulin unit")
+                            ).foregroundColor(.secondary)
                         }.contentShape(Rectangle())
                             .onTapGesture {
                                 viewModel.amount = viewModel.inslinRecommended
@@ -76,9 +84,10 @@ extension Bolus {
                 }
             }
             .alert(isPresented: $isAddInsulinAlertPresented) {
-                let amount = formatter.string(from: viewModel.amount as NSNumber)! + " U"
+                let amount = formatter
+                    .string(from: viewModel.amount as NSNumber)! + NSLocalizedString(" U", comment: "Insulin unit")
                 return Alert(
-                    title: Text("Are your sure?"),
+                    title: Text("Are you sure?"),
                     message: Text("Add \(amount) without bolusing"),
                     primaryButton: .destructive(
                         Text("Add"),
@@ -91,5 +100,19 @@ extension Bolus {
             .navigationBarTitleDisplayMode(.automatic)
             .navigationBarItems(leading: Button("Close", action: viewModel.hideModal))
         }
+    }
+}
+
+// fix iOS 15 bug
+struct ActivityIndicator: UIViewRepresentable {
+    @Binding var isAnimating: Bool
+    let style: UIActivityIndicatorView.Style
+
+    func makeUIView(context _: UIViewRepresentableContext<ActivityIndicator>) -> UIActivityIndicatorView {
+        UIActivityIndicatorView(style: style)
+    }
+
+    func updateUIView(_ uiView: UIActivityIndicatorView, context _: UIViewRepresentableContext<ActivityIndicator>) {
+        isAnimating ? uiView.startAnimating() : uiView.stopAnimating()
     }
 }

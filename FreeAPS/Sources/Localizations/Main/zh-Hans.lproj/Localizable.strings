@@ -1,0 +1,521 @@
+/*
+  Localizable.strings
+  FreeAPS X
+*/
+/* Bolus screen when adding insulin */
+
+"Add insulin without actually bolusing" = "仅添加胰岛素 没有实际注射";
+
+/* Add insulin from source outside of pump */
+"Add %@ without bolusing" = "添加 %@ 不是通过胰岛素泵注射的剂量";
+
+"Bolus" = "大剂量";
+
+"Close" = "关闭";
+
+/* Continue after added carbs without bolus */
+"Continue without bolus" = "不输注胰岛素并继续";
+
+/* Header */
+"Enact Bolus" = "执行大剂量";
+
+/* Button */
+"Enact bolus" = "执行大剂量";
+
+/*  */
+"Insulin recommended" = "推荐剂量";
+
+/*  */
+"Insulin required" = "所需剂量";
+
+/* Bolus screen */
+"Recommendation" = "推荐";
+
+/* Button */
+"Clear" = "清除";
+
+/* Button */
+"Done" = "完成";
+
+/*  */
+"Wait please" = "请稍候";
+
+/*  */
+"Agree and continue" = "同意并继续";
+
+/* Disclaimer when opening app for first time*/
+"Disclaimer" = "声明";
+
+/* Disclaimer Description */
+"FreeAPS X is in an active development state. We do not recommend to use the system for everyday control of blood glucose! Use it for testing purposes only at your own risk. We are not responsible for your decisions and actions." = "FreeAPS X正处于快发开发状态。我们不建议将该系统用于日常的血糖控制! 仅用于测试目的，风险自负。我们对您的决定和行为不负责任。";
+
+/* Enacted at a date */
+"Enacted at %@" = "运行于 %@";
+
+/* Home title */
+"Home" = "主页";
+
+/* Looping in progress */
+"looping" = "闭环中";
+
+/* min ago since last loop */
+"min ago" = "分钟前";
+
+/* Status Title */
+"No suggestion" = "暂无建议";
+
+/* Replace pod text in Header */
+"Replace pod" = "更换Pod";
+
+/* Suggested at a date */
+"Suggested at %@" = "建议于%@";
+
+/* Add carbs screen */
+"Add Carbs" = "添加碳水化合物";
+
+/*  */
+"Amount Carbs" = "碳水化合物含量";
+
+/* Grams unit */
+"grams" = "克";
+
+/*  */
+"Carbs required" = "所需碳水化合物";
+
+/* */
+"Are you sure?" = "确定？";
+
+/* Bottom target temp */
+"Bottom target" = "血糖下限";
+
+/* Cancel preset name */
+"Cancel" = "取消";
+
+/*  */
+"Cancel Temp Target" = "取消临时目标";
+
+/* Custom temp target */
+"Custom" = "自定义";
+
+/*  */
+"Date" = "日期";
+
+/*  */
+"Delete" = "删除";
+
+/* Delete preset temp target */
+"Delete preset \"%@\"" = "删除预设\"\"%@\"";
+
+/* Duration of target temp or temp basal */
+"Duration" = "持续时间";
+
+/*  */
+"Enact Temp Target" = "设置临时目标";
+
+/*  */
+"Enter preset name" = "输入预设名称";
+
+/* Preset name */
+"Name" = "Name";
+
+/* minutes of target temp */
+"minutes" = "分钟";
+
+/*  */
+"Presets" = "预设";
+
+/* Save preset name */
+"Save" = "保存​​";
+
+/*  */
+"Save as preset" = "保存为预设";
+
+/* Upper temp target limit */
+"Top target" = "血糖上限";
+
+/*  */
+"Autotune" = "自动调谐";
+
+/*  */
+"Basal profile" = "基础率配置文件";
+
+/*  */
+"Carb ratio" = "碳水化合物系数";
+
+/*  */
+"Delete autotune data" = "删除自动调谐数据";
+
+/*  */
+"Run now" = "马上执行";
+
+/*  */
+"Last run" = "Last run";
+
+/*  */
+"Sensitivity" = "胰岛素敏感系数";
+
+/*  */
+"Use Autotune" = "使用自动调谐";
+
+/* Add profile basal */
+"Add" = "添加";
+
+/*  */
+"Basal Profile" = "基础率配置文件";
+
+/* Rate basal profile */
+"Rate" = "输注率";
+
+/*  */
+"Save on Pump" = "在泵上保存";
+
+/*  */
+"Saving..." = "正在保存...";
+
+/*  */
+"Schedule" = "设定时间";
+
+/*  */
+"starts at" = "开始于";
+
+/* Time basal profile */
+"Time" = "时间";
+
+/* */
+"Calculated Ratio" = "计算的比率";
+
+/* Carb Ratios header */
+"Carb Ratios" = "碳水化合物系数";
+
+/*  */
+"Ratio" = "比率";
+
+/*  */
+"Autosens" = "自动传输";
+
+/*  */
+"Calculated Sensitivity" = "计算的敏感系数";
+
+/*  */
+"Insulin Sensitivities" = "胰岛素敏感系数";
+
+/* */
+"Sensitivity Ratio" = "敏感率";
+
+/*  */
+"Dismiss" = "忽略";
+
+/*  */
+"Important message" = "重要信息";
+
+/*  */
+"Amount" = "数量";
+
+/* */
+"Cancel Temp Basal" = "取消临时基础率";
+
+/* Enact
+Enact a temp Basal or a temp target */
+"Enact" = "执行";
+
+/* */
+"Manual Temp Basal" = "手动设置临时基础";
+
+/* Allow uploads tp NS */
+"Allow uploads" = "允许上传";
+
+/* API secret in NS */
+"API secret" = "API密钥";
+
+/* Connect to NS */
+"Connect" = "连接";
+
+/* Connected to NS */
+"Connected!" = "已连接";
+
+/* Connecting to NS */
+"Connecting..." = "正在连接...";
+
+/*  */
+"Invalid URL" = "网址不正确";
+
+/*  */
+"Local glucose source" = "本地血糖数据源";
+
+/* Header */
+"Nightscout Config" = "Nightscout配置";
+
+/*  */
+"Port" = "端口";
+
+/*  */
+"URL" = "网址：";
+
+/**/
+"Use local glucose server" = "使用本地端口获取血糖";
+
+/*  */
+"Edit settings json" = "编辑设置文件";
+
+/* */
+"Glucose units" = "血糖单位";
+
+/*  */
+"Preferences" = "选项";
+
+/* Recommended Insulin Fraction in preferences */
+"Recommended Insulin Fraction" = "建议胰岛素比率";
+
+/* Do you want to show bolus screen after added carbs? */
+"Skip Bolus screen after carbs" = "添加碳水后跳过大剂量操作";
+
+/* Allow remote control from NS */
+"Remote control" = "远程控制";
+
+/* Add Medtronic pump */
+"Add Medtronic" = "添加美敦力泵";
+
+/* Add Omnipod pump */
+"Add Omnipod" = "添加Omnipod";
+
+/* Add Simulator pump */
+"Add Simulator" = "添加模拟器";
+
+/* Insulin model */
+"Model" = "模型";
+
+/*  */
+"Pump config" = "泵配置";
+
+/*  */
+"Delivery limits" = "输注限制";
+
+/*  */
+"Duration of Insulin Action" = "胰岛素作用时间（DIA）";
+
+/* hours of duration of insulin activity */
+"hours" = "小时";
+
+/* Max setting */
+"Max Basal" = "最大基础率";
+
+/* Max setting */
+"Max Bolus" = "最大大剂量";
+
+/* */
+"Pump Settings" = "泵设置";
+
+/* Insulin unit per hour */
+"U/hr" = "U/小时";
+
+/* Unit in number of units delivered (keep the space character!) */
+" U" = "U";
+
+/* /Insulin unit */
+"/U" = "/U";
+
+/* Insulin unit */
+"U" = "U";
+
+/* Unit per hour with space */
+" U/hr" = " U/小时";
+
+/* Number of units per hour*/
+"%@ U/hr" = "%@ U/小时";
+
+/* Number of units insulin delivered */
+"%@ U" = "%@ U";
+
+/*Carb ratio unit */
+"g/U" = "克/U";
+
+/* grams */
+" g" = " 克";
+
+/* when 0 U/hr */
+"0 U/hr" = "0 U/小时";
+
+/* abbreviation for days */
+"d" = "天";
+
+/* abbreviation for hours */
+"h" = "时";
+
+/* abbreviation for minutes */
+"m" = "分";
+
+/*  */
+"Closed loop" = "启动闭环";
+
+/* */
+"Configuration" = "配置";
+
+/* */
+"Devices" = "设备";
+
+/*  */
+"Pump" = "胰岛素泵";
+
+/*  */
+"Services" = "服务";
+
+/*  */
+"Settings" = "设置";
+
+/* 2 log files to share */
+"Share logs" = "分享日志";
+
+/* Upper target */
+"High target" = "高目标";
+
+/* Lower target */
+"Low target" = "血糖低目标";
+
+/*  */
+"Target Ranges" = "目标范围：";
+
+/* When bolusing */
+"Bolusing" = "注射中";
+
+/* */
+"Pump suspended" = "泵已暂停输注";
+
+/* */
+"Middleware" = "Middleware";
+
+/* Header */
+"History" = "历史";
+
+/* CGM option */
+"Upload glucose to Nightscout" = "Upload glucose to Nightscout";
+
+/* Type of CGM or glucose source */
+"Type" = "Type";
+
+/* CGM */
+"CGM" = "CGM";
+
+/* CGM Transmitter ID */
+"Transmitter ID" = "Transmitter ID";
+
+/* Other CGM setting */
+"Other" = "Other";
+
+/*
+  Infotexts from openaps.docs and androidaps.docs
+  FreeAPS
+*/
+/* ”Rewind Resets Autosens” */
+
+"This feature, enabled by default, resets the autosens ratio to neutral when you rewind your pump, on the assumption that this corresponds to a probable site change. Autosens will begin learning sensitivity anew from the time of the rewind, which may take up to 6 hours. If you usually rewind your pump independently of site changes, you may want to consider disabling this feature." = "该功能默认启用，当复位胰岛素泵时，Autosens参数会重置为中性，这基于复位胰岛素泵是您会更换管路部位的假设。Autosens将会在胰岛素泵复位后开始重新学习灵敏度，这可能需要6个小时。如果你通常复位泵时并没有同时更换部位，你可能要考虑禁用这一功能。";
+
+/* ”High Temptarget Raises Sensitivity" */
+"Defaults to false. When set to true, raises sensitivity (lower sensitivity ratio) for temp targets set to >= 111. Synonym for exercise_mode. The higher your temp target above 110 will result in more sensitive (lower) ratios, e.g., temp target of 120 results in sensitivity ratio of 0.75, while 140 results in 0.6 (with default halfBasalTarget of 160)." = "
+默认禁用。当设置为 \"true \"时，对设置为>=111的临时目标提高敏感系数（降低灵敏度比率）。与exercise_mode同义。你的临时目标越高于110，将导致更低的敏感系数，例如，临时目标为120，导致敏感系数为0.75，而140导致0.6（默认halfBasalTarget为160）。";
+
+/* ”Low Temptarget Lowers Sensitivity" */
+"Defaults to false. When set to true, can lower sensitivity (higher sensitivity ratio) for temptargets <= 99. The lower your temp target below 100 will result in less sensitive (higher) ratios, e.g., temp target of 95 results in sensitivity ratio of 1.09, while 85 results in 1.33 (with default halfBasalTarget of 160)." = "默认禁用。当设置为 \"true \"时，当临时目标<=99时会降低敏感系数（较高的灵敏度比率）。血糖低于100mg/dL时,临时目标越低，会导致较高的敏感系数，例如，温度目标为95会导致敏感系数为1.09，而85会导致1.33（默认halfBasalTarget为160）。";
+
+/* ”Sensitivity Raises Target" */
+"When true, raises BG target when autosens detects sensitivity" = "当启用时，当Autosens检测到敏感度变大时，会提高血糖目标。";
+
+/* ”Resistance Lowers Target" */
+"Defaults to false. When true, will lower BG target when autosens detects resistance" = "默认禁用。当启用时，当Autosens检测到抵抗时，将降低血糖目标。";
+
+/* ”Advanced Target Adjustments" */
+"This feature was previously enabled by default but will now default to false (will NOT be enabled automatically) in oref0 0.6.0 and beyond. (There is no need for this with 0.6.0). This feature lowers oref0’s target BG automatically when current BG and eventualBG are high. This helps prevent and mitigate high BG, but automatically switches to low-temping to ensure that BG comes down smoothly toward your actual target. If you find this behavior too aggressive, you can disable this feature. If you do so, please let us know so we can better understand what settings work best for everyone." = "这个功能以前是默认启用的，但现在在oref0 0.6.0及以后的版本中会默认为false(不会自动启用)。(0.6.0中没有必要这样做)。当当前BG和最终BG较高时，这个功能会自动降低oref0的目标BG。这有助于防止和缓解高BG，但会自动切换到低Temping，以确保BG平稳地朝你的实际目标下降。如果你觉得这种行为过于激进，你可以禁用这个功能。如果你这样做，请让我们知道，以便我们能够更好地了解什么设置对每个人都是最有效的。";
+
+/* "Exercise Mode" */
+"Defaults to false. When true, > 105 mg/dL high temp target adjusts sensitivityRatio for exercise_mode. Synonym for high_temptarget_raises_sensitivity" = "默认为false。当启用时，>105 mg/dL的高临时目标会调整运动模式下的敏感系数。与high_temptarget_raises_sensitivity同义。";
+
+/* "Wide BG Target Range" */
+"Defaults to false, which means by default only the low end of the pump’s BG target range is used as OpenAPS target. This is a safety feature to prevent too-wide targets and less-optimal outcomes. Therefore the higher end of the target range is used only for avoiding bolus wizard overcorrections. Use wide_bg_target_range: true to force neutral temps over a wider range of eventualBGs." = "默认禁用，这意味着默认情况下只有泵上设备的低血糖限制被用作OpenAPS目标。这是一个安全功能，以防止目标范围过宽和不理想的结果。因此，高的血糖目标范围仅用于大剂量向导的过度校正。使用 wide_bg_target_range: true使用适中的目标血糖来约束更宽的血糖控制目标。";
+
+/* "Skip Neutral Temps" */
+"Defaults to false, so that FreeAPS X will set temps whenever it can, so it will be easier to see if the system is working, even when you are offline. This means FreeAPS X will set a “neutral” temp (same as your default basal) if no adjustments are needed. This is an old setting for OpenAPS to have the options to minimise sounds and notifications from the 'rig', that may wake you up during the night." = "默认禁用，这样FreeAPS X就会在任何时候设置临时目标，这样就会更容易看到系统是否在工作，即使你不在线。这意味着如果不需要调整，OpenAPS将设置一个 \"中性 \"临时基础（与你的默认基础相同）。这是OpenAPS的一个旧设置，可以选择最大限度地减少 \"设备 \"的声音和通知，这些声音和通知可能会在夜间吵醒你。";
+
+/* "Unsuspend If No Temp” */
+"Many people occasionally forget to resume / unsuspend their pump after reconnecting it. If you’re one of them, and you are willing to reliably set a zero temp basal whenever suspending and disconnecting your pump, this feature has your back. If enabled, it will automatically resume / unsuspend the pump if you forget to do so before your zero temp expires. As long as the zero temp is still running, it will leave the pump suspended." = " 默认为false。在泵被暂停期间，任何现有的临时基础率将被删除，并以空的基础率来抵消配置基础率。";
+
+/* "Enable UAM" */
+"With this option enabled, the SMB algorithm can recognize unannounced meals. This is helpful, if you forget to tell AndroidAPS about your carbs or estimate your carbs wrong and the amount of entered carbs is wrong or if a meal with lots of fat and protein has a longer duration than expected. Without any carb entry, UAM can recognize fast glucose increasments caused by carbs, adrenaline, etc, and tries to adjust it with SMBs. This also works the opposite way: if there is a fast glucose decreasement, it can stop SMBs earlier." = "启用该选项后，SMB算法可以识别未宣布的膳食。这很有帮助，如果你忘记告诉AndroidAPS你的碳水化合物，或者估计错误，输入的碳水化合物的数量是错误的，或者如果一餐有大量脂肪和蛋白质的时间比预期的长。在没有任何碳水化合物输入的情况下，UAM可以识别由碳水化合物、肾上腺素等引起的快速葡萄糖增量，并尝试用SMB进行调整。这也有相反的作用：如果有快速的葡萄糖递减，它可以提前停止SMBs。";
+
+/* Enable SMB With COB" */
+
+"This enables supermicrobolus (SMB) while carbs on board (COB) are positive." = "当COB (活性碳水化合物) 为正时启动SMB功能";
+
+/* "Enable SMB With Temptarget” */
+"This enables supermicrobolus (SMB) with eating soon / low temp targets. With this feature enabled, any temporary target below 100mg/dL, such as a temp target of 99 (or 80, the typical eating soon target) will enable SMB." = "这可以使超微循环（SMB）与即将进食/临时目标相结合。启用该功能后，任何低于100mg/dL的临时目标，如目标为99（或80，典型的快餐目标）都将启用SMB。";
+
+/* "Enable SMB Always" */
+"Defaults to false. When true, always enable supermicrobolus (unless disabled by high temptarget)." = "
+默认为禁用。当为 \"true \"时，总是启用SMB(除非被高的临时目标禁用)。";
+
+/* "Enable SMB After Carbs" */
+"Defaults to false. When true, enables supermicrobolus (SMB) for 6h after carbs, even with 0 carbs on board (COB)." = "默认为禁用。当启用时，在碳水化合物之后的6小时内启用(SMB)，即使活性碳水化合物(COB)为0。";
+
+/* "Allow SMB With High Temptarget" */
+"Defaults to false. When true, allows supermicrobolus (if otherwise enabled) even with high temp targets." = "默认为禁用。当启用时，允许SMB(如果其他情况下启用)，即使是比较高的临时目标。";
+
+/* "Use Custom Peak Time” */
+"Defaults to false. Setting to true allows changing insulinPeakTime" = "默认禁用，如果启用则可以调整模拟胰岛素达峰时间";
+
+/* "Suspend Zeros IOB” */
+"Default is false. Any existing temp basals during times the pump was suspended will be deleted and 0 temp basals to negate the profile basal rates during times pump is suspended will be added." = "默认为false。在泵被暂停期间，任何现有的临时基础率将被删除，并以空的基础率来抵消配置基础率。";
+
+/* "Max IOB" */
+"Max IOB is the maximum amount of insulin on board from all sources – both basal (or SMB correction) and bolus insulin – that your loop is allowed to accumulate to treat higher-than-target BG. Unlike the other two OpenAPS safety settings (max_daily_safety_multiplier and current_basal_safety_multiplier), max_iob is set as a fixed number of units of insulin. As of now manual boluses are NOT limited by this setting. \n\n To test your basal rates during nighttime, you can modify the Max IOB setting to zero while in Closed Loop. This will enable low glucose suspend mode while testing your basal rates settings\n\n(Tip from https://www.loopandlearn.org/freeaps-x/#open-loop)." = "“Max IOB是所有来源(基础胰岛素、smb胰岛素和大剂量胰岛素)的最大胰岛素量，你的循环允许积累以治疗高于目标的BG。不同于其他两个OpenAPS安全设置(最大每日安全倍增器和当前基础安全倍增器)，最大IOB设置为固定数量的胰岛素单位。到目前为止，手动大剂量不受此设置的限制。为了在夜间测试你的基础率，你可以在闭环中将最大IOB设置为零。这将打开低血糖时暂停模式，同时测试您的基础率设置(提示：来自 https://www.loopandlearn.org/freeaps-x/#open-loop)。";
+
+/* "Max Daily Safety Multiplier" */
+"This is an important OpenAPS safety limit. The default setting (which is unlikely to need adjusting) is 3. This means that OpenAPS will never be allowed to set a temporary basal rate that is more than 3x the highest hourly basal rate programmed in a user’s pump, or, if enabled, determined by autotune." = "这是一个重要的OpenAPS安全限制。这意味着OpenAPS永远不会被允许设置一个超过用户泵中最高基础速率3倍的临时基础速率(一般不需要修改)。如果启用，由会由AutoSens决定。";
+
+/* "Current Basal Safety Multiplier" */
+"This is another important OpenAPS safety limit. The default setting (which is also unlikely to need adjusting) is 4. This means that OpenAPS will never be allowed to set a temporary basal rate that is more than 4x the current hourly basal rate programmed in a user’s pump, or, if enabled, determined by autotune." = "这是另一个重要的OpenAPS安全限制。默认设置（也不太可能需要调整）是4。这意味着OpenAPS永远不会被允许设置一个临时的基础代谢率超过用户泵中当前每小时基础代谢率的4倍，或者，如果启用，由Autosens决定。";
+
+/* "Autosens Max" */
+"This is a multiplier cap for autosens (and autotune) to set a 20% max limit on how high the autosens ratio can be, which in turn determines how high autosens can adjust basals, how low it can adjust ISF, and how low it can set the BG target." = "这是Antosens(和AutoTune)的一个倍数上限，将调高Autosens比率最大限制设定为20%，这反过来又决定了AutoTune可以跳高基础率，调低的ISF，以及可以设定多低的BG目标。";
+
+/* "Autosens Min" */
+"The other side of the autosens safety limits, putting a cap on how low autosens can adjust basals, and how high it can adjust ISF and BG targets." = "Autosens安全限制的另一方面，为Autosens在调低基础率和调高ISF和BG目标设置了上限。";
+
+/* "Half Basal Exercise Target" */
+"Set to a number, e.g. 160, which means when temp target is 160 mg/dL and exercise_mode=true, run 50% basal at this level (120 = 75%; 140 = 60%). This can be adjusted, to give you more control over your exercise modes." = "设置为一个数字，例如160，这意味着当临时目标为160毫克/分升，并且exercise_mode=true时，在这个水平上运行50%的基础（120=75%；140=60%）。这一点可以调整，以使你对运动模式有更多的控制。";
+
+/* "Max COB" */
+"This defaults maxCOB to 120 because that’s the most a typical body can absorb over 4 hours. (If someone enters more carbs or stacks more; OpenAPS will just truncate dosing based on 120. Essentially, this just limits AMA as a safety cap against weird COB calculations due to fluky data.)" = "默认把maxCOB设为120，因为一般来说这是身体在4小时内所能吸收的最多的碳水化合物。（如果有人输入更多的碳水化合物或堆积更多的碳水化合物；OpenAPS将只是根据120来分配剂量。从本质上讲，这只是对AMA的限制，作为一个安全上限，以防止由于数据不稳定而导致的奇怪的COB计算)";
+
+/* "Bolus Snooze DIA Divisor" */
+"Bolus snooze is enacted after you do a meal bolus, so the loop won’t counteract with low temps when you’ve just eaten. The example here and default is 2; so a 3 hour DIA means that bolus snooze will be gradually phased out over 1.5 hours (3DIA/2)." = "大剂量snooze是在输注餐时大剂量后开始生效的, 所以在你刚吃完饭的时候, 闭环不会因为你输注了大剂量而减少或停基础。这里的例子和缺省是 2; 因此, 3 小时的DIA(胰岛素持续作用时间) 意味着大剂量snooze将逐步在１. ５小时 (3 DIA/2) 后失效。";
+
+/* "Min 5m Carbimpact" */
+"This is a setting for default carb absorption impact per 5 minutes. The default is an expected 8 mg/dL/5min. This affects how fast COB is decayed in situations when carb absorption is not visible in BG deviations. The default of 8 mg/dL/5min corresponds to a minimum carb absorption rate of 24g/hr at a CSF of 4 mg/dL/g." = "这是对每5分钟默认碳水化合物吸收影响的设置。默认的预期是8毫克/分升/5分钟。这影响到在BG偏差中看不到碳水化合物吸收的情况下，COB衰减的速度。默认的8mg/dL/5min对应于CSF为4mg/dL/g时的最低碳水化合物吸收率为24g/hr。";
+
+/* "Autotune ISF Adjustment Fraction" */
+"The default of 0.5 for this value keeps autotune ISF closer to pump ISF via a weighted average of fullNewISF and pumpISF. 1.0 allows full adjustment, 0 is no adjustment from pump ISF." = "这个值的默认值为0.5，通过fullNewISF和pumpISF的加权平均，使AutoTune ISF更接近泵的ISF。1.0允许完全调整，0是不调整泵的ISF。";
+
+/* "Remaining Carbs Fraction" */
+"This is the fraction of carbs we’ll assume will absorb over 4h if we don’t yet see carb absorption." = "如果我们还没有看到碳水化合物的吸收，这就是我们假设在4小时内会吸收的那部分碳水化合物。";
+
+/* "Remaining Carbs Cap" */
+"This is the amount of the maximum number of carbs we’ll assume will absorb over 4h if we don’t yet see carb absorption." = "这是我们假设在4小时内会吸收的最大数量的碳水化合物的量，如果我们还没有看到碳水化合物的吸收。";
+
+/* ”Max SMB Basal Minutes" */
+"Defaults to start at 30. This is the maximum minutes of basal that can be delivered as a single SMB with uncovered COB. This gives the ability to make SMB more aggressive if you choose. It is recommended that the value is set to start at 30, in line with the default, and if you choose to increase this value, do so in no more than 15 minute increments, keeping a close eye on the effects of the changes. It is not recommended to set this value higher than 90 mins, as this may affect the ability for the algorithm to safely zero temp. It is also recommended that pushover is used when setting the value to be greater than default, so that alerts are generated for any predicted lows or highs." = "默认以30分钟为起点。这是在未覆盖COB的情况下，作为一个单一的SMB可以提供的最大分钟数的基础率。如果你选择的话，这可以使SMB更加积极。建议将该值设置为30，与默认值一致，如果你选择增加该值，以不超过15分钟为单位，密切关注变化的效果。不建议将这个值设置得高于90分钟，因为这可能会影响算法调整零基础率的能力。还建议在设置该值大于默认值时，使用PushOVer，以便对任何预测的低点或高点产生警报。";
+
+/* "Max UAM SMB Basal Minutes" */
+"Defaults to start at 30. This is the maximum minutes of basal that can be delivered by UAM as a single SMB when IOB exceeds COB. This gives the ability to make UAM more or less aggressive if you choose. It is recommended that the value is set to start at 30, in line with the default, and if you choose to increase this value, do so in no more than 15 minute increments, keeping a close eye on the effects of the changes. Reducing the value will cause UAM to dose less insulin for each SMB. It is not recommended to set this value higher than 60 mins, as this may affect the ability for the algorithm to safely zero temp. It is also recommended that pushover is used when setting the value to be greater than default, so that alerts are generated for any predicted lows or highs." = "默认以30为起点。这是当IOB无法覆盖COB时，UAM作为单个SMB所能提供的基础率时间最大时间。如果你选择的话，这可以使UAM干预更频繁或更迟钝。建议该值从30开始，与默认值一致，如果你选择增加该值，以不超过15分钟为单位，密切关注变化的效果。降低这个值会导致UAM对每个SMB的胰岛素剂量减少。不建议将该值设置为高于60分钟，因为这可能会影响算法回到临时基础的能力。另外，建议在设置该值大于默认值时，使用PushOver，以便对任何预测的低点或高点发出警报。";
+
+/* "SMB Interval" */
+"Minimum duration in minutes between two enacted SMBs" = "两次自动大剂量的最短时间";
+
+/* "Bolus Increment" */
+"Smallest possible bolus amount" = "可能的最小大剂量输注";
+
+/* "Insulin Peak Time" */
+"Time of maximum blood glucose lowering effect of insulin, in minutes" = "胰岛素的最大降血糖作用，以分钟为单位";
+
+/* "Carbs Req Threshold" */
+"Grams of carbsReq to trigger a pushover. Defaults to 1 (for 1 gram of carbohydrate). Can be increased if you only want to get Pushover for carbsReq at X threshold." = "触发Pushover的碳水化合物的克数。默认为1（对于1克碳水化合物）。如果你只想在X阈值时得到碳水化合物需求的Pushover通知，可以增加。";
+
+/* "Noisy CGM Target Multiplier" */
+"Defaults to 1.3. Increase target by this amount when looping off raw/noisy CGM data" = "Defaults to 1.3. Increase target by this amount when looping off raw/noisy CGM data";

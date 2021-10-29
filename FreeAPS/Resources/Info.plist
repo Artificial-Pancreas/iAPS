@@ -2,8 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>LSSupportsOpeningDocumentsInPlace</key>
-	<true/>
 	<key>AppGroupID</key>
 	<string>$(APP_GROUP_ID)</string>
 	<key>CFBundleDevelopmentRegion</key>
@@ -26,9 +24,9 @@
 	<false/>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
+		<string>xdripswift</string>
 		<string>dexcomg6</string>
 		<string>dexcomcgm</string>
-		<string>dexcomshare</string>
 		<string>diabox</string>
 		<string>spikeapp</string>
 	</array>
