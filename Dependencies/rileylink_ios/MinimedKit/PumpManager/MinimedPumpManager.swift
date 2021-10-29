@@ -33,7 +33,7 @@ public class MinimedPumpManager: RileyLinkPumpManager {
         super.init(rileyLinkDeviceProvider: rileyLinkDeviceProvider, rileyLinkConnectionManager: rileyLinkConnectionManager)
 
         // Pump communication
-        let idleListeningEnabled = state.pumpModel.hasMySentry
+        let idleListeningEnabled = state.pumpModel.hasMySentry && state.useMySentry
         self.pumpOps = pumpOps ?? PumpOps(pumpSettings: state.pumpSettings, pumpState: state.pumpState, delegate: self)
 
         self.rileyLinkDeviceProvider.idleListeningState = idleListeningEnabled ? MinimedPumpManagerState.idleListeningEnabledDefaults : .disabled
@@ -745,7 +745,24 @@ extension MinimedPumpManager {
             }
         }
     }
-    
+
+    /// Whether to use MySentry packets on capable pumps:
+    public var useMySentry: Bool {
+        get {
+            return state.useMySentry
+        }
+        set {
+            let oldValue = state.useMySentry
+            setState { (state) in
+                state.useMySentry = newValue
+            }
+            if oldValue != newValue {
+                let useIdleListening = state.pumpModel.hasMySentry && state.useMySentry
+                self.rileyLinkDeviceProvider.idleListeningState = useIdleListening ? MinimedPumpManagerState.idleListeningEnabledDefaults : .disabled
+            }
+        }
+    }
+
 }
 
 

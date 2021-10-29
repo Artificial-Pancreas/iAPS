@@ -16,6 +16,8 @@ public struct PumpState: RawRepresentable, Equatable {
     
     public var pumpModel: PumpModel?
     
+    public var useMySentry: Bool
+    
     public var awakeUntil: Date?
     
     public var lastValidFrequency: Measurement<UnitFrequency>?
@@ -34,23 +36,27 @@ public struct PumpState: RawRepresentable, Equatable {
 
     public init() {
         self.timeZone = .currentFixed
+        self.useMySentry = true
     }
 
-    public init(timeZone: TimeZone, pumpModel: PumpModel) {
+    public init(timeZone: TimeZone, pumpModel: PumpModel, useMySentry: Bool) {
         self.timeZone = timeZone
         self.pumpModel = pumpModel
+        self.useMySentry = useMySentry
     }
 
     public init?(rawValue: RawValue) {
         guard
             let timeZoneSeconds = rawValue["timeZone"] as? Int,
-            let timeZone = TimeZone(secondsFromGMT: timeZoneSeconds)
+            let timeZone = TimeZone(secondsFromGMT: timeZoneSeconds),
+            let useMySentry = rawValue["useMySentry"] as? Bool
         else {
             return nil
         }
 
         self.timeZone = timeZone
-        
+        self.useMySentry = useMySentry
+
         if let pumpModelNumber = rawValue["pumpModel"] as? PumpModel.RawValue {
             pumpModel = PumpModel(rawValue: pumpModelNumber)
         }
@@ -63,6 +69,7 @@ public struct PumpState: RawRepresentable, Equatable {
     public var rawValue: RawValue {
         var rawValue: RawValue = [
             "timeZone": timeZone.secondsFromGMT(),
+            "useMySentry": useMySentry,
         ]
 
         if let pumpModel = pumpModel {
@@ -85,6 +92,7 @@ extension PumpState: CustomDebugStringConvertible {
             "## PumpState",
             "timeZone: \(timeZone)",
             "pumpModel: \(pumpModel?.rawValue ?? "")",
+            "useMySentry: \(useMySentry)",
             "awakeUntil: \(awakeUntil ?? .distantPast)",
             "lastValidFrequency: \(String(describing: lastValidFrequency))",
             "lastTuned: \(awakeUntil ?? .distantPast))",
