@@ -328,7 +328,7 @@ class MinimedPumpIDSetupViewController: SetupTableViewController {
 #if targetEnvironment(simulator)
             self.continueState = .completed
             self.pumpState = PumpState(timeZone: .currentFixed, pumpModel: PumpModel(rawValue:
-                "523")!)
+                                                                                        "523")!, useMySentry: false)
             self.pumpFirmwareVersion = "2.4Mock"
 #else
             setupPump(with: PumpSettings(pumpID: pumpID, pumpRegion: pumpRegion))
