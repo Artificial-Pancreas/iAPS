@@ -110,7 +110,7 @@
 "Duration" = "Длительность";
 
 /*  */
-"Enact Temp Target" = "Запустить Временную Цель";
+"Enact Temp Target" = "Временная цель";
 
 /*  */
 "Enter preset name" = "Название шаблона";
@@ -155,7 +155,7 @@
 "Sensitivity" = "Чувствительность";
 
 /*  */
-"Use Autotune" = "использовать Автотюн";
+"Use Autotune" = "Использовать автотюн";
 
 /* Add profile basal */
 "Add" = "Добавить";
@@ -185,7 +185,7 @@
 "Calculated Ratio" = "Рассчитанное соотношение";
 
 /* Carb Ratios header */
-"Carb Ratios" = "Углеводные Коэфициенты";
+"Carb Ratios" = "Углеводные коэффициенты";
 
 /*  */
 "Ratio" = "Коэфициент";
@@ -197,7 +197,7 @@
 "Calculated Sensitivity" = "Рассчитанная Чувствительность";
 
 /*  */
-"Insulin Sensitivities" = "Факторы Чувствительности к Инсулину";
+"Insulin Sensitivities" = "Чувствительность к инсулину";
 
 /* */
 "Sensitivity Ratio" = "Коэффициент Чувствительности";
@@ -243,7 +243,7 @@ Enact a temp Basal or a temp target */
 "Local glucose source" = "Локальный источник глюкозы";
 
 /* Header */
-"Nightscout Config" = "Настройка Nightscout";
+"Nightscout Config" = "Nightscout";
 
 /*  */
 "Port" = "Порт";
@@ -261,13 +261,13 @@ Enact a temp Basal or a temp target */
 "Glucose units" = "Единицы измерения глюкозы";
 
 /*  */
-"Preferences" = "Настройки";
+"Preferences" = "Предпочтения";
 
 /* Recommended Insulin Fraction in preferences */
 "Recommended Insulin Fraction" = "Рекомендуемая дробь инсулина";
 
 /* Do you want to show bolus screen after added carbs? */
-"Skip Bolus screen after carbs" = "Пропустить Экран болюса после ввода углеводов";
+"Skip Bolus screen after carbs" = "Пропустить экран болюса после ввода углеводов";
 
 /* Allow remote control from NS */
 "Remote control" = "Удаленное управление";
@@ -348,7 +348,7 @@ Enact a temp Basal or a temp target */
 "Closed loop" = "Замкнутая петля";
 
 /* */
-"Configuration" = "Настройка";
+"Configuration" = "Конфигурация";
 
 /* */
 "Devices" = "Устройства";
@@ -372,7 +372,7 @@ Enact a temp Basal or a temp target */
 "Low target" = "Нижняя цель";
 
 /*  */
-"Target Ranges" = "Целевой Диапазон";
+"Target Ranges" = "Целевой диапазон";
 
 /* When bolusing */
 "Bolusing" = "Подается болюс";
