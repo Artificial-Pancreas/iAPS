@@ -15,7 +15,7 @@ extension PumpManagerUI {
         setupViewController(
             insulinTintColor: .accentColor,
             guidanceColors: GuidanceColors(acceptable: .green, warning: .orange, critical: .red),
-            allowedInsulinTypes: [.apidra, .humalog, .novolog, .fiasp]
+            allowedInsulinTypes: [.apidra, .humalog, .novolog, .fiasp, .lyumjev]
         )
     }
 
@@ -23,7 +23,7 @@ extension PumpManagerUI {
         settingsViewController(
             insulinTintColor: .accentColor,
             guidanceColors: GuidanceColors(acceptable: .green, warning: .orange, critical: .red),
-            allowedInsulinTypes: [.apidra, .humalog, .novolog, .fiasp]
+            allowedInsulinTypes: [.apidra, .humalog, .novolog, .fiasp, .lyumjev]
         )
     }
 }
