@@ -118,14 +118,19 @@ class InsertCannulaSetupViewController: SetupTableViewController {
             }
             loadingText = errorText
             
-            var podCommsError: PodCommsError? = nil
+            let podCommsError: PodCommsError?
             if let pumpManagerError = lastError as? PumpManagerError {
                 switch pumpManagerError {
-                case .communication(let error):
+                // Check for a wrapped PodCommsError in the possible PumpManagerError types
+                case .communication(let error), .configuration(let error), .connection(let error), .deviceState(let error):
                     podCommsError = error as? PodCommsError
                 default:
+                    podCommsError = nil
                     break
                 }
+            } else {
+                // Check for a non PumpManagerError PodCommsError
+                podCommsError = lastError as? PodCommsError
             }
 
             // If we have an error, update the continue state depending on whether it's fatal or if the cannula insertion was started or not
