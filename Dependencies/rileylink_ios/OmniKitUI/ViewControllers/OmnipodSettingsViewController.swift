@@ -452,7 +452,7 @@ class OmnipodSettingsViewController: RileyLinkSettingsViewController {
             case .insulinType:
                 let cell = tableView.dequeueReusableCell(withIdentifier: SettingsTableViewCell.className, for: indexPath)
                 cell.prepareForReuse()
-                cell.textLabel?.text = "Insulin Type"
+                cell.textLabel?.text = LocalizedString("Insulin Type", comment: "The title of the Insulin Type")
                 cell.detailTextLabel?.text = pumpManager.insulinType?.brandName
                 cell.accessoryType = .disclosureIndicator
                 return cell
