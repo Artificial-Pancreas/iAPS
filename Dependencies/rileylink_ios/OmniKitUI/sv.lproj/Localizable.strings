@@ -106,10 +106,16 @@
 "Error enabling bolus beeps" = "Fel vid aktivering av bolusljud";
 
 /* The alert title for enable Confirmation Beeps */
-"Enable Confirmation Beeps" =  "Sätt på bekräftelsepip";
+"Enable Confirmation Beeps" = "Sätt på bekräftelsepip";
+
+/* The alert title for Disable Confirmation Beep */
+"Disable Confirmation Beeps" = "Stäng av bekräftelsepip";
 
 /* The alert title for enable Automatic Bolus Beeps */
-"Enable Automatic Bolus Beeps" ="Sätt på pip vid automatiska bolusar";
+"Enable Automatic Bolus Beeps" = "Sätt på pip vid automatiska bolusar";
+
+/* The alert title for Disable Automatic Bolus Beeps */
+"Disable Automatic Bolus Beeps" = "Stäng av pip vid automatiska bolusar";
 
 /* The alert title for a resume error */
 "Error Resuming" = "Fel vid återupptagande";
