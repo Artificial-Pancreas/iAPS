@@ -82,7 +82,9 @@ public class RileyLinkDeviceManager: NSObject {
             lockedTimerTickEnabled.value = newValue
             centralQueue.async {
                 for device in self.devices {
-                    device.setTimerTickEnabled(newValue)
+                    if device.peripheralState == .connected {
+                        device.setTimerTickEnabled(newValue)
+                    }
                 }
             }
         }
@@ -163,8 +165,10 @@ extension RileyLinkDeviceManager {
             device.manager.peripheral = peripheral
         } else {
             device = RileyLinkDevice(peripheralManager: PeripheralManager(peripheral: peripheral, configuration: .rileyLink, centralManager: central, queue: sessionQueue))
-            device.setTimerTickEnabled(timerTickEnabled)
-            device.setIdleListeningState(idleListeningState)
+            if peripheral.state == .connected {
+                device.setTimerTickEnabled(timerTickEnabled)
+                device.setIdleListeningState(idleListeningState)
+            }
 
             devices.append(device)
 

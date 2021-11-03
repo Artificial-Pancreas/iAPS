@@ -20,16 +20,16 @@
 "Disconnected" = "Getrennt";
 
 /* The in-progress disconnecting state */
-"Disconnecting" = "trennen";
+"Disconnecting" = "Trennen";
 
 /* The title of the cell showing firmware version */
 "Firmware" = "Firmware";
 
 /* The title of the cell showing current rileylink frequency */
-"Frequency" = "Frequency";
+"Frequency" = "Frequenz";
 
 /* The title of the cell showing device name */
-"Name" = "Nombre";
+"Name" = "Name";
 
 /* RileyLink setup description */
 "RileyLink allows for communication with the pump over Bluetooth Low Energy." = "RileyLink ermöglicht Kommunikation zur Pumpe über Bluetooth Low Energy.";
@@ -38,67 +38,67 @@
 "Signal Strength" = "Signalstärke";
 
 /* The header of the cells showing connection monitoring */
-"Connection Monitoring" = "Connection Monitoring";
+"Connection Monitoring" = "Verbindungsüberwachung";
 
 /* The title of the cell showing uptime */
-"Uptime" = "Uptime";
+"Uptime" = "Betriebszeit";
 
 /* The title of the cell showing battery level */
-"Battery level" = "Battery level";
+"Battery level" = "Ladezustand";
 
 /* The title of the cell showing Voltage */
-"Voltage" = "Voltage";
+"Voltage" = "Spannung";
 
 /* "The title of the section for alerts" */
-"Alert" = "Alert";
+"Alert" = "Alarmierung";
 
 /* The title of the cell showing Low Battery Alert */
-"Low Battery Alert" = "Low Battery Alert";
+"Low Battery Alert" = "Warnung bei schwacher Batterie";
 
 /* Header of list showing battery level alert options */
-"Battery level Alert" = "Battery level Alert";
+"Battery level Alert" = "Ladezustandswarnung";
 
 /* Battery level alert OFF in list of options */
-"OFF" = "OFF";
+"OFF" = "Aus";
 
 /* The title of the command to update diagnostic LEDs */
-"Diagnostic LEDs" = "Diagnostic LEDs";
+"Diagnostic LEDs" = "Diagnose LEDs";
 
 /* The title of the command to fetch RileyLink statistics */
-"Get RileyLink Statistics" = "Get RileyLink Statistics";
+"Get RileyLink Statistics" = "RileyLink Messwerte abrufen";
 
 /* The title of the command to invert BLE connection LED logic */
-"Invert LED Logic" = "Invert LED Logic";
+"Invert LED Logic" = "LED Logik umkehren";
 
 /* The header of the cells showing test commands */
-"Test Commands" = "Test Commands";
+"Test Commands" = "Testbefehle";
 
 /* The title of the cell showing Lighten Yellow LED */
-"Lighten Yellow LED" = "Lighten Yellow LED";
+"Lighten Yellow LED" = "Gelbe LED aktivieren";
 
 /* The title of the cell showing Lighten Yellow LED */
-"Lighten Red LED" = "Lighten Red LED";
+"Lighten Red LED" = "Rote LED aktivieren";
 
 /* The title of the cell showing Test Vibration */
-"Test Vibration" = "Test Vibration";
+"Test Vibration" = "Vibration aktivieren";
 
 /* The title of the cell for sounding device finding piezo */
-"Find Device" = "Find Device";
+"Find Device" = "Gerät lokalisieren";
 
 /* The title of the cell for connection LED */
-"Connection LED" = "Connection LED";
+"Connection LED" = "Verbindungs-LED";
 
 /* The title of the cell for connection vibration */
-"Connection Vibration" = "Connection Vibration";
+"Connection Vibration" = "Vibrieren bei Verbindung";
 
 /* Detail text when battery alert disabled. */
-"Off" = "Off";
+"Off" = "Aus";
 
 /* Text indicating LED Mode is on */
-"On" = "On";
+"On" = "An";
 
 /* Text indicating LED Mode is off */
-"Off" = "Off";
+"Off" = "Aus";
 
 /* Text indicating LED Mode is auto */
 "Auto" = "Auto";
