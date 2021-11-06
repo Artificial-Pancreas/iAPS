@@ -189,6 +189,7 @@ enum InsulinTypeHealthKitRepresentation: String {
     case humalog = "Humalog"
     case apidra = "Apidra"
     case fiasp = "Fiasp"
+    case lyumjev = "Lyumjev"
 }
 
 extension InsulinType {
@@ -202,6 +203,8 @@ extension InsulinType {
             return InsulinTypeHealthKitRepresentation.apidra.rawValue
         case .fiasp:
             return InsulinTypeHealthKitRepresentation.fiasp.rawValue
+        case .lyumjev:
+            return InsulinTypeHealthKitRepresentation.lyumjev.rawValue
         }
     }
     
@@ -215,6 +218,8 @@ extension InsulinType {
             self = .apidra
         case InsulinTypeHealthKitRepresentation.fiasp.rawValue:
             self = .fiasp
+        case InsulinTypeHealthKitRepresentation.lyumjev.rawValue:
+            self = .lyumjev
         default:
             return nil
         }
