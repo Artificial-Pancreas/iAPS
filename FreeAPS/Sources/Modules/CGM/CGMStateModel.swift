@@ -1,7 +1,7 @@
 import SwiftUI
 
 extension CGM {
-    class ViewModel<Provider>: BaseViewModel<Provider>, ObservableObject where Provider: CGMProvider {
+    class StateModel: BaseStateModel<Provider> {
         @Injected() var settingsManager: SettingsManager!
 
         @Published var cgm: CGMType = .nightscout

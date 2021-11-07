@@ -4,7 +4,7 @@ import SwiftDate
 import SwiftUI
 
 extension PumpConfig {
-    class ViewModel<Provider>: BaseViewModel<Provider>, ObservableObject where Provider: PumpConfigProvider {
+    class StateModel: BaseStateModel<Provider> {
         @Published var setupPump = false
         private(set) var setupPumpType: PumpType = .minimed
         @Published var pumpState: PumpDisplayState?
@@ -38,13 +38,13 @@ extension PumpConfig {
     }
 }
 
-extension PumpConfig.ViewModel: CompletionDelegate {
+extension PumpConfig.StateModel: CompletionDelegate {
     func completionNotifyingDidComplete(_: CompletionNotifying) {
         setupPump = false
     }
 }
 
-extension PumpConfig.ViewModel: PumpManagerSetupViewControllerDelegate {
+extension PumpConfig.StateModel: PumpManagerSetupViewControllerDelegate {
     func pumpManagerSetupViewController(_: PumpManagerSetupViewController, didSetUpPumpManager pumpManager: PumpManagerUI) {
         provider.setPumpManager(pumpManager)
         setupPump = false

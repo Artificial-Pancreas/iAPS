@@ -1,7 +1,7 @@
 import SwiftUI
 
 extension BasalProfileEditor {
-    class ViewModel<Provider>: BaseViewModel<Provider>, ObservableObject where Provider: BasalProfileEditorProvider {
+    class StateModel: BaseStateModel<Provider> {
         @Published var syncInProgress = false
         @Published var items: [Item] = []
 

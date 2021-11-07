@@ -1,10 +1,8 @@
-import Combine
 import SwiftUI
 import Swinject
 
 extension Main {
-    class ViewModel<Provider>: BaseViewModel<Provider>, ObservableObject where Provider: MainProvider {
-        @Published private(set) var isAuthotized = false
+    class StateModel: BaseStateModel<Provider> {
         private(set) var modal: Modal?
         @Published var isModalPresented = false
         @Published var isAlertPresented = false
@@ -12,9 +10,9 @@ extension Main {
 
         override func subscribe() {
             router.mainModalScreen
-                .map { $0?.modal(resolver: self.resolver) }
+                .map { $0?.modal(resolver: self.resolver!) }
                 .removeDuplicates { $0?.id == $1?.id }
-                .receive(on: RunLoop.main)
+                .receive(on: DispatchQueue.main)
                 .sink { modal in
                     self.modal = modal
                     self.isModalPresented = modal != nil

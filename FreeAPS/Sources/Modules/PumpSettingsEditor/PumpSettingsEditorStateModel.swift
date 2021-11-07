@@ -1,7 +1,7 @@
 import SwiftUI
 
 extension PumpSettingsEditor {
-    class ViewModel<Provider>: BaseViewModel<Provider>, ObservableObject where Provider: PumpSettingsEditorProvider {
+    class StateModel: BaseStateModel<Provider> {
         @Published var maxBasal: Decimal = 0.0
         @Published var maxBolus: Decimal = 0.0
         @Published var dia: Decimal = 0.0

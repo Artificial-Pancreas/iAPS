@@ -26,50 +26,50 @@ enum Screen: Identifiable, Hashable {
 }
 
 extension Screen {
-    func view(resolver: Resolver) -> AnyView {
+    @ViewBuilder func view(resolver: Resolver) -> some View {
         switch self {
         case .loading:
-            return ProgressView().asAny()
+            ProgressView()
         case .home:
-            return Home.Builder(resolver: resolver).buildView()
+            Home.RootView(resolver: resolver)
         case .settings:
-            return Settings.Builder(resolver: resolver).buildView()
+            Settings.RootView(resolver: resolver)
         case let .configEditor(file):
-            return ConfigEditor.Builder(resolver: resolver, file: file).buildView()
+            ConfigEditor.RootView(resolver: resolver, file: file)
         case .nighscoutConfig:
-            return NightscoutConfig.Builder(resolver: resolver).buildView()
+            NightscoutConfig.RootView(resolver: resolver)
         case .pumpConfig:
-            return PumpConfig.Builder(resolver: resolver).buildView()
+            PumpConfig.RootView(resolver: resolver)
         case .pumpSettingsEditor:
-            return PumpSettingsEditor.Builder(resolver: resolver).buildView()
+            PumpSettingsEditor.RootView(resolver: resolver)
         case .basalProfileEditor:
-            return BasalProfileEditor.Builder(resolver: resolver).buildView()
+            BasalProfileEditor.RootView(resolver: resolver)
         case .isfEditor:
-            return ISFEditor.Builder(resolver: resolver).buildView()
+            ISFEditor.RootView(resolver: resolver)
         case .crEditor:
-            return CREditor.Builder(resolver: resolver).buildView()
+            CREditor.RootView(resolver: resolver)
         case .targetsEditor:
-            return TargetsEditor.Builder(resolver: resolver).buildView()
+            TargetsEditor.RootView(resolver: resolver)
         case .preferencesEditor:
-            return PreferencesEditor.Builder(resolver: resolver).buildView()
+            PreferencesEditor.RootView(resolver: resolver)
         case .addCarbs:
-            return AddCarbs.Builder(resolver: resolver).buildView()
+            AddCarbs.RootView(resolver: resolver)
         case .addTempTarget:
-            return AddTempTarget.Builder(resolver: resolver).buildView()
+            AddTempTarget.RootView(resolver: resolver)
         case let .bolus(waitForSuggestion):
-            return Bolus.Builder(resolver: resolver, waitForSuggestion: waitForSuggestion).buildView()
+            Bolus.RootView(resolver: resolver, waitForSuggestion: waitForSuggestion)
         case .manualTempBasal:
-            return ManualTempBasal.Builder(resolver: resolver).buildView()
+            ManualTempBasal.RootView(resolver: resolver)
         case .autotuneConfig:
-            return AutotuneConfig.Builder(resolver: resolver).buildView()
+            AutotuneConfig.RootView(resolver: resolver)
         case .dataTable:
-            return DataTable.Builder(resolver: resolver).buildView()
+            DataTable.RootView(resolver: resolver)
         case .cgm:
-            return CGM.Builder(resolver: resolver).buildView()
+            CGM.RootView(resolver: resolver)
         }
     }
 
     func modal(resolver: Resolver) -> Main.Modal {
-        .init(screen: self, view: view(resolver: resolver))
+        .init(screen: self, view: view(resolver: resolver).asAny())
     }
 }

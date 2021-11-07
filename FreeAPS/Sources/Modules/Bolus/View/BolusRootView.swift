@@ -1,8 +1,11 @@
 import SwiftUI
+import Swinject
 
 extension Bolus {
     struct RootView: BaseView {
-        @EnvironmentObject var viewModel: ViewModel<Provider>
+        let resolver: Resolver
+        let waitForSuggestion: Bool
+        @StateObject var state = StateModel()
         @State private var isAddInsulinAlertPresented = false
 
         private var formatter: NumberFormatter {
@@ -15,7 +18,7 @@ extension Bolus {
         var body: some View {
             Form {
                 Section(header: Text("Recommendation")) {
-                    if viewModel.waitForSuggestion {
+                    if state.waitForSuggestion {
                         HStack {
                             Text("Wait please").foregroundColor(.secondary)
                             Spacer()
@@ -27,36 +30,36 @@ extension Bolus {
                             Spacer()
                             Text(
                                 formatter
-                                    .string(from: viewModel.inslinRequired as NSNumber)! +
+                                    .string(from: state.inslinRequired as NSNumber)! +
                                     NSLocalizedString(" U", comment: "Insulin unit")
                             ).foregroundColor(.secondary)
                         }.contentShape(Rectangle())
                             .onTapGesture {
-                                viewModel.amount = viewModel.inslinRecommended
+                                state.amount = state.inslinRecommended
                             }
                         HStack {
                             Text("Insulin recommended")
                             Spacer()
                             Text(
                                 formatter
-                                    .string(from: viewModel.inslinRecommended as NSNumber)! +
+                                    .string(from: state.inslinRecommended as NSNumber)! +
                                     NSLocalizedString(" U", comment: "Insulin unit")
                             ).foregroundColor(.secondary)
                         }.contentShape(Rectangle())
                             .onTapGesture {
-                                viewModel.amount = viewModel.inslinRecommended
+                                state.amount = state.inslinRecommended
                             }
                     }
                 }
 
-                if !viewModel.waitForSuggestion {
+                if !state.waitForSuggestion {
                     Section(header: Text("Bolus")) {
                         HStack {
                             Text("Amount")
                             Spacer()
                             DecimalTextField(
                                 "0",
-                                value: $viewModel.amount,
+                                value: $state.amount,
                                 formatter: formatter,
                                 autofocus: true,
                                 cleanInput: true
@@ -66,39 +69,45 @@ extension Bolus {
                     }
 
                     Section {
-                        Button { viewModel.add() }
+                        Button { state.add() }
                         label: { Text("Enact bolus") }
-                            .disabled(viewModel.amount <= 0)
+                            .disabled(state.amount <= 0)
                     }
 
                     Section {
-                        if viewModel.waitForSuggestionInitial {
-                            Button { viewModel.showModal(for: nil) }
+                        if waitForSuggestion {
+                            Button { state.showModal(for: nil) }
                             label: { Text("Continue without bolus") }
                         } else {
                             Button { isAddInsulinAlertPresented = true }
                             label: { Text("Add insulin without actually bolusing") }
-                                .disabled(viewModel.amount <= 0)
+                                .disabled(state.amount <= 0)
                         }
                     }
                 }
             }
             .alert(isPresented: $isAddInsulinAlertPresented) {
                 let amount = formatter
-                    .string(from: viewModel.amount as NSNumber)! + NSLocalizedString(" U", comment: "Insulin unit")
+                    .string(from: state.amount as NSNumber)! + NSLocalizedString(" U", comment: "Insulin unit")
                 return Alert(
                     title: Text("Are you sure?"),
                     message: Text("Add \(amount) without bolusing"),
                     primaryButton: .destructive(
                         Text("Add"),
-                        action: { viewModel.addWithoutBolus() }
+                        action: { state.addWithoutBolus() }
                     ),
                     secondaryButton: .cancel()
                 )
             }
+            .onAppear {
+                configureView {
+                    state.waitForSuggestionInitial = waitForSuggestion
+                    state.waitForSuggestion = waitForSuggestion
+                }
+            }
             .navigationTitle("Enact Bolus")
             .navigationBarTitleDisplayMode(.automatic)
-            .navigationBarItems(leading: Button("Close", action: viewModel.hideModal))
+            .navigationBarItems(leading: Button("Close", action: state.hideModal))
         }
     }
 }

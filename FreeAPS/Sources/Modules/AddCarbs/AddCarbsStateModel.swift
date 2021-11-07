@@ -1,7 +1,7 @@
 import SwiftUI
 
 extension AddCarbs {
-    class ViewModel<Provider>: BaseViewModel<Provider>, ObservableObject where Provider: AddCarbsProvider {
+    class StateModel: BaseStateModel<Provider> {
         @Injected() var carbsStorage: CarbsStorage!
         @Injected() var settingsManager: SettingsManager!
         @Injected() var apsManager: APSManager!

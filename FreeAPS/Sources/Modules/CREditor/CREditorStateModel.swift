@@ -1,7 +1,7 @@
 import SwiftUI
 
 extension CREditor {
-    class ViewModel<Provider>: BaseViewModel<Provider>, ObservableObject where Provider: CREditorProvider {
+    class StateModel: BaseStateModel<Provider> {
         @Published var items: [Item] = []
         @Published var autotune: Autotune?
 

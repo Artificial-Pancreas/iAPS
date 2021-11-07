@@ -1,7 +1,7 @@
 import SwiftUI
 
 extension DataTable {
-    class ViewModel<Provider>: BaseViewModel<Provider>, ObservableObject where Provider: DataTableProvider {
+    class StateModel: BaseStateModel<Provider> {
         @Injected() var broadcaster: Broadcaster!
         @Injected() var settingsManager: SettingsManager!
         @Published var items: [Item] = []
@@ -83,7 +83,7 @@ extension DataTable {
     }
 }
 
-extension DataTable.ViewModel:
+extension DataTable.StateModel:
     SettingsObserver,
     PumpHistoryObserver,
     TempTargetsObserver,

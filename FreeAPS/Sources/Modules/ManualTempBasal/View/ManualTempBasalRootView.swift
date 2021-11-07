@@ -1,8 +1,10 @@
 import SwiftUI
+import Swinject
 
 extension ManualTempBasal {
     struct RootView: BaseView {
-        @EnvironmentObject var viewModel: ViewModel<Provider>
+        let resolver: Resolver
+        @StateObject var state = StateModel()
 
         private var formatter: NumberFormatter {
             let formatter = NumberFormatter()
@@ -17,16 +19,16 @@ extension ManualTempBasal {
                     HStack {
                         Text("Amount")
                         Spacer()
-                        DecimalTextField("0", value: $viewModel.rate, formatter: formatter, autofocus: true, cleanInput: true)
+                        DecimalTextField("0", value: $state.rate, formatter: formatter, autofocus: true, cleanInput: true)
                         Text("U/hr").foregroundColor(.secondary)
                     }
-                    Picker(selection: $viewModel.durationIndex, label: Text("Duration")) {
-                        ForEach(0 ..< viewModel.durationValues.count) { index in
+                    Picker(selection: $state.durationIndex, label: Text("Duration")) {
+                        ForEach(0 ..< state.durationValues.count) { index in
                             Text(
                                 String(
                                     format: "%.0f h %02.0f min",
-                                    viewModel.durationValues[index] / 60 - 0.1,
-                                    viewModel.durationValues[index].truncatingRemainder(dividingBy: 60)
+                                    state.durationValues[index] / 60 - 0.1,
+                                    state.durationValues[index].truncatingRemainder(dividingBy: 60)
                                 )
                             ).tag(index)
                         }
@@ -34,15 +36,16 @@ extension ManualTempBasal {
                 }
 
                 Section {
-                    Button { viewModel.enact() }
+                    Button { state.enact() }
                     label: { Text("Enact") }
-                    Button { viewModel.cancel() }
+                    Button { state.cancel() }
                     label: { Text("Cancel Temp Basal") }
                 }
             }
+            .onAppear(perform: configureView)
             .navigationTitle("Manual Temp Basal")
             .navigationBarTitleDisplayMode(.automatic)
-            .navigationBarItems(leading: Button("Close", action: viewModel.hideModal))
+            .navigationBarItems(leading: Button("Close", action: state.hideModal))
         }
     }
 }

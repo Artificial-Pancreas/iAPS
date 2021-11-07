@@ -1,7 +1,7 @@
 import SwiftUI
 
 extension Settings {
-    class ViewModel<Provider>: BaseViewModel<Provider>, ObservableObject where Provider: SettingsProvider {
+    class StateModel: BaseStateModel<Provider> {
         @Injected() private var settingsManager: SettingsManager!
         @Injected() private var broadcaster: Broadcaster!
         @Injected() private var fileManager: FileManager!
@@ -42,7 +42,7 @@ extension Settings {
     }
 }
 
-extension Settings.ViewModel: SettingsObserver {
+extension Settings.StateModel: SettingsObserver {
     func settingsDidChange(_ settings: FreeAPSSettings) {
         closedLoop = settings.closedLoop
         debugOptions = settings.debugOptions ?? false

@@ -42,19 +42,10 @@ import Swinject
 
     var body: some Scene {
         WindowGroup {
-            Main.Builder(resolver: resolver).buildView()
+            Main.RootView(resolver: resolver)
         }
         .onChange(of: scenePhase) { newScenePhase in
-            switch newScenePhase {
-            case .active:
-                debug(.default, "APPLICATION is active")
-            case .inactive:
-                debug(.default, "APPLICATION is inactive")
-            case .background:
-                debug(.default, "APPLICATION is in background")
-            @unknown default:
-                debug(.default, "APPLICATION: Received an unexpected scenePhase.")
-            }
+            debug(.default, "APPLICATION PHASE: \(newScenePhase)")
         }
     }
 }

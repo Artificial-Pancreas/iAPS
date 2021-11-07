@@ -1,12 +1,15 @@
 import SwiftUI
+import Swinject
 
 extension ConfigEditor {
     struct RootView: BaseView {
-        @EnvironmentObject var viewModel: ViewModel<Provider>
+        let resolver: Resolver
+        let file: String
+        @StateObject var state = StateModel()
         @State private var showShareSheet = false
 
         var body: some View {
-            TextEditor(text: $viewModel.configText)
+            TextEditor(text: $state.configText)
                 .keyboardType(.asciiCapable)
                 .font(.system(.subheadline, design: .monospaced))
                 .allowsTightening(true)
@@ -22,12 +25,17 @@ extension ConfigEditor {
                     }
                 }
                 .navigationBarItems(
-                    trailing: Button("Save", action: viewModel.save)
+                    trailing: Button("Save", action: state.save)
                 )
                 .sheet(isPresented: $showShareSheet) {
-                    ShareSheet(activityItems: [viewModel.provider.urlFor(file: viewModel.file)!])
+                    ShareSheet(activityItems: [state.provider.urlFor(file: state.file)!])
                 }
-                .navigationTitle(viewModel.file)
+                .onAppear {
+                    configureView {
+                        state.file = file
+                    }
+                }
+                .navigationTitle(file)
                 .navigationBarTitleDisplayMode(.inline)
                 .padding()
         }

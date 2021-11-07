@@ -1,21 +1,18 @@
 import SwiftUI
 
-extension ISFEditor {
-    class ViewModel<Provider>: BaseViewModel<Provider>, ObservableObject where Provider: ISFEditorProvider {
+extension TargetsEditor {
+    class StateModel: BaseStateModel<Provider> {
         @Injected() var settingsManager: SettingsManager!
         @Published var items: [Item] = []
-        private(set) var autosensISF: Decimal?
-        private(set) var autosensRatio: Decimal = 0
-        @Published var autotune: Autotune?
 
         let timeValues = stride(from: 0.0, to: 1.days.timeInterval, by: 30.minutes.timeInterval).map { $0 }
 
-        var rateValues: [Decimal] {
+        var rateValues: [Double] {
             switch units {
             case .mgdL:
-                return stride(from: 9, to: 540.01, by: 1.0).map { $0 }
+                return stride(from: 72, to: 180.01, by: 1.0).map { $0 }
             case .mmolL:
-                return stride(from: 0.1, to: 30.01, by: 0.1).map { $0 }
+                return stride(from: 4.0, to: 10.01, by: 0.1).map { $0 }
             }
         }
 
@@ -29,53 +26,41 @@ extension ISFEditor {
         override func subscribe() {
             let profile = provider.profile
             units = profile.units
-            items = profile.sensitivities.map { value in
+            items = profile.targets.map { value in
                 let timeIndex = timeValues.firstIndex(of: Double(value.offset * 60)) ?? 0
-                let rateIndex = rateValues.firstIndex(of: value.sensitivity) ?? 0
-                return Item(rateIndex: rateIndex, timeIndex: timeIndex)
+                let lowIndex = rateValues.firstIndex(of: Double(value.low)) ?? 0
+                let highIndex = rateValues.firstIndex(of: Double(value.high)) ?? 0
+                return Item(lowIndex: lowIndex, highIndex: highIndex, timeIndex: timeIndex)
             }
-            autotune = provider.autotune
-
-            if let newISF = provider.autosense.newisf {
-                switch units {
-                case .mgdL:
-                    autosensISF = newISF
-                case .mmolL:
-                    autosensISF = newISF * GlucoseUnits.exchangeRate
-                }
-            }
-
-            autosensRatio = provider.autosense.ratio
         }
 
         func add() {
             var time = 0
-            var rate = 0
+            var low = 0
+            var high = 0
             if let last = items.last {
                 time = last.timeIndex + 1
-                rate = last.rateIndex
+                low = last.lowIndex
+                high = last.highIndex
             }
 
-            let newItem = Item(rateIndex: rate, timeIndex: time)
+            let newItem = Item(lowIndex: low, highIndex: high, timeIndex: time)
 
             items.append(newItem)
         }
 
         func save() {
-            let sensitivities = items.map { item -> InsulinSensitivityEntry in
+            let targets = items.map { item -> BGTargetEntry in
                 let fotmatter = DateFormatter()
                 fotmatter.timeZone = TimeZone(secondsFromGMT: 0)
                 fotmatter.dateFormat = "HH:mm:ss"
                 let date = Date(timeIntervalSince1970: self.timeValues[item.timeIndex])
                 let minutes = Int(date.timeIntervalSince1970 / 60)
-                let rate = self.rateValues[item.rateIndex]
-                return InsulinSensitivityEntry(sensitivity: rate, offset: minutes, start: fotmatter.string(from: date))
+                let low = Decimal(self.rateValues[item.lowIndex])
+                let high = Decimal(self.rateValues[item.highIndex])
+                return BGTargetEntry(low: low, high: high, start: fotmatter.string(from: date), offset: minutes)
             }
-            let profile = InsulinSensitivities(
-                units: units,
-                userPrefferedUnits: settingsManager.settings.units,
-                sensitivities: sensitivities
-            )
+            let profile = BGTargets(units: units, userPrefferedUnits: settingsManager.settings.units, targets: targets)
             provider.saveProfile(profile)
         }
 
@@ -83,6 +68,10 @@ extension ISFEditor {
             DispatchQueue.main.async {
                 let uniq = Array(Set(self.items))
                 let sorted = uniq.sorted { $0.timeIndex < $1.timeIndex }
+                    .map { item -> Item in
+                        guard item.highIndex < item.lowIndex else { return item }
+                        return Item(lowIndex: item.lowIndex, highIndex: item.lowIndex, timeIndex: item.timeIndex)
+                    }
                 sorted.first?.timeIndex = 0
                 self.items = sorted
 

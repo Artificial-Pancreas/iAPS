@@ -3,7 +3,7 @@ import SwiftDate
 import SwiftUI
 
 extension Home {
-    class ViewModel<Provider>: BaseViewModel<Provider>, ObservableObject where Provider: HomeProvider {
+    class StateModel: BaseStateModel<Provider> {
         @Injected() var broadcaster: Broadcaster!
         @Injected() var settingsManager: SettingsManager!
         @Injected() var apsManager: APSManager!
@@ -281,7 +281,7 @@ extension Home {
     }
 }
 
-extension Home.ViewModel:
+extension Home.StateModel:
     GlucoseObserver,
     SuggestionObserver,
     SettingsObserver,
@@ -346,7 +346,7 @@ extension Home.ViewModel:
     }
 }
 
-extension Home.ViewModel: CompletionDelegate {
+extension Home.StateModel: CompletionDelegate {
     func completionNotifyingDidComplete(_: CompletionNotifying) {
         setupPump = false
     }

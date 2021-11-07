@@ -2,7 +2,7 @@ import SwiftUI
 import Swinject
 
 extension Bolus {
-    class ViewModel<Provider>: BaseViewModel<Provider>, ObservableObject where Provider: BolusProvider {
+    class StateModel: BaseStateModel<Provider> {
         @Injected() var unlockmanager: UnlockManager!
         @Injected() var apsManager: APSManager!
         @Injected() var broadcaster: Broadcaster!
@@ -11,18 +11,8 @@ extension Bolus {
         @Published var amount: Decimal = 0
         @Published var inslinRecommended: Decimal = 0
         @Published var inslinRequired: Decimal = 0
-        @Published var waitForSuggestion: Bool
-        let waitForSuggestionInitial: Bool
-
-        init(provider: Provider, resolver: Resolver, waitForSuggestion: Bool) {
-            self.waitForSuggestion = waitForSuggestion
-            waitForSuggestionInitial = waitForSuggestion
-            super.init(provider: provider, resolver: resolver)
-        }
-
-        required init(provider _: Provider, resolver _: Resolver) {
-            error(.default, "init(provider:resolver:) has not been implemented")
-        }
+        @Published var waitForSuggestion: Bool = false
+        var waitForSuggestionInitial: Bool = false
 
         override func subscribe() {
             setupInsulinRequired()
@@ -51,7 +41,8 @@ extension Bolus {
             let maxAmount = Double(min(amount, provider.pumpSettings().maxBolus))
 
             unlockmanager.unlock()
-                .sink { _ in } receiveValue: {
+                .sink { _ in } receiveValue: { [weak self] _ in
+                    guard let self = self else { return }
                     self.apsManager.enactBolus(amount: maxAmount, isSMB: false)
                     self.showModal(for: nil)
                 }
@@ -92,7 +83,7 @@ extension Bolus {
     }
 }
 
-extension Bolus.ViewModel: SuggestionObserver {
+extension Bolus.StateModel: SuggestionObserver {
     func suggestionDidUpdate(_: Suggestion) {
         DispatchQueue.main.async {
             self.waitForSuggestion = false

@@ -1,7 +1,7 @@
 import SwiftUI
 
 extension AddTempTarget {
-    class ViewModel<Provider>: BaseViewModel<Provider>, ObservableObject where Provider: AddTempTargetProvider {
+    class StateModel: BaseStateModel<Provider> {
         @Injected() private var storage: TempTargetsStorage!
         @Injected() private var settingsManager: SettingsManager!
         @Injected() var apsManager: APSManager!

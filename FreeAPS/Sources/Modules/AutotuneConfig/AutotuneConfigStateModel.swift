@@ -2,7 +2,7 @@ import Combine
 import SwiftUI
 
 extension AutotuneConfig {
-    class ViewModel<Provider>: BaseViewModel<Provider>, ObservableObject where Provider: AutotuneConfigProvider {
+    class StateModel: BaseStateModel<Provider> {
         @Injected() var settingsManager: SettingsManager!
         @Injected() var apsManager: APSManager!
         @Published var useAutotune = false
@@ -25,7 +25,10 @@ extension AutotuneConfig {
 
             $useAutotune
                 .removeDuplicates()
-                .flatMap { use -> AnyPublisher<Bool, Never> in
+                .flatMap { [weak self] use -> AnyPublisher<Bool, Never> in
+                    guard let self = self else {
+                        return Just(false).eraseToAnyPublisher()
+                    }
                     self.settingsManager.settings.useAutotune = use
                     return self.apsManager.makeProfiles()
                 }
@@ -36,12 +39,15 @@ extension AutotuneConfig {
         func run() {
             provider.runAutotune()
                 .receive(on: DispatchQueue.main)
-                .flatMap { result -> AnyPublisher<Bool, Never> in
+                .flatMap { [weak self] result -> AnyPublisher<Bool, Never> in
+                    guard let self = self else {
+                        return Just(false).eraseToAnyPublisher()
+                    }
                     self.autotune = result
                     return self.apsManager.makeProfiles()
                 }
-                .sink { _ in
-                    self.lastAutotuneDate = Date()
+                .sink { [weak self] _ in
+                    self?.lastAutotuneDate = Date()
                 }.store(in: &lifetime)
         }
 

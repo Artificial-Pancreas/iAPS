@@ -2,7 +2,7 @@ import Combine
 import SwiftUI
 
 extension NightscoutConfig {
-    class ViewModel<Provider>: BaseViewModel<Provider>, ObservableObject where Provider: NightscoutConfigProvider {
+    class StateModel: BaseStateModel<Provider> {
         @Injected() var keychain: Keychain!
         @Injected() var settingsManager: SettingsManager!
 

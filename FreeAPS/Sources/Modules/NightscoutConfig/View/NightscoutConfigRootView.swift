@@ -1,8 +1,10 @@
 import SwiftUI
+import Swinject
 
 extension NightscoutConfig {
     struct RootView: BaseView {
-        @EnvironmentObject var viewModel: ViewModel<Provider>
+        let resolver: Resolver
+        @StateObject var state = StateModel()
 
         private var portFormater: NumberFormatter {
             let formatter = NumberFormatter()
@@ -13,20 +15,20 @@ extension NightscoutConfig {
         var body: some View {
             Form {
                 Section {
-                    TextField("URL", text: $viewModel.url)
+                    TextField("URL", text: $state.url)
                         .disableAutocorrection(true)
                         .textContentType(.URL)
                         .autocapitalization(.none)
                         .keyboardType(.URL)
-                    SecureField("API secret", text: $viewModel.secret)
+                    SecureField("API secret", text: $state.secret)
                         .disableAutocorrection(true)
                         .autocapitalization(.none)
                         .textContentType(.password)
                         .keyboardType(.asciiCapable)
-                    if !viewModel.message.isEmpty {
-                        Text(viewModel.message)
+                    if !state.message.isEmpty {
+                        Text(state.message)
                     }
-                    if viewModel.connecting {
+                    if state.connecting {
                         HStack {
                             Text("Connecting...")
                             Spacer()
@@ -36,24 +38,26 @@ extension NightscoutConfig {
                 }
 
                 Section {
-                    Button("Connect") { viewModel.connect() }
-                        .disabled(viewModel.url.isEmpty || viewModel.connecting)
-                    Button("Delete") { viewModel.delete() }.foregroundColor(.red).disabled(viewModel.connecting)
+                    Button("Connect") { state.connect() }
+                        .disabled(state.url.isEmpty || state.connecting)
+                    Button("Delete") { state.delete() }.foregroundColor(.red).disabled(state.connecting)
                 }
 
                 Section {
-                    Toggle("Allow uploads", isOn: $viewModel.isUploadEnabled)
+                    Toggle("Allow uploads", isOn: $state.isUploadEnabled)
                 }
 
                 Section(header: Text("Local glucose source")) {
-                    Toggle("Use local glucose server", isOn: $viewModel.useLocalSource)
+                    Toggle("Use local glucose server", isOn: $state.useLocalSource)
                     HStack {
                         Text("Port")
-                        DecimalTextField("", value: $viewModel.localPort, formatter: portFormater)
+                        DecimalTextField("", value: $state.localPort, formatter: portFormater)
                     }
                 }
             }
-            .navigationBarTitle("Nightscout Config", displayMode: .automatic)
+            .onAppear(perform: configureView)
+            .navigationBarTitle("Nightscout Config")
+            .navigationBarTitleDisplayMode(.automatic)
         }
     }
 }
