@@ -2,7 +2,7 @@ import Combine
 import SwiftUI
 
 extension NightscoutConfig {
-    class StateModel: BaseStateModel<Provider> {
+    final class StateModel: BaseStateModel<Provider> {
         @Injected() var keychain: Keychain!
         @Injected() var settingsManager: SettingsManager!
 

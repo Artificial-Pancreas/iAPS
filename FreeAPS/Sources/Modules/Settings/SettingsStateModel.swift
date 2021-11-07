@@ -1,7 +1,7 @@
 import SwiftUI
 
 extension Settings {
-    class StateModel: BaseStateModel<Provider> {
+    final class StateModel: BaseStateModel<Provider> {
         @Injected() private var settingsManager: SettingsManager!
         @Injected() private var broadcaster: Broadcaster!
         @Injected() private var fileManager: FileManager!

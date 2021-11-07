@@ -2,7 +2,7 @@ import SwiftUI
 import Swinject
 
 extension Main {
-    class StateModel: BaseStateModel<Provider> {
+    final class StateModel: BaseStateModel<Provider> {
         private(set) var modal: Modal?
         @Published var isModalPresented = false
         @Published var isAlertPresented = false

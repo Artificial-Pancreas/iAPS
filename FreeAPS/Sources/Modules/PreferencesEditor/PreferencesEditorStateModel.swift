@@ -2,7 +2,7 @@ import Foundation
 import SwiftUI
 
 extension PreferencesEditor {
-    class StateModel: BaseStateModel<Provider>, PreferencesSettable {
+    final class StateModel: BaseStateModel<Provider>, PreferencesSettable {
         @Injected() var settingsManager: SettingsManager!
         private(set) var preferences = Preferences()
         @Published var unitsIndex = 1

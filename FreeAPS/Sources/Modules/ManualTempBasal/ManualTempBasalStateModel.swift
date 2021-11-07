@@ -1,7 +1,7 @@
 import SwiftUI
 
 extension ManualTempBasal {
-    class StateModel: BaseStateModel<Provider> {
+    final class StateModel: BaseStateModel<Provider> {
         @Injected() var apsManager: APSManager!
         @Published var rate: Decimal = 0
         @Published var durationIndex = 0

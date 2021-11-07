@@ -4,7 +4,7 @@ import SwiftDate
 import SwiftUI
 
 extension PumpConfig {
-    class StateModel: BaseStateModel<Provider> {
+    final class StateModel: BaseStateModel<Provider> {
         @Published var setupPump = false
         private(set) var setupPumpType: PumpType = .minimed
         @Published var pumpState: PumpDisplayState?

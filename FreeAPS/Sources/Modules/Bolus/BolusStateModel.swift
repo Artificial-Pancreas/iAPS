@@ -2,7 +2,7 @@ import SwiftUI
 import Swinject
 
 extension Bolus {
-    class StateModel: BaseStateModel<Provider> {
+    final class StateModel: BaseStateModel<Provider> {
         @Injected() var unlockmanager: UnlockManager!
         @Injected() var apsManager: APSManager!
         @Injected() var broadcaster: Broadcaster!

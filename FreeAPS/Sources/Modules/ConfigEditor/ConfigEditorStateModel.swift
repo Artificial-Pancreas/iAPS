@@ -2,7 +2,7 @@ import SwiftUI
 import Swinject
 
 extension ConfigEditor {
-    class StateModel: BaseStateModel<Provider> {
+    final class StateModel: BaseStateModel<Provider> {
         var file: String = ""
         @Published var configText = ""
 

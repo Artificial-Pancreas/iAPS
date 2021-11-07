@@ -1,7 +1,7 @@
 import SwiftUI
 
 extension TargetsEditor {
-    class StateModel: BaseStateModel<Provider> {
+    final class StateModel: BaseStateModel<Provider> {
         @Injected() var settingsManager: SettingsManager!
         @Published var items: [Item] = []
 

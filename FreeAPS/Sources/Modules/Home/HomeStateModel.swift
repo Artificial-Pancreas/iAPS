@@ -3,7 +3,7 @@ import SwiftDate
 import SwiftUI
 
 extension Home {
-    class StateModel: BaseStateModel<Provider> {
+    final class StateModel: BaseStateModel<Provider> {
         @Injected() var broadcaster: Broadcaster!
         @Injected() var settingsManager: SettingsManager!
         @Injected() var apsManager: APSManager!

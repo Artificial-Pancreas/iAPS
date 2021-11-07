@@ -73,7 +73,6 @@
 		38569347270B5DFB0002C50D /* CGMType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38569344270B5DFA0002C50D /* CGMType.swift */; };
 		38569348270B5DFB0002C50D /* GlucoseSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38569345270B5DFA0002C50D /* GlucoseSource.swift */; };
 		38569349270B5DFB0002C50D /* AppGroupSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38569346270B5DFB0002C50D /* AppGroupSource.swift */; };
-		3856934F270B5E1D0002C50D /* CGMProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3856934B270B5E1C0002C50D /* CGMProvider.swift */; };
 		38569353270B5E350002C50D /* CGMRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38569352270B5E350002C50D /* CGMRootView.swift */; };
 		385CEA8225F23DFD002D6D5B /* NightscoutStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 385CEA8125F23DFD002D6D5B /* NightscoutStatus.swift */; };
 		385CEAC125F2EA52002D6D5B /* Announcement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 385CEAC025F2EA52002D6D5B /* Announcement.swift */; };
@@ -180,6 +179,7 @@
 		38FE826D25CC8461001FF17A /* NightscoutAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38FE826C25CC8461001FF17A /* NightscoutAPI.swift */; };
 		38FEF3FA2737E42000574A46 /* BaseStateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38FEF3F92737E42000574A46 /* BaseStateModel.swift */; };
 		38FEF3FC2737E53800574A46 /* MainStateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38FEF3FB2737E53800574A46 /* MainStateModel.swift */; };
+		38FEF3FE2738083E00574A46 /* CGMProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38FEF3FD2738083E00574A46 /* CGMProvider.swift */; };
 		44190F0BBA464D74B857D1FB /* PreferencesEditorRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A965332F237348B119FB858 /* PreferencesEditorRootView.swift */; };
 		448B6FCB252BD4796E2960C0 /* PumpSettingsEditorDataFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0274EE6439B1C3ED70730D41 /* PumpSettingsEditorDataFlow.swift */; };
 		45252C95D220E796FDB3B022 /* ConfigEditorDataFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F8A87AA037BD079BA3528BA /* ConfigEditorDataFlow.swift */; };
@@ -280,7 +280,6 @@
 /* Begin PBXFileReference section */
 		0274EE6439B1C3ED70730D41 /* PumpSettingsEditorDataFlow.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PumpSettingsEditorDataFlow.swift; sourceTree = "<group>"; };
 		0CA3E609094E064C99A4752C /* PreferencesEditorStateModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PreferencesEditorStateModel.swift; sourceTree = "<group>"; };
-		0E0D51F68E37921622962DB4 /* CGMProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CGMProvider.swift; sourceTree = "<group>"; };
 		10A0C32B0DAB52726EF9B6D9 /* BolusRootView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = BolusRootView.swift; sourceTree = "<group>"; };
 		12204445D7632AF09264A979 /* PreferencesEditorDataFlow.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PreferencesEditorDataFlow.swift; sourceTree = "<group>"; };
 		1918333A26ADA46800F45722 /* fi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fi; path = fi.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -358,7 +357,6 @@
 		38569344270B5DFA0002C50D /* CGMType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CGMType.swift; sourceTree = "<group>"; };
 		38569345270B5DFA0002C50D /* GlucoseSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlucoseSource.swift; sourceTree = "<group>"; };
 		38569346270B5DFB0002C50D /* AppGroupSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppGroupSource.swift; sourceTree = "<group>"; };
-		3856934B270B5E1C0002C50D /* CGMProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CGMProvider.swift; sourceTree = "<group>"; };
 		38569352270B5E350002C50D /* CGMRootView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CGMRootView.swift; sourceTree = "<group>"; };
 		385CEA8125F23DFD002D6D5B /* NightscoutStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NightscoutStatus.swift; sourceTree = "<group>"; };
 		385CEAC025F2EA52002D6D5B /* Announcement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Announcement.swift; sourceTree = "<group>"; };
@@ -457,6 +455,7 @@
 		38FE826C25CC8461001FF17A /* NightscoutAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NightscoutAPI.swift; sourceTree = "<group>"; };
 		38FEF3F92737E42000574A46 /* BaseStateModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseStateModel.swift; sourceTree = "<group>"; };
 		38FEF3FB2737E53800574A46 /* MainStateModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainStateModel.swift; sourceTree = "<group>"; };
+		38FEF3FD2738083E00574A46 /* CGMProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CGMProvider.swift; sourceTree = "<group>"; };
 		39E7C997E56DAF8D28D09014 /* AddCarbsStateModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AddCarbsStateModel.swift; sourceTree = "<group>"; };
 		3BDEA2DC60EDE0A3CA54DC73 /* TargetsEditorProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = TargetsEditorProvider.swift; sourceTree = "<group>"; };
 		3BF768BD6264FF7D71D66767 /* NightscoutConfigProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NightscoutConfigProvider.swift; sourceTree = "<group>"; };
@@ -1375,8 +1374,7 @@
 			isa = PBXGroup;
 			children = (
 				B9B5C0607505A38F256BF99A /* CGMDataFlow.swift */,
-				0E0D51F68E37921622962DB4 /* CGMProvider.swift */,
-				3856934B270B5E1C0002C50D /* CGMProvider.swift */,
+				38FEF3FD2738083E00574A46 /* CGMProvider.swift */,
 				5C018D1680307A31C9ED7120 /* CGMStateModel.swift */,
 				0D76BBC81CEDC1A0050F45EF /* View */,
 			);
@@ -1644,7 +1642,6 @@
 				3811DE4325C9D4A100A708ED /* SettingsProvider.swift in Sources */,
 				45252C95D220E796FDB3B022 /* ConfigEditorDataFlow.swift in Sources */,
 				3871F38725ED661C0013ECB5 /* Suggestion.swift in Sources */,
-				3856934F270B5E1D0002C50D /* CGMProvider.swift in Sources */,
 				38C4D33A25E9A1ED00D30B77 /* NSObject+AssociatedValues.swift in Sources */,
 				38AAF8712600C1B0004AF583 /* MainChartView.swift in Sources */,
 				72F1BD388F42FCA6C52E4500 /* ConfigEditorProvider.swift in Sources */,
@@ -1666,6 +1663,7 @@
 				A0B8EC8CC5CD1DD237D1BCD2 /* PumpSettingsEditorRootView.swift in Sources */,
 				38EA0600262091870064E39B /* BolusProgressViewStyle.swift in Sources */,
 				389ECDFE2601061500D86C4F /* View+Snapshot.swift in Sources */,
+				38FEF3FE2738083E00574A46 /* CGMProvider.swift in Sources */,
 				38E98A3725F5509500C0CED0 /* String+Extensions.swift in Sources */,
 				385CEAC125F2EA52002D6D5B /* Announcement.swift in Sources */,
 				8B759CFCF47B392BB365C251 /* BasalProfileEditorDataFlow.swift in Sources */,
