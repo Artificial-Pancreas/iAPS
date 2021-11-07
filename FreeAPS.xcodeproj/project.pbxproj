@@ -46,30 +46,10 @@
 		3811DE4125C9D4A100A708ED /* SettingsRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3811DE3C25C9D4A100A708ED /* SettingsRootView.swift */; };
 		3811DE4225C9D4A100A708ED /* SettingsDataFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3811DE3D25C9D4A100A708ED /* SettingsDataFlow.swift */; };
 		3811DE4325C9D4A100A708ED /* SettingsProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3811DE3E25C9D4A100A708ED /* SettingsProvider.swift */; };
-		3811DE4C25C9D4B800A708ED /* AuthorizedRootBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3811DE4625C9D4B800A708ED /* AuthorizedRootBuilder.swift */; };
-		3811DE4D25C9D4B800A708ED /* AuthorizedRootViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3811DE4725C9D4B800A708ED /* AuthorizedRootViewModel.swift */; };
-		3811DE4E25C9D4B800A708ED /* AuthotizedRootRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3811DE4925C9D4B800A708ED /* AuthotizedRootRootView.swift */; };
-		3811DE4F25C9D4B800A708ED /* AuthorizedRootDataFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3811DE4A25C9D4B800A708ED /* AuthorizedRootDataFlow.swift */; };
-		3811DE5025C9D4B800A708ED /* AuthorizedRootProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3811DE4B25C9D4B800A708ED /* AuthorizedRootProvider.swift */; };
 		3811DE5C25C9D4D500A708ED /* Formatters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3811DE5425C9D4D500A708ED /* Formatters.swift */; };
 		3811DE5D25C9D4D500A708ED /* Publisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3811DE5525C9D4D500A708ED /* Publisher.swift */; };
 		3811DE5F25C9D4D500A708ED /* ProgressBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3811DE5725C9D4D500A708ED /* ProgressBar.swift */; };
 		3811DE6125C9D4D500A708ED /* ViewModifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3811DE5925C9D4D500A708ED /* ViewModifiers.swift */; };
-		3811DE6A25C9D62600A708ED /* OnboardingBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3811DE6425C9D62600A708ED /* OnboardingBuilder.swift */; };
-		3811DE6B25C9D62600A708ED /* OnboardingProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3811DE6525C9D62600A708ED /* OnboardingProvider.swift */; };
-		3811DE6C25C9D62600A708ED /* OnboardingDataFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3811DE6625C9D62600A708ED /* OnboardingDataFlow.swift */; };
-		3811DE6D25C9D62600A708ED /* OnboardingRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3811DE6825C9D62600A708ED /* OnboardingRootView.swift */; };
-		3811DE6E25C9D62600A708ED /* OnboardingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3811DE6925C9D62600A708ED /* OnboardingViewModel.swift */; };
-		3811DE7925C9D6D300A708ED /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3811DE7125C9D6D300A708ED /* LoginViewModel.swift */; };
-		3811DE7A25C9D6D300A708ED /* LoginDataFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3811DE7225C9D6D300A708ED /* LoginDataFlow.swift */; };
-		3811DE7B25C9D6D300A708ED /* LoginProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3811DE7325C9D6D300A708ED /* LoginProvider.swift */; };
-		3811DE7D25C9D6D300A708ED /* LoginRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3811DE7625C9D6D300A708ED /* LoginRootView.swift */; };
-		3811DE7F25C9D6D300A708ED /* LoginBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3811DE7825C9D6D300A708ED /* LoginBuilder.swift */; };
-		3811DE8825C9D6DD00A708ED /* RequestPermissionsDataFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3811DE8225C9D6DD00A708ED /* RequestPermissionsDataFlow.swift */; };
-		3811DE8925C9D6DD00A708ED /* RequestPermissionsProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3811DE8325C9D6DD00A708ED /* RequestPermissionsProvider.swift */; };
-		3811DE8A25C9D6DD00A708ED /* RequestPermissionsRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3811DE8525C9D6DD00A708ED /* RequestPermissionsRootView.swift */; };
-		3811DE8B25C9D6DD00A708ED /* RequestPermissionsBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3811DE8625C9D6DD00A708ED /* RequestPermissionsBuilder.swift */; };
-		3811DE8C25C9D6DD00A708ED /* RequestPermissionsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3811DE8725C9D6DD00A708ED /* RequestPermissionsViewModel.swift */; };
 		3811DE8F25C9D80400A708ED /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3811DE8E25C9D80400A708ED /* User.swift */; };
 		3811DEA925C9D88300A708ED /* AppearanceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3811DE9325C9D88200A708ED /* AppearanceManager.swift */; };
 		3811DEAB25C9D88300A708ED /* HTTPResponseStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3811DE9625C9D88300A708ED /* HTTPResponseStatus.swift */; };
@@ -81,7 +61,6 @@
 		3811DEB125C9D88300A708ED /* Keychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3811DE9F25C9D88300A708ED /* Keychain.swift */; };
 		3811DEB225C9D88300A708ED /* KeychainItemAccessibility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3811DEA025C9D88300A708ED /* KeychainItemAccessibility.swift */; };
 		3811DEB625C9D88300A708ED /* UnlockManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3811DEA625C9D88300A708ED /* UnlockManager.swift */; };
-		3811DEB725C9D88300A708ED /* AuthorizationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3811DEA825C9D88300A708ED /* AuthorizationManager.swift */; };
 		3811DEE825CA063400A708ED /* Injected.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3811DEE425CA063400A708ED /* Injected.swift */; };
 		3811DEEA25CA063400A708ED /* SyncAccess.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3811DEE625CA063400A708ED /* SyncAccess.swift */; };
 		3811DEEB25CA063400A708ED /* PersistedProperty.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3811DEE725CA063400A708ED /* PersistedProperty.swift */; };
@@ -374,30 +353,10 @@
 		3811DE3C25C9D4A100A708ED /* SettingsRootView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsRootView.swift; sourceTree = "<group>"; };
 		3811DE3D25C9D4A100A708ED /* SettingsDataFlow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsDataFlow.swift; sourceTree = "<group>"; };
 		3811DE3E25C9D4A100A708ED /* SettingsProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsProvider.swift; sourceTree = "<group>"; };
-		3811DE4625C9D4B800A708ED /* AuthorizedRootBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthorizedRootBuilder.swift; sourceTree = "<group>"; };
-		3811DE4725C9D4B800A708ED /* AuthorizedRootViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthorizedRootViewModel.swift; sourceTree = "<group>"; };
-		3811DE4925C9D4B800A708ED /* AuthotizedRootRootView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthotizedRootRootView.swift; sourceTree = "<group>"; };
-		3811DE4A25C9D4B800A708ED /* AuthorizedRootDataFlow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthorizedRootDataFlow.swift; sourceTree = "<group>"; };
-		3811DE4B25C9D4B800A708ED /* AuthorizedRootProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthorizedRootProvider.swift; sourceTree = "<group>"; };
 		3811DE5425C9D4D500A708ED /* Formatters.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Formatters.swift; sourceTree = "<group>"; };
 		3811DE5525C9D4D500A708ED /* Publisher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Publisher.swift; sourceTree = "<group>"; };
 		3811DE5725C9D4D500A708ED /* ProgressBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProgressBar.swift; sourceTree = "<group>"; };
 		3811DE5925C9D4D500A708ED /* ViewModifiers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewModifiers.swift; sourceTree = "<group>"; };
-		3811DE6425C9D62600A708ED /* OnboardingBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingBuilder.swift; sourceTree = "<group>"; };
-		3811DE6525C9D62600A708ED /* OnboardingProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingProvider.swift; sourceTree = "<group>"; };
-		3811DE6625C9D62600A708ED /* OnboardingDataFlow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingDataFlow.swift; sourceTree = "<group>"; };
-		3811DE6825C9D62600A708ED /* OnboardingRootView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingRootView.swift; sourceTree = "<group>"; };
-		3811DE6925C9D62600A708ED /* OnboardingViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingViewModel.swift; sourceTree = "<group>"; };
-		3811DE7125C9D6D300A708ED /* LoginViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
-		3811DE7225C9D6D300A708ED /* LoginDataFlow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginDataFlow.swift; sourceTree = "<group>"; };
-		3811DE7325C9D6D300A708ED /* LoginProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginProvider.swift; sourceTree = "<group>"; };
-		3811DE7625C9D6D300A708ED /* LoginRootView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginRootView.swift; sourceTree = "<group>"; };
-		3811DE7825C9D6D300A708ED /* LoginBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginBuilder.swift; sourceTree = "<group>"; };
-		3811DE8225C9D6DD00A708ED /* RequestPermissionsDataFlow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestPermissionsDataFlow.swift; sourceTree = "<group>"; };
-		3811DE8325C9D6DD00A708ED /* RequestPermissionsProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestPermissionsProvider.swift; sourceTree = "<group>"; };
-		3811DE8525C9D6DD00A708ED /* RequestPermissionsRootView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestPermissionsRootView.swift; sourceTree = "<group>"; };
-		3811DE8625C9D6DD00A708ED /* RequestPermissionsBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestPermissionsBuilder.swift; sourceTree = "<group>"; };
-		3811DE8725C9D6DD00A708ED /* RequestPermissionsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestPermissionsViewModel.swift; sourceTree = "<group>"; };
 		3811DE8E25C9D80400A708ED /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		3811DE9325C9D88200A708ED /* AppearanceManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppearanceManager.swift; sourceTree = "<group>"; };
 		3811DE9625C9D88300A708ED /* HTTPResponseStatus.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTPResponseStatus.swift; sourceTree = "<group>"; };
@@ -409,7 +368,6 @@
 		3811DE9F25C9D88300A708ED /* Keychain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Keychain.swift; sourceTree = "<group>"; };
 		3811DEA025C9D88300A708ED /* KeychainItemAccessibility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeychainItemAccessibility.swift; sourceTree = "<group>"; };
 		3811DEA625C9D88300A708ED /* UnlockManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnlockManager.swift; sourceTree = "<group>"; };
-		3811DEA825C9D88300A708ED /* AuthorizationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthorizationManager.swift; sourceTree = "<group>"; };
 		3811DEC725C9DA7300A708ED /* FreeAPS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = FreeAPS.entitlements; sourceTree = "<group>"; };
 		3811DEE425CA063400A708ED /* Injected.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Injected.swift; sourceTree = "<group>"; };
 		3811DEE625CA063400A708ED /* SyncAccess.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SyncAccess.swift; sourceTree = "<group>"; };
@@ -704,7 +662,6 @@
 			children = (
 				6DC5D590658EF8B8DF94F9F5 /* AddCarbs */,
 				A9A4C88374496B3C89058A89 /* AddTempTarget */,
-				3811DE4525C9D4B800A708ED /* AuthorizedRoot */,
 				672F63EEAE27400625E14BAD /* AutotuneConfig */,
 				A42F1FEDFFD0DDE00AAD54D3 /* BasalProfileEditor */,
 				3811DE0425C9D32E00A708ED /* Base */,
@@ -715,15 +672,12 @@
 				9E56E3626FAD933385101B76 /* DataTable */,
 				3811DE2725C9D49500A708ED /* Home */,
 				D8F047E14D567F2B5DBEFD96 /* ISFEditor */,
-				3811DE7025C9D6D300A708ED /* Login */,
 				3811DE1A25C9D48300A708ED /* Main */,
 				5031FE61F63C2A8A8B7674DD /* ManualTempBasal */,
 				D533BF261CDC1C3F871E7BFD /* NightscoutConfig */,
-				3811DE6325C9D62600A708ED /* Onboarding */,
 				3E1C41D9301B7058AA7BF5EA /* PreferencesEditor */,
 				99C01B871ACAB3F32CE755C7 /* PumpConfig */,
 				E493126EA71765130F64CCE5 /* PumpSettingsEditor */,
-				3811DE8125C9D6DD00A708ED /* RequestPermissions */,
 				3811DE3825C9D4A100A708ED /* Settings */,
 				6517011F19F244F64E1FF14B /* TargetsEditor */,
 			);
@@ -831,86 +785,6 @@
 			path = View;
 			sourceTree = "<group>";
 		};
-		3811DE4525C9D4B800A708ED /* AuthorizedRoot */ = {
-			isa = PBXGroup;
-			children = (
-				3811DE4625C9D4B800A708ED /* AuthorizedRootBuilder.swift */,
-				3811DE4A25C9D4B800A708ED /* AuthorizedRootDataFlow.swift */,
-				3811DE4B25C9D4B800A708ED /* AuthorizedRootProvider.swift */,
-				3811DE4725C9D4B800A708ED /* AuthorizedRootViewModel.swift */,
-				3811DE4825C9D4B800A708ED /* View */,
-			);
-			path = AuthorizedRoot;
-			sourceTree = "<group>";
-		};
-		3811DE4825C9D4B800A708ED /* View */ = {
-			isa = PBXGroup;
-			children = (
-				3811DE4925C9D4B800A708ED /* AuthotizedRootRootView.swift */,
-			);
-			path = View;
-			sourceTree = "<group>";
-		};
-		3811DE6325C9D62600A708ED /* Onboarding */ = {
-			isa = PBXGroup;
-			children = (
-				3811DE6425C9D62600A708ED /* OnboardingBuilder.swift */,
-				3811DE6525C9D62600A708ED /* OnboardingProvider.swift */,
-				3811DE6625C9D62600A708ED /* OnboardingDataFlow.swift */,
-				3811DE6725C9D62600A708ED /* View */,
-				3811DE6925C9D62600A708ED /* OnboardingViewModel.swift */,
-			);
-			path = Onboarding;
-			sourceTree = "<group>";
-		};
-		3811DE6725C9D62600A708ED /* View */ = {
-			isa = PBXGroup;
-			children = (
-				3811DE6825C9D62600A708ED /* OnboardingRootView.swift */,
-			);
-			path = View;
-			sourceTree = "<group>";
-		};
-		3811DE7025C9D6D300A708ED /* Login */ = {
-			isa = PBXGroup;
-			children = (
-				3811DE7825C9D6D300A708ED /* LoginBuilder.swift */,
-				3811DE7225C9D6D300A708ED /* LoginDataFlow.swift */,
-				3811DE7325C9D6D300A708ED /* LoginProvider.swift */,
-				3811DE7125C9D6D300A708ED /* LoginViewModel.swift */,
-				3811DE7425C9D6D300A708ED /* View */,
-			);
-			path = Login;
-			sourceTree = "<group>";
-		};
-		3811DE7425C9D6D300A708ED /* View */ = {
-			isa = PBXGroup;
-			children = (
-				3811DE7625C9D6D300A708ED /* LoginRootView.swift */,
-			);
-			path = View;
-			sourceTree = "<group>";
-		};
-		3811DE8125C9D6DD00A708ED /* RequestPermissions */ = {
-			isa = PBXGroup;
-			children = (
-				3811DE8225C9D6DD00A708ED /* RequestPermissionsDataFlow.swift */,
-				3811DE8325C9D6DD00A708ED /* RequestPermissionsProvider.swift */,
-				3811DE8425C9D6DD00A708ED /* View */,
-				3811DE8625C9D6DD00A708ED /* RequestPermissionsBuilder.swift */,
-				3811DE8725C9D6DD00A708ED /* RequestPermissionsViewModel.swift */,
-			);
-			path = RequestPermissions;
-			sourceTree = "<group>";
-		};
-		3811DE8425C9D6DD00A708ED /* View */ = {
-			isa = PBXGroup;
-			children = (
-				3811DE8525C9D6DD00A708ED /* RequestPermissionsRootView.swift */,
-			);
-			path = View;
-			sourceTree = "<group>";
-		};
 		3811DE9125C9D88200A708ED /* Services */ = {
 			isa = PBXGroup;
 			children = (
@@ -920,7 +794,6 @@
 				3811DE9425C9D88200A708ED /* Network */,
 				3811DE9825C9D88300A708ED /* Storage */,
 				3811DEA525C9D88300A708ED /* UnlockManager */,
-				3811DEA725C9D88300A708ED /* AuthorizationManager */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -981,14 +854,6 @@
 				3811DEA625C9D88300A708ED /* UnlockManager.swift */,
 			);
 			path = UnlockManager;
-			sourceTree = "<group>";
-		};
-		3811DEA725C9D88300A708ED /* AuthorizationManager */ = {
-			isa = PBXGroup;
-			children = (
-				3811DEA825C9D88300A708ED /* AuthorizationManager.swift */,
-			);
-			path = AuthorizationManager;
 			sourceTree = "<group>";
 		};
 		3811DED425C9E1E300A708ED /* Resources */ = {
@@ -1738,9 +1603,7 @@
 				3811DE2325C9D48300A708ED /* MainDataFlow.swift in Sources */,
 				3811DEEB25CA063400A708ED /* PersistedProperty.swift in Sources */,
 				388E5A6025B6F2310019842D /* Autosens.swift in Sources */,
-				3811DE8B25C9D6DD00A708ED /* RequestPermissionsBuilder.swift in Sources */,
 				38569351270B5E1D0002C50D /* CGMBuilder.swift in Sources */,
-				3811DE4C25C9D4B800A708ED /* AuthorizedRootBuilder.swift in Sources */,
 				3811DE8F25C9D80400A708ED /* User.swift in Sources */,
 				3811DEB225C9D88300A708ED /* KeychainItemAccessibility.swift in Sources */,
 				385CEAC425F2F154002D6D5B /* AnnouncementsStorage.swift in Sources */,
@@ -1748,7 +1611,6 @@
 				38FCF3FD25E997A80078B0D1 /* PumpHistoryStorage.swift in Sources */,
 				38D0B3B625EBE24900CB6E88 /* Battery.swift in Sources */,
 				38C4D33725E9A1A300D30B77 /* DispatchQueue+Extensions.swift in Sources */,
-				3811DE6B25C9D62600A708ED /* OnboardingProvider.swift in Sources */,
 				38B4F3C325E2A20B00E76A18 /* PumpSetupView.swift in Sources */,
 				382C134B25F14E3700715CE1 /* BGTargets.swift in Sources */,
 				38AEE75725F0F18E0013F05B /* CarbsStorage.swift in Sources */,
@@ -1757,9 +1619,7 @@
 				3894873A2614928B004DF424 /* DispatchTimer.swift in Sources */,
 				3895E4C625B9E00D00214B37 /* Preferences.swift in Sources */,
 				386A124F271707F000DDC61C /* DexcomSource.swift in Sources */,
-				3811DE6E25C9D62600A708ED /* OnboardingViewModel.swift in Sources */,
 				38B4F3CD25E5031100E76A18 /* Broadcaster.swift in Sources */,
-				3811DE6D25C9D62600A708ED /* OnboardingRootView.swift in Sources */,
 				383420D925FFEB3F002D46C1 /* Popup.swift in Sources */,
 				3811DE3025C9D49500A708ED /* HomeViewModel.swift in Sources */,
 				38BF021725E7CBBC00579895 /* PumpManagerExtensions.swift in Sources */,
@@ -1778,18 +1638,13 @@
 				38DAB280260CBB7F00F74C1A /* PumpView.swift in Sources */,
 				3811DEB125C9D88300A708ED /* Keychain.swift in Sources */,
 				382C133725F13A1E00715CE1 /* InsulinSensitivities.swift in Sources */,
-				3811DE7B25C9D6D300A708ED /* LoginProvider.swift in Sources */,
 				383948D625CD4D8900E91849 /* FileStorage.swift in Sources */,
 				3811DE4125C9D4A100A708ED /* SettingsRootView.swift in Sources */,
 				38192E04261B82FA0094D973 /* ReachabilityManager.swift in Sources */,
 				388E595C25AD948C0019842D /* FreeAPSApp.swift in Sources */,
-				3811DE8925C9D6DD00A708ED /* RequestPermissionsProvider.swift in Sources */,
 				38569348270B5DFB0002C50D /* GlucoseSource.swift in Sources */,
 				3811DE4225C9D4A100A708ED /* SettingsDataFlow.swift in Sources */,
-				3811DE8825C9D6DD00A708ED /* RequestPermissionsDataFlow.swift in Sources */,
-				3811DE8A25C9D6DD00A708ED /* RequestPermissionsRootView.swift in Sources */,
 				3811DE2525C9D48300A708ED /* MainRootView.swift in Sources */,
-				3811DE8C25C9D6DD00A708ED /* RequestPermissionsViewModel.swift in Sources */,
 				3811DE3125C9D49500A708ED /* HomeProvider.swift in Sources */,
 				388E5A5C25B6F0770019842D /* JSON.swift in Sources */,
 				3811DF0225CA9FEA00A708ED /* Credentials.swift in Sources */,
@@ -1806,8 +1661,6 @@
 				3811DEE825CA063400A708ED /* Injected.swift in Sources */,
 				3811DEAF25C9D88300A708ED /* KeyValueStorage.swift in Sources */,
 				38FE826D25CC8461001FF17A /* NightscoutAPI.swift in Sources */,
-				3811DE4E25C9D4B800A708ED /* AuthotizedRootRootView.swift in Sources */,
-				3811DE7D25C9D6D300A708ED /* LoginRootView.swift in Sources */,
 				3811DE4025C9D4A100A708ED /* SettingsBuilder.swift in Sources */,
 				388358C825EEF6D200E024B2 /* BasalProfileEntry.swift in Sources */,
 				3811DE0B25C9D32F00A708ED /* BaseView.swift in Sources */,
@@ -1815,7 +1668,6 @@
 				38569347270B5DFB0002C50D /* CGMType.swift in Sources */,
 				3821ED4C25DD18BA00BC42AD /* Constants.swift in Sources */,
 				384E803425C385E60086DB71 /* JavaScriptWorker.swift in Sources */,
-				3811DE7A25C9D6D300A708ED /* LoginDataFlow.swift in Sources */,
 				3811DE5D25C9D4D500A708ED /* Publisher.swift in Sources */,
 				E00EEC0727368630002FF094 /* APSAssembly.swift in Sources */,
 				38B4F3AF25E2979F00E76A18 /* IndexedCollection.swift in Sources */,
@@ -1826,7 +1678,6 @@
 				3811DE0C25C9D32F00A708ED /* BaseProvider.swift in Sources */,
 				3811DE5C25C9D4D500A708ED /* Formatters.swift in Sources */,
 				3871F39F25ED895A0013ECB5 /* Decimal+Extensions.swift in Sources */,
-				3811DE7F25C9D6D300A708ED /* LoginBuilder.swift in Sources */,
 				3811DE3525C9D49500A708ED /* HomeRootView.swift in Sources */,
 				38E98A2925F52C9300C0CED0 /* Error+Extensions.swift in Sources */,
 				38EA05DA261F6E7C0064E39B /* SimpleLogReporter.swift in Sources */,
@@ -1838,31 +1689,24 @@
 				38A9260525F012D8009E3739 /* CarbRatios.swift in Sources */,
 				3811DE2125C9D48300A708ED /* MainBuilder.swift in Sources */,
 				38FCF3D625E8FDF40078B0D1 /* MD5.swift in Sources */,
-				3811DE7925C9D6D300A708ED /* LoginViewModel.swift in Sources */,
 				3871F39C25ED892B0013ECB5 /* TempTarget.swift in Sources */,
 				3811DEAB25C9D88300A708ED /* HTTPResponseStatus.swift in Sources */,
 				3811DE5F25C9D4D500A708ED /* ProgressBar.swift in Sources */,
 				38BF021D25E7E3AF00579895 /* Reservoir.swift in Sources */,
 				38BF021B25E7D06400579895 /* PumpSettingsView.swift in Sources */,
 				3811DEEA25CA063400A708ED /* SyncAccess.swift in Sources */,
-				3811DE4F25C9D4B800A708ED /* AuthorizedRootDataFlow.swift in Sources */,
 				38BF021F25E7F0DE00579895 /* DeviceDataManager.swift in Sources */,
-				3811DE5025C9D4B800A708ED /* AuthorizedRootProvider.swift in Sources */,
 				38A504A425DD9C4000C5B9E8 /* UserDefaultsExtensions.swift in Sources */,
 				38FE826A25CC82DB001FF17A /* NetworkService.swift in Sources */,
 				3883581C25EE79BB00E024B2 /* DecimalTextField.swift in Sources */,
-				3811DE6C25C9D62600A708ED /* OnboardingDataFlow.swift in Sources */,
 				38DAB28A260D349500F74C1A /* FetchGlucoseManager.swift in Sources */,
 				3811DE2425C9D48300A708ED /* MainViewModel.swift in Sources */,
 				38F37828261260DC009DB701 /* Color+Extensions.swift in Sources */,
 				3811DE3F25C9D4A100A708ED /* SettingsViewModel.swift in Sources */,
 				38B4F3CB25E502E200E76A18 /* WeakObjectSet.swift in Sources */,
-				3811DEB725C9D88300A708ED /* AuthorizationManager.swift in Sources */,
 				38E989DD25F5021400C0CED0 /* PumpStatus.swift in Sources */,
 				38E98A2525F52C9300C0CED0 /* IssueReporter.swift in Sources */,
 				3811DEB025C9D88300A708ED /* BaseKeychain.swift in Sources */,
-				3811DE4D25C9D4B800A708ED /* AuthorizedRootViewModel.swift in Sources */,
-				3811DE6A25C9D62600A708ED /* OnboardingBuilder.swift in Sources */,
 				3811DE4325C9D4A100A708ED /* SettingsProvider.swift in Sources */,
 				E102DE9C3E9C8AEDCB3C61BB /* ConfigEditorBuilder.swift in Sources */,
 				45252C95D220E796FDB3B022 /* ConfigEditorDataFlow.swift in Sources */,

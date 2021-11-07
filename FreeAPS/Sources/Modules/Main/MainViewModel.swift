@@ -9,7 +9,6 @@ extension Main {
         @Published var isModalPresented = false
         @Published var isAlertPresented = false
         @Published var alertMessage = ""
-        @Published private(set) var scene: Scene = .loading
 
         override func subscribe() {
             router.mainModalScreen
@@ -19,18 +18,6 @@ extension Main {
                 .sink { modal in
                     self.modal = modal
                     self.isModalPresented = modal != nil
-                }
-                .store(in: &lifetime)
-
-            provider.authorizationManager
-                .authorizationPublisher
-                .receive(on: RunLoop.main)
-                .assign(to: \.isAuthotized, on: self)
-                .store(in: &lifetime)
-
-            $isAuthotized
-                .sink { isAuthotized in
-                    self.scene = isAuthotized ? .authorized : .onboarding
                 }
                 .store(in: &lifetime)
 

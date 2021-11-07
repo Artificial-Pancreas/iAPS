@@ -9,6 +9,5 @@ final class NetworkAssembly: Assembly {
         }.inObjectScope(.transient)
 
         container.register(NightscoutManager.self) { r in BaseNightscoutManager(resolver: r) }
-        container.register(AuthorizationManager.self) { r in BaseAuthorizationManager(resolver: r) }
     }
 }

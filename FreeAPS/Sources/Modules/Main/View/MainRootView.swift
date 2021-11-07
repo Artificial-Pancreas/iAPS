@@ -5,7 +5,7 @@ extension Main {
         @EnvironmentObject var viewModel: ViewModel<Provider>
 
         @ViewBuilder func presentedView() -> some View {
-            viewModel.cachedView(for: viewModel.scene.screen)
+            viewModel.cachedView(for: .home)
         }
 
         var body: some View {

@@ -5,10 +5,6 @@ enum Screen: Identifiable, Hashable {
     case loading
     case home
     case settings
-    case onboarding
-    case authorizedRoot
-    case login
-    case requestPermissions
     case configEditor(file: String)
     case nighscoutConfig
     case pumpConfig
@@ -38,14 +34,6 @@ extension Screen {
             return Home.Builder(resolver: resolver).buildView()
         case .settings:
             return Settings.Builder(resolver: resolver).buildView()
-        case .onboarding:
-            return Onboarding.Builder(resolver: resolver).buildView()
-        case .authorizedRoot:
-            return AuthorizedRoot.Builder(resolver: resolver).buildView()
-        case .login:
-            return Login.Builder(resolver: resolver).buildView()
-        case .requestPermissions:
-            return RequestPermissions.Builder(resolver: resolver).buildView()
         case let .configEditor(file):
             return ConfigEditor.Builder(resolver: resolver, file: file).buildView()
         case .nighscoutConfig:
