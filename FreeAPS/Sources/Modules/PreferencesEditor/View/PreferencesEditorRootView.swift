@@ -38,32 +38,53 @@ extension PreferencesEditor {
                     Toggle("Skip Bolus screen after carbs", isOn: $state.skipBolusScreenAfterCarbs)
                 }
 
-                Section(header: Text("OpenAPS")) {
-                    Picker(selection: $state.insulinCurveField.value, label: Text(state.insulinCurveField.displayName)) {
-                        ForEach(InsulinCurve.allCases) { v in
-                            Text(v.rawValue).tag(v)
-                        }
-                    }
-
-                    ForEach(state.boolFields.indexed(), id: \.1.id) { index, field in
-                        HStack {
-                            Button("", action: {
-                                infoButtonPressed = InfoText(description: field.infoText, oref0Variable: field.displayName)
-                            })
-                            Toggle(field.displayName, isOn: self.$state.boolFields[index].value)
-                        }
-                    }
-
-                    ForEach(state.decimalFields.indexed(), id: \.1.id) { index, field in
-                        HStack {
-                            Button("", action: {
-                                infoButtonPressed = InfoText(description: field.infoText, oref0Variable: field.displayName)
-                            })
-                            Text(field.displayName)
-                            DecimalTextField("0", value: self.$state.decimalFields[index].value, formatter: formatter)
+                ForEach(state.sections.indexed(), id: \.1.id) { sectionIndex, section in
+                    Section(header: Text(section.displayName)) {
+                        ForEach(section.fields.indexed(), id: \.1.id) { fieldIndex, field in
+                            HStack {
+                                switch field.type {
+                                case .boolean:
+                                    ZStack {
+                                        Button("", action: {
+                                            infoButtonPressed = InfoText(
+                                                description: field.infoText,
+                                                oref0Variable: field.displayName
+                                            )
+                                        })
+                                        Toggle(isOn: self.$state.sections[sectionIndex].fields[fieldIndex].boolValue) {
+                                            Text(field.displayName)
+                                        }
+                                    }
+                                case .decimal:
+                                    ZStack {
+                                        Button("", action: {
+                                            infoButtonPressed = InfoText(
+                                                description: field.infoText,
+                                                oref0Variable: field.displayName
+                                            )
+                                        })
+                                        Text(field.displayName)
+                                    }
+                                    DecimalTextField(
+                                        "0",
+                                        value: self.$state.sections[sectionIndex].fields[fieldIndex].decimalValue,
+                                        formatter: formatter
+                                    )
+                                case .insulinCurve:
+                                    Picker(
+                                        selection: $state.sections[sectionIndex].fields[fieldIndex].insulinCurveValue,
+                                        label: Text(field.displayName)
+                                    ) {
+                                        ForEach(InsulinCurve.allCases) { v in
+                                            Text(v.rawValue).tag(v)
+                                        }
+                                    }
+                                }
+                            }
                         }
                     }
                 }
+
                 Section {
                     Text("Edit settings json")
                         .navigationLink(to: .configEditor(file: OpenAPS.FreeAPS.settings), from: self)

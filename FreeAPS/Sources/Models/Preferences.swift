@@ -17,7 +17,7 @@ struct Preferences: JSON {
     var maxCOB: Decimal = 120
     var wideBGTargetRange: Bool = false
     var skipNeutralTemps: Bool = false
-    var unsuspendIfNoTemp: Bool = true
+    var unsuspendIfNoTemp: Bool = false
     var bolusSnoozeDIADivisor: Decimal = 2
     var min5mCarbimpact: Decimal = 8
     var autotuneISFAdjustmentFraction: Decimal = 1.0
