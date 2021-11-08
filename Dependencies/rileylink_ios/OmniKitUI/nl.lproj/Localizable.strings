@@ -1,5 +1,5 @@
 /* Accessibility format string for (1: localized volume)(2: time) */
-"%1$@ units remaining at %2$@" = "%1$@ eenheden aanwezig op %2$@";
+"%1$@ units remaining at %2$@" = "%1$@ eenheden aanwezig om %2$@";
 
 /* The format string for displaying an offset from a time zone: (1: GMT)(2: -)(3: 4:00) */
 "%1$@%2$@%3$@" = "%1$@%2$@%3$@";
@@ -72,7 +72,7 @@
 "Configuration" = "Configuratie";
 
 /* The title of the Insulin Type */
-"Insulin Type" = "Insulin Type";
+"Insulin Type" = "Insuline soort";
 
 /* The title of the continue action in an action sheet */
 "Continue" = "Vervolg";
@@ -94,7 +94,7 @@
 "Device Information" = "Apparaat informatie";
 
 /* Title text for button to disable bolus beeps */
-"Disable Bolus Beeps" = "Stop gebruik Bolus Piepjes";
+"Disable Bolus Beeps" = "Bolus piepjes uitschakelen";
 
 /* Title text for button to enable bolus beeps */
 "Enable Bolus Beeps" = "Pas Bolus Piepjes gebruik toe";
@@ -106,16 +106,16 @@
 "Error enabling bolus beeps" = "Fout in toepassen gebruik bolus piepjes";
 
 /* The alert title for enable Confirmation Beeps */
-"Enable Confirmation Beeps" = "Enable Confirmation Beeps";
+"Enable Confirmation Beeps" = "Schakel bevestigingspiepjes in";
 
 /* The alert title for Disable Confirmation Beep */
-"Disable Confirmation Beeps" = "Disable Confirmation Beeps";
+"Disable Confirmation Beeps" = "Schakel bevestigingspiepjes uit";
 
 /* The alert title for enable Automatic Bolus Beeps */
-"Enable Automatic Bolus Beeps" = "Enable Automatic Bolus Beeps";
+"Enable Automatic Bolus Beeps" = "Automatische boluspiepen inschakelen";
 
 /* The alert title for Disable Automatic Bolus Beeps */
-"Disable Automatic Bolus Beeps" = "Disable Automatic Bolus Beeps";
+"Disable Automatic Bolus Beeps" = "Automatische boluspiepen uitschakelen";
 
 /* The alert title for a resume error */
 "Error Resuming" = "Fout met hervatten";
@@ -249,13 +249,13 @@
 "Unknown" = "Onbekend";
 
 /* The title of the diagnostics section in settings */
-"Diagnostics" = "Diagnostics";
+"Diagnostics" = "Diagnostische gegevens";
 
 /* The diagnostic command Read Pod Status */
-"Read Pod Status" = "Read Pod Status";
+"Read Pod Status" = "Lees pompstatus";
 
 /* The diagnostic command Read Pulse Log */
-"Read Pulse Log" = "Read Pulse Log";
+"Read Pulse Log" = "Pulslog uitlezen";
 
 /* The title of the pod details section in settings */
 "Pod Details" = "Pod Details";

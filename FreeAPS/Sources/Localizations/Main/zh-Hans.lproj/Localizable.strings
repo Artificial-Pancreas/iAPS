@@ -116,7 +116,7 @@
 "Enter preset name" = "输入预设名称";
 
 /* Preset name */
-"Name" = "Name";
+"Name" = "设备名称";
 
 /* minutes of target temp */
 "minutes" = "分钟";
