@@ -92,7 +92,7 @@
 "Connection Vibration" = "Вибрировать при потере связи";
 
 /* Detail text when battery alert disabled. */
-"Off" = "Нет";
+"Off" = "Выкл";
 
 /* Text indicating LED Mode is on */
 "On" = "Вкл";
