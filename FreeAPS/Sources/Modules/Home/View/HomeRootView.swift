@@ -33,22 +33,20 @@ extension Home {
             HStack(alignment: .bottom) {
                 Spacer()
                 VStack(alignment: .leading, spacing: 12) {
-                    // HStack {
-                    // Text("").font(.caption2).foregroundColor(.secondary) // Was "IOB"
-                    Text(
-                        (numberFormatter.string(from: (viewModel.suggestion?.iob ?? 0) as NSNumber) ?? "0") +
-                            NSLocalizedString(" U", comment: "Insulin unit")
-                    )
-                    .font(.system(size: 12, weight: .bold))
-                    // }
-                    // HStack {
-                    // Text("").font(.caption2).foregroundColor(.secondary) // Was "COB"
-                    Text(
-                        (numberFormatter.string(from: (viewModel.suggestion?.cob ?? 0) as NSNumber) ?? "0") +
-                            NSLocalizedString(" g", comment: "gram of carbs")
-                    )
-                    .font(.system(size: 12, weight: .bold))
-                    // }
+                    HStack {
+                        Text(
+                            (numberFormatter.string(from: (state.suggestion?.iob ?? 0) as NSNumber) ?? "0") +
+                                NSLocalizedString(" U", comment: "Insulin unit")
+                        )
+                        .font(.system(size: 12, weight: .bold))
+                    }
+                    HStack {
+                        Text(
+                            (numberFormatter.string(from: (state.suggestion?.cob ?? 0) as NSNumber) ?? "0") +
+                                NSLocalizedString(" g", comment: "gram of carbs")
+                        )
+                        .font(.system(size: 12, weight: .bold))
+                    }
                 }
                 Spacer()
 
