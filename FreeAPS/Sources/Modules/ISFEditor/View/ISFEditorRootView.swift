@@ -1,8 +1,10 @@
 import SwiftUI
+import Swinject
 
 extension ISFEditor {
     struct RootView: BaseView {
-        @EnvironmentObject var viewModel: ViewModel<Provider>
+        let resolver: Resolver
+        @StateObject var state = StateModel()
         @State private var editMode = EditMode.inactive
 
         private var dateFormatter: DateFormatter {
@@ -21,32 +23,32 @@ extension ISFEditor {
 
         var body: some View {
             Form {
-                if let autotune = viewModel.autotune {
+                if let autotune = state.autotune {
                     Section(header: Text("Autotune")) {
                         HStack {
                             Text("Calculated Sensitivity")
                             Spacer()
-                            if viewModel.units == .mmolL {
+                            if state.units == .mmolL {
                                 Text(rateFormatter.string(from: autotune.sensitivity.asMmolL as NSNumber) ?? "0")
                             } else {
                                 Text(rateFormatter.string(from: autotune.sensitivity as NSNumber) ?? "0")
                             }
-                            Text(viewModel.units.rawValue + "/U").foregroundColor(.secondary)
+                            Text(state.units.rawValue + "/U").foregroundColor(.secondary)
                         }
                     }
                 }
-                if let newISF = viewModel.autosensISF {
+                if let newISF = state.autosensISF {
                     Section(header: Text("Autosens")) {
                         HStack {
                             Text("Sensitivity Ratio")
                             Spacer()
-                            Text(rateFormatter.string(from: viewModel.autosensRatio as NSNumber) ?? "1")
+                            Text(rateFormatter.string(from: state.autosensRatio as NSNumber) ?? "1")
                         }
                         HStack {
                             Text("Calculated Sensitivity")
                             Spacer()
                             Text(rateFormatter.string(from: newISF as NSNumber) ?? "0")
-                            Text(viewModel.units.rawValue + "/U").foregroundColor(.secondary)
+                            Text(state.units.rawValue + "/U").foregroundColor(.secondary)
                         }
                     }
                 }
@@ -55,13 +57,14 @@ extension ISFEditor {
                     addButton
                 }
                 Section {
-                    Button { viewModel.save() }
+                    Button { state.save() }
                     label: {
                         Text("Save")
                     }
-                    .disabled(viewModel.items.isEmpty)
+                    .disabled(state.items.isEmpty)
                 }
             }
+            .onAppear(perform: configureView)
             .navigationTitle("Insulin Sensitivities")
             .navigationBarTitleDisplayMode(.automatic)
             .navigationBarItems(
@@ -69,7 +72,7 @@ extension ISFEditor {
             )
             .environment(\.editMode, $editMode)
             .onAppear {
-                viewModel.validate()
+                state.validate()
             }
         }
 
@@ -81,25 +84,25 @@ extension ISFEditor {
                         Text("Time").frame(width: geometry.size.width / 2)
                     }
                     HStack(spacing: 0) {
-                        Picker(selection: $viewModel.items[index].rateIndex, label: EmptyView()) {
-                            ForEach(0 ..< viewModel.rateValues.count, id: \.self) { i in
+                        Picker(selection: $state.items[index].rateIndex, label: EmptyView()) {
+                            ForEach(0 ..< state.rateValues.count, id: \.self) { i in
                                 Text(
                                     (
                                         self.rateFormatter
-                                            .string(from: viewModel.rateValues[i] as NSNumber) ?? ""
-                                    ) + " \(viewModel.units.rawValue)/U"
+                                            .string(from: state.rateValues[i] as NSNumber) ?? ""
+                                    ) + " \(state.units.rawValue)/U"
                                 ).tag(i)
                             }
                         }
                         .frame(maxWidth: geometry.size.width / 2)
                         .clipped()
 
-                        Picker(selection: $viewModel.items[index].timeIndex, label: EmptyView()) {
-                            ForEach(0 ..< viewModel.timeValues.count, id: \.self) { i in
+                        Picker(selection: $state.items[index].timeIndex, label: EmptyView()) {
+                            ForEach(0 ..< state.timeValues.count, id: \.self) { i in
                                 Text(
                                     self.dateFormatter
                                         .string(from: Date(
-                                            timeIntervalSince1970: viewModel
+                                            timeIntervalSince1970: state
                                                 .timeValues[i]
                                         ))
                                 ).tag(i)
@@ -114,17 +117,17 @@ extension ISFEditor {
 
         private var list: some View {
             List {
-                ForEach(viewModel.items.indexed(), id: \.1.id) { index, item in
+                ForEach(state.items.indexed(), id: \.1.id) { index, item in
                     NavigationLink(destination: pickers(for: index)) {
                         HStack {
                             Text("Rate").foregroundColor(.secondary)
                             Text(
-                                "\(rateFormatter.string(from: viewModel.rateValues[item.rateIndex] as NSNumber) ?? "0") \(viewModel.units.rawValue)/U"
+                                "\(rateFormatter.string(from: state.rateValues[item.rateIndex] as NSNumber) ?? "0") \(state.units.rawValue)/U"
                             )
                             Spacer()
                             Text("starts at").foregroundColor(.secondary)
                             Text(
-                                "\(dateFormatter.string(from: Date(timeIntervalSince1970: viewModel.timeValues[item.timeIndex])))"
+                                "\(dateFormatter.string(from: Date(timeIntervalSince1970: state.timeValues[item.timeIndex])))"
                             )
                         }
                     }
@@ -135,7 +138,7 @@ extension ISFEditor {
         }
 
         private var addButton: some View {
-            guard viewModel.canAdd else {
+            guard state.canAdd else {
                 return AnyView(EmptyView())
             }
 
@@ -148,12 +151,12 @@ extension ISFEditor {
         }
 
         func onAdd() {
-            viewModel.add()
+            state.add()
         }
 
         private func onDelete(offsets: IndexSet) {
-            viewModel.items.remove(atOffsets: offsets)
-            viewModel.validate()
+            state.items.remove(atOffsets: offsets)
+            state.validate()
         }
     }
 }

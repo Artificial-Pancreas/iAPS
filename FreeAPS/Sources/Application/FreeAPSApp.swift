@@ -1,33 +1,33 @@
 import SwiftUI
 import Swinject
 
-private let dependencies: [DependeciesContainer.Type] = [
-    StorageContainer.self,
-    ServiceContainer.self,
-    APSContainer.self,
-    UIContainer.self,
-    NetworkContainer.self,
-    SecurityContainer.self
-]
-
-private extension Swinject.Resolver {
-    func setup() {
-        for dep in dependencies {
-            dep.setup()
-        }
-    }
-}
-
 @main struct FreeAPSApp: App {
     @Environment(\.scenePhase) var scenePhase
 
-    static let resolver = Container(defaultObjectScope: .container) { container in
-        for dep in dependencies {
-            dep.register(container: container)
-        }
-    }.synchronize()
+    // Dependencies Assembler
+    // contain all dependencies Assemblies
+    // TODO: Remove static key after update "Use Dependencies" logic
+    private static var assembler = Assembler([
+        StorageAssembly(),
+        ServiceAssembly(),
+        APSAssembly(),
+        NetworkAssembly(),
+        UIAssembly(),
+        SecurityAssembly()
+    ], parent: nil, defaultObjectScope: .container)
 
-    private static func loadServices() {
+    var resolver: Resolver {
+        FreeAPSApp.assembler.resolver
+    }
+
+    // Temp static var
+    // Use to backward compatibility with old Dependencies logic on Logger
+    // TODO: Remove var after update "Use Dependencies" logic in Logger
+    static var resolver: Resolver {
+        FreeAPSApp.assembler.resolver
+    }
+
+    private func loadServices() {
         resolver.resolve(AppearanceManager.self)!.setupGlobalAppearance()
         _ = resolver.resolve(DeviceDataManager.self)!
         _ = resolver.resolve(APSManager.self)!
@@ -37,27 +37,15 @@ private extension Swinject.Resolver {
     }
 
     init() {
-        FreeAPSApp.resolver.setup()
-        FreeAPSApp.loadServices()
+        loadServices()
     }
-
-    private let mainView = Main.Builder(resolver: FreeAPSApp.resolver).buildView()
 
     var body: some Scene {
         WindowGroup {
-            mainView
+            Main.RootView(resolver: resolver)
         }
         .onChange(of: scenePhase) { newScenePhase in
-            switch newScenePhase {
-            case .active:
-                debug(.default, "APPLICATION is active")
-            case .inactive:
-                debug(.default, "APPLICATION is inactive")
-            case .background:
-                debug(.default, "APPLICATION is in background")
-            @unknown default:
-                debug(.default, "APPLICATION: Received an unexpected scenePhase.")
-            }
+            debug(.default, "APPLICATION PHASE: \(newScenePhase)")
         }
     }
 }

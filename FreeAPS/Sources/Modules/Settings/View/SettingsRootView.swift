@@ -1,14 +1,16 @@
 import SwiftUI
+import Swinject
 
 extension Settings {
     struct RootView: BaseView {
-        @EnvironmentObject var viewModel: ViewModel<Provider>
+        let resolver: Resolver
+        @StateObject var state = StateModel()
         @State private var showShareSheet = false
 
         var body: some View {
             Form {
-                Section(header: Text("FreeAPS X v\(viewModel.buildNumber)")) {
-                    Toggle("Closed loop", isOn: $viewModel.closedLoop)
+                Section(header: Text("FreeAPS X v\(state.buildNumber)")) {
+                    Toggle("Closed loop", isOn: $state.closedLoop)
                 }
 
                 Section(header: Text("Devices")) {
@@ -30,7 +32,7 @@ extension Settings {
                     Text("Autotune").navigationLink(to: .autotuneConfig, from: self)
                 }
 
-                if viewModel.debugOptions {
+                if state.debugOptions {
                     Section(header: Text("Config files")) {
                         Group {
                             Text("Preferences")
@@ -92,17 +94,14 @@ extension Settings {
                         .onTapGesture {
                             showShareSheet = true
                         }
-//                    Text("Read disclaimer")
-//                        .onTapGesture {
-//                            viewModel.logout()
-//                        }
                 }
             }
             .sheet(isPresented: $showShareSheet) {
-                ShareSheet(activityItems: viewModel.logItems())
+                ShareSheet(activityItems: state.logItems())
             }
+            .onAppear(perform: configureView)
             .navigationTitle("Settings")
-            .navigationBarItems(leading: Button("Close", action: viewModel.hideModal))
+            .navigationBarItems(leading: Button("Close", action: state.hideModal))
             .navigationBarTitleDisplayMode(.automatic)
         }
     }

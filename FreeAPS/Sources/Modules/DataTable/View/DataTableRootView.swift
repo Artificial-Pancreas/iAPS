@@ -1,8 +1,10 @@
 import SwiftUI
+import Swinject
 
 extension DataTable {
     struct RootView: BaseView {
-        @EnvironmentObject var viewModel: ViewModel<Provider>
+        let resolver: Resolver
+        @StateObject var state = StateModel()
         @State private var isRemoveCarbsAlertPresented = false
         @State private var removeCarbsAlert: Alert?
 
@@ -16,16 +18,17 @@ extension DataTable {
             Form {
                 list
             }
+            .onAppear(perform: configureView)
             .navigationTitle("History")
             .navigationBarTitleDisplayMode(.automatic)
             .navigationBarItems(
-                leading: Button("Close", action: viewModel.hideModal)
+                leading: Button("Close", action: state.hideModal)
             )
         }
 
         private var list: some View {
             List {
-                ForEach(viewModel.items.indexed(), id: \.1.id) { _, item in
+                ForEach(state.items.indexed(), id: \.1.id) { _, item in
                     HStack {
                         Image(systemName: "circle.fill").foregroundColor(item.color)
                         Text(dateFormatter.string(from: item.date))
@@ -47,7 +50,7 @@ extension DataTable {
                                         message: Text(item.amountText),
                                         primaryButton: .destructive(
                                             Text("Delete"),
-                                            action: { viewModel.deleteCarbs(at: item.date) }
+                                            action: { state.deleteCarbs(at: item.date) }
                                         ),
                                         secondaryButton: .cancel()
                                     )

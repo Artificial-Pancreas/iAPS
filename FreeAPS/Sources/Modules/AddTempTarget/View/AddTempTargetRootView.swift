@@ -1,8 +1,10 @@
 import SwiftUI
+import Swinject
 
 extension AddTempTarget {
     struct RootView: BaseView {
-        @EnvironmentObject var viewModel: ViewModel<Provider>
+        let resolver: Resolver
+        @StateObject var state = StateModel()
         @State private var isPromtPresented = false
         @State private var isRemoveAlertPresented = false
         @State private var removeAlert: Alert?
@@ -16,9 +18,9 @@ extension AddTempTarget {
 
         var body: some View {
             Form {
-                if !viewModel.presets.isEmpty {
+                if !state.presets.isEmpty {
                     Section(header: Text("Presets")) {
-                        ForEach(viewModel.presets) { preset in
+                        ForEach(state.presets) { preset in
                             presetView(for: preset)
                         }
                     }
@@ -28,39 +30,39 @@ extension AddTempTarget {
                     HStack {
                         Text("Bottom target")
                         Spacer()
-                        DecimalTextField("0", value: $viewModel.low, formatter: formatter, cleanInput: true)
-                        Text(viewModel.units.rawValue).foregroundColor(.secondary)
+                        DecimalTextField("0", value: $state.low, formatter: formatter, cleanInput: true)
+                        Text(state.units.rawValue).foregroundColor(.secondary)
                     }
                     HStack {
                         Text("Top target")
                         Spacer()
-                        DecimalTextField("0", value: $viewModel.high, formatter: formatter, cleanInput: true)
-                        Text(viewModel.units.rawValue).foregroundColor(.secondary)
+                        DecimalTextField("0", value: $state.high, formatter: formatter, cleanInput: true)
+                        Text(state.units.rawValue).foregroundColor(.secondary)
                     }
                     HStack {
                         Text("Duration")
                         Spacer()
-                        DecimalTextField("0", value: $viewModel.duration, formatter: formatter, cleanInput: true)
+                        DecimalTextField("0", value: $state.duration, formatter: formatter, cleanInput: true)
                         Text("minutes").foregroundColor(.secondary)
                     }
-                    DatePicker("Date", selection: $viewModel.date)
+                    DatePicker("Date", selection: $state.date)
                     Button { isPromtPresented = true }
                     label: { Text("Save as preset") }
                 }
 
                 Section {
-                    Button { viewModel.enact() }
+                    Button { state.enact() }
                     label: { Text("Enact") }
-                    Button { viewModel.cancel() }
+                    Button { state.cancel() }
                     label: { Text("Cancel Temp Target") }
                 }
             }
             .popover(isPresented: $isPromtPresented) {
                 Form {
                     Section(header: Text("Enter preset name")) {
-                        TextField("Name", text: $viewModel.newPresetName)
+                        TextField("Name", text: $state.newPresetName)
                         Button {
-                            viewModel.save()
+                            state.save()
                             isPromtPresented = false
                         }
                         label: { Text("Save") }
@@ -69,15 +71,16 @@ extension AddTempTarget {
                     }
                 }
             }
+            .onAppear(perform: configureView)
             .navigationTitle("Enact Temp Target")
             .navigationBarTitleDisplayMode(.automatic)
-            .navigationBarItems(leading: Button("Close", action: viewModel.hideModal))
+            .navigationBarItems(leading: Button("Close", action: state.hideModal))
         }
 
         private func presetView(for preset: TempTarget) -> some View {
             var low = preset.targetBottom
             var high = preset.targetTop
-            if viewModel.units == .mmolL {
+            if state.units == .mmolL {
                 low = low?.asMmolL
                 high = high?.asMmolL
             }
@@ -94,7 +97,7 @@ extension AddTempTarget {
                         .foregroundColor(.secondary)
                         .font(.caption)
 
-                        Text(viewModel.units.rawValue)
+                        Text(state.units.rawValue)
                             .foregroundColor(.secondary)
                             .font(.caption)
                         Text("for \(formatter.string(from: preset.duration as NSNumber)!) min")
@@ -105,7 +108,7 @@ extension AddTempTarget {
                 }
                 .contentShape(Rectangle())
                 .onTapGesture {
-                    viewModel.enactPreset(id: preset.id)
+                    state.enactPreset(id: preset.id)
                 }
 
                 Image(systemName: "xmark.circle").foregroundColor(.secondary)
@@ -115,7 +118,7 @@ extension AddTempTarget {
                         removeAlert = Alert(
                             title: Text("Are you sure?"),
                             message: Text("Delete preset \"\(preset.displayName)\""),
-                            primaryButton: .destructive(Text("Delete"), action: { viewModel.removePreset(id: preset.id) }),
+                            primaryButton: .destructive(Text("Delete"), action: { state.removePreset(id: preset.id) }),
                             secondaryButton: .cancel()
                         )
                         isRemoveAlertPresented = true

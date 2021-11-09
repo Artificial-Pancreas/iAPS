@@ -10,7 +10,7 @@ import SwiftUI
 import LoopKit
 import HealthKit
 
-public class OverrideHistoryViewModel: ObservableObject {
+public class OverrideHistorystate: ObservableObject {
     var overrides: [TemporaryScheduleOverride]
     var glucoseUnit: HKUnit
     var didEditOverride: ((TemporaryScheduleOverride) -> Void)?
@@ -26,12 +26,12 @@ public class OverrideHistoryViewModel: ObservableObject {
 }
 
 public struct OverrideSelectionHistory: View {
-    @ObservedObject var model: OverrideHistoryViewModel
+    @ObservedObject var model: OverrideHistorystate
     private var quantityFormatter: QuantityFormatter
     private var glucoseNumberFormatter: NumberFormatter
     private var durationFormatter: DateComponentsFormatter
     
-    public init(model: OverrideHistoryViewModel) {
+    public init(model: OverrideHistorystate) {
         self.model = model
         self.quantityFormatter = {
             let quantityFormatter = QuantityFormatter()

@@ -1,9 +1,12 @@
 import SwiftDate
 import SwiftUI
+import Swinject
 
 extension Home {
     struct RootView: BaseView {
-        @EnvironmentObject var viewModel: ViewModel<Provider>
+        let resolver: Resolver
+
+        @StateObject var state = StateModel()
         @State var isStatusPopupPresented = false
 
         private var numberFormatter: NumberFormatter {
@@ -33,7 +36,7 @@ extension Home {
                     HStack {
                         Text("IOB").font(.caption2).foregroundColor(.secondary)
                         Text(
-                            (numberFormatter.string(from: (viewModel.suggestion?.iob ?? 0) as NSNumber) ?? "0") +
+                            (numberFormatter.string(from: (state.suggestion?.iob ?? 0) as NSNumber) ?? "0") +
                                 NSLocalizedString(" U", comment: "Insulin unit")
                         )
                         .font(.system(size: 12, weight: .bold))
@@ -41,7 +44,7 @@ extension Home {
                     HStack {
                         Text("COB").font(.caption2).foregroundColor(.secondary)
                         Text(
-                            (numberFormatter.string(from: (viewModel.suggestion?.cob ?? 0) as NSNumber) ?? "0") +
+                            (numberFormatter.string(from: (state.suggestion?.cob ?? 0) as NSNumber) ?? "0") +
                                 NSLocalizedString(" g", comment: "gram of carbs")
                         )
                         .font(.system(size: 12, weight: .bold))
@@ -50,41 +53,41 @@ extension Home {
                 Spacer()
 
                 CurrentGlucoseView(
-                    recentGlucose: $viewModel.recentGlucose,
-                    delta: $viewModel.glucoseDelta,
-                    units: $viewModel.units
+                    recentGlucose: $state.recentGlucose,
+                    delta: $state.glucoseDelta,
+                    units: $state.units
                 )
                 .onTapGesture {
-                    viewModel.openCGM()
+                    state.openCGM()
                 }
                 Spacer()
                 PumpView(
-                    reservoir: $viewModel.reservoir,
-                    battery: $viewModel.battery,
-                    name: $viewModel.pumpName,
-                    expiresAtDate: $viewModel.pumpExpiresAtDate,
-                    timerDate: $viewModel.timerDate
+                    reservoir: $state.reservoir,
+                    battery: $state.battery,
+                    name: $state.pumpName,
+                    expiresAtDate: $state.pumpExpiresAtDate,
+                    timerDate: $state.timerDate
                 )
                 .onTapGesture {
-                    viewModel.setupPump = true
+                    state.setupPump = true
                 }
-                .popover(isPresented: $viewModel.setupPump) {
-                    if let pumpManager = viewModel.provider.apsManager.pumpManager {
-                        PumpConfig.PumpSettingsView(pumpManager: pumpManager, completionDelegate: viewModel)
+                .popover(isPresented: $state.setupPump) {
+                    if let pumpManager = state.provider.apsManager.pumpManager {
+                        PumpConfig.PumpSettingsView(pumpManager: pumpManager, completionDelegate: state)
                     }
                 }
                 Spacer()
                 LoopView(
-                    suggestion: $viewModel.suggestion,
-                    enactedSuggestion: $viewModel.enactedSuggestion,
-                    closedLoop: $viewModel.closedLoop,
-                    timerDate: $viewModel.timerDate,
-                    isLooping: $viewModel.isLooping,
-                    lastLoopDate: $viewModel.lastLoopDate
+                    suggestion: $state.suggestion,
+                    enactedSuggestion: $state.enactedSuggestion,
+                    closedLoop: $state.closedLoop,
+                    timerDate: $state.timerDate,
+                    isLooping: $state.isLooping,
+                    lastLoopDate: $state.lastLoopDate
                 ).onTapGesture {
                     isStatusPopupPresented = true
                 }.onLongPressGesture {
-                    viewModel.runLoop()
+                    state.runLoop()
                 }
                 Spacer()
             }.frame(maxWidth: .infinity)
@@ -92,11 +95,11 @@ extension Home {
 
         var infoPanal: some View {
             HStack(alignment: .center) {
-                if viewModel.pumpSuspended {
+                if state.pumpSuspended {
                     Text("Pump suspended")
                         .font(.system(size: 12, weight: .bold)).foregroundColor(.loopGray)
                         .padding(.leading, 8)
-                } else if let tempRate = viewModel.tempRate {
+                } else if let tempRate = state.tempRate {
                     Text(
                         (numberFormatter.string(from: tempRate as NSNumber) ?? "0") +
                             NSLocalizedString(" U/hr", comment: "Unit per hour with space")
@@ -105,9 +108,9 @@ extension Home {
                     .padding(.leading, 8)
                 }
 
-                if let tempTarget = viewModel.tempTarget {
+                if let tempTarget = state.tempTarget {
                     Text(tempTarget.displayName).font(.caption).foregroundColor(.secondary)
-                    if viewModel.units == .mmolL {
+                    if state.units == .mmolL {
                         Text(
                             targetFormatter
                                 .string(from: (tempTarget.targetBottom?.asMmolL ?? 0) as NSNumber)!
@@ -120,12 +123,12 @@ extension Home {
                             Text(
                                 targetFormatter
                                     .string(from: (tempTarget.targetTop?.asMmolL ?? 0) as NSNumber)! +
-                                    " \(viewModel.units.rawValue)"
+                                    " \(state.units.rawValue)"
                             )
                             .font(.caption)
                             .foregroundColor(.secondary)
                         } else {
-                            Text(viewModel.units.rawValue).font(.caption)
+                            Text(state.units.rawValue).font(.caption)
                                 .foregroundColor(.secondary)
                         }
 
@@ -138,25 +141,25 @@ extension Home {
                                 .foregroundColor(.secondary)
                             Text(
                                 targetFormatter
-                                    .string(from: (tempTarget.targetTop ?? 0) as NSNumber)! + " \(viewModel.units.rawValue)"
+                                    .string(from: (tempTarget.targetTop ?? 0) as NSNumber)! + " \(state.units.rawValue)"
                             )
                             .font(.caption)
                             .foregroundColor(.secondary)
                         } else {
-                            Text(viewModel.units.rawValue).font(.caption)
+                            Text(state.units.rawValue).font(.caption)
                                 .foregroundColor(.secondary)
                         }
                     }
                 }
                 Spacer()
-                if let progress = viewModel.bolusProgress {
+                if let progress = state.bolusProgress {
                     Text("Bolusing")
                         .font(.system(size: 12, weight: .bold)).foregroundColor(.insulin)
                     ProgressView(value: Double(progress))
                         .progressViewStyle(BolusProgressViewStyle())
                         .padding(.trailing, 8)
                         .onTapGesture {
-                            viewModel.cancelBolus()
+                            state.cancelBolus()
                         }
                 }
             }
@@ -195,10 +198,10 @@ extension Home {
                         .font(.system(size: 12, weight: .bold)).foregroundColor(.uam)
                 }
 
-                if let eventualBG = viewModel.eventualBG {
+                if let eventualBG = state.eventualBG {
                     Text(
                         "⇢ " + numberFormatter.string(
-                            from: (viewModel.units == .mmolL ? eventualBG.asMmolL : Decimal(eventualBG)) as NSNumber
+                            from: (state.units == .mmolL ? eventualBG.asMmolL : Decimal(eventualBG)) as NSNumber
                         )!
                     )
                     .font(.system(size: 12, weight: .bold)).foregroundColor(.secondary)
@@ -217,19 +220,19 @@ extension Home {
 
                     infoPanal
                     MainChartView(
-                        glucose: $viewModel.glucose,
-                        suggestion: $viewModel.suggestion,
-                        tempBasals: $viewModel.tempBasals,
-                        boluses: $viewModel.boluses,
-                        suspensions: $viewModel.suspensions,
-                        hours: .constant(viewModel.filteredHours),
-                        maxBasal: $viewModel.maxBasal,
-                        autotunedBasalProfile: $viewModel.autotunedBasalProfile,
-                        basalProfile: $viewModel.basalProfile,
-                        tempTargets: $viewModel.tempTargets,
-                        carbs: $viewModel.carbs,
-                        timerDate: $viewModel.timerDate,
-                        units: $viewModel.units
+                        glucose: $state.glucose,
+                        suggestion: $state.suggestion,
+                        tempBasals: $state.tempBasals,
+                        boluses: $state.boluses,
+                        suspensions: $state.suspensions,
+                        hours: .constant(state.filteredHours),
+                        maxBasal: $state.maxBasal,
+                        autotunedBasalProfile: $state.autotunedBasalProfile,
+                        basalProfile: $state.basalProfile,
+                        tempTargets: $state.tempTargets,
+                        carbs: $state.carbs,
+                        timerDate: $state.timerDate,
+                        units: $state.units
                     )
                     .padding(.bottom)
                     .modal(for: .dataTable, from: self)
@@ -240,7 +243,7 @@ extension Home {
                         Rectangle().fill(Color.gray.opacity(0.2)).frame(height: 50 + geo.safeAreaInsets.bottom)
 
                         HStack {
-                            Button { viewModel.showModal(for: .addCarbs) }
+                            Button { state.showModal(for: .addCarbs) }
                             label: {
                                 ZStack(alignment: Alignment(horizontal: .trailing, vertical: .bottom)) {
                                     Image("carbs")
@@ -249,7 +252,7 @@ extension Home {
                                         .frame(width: 24, height: 24)
                                         .foregroundColor(.loopGreen)
                                         .padding(8)
-                                    if let carbsReq = viewModel.carbsRequired {
+                                    if let carbsReq = state.carbsRequired {
                                         Text(numberFormatter.string(from: carbsReq as NSNumber)!)
                                             .font(.caption)
                                             .foregroundColor(.white)
@@ -259,7 +262,7 @@ extension Home {
                                 }
                             }
                             Spacer()
-                            Button { viewModel.showModal(for: .addTempTarget) }
+                            Button { state.showModal(for: .addTempTarget) }
                             label: {
                                 Image("target")
                                     .renderingMode(.template)
@@ -268,7 +271,7 @@ extension Home {
                                     .padding(8)
                             }.foregroundColor(.loopYellow)
                             Spacer()
-                            Button { viewModel.showModal(for: .bolus(waitForDuggestion: false)) }
+                            Button { state.showModal(for: .bolus(waitForDuggestion: false)) }
                             label: {
                                 Image("bolus")
                                     .renderingMode(.template)
@@ -277,8 +280,8 @@ extension Home {
                                     .padding(8)
                             }.foregroundColor(.insulin)
                             Spacer()
-                            if viewModel.allowManualTemp {
-                                Button { viewModel.showModal(for: .manualTempBasal) }
+                            if state.allowManualTemp {
+                                Button { state.showModal(for: .manualTempBasal) }
                                 label: {
                                     Image("bolus1")
                                         .renderingMode(.template)
@@ -288,7 +291,7 @@ extension Home {
                                 }.foregroundColor(.insulin)
                                 Spacer()
                             }
-                            Button { viewModel.showModal(for: .settings) }
+                            Button { state.showModal(for: .settings) }
                             label: {
                                 Image("settings1")
                                     .renderingMode(.template)
@@ -303,16 +306,17 @@ extension Home {
                 }
                 .edgesIgnoringSafeArea(.vertical)
             }
+            .onAppear(perform: configureView)
             .navigationTitle("Home")
             .navigationBarHidden(true)
             .ignoresSafeArea(.keyboard)
             .popup(isPresented: isStatusPopupPresented, alignment: .top, direction: .top) {
                 VStack(alignment: .leading) {
-                    Text(viewModel.statusTitle).foregroundColor(.white)
+                    Text(state.statusTitle).foregroundColor(.white)
                         .padding(.bottom, 4)
-                    Text(viewModel.suggestion?.reason ?? "No sugestion found").font(.caption).foregroundColor(.white)
+                    Text(state.suggestion?.reason ?? "No sugestion found").font(.caption).foregroundColor(.white)
 
-                    if let errorMessage = viewModel.errorMessage, let date = viewModel.errorDate {
+                    if let errorMessage = state.errorMessage, let date = state.errorDate {
                         Text("Error at \(dateFormatter.string(from: date))").foregroundColor(.white)
                             .padding(.bottom, 4)
                             .padding(.top, 8)

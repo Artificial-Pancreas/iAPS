@@ -11,6 +11,7 @@ import Foundation
 public struct StoredInsulinModel: Codable, Equatable {
     public enum ModelType: String, Codable {
         case fiasp
+        case lyumjev
         case rapidAdult
         case rapidChild
         case walsh

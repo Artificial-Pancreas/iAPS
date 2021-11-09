@@ -28,6 +28,8 @@ public enum InsulinModelSettings: Equatable {
         switch type {
         case .fiasp:
             return ExponentialInsulinModelPreset.fiasp
+        case .lyumjev:
+            return ExponentialInsulinModelPreset.lyumjev
         default:
             switch self {
             case .exponentialPreset(let model):
@@ -150,6 +152,8 @@ public extension InsulinModelSettings {
         switch storedSettingsInsulinModel.modelType {
         case .fiasp:
             self = .exponentialPreset(.fiasp)
+        case .lyumjev:
+            self = .exponentialPreset(.lyumjev)
         case .rapidAdult:
             self = .exponentialPreset(.rapidActingAdult)
         case .rapidChild:
@@ -175,6 +179,8 @@ public extension StoredInsulinModel {
                 modelType = .rapidChild
             case .fiasp:
                 modelType = .fiasp
+            case .lyumjev:
+                modelType = .lyumjev
             }
             actionDuration = preset.actionDuration
             peakActivity = preset.peakActivity
