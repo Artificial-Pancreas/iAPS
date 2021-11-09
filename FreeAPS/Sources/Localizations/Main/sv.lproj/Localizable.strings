@@ -532,3 +532,18 @@ Enact a temp Basal or a temp target */
 
 /* "SMB DeliveryRatio" */
 "Default value: 0.5 This is another key OpenAPS safety cap, and specifies what share of the total insulin required can be delivered as SMB. This is to prevent people from getting into dangerous territory by setting SMB requests from the caregivers phone at the same time. Increase this experimental value slowly and with caution." = "Standardvärde: 0.5. Bestämmer hur stor del av insulin som krävs (insulin required) som kommer att ges som SMB. Öka detta experimentella värde långsamt och med försiktighet.";
+
+/* OpenAPS main settings */
+"OpenAPS main settings" = "OpenAPS huvudsakliga inställnigar";
+
+/* OpenAPS SMB settings */
+"OpenAPS SMB settings" = "OpenAPS SMB-inställningar";
+
+/* OpenAPS targets settings */
+"OpenAPS targets settings" = "OpenAPS målvärdesinställningar";
+
+/* OpenAPS other settings */
+"OpenAPS other settings" = "OpenAPS andra inställningar";
+
+/* Auto-ISF settings */
+"Auto-ISF settings" = "Auto-ISF-inställningar";
