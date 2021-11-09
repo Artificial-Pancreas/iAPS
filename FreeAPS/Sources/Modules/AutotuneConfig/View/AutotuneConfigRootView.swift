@@ -1,8 +1,10 @@
 import SwiftUI
+import Swinject
 
 extension AutotuneConfig {
     struct RootView: BaseView {
-        @EnvironmentObject var viewModel: ViewModel<Provider>
+        let resolver: Resolver
+        @StateObject var state = StateModel()
 
         private var isfFormatter: NumberFormatter {
             let formatter = NumberFormatter()
@@ -28,20 +30,20 @@ extension AutotuneConfig {
         var body: some View {
             Form {
                 Section {
-                    Toggle("Use Autotune", isOn: $viewModel.useAutotune)
+                    Toggle("Use Autotune", isOn: $state.useAutotune)
                 }
 
                 Section {
                     HStack {
                         Text("Last run")
                         Spacer()
-                        Text(dateFormatter.string(from: viewModel.publishedDate))
+                        Text(dateFormatter.string(from: state.publishedDate))
                     }
-                    Button { viewModel.run() }
+                    Button { state.run() }
                     label: { Text("Run now") }
                 }
 
-                if let autotune = viewModel.autotune {
+                if let autotune = state.autotune {
                     Section {
                         HStack {
                             Text("Carb ratio")
@@ -52,12 +54,12 @@ extension AutotuneConfig {
                         HStack {
                             Text("Sensitivity")
                             Spacer()
-                            if viewModel.units == .mmolL {
+                            if state.units == .mmolL {
                                 Text(isfFormatter.string(from: autotune.sensitivity.asMmolL as NSNumber) ?? "0")
                             } else {
                                 Text(isfFormatter.string(from: autotune.sensitivity as NSNumber) ?? "0")
                             }
-                            Text(viewModel.units.rawValue + "/U").foregroundColor(.secondary)
+                            Text(state.units.rawValue + "/U").foregroundColor(.secondary)
                         }
                     }
 
@@ -73,12 +75,13 @@ extension AutotuneConfig {
                     }
 
                     Section {
-                        Button { viewModel.delete() }
+                        Button { state.delete() }
                         label: { Text("Delete autotune data") }
                             .foregroundColor(.red)
                     }
                 }
             }
+            .onAppear(perform: configureView)
             .navigationTitle("Autotune")
             .navigationBarTitleDisplayMode(.automatic)
         }

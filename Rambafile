@@ -17,4 +17,4 @@ project_group_path: FreeAPS/Sources/Modules
 
 ### Templates
 templates:
-- {name: swift_pvvm, local: Templates/swift_pvvm}
+- {name: unit, local: Templates/unit}

@@ -8,7 +8,6 @@ protocol Provider {
 
 class BaseProvider: Provider, Injectable {
     var lifetime = Lifetime()
-    @Injected() var authorizationManager: AuthorizationManager!
     @Injected() var deviceManager: DeviceDataManager!
     @Injected() var storage: FileStorage!
 

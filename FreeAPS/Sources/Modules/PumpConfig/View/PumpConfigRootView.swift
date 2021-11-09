@@ -1,15 +1,17 @@
 import SwiftUI
+import Swinject
 
 extension PumpConfig {
     struct RootView: BaseView {
-        @EnvironmentObject var viewModel: ViewModel<Provider>
+        let resolver: Resolver
+        @StateObject var state = StateModel()
 
         var body: some View {
             Form {
                 Section(header: Text("Model")) {
-                    if let pumpState = viewModel.pumpState {
+                    if let pumpState = state.pumpState {
                         Button {
-                            viewModel.setupPump = true
+                            state.setupPump = true
                         } label: {
                             HStack {
                                 Image(uiImage: pumpState.image ?? UIImage()).padding()
@@ -17,23 +19,24 @@ extension PumpConfig {
                             }
                         }
                     } else {
-                        Button("Add Medtronic") { viewModel.addPump(.minimed) }
-                        Button("Add Omnipod") { viewModel.addPump(.omnipod) }
-                        Button("Add Simulator") { viewModel.addPump(.simulator) }
+                        Button("Add Medtronic") { state.addPump(.minimed) }
+                        Button("Add Omnipod") { state.addPump(.omnipod) }
+                        Button("Add Simulator") { state.addPump(.simulator) }
                     }
                 }
             }
+            .onAppear(perform: configureView)
             .navigationTitle("Pump config")
             .navigationBarTitleDisplayMode(.automatic)
-            .popover(isPresented: $viewModel.setupPump) {
-                if let pumpManager = viewModel.provider.apsManager.pumpManager {
-                    PumpSettingsView(pumpManager: pumpManager, completionDelegate: viewModel)
+            .popover(isPresented: $state.setupPump) {
+                if let pumpManager = state.provider.apsManager.pumpManager {
+                    PumpSettingsView(pumpManager: pumpManager, completionDelegate: state)
                 } else {
                     PumpSetupView(
-                        pumpType: viewModel.setupPumpType,
-                        pumpInitialSettings: viewModel.initialSettings,
-                        completionDelegate: viewModel,
-                        setupDelegate: viewModel
+                        pumpType: state.setupPumpType,
+                        pumpInitialSettings: state.initialSettings,
+                        completionDelegate: state,
+                        setupDelegate: state
                     )
                 }
             }

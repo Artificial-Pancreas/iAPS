@@ -1,8 +1,10 @@
 import SwiftUI
+import Swinject
 
 extension PumpSettingsEditor {
     struct RootView: BaseView {
-        @EnvironmentObject var viewModel: ViewModel<Provider>
+        let resolver: Resolver
+        @StateObject var state = StateModel()
 
         private var formatter: NumberFormatter {
             let formatter = NumberFormatter()
@@ -15,34 +17,35 @@ extension PumpSettingsEditor {
                 Section(header: Text("Delivery limits")) {
                     HStack {
                         Text("Max Basal")
-                        DecimalTextField("U/hr", value: $viewModel.maxBasal, formatter: formatter)
+                        DecimalTextField("U/hr", value: $state.maxBasal, formatter: formatter)
                     }
                     HStack {
                         Text("Max Bolus")
-                        DecimalTextField("U", value: $viewModel.maxBolus, formatter: formatter)
+                        DecimalTextField("U", value: $state.maxBolus, formatter: formatter)
                     }
                 }
 
                 Section(header: Text("Duration of Insulin Action")) {
                     HStack {
                         Text("DIA")
-                        DecimalTextField("hours", value: $viewModel.dia, formatter: formatter)
+                        DecimalTextField("hours", value: $state.dia, formatter: formatter)
                     }
                 }
 
                 Section {
                     HStack {
-                        if viewModel.syncInProgress {
+                        if state.syncInProgress {
                             ProgressView().padding(.trailing, 10)
                         }
-                        Button { viewModel.save() }
+                        Button { state.save() }
                         label: {
-                            Text(viewModel.syncInProgress ? "Saving..." : "Save on Pump")
+                            Text(state.syncInProgress ? "Saving..." : "Save on Pump")
                         }
-                        .disabled(viewModel.syncInProgress)
+                        .disabled(state.syncInProgress)
                     }
                 }
             }
+            .onAppear(perform: configureView)
             .navigationTitle("Pump Settings")
             .navigationBarTitleDisplayMode(.automatic)
         }

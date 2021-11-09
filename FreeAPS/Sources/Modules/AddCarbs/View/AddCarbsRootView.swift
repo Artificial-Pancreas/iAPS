@@ -1,8 +1,10 @@
 import SwiftUI
+import Swinject
 
 extension AddCarbs {
     struct RootView: BaseView {
-        @EnvironmentObject var viewModel: ViewModel<Provider>
+        let resolver: Resolver
+        @StateObject var state = StateModel()
 
         private var formatter: NumberFormatter {
             let formatter = NumberFormatter()
@@ -13,7 +15,7 @@ extension AddCarbs {
 
         var body: some View {
             Form {
-                if let carbsReq = viewModel.carbsRequired {
+                if let carbsReq = state.carbsRequired {
                     Section {
                         HStack {
                             Text("Carbs required")
@@ -26,21 +28,22 @@ extension AddCarbs {
                     HStack {
                         Text("Amount")
                         Spacer()
-                        DecimalTextField("0", value: $viewModel.carbs, formatter: formatter, autofocus: true, cleanInput: true)
+                        DecimalTextField("0", value: $state.carbs, formatter: formatter, autofocus: true, cleanInput: true)
                         Text("grams").foregroundColor(.secondary)
                     }
-                    DatePicker("Date", selection: $viewModel.date)
+                    DatePicker("Date", selection: $state.date)
                 }
 
                 Section {
-                    Button { viewModel.add() }
+                    Button { state.add() }
                     label: { Text("Add") }
-                        .disabled(viewModel.carbs <= 0)
+                        .disabled(state.carbs <= 0)
                 }
             }
+            .onAppear(perform: configureView)
             .navigationTitle("Add Carbs")
             .navigationBarTitleDisplayMode(.automatic)
-            .navigationBarItems(leading: Button("Close", action: viewModel.hideModal))
+            .navigationBarItems(leading: Button("Close", action: state.hideModal))
         }
     }
 }
