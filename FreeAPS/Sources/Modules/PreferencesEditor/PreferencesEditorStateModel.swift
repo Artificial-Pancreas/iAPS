@@ -466,7 +466,7 @@ extension PreferencesEditor {
                     fields: otherSettings
                 ),
                 FieldSection(
-                    displayName: NSLocalizedString("Auto-ISF settings", comment: "Auto-ISF settings"),
+                    displayName: NSLocalizedString("Auto ISF settings", comment: "Auto ISF settings"),
                     fields: autoisfSettings
                 )
             ]
