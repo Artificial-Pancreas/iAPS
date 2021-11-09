@@ -450,13 +450,13 @@ Enact a temp Basal or a temp target */
 "Defaults to false. When true, always enable supermicrobolus (unless disabled by high temptarget)." = "Разрешать Smb всегда. По умолчанию выключена. Когда включено, всегда разрешает супермикроболюсы Smb (если не запрещено для высокой цели).";
 
 /* "Enable SMB After Carbs" */
-"Defaults to false. When true, enables supermicrobolus (SMB) for 6h after carbs, even with 0 carbs on board (COB)." = "Defaults to false. When true, enables supermicrobolus (SMB) for 6h after carbs, even with 0 carbs on board (COB).";
+"Defaults to false. When true, enables supermicrobolus (SMB) for 6h after carbs, even with 0 carbs on board (COB)." = "По умолчанию выключено. Включение разрешает супермикроболюсы (SMB) на 6 часов после последнего ввода углеводов, даже с 0 углеводов на борту (COB).";
 
 /* "Allow SMB With High Temptarget" */
-"Defaults to false. When true, allows supermicrobolus (if otherwise enabled) even with high temp targets." = "Defaults to false. When true, allows supermicrobolus (if otherwise enabled) even with high temp targets.";
+"Defaults to false. When true, allows supermicrobolus (if otherwise enabled) even with high temp targets." = "По умолчанию выключено. Включение разрешает супермикроболюсы Smb даже с высокими временными целями.";
 
 /* "Use Custom Peak Time” */
-"Defaults to false. Setting to true allows changing insulinPeakTime" = "Defaults to false. Setting to true allows changing insulinPeakTime";
+"Defaults to false. Setting to true allows changing insulinPeakTime" = "По умолчанию значение выключено. Включение параметра позволяет изменять пиковое время инсулина (insulinPeakTime)";
 
 /* "Suspend Zeros IOB” */
 "Default is false. Any existing temp basals during times the pump was suspended will be deleted and 0 temp basals to negate the profile basal rates during times pump is suspended will be added." = "Default is false. Any existing temp basals during times the pump was suspended will be deleted and 0 temp basals to negate the profile basal rates during times pump is suspended will be added.";
