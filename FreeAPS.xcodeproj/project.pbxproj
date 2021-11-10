@@ -1924,7 +1924,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = FreeAPS/Resources/FreeAPS.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = "0.2.2 Auto ISF";
+				CURRENT_PROJECT_VERSION = "0.2.3 Auto ISF";
 				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = T7VZ6LU6H3;
 				ENABLE_PREVIEWS = YES;
@@ -1934,7 +1934,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = "0.2.2 Auto ISF";
+				MARKETING_VERSION = "0.2.3 Auto ISF";
 				PRODUCT_BUNDLE_IDENTIFIER = com.T7VZ6LU6H3.aps;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -1950,7 +1950,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = FreeAPS/Resources/FreeAPS.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = "0.2.2 Auto ISF";
+				CURRENT_PROJECT_VERSION = "0.2.3 Auto ISF";
 				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = T7VZ6LU6H3;
 				ENABLE_PREVIEWS = YES;
@@ -1960,7 +1960,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = "0.2.2 Auto ISF";
+				MARKETING_VERSION = "0.2.3 Auto ISF";
 				PRODUCT_BUNDLE_IDENTIFIER = com.T7VZ6LU6H3.aps;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
