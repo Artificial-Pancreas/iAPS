@@ -11,6 +11,7 @@ final class BaseFetchGlucoseManager: FetchGlucoseManager, Injectable {
     @Injected() var nightscoutManager: NightscoutManager!
     @Injected() var apsManager: APSManager!
     @Injected() var settingsManager: SettingsManager!
+    @Injected() var libreTransmitter: LibreTransmitterSource!
 
     private var lifetime = Lifetime()
     private let timer = DispatchTimer(timeInterval: 1.minutes.timeInterval)
@@ -36,6 +37,12 @@ final class BaseFetchGlucoseManager: FetchGlucoseManager, Injectable {
         case .nightscout,
              .none:
             glucoseSource = nightscoutManager
+        case .libreTransmitter:
+            glucoseSource = libreTransmitter
+        }
+
+        if settingsManager.settings.cgm != .libreTransmitter {
+            libreTransmitter.manager = nil
         }
     }
 

@@ -3,6 +3,7 @@ import SwiftUI
 extension CGM {
     final class StateModel: BaseStateModel<Provider> {
         @Injected() var settingsManager: SettingsManager!
+        @Injected() var libreSource: LibreTransmitterSource!
 
         @Published var cgm: CGMType = .nightscout
         @Published var transmitterID = ""
@@ -16,7 +17,8 @@ extension CGM {
             $cgm
                 .removeDuplicates()
                 .sink { [weak self] value in
-                    self?.settingsManager.settings.cgm = value
+                    guard let self = self else { return }
+                    self.settingsManager.settings.cgm = value
                 }
                 .store(in: &lifetime)
 
