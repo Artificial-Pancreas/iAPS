@@ -23,6 +23,13 @@ protocol CalibrationService {
 }
 
 final class BaseCalibrationService: CalibrationService, Injectable {
+    private enum Config {
+        static let minSlope = 0.66
+        static let maxSlope = 1.5
+        static let minIntercept = -100.0
+        static let maxIntercept = 100.0
+    }
+
     @Injected() var storage: FileStorage!
 
     private(set) var calibrations: [Calibration] = [] {
@@ -47,7 +54,7 @@ final class BaseCalibrationService: CalibrationService, Injectable {
         let sum2 = average(multiply(xs, xs)) - pow(average(xs), 2)
         let slope = sum1 / sum2
 
-        return slope
+        return min(max(slope, Config.minSlope), Config.maxSlope)
     }
 
     var intercept: Double {
@@ -59,7 +66,7 @@ final class BaseCalibrationService: CalibrationService, Injectable {
 
         let intercept = average(ys) - slope * average(xs)
 
-        return intercept
+        return min(max(intercept, Config.minIntercept), Config.maxIntercept)
     }
 
     func calibrate(value: Double) -> Double {
