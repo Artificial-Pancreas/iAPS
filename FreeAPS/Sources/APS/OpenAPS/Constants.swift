@@ -84,5 +84,6 @@ extension OpenAPS {
         static let announcements = "freeaps/announcements.json"
         static let announcementsEnacted = "freeaps/announcements_enacted.json"
         static let tempTargetsPresets = "freeaps/temptargets_presets.json"
+        static let calibrations = "freeaps/calibrations.json"
     }
 }

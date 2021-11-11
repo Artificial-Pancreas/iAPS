@@ -11,6 +11,7 @@ final class BaseLibreTransmitterSource: LibreTransmitterSource, Injectable {
     private let processQueue = DispatchQueue(label: "BaseLibreTransmitterSource.processQueue")
 
     @Injected() var glucoseStorage: GlucoseStorage!
+    @Injected() var calibrationService: CalibrationService!
 
     private var promise: Future<[BloodGlucose], Error>.Promise?
 
@@ -60,6 +61,7 @@ extension BaseLibreTransmitterSource: LibreTransmitterManagerDelegate {
                         .map { .init(trendType: $0) },
                     date: Decimal(Int(value.startDate.timeIntervalSince1970 * 1000)),
                     dateString: value.startDate,
+                    unfiltered: Decimal(value.unsmoothedGlucose),
                     filtered: nil,
                     noise: nil,
                     glucose: Int(value.glucose),
@@ -73,6 +75,10 @@ extension BaseLibreTransmitterSource: LibreTransmitterManagerDelegate {
             warning(.service, "LibreTransmitter error:", error: error)
             promise?(.failure(error))
         }
+    }
+
+    func overcalibration(for _: LibreTransmitterManager) -> ((Double) -> (Double))? {
+        calibrationService.calibrate
     }
 }
 
