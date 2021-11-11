@@ -25,6 +25,7 @@ struct BloodGlucose: JSON, Identifiable, Hashable {
     var direction: Direction?
     let date: Decimal
     let dateString: Date
+    let unfiltered: Decimal?
     let filtered: Decimal?
     let noise: Int?
     var glucose: Int?

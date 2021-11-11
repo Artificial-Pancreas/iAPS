@@ -34,6 +34,7 @@ extension CGM {
                     Button("Configure Libre Transmitter") {
                         state.showModal(for: .libreConfig)
                     }
+                    Text("Calibrations").navigationLink(to: .calibrations, from: self)
                 }
 
                 Section(header: Text("Other")) {

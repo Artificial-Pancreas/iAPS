@@ -22,6 +22,7 @@ enum Screen: Identifiable, Hashable {
     case dataTable
     case cgm
     case libreConfig
+    case calibrations
 
     var id: Int { String(reflecting: self).hashValue }
 }
@@ -69,6 +70,8 @@ extension Screen {
             CGM.RootView(resolver: resolver)
         case .libreConfig:
             LibreConfig.RootView(resolver: resolver)
+        case .calibrations:
+            Calibrations.RootView(resolver: resolver)
         }
     }
 
