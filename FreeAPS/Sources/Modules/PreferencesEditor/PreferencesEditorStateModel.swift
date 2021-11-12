@@ -376,6 +376,54 @@ extension PreferencesEditor {
                 )
             ]
 
+            let autoisfSettings = [
+                Field(
+                    displayName: "Enable AutoISF",
+                    type: .boolean(keypath: \.autoisf),
+                    infoText: NSLocalizedString(
+                        "Defaults to false. Adapt ISF when glucose is stuck at high levels, only works without COB.\n\nRead up on:\nhttps://github.com/ga-zelle/autoISF/tree/2.8.2",
+                        comment: "Enable AutoISF"
+                    ),
+                    settable: self
+                ),
+                Field(
+                    displayName: "AutoISF HourlyMaxChange",
+                    type: .decimal(keypath: \.autoISFhourlyChange),
+                    infoText: NSLocalizedString(
+                        "Defaults to false. Rate at which autoISF grows per hour assuming bg is twice target. When value = 1.0, ISF is reduced to 50% after 1 hour of BG at 2x target.",
+                        comment: "AutoISF HourlyMaxChange"
+                    ),
+                    settable: self
+                ),
+                Field(
+                    displayName: "AutoISF Max",
+                    type: .decimal(keypath: \.autoISFmax),
+                    infoText: NSLocalizedString(
+                        "Multiplier cap on how high the autoISF ratio can be and therefore how low it can adjust ISF.",
+                        comment: "AutoISF Max"
+                    ),
+                    settable: self
+                ),
+                Field(
+                    displayName: "SMB Max RangeExtension",
+                    type: .decimal(keypath: \.smbMaxRangeExtension),
+                    infoText: NSLocalizedString(
+                        "Default value: 1. This is another key OpenAPS safety cap, and specifies by what factor you can exceed the regular 120 maxSMB/maxUAM minutes. Increase this experimental value slowly and with caution.",
+                        comment: "SMB Max RangeExtension"
+                    ),
+                    settable: self
+                ),
+                Field(
+                    displayName: "SMB DeliveryRatio",
+                    type: .decimal(keypath: \.smbDeliveryRatio),
+                    infoText: NSLocalizedString(
+                        "Default value: 0.5 This is another key OpenAPS safety cap, and specifies what share of the total insulin required can be delivered as SMB. This is to prevent people from getting into dangerous territory by setting SMB requests from the caregivers phone at the same time. Increase this experimental value slowly and with caution.",
+                        comment: "SMB DeliveryRatio"
+                    ),
+                    settable: self
+                )
+            ]
+
             sections = [
                 FieldSection(
                     displayName: NSLocalizedString("OpenAPS main settings", comment: "OpenAPS main settings"), fields: mainFields
@@ -390,6 +438,10 @@ extension PreferencesEditor {
                 FieldSection(
                     displayName: NSLocalizedString("OpenAPS other settings", comment: "OpenAPS other settings"),
                     fields: otherSettings
+                ),
+                FieldSection(
+                    displayName: NSLocalizedString("Auto-ISF settings", comment: "Auto-ISF settings"),
+                    fields: autoisfSettings
                 )
             ]
         }
