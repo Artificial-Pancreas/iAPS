@@ -56,7 +56,7 @@
 "Home" = "Home";
 
 /* Looping in progress */
-"looping" = "looping";
+"looping" = "döngüde";
 
 /* min ago since last loop */
 "min ago" = "min ago";
@@ -89,7 +89,7 @@
 "Bottom target" = "Bottom target";
 
 /* Cancel preset name */
-"Cancel" = "Cancel";
+"Cancel" = "Vazgeç";
 
 /*  */
 "Cancel Temp Target" = "Cancel Temp Target";
@@ -98,7 +98,7 @@
 "Custom" = "Custom";
 
 /*  */
-"Date" = "Date";
+"Date" = "Tarih";
 
 /*  */
 "Delete" = "Delete";
@@ -336,13 +336,13 @@ Enact a temp Basal or a temp target */
 "0 U/hr" = "0 U/hr";
 
 /* abbreviation for days */
-"d" = "d";
+"d" = "g";
 
 /* abbreviation for hours */
-"h" = "h";
+"h" = "s";
 
 /* abbreviation for minutes */
-"m" = "m";
+"m" = "d";
 
 /*  */
 "Closed loop" = "Closed loop";
@@ -354,13 +354,13 @@ Enact a temp Basal or a temp target */
 "Devices" = "Devices";
 
 /*  */
-"Pump" = "Pump";
+"Pump" = "Pompa";
 
 /*  */
-"Services" = "Services";
+"Services" = "Hizmetler";
 
 /*  */
-"Settings" = "Settings";
+"Settings" = "Ayarlar";
 
 /* 2 log files to share */
 "Share logs" = "Share logs";
@@ -384,7 +384,7 @@ Enact a temp Basal or a temp target */
 "Middleware" = "Middleware";
 
 /* Header */
-"History" = "History";
+"History" = "Geçmiş";
 
 /* CGM option */
 "Upload glucose to Nightscout" = "Upload glucose to Nightscout";
@@ -396,7 +396,7 @@ Enact a temp Basal or a temp target */
 "CGM" = "CGM";
 
 /* CGM Transmitter ID */
-"Transmitter ID" = "Transmitter ID";
+"Transmitter ID" = "Verici ID";
 
 /* Other CGM setting */
 "Other" = "Other";
