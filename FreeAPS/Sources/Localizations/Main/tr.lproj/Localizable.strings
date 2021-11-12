@@ -11,7 +11,7 @@
 
 "Bolus" = "Bolus";
 
-"Close" = "Close";
+"Close" = "Kapat";
 
 /* Continue after added carbs without bolus */
 "Continue without bolus" = "Continue without bolus";
@@ -59,7 +59,7 @@
 "looping" = "döngüde";
 
 /* min ago since last loop */
-"min ago" = "min ago";
+"min ago" = "dk. önce";
 
 /* Status Title */
 "No suggestion" = "No suggestion";
@@ -71,13 +71,13 @@
 "Suggested at %@" = "Suggested at %@";
 
 /* Add carbs screen */
-"Add Carbs" = "Add Carbs";
+"Add Carbs" = "Karbonhidrat Ekle";
 
 /*  */
-"Amount Carbs" = "Amount Carbs";
+"Amount Carbs" = "Miktar Karbonhidrat";
 
 /* Grams unit */
-"grams" = "grams";
+"grams" = "gram";
 
 /*  */
 "Carbs required" = "Carbs required";
@@ -152,16 +152,16 @@
 "Last run" = "Last run";
 
 /*  */
-"Sensitivity" = "Sensitivity";
+"Sensitivity" = "Duyarlılık";
 
 /*  */
 "Use Autotune" = "use Autotune";
 
 /* Add profile basal */
-"Add" = "Add";
+"Add" = "Ekle";
 
 /*  */
-"Basal Profile" = "Basal Profile";
+"Basal Profile" = "Bazal Profil";
 
 /* Rate basal profile */
 "Rate" = "Rate";
@@ -173,7 +173,7 @@
 "Saving..." = "Kaydediliyor...";
 
 /*  */
-"Schedule" = "Schedule";
+"Schedule" = "Planlama";
 
 /*  */
 "starts at" = "starts at";
@@ -191,28 +191,28 @@
 "Ratio" = "Oran";
 
 /*  */
-"Autosens" = "Autosens";
+"Autosens" = "Otoduyarlılık";
 
 /*  */
 "Calculated Sensitivity" = "Calculated Sensitivity";
 
 /*  */
-"Insulin Sensitivities" = "Insulin Sensitivities";
+"Insulin Sensitivities" = "İnsülin Duyarlılık Faktörü";
 
 /* */
-"Sensitivity Ratio" = "Sensitivity Ratio";
+"Sensitivity Ratio" = "Duyarlılık Faktörü (ISF)";
 
 /*  */
 "Dismiss" = "Dismiss";
 
 /*  */
-"Important message" = "Important message";
+"Important message" = "Önemli mesaj";
 
 /*  */
-"Amount" = "Amount";
+"Amount" = "Miktar";
 
 /* */
-"Cancel Temp Basal" = "Cancel Temp Basal";
+"Cancel Temp Basal" = "Geçici Bazali İptal Et";
 
 /* Enact
 Enact a temp Basal or a temp target */
@@ -222,28 +222,28 @@ Enact a temp Basal or a temp target */
 "Manual Temp Basal" = "Manual Temp Basal";
 
 /* Allow uploads tp NS */
-"Allow uploads" = "Allow uploads";
+"Allow uploads" = "Veri yüklemeye izin ver";
 
 /* API secret in NS */
 "API secret" = "API secret";
 
 /* Connect to NS */
-"Connect" = "Connect";
+"Connect" = "Bağlan";
 
 /* Connected to NS */
-"Connected!" = "Connected!";
+"Connected!" = "Bağlı!";
 
 /* Connecting to NS */
-"Connecting..." = "Connecting...";
+"Connecting..." = "Bağlanıyor...";
 
 /*  */
-"Invalid URL" = "Invalid URL";
+"Invalid URL" = "Geçersiz URL";
 
 /*  */
-"Local glucose source" = "Local glucose source";
+"Local glucose source" = "Yerel KŞ kaynağı";
 
 /* Header */
-"Nightscout Config" = "Nightscout Config";
+"Nightscout Config" = "Nightscout Yapılandırması";
 
 /*  */
 "Port" = "Port";
@@ -258,82 +258,82 @@ Enact a temp Basal or a temp target */
 "Edit settings json" = "Edit settings json";
 
 /* */
-"Glucose units" = "Glucose units";
+"Glucose units" = "Glikoz birimi";
 
 /*  */
-"Preferences" = "Preferences";
+"Preferences" = "Tercihler";
 
 /* Recommended Insulin Fraction in preferences */
-"Recommended Insulin Fraction" = "Recommended Insulin Fraction";
+"Recommended Insulin Fraction" = "Önerilen insülin oranı";
 
 /* Do you want to show bolus screen after added carbs? */
 "Skip Bolus screen after carbs" = "Skip Bolus screen after carbs";
 
 /* Allow remote control from NS */
-"Remote control" = "Remote control";
+"Remote control" = "Uzaktan kontrol";
 
 /* Add Medtronic pump */
-"Add Medtronic" = "Add Medtronic";
+"Add Medtronic" = "Medtronic ekle";
 
 /* Add Omnipod pump */
-"Add Omnipod" = "Add Omnipod";
+"Add Omnipod" = "Omnipod ekle";
 
 /* Add Simulator pump */
-"Add Simulator" = "Add Simulator";
+"Add Simulator" = "Simülatör ekle";
 
 /* Insulin model */
 "Model" = "Model";
 
 /*  */
-"Pump config" = "Pump config";
+"Pump config" = "Pompa Konfigurasyonu";
 
 /*  */
-"Delivery limits" = "Delivery limits";
+"Delivery limits" = "İletim Kısıtlamaları";
 
 /*  */
-"Duration of Insulin Action" = "Duration of Insulin Action";
+"Duration of Insulin Action" = "İnsülin Etki Süresi (İES)";
 
 /* hours of duration of insulin activity */
-"hours" = "hours";
+"hours" = "saat";
 
 /* Max setting */
-"Max Basal" = "Max Basal";
+"Max Basal" = "Maks Bazal";
 
 /* Max setting */
-"Max Bolus" = "Max Bolus";
+"Max Bolus" = "Maks Bolus";
 
 /* */
-"Pump Settings" = "Pump Settings";
+"Pump Settings" = "Pompa Ayarları";
 
 /* Insulin unit per hour */
-"U/hr" = "U/hr";
+"U/hr" = "Ü/Sa";
 
 /* Unit in number of units delivered (keep the space character!) */
-" U" = " U";
+" U" = " Ü";
 
 /* /Insulin unit */
-"/U" = "/U";
+"/U" = "/Ü";
 
 /* Insulin unit */
-"U" = "U";
+"U" = "Ü";
 
 /* Unit per hour with space */
-" U/hr" = " U/hr";
+" U/hr" = " Ü/Sa";
 
 /* Number of units per hour*/
-"%@ U/hr" = "%@ U/hr";
+"%@ U/hr" = "%@ Ü/Sa";
 
 /* Number of units insulin delivered */
-"%@ U" = "%@ U";
+"%@ U" = "%@ Ü";
 
 /*Carb ratio unit */
-"g/U" = "g/U";
+"g/U" = "g/Ü";
 
 /* grams */
 " g" = " g";
 
 /* when 0 U/hr */
-"0 U/hr" = "0 U/hr";
+"0 U/hr" = "0 Ü/Sa";
 
 /* abbreviation for days */
 "d" = "g";
@@ -345,10 +345,10 @@ Enact a temp Basal or a temp target */
 "m" = "d";
 
 /*  */
-"Closed loop" = "Closed loop";
+"Closed loop" = "Kapalı döngü";
 
 /* */
-"Configuration" = "Configuration";
+"Configuration" = "Yapılandırma";
 
 /* */
 "Devices" = "Aygıtlar";
@@ -372,7 +372,7 @@ Enact a temp Basal or a temp target */
 "Low target" = "Düşük hedef";
 
 /*  */
-"Target Ranges" = "Target Ranges";
+"Target Ranges" = "Hedef Aralığı";
 
 /* When bolusing */
 "Bolusing" = "Bolus veriliyor";
@@ -387,7 +387,7 @@ Enact a temp Basal or a temp target */
 "History" = "Geçmiş";
 
 /* CGM option */
-"Upload glucose to Nightscout" = "Upload glucose to Nightscout";
+"Upload glucose to Nightscout" = "Nightscout'a KŞ değerlerini yükle";
 
 /* Type of CGM or glucose source */
 "Type" = "Type";
