@@ -75,7 +75,7 @@
 "Insulin Type" = "Insulin Type";
 
 /* The title of the continue action in an action sheet */
-"Continue" = "Continue";
+"Continue" = "Devam et";
 
 /* Button title to deactivate pod because of fault during setup */
 "Deactivate" = "Deactivate";
@@ -85,7 +85,7 @@
 "Deactivate Pod" = "Deactivate Pod";
 
 /* Button title to delete Omnipod PumpManager */
-"Delete Omnipod" = "Delete Omnipod";
+"Delete Omnipod" = "Omnipod'u Sill";
 
 /* Title text for delivery limits */
 "Delivery Limits" = "Delivery Limits";
@@ -124,16 +124,16 @@
 "Error Suspending" = "Error Suspending";
 
 /* The title of the cell showing the pod expiration reminder date */
-"Expiration Reminder" = "Expiration Reminder";
+"Expiration Reminder" = "Süre Sonu Hatırlatıcısı";
 
 /* The title of the cell showing the pod expiration after expiry */
-"Expired" = "Expired";
+"Expired" = "Süresi doldu";
 
 /* The title of the cell showing the pod expiration */
-"Expires" = "Expires";
+"Expires" = "Bitiyor";
 
 /* Pod life HUD view label */
-"Fault" = "Fault";
+"Fault" = "Hata";
 
 /* The title of the command to finish pod setup */
 "Finish pod setup" = "Finish pod setup";
@@ -148,7 +148,7 @@
 "Incompletely set up pod must be deactivated before pairing with a new one. Please deactivate and remove pod." = "Incompletely set up pod must be deactivated before pairing with a new one. Please deactivate and remove pod.";
 
 /* Button title to insert cannula during setup */
-"Insert Cannula" = "Insert Cannula";
+"Insert Cannula" = "Kanül Yerleştir";
 
 /* The title of the cell showing delivered insulin */
 "Insulin Delivered" = "Insulin Delivered";
@@ -193,10 +193,10 @@
 "Primed" = "Primed";
 
 /* The text of the loading label when priming */
-"Priming…" = "Priming…";
+"Priming…" = "Hazırlanıyor…";
 
 /* Label describing time remaining view */
-"Remaining" = "Remaining";
+"Remaining" = "Geri Kalan";
 
 /* Label indicating pod replacement necessary
    The title of the command to replace pod */
@@ -222,10 +222,10 @@
 "Status" = "Status";
 
 /* A message indicating a command succeeded */
-"Succeeded" = "Succeeded";
+"Succeeded" = "Başarılı oldu";
 
 /* The detail text of the basal row when pod is suspended */
-"Suspended" = "Suspended";
+"Suspended" = "İptal edildi";
 
 /* Title text for the button to delete Omnipod PumpManager */
 "Switch from Omnipod Pumps" = "Switch from Omnipod Pumps";
@@ -240,13 +240,13 @@
 "Testing Commands…" = "Testing Commands…";
 
 /* The error message shown when Loop's basal schedule has more entries than the pod can support */
-"Too many entries" = "Too many entries";
+"Too many entries" = "Çok fazla sayıda giriş";
 
 /* Instructions when pod cannot be deactivated */
 "Unable to deactivate pod. Please continue and pair a new one." = "Unable to deactivate pod. Please continue and pair a new one.";
 
 /* The detail text for delivered insulin when no measurement is available */
-"Unknown" = "Unknown";
+"Unknown" = "Bilinmiyor";
 
 /* The title of the diagnostics section in settings */
 "Diagnostics" = "Diagnostics";
@@ -258,4 +258,4 @@
 "Read Pulse Log" = "Read Pulse Log";
 
 /* The title of the pod details section in settings */
-"Pod Details" = "Pod Details";
+"Pod Details" = "Pod Ayrıntıları";

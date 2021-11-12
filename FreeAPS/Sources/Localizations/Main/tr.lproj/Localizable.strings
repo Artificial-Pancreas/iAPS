@@ -170,7 +170,7 @@
 "Save on Pump" = "Save on Pump";
 
 /*  */
-"Saving..." = "Saving...";
+"Saving..." = "Kaydediliyor...";
 
 /*  */
 "Schedule" = "Schedule";
@@ -179,7 +179,7 @@
 "starts at" = "starts at";
 
 /* Time basal profile */
-"Time" = "Time";
+"Time" = "Saat";
 
 /* */
 "Calculated Ratio" = "Calculated Ratio";
@@ -188,7 +188,7 @@
 "Carb Ratios" = "Carb Ratios";
 
 /*  */
-"Ratio" = "Ratio";
+"Ratio" = "Oran";
 
 /*  */
 "Autosens" = "Autosens";
@@ -351,7 +351,7 @@ Enact a temp Basal or a temp target */
 "Configuration" = "Configuration";
 
 /* */
-"Devices" = "Devices";
+"Devices" = "Aygıtlar";
 
 /*  */
 "Pump" = "Pompa";
@@ -363,22 +363,22 @@ Enact a temp Basal or a temp target */
 "Settings" = "Ayarlar";
 
 /* 2 log files to share */
-"Share logs" = "Share logs";
+"Share logs" = "Günlükleri paylaş";
 
 /* Upper target */
-"High target" = "High target";
+"High target" = "Yüksek hedef";
 
 /* Lower target */
-"Low target" = "Low target";
+"Low target" = "Düşük hedef";
 
 /*  */
 "Target Ranges" = "Target Ranges";
 
 /* When bolusing */
-"Bolusing" = "Bolusing";
+"Bolusing" = "Bolus veriliyor";
 
 /* */
-"Pump suspended" = "Pump suspended";
+"Pump suspended" = "Pompa durduldu";
 
 /* */
 "Middleware" = "Middleware";
@@ -399,7 +399,7 @@ Enact a temp Basal or a temp target */
 "Transmitter ID" = "Verici ID";
 
 /* Other CGM setting */
-"Other" = "Other";
+"Other" = "Diğer";
 
 /*
   Infotexts from openaps.docs and androidaps.docs
