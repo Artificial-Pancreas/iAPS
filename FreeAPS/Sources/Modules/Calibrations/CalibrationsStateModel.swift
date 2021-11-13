@@ -9,9 +9,9 @@ extension Calibrations {
 
         @Published var slope: Double = 1
         @Published var intercept: Double = 1
-        @Published var calibration: Decimal = 0
-
-        @Published var calibrationsCount = 0
+        @Published var newCalibration: Decimal = 0
+        @Published var calibrations: [Calibration] = []
+        @Published var calibrate: (Double) -> Double = { $0 }
 
         var units: GlucoseUnits = .mmolL
 
@@ -20,7 +20,8 @@ extension Calibrations {
             intercept = calibrationService.intercept
 
             units = settingsManager.settings.units
-            calibrationsCount = calibrationService.calibrations.count
+            calibrations = calibrationService.calibrations
+            calibrate = calibrationService.calibrate
         }
 
         func addCalibration() {
@@ -28,9 +29,9 @@ extension Calibrations {
                 hideModal()
             }
 
-            var glucose = calibration
+            var glucose = newCalibration
             if units == .mmolL {
-                glucose = calibration.asMgdL
+                glucose = newCalibration.asMgdL
             }
 
             guard let lastGlucose = glucoseStorage.recent().last,

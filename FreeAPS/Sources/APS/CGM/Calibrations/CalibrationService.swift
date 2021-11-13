@@ -1,12 +1,14 @@
 import Foundation
 import Swinject
 
-struct Calibration: JSON, Equatable {
+struct Calibration: JSON, Hashable, Identifiable {
     let x: Double
     let y: Double
     var date = Date()
 
     static let zero = Calibration(x: 0, y: 0)
+
+    var id = UUID()
 }
 
 protocol CalibrationService {
@@ -24,8 +26,8 @@ protocol CalibrationService {
 
 final class BaseCalibrationService: CalibrationService, Injectable {
     private enum Config {
-        static let minSlope = 0.66
-        static let maxSlope = 1.5
+        static let minSlope = 0.8
+        static let maxSlope = 1.25
         static let minIntercept = -100.0
         static let maxIntercept = 100.0
     }
