@@ -9,7 +9,7 @@
 	</array>
 	<key>com.apple.security.application-groups</key>
 	<array>
-		<string>$(APP_GROUP_ID)</string>
+		<string>group.com.${DEVELOPMENT_TEAM}.loopkit.LoopGroup</string>
 	</array>
 </dict>
 </plist>
