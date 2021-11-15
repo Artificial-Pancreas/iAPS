@@ -30,6 +30,13 @@ extension CGM {
                     }
                 }
 
+                if state.cgm == .libreTransmitter {
+                    Button("Configure Libre Transmitter") {
+                        state.showModal(for: .libreConfig)
+                    }
+                    Text("Calibrations").navigationLink(to: .calibrations, from: self)
+                }
+
                 Section(header: Text("Other")) {
                     Toggle("Upload glucose to Nightscout", isOn: $state.uploadGlucose)
                 }

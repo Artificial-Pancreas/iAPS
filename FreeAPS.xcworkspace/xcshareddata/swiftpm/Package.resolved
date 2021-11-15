@@ -20,6 +20,15 @@
         }
       },
       {
+        "package": "LibreTransmitter",
+        "repositoryURL": "https://github.com/ivalkou/LibreTransmitterX",
+        "state": {
+          "branch": null,
+          "revision": "97301803d0c9be325d5c31c0f0ecbc3c2c24a1da",
+          "version": "1.0.5"
+        }
+      },
+      {
         "package": "swift-algorithms",
         "repositoryURL": "https://github.com/apple/swift-algorithms",
         "state": {

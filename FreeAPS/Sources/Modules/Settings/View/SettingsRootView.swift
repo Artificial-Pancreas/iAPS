@@ -83,6 +83,8 @@ extension Settings {
                         Group {
                             Text("Target presets")
                                 .navigationLink(to: .configEditor(file: OpenAPS.FreeAPS.tempTargetsPresets), from: self)
+                            Text("Calibrations")
+                                .navigationLink(to: .configEditor(file: OpenAPS.FreeAPS.calibrations), from: self)
                             Text("Middleware")
                                 .navigationLink(to: .configEditor(file: OpenAPS.Middleware.determineBasal), from: self)
                         }
