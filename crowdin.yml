@@ -23,3 +23,5 @@ files:
     translation: /FreeAPS/Sources/Localizations/Main/%osx_locale%.lproj/Localizable.strings
   - source: /Dependencies/rileylink_ios/RileyLinkKitUI/Base.lproj/Localizable.strings
     translation: /Dependencies/rileylink_ios/RileyLinkKitUI/%osx_locale%.lproj/Localizable.strings
+  - source: /Dependencies/rileylink_ios/OmniKitUI/en.lproj/Localizable.strings
+    translation: /Dependencies/rileylink_ios/OmniKitUI/%osx_locale%.lproj/Localizable.strings

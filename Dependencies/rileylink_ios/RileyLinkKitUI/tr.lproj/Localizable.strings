@@ -1,71 +1,71 @@
 /* The title of the section describing commands */
-"Commands" = "Commands";
+"Commands" = "Komutlar";
 
 /* The connected state */
-"Connected" = "Connected";
+"Connected" = "Bağlanıldı";
 
 /* The in-progress connecting state */
-"Connecting" = "Connecting";
+"Connecting" = "Bağlanıyor";
 
 /* The title of the cell showing BLE connection state */
-"Connection State" = "Connection State";
+"Connection State" = "Bağlantı Durumu";
 
 /* The title of the section describing the device */
-"Device" = "Device";
+"Device" = "Cihaz";
 
 /* The title of the devices table section in RileyLink settings */
-"Devices" = "Devices";
+"Devices" = "Cihazlar";
 
 /* The disconnected state */
-"Disconnected" = "Disconnected";
+"Disconnected" = "Bağlantı kesildi";
 
 /* The in-progress disconnecting state */
-"Disconnecting" = "Disconnecting";
+"Disconnecting" = "Bağlantı kesiliyor";
 
 /* The title of the cell showing firmware version */
 "Firmware" = "Firmware";
 
 /* The title of the cell showing current rileylink frequency */
-"Frequency" = "Frequency";
+"Frequency" = "Frekans";
 
 /* The title of the cell showing device name */
-"Name" = "Name";
+"Name" = "Ad";
 
 /* RileyLink setup description */
-"RileyLink allows for communication with the pump over Bluetooth Low Energy." = "RileyLink allows for communication with the pump over Bluetooth Low Energy.";
+"RileyLink allows for communication with the pump over Bluetooth Low Energy." = "RileyLink, Bluetooth Low Energy üzerinden pompa ile iletişime izin verir.";
 
 /* The title of the cell showing BLE signal strength (RSSI) */
-"Signal Strength" = "Signal Strength";
+"Signal Strength" = "Sinyal Gücü";
 
 /* The header of the cells showing connection monitoring */
-"Connection Monitoring" = "Connection Monitoring";
+"Connection Monitoring" = "Bağlantı İzleme";
 
 /* The title of the cell showing uptime */
 "Uptime" = "Uptime";
 
 /* The title of the cell showing battery level */
-"Battery level" = "Battery level";
+"Battery level" = "Pil seviyesi";
 
 /* The title of the cell showing Voltage */
-"Voltage" = "Voltage";
+"Voltage" = "Voltaj";
 
 /* "The title of the section for alerts" */
-"Alert" = "Alert";
+"Alert" = "Uyarı";
 
 /* The title of the cell showing Low Battery Alert */
-"Low Battery Alert" = "Low Battery Alert";
+"Low Battery Alert" = "Düşük Pil Uyarısı";
 
 /* Header of list showing battery level alert options */
-"Battery level Alert" = "Battery level Alert";
+"Battery level Alert" = "Pil seviyesi Uyarısı";
 
 /* Battery level alert OFF in list of options */
-"OFF" = "OFF";
+"OFF" = "KAPA";
 
 /* The title of the command to update diagnostic LEDs */
 "Diagnostic LEDs" = "Diagnostic LEDs";
 
 /* The title of the command to fetch RileyLink statistics */
-"Get RileyLink Statistics" = "Get RileyLink Statistics";
+"Get RileyLink Statistics" = "RileyLink İstatistiklerini Al";
 
 /* The title of the command to invert BLE connection LED logic */
 "Invert LED Logic" = "Invert LED Logic";
@@ -80,16 +80,16 @@
 "Lighten Red LED" = "Lighten Red LED";
 
 /* The title of the cell showing Test Vibration */
-"Test Vibration" = "Test Vibration";
+"Test Vibration" = "Titreşimi Dene";
 
 /* The title of the cell for sounding device finding piezo */
-"Find Device" = "Find Device";
+"Find Device" = "Cihazı Bul";
 
 /* The title of the cell for connection LED */
-"Connection LED" = "Connection LED";
+"Connection LED" = "Bağlantı LED'i";
 
 /* The title of the cell for connection vibration */
-"Connection Vibration" = "Connection Vibration";
+"Connection Vibration" = "Bağlanıldığında Titreş";
 
 /* Detail text when battery alert disabled. */
 "Off" = "Off";
@@ -101,4 +101,4 @@
 "Off" = "Off";
 
 /* Text indicating LED Mode is auto */
-"Auto" = "Auto";
+"Auto" = "Oto";
