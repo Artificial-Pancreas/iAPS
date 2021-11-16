@@ -16,6 +16,7 @@ struct Suggestion: JSON, Equatable {
     let temp: TempType?
     let bg: Decimal?
     let reservoir: Decimal?
+    let isf: Int?
     var timestamp: Date?
     var recieved: Bool?
 
@@ -48,6 +49,7 @@ extension Suggestion {
         case temp
         case bg
         case reservoir
+        case isf = "ISF"
         case timestamp
         case recieved
     }

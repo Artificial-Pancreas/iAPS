@@ -8,7 +8,8 @@ extension Home {
 
         @StateObject var state = StateModel()
         @State var isStatusPopupPresented = false
-
+        @State var currentISF: Int?
+        
         private var numberFormatter: NumberFormatter {
             let formatter = NumberFormatter()
             formatter.numberStyle = .decimal
@@ -160,6 +161,18 @@ extension Home {
                             state.cancelBolus()
                         }
                 }
+                Spacer()
+                Text(
+                    NSLocalizedString("ISF", comment: "current ISF") + ":"
+                )
+                .font(.system(size: 12))
+                .padding(.leading, 6)
+                .fixedSize()
+                Text(
+                    numberFormatter.string(from: (currentISF ?? 0) as NSNumber) ?? "0"
+                )
+                .font(.system(size: 12, weight: .bold)).foregroundColor(.secondary)
+                .fixedSize()
             }
             .frame(maxWidth: .infinity, maxHeight: 30)
         }
