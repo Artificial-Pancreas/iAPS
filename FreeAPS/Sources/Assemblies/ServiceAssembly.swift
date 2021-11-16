@@ -13,5 +13,6 @@ final class ServiceAssembly: Assembly {
             reporter.setup()
             return reporter
         }
+        container.register(CalendarManager.self) { r in BaseCalendarManager(resilver: r) }
     }
 }

@@ -13,9 +13,9 @@ extension ISFEditor {
         var rateValues: [Decimal] {
             switch units {
             case .mgdL:
-                return stride(from: 9, to: 540.01, by: 1.0).map { $0 }
+                return stride(from: 9, to: 540.01, by: 1.0).map { Decimal($0) }
             case .mmolL:
-                return stride(from: 0.1, to: 30.01, by: 0.1).map { $0 }
+                return stride(from: 0.1, to: 30.01, by: 0.1).map { Decimal($0) }
             }
         }
 

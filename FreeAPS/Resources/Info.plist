@@ -65,6 +65,10 @@
 	</dict>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+	<key>NFCReaderUsageDescription</key>
+	<string>NFC is used to scan Libre sensors.</string>
+	<key>NSCalendarsUsageDescription</key>
+	<string>Calendar is used to create a new glucose events.</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>bluetooth-central</string>
