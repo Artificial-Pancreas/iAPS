@@ -20,7 +20,7 @@ enum CGMType: String, JSON, CaseIterable, Identifiable {
         case .dexcomG5:
             return "Dexcom G5"
         case .libreTransmitter:
-            return "Libre Transmitter"
+            return NSLocalizedString("Libre Transmitter", comment: "Libre Transmitter type")
         }
     }
 
