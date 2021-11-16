@@ -8,6 +8,7 @@ extension Home {
 
         @StateObject var state = StateModel()
         @State var isStatusPopupPresented = false
+        @State var currentISF: Int?
         
         private var numberFormatter: NumberFormatter {
             let formatter = NumberFormatter()
@@ -168,7 +169,7 @@ extension Home {
                 .padding(.leading, 6)
                 .fixedSize()
                 Text(
-                    numberFormatter.string(from: (state.suggestion?.isf ?? 0) as NSNumber) ?? "0"
+                    numberFormatter.string(from: (currentISF ?? 0) as NSNumber) ?? "0"
                 )
                 .font(.system(size: 12, weight: .bold)).foregroundColor(.secondary)
                 .fixedSize()
