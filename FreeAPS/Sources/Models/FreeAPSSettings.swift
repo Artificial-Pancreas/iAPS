@@ -13,4 +13,5 @@ struct FreeAPSSettings: JSON, Equatable {
     var skipBolusScreenAfterCarbs: Bool?
     var cgm: CGMType?
     var uploadGlucose: Bool?
+    var useCalendar: Bool?
 }
