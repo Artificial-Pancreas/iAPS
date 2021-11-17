@@ -37,6 +37,17 @@ extension CGM {
                     Text("Calibrations").navigationLink(to: .calibrations, from: self)
                 }
 
+                Section(header: Text("Calendar")) {
+                    Toggle("Create events in calendar", isOn: $state.createCalendarEvents)
+                    if state.calendarIDs.isNotEmpty {
+                        Picker("Calendar", selection: $state.currentCalendarID) {
+                            ForEach(state.calendarIDs, id: \.self) {
+                                Text($0).tag($0)
+                            }
+                        }
+                    }
+                }
+
                 Section(header: Text("Other")) {
                     Toggle("Upload glucose to Nightscout", isOn: $state.uploadGlucose)
                 }

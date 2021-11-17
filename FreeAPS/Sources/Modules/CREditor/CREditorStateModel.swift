@@ -7,7 +7,7 @@ extension CREditor {
 
         let timeValues = stride(from: 0.0, to: 1.days.timeInterval, by: 30.minutes.timeInterval).map { $0 }
 
-        let rateValues = stride(from: 3, to: 50.01, by: 0.1).map { $0 }
+        let rateValues = stride(from: 3, to: 50.01, by: 0.1).map { Decimal($0) }
 
         var canAdd: Bool {
             guard let lastItem = items.last else { return true }
@@ -17,7 +17,7 @@ extension CREditor {
         override func subscribe() {
             items = provider.profile.schedule.map { value in
                 let timeIndex = timeValues.firstIndex(of: Double(value.offset * 60)) ?? 0
-                let rateIndex = rateValues.firstIndex(of: Double(value.ratio)) ?? 0
+                let rateIndex = rateValues.firstIndex(of: value.ratio) ?? 0
                 return Item(rateIndex: rateIndex, timeIndex: timeIndex)
             }
 
@@ -44,7 +44,7 @@ extension CREditor {
                 fotmatter.dateFormat = "HH:mm:ss"
                 let date = Date(timeIntervalSince1970: self.timeValues[item.timeIndex])
                 let minutes = Int(date.timeIntervalSince1970 / 60)
-                let rate = Decimal(self.rateValues[item.rateIndex])
+                let rate = self.rateValues[item.rateIndex]
                 return CarbRatioEntry(start: fotmatter.string(from: date), offset: minutes, ratio: rate)
             }
             let profile = CarbRatios(units: .grams, schedule: schedule)

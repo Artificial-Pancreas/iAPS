@@ -11,7 +11,7 @@
 
 "Bolus" = "Bolus";
 
-"Close" = "Close";
+"Close" = "Kapat";
 
 /* Continue after added carbs without bolus */
 "Continue without bolus" = "Continue without bolus";
@@ -56,10 +56,10 @@
 "Home" = "Home";
 
 /* Looping in progress */
-"looping" = "looping";
+"looping" = "döngüde";
 
 /* min ago since last loop */
-"min ago" = "min ago";
+"min ago" = "dk. önce";
 
 /* Status Title */
 "No suggestion" = "No suggestion";
@@ -71,13 +71,13 @@
 "Suggested at %@" = "Suggested at %@";
 
 /* Add carbs screen */
-"Add Carbs" = "Add Carbs";
+"Add Carbs" = "Karbonhidrat Ekle";
 
 /*  */
-"Amount Carbs" = "Amount Carbs";
+"Amount Carbs" = "Miktar Karbonhidrat";
 
 /* Grams unit */
-"grams" = "grams";
+"grams" = "gram";
 
 /*  */
 "Carbs required" = "Carbs required";
@@ -89,7 +89,7 @@
 "Bottom target" = "Bottom target";
 
 /* Cancel preset name */
-"Cancel" = "Cancel";
+"Cancel" = "Vazgeç";
 
 /*  */
 "Cancel Temp Target" = "Cancel Temp Target";
@@ -98,7 +98,7 @@
 "Custom" = "Custom";
 
 /*  */
-"Date" = "Date";
+"Date" = "Tarih";
 
 /*  */
 "Delete" = "Delete";
@@ -152,16 +152,16 @@
 "Last run" = "Last run";
 
 /*  */
-"Sensitivity" = "Sensitivity";
+"Sensitivity" = "Duyarlılık";
 
 /*  */
 "Use Autotune" = "use Autotune";
 
 /* Add profile basal */
-"Add" = "Add";
+"Add" = "Ekle";
 
 /*  */
-"Basal Profile" = "Basal Profile";
+"Basal Profile" = "Bazal Profil";
 
 /* Rate basal profile */
 "Rate" = "Rate";
@@ -170,16 +170,16 @@
 "Save on Pump" = "Save on Pump";
 
 /*  */
-"Saving..." = "Saving...";
+"Saving..." = "Kaydediliyor...";
 
 /*  */
-"Schedule" = "Schedule";
+"Schedule" = "Planlama";
 
 /*  */
 "starts at" = "starts at";
 
 /* Time basal profile */
-"Time" = "Time";
+"Time" = "Saat";
 
 /* */
 "Calculated Ratio" = "Calculated Ratio";
@@ -188,31 +188,31 @@
 "Carb Ratios" = "Carb Ratios";
 
 /*  */
-"Ratio" = "Ratio";
+"Ratio" = "Oran";
 
 /*  */
-"Autosens" = "Autosens";
+"Autosens" = "Otoduyarlılık";
 
 /*  */
 "Calculated Sensitivity" = "Calculated Sensitivity";
 
 /*  */
-"Insulin Sensitivities" = "Insulin Sensitivities";
+"Insulin Sensitivities" = "İnsülin Duyarlılık Faktörü";
 
 /* */
-"Sensitivity Ratio" = "Sensitivity Ratio";
+"Sensitivity Ratio" = "Duyarlılık Faktörü (ISF)";
 
 /*  */
 "Dismiss" = "Dismiss";
 
 /*  */
-"Important message" = "Important message";
+"Important message" = "Önemli mesaj";
 
 /*  */
-"Amount" = "Amount";
+"Amount" = "Miktar";
 
 /* */
-"Cancel Temp Basal" = "Cancel Temp Basal";
+"Cancel Temp Basal" = "Geçici Bazali İptal Et";
 
 /* Enact
 Enact a temp Basal or a temp target */
@@ -222,28 +222,28 @@ Enact a temp Basal or a temp target */
 "Manual Temp Basal" = "Manual Temp Basal";
 
 /* Allow uploads tp NS */
-"Allow uploads" = "Allow uploads";
+"Allow uploads" = "Veri yüklemeye izin ver";
 
 /* API secret in NS */
 "API secret" = "API secret";
 
 /* Connect to NS */
-"Connect" = "Connect";
+"Connect" = "Bağlan";
 
 /* Connected to NS */
-"Connected!" = "Connected!";
+"Connected!" = "Bağlı!";
 
 /* Connecting to NS */
-"Connecting..." = "Connecting...";
+"Connecting..." = "Bağlanıyor...";
 
 /*  */
-"Invalid URL" = "Invalid URL";
+"Invalid URL" = "Geçersiz URL";
 
 /*  */
-"Local glucose source" = "Local glucose source";
+"Local glucose source" = "Yerel KŞ kaynağı";
 
 /* Header */
-"Nightscout Config" = "Nightscout Config";
+"Nightscout Config" = "Nightscout Yapılandırması";
 
 /*  */
 "Port" = "Port";
@@ -258,136 +258,136 @@ Enact a temp Basal or a temp target */
 "Edit settings json" = "Edit settings json";
 
 /* */
-"Glucose units" = "Glucose units";
+"Glucose units" = "Glikoz birimi";
 
 /*  */
-"Preferences" = "Preferences";
+"Preferences" = "Tercihler";
 
 /* Recommended Insulin Fraction in preferences */
-"Recommended Insulin Fraction" = "Recommended Insulin Fraction";
+"Recommended Insulin Fraction" = "Önerilen insülin oranı";
 
 /* Do you want to show bolus screen after added carbs? */
 "Skip Bolus screen after carbs" = "Skip Bolus screen after carbs";
 
 /* Allow remote control from NS */
-"Remote control" = "Remote control";
+"Remote control" = "Uzaktan kontrol";
 
 /* Add Medtronic pump */
-"Add Medtronic" = "Add Medtronic";
+"Add Medtronic" = "Medtronic ekle";
 
 /* Add Omnipod pump */
-"Add Omnipod" = "Add Omnipod";
+"Add Omnipod" = "Omnipod ekle";
 
 /* Add Simulator pump */
-"Add Simulator" = "Add Simulator";
+"Add Simulator" = "Simülatör ekle";
 
 /* Insulin model */
 "Model" = "Model";
 
 /*  */
-"Pump config" = "Pump config";
+"Pump config" = "Pompa Konfigurasyonu";
 
 /*  */
-"Delivery limits" = "Delivery limits";
+"Delivery limits" = "İletim Kısıtlamaları";
 
 /*  */
-"Duration of Insulin Action" = "Duration of Insulin Action";
+"Duration of Insulin Action" = "İnsülin Etki Süresi (İES)";
 
 /* hours of duration of insulin activity */
-"hours" = "hours";
+"hours" = "saat";
 
 /* Max setting */
-"Max Basal" = "Max Basal";
+"Max Basal" = "Maks Bazal";
 
 /* Max setting */
-"Max Bolus" = "Max Bolus";
+"Max Bolus" = "Maks Bolus";
 
 /* */
-"Pump Settings" = "Pump Settings";
+"Pump Settings" = "Pompa Ayarları";
 
 /* Insulin unit per hour */
-"U/hr" = "U/hr";
+"U/hr" = "Ü/Sa";
 
 /* Unit in number of units delivered (keep the space character!) */
-" U" = " U";
+" U" = " Ü";
 
 /* /Insulin unit */
-"/U" = "/U";
+"/U" = "/Ü";
 
 /* Insulin unit */
-"U" = "U";
+"U" = "Ü";
 
 /* Unit per hour with space */
-" U/hr" = " U/hr";
+" U/hr" = " Ü/Sa";
 
 /* Number of units per hour*/
-"%@ U/hr" = "%@ U/hr";
+"%@ U/hr" = "%@ Ü/Sa";
 
 /* Number of units insulin delivered */
-"%@ U" = "%@ U";
+"%@ U" = "%@ Ü";
 
 /*Carb ratio unit */
-"g/U" = "g/U";
+"g/U" = "g/Ü";
 
 /* grams */
 " g" = " g";
 
 /* when 0 U/hr */
-"0 U/hr" = "0 U/hr";
+"0 U/hr" = "0 Ü/Sa";
 
 /* abbreviation for days */
-"d" = "d";
+"d" = "g";
 
 /* abbreviation for hours */
-"h" = "h";
+"h" = "s";
 
 /* abbreviation for minutes */
-"m" = "m";
+"m" = "d";
 
 /*  */
-"Closed loop" = "Closed loop";
+"Closed loop" = "Kapalı döngü";
 
 /* */
-"Configuration" = "Configuration";
+"Configuration" = "Yapılandırma";
 
 /* */
-"Devices" = "Devices";
+"Devices" = "Aygıtlar";
 
 /*  */
-"Pump" = "Pump";
+"Pump" = "Pompa";
 
 /*  */
-"Services" = "Services";
+"Services" = "Hizmetler";
 
 /*  */
-"Settings" = "Settings";
+"Settings" = "Ayarlar";
 
 /* 2 log files to share */
-"Share logs" = "Share logs";
+"Share logs" = "Günlükleri paylaş";
 
 /* Upper target */
-"High target" = "High target";
+"High target" = "Yüksek hedef";
 
 /* Lower target */
-"Low target" = "Low target";
+"Low target" = "Düşük hedef";
 
 /*  */
-"Target Ranges" = "Target Ranges";
+"Target Ranges" = "Hedef Aralığı";
 
 /* When bolusing */
-"Bolusing" = "Bolusing";
+"Bolusing" = "Bolus veriliyor";
 
 /* */
-"Pump suspended" = "Pump suspended";
+"Pump suspended" = "Pompa durduldu";
 
 /* */
 "Middleware" = "Middleware";
 
 /* Header */
-"History" = "History";
+"History" = "Geçmiş";
 
 /* CGM option */
-"Upload glucose to Nightscout" = "Upload glucose to Nightscout";
+"Upload glucose to Nightscout" = "Nightscout'a KŞ değerlerini yükle";
 
 /* Type of CGM or glucose source */
 "Type" = "Type";
@@ -396,14 +396,104 @@ Enact a temp Basal or a temp target */
 "CGM" = "CGM";
 
 /* CGM Transmitter ID */
-"Transmitter ID" = "Transmitter ID";
+"Transmitter ID" = "Verici ID";
 
 /* Other CGM setting */
+"Other" = "Diğer";
+
+
+/* Calendar and Libre transmitter settings */
+
+"Configure Libre Transmitter" = "Configure Libre Transmitter";
+
+"Calibrations" = "Calibrations";
+
+"Create events in calendar" = "Create events in calendar";
+
+"Calendar" = "Calendar";
+
 "Other" = "Other";
+
+"Libre Transmitter" = "Libre Transmitter";
+
+"Libre Transmitters" = "Libre Transmitters";
+
+"Bluetooth Transmitters" = "Bluetooth Transmitters";
+
+"Modes" = "Modes";
+
+"Libre 2 Direct" = "Libre 2 Direct";
+
+"Select the third party transmitter you want to connect to" = "Select the third party transmitter you want to connect to";
+
+/* The short unit display string for millimoles of glucose per liter */
+"mmol/L" = "mmol/L";
+
+/* The short unit display string for milligrams of glucose per decilter */
+"mg/dL" = "mg/dL";
+
+"Add calibration" = "Add calibration";
+
+"Meter glucose" = "Meter glucose";
+
+"Info" = "Info";
+
+"Slope" = "Slope";
+
+"Intercept" = "Intercept";
+
+"Chart" = "Chart";
+
+"Remove" = "Remove";
+
+"Remove Last" = "Remove Last";
+
+"Remove All" = "Remove All";
+
+"Calibrations" = "Calibrations";
+
+"About the Process" = "About the Process";
+
+"Please make sure that your Libre 2 sensor is already activated and finished warming up. If you have other apps connecting to the sensor via bluetooth, these need to be shut down or uninstalled. \n\n You can only have one app communicating with the sensor via bluetooth. Then press the \"pariring and connection\" button below to start the process. Please note that the bluetooth connection might take up to a couple of minutes before it starts working." = "Please make sure that your Libre 2 sensor is already activated and finished warming up. If you have other apps connecting to the sensor via bluetooth, these need to be shut down or uninstalled. \n\n You can only have one app communicating with the sensor via bluetooth. Then press the \"pariring and connection\" button below to start the process. Please note that the bluetooth connection might take up to a couple of minutes before it starts working.";
+
+"Pairinginfo" = "Pairinginfo";
+
+"PatchInfo" = "PatchInfo";
+
+"Calibrationinfo" = "Calibrationinfo";
+
+"Unknown" = "Unknown";
+
+"Not paired yet" = "Not paired yet";
+
+"Pair Sensor & connect" = "Pair Sensor & connect";
+
+"Phone NFC required!" = "Phone NFC required!";
+
+"Your phone or app is not enabled for NFC communications, which is needed to pair to libre2 sensors" = "Your phone or app is not enabled for NFC communications, which is needed to pair to libre2 sensors";
+
+"Bluetooth Power Off" = "Bluetooth Power Off";
+
+"Please turn on Bluetooth" = "Please turn on Bluetooth";
+
+"No Libre Transmitter Selected" = "No Libre Transmitter Selected";
+
+"Delete CGMManager and start anew. Your libreoopweb credentials will be preserved" = "Delete CGMManager and start anew. Your libreoopweb credentials will be preserved";
+
+
+/* Headers for settings */
+
+"OpenAPS main settings" = "OpenAPS main settings";
+
+"OpenAPS SMB settings" = "OpenAPS SMB settings";
+
+"OpenAPS targets settings" = "OpenAPS targets settings";
+
+"OpenAPS other settings" = "OpenAPS other settings";
 
 /*
   Infotexts from openaps.docs and androidaps.docs
-  FreeAPS
+  FreeAPS X
 */
 /* ”Rewind Resets Autosens” */
 
