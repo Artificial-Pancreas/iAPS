@@ -404,27 +404,27 @@ Enact a temp Basal or a temp target */
 
 /* Calendar and Libre transmitter settings */
 
-"Configure Libre Transmitter" = "Configure Libre Transmitter";
+"Configure Libre Transmitter" = "Libre Sender konfigurieren";
 
-"Calibrations" = "Calibrations";
+"Calibrations" = "Kalibrierungen";
 
-"Create events in calendar" = "Create events in calendar";
+"Create events in calendar" = "Termine im Kalender erstellen";
 
-"Calendar" = "Calendar";
+"Calendar" = "Kalender";
 
-"Other" = "Other";
+"Other" = "Sonstiges";
 
-"Libre Transmitter" = "Libre Transmitter";
+"Libre Transmitter" = "Libre Sender";
 
-"Libre Transmitters" = "Libre Transmitters";
+"Libre Transmitters" = "Libre Sender";
 
-"Bluetooth Transmitters" = "Bluetooth Transmitters";
+"Bluetooth Transmitters" = "Bluetooth Sender";
 
-"Modes" = "Modes";
+"Modes" = "Modi";
 
-"Libre 2 Direct" = "Libre 2 Direct";
+"Libre 2 Direct" = "Libre 2 direkt";
 
-"Select the third party transmitter you want to connect to" = "Select the third party transmitter you want to connect to";
+"Select the third party transmitter you want to connect to" = "Wählen Sie den externen Sender, den Sie verbinden möchten";
 
 /* The short unit display string for millimoles of glucose per liter */
 "mmol/L" = "mmol/L";
@@ -432,64 +432,64 @@ Enact a temp Basal or a temp target */
 /* The short unit display string for milligrams of glucose per decilter */
 "mg/dL" = "mg/dL";
 
-"Add calibration" = "Add calibration";
+"Add calibration" = "Kalibrierung hinzufügen";
 
-"Meter glucose" = "Meter glucose";
+"Meter glucose" = "Blutzucker messen";
 
 "Info" = "Info";
 
-"Slope" = "Slope";
+"Slope" = "Anstieg";
 
-"Intercept" = "Intercept";
+"Intercept" = "Schnittpunkt";
 
-"Chart" = "Chart";
+"Chart" = "Diagramm";
 
-"Remove" = "Remove";
+"Remove" = "Entfernen";
 
-"Remove Last" = "Remove Last";
+"Remove Last" = "Letzten entfernen";
 
-"Remove All" = "Remove All";
+"Remove All" = "Alle entfernen";
 
-"Calibrations" = "Calibrations";
+"Calibrations" = "Kalibrierungen";
 
-"About the Process" = "About the Process";
+"About the Process" = "Über diesen Prozess";
 
-"Please make sure that your Libre 2 sensor is already activated and finished warming up. If you have other apps connecting to the sensor via bluetooth, these need to be shut down or uninstalled. \n\n You can only have one app communicating with the sensor via bluetooth. Then press the \"pariring and connection\" button below to start the process. Please note that the bluetooth connection might take up to a couple of minutes before it starts working." = "Please make sure that your Libre 2 sensor is already activated and finished warming up. If you have other apps connecting to the sensor via bluetooth, these need to be shut down or uninstalled. \n\n You can only have one app communicating with the sensor via bluetooth. Then press the \"pariring and connection\" button below to start the process. Please note that the bluetooth connection might take up to a couple of minutes before it starts working.";
+"Please make sure that your Libre 2 sensor is already activated and finished warming up. If you have other apps connecting to the sensor via bluetooth, these need to be shut down or uninstalled. \n\n You can only have one app communicating with the sensor via bluetooth. Then press the \"pariring and connection\" button below to start the process. Please note that the bluetooth connection might take up to a couple of minutes before it starts working." = "Bitte stellen Sie sicher, dass Ihr Libre 2 Sensor bereits aktiviert ist und die Aufwärmphase beendet ist. Wenn andere Apps über Bluetooth mit dem Sensor verbunden sind, müssen diese heruntergefahren oder deinstalliert werden. \n\n Man kann nur eine App haben, die über Bluetooth mit dem Sensor kommuniziert. Dann drücken Sie die Schaltfläche \"Koppeln und Verbinden\" unten, um den Prozess zu starten. Bitte beachten Sie, dass es einige Minuten dauern kann, bevor die Bluetooth-Verbindung funktioniert.";
 
-"Pairinginfo" = "Pairinginfo";
+"Pairinginfo" = "Kopplungsinfo";
 
-"PatchInfo" = "PatchInfo";
+"PatchInfo" = "Patchinfo";
 
-"Calibrationinfo" = "Calibrationinfo";
+"Calibrationinfo" = "Kalibrierungsinfo";
 
-"Unknown" = "Unknown";
+"Unknown" = "Unbekannt";
 
-"Not paired yet" = "Not paired yet";
+"Not paired yet" = "Noch nicht gekoppelt";
 
-"Pair Sensor & connect" = "Pair Sensor & connect";
+"Pair Sensor & connect" = "Sensor koppeln & verbinden";
 
 "Phone NFC required!" = "Phone NFC required!";
 
 "Your phone or app is not enabled for NFC communications, which is needed to pair to libre2 sensors" = "Your phone or app is not enabled for NFC communications, which is needed to pair to libre2 sensors";
 
-"Bluetooth Power Off" = "Bluetooth Power Off";
+"Bluetooth Power Off" = "Bluetooth ausschalten";
 
-"Please turn on Bluetooth" = "Please turn on Bluetooth";
+"Please turn on Bluetooth" = "Bitte Bluetooth einschalten";
 
-"No Libre Transmitter Selected" = "No Libre Transmitter Selected";
+"No Libre Transmitter Selected" = "Kein Libre Sender ausgewählt";
 
-"Delete CGMManager and start anew. Your libreoopweb credentials will be preserved" = "Delete CGMManager and start anew. Your libreoopweb credentials will be preserved";
+"Delete CGMManager and start anew. Your libreoopweb credentials will be preserved" = "CGMManager löschen und neu starten. Ihre libreoopweb Zugangsdaten bleiben erhalten";
 
 
 /* Headers for settings */
 
-"OpenAPS main settings" = "OpenAPS main settings";
+"OpenAPS main settings" = "OpenAPS Haupteinstellungen";
 
-"OpenAPS SMB settings" = "OpenAPS SMB settings";
+"OpenAPS SMB settings" = "OpenAPS SMB Einstellungen";
 
-"OpenAPS targets settings" = "OpenAPS targets settings";
+"OpenAPS targets settings" = "OpenAPS Zieleinstellungen";
 
-"OpenAPS other settings" = "OpenAPS other settings";
+"OpenAPS other settings" = "OpenAPS weitere Einstellungen";
 
 /*
   Infotexts from openaps.docs and androidaps.docs
@@ -546,7 +546,7 @@ Enact a temp Basal or a temp target */
 "Defaults to false. When true, allows supermicrobolus (if otherwise enabled) even with high temp targets." = "Defaults to false. When true, allows supermicrobolus (if otherwise enabled) even with high temp targets.";
 
 /* "Use Custom Peak Time” */
-"Defaults to false. Setting to true allows changing insulinPeakTime" = "Ist standardmäßig auf aus. Wenn eingeschaltet erlaubt dies freies Einstellen des Wirkungshochs des Insulins";
+"Defaults to false. Setting to true allows changing insulinPeakTime" = "Ist standardmäßig auf aus. Wenn eingeschaltet erlaubt dies das Einstellen eines benutzerspezifischen Wirkungshochs für das ausgewählte Insulin, respektive dessen Wirkungs-Kurve";
 
 /* "Suspend Zeros IOB” */
 "Default is false. Any existing temp basals during times the pump was suspended will be deleted and 0 temp basals to negate the profile basal rates during times pump is suspended will be added." = "Default is false. Any existing temp basals during times the pump was suspended will be deleted and 0 temp basals to negate the profile basal rates during times pump is suspended will be added.";
@@ -600,7 +600,7 @@ Enact a temp Basal or a temp target */
 "Smallest possible bolus amount" = "Kleinste mögliche Bolusmenge";
 
 /* "Insulin Peak Time" */
-"Time of maximum blood glucose lowering effect of insulin, in minutes. Beware: Oref assumes for ultra-papid (Lyumjev) & rapid-acting (Fiasp) curves minimal (35 & 50 min) and maximal (100 & 120 min) applicable insulinPeakTimes. Using a custom insulinPeakTime outside these bounds will result in issues with FreeAPS-X, longer loop calculations and possible red loops." = "Ist standardmäßig auf aus. Wenn eingeschaltet erlaubt dies freies Einstellen des Wirkungshochs des Insulins. Achtung: Oref wendet für die ultra-rapid (Lyumjev) & rapid-acting (Fiasp) Insulin-Kurven Unter- (35 & 50 min) und Obergrenzen (100 & 120 min) an. Falls das benutzerdefinierte Wirkungshoch außerhalb dieser Grenzen liegt, kann es zu Komplikationen mit FreeAPS-X kommen, lange Loop-Berechnungszeiten und \"red loops\".";
+"Time of maximum blood glucose lowering effect of insulin, in minutes. Beware: Oref assumes for ultra-papid (Lyumjev) & rapid-acting (Fiasp) curves minimal (35 & 50 min) and maximal (100 & 120 min) applicable insulinPeakTimes. Using a custom insulinPeakTime outside these bounds will result in issues with FreeAPS-X, longer loop calculations and possible red loops." = "Benutzerspezifische Zeit des maximalen Wirkungshochs des Insulins. Achtung: Oref wendet für die ultra-rapid (Lyumjev) & rapid-acting (Fiasp) Insulinwirkungs-Kurven Unter- (35 & 50 min) und Obergrenzen (100 & 120 min) an. Falls das benutzerdefinierte Wirkungshoch außerhalb dieser Grenzen liegt, kann es zu Komplikationen mit FreeAPS-X kommen, langen Loop-Berechnungszeiten und \"red loops\".";
 
 /* "Carbs Req Threshold" */
 "Grams of carbsReq to trigger a pushover. Defaults to 1 (for 1 gram of carbohydrate). Can be increased if you only want to get Pushover for carbsReq at X threshold." = "Grams of carbsReq to trigger a pushover. Defaults to 1 (for 1 gram of carbohydrate). Can be increased if you only want to get Pushover for carbsReq at X threshold.";
