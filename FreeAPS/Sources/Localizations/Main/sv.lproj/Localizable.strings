@@ -399,10 +399,10 @@ Enact a temp Basal or a temp target */
 "Transmitter ID" = "Sändar-ID";
 
 /* Other CGM setting */
-"Other" = "Annan inställning";
+"Other" = "Annan";
 
 
-/* Calendar and Libre transnmitter settings */
+/* Calendar and Libre transmitter settings */
 
 "Configure Libre Transmitter" = "Ställ in en Libre-sändare";
 
@@ -427,10 +427,10 @@ Enact a temp Basal or a temp target */
 "Select the third party transmitter you want to connect to" = "Välj vilken sändare du vill ansluta till";
 
 /* The short unit display string for millimoles of glucose per liter */
-"mmol/L" = "mmol/L";
+"mmol/L" = "mmol/l";
 
 /* The short unit display string for milligrams of glucose per decilter */
-"mg/dL" = "mg/dL";
+"mg/dL" = "mg/dl";
 
 "Add calibration" = "Lägg till kalibrering";
 
@@ -440,7 +440,9 @@ Enact a temp Basal or a temp target */
 
 "Slope" = "Lutning";
 
-"Intercept" = "Intercept";
+"Intercept" = "Skärningspunkt";
+
+"Chart" = "Diagram";
 
 "Remove" = "Ta bort";
 
@@ -450,13 +452,13 @@ Enact a temp Basal or a temp target */
 
 "Calibrations" = "Kalibreringar";
 
-"About the Process"= "Om processen";
+"About the Process" = "Om processen";
 
 "Please make sure that your Libre 2 sensor is already activated and finished warming up. If you have other apps connecting to the sensor via bluetooth, these need to be shut down or uninstalled. \n\n You can only have one app communicating with the sensor via bluetooth. Then press the \"pariring and connection\" button below to start the process. Please note that the bluetooth connection might take up to a couple of minutes before it starts working." = "Bla bla";
 
 "Pairinginfo" = "Parkopplingsinfo";
 
-"PatchInfo" = "PatchInfo";
+"PatchInfo" = "Patchinformation";
 
 "Calibrationinfo" = "Kalibreringsinfo";
 
@@ -476,7 +478,7 @@ Enact a temp Basal or a temp target */
 
 "No Libre Transmitter Selected" = "Ingen Libre-sändare vald";
 
-"Delete CGMManager and start anew. Your libreoopweb credentials will be preserved" = "Ta bort CGMM och börja om. Dina libreoopweb-inställningar kommer att sparas";
+"Delete CGMManager and start anew. Your libreoopweb credentials will be preserved" = "Ta bort CGM och börja om. Dina libreoopweb-inställningar kommer att sparas";
 
 
 /* Headers for settings */
@@ -491,7 +493,7 @@ Enact a temp Basal or a temp target */
 
 /*
   Infotexts from openaps.docs and androidaps.docs
-  FreeAPS
+  FreeAPS X
 */
 /* ”Rewind Resets Autosens” */
 
