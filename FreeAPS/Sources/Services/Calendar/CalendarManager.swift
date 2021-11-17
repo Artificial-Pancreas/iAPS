@@ -47,7 +47,7 @@ final class BaseCalendarManager: CalendarManager, Injectable {
     }
 
     func createEvent(for glucose: BloodGlucose?, delta: Int?) {
-        guard settingsManager.settings.useCalendar ?? false else { return }
+        guard settingsManager.settings.useCalendar else { return }
 
         guard let calendar = currentCalendar else { return }
 

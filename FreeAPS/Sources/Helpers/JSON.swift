@@ -11,12 +11,17 @@ extension JSON {
     }
 
     init?(from: String) {
-        guard let data = from.data(using: .utf8),
-              let object = try? JSONCoding.decoder.decode(Self.self, from: data)
-        else {
+        guard let data = from.data(using: .utf8) else {
             return nil
         }
-        self = object
+
+        do {
+            let object = try JSONCoding.decoder.decode(Self.self, from: data)
+            self = object
+        } catch {
+            warning(.service, "Cannot decode JSON", error: error)
+            return nil
+        }
     }
 
     var dictionaryRepresentation: [String: Any]? {

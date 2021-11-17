@@ -18,9 +18,9 @@ extension NightscoutConfig {
         override func subscribe() {
             url = keychain.getValue(String.self, forKey: Config.urlKey) ?? ""
             secret = keychain.getValue(String.self, forKey: Config.secretKey) ?? ""
-            isUploadEnabled = settingsManager.settings.isUploadEnabled ?? false
-            useLocalSource = settingsManager.settings.useLocalGlucoseSource ?? false
-            localPort = Decimal(settingsManager.settings.localGlucosePort ?? 8080)
+            isUploadEnabled = settingsManager.settings.isUploadEnabled
+            useLocalSource = settingsManager.settings.useLocalGlucoseSource
+            localPort = Decimal(settingsManager.settings.localGlucosePort)
 
             $isUploadEnabled
                 .removeDuplicates()

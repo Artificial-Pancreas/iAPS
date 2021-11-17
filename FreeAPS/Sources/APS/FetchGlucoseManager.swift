@@ -34,8 +34,7 @@ final class BaseFetchGlucoseManager: FetchGlucoseManager, Injectable {
         case .dexcomG5,
              .dexcomG6:
             glucoseSource = dexcomSource
-        case .nightscout,
-             .none:
+        case .nightscout:
             glucoseSource = nightscoutManager
         case .libreTransmitter:
             glucoseSource = libreTransmitter

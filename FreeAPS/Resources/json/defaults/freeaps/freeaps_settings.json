@@ -2,7 +2,7 @@
     "units": "mmol/L",
     "closedLoop": false,
     "allowAnnouncements": false,
-    "useAutotune": false
+    "useAutotune": false,
     "isUploadEnabled": false,
     "useLocalGlucoseSource": false,
     "localGlucosePort": 8080,
@@ -10,6 +10,5 @@
     "insulinReqFraction": 0.7,
     "skipBolusScreenAfterCarbs": false,
     "cgm": "nightscout",
-    "uploadGlucose": false,
-    "useCalendar": false
+    "uploadGlucose": false
 }
