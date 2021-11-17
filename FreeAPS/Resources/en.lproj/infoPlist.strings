@@ -1,3 +1,4 @@
+
 /* Privacy - Bluetooth Always Usage Description */
 "NSBluetoothAlwaysUsageDescription" = "Bluetooth is used to communicate with insulin pump and continuous glucose monitor devices";
 
@@ -11,4 +12,5 @@
 
 /* Privacy - Calendars Usage Description */
 "NSCalendarsUsageDescription" = "Calendar is used to create a new glucose events.";
+
 

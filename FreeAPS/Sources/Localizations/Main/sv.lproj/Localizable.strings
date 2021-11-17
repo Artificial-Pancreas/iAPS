@@ -424,7 +424,7 @@ Enact a temp Basal or a temp target */
 
 "Libre 2 Direct" = "Libre 2 Direkt";
 
-"Select the third party transmitter you want to conect to" = "Välj vilken sändare du vill ansluta till";
+"Select the third party transmitter you want to connect to" = "Välj vilken sändare du vill ansluta till";
 
 /* The short unit display string for millimoles of glucose per liter */
 "mmol/L" = "mmol/L";
