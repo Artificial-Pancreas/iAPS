@@ -418,7 +418,7 @@ Enact a temp Basal or a temp target */
 
 "Libre Transmitters" = "Libre-sendere";
 
-"Bluetooth Transmitters" = "Blåtann-sendere";
+"Bluetooth Transmitters" = "Bluetooth-sendere";
 
 "Modes" = "Moduser";
 
@@ -442,7 +442,7 @@ Enact a temp Basal or a temp target */
 
 "Intercept" = "Skjæringspunkt";
 
-"Chart" = "Chart";
+"Chart" = "Diagram";
 
 "Remove" = "Fjern";
 
@@ -472,24 +472,24 @@ Enact a temp Basal or a temp target */
 
 "Your phone or app is not enabled for NFC communications, which is needed to pair to libre2 sensors" = "Your phone or app is not enabled for NFC communications, which is needed to pair to libre2 sensors";
 
-"Bluetooth Power Off" = "Bluetooth Power Off";
+"Bluetooth Power Off" = "Strøm til Bluetooth av";
 
-"Please turn on Bluetooth" = "Vennligst slå på blåtann";
+"Please turn on Bluetooth" = "Vennligst slå på Bluetooth";
 
 "No Libre Transmitter Selected" = "Ingen Libre sender er valgt";
 
-"Delete CGMManager and start anew. Your libreoopweb credentials will be preserved" = "Delete CGMManager and start anew. Your libreoopweb credentials will be preserved";
+"Delete CGMManager and start anew. Your libreoopweb credentials will be preserved" = "Slett CGM-styring og start på nytt. Innloggingsinformasjon for libreoopweb lagres.";
 
 
 /* Headers for settings */
 
 "OpenAPS main settings" = "OpenAPS hovedinnstillinger";
 
-"OpenAPS SMB settings" = "OpenAPS SMB settings";
+"OpenAPS SMB settings" = "OpenAPS SMB innstillinger";
 
-"OpenAPS targets settings" = "OpenAPS targets settings";
+"OpenAPS targets settings" = "OpenAPS mål-innstillinger";
 
-"OpenAPS other settings" = "OpenAPS other settings";
+"OpenAPS other settings" = "OpenAPS andre innstillinger";
 
 /*
   Infotexts from openaps.docs and androidaps.docs
