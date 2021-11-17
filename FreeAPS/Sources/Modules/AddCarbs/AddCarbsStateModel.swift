@@ -23,7 +23,7 @@ extension AddCarbs {
                 CarbsEntry(createdAt: date, carbs: carbs, enteredBy: CarbsEntry.manual)
             ])
 
-            if settingsManager.settings.skipBolusScreenAfterCarbs ?? false {
+            if settingsManager.settings.skipBolusScreenAfterCarbs {
                 apsManager.determineBasalSync()
                 showModal(for: nil)
             } else {

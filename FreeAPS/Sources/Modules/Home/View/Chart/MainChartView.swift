@@ -147,7 +147,7 @@ struct MainChartView: View {
     }
 
     private func glucoseLabelsView(fullSize: CGSize) -> some View {
-        ForEach(0 ..< Config.yLinesCount + 1) { line -> AnyView in
+        ForEach(0 ..< Config.yLinesCount + 1, id: \.self) { line -> AnyView in
             let range = glucoseYGange
             let yStep = (range.maxY - range.minY) / CGFloat(Config.yLinesCount)
             let valueStep = Double(range.maxValue - range.minValue) / Double(Config.yLinesCount)
