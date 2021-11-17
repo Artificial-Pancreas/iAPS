@@ -404,25 +404,25 @@ Enact a temp Basal or a temp target */
 
 /* Calendar and Libre transmitter settings */
 
-"Configure Libre Transmitter" = "Configure Libre Transmitter";
+"Configure Libre Transmitter" = "Konfigurer Libre-sender";
 
-"Calibrations" = "Calibrations";
+"Calibrations" = "Kalibreringer";
 
-"Create events in calendar" = "Create events in calendar";
+"Create events in calendar" = "Opprett hendelser i kalenderen";
 
-"Calendar" = "Calendar";
+"Calendar" = "Kalender";
 
-"Other" = "Other";
+"Other" = "Annet";
 
-"Libre Transmitter" = "Libre Transmitter";
+"Libre Transmitter" = "Libre-sender";
 
-"Libre Transmitters" = "Libre Transmitters";
+"Libre Transmitters" = "Libre-sendere";
 
-"Bluetooth Transmitters" = "Bluetooth Transmitters";
+"Bluetooth Transmitters" = "Blåtann-sendere";
 
-"Modes" = "Modes";
+"Modes" = "Moduser";
 
-"Libre 2 Direct" = "Libre 2 Direct";
+"Libre 2 Direct" = "Libre 2 direkte";
 
 "Select the third party transmitter you want to connect to" = "Select the third party transmitter you want to connect to";
 
@@ -432,41 +432,41 @@ Enact a temp Basal or a temp target */
 /* The short unit display string for milligrams of glucose per decilter */
 "mg/dL" = "mg/dL";
 
-"Add calibration" = "Add calibration";
+"Add calibration" = "Legg til kalibrering";
 
-"Meter glucose" = "Meter glucose";
+"Meter glucose" = "Blodsukkermåling";
 
 "Info" = "Info";
 
-"Slope" = "Slope";
+"Slope" = "Stigningstall";
 
-"Intercept" = "Intercept";
+"Intercept" = "Skjæringspunkt";
 
 "Chart" = "Chart";
 
-"Remove" = "Remove";
+"Remove" = "Fjern";
 
-"Remove Last" = "Remove Last";
+"Remove Last" = "Fjern siste";
 
-"Remove All" = "Remove All";
+"Remove All" = "Fjern alle";
 
-"Calibrations" = "Calibrations";
+"Calibrations" = "Kalibreringer";
 
-"About the Process" = "About the Process";
+"About the Process" = "Om prosessen";
 
 "Please make sure that your Libre 2 sensor is already activated and finished warming up. If you have other apps connecting to the sensor via bluetooth, these need to be shut down or uninstalled. \n\n You can only have one app communicating with the sensor via bluetooth. Then press the \"pariring and connection\" button below to start the process. Please note that the bluetooth connection might take up to a couple of minutes before it starts working." = "Please make sure that your Libre 2 sensor is already activated and finished warming up. If you have other apps connecting to the sensor via bluetooth, these need to be shut down or uninstalled. \n\n You can only have one app communicating with the sensor via bluetooth. Then press the \"pariring and connection\" button below to start the process. Please note that the bluetooth connection might take up to a couple of minutes before it starts working.";
 
-"Pairinginfo" = "Pairinginfo";
+"Pairinginfo" = "Parings-info";
 
-"PatchInfo" = "PatchInfo";
+"PatchInfo" = "Patch-info";
 
-"Calibrationinfo" = "Calibrationinfo";
+"Calibrationinfo" = "Kalibrerings-info";
 
-"Unknown" = "Unknown";
+"Unknown" = "Ukjent";
 
-"Not paired yet" = "Not paired yet";
+"Not paired yet" = "Ikke paret ennå";
 
-"Pair Sensor & connect" = "Pair Sensor & connect";
+"Pair Sensor & connect" = "Parkoble sensor";
 
 "Phone NFC required!" = "Phone NFC required!";
 
@@ -474,16 +474,16 @@ Enact a temp Basal or a temp target */
 
 "Bluetooth Power Off" = "Bluetooth Power Off";
 
-"Please turn on Bluetooth" = "Please turn on Bluetooth";
+"Please turn on Bluetooth" = "Vennligst slå på blåtann";
 
-"No Libre Transmitter Selected" = "No Libre Transmitter Selected";
+"No Libre Transmitter Selected" = "Ingen Libre sender er valgt";
 
 "Delete CGMManager and start anew. Your libreoopweb credentials will be preserved" = "Delete CGMManager and start anew. Your libreoopweb credentials will be preserved";
 
 
 /* Headers for settings */
 
-"OpenAPS main settings" = "OpenAPS main settings";
+"OpenAPS main settings" = "OpenAPS hovedinnstillinger";
 
 "OpenAPS SMB settings" = "OpenAPS SMB settings";
 

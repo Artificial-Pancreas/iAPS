@@ -404,92 +404,92 @@ Enact a temp Basal or a temp target */
 
 /* Calendar and Libre transmitter settings */
 
-"Configure Libre Transmitter" = "Configure Libre Transmitter";
+"Configure Libre Transmitter" = "Настроить Libre Transmitter";
 
-"Calibrations" = "Calibrations";
+"Calibrations" = "Калибровки";
 
-"Create events in calendar" = "Create events in calendar";
+"Create events in calendar" = "Создавать событий в календаре";
 
-"Calendar" = "Calendar";
+"Calendar" = "Календарь";
 
-"Other" = "Other";
+"Other" = "Прочее";
 
 "Libre Transmitter" = "Libre Transmitter";
 
-"Libre Transmitters" = "Libre Transmitters";
+"Libre Transmitters" = "Передатчики Libre";
 
-"Bluetooth Transmitters" = "Bluetooth Transmitters";
+"Bluetooth Transmitters" = "Bluetooth передатчики";
 
-"Modes" = "Modes";
+"Modes" = "Режимы";
 
-"Libre 2 Direct" = "Libre 2 Direct";
+"Libre 2 Direct" = "Libre 2 прямое подключение";
 
-"Select the third party transmitter you want to connect to" = "Select the third party transmitter you want to connect to";
+"Select the third party transmitter you want to connect to" = "Выберите сторонний передатчик, к которому вы хотите подключиться";
 
 /* The short unit display string for millimoles of glucose per liter */
-"mmol/L" = "mmol/L";
+"mmol/L" = "ммоль/л";
 
 /* The short unit display string for milligrams of glucose per decilter */
-"mg/dL" = "mg/dL";
+"mg/dL" = "мг/дл";
 
-"Add calibration" = "Add calibration";
+"Add calibration" = "Добавить калибровку";
 
-"Meter glucose" = "Meter glucose";
+"Meter glucose" = "Показание глюкометра";
 
-"Info" = "Info";
+"Info" = "Инфо";
 
-"Slope" = "Slope";
+"Slope" = "Наклон";
 
-"Intercept" = "Intercept";
+"Intercept" = "Смещение";
 
-"Chart" = "Chart";
+"Chart" = "График";
 
-"Remove" = "Remove";
+"Remove" = "Удалить";
 
-"Remove Last" = "Remove Last";
+"Remove Last" = "Удалить последнюю";
 
-"Remove All" = "Remove All";
+"Remove All" = "Удалить все";
 
-"Calibrations" = "Calibrations";
+"Calibrations" = "Калибровки";
 
-"About the Process" = "About the Process";
+"About the Process" = "О процессе";
 
-"Please make sure that your Libre 2 sensor is already activated and finished warming up. If you have other apps connecting to the sensor via bluetooth, these need to be shut down or uninstalled. \n\n You can only have one app communicating with the sensor via bluetooth. Then press the \"pariring and connection\" button below to start the process. Please note that the bluetooth connection might take up to a couple of minutes before it starts working." = "Please make sure that your Libre 2 sensor is already activated and finished warming up. If you have other apps connecting to the sensor via bluetooth, these need to be shut down or uninstalled. \n\n You can only have one app communicating with the sensor via bluetooth. Then press the \"pariring and connection\" button below to start the process. Please note that the bluetooth connection might take up to a couple of minutes before it starts working.";
+"Please make sure that your Libre 2 sensor is already activated and finished warming up. If you have other apps connecting to the sensor via bluetooth, these need to be shut down or uninstalled. \n\n You can only have one app communicating with the sensor via bluetooth. Then press the \"pariring and connection\" button below to start the process. Please note that the bluetooth connection might take up to a couple of minutes before it starts working." = "Пожалуйста, убедитесь, что датчик Libre 2 уже активирован и завершен прогрев. Если у вас есть другие приложения, подключающиеся к датчику через bluetooth, они должны быть выключены или удалены. Вы можете иметь только одно приложение для общения с сенсором через bluetooth. Затем нажмите на кнопку \"pariring and connection\" ниже, чтобы запустить процесс. Пожалуйста, обратите внимание, что Bluetooth-соединение может занять несколько минут до того, как он начнет работать.";
 
-"Pairinginfo" = "Pairinginfo";
+"Pairinginfo" = "Информация о сопряжении";
 
-"PatchInfo" = "PatchInfo";
+"PatchInfo" = "Информация о патче";
 
-"Calibrationinfo" = "Calibrationinfo";
+"Calibrationinfo" = "Информация о калибровке";
 
-"Unknown" = "Unknown";
+"Unknown" = "Неизвестно";
 
-"Not paired yet" = "Not paired yet";
+"Not paired yet" = "Нет сопряжения";
 
-"Pair Sensor & connect" = "Pair Sensor & connect";
+"Pair Sensor & connect" = "Привязать сенсор и подключить";
 
 "Phone NFC required!" = "Phone NFC required!";
 
 "Your phone or app is not enabled for NFC communications, which is needed to pair to libre2 sensors" = "Your phone or app is not enabled for NFC communications, which is needed to pair to libre2 sensors";
 
-"Bluetooth Power Off" = "Bluetooth Power Off";
+"Bluetooth Power Off" = "Bluetooth отключен";
 
-"Please turn on Bluetooth" = "Please turn on Bluetooth";
+"Please turn on Bluetooth" = "Пожалуйста, включите Bluetooth";
 
-"No Libre Transmitter Selected" = "No Libre Transmitter Selected";
+"No Libre Transmitter Selected" = "Не выбран передатчик для Libre";
 
 "Delete CGMManager and start anew. Your libreoopweb credentials will be preserved" = "Delete CGMManager and start anew. Your libreoopweb credentials will be preserved";
 
 
 /* Headers for settings */
 
-"OpenAPS main settings" = "OpenAPS main settings";
+"OpenAPS main settings" = "Основные настройки OpenAPS";
 
-"OpenAPS SMB settings" = "OpenAPS SMB settings";
+"OpenAPS SMB settings" = "Настройки OpenAPS SMB";
 
-"OpenAPS targets settings" = "OpenAPS targets settings";
+"OpenAPS targets settings" = "Настройки целей OpenAPS";
 
-"OpenAPS other settings" = "OpenAPS other settings";
+"OpenAPS other settings" = "Другие настройки OpenAPS";
 
 /*
   Infotexts from openaps.docs and androidaps.docs
