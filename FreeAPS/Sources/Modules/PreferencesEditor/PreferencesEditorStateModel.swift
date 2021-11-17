@@ -17,8 +17,8 @@ extension PreferencesEditor {
             unitsIndex = settingsManager.settings.units == .mgdL ? 0 : 1
             allowAnnouncements = settingsManager.settings.allowAnnouncements
 
-            insulinReqFraction = settingsManager.settings.insulinReqFraction ?? 0.7
-            skipBolusScreenAfterCarbs = settingsManager.settings.skipBolusScreenAfterCarbs ?? false
+            insulinReqFraction = settingsManager.settings.insulinReqFraction
+            skipBolusScreenAfterCarbs = settingsManager.settings.skipBolusScreenAfterCarbs
 
             $unitsIndex
                 .removeDuplicates()

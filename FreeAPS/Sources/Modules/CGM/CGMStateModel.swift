@@ -16,12 +16,12 @@ extension CGM {
         @Persisted(key: "CalendarManager.currentCalendarID") var storedCalendarID: String? = nil
 
         override func subscribe() {
-            cgm = settingsManager.settings.cgm ?? .nightscout
-            uploadGlucose = settingsManager.settings.uploadGlucose ?? false
+            cgm = settingsManager.settings.cgm
+            uploadGlucose = settingsManager.settings.uploadGlucose
             transmitterID = UserDefaults.standard.dexcomTransmitterID ?? ""
             currentCalendarID = storedCalendarID ?? ""
             calendarIDs = calendarManager.calendarIDs()
-            createCalendarEvents = settingsManager.settings.useCalendar ?? false
+            createCalendarEvents = settingsManager.settings.useCalendar
 
             $cgm
                 .removeDuplicates()

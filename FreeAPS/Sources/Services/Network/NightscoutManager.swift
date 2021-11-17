@@ -35,11 +35,11 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
     }
 
     private var isUploadEnabled: Bool {
-        settingsManager.settings.isUploadEnabled ?? false
+        settingsManager.settings.isUploadEnabled
     }
 
     private var isUploadGlucoseEnabled: Bool {
-        settingsManager.settings.uploadGlucose ?? false
+        settingsManager.settings.uploadGlucose
     }
 
     private var nightscoutAPI: NightscoutAPI? {
@@ -67,23 +67,21 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
     }
 
     var cgmURL: URL? {
-        if let url = settingsManager.settings.cgm?.appURL {
+        if let url = settingsManager.settings.cgm.appURL {
             return url
         }
 
-        let useLocal = (settingsManager.settings.useLocalGlucoseSource ?? false) && settingsManager.settings
-            .localGlucosePort != nil
+        let useLocal = settingsManager.settings.useLocalGlucoseSource
 
         let maybeNightscout = useLocal
-            ? NightscoutAPI(url: URL(string: "http://127.0.0.1:\(settingsManager.settings.localGlucosePort!)")!)
+            ? NightscoutAPI(url: URL(string: "http://127.0.0.1:\(settingsManager.settings.localGlucosePort)")!)
             : nightscoutAPI
 
         return maybeNightscout?.url
     }
 
     func fetchGlucose() -> AnyPublisher<[BloodGlucose], Never> {
-        let useLocal = (settingsManager.settings.useLocalGlucoseSource ?? false) && settingsManager.settings
-            .localGlucosePort != nil
+        let useLocal = settingsManager.settings.useLocalGlucoseSource
 
         if !useLocal {
             guard isNetworkReachable else {
@@ -92,7 +90,7 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
         }
 
         let maybeNightscout = useLocal
-            ? NightscoutAPI(url: URL(string: "http://127.0.0.1:\(settingsManager.settings.localGlucosePort!)")!)
+            ? NightscoutAPI(url: URL(string: "http://127.0.0.1:\(settingsManager.settings.localGlucosePort)")!)
             : nightscoutAPI
 
         guard let nightscout = maybeNightscout else {

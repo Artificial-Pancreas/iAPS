@@ -13,7 +13,7 @@ extension Settings {
 
         override func subscribe() {
             closedLoop = settingsManager.settings.closedLoop
-            debugOptions = settingsManager.settings.debugOptions ?? false
+            debugOptions = settingsManager.settings.debugOptions
 
             $closedLoop
                 .removeDuplicates()
@@ -45,6 +45,6 @@ extension Settings {
 extension Settings.StateModel: SettingsObserver {
     func settingsDidChange(_ settings: FreeAPSSettings) {
         closedLoop = settings.closedLoop
-        debugOptions = settings.debugOptions ?? false
+        debugOptions = settings.debugOptions
     }
 }

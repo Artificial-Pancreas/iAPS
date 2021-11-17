@@ -6,7 +6,7 @@ final class DexcomSource: GlucoseSource {
     private let processQueue = DispatchQueue(label: "DexcomSource.processQueue")
 
     private let dexcomManager = TransmitterManager(
-        state: TransmitterManagerState(transmitterID: UserDefaults.standard.dexcomTransmitterID ?? "8MBPEY")
+        state: TransmitterManagerState(transmitterID: UserDefaults.standard.dexcomTransmitterID ?? "000000")
     )
 
     private var promise: Future<[BloodGlucose], Error>.Promise?
