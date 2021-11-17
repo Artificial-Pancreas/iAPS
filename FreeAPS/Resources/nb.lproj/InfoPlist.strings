@@ -1,0 +1,13 @@
+/* Privacy - NFC Scan Usage Description */
+"NFCReaderUsageDescription" = "NFC brukes til å skanne Libre-sensorer.";
+
+/* Privacy - Bluetooth Always Usage Description */
+"NSBluetoothAlwaysUsageDescription" = "Bluetooth brukes til å kommunisere med insulinpumpe og blodsukkersensor";
+
+"NSBluetoothPeripheralUsageDescription" = "Bluetooth brukes til å kommunisere med insulinpumpe og blodsukkersensor-enheter";
+
+/* Privacy - Calendars Usage Description */
+"NSCalendarsUsageDescription" = "Kalender brukes til å opprette nye blodsukker-oppføringer.";
+
+/* Privacy - Face ID Usage Description */
+"NSFaceIDUsageDescription" = "For autorisert tilgang til bolus";
