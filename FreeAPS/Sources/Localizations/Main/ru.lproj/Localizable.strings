@@ -404,15 +404,15 @@ Enact a temp Basal or a temp target */
 
 /* Calendar and Libre transmitter settings */
 
-"Configure Libre Transmitter" = "Configure Libre Transmitter";
+"Configure Libre Transmitter" = "Настроить Libre Transmitter";
 
-"Calibrations" = "Calibrations";
+"Calibrations" = "Калибровки";
 
-"Create events in calendar" = "Create events in calendar";
+"Create events in calendar" = "Создавать событий в календаре";
 
-"Calendar" = "Calendar";
+"Calendar" = "Календарь";
 
-"Other" = "Other";
+"Other" = "Прочее";
 
 "Libre Transmitter" = "Libre Transmitter";
 
@@ -427,30 +427,30 @@ Enact a temp Basal or a temp target */
 "Select the third party transmitter you want to connect to" = "Select the third party transmitter you want to connect to";
 
 /* The short unit display string for millimoles of glucose per liter */
-"mmol/L" = "mmol/L";
+"mmol/L" = "ммоль/л";
 
 /* The short unit display string for milligrams of glucose per decilter */
-"mg/dL" = "mg/dL";
+"mg/dL" = "мг/дл";
 
-"Add calibration" = "Add calibration";
+"Add calibration" = "Добавить калибровку";
 
-"Meter glucose" = "Meter glucose";
+"Meter glucose" = "Показание глюкометра";
 
-"Info" = "Info";
+"Info" = "Инфо";
 
-"Slope" = "Slope";
+"Slope" = "Наклон";
 
-"Intercept" = "Intercept";
+"Intercept" = "Смещение";
 
-"Chart" = "Chart";
+"Chart" = "График";
 
-"Remove" = "Remove";
+"Remove" = "Удалить";
 
-"Remove Last" = "Remove Last";
+"Remove Last" = "Удалить последнюю";
 
-"Remove All" = "Remove All";
+"Remove All" = "Удалить все";
 
-"Calibrations" = "Calibrations";
+"Calibrations" = "Калибровки";
 
 "About the Process" = "About the Process";
 
@@ -483,13 +483,13 @@ Enact a temp Basal or a temp target */
 
 /* Headers for settings */
 
-"OpenAPS main settings" = "OpenAPS main settings";
+"OpenAPS main settings" = "Основные настройки OpenAPS";
 
-"OpenAPS SMB settings" = "OpenAPS SMB settings";
+"OpenAPS SMB settings" = "Настройки OpenAPS SMB";
 
-"OpenAPS targets settings" = "OpenAPS targets settings";
+"OpenAPS targets settings" = "Настройки целей OpenAPS";
 
-"OpenAPS other settings" = "OpenAPS other settings";
+"OpenAPS other settings" = "Другие настройки OpenAPS";
 
 /*
   Infotexts from openaps.docs and androidaps.docs
