@@ -79,6 +79,7 @@ final class BaseFetchGlucoseManager: FetchGlucoseManager, Injectable {
             .publisher(for: \.dexcomTransmitterID)
             .removeDuplicates()
             .sink { id in
+                guard [.dexcomG5, .dexcomG6].contains(self.settingsManager.settings.cgm) else { return }
                 if id != self.dexcomSource.transmitterID {
                     self.dexcomSource = DexcomSource()
                 }
