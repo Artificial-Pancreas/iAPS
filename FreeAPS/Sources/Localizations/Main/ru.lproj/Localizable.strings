@@ -401,9 +401,204 @@ Enact a temp Basal or a temp target */
 /* Other CGM setting */
 "Other" = "Прочее";
 
+
+/* Calendar and Libre transmitter settings --------------*/
+/* */
+
+"Configure Libre Transmitter" = "Настроить Libre Transmitter";
+
+/* */
+"Calibrations" = "Калибровки";
+
+/* */
+"Create events in calendar" = "Создавать событий в календаре";
+
+/* */
+"Calendar" = "Календарь";
+
+/* */
+"Other" = "Прочее";
+
+/* */
+"Libre Transmitter" = "Libre Transmitter";
+
+/* */
+"Libre Transmitters" = "Передатчики Libre";
+
+/* */
+"Bluetooth Transmitters" = "Bluetooth передатчики";
+
+/* */
+"Modes" = "Режимы";
+
+/* Libre 2 Direct */
+"Libre 2 Direct" = "Libre 2 прямое подключение";
+
+/* */
+"Select the third party transmitter you want to connect to" = "Выберите сторонний передатчик, к которому вы хотите подключиться";
+
+/* State was restored */
+"State was restored" = "Состояние восстановлено";
+
+/* The short unit display string for millimoles of glucose per liter */
+"mmol/L" = "ммоль/л";
+
+/* The short unit display string for milligrams of glucose per decilter */
+"mg/dL" = "мг/дл";
+
+/* */
+"Add calibration" = "Добавить калибровку";
+
+/* When adding capillary glucose meater reading */
+"Meter glucose" = "Показание глюкометра";
+
+/* */
+"Info" = "Инфо";
+
+/*v*/
+"Slope" = "Наклон";
+
+/* */
+"Intercept" = "Смещение";
+
+/* */
+"Chart" = "График";
+
+/* */
+"Remove" = "Удалить";
+
+/* */
+"Remove Last" = "Удалить последнюю";
+
+/* */
+"Remove All" = "Удалить все";
+
+/* */
+"Calibrations" = "Калибровки";
+
+/* */
+"About the Process" = "О процессе";
+
+/* */
+"Please make sure that your Libre 2 sensor is already activated and finished warming up. If you have other apps connecting to the sensor via bluetooth, these need to be shut down or uninstalled. \n\n You can only have one app communicating with the sensor via bluetooth. Then press the \"pariring and connection\" button below to start the process. Please note that the bluetooth connection might take up to a couple of minutes before it starts working." = "Пожалуйста, убедитесь, что датчик Libre 2 уже активирован и завершен прогрев. Если у вас есть другие приложения, подключающиеся к датчику через bluetooth, они должны быть выключены или удалены. Вы можете иметь только одно приложение для общения с сенсором через bluetooth. Затем нажмите на кнопку \"pariring and connection\" ниже, чтобы запустить процесс. Пожалуйста, обратите внимание, что Bluetooth-соединение может занять несколько минут до того, как он начнет работать.";
+
+/* */
+"Pairinginfo" = "Информация о сопряжении";
+
+/* */
+"PatchInfo" = "Информация о патче";
+
+/* */
+"Calibrationinfo" = "Информация о калибровке";
+
+/* */
+"Unknown" = "Неизвестно";
+
+/* */
+"Not paired yet" = "Нет сопряжения";
+
+/* */
+"Pair Sensor & connect" = "Привязать сенсор и подключить";
+
+/* */
+"Phone NFC required!" = "Необходим NFC в телефоне!";
+
+/* */
+"Your phone or app is not enabled for NFC communications, which is needed to pair to libre2 sensors" = "NFC недоступен. Он требуется для соединение с сенсором Libre2";
+
+/* Bluetooth Power Off */
+"Bluetooth Power Off" = "Bluetooth отключен";
+
+/* Please turn on Bluetooth */
+"Please turn on Bluetooth" = "Пожалуйста, включите Bluetooth";
+
+/* No Libre Transmitter Selected */
+"No Libre Transmitter Selected" = "Не выбран передатчик для Libre";
+
+/* Delete Transmitter and start anew. */
+"Delete CGMManager and start anew. Your libreoopweb credentials will be preserved" = "Delete CGMManager and start anew. Your libreoopweb credentials will be preserved";
+
+/* Invalid libre checksum */
+"Invalid libre checksum" = "Неверная контрольная сумма сенсора";
+
+/* Libre sensor was incorrectly read, CRCs were not valid */
+"Libre sensor was incorrectly read, CRCs were not valid" = "Сенсор прочитан некорректно, неверная контрольная сумма";
+
+/* Glucose */
+"Glucose" = "Глюкоза";
+
+/* LOWALERT! */
+"LOWALERT!" = "ГИПО!";
+
+/* HIGHALERT! */
+"HIGHALERT!" = "ГИПЕР!";
+
+/* (Snoozed)*/
+"(Snoozed)" = "(Заглушено)";
+
+/* Glucose: %@ */
+"Glucose: %@" = "Глюкоза: %@";
+
+/* Transmitter: %@ */
+"Transmitter: %@" = "Передатчик: %@";
+
+/* No Sensor Detected */
+"No Sensor Detected" = "Сенсор не обнаружен";
+
+/* This might be an intermittent problem, but please check that your transmitter is tightly secured over your sensor */
+"This might be an intermittent problem, but please check that your transmitter is tightly secured over your sensor" = "Это может быть временная проблема, но пожалуйста, проверьте, что ваш передатчик надежно закрывает сенсор";
+
+/* New Sensor Detected */
+"New Sensor Detected" = "Обнаружен новый сенсор";
+
+/* Please wait up to 30 minutes before glucose readings are available! */
+"Please wait up to 30 minutes before glucose readings are available!" = "Пожалуйста, подождите до 30 минут перед тем, как будут доступны данные о глюкозе!";
+
+/* Invalid Glucose sample detected, try again later */
+"Invalid Glucose sample detected, try again later" = "Обнаружено невалидное значение глюкозы, повторите попытку позже";
+
+/* ensor might have temporarily stopped, fallen off or is too cold or too warm */
+"Sensor might have temporarily stopped, fallen off or is too cold or too warm" = "Сенсор временно остановлен, отсоединён или температура за рамками допустимой";
+
+/* Invalid Sensor Detected */
+"Invalid Sensor Detected" = "Обнаружен неверный сенсор";
+
+/* Detected sensor seems not to be a libre 1 sensor! */
+"Detected sensor seems not to be a libre 1 sensor!" = "Обнаруженный сенсор не является Libre 1 сенсором!";
+
+/* Detected sensor is invalid: %@ */
+"Detected sensor is invalid: %@" = "Обнаруженный сенсор невалиден: %@";
+
+/* Low Battery */
+"Low Battery" = "Низкий заряд батареи";
+
+/* Battery is running low %@, consider charging your %@ device as soon as possible */
+"Battery is running low %@, consider charging your %@ device as soon as possible" = "Батарея работает на низком уровне %@, попробуйте зарядить устройство %@ как можно скорее";
+
+/* Extracting calibrationdata from sensor */
+"Extracting calibrationdata from sensor" = "Извлечение данных калибровки из сенсора";
+
+/* Sensor Ending Soon */
+"Sensor Ending Soon" = "Сенсор скоро закончится";
+
+/* Current Sensor is Ending soon! Sensor Life left in %@ */
+"Current Sensor is Ending soon! Sensor Life left in %@" = "Сенсор скоро закончится! Осталась %@";
+
+
+/* Headers for settings ------------------- */
+
+
+"OpenAPS main settings" = "Основные настройки OpenAPS";
+
+"OpenAPS SMB settings" = "Настройки OpenAPS SMB";
+
+"OpenAPS targets settings" = "Настройки целей OpenAPS";
+
+"OpenAPS other settings" = "Другие настройки OpenAPS";
+
 /*
   Infotexts from openaps.docs and androidaps.docs
-  FreeAPS
+  FreeAPS X
 */
 /* ”Rewind Resets Autosens” */
 
@@ -510,7 +705,7 @@ Enact a temp Basal or a temp target */
 "Smallest possible bolus amount" = "Минимально возможный размер болюса";
 
 /* "Insulin Peak Time" */
-"Time of maximum blood glucose lowering effect of insulin, in minutes" = "Пиковое время инсулина в минутах. Время необходимое инсулину для достижения максимального воздействия";
+"Time of maximum blood glucose lowering effect of insulin, in minutes. Beware: Oref assumes for ultra-papid (Lyumjev) & rapid-acting (Fiasp) curves minimal (35 & 50 min) and maximal (100 & 120 min) applicable insulinPeakTimes. Using a custom insulinPeakTime outside these bounds will result in issues with FreeAPS-X, longer loop calculations and possible red loops." = "Пиковое время инсулина в минутах. Время необходимое инсулину для достижения максимального воздействия";
 
 /* "Carbs Req Threshold" */
 "Grams of carbsReq to trigger a pushover. Defaults to 1 (for 1 gram of carbohydrate). Can be increased if you only want to get Pushover for carbsReq at X threshold." = "Требуемое количество грамм углеводов для срабатывания оповещения pushover. По умолчанию 1 (для 1 грамма углевода). Можно увеличить только если вы хотите получить Pushover для carbsReq при X пороге.";

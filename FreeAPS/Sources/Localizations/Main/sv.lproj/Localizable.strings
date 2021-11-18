@@ -399,11 +399,206 @@ Enact a temp Basal or a temp target */
 "Transmitter ID" = "Sändar-ID";
 
 /* Other CGM setting */
-"Other" = "Annan inställning";
+"Other" = "Annan";
+
+
+/* Calendar and Libre transmitter settings --------------*/
+/* */
+
+"Configure Libre Transmitter" = "Ställ in en Libre-sändare";
+
+/* */
+"Calibrations" = "Kalibreringar";
+
+/* */
+"Create events in calendar" = "Skapa kalenderhändelser";
+
+/* */
+"Calendar" = "Kalender";
+
+/* */
+"Other" = "Annan";
+
+/* */
+"Libre Transmitter" = "Libre-sändare";
+
+/* */
+"Libre Transmitters" = "Libre-sändare";
+
+/* */
+"Bluetooth Transmitters" = "Bluetooth-sändare";
+
+/* */
+"Modes" = "Lägen";
+
+/* Libre 2 Direct */
+"Libre 2 Direct" = "Libre 2 Direkt";
+
+/* */
+"Select the third party transmitter you want to connect to" = "Välj vilken sändare du vill ansluta till";
+
+/* State was restored */
+"State was restored" = "Återställd";
+
+/* The short unit display string for millimoles of glucose per liter */
+"mmol/L" = "mmol/l";
+
+/* The short unit display string for milligrams of glucose per decilter */
+"mg/dL" = "mg/dl";
+
+/* */
+"Add calibration" = "Lägg till kalibrering";
+
+/* When adding capillary glucose meater reading */
+"Meter glucose" = "Glukosmätarvärde";
+
+/* */
+"Info" = "Info";
+
+/*v*/
+"Slope" = "Lutning";
+
+/* */
+"Intercept" = "Skärningspunkt";
+
+/* */
+"Chart" = "Diagram";
+
+/* */
+"Remove" = "Ta bort";
+
+/* */
+"Remove Last" = "Ta bort senaste";
+
+/* */
+"Remove All" = "Ta bort alla";
+
+/* */
+"Calibrations" = "Kalibreringar";
+
+/* */
+"About the Process" = "Om processen";
+
+/* */
+"Please make sure that your Libre 2 sensor is already activated and finished warming up. If you have other apps connecting to the sensor via bluetooth, these need to be shut down or uninstalled. \n\n You can only have one app communicating with the sensor via bluetooth. Then press the \"pariring and connection\" button below to start the process. Please note that the bluetooth connection might take up to a couple of minutes before it starts working." = "Se till att din Libre 2-sensor redan är aktiverad och klar med uppvärmningen. Om du har andra appar som ansluter till sensorn via bluetooth, måste dessa stängas av eller avinstalleras. \n\n Du kan bara ha en app som kommunicerar med sensorn via bluetooth. Tryck sedan på \"Parkoppla sensor och anslut\"-knappen nedan för att starta processen. Observera att Bluetooth-anslutningen kan ta upp till ett par minuter innan den börjar fungera.";
+
+/* */
+"Pairinginfo" = "Parkopplingsinfo";
+
+/* */
+"PatchInfo" = "Patchinformation";
+
+/* */
+"Calibrationinfo" = "Kalibreringsinfo";
+
+/* */
+"Unknown" = "Okänd";
+
+/* */
+"Not paired yet" = "Inte parkopplad ännu";
+
+/* */
+"Pair Sensor & connect" = "Parkoppla sensor och anslut ";
+
+/* */
+"Phone NFC required!" = "Telefon med NFC krävs!";
+
+/* */
+"Your phone or app is not enabled for NFC communications, which is needed to pair to libre2 sensors" = "Din telefon eller app är inte aktiverad med NFC, vilket krävs för att parkoppla med Libre2-sensorer";
+
+/* Bluetooth Power Off */
+"Bluetooth Power Off" = "Bluetooth är av";
+
+/* Please turn on Bluetooth */
+"Please turn on Bluetooth" = "Sätt på Bluetooth";
+
+/* No Libre Transmitter Selected */
+"No Libre Transmitter Selected" = "Ingen Libre-sändare vald";
+
+/* Delete Transmitter and start anew. */
+"Delete CGMManager and start anew. Your libreoopweb credentials will be preserved" = "Ta bort CGM och börja om. Dina libreoopweb-inställningar kommer att sparas";
+
+/* Invalid libre checksum */
+"Invalid libre checksum" = "Ogiltig kontrollsumma för libre";
+
+/* Libre sensor was incorrectly read, CRCs were not valid */
+"Libre sensor was incorrectly read, CRCs were not valid" = "Libre-sensor felaktigt läst, CRCs ogiltiga";
+
+/* Glucose */
+"Glucose" = "Glukos";
+
+/* LOWALERT! */
+"LOWALERT!" = "VARNING LÅGT!";
+
+/* HIGHALERT! */
+"HIGHALERT!" = "VARNING HÖGT!";
+
+/* (Snoozed)*/
+"(Snoozed)" = "(Snoozad)";
+
+/* Glucose: %@ */
+"Glucose: %@" = "Glukos: %@";
+
+/* Transmitter: %@ */
+"Transmitter: %@" = "Sändare: %@";
+
+/* No Sensor Detected */
+"No Sensor Detected" = "Ingen Sensor upptäckt";
+
+/* This might be an intermittent problem, but please check that your transmitter is tightly secured over your sensor */
+"This might be an intermittent problem, but please check that your transmitter is tightly secured over your sensor" = "Detta kan vara ett övergående problem, men kontrollera att din sändare sitter fast ordentligt på din sensor";
+
+/* New Sensor Detected */
+"New Sensor Detected" = "Ingen sensor upptäckt";
+
+/* Please wait up to 30 minutes before glucose readings are available! */
+"Please wait up to 30 minutes before glucose readings are available!" = "Vänta upp till 30 minuter innan glukosvärden finns tillgängliga!";
+
+/* Invalid Glucose sample detected, try again later */
+"Invalid Glucose sample detected, try again later" = "Ogiltigt glukosvärde upptäckt, försök igen senare";
+
+/* ensor might have temporarily stopped, fallen off or is too cold or too warm */
+"Sensor might have temporarily stopped, fallen off or is too cold or too warm" = "Sensorn kan tillfälligt ha stoppats, fallit av eller är för kall eller för varm";
+
+/* Invalid Sensor Detected */
+"Invalid Sensor Detected" = "Ogiltig sensor upptäckt";
+
+/* Detected sensor seems not to be a libre 1 sensor! */
+"Detected sensor seems not to be a libre 1 sensor!" = "Upptäckt sensor verkar inte vara en libre 1-sensor!";
+
+/* Detected sensor is invalid: %@ */
+"Detected sensor is invalid: %@" = "Upptäckt sensor är ogiltig: %@";
+
+/* Low Battery */
+"Low Battery" = "Låg batterinivå";
+
+/* Battery is running low %@, consider charging your %@ device as soon as possible */
+"Battery is running low %@, consider charging your %@ device as soon as possible" = "Batterinivå är låg %@, överväg att ladda din %@ enhet så snart som möjligt";
+
+/* Extracting calibrationdata from sensor */
+"Extracting calibrationdata from sensor" = "Extraherar kalibreringsdata från sensorn";
+
+/* Sensor Ending Soon */
+"Sensor Ending Soon" = "Sensor behöver snart bytas";
+
+/* Current Sensor is Ending soon! Sensor Life left in %@ */
+"Current Sensor is Ending soon! Sensor Life left in %@" = "Nuvarande sensor behöver snart bytas! Sensortid kvar i %@";
+
+
+/* Headers for settings ------------------- */
+
+
+"OpenAPS main settings" = "OpenAPS huvudsakliga inställningar";
+
+"OpenAPS SMB settings" = "OpenAPS SMB-inställningar";
+
+"OpenAPS targets settings" = "OpenAPS målvärdesinställningar";
+
+"OpenAPS other settings" = "OpenAPS andra inställningar";
 
 /*
   Infotexts from openaps.docs and androidaps.docs
-  FreeAPS
+  FreeAPS X
 */
 /* ”Rewind Resets Autosens” */
 
@@ -510,7 +705,7 @@ Enact a temp Basal or a temp target */
 "Smallest possible bolus amount" = "Minsta möjliga bolusdos";
 
 /* "Insulin Peak Time" */
-"Time of maximum blood glucose lowering effect of insulin, in minutes" = "Tid i minuter för när insulinet har som störst blodsockersänkande effekt";
+"Time of maximum blood glucose lowering effect of insulin, in minutes. Beware: Oref assumes for ultra-papid (Lyumjev) & rapid-acting (Fiasp) curves minimal (35 & 50 min) and maximal (100 & 120 min) applicable insulinPeakTimes. Using a custom insulinPeakTime outside these bounds will result in issues with FreeAPS-X, longer loop calculations and possible red loops." = "Tid i minuter för när insulinet har som störst blodsockersänkande effekt. Observera att inte ange ett lägre värde än 35 min för Lyumjev eller 50 min för Fiasp, eller högre än 100, respektive 120 min. Om du gör så kommer det att leda till problem med FreeAPS X, som röda loopar, långa Loop-beräkningar och överdrivet stora loggfiler.";
 
 /* "Carbs Req Threshold" */
 "Grams of carbsReq to trigger a pushover. Defaults to 1 (for 1 gram of carbohydrate). Can be increased if you only want to get Pushover for carbsReq at X threshold." = "Antal kolhydrater för att utlösa en pushover-notis, av det totala antal kolhydrater nödvändiga (carbsReq) för att undvika ett lågt blodsockervärde, som krävs. Standardvärde är 1 (gram kolhydrater). Kan ökas om du bara vill få en Pushover-notis vid en större mängd nödvändiga kolhydrater.";
