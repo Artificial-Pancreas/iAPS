@@ -438,7 +438,7 @@ Enact a temp Basal or a temp target */
 "Select the third party transmitter you want to connect to" = "Выберите сторонний передатчик, к которому вы хотите подключиться";
 
 /* State was restored */
-"State was restored" = "State was restored";
+"State was restored" = "Состояние восстановлено";
 
 /* The short unit display string for millimoles of glucose per liter */
 "mmol/L" = "ммоль/л";
@@ -501,10 +501,10 @@ Enact a temp Basal or a temp target */
 "Pair Sensor & connect" = "Привязать сенсор и подключить";
 
 /* */
-"Phone NFC required!" = "Phone NFC required!";
+"Phone NFC required!" = "Необходим NFC в телефоне!";
 
 /* */
-"Your phone or app is not enabled for NFC communications, which is needed to pair to libre2 sensors" = "Your phone or app is not enabled for NFC communications, which is needed to pair to libre2 sensors";
+"Your phone or app is not enabled for NFC communications, which is needed to pair to libre2 sensors" = "NFC недоступен. Он требуется для соединение с сенсором Libre2";
 
 /* Bluetooth Power Off */
 "Bluetooth Power Off" = "Bluetooth отключен";
@@ -519,70 +519,70 @@ Enact a temp Basal or a temp target */
 "Delete CGMManager and start anew. Your libreoopweb credentials will be preserved" = "Delete CGMManager and start anew. Your libreoopweb credentials will be preserved";
 
 /* Invalid libre checksum */
-"Invalid libre checksum" = "Invalid libre checksum";
+"Invalid libre checksum" = "Неверная контрольная сумма сенсора";
 
 /* Libre sensor was incorrectly read, CRCs were not valid */
-"Libre sensor was incorrectly read, CRCs were not valid" = "Libre sensor was incorrectly read, CRCs were not valid";
+"Libre sensor was incorrectly read, CRCs were not valid" = "Сенсор прочитан некорректно, неверная контрольная сумма";
 
 /* Glucose */
-"Glucose" = "Glucose";
+"Glucose" = "Глюкоза";
 
 /* LOWALERT! */
-"LOWALERT!" = "LOWALERT!";
+"LOWALERT!" = "ГИПО!";
 
 /* HIGHALERT! */
-"HIGHALERT!" = "HIGHALERT!";
+"HIGHALERT!" = "ГИПЕР!";
 
 /* (Snoozed)*/
-"(Snoozed)" = "(Snoozed)";
+"(Snoozed)" = "(Заглушено)";
 
 /* Glucose: %@ */
-"Glucose: %@" = "Glucose: %@";
+"Glucose: %@" = "Глюкоза: %@";
 
 /* Transmitter: %@ */
-"Transmitter: %@" = "Transmitter: %@";
+"Transmitter: %@" = "Передатчик: %@";
 
 /* No Sensor Detected */
-"No Sensor Detected" = "No Sensor Detected";
+"No Sensor Detected" = "Сенсор не обнаружен";
 
 /* This might be an intermittent problem, but please check that your transmitter is tightly secured over your sensor */
-"This might be an intermittent problem, but please check that your transmitter is tightly secured over your sensor" = "This might be an intermittent problem, but please check that your transmitter is tightly secured over your sensor";
+"This might be an intermittent problem, but please check that your transmitter is tightly secured over your sensor" = "Это может быть временная проблема, но пожалуйста, проверьте, что ваш передатчик надежно закрывает сенсор";
 
 /* New Sensor Detected */
-"New Sensor Detected" = "New Sensor Detected";
+"New Sensor Detected" = "Обнаружен новый сенсор";
 
 /* Please wait up to 30 minutes before glucose readings are available! */
-"Please wait up to 30 minutes before glucose readings are available!" = "Please wait up to 30 minutes before glucose readings are available!";
+"Please wait up to 30 minutes before glucose readings are available!" = "Пожалуйста, подождите до 30 минут перед тем, как будут доступны данные о глюкозе!";
 
 /* Invalid Glucose sample detected, try again later */
-"Invalid Glucose sample detected, try again later" = "Invalid Glucose sample detected, try again later";
+"Invalid Glucose sample detected, try again later" = "Обнаружено невалидное значение глюкозы, повторите попытку позже";
 
 /* ensor might have temporarily stopped, fallen off or is too cold or too warm */
-"Sensor might have temporarily stopped, fallen off or is too cold or too warm" = "Sensor might have temporarily stopped, fallen off or is too cold or too warm";
+"Sensor might have temporarily stopped, fallen off or is too cold or too warm" = "Сенсор временно остановлен, отсоединён или температура за рамками допустимой";
 
 /* Invalid Sensor Detected */
-"Invalid Sensor Detected" = "Invalid Sensor Detected";
+"Invalid Sensor Detected" = "Обнаружен неверный сенсор";
 
 /* Detected sensor seems not to be a libre 1 sensor! */
-"Detected sensor seems not to be a libre 1 sensor!" = "Detected sensor seems not to be a libre 1 sensor!";
+"Detected sensor seems not to be a libre 1 sensor!" = "Обнаруженный сенсор не является Libre 1 сенсором!";
 
 /* Detected sensor is invalid: %@ */
-"Detected sensor is invalid: %@" = "Detected sensor is invalid: %@";
+"Detected sensor is invalid: %@" = "Обнаруженный сенсор невалиден: %@";
 
 /* Low Battery */
-"Low Battery" = "Low Battery";
+"Low Battery" = "Низкий заряд батареи";
 
 /* Battery is running low %@, consider charging your %@ device as soon as possible */
-"Battery is running low %@, consider charging your %@ device as soon as possible" = "Battery is running low %@, consider charging your %@ device as soon as possible";
+"Battery is running low %@, consider charging your %@ device as soon as possible" = "Батарея работает на низком уровне %@, попробуйте зарядить устройство %@ как можно скорее";
 
 /* Extracting calibrationdata from sensor */
-"Extracting calibrationdata from sensor" = "Extracting calibrationdata from sensor";
+"Extracting calibrationdata from sensor" = "Извлечение данных калибровки из сенсора";
 
 /* Sensor Ending Soon */
-"Sensor Ending Soon" = "Sensor Ending Soon";
+"Sensor Ending Soon" = "Сенсор скоро закончится";
 
 /* Current Sensor is Ending soon! Sensor Life left in %@ */
-"Current Sensor is Ending soon! Sensor Life left in %@" = "Current Sensor is Ending soon! Sensor Life left in %@";
+"Current Sensor is Ending soon! Sensor Life left in %@" = "Сенсор скоро закончится! Осталась %@";
 
 
 /* Headers for settings ------------------- */
