@@ -1,4 +1,3 @@
-
 /* Privacy - NFC Scan Usage Description */
 "NFCReaderUsageDescription" = "NFC is used to scan Libre sensors.";
 
@@ -12,4 +11,3 @@
 
 /* Privacy - Face ID Usage Description */
 "NSFaceIDUsageDescription" = "For authorized acces to bolus";
-
