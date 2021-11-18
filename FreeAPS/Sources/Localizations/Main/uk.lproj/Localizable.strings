@@ -584,8 +584,74 @@ Enact a temp Basal or a temp target */
 /* Current Sensor is Ending soon! Sensor Life left in %@ */
 "Current Sensor is Ending soon! Sensor Life left in %@" = "Current Sensor is Ending soon! Sensor Life left in %@";
 
+"Libre Transmitter" = "Libre Transmitter";
 
-/* Headers for settings ------------------- */
+"Libre Transmitters" = "Libre Transmitters";
+
+"Bluetooth Transmitters" = "Bluetooth Transmitters";
+
+"Modes" = "Modes";
+
+"Libre 2 Direct" = "Libre 2 Direct";
+
+"Select the third party transmitter you want to connect to" = "Select the third party transmitter you want to connect to";
+
+/* The short unit display string for millimoles of glucose per liter */
+"mmol/L" = "mmol/L";
+
+/* The short unit display string for milligrams of glucose per decilter */
+"mg/dL" = "mg/dL";
+
+"Add calibration" = "Add calibration";
+
+"Meter glucose" = "Meter glucose";
+
+"Info" = "Info";
+
+"Slope" = "Slope";
+
+"Intercept" = "Intercept";
+
+"Chart" = "Chart";
+
+"Remove" = "Remove";
+
+"Remove Last" = "Remove Last";
+
+"Remove All" = "Remove All";
+
+"Calibrations" = "Calibrations";
+
+"About the Process" = "About the Process";
+
+"Please make sure that your Libre 2 sensor is already activated and finished warming up. If you have other apps connecting to the sensor via bluetooth, these need to be shut down or uninstalled. \n\n You can only have one app communicating with the sensor via bluetooth. Then press the \"pariring and connection\" button below to start the process. Please note that the bluetooth connection might take up to a couple of minutes before it starts working." = "Please make sure that your Libre 2 sensor is already activated and finished warming up. If you have other apps connecting to the sensor via bluetooth, these need to be shut down or uninstalled. \n\n You can only have one app communicating with the sensor via bluetooth. Then press the \"pariring and connection\" button below to start the process. Please note that the bluetooth connection might take up to a couple of minutes before it starts working.";
+
+"Pairinginfo" = "Pairinginfo";
+
+"PatchInfo" = "PatchInfo";
+
+"Calibrationinfo" = "Calibrationinfo";
+
+"Unknown" = "Unknown";
+
+"Not paired yet" = "Not paired yet";
+
+"Pair Sensor & connect" = "Pair Sensor & connect";
+
+"Phone NFC required!" = "Phone NFC required!";
+
+"Your phone or app is not enabled for NFC communications, which is needed to pair to libre2 sensors" = "Your phone or app is not enabled for NFC communications, which is needed to pair to libre2 sensors";
+
+"Bluetooth Power Off" = "Bluetooth Power Off";
+
+"Please turn on Bluetooth" = "Please turn on Bluetooth";
+
+"No Libre Transmitter Selected" = "No Libre Transmitter Selected";
+
+"Delete CGMManager and start anew. Your libreoopweb credentials will be preserved" = "Delete CGMManager and start anew. Your libreoopweb credentials will be preserved";
+
+
+/* Headers for settings */
 
 "OpenAPS main settings" = "OpenAPS main settings";
 

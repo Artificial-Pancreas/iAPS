@@ -587,6 +587,7 @@ Enact a temp Basal or a temp target */
 
 /* Headers for settings ------------------- */
 
+
 "OpenAPS main settings" = "Основные настройки OpenAPS";
 
 "OpenAPS SMB settings" = "Настройки OpenAPS SMB";
