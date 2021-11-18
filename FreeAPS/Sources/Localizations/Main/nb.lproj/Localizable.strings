@@ -438,7 +438,7 @@ Enact a temp Basal or a temp target */
 "Select the third party transmitter you want to connect to" = "Velg tredjeparts-senderen du vil koble til";
 
 /* State was restored */
-"State was restored" = "State was restored";
+"State was restored" = "Tilbakestilt";
 
 /* The short unit display string for millimoles of glucose per liter */
 "mmol/L" = "mmol/L";
@@ -501,10 +501,10 @@ Enact a temp Basal or a temp target */
 "Pair Sensor & connect" = "Parkoble sensor";
 
 /* */
-"Phone NFC required!" = "Phone NFC required!";
+"Phone NFC required!" = "Telefon med NFC kreves!";
 
 /* */
-"Your phone or app is not enabled for NFC communications, which is needed to pair to libre2 sensors" = "Your phone or app is not enabled for NFC communications, which is needed to pair to libre2 sensors";
+"Your phone or app is not enabled for NFC communications, which is needed to pair to libre2 sensors" = "NFC-kommunikasjon er ikke aktivert på telefonen eller i appen. Dette er nødvendig for å koble til libre2-sensorer";
 
 /* Bluetooth Power Off */
 "Bluetooth Power Off" = "Strøm til Bluetooth av";
@@ -519,31 +519,31 @@ Enact a temp Basal or a temp target */
 "Delete CGMManager and start anew. Your libreoopweb credentials will be preserved" = "Slett CGM-styring og start på nytt. Innloggingsinformasjon for libreoopweb lagres.";
 
 /* Invalid libre checksum */
-"Invalid libre checksum" = "Invalid libre checksum";
+"Invalid libre checksum" = "Ugyldig sjekksum for Libre";
 
 /* Libre sensor was incorrectly read, CRCs were not valid */
-"Libre sensor was incorrectly read, CRCs were not valid" = "Libre sensor was incorrectly read, CRCs were not valid";
+"Libre sensor was incorrectly read, CRCs were not valid" = "Libre-sensoren var feil lest, CRC-er var ugyldige";
 
 /* Glucose */
-"Glucose" = "Glucose";
+"Glucose" = "Blodsukker";
 
 /* LOWALERT! */
-"LOWALERT!" = "LOWALERT!";
+"LOWALERT!" = "LAV ALARM!";
 
 /* HIGHALERT! */
-"HIGHALERT!" = "HIGHALERT!";
+"HIGHALERT!" = "HØY ALARM!";
 
 /* (Snoozed)*/
-"(Snoozed)" = "(Snoozed)";
+"(Snoozed)" = "(Slumret)";
 
 /* Glucose: %@ */
-"Glucose: %@" = "Glucose: %@";
+"Glucose: %@" = "Blodsukker: %@";
 
 /* Transmitter: %@ */
-"Transmitter: %@" = "Transmitter: %@";
+"Transmitter: %@" = "Sender: %@";
 
 /* No Sensor Detected */
-"No Sensor Detected" = "No Sensor Detected";
+"No Sensor Detected" = "Ingen sensor oppdaget";
 
 /* This might be an intermittent problem, but please check that your transmitter is tightly secured over your sensor */
 "This might be an intermittent problem, but please check that your transmitter is tightly secured over your sensor" = "This might be an intermittent problem, but please check that your transmitter is tightly secured over your sensor";
