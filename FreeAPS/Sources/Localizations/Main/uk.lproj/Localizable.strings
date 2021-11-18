@@ -584,30 +584,6 @@ Enact a temp Basal or a temp target */
 /* Current Sensor is Ending soon! Sensor Life left in %@ */
 "Current Sensor is Ending soon! Sensor Life left in %@" = "Current Sensor is Ending soon! Sensor Life left in %@";
 
-
-/* Headers for settings ------------------- */
-
-"OpenAPS main settings" = "OpenAPS main settings";
-
-"OpenAPS SMB settings" = "OpenAPS SMB settings";
-
-"OpenAPS targets settings" = "OpenAPS targets settings";
-
-"OpenAPS other settings" = "OpenAPS other settings";
-
-
-/* Calendar and Libre transmitter settings */
-
-"Configure Libre Transmitter" = "Configure Libre Transmitter";
-
-"Calibrations" = "Calibrations";
-
-"Create events in calendar" = "Create events in calendar";
-
-"Calendar" = "Calendar";
-
-"Other" = "Other";
-
 "Libre Transmitter" = "Libre Transmitter";
 
 "Libre Transmitters" = "Libre Transmitters";
