@@ -7,7 +7,7 @@
 "Add insulin without actually bolusing" = "Додати інсулін без подачі болюсу";
 
 /* Add insulin from source outside of pump */
-"Add %@ without bolusing" = "Add %@ without bolusing";
+"Add %@ without bolusing" = "Подати %@ болюсу";
 
 "Bolus" = "Болюс";
 
@@ -80,7 +80,7 @@
 "grams" = "грами";
 
 /*  */
-"Carbs required" = "Carbs required";
+"Carbs required" = "Введіть кількість вуглеводів";
 
 /* */
 "Are you sure?" = "Ви впевнені?";
@@ -116,7 +116,7 @@
 "Enter preset name" = "Введіть ім'я шаблону";
 
 /* Preset name */
-"Name" = "Name";
+"Name" = "Ім’я";
 
 /* minutes of target temp */
 "minutes" = "хвилин";
@@ -249,7 +249,7 @@ Enact a temp Basal or a temp target */
 "Port" = "Порт";
 
 /*  */
-"URL" = "URL";
+"URL" = "URL-адреса";
 
 /**/
 "Use local glucose server" = "Використовувати локальний сервер";
@@ -309,7 +309,7 @@ Enact a temp Basal or a temp target */
 "U/hr" = "Од/год";
 
 /* Unit in number of units delivered (keep the space character!) */
-" U" = " U";
+" U" = "Од";
 
 /* /Insulin unit */
 "/U" = "/U";
@@ -318,22 +318,22 @@ Enact a temp Basal or a temp target */
 "U" = "U";
 
 /* Unit per hour with space */
-" U/hr" = " U/hr";
+" U/hr" = " Од/год";
 
 /* Number of units per hour*/
-"%@ U/hr" = "%@ U/hr";
+"%@ U/hr" = " %@ Од/год";
 
 /* Number of units insulin delivered */
-"%@ U" = "%@ U";
+"%@ U" = "%@ Од";
 
 /*Carb ratio unit */
-"g/U" = "g/U";
+"g/U" = "гр/Од";
 
 /* grams */
-" g" = " g";
+" g" = "гр";
 
 /* when 0 U/hr */
-"0 U/hr" = "0 U/hr";
+"0 U/hr" = "0 Од/Год";
 
 /* abbreviation for days */
 "d" = "d";
@@ -387,73 +387,73 @@ Enact a temp Basal or a temp target */
 "History" = "Історія";
 
 /* CGM option */
-"Upload glucose to Nightscout" = "Upload glucose to Nightscout";
+"Upload glucose to Nightscout" = "Вивантажити глюкозу у Nightscout";
 
 /* Type of CGM or glucose source */
-"Type" = "Type";
+"Type" = "Тип";
 
 /* CGM */
 "CGM" = "CGM";
 
 /* CGM Transmitter ID */
-"Transmitter ID" = "Transmitter ID";
+"Transmitter ID" = "ID передавача";
 
 /* Other CGM setting */
-"Other" = "Other";
+"Other" = "Інше";
 
 
 /* Calendar and Libre transmitter settings --------------*/
 /* */
 
-"Configure Libre Transmitter" = "Configure Libre Transmitter";
+"Configure Libre Transmitter" = "Налаштувати Libre Transmitter";
 
 /* */
-"Calibrations" = "Calibrations";
+"Calibrations" = "Калібрування";
 
 /* */
-"Create events in calendar" = "Create events in calendar";
+"Create events in calendar" = "Створити подію в календарі";
 
 /* */
-"Calendar" = "Calendar";
+"Calendar" = "Календар";
 
 /* */
-"Other" = "Other";
+"Other" = "Інше";
 
 /* */
-"Libre Transmitter" = "Libre Transmitter";
+"Libre Transmitter" = "Libre трансміттер";
 
 /* */
-"Libre Transmitters" = "Libre Transmitters";
+"Libre Transmitters" = "Libre трансміттери";
 
 /* */
-"Bluetooth Transmitters" = "Bluetooth Transmitters";
+"Bluetooth Transmitters" = "Bluetooth передавачі";
 
 /* */
-"Modes" = "Modes";
+"Modes" = "Режими";
 
 /* Libre 2 Direct */
 "Libre 2 Direct" = "Libre 2 Direct";
 
 /* */
-"Select the third party transmitter you want to connect to" = "Select the third party transmitter you want to connect to";
+"Select the third party transmitter you want to connect to" = "Виберіть сторонній передавач для підключення";
 
 /* State was restored */
-"State was restored" = "State was restored";
+"State was restored" = "Стан було відновлено";
 
 /* The short unit display string for millimoles of glucose per liter */
-"mmol/L" = "mmol/L";
+"mmol/L" = "ммол/л";
 
 /* The short unit display string for milligrams of glucose per decilter */
-"mg/dL" = "mg/dL";
+"mg/dL" = "мг/дл";
 
 /* */
-"Add calibration" = "Add calibration";
+"Add calibration" = "Додати калібрування";
 
 /* When adding capillary glucose meater reading */
 "Meter glucose" = "Meter glucose";
 
 /* */
-"Info" = "Info";
+"Info" = "Інформація";
 
 /*v*/
 "Slope" = "Slope";
@@ -465,22 +465,22 @@ Enact a temp Basal or a temp target */
 "Chart" = "Chart";
 
 /* */
-"Remove" = "Remove";
+"Remove" = "Вилучити";
 
 /* */
-"Remove Last" = "Remove Last";
+"Remove Last" = "Видалити останнє";
 
 /* */
-"Remove All" = "Remove All";
+"Remove All" = "Вилучити все";
 
 /* */
-"Calibrations" = "Calibrations";
+"Calibrations" = "Калібрування";
 
 /* */
-"About the Process" = "About the Process";
+"About the Process" = "Про процес";
 
 /* */
-"Please make sure that your Libre 2 sensor is already activated and finished warming up. If you have other apps connecting to the sensor via bluetooth, these need to be shut down or uninstalled. \n\n You can only have one app communicating with the sensor via bluetooth. Then press the \"pariring and connection\" button below to start the process. Please note that the bluetooth connection might take up to a couple of minutes before it starts working." = "Please make sure that your Libre 2 sensor is already activated and finished warming up. If you have other apps connecting to the sensor via bluetooth, these need to be shut down or uninstalled. \n\n You can only have one app communicating with the sensor via bluetooth. Then press the \"pariring and connection\" button below to start the process. Please note that the bluetooth connection might take up to a couple of minutes before it starts working.";
+"Please make sure that your Libre 2 sensor is already activated and finished warming up. If you have other apps connecting to the sensor via bluetooth, these need to be shut down or uninstalled. \n\n You can only have one app communicating with the sensor via bluetooth. Then press the \"pariring and connection\" button below to start the process. Please note that the bluetooth connection might take up to a couple of minutes before it starts working." = "Будь ласка, переконайтеся, що ваш датчик Libre 2 вже активований і закінчився розігрів. Якщо у вас є інші програми, які підключаються до датчика через bluetooth, їх потрібно вимкнути або видалити. \n\n Ви можете мати лише один додаток, який зв’язується з датчиком через Bluetooth. Потім натисніть кнопку «сполучення та підключення» нижче, щоб почати процес. Зверніть увагу, що з’єднання Bluetooth може зайняти до кількох хвилин, перш ніж воно почне працювати.";
 
 /* */
 "Pairinginfo" = "Pairinginfo";
