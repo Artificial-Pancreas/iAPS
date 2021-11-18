@@ -480,7 +480,7 @@ Enact a temp Basal or a temp target */
 "About the Process" = "Om processen";
 
 /* */
-"Please make sure that your Libre 2 sensor is already activated and finished warming up. If you have other apps connecting to the sensor via bluetooth, these need to be shut down or uninstalled. \n\n You can only have one app communicating with the sensor via bluetooth. Then press the \"pariring and connection\" button below to start the process. Please note that the bluetooth connection might take up to a couple of minutes before it starts working." = "Bla bla";
+"Please make sure that your Libre 2 sensor is already activated and finished warming up. If you have other apps connecting to the sensor via bluetooth, these need to be shut down or uninstalled. \n\n You can only have one app communicating with the sensor via bluetooth. Then press the \"pariring and connection\" button below to start the process. Please note that the bluetooth connection might take up to a couple of minutes before it starts working." = "Se till att din Libre 2-sensor redan är aktiverad och klar med uppvärmningen. Om du har andra appar som ansluter till sensorn via bluetooth, måste dessa stängas av eller avinstalleras. \n\n Du kan bara ha en app som kommunicerar med sensorn via bluetooth. Tryck sedan på \"Parkoppla sensor och anslut\"-knappen nedan för att starta processen. Observera att Bluetooth-anslutningen kan ta upp till ett par minuter innan den börjar fungera.";
 
 /* */
 "Pairinginfo" = "Parkopplingsinfo";
