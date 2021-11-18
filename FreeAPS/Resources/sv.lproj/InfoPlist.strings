@@ -4,10 +4,11 @@
 /* Privacy - Bluetooth Always Usage Description */
 "NSBluetoothAlwaysUsageDescription" = "Bluetooth används för att kommunicera med insulinpumpen och kontinuerlig glukosmätare";
 
+/* Privacy - Bluetooth Peripheral Usage Description */
 "NSBluetoothPeripheralUsageDescription" = "Bluetooth används för att kommunicera med insulinpumpen och kontinuerlig glukosmätare";
-
-/* Privacy - Calendars Usage Description */
-"NSCalendarsUsageDescription" = "Kalendern används för att skapa kalenderhändelser för glukosvärden.";
 
 /* Privacy - Face ID Usage Description */
 "NSFaceIDUsageDescription" = "För auktoriserad åtkomst till bolus";
+
+/* Privacy - Calendars Usage Description */
+"NSCalendarsUsageDescription" = "Kalendern används för att skapa kalenderhändelser för glukosvärden.";
