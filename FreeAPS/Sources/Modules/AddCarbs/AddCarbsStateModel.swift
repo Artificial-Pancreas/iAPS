@@ -27,7 +27,7 @@ extension AddCarbs {
                 apsManager.determineBasalSync()
                 showModal(for: nil)
             } else {
-                showModal(for: .bolus(waitForDuggestion: true))
+                showModal(for: .bolus(waitForSuggestion: true))
             }
         }
     }

@@ -50,7 +50,7 @@
 "Voltage" = "Напряжение";
 
 /* "The title of the section for alerts" */
-"Alert" = "Alert";
+"Alert" = "Тревога";
 
 /* The title of the cell showing Low Battery Alert */
 "Low Battery Alert" = "Предупредить при уровне заряда";

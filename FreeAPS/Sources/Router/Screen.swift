@@ -16,7 +16,7 @@ enum Screen: Identifiable, Hashable {
     case preferencesEditor
     case addCarbs
     case addTempTarget
-    case bolus(waitForDuggestion: Bool)
+    case bolus(waitForSuggestion: Bool)
     case manualTempBasal
     case autotuneConfig
     case dataTable

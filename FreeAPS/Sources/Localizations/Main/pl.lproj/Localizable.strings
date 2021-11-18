@@ -589,6 +589,7 @@ Połączono z Nightscout!";
 
 /* Headers for settings ------------------- */
 
+
 "OpenAPS main settings" = "OpenAPS main settings";
 
 "OpenAPS SMB settings" = "OpenAPS SMB settings";
