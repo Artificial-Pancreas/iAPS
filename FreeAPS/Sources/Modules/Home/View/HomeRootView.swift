@@ -271,7 +271,7 @@ extension Home {
                                     .padding(8)
                             }.foregroundColor(.loopYellow)
                             Spacer()
-                            Button { state.showModal(for: .bolus(waitForDuggestion: false)) }
+                            Button { state.showModal(for: .bolus(waitForSuggestion: false)) }
                             label: {
                                 Image("bolus")
                                     .renderingMode(.template)
