@@ -584,6 +584,112 @@ Enact a temp Basal or a temp target */
 /* Current Sensor is Ending soon! Sensor Life left in %@ */
 "Current Sensor is Ending soon! Sensor Life left in %@" = "Current Sensor is Ending soon! Sensor Life left in %@";
 
+/* */
+"Libre Bluetooth" = "Libre Bluetooth";
+
+/* */
+"Snooze Alerts" = "Snooze Alerts";
+
+/* */
+"Last measurement" = "Last measurement";
+
+/* */
+"Sensor Footer checksum" = "Sensor Footer checksum";
+
+/* */
+"Last Blood Sugar prediction" = "Last Blood Sugar prediction";
+
+/* */
+"CurrentBG" = "CurrentBG";
+
+/* */
+"Sensor Info" = "Sensor Info";
+
+/* */
+"Sensor Age" = "Sensor Age";
+
+/* */
+"Sensor Age Left" = "Sensor Age Left";
+
+/* */
+"Sensor Endtime" = "Sensor Endtime";
+
+/* */
+"Sensor State" = "Sensor State";
+
+/* */
+"Sensor Serial" = "Sensor Serial";
+
+/* */
+"Transmitter Info" = "Transmitter Info";
+
+/* */
+"Hardware" = "Hardware";
+
+/* */
+"Firmware" = "Firmware";
+
+/* */
+"Connection State" = "Connection State";
+
+/* */
+"Transmitter Type" = "Transmitter Type";
+
+/* */
+"Sensor Type" = "Sensor Type";
+
+/* */
+"Factory Calibration Parameters" = "Factory Calibration Parameters";
+
+/* */
+"Valid for footer" = "Valid for footer";
+
+/* */
+"Edit calibrations" = "Edit calibrations";
+
+/* */
+"edit calibration clicked" = "edit calibration clicked";
+
+/* */
+"Delete CGM" = "Delete CGM";
+    
+/* */
+"Are you sure you want to remove this cgm from loop?" = "Are you sure you want to remove this cgm from loop?";
+
+/* */
+"There is no undo" = "There is no undo";
+
+/* */
+"Advanced" = "Advanced";
+
+/* */
+"Alarms" = "Alarms";
+
+/* */
+"Glucose Settings" = "Glucose Settings";
+
+/* */
+"Notifications" = "Notifications";
+
+/* */
+"Export logs" = "Export logs";
+
+/* */
+"Export not available" = "Export not available";
+
+/* */
+"Log export requires ios 15" = "Log export requires ios 15";
+
+/* */
+"Got it!" = "Got it!";
+
+/* */
+"Saved to %@" = "Saved to %@";
+
+/* */
+"No logs available" = "No logs available";
+
+
 
 /* Headers for settings ------------------- */
 
