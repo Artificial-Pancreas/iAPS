@@ -785,6 +785,9 @@ Enact a temp Basal or a temp target */
 /* */
 "Also play alert sound" = "Also play alert sound";
 
+/* */
+"Notification Settings" = "Notification Settings";
+
 
 /* Headers for settings ------------------- */
 
