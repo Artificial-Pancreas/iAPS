@@ -776,6 +776,12 @@ Enact a temp Basal or a temp target */
 /* */
 "Strength" = "Strength";
 
+/* */
+"Hold the top of your iPhone near the sensor to pair" = "Hold the top of your iPhone near the sensor to pair";
+
+/* */
+"Sensor not found" = "Sensor not found";
+
 
 /* Headers for settings ------------------- */
 
