@@ -689,6 +689,92 @@ Enact a temp Basal or a temp target */
 /* */
 "No logs available" = "No logs available";
 
+/* */
+"Glucose Notification visibility" = "Glucose Notification visibility";
+
+/* */
+"Always Notify Glucose" = "Always Notify Glucose";
+
+/* */
+"Notify per reading" = "Notify per reading";
+
+/* */
+"Value" = "Value";
+
+/* */
+"Adds Phone Battery" = "Adds Phone Battery";
+
+/* */
+"Adds Transmitter Battery";
+
+/* */
+"Also vibrate" = "Also vibrate";
+
+/* */
+"Additional notification types" = "Additional notification types";
+
+/* */
+"Low battery"
+
+/* */
+"Misc" = "Misc";
+
+/* */
+"Unit override" = "Unit override";
+
+/* */
+"Low" = "Low";
+
+/* */
+"glucose" = "glucose"
+
+/* */
+"Schedule %d" = "Schedule %d";
+
+/* */
+"tapped save schedules" = "tapped save schedules";
+
+/* */
+"Error" = "Error";
+
+/* */
+"Some ui element was incorrectly specified" = "Some ui element was incorrectly specified";
+
+/* */
+"Success" = "Success";
+
+/* */
+"Schedules were saved successfully!" = "Schedules were saved successfully!";
+
+/* */
+"High Glucose Alarm active" = "High Glucose Alarm active";
+
+/* */
+"Low Glucose Alarm active" = "Low Glucose Alarm active";
+
+/* */
+"No Glucose Alarm active" = "No Glucose Alarm active";
+
+/* */
+"snoozing until %@" = "snoozing until %@";
+
+/* */
+"not snoozing" = "not snoozing";
+
+/* */
+"nothing to see here" = "nothing to see here";
+
+/* */
+"snooze from testview clicked" = "snooze from testview clicked";
+
+/* */
+"will snooze for %@ until %@" = "will snooze for %@ until %@";
+
+/* */
+"Click to Snooze Alerts" = "Click to Snooze Alerts";
+
+/* */
+"Strength" = "Strength";
 
 
 /* Headers for settings ------------------- */
