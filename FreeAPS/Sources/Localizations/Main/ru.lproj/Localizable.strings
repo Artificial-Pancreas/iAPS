@@ -17,7 +17,7 @@
 "Continue without bolus" = "Продолжить без болюса";
 
 /* Header */
-"Enact Bolus" = "Ввести Болюс";
+"Enact Bolus" = "Вввод болюса";
 
 /* Button */
 "Enact bolus" = "Ввести болюс";
@@ -71,7 +71,7 @@
 "Suggested at %@" = "Предложено в %@";
 
 /* Add carbs screen */
-"Add Carbs" = "Ввод Углеводов";
+"Add Carbs" = "Ввод углеводов";
 
 /*  */
 "Amount Carbs" = "Кол-во углеводов";
@@ -92,7 +92,7 @@
 "Cancel" = "Отмена";
 
 /*  */
-"Cancel Temp Target" = "Отменить Временную Цель";
+"Cancel Temp Target" = "Отменить временную цель";
 
 /* Custom temp target */
 "Custom" = "Своя";
@@ -740,55 +740,55 @@ Misc" = "Разное";
 "Some ui element was incorrectly specified" = "Некорректно указан элемент ui";
 
 /* */
-"Success" = "Success";
+"Success" = "Успех";
 
 /* */
-"Schedules were saved successfully!" = "Schedules were saved successfully!";
+"Schedules were saved successfully!" = "Расписание успешно сохранено!";
 
 /* */
-"High Glucose Alarm active" = "High Glucose Alarm active";
+"High Glucose Alarm active" = "Высокая тревога включена";
 
 /* */
-"Low Glucose Alarm active" = "Low Glucose Alarm active";
+"Low Glucose Alarm active" = "Низкая тревога включена";
 
 /* */
-"No Glucose Alarm active" = "No Glucose Alarm active";
+"No Glucose Alarm active" = "Тревога неактивна";
 
 /* */
-"snoozing until %@" = "snoozing until %@";
+"snoozing until %@" = "отложена до %@";
 
 /* */
-"not snoozing" = "not snoozing";
+"not snoozing" = "не отложена";
 
 /* */
-"nothing to see here" = "nothing to see here";
+"nothing to see here" = "здесь ничего нет";
 
 /* */
 "snooze from testview clicked" = "snooze from testview clicked";
 
 /* */
-"will snooze for %@ until %@" = "will snooze for %@ until %@";
+"will snooze for %@ until %@" = "будет отложена для %@ до %@";
 
 /* */
 "Click to Snooze Alerts" = "Нажмите, чтобы отложить тревоги";
 
 /* */
-"Strength" = "Strength";
+"Strength" = "Сила";
 
 /* */
-"Hold the top of your iPhone near the sensor to pair" = "Hold the top of your iPhone near the sensor to pair";
+"Hold the top of your iPhone near the sensor to pair" = "Держите верхнюю часть вашего iPhone рядом с сенсором для подключения";
 
 /* */
-"Sensor not found" = "Sensor not found";
+"Sensor not found" = "Сенсор не найден";
 
 /* */
-"Also play alert sound" = "Also play alert sound";
+"Also play alert sound" = "Использовать звук тревоги";
 
 /* */
-"Notification Settings" = "Notification Settings";
+"Notification Settings" = "Настройки уведомлений";
 
 /* */
-"Found devices: %d" = "Found devices: %d";
+"Found devices: %d" = "Найдено устройств: %d";
 
 
 /* Headers for settings ------------------- */

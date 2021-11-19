@@ -755,19 +755,19 @@ Misc" = "Övrigt";
 "No Glucose Alarm active" = "No Glucose Alarm active";
 
 /* */
-"snoozing until %@" = "snoozing until %@";
+"snoozing until %@" = "snoozar till %@";
 
 /* */
-"not snoozing" = "not snoozing";
+"not snoozing" = "snoozar inte";
 
 /* */
-"nothing to see here" = "nothing to see here";
+"nothing to see here" = "inget att se här";
 
 /* */
 "snooze from testview clicked" = "snooze from testview clicked";
 
 /* */
-"will snooze for %@ until %@" = "will snooze for %@ until %@";
+"will snooze for %@ until %@" = "kommer att snooza i %@ tills %@";
 
 /* */
 "Click to Snooze Alerts" = "Klicka för att snooza varningar";
