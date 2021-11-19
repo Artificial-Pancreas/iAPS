@@ -689,7 +689,7 @@ Enact a temp Basal or a temp target */
 "No logs available" = "Inga loggar tillgängliga";
 
 /* */
-"Glucose Notification visibility" = "Glucose Notification visibility";
+"Glucose Notification visibility" = "Blodsockernotiser";
 
 /* */
 "Always Notify Glucose" = "Meddela alltid glukos";
@@ -716,7 +716,7 @@ Also vibrate" = "Vibrera också";
 "Low battery" = "Low battery";
 
 /* */
-"Misc" = "Misc";
+"Misc" = "Övrigt";
 
 /* */
 "Unit override" = "Åsidosätt enhet";
@@ -746,13 +746,13 @@ Also vibrate" = "Vibrera också";
 "Schedules were saved successfully!" = "Scheman har sparats!";
 
 /* */
-"High Glucose Alarm active" = "High Glucose Alarm active";
+"High Glucose Alarm active" = "Högt blodsockerlarm aktivt";
 
 /* */
-"Low Glucose Alarm active" = "Low Glucose Alarm active";
+"Low Glucose Alarm active" = "Lågt blodsockerlarm aktivt";
 
 /* */
-"No Glucose Alarm active" = "No Glucose Alarm active";
+"No Glucose Alarm active" = "Inget blodsockerlarm aktivt";
 
 /* */
 "snoozing until %@" = "snoozar till %@";
