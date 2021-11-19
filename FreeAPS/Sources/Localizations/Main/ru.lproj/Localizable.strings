@@ -584,6 +584,209 @@ Enact a temp Basal or a temp target */
 /* Current Sensor is Ending soon! Sensor Life left in %@ */
 "Current Sensor is Ending soon! Sensor Life left in %@" = "Сенсор скоро закончится! Осталась %@";
 
+/* */
+"Libre Bluetooth" = "Libre Bluetooth";
+
+/* */
+"Snooze Alerts" = "Отложить оповещения";
+
+/* */
+"Last measurement" = "Последнее измерение";
+
+/* */
+"Sensor Footer checksum" = "Контрольная сумма сенсора";
+
+/* */
+"Last Blood Sugar prediction" = "Последнее предсказание глюкозы";
+
+/* */
+"CurrentBG" = "Текущая ГК";
+
+/* */
+"Sensor Info" = "Информация о сенсоре";
+
+/* */
+"Sensor Age" = "Возраст сенсора";
+
+/* */
+"Sensor Age Left" = "Осталось";
+
+/* */
+"Sensor Endtime" = "Время окончания сенсора";
+
+/* */
+"Sensor State" = "Состояние сенсора";
+
+/* */
+"Sensor Serial" = "Серийный номер сенсора";
+
+/* */
+"Transmitter Info" = "Информация о передатчике";
+
+/* */
+"Hardware" = "Оборудование";
+
+/* */
+"Firmware" = "Версия прошивки";
+
+/* */
+"Connection State" = "Состояние соединения";
+
+/* */
+"Transmitter Type" = "Тип передатчика";
+
+/* */
+"Sensor Type" = "Тип сенсора";
+
+/* */
+"Factory Calibration Parameters" = "Параметры заводской калибровки";
+
+/* */
+"Valid for footer" = "Действителен для футера";
+
+/* */
+"Edit calibrations" = "Редактировать калибровки";
+
+/* */
+"edit calibration clicked" = "изменить калибровку нажато";
+
+/* */
+"Delete CGM" = "Удалить CGM";
+/* */
+"Are you sure you want to remove this cgm from loop?" = "Вы уверены, что хотите удалить этот CGM?";
+
+/* */
+"There is no undo" = "Это нельзя отменить!";
+
+/* */
+"Advanced" = "Расширенные";
+
+/* */
+"Alarms" = "Тревоги";
+
+/* */
+"Glucose Settings" = "Настройки глюкозы";
+
+/* */
+"Notifications" = "Уведомления";
+
+/* */
+"Export logs" = "Экспорт журналов";
+
+/* */
+"Export not available" = "Экспорт недоступен";
+
+/* */
+"Log export requires ios 15" = "Для экспорта журнала требуется ios 15";
+
+/* */
+"Got it!" = "Понятно!";
+
+/* */
+"Saved to %@" = "Сохранено в %@";
+
+/* */
+"No logs available" = "Нет доступных журналов";
+
+/* */
+"Glucose Notification visibility" = "Видимость уведомлений глюкозы";
+
+/* */
+"Always Notify Glucose" = "Всегда уведомлять о глюкозе";
+
+/* */
+"Notify per reading" = "Уведомлять за чтение";
+
+/* */
+"Value" = "Значение";
+
+/* */
+"Adds Phone Battery" = "Показывать заряд батареи телефона";
+
+/* */
+/* */
+
+"Adds Transmitter Battery
+Also vibrate" = "Вибрировать";
+
+/* */
+"Additional notification types" = "Дополнительные уведомления";
+
+/* */
+/* */
+
+"Low battery
+Misc" = "Разное";
+
+/* */
+"Unit override" = "Переопределение единицы";
+
+/* */
+"Low" = "Низкий";
+
+/* */
+"glucose" = "глюкоза";
+
+/* */
+"Schedule %d" = "Расписание %d";
+
+/* */
+"tapped save schedules" = "выбрано сохранение расписаний";
+
+/* */
+"Error" = "Ошибка";
+
+/* */
+"Some ui element was incorrectly specified" = "Некорректно указан элемент ui";
+
+/* */
+"Success" = "Success";
+
+/* */
+"Schedules were saved successfully!" = "Schedules were saved successfully!";
+
+/* */
+"High Glucose Alarm active" = "High Glucose Alarm active";
+
+/* */
+"Low Glucose Alarm active" = "Low Glucose Alarm active";
+
+/* */
+"No Glucose Alarm active" = "No Glucose Alarm active";
+
+/* */
+"snoozing until %@" = "snoozing until %@";
+
+/* */
+"not snoozing" = "not snoozing";
+
+/* */
+"nothing to see here" = "nothing to see here";
+
+/* */
+"snooze from testview clicked" = "snooze from testview clicked";
+
+/* */
+"will snooze for %@ until %@" = "will snooze for %@ until %@";
+
+/* */
+"Click to Snooze Alerts" = "Нажмите, чтобы отложить тревоги";
+
+/* */
+"Strength" = "Strength";
+
+/* */
+"Hold the top of your iPhone near the sensor to pair" = "Hold the top of your iPhone near the sensor to pair";
+
+/* */
+"Sensor not found" = "Sensor not found";
+
+/* */
+"Also play alert sound" = "Also play alert sound";
+
+/* */
+"Notification Settings" = "Notification Settings";
+
 
 /* Headers for settings ------------------- */
 

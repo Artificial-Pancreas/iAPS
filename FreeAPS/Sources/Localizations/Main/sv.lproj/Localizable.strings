@@ -584,6 +584,209 @@ Enact a temp Basal or a temp target */
 /* Current Sensor is Ending soon! Sensor Life left in %@ */
 "Current Sensor is Ending soon! Sensor Life left in %@" = "Nuvarande sensor behöver snart bytas! Sensortid kvar i %@";
 
+/* */
+"Libre Bluetooth" = "Libre bluetooth";
+
+/* */
+"Snooze Alerts" = "Snooza larm";
+
+/* */
+"Last measurement" = "Senaste mätning";
+
+/* */
+"Sensor Footer checksum" = "Sensor Footer checksum";
+
+/* */
+"Last Blood Sugar prediction" = "Senaste blodsockerförutsägelse";
+
+/* */
+"CurrentBG" = "NuvarandeBG";
+
+/* */
+"Sensor Info" = "SensorInfo";
+
+/* */
+"Sensor Age" = "Sensorålder";
+
+/* */
+"Sensor Age Left" = "Sensortid kvar";
+
+/* */
+"Sensor Endtime" = "Sensor slutdatum";
+
+/* */
+"Sensor State" = "Sensorläge";
+
+/* */
+"Sensor Serial" = "Sensorns serienummer";
+
+/* */
+"Transmitter Info" = "Sändarinfo";
+
+/* */
+"Hardware" = "Hårdvara";
+
+/* */
+"Firmware" = "Firmware";
+
+/* */
+"Connection State" = "Anslutningsstatus";
+
+/* */
+"Transmitter Type" = "Sändartyp";
+
+/* */
+"Sensor Type" = "Sensortyp";
+
+/* */
+"Factory Calibration Parameters" = "Parametrar för fabrikskalibrering";
+
+/* */
+"Valid for footer" = "Valid for footer";
+
+/* */
+"Edit calibrations" = "Ändra kalibreringar";
+
+/* */
+"edit calibration clicked" = "ändrad kalibrering vald";
+
+/* */
+"Delete CGM" = "Radera CGM";
+/* */
+"Are you sure you want to remove this cgm from loop?" = "Är du säker på att du vill ta bort denna CGM från FreeAPS X?";
+
+/* */
+"There is no undo" = "Det går inte att ångra!";
+
+/* */
+"Advanced" = "Avancerat";
+
+/* */
+"Alarms" = "Larm";
+
+/* */
+"Glucose Settings" = "Glukosinställningar";
+
+/* */
+"Notifications" = "Notiser";
+
+/* */
+"Export logs" = "Exportera loggar";
+
+/* */
+"Export not available" = "Export inte tillgänglig";
+
+/* */
+"Log export requires ios 15" = "Loggexport kräver ios 15";
+
+/* */
+"Got it!" = "Uppfattat!";
+
+/* */
+"Saved to %@" = "Sparad till %@";
+
+/* */
+"No logs available" = "Inga loggar tillgängliga";
+
+/* */
+"Glucose Notification visibility" = "Glucose Notification visibility";
+
+/* */
+"Always Notify Glucose" = "Meddela alltid glukos";
+
+/* */
+"Notify per reading" = "Meddela per avläsning";
+
+/* */
+"Value" = "Värde";
+
+/* */
+"Adds Phone Battery" = "Visa telefonens batterinivå";
+
+/* */
+/* */
+
+"Adds Transmitter Battery
+Also vibrate" = "Vibrera också";
+
+/* */
+"Additional notification types" = "Ytterligare notistyper";
+
+/* */
+/* */
+
+"Low battery
+Misc" = "Övrigt";
+
+/* */
+"Unit override" = "Åsidosätt enhet";
+
+/* */
+"Low" = "Lågt";
+
+/* */
+"glucose" = "glukos";
+
+/* */
+"Schedule %d" = "Schema %d";
+
+/* */
+"tapped save schedules" = "tapped save schedules";
+
+/* */
+"Error" = "Fel";
+
+/* */
+"Some ui element was incorrectly specified" = "Some ui element was incorrectly specified";
+
+/* */
+"Success" = "Lyckades";
+
+/* */
+"Schedules were saved successfully!" = "Scheman har sparats!";
+
+/* */
+"High Glucose Alarm active" = "High Glucose Alarm active";
+
+/* */
+"Low Glucose Alarm active" = "Low Glucose Alarm active";
+
+/* */
+"No Glucose Alarm active" = "No Glucose Alarm active";
+
+/* */
+"snoozing until %@" = "snoozing until %@";
+
+/* */
+"not snoozing" = "not snoozing";
+
+/* */
+"nothing to see here" = "nothing to see here";
+
+/* */
+"snooze from testview clicked" = "snooze from testview clicked";
+
+/* */
+"will snooze for %@ until %@" = "will snooze for %@ until %@";
+
+/* */
+"Click to Snooze Alerts" = "Klicka för att snooza varningar";
+
+/* */
+"Strength" = "Styrka";
+
+/* */
+"Hold the top of your iPhone near the sensor to pair" = "Håll toppen av din iPhone nära sensorn för att parkoppla";
+
+/* */
+"Sensor not found" = "Sensorn hittades inte";
+
+/* */
+"Also play alert sound" = "Spela också upp varningsljud";
+
+/* */
+"Notification Settings" = "Notisinställningar";
+
 
 /* Headers for settings ------------------- */
 
