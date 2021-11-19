@@ -539,8 +539,8 @@ Enact a temp Basal or a temp target */
 /* Glucose: %@ */
 "Glucose: %@" = "Glukos: %@";
 
-/* Transmitter: %@ */
-"Transmitter: %@" = "Sändare: %@";
+/* Transmitter: %@%% */
+"Transmitter: %@%%" = "Sändare: %@";
 
 /* No Sensor Detected */
 "No Sensor Detected" = "Ingen Sensor upptäckt";
