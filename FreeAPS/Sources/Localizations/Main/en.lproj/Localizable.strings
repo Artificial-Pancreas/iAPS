@@ -726,7 +726,7 @@ Enact a temp Basal or a temp target */
 "Low" = "Low";
 
 /* */
-"glucose" = "glucose"
+"glucose" = "glucose";
 
 /* */
 "Schedule %d" = "Schedule %d";
