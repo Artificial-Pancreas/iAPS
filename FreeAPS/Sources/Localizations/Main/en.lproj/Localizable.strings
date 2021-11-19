@@ -788,6 +788,9 @@ Enact a temp Basal or a temp target */
 /* */
 "Notification Settings" = "Notification Settings";
 
+/* */
+"Found devices: %d" = "Found devices: %d";
+
 
 /* Headers for settings ------------------- */
 
