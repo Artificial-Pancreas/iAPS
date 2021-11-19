@@ -540,7 +540,7 @@ Enact a temp Basal or a temp target */
 "Glucose: %@" = "Glukos: %@";
 
 /* Transmitter: %@%% */
-"Transmitter: %@%%" = "Sändare: %@";
+"Transmitter: %@%%" = "Sändare: %@%%";
 
 /* No Sensor Detected */
 "No Sensor Detected" = "Ingen Sensor upptäckt";
@@ -786,6 +786,9 @@ Misc" = "Övrigt";
 
 /* */
 "Notification Settings" = "Notisinställningar";
+
+/* */
+"Found devices: %d" = "Found devices: %d";
 
 
 /* Headers for settings ------------------- */

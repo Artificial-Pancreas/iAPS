@@ -787,6 +787,9 @@ Misc" = "Misc";
 /* */
 "Notification Settings" = "Notification Settings";
 
+/* */
+"Found devices: %d" = "Found devices: %d";
+
 
 /* Headers for settings ------------------- */
 
