@@ -713,10 +713,10 @@ Also vibrate" = "Вибрировать";
 "Additional notification types" = "Дополнительные уведомления";
 
 /* */
-/* */
+"Low battery" = "Low battery";
 
-"Low battery
-Misc" = "Разное";
+/* */
+"Misc" = "Misc";
 
 /* */
 "Unit override" = "Переопределение единицы";

@@ -713,10 +713,10 @@ Also vibrate" = "Vibrera också";
 "Additional notification types" = "Ytterligare notistyper";
 
 /* */
-/* */
+"Low battery" = "Low battery";
 
-"Low battery
-Misc" = "Övrigt";
+/* */
+"Misc" = "Misc";
 
 /* */
 "Unit override" = "Åsidosätt enhet";
