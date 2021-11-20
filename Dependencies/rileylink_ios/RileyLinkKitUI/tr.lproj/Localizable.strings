@@ -41,7 +41,7 @@
 "Connection Monitoring" = "Bağlantı İzleme";
 
 /* The title of the cell showing uptime */
-"Uptime" = "Uptime";
+"Uptime" = "Çalışma süresi";
 
 /* The title of the cell showing battery level */
 "Battery level" = "Pil seviyesi";
@@ -62,22 +62,22 @@
 "OFF" = "KAPA";
 
 /* The title of the command to update diagnostic LEDs */
-"Diagnostic LEDs" = "Diagnostic LEDs";
+"Diagnostic LEDs" = "Sistem kontrol LEDleri";
 
 /* The title of the command to fetch RileyLink statistics */
 "Get RileyLink Statistics" = "RileyLink İstatistiklerini Al";
 
 /* The title of the command to invert BLE connection LED logic */
-"Invert LED Logic" = "Invert LED Logic";
+"Invert LED Logic" = "LED Mantığını Ters Çevir";
 
 /* The header of the cells showing test commands */
-"Test Commands" = "Test Commands";
+"Test Commands" = "Komutları Dene";
 
 /* The title of the cell showing Lighten Yellow LED */
-"Lighten Yellow LED" = "Lighten Yellow LED";
+"Lighten Yellow LED" = "Sarı LED'i Aç";
 
 /* The title of the cell showing Lighten Yellow LED */
-"Lighten Red LED" = "Lighten Red LED";
+"Lighten Red LED" = "Kırmızı LED'i Aç";
 
 /* The title of the cell showing Test Vibration */
 "Test Vibration" = "Titreşimi Dene";
@@ -92,13 +92,13 @@
 "Connection Vibration" = "Bağlanıldığında Titreş";
 
 /* Detail text when battery alert disabled. */
-"Off" = "Off";
+"Off" = "Kapa";
 
 /* Text indicating LED Mode is on */
-"On" = "On";
+"On" = "Aç";
 
 /* Text indicating LED Mode is off */
-"Off" = "Off";
+"Off" = "Kapa";
 
 /* Text indicating LED Mode is auto */
 "Auto" = "Oto";
