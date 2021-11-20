@@ -594,7 +594,7 @@ Enact a temp Basal or a temp target */
 "Last measurement" = "Senaste mätning";
 
 /* */
-"Sensor Footer checksum" = "Sensor Footer checksum";
+"Sensor Footer checksum" = "Kontrollsumma för sensor";
 
 /* */
 "Last Blood Sugar prediction" = "Senaste blodsockerförutsägelse";
@@ -642,7 +642,7 @@ Enact a temp Basal or a temp target */
 "Factory Calibration Parameters" = "Parametrar för fabrikskalibrering";
 
 /* */
-"Valid for footer" = "Valid for footer";
+"Valid for footer" = "Giltig för sidfot";
 
 /* */
 "Edit calibrations" = "Ändra kalibreringar";
@@ -731,13 +731,13 @@ Also vibrate" = "Vibrera också";
 "Schedule %d" = "Schema %d";
 
 /* */
-"tapped save schedules" = "tapped save schedules";
+"tapped save schedules" = "klickat på sparade scheman";
 
 /* */
 "Error" = "Fel";
 
 /* */
-"Some ui element was incorrectly specified" = "Some ui element was incorrectly specified";
+"Some ui element was incorrectly specified" = "Vissa UI-element felaktigt specificerade";
 
 /* */
 "Success" = "Lyckades";
@@ -764,7 +764,7 @@ Also vibrate" = "Vibrera också";
 "nothing to see here" = "inget att se här";
 
 /* */
-"snooze from testview clicked" = "snooze from testview clicked";
+"snooze from testview clicked" = "klickat på snooze från testvy";
 
 /* */
 "will snooze for %@ until %@" = "kommer att snooza i %@ tills %@";
