@@ -399,7 +399,7 @@ extension OmnipodPumpManager {
     private func pumpStatusHighlight(for state: OmnipodPumpManagerState) -> PumpManagerStatus.PumpStatusHighlight? {
         guard let podState = state.podState else {
             return PumpManagerStatus.PumpStatusHighlight(
-                localizedMessage: NSLocalizedString("No Pod", comment: "Status highlight that when no pod is paired."),
+                localizedMessage: LocalizedString("No Pod", comment: "Status highlight that when no pod is paired."),
                 imageName: "exclamationmark.circle.fill",
                 state: .warning)
         }
@@ -414,7 +414,7 @@ extension OmnipodPumpManager {
         if let reservoir = podState.lastInsulinMeasurements, let level = reservoir.reservoirLevel {
             if level <= 0 {
                 return PumpManagerStatus.PumpStatusHighlight(
-                    localizedMessage: NSLocalizedString("No Insulin", comment: "Status highlight that a pump is out of insulin."),
+                    localizedMessage: LocalizedString("No Insulin", comment: "Status highlight that a pump is out of insulin."),
                     imageName: "exclamationmark.circle.fill",
                     state: .critical)
             }
@@ -422,7 +422,7 @@ extension OmnipodPumpManager {
         
         if case .suspended = podState.suspendState {
             return PumpManagerStatus.PumpStatusHighlight(
-                localizedMessage: NSLocalizedString("Insulin Suspended", comment: "Status highlight that insulin delivery was suspended."),
+                localizedMessage: LocalizedString("Insulin Suspended", comment: "Status highlight that insulin delivery was suspended."),
                 imageName: "pause.circle.fill",
                 state: .warning)
         }
@@ -505,9 +505,9 @@ extension OmnipodPumpManager {
 
         let timeUntilExpiration = formatter.string(from: timeBetweenNoticeAndExpiration) ?? ""
 
-        content.title = NSLocalizedString("Pod Expiration Notice", comment: "The title for pod expiration notification")
+        content.title = LocalizedString("Pod Expiration Notice", comment: "The title for pod expiration notification")
 
-        content.body = String(format: NSLocalizedString("Time to replace your pod! Your pod will expire in %1$@", comment: "The format string for pod expiration notification body (1: time until expiration)"), timeUntilExpiration)
+        content.body = String(format: LocalizedString("Time to replace your pod! Your pod will expire in %1$@", comment: "The format string for pod expiration notification body (1: time until expiration)"), timeUntilExpiration)
         content.sound = UNNotificationSound.default
         content.categoryIdentifier = LoopNotificationCategory.pumpExpired.rawValue
         content.threadIdentifier = LoopNotificationCategory.pumpExpired.rawValue
