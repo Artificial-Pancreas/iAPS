@@ -68,7 +68,7 @@
 "Replace pod" = "Pod'u değiştir";
 
 /* Suggested at a date */
-"Suggested at %@" = "Suggested at %@";
+"Suggested at %@" = "%@'de önerilen";
 
 /* Add carbs screen */
 "Add Carbs" = "Karbonhidrat Ekle";
@@ -110,10 +110,10 @@
 "Duration" = "Süre";
 
 /*  */
-"Enact Temp Target" = "Enact Temp Target";
+"Enact Temp Target" = "Geçici Hedefe Başla";
 
 /*  */
-"Enter preset name" = "Enter preset name";
+"Enter preset name" = "Ön ayar adını girin";
 
 /* Preset name */
 "Name" = "İsim";
@@ -146,10 +146,10 @@
 "Delete autotune data" = "Autotune verilerini sil";
 
 /*  */
-"Run now" = "Run now";
+"Run now" = "Şimdi çalıştır";
 
 /*  */
-"Last run" = "Last run";
+"Last run" = "Son Çalıştırma";
 
 /*  */
 "Sensitivity" = "Duyarlılık";
@@ -176,16 +176,16 @@
 "Schedule" = "Planlama";
 
 /*  */
-"starts at" = "starts at";
+"starts at" = "de başlar";
 
 /* Time basal profile */
 "Time" = "Saat";
 
 /* */
-"Calculated Ratio" = "Calculated Ratio";
+"Calculated Ratio" = "Hesaplanan Oran";
 
 /* Carb Ratios header */
-"Carb Ratios" = "Carb Ratios";
+"Carb Ratios" = "Karbonhidrat Oranları";
 
 /*  */
 "Ratio" = "Oran";
@@ -194,7 +194,7 @@
 "Autosens" = "Otoduyarlılık";
 
 /*  */
-"Calculated Sensitivity" = "Calculated Sensitivity";
+"Calculated Sensitivity" = "Hesaplanan Duyarlılık";
 
 /*  */
 "Insulin Sensitivities" = "İnsülin Duyarlılık Faktörü";
@@ -216,10 +216,10 @@
 
 /* Enact
 Enact a temp Basal or a temp target */
-"Enact" = "Enact";
+"Enact" = "Enjekte et";
 
 /* */
-"Manual Temp Basal" = "Manual Temp Basal";
+"Manual Temp Basal" = "Manuel Geçici Bazal";
 
 /* Allow uploads tp NS */
 "Allow uploads" = "Veri yüklemeye izin ver";
@@ -252,10 +252,10 @@ Enact a temp Basal or a temp target */
 "URL" = "URL";
 
 /**/
-"Use local glucose server" = "Use local glucose server";
+"Use local glucose server" = "Yerel glikoz sunucusu kullan";
 
 /*  */
-"Edit settings json" = "Edit settings json";
+"Edit settings json" = "Json ayarlarını düzenle";
 
 /* */
 "Glucose units" = "Glikoz birimi";
@@ -267,7 +267,7 @@ Enact a temp Basal or a temp target */
 "Recommended Insulin Fraction" = "Önerilen insülin oranı";
 
 /* Do you want to show bolus screen after added carbs? */
-"Skip Bolus screen after carbs" = "Skip Bolus screen after carbs";
+"Skip Bolus screen after carbs" = "Karbonhidrattan sonra Bolus ekranını atla";
 
 /* Allow remote control from NS */
 "Remote control" = "Uzaktan kontrol";
@@ -390,7 +390,7 @@ Enact a temp Basal or a temp target */
 "Upload glucose to Nightscout" = "Nightscout'a KŞ değerlerini yükle";
 
 /* Type of CGM or glucose source */
-"Type" = "Type";
+"Type" = "Tip";
 
 /* CGM */
 "CGM" = "CGM";
@@ -405,19 +405,19 @@ Enact a temp Basal or a temp target */
 /* Calendar and Libre transmitter settings --------------*/
 /* */
 
-"Configure Libre Transmitter" = "Configure Libre Transmitter";
+"Configure Libre Transmitter" = "Libre Vericiyi Yapılandır";
 
 /* */
-"Calibrations" = "Calibrations";
+"Calibrations" = "Kalibrasyonlar";
 
 /* */
-"Create events in calendar" = "Create events in calendar";
+"Create events in calendar" = "Takvimde etkinlikler oluşturun";
 
 /* */
 "Calendar" = "Takvim";
 
 /* */
-"Other" = "Other";
+"Other" = "Diğeri";
 
 /* */
 "Libre Transmitter" = "Libre Vericisi";
@@ -429,13 +429,13 @@ Enact a temp Basal or a temp target */
 "Bluetooth Transmitters" = "Bluetooth Vericileri";
 
 /* */
-"Modes" = "Modes";
+"Modes" = "Mod";
 
 /* Libre 2 Direct */
 "Libre 2 Direct" = "Libre 2 Direk";
 
 /* */
-"Select the third party transmitter you want to connect to" = "Select the third party transmitter you want to connect to";
+"Select the third party transmitter you want to connect to" = "Bağlanmak istediğiniz üçüncü parti vericiyi seçin";
 
 /* State was restored */
 "State was restored" = "Durum yenilendi";
@@ -519,22 +519,22 @@ Enact a temp Basal or a temp target */
 "Delete CGMManager and start anew. Your libreoopweb credentials will be preserved" = "CGMManager'ı silin ve yeniden başlayın. libreoopweb kimlik bilgileriniz korunacaktır";
 
 /* Invalid libre checksum */
-"Invalid libre checksum" = "Invalid libre checksum";
+"Invalid libre checksum" = "Geçersiz libre sağlama toplamı";
 
 /* Libre sensor was incorrectly read, CRCs were not valid */
-"Libre sensor was incorrectly read, CRCs were not valid" = "Libre sensor was incorrectly read, CRCs were not valid";
+"Libre sensor was incorrectly read, CRCs were not valid" = "Libre sensörü hatalı okundu, CRC'ler geçersizdi";
 
 /* Glucose */
 "Glucose" = "Glikoz";
 
 /* LOWALERT! */
-"LOWALERT!" = "LOWALERT!";
+"LOWALERT!" = "DÜŞÜK İKAZI!";
 
 /* HIGHALERT! */
-"HIGHALERT!" = "HIGHALERT!";
+"HIGHALERT!" = "YÜKSEK İKAZI!";
 
 /* (Snoozed)*/
-"(Snoozed)" = "(Snoozed)";
+"(Snoozed)" = "(Ertelendi)";
 
 /* Glucose: %@ */
 "Glucose: %@" = "Glikoz: %@";
@@ -552,16 +552,16 @@ Enact a temp Basal or a temp target */
 "New Sensor Detected" = "Yemi Sensör Tespit Edildi";
 
 /* Please wait up to 30 minutes before glucose readings are available! */
-"Please wait up to 30 minutes before glucose readings are available!" = "Please wait up to 30 minutes before glucose readings are available!";
+"Please wait up to 30 minutes before glucose readings are available!" = "Lütfen glikoz ölçümleri mevcut olana kadar 30 dakikaya kadar bekleyin!";
 
 /* Invalid Glucose sample detected, try again later */
-"Invalid Glucose sample detected, try again later" = "Invalid Glucose sample detected, try again later";
+"Invalid Glucose sample detected, try again later" = "Geçersiz Glikoz örneği tespit edildi, daha sonra tekrar deneyin";
 
 /* ensor might have temporarily stopped, fallen off or is too cold or too warm */
-"Sensor might have temporarily stopped, fallen off or is too cold or too warm" = "Sensor might have temporarily stopped, fallen off or is too cold or too warm";
+"Sensor might have temporarily stopped, fallen off or is too cold or too warm" = "Sensör geçici olarak durmuş, düşmüş veya çok soğuk veya çok sıcak olabilir";
 
 /* Invalid Sensor Detected */
-"Invalid Sensor Detected" = "Invalid Sensor Detected";
+"Invalid Sensor Detected" = "Geçersiz Sensör Algılandı";
 
 /* Detected sensor seems not to be a libre 1 sensor! */
 "Detected sensor seems not to be a libre 1 sensor!" = "Tespit edilen sensör, libre 1 sensörü gibi görünmüyor!";
@@ -573,7 +573,7 @@ Enact a temp Basal or a temp target */
 "Low Battery" = "Düşük Pil";
 
 /* Battery is running low %@, consider charging your %@ device as soon as possible */
-"Battery is running low %@, consider charging your %@ device as soon as possible" = "Battery is running low %@, consider charging your %@ device as soon as possible";
+"Battery is running low %@, consider charging your %@ device as soon as possible" = "Pil azalıyor %@, %@ cihazınızı mümkün olan en kısa zamanda şarj etmeyi sağlayın";
 
 /* Extracting calibrationdata from sensor */
 "Extracting calibrationdata from sensor" = "Extracting calibrationdata from sensor";
@@ -594,13 +594,13 @@ Enact a temp Basal or a temp target */
 "Last measurement" = "Son ölçüm";
 
 /* */
-"Sensor Footer checksum" = "Sensor Footer checksum";
+"Sensor Footer checksum" = "Sensör Altbilgi sağlama toplamı";
 
 /* */
-"Last Blood Sugar prediction" = "Last Blood Sugar prediction";
+"Last Blood Sugar prediction" = "Son KŞ'i tahmini";
 
 /* */
-"CurrentBG" = "CurrentBG";
+"CurrentBG" = "GeçerliKŞ";
 
 /* */
 "Sensor Info" = "Sensör Bilgisi";
@@ -642,10 +642,10 @@ Enact a temp Basal or a temp target */
 "Factory Calibration Parameters" = "Fabrika Parametre Ayarları";
 
 /* */
-"Valid for footer" = "Valid for footer";
+"Valid for footer" = "Altbilgi için geçerli";
 
 /* */
-"Edit calibrations" = "Edit calibrations";
+"Edit calibrations" = "Kalibrasyonları Düzenle";
 
 /* */
 "edit calibration clicked" = "edit calibration clicked";
@@ -656,7 +656,7 @@ Enact a temp Basal or a temp target */
 "Are you sure you want to remove this cgm from loop?" = "Are you sure you want to remove this cgm from loop?";
 
 /* */
-"There is no undo" = "There is no undo";
+"There is no undo" = "Geri çekme yok";
 
 /* */
 "Advanced" = "Gelişmiş";
@@ -674,10 +674,10 @@ Enact a temp Basal or a temp target */
 "Export logs" = "Günlüğü Dışa Aktarın";
 
 /* */
-"Export not available" = "Export not available";
+"Export not available" = "Dışa aktarma mevcut değil";
 
 /* */
-"Log export requires ios 15" = "Log export requires ios 15";
+"Log export requires ios 15" = "Günlük dışa aktarma işlemi için ios 15 gerekir";
 
 /* */
 "Got it!" = "Anlaşıldı!";
@@ -686,16 +686,16 @@ Enact a temp Basal or a temp target */
 "Saved to %@" = "Saved to %@";
 
 /* */
-"No logs available" = "No logs available";
+"No logs available" = "Günlük bulunmuyor";
 
 /* */
 "Glucose Notification visibility" = "Glucose Notification visibility";
 
 /* */
-"Always Notify Glucose" = "Always Notify Glucose";
+"Always Notify Glucose" = "Daima Glikozu Bildir";
 
 /* */
-"Notify per reading" = "Notify per reading";
+"Notify per reading" = "Her okuma için bildir";
 
 /* */
 "Value" = "Değer";
@@ -716,7 +716,7 @@ Also vibrate" = "Also vibrate";
 "Low battery" = "Low battery";
 
 /* */
-"Misc" = "Misc";
+"Misc" = "Diğer";
 
 /* */
 "Unit override" = "Unit override";
@@ -728,7 +728,7 @@ Also vibrate" = "Also vibrate";
 "glucose" = "glikoz";
 
 /* */
-"Schedule %d" = "Schedule %d";
+"Schedule %d" = "Planla %d";
 
 /* */
 "tapped save schedules" = "tapped save schedules";
@@ -746,22 +746,22 @@ Also vibrate" = "Also vibrate";
 "Schedules were saved successfully!" = "Schedules were saved successfully!";
 
 /* */
-"High Glucose Alarm active" = "High Glucose Alarm active";
+"High Glucose Alarm active" = "Yüksek Glikoz Uyarılarımı aktif";
 
 /* */
-"Low Glucose Alarm active" = "Low Glucose Alarm active";
+"Low Glucose Alarm active" = "Düşük Glikoz Uyarılarımı aktif";
 
 /* */
-"No Glucose Alarm active" = "No Glucose Alarm active";
+"No Glucose Alarm active" = "Glikoz Uyarılarımı aktif değil";
 
 /* */
-"snoozing until %@" = "snoozing until %@";
+"snoozing until %@" = "%@'e kadar erteleniyor";
 
 /* */
-"not snoozing" = "not snoozing";
+"not snoozing" = "ertelenmiyor";
 
 /* */
-"nothing to see here" = "nothing to see here";
+"nothing to see here" = "burada görülecek bir şey yok";
 
 /* */
 "snooze from testview clicked" = "snooze from testview clicked";
@@ -770,19 +770,19 @@ Also vibrate" = "Also vibrate";
 "will snooze for %@ until %@" = "will snooze for %@ until %@";
 
 /* */
-"Click to Snooze Alerts" = "Click to Snooze Alerts";
+"Click to Snooze Alerts" = "Uyarıları Ertelemek için Tıklayın";
 
 /* */
 "Strength" = "Güçü";
 
 /* */
-"Hold the top of your iPhone near the sensor to pair" = "Hold the top of your iPhone near the sensor to pair";
+"Hold the top of your iPhone near the sensor to pair" = "Eşleştirmek için iPhone'unuzun üst kısmını sensörün yakınında tutun";
 
 /* */
 "Sensor not found" = "Sensör bulunamadı";
 
 /* */
-"Also play alert sound" = "Also play alert sound";
+"Also play alert sound" = "Ayrıca uyarı sesi çal";
 
 /* */
 "Notification Settings" = "Bildirim ayarları";
@@ -857,7 +857,7 @@ Also vibrate" = "Also vibrate";
 "Defaults to false. When true, allows supermicrobolus (if otherwise enabled) even with high temp targets." = "Defaults to false. When true, allows supermicrobolus (if otherwise enabled) even with high temp targets.";
 
 /* "Use Custom Peak Time” */
-"Defaults to false. Setting to true allows changing insulinPeakTime" = "Defaults to false. Setting to true allows changing insulinPeakTime";
+"Defaults to false. Setting to true allows changing insulinPeakTime" = "Varsayılan olarak kapalıdır. Açılırsa, 'insulinPeakTime' değerinin değişmesine izin verir";
 
 /* "Suspend Zeros IOB” */
 "Default is false. Any existing temp basals during times the pump was suspended will be deleted and 0 temp basals to negate the profile basal rates during times pump is suspended will be added." = "Default is false. Any existing temp basals during times the pump was suspended will be deleted and 0 temp basals to negate the profile basal rates during times pump is suspended will be added.";
