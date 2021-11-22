@@ -535,7 +535,7 @@ final class BaseAPSManager: APSManager, Injectable {
     }
 
     private func reportEnacted(suggestion: Suggestion, received: Bool) {
-        if suggestion.deliverAt != nil, suggestion.rate != nil || suggestion.units != nil {
+        if suggestion.deliverAt != nil {
             var enacted = suggestion
             enacted.timestamp = Date()
             enacted.recieved = received
