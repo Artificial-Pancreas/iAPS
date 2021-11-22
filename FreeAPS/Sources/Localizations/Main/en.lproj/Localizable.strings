@@ -570,7 +570,16 @@ Enact a temp Basal or a temp target */
 "Detected sensor is invalid: %@" = "Detected sensor is invalid: %@";
 
 /* Low Battery */
-"Low Battery" = "Low Battery";
+"Low battery" = "Low battery";
+
+/* */
+"Invalid sensor" = "Invalid sensor";
+
+/* */
+"Sensor change" = "Sensor change";
+
+/* */
+"Sensor expires soon" = "Sensor expires soon";
 
 /* Battery is running low %@, consider charging your %@ device as soon as possible */
 "Battery is running low %@, consider charging your %@ device as soon as possible" = "Battery is running low %@, consider charging your %@ device as soon as possible";
@@ -705,7 +714,7 @@ Enact a temp Basal or a temp target */
 "Adds Phone Battery" = "Adds Phone Battery";
 
 /* */
-"Adds Transmitter Battery";
+"Adds Transmitter Battery" = "Adds Transmitter Battery";
 
 /* */
 "Also vibrate" = "Also vibrate";

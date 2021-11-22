@@ -570,7 +570,16 @@ Enact a temp Basal or a temp target */
 "Detected sensor is invalid: %@" = "Upptäckt sensor är ogiltig: %@";
 
 /* Low Battery */
-"Low Battery" = "Låg batterinivå";
+"Low battery" = "Låg batterinivå";
+
+/* */
+"Invalid sensor" = "Ogiltig sensor";
+
+/* */
+"Sensor change" = "Sensorbyte";
+
+/* */
+"Sensor expires soon" = "Sensor går ut snart";
 
 /* Battery is running low %@, consider charging your %@ device as soon as possible */
 "Battery is running low %@, consider charging your %@ device as soon as possible" = "Batterinivå är låg %@, överväg att ladda din %@ enhet så snart som möjligt";
@@ -711,9 +720,6 @@ Also vibrate" = "Vibrera också";
 
 /* */
 "Additional notification types" = "Ytterligare notistyper";
-
-/* */
-"Low battery" = "Low battery";
 
 /* */
 "Misc" = "Övrigt";
