@@ -572,7 +572,16 @@ Połączono z Nightscout!";
 "Detected sensor is invalid: %@" = "Detected sensor is invalid: %@";
 
 /* Low Battery */
-"Low Battery" = "Low Battery";
+"Low battery" = "Low battery";
+
+/* */
+"Invalid sensor" = "Invalid sensor";
+
+/* */
+"Sensor change" = "Sensor change";
+
+/* */
+"Sensor expires soon" = "Sensor expires soon";
 
 /* Battery is running low %@, consider charging your %@ device as soon as possible */
 "Battery is running low %@, consider charging your %@ device as soon as possible" = "Battery is running low %@, consider charging your %@ device as soon as possible";
@@ -706,10 +715,10 @@ Połączono z Nightscout!";
 "Adds Phone Battery" = "Adds Phone Battery";
 
 /* */
-/* */
+"Adds Transmitter Battery" = "Adds Transmitter Battery";
 
-"Adds Transmitter Battery
-Also vibrate" = "Also vibrate";
+/* */
+"Also vibrate" = "Also vibrate";
 
 /* */
 "Additional notification types" = "Additional notification types";
@@ -730,7 +739,7 @@ Also vibrate" = "Also vibrate";
 "glucose" = "glucose";
 
 /* */
-"Schedule %d" = "Schedule %d";
+"Schedule " = "Schedule ";
 
 /* */
 "tapped save schedules" = "tapped save schedules";

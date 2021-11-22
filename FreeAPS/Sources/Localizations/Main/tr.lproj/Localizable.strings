@@ -399,7 +399,7 @@ Enact a temp Basal or a temp target */
 "Transmitter ID" = "Verici ID";
 
 /* Other CGM setting */
-"Other" = "Diğer";
+"Other" = "Diğeri";
 
 
 /* Calendar and Libre transmitter settings --------------*/
@@ -570,7 +570,16 @@ Enact a temp Basal or a temp target */
 "Detected sensor is invalid: %@" = "Algılanan sensör geçersiz: %@";
 
 /* Low Battery */
-"Low Battery" = "Düşük Pil";
+"Low battery" = "Low battery";
+
+/* */
+"Invalid sensor" = "Invalid sensor";
+
+/* */
+"Sensor change" = "Sensor change";
+
+/* */
+"Sensor expires soon" = "Sensor expires soon";
 
 /* Battery is running low %@, consider charging your %@ device as soon as possible */
 "Battery is running low %@, consider charging your %@ device as soon as possible" = "Pil azalıyor %@, %@ cihazınızı mümkün olan en kısa zamanda şarj etmeyi sağlayın";
@@ -704,10 +713,10 @@ Enact a temp Basal or a temp target */
 "Adds Phone Battery" = "Telefon Pilini Ekler";
 
 /* */
-/* */
+"Adds Transmitter Battery" = "Adds Transmitter Battery";
 
-"Adds Transmitter Battery
-Also vibrate" = "Also vibrate";
+/* */
+"Also vibrate" = "Also vibrate";
 
 /* */
 "Additional notification types" = "Ek bildirim çeşitleri";
@@ -728,7 +737,7 @@ Also vibrate" = "Also vibrate";
 "glucose" = "glikoz";
 
 /* */
-"Schedule %d" = "Planla %d";
+"Schedule " = "Schedule ";
 
 /* */
 "tapped save schedules" = "dokunulan kaydetme planları";
