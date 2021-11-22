@@ -243,6 +243,7 @@
 		E00EEC0627368630002FF094 /* UIAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = E00EEC0027368630002FF094 /* UIAssembly.swift */; };
 		E00EEC0727368630002FF094 /* APSAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = E00EEC0127368630002FF094 /* APSAssembly.swift */; };
 		E00EEC0827368630002FF094 /* NetworkAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = E00EEC0227368630002FF094 /* NetworkAssembly.swift */; };
+		E013D872273AC6FE0014109C /* GlucoseSimulatorSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = E013D871273AC6FE0014109C /* GlucoseSimulatorSource.swift */; };
 		E13B7DAB2A435F57066AF02E /* TargetsEditorStateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36F58DDD71F0E795464FA3F0 /* TargetsEditorStateModel.swift */; };
 		E25073BC86C11C3D6A42F5AC /* CalibrationsStateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47DFCE895C930F784EF11843 /* CalibrationsStateModel.swift */; };
 		E39E418C56A5A46B61D960EE /* ConfigEditorStateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D5B4F8B4194BB7E260EF251 /* ConfigEditorStateModel.swift */; };
@@ -561,6 +562,7 @@
 		E00EEC0027368630002FF094 /* UIAssembly.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIAssembly.swift; sourceTree = "<group>"; };
 		E00EEC0127368630002FF094 /* APSAssembly.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APSAssembly.swift; sourceTree = "<group>"; };
 		E00EEC0227368630002FF094 /* NetworkAssembly.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkAssembly.swift; sourceTree = "<group>"; };
+		E013D871273AC6FE0014109C /* GlucoseSimulatorSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlucoseSimulatorSource.swift; sourceTree = "<group>"; };
 		E2EBA7C03C26FCC67E16D798 /* LibreConfigProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = LibreConfigProvider.swift; sourceTree = "<group>"; };
 		E68CDC1E5C438D1BEAD4CF24 /* LibreConfigStateModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = LibreConfigStateModel.swift; sourceTree = "<group>"; };
 		E9AAB83FB6C3B41EFD1846A0 /* AddTempTargetRootView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AddTempTargetRootView.swift; sourceTree = "<group>"; };
@@ -935,6 +937,7 @@
 				38569344270B5DFA0002C50D /* CGMType.swift */,
 				386A124E271707F000DDC61C /* DexcomSource.swift */,
 				38569345270B5DFA0002C50D /* GlucoseSource.swift */,
+				E013D871273AC6FE0014109C /* GlucoseSimulatorSource.swift */,
 				38FEF407273B011A00574A46 /* LibreTransmitterSource.swift */,
 				3862CC03273D150600BF832C /* Calibrations */,
 			);
@@ -1700,6 +1703,7 @@
 				3811DE4225C9D4A100A708ED /* SettingsDataFlow.swift in Sources */,
 				3811DE2525C9D48300A708ED /* MainRootView.swift in Sources */,
 				3811DE3125C9D49500A708ED /* HomeProvider.swift in Sources */,
+				E013D872273AC6FE0014109C /* GlucoseSimulatorSource.swift in Sources */,
 				388E5A5C25B6F0770019842D /* JSON.swift in Sources */,
 				3811DF0225CA9FEA00A708ED /* Credentials.swift in Sources */,
 				389A572026079BAA00BC102F /* Interpolation.swift in Sources */,
