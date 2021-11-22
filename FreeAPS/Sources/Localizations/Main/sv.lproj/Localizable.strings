@@ -791,25 +791,25 @@ Also vibrate" = "Vibrera också";
 "Found devices: %d" = "Hittade enheter: %d";
 
 /* */
-"Backfill options" = "Backfill options";
+"Backfill options" = "Alternativ för återfyllnad";
 
 /* */
-"Backfilling from trend is currently not well supported by Loop" = "Backfilling from trend is currently not well supported by Loop";
+"Backfilling from trend is currently not well supported by Loop" = "Återfyllning från trend stöds för närvarande inte bra av Loop";
 
 /* */
-"Backfill from history" = "Backfill from history";
+"Backfill from history" = "Återfyll från historik";
 
 /* */
-"Backfill from trend" = "Backfill from trend";
+"Backfill from trend" = "Återfyll från trend";
 
 /* */
-"Debug options" = "Debug options";
+"Debug options" = "Felsökningsalternativ";
 
 /* */
-"Adds a lot of data to the Issue Report " = "Adds a lot of data to the Issue Report ";
+"Adds a lot of data to the Issue Report " = "Lägger till en hel del data till rapporten ";
 
 /* */
-"Persist sensordata" = "Persist sensordata";
+"Persist sensordata" = "Bevara sensordata";
 
 /* */
 "Battery" = "Batteri";
@@ -948,33 +948,3 @@ Also vibrate" = "Vibrera också";
 
 /* "Noisy CGM Target Multiplier" */
 "Defaults to 1.3. Increase target by this amount when looping off raw/noisy CGM data" = "Standardvärde 1,3. Öka målvärdet med denna multipel när du loopar med ofiltrerad CGM-data med mycket brus";
-
-/* "Enable AutoISF" */
-"Defaults to false. Adapt ISF when glucose is stuck at high levels, only works without COB.\n\nRead up on:\nhttps://github.com/ga-zelle/autoISF/tree/2.8.2" = "Av som förval. Anpasar ISF (insulinkänslighet) vid långvariga höga glukosnivåer, och fungerar endast utan aktiva kolhydrater.\n\nLäs mer på:\nhttps://github.com/ga-zelle/autoISF/tree/2.8.2";
-
-/* "AutoISF HourlyMaxChange" */
-"Defaults to false. Rate at which autoISF grows per hour assuming bg is twice target. When value = 1.0, ISF is reduced to 50% after 1 hour of BG at 2x target." = "Av som förval. Hastighet med vilken autoISF ökar per timme givet att blodsocker är dubbelt så högt som målvärde. Vid värde = 1.0, reduceras ISF till 50% efter 1 timme med blodsocker vid 2x målvärde.";
-
-
-"Multiplier cap on how high the autoISF ratio can be and therefore how low it can adjust ISF." = "Faktor som bestämmer hur hög autoISF-kvoten kan vara och hur mycket ISF tillåts att justeras ned.";
-/* "AutoISF Max" */
-/* "SMB Max RangeExtension" */
-"Default value: 1. This is another key OpenAPS safety cap, and specifies by what factor you can exceed the regular 120 maxSMB/maxUAM minutes. Increase this experimental value slowly and with caution." = "Standardvärde: 1. Bestämmer med vilken faktor du kan överstiga de maximala inställningarna för 120 maxSMB/maxUAM minutes. Öka denna experimentella faktor långsamt och med försiktighet.";
-
-/* "SMB DeliveryRatio" */
-"Default value: 0.5 This is another key OpenAPS safety cap, and specifies what share of the total insulin required can be delivered as SMB. This is to prevent people from getting into dangerous territory by setting SMB requests from the caregivers phone at the same time. Increase this experimental value slowly and with caution." = "Standardvärde: 0.5. Bestämmer hur stor del av insulin som krävs (insulin required) som kommer att ges som SMB. Öka detta experimentella värde långsamt och med försiktighet.";
-
-/* OpenAPS main settings */
-"OpenAPS main settings" = "OpenAPS huvudsakliga inställnigar";
-
-/* OpenAPS SMB settings */
-"OpenAPS SMB settings" = "OpenAPS SMB-inställningar";
-
-/* OpenAPS targets settings */
-"OpenAPS targets settings" = "OpenAPS målvärdesinställningar";
-
-/* OpenAPS other settings */
-"OpenAPS other settings" = "OpenAPS andra inställningar";
-
-/* Auto-ISF settings */
-"Auto ISF settings" = "Auto-ISF-inställningar";
