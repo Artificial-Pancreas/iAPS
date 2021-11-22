@@ -39,6 +39,6 @@ public protocol PumpManagerSetupViewController {
 }
 
 
-public protocol PumpManagerSetupViewControllerDelegate: class {
+public protocol PumpManagerSetupViewControllerDelegate: AnyObject {
     func pumpManagerSetupViewController(_ pumpManagerSetupViewController: PumpManagerSetupViewController, didSetUpPumpManager pumpManager: PumpManagerUI)
 }

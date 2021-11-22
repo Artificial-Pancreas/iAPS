@@ -37,6 +37,6 @@ public protocol CGMManagerSetupViewController {
     var setupDelegate: CGMManagerSetupViewControllerDelegate? { get set }
 }
 
-public protocol CGMManagerSetupViewControllerDelegate: class {
+public protocol CGMManagerSetupViewControllerDelegate: AnyObject {
     func cgmManagerSetupViewController(_ cgmManagerSetupViewController: CGMManagerSetupViewController, didSetUpCGMManager cgmManager: CGMManagerUI)
 }

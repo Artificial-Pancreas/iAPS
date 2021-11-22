@@ -178,7 +178,7 @@ public class TransmitterManager: TransmitterDelegate {
             return
         }
         
-        guard let quantity = glucose.glucose else {
+        guard glucose.glucose != nil else {
             delegate?.transmitterManager(self, didRead: [])
 //            updateDelegate(with: .noData)
             return
