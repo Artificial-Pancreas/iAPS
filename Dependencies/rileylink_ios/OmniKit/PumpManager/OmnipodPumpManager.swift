@@ -1425,18 +1425,28 @@ extension OmnipodPumpManager: PumpManager {
                 state.bolusEngageState = .engaging
             })
 
-            // If pod suspended, resume basal before bolusing to match existing Medtronic PumpManager behavior
+            // Initialize to true to match existing Medtronic PumpManager behavior for any
+            // manual boluses or to false to never auto resume a suspended pod for any bolus.
+            let autoResumeOnManualBolus = true
+
             if case .some(.suspended) = self.state.podState?.suspendState {
+                // Pod suspended, only auto resume for a manual bolus if autoResumeOnManualBolus is true
+                if automatic || autoResumeOnManualBolus == false {
+                    self.log.error("enactBolus: returning pod suspended error for %@ bolus", automatic ? "automatic" : "manual")
+                    completion(.failure(PumpManagerError.deviceState(PodCommsError.podSuspended)))
+                    return
+                }
                 do {
                     let scheduleOffset = self.state.timeZone.scheduleOffset(forDate: Date())
                     let beep = self.confirmationBeeps
                     let podStatus = try session.resumeBasal(schedule: self.state.basalSchedule, scheduleOffset: scheduleOffset, acknowledgementBeep: beep, completionBeep: beep)
+                    try session.cancelSuspendAlerts()
                     guard podStatus.deliveryStatus.bolusing == false else {
                         completion(.failure(PumpManagerError.deviceState(PodCommsError.unfinalizedBolus)))
                         return
                     }
                 } catch let error {
-                    self.log.error("enactBolus: error resuming suspended pod: %s", String(describing: error))
+                    self.log.error("enactBolus: error resuming suspended pod: %@", String(describing: error))
                     completion(.failure(PumpManagerError.communication(error as? LocalizedError)))
                     return
                 }
