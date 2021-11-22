@@ -336,10 +336,10 @@ Enact a temp Basal or a temp target */
 "0 U/hr" = "0 Ед/час";
 
 /* abbreviation for days */
-"d" = "дн";
+"d" = "д";
 
 /* abbreviation for hours */
-"h" = "час";
+"h" = "ч";
 
 /* abbreviation for minutes */
 "m" = "мин";
@@ -588,7 +588,7 @@ Enact a temp Basal or a temp target */
 "Libre Bluetooth" = "Libre Bluetooth";
 
 /* */
-"Snooze Alerts" = "Отложить оповещения";
+"Snooze Alerts" = "Отложить тревоги";
 
 /* */
 "Last measurement" = "Последнее измерение";
@@ -790,6 +790,31 @@ Also vibrate" = "Вибрировать";
 /* */
 "Found devices: %d" = "Найдено устройств: %d";
 
+/* */
+"Backfill options" = "Опции заполнения";
+
+/* */
+"Backfilling from trend is currently not well supported by Loop" = "Заполнение из тренда в настоящее время не поддерживается в Loop";
+
+/* */
+"Backfill from history" = "Заполнять из истории";
+
+/* */
+"Backfill from trend" = "Заполнять из тренда";
+
+/* */
+"Debug options" = "Опции отладки";
+
+/* */
+"Adds a lot of data to the Issue Report " = "Добавляет много данных в отчет об ошибках ";
+
+/* */
+"Persist sensordata" = "Хранить данные сенсора";
+
+/* */
+"Battery" = "Батарея";
+
+
 
 /* Headers for settings ------------------- */
 
@@ -804,7 +829,7 @@ Also vibrate" = "Вибрировать";
 
 
 /* Glucose Simulator CGM */
-"Glucose Simulator" = "Glucose Simulator";
+"Glucose Simulator" = "Симулятор глюкозы";
 
 
 /*

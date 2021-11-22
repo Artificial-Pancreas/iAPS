@@ -792,6 +792,31 @@ Also vibrate" = "Also vibrate";
 /* */
 "Found devices: %d" = "Found devices: %d";
 
+/* */
+"Backfill options" = "Backfill options";
+
+/* */
+"Backfilling from trend is currently not well supported by Loop" = "Backfilling from trend is currently not well supported by Loop";
+
+/* */
+"Backfill from history" = "Backfill from history";
+
+/* */
+"Backfill from trend" = "Backfill from trend";
+
+/* */
+"Debug options" = "Debug options";
+
+/* */
+"Adds a lot of data to the Issue Report " = "Adds a lot of data to the Issue Report ";
+
+/* */
+"Persist sensordata" = "Persist sensordata";
+
+/* */
+"Battery" = "Battery";
+
+
 
 /* Headers for settings ------------------- */
 

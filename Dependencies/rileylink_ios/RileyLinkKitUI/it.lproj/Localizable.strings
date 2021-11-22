@@ -26,7 +26,7 @@
 "Firmware" = "Firmware";
 
 /* The title of the cell showing current rileylink frequency */
-"Frequency" = "Frequency";
+"Frequency" = "Frequenza";
 
 /* The title of the cell showing device name */
 "Name" = "Nome";
@@ -38,19 +38,19 @@
 "Signal Strength" = "Potenza Segnale";
 
 /* The header of the cells showing connection monitoring */
-"Connection Monitoring" = "Connection Monitoring";
+"Connection Monitoring" = "Monitoraggio della Connessione";
 
 /* The title of the cell showing uptime */
-"Uptime" = "Uptime";
+"Uptime" = "Tempo d'attività";
 
 /* The title of the cell showing battery level */
-"Battery level" = "Battery level";
+"Battery level" = "Livello della batteria";
 
 /* The title of the cell showing Voltage */
-"Voltage" = "Voltage";
+"Voltage" = "Voltaggio";
 
 /* "The title of the section for alerts" */
-"Alert" = "Alert";
+"Alert" = "Sveglia";
 
 /* The title of the cell showing Low Battery Alert */
 "Low Battery Alert" = "Low Battery Alert";

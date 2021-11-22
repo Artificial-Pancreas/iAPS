@@ -576,13 +576,13 @@ Enact a temp Basal or a temp target */
 "Battery is running low %@, consider charging your %@ device as soon as possible" = "Pil azalıyor %@, %@ cihazınızı mümkün olan en kısa zamanda şarj etmeyi sağlayın";
 
 /* Extracting calibrationdata from sensor */
-"Extracting calibrationdata from sensor" = "Extracting calibrationdata from sensor";
+"Extracting calibrationdata from sensor" = "Sensörden kalibrasyon verilerinin çıkarılması";
 
 /* Sensor Ending Soon */
 "Sensor Ending Soon" = "Sensör Yakında Sona Eriyor";
 
 /* Current Sensor is Ending soon! Sensor Life left in %@ */
-"Current Sensor is Ending soon! Sensor Life left in %@" = "Current Sensor is Ending soon! Sensor Life left in %@";
+"Current Sensor is Ending soon! Sensor Life left in %@" = "Mevcut Sensör yakında Sona Eriyor! Sensör Ömrü %@ kaldı";
 
 /* */
 "Libre Bluetooth" = "Libre Bluetooth";
@@ -648,12 +648,12 @@ Enact a temp Basal or a temp target */
 "Edit calibrations" = "Kalibrasyonları Düzenle";
 
 /* */
-"edit calibration clicked" = "edit calibration clicked";
+"edit calibration clicked" = "kalibrasyonu düzenle tıklandı";
 
 /* */
 "Delete CGM" = "CGM'i Sil";
 /* */
-"Are you sure you want to remove this cgm from loop?" = "Are you sure you want to remove this cgm from loop?";
+"Are you sure you want to remove this cgm from loop?" = "Bu CGM'i FreeAPS X'den kaldırmak istediğinizden emin misiniz?";
 
 /* */
 "There is no undo" = "Geri çekme yok";
@@ -683,13 +683,13 @@ Enact a temp Basal or a temp target */
 "Got it!" = "Anlaşıldı!";
 
 /* */
-"Saved to %@" = "Saved to %@";
+"Saved to %@" = "%@'a kaydedildi";
 
 /* */
 "No logs available" = "Günlük bulunmuyor";
 
 /* */
-"Glucose Notification visibility" = "Glucose Notification visibility";
+"Glucose Notification visibility" = "Glikoz Bildirim görünürlüğü";
 
 /* */
 "Always Notify Glucose" = "Daima Glikozu Bildir";
@@ -719,7 +719,7 @@ Also vibrate" = "Also vibrate";
 "Misc" = "Diğer";
 
 /* */
-"Unit override" = "Unit override";
+"Unit override" = "Birim üzerine yaz";
 
 /* */
 "Low" = "Düşük";
@@ -731,19 +731,19 @@ Also vibrate" = "Also vibrate";
 "Schedule %d" = "Planla %d";
 
 /* */
-"tapped save schedules" = "tapped save schedules";
+"tapped save schedules" = "dokunulan kaydetme planları";
 
 /* */
 "Error" = "Hata";
 
 /* */
-"Some ui element was incorrectly specified" = "Some ui element was incorrectly specified";
+"Some ui element was incorrectly specified" = "Bazı kullanıcı arabirimi öğeleri yanlış belirtildi";
 
 /* */
 "Success" = "Başarılı";
 
 /* */
-"Schedules were saved successfully!" = "Schedules were saved successfully!";
+"Schedules were saved successfully!" = "Programlar başarıyla kaydedildi!";
 
 /* */
 "High Glucose Alarm active" = "Yüksek Glikoz Uyarılarımı aktif";
@@ -764,10 +764,10 @@ Also vibrate" = "Also vibrate";
 "nothing to see here" = "burada görülecek bir şey yok";
 
 /* */
-"snooze from testview clicked" = "snooze from testview clicked";
+"snooze from testview clicked" = "tıklanan testview'ü ertele";
 
 /* */
-"will snooze for %@ until %@" = "will snooze for %@ until %@";
+"will snooze for %@ until %@" = "%@ için %@ tarihine kadar ertelenecek";
 
 /* */
 "Click to Snooze Alerts" = "Uyarıları Ertelemek için Tıklayın";
@@ -790,6 +790,31 @@ Also vibrate" = "Also vibrate";
 /* */
 "Found devices: %d" = "Bulunan cihazlar: %d";
 
+/* */
+"Backfill options" = "Backfill options";
+
+/* */
+"Backfilling from trend is currently not well supported by Loop" = "Backfilling from trend is currently not well supported by Loop";
+
+/* */
+"Backfill from history" = "Backfill from history";
+
+/* */
+"Backfill from trend" = "Backfill from trend";
+
+/* */
+"Debug options" = "Debug options";
+
+/* */
+"Adds a lot of data to the Issue Report " = "Adds a lot of data to the Issue Report ";
+
+/* */
+"Persist sensordata" = "Persist sensordata";
+
+/* */
+"Battery" = "Battery";
+
+
 
 /* Headers for settings ------------------- */
 
@@ -804,7 +829,7 @@ Also vibrate" = "Also vibrate";
 
 
 /* Glucose Simulator CGM */
-"Glucose Simulator" = "Glucose Simulator";
+"Glucose Simulator" = "Glikoz Simülatörü";
 
 
 /*
@@ -922,4 +947,4 @@ Also vibrate" = "Also vibrate";
 "Grams of carbsReq to trigger a pushover. Defaults to 1 (for 1 gram of carbohydrate). Can be increased if you only want to get Pushover for carbsReq at X threshold." = "Grams of carbsReq to trigger a pushover. Defaults to 1 (for 1 gram of carbohydrate). Can be increased if you only want to get Pushover for carbsReq at X threshold.";
 
 /* "Noisy CGM Target Multiplier" */
-"Defaults to 1.3. Increase target by this amount when looping off raw/noisy CGM data" = "Defaults to 1.3. Increase target by this amount when looping off raw/noisy CGM data";
+"Defaults to 1.3. Increase target by this amount when looping off raw/noisy CGM data" = "Varsayılan olarak 1.3'tür. Ham/Gürültülü CGM verilerini devre dışı bırakırken hedefi bu miktarda artır";
