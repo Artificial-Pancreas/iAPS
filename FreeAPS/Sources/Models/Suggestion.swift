@@ -19,10 +19,6 @@ struct Suggestion: JSON, Equatable {
     let isf: Int?
     var timestamp: Date?
     var recieved: Bool?
-
-    var isNoTempRequired: Bool {
-        reason.contains("no temp required")
-    }
 }
 
 struct Predictions: JSON, Equatable {

@@ -239,7 +239,7 @@ extension Home {
             if closedLoop,
                let enactedSuggestion = enactedSuggestion,
                let timestamp = enactedSuggestion.timestamp,
-               enactedSuggestion.deliverAt == suggestion.deliverAt, suggestion.rate != nil || suggestion.units != nil
+               enactedSuggestion.deliverAt == suggestion.deliverAt, enactedSuggestion.recieved == true
             {
                 statusTitle = "Enacted at \(dateFormatter.string(from: timestamp))"
             } else if let suggestedDate = suggestion.deliverAt {

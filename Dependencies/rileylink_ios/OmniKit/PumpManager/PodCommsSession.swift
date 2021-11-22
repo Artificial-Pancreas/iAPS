@@ -123,7 +123,7 @@ extension PodCommsError: LocalizedError {
         case .nonceResyncFailed:
             return nil
         case .podSuspended:
-            return nil
+            return LocalizedString("Resume delivery", comment: "Recovery suggestion when pod is suspended")
         case .podFault:
             return nil
         case .commsError:
