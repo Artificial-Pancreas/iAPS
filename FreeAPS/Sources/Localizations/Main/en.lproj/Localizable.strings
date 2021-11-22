@@ -803,6 +803,11 @@ Enact a temp Basal or a temp target */
 
 "OpenAPS other settings" = "OpenAPS other settings";
 
+
+/* Glucose Simulator CGM */
+"Glucose Simulator" = "Glucose Simulator";
+
+
 /*
   Infotexts from openaps.docs and androidaps.docs
   FreeAPS X
