@@ -16,7 +16,7 @@ public enum HUDTapAction {
     case takeNoAction
 }
 
-public protocol HUDProvider: class  {
+public protocol HUDProvider: AnyObject  {
     var managerIdentifier: String { get }
 
     typealias HUDViewRawState = [String: Any]

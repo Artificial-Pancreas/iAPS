@@ -1,0 +1,11 @@
+framework module RawGlucose {
+  umbrella header "RawGlucose.h"
+
+  export *
+  module * { export * }
+}
+
+module RawGlucose.Swift {
+    header "RawGlucose-Swift.h"
+    requires objc
+}

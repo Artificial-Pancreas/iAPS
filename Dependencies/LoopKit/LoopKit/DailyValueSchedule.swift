@@ -91,7 +91,7 @@ extension DailySchedule where T: Comparable {
 
 public struct DailyValueSchedule<T>: DailySchedule {
     let referenceTimeInterval: TimeInterval
-    let repeatInterval = TimeInterval(hours: 24)
+    var repeatInterval = TimeInterval(hours: 24)
 
     public let items: [RepeatingScheduleValue<T>]
     public var timeZone: TimeZone
