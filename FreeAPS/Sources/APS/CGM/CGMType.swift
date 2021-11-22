@@ -7,6 +7,7 @@ enum CGMType: String, JSON, CaseIterable, Identifiable {
     case xdrip
     case dexcomG6
     case dexcomG5
+    case simulator
     case libreTransmitter
 
     var displayName: String {
@@ -19,6 +20,8 @@ enum CGMType: String, JSON, CaseIterable, Identifiable {
             return "Dexcom G6"
         case .dexcomG5:
             return "Dexcom G5"
+        case .simulator:
+            return "Glucose Simulator"
         case .libreTransmitter:
             return NSLocalizedString("Libre Transmitter", comment: "Libre Transmitter type")
         }
@@ -34,6 +37,8 @@ enum CGMType: String, JSON, CaseIterable, Identifiable {
             return URL(string: "dexcomg6://")!
         case .dexcomG5:
             return URL(string: "dexcomgcgm://")!
+        case .simulator:
+            return nil
         case .libreTransmitter:
             return URL(string: "freeaps-x://libre-transmitter")!
         }

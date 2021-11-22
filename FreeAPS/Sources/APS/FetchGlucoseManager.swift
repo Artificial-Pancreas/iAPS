@@ -18,6 +18,7 @@ final class BaseFetchGlucoseManager: FetchGlucoseManager, Injectable {
 
     private lazy var appGroupSource = AppGroupSource()
     private lazy var dexcomSource = DexcomSource()
+    private lazy var simulatorSource = GlucoseSimulatorSource()
 
     init(resolver: Resolver) {
         injectServices(resolver)
@@ -36,6 +37,8 @@ final class BaseFetchGlucoseManager: FetchGlucoseManager, Injectable {
             glucoseSource = dexcomSource
         case .nightscout:
             glucoseSource = nightscoutManager
+        case .simulator:
+            glucoseSource = simulatorSource
         case .libreTransmitter:
             glucoseSource = libreTransmitter
         }
