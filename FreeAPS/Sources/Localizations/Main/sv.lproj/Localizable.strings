@@ -802,6 +802,11 @@ Also vibrate" = "Vibrera också";
 
 "OpenAPS other settings" = "OpenAPS andra inställningar";
 
+
+/* Glucose Simulator CGM */
+"Glucose Simulator" = "Glukossimulator";
+
+
 /*
   Infotexts from openaps.docs and androidaps.docs
   FreeAPS X
