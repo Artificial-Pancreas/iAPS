@@ -378,6 +378,7 @@
 		3811DEE725CA063400A708ED /* PersistedProperty.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersistedProperty.swift; sourceTree = "<group>"; };
 		3811DF0125CA9FEA00A708ED /* Credentials.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Credentials.swift; sourceTree = "<group>"; };
 		3811DF0F25CAAAE200A708ED /* APSManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APSManager.swift; sourceTree = "<group>"; };
+		3818AA42274BBC1100843DB3 /* ConfigOverride.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = ConfigOverride.xcconfig; sourceTree = "<group>"; };
 		38192E03261B82FA0094D973 /* ReachabilityManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReachabilityManager.swift; sourceTree = "<group>"; };
 		38192E06261BA9960094D973 /* FetchTreatmentsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchTreatmentsManager.swift; sourceTree = "<group>"; };
 		38192E0C261BAF980094D973 /* ConvenienceExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConvenienceExtensions.swift; sourceTree = "<group>"; };
@@ -971,6 +972,7 @@
 		388E594F25AD948C0019842D = {
 			isa = PBXGroup;
 			children = (
+				3818AA42274BBC1100843DB3 /* ConfigOverride.xcconfig */,
 				38F3783A2613555C009DB701 /* Config.xcconfig */,
 				388E595A25AD948C0019842D /* FreeAPS */,
 				38FCF3EE25E9028E0078B0D1 /* FreeAPSTests */,
