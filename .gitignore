@@ -9,6 +9,7 @@
 build/
 DerivedData/
 R.generated.swift
+*-old
 
 ## Various settings
 !default.mode1v3
