@@ -539,8 +539,8 @@ Enact a temp Basal or a temp target */
 /* Glucose: %@ */
 "Glucose: %@" = "Blodsukker: %@";
 
-/* Transmitter: %@ */
-"Transmitter: %@" = "Sender: %@";
+/* Transmitter: %@%% */
+"Transmitter: %@%%" = "Sender: %@";
 
 /* No Sensor Detected */
 "No Sensor Detected" = "Ingen sensor oppdaget";
@@ -583,6 +583,212 @@ Enact a temp Basal or a temp target */
 
 /* Current Sensor is Ending soon! Sensor Life left in %@ */
 "Current Sensor is Ending soon! Sensor Life left in %@" = "Current Sensor is Ending soon! Sensor Life left in %@";
+
+/* */
+"Libre Bluetooth" = "Libre Bluetooth";
+
+/* */
+"Snooze Alerts" = "Snooze Alerts";
+
+/* */
+"Last measurement" = "Last measurement";
+
+/* */
+"Sensor Footer checksum" = "Sensor Footer checksum";
+
+/* */
+"Last Blood Sugar prediction" = "Last Blood Sugar prediction";
+
+/* */
+"CurrentBG" = "CurrentBG";
+
+/* */
+"Sensor Info" = "Sensor Info";
+
+/* */
+"Sensor Age" = "Sensor Age";
+
+/* */
+"Sensor Age Left" = "Sensor Age Left";
+
+/* */
+"Sensor Endtime" = "Sensor Endtime";
+
+/* */
+"Sensor State" = "Sensor State";
+
+/* */
+"Sensor Serial" = "Sensor Serial";
+
+/* */
+"Transmitter Info" = "Transmitter Info";
+
+/* */
+"Hardware" = "Hardware";
+
+/* */
+"Firmware" = "Firmware";
+
+/* */
+"Connection State" = "Connection State";
+
+/* */
+"Transmitter Type" = "Transmitter Type";
+
+/* */
+"Sensor Type" = "Sensor Type";
+
+/* */
+"Factory Calibration Parameters" = "Factory Calibration Parameters";
+
+/* */
+"Valid for footer" = "Valid for footer";
+
+/* */
+"Edit calibrations" = "Edit calibrations";
+
+/* */
+"edit calibration clicked" = "edit calibration clicked";
+
+/* */
+"Delete CGM" = "Delete CGM";
+/* */
+"Are you sure you want to remove this cgm from loop?" = "Are you sure you want to remove this cgm from loop?";
+
+/* */
+"There is no undo" = "There is no undo";
+
+/* */
+"Advanced" = "Advanced";
+
+/* */
+"Alarms" = "Alarms";
+
+/* */
+"Glucose Settings" = "Glucose Settings";
+
+/* */
+"Notifications" = "Notifications";
+
+/* */
+"Export logs" = "Export logs";
+
+/* */
+"Export not available" = "Export not available";
+
+/* */
+"Log export requires ios 15" = "Log export requires ios 15";
+
+/* */
+"Got it!" = "Got it!";
+
+/* */
+"Saved to %@" = "Saved to %@";
+
+/* */
+"No logs available" = "No logs available";
+
+/* */
+"Glucose Notification visibility" = "Glucose Notification visibility";
+
+/* */
+"Always Notify Glucose" = "Always Notify Glucose";
+
+/* */
+"Notify per reading" = "Notify per reading";
+
+/* */
+"Value" = "Value";
+
+/* */
+"Adds Phone Battery" = "Adds Phone Battery";
+
+/* */
+/* */
+
+"Adds Transmitter Battery
+Also vibrate" = "Also vibrate";
+
+/* */
+"Additional notification types" = "Additional notification types";
+
+/* */
+"Low battery" = "Low battery";
+
+/* */
+"Misc" = "Misc";
+
+/* */
+"Unit override" = "Unit override";
+
+/* */
+"Low" = "Low";
+
+/* */
+"glucose" = "glucose";
+
+/* */
+"Schedule %d" = "Schedule %d";
+
+/* */
+"tapped save schedules" = "tapped save schedules";
+
+/* */
+"Error" = "Error";
+
+/* */
+"Some ui element was incorrectly specified" = "Some ui element was incorrectly specified";
+
+/* */
+"Success" = "Success";
+
+/* */
+"Schedules were saved successfully!" = "Schedules were saved successfully!";
+
+/* */
+"High Glucose Alarm active" = "High Glucose Alarm active";
+
+/* */
+"Low Glucose Alarm active" = "Low Glucose Alarm active";
+
+/* */
+"No Glucose Alarm active" = "No Glucose Alarm active";
+
+/* */
+"snoozing until %@" = "snoozing until %@";
+
+/* */
+"not snoozing" = "not snoozing";
+
+/* */
+"nothing to see here" = "nothing to see here";
+
+/* */
+"snooze from testview clicked" = "snooze from testview clicked";
+
+/* */
+"will snooze for %@ until %@" = "will snooze for %@ until %@";
+
+/* */
+"Click to Snooze Alerts" = "Click to Snooze Alerts";
+
+/* */
+"Strength" = "Strength";
+
+/* */
+"Hold the top of your iPhone near the sensor to pair" = "Hold the top of your iPhone near the sensor to pair";
+
+/* */
+"Sensor not found" = "Sensor not found";
+
+/* */
+"Also play alert sound" = "Also play alert sound";
+
+/* */
+"Notification Settings" = "Notification Settings";
+
+/* */
+"Found devices: %d" = "Found devices: %d";
 
 
 /* Headers for settings ------------------- */

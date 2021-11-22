@@ -539,8 +539,8 @@ Enact a temp Basal or a temp target */
 /* Glucose: %@ */
 "Glucose: %@" = "Glukos: %@";
 
-/* Transmitter: %@ */
-"Transmitter: %@" = "Sändare: %@";
+/* Transmitter: %@%% */
+"Transmitter: %@%%" = "Sändare: %@%%";
 
 /* No Sensor Detected */
 "No Sensor Detected" = "Ingen Sensor upptäckt";
@@ -583,6 +583,212 @@ Enact a temp Basal or a temp target */
 
 /* Current Sensor is Ending soon! Sensor Life left in %@ */
 "Current Sensor is Ending soon! Sensor Life left in %@" = "Nuvarande sensor behöver snart bytas! Sensortid kvar i %@";
+
+/* */
+"Libre Bluetooth" = "Libre bluetooth";
+
+/* */
+"Snooze Alerts" = "Snooza larm";
+
+/* */
+"Last measurement" = "Senaste mätning";
+
+/* */
+"Sensor Footer checksum" = "Kontrollsumma för sensor";
+
+/* */
+"Last Blood Sugar prediction" = "Senaste blodsockerförutsägelse";
+
+/* */
+"CurrentBG" = "NuvarandeBG";
+
+/* */
+"Sensor Info" = "SensorInfo";
+
+/* */
+"Sensor Age" = "Sensorålder";
+
+/* */
+"Sensor Age Left" = "Sensortid kvar";
+
+/* */
+"Sensor Endtime" = "Sensor slutdatum";
+
+/* */
+"Sensor State" = "Sensorläge";
+
+/* */
+"Sensor Serial" = "Sensorns serienummer";
+
+/* */
+"Transmitter Info" = "Sändarinfo";
+
+/* */
+"Hardware" = "Hårdvara";
+
+/* */
+"Firmware" = "Firmware";
+
+/* */
+"Connection State" = "Anslutningsstatus";
+
+/* */
+"Transmitter Type" = "Sändartyp";
+
+/* */
+"Sensor Type" = "Sensortyp";
+
+/* */
+"Factory Calibration Parameters" = "Parametrar för fabrikskalibrering";
+
+/* */
+"Valid for footer" = "Giltig för sidfot";
+
+/* */
+"Edit calibrations" = "Ändra kalibreringar";
+
+/* */
+"edit calibration clicked" = "ändrad kalibrering vald";
+
+/* */
+"Delete CGM" = "Radera CGM";
+/* */
+"Are you sure you want to remove this cgm from loop?" = "Är du säker på att du vill ta bort denna CGM från FreeAPS X?";
+
+/* */
+"There is no undo" = "Det går inte att ångra!";
+
+/* */
+"Advanced" = "Avancerat";
+
+/* */
+"Alarms" = "Larm";
+
+/* */
+"Glucose Settings" = "Glukosinställningar";
+
+/* */
+"Notifications" = "Notiser";
+
+/* */
+"Export logs" = "Exportera loggar";
+
+/* */
+"Export not available" = "Export inte tillgänglig";
+
+/* */
+"Log export requires ios 15" = "Loggexport kräver ios 15";
+
+/* */
+"Got it!" = "Uppfattat!";
+
+/* */
+"Saved to %@" = "Sparad till %@";
+
+/* */
+"No logs available" = "Inga loggar tillgängliga";
+
+/* */
+"Glucose Notification visibility" = "Blodsockernotiser";
+
+/* */
+"Always Notify Glucose" = "Meddela alltid glukos";
+
+/* */
+"Notify per reading" = "Meddela per avläsning";
+
+/* */
+"Value" = "Värde";
+
+/* */
+"Adds Phone Battery" = "Visa telefonens batterinivå";
+
+/* */
+/* */
+
+"Adds Transmitter Battery
+Also vibrate" = "Vibrera också";
+
+/* */
+"Additional notification types" = "Ytterligare notistyper";
+
+/* */
+"Low battery" = "Low battery";
+
+/* */
+"Misc" = "Övrigt";
+
+/* */
+"Unit override" = "Åsidosätt enhet";
+
+/* */
+"Low" = "Lågt";
+
+/* */
+"glucose" = "glukos";
+
+/* */
+"Schedule %d" = "Schema %d";
+
+/* */
+"tapped save schedules" = "klickat på sparade scheman";
+
+/* */
+"Error" = "Fel";
+
+/* */
+"Some ui element was incorrectly specified" = "Vissa UI-element felaktigt specificerade";
+
+/* */
+"Success" = "Lyckades";
+
+/* */
+"Schedules were saved successfully!" = "Scheman har sparats!";
+
+/* */
+"High Glucose Alarm active" = "Högt blodsockerlarm aktivt";
+
+/* */
+"Low Glucose Alarm active" = "Lågt blodsockerlarm aktivt";
+
+/* */
+"No Glucose Alarm active" = "Inget blodsockerlarm aktivt";
+
+/* */
+"snoozing until %@" = "snoozar till %@";
+
+/* */
+"not snoozing" = "snoozar inte";
+
+/* */
+"nothing to see here" = "inget att se här";
+
+/* */
+"snooze from testview clicked" = "klickat på snooze från testvy";
+
+/* */
+"will snooze for %@ until %@" = "kommer att snooza i %@ tills %@";
+
+/* */
+"Click to Snooze Alerts" = "Klicka för att snooza varningar";
+
+/* */
+"Strength" = "Styrka";
+
+/* */
+"Hold the top of your iPhone near the sensor to pair" = "Håll toppen av din iPhone nära sensorn för att parkoppla";
+
+/* */
+"Sensor not found" = "Sensorn hittades inte";
+
+/* */
+"Also play alert sound" = "Spela också upp varningsljud";
+
+/* */
+"Notification Settings" = "Notisinställningar";
+
+/* */
+"Found devices: %d" = "Hittade enheter: %d";
 
 
 /* Headers for settings ------------------- */
