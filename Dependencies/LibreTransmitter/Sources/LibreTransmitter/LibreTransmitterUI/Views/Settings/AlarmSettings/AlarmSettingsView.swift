@@ -333,7 +333,7 @@ struct AlarmSettingsView: View {
 
         List {
             ForEach(Array(alarmState.schedules.enumerated()), id: \.1) { i, schedule in
-                Section(header: Text(NSLocalizedString("Schedule \(i+1)", comment: "")){
+                Section(header: Text("Schedule \(i+1)")){
                     AlarmDateRow(schedule: schedule, tag: i, subviewSelection: $subviewSelection)
                     AlarmLowRow(schedule: schedule, glucoseUnit: glucoseUnit, glucoseUnitDesc: glucoseUnitDesc, errorReporter: errorReporter)
                     AlarmHighRow(schedule: schedule, glucoseUnit: glucoseUnit, glucoseUnitDesc: glucoseUnitDesc, errorReporter: errorReporter)
