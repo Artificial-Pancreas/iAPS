@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		198AA26227295EDC00FB87CE /* CommandResponseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 198AA26127295EDC00FB87CE /* CommandResponseViewController.swift */; };
 		2B19B9881DF3EF68006AB65F /* NewTimePumpEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B19B9871DF3EF68006AB65F /* NewTimePumpEvent.swift */; };
 		2F962EC11E6872170070EFBD /* TimestampedHistoryEventTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F962EC01E6872170070EFBD /* TimestampedHistoryEventTests.swift */; };
 		2F962EC81E7074E60070EFBD /* BolusNormalPumpEventTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F962EC71E7074E60070EFBD /* BolusNormalPumpEventTests.swift */; };
@@ -1889,7 +1888,6 @@
 				7D23679521252EBC0028B67D /* Localizable.strings */,
 				43709AEB20E0056F00F941B3 /* RileyLinkKitUI.xcassets */,
 				C170C98D1CECD6F300F3D8E5 /* CBPeripheralState.swift */,
-				198AA26127295EDC00FB87CE /* CommandResponseViewController.swift */,
 				439731261CF21C3C00F474E5 /* RileyLinkDeviceTableViewCell.swift */,
 				C170C9981CECD80000F3D8E5 /* RileyLinkDeviceTableViewController.swift */,
 				B62DBD562725B9EB0050C038 /* CommandResponseViewController.swift */,
@@ -3634,7 +3632,6 @@
 				43709AEE20E008F300F941B3 /* SetupImageTableViewCell.swift in Sources */,
 				43709AF120E0127000F941B3 /* NibLoadable.swift in Sources */,
 				43D5E7A31FAF7D05004ACDB7 /* CBPeripheralState.swift in Sources */,
-				198AA26227295EDC00FB87CE /* CommandResponseViewController.swift in Sources */,
 				43D5E7A21FAF7CF2004ACDB7 /* CaseCountable.swift in Sources */,
 				435D26B620DA0BCC00891C17 /* RileyLinkDevicesTableViewDataSource.swift in Sources */,
 				43709AE820DF22E700F941B3 /* UIColor.swift in Sources */,
