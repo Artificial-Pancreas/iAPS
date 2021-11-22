@@ -9,7 +9,7 @@
 	</array>
 	<key>com.apple.security.application-groups</key>
 	<array>
-		<string>$(APP_GROUP_ID)</string>
+		<string>group.com.T7VZ6LU6H3.aps.JBMgroup</string>
 	</array>
 </dict>
 </plist>

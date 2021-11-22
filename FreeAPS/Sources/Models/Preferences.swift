@@ -6,6 +6,11 @@ struct Preferences: JSON {
     var currentBasalSafetyMultiplier: Decimal = 4
     var autosensMax: Decimal = 1.2
     var autosensMin: Decimal = 0.7
+    var autoisf: Bool = true
+    var autoISFhourlyChange: Decimal = 0.25
+    var autoISFmax: Decimal = 1.4
+    var smbDeliveryRatio: Decimal = 0.65
+    var smbMaxRangeExtension: Decimal = 2.0
     var rewindResetsAutosens: Bool = true
     var highTemptargetRaisesSensitivity: Bool = false
     var lowTemptargetLowersSensitivity: Bool = false
@@ -32,7 +37,7 @@ struct Preferences: JSON {
     var allowSMBWithHighTemptarget: Bool = false
     var maxSMBBasalMinutes: Decimal = 30
     var maxUAMSMBBasalMinutes: Decimal = 30
-    var smbInterval: Decimal = 3
+    var smbInterval: Decimal = 2
     var bolusIncrement: Decimal = 0.1
     var curve: InsulinCurve = .rapidActing
     var useCustomPeakTime: Bool = false
@@ -50,6 +55,11 @@ extension Preferences {
         case currentBasalSafetyMultiplier = "current_basal_safety_multiplier"
         case autosensMax = "autosens_max"
         case autosensMin = "autosens_min"
+        case autoisf = "auto_isf"
+        case autoISFhourlyChange = "autoisf_hourlychange"
+        case autoISFmax = "autoisf_max"
+        case smbDeliveryRatio = "smb_delivery_ratio"
+        case smbMaxRangeExtension = "smb_max_range_extension"
         case rewindResetsAutosens = "rewind_resets_autosens"
         case highTemptargetRaisesSensitivity = "high_temptarget_raises_sensitivity"
         case lowTemptargetLowersSensitivity = "low_temptarget_lowers_sensitivity"
