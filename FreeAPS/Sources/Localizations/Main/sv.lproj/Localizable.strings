@@ -594,7 +594,7 @@ Enact a temp Basal or a temp target */
 "Last measurement" = "Senaste mätning";
 
 /* */
-"Sensor Footer checksum" = "Sensor Footer checksum";
+"Sensor Footer checksum" = "Kontrollsumma för sensor";
 
 /* */
 "Last Blood Sugar prediction" = "Senaste blodsockerförutsägelse";
@@ -642,7 +642,7 @@ Enact a temp Basal or a temp target */
 "Factory Calibration Parameters" = "Parametrar för fabrikskalibrering";
 
 /* */
-"Valid for footer" = "Valid for footer";
+"Valid for footer" = "Giltig för sidfot";
 
 /* */
 "Edit calibrations" = "Ändra kalibreringar";
@@ -689,7 +689,7 @@ Enact a temp Basal or a temp target */
 "No logs available" = "Inga loggar tillgängliga";
 
 /* */
-"Glucose Notification visibility" = "Glucose Notification visibility";
+"Glucose Notification visibility" = "Blodsockernotiser";
 
 /* */
 "Always Notify Glucose" = "Meddela alltid glukos";
@@ -713,10 +713,10 @@ Also vibrate" = "Vibrera också";
 "Additional notification types" = "Ytterligare notistyper";
 
 /* */
-/* */
+"Low battery" = "Low battery";
 
-"Low battery
-Misc" = "Övrigt";
+/* */
+"Misc" = "Övrigt";
 
 /* */
 "Unit override" = "Åsidosätt enhet";
@@ -731,13 +731,13 @@ Misc" = "Övrigt";
 "Schedule %d" = "Schema %d";
 
 /* */
-"tapped save schedules" = "tapped save schedules";
+"tapped save schedules" = "klickat på sparade scheman";
 
 /* */
 "Error" = "Fel";
 
 /* */
-"Some ui element was incorrectly specified" = "Some ui element was incorrectly specified";
+"Some ui element was incorrectly specified" = "Vissa UI-element felaktigt specificerade";
 
 /* */
 "Success" = "Lyckades";
@@ -746,13 +746,13 @@ Misc" = "Övrigt";
 "Schedules were saved successfully!" = "Scheman har sparats!";
 
 /* */
-"High Glucose Alarm active" = "High Glucose Alarm active";
+"High Glucose Alarm active" = "Högt blodsockerlarm aktivt";
 
 /* */
-"Low Glucose Alarm active" = "Low Glucose Alarm active";
+"Low Glucose Alarm active" = "Lågt blodsockerlarm aktivt";
 
 /* */
-"No Glucose Alarm active" = "No Glucose Alarm active";
+"No Glucose Alarm active" = "Inget blodsockerlarm aktivt";
 
 /* */
 "snoozing until %@" = "snoozar till %@";
@@ -764,7 +764,7 @@ Misc" = "Övrigt";
 "nothing to see here" = "inget att se här";
 
 /* */
-"snooze from testview clicked" = "snooze from testview clicked";
+"snooze from testview clicked" = "klickat på snooze från testvy";
 
 /* */
 "will snooze for %@ until %@" = "kommer att snooza i %@ tills %@";
@@ -801,6 +801,11 @@ Misc" = "Övrigt";
 "OpenAPS targets settings" = "OpenAPS målvärdesinställningar";
 
 "OpenAPS other settings" = "OpenAPS andra inställningar";
+
+
+/* Glucose Simulator CGM */
+"Glucose Simulator" = "Glukossimulator";
+
 
 /*
   Infotexts from openaps.docs and androidaps.docs

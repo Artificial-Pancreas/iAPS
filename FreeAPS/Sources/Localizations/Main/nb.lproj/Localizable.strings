@@ -713,10 +713,10 @@ Also vibrate" = "Also vibrate";
 "Additional notification types" = "Additional notification types";
 
 /* */
-/* */
+"Low battery" = "Low battery";
 
-"Low battery
-Misc" = "Misc";
+/* */
+"Misc" = "Misc";
 
 /* */
 "Unit override" = "Unit override";
@@ -801,6 +801,11 @@ Misc" = "Misc";
 "OpenAPS targets settings" = "OpenAPS mål-innstillinger";
 
 "OpenAPS other settings" = "OpenAPS andre innstillinger";
+
+
+/* Glucose Simulator CGM */
+"Glucose Simulator" = "Glucose Simulator";
+
 
 /*
   Infotexts from openaps.docs and androidaps.docs

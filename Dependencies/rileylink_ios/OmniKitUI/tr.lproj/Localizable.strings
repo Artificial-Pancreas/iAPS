@@ -1,11 +1,11 @@
 /* Accessibility format string for (1: localized volume)(2: time) */
-"%1$@ units remaining at %2$@" = "%1$@ units remaining at %2$@";
+"%1$@ units remaining at %2$@" = "%1$@ ünite %2$@'de kaldı";
 
 /* The format string for displaying an offset from a time zone: (1: GMT)(2: -)(3: 4:00) */
 "%1$@%2$@%3$@" = "%1$@%2$@%3$@";
 
 /* Format string providing instructions for replacing pod due to a fault. (1: The fault description) */
-"%1$@. Insulin delivery has stopped. Please deactivate and remove pod." = "%1$@. Insulin delivery has stopped. Please deactivate and remove pod.";
+"%1$@. Insulin delivery has stopped. Please deactivate and remove pod." = "%1$@. İnsülin iletimi durduruldu. Lütfen pod'u devre dışı bırakın ve çıkartın.";
 
 /* Format string for delivered insulin. (1: The localized amount)
    Format string for insulin remaining in reservoir. (1: The localized amount) */
@@ -15,7 +15,7 @@
 "%@ U (Finished)" = "%@ Ü (Tamamlandı)";
 
 /* Format string for bolus progress. (1: The delivered amount) (2: The programmed amount) (3: the percent progress) */
-"%@ U of %@ U (%@)" = "%1$@ U of %2$@ U (%3$@)";
+"%@ U of %@ U (%@)" = "%2$@ Ü den %1$@ Ü (%3$@)";
 
 /* Format string for temp basal rate. (1: The localized amount) */
 "%@ U/hour" = "%@ Ü/Sa";
@@ -33,10 +33,10 @@
 "%@U" = "%@Ü";
 
 /* The title of the cell showing the pod activated at time */
-"Active Time" = "Active Time";
+"Active Time" = "Aktif Süre";
 
 /* The title of the cell showing the Pod Active Clock */
-"Pod Active Clock" = "Pod Active Clock";
+"Pod Active Clock" = "Pod Aktif Saati";
 
 /* The title of the cell showing alarm status */
 "Alarms" = "Alarmlar";
@@ -45,7 +45,7 @@
 "Are you sure you want to shutdown this pod?" = "Bu pod'u iptal etmek istediğinizden emin misiniz?";
 
 /* Confirmation message for removing Omnipod PumpManager */
-"Are you sure you want to stop using Omnipod?" = "Are you sure you want to stop using Omnipod?";
+"Are you sure you want to stop using Omnipod?" = "Omnipod'u kullanmayı bırakmak istediğinizden emin misiniz?";
 
 /* The title text for the address assigned to the pod */
 "Assigned Address" = "Adress Atandı";
@@ -94,28 +94,28 @@
 "Device Information" = "Cihaz Bilgileri";
 
 /* Title text for button to disable bolus beeps */
-"Disable Bolus Beeps" = "Disable Bolus Beeps";
+"Disable Bolus Beeps" = "Bolus Uyarılarını Devre Dışı Bırak";
 
 /* Title text for button to enable bolus beeps */
-"Enable Bolus Beeps" = "Enable Bolus Beeps";
+"Enable Bolus Beeps" = "Bolus Uyarılarını Etkinleştir";
 
 /* The alert title for disable bolus beeps error */
-"Error disabling bolus beeps" = "Error disabling bolus beeps";
+"Error disabling bolus beeps" = "Bolus uyarılarını devre dışı bırakılırken hata oluştu";
 
 /* The alert title for enable bolus beeps error */
-"Error enabling bolus beeps" = "Error enabling bolus beeps";
+"Error enabling bolus beeps" = "Bolus uyarılarını etkinleştirirken hata oluştu";
 
 /* The alert title for enable Confirmation Beeps */
-"Enable Confirmation Beeps" = "Enable Confirmation Beeps";
+"Enable Confirmation Beeps" = "Onay Uyarılarını Etkinleştir";
 
 /* The alert title for Disable Confirmation Beep */
-"Disable Confirmation Beeps" = "Disable Confirmation Beeps";
+"Disable Confirmation Beeps" = "Onay Uyarılarını Devre Dışı Bırak";
 
 /* The alert title for enable Automatic Bolus Beeps */
-"Enable Automatic Bolus Beeps" = "Enable Automatic Bolus Beeps";
+"Enable Automatic Bolus Beeps" = "Otomatik Bolus Uyarılarını Etkinleştir";
 
 /* The alert title for Disable Automatic Bolus Beeps */
-"Disable Automatic Bolus Beeps" = "Disable Automatic Bolus Beeps";
+"Disable Automatic Bolus Beeps" = "Otomatik Bolus Uyarılarını Devre Dışı Bırak";
 
 /* The alert title for a resume error */
 "Error Resuming" = "Devam ederken hata oluştu";
@@ -139,13 +139,13 @@
 "Finish pod setup" = "Pod kurulumu bitir";
 
 /* Accessibility format string for (1: localized volume)(2: time) */
-"Greater than %1$@ units remaining at %2$@" = "Greater than %1$@ units remaining at %2$@";
+"Greater than %1$@ units remaining at %2$@" = "%2$@ 'te %1$@ üniteden fazla kaldı";
 
 /* Instructions when deactivating pod that has been paired, but not attached. */
-"Incompletely set up pod must be deactivated before pairing with a new one. Please deactivate and discard pod." = "Incompletely set up pod must be deactivated before pairing with a new one. Please deactivate and discard pod.";
+"Incompletely set up pod must be deactivated before pairing with a new one. Please deactivate and discard pod." = "Eksik ayarlanmış pod, yenisiyle eşleştirmeden önce devre dışı bırakılmalıdır. Lütfen pod'u devre dışı bırakın ve atın.";
 
 /* Instructions when deactivating pod that has been paired and possibly attached. */
-"Incompletely set up pod must be deactivated before pairing with a new one. Please deactivate and remove pod." = "Incompletely set up pod must be deactivated before pairing with a new one. Please deactivate and remove pod.";
+"Incompletely set up pod must be deactivated before pairing with a new one. Please deactivate and remove pod." = "Eksik ayarlanmış pod, yenisiyle eşleştirmeden önce devre dışı bırakılmalıdır. Lütfen pod'u devre dışı bırakın ve çıkartın.";
 
 /* Button title to insert cannula during setup */
 "Insert Cannula" = "Kanül Yerleştir";
