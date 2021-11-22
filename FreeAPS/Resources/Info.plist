@@ -13,7 +13,7 @@
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
-	<string>FreeAPS X</string>
+	<string>$(APP_DISPLAY_NAME)</string>
 	<key>CFBundlePackageType</key>
 	<string>$(PRODUCT_BUNDLE_PACKAGE_TYPE)</string>
 	<key>CFBundleShortVersionString</key>
@@ -56,6 +56,8 @@
 	<string>Bluetooth is used to communicate with insulin pump and continuous glucose monitor devices</string>
 	<key>NSBluetoothPeripheralUsageDescription</key>
 	<string>Bluetooth is used to communicate with insulin pump and continuous glucose monitor devices</string>
+	<key>NSCalendarsUsageDescription</key>
+	<string>Calendar is used to create a new glucose events.</string>
 	<key>NSFaceIDUsageDescription</key>
 	<string>For authorized acces to bolus</string>
 	<key>UIApplicationSceneManifest</key>
@@ -65,8 +67,6 @@
 	</dict>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
-	<key>NSCalendarsUsageDescription</key>
-	<string>Calendar is used to create a new glucose events.</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>bluetooth-central</string>

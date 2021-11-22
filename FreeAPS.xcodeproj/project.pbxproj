@@ -871,7 +871,6 @@
 				388E596425AD948E0019842D /* Info.plist */,
 				1927C8E82744606D00347C69 /* InfoPlist.strings */,
 				388E595F25AD948E0019842D /* Assets.xcassets */,
-				38F3783A2613555C009DB701 /* Config.xcconfig */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -972,6 +971,7 @@
 		388E594F25AD948C0019842D = {
 			isa = PBXGroup;
 			children = (
+				38F3783A2613555C009DB701 /* Config.xcconfig */,
 				388E595A25AD948C0019842D /* FreeAPS */,
 				38FCF3EE25E9028E0078B0D1 /* FreeAPSTests */,
 				388E595925AD948C0019842D /* Products */,
@@ -2059,14 +2059,14 @@
 		388E596825AD948E0019842D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				APP_GROUP_ID = "group.com.${DEVELOPMENT_TEAM}.loopkit.LoopGroup";
+				APP_GROUP_ID = "$(APP_GROUP_ID)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = FreeAPS/Resources/FreeAPS.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "";
-				DEVELOPMENT_TEAM = BA7ZHP4963;
+				DEVELOPMENT_TEAM = "${DEVELOPER_TEAM}";
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = FreeAPS/Resources/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
@@ -2075,7 +2075,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = "$(CURRENT_PROJECT_VERSION)";
-				PRODUCT_BUNDLE_IDENTIFIER = ru.artpancreas.FreeAPS;
+				PRODUCT_BUNDLE_IDENTIFIER = "$(BUNDLE_IDENTIFIER)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -2085,14 +2085,14 @@
 		388E596925AD948E0019842D /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				APP_GROUP_ID = "group.com.${DEVELOPMENT_TEAM}.loopkit.LoopGroup";
+				APP_GROUP_ID = "$(APP_GROUP_ID)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = FreeAPS/Resources/FreeAPS.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "";
-				DEVELOPMENT_TEAM = BA7ZHP4963;
+				DEVELOPMENT_TEAM = "${DEVELOPER_TEAM}";
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = FreeAPS/Resources/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
@@ -2101,7 +2101,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = "$(CURRENT_PROJECT_VERSION)";
-				PRODUCT_BUNDLE_IDENTIFIER = ru.artpancreas.FreeAPS;
+				PRODUCT_BUNDLE_IDENTIFIER = "$(BUNDLE_IDENTIFIER)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -2113,7 +2113,7 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 777258T3K8;
+				DEVELOPMENT_TEAM = "$(DEVELOPER_TEAM)";
 				INFOPLIST_FILE = FreeAPSTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -2134,7 +2134,7 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 777258T3K8;
+				DEVELOPMENT_TEAM = "$(DEVELOPER_TEAM)";
 				INFOPLIST_FILE = FreeAPSTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
 				LD_RUNPATH_SEARCH_PATHS = (
