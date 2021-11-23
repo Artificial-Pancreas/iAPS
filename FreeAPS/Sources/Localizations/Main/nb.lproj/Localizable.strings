@@ -43,12 +43,6 @@
 /*  */
 "Agree and continue" = "Godta og fortsett";
 
-/* Disclaimer when opening app for first time*/
-"Disclaimer" = "Ansvarsfraskrivelse";
-
-/* Disclaimer Description */
-"FreeAPS X is in an active development state. We do not recommend to use the system for everyday control of blood glucose! Use it for testing purposes only at your own risk. We are not responsible for your decisions and actions." = "FreeAPS X er under utvikling. Vi anbefaler ikke å bruke systemet for daglig blodsukkerregulering! Bruk det for testformål og på egen risiko. Vi er ikke ansvarlige for dine beslutninger og handlinger.";
-
 /* Enacted at a date */
 "Enacted at %@" = "Utført kl. %@";
 

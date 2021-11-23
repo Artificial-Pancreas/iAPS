@@ -43,12 +43,6 @@
 /*  */
 "Agree and continue" = "Kabul et ve Devam et";
 
-/* Disclaimer when opening app for first time*/
-"Disclaimer" = "Sorumluluk Reddi";
-
-/* Disclaimer Description */
-"FreeAPS X is in an active development state. We do not recommend to use the system for everyday control of blood glucose! Use it for testing purposes only at your own risk. We are not responsible for your decisions and actions." = "FreeAPS X aktif bir geliştirme durumunda. Sistemin günlük kan şekeri kontrolü için kullanılmasını önermiyoruz! Yalnızca kendi sorumluluğunuzda olmak üzere test amaçlı kullanın. Kararlarınızdan ve eylemlerinizden biz sorumluk kabul etmiyoruz.";
-
 /* Enacted at a date */
 "Enacted at %@" = "%@'ta başlatıldı";
 
