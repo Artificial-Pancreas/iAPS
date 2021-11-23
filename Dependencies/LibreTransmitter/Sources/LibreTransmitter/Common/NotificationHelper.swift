@@ -434,7 +434,7 @@ public enum NotificationHelper {
 
             let hours = minutesLeft == 0 ? 0 : round(minutesLeft/60)
 
-            let dynamicText =  hours <= 1 ?  "minutes: \(minutesLeft.twoDecimals)" : "hours: \(hours.twoDecimals)"
+            let dynamicText =  hours <= 1 ?  NSLocalizedString("minutes", comment: "minutes") + ": \(minutesLeft.twoDecimals)" : NSLocalizedString("hours", comment: "hours") + ": \(hours.twoDecimals)"
 
             let content = UNMutableNotificationContent()
             content.title = NSLocalizedString("Sensor Ending Soon", comment: "Sensor Ending Soon")
