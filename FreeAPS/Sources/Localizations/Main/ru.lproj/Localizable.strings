@@ -573,13 +573,13 @@ Enact a temp Basal or a temp target */
 "Low battery" = "Low battery";
 
 /* */
-"Invalid sensor" = "Invalid sensor";
+"Invalid sensor" = "Сенсор неисправен";
 
 /* */
-"Sensor change" = "Sensor change";
+"Sensor change" = "Смена сенсора";
 
 /* */
-"Sensor expires soon" = "Sensor expires soon";
+"Sensor expires soon" = "Сенсор скоро закончится";
 
 /* Battery is running low %@, consider charging your %@ device as soon as possible */
 "Battery is running low %@, consider charging your %@ device as soon as possible" = "Батарея работает на низком уровне %@, попробуйте зарядить устройство %@ как можно скорее";
@@ -713,7 +713,7 @@ Enact a temp Basal or a temp target */
 "Adds Phone Battery" = "Показывать заряд батареи телефона";
 
 /* */
-"Adds Transmitter Battery" = "Adds Transmitter Battery";
+"Adds Transmitter Battery" = "Добавить батарею передатчика";
 
 /* */
 "Also vibrate" = "Вибрировать";
@@ -722,7 +722,7 @@ Enact a temp Basal or a temp target */
 "Additional notification types" = "Дополнительные уведомления";
 
 /* */
-"Low battery" = "Low battery";
+"Low battery" = "Низкий заряд батареи";
 
 /* */
 "Misc" = "Разное";
@@ -732,6 +732,9 @@ Enact a temp Basal or a temp target */
 
 /* */
 "Low" = "Низкий";
+
+/* */
+"High" = "Высокий";
 
 /* */
 "glucose" = "глюкоза";
