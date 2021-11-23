@@ -12,7 +12,6 @@ import HealthKit
 import UserNotifications
 import os.log
 import UIKit
-import AudioToolbox
 
 fileprivate var logger = Logger(forType: "NotificationHelper")
 
@@ -44,7 +43,7 @@ public enum NotificationHelper {
             return
         }
 
-        AudioServicesPlaySystemSoundWithCompletion(SystemSoundID(1336)) {
+        AudioServicesPlaySystemSoundWithCompletion(1336) {
             playSound(times: times - 1)
         }
     }

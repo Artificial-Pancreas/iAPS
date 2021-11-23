@@ -63,6 +63,7 @@ open class QuantityFormatter {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
         formatter.locale = self.locale
+        formatter.roundingMode = .halfUp
         return formatter
     }()
 

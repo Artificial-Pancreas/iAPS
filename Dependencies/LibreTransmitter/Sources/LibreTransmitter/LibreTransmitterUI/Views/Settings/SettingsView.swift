@@ -353,9 +353,9 @@ struct SettingsView: View {
         List {
             snoozeSection
             measurementSection
-            if !glucoseMeasurement.predictionDate.isEmpty{
-                predictionSection
-            }
+//            if !glucoseMeasurement.predictionDate.isEmpty{
+//                predictionSection
+//            }
             advancedSection
             sensorInfoSection
             transmitterInfoSection

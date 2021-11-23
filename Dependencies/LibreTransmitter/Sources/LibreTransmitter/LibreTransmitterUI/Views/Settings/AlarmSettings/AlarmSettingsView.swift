@@ -29,8 +29,8 @@ private class AlarmSettingsIcons {
 class AlarmScheduleState : ObservableObject, Identifiable, Hashable{
 
     var id = UUID()
-    
 
+    private let glucoseRate = 18.018
 
     @Published var lowmgdl : Double = 72
     @Published var highmgdl : Double = 180  
@@ -42,7 +42,7 @@ class AlarmScheduleState : ObservableObject, Identifiable, Hashable{
     public func setLowAlarm(forUnit unit: HKUnit, lowAlarm: Double) {
 
         if unit == HKUnit.millimolesPerLiter {
-            self.lowmgdl = lowAlarm * 18
+            self.lowmgdl = lowAlarm * glucoseRate
             return
         }
 
@@ -52,7 +52,7 @@ class AlarmScheduleState : ObservableObject, Identifiable, Hashable{
     public func getLowAlarm(forUnit unit: HKUnit) -> Double {
 
         if unit == HKUnit.millimolesPerLiter {
-            return (lowmgdl / 18).roundTo(places: 1)
+            return (lowmgdl / glucoseRate).roundTo(places: 1)
         }
 
         return lowmgdl
@@ -65,7 +65,7 @@ class AlarmScheduleState : ObservableObject, Identifiable, Hashable{
     public func setHighAlarm(forUnit unit: HKUnit, highAlarm: Double) {
 
         if unit == HKUnit.millimolesPerLiter {
-            self.highmgdl = highAlarm * 18
+            self.highmgdl = highAlarm * glucoseRate
             return
         }
 
@@ -75,7 +75,7 @@ class AlarmScheduleState : ObservableObject, Identifiable, Hashable{
     public func getHighAlarm(forUnit unit: HKUnit) -> Double {
 
         if unit == HKUnit.millimolesPerLiter {
-            return (highmgdl / 18).roundTo(places: 1)
+            return (highmgdl / glucoseRate).roundTo(places: 1)
         }
         return highmgdl
 
