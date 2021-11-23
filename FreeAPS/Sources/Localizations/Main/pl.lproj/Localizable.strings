@@ -736,6 +736,9 @@ Połączono z Nightscout!";
 "Low" = "Low";
 
 /* */
+"High" = "High";
+
+/* */
 "glucose" = "glucose";
 
 /* */

@@ -734,6 +734,9 @@ Enact a temp Basal or a temp target */
 "Low" = "Low";
 
 /* */
+"High" = "High";
+
+/* */
 "glucose" = "glucose";
 
 /* */
