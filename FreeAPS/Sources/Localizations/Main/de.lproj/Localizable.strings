@@ -438,7 +438,7 @@ Enact a temp Basal or a temp target */
 "Select the third party transmitter you want to connect to" = "Wählen Sie den externen Sender, den Sie verbinden möchten";
 
 /* State was restored */
-"State was restored" = "State was restored";
+"State was restored" = "Status wurde wieder hergestellt";
 
 /* The short unit display string for millimoles of glucose per liter */
 "mmol/L" = "mmol/L";
@@ -501,10 +501,10 @@ Enact a temp Basal or a temp target */
 "Pair Sensor & connect" = "Sensor koppeln & verbinden";
 
 /* */
-"Phone NFC required!" = "Phone NFC required!";
+"Phone NFC required!" = "NFC ist erforderlich!";
 
 /* */
-"Your phone or app is not enabled for NFC communications, which is needed to pair to libre2 sensors" = "Your phone or app is not enabled for NFC communications, which is needed to pair to libre2 sensors";
+"Your phone or app is not enabled for NFC communications, which is needed to pair to libre2 sensors" = "Ihr Telefon oder Ihre App ist für NFC-Kommunikation nicht aktiviert, was benötigt wird, um eine Verbindung mit Libre2-Sensoren herzustellen";
 
 /* Bluetooth Power Off */
 "Bluetooth Power Off" = "Bluetooth ausschalten";
@@ -519,22 +519,22 @@ Enact a temp Basal or a temp target */
 "Delete CGMManager and start anew. Your libreoopweb credentials will be preserved" = "CGMManager löschen und neu starten. Ihre libreoopweb Zugangsdaten bleiben erhalten";
 
 /* Invalid libre checksum */
-"Invalid libre checksum" = "Invalid libre checksum";
+"Invalid libre checksum" = "Ungültige Libre Datei-Prüfsumme";
 
 /* Libre sensor was incorrectly read, CRCs were not valid */
-"Libre sensor was incorrectly read, CRCs were not valid" = "Libre sensor was incorrectly read, CRCs were not valid";
+"Libre sensor was incorrectly read, CRCs were not valid" = "Libre Sensor wurde unkorrekt ausgelesen, CRCs waren nicht gültig";
 
 /* Glucose */
-"Glucose" = "Glucose";
+"Glucose" = "Blutzucker";
 
 /* LOWALERT! */
-"LOWALERT!" = "LOWALERT!";
+"LOWALERT!" = "Unterzuckerungs Alarm!";
 
 /* HIGHALERT! */
-"HIGHALERT!" = "HIGHALERT!";
+"HIGHALERT!" = "Überzuckerungs Alarm!";
 
 /* (Snoozed)*/
-"(Snoozed)" = "(Snoozed)";
+"(Snoozed)" = "(Schlummern)";
 
 /* Glucose: %@ */
 "Glucose: %@" = "Glucose: %@";
@@ -543,82 +543,91 @@ Enact a temp Basal or a temp target */
 "Transmitter: %@%%" = "Transmitter: %@%%";
 
 /* No Sensor Detected */
-"No Sensor Detected" = "No Sensor Detected";
+"No Sensor Detected" = "Kein Sensor entdeckt";
 
 /* This might be an intermittent problem, but please check that your transmitter is tightly secured over your sensor */
-"This might be an intermittent problem, but please check that your transmitter is tightly secured over your sensor" = "This might be an intermittent problem, but please check that your transmitter is tightly secured over your sensor";
+"This might be an intermittent problem, but please check that your transmitter is tightly secured over your sensor" = "Dies könnte ein vorübergehendes Problem sein, aber bitte überprüfen Sie, ob Ihr Sender fest über Ihren Sensor gesichert ist";
 
 /* New Sensor Detected */
-"New Sensor Detected" = "New Sensor Detected";
+"New Sensor Detected" = "Neuer Sensor wurde erkannt";
 
 /* Please wait up to 30 minutes before glucose readings are available! */
-"Please wait up to 30 minutes before glucose readings are available!" = "Please wait up to 30 minutes before glucose readings are available!";
+"Please wait up to 30 minutes before glucose readings are available!" = "Bitte warte bis zu 30 Minuten, bevor Glukosemessungen verfügbar sind!";
 
 /* Invalid Glucose sample detected, try again later */
-"Invalid Glucose sample detected, try again later" = "Invalid Glucose sample detected, try again later";
+"Invalid Glucose sample detected, try again later" = "Ungültiger Glucose-Wert erkannt, versuchen Sie es später erneut";
 
 /* ensor might have temporarily stopped, fallen off or is too cold or too warm */
-"Sensor might have temporarily stopped, fallen off or is too cold or too warm" = "Sensor might have temporarily stopped, fallen off or is too cold or too warm";
+"Sensor might have temporarily stopped, fallen off or is too cold or too warm" = "Möglicherweise ist der Sensor vorübergehend gestoppt, hat sich gelöst, ist zu kalt oder zu warm";
 
 /* Invalid Sensor Detected */
-"Invalid Sensor Detected" = "Invalid Sensor Detected";
+"Invalid Sensor Detected" = "Fehlerhafter Sensor erkannt";
 
 /* Detected sensor seems not to be a libre 1 sensor! */
-"Detected sensor seems not to be a libre 1 sensor!" = "Detected sensor seems not to be a libre 1 sensor!";
+"Detected sensor seems not to be a libre 1 sensor!" = "Der erkannte Sensor scheint kein Libre 1 Sensor zu sein!";
 
 /* Detected sensor is invalid: %@ */
-"Detected sensor is invalid: %@" = "Detected sensor is invalid: %@";
+"Detected sensor is invalid: %@" = "Erkannter Sensor ist ungültig: %@";
 
 /* Low Battery */
-"Low Battery" = "Low Battery";
+"Low battery" = "Low battery";
+
+/* */
+"Invalid sensor" = "Invalid sensor";
+
+/* */
+"Sensor change" = "Sensor change";
+
+/* */
+"Sensor expires soon" = "Sensor expires soon";
 
 /* Battery is running low %@, consider charging your %@ device as soon as possible */
-"Battery is running low %@, consider charging your %@ device as soon as possible" = "Battery is running low %@, consider charging your %@ device as soon as possible";
+"Battery is running low %@, consider charging your %@ device as soon as possible" = "Batteriestand ist niedrig %@, lade dein %@ Gerät so schnell wie möglich auf";
 
 /* Extracting calibrationdata from sensor */
-"Extracting calibrationdata from sensor" = "Extracting calibrationdata from sensor";
+"Extracting calibrationdata from sensor" = "Kalibrationsdaten aus Sensor extrahieren";
 
 /* Sensor Ending Soon */
-"Sensor Ending Soon" = "Sensor Ending Soon";
+"Sensor Ending Soon" = "Sensorlaufzeit endet bald";
 
 /* Current Sensor is Ending soon! Sensor Life left in %@ */
-"Current Sensor is Ending soon! Sensor Life left in %@" = "Current Sensor is Ending soon! Sensor Life left in %@";
+"Current Sensor is Ending soon! Sensor Life left in %@" = "Der Sensorlaufzeit endet bald! Sensorlaufzeit übrig in %@";
 
 /* */
 "Libre Bluetooth" = "Libre Bluetooth";
 
 /* */
-"Snooze Alerts" = "Snooze Alerts";
+"Snooze Alerts" = "Alarme vorübergehend ausschalten";
 
 /* */
-"Last measurement" = "Last measurement";
+"Last measurement" = "Letzte Messung";
 
 /* */
 "Sensor Footer checksum" = "Sensor Footer checksum";
 
 /* */
-"Last Blood Sugar prediction" = "Last Blood Sugar prediction";
+"Last Blood Sugar prediction" = "Letzte Blutzuckervorhersage";
 
 /* */
-"CurrentBG" = "CurrentBG";
+"CurrentBG" = "AktuellerBG";
 
 /* */
 "Sensor Info" = "Sensor Info";
 
 /* */
-"Sensor Age" = "Sensor Age";
+"Sensor Age" = "Sensoralter";
 
 /* */
-"Sensor Age Left" = "Sensor Age Left";
+"Sensor Age Left" = "Sensorlaufzeit übrig";
 
 /* */
-"Sensor Endtime" = "Sensor Endtime";
+"Sensor Endtime" = "Sensorlaufzeit Ende";
 
 /* */
-"Sensor State" = "Sensor State";
+"Sensor State" = "Sensor Status";
 
 /* */
-"Sensor Serial" = "Sensor Serial";
+"Sensor Serial" = "Sensor Serien Nummer";
 
 /* */
 "Transmitter Info" = "Transmitter Info";
@@ -630,33 +639,33 @@ Enact a temp Basal or a temp target */
 "Firmware" = "Firmware";
 
 /* */
-"Connection State" = "Connection State";
+"Connection State" = "Verbindungsstatus";
 
 /* */
-"Transmitter Type" = "Transmitter Type";
+"Transmitter Type" = "Transmitter-Typ";
 
 /* */
-"Sensor Type" = "Sensor Type";
+"Sensor Type" = "Sensor-Typ";
 
 /* */
-"Factory Calibration Parameters" = "Factory Calibration Parameters";
+"Factory Calibration Parameters" = "Werkskalibrierungsparameter";
 
 /* */
 "Valid for footer" = "Valid for footer";
 
 /* */
-"Edit calibrations" = "Edit calibrations";
+"Edit calibrations" = "Kalibrierung bearbeiten";
 
 /* */
-"edit calibration clicked" = "edit calibration clicked";
+"edit calibration clicked" = "kalibration bearbeiten angeklickt";
 
 /* */
-"Delete CGM" = "Delete CGM";
+"Delete CGM" = "CGM löschen";
 /* */
-"Are you sure you want to remove this cgm from loop?" = "Are you sure you want to remove this cgm from loop?";
+"Are you sure you want to remove this cgm from loop?" = "Sind Sie sicher, dass Sie dieses Cgm aus der Liste löschen wollen?";
 
 /* */
-"There is no undo" = "There is no undo";
+"There is no undo" = "Rücknahme nicht möglich";
 
 /* */
 "Advanced" = "Advanced";
@@ -704,16 +713,13 @@ Enact a temp Basal or a temp target */
 "Adds Phone Battery" = "Adds Phone Battery";
 
 /* */
-/* */
+"Adds Transmitter Battery" = "Adds Transmitter Battery";
 
-"Adds Transmitter Battery
-Also vibrate" = "Also vibrate";
+/* */
+"Also vibrate" = "Also vibrate";
 
 /* */
 "Additional notification types" = "Additional notification types";
-
-/* */
-"Low battery" = "Low battery";
 
 /* */
 "Misc" = "Misc";
@@ -725,10 +731,13 @@ Also vibrate" = "Also vibrate";
 "Low" = "Low";
 
 /* */
+"High" = "High";
+
+/* */
 "glucose" = "glucose";
 
 /* */
-"Schedule %d" = "Schedule %d";
+"Schedule " = "Schedule ";
 
 /* */
 "tapped save schedules" = "tapped save schedules";
@@ -790,6 +799,31 @@ Also vibrate" = "Also vibrate";
 /* */
 "Found devices: %d" = "Found devices: %d";
 
+/* */
+"Backfill options" = "Backfill options";
+
+/* */
+"Backfilling from trend is currently not well supported by Loop" = "Backfilling from trend is currently not well supported by Loop";
+
+/* */
+"Backfill from history" = "Backfill from history";
+
+/* */
+"Backfill from trend" = "Backfill from trend";
+
+/* */
+"Debug options" = "Debug options";
+
+/* */
+"Adds a lot of data to the Issue Report " = "Adds a lot of data to the Issue Report ";
+
+/* */
+"Persist sensordata" = "Persist sensordata";
+
+/* */
+"Battery" = "Battery";
+
+
 
 /* Headers for settings ------------------- */
 
@@ -801,6 +835,14 @@ Also vibrate" = "Also vibrate";
 "OpenAPS targets settings" = "OpenAPS Zieleinstellungen";
 
 "OpenAPS other settings" = "OpenAPS weitere Einstellungen";
+
+
+/* Glucose Simulator CGM */
+"Glucose Simulator" = "Glucose Simulator";
+
+/* Restored state message */
+"Bluetooth State restored (APS restarted?). Found %d peripherals, and connected to %@ with identifier %@" = "Bluetooth State restored (APS restarted?). Found %d peripherals, and connected to %@ with identifier %@";
+
 
 /*
   Infotexts from openaps.docs and androidaps.docs

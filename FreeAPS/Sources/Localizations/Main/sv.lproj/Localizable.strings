@@ -570,7 +570,16 @@ Enact a temp Basal or a temp target */
 "Detected sensor is invalid: %@" = "Upptäckt sensor är ogiltig: %@";
 
 /* Low Battery */
-"Low Battery" = "Låg batterinivå";
+"Low battery" = "Låg batterinivå";
+
+/* */
+"Invalid sensor" = "Ogiltig sensor";
+
+/* */
+"Sensor change" = "Sensorbyte";
+
+/* */
+"Sensor expires soon" = "Sensor går ut snart";
 
 /* Battery is running low %@, consider charging your %@ device as soon as possible */
 "Battery is running low %@, consider charging your %@ device as soon as possible" = "Batterinivå är låg %@, överväg att ladda din %@ enhet så snart som möjligt";
@@ -704,16 +713,13 @@ Enact a temp Basal or a temp target */
 "Adds Phone Battery" = "Visa telefonens batterinivå";
 
 /* */
-/* */
+"Adds Transmitter Battery" = "Lägger till sändarbatteri";
 
-"Adds Transmitter Battery
-Also vibrate" = "Vibrera också";
+/* */
+"Also vibrate" = "Vibrera också";
 
 /* */
 "Additional notification types" = "Ytterligare notistyper";
-
-/* */
-"Low battery" = "Low battery";
 
 /* */
 "Misc" = "Övrigt";
@@ -725,10 +731,13 @@ Also vibrate" = "Vibrera också";
 "Low" = "Lågt";
 
 /* */
+"High" = "Högt";
+
+/* */
 "glucose" = "glukos";
 
 /* */
-"Schedule %d" = "Schema %d";
+"Schedule " = "Schema ";
 
 /* */
 "tapped save schedules" = "klickat på sparade scheman";
@@ -790,6 +799,31 @@ Also vibrate" = "Vibrera också";
 /* */
 "Found devices: %d" = "Hittade enheter: %d";
 
+/* */
+"Backfill options" = "Alternativ för återfyllnad";
+
+/* */
+"Backfilling from trend is currently not well supported by Loop" = "Återfyllning från trend stöds för närvarande inte bra av Loop";
+
+/* */
+"Backfill from history" = "Återfyll från historik";
+
+/* */
+"Backfill from trend" = "Återfyll från trend";
+
+/* */
+"Debug options" = "Felsökningsalternativ";
+
+/* */
+"Adds a lot of data to the Issue Report " = "Lägger till en hel del data till rapporten ";
+
+/* */
+"Persist sensordata" = "Bevara sensordata";
+
+/* */
+"Battery" = "Batteri";
+
+
 
 /* Headers for settings ------------------- */
 
@@ -801,6 +835,14 @@ Also vibrate" = "Vibrera också";
 "OpenAPS targets settings" = "OpenAPS målvärdesinställningar";
 
 "OpenAPS other settings" = "OpenAPS andra inställningar";
+
+
+/* Glucose Simulator CGM */
+"Glucose Simulator" = "Glukossimulator";
+
+/* Restored state message */
+"Bluetooth State restored (APS restarted?). Found %d peripherals, and connected to %@ with identifier %@" = "Bluetooth-status återställd (APS startades om?). Hittade %d perifera enheter anslutna till %@ med identifieraren %@";
+
 
 /*
   Infotexts from openaps.docs and androidaps.docs

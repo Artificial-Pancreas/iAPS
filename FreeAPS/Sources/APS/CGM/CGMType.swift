@@ -21,7 +21,7 @@ enum CGMType: String, JSON, CaseIterable, Identifiable {
         case .dexcomG5:
             return "Dexcom G5"
         case .simulator:
-            return "Glucose Simulator"
+            return NSLocalizedString("Glucose Simulator", comment: "Glucose Simulator CGM type")
         case .libreTransmitter:
             return NSLocalizedString("Libre Transmitter", comment: "Libre Transmitter type")
         }

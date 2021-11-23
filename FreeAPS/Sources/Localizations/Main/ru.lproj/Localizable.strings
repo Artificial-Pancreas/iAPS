@@ -336,10 +336,10 @@ Enact a temp Basal or a temp target */
 "0 U/hr" = "0 Ед/час";
 
 /* abbreviation for days */
-"d" = "дн";
+"d" = "д";
 
 /* abbreviation for hours */
-"h" = "час";
+"h" = "ч";
 
 /* abbreviation for minutes */
 "m" = "мин";
@@ -570,7 +570,16 @@ Enact a temp Basal or a temp target */
 "Detected sensor is invalid: %@" = "Обнаруженный сенсор невалиден: %@";
 
 /* Low Battery */
-"Low Battery" = "Низкий заряд батареи";
+"Low battery" = "Низкий заряд батареи";
+
+/* */
+"Invalid sensor" = "Сенсор неисправен";
+
+/* */
+"Sensor change" = "Смена сенсора";
+
+/* */
+"Sensor expires soon" = "Сенсор скоро закончится";
 
 /* Battery is running low %@, consider charging your %@ device as soon as possible */
 "Battery is running low %@, consider charging your %@ device as soon as possible" = "Батарея работает на низком уровне %@, попробуйте зарядить устройство %@ как можно скорее";
@@ -588,7 +597,7 @@ Enact a temp Basal or a temp target */
 "Libre Bluetooth" = "Libre Bluetooth";
 
 /* */
-"Snooze Alerts" = "Отложить оповещения";
+"Snooze Alerts" = "Отложить тревоги";
 
 /* */
 "Last measurement" = "Последнее измерение";
@@ -704,16 +713,13 @@ Enact a temp Basal or a temp target */
 "Adds Phone Battery" = "Показывать заряд батареи телефона";
 
 /* */
-/* */
+"Adds Transmitter Battery" = "Добавить батарею передатчика";
 
-"Adds Transmitter Battery
-Also vibrate" = "Вибрировать";
+/* */
+"Also vibrate" = "Вибрировать";
 
 /* */
 "Additional notification types" = "Дополнительные уведомления";
-
-/* */
-"Low battery" = "Low battery";
 
 /* */
 "Misc" = "Разное";
@@ -725,10 +731,13 @@ Also vibrate" = "Вибрировать";
 "Low" = "Низкий";
 
 /* */
+"High" = "Высокий";
+
+/* */
 "glucose" = "глюкоза";
 
 /* */
-"Schedule %d" = "Расписание %d";
+"Schedule " = "Расписание ";
 
 /* */
 "tapped save schedules" = "выбрано сохранение расписаний";
@@ -790,6 +799,31 @@ Also vibrate" = "Вибрировать";
 /* */
 "Found devices: %d" = "Найдено устройств: %d";
 
+/* */
+"Backfill options" = "Опции заполнения";
+
+/* */
+"Backfilling from trend is currently not well supported by Loop" = "Заполнение из тренда в настоящее время не поддерживается в Loop";
+
+/* */
+"Backfill from history" = "Заполнять из истории";
+
+/* */
+"Backfill from trend" = "Заполнять из тренда";
+
+/* */
+"Debug options" = "Опции отладки";
+
+/* */
+"Adds a lot of data to the Issue Report " = "Добавляет много данных в отчет об ошибках ";
+
+/* */
+"Persist sensordata" = "Хранить данные сенсора";
+
+/* */
+"Battery" = "Батарея";
+
+
 
 /* Headers for settings ------------------- */
 
@@ -801,6 +835,14 @@ Also vibrate" = "Вибрировать";
 "OpenAPS targets settings" = "Настройки целей OpenAPS";
 
 "OpenAPS other settings" = "Другие настройки OpenAPS";
+
+
+/* Glucose Simulator CGM */
+"Glucose Simulator" = "Симулятор глюкозы";
+
+/* Restored state message */
+"Bluetooth State restored (APS restarted?). Found %d peripherals, and connected to %@ with identifier %@" = "Bluetooth состояние восстановлено (APS перезапущен?). Найдено %d периферийных устройств и подключено к %@ с идентификатором %@";
+
 
 /*
   Infotexts from openaps.docs and androidaps.docs
