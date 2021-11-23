@@ -19,14 +19,14 @@ typealias GlucoseYRange = (minValue: Int, minY: CGFloat, maxValue: Int, maxY: CG
 struct MainChartView: View {
     private enum Config {
         static let endID = "End"
-        static let screenHours = 6
-        static let basalHeight: CGFloat = 100
-        static let topYPadding: CGFloat = 50
+        static let screenHours = 5
+        static let basalHeight: CGFloat = 70
+        static let topYPadding: CGFloat = 20
         static let bottomYPadding: CGFloat = 50
         static let minAdditionalWidth: CGFloat = 150
-        static let maxGlucose = 300 // 450
+        static let maxGlucose = 450
         static let minGlucose = 70
-        static let yLinesCount = 4 // Test
+        static let yLinesCount = 5
         static let bolusSize: CGFloat = 8
         static let bolusScale: CGFloat = 2.5
         static let carbsSize: CGFloat = 10
@@ -143,7 +143,7 @@ struct MainChartView: View {
                 path.move(to: CGPoint(x: 0, y: range.minY + CGFloat(line) * step))
                 path.addLine(to: CGPoint(x: fullSize.width, y: range.minY + CGFloat(line) * step))
             }
-        }.stroke(Color.secondary, lineWidth: 0.1)
+        }.stroke(Color.secondary, lineWidth: 0.2)
     }
 
     private func glucoseLabelsView(fullSize: CGSize) -> some View {
@@ -156,16 +156,17 @@ struct MainChartView: View {
 
             return Text(glucoseFormatter.string(from: value as NSNumber)!)
                 .position(CGPoint(x: fullSize.width - 12, y: range.minY + CGFloat(line) * yStep))
-                .font(.caption) // Before: .font(.caption2)
+                .font(.caption2)
                 .asAny()
         }
     }
 
     private func basalView(fullSize: CGSize) -> some View {
         ZStack {
-            tempBasalPath.fill(Color.tempBasal.opacity(0.5)).scaleEffect(x: 1, y: -1)
-//            tempBasalPath.stroke(Color.tempBasal, lineWidth: 1).scaleEffect(x: 1, y: -1)          // removed the Y=0 line, not needed when having icicles
-            regularBasalPath.stroke(Color.tempBasal, style: StrokeStyle(lineWidth: 1, dash: [3])).scaleEffect(x: 1, y: -1)
+            tempBasalPath.fill(Color.tempBasal)
+            tempBasalPath.stroke(Color.tempBasal, lineWidth: 1)
+            suspensionsPath.fill(Color.loopGray)
+            regularBasalPath.stroke(Color.basal, lineWidth: 1)
         }
         .frame(width: fullGlucoseWidth(viewWidth: fullSize.width) + additionalWidth(viewWidth: fullSize.width))
         .frame(maxHeight: Config.basalHeight)
@@ -203,8 +204,6 @@ struct MainChartView: View {
         .frame(width: fullGlucoseWidth(viewWidth: fullSize.width) + additionalWidth(viewWidth: fullSize.width))
     }
 
-    @Environment(\.colorScheme) var colorScheme
-
     private func xGridView(fullSize: CGSize) -> some View {
         ZStack {
             Path { path in
@@ -216,17 +215,14 @@ struct MainChartView: View {
                     path.addLine(to: CGPoint(x: x, y: fullSize.height - 20))
                 }
             }
-            .stroke(Color.secondary, lineWidth: 0)
+            .stroke(Color.secondary, lineWidth: 0.2)
 
             Path { path in
                 let x = timeToXCoordinate(timerDate.timeIntervalSince1970, fullSize: fullSize)
                 path.move(to: CGPoint(x: x, y: 0))
                 path.addLine(to: CGPoint(x: x, y: fullSize.height - 20))
             }
-            .stroke(
-                colorScheme == .dark ? Color.white : Color.black, // current time as vertical line
-                style: StrokeStyle(lineWidth: 1, dash: [2])
-            )
+            .stroke(Color.secondary, style: StrokeStyle(lineWidth: 0.5, dash: [5]))
         }
     }
 

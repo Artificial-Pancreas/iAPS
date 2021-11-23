@@ -34,6 +34,7 @@ extension Home {
                 Spacer()
                 VStack(alignment: .leading, spacing: 12) {
                     HStack {
+                        Text("IOB").font(.caption2).foregroundColor(.secondary)
                         Text(
                             (numberFormatter.string(from: (state.suggestion?.iob ?? 0) as NSNumber) ?? "0") +
                                 NSLocalizedString(" U", comment: "Insulin unit")
@@ -41,6 +42,7 @@ extension Home {
                         .font(.system(size: 12, weight: .bold))
                     }
                     HStack {
+                        Text("COB").font(.caption2).foregroundColor(.secondary)
                         Text(
                             (numberFormatter.string(from: (state.suggestion?.cob ?? 0) as NSNumber) ?? "0") +
                                 NSLocalizedString(" g", comment: "gram of carbs")
@@ -214,11 +216,9 @@ extension Home {
                     header
                         .frame(maxHeight: 70)
                         .padding(.top, geo.safeAreaInsets.top)
-                        .background(Color.gray.opacity(0.05))
-                    //  .background(Color.gray.opacity(0.2))
-                    Divider().background(Color.gray) // Added 29/4
+                        .background(Color.gray.opacity(0.2))
+
                     infoPanal
-                        .background(Color.backgroundColor)
                     MainChartView(
                         glucose: $state.glucose,
                         suggestion: $state.suggestion,
@@ -234,15 +234,14 @@ extension Home {
                         timerDate: $state.timerDate,
                         units: $state.units
                     )
-                    .background(Color.gray.opacity(0.05))
-                    // .padding(.bottom)
+                    .padding(.bottom)
                     .modal(for: .dataTable, from: self)
-                    Divider().background(Color.gray) // Added 29/4
+
                     legendPanal
-                        .background(Color.backgroundColor)
-                    Divider().background(Color.gray)
+
                     ZStack {
-                        Rectangle().fill(Color.gray.opacity(0.05)).frame(height: 50 + geo.safeAreaInsets.bottom)
+                        Rectangle().fill(Color.gray.opacity(0.2)).frame(height: 50 + geo.safeAreaInsets.bottom)
+
                         HStack {
                             Button { state.showModal(for: .addCarbs) }
                             label: {
