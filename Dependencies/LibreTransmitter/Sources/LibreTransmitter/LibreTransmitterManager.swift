@@ -755,6 +755,7 @@ extension LibreTransmitterManager {
         case .newSensor:
             logger.debug("dabear:: new libresensor detected")
             NotificationHelper.sendSensorChangeNotificationIfNeeded()
+            NotificationCenter.default.post(name: .newSensorDetected, object: nil)
         case .noSensor:
             logger.debug("dabear:: no libresensor detected")
             NotificationHelper.sendSensorNotDetectedNotificationIfNeeded(noSensor: true)

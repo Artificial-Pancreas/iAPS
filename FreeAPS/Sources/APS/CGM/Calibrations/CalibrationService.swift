@@ -1,4 +1,5 @@
 import Foundation
+import LibreTransmitter
 import Swinject
 
 struct Calibration: JSON, Hashable, Identifiable {
@@ -33,6 +34,8 @@ final class BaseCalibrationService: CalibrationService, Injectable {
     }
 
     @Injected() var storage: FileStorage!
+    @Injected() var notificationCenter: NotificationCenter!
+    private var lifetime = Lifetime()
 
     private(set) var calibrations: [Calibration] = [] {
         didSet {
@@ -43,6 +46,15 @@ final class BaseCalibrationService: CalibrationService, Injectable {
     init(resolver: Resolver) {
         injectServices(resolver)
         calibrations = storage.retrieve(OpenAPS.FreeAPS.calibrations, as: [Calibration].self) ?? []
+        subscribe()
+    }
+
+    private func subscribe() {
+        notificationCenter.publisher(for: .newSensorDetected)
+            .sink { [weak self] _ in
+                self?.removeAllCalibrations()
+            }
+            .store(in: &lifetime)
     }
 
     var slope: Double {
