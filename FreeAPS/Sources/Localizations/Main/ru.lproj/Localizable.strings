@@ -716,7 +716,7 @@ Enact a temp Basal or a temp target */
 "Adds Transmitter Battery" = "Adds Transmitter Battery";
 
 /* */
-"Also vibrate" = "Also vibrate";
+"Also vibrate" = "Вибрировать";
 
 /* */
 "Additional notification types" = "Дополнительные уведомления";
@@ -737,7 +737,7 @@ Enact a temp Basal or a temp target */
 "glucose" = "глюкоза";
 
 /* */
-"Schedule " = "Schedule ";
+"Schedule " = "Расписание ";
 
 /* */
 "tapped save schedules" = "выбрано сохранение расписаний";
