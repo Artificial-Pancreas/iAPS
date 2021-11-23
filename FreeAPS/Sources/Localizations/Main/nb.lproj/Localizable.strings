@@ -546,126 +546,135 @@ Enact a temp Basal or a temp target */
 "No Sensor Detected" = "Ingen sensor oppdaget";
 
 /* This might be an intermittent problem, but please check that your transmitter is tightly secured over your sensor */
-"This might be an intermittent problem, but please check that your transmitter is tightly secured over your sensor" = "This might be an intermittent problem, but please check that your transmitter is tightly secured over your sensor";
+"This might be an intermittent problem, but please check that your transmitter is tightly secured over your sensor" = "Dette kan være et forbigående problem, men kontroller at senderen er godt festet over sensoren";
 
 /* New Sensor Detected */
-"New Sensor Detected" = "New Sensor Detected";
+"New Sensor Detected" = "Ny sensor oppdaget";
 
 /* Please wait up to 30 minutes before glucose readings are available! */
-"Please wait up to 30 minutes before glucose readings are available!" = "Please wait up to 30 minutes before glucose readings are available!";
+"Please wait up to 30 minutes before glucose readings are available!" = "Vennligst vent opptil 30 minutter før blodsukker-avlesningen er tilgjengelig!";
 
 /* Invalid Glucose sample detected, try again later */
-"Invalid Glucose sample detected, try again later" = "Invalid Glucose sample detected, try again later";
+"Invalid Glucose sample detected, try again later" = "Ugyldig blodsukkermåling, prøv igjen senere";
 
 /* ensor might have temporarily stopped, fallen off or is too cold or too warm */
-"Sensor might have temporarily stopped, fallen off or is too cold or too warm" = "Sensor might have temporarily stopped, fallen off or is too cold or too warm";
+"Sensor might have temporarily stopped, fallen off or is too cold or too warm" = "Sensoren kan ha stoppet midlertidig, falt av eller er for kald eller for varm";
 
 /* Invalid Sensor Detected */
-"Invalid Sensor Detected" = "Invalid Sensor Detected";
+"Invalid Sensor Detected" = "Ugyldig sensor funnet";
 
 /* Detected sensor seems not to be a libre 1 sensor! */
-"Detected sensor seems not to be a libre 1 sensor!" = "Detected sensor seems not to be a libre 1 sensor!";
+"Detected sensor seems not to be a libre 1 sensor!" = "Oppdaget sensor ser ikke ut til å være en Libre 1 sensor!";
 
 /* Detected sensor is invalid: %@ */
-"Detected sensor is invalid: %@" = "Detected sensor is invalid: %@";
+"Detected sensor is invalid: %@" = "Oppdaget sensor er ugyldig: %@";
 
 /* Low Battery */
-"Low Battery" = "Low Battery";
+"Low battery" = "Low battery";
+
+/* */
+"Invalid sensor" = "Invalid sensor";
+
+/* */
+"Sensor change" = "Sensor change";
+
+/* */
+"Sensor expires soon" = "Sensor expires soon";
 
 /* Battery is running low %@, consider charging your %@ device as soon as possible */
-"Battery is running low %@, consider charging your %@ device as soon as possible" = "Battery is running low %@, consider charging your %@ device as soon as possible";
+"Battery is running low %@, consider charging your %@ device as soon as possible" = "Batterinivået er lavt %@, vurder å lade %@ enheten din så snart som mulig";
 
 /* Extracting calibrationdata from sensor */
-"Extracting calibrationdata from sensor" = "Extracting calibrationdata from sensor";
+"Extracting calibrationdata from sensor" = "Henter ut kalibreringsdata fra sensoren";
 
 /* Sensor Ending Soon */
-"Sensor Ending Soon" = "Sensor Ending Soon";
+"Sensor Ending Soon" = "Sensoren utløper snart";
 
 /* Current Sensor is Ending soon! Sensor Life left in %@ */
-"Current Sensor is Ending soon! Sensor Life left in %@" = "Current Sensor is Ending soon! Sensor Life left in %@";
+"Current Sensor is Ending soon! Sensor Life left in %@" = "Gjeldende sensor utløper snart! Sensor-tid gjenstår i %@";
 
 /* */
 "Libre Bluetooth" = "Libre Bluetooth";
 
 /* */
-"Snooze Alerts" = "Snooze Alerts";
+"Snooze Alerts" = "Slumre varsler";
 
 /* */
-"Last measurement" = "Last measurement";
+"Last measurement" = "Siste måling";
 
 /* */
-"Sensor Footer checksum" = "Sensor Footer checksum";
+"Sensor Footer checksum" = "Sjekk-sum for sensor";
 
 /* */
-"Last Blood Sugar prediction" = "Last Blood Sugar prediction";
+"Last Blood Sugar prediction" = "Siste blodsukker-prediksjon";
 
 /* */
-"CurrentBG" = "CurrentBG";
+"CurrentBG" = "Nåværende BS";
 
 /* */
-"Sensor Info" = "Sensor Info";
+"Sensor Info" = "Sensor-info";
 
 /* */
-"Sensor Age" = "Sensor Age";
+"Sensor Age" = "Sensoralder";
 
 /* */
-"Sensor Age Left" = "Sensor Age Left";
+"Sensor Age Left" = "Sensoralder gjenstår";
 
 /* */
-"Sensor Endtime" = "Sensor Endtime";
+"Sensor Endtime" = "Utløpstid for sensor";
 
 /* */
-"Sensor State" = "Sensor State";
+"Sensor State" = "Sensortilstand";
 
 /* */
-"Sensor Serial" = "Sensor Serial";
+"Sensor Serial" = "Sensor serienummer";
 
 /* */
-"Transmitter Info" = "Transmitter Info";
+"Transmitter Info" = "Senderinfo";
 
 /* */
-"Hardware" = "Hardware";
+"Hardware" = "Maskinvare";
 
 /* */
-"Firmware" = "Firmware";
+"Firmware" = "Fastvare";
 
 /* */
-"Connection State" = "Connection State";
+"Connection State" = "Tilkoblingsstatus";
 
 /* */
-"Transmitter Type" = "Transmitter Type";
+"Transmitter Type" = "Type sender";
 
 /* */
-"Sensor Type" = "Sensor Type";
+"Sensor Type" = "Type sensor";
 
 /* */
-"Factory Calibration Parameters" = "Factory Calibration Parameters";
+"Factory Calibration Parameters" = "Fabrikkens kalibreringsparametre";
 
 /* */
-"Valid for footer" = "Valid for footer";
+"Valid for footer" = "Gyldig i bunntekst";
 
 /* */
-"Edit calibrations" = "Edit calibrations";
+"Edit calibrations" = "Rediger kalibreringer";
 
 /* */
 "edit calibration clicked" = "edit calibration clicked";
 
 /* */
-"Delete CGM" = "Delete CGM";
+"Delete CGM" = "Slett CGM";
 /* */
-"Are you sure you want to remove this cgm from loop?" = "Are you sure you want to remove this cgm from loop?";
+"Are you sure you want to remove this cgm from loop?" = "Er du sikker på at du vil fjerne denne CGM-en?";
 
 /* */
-"There is no undo" = "There is no undo";
+"There is no undo" = "Dette kan ikke angres";
 
 /* */
-"Advanced" = "Advanced";
+"Advanced" = "Avansert";
 
 /* */
-"Alarms" = "Alarms";
+"Alarms" = "Alarmer";
 
 /* */
-"Glucose Settings" = "Glucose Settings";
+"Glucose Settings" = "Blodsukker-innstillinger";
 
 /* */
 "Notifications" = "Notifications";
@@ -704,10 +713,10 @@ Enact a temp Basal or a temp target */
 "Adds Phone Battery" = "Adds Phone Battery";
 
 /* */
-/* */
+"Adds Transmitter Battery" = "Adds Transmitter Battery";
 
-"Adds Transmitter Battery
-Also vibrate" = "Also vibrate";
+/* */
+"Also vibrate" = "Also vibrate";
 
 /* */
 "Additional notification types" = "Additional notification types";
@@ -725,10 +734,13 @@ Also vibrate" = "Also vibrate";
 "Low" = "Low";
 
 /* */
+"High" = "High";
+
+/* */
 "glucose" = "glucose";
 
 /* */
-"Schedule %d" = "Schedule %d";
+"Schedule " = "Schedule ";
 
 /* */
 "tapped save schedules" = "tapped save schedules";
@@ -790,6 +802,31 @@ Also vibrate" = "Also vibrate";
 /* */
 "Found devices: %d" = "Found devices: %d";
 
+/* */
+"Backfill options" = "Backfill options";
+
+/* */
+"Backfilling from trend is currently not well supported by Loop" = "Backfilling from trend is currently not well supported by Loop";
+
+/* */
+"Backfill from history" = "Backfill from history";
+
+/* */
+"Backfill from trend" = "Backfill from trend";
+
+/* */
+"Debug options" = "Debug options";
+
+/* */
+"Adds a lot of data to the Issue Report " = "Adds a lot of data to the Issue Report ";
+
+/* */
+"Persist sensordata" = "Persist sensordata";
+
+/* */
+"Battery" = "Battery";
+
+
 
 /* Headers for settings ------------------- */
 
@@ -801,6 +838,11 @@ Also vibrate" = "Also vibrate";
 "OpenAPS targets settings" = "OpenAPS mål-innstillinger";
 
 "OpenAPS other settings" = "OpenAPS andre innstillinger";
+
+
+/* Glucose Simulator CGM */
+"Glucose Simulator" = "Blodsukker-simulator";
+
 
 /*
   Infotexts from openaps.docs and androidaps.docs

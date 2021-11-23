@@ -570,7 +570,16 @@ Enact a temp Basal or a temp target */
 "Detected sensor is invalid: %@" = "Detected sensor is invalid: %@";
 
 /* Low Battery */
-"Low Battery" = "Low Battery";
+"Low battery" = "Low battery";
+
+/* */
+"Invalid sensor" = "Invalid sensor";
+
+/* */
+"Sensor change" = "Sensor change";
+
+/* */
+"Sensor expires soon" = "Sensor expires soon";
 
 /* Battery is running low %@, consider charging your %@ device as soon as possible */
 "Battery is running low %@, consider charging your %@ device as soon as possible" = "Battery is running low %@, consider charging your %@ device as soon as possible";
@@ -705,7 +714,7 @@ Enact a temp Basal or a temp target */
 "Adds Phone Battery" = "Adds Phone Battery";
 
 /* */
-"Adds Transmitter Battery";
+"Adds Transmitter Battery" = "Adds Transmitter Battery";
 
 /* */
 "Also vibrate" = "Also vibrate";
@@ -726,10 +735,13 @@ Enact a temp Basal or a temp target */
 "Low" = "Low";
 
 /* */
+"High" = "High";
+
+/* */
 "glucose" = "glucose";
 
 /* */
-"Schedule %d" = "Schedule %d";
+"Schedule " = "Schedule ";
 
 /* */
 "tapped save schedules" = "tapped save schedules";
@@ -791,6 +803,31 @@ Enact a temp Basal or a temp target */
 /* */
 "Found devices: %d" = "Found devices: %d";
 
+/* */
+"Backfill options" = "Backfill options";
+
+/* */
+"Backfilling from trend is currently not well supported by Loop" = "Backfilling from trend is currently not well supported by Loop";
+
+/* */
+"Backfill from history" = "Backfill from history";
+
+/* */
+"Backfill from trend" = "Backfill from trend";
+
+/* */
+"Debug options" = "Debug options";
+
+/* */
+"Adds a lot of data to the Issue Report " = "Adds a lot of data to the Issue Report ";
+
+/* */
+"Persist sensordata" = "Persist sensordata";
+
+/* */
+"Battery" = "Battery";
+
+
 
 /* Headers for settings ------------------- */
 
@@ -802,6 +839,11 @@ Enact a temp Basal or a temp target */
 "OpenAPS targets settings" = "OpenAPS targets settings";
 
 "OpenAPS other settings" = "OpenAPS other settings";
+
+
+/* Glucose Simulator CGM */
+"Glucose Simulator" = "Glucose Simulator";
+
 
 /*
   Infotexts from openaps.docs and androidaps.docs
