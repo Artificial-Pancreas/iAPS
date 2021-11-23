@@ -69,7 +69,9 @@ extension Home {
                     timerDate: $state.timerDate
                 )
                 .onTapGesture {
-                    state.setupPump = true
+                    if state.pumpDisplayState != nil {
+                        state.setupPump = true
+                    }
                 }
                 .popover(isPresented: $state.setupPump) {
                     if let pumpManager = state.provider.apsManager.pumpManager {

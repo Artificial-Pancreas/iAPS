@@ -34,7 +34,7 @@ extension Home {
         @Published var tempRate: Decimal?
         @Published var battery: Battery?
         @Published var reservoir: Decimal?
-        @Published var pumpName = "Pump"
+        @Published var pumpName = ""
         @Published var pumpExpiresAtDate: Date?
         @Published var tempTarget: TempTarget?
         @Published var setupPump = false
@@ -46,6 +46,7 @@ extension Home {
         @Published var carbsRequired: Decimal?
         @Published var allowManualTemp = false
         @Published var units: GlucoseUnits = .mmolL
+        @Published var pumpDisplayState: PumpDisplayState?
 
         override func subscribe() {
             setupGlucose()
@@ -122,6 +123,24 @@ extension Home {
             apsManager.bolusProgress
                 .receive(on: DispatchQueue.main)
                 .weakAssign(to: \.bolusProgress, on: self)
+                .store(in: &lifetime)
+
+            apsManager.pumpDisplayState
+                .receive(on: DispatchQueue.main)
+                .sink { [weak self] state in
+                    guard let self = self else { return }
+                    self.pumpDisplayState = state
+                    if state == nil {
+                        self.reservoir = nil
+                        self.battery = nil
+                        self.pumpName = ""
+                        self.pumpExpiresAtDate = nil
+                        self.setupPump = false
+                    } else {
+                        self.setupBattery()
+                        self.setupReservoir()
+                    }
+                }
                 .store(in: &lifetime)
         }
 
