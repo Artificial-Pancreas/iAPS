@@ -67,6 +67,8 @@ final class BaseDeviceDataManager: DeviceDataManager, Injectable {
                 }
             } else {
                 pumpDisplayState.value = nil
+                pumpExpiresAtDate.send(nil)
+                pumpName.send("")
             }
         }
     }
@@ -86,9 +88,7 @@ final class BaseDeviceDataManager: DeviceDataManager, Injectable {
     }
 
     func setupPumpManager() {
-        if let pumpManagerRawValue = UserDefaults.standard.pumpManagerRawValue {
-            pumpManager = pumpManagerFromRawValue(pumpManagerRawValue)
-        }
+        pumpManager = UserDefaults.standard.pumpManagerRawValue.flatMap { pumpManagerFromRawValue($0) }
     }
 
     func createBolusProgressReporter() -> DoseProgressReporter? {
