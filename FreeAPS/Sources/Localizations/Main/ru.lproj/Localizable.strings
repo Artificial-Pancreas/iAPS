@@ -841,7 +841,7 @@ Enact a temp Basal or a temp target */
 "Glucose Simulator" = "Симулятор глюкозы";
 
 /* Restored state message */
-"Bluetooth State restored (APS restarted?). Found %d peripherals, and connected to %@ with identifier %@" = "Bluetooth State restored (APS restarted?). Found %d peripherals, and connected to %@ with identifier %@";
+"Bluetooth State restored (APS restarted?). Found %d peripherals, and connected to %@ with identifier %@" = "Bluetooth состояние восстановлено (APS перезапущен?). Найдено %d периферийных устройств и подключено к %@ с идентификатором %@";
 
 
 /*
