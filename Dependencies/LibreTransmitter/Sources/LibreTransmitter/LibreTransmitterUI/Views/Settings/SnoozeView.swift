@@ -10,28 +10,29 @@ import SwiftUI
 
 struct SnoozeView: View {
 
-    var pickerTimes: [TimeInterval] = ({
-        pickerTimesArray()
+    private var pickerTimes: [TimeInterval] {
+        SnoozeView.pickerTimesArray()
+    }
 
-    })()
+    private var formatter: DateComponentsFormatter {
+        let formatter = DateComponentsFormatter()
+        formatter.allowsFractionalUnits = false
+        formatter.unitsStyle = .full
+        return formatter
+    }
 
-    var formatter : DateComponentsFormatter = ({
-        var f = DateComponentsFormatter()
-        f.allowsFractionalUnits = false
-        f.unitsStyle = .full
-        return f
-
-    })()
-
-    func formatInterval(_ interval: TimeInterval) -> String {
+    private func formatInterval(_ interval: TimeInterval) -> String {
         formatter.string(from: interval)!
     }
 
-
+    private var dateFormatter: DateFormatter {
+        let formatter = DateFormatter()
+        formatter.timeStyle = .short
+        return formatter
+    }
 
     @Binding var isAlarming : Bool
     @Binding var activeAlarms: LibreTransmitter.GlucoseScheduleAlarmResult
-
 
     static func pickerTimesArray() -> [TimeInterval] {
         var arr  = [TimeInterval]()
@@ -72,8 +73,8 @@ struct SnoozeView: View {
                 celltext = NSLocalizedString("No Glucose Alarm active", comment: "No Glucose Alarm active")
         }
 
-        if let until = GlucoseScheduleList.snoozedUntil {
-            snoozeDescription = String(format: NSLocalizedString("snoozing until %@", comment: "snoozing until %@"), until.description(with: .current))
+        if let until = GlucoseScheduleList.snoozedUntil, until > Date() {
+            snoozeDescription = String(format: NSLocalizedString("snoozing until %@", comment: "snoozing until %@"), dateFormatter.string(from: until))
         } else {
             snoozeDescription = NSLocalizedString("not snoozing", comment: "not snoozing")  
         }
@@ -92,7 +93,7 @@ struct SnoozeView: View {
                 let snoozeFor = formatter.string(from: interval)!
                 let untilDate = Date() + interval
                 UserDefaults.standard.snoozedUntil = untilDate < Date() ? nil : untilDate
-                print("will snooze for \(snoozeFor) until \(untilDate.description(with: .current))")
+                print("will snooze for \(snoozeFor) until \(dateFormatter.string(from: untilDate))")
                 snoozeDescription = getSnoozeDescription()
             }) {
                 Text("Click to Snooze Alerts")
