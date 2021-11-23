@@ -840,6 +840,9 @@ Enact a temp Basal or a temp target */
 /* Glucose Simulator CGM */
 "Glucose Simulator" = "Glukossimulator";
 
+/* Restored state message */
+"Bluetooth State restored (APS restarted?). Found %d peripherals, and connected to %@ with identifier %@" = "Bluetooth-status återställd (APS startades om?). Hittade %d perifera enheter anslutna till %@ med identifieraren %@";
+
 
 /*
   Infotexts from openaps.docs and androidaps.docs
