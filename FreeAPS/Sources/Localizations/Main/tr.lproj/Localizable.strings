@@ -43,12 +43,6 @@
 /*  */
 "Agree and continue" = "Kabul et ve Devam et";
 
-/* Disclaimer when opening app for first time*/
-"Disclaimer" = "Sorumluluk Reddi";
-
-/* Disclaimer Description */
-"FreeAPS X is in an active development state. We do not recommend to use the system for everyday control of blood glucose! Use it for testing purposes only at your own risk. We are not responsible for your decisions and actions." = "FreeAPS X aktif bir geliştirme durumunda. Sistemin günlük kan şekeri kontrolü için kullanılmasını önermiyoruz! Yalnızca kendi sorumluluğunuzda olmak üzere test amaçlı kullanın. Kararlarınızdan ve eylemlerinizden biz sorumluk kabul etmiyoruz.";
-
 /* Enacted at a date */
 "Enacted at %@" = "%@'ta başlatıldı";
 
@@ -570,16 +564,16 @@ Enact a temp Basal or a temp target */
 "Detected sensor is invalid: %@" = "Algılanan sensör geçersiz: %@";
 
 /* Low Battery */
-"Low battery" = "Low battery";
+"Low battery" = "Düşük pil";
 
 /* */
-"Invalid sensor" = "Invalid sensor";
+"Invalid sensor" = "Geçersiz sensör";
 
 /* */
-"Sensor change" = "Sensor change";
+"Sensor change" = "Sensör değişimi";
 
 /* */
-"Sensor expires soon" = "Sensor expires soon";
+"Sensor expires soon" = "Sensör süresi yakında doluyor";
 
 /* Battery is running low %@, consider charging your %@ device as soon as possible */
 "Battery is running low %@, consider charging your %@ device as soon as possible" = "Pil azalıyor %@, %@ cihazınızı mümkün olan en kısa zamanda şarj etmeyi sağlayın";
@@ -713,10 +707,10 @@ Enact a temp Basal or a temp target */
 "Adds Phone Battery" = "Telefon Pilini Ekler";
 
 /* */
-"Adds Transmitter Battery" = "Adds Transmitter Battery";
+"Adds Transmitter Battery" = "Verici Pili Ekler";
 
 /* */
-"Also vibrate" = "Also vibrate";
+"Also vibrate" = "Ayrıca titreşim";
 
 /* */
 "Additional notification types" = "Ek bildirim çeşitleri";
@@ -731,13 +725,13 @@ Enact a temp Basal or a temp target */
 "Low" = "Düşük";
 
 /* */
-"High" = "High";
+"High" = "Yüksek";
 
 /* */
 "glucose" = "glikoz";
 
 /* */
-"Schedule " = "Schedule ";
+"Schedule " = "Planlama ";
 
 /* */
 "tapped save schedules" = "dokunulan kaydetme planları";
@@ -800,28 +794,28 @@ Enact a temp Basal or a temp target */
 "Found devices: %d" = "Bulunan cihazlar: %d";
 
 /* */
-"Backfill options" = "Backfill options";
+"Backfill options" = "Geri doldurma seçenekleri";
 
 /* */
-"Backfilling from trend is currently not well supported by Loop" = "Backfilling from trend is currently not well supported by Loop";
+"Backfilling from trend is currently not well supported by Loop" = "Trendden yapılan dolgu şu anda Loop tarafından iyi desteklenmiyor";
 
 /* */
-"Backfill from history" = "Backfill from history";
+"Backfill from history" = "Geçmiş geri doldurma";
 
 /* */
-"Backfill from trend" = "Backfill from trend";
+"Backfill from trend" = "Trend geri doldurma";
 
 /* */
-"Debug options" = "Debug options";
+"Debug options" = "Hata ayıklama seçenekleri";
 
 /* */
-"Adds a lot of data to the Issue Report " = "Adds a lot of data to the Issue Report ";
+"Adds a lot of data to the Issue Report " = "Sorun Raporuna çok fazla veri ekler ";
 
 /* */
-"Persist sensordata" = "Persist sensordata";
+"Persist sensordata" = "Kalıcı sensör verileri";
 
 /* */
-"Battery" = "Battery";
+"Battery" = "Pil";
 
 
 
@@ -929,16 +923,16 @@ Enact a temp Basal or a temp target */
 "Bolus snooze is enacted after you do a meal bolus, so the loop won’t counteract with low temps when you’ve just eaten. The example here and default is 2; so a 3 hour DIA means that bolus snooze will be gradually phased out over 1.5 hours (3DIA/2)." = "Bolus snooze is enacted after you do a meal bolus, so the loop won’t counteract with low temps when you’ve just eaten. The example here and default is 2; so a 3 hour DIA means that bolus snooze will be gradually phased out over 1.5 hours (3DIA/2).";
 
 /* "Min 5m Carbimpact" */
-"This is a setting for default carb absorption impact per 5 minutes. The default is an expected 8 mg/dL/5min. This affects how fast COB is decayed in situations when carb absorption is not visible in BG deviations. The default of 8 mg/dL/5min corresponds to a minimum carb absorption rate of 24g/hr at a CSF of 4 mg/dL/g." = "This is a setting for default carb absorption impact per 5 minutes. The default is an expected 8 mg/dL/5min. This affects how fast COB is decayed in situations when carb absorption is not visible in BG deviations. The default of 8 mg/dL/5min corresponds to a minimum carb absorption rate of 24g/hr at a CSF of 4 mg/dL/g.";
+"This is a setting for default carb absorption impact per 5 minutes. The default is an expected 8 mg/dL/5min. This affects how fast COB is decayed in situations when carb absorption is not visible in BG deviations. The default of 8 mg/dL/5min corresponds to a minimum carb absorption rate of 24g/hr at a CSF of 4 mg/dL/g." = "Bu ayar 5 dakikada bir varsayılan karbonhidrat emilim etkisi için dır. Varsayılan, beklenen bir 8 mg/dL/5dk'dır. Bu, KŞ sapmalarında karbonhidrat emiliminin görünmediği durumlarda COB'nin ne kadar hızlı bozulduğunu etkiler. Varsayılan 8 mg/dL/5dk, 4 mg/dL/g'lik bir BOS'ta 24g/saatlik minimum karbonhidrat emilim oranına karşılık gelir.";
 
 /* "Autotune ISF Adjustment Fraction" */
 "The default of 0.5 for this value keeps autotune ISF closer to pump ISF via a weighted average of fullNewISF and pumpISF. 1.0 allows full adjustment, 0 is no adjustment from pump ISF." = "The default of 0.5 for this value keeps autotune ISF closer to pump ISF via a weighted average of fullNewISF and pumpISF. 1.0 allows full adjustment, 0 is no adjustment from pump ISF.";
 
 /* "Remaining Carbs Fraction" */
-"This is the fraction of carbs we’ll assume will absorb over 4h if we don’t yet see carb absorption." = "This is the fraction of carbs we’ll assume will absorb over 4h if we don’t yet see carb absorption.";
+"This is the fraction of carbs we’ll assume will absorb over 4h if we don’t yet see carb absorption." = "Bu henüz karbonhidrat emilimini süresini görmezsek, 4 saatten fazla emilimi varsayımı karbonhidrat oranıdır.";
 
 /* "Remaining Carbs Cap" */
-"This is the amount of the maximum number of carbs we’ll assume will absorb over 4h if we don’t yet see carb absorption." = "This is the amount of the maximum number of carbs we’ll assume will absorb over 4h if we don’t yet see carb absorption.";
+"This is the amount of the maximum number of carbs we’ll assume will absorb over 4h if we don’t yet see carb absorption." = "Bu henüz karbonhidrat emilimini görmezsek, 4 saatten fazla emeceğini varsaydığımız maksimum karbonhidrat miktarıdır.";
 
 /* ”Max SMB Basal Minutes" */
 "Defaults to start at 30. This is the maximum minutes of basal that can be delivered as a single SMB with uncovered COB. This gives the ability to make SMB more aggressive if you choose. It is recommended that the value is set to start at 30, in line with the default, and if you choose to increase this value, do so in no more than 15 minute increments, keeping a close eye on the effects of the changes. It is not recommended to set this value higher than 90 mins, as this may affect the ability for the algorithm to safely zero temp. It is also recommended that pushover is used when setting the value to be greater than default, so that alerts are generated for any predicted lows or highs." = "Defaults to start at 30. This is the maximum minutes of basal that can be delivered as a single SMB with uncovered COB. This gives the ability to make SMB more aggressive if you choose. It is recommended that the value is set to start at 30, in line with the default, and if you choose to increase this value, do so in no more than 15 minute increments, keeping a close eye on the effects of the changes. It is not recommended to set this value higher than 90 mins, as this may affect the ability for the algorithm to safely zero temp. It is also recommended that pushover is used when setting the value to be greater than default, so that alerts are generated for any predicted lows or highs.";
@@ -947,13 +941,13 @@ Enact a temp Basal or a temp target */
 "Defaults to start at 30. This is the maximum minutes of basal that can be delivered by UAM as a single SMB when IOB exceeds COB. This gives the ability to make UAM more or less aggressive if you choose. It is recommended that the value is set to start at 30, in line with the default, and if you choose to increase this value, do so in no more than 15 minute increments, keeping a close eye on the effects of the changes. Reducing the value will cause UAM to dose less insulin for each SMB. It is not recommended to set this value higher than 60 mins, as this may affect the ability for the algorithm to safely zero temp. It is also recommended that pushover is used when setting the value to be greater than default, so that alerts are generated for any predicted lows or highs." = "Defaults to start at 30. This is the maximum minutes of basal that can be delivered by UAM as a single SMB when IOB exceeds COB. This gives the ability to make UAM more or less aggressive if you choose. It is recommended that the value is set to start at 30, in line with the default, and if you choose to increase this value, do so in no more than 15 minute increments, keeping a close eye on the effects of the changes. Reducing the value will cause UAM to dose less insulin for each SMB. It is not recommended to set this value higher than 60 mins, as this may affect the ability for the algorithm to safely zero temp. It is also recommended that pushover is used when setting the value to be greater than default, so that alerts are generated for any predicted lows or highs.";
 
 /* "SMB Interval" */
-"Minimum duration in minutes between two enacted SMBs" = "Minimum duration in minutes between two enacted SMBs";
+"Minimum duration in minutes between two enacted SMBs" = "Yürürlüğe giren iki SMB arasındaki dakika cinsinden minimum süre";
 
 /* "Bolus Increment" */
 "Smallest possible bolus amount" = "Mümkün olan en küçük bolus miktarı";
 
 /* "Insulin Peak Time" */
-"Time of maximum blood glucose lowering effect of insulin, in minutes. Beware: Oref assumes for ultra-papid (Lyumjev) & rapid-acting (Fiasp) curves minimal (35 & 50 min) and maximal (100 & 120 min) applicable insulinPeakTimes. Using a custom insulinPeakTime outside these bounds will result in issues with FreeAPS-X, longer loop calculations and possible red loops." = "Time of maximum blood glucose lowering effect of insulin, in minutes. Beware: Oref assumes for ultra-papid (Lyumjev) & rapid-acting (Fiasp) curves minimal (35 & 50 min) and maximal (100 & 120 min) applicable insulinPeakTimes. Using a custom insulinPeakTime outside these bounds will result in issues with FreeAPS-X, longer loop calculations and possible red loops.";
+"Time of maximum blood glucose lowering effect of insulin, in minutes. Beware: Oref assumes for ultra-papid (Lyumjev) & rapid-acting (Fiasp) curves minimal (35 & 50 min) and maximal (100 & 120 min) applicable insulinPeakTimes. Using a custom insulinPeakTime outside these bounds will result in issues with FreeAPS-X, longer loop calculations and possible red loops." = "İnsülinin maksimum kan şekerini düşürücü etkisinin dakika cinsinden süresi. Dikkat: Oref, ultra-papid (Lyumjev) ve hızlı etkili (Fiasp) eğrilerin minimum (35 ve 50 dakika) ve maksimum (100 ve 120 dakika) uygulanabilir insülinPeakTimes olduğunu varsayar. Bu sınırların dışında özel bir insülinPeakTime kullanılması, FreeAPS-X, daha uzun döngü hesaplamaları ve olası kırmızı döngülerle ilgili sorunlara neden olacaktır.";
 
 /* "Carbs Req Threshold" */
 "Grams of carbsReq to trigger a pushover. Defaults to 1 (for 1 gram of carbohydrate). Can be increased if you only want to get Pushover for carbsReq at X threshold." = "Grams of carbsReq to trigger a pushover. Defaults to 1 (for 1 gram of carbohydrate). Can be increased if you only want to get Pushover for carbsReq at X threshold.";

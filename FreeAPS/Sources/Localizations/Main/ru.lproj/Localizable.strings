@@ -43,12 +43,6 @@
 /*  */
 "Agree and continue" = "Согласиться и Продолжить";
 
-/* Disclaimer when opening app for first time*/
-"Disclaimer" = "Дисклеймер";
-
-/* Disclaimer Description */
-"FreeAPS X is in an active development state. We do not recommend to use the system for everyday control of blood glucose! Use it for testing purposes only at your own risk. We are not responsible for your decisions and actions." = "FreeAPS X находится в разработке. Мы не рекомендуем его для ежедневного контроля сахара в крови! Используйте только для тестирования на свой страх и риск. Мы не несём ответственности за ваши действия.";
-
 /* Enacted at a date */
 "Enacted at %@" = "Введено в %@";
 
