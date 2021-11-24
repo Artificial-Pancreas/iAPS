@@ -217,6 +217,7 @@ public enum NotificationHelper {
                 titles.append(NSLocalizedString("(Snoozed)", comment: "(Snoozed)"))
             } else if alarm.isAlarming() {
                 content.sound = .default
+                content.userInfo = ["action": "snooze"]
                 playSoundIfNeeded()
             }
             titles.append(glucoseDesc)

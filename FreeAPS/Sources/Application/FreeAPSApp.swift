@@ -3,6 +3,7 @@ import Swinject
 
 @main struct FreeAPSApp: App {
     @Environment(\.scenePhase) var scenePhase
+    @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
 
     // Dependencies Assembler
     // contain all dependencies Assemblies
@@ -43,6 +44,7 @@ import Swinject
     var body: some Scene {
         WindowGroup {
             Main.RootView(resolver: resolver)
+                .environmentObject(appDelegate)
         }
         .onChange(of: scenePhase) { newScenePhase in
             debug(.default, "APPLICATION PHASE: \(newScenePhase)")
