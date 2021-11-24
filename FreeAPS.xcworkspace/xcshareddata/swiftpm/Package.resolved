@@ -2,24 +2,6 @@
   "object": {
     "pins": [
       {
-        "package": "Alamofire",
-        "repositoryURL": "https://github.com/Alamofire/Alamofire",
-        "state": {
-          "branch": null,
-          "revision": "d120af1e8638c7da36c8481fd61a66c0c08dc4fc",
-          "version": "5.4.4"
-        }
-      },
-      {
-        "package": "Disk",
-        "repositoryURL": "https://github.com/saoudrizwan/Disk",
-        "state": {
-          "branch": null,
-          "revision": "b0cb4fdf23e51849cc2460bdc6de795c3bcca99d",
-          "version": "0.6.4"
-        }
-      },
-      {
         "package": "swift-algorithms",
         "repositoryURL": "https://github.com/apple/swift-algorithms",
         "state": {
