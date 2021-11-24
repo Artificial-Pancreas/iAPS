@@ -369,7 +369,6 @@
 		892ADE002446C858007CE08C /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = 892ADDFF2446C858007CE08C /* Card.swift */; };
 		893C9F8C2447DBD900CD4185 /* CardBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 893C9F8B2447DBD900CD4185 /* CardBuilder.swift */; };
 		895FE06E22011E9A00FCF18A /* OverrideEmojiDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 895FE06C22011E9900FCF18A /* OverrideEmojiDataSource.swift */; };
-		895FE06F22011E9A00FCF18A /* OverrideSelectionViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 895FE06D22011E9A00FCF18A /* OverrideSelectionViewController.storyboard */; };
 		895FE07122011EDD00FCF18A /* EmojiInputController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 895FE07022011EDD00FCF18A /* EmojiInputController.storyboard */; };
 		895FE07F22011F0C00FCF18A /* DoubleRangeTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 895FE07222011F0B00FCF18A /* DoubleRangeTableViewCell.xib */; };
 		895FE08022011F0C00FCF18A /* EmojiDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 895FE07322011F0B00FCF18A /* EmojiDataSource.swift */; };
@@ -1289,7 +1288,6 @@
 		893C9F8B2447DBD900CD4185 /* CardBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardBuilder.swift; sourceTree = "<group>"; };
 		895695F521AA413B00828067 /* DateAndDurationTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateAndDurationTableViewController.swift; sourceTree = "<group>"; };
 		895FE06C22011E9900FCF18A /* OverrideEmojiDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OverrideEmojiDataSource.swift; sourceTree = "<group>"; };
-		895FE06D22011E9A00FCF18A /* OverrideSelectionViewController.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = OverrideSelectionViewController.storyboard; sourceTree = "<group>"; };
 		895FE07022011EDD00FCF18A /* EmojiInputController.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = EmojiInputController.storyboard; sourceTree = "<group>"; };
 		895FE07222011F0B00FCF18A /* DoubleRangeTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DoubleRangeTableViewCell.xib; sourceTree = "<group>"; };
 		895FE07322011F0B00FCF18A /* EmojiDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmojiDataSource.swift; sourceTree = "<group>"; };
@@ -1998,7 +1996,6 @@
 				43BA7156201E484D0058961E /* LoopKitUI.h */,
 				C16DA84422E9330A008624C2 /* LoopUIPlugin.swift */,
 				895FE06C22011E9900FCF18A /* OverrideEmojiDataSource.swift */,
-				895FE06D22011E9A00FCF18A /* OverrideSelectionViewController.storyboard */,
 				43FB60E220DCB9E0002B996B /* PumpManagerUI.swift */,
 				43F503622106C761009FA89A /* ServiceAuthenticationUI.swift */,
 				43F5035521059A8A009FA89A /* ServiceCredential.swift */,
@@ -3010,7 +3007,6 @@
 				1FE58796211D12CE004F24ED /* Localizable.strings in Resources */,
 				892A5DB72231E1A0008961AB /* ReservoirVolumeHUDView.xib in Resources */,
 				898E6E68224179310019E459 /* BatteryLevelHUDView.xib in Resources */,
-				895FE06F22011E9A00FCF18A /* OverrideSelectionViewController.storyboard in Resources */,
 				43BA7193202039A30058961E /* TextFieldTableViewCell.xib in Resources */,
 				895FE08622011F0C00FCF18A /* DecimalTextFieldTableViewCell.xib in Resources */,
 				43BA719620203C750058961E /* Assets.xcassets in Resources */,
