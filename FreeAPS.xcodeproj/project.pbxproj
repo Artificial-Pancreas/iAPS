@@ -86,7 +86,6 @@
 		3818AA6F274C26A500843DB3 /* RileyLinkKitUI.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 3818AA57274C26A300843DB3 /* RileyLinkKitUI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		3818AA71274C278200843DB3 /* LoopTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3818AA70274C278200843DB3 /* LoopTestingKit.framework */; };
 		3818AA72274C278200843DB3 /* LoopTestingKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 3818AA70274C278200843DB3 /* LoopTestingKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		38192E01261B826A0094D973 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 38192E00261B826A0094D973 /* Alamofire */; };
 		38192E04261B82FA0094D973 /* ReachabilityManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38192E03261B82FA0094D973 /* ReachabilityManager.swift */; };
 		38192E07261BA9960094D973 /* FetchTreatmentsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38192E06261BA9960094D973 /* FetchTreatmentsManager.swift */; };
 		38192E0D261BAF980094D973 /* ConvenienceExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38192E0C261BAF980094D973 /* ConvenienceExtensions.swift */; };
@@ -96,7 +95,6 @@
 		3833B46D26012030003021B3 /* Algorithms in Frameworks */ = {isa = PBXBuildFile; productRef = 3833B46C26012030003021B3 /* Algorithms */; };
 		383420D625FFE38C002D46C1 /* LoopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 383420D525FFE38C002D46C1 /* LoopView.swift */; };
 		383420D925FFEB3F002D46C1 /* Popup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 383420D825FFEB3F002D46C1 /* Popup.swift */; };
-		383948D325CD4D6D00E91849 /* Disk in Frameworks */ = {isa = PBXBuildFile; productRef = 383948D225CD4D6D00E91849 /* Disk */; };
 		383948D625CD4D8900E91849 /* FileStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 383948D525CD4D8900E91849 /* FileStorage.swift */; };
 		383948DA25CD64D500E91849 /* Glucose.swift in Sources */ = {isa = PBXBuildFile; fileRef = 383948D925CD64D500E91849 /* Glucose.swift */; };
 		384E803425C385E60086DB71 /* JavaScriptWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 384E803325C385E60086DB71 /* JavaScriptWorker.swift */; };
@@ -163,6 +161,19 @@
 		38D0B3D925EC07C400CB6E88 /* CarbsEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38D0B3D825EC07C400CB6E88 /* CarbsEntry.swift */; };
 		38DAB280260CBB7F00F74C1A /* PumpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38DAB27F260CBB7F00F74C1A /* PumpView.swift */; };
 		38DAB28A260D349500F74C1A /* FetchGlucoseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38DAB289260D349500F74C1A /* FetchGlucoseManager.swift */; };
+		38E4451E274DB04600EC9A94 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38E4451D274DB04600EC9A94 /* AppDelegate.swift */; };
+		38E44522274E3DDC00EC9A94 /* NetworkReachabilityManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38E44521274E3DDC00EC9A94 /* NetworkReachabilityManager.swift */; };
+		38E44528274E401C00EC9A94 /* Protected.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38E44527274E401C00EC9A94 /* Protected.swift */; };
+		38E44534274E411700EC9A94 /* Disk+InternalHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38E4452A274E411600EC9A94 /* Disk+InternalHelpers.swift */; };
+		38E44535274E411700EC9A94 /* Disk+Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38E4452B274E411600EC9A94 /* Disk+Data.swift */; };
+		38E44536274E411700EC9A94 /* Disk.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38E4452C274E411600EC9A94 /* Disk.swift */; };
+		38E44537274E411700EC9A94 /* Disk+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38E4452D274E411600EC9A94 /* Disk+Helpers.swift */; };
+		38E44538274E411700EC9A94 /* Disk+[Data].swift in Sources */ = {isa = PBXBuildFile; fileRef = 38E4452E274E411600EC9A94 /* Disk+[Data].swift */; };
+		38E44539274E411700EC9A94 /* Disk+UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38E4452F274E411600EC9A94 /* Disk+UIImage.swift */; };
+		38E4453A274E411700EC9A94 /* Disk+[UIImage].swift in Sources */ = {isa = PBXBuildFile; fileRef = 38E44530274E411700EC9A94 /* Disk+[UIImage].swift */; };
+		38E4453B274E411700EC9A94 /* Disk+VolumeInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38E44531274E411700EC9A94 /* Disk+VolumeInformation.swift */; };
+		38E4453C274E411700EC9A94 /* Disk+Codable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38E44532274E411700EC9A94 /* Disk+Codable.swift */; };
+		38E4453D274E411700EC9A94 /* Disk+Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38E44533274E411700EC9A94 /* Disk+Errors.swift */; };
 		38E989DD25F5021400C0CED0 /* PumpStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38E989DC25F5021400C0CED0 /* PumpStatus.swift */; };
 		38E98A2325F52C9300C0CED0 /* Signpost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38E98A1B25F52C9300C0CED0 /* Signpost.swift */; };
 		38E98A2425F52C9300C0CED0 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38E98A1C25F52C9300C0CED0 /* Logger.swift */; };
@@ -467,6 +478,19 @@
 		38D0B3D825EC07C400CB6E88 /* CarbsEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarbsEntry.swift; sourceTree = "<group>"; };
 		38DAB27F260CBB7F00F74C1A /* PumpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PumpView.swift; sourceTree = "<group>"; };
 		38DAB289260D349500F74C1A /* FetchGlucoseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchGlucoseManager.swift; sourceTree = "<group>"; };
+		38E4451D274DB04600EC9A94 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		38E44521274E3DDC00EC9A94 /* NetworkReachabilityManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkReachabilityManager.swift; sourceTree = "<group>"; };
+		38E44527274E401C00EC9A94 /* Protected.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Protected.swift; sourceTree = "<group>"; };
+		38E4452A274E411600EC9A94 /* Disk+InternalHelpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Disk+InternalHelpers.swift"; sourceTree = "<group>"; };
+		38E4452B274E411600EC9A94 /* Disk+Data.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Disk+Data.swift"; sourceTree = "<group>"; };
+		38E4452C274E411600EC9A94 /* Disk.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Disk.swift; sourceTree = "<group>"; };
+		38E4452D274E411600EC9A94 /* Disk+Helpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Disk+Helpers.swift"; sourceTree = "<group>"; };
+		38E4452E274E411600EC9A94 /* Disk+[Data].swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Disk+[Data].swift"; sourceTree = "<group>"; };
+		38E4452F274E411600EC9A94 /* Disk+UIImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Disk+UIImage.swift"; sourceTree = "<group>"; };
+		38E44530274E411700EC9A94 /* Disk+[UIImage].swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Disk+[UIImage].swift"; sourceTree = "<group>"; };
+		38E44531274E411700EC9A94 /* Disk+VolumeInformation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Disk+VolumeInformation.swift"; sourceTree = "<group>"; };
+		38E44532274E411700EC9A94 /* Disk+Codable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Disk+Codable.swift"; sourceTree = "<group>"; };
+		38E44533274E411700EC9A94 /* Disk+Errors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Disk+Errors.swift"; sourceTree = "<group>"; };
 		38E989DC25F5021400C0CED0 /* PumpStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PumpStatus.swift; sourceTree = "<group>"; };
 		38E98A1B25F52C9300C0CED0 /* Signpost.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Signpost.swift; sourceTree = "<group>"; };
 		38E98A1C25F52C9300C0CED0 /* Logger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
@@ -574,9 +598,7 @@
 				3811DE1025C9D37700A708ED /* Swinject in Frameworks */,
 				3818AA5C274C26A300843DB3 /* MockKit.framework in Frameworks */,
 				3818AA6A274C26A500843DB3 /* RileyLinkBLEKit.framework in Frameworks */,
-				38192E01261B826A0094D973 /* Alamofire in Frameworks */,
 				3818AA64274C26A400843DB3 /* MinimedKitUI.framework in Frameworks */,
-				383948D325CD4D6D00E91849 /* Disk in Frameworks */,
 				3818AA66274C26A400843DB3 /* OmniKit.framework in Frameworks */,
 				3818AA6C274C26A500843DB3 /* RileyLinkKit.framework in Frameworks */,
 				3818AA68274C26A400843DB3 /* OmniKitUI.framework in Frameworks */,
@@ -811,6 +833,7 @@
 		3811DE9425C9D88200A708ED /* Network */ = {
 			isa = PBXGroup;
 			children = (
+				38E44521274E3DDC00EC9A94 /* NetworkReachabilityManager.swift */,
 				38192E03261B82FA0094D973 /* ReachabilityManager.swift */,
 				3811DE9625C9D88300A708ED /* HTTPResponseStatus.swift */,
 				3811DE9725C9D88300A708ED /* NightscoutManager.swift */,
@@ -826,6 +849,7 @@
 				383948D525CD4D8900E91849 /* FileStorage.swift */,
 				3811DE9C25C9D88300A708ED /* KeyValueStorage.swift */,
 				3811DE9925C9D88300A708ED /* Cache */,
+				38E44529274E40F100EC9A94 /* Disk */,
 				3811DE9D25C9D88300A708ED /* Keychain */,
 			);
 			path = Storage;
@@ -874,6 +898,7 @@
 		3811DEDE25C9E2DD00A708ED /* Application */ = {
 			isa = PBXGroup;
 			children = (
+				38E4451D274DB04600EC9A94 /* AppDelegate.swift */,
 				388E595B25AD948C0019842D /* FreeAPSApp.swift */,
 			);
 			path = Application;
@@ -882,6 +907,7 @@
 		3811DEE325CA063400A708ED /* PropertyWrappers */ = {
 			isa = PBXGroup;
 			children = (
+				38E44527274E401C00EC9A94 /* Protected.swift */,
 				3811DEE425CA063400A708ED /* Injected.swift */,
 				3811DEE625CA063400A708ED /* SyncAccess.swift */,
 				3811DEE725CA063400A708ED /* PersistedProperty.swift */,
@@ -1071,7 +1097,6 @@
 		388E5A5A25B6F05F0019842D /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
-				38FEF412273B317A00574A46 /* HKUnit.swift */,
 				38F37827261260DC009DB701 /* Color+Extensions.swift */,
 				389ECE042601144100D86C4F /* ConcurrentMap.swift */,
 				38192E0C261BAF980094D973 /* ConvenienceExtensions.swift */,
@@ -1079,6 +1104,7 @@
 				38C4D33625E9A1A200D30B77 /* DispatchQueue+Extensions.swift */,
 				389487392614928B004DF424 /* DispatchTimer.swift */,
 				3811DE5425C9D4D500A708ED /* Formatters.swift */,
+				38FEF412273B317A00574A46 /* HKUnit.swift */,
 				38B4F3AE25E2979F00E76A18 /* IndexedCollection.swift */,
 				389A571F26079BAA00BC102F /* Interpolation.swift */,
 				388E5A5B25B6F0770019842D /* JSON.swift */,
@@ -1140,6 +1166,23 @@
 				38B4F3C925E502E100E76A18 /* WeakObjectSet.swift */,
 			);
 			path = SwiftNotificationCenter;
+			sourceTree = "<group>";
+		};
+		38E44529274E40F100EC9A94 /* Disk */ = {
+			isa = PBXGroup;
+			children = (
+				38E4452C274E411600EC9A94 /* Disk.swift */,
+				38E4452E274E411600EC9A94 /* Disk+[Data].swift */,
+				38E44530274E411700EC9A94 /* Disk+[UIImage].swift */,
+				38E44532274E411700EC9A94 /* Disk+Codable.swift */,
+				38E4452B274E411600EC9A94 /* Disk+Data.swift */,
+				38E44533274E411700EC9A94 /* Disk+Errors.swift */,
+				38E4452D274E411600EC9A94 /* Disk+Helpers.swift */,
+				38E4452A274E411600EC9A94 /* Disk+InternalHelpers.swift */,
+				38E4452F274E411600EC9A94 /* Disk+UIImage.swift */,
+				38E44531274E411700EC9A94 /* Disk+VolumeInformation.swift */,
+			);
+			path = Disk;
 			sourceTree = "<group>";
 		};
 		38E98A1A25F52C9300C0CED0 /* Logger */ = {
@@ -1515,10 +1558,8 @@
 			name = FreeAPS;
 			packageProductDependencies = (
 				3811DE0F25C9D37700A708ED /* Swinject */,
-				383948D225CD4D6D00E91849 /* Disk */,
 				38B17B6525DD90E0005CAE3D /* SwiftDate */,
 				3833B46C26012030003021B3 /* Algorithms */,
-				38192E00261B826A0094D973 /* Alamofire */,
 				3818AA46274C255A00843DB3 /* LibreTransmitter */,
 			);
 			productName = FreeAPS;
@@ -1591,10 +1632,8 @@
 			mainGroup = 388E594F25AD948C0019842D;
 			packageReferences = (
 				3811DE0E25C9D37700A708ED /* XCRemoteSwiftPackageReference "Swinject" */,
-				383948D125CD4D6D00E91849 /* XCRemoteSwiftPackageReference "Disk" */,
 				38B17B6425DD90E0005CAE3D /* XCRemoteSwiftPackageReference "SwiftDate" */,
 				3833B46B26012030003021B3 /* XCRemoteSwiftPackageReference "swift-algorithms" */,
-				38192DFF261B826A0094D973 /* XCRemoteSwiftPackageReference "Alamofire" */,
 			);
 			productRefGroup = 388E595925AD948C0019842D /* Products */;
 			projectDirPath = "";
@@ -1656,6 +1695,7 @@
 			files = (
 				3811DE2325C9D48300A708ED /* MainDataFlow.swift in Sources */,
 				3811DEEB25CA063400A708ED /* PersistedProperty.swift in Sources */,
+				38E44537274E411700EC9A94 /* Disk+Helpers.swift in Sources */,
 				388E5A6025B6F2310019842D /* Autosens.swift in Sources */,
 				3811DE8F25C9D80400A708ED /* User.swift in Sources */,
 				3811DEB225C9D88300A708ED /* KeychainItemAccessibility.swift in Sources */,
@@ -1666,6 +1706,7 @@
 				38C4D33725E9A1A300D30B77 /* DispatchQueue+Extensions.swift in Sources */,
 				3862CC2E2743F9F700BF832C /* CalendarManager.swift in Sources */,
 				38B4F3C325E2A20B00E76A18 /* PumpSetupView.swift in Sources */,
+				38E4453C274E411700EC9A94 /* Disk+Codable.swift in Sources */,
 				382C134B25F14E3700715CE1 /* BGTargets.swift in Sources */,
 				38AEE75725F0F18E0013F05B /* CarbsStorage.swift in Sources */,
 				38B4F3CA25E502E200E76A18 /* SwiftNotificationCenter.swift in Sources */,
@@ -1694,17 +1735,20 @@
 				383948D625CD4D8900E91849 /* FileStorage.swift in Sources */,
 				3811DE4125C9D4A100A708ED /* SettingsRootView.swift in Sources */,
 				38192E04261B82FA0094D973 /* ReachabilityManager.swift in Sources */,
+				38E44539274E411700EC9A94 /* Disk+UIImage.swift in Sources */,
 				388E595C25AD948C0019842D /* FreeAPSApp.swift in Sources */,
 				38FEF3FC2737E53800574A46 /* MainStateModel.swift in Sources */,
 				38569348270B5DFB0002C50D /* GlucoseSource.swift in Sources */,
 				3811DE4225C9D4A100A708ED /* SettingsDataFlow.swift in Sources */,
 				3811DE2525C9D48300A708ED /* MainRootView.swift in Sources */,
+				38E44535274E411700EC9A94 /* Disk+Data.swift in Sources */,
 				3811DE3125C9D49500A708ED /* HomeProvider.swift in Sources */,
 				E013D872273AC6FE0014109C /* GlucoseSimulatorSource.swift in Sources */,
 				388E5A5C25B6F0770019842D /* JSON.swift in Sources */,
 				3811DF0225CA9FEA00A708ED /* Credentials.swift in Sources */,
 				389A572026079BAA00BC102F /* Interpolation.swift in Sources */,
 				38B4F3C625E5017E00E76A18 /* NotificationCenter.swift in Sources */,
+				38E44528274E401C00EC9A94 /* Protected.swift in Sources */,
 				3811DEB625C9D88300A708ED /* UnlockManager.swift in Sources */,
 				E00EEC0827368630002FF094 /* NetworkAssembly.swift in Sources */,
 				38A13D3225E28B4B00EAA382 /* PumpHistoryEvent.swift in Sources */,
@@ -1764,6 +1808,7 @@
 				3871F38725ED661C0013ECB5 /* Suggestion.swift in Sources */,
 				38C4D33A25E9A1ED00D30B77 /* NSObject+AssociatedValues.swift in Sources */,
 				38AAF8712600C1B0004AF583 /* MainChartView.swift in Sources */,
+				38E4453A274E411700EC9A94 /* Disk+[UIImage].swift in Sources */,
 				72F1BD388F42FCA6C52E4500 /* ConfigEditorProvider.swift in Sources */,
 				E39E418C56A5A46B61D960EE /* ConfigEditorStateModel.swift in Sources */,
 				45717281F743594AA9D87191 /* ConfigEditorRootView.swift in Sources */,
@@ -1778,6 +1823,7 @@
 				5D16287A969E64D18CE40E44 /* PumpConfigStateModel.swift in Sources */,
 				E974172296125A5AE99E634C /* PumpConfigRootView.swift in Sources */,
 				448B6FCB252BD4796E2960C0 /* PumpSettingsEditorDataFlow.swift in Sources */,
+				38E44536274E411700EC9A94 /* Disk.swift in Sources */,
 				2BE9A6FA20875F6F4F9CD461 /* PumpSettingsEditorProvider.swift in Sources */,
 				6B9625766B697D1C98E455A2 /* PumpSettingsEditorStateModel.swift in Sources */,
 				A0B8EC8CC5CD1DD237D1BCD2 /* PumpSettingsEditorRootView.swift in Sources */,
@@ -1806,7 +1852,9 @@
 				A33352ED40476125EBAC6EE0 /* CREditorDataFlow.swift in Sources */,
 				17A9D0899046B45E87834820 /* CREditorProvider.swift in Sources */,
 				69B9A368029F7EB39F525422 /* CREditorStateModel.swift in Sources */,
+				38E44538274E411700EC9A94 /* Disk+[Data].swift in Sources */,
 				98641AF4F92123DA668AB931 /* CREditorRootView.swift in Sources */,
+				38E4453D274E411700EC9A94 /* Disk+Errors.swift in Sources */,
 				38E98A2325F52C9300C0CED0 /* Signpost.swift in Sources */,
 				F5F7E6C1B7F098F59EB67EC5 /* TargetsEditorDataFlow.swift in Sources */,
 				5075C1608E6249A51495C422 /* TargetsEditorProvider.swift in Sources */,
@@ -1818,10 +1866,12 @@
 				DD399FB31EACB9343C944C4C /* PreferencesEditorStateModel.swift in Sources */,
 				44190F0BBA464D74B857D1FB /* PreferencesEditorRootView.swift in Sources */,
 				E97285ED9B814CD5253C6658 /* AddCarbsDataFlow.swift in Sources */,
+				38E44522274E3DDC00EC9A94 /* NetworkReachabilityManager.swift in Sources */,
 				A6F097A14CAAE0CE0D11BE1B /* AddCarbsProvider.swift in Sources */,
 				33E198D3039045D98C3DC5D4 /* AddCarbsStateModel.swift in Sources */,
 				28089E07169488CF6DCC2A31 /* AddCarbsRootView.swift in Sources */,
 				D2165E9D78EFF692C1DED1C6 /* AddTempTargetDataFlow.swift in Sources */,
+				38E4451E274DB04600EC9A94 /* AppDelegate.swift in Sources */,
 				5BFA1C2208114643B77F8CEB /* AddTempTargetProvider.swift in Sources */,
 				919DBD08F13BAFB180DF6F47 /* AddTempTargetStateModel.swift in Sources */,
 				8BC2F5A29AD1ED08AC0EE013 /* AddTempTargetRootView.swift in Sources */,
@@ -1837,7 +1887,9 @@
 				711C0CB42CAABE788916BC9D /* ManualTempBasalDataFlow.swift in Sources */,
 				BF1667ADE69E4B5B111CECAE /* ManualTempBasalProvider.swift in Sources */,
 				C967DACD3B1E638F8B43BE06 /* ManualTempBasalStateModel.swift in Sources */,
+				38E4453B274E411700EC9A94 /* Disk+VolumeInformation.swift in Sources */,
 				7BCFACB97C821041BA43A114 /* ManualTempBasalRootView.swift in Sources */,
+				38E44534274E411700EC9A94 /* Disk+InternalHelpers.swift in Sources */,
 				38A00B2325FC2B55006BC0B0 /* LRUCache.swift in Sources */,
 				3083261C4B268E353F36CD0B /* AutotuneConfigDataFlow.swift in Sources */,
 				891DECF7BC20968D7F566161 /* AutotuneConfigProvider.swift in Sources */,
@@ -2194,28 +2246,12 @@
 				minimumVersion = 2.7.1;
 			};
 		};
-		38192DFF261B826A0094D973 /* XCRemoteSwiftPackageReference "Alamofire" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/Alamofire/Alamofire";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 5.4.2;
-			};
-		};
 		3833B46B26012030003021B3 /* XCRemoteSwiftPackageReference "swift-algorithms" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/apple/swift-algorithms";
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 0.0.3;
-			};
-		};
-		383948D125CD4D6D00E91849 /* XCRemoteSwiftPackageReference "Disk" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/saoudrizwan/Disk";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 0.6.4;
 			};
 		};
 		38B17B6425DD90E0005CAE3D /* XCRemoteSwiftPackageReference "SwiftDate" */ = {
@@ -2238,20 +2274,10 @@
 			isa = XCSwiftPackageProductDependency;
 			productName = LibreTransmitter;
 		};
-		38192E00261B826A0094D973 /* Alamofire */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 38192DFF261B826A0094D973 /* XCRemoteSwiftPackageReference "Alamofire" */;
-			productName = Alamofire;
-		};
 		3833B46C26012030003021B3 /* Algorithms */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 3833B46B26012030003021B3 /* XCRemoteSwiftPackageReference "swift-algorithms" */;
 			productName = Algorithms;
-		};
-		383948D225CD4D6D00E91849 /* Disk */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 383948D125CD4D6D00E91849 /* XCRemoteSwiftPackageReference "Disk" */;
-			productName = Disk;
 		};
 		38B17B6525DD90E0005CAE3D /* SwiftDate */ = {
 			isa = XCSwiftPackageProductDependency;
