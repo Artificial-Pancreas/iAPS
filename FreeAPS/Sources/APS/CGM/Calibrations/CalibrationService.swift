@@ -31,6 +31,8 @@ final class BaseCalibrationService: CalibrationService, Injectable {
         static let maxSlope = 1.25
         static let minIntercept = -100.0
         static let maxIntercept = 100.0
+        static let maxValue = 400.0
+        static let minValue = 40.0
     }
 
     @Injected() var storage: FileStorage!
@@ -112,6 +114,6 @@ final class BaseCalibrationService: CalibrationService, Injectable {
     }
 
     private func linearRegression(_ x: Double) -> Double {
-        intercept + slope * x
+        (intercept + slope * x).clamped(Config.minValue ... Config.maxValue)
     }
 }
