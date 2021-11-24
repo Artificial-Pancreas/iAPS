@@ -31,8 +31,8 @@ final class BaseCalibrationService: CalibrationService, Injectable {
         static let maxSlope = 1.25
         static let minIntercept = -100.0
         static let maxIntercept = 100.0
-        static let maxValue = 400.0
-        static let minValue = 40.0
+        static let maxValue = 500.0
+        static let minValue = 0.0
     }
 
     @Injected() var storage: FileStorage!
