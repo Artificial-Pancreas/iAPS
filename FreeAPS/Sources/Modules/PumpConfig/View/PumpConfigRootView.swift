@@ -28,7 +28,7 @@ extension PumpConfig {
             .onAppear(perform: configureView)
             .navigationTitle("Pump config")
             .navigationBarTitleDisplayMode(.automatic)
-            .popover(isPresented: $state.setupPump) {
+            .sheet(isPresented: $state.setupPump) {
                 if let pumpManager = state.provider.apsManager.pumpManager {
                     PumpSettingsView(pumpManager: pumpManager, completionDelegate: state)
                 } else {
