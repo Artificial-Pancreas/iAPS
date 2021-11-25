@@ -14,9 +14,13 @@ final class BaseCalendarManager: CalendarManager, Injectable {
 
     @Persisted(key: "CalendarManager.currentCalendarID") var currentCalendarID: String? = nil
     @Injected() private var settingsManager: SettingsManager!
+    @Injected() private var broadcaster: Broadcaster!
+    @Injected() private var glucoseStorage: GlucoseStorage!
 
-    init(resilver: Resolver) {
-        injectServices(resilver)
+    init(resolver: Resolver) {
+        injectServices(resolver)
+        broadcaster.register(GlucoseObserver.self, observer: self)
+        setupGlucose()
     }
 
     func requestAccessIfNeeded() -> AnyPublisher<Bool, Never> {
@@ -117,6 +121,7 @@ final class BaseCalendarManager: CalendarManager, Injectable {
             formatter.minimumFractionDigits = 1
             formatter.maximumFractionDigits = 1
         }
+        formatter.roundingMode = .halfUp
         return formatter
     }
 
@@ -126,6 +131,24 @@ final class BaseCalendarManager: CalendarManager, Injectable {
         formatter.maximumFractionDigits = 2
         formatter.positivePrefix = "+"
         return formatter
+    }
+
+    func setupGlucose() {
+        let glucose = glucoseStorage.recent()
+        let recentGlucose = glucose.last
+        let glucoseDelta: Int?
+        if glucose.count >= 2 {
+            glucoseDelta = (recentGlucose?.glucose ?? 0) - (glucose[glucose.count - 2].glucose ?? 0)
+        } else {
+            glucoseDelta = nil
+        }
+        createEvent(for: recentGlucose, delta: glucoseDelta)
+    }
+}
+
+extension BaseCalendarManager: GlucoseObserver {
+    func glucoseDidUpdate(_: [BloodGlucose]) {
+        setupGlucose()
     }
 }
 

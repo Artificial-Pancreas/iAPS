@@ -11,6 +11,7 @@ protocol GlucoseStorage {
     func isGlucoseFresh() -> Bool
     func isGlucoseNotFlat() -> Bool
     func nightscoutGlucoseNotUploaded() -> [BloodGlucose]
+    var alarm: GlucoseAlarm? { get }
 }
 
 final class BaseGlucoseStorage: GlucoseStorage, Injectable {
@@ -100,8 +101,37 @@ final class BaseGlucoseStorage: GlucoseStorage, Injectable {
 
         return Array(Set(recentGlucose).subtracting(Set(uploaded)))
     }
+
+    var alarm: GlucoseAlarm? {
+        guard let glucose = recent().last, glucose.dateString.addingTimeInterval(20.minutes.timeInterval) > Date(),
+              let glucoseValue = glucose.glucose else { return nil }
+
+        if glucoseValue < 72 {
+            return .low
+        }
+
+        if glucoseValue > 270 {
+            return .high
+        }
+
+        return nil
+    }
 }
 
 protocol GlucoseObserver {
     func glucoseDidUpdate(_ glucose: [BloodGlucose])
+}
+
+enum GlucoseAlarm {
+    case high
+    case low
+
+    var displayName: String {
+        switch self {
+        case .high:
+            return NSLocalizedString("LOWALERT!", comment: "LOWALERT!")
+        case .low:
+            return NSLocalizedString("HIGHALERT!", comment: "HIGHALERT!")
+        }
+    }
 }

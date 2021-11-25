@@ -10,5 +10,7 @@
     "insulinReqFraction": 0.7,
     "skipBolusScreenAfterCarbs": false,
     "cgm": "nightscout",
-    "uploadGlucose": false
+    "uploadGlucose": false,
+    "glucoseBadge": false,
+    "glucoseNotifications": false
 }

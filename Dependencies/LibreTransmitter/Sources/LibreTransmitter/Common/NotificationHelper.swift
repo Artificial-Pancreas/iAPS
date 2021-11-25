@@ -244,9 +244,9 @@ public enum NotificationHelper {
 
             content.title = titles.joined(separator: " ")
             content.body = body.joined(separator: ", ") + body2s
-            addRequest(identifier: .glucocoseNotifications,
-                       content: content,
-                       deleteOld: true)
+//            addRequest(identifier: .glucocoseNotifications,
+//                       content: content,
+//                       deleteOld: true)
         }
     }
 

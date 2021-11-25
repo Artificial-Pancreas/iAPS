@@ -94,8 +94,6 @@ class SettingsModel : ObservableObject {
 }
 
 struct SettingsView: View {
-    @State var openSnooze = false
-
     //@ObservedObject private var displayGlucoseUnitObservable: DisplayGlucoseUnitObservable
     @ObservedObject private var transmitterInfo: LibreTransmitter.TransmitterInfo
     @ObservedObject private var sensorInfo: LibreTransmitter.SensorInfo
@@ -118,7 +116,6 @@ struct SettingsView: View {
 
     static func asHostedViewController(
         glucoseUnit: HKUnit,
-        openSnooze: Bool,
         //displayGlucoseUnitObservable: DisplayGlucoseUnitObservable,
         notifyComplete: GenericObservableObject,
         notifyDelete: GenericObservableObject,
@@ -128,7 +125,6 @@ struct SettingsView: View {
         alarmStatus: LibreTransmitter.AlarmStatus) -> UIHostingController<SettingsView> {
         UIHostingController(rootView: self.init(
             //displayGlucoseUnitObservable: displayGlucoseUnitObservable,
-            openSnooze: openSnooze,
             transmitterInfo: transmitterInfoObservable, sensorInfo: sensorInfoObervable, glucoseMeasurement: glucoseInfoObservable, notifyComplete: notifyComplete, notifyDelete: notifyDelete, alarmStatus: alarmStatus, glucoseUnit: glucoseUnit
 
         ))
@@ -189,7 +185,7 @@ struct SettingsView: View {
 
     var snoozeSection: some View {
         Section {
-            NavigationLink(destination: SnoozeView(isAlarming: $alarmStatus.isAlarming, activeAlarms: $alarmStatus.glucoseScheduleAlarmResult), isActive: $openSnooze) {
+            NavigationLink(destination: SnoozeView(isAlarming: $alarmStatus.isAlarming, activeAlarms: $alarmStatus.glucoseScheduleAlarmResult)) {
                 if alarmStatus.isAlarming {
                     Text("Snooze Alerts").frame(alignment: .center)
                         .padding(.top, 30)

@@ -8,7 +8,6 @@ extension Home {
         @Injected() var settingsManager: SettingsManager!
         @Injected() var apsManager: APSManager!
         @Injected() var nightscoutManager: NightscoutManager!
-        @Injected() var calendarManager: CalendarManager!
         private let timer = DispatchTimer(timeInterval: 5)
         private(set) var filteredHours = 24
 
@@ -166,7 +165,6 @@ extension Home {
                 } else {
                     self.glucoseDelta = nil
                 }
-                self.calendarManager.createEvent(for: self.recentGlucose, delta: self.glucoseDelta)
             }
         }
 

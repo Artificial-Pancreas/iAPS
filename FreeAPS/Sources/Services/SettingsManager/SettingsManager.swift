@@ -1,7 +1,7 @@
 import Foundation
 import Swinject
 
-protocol SettingsManager {
+protocol SettingsManager: AnyObject {
     var settings: FreeAPSSettings { get set }
     var preferences: Preferences { get }
 }
