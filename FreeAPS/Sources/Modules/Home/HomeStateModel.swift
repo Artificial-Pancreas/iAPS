@@ -1,3 +1,4 @@
+import Combine
 import LoopKitUI
 import SwiftDate
 import SwiftUI
@@ -5,7 +6,6 @@ import SwiftUI
 extension Home {
     final class StateModel: BaseStateModel<Provider> {
         @Injected() var broadcaster: Broadcaster!
-        @Injected() var settingsManager: SettingsManager!
         @Injected() var apsManager: APSManager!
         @Injected() var nightscoutManager: NightscoutManager!
         @Injected() var calendarManager: CalendarManager!
@@ -139,6 +139,19 @@ extension Home {
                     } else {
                         self.setupBattery()
                         self.setupReservoir()
+                    }
+                }
+                .store(in: &lifetime)
+
+            $setupPump
+                .removeDuplicates()
+                .sink { [weak self] show in
+                    guard let self = self else { return }
+                    if show, let pumpManager = self.provider.apsManager.pumpManager {
+                        let view = PumpConfig.PumpSettingsView(pumpManager: pumpManager, completionDelegate: self).asAny()
+                        self.router.mainSecondaryModalView.value = view
+                    } else {
+                        self.router.mainSecondaryModalView.value = nil
                     }
                 }
                 .store(in: &lifetime)

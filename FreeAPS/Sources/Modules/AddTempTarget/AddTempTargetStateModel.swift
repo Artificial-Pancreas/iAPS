@@ -3,7 +3,6 @@ import SwiftUI
 extension AddTempTarget {
     final class StateModel: BaseStateModel<Provider> {
         @Injected() private var storage: TempTargetsStorage!
-        @Injected() private var settingsManager: SettingsManager!
         @Injected() var apsManager: APSManager!
 
         @Published var low: Decimal = 0

@@ -73,11 +73,6 @@ extension Home {
                         state.setupPump = true
                     }
                 }
-                .popover(isPresented: $state.setupPump) {
-                    if let pumpManager = state.provider.apsManager.pumpManager {
-                        PumpConfig.PumpSettingsView(pumpManager: pumpManager, completionDelegate: state)
-                    }
-                }
                 Spacer()
                 LoopView(
                     suggestion: $state.suggestion,

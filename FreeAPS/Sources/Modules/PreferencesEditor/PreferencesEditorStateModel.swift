@@ -2,9 +2,7 @@ import Foundation
 import SwiftUI
 
 extension PreferencesEditor {
-    final class StateModel: BaseStateModel<Provider>, PreferencesSettable {
-        @Injected() var settingsManager: SettingsManager!
-        private(set) var preferences = Preferences()
+    final class StateModel: BaseStateModel<Provider>, PreferencesSettable { private(set) var preferences = Preferences()
         @Published var unitsIndex = 1
         @Published var allowAnnouncements = false
         @Published var insulinReqFraction: Decimal = 0.7
@@ -14,40 +12,16 @@ extension PreferencesEditor {
 
         override func subscribe() {
             preferences = provider.preferences
-            unitsIndex = settingsManager.settings.units == .mgdL ? 0 : 1
-            allowAnnouncements = settingsManager.settings.allowAnnouncements
 
-            insulinReqFraction = settingsManager.settings.insulinReqFraction
-            skipBolusScreenAfterCarbs = settingsManager.settings.skipBolusScreenAfterCarbs
+            subscribeSetting(\.allowAnnouncements, on: $allowAnnouncements) { allowAnnouncements = $0 }
+            subscribeSetting(\.insulinReqFraction, on: $insulinReqFraction) { insulinReqFraction = $0 }
+            subscribeSetting(\.skipBolusScreenAfterCarbs, on: $skipBolusScreenAfterCarbs) { skipBolusScreenAfterCarbs = $0 }
 
-            $unitsIndex
-                .removeDuplicates()
-                .sink { [weak self] index in
-                    self?.settingsManager.settings.units = index == 0 ? .mgdL : .mmolL
-                    self?.provider.migrateUnits()
-                }
-                .store(in: &lifetime)
-
-            $allowAnnouncements
-                .removeDuplicates()
-                .sink { [weak self] allow in
-                    self?.settingsManager.settings.allowAnnouncements = allow
-                }
-                .store(in: &lifetime)
-
-            $insulinReqFraction
-                .removeDuplicates()
-                .sink { [weak self] fraction in
-                    self?.settingsManager.settings.insulinReqFraction = fraction
-                }
-                .store(in: &lifetime)
-
-            $skipBolusScreenAfterCarbs
-                .removeDuplicates()
-                .sink { [weak self] skip in
-                    self?.settingsManager.settings.skipBolusScreenAfterCarbs = skip
-                }
-                .store(in: &lifetime)
+            subscribeSetting(\.units, on: $unitsIndex.map { $0 == 0 ? GlucoseUnits.mgdL : .mmolL }) {
+                unitsIndex = $0 == .mgdL ? 0 : 1
+            } didSet: { [weak self] _ in
+                self?.provider.migrateUnits()
+            }
 
             // MARK: - Main fields
 

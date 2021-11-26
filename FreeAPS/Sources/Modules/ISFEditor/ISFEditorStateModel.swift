@@ -2,7 +2,6 @@ import SwiftUI
 
 extension ISFEditor {
     final class StateModel: BaseStateModel<Provider> {
-        @Injected() var settingsManager: SettingsManager!
         @Published var items: [Item] = []
         private(set) var autosensISF: Decimal?
         private(set) var autosensRatio: Decimal = 0

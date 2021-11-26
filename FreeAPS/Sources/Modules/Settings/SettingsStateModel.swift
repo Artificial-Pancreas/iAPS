@@ -2,7 +2,6 @@ import SwiftUI
 
 extension Settings {
     final class StateModel: BaseStateModel<Provider> {
-        @Injected() private var settingsManager: SettingsManager!
         @Injected() private var broadcaster: Broadcaster!
         @Injected() private var fileManager: FileManager!
         @Published var closedLoop = false
@@ -12,14 +11,9 @@ extension Settings {
         private(set) var buildNumber = ""
 
         override func subscribe() {
-            closedLoop = settingsManager.settings.closedLoop
             debugOptions = settingsManager.settings.debugOptions
 
-            $closedLoop
-                .removeDuplicates()
-                .sink { [weak self] value in
-                    self?.settingsManager.settings.closedLoop = value
-                }.store(in: &lifetime)
+            subscribeSetting(\.closedLoop, on: $closedLoop) { closedLoop = $0 }
 
             broadcaster.register(SettingsObserver.self, observer: self)
 

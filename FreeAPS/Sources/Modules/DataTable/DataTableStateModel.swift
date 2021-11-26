@@ -3,7 +3,6 @@ import SwiftUI
 extension DataTable {
     final class StateModel: BaseStateModel<Provider> {
         @Injected() var broadcaster: Broadcaster!
-        @Injected() var settingsManager: SettingsManager!
         @Published var items: [Item] = []
 
         override func subscribe() {

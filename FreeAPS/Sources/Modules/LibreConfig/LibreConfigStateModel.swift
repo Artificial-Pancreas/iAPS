@@ -4,7 +4,6 @@ import SwiftUI
 extension LibreConfig {
     final class StateModel: BaseStateModel<Provider> {
         @Injected() var source: LibreTransmitterSource!
-        @Injected() var settingsManager: SettingsManager!
 
         @Published var configured = false
 

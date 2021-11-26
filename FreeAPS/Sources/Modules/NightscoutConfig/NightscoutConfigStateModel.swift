@@ -4,7 +4,6 @@ import SwiftUI
 extension NightscoutConfig {
     final class StateModel: BaseStateModel<Provider> {
         @Injected() var keychain: Keychain!
-        @Injected() var settingsManager: SettingsManager!
 
         @Published var url = ""
         @Published var secret = ""
@@ -18,27 +17,10 @@ extension NightscoutConfig {
         override func subscribe() {
             url = keychain.getValue(String.self, forKey: Config.urlKey) ?? ""
             secret = keychain.getValue(String.self, forKey: Config.secretKey) ?? ""
-            isUploadEnabled = settingsManager.settings.isUploadEnabled
-            useLocalSource = settingsManager.settings.useLocalGlucoseSource
-            localPort = Decimal(settingsManager.settings.localGlucosePort)
 
-            $isUploadEnabled
-                .removeDuplicates()
-                .sink { [weak self] enabled in
-                    self?.settingsManager.settings.isUploadEnabled = enabled
-                }.store(in: &lifetime)
-
-            $useLocalSource
-                .removeDuplicates()
-                .sink { [weak self] use in
-                    self?.settingsManager.settings.useLocalGlucoseSource = use
-                }.store(in: &lifetime)
-
-            $localPort
-                .removeDuplicates()
-                .sink { [weak self] port in
-                    self?.settingsManager.settings.localGlucosePort = Int(port)
-                }.store(in: &lifetime)
+            subscribeSetting(\.isUploadEnabled, on: $isUploadEnabled) { isUploadEnabled = $0 }
+            subscribeSetting(\.useLocalGlucoseSource, on: $useLocalSource) { useLocalSource = $0 }
+            subscribeSetting(\.localGlucosePort, on: $localPort.map(Int.init)) { localPort = Decimal($0) }
         }
 
         func connect() {
