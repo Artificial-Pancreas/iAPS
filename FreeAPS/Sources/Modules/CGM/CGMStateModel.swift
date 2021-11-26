@@ -16,11 +16,12 @@ extension CGM {
 
         override func subscribe() {
             cgm = settingsManager.settings.cgm
-            uploadGlucose = settingsManager.settings.uploadGlucose
             transmitterID = UserDefaults.standard.dexcomTransmitterID ?? ""
             currentCalendarID = storedCalendarID ?? ""
             calendarIDs = calendarManager.calendarIDs()
-            createCalendarEvents = settingsManager.settings.useCalendar
+
+            subscribeSetting(\.useCalendar, on: $createCalendarEvents) { createCalendarEvents = $0 }
+            subscribeSetting(\.uploadGlucose, on: $uploadGlucose) { uploadGlucose = $0 }
 
             $cgm
                 .removeDuplicates()
@@ -29,8 +30,6 @@ extension CGM {
                     self.settingsManager.settings.cgm = value
                 }
                 .store(in: &lifetime)
-
-            subscribeSetting(\.uploadGlucose, on: $uploadGlucose)
 
             $createCalendarEvents
                 .removeDuplicates()
@@ -45,8 +44,6 @@ extension CGM {
                 .receive(on: DispatchQueue.main)
                 .weakAssign(to: \.calendarIDs, on: self)
                 .store(in: &lifetime)
-
-            subscribeSetting(\.useCalendar, on: $createCalendarEvents)
 
             $currentCalendarID
                 .removeDuplicates()

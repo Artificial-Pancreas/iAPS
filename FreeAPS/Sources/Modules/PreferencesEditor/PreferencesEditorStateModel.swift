@@ -12,24 +12,16 @@ extension PreferencesEditor {
 
         override func subscribe() {
             preferences = provider.preferences
-            unitsIndex = settingsManager.settings.units == .mgdL ? 0 : 1
-            allowAnnouncements = settingsManager.settings.allowAnnouncements
 
-            insulinReqFraction = settingsManager.settings.insulinReqFraction
-            skipBolusScreenAfterCarbs = settingsManager.settings.skipBolusScreenAfterCarbs
+            subscribeSetting(\.allowAnnouncements, on: $allowAnnouncements) { allowAnnouncements = $0 }
+            subscribeSetting(\.insulinReqFraction, on: $insulinReqFraction) { insulinReqFraction = $0 }
+            subscribeSetting(\.skipBolusScreenAfterCarbs, on: $skipBolusScreenAfterCarbs) { skipBolusScreenAfterCarbs = $0 }
 
-            subscribeSetting(\.allowAnnouncements, on: $allowAnnouncements)
-            subscribeSetting(\.insulinReqFraction, on: $insulinReqFraction)
-            subscribeSetting(\.skipBolusScreenAfterCarbs, on: $skipBolusScreenAfterCarbs)
-
-            $unitsIndex
-                .removeDuplicates()
-                .map { $0 == 0 ? GlucoseUnits.mgdL : .mmolL }
-                .sink { [weak self] units in
-                    self?.settingsManager.settings.units = units
-                    self?.provider.migrateUnits()
-                }
-                .store(in: &lifetime)
+            subscribeSetting(\.units, on: $unitsIndex.map { $0 == 0 ? GlucoseUnits.mgdL : .mmolL }) {
+                unitsIndex = $0 == .mgdL ? 0 : 1
+            } didSet: { [weak self] _ in
+                self?.provider.migrateUnits()
+            }
 
             // MARK: - Main fields
 

@@ -11,10 +11,9 @@ extension Settings {
         private(set) var buildNumber = ""
 
         override func subscribe() {
-            closedLoop = settingsManager.settings.closedLoop
             debugOptions = settingsManager.settings.debugOptions
 
-            subscribeSetting(\.closedLoop, on: $closedLoop)
+            subscribeSetting(\.closedLoop, on: $closedLoop) { closedLoop = $0 }
 
             broadcaster.register(SettingsObserver.self, observer: self)
 

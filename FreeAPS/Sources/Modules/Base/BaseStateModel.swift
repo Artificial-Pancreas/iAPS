@@ -43,12 +43,17 @@ class BaseStateModel<Provider>: StateModel, Injectable where Provider: FreeAPS.P
         router.view(for: screen)
     }
 
-    func subscribeSetting<T: Equatable, U: Publisher>(_ keyPath: WritableKeyPath<FreeAPSSettings, T>, on settingPublisher: U)
-        where U.Output == T, U.Failure == Never
-    {
+    func subscribeSetting<T: Equatable, U: Publisher>(
+        _ keyPath: WritableKeyPath<FreeAPSSettings, T>,
+        on settingPublisher: U, initial: (T) -> Void, didSet: ((T) -> Void)? = nil
+    ) where U.Output == T, U.Failure == Never {
+        initial(settingsManager.settings[keyPath: keyPath])
         settingPublisher
             .removeDuplicates()
-            .assign(to: (\SettingsManager.settings).appending(path: keyPath), on: settingsManager)
+            .sink { [weak self] value in
+                self?.settingsManager.settings[keyPath: keyPath] = value
+                didSet?(value)
+            }
             .store(in: &lifetime)
     }
 }
