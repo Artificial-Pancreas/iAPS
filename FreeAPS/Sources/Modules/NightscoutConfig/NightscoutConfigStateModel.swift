@@ -17,13 +17,10 @@ extension NightscoutConfig {
         override func subscribe() {
             url = keychain.getValue(String.self, forKey: Config.urlKey) ?? ""
             secret = keychain.getValue(String.self, forKey: Config.secretKey) ?? ""
-            isUploadEnabled = settingsManager.settings.isUploadEnabled
-            useLocalSource = settingsManager.settings.useLocalGlucoseSource
-            localPort = Decimal(settingsManager.settings.localGlucosePort)
 
-            subscribeSetting(\.isUploadEnabled, on: $isUploadEnabled)
-            subscribeSetting(\.useLocalGlucoseSource, on: $useLocalSource)
-            subscribeSetting(\.localGlucosePort, on: $localPort.map(Int.init))
+            subscribeSetting(\.isUploadEnabled, on: $isUploadEnabled) { isUploadEnabled = $0 }
+            subscribeSetting(\.useLocalGlucoseSource, on: $useLocalSource) { useLocalSource = $0 }
+            subscribeSetting(\.localGlucosePort, on: $localPort.map(Int.init)) { localPort = Decimal($0) }
         }
 
         func connect() {
