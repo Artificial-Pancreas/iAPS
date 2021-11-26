@@ -12,5 +12,5 @@
     "cgm": "nightscout",
     "uploadGlucose": false,
     "glucoseBadge": false,
-    "glucoseNotifications": false
+    "glucoseNotificationsAlways": false
 }

@@ -15,7 +15,7 @@ struct FreeAPSSettings: JSON, Equatable {
     var uploadGlucose: Bool = false
     var useCalendar: Bool = false
     var glucoseBadge: Bool = false
-    var glucoseNotifications: Bool = false
+    var glucoseNotificationsAlways: Bool = false
 }
 
 extension FreeAPSSettings: Decodable {
@@ -80,8 +80,8 @@ extension FreeAPSSettings: Decodable {
             settings.glucoseBadge = glucoseBadge
         }
 
-        if let glucoseNotifications = try? container.decode(Bool.self, forKey: .glucoseNotifications) {
-            settings.glucoseNotifications = glucoseNotifications
+        if let glucoseNotificationsAlways = try? container.decode(Bool.self, forKey: .glucoseNotificationsAlways) {
+            settings.glucoseNotificationsAlways = glucoseNotificationsAlways
         }
 
         self = settings

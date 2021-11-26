@@ -41,6 +41,13 @@ final class BaseLibreTransmitterSource: LibreTransmitterSource, Injectable {
         .replaceError(with: [])
         .eraseToAnyPublisher()
     }
+
+    func sourceInfo() -> [String: Any]? {
+        if let battery = manager?.battery {
+            return ["transmitterBattery": battery]
+        }
+        return nil
+    }
 }
 
 extension BaseLibreTransmitterSource: LibreTransmitterManagerDelegate {

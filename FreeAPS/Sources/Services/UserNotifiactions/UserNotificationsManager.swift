@@ -6,6 +6,11 @@ import UserNotifications
 
 protocol UserNotificationsManager {}
 
+enum GlucoseSourceKey: String {
+    case transmitterBattery
+    case nightscoutPing
+}
+
 final class BaseUserNotificationsManager: NSObject, UserNotificationsManager, Injectable {
     private enum Identifier: String {
         case glucocoseNotification = "FreeAPS.glucoseNotification"
@@ -14,6 +19,7 @@ final class BaseUserNotificationsManager: NSObject, UserNotificationsManager, In
     @Injected() private var settingsManager: SettingsManager!
     @Injected() private var broadcaster: Broadcaster!
     @Injected() private var glucoseStorage: GlucoseStorage!
+    @Injected(as: FetchGlucoseManager.self) private var sourceInfoProvider: SourceInfoProvider!
 
     private let center = UNUserNotificationCenter.current()
 
@@ -93,10 +99,32 @@ final class BaseUserNotificationsManager: NSObject, UserNotificationsManager, In
                         ) as NSNumber)!
                 } ?? "--"
 
-            let body = glucoseText + " " + directionText + " " + deltaText
+            var body = glucoseText + " " + directionText + " " + deltaText
             titles.append(body)
 
             content.title = titles.joined(separator: " ")
+
+            if let info = self.sourceInfoProvider.sourceInfo() {
+                //NS ping
+                if let ping = info[GlucoseSourceKey.nightscoutPing.rawValue] as? TimeInterval {
+                    body.append(
+                        "\n"
+                            + String(
+                                format: NSLocalizedString("Nightscout ping: %d ms", comment: "Nightscout ping"),
+                                Int(ping * 1000)
+                            )
+                    )
+                }
+
+                //Transmitter battery
+                if let transmitterBattery = info[GlucoseSourceKey.transmitterBattery.rawValue] as? Int {
+                    body.append(
+                        "\n"
+                            + String(format: NSLocalizedString("Transmitter: %@%%", comment: "Transmitter: %@%%"), transmitterBattery)
+                    )
+                }
+            }
+
             content.body = body
 
             self.addAppBadge(glucose: lastGlucose.glucose)
