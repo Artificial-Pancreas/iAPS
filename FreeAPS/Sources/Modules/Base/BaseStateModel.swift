@@ -1,3 +1,4 @@
+import Combine
 import SwiftUI
 import Swinject
 
@@ -12,6 +13,7 @@ protocol StateModel: ObservableObject {
 
 class BaseStateModel<Provider>: StateModel, Injectable where Provider: FreeAPS.Provider {
     @Injected() var router: Router!
+    @Injected() var settingsManager: SettingsManager!
     var isInitial: Bool = true
     private(set) var provider: Provider!
 
@@ -39,5 +41,14 @@ class BaseStateModel<Provider>: StateModel, Injectable where Provider: FreeAPS.P
 
     func view(for screen: Screen) -> AnyView {
         router.view(for: screen)
+    }
+
+    func subscribeSetting<T: Equatable, U: Publisher>(_ keyPath: WritableKeyPath<FreeAPSSettings, T>, on settingPublisher: U)
+        where U.Output == T, U.Failure == Never
+    {
+        settingPublisher
+            .removeDuplicates()
+            .assign(to: (\SettingsManager.settings).appending(path: keyPath), on: settingsManager)
+            .store(in: &lifetime)
     }
 }

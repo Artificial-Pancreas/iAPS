@@ -6,7 +6,6 @@ extension Bolus {
         @Injected() var unlockmanager: UnlockManager!
         @Injected() var apsManager: APSManager!
         @Injected() var broadcaster: Broadcaster!
-        @Injected() var settingsManager: SettingsManager!
         @Injected() var pumpHistotyStorage: PumpHistoryStorage!
         @Published var amount: Decimal = 0
         @Published var inslinRecommended: Decimal = 0

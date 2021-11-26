@@ -5,7 +5,6 @@ extension Calibrations {
     final class StateModel: BaseStateModel<Provider> {
         @Injected() var glucoseStorage: GlucoseStorage!
         @Injected() var calibrationService: CalibrationService!
-        @Injected() var settingsManager: SettingsManager!
 
         @Published var slope: Double = 1
         @Published var intercept: Double = 1

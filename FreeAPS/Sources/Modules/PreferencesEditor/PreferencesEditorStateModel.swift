@@ -2,9 +2,7 @@ import Foundation
 import SwiftUI
 
 extension PreferencesEditor {
-    final class StateModel: BaseStateModel<Provider>, PreferencesSettable {
-        @Injected() var settingsManager: SettingsManager!
-        private(set) var preferences = Preferences()
+    final class StateModel: BaseStateModel<Provider>, PreferencesSettable { private(set) var preferences = Preferences()
         @Published var unitsIndex = 1
         @Published var allowAnnouncements = false
         @Published var insulinReqFraction: Decimal = 0.7
@@ -20,34 +18,18 @@ extension PreferencesEditor {
             insulinReqFraction = settingsManager.settings.insulinReqFraction
             skipBolusScreenAfterCarbs = settingsManager.settings.skipBolusScreenAfterCarbs
 
-            $unitsIndex
-                .removeDuplicates()
-                .sink { [weak self] index in
-                    self?.settingsManager.settings.units = index == 0 ? .mgdL : .mmolL
-                    self?.provider.migrateUnits()
-                }
-                .store(in: &lifetime)
+            subscribeSetting(
+                \.units,
+                on: $unitsIndex
+                    .map { [weak self] index in
+                        self?.provider.migrateUnits()
+                        return index == 0 ? GlucoseUnits.mgdL : .mmolL
+                    }
+            )
 
-            $allowAnnouncements
-                .removeDuplicates()
-                .sink { [weak self] allow in
-                    self?.settingsManager.settings.allowAnnouncements = allow
-                }
-                .store(in: &lifetime)
-
-            $insulinReqFraction
-                .removeDuplicates()
-                .sink { [weak self] fraction in
-                    self?.settingsManager.settings.insulinReqFraction = fraction
-                }
-                .store(in: &lifetime)
-
-            $skipBolusScreenAfterCarbs
-                .removeDuplicates()
-                .sink { [weak self] skip in
-                    self?.settingsManager.settings.skipBolusScreenAfterCarbs = skip
-                }
-                .store(in: &lifetime)
+            subscribeSetting(\.allowAnnouncements, on: $allowAnnouncements)
+            subscribeSetting(\.insulinReqFraction, on: $insulinReqFraction)
+            subscribeSetting(\.skipBolusScreenAfterCarbs, on: $skipBolusScreenAfterCarbs)
 
             // MARK: - Main fields
 
