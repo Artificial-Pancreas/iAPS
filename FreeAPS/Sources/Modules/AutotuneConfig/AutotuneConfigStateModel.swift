@@ -3,7 +3,6 @@ import SwiftUI
 
 extension AutotuneConfig {
     final class StateModel: BaseStateModel<Provider> {
-        @Injected() var settingsManager: SettingsManager!
         @Injected() var apsManager: APSManager!
         @Published var useAutotune = false
         @Published var autotune: Autotune?

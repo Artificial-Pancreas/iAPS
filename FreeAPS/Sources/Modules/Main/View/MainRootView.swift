@@ -12,6 +12,13 @@ extension Main {
                     NavigationView { self.state.modal!.view }
                         .navigationViewStyle(StackNavigationViewStyle())
                 }
+                .sheet(isPresented: $state.isSecondaryModalPresented) {
+                    if let view = state.secondaryModalView {
+                        view
+                    } else {
+                        EmptyView()
+                    }
+                }
                 .alert(isPresented: $state.isAlertPresented) {
                     Alert(
                         title: Text("Important message"),

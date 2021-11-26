@@ -2,7 +2,6 @@ import SwiftUI
 
 extension TargetsEditor {
     final class StateModel: BaseStateModel<Provider> {
-        @Injected() var settingsManager: SettingsManager!
         @Published var items: [Item] = []
 
         let timeValues = stride(from: 0.0, to: 1.days.timeInterval, by: 30.minutes.timeInterval).map { $0 }

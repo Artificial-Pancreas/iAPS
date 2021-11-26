@@ -3,7 +3,6 @@ import SwiftUI
 extension AddCarbs {
     final class StateModel: BaseStateModel<Provider> {
         @Injected() var carbsStorage: CarbsStorage!
-        @Injected() var settingsManager: SettingsManager!
         @Injected() var apsManager: APSManager!
         @Published var carbs: Decimal = 0
         @Published var date = Date()

@@ -3,7 +3,6 @@ import SwiftUI
 
 extension CGM {
     final class StateModel: BaseStateModel<Provider> {
-        @Injected() var settingsManager: SettingsManager!
         @Injected() var libreSource: LibreTransmitterSource!
         @Injected() var calendarManager: CalendarManager!
 
@@ -31,12 +30,7 @@ extension CGM {
                 }
                 .store(in: &lifetime)
 
-            $uploadGlucose
-                .removeDuplicates()
-                .sink { [weak self] value in
-                    self?.settingsManager.settings.uploadGlucose = value
-                }
-                .store(in: &lifetime)
+            subscribeSetting(\.uploadGlucose, on: $uploadGlucose)
 
             $createCalendarEvents
                 .removeDuplicates()
@@ -52,12 +46,7 @@ extension CGM {
                 .weakAssign(to: \.calendarIDs, on: self)
                 .store(in: &lifetime)
 
-            $createCalendarEvents
-                .removeDuplicates()
-                .sink { [weak self] use in
-                    self?.settingsManager.settings.useCalendar = use
-                }
-                .store(in: &lifetime)
+            subscribeSetting(\.useCalendar, on: $createCalendarEvents)
 
             $currentCalendarID
                 .removeDuplicates()

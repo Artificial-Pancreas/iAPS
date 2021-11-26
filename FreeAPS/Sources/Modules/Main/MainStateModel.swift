@@ -5,8 +5,10 @@ extension Main {
     final class StateModel: BaseStateModel<Provider> {
         private(set) var modal: Modal?
         @Published var isModalPresented = false
+        @Published var isSecondaryModalPresented = false
         @Published var isAlertPresented = false
         @Published var alertMessage = ""
+        @Published var secondaryModalView: AnyView? = nil
 
         override func subscribe() {
             router.mainModalScreen
@@ -31,6 +33,22 @@ extension Main {
                 .sink { message in
                     self.isAlertPresented = true
                     self.alertMessage = message
+                }
+                .store(in: &lifetime)
+
+            router.mainSecondaryModalView
+                .receive(on: DispatchQueue.main)
+                .sink { view in
+                    self.secondaryModalView = view
+                    self.isSecondaryModalPresented = view != nil
+                }
+                .store(in: &lifetime)
+
+            $isSecondaryModalPresented
+                .removeDuplicates()
+                .filter { !$0 }
+                .sink { _ in
+                    self.router.mainSecondaryModalView.send(nil)
                 }
                 .store(in: &lifetime)
         }
