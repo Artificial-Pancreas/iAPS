@@ -46,6 +46,7 @@ extension Home {
         @Published var allowManualTemp = false
         @Published var units: GlucoseUnits = .mmolL
         @Published var pumpDisplayState: PumpDisplayState?
+        @Published var alarm: GlucoseAlarm?
 
         override func subscribe() {
             setupGlucose()
@@ -66,6 +67,7 @@ extension Home {
             closedLoop = settingsManager.settings.closedLoop
             lastLoopDate = apsManager.lastLoopDate
             carbsRequired = suggestion?.carbsReq
+            alarm = provider.glucoseStorage.alarm
 
             setStatusTitle()
             setupCurrentTempTarget()
@@ -178,6 +180,7 @@ extension Home {
                 } else {
                     self.glucoseDelta = nil
                 }
+                self.alarm = self.provider.glucoseStorage.alarm
             }
         }
 
