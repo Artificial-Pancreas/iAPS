@@ -18,18 +18,18 @@ extension PreferencesEditor {
             insulinReqFraction = settingsManager.settings.insulinReqFraction
             skipBolusScreenAfterCarbs = settingsManager.settings.skipBolusScreenAfterCarbs
 
-            subscribeSetting(
-                \.units,
-                on: $unitsIndex
-                    .map { [weak self] index in
-                        self?.provider.migrateUnits()
-                        return index == 0 ? GlucoseUnits.mgdL : .mmolL
-                    }
-            )
-
             subscribeSetting(\.allowAnnouncements, on: $allowAnnouncements)
             subscribeSetting(\.insulinReqFraction, on: $insulinReqFraction)
             subscribeSetting(\.skipBolusScreenAfterCarbs, on: $skipBolusScreenAfterCarbs)
+
+            $unitsIndex
+                .removeDuplicates()
+                .map { $0 == 0 ? GlucoseUnits.mgdL : .mmolL }
+                .sink { [weak self] units in
+                    self?.settingsManager.settings.units = units
+                    self?.provider.migrateUnits()
+                }
+                .store(in: &lifetime)
 
             // MARK: - Main fields
 
