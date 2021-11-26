@@ -18,6 +18,7 @@ final class BaseGlucoseStorage: GlucoseStorage, Injectable {
     private let processQueue = DispatchQueue(label: "BaseGlucoseStorage.processQueue")
     @Injected() private var storage: FileStorage!
     @Injected() private var broadcaster: Broadcaster!
+    @Injected() private var settingsManager: SettingsManager!
 
     private enum Config {
         static let filterTime: TimeInterval = 4.5 * 60
@@ -106,11 +107,11 @@ final class BaseGlucoseStorage: GlucoseStorage, Injectable {
         guard let glucose = recent().last, glucose.dateString.addingTimeInterval(20.minutes.timeInterval) > Date(),
               let glucoseValue = glucose.glucose else { return nil }
 
-        if glucoseValue < 72 {
+        if Decimal(glucoseValue) < settingsManager.settings.lowGlucose {
             return .low
         }
 
-        if glucoseValue > 270 {
+        if Decimal(glucoseValue) > settingsManager.settings.highGlucose {
             return .high
         }
 

@@ -56,19 +56,17 @@ final class BaseUserNotificationsManager: NSObject, UserNotificationsManager, In
     private func sendGlucoseNotification() {
         addAppBadge(glucose: nil)
 
+        let glucose = glucoseStorage.recent()
+
+        guard let lastGlucose = glucose.last, let glucoseValue = lastGlucose.glucose else { return }
+
+        addAppBadge(glucose: lastGlucose.glucose)
+
+        guard glucoseStorage.alarm != nil || settingsManager.settings.glucoseNotificationsAlways else {
+            return
+        }
+
         ensureCanSendNotification {
-            let glucose = self.glucoseStorage.recent()
-            guard let lastGlucose = glucose.last, let glucoseValue = lastGlucose.glucose else { return }
-
-            let delta: Int?
-            if glucose.count >= 2 {
-                delta = glucoseValue - (glucose[glucose.count - 2].glucose ?? 0)
-            } else {
-                delta = nil
-            }
-
-            let content = UNMutableNotificationContent()
-
             var titles: [String] = []
 
             switch self.glucoseStorage.alarm {
@@ -76,61 +74,76 @@ final class BaseUserNotificationsManager: NSObject, UserNotificationsManager, In
                 titles.append(NSLocalizedString("Glucose", comment: "Glucose"))
             case .low:
                 titles.append(NSLocalizedString("LOWALERT!", comment: "LOWALERT!"))
-                self.playSound()
+                self.playSoundIfNeeded()
             case .high:
                 titles.append(NSLocalizedString("HIGHALERT!", comment: "HIGHALERT!"))
-                self.playSound()
+                self.playSoundIfNeeded()
             }
 
-            let units = self.settingsManager.settings.units
+            let delta = glucose.count >= 2 ? glucoseValue - (glucose[glucose.count - 2].glucose ?? 0) : nil
 
-            let glucoseText = self.glucoseFormatter
-                .string(from: Double(
-                    units == .mmolL ? glucoseValue
-                        .asMmolL : Decimal(glucoseValue)
-                ) as NSNumber)! + " " + NSLocalizedString(units.rawValue, comment: "units")
-            let directionText = lastGlucose.direction?.symbol ?? "↔︎"
-            let deltaText = delta
-                .map {
-                    self.deltaFormatter
-                        .string(from: Double(
-                            units == .mmolL ? $0
-                                .asMmolL : Decimal($0)
-                        ) as NSNumber)!
-                } ?? "--"
+            let body = self.glucoseText(glucoseValue: glucoseValue, delta: delta, direction: lastGlucose.direction) + self
+                .infoBody()
 
-            var body = glucoseText + " " + directionText + " " + deltaText
             titles.append(body)
 
+            let content = UNMutableNotificationContent()
             content.title = titles.joined(separator: " ")
-
-            if let info = self.sourceInfoProvider.sourceInfo() {
-                //NS ping
-                if let ping = info[GlucoseSourceKey.nightscoutPing.rawValue] as? TimeInterval {
-                    body.append(
-                        "\n"
-                            + String(
-                                format: NSLocalizedString("Nightscout ping: %d ms", comment: "Nightscout ping"),
-                                Int(ping * 1000)
-                            )
-                    )
-                }
-
-                //Transmitter battery
-                if let transmitterBattery = info[GlucoseSourceKey.transmitterBattery.rawValue] as? Int {
-                    body.append(
-                        "\n"
-                            + String(format: NSLocalizedString("Transmitter: %@%%", comment: "Transmitter: %@%%"), transmitterBattery)
-                    )
-                }
-            }
-
             content.body = body
-
-            self.addAppBadge(glucose: lastGlucose.glucose)
 
             self.addRequest(identifier: .glucocoseNotification, content: content, deleteOld: true)
         }
+    }
+
+    private func glucoseText(glucoseValue: Int, delta: Int?, direction: BloodGlucose.Direction?) -> String {
+        let units = settingsManager.settings.units
+        let glucoseText = glucoseFormatter
+            .string(from: Double(
+                units == .mmolL ? glucoseValue
+                    .asMmolL : Decimal(glucoseValue)
+            ) as NSNumber)! + " " + NSLocalizedString(units.rawValue, comment: "units")
+        let directionText = direction?.symbol ?? "↔︎"
+        let deltaText = delta
+            .map {
+                self.deltaFormatter
+                    .string(from: Double(
+                        units == .mmolL ? $0
+                            .asMmolL : Decimal($0)
+                    ) as NSNumber)!
+            } ?? "--"
+
+        return glucoseText + " " + directionText + " " + deltaText
+    }
+
+    private func infoBody() -> String {
+        var body = ""
+
+        if settingsManager.settings.addSourceInfoToGlucoseNotifications,
+           let info = sourceInfoProvider.sourceInfo()
+        {
+            // NS ping
+            if let ping = info[GlucoseSourceKey.nightscoutPing.rawValue] as? TimeInterval {
+                body.append(
+                    "\n"
+                        + String(
+                            format: NSLocalizedString("Nightscout ping: %d ms", comment: "Nightscout ping"),
+                            Int(ping * 1000)
+                        )
+                )
+            }
+
+            // Transmitter battery
+            if let transmitterBattery = info[GlucoseSourceKey.transmitterBattery.rawValue] as? Int {
+                body.append(
+                    "\n"
+                        + String(
+                            format: NSLocalizedString("Transmitter: %@%%", comment: "Transmitter: %@%%"),
+                            transmitterBattery
+                        )
+                )
+            }
+        }
+        return body
     }
 
     private func requestNotificationPermissionsIfNeeded() {
@@ -184,14 +197,25 @@ final class BaseUserNotificationsManager: NSObject, UserNotificationsManager, In
         }
     }
 
+    private func playSoundIfNeeded() {
+        guard settingsManager.settings.useAlarmSound else { return }
+        playSound()
+    }
+
+    private let soundID: UInt32 = 1336
+
     private func playSound(times: Int = 3) {
         guard times > 0 else {
             return
         }
 
-        AudioServicesPlaySystemSoundWithCompletion(1336) {
+        AudioServicesPlaySystemSoundWithCompletion(soundID) {
             self.playSound(times: times - 1)
         }
+    }
+
+    private func stopSound() {
+        AudioServicesDisposeSystemSoundID(soundID)
     }
 
     private var glucoseFormatter: NumberFormatter {

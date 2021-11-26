@@ -107,7 +107,6 @@ struct SettingsView: View {
     //most of the settings are now retrieved from the cgmmanager observables instead
     @StateObject var model = SettingsModel()
     @State private var presentableStatus: StatusMessage?
-    @ObservedObject var alarmStatus: LibreTransmitter.AlarmStatus
 
     @State private var showingDestructQuestion = false
     @State private var showingExporter = false
@@ -121,11 +120,10 @@ struct SettingsView: View {
         notifyDelete: GenericObservableObject,
         transmitterInfoObservable:LibreTransmitter.TransmitterInfo,
         sensorInfoObervable: LibreTransmitter.SensorInfo,
-        glucoseInfoObservable: LibreTransmitter.GlucoseInfo,
-        alarmStatus: LibreTransmitter.AlarmStatus) -> UIHostingController<SettingsView> {
+        glucoseInfoObservable: LibreTransmitter.GlucoseInfo) -> UIHostingController<SettingsView> {
         UIHostingController(rootView: self.init(
             //displayGlucoseUnitObservable: displayGlucoseUnitObservable,
-            transmitterInfo: transmitterInfoObservable, sensorInfo: sensorInfoObervable, glucoseMeasurement: glucoseInfoObservable, notifyComplete: notifyComplete, notifyDelete: notifyDelete, alarmStatus: alarmStatus, glucoseUnit: glucoseUnit
+            transmitterInfo: transmitterInfoObservable, sensorInfo: sensorInfoObervable, glucoseMeasurement: glucoseInfoObservable, notifyComplete: notifyComplete, notifyDelete: notifyDelete, glucoseUnit: glucoseUnit
 
         ))
     }
@@ -185,18 +183,9 @@ struct SettingsView: View {
 
     var snoozeSection: some View {
         Section {
-            NavigationLink(destination: SnoozeView(isAlarming: $alarmStatus.isAlarming, activeAlarms: $alarmStatus.glucoseScheduleAlarmResult)) {
-                if alarmStatus.isAlarming {
-                    Text("Snooze Alerts").frame(alignment: .center)
-                        .padding(.top, 30)
-                        .padding(.bottom, 30)
-                } else {
-                    Text("Snooze Alerts").frame(alignment: .center)
-                }
-            }
+            Text("Snooze Alerts").frame(alignment: .center)
         }
     }
-
 
     var measurementSection : some View {
         Section(header: Text("Last measurement")) {

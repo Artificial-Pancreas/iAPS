@@ -12,19 +12,13 @@ import HealthKit
 extension UserDefaults {
     private enum Key: String {
         case glucoseSchedules = "no.bjorninge.glucoseschedules"
-
-        case mmAlwaysDisplayGlucose = "no.bjorninge.mmAlwaysDisplayGlucose"
-        case mmNotifyEveryXTimes = "no.bjorninge.mmNotifyEveryXTimes"
-        case mmGlucoseAlarmsVibrate = "no.bjorninge.mmGlucoseAlarmsVibrate"
         case mmAlertLowBatteryWarning = "no.bjorninge.mmLowBatteryWarning"
         case mmAlertInvalidSensorDetected = "no.bjorninge.mmInvalidSensorDetected"
-        //case mmAlertalarmNotifications
         case mmAlertNewSensorDetected = "no.bjorninge.mmNewSensorDetected"
         case mmAlertNoSensorDetected = "no.bjorninge.mmNoSensorDetected"
         case mmGlucoseUnit = "no.bjorninge.mmGlucoseUnit"
         case mmAlertSensorSoonExpire = "no.bjorninge.mmAlertSensorSoonExpire"
         case mmSnoozedUntil = "no.bjorninge.mmSnoozedUntil"
-        case mmShowTransmitterBattery = "no.bjorninge.mmShowTransmitterBattery"
     }
     /*
      case always
@@ -40,23 +34,6 @@ extension UserDefaults {
             return value as? Bool
         }
         return nil
-    }
-
-    var mmAlwaysDisplayGlucose: Bool {
-        get {
-            optionalBool(forKey: Key.mmAlwaysDisplayGlucose.rawValue) ?? true
-        }
-        set {
-            set(newValue, forKey: Key.mmAlwaysDisplayGlucose.rawValue)
-        }
-    }
-    var mmNotifyEveryXTimes: Int {
-        get {
-            integer(forKey: Key.mmNotifyEveryXTimes.rawValue)
-        }
-        set {
-            set(newValue, forKey: Key.mmNotifyEveryXTimes.rawValue)
-        }
     }
 
     var mmAlertLowBatteryWarning: Bool {
@@ -103,26 +80,8 @@ extension UserDefaults {
         }
     }
 
-    var mmGlucoseAlarmsVibrate: Bool {
-        get {
-            optionalBool(forKey: Key.mmGlucoseAlarmsVibrate.rawValue) ?? true
-        }
-        set {
-            set(newValue, forKey: Key.mmGlucoseAlarmsVibrate.rawValue)
-        }
-    }
-
-    var mmShowTransmitterBattery: Bool {
-        get {
-            optionalBool(forKey: Key.mmShowTransmitterBattery.rawValue) ?? true
-        }
-        set {
-            set(newValue, forKey: Key.mmShowTransmitterBattery.rawValue)
-        }
-    }
-
     var allNotificationToggles: [Bool] {
-        [mmAlwaysDisplayGlucose, mmAlertLowBatteryWarning, mmAlertInvalidSensorDetected, mmAlertNewSensorDetected, mmAlertNoSensorDetected, mmAlertWillSoonExpire, mmGlucoseAlarmsVibrate, mmShowTransmitterBattery]
+        [mmAlertLowBatteryWarning, mmAlertInvalidSensorDetected, mmAlertNewSensorDetected, mmAlertNoSensorDetected, mmAlertWillSoonExpire]
     }
 
     //intentionally only supports mgdl and mmol

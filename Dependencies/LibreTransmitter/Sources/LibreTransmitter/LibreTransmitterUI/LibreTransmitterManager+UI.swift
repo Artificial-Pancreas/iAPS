@@ -81,8 +81,7 @@ public struct LibreTransmitterSettingsView: UIViewControllerRepresentable {
             notifyDelete: wantToTerminateNotifier,
             transmitterInfoObservable: manager.transmitterInfoObservable,
             sensorInfoObervable: manager.sensorInfoObservable,
-            glucoseInfoObservable: manager.glucoseInfoObservable,
-            alarmStatus: manager.alarmStatus
+            glucoseInfoObservable: manager.glucoseInfoObservable
         )
 
         let nav = SettingsNavigationViewController(rootViewController: settings)

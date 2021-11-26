@@ -16,6 +16,10 @@ struct FreeAPSSettings: JSON, Equatable {
     var useCalendar: Bool = false
     var glucoseBadge: Bool = false
     var glucoseNotificationsAlways: Bool = false
+    var useAlarmSound: Bool = false
+    var addSourceInfoToGlucoseNotifications: Bool = false
+    var lowGlucose: Decimal = 72
+    var highGlucose: Decimal = 270
 }
 
 extension FreeAPSSettings: Decodable {
@@ -82,6 +86,25 @@ extension FreeAPSSettings: Decodable {
 
         if let glucoseNotificationsAlways = try? container.decode(Bool.self, forKey: .glucoseNotificationsAlways) {
             settings.glucoseNotificationsAlways = glucoseNotificationsAlways
+        }
+
+        if let useAlarmSound = try? container.decode(Bool.self, forKey: .useAlarmSound) {
+            settings.useAlarmSound = useAlarmSound
+        }
+
+        if let addSourceInfoToGlucoseNotifications = try? container.decode(
+            Bool.self,
+            forKey: .addSourceInfoToGlucoseNotifications
+        ) {
+            settings.addSourceInfoToGlucoseNotifications = addSourceInfoToGlucoseNotifications
+        }
+
+        if let lowGlucose = try? container.decode(Decimal.self, forKey: .lowGlucose) {
+            settings.lowGlucose = lowGlucose
+        }
+
+        if let highGlucose = try? container.decode(Decimal.self, forKey: .highGlucose) {
+            settings.highGlucose = highGlucose
         }
 
         self = settings
