@@ -564,16 +564,16 @@ Enact a temp Basal or a temp target */
 "Detected sensor is invalid: %@" = "Oppdaget sensor er ugyldig: %@";
 
 /* Low Battery */
-"Low battery" = "Low battery";
+"Low battery" = "Lavt batterinivå";
 
 /* */
-"Invalid sensor" = "Invalid sensor";
+"Invalid sensor" = "Ugyldig sensor";
 
 /* */
-"Sensor change" = "Sensor change";
+"Sensor change" = "Endring av sensor";
 
 /* */
-"Sensor expires soon" = "Sensor expires soon";
+"Sensor expires soon" = "Sensor utløper snart";
 
 /* Battery is running low %@, consider charging your %@ device as soon as possible */
 "Battery is running low %@, consider charging your %@ device as soon as possible" = "Batterinivået er lavt %@, vurder å lade %@ enheten din så snart som mulig";
@@ -651,7 +651,7 @@ Enact a temp Basal or a temp target */
 "Edit calibrations" = "Rediger kalibreringer";
 
 /* */
-"edit calibration clicked" = "edit calibration clicked";
+"edit calibration clicked" = "rediger valgt kalibrering";
 
 /* */
 "Delete CGM" = "Slett CGM";
@@ -671,46 +671,46 @@ Enact a temp Basal or a temp target */
 "Glucose Settings" = "Blodsukker-innstillinger";
 
 /* */
-"Notifications" = "Notifications";
+"Notifications" = "Varsler";
 
 /* */
-"Export logs" = "Export logs";
+"Export logs" = "Eksporter logger";
 
 /* */
-"Export not available" = "Export not available";
+"Export not available" = "Eksport ikke tilgjengelig";
 
 /* */
-"Log export requires ios 15" = "Log export requires ios 15";
+"Log export requires ios 15" = "Loggeksportering krever ios 15";
 
 /* */
-"Got it!" = "Got it!";
+"Got it!" = "Skjønner!";
 
 /* */
-"Saved to %@" = "Saved to %@";
+"Saved to %@" = "Lagret til %@";
 
 /* */
-"No logs available" = "No logs available";
+"No logs available" = "Ingen logger tilgjengelig";
 
 /* */
 "Glucose Notification visibility" = "Glucose Notification visibility";
 
 /* */
-"Always Notify Glucose" = "Always Notify Glucose";
+"Always Notify Glucose" = "Alltid varsle om blodsukker";
 
 /* */
-"Notify per reading" = "Notify per reading";
+"Notify per reading" = "Varsle per lesing";
 
 /* */
-"Value" = "Value";
+"Value" = "Verdi";
 
 /* */
-"Adds Phone Battery" = "Adds Phone Battery";
+"Adds Phone Battery" = "Legger til telefonbatteri";
 
 /* */
-"Adds Transmitter Battery" = "Adds Transmitter Battery";
+"Adds Transmitter Battery" = "Legger til senderbatteri";
 
 /* */
-"Also vibrate" = "Also vibrate";
+"Also vibrate" = "Også vibrasjon";
 
 /* */
 "Additional notification types" = "Additional notification types";
@@ -719,52 +719,52 @@ Enact a temp Basal or a temp target */
 "Misc" = "Misc";
 
 /* */
-"Unit override" = "Unit override";
+"Unit override" = "Overstyr enhet";
 
 /* */
-"Low" = "Low";
+"Low" = "Lav";
 
 /* */
-"High" = "High";
+"High" = "Høy";
 
 /* */
-"glucose" = "glucose";
+"glucose" = "blodsukker";
 
 /* */
-"Schedule " = "Schedule ";
+"Schedule " = "Tidsplan ";
 
 /* */
-"tapped save schedules" = "tapped save schedules";
+"tapped save schedules" = "valgt lagre tidsplaner";
 
 /* */
-"Error" = "Error";
+"Error" = "Feil";
 
 /* */
 "Some ui element was incorrectly specified" = "Some ui element was incorrectly specified";
 
 /* */
-"Success" = "Success";
+"Success" = "Vellykket";
 
 /* */
 "Schedules were saved successfully!" = "Schedules were saved successfully!";
 
 /* */
-"High Glucose Alarm active" = "High Glucose Alarm active";
+"High Glucose Alarm active" = "Høy glukosealarm aktiv";
 
 /* */
-"Low Glucose Alarm active" = "Low Glucose Alarm active";
+"Low Glucose Alarm active" = "Lav glukosealarm aktiv";
 
 /* */
-"No Glucose Alarm active" = "No Glucose Alarm active";
+"No Glucose Alarm active" = "Ingen glukosealarm aktiv";
 
 /* */
-"snoozing until %@" = "snoozing until %@";
+"snoozing until %@" = "slumrer til %@";
 
 /* */
-"not snoozing" = "not snoozing";
+"not snoozing" = "slumrer ikke";
 
 /* */
-"nothing to see here" = "nothing to see here";
+"nothing to see here" = "ingenting å se her";
 
 /* */
 "snooze from testview clicked" = "snooze from testview clicked";
@@ -782,7 +782,7 @@ Enact a temp Basal or a temp target */
 "Hold the top of your iPhone near the sensor to pair" = "Hold the top of your iPhone near the sensor to pair";
 
 /* */
-"Sensor not found" = "Sensor not found";
+"Sensor not found" = "Sensor ikke funnet";
 
 /* */
 "Also play alert sound" = "Also play alert sound";
@@ -791,7 +791,7 @@ Enact a temp Basal or a temp target */
 "Notification Settings" = "Notification Settings";
 
 /* */
-"Found devices: %d" = "Found devices: %d";
+"Found devices: %d" = "Fant enheter: %d";
 
 /* */
 "Backfill options" = "Backfill options";
