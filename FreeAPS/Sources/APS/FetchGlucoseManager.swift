@@ -41,6 +41,8 @@ final class BaseFetchGlucoseManager: FetchGlucoseManager, Injectable {
             glucoseSource = simulatorSource
         case .libreTransmitter:
             glucoseSource = libreTransmitter
+        case .glucoseDirect:
+            glucoseSource = appGroupSource
         }
 
         if settingsManager.settings.cgm != .libreTransmitter {
