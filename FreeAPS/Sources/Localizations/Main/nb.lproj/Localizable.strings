@@ -692,7 +692,7 @@ Enact a temp Basal or a temp target */
 "No logs available" = "Ingen logger tilgjengelig";
 
 /* */
-"Glucose Notification visibility" = "Glucose Notification visibility";
+"Glucose Notification visibility" = "Blodsukker-varsel";
 
 /* */
 "Always Notify Glucose" = "Alltid varsle om blodsukker";
@@ -713,10 +713,10 @@ Enact a temp Basal or a temp target */
 "Also vibrate" = "Også vibrasjon";
 
 /* */
-"Additional notification types" = "Additional notification types";
+"Additional notification types" = "Andre varslingstyper";
 
 /* */
-"Misc" = "Misc";
+"Misc" = "Diverse";
 
 /* */
 "Unit override" = "Overstyr enhet";
@@ -740,13 +740,13 @@ Enact a temp Basal or a temp target */
 "Error" = "Feil";
 
 /* */
-"Some ui element was incorrectly specified" = "Some ui element was incorrectly specified";
+"Some ui element was incorrectly specified" = "Et ui-element var feil spesifisert";
 
 /* */
 "Success" = "Vellykket";
 
 /* */
-"Schedules were saved successfully!" = "Schedules were saved successfully!";
+"Schedules were saved successfully!" = "Tidsplaner ble lagret!";
 
 /* */
 "High Glucose Alarm active" = "Høy glukosealarm aktiv";
@@ -767,7 +767,7 @@ Enact a temp Basal or a temp target */
 "nothing to see here" = "ingenting å se her";
 
 /* */
-"snooze from testview clicked" = "snooze from testview clicked";
+"snooze from testview clicked" = "trykket på slumre fra testvisning";
 
 /* */
 "will snooze for %@ until %@" = "will snooze for %@ until %@";
