@@ -1,0 +1,40 @@
+/* The title text for the basal rate schedule */
+"Basal Rates" = "Bazálne Hodnoty";
+
+/* The title of the carb ratios schedule screen */
+"Carb Ratios" = "Sacharidový Pomer";
+
+/* The title for the cell navigating to the carbs screen */
+"Carbs" = "Sach";
+
+/* The title text for the glucose correction range schedule */
+"Correction Range" = "Korekčný Rozsah";
+
+/* The title for the cell displaying diagnostic data */
+"Diagnostic" = "Diagnostika";
+
+/* The placeholder text instructing users how to enter a pump ID */
+"Enter the 6-digit pump ID" = "Zadajte 6-miestny ID pumpy";
+
+/* The title for the cell displaying data generation */
+"Generate Data" = "Generovať Údaje";
+
+/* The title of the insulin sensitivity schedule screen
+   The title text for the insulin sensitivity schedule */
+"Insulin Sensitivity" = "Inzulínová Citlivosť";
+
+/* The title text for the pump ID */
+"Pump ID" = "ID Pumpy";
+
+/* The title for the cell navigating to the reservoir screen */
+"Reservoir" = "Rezervoár";
+
+/* Title for the cell resetting the data manager */
+"Reset" = "Resetovať";
+
+/* Title of button to sync basal profile from pump */
+"Sync With Pump" = "Synchronizuj s Pumpou";
+
+/* Instructions on where to find the pump ID on a Minimed pump */
+"The pump ID can be found printed on the back, or near the bottom of the STATUS/Esc screen. It is the strictly numerical portion of the serial number (shown as SN or S/N)." = "ID Pumpy môžete nájsť na etikete vzadu, alebo blízko spodnej časti obrazovky STATUS/Esc. Ide o výhradne číselný údaj sériového čísla (zobrazený ako SN alebo S/N).";
+
