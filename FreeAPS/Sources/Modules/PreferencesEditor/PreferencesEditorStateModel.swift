@@ -376,7 +376,16 @@ extension PreferencesEditor {
                 )
             ]
 
-            let autoisfSettings = [
+            let xpmSettings = [
+                Field(
+                    displayName: "Enable Floating Carbs",
+                    type: .boolean(keypath: \.floatingcarbs),
+                    infoText: NSLocalizedString(
+                        "Defaults to false. If true, then dose slightly more aggressively by using all entered carbs for calculating COBpredBGs. This avoids backing off too quickly as COB decays. Even with this option, oref0 still switches gradually from using COBpredBGs to UAMpredBGs proportionally to how many carbs are left as COB. Summary: use all entered carbs in the future for predBGs & don't decay them as COB, only once they are actual.",
+                        comment: "Floating Carbs"
+                    ),
+                    settable: self
+                ),
                 Field(
                     displayName: "Enable AutoISF",
                     type: .boolean(keypath: \.autoisf),
@@ -408,17 +417,8 @@ extension PreferencesEditor {
                     displayName: "SMB Max RangeExtension",
                     type: .decimal(keypath: \.smbMaxRangeExtension),
                     infoText: NSLocalizedString(
-                        "Default value: 1. This is another key OpenAPS safety cap, and specifies by what factor you can exceed the regular 120 maxSMB/maxUAM minutes. Increase this experimental value slowly and with caution.",
+                        "Default value: 1. This is another key OpenAPS safety cap, and specifies by what factor you can exceed the regular 120 maxSMB/maxUAM minutes. Increase this experimental value slowly and with caution. Available only when autoISF is enabled.",
                         comment: "SMB Max RangeExtension"
-                    ),
-                    settable: self
-                ),
-                Field(
-                    displayName: "SMB DeliveryRatio",
-                    type: .decimal(keypath: \.smbDeliveryRatio),
-                    infoText: NSLocalizedString(
-                        "Default value: 0.5 This is another key OpenAPS safety cap, and specifies what share of the total insulin required can be delivered as SMB. This is to prevent people from getting into dangerous territory by setting SMB requests from the caregivers phone at the same time. Increase this experimental value slowly and with caution.",
-                        comment: "SMB DeliveryRatio"
                     ),
                     settable: self
                 )
@@ -440,8 +440,8 @@ extension PreferencesEditor {
                     fields: otherSettings
                 ),
                 FieldSection(
-                    displayName: NSLocalizedString("Auto-ISF settings", comment: "Auto-ISF settings"),
-                    fields: autoisfSettings
+                    displayName: NSLocalizedString("XPM settings", comment: "Experimental stuff settings"),
+                    fields: xpmSettings
                 )
             ]
         }

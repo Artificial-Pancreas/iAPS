@@ -46,6 +46,7 @@ struct Preferences: JSON {
     var noisyCGMTargetMultiplier: Decimal = 1.3
     var suspendZerosIOB: Bool = true
     var timestamp: Date?
+    var floatingcarbs: Bool = false
 }
 
 extension Preferences {
@@ -94,6 +95,7 @@ extension Preferences {
         case carbsReqThreshold
         case noisyCGMTargetMultiplier
         case suspendZerosIOB = "suspend_zeros_iob"
+        case floatingcarbs = "floating_carbs"
     }
 }
 
