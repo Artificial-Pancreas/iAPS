@@ -836,7 +836,7 @@ Enact a temp Basal or a temp target */
 "Last loop was more then %d min ago" = "Last loop was more then %d min ago";
 
 /* Glucose badge */
-"Show glucose on the app badge" = "Show glucose on the app badge";
+"Show glucose on the app badge" = "Mostra il glucosio sul badge dell'app";
 
 
 /* Headers for settings ------------------- */
