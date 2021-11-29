@@ -17,6 +17,13 @@ extension NotificationsConfig {
             return formatter
         }
 
+        private var carbsFormatter: NumberFormatter {
+            let formatter = NumberFormatter()
+            formatter.numberStyle = .decimal
+            formatter.maximumFractionDigits = 0
+            return formatter
+        }
+
         var body: some View {
             Form {
                 Section(header: Text("Glucose")) {
@@ -37,6 +44,15 @@ extension NotificationsConfig {
                         Spacer()
                         DecimalTextField("0", value: $state.highGlucose, formatter: glucoseFormatter)
                         Text(state.units.rawValue).foregroundColor(.secondary)
+                    }
+                }
+
+                Section(header: Text("Other")) {
+                    HStack {
+                        Text("Carbs Requeted Threshold")
+                        Spacer()
+                        DecimalTextField("0", value: $state.carbsRequiredThreshold, formatter: carbsFormatter)
+                        Text("г").foregroundColor(.secondary)
                     }
                 }
             }

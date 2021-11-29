@@ -20,6 +20,7 @@ struct FreeAPSSettings: JSON, Equatable {
     var addSourceInfoToGlucoseNotifications: Bool = false
     var lowGlucose: Decimal = 72
     var highGlucose: Decimal = 270
+    var carbsRequiredThreshold: Decimal = 10
 }
 
 extension FreeAPSSettings: Decodable {
@@ -105,6 +106,10 @@ extension FreeAPSSettings: Decodable {
 
         if let highGlucose = try? container.decode(Decimal.self, forKey: .highGlucose) {
             settings.highGlucose = highGlucose
+        }
+
+        if let carbsRequiredThreshold = try? container.decode(Decimal.self, forKey: .carbsRequiredThreshold) {
+            settings.carbsRequiredThreshold = carbsRequiredThreshold
         }
 
         self = settings

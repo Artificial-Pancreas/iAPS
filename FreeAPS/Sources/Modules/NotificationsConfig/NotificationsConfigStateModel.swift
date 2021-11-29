@@ -8,6 +8,7 @@ extension NotificationsConfig {
         @Published var addSourceInfoToGlucoseNotifications = false
         @Published var lowGlucose: Decimal = 0
         @Published var highGlucose: Decimal = 0
+        @Published var carbsRequiredThreshold: Decimal = 0
         var units: GlucoseUnits = .mmolL
 
         override func subscribe() {
@@ -35,6 +36,11 @@ extension NotificationsConfig {
                 guard units == .mmolL else { return $0 }
                 return $0.asMgdL
             })
+
+            subscribeSetting(
+                \.carbsRequiredThreshold,
+                on: $carbsRequiredThreshold
+            ) { carbsRequiredThreshold = $0 }
         }
     }
 }

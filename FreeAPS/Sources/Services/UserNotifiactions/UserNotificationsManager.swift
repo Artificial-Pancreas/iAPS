@@ -15,25 +15,40 @@ enum GlucoseSourceKey: String {
 final class BaseUserNotificationsManager: NSObject, UserNotificationsManager, Injectable {
     private enum Identifier: String {
         case glucocoseNotification = "FreeAPS.glucoseNotification"
+        case carbsRequiredNotification = "FreeAPS.carbsRequiredNotification"
+        case noLoopFirstNotification = "FreeAPS.noLoopFirstNotification"
+        case noLoopSecondNotification = "FreeAPS.noLoopSecondNotification"
     }
 
     @Injected() private var settingsManager: SettingsManager!
     @Injected() private var broadcaster: Broadcaster!
     @Injected() private var glucoseStorage: GlucoseStorage!
+    @Injected() private var apsManager: APSManager!
     @Injected(as: FetchGlucoseManager.self) private var sourceInfoProvider: SourceInfoProvider!
 
     @Persisted(key: "UserNotificationsManager.snoozeUntilDate") private var snoozeUntilDate: Date = .distantPast
 
     private let center = UNUserNotificationCenter.current()
+    private var lifetime = Lifetime()
 
     init(resolver: Resolver) {
         super.init()
         center.delegate = self
         injectServices(resolver)
         broadcaster.register(GlucoseObserver.self, observer: self)
+        broadcaster.register(SuggestionObserver.self, observer: self)
 
         requestNotificationPermissionsIfNeeded()
         sendGlucoseNotification()
+        subscribeOnLoop()
+    }
+
+    private func subscribeOnLoop() {
+        apsManager.lastLoopDateSubject
+            .sink { [weak self] date in
+                self?.scheduleMissingLoopNotifiactions(date: date)
+            }
+            .store(in: &lifetime)
     }
 
     private func addAppBadge(glucose: Int?) {
@@ -53,6 +68,72 @@ final class BaseUserNotificationsManager: NSObject, UserNotificationsManager, In
 
         DispatchQueue.main.async {
             UIApplication.shared.applicationIconBadgeNumber = badge
+        }
+    }
+
+    private func notifyCarbsRequired(_ carbs: Int) {
+        guard Decimal(carbs) >= settingsManager.settings.carbsRequiredThreshold else { return }
+
+        ensureCanSendNotification {
+            var titles: [String] = []
+
+            let content = UNMutableNotificationContent()
+
+            if self.snoozeUntilDate > Date() {
+                titles.append(NSLocalizedString("(Snoozed)", comment: "(Snoozed)"))
+            } else {
+                content.sound = .default
+                self.playSound()
+            }
+
+            titles.append(String(format: NSLocalizedString("Carbs required: %d g", comment: "Carbs required"), carbs))
+
+            content.title = titles.joined(separator: " ")
+            content.body = String(
+                format: NSLocalizedString(
+                    "To prevent LOW required %d g of carbs",
+                    comment: "To prevent LOW required %d g of carbs"
+                ),
+                carbs
+            )
+
+            self.addRequest(identifier: .carbsRequiredNotification, content: content, deleteOld: true)
+        }
+    }
+
+    private func scheduleMissingLoopNotifiactions(date _: Date) {
+        ensureCanSendNotification {
+            let title = NSLocalizedString("FreeAPS X not active", comment: "FreeAPS X not active")
+            let body = NSLocalizedString("Last loop was more then %d min ago", comment: "Last loop was more then %d min ago")
+
+            let firstInterval = 20 // min
+            let secondInterval = 40 // min
+
+            let firstContent = UNMutableNotificationContent()
+            firstContent.title = title
+            firstContent.body = String(format: body, firstInterval)
+            firstContent.sound = .default
+
+            let secondContent = UNMutableNotificationContent()
+            secondContent.title = title
+            secondContent.body = String(format: body, secondInterval)
+            secondContent.sound = .default
+
+            let firstTrigger = UNTimeIntervalNotificationTrigger(timeInterval: 60 * TimeInterval(firstInterval), repeats: false)
+            let secondTrigger = UNTimeIntervalNotificationTrigger(timeInterval: 60 * TimeInterval(secondInterval), repeats: false)
+
+            self.addRequest(
+                identifier: .noLoopFirstNotification,
+                content: firstContent,
+                deleteOld: true,
+                trigger: firstTrigger
+            )
+            self.addRequest(
+                identifier: .noLoopSecondNotification,
+                content: secondContent,
+                deleteOld: true,
+                trigger: secondTrigger
+            )
         }
     }
 
@@ -200,8 +281,13 @@ final class BaseUserNotificationsManager: NSObject, UserNotificationsManager, In
         }
     }
 
-    private func addRequest(identifier: Identifier, content: UNMutableNotificationContent, deleteOld: Bool = false) {
-        let request = UNNotificationRequest(identifier: identifier.rawValue, content: content, trigger: nil)
+    private func addRequest(
+        identifier: Identifier,
+        content: UNMutableNotificationContent,
+        deleteOld: Bool = false,
+        trigger: UNNotificationTrigger? = nil
+    ) {
+        let request = UNNotificationRequest(identifier: identifier.rawValue, content: content, trigger: trigger)
 
         if deleteOld {
             center.removeDeliveredNotifications(withIdentifiers: [identifier.rawValue])
@@ -266,6 +352,13 @@ final class BaseUserNotificationsManager: NSObject, UserNotificationsManager, In
 extension BaseUserNotificationsManager: GlucoseObserver {
     func glucoseDidUpdate(_: [BloodGlucose]) {
         sendGlucoseNotification()
+    }
+}
+
+extension BaseUserNotificationsManager: SuggestionObserver {
+    func suggestionDidUpdate(_ suggestion: Suggestion) {
+        guard let carndRequired = suggestion.carbsReq else { return }
+        notifyCarbsRequired(Int(carndRequired))
     }
 }
 
