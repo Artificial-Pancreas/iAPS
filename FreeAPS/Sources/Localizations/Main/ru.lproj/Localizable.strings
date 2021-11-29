@@ -818,22 +818,25 @@ Enact a temp Basal or a temp target */
 "Battery" = "Батарея";
 
 /* */
- "Also add source info" = "Дополнительная информация об истонике";
+"Also add source info" = "Дополнительная информация об истонике";
 
- /* */
- "Carbs Required Threshold" = "Порог необходимых углеводов";
+/* */
+"Carbs Required Threshold" = "Порог необходимых углеводов";
 
- /* */
- "Carbs required: %d g" = "Необходимы углеводы: %d г";
+/* */
+"Carbs required: %d g" = "Необходимы углеводы: %d г";
 
- /* */
- "To prevent LOW required %d g of carbs" = "Для избежания ГИПО необходимо %d г углеводов";
+/* */
+"To prevent LOW required %d g of carbs" = "Для избежания ГИПО необходимо %d г углеводов";
 
- /* */
- "FreeAPS X not active" = "FreeAPS X неактивен";
+/* */
+"FreeAPS X not active" = "FreeAPS X неактивен";
 
- /* */
- "Last loop was more then %d min ago" = "Последний цикл был более %d минут назад";
+/* */
+"Last loop was more then %d min ago" = "Последний цикл был более %d минут назад";
+
+/* Glucose badge */
+"Show glucose on the app badge" = "Show glucose on the app badge";
 
 
 /* Headers for settings ------------------- */

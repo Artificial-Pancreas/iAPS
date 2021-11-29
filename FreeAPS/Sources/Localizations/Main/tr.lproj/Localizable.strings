@@ -817,6 +817,26 @@ Enact a temp Basal or a temp target */
 /* */
 "Battery" = "Pil";
 
+/* */
+"Also add source info" = "Ayrıca kaynak bilgisi ekleyin";
+
+/* */
+"Carbs Required Threshold" = "Gerekli Karbonhidrat Önerisi";
+
+/* */
+"Carbs required: %d g" = "Gerekli karbonhidrat: %d g";
+
+/* */
+"To prevent LOW required %d g of carbs" = "To prevent LOW required %d g of carbs";
+
+/* */
+"FreeAPS X not active" = "FreeAPS X not active";
+
+/* */
+"Last loop was more then %d min ago" = "Last loop was more then %d min ago";
+
+/* Glucose badge */
+"Show glucose on the app badge" = "Show glucose on the app badge";
 
 
 /* Headers for settings ------------------- */
