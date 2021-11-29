@@ -34,7 +34,7 @@ extension Home {
                 Spacer()
                 VStack(alignment: .leading, spacing: 12) {
                     HStack {
-                        Text("IOB").font(.caption2).foregroundColor(.secondary)
+//                        Text("IOB").font(.caption2).foregroundColor(.secondary)
                         Text(
                             (numberFormatter.string(from: (state.suggestion?.iob ?? 0) as NSNumber) ?? "0") +
                                 NSLocalizedString(" U", comment: "Insulin unit")
@@ -42,7 +42,7 @@ extension Home {
                         .font(.system(size: 12, weight: .bold))
                     }
                     HStack {
-                        Text("COB").font(.caption2).foregroundColor(.secondary)
+//                        Text("COB").font(.caption2).foregroundColor(.secondary)
                         Text(
                             (numberFormatter.string(from: (state.suggestion?.cob ?? 0) as NSNumber) ?? "0") +
                                 NSLocalizedString(" g", comment: "gram of carbs")
