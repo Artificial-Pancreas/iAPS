@@ -8,8 +8,8 @@ struct Preferences: JSON {
     var autosensMin: Decimal = 0.7
     var autoisf: Bool = false
     var autoISFhourlyChange: Decimal = 0.25
-    var autoISFmax: Decimal = 1.3
-    var smbDeliveryRatio: Decimal = 0.5
+    var autoISFmax: Decimal = 1.5
+    var smbDeliveryRatio: Decimal = 0.65
     var smbMaxRangeExtension: Decimal = 1
     var rewindResetsAutosens: Bool = true
     var highTemptargetRaisesSensitivity: Bool = false
