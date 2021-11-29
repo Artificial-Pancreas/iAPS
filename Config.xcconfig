@@ -1,7 +1,7 @@
-APP_DISPLAY_NAME = FreeAPS X
+APP_DISPLAY_NAME = iAPS
 BUILD_VERSION = 0.2.4
 DEVELOPER_TEAM = ##TEAM_ID##
-BUNDLE_IDENTIFIER = ru.artpancreas.$(DEVELOPMENT_TEAM).FreeAPS
-APP_GROUP_ID = group.com.$(DEVELOPMENT_TEAM).loopkit.LoopGroup
+BUNDLE_IDENTIFIER = com.$(DEVELOPMENT_TEAM).aps
+APP_GROUP_ID = group.com.$(DEVELOPMENT_TEAM).aps.JBMgroup
 
 #include? "ConfigOverride.xcconfig"
