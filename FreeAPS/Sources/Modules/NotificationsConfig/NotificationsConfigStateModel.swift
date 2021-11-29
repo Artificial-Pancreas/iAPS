@@ -21,14 +21,16 @@ extension NotificationsConfig {
                 addSourceInfoToGlucoseNotifications = $0 }
 
             subscribeSetting(\.lowGlucose, on: $lowGlucose, initial: {
-                lowGlucose = units == .mmolL ? $0.asMmolL : $0
+                let value = max(min($0, 400), 40)
+                lowGlucose = units == .mmolL ? value.asMmolL : value
             }, map: {
                 guard units == .mmolL else { return $0 }
                 return $0.asMgdL
             })
 
             subscribeSetting(\.highGlucose, on: $highGlucose, initial: {
-                highGlucose = units == .mmolL ? $0.asMmolL : $0
+                let value = max(min($0, 400), 40)
+                highGlucose = units == .mmolL ? value.asMmolL : value
             }, map: {
                 guard units == .mmolL else { return $0 }
                 return $0.asMgdL

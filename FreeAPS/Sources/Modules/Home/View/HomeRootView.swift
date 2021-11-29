@@ -55,7 +55,8 @@ extension Home {
                 CurrentGlucoseView(
                     recentGlucose: $state.recentGlucose,
                     delta: $state.glucoseDelta,
-                    units: $state.units
+                    units: $state.units,
+                    alarm: $state.alarm
                 )
                 .onTapGesture {
                     if state.alarm == nil {
@@ -67,7 +68,11 @@ extension Home {
                 .onLongPressGesture {
                     let impactHeavy = UIImpactFeedbackGenerator(style: .heavy)
                     impactHeavy.impactOccurred()
-                    state.showModal(for: .snooze)
+                    if state.alarm == nil {
+                        state.showModal(for: .snooze)
+                    } else {
+                        state.openCGM()
+                    }
                 }
 
                 Spacer()

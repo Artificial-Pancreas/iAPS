@@ -345,6 +345,7 @@ extension Home.StateModel:
         allowManualTemp = !settings.closedLoop
         closedLoop = settingsManager.settings.closedLoop
         units = settingsManager.settings.units
+        setupGlucose()
     }
 
     func pumpHistoryDidUpdate(_: [PumpHistoryEvent]) {

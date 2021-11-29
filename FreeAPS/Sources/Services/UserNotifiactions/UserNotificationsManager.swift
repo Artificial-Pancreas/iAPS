@@ -21,6 +21,8 @@ final class BaseUserNotificationsManager: NSObject, UserNotificationsManager, In
     @Injected() private var glucoseStorage: GlucoseStorage!
     @Injected(as: FetchGlucoseManager.self) private var sourceInfoProvider: SourceInfoProvider!
 
+    @Persisted(key: "UserNotificationsManager.snoozeUntilDate") private var snoozeUntilDate: Date = .distantPast
+
     private let center = UNUserNotificationCenter.current()
 
     init(resolver: Resolver) {
@@ -78,6 +80,10 @@ final class BaseUserNotificationsManager: NSObject, UserNotificationsManager, In
             case .high:
                 titles.append(NSLocalizedString("HIGHALERT!", comment: "HIGHALERT!"))
                 self.playSoundIfNeeded()
+            }
+
+            if self.snoozeUntilDate > Date() {
+                titles.append(NSLocalizedString("(Snoozed)", comment: "(Snoozed)"))
             }
 
             let delta = glucose.count >= 2 ? glucoseValue - (glucose[glucose.count - 2].glucose ?? 0) : nil
@@ -198,7 +204,7 @@ final class BaseUserNotificationsManager: NSObject, UserNotificationsManager, In
     }
 
     private func playSoundIfNeeded() {
-        guard settingsManager.settings.useAlarmSound else { return }
+        guard settingsManager.settings.useAlarmSound, snoozeUntilDate < Date() else { return }
         playSound()
     }
 
