@@ -1,15 +1,3 @@
-/* Appends a full-stop to a statement */
-"%@." = "%@.";
-
-/* The format for an insulin needs percentage. */
-"%@%% of normal insulin" = "Normal insülinin %@%%'si";
-
-/* Format string for reservoir volume. (1: The localized volume) */
-"%@U" = "%@Ü";
-
-/* The format for a glucose target range. (1: min target)(2: max target)(3: glucose unit) */
-"%1$@ – %2$@ %3$@" = "%1$@ – %2$@ %3$@";
-
 /* The format for an override preset cell. (1: symbol)(2: name)
    The format for an override symbol and name (1: symbol)(2: name) */
 "%1$@ %2$@" = "%1$@ %2$@";
@@ -17,23 +5,35 @@
 /* Accessibility format string for (1: localized volume)(2: time) */
 "%1$@ units remaining at %2$@" = "%2$@'de %1$@ ünite kaldı";
 
+/* The format for a glucose target range. (1: min target)(2: max target)(3: glucose unit) */
+"%1$@ – %2$@ %3$@" = "%1$@ – %2$@ %3$@";
+
+/* The format for an insulin needs percentage. */
+"%@%% of normal insulin" = "Normal insülinin %@%%'si";
+
+/* Appends a full-stop to a statement */
+"%@." = "%@.";
+
+/* Format string for reservoir volume. (1: The localized volume) */
+"%@U" = "%@Ü";
+
 /* Title of the carb entry absorption time cell */
 "Absorption Time" = "Emilim Süresi";
 
 /* The title for the override emoji activity section */
 "Activity" = "Aktivite";
 
-/* The title of the button to add the credentials for a service */
-"Add Account" = "Hesap Ekle";
-
-/* The title of the view controller to create a new carb entry */
-"Add Carb Entry" = "Karbonhidrat Girdisi Ekle";
-
 /* Action sheet confirmation message for pump history deletion */
 "Are you sure you want to delete all history entries?" = "Tüm geçmiş girişlerini silmek istediğinizden emin misiniz?";
 
 /* Action sheet confirmation message for reservoir deletion */
 "Are you sure you want to delete all reservoir values?" = "Tüm rezervuar değerlerini silmek istediğinizden emin misiniz?";
+
+/* The title of the button to add the credentials for a service */
+"Add Account" = "Hesap Ekle";
+
+/* The title of the button to remove the credentials for a service */
+"Delete Account" = "Hesabı Sil";
 
 /* Describes a percentage decrease in overall insulin needs */
 "Basal, bolus, and correction insulin dose amounts are decreased by %@%%." = "Bazal, bolus ve düzeltme insülin doz miktarları %@%% oranında azaltılır.";
@@ -52,6 +52,12 @@
 
 /* Title text for suspend resume button when temp basal canceling */
 "Canceling Temp Basal" = "Geçici Bazalı İptal Et";
+
+/* The title of the view controller to create a new carb entry */
+"Add Carb Entry" = "Karbonhidrat Girdisi Ekle";
+
+/* The title of the view controller to edit an existing carb entry */
+"Edit Carb Entry" = "Karbonhidrat Girdisi Düzenle";
 
 /* Footer text for customizing an override from a preset (1: preset name) */
 "Changes will only apply this time you enable the override. The default settings of %@ will not be affected." = "Değişiklikler yalnızca geçersiz kılmayı etkinleştirdiğinizde etkili olur. %@ varsayılan ayarlar etkilenmeyecektir.";
@@ -92,17 +98,11 @@
 /* Title of the carb entry date picker cell */
 "Date" = "Tarih";
 
-/* The title of the button to remove the credentials for a service */
-"Delete Account" = "Hesabı Sil";
-
 /* Button title to delete all objects */
 "Delete All" = "Tümünü sil";
 
 /* The text for the override duration setting */
 "Duration" = "Süre";
-
-/* The title of the view controller to edit an existing carb entry */
-"Edit Carb Entry" = "Karbonhidrat Girdisi Düzenle";
 
 /* The title for the override editing screen */
 "Edit Override" = "Geçersiz kılma Düzenle";
@@ -177,9 +177,6 @@
 /* The title of the screen displaying a pump event */
 "Pump Event" = "Pompa Durumu";
 
-/* The default placeholder string for a credential */
-"Required" = "Gerekli";
-
 /* Title text for button to resume insulin delivery */
 "Resume Delivery" = "İletime devam et";
 
@@ -223,6 +220,9 @@
 /* The title for the override selection screen */
 "Temporary Override" = "Geçici Geçersiz Kılma";
 
+/* The default placeholder string for a credential */
+"Required" = "Gerekli";
+
 /* Alert body displayed absorption time greater than max (1: maximum absorption time) */
 "The maximum absorption time is %@" = "Maksimum emilim süresi %@";
 
@@ -250,4 +250,3 @@
 
 /* Title for the workout override range */
 "Workout" = "Egzersiz";
-
