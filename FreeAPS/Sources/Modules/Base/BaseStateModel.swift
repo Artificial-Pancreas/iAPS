@@ -45,11 +45,12 @@ class BaseStateModel<Provider>: StateModel, Injectable where Provider: FreeAPS.P
 
     func subscribeSetting<T: Equatable, U: Publisher>(
         _ keyPath: WritableKeyPath<FreeAPSSettings, T>,
-        on settingPublisher: U, initial: (T) -> Void, didSet: ((T) -> Void)? = nil
+        on settingPublisher: U, initial: (T) -> Void, map: ((T) -> (T))? = nil, didSet: ((T) -> Void)? = nil
     ) where U.Output == T, U.Failure == Never {
         initial(settingsManager.settings[keyPath: keyPath])
         settingPublisher
             .removeDuplicates()
+            .map(map ?? { $0 })
             .sink { [weak self] value in
                 self?.settingsManager.settings[keyPath: keyPath] = value
                 didSet?(value)

@@ -10,5 +10,12 @@
     "insulinReqFraction": 0.7,
     "skipBolusScreenAfterCarbs": false,
     "cgm": "nightscout",
-    "uploadGlucose": false
+    "uploadGlucose": false,
+    "glucoseBadge": false,
+    "glucoseNotificationsAlways": false,
+    "useAlarmSound": false,
+    "addSourceInfoToGlucoseNotifications": false,
+    "lowGlucose": 72,
+    "highGlucose": 270,
+    "carbsRequiredThreshold": 10
 }

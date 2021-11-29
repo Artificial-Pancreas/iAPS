@@ -8,7 +8,6 @@ extension Home {
         @Injected() var broadcaster: Broadcaster!
         @Injected() var apsManager: APSManager!
         @Injected() var nightscoutManager: NightscoutManager!
-        @Injected() var calendarManager: CalendarManager!
         private let timer = DispatchTimer(timeInterval: 5)
         private(set) var filteredHours = 24
 
@@ -46,6 +45,7 @@ extension Home {
         @Published var allowManualTemp = false
         @Published var units: GlucoseUnits = .mmolL
         @Published var pumpDisplayState: PumpDisplayState?
+        @Published var alarm: GlucoseAlarm?
 
         override func subscribe() {
             setupGlucose()
@@ -66,6 +66,7 @@ extension Home {
             closedLoop = settingsManager.settings.closedLoop
             lastLoopDate = apsManager.lastLoopDate
             carbsRequired = suggestion?.carbsReq
+            alarm = provider.glucoseStorage.alarm
 
             setStatusTitle()
             setupCurrentTempTarget()
@@ -178,7 +179,7 @@ extension Home {
                 } else {
                     self.glucoseDelta = nil
                 }
-                self.calendarManager.createEvent(for: self.recentGlucose, delta: self.glucoseDelta)
+                self.alarm = self.provider.glucoseStorage.alarm
             }
         }
 
@@ -344,6 +345,7 @@ extension Home.StateModel:
         allowManualTemp = !settings.closedLoop
         closedLoop = settingsManager.settings.closedLoop
         units = settingsManager.settings.units
+        setupGlucose()
     }
 
     func pumpHistoryDidUpdate(_: [PumpHistoryEvent]) {

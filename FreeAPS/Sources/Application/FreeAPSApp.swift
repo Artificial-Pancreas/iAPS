@@ -35,6 +35,8 @@ import Swinject
         _ = resolver.resolve(FetchGlucoseManager.self)!
         _ = resolver.resolve(FetchTreatmentsManager.self)!
         _ = resolver.resolve(FetchAnnouncementsManager.self)!
+        _ = resolver.resolve(CalendarManager.self)!
+        _ = resolver.resolve(UserNotificationsManager.self)!
     }
 
     init() {
@@ -44,7 +46,6 @@ import Swinject
     var body: some Scene {
         WindowGroup {
             Main.RootView(resolver: resolver)
-                .environmentObject(appDelegate)
         }
         .onChange(of: scenePhase) { newScenePhase in
             debug(.default, "APPLICATION PHASE: \(newScenePhase)")

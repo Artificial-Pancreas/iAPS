@@ -60,6 +60,10 @@ struct AppGroupSource: GlucoseSource {
         let epoch = Double((timestamp as NSString).substring(with: matchRange))! / 1000
         return Date(timeIntervalSince1970: epoch)
     }
+
+    func sourceInfo() -> [String: Any]? {
+        [GlucoseSourceKey.description.rawValue: "Group ID: \(String(describing: Bundle.main.appGroupSuiteName))"]
+    }
 }
 
 public extension Bundle {

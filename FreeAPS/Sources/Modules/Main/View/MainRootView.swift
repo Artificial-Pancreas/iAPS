@@ -5,7 +5,6 @@ extension Main {
     struct RootView: BaseView {
         let resolver: Resolver
         @StateObject var state = StateModel()
-        @EnvironmentObject var appDelegate: AppDelegate
 
         var body: some View {
             router.view(for: .home)
@@ -31,13 +30,6 @@ extension Main {
                     )
                 }
                 .onAppear(perform: configureView)
-                .onReceive(appDelegate.$notificationAction) { action in
-                    switch action {
-                    case .snoozeAlert:
-                        state.showModal(for: .libreConfig)
-                    default: break
-                    }
-                }
         }
     }
 }

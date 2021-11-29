@@ -3,7 +3,7 @@ import Foundation
 import SwiftDate
 import Swinject
 
-protocol FetchGlucoseManager {}
+protocol FetchGlucoseManager: SourceInfoProvider {}
 
 final class BaseFetchGlucoseManager: FetchGlucoseManager, Injectable {
     private let processQueue = DispatchQueue(label: "BaseGlucoseManager.processQueue")
@@ -87,6 +87,10 @@ final class BaseFetchGlucoseManager: FetchGlucoseManager, Injectable {
                 }
             }
             .store(in: &lifetime)
+    }
+
+    func sourceInfo() -> [String: Any]? {
+        glucoseSource.sourceInfo()
     }
 }
 

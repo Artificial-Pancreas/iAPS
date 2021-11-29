@@ -36,11 +36,6 @@ struct NotificationSettingsView: View {
 
 
     private enum Key: String {
-        //case glucoseSchedules = "no.bjorninge.glucoseschedules"
-
-        case mmAlwaysDisplayGlucose = "no.bjorninge.mmAlwaysDisplayGlucose"
-        case mmNotifyEveryXTimes = "no.bjorninge.mmNotifyEveryXTimes"
-        case mmGlucoseAlarmsVibrate = "no.bjorninge.mmGlucoseAlarmsVibrate"
         case mmAlertLowBatteryWarning = "no.bjorninge.mmLowBatteryWarning"
         case mmAlertInvalidSensorDetected = "no.bjorninge.mmInvalidSensorDetected"
         //case mmAlertalarmNotifications
@@ -49,29 +44,15 @@ struct NotificationSettingsView: View {
 
         case mmAlertSensorSoonExpire = "no.bjorninge.mmAlertSensorSoonExpire"
 
-        case mmShowTransmitterBattery = "no.bjorninge.mmShowTransmitterBattery"
-
         //handle specially:
         case mmGlucoseUnit = "no.bjorninge.mmGlucoseUnit"
     }
-
-
-
-
-
-    @AppStorage(Key.mmAlwaysDisplayGlucose.rawValue) var mmAlwaysDisplayGlucose: Bool = true
-    @AppStorage(Key.mmNotifyEveryXTimes.rawValue) var mmNotifyEveryXTimes: Int = 0
-    @AppStorage(Key.mmShowTransmitterBattery.rawValue) var mmShowTransmitterBattery: Bool = true
-
-
 
     @AppStorage(Key.mmAlertLowBatteryWarning.rawValue) var mmAlertLowBatteryWarning: Bool = true
     @AppStorage(Key.mmAlertInvalidSensorDetected.rawValue) var mmAlertInvalidSensorDetected: Bool = true
     @AppStorage(Key.mmAlertNewSensorDetected.rawValue) var mmAlertNewSensorDetected: Bool = true
     @AppStorage(Key.mmAlertNoSensorDetected.rawValue) var mmAlertNoSensorDetected: Bool = true
     @AppStorage(Key.mmAlertSensorSoonExpire.rawValue) var mmAlertSensorSoonExpire: Bool = true
-
-    @AppStorage(Key.mmGlucoseAlarmsVibrate.rawValue) var mmGlucoseAlarmsVibrate: Bool = true
 
     //especially handled mostly for backward compat
     @AppStorage(Key.mmGlucoseUnit.rawValue) var mmGlucoseUnit: String = ""
@@ -82,28 +63,6 @@ struct NotificationSettingsView: View {
     @State private var favoriteGlucoseUnit = 0
 
     static let formatter = NumberFormatter()
-
-    var glucoseVisibilitySection : some View {
-        Section(header: Text("Glucose Notification visibility") ) {
-            Toggle("Always Notify Glucose", isOn: $mmAlwaysDisplayGlucose)
-
-            HStack {
-                Text("Notify per reading")
-                TextField("", value: $mmNotifyEveryXTimes, formatter: Self.formatter)
-                    .multilineTextAlignment(.center)
-                    .disabled(true)
-                    .frame(minWidth: 15, maxWidth: 60)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
-                Stepper("Value", value: $mmNotifyEveryXTimes, in: 0...9)
-                    .labelsHidden()
-
-            }.clipped()
-
-            Toggle("Adds Transmitter Battery", isOn: $mmShowTransmitterBattery)
-            Toggle("Also play alert sound", isOn: $mmGlucoseAlarmsVibrate)
-
-        }
-    }
 
     var additionalNotificationsSection : some View {
         Section(header: Text("Additional notification types")) {
@@ -132,8 +91,6 @@ struct NotificationSettingsView: View {
 
     var body: some View {
         List {
-            
-            glucoseVisibilitySection
             additionalNotificationsSection
 
             miscSection

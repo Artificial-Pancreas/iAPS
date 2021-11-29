@@ -27,6 +27,7 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
     @Injected() private var reachabilityManager: ReachabilityManager!
 
     private let processQueue = DispatchQueue(label: "BaseNetworkManager.processQueue")
+    private var ping: TimeInterval?
 
     private var lifetime = Lifetime()
 
@@ -66,6 +67,13 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
         }
     }
 
+    func sourceInfo() -> [String: Any]? {
+        if let ping = ping {
+            return [GlucoseSourceKey.nightscoutPing.rawValue: ping]
+        }
+        return nil
+    }
+
     var cgmURL: URL? {
         if let url = settingsManager.settings.cgm.appURL {
             return url
@@ -82,6 +90,7 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
 
     func fetchGlucose() -> AnyPublisher<[BloodGlucose], Never> {
         let useLocal = settingsManager.settings.useLocalGlucoseSource
+        ping = nil
 
         if !useLocal {
             guard isNetworkReachable else {
@@ -97,6 +106,8 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
             return Just([]).eraseToAnyPublisher()
         }
 
+        let startDate = Date()
+
         let since = glucoseStorage.syncDate()
         return nightscout.fetchLastGlucose(sinceDate: since)
             .tryCatch({ (error) -> AnyPublisher<[BloodGlucose], Error> in
@@ -104,6 +115,10 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
                 return Just([]).setFailureType(to: Error.self).eraseToAnyPublisher()
             })
             .replaceError(with: [])
+            .handleEvents(receiveOutput: { value in
+                guard value.isNotEmpty else { return }
+                self.ping = Date().timeIntervalSince(startDate)
+            })
             .eraseToAnyPublisher()
     }
 

@@ -4,6 +4,7 @@ struct CurrentGlucoseView: View {
     @Binding var recentGlucose: BloodGlucose?
     @Binding var delta: Int?
     @Binding var units: GlucoseUnits
+    @Binding var alarm: GlucoseAlarm?
 
     private var glucoseFormatter: NumberFormatter {
         let formatter = NumberFormatter()
@@ -43,6 +44,7 @@ struct CurrentGlucoseView: View {
                 )
                 .font(.system(size: 24, weight: .bold))
                 .fixedSize()
+                .foregroundColor(alarm == nil ? .primary : .loopRed)
                 image.padding(.bottom, 2)
 
             }.padding(.leading, 4)

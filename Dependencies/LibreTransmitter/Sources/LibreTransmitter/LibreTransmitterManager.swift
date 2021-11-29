@@ -110,9 +110,6 @@ public final class LibreTransmitterManager: LibreTransmitterDelegate {
 
     public private(set) var lastConnected: Date?
 
-    public private(set) var alarmStatus = AlarmStatus()
-
-
     public private(set) var latestPrediction: LibreGlucose?
     public private(set) var latestBackfill: LibreGlucose? {
         willSet(newValue) {
@@ -122,29 +119,6 @@ public final class LibreTransmitterManager: LibreTransmitterDelegate {
 
             var trend: GlucoseTrend?
             let oldValue = latestBackfill
-
-            defer {
-                logger.debug("dabear:: sending glucose notification")
-                NotificationHelper.sendGlucoseNotitifcationIfNeeded(glucose: newValue,
-                                                                    oldValue: oldValue,
-                                                                    trend: trend,
-                                                                    battery: batteryString)
-
-                //once we have a new glucose value, we can update the isalarming property
-                if let activeAlarms = UserDefaults.standard.glucoseSchedules?.getActiveAlarms(newValue.glucoseDouble) {
-                    DispatchQueue.main.async {
-                        self.alarmStatus.isAlarming = ([.high,.low].contains(activeAlarms))
-                        self.alarmStatus.glucoseScheduleAlarmResult = activeAlarms
-                    }
-                } else {
-                    DispatchQueue.main.async {
-                    self.alarmStatus.isAlarming = false
-                    self.alarmStatus.glucoseScheduleAlarmResult = .none
-                    }
-                }
-
-
-            }
 
             logger.debug("dabear:: latestBackfill set, newvalue is \(newValue.description)")
 

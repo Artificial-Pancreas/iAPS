@@ -61,6 +61,10 @@ extension DexcomSource: TransmitterManagerDelegate {
         }
         promise?(.success(bloodGlucose))
     }
+
+    func sourceInfo() -> [String: Any]? {
+        [GlucoseSourceKey.description.rawValue: "Dexcom tramsmitter ID: \(transmitterID)"]
+    }
 }
 
 extension BloodGlucose.Direction {

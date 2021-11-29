@@ -62,14 +62,12 @@ public struct LibreTransmitterSettingsView: UIViewControllerRepresentable {
     private let glucoseUnit: HKUnit
     private let delete: (() -> Void)?
     private let completion: (() -> Void)?
-    private let openSnooze: Bool
 
-    public init(manager: LibreTransmitterManager, openSnooze: Bool = false, glucoseUnit: HKUnit, delete: (() -> Void)? = nil , completion: (() -> Void)? = nil) {
+    public init(manager: LibreTransmitterManager, glucoseUnit: HKUnit, delete: (() -> Void)? = nil , completion: (() -> Void)? = nil) {
         self.manager = manager
         self.glucoseUnit = glucoseUnit
         self.delete = delete
         self.completion = completion
-        self.openSnooze = openSnooze
     }
 
     public func makeUIViewController(context: Context) -> UIViewController {
@@ -78,14 +76,12 @@ public struct LibreTransmitterSettingsView: UIViewControllerRepresentable {
 
         let settings = SettingsView.asHostedViewController(
             glucoseUnit: glucoseUnit,
-            openSnooze: openSnooze,
             //displayGlucoseUnitObservable: displayGlucoseUnitObservable,
             notifyComplete: doneNotifier,
             notifyDelete: wantToTerminateNotifier,
             transmitterInfoObservable: manager.transmitterInfoObservable,
             sensorInfoObervable: manager.sensorInfoObservable,
-            glucoseInfoObservable: manager.glucoseInfoObservable,
-            alarmStatus: manager.alarmStatus
+            glucoseInfoObservable: manager.glucoseInfoObservable
         )
 
         let nav = SettingsNavigationViewController(rootViewController: settings)

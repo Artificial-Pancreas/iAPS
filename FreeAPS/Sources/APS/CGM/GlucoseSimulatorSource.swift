@@ -177,4 +177,8 @@ class IntelligentGenerator: BloodGlucoseGenerator {
             generateNewTrend()
         }
     }
+
+    func sourceInfo() -> [String: Any]? {
+        [GlucoseSourceKey.description.rawValue: "Glucose simulator"]
+    }
 }
