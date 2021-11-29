@@ -819,6 +819,13 @@ Połączono z Nightscout!";
 /* */
 "Battery" = "Battery";
 
+/* */
+
+"Show glucose on the app badge" = "Show glucose on the app badge";
+
+/* */
+"Also add source info" = "Also add source info";
+
 
 
 /* Headers for settings ------------------- */

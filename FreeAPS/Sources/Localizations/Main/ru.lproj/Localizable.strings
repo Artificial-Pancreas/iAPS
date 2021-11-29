@@ -817,6 +817,13 @@ Enact a temp Basal or a temp target */
 /* */
 "Battery" = "Батарея";
 
+/* */
+
+"Show glucose on the app badge" = "Показывать глюкозу на значке приложения";
+
+/* */
+"Also add source info" = "Дополнительная информация об истонике";
+
 
 
 /* Headers for settings ------------------- */

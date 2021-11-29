@@ -71,19 +71,24 @@ final class BaseUserNotificationsManager: NSObject, UserNotificationsManager, In
         ensureCanSendNotification {
             var titles: [String] = []
 
+            var notificationAlarm = false
+
             switch self.glucoseStorage.alarm {
             case .none:
                 titles.append(NSLocalizedString("Glucose", comment: "Glucose"))
             case .low:
                 titles.append(NSLocalizedString("LOWALERT!", comment: "LOWALERT!"))
+                notificationAlarm = true
                 self.playSoundIfNeeded()
             case .high:
                 titles.append(NSLocalizedString("HIGHALERT!", comment: "HIGHALERT!"))
+                notificationAlarm = true
                 self.playSoundIfNeeded()
             }
 
             if self.snoozeUntilDate > Date() {
                 titles.append(NSLocalizedString("(Snoozed)", comment: "(Snoozed)"))
+                notificationAlarm = false
             }
 
             let delta = glucose.count >= 2 ? glucoseValue - (glucose[glucose.count - 2].glucose ?? 0) : nil
@@ -96,6 +101,10 @@ final class BaseUserNotificationsManager: NSObject, UserNotificationsManager, In
             let content = UNMutableNotificationContent()
             content.title = titles.joined(separator: " ")
             content.body = body
+
+            if notificationAlarm {
+                content.sound = .default
+            }
 
             self.addRequest(identifier: .glucocoseNotification, content: content, deleteOld: true)
         }
@@ -205,22 +214,25 @@ final class BaseUserNotificationsManager: NSObject, UserNotificationsManager, In
 
     private func playSoundIfNeeded() {
         guard settingsManager.settings.useAlarmSound, snoozeUntilDate < Date() else { return }
+        Self.stopPlaying = false
         playSound()
     }
 
-    private let soundID: UInt32 = 1336
+    static let soundID: UInt32 = 1336
+    private static var stopPlaying = false
 
     private func playSound(times: Int = 3) {
-        guard times > 0 else {
+        guard times > 0, !Self.stopPlaying else {
             return
         }
 
-        AudioServicesPlaySystemSoundWithCompletion(soundID) {
+        AudioServicesPlaySystemSoundWithCompletion(Self.soundID) {
             self.playSound(times: times - 1)
         }
     }
 
-    private func stopSound() {
+    static func stopSound() {
+        stopPlaying = true
         AudioServicesDisposeSystemSoundID(soundID)
     }
 
