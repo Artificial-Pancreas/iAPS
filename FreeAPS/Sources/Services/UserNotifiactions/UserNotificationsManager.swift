@@ -9,6 +9,7 @@ protocol UserNotificationsManager {}
 enum GlucoseSourceKey: String {
     case transmitterBattery
     case nightscoutPing
+    case description
 }
 
 final class BaseUserNotificationsManager: NSObject, UserNotificationsManager, Injectable {
@@ -136,6 +137,11 @@ final class BaseUserNotificationsManager: NSObject, UserNotificationsManager, In
         if settingsManager.settings.addSourceInfoToGlucoseNotifications,
            let info = sourceInfoProvider.sourceInfo()
         {
+            // Description
+            if let description = info[GlucoseSourceKey.description.rawValue] as? String {
+                body.append("\n" + description)
+            }
+
             // NS ping
             if let ping = info[GlucoseSourceKey.nightscoutPing.rawValue] as? TimeInterval {
                 body.append(
