@@ -825,7 +825,7 @@ Enact a temp Basal or a temp target */
 "Also add source info" = "Дополнительная информация об истонике";
 
 /* */
-"Carbs Requeted Threshold" = "Порог необходимых углеводов";
+"Carbs Required Threshold" = "Порог необходимых углеводов";
 
 /* */
 "Carbs required: %d g" = "Необходимы углеводы: %d г";

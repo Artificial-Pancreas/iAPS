@@ -826,7 +826,7 @@ Enact a temp Basal or a temp target */
 "Also add source info" = "Also add source info";
 
 /* */
-"Carbs Requeted Threshold" = "Carbs Requeted Threshold";
+"Carbs Required Threshold" = "Carbs Requeted Threshold";
 
 /* */
 "Carbs required: %d g" = "Carbs required: %d g";
