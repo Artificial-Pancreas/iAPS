@@ -827,16 +827,16 @@ Enact a temp Basal or a temp target */
 "Carbs required: %d g" = "Gerekli karbonhidrat: %d g";
 
 /* */
-"To prevent LOW required %d g of carbs" = "To prevent LOW required %d g of carbs";
+"To prevent LOW required %d g of carbs" = "DÜŞÜK KŞ'ini önlemek için gerekli Karbonhidrat %d g";
 
 /* */
-"FreeAPS X not active" = "FreeAPS X not active";
+"FreeAPS X not active" = "FreeAPS X etkin değil";
 
 /* */
-"Last loop was more then %d min ago" = "Last loop was more then %d min ago";
+"Last loop was more then %d min ago" = "Son döngü %d dak daha önceydi";
 
 /* Glucose badge */
-"Show glucose on the app badge" = "Show glucose on the app badge";
+"Show glucose on the app badge" = "Uygulama rozetinde glikozu göster";
 
 
 /* Headers for settings ------------------- */
@@ -867,7 +867,7 @@ Enact a temp Basal or a temp target */
 "This feature, enabled by default, resets the autosens ratio to neutral when you rewind your pump, on the assumption that this corresponds to a probable site change. Autosens will begin learning sensitivity anew from the time of the rewind, which may take up to 6 hours. If you usually rewind your pump independently of site changes, you may want to consider disabling this feature." = "Varsayılan olarak etkinleştirilen bu özellik, pompanızı geri sardığınızda, bunun olası bir yer değişikliğine karşılık geldiği varsayımıyla otoduyarlılık oranını nötr olarak sıfırlar. Otoduyarlılık, 6 saate kadar sürebilen geri sarma zamanından itibaren hassasiyeti yeniden öğrenmeye başlayacaktır. Pompanızı genellikle site değişikliklerinden bağımsız olarak geri sarıyorsanız, bu özelliği devre dışı bırakmayı düşünebilirsiniz.";
 
 /* ”High Temptarget Raises Sensitivity" */
-"Defaults to false. When set to true, raises sensitivity (lower sensitivity ratio) for temp targets set to >= 111. Synonym for exercise_mode. The higher your temp target above 110 will result in more sensitive (lower) ratios, e.g., temp target of 120 results in sensitivity ratio of 0.75, while 140 results in 0.6 (with default halfBasalTarget of 160)." = "Defaults to false. When set to true, raises sensitivity (lower sensitivity ratio) for temp targets set to >= 111. Synonym for exercise_mode. The higher your temp target above 110 will result in more sensitive (lower) ratios, e.g., temp target of 120 results in sensitivity ratio of 0.75, while 140 results in 0.6 (with default halfBasalTarget of 160).";
+"Defaults to false. When set to true, raises sensitivity (lower sensitivity ratio) for temp targets set to >= 111. Synonym for exercise_mode. The higher your temp target above 110 will result in more sensitive (lower) ratios, e.g., temp target of 120 results in sensitivity ratio of 0.75, while 140 results in 0.6 (with default halfBasalTarget of 160)." = "Varsayılan olarak kapalı olup. Açık olarak ayarlandığında, >= 111 olarak ayarlanan geçici hedefler için duyarlılığı artırır (düşük duyarlılık oranı). Egzersiz_modu ile eşanlamlı. Geçici hedefiniz 110'un üzerinde ne kadar yüksek olursa, daha hassas (düşük) oranlar elde edilir, örneğin 120'lik geçici hedef 0,75 hassasiyet oranı ile sonuçlanırken 140 sonuç 0,6 ile sonuçlanır (varsayılan ile HalfBasalTarget 160).";
 
 /* ”Low Temptarget Lowers Sensitivity" */
 "Defaults to false. When set to true, can lower sensitivity (higher sensitivity ratio) for temptargets <= 99. The lower your temp target below 100 will result in less sensitive (higher) ratios, e.g., temp target of 95 results in sensitivity ratio of 1.09, while 85 results in 1.33 (with default halfBasalTarget of 160)." = "Defaults to false. When set to true, can lower sensitivity (higher sensitivity ratio) for temptargets <= 99. The lower your temp target below 100 will result in less sensitive (higher) ratios, e.g., temp target of 95 results in sensitivity ratio of 1.09, while 85 results in 1.33 (with default halfBasalTarget of 160).";
@@ -901,7 +901,7 @@ Enact a temp Basal or a temp target */
 "This enables supermicrobolus (SMB) while carbs on board (COB) are positive." = "Bu aktif karbonhidrat (COB) pozitifken, süpermikrobolusu (SMB) sağlar.";
 
 /* "Enable SMB With Temptarget” */
-"This enables supermicrobolus (SMB) with eating soon / low temp targets. With this feature enabled, any temporary target below 100mg/dL, such as a temp target of 99 (or 80, the typical eating soon target) will enable SMB." = "This enables supermicrobolus (SMB) with eating soon / low temp targets. With this feature enabled, any temporary target below 100mg/dL, such as a temp target of 99 (or 80, the typical eating soon target) will enable SMB.";
+"This enables supermicrobolus (SMB) with eating soon / low temp targets. With this feature enabled, any temporary target below 100mg/dL, such as a temp target of 99 (or 80, the typical eating soon target) will enable SMB." = "Bu yakında yemek / düşük geçici hedefler ile süpermikrobolus (SMB) sağlar. Bu özellik etkinleştirildiğinde geçici hedef 99 (veya 80, tipik yakında yeme hedefi) gibi herhangi bir geçici hedef 100mg/dL'nin altında SMB'yi etkinleştirecektir.";
 
 /* "Enable SMB Always" */
 "Defaults to false. When true, always enable supermicrobolus (unless disabled by high temptarget)." = "Varsayılan olarak geçersizdir. Geçerli olduğunda, her zaman supermicrobolus'u etkinleştirir (yüksek geçicihedef tarafından devre dışı bırakılmadığı sürece).";
