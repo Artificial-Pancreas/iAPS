@@ -328,6 +328,9 @@ Połączono z Nightscout!";
 /* grams */
 " g" = " g";
 
+/* The short unit display string for grams */
+"g" = "g";
+
 /* when 0 U/hr */
 "0 U/hr" = "0 U/hr";
 

@@ -326,6 +326,9 @@ Enact a temp Basal or a temp target */
 /* grams */
 " g" = "гр";
 
+/* The short unit display string for grams */
+"g" = "g";
+
 /* when 0 U/hr */
 "0 U/hr" = "0 Од/Год";
 
