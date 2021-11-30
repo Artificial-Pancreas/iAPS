@@ -47,7 +47,7 @@ final class BaseWatchManager: NSObject, WatchManager, Injectable {
             self.state.trend = glucoseValues.trend
             self.state.delta = glucoseValues.delta
             self.state.glucoseDate = self.glucoseStorage.recent().last?.dateString
-            self.state.lastLoopDate = self.apsManager.lastLoopDate
+            self.state.lastLoopDate = self.enactedSuggestion?.deliverAt
             self.state.bolusIncrement = self.settingsManager.preferences.bolusIncrement
             self.state.maxCOB = self.settingsManager.preferences.maxCOB
             self.state.maxBolus = self.settingsManager.pumpSettings.maxBolus
@@ -59,6 +59,8 @@ final class BaseWatchManager: NSObject, WatchManager, Injectable {
 
             self.state.iob = self.suggestion?.iob
             self.state.cob = self.suggestion?.cob
+
+            self.sendState()
         }
     }
 
@@ -89,7 +91,7 @@ final class BaseWatchManager: NSObject, WatchManager, Injectable {
             .string(from: Double(
                 units == .mmolL ? glucoseValue
                     .asMmolL : Decimal(glucoseValue)
-            ) as NSNumber)! + " " + NSLocalizedString(units.rawValue, comment: "units")
+            ) as NSNumber)!
         let directionText = lastGlucose.direction?.symbol ?? "↔︎"
         let deltaText = delta
             .map {
@@ -126,6 +128,10 @@ final class BaseWatchManager: NSObject, WatchManager, Injectable {
     private var suggestion: Suggestion? {
         storage.retrieve(OpenAPS.Enact.suggested, as: Suggestion.self)
     }
+
+    private var enactedSuggestion: Suggestion? {
+        storage.retrieve(OpenAPS.Enact.enacted, as: Suggestion.self)
+    }
 }
 
 extension BaseWatchManager: WCSessionDelegate {
@@ -137,14 +143,26 @@ extension BaseWatchManager: WCSessionDelegate {
         debug(.service, "WCSession is activated: \(state == .activated)")
     }
 
-    func session(_ session: WCSession, didReceiveMessage _: [String: Any]) {
-        session.sendMessage(["message": "It works!"], replyHandler: nil) { _ in }
+    func session(_: WCSession, didReceiveMessage message: [String: Any]) {
+        guard let commandRaw = message[WatchCommandKey.command.rawValue] as? String,
+              let command = WatchCommand(rawValue: commandRaw) else { return }
+        switch command {
+        case .stateRequest:
+            processQueue.async {
+                self.sendState()
+            }
+        case .carbs: break
+        }
+    }
+
+    func session(_: WCSession, didReceiveMessage _: [String: Any], replyHandler: @escaping ([String: Any]) -> Void) {
+        print("WCSession got message with reply handler")
+        replyHandler(["message": "ok"])
     }
 
     func session(_: WCSession, didReceiveMessageData _: Data) {}
 
     func sessionReachabilityDidChange(_ session: WCSession) {
-        print("WCSession reacanility: \(session.isReachable)")
         if session.isReachable {
             processQueue.async {
                 self.sendState()
@@ -199,7 +217,7 @@ extension BaseWatchManager:
     }
 
     func enactedSuggestionDidUpdate(_: Suggestion) {
-        // TODO:
+        configureState()
     }
 
     func pumpBatteryDidChange(_: Battery) {

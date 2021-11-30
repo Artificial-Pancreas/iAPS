@@ -198,6 +198,8 @@
 		38E8754F275556FA00975559 /* WatchManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38E8754E275556FA00975559 /* WatchManager.swift */; };
 		38E8755127555D0500975559 /* DataFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38E8755027555D0500975559 /* DataFlow.swift */; };
 		38E8755427561E9800975559 /* DataFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38E8755027555D0500975559 /* DataFlow.swift */; };
+		38E8755827567AE400975559 /* SwiftDate in Frameworks */ = {isa = PBXBuildFile; productRef = 38E8755727567AE400975559 /* SwiftDate */; };
+		38E8755927567CA600975559 /* Decimal+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3871F39E25ED895A0013ECB5 /* Decimal+Extensions.swift */; };
 		38E989DD25F5021400C0CED0 /* PumpStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38E989DC25F5021400C0CED0 /* PumpStatus.swift */; };
 		38E98A2325F52C9300C0CED0 /* Signpost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38E98A1B25F52C9300C0CED0 /* Signpost.swift */; };
 		38E98A2425F52C9300C0CED0 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38E98A1C25F52C9300C0CED0 /* Logger.swift */; };
@@ -713,6 +715,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				38E8755827567AE400975559 /* SwiftDate in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1810,6 +1813,9 @@
 			dependencies = (
 			);
 			name = "FreeAPSWatch WatchKit Extension";
+			packageProductDependencies = (
+				38E8755727567AE400975559 /* SwiftDate */,
+			);
 			productName = "FreeAPSWatch WatchKit Extension";
 			productReference = 38E8752427554D5700975559 /* FreeAPSWatch WatchKit Extension.appex */;
 			productType = "com.apple.product-type.watchkit2-extension";
@@ -2212,6 +2218,7 @@
 				38E8752A27554D5700975559 /* FreeAPSApp.swift in Sources */,
 				38E8753027554D5700975559 /* NotificationView.swift in Sources */,
 				38E8754727554DF100975559 /* Color+Extensions.swift in Sources */,
+				38E8755927567CA600975559 /* Decimal+Extensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2748,6 +2755,11 @@
 			productName = Algorithms;
 		};
 		38B17B6525DD90E0005CAE3D /* SwiftDate */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 38B17B6425DD90E0005CAE3D /* XCRemoteSwiftPackageReference "SwiftDate" */;
+			productName = SwiftDate;
+		};
+		38E8755727567AE400975559 /* SwiftDate */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 38B17B6425DD90E0005CAE3D /* XCRemoteSwiftPackageReference "SwiftDate" */;
 			productName = SwiftDate;

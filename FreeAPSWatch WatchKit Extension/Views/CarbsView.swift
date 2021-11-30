@@ -9,7 +9,7 @@ struct CarbsView: View {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
         formatter.minimum = 0
-        formatter.maximum = 120
+        formatter.maximum = (state.maxCOB ?? 120) as NSNumber
         formatter.maximumFractionDigits = 0
         formatter.allowsFloats = false
         return formatter
@@ -39,7 +39,7 @@ struct CarbsView: View {
                 Spacer()
                 Button {
                     let newValue = amount + 5
-                    amount = min(newValue, 120)
+                    amount = min(newValue, Double(state.maxCOB ?? 120))
                 } label: { Image(systemName: "plus") }
                     .frame(width: 50)
             }
@@ -59,6 +59,9 @@ struct CarbsView: View {
             .disabled(amount <= 0)
         }
         .navigationTitle("Add Carbs")
+        .onAppear {
+            amount = Double(state.carbsRequired ?? 0)
+        }
     }
 }
 

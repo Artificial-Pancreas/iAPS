@@ -1,16 +1,12 @@
 import Foundation
 
-enum WatchMessageType: String {
-    case state
-    case confirmation
+enum WatchCommandKey: String {
     case command
 }
 
-struct WatchMessage {
-    let type: WatchMessageType
-    let carbs: Int?
-    let tempTargetID: String?
-    let bolusUnits: Decimal?
+enum WatchCommand: String {
+    case stateRequest
+    case carbs
 }
 
 struct WatchState: Codable {
