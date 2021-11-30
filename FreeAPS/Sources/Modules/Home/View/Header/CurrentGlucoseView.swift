@@ -22,7 +22,8 @@ struct CurrentGlucoseView: View {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
         formatter.maximumFractionDigits = 2
-        formatter.positivePrefix = "+"
+        formatter.positivePrefix = "  +"
+        formatter.negativePrefix = "  -"
         return formatter
     }
 
