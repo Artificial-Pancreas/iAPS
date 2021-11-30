@@ -197,6 +197,7 @@
 		38E8754C2755548F00975559 /* WatchStateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38E8754B2755548F00975559 /* WatchStateModel.swift */; };
 		38E8754F275556FA00975559 /* WatchManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38E8754E275556FA00975559 /* WatchManager.swift */; };
 		38E8755127555D0500975559 /* DataFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38E8755027555D0500975559 /* DataFlow.swift */; };
+		38E8755427561E9800975559 /* DataFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38E8755027555D0500975559 /* DataFlow.swift */; };
 		38E989DD25F5021400C0CED0 /* PumpStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38E989DC25F5021400C0CED0 /* PumpStatus.swift */; };
 		38E98A2325F52C9300C0CED0 /* Signpost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38E98A1B25F52C9300C0CED0 /* Signpost.swift */; };
 		38E98A2425F52C9300C0CED0 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38E98A1C25F52C9300C0CED0 /* Logger.swift */; };
@@ -578,6 +579,8 @@
 		38E8754B2755548F00975559 /* WatchStateModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchStateModel.swift; sourceTree = "<group>"; };
 		38E8754E275556FA00975559 /* WatchManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchManager.swift; sourceTree = "<group>"; };
 		38E8755027555D0500975559 /* DataFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataFlow.swift; sourceTree = "<group>"; };
+		38E8755527564B5000975559 /* FreeAPSWatch WatchKit Extension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "FreeAPSWatch WatchKit Extension.entitlements"; sourceTree = "<group>"; };
+		38E8755627564B6100975559 /* FreeAPSWatch.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = FreeAPSWatch.entitlements; sourceTree = "<group>"; };
 		38E989DC25F5021400C0CED0 /* PumpStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PumpStatus.swift; sourceTree = "<group>"; };
 		38E98A1B25F52C9300C0CED0 /* Signpost.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Signpost.swift; sourceTree = "<group>"; };
 		38E98A1C25F52C9300C0CED0 /* Logger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
@@ -1325,6 +1328,7 @@
 		38E8751D27554D5500975559 /* FreeAPSWatch */ = {
 			isa = PBXGroup;
 			children = (
+				38E8755627564B6100975559 /* FreeAPSWatch.entitlements */,
 				38E8751E27554D5700975559 /* Assets.xcassets */,
 			);
 			path = FreeAPSWatch;
@@ -1333,6 +1337,8 @@
 		38E8752827554D5700975559 /* FreeAPSWatch WatchKit Extension */ = {
 			isa = PBXGroup;
 			children = (
+				38E8755527564B5000975559 /* FreeAPSWatch WatchKit Extension.entitlements */,
+				38E8755027555D0500975559 /* DataFlow.swift */,
 				38E875482755505800975559 /* Views */,
 				38E8752927554D5700975559 /* FreeAPSApp.swift */,
 				38E8752D27554D5700975559 /* NotificationController.swift */,
@@ -1342,7 +1348,6 @@
 				38E8753827554D5900975559 /* Info.plist */,
 				38E8753927554D5900975559 /* PushNotificationPayload.apns */,
 				38E8753527554D5800975559 /* Preview Content */,
-				38E8755027555D0500975559 /* DataFlow.swift */,
 			);
 			path = "FreeAPSWatch WatchKit Extension";
 			sourceTree = "<group>";
@@ -2138,6 +2143,7 @@
 				DD399FB31EACB9343C944C4C /* PreferencesEditorStateModel.swift in Sources */,
 				44190F0BBA464D74B857D1FB /* PreferencesEditorRootView.swift in Sources */,
 				E97285ED9B814CD5253C6658 /* AddCarbsDataFlow.swift in Sources */,
+				38E8755427561E9800975559 /* DataFlow.swift in Sources */,
 				38E44522274E3DDC00EC9A94 /* NetworkReachabilityManager.swift in Sources */,
 				A6F097A14CAAE0CE0D11BE1B /* AddCarbsProvider.swift in Sources */,
 				33E198D3039045D98C3DC5D4 /* AddCarbsStateModel.swift in Sources */,
@@ -2492,6 +2498,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CODE_SIGN_ENTITLEMENTS = FreeAPSWatch/FreeAPSWatch.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 0.2.4;
 				DEVELOPMENT_TEAM = "${DEVELOPER_TEAM}";
@@ -2519,6 +2526,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CODE_SIGN_ENTITLEMENTS = FreeAPSWatch/FreeAPSWatch.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 0.2.4;
 				DEVELOPMENT_TEAM = "${DEVELOPER_TEAM}";
@@ -2544,6 +2552,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CODE_SIGN_ENTITLEMENTS = "FreeAPSWatch WatchKit Extension/FreeAPSWatch WatchKit Extension.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 0.2.4;
 				DEVELOPMENT_ASSET_PATHS = "\"FreeAPSWatch WatchKit Extension/Preview Content\"";
@@ -2576,6 +2585,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CODE_SIGN_ENTITLEMENTS = "FreeAPSWatch WatchKit Extension/FreeAPSWatch WatchKit Extension.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 0.2.4;
 				DEVELOPMENT_ASSET_PATHS = "\"FreeAPSWatch WatchKit Extension/Preview Content\"";

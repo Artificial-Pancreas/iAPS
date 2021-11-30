@@ -7,47 +7,58 @@ struct MainView: View {
     @State var isTargetsActive = false
     @State var isBolusActive = false
     var body: some View {
-        Form {
-            NavigationLink {
-                CarbsView()
-                    .environmentObject(state)
-            } label: {
-                HStack {
-                    Image("carbs", bundle: nil)
-                        .renderingMode(.template)
-                        .resizable()
-                        .frame(width: 24, height: 24)
-                        .foregroundColor(.loopGreen)
-                    Text("Abb Carbs")
+        VStack {
+            header
+            Form {
+                NavigationLink {
+                    CarbsView()
+                        .environmentObject(state)
+                } label: {
+                    HStack {
+                        Image("carbs", bundle: nil)
+                            .renderingMode(.template)
+                            .resizable()
+                            .frame(width: 24, height: 24)
+                            .foregroundColor(.loopGreen)
+                        Text("Abb Carbs")
+                    }
                 }
-            }
 
-            NavigationLink {
-                EmptyView()
-            } label: {
-                HStack {
-                    Image("target", bundle: nil)
-                        .renderingMode(.template)
-                        .resizable()
-                        .frame(width: 24, height: 24)
-                        .foregroundColor(.loopYellow)
-                    Text("Temp Targets").foregroundColor(.primary)
+                NavigationLink {
+                    EmptyView()
+                } label: {
+                    HStack {
+                        Image("target", bundle: nil)
+                            .renderingMode(.template)
+                            .resizable()
+                            .frame(width: 24, height: 24)
+                            .foregroundColor(.loopYellow)
+                        Text("Temp Targets").foregroundColor(.primary)
+                    }
                 }
-            }
 
-            NavigationLink {
-                EmptyView()
-            } label: {
-                HStack {
-                    Image("bolus", bundle: nil)
-                        .renderingMode(.template)
-                        .resizable()
-                        .frame(width: 24, height: 24)
-                        .foregroundColor(.insulin)
-                    Text("Enact Bolus")
+                NavigationLink {
+                    EmptyView()
+                } label: {
+                    HStack {
+                        Image("bolus", bundle: nil)
+                            .renderingMode(.template)
+                            .resizable()
+                            .frame(width: 24, height: 24)
+                            .foregroundColor(.insulin)
+                        Text("Enact Bolus")
+                    }
                 }
-            }
-        }.padding()
+            }.padding()
+        }
+    }
+
+    var header: some View {
+        HStack {
+            Text(state.glucose).font(.title2)
+            Text(state.trend)
+            Text(state.delta)
+        }
     }
 }
 
