@@ -19,6 +19,7 @@ class WatchStateModel: NSObject, ObservableObject {
     @Published var iob: Decimal?
     @Published var cob: Decimal?
     @Published var tempTargets: [TempTargetWatchPreset] = []
+    @Published var bolusAfterCarbs = true
 
     @Published var isCarbsViewActive = false
     @Published var isTempTargetViewActive = false
@@ -40,7 +41,14 @@ class WatchStateModel: NSObject, ObservableObject {
         confirmationSuccess = nil
         isConfirmationViewActive = true
         isCarbsViewActive = false
-        session.sendMessage(["carbs": carbs], replyHandler: completionHandler) { error in
+        session.sendMessage(["carbs": carbs], replyHandler: { reply in
+            self.completionHandler(reply)
+            if let ok = reply["confirmation"] as? Bool, ok, self.bolusAfterCarbs {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                    self.isBolusViewActive = true
+                }
+            }
+        }) { error in
             print(error.localizedDescription)
             DispatchQueue.main.async {
                 self.confirmation(false)
@@ -53,6 +61,18 @@ class WatchStateModel: NSObject, ObservableObject {
         isConfirmationViewActive = true
         isTempTargetViewActive = false
         session.sendMessage(["tempTarget": id], replyHandler: completionHandler) { error in
+            print(error.localizedDescription)
+            DispatchQueue.main.async {
+                self.confirmation(false)
+            }
+        }
+    }
+
+    func enactBolus(amount: Double) {
+        confirmationSuccess = nil
+        isConfirmationViewActive = true
+        isBolusViewActive = false
+        session.sendMessage(["bolus": amount], replyHandler: completionHandler) { error in
             print(error.localizedDescription)
             DispatchQueue.main.async {
                 self.confirmation(false)
@@ -99,11 +119,13 @@ class WatchStateModel: NSObject, ObservableObject {
         lastLoopDate = state.lastLoopDate
         bolusIncrement = state.bolusIncrement
         maxCOB = state.maxCOB
+        maxBolus = state.maxBolus
         bolusRecommended = state.bolusRecommended
         carbsRequired = state.carbsRequired
         iob = state.iob
         cob = state.cob
         tempTargets = state.tempTargets
+        bolusAfterCarbs = state.bolusAfterCarbs ?? true
     }
 }
 

@@ -30,7 +30,7 @@ struct CarbsView: View {
                     .digitalCrownRotation(
                         $amount,
                         from: 0,
-                        through: 120,
+                        through: Double(state.maxCOB ?? 120),
                         by: 1,
                         sensitivity: .medium,
                         isContinuous: false,

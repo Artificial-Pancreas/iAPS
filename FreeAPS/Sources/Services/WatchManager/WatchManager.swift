@@ -17,6 +17,8 @@ final class BaseWatchManager: NSObject, WatchManager, Injectable {
     @Injected() private var carbsStorage: CarbsStorage!
     @Injected() private var tempTargetsStorage: TempTargetsStorage!
 
+    private var lifetime = Lifetime()
+
     init(resolver: Resolver, session: WCSession = .default) {
         self.session = session
         super.init()
@@ -74,6 +76,8 @@ final class BaseWatchManager: NSObject, WatchManager, Injectable {
                         until: untilDate
                     )
                 }
+            self.state.bolusAfterCarbs = !self.settingsManager.settings.skipBolusScreenAfterCarbs
+
             self.sendState()
         }
     }
@@ -199,8 +203,18 @@ extension BaseWatchManager: WCSessionDelegate {
                 CarbsEntry(createdAt: Date(), carbs: Decimal(carbs), enteredBy: CarbsEntry.manual)
             ])
 
-            replyHandler(["confirmation": true])
-            return
+            if settingsManager.settings.skipBolusScreenAfterCarbs {
+                apsManager.determineBasalSync()
+                replyHandler(["confirmation": true])
+                return
+            } else {
+                apsManager.determineBasal()
+                    .sink { _ in
+                        replyHandler(["confirmation": true])
+                    }
+                    .store(in: &lifetime)
+                return
+            }
         }
 
         if let tempTargetID = message["tempTarget"] as? String {
@@ -223,6 +237,12 @@ extension BaseWatchManager: WCSessionDelegate {
                 replyHandler(["confirmation": true])
                 return
             }
+        }
+
+        if let bolus = message["bolus"] as? Double, bolus > 0 {
+            apsManager.enactBolus(amount: bolus, isSMB: false)
+            replyHandler(["confirmation": true])
+            return
         }
 
         replyHandler(["confirmation": false])

@@ -95,7 +95,8 @@ struct MainView: View {
             }
 
             NavigationLink(isActive: $state.isBolusViewActive) {
-                EmptyView()
+                BolusView()
+                    .environmentObject(state)
             } label: {
                 Image("bolus", bundle: nil)
                     .renderingMode(.template)
