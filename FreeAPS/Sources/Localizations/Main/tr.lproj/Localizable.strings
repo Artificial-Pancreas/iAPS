@@ -327,7 +327,7 @@ Enact a temp Basal or a temp target */
 " g" = " g";
 
 /* The short unit display string for grams */
-"g" = "g";
+"g" = "gr";
 
 /* when 0 U/hr */
 "0 U/hr" = "0 Ü/Sa";
@@ -940,10 +940,10 @@ Enact a temp Basal or a temp target */
 "Set to a number, e.g. 160, which means when temp target is 160 mg/dL and exercise_mode=true, run 50% basal at this level (120 = 75%; 140 = 60%). This can be adjusted, to give you more control over your exercise modes." = "Set to a number, e.g. 160, which means when temp target is 160 mg/dL and exercise_mode=true, run 50% basal at this level (120 = 75%; 140 = 60%). This can be adjusted, to give you more control over your exercise modes.";
 
 /* "Max COB" */
-"This defaults maxCOB to 120 because that’s the most a typical body can absorb over 4 hours. (If someone enters more carbs or stacks more; OpenAPS will just truncate dosing based on 120. Essentially, this just limits AMA as a safety cap against weird COB calculations due to fluky data.)" = "This defaults maxCOB to 120 because that’s the most a typical body can absorb over 4 hours. (If someone enters more carbs or stacks more; OpenAPS will just truncate dosing based on 120. Essentially, this just limits AMA as a safety cap against weird COB calculations due to fluky data.)";
+"This defaults maxCOB to 120 because that’s the most a typical body can absorb over 4 hours. (If someone enters more carbs or stacks more; OpenAPS will just truncate dosing based on 120. Essentially, this just limits AMA as a safety cap against weird COB calculations due to fluky data.)" = "Bu varsayılan olarak maxCOB'u 120'ye ayarlar çünkü bu, tipik bir vücudun 4 saatten fazla emebileceği en fazla değerdir. (Birisi daha fazla karbonhidrat yerse; OpenAPS, 120'ye dayalı dozlamayı keser. Esasen, bu, AMA'yı (Gelişmiş Yemek Asistanı), rastgele verilerden kaynaklanan tuhaf COB hesaplamalarına karşı bir güvenlik sınırı olarak sınırlar.)";
 
 /* "Bolus Snooze DIA Divisor" */
-"Bolus snooze is enacted after you do a meal bolus, so the loop won’t counteract with low temps when you’ve just eaten. The example here and default is 2; so a 3 hour DIA means that bolus snooze will be gradually phased out over 1.5 hours (3DIA/2)." = "Bolus snooze is enacted after you do a meal bolus, so the loop won’t counteract with low temps when you’ve just eaten. The example here and default is 2; so a 3 hour DIA means that bolus snooze will be gradually phased out over 1.5 hours (3DIA/2).";
+"Bolus snooze is enacted after you do a meal bolus, so the loop won’t counteract with low temps when you’ve just eaten. The example here and default is 2; so a 3 hour DIA means that bolus snooze will be gradually phased out over 1.5 hours (3DIA/2)." = "Bolus erteleme, bir yemek bolusu yaptıktan sonra yürürlüğe girer, bu nedenle döngü, az önce yemek yediğinizde geçici düşük bazala etki etmez. Burada varsayılan örnek 2'dir; Dolayısıyla 3 saatlik bir DIA, bolus ertelemenin kademeli olarak 1,5 saat (3DIA / 2) üzerinden aşamalı olarak sonlandırılacağı anlamına gelir.";
 
 /* "Min 5m Carbimpact" */
 "This is a setting for default carb absorption impact per 5 minutes. The default is an expected 8 mg/dL/5min. This affects how fast COB is decayed in situations when carb absorption is not visible in BG deviations. The default of 8 mg/dL/5min corresponds to a minimum carb absorption rate of 24g/hr at a CSF of 4 mg/dL/g." = "Bu ayar 5 dakikada bir varsayılan karbonhidrat emilim etkisi için dır. Varsayılan, beklenen bir 8 mg/dL/5dk'dır. Bu, KŞ sapmalarında karbonhidrat emiliminin görünmediği durumlarda COB'nin ne kadar hızlı bozulduğunu etkiler. Varsayılan 8 mg/dL/5dk, 4 mg/dL/g'lik bir BOS'ta 24g/saatlik minimum karbonhidrat emilim oranına karşılık gelir.";
