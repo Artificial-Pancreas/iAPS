@@ -2,13 +2,13 @@
 "NFCReaderUsageDescription" = "NFC wird zum Scannen von Libre Sensoren benutzt.";
 
 /* Privacy - Bluetooth Always Usage Description */
-"NSBluetoothAlwaysUsageDescription" = "Bluetooth is used to communicate with insulin pump and continuous glucose monitor devices";
+"NSBluetoothAlwaysUsageDescription" = "Bluetooth wird verwendet, um mit Insulinpumpen und CGMs zu kommunizieren.";
 
 /* Privacy - Bluetooth Peripheral Usage Description */
-"NSBluetoothPeripheralUsageDescription" = "Bluetooth is used to communicate with insulin pump and continuous glucose monitor devices";
+"NSBluetoothPeripheralUsageDescription" = "Bluetooth wird verwendet, um mit Insulinpumpen und CGMs zu kommunizieren.";
 
 /* Privacy - Face ID Usage Description */
-"NSFaceIDUsageDescription" = "For authorized acces to bolus";
+"NSFaceIDUsageDescription" = "Identitätsverifizierung für Bolus - damit nur autorisierte Personen einen Bolus abrufen können.";
 
 /* Privacy - Calendars Usage Description */
-"NSCalendarsUsageDescription" = "Calendar is used to create a new glucose events.";
+"NSCalendarsUsageDescription" = "BZ Werte als Kalendartermin: Jeder neue CGM-Blutzuckerwert wird als momentaner Kalendartermin gespeichert, damit er auf der Apple Watch in real-time aufgefrischt wird.";
