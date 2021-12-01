@@ -7,7 +7,7 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
         let descriptors = [
             CLKComplicationDescriptor(
                 identifier: "complication",
-                displayName: "FreeAPS",
+                displayName: "FreeAPS X",
                 supportedFamilies: CLKComplicationFamily.allCases
             )
             // Multiple complication support can be added here with more descriptors
