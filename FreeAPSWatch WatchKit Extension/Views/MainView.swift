@@ -12,10 +12,17 @@ struct MainView: View {
     @State var isTargetsActive = false
     @State var isBolusActive = false
     var body: some View {
-        VStack {
-            header
-            Spacer()
-            buttons
+        ZStack {
+            VStack {
+                header
+                Spacer()
+                buttons
+            }
+
+            if state.isConfirmationViewActive {
+                ConfirmationView(success: $state.confirmationSuccess)
+                    .background(Rectangle().fill(.black))
+            }
         }
         .frame(maxHeight: .infinity)
         .padding()
@@ -57,7 +64,7 @@ struct MainView: View {
 
     var buttons: some View {
         HStack {
-            NavigationLink {
+            NavigationLink(isActive: $state.isCarbsViewActive) {
                 CarbsView()
                     .environmentObject(state)
             } label: {
@@ -70,7 +77,7 @@ struct MainView: View {
                 }
             }
 
-            NavigationLink {
+            NavigationLink(isActive: $state.isTempTargetViewActive) {
                 EmptyView()
             } label: {
                 HStack {
@@ -82,7 +89,7 @@ struct MainView: View {
                 }
             }
 
-            NavigationLink {
+            NavigationLink(isActive: $state.isBolusViewActive) {
                 EmptyView()
             } label: {
                 HStack {

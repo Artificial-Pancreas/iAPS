@@ -1,14 +1,5 @@
 import Foundation
 
-enum WatchCommandKey: String {
-    case command
-}
-
-enum WatchCommand: String {
-    case stateRequest
-    case carbs
-}
-
 struct WatchState: Codable {
     var glucose: String?
     var trend: String?
@@ -22,9 +13,4 @@ struct WatchState: Codable {
     var bolusRecommended: Decimal?
     var iob: Decimal?
     var cob: Decimal?
-}
-
-struct WatchCommandConfitmation: Codable {
-    let confirmed: Bool
-    let reason: String?
 }

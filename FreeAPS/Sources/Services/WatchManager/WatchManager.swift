@@ -14,6 +14,7 @@ final class BaseWatchManager: NSObject, WatchManager, Injectable {
     @Injected() private var glucoseStorage: GlucoseStorage!
     @Injected() private var apsManager: APSManager!
     @Injected() private var storage: FileStorage!
+    @Injected() private var carbsStorage: CarbsStorage!
 
     init(resolver: Resolver, session: WCSession = .default) {
         self.session = session
@@ -144,20 +145,28 @@ extension BaseWatchManager: WCSessionDelegate {
     }
 
     func session(_: WCSession, didReceiveMessage message: [String: Any]) {
-        guard let commandRaw = message[WatchCommandKey.command.rawValue] as? String,
-              let command = WatchCommand(rawValue: commandRaw) else { return }
-        switch command {
-        case .stateRequest:
+        debug(.service, "WCSession got message: \(message)")
+
+        if let stateRequest = message["stateRequest"] as? Bool, stateRequest {
             processQueue.async {
                 self.sendState()
             }
-        case .carbs: break
         }
     }
 
-    func session(_: WCSession, didReceiveMessage _: [String: Any], replyHandler: @escaping ([String: Any]) -> Void) {
-        print("WCSession got message with reply handler")
-        replyHandler(["message": "ok"])
+    func session(_: WCSession, didReceiveMessage message: [String: Any], replyHandler: @escaping ([String: Any]) -> Void) {
+        debug(.service, "WCSession got message with reply handler: \(message)")
+
+        if let carbs = message["carbs"] as? Double, carbs > 0 {
+            carbsStorage.storeCarbs([
+                CarbsEntry(createdAt: Date(), carbs: Decimal(carbs), enteredBy: CarbsEntry.manual)
+            ])
+
+            replyHandler(["confirmation": true])
+            return
+        }
+
+        replyHandler(["confirmation": false])
     }
 
     func session(_: WCSession, didReceiveMessageData _: Data) {}

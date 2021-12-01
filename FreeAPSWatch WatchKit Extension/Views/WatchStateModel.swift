@@ -1,10 +1,10 @@
+import Combine
 import Foundation
 import SwiftUI
 import WatchConnectivity
 
 class WatchStateModel: NSObject, ObservableObject {
     var session: WCSession
-    @Published var result = ""
 
     @Published var glucose = "00"
     @Published var trend = "→"
@@ -19,6 +19,14 @@ class WatchStateModel: NSObject, ObservableObject {
     @Published var iob: Decimal?
     @Published var cob: Decimal?
 
+    @Published var isCarbsViewActive = false
+    @Published var isTempTargetViewActive = false
+    @Published var isBolusViewActive = false
+    @Published var isConfirmationViewActive = false
+    @Published var confirmationSuccess: Bool?
+
+    private var lifetime = Set<AnyCancellable>()
+
     init(session: WCSession = .default) {
         self.session = session
         super.init()
@@ -28,10 +36,38 @@ class WatchStateModel: NSObject, ObservableObject {
     }
 
     func addCarbs(_ carbs: Int) {
-        session.sendMessage(["addCarbs": carbs], replyHandler: { _ in
-            WKInterfaceDevice.current().play(.success)
+        confirmationSuccess = nil
+        isConfirmationViewActive = true
+        isCarbsViewActive = false
+        session.sendMessage(["carbs": carbs], replyHandler: { replay in
+            if let ok = replay["confirmation"] as? Bool {
+                DispatchQueue.main.async {
+                    self.confirmation(ok)
+                }
+            } else {
+                DispatchQueue.main.async {
+                    self.confirmation(false)
+                }
+            }
+
         }) { error in
-            print("ASDF: " + error.localizedDescription)
+            print(error.localizedDescription)
+            DispatchQueue.main.async {
+                self.confirmation(false)
+            }
+        }
+    }
+
+    private func confirmation(_ ok: Bool) {
+        WKInterfaceDevice.current().play(ok ? .success : .failure)
+        withAnimation {
+            confirmationSuccess = ok
+        }
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            withAnimation {
+                self.isConfirmationViewActive = false
+            }
         }
     }
 
@@ -53,18 +89,12 @@ class WatchStateModel: NSObject, ObservableObject {
 extension WatchStateModel: WCSessionDelegate {
     func session(_: WCSession, activationDidCompleteWith state: WCSessionActivationState, error _: Error?) {
         print("WCSession activated: \(state == .activated)")
-        session.sendMessage([WatchCommandKey.command.rawValue: WatchCommand.stateRequest.rawValue], replyHandler: nil) { error in
+        session.sendMessage(["stateRequest": true], replyHandler: nil) { error in
             print("WatchStateModel error: " + error.localizedDescription)
         }
     }
 
-    func session(_: WCSession, didReceiveMessage message: [String: Any]) {
-        if let text = message["message"] as? String {
-            DispatchQueue.main.async {
-                self.result = text
-            }
-        }
-    }
+    func session(_: WCSession, didReceiveMessage _: [String: Any]) {}
 
     func sessionReachabilityDidChange(_ session: WCSession) {
         print("WCSession Reachability: \(session.isReachable)")

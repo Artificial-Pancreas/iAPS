@@ -10,6 +10,6 @@ import SwiftUI
             }.environmentObject(state)
         }
 
-        WKNotificationScene(controller: NotificationController.self, category: "myCategory")
+        WKNotificationScene(controller: NotificationController.self, category: "FreeAPSCategory")
     }
 }
