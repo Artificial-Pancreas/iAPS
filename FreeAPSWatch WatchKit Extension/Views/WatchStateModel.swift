@@ -18,6 +18,7 @@ class WatchStateModel: NSObject, ObservableObject {
     @Published var carbsRequired: Decimal?
     @Published var iob: Decimal?
     @Published var cob: Decimal?
+    @Published var tempTargets: [TempTargetWatchPreset] = []
 
     @Published var isCarbsViewActive = false
     @Published var isTempTargetViewActive = false
@@ -39,19 +40,32 @@ class WatchStateModel: NSObject, ObservableObject {
         confirmationSuccess = nil
         isConfirmationViewActive = true
         isCarbsViewActive = false
-        session.sendMessage(["carbs": carbs], replyHandler: { replay in
-            if let ok = replay["confirmation"] as? Bool {
-                DispatchQueue.main.async {
-                    self.confirmation(ok)
-                }
-            } else {
-                DispatchQueue.main.async {
-                    self.confirmation(false)
-                }
-            }
-
-        }) { error in
+        session.sendMessage(["carbs": carbs], replyHandler: completionHandler) { error in
             print(error.localizedDescription)
+            DispatchQueue.main.async {
+                self.confirmation(false)
+            }
+        }
+    }
+
+    func enactTempTarget(id: String) {
+        confirmationSuccess = nil
+        isConfirmationViewActive = true
+        isTempTargetViewActive = false
+        session.sendMessage(["tempTarget": id], replyHandler: completionHandler) { error in
+            print(error.localizedDescription)
+            DispatchQueue.main.async {
+                self.confirmation(false)
+            }
+        }
+    }
+
+    private func completionHandler(_ reply: [String: Any]) {
+        if let ok = reply["confirmation"] as? Bool {
+            DispatchQueue.main.async {
+                self.confirmation(ok)
+            }
+        } else {
             DispatchQueue.main.async {
                 self.confirmation(false)
             }
@@ -83,6 +97,7 @@ class WatchStateModel: NSObject, ObservableObject {
         carbsRequired = state.carbsRequired
         iob = state.iob
         cob = state.cob
+        tempTargets = state.tempTargets
     }
 }
 

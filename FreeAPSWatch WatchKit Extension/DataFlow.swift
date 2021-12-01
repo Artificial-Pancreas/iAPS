@@ -13,4 +13,12 @@ struct WatchState: Codable {
     var bolusRecommended: Decimal?
     var iob: Decimal?
     var cob: Decimal?
+    var tempTargets: [TempTargetWatchPreset] = []
+}
+
+struct TempTargetWatchPreset: Codable, Identifiable {
+    let name: String
+    let id: String
+    let description: String
+    let until: Date?
 }

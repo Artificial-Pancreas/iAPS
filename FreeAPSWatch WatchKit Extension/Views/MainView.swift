@@ -68,37 +68,37 @@ struct MainView: View {
                 CarbsView()
                     .environmentObject(state)
             } label: {
-                HStack {
-                    Image("carbs", bundle: nil)
-                        .renderingMode(.template)
-                        .resizable()
-                        .frame(width: 24, height: 24)
-                        .foregroundColor(.loopGreen)
-                }
+                Image("carbs", bundle: nil)
+                    .renderingMode(.template)
+                    .resizable()
+                    .frame(width: 24, height: 24)
+                    .foregroundColor(.loopGreen)
             }
 
             NavigationLink(isActive: $state.isTempTargetViewActive) {
-                EmptyView()
+                TempTargetsView()
+                    .environmentObject(state)
             } label: {
-                HStack {
+                VStack {
                     Image("target", bundle: nil)
                         .renderingMode(.template)
                         .resizable()
                         .frame(width: 24, height: 24)
                         .foregroundColor(.loopYellow)
+                    if let until = state.tempTargets.compactMap(\.until).first, until > Date() {
+                        Text(until, style: .timer).font(.system(size: 8))
+                    }
                 }
             }
 
             NavigationLink(isActive: $state.isBolusViewActive) {
                 EmptyView()
             } label: {
-                HStack {
-                    Image("bolus", bundle: nil)
-                        .renderingMode(.template)
-                        .resizable()
-                        .frame(width: 24, height: 24)
-                        .foregroundColor(.insulin)
-                }
+                Image("bolus", bundle: nil)
+                    .renderingMode(.template)
+                    .resizable()
+                    .frame(width: 24, height: 24)
+                    .foregroundColor(.insulin)
             }
         }
     }

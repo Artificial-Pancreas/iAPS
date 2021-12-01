@@ -15,6 +15,7 @@ final class BaseWatchManager: NSObject, WatchManager, Injectable {
     @Injected() private var apsManager: APSManager!
     @Injected() private var storage: FileStorage!
     @Injected() private var carbsStorage: CarbsStorage!
+    @Injected() private var tempTargetsStorage: TempTargetsStorage!
 
     init(resolver: Resolver, session: WCSession = .default) {
         self.session = session
@@ -60,7 +61,19 @@ final class BaseWatchManager: NSObject, WatchManager, Injectable {
 
             self.state.iob = self.suggestion?.iob
             self.state.cob = self.suggestion?.cob
-
+            self.state.tempTargets = self.tempTargetsStorage.presets()
+                .map { target -> TempTargetWatchPreset in
+                    let untilDate = self.tempTargetsStorage.current().flatMap { currentTarget -> Date? in
+                        guard currentTarget.id == target.id else { return nil }
+                        return currentTarget.createdAt.addingTimeInterval(TimeInterval(currentTarget.duration * 60))
+                    }
+                    return TempTargetWatchPreset(
+                        name: target.displayName,
+                        id: target.id,
+                        description: self.descriptionForTarget(target),
+                        until: untilDate
+                    )
+                }
             self.sendState()
         }
     }
@@ -106,6 +119,23 @@ final class BaseWatchManager: NSObject, WatchManager, Injectable {
         return (glucoseText, directionText, deltaText)
     }
 
+    private func descriptionForTarget(_ target: TempTarget) -> String {
+        let units = settingsManager.settings.units
+
+        var low = target.targetBottom
+        var high = target.targetTop
+        if units == .mmolL {
+            low = low?.asMmolL
+            high = high?.asMmolL
+        }
+
+        let description =
+            "\(targetFormatter.string(from: (low ?? 0) as NSNumber)!) - \(targetFormatter.string(from: (high ?? 0) as NSNumber)!)" +
+            " for \(targetFormatter.string(from: target.duration as NSNumber)!) min"
+
+        return description
+    }
+
     private var glucoseFormatter: NumberFormatter {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
@@ -123,6 +153,13 @@ final class BaseWatchManager: NSObject, WatchManager, Injectable {
         formatter.numberStyle = .decimal
         formatter.maximumFractionDigits = 2
         formatter.positivePrefix = "+"
+        return formatter
+    }
+
+    private var targetFormatter: NumberFormatter {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        formatter.maximumFractionDigits = 1
         return formatter
     }
 
@@ -164,6 +201,28 @@ extension BaseWatchManager: WCSessionDelegate {
 
             replyHandler(["confirmation": true])
             return
+        }
+
+        if let tempTargetID = message["tempTarget"] as? String {
+            if var preset = tempTargetsStorage.presets().first(where: { $0.id == tempTargetID }) {
+                preset.createdAt = Date()
+                tempTargetsStorage.storeTempTargets([preset])
+                replyHandler(["confirmation": true])
+                return
+            } else if tempTargetID == "cancel" {
+                let entry = TempTarget(
+                    name: TempTarget.cancel,
+                    createdAt: Date(),
+                    targetTop: 0,
+                    targetBottom: 0,
+                    duration: 0,
+                    enteredBy: TempTarget.manual,
+                    reason: TempTarget.cancel
+                )
+                tempTargetsStorage.storeTempTargets([entry])
+                replyHandler(["confirmation": true])
+                return
+            }
         }
 
         replyHandler(["confirmation": false])
