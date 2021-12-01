@@ -26,6 +26,9 @@ struct MainView: View {
         }
         .frame(maxHeight: .infinity)
         .padding()
+        .onAppear {
+            state.requestState()
+        }
     }
 
     var header: some View {

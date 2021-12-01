@@ -60,6 +60,12 @@ class WatchStateModel: NSObject, ObservableObject {
         }
     }
 
+    func requestState() {
+        session.sendMessage(["stateRequest": true], replyHandler: nil) { error in
+            print("WatchStateModel error: " + error.localizedDescription)
+        }
+    }
+
     private func completionHandler(_ reply: [String: Any]) {
         if let ok = reply["confirmation"] as? Bool {
             DispatchQueue.main.async {
@@ -104,9 +110,7 @@ class WatchStateModel: NSObject, ObservableObject {
 extension WatchStateModel: WCSessionDelegate {
     func session(_: WCSession, activationDidCompleteWith state: WCSessionActivationState, error _: Error?) {
         print("WCSession activated: \(state == .activated)")
-        session.sendMessage(["stateRequest": true], replyHandler: nil) { error in
-            print("WatchStateModel error: " + error.localizedDescription)
-        }
+        requestState()
     }
 
     func session(_: WCSession, didReceiveMessage _: [String: Any]) {}
