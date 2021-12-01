@@ -52,7 +52,7 @@ extension NotificationsConfig {
                         Text("Carbs Required Threshold")
                         Spacer()
                         DecimalTextField("0", value: $state.carbsRequiredThreshold, formatter: carbsFormatter)
-                        Text("г").foregroundColor(.secondary)
+                        Text("g").foregroundColor(.secondary)
                     }
                 }
             }
