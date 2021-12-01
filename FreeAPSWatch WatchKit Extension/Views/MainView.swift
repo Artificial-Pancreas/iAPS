@@ -39,10 +39,14 @@ struct MainView: View {
             HStack(alignment: .top) {
                 VStack(alignment: .leading) {
                     HStack {
-                        Text(state.glucose).font(.largeTitle).minimumScaleFactor(0.5)
+                        Text(state.glucose).font(.largeTitle)
+                            .scaledToFill()
+                            .minimumScaleFactor(0.5)
                         Text(state.trend)
                     }
                     Text(state.delta).font(.caption2)
+                        .scaledToFill()
+                        .minimumScaleFactor(0.5)
                 }
                 Spacer()
 
@@ -53,16 +57,22 @@ struct MainView: View {
 
                     if state.lastLoopDate != nil {
                         Text(timeString).font(.caption2)
+                            .scaledToFill()
+                            .minimumScaleFactor(0.5)
                     } else {
                         Text("--").font(.caption2)
                     }
                 }
             }
             Spacer()
-            HStack {
+            HStack (alignment: .firstTextBaseline) {
                 Text("IOB: " + iobFormatter.string(from: (state.iob ?? 0) as NSNumber)! + " U").font(.caption2)
+                    .scaledToFill()
+                    .minimumScaleFactor(0.5)
                 Spacer()
                 Text("COB: " + iobFormatter.string(from: (state.cob ?? 0) as NSNumber)! + " g").font(.caption2)
+                    .scaledToFill()
+                    .minimumScaleFactor(0.5)
             }
             Spacer()
         }.padding()
@@ -143,9 +153,18 @@ struct MainView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        Group {
-            MainView().environmentObject(WatchStateModel())
-            MainView().previewDevice("Apple Watch Series 5 - 40mm").environmentObject(WatchStateModel())
-        }
+        let state = WatchStateModel()
+
+        state.glucose = "15,7"
+        state.delta = "+0.39"
+        state.iob = 10.38
+        state.cob = 112
+
+        state.lastLoopDate = Date().addingTimeInterval(-200)
+
+        return Group {
+            MainView()
+            MainView().previewDevice("Apple Watch Series 5 - 40mm")
+        }.environmentObject(state)
     }
 }
