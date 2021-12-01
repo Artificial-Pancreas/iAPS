@@ -28,6 +28,7 @@ class WatchStateModel: NSObject, ObservableObject {
     @Published var confirmationSuccess: Bool?
 
     private var lifetime = Set<AnyCancellable>()
+    let timer = Timer.publish(every: 10, on: .main, in: .common).autoconnect()
 
     init(session: WCSession = .default) {
         self.session = session
@@ -81,6 +82,10 @@ class WatchStateModel: NSObject, ObservableObject {
     }
 
     func requestState() {
+        guard session.activationState == .activated else {
+            session.activate()
+            return
+        }
         session.sendMessage(["stateRequest": true], replyHandler: nil) { error in
             print("WatchStateModel error: " + error.localizedDescription)
         }

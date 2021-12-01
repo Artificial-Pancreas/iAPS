@@ -26,6 +26,9 @@ struct MainView: View {
         }
         .frame(maxHeight: .infinity)
         .padding()
+        .onReceive(state.timer) { _ in
+            state.requestState()
+        }
         .onAppear {
             state.requestState()
         }
