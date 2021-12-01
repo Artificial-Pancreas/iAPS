@@ -2,8 +2,8 @@
   Localizable.strings
   FreeAPS X
 */
-
 /* Bolus screen when adding insulin */
+
 "Add insulin without actually bolusing" = "Add insulin without actually bolusing";
 
 /* Add insulin from source outside of pump */
@@ -400,8 +400,8 @@ Enact a temp Basal or a temp target */
 
 
 /* Calendar and Libre transmitter settings --------------*/
-
 /* */
+
 "Configure Libre Transmitter" = "Configure Libre Transmitter";
 
 /* */
@@ -474,7 +474,7 @@ Enact a temp Basal or a temp target */
 "Calibrations" = "Calibrations";
 
 /* */
-"About the Process"= "About the Process";
+"About the Process" = "About the Process";
 
 /* */
 "Please make sure that your Libre 2 sensor is already activated and finished warming up. If you have other apps connecting to the sensor via bluetooth, these need to be shut down or uninstalled. \n\n You can only have one app communicating with the sensor via bluetooth. Then press the \"pariring and connection\" button below to start the process. Please note that the bluetooth connection might take up to a couple of minutes before it starts working." = "Please make sure that your Libre 2 sensor is already activated and finished warming up. If you have other apps connecting to the sensor via bluetooth, these need to be shut down or uninstalled. \n\n You can only have one app communicating with the sensor via bluetooth. Then press the \"pariring and connection\" button below to start the process. Please note that the bluetooth connection might take up to a couple of minutes before it starts working.";
@@ -519,7 +519,7 @@ Enact a temp Basal or a temp target */
 "Invalid libre checksum" = "Invalid libre checksum";
 
 /* Libre sensor was incorrectly read, CRCs were not valid */
-"Libre sensor was incorrectly read, CRCs were not valid"= "Libre sensor was incorrectly read, CRCs were not valid";
+"Libre sensor was incorrectly read, CRCs were not valid" = "Libre sensor was incorrectly read, CRCs were not valid";
 
 /* Glucose */
 "Glucose" = "Glucose";
@@ -658,7 +658,6 @@ Enact a temp Basal or a temp target */
 
 /* */
 "Delete CGM" = "Delete CGM";
-    
 /* */
 "Are you sure you want to remove this cgm from loop?" = "Are you sure you want to remove this cgm from loop?";
 
@@ -822,22 +821,22 @@ Enact a temp Basal or a temp target */
 "Battery" = "Battery";
 
 /* */
- "Also add source info" = "Also add source info";
+"Also add source info" = "Also add source info";
 
- /* */
- "Carbs Required Threshold" = "Carbs Required Threshold";
+/* */
+"Carbs Required Threshold" = "Carbs Required Threshold";
 
- /* */
- "Carbs required: %d g" = "Carbs required: %d g";
+/* */
+"Carbs required: %d g" = "Carbs required: %d g";
 
- /* */
- "To prevent LOW required %d g of carbs" = "To prevent LOW required %d g of carbs";
+/* */
+"To prevent LOW required %d g of carbs" = "To prevent LOW required %d g of carbs";
 
- /* */
- "FreeAPS X not active" = "FreeAPS X not active";
+/* */
+"FreeAPS X not active" = "FreeAPS X not active";
 
- /* */
- "Last loop was more then %d min ago" = "Last loop was more then %d min ago";
+/* */
+"Last loop was more then %d min ago" = "Last loop was more then %d min ago";
 
 /* Glucose badge */
 "Show glucose on the app badge" = "Show glucose on the app badge";
@@ -866,8 +865,8 @@ Enact a temp Basal or a temp target */
   Infotexts from openaps.docs and androidaps.docs
   FreeAPS X
 */
-
 /* ”Rewind Resets Autosens” */
+
 "This feature, enabled by default, resets the autosens ratio to neutral when you rewind your pump, on the assumption that this corresponds to a probable site change. Autosens will begin learning sensitivity anew from the time of the rewind, which may take up to 6 hours. If you usually rewind your pump independently of site changes, you may want to consider disabling this feature." = "This feature, enabled by default, resets the autosens ratio to neutral when you rewind your pump, on the assumption that this corresponds to a probable site change. Autosens will begin learning sensitivity anew from the time of the rewind, which may take up to 6 hours. If you usually rewind your pump independently of site changes, you may want to consider disabling this feature.";
 
 /* ”High Temptarget Raises Sensitivity" */
