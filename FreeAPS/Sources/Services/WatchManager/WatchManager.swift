@@ -67,7 +67,8 @@ final class BaseWatchManager: NSObject, WatchManager, Injectable {
                 .map { target -> TempTargetWatchPreset in
                     let untilDate = self.tempTargetsStorage.current().flatMap { currentTarget -> Date? in
                         guard currentTarget.id == target.id else { return nil }
-                        return currentTarget.createdAt.addingTimeInterval(TimeInterval(currentTarget.duration * 60))
+                        let date = currentTarget.createdAt.addingTimeInterval(TimeInterval(currentTarget.duration * 60))
+                        return date > Date() ? date : nil
                     }
                     return TempTargetWatchPreset(
                         name: target.displayName,
