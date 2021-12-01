@@ -44,7 +44,7 @@ struct CarbsView: View {
                     .frame(width: 50)
             }
             Button {
-                state.addCarbs(10)
+                state.addCarbs(Int(amount))
             }
             label: {
                 HStack {
