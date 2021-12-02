@@ -39,10 +39,10 @@ struct MainView: View {
             HStack(alignment: .top) {
                 VStack(alignment: .leading) {
                     HStack {
-                        Text(state.glucose).font(.largeTitle).minimumScaleFactor(0.5)
+                        Text(state.glucose).font(.largeTitle)
                         Text(state.trend)
                     }
-                    Text(state.delta).font(.caption2)
+                    Text(state.delta).font(.caption2).foregroundColor(.gray)
                 }
                 Spacer()
 
@@ -52,12 +52,13 @@ struct MainView: View {
                     }
 
                     if state.lastLoopDate != nil {
-                        Text(timeString).font(.caption2)
+                        Text(timeString).font(.caption2).foregroundColor(.gray)
                     } else {
-                        Text("--").font(.caption2)
+                        Text("--").font(.caption2).foregroundColor(.gray)
                     }
                 }
             }
+            Spacer()
             Spacer()
             HStack {
                 Text(iobFormatter.string(from: (state.cob ?? 0) as NSNumber)!).font(.caption2)
