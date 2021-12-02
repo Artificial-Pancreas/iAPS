@@ -9,6 +9,7 @@ class WatchStateModel: NSObject, ObservableObject {
     @Published var glucose = "00"
     @Published var trend = "→"
     @Published var delta = "+00"
+    @Published var eventualBG = ""
     @Published var lastLoopDate: Date?
     @Published var glucoseDate: Date?
     @Published var bolusIncrement: Decimal?
@@ -131,6 +132,7 @@ class WatchStateModel: NSObject, ObservableObject {
         cob = state.cob
         tempTargets = state.tempTargets
         bolusAfterCarbs = state.bolusAfterCarbs ?? true
+        eventualBG = state.eventualBG ?? ""
     }
 }
 

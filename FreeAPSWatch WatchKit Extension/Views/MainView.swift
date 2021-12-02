@@ -47,6 +47,7 @@ struct MainView: View {
                     Text(state.delta).font(.caption2)
                         .scaledToFill()
                         .minimumScaleFactor(0.5)
+                        .foregroundColor(.secondary)
                 }
                 Spacer()
 
@@ -59,27 +60,48 @@ struct MainView: View {
                         Text(timeString).font(.caption2)
                             .scaledToFill()
                             .minimumScaleFactor(0.5)
+                            .foregroundColor(.secondary)
                     } else {
                         Text("--").font(.caption2)
                     }
                 }
             }
             Spacer()
-            HStack (alignment: .firstTextBaseline) {
-                Text("IOB: " + iobFormatter.string(from: (state.iob ?? 0) as NSNumber)! + " U").font(.caption2)
-                    .scaledToFill()
-                    .minimumScaleFactor(0.5)
+            HStack(alignment: .firstTextBaseline) {
+                HStack {
+                    Text(iobFormatter.string(from: (state.iob ?? 0) as NSNumber)! + " U")
+                        .font(.caption2)
+                        .scaledToFill()
+                        .foregroundColor(.insulin)
+                        .minimumScaleFactor(0.5)
+
+                }.minimumScaleFactor(0.5)
                 Spacer()
-                Text("COB: " + iobFormatter.string(from: (state.cob ?? 0) as NSNumber)! + " g").font(.caption2)
-                    .scaledToFill()
-                    .minimumScaleFactor(0.5)
+                HStack {
+                    Text(iobFormatter.string(from: (state.cob ?? 0) as NSNumber)! + " g")
+                        .font(.caption2)
+                        .scaledToFill()
+                        .foregroundColor(.loopGreen)
+                        .minimumScaleFactor(0.5)
+                }
+
+                if let eventualBG = state.eventualBG.nonEmpty {
+                    Spacer()
+                    HStack {
+                        Text(eventualBG)
+                            .font(.caption2)
+                            .scaledToFill()
+                            .foregroundColor(.secondary)
+                            .minimumScaleFactor(0.5)
+                    }
+                }
             }
             Spacer()
         }.padding()
     }
 
     var buttons: some View {
-        HStack {
+        HStack(alignment: .center) {
             NavigationLink(isActive: $state.isCarbsViewActive) {
                 CarbsView()
                     .environmentObject(state)
@@ -102,7 +124,9 @@ struct MainView: View {
                         .frame(width: 24, height: 24)
                         .foregroundColor(.loopYellow)
                     if let until = state.tempTargets.compactMap(\.until).first, until > Date() {
-                        Text(until, style: .timer).font(.system(size: 8))
+                        Text(until, style: .timer)
+                            .scaledToFill()
+                            .font(.system(size: 8))
                     }
                 }
             }
@@ -132,7 +156,7 @@ struct MainView: View {
         if minAgo > 1440 {
             return "--"
         }
-        return "\(minAgo) " + NSLocalizedString("min ago", comment: "Minutes ago since last loop")
+        return "\(minAgo) " + NSLocalizedString("min", comment: "Minutes ago since last loop")
     }
 
     private var color: Color {
@@ -155,12 +179,15 @@ struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         let state = WatchStateModel()
 
-        state.glucose = "15,7"
-        state.delta = "+0.39"
-        state.iob = 10.38
-        state.cob = 112
-
+        state.glucose = "888"
+        state.delta = "+888"
+        state.iob = 100.38
+        state.cob = 112.123
+        state.eventualBG = "⇢ 8,888"
         state.lastLoopDate = Date().addingTimeInterval(-200)
+        state
+            .tempTargets =
+            [TempTargetWatchPreset(name: "Test", id: "test", description: "", until: Date().addingTimeInterval(3600 * 3))]
 
         return Group {
             MainView()

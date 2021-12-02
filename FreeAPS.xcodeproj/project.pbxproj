@@ -204,6 +204,7 @@
 		38E8757927579D9200975559 /* Publisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3811DE5525C9D4D500A708ED /* Publisher.swift */; };
 		38E8757B2757B1C300975559 /* TempTargetsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38E8757A2757B1C300975559 /* TempTargetsView.swift */; };
 		38E8757D2757C45D00975559 /* BolusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38E8757C2757C45D00975559 /* BolusView.swift */; };
+		38E8757E2758C86A00975559 /* ConvenienceExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38192E0C261BAF980094D973 /* ConvenienceExtensions.swift */; };
 		38E989DD25F5021400C0CED0 /* PumpStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38E989DC25F5021400C0CED0 /* PumpStatus.swift */; };
 		38E98A2325F52C9300C0CED0 /* Signpost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38E98A1B25F52C9300C0CED0 /* Signpost.swift */; };
 		38E98A2425F52C9300C0CED0 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38E98A1C25F52C9300C0CED0 /* Logger.swift */; };
@@ -2231,6 +2232,7 @@
 				38E8752A27554D5700975559 /* FreeAPSApp.swift in Sources */,
 				38E8757B2757B1C300975559 /* TempTargetsView.swift in Sources */,
 				38E8753027554D5700975559 /* NotificationView.swift in Sources */,
+				38E8757E2758C86A00975559 /* ConvenienceExtensions.swift in Sources */,
 				38E8754727554DF100975559 /* Color+Extensions.swift in Sources */,
 				38E8755927567CA600975559 /* Decimal+Extensions.swift in Sources */,
 			);

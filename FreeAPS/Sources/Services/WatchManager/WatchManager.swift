@@ -51,7 +51,8 @@ final class BaseWatchManager: NSObject, WatchManager, Injectable {
             self.state.trend = glucoseValues.trend
             self.state.delta = glucoseValues.delta
             self.state.glucoseDate = self.glucoseStorage.recent().last?.dateString
-            self.state.lastLoopDate = self.enactedSuggestion?.deliverAt
+            self.state.lastLoopDate = self.enactedSuggestion?.recieved == true ? self.enactedSuggestion?.deliverAt : self
+                .apsManager.lastLoopDate
             self.state.bolusIncrement = self.settingsManager.preferences.bolusIncrement
             self.state.maxCOB = self.settingsManager.preferences.maxCOB
             self.state.maxBolus = self.settingsManager.pumpSettings.maxBolus
@@ -78,6 +79,7 @@ final class BaseWatchManager: NSObject, WatchManager, Injectable {
                     )
                 }
             self.state.bolusAfterCarbs = !self.settingsManager.settings.skipBolusScreenAfterCarbs
+            self.state.eventualBG = self.evetualBGStraing()
 
             self.sendState()
         }
@@ -141,6 +143,16 @@ final class BaseWatchManager: NSObject, WatchManager, Injectable {
         return description
     }
 
+    private func evetualBGStraing() -> String? {
+        guard let eventualBG = suggestion?.eventualBG else {
+            return nil
+        }
+        let units = settingsManager.settings.units
+        return "⇢ " + eventualFormatter.string(
+            from: (units == .mmolL ? eventualBG.asMmolL : Decimal(eventualBG)) as NSNumber
+        )!
+    }
+
     private var glucoseFormatter: NumberFormatter {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
@@ -150,6 +162,13 @@ final class BaseWatchManager: NSObject, WatchManager, Injectable {
             formatter.maximumFractionDigits = 1
         }
         formatter.roundingMode = .halfUp
+        return formatter
+    }
+
+    private var eventualFormatter: NumberFormatter {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        formatter.maximumFractionDigits = 2
         return formatter
     }
 
