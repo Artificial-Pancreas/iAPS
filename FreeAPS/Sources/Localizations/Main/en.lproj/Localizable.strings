@@ -67,7 +67,7 @@
 /* Add carbs screen */
 "Add Carbs" = "Add Carbs";
 
-/* Add carbs header in Watch app */
+/* Add carbs header and button in Watch app. You can skip the last " " space. It's just for differentation */
 "Add Carbs " = "Add Carbs ";
 
 /*  */
