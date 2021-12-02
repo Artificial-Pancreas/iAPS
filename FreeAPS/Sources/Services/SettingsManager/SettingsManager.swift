@@ -4,6 +4,7 @@ import Swinject
 protocol SettingsManager: AnyObject {
     var settings: FreeAPSSettings { get set }
     var preferences: Preferences { get }
+    var pumpSettings: PumpSettings { get }
 }
 
 protocol SettingsObserver {
@@ -44,5 +45,11 @@ final class BaseSettingsManager: SettingsManager, Injectable {
         storage.retrieve(OpenAPS.Settings.preferences, as: Preferences.self)
             ?? Preferences(from: OpenAPS.defaults(for: OpenAPS.Settings.preferences))
             ?? Preferences()
+    }
+
+    var pumpSettings: PumpSettings {
+        storage.retrieve(OpenAPS.Settings.settings, as: PumpSettings.self)
+            ?? PumpSettings(from: OpenAPS.defaults(for: OpenAPS.Settings.settings))
+            ?? PumpSettings(insulinActionCurve: 5, maxBolus: 10, maxBasal: 2)
     }
 }
