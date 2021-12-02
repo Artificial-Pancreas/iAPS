@@ -51,7 +51,7 @@ struct ConfirmationView_Previews: PreviewProvider {
     }
 }
 
-private struct BlinkingView: View {
+struct BlinkingView: View {
     let count: UInt
     let size: CGFloat
 

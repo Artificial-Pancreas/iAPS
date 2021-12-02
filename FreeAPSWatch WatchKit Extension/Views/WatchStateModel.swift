@@ -27,6 +27,8 @@ class WatchStateModel: NSObject, ObservableObject {
     @Published var isBolusViewActive = false
     @Published var isConfirmationViewActive = false
     @Published var confirmationSuccess: Bool?
+    @Published var lastUpdate: Date = .distantPast
+    @Published var timerDate = Date()
 
     private var lifetime = Set<AnyCancellable>()
     let timer = Timer.publish(every: 10, on: .main, in: .common).autoconnect()
@@ -133,6 +135,7 @@ class WatchStateModel: NSObject, ObservableObject {
         tempTargets = state.tempTargets
         bolusAfterCarbs = state.bolusAfterCarbs ?? true
         eventualBG = state.eventualBG ?? ""
+        lastUpdate = Date()
     }
 }
 
