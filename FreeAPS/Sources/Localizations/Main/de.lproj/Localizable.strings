@@ -330,8 +330,7 @@ Enact a temp Basal or a temp target */
 " g" = " g";
 
 /* The short unit display string for grams */
-"g" = "g
-Einheitenzeichen g, für Gramm";
+"g" = "g";
 
 /* when 0 U/hr */
 "0 U/hr" = "0 IE/h";
