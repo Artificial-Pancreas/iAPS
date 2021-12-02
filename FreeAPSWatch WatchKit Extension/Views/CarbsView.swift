@@ -16,38 +16,10 @@ struct CarbsView: View {
     }
 
     var body: some View {
-        VStack(spacing: 16) {
-            HStack {
-                Button {
-                    let newValue = amount - 5
-                    amount = max(newValue, 0)
-                } label: { Image(systemName: "minus") }
-                    .frame(width: 50)
-                Spacer()
-                Text(numberFormatter.string(from: amount as NSNumber)! + " g")
-                    .font(.title2)
-                    .focusable(true)
-                    .digitalCrownRotation(
-                        $amount,
-                        from: 0,
-                        through: Double(state.maxCOB ?? 120),
-                        by: 1,
-                        sensitivity: .medium,
-                        isContinuous: false,
-                        isHapticFeedbackEnabled: true
-                    )
-                Spacer()
-                Button {
-                    let newValue = amount + 5
-                    amount = min(newValue, Double(state.maxCOB ?? 120))
-                } label: { Image(systemName: "plus") }
-                    .frame(width: 50)
-            }
-            Button {
-                state.addCarbs(Int(amount))
-            }
-            label: {
+        GeometryReader { geo in
+            VStack(spacing: 16) {
                 HStack {
+<<<<<<< HEAD
                     Image("carbs", bundle: nil)
                         .renderingMode(.template)
                         .resizable()
@@ -55,9 +27,50 @@ struct CarbsView: View {
                         .foregroundColor(.loopGreen)
                     Text("Add Carbs ")
 
+=======
+                    Button {
+                        let newValue = amount - 5
+                        amount = max(newValue, 0)
+                    } label: {
+                        Image(systemName: "minus")
+                    }
+                    .frame(width: geo.size.width / 4)
+                    Spacer()
+                    Text(numberFormatter.string(from: amount as NSNumber)! + " g")
+                        .font(.title2)
+                        .focusable(true)
+                        .digitalCrownRotation(
+                            $amount,
+                            from: 0,
+                            through: Double(state.maxCOB ?? 120),
+                            by: 1,
+                            sensitivity: .medium,
+                            isContinuous: false,
+                            isHapticFeedbackEnabled: true
+                        )
+                    Spacer()
+                    Button {
+                        let newValue = amount + 5
+                        amount = min(newValue, Double(state.maxCOB ?? 120))
+                    } label: { Image(systemName: "plus") }
+                        .frame(width: geo.size.width / 4)
                 }
-            }
-            .disabled(amount <= 0)
+                Button {
+                    state.addCarbs(Int(amount))
+                }
+                label: {
+                    HStack {
+                        Image("carbs", bundle: nil)
+                            .renderingMode(.template)
+                            .resizable()
+                            .frame(width: 24, height: 24)
+                            .foregroundColor(.loopGreen)
+                        Text("Add Carbs")
+                    }
+>>>>>>> 1e5c754... 38mm watch support and fixed bolus rounding
+                }
+                .disabled(amount <= 0)
+            }.frame(maxHeight: .infinity)
         }
         .navigationTitle("Add Carbs ")
 
@@ -69,6 +82,13 @@ struct CarbsView: View {
 
 struct CarbsView_Previews: PreviewProvider {
     static var previews: some View {
-        CarbsView().environmentObject(WatchStateModel())
+        let state = WatchStateModel()
+        state.carbsRequired = 120
+        return Group {
+            CarbsView()
+            CarbsView().previewDevice("Apple Watch Series 5 - 40mm")
+            CarbsView().previewDevice("Apple Watch Series 3 - 38mm")
+        }
+        .environmentObject(state)
     }
 }
