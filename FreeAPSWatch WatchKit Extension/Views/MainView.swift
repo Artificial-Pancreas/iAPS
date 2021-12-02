@@ -60,16 +60,16 @@ struct MainView: View {
             }
             Spacer()
             HStack {
-                Text(iobFormatter.string(from: (state.iob ?? 0) as NSNumber)!).font(.caption2)
-                Text(" U").foregroundColor(.insulin)
-
-                Spacer()
                 Text(iobFormatter.string(from: (state.cob ?? 0) as NSNumber)!).font(.caption2)
-                Text(" g").foregroundColor(.loopYellow)
+                Text("g").foregroundColor(.loopGreen)
+                Spacer()
+                Text(iobFormatter.string(from: (state.iob ?? 0) as NSNumber)!).font(.caption2)
+                Text("U").foregroundColor(.insulin)
+
                 Spacer()
                 Spacer()
             }
-            Spacer()
+//            Spacer()
         }.padding()
     }
 
@@ -86,6 +86,17 @@ struct MainView: View {
                     .foregroundColor(.loopGreen)
             }
 
+            NavigationLink(isActive: $state.isBolusViewActive) {
+                BolusView()
+                    .environmentObject(state)
+            } label: {
+                Image("bolus", bundle: nil)
+                    .renderingMode(.template)
+                    .resizable()
+                    .frame(width: 24, height: 24)
+                    .foregroundColor(.insulin)
+            }
+
             NavigationLink(isActive: $state.isTempTargetViewActive) {
                 TempTargetsView()
                     .environmentObject(state)
@@ -100,17 +111,6 @@ struct MainView: View {
                         Text(until, style: .timer).font(.system(size: 8))
                     }
                 }
-            }
-
-            NavigationLink(isActive: $state.isBolusViewActive) {
-                BolusView()
-                    .environmentObject(state)
-            } label: {
-                Image("bolus", bundle: nil)
-                    .renderingMode(.template)
-                    .resizable()
-                    .frame(width: 24, height: 24)
-                    .foregroundColor(.insulin)
             }
         }
     }
