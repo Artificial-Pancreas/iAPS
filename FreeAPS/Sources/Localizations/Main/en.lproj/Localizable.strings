@@ -67,6 +67,9 @@
 /* Add carbs screen */
 "Add Carbs" = "Add Carbs";
 
+/* Add carbs header and button in Watch app. You can skip the last " " space. It's just for differentation */
+"Add Carbs " = "Add Carbs ";
+
 /*  */
 "Amount Carbs" = "Amount Carbs";
 
@@ -397,6 +400,15 @@ Enact a temp Basal or a temp target */
 
 /* Other CGM setting */
 "Other" = "Other";
+
+/* Whatch app alert */
+"Set temp targets presets on iPhone first" = "Set temp targets presets on iPhone first";
+
+/* Updating Watch app */
+"Updating..." = "Updating...";
+
+/* Header for Temp targets in Watch app */
+"Temp Targets" = "Temp Targets";
 
 
 /* Calendar and Libre transmitter settings --------------*/
