@@ -25,18 +25,18 @@ struct BolusView: View {
                 } label: { Image(systemName: "minus") }
                     .frame(width: 50)
                 Spacer()
-                Text(numberFormatter.string(from: (steps * Double(state.bolusIncrement ?? 0.1)) as NSNumber)! + " U")
+                Text(numberFormatter.string(from: (steps * Double(state.bolusIncrement ?? 0.1)) as NSNumber)! + NSLocalizedString(" U", comment: "Abbreviation for insulin unit"))
                     .font(.headline)
                     .focusable(true)
                     .digitalCrownRotation(
-                        $steps,
-                        from: 0,
-                        through: Double((state.maxBolus ?? 5) / (state.bolusIncrement ?? 0.1)),
-                        by: 1,
-                        sensitivity: .medium,
-                        isContinuous: false,
-                        isHapticFeedbackEnabled: true
-                    )
+                    $steps,
+                    from: 0,
+                    through: Double((state.maxBolus ?? 5) / (state.bolusIncrement ?? 0.1)),
+                    by: 1,
+                    sensitivity: .medium,
+                    isContinuous: false,
+                    isHapticFeedbackEnabled: true
+                )
                 Spacer()
                 Button {
                     let newValue = steps + 1

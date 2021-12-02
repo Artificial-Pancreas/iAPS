@@ -395,6 +395,15 @@ Enact a temp Basal or a temp target */
 /* Other CGM setting */
 "Other" = "Annan";
 
+/* Whatch app alert */
+"Set temp targets presets on iPhone first" = "Spara ett tillfälligt målvärde på din iPhone först";
+
+/* Updating Watch app */
+"Updating..." = "Uppdaterar...";
+
+/* Header for Temp targets in Watch app */
+"Temp Targets" = "Målvärden";
+
 
 /* Calendar and Libre transmitter settings --------------*/
 /* */
