@@ -22,6 +22,7 @@ struct BolusView: View {
             VStack(spacing: 16) {
                 HStack {
                     Button {
+                        WKInterfaceDevice.current().play(.click)
                         let newValue = steps - 1
                         steps = max(newValue, 0)
                     } label: { Image(systemName: "minus") }
@@ -41,6 +42,7 @@ struct BolusView: View {
                         )
                     Spacer()
                     Button {
+                        WKInterfaceDevice.current().play(.click)
                         let newValue = steps + 1
                         steps = min(newValue, Double((state.maxBolus ?? 5) / (state.bolusIncrement ?? 0.1)))
                     } label: { Image(systemName: "plus") }
@@ -58,6 +60,7 @@ struct BolusView: View {
                             .frame(width: 30, height: 30)
                     }
                     Button {
+                        WKInterfaceDevice.current().play(.click)
                         enactBolus()
                     }
                     label: {
@@ -78,7 +81,7 @@ struct BolusView: View {
 
     private func enactBolus() {
         let amount = steps * Double(state.bolusIncrement ?? 0.1)
-        state.enactBolus(amount: amount)
+        state.addBolus(amount: amount)
     }
 }
 

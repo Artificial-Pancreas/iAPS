@@ -10,6 +10,7 @@ struct TempTargetsView: View {
             } else {
                 ForEach(state.tempTargets) { target in
                     Button {
+                        WKInterfaceDevice.current().play(.click)
                         state.enactTempTarget(id: target.id)
                     } label: {
                         VStack(alignment: .leading) {
@@ -27,6 +28,7 @@ struct TempTargetsView: View {
             }
 
             Button {
+                WKInterfaceDevice.current().play(.click)
                 state.enactTempTarget(id: "cancel")
             } label: {
                 Text("Cancel Temp Target")
