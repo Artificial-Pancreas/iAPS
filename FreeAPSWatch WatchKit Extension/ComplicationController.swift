@@ -1,4 +1,5 @@
 import ClockKit
+import SwiftUI
 
 class ComplicationController: NSObject, CLKComplicationDataSource {
     // MARK: - Complication Configuration
@@ -8,9 +9,13 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
             CLKComplicationDescriptor(
                 identifier: "complication",
                 displayName: "FreeAPS X",
-                supportedFamilies: CLKComplicationFamily.allCases
+                supportedFamilies: [
+                    .graphicCorner,
+                    .modularSmall,
+                    .utilitarianSmall,
+                    .circularSmall
+                ]
             )
-            // Multiple complication support can be added here with more descriptors
         ]
 
         // Call the handler with the currently supported complication descriptors
@@ -35,9 +40,49 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
 
     // MARK: - Timeline Population
 
-    func getCurrentTimelineEntry(for _: CLKComplication, withHandler handler: @escaping (CLKComplicationTimelineEntry?) -> Void) {
-        // Call the handler with the current timeline entry
-        handler(nil)
+    func getCurrentTimelineEntry(
+        for complication: CLKComplication,
+        withHandler handler: @escaping (CLKComplicationTimelineEntry?) -> Void
+    ) {
+        switch complication.family {
+        case .graphicCorner:
+            guard let image = UIImage(named: "Complication/Graphic Corner") else {
+                handler(nil)
+                return
+            }
+            let template = CLKComplicationTemplateGraphicCornerTextImage(
+                textProvider: CLKTextProvider(format: "%@", "FreeAPS X"),
+                imageProvider: CLKFullColorImageProvider(fullColorImage: image)
+            )
+            let timelineEntry = CLKComplicationTimelineEntry(date: Date(), complicationTemplate: template)
+            handler(timelineEntry)
+        case .modularSmall:
+            let template = CLKComplicationTemplateModularSmallRingText(
+                textProvider: CLKTextProvider(format: "%@", "FAX"),
+                fillFraction: 1,
+                ringStyle: .closed
+            )
+
+            let timelineEntry = CLKComplicationTimelineEntry(date: Date(), complicationTemplate: template)
+            handler(timelineEntry)
+        case .utilitarianSmall:
+            guard let image = UIImage(named: "Complication/Utilitarian") else {
+                handler(nil)
+                return
+            }
+            let template = CLKComplicationTemplateUtilitarianSmallSquare(
+                imageProvider: CLKImageProvider(onePieceImage: image)
+            )
+            let timelineEntry = CLKComplicationTimelineEntry(date: Date(), complicationTemplate: template)
+            handler(timelineEntry)
+        case .circularSmall:
+            let template =
+                CLKComplicationTemplateCircularSmallSimpleText(textProvider: CLKTextProvider(format: "%@", "FAX"))
+            let timelineEntry = CLKComplicationTimelineEntry(date: Date(), complicationTemplate: template)
+            handler(timelineEntry)
+        default:
+            handler(nil)
+        }
     }
 
     func getTimelineEntries(
@@ -46,14 +91,15 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
         limit _: Int,
         withHandler handler: @escaping ([CLKComplicationTimelineEntry]?) -> Void
     ) {
-        // Call the handler with the timeline entries after the given date
         handler(nil)
     }
 
     // MARK: - Sample Templates
 
-    func getLocalizableSampleTemplate(for _: CLKComplication, withHandler handler: @escaping (CLKComplicationTemplate?) -> Void) {
-        // This method will be called once per supported complication, and the results will be cached
+    func getLocalizableSampleTemplate(
+        for _: CLKComplication,
+        withHandler handler: @escaping (CLKComplicationTemplate?) -> Void
+    ) {
         handler(nil)
     }
 }
