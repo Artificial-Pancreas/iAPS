@@ -67,7 +67,7 @@
 /* Add carbs screen */
 "Add Carbs" = "Lägg till kolhydrater";
 
-/* Add carbs header and button in Watch app. You can skip the last " " space. It's just for differentation */
+/* Add carbs header and button in Watch app. You can skip the last " " space. It's just for differentiation */
 "Add Carbs " = "Kolhydrater";
 
 /*  */
