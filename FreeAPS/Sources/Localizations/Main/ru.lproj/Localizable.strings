@@ -68,7 +68,7 @@
 "Add Carbs" = "Ввод углеводов";
 
 /* Add carbs header and button in Watch app. You can skip the last " " space. It's just for differentiation */
-"Add Carbs " = "Добавить";
+"Add Carbs " = "Ввод углеводов";
 
 /*  */
 "Amount Carbs" = "Кол-во углеводов";
