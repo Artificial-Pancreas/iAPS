@@ -11,8 +11,19 @@ struct MainView: View {
     @State var isCarbsActive = false
     @State var isTargetsActive = false
     @State var isBolusActive = false
+
     var body: some View {
-        ZStack {
+        ZStack(alignment: .topLeading) {
+            if state.timerDate.timeIntervalSince(state.lastUpdate) > 10 {
+                HStack {
+                    withAnimation {
+                        BlinkingView(count: 5, size: 3)
+                            .frame(width: 14, height: 14)
+                            .padding(2)
+                    }
+                    Text("Updating...").font(.caption2).foregroundColor(.secondary)
+                }
+            }
             VStack {
                 header
                 Spacer()
@@ -26,7 +37,8 @@ struct MainView: View {
         }
         .frame(maxHeight: .infinity)
         .padding()
-        .onReceive(state.timer) { _ in
+        .onReceive(state.timer) { date in
+            state.timerDate = date
             state.requestState()
         }
         .onAppear {
