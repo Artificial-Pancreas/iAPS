@@ -60,9 +60,14 @@ struct MainView: View {
             }
             Spacer()
             HStack {
-                Text("IOB: " + iobFormatter.string(from: (state.iob ?? 0) as NSNumber)! + " U").font(.caption2)
+                Text(iobFormatter.string(from: (state.iob ?? 0) as NSNumber)!).font(.caption2)
+                Text(" U").foregroundColor(.insulin)
+
                 Spacer()
-                Text("COB: " + iobFormatter.string(from: (state.cob ?? 0) as NSNumber)! + " g").font(.caption2)
+                Text(iobFormatter.string(from: (state.cob ?? 0) as NSNumber)!).font(.caption2)
+                Text(" g").foregroundColor(.loopYellow)
+                Spacer()
+                Spacer()
             }
             Spacer()
         }.padding()
@@ -122,7 +127,7 @@ struct MainView: View {
         if minAgo > 1440 {
             return "--"
         }
-        return "\(minAgo) " + NSLocalizedString("min ago", comment: "Minutes ago since last loop")
+        return "\(minAgo) " + NSLocalizedString("min", comment: "Minutes ago since last loop")
     }
 
     private var color: Color {
