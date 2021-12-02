@@ -402,13 +402,13 @@ Enact a temp Basal or a temp target */
 "Other" = "Diğeri";
 
 /* Whatch app alert */
-"Set temp targets presets on iPhone first" = "Set temp targets presets on iPhone first";
+"Set temp targets presets on iPhone first" = "Önce iPhone'da geçici hedef ön ayarlarını belirleyin";
 
 /* Updating Watch app */
-"Updating..." = "Updating...";
+"Updating..." = "Güncelleniyor...";
 
 /* Header for Temp targets in Watch app */
-"Temp Targets" = "Temp Targets";
+"Temp Targets" = "Geçici Hedefleri";
 
 
 /* Calendar and Libre transmitter settings --------------*/
