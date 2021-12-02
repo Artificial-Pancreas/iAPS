@@ -1,20 +1,21 @@
-/* Appends a full-stop to a statement */
-"%@." = "%@.";
-
-/* The format for an insulin needs percentage. */
-"%@%% of normal insulin" = "%@%% normalnej insuliny";
-
-/* Format string for reservoir volume. (1: The localized volume) */
-"%@U" = "%@J";
-
-/* The format for a glucose target range. (1: min target)(2: max target)(3: glucose unit) */
-"%1$@ – %2$@ %3$@" = "%1$@ – %2$@ %3$@";
-
-/* The format for an override symbol and name (1: symbol)(2: name) */
+/* The format for an override preset cell. (1: symbol)(2: name)
+   The format for an override symbol and name (1: symbol)(2: name) */
 "%1$@ %2$@" = "%1$@ %2$@";
 
 /* Accessibility format string for (1: localized volume)(2: time) */
 "%1$@ units remaining at %2$@" = "%1$@ jednostek pozostających w %2$@";
+
+/* The format for a glucose target range. (1: min target)(2: max target)(3: glucose unit) */
+"%1$@ – %2$@ %3$@" = "%1$@ – %2$@ %3$@";
+
+/* The format for an insulin needs percentage. */
+"%@%% of normal insulin" = "%@%% normalnej insuliny";
+
+/* Appends a full-stop to a statement */
+"%@." = "%@.";
+
+/* Format string for reservoir volume. (1: The localized volume) */
+"%@U" = "%@J";
 
 /* Title of the carb entry absorption time cell */
 "Absorption Time" = "Czas absorpcji";
@@ -22,17 +23,17 @@
 /* The title for the override emoji activity section */
 "Activity" = "Aktywność";
 
-/* The title of the button to add the credentials for a service */
-"Add Account" = "Dodaj konto";
-
-/* The title of the view controller to create a new carb entry */
-"Add Carb Entry" = "Wprowadź węglowodany";
-
 /* Action sheet confirmation message for pump history deletion */
 "Are you sure you want to delete all history entries?" = "Czy jesteś pewien, że chcesz usunąć z Loop wszystkie dane historyczne pompy?";
 
 /* Action sheet confirmation message for reservoir deletion */
 "Are you sure you want to delete all reservoir values?" = "Czy jesteś pewien, że chcesz usunąć wszystkie wartości zbiornika?";
+
+/* The title of the button to add the credentials for a service */
+"Add Account" = "Dodaj konto";
+
+/* The title of the button to remove the credentials for a service */
+"Delete Account" = "Usuń konto";
 
 /* Describes a percentage decrease in overall insulin needs */
 "Basal, bolus, and correction insulin dose amounts are decreased by %@%%." = "Dawka podstawowa, bolus i korygująca dawka insuliny zostały zmniejszone o %@%%.";
@@ -51,6 +52,12 @@
 
 /* Title text for suspend resume button when temp basal canceling */
 "Canceling Temp Basal" = "Anulowanie tymczasowej dawki podstawowej";
+
+/* The title of the view controller to create a new carb entry */
+"Add Carb Entry" = "Wprowadź węglowodany";
+
+/* The title of the view controller to edit an existing carb entry */
+"Edit Carb Entry" = "Edytuj wprowadzone węglowodany";
 
 /* Footer text for customizing an override from a preset (1: preset name) */
 "Changes will only apply this time you enable the override. The default settings of %@ will not be affected." = "Zmiany będą obowiązywać wyłącznie podczas tego pominięcia. Domyślne ustawienia %@ nie zostaną zmienione.";
@@ -91,17 +98,11 @@
 /* Title of the carb entry date picker cell */
 "Date" = "Data";
 
-/* The title of the button to remove the credentials for a service */
-"Delete Account" = "Usuń konto";
-
 /* Button title to delete all objects */
 "Delete All" = "Usuń wszystko";
 
 /* The text for the override duration setting */
 "Duration" = "Czas trwania";
-
-/* The title of the view controller to edit an existing carb entry */
-"Edit Carb Entry" = "Edytuj wprowadzone węglowodany";
 
 /* The title for the override editing screen */
 "Edit Override" = "Edytuj pominięcie";
@@ -176,9 +177,6 @@
 /* The title of the screen displaying a pump event */
 "Pump Event" = "Zdarzenie pompy";
 
-/* The default placeholder string for a credential */
-"Required" = "Wymagane";
-
 /* Title text for button to resume insulin delivery */
 "Resume Delivery" = "Wznów podawanie";
 
@@ -222,6 +220,9 @@
 /* The title for the override selection screen */
 "Temporary Override" = "Pominięcie tymczasowe";
 
+/* The default placeholder string for a credential */
+"Required" = "Wymagane";
+
 /* Alert body displayed absorption time greater than max (1: maximum absorption time) */
 "The maximum absorption time is %@" = "Maksymalny czas absorpcji wynosi %@";
 
@@ -249,4 +250,3 @@
 
 /* Title for the workout override range */
 "Workout" = "Wysiłek fizyczny";
-

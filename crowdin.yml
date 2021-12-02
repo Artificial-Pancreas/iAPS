@@ -18,6 +18,7 @@ export_languages:
   - zh-CN
   - pt-PT
   - pt-BR
+  - sk
 files:
   - source: /FreeAPS/Sources/Localizations/Main/en.lproj/Localizable.strings
     translation: /FreeAPS/Sources/Localizations/Main/%osx_locale%.lproj/Localizable.strings
@@ -27,3 +28,7 @@ files:
     translation: /Dependencies/rileylink_ios/OmniKitUI/%osx_locale%.lproj/Localizable.strings
   - source: /FreeAPS/Resources/Base.lproj/InfoPlist.strings
     translation: /FreeAPS/Resources/%osx_locale%.lproj/InfoPlist.strings
+  - source: /Dependencies/LoopKit/LoopKit/Base.lproj/Localizable.strings
+    translation: /Dependencies/LoopKit/LoopKit/%osx_locale%.lproj/Localizable.strings
+  - source: /Dependencies/LoopKit/LoopKitUI/Base.lproj/Localizable.strings
+    translation: /Dependencies/LoopKit/LoopKitUI/%osx_locale%.lproj/Localizable.strings

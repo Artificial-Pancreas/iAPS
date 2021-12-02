@@ -9,13 +9,13 @@
 "%1$@ – %2$@ %3$@" = "%1$@ – %2$@ %3$@";
 
 /* The format for an insulin needs percentage. */
-"%@%% of normal insulin" = "%@%% of normal insulin";
+"%@%% of normal insulin" = "%@%% av normalt insulinbehov";
 
 /* Appends a full-stop to a statement */
 "%@." = "%@.";
 
 /* Format string for reservoir volume. (1: The localized volume) */
-"%@U" = "%@U";
+"%@U" = "%@IE";
 
 /* Title of the carb entry absorption time cell */
 "Absorption Time" = "Absorptionstid";
@@ -166,7 +166,7 @@
 "Override presets can be set up under the 'Configuration' section of the settings screen." = "Override förinställningar kan ställas in under ‘Konfiguration’ i menyn inställningar.";
 
 /* The section title of glucose overrides */
-"Overrides" = "Overrides";
+"Overrides" = "Undantag";
 
 /* Title for the pre-meal override range */
 "Pre-Meal" = "Före måltid";

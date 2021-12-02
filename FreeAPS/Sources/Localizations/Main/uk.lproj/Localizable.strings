@@ -326,6 +326,9 @@ Enact a temp Basal or a temp target */
 /* grams */
 " g" = "гр";
 
+/* The short unit display string for grams */
+"g" = "g";
+
 /* when 0 U/hr */
 "0 U/hr" = "0 Од/Год";
 
@@ -818,12 +821,25 @@ Enact a temp Basal or a temp target */
 "Battery" = "Battery";
 
 /* */
-
-"Show glucose on the app badge" = "Show glucose on the app badge";
-
-/* */
 "Also add source info" = "Also add source info";
 
+/* */
+"Carbs Required Threshold" = "Carbs Required Threshold";
+
+/* */
+"Carbs required: %d g" = "Carbs required: %d g";
+
+/* */
+"To prevent LOW required %d g of carbs" = "To prevent LOW required %d g of carbs";
+
+/* */
+"FreeAPS X not active" = "FreeAPS X not active";
+
+/* */
+"Last loop was more then %d min ago" = "Last loop was more then %d min ago";
+
+/* Glucose badge */
+"Show glucose on the app badge" = "Show glucose on the app badge";
 
 
 /* Headers for settings ------------------- */

@@ -1,21 +1,21 @@
-/* Appends a full-stop to a statement */
-"%@." = "%@.";
-
-/* The format for an insulin needs percentage. */
-"%@%% of normal insulin" = "%@%% von normalem Insulin";
-
-/* Format string for reservoir volume. (1: The localized volume) */
-"%@U" = "%@IE";
-
-/* The format for a glucose target range. (1: min target)(2: max target)(3: glucose unit) */
-"%1$@ – %2$@ %3$@" = "%1$@ – %2$@ %3$@";
-
 /* The format for an override preset cell. (1: symbol)(2: name)
    The format for an override symbol and name (1: symbol)(2: name) */
 "%1$@ %2$@" = "%1$@ %2$@";
 
 /* Accessibility format string for (1: localized volume)(2: time) */
 "%1$@ units remaining at %2$@" = "%1$@ Einheiten verbleiben um %2$@";
+
+/* The format for a glucose target range. (1: min target)(2: max target)(3: glucose unit) */
+"%1$@ – %2$@ %3$@" = "%1$@ – %2$@ %3$@";
+
+/* The format for an insulin needs percentage. */
+"%@%% of normal insulin" = "%@%% von normalem Insulin";
+
+/* Appends a full-stop to a statement */
+"%@." = "%@.";
+
+/* Format string for reservoir volume. (1: The localized volume) */
+"%@U" = "%@IE";
 
 /* Title of the carb entry absorption time cell */
 "Absorption Time" = "Absorbtionszeit";
@@ -129,7 +129,7 @@
 "Insulin sensitivity describes how your blood glucose should respond to a 1 Unit dose of insulin. Smaller values mean more insulin will be given when above target. Values that are too small can cause dangerously low blood glucose." = "Die Insulinempfindlichkeit beschreibt, wie Ihr Blutzucker auf die Insulindosis von 1 Einheit reagiert. Kleinere Werte bedeuten, dass mehr Insulin verabreicht wird, wenn der BZ über dem Ziel liegt. Zu kleine Werte können gefährlich niedrige Blutzuckerwerte verursachen.";
 
 /* Placeholder for maximum value in glucose range */
-"max" = "max";
+"max" = "max.";
 
 /* The title text for the maximum basal rate value */
 "Maximum Basal Rate" = "Maximale Basalrate";
@@ -250,4 +250,3 @@
 
 /* Title for the workout override range */
 "Workout" = "Training";
-

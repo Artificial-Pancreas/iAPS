@@ -326,6 +326,9 @@ Enact a temp Basal or a temp target */
 /* grams */
 " g" = " g";
 
+/* The short unit display string for grams */
+"g" = "g";
+
 /* when 0 U/hr */
 "0 U/hr" = "0 IE/h";
 
@@ -818,12 +821,25 @@ Enact a temp Basal or a temp target */
 "Battery" = "Batteri";
 
 /* */
-
-"Show glucose on the app badge" = "Show glucose on the app badge";
+"Also add source info" = "Lägg till info om glukoskälla";
 
 /* */
-"Also add source info" = "Also add source info";
+"Carbs Required Threshold" = "Tröskelvärde för kolhydrater som krävs";
 
+/* */
+"Carbs required: %d g" = "Kolhydrater som krävs: %d g";
+
+/* */
+"To prevent LOW required %d g of carbs" = "För att förhindra lågt blodsocker krävs %d g kolhydrater";
+
+/* */
+"FreeAPS X not active" = "FreeAPS X är inte aktiv";
+
+/* */
+"Last loop was more then %d min ago" = "Senaste loopen var mer än %d min sedan";
+
+/* Glucose badge */
+"Show glucose on the app badge" = "Visa glukosvärde på app-ikon";
 
 
 /* Headers for settings ------------------- */

@@ -153,7 +153,7 @@
 "New Preset" = "Nieuw tijdelijk programma";
 
 /* Section title for no-carb food
-The title for override emoji miscellaneous section */
+   The title for override emoji miscellaneous section */
 "Other" = "Anders";
 
 /* The title text for the insulin sensitivity scaling setting */
@@ -239,7 +239,7 @@ The title for override emoji miscellaneous section */
 "Units" = "Eenheden";
 
 /* Accessibility value for an unknown value
-The default title to use when an entry has none */
+   The default title to use when an entry has none */
 "Unknown" = "Onbekend";
 
 /* Label indicating validation is occurring */
@@ -250,4 +250,3 @@ The default title to use when an entry has none */
 
 /* Title for the workout override range */
 "Workout" = "Training";
-

@@ -49,7 +49,7 @@ extension NotificationsConfig {
 
                 Section(header: Text("Other")) {
                     HStack {
-                        Text("Carbs Requered Threshold")
+                        Text("Carbs Required Threshold")
                         Spacer()
                         DecimalTextField("0", value: $state.carbsRequiredThreshold, formatter: carbsFormatter)
                         Text("g").foregroundColor(.secondary)
