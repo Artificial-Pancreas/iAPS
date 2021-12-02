@@ -67,6 +67,9 @@
 /* Add carbs screen */
 "Add Carbs" = "Add Carbs";
 
+/* Add carbs header in Watch app */
+"Add Carbs " = "Add Carbs ";
+
 /*  */
 "Amount Carbs" = "Amount Carbs";
 

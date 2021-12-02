@@ -53,12 +53,12 @@ struct CarbsView: View {
                         .resizable()
                         .frame(width: 24, height: 24)
                         .foregroundColor(.loopGreen)
-                    Text("Add Carbs")
+                    Text("Add Carbs ")
                 }
             }
             .disabled(amount <= 0)
         }
-        .navigationTitle("Add Carbs")
+        .navigationTitle("Add Carbs ")
         .onAppear {
             amount = Double(state.carbsRequired ?? 0)
         }
