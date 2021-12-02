@@ -206,6 +206,7 @@
 		38E8757B2757B1C300975559 /* TempTargetsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38E8757A2757B1C300975559 /* TempTargetsView.swift */; };
 		38E8757D2757C45D00975559 /* BolusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38E8757C2757C45D00975559 /* BolusView.swift */; };
 		38E8757E2758C86A00975559 /* ConvenienceExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38192E0C261BAF980094D973 /* ConvenienceExtensions.swift */; };
+		38E8758027595DC600975559 /* BolusConfirmationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38E8757F27595DC500975559 /* BolusConfirmationView.swift */; };
 		38E989DD25F5021400C0CED0 /* PumpStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38E989DC25F5021400C0CED0 /* PumpStatus.swift */; };
 		38E98A2325F52C9300C0CED0 /* Signpost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38E98A1B25F52C9300C0CED0 /* Signpost.swift */; };
 		38E98A2425F52C9300C0CED0 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38E98A1C25F52C9300C0CED0 /* Logger.swift */; };
@@ -594,6 +595,7 @@
 		38E8755A27568A6700975559 /* ConfirmationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmationView.swift; sourceTree = "<group>"; };
 		38E8757A2757B1C300975559 /* TempTargetsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TempTargetsView.swift; sourceTree = "<group>"; };
 		38E8757C2757C45D00975559 /* BolusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BolusView.swift; sourceTree = "<group>"; };
+		38E8757F27595DC500975559 /* BolusConfirmationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BolusConfirmationView.swift; sourceTree = "<group>"; };
 		38E989DC25F5021400C0CED0 /* PumpStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PumpStatus.swift; sourceTree = "<group>"; };
 		38E98A1B25F52C9300C0CED0 /* Signpost.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Signpost.swift; sourceTree = "<group>"; };
 		38E98A1C25F52C9300C0CED0 /* Logger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
@@ -1353,6 +1355,7 @@
 			children = (
 				38E8755527564B5000975559 /* FreeAPSWatch WatchKit Extension.entitlements */,
 				38E8755027555D0500975559 /* DataFlow.swift */,
+				38E8754B2755548F00975559 /* WatchStateModel.swift */,
 				38E875482755505800975559 /* Views */,
 				38E8752927554D5700975559 /* FreeAPSApp.swift */,
 				38E8752D27554D5700975559 /* NotificationController.swift */,
@@ -1378,11 +1381,11 @@
 			isa = PBXGroup;
 			children = (
 				38E8752B27554D5700975559 /* MainView.swift */,
-				38E8754B2755548F00975559 /* WatchStateModel.swift */,
 				38E87549275550BB00975559 /* CarbsView.swift */,
 				38E8755A27568A6700975559 /* ConfirmationView.swift */,
 				38E8757A2757B1C300975559 /* TempTargetsView.swift */,
 				38E8757C2757C45D00975559 /* BolusView.swift */,
+				38E8757F27595DC500975559 /* BolusConfirmationView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -2240,6 +2243,7 @@
 				38E8757E2758C86A00975559 /* ConvenienceExtensions.swift in Sources */,
 				38E8754727554DF100975559 /* Color+Extensions.swift in Sources */,
 				38E8755927567CA600975559 /* Decimal+Extensions.swift in Sources */,
+				38E8758027595DC600975559 /* BolusConfirmationView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

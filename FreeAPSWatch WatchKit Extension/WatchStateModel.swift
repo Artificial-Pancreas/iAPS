@@ -26,9 +26,11 @@ class WatchStateModel: NSObject, ObservableObject {
     @Published var isTempTargetViewActive = false
     @Published var isBolusViewActive = false
     @Published var isConfirmationViewActive = false
+    @Published var isConfirmationBolusViewActive = false
     @Published var confirmationSuccess: Bool?
     @Published var lastUpdate: Date = .distantPast
     @Published var timerDate = Date()
+    @Published var pendingBolus: Double?
 
     private var lifetime = Set<AnyCancellable>()
     let timer = Timer.publish(every: 10, on: .main, in: .common).autoconnect()
@@ -72,10 +74,18 @@ class WatchStateModel: NSObject, ObservableObject {
         }
     }
 
-    func enactBolus(amount: Double) {
+    func addBolus(amount: Double) {
+        isBolusViewActive = false
+        pendingBolus = amount
+        isConfirmationBolusViewActive = true
+    }
+
+    func enactBolus() {
+        isConfirmationBolusViewActive = false
+        guard let amount = pendingBolus else { return }
+
         confirmationSuccess = nil
         isConfirmationViewActive = true
-        isBolusViewActive = false
         session.sendMessage(["bolus": amount], replyHandler: completionHandler) { error in
             print(error.localizedDescription)
             DispatchQueue.main.async {
