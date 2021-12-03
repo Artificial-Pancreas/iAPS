@@ -4,384 +4,390 @@
 */
 /* Bolus screen when adding insulin */
 
-"Add insulin without actually bolusing" = "Legg til insulin uten å gi bolus";
+"Add insulin without actually bolusing" = "Add insulin without actually bolusing";
 
 /* Add insulin from source outside of pump */
-"Add %@ without bolusing" = "Registrer %@ uten å gi bolus";
+"Add %@ without bolusing" = "Add %@ without bolusing";
 
 "Bolus" = "Bolus";
 
-"Close" = "Lukk";
+"Close" = "Close";
 
 /* Continue after added carbs without bolus */
-"Continue without bolus" = "Fortsett uten å gi bolus";
+"Continue without bolus" = "Continue without bolus";
 
 /* Header */
-"Enact Bolus" = "Gi bolus";
+"Enact Bolus" = "Enact Bolus";
 
 /* Button */
-"Enact bolus" = "Gi bolus";
+"Enact bolus" = "Enact bolus";
 
 /*  */
-"Insulin recommended" = "Anbefalt insulindose";
+"Insulin recommended" = "Insulin recommended";
 
 /*  */
-"Insulin required" = "Insulinbehov";
+"Insulin required" = "Insulin required";
 
 /* Bolus screen */
-"Recommendation" = "Anbefaling";
+"Recommendation" = "Recommendation";
 
 /* Button */
-"Clear" = "Fjern";
+"Clear" = "Clear";
 
 /* Button */
-"Done" = "Ferdig";
+"Done" = "Done";
 
 /*  */
-"Wait please" = "Vennligst vent";
+"Wait please" = "Wait please";
 
 /*  */
-"Agree and continue" = "Godta og fortsett";
+"Agree and continue" = "Agree and Continue";
 
 /* Enacted at a date */
-"Enacted at %@" = "Utført kl. %@";
+"Enacted at %@" = "Enacted at %@";
 
 /* Home title */
-"Home" = "Hjem";
+"Home" = "Home";
 
 /* Looping in progress */
-"looping" = "looper";
+"looping" = "looping";
 
 /* min ago since last loop */
-"min ago" = "min siden";
+"min ago" = "min ago";
 
 /* Status Title */
-"No suggestion" = "Ingen forslag";
+"No suggestion" = "No suggestion";
 
 /* Replace pod text in Header */
-"Replace pod" = "Bytt pod";
+"Replace pod" = "Replace pod";
 
 /* Suggested at a date */
-"Suggested at %@" = "Foreslått kl. %@";
+"Suggested at %@" = "Suggested at %@";
 
 /* Add carbs screen */
-"Add Carbs" = "Legg til karbo";
+"Add Carbs" = "Add Carbs";
+
+/* Add carbs header and button in Watch app. You can skip the last " " space. It's just for differentiation */
+"Add Carbs " = "Add Carbs ";
 
 /*  */
-"Amount Carbs" = "Mengde karbo";
+"Amount Carbs" = "Amount Carbs";
 
 /* Grams unit */
-"grams" = "gram";
+"grams" = "grams";
 
 /*  */
-"Carbs required" = "Karbo nødvendig";
+"Carbs required" = "Carbs required";
 
 /* */
-"Are you sure?" = "Er du sikker?";
+"Are you sure?" = "Are you sure?";
 
 /* Bottom target temp */
-"Bottom target" = "Nedre mål";
+"Bottom target" = "Bottom target";
 
 /* Cancel preset name */
-"Cancel" = "Avbryt";
+"Cancel" = "Cancel";
 
 /*  */
-"Cancel Temp Target" = "Avbryt midlertidig mål";
+"Cancel Temp Target" = "Cancel Temp Target";
 
 /* Custom temp target */
-"Custom" = "Egendefinert";
+"Custom" = "Custom";
 
 /*  */
-"Date" = "Dato";
+"Date" = "Date";
 
 /*  */
-"Delete" = "Slett";
+"Delete" = "Delete";
 
 /* Delete preset temp target */
-"Delete preset \"%@\"" = "Slett forhåndsinnstilling \"%@\"";
+"Delete preset \"%@\"" = "Delete preset \"%@\"";
 
 /* Duration of target temp or temp basal */
-"Duration" = "Varighet";
+"Duration" = "Duration";
 
 /*  */
-"Enact Temp Target" = "Start midlertidig mål";
+"Enact Temp Target" = "Enact Temp Target";
 
 /*  */
-"Enter preset name" = "Angi navn på forhåndsinnstilling";
+"Enter preset name" = "Enter preset name";
 
 /* Preset name */
-"Name" = "Navn";
+"Name" = "Name";
 
 /* minutes of target temp */
-"minutes" = "minutter";
+"minutes" = "minutes";
 
 /*  */
-"Presets" = "Forhåndsinnstillinger";
+"Presets" = "Presets";
 
 /* Save preset name */
-"Save" = "Lagre";
+"Save" = "Save";
 
 /*  */
-"Save as preset" = "Lagre som forhåndsinnstilling";
+"Save as preset" = "Save as preset";
 
 /* Upper temp target limit */
-"Top target" = "Øvre mål";
+"Top target" = "Top target";
 
 /*  */
 "Autotune" = "Autotune";
 
 /*  */
-"Basal profile" = "Basalprofil";
+"Basal profile" = "Basal profile";
 
 /*  */
-"Carb ratio" = "Karbohydratforhold";
+"Carb ratio" = "Carb ratio";
 
 /*  */
-"Delete autotune data" = "Slett autotune data";
+"Delete autotune data" = "Delete autotune data";
 
 /*  */
-"Run now" = "Kjør nå";
+"Run now" = "Run now";
 
 /*  */
-"Last run" = "Siste kjøring";
+"Last run" = "Last run";
 
 /*  */
-"Sensitivity" = "Insulinfølsomhet";
+"Sensitivity" = "Sensitivity";
 
 /*  */
-"Use Autotune" = "Bruk Autotune";
+"Use Autotune" = "Use Autotune";
 
 /* Add profile basal */
-"Add" = "Legg til";
+"Add" = "Add";
 
 /*  */
-"Basal Profile" = "Basalprofil";
+"Basal Profile" = "Basal Profile";
 
 /* Rate basal profile */
 "Rate" = "Rate";
 
 /*  */
-"Save on Pump" = "Lagre på pumpen";
+"Save on Pump" = "Save on Pump";
 
 /*  */
-"Saving..." = "Lagrer...";
+"Saving..." = "Saving...";
 
 /*  */
-"Schedule" = "Tidsplan";
+"Schedule" = "Schedule";
 
 /*  */
-"starts at" = "starter kl.";
+"starts at" = "starts at";
 
 /* Time basal profile */
-"Time" = "Tidspunkt";
+"Time" = "Time";
 
 /* */
-"Calculated Ratio" = "Beregnet karbohydratforhold";
+"Calculated Ratio" = "Calculated Ratio";
 
 /* Carb Ratios header */
-"Carb Ratios" = "Karbohydratforhold";
+"Carb Ratios" = "Carb Ratios";
 
 /*  */
-"Ratio" = "Forhold";
+"Ratio" = "Ratio";
 
 /*  */
 "Autosens" = "Autosens";
 
 /*  */
-"Calculated Sensitivity" = "Beregnet insulinfølsomhet";
+"Calculated Sensitivity" = "Calculated Sensitivity";
 
 /*  */
-"Insulin Sensitivities" = "Insulinfølsomhet";
+"Insulin Sensitivities" = "Insulin Sensitivities";
 
 /* */
-"Sensitivity Ratio" = "Sensitivitetsratio";
+"Sensitivity Ratio" = "Sensitivity Ratio";
 
 /*  */
-"Dismiss" = "Avskjedige";
+"Dismiss" = "Dismiss";
 
 /*  */
-"Important message" = "Viktig melding";
+"Important message" = "Important message";
 
 /*  */
-"Amount" = "Mengde";
+"Amount" = "Amount";
 
 /* */
-"Cancel Temp Basal" = "Avbryt midlertidig basal";
+"Cancel Temp Basal" = "Cancel Temp Basal";
 
 /* Enact
 Enact a temp Basal or a temp target */
-"Enact" = "Start";
+"Enact" = "Enact";
 
 /* */
-"Manual Temp Basal" = "Manuell basal";
+"Manual Temp Basal" = "Manual Temp Basal";
 
 /* Allow uploads tp NS */
-"Allow uploads" = "Tillat opplastinger";
+"Allow uploads" = "Allow uploads";
 
 /* API secret in NS */
-"API secret" = "API nøkkel";
+"API secret" = "API secret";
 
 /* Connect to NS */
-"Connect" = "Koble til";
+"Connect" = "Connect";
 
 /* Connected to NS */
-"Connected!" = "Tilkoblet!";
+"Connected!" = "Connected!";
 
 /* Connecting to NS */
-"Connecting..." = "Kobler til...";
+"Connecting..." = "Connecting...";
 
 /*  */
-"Invalid URL" = "Ugyldig nettadresse (URL)";
+"Invalid URL" = "Invalid URL";
 
 /*  */
-"Local glucose source" = "Lokal glukosekilde";
+"Local glucose source" = "Local glucose source";
 
 /* Header */
-"Nightscout Config" = "Nightscout";
+"Nightscout Config" = "Nightscout Config";
 
 /*  */
 "Port" = "Port";
 
 /*  */
-"URL" = "Nettadresse";
+"URL" = "URL";
 
 /**/
-"Use local glucose server" = "Bruk lokal glukoseserver";
+"Use local glucose server" = "Use local glucose server";
 
 /*  */
-"Edit settings json" = "Rediger \"freeaps_settings.json\"";
+"Edit settings json" = "Edit settings json";
 
 /* */
-"Glucose units" = "Glukoseenheter";
+"Glucose units" = "Glucose units";
 
 /*  */
-"Preferences" = "Innstillinger";
+"Preferences" = "Preferences";
 
 /* Recommended Insulin Fraction in preferences */
-"Recommended Insulin Fraction" = "Anbefalt insulin-fraksjon";
+"Recommended Insulin Fraction" = "Recommended Insulin Fraction";
 
 /* Do you want to show bolus screen after added carbs? */
-"Skip Bolus screen after carbs" = "Hopp over Bolus-skjerm etter karbo";
+"Skip Bolus screen after carbs" = "Skip Bolus screen after carbs";
 
 /* Allow remote control from NS */
-"Remote control" = "Fjernstyring";
+"Remote control" = "Remote control";
 
 /* Add Medtronic pump */
-"Add Medtronic" = "Legge til Medtronic";
+"Add Medtronic" = "Add Medtronic";
 
 /* Add Omnipod pump */
-"Add Omnipod" = "Legg til Omnipod";
+"Add Omnipod" = "Add Omnipod";
 
 /* Add Simulator pump */
-"Add Simulator" = "Legg til Simulator";
+"Add Simulator" = "Add Simulator";
 
 /* Insulin model */
-"Model" = "Modell";
+"Model" = "Model";
 
 /*  */
-"Pump config" = "Pumpe";
+"Pump config" = "Pump config";
 
 /*  */
-"Delivery limits" = "Leveringsgrenser";
+"Delivery limits" = "Delivery limits";
 
 /*  */
-"Duration of Insulin Action" = "Varighet av insulinaktivitet (DIA)";
+"Duration of Insulin Action" = "Duration of Insulin Action";
 
 /* hours of duration of insulin activity */
-"hours" = "timer";
+"hours" = "hours";
 
 /* Max setting */
-"Max Basal" = "Maks basal";
+"Max Basal" = "Max Basal";
 
 /* Max setting */
-"Max Bolus" = "Maks bolus";
+"Max Bolus" = "Max Bolus";
 
 /* */
-"Pump Settings" = "Pumpeinnstillinger";
+"Pump Settings" = "Pump Settings";
 
 /* Insulin unit per hour */
-"U/hr" = "E/t";
+"U/hr" = "U/hr";
 
 /* Unit in number of units delivered (keep the space character!) */
-" U" = " E";
+" U" = " U";
 
 /* /Insulin unit */
-"/U" = "/E";
+"/U" = "/U";
 
 /* Insulin unit */
-"U" = "E";
+"U" = "U";
 
 /* Unit per hour with space */
-" U/hr" = " E/t";
+" U/hr" = " U/hr";
 
 /* Number of units per hour*/
-"%@ U/hr" = "%@ E/t";
+"%@ U/hr" = "%@ U/hr";
 
 /* Number of units insulin delivered */
-"%@ U" = "%@ E";
+"%@ U" = "%@ U";
 
 /*Carb ratio unit */
-"g/U" = "g/E";
+"g/U" = "g/U";
 
 /* grams */
 " g" = " g";
 
+/* The short unit display string for grams */
+"g" = "g";
+
 /* when 0 U/hr */
-"0 U/hr" = "0 E/t";
+"0 U/hr" = "0 U/hr";
 
 /* abbreviation for days */
 "d" = "d";
 
 /* abbreviation for hours */
-"h" = "t";
+"h" = "h";
 
 /* abbreviation for minutes */
-"m" = "min";
+"m" = "m";
 
 /*  */
-"Closed loop" = "Lukket loop";
+"Closed loop" = "Closed loop";
 
 /* */
-"Configuration" = "Oppsett";
+"Configuration" = "Configuration";
 
 /* */
-"Devices" = "Enheter";
+"Devices" = "Devices";
 
 /*  */
-"Pump" = "Pumpe";
+"Pump" = "Pump";
 
 /*  */
-"Services" = "Tjenester";
+"Services" = "Services";
 
 /*  */
-"Settings" = "Innstillinger";
+"Settings" = "Settings";
 
 /* 2 log files to share */
-"Share logs" = "Del logger";
+"Share logs" = "Share logs";
 
 /* Upper target */
-"High target" = "Øvre mål";
+"High target" = "High target";
 
 /* Lower target */
-"Low target" = "Nedre mål";
+"Low target" = "Low target";
 
 /*  */
-"Target Ranges" = "Målområder";
+"Target Ranges" = "Target Ranges";
 
 /* When bolusing */
-"Bolusing" = "Leverer bolus";
+"Bolusing" = "Bolusing";
 
 /* */
-"Pump suspended" = "Pumpe satt på pause";
+"Pump suspended" = "Pump suspended";
 
 /* */
-"Middleware" = "Middelware";
+"Middleware" = "Middleware";
 
 /* Header */
-"History" = "Historikk";
+"History" = "History";
 
 /* CGM option */
-"Upload glucose to Nightscout" = "Last opp blodsukker til Nightscout";
+"Upload glucose to Nightscout" = "Upload glucose to Nightscout";
 
 /* Type of CGM or glucose source */
 "Type" = "Type";
@@ -390,49 +396,58 @@ Enact a temp Basal or a temp target */
 "CGM" = "CGM";
 
 /* CGM Transmitter ID */
-"Transmitter ID" = "Sender-ID";
+"Transmitter ID" = "Transmitter ID";
 
 /* Other CGM setting */
-"Other" = "Annet";
+"Other" = "Other";
+
+/* Whatch app alert */
+"Set temp targets presets on iPhone first" = "Set temp targets presets on iPhone first";
+
+/* Updating Watch app */
+"Updating..." = "Updating...";
+
+/* Header for Temp targets in Watch app */
+"Temp Targets" = "Temp Targets";
 
 
 /* Calendar and Libre transmitter settings --------------*/
 /* */
 
-"Configure Libre Transmitter" = "Konfigurer Libre-sender";
+"Configure Libre Transmitter" = "Configure Libre Transmitter";
 
 /* */
-"Calibrations" = "Kalibreringer";
+"Calibrations" = "Calibrations";
 
 /* */
-"Create events in calendar" = "Opprett hendelser i kalenderen";
+"Create events in calendar" = "Create events in calendar";
 
 /* */
-"Calendar" = "Kalender";
+"Calendar" = "Calendar";
 
 /* */
-"Other" = "Annet";
+"Other" = "Other";
 
 /* */
-"Libre Transmitter" = "Libre-sender";
+"Libre Transmitter" = "Libre Transmitter";
 
 /* */
-"Libre Transmitters" = "Libre-sendere";
+"Libre Transmitters" = "Libre Transmitters";
 
 /* */
-"Bluetooth Transmitters" = "Bluetooth-sendere";
+"Bluetooth Transmitters" = "Bluetooth Transmitters";
 
 /* */
-"Modes" = "Moduser";
+"Modes" = "Modes";
 
 /* Libre 2 Direct */
-"Libre 2 Direct" = "Libre 2 direkte";
+"Libre 2 Direct" = "Libre 2 Direct";
 
 /* */
-"Select the third party transmitter you want to connect to" = "Velg tredjeparts-senderen du vil koble til";
+"Select the third party transmitter you want to connect to" = "Select the third party transmitter you want to connect to";
 
 /* State was restored */
-"State was restored" = "Tilbakestilt";
+"State was restored" = "State was restored";
 
 /* The short unit display string for millimoles of glucose per liter */
 "mmol/L" = "mmol/L";
@@ -441,333 +456,333 @@ Enact a temp Basal or a temp target */
 "mg/dL" = "mg/dL";
 
 /* */
-"Add calibration" = "Legg til kalibrering";
+"Add calibration" = "Add calibration";
 
 /* When adding capillary glucose meater reading */
-"Meter glucose" = "Blodsukkermåling";
+"Meter glucose" = "Meter glucose";
 
 /* */
 "Info" = "Info";
 
 /*v*/
-"Slope" = "Stigningstall";
+"Slope" = "Slope";
 
 /* */
-"Intercept" = "Skjæringspunkt";
+"Intercept" = "Intercept";
 
 /* */
-"Chart" = "Diagram";
+"Chart" = "Chart";
 
 /* */
-"Remove" = "Fjern";
+"Remove" = "Remove";
 
 /* */
-"Remove Last" = "Fjern siste";
+"Remove Last" = "Remove Last";
 
 /* */
-"Remove All" = "Fjern alle";
+"Remove All" = "Remove All";
 
 /* */
-"Calibrations" = "Kalibreringer";
+"Calibrations" = "Calibrations";
 
 /* */
-"About the Process" = "Om prosessen";
+"About the Process" = "About the Process";
 
 /* */
-"Please make sure that your Libre 2 sensor is already activated and finished warming up. If you have other apps connecting to the sensor via bluetooth, these need to be shut down or uninstalled. \n\n You can only have one app communicating with the sensor via bluetooth. Then press the \"pariring and connection\" button below to start the process. Please note that the bluetooth connection might take up to a couple of minutes before it starts working." = "Sørg for at Libre 2-sensoren allerede er aktivert og ferdig med oppvarmingen. Hvis du har andre apper som kobler til sensoren via bluetooth, må disse stoppes eller avinstalleres. \n\n Kun én app kan kommunisere med sensoren om gangen. Trykk på \\«Parkobling»\\ knappen nedenfor for å starte prosessen. Vær oppmerksom på at blåtannforbindelsen kan ta opp til et par minutter før den begynner å virke.";
+"Please make sure that your Libre 2 sensor is already activated and finished warming up. If you have other apps connecting to the sensor via bluetooth, these need to be shut down or uninstalled. \n\n You can only have one app communicating with the sensor via bluetooth. Then press the \"pariring and connection\" button below to start the process. Please note that the bluetooth connection might take up to a couple of minutes before it starts working." = "Please make sure that your Libre 2 sensor is already activated and finished warming up. If you have other apps connecting to the sensor via bluetooth, these need to be shut down or uninstalled. \n\n You can only have one app communicating with the sensor via bluetooth. Then press the \"pariring and connection\" button below to start the process. Please note that the bluetooth connection might take up to a couple of minutes before it starts working.";
 
 /* */
-"Pairinginfo" = "Parings-info";
+"Pairinginfo" = "Pairinginfo";
 
 /* */
-"PatchInfo" = "Patch-info";
+"PatchInfo" = "PatchInfo";
 
 /* */
-"Calibrationinfo" = "Kalibrerings-info";
+"Calibrationinfo" = "Calibrationinfo";
 
 /* */
-"Unknown" = "Ukjent";
+"Unknown" = "Unknown";
 
 /* */
-"Not paired yet" = "Ikke paret ennå";
+"Not paired yet" = "Not paired yet";
 
 /* */
-"Pair Sensor & connect" = "Parkoble sensor";
+"Pair Sensor & connect" = "Pair Sensor & connect";
 
 /* */
-"Phone NFC required!" = "Telefon med NFC kreves!";
+"Phone NFC required!" = "Phone NFC required!";
 
 /* */
-"Your phone or app is not enabled for NFC communications, which is needed to pair to libre2 sensors" = "NFC-kommunikasjon er ikke aktivert på telefonen eller i appen. Dette er nødvendig for å koble til libre2-sensorer";
+"Your phone or app is not enabled for NFC communications, which is needed to pair to libre2 sensors" = "Your phone or app is not enabled for NFC communications, which is needed to pair to libre2 sensors";
 
 /* Bluetooth Power Off */
-"Bluetooth Power Off" = "Strøm til Bluetooth av";
+"Bluetooth Power Off" = "Bluetooth Power Off";
 
 /* Please turn on Bluetooth */
-"Please turn on Bluetooth" = "Vennligst slå på Bluetooth";
+"Please turn on Bluetooth" = "Please turn on Bluetooth";
 
 /* No Libre Transmitter Selected */
-"No Libre Transmitter Selected" = "Ingen Libre sender er valgt";
+"No Libre Transmitter Selected" = "No Libre Transmitter Selected";
 
 /* Delete Transmitter and start anew. */
-"Delete CGMManager and start anew. Your libreoopweb credentials will be preserved" = "Slett CGM-styring og start på nytt. Innloggingsinformasjon for libreoopweb lagres.";
+"Delete CGMManager and start anew. Your libreoopweb credentials will be preserved" = "Delete CGMManager and start anew. Your libreoopweb credentials will be preserved";
 
 /* Invalid libre checksum */
-"Invalid libre checksum" = "Ugyldig sjekksum for Libre";
+"Invalid libre checksum" = "Invalid libre checksum";
 
 /* Libre sensor was incorrectly read, CRCs were not valid */
-"Libre sensor was incorrectly read, CRCs were not valid" = "Libre-sensoren var feil lest, CRC-er var ugyldige";
+"Libre sensor was incorrectly read, CRCs were not valid" = "Libre sensor was incorrectly read, CRCs were not valid";
 
 /* Glucose */
-"Glucose" = "Blodsukker";
+"Glucose" = "Glucose";
 
 /* LOWALERT! */
-"LOWALERT!" = "LAV ALARM!";
+"LOWALERT!" = "LOWALERT!";
 
 /* HIGHALERT! */
-"HIGHALERT!" = "HØY ALARM!";
+"HIGHALERT!" = "HIGHALERT!";
 
 /* (Snoozed)*/
-"(Snoozed)" = "(Slumret)";
+"(Snoozed)" = "(Snoozed)";
 
 /* Glucose: %@ */
-"Glucose: %@" = "Blodsukker: %@";
+"Glucose: %@" = "Glucose: %@";
 
 /* Transmitter: %@%% */
-"Transmitter: %@%%" = "Sender: %@";
+"Transmitter: %@%%" = "Transmitter: %@%%";
 
 /* No Sensor Detected */
-"No Sensor Detected" = "Ingen sensor oppdaget";
+"No Sensor Detected" = "No Sensor Detected";
 
 /* This might be an intermittent problem, but please check that your transmitter is tightly secured over your sensor */
-"This might be an intermittent problem, but please check that your transmitter is tightly secured over your sensor" = "Dette kan være et forbigående problem, men kontroller at senderen er godt festet over sensoren";
+"This might be an intermittent problem, but please check that your transmitter is tightly secured over your sensor" = "This might be an intermittent problem, but please check that your transmitter is tightly secured over your sensor";
 
 /* New Sensor Detected */
-"New Sensor Detected" = "Ny sensor oppdaget";
+"New Sensor Detected" = "New Sensor Detected";
 
 /* Please wait up to 30 minutes before glucose readings are available! */
-"Please wait up to 30 minutes before glucose readings are available!" = "Vennligst vent opptil 30 minutter før blodsukker-avlesningen er tilgjengelig!";
+"Please wait up to 30 minutes before glucose readings are available!" = "Please wait up to 30 minutes before glucose readings are available!";
 
 /* Invalid Glucose sample detected, try again later */
-"Invalid Glucose sample detected, try again later" = "Ugyldig blodsukkermåling, prøv igjen senere";
+"Invalid Glucose sample detected, try again later" = "Invalid Glucose sample detected, try again later";
 
 /* ensor might have temporarily stopped, fallen off or is too cold or too warm */
-"Sensor might have temporarily stopped, fallen off or is too cold or too warm" = "Sensoren kan ha stoppet midlertidig, falt av eller er for kald eller for varm";
+"Sensor might have temporarily stopped, fallen off or is too cold or too warm" = "Sensor might have temporarily stopped, fallen off or is too cold or too warm";
 
 /* Invalid Sensor Detected */
-"Invalid Sensor Detected" = "Ugyldig sensor funnet";
+"Invalid Sensor Detected" = "Invalid Sensor Detected";
 
 /* Detected sensor seems not to be a libre 1 sensor! */
-"Detected sensor seems not to be a libre 1 sensor!" = "Oppdaget sensor ser ikke ut til å være en Libre 1 sensor!";
+"Detected sensor seems not to be a libre 1 sensor!" = "Detected sensor seems not to be a libre 1 sensor!";
 
 /* Detected sensor is invalid: %@ */
-"Detected sensor is invalid: %@" = "Oppdaget sensor er ugyldig: %@";
+"Detected sensor is invalid: %@" = "Detected sensor is invalid: %@";
 
 /* Low Battery */
-"Low battery" = "Lavt batterinivå";
+"Low battery" = "Low battery";
 
 /* */
-"Invalid sensor" = "Ugyldig sensor";
+"Invalid sensor" = "Invalid sensor";
 
 /* */
-"Sensor change" = "Endring av sensor";
+"Sensor change" = "Sensor change";
 
 /* */
-"Sensor expires soon" = "Sensor utløper snart";
+"Sensor expires soon" = "Sensor expires soon";
 
 /* Battery is running low %@, consider charging your %@ device as soon as possible */
-"Battery is running low %@, consider charging your %@ device as soon as possible" = "Batterinivået er lavt %@, vurder å lade %@ enheten din så snart som mulig";
+"Battery is running low %@, consider charging your %@ device as soon as possible" = "Battery is running low %@, consider charging your %@ device as soon as possible";
 
 /* Extracting calibrationdata from sensor */
-"Extracting calibrationdata from sensor" = "Henter ut kalibreringsdata fra sensoren";
+"Extracting calibrationdata from sensor" = "Extracting calibrationdata from sensor";
 
 /* Sensor Ending Soon */
-"Sensor Ending Soon" = "Sensoren utløper snart";
+"Sensor Ending Soon" = "Sensor Ending Soon";
 
 /* Current Sensor is Ending soon! Sensor Life left in %@ */
-"Current Sensor is Ending soon! Sensor Life left in %@" = "Gjeldende sensor utløper snart! Sensor-tid gjenstår i %@";
+"Current Sensor is Ending soon! Sensor Life left in %@" = "Current Sensor is Ending soon! Sensor Life left in %@";
 
 /* */
 "Libre Bluetooth" = "Libre Bluetooth";
 
 /* */
-"Snooze Alerts" = "Slumre varsler";
+"Snooze Alerts" = "Snooze Alerts";
 
 /* */
-"Last measurement" = "Siste måling";
+"Last measurement" = "Last measurement";
 
 /* */
-"Sensor Footer checksum" = "Sjekk-sum for sensor";
+"Sensor Footer checksum" = "Sensor Footer checksum";
 
 /* */
-"Last Blood Sugar prediction" = "Siste blodsukker-prediksjon";
+"Last Blood Sugar prediction" = "Last Blood Sugar prediction";
 
 /* */
-"CurrentBG" = "Nåværende BS";
+"CurrentBG" = "CurrentBG";
 
 /* */
-"Sensor Info" = "Sensor-info";
+"Sensor Info" = "Sensor Info";
 
 /* */
-"Sensor Age" = "Sensoralder";
+"Sensor Age" = "Sensor Age";
 
 /* */
-"Sensor Age Left" = "Sensoralder gjenstår";
+"Sensor Age Left" = "Sensor Age Left";
 
 /* */
-"Sensor Endtime" = "Utløpstid for sensor";
+"Sensor Endtime" = "Sensor Endtime";
 
 /* */
-"Sensor State" = "Sensortilstand";
+"Sensor State" = "Sensor State";
 
 /* */
-"Sensor Serial" = "Sensor serienummer";
+"Sensor Serial" = "Sensor Serial";
 
 /* */
-"Transmitter Info" = "Senderinfo";
+"Transmitter Info" = "Transmitter Info";
 
 /* */
-"Hardware" = "Maskinvare";
+"Hardware" = "Hardware";
 
 /* */
-"Firmware" = "Fastvare";
+"Firmware" = "Firmware";
 
 /* */
-"Connection State" = "Tilkoblingsstatus";
+"Connection State" = "Connection State";
 
 /* */
-"Transmitter Type" = "Type sender";
+"Transmitter Type" = "Transmitter Type";
 
 /* */
-"Sensor Type" = "Type sensor";
+"Sensor Type" = "Sensor Type";
 
 /* */
-"Factory Calibration Parameters" = "Fabrikkens kalibreringsparametre";
+"Factory Calibration Parameters" = "Factory Calibration Parameters";
 
 /* */
-"Valid for footer" = "Gyldig i bunntekst";
+"Valid for footer" = "Valid for footer";
 
 /* */
-"Edit calibrations" = "Rediger kalibreringer";
+"Edit calibrations" = "Edit calibrations";
 
 /* */
-"edit calibration clicked" = "rediger valgt kalibrering";
+"edit calibration clicked" = "edit calibration clicked";
 
 /* */
-"Delete CGM" = "Slett CGM";
+"Delete CGM" = "Delete CGM";
 /* */
-"Are you sure you want to remove this cgm from loop?" = "Er du sikker på at du vil fjerne denne CGM-en?";
+"Are you sure you want to remove this cgm from loop?" = "Are you sure you want to remove this cgm from loop?";
 
 /* */
-"There is no undo" = "Dette kan ikke angres";
+"There is no undo" = "There is no undo";
 
 /* */
-"Advanced" = "Avansert";
+"Advanced" = "Advanced";
 
 /* */
-"Alarms" = "Alarmer";
+"Alarms" = "Alarms";
 
 /* */
-"Glucose Settings" = "Blodsukker-innstillinger";
+"Glucose Settings" = "Glucose Settings";
 
 /* */
-"Notifications" = "Varsler";
+"Notifications" = "Notifications";
 
 /* */
-"Export logs" = "Eksporter logger";
+"Export logs" = "Export logs";
 
 /* */
-"Export not available" = "Eksport ikke tilgjengelig";
+"Export not available" = "Export not available";
 
 /* */
-"Log export requires ios 15" = "Loggeksportering krever ios 15";
+"Log export requires ios 15" = "Log export requires ios 15";
 
 /* */
-"Got it!" = "Skjønner!";
+"Got it!" = "Got it!";
 
 /* */
-"Saved to %@" = "Lagret til %@";
+"Saved to %@" = "Saved to %@";
 
 /* */
-"No logs available" = "Ingen logger tilgjengelig";
+"No logs available" = "No logs available";
 
 /* */
-"Glucose Notification visibility" = "Blodsukker-varsel";
+"Glucose Notification visibility" = "Glucose Notification visibility";
 
 /* */
-"Always Notify Glucose" = "Alltid varsle om blodsukker";
+"Always Notify Glucose" = "Always Notify Glucose";
 
 /* */
-"Notify per reading" = "Varsle per lesing";
+"Notify per reading" = "Notify per reading";
 
 /* */
-"Value" = "Verdi";
+"Value" = "Value";
 
 /* */
-"Adds Phone Battery" = "Legger til telefonbatteri";
+"Adds Phone Battery" = "Adds Phone Battery";
 
 /* */
-"Adds Transmitter Battery" = "Legger til senderbatteri";
+"Adds Transmitter Battery" = "Adds Transmitter Battery";
 
 /* */
-"Also vibrate" = "Også vibrasjon";
+"Also vibrate" = "Also vibrate";
 
 /* */
-"Additional notification types" = "Andre varslingstyper";
+"Additional notification types" = "Additional notification types";
 
 /* */
-"Misc" = "Diverse";
+"Misc" = "Misc";
 
 /* */
-"Unit override" = "Overstyr enhet";
+"Unit override" = "Unit override";
 
 /* */
-"Low" = "Lav";
+"Low" = "Low";
 
 /* */
-"High" = "Høy";
+"High" = "High";
 
 /* */
-"glucose" = "blodsukker";
+"glucose" = "glucose";
 
 /* */
-"Schedule " = "Tidsplan ";
+"Schedule " = "Schedule ";
 
 /* */
-"tapped save schedules" = "valgt lagre tidsplaner";
+"tapped save schedules" = "tapped save schedules";
 
 /* */
-"Error" = "Feil";
+"Error" = "Error";
 
 /* */
-"Some ui element was incorrectly specified" = "Et ui-element var feil spesifisert";
+"Some ui element was incorrectly specified" = "Some ui element was incorrectly specified";
 
 /* */
-"Success" = "Vellykket";
+"Success" = "Success";
 
 /* */
-"Schedules were saved successfully!" = "Tidsplaner ble lagret!";
+"Schedules were saved successfully!" = "Schedules were saved successfully!";
 
 /* */
-"High Glucose Alarm active" = "Høy glukosealarm aktiv";
+"High Glucose Alarm active" = "High Glucose Alarm active";
 
 /* */
-"Low Glucose Alarm active" = "Lav glukosealarm aktiv";
+"Low Glucose Alarm active" = "Low Glucose Alarm active";
 
 /* */
-"No Glucose Alarm active" = "Ingen glukosealarm aktiv";
+"No Glucose Alarm active" = "No Glucose Alarm active";
 
 /* */
-"snoozing until %@" = "slumrer til %@";
+"snoozing until %@" = "snoozing until %@";
 
 /* */
-"not snoozing" = "slumrer ikke";
+"not snoozing" = "not snoozing";
 
 /* */
-"nothing to see here" = "ingenting å se her";
+"nothing to see here" = "nothing to see here";
 
 /* */
-"snooze from testview clicked" = "trykket på slumre fra testvisning";
+"snooze from testview clicked" = "snooze from testview clicked";
 
 /* */
 "will snooze for %@ until %@" = "will snooze for %@ until %@";
@@ -782,7 +797,7 @@ Enact a temp Basal or a temp target */
 "Hold the top of your iPhone near the sensor to pair" = "Hold the top of your iPhone near the sensor to pair";
 
 /* */
-"Sensor not found" = "Sensor ikke funnet";
+"Sensor not found" = "Sensor not found";
 
 /* */
 "Also play alert sound" = "Also play alert sound";
@@ -791,7 +806,7 @@ Enact a temp Basal or a temp target */
 "Notification Settings" = "Notification Settings";
 
 /* */
-"Found devices: %d" = "Fant enheter: %d";
+"Found devices: %d" = "Found devices: %d";
 
 /* */
 "Backfill options" = "Backfill options";
@@ -845,17 +860,17 @@ Enact a temp Basal or a temp target */
 /* Headers for settings ------------------- */
 
 
-"OpenAPS main settings" = "OpenAPS hovedinnstillinger";
+"OpenAPS main settings" = "OpenAPS main settings";
 
-"OpenAPS SMB settings" = "OpenAPS SMB innstillinger";
+"OpenAPS SMB settings" = "OpenAPS SMB settings";
 
-"OpenAPS targets settings" = "OpenAPS mål-innstillinger";
+"OpenAPS targets settings" = "OpenAPS targets settings";
 
-"OpenAPS other settings" = "OpenAPS andre innstillinger";
+"OpenAPS other settings" = "OpenAPS other settings";
 
 
 /* Glucose Simulator CGM */
-"Glucose Simulator" = "Blodsukker-simulator";
+"Glucose Simulator" = "Glucose Simulator";
 
 /* Restored state message */
 "Bluetooth State restored (APS restarted?). Found %d peripherals, and connected to %@ with identifier %@" = "Bluetooth State restored (APS restarted?). Found %d peripherals, and connected to %@ with identifier %@";

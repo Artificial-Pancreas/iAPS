@@ -422,6 +422,9 @@ Enact a temp Basal or a temp target */
 /* Other CGM setting */
 "Other" = "Other";
 
+/* */
+"Backfill glucose" = "Backfill glucose";
+
 /*
   Infotexts from openaps.docs and androidaps.docs
   FreeAPS
