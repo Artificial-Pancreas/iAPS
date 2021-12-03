@@ -83,7 +83,7 @@ final class BaseUserNotificationsManager: NSObject, UserNotificationsManager, In
                 titles.append(NSLocalizedString("(Snoozed)", comment: "(Snoozed)"))
             } else {
                 content.sound = .default
-                self.playSound()
+                self.playSoundIfNeeded()
             }
 
             titles.append(String(format: NSLocalizedString("Carbs required: %d g", comment: "Carbs required"), carbs))
