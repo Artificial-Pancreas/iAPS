@@ -51,6 +51,7 @@ struct BolusView: View {
 
                 HStack {
                     Button {
+                        WKInterfaceDevice.current().play(.click)
                         state.isBolusViewActive = false
                     }
                     label: {
