@@ -55,11 +55,13 @@ extension NightscoutConfig {
             backfilling = true
             nightscoutManager.fetchGlucose(since: Date().addingTimeInterval(-1.days.timeInterval))
                 .sink { [weak self] glucose in
-                    guard let self = self, glucose.isNotEmpty else { return }
-                    self.glucoseStorage.storeGlucose(glucose)
+                    guard let self = self else { return }
                     DispatchQueue.main.async {
                         self.backfilling = false
                     }
+
+                    guard glucose.isNotEmpty else { return }
+                    self.glucoseStorage.storeGlucose(glucose)
                 }
                 .store(in: &lifetime)
         }
