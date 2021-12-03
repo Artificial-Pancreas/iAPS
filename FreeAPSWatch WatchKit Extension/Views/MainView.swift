@@ -34,6 +34,12 @@ struct MainView: View {
                 ConfirmationView(success: $state.confirmationSuccess)
                     .background(Rectangle().fill(.black))
             }
+
+            if state.isConfirmationBolusViewActive {
+                BolusConfirmationView()
+                    .environmentObject(state)
+                    .background(Rectangle().fill(.black))
+            }
         }
         .frame(maxHeight: .infinity)
         .padding()

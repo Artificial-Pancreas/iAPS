@@ -54,9 +54,54 @@ struct CarbsView: View {
                         .frame(width: 24, height: 24)
                         .foregroundColor(.loopGreen)
                     Text("Add Carbs ")
+
+=======
+                    Button {
+                        WKInterfaceDevice.current().play(.click)
+                        let newValue = amount - 5
+                        amount = max(newValue, 0)
+                    } label: {
+                        Image(systemName: "minus")
+                    }
+                    .frame(width: geo.size.width / 4)
+                    Spacer()
+                    Text(numberFormatter.string(from: amount as NSNumber)! + " g")
+                        .font(.title2)
+                        .focusable(true)
+                        .digitalCrownRotation(
+                            $amount,
+                            from: 0,
+                            through: Double(state.maxCOB ?? 120),
+                            by: 1,
+                            sensitivity: .medium,
+                            isContinuous: false,
+                            isHapticFeedbackEnabled: true
+                        )
+                    Spacer()
+                    Button {
+                        WKInterfaceDevice.current().play(.click)
+                        let newValue = amount + 5
+                        amount = min(newValue, Double(state.maxCOB ?? 120))
+                    } label: { Image(systemName: "plus") }
+                        .frame(width: geo.size.width / 4)
                 }
-            }
-            .disabled(amount <= 0)
+                Button {
+                    WKInterfaceDevice.current().play(.click)
+                    state.addCarbs(Int(amount))
+                }
+                label: {
+                    HStack {
+                        Image("carbs", bundle: nil)
+                            .renderingMode(.template)
+                            .resizable()
+                            .frame(width: 24, height: 24)
+                            .foregroundColor(.loopGreen)
+                        Text("Add Carbs ")
+                    }
+>>>>>>> 1e5c754... 38mm watch support and fixed bolus rounding
+                }
+                .disabled(amount <= 0)
+            }.frame(maxHeight: .infinity)
         }
         .navigationTitle("Add Carbs ")
         .onAppear {
