@@ -54,6 +54,11 @@ extension NightscoutConfig {
                         DecimalTextField("", value: $state.localPort, formatter: portFormater)
                     }
                 }
+
+                Section {
+                    Button("Backfill glucose") { state.backfillGlucose() }
+                        .disabled(state.url.isEmpty || state.connecting || state.backfilling)
+                }
             }
             .onAppear(perform: configureView)
             .navigationBarTitle("Nightscout Config")

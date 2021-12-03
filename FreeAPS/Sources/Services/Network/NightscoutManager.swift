@@ -4,7 +4,7 @@ import Swinject
 import UIKit
 
 protocol NightscoutManager: GlucoseSource {
-    func fetchGlucose() -> AnyPublisher<[BloodGlucose], Never>
+    func fetchGlucose(since date: Date) -> AnyPublisher<[BloodGlucose], Never>
     func fetchCarbs() -> AnyPublisher<[CarbsEntry], Never>
     func fetchTempTargets() -> AnyPublisher<[TempTarget], Never>
     func fetchAnnouncements() -> AnyPublisher<[Announcement], Never>
@@ -88,7 +88,7 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
         return maybeNightscout?.url
     }
 
-    func fetchGlucose() -> AnyPublisher<[BloodGlucose], Never> {
+    func fetchGlucose(since date: Date) -> AnyPublisher<[BloodGlucose], Never> {
         let useLocal = settingsManager.settings.useLocalGlucoseSource
         ping = nil
 
@@ -108,8 +108,7 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
 
         let startDate = Date()
 
-        let since = glucoseStorage.syncDate()
-        return nightscout.fetchLastGlucose(sinceDate: since)
+        return nightscout.fetchLastGlucose(sinceDate: date)
             .tryCatch({ (error) -> AnyPublisher<[BloodGlucose], Error> in
                 print(error.localizedDescription)
                 return Just([]).setFailureType(to: Error.self).eraseToAnyPublisher()
@@ -123,7 +122,7 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
     }
 
     func fetch() -> AnyPublisher<[BloodGlucose], Never> {
-        fetchGlucose()
+        fetchGlucose(since: glucoseStorage.syncDate())
     }
 
     func fetchCarbs() -> AnyPublisher<[CarbsEntry], Never> {

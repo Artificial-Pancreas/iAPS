@@ -853,6 +853,9 @@ Enact a temp Basal or a temp target */
 /* Glucose badge */
 "Show glucose on the app badge" = "Visa glukosvärde på app-ikon";
 
+/* */
+"Backfill glucose" = "Backfill glucose";
+
 
 /* Headers for settings ------------------- */
 

@@ -855,6 +855,9 @@ Połączono z Nightscout!";
 /* Glucose badge */
 "Show glucose on the app badge" = "Show glucose on the app badge";
 
+/* */
+"Backfill glucose" = "Backfill glucose";
+
 
 /* Headers for settings ------------------- */
 
