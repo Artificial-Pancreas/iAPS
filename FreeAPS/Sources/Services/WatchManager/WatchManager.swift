@@ -91,10 +91,7 @@ final class BaseWatchManager: NSObject, WatchManager, Injectable {
             warning(.service, "Cannot encode watch state")
             return
         }
-        guard session.isReachable else {
-            warning(.service, "WCSession is not reachable")
-            return
-        }
+        guard session.isReachable else { return }
         session.sendMessageData(data, replyHandler: nil) { error in
             warning(.service, "Cannot send message to watch", error: error)
         }
