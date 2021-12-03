@@ -10,9 +10,10 @@ struct BolusView: View {
         formatter.numberStyle = .decimal
         formatter.minimum = 0
         formatter.maximum = Double((state.maxBolus ?? 5) / (state.bolusIncrement ?? 0.1)) as NSNumber
-        formatter.maximumFractionDigits = 2
-        formatter.minimumFractionDigits = 2
+        formatter.maximumFractionDigits = (state.bolusIncrement ?? 0.1) > 0.05 ? 1 : 2
+        formatter.minimumFractionDigits = (state.bolusIncrement ?? 0.1) > 0.05 ? 1 : 2
         formatter.allowsFloats = true
+        formatter.roundingIncrement = Double(state.bolusIncrement ?? 0.1) as NSNumber
         return formatter
     }
 
@@ -70,23 +71,7 @@ struct BolusView: View {
                     }
                     .disabled(steps <= 0)
                 }
-                label: {
-                    Image(systemName: "xmark.circle.fill")
-                        .resizable()
-                        .foregroundColor(.loopRed)
-                        .frame(width: 30, height: 30)
-                }
-                Button {
-                    enactBolus()
-                }
-                label: {
-                    Image(systemName: "checkmark.circle.fill")
-                        .resizable()
-                        .foregroundColor(.loopGreen)
-                        .frame(width: 30, height: 30)
-                }
-                .disabled(steps <= 0)
-            }
+            }.frame(maxHeight: .infinity)
         }
         .navigationTitle("Enact Bolus")
         .onAppear {
@@ -102,6 +87,13 @@ struct BolusView: View {
 
 struct BolusView_Previews: PreviewProvider {
     static var previews: some View {
-        BolusView().environmentObject(WatchStateModel())
+        let state = WatchStateModel()
+        state.bolusRecommended = 10.3
+        state.bolusIncrement = 0.05
+        return Group {
+            BolusView()
+            BolusView().previewDevice("Apple Watch Series 5 - 40mm")
+            BolusView().previewDevice("Apple Watch Series 3 - 38mm")
+        }.environmentObject(state)
     }
 }

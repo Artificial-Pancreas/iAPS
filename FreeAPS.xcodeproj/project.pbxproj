@@ -205,7 +205,6 @@
 		38E8757927579D9200975559 /* Publisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3811DE5525C9D4D500A708ED /* Publisher.swift */; };
 		38E8757B2757B1C300975559 /* TempTargetsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38E8757A2757B1C300975559 /* TempTargetsView.swift */; };
 		38E8757D2757C45D00975559 /* BolusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38E8757C2757C45D00975559 /* BolusView.swift */; };
-		38E8757E2758C86A00975559 /* ConvenienceExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38192E0C261BAF980094D973 /* ConvenienceExtensions.swift */; };
 		38E8758027595DC600975559 /* BolusConfirmationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38E8757F27595DC500975559 /* BolusConfirmationView.swift */; };
 		38E989DD25F5021400C0CED0 /* PumpStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38E989DC25F5021400C0CED0 /* PumpStatus.swift */; };
 		38E98A2325F52C9300C0CED0 /* Signpost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38E98A1B25F52C9300C0CED0 /* Signpost.swift */; };
@@ -2535,7 +2534,7 @@
 				CODE_SIGN_ENTITLEMENTS = FreeAPSWatch/FreeAPSWatch.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = "$(BUILD_VERSION)";
-				DEVELOPMENT_TEAM = "${DEVELOPER_TEAM}";
+				DEVELOPMENT_TEAM = T7VZ6LU6H3;
 				GENERATE_INFOPLIST_FILE = YES;
 				IBSC_MODULE = FreeAPSWatch_WatchKit_Extension;
 				INFOPLIST_KEY_CFBundleDisplayName = "$(APP_DISPLAY_NAME)";
@@ -2565,7 +2564,7 @@
 				CODE_SIGN_ENTITLEMENTS = FreeAPSWatch/FreeAPSWatch.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = "$(BUILD_VERSION)";
-				DEVELOPMENT_TEAM = "${DEVELOPER_TEAM}";
+				DEVELOPMENT_TEAM = T7VZ6LU6H3;
 				GENERATE_INFOPLIST_FILE = YES;
 				IBSC_MODULE = FreeAPSWatch_WatchKit_Extension;
 				INFOPLIST_KEY_CFBundleDisplayName = "$(APP_DISPLAY_NAME)";
@@ -2594,7 +2593,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = "$(BUILD_VERSION)";
 				DEVELOPMENT_ASSET_PATHS = "\"FreeAPSWatch WatchKit Extension/Preview Content\"";
-				DEVELOPMENT_TEAM = BA7ZHP4963;
+				DEVELOPMENT_TEAM = T7VZ6LU6H3;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "FreeAPSWatch WatchKit Extension/Info.plist";
@@ -2629,7 +2628,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = "$(BUILD_VERSION)";
 				DEVELOPMENT_ASSET_PATHS = "\"FreeAPSWatch WatchKit Extension/Preview Content\"";
-				DEVELOPMENT_TEAM = BA7ZHP4963;
+				DEVELOPMENT_TEAM = T7VZ6LU6H3;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "FreeAPSWatch WatchKit Extension/Info.plist";
