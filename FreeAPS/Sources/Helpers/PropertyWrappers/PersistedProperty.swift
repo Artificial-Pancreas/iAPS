@@ -43,6 +43,8 @@ import Foundation
         initialValue = wrappedValue
         lock?.lock()
         defer { lock?.unlock() }
-        setValue(storage.getValue(Value.self, forKey: key) ?? wrappedValue)
+        if storage.getValue(Value.self, forKey: key) == nil {
+            setValue(wrappedValue)
+        }
     }
 }
