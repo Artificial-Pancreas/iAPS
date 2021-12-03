@@ -16,10 +16,15 @@ struct BolusConfirmationView: View {
     var body: some View {
         VStack {
             GeometryReader { geo in
-                ZStack {
+                ZStack(alignment: .top) {
                     RoundedRectangle(cornerRadius: elementSize / 2, style: .circular)
                         .fill(.secondary)
                         .frame(width: elementSize, height: geo.size.height)
+                        .opacity(0.2)
+
+                    RoundedRectangle(cornerRadius: elementSize / 2, style: .circular)
+                        .fill(Color.insulin)
+                        .frame(width: elementSize, height: elementSize + (geo.size.height - elementSize) * progress / 100)
                         .opacity(0.2)
 
                     Image(systemName: "arrow.right")
@@ -104,6 +109,6 @@ struct BolusConfirmationView: View {
 
 struct BolusConfirmationView_Previews: PreviewProvider {
     static var previews: some View {
-        BolusConfirmationView().environmentObject(WatchStateModel())
+        BolusConfirmationView(progress: 50, done: false).environmentObject(WatchStateModel())
     }
 }
