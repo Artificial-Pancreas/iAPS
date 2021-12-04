@@ -782,7 +782,7 @@ Enact a temp Basal or a temp target */
 "nothing to see here" = "hier gibt es nichts zu sehen";
 
 /* */
-"snooze from testview clicked" = "snooze from testview clicked";
+"snooze from testview clicked" = "snooze in der Testansicht angeklickt";
 
 /* */
 "will snooze for %@ until %@" = "wird für %@ schlummern bis %@";
@@ -854,7 +854,7 @@ Enact a temp Basal or a temp target */
 "Show glucose on the app badge" = "Zeige Glucosewert auf dem App Symbol";
 
 /* */
-"Backfill glucose" = "Backfill glucose";
+"Backfill glucose" = "Glucose Werte auffüllen";
 
 
 /* Headers for settings ------------------- */
