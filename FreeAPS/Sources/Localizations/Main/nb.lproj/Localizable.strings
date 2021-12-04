@@ -846,16 +846,16 @@ Enact a temp Basal or a temp target */
 "To prevent LOW required %d g of carbs" = "For å forhindre lavt blodsukker: %d g karbo nødvendig";
 
 /* */
-"FreeAPS X not active" = "FreeAPS X not active";
+"FreeAPS X not active" = "FreeAPS X ikke aktiv";
 
 /* */
-"Last loop was more then %d min ago" = "Last loop was more then %d min ago";
+"Last loop was more then %d min ago" = "Siste loop var mer enn %d min siden";
 
 /* Glucose badge */
-"Show glucose on the app badge" = "Show glucose on the app badge";
+"Show glucose on the app badge" = "Vis blodsukker på app-ikonet";
 
 /* */
-"Backfill glucose" = "Backfill glucose";
+"Backfill glucose" = "Tilbakefyll blodsukker";
 
 
 /* Headers for settings ------------------- */

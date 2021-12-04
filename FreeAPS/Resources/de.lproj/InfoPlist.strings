@@ -12,3 +12,9 @@
 
 /* Privacy - Calendars Usage Description */
 "NSCalendarsUsageDescription" = "BZ Werte als Kalendartermin: Jeder neue CGM-Blutzuckerwert wird als momentaner Kalendartermin gespeichert, damit er auf der Apple Watch in real-time aufgefrischt wird.";
+
+/* Privacy - Health Update Usage Description */
+"NSHealthUpdateUsageDescription" = "Health App is used to store blood glucose data";
+
+/* Privacy - Health Share Usage Description */
+"NSHealthShareUsageDescription" = "Health App is used to store blood glucose data";
