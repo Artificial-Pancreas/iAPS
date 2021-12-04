@@ -25,8 +25,9 @@
 /*  */
 "Insulin recommended" = "Anbefalt insulindose";
 
-/*  */
-"Insulin required" = "Insulinbehov";
+/* Insulin required (insulinReq)
+ */
+"Insulin required" = "insulinReq";
 
 /* Bolus screen */
 "Recommendation" = "Anbefaling";
@@ -785,64 +786,64 @@ Enact a temp Basal or a temp target */
 "snooze from testview clicked" = "trykket på slumre fra testvisning";
 
 /* */
-"will snooze for %@ until %@" = "will snooze for %@ until %@";
+"will snooze for %@ until %@" = "vil slumre i %@ til %@";
 
 /* */
-"Click to Snooze Alerts" = "Click to Snooze Alerts";
+"Click to Snooze Alerts" = "Klikk for å slumre varslinger";
 
 /* */
-"Strength" = "Strength";
+"Strength" = "Styrke";
 
 /* */
-"Hold the top of your iPhone near the sensor to pair" = "Hold the top of your iPhone near the sensor to pair";
+"Hold the top of your iPhone near the sensor to pair" = "Hold den øverste delen av telefonen nær sensoren for å parkoble";
 
 /* */
 "Sensor not found" = "Sensor ikke funnet";
 
 /* */
-"Also play alert sound" = "Also play alert sound";
+"Also play alert sound" = "Spill også alarmlyd";
 
 /* */
-"Notification Settings" = "Notification Settings";
+"Notification Settings" = "Varslingsinnstillinger";
 
 /* */
 "Found devices: %d" = "Fant enheter: %d";
 
 /* */
-"Backfill options" = "Backfill options";
+"Backfill options" = "Alternativer for etterfylling";
 
 /* */
-"Backfilling from trend is currently not well supported by Loop" = "Backfilling from trend is currently not well supported by Loop";
+"Backfilling from trend is currently not well supported by Loop" = "Etterfylling av data fra trenden er for øyeblikket ikke støttet av Loop";
 
 /* */
-"Backfill from history" = "Backfill from history";
+"Backfill from history" = "Etterfylling fra historikk";
 
 /* */
-"Backfill from trend" = "Backfill from trend";
+"Backfill from trend" = "Etterfylling fra trend";
 
 /* */
-"Debug options" = "Debug options";
+"Debug options" = "Alternativ for feilsøking";
 
 /* */
-"Adds a lot of data to the Issue Report " = "Adds a lot of data to the Issue Report ";
+"Adds a lot of data to the Issue Report " = "Legger til en rekke data i Hendelsesrapport ";
 
 /* */
-"Persist sensordata" = "Persist sensordata";
+"Persist sensordata" = "Vedvarende sensordata";
 
 /* */
-"Battery" = "Battery";
+"Battery" = "Batteri";
 
 /* */
-"Also add source info" = "Also add source info";
+"Also add source info" = "Legg også til kildeinfo";
 
 /* */
-"Carbs Required Threshold" = "Carbs Required Threshold";
+"Carbs Required Threshold" = "Terskel for karbo nødvendig";
 
 /* */
-"Carbs required: %d g" = "Carbs required: %d g";
+"Carbs required: %d g" = "Karbo nødvendig: %d g";
 
 /* */
-"To prevent LOW required %d g of carbs" = "To prevent LOW required %d g of carbs";
+"To prevent LOW required %d g of carbs" = "For å forhindre lavt blodsukker: %d g karbo nødvendig";
 
 /* */
 "FreeAPS X not active" = "FreeAPS X not active";
