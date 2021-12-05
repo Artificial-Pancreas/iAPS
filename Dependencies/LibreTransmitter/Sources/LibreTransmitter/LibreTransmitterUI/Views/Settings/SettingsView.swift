@@ -181,12 +181,6 @@ struct SettingsView: View {
 
     }
 
-    var snoozeSection: some View {
-        Section {
-            Text("Snooze Alerts").frame(alignment: .center)
-        }
-    }
-
     var measurementSection : some View {
         Section(header: Text("Last measurement")) {
             if glucoseUnit == .millimolesPerLiter {
@@ -303,13 +297,6 @@ struct SettingsView: View {
     //todo: replace sub with navigationlinks
     var advancedSection: some View {
         Section(header: Text("Advanced")) {
-            //these subviews don't really need to be notified once glucose unit changes
-            // so we just pass glucoseunit directly on init
-            ZStack {
-                NavigationLink(destination: AlarmSettingsView(glucoseUnit: self.glucoseUnit)) {
-                    SettingsItem(title: "Alarms", detail: .constant(""))
-                }
-            }
             ZStack {
                 NavigationLink(destination: GlucoseSettingsView(glucoseUnit: self.glucoseUnit)) {
                     SettingsItem(title: "Glucose Settings", detail: .constant(""))
@@ -339,7 +326,6 @@ struct SettingsView: View {
 
     var overview: some View {
         List {
-            snoozeSection
             measurementSection
 //            if !glucoseMeasurement.predictionDate.isEmpty{
 //                predictionSection
