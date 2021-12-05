@@ -881,8 +881,8 @@ Enact a temp Basal or a temp target */
   Infotexts from openaps.docs and androidaps.docs
   FreeAPS X
 */
-/* ”Rewind Resets Autosens” */
 
+/* ”Rewind Resets Autosens” */
 "This feature, enabled by default, resets the autosens ratio to neutral when you rewind your pump, on the assumption that this corresponds to a probable site change. Autosens will begin learning sensitivity anew from the time of the rewind, which may take up to 6 hours. If you usually rewind your pump independently of site changes, you may want to consider disabling this feature." = "Denna funktion, på som standard, återställer 'Autosens' kvot till neutralt läge vid reservoarbyten, då det antas att du vid detta tillfälle även byter infusionskanyl. 'Autosens' kommer nu börja lära sig din insulinkänslighet på nytt, vilket kan ta upp till 6 timmar. Om du vanligtvis gör reservoarbyten oberoende av kanylbyten, kanske du ska överväga att inaktivera denna funktion.";
 
 /* ”High Temptarget Raises Sensitivity" */
