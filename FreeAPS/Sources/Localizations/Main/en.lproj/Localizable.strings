@@ -483,9 +483,6 @@ Enact a temp Basal or a temp target */
 "Remove All" = "Remove All";
 
 /* */
-"Calibrations" = "Calibrations";
-
-/* */
 "About the Process"= "About the Process";
 
 /* */
@@ -670,7 +667,7 @@ Enact a temp Basal or a temp target */
 
 /* */
 "Delete CGM" = "Delete CGM";
-    
+
 /* */
 "Are you sure you want to remove this cgm from loop?" = "Are you sure you want to remove this cgm from loop?";
 

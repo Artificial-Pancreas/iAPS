@@ -670,6 +670,7 @@ Enact a temp Basal or a temp target */
 
 /* */
 "Delete CGM" = "Radera CGM";
+
 /* */
 "Are you sure you want to remove this cgm from loop?" = "Är du säker på att du vill ta bort denna CGM från FreeAPS X?";
 

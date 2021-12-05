@@ -670,6 +670,7 @@ Enact a temp Basal or a temp target */
 
 /* */
 "Delete CGM" = "Удалить CGM";
+
 /* */
 "Are you sure you want to remove this cgm from loop?" = "Вы уверены, что хотите удалить этот CGM?";
 
