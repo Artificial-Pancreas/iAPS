@@ -4,6 +4,8 @@ import Swinject
 
 protocol GlucoseStorage {
     func storeGlucose(_ glucose: [BloodGlucose])
+    func removeGlucose(byID id: String)
+    func removeGlucose(byIDCollection ids: [String])
     func recent() -> [BloodGlucose]
     func syncDate() -> Date
     func filterTooFrequentGlucose(_ glucose: [BloodGlucose], at: Date) -> [BloodGlucose]
@@ -42,6 +44,40 @@ final class BaseGlucoseStorage: GlucoseStorage, Injectable {
                 DispatchQueue.main.async {
                     self.broadcaster.notify(GlucoseObserver.self, on: .main) {
                         $0.glucoseDidUpdate(glucose.reversed())
+                    }
+                }
+            }
+        }
+    }
+
+    func removeGlucose(byIDCollection ids: [String]) {
+        processQueue.sync {
+            let file = OpenAPS.Monitor.glucose
+            self.storage.transaction { storage in
+                let BGInStorage = storage.retrieve(file, as: [BloodGlucose].self)
+                let filteredBG = BGInStorage?.filter { !ids.contains($0.id) } ?? []
+                storage.save(filteredBG, as: file)
+
+                DispatchQueue.main.async {
+                    self.broadcaster.notify(GlucoseObserver.self, on: .main) {
+                        $0.glucoseDidUpdate(filteredBG.reversed())
+                    }
+                }
+            }
+        }
+    }
+
+    func removeGlucose(byID id: String) {
+        processQueue.sync {
+            let file = OpenAPS.Monitor.glucose
+            self.storage.transaction { storage in
+                let BGInStorage = storage.retrieve(file, as: [BloodGlucose].self)
+                let filteredBG = BGInStorage?.filter { $0.id != id } ?? []
+                storage.save(filteredBG, as: file)
+
+                DispatchQueue.main.async {
+                    self.broadcaster.notify(GlucoseObserver.self, on: .main) {
+                        $0.glucoseDidUpdate(filteredBG.reversed())
                     }
                 }
             }
