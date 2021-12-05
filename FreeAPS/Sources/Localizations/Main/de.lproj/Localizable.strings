@@ -876,7 +876,6 @@ Enact a temp Basal or a temp target */
 /* Restored state message */
 "Bluetooth State restored (APS restarted?). Found %d peripherals, and connected to %@ with identifier %@" = "Bluetooth-Status wiederhergestellt (APS neu gestartet?). %d Peripheriegeräte gefunden und mit %@ mit der Kennung %@ verbunden";
 
-
 /*
   Infotexts from openaps.docs and androidaps.docs
   FreeAPS X
