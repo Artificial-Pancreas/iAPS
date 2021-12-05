@@ -9,6 +9,7 @@ enum CGMType: String, JSON, CaseIterable, Identifiable {
     case dexcomG5
     case simulator
     case libreTransmitter
+    case enlite
 
     var displayName: String {
         switch self {
@@ -24,12 +25,15 @@ enum CGMType: String, JSON, CaseIterable, Identifiable {
             return NSLocalizedString("Glucose Simulator", comment: "Glucose Simulator CGM type")
         case .libreTransmitter:
             return NSLocalizedString("Libre Transmitter", comment: "Libre Transmitter type")
+        case .enlite:
+            return "Medtronic Enlite"
         }
     }
 
     var appURL: URL? {
         switch self {
-        case .nightscout:
+        case .enlite,
+             .nightscout:
             return nil
         case .xdrip:
             return URL(string: "xdripswift://")!
