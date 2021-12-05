@@ -19,15 +19,6 @@ struct CarbsView: View {
         GeometryReader { geo in
             VStack(spacing: 16) {
                 HStack {
-<<<<<<< HEAD
-                    Image("carbs", bundle: nil)
-                        .renderingMode(.template)
-                        .resizable()
-                        .frame(width: 24, height: 24)
-                        .foregroundColor(.loopGreen)
-                    Text("Add Carbs ")
-
-=======
                     Button {
                         WKInterfaceDevice.current().play(.click)
                         let newValue = amount - 5
@@ -70,7 +61,6 @@ struct CarbsView: View {
                             .foregroundColor(.loopGreen)
                         Text("Add Carbs ")
                     }
->>>>>>> 1e5c754... 38mm watch support and fixed bolus rounding
                 }
                 .disabled(amount <= 0)
             }.frame(maxHeight: .infinity)

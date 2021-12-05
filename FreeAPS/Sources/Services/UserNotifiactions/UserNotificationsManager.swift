@@ -83,7 +83,7 @@ final class BaseUserNotificationsManager: NSObject, UserNotificationsManager, In
                 titles.append(NSLocalizedString("(Snoozed)", comment: "(Snoozed)"))
             } else {
                 content.sound = .default
-                self.playSound()
+                self.playSoundIfNeeded()
             }
 
             titles.append(String(format: NSLocalizedString("Carbs required: %d g", comment: "Carbs required"), carbs))
@@ -313,7 +313,7 @@ final class BaseUserNotificationsManager: NSObject, UserNotificationsManager, In
     static let soundID: UInt32 = 1336
     private static var stopPlaying = false
 
-    private func playSound(times: Int = 3) {
+    private func playSound(times: Int = 1) {
         guard times > 0, !Self.stopPlaying else {
             return
         }

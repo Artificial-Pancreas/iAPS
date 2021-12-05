@@ -11,7 +11,6 @@ import HealthKit
 
 extension UserDefaults {
     private enum Key: String {
-        case glucoseSchedules = "no.bjorninge.glucoseschedules"
         case mmAlertLowBatteryWarning = "no.bjorninge.mmLowBatteryWarning"
         case mmAlertInvalidSensorDetected = "no.bjorninge.mmInvalidSensorDetected"
         case mmAlertNewSensorDetected = "no.bjorninge.mmNewSensorDetected"
@@ -106,38 +105,12 @@ extension UserDefaults {
         }
     }
 
-    var enabledSchedules: [GlucoseSchedule]? {
-        glucoseSchedules?.schedules.compactMap({ schedule -> GlucoseSchedule? in
-            if schedule.enabled ?? false {
-                return schedule
-            }
-            return nil
-        })
-    }
     var snoozedUntil: Date? {
         get {
             object(forKey: Key.mmSnoozedUntil.rawValue) as? Date
         }
         set {
             set(newValue, forKey: Key.mmSnoozedUntil.rawValue)
-        }
-    }
-    var glucoseSchedules: GlucoseScheduleList? {
-        get {
-            if let savedGlucoseSchedules = object(forKey: Key.glucoseSchedules.rawValue) as? Data {
-                let decoder = JSONDecoder()
-                if let loadedGlucoseSchedules = try? decoder.decode(GlucoseScheduleList.self, from: savedGlucoseSchedules) {
-                    return loadedGlucoseSchedules
-                }
-            }
-
-            return GlucoseScheduleList()
-        }
-        set {
-            let encoder = JSONEncoder()
-            if let val = newValue, let encoded = try? encoder.encode(val) {
-                set(encoded, forKey: Key.glucoseSchedules.rawValue)
-            }
         }
     }
 }
