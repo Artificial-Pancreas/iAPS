@@ -151,7 +151,7 @@ struct SettingsView: View {
         overview
             //.navigationViewStyle(StackNavigationViewStyle())
             .navigationBarTitle(Text("Libre Bluetooth"), displayMode: .inline)
-            .navigationBarItems(trailing: dismissButton)
+            .navigationBarItems(leading: dismissButton)
             .onAppear{
                 print("dabear:: settingsview appeared")
                 //While loop does this request on our behalf, freeaps does not
@@ -269,7 +269,7 @@ struct SettingsView: View {
             // to notify the parent to close the cgmviewcontrollers navigation
             notifyComplete.notify()
         }) {
-            Text("Done")
+            Text("Close")
         }
     }
 
