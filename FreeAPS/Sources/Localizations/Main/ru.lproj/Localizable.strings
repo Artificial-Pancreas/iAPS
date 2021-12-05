@@ -875,10 +875,10 @@ Enact a temp Basal or a temp target */
 "Apple Health" = "Apple Health";
 
 /* */
-"Connect to Apple Health" = "Соединить с Apple Health";
+"Connect to Apple Health" = "Подключить к Apple Health";
 
 /* Show when have not permissions for writing to Health */
-"For write data to Apple Health you must give permissions in Settings > Health > Data Access" = "Для записи данных в Apple Health необходимо предоставить разрешения в Настройки > Здоровье > Доступ к данным";
+"For write data to Apple Health you must give permissions in Settings > Health > Data Access" = "Чтобы записывать данные в Apple Health вам необходимо дать соответствующие разрешения, перейдя к меню Настройки > Здоровье > Доступ к данным";
 /* --------------------------------------------
 
 
@@ -997,12 +997,3 @@ Enact a temp Basal or a temp target */
 
 /* "Noisy CGM Target Multiplier" */
 "Defaults to 1.3. Increase target by this amount when looping off raw/noisy CGM data" = "По умолчанию 1,3. Увеличивает цель на эту величину, когда цикл отключается из за шума сенсора";
-
-/* */
-"Apple Health" = "Apple Health";
-
-/* */
-"Connect to Apple Health" = "Подключить к Apple Health";
-
-/* Show when have not permissions for writing to Health */
-"For write data to Apple Health you must give permissions in Settings > Health > Data Access" = "Чтобы записывать данные в Apple Health вам необходимо дать соответствующие разрешения, перейдя к меню Настройки > Здоровье > Доступ к данным";
