@@ -859,7 +859,6 @@ Enact a temp Basal or a temp target */
 
 /* Headers for settings ------------------- */
 
-
 "OpenAPS main settings" = "OpenAPS main settings";
 
 "OpenAPS SMB settings" = "OpenAPS SMB settings";
@@ -875,12 +874,25 @@ Enact a temp Basal or a temp target */
 /* Restored state message */
 "Bluetooth State restored (APS restarted?). Found %d peripherals, and connected to %@ with identifier %@" = "Bluetooth State restored (APS restarted?). Found %d peripherals, and connected to %@ with identifier %@";
 
+
+/* HealthKit intergration ------------------*/
+/* */
+"Apple Health" = "Apple Health";
+
+/* */
+"Connect to Apple Health" = "Connect to Apple Health";
+
+/* Show when have not permissions for writing to Health */
+"For write data to Apple Health you must give permissions in Settings > Health > Data Access" = "For write data to Apple Health you must give permissions in Settings > Health > Data Access";
+/* -------------------------------------------*/
 /*
   Infotexts from openaps.docs and androidaps.docs
   FreeAPS X
 */
-
 /* ”Rewind Resets Autosens” */
+
+
+
 "This feature, enabled by default, resets the autosens ratio to neutral when you rewind your pump, on the assumption that this corresponds to a probable site change. Autosens will begin learning sensitivity anew from the time of the rewind, which may take up to 6 hours. If you usually rewind your pump independently of site changes, you may want to consider disabling this feature." = "Cette fonctionnalité, activée par défaut, réinitialise le ratio autosens à neutre lorsque vous changez votre pompe/site en se basant sur l'hypothèse que cela correspond à un changement probable de site. L’Autosens reprendra l’apprentissage de la sensibilité à partir du changement de site, ce qui peut prendre jusqu’à 6 heures. Si vous ré-initialisez votre pompe indépendamment d'un changement de site, vous pouvez envisager de désactiver cette fonctionnalité.";
 
 /* ”High Temptarget Raises Sensitivity" */

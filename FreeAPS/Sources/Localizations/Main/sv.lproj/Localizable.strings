@@ -25,8 +25,7 @@
 /*  */
 "Insulin recommended" = "Rekommenderad insulindos";
 
-/* Insulin required (insulinReq)
- */
+/*  */
 "Insulin required" = "Insulin som krävs";
 
 /* Bolus screen */
@@ -860,7 +859,6 @@ Enact a temp Basal or a temp target */
 
 /* Headers for settings ------------------- */
 
-
 "OpenAPS main settings" = "OpenAPS huvudsakliga inställningar";
 
 "OpenAPS SMB settings" = "OpenAPS SMB-inställningar";
@@ -876,12 +874,25 @@ Enact a temp Basal or a temp target */
 /* Restored state message */
 "Bluetooth State restored (APS restarted?). Found %d peripherals, and connected to %@ with identifier %@" = "Bluetooth-status återställd (APS startades om?). Hittade %d perifera enheter anslutna till %@ med identifieraren %@";
 
+
+/* HealthKit intergration ------------------*/
+/* */
+"Apple Health" = "Apple Hälsa";
+
+/* */
+"Connect to Apple Health" = "Anslut till Apple Hälsa";
+
+/* Show when have not permissions for writing to Health */
+"For write data to Apple Health you must give permissions in Settings > Health > Data Access" = "För att kunna skriva data till Apple Hälsa måste du först ge din tillåtelse i Inställningar > Hälsa > Datatillgång och enheter";
+/* -------------------------------------------*/
 /*
   Infotexts from openaps.docs and androidaps.docs
   FreeAPS X
 */
-
 /* ”Rewind Resets Autosens” */
+
+
+
 "This feature, enabled by default, resets the autosens ratio to neutral when you rewind your pump, on the assumption that this corresponds to a probable site change. Autosens will begin learning sensitivity anew from the time of the rewind, which may take up to 6 hours. If you usually rewind your pump independently of site changes, you may want to consider disabling this feature." = "Denna funktion, på som standard, återställer 'Autosens' kvot till neutralt läge vid reservoarbyten, då det antas att du vid detta tillfälle även byter infusionskanyl. 'Autosens' kommer nu börja lära sig din insulinkänslighet på nytt, vilket kan ta upp till 6 timmar. Om du vanligtvis gör reservoarbyten oberoende av kanylbyten, kanske du ska överväga att inaktivera denna funktion.";
 
 /* ”High Temptarget Raises Sensitivity" */

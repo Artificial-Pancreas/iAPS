@@ -859,7 +859,6 @@ Enact a temp Basal or a temp target */
 
 /* Headers for settings ------------------- */
 
-
 "OpenAPS main settings" = "Основные настройки OpenAPS";
 
 "OpenAPS SMB settings" = "Настройки OpenAPS SMB";
@@ -875,12 +874,25 @@ Enact a temp Basal or a temp target */
 /* Restored state message */
 "Bluetooth State restored (APS restarted?). Found %d peripherals, and connected to %@ with identifier %@" = "Bluetooth состояние восстановлено (APS перезапущен?). Найдено %d периферийных устройств и подключено к %@ с идентификатором %@";
 
+
+/* HealthKit intergration ------------------*/
+/* */
+"Apple Health" = "Apple Health";
+
+/* */
+"Connect to Apple Health" = "Соединить с Apple Health";
+
+/* Show when have not permissions for writing to Health */
+"For write data to Apple Health you must give permissions in Settings > Health > Data Access" = "Для записи данных в Apple Health необходимо предоставить разрешения в Настройки > Здоровье > Доступ к данным";
+/* -------------------------------------------*/
 /*
   Infotexts from openaps.docs and androidaps.docs
   FreeAPS X
 */
-
 /* ”Rewind Resets Autosens” */
+
+
+
 "This feature, enabled by default, resets the autosens ratio to neutral when you rewind your pump, on the assumption that this corresponds to a probable site change. Autosens will begin learning sensitivity anew from the time of the rewind, which may take up to 6 hours. If you usually rewind your pump independently of site changes, you may want to consider disabling this feature." = "Эта функция (включена по умолчанию), сбрасывает Автосенс к нейтральному при сбросе помпы, предполагая, что это связано со сменой канюли. Автосенс начнет учиться заново со времени сброса, что может занять до 6 часов. Если вы сбрасываете помпу отдельно от смены канюли, вам стоит отключить эту функцию.";
 
 /* ”High Temptarget Raises Sensitivity" */
