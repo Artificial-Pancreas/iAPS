@@ -887,6 +887,7 @@ Enact a temp Basal or a temp target */
 "For write data to Apple Health you must give permissions in Settings > Health > Data Access" = "For write data to Apple Health you must give permissions in Settings > Health > Data Access";
 /* -------------------------------------------*/
 
+
 /*
   Infotexts from openaps.docs and androidaps.docs
   FreeAPS X
