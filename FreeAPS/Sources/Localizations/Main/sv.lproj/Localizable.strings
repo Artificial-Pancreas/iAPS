@@ -25,7 +25,8 @@
 /*  */
 "Insulin recommended" = "Rekommenderad insulindos";
 
-/*  */
+/* Insulin required (insulinReq)
+ */
 "Insulin required" = "Insulin som krävs";
 
 /* Bolus screen */
@@ -842,7 +843,7 @@ Enact a temp Basal or a temp target */
 "Carbs required: %d g" = "Kolhydrater som krävs: %d g";
 
 /* */
-"To prevent LOW required %d g of carbs" = "För att förhindra lågt blodsocker krävs %d g kolhydrater";
+"To prevent LOW required %d g of carbs" = "För att förhindra ett lågt blodsocker krävs uppskattningsvis %d g kolhydrater";
 
 /* */
 "FreeAPS X not active" = "FreeAPS X är inte aktiv";
