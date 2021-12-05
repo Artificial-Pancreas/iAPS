@@ -2,7 +2,7 @@
   Localizable.strings
   FreeAPS X
 */
-
+/* -------------------------------- */
 /* Bolus screen when adding insulin */
 "Add insulin without actually bolusing" = "Add insulin without actually bolusing";
 
@@ -413,8 +413,8 @@ Połączono z Nightscout!";
 "Temp Targets" = "Temp Targets";
 
 
-/* Calendar and Libre transmitter settings --------------*/
-
+/* Calendar and Libre transmitter settings ---------------
+ */
 /* */
 "Configure Libre Transmitter" = "Configure Libre Transmitter";
 
@@ -483,9 +483,6 @@ Połączono z Nightscout!";
 
 /* */
 "Remove All" = "Remove All";
-
-/* */
-"Calibrations" = "Calibrations";
 
 /* */
 "About the Process" = "About the Process";
@@ -860,8 +857,7 @@ Połączono z Nightscout!";
 "Backfill glucose" = "Backfill glucose";
 
 
-/* Headers for settings ------------------- */
-
+/* Headers for settings ----------------------- */
 "OpenAPS main settings" = "OpenAPS main settings";
 
 "OpenAPS SMB settings" = "OpenAPS SMB settings";
@@ -870,15 +866,13 @@ Połączono z Nightscout!";
 
 "OpenAPS other settings" = "OpenAPS other settings";
 
-
 /* Glucose Simulator CGM */
 "Glucose Simulator" = "Glucose Simulator";
 
 /* Restored state message */
 "Bluetooth State restored (APS restarted?). Found %d peripherals, and connected to %@ with identifier %@" = "Bluetooth State restored (APS restarted?). Found %d peripherals, and connected to %@ with identifier %@";
 
-
-/* HealthKit intergration ------------------*/
+/* HealthKit intergration --------------------*/
 /* */
 "Apple Health" = "Apple Health";
 
@@ -887,14 +881,14 @@ Połączono z Nightscout!";
 
 /* Show when have not permissions for writing to Health */
 "For write data to Apple Health you must give permissions in Settings > Health > Data Access" = "For write data to Apple Health you must give permissions in Settings > Health > Data Access";
-/* -------------------------------------------*/
+/* --------------------------------------------
 
-/*
+
   Infotexts from openaps.docs and androidaps.docs
   FreeAPS X
 */
-
 /* ”Rewind Resets Autosens” */
+
 "This feature, enabled by default, resets the autosens ratio to neutral when you rewind your pump, on the assumption that this corresponds to a probable site change. Autosens will begin learning sensitivity anew from the time of the rewind, which may take up to 6 hours. If you usually rewind your pump independently of site changes, you may want to consider disabling this feature." = "This feature, enabled by default, resets the autosens ratio to neutral when you rewind your pump, on the assumption that this corresponds to a probable site change. Autosens will begin learning sensitivity anew from the time of the rewind, which may take up to 6 hours. If you usually rewind your pump independently of site changes, you may want to consider disabling this feature.";
 
 /* ”High Temptarget Raises Sensitivity" */

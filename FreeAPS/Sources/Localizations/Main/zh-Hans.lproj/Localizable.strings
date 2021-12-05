@@ -2,7 +2,7 @@
   Localizable.strings
   FreeAPS X
 */
-
+/* -------------------------------- */
 /* Bolus screen when adding insulin */
 "Add insulin without actually bolusing" = "仅添加胰岛素 没有实际注射";
 
@@ -411,8 +411,8 @@ Enact a temp Basal or a temp target */
 "Temp Targets" = "Temp Targets";
 
 
-/* Calendar and Libre transmitter settings --------------*/
-
+/* Calendar and Libre transmitter settings ---------------
+ */
 /* */
 "Configure Libre Transmitter" = "Configure Libre Transmitter";
 
@@ -481,9 +481,6 @@ Enact a temp Basal or a temp target */
 
 /* */
 "Remove All" = "Remove All";
-
-/* */
-"Calibrations" = "Calibrations";
 
 /* */
 "About the Process" = "About the Process";
@@ -858,8 +855,7 @@ Enact a temp Basal or a temp target */
 "Backfill glucose" = "Backfill glucose";
 
 
-/* Headers for settings ------------------- */
-
+/* Headers for settings ----------------------- */
 "OpenAPS main settings" = "OpenAPS main settings";
 
 "OpenAPS SMB settings" = "OpenAPS SMB settings";
@@ -868,15 +864,13 @@ Enact a temp Basal or a temp target */
 
 "OpenAPS other settings" = "OpenAPS other settings";
 
-
 /* Glucose Simulator CGM */
 "Glucose Simulator" = "Glucose Simulator";
 
 /* Restored state message */
 "Bluetooth State restored (APS restarted?). Found %d peripherals, and connected to %@ with identifier %@" = "Bluetooth State restored (APS restarted?). Found %d peripherals, and connected to %@ with identifier %@";
 
-
-/* HealthKit intergration ------------------*/
+/* HealthKit intergration --------------------*/
 /* */
 "Apple Health" = "Apple Health";
 
@@ -885,14 +879,14 @@ Enact a temp Basal or a temp target */
 
 /* Show when have not permissions for writing to Health */
 "For write data to Apple Health you must give permissions in Settings > Health > Data Access" = "For write data to Apple Health you must give permissions in Settings > Health > Data Access";
-/* -------------------------------------------*/
+/* --------------------------------------------
 
-/*
+
   Infotexts from openaps.docs and androidaps.docs
   FreeAPS X
 */
-
 /* ”Rewind Resets Autosens” */
+
 "This feature, enabled by default, resets the autosens ratio to neutral when you rewind your pump, on the assumption that this corresponds to a probable site change. Autosens will begin learning sensitivity anew from the time of the rewind, which may take up to 6 hours. If you usually rewind your pump independently of site changes, you may want to consider disabling this feature." = "该功能默认启用，当复位胰岛素泵时，Autosens参数会重置为中性，这基于复位胰岛素泵是您会更换管路部位的假设。Autosens将会在胰岛素泵复位后开始重新学习灵敏度，这可能需要6个小时。如果你通常复位泵时并没有同时更换部位，你可能要考虑禁用这一功能。";
 
 /* ”High Temptarget Raises Sensitivity" */

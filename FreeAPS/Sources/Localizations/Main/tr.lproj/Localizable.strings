@@ -2,7 +2,7 @@
   Localizable.strings
   FreeAPS X
 */
-
+/* -------------------------------- */
 /* Bolus screen when adding insulin */
 "Add insulin without actually bolusing" = "Gerçekten bolus yapmadan insülin ekleyin";
 
@@ -411,8 +411,8 @@ Enact a temp Basal or a temp target */
 "Temp Targets" = "Geçici Hedefleri";
 
 
-/* Calendar and Libre transmitter settings --------------*/
-
+/* Calendar and Libre transmitter settings ---------------
+ */
 /* */
 "Configure Libre Transmitter" = "Libre Vericiyi Yapılandır";
 
@@ -481,9 +481,6 @@ Enact a temp Basal or a temp target */
 
 /* */
 "Remove All" = "Tümünü kaldır";
-
-/* */
-"Calibrations" = "Kalibrasyonlar";
 
 /* */
 "About the Process" = "Süreç Hakkında";
@@ -858,8 +855,7 @@ Enact a temp Basal or a temp target */
 "Backfill glucose" = "Geri doldurma glikoz";
 
 
-/* Headers for settings ------------------- */
-
+/* Headers for settings ----------------------- */
 "OpenAPS main settings" = "OpenAPS ana ayarları";
 
 "OpenAPS SMB settings" = "OpenAPS SMB ayarları";
@@ -868,31 +864,29 @@ Enact a temp Basal or a temp target */
 
 "OpenAPS other settings" = "OpenAPS diğer ayarları";
 
-
 /* Glucose Simulator CGM */
 "Glucose Simulator" = "Glikoz Simülatörü";
 
 /* Restored state message */
 "Bluetooth State restored (APS restarted?). Found %d peripherals, and connected to %@ with identifier %@" = "Bluetooth Durumu geri yüklendi (APS yeniden başlatıldı mı?). %d çevre birimi bulundu ve %@ tanımlayıcısı ile %@'a bağlandı";
 
-
-/* HealthKit intergration ------------------*/
+/* HealthKit intergration --------------------*/
 /* */
 "Apple Health" = "Apple Health";
 
 /* */
-"Connect to Apple Health" = "Connect to Apple Health";
+"Connect to Apple Health" = "Apple Health'e bağlan";
 
 /* Show when have not permissions for writing to Health */
-"For write data to Apple Health you must give permissions in Settings > Health > Data Access" = "For write data to Apple Health you must give permissions in Settings > Health > Data Access";
-/* -------------------------------------------*/
+"For write data to Apple Health you must give permissions in Settings > Health > Data Access" = "Apple Health'e veri yazmak için Ayarlar > Sağlık > Veri Erişimi'nde izinler vermelisiniz";
+/* --------------------------------------------
 
-/*
+
   Infotexts from openaps.docs and androidaps.docs
   FreeAPS X
 */
-
 /* ”Rewind Resets Autosens” */
+
 "This feature, enabled by default, resets the autosens ratio to neutral when you rewind your pump, on the assumption that this corresponds to a probable site change. Autosens will begin learning sensitivity anew from the time of the rewind, which may take up to 6 hours. If you usually rewind your pump independently of site changes, you may want to consider disabling this feature." = "Varsayılan olarak etkinleştirilen bu özellik, pompanızı geri sardığınızda, bunun olası bir yer değişikliğine karşılık geldiği varsayımıyla otoduyarlılık oranını nötr olarak sıfırlar. Otoduyarlılık, 6 saate kadar sürebilen geri sarma zamanından itibaren hassasiyeti yeniden öğrenmeye başlayacaktır. Pompanızı genellikle site değişikliklerinden bağımsız olarak geri sarıyorsanız, bu özelliği devre dışı bırakmayı düşünebilirsiniz.";
 
 /* ”High Temptarget Raises Sensitivity" */
