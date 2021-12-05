@@ -402,13 +402,13 @@ Enact a temp Basal or a temp target */
 "Other" = "Altro";
 
 /* Whatch app alert */
-"Set temp targets presets on iPhone first" = "Set temp targets presets on iPhone first";
+"Set temp targets presets on iPhone first" = "Imposta prima le pre-impostazioni degli obiettivi temporanei sull'iPhone";
 
 /* Updating Watch app */
-"Updating..." = "Updating...";
+"Updating..." = "Aggiornando...";
 
 /* Header for Temp targets in Watch app */
-"Temp Targets" = "Temp Targets";
+"Temp Targets" = "Obiettivi Temporanei";
 
 
 /* Calendar and Libre transmitter settings ---------------
@@ -486,7 +486,7 @@ Enact a temp Basal or a temp target */
 "About the Process" = "Sul Processo";
 
 /* */
-"Please make sure that your Libre 2 sensor is already activated and finished warming up. If you have other apps connecting to the sensor via bluetooth, these need to be shut down or uninstalled. \n\n You can only have one app communicating with the sensor via bluetooth. Then press the \"pariring and connection\" button below to start the process. Please note that the bluetooth connection might take up to a couple of minutes before it starts working." = "Please make sure that your Libre 2 sensor is already activated and finished warming up. If you have other apps connecting to the sensor via bluetooth, these need to be shut down or uninstalled. \n\n You can only have one app communicating with the sensor via bluetooth. Then press the \"pariring and connection\" button below to start the process. Please note that the bluetooth connection might take up to a couple of minutes before it starts working.";
+"Please make sure that your Libre 2 sensor is already activated and finished warming up. If you have other apps connecting to the sensor via bluetooth, these need to be shut down or uninstalled. \n\n You can only have one app communicating with the sensor via bluetooth. Then press the \"pariring and connection\" button below to start the process. Please note that the bluetooth connection might take up to a couple of minutes before it starts working." = "Sei pregato di assicurarti che il tuo sensore di Libre 2 sia giù attivato e abbia terminato il riscaldamento. Se hai altre app connesse al sensore via bluetooth, devono esser arrestate o disinstallate. \n\n Puoi avere solo un'app in comunicazione con il sensore via bluetooth. Poi premi il pulsante \"abbinamento e connessione\" di seguito per avviare il processo. Sei pregato di notare che la connessione bluetooth potrebbe impiegare fino a un paio di minuti prima di iniziare a funzionare.";
 
 /* */
 "Pairinginfo" = "Pairinginfo";
@@ -516,22 +516,22 @@ Enact a temp Basal or a temp target */
 "Bluetooth Power Off" = "Bluetooth Disabilitato";
 
 /* Please turn on Bluetooth */
-"Please turn on Bluetooth" = "Please turn on Bluetooth";
+"Please turn on Bluetooth" = "Sei pregato di attivare il Bluetooth";
 
 /* No Libre Transmitter Selected */
-"No Libre Transmitter Selected" = "No Libre Transmitter Selected";
+"No Libre Transmitter Selected" = "Nessun Trasmettitore di Libre Selezionato";
 
 /* Delete Transmitter and start anew. */
-"Delete CGMManager and start anew. Your libreoopweb credentials will be preserved" = "Delete CGMManager and start anew. Your libreoopweb credentials will be preserved";
+"Delete CGMManager and start anew. Your libreoopweb credentials will be preserved" = "Elimina CGMManager e ricomincia. Le tue credenziali di libreoopweb saranno conservate";
 
 /* Invalid libre checksum */
-"Invalid libre checksum" = "Invalid libre checksum";
+"Invalid libre checksum" = "Checksum di Libre non valido";
 
 /* Libre sensor was incorrectly read, CRCs were not valid */
-"Libre sensor was incorrectly read, CRCs were not valid" = "Libre sensor was incorrectly read, CRCs were not valid";
+"Libre sensor was incorrectly read, CRCs were not valid" = "Il sensore di Libre è stato letto erroneamente, I CRC non erano validi";
 
 /* Glucose */
-"Glucose" = "Glucose";
+"Glucose" = "Glucosio";
 
 /* LOWALERT! */
 "LOWALERT!" = "LOWALERT!";
@@ -540,58 +540,58 @@ Enact a temp Basal or a temp target */
 "HIGHALERT!" = "HIGHALERT!";
 
 /* (Snoozed)*/
-"(Snoozed)" = "(Snoozed)";
+"(Snoozed)" = "(Posticipato)";
 
 /* Glucose: %@ */
-"Glucose: %@" = "Glucose: %@";
+"Glucose: %@" = "Glucosio: %@";
 
 /* Transmitter: %@%% */
-"Transmitter: %@%%" = "Transmitter: %@%%";
+"Transmitter: %@%%" = "Trasmettitore: %@%%";
 
 /* No Sensor Detected */
-"No Sensor Detected" = "No Sensor Detected";
+"No Sensor Detected" = "Nessun Sensore Rilevato";
 
 /* This might be an intermittent problem, but please check that your transmitter is tightly secured over your sensor */
-"This might be an intermittent problem, but please check that your transmitter is tightly secured over your sensor" = "This might be an intermittent problem, but please check that your transmitter is tightly secured over your sensor";
+"This might be an intermittent problem, but please check that your transmitter is tightly secured over your sensor" = "Questo potrebbe essere un problema intermittente, ma sei pregato di verificare che il tuo trasmettitore sia strettamente protetto sul tuo sensore";
 
 /* New Sensor Detected */
-"New Sensor Detected" = "New Sensor Detected";
+"New Sensor Detected" = "Nuovo Sensore Rilevato";
 
 /* Please wait up to 30 minutes before glucose readings are available! */
-"Please wait up to 30 minutes before glucose readings are available!" = "Please wait up to 30 minutes before glucose readings are available!";
+"Please wait up to 30 minutes before glucose readings are available!" = "Sei pregato di attendere fino a 30 minuti prima che le letture del glucosio siano disponibili!";
 
 /* Invalid Glucose sample detected, try again later */
-"Invalid Glucose sample detected, try again later" = "Invalid Glucose sample detected, try again later";
+"Invalid Glucose sample detected, try again later" = "Campione di Glucose non valido rilevato, riprova più tardi";
 
 /* ensor might have temporarily stopped, fallen off or is too cold or too warm */
-"Sensor might have temporarily stopped, fallen off or is too cold or too warm" = "Sensor might have temporarily stopped, fallen off or is too cold or too warm";
+"Sensor might have temporarily stopped, fallen off or is too cold or too warm" = "Il sensore potrebbe essersi interrotto temporaneamente, caduto o troppo freddo o troppo caldo";
 
 /* Invalid Sensor Detected */
-"Invalid Sensor Detected" = "Invalid Sensor Detected";
+"Invalid Sensor Detected" = "Sensore Non Valido Rilevato";
 
 /* Detected sensor seems not to be a libre 1 sensor! */
-"Detected sensor seems not to be a libre 1 sensor!" = "Detected sensor seems not to be a libre 1 sensor!";
+"Detected sensor seems not to be a libre 1 sensor!" = "Il sensore rilevato non sembra essere un sensore Libre 1!";
 
 /* Detected sensor is invalid: %@ */
-"Detected sensor is invalid: %@" = "Detected sensor is invalid: %@";
+"Detected sensor is invalid: %@" = "Sensore rilevato non valido: %@";
 
 /* Low Battery */
-"Low battery" = "Low battery";
+"Low battery" = "Batteria scarica";
 
 /* */
-"Invalid sensor" = "Invalid sensor";
+"Invalid sensor" = "Sensore non valido";
 
 /* */
-"Sensor change" = "Sensor change";
+"Sensor change" = "Cambio sensore";
 
 /* */
-"Sensor expires soon" = "Sensor expires soon";
+"Sensor expires soon" = "Il sensore scade presto";
 
 /* Battery is running low %@, consider charging your %@ device as soon as possible */
-"Battery is running low %@, consider charging your %@ device as soon as possible" = "Battery is running low %@, consider charging your %@ device as soon as possible";
+"Battery is running low %@, consider charging your %@ device as soon as possible" = "Batteria scarsa %@, considera di caricare il tuo dispositivo %@ il prima possibile";
 
 /* Extracting calibrationdata from sensor */
-"Extracting calibrationdata from sensor" = "Extracting calibrationdata from sensor";
+"Extracting calibrationdata from sensor" = "Estraendo i dati di calibrazione dal sensore";
 
 /* Sensor Ending Soon */
 "Sensor Ending Soon" = "Sensor Ending Soon";
@@ -600,43 +600,43 @@ Enact a temp Basal or a temp target */
 "Current Sensor is Ending soon! Sensor Life left in %@" = "Current Sensor is Ending soon! Sensor Life left in %@";
 
 /* */
-"Libre Bluetooth" = "Libre Bluetooth";
+"Libre Bluetooth" = "Bluetooth Libre";
 
 /* */
-"Snooze Alerts" = "Snooze Alerts";
+"Snooze Alerts" = "Posticipa Avvisi";
 
 /* */
-"Last measurement" = "Last measurement";
+"Last measurement" = "Ultima misurazione";
 
 /* */
 "Sensor Footer checksum" = "Sensor Footer checksum";
 
 /* */
-"Last Blood Sugar prediction" = "Last Blood Sugar prediction";
+"Last Blood Sugar prediction" = "Ultima previsione di Zucchero nel Sangue";
 
 /* */
-"CurrentBG" = "CurrentBG";
+"CurrentBG" = "Bg Corrente";
 
 /* */
-"Sensor Info" = "Sensor Info";
+"Sensor Info" = "Info sul Sensore";
 
 /* */
-"Sensor Age" = "Sensor Age";
+"Sensor Age" = "Età del Sensore";
 
 /* */
-"Sensor Age Left" = "Sensor Age Left";
+"Sensor Age Left" = "Età Rimanente del Sensore";
 
 /* */
-"Sensor Endtime" = "Sensor Endtime";
+"Sensor Endtime" = "Termine del Sensore";
 
 /* */
-"Sensor State" = "Sensor State";
+"Sensor State" = "Stato del Sensore";
 
 /* */
-"Sensor Serial" = "Sensor Serial";
+"Sensor Serial" = "Seriale del Sensore";
 
 /* */
-"Transmitter Info" = "Transmitter Info";
+"Transmitter Info" = "Info del Trasmettitore";
 
 /* */
 "Hardware" = "Hardware";
@@ -645,7 +645,7 @@ Enact a temp Basal or a temp target */
 "Firmware" = "Firmware";
 
 /* */
-"Connection State" = "Connection State";
+"Connection State" = "Stato di Connessione";
 
 /* */
 "Transmitter Type" = "Transmitter Type";
