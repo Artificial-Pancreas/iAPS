@@ -99,6 +99,8 @@ extension Home {
                 ).onTapGesture {
                     isStatusPopupPresented = true
                 }.onLongPressGesture {
+                    let impactHeavy = UIImpactFeedbackGenerator(style: .heavy)
+                    impactHeavy.impactOccurred()
                     state.runLoop()
                 }
                 Spacer()

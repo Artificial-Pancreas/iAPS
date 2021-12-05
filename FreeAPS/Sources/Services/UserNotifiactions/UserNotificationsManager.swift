@@ -313,7 +313,7 @@ final class BaseUserNotificationsManager: NSObject, UserNotificationsManager, In
     static let soundID: UInt32 = 1336
     private static var stopPlaying = false
 
-    private func playSound(times: Int = 3) {
+    private func playSound(times: Int = 1) {
         guard times > 0, !Self.stopPlaying else {
             return
         }
