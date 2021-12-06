@@ -62,7 +62,8 @@ final class BaseFetchGlucoseManager: FetchGlucoseManager, Injectable {
                 return Publishers.CombineLatest3(
                     Just(date),
                     Just(self.glucoseStorage.syncDate()),
-                    self.glucoseSource.fetch()
+                    self.glucoseSource.fetch().merge(with: self.healthKitManager.fetch())
+                        .eraseToAnyPublisher()
                 )
                 .eraseToAnyPublisher()
             }

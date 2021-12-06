@@ -240,7 +240,7 @@ final class BaseUserNotificationsManager: NSObject, UserNotificationsManager, In
                     "\n"
                         + String(
                             format: NSLocalizedString("Transmitter: %@%%", comment: "Transmitter: %@%%"),
-                            transmitterBattery
+                            "\(transmitterBattery)"
                         )
                 )
             }
