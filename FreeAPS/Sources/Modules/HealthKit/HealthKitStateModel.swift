@@ -11,6 +11,8 @@ extension AppleHealthKit {
         override func subscribe() {
             useAppleHealth = settingsManager.settings.useAppleHealth
 
+            needShowInformationTextForSetPermissions = healthKitManager.areAllowAllPermissions
+
             subscribeSetting(\.useAppleHealth, on: $useAppleHealth) {
                 useAppleHealth = $0
             } didSet: { [weak self] value in
