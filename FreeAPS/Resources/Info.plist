@@ -40,6 +40,7 @@
 		<string>dexcomcgm</string>
 		<string>diabox</string>
 		<string>spikeapp</string>
+		<string>libredirect</string>
 	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>

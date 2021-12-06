@@ -9,6 +9,7 @@ enum CGMType: String, JSON, CaseIterable, Identifiable {
     case dexcomG5
     case simulator
     case libreTransmitter
+    case glucoseDirect
 
     var displayName: String {
         switch self {
@@ -16,6 +17,8 @@ enum CGMType: String, JSON, CaseIterable, Identifiable {
             return "Nightscout"
         case .xdrip:
             return "xDrip"
+        case .glucoseDirect:
+            return "Glucose Direct"
         case .dexcomG6:
             return "Dexcom G6"
         case .dexcomG5:
@@ -33,6 +36,8 @@ enum CGMType: String, JSON, CaseIterable, Identifiable {
             return nil
         case .xdrip:
             return URL(string: "xdripswift://")!
+        case .glucoseDirect:
+            return URL(string: "libredirect://")!
         case .dexcomG6:
             return URL(string: "dexcomg6://")!
         case .dexcomG5:
@@ -48,6 +53,9 @@ enum CGMType: String, JSON, CaseIterable, Identifiable {
         switch self {
         case .xdrip:
             return URL(string: "https://github.com/JohanDegraeve/xdripswift")!
+        default: return nil
+        case .glucoseDirect:
+            return URL(string: "https://github.com/creepymonster/GlucoseDirectApp")!
         default: return nil
         }
     }
@@ -66,8 +74,10 @@ enum CGMType: String, JSON, CaseIterable, Identifiable {
             return NSLocalizedString("Simple simulator", comment: "Simple simulator")
         case .libreTransmitter:
             return NSLocalizedString(
-                "Direct connection with Libre 1 transmiters or Libre 2",
-                comment: "Direct connection with Libre 1 transmiters or Libre 2"
+                "Direct connection with Libre 1 transmitters or Libre 2",
+                comment: "Direct connection with Libre 1 transmitters or Libre 2"
+        case .glucoseDirect:
+            return NSLocalizedString("Shared app group", comment: "Shared app group")
             )
         }
     }
