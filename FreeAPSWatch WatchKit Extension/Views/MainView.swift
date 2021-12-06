@@ -100,9 +100,8 @@ struct MainView: View {
 
             Spacer()
             Spacer()
-//            Spacer()
         }.padding()
-            .onAppear(perform: start)
+        .onAppear(perform: start)
     }
 
     var buttons: some View {
@@ -160,18 +159,14 @@ struct MainView: View {
     }
 
     private func startHeartRateQuery(quantityTypeIdentifier: HKQuantityTypeIdentifier) {
-        // 1
         let devicePredicate = HKQuery.predicateForObjects(from: [HKDevice.local()])
-        // 2
         let updateHandler: (HKAnchoredObjectQuery, [HKSample]?, [HKDeletedObject]?, HKQueryAnchor?, Error?) -> Void = {
             _, samples, _, _, _ in
-            // 3
             guard let samples = samples as? [HKQuantitySample] else {
                 return
             }
             self.process(samples, type: quantityTypeIdentifier)
         }
-        // 4
         let query = HKAnchoredObjectQuery(
             type: HKObjectType.quantityType(forIdentifier: quantityTypeIdentifier)!,
             predicate: devicePredicate,
@@ -180,7 +175,6 @@ struct MainView: View {
             resultsHandler: updateHandler
         )
         query.updateHandler = updateHandler
-        // 5
         healthStore.execute(query)
     }
 
@@ -193,7 +187,7 @@ struct MainView: View {
             value = Int(lastHeartRate)
         }
     }
-
+    
     private var iobFormatter: NumberFormatter {
         let formatter = NumberFormatter()
         formatter.maximumFractionDigits = 2
