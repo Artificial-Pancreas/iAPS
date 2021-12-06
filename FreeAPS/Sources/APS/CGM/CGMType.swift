@@ -43,4 +43,32 @@ enum CGMType: String, JSON, CaseIterable, Identifiable {
             return URL(string: "freeaps-x://libre-transmitter")!
         }
     }
+
+    var externalLink: URL? {
+        switch self {
+        case .xdrip:
+            return URL(string: "https://github.com/JohanDegraeve/xdripswift")!
+        default: return nil
+        }
+    }
+
+    var subtitle: String {
+        switch self {
+        case .nightscout:
+            return NSLocalizedString("Online or internal server", comment: "Online or internal server")
+        case .xdrip:
+            return NSLocalizedString("Shared app group", comment: "Shared app group")
+        case .dexcomG6:
+            return NSLocalizedString("Native G6 app", comment: "Native G6 app")
+        case .dexcomG5:
+            return NSLocalizedString("Native G5 app", comment: "Native G5 app")
+        case .simulator:
+            return NSLocalizedString("Simple simulator", comment: "Simple simulator")
+        case .libreTransmitter:
+            return NSLocalizedString(
+                "Direct connection with Libre 1 transmiters or Libre 2",
+                comment: "Direct connection with Libre 1 transmiters or Libre 2"
+            )
+        }
+    }
 }
