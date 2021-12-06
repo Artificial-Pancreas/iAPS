@@ -855,8 +855,7 @@ Enact a temp Basal or a temp target */
 
 
 /* Headers for settings ------------------- */
-
-
+/* */
 "OpenAPS main settings" = "OpenAPS huvudsakliga inställningar";
 
 "OpenAPS SMB settings" = "OpenAPS SMB-inställningar";
@@ -875,7 +874,16 @@ Enact a temp Basal or a temp target */
 /* Restored state message */
 "Bluetooth State restored (APS restarted?). Found %d peripherals, and connected to %@ with identifier %@" = "Bluetooth-status återställd (APS startades om?). Hittade %d perifera enheter anslutna till %@ med identifieraren %@";
 
+/* HealthKit intergration --------------------*/
+/* */
+"Apple Health" = "Apple Hälsa";
 
+/* */
+"Connect to Apple Health" = "Anslut till Apple Hälsa";
+
+/* Show when have not permissions for writing to Health */
+"For write data to Apple Health you must give permissions in Settings > Health > Data Access" = "För att kunna skriva data till Apple Hälsa måste du först ge din tillåtelse i Inställningar > Hälsa > Datatillgång och enheter";
+/* --------------------------------------------
 /*
   Infotexts from openaps.docs and androidaps.docs
   FreeAPS X
