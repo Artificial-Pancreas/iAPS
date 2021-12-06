@@ -11,6 +11,7 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
                 displayName: "FreeAPS X",
                 supportedFamilies: [
                     .graphicCorner,
+                    .graphicCircular,
                     .modularSmall,
                     .utilitarianSmall,
                     .circularSmall
