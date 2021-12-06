@@ -205,7 +205,7 @@ final class BaseHealthKitManager: HealthKitManager, Injectable {
                 let removingBGID = samples.map {
                     $0.metadata?["HKMetadataKeySyncIdentifier"] as? String ?? $0.uuid.uuidString
                 }
-                glucoseStorage.removeGlucose(byIDCollection: removingBGID)
+                glucoseStorage.removeGlucose(ids: removingBGID)
             }
         }
         return query
