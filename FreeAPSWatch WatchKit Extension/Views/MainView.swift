@@ -90,18 +90,14 @@ struct MainView: View {
                 Text(iobFormatter.string(from: (state.iob ?? 0) as NSNumber)!).font(.caption2)
                 Text("U").foregroundColor(.insulin)
                 Spacer()
-                HStack {
-                    Text("❤️").font(.system(size: 25))
-                    Text("\(value)")
-                        .fontWeight(.regular)
-                        .font(.system(size: 20)).foregroundColor(Color.red)
-                }
+                Text("❤️" + " \(value)")
+                    .fontWeight(.regular)
+                    .font(.system(size: 20)).foregroundColor(Color.red)
             }
-
             Spacer()
             Spacer()
         }.padding()
-        .onAppear(perform: start)
+            .onAppear(perform: start)
     }
 
     var buttons: some View {
@@ -187,7 +183,7 @@ struct MainView: View {
             value = Int(lastHeartRate)
         }
     }
-    
+
     private var iobFormatter: NumberFormatter {
         let formatter = NumberFormatter()
         formatter.maximumFractionDigits = 2
