@@ -1,3 +1,4 @@
+import HealthKit
 import SwiftDate
 import SwiftUI
 
@@ -11,6 +12,10 @@ struct MainView: View {
     @State var isCarbsActive = false
     @State var isTargetsActive = false
     @State var isBolusActive = false
+
+    private var healthStore = HKHealthStore()
+    let heartRateQuantity = HKUnit(from: "count/min")
+    @State private var value = 0
 
     var body: some View {
         ZStack(alignment: .topLeading) {
@@ -84,12 +89,20 @@ struct MainView: View {
                 Spacer()
                 Text(iobFormatter.string(from: (state.iob ?? 0) as NSNumber)!).font(.caption2)
                 Text("U").foregroundColor(.insulin)
-
                 Spacer()
-                Spacer()
+                HStack {
+                    Text("❤️").font(.system(size: 25))
+                    Text("\(value)")
+                        .fontWeight(.regular)
+                        .font(.system(size: 20)).foregroundColor(Color.red)
+                }
             }
+
+            Spacer()
+            Spacer()
 //            Spacer()
         }.padding()
+            .onAppear(perform: start)
     }
 
     var buttons: some View {
@@ -131,6 +144,53 @@ struct MainView: View {
                     }
                 }
             }
+        }
+    }
+
+    func start() {
+        autorizeHealthKit()
+        startHeartRateQuery(quantityTypeIdentifier: .heartRate)
+    }
+
+    func autorizeHealthKit() {
+        let healthKitTypes: Set = [
+            HKObjectType.quantityType(forIdentifier: HKQuantityTypeIdentifier.heartRate)!
+        ]
+        healthStore.requestAuthorization(toShare: healthKitTypes, read: healthKitTypes) { _, _ in }
+    }
+
+    private func startHeartRateQuery(quantityTypeIdentifier: HKQuantityTypeIdentifier) {
+        // 1
+        let devicePredicate = HKQuery.predicateForObjects(from: [HKDevice.local()])
+        // 2
+        let updateHandler: (HKAnchoredObjectQuery, [HKSample]?, [HKDeletedObject]?, HKQueryAnchor?, Error?) -> Void = {
+            _, samples, _, _, _ in
+            // 3
+            guard let samples = samples as? [HKQuantitySample] else {
+                return
+            }
+            self.process(samples, type: quantityTypeIdentifier)
+        }
+        // 4
+        let query = HKAnchoredObjectQuery(
+            type: HKObjectType.quantityType(forIdentifier: quantityTypeIdentifier)!,
+            predicate: devicePredicate,
+            anchor: nil,
+            limit: HKObjectQueryNoLimit,
+            resultsHandler: updateHandler
+        )
+        query.updateHandler = updateHandler
+        // 5
+        healthStore.execute(query)
+    }
+
+    private func process(_ samples: [HKQuantitySample], type: HKQuantityTypeIdentifier) {
+        var lastHeartRate = 0.0
+        for sample in samples {
+            if type == .heartRate {
+                lastHeartRate = sample.quantity.doubleValue(for: heartRateQuantity)
+            }
+            value = Int(lastHeartRate)
         }
     }
 
