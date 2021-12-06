@@ -54,8 +54,8 @@ final class BaseGlucoseStorage: GlucoseStorage, Injectable {
         processQueue.sync {
             let file = OpenAPS.Monitor.glucose
             self.storage.transaction { storage in
-                let BGInStorage = storage.retrieve(file, as: [BloodGlucose].self)
-                let filteredBG = BGInStorage?.filter { !ids.contains($0.id) } ?? []
+                let bgInStorage = storage.retrieve(file, as: [BloodGlucose].self)
+                let filteredBG = bgInStorage?.filter { !ids.contains($0.id) } ?? []
                 storage.save(filteredBG, as: file)
 
                 DispatchQueue.main.async {
@@ -71,8 +71,8 @@ final class BaseGlucoseStorage: GlucoseStorage, Injectable {
         processQueue.sync {
             let file = OpenAPS.Monitor.glucose
             self.storage.transaction { storage in
-                let BGInStorage = storage.retrieve(file, as: [BloodGlucose].self)
-                let filteredBG = BGInStorage?.filter { $0.id != id } ?? []
+                let bgInStorage = storage.retrieve(file, as: [BloodGlucose].self)
+                let filteredBG = bgInStorage?.filter { $0.id != id } ?? []
                 storage.save(filteredBG, as: file)
 
                 DispatchQueue.main.async {
