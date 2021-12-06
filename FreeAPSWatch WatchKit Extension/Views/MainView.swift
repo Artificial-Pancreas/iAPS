@@ -92,7 +92,7 @@ struct MainView: View {
                 Spacer()
                 Text("❤️" + " \(value)")
                     .fontWeight(.regular)
-                    .font(.system(size: 20)).foregroundColor(Color.red)
+                    .font(.system(size: 18)).foregroundColor(Color.red)
             }
             Spacer()
             Spacer()
