@@ -12,10 +12,10 @@ struct MainView: View {
     @State var isCarbsActive = false
     @State var isTargetsActive = false
     @State var isBolusActive = false
+    @State private var pulse = 0
 
     private var healthStore = HKHealthStore()
     let heartRateQuantity = HKUnit(from: "count/min")
-    @State private var value = 0
 
     var body: some View {
         ZStack(alignment: .topLeading) {
@@ -90,7 +90,7 @@ struct MainView: View {
                 Text(iobFormatter.string(from: (state.iob ?? 0) as NSNumber)!).font(.caption2)
                 Text("U").foregroundColor(.insulin)
                 Spacer()
-                Text("❤️" + " \(value)")
+                Text("❤️" + " \(pulse)")
                     .fontWeight(.regular)
                     .font(.system(size: 18)).foregroundColor(Color.red)
             }
@@ -180,7 +180,7 @@ struct MainView: View {
             if type == .heartRate {
                 lastHeartRate = sample.quantity.doubleValue(for: heartRateQuantity)
             }
-            value = Int(lastHeartRate)
+            pulse = Int(lastHeartRate)
         }
     }
 
