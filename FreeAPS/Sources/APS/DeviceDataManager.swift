@@ -161,7 +161,7 @@ final class BaseDeviceDataManager: DeviceDataManager, Injectable {
     @Persisted(key: "BaseDeviceDataManager.lastFetchGlucoseDate") private var lastFetchGlucoseDate: Date = .distantPast
 
     func fetch() -> AnyPublisher<[BloodGlucose], Never> {
-        guard let medtrinic = pumpManager as? MinimedPumpManager else {
+        guard let medtronic = pumpManager as? MinimedPumpManager else {
             warning(.deviceManager, "Fetch minilink glucose failed: Pump is not Medtronic")
             return Just([]).eraseToAnyPublisher()
         }
@@ -172,7 +172,7 @@ final class BaseDeviceDataManager: DeviceDataManager, Injectable {
 
         return Future<[BloodGlucose], Error> { promise in
             self.processQueue.async {
-                medtrinic.fetchNewDataIfNeeded { result in
+                medtronic.fetchNewDataIfNeeded { result in
                     switch result {
                     case .noData:
                         promise(.success([]))
