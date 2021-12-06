@@ -12,3 +12,9 @@
 
 /* Privacy - Calendars Usage Description */
 "NSCalendarsUsageDescription" = "Kalender brukes til å opprette nye blodsukker-oppføringer.";
+
+/* Privacy - Health Update Usage Description */
+"NSHealthUpdateUsageDescription" = "Helseappen brukes til å lagre blodsukkerdata";
+
+/* Privacy - Health Share Usage Description */
+"NSHealthShareUsageDescription" = "Helseappen brukes til å lagre blodsukkerdata";

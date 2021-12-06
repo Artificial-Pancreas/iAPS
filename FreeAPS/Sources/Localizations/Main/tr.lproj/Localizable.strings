@@ -2,8 +2,8 @@
   Localizable.strings
   FreeAPS X
 */
+/* -------------------------------- */
 /* Bolus screen when adding insulin */
-
 "Add insulin without actually bolusing" = "Gerçekten bolus yapmadan insülin ekleyin";
 
 /* Add insulin from source outside of pump */
@@ -402,18 +402,18 @@ Enact a temp Basal or a temp target */
 "Other" = "Diğeri";
 
 /* Whatch app alert */
-"Set temp targets presets on iPhone first" = "Set temp targets presets on iPhone first";
+"Set temp targets presets on iPhone first" = "Önce iPhone'da geçici hedef ön ayarlarını belirleyin";
 
 /* Updating Watch app */
-"Updating..." = "Updating...";
+"Updating..." = "Güncelleniyor...";
 
 /* Header for Temp targets in Watch app */
-"Temp Targets" = "Temp Targets";
+"Temp Targets" = "Geçici Hedefleri";
 
 
-/* Calendar and Libre transmitter settings --------------*/
+/* Calendar and Libre transmitter settings ---------------
+ */
 /* */
-
 "Configure Libre Transmitter" = "Libre Vericiyi Yapılandır";
 
 /* */
@@ -481,9 +481,6 @@ Enact a temp Basal or a temp target */
 
 /* */
 "Remove All" = "Tümünü kaldır";
-
-/* */
-"Calibrations" = "Kalibrasyonlar";
 
 /* */
 "About the Process" = "Süreç Hakkında";
@@ -670,6 +667,7 @@ Enact a temp Basal or a temp target */
 
 /* */
 "Delete CGM" = "CGM'i Sil";
+
 /* */
 "Are you sure you want to remove this cgm from loop?" = "Bu CGM'i FreeAPS X'den kaldırmak istediğinizden emin misiniz?";
 
@@ -854,12 +852,10 @@ Enact a temp Basal or a temp target */
 "Show glucose on the app badge" = "Uygulama rozetinde glikozu göster";
 
 /* */
-"Backfill glucose" = "Backfill glucose";
+"Backfill glucose" = "Geri doldurma glikoz";
 
 
-/* Headers for settings ------------------- */
-
-
+/* Headers for settings ----------------------- */
 "OpenAPS main settings" = "OpenAPS ana ayarları";
 
 "OpenAPS SMB settings" = "OpenAPS SMB ayarları";
@@ -868,15 +864,24 @@ Enact a temp Basal or a temp target */
 
 "OpenAPS other settings" = "OpenAPS diğer ayarları";
 
-
 /* Glucose Simulator CGM */
 "Glucose Simulator" = "Glikoz Simülatörü";
 
 /* Restored state message */
 "Bluetooth State restored (APS restarted?). Found %d peripherals, and connected to %@ with identifier %@" = "Bluetooth Durumu geri yüklendi (APS yeniden başlatıldı mı?). %d çevre birimi bulundu ve %@ tanımlayıcısı ile %@'a bağlandı";
 
+/* HealthKit intergration --------------------*/
+/* */
+"Apple Health" = "Apple Health";
 
-/*
+/* */
+"Connect to Apple Health" = "Apple Health'e bağlan";
+
+/* Show when have not permissions for writing to Health */
+"For write data to Apple Health you must give permissions in Settings > Health > Data Access" = "Apple Health'e veri yazmak için Ayarlar > Sağlık > Veri Erişimi'nde izinler vermelisiniz";
+/* --------------------------------------------
+
+
   Infotexts from openaps.docs and androidaps.docs
   FreeAPS X
 */
