@@ -414,15 +414,6 @@ extension PreferencesEditor {
                     settable: self
                 ),
                 Field(
-                    displayName: "SMB Max RangeExtension",
-                    type: .decimal(keypath: \.smbMaxRangeExtension),
-                    infoText: NSLocalizedString(
-                        "Default value: 1. This is another key OpenAPS safety cap, and specifies by what factor you can exceed the regular 120 maxSMB/maxUAM minutes. Increase this experimental value slowly and with caution. Available only when autoISF is enabled.",
-                        comment: "SMB Max RangeExtension"
-                    ),
-                    settable: self
-                ),
-                Field(
                     displayName: "SMB DeliveryRatio",
                     type: .decimal(keypath: \.smbDeliveryRatio),
                     infoText: NSLocalizedString(
