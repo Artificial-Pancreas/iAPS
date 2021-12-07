@@ -870,6 +870,24 @@ Enact a temp Basal or a temp target */
 /* Restored state message */
 "Bluetooth State restored (APS restarted?). Found %d peripherals, and connected to %@ with identifier %@" = "Bluetooth-status återställd (APS startades om?). Hittade %d perifera enheter anslutna till %@ med identifieraren %@";
 
+/* Shared app group */
+"Shared app group" = "Delad appgrupp";
+
+/* Native G6 app */
+"Native G6 app" = "Ursprunglig Dexcom G6-app";
+
+/* Native G5 app */
+"Native G5 app" = "Ursprunglig G5-app";
+
+/* Simple simulator */
+"Simple simulator" = "Enkel Glukossimulator";
+
+/* Direct connection with Libre 1 transmitters or Libre 2 */
+"Direct connection with Libre 1 transmitters or Libre 2" = "Direkt anslutning till Europeisk Libre 2 sensor eller till en Libre 1-sändare";
+
+/* Online or internal server */
+"Online or internal server" = "Online eller intern server";
+
 /* HealthKit intergration --------------------*/
 /* */
 "Apple Health" = "Apple Hälsa";
