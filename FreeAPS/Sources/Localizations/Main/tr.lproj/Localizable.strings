@@ -4,7 +4,7 @@
 */
 /* -------------------------------- */
 /* Bolus screen when adding insulin */
-"Add insulin without actually bolusing" = "Gerçekten bolus yapmadan insülin ekleyin";
+"Add insulin without actually bolusing" = "Bolus yapmadan insülin ekleyin";
 
 /* Add insulin from source outside of pump */
 "Add %@ without bolusing" = "Bolus yapmadan %@ ekleyin";
@@ -17,10 +17,10 @@
 "Continue without bolus" = "Bolus yapmadan devam edin";
 
 /* Header */
-"Enact Bolus" = "Bolus Enjekte et";
+"Enact Bolus" = "Bolus Gönder";
 
 /* Button */
-"Enact bolus" = "Bolus enjekte et";
+"Enact bolus" = "Bolus gönder";
 
 /*  */
 "Insulin recommended" = "Önerilen insülin";
@@ -871,22 +871,22 @@ Enact a temp Basal or a temp target */
 "Bluetooth State restored (APS restarted?). Found %d peripherals, and connected to %@ with identifier %@" = "Bluetooth Durumu geri yüklendi (APS yeniden başlatıldı mı?). %d çevre birimi bulundu ve %@ tanımlayıcısı ile %@'a bağlandı";
 
 /* Shared app group */
-"Shared app group" = "Shared app group";
+"Shared app group" = "Paylaşılan uygulama grubu";
 
 /* Native G6 app */
-"Native G6 app" = "Native G6 app";
+"Native G6 app" = "Yerel G6 uygulaması";
 
 /* Native G5 app */
-"Native G5 app" = "Native G5 app";
+"Native G5 app" = "Yerel G5 uygulaması";
 
 /* Simple simulator */
-"Simple simulator" = "Simple simulator";
+"Simple simulator" = "Basit simülatör";
 
 /* Direct connection with Libre 1 transmitters or Libre 2 */
-"Direct connection with Libre 1 transmitters or Libre 2" = "Direct connection with Libre 1 transmitters or Libre 2";
+"Direct connection with Libre 1 transmitters or Libre 2" = "Libre 1 veya Libre 2 vericileri ile doğrudan bağlantı";
 
 /* Online or internal server */
-"Online or internal server" = "Online or internal server";
+"Online or internal server" = "Çevrimiçi veya dahili sunucu";
 
 /* HealthKit intergration --------------------*/
 /* */
