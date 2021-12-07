@@ -78,7 +78,7 @@
 "com.loudnate.InsulinKit.totalDateLabel" = "seit %1$@";
 
 /* The title of the action used to dismiss an error alert */
-"com.loudnate.LoopKit.errorAlertActionTitle" = "OK";
+"com.loudnate.LoopKit.errorAlertActionTitle" = "Ok";
 
 /* The title for the override emoji condition section */
 "Condition" = "Bedingung";
@@ -141,7 +141,7 @@
 "Medium" = "Mittlere";
 
 /* Placeholder for minimum value in glucose range */
-"min" = "min";
+"min" = "minimal";
 
 /* Alert action title to open error help */
 "More Info" = "Weitere Info";
@@ -166,7 +166,7 @@
 "Override presets can be set up under the 'Configuration' section of the settings screen." = "Voreinstellungen der Overrides können im Abschnitt Konfiguration des Einstellungsbildschirms eingerichtet werden.";
 
 /* The section title of glucose overrides */
-"Overrides" = "Overrides";
+"Overrides" = "Zeitliche Anpassungen";
 
 /* Title for the pre-meal override range */
 "Pre-Meal" = "Vor dem Essen";

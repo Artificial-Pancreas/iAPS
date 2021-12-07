@@ -2,8 +2,8 @@
   Localizable.strings
   FreeAPS X
 */
+/* -------------------------------- */
 /* Bolus screen when adding insulin */
-
 "Add insulin without actually bolusing" = "Legg til insulin uten å gi bolus";
 
 /* Add insulin from source outside of pump */
@@ -26,7 +26,7 @@
 "Insulin recommended" = "Anbefalt insulindose";
 
 /*  */
-"Insulin required" = "Insulinbehov";
+"Insulin required" = "insulinReq";
 
 /* Bolus screen */
 "Recommendation" = "Anbefaling";
@@ -411,9 +411,9 @@ Enact a temp Basal or a temp target */
 "Temp Targets" = "Midlertidige mål";
 
 
-/* Calendar and Libre transmitter settings --------------*/
+/* Calendar and Libre transmitter settings ---------------
+ */
 /* */
-
 "Configure Libre Transmitter" = "Konfigurer Libre-sender";
 
 /* */
@@ -481,9 +481,6 @@ Enact a temp Basal or a temp target */
 
 /* */
 "Remove All" = "Fjern alle";
-
-/* */
-"Calibrations" = "Kalibreringer";
 
 /* */
 "About the Process" = "Om prosessen";
@@ -670,6 +667,7 @@ Enact a temp Basal or a temp target */
 
 /* */
 "Delete CGM" = "Slett CGM";
+
 /* */
 "Are you sure you want to remove this cgm from loop?" = "Er du sikker på at du vil fjerne denne CGM-en?";
 
@@ -785,81 +783,79 @@ Enact a temp Basal or a temp target */
 "snooze from testview clicked" = "trykket på slumre fra testvisning";
 
 /* */
-"will snooze for %@ until %@" = "will snooze for %@ until %@";
+"will snooze for %@ until %@" = "vil slumre i %@ til %@";
 
 /* */
-"Click to Snooze Alerts" = "Click to Snooze Alerts";
+"Click to Snooze Alerts" = "Klikk for å slumre varslinger";
 
 /* */
-"Strength" = "Strength";
+"Strength" = "Styrke";
 
 /* */
-"Hold the top of your iPhone near the sensor to pair" = "Hold the top of your iPhone near the sensor to pair";
+"Hold the top of your iPhone near the sensor to pair" = "Hold den øverste delen av telefonen nær sensoren for å parkoble";
 
 /* */
 "Sensor not found" = "Sensor ikke funnet";
 
 /* */
-"Also play alert sound" = "Also play alert sound";
+"Also play alert sound" = "Spill også alarmlyd";
 
 /* */
-"Notification Settings" = "Notification Settings";
+"Notification Settings" = "Varslingsinnstillinger";
 
 /* */
 "Found devices: %d" = "Fant enheter: %d";
 
 /* */
-"Backfill options" = "Backfill options";
+"Backfill options" = "Alternativer for etterfylling";
 
 /* */
-"Backfilling from trend is currently not well supported by Loop" = "Backfilling from trend is currently not well supported by Loop";
+"Backfilling from trend is currently not well supported by Loop" = "Etterfylling av data fra trenden er for øyeblikket ikke støttet av Loop";
 
 /* */
-"Backfill from history" = "Backfill from history";
+"Backfill from history" = "Etterfylling fra historikk";
 
 /* */
-"Backfill from trend" = "Backfill from trend";
+"Backfill from trend" = "Etterfylling fra trend";
 
 /* */
-"Debug options" = "Debug options";
+"Debug options" = "Alternativ for feilsøking";
 
 /* */
-"Adds a lot of data to the Issue Report " = "Adds a lot of data to the Issue Report ";
+"Adds a lot of data to the Issue Report " = "Legger til en rekke data i Hendelsesrapport ";
 
 /* */
-"Persist sensordata" = "Persist sensordata";
+"Persist sensordata" = "Vedvarende sensordata";
 
 /* */
-"Battery" = "Battery";
+"Battery" = "Batteri";
 
 /* */
-"Also add source info" = "Also add source info";
+"Also add source info" = "Legg også til kildeinfo";
 
 /* */
-"Carbs Required Threshold" = "Carbs Required Threshold";
+"Carbs Required Threshold" = "Terskel for karbo nødvendig";
 
 /* */
-"Carbs required: %d g" = "Carbs required: %d g";
+"Carbs required: %d g" = "Karbo nødvendig: %d g";
 
 /* */
-"To prevent LOW required %d g of carbs" = "To prevent LOW required %d g of carbs";
+"To prevent LOW required %d g of carbs" = "For å forhindre lavt blodsukker: %d g karbo nødvendig";
 
 /* */
-"FreeAPS X not active" = "FreeAPS X not active";
+"FreeAPS X not active" = "FreeAPS X ikke aktiv";
 
 /* */
-"Last loop was more then %d min ago" = "Last loop was more then %d min ago";
+"Last loop was more then %d min ago" = "Siste loop var mer enn %d min siden";
 
 /* Glucose badge */
-"Show glucose on the app badge" = "Show glucose on the app badge";
+"Show glucose on the app badge" = "Vis blodsukker på app-ikonet";
 
 /* */
-"Backfill glucose" = "Backfill glucose";
+"Backfill glucose" = "Tilbakefyll blodsukker";
 
 
-/* Headers for settings ------------------- */
-
-
+/* Headers for settings ----------------------- */
 "OpenAPS main settings" = "OpenAPS hovedinnstillinger";
 
 "OpenAPS SMB settings" = "OpenAPS SMB innstillinger";
@@ -868,15 +864,24 @@ Enact a temp Basal or a temp target */
 
 "OpenAPS other settings" = "OpenAPS andre innstillinger";
 
-
 /* Glucose Simulator CGM */
 "Glucose Simulator" = "Blodsukker-simulator";
 
 /* Restored state message */
 "Bluetooth State restored (APS restarted?). Found %d peripherals, and connected to %@ with identifier %@" = "Bluetooth State restored (APS restarted?). Found %d peripherals, and connected to %@ with identifier %@";
 
+/* HealthKit intergration --------------------*/
+/* */
+"Apple Health" = "Apple Health";
 
-/*
+/* */
+"Connect to Apple Health" = "Connect to Apple Health";
+
+/* Show when have not permissions for writing to Health */
+"For write data to Apple Health you must give permissions in Settings > Health > Data Access" = "For write data to Apple Health you must give permissions in Settings > Health > Data Access";
+/* --------------------------------------------
+
+
   Infotexts from openaps.docs and androidaps.docs
   FreeAPS X
 */
