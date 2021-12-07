@@ -71,7 +71,7 @@
 "Add Carbs " = "Karbonhidrat Ekle ";
 
 /*  */
-"Amount Carbs" = "Miktar Karbonhidrat";
+"Amount Carbs" = "Karbonhidrat miktarı";
 
 /* Grams unit */
 "grams" = "gram";
@@ -131,7 +131,7 @@
 "Top target" = "Üst hedef";
 
 /*  */
-"Autotune" = "Autotune";
+"Autotune" = "Atoayar";
 
 /*  */
 "Basal profile" = "Bazal profil";
@@ -140,7 +140,7 @@
 "Carb ratio" = "Karbonhidrat oranı";
 
 /*  */
-"Delete autotune data" = "Autotune verilerini sil";
+"Delete autotune data" = "Atoayar verilerini sil";
 
 /*  */
 "Run now" = "Şimdi çalıştır";
@@ -152,7 +152,7 @@
 "Sensitivity" = "Duyarlılık";
 
 /*  */
-"Use Autotune" = "use Autotune";
+"Use Autotune" = "Otoayar kullan";
 
 /* Add profile basal */
 "Add" = "Ekle";
@@ -170,7 +170,7 @@
 "Saving..." = "Kaydediliyor...";
 
 /*  */
-"Schedule" = "Planlama";
+"Schedule" = "Zamanlama";
 
 /*  */
 "starts at" = "de başlar";
@@ -194,7 +194,7 @@
 "Calculated Sensitivity" = "Hesaplanan Duyarlılık";
 
 /*  */
-"Insulin Sensitivities" = "İnsülin Duyarlılık Faktörü";
+"Insulin Sensitivities" = "İnsülin Duyarlılığı";
 
 /* */
 "Sensitivity Ratio" = "Duyarlılık Faktörü (ISF)";
@@ -213,7 +213,7 @@
 
 /* Enact
 Enact a temp Basal or a temp target */
-"Enact" = "Enjekte et";
+"Enact" = "Başlat";
 
 /* */
 "Manual Temp Basal" = "Manuel Geçici Bazal";
@@ -222,7 +222,7 @@ Enact a temp Basal or a temp target */
 "Allow uploads" = "Veri yüklemeye izin ver";
 
 /* API secret in NS */
-"API secret" = "API secret";
+"API secret" = "API parolası";
 
 /* Connect to NS */
 "Connect" = "Bağlan";
@@ -270,7 +270,7 @@ Enact a temp Basal or a temp target */
 "Remote control" = "Uzaktan kontrol";
 
 /* Add Medtronic pump */
-"Add Medtronic" = "Medtronic ekle";
+"Add Medtronic" = "Medtronic Pompa ekle";
 
 /* Add Omnipod pump */
 "Add Omnipod" = "Omnipod ekle";
@@ -282,10 +282,10 @@ Enact a temp Basal or a temp target */
 "Model" = "Model";
 
 /*  */
-"Pump config" = "Pompa Konfigurasyonu";
+"Pump config" = "Pompa Yapılandırması";
 
 /*  */
-"Delivery limits" = "İletim Kısıtlamaları";
+"Delivery limits" = "İletim Limitleri";
 
 /*  */
 "Duration of Insulin Action" = "İnsülin Etki Süresi (İES)";
@@ -399,7 +399,7 @@ Enact a temp Basal or a temp target */
 "Transmitter ID" = "Verici ID";
 
 /* Other CGM setting */
-"Other" = "Diğeri";
+"Other" = "Diğer";
 
 /* Whatch app alert */
 "Set temp targets presets on iPhone first" = "Önce iPhone'da geçici hedef ön ayarlarını belirleyin";
@@ -408,7 +408,7 @@ Enact a temp Basal or a temp target */
 "Updating..." = "Güncelleniyor...";
 
 /* Header for Temp targets in Watch app */
-"Temp Targets" = "Geçici Hedefleri";
+"Temp Targets" = "Geçici Hedefler";
 
 
 /* Calendar and Libre transmitter settings ---------------
