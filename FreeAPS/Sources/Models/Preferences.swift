@@ -47,6 +47,16 @@ struct Preferences: JSON {
     var suspendZerosIOB: Bool = true
     var timestamp: Date?
     var floatingcarbs: Bool = false
+    var smbDeliveryRatioBGrange: Decimal = 0
+    var smbDeliveryRatioMin: Decimal = 0.5
+    var smbDeliveryRatioMax: Decimal = 0.75
+    var enableautoISFwithCOB: Bool = false
+    var higherISFrangeWeight: Decimal = 0
+    var lowerISFrangeWeight: Decimal = 0
+    var deltaISFrangeWeight: Decimal = 0
+    var postMealISFweight: Decimal = 0
+    var postMealISFduration: Decimal = 3
+    var postMealISFalways: Bool = false
 }
 
 extension Preferences {
@@ -56,7 +66,7 @@ extension Preferences {
         case currentBasalSafetyMultiplier = "current_basal_safety_multiplier"
         case autosensMax = "autosens_max"
         case autosensMin = "autosens_min"
-        case autoisf = "auto_isf"
+        case autoisf = "use_autoisf"
         case autoISFhourlyChange = "autoisf_hourlychange"
         case autoISFmax = "autoisf_max"
         case smbDeliveryRatio = "smb_delivery_ratio"
@@ -96,6 +106,16 @@ extension Preferences {
         case noisyCGMTargetMultiplier
         case suspendZerosIOB = "suspend_zeros_iob"
         case floatingcarbs = "floating_carbs"
+        case smbDeliveryRatioBGrange = "smb_delivery_ratio_bg_range"
+        case smbDeliveryRatioMin = "smb_delivery_ratio_min"
+        case smbDeliveryRatioMax = "smb_delivery_ratio_max"
+        case enableautoISFwithCOB = "enableautoisf_with_COB"
+        case higherISFrangeWeight = "higher_ISFrange_weight"
+        case lowerISFrangeWeight = "lower_ISFrange_weight"
+        case deltaISFrangeWeight = "delta_ISFrange_weight"
+        case postMealISFweight = "postmeal_ISF_weight"
+        case postMealISFduration = "postmeal_ISF_duration"
+        case postMealISFalways = "enableppisf_always"
     }
 }
 
