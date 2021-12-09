@@ -78,6 +78,8 @@ enum CGMType: String, JSON, CaseIterable, Identifiable {
             )
         case .glucoseDirect:
             return NSLocalizedString("Shared app group", comment: "Shared app group")
+        case .enlite:
+            return NSLocalizedString("Minilink transmitter", comment: "Minilink transmitter")
         }
     }
 }
