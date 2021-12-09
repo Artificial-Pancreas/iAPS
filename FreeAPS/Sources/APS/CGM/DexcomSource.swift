@@ -26,6 +26,7 @@ final class DexcomSource: GlucoseSource {
         }
         .timeout(60, scheduler: processQueue, options: nil, customError: nil)
         .replaceError(with: [])
+        .replaceEmpty(with: [])
         .eraseToAnyPublisher()
     }
 
