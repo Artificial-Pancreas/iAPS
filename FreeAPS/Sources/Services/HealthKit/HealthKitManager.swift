@@ -98,9 +98,6 @@ final class BaseHealthKitManager: HealthKitManager, Injectable {
     }
 
     func save(bloodGlucoses: [BloodGlucose], completion: ((Result<Bool, Error>) -> Void)? = nil) {
-        guard settingsManager.settings.useAppleHealth,
-              bloodGlucoses.isNotEmpty else { return }
-
         for bgItem in bloodGlucoses {
             let bgQuantity = HKQuantity(
                 unit: .milligramsPerDeciliter,
@@ -148,21 +145,14 @@ final class BaseHealthKitManager: HealthKitManager, Injectable {
             }
 
             // loading only daily bg
-            let predicateByDate = HKQuery.predicateForSamples(
+            let predicate = HKQuery.predicateForSamples(
                 withStart: Date().addingTimeInterval(-1.days.timeInterval),
                 end: nil,
                 options: .strictStartDate
             )
-            // loading only not FreeAPS bg
-            let predicateByMeta = HKQuery.predicateForObjects(
-                withMetadataKey: "fromFreeAPSX",
-                operatorType: .notEqualTo,
-                value: 1
-            )
-            let compoundPredicate = NSCompoundPredicate(andPredicateWithSubpredicates: [predicateByDate, predicateByMeta])
 
-            healthKitStore.execute(getQueryForDeletedBloodGlucose(sampleType: bgType, predicate: predicateByDate))
-            healthKitStore.execute(getQueryForAddedBloodGlucose(sampleType: bgType, predicate: compoundPredicate))
+            healthKitStore.execute(getQueryForDeletedBloodGlucose(sampleType: bgType, predicate: predicate))
+            healthKitStore.execute(getQueryForAddedBloodGlucose(sampleType: bgType, predicate: predicate))
         }
         healthKitStore.execute(query)
     }
@@ -210,8 +200,7 @@ final class BaseHealthKitManager: HealthKitManager, Injectable {
                         removingBGID.append($0.uuid.uuidString)
                     }
                 }
-                glucoseStorage.removeGlucose(ids: removingBGID)
-                newGlucose = newGlucose.filter { !removingBGID.contains($0.id) }
+                glucoseStorage.removeGlucose(byIDCollection: removingBGID)
             }
         }
         return query
@@ -269,13 +258,6 @@ final class BaseHealthKitManager: HealthKitManager, Injectable {
             self.fileStorage.save(savingSamples, as: OpenAPS.HealthKit.downloadedGlucose)
         }
         return query
-    }
-
-    func fetch() -> AnyPublisher<[BloodGlucose], Never> {
-        guard settingsManager.settings.useAppleHealth else { return Just([]).eraseToAnyPublisher() }
-        let actualGlucose = newGlucose.filter { $0.dateString <= Date() }
-        newGlucose = newGlucose.filter { !actualGlucose.contains($0) }
-        return Just(actualGlucose).eraseToAnyPublisher()
     }
 }
 

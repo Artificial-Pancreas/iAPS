@@ -65,7 +65,7 @@ final class GlucoseSimulatorSource: GlucoseSource {
 
     func fetch() -> AnyPublisher<[BloodGlucose], Never> {
         guard canGenerateNewValues else {
-            return Just([]).eraseToAnyPublisher()
+            return Empty().eraseToAnyPublisher()
         }
 
         let glucoses = generator.getBloodGlucoses(
