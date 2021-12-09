@@ -179,8 +179,10 @@ final class BaseDeviceDataManager: DeviceDataManager, Injectable {
                     case let .newData(glucose):
                         let directions: [BloodGlucose.Direction?] = [nil]
                             + glucose.windows(ofCount: 2).map { window -> BloodGlucose.Direction? in
-                                let firstValue = Int(window[0].quantity.doubleValue(for: .milligramsPerDeciliter))
-                                let secondValue = Int(window[1].quantity.doubleValue(for: .milligramsPerDeciliter))
+                                let pair = Array(window)
+                                guard pair.count == 2 else { return nil }
+                                let firstValue = Int(pair[0].quantity.doubleValue(for: .milligramsPerDeciliter))
+                                let secondValue = Int(pair[1].quantity.doubleValue(for: .milligramsPerDeciliter))
                                 return .init(trend: secondValue - firstValue)
                             }
 
@@ -199,7 +201,10 @@ final class BaseDeviceDataManager: DeviceDataManager, Injectable {
                                 type: "sgv"
                             )
                         }
-                        self.lastFetchGlucoseDate = Date()
+                        if let lastDate = results.last?.dateString {
+                            self.lastFetchGlucoseDate = lastDate
+                        }
+
                         promise(.success(results))
                     case let .error(error):
                         warning(.deviceManager, "Fetch minilink glucose failed", error: error)
@@ -210,6 +215,7 @@ final class BaseDeviceDataManager: DeviceDataManager, Injectable {
         }
         .timeout(60, scheduler: processQueue, options: nil, customError: nil)
         .replaceError(with: [])
+        .replaceEmpty(with: [])
         .eraseToAnyPublisher()
     }
 }
