@@ -39,6 +39,7 @@ final class BaseLibreTransmitterSource: LibreTransmitterSource, Injectable {
         }
         .timeout(60, scheduler: processQueue, options: nil, customError: nil)
         .replaceError(with: [])
+        .replaceEmpty(with: [])
         .eraseToAnyPublisher()
     }
 
