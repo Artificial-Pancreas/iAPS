@@ -386,7 +386,7 @@ extension BaseDeviceDataManager: DeviceManagerDelegate {
 
 extension BaseDeviceDataManager: CGMManagerDelegate {
     func startDateToFilterNewData(for _: CGMManager) -> Date? {
-        glucoseStorage.syncDate()
+        glucoseStorage.syncDate().addingTimeInterval(-10.minutes.timeInterval) // additional time to calculate directions
     }
 
     func cgmManager(_: CGMManager, hasNew _: CGMReadingResult) {}
