@@ -165,6 +165,8 @@ final class BaseDeviceDataManager: DeviceDataManager, Injectable {
             return Just([]).eraseToAnyPublisher()
         }
 
+        medtronic.cgmManagerDelegate = self
+
         guard lastFetchGlucoseDate.addingTimeInterval(4.5 * 60) < Date() else {
             return Just([]).eraseToAnyPublisher()
         }
@@ -212,7 +214,7 @@ final class BaseDeviceDataManager: DeviceDataManager, Injectable {
                 }
             }
         }
-        .timeout(60, scheduler: processQueue, options: nil, customError: nil)
+        .timeout(60 * 3, scheduler: processQueue, options: nil, customError: nil)
         .replaceError(with: [])
         .replaceEmpty(with: [])
         .eraseToAnyPublisher()
@@ -380,6 +382,22 @@ extension BaseDeviceDataManager: DeviceManagerDelegate {
     ) {
         debug(.deviceManager, "Device message: \(message)")
     }
+}
+
+extension BaseDeviceDataManager: CGMManagerDelegate {
+    func startDateToFilterNewData(for _: CGMManager) -> Date? {
+        glucoseStorage.syncDate()
+    }
+
+    func cgmManager(_: CGMManager, hasNew _: CGMReadingResult) {}
+
+    func cgmManagerWantsDeletion(_: CGMManager) {}
+
+    func cgmManagerDidUpdateState(_: CGMManager) {}
+
+    func credentialStoragePrefix(for _: CGMManager) -> String { "BaseDeviceDataManager" }
+
+    func cgmManager(_: CGMManager, didUpdate _: CGMManagerStatus) {}
 }
 
 // MARK: - AlertPresenter
