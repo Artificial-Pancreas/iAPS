@@ -54,28 +54,31 @@ final class BaseFetchGlucoseManager: FetchGlucoseManager, Injectable {
     private func subscribe() {
         timer.publisher
             .receive(on: processQueue)
-            .flatMap { date -> AnyPublisher<(Date, Date, [BloodGlucose]), Never> in
+            .flatMap { date -> AnyPublisher<(Date, Date, [BloodGlucose], [BloodGlucose]), Never> in
                 debug(.nightscout, "FetchGlucoseManager heartbeat")
                 debug(.nightscout, "Start fetching glucose")
                 self.updateGlucoseSource()
-                return Publishers.CombineLatest3(
+                return Publishers.CombineLatest4(
                     Just(date),
                     Just(self.glucoseStorage.syncDate()),
-                    self.glucoseSource.fetch().merge(with: self.healthKitManager.fetch())
-                        .eraseToAnyPublisher()
+                    self.glucoseSource.fetch(),
+                    self.healthKitManager.fetch()
                 )
                 .eraseToAnyPublisher()
             }
-            .sink { date, syncDate, glucose in
+            .sink { date, syncDate, glucose, glucoseFromHealth in
                 // Because of Spike dosn't respect a date query
-                let filteredByDate = glucose.filter { $0.dateString > syncDate }
+                let filteredByDate = (glucose + glucoseFromHealth).filter { $0.dateString > syncDate }
                 let filtered = self.glucoseStorage.filterTooFrequentGlucose(filteredByDate, at: syncDate)
-                if !filtered.isEmpty {
+                if filtered.isNotEmpty {
                     debug(.nightscout, "New glucose found")
                     self.glucoseStorage.storeGlucose(filtered)
                     self.apsManager.heartbeat(date: date, force: false)
                     self.nightscoutManager.uploadGlucose()
-                    self.healthKitManager.save(bloodGlucoses: filtered, completion: nil)
+                    let glucoseForHealth = filteredByDate.filter { !glucoseFromHealth.contains($0) }
+                    if glucoseForHealth.isNotEmpty {
+                        self.healthKitManager.save(bloodGlucoses: glucoseForHealth, completion: nil)
+                    }
                 }
             }
             .store(in: &lifetime)
