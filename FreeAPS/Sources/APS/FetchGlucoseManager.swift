@@ -13,6 +13,7 @@ final class BaseFetchGlucoseManager: FetchGlucoseManager, Injectable {
     @Injected() var settingsManager: SettingsManager!
     @Injected() var libreTransmitter: LibreTransmitterSource!
     @Injected() var healthKitManager: HealthKitManager!
+    @Injected() var deviceDataManager: DeviceDataManager!
 
     private var lifetime = Lifetime()
     private let timer = DispatchTimer(timeInterval: 1.minutes.timeInterval)
@@ -44,6 +45,8 @@ final class BaseFetchGlucoseManager: FetchGlucoseManager, Injectable {
             glucoseSource = libreTransmitter
         case .glucoseDirect:
             glucoseSource = appGroupSource
+        case .enlite:
+            glucoseSource = deviceDataManager
         }
 
         if settingsManager.settings.cgm != .libreTransmitter {

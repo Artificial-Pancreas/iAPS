@@ -1,3 +1,4 @@
+import Algorithms
 import Combine
 import Foundation
 import LoopKit
@@ -9,7 +10,7 @@ import SwiftDate
 import Swinject
 import UserNotifications
 
-protocol DeviceDataManager {
+protocol DeviceDataManager: GlucoseSource {
     var pumpManager: PumpManagerUI? { get set }
     var pumpDisplayState: CurrentValueSubject<PumpDisplayState?, Never> { get }
     var recommendsLoop: PassthroughSubject<Void, Never> { get }
@@ -153,6 +154,71 @@ final class BaseDeviceDataManager: DeviceDataManager, Injectable {
         }
 
         return staticPumpManagersByIdentifier[managerIdentifier]
+    }
+
+    // MARK: - GlucoseSource
+
+    @Persisted(key: "BaseDeviceDataManager.lastFetchGlucoseDate") private var lastFetchGlucoseDate: Date = .distantPast
+
+    func fetch() -> AnyPublisher<[BloodGlucose], Never> {
+        guard let medtronic = pumpManager as? MinimedPumpManager else {
+            warning(.deviceManager, "Fetch minilink glucose failed: Pump is not Medtronic")
+            return Just([]).eraseToAnyPublisher()
+        }
+
+        medtronic.cgmManagerDelegate = self
+
+        guard lastFetchGlucoseDate.addingTimeInterval(4.5 * 60) < Date() else {
+            return Just([]).eraseToAnyPublisher()
+        }
+
+        return Future<[BloodGlucose], Error> { promise in
+            self.processQueue.async {
+                medtronic.fetchNewDataIfNeeded { result in
+                    switch result {
+                    case .noData:
+                        promise(.success([]))
+                    case let .newData(glucose):
+                        let directions: [BloodGlucose.Direction?] = [nil]
+                            + glucose.windows(ofCount: 2).map { window -> BloodGlucose.Direction? in
+                                let pair = Array(window)
+                                guard pair.count == 2 else { return nil }
+                                let firstValue = Int(pair[0].quantity.doubleValue(for: .milligramsPerDeciliter))
+                                let secondValue = Int(pair[1].quantity.doubleValue(for: .milligramsPerDeciliter))
+                                return .init(trend: secondValue - firstValue)
+                            }
+
+                        let results = glucose.enumerated().map { index, sample -> BloodGlucose in
+                            let value = Int(sample.quantity.doubleValue(for: .milligramsPerDeciliter))
+                            return BloodGlucose(
+                                _id: sample.syncIdentifier,
+                                sgv: value,
+                                direction: directions[index],
+                                date: Decimal(Int(sample.date.timeIntervalSince1970 * 1000)),
+                                dateString: sample.date,
+                                unfiltered: nil,
+                                filtered: nil,
+                                noise: nil,
+                                glucose: value,
+                                type: "sgv"
+                            )
+                        }
+                        if let lastDate = results.last?.dateString {
+                            self.lastFetchGlucoseDate = lastDate
+                        }
+
+                        promise(.success(results))
+                    case let .error(error):
+                        warning(.deviceManager, "Fetch minilink glucose failed", error: error)
+                        promise(.failure(error))
+                    }
+                }
+            }
+        }
+        .timeout(60 * 3, scheduler: processQueue, options: nil, customError: nil)
+        .replaceError(with: [])
+        .replaceEmpty(with: [])
+        .eraseToAnyPublisher()
     }
 }
 
@@ -317,6 +383,22 @@ extension BaseDeviceDataManager: DeviceManagerDelegate {
     ) {
         debug(.deviceManager, "Device message: \(message)")
     }
+}
+
+extension BaseDeviceDataManager: CGMManagerDelegate {
+    func startDateToFilterNewData(for _: CGMManager) -> Date? {
+        glucoseStorage.syncDate().addingTimeInterval(-10.minutes.timeInterval) // additional time to calculate directions
+    }
+
+    func cgmManager(_: CGMManager, hasNew _: CGMReadingResult) {}
+
+    func cgmManagerWantsDeletion(_: CGMManager) {}
+
+    func cgmManagerDidUpdateState(_: CGMManager) {}
+
+    func credentialStoragePrefix(for _: CGMManager) -> String { "BaseDeviceDataManager" }
+
+    func cgmManager(_: CGMManager, didUpdate _: CGMManagerStatus) {}
 }
 
 // MARK: - AlertPresenter
