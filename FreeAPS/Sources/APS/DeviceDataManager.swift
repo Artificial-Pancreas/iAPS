@@ -382,22 +382,6 @@ extension BaseDeviceDataManager: DeviceManagerDelegate {
     }
 }
 
-extension BaseDeviceDataManager: CGMManagerDelegate {
-    func startDateToFilterNewData(for _: CGMManager) -> Date? {
-        glucoseStorage.syncDate().addingTimeInterval(-10.minutes.timeInterval) // additional time to calculate directions
-    }
-
-    func cgmManager(_: CGMManager, hasNew _: CGMReadingResult) {}
-
-    func cgmManagerWantsDeletion(_: CGMManager) {}
-
-    func cgmManagerDidUpdateState(_: CGMManager) {}
-
-    func credentialStoragePrefix(for _: CGMManager) -> String { "BaseDeviceDataManager" }
-
-    func cgmManager(_: CGMManager, didUpdate _: CGMManagerStatus) {}
-}
-
 // MARK: - AlertPresenter
 
 extension BaseDeviceDataManager: AlertPresenter {
