@@ -2,7 +2,7 @@
   Localizable.strings
   FreeAPS X
 */
-
+/* -------------------------------- */
 /* Bolus screen when adding insulin */
 "Add insulin without actually bolusing" = "Add insulin without actually bolusing";
 
@@ -411,8 +411,8 @@ Enact a temp Basal or a temp target */
 "Temp Targets" = "Temp Targets";
 
 
-/* Calendar and Libre transmitter settings --------------*/
-
+/* Calendar and Libre transmitter settings ---------------
+ */
 /* */
 "Configure Libre Transmitter" = "Configure Libre Transmitter";
 
@@ -481,9 +481,6 @@ Enact a temp Basal or a temp target */
 
 /* */
 "Remove All" = "Remove All";
-
-/* */
-"Calibrations" = "Calibrations";
 
 /* */
 "About the Process"= "About the Process";
@@ -670,7 +667,7 @@ Enact a temp Basal or a temp target */
 
 /* */
 "Delete CGM" = "Delete CGM";
-    
+
 /* */
 "Are you sure you want to remove this cgm from loop?" = "Are you sure you want to remove this cgm from loop?";
 
@@ -858,9 +855,7 @@ Enact a temp Basal or a temp target */
 "Backfill glucose" = "Backfill glucose";
 
 
-/* Headers for settings ------------------- */
-
-
+/* Headers for settings ----------------------- */
 "OpenAPS main settings" = "OpenAPS main settings";
 
 "OpenAPS SMB settings" = "OpenAPS SMB settings";
@@ -869,14 +864,23 @@ Enact a temp Basal or a temp target */
 
 "OpenAPS other settings" = "OpenAPS other settings";
 
-
 /* Glucose Simulator CGM */
 "Glucose Simulator" = "Glucose Simulator";
 
 /* Restored state message */
 "Bluetooth State restored (APS restarted?). Found %d peripherals, and connected to %@ with identifier %@" = "Bluetooth State restored (APS restarted?). Found %d peripherals, and connected to %@ with identifier %@";
 
+/* HealthKit intergration --------------------*/
+/* */
+"Apple Health" = "Apple Health";
 
+/* */
+"Connect to Apple Health" = "Connect to Apple Health";
+
+/* Show when have not permissions for writing to Health */
+"For write data to Apple Health you must give permissions in Settings > Health > Data Access" = "For write data to Apple Health you must give permissions in Settings > Health > Data Access";
+/* --------------------------------------------
+*/
 /*
   Infotexts from openaps.docs and androidaps.docs
   FreeAPS X
@@ -993,12 +997,3 @@ Enact a temp Basal or a temp target */
 
 /* "Noisy CGM Target Multiplier" */
 "Defaults to 1.3. Increase target by this amount when looping off raw/noisy CGM data" = "Defaults to 1.3. Increase target by this amount when looping off raw/noisy CGM data";
-
-/* */
-"Apple Health" = "Apple Health";
-
-/* */
-"Connect to Apple Health" = "Connect to Apple Health";
-
-/* Show when have not permissions for writing to Health */
-"For write data to Apple Health you must give permissions in Settings > Health > Data Access" = "For write data to Apple Health you must give permissions in Settings > Health > Data Access";

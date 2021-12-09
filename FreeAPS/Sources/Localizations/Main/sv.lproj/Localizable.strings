@@ -2,8 +2,8 @@
   Localizable.strings
   FreeAPS X
 */
+/* -------------------------------- */
 /* Bolus screen when adding insulin */
-
 "Add insulin without actually bolusing" = "Lägg till insulin utan att ge bolus";
 
 /* Add insulin from source outside of pump */
@@ -411,9 +411,9 @@ Enact a temp Basal or a temp target */
 "Temp Targets" = "Målvärden";
 
 
-/* Calendar and Libre transmitter settings --------------*/
+/* Calendar and Libre transmitter settings ---------------
+ */
 /* */
-
 "Configure Libre Transmitter" = "Ställ in en Libre-sändare";
 
 /* */
@@ -481,9 +481,6 @@ Enact a temp Basal or a temp target */
 
 /* */
 "Remove All" = "Ta bort alla";
-
-/* */
-"Calibrations" = "Kalibreringar";
 
 /* */
 "About the Process" = "Om processen";
@@ -670,6 +667,7 @@ Enact a temp Basal or a temp target */
 
 /* */
 "Delete CGM" = "Radera CGM";
+
 /* */
 "Are you sure you want to remove this cgm from loop?" = "Är du säker på att du vill ta bort denna CGM från FreeAPS X?";
 
@@ -842,7 +840,7 @@ Enact a temp Basal or a temp target */
 "Carbs required: %d g" = "Kolhydrater som krävs: %d g";
 
 /* */
-"To prevent LOW required %d g of carbs" = "För att förhindra lågt blodsocker krävs %d g kolhydrater";
+"To prevent LOW required %d g of carbs" = "För att förhindra ett lågt blodsocker krävs uppskattningsvis %d g kolhydrater";
 
 /* */
 "FreeAPS X not active" = "FreeAPS X är inte aktiv";
@@ -854,12 +852,10 @@ Enact a temp Basal or a temp target */
 "Show glucose on the app badge" = "Visa glukosvärde på app-ikon";
 
 /* */
-"Backfill glucose" = "Backfill glucose";
+"Backfill glucose" = "Återfyll glukosvärden";
 
 
-/* Headers for settings ------------------- */
-
-
+/* Headers for settings ----------------------- */
 "OpenAPS main settings" = "OpenAPS huvudsakliga inställningar";
 
 "OpenAPS SMB settings" = "OpenAPS SMB-inställningar";
@@ -868,15 +864,24 @@ Enact a temp Basal or a temp target */
 
 "OpenAPS other settings" = "OpenAPS andra inställningar";
 
-
 /* Glucose Simulator CGM */
 "Glucose Simulator" = "Glukossimulator";
 
 /* Restored state message */
 "Bluetooth State restored (APS restarted?). Found %d peripherals, and connected to %@ with identifier %@" = "Bluetooth-status återställd (APS startades om?). Hittade %d perifera enheter anslutna till %@ med identifieraren %@";
 
+/* HealthKit intergration --------------------*/
+/* */
+"Apple Health" = "Apple Hälsa";
 
-/*
+/* */
+"Connect to Apple Health" = "Anslut till Apple Hälsa";
+
+/* Show when have not permissions for writing to Health */
+"For write data to Apple Health you must give permissions in Settings > Health > Data Access" = "För att kunna skriva data till Apple Hälsa måste du först ge din tillåtelse i Inställningar > Hälsa > Datatillgång och enheter";
+/* --------------------------------------------
+
+
   Infotexts from openaps.docs and androidaps.docs
   FreeAPS X
 */

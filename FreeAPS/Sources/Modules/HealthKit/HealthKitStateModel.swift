@@ -23,7 +23,7 @@ extension AppleHealthKit {
                     return
                 }
 
-                self.healthKitManager.requestPermission { status, error in
+                self.healthKitManager.requestPermission { _, error in
                     guard error == nil else {
                         return
                     }
