@@ -879,6 +879,9 @@ Enact a temp Basal or a temp target */
 /* Native G5 app */
 "Native G5 app" = "Ursprunglig G5-app";
 
+/* Minilink transmitter */
+"Minilink transmitter" = "Minilink transmitter";
+
 /* Simple simulator */
 "Simple simulator" = "Enkel Glukossimulator";
 

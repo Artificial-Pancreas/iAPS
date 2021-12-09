@@ -881,6 +881,9 @@ Połączono z Nightscout!";
 /* Native G5 app */
 "Native G5 app" = "Native G5 app";
 
+/* Minilink transmitter */
+"Minilink transmitter" = "Minilink transmitter";
+
 /* Simple simulator */
 "Simple simulator" = "Simple simulator";
 
