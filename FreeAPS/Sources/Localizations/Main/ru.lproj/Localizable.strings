@@ -831,7 +831,7 @@ Enact a temp Basal or a temp target */
 "Battery" = "Батарея";
 
 /* */
-"Also add source info" = "Дополнительная информация об истонике";
+"Also add source info" = "Дополнительная информация об источнике";
 
 /* */
 "Carbs Required Threshold" = "Порог необходимых углеводов";
@@ -853,6 +853,9 @@ Enact a temp Basal or a temp target */
 
 /* */
 "Backfill glucose" = "Скачать глюкозу";
+
+/* About this source */
+"About this source" = "Об этом источнике";
 
 
 /* Headers for settings ----------------------- */
@@ -880,7 +883,7 @@ Enact a temp Basal or a temp target */
 "Native G5 app" = "Родное приложение G5";
 
 /* Minilink transmitter */
-"Minilink transmitter" = "Minilink transmitter";
+"Minilink transmitter" = "Передатчик Minilink";
 
 /* Simple simulator */
 "Simple simulator" = "Простой симулятор";

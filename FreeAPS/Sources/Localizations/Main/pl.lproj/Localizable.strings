@@ -856,6 +856,9 @@ Połączono z Nightscout!";
 /* */
 "Backfill glucose" = "Backfill glucose";
 
+/* About this source */
+"About this source" = "About this source";
+
 
 /* Headers for settings ----------------------- */
 "OpenAPS main settings" = "OpenAPS main settings";

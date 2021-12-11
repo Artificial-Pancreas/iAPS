@@ -854,6 +854,9 @@ Enact a temp Basal or a temp target */
 /* */
 "Backfill glucose" = "Geri doldurma glikoz";
 
+/* About this source */
+"About this source" = "About this source";
+
 
 /* Headers for settings ----------------------- */
 "OpenAPS main settings" = "OpenAPS ana ayarları";
@@ -880,7 +883,7 @@ Enact a temp Basal or a temp target */
 "Native G5 app" = "Yerel G5 uygulaması";
 
 /* Minilink transmitter */
-"Minilink transmitter" = "Minilink transmitter";
+"Minilink transmitter" = "Minilink Sensörü";
 
 /* Simple simulator */
 "Simple simulator" = "Basit simülatör";
