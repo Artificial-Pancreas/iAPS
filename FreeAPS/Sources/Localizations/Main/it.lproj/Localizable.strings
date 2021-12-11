@@ -68,7 +68,7 @@
 "Add Carbs" = "Aggiungi carboidrati";
 
 /* Add carbs header and button in Watch app. You can skip the last " " space. It's just for differentiation */
-"Add Carbs " = "Add Carbs ";
+"Add Carbs " = "Aggiungi Carboidrati ";
 
 /*  */
 "Amount Carbs" = "Quantità di carboidrati";
@@ -534,10 +534,10 @@ Enact a temp Basal or a temp target */
 "Glucose" = "Glucosio";
 
 /* LOWALERT! */
-"LOWALERT!" = "LOWALERT!";
+"LOWALERT!" = "AVVISO SCARSO!";
 
 /* HIGHALERT! */
-"HIGHALERT!" = "HIGHALERT!";
+"HIGHALERT!" = "AVVISO ECCESSO!";
 
 /* (Snoozed)*/
 "(Snoozed)" = "(Posticipato)";
@@ -594,10 +594,10 @@ Enact a temp Basal or a temp target */
 "Extracting calibrationdata from sensor" = "Estraendo i dati di calibrazione dal sensore";
 
 /* Sensor Ending Soon */
-"Sensor Ending Soon" = "Sensor Ending Soon";
+"Sensor Ending Soon" = "Il Sensore Terminerà Presto";
 
 /* Current Sensor is Ending soon! Sensor Life left in %@ */
-"Current Sensor is Ending soon! Sensor Life left in %@" = "Current Sensor is Ending soon! Sensor Life left in %@";
+"Current Sensor is Ending soon! Sensor Life left in %@" = "Il Sensore Corrente terminerà presto! Vita del Sensore rimanente in %@";
 
 /* */
 "Libre Bluetooth" = "Bluetooth Libre";
@@ -648,28 +648,28 @@ Enact a temp Basal or a temp target */
 "Connection State" = "Stato di Connessione";
 
 /* */
-"Transmitter Type" = "Transmitter Type";
+"Transmitter Type" = "Tipo di Trasmettitore";
 
 /* */
-"Sensor Type" = "Sensor Type";
+"Sensor Type" = "Tipo di Sensore";
 
 /* */
-"Factory Calibration Parameters" = "Factory Calibration Parameters";
+"Factory Calibration Parameters" = "Parametri di Calibrazione di Fabbrica";
 
 /* */
-"Valid for footer" = "Valid for footer";
+"Valid for footer" = "Valido per il piè di pagina";
 
 /* */
-"Edit calibrations" = "Edit calibrations";
+"Edit calibrations" = "Modifica calibrazioni";
 
 /* */
-"edit calibration clicked" = "edit calibration clicked";
+"edit calibration clicked" = "modifica calibrazione cliccata";
 
 /* */
-"Delete CGM" = "Delete CGM";
+"Delete CGM" = "Elimina CGM";
 
 /* */
-"Are you sure you want to remove this cgm from loop?" = "Are you sure you want to remove this cgm from loop?";
+"Are you sure you want to remove this cgm from loop?" = "Sei sicuro di voler rimuovere questo cgm dal ciclo?";
 
 /* */
 "There is no undo" = "Impossibile annullare";
@@ -720,10 +720,10 @@ Enact a temp Basal or a temp target */
 "Adds Phone Battery" = "Aggiungi Batteria del Telefono";
 
 /* */
-"Adds Transmitter Battery" = "Adds Transmitter Battery";
+"Adds Transmitter Battery" = "Aggiunge Batteria del Trasmettitore";
 
 /* */
-"Also vibrate" = "Also vibrate";
+"Also vibrate" = "Vibra anche";
 
 /* */
 "Additional notification types" = "Aggiungi tipi di notifica";
@@ -738,13 +738,13 @@ Enact a temp Basal or a temp target */
 "Low" = "Basso";
 
 /* */
-"High" = "High";
+"High" = "Elevato";
 
 /* */
 "glucose" = "glucose";
 
 /* */
-"Schedule " = "Schedule ";
+"Schedule " = "Programmazione ";
 
 /* */
 "tapped save schedules" = "ha toccato salva pianificazioni";
@@ -854,6 +854,9 @@ Enact a temp Basal or a temp target */
 /* */
 "Backfill glucose" = "Backfill glucose";
 
+/* About this source */
+"About this source" = "About this source";
+
 
 /* Headers for settings ----------------------- */
 "OpenAPS main settings" = "Impostazioni principali di OpenAPS";
@@ -869,6 +872,27 @@ Enact a temp Basal or a temp target */
 
 /* Restored state message */
 "Bluetooth State restored (APS restarted?). Found %d peripherals, and connected to %@ with identifier %@" = "Bluetooth State restored (APS restarted?). Found %d peripherals, and connected to %@ with identifier %@";
+
+/* Shared app group */
+"Shared app group" = "Shared app group";
+
+/* Native G6 app */
+"Native G6 app" = "Native G6 app";
+
+/* Native G5 app */
+"Native G5 app" = "Native G5 app";
+
+/* Minilink transmitter */
+"Minilink transmitter" = "Minilink transmitter";
+
+/* Simple simulator */
+"Simple simulator" = "Simple simulator";
+
+/* Direct connection with Libre 1 transmitters or Libre 2 */
+"Direct connection with Libre 1 transmitters or Libre 2" = "Direct connection with Libre 1 transmitters or Libre 2";
+
+/* Online or internal server */
+"Online or internal server" = "Online or internal server";
 
 /* HealthKit intergration --------------------*/
 /* */
@@ -990,7 +1014,7 @@ Enact a temp Basal or a temp target */
 "Smallest possible bolus amount" = "Minimo bolo consentito";
 
 /* "Insulin Peak Time" */
-"Time of maximum blood glucose lowering effect of insulin, in minutes. Beware: Oref assumes for ultra-papid (Lyumjev) & rapid-acting (Fiasp) curves minimal (35 & 50 min) and maximal (100 & 120 min) applicable insulinPeakTimes. Using a custom insulinPeakTime outside these bounds will result in issues with FreeAPS-X, longer loop calculations and possible red loops." = "Tempo del massimo effetto ipoglicemizzante dell’insulina, in minuti";
+"Time of maximum blood glucose lowering effect of insulin, in minutes. Beware: Oref assumes for ultra-rapid (Lyumjev) & rapid-acting (Fiasp) curves minimal (35 & 50 min) and maximal (100 & 120 min) applicable insulinPeakTimes. Using a custom insulinPeakTime outside these bounds will result in issues with FreeAPS-X, longer loop calculations and possible red loops." = "Tempo del massimo effetto ipoglicemizzante dell’insulina, in minuti";
 
 /* "Carbs Req Threshold" */
 "Grams of carbsReq to trigger a pushover. Defaults to 1 (for 1 gram of carbohydrate). Can be increased if you only want to get Pushover for carbsReq at X threshold." = "Grammi di CarboidratiRichiesti per attivare un pushover. Predefiniti a 1 (per 1 grammo di carboidrati). Può essere aumentato se si desidera solo ottenere Pushover per CarboidratiRichiesti alla soglia X.";

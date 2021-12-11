@@ -854,6 +854,9 @@ Enact a temp Basal or a temp target */
 /* */
 "Backfill glucose" = "Glucose Werte auffüllen";
 
+/* About this source */
+"About this source" = "About this source";
+
 
 /* Headers for settings ----------------------- */
 "OpenAPS main settings" = "OpenAPS Haupteinstellungen";
@@ -869,6 +872,27 @@ Enact a temp Basal or a temp target */
 
 /* Restored state message */
 "Bluetooth State restored (APS restarted?). Found %d peripherals, and connected to %@ with identifier %@" = "Bluetooth-Status wiederhergestellt (APS neu gestartet?). %d Peripheriegeräte gefunden und mit %@ mit der Kennung %@ verbunden";
+
+/* Shared app group */
+"Shared app group" = "Shared app group";
+
+/* Native G6 app */
+"Native G6 app" = "Native G6 app";
+
+/* Native G5 app */
+"Native G5 app" = "Native G5 app";
+
+/* Minilink transmitter */
+"Minilink transmitter" = "Minilink transmitter";
+
+/* Simple simulator */
+"Simple simulator" = "Simple simulator";
+
+/* Direct connection with Libre 1 transmitters or Libre 2 */
+"Direct connection with Libre 1 transmitters or Libre 2" = "Direct connection with Libre 1 transmitters or Libre 2";
+
+/* Online or internal server */
+"Online or internal server" = "Online or internal server";
 
 /* HealthKit intergration --------------------*/
 /* */
@@ -930,7 +954,7 @@ Enact a temp Basal or a temp target */
 "Defaults to false. When true, always enable supermicrobolus (unless disabled by high temptarget)." = "Standard Wert ist \"Aus\". Wenn aktiviert werden immer SMB verwandt (es sei denn, es wird ein höheres temporäres Ziel eingestellt).";
 
 /* "Enable SMB After Carbs" */
-"Defaults to false. When true, enables supermicrobolus (SMB) for 6h after carbs, even with 0 carbs on board (COB)." = "Standard Wert ist \"Aus. Wenn aktiviert werden (SMB) für 6 Stunden nach Kohlenhydrat Aufnahme zur Regulierung verwendet. Auch wenn die Kohlenhydrate bereits alle vom Körper aufgenommen wurden (0 Kohlenhydrate on Bord).";
+"Defaults to false. When true, enables supermicrobolus (SMB) for 6h after carbs, even with 0 carbs on board (COB)." = "Standard Wert ist \"Aus\". Wenn aktiviert werden Super Micro Bolus (SMB) für 6 Stunden nach Kohlenhydrat Aufnahme zur Regulierung verwendet. Auch wenn die Kohlenhydrate bereits alle vom Körper aufgenommen wurden (0g Kohlenhydrate on Bord).";
 
 /* "Allow SMB With High Temptarget" */
 "Defaults to false. When true, allows supermicrobolus (if otherwise enabled) even with high temp targets." = "Standard Wert ist \"Aus\". Wenn aktiviert, werden auch bei erhöhten temporären Blutzucker Zielen SMBs verwendet.";
@@ -975,7 +999,7 @@ Enact a temp Basal or a temp target */
 "This is the fraction of carbs we’ll assume will absorb over 4h if we don’t yet see carb absorption." = "This is the fraction of carbs we’ll assume will absorb over 4h if we don’t yet see carb absorption.";
 
 /* "Remaining Carbs Cap" */
-"This is the amount of the maximum number of carbs we’ll assume will absorb over 4h if we don’t yet see carb absorption." = "Dies ist die maximale Anzahl der geschätzten abgebauten Kohlenhydrate in 4 Stunden, wenn kein Kohlenhydratabbau ersichtlich ist.";
+"This is the amount of the maximum number of carbs we’ll assume will absorb over 4h if we don’t yet see carb absorption." = "Dies ist die maximale Anzahl der geschätzten abgebauten Kohlenhydrate in 4 Stunden, wenn keine Kohlenhydrat-Resorption ersichtlich ist.";
 
 /* ”Max SMB Basal Minutes" */
 "Defaults to start at 30. This is the maximum minutes of basal that can be delivered as a single SMB with uncovered COB. This gives the ability to make SMB more aggressive if you choose. It is recommended that the value is set to start at 30, in line with the default, and if you choose to increase this value, do so in no more than 15 minute increments, keeping a close eye on the effects of the changes. It is not recommended to set this value higher than 90 mins, as this may affect the ability for the algorithm to safely zero temp. It is also recommended that pushover is used when setting the value to be greater than default, so that alerts are generated for any predicted lows or highs." = "Defaults to start at 30. This is the maximum minutes of basal that can be delivered as a single SMB with uncovered COB. This gives the ability to make SMB more aggressive if you choose. It is recommended that the value is set to start at 30, in line with the default, and if you choose to increase this value, do so in no more than 15 minute increments, keeping a close eye on the effects of the changes. It is not recommended to set this value higher than 90 mins, as this may affect the ability for the algorithm to safely zero temp. It is also recommended that pushover is used when setting the value to be greater than default, so that alerts are generated for any predicted lows or highs.";
@@ -990,7 +1014,7 @@ Enact a temp Basal or a temp target */
 "Smallest possible bolus amount" = "Kleinste mögliche Bolusmenge";
 
 /* "Insulin Peak Time" */
-"Time of maximum blood glucose lowering effect of insulin, in minutes. Beware: Oref assumes for ultra-papid (Lyumjev) & rapid-acting (Fiasp) curves minimal (35 & 50 min) and maximal (100 & 120 min) applicable insulinPeakTimes. Using a custom insulinPeakTime outside these bounds will result in issues with FreeAPS-X, longer loop calculations and possible red loops." = "Benutzerspezifische Zeit des maximalen Wirkungshochs des Insulins. Achtung: Oref wendet für die ultra-rapid (Lyumjev) & rapid-acting (Fiasp) Insulinwirkungs-Kurven Unter- (35 & 50 min) und Obergrenzen (100 & 120 min) an. Falls das benutzerdefinierte Wirkungshoch außerhalb dieser Grenzen liegt, kann es zu Komplikationen mit FreeAPS-X kommen, langen Loop-Berechnungszeiten und \"red loops\".";
+"Time of maximum blood glucose lowering effect of insulin, in minutes. Beware: Oref assumes for ultra-rapid (Lyumjev) & rapid-acting (Fiasp) curves minimal (35 & 50 min) and maximal (100 & 120 min) applicable insulinPeakTimes. Using a custom insulinPeakTime outside these bounds will result in issues with FreeAPS-X, longer loop calculations and possible red loops." = "Benutzerspezifische Zeit des maximalen Wirkungshochs des Insulins. Achtung: Oref wendet für die ultra-rapid (Lyumjev) & rapid-acting (Fiasp) Insulinwirkungs-Kurven Unter- (35 & 50 min) und Obergrenzen (100 & 120 min) an. Falls das benutzerdefinierte Wirkungshoch außerhalb dieser Grenzen liegt, kann es zu Komplikationen mit FreeAPS-X kommen, langen Loop-Berechnungszeiten und \"red loops\".";
 
 /* "Carbs Req Threshold" */
 "Grams of carbsReq to trigger a pushover. Defaults to 1 (for 1 gram of carbohydrate). Can be increased if you only want to get Pushover for carbsReq at X threshold." = "Benötigte Menge von Kohlenhydraten in Gramm, um einen Pushover auszulösen. Standardmäßig ist 1 Gramm Kohlenhydrate. Dieser Wert kann erhöht werden, wenn Sie nur Pushover bei Überschreiten einer bestimmten Menge benötigter Kohlenhydrate erhalten möchten.";
