@@ -91,8 +91,9 @@ final class BaseGlucoseStorage: GlucoseStorage, Injectable {
     func filterTooFrequentGlucose(_ glucose: [BloodGlucose], at date: Date) -> [BloodGlucose] {
         var lastDate = date
         var filtered: [BloodGlucose] = []
+        let sorted = glucose.sorted { $0.date < $1.date }
 
-        for entry in glucose.reversed() {
+        for entry in sorted {
             guard entry.dateString.addingTimeInterval(-Config.filterTime) > lastDate else {
                 continue
             }
