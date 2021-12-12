@@ -150,7 +150,7 @@ final class BaseAPSManager: APSManager, Injectable {
         debug(.apsManager, "Starting loop")
         isLooping.send(true)
         determineBasal()
-            .sink { _ in } receiveValue: { [weak self] ok in
+            .sink { [weak self] ok in
                 guard let self = self else { return }
 
                 if ok {
@@ -170,7 +170,7 @@ final class BaseAPSManager: APSManager, Injectable {
     private func verifyStatus() -> Bool {
         guard let pump = pumpManager else {
             debug(.apsManager, "Pump is not set")
-            processError(APSError.invalidPumpState(message: "Pump is not set"))
+            processError(APSError.invalidPumpState(message: "Pump not set"))
             return false
         }
         let status = pump.status.pumpStatus
@@ -486,14 +486,15 @@ final class BaseAPSManager: APSManager, Injectable {
             return
         }
 
-        guard let pump = pumpManager, verifyStatus() else {
+        guard let pump = pumpManager else {
             isLooping.send(false)
-            warning(.apsManager, "Invalid pump state")
+            warning(.apsManager, "Pump not set")
+            processError(APSError.invalidPumpState(message: "Pump not set"))
             return
         }
 
         let basalPublisher: AnyPublisher<Void, Error> = {
-            guard let rate = suggested.rate, let duration = suggested.duration else {
+            guard let rate = suggested.rate, let duration = suggested.duration, verifyStatus() else {
                 return Just(()).setFailureType(to: Error.self)
                     .eraseToAnyPublisher()
             }
@@ -506,7 +507,7 @@ final class BaseAPSManager: APSManager, Injectable {
         }()
 
         let bolusPublisher: AnyPublisher<Void, Error> = {
-            guard let units = suggested.units else {
+            guard let units = suggested.units, verifyStatus() else {
                 return Just(()).setFailureType(to: Error.self)
                     .eraseToAnyPublisher()
             }
