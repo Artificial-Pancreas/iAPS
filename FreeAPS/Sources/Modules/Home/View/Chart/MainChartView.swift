@@ -876,12 +876,12 @@ extension MainChartView {
     }
 
     private func firstHourDate() -> Date {
-        let firstDate = glucose.first?.dateString ?? Date()
+        let firstDate = Date().addingTimeInterval(-1.days.timeInterval)
         return firstDate.dateTruncated(from: .minute)!
     }
 
     private func firstHourPosition(viewWidth: CGFloat) -> CGFloat {
-        let firstDate = glucose.first?.dateString ?? Date()
+        let firstDate = Date().addingTimeInterval(-1.days.timeInterval)
         let firstHour = firstHourDate()
 
         let lastDeltaTime = firstHour.timeIntervalSince(firstDate)
