@@ -63,23 +63,26 @@ Bug reports and feature requests are accepted on the [Issues page](https://githu
 - Autosens
 - Nightscout BG data source as a CGM (Online)
 - Applications that mimic Nightscout as a CGM (apps like Spike and Diabox) (Offline)
-- xDrip4iOS data source as a CGM via shared app gpoup (Offline)
+- [xDrip4iOS](https://github.com/JohanDegraeve/xdripswift) data source as a CGM via shared app gpoup (Offline)
+- [GlucoseDirectApp](https://github.com/creepymonster/GlucoseDirectApp) data source as a CGM via shared app gpoup (Offline)
+- Libre 1 transmitters and Libre 2 direct as a CGM
+- Simple glucose simulator
 - System state upload to Nightscout
 - Remote carbs enter and temporary targets through Nightscout
 - Remote bolusing and insulin pump control
 - Dexcom offline support (beta)
-- Detailed functions description inside the app (beta)
+- Detailed oref preferences description inside the app (beta)
+- User notifications of the system and connected devices state (beta)
+- Apple Watch app (beta)
+- Enlite support (beta)
+- Apple Health support for blood glucose (beta)
 
 ## Not implemented (plans for future)
 
 - Open loop mode
-- Phone notifications of the system and connected devices state
 - Profile upload to Nightscout
-- Desktop widget
-- Apple Watch app
-- Plugins
-- Enlite support
-- Apple Health support
+- Home screen widget
+- Apple Health support for carbs and insulin
 
 ## Community
 
