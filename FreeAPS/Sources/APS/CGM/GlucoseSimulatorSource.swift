@@ -79,7 +79,7 @@ final class GlucoseSimulatorSource: GlucoseSource {
             lastFetchDate = Date()
         }
 
-        return Just(glucoses.reversed()).eraseToAnyPublisher()
+        return Just(glucoses).eraseToAnyPublisher()
     }
 }
 
