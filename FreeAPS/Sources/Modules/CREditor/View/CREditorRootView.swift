@@ -37,7 +37,11 @@ extension CREditor {
                     addButton
                 }
                 Section {
-                    Button { state.save() }
+                    Button {
+                        let impactHeavy = UIImpactFeedbackGenerator(style: .heavy)
+                        impactHeavy.impactOccurred()
+                        state.save()
+                    }
                     label: {
                         Text("Save")
                     }
