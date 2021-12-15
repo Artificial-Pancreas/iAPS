@@ -65,3 +65,13 @@ protocol SuggestionObserver {
 protocol EnactedSuggestionObserver {
     func enactedSuggestionDidUpdate(_ suggestion: Suggestion)
 }
+
+extension Suggestion {
+    var reasonParts: [String] {
+        reason.components(separatedBy: "; ").first?.components(separatedBy: ", ") ?? []
+    }
+
+    var reasonConclusion: String {
+        reason.components(separatedBy: "; ").last ?? ""
+    }
+}

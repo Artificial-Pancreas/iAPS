@@ -91,8 +91,9 @@ final class BaseGlucoseStorage: GlucoseStorage, Injectable {
     func filterTooFrequentGlucose(_ glucose: [BloodGlucose], at date: Date) -> [BloodGlucose] {
         var lastDate = date
         var filtered: [BloodGlucose] = []
+        let sorted = glucose.sorted { $0.date < $1.date }
 
-        for entry in glucose.reversed() {
+        for entry in sorted {
             guard entry.dateString.addingTimeInterval(-Config.filterTime) > lastDate else {
                 continue
             }
@@ -126,11 +127,11 @@ final class BaseGlucoseStorage: GlucoseStorage, Injectable {
         guard let glucose = recent().last, glucose.dateString.addingTimeInterval(20.minutes.timeInterval) > Date(),
               let glucoseValue = glucose.glucose else { return nil }
 
-        if Decimal(glucoseValue) < settingsManager.settings.lowGlucose {
+        if Decimal(glucoseValue) <= settingsManager.settings.lowGlucose {
             return .low
         }
 
-        if Decimal(glucoseValue) > settingsManager.settings.highGlucose {
+        if Decimal(glucoseValue) >= settingsManager.settings.highGlucose {
             return .high
         }
 

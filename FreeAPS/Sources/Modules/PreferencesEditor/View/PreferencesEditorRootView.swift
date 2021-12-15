@@ -84,11 +84,6 @@ extension PreferencesEditor {
                         }
                     }
                 }
-
-                Section {
-                    Text("Edit settings json")
-                        .navigationLink(to: .configEditor(file: OpenAPS.FreeAPS.settings), from: self)
-                }
             }
             .onAppear(perform: configureView)
             .navigationTitle("Preferences")

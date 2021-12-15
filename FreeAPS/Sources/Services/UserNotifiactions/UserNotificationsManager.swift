@@ -290,17 +290,21 @@ final class BaseUserNotificationsManager: NSObject, UserNotificationsManager, In
         let request = UNNotificationRequest(identifier: identifier.rawValue, content: content, trigger: trigger)
 
         if deleteOld {
-            center.removeDeliveredNotifications(withIdentifiers: [identifier.rawValue])
-            center.removePendingNotificationRequests(withIdentifiers: [identifier.rawValue])
+            DispatchQueue.main.async {
+                self.center.removeDeliveredNotifications(withIdentifiers: [identifier.rawValue])
+                self.center.removePendingNotificationRequests(withIdentifiers: [identifier.rawValue])
+            }
         }
 
-        center.add(request) { error in
-            if let error = error {
-                warning(.service, "Unable to addNotificationRequest", error: error)
-                return
-            }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            self.center.add(request) { error in
+                if let error = error {
+                    warning(.service, "Unable to addNotificationRequest", error: error)
+                    return
+                }
 
-            debug(.service, "Sending \(identifier) notification")
+                debug(.service, "Sending \(identifier) notification")
+            }
         }
     }
 

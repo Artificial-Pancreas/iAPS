@@ -325,16 +325,23 @@ extension Home {
             .navigationBarHidden(true)
             .ignoresSafeArea(.keyboard)
             .popup(isPresented: isStatusPopupPresented, alignment: .top, direction: .top) {
-                VStack(alignment: .leading) {
-                    Text(state.statusTitle).foregroundColor(.white)
+                VStack(alignment: .leading, spacing: 4) {
+                    Text(state.statusTitle).font(.headline).foregroundColor(.white)
                         .padding(.bottom, 4)
-                    Text(state.suggestion?.reason ?? "No sugestion found").font(.caption).foregroundColor(.white)
+                    if let suggestion = state.suggestion {
+                        TagCloudView(tags: suggestion.reasonParts).animation(.none, value: false)
+                        Text(suggestion.reasonConclusion.capitalizingFirstLetter()).font(.body).foregroundColor(.white)
+                    } else {
+                        Text("No sugestion found").font(.body).foregroundColor(.white)
+                    }
 
                     if let errorMessage = state.errorMessage, let date = state.errorDate {
-                        Text("Error at \(dateFormatter.string(from: date))").foregroundColor(.white)
+                        Text("Error at \(dateFormatter.string(from: date))")
+                            .foregroundColor(.white)
+                            .font(.headline)
                             .padding(.bottom, 4)
                             .padding(.top, 8)
-                        Text(errorMessage).font(.caption).foregroundColor(.white)
+                        Text(errorMessage).font(.caption).foregroundColor(.loopRed)
                     }
                 }
                 .padding()

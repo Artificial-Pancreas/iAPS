@@ -150,7 +150,7 @@ final class BaseAPSManager: APSManager, Injectable {
         debug(.apsManager, "Starting loop")
         isLooping.send(true)
         determineBasal()
-            .sink { _ in } receiveValue: { [weak self] ok in
+            .sink { [weak self] ok in
                 guard let self = self else { return }
 
                 if ok {
@@ -170,7 +170,7 @@ final class BaseAPSManager: APSManager, Injectable {
     private func verifyStatus() -> Bool {
         guard let pump = pumpManager else {
             debug(.apsManager, "Pump is not set")
-            processError(APSError.invalidPumpState(message: "Pump is not set"))
+            processError(APSError.invalidPumpState(message: "Pump not set"))
             return false
         }
         let status = pump.status.pumpStatus
@@ -286,8 +286,10 @@ final class BaseAPSManager: APSManager, Injectable {
     }
 
     func roundBolus(amount: Decimal) -> Decimal {
-        guard let pump = pumpManager, verifyStatus() else { return amount }
-        return Decimal(pump.roundToSupportedBolusVolume(units: Double(amount)))
+        guard let pump = pumpManager else { return amount }
+        let rounded = Decimal(pump.roundToSupportedBolusVolume(units: Double(amount)))
+        let maxBolus = Decimal(pump.roundToSupportedBolusVolume(units: Double(settingsManager.pumpSettings.maxBolus))) 
+        return min(rounded, maxBolus)
     }
 
     private var bolusReporter: DoseProgressReporter?
@@ -486,14 +488,15 @@ final class BaseAPSManager: APSManager, Injectable {
             return
         }
 
-        guard let pump = pumpManager, verifyStatus() else {
+        guard let pump = pumpManager else {
             isLooping.send(false)
-            warning(.apsManager, "Invalid pump state")
+            warning(.apsManager, "Pump not set")
+            processError(APSError.invalidPumpState(message: "Pump not set"))
             return
         }
 
-        let basalPublisher: AnyPublisher<Void, Error> = {
-            guard let rate = suggested.rate, let duration = suggested.duration else {
+        let basalPublisher: AnyPublisher<Void, Error> = Deferred { () -> AnyPublisher<Void, Error> in
+            guard let rate = suggested.rate, let duration = suggested.duration, self.verifyStatus() else {
                 return Just(()).setFailureType(to: Error.self)
                     .eraseToAnyPublisher()
             }
@@ -503,10 +506,10 @@ final class BaseAPSManager: APSManager, Injectable {
                 return ()
             }
             .eraseToAnyPublisher()
-        }()
+        }.eraseToAnyPublisher()
 
-        let bolusPublisher: AnyPublisher<Void, Error> = {
-            guard let units = suggested.units else {
+        let bolusPublisher: AnyPublisher<Void, Error> = Deferred { () -> AnyPublisher<Void, Error> in
+            guard let units = suggested.units, self.verifyStatus() else {
                 return Just(()).setFailureType(to: Error.self)
                     .eraseToAnyPublisher()
             }
@@ -515,7 +518,7 @@ final class BaseAPSManager: APSManager, Injectable {
                 return ()
             }
             .eraseToAnyPublisher()
-        }()
+        }.eraseToAnyPublisher()
 
         basalPublisher
             .flatMap { bolusPublisher }

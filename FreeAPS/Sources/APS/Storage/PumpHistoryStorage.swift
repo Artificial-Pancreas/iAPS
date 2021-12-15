@@ -46,7 +46,7 @@ final class BasePumpHistoryStorage: PumpHistoryStorage, Injectable {
                     )]
                 case .tempBasal:
                     // get only start of TBR
-                    guard let dose = event.dose, dose.deliveredUnits == nil else { return [] }
+                    guard let dose = event.dose, dose.deliveredUnits ?? 0 == 0 else { return [] }
                     let rate = Decimal(string: dose.unitsPerHour.description)
                     let minutes = Int((dose.endDate - dose.startDate).timeInterval / 60)
                     return [
