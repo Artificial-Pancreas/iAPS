@@ -296,8 +296,6 @@ final class BaseUserNotificationsManager: NSObject, UserNotificationsManager, In
             }
         }
 
-        
-
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
             self.center.add(request) { error in
                 if let error = error {
