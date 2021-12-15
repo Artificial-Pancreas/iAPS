@@ -426,7 +426,7 @@ Enact a temp Basal or a temp target */
 "Calendar" = "Takvim";
 
 /* */
-"Other" = "Diğeri";
+"Other" = "Diğer";
 
 /* */
 "Libre Transmitter" = "Libre Vericisi";
@@ -438,7 +438,7 @@ Enact a temp Basal or a temp target */
 "Bluetooth Transmitters" = "Bluetooth Vericileri";
 
 /* */
-"Modes" = "Mod";
+"Modes" = "Modlar";
 
 /* Libre 2 Direct */
 "Libre 2 Direct" = "Libre 2 Direk";
