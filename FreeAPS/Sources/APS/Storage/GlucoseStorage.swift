@@ -127,11 +127,11 @@ final class BaseGlucoseStorage: GlucoseStorage, Injectable {
         guard let glucose = recent().last, glucose.dateString.addingTimeInterval(20.minutes.timeInterval) > Date(),
               let glucoseValue = glucose.glucose else { return nil }
 
-        if Decimal(glucoseValue) < settingsManager.settings.lowGlucose {
+        if Decimal(glucoseValue) <= settingsManager.settings.lowGlucose {
             return .low
         }
 
-        if Decimal(glucoseValue) > settingsManager.settings.highGlucose {
+        if Decimal(glucoseValue) >= settingsManager.settings.highGlucose {
             return .high
         }
 
