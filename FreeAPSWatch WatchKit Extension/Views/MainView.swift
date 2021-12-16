@@ -227,7 +227,6 @@ struct ContentView_Previews: PreviewProvider {
         state.delta = "+888"
         state.iob = 100.38
         state.cob = 112.123
-        state.eventualBG = "⇢ 8,888"
         state.lastLoopDate = Date().addingTimeInterval(-200)
         state
             .tempTargets =
