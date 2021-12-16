@@ -2,8 +2,8 @@
   Localizable.strings
   FreeAPS X
 */
+/* -------------------------------- */
 /* Bolus screen when adding insulin */
-
 "Add insulin without actually bolusing" = "Add insulin without actually bolusing";
 
 /* Add insulin from source outside of pump */
@@ -411,9 +411,9 @@ Enact a temp Basal or a temp target */
 "Temp Targets" = "Temp Targets";
 
 
-/* Calendar and Libre transmitter settings --------------*/
+/* Calendar and Libre transmitter settings ---------------
+ */
 /* */
-
 "Configure Libre Transmitter" = "Configure Libre Transmitter";
 
 /* */
@@ -481,9 +481,6 @@ Enact a temp Basal or a temp target */
 
 /* */
 "Remove All" = "Remove All";
-
-/* */
-"Calibrations" = "Calibrations";
 
 /* */
 "About the Process" = "About the Process";
@@ -670,6 +667,7 @@ Enact a temp Basal or a temp target */
 
 /* */
 "Delete CGM" = "Delete CGM";
+
 /* */
 "Are you sure you want to remove this cgm from loop?" = "Are you sure you want to remove this cgm from loop?";
 
@@ -856,10 +854,11 @@ Enact a temp Basal or a temp target */
 /* */
 "Backfill glucose" = "Backfill glucose";
 
+/* About this source */
+"About this source" = "About this source";
 
-/* Headers for settings ------------------- */
 
-
+/* Headers for settings ----------------------- */
 "OpenAPS main settings" = "OpenAPS main settings";
 
 "OpenAPS SMB settings" = "OpenAPS SMB settings";
@@ -868,15 +867,45 @@ Enact a temp Basal or a temp target */
 
 "OpenAPS other settings" = "OpenAPS other settings";
 
-
 /* Glucose Simulator CGM */
 "Glucose Simulator" = "Glucose Simulator";
 
 /* Restored state message */
 "Bluetooth State restored (APS restarted?). Found %d peripherals, and connected to %@ with identifier %@" = "Bluetooth State restored (APS restarted?). Found %d peripherals, and connected to %@ with identifier %@";
 
+/* Shared app group */
+"Shared app group" = "Shared app group";
 
-/*
+/* Native G6 app */
+"Native G6 app" = "Native G6 app";
+
+/* Native G5 app */
+"Native G5 app" = "Native G5 app";
+
+/* Minilink transmitter */
+"Minilink transmitter" = "Minilink transmitter";
+
+/* Simple simulator */
+"Simple simulator" = "Simple simulator";
+
+/* Direct connection with Libre 1 transmitters or Libre 2 */
+"Direct connection with Libre 1 transmitters or Libre 2" = "Direct connection with Libre 1 transmitters or Libre 2";
+
+/* Online or internal server */
+"Online or internal server" = "Online or internal server";
+
+/* HealthKit intergration --------------------*/
+/* */
+"Apple Health" = "Apple Health";
+
+/* */
+"Connect to Apple Health" = "Connect to Apple Health";
+
+/* Show when have not permissions for writing to Health */
+"For write data to Apple Health you must give permissions in Settings > Health > Data Access" = "For write data to Apple Health you must give permissions in Settings > Health > Data Access";
+/* --------------------------------------------
+
+
   Infotexts from openaps.docs and androidaps.docs
   FreeAPS X
 */
@@ -985,7 +1014,7 @@ Enact a temp Basal or a temp target */
 "Smallest possible bolus amount" = "Smallest possible bolus amount";
 
 /* "Insulin Peak Time" */
-"Time of maximum blood glucose lowering effect of insulin, in minutes. Beware: Oref assumes for ultra-papid (Lyumjev) & rapid-acting (Fiasp) curves minimal (35 & 50 min) and maximal (100 & 120 min) applicable insulinPeakTimes. Using a custom insulinPeakTime outside these bounds will result in issues with FreeAPS-X, longer loop calculations and possible red loops." = "Time of maximum blood glucose lowering effect of insulin, in minutes. Beware: Oref assumes for ultra-papid (Lyumjev) & rapid-acting (Fiasp) curves minimal (35 & 50 min) and maximal (100 & 120 min) applicable insulinPeakTimes. Using a custom insulinPeakTime outside these bounds will result in issues with FreeAPS-X, longer loop calculations and possible red loops.";
+"Time of maximum blood glucose lowering effect of insulin, in minutes. Beware: Oref assumes for ultra-rapid (Lyumjev) & rapid-acting (Fiasp) curves minimal (35 & 50 min) and maximal (100 & 120 min) applicable insulinPeakTimes. Using a custom insulinPeakTime outside these bounds will result in issues with FreeAPS-X, longer loop calculations and possible red loops." = "Time of maximum blood glucose lowering effect of insulin, in minutes. Beware: Oref assumes for ultra-rapid (Lyumjev) & rapid-acting (Fiasp) curves minimal (35 & 50 min) and maximal (100 & 120 min) applicable insulinPeakTimes. Using a custom insulinPeakTime outside these bounds will result in issues with FreeAPS-X, longer loop calculations and possible red loops.";
 
 /* "Carbs Req Threshold" */
 "Grams of carbsReq to trigger a pushover. Defaults to 1 (for 1 gram of carbohydrate). Can be increased if you only want to get Pushover for carbsReq at X threshold." = "Grams of carbsReq to trigger a pushover. Defaults to 1 (for 1 gram of carbohydrate). Can be increased if you only want to get Pushover for carbsReq at X threshold.";

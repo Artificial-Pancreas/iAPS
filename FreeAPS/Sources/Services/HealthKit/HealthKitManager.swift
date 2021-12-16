@@ -1,8 +1,9 @@
+import Combine
 import Foundation
 import HealthKit
 import Swinject
 
-protocol HealthKitManager {
+protocol HealthKitManager: GlucoseSource {
     /// Check availability HealthKit on current device and user's permissions
     var isAvailableOnCurrentDevice: Bool { get }
     /// Check all needed permissions
@@ -24,6 +25,7 @@ final class BaseHealthKitManager: HealthKitManager, Injectable {
     @Injected() private var fileStorage: FileStorage!
     @Injected() private var glucoseStorage: GlucoseStorage!
     @Injected() private var healthKitStore: HKHealthStore!
+    @Injected() private var settingsManager: SettingsManager!
 
     private enum Config {
         // unwraped HKObjects
@@ -41,6 +43,8 @@ final class BaseHealthKitManager: HealthKitManager, Injectable {
 
         static let frequencyBackgroundDeliveryBloodGlucoseFromHealth = HKUpdateFrequency(rawValue: 10)!
     }
+
+    private var newGlucose: [BloodGlucose] = []
 
     var isAvailableOnCurrentDevice: Bool {
         HKHealthStore.isHealthDataAvailable()
@@ -131,6 +135,8 @@ final class BaseHealthKitManager: HealthKitManager, Injectable {
     }
 
     func createObserver() {
+        guard settingsManager.settings.useAppleHealth else { return }
+
         guard let bgType = Config.healthBGObject else {
             warning(
                 .service,
@@ -168,6 +174,8 @@ final class BaseHealthKitManager: HealthKitManager, Injectable {
     }
 
     func enableBackgroundDelivery() {
+        guard settingsManager.settings.useAppleHealth else { return }
+
         guard let bgType = Config.healthBGObject else {
             warning(
                 .service,
@@ -202,13 +210,8 @@ final class BaseHealthKitManager: HealthKitManager, Injectable {
             }
 
             DispatchQueue.global(qos: .utility).async {
-                var removingBGID = [String]()
-                samples.forEach {
-                    if let idString = $0.metadata?["HKMetadataKeySyncIdentifier"] as? String {
-                        removingBGID.append(idString)
-                    } else {
-                        removingBGID.append($0.uuid.uuidString)
-                    }
+                let removingBGID = samples.map {
+                    $0.metadata?["HKMetadataKeySyncIdentifier"] as? String ?? $0.uuid.uuidString
                 }
                 glucoseStorage.removeGlucose(ids: removingBGID)
                 newGlucose = newGlucose.filter { !removingBGID.contains($0.id) }
@@ -225,29 +228,29 @@ final class BaseHealthKitManager: HealthKitManager, Injectable {
             sortDescriptors: nil
         ) { [unowned self] _, results, _ in
 
-            guard let samples = results as? [HKQuantitySample] else {
+            guard let samples = results as? [HKQuantitySample], samples.isNotEmpty else {
                 return
             }
 
             let oldSamples: [HealthKitSample] = fileStorage
                 .retrieve(OpenAPS.HealthKit.downloadedGlucose, as: [HealthKitSample].self) ?? []
 
-            var newSamples = [HealthKitSample]()
-            for sample in samples {
-                if sample.wasUserEntered {
-                    newSamples.append(HealthKitSample(
+            let newSamples = samples
+                .compactMap { sample -> HealthKitSample? in
+                    let fromFAX = sample.metadata?["fromFreeAPSX"] as? Bool ?? false
+                    guard !fromFAX else { return nil }
+                    return HealthKitSample(
                         healthKitId: sample.uuid.uuidString,
                         date: sample.startDate,
                         glucose: Int(round(sample.quantity.doubleValue(for: .milligramsPerDeciliter)))
-                    ))
+                    )
                 }
-            }
-
-            newSamples = newSamples
                 .filter { !oldSamples.contains($0) }
 
-            newSamples.forEach({ sample in
-                let glucose = BloodGlucose(
+            guard newSamples.isNotEmpty else { return }
+
+            let newGlucose = newSamples.map { sample in
+                BloodGlucose(
                     _id: sample.healthKitId,
                     sgv: sample.glucose,
                     direction: nil,
@@ -259,8 +262,9 @@ final class BaseHealthKitManager: HealthKitManager, Injectable {
                     glucose: sample.glucose,
                     type: "sgv"
                 )
-                glucoseStorage.storeGlucose([glucose])
-            })
+            }
+
+            self.newGlucose = newGlucose
 
             let savingSamples = (newSamples + oldSamples)
                 .removeDublicates()

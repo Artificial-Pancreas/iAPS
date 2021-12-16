@@ -14,10 +14,7 @@ struct FreeAPSSettings: JSON, Equatable {
     var cgm: CGMType = .nightscout
     var uploadGlucose: Bool = false
     var useCalendar: Bool = false
-    // Apple Health Integration
     var useAppleHealth: Bool = false
-    var needShowInformationTextForSetPermissions: Bool = false
-    // ---
     var glucoseBadge: Bool = false
     var glucoseNotificationsAlways: Bool = false
     var useAlarmSound: Bool = false
@@ -87,13 +84,6 @@ extension FreeAPSSettings: Decodable {
 
         if let useAppleHealth = try? container.decode(Bool.self, forKey: .useAppleHealth) {
             settings.useAppleHealth = useAppleHealth
-        }
-
-        if let needShowInformationTextForSetPermissions = try? container.decode(
-            Bool.self,
-            forKey: .needShowInformationTextForSetPermissions
-        ) {
-            settings.needShowInformationTextForSetPermissions = needShowInformationTextForSetPermissions
         }
 
         if let glucoseBadge = try? container.decode(Bool.self, forKey: .glucoseBadge) {

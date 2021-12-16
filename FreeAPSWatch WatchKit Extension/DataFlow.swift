@@ -15,6 +15,7 @@ struct WatchState: Codable {
     var cob: Decimal?
     var tempTargets: [TempTargetWatchPreset] = []
     var bolusAfterCarbs: Bool?
+    var eventualBG: String?
 }
 
 struct TempTargetWatchPreset: Codable, Identifiable {

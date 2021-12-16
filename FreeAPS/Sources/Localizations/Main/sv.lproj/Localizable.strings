@@ -2,8 +2,8 @@
   Localizable.strings
   FreeAPS X
 */
+/* -------------------------------- */
 /* Bolus screen when adding insulin */
-
 "Add insulin without actually bolusing" = "Lägg till insulin utan att ge bolus";
 
 /* Add insulin from source outside of pump */
@@ -67,7 +67,7 @@
 /* Add carbs screen */
 "Add Carbs" = "Lägg till kolhydrater";
 
-/* Add carbs header and button in Watch app. You can skip the last " " space. It's just for differentation */
+/* Add carbs header and button in Watch app. You can skip the last " " space. It's just for differentiation */
 "Add Carbs " = "Kolhydrater";
 
 /*  */
@@ -329,6 +329,9 @@ Enact a temp Basal or a temp target */
 /* grams */
 " g" = " g";
 
+/* The short unit display string for grams */
+"g" = "g";
+
 /* when 0 U/hr */
 "0 U/hr" = "0 IE/h";
 
@@ -408,9 +411,9 @@ Enact a temp Basal or a temp target */
 "Temp Targets" = "Målvärden";
 
 
-/* Calendar and Libre transmitter settings --------------*/
+/* Calendar and Libre transmitter settings ---------------
+ */
 /* */
-
 "Configure Libre Transmitter" = "Ställ in en Libre-sändare";
 
 /* */
@@ -478,9 +481,6 @@ Enact a temp Basal or a temp target */
 
 /* */
 "Remove All" = "Ta bort alla";
-
-/* */
-"Calibrations" = "Kalibreringar";
 
 /* */
 "About the Process" = "Om processen";
@@ -667,6 +667,7 @@ Enact a temp Basal or a temp target */
 
 /* */
 "Delete CGM" = "Radera CGM";
+
 /* */
 "Are you sure you want to remove this cgm from loop?" = "Är du säker på att du vill ta bort denna CGM från FreeAPS X?";
 
@@ -830,7 +831,7 @@ Enact a temp Basal or a temp target */
 "Battery" = "Batteri";
 
 /* */
-"Also add source info" = "Lägg till info om glukoskälla";
+"Also add source info" = "Lägg till info om CGM";
 
 /* */
 "Carbs Required Threshold" = "Tröskelvärde för kolhydrater som krävs";
@@ -839,7 +840,7 @@ Enact a temp Basal or a temp target */
 "Carbs required: %d g" = "Kolhydrater som krävs: %d g";
 
 /* */
-"To prevent LOW required %d g of carbs" = "För att förhindra lågt blodsocker krävs %d g kolhydrater";
+"To prevent LOW required %d g of carbs" = "För att förhindra ett lågt blodsocker krävs uppskattningsvis %d g kolhydrater";
 
 /* */
 "FreeAPS X not active" = "FreeAPS X är inte aktiv";
@@ -851,11 +852,13 @@ Enact a temp Basal or a temp target */
 "Show glucose on the app badge" = "Visa glukosvärde på app-ikon";
 
 /* */
-"Backfill glucose" = "Backfill glucose";
+"Backfill glucose" = "Återfyll glukosvärden";
+
+/* About this source */
+"About this source" = "Om denna CGM";
 
 
-/* Headers for settings ------------------- */
-/* */
+/* Headers for settings ----------------------- */
 "OpenAPS main settings" = "OpenAPS huvudsakliga inställningar";
 
 "OpenAPS SMB settings" = "OpenAPS SMB-inställningar";
@@ -874,6 +877,27 @@ Enact a temp Basal or a temp target */
 /* Restored state message */
 "Bluetooth State restored (APS restarted?). Found %d peripherals, and connected to %@ with identifier %@" = "Bluetooth-status återställd (APS startades om?). Hittade %d perifera enheter anslutna till %@ med identifieraren %@";
 
+/* Shared app group */
+"Shared app group" = "Delad appgrupp";
+
+/* Native G6 app */
+"Native G6 app" = "Ursprunglig Dexcom G6-app";
+
+/* Native G5 app */
+"Native G5 app" = "Ursprunglig G5-app";
+
+/* Minilink transmitter */
+"Minilink transmitter" = "Minilink-sändare";
+
+/* Simple simulator */
+"Simple simulator" = "Enkel Glukossimulator";
+
+/* Direct connection with Libre 1 transmitters or Libre 2 */
+"Direct connection with Libre 1 transmitters or Libre 2" = "Direkt anslutning till Europeisk Libre 2 sensor eller till en Libre 1-sändare";
+
+/* Online or internal server */
+"Online or internal server" = "Online eller intern server";
+
 /* HealthKit intergration --------------------*/
 /* */
 "Apple Health" = "Apple Hälsa";
@@ -884,7 +908,8 @@ Enact a temp Basal or a temp target */
 /* Show when have not permissions for writing to Health */
 "For write data to Apple Health you must give permissions in Settings > Health > Data Access" = "För att kunna skriva data till Apple Hälsa måste du först ge din tillåtelse i Inställningar > Hälsa > Datatillgång och enheter";
 /* --------------------------------------------
-/*
+
+
   Infotexts from openaps.docs and androidaps.docs
   FreeAPS X
 */
@@ -993,7 +1018,7 @@ Enact a temp Basal or a temp target */
 "Smallest possible bolus amount" = "Minsta möjliga bolusdos";
 
 /* "Insulin Peak Time" */
-"Time of maximum blood glucose lowering effect of insulin, in minutes. Beware: Oref assumes for ultra-papid (Lyumjev) & rapid-acting (Fiasp) curves minimal (35 & 50 min) and maximal (100 & 120 min) applicable insulinPeakTimes. Using a custom insulinPeakTime outside these bounds will result in issues with FreeAPS-X, longer loop calculations and possible red loops." = "Tid i minuter för när insulinet har som störst blodsockersänkande effekt. Observera att inte ange ett lägre värde än 35 min för Lyumjev eller 50 min för Fiasp, eller högre än 100, respektive 120 min. Om du gör så kommer det att leda till problem med FreeAPS X, som röda loopar, långa Loop-beräkningar och överdrivet stora loggfiler.";
+"Time of maximum blood glucose lowering effect of insulin, in minutes. Beware: Oref assumes for ultra-rapid (Lyumjev) & rapid-acting (Fiasp) curves minimal (35 & 50 min) and maximal (100 & 120 min) applicable insulinPeakTimes. Using a custom insulinPeakTime outside these bounds will result in issues with FreeAPS-X, longer loop calculations and possible red loops." = "Tid i minuter för när insulinet har som störst blodsockersänkande effekt. Observera att inte ange ett lägre värde än 35 min för Lyumjev eller 50 min för Fiasp, eller högre än 100, respektive 120 min. Om du gör så kommer det att leda till problem med FreeAPS X, som röda loopar, långa Loop-beräkningar och överdrivet stora loggfiler.";
 
 /* "Carbs Req Threshold" */
 "Grams of carbsReq to trigger a pushover. Defaults to 1 (for 1 gram of carbohydrate). Can be increased if you only want to get Pushover for carbsReq at X threshold." = "Antal kolhydrater för att utlösa en pushover-notis, av det totala antal kolhydrater nödvändiga (carbsReq) för att undvika ett lågt blodsockervärde, som krävs. Standardvärde är 1 (gram kolhydrater). Kan ökas om du bara vill få en Pushover-notis vid en större mängd nödvändiga kolhydrater.";

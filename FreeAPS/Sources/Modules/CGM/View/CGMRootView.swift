@@ -10,8 +10,16 @@ extension CGM {
             Form {
                 Section {
                     Picker("Type", selection: $state.cgm) {
-                        ForEach(CGMType.allCases) {
-                            Text($0.displayName).tag($0)
+                        ForEach(CGMType.allCases) { type in
+                            VStack(alignment: .leading) {
+                                Text(type.displayName)
+                                Text(type.subtitle).font(.caption).foregroundColor(.secondary)
+                            }.tag(type)
+                        }
+                    }
+                    if let link = state.cgm.externalLink {
+                        Button("About this source") {
+                            UIApplication.shared.open(link, options: [:], completionHandler: nil)
                         }
                     }
                 }

@@ -17,5 +17,6 @@
     "addSourceInfoToGlucoseNotifications": false,
     "lowGlucose": 72,
     "highGlucose": 270,
-    "carbsRequiredThreshold": 10
+    "carbsRequiredThreshold": 10,
+    "useAppleHealth": false
 }

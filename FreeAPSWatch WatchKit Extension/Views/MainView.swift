@@ -64,6 +64,8 @@ struct MainView: View {
                     HStack {
                         Text(state.glucose).font(.largeTitle)
                         Text(state.trend)
+                            .scaledToFill()
+                            .minimumScaleFactor(0.5)
                     }
                     Text(state.delta).font(.caption2).foregroundColor(.gray)
                 }
@@ -101,7 +103,7 @@ struct MainView: View {
     }
 
     var buttons: some View {
-        HStack {
+        HStack(alignment: .center) {
             NavigationLink(isActive: $state.isCarbsViewActive) {
                 CarbsView()
                     .environmentObject(state)
@@ -135,7 +137,9 @@ struct MainView: View {
                         .frame(width: 24, height: 24)
                         .foregroundColor(.loopYellow)
                     if let until = state.tempTargets.compactMap(\.until).first, until > Date() {
-                        Text(until, style: .timer).font(.system(size: 8))
+                        Text(until, style: .timer)
+                            .scaledToFill()
+                            .font(.system(size: 8))
                     }
                 }
             }
@@ -217,9 +221,22 @@ struct MainView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        Group {
-            MainView().environmentObject(WatchStateModel())
-            MainView().previewDevice("Apple Watch Series 5 - 40mm").environmentObject(WatchStateModel())
-        }
+        let state = WatchStateModel()
+
+        state.glucose = "15,8"
+        state.delta = "+888"
+        state.iob = 100.38
+        state.cob = 112.123
+        state.eventualBG = "⇢ 8,888"
+        state.lastLoopDate = Date().addingTimeInterval(-200)
+        state
+            .tempTargets =
+            [TempTargetWatchPreset(name: "Test", id: "test", description: "", until: Date().addingTimeInterval(3600 * 3))]
+
+        return Group {
+            MainView()
+            MainView().previewDevice("Apple Watch Series 5 - 40mm")
+            MainView().previewDevice("Apple Watch Series 3 - 38mm")
+        }.environmentObject(state)
     }
 }

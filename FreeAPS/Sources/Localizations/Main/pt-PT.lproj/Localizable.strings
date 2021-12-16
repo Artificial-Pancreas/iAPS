@@ -4,306 +4,303 @@
 */
 
 /* Bolus screen when adding insulin */
-"Add insulin without actually bolusing" = "Add insulin without actually bolusing";
+"Add insulin without actually bolusing" = "Adicionar insulina sem tomar bolus";
 
 /* Add insulin from source outside of pump */
-"Add %@ without bolusing" = "Add %@ without bolusing";
+"Add %@ without bolusing" = "Adicionar %@ sem tomar bolus";
 
 "Bolus" = "Bolus";
 
-"Close" = "Close";
+"Close" = "Fechar";
 
 /* Continue after added carbs without bolus */
-"Continue without bolus" = "Continue without bolus";
+"Continue without bolus" = "Continuar sem tomar bolus";
 
 /* Header */
-"Enact Bolus" = "Enact Bolus";
+"Enact Bolus" = "Aplicar Bolus";
 
 /* Button */
-"Enact bolus" = "Enact bolus";
+"Enact bolus" = "Aplicar bolus";
 
 /*  */
-"Insulin recommended" = "Insulin recommended";
+"Insulin recommended" = "Insulina recomendada";
 
 /*  */
-"Insulin required" = "Insulin required";
+"Insulin required" = "Insulina necessária";
 
 /* Bolus screen */
-"Recommendation" = "Recommendation";
+"Recommendation" = "Recomendação";
 
 /* Button */
-"Clear" = "Clear";
+"Clear" = "Apagar";
 
 /* Button */
-"Done" = "Done";
+"Done" = "OK";
 
 /*  */
-"Wait please" = "Wait please";
+"Wait please" = "Aguarde";
 
 /*  */
-"Agree and continue" = "Agree and Continue";
-
-/* Disclaimer when opening app for first time*/
-"Disclaimer" = "Disclaimer";
-
-/* Disclaimer Description */
-"FreeAPS X is in an active development state. We do not recommend to use the system for everyday control of blood glucose! Use it for testing purposes only at your own risk. We are not responsible for your decisions and actions." = "FreeAPS X is in an active development state. We do not recommend to use the system for everyday control of blood glucose! Use it for testing purposes only at your own risk. We are not responsible for your decisions and actions.";
+"Agree and continue" = "Concordar e Continuar";
 
 /* Enacted at a date */
-"Enacted at %@" = "Enacted at %@";
+"Enacted at %@" = "Executado em %@";
 
 /* Home title */
-"Home" = "Home";
+"Home" = "Tela inicial";
 
 /* Looping in progress */
 "looping" = "looping";
 
 /* min ago since last loop */
-"min ago" = "min ago";
+"min ago" = "min atrás";
 
 /* Status Title */
-"No suggestion" = "No suggestion";
+"No suggestion" = "Sem sugestão";
 
 /* Replace pod text in Header */
-"Replace pod" = "Replace pod";
+"Replace pod" = "Substituir pod";
 
 /* Suggested at a date */
-"Suggested at %@" = "Suggested at %@";
+"Suggested at %@" = "Sugerido %@";
 
 /* Add carbs screen */
-"Add Carbs" = "Add Carbs";
+"Add Carbs" = "Adicionar carboidratos";
+
+/* Add carbs header and button in Watch app. You can skip the last " " space. It's just for differentiation */
+"Add Carbs " = "Add Carbs ";
 
 /*  */
-"Amount Carbs" = "Amount Carbs";
+"Amount Carbs" = "Quantidade de Carboidratos";
 
 /* Grams unit */
-"grams" = "grams";
+"grams" = "gramas";
 
 /*  */
-"Carbs required" = "Carbs required";
+"Carbs required" = "Carbos necessários";
 
 /* */
-"Are you sure?" = "Are you sure?";
+"Are you sure?" = "Tem certeza?";
 
 /* Bottom target temp */
-"Bottom target" = "Bottom target";
+"Bottom target" = "Limite baixo";
 
 /* Cancel preset name */
-"Cancel" = "Cancel";
+"Cancel" = "Cancelar";
 
 /*  */
-"Cancel Temp Target" = "Cancel Temp Target";
+"Cancel Temp Target" = "Cancelar Meta Temporária";
 
 /* Custom temp target */
-"Custom" = "Custom";
+"Custom" = "Definir";
 
 /*  */
-"Date" = "Date";
+"Date" = "Data";
 
 /*  */
-"Delete" = "Delete";
+"Delete" = "Apagar";
 
 /* Delete preset temp target */
-"Delete preset \"%@\"" = "Delete preset \"%@\"";
+"Delete preset \"%@\"" = "Apagar predefinido \"%@\"";
 
 /* Duration of target temp or temp basal */
-"Duration" = "Duration";
+"Duration" = "Duração";
 
 /*  */
-"Enact Temp Target" = "Enact Temp Target";
+"Enact Temp Target" = "Executar Meta Temporária";
 
 /*  */
-"Enter preset name" = "Enter preset name";
+"Enter preset name" = "Nomear predefinido";
 
 /* Preset name */
-"Name" = "Name";
+"Name" = "Nome";
 
 /* minutes of target temp */
-"minutes" = "minutes";
+"minutes" = "minutos";
 
 /*  */
-"Presets" = "Presets";
+"Presets" = "Predefinidos";
 
 /* Save preset name */
-"Save" = "Save";
+"Save" = "Salvar";
 
 /*  */
-"Save as preset" = "Save as preset";
+"Save as preset" = "Salvar como predefinido";
 
 /* Upper temp target limit */
-"Top target" = "Top target";
+"Top target" = "Limite alto";
 
 /*  */
 "Autotune" = "Autotune";
 
 /*  */
-"Basal profile" = "Basal profile";
+"Basal profile" = "Perfil Basal";
 
 /*  */
-"Carb ratio" = "Carb ratio";
+"Carb ratio" = "Taxas carboidratos";
 
 /*  */
-"Delete autotune data" = "Delete autotune data";
+"Delete autotune data" = "Apagar dados autotune";
 
 /*  */
-"Run now" = "Run now";
+"Run now" = "Executar agora";
 
 /*  */
-"Last run" = "Last run";
+"Last run" = "Ultima execução";
 
 /*  */
-"Sensitivity" = "Sensitivity";
+"Sensitivity" = "Fator de sensibilidade";
 
 /*  */
-"Use Autotune" = "use Autotune";
+"Use Autotune" = "usar Autotune";
 
 /* Add profile basal */
-"Add" = "Add";
+"Add" = "Adicionar";
 
 /*  */
-"Basal Profile" = "Basal Profile";
+"Basal Profile" = "Perfil Basal";
 
 /* Rate basal profile */
-"Rate" = "Rate";
+"Rate" = "Taxa";
 
 /*  */
-"Save on Pump" = "Save on Pump";
+"Save on Pump" = "Salvar na Bomba";
 
 /*  */
-"Saving..." = "Saving...";
+"Saving..." = "Salvando...";
 
 /*  */
-"Schedule" = "Schedule";
+"Schedule" = "Agenda";
 
 /*  */
-"starts at" = "starts at";
+"starts at" = "começa";
 
 /* Time basal profile */
-"Time" = "Time";
+"Time" = "Hora";
 
 /* */
-"Calculated Ratio" = "Calculated Ratio";
+"Calculated Ratio" = "Taxa calculada";
 
 /* Carb Ratios header */
-"Carb Ratios" = "Carb Ratios";
+"Carb Ratios" = "Taxas de carbo";
 
 /*  */
-"Ratio" = "Ratio";
+"Ratio" = "Taxa";
 
 /*  */
 "Autosens" = "Autosens";
 
 /*  */
-"Calculated Sensitivity" = "Calculated Sensitivity";
+"Calculated Sensitivity" = "Sensibilidade Calculada";
 
 /*  */
-"Insulin Sensitivities" = "Insulin Sensitivities";
+"Insulin Sensitivities" = "Sensibilidade a Insulina";
 
 /* */
-"Sensitivity Ratio" = "Sensitivity Ratio";
+"Sensitivity Ratio" = "Taxa de Sensibilidade";
 
 /*  */
-"Dismiss" = "Dismiss";
+"Dismiss" = "Ignorar";
 
 /*  */
-"Important message" = "Important message";
+"Important message" = "Mensagem importante";
 
 /*  */
-"Amount" = "Amount";
+"Amount" = "Quantidade";
 
 /* */
-"Cancel Temp Basal" = "Cancel Temp Basal";
+"Cancel Temp Basal" = "Cancelar Basal Temporária";
 
 /* Enact
 Enact a temp Basal or a temp target */
-"Enact" = "Enact";
+"Enact" = "Executar";
 
 /* */
-"Manual Temp Basal" = "Manual Temp Basal";
+"Manual Temp Basal" = "Basal Temporária Manual";
 
 /* Allow uploads tp NS */
-"Allow uploads" = "Allow uploads";
+"Allow uploads" = "Permitir uploads";
 
 /* API secret in NS */
 "API secret" = "API secret";
 
 /* Connect to NS */
-"Connect" = "Connect";
+"Connect" = "Conectar";
 
 /* Connected to NS */
-"Connected!" = "Connected!";
+"Connected!" = "Conectado!";
 
 /* Connecting to NS */
-"Connecting..." = "Connecting...";
+"Connecting..." = "Conectando...";
 
 /*  */
-"Invalid URL" = "Invalid URL";
+"Invalid URL" = "URL inválida";
 
 /*  */
-"Local glucose source" = "Local glucose source";
+"Local glucose source" = "Glicose local";
 
 /* Header */
-"Nightscout Config" = "Nightscout Config";
+"Nightscout Config" = "Ajustes Nightscout";
 
 /*  */
-"Port" = "Port";
+"Port" = "Porta";
 
 /*  */
-"URL" = "URL";
+"URL" = "Endereço da URL";
 
 /**/
-"Use local glucose server" = "Use local glucose server";
+"Use local glucose server" = "Usar servidor de glicose local";
 
 /*  */
-"Edit settings json" = "Edit settings json";
+"Edit settings json" = "Editar json de configurações";
 
 /* */
-"Glucose units" = "Glucose units";
+"Glucose units" = "Unidades de glicose";
 
 /*  */
-"Preferences" = "Preferences";
+"Preferences" = "Preferências";
 
 /* Recommended Insulin Fraction in preferences */
-"Recommended Insulin Fraction" = "Recommended Insulin Fraction";
+"Recommended Insulin Fraction" = "Fração de insulina recomendada";
 
 /* Do you want to show bolus screen after added carbs? */
-"Skip Bolus screen after carbs" = "Skip Bolus screen after carbs";
+"Skip Bolus screen after carbs" = "Pular tela de bolus depois de carbo";
 
 /* Allow remote control from NS */
-"Remote control" = "Remote control";
+"Remote control" = "Controle remoto";
 
 /* Add Medtronic pump */
-"Add Medtronic" = "Add Medtronic";
+"Add Medtronic" = "Adicionar Medtronic";
 
 /* Add Omnipod pump */
-"Add Omnipod" = "Add Omnipod";
+"Add Omnipod" = "Adicionar Omnipod";
 
 /* Add Simulator pump */
-"Add Simulator" = "Add Simulator";
+"Add Simulator" = "Adicionar Simulador";
 
 /* Insulin model */
-"Model" = "Model";
+"Model" = "Modelo";
 
 /*  */
-"Pump config" = "Pump config";
+"Pump config" = "Ajustes bomba";
 
 /*  */
-"Delivery limits" = "Delivery limits";
+"Delivery limits" = "Limites de entrega";
 
 /*  */
-"Duration of Insulin Action" = "Duration of Insulin Action";
+"Duration of Insulin Action" = "Duração da ação da Insulina";
 
 /* hours of duration of insulin activity */
-"hours" = "hours";
+"hours" = "horas";
 
 /* Max setting */
-"Max Basal" = "Max Basal";
+"Max Basal" = "Basal Maxima";
 
 /* Max setting */
-"Max Bolus" = "Max Bolus";
+"Max Bolus" = "Bolus Máximo";
 
 /* */
-"Pump Settings" = "Pump Settings";
+"Pump Settings" = "Ajustes Bomba";
 
 /* Insulin unit per hour */
 "U/hr" = "U/hr";
@@ -332,6 +329,9 @@ Enact a temp Basal or a temp target */
 /* grams */
 " g" = " g";
 
+/* The short unit display string for grams */
+"g" = "g";
+
 /* when 0 U/hr */
 "0 U/hr" = "0 U/hr";
 
@@ -344,93 +344,544 @@ Enact a temp Basal or a temp target */
 /* abbreviation for minutes */
 "m" = "m";
 
-/* */
-"Autotune Conf" = "Autotune";
-
 /*  */
-"Basal Profile Conf" = "Basal Profile";
-
-/*  */
-"Carb Ratios Conf" = "Carb Ratios";
-
-/*  */
-"Closed loop" = "Closed loop";
+"Closed loop" = "Loop fechado";
 
 /* */
-"Configuration" = "Configuration";
+"Configuration" = "Ajustes";
 
 /* */
-"Devices" = "Devices";
-
-/* */
-"Insulin Sensitivities Conf" = "Insulin Sensitivities";
-
-/* */
-"Preferences Conf" = "Preferences";
+"Devices" = "Dispositivos";
 
 /*  */
-"Pump" = "Pump";
+"Pump" = "Bomba";
 
 /*  */
-"Pump Settings Conf" = "Pump Settings";
+"Services" = "Serviços";
 
 /*  */
-"Services" = "Services";
-
-/*  */
-"Settings" = "Settings";
+"Settings" = "Configurações";
 
 /* 2 log files to share */
-"Share logs" = "Share logs";
-
-/*  */
-"Target Ranges Conf" = "Target Ranges";
+"Share logs" = "Compartilhar logs";
 
 /* Upper target */
-"High target" = "High target";
+"High target" = "Meta alta";
 
 /* Lower target */
-"Low target" = "Low target";
+"Low target" = "Meta baixa";
 
 /*  */
-"Target Ranges" = "Target Ranges";
+"Target Ranges" = "Limites da meta";
 
 /* When bolusing */
-"Bolusing" = "Bolusing";
+"Bolusing" = "Aplicando bolus";
 
 /* */
-"Pump suspended" = "Pump suspended";
+"Pump suspended" = "Bomba suspensa";
 
 /* */
 "Middleware" = "Middleware";
 
 /* Header */
-"History" = "History";
+"History" = "Histórico";
 
 /* CGM option */
-"Upload glucose to Nightscout" = "Upload glucose to Nightscout";
+"Upload glucose to Nightscout" = "Upload glicose para o Nightscout";
 
 /* Type of CGM or glucose source */
-"Type" = "Type";
+"Type" = "Tipo";
 
 /* CGM */
-"CGM" = "CGM";
+"CGM" = "MCG";
 
 /* CGM Transmitter ID */
-"Transmitter ID" = "Transmitter ID";
+"Transmitter ID" = "ID do transmissor";
 
 /* Other CGM setting */
+"Other" = "Outro";
+
+/* Whatch app alert */
+"Set temp targets presets on iPhone first" = "Set temp targets presets on iPhone first";
+
+/* Updating Watch app */
+"Updating..." = "Updating...";
+
+/* Header for Temp targets in Watch app */
+"Temp Targets" = "Temp Targets";
+
+
+/* Calendar and Libre transmitter settings --------------*/
+
+/* */
+"Configure Libre Transmitter" = "Configure Libre Transmitter";
+
+/* */
+"Calibrations" = "Calibrations";
+
+/* */
+"Create events in calendar" = "Create events in calendar";
+
+/* */
+"Calendar" = "Calendar";
+
+/* */
 "Other" = "Other";
+
+/* */
+"Libre Transmitter" = "Libre Transmitter";
+
+/* */
+"Libre Transmitters" = "Libre Transmitters";
+
+/* */
+"Bluetooth Transmitters" = "Bluetooth Transmitters";
+
+/* */
+"Modes" = "Modes";
+
+/* Libre 2 Direct */
+"Libre 2 Direct" = "Libre 2 Direct";
+
+/* */
+"Select the third party transmitter you want to connect to" = "Select the third party transmitter you want to connect to";
+
+/* State was restored */
+"State was restored" = "State was restored";
+
+/* The short unit display string for millimoles of glucose per liter */
+"mmol/L" = "mmol/L";
+
+/* The short unit display string for milligrams of glucose per decilter */
+"mg/dL" = "mg/dL";
+
+/* */
+"Add calibration" = "Add calibration";
+
+/* When adding capillary glucose meater reading */
+"Meter glucose" = "Meter glucose";
+
+/* */
+"Info" = "Info";
+
+/*v*/
+"Slope" = "Slope";
+
+/* */
+"Intercept" = "Intercept";
+
+/* */
+"Chart" = "Chart";
+
+/* */
+"Remove" = "Remove";
+
+/* */
+"Remove Last" = "Remove Last";
+
+/* */
+"Remove All" = "Remove All";
+
+/* */
+"Calibrations" = "Calibrations";
+
+/* */
+"About the Process" = "About the Process";
+
+/* */
+"Please make sure that your Libre 2 sensor is already activated and finished warming up. If you have other apps connecting to the sensor via bluetooth, these need to be shut down or uninstalled. \n\n You can only have one app communicating with the sensor via bluetooth. Then press the \"pariring and connection\" button below to start the process. Please note that the bluetooth connection might take up to a couple of minutes before it starts working." = "Please make sure that your Libre 2 sensor is already activated and finished warming up. If you have other apps connecting to the sensor via bluetooth, these need to be shut down or uninstalled. \n\n You can only have one app communicating with the sensor via bluetooth. Then press the \"pariring and connection\" button below to start the process. Please note that the bluetooth connection might take up to a couple of minutes before it starts working.";
+
+/* */
+"Pairinginfo" = "Pairinginfo";
+
+/* */
+"PatchInfo" = "PatchInfo";
+
+/* */
+"Calibrationinfo" = "Calibrationinfo";
+
+/* */
+"Unknown" = "Unknown";
+
+/* */
+"Not paired yet" = "Not paired yet";
+
+/* */
+"Pair Sensor & connect" = "Pair Sensor & connect";
+
+/* */
+"Phone NFC required!" = "Phone NFC required!";
+
+/* */
+"Your phone or app is not enabled for NFC communications, which is needed to pair to libre2 sensors" = "Your phone or app is not enabled for NFC communications, which is needed to pair to libre2 sensors";
+
+/* Bluetooth Power Off */
+"Bluetooth Power Off" = "Bluetooth Power Off";
+
+/* Please turn on Bluetooth */
+"Please turn on Bluetooth" = "Please turn on Bluetooth";
+
+/* No Libre Transmitter Selected */
+"No Libre Transmitter Selected" = "No Libre Transmitter Selected";
+
+/* Delete Transmitter and start anew. */
+"Delete CGMManager and start anew. Your libreoopweb credentials will be preserved" = "Delete CGMManager and start anew. Your libreoopweb credentials will be preserved";
+
+/* Invalid libre checksum */
+"Invalid libre checksum" = "Invalid libre checksum";
+
+/* Libre sensor was incorrectly read, CRCs were not valid */
+"Libre sensor was incorrectly read, CRCs were not valid" = "Libre sensor was incorrectly read, CRCs were not valid";
+
+/* Glucose */
+"Glucose" = "Glucose";
+
+/* LOWALERT! */
+"LOWALERT!" = "LOWALERT!";
+
+/* HIGHALERT! */
+"HIGHALERT!" = "HIGHALERT!";
+
+/* (Snoozed)*/
+"(Snoozed)" = "(Snoozed)";
+
+/* Glucose: %@ */
+"Glucose: %@" = "Glucose: %@";
+
+/* Transmitter: %@%% */
+"Transmitter: %@%%" = "Transmitter: %@%%";
+
+/* No Sensor Detected */
+"No Sensor Detected" = "No Sensor Detected";
+
+/* This might be an intermittent problem, but please check that your transmitter is tightly secured over your sensor */
+"This might be an intermittent problem, but please check that your transmitter is tightly secured over your sensor" = "This might be an intermittent problem, but please check that your transmitter is tightly secured over your sensor";
+
+/* New Sensor Detected */
+"New Sensor Detected" = "New Sensor Detected";
+
+/* Please wait up to 30 minutes before glucose readings are available! */
+"Please wait up to 30 minutes before glucose readings are available!" = "Please wait up to 30 minutes before glucose readings are available!";
+
+/* Invalid Glucose sample detected, try again later */
+"Invalid Glucose sample detected, try again later" = "Invalid Glucose sample detected, try again later";
+
+/* ensor might have temporarily stopped, fallen off or is too cold or too warm */
+"Sensor might have temporarily stopped, fallen off or is too cold or too warm" = "Sensor pode ter parado temporariamente, caído ou está muito frio ou quente";
+
+/* Invalid Sensor Detected */
+"Invalid Sensor Detected" = "Invalid Sensor Detected";
+
+/* Detected sensor seems not to be a libre 1 sensor! */
+"Detected sensor seems not to be a libre 1 sensor!" = "Detected sensor seems not to be a libre 1 sensor!";
+
+/* Detected sensor is invalid: %@ */
+"Detected sensor is invalid: %@" = "Detected sensor is invalid: %@";
+
+/* Low Battery */
+"Low battery" = "Low battery";
+
+/* */
+"Invalid sensor" = "Invalid sensor";
+
+/* */
+"Sensor change" = "Sensor change";
+
+/* */
+"Sensor expires soon" = "Sensor expires soon";
+
+/* Battery is running low %@, consider charging your %@ device as soon as possible */
+"Battery is running low %@, consider charging your %@ device as soon as possible" = "Battery is running low %@, consider charging your %@ device as soon as possible";
+
+/* Extracting calibrationdata from sensor */
+"Extracting calibrationdata from sensor" = "Extracting calibrationdata from sensor";
+
+/* Sensor Ending Soon */
+"Sensor Ending Soon" = "Sensor Ending Soon";
+
+/* Current Sensor is Ending soon! Sensor Life left in %@ */
+"Current Sensor is Ending soon! Sensor Life left in %@" = "Current Sensor is Ending soon! Sensor Life left in %@";
+
+/* */
+"Libre Bluetooth" = "Libre Bluetooth";
+
+/* */
+"Snooze Alerts" = "Snooze Alerts";
+
+/* */
+"Last measurement" = "Last measurement";
+
+/* */
+"Sensor Footer checksum" = "Sensor Footer checksum";
+
+/* */
+"Last Blood Sugar prediction" = "Last Blood Sugar prediction";
+
+/* */
+"CurrentBG" = "CurrentBG";
+
+/* */
+"Sensor Info" = "Sensor Info";
+
+/* */
+"Sensor Age" = "Sensor Age";
+
+/* */
+"Sensor Age Left" = "Sensor Age Left";
+
+/* */
+"Sensor Endtime" = "Sensor Endtime";
+
+/* */
+"Sensor State" = "Sensor State";
+
+/* */
+"Sensor Serial" = "Sensor Serial";
+
+/* */
+"Transmitter Info" = "Transmitter Info";
+
+/* */
+"Hardware" = "Hardware";
+
+/* */
+"Firmware" = "Firmware";
+
+/* */
+"Connection State" = "Connection State";
+
+/* */
+"Transmitter Type" = "Transmitter Type";
+
+/* */
+"Sensor Type" = "Sensor Type";
+
+/* */
+"Factory Calibration Parameters" = "Factory Calibration Parameters";
+
+/* */
+"Valid for footer" = "Valid for footer";
+
+/* */
+"Edit calibrations" = "Edit calibrations";
+
+/* */
+"edit calibration clicked" = "edit calibration clicked";
+
+/* */
+"Delete CGM" = "Delete CGM";
+
+/* */
+"Are you sure you want to remove this cgm from loop?" = "Are you sure you want to remove this cgm from loop?";
+
+/* */
+"There is no undo" = "There is no undo";
+
+/* */
+"Advanced" = "Advanced";
+
+/* */
+"Alarms" = "Alarms";
+
+/* */
+"Glucose Settings" = "Glucose Settings";
+
+/* */
+"Notifications" = "Notifications";
+
+/* */
+"Export logs" = "Export logs";
+
+/* */
+"Export not available" = "Export not available";
+
+/* */
+"Log export requires ios 15" = "Log export requires ios 15";
+
+/* */
+"Got it!" = "Got it!";
+
+/* */
+"Saved to %@" = "Saved to %@";
+
+/* */
+"No logs available" = "No logs available";
+
+/* */
+"Glucose Notification visibility" = "Glucose Notification visibility";
+
+/* */
+"Always Notify Glucose" = "Always Notify Glucose";
+
+/* */
+"Notify per reading" = "Notify per reading";
+
+/* */
+"Value" = "Value";
+
+/* */
+"Adds Phone Battery" = "Adds Phone Battery";
+
+/* */
+"Adds Transmitter Battery" = "Adds Transmitter Battery";
+
+/* */
+"Also vibrate" = "Also vibrate";
+
+/* */
+"Additional notification types" = "Additional notification types";
+
+/* */
+"Misc" = "Misc";
+
+/* */
+"Unit override" = "Unit override";
+
+/* */
+"Low" = "Low";
+
+/* */
+"High" = "High";
+
+/* */
+"glucose" = "glucose";
+
+/* */
+"Schedule " = "Schedule ";
+
+/* */
+"tapped save schedules" = "tapped save schedules";
+
+/* */
+"Error" = "Error";
+
+/* */
+"Some ui element was incorrectly specified" = "Some ui element was incorrectly specified";
+
+/* */
+"Success" = "Success";
+
+/* */
+"Schedules were saved successfully!" = "Schedules were saved successfully!";
+
+/* */
+"High Glucose Alarm active" = "High Glucose Alarm active";
+
+/* */
+"Low Glucose Alarm active" = "Low Glucose Alarm active";
+
+/* */
+"No Glucose Alarm active" = "No Glucose Alarm active";
+
+/* */
+"snoozing until %@" = "snoozing until %@";
+
+/* */
+"not snoozing" = "not snoozing";
+
+/* */
+"nothing to see here" = "nothing to see here";
+
+/* */
+"snooze from testview clicked" = "snooze from testview clicked";
+
+/* */
+"will snooze for %@ until %@" = "will snooze for %@ until %@";
+
+/* */
+"Click to Snooze Alerts" = "Click to Snooze Alerts";
+
+/* */
+"Strength" = "Strength";
+
+/* */
+"Hold the top of your iPhone near the sensor to pair" = "Hold the top of your iPhone near the sensor to pair";
+
+/* */
+"Sensor not found" = "Sensor not found";
+
+/* */
+"Also play alert sound" = "Also play alert sound";
+
+/* */
+"Notification Settings" = "Notification Settings";
+
+/* */
+"Found devices: %d" = "Found devices: %d";
+
+/* */
+"Backfill options" = "Backfill options";
+
+/* */
+"Backfilling from trend is currently not well supported by Loop" = "Backfilling from trend is currently not well supported by Loop";
+
+/* */
+"Backfill from history" = "Backfill from history";
+
+/* */
+"Backfill from trend" = "Backfill from trend";
+
+/* */
+"Debug options" = "Debug options";
+
+/* */
+"Adds a lot of data to the Issue Report " = "Adds a lot of data to the Issue Report ";
+
+/* */
+"Persist sensordata" = "Persist sensordata";
+
+/* */
+"Battery" = "Battery";
+
+/* */
+"Also add source info" = "Also add source info";
+
+/* */
+"Carbs Required Threshold" = "Carbs Required Threshold";
+
+/* */
+"Carbs required: %d g" = "Carbs required: %d g";
+
+/* */
+"To prevent LOW required %d g of carbs" = "To prevent LOW required %d g of carbs";
+
+/* */
+"FreeAPS X not active" = "FreeAPS X not active";
+
+/* */
+"Last loop was more then %d min ago" = "Last loop was more then %d min ago";
+
+/* Glucose badge */
+"Show glucose on the app badge" = "Show glucose on the app badge";
 
 /* */
 "Backfill glucose" = "Backfill glucose";
 
+
+/* Headers for settings ------------------- */
+
+
+"OpenAPS main settings" = "OpenAPS main settings";
+
+"OpenAPS SMB settings" = "OpenAPS SMB settings";
+
+"OpenAPS targets settings" = "OpenAPS targets settings";
+
+"OpenAPS other settings" = "OpenAPS other settings";
+
+
+/* Glucose Simulator CGM */
+"Glucose Simulator" = "Glucose Simulator";
+
+/* Restored state message */
+"Bluetooth State restored (APS restarted?). Found %d peripherals, and connected to %@ with identifier %@" = "Bluetooth State restored (APS restarted?). Found %d peripherals, and connected to %@ with identifier %@";
+
 /*
   Infotexts from openaps.docs and androidaps.docs
-  FreeAPS
+  FreeAPS X
 */
-/* ”Rewind Resets Autosens” */
 
+/* ”Rewind Resets Autosens” */
 "This feature, enabled by default, resets the autosens ratio to neutral when you rewind your pump, on the assumption that this corresponds to a probable site change. Autosens will begin learning sensitivity anew from the time of the rewind, which may take up to 6 hours. If you usually rewind your pump independently of site changes, you may want to consider disabling this feature." = "This feature, enabled by default, resets the autosens ratio to neutral when you rewind your pump, on the assumption that this corresponds to a probable site change. Autosens will begin learning sensitivity anew from the time of the rewind, which may take up to 6 hours. If you usually rewind your pump independently of site changes, you may want to consider disabling this feature.";
 
 /* ”High Temptarget Raises Sensitivity" */
@@ -534,7 +985,7 @@ Enact a temp Basal or a temp target */
 "Smallest possible bolus amount" = "Smallest possible bolus amount";
 
 /* "Insulin Peak Time" */
-"Time of maximum blood glucose lowering effect of insulin, in minutes. Beware: Oref assumes for ultra-papid (Lyumjev) & rapid-acting (Fiasp) curves minimal (35 & 50 min) and maximal (100 & 120 min) applicable insulinPeakTimes. Using a custom insulinPeakTime outside these bounds will result in issues with FreeAPS-X, longer loop calculations and possible red loops." = "Time of maximum blood glucose lowering effect of insulin, in minutes. Beware: Oref assumes for ultra-papid (Lyumjev) & rapid-acting (Fiasp) curves minimal (35 & 50 min) and maximal (100 & 120 min) applicable insulinPeakTimes. Using a custom insulinPeakTime outside these bounds will result in issues with FreeAPS-X, longer loop calculations and possible red loops.";
+"Time of maximum blood glucose lowering effect of insulin, in minutes. Beware: Oref assumes for ultra-rapid (Lyumjev) & rapid-acting (Fiasp) curves minimal (35 & 50 min) and maximal (100 & 120 min) applicable insulinPeakTimes. Using a custom insulinPeakTime outside these bounds will result in issues with FreeAPS-X, longer loop calculations and possible red loops." = "Time of maximum blood glucose lowering effect of insulin, in minutes. Beware: Oref assumes for ultra-rapid (Lyumjev) & rapid-acting (Fiasp) curves minimal (35 & 50 min) and maximal (100 & 120 min) applicable insulinPeakTimes. Using a custom insulinPeakTime outside these bounds will result in issues with FreeAPS-X, longer loop calculations and possible red loops.";
 
 /* "Carbs Req Threshold" */
 "Grams of carbsReq to trigger a pushover. Defaults to 1 (for 1 gram of carbohydrate). Can be increased if you only want to get Pushover for carbsReq at X threshold." = "Grams of carbsReq to trigger a pushover. Defaults to 1 (for 1 gram of carbohydrate). Can be increased if you only want to get Pushover for carbsReq at X threshold.";

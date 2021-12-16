@@ -2,8 +2,8 @@
   Localizable.strings
   FreeAPS X
 */
+/* -------------------------------- */
 /* Bolus screen when adding insulin */
-
 "Add insulin without actually bolusing" = "Добавить инсулин без болюса";
 
 /* Add insulin from source outside of pump */
@@ -66,6 +66,9 @@
 
 /* Add carbs screen */
 "Add Carbs" = "Ввод углеводов";
+
+/* Add carbs header and button in Watch app. You can skip the last " " space. It's just for differentiation */
+"Add Carbs " = "Ввод углеводов";
 
 /*  */
 "Amount Carbs" = "Кол-во углеводов";
@@ -326,6 +329,9 @@ Enact a temp Basal or a temp target */
 /* grams */
 " g" = " г";
 
+/* The short unit display string for grams */
+"g" = "г";
+
 /* when 0 U/hr */
 "0 U/hr" = "0 Ед/час";
 
@@ -395,10 +401,19 @@ Enact a temp Basal or a temp target */
 /* Other CGM setting */
 "Other" = "Прочее";
 
+/* Whatch app alert */
+"Set temp targets presets on iPhone first" = "Сначала установите временные цели в приложении на iPhone";
 
-/* Calendar and Libre transmitter settings --------------*/
+/* Updating Watch app */
+"Updating..." = "Обновление...";
+
+/* Header for Temp targets in Watch app */
+"Temp Targets" = "Временные цели";
+
+
+/* Calendar and Libre transmitter settings ---------------
+ */
 /* */
-
 "Configure Libre Transmitter" = "Настроить Libre Transmitter";
 
 /* */
@@ -466,9 +481,6 @@ Enact a temp Basal or a temp target */
 
 /* */
 "Remove All" = "Удалить все";
-
-/* */
-"Calibrations" = "Калибровки";
 
 /* */
 "About the Process" = "О процессе";
@@ -655,6 +667,7 @@ Enact a temp Basal or a temp target */
 
 /* */
 "Delete CGM" = "Удалить CGM";
+
 /* */
 "Are you sure you want to remove this cgm from loop?" = "Вы уверены, что хотите удалить этот CGM?";
 
@@ -818,7 +831,7 @@ Enact a temp Basal or a temp target */
 "Battery" = "Батарея";
 
 /* */
-"Also add source info" = "Дополнительная информация об истонике";
+"Also add source info" = "Дополнительная информация об источнике";
 
 /* */
 "Carbs Required Threshold" = "Порог необходимых углеводов";
@@ -841,10 +854,11 @@ Enact a temp Basal or a temp target */
 /* */
 "Backfill glucose" = "Скачать глюкозу";
 
+/* About this source */
+"About this source" = "Об этом источнике";
 
-/* Headers for settings ------------------- */
 
-
+/* Headers for settings ----------------------- */
 "OpenAPS main settings" = "Основные настройки OpenAPS";
 
 "OpenAPS SMB settings" = "Настройки OpenAPS SMB";
@@ -853,15 +867,45 @@ Enact a temp Basal or a temp target */
 
 "OpenAPS other settings" = "Другие настройки OpenAPS";
 
-
 /* Glucose Simulator CGM */
 "Glucose Simulator" = "Симулятор глюкозы";
 
 /* Restored state message */
 "Bluetooth State restored (APS restarted?). Found %d peripherals, and connected to %@ with identifier %@" = "Bluetooth состояние восстановлено (APS перезапущен?). Найдено %d периферийных устройств и подключено к %@ с идентификатором %@";
 
+/* Shared app group */
+"Shared app group" = "Общая группа приложений";
 
-/*
+/* Native G6 app */
+"Native G6 app" = "Родное приложение G6";
+
+/* Native G5 app */
+"Native G5 app" = "Родное приложение G5";
+
+/* Minilink transmitter */
+"Minilink transmitter" = "Передатчик Minilink";
+
+/* Simple simulator */
+"Simple simulator" = "Простой симулятор";
+
+/* Direct connection with Libre 1 transmitters or Libre 2 */
+"Direct connection with Libre 1 transmitters or Libre 2" = "Прямое соединение с передатчиками Libre 1 или Libre 2";
+
+/* Online or internal server */
+"Online or internal server" = "Онлайн или внутренний сервер";
+
+/* HealthKit intergration --------------------*/
+/* */
+"Apple Health" = "Apple Health";
+
+/* */
+"Connect to Apple Health" = "Подключить к Apple Health";
+
+/* Show when have not permissions for writing to Health */
+"For write data to Apple Health you must give permissions in Settings > Health > Data Access" = "Чтобы записывать данные в Apple Health вам необходимо дать соответствующие разрешения, перейдя к меню Настройки > Здоровье > Доступ к данным";
+/* --------------------------------------------
+
+
   Infotexts from openaps.docs and androidaps.docs
   FreeAPS X
 */
@@ -970,7 +1014,7 @@ Enact a temp Basal or a temp target */
 "Smallest possible bolus amount" = "Минимально возможный размер болюса";
 
 /* "Insulin Peak Time" */
-"Time of maximum blood glucose lowering effect of insulin, in minutes. Beware: Oref assumes for ultra-papid (Lyumjev) & rapid-acting (Fiasp) curves minimal (35 & 50 min) and maximal (100 & 120 min) applicable insulinPeakTimes. Using a custom insulinPeakTime outside these bounds will result in issues with FreeAPS-X, longer loop calculations and possible red loops." = "Пиковое время инсулина в минутах. Время необходимое инсулину для достижения максимального воздействия";
+"Time of maximum blood glucose lowering effect of insulin, in minutes. Beware: Oref assumes for ultra-rapid (Lyumjev) & rapid-acting (Fiasp) curves minimal (35 & 50 min) and maximal (100 & 120 min) applicable insulinPeakTimes. Using a custom insulinPeakTime outside these bounds will result in issues with FreeAPS-X, longer loop calculations and possible red loops." = "Пиковое время инсулина в минутах. Время необходимое инсулину для достижения максимального воздействия";
 
 /* "Carbs Req Threshold" */
 "Grams of carbsReq to trigger a pushover. Defaults to 1 (for 1 gram of carbohydrate). Can be increased if you only want to get Pushover for carbsReq at X threshold." = "Требуемое количество грамм углеводов для срабатывания оповещения pushover. По умолчанию 1 (для 1 грамма углевода). Можно увеличить только если вы хотите получить Pushover для carbsReq при X пороге.";

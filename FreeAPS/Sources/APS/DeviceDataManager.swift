@@ -1,3 +1,4 @@
+import Algorithms
 import Combine
 import Foundation
 import LoopKit
@@ -9,7 +10,7 @@ import SwiftDate
 import Swinject
 import UserNotifications
 
-protocol DeviceDataManager {
+protocol DeviceDataManager: GlucoseSource {
     var pumpManager: PumpManagerUI? { get set }
     var pumpDisplayState: CurrentValueSubject<PumpDisplayState?, Never> { get }
     var recommendsLoop: PassthroughSubject<Void, Never> { get }
@@ -165,17 +166,18 @@ final class BaseDeviceDataManager: DeviceDataManager, Injectable {
             return Just([]).eraseToAnyPublisher()
         }
 
-        medtronic.cgmManagerDelegate = self
-
-        guard lastFetchGlucoseDate.addingTimeInterval(4.5 * 60) < Date() else {
+        guard lastFetchGlucoseDate.addingTimeInterval(5.minutes.timeInterval) < Date() else {
             return Just([]).eraseToAnyPublisher()
         }
+
+        medtronic.cgmManagerDelegate = self
 
         return Future<[BloodGlucose], Error> { promise in
             self.processQueue.async {
                 medtronic.fetchNewDataIfNeeded { result in
                     switch result {
                     case .noData:
+                        debug(.deviceManager, "Minilink glucose is empty")
                         promise(.success([]))
                     case let .newData(glucose):
                         let directions: [BloodGlucose.Direction?] = [nil]
