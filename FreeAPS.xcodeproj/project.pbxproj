@@ -807,6 +807,14 @@
 			path = View;
 			sourceTree = "<group>";
 		};
+		192F0FF5276AC36D0085BE4D /* Recovered References */ = {
+			isa = PBXGroup;
+			children = (
+				199561C0275E61A50077B976 /* HealthKit.framework */,
+			);
+			name = "Recovered References";
+			sourceTree = "<group>";
+		};
 		198377CF266BFEDE004DE65E /* Localizations */ = {
 			isa = PBXGroup;
 			children = (
@@ -1202,6 +1210,7 @@
 				38E8752827554D5700975559 /* FreeAPSWatch WatchKit Extension */,
 				388E595925AD948C0019842D /* Products */,
 				3818AA48274C267000843DB3 /* Frameworks */,
+				192F0FF5276AC36D0085BE4D /* Recovered References */,
 			);
 			sourceTree = "<group>";
 		};
