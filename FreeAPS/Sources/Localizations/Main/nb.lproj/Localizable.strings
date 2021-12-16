@@ -855,7 +855,7 @@ Enact a temp Basal or a temp target */
 "Backfill glucose" = "Tilbakefyll blodsukker";
 
 /* About this source */
-"About this source" = "About this source";
+"About this source" = "Om denne kilden";
 
 
 /* Headers for settings ----------------------- */
@@ -871,7 +871,28 @@ Enact a temp Basal or a temp target */
 "Glucose Simulator" = "Blodsukker-simulator";
 
 /* Restored state message */
-"Bluetooth State restored (APS restarted?). Found %d peripherals, and connected to %@ with identifier %@" = "Bluetooth State restored (APS restarted?). Found %d peripherals, and connected to %@ with identifier %@";
+"Bluetooth State restored (APS restarted?). Found %d peripherals, and connected to %@ with identifier %@" = "Bluetooth-status gjenopprettet (APS restartet?). Funnet %d ennheter, og koblet til %@ med identifikator %@";
+
+/* Shared app group */
+"Shared app group" = "Delt app-gruppe";
+
+/* Native G6 app */
+"Native G6 app" = "Opprinnelig G6-app";
+
+/* Native G5 app */
+"Native G5 app" = "Opprinnelig G5-app";
+
+/* Minilink transmitter */
+"Minilink transmitter" = "Minilink sender";
+
+/* Simple simulator */
+"Simple simulator" = "Enkel simulator";
+
+/* Direct connection with Libre 1 transmitters or Libre 2 */
+"Direct connection with Libre 1 transmitters or Libre 2" = "Direkte tilkobling med Libre 1 sendere eller Libre 2";
+
+/* Online or internal server */
+"Online or internal server" = "Online eller intern server";
 
 /* Shared app group */
 "Shared app group" = "Shared app group";
@@ -896,13 +917,13 @@ Enact a temp Basal or a temp target */
 
 /* HealthKit intergration --------------------*/
 /* */
-"Apple Health" = "Apple Health";
+"Apple Health" = "Apple Helse";
 
 /* */
-"Connect to Apple Health" = "Connect to Apple Health";
+"Connect to Apple Health" = "Koble til Apple Helse";
 
 /* Show when have not permissions for writing to Health */
-"For write data to Apple Health you must give permissions in Settings > Health > Data Access" = "For write data to Apple Health you must give permissions in Settings > Health > Data Access";
+"For write data to Apple Health you must give permissions in Settings > Health > Data Access" = "For å skrive data til Apple Health må du gi rettigheter i Innstillinger > Helse > Datatilgang";
 /* --------------------------------------------
 
 

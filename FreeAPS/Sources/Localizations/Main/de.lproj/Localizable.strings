@@ -855,7 +855,7 @@ Enact a temp Basal or a temp target */
 "Backfill glucose" = "Glucose Werte auffüllen";
 
 /* About this source */
-"About this source" = "About this source";
+"About this source" = "Über diesen Quellcode";
 
 
 /* Headers for settings ----------------------- */
@@ -874,7 +874,7 @@ Enact a temp Basal or a temp target */
 "Bluetooth State restored (APS restarted?). Found %d peripherals, and connected to %@ with identifier %@" = "Bluetooth-Status wiederhergestellt (APS neu gestartet?). %d Peripheriegeräte gefunden und mit %@ mit der Kennung %@ verbunden";
 
 /* Shared app group */
-"Shared app group" = "Shared app group";
+"Shared app group" = "Gemeinsame App-Gruppe";
 
 /* Native G6 app */
 "Native G6 app" = "Native G6 app";
@@ -883,16 +883,16 @@ Enact a temp Basal or a temp target */
 "Native G5 app" = "Native G5 app";
 
 /* Minilink transmitter */
-"Minilink transmitter" = "Minilink transmitter";
+"Minilink transmitter" = "Minilink Transmitter";
 
 /* Simple simulator */
-"Simple simulator" = "Simple simulator";
+"Simple simulator" = "Einfacher Simulator";
 
 /* Direct connection with Libre 1 transmitters or Libre 2 */
-"Direct connection with Libre 1 transmitters or Libre 2" = "Direct connection with Libre 1 transmitters or Libre 2";
+"Direct connection with Libre 1 transmitters or Libre 2" = "Direkte Verbindung mit Libre 1 Transmittern oder Libre 2";
 
 /* Online or internal server */
-"Online or internal server" = "Online or internal server";
+"Online or internal server" = "Online oder interner Server";
 
 /* HealthKit intergration --------------------*/
 /* */
@@ -941,11 +941,11 @@ Enact a temp Basal or a temp target */
 "Many people occasionally forget to resume / unsuspend their pump after reconnecting it. If you’re one of them, and you are willing to reliably set a zero temp basal whenever suspending and disconnecting your pump, this feature has your back. If enabled, it will automatically resume / unsuspend the pump if you forget to do so before your zero temp expires. As long as the zero temp is still running, it will leave the pump suspended." = "Many people occasionally forget to resume / unsuspend their pump after reconnecting it. If you’re one of them, and you are willing to reliably set a zero temp basal whenever suspending and disconnecting your pump, this feature has your back. If enabled, it will automatically resume / unsuspend the pump if you forget to do so before your zero temp expires. As long as the zero temp is still running, it will leave the pump suspended.";
 
 /* "Enable UAM" */
-"With this option enabled, the SMB algorithm can recognize unannounced meals. This is helpful, if you forget to tell FreeAPS X about your carbs or estimate your carbs wrong and the amount of entered carbs is wrong or if a meal with lots of fat and protein has a longer duration than expected. Without any carb entry, UAM can recognize fast glucose increasments caused by carbs, adrenaline, etc, and tries to adjust it with SMBs. This also works the opposite way: if there is a fast glucose decreasement, it can stop SMBs earlier." = "With this option enabled, the SMB algorithm can recognize unannounced meals. This is helpful, if you forget to tell FreeAPS X about your carbs or estimate your carbs wrong and the amount of entered carbs is wrong or if a meal with lots of fat and protein has a longer duration than expected. Without any carb entry, UAM can recognize fast glucose increasments caused by carbs, adrenaline, etc, and tries to adjust it with SMBs. This also works the opposite way: if there is a fast glucose decreasement, it can stop SMBs earlier.";
+"With this option enabled, the SMB algorithm can recognize unannounced meals. This is helpful, if you forget to tell FreeAPS X about your carbs or estimate your carbs wrong and the amount of entered carbs is wrong or if a meal with lots of fat and protein has a longer duration than expected. Without any carb entry, UAM can recognize fast glucose increasments caused by carbs, adrenaline, etc, and tries to adjust it with SMBs. This also works the opposite way: if there is a fast glucose decreasement, it can stop SMBs earlier." = "Wenn diese Option aktiviert ist, kann der SMB-Algorithmus unangekündigte Mahlzeiten erkennen. Dies ist hilfreich, wenn Sie vergessen Ihre Kohlenhydrate einzugeben oder Ihre Kohlenhydrate falsch einschätzen und die Menge der eingegebenen Kohlenhydrate falsch ist. Außerdem wenn eine Mahlzeit mit viel Fett und Protein eine längere Dauer als erwartet hat. UAM erkennt ohne Kohlenhydrateingabe schnelle Glukosesteigerungen, die durch Kohlenhydrate, Adrenalin usw. verursacht werden, und versucht es mit SMBs zu regulieren. Dies funktioniert auch umgekehrt: Bei einer schnellen Glukoseabnahme kann es SMB früher stoppen.";
 
 /* Enable SMB With COB" */
 
-"This enables supermicrobolus (SMB) while carbs on board (COB) are positive." = "This enables supermicrobolus (SMB) while carbs on board (COB) are positive.";
+"This enables supermicrobolus (SMB) while carbs on board (COB) are positive." = "Dies ermöglicht Supermicrobolus (SMB), während Kohlenhydrate an Bord (COB) positiv sind.";
 
 /* "Enable SMB With Temptarget” */
 "This enables supermicrobolus (SMB) with eating soon / low temp targets. With this feature enabled, any temporary target below 100mg/dL, such as a temp target of 99 (or 80, the typical eating soon target) will enable SMB." = "This enables supermicrobolus (SMB) with eating soon / low temp targets. With this feature enabled, any temporary target below 100mg/dL, such as a temp target of 99 (or 80, the typical eating soon target) will enable SMB.";
@@ -969,16 +969,16 @@ Enact a temp Basal or a temp target */
 "Max IOB is the maximum amount of insulin on board from all sources – both basal (or SMB correction) and bolus insulin – that your loop is allowed to accumulate to treat higher-than-target BG. Unlike the other two OpenAPS safety settings (max_daily_safety_multiplier and current_basal_safety_multiplier), max_iob is set as a fixed number of units of insulin. As of now manual boluses are NOT limited by this setting. \n\n To test your basal rates during nighttime, you can modify the Max IOB setting to zero while in Closed Loop. This will enable low glucose suspend mode while testing your basal rates settings\n\n(Tip from https://www.loopandlearn.org/freeaps-x/#open-loop)." = "Max IOB is the maximum amount of insulin on board from all sources – both basal (or SMB correction) and bolus insulin – that your loop is allowed to accumulate to treat higher-than-target BG. Unlike the other two OpenAPS safety settings (max_daily_safety_multiplier and current_basal_safety_multiplier), max_iob is set as a fixed number of units of insulin. As of now manual boluses are NOT limited by this setting. \n\n To test your basal rates during nighttime, you can modify the Max IOB setting to zero while in Closed Loop. This will enable low glucose suspend mode while testing your basal rates settings\n\n(Tip from https://www.loopandlearn.org/freeaps-x/#open-loop).";
 
 /* "Max Daily Safety Multiplier" */
-"This is an important OpenAPS safety limit. The default setting (which is unlikely to need adjusting) is 3. This means that OpenAPS will never be allowed to set a temporary basal rate that is more than 3x the highest hourly basal rate programmed in a user’s pump, or, if enabled, determined by autotune." = "This is an important OpenAPS safety limit. The default setting (which is unlikely to need adjusting) is 3. This means that OpenAPS will never be allowed to set a temporary basal rate that is more than 3x the highest hourly basal rate programmed in a user’s pump, or, if enabled, determined by autotune.";
+"This is an important OpenAPS safety limit. The default setting (which is unlikely to need adjusting) is 3. This means that OpenAPS will never be allowed to set a temporary basal rate that is more than 3x the highest hourly basal rate programmed in a user’s pump, or, if enabled, determined by autotune." = "Dies ist ein wichtiges OpenAPS-Sicherheitslimit. Die Standardeinstellung (die wahrscheinlich nicht angepasst werden muss) ist 3. Das bedeutet, dass es OpenAPS niemals erlaubt sein wird, eine temporäre Basalrate festzulegen, die mehr als das dreifache der höchsten Stunden-Basalrate ist, die in der Pumpe eines Benutzers gespeichert ist. Auch bei aktiviertem Autotune gilt diese Grenze.";
 
 /* "Current Basal Safety Multiplier" */
-"This is another important OpenAPS safety limit. The default setting (which is also unlikely to need adjusting) is 4. This means that OpenAPS will never be allowed to set a temporary basal rate that is more than 4x the current hourly basal rate programmed in a user’s pump, or, if enabled, determined by autotune." = "This is another important OpenAPS safety limit. The default setting (which is also unlikely to need adjusting) is 4. This means that OpenAPS will never be allowed to set a temporary basal rate that is more than 4x the current hourly basal rate programmed in a user’s pump, or, if enabled, determined by autotune.";
+"This is another important OpenAPS safety limit. The default setting (which is also unlikely to need adjusting) is 4. This means that OpenAPS will never be allowed to set a temporary basal rate that is more than 4x the current hourly basal rate programmed in a user’s pump, or, if enabled, determined by autotune." = "Dies ist ein weiteres wichtiges OpenAPS-Sicherheitslimit. Die Standardeinstellung (die ebenfalls vermutlich nicht angepasst werden muss) ist 4. Das bedeutet, dass OpenAPS niemals eine temporäre Basalrate festlegen darf, die mehr als das vierfache der aktuellen Stunden-Basalrate ist, die in der Pumpe eines Benutzers programmiert ist. Auch ein aktiviertes Autotune kann diese Grenze nicht überschreiten.";
 
 /* "Autosens Max" */
 "This is a multiplier cap for autosens (and autotune) to set a 20% max limit on how high the autosens ratio can be, which in turn determines how high autosens can adjust basals, how low it can adjust ISF, and how low it can set the BG target." = "This is a multiplier cap for autosens (and autotune) to set a 20% max limit on how high the autosens ratio can be, which in turn determines how high autosens can adjust basals, how low it can adjust ISF, and how low it can set the BG target.";
 
 /* "Autosens Min" */
-"The other side of the autosens safety limits, putting a cap on how low autosens can adjust basals, and how high it can adjust ISF and BG targets." = "The other side of the autosens safety limits, putting a cap on how low autosens can adjust basals, and how high it can adjust ISF and BG targets.";
+"The other side of the autosens safety limits, putting a cap on how low autosens can adjust basals, and how high it can adjust ISF and BG targets." = "Die andere Seite der Autosens Sicherheitsgrenzen, indem eine Grenze gesetzt wird, wie niedrig Autosens Basaleinstellung einstellen kann, und wie hoch er ISF und BG Ziele anpassen darf.";
 
 /* "Half Basal Exercise Target" */
 "Set to a number, e.g. 160, which means when temp target is 160 mg/dL and exercise_mode=true, run 50% basal at this level (120 = 75%; 140 = 60%). This can be adjusted, to give you more control over your exercise modes." = "Set to a number, e.g. 160, which means when temp target is 160 mg/dL and exercise_mode=true, run 50% basal at this level (120 = 75%; 140 = 60%). This can be adjusted, to give you more control over your exercise modes.";
@@ -996,7 +996,7 @@ Enact a temp Basal or a temp target */
 "The default of 0.5 for this value keeps autotune ISF closer to pump ISF via a weighted average of fullNewISF and pumpISF. 1.0 allows full adjustment, 0 is no adjustment from pump ISF." = "The default of 0.5 for this value keeps autotune ISF closer to pump ISF via a weighted average of fullNewISF and pumpISF. 1.0 allows full adjustment, 0 is no adjustment from pump ISF.";
 
 /* "Remaining Carbs Fraction" */
-"This is the fraction of carbs we’ll assume will absorb over 4h if we don’t yet see carb absorption." = "This is the fraction of carbs we’ll assume will absorb over 4h if we don’t yet see carb absorption.";
+"This is the fraction of carbs we’ll assume will absorb over 4h if we don’t yet see carb absorption." = "Dies ist die maximale Anzahl der geschätzt abgebauten Kohlenhydrate in 4 Stunden, wenn keine Kohlenhydratabbau ersichtlich ist.";
 
 /* "Remaining Carbs Cap" */
 "This is the amount of the maximum number of carbs we’ll assume will absorb over 4h if we don’t yet see carb absorption." = "Dies ist die maximale Anzahl der geschätzten abgebauten Kohlenhydrate in 4 Stunden, wenn keine Kohlenhydrat-Resorption ersichtlich ist.";
