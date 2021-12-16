@@ -28,10 +28,12 @@ extension AppleHealthKit {
                         return
                     }
 
-                    self.healthKitManager.enableBackgroundDelivery()
+                    debug(.service, "User set permission for HealthKitManager")
+
                     self.healthKitManager.createObserver()
+                    self.healthKitManager.enableBackgroundDelivery()
                     DispatchQueue.main.async {
-                        self.needShowInformationTextForSetPermissions = !self.healthKitManager.areAllowAllPermissions
+                        self.needShowInformationTextForSetPermissions = !self.healthKitManager.checkAvailabilitySaveBG()
                     }
                 }
             }
