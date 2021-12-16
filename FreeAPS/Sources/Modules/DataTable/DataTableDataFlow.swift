@@ -71,8 +71,8 @@ enum DataTable {
         }
 
         var amountText: String {
-            guard let amount = amount else {
-                return ""
+            guard let amount = amount, amount > 0 else {
+                return "Cancel temp"
             }
 
             switch type {
@@ -120,7 +120,7 @@ enum DataTable {
         }
 
         var durationText: String? {
-            guard let duration = duration else {
+            guard let duration = duration, duration > 0 else {
                 return nil
             }
             return numberFormater.string(from: duration as NSNumber)! + " min"

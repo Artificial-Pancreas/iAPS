@@ -345,6 +345,9 @@ final class BaseAPSManager: APSManager, Injectable {
                 debug(.apsManager, "Temp Basal succeeded")
                 let temp = TempBasal(duration: Int(duration / 60), rate: Decimal(rate), temp: .absolute, timestamp: Date())
                 self.storage.save(temp, as: OpenAPS.Monitor.tempBasal)
+                if rate == 0, duration == 0 {
+                    self.pumpHistoryStorage.saveCancelTempEvents()
+                }
             case let .failure(error):
                 debug(.apsManager, "Temp Basal failed with error: \(error.localizedDescription)")
                 self.processError(APSError.pumpError(error))

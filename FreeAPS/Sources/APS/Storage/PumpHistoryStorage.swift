@@ -13,6 +13,7 @@ protocol PumpHistoryStorage {
     func storeJournalCarbs(_ carbs: Int)
     func recent() -> [PumpHistoryEvent]
     func nightscoutTretmentsNotUploaded() -> [NigtscoutTreatment]
+    func saveCancelTempEvents()
 }
 
 final class BasePumpHistoryStorage: PumpHistoryStorage, Injectable {
@@ -45,26 +46,34 @@ final class BasePumpHistoryStorage: PumpHistoryStorage, Injectable {
                         carbInput: nil
                     )]
                 case .tempBasal:
-                    // get only start of TBR
-                    guard let dose = event.dose, dose.deliveredUnits ?? 0 == 0 else { return [] }
+                    guard let dose = event.dose else { return [] }
+
                     let rate = Decimal(string: dose.unitsPerHour.description)
-                    let minutes = Int((dose.endDate - dose.startDate).timeInterval / 60)
+                    let minutes = (dose.endDate - dose.startDate).timeInterval / 60
+                    let delivered = dose.deliveredUnits
+                    let date = event.date
+
+                    let isCancel = !event.isMutable && delivered != nil
+                    guard !isCancel else { return [] }
+
+                    let basalID = UUID().uuidString
+
                     return [
                         PumpHistoryEvent(
-                            id: id,
+                            id: basalID,
                             type: .tempBasalDuration,
-                            timestamp: event.date,
+                            timestamp: date,
                             amount: nil,
                             duration: nil,
-                            durationMin: minutes,
+                            durationMin: Int(round(minutes)),
                             rate: nil,
                             temp: nil,
                             carbInput: nil
                         ),
                         PumpHistoryEvent(
-                            id: "_" + id,
+                            id: "_" + basalID,
                             type: .tempBasal,
-                            timestamp: event.date,
+                            timestamp: date,
                             amount: nil,
                             duration: nil,
                             durationMin: nil,
@@ -258,5 +267,37 @@ final class BasePumpHistoryStorage: PumpHistoryStorage, Injectable {
         let treatments = Array(Set([bolusesAndCarbs, temps].flatMap { $0 }).subtracting(Set(uploaded)))
 
         return treatments.sorted { $0.createdAt! > $1.createdAt! }
+    }
+
+    func saveCancelTempEvents() {
+        let basalID = UUID().uuidString
+        let date = Date()
+
+        let events = [
+            PumpHistoryEvent(
+                id: basalID,
+                type: .tempBasalDuration,
+                timestamp: date,
+                amount: nil,
+                duration: nil,
+                durationMin: 0,
+                rate: nil,
+                temp: nil,
+                carbInput: nil
+            ),
+            PumpHistoryEvent(
+                id: "_" + basalID,
+                type: .tempBasal,
+                timestamp: date,
+                amount: nil,
+                duration: nil,
+                durationMin: nil,
+                rate: 0,
+                temp: .absolute,
+                carbInput: nil
+            )
+        ]
+
+        storeEvents(events)
     }
 }
