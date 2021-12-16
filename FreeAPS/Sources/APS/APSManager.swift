@@ -288,7 +288,7 @@ final class BaseAPSManager: APSManager, Injectable {
     func roundBolus(amount: Decimal) -> Decimal {
         guard let pump = pumpManager else { return amount }
         let rounded = Decimal(pump.roundToSupportedBolusVolume(units: Double(amount)))
-        let maxBolus = Decimal(pump.roundToSupportedBolusVolume(units: Double(settingsManager.pumpSettings.maxBolus))) 
+        let maxBolus = Decimal(pump.roundToSupportedBolusVolume(units: Double(settingsManager.pumpSettings.maxBolus)))
         return min(rounded, maxBolus)
     }
 
