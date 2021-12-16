@@ -71,7 +71,11 @@ enum DataTable {
         }
 
         var amountText: String {
-            guard let amount = amount, amount > 0 else {
+            guard let amount = amount else {
+                return ""
+            }
+
+            if amount == 0, duration == 0 {
                 return "Cancel temp"
             }
 
