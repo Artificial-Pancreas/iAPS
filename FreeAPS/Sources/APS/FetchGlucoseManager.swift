@@ -18,7 +18,6 @@ final class BaseFetchGlucoseManager: FetchGlucoseManager, Injectable {
     private var lifetime = Lifetime()
     private let timer = DispatchTimer(timeInterval: 1.minutes.timeInterval)
 
-    private lazy var appGroupSource = AppGroupSource()
     private lazy var dexcomSource = DexcomSource()
     private lazy var simulatorSource = GlucoseSimulatorSource()
 
@@ -33,7 +32,7 @@ final class BaseFetchGlucoseManager: FetchGlucoseManager, Injectable {
     private func updateGlucoseSource() {
         switch settingsManager.settings.cgm {
         case .xdrip:
-            glucoseSource = appGroupSource
+            glucoseSource = AppGroupSource(from: "xDrip")
         case .dexcomG5,
              .dexcomG6:
             glucoseSource = dexcomSource
@@ -44,7 +43,7 @@ final class BaseFetchGlucoseManager: FetchGlucoseManager, Injectable {
         case .libreTransmitter:
             glucoseSource = libreTransmitter
         case .glucoseDirect:
-            glucoseSource = appGroupSource
+            glucoseSource = AppGroupSource(from: "GlucoseDirect")
         case .enlite:
             glucoseSource = deviceDataManager
         }
