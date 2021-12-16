@@ -75,6 +75,10 @@ enum DataTable {
                 return ""
             }
 
+            if amount == 0, duration == 0 {
+                return "Cancel temp"
+            }
+
             switch type {
             case .carbs:
                 return numberFormater.string(from: amount as NSNumber)! + NSLocalizedString(" g", comment: "gram of carbs")
@@ -120,7 +124,7 @@ enum DataTable {
         }
 
         var durationText: String? {
-            guard let duration = duration else {
+            guard let duration = duration, duration > 0 else {
                 return nil
             }
             return numberFormater.string(from: duration as NSNumber)! + " min"

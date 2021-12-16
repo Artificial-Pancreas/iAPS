@@ -10,7 +10,7 @@ struct IOBEntry: JSON {
     let iobWithZeroTemp: WithZeroTemp?
     let lastBolusTime: UInt64?
     let lastTemp: LastTemp?
-    var timestamp: Date?
+    var time: Date?
 
     struct WithZeroTemp: JSON {
         let iob: Decimal
