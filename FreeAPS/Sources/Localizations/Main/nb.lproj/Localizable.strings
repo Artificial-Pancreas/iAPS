@@ -894,27 +894,6 @@ Enact a temp Basal or a temp target */
 /* Online or internal server */
 "Online or internal server" = "Online eller intern server";
 
-/* Shared app group */
-"Shared app group" = "Shared app group";
-
-/* Native G6 app */
-"Native G6 app" = "Native G6 app";
-
-/* Native G5 app */
-"Native G5 app" = "Native G5 app";
-
-/* Minilink transmitter */
-"Minilink transmitter" = "Minilink transmitter";
-
-/* Simple simulator */
-"Simple simulator" = "Simple simulator";
-
-/* Direct connection with Libre 1 transmitters or Libre 2 */
-"Direct connection with Libre 1 transmitters or Libre 2" = "Direct connection with Libre 1 transmitters or Libre 2";
-
-/* Online or internal server */
-"Online or internal server" = "Online or internal server";
-
 /* HealthKit intergration --------------------*/
 /* */
 "Apple Health" = "Apple Helse";
@@ -924,6 +903,9 @@ Enact a temp Basal or a temp target */
 
 /* Show when have not permissions for writing to Health */
 "For write data to Apple Health you must give permissions in Settings > Health > Data Access" = "For å skrive data til Apple Health må du gi rettigheter i Innstillinger > Helse > Datatilgang";
+
+/* */
+"After you create or delete glucose records in the Health app, please open FreeAPS X to help us guaranteed transfer changed data" = "Etter at du har lagt til eller slettet blodsukker i Helse-appen, vennligst åpne FreeAPS X for å sikre overføring av endrede data";
 /* --------------------------------------------
 
 
