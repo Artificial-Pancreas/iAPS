@@ -23,14 +23,6 @@ protocol HealthKitManager: GlucoseSource {
 }
 
 final class BaseHealthKitManager: HealthKitManager, Injectable {
-    @Injected() private var fileStorage: FileStorage!
-    @Injected() private var glucoseStorage: GlucoseStorage!
-    @Injected() private var healthKitStore: HKHealthStore!
-    @Injected() private var settingsManager: SettingsManager!
-
-    private let queue = DispatchQueue(label: "debugInfoQueue")
-    private var lock = NSLock(label: "helathKitExecureQueryLock")
-
     private enum Config {
         // unwraped HKObjects
         static var permissions: Set<HKSampleType> {
@@ -50,28 +42,19 @@ final class BaseHealthKitManager: HealthKitManager, Injectable {
         static let freeAPSMetaKey = "fromFreeAPSX"
     }
 
+    @Injected() private var glucoseStorage: GlucoseStorage!
+    @Injected() private var healthKitStore: HKHealthStore!
+    @Injected() private var settingsManager: SettingsManager!
+
+    private let processQueue = DispatchQueue(label: "BaseHealthKitManager.processQueue")
+    private var lifetime = Lifetime()
+
     // BG that will be return Publisher
-    @Persisted(key: "HealthKitManagerNewGlucose") private var newGlucose: [BloodGlucose] = []
+    @SyncAccess @Persisted(key: "BaseHealthKitManager.newGlucose") private var newGlucose: [BloodGlucose] = []
 
     // last anchor for HKAnchoredQuery
-    private var lastBloodGlucoseQueryAnchor: HKQueryAnchor! {
-        set {
-            guard let data = try? NSKeyedArchiver.archivedData(withRootObject: newValue as Any, requiringSecureCoding: false)
-            else {
-                persistedAnchor = Data()
-                return
-            }
-            persistedAnchor = data
-        }
-        get {
-            guard let result = try? NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(persistedAnchor) as? HKQueryAnchor else {
-                return HKQueryAnchor(fromValue: 0)
-            }
-            return result
-        }
-    }
-
-    @Persisted(key: "HealthKitManagerAnchor") private var persistedAnchor = Data()
+    @Persisted(key: "BaseHealthKitManager.lastBloodGlucoseQueryAnchor") private var lastBloodGlucoseQueryAnchor =
+        CodableAnchor(anchor: nil)
 
     var isAvailableOnCurrentDevice: Bool {
         HKHealthStore.isHealthDataAvailable()
@@ -159,30 +142,32 @@ final class BaseHealthKitManager: HealthKitManager, Injectable {
               bloodGlucoses.isNotEmpty
         else { return }
 
-        for bgItem in bloodGlucoses {
-            let bgQuantity = HKQuantity(
-                unit: .milligramsPerDeciliter,
-                doubleValue: Double(bgItem.glucose!)
-            )
-
-            let bgObjectSample = HKQuantitySample(
-                type: sampleType,
-                quantity: bgQuantity,
-                start: bgItem.dateString,
-                end: bgItem.dateString,
-                metadata: [
-                    HKMetadataKeyExternalUUID: bgItem.id,
-                    HKMetadataKeySyncIdentifier: bgItem.id,
-                    HKMetadataKeySyncVersion: 1,
-                    Config.freeAPSMetaKey: true
-                ]
-            )
-            load(sampleFromHealth: sampleType, withID: bgItem.id) { [weak self] samples in
-                if samples.isEmpty {
-                    self?.healthKitStore.save(bgObjectSample) { _, _ in }
+        func save(samples: [HKSample]) {
+            let sampleIDs = samples.compactMap(\.syncIdentifier)
+            let samplesToSave = bloodGlucose
+                .filter { !sampleIDs.contains($0.id) }
+                .map {
+                    HKQuantitySample(
+                        type: sampleType,
+                        quantity: HKQuantity(unit: .milligramsPerDeciliter, doubleValue: Double($0.glucose!)),
+                        start: $0.dateString,
+                        end: $0.dateString,
+                        metadata: [
+                            HKMetadataKeyExternalUUID: $0.id,
+                            HKMetadataKeySyncIdentifier: $0.id,
+                            HKMetadataKeySyncVersion: 1,
+                            Config.freeAPSMetaKey: true
+                        ]
+                    )
                 }
-            }
+
+            healthKitStore.save(samplesToSave) { _, _ in }
         }
+
+        loadSamplesFromHealth(sampleType: sampleType, withIDs: bloodGlucose.map(\.id))
+            .receive(on: processQueue)
+            .sink(receiveValue: save)
+            .store(in: &lifetime)
     }
 
     func createObserver() {
@@ -242,32 +227,26 @@ final class BaseHealthKitManager: HealthKitManager, Injectable {
     }
 
     /// Try to load samples from Health store with id and do some work
-    private func load(
-        sampleFromHealth sampleType: HKQuantityType,
-        withID id: String,
-        andDo completion: (([HKSample]) -> Void)?
-    ) {
-        let predicate = HKQuery.predicateForObjects(
-            withMetadataKey: HKMetadataKeySyncIdentifier,
-            operatorType: .equalTo,
-            value: id
-        )
+    private func loadSamplesFromHealth(
+        sampleType: HKQuantityType,
+        withIDs ids: [String]
+    ) -> Future<[HKSample], Never> {
+        Future { promise in
+            let predicate = HKQuery.predicateForObjects(
+                withMetadataKey: HKMetadataKeySyncIdentifier,
+                allowedValues: ids
+            )
 
-        let query = HKSampleQuery(
-            sampleType: sampleType,
-            predicate: predicate,
-            limit: 1,
-            sortDescriptors: nil
-        ) { _, results, _ in
-
-            guard let samples = results as? [HKQuantitySample] else {
-                completion?([])
-                return
+            let query = HKSampleQuery(
+                sampleType: sampleType,
+                predicate: predicate,
+                limit: 1000,
+                sortDescriptors: nil
+            ) { _, results, _ in
+                promise(.success((results as? [HKQuantitySample]) ?? []))
             }
-
-            completion?(samples)
+            self.healthKitStore.execute(query)
         }
-        healthKitStore.execute(query)
     }
 
     private func getBloodGlucoseHKQuery(predicate: NSPredicate) -> HKQuery? {
@@ -276,14 +255,14 @@ final class BaseHealthKitManager: HealthKitManager, Injectable {
         let query = HKAnchoredObjectQuery(
             type: sampleType,
             predicate: predicate,
-            anchor: lastBloodGlucoseQueryAnchor,
+            anchor: lastBloodGlucoseQueryAnchor.anchor,
             limit: HKObjectQueryNoLimit
         ) { [unowned self] _, addedObjects, deletedObjects, anchor, _ in
             queue.sync {
                 debug(.service, "AnchoredQuery did execute")
             }
 
-            lastBloodGlucoseQueryAnchor = anchor
+                self.lastBloodGlucoseQueryAnchor = CodableAnchor(anchor: anchor)
 
             // Added objects
             if let bgSamples = addedObjects as? [HKQuantitySample],
@@ -343,17 +322,29 @@ final class BaseHealthKitManager: HealthKitManager, Injectable {
         }
     }
 
-    private func delete(samplesFromLocalStorage deletedSamples: [HKDeletedObject]) {
-        queue.sync {
-            debug(.service, "Delete HealthKit objects: \(String(describing: deletedSamples))")
+    private func deleteSamplesFromLocalStorage(_ deletedSamples: [HKDeletedObject]) {
+        guard settingsManager.settings.useAppleHealth,
+              let sampleType = Config.healthBGObject,
+              checkAvailabilitySave(objectTypeToHealthStore: sampleType),
+              deletedSamples.isNotEmpty
+        else { return }
+
+        let removingBGID = deletedSamples.map {
+            $0.metadata?[HKMetadataKeySyncIdentifier] as? String ?? $0.uuid.uuidString
         }
-        DispatchQueue.global(qos: .utility).async {
-            let removingBGID = deletedSamples.map {
-                $0.metadata?[HKMetadataKeySyncIdentifier] as? String ?? $0.uuid.uuidString
-            }
-            self.glucoseStorage.removeGlucose(ids: removingBGID)
-            self.newGlucose = self.newGlucose.filter { !removingBGID.contains($0.id) }
+
+        func delete(samples: [HKSample]) {
+            let sampleIDs = samples.map(\.syncIdentifier)
+            let idsToRemove = removingBGID.filter { !sampleIDs.contains($0) }
+            debug(.service, "Delete HealthKit objects: \(idsToRemove)")
+            glucoseStorage.removeGlucose(ids: idsToRemove)
+            newGlucose = newGlucose.filter { !idsToRemove.contains($0.id) }
         }
+
+        loadSamplesFromHealth(sampleType: sampleType, withIDs: removingBGID)
+            .receive(on: processQueue)
+            .sink(receiveValue: delete)
+            .store(in: &lifetime)
     }
 
     func fetch() -> AnyPublisher<[BloodGlucose], Never> {
@@ -396,4 +387,33 @@ enum HKError: Error {
     case notAvailableOnCurrentDevice
     // Some data can be not available on current iOS-device
     case dataNotAvailable
+}
+
+final class CodableAnchor: Codable, Equatable {
+    static func == (lhs: CodableAnchor, rhs: CodableAnchor) -> Bool {
+        lhs.anchor == rhs.anchor
+    }
+
+    enum CodingKeys: String, CodingKey {
+        case data
+    }
+
+    let anchor: HKQueryAnchor
+
+    init(anchor: HKQueryAnchor?) {
+        self.anchor = anchor ?? HKQueryAnchor(fromValue: 0)
+    }
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+
+        let data = try NSKeyedArchiver.archivedData(withRootObject: anchor as Any, requiringSecureCoding: false)
+        try container.encode(data, forKey: .data)
+    }
+
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        let data = try container.decode(Data.self, forKey: .data)
+        anchor = (try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(data) as? HKQueryAnchor) ?? HKQueryAnchor(fromValue: 0)
+    }
 }

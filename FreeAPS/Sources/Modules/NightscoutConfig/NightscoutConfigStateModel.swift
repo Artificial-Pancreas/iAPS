@@ -62,8 +62,8 @@ extension NightscoutConfig {
                     }
 
                     guard glucose.isNotEmpty else { return }
+                    self.healthKitManager.saveIfNeeded(bloodGlucose: glucose)
                     self.glucoseStorage.storeGlucose(glucose)
-                    self.healthKitManager.saveIfNeeded(bloodGlucoses: glucose)
                 }
                 .store(in: &lifetime)
         }
