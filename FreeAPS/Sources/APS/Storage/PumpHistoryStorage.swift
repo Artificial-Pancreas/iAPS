@@ -56,11 +56,9 @@ final class BasePumpHistoryStorage: PumpHistoryStorage, Injectable {
                     let isCancel = !event.isMutable && delivered != nil
                     guard !isCancel else { return [] }
 
-                    let basalID = UUID().uuidString
-
                     return [
                         PumpHistoryEvent(
-                            id: basalID,
+                            id: id,
                             type: .tempBasalDuration,
                             timestamp: date,
                             amount: nil,
@@ -71,7 +69,7 @@ final class BasePumpHistoryStorage: PumpHistoryStorage, Injectable {
                             carbInput: nil
                         ),
                         PumpHistoryEvent(
-                            id: "_" + basalID,
+                            id: "_" + id,
                             type: .tempBasal,
                             timestamp: date,
                             amount: nil,
