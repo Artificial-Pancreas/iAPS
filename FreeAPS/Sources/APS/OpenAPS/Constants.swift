@@ -86,8 +86,4 @@ extension OpenAPS {
         static let tempTargetsPresets = "freeaps/temptargets_presets.json"
         static let calibrations = "freeaps/calibrations.json"
     }
-
-    enum HealthKit {
-        static let downloadedGlucose = "healthkit/downloaded-glucose.json"
-    }
 }
