@@ -32,8 +32,10 @@ final class BaseFetchAnnouncementsManager: FetchAnnouncementsManager, Injectable
                 return self.nightscoutManager.fetchAnnouncements()
             }
             .sink { announcements in
-                guard announcements.filter({ $0.createdAt > self.announcementsStorage.syncDate() }).isNotEmpty else { return }
-                self.announcementsStorage.storeAnnouncements(announcements, enacted: false)
+                guard let last = announcements.filter({ $0.createdAt > self.announcementsStorage.syncDate() }).last
+                else { return }
+
+                self.announcementsStorage.storeAnnouncements([last], enacted: false)
                 if self.settingsManager.settings.allowAnnouncements, let recent = self.announcementsStorage.recent(),
                    recent.action != nil
                 {
