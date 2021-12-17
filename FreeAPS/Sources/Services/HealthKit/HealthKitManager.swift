@@ -53,8 +53,19 @@ final class BaseHealthKitManager: HealthKitManager, Injectable {
     @SyncAccess @Persisted(key: "BaseHealthKitManager.newGlucose") private var newGlucose: [BloodGlucose] = []
 
     // last anchor for HKAnchoredQuery
-    @Persisted(key: "BaseHealthKitManager.lastBloodGlucoseQueryAnchor") private var lastBloodGlucoseQueryAnchor =
-        CodableAnchor(anchor: nil)
+    private var lastBloodGlucoseQueryAnchor: HKQueryAnchor! {
+        set {
+            persistedAnchor = (
+                try? NSKeyedArchiver.archivedData(withRootObject: newValue as Any, requiringSecureCoding: false)
+            ) ?? Data()
+        }
+        get {
+            (try? NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(persistedAnchor) as? HKQueryAnchor) ??
+                HKQueryAnchor(fromValue: 0)
+        }
+    }
+
+    @SyncAccess @Persisted(key: "HealthKitManagerAnchor") private var persistedAnchor = Data()
 
     var isAvailableOnCurrentDevice: Bool {
         HKHealthStore.isHealthDataAvailable()
@@ -255,14 +266,14 @@ final class BaseHealthKitManager: HealthKitManager, Injectable {
         let query = HKAnchoredObjectQuery(
             type: sampleType,
             predicate: predicate,
-            anchor: lastBloodGlucoseQueryAnchor.anchor,
+            anchor: lastBloodGlucoseQueryAnchor,
             limit: HKObjectQueryNoLimit
         ) { [unowned self] _, addedObjects, deletedObjects, anchor, _ in
             queue.sync {
                 debug(.service, "AnchoredQuery did execute")
             }
 
-                self.lastBloodGlucoseQueryAnchor = CodableAnchor(anchor: anchor)
+                self.lastBloodGlucoseQueryAnchor = anchor
 
             // Added objects
             if let bgSamples = addedObjects as? [HKQuantitySample],
@@ -387,33 +398,4 @@ enum HKError: Error {
     case notAvailableOnCurrentDevice
     // Some data can be not available on current iOS-device
     case dataNotAvailable
-}
-
-final class CodableAnchor: Codable, Equatable {
-    static func == (lhs: CodableAnchor, rhs: CodableAnchor) -> Bool {
-        lhs.anchor == rhs.anchor
-    }
-
-    enum CodingKeys: String, CodingKey {
-        case data
-    }
-
-    let anchor: HKQueryAnchor
-
-    init(anchor: HKQueryAnchor?) {
-        self.anchor = anchor ?? HKQueryAnchor(fromValue: 0)
-    }
-
-    public func encode(to encoder: Encoder) throws {
-        var container = encoder.container(keyedBy: CodingKeys.self)
-
-        let data = try NSKeyedArchiver.archivedData(withRootObject: anchor as Any, requiringSecureCoding: false)
-        try container.encode(data, forKey: .data)
-    }
-
-    init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        let data = try container.decode(Data.self, forKey: .data)
-        anchor = (try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(data) as? HKQueryAnchor) ?? HKQueryAnchor(fromValue: 0)
-    }
 }
