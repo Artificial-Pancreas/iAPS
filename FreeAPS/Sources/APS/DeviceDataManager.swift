@@ -103,7 +103,7 @@ final class BaseDeviceDataManager: DeviceDataManager, Injectable {
                 return
             }
 
-            var updateInterval: TimeInterval = 4.5 * 60
+            var updateInterval: TimeInterval = 4.0 * 60
 
             switch date.timeIntervalSince(lastHeartBeatTime) {
             case let interval where interval > 10.minutes.timeInterval:
