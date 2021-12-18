@@ -130,6 +130,9 @@
 /* Upper temp target limit */
 "Top target" = "Üst hedef";
 
+/*  Temp target set for ... minutes */
+"for %@ min" = "%@ dak için";
+
 /*  */
 "Autotune" = "Atoayar";
 

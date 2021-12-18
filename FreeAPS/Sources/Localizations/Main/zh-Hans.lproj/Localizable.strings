@@ -130,6 +130,9 @@
 /* Upper temp target limit */
 "Top target" = "血糖上限";
 
+/*  Temp target set for ... minutes */
+"for %@ min" = "for %@ min";
+
 /*  */
 "Autotune" = "自动调谐";
 
