@@ -15,7 +15,7 @@ protocol HealthKitManager: GlucoseSource {
     /// Requests user to give permissions on using HealthKit
     func requestPermission(completion: ((Bool, Error?) -> Void)?)
     /// Save blood glucose to Health store (dublicate of bg will ignore)
-    func saveIfNeeded(bloodGlucoses: [BloodGlucose])
+    func saveIfNeeded(bloodGlucose: [BloodGlucose])
     /// Create observer for data passing beetwen Health Store and FreeAPS
     func createObserver()
     /// Enable background delivering objects from Apple Health to FreeAPS
@@ -25,19 +25,11 @@ protocol HealthKitManager: GlucoseSource {
 final class BaseHealthKitManager: HealthKitManager, Injectable {
     private enum Config {
         // unwraped HKObjects
-        static var permissions: Set<HKSampleType> {
-            var result: Set<HKSampleType> = []
-            for permission in optionalPermissions {
-                result.insert(permission!)
-            }
-            return result
-        }
+        static var permissions: Set<HKSampleType> { Set([healthBGObject].compactMap { $0 }) }
 
-        static let optionalPermissions = Set([Config.healthBGObject])
         // link to object in HealthKit
         static let healthBGObject = HKObjectType.quantityType(forIdentifier: .bloodGlucose)
 
-        static let frequencyBackgroundDeliveryBloodGlucoseFromHealth = HKUpdateFrequency(rawValue: 1)!
         // Meta-data key of FreeASPX data in HealthStore
         static let freeAPSMetaKey = "fromFreeAPSX"
     }
@@ -72,19 +64,13 @@ final class BaseHealthKitManager: HealthKitManager, Injectable {
     }
 
     var areAllowAllPermissions: Bool {
-        var result = true
-        Config.permissions.forEach { permission in
-            if [HKAuthorizationStatus.sharingDenied, HKAuthorizationStatus.notDetermined]
-                .contains(healthKitStore.authorizationStatus(for: permission))
-            {
-                result = false
-            }
-        }
-        return result
+        Set(Config.permissions.map { healthKitStore.authorizationStatus(for: $0) })
+            .intersection([.sharingDenied, .notDetermined])
+            .isEmpty
     }
 
     // NSPredicate, which use during load increment BG from Health store
-    private lazy var loadBGPredicate: NSPredicate = {
+    private var loadBGPredicate: NSPredicate {
         // loading only daily bg
         let predicateByStartDate = HKQuery.predicateForSamples(
             withStart: Date().addingTimeInterval(-1.days.timeInterval),
@@ -101,7 +87,7 @@ final class BaseHealthKitManager: HealthKitManager, Injectable {
         )
 
         return NSCompoundPredicate(andPredicateWithSubpredicates: [predicateByStartDate, predicateByMeta])
-    }()
+    }
 
     init(resolver: Resolver) {
         injectServices(resolver)
@@ -113,20 +99,11 @@ final class BaseHealthKitManager: HealthKitManager, Injectable {
     }
 
     func checkAvailabilitySave(objectTypeToHealthStore: HKObjectType) -> Bool {
-        let status = healthKitStore.authorizationStatus(for: objectTypeToHealthStore)
-        switch status {
-        case .sharingAuthorized:
-            return true
-        default:
-            return false
-        }
+        healthKitStore.authorizationStatus(for: objectTypeToHealthStore) == .sharingAuthorized
     }
 
     func checkAvailabilitySaveBG() -> Bool {
-        guard let sampleType = Config.healthBGObject else {
-            return false
-        }
-        return checkAvailabilitySave(objectTypeToHealthStore: sampleType)
+        Config.healthBGObject.map { checkAvailabilitySave(objectTypeToHealthStore: $0) } ?? false
     }
 
     func requestPermission(completion: ((Bool, Error?) -> Void)? = nil) {
@@ -134,11 +111,9 @@ final class BaseHealthKitManager: HealthKitManager, Injectable {
             completion?(false, HKError.notAvailableOnCurrentDevice)
             return
         }
-        for permission in Config.optionalPermissions {
-            guard permission != nil else {
-                completion?(false, HKError.dataNotAvailable)
-                return
-            }
+        guard Config.permissions.isNotEmpty else {
+            completion?(false, HKError.dataNotAvailable)
+            return
         }
 
         healthKitStore.requestAuthorization(toShare: Config.permissions, read: Config.permissions) { status, error in
@@ -146,11 +121,11 @@ final class BaseHealthKitManager: HealthKitManager, Injectable {
         }
     }
 
-    func saveIfNeeded(bloodGlucoses: [BloodGlucose]) {
+    func saveIfNeeded(bloodGlucose: [BloodGlucose]) {
         guard settingsManager.settings.useAppleHealth,
               let sampleType = Config.healthBGObject,
               checkAvailabilitySave(objectTypeToHealthStore: sampleType),
-              bloodGlucoses.isNotEmpty
+              bloodGlucose.isNotEmpty
         else { return }
 
         func save(samples: [HKSample]) {
@@ -185,25 +160,21 @@ final class BaseHealthKitManager: HealthKitManager, Injectable {
         guard settingsManager.settings.useAppleHealth else { return }
 
         guard let bgType = Config.healthBGObject else {
-            warning(
-                .service,
-                "Can not create HealthKit Observer, because unable to get the Blood Glucose type",
-                description: nil,
-                error: nil
-            )
+            warning(.service, "Can not create HealthKit Observer, because unable to get the Blood Glucose type")
             return
         }
 
-        let query = HKObserverQuery(sampleType: bgType, predicate: nil) { [unowned self] _, _, observerError in
+        let query = HKObserverQuery(sampleType: bgType, predicate: nil) { [weak self] _, _, observerError in
+            guard let self = self else { return }
             debug(.service, "Execute HelathKit observer query for loading increment samples")
             guard observerError == nil else {
                 warning(.service, "Error during execution of HelathKit Observer's query", error: observerError!)
                 return
             }
 
-            if let incrementQuery = getBloodGlucoseHKQuery(predicate: loadBGPredicate) {
+            if let incrementQuery = self.getBloodGlucoseHKQuery(predicate: self.loadBGPredicate) {
                 debug(.service, "Create increment query")
-                healthKitStore.execute(incrementQuery)
+                self.healthKitStore.execute(incrementQuery)
             }
         }
         healthKitStore.execute(query)
@@ -218,19 +189,14 @@ final class BaseHealthKitManager: HealthKitManager, Injectable {
         guard let bgType = Config.healthBGObject else {
             warning(
                 .service,
-                "Can not create background delivery, because unable to get the Blood Glucose type",
-                description: nil,
-                error: nil
+                "Can not create background delivery, because unable to get the Blood Glucose type"
             )
             return
         }
 
-        healthKitStore.enableBackgroundDelivery(
-            for: bgType,
-            frequency: Config.frequencyBackgroundDeliveryBloodGlucoseFromHealth
-        ) { status, e in
-            guard e == nil else {
-                warning(.service, "Can not enable background delivery", description: nil, error: e)
+        healthKitStore.enableBackgroundDelivery(for: bgType, frequency: .immediate) { status, error in
+            guard error == nil else {
+                warning(.service, "Can not enable background delivery", error: error)
                 return
             }
             debug(.service, "Background delivery status is \(status)")
@@ -268,18 +234,26 @@ final class BaseHealthKitManager: HealthKitManager, Injectable {
             predicate: predicate,
             anchor: lastBloodGlucoseQueryAnchor,
             limit: HKObjectQueryNoLimit
-        ) { [unowned self] _, addedObjects, deletedObjects, anchor, _ in
-            queue.sync {
+        ) { [weak self] _, addedObjects, deletedObjects, anchor, _ in
+            guard let self = self else { return }
+            self.processQueue.async {
                 debug(.service, "AnchoredQuery did execute")
-            }
 
                 self.lastBloodGlucoseQueryAnchor = anchor
 
-            // Added objects
-            if let bgSamples = addedObjects as? [HKQuantitySample],
-               bgSamples.isNotEmpty
-            {
-                prepare(bloodGlucoseSamplesToPublisherFetch: bgSamples)
+                // Added objects
+                if let bgSamples = addedObjects as? [HKQuantitySample],
+                   bgSamples.isNotEmpty
+                {
+                    self.prepareSamplesToPublisherFetch(bgSamples)
+                }
+
+                // Deleted objects
+                if let deletedSamples = deletedObjects,
+                   deletedSamples.isNotEmpty
+                {
+                    self.deleteSamplesFromLocalStorage(deletedSamples)
+                }
             }
 
             // Deleted objects
@@ -292,10 +266,9 @@ final class BaseHealthKitManager: HealthKitManager, Injectable {
         return query
     }
 
-    private func prepare(bloodGlucoseSamplesToPublisherFetch samples: [HKQuantitySample]) {
-        queue.sync {
-            debug(.service, "Start preparing samples: \(String(describing: samples))")
-        }
+    private func prepareSamplesToPublisherFetch(_ samples: [HKQuantitySample]) {
+        dispatchPrecondition(condition: .onQueue(processQueue))
+        debug(.service, "Start preparing samples: \(String(describing: samples))")
 
         newGlucose += samples
             .compactMap { sample -> HealthKitSample? in
@@ -325,12 +298,10 @@ final class BaseHealthKitManager: HealthKitManager, Injectable {
 
         newGlucose = newGlucose.removeDublicates()
 
-        queue.sync {
-            debug(
-                .service,
-                "Current BloodGlucose.Type objects will be send from Publisher during fetch: \(String(describing: newGlucose))"
-            )
-        }
+        debug(
+            .service,
+            "Current BloodGlucose.Type objects will be send from Publisher during fetch: \(String(describing: newGlucose))"
+        )
     }
 
     private func deleteSamplesFromLocalStorage(_ deletedSamples: [HKDeletedObject]) {
@@ -359,32 +330,38 @@ final class BaseHealthKitManager: HealthKitManager, Injectable {
     }
 
     func fetch() -> AnyPublisher<[BloodGlucose], Never> {
-        queue.sync {
-            debug(.service, "Start fetching HealthKitManager")
-        }
-        guard settingsManager.settings.useAppleHealth else {
-            queue.sync {
-                debug(.service, "HealthKitManager cant return any data, because useAppleHealth option is disable")
+        Future { [weak self] promise in
+            guard let self = self else {
+                promise(.success([]))
+                return
             }
-            return Just([]).eraseToAnyPublisher()
-        }
 
-        // Remove old BGs
-        newGlucose = newGlucose
-            .filter { $0.dateString >= Date().addingTimeInterval(-1.days.timeInterval) }
-        // Get actual BGs (beetwen Date() - 1 day and Date())
-        let actualGlucose = newGlucose
-            .filter { $0.dateString <= Date() }
-        // Update newGlucose
-        newGlucose = newGlucose
-            .filter { !actualGlucose.contains($0) }
-        queue.sync {
-            debug(.service, "Actual glucose is \(actualGlucose)")
+            self.processQueue.async {
+                debug(.service, "Start fetching HealthKitManager")
+                guard self.settingsManager.settings.useAppleHealth else {
+                    debug(.service, "HealthKitManager cant return any data, because useAppleHealth option is disable")
+                    promise(.success([]))
+                    return
+                }
+
+                // Remove old BGs
+                self.newGlucose = self.newGlucose
+                    .filter { $0.dateString >= Date().addingTimeInterval(-1.days.timeInterval) }
+                // Get actual BGs (beetwen Date() - 1 day and Date())
+                let actualGlucose = self.newGlucose
+                    .filter { $0.dateString <= Date() }
+                // Update newGlucose
+                self.newGlucose = self.newGlucose
+                    .filter { !actualGlucose.contains($0) }
+
+                debug(.service, "Actual glucose is \(actualGlucose)")
+
+                debug(.service, "Current state of newGlucose is \(self.newGlucose)")
+
+                promise(.success(actualGlucose))
+            }
         }
-        queue.sync {
-            debug(.service, "Current state of newGlucose is \(newGlucose)")
-        }
-        return Just(actualGlucose).eraseToAnyPublisher()
+        .eraseToAnyPublisher()
     }
 }
 

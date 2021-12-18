@@ -23,18 +23,20 @@ extension AppleHealthKit {
                     return
                 }
 
-                self.healthKitManager.requestPermission { _, error in
-                    guard error == nil else {
-                        return
-                    }
-
-                    debug(.service, "User set permission for HealthKitManager")
-
-                    self.healthKitManager.createObserver()
-                    self.healthKitManager.enableBackgroundDelivery()
+                self.healthKitManager.requestPermission { ok, error in
                     DispatchQueue.main.async {
                         self.needShowInformationTextForSetPermissions = !self.healthKitManager.checkAvailabilitySaveBG()
                     }
+
+                    guard ok, error == nil else {
+                        warning(.service, "Permission not granted for HealthKitManager", error: error)
+                        return
+                    }
+
+                    debug(.service, "Permission  granted HealthKitManager")
+
+                    self.healthKitManager.createObserver()
+                    self.healthKitManager.enableBackgroundDelivery()
                 }
             }
         }
