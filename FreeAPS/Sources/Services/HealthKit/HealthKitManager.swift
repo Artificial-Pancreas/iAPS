@@ -255,13 +255,6 @@ final class BaseHealthKitManager: HealthKitManager, Injectable {
                     self.deleteSamplesFromLocalStorage(deletedSamples)
                 }
             }
-
-            // Deleted objects
-            if let deletedSamples = deletedObjects,
-               deletedSamples.isNotEmpty
-            {
-                delete(samplesFromLocalStorage: deletedSamples)
-            }
         }
         return query
     }
