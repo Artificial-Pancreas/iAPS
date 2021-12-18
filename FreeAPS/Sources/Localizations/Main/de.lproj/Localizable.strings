@@ -130,6 +130,9 @@
 /* Upper temp target limit */
 "Top target" = "Obergrenze";
 
+/*  Temp target set for ... minutes */
+"for %@ min" = "for %@ min";
+
 /*  */
 "Autotune" = "Autotune";
 
