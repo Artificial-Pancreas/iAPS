@@ -120,17 +120,19 @@ final class BaseDeviceDataManager: DeviceDataManager, Injectable {
         }
 
         debug(.deviceManager, "Start updating the pump data")
-
-        pumpManager.ensureCurrentPumpData { [unowned self] in
-            debug(.deviceManager, "Pump data updated. Waiting for loop recommendation")
-            self.pumpUpdateCancellable = Future<Bool, Never> { promise in
-                self.pumpUpdatePromise = promise
+        pumpUpdateCancellable = Future<Bool, Never> { [unowned self] promise in
+            pumpUpdatePromise = promise
+            debug(.deviceManager, "Waiting for waiting for pump update and loop recommendation")
+            processQueue.async {
+                pumpManager.ensureCurrentPumpData {
+                    debug(.deviceManager, "Pump data updated.")
+                }
             }
-            .timeout(60, scheduler: self.processQueue)
-            .replaceError(with: false)
-            .replaceEmpty(with: false)
-            .sink(receiveValue: self.updateUpdateFinished)
         }
+        .timeout(60, scheduler: processQueue)
+        .replaceError(with: false)
+        .replaceEmpty(with: false)
+        .sink(receiveValue: updateUpdateFinished)
     }
 
     private func updateUpdateFinished(_ recommendsLoop: Bool) {
