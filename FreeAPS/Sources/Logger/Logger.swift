@@ -224,9 +224,9 @@ final class Logger {
         function: String = #function,
         line: UInt = #line
     ) {
-        let message = "INFO: \(message)"
-        os_log("%@ - %@ - %d %{public}@", log: log, type: .info, file.file, function, line, message)
-        reporter.log(category.name, message, file: file, function: function, line: line)
+        let printedMessage = "INFO: \(message)"
+        os_log("%@ - %@ - %d %{public}@", log: log, type: .info, file.file, function, line, printedMessage)
+        reporter.log(category.name, printedMessage, file: file, function: function, line: line)
 
         showAlert(message)
     }

@@ -45,6 +45,7 @@ extension Calibrations {
                   lastGlucose.dateString.addingTimeInterval(60 * 4.5) > Date(),
                   let unfiltered = lastGlucose.unfiltered
             else {
+                info(.service, "Glucose is stale for calibration")
                 return
             }
 

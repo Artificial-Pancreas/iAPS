@@ -1,3 +1,4 @@
+import SwiftMessages
 import SwiftUI
 import Swinject
 
@@ -6,8 +7,6 @@ extension Main {
         private(set) var modal: Modal?
         @Published var isModalPresented = false
         @Published var isSecondaryModalPresented = false
-        @Published var isAlertPresented = false
-        @Published var alertMessage = ""
         @Published var secondaryModalView: AnyView? = nil
 
         override func subscribe() {
@@ -31,8 +30,24 @@ extension Main {
             router.alertMessage
                 .receive(on: DispatchQueue.main)
                 .sink { message in
-                    self.isAlertPresented = message.isNotEmpty
-                    self.alertMessage = message
+                    SwiftMessages.show {
+                        let view = MessageView.viewFromNib(layout: .messageView)
+                        view.backgroundColor = .secondarySystemGroupedBackground
+                        view.titleLabel?.textColor = .label
+                        view.bodyLabel?.textColor = .label
+                        view.configureContent(
+                            title: NSLocalizedString("Info", comment: "Info title"),
+                            body: NSLocalizedString(message, comment: "Info message"),
+                            iconImage: nil,
+                            iconText: nil,
+                            buttonImage: nil,
+                            buttonTitle: nil,
+                            buttonTapHandler: nil
+                        )
+
+                        view.bodyLabel?.text = message
+                        return view
+                    }
                 }
                 .store(in: &lifetime)
 
