@@ -908,7 +908,7 @@ Enact a temp Basal or a temp target */
 "For write data to Apple Health you must give permissions in Settings > Health > Data Access" = "Um Daten bei Apple Health zu speichern, müssen Sie unter „Einstellungen“ > „Health“ > „Datenzugriff & Geräte“ die entsprechenden Berechtigungen erteilen";
 
 /* */
-"After you create glucose records in the Health app, please open FreeAPS X to help us guaranteed transfer changed data" = "After you create glucose records in the Health app, please open FreeAPS X to help us guaranteed transfer changed data";
+"After you create glucose records in the Health app, please open FreeAPS X to help us guaranteed transfer changed data" = "Nachdem Sie Glukosedatensätze in der Health App erstellt oder gelöscht haben, öffnen Sie bitte FreeAPS X, um die Übertragung der geänderten Daten sicher zu gewährleisten";
 /* --------------------------------------------
 
 
@@ -981,7 +981,7 @@ Enact a temp Basal or a temp target */
 "This is another important OpenAPS safety limit. The default setting (which is also unlikely to need adjusting) is 4. This means that OpenAPS will never be allowed to set a temporary basal rate that is more than 4x the current hourly basal rate programmed in a user’s pump, or, if enabled, determined by autotune." = "Dies ist ein weiteres wichtiges OpenAPS-Sicherheitslimit. Die Standardeinstellung (die ebenfalls vermutlich nicht angepasst werden muss) ist 4. Das bedeutet, dass OpenAPS niemals eine temporäre Basalrate festlegen darf, die mehr als das vierfache der aktuellen Stunden-Basalrate ist, die in der Pumpe eines Benutzers programmiert ist. Auch ein aktiviertes Autotune kann diese Grenze nicht überschreiten.";
 
 /* "Autosens Max" */
-"This is a multiplier cap for autosens (and autotune) to set a 20% max limit on how high the autosens ratio can be, which in turn determines how high autosens can adjust basals, how low it can adjust ISF, and how low it can set the BG target." = "This is a multiplier cap for autosens (and autotune) to set a 20% max limit on how high the autosens ratio can be, which in turn determines how high autosens can adjust basals, how low it can adjust ISF, and how low it can set the BG target.";
+"This is a multiplier cap for autosens (and autotune) to set a 20% max limit on how high the autosens ratio can be, which in turn determines how high autosens can adjust basals, how low it can adjust ISF, and how low it can set the BG target." = "Dies ist eine Sicherheitsgrenze für Autosens (und Autotune), die besagt, wie hoch Autosens Basalraten anpassen darf und wie niedrig der ISF (Insulin-Sensitivitäts-Faktor) und der BZ-Zielwert eingestellt werden können. Eine Anpassung um max 20% ist erlaubt.";
 
 /* "Autosens Min" */
 "The other side of the autosens safety limits, putting a cap on how low autosens can adjust basals, and how high it can adjust ISF and BG targets." = "Die andere Seite der Autosens Sicherheitsgrenzen, indem eine Grenze gesetzt wird, wie niedrig Autosens Basaleinstellung einstellen kann, und wie hoch er ISF und BG Ziele anpassen darf.";
