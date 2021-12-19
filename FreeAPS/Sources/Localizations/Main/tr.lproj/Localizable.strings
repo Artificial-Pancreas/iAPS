@@ -908,7 +908,7 @@ Enact a temp Basal or a temp target */
 "For write data to Apple Health you must give permissions in Settings > Health > Data Access" = "Apple Health'e veri yazmak için Ayarlar > Sağlık > Veri Erişimi'nde izinler vermelisiniz";
 
 /* */
-"After you create or delete glucose records in the Health app, please open FreeAPS X to help us guaranteed transfer changed data" = "Health uygulamasında glikoz kayıtları oluşturduktan veya sildikten sonra, değiştirilen verileri aktarmayı garanti etmemize yardımcı olmak için lütfen FreeAPS X'i açın";
+"After you create glucose records in the Health app, please open FreeAPS X to help us guaranteed transfer changed data" = "After you create glucose records in the Health app, please open FreeAPS X to help us guaranteed transfer changed data";
 /* --------------------------------------------
 
 
