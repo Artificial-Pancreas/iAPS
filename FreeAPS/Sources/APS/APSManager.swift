@@ -6,7 +6,7 @@ import SwiftDate
 import Swinject
 
 protocol APSManager {
-    func heartbeat(date: Date, force: Bool)
+    func heartbeat(date: Date)
     func autotune() -> AnyPublisher<Autotune?, Never>
     func enactBolus(amount: Double, isSMB: Bool)
     var pumpManager: PumpManagerUI? { get set }
@@ -137,8 +137,8 @@ final class BaseAPSManager: APSManager, Injectable {
             .store(in: &lifetime)
     }
 
-    func heartbeat(date: Date, force: Bool) {
-        deviceDataManager.heartbeat(date: date, force: force)
+    func heartbeat(date: Date) {
+        deviceDataManager.heartbeat(date: date)
     }
 
     private func loop() {

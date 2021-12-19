@@ -81,7 +81,7 @@ final class BaseFetchGlucoseManager: FetchGlucoseManager, Injectable {
                 debug(.nightscout, "New glucose found")
 
                 self.glucoseStorage.storeGlucose(filtered)
-                self.apsManager.heartbeat(date: date, force: false)
+                self.apsManager.heartbeat(date: date)
                 self.nightscoutManager.uploadGlucose()
                 let glucoseForHealth = filteredByDate.filter { !glucoseFromHealth.contains($0) }
 
