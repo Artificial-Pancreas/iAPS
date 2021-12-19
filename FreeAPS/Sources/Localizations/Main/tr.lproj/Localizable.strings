@@ -413,14 +413,17 @@ Enact a temp Basal or a temp target */
 /* Header for Temp targets in Watch app */
 "Temp Targets" = "Geçici Hedefler";
 
-/* Delete carbs from Treatments list*/
-"Delete carbs?" = "Delete carbs?";
+/* Delete carbs?
+Delete carbs from Treatments data table */
+"Delete carbs?" = "Karbonhidratları sil?";
 
-/* Treatments list */
-"Treatments" = "Treatments";
+/* Treatments
+Treatments data table */
+"Treatments" = "Tedaviler";
 
-/* " min" in Treatments list */
-" min" = " min";
+/*  min
+" min" in Treatments data table */
+" min" = " dk";
 
 
 /* Calendar and Libre transmitter settings ---------------
@@ -917,7 +920,7 @@ Enact a temp Basal or a temp target */
 "For write data to Apple Health you must give permissions in Settings > Health > Data Access" = "Apple Health'e veri yazmak için Ayarlar > Sağlık > Veri Erişimi'nde izinler vermelisiniz";
 
 /* */
-"After you create glucose records in the Health app, please open FreeAPS X to help us guaranteed transfer changed data" = "After you create glucose records in the Health app, please open FreeAPS X to help us guaranteed transfer changed data";
+"After you create glucose records in the Health app, please open FreeAPS X to help us guaranteed transfer changed data" = "Health uygulamasında glikoz kayıtları oluşturduktan sonra, değiştirilen verileri aktarmayı garanti etmemize yardımcı olmak için lütfen FreeAPS X'i açın";
 /* --------------------------------------------
 
 
