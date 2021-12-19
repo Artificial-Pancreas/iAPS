@@ -3,38 +3,44 @@ import SwiftUI
 extension DataTable {
     final class StateModel: BaseStateModel<Provider> {
         @Injected() var broadcaster: Broadcaster!
-        @Published var items: [Item] = []
+        @Published var mode: Mode = .treatments
+        @Published var treatments: [Treatment] = []
+        @Published var glucose: [Glucose] = []
+        var units: GlucoseUnits = .mmolL
 
         override func subscribe() {
-            setupItems()
+            units = settingsManager.settings.units
+            setupTreatments()
+            setupGlucose()
             broadcaster.register(SettingsObserver.self, observer: self)
             broadcaster.register(PumpHistoryObserver.self, observer: self)
             broadcaster.register(TempTargetsObserver.self, observer: self)
             broadcaster.register(CarbsObserver.self, observer: self)
+            broadcaster.register(GlucoseObserver.self, observer: self)
         }
 
-        private func setupItems() {
+        private func setupTreatments() {
             DispatchQueue.global().async {
                 let units = self.settingsManager.settings.units
 
                 let carbs = self.provider.carbs().map {
-                    Item(units: units, type: .carbs, date: $0.createdAt, amount: $0.carbs)
+                    Treatment(units: units, type: .carbs, date: $0.createdAt, amount: $0.carbs)
                 }
 
                 let boluses = self.provider.pumpHistory()
                     .filter { $0.type == .bolus }
                     .map {
-                        Item(units: units, type: .bolus, date: $0.timestamp, amount: $0.amount)
+                        Treatment(units: units, type: .bolus, date: $0.timestamp, amount: $0.amount)
                     }
 
                 let tempBasals = self.provider.pumpHistory()
                     .filter { $0.type == .tempBasal || $0.type == .tempBasalDuration }
                     .chunks(ofCount: 2)
-                    .compactMap { chunk -> Item? in
+                    .compactMap { chunk -> Treatment? in
                         let chunk = Array(chunk)
                         guard chunk.count == 2, chunk[0].type == .tempBasal,
                               chunk[1].type == .tempBasalDuration else { return nil }
-                        return Item(
+                        return Treatment(
                             units: units,
                             type: .tempBasal,
                             date: chunk[0].timestamp,
@@ -46,7 +52,7 @@ extension DataTable {
 
                 let tempTargets = self.provider.tempTargets()
                     .map {
-                        Item(
+                        Treatment(
                             units: units,
                             type: .tempTarget,
                             date: $0.createdAt,
@@ -59,25 +65,36 @@ extension DataTable {
                 let suspend = self.provider.pumpHistory()
                     .filter { $0.type == .pumpSuspend }
                     .map {
-                        Item(units: units, type: .suspend, date: $0.timestamp)
+                        Treatment(units: units, type: .suspend, date: $0.timestamp)
                     }
 
                 let resume = self.provider.pumpHistory()
                     .filter { $0.type == .pumpResume }
                     .map {
-                        Item(units: units, type: .resume, date: $0.timestamp)
+                        Treatment(units: units, type: .resume, date: $0.timestamp)
                     }
 
                 DispatchQueue.main.async {
-                    self.items = [carbs, boluses, tempBasals, tempTargets, suspend, resume]
+                    self.treatments = [carbs, boluses, tempBasals, tempTargets, suspend, resume]
                         .flatMap { $0 }
                         .sorted { $0.date > $1.date }
                 }
             }
         }
 
+        func setupGlucose() {
+            DispatchQueue.main.async {
+                self.glucose = self.provider.glucose().map(Glucose.init)
+            }
+        }
+
         func deleteCarbs(at date: Date) {
             provider.deleteCarbs(at: date)
+        }
+
+        func deleteGlucose(at index: Int) {
+            let id = glucose[index].id
+            provider.deleteGlucose(id: id)
         }
     }
 }
@@ -86,21 +103,26 @@ extension DataTable.StateModel:
     SettingsObserver,
     PumpHistoryObserver,
     TempTargetsObserver,
-    CarbsObserver
+    CarbsObserver,
+    GlucoseObserver
 {
     func settingsDidChange(_: FreeAPSSettings) {
-        setupItems()
+        setupTreatments()
     }
 
     func pumpHistoryDidUpdate(_: [PumpHistoryEvent]) {
-        setupItems()
+        setupTreatments()
     }
 
     func tempTargetsDidUpdate(_: [TempTarget]) {
-        setupItems()
+        setupTreatments()
     }
 
     func carbsDidUpdate(_: [CarbsEntry]) {
-        setupItems()
+        setupTreatments()
+    }
+
+    func glucoseDidUpdate(_: [BloodGlucose]) {
+        setupGlucose()
     }
 }
