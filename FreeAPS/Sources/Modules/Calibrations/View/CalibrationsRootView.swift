@@ -13,6 +13,13 @@ extension Calibrations {
             return formatter
         }
 
+        private var dateFormatter: DateFormatter {
+            let formatter = DateFormatter()
+            formatter.timeStyle = .short
+            formatter.dateStyle = .short
+            return formatter
+        }
+
         var body: some View {
             GeometryReader { geo in
                 Form {
@@ -61,17 +68,41 @@ extension Calibrations {
                         }
                         label: { Text("Remove All") }
                             .disabled(state.calibrations.isEmpty)
+                        List {
+                            ForEach(state.items) { item in
+                                HStack {
+                                    Text(dateFormatter.string(from: item.calibration.date))
+                                    Spacer()
+                                    VStack(alignment: .leading) {
+                                        Text("raw: \(item.calibration.x)")
+                                            .font(.caption2)
+                                            .foregroundColor(.secondary)
+                                        Text("value: \(item.calibration.y)")
+                                            .font(.caption2)
+                                            .foregroundColor(.secondary)
+                                    }
+                                }
+
+                            }.onDelete(perform: delete)
+                        }
                     }
 
-                    Section(header: Text("Chart")) {
-                        CalibrationsChart().environmentObject(state)
-                            .frame(minHeight: geo.size.width)
+                    if state.calibrations.isNotEmpty {
+                        Section(header: Text("Chart")) {
+                            CalibrationsChart().environmentObject(state)
+                                .frame(minHeight: geo.size.width)
+                        }
                     }
                 }
             }
             .onAppear(perform: configureView)
             .navigationTitle("Calibrations")
+            .navigationBarItems(trailing: EditButton().disabled(state.calibrations.isEmpty))
             .navigationBarTitleDisplayMode(.automatic)
+        }
+
+        private func delete(at offsets: IndexSet) {
+            state.removeAtIndex(offsets[offsets.startIndex])
         }
     }
 }

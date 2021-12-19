@@ -31,7 +31,7 @@ extension Main {
             router.alertMessage
                 .receive(on: DispatchQueue.main)
                 .sink { message in
-                    self.isAlertPresented = true
+                    self.isAlertPresented = message.isNotEmpty
                     self.alertMessage = message
                 }
                 .store(in: &lifetime)
