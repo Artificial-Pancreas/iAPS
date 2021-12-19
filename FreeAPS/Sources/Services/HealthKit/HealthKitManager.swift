@@ -17,6 +17,8 @@ protocol HealthKitManager: GlucoseSource {
     func createObserver()
     /// Enable background delivering objects from Apple Health to FreeAPS
     func enableBackgroundDelivery()
+    /// Delete glucose with syncID
+    func deleteGlucise(syncID: String)
 }
 
 final class BaseHealthKitManager: HealthKitManager, Injectable {
@@ -318,6 +320,26 @@ final class BaseHealthKitManager: HealthKitManager, Injectable {
             }
         }
         .eraseToAnyPublisher()
+    }
+
+    func deleteGlucise(syncID: String) {
+        guard settingsManager.settings.useAppleHealth,
+              let sampleType = Config.healthBGObject,
+              checkAvailabilitySave(objectTypeToHealthStore: sampleType)
+        else { return }
+
+        processQueue.async {
+            let predicate = HKQuery.predicateForObjects(
+                withMetadataKey: HKMetadataKeySyncIdentifier,
+                operatorType: .equalTo,
+                value: syncID
+            )
+
+            self.healthKitStore.deleteObjects(of: sampleType, predicate: predicate) { _, _, error in
+                guard let error = error else { return }
+                warning(.service, "Cannot delete sample with syncID: \(syncID)", error: error)
+            }
+        }
     }
 }
 
