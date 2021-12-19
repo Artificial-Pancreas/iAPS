@@ -131,7 +131,7 @@
 "Top target" = "Obergrenze";
 
 /*  Temp target set for ... minutes */
-"for %@ min" = "for %@ min";
+"for %@ min" = "für %@ Minuten";
 
 /*  */
 "Autotune" = "Autotune";
@@ -880,10 +880,10 @@ Enact a temp Basal or a temp target */
 "Shared app group" = "Gemeinsame App-Gruppe";
 
 /* Native G6 app */
-"Native G6 app" = "Native G6 app";
+"Native G6 app" = "Native G6 App";
 
 /* Native G5 app */
-"Native G5 app" = "Native G5 app";
+"Native G5 app" = "Native G5 App";
 
 /* Minilink transmitter */
 "Minilink transmitter" = "Minilink Transmitter";
@@ -908,7 +908,7 @@ Enact a temp Basal or a temp target */
 "For write data to Apple Health you must give permissions in Settings > Health > Data Access" = "Um Daten bei Apple Health zu speichern, müssen Sie unter „Einstellungen“ > „Health“ > „Datenzugriff & Geräte“ die entsprechenden Berechtigungen erteilen";
 
 /* */
-"After you create or delete glucose records in the Health app, please open FreeAPS X to help us guaranteed transfer changed data" = "After you create or delete glucose records in the Health app, please open FreeAPS X to help us guaranteed transfer changed data";
+"After you create or delete glucose records in the Health app, please open FreeAPS X to help us guaranteed transfer changed data" = "Nachdem Sie die Glukosedatensätze in der Health App erstellt oder gelöscht haben, öffnen Sie bitte FreeAPS X, um die Übertragung der geänderten Daten sicher zu gewährleisten";
 /* --------------------------------------------
 
 
