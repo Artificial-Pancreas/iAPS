@@ -122,7 +122,7 @@ final class BaseDeviceDataManager: DeviceDataManager, Injectable {
         debug(.deviceManager, "Start updating the pump data")
         pumpUpdateCancellable = Future<Bool, Never> { [unowned self] promise in
             pumpUpdatePromise = promise
-            debug(.deviceManager, "Waiting for waiting for pump update and loop recommendation")
+            debug(.deviceManager, "Waiting for pump update and loop recommendation")
             processQueue.async {
                 pumpManager.ensureCurrentPumpData {
                     debug(.deviceManager, "Pump data updated.")
