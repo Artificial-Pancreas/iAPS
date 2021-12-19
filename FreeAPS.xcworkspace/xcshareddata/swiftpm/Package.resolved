@@ -29,6 +29,15 @@
         }
       },
       {
+        "package": "SwiftMessages",
+        "repositoryURL": "https://github.com/SwiftKickMobile/SwiftMessages",
+        "state": {
+          "branch": null,
+          "revision": "1e49de7b3780b69927bc3e61903d8ec0693a3dc5",
+          "version": "9.0.5"
+        }
+      },
+      {
         "package": "Swinject",
         "repositoryURL": "https://github.com/Swinject/Swinject",
         "state": {

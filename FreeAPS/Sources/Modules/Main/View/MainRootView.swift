@@ -19,16 +19,6 @@ extension Main {
                         EmptyView()
                     }
                 }
-                .alert(isPresented: $state.isAlertPresented) {
-                    Alert(
-                        title: Text("Important message"),
-                        message: Text(state.alertMessage),
-                        dismissButton: .default(Text("Dismiss")) {
-                            state.isAlertPresented = false
-                            state.alertMessage = ""
-                        }
-                    )
-                }
                 .onAppear(perform: configureView)
         }
     }
