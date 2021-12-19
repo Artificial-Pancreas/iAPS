@@ -4,13 +4,10 @@ import HealthKit
 import Swinject
 
 protocol HealthKitManager: GlucoseSource {
-    /// Check availability HealthKit on current device and user's permissions
-    var isAvailableOnCurrentDevice: Bool { get }
     /// Check all needed permissions
     /// Return false if one or more permissions are deny or not choosen
     var areAllowAllPermissions: Bool { get }
-    /// Check availability to save data of concrete type to Health store
-    func checkAvailabilitySave(objectTypeToHealthStore: HKObjectType) -> Bool
+    /// Check availability to save data of BG type to Health store
     func checkAvailabilitySaveBG() -> Bool
     /// Requests user to give permissions on using HealthKit
     func requestPermission(completion: ((Bool, Error?) -> Void)?)
@@ -45,19 +42,17 @@ final class BaseHealthKitManager: HealthKitManager, Injectable {
     @SyncAccess @Persisted(key: "BaseHealthKitManager.newGlucose") private var newGlucose: [BloodGlucose] = []
 
     // last anchor for HKAnchoredQuery
-    private var lastBloodGlucoseQueryAnchor: HKQueryAnchor! {
+    private var lastBloodGlucoseQueryAnchor: HKQueryAnchor? {
         set {
-            persistedAnchor = (
-                try? NSKeyedArchiver.archivedData(withRootObject: newValue as Any, requiringSecureCoding: false)
-            ) ?? Data()
+            persistedAnchor = try? NSKeyedArchiver.archivedData(withRootObject: newValue as Any, requiringSecureCoding: false)
         }
         get {
-            (try? NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(persistedAnchor) as? HKQueryAnchor) ??
-                HKQueryAnchor(fromValue: 0)
+            guard let data = persistedAnchor else { return nil }
+            return try? NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(data) as? HKQueryAnchor
         }
     }
 
-    @SyncAccess @Persisted(key: "HealthKitManagerAnchor") private var persistedAnchor = Data()
+    @Persisted(key: "HealthKitManagerAnchor") private var persistedAnchor: Data? = nil
 
     var isAvailableOnCurrentDevice: Bool {
         HKHealthStore.isHealthDataAvailable()
@@ -234,7 +229,7 @@ final class BaseHealthKitManager: HealthKitManager, Injectable {
             predicate: predicate,
             anchor: lastBloodGlucoseQueryAnchor,
             limit: HKObjectQueryNoLimit
-        ) { [weak self] _, addedObjects, deletedObjects, anchor, _ in
+        ) { [weak self] _, addedObjects, _, anchor, _ in
             guard let self = self else { return }
             self.processQueue.async {
                 debug(.service, "AnchoredQuery did execute")
@@ -246,13 +241,6 @@ final class BaseHealthKitManager: HealthKitManager, Injectable {
                    bgSamples.isNotEmpty
                 {
                     self.prepareSamplesToPublisherFetch(bgSamples)
-                }
-
-                // Deleted objects
-                if let deletedSamples = deletedObjects,
-                   deletedSamples.isNotEmpty
-                {
-                    self.deleteSamplesFromLocalStorage(deletedSamples)
                 }
             }
         }
@@ -295,31 +283,6 @@ final class BaseHealthKitManager: HealthKitManager, Injectable {
             .service,
             "Current BloodGlucose.Type objects will be send from Publisher during fetch: \(String(describing: newGlucose))"
         )
-    }
-
-    private func deleteSamplesFromLocalStorage(_ deletedSamples: [HKDeletedObject]) {
-        guard settingsManager.settings.useAppleHealth,
-              let sampleType = Config.healthBGObject,
-              checkAvailabilitySave(objectTypeToHealthStore: sampleType),
-              deletedSamples.isNotEmpty
-        else { return }
-
-        let removingBGID = deletedSamples.map {
-            $0.metadata?[HKMetadataKeySyncIdentifier] as? String ?? $0.uuid.uuidString
-        }
-
-        func delete(samples: [HKSample]) {
-            let sampleIDs = samples.map(\.syncIdentifier)
-            let idsToRemove = removingBGID.filter { !sampleIDs.contains($0) }
-            debug(.service, "Delete HealthKit objects: \(idsToRemove)")
-            glucoseStorage.removeGlucose(ids: idsToRemove)
-            newGlucose = newGlucose.filter { !idsToRemove.contains($0.id) }
-        }
-
-        loadSamplesFromHealth(sampleType: sampleType, withIDs: removingBGID)
-            .receive(on: processQueue)
-            .sink(receiveValue: delete)
-            .store(in: &lifetime)
     }
 
     func fetch() -> AnyPublisher<[BloodGlucose], Never> {
