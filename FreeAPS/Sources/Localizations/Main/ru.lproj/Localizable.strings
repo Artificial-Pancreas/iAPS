@@ -130,6 +130,9 @@
 /* Upper temp target limit */
 "Top target" = "Верхняя граница";
 
+/*  Temp target set for ... minutes */
+"for %@ min" = "на %d минут";
+
 /*  */
 "Autotune" = "Автотюн";
 
@@ -409,6 +412,15 @@ Enact a temp Basal or a temp target */
 
 /* Header for Temp targets in Watch app */
 "Temp Targets" = "Временные цели";
+
+/* Delete carbs from Treatments list*/
+"Delete carbs?" = "Удалить углероды?";
+
+/* Treatments list */
+"Treatments" = "События";
+
+/* " min" in Treatments list */
+" min" = " мин";
 
 
 /* Calendar and Libre transmitter settings ---------------

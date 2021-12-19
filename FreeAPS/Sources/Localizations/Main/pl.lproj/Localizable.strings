@@ -130,6 +130,9 @@
 /* Upper temp target limit */
 "Top target" = "Górna wartość docelowa";
 
+/*  Temp target set for ... minutes */
+"for %@ min" = "for %@ min";
+
 /*  */
 "Autotune" = "Autotune";
 
@@ -411,6 +414,15 @@ Połączono z Nightscout!";
 
 /* Header for Temp targets in Watch app */
 "Temp Targets" = "Temp Targets";
+
+/* Delete carbs from Treatments list*/
+"Delete carbs?" = "Delete carbs?";
+
+/* Treatments list */
+"Treatments" = "Treatments";
+
+/* " min" in Treatments list */
+" min" = " min";
 
 
 /* Calendar and Libre transmitter settings ---------------
@@ -905,6 +917,9 @@ Połączono z Nightscout!";
 
 /* Show when have not permissions for writing to Health */
 "For write data to Apple Health you must give permissions in Settings > Health > Data Access" = "For write data to Apple Health you must give permissions in Settings > Health > Data Access";
+
+/* */
+"After you create glucose records in the Health app, please open FreeAPS X to help us guaranteed transfer changed data" = "After you create glucose records in the Health app, please open FreeAPS X to help us guaranteed transfer changed data";
 /* --------------------------------------------
 
 

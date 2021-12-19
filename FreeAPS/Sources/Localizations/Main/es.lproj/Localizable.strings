@@ -130,6 +130,9 @@
 /* Upper temp target limit */
 "Top target" = "Objetivo Superior";
 
+/*  Temp target set for ... minutes */
+"for %@ min" = "for %@ min";
+
 /*  */
 "Autotune" = "Autotune";
 
@@ -409,6 +412,15 @@ Enact a temp Basal or a temp target */
 
 /* Header for Temp targets in Watch app */
 "Temp Targets" = "Temp Targets";
+
+/* Delete carbs from Treatments list*/
+"Delete carbs?" = "Delete carbs?";
+
+/* Treatments list */
+"Treatments" = "Treatments";
+
+/* " min" in Treatments list */
+" min" = " min";
 
 
 /* Calendar and Libre transmitter settings ---------------
@@ -903,6 +915,9 @@ Enact a temp Basal or a temp target */
 
 /* Show when have not permissions for writing to Health */
 "For write data to Apple Health you must give permissions in Settings > Health > Data Access" = "For write data to Apple Health you must give permissions in Settings > Health > Data Access";
+
+/* */
+"After you create glucose records in the Health app, please open FreeAPS X to help us guaranteed transfer changed data" = "After you create glucose records in the Health app, please open FreeAPS X to help us guaranteed transfer changed data";
 /* --------------------------------------------
 
 
