@@ -18,7 +18,7 @@ protocol DeviceDataManager: GlucoseSource {
     var errorSubject: PassthroughSubject<Error, Never> { get }
     var pumpName: CurrentValueSubject<String, Never> { get }
     var pumpExpiresAtDate: CurrentValueSubject<Date?, Never> { get }
-    func heartbeat(date: Date, force: Bool)
+    func heartbeat(date: Date)
     func createBolusProgressReporter() -> DoseProgressReporter?
 }
 
@@ -96,30 +96,8 @@ final class BaseDeviceDataManager: DeviceDataManager, Injectable {
         pumpManager?.createBolusProgressReporter(reportingOn: processQueue)
     }
 
-    func heartbeat(date: Date, force: Bool) {
+    func heartbeat(date: Date) {
         processQueue.safeSync {
-            if force {
-                updatePumpData()
-                return
-            }
-
-            var updateInterval: TimeInterval = 4.0 * 60
-
-            switch date.timeIntervalSince(lastHeartBeatTime) {
-            case let interval where interval > 10.minutes.timeInterval:
-                break
-            case let interval where interval > 5.minutes.timeInterval:
-                updateInterval = 1.minutes.timeInterval
-            default:
-                break
-            }
-
-            let interval = date.timeIntervalSince(lastHeartBeatTime)
-            guard interval >= updateInterval else {
-                debug(.deviceManager, "Last hearbeat \(interval / 60) min ago, skip updating the pump data")
-                return
-            }
-
             lastHeartBeatTime = date
             updatePumpData()
         }
