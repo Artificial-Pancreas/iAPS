@@ -413,6 +413,11 @@ Enact a temp Basal or a temp target */
 /* Header for Temp targets in Watch app */
 "Temp Targets" = "Målvärden";
 
+/* Delete carbs from Treatments list*/
+"Delete carbs?" = "Ta bort kolhydrater?";
+
+/* Treatments list */
+"Treatments" = "Behandlingar";
 
 /* Calendar and Libre transmitter settings ---------------
  */
