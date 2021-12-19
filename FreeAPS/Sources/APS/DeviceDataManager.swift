@@ -98,7 +98,6 @@ final class BaseDeviceDataManager: DeviceDataManager, Injectable {
 
     func heartbeat(date: Date) {
         processQueue.safeSync {
-            default:
             lastHeartBeatTime = date
             updatePumpData()
         }
