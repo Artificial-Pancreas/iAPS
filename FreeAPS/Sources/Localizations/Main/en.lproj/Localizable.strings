@@ -419,6 +419,9 @@ Enact a temp Basal or a temp target */
 /* Treatments list */
 "Treatments" = "Treatments";
 
+/* " min" in Treatments list */
+" min" = " min";
+
 
 /* Calendar and Libre transmitter settings ---------------
  */
