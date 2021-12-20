@@ -100,7 +100,7 @@ extension AddTempTarget {
                         Text(state.units.rawValue)
                             .foregroundColor(.secondary)
                             .font(.caption)
-                        Text("for \(formatter.string(from: preset.duration as NSNumber)!) min")
+                        Text("for" + " \(formatter.string(from: preset.duration as NSNumber)!) " + "min")
                             .foregroundColor(.secondary)
                             .font(.caption)
                         Spacer()

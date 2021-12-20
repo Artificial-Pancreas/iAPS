@@ -547,7 +547,7 @@ final class BaseAPSManager: APSManager, Injectable {
             enacted.timestamp = Date()
             enacted.recieved = received
             storage.save(enacted, as: OpenAPS.Enact.enacted)
-            debug(.apsManager, "Suggestion enacted")
+            debug(.apsManager, "Suggestion enacted. Received: \(received)")
             DispatchQueue.main.async {
                 self.broadcaster.notify(EnactedSuggestionObserver.self, on: .main) {
                     $0.enactedSuggestionDidUpdate(enacted)
@@ -582,8 +582,10 @@ private extension PumpManager {
             self.enactTempBasal(unitsPerHour: unitsPerHour, for: duration) { result in
                 switch result {
                 case let .success(dose):
+                    debug(.apsManager, "Temp basal succeded: \(unitsPerHour) for: \(duration)")
                     promise(.success(dose))
                 case let .failure(error):
+                    debug(.apsManager, "Temp basal failed: \(unitsPerHour) for: \(duration)")
                     promise(.failure(error))
                 }
             }
@@ -595,8 +597,10 @@ private extension PumpManager {
             self.enactBolus(units: units, automatic: automatic) { result in
                 switch result {
                 case let .success(dose):
+                    debug(.apsManager, "Bolus succeded: \(units)")
                     promise(.success(dose))
                 case let .failure(error):
+                    debug(.apsManager, "Bolus failed: \(units)")
                     promise(.failure(error))
                 }
             }
@@ -608,8 +612,10 @@ private extension PumpManager {
             self.cancelBolus { result in
                 switch result {
                 case let .success(dose):
+                    debug(.apsManager, "Cancel Bolus succeded")
                     promise(.success(dose))
                 case let .failure(error):
+                    debug(.apsManager, "Cancel Bolus failed")
                     promise(.failure(error))
                 }
             }
