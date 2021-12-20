@@ -456,7 +456,7 @@ Enact a temp Basal or a temp target */
 "Libre 2 Direct" = "Libre 2 Direk";
 
 /* */
-"Select the third party transmitter you want to connect to" = "Bağlanmak istediğiniz üçüncü parti vericiyi seçin";
+"Select the third party transmitter you want to connect to" = "Bağlanmak istediğiniz harici vericiyi seçin";
 
 /* State was restored */
 "State was restored" = "Durum yenilendi";
