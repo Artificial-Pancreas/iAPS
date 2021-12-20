@@ -414,10 +414,10 @@ Enact a temp Basal or a temp target */
 "Temp Targets" = "Midlertidige mål";
 
 /* Delete carbs from Treatments list*/
-"Delete carbs?" = "Delete carbs?";
+"Delete carbs?" = "Slette karbohydrater?";
 
 /* Treatments list */
-"Treatments" = "Treatments";
+"Treatments" = "Behandlinger";
 
 /* " min" in Treatments list */
 " min" = " min";
@@ -917,7 +917,7 @@ Enact a temp Basal or a temp target */
 "For write data to Apple Health you must give permissions in Settings > Health > Data Access" = "For å skrive data til Apple Health må du gi rettigheter i Innstillinger > Helse > Datatilgang";
 
 /* */
-"After you create glucose records in the Health app, please open FreeAPS X to help us guaranteed transfer changed data" = "After you create glucose records in the Health app, please open FreeAPS X to help us guaranteed transfer changed data";
+"After you create glucose records in the Health app, please open FreeAPS X to help us guaranteed transfer changed data" = "Etter at du har lagt til blodsukker i Helse-appen, vennligst åpne FreeAPS X for å sikre overføring av endrede data";
 /* --------------------------------------------
 
 
