@@ -12,6 +12,12 @@ enum GlucoseSourceKey: String {
     case description
 }
 
+enum NotificationAction: String {
+    static let key = "action"
+
+    case snooze
+}
+
 final class BaseUserNotificationsManager: NSObject, UserNotificationsManager, Injectable {
     private enum Identifier: String {
         case glucocoseNotification = "FreeAPS.glucoseNotification"
@@ -24,6 +30,7 @@ final class BaseUserNotificationsManager: NSObject, UserNotificationsManager, In
     @Injected() private var broadcaster: Broadcaster!
     @Injected() private var glucoseStorage: GlucoseStorage!
     @Injected() private var apsManager: APSManager!
+    @Injected() private var router: Router!
     @Injected(as: FetchGlucoseManager.self) private var sourceInfoProvider: SourceInfoProvider!
 
     @Persisted(key: "UserNotificationsManager.snoozeUntilDate") private var snoozeUntilDate: Date = .distantPast
@@ -161,11 +168,9 @@ final class BaseUserNotificationsManager: NSObject, UserNotificationsManager, In
             case .low:
                 titles.append(NSLocalizedString("LOWALERT!", comment: "LOWALERT!"))
                 notificationAlarm = true
-                self.playSoundIfNeeded()
             case .high:
                 titles.append(NSLocalizedString("HIGHALERT!", comment: "HIGHALERT!"))
                 notificationAlarm = true
-                self.playSoundIfNeeded()
             }
 
             if self.snoozeUntilDate > Date() {
@@ -185,7 +190,9 @@ final class BaseUserNotificationsManager: NSObject, UserNotificationsManager, In
             content.body = body
 
             if notificationAlarm {
+                self.playSoundIfNeeded()
                 content.sound = .default
+                content.userInfo[NotificationAction.key] = NotificationAction.snooze.rawValue
             }
 
             self.addRequest(identifier: .glucocoseNotification, content: content, deleteOld: true)
@@ -373,5 +380,21 @@ extension BaseUserNotificationsManager: UNUserNotificationCenterDelegate {
         withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void
     ) {
         completionHandler([.banner, .badge, .sound])
+    }
+
+    func userNotificationCenter(
+        _: UNUserNotificationCenter,
+        didReceive response: UNNotificationResponse,
+        withCompletionHandler completionHandler: @escaping () -> Void
+    ) {
+        defer { completionHandler() }
+        guard let actionRaw = response.notification.request.content.userInfo[NotificationAction.key] as? String,
+              let action = NotificationAction(rawValue: actionRaw)
+        else { return }
+
+        switch action {
+        case .snooze:
+            router.mainModalScreen.send(.snooze)
+        }
     }
 }
