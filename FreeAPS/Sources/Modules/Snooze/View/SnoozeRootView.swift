@@ -107,7 +107,7 @@ extension Snooze {
         }
 
         var snoozeDesc: some View {
-            Text(snoozeDescription)
+            Text(snoozeDescription).lineLimit(0)
         }
 
         var body: some View {
