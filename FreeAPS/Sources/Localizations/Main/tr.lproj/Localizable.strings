@@ -131,7 +131,10 @@
 "Top target" = "Üst hedef";
 
 /*  Temp target set for ... minutes */
-"for %@ min" = "%@ dak için";
+"for" = "for";
+
+/*  Temp target set for ... minutes */
+"min" = "min";
 
 /*  */
 "Autotune" = "Atoayar";

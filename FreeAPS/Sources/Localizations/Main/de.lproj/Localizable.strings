@@ -131,7 +131,10 @@
 "Top target" = "Obergrenze";
 
 /*  Temp target set for ... minutes */
-"for %@ min" = "für %@ Minuten";
+"for" = "for";
+
+/*  Temp target set for ... minutes */
+"min" = "min";
 
 /*  */
 "Autotune" = "Autotune";

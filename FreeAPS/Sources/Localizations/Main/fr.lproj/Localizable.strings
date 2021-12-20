@@ -131,7 +131,10 @@
 "Top target" = "Cible haute";
 
 /*  Temp target set for ... minutes */
-"for %@ min" = "for %@ min";
+"for" = "for";
+
+/*  Temp target set for ... minutes */
+"min" = "min";
 
 /*  */
 "Autotune" = "Autotune";

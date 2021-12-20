@@ -131,7 +131,10 @@
 "Top target" = "Øvre mål";
 
 /*  Temp target set for ... minutes */
-"for %@ min" = "i %@ min";
+"for" = "for";
+
+/*  Temp target set for ... minutes */
+"min" = "min";
 
 /*  */
 "Autotune" = "Autotune";
