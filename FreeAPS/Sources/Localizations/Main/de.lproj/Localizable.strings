@@ -131,7 +131,7 @@
 "Top target" = "Obergrenze";
 
 /*  Temp target set for ... minutes */
-"for" = "for";
+"for" = "für";
 
 /*  Temp target set for ... minutes */
 "min" = "min";
@@ -417,10 +417,10 @@ Enact a temp Basal or a temp target */
 "Temp Targets" = "Temporäre Ziele";
 
 /* Delete carbs from Treatments list*/
-"Delete carbs?" = "Delete carbs?";
+"Delete carbs?" = "Carbs löschen?";
 
 /* Treatments list */
-"Treatments" = "Treatments";
+"Treatments" = "Behandlungen";
 
 /* " min" in Treatments list */
 " min" = " min";
@@ -873,10 +873,10 @@ Enact a temp Basal or a temp target */
 "About this source" = "Über diesen Quellcode";
 
 /* */
-"Bolus failed" = "Bolus failed";
+"Bolus failed" = "Bolus fehlgeschlagen";
 
 /* */
-"Bolus failed or inaccurate. Check pump history before repeating." = "Bolus failed or inaccurate. Check pump history before repeating.";
+"Bolus failed or inaccurate. Check pump history before repeating." = "Bolus ist fehlgeschlagen oder ungenau. Prüfe den Pumpenverlauf vor einer erneuten Abgabe.";
 
 
 /* Headers for settings ----------------------- */
