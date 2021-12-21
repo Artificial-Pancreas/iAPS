@@ -106,6 +106,12 @@ final class BaseAPSManager: APSManager, Injectable {
         openAPS = OpenAPS(storage: storage)
         subscribe()
         lastLoopDateSubject.send(lastLoopDate)
+
+        isLooping
+            .sink { value in
+                self.deviceDataManager.loopInProgress = value
+            }
+            .store(in: &lifetime)
     }
 
     private func subscribe() {
@@ -305,6 +311,13 @@ final class BaseAPSManager: APSManager, Injectable {
             if case let .failure(error) = completion {
                 warning(.apsManager, "Bolus failed with error: \(error.localizedDescription)")
                 self.processError(APSError.pumpError(error))
+                if !isSMB {
+                    self.processQueue.async {
+                        self.broadcaster.notify(BolusFailureObserver.self, on: self.processQueue) {
+                            $0.bolusDidFail()
+                        }
+                    }
+                }
             } else {
                 debug(.apsManager, "Bolus succeeded")
                 if !isSMB {
