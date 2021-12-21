@@ -106,6 +106,12 @@ final class BaseAPSManager: APSManager, Injectable {
         openAPS = OpenAPS(storage: storage)
         subscribe()
         lastLoopDateSubject.send(lastLoopDate)
+
+        isLooping
+            .sink { value in
+                self.deviceDataManager.loopInProgress = value
+            }
+            .store(in: &lifetime)
     }
 
     private func subscribe() {
