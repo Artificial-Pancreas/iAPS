@@ -90,7 +90,7 @@ extension AddTempTarget {
                         Text(preset.displayName)
                         Spacer()
                     }
-                    HStack {
+                    HStack(spacing: 2) {
                         Text(
                             "\(formatter.string(from: (low ?? 0) as NSNumber)!) - \(formatter.string(from: (high ?? 0) as NSNumber)!)"
                         )
@@ -100,9 +100,16 @@ extension AddTempTarget {
                         Text(state.units.rawValue)
                             .foregroundColor(.secondary)
                             .font(.caption)
-                        Text("for" + " \(formatter.string(from: preset.duration as NSNumber)!) " + "min")
+                        Text("for")
                             .foregroundColor(.secondary)
                             .font(.caption)
+                        Text("\(formatter.string(from: preset.duration as NSNumber)!)")
+                            .foregroundColor(.secondary)
+                            .font(.caption)
+                        Text("min")
+                            .foregroundColor(.secondary)
+                            .font(.caption)
+
                         Spacer()
                     }.padding(.top, 2)
                 }
