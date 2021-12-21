@@ -131,10 +131,10 @@
 "Top target" = "Üst hedef";
 
 /*  Temp target set for ... minutes */
-"for" = "for";
+"for" = "için";
 
 /*  Temp target set for ... minutes */
-"min" = "min";
+"min" = "dk";
 
 /*  */
 "Autotune" = "Atoayar";
@@ -911,16 +911,16 @@ Enact a temp Basal or a temp target */
 
 /* HealthKit intergration --------------------*/
 /* */
-"Apple Health" = "Apple Health";
+"Apple Health" = "Apple Sağlık Uygulaması";
 
 /* */
-"Connect to Apple Health" = "Apple Health'e bağlan";
+"Connect to Apple Health" = "Apple Sağlık Uygulamasına bağlan";
 
 /* Show when have not permissions for writing to Health */
-"For write data to Apple Health you must give permissions in Settings > Health > Data Access" = "Apple Health'e veri yazmak için Ayarlar > Sağlık > Veri Erişimi'nde izinler vermelisiniz";
+"For write data to Apple Health you must give permissions in Settings > Health > Data Access" = "Apple Sağlık Uygulamasına veri yazmak için Ayarlar > Sağlık > Veri Erişimi'nde izinler vermelisiniz";
 
 /* */
-"After you create glucose records in the Health app, please open FreeAPS X to help us guaranteed transfer changed data" = "Health uygulamasında glikoz kayıtları oluşturduktan sonra, değiştirilen verileri aktarmayı garanti etmemize yardımcı olmak için lütfen FreeAPS X'i açın";
+"After you create glucose records in the Health app, please open FreeAPS X to help us guaranteed transfer changed data" = "Sağlık uygulamasında glikoz kayıtları oluşturduktan sonra, değiştirilen verileri aktarmayı garanti etmemize yardımcı olmak için lütfen FreeAPS X'i açın";
 /* --------------------------------------------
 
 
