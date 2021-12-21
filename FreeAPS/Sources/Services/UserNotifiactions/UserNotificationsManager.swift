@@ -18,12 +18,17 @@ enum NotificationAction: String {
     case snooze
 }
 
+protocol BolusFailureObserver {
+    func bolusDidFail()
+}
+
 final class BaseUserNotificationsManager: NSObject, UserNotificationsManager, Injectable {
     private enum Identifier: String {
         case glucocoseNotification = "FreeAPS.glucoseNotification"
         case carbsRequiredNotification = "FreeAPS.carbsRequiredNotification"
         case noLoopFirstNotification = "FreeAPS.noLoopFirstNotification"
         case noLoopSecondNotification = "FreeAPS.noLoopSecondNotification"
+        case bolusFailedNotification = "FreeAPS.bolusFailedNotification"
     }
 
     @Injected() private var settingsManager: SettingsManager!
@@ -44,6 +49,7 @@ final class BaseUserNotificationsManager: NSObject, UserNotificationsManager, In
         injectServices(resolver)
         broadcaster.register(GlucoseObserver.self, observer: self)
         broadcaster.register(SuggestionObserver.self, observer: self)
+        broadcaster.register(BolusFailureObserver.self, observer: self)
 
         requestNotificationPermissionsIfNeeded()
         sendGlucoseNotification()
@@ -140,6 +146,28 @@ final class BaseUserNotificationsManager: NSObject, UserNotificationsManager, In
                 content: secondContent,
                 deleteOld: true,
                 trigger: secondTrigger
+            )
+        }
+    }
+
+    private func notifyBolusFailure() {
+        ensureCanSendNotification {
+            let title = NSLocalizedString("Bolus failed", comment: "Bolus failed")
+            let body = NSLocalizedString(
+                "Bolus failed or inaccurate. Check pump history before repeating.",
+                comment: "Bolus failed or inaccurate. Check pump history before repeating."
+            )
+
+            let content = UNMutableNotificationContent()
+            content.title = title
+            content.body = body
+            content.sound = .default
+
+            self.addRequest(
+                identifier: .noLoopFirstNotification,
+                content: content,
+                deleteOld: true,
+                trigger: nil
             )
         }
     }
@@ -370,6 +398,12 @@ extension BaseUserNotificationsManager: SuggestionObserver {
     func suggestionDidUpdate(_ suggestion: Suggestion) {
         guard let carndRequired = suggestion.carbsReq else { return }
         notifyCarbsRequired(Int(carndRequired))
+    }
+}
+
+extension BaseUserNotificationsManager: BolusFailureObserver {
+    func bolusDidFail() {
+        notifyBolusFailure()
     }
 }
 
