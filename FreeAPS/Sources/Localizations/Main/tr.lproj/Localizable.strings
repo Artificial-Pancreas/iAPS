@@ -872,6 +872,12 @@ Enact a temp Basal or a temp target */
 /* About this source */
 "About this source" = "Bu kaynak hakkında";
 
+/* */
+"Bolus failed" = "Bolus başarısız";
+
+/* */
+"Bolus failed or inaccurate. Check pump history before repeating." = "Bolus başarısız veya hatalı. Tekrarlamadan önce pompa geçmişini kontrol edin.";
+
 
 /* Headers for settings ----------------------- */
 "OpenAPS main settings" = "OpenAPS ana ayarları";
