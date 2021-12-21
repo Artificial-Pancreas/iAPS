@@ -131,7 +131,10 @@
 "Top target" = "Верхня ціль";
 
 /*  Temp target set for ... minutes */
-"for %@ min" = "for %@ min";
+"for" = "for";
+
+/*  Temp target set for ... minutes */
+"min" = "min";
 
 /*  */
 "Autotune" = "Автотюн";
@@ -868,6 +871,12 @@ Enact a temp Basal or a temp target */
 
 /* About this source */
 "About this source" = "About this source";
+
+/* */
+"Bolus failed" = "Bolus failed";
+
+/* */
+"Bolus failed or inaccurate. Check pump history before repeating." = "Bolus failed or inaccurate. Check pump history before repeating.";
 
 
 /* Headers for settings ----------------------- */

@@ -131,7 +131,10 @@
 "Top target" = "Верхняя граница";
 
 /*  Temp target set for ... minutes */
-"for %@ min" = "на %d минут";
+"for" = "для";
+
+/*  Temp target set for ... minutes */
+"min" = "мин";
 
 /*  */
 "Autotune" = "Автотюн";

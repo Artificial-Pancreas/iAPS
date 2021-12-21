@@ -14,7 +14,7 @@
 "com.loudnate.CarbKit.deleteCarbEntryUnownedErrorDescription" = "Yetkilendirme Reddedildi";
 
 /* The error recovery suggestion when attempting to delete a sample not shared by the current app */
-"com.loudnate.carbKit.sharingDeniedErrorRecoverySuggestion" = "Bu örnek Health uygulamasından silinebilir";
+"com.loudnate.carbKit.sharingDeniedErrorRecoverySuggestion" = "Bu örnek Sağlık uygulamasından silinebilir";
 
 /* Generic pump error description */
 "Communication Failure" = "İletişim Hatası";
@@ -68,7 +68,7 @@
 "OK" = "Tamam";
 
 /* The error recovery suggestion when Health sharing was denied */
-"Please re-enable sharing in Health" = "Lütfen Health paylaşımı yeniden etkinleştirin";
+"Please re-enable sharing in Health" = "Lütfen Sağlık Uygulaması paylaşımını yeniden etkinleştirin";
 
 /* Glucose trend up */
 "Rising" = "Yükselmekte";

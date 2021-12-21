@@ -131,7 +131,10 @@
 "Top target" = "Üst hedef";
 
 /*  Temp target set for ... minutes */
-"for %@ min" = "%@ dak için";
+"for" = "için";
+
+/*  Temp target set for ... minutes */
+"min" = "dk";
 
 /*  */
 "Autotune" = "Atoayar";
@@ -456,7 +459,7 @@ Enact a temp Basal or a temp target */
 "Libre 2 Direct" = "Libre 2 Direk";
 
 /* */
-"Select the third party transmitter you want to connect to" = "Bağlanmak istediğiniz üçüncü parti vericiyi seçin";
+"Select the third party transmitter you want to connect to" = "Bağlanmak istediğiniz harici vericiyi seçin";
 
 /* State was restored */
 "State was restored" = "Durum yenilendi";
@@ -869,6 +872,12 @@ Enact a temp Basal or a temp target */
 /* About this source */
 "About this source" = "Bu kaynak hakkında";
 
+/* */
+"Bolus failed" = "Bolus başarısız";
+
+/* */
+"Bolus failed or inaccurate. Check pump history before repeating." = "Bolus başarısız veya hatalı. Tekrarlamadan önce pompa geçmişini kontrol edin.";
+
 
 /* Headers for settings ----------------------- */
 "OpenAPS main settings" = "OpenAPS ana ayarları";
@@ -908,16 +917,16 @@ Enact a temp Basal or a temp target */
 
 /* HealthKit intergration --------------------*/
 /* */
-"Apple Health" = "Apple Health";
+"Apple Health" = "Apple Sağlık Uygulaması";
 
 /* */
-"Connect to Apple Health" = "Apple Health'e bağlan";
+"Connect to Apple Health" = "Apple Sağlık Uygulamasına bağlan";
 
 /* Show when have not permissions for writing to Health */
-"For write data to Apple Health you must give permissions in Settings > Health > Data Access" = "Apple Health'e veri yazmak için Ayarlar > Sağlık > Veri Erişimi'nde izinler vermelisiniz";
+"For write data to Apple Health you must give permissions in Settings > Health > Data Access" = "Apple Sağlık Uygulamasına veri yazmak için Ayarlar > Sağlık > Veri Erişimi'nde izinler vermelisiniz";
 
 /* */
-"After you create glucose records in the Health app, please open FreeAPS X to help us guaranteed transfer changed data" = "Health uygulamasında glikoz kayıtları oluşturduktan sonra, değiştirilen verileri aktarmayı garanti etmemize yardımcı olmak için lütfen FreeAPS X'i açın";
+"After you create glucose records in the Health app, please open FreeAPS X to help us guaranteed transfer changed data" = "Sağlık uygulamasında glikoz kayıtları oluşturduktan sonra, değiştirilen verileri aktarmayı garanti etmemize yardımcı olmak için lütfen FreeAPS X'i açın";
 /* --------------------------------------------
 
 
