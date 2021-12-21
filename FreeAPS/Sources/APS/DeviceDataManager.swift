@@ -12,6 +12,7 @@ import UserNotifications
 
 protocol DeviceDataManager: GlucoseSource {
     var pumpManager: PumpManagerUI? { get set }
+    var loopInProgress: Bool { get set }
     var pumpDisplayState: CurrentValueSubject<PumpDisplayState?, Never> { get }
     var recommendsLoop: PassthroughSubject<Void, Never> { get }
     var bolusTrigger: PassthroughSubject<Bool, Never> { get }
@@ -51,6 +52,7 @@ final class BaseDeviceDataManager: DeviceDataManager, Injectable {
     let pumpNewStatus = PassthroughSubject<Void, Never>()
     @SyncAccess private var pumpUpdateCancellable: AnyCancellable?
     private var pumpUpdatePromise: Future<Bool, Never>.Promise?
+    @SyncAccess var loopInProgress: Bool = false
 
     var pumpManager: PumpManagerUI? {
         didSet {
@@ -100,7 +102,12 @@ final class BaseDeviceDataManager: DeviceDataManager, Injectable {
 
     func heartbeat(date: Date) {
         guard pumpUpdateCancellable == nil else {
-            warning(.deviceManager, "Pump updating already in progress")
+            warning(.deviceManager, "Pump updating already in progress. Skip updating.")
+            return
+        }
+
+        guard !loopInProgress else {
+            warning(.deviceManager, "Loop in progress. Skip updating.")
             return
         }
 
@@ -139,9 +146,12 @@ final class BaseDeviceDataManager: DeviceDataManager, Injectable {
         pumpUpdateCancellable = nil
         pumpUpdatePromise = nil
         if !recommendsLoop {
-            warning(.deviceManager, "Loop recommendation time out or got error. Starting loop right now.")
+            warning(.deviceManager, "Loop recommendation time out or got error. Trying to loop right now.")
         }
-
+        guard !loopInProgress else {
+            warning(.deviceManager, "Loop already in progress. Skip recommendation.")
+            return
+        }
         self.recommendsLoop.send()
     }
 
