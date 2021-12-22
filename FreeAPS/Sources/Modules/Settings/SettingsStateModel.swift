@@ -4,9 +4,10 @@ extension Settings {
     final class StateModel: BaseStateModel<Provider> {
         @Injected() private var broadcaster: Broadcaster!
         @Injected() private var fileManager: FileManager!
-        @Published var closedLoop = false
 
+        @Published var closedLoop = false
         @Published var debugOptions = false
+        @Published var animatedBackground = false
 
         private(set) var buildNumber = ""
 
@@ -17,6 +18,8 @@ extension Settings {
             broadcaster.register(SettingsObserver.self, observer: self)
 
             buildNumber = Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? "Unknown"
+
+            subscribeSetting(\.animatedBackground, on: $animatedBackground) { animatedBackground = $0 }
         }
 
         func logItems() -> [URL] {

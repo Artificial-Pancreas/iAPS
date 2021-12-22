@@ -102,6 +102,10 @@ extension Settings {
                 }
 
                 Section {
+                    Toggle("Animated Background", isOn: $state.animatedBackground)
+                }
+
+                Section {
                     Text("Share logs")
                         .onTapGesture {
                             showShareSheet = true
