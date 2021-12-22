@@ -893,6 +893,7 @@ Enact a temp Basal or a temp target */
 /* */
 "Suspend" = "Остановка";
 
+
 /* Headers for settings ----------------------- */
 "OpenAPS main settings" = "Основные настройки OpenAPS";
 
