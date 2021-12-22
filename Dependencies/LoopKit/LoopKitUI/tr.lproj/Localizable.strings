@@ -230,7 +230,7 @@
 "The maximum allowed amount is %@ grams" = "İzin verilen maksimum miktar %@ gramdır";
 
 /* The schedule table view header describing the configured time zone difference from the default time zone. The substitution parameters are: (1: time zone name)(2: +/-)(3: time interval) */
-"Times in %1$@%2$@%3$@" = "Zaman saat dilimi %1$@%2$@%3$@";
+"Times in %1$@%2$@%3$@" = "Saat dilimi %1$@%2$@%3$@";
 
 /* The unit string for units per hour */
 "U/hour" = "Ü/Sa";

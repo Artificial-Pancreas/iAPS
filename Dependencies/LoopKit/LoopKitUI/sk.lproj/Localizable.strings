@@ -1,15 +1,3 @@
-/* Appends a full-stop to a statement */
-"%@." = "%@.";
-
-/* The format for an insulin needs percentage. */
-"%@%% of normal insulin" = "%@%% normálneho inzulínu";
-
-/* Format string for reservoir volume. (1: The localized volume) */
-"%@U" = "%@J";
-
-/* The format for a glucose target range. (1: min target)(2: max target)(3: glucose unit) */
-"%1$@ – %2$@ %3$@" = "%1$@ – %2$@ %3$@";
-
 /* The format for an override preset cell. (1: symbol)(2: name)
    The format for an override symbol and name (1: symbol)(2: name) */
 "%1$@ %2$@" = "%1$@ %2$@";
@@ -17,23 +5,35 @@
 /* Accessibility format string for (1: localized volume)(2: time) */
 "%1$@ units remaining at %2$@" = "%1$@ jednotiek zostávajúcich o %2$@";
 
+/* The format for a glucose target range. (1: min target)(2: max target)(3: glucose unit) */
+"%1$@ – %2$@ %3$@" = "%1$@ – %2$@ %3$@";
+
+/* The format for an insulin needs percentage. */
+"%@%% of normal insulin" = "%@%% of normal insulin";
+
+/* Appends a full-stop to a statement */
+"%@." = "%@.";
+
+/* Format string for reservoir volume. (1: The localized volume) */
+"%@U" = "%@J";
+
 /* Title of the carb entry absorption time cell */
 "Absorption Time" = "Čas vstrebania";
 
 /* The title for the override emoji activity section */
 "Activity" = "Aktivita";
 
-/* The title of the button to add the credentials for a service */
-"Add Account" = "Pridať účet";
-
-/* The title of the view controller to create a new carb entry */
-"Add Carb Entry" = "Pridaj Sach";
-
 /* Action sheet confirmation message for pump history deletion */
 "Are you sure you want to delete all history entries?" = "Naozaj chcete vymazať celú históriu podaní?";
 
 /* Action sheet confirmation message for reservoir deletion */
 "Are you sure you want to delete all reservoir values?" = "Naozaj chcete vymazať všetky údaje rezervoára?";
+
+/* The title of the button to add the credentials for a service */
+"Add Account" = "Pridať účet";
+
+/* The title of the button to remove the credentials for a service */
+"Delete Account" = "Odstrániť účet";
 
 /* Describes a percentage decrease in overall insulin needs */
 "Basal, bolus, and correction insulin dose amounts are decreased by %@%%." = "Bazál, Bolus, a korekčná dávka inzulínu sú znížené o %@%%.";
@@ -52,6 +52,12 @@
 
 /* Title text for suspend resume button when temp basal canceling */
 "Canceling Temp Basal" = "Ruší sa Dočasný Bazál";
+
+/* The title of the view controller to create a new carb entry */
+"Add Carb Entry" = "Pridaj Sach";
+
+/* The title of the view controller to edit an existing carb entry */
+"Edit Carb Entry" = "Uprav Sach";
 
 /* Footer text for customizing an override from a preset (1: preset name) */
 "Changes will only apply this time you enable the override. The default settings of %@ will not be affected." = "Zmeny budú uplatnené iba počas aktívneho override. Prednastavené nastavenia %@ nebudú ovplyvnené.";
@@ -92,17 +98,11 @@
 /* Title of the carb entry date picker cell */
 "Date" = "Dátum";
 
-/* The title of the button to remove the credentials for a service */
-"Delete Account" = "Odstrániť účet";
-
 /* Button title to delete all objects */
 "Delete All" = "Vymazať všetko";
 
 /* The text for the override duration setting */
 "Duration" = "Trvanie";
-
-/* The title of the view controller to edit an existing carb entry */
-"Edit Carb Entry" = "Uprav Sach";
 
 /* The title for the override editing screen */
 "Edit Override" = "Uprav Override";
@@ -177,9 +177,6 @@
 /* The title of the screen displaying a pump event */
 "Pump Event" = "Pump Event";
 
-/* The default placeholder string for a credential */
-"Required" = "Required";
-
 /* Title text for button to resume insulin delivery */
 "Resume Delivery" = "Resume Delivery";
 
@@ -223,6 +220,9 @@
 /* The title for the override selection screen */
 "Temporary Override" = "Temporary Override";
 
+/* The default placeholder string for a credential */
+"Required" = "Required";
+
 /* Alert body displayed absorption time greater than max (1: maximum absorption time) */
 "The maximum absorption time is %@" = "The maximum absorption time is %@";
 
@@ -250,4 +250,3 @@
 
 /* Title for the workout override range */
 "Workout" = "Workout";
-

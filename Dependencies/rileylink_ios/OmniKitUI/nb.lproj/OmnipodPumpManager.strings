@@ -1,4 +1,3 @@
-
 /* Class = "UITableViewSection"; headerTitle = "Remove POD"; ObjectID = "1LF-te-Bdd"; */
 "1LF-te-Bdd.headerTitle" = "Fjern POD";
 
@@ -49,7 +48,7 @@
 
 /* Class = "UILabel"; text = "Review your settings below. They will be programmed into the pod during pairing. You can change these settings at any time in Loopʼs Settings screen."; ObjectID = "kLL-SQ-K0a"; */
 "kLL-SQ-K0a.text" = "Se over innstillinger under. Disse blir programmert inn i pod ved sammenkobling. Du kan når som helst endre disse på skjermbildet for innstillinger i Loop.";
-    
+
 /* Class = "UINavigationItem"; title = "Setup Complete"; ObjectID = "nDb-R5-e02"; */
 "nDb-R5-e02.title" = "Oppsett ferdig.";
 

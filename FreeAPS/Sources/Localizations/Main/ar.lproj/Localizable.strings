@@ -131,7 +131,10 @@
 "Top target" = "Top target";
 
 /*  Temp target set for ... minutes */
-"for %@ min" = "for %@ min";
+"for" = "for";
+
+/*  Temp target set for ... minutes */
+"min" = "min";
 
 /*  */
 "Autotune" = "Autotune";
@@ -412,6 +415,15 @@ Enact a temp Basal or a temp target */
 
 /* Header for Temp targets in Watch app */
 "Temp Targets" = "Temp Targets";
+
+/* Delete carbs from Treatments list*/
+"Delete carbs?" = "Delete carbs?";
+
+/* Treatments list */
+"Treatments" = "Treatments";
+
+/* " min" in Treatments list */
+" min" = " min";
 
 
 /* Calendar and Libre transmitter settings ---------------
@@ -845,25 +857,6 @@ Enact a temp Basal or a temp target */
 /* */
 "To prevent LOW required %d g of carbs" = "To prevent LOW required %d g of carbs";
 
-/* */
-"FreeAPS X not active" = "FreeAPS X not active";
-
-/* */
-"Last loop was more then %d min ago" = "Last loop was more then %d min ago";
-
-/* Glucose badge */
-"Show glucose on the app badge" = "Show glucose on the app badge";
-/* */
-"Carbs Required Threshold" = "Carbs Required Threshold";
-
-/* */
-"Backfill glucose" = "Backfill glucose";
-"Carbs required: %d g" = "Carbs required: %d g";
-
-/* */
-"To prevent LOW required %d g of carbs" = "To prevent LOW required %d g of carbs";
-
-/* Headers for settings ------------------- */
 /* */
 "FreeAPS X not active" = "FreeAPS X not active";
 
