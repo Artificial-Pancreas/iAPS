@@ -522,13 +522,13 @@ Enact a temp Basal or a temp target */
 "Pair Sensor & connect" = "Sensor koppelen en verbinden";
 
 /* */
-"Phone NFC required!" = "Phone NFC required!";
+"Phone NFC required!" = "Telefoon NFC vereist!";
 
 /* */
-"Your phone or app is not enabled for NFC communications, which is needed to pair to libre2 sensors" = "Your phone or app is not enabled for NFC communications, which is needed to pair to libre2 sensors";
+"Your phone or app is not enabled for NFC communications, which is needed to pair to libre2 sensors" = "Je telefoon of app is niet ingeschakeld voor NFC communicatie, wat nodig is om te koppelen met libre2 sensoren";
 
 /* Bluetooth Power Off */
-"Bluetooth Power Off" = "Bluetooth Power Off";
+"Bluetooth Power Off" = "Bluetooth uitschakelen";
 
 /* Please turn on Bluetooth */
 "Please turn on Bluetooth" = "Please turn on Bluetooth";
