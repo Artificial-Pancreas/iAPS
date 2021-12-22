@@ -462,7 +462,7 @@ Enact a temp Basal or a temp target */
 "Select the third party transmitter you want to connect to" = "Selecteer de zender van de derde partij waarmee u wilt verbinden";
 
 /* State was restored */
-"State was restored" = "Staat is hersteld";
+"State was restored" = "Staat is teruggezet";
 
 /* The short unit display string for millimoles of glucose per liter */
 "mmol/L" = "mmol/l";
@@ -480,7 +480,7 @@ Enact a temp Basal or a temp target */
 "Info" = "Info";
 
 /*v*/
-"Slope" = "Slope";
+"Slope" = "Toename";
 
 /* */
 "Intercept" = "Intercept";
@@ -531,106 +531,106 @@ Enact a temp Basal or a temp target */
 "Bluetooth Power Off" = "Bluetooth uitschakelen";
 
 /* Please turn on Bluetooth */
-"Please turn on Bluetooth" = "Please turn on Bluetooth";
+"Please turn on Bluetooth" = "Activeer Bluetooth a.u.b.";
 
 /* No Libre Transmitter Selected */
-"No Libre Transmitter Selected" = "No Libre Transmitter Selected";
+"No Libre Transmitter Selected" = "Geen Libre zender geselecteerd";
 
 /* Delete Transmitter and start anew. */
-"Delete CGMManager and start anew. Your libreoopweb credentials will be preserved" = "Delete CGMManager and start anew. Your libreoopweb credentials will be preserved";
+"Delete CGMManager and start anew. Your libreoopweb credentials will be preserved" = "Verwijder CGMManager en start opnieuw. De libreoopweb gegevens blijven bewaard";
 
 /* Invalid libre checksum */
-"Invalid libre checksum" = "Invalid libre checksum";
+"Invalid libre checksum" = "Ongeldige libre controlesom";
 
 /* Libre sensor was incorrectly read, CRCs were not valid */
-"Libre sensor was incorrectly read, CRCs were not valid" = "Libre sensor was incorrectly read, CRCs were not valid";
+"Libre sensor was incorrectly read, CRCs were not valid" = "Libre sensor is onjuist gelezen, CRC's waren niet geldig";
 
 /* Glucose */
-"Glucose" = "Glucose";
+"Glucose" = "Glucosewaarde";
 
 /* LOWALERT! */
-"LOWALERT!" = "LOWALERT!";
+"LOWALERT!" = "Waarschuwing Laag!";
 
 /* HIGHALERT! */
-"HIGHALERT!" = "HIGHALERT!";
+"HIGHALERT!" = "Waarschuwing Hoog!";
 
 /* (Snoozed)*/
-"(Snoozed)" = "(Snoozed)";
+"(Snoozed)" = "(Uitstellen)";
 
 /* Glucose: %@ */
-"Glucose: %@" = "Glucose: %@";
+"Glucose: %@" = "Bloedsuiker: %@";
 
 /* Transmitter: %@%% */
-"Transmitter: %@%%" = "Transmitter: %@%%";
+"Transmitter: %@%%" = "Zender: %@%%";
 
 /* No Sensor Detected */
-"No Sensor Detected" = "No Sensor Detected";
+"No Sensor Detected" = "Geen Sensor Gevonden";
 
 /* This might be an intermittent problem, but please check that your transmitter is tightly secured over your sensor */
-"This might be an intermittent problem, but please check that your transmitter is tightly secured over your sensor" = "This might be an intermittent problem, but please check that your transmitter is tightly secured over your sensor";
+"This might be an intermittent problem, but please check that your transmitter is tightly secured over your sensor" = "Dit kan een tijdelijk probleem zijn, maar controleer of uw zender stevig vastzit op uw sensor";
 
 /* New Sensor Detected */
-"New Sensor Detected" = "New Sensor Detected";
+"New Sensor Detected" = "Nieuwe Sensor Gevonden";
 
 /* Please wait up to 30 minutes before glucose readings are available! */
-"Please wait up to 30 minutes before glucose readings are available!" = "Please wait up to 30 minutes before glucose readings are available!";
+"Please wait up to 30 minutes before glucose readings are available!" = "Gelieve tot 30 minuten te wachten voordat glucosewaardes beschikbaar zijn!";
 
 /* Invalid Glucose sample detected, try again later */
-"Invalid Glucose sample detected, try again later" = "Invalid Glucose sample detected, try again later";
+"Invalid Glucose sample detected, try again later" = "Ongeldige glucosewaarde ontdekt, probeer het later opnieuw";
 
 /* ensor might have temporarily stopped, fallen off or is too cold or too warm */
-"Sensor might have temporarily stopped, fallen off or is too cold or too warm" = "Sensor might have temporarily stopped, fallen off or is too cold or too warm";
+"Sensor might have temporarily stopped, fallen off or is too cold or too warm" = "Mogelijk is de sensor tijdelijk gestopt, losgeraakt of te koud of te warm";
 
 /* Invalid Sensor Detected */
-"Invalid Sensor Detected" = "Invalid Sensor Detected";
+"Invalid Sensor Detected" = "Ongeldige Sensor Gevonden";
 
 /* Detected sensor seems not to be a libre 1 sensor! */
-"Detected sensor seems not to be a libre 1 sensor!" = "Detected sensor seems not to be a libre 1 sensor!";
+"Detected sensor seems not to be a libre 1 sensor!" = "Gevonden sensor lijkt geen Libre 1 sensor te zijn!";
 
 /* Detected sensor is invalid: %@ */
-"Detected sensor is invalid: %@" = "Detected sensor is invalid: %@";
+"Detected sensor is invalid: %@" = "Gevonden sensor is ongeldig: %@";
 
 /* Low Battery */
-"Low battery" = "Low battery";
+"Low battery" = "Batterij bijna leeg";
 
 /* */
-"Invalid sensor" = "Invalid sensor";
+"Invalid sensor" = "Ongeldige sensor";
 
 /* */
-"Sensor change" = "Sensor change";
+"Sensor change" = "Sensor wisselen";
 
 /* */
-"Sensor expires soon" = "Sensor expires soon";
+"Sensor expires soon" = "Sensor verloopt binnenkort";
 
 /* Battery is running low %@, consider charging your %@ device as soon as possible */
-"Battery is running low %@, consider charging your %@ device as soon as possible" = "Battery is running low %@, consider charging your %@ device as soon as possible";
+"Battery is running low %@, consider charging your %@ device as soon as possible" = "Batterijniveau is laag %@, laad uw %@ apparaat zo snel mogelijk op";
 
 /* Extracting calibrationdata from sensor */
-"Extracting calibrationdata from sensor" = "Extracting calibrationdata from sensor";
+"Extracting calibrationdata from sensor" = "Kalibratiegegevens uit de sensor halen";
 
 /* Sensor Ending Soon */
-"Sensor Ending Soon" = "Sensor Ending Soon";
+"Sensor Ending Soon" = "Sensor verloopt binnenkort";
 
 /* Current Sensor is Ending soon! Sensor Life left in %@ */
-"Current Sensor is Ending soon! Sensor Life left in %@" = "Current Sensor is Ending soon! Sensor Life left in %@";
+"Current Sensor is Ending soon! Sensor Life left in %@" = "Sensor verloopt binnenkort! Sensor verloopt in %@";
 
 /* */
 "Libre Bluetooth" = "Libre Bluetooth";
 
 /* */
-"Snooze Alerts" = "Snooze Alerts";
+"Snooze Alerts" = "Alarmen tijdelijk uitschakelen";
 
 /* */
-"Last measurement" = "Last measurement";
+"Last measurement" = "Laatste meting";
 
 /* */
-"Sensor Footer checksum" = "Sensor Footer checksum";
+"Sensor Footer checksum" = "Sensor voettekst controlesom";
 
 /* */
-"Last Blood Sugar prediction" = "Last Blood Sugar prediction";
+"Last Blood Sugar prediction" = "Laatste Bloedsuikervoorspelling";
 
 /* */
-"CurrentBG" = "CurrentBG";
+"CurrentBG" = "HuidigeBG";
 
 /* */
 "Sensor Info" = "Sensor Info";
@@ -645,13 +645,13 @@ Enact a temp Basal or a temp target */
 "Sensor Endtime" = "Sensor verloopt";
 
 /* */
-"Sensor State" = "Sensor State";
+"Sensor State" = "Sensor status";
 
 /* */
-"Sensor Serial" = "Sensor Serial";
+"Sensor Serial" = "Sensor serienummer";
 
 /* */
-"Transmitter Info" = "Transmitter Info";
+"Transmitter Info" = "Zender Informatie";
 
 /* */
 "Hardware" = "Hardware";
@@ -663,10 +663,10 @@ Enact a temp Basal or a temp target */
 "Connection State" = "Connection State";
 
 /* */
-"Transmitter Type" = "Transmitter Type";
+"Transmitter Type" = "Type zender";
 
 /* */
-"Sensor Type" = "Sensor Type";
+"Sensor Type" = "Type Sensor";
 
 /* */
 "Factory Calibration Parameters" = "Factory Calibration Parameters";
@@ -892,6 +892,9 @@ Enact a temp Basal or a temp target */
 
 /* */
 "Suspend" = "Suspend";
+
+/* */
+"Animated Background" = "Animated Background";
 
 
 /* Headers for settings ----------------------- */

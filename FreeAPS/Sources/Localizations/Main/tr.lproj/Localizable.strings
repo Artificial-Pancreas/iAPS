@@ -879,19 +879,22 @@ Enact a temp Basal or a temp target */
 "Bolus failed or inaccurate. Check pump history before repeating." = "Bolus başarısız veya hatalı. Tekrarlamadan önce pompa geçmişini kontrol edin.";
 
 /* */
-"Carbs" = "Carbs";
+"Carbs" = "Karbonhidrat";
 
 /* */
-"Temp Basal" = "Temp Basal";
+"Temp Basal" = "Geçici Bazal Oranı";
 
 /* */
-"Temp Target" = "Temp Target";
+"Temp Target" = "Geçici Hedef";
 
 /* */
-"Resume" = "Resume";
+"Resume" = "Devam et";
 
 /* */
-"Suspend" = "Suspend";
+"Suspend" = "Askıya al";
+
+/* */
+"Animated Background" = "Animasyonlu Arka Plan";
 
 
 /* Headers for settings ----------------------- */
