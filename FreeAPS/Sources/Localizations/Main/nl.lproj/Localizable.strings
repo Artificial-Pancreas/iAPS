@@ -501,25 +501,25 @@ Enact a temp Basal or a temp target */
 "About the Process" = "Over de werkwijze";
 
 /* */
-"Please make sure that your Libre 2 sensor is already activated and finished warming up. If you have other apps connecting to the sensor via bluetooth, these need to be shut down or uninstalled. \n\n You can only have one app communicating with the sensor via bluetooth. Then press the \"pariring and connection\" button below to start the process. Please note that the bluetooth connection might take up to a couple of minutes before it starts working." = "Please make sure that your Libre 2 sensor is already activated and finished warming up. If you have other apps connecting to the sensor via bluetooth, these need to be shut down or uninstalled. \n\n You can only have one app communicating with the sensor via bluetooth. Then press the \"pariring and connection\" button below to start the process. Please note that the bluetooth connection might take up to a couple of minutes before it starts working.";
+"Please make sure that your Libre 2 sensor is already activated and finished warming up. If you have other apps connecting to the sensor via bluetooth, these need to be shut down or uninstalled. \n\n You can only have one app communicating with the sensor via bluetooth. Then press the \"pariring and connection\" button below to start the process. Please note that the bluetooth connection might take up to a couple of minutes before it starts working." = "Zorg ervoor dat uw Libre 2-sensor al geactiveerd is en klaar is met opwarmen. Als er andere apps zijn die via bluetooth verbinding maken met de sensor dan moeten deze uitgeschakeld of verwijderd worden. \n\n Je kunt maar één app gebruiken die communiceert met de sensor via bluetooth. Druk vervolgens op de knop \"koppelen en verbinden\" hieronder om het proces te starten. Houd er rekening mee dat de bluetooth-verbinding tot enkele minuten kan duren voordat deze begint te werken.";
 
 /* */
-"Pairinginfo" = "Pairinginfo";
+"Pairinginfo" = "Koppeling informatie";
 
 /* */
 "PatchInfo" = "PatchInfo";
 
 /* */
-"Calibrationinfo" = "Calibrationinfo";
+"Calibrationinfo" = "Kalibratie-info";
 
 /* */
-"Unknown" = "Unknown";
+"Unknown" = "Onbekend";
 
 /* */
-"Not paired yet" = "Not paired yet";
+"Not paired yet" = "Niet gekoppeld apparaat";
 
 /* */
-"Pair Sensor & connect" = "Pair Sensor & connect";
+"Pair Sensor & connect" = "Sensor koppelen en verbinden";
 
 /* */
 "Phone NFC required!" = "Phone NFC required!";
