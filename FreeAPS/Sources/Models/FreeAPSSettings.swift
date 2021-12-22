@@ -22,7 +22,7 @@ struct FreeAPSSettings: JSON, Equatable {
     var lowGlucose: Decimal = 72
     var highGlucose: Decimal = 270
     var carbsRequiredThreshold: Decimal = 10
-    var animatedBackground: Bool = true
+    var animatedBackground: Bool = false
 }
 
 extension FreeAPSSettings: Decodable {
