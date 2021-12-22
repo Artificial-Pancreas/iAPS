@@ -417,7 +417,7 @@ Enact a temp Basal or a temp target */
 "Temp Targets" = "Временные цели";
 
 /* Delete carbs from Treatments list*/
-"Delete carbs?" = "Удалить углероды?";
+"Delete carbs?" = "Удалить углеводы?";
 
 /* Treatments list */
 "Treatments" = "События";
