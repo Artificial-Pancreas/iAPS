@@ -68,7 +68,7 @@
 "Add Carbs" = "添加碳水化合物";
 
 /* Add carbs header and button in Watch app. You can skip the last " " space. It's just for differentiation */
-"Add Carbs " = "Add Carbs ";
+"Add Carbs " = "添加碳水化合物 ";
 
 /*  */
 "Amount Carbs" = "碳水化合物含量";
@@ -131,10 +131,10 @@
 "Top target" = "血糖上限";
 
 /*  Temp target set for ... minutes */
-"for" = "for";
+"for" = "持续";
 
 /*  Temp target set for ... minutes */
-"min" = "min";
+"min" = "分钟";
 
 /*  */
 "Autotune" = "自动调谐";
@@ -152,7 +152,7 @@
 "Run now" = "马上执行";
 
 /*  */
-"Last run" = "Last run";
+"Last run" = "上次运行";
 
 /*  */
 "Sensitivity" = "胰岛素敏感系数";
@@ -336,7 +336,7 @@ Enact a temp Basal or a temp target */
 " g" = " 克";
 
 /* The short unit display string for grams */
-"g" = "g";
+"g" = "克";
 
 /* when 0 U/hr */
 "0 U/hr" = "0 U/小时";
@@ -387,82 +387,82 @@ Enact a temp Basal or a temp target */
 "Pump suspended" = "泵已暂停输注";
 
 /* */
-"Middleware" = "Middleware";
+"Middleware" = "中间件";
 
 /* Header */
 "History" = "历史";
 
 /* CGM option */
-"Upload glucose to Nightscout" = "Upload glucose to Nightscout";
+"Upload glucose to Nightscout" = "将葡萄糖上传到 Nightscout";
 
 /* Type of CGM or glucose source */
-"Type" = "Type";
+"Type" = "类型";
 
 /* CGM */
-"CGM" = "CGM";
+"CGM" = "动态血糖";
 
 /* CGM Transmitter ID */
-"Transmitter ID" = "Transmitter ID";
+"Transmitter ID" = "发射器编号";
 
 /* Other CGM setting */
-"Other" = "Other";
+"Other" = "其他";
 
 /* Whatch app alert */
-"Set temp targets presets on iPhone first" = "Set temp targets presets on iPhone first";
+"Set temp targets presets on iPhone first" = "首先在 iPhone 上设置临时目标预设";
 
 /* Updating Watch app */
-"Updating..." = "Updating...";
+"Updating..." = "更新中...";
 
 /* Header for Temp targets in Watch app */
-"Temp Targets" = "Temp Targets";
+"Temp Targets" = "临时目标";
 
 /* Delete carbs from Treatments list*/
-"Delete carbs?" = "Delete carbs?";
+"Delete carbs?" = "删除碳水？";
 
 /* Treatments list */
-"Treatments" = "Treatments";
+"Treatments" = "治疗";
 
 /* " min" in Treatments list */
-" min" = " min";
+" min" = " 分钟";
 
 
 /* Calendar and Libre transmitter settings ---------------
  */
 /* */
-"Configure Libre Transmitter" = "Configure Libre Transmitter";
+"Configure Libre Transmitter" = "配置 Libre 发射器";
 
 /* */
-"Calibrations" = "Calibrations";
+"Calibrations" = "校准";
 
 /* */
-"Create events in calendar" = "Create events in calendar";
+"Create events in calendar" = "在日历中创建事件";
 
 /* */
-"Calendar" = "Calendar";
+"Calendar" = "日历";
 
 /* */
-"Other" = "Other";
+"Other" = "其他";
 
 /* */
-"Libre Transmitter" = "Libre Transmitter";
+"Libre Transmitter" = "Libre 发射器";
 
 /* */
-"Libre Transmitters" = "Libre Transmitters";
+"Libre Transmitters" = "Libre 发射器";
 
 /* */
-"Bluetooth Transmitters" = "Bluetooth Transmitters";
+"Bluetooth Transmitters" = "蓝牙发射器";
 
 /* */
-"Modes" = "Modes";
+"Modes" = "模式";
 
 /* Libre 2 Direct */
-"Libre 2 Direct" = "Libre 2 Direct";
+"Libre 2 Direct" = "雅培2代直连";
 
 /* */
-"Select the third party transmitter you want to connect to" = "Select the third party transmitter you want to connect to";
+"Select the third party transmitter you want to connect to" = "选择您想要连接的第三方发射器";
 
 /* State was restored */
-"State was restored" = "State was restored";
+"State was restored" = "状态已恢复";
 
 /* The short unit display string for millimoles of glucose per liter */
 "mmol/L" = "mmol/L";
@@ -471,462 +471,477 @@ Enact a temp Basal or a temp target */
 "mg/dL" = "mg/dL";
 
 /* */
-"Add calibration" = "Add calibration";
+"Add calibration" = "添加校准";
 
 /* When adding capillary glucose meater reading */
-"Meter glucose" = "Meter glucose";
+"Meter glucose" = "指尖血糖";
 
 /* */
-"Info" = "Info";
+"Info" = "信息";
 
 /*v*/
-"Slope" = "Slope";
+"Slope" = "斜率";
 
 /* */
-"Intercept" = "Intercept";
+"Intercept" = "截距";
 
 /* */
-"Chart" = "Chart";
+"Chart" = "图表";
 
 /* */
-"Remove" = "Remove";
+"Remove" = "移除";
 
 /* */
-"Remove Last" = "Remove Last";
+"Remove Last" = "移除最后一个";
 
 /* */
-"Remove All" = "Remove All";
+"Remove All" = "删除所有";
 
 /* */
-"About the Process" = "About the Process";
+"About the Process" = "关于流程";
 
 /* */
-"Please make sure that your Libre 2 sensor is already activated and finished warming up. If you have other apps connecting to the sensor via bluetooth, these need to be shut down or uninstalled. \n\n You can only have one app communicating with the sensor via bluetooth. Then press the \"pariring and connection\" button below to start the process. Please note that the bluetooth connection might take up to a couple of minutes before it starts working." = "Please make sure that your Libre 2 sensor is already activated and finished warming up. If you have other apps connecting to the sensor via bluetooth, these need to be shut down or uninstalled. \n\n You can only have one app communicating with the sensor via bluetooth. Then press the \"pariring and connection\" button below to start the process. Please note that the bluetooth connection might take up to a couple of minutes before it starts working.";
+"Please make sure that your Libre 2 sensor is already activated and finished warming up. If you have other apps connecting to the sensor via bluetooth, these need to be shut down or uninstalled. \n\n You can only have one app communicating with the sensor via bluetooth. Then press the \"pariring and connection\" button below to start the process. Please note that the bluetooth connection might take up to a couple of minutes before it starts working." = "请确保您的 Libre 2 传感器已经激活并完成预热。 如果您有其他应用通过蓝牙连接到传感器，这些应用需要关闭或卸载。 \n\n 您只能有一个应用通过蓝牙与传感器通信。 然后按下下面的“解析和连接”按钮来启动进程。 请注意，蓝牙连接可能需要几分钟才能开始工作。";
 
 /* */
-"Pairinginfo" = "Pairinginfo";
+"Pairinginfo" = "配对信息";
 
 /* */
 "PatchInfo" = "PatchInfo";
 
 /* */
-"Calibrationinfo" = "Calibrationinfo";
+"Calibrationinfo" = "校准信息";
 
 /* */
-"Unknown" = "Unknown";
+"Unknown" = "未知";
 
 /* */
-"Not paired yet" = "Not paired yet";
+"Not paired yet" = "未配对";
 
 /* */
-"Pair Sensor & connect" = "Pair Sensor & connect";
+"Pair Sensor & connect" = "配对传感器并连接";
 
 /* */
-"Phone NFC required!" = "Phone NFC required!";
+"Phone NFC required!" = "需要手机支持NFC";
 
 /* */
-"Your phone or app is not enabled for NFC communications, which is needed to pair to libre2 sensors" = "Your phone or app is not enabled for NFC communications, which is needed to pair to libre2 sensors";
+"Your phone or app is not enabled for NFC communications, which is needed to pair to libre2 sensors" = "您的手机或应用程序尚未启用 NFC，需要启用NFC配对 libre2 传感器";
 
 /* Bluetooth Power Off */
-"Bluetooth Power Off" = "Bluetooth Power Off";
+"Bluetooth Power Off" = "蓝牙已关闭";
 
 /* Please turn on Bluetooth */
-"Please turn on Bluetooth" = "Please turn on Bluetooth";
+"Please turn on Bluetooth" = "请打开蓝牙";
 
 /* No Libre Transmitter Selected */
-"No Libre Transmitter Selected" = "No Libre Transmitter Selected";
+"No Libre Transmitter Selected" = "未选择瞬感发射器";
 
 /* Delete Transmitter and start anew. */
-"Delete CGMManager and start anew. Your libreoopweb credentials will be preserved" = "Delete CGMManager and start anew. Your libreoopweb credentials will be preserved";
+"Delete CGMManager and start anew. Your libreoopweb credentials will be preserved" = "删除动态血糖数据源再次添加时会重置血糖算法配置";
 
 /* Invalid libre checksum */
-"Invalid libre checksum" = "Invalid libre checksum";
+"Invalid libre checksum" = "瞬感传感器数据校验错误";
 
 /* Libre sensor was incorrectly read, CRCs were not valid */
-"Libre sensor was incorrectly read, CRCs were not valid" = "Libre sensor was incorrectly read, CRCs were not valid";
+"Libre sensor was incorrectly read, CRCs were not valid" = "Libre 传感器数据不正确，CRC无效";
 
 /* Glucose */
-"Glucose" = "Glucose";
+"Glucose" = "葡萄糖";
 
 /* LOWALERT! */
-"LOWALERT!" = "LOWALERT!";
+"LOWALERT!" = "低血糖！";
 
 /* HIGHALERT! */
-"HIGHALERT!" = "HIGHALERT!";
+"HIGHALERT!" = "高血糖！";
 
 /* (Snoozed)*/
-"(Snoozed)" = "(Snoozed)";
+"(Snoozed)" = "延后";
 
 /* Glucose: %@ */
-"Glucose: %@" = "Glucose: %@";
+"Glucose: %@" = "血糖:%@";
 
 /* Transmitter: %@%% */
-"Transmitter: %@%%" = "Transmitter: %@%%";
+"Transmitter: %@%%" = "发射器:%@%%";
 
 /* No Sensor Detected */
-"No Sensor Detected" = "No Sensor Detected";
+"No Sensor Detected" = "未检测到传感器！";
 
 /* This might be an intermittent problem, but please check that your transmitter is tightly secured over your sensor */
-"This might be an intermittent problem, but please check that your transmitter is tightly secured over your sensor" = "This might be an intermittent problem, but please check that your transmitter is tightly secured over your sensor";
+"This might be an intermittent problem, but please check that your transmitter is tightly secured over your sensor" = "这可能是一个间歇性问题，但请检查您的发射器是否对贴紧传感器";
 
 /* New Sensor Detected */
-"New Sensor Detected" = "New Sensor Detected";
+"New Sensor Detected" = "检测到新的传感器";
 
 /* Please wait up to 30 minutes before glucose readings are available! */
-"Please wait up to 30 minutes before glucose readings are available!" = "Please wait up to 30 minutes before glucose readings are available!";
+"Please wait up to 30 minutes before glucose readings are available!" = "请等待30分钟后获取葡萄糖读数！";
 
 /* Invalid Glucose sample detected, try again later */
-"Invalid Glucose sample detected, try again later" = "Invalid Glucose sample detected, try again later";
+"Invalid Glucose sample detected, try again later" = "检测到无效的血糖值，请稍后再试";
 
 /* ensor might have temporarily stopped, fallen off or is too cold or too warm */
-"Sensor might have temporarily stopped, fallen off or is too cold or too warm" = "Sensor might have temporarily stopped, fallen off or is too cold or too warm";
+"Sensor might have temporarily stopped, fallen off or is too cold or too warm" = "传感器可能已经暂时停止, 温度过高或过低, 也可能传感器脱落";
 
 /* Invalid Sensor Detected */
-"Invalid Sensor Detected" = "Invalid Sensor Detected";
+"Invalid Sensor Detected" = "检测到无效传感器";
 
 /* Detected sensor seems not to be a libre 1 sensor! */
-"Detected sensor seems not to be a libre 1 sensor!" = "Detected sensor seems not to be a libre 1 sensor!";
+"Detected sensor seems not to be a libre 1 sensor!" = "检测到的传感器似乎不是一个瞬感1代！";
 
 /* Detected sensor is invalid: %@ */
-"Detected sensor is invalid: %@" = "Detected sensor is invalid: %@";
+"Detected sensor is invalid: %@" = "检测到的传感器无效： %@";
 
 /* Low Battery */
-"Low battery" = "Low battery";
+"Low battery" = "电量不足";
 
 /* */
-"Invalid sensor" = "Invalid sensor";
+"Invalid sensor" = "无效传感器";
 
 /* */
-"Sensor change" = "Sensor change";
+"Sensor change" = "更换传感器";
 
 /* */
-"Sensor expires soon" = "Sensor expires soon";
+"Sensor expires soon" = "传感器即将过期";
 
 /* Battery is running low %@, consider charging your %@ device as soon as possible */
-"Battery is running low %@, consider charging your %@ device as soon as possible" = "Battery is running low %@, consider charging your %@ device as soon as possible";
+"Battery is running low %@, consider charging your %@ device as soon as possible" = "电池运行低 %@，考虑尽快充电您的 %@ 设备";
 
 /* Extracting calibrationdata from sensor */
-"Extracting calibrationdata from sensor" = "Extracting calibrationdata from sensor";
+"Extracting calibrationdata from sensor" = "从传感器提取校准数据";
 
 /* Sensor Ending Soon */
-"Sensor Ending Soon" = "Sensor Ending Soon";
+"Sensor Ending Soon" = "传感器即将结束";
 
 /* Current Sensor is Ending soon! Sensor Life left in %@ */
-"Current Sensor is Ending soon! Sensor Life left in %@" = "Current Sensor is Ending soon! Sensor Life left in %@";
+"Current Sensor is Ending soon! Sensor Life left in %@" = "当前传感器即将结束！传感器剩余 %@";
 
 /* */
-"Libre Bluetooth" = "Libre Bluetooth";
+"Libre Bluetooth" = "瞬感发射器";
 
 /* */
-"Snooze Alerts" = "Snooze Alerts";
+"Snooze Alerts" = "延后警报";
 
 /* */
-"Last measurement" = "Last measurement";
+"Last measurement" = "上次测量";
 
 /* */
-"Sensor Footer checksum" = "Sensor Footer checksum";
+"Sensor Footer checksum" = "传感器Footer校验";
 
 /* */
-"Last Blood Sugar prediction" = "Last Blood Sugar prediction";
+"Last Blood Sugar prediction" = "最后一次血糖预测";
 
 /* */
-"CurrentBG" = "CurrentBG";
+"CurrentBG" = "当前血糖";
 
 /* */
-"Sensor Info" = "Sensor Info";
+"Sensor Info" = "传感器信息";
 
 /* */
-"Sensor Age" = "Sensor Age";
+"Sensor Age" = "传感器使用时间";
 
 /* */
-"Sensor Age Left" = "Sensor Age Left";
+"Sensor Age Left" = "传感器剩余时间";
 
 /* */
-"Sensor Endtime" = "Sensor Endtime";
+"Sensor Endtime" = "传感器到期时间";
 
 /* */
-"Sensor State" = "Sensor State";
+"Sensor State" = "传感器状态";
 
 /* */
-"Sensor Serial" = "Sensor Serial";
+"Sensor Serial" = "传感器编号";
 
 /* */
-"Transmitter Info" = "Transmitter Info";
+"Transmitter Info" = "发射器信息";
 
 /* */
-"Hardware" = "Hardware";
+"Hardware" = "硬件";
 
 /* */
-"Firmware" = "Firmware";
+"Firmware" = "固件";
 
 /* */
-"Connection State" = "Connection State";
+"Connection State" = "连接状态";
 
 /* */
-"Transmitter Type" = "Transmitter Type";
+"Transmitter Type" = "发射器类型";
 
 /* */
-"Sensor Type" = "Sensor Type";
+"Sensor Type" = "传感器类型";
 
 /* */
-"Factory Calibration Parameters" = "Factory Calibration Parameters";
+"Factory Calibration Parameters" = "工厂校准参数";
 
 /* */
 "Valid for footer" = "Valid for footer";
 
 /* */
-"Edit calibrations" = "Edit calibrations";
+"Edit calibrations" = "编辑校准参数";
 
 /* */
-"edit calibration clicked" = "edit calibration clicked";
+"edit calibration clicked" = "编辑校准已点击";
 
 /* */
-"Delete CGM" = "Delete CGM";
+"Delete CGM" = "删除CGM数据源";
 
 /* */
-"Are you sure you want to remove this cgm from loop?" = "Are you sure you want to remove this cgm from loop?";
+"Are you sure you want to remove this cgm from loop?" = "确定要从Loop中删除该CGM吗？";
 
 /* */
-"There is no undo" = "There is no undo";
+"There is no undo" = "没有撤销!";
 
 /* */
-"Advanced" = "Advanced";
+"Advanced" = "高级选项";
 
 /* */
-"Alarms" = "Alarms";
+"Alarms" = "报警";
 
 /* */
-"Glucose Settings" = "Glucose Settings";
+"Glucose Settings" = "血糖设置";
 
 /* */
-"Notifications" = "Notifications";
+"Notifications" = "通知";
 
 /* */
-"Export logs" = "Export logs";
+"Export logs" = "导出日志";
 
 /* */
-"Export not available" = "Export not available";
+"Export not available" = "无法导出";
 
 /* */
-"Log export requires ios 15" = "Log export requires ios 15";
+"Log export requires ios 15" = "日志导出需要 ios 15";
 
 /* */
-"Got it!" = "Got it!";
+"Got it!" = "知道了";
 
 /* */
-"Saved to %@" = "Saved to %@";
+"Saved to %@" = "保存到 %@";
 
 /* */
-"No logs available" = "No logs available";
+"No logs available" = "没有可用的日志";
 
 /* */
-"Glucose Notification visibility" = "Glucose Notification visibility";
+"Glucose Notification visibility" = "血糖通知设置";
 
 /* */
-"Always Notify Glucose" = "Always Notify Glucose";
+"Always Notify Glucose" = "总是提醒新的血糖读数";
 
 /* */
-"Notify per reading" = "Notify per reading";
+"Notify per reading" = "每次读数都推送";
 
 /* */
-"Value" = "Value";
+"Value" = "值";
 
 /* */
-"Adds Phone Battery" = "Adds Phone Battery";
+"Adds Phone Battery" = "通知中包括手机电量";
 
 /* */
-"Adds Transmitter Battery" = "Adds Transmitter Battery";
+"Adds Transmitter Battery" = "通知中包括发射器电量";
 
 /* */
-"Also vibrate" = "Also vibrate";
+"Also vibrate" = "同时振动";
 
 /* */
-"Additional notification types" = "Additional notification types";
+"Additional notification types" = "额外的通知类型";
 
 /* */
-"Misc" = "Misc";
+"Misc" = "其他";
 
 /* */
-"Unit override" = "Unit override";
+"Unit override" = "覆盖单位";
 
 /* */
-"Low" = "Low";
+"Low" = "低";
 
 /* */
-"High" = "High";
+"High" = "高";
 
 /* */
-"glucose" = "glucose";
+"glucose" = "葡萄糖";
 
 /* */
-"Schedule " = "Schedule ";
+"Schedule " = "配置 ";
 
 /* */
-"tapped save schedules" = "tapped save schedules";
+"tapped save schedules" = "点击保存配置";
 
 /* */
-"Error" = "Error";
+"Error" = "错误";
 
 /* */
-"Some ui element was incorrectly specified" = "Some ui element was incorrectly specified";
+"Some ui element was incorrectly specified" = "某些ui 元素指定不正确";
 
 /* */
-"Success" = "Success";
+"Success" = "成功";
 
 /* */
-"Schedules were saved successfully!" = "Schedules were saved successfully!";
+"Schedules were saved successfully!" = "配置已成功保存";
 
 /* */
-"High Glucose Alarm active" = "High Glucose Alarm active";
+"High Glucose Alarm active" = "高血糖报警激活";
 
 /* */
-"Low Glucose Alarm active" = "Low Glucose Alarm active";
+"Low Glucose Alarm active" = "低血糖报警激活";
 
 /* */
-"No Glucose Alarm active" = "No Glucose Alarm active";
+"No Glucose Alarm active" = "所有血糖报警都没有激活";
 
 /* */
-"snoozing until %@" = "snoozing until %@";
+"snoozing until %@" = "推迟至 %@";
 
 /* */
-"not snoozing" = "not snoozing";
+"not snoozing" = "不要休眠";
 
 /* */
-"nothing to see here" = "nothing to see here";
+"nothing to see here" = "暂无内容";
 
 /* */
-"snooze from testview clicked" = "snooze from testview clicked";
+"snooze from testview clicked" = "已点击测试视图休眠";
 
 /* */
-"will snooze for %@ until %@" = "will snooze for %@ until %@";
+"will snooze for %@ until %@" = "将暂停 %@ 到 %@";
 
 /* */
-"Click to Snooze Alerts" = "Click to Snooze Alerts";
+"Click to Snooze Alerts" = "点击以暂停提醒";
 
 /* */
-"Strength" = "Strength";
+"Strength" = "强度";
 
 /* */
-"Hold the top of your iPhone near the sensor to pair" = "Hold the top of your iPhone near the sensor to pair";
+"Hold the top of your iPhone near the sensor to pair" = "按住传感器附近的 iPhone 顶部配对";
 
 /* */
-"Sensor not found" = "Sensor not found";
+"Sensor not found" = "找不到传感器 ！";
 
 /* */
-"Also play alert sound" = "Also play alert sound";
+"Also play alert sound" = "同时播放警报声音";
 
 /* */
-"Notification Settings" = "Notification Settings";
+"Notification Settings" = "通知设置";
 
 /* */
-"Found devices: %d" = "Found devices: %d";
+"Found devices: %d" = "已发现设备: %d";
 
 /* */
-"Backfill options" = "Backfill options";
+"Backfill options" = "回填选项";
 
 /* */
-"Backfilling from trend is currently not well supported by Loop" = "Backfilling from trend is currently not well supported by Loop";
+"Backfilling from trend is currently not well supported by Loop" = "Loop不支持从当前值中回填数据功能";
 
 /* */
-"Backfill from history" = "Backfill from history";
+"Backfill from history" = "从历史数据中回填";
 
 /* */
-"Backfill from trend" = "Backfill from trend";
+"Backfill from trend" = "从当前数据中回填";
 
 /* */
-"Debug options" = "Debug options";
+"Debug options" = "调试选项";
 
 /* */
-"Adds a lot of data to the Issue Report " = "Adds a lot of data to the Issue Report ";
+"Adds a lot of data to the Issue Report " = "给问题报告添加大量数据 ";
 
 /* */
-"Persist sensordata" = "Persist sensordata";
+"Persist sensordata" = "保存所有血糖数据";
 
 /* */
-"Battery" = "Battery";
+"Battery" = "电量";
 
 /* */
-"Also add source info" = "Also add source info";
+"Also add source info" = "同时添加源信息";
 
 /* */
-"Carbs Required Threshold" = "Carbs Required Threshold";
+"Carbs Required Threshold" = "所需碳水阈值";
 
 /* */
-"Carbs required: %d g" = "Carbs required: %d g";
+"Carbs required: %d g" = "所需碳水: %d 克";
 
 /* */
-"To prevent LOW required %d g of carbs" = "To prevent LOW required %d g of carbs";
+"To prevent LOW required %d g of carbs" = "为了防止低血糖, 需要%d 克碳水";
 
 /* */
-"FreeAPS X not active" = "FreeAPS X not active";
+"FreeAPS X not active" = "FreeAPS X 未激活";
 
 /* */
-"Last loop was more then %d min ago" = "Last loop was more then %d min ago";
+"Last loop was more then %d min ago" = "上次闭环成功在 %d 分钟前";
 
 /* Glucose badge */
-"Show glucose on the app badge" = "Show glucose on the app badge";
+"Show glucose on the app badge" = "在应用图表上显示葡萄糖。";
 
 /* */
-"Backfill glucose" = "Backfill glucose";
+"Backfill glucose" = "回填血糖数据";
 
 /* About this source */
-"About this source" = "About this source";
+"About this source" = "关于该来源";
 
 /* */
-"Bolus failed" = "Bolus failed";
+"Bolus failed" = "大剂量输注失败";
 
 /* */
-"Bolus failed or inaccurate. Check pump history before repeating." = "Bolus failed or inaccurate. Check pump history before repeating.";
+"Bolus failed or inaccurate. Check pump history before repeating." = "大剂量失败或者不准确，请在重复操作前检查胰岛素泵历史";
+
+/* */
+"Carbs" = "Carbs";
+
+/* */
+"Temp Basal" = "Temp Basal";
+
+/* */
+"Temp Target" = "Temp Target";
+
+/* */
+"Resume" = "Resume";
+
+/* */
+"Suspend" = "Suspend";
 
 
 /* Headers for settings ----------------------- */
-"OpenAPS main settings" = "OpenAPS main settings";
+"OpenAPS main settings" = "OpenAPS 主要设置";
 
-"OpenAPS SMB settings" = "OpenAPS SMB settings";
+"OpenAPS SMB settings" = "OpenAPS SMB 设置";
 
-"OpenAPS targets settings" = "OpenAPS targets settings";
+"OpenAPS targets settings" = "OpenAPS 目标设置";
 
-"OpenAPS other settings" = "OpenAPS other settings";
+"OpenAPS other settings" = "OpenAPS 其他设置";
 
 /* Glucose Simulator CGM */
-"Glucose Simulator" = "Glucose Simulator";
+"Glucose Simulator" = "葡萄糖模拟器";
 
 /* Restored state message */
-"Bluetooth State restored (APS restarted?). Found %d peripherals, and connected to %@ with identifier %@" = "Bluetooth State restored (APS restarted?). Found %d peripherals, and connected to %@ with identifier %@";
+"Bluetooth State restored (APS restarted?). Found %d peripherals, and connected to %@ with identifier %@" = "蓝牙状态已恢复(APS 重启?) 找到 %d 个蓝牙，并连接到 %@ 标识符为 %@ 的设备";
 
 /* Shared app group */
-"Shared app group" = "Shared app group";
+"Shared app group" = "共享的应用组";
 
 /* Native G6 app */
-"Native G6 app" = "Native G6 app";
+"Native G6 app" = "官方G6 App";
 
 /* Native G5 app */
-"Native G5 app" = "Native G5 app";
+"Native G5 app" = "官方G5 App";
 
 /* Minilink transmitter */
-"Minilink transmitter" = "Minilink transmitter";
+"Minilink transmitter" = "Minilink发射器";
 
 /* Simple simulator */
-"Simple simulator" = "Simple simulator";
+"Simple simulator" = "简单模拟器";
 
 /* Direct connection with Libre 1 transmitters or Libre 2 */
-"Direct connection with Libre 1 transmitters or Libre 2" = "Direct connection with Libre 1 transmitters or Libre 2";
+"Direct connection with Libre 1 transmitters or Libre 2" = "直连Libre2或者Libre1发射器组合";
 
 /* Online or internal server */
-"Online or internal server" = "Online or internal server";
+"Online or internal server" = "在线或内部服务器";
 
 /* HealthKit intergration --------------------*/
 /* */
-"Apple Health" = "Apple Health";
+"Apple Health" = "苹果健康";
 
 /* */
-"Connect to Apple Health" = "Connect to Apple Health";
+"Connect to Apple Health" = "连接到苹果健康";
 
 /* Show when have not permissions for writing to Health */
-"For write data to Apple Health you must give permissions in Settings > Health > Data Access" = "For write data to Apple Health you must give permissions in Settings > Health > Data Access";
+"For write data to Apple Health you must give permissions in Settings > Health > Data Access" = "若要将数据写入苹果健康，您必须在“设置 > Health > 数据访问权限”中授予权限";
 
 /* */
-"After you create glucose records in the Health app, please open FreeAPS X to help us guaranteed transfer changed data" = "After you create glucose records in the Health app, please open FreeAPS X to help us guaranteed transfer changed data";
+"After you create glucose records in the Health app, please open FreeAPS X to help us guaranteed transfer changed data" = "在您在 Health App中创建血糖记录后，请打开 FreeAPS X，以帮助我们保证传输数据已更改";
 /* --------------------------------------------
 
 
@@ -1046,4 +1061,4 @@ Enact a temp Basal or a temp target */
 "Grams of carbsReq to trigger a pushover. Defaults to 1 (for 1 gram of carbohydrate). Can be increased if you only want to get Pushover for carbsReq at X threshold." = "触发Pushover的碳水化合物的克数。默认为1（对于1克碳水化合物）。如果你只想在X阈值时得到碳水化合物需求的Pushover通知，可以增加。";
 
 /* "Noisy CGM Target Multiplier" */
-"Defaults to 1.3. Increase target by this amount when looping off raw/noisy CGM data" = "Defaults to 1.3. Increase target by this amount when looping off raw/noisy CGM data";
+"Defaults to 1.3. Increase target by this amount when looping off raw/noisy CGM data" = "默认值为 1.3. 当闭环与原始/躁点血糖数据偏离时调高目标";
