@@ -878,12 +878,6 @@ Enact a temp Basal or a temp target */
 /* */
 "Bolus failed or inaccurate. Check pump history before repeating." = "大剂量失败或者不准确，请在重复操作前检查胰岛素泵历史";
 
-/* */
-"Bolus failed" = "Bolus failed";
-
-/* */
-"Bolus failed or inaccurate. Check pump history before repeating." = "Bolus failed or inaccurate. Check pump history before repeating.";
-
 
 /* Headers for settings ----------------------- */
 "OpenAPS main settings" = "OpenAPS 主要设置";

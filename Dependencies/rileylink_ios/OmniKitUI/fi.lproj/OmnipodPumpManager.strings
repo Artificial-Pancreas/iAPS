@@ -10,26 +10,14 @@
 /* Class = "UITableViewController"; title = "Pump Setup"; ObjectID = "91O-Un-vKc"; */
 "91O-Un-vKc.title" = "Pumpun asennus";
 
-/* Class = "UITableViewController"; title = "Pump Setup"; ObjectID = "ack-ra-XH6"; */
-"ack-ra-XH6.title" = "Pumpun asennus";
-
-/* Class = "UITableViewController"; title = "Pump Setup"; ObjectID = "aNg-mm-Uuy"; */
-"aNg-mm-Uuy.title" = "Pumpun asennus";
-
-/* Class = "UILabel"; text = "Your Pod is ready for use."; ObjectID = "bJ5-iH-fnF"; */
-"bJ5-iH-fnF.text" = "Pumppu on valmis käyttöön.";
-
-/* Class = "UILabel"; text = "Loop will remind you to change your pod before it expires. You can change this to a time convenient for you."; ObjectID = "Eng-IY-fQ7"; */
-"Eng-IY-fQ7.text" = "Loop muistuttaa sinua, ennen kuin pumpun käyttöaika loppuu. Halutessasi voit muuttaa aikaa sinulle sopivaksi.";
-
-/* Class = "UILabel"; text = "Reminder"; ObjectID = "ePA-6p-q8C"; */
-"ePA-6p-q8C.text" = "Muistutus";
-
 /* Class = "UITableViewSection"; footerTitle = "NOTE: Do not remove the pod's needle cap at this time."; ObjectID = "EUt-xk-Rmp"; */
 "EUt-xk-Rmp.footerTitle" = "HUOM: Älä poista pumpun neulansuojusta vielä tässä vaiheessa.";
 
 /* Class = "UITableViewSection"; headerTitle = "Prepare Pod"; ObjectID = "EUt-xk-Rmp"; */
 "EUt-xk-Rmp.headerTitle" = "Valmistele pumppu";
+
+/* Class = "UILabel"; text = "Loop will remind you to change your pod before it expires. You can change this to a time convenient for you."; ObjectID = "Eng-IY-fQ7"; */
+"Eng-IY-fQ7.text" = "Loop muistuttaa sinua, ennen kuin pumpun käyttöaika loppuu. Halutessasi voit muuttaa aikaa sinulle sopivaksi.";
 
 /* Class = "UILabel"; text = "Please deactivate the pod. When deactivation is complete, remove pod from body."; ObjectID = "GK7-jb-tyY"; */
 "GK7-jb-tyY.text" = "Deaktivoi pumppu. Kun deaktivointi on valmis, irrota pumppu kehosta.";
@@ -39,6 +27,18 @@
 
 /* Class = "UILabel"; text = "Prepare site. Remove the pod's needle cap and adhesive backing. If pod is OK, apply to site."; ObjectID = "Iuv-5M-bDH"; */
 "Iuv-5M-bDH.text" = "Valmistele infuusiokohta. Poista pumpun neulansuojus ja suojateippi. Jos pumppu on OK, kiinnitä se iholle.";
+
+/* Class = "UITableViewController"; title = "Pump Setup"; ObjectID = "aNg-mm-Uuy"; */
+"aNg-mm-Uuy.title" = "Pumpun asennus";
+
+/* Class = "UITableViewController"; title = "Pump Setup"; ObjectID = "ack-ra-XH6"; */
+"ack-ra-XH6.title" = "Pumpun asennus";
+
+/* Class = "UILabel"; text = "Your Pod is ready for use."; ObjectID = "bJ5-iH-fnF"; */
+"bJ5-iH-fnF.text" = "Pumppu on valmis käyttöön.";
+
+/* Class = "UILabel"; text = "Reminder"; ObjectID = "ePA-6p-q8C"; */
+"ePA-6p-q8C.text" = "Muistutus";
 
 /* Class = "UINavigationItem"; title = "Pod Pairing"; ObjectID = "jVO-Ut-MhL"; */
 "jVO-Ut-MhL.title" = "Yhdistäminen pumppuun";
@@ -66,4 +66,3 @@
 
 /* Class = "UINavigationItem"; title = "Replace Pod"; ObjectID = "yy1-xf-HdR"; */
 "yy1-xf-HdR.title" = "Vaihda pumppu";
-
