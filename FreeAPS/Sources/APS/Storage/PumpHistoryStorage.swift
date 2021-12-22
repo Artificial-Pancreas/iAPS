@@ -48,7 +48,7 @@ final class BasePumpHistoryStorage: PumpHistoryStorage, Injectable {
                 case .tempBasal:
                     guard let dose = event.dose else { return [] }
 
-                    let rate = Decimal(string: dose.unitsPerHour.description)
+                    let rate = Decimal(dose.unitsPerHour)
                     let minutes = (dose.endDate - dose.startDate).timeInterval / 60
                     let delivered = dose.deliveredUnits
                     let date = event.date
