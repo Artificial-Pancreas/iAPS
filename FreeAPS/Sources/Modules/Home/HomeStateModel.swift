@@ -46,6 +46,7 @@ extension Home {
         @Published var units: GlucoseUnits = .mmolL
         @Published var pumpDisplayState: PumpDisplayState?
         @Published var alarm: GlucoseAlarm?
+        @Published var animatedBackground = false
 
         override func subscribe() {
             setupGlucose()
@@ -82,6 +83,8 @@ extension Home {
             broadcaster.register(EnactedSuggestionObserver.self, observer: self)
             broadcaster.register(PumpBatteryObserver.self, observer: self)
             broadcaster.register(PumpReservoirObserver.self, observer: self)
+
+            animatedBackground = settingsManager.settings.animatedBackground
 
             timer.eventHandler = {
                 DispatchQueue.main.async { [weak self] in
@@ -348,6 +351,7 @@ extension Home.StateModel:
         allowManualTemp = !settings.closedLoop
         closedLoop = settingsManager.settings.closedLoop
         units = settingsManager.settings.units
+        animatedBackground = settingsManager.settings.animatedBackground
         setupGlucose()
     }
 
