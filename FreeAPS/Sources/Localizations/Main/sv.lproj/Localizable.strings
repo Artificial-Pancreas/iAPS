@@ -878,6 +878,21 @@ Enact a temp Basal or a temp target */
 /* */
 "Bolus failed or inaccurate. Check pump history before repeating." = "Misslyckad eller felaktig bolus. Kontrollera pumpens historik innan du försöker igen.";
 
+/* */
+"Carbs" = "Kolhydrater";
+
+/* */
+"Temp Basal" = "Temporär basal";
+
+/* */
+"Temp Target" = "Tillfälligt målvärde";
+
+/* */
+"Resume" = "Återuppta";
+
+/* */
+"Suspend" = "Pausa";
+
 
 /* Headers for settings ----------------------- */
 "OpenAPS main settings" = "OpenAPS huvudsakliga inställningar";

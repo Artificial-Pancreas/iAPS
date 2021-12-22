@@ -62,7 +62,7 @@
 "vEc-Km-ewe.text" = "Titel";
 
 /* Class = "UILabel"; text = "Fill a new pod with insulin. Listen for 2 beeps from the pod during filling. Keep RileyLink adjacent to the pod during pairing."; ObjectID = "vmF-Dc-3DS"; */
-"vmF-Dc-3DS.text" = "Fyll din nya podd med insulin. Lyssna efter 2 pip under fyllningen. Placera din RileyLink nära podden under parkopplingen.";
+"vmF-Dc-3DS.text" = "Fyll din nya podd med insulin. Det ska höras 2 pip när podden fyllts med minsta nödvändiga mängd insulin (80 IE). Placera din RileyLink ca 1-2 decimeter från podden under parkopplingen.";
 
 /* Class = "UINavigationItem"; title = "Replace Pod"; ObjectID = "yy1-xf-HdR"; */
 "yy1-xf-HdR.title" = "Byt podd";
