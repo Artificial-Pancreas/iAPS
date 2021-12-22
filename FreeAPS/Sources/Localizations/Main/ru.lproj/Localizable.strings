@@ -878,6 +878,21 @@ Enact a temp Basal or a temp target */
 /* */
 "Bolus failed or inaccurate. Check pump history before repeating." = "Болюс не выполнен или неточный. Перед повторением проверьте историю помпы.";
 
+/* */
+"Carbs" = "Углеводы";
+
+/* */
+"Temp Basal" = "Врем. базал";
+
+/* */
+"Temp Target" = "Врем. цель";
+
+/* */
+"Resume" = "Возобновление";
+
+/* */
+"Suspend" = "Остановка";
+
 
 /* Headers for settings ----------------------- */
 "OpenAPS main settings" = "Основные настройки OpenAPS";

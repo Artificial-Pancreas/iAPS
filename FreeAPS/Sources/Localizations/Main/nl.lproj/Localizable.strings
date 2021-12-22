@@ -495,10 +495,10 @@ Enact a temp Basal or a temp target */
 "Remove Last" = "Laatste verwijderen";
 
 /* */
-"Remove All" = "Remove All";
+"Remove All" = "Alles verwijderen";
 
 /* */
-"About the Process" = "About the Process";
+"About the Process" = "Over de werkwijze";
 
 /* */
 "Please make sure that your Libre 2 sensor is already activated and finished warming up. If you have other apps connecting to the sensor via bluetooth, these need to be shut down or uninstalled. \n\n You can only have one app communicating with the sensor via bluetooth. Then press the \"pariring and connection\" button below to start the process. Please note that the bluetooth connection might take up to a couple of minutes before it starts working." = "Please make sure that your Libre 2 sensor is already activated and finished warming up. If you have other apps connecting to the sensor via bluetooth, these need to be shut down or uninstalled. \n\n You can only have one app communicating with the sensor via bluetooth. Then press the \"pariring and connection\" button below to start the process. Please note that the bluetooth connection might take up to a couple of minutes before it starts working.";
@@ -639,10 +639,10 @@ Enact a temp Basal or a temp target */
 "Sensor Age" = "Sensor leeftijd";
 
 /* */
-"Sensor Age Left" = "Sensor Age Left";
+"Sensor Age Left" = "Sensor nog te gebruiken";
 
 /* */
-"Sensor Endtime" = "Sensor Endtime";
+"Sensor Endtime" = "Sensor verloopt";
 
 /* */
 "Sensor State" = "Sensor State";
@@ -877,6 +877,21 @@ Enact a temp Basal or a temp target */
 
 /* */
 "Bolus failed or inaccurate. Check pump history before repeating." = "Bolus failed or inaccurate. Check pump history before repeating.";
+
+/* */
+"Carbs" = "Carbs";
+
+/* */
+"Temp Basal" = "Temp Basal";
+
+/* */
+"Temp Target" = "Temp Target";
+
+/* */
+"Resume" = "Resume";
+
+/* */
+"Suspend" = "Suspend";
 
 
 /* Headers for settings ----------------------- */
