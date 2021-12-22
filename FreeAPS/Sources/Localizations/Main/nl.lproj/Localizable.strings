@@ -7,7 +7,7 @@
 "Add insulin without actually bolusing" = "Insuline toevoegen zonder daadwerkelijke bolus";
 
 /* Add insulin from source outside of pump */
-"Add %@ without bolusing" = "Add %@ without bolusing";
+"Add %@ without bolusing" = "Voeg %@ toe zonder bolus";
 
 "Bolus" = "Bolus";
 
@@ -68,7 +68,7 @@
 "Add Carbs" = "Koolhydraten toevoegen";
 
 /* Add carbs header and button in Watch app. You can skip the last " " space. It's just for differentiation */
-"Add Carbs " = "Add Carbs ";
+"Add Carbs " = "Koolhydraten toevoegen ";
 
 /*  */
 "Amount Carbs" = "Hoeveelheid koolhydraten";
@@ -131,7 +131,7 @@
 "Top target" = "Bovengrens doel";
 
 /*  Temp target set for ... minutes */
-"for" = "for";
+"for" = "voor";
 
 /*  Temp target set for ... minutes */
 "min" = "min";
@@ -152,7 +152,7 @@
 "Run now" = "Nu uitvoeren";
 
 /*  */
-"Last run" = "Last run";
+"Last run" = "Laatste berekening";
 
 /*  */
 "Sensitivity" = "Gevoeligheid";
@@ -333,19 +333,19 @@ Enact a temp Basal or a temp target */
 "g/U" = "g/E";
 
 /* grams */
-" g" = " g";
+" g" = " gr";
 
 /* The short unit display string for grams */
-"g" = "g";
+"g" = "gr";
 
 /* when 0 U/hr */
-"0 U/hr" = "0 U/hr";
+"0 U/hr" = "0 E/uur";
 
 /* abbreviation for days */
 "d" = "d";
 
 /* abbreviation for hours */
-"h" = "h";
+"h" = "u";
 
 /* abbreviation for minutes */
 "m" = "m";
@@ -393,7 +393,7 @@ Enact a temp Basal or a temp target */
 "History" = "Geschiedenis";
 
 /* CGM option */
-"Upload glucose to Nightscout" = "Upload glucose to Nightscout";
+"Upload glucose to Nightscout" = "Upload glucose naar Nightscout";
 
 /* Type of CGM or glucose source */
 "Type" = "Type";
@@ -402,25 +402,25 @@ Enact a temp Basal or a temp target */
 "CGM" = "CGM";
 
 /* CGM Transmitter ID */
-"Transmitter ID" = "Transmitter ID";
+"Transmitter ID" = "Zender ID";
 
 /* Other CGM setting */
-"Other" = "Other";
+"Other" = "Anders";
 
 /* Whatch app alert */
-"Set temp targets presets on iPhone first" = "Set temp targets presets on iPhone first";
+"Set temp targets presets on iPhone first" = "Stel eerst tijdelijke doelen voorinstelling op iPhone in";
 
 /* Updating Watch app */
-"Updating..." = "Updating...";
+"Updating..." = "Updaten...";
 
 /* Header for Temp targets in Watch app */
-"Temp Targets" = "Temp Targets";
+"Temp Targets" = "Tijdelijk streefdoel";
 
 /* Delete carbs from Treatments list*/
-"Delete carbs?" = "Delete carbs?";
+"Delete carbs?" = "Koolhydraten verwijderen?";
 
 /* Treatments list */
-"Treatments" = "Treatments";
+"Treatments" = "Behandelingen";
 
 /* " min" in Treatments list */
 " min" = " min";
@@ -429,28 +429,28 @@ Enact a temp Basal or a temp target */
 /* Calendar and Libre transmitter settings ---------------
  */
 /* */
-"Configure Libre Transmitter" = "Configure Libre Transmitter";
+"Configure Libre Transmitter" = "Configureer Libre zender";
 
 /* */
-"Calibrations" = "Calibrations";
+"Calibrations" = "Kalibraties";
 
 /* */
-"Create events in calendar" = "Create events in calendar";
+"Create events in calendar" = "Voeg gebeurtenissen toe aan de kalender";
 
 /* */
-"Calendar" = "Calendar";
+"Calendar" = "Agenda";
 
 /* */
-"Other" = "Other";
+"Other" = "Anders";
 
 /* */
-"Libre Transmitter" = "Libre Transmitter";
+"Libre Transmitter" = "Libre zender";
 
 /* */
-"Libre Transmitters" = "Libre Transmitters";
+"Libre Transmitters" = "Libre zenders";
 
 /* */
-"Bluetooth Transmitters" = "Bluetooth Transmitters";
+"Bluetooth Transmitters" = "Bluetooth zenders";
 
 /* */
 "Modes" = "Modes";
@@ -459,22 +459,22 @@ Enact a temp Basal or a temp target */
 "Libre 2 Direct" = "Libre 2 Direct";
 
 /* */
-"Select the third party transmitter you want to connect to" = "Select the third party transmitter you want to connect to";
+"Select the third party transmitter you want to connect to" = "Selecteer de zender van de derde partij waarmee u wilt verbinden";
 
 /* State was restored */
-"State was restored" = "State was restored";
+"State was restored" = "Staat is hersteld";
 
 /* The short unit display string for millimoles of glucose per liter */
-"mmol/L" = "mmol/L";
+"mmol/L" = "mmol/l";
 
 /* The short unit display string for milligrams of glucose per decilter */
-"mg/dL" = "mg/dL";
+"mg/dL" = "mg/dl";
 
 /* */
-"Add calibration" = "Add calibration";
+"Add calibration" = "Kalibratie toevoegen";
 
 /* When adding capillary glucose meater reading */
-"Meter glucose" = "Meter glucose";
+"Meter glucose" = "Meter glucosewaarde";
 
 /* */
 "Info" = "Info";
@@ -486,13 +486,13 @@ Enact a temp Basal or a temp target */
 "Intercept" = "Intercept";
 
 /* */
-"Chart" = "Chart";
+"Chart" = "Grafiek";
 
 /* */
-"Remove" = "Remove";
+"Remove" = "Verwijder";
 
 /* */
-"Remove Last" = "Remove Last";
+"Remove Last" = "Laatste verwijderen";
 
 /* */
 "Remove All" = "Remove All";
@@ -636,7 +636,7 @@ Enact a temp Basal or a temp target */
 "Sensor Info" = "Sensor Info";
 
 /* */
-"Sensor Age" = "Sensor Age";
+"Sensor Age" = "Sensor leeftijd";
 
 /* */
 "Sensor Age Left" = "Sensor Age Left";

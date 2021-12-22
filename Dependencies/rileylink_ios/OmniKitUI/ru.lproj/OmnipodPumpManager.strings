@@ -41,7 +41,7 @@
 "ePA-6p-q8C.text" = "Напоминание";
 
 /* Class = "UINavigationItem"; title = "Pod Pairing"; ObjectID = "jVO-Ut-MhL"; */
-"jVO-Ut-MhL.title" = "Pod Pairing";
+"jVO-Ut-MhL.title" = "Cопряжение с Pod-ом";
 
 /* Class = "UITableViewController"; title = "Pump Setup"; ObjectID = "k1Y-x4-m0a"; */
 "k1Y-x4-m0a.title" = "Настройка помпы";
