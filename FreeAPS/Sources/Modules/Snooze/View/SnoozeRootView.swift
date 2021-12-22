@@ -78,7 +78,7 @@ extension Snooze {
             return [celltext, snoozeDescription].joined(separator: ", ")
         }
 
-        var snoozeButton: some View {
+        private var snoozeButton: some View {
             VStack(alignment: .leading) {
                 Button {
                     let interval = pickerTimes[selectedInterval]
@@ -106,15 +106,13 @@ extension Snooze {
             }
         }
 
-        var snoozeDesc: some View {
-            Text(snoozeDescription).lineLimit(0)
-        }
-
         var body: some View {
             Form {
-                snoozeDesc
-                snoozePicker
-                snoozeButton
+                Section {
+                    Text(snoozeDescription).lineLimit(nil)
+                    snoozePicker
+                    snoozeButton
+                }
             }
             .navigationBarTitle("Snooze Alerts")
             .navigationBarTitleDisplayMode(.automatic)
