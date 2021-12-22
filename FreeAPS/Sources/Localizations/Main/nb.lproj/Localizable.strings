@@ -879,22 +879,22 @@ Enact a temp Basal or a temp target */
 "Bolus failed or inaccurate. Check pump history before repeating." = "Bolus mislyktes eller var upresis. Kontroller bolus-historikken før du gjentar.";
 
 /* */
-"Carbs" = "Carbs";
+"Carbs" = "Karbo";
 
 /* */
-"Temp Basal" = "Temp Basal";
+"Temp Basal" = "Midlertidig basal";
 
 /* */
-"Temp Target" = "Temp Target";
+"Temp Target" = "Midlertidig mål";
 
 /* */
-"Resume" = "Resume";
+"Resume" = "Gjenoppta leveranse";
 
 /* */
-"Suspend" = "Suspend";
+"Suspend" = "Pause leveranse";
 
 /* */
-"Animated Background" = "Animated Background";
+"Animated Background" = "Animert bakgrunn";
 
 
 /* Headers for settings ----------------------- */
