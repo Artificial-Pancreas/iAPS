@@ -41,6 +41,7 @@ final class BaseDeviceDataManager: DeviceDataManager, Injectable {
     @Injected() private var storage: FileStorage!
     @Injected() private var broadcaster: Broadcaster!
     @Injected() private var glucoseStorage: GlucoseStorage!
+    @Injected() private var settingsManager: SettingsManager!
 
     @Persisted(key: "BaseDeviceDataManager.lastEventDate") var lastEventDate: Date? = nil
     @SyncAccess(lock: accessLock) @Persisted(key: "BaseDeviceDataManager.lastHeartBeatTime") var lastHeartBeatTime: Date =
@@ -321,6 +322,12 @@ extension BaseDeviceDataManager: PumpManagerDelegate {
     ) {
         dispatchPrecondition(condition: .onQueue(processQueue))
         debug(.deviceManager, "New pump events:\n\(events.map(\.title).joined(separator: "\n"))")
+
+        // filter buggy TBRs > maxBasal from MDT
+        let events = events.filter {
+            guard $0.type == .tempBasal else { return true }
+            return $0.dose?.unitsPerHour ?? 0 <= Double(settingsManager.pumpSettings.maxBasal)
+        }
         pumpHistoryStorage.storePumpEvents(events)
         lastEventDate = events.last?.date
         completion(nil)

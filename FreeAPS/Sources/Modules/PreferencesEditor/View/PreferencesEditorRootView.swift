@@ -88,6 +88,30 @@ extension PreferencesEditor {
             .onAppear(perform: configureView)
             .navigationTitle("Preferences")
             .navigationBarTitleDisplayMode(.automatic)
+            .navigationBarItems(
+                trailing:
+                Button {
+                    let lang = Locale.current.languageCode ?? "en"
+                    if lang == "en" {
+                        UIApplication.shared.open(
+                            URL(
+                                string: "https://openaps.readthedocs.io/en/latest/docs/While%20You%20Wait%20For%20Gear/preferences-and-safety-settings.html"
+                            )!,
+                            options: [:],
+                            completionHandler: nil
+                        )
+                    } else {
+                        UIApplication.shared.open(
+                            URL(
+                                string: "https://openaps-readthedocs-io.translate.goog/en/latest/docs/While%20You%20Wait%20For%20Gear/preferences-and-safety-settings.html?_x_tr_sl=en&_x_tr_tl=\(lang)&_x_tr_hl=\(lang)"
+                            )!,
+                            options: [:],
+                            completionHandler: nil
+                        )
+                    }
+                }
+                label: { Image(systemName: "questionmark.circle") }
+            )
             .alert(item: $infoButtonPressed) { infoButton in
                 Alert(
                     title: Text("\(infoButton.oref0Variable)"),
