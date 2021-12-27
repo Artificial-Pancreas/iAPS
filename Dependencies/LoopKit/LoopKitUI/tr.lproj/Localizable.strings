@@ -45,7 +45,7 @@
 "Basal, bolus, and correction insulin dose amounts are unaffected." = "Bazal, bolus ve düzeltme insülin doz miktarları etkilenmez.";
 
 /* The title of the cancel action in an action sheet */
-"Cancel" = "İptal Et";
+"Cancel" = "Vazgeç";
 
 /* The text for the override cancellation button */
 "Cancel Override" = "Geçersiz kılmayı İptal et";
