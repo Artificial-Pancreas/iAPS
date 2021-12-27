@@ -160,12 +160,13 @@ final class BaseAPSManager: APSManager, Injectable {
                 guard let self = self, success else {
                     return Fail(error: APSError.apsError(message: "Determine basal failed")).eraseToAnyPublisher()
                 }
-                self.nightscout.uploadStatus()
 
                 // Open loop completed
                 guard self.settings.closedLoop else {
                     return Just(()).setFailureType(to: Error.self).eraseToAnyPublisher()
                 }
+
+                self.nightscout.uploadStatus()
 
                 // Closed loop - enact suggested
                 return self.enactSuggested()
