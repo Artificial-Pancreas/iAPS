@@ -194,7 +194,9 @@ final class BaseAPSManager: APSManager, Injectable {
             lastError.send(nil)
         }
 
-        reportEnacted(received: error == nil)
+        if settings.closedLoop {
+            reportEnacted(received: error == nil)
+        }
     }
 
     private func verifyStatus() -> Error? {
