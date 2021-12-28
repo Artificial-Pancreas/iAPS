@@ -896,6 +896,7 @@ Enact a temp Basal or a temp target */
 /* */
 "Animated Background" = "Анимированный фон";
 
+
 /* Headers for settings ----------------------- */
 "OpenAPS main settings" = "Основные настройки OpenAPS";
 

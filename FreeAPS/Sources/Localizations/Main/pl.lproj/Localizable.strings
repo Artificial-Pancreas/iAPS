@@ -895,6 +895,9 @@ Połączono z Nightscout!";
 /* */
 "Suspend" = "Suspend";
 
+/* */
+"Animated Background" = "Animated Background";
+
 
 /* Headers for settings ----------------------- */
 "OpenAPS main settings" = "OpenAPS main settings";

@@ -12,7 +12,7 @@ FreeAPS X uses original JavaScript files of oref0 and provides a user interface 
 
 ## Smartphone requirements
 
-- All iPhones which support iOS 14 and up.
+- All iPhones which support iOS 15 and up.
 
 ## Supported pumps
 
@@ -39,13 +39,11 @@ A stable version means that it has been tested for a long time and does not cont
 
 Stable version numbers end in **.0**.
 
-The current stable version is 0.2.0. (**DOES NOT work on iOS 15! Use beta versions**)
-
 ### Beta versions
 
 Beta versions are the first to introduce new functionality. They are designed to test and identify issues and bugs.
 
-**Beta versions are less stable, use with caution!**
+**Beta versions are fairly stable, but may contain occasional bugs.**
 
 Beta numbers end with a number greater than **0**.
 
