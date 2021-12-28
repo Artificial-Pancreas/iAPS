@@ -37,82 +37,100 @@ extension Home {
             return scene
         }
 
-        var header: some View {
+        @ViewBuilder func header(_ geo: GeometryProxy) -> some View {
             HStack(alignment: .bottom) {
                 Spacer()
-                VStack(alignment: .leading, spacing: 12) {
-                    HStack {
-                        Text("IOB").font(.caption2).foregroundColor(.secondary)
-                        Text(
-                            (numberFormatter.string(from: (state.suggestion?.iob ?? 0) as NSNumber) ?? "0") +
-                                NSLocalizedString(" U", comment: "Insulin unit")
-                        )
-                        .font(.system(size: 12, weight: .bold))
-                    }
-                    HStack {
-                        Text("COB").font(.caption2).foregroundColor(.secondary)
-                        Text(
-                            (numberFormatter.string(from: (state.suggestion?.cob ?? 0) as NSNumber) ?? "0") +
-                                NSLocalizedString(" g", comment: "gram of carbs")
-                        )
-                        .font(.system(size: 12, weight: .bold))
-                    }
-                }
+                cobIobView
                 Spacer()
+                glucoseView
+                Spacer()
+                pumpView
+                Spacer()
+                loopView
+                Spacer()
+            }
+            .frame(maxWidth: .infinity)
+            .frame(maxHeight: 70)
+            .padding(.top, geo.safeAreaInsets.top)
+            .background(Color.gray.opacity(0.2))
+        }
 
-                CurrentGlucoseView(
-                    recentGlucose: $state.recentGlucose,
-                    delta: $state.glucoseDelta,
-                    units: $state.units,
-                    alarm: $state.alarm
-                )
-                .onTapGesture {
-                    if state.alarm == nil {
-                        state.openCGM()
-                    } else {
-                        state.showModal(for: .snooze)
-                    }
+        var cobIobView: some View {
+            VStack(alignment: .leading, spacing: 12) {
+                HStack {
+                    Text("IOB").font(.caption2).foregroundColor(.secondary)
+                    Text(
+                        (numberFormatter.string(from: (state.suggestion?.iob ?? 0) as NSNumber) ?? "0") +
+                            NSLocalizedString(" U", comment: "Insulin unit")
+                    )
+                    .font(.system(size: 12, weight: .bold))
                 }
-                .onLongPressGesture {
-                    let impactHeavy = UIImpactFeedbackGenerator(style: .heavy)
-                    impactHeavy.impactOccurred()
-                    if state.alarm == nil {
-                        state.showModal(for: .snooze)
-                    } else {
-                        state.openCGM()
-                    }
+                HStack {
+                    Text("COB").font(.caption2).foregroundColor(.secondary)
+                    Text(
+                        (numberFormatter.string(from: (state.suggestion?.cob ?? 0) as NSNumber) ?? "0") +
+                            NSLocalizedString(" g", comment: "gram of carbs")
+                    )
+                    .font(.system(size: 12, weight: .bold))
                 }
+            }
+        }
 
-                Spacer()
-                PumpView(
-                    reservoir: $state.reservoir,
-                    battery: $state.battery,
-                    name: $state.pumpName,
-                    expiresAtDate: $state.pumpExpiresAtDate,
-                    timerDate: $state.timerDate
-                )
-                .onTapGesture {
-                    if state.pumpDisplayState != nil {
-                        state.setupPump = true
-                    }
+        var glucoseView: some View {
+            CurrentGlucoseView(
+                recentGlucose: $state.recentGlucose,
+                delta: $state.glucoseDelta,
+                units: $state.units,
+                alarm: $state.alarm
+            )
+            .onTapGesture {
+                if state.alarm == nil {
+                    state.openCGM()
+                } else {
+                    state.showModal(for: .snooze)
                 }
-                Spacer()
-                LoopView(
-                    suggestion: $state.suggestion,
-                    enactedSuggestion: $state.enactedSuggestion,
-                    closedLoop: $state.closedLoop,
-                    timerDate: $state.timerDate,
-                    isLooping: $state.isLooping,
-                    lastLoopDate: $state.lastLoopDate
-                ).onTapGesture {
-                    isStatusPopupPresented = true
-                }.onLongPressGesture {
-                    let impactHeavy = UIImpactFeedbackGenerator(style: .heavy)
-                    impactHeavy.impactOccurred()
-                    state.runLoop()
+            }
+            .onLongPressGesture {
+                let impactHeavy = UIImpactFeedbackGenerator(style: .heavy)
+                impactHeavy.impactOccurred()
+                if state.alarm == nil {
+                    state.showModal(for: .snooze)
+                } else {
+                    state.openCGM()
                 }
-                Spacer()
-            }.frame(maxWidth: .infinity)
+            }
+        }
+
+        var pumpView: some View {
+            PumpView(
+                reservoir: $state.reservoir,
+                battery: $state.battery,
+                name: $state.pumpName,
+                expiresAtDate: $state.pumpExpiresAtDate,
+                timerDate: $state.timerDate
+            )
+            .onTapGesture {
+                if state.pumpDisplayState != nil {
+                    state.setupPump = true
+                }
+            }
+        }
+
+        var loopView: some View {
+            LoopView(
+                suggestion: $state.suggestion,
+                enactedSuggestion: $state.enactedSuggestion,
+                closedLoop: $state.closedLoop,
+                timerDate: $state.timerDate,
+                isLooping: $state.isLooping,
+                lastLoopDate: $state.lastLoopDate
+            ).onTapGesture {
+                isStatusPopupPresented = true
+            }.onLongPressGesture {
+                let impactHeavy = UIImpactFeedbackGenerator(style: .heavy)
+                impactHeavy.impactOccurred()
+                state.runLoop()
+            }
         }
 
         var infoPanal: some View {
@@ -330,11 +348,7 @@ extension Home {
         var body: some View {
             GeometryReader { geo in
                 VStack(spacing: 0) {
-                    header
-                        .frame(maxHeight: 70)
-                        .padding(.top, geo.safeAreaInsets.top)
-                        .background(Color.gray.opacity(0.2))
-
+                    header(geo)
                     infoPanal
                     mainChart
                     legendPanal
