@@ -896,9 +896,6 @@ Enact a temp Basal or a temp target */
 /* */
 "Animated Background" = "Arrière-plan dynamique";
 
-/* */
-"Animated Background" = "Animated Background";
-
 
 /* Headers for settings ----------------------- */
 "OpenAPS main settings" = "Paramètres OpenAPS";
