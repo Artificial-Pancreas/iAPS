@@ -7,7 +7,7 @@ extension CREditor {
 
         let timeValues = stride(from: 0.0, to: 1.days.timeInterval, by: 30.minutes.timeInterval).map { $0 }
 
-        let rateValues = stride(from: 3, to: 50.01, by: 0.1).map { Decimal($0) }
+        let rateValues = stride(from: 30.0, to: 501.0, by: 1.0).map { ($0.decimal ?? .zero) / 10 }
 
         var canAdd: Bool {
             guard let lastItem = items.last else { return true }
