@@ -879,10 +879,10 @@ Enact a temp Basal or a temp target */
 "Bolus failed or inaccurate. Check pump history before repeating." = "Bolus ist fehlgeschlagen oder ungenau. Prüfe den Pumpenverlauf vor einer erneuten Abgabe.";
 
 /* */
-"Carbs" = "Carbs";
+"Carbs" = "Kohlenhydrate";
 
 /* */
-"Temp Basal" = "Temp Basal";
+"Temp Basal" = "Temporäre Basalrate";
 
 /* */
 "Temp Target" = "Temp Target";
