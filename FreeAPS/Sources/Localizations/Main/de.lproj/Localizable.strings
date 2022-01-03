@@ -369,7 +369,7 @@ Enact a temp Basal or a temp target */
 "Settings" = "Einstellungen";
 
 /* 2 log files to share */
-"Share logs" = "Logs teilen";
+"Share logs" = "Ereignisprotokolldatei teilen";
 
 /* Upper target */
 "High target" = "Obere Grenze";
@@ -408,7 +408,7 @@ Enact a temp Basal or a temp target */
 "Other" = "Sonstiges";
 
 /* Whatch app alert */
-"Set temp targets presets on iPhone first" = "Temp Zielvorgaben auf iPhone zuerst setzen";
+"Set temp targets presets on iPhone first" = "Temporäre Zielvorlage auf dem iPhone zuerst setzen";
 
 /* Updating Watch app */
 "Updating..." = "Wird aktualisiert...";
@@ -417,7 +417,7 @@ Enact a temp Basal or a temp target */
 "Temp Targets" = "Temporäre Ziele";
 
 /* Delete carbs from Treatments list*/
-"Delete carbs?" = "Carbs löschen?";
+"Delete carbs?" = "Kohlenhydrate löschen?";
 
 /* Treatments list */
 "Treatments" = "Behandlungen";
@@ -435,7 +435,7 @@ Enact a temp Basal or a temp target */
 "Calibrations" = "Kalibrierungen";
 
 /* */
-"Create events in calendar" = "Termine im Kalender erstellen";
+"Create events in calendar" = "Kalendereintrag erstellen";
 
 /* */
 "Calendar" = "Kalender";
@@ -453,7 +453,7 @@ Enact a temp Basal or a temp target */
 "Bluetooth Transmitters" = "Bluetooth Sender";
 
 /* */
-"Modes" = "Modi";
+"Modes" = "Modus";
 
 /* Libre 2 Direct */
 "Libre 2 Direct" = "Libre 2 direkt";
@@ -474,7 +474,7 @@ Enact a temp Basal or a temp target */
 "Add calibration" = "Kalibrierung hinzufügen";
 
 /* When adding capillary glucose meater reading */
-"Meter glucose" = "Blutzucker messen";
+"Meter glucose" = "Blutzuckermessung";
 
 /* */
 "Info" = "Info";
@@ -507,7 +507,7 @@ Enact a temp Basal or a temp target */
 "Pairinginfo" = "Kopplungsinfo";
 
 /* */
-"PatchInfo" = "Patchinfo";
+"PatchInfo" = "Patch-Info";
 
 /* */
 "Calibrationinfo" = "Kalibrierungsinfo";
@@ -525,7 +525,7 @@ Enact a temp Basal or a temp target */
 "Phone NFC required!" = "NFC ist erforderlich!";
 
 /* */
-"Your phone or app is not enabled for NFC communications, which is needed to pair to libre2 sensors" = "Ihr Telefon oder Ihre App ist für NFC-Kommunikation nicht aktiviert, was benötigt wird, um eine Verbindung mit Libre2-Sensoren herzustellen";
+"Your phone or app is not enabled for NFC communications, which is needed to pair to libre2 sensors" = "In Ihrem Smartphone oder Ihrer App ist die NFC-Kommunikation nicht aktiviert, welche benötigt wird, um eine Verbindung mit Libre 2 Sensoren herzustellen";
 
 /* Bluetooth Power Off */
 "Bluetooth Power Off" = "Bluetooth ausschalten";
@@ -540,7 +540,7 @@ Enact a temp Basal or a temp target */
 "Delete CGMManager and start anew. Your libreoopweb credentials will be preserved" = "CGMManager löschen und neu starten. Ihre libreoopweb Zugangsdaten bleiben erhalten";
 
 /* Invalid libre checksum */
-"Invalid libre checksum" = "Ungültige Libre Datei-Prüfsumme";
+"Invalid libre checksum" = "Ungültige Libre Prüfsumme";
 
 /* Libre sensor was incorrectly read, CRCs were not valid */
 "Libre sensor was incorrectly read, CRCs were not valid" = "Libre Sensor wurde unkorrekt ausgelesen, CRCs waren nicht gültig";
@@ -564,16 +564,16 @@ Enact a temp Basal or a temp target */
 "Transmitter: %@%%" = "Transmitter: %@%%";
 
 /* No Sensor Detected */
-"No Sensor Detected" = "Kein Sensor entdeckt";
+"No Sensor Detected" = "Kein Sensor gefunden";
 
 /* This might be an intermittent problem, but please check that your transmitter is tightly secured over your sensor */
-"This might be an intermittent problem, but please check that your transmitter is tightly secured over your sensor" = "Dies könnte ein vorübergehendes Problem sein, aber bitte überprüfen Sie, ob Ihr Sender fest über Ihren Sensor gesichert ist";
+"This might be an intermittent problem, but please check that your transmitter is tightly secured over your sensor" = "Dies könnte ein vorübergehendes Problem sein, bitte überprüfen Sie, ob Ihr Sender fest über Ihren Sensor befestigt ist";
 
 /* New Sensor Detected */
 "New Sensor Detected" = "Neuer Sensor wurde erkannt";
 
 /* Please wait up to 30 minutes before glucose readings are available! */
-"Please wait up to 30 minutes before glucose readings are available!" = "Bitte warte bis zu 30 Minuten, bevor Glukosemessungen verfügbar sind!";
+"Please wait up to 30 minutes before glucose readings are available!" = "Bitte warte Sie bis zu 30 Minuten, bevor die Glukosemessungen verfügbar sind!";
 
 /* Invalid Glucose sample detected, try again later */
 "Invalid Glucose sample detected, try again later" = "Ungültiger Glucose-Wert erkannt, versuchen Sie es später erneut";
@@ -612,7 +612,7 @@ Enact a temp Basal or a temp target */
 "Sensor Ending Soon" = "Sensorlaufzeit endet bald";
 
 /* Current Sensor is Ending soon! Sensor Life left in %@ */
-"Current Sensor is Ending soon! Sensor Life left in %@" = "Der Sensorlaufzeit endet bald! Sensorlaufzeit übrig in %@";
+"Current Sensor is Ending soon! Sensor Life left in %@" = "Der aktuelle Sensor endet bald! Sensorlaufzeit verbleibend %@";
 
 /* */
 "Libre Bluetooth" = "Libre Bluetooth";
@@ -630,7 +630,7 @@ Enact a temp Basal or a temp target */
 "Last Blood Sugar prediction" = "Letzte Blutzuckervorhersage";
 
 /* */
-"CurrentBG" = "AktuellerBG";
+"CurrentBG" = "Aktueller BZ";
 
 /* */
 "Sensor Info" = "Sensor Info";
@@ -648,7 +648,7 @@ Enact a temp Basal or a temp target */
 "Sensor State" = "Sensor Status";
 
 /* */
-"Sensor Serial" = "Sensor Serien Nummer";
+"Sensor Serial" = "Sensor Seriennummer";
 
 /* */
 "Transmitter Info" = "Transmitter Info";
@@ -678,13 +678,13 @@ Enact a temp Basal or a temp target */
 "Edit calibrations" = "Kalibrierung bearbeiten";
 
 /* */
-"edit calibration clicked" = "kalibration bearbeiten angeklickt";
+"edit calibration clicked" = "Kalibration bearbeiten angeklickt";
 
 /* */
 "Delete CGM" = "CGM löschen";
 
 /* */
-"Are you sure you want to remove this cgm from loop?" = "Sind Sie sicher, dass Sie dieses Cgm aus der Liste löschen wollen?";
+"Are you sure you want to remove this cgm from loop?" = "Sind Sie sicher, dass Sie diesen CGM aus dem Loop löschen wollen?";
 
 /* */
 "There is no undo" = "Rücknahme nicht möglich";
@@ -702,13 +702,13 @@ Enact a temp Basal or a temp target */
 "Notifications" = "Mitteilungen";
 
 /* */
-"Export logs" = "Logs exportieren";
+"Export logs" = "Ereignisprotokolldatei exportieren";
 
 /* */
 "Export not available" = "Export nicht möglich";
 
 /* */
-"Log export requires ios 15" = "Log Export erfordert ios 15";
+"Log export requires ios 15" = "Ereignisprotokolldatei Export erfordert ios 15";
 
 /* */
 "Got it!" = "Okay, verstanden! ";
@@ -717,16 +717,16 @@ Enact a temp Basal or a temp target */
 "Saved to %@" = "In %@ gespeichert";
 
 /* */
-"No logs available" = "Keine Logs verfügbar";
+"No logs available" = "Keine Ereignisprotokolldatei verfügbar";
 
 /* */
 "Glucose Notification visibility" = "Einstellungen Glukosebenachrichtigungen";
 
 /* */
-"Always Notify Glucose" = "Blutzucker Wert immer mitteilen";
+"Always Notify Glucose" = "Blutzuckerwert immer mitteilen";
 
 /* */
-"Notify per reading" = "Benachrichtigung per CGM Abfrage";
+"Notify per reading" = "Benachrichtigung per Lesung";
 
 /* */
 "Value" = "Wert";
@@ -735,7 +735,7 @@ Enact a temp Basal or a temp target */
 "Adds Phone Battery" = "Telefon-Akkustand anzeigen";
 
 /* */
-"Adds Transmitter Battery" = "Transmitter-Batteriestand anzeigen";
+"Adds Transmitter Battery" = "Transmitter-Batteriestand hinzufügen";
 
 /* */
 "Also vibrate" = "Auch vibrieren";
