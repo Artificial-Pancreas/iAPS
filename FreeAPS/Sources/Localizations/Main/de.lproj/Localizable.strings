@@ -7,7 +7,7 @@
 "Add insulin without actually bolusing" = "Insulin ohne tatsächliche Bolusabgabe erfassen";
 
 /* Add insulin from source outside of pump */
-"Add %@ without bolusing" = "Erfasse %@ ohne tatsächliche Bolusabgabe";
+"Add %@ without bolusing" = "Hinzufügen von %@ ohne tatsächliche Bolusabgabe";
 
 "Bolus" = "Bolus";
 
@@ -47,10 +47,10 @@
 "Enacted at %@" = "Gestartet um %@";
 
 /* Home title */
-"Home" = "Start";
+"Home" = "Hauptseite";
 
 /* Looping in progress */
-"looping" = "Loop An";
+"looping" = "Loop aktiv";
 
 /* min ago since last loop */
 "min ago" = "min her";
@@ -68,7 +68,7 @@
 "Add Carbs" = "Kohlenhydrate hinzufügen";
 
 /* Add carbs header and button in Watch app. You can skip the last " " space. It's just for differentiation */
-"Add Carbs " = "Carbs zufuegen ";
+"Add Carbs " = "Kohlenhydrate hinzufügen ";
 
 /*  */
 "Amount Carbs" = "Kohlenhydratmenge";
@@ -92,7 +92,7 @@
 "Cancel Temp Target" = "Temporäres Ziel abbrechen";
 
 /* Custom temp target */
-"Custom" = "Benutzerdefiniert";
+"Custom" = "Benutzerdefiniertes";
 
 /*  */
 "Date" = "Datum";
@@ -101,7 +101,7 @@
 "Delete" = "Löschen";
 
 /* Delete preset temp target */
-"Delete preset \"%@\"" = "Preset \"%@\" löschen";
+"Delete preset \"%@\"" = "Vorlage \"%@\" löschen";
 
 /* Duration of target temp or temp basal */
 "Duration" = "Dauer";
@@ -110,7 +110,7 @@
 "Enact Temp Target" = "Temporäres Ziel starten";
 
 /*  */
-"Enter preset name" = "Geben Sie einen Namen für das Preset ein";
+"Enter preset name" = "Geben Sie einen Namen für die Vorlage ein";
 
 /* Preset name */
 "Name" = "Name";
@@ -119,13 +119,13 @@
 "minutes" = "Minuten";
 
 /*  */
-"Presets" = "Voreinstellungen";
+"Presets" = "Vorlage";
 
 /* Save preset name */
 "Save" = "Speichern";
 
 /*  */
-"Save as preset" = "Als Preset speichern";
+"Save as preset" = "Als Vorlage speichern";
 
 /* Upper temp target limit */
 "Top target" = "Obergrenze";
@@ -219,7 +219,7 @@
 
 /* Enact
 Enact a temp Basal or a temp target */
-"Enact" = "Starte";
+"Enact" = "Starten";
 
 /* */
 "Manual Temp Basal" = "Manuelle Temporäre Basalrate";
@@ -258,7 +258,7 @@ Enact a temp Basal or a temp target */
 "Use local glucose server" = "Lokalen BZ-Server verwenden";
 
 /*  */
-"Edit settings json" = "Einstellungen bearbeiten";
+"Edit settings json" = "Einstellungen bearbeiten json";
 
 /* */
 "Glucose units" = "BZ Einheiten";
@@ -885,16 +885,16 @@ Enact a temp Basal or a temp target */
 "Temp Basal" = "Temporäre Basalrate";
 
 /* */
-"Temp Target" = "Temp Target";
+"Temp Target" = "Temporäre Ziele";
 
 /* */
-"Resume" = "Resume";
+"Resume" = "Fortsetzen";
 
 /* */
-"Suspend" = "Suspend";
+"Suspend" = "Unterbrechen";
 
 /* */
-"Animated Background" = "Animated Background";
+"Animated Background" = "Animierter Hintergrund";
 
 
 /* Headers for settings ----------------------- */
