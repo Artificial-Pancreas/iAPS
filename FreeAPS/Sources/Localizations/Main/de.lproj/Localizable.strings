@@ -741,13 +741,13 @@ Enact a temp Basal or a temp target */
 "Also vibrate" = "Auch vibrieren";
 
 /* */
-"Additional notification types" = "Weitere Benachrichtigungs Einstellungen";
+"Additional notification types" = "Weitere Benachrichtigungseinstellungen";
 
 /* */
 "Misc" = "Sonstiges";
 
 /* */
-"Unit override" = "BZ Einheit";
+"Unit override" = "Einheit überschreiben";
 
 /* */
 "Low" = "Tief";
@@ -768,7 +768,7 @@ Enact a temp Basal or a temp target */
 "Error" = "Fehler";
 
 /* */
-"Some ui element was incorrectly specified" = "UI Element(s) wurde(n) falsch eingegeben.";
+"Some ui element was incorrectly specified" = "UI Element(e) wurde(n) falsch eingegeben";
 
 /* */
 "Success" = "Erfolgreich";
@@ -783,7 +783,7 @@ Enact a temp Basal or a temp target */
 "Low Glucose Alarm active" = "Alarm für \"Niedriger Blutzucker\" aktiv";
 
 /* */
-"No Glucose Alarm active" = "Alle Blutzucker Alarme sind deaktiviert";
+"No Glucose Alarm active" = "Keine Blutzuckeralarm aktiv";
 
 /* */
 "snoozing until %@" = "schlummern bis %@";
@@ -807,7 +807,7 @@ Enact a temp Basal or a temp target */
 "Strength" = "Stärke";
 
 /* */
-"Hold the top of your iPhone near the sensor to pair" = "Halten Sie die Oberseite Ihres iPhones an den Sensor, um zu koppeln";
+"Hold the top of your iPhone near the sensor to pair" = "Halten Sie die Oberseite Ihres iPhones an den Sensor, um eine Verbindung herzustellen";
 
 /* */
 "Sensor not found" = "Sensor nicht gefunden";
@@ -822,16 +822,16 @@ Enact a temp Basal or a temp target */
 "Found devices: %d" = "Geräte gefunden: %d";
 
 /* */
-"Backfill options" = "Backfill-Optionen";
+"Backfill options" = "Auffüllen-Optionen";
 
 /* */
-"Backfilling from trend is currently not well supported by Loop" = "Auffüllung der Werte aus dem Trend wird derzeit von Loop nicht gut unterstützt";
+"Backfilling from trend is currently not well supported by Loop" = "Auffüllen der Werte aus dem Trend wird derzeit von Loop nicht gut unterstützt";
 
 /* */
-"Backfill from history" = "Backfill aus dem Verlauf";
+"Backfill from history" = "Auffüllen aus dem Verlauf";
 
 /* */
-"Backfill from trend" = "Backfill aus dem Trend";
+"Backfill from trend" = "Auffüllen aus dem Trend";
 
 /* */
 "Debug options" = "Debug-Optionen";
@@ -855,7 +855,7 @@ Enact a temp Basal or a temp target */
 "Carbs required: %d g" = "Benötigte Kohlenhydrate: %d g";
 
 /* */
-"To prevent LOW required %d g of carbs" = "Um LOW zu verhindern, werden %d g Kohlenhydrate benötigt";
+"To prevent LOW required %d g of carbs" = "Um einen NIEDRIGEN BZ zu verhindern, werden %d g Kohlenhydrate benötigt";
 
 /* */
 "FreeAPS X not active" = "FreeAPS X ist nicht aktiv";
