@@ -480,8 +480,8 @@ extension PreferencesEditor {
                     displayName: "ISF weight while BG accelerates",
                     type: .decimal(keypath: \.bgAccelISFweight),
                     infoText: NSLocalizedString(
-                        "Default value: 0. This is the weight applied while glucose accelerates and which strengthens ISF. With 0 this contribution is effectively disabled.",
-                        comment: "ISF postprandial change duration"
+                        "Default value: 0. This is the weight applied while glucose accelerates and which strengthens ISF. With 0 this contribution is effectively disabled. 0.15 might be a good starting point.",
+                        comment: "ISF acceleration weight"
                     ),
                     settable: self
                 ),
@@ -489,8 +489,8 @@ extension PreferencesEditor {
                     displayName: "ISF weight while BG decelerates",
                     type: .decimal(keypath: \.bgBrakeISFweight),
                     infoText: NSLocalizedString(
-                        "Default value: 0. This is the weight applied while glucose decelerates and which weakens ISF. With 0 this contribution is effectively disabled.",
-                        comment: "ISF postprandial change duration"
+                        "Default value: 0. This is the weight applied while glucose decelerates and which weakens ISF. With 0 this contribution is effectively disabled. 0.15 might be a good starting point.",
+                        comment: "ISF decceleration weight"
                     ),
                     settable: self
                 ),
