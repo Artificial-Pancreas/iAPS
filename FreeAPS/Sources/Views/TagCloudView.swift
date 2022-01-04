@@ -54,8 +54,8 @@ struct TagCloudView: View {
             if textTag.contains("Not Floating") {
                 return .loopYellow } else {
                 switch textTag {
-                case "Floating":
-                    return .loopOrange
+                case "Floating Carbs:":
+                    return .loopPink
                 case "autoISF":
                     return .zt
                 case "SMB Delivery Ratio:":

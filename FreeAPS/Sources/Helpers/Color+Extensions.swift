@@ -11,5 +11,5 @@ extension Color {
     static let tempBasal = Color("TempBasal")
     static let basal = Color("Basal")
     static let darkerBlue = Color("DarkerBlue")
-    static let loopOrange = Color("LoopOrange")
+    static let loopPink = Color("LoopPink")
 }
