@@ -387,7 +387,7 @@ extension Home {
                     .padding(.bottom, 4)
                 if let suggestion = state.suggestion {
                     TagCloudView(tags: suggestion.reasonParts).animation(.none, value: false)
-                    Text(suggestion.reasonConclusion.capitalizingFirstLetter()).font(.body).foregroundColor(.white)
+                    Text(suggestion.reasonConclusion.capitalizingFirstLetter()).font(.caption).foregroundColor(.white)
                 } else {
                     Text("No sugestion found").font(.body).foregroundColor(.white)
                 }
