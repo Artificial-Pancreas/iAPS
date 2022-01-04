@@ -8,8 +8,9 @@ struct Preferences: JSON {
     var autosensMin: Decimal = 0.7
     var autoisf: Bool = false
     var autoISFhourlyChange: Decimal = 0.25
-    var autoISFmax: Decimal = 1.5
-    var smbDeliveryRatio: Decimal = 0.65
+    var autoISFmax: Decimal = 1.3
+    var autoISFmin: Decimal = 1
+    var smbDeliveryRatio: Decimal = 0.5
     var smbMaxRangeExtension: Decimal = 1
     var rewindResetsAutosens: Bool = true
     var highTemptargetRaisesSensitivity: Bool = false
@@ -57,6 +58,8 @@ struct Preferences: JSON {
     var postMealISFweight: Decimal = 0
     var postMealISFduration: Decimal = 3
     var postMealISFalways: Bool = false
+    var bgAccelISFweight: Decimal = 0
+    var bgBrakeISFweight: Decimal = 0
 }
 
 extension Preferences {
@@ -69,6 +72,7 @@ extension Preferences {
         case autoisf = "use_autoisf"
         case autoISFhourlyChange = "autoisf_hourlychange"
         case autoISFmax = "autoisf_max"
+        case autoISFmin = "autoisf_min"
         case smbDeliveryRatio = "smb_delivery_ratio"
         case smbMaxRangeExtension = "smb_max_range_extension"
         case rewindResetsAutosens = "rewind_resets_autosens"
@@ -116,6 +120,8 @@ extension Preferences {
         case postMealISFweight = "postmeal_ISF_weight"
         case postMealISFduration = "postmeal_ISF_duration"
         case postMealISFalways = "enableppisf_always"
+        case bgAccelISFweight = "bgAccel_ISF_weight"
+        case bgBrakeISFweight = "bgBrake_ISF_weight"
     }
 }
 

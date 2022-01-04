@@ -396,6 +396,15 @@ extension PreferencesEditor {
                     settable: self
                 ),
                 Field(
+                    displayName: "Enable AutoISF with COB",
+                    type: .boolean(keypath: \.enableautoISFwithCOB),
+                    infoText: NSLocalizedString(
+                        "Enables autoISF not just for UAM, but also with COB\n\nRead up on:\nhttps://github.com/ga-zelle/autoISF/tree/2.8.2_dev_parabola",
+                        comment: "Enable autoISF with COB"
+                    ),
+                    settable: self
+                ),
+                Field(
                     displayName: "AutoISF HourlyMaxChange",
                     type: .decimal(keypath: \.autoISFhourlyChange),
                     infoText: NSLocalizedString(
@@ -410,6 +419,24 @@ extension PreferencesEditor {
                     infoText: NSLocalizedString(
                         "Multiplier cap on how high the autoISF ratio can be and therefore how low it can adjust ISF.",
                         comment: "AutoISF Max"
+                    ),
+                    settable: self
+                ),
+                Field(
+                    displayName: "AutoISF Min",
+                    type: .decimal(keypath: \.autoISFmin),
+                    infoText: NSLocalizedString(
+                        "This is a multiplier cap for autoISF to set a limit on how low the autoISF ratio can be, which in turn determines how high it can adjust ISF.",
+                        comment: "AutoISF Min"
+                    ),
+                    settable: self
+                ),
+                Field(
+                    displayName: "SMB Max RangeExtension",
+                    type: .decimal(keypath: \.smbMaxRangeExtension),
+                    infoText: NSLocalizedString(
+                        "Default value: 1. This is another key OpenAPS safety cap, and specifies by what factor you can exceed the regular 120 maxSMB/maxUAM minutes. Increase this experimental value slowly and with caution. Available only when autoISF is enabled.",
+                        comment: "SMB Max RangeExtension"
                     ),
                     settable: self
                 ),
@@ -450,11 +477,20 @@ extension PreferencesEditor {
                     settable: self
                 ),
                 Field(
-                    displayName: "Enable AutoISF with COB",
-                    type: .boolean(keypath: \.enableautoISFwithCOB),
+                    displayName: "ISF weight while BG accelerates",
+                    type: .decimal(keypath: \.bgAccelISFweight),
                     infoText: NSLocalizedString(
-                        "Enables autoISF not just for UAM, but also with COB\n\nRead up on:\nhttps://github.com/ga-zelle/autoISF/tree/2.8.2_dev_parabola",
-                        comment: "Enable autoISF with COB"
+                        "Default value: 0. This is the weight applied while glucose accelerates and which strengthens ISF. With 0 this contribution is effectively disabled.",
+                        comment: "ISF postprandial change duration"
+                    ),
+                    settable: self
+                ),
+                Field(
+                    displayName: "ISF weight while BG decelerates",
+                    type: .decimal(keypath: \.bgBrakeISFweight),
+                    infoText: NSLocalizedString(
+                        "Default value: 0. This is the weight applied while glucose decelerates and which weakens ISF. With 0 this contribution is effectively disabled.",
+                        comment: "ISF postprandial change duration"
                     ),
                     settable: self
                 ),
