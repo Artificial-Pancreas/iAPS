@@ -405,6 +405,15 @@ extension PreferencesEditor {
                     settable: self
                 ),
                 Field(
+                    displayName: "Enable BG acceleartion in AutoISF",
+                    type: .boolean(keypath: \.enableBGacceleration),
+                    infoText: NSLocalizedString(
+                        "Enables the BG acceleration adaptiions for autoISF\n\nRead up on:\nhttps://github.com/ga-zelle/autoISF/tree/2.8.2dev_ai2.2",
+                        comment: "Enable BG accel in autoISF"
+                    ),
+                    settable: self
+                ),
+                Field(
                     displayName: "AutoISF HourlyMaxChange",
                     type: .decimal(keypath: \.autoISFhourlyChange),
                     infoText: NSLocalizedString(

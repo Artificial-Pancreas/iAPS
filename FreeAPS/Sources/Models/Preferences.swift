@@ -60,6 +60,7 @@ struct Preferences: JSON {
     var postMealISFalways: Bool = false
     var bgAccelISFweight: Decimal = 0
     var bgBrakeISFweight: Decimal = 0
+    var enableBGacceleration: Bool = false
 }
 
 extension Preferences {
@@ -122,6 +123,7 @@ extension Preferences {
         case postMealISFalways = "enableppisf_always"
         case bgAccelISFweight = "bgAccel_ISF_weight"
         case bgBrakeISFweight = "bgBrake_ISF_weight"
+        case enableBGacceleration = "enable_BG_acceleration"
     }
 }
 
