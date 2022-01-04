@@ -6,7 +6,6 @@ struct TagCloudView: View {
     @State private var totalHeight
 //          = CGFloat.zero       // << variant for ScrollView/List
         = CGFloat.infinity // << variant for VStack
-
     var body: some View {
         VStack {
             GeometryReader { geometry in
@@ -24,7 +23,7 @@ struct TagCloudView: View {
         return ZStack(alignment: .topLeading) {
             ForEach(self.tags, id: \.self) { tag in
                 self.item(for: tag)
-                    .padding([.horizontal, .vertical], 4)
+                    .padding([.horizontal, .vertical], 2)
                     .alignmentGuide(.leading, computeValue: { d in
                         if abs(width - d.width) > g.size.width
                         {
@@ -52,21 +51,23 @@ struct TagCloudView: View {
 
     private func item(for textTag: String) -> some View {
         var colorOfTag: Color {
-            if textTag.contains("Floating") {
+            if textTag.contains("Not Floating") {
                 return .loopYellow } else {
                 switch textTag {
+                case "Floating":
+                    return .loopOrange
                 case "autoISF":
                     return .zt
                 case "SMB Delivery Ratio:":
-                    return .loopOrange
+                    return .uam
                 case "Parabolic Fit":
                     return .loopRed
                 case "Autosense":
                     return .loopGreen
                 case "Standard":
-                    return .insulin
+                    return .darkerBlue
                 default:
-                    return .basal
+                    return .insulin
                 }
             }
         }
@@ -76,7 +77,7 @@ struct TagCloudView: View {
             .font(.caption)
             .background(colorOfTag.opacity(0.8))
             .foregroundColor(Color.white)
-            .cornerRadius(5)
+            .cornerRadius(5) }
     }
 
     private func viewHeightReader(_ binding: Binding<CGFloat>) -> some View {
