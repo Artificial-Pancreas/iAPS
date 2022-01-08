@@ -8,10 +8,10 @@
 "NSBluetoothPeripheralUsageDescription" = "Bluetooth wird verwendet, um mit Insulinpumpen und CGMs zu kommunizieren.";
 
 /* Privacy - Face ID Usage Description */
-"NSFaceIDUsageDescription" = "Identitätsverifizierung für Bolus - damit nur autorisierte Personen einen Bolus abrufen können.";
+"NSFaceIDUsageDescription" = "Autorisierung für Bolusabgabe";
 
 /* Privacy - Calendars Usage Description */
-"NSCalendarsUsageDescription" = "BZ Werte als Kalendartermin: Jeder neue CGM-Blutzuckerwert wird als momentaner Kalendartermin gespeichert, damit er auf der Apple Watch in real-time aufgefrischt wird.";
+"NSCalendarsUsageDescription" = "BZ-Werte werden im Kalender als temporärer Termin erstellt.";
 
 /* Privacy - Health Update Usage Description */
 "NSHealthUpdateUsageDescription" = "Die Health App wird zur Speicherung von Blutzuckerdaten verwendet";
