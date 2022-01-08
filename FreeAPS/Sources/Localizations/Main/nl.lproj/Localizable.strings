@@ -62,7 +62,7 @@
 "Replace pod" = "Vervang Pod";
 
 /* Suggested at a date */
-"Suggested at %@" = "Voorgesteld %@";
+"Suggested at %@" = "Voorgesteld op %@";
 
 /* Add carbs screen */
 "Add Carbs" = "Koolhydraten toevoegen";
