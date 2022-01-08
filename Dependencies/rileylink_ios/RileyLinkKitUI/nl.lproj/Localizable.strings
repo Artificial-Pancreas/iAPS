@@ -62,43 +62,43 @@
 "OFF" = "UIT";
 
 /* The title of the command to update diagnostic LEDs */
-"Diagnostic LEDs" = "Diagnostic LEDs";
+"Diagnostic LEDs" = "Diagnostische LEDs";
 
 /* The title of the command to fetch RileyLink statistics */
-"Get RileyLink Statistics" = "Get RileyLink Statistics";
+"Get RileyLink Statistics" = "RileyLink statistieken";
 
 /* The title of the command to invert BLE connection LED logic */
-"Invert LED Logic" = "Invert LED Logic";
+"Invert LED Logic" = "LED Logica omkeren";
 
 /* The header of the cells showing test commands */
-"Test Commands" = "Test Commands";
+"Test Commands" = "Test commando’s";
 
 /* The title of the cell showing Lighten Yellow LED */
-"Lighten Yellow LED" = "Lighten Yellow LED";
+"Lighten Yellow LED" = "Zet gele LED aan";
 
 /* The title of the cell showing Lighten Yellow LED */
-"Lighten Red LED" = "Lighten Red LED";
+"Lighten Red LED" = "Zet rode LED aan";
 
 /* The title of the cell showing Test Vibration */
-"Test Vibration" = "Test Vibration";
+"Test Vibration" = "Test trillen";
 
 /* The title of the cell for sounding device finding piezo */
-"Find Device" = "Find Device";
+"Find Device" = "Apparaat zoeken";
 
 /* The title of the cell for connection LED */
-"Connection LED" = "Connection LED";
+"Connection LED" = "Verbinding LED";
 
 /* The title of the cell for connection vibration */
-"Connection Vibration" = "Connection Vibration";
+"Connection Vibration" = "Verbinding trillen";
 
 /* Detail text when battery alert disabled. */
-"Off" = "Off";
+"Off" = "Uit";
 
 /* Text indicating LED Mode is on */
-"On" = "On";
+"On" = "Aan";
 
 /* Text indicating LED Mode is off */
-"Off" = "Off";
+"Off" = "Uit";
 
 /* Text indicating LED Mode is auto */
 "Auto" = "Auto";
