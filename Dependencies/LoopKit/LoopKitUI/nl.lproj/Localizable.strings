@@ -15,7 +15,7 @@
 "%@." = "%@.";
 
 /* Format string for reservoir volume. (1: The localized volume) */
-"%@U" = "%@U";
+"%@U" = "%@E";
 
 /* Title of the carb entry absorption time cell */
 "Absorption Time" = "Absorptie tijd";

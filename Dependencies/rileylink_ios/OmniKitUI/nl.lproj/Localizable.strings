@@ -36,7 +36,7 @@
 "Active Time" = "Activatie tijd";
 
 /* The title of the cell showing the Pod Active Clock */
-"Pod Active Clock" = "Pod Active Clock";
+"Pod Active Clock" = "Pod actieve klok";
 
 /* The title of the cell showing alarm status */
 "Alarms" = "Alarmen";

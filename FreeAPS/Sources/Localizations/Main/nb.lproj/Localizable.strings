@@ -26,7 +26,7 @@
 "Insulin recommended" = "Anbefalt insulindose";
 
 /*  */
-"Insulin required" = "insulinReq";
+"Insulin required" = "Insulinbehov";
 
 /* Bolus screen */
 "Recommendation" = "Anbefaling";
@@ -913,7 +913,7 @@ Enact a temp Basal or a temp target */
 "Bluetooth State restored (APS restarted?). Found %d peripherals, and connected to %@ with identifier %@" = "Bluetooth-status gjenopprettet (APS restartet?). Funnet %d ennheter, og koblet til %@ med identifikator %@";
 
 /* Shared app group */
-"Shared app group" = "Delt app-gruppe";
+"Shared app group for direct connection with Libre 1 transmitters or European Libre 2 sensors" = "Delt appgruppe for direkte tilkobling av Libre 1 med sender, eller direkte tilkobling til europeisk versjon av Libre 2";
 
 /* Native G6 app */
 "Native G6 app" = "Opprinnelig G6-app";
@@ -928,7 +928,7 @@ Enact a temp Basal or a temp target */
 "Simple simulator" = "Enkel simulator";
 
 /* Direct connection with Libre 1 transmitters or Libre 2 */
-"Direct connection with Libre 1 transmitters or Libre 2" = "Direkte tilkobling med Libre 1 sendere eller Libre 2";
+"Direct connection with Libre 1 transmitters or European Libre 2 sensors" = "Direkte tilkobling av Libre 1 med sender, eller direkte tilkobling til europeisk versjon av Libre 2";
 
 /* Online or internal server */
 "Online or internal server" = "Online eller intern server";
