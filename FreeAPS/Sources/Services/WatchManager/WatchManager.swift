@@ -58,9 +58,9 @@ final class BaseWatchManager: NSObject, WatchManager, Injectable {
             self.state.maxBolus = self.settingsManager.pumpSettings.maxBolus
             self.state.carbsRequired = self.suggestion?.carbsReq
 
-            let inslinRequired = self.suggestion?.insulinReq ?? 0
+            let insulinRequired = self.suggestion?.insulinReq ?? 0
             self.state.bolusRecommended = self.apsManager
-                .roundBolus(amount: max(inslinRequired * self.settingsManager.settings.insulinReqFraction, 0))
+                .roundBolus(amount: max(insulinRequired * self.settingsManager.settings.insulinReqFraction, 0))
 
             self.state.iob = self.suggestion?.iob
             self.state.cob = self.suggestion?.cob
