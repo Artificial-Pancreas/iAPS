@@ -913,7 +913,7 @@ Enact a temp Basal or a temp target */
 "Bluetooth State restored (APS restarted?). Found %d peripherals, and connected to %@ with identifier %@" = "蓝牙状态已恢复(APS 重启?) 找到 %d 个蓝牙，并连接到 %@ 标识符为 %@ 的设备";
 
 /* Shared app group */
-"Shared app group" = "共享的应用组";
+"Shared app group for direct connection with Libre 1 transmitters or European Libre 2 sensors" = "Shared app group for direct connection with Libre 1 transmitters or European Libre 2 sensors";
 
 /* Native G6 app */
 "Native G6 app" = "官方G6 App";
@@ -928,7 +928,7 @@ Enact a temp Basal or a temp target */
 "Simple simulator" = "简单模拟器";
 
 /* Direct connection with Libre 1 transmitters or Libre 2 */
-"Direct connection with Libre 1 transmitters or Libre 2" = "直连Libre2或者Libre1发射器组合";
+"Direct connection with Libre 1 transmitters or European Libre 2 sensors" = "Direct connection with Libre 1 transmitters or European Libre 2 sensors";
 
 /* Online or internal server */
 "Online or internal server" = "在线或内部服务器";
