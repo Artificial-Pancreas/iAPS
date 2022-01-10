@@ -24,7 +24,20 @@ class WatchStateModel: NSObject, ObservableObject {
     @Published var isCarbsViewActive = false
     @Published var isTempTargetViewActive = false
     @Published var isBolusViewActive = false
-    @Published var isConfirmationViewActive = false
+    @Published var isConfirmationViewActive = false {
+        didSet {
+            confirmationTimeout = nil
+            if isConfirmationViewActive {
+                confirmationTimeout = Just(())
+                    .delay(for: 30, scheduler: DispatchQueue.main)
+                    .sink {
+                        WKInterfaceDevice.current().play(.retry)
+                        self.isConfirmationViewActive = false
+                    }
+            }
+        }
+    }
+
     @Published var isConfirmationBolusViewActive = false
     @Published var confirmationSuccess: Bool?
     @Published var lastUpdate: Date = .distantPast
@@ -32,6 +45,7 @@ class WatchStateModel: NSObject, ObservableObject {
     @Published var pendingBolus: Double?
 
     private var lifetime = Set<AnyCancellable>()
+    private var confirmationTimeout: AnyCancellable?
     let timer = Timer.publish(every: 10, on: .main, in: .common).autoconnect()
 
     init(session: WCSession = .default) {
@@ -162,7 +176,6 @@ extension WatchStateModel: WCSessionDelegate {
     func session(_: WCSession, didReceiveMessageData messageData: Data) {
         if let state = try? JSONDecoder().decode(WatchState.self, from: messageData) {
             DispatchQueue.main.async {
-//                WKInterfaceDevice.current().play(.click)
                 self.processState(state)
             }
         }
