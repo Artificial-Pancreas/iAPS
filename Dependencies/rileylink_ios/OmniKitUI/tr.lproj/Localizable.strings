@@ -48,7 +48,7 @@
 "Are you sure you want to stop using Omnipod?" = "Omnipod'u kullanmayı bırakmak istediğinizden emin misiniz?";
 
 /* The title text for the address assigned to the pod */
-"Assigned Address" = "Adress Atandı";
+"Assigned Address" = "Adres Atandı";
 
 /* The title of the cell showing pod basal status */
 "Basal Delivery" = "Bazal İletimi";
@@ -66,7 +66,7 @@
 "Change Time Zone" = "Zaman dilimini Değiştir";
 
 /* Progress message for changing pod time. */
-"Changing time…" = "Zaman değiştir…";
+"Changing time…" = "Zaman değiştiriliyor…";
 
 /* The title of the configuration section in settings */
 "Configuration" = "Yapılandırma";
@@ -100,7 +100,7 @@
 "Enable Bolus Beeps" = "Bolus Uyarılarını Etkinleştir";
 
 /* The alert title for disable bolus beeps error */
-"Error disabling bolus beeps" = "Bolus uyarılarını devre dışı bırakılırken hata oluştu";
+"Error disabling bolus beeps" = "Bolus uyarılarını devre dışı bırakırken hata oluştu";
 
 /* The alert title for enable bolus beeps error */
 "Error enabling bolus beeps" = "Bolus uyarılarını etkinleştirirken hata oluştu";
@@ -121,7 +121,7 @@
 "Error Resuming" = "Devam ederken hata oluştu";
 
 /* The alert title for a suspend error */
-"Error Suspending" = "İptal Ederken Hata Oluştu";
+"Error Suspending" = "Askıya alırken Hata";
 
 /* The title of the cell showing the pod expiration reminder date */
 "Expiration Reminder" = "Süre Sonu Hatırlatıcısı";
@@ -166,7 +166,7 @@
 "Pair" = "Eşleştir";
 
 /* The title of the command to pair new pod */
-"Pair New Pod" = "Yeni Pod Eşle";
+"Pair New Pod" = "Yeni Pod Eşleştir";
 
 /* The text of the loading label when pairing */
 "Pairing…" = "Eşlestiriliyor…";
@@ -225,7 +225,7 @@
 "Succeeded" = "Başarılı oldu";
 
 /* The detail text of the basal row when pod is suspended */
-"Suspended" = "İptal edildi";
+"Suspended" = "Askıya Alındı";
 
 /* Title text for the button to delete Omnipod PumpManager */
 "Switch from Omnipod Pumps" = "Omnipod'u kullanmayı bırak";
