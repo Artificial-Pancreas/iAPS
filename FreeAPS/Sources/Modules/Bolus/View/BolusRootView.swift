@@ -35,8 +35,7 @@ extension Bolus {
                             ).foregroundColor(.secondary)
                         }.contentShape(Rectangle())
                             .onTapGesture {
-                                state.amount = max(Decimal(round(Double(state.insulinRequired) * 20) / 20.0), 0) // round to x.x5
-                                // state.amount = max(0, self.apsManager.roundBolus(amount: state.insulinRequired))  //throws arror about optional parameter being nil
+                                state.amount = state.insulinRecommended
                             }
                         HStack {
                             Text("Insulin recommended")
