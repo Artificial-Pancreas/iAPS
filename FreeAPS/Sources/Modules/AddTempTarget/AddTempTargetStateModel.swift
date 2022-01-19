@@ -45,17 +45,7 @@ extension AddTempTarget {
         }
 
         func cancel() {
-            let entry = TempTarget(
-                name: TempTarget.cancel,
-                createdAt: Date(),
-                targetTop: 0,
-                targetBottom: 0,
-                duration: 0,
-                enteredBy: TempTarget.manual,
-                reason: TempTarget.cancel
-            )
-            storage.storeTempTargets([entry])
-
+            storage.storeTempTargets([TempTarget.cancel(at: Date())])
             showModal(for: nil)
         }
 

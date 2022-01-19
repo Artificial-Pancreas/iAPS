@@ -31,6 +31,17 @@ final class BaseTempTargetsStorage: TempTargetsStorage, Injectable {
 
     private func storeTempTargets(_ targets: [TempTarget], isPresets: Bool) {
         processQueue.sync {
+            var targets = targets
+            if !isPresets {
+                if current() != nil, let newActive = targets.last(where: {
+                    $0.createdAt.addingTimeInterval(Int($0.duration).minutes.timeInterval) > Date()
+                        && $0.createdAt <= Date()
+                }) {
+                    // cancel current
+                    targets += [TempTarget.cancel(at: newActive.createdAt.addingTimeInterval(-1))]
+                }
+            }
+
             let file = isPresets ? OpenAPS.FreeAPS.tempTargetsPresets : OpenAPS.Settings.tempTargets
             var uniqEvents: [TempTarget] = []
             self.storage.transaction { storage in
