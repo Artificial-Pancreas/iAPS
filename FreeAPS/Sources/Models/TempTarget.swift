@@ -25,6 +25,18 @@ struct TempTarget: JSON, Identifiable, Equatable, Hashable {
     func hash(into hasher: inout Hasher) {
         hasher.combine(createdAt)
     }
+
+    static func cancel(at date: Date) -> TempTarget {
+        TempTarget(
+            name: TempTarget.cancel,
+            createdAt: date,
+            targetTop: 0,
+            targetBottom: 0,
+            duration: 0,
+            enteredBy: TempTarget.manual,
+            reason: TempTarget.cancel
+        )
+    }
 }
 
 extension TempTarget {
