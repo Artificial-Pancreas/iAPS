@@ -53,7 +53,7 @@
 "looping" = "looper";
 
 /* min ago since last loop */
-"min ago" = "min siden";
+"min ago" = "min";
 
 /* Status Title */
 "No suggestion" = "Ingen forslag";
