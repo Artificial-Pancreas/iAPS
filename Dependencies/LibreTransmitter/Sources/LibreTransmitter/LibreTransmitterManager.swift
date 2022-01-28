@@ -258,7 +258,7 @@ extension LibreTransmitterManager {
                 let aday = 86_400.0 //in seconds
                 var humanReadableSensorAge: String {
                     let days = TimeInterval(bleData.age * 60) / aday
-                    return String(format: "%.2f", days) + " day(s)"
+                    return String(format: "%.2f", days) + NSLocalizedString(" day(s)", comment: "Sensor day(s)")
                 }
 
 
@@ -273,7 +273,7 @@ extension LibreTransmitterManager {
 
                 var humanReadableTimeLeft: String {
                     let days = TimeInterval(minutesLeft * 60) / aday
-                    return String(format: "%.2f", days) + " day(s)"
+                    return String(format: "%.2f", days) + NSLocalizedString(" day(s)", comment: "Sensor day(s)")
                 }
 
                 //once the sensor has ended we don't know the exact date anymore
@@ -447,7 +447,7 @@ extension LibreTransmitterManager {
             glucose += LibreGlucose.fromHistoryMeasurements(sortedHistory, nativeCalibrationData: calibrationData)
         }*/
 
-        let newGlucose = glucosesToSamplesFilter(glucose, startDate: getStartDateForFilter())
+        var newGlucose = glucosesToSamplesFilter(glucose, startDate: getStartDateForFilter())
 
         if newGlucose.isEmpty {
             self.countTimesWithoutData &+= 1
@@ -459,6 +459,10 @@ extension LibreTransmitterManager {
 
         //todo: predictions also for libre2 bluetooth data
         //self.latestPrediction = prediction?.first
+        var predictions: [LibreGlucose] = []
+
+        overcalibrate(entries: &newGlucose, prediction: &predictions)
+
         self.setObservables(sensorData: nil, bleData: bleData, metaData: device)
 
         self.logger.debug("dabear:: handleGoodReading returned with \(newGlucose.count) entries")
@@ -638,6 +642,12 @@ extension LibreTransmitterManager {
             entries += LibreGlucose.fromHistoryMeasurements(history, nativeCalibrationData: calibration)
         }
 
+        overcalibrate(entries: &entries, prediction: &prediction)
+
+        return (glucose: entries, prediction: prediction)
+    }
+
+    private func overcalibrate(entries: inout [LibreGlucose], prediction: inout [LibreGlucose]) {
         // overcalibrate
         var overcalibration: ((Double) -> (Double))? = nil
         delegateQueue.sync { overcalibration = cgmManagerDelegate?.overcalibration(for: self) }
@@ -654,8 +664,6 @@ extension LibreTransmitterManager {
             entries = overcalibrate(entries: entries)
             prediction = overcalibrate(entries: prediction)
         }
-
-        return (glucose: entries, prediction: prediction)
     }
 
     public func handleGoodReading(data: SensorData?, _ callback: @escaping (LibreError?, GlucoseArrayWithPrediction?) -> Void) {
