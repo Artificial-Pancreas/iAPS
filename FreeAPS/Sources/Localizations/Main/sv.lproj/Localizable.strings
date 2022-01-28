@@ -896,6 +896,9 @@ Enact a temp Basal or a temp target */
 /* */
 "Animated Background" = "Animerad Bakgrund";
 
+/* Sensor day(s) */
+" day(s)" = " dagar";
+
 
 /* Headers for settings ----------------------- */
 "OpenAPS main settings" = "OpenAPS huvudsakliga inställningar";

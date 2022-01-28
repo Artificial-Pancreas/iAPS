@@ -898,6 +898,9 @@ Połączono z Nightscout!";
 /* */
 "Animated Background" = "Animated Background";
 
+/* Sensor day(s) */
+" day(s)" = " day(s)";
+
 
 /* Headers for settings ----------------------- */
 "OpenAPS main settings" = "OpenAPS main settings";
