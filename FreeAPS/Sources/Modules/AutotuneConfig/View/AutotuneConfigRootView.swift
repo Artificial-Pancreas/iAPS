@@ -79,6 +79,12 @@ extension AutotuneConfig {
                         label: { Text("Delete autotune data") }
                             .foregroundColor(.red)
                     }
+
+                    Section {
+                        Button { state.copyBasal() }
+                        label: { Text("Copy basal rates to pump") }
+                            .foregroundColor(.red)
+                    }
                 }
             }
             .onAppear(perform: configureView)
