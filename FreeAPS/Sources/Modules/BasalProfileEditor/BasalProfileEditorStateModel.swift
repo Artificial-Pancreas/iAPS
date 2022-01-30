@@ -56,6 +56,17 @@ extension BasalProfileEditor {
                 .store(in: &lifetime)
         }
 
+        func read() {
+            syncInProgress = true
+            provider.readProfile()
+                .receive(on: DispatchQueue.main)
+                .sink { _ in
+                    self.syncInProgress = false
+                    self.subscribe()
+                } receiveValue: {}
+                .store(in: &lifetime)
+        }
+
         func validate() {
             DispatchQueue.main.async {
                 let uniq = Array(Set(self.items))

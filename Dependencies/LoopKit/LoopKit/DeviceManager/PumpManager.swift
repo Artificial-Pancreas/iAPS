@@ -183,6 +183,9 @@ public protocol PumpManager: DeviceManager {
     ///   - completion: A closure called after the command is complete
     ///   - result: A BasalRateSchedule or an error describing why the command failed
     func syncBasalRateSchedule(items scheduleItems: [RepeatingScheduleValue<Double>], completion: @escaping (_ result: Result<BasalRateSchedule, Error>) -> Void)
+
+    func getBasalRateSchedule(completion: @escaping (Result<BasalRateSchedule, Error>) -> Void)
+
 }
 
 

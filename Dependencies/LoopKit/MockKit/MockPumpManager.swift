@@ -590,6 +590,18 @@ public final class MockPumpManager: TestingPumpManager {
             completion(.success(BasalRateSchedule(dailyItems: scheduleItems, timeZone: self.status.timeZone)!))
         }
     }
+
+    public func getBasalRateSchedule(completion: @escaping (Result<BasalRateSchedule, Error>) -> Void) {
+        if let schedule = state.basalRateSchedule {
+            NSLog("Mock read success")
+
+            completion(.success(BasalRateSchedule(dailyItems: schedule.items, timeZone: self.status.timeZone)!))
+        } else {
+            NSLog("Mock read failure")
+            completion(.failure(PumpManagerError.communication(MockPumpManagerError.communicationFailure)))
+        }
+    }
+
 }
 
 // MARK: - AlertResponder implementation

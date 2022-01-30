@@ -28,4 +28,5 @@ protocol BasalProfileEditorProvider: Provider {
     var profile: [BasalProfileEntry] { get }
     var supportedBasalRates: [Decimal]? { get }
     func saveProfile(_ profile: [BasalProfileEntry]) -> AnyPublisher<Void, Error>
+    func readProfile() -> AnyPublisher<Void, Error>
 }

@@ -37,6 +37,17 @@ extension BasalProfileEditor {
                         }
                         .disabled(state.syncInProgress || state.items.isEmpty)
                     }
+
+                    HStack {
+                        if state.syncInProgress {
+                            ProgressView().padding(.trailing, 10)
+                        }
+                        Button { state.read() }
+                        label: {
+                            Text(state.syncInProgress ? "Readimg..." : "Read from Pump")
+                        }
+                        .disabled(state.syncInProgress || state.items.isEmpty)
+                    }
                 }
             }
             .onAppear(perform: configureView)
