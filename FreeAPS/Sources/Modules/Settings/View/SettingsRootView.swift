@@ -72,6 +72,7 @@ extension Settings {
                                 .navigationLink(to: .configEditor(file: OpenAPS.Settings.profile), from: self)
                             Text("Glucose")
                                 .navigationLink(to: .configEditor(file: OpenAPS.Monitor.glucose), from: self)
+
                             Text("Carbs")
                                 .navigationLink(to: .configEditor(file: OpenAPS.Monitor.carbHistory), from: self)
                             Text("Suggested")
@@ -85,7 +86,10 @@ extension Settings {
                             Text("Autotune")
                                 .navigationLink(to: .configEditor(file: OpenAPS.Settings.autotune), from: self)
                         }
-
+                        Group {
+                            Text("CGM Events")
+                                .navigationLink(to: .configEditor(file: OpenAPS.Monitor.cgmState), from: self)
+                        }
                         Group {
                             Text("Target presets")
                                 .navigationLink(to: .configEditor(file: OpenAPS.FreeAPS.tempTargetsPresets), from: self)
