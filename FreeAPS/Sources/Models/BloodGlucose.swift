@@ -32,6 +32,10 @@ struct BloodGlucose: JSON, Identifiable, Hashable {
 
     let type: String?
 
+    var activationDate: Date? = nil
+    var sessionStartDate: Date? = nil
+    var transmitterID: String? = nil
+
     var isStateValid: Bool { sgv ?? 0 >= 39 && noise ?? 1 != 4 }
 
     static func == (lhs: BloodGlucose, rhs: BloodGlucose) -> Bool {
