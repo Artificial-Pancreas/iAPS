@@ -12,6 +12,10 @@ extension BasalProfileEditor {
                 ?? []
         }
 
+        var autotune: Autotune? {
+            storage.retrieve(OpenAPS.Settings.autotune, as: Autotune.self)
+        }
+
         var supportedBasalRates: [Decimal]? {
             deviceManager.pumpManager?.supportedBasalRates.map { Decimal($0) }
         }
