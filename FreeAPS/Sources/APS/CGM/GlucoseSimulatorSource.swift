@@ -103,7 +103,7 @@ class IntelligentGenerator: BloodGlucoseGenerator {
     // direction of last step
     @Persisted(key: "GlucoseSimulatorDirection") private var trandsStepDirection = BloodGlucose.Direction.flat.rawValue
     var currentGlucose: Int
-
+    let startup = Date()
     init(currentGlucose: Int) {
         self.currentGlucose = currentGlucose
     }
@@ -135,7 +135,10 @@ class IntelligentGenerator: BloodGlucoseGenerator {
             filtered: nil,
             noise: nil,
             glucose: currentGlucose,
-            type: nil
+            type: nil,
+            activationDate: startup,
+            sessionStartDate: startup,
+            transmitterID: "SIMULATOR"
         )
         return glucose
     }
