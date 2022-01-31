@@ -7,6 +7,7 @@ extension AutotuneConfig {
         @Injected() var apsManager: APSManager!
         @Published var useAutotune = false
         @Published var autotune: Autotune?
+        @Published var basalProfile: [BasalProfileEntry?] = []
         private(set) var units: GlucoseUnits = .mmolL
         @Published var publishedDate = Date()
         @Persisted(key: "lastAutotuneDate") private var lastAutotuneDate = Date() {
@@ -19,6 +20,20 @@ extension AutotuneConfig {
 
         override func subscribe() {
             autotune = provider.autotune
+            var bp: [BasalProfileEntry?] = []
+            for p in provider.autotune?.basalProfile ?? [] {
+                var np: BasalProfileEntry?
+                for b in provider.basalProfilePump {
+                    if b.start > p.start {
+                        NSLog("Matched \(p) with \(b)")
+                        break
+                    }
+                    np = b
+                }
+                bp.append(np)
+            }
+            NSLog("basalProfile \(bp)")
+            basalProfile = bp
             units = settingsManager.settings.units
             useAutotune = settingsManager.settings.useAutotune
             publishedDate = lastAutotuneDate

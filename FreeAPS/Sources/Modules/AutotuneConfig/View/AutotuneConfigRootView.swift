@@ -66,10 +66,23 @@ extension AutotuneConfig {
                     Section(header: Text("Basal profile")) {
                         ForEach(0 ..< autotune.basalProfile.count, id: \.self) { index in
                             HStack {
-                                Text(autotune.basalProfile[index].start).foregroundColor(.secondary)
-                                Spacer()
-                                Text(rateFormatter.string(from: autotune.basalProfile[index].rate as NSNumber) ?? "0")
-                                Text("U/hr").foregroundColor(.secondary)
+                                VStack {
+                                    HStack {
+                                        Text(autotune.basalProfile[index].displayTime).foregroundColor(.secondary)
+                                        Spacer()
+                                        Text(rateFormatter.string(from: autotune.basalProfile[index].rate as NSNumber) ?? "0")
+                                        Text("U/hr").foregroundColor(.secondary)
+                                    }
+                                    if let basalProfile = state.basalProfile[index] {
+                                        HStack {
+                                            Text("Pump")
+                                            Text(basalProfile.displayTime)
+                                            Spacer()
+                                            Text(rateFormatter.string(from: basalProfile.rate as NSNumber) ?? "0")
+                                            Text("U/hr").foregroundColor(.secondary)
+                                        }.font(Font.system(size: 12))
+                                    }
+                                }
                             }
                         }
                     }
