@@ -57,7 +57,10 @@ extension DexcomSource: TransmitterManagerDelegate {
                 filtered: nil,
                 noise: nil,
                 glucose: value,
-                type: "sgv"
+                type: "sgv",
+                activationDate: glucose.activationDate,
+                sessionStartDate: glucose.sessionStartDate,
+                transmitterID: glucose.transmitterID
             )
         }
         promise?(.success(bloodGlucose))
