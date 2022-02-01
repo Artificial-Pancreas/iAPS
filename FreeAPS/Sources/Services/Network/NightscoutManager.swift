@@ -309,7 +309,6 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
             enteredBy: NigtscoutTreatment.local,
             store: [defaultProfile: ps]
         )
-        NSLog(p.rawJSON)
 
         if let uploadedProfile = storage.retrieve(OpenAPS.Nightscout.uploadedProfile, as: NightscoutProfileStore.self),
            (uploadedProfile.store[defaultProfile]?.rawJSON ?? "") == ps.rawJSON
