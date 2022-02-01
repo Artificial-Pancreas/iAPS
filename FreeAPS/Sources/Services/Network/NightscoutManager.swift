@@ -212,7 +212,7 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
         let uploader = Uploader(batteryVoltage: nil, battery: Int(device.batteryLevel * 100))
 
         let status = NightscoutStatus(
-            device: NigtscoutTreatment.local,
+            device: "freeaps-x://" + device.name,
             openaps: openapsStatus,
             pump: pump,
             preferences: preferences,
@@ -317,7 +317,7 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
             return
         }
         guard let nightscout = nightscoutAPI, isNetworkReachable, isUploadEnabled else {
-            return // Just([]).eraseToAnyPublisher()
+            return
         }
         processQueue.async {
             nightscout.uploadProfile(p)
