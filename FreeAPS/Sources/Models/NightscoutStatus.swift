@@ -28,9 +28,6 @@ struct Uploader: JSON {
 }
 
 struct NightscoutTimevalue: JSON {
-    // rep["time"] = String(format:"%02i:%02i", Int(hours), Int(minutes))
-    // rep["value"] = value
-    //  rep["timeAsSeconds"] = Int(offset)
     let time: String
     let value: Decimal
     let timeAsSeconds: Int
