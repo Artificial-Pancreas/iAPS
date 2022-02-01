@@ -41,6 +41,13 @@ extension Settings {
                     Toggle("Debug options", isOn: $state.debugOptions)
                     if state.debugOptions {
                         Group {
+                            Text("NS Upload Profile").onTapGesture {
+                                state.uploadProfile()
+                            }
+                            Text("NS Uploaded Profile")
+                                .navigationLink(to: .configEditor(file: OpenAPS.Nightscout.uploadedProfile), from: self)
+                        }
+                        Group {
                             Text("Preferences")
                                 .navigationLink(to: .configEditor(file: OpenAPS.Settings.preferences), from: self)
                             Text("Pump Settings")
@@ -117,7 +124,7 @@ extension Settings {
             }
             .onAppear(perform: configureView)
             .navigationTitle("Settings")
-            .navigationBarItems(leading: Button("Close", action: state.hideModal))
+            .navigationBarItems(leading: Button("Close", action: state.hideSettingsModal))
             .navigationBarTitleDisplayMode(.automatic)
         }
     }

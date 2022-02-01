@@ -11,6 +11,7 @@ protocol NightscoutManager: GlucoseSource {
     func deleteCarbs(at date: Date)
     func uploadStatus()
     func uploadGlucose()
+    func uploadProfile()
     var cgmURL: URL? { get }
 }
 
@@ -211,7 +212,7 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
         let uploader = Uploader(batteryVoltage: nil, battery: Int(device.batteryLevel * 100))
 
         let status = NightscoutStatus(
-            device: "freeaps-x://" + device.name,
+            device: NigtscoutTreatment.local,
             openaps: openapsStatus,
             pump: pump,
             preferences: preferences,
@@ -230,6 +231,102 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
                     switch completion {
                     case .finished:
                         debug(.nightscout, "Status uploaded")
+                    case let .failure(error):
+                        debug(.nightscout, error.localizedDescription)
+                    }
+                } receiveValue: {}
+                .store(in: &self.lifetime)
+        }
+    }
+
+    func uploadProfile() {
+        // These should be modified anyways and not the defaults
+        guard let sensitivities = storage.retrieve(OpenAPS.Settings.insulinSensitivities, as: InsulinSensitivities.self),
+              let basalProfile = storage.retrieve(OpenAPS.Settings.basalProfile, as: [BasalProfileEntry].self),
+              let carbRatios = storage.retrieve(OpenAPS.Settings.carbRatios, as: CarbRatios.self),
+              let targets = storage.retrieve(OpenAPS.Settings.bgTargets, as: BGTargets.self)
+        else {
+            NSLog("NightscoutManager uploadProfile Not all settings found to build profile!")
+            return
+        }
+
+        let sens = sensitivities.sensitivities.map { item -> NightscoutTimevalue in
+            NightscoutTimevalue(
+                time: String(item.start.prefix(5)),
+                value: item.sensitivity,
+                timeAsSeconds: item.offset
+            )
+        }
+
+        let target_low = targets.targets.map { item -> NightscoutTimevalue in
+            NightscoutTimevalue(
+                time: String(item.start.prefix(5)),
+                value: item.low,
+                timeAsSeconds: item.offset
+            )
+        }
+        let target_high = targets.targets.map { item -> NightscoutTimevalue in
+            NightscoutTimevalue(
+                time: String(item.start.prefix(5)),
+                value: item.high,
+                timeAsSeconds: item.offset
+            )
+        }
+        let cr = carbRatios.schedule.map { item -> NightscoutTimevalue in
+            NightscoutTimevalue(
+                time: String(item.start.prefix(5)),
+                value: item.ratio,
+                timeAsSeconds: item.offset
+            )
+        }
+
+        let basal = basalProfile.map { item -> NightscoutTimevalue in
+            NightscoutTimevalue(
+                time: String(item.start.prefix(5)),
+                value: item.rate,
+                timeAsSeconds: item.minutes * 60
+            )
+        }
+
+        let ps = ScheduledNightscoutProfile(
+            dia: settingsManager.pumpSettings.insulinActionCurve,
+            carbs_hr: settingsManager.preferences.min5mCarbimpact * 12,
+            delay: 0,
+            timezone: TimeZone.current.identifier,
+            target_low: target_low,
+            target_high: target_high,
+            sens: sens,
+            basal: basal,
+            carbratio: cr
+        )
+        let defaultProfile = "default"
+        let now = Date()
+        let p = NightscoutProfileStore(
+            defaultProfile: defaultProfile,
+            startDate: now,
+            mills: Int(now.timeIntervalSince1970),
+            units: String(describing: settingsManager.settings.units),
+            enteredBy: NigtscoutTreatment.local,
+            store: [defaultProfile: ps]
+        )
+        NSLog(p.rawJSON)
+
+        if let uploadedProfile = storage.retrieve(OpenAPS.Nightscout.uploadedProfile, as: NightscoutProfileStore.self),
+           (uploadedProfile.store[defaultProfile]?.rawJSON ?? "") == ps.rawJSON
+        {
+            NSLog("NightscoutManager uploadProfile, no profile change")
+            return
+        }
+        guard let nightscout = nightscoutAPI, isNetworkReachable, isUploadEnabled else {
+            return // Just([]).eraseToAnyPublisher()
+        }
+        processQueue.async {
+            nightscout.uploadProfile(p)
+                .sink { completion in
+                    switch completion {
+                    case .finished:
+                        self.storage.save(p, as: OpenAPS.Nightscout.uploadedProfile)
+                        debug(.nightscout, "Profile uploaded")
                     case let .failure(error):
                         debug(.nightscout, error.localizedDescription)
                     }
