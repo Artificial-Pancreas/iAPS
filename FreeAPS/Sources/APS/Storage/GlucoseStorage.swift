@@ -59,7 +59,12 @@ final class BaseGlucoseStorage: GlucoseStorage, Injectable {
                         continue
                     }
                     NSLog("CGM start \(sessionStartDate) lastTreatment \(String(describing: treatments.last))")
-                    if let lastTreatment = treatments.last, lastTreatment.createdAt == sessionStartDate {
+                    if let lastTreatment = treatments.last,
+                       let createdAt = lastTreatment.createdAt,
+                       // When a new Dexcom sensor is started, it produces multiple consequetive
+                       // startDates. Disambiguate them by only allowing a session start per minute.
+                       abs(createdAt.timeIntervalSince(sessionStartDate)) < TimeInterval(60)
+                    {
                         continue
                     }
                     var notes = ""
