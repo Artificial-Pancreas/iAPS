@@ -196,6 +196,7 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
         )
 
         let battery = storage.retrieve(OpenAPS.Monitor.battery, as: Battery.self)
+
         var reservoir = Decimal(from: storage.retrieveRaw(OpenAPS.Monitor.reservoir) ?? "0")
         if reservoir == 0xDEAD_BEEF {
             reservoir = nil
@@ -211,7 +212,7 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
         let uploader = Uploader(batteryVoltage: nil, battery: Int(device.batteryLevel * 100))
 
         let status = NightscoutStatus(
-            device: "freeaps-x://" + device.name,
+            device: NigtscoutTreatment.local,
             openaps: openapsStatus,
             pump: pump,
             preferences: preferences,
@@ -236,6 +237,31 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
                 } receiveValue: {}
                 .store(in: &self.lifetime)
         }
+    
+        let uploadedPodAge = storage.retrieve(OpenAPS.Nightscout.uploadedPodAge, as: [NigtscoutTreatment].self) ?? []
+        let podAge = storage.retrieve(OpenAPS.Monitor.podAge, as: Date.self) ?? Date.distantPast
+
+        if uploadedPodAge.last?.createdAt == nil || podAge != uploadedPodAge.last!.createdAt!
+        {
+            let siteTreatment = NigtscoutTreatment(
+                duration: nil,
+                rawDuration: nil,
+                rawRate: nil,
+                absolute: nil,
+                rate: nil,
+                eventType: .nsSiteChange,
+                createdAt: podAge,
+                enteredBy: NigtscoutTreatment.local,
+                bolus: nil,
+                insulin: nil,
+                notes: nil,
+                carbs: nil,
+                targetTop: nil,
+                targetBottom: nil
+            )
+            uploadTreatments([siteTreatment], fileToSave: OpenAPS.Nightscout.uploadedPodAge)
+        }
+    
     }
 
     func uploadGlucose() {
