@@ -297,7 +297,8 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
             target_high: target_high,
             sens: sens,
             basal: basal,
-            carbratio: cr
+            carbratio: cr,
+            units: settingsManager.settings.units.rawValue.lowercased()
         )
         let defaultProfile = "default"
         let now = Date()
@@ -305,7 +306,7 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
             defaultProfile: defaultProfile,
             startDate: now,
             mills: Int(now.timeIntervalSince1970),
-            units: String(describing: settingsManager.settings.units),
+            units: settingsManager.settings.units.rawValue.lowercased(),
             enteredBy: NigtscoutTreatment.local,
             store: [defaultProfile: ps]
         )
