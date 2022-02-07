@@ -295,9 +295,17 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
             nsUnits = "mmol"
         }
 
+        var carbs_hr: Decimal?
+        if let isf = sensitivities.sensitivities.map(\.sensitivity).first,
+           let cr = carbRatios.schedule.map(\.ratio).first,
+           isf > 0, cr > 0
+        {
+            // CarbImpact -> Carbs/hr = CI [mg/dl/5min] * 12 / ISF [mg/dl/U] * CR [g/U]
+            carbs_hr = settingsManager.preferences.min5mCarbimpact * 12 / isf * cr
+        }
         let ps = ScheduledNightscoutProfile(
             dia: settingsManager.pumpSettings.insulinActionCurve,
-            carbs_hr: settingsManager.preferences.min5mCarbimpact * 12,
+            carbs_hr: carbs_hr ?? 0,
             delay: 0,
             timezone: TimeZone.current.identifier,
             target_low: target_low,
