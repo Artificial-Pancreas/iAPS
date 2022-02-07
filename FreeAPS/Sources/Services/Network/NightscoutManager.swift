@@ -240,7 +240,7 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
     
         let uploadedPodAge = storage.retrieve(OpenAPS.Nightscout.uploadedPodAge, as: [NigtscoutTreatment].self) ?? []
         if let podAge = storage.retrieve(OpenAPS.Monitor.podAge, as: Date.self),
-           (uploadedPodAge.last?.createdAt == nil || podAge != uploadedPodAge.last!.createdAt!)
+           uploadedPodAge.last?.createdAt == nil || podAge != uploadedPodAge.last!.createdAt!
         {
             let siteTreatment = NigtscoutTreatment(
                 duration: nil,
