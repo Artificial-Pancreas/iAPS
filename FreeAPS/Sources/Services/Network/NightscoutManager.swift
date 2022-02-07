@@ -312,7 +312,7 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
         let p = NightscoutProfileStore(
             defaultProfile: defaultProfile,
             startDate: now,
-            mills: Int(now.timeIntervalSince1970),
+            mills: Int(now.timeIntervalSince1970) * 1000,
             units: nsUnits,
             enteredBy: NigtscoutTreatment.local,
             store: [defaultProfile: ps]
