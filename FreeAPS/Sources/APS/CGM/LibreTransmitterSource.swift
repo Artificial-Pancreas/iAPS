@@ -73,7 +73,10 @@ extension BaseLibreTransmitterSource: LibreTransmitterManagerDelegate {
                     filtered: nil,
                     noise: nil,
                     glucose: Int(value.glucose),
-                    type: "sgv"
+                    type: "sgv",
+                    activationDate: manager.sensorStartDate,
+                    sessionStartDate: manager.sensorStartDate,
+                    transmitterID: manager.sensorSerialNumber
                 )
             }
 
