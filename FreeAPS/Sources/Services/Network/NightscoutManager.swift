@@ -295,17 +295,22 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
             nsUnits = "mmol"
         }
 
-        var carbs_hr: Decimal?
+        var carbs_hr: Decimal = 0
         if let isf = sensitivities.sensitivities.map(\.sensitivity).first,
            let cr = carbRatios.schedule.map(\.ratio).first,
            isf > 0, cr > 0
         {
             // CarbImpact -> Carbs/hr = CI [mg/dl/5min] * 12 / ISF [mg/dl/U] * CR [g/U]
             carbs_hr = settingsManager.preferences.min5mCarbimpact * 12 / isf * cr
+            if settingsManager.settings.units == .mmolL {
+                carbs_hr = carbs_hr * GlucoseUnits.exchangeRate
+            }
+            // No, Decimal has no rounding function.
+            carbs_hr = Decimal(round(Double(carbs_hr) * 10.0)) / 10
         }
         let ps = ScheduledNightscoutProfile(
             dia: settingsManager.pumpSettings.insulinActionCurve,
-            carbs_hr: carbs_hr ?? 0,
+            carbs_hr: carbs_hr,
             delay: 0,
             timezone: TimeZone.current.identifier,
             target_low: target_low,
