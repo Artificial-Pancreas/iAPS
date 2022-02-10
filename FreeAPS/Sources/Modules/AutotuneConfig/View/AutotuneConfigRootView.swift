@@ -73,7 +73,11 @@ extension AutotuneConfig {
                                         Text(rateFormatter.string(from: autotune.basalProfile[index].rate as NSNumber) ?? "0")
                                         Text("U/hr").foregroundColor(.secondary)
                                     }
-                                    if let basalProfile = state.basalProfile[index] {
+                                    // To prevent a race condition if Autotune is ran an no profile
+                                    // existed before.
+                                    if state.basalProfile.indices.contains(index),
+                                       let basalProfile = state.basalProfile[index]
+                                    {
                                         HStack {
                                             Text("Pump")
                                             Text(basalProfile.displayTime)
