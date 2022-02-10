@@ -10,6 +10,31 @@ struct PumpHistoryEvent: JSON, Equatable {
     let rate: Decimal?
     let temp: TempType?
     let carbInput: Int?
+    let note: String?
+
+    init(
+        id: String,
+        type: EventType,
+        timestamp: Date,
+        amount: Decimal? = nil,
+        duration: Int? = nil,
+        durationMin: Int? = nil,
+        rate: Decimal? = nil,
+        temp: TempType? = nil,
+        carbInput: Int? = nil,
+        note: String? = nil
+    ) {
+        self.id = id
+        self.type = type
+        self.timestamp = timestamp
+        self.amount = amount
+        self.duration = duration
+        self.durationMin = durationMin
+        self.rate = rate
+        self.temp = temp
+        self.carbInput = carbInput
+        self.note = note
+    }
 }
 
 enum EventType: String, JSON {
@@ -29,6 +54,8 @@ enum EventType: String, JSON {
     case nsTempBasal = "Temp Basal"
     case nsCarbCorrection = "Carb Correction"
     case nsTempTarget = "Temporary Target"
+    case nsSiteChange = "Site Change"
+    case nsSensorChange = "Sensor Start"
 }
 
 enum TempType: String, JSON {
@@ -47,5 +74,6 @@ extension PumpHistoryEvent {
         case rate
         case temp
         case carbInput = "carb_input"
+        case note
     }
 }
