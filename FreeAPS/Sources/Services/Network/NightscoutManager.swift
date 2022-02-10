@@ -237,7 +237,7 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
                 } receiveValue: {}
                 .store(in: &self.lifetime)
         }
-    
+
         let uploadedPodAge = storage.retrieve(OpenAPS.Nightscout.uploadedPodAge, as: [NigtscoutTreatment].self) ?? []
         if let podAge = storage.retrieve(OpenAPS.Monitor.podAge, as: Date.self),
            uploadedPodAge.last?.createdAt == nil || podAge != uploadedPodAge.last!.createdAt!
@@ -260,7 +260,6 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
             )
             uploadTreatments([siteTreatment], fileToSave: OpenAPS.Nightscout.uploadedPodAge)
         }
-    
     }
 
     func uploadGlucose() {
