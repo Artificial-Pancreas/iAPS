@@ -53,12 +53,11 @@ final class BaseGlucoseStorage: GlucoseStorage, Injectable {
             self.storage.transaction { storage in
                 let file = OpenAPS.Monitor.cgmState
                 var treatments = storage.retrieve(file, as: [NigtscoutTreatment].self) ?? []
-                NSLog("CGM Treatments \(treatments)")
+                var updated = false
                 for x in glucose {
                     guard let sessionStartDate = x.sessionStartDate else {
                         continue
                     }
-                    NSLog("CGM start \(sessionStartDate) lastTreatment \(String(describing: treatments.last))")
                     if let lastTreatment = treatments.last,
                        let createdAt = lastTreatment.createdAt,
                        // When a new Dexcom sensor is started, it produces multiple consequetive
@@ -92,13 +91,16 @@ final class BaseGlucoseStorage: GlucoseStorage, Injectable {
                     )
                     NSLog("CGM sensor change \(treatment)")
                     treatments.append(treatment)
+                    updated = true
                 }
-                // We have to keep quite a bit of history as sensors start only every 10 days.
-                storage.save(
-                    treatments.filter
-                        { $0.createdAt != nil && $0.createdAt!.addingTimeInterval(30.days.timeInterval) > Date() },
-                    as: file
-                )
+                if updated {
+                    // We have to keep quite a bit of history as sensors start only every 10 days.
+                    storage.save(
+                        treatments.filter
+                            { $0.createdAt != nil && $0.createdAt!.addingTimeInterval(30.days.timeInterval) > Date() },
+                        as: file
+                    )
+                }
             }
         }
     }
