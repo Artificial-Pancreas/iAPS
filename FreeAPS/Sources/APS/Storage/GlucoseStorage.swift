@@ -55,6 +55,7 @@ final class BaseGlucoseStorage: GlucoseStorage, Injectable {
                 var treatments = storage.retrieve(file, as: [NigtscoutTreatment].self) ?? []
                 var updated = false
                 for x in glucose {
+                    NSLog("storeGlucose \(x)")
                     guard let sessionStartDate = x.sessionStartDate else {
                         continue
                     }

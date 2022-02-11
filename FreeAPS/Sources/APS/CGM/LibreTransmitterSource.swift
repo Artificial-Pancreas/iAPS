@@ -79,7 +79,7 @@ extension BaseLibreTransmitterSource: LibreTransmitterManagerDelegate {
                     transmitterID: manager.sensorSerialNumber
                 )
             }
-
+            NSLog("Debug Libre \(glucose)")
             promise?(.success(glucose))
 
         case let .failure(error):
