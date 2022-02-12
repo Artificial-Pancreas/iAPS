@@ -35,7 +35,7 @@ struct NightscoutTimevalue: JSON {
 
 struct ScheduledNightscoutProfile: JSON {
     let dia: Decimal
-    let carbs_hr: Decimal
+    let carbs_hr: Int
     let delay: Decimal
     let timezone: String
     let target_low: [NightscoutTimevalue]

@@ -310,7 +310,7 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
         }
         let ps = ScheduledNightscoutProfile(
             dia: settingsManager.pumpSettings.insulinActionCurve,
-            carbs_hr: carbs_hr,
+            carbs_hr: Int(carbs_hr),
             delay: 0,
             timezone: TimeZone.current.identifier,
             target_low: target_low,
