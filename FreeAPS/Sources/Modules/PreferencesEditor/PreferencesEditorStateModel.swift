@@ -102,6 +102,15 @@ extension PreferencesEditor {
                     settable: self
                 ),
                 Field(
+                    displayName: "Max Delta-BG Threshold SMB",
+                    type: .decimal(keypath: \.maxDeltaBGthreshold),
+                    infoText: NSLocalizedString(
+                        "Defaults to 0.2 (20%). Maximum positiv %change of BG level to use SMB, above that will disable SMB. Hardcoded cap of 40%. For UAM fully-closed-loop 30% is advisable. Observe in log and popup (maxDelta 27 > 20% of BG 100 - disabling SMB!).",
+                        comment: "Max Delta-BG Threshold"
+                    ),
+                    settable: self
+                ),
+                Field(
                     displayName: "Enable SMB With COB",
                     type: .boolean(keypath: \.enableSMBWithCOB),
                     infoText: NSLocalizedString(
