@@ -879,19 +879,19 @@ Enact a temp Basal or a temp target */
 "Bolus failed or inaccurate. Check pump history before repeating." = "大剂量失败或者不准确，请在重复操作前检查胰岛素泵历史";
 
 /* */
-"Carbs" = "Carbs";
+"Carbs" = "碳水化合物";
 
 /* */
-"Temp Basal" = "Temp Basal";
+"Temp Basal" = "临时基础率";
 
 /* */
-"Temp Target" = "Temp Target";
+"Temp Target" = "临时目标";
 
 /* */
 "Resume" = "Resume";
 
 /* */
-"Suspend" = "Suspend";
+"Suspend" = "暂停";
 
 /* */
 "Animated Background" = "Animated Background";
