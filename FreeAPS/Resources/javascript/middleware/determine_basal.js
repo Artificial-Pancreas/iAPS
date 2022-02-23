@@ -4,7 +4,7 @@ function middleware(iob, currenttemp, glucose, profile, autosens, meal, reservoi
     const BG = glucose[0].glucose;
     // Change to false to turn off Chris Wilson's formula
     var chrisFormula = true;
-    var TDD = 0.0;
+    var TDD = 0.00;
     const minLimitChris = profile.autosens_min;
     const maxLimitChris = profile.autosens_max;
     const adjustmentFactor = 1;
@@ -14,10 +14,15 @@ function middleware(iob, currenttemp, glucose, profile, autosens, meal, reservoi
     var log = "";
     var logTDD = "";
     var logBasal = "";
+    var logBolus = "";
+    var logTempBasal = "";
     var current = 0;
     // If you have not set this to 0.05 in FAX settings (Omnipod), this will be set to 0.1 in code.
     var minimalDose = profile.bolus_increment;
     var insulin = 0.00;
+    var tempInsulin = 0.00;
+    var bolusInsulin = 0.00;
+    var scheduledBasalInsulin = 0,00;
     var incrementsRaw = 0.00;
     var incrementsRounded = 0.00;
     var quota = 0;
@@ -39,7 +44,8 @@ function middleware(iob, currenttemp, glucose, profile, autosens, meal, reservoi
     for (let i = 0; i < pumphistory.length; i++) {
         if (pumphistory[i]._type == "Bolus") {
             // Bolus delivered
-            TDD += pumphistory[i].amount;
+            bolusInsulin += pumphistory[i].amount;
+            TDD += bolusInsulin;
         }
     }
 
@@ -70,7 +76,7 @@ function middleware(iob, currenttemp, glucose, profile, autosens, meal, reservoi
                     duration = diff;
                 }
                 insulin = quota * duration;
-            
+                
                 // Account for smallest possible pump dosage
                 if (minimalDose != 0.05) {
                     minimalDose = 0.1;
@@ -79,8 +85,9 @@ function middleware(iob, currenttemp, glucose, profile, autosens, meal, reservoi
                 if (incrementsRaw >= 1) {
                     incrementsRounded = Math.floor(incrementsRaw);
                     insulin = incrementsRounded * minimalDose;
+                    tempInsulin += insulin;
                 } else { insulin = 0}
-            
+                
                 // Add temp basal delivered to TDD
                 TDD += insulin;
                 j = current;
@@ -104,7 +111,7 @@ function middleware(iob, currenttemp, glucose, profile, autosens, meal, reservoi
                     break;
                 }
             } while (j >= 0);
-            // duration of current scheduled basal
+            // duration of current scheduled basal in h
             let basDuration = (time2 - time1) / 36e5;
             if (basDuration > 0) {
                 let hour = time1.getHours();
@@ -159,7 +166,7 @@ function middleware(iob, currenttemp, glucose, profile, autosens, meal, reservoi
                         scheduledBasalInsulin += basalScheduledRate * basDuration;
                         break;
                     } else if (profile.basalprofile[k].start < string && profile.basalprofile[k+1].start > string){
-                        basalScheduledRate = basalScheduledRate = profile.basalprofile[k].rate;
+                        basalScheduledRate = profile.basalprofile[k].rate;
                         // This is the scheduled insulin amount delivered after a fully completed temp basal
                         scheduledBasalInsulin += basalScheduledRate * basDuration;
                         break;
@@ -169,9 +176,10 @@ function middleware(iob, currenttemp, glucose, profile, autosens, meal, reservoi
         }
     }
     
-    TDD += scheduledBasalInsulin
-    logBasal = ". Delivered scheduled basal rate insulin: " + scheduledBasalInsulin.toPrecision(5);
-                           
+    TDD += scheduledBasalInsulin;
+    logBolus = ". Delivered bolus insulin: " + bolusInsulin.toPrecision(5) + " U";
+    logTempBasal = ". Delivered temporary basal insulin: " + tempInsulin.toPrecision(5) + " U";
+    logBasal = ". Delivered scheduled basal rate insulin: " + scheduledBasalInsulin.toPrecision(5) + " U";
     logTDD = ". TDD past 24h is: " + TDD.toPrecision(3) + " U";
     // ----------------------------------------------------
       
@@ -191,7 +199,7 @@ function middleware(iob, currenttemp, glucose, profile, autosens, meal, reservoi
 
         // Set the new ratio
         autosens.ratio = newRatio;
-        return log + logTDD + logBasal;
+        return log + logTDD + logBolus + logTempBasal + logBasal;
         
     } else { return "Chris' formula is off." }
 }
