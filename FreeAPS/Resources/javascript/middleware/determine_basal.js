@@ -4,7 +4,6 @@ function middleware(iob, currenttemp, glucose, profile, autosens, meal, reservoi
     const BG = glucose[0].glucose;
     // Change to false to turn off Chris Wilson's formula
     var chrisFormula = true;
-    var TDD = 0.00;
     const minLimitChris = profile.autosens_min;
     const maxLimitChris = profile.autosens_max;
     const adjustmentFactor = 1;
@@ -19,12 +18,13 @@ function middleware(iob, currenttemp, glucose, profile, autosens, meal, reservoi
     var current = 0;
     // If you have not set this to 0.05 in FAX settings (Omnipod), this will be set to 0.1 in code.
     var minimalDose = profile.bolus_increment;
-    var insulin = 0.00;
-    var tempInsulin = 0.00;
-    var bolusInsulin = 0.00;
-    var scheduledBasalInsulin = 0,00;
-    var incrementsRaw = 0.00;
-    var incrementsRounded = 0.00;
+    var TDD = 0;
+    var insulin = 0;
+    var tempInsulin = 0;
+    var bolusInsulin = 0;
+    var scheduledBasalInsulin = 0;
+    var incrementsRaw = 0;
+    var incrementsRounded = 0;
     var quota = 0;
     
     if (profile.high_temptarget_raises_sensitivity == true || profile.exercise_mode == true) {
@@ -44,12 +44,16 @@ function middleware(iob, currenttemp, glucose, profile, autosens, meal, reservoi
     for (let i = 0; i < pumphistory.length; i++) {
         if (pumphistory[i]._type == "Bolus") {
             // Bolus delivered
-            bolusInsulin += pumphistory[i].amount;
-            TDD += bolusInsulin;
+            TDD += pumphistory[i].amount;
         }
     }
-
+    
+    bolusInsulin = TDD;
+    
     // Temp basals:
+    if (minimalDose != 0.05) {
+        minimalDose = 0.1;
+    }
     for (let j = 1; j < pumphistory.length; j++) {
             if (pumphistory[j]._type == "TempBasal" && pumphistory[j].rate > 0) {
                 current = j;
@@ -78,9 +82,6 @@ function middleware(iob, currenttemp, glucose, profile, autosens, meal, reservoi
                 insulin = quota * duration;
                 
                 // Account for smallest possible pump dosage
-                if (minimalDose != 0.05) {
-                    minimalDose = 0.1;
-                }
                 incrementsRaw = insulin / minimalDose;
                 if (incrementsRaw >= 1) {
                     incrementsRounded = Math.floor(incrementsRaw);
@@ -88,18 +89,18 @@ function middleware(iob, currenttemp, glucose, profile, autosens, meal, reservoi
                     tempInsulin += insulin;
                 } else { insulin = 0}
                 
-                // Add temp basal delivered to TDD
-                TDD += insulin;
                 j = current;
             }
+            // Add temp basal delivered to TDD
     }
-    //  Calculate basals delivered with scheduled basal rates or Autotuned basal rates.
-    //  Check for 0 temp basals with 0 min duration. Take that timestamp and compare to next enacted temp basal. The difference should be duration of current scheduled basal (which can be retrieved from profile.json). This is for when ending a manual temp basal and (perhaps) continueing in open loop.
-    //  Also check for temp basals with a real duration < (next.basal.timestamp - orig.basal.timestamp). This is a temp basal that completes. Then calculate (following.basal.timestamp - next.basal.timestamp)h * the basal rate scheduled at that time.
+    //  Check and count for exceptions when
+    //  basals are delivered with a scheduled basal rate or an Autotuned basal rate.
+    //  1. Check for 0 temp basals with 0 min duration. Take that timestamp and compare to next enacted temp basal. The difference should be duration of current scheduled basal (which can be retrieved from profile.json). This is for when ending a manual temp basal and (perhaps) continuing in open loop for a while.
+    //  2. Also check for temp basals with a real duration < (next.basal.timestamp - orig.basal.timestamp). This is a temp basal that completes. Then calculate (following.basal.timestamp - next.basal.timestamp)h * the basal rate scheduled at that time.
     ///
-    var scheduledBasalInsulin = 0;
     for (let i = 0; i < pumphistory.length; i++) {
         // Check for 0 temp basals with 0 min duration.
+        insulin = 0;
         if (pumphistory[i]['duration (min)'] == 0) {
             let time1 = new Date(pumphistory[i].timestamp);
             let time2 = time1;
@@ -120,20 +121,34 @@ function middleware(iob, currenttemp, glucose, profile, autosens, meal, reservoi
                 string = "" + hour + ":" + minutes + ":" + seconds;
                 let basalScheduledRate = 0;
                 for (let k = 0; k < profile.basalprofile.length; k++) {
-                    if (profile.basalprofile[k].start = string) {
+                    if (profile.basalprofile[k].start == string) {
                         basalScheduledRate = profile.basalprofile[k].rate;
                         // This is the scheduled insulin amount delivered after ending a manual temp basal and (perhaps) when continuing in open loop or if disconnected
-                        scheduledBasalInsulin += basalScheduledRate * basDuration;
-                        break;
-                    } else if (profile.basalprofile[k].start < string && profile.basalprofile[k+1].start > string){
-                            basalScheduledRate = profile.basalprofile[k].rate;
-                            scheduledBasalInsulin += basalScheduledRate * basDuration;
-                            break;
-                    }
+                        insulin = basalScheduledRate * basDuration;
+                        // Account for smallest possible pump dosage
+                        incrementsRaw = insulin / minimalDose;
+                        if (incrementsRaw >= 1) {
+                            incrementsRounded = Math.floor(incrementsRaw);
+                            insulin = incrementsRounded * minimalDose;
+                            scheduledBasalInsulin += insulin;
+                        } else { insulin = 0}
+                    } else if (k + 1 < profile.basalprofile.length) {
+                            if (profile.basalprofile[k].start < string && profile.basalprofile[k+1].start > string){
+                                // This is also the scheduled insulin amount delivered after ending a manual temp basal and (perhaps) when continuing in open loop or if disconnected
+                                basalScheduledRate = profile.basalprofile[k].rate;
+                                insulin = basalScheduledRate * basDuration;
+                                // Account for smallest possible pump dosage
+                                incrementsRaw = insulin / minimalDose;
+                                if (incrementsRaw >= 1) {
+                                    incrementsRounded = Math.floor(incrementsRaw);
+                                    insulin = incrementsRounded * minimalDose;
+                                    scheduledBasalInsulin += insulin;
+                                } else { insulin = 0}
+                            }
+                      }
                 }
             }
         }
-        
         // Check for temp basals that completes
         if (pumphistory[i]._type == "TempBasal") {
             let time1 = new Date(pumphistory[i].timestamp);
@@ -159,31 +174,46 @@ function middleware(iob, currenttemp, glucose, profile, autosens, meal, reservoi
                 let seconds = "00";
                 let string = "" + hour + ":" + minutes + ":" + seconds;
                 let basalScheduledRate = 0;
+                
                 for (let k = 0; k < profile.basalprofile.length; k++) {
-                    if (profile.basalprofile[k].start = string) {
+                    if (profile.basalprofile[k].start == string) {
                         basalScheduledRate = profile.basalprofile[k].rate;
                         // This is the scheduled insulin amount delivered after a fully completed temp basal
                         scheduledBasalInsulin += basalScheduledRate * basDuration;
                         break;
-                    } else if (profile.basalprofile[k].start < string && profile.basalprofile[k+1].start > string){
-                        basalScheduledRate = profile.basalprofile[k].rate;
-                        // This is the scheduled insulin amount delivered after a fully completed temp basal
-                        scheduledBasalInsulin += basalScheduledRate * basDuration;
-                        break;
+                    } else if (k + 1 < profile.basalprofile.length) {
+                            if (profile.basalprofile[k].start < string &&  profile.basalprofile[k+1].start > string){
+                                basalScheduledRate = profile.basalprofile[k].rate;
+                                // This is the scheduled insulin amount delivered after a fully completed temp basal
+                                scheduledBasalInsulin += basalScheduledRate * basDuration;
+                                break;
+                            }
                       }
                 }
             }
         }
+        
+        // Account for smallest possible pump dosage
+        
+        incrementsRaw = scheduledBasalInsulin / minimalDose;
+        if (incrementsRaw >= 1) {
+            incrementsRounded = Math.floor(incrementsRaw);
+            scheduledBasalInsulin = incrementsRounded * minimalDose;
+            tempInsulin += insulin;
+        } else { insulin = 0}
+
+        
+        
     }
     
-    TDD += scheduledBasalInsulin;
+    TDD = bolusInsulin + tempInsulin + scheduledBasalInsulin;
     logBolus = ". Delivered bolus insulin: " + bolusInsulin.toPrecision(5) + " U";
     logTempBasal = ". Delivered temporary basal insulin: " + tempInsulin.toPrecision(5) + " U";
     logBasal = ". Delivered scheduled basal rate insulin: " + scheduledBasalInsulin.toPrecision(5) + " U";
-    logTDD = ". TDD past 24h is: " + TDD.toPrecision(3) + " U";
+    logTDD = ". TDD past 24h is: " + TDD.toPrecision(5) + " U";
     // ----------------------------------------------------
       
-    // Chris' formula:
+    // Chris' formula with added adjustmentFactor for tuning:
     if (chrisFormula == true && TDD > 0) {
         var newRatio = profile.sens / (277700 / (adjustmentFactor  * TDD * BG));
         log = "New ratio using Chris' formula is " + newRatio.toPrecision(3) + " with ISF: " + (profile.sens / newRatio).toPrecision(3) + " (" + ((profile.sens / newRatio) * 0.0555).toPrecision(3) + " mmol/l/U)";
@@ -199,6 +229,7 @@ function middleware(iob, currenttemp, glucose, profile, autosens, meal, reservoi
 
         // Set the new ratio
         autosens.ratio = newRatio;
+        // Print to logs
         return log + logTDD + logBolus + logTempBasal + logBasal;
         
     } else { return "Chris' formula is off." }
