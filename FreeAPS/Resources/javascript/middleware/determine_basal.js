@@ -13,6 +13,7 @@ function middleware(iob, currenttemp, glucose, profile, autosens, meal, reservoi
     var exerciseSetting = false;
     var log = "";
     var logTDD = "";
+    var logBasal = "";
     var current = 0;
     // If you have not set this to 0.05 in FAX settings (Omnipod), this will be set to 0.1 in code.
     var minimalDose = profile.bolus_increment;
@@ -85,6 +86,92 @@ function middleware(iob, currenttemp, glucose, profile, autosens, meal, reservoi
                 j = current;
             }
     }
+    //  Calculate basals delivered with scheduled basal rates or Autotuned basal rates.
+    //  Check for 0 temp basals with 0 min duration. Take that timestamp and compare to next enacted temp basal. The difference should be duration of current scheduled basal (which can be retrieved from profile.json). This is for when ending a manual temp basal and (perhaps) continueing in open loop.
+    //  Also check for temp basals with a real duration < (next.basal.timestamp - orig.basal.timestamp). This is a temp basal that completes. Then calculate (following.basal.timestamp - next.basal.timestamp)h * the basal rate scheduled at that time.
+    ///
+    var scheduledBasalInsulin = 0;
+    for (let i = 0; i < pumphistory.length; i++) {
+        // Check for 0 temp basals with 0 min duration.
+        if (pumphistory[i]['duration (min)'] == 0) {
+            let time1 = new Date(pumphistory[i].timestamp);
+            let time2 = time1;
+            let j = i;
+            do {
+                j--;
+                if (pumphistory[j]._type == "TempBasal" && j >= 0) {
+                    time2 = new Date(pumphistory[j].timestamp);
+                    break;
+                }
+            } while (j >= 0);
+            // duration of current scheduled basal
+            let basDuration = (time2 - time1) / 36e5;
+            if (basDuration > 0) {
+                let hour = time1.getHours();
+                let minutes = time1.getMinutes();
+                let seconds = "00";
+                string = "" + hour + ":" + minutes + ":" + seconds;
+                let basalScheduledRate = 0;
+                for (let k = 0; k < profile.basalprofile.length; k++) {
+                    if (profile.basalprofile[k].start = string) {
+                        basalScheduledRate = profile.basalprofile[k].rate;
+                        // This is the scheduled insulin amount delivered after ending a manual temp basal and (perhaps) when continuing in open loop or if disconnected
+                        scheduledBasalInsulin += basalScheduledRate * basDuration;
+                        break;
+                    } else if (profile.basalprofile[k].start < string && profile.basalprofile[k+1].start > string){
+                            basalScheduledRate = profile.basalprofile[k].rate;
+                            scheduledBasalInsulin += basalScheduledRate * basDuration;
+                            break;
+                    }
+                }
+            }
+        }
+        
+        // Check for temp basals that completes
+        if (pumphistory[i]._type == "TempBasal") {
+            let time1 = new Date(pumphistory[i].timestamp);
+            let time2 = time1;
+            for (let m = i; m < pumphistory.length; m--) {
+                if (pumphistory[m]._type == "TempBasal") {
+                    let time2 = new Date(pumphistory[m].timestamp);
+                    break;
+                }
+            }
+            let basDuration = (time2 - time1) / 36e5;
+            if ((pumphistory[i-1]['duration (min)'] / 60 ) < basDuration) {
+                let timeOrig = new Date(pumphistory[i-1].timestamp);
+                for (let l = i-1; l < pumphistory.length; l++) {
+                    if (pumphistory[l]._type == "TempBasal") {
+                        let timeNext = new Date(timeOrig = pumphistory[l].timestamp);
+                        break;
+                    }
+                }
+                let durationOfSheduledBasal = (timeNext - timeOrig) / 36e5;
+                let hour = time1.getHours();
+                let minutes = time1.getMinutes();
+                let seconds = "00";
+                let string = "" + hour + ":" + minutes + ":" + seconds;
+                let basalScheduledRate = 0;
+                for (let k = 0; k < profile.basalprofile.length; k++) {
+                    if (profile.basalprofile[k].start = string) {
+                        basalScheduledRate = profile.basalprofile[k].rate;
+                        // This is the scheduled insulin amount delivered after a fully completed temp basal
+                        scheduledBasalInsulin += basalScheduledRate * basDuration;
+                        break;
+                    } else if (profile.basalprofile[k].start < string && profile.basalprofile[k+1].start > string){
+                        basalScheduledRate = basalScheduledRate = profile.basalprofile[k].rate;
+                        // This is the scheduled insulin amount delivered after a fully completed temp basal
+                        scheduledBasalInsulin += basalScheduledRate * basDuration;
+                        break;
+                      }
+                }
+            }
+        }
+    }
+    
+    TDD += scheduledBasalInsulin
+    logBasal = ". Delivered scheduled basal rate insulin: " + scheduledBasalInsulin.toPrecision(5);
+                           
     logTDD = ". TDD past 24h is: " + TDD.toPrecision(3) + " U";
     // ----------------------------------------------------
       
@@ -104,7 +191,7 @@ function middleware(iob, currenttemp, glucose, profile, autosens, meal, reservoi
 
         // Set the new ratio
         autosens.ratio = newRatio;
-        return log + logTDD;
+        return log + logTDD + logBasal;
         
-    } else { return "Chris' formula is disabled." }
+    } else { return "Chris' formula is off." }
 }
