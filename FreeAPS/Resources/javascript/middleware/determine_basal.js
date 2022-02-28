@@ -9,6 +9,7 @@ function middleware(iob, currenttemp, glucose, profile, autosens, meal, reservoi
     const adjustmentFactor = 1;
     const currentMinTarget = profile.min_bg;
     var exerciseSetting = false;
+    var enoughData = false;
     var log = "";
     var logTDD = "";
     var logBasal = "";
@@ -37,7 +38,21 @@ function middleware(iob, currenttemp, glucose, profile, autosens, meal, reservoi
         chrisFormula = false;
         log = "Chris' formula is off due to a high temp target/exercising. Current min target: " + currentMinTarget;
     }
-
+    
+    // Check that there is enough pump history data (>23 hours) for TDD calculation, else end this middleware.
+    if (chrisFormula == true) {
+        let ph_length = pumphistory.length;
+        let endDate = new Date(pumphistory[ph_length-1].timestamp);
+        let startDate = new Date(pumphistory[0].timestamp);
+        // > 23 hours
+        if ((startDate - endDate) / 36e5 >= 23) {
+            enoughData = true;
+        } else {
+                chrisFormula = false;
+                return "Chris' formula is off. Not enough pump history data (24 hours are required for correct TDD calculation)"
+        }
+    }
+    
     // Calculate TDD --------------------------------------
     //Bolus:
     for (let i = 0; i < pumphistory.length; i++) {
