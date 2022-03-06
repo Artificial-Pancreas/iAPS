@@ -415,7 +415,7 @@ public final class MockPumpManager: TestingPumpManager {
             completion(.failure(error))
         } else if case .suspended = state.suspendState {
             let error = PumpManagerError.deviceState(MockPumpManagerError.pumpSuspended)
-            logDeviceComms(.error, message: "Temp Basal failed because inulin delivery is suspended")
+            logDeviceComms(.error, message: "Temp Basal failed because insulin delivery is suspended")
             completion(.failure(error))
         } else if state.reservoirUnitsRemaining == 0 {
             let error = PumpManagerError.deviceState(MockPumpManagerError.pumpSuspended)
