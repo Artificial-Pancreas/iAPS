@@ -1,6 +1,6 @@
 function middleware(iob, currenttemp, glucose, profile, autosens, meal, reservoir, clock, pumphistory, preferences) {
      
-    // This middleware only works if you have added pumphistory to middleware in FreeAPS X code (my pumphistory branch).
+    // This middleware only works if you have added pumphistory and preferences to middleware in FreeAPS X code (my mw_preferences branch).
     const BG = glucose[0].glucose;
     // Change to false to turn off Chris Wilson's formula
     var chrisFormula = preferences.enableChris;
@@ -248,7 +248,7 @@ function middleware(iob, currenttemp, glucose, profile, autosens, meal, reservoi
         // Set the new ratio
         autosens.ratio = newRatio;
         // Print to log
-        return log + logTDD + logBolus + logTempBasal + logBasal; // + " TimeDiff: " + timeOfbasal + " baseTime: " + baseTime + " insulin:" + insulin;
+        return log + logTDD + logBolus + logTempBasal + logBasal;
         
     } else { return "Chris' formula is off." }
 }
