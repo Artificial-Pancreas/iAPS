@@ -47,7 +47,7 @@ function middleware(iob, currenttemp, glucose, profile, autosens, meal, reservoi
         let startDate = new Date(pumphistory[0].timestamp);
         // > 23 hours
         pumpData = (startDate - endDate) / 36e5;
-        if (pumpData >= 22) {
+        if (pumpData >= 23) {
             enoughData = true;
         } else {
                 chrisFormula = false;
