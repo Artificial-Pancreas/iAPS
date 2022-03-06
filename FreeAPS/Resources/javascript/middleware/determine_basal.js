@@ -10,6 +10,7 @@ function middleware(iob, currenttemp, glucose, profile, autosens, meal, reservoi
     const currentMinTarget = profile.min_bg;
     var exerciseSetting = false;
     var enoughData = false;
+    var pumpData = 0;
     var log = "";
     var logTDD = "";
     var logBasal = "";
@@ -45,11 +46,12 @@ function middleware(iob, currenttemp, glucose, profile, autosens, meal, reservoi
         let endDate = new Date(pumphistory[ph_length-1].timestamp);
         let startDate = new Date(pumphistory[0].timestamp);
         // > 23 hours
-        if ((startDate - endDate) / 36e5 >= 23) {
+        pumpData = (startDate - endDate) / 36e5;
+        if (pumpData >= 22) {
             enoughData = true;
         } else {
                 chrisFormula = false;
-                return "Chris' formula is off. Not enough pump history data (24 hours are required for correct TDD calculation)"
+                return "Chris' formula is temporarily off. 24 hours of data is required for a correct TDD calculation. Currently only " + pumpData.toPrecision(3) + " hours of pump history data available.";
         }
     }
     
@@ -111,18 +113,18 @@ function middleware(iob, currenttemp, glucose, profile, autosens, meal, reservoi
         // Check for 0 temp basals with 0 min duration.
         insulin = 0;
         if (pumphistory[i]['duration (min)'] == 0) {
-            let time1 = new Date(pumphistory[i].timestamp) / 36e5;
+            let time1 = new Date(pumphistory[i].timestamp);
             let time2 = time1;
             let j = i;
             do {
                 --j;
                 if (pumphistory[j]._type == "TempBasal" && j >= 0) {
-                    time2 = new Date(pumphistory[j].timestamp) / 36e5;
+                    time2 = new Date(pumphistory[j].timestamp);
                     break;
                 }
             } while (j > 0);
             // duration of current scheduled basal in h
-            let basDuration = time2 - time1;
+            let basDuration = (time2 - time1) / 36e5;
             if (basDuration > 0) {
                 let hour = time1.getHours();
                 let minutes = time1.getMinutes();
@@ -161,23 +163,25 @@ function middleware(iob, currenttemp, glucose, profile, autosens, meal, reservoi
     }
     
     // Check for temp basals that completes
-    for (let i = 2; i < pumphistory.length; i++) {
+    for (let i = pumphistory.length -1; i > 0; i--) {
         if (pumphistory[i]._type == "TempBasalDuration" && pumphistory[i]['duration (min)'] > 0) {
             let time2Duration = pumphistory[i]['duration (min)'] / 60;
-            let time2 = new Date(pumphistory[i].timestamp) / 36e5;;
+            let time2 = new Date(pumphistory[i].timestamp);;
             let time1 = time2;
             let m = i;
             do {
                 --m;
-                if (pumphistory[m]._type == "TempBasal" && m >= 0) {
-                    // next (newer) temp basal
-                    let time1 = new Date(pumphistory[m].timestamp) / 36e5;
-                    break;
+                if (m >= 0) {
+                    if (pumphistory[m]._type == "TempBasal" && m >= 0) {
+                        // next (newer) temp basal
+                        let time1 = new Date(pumphistory[m].timestamp);
+                        break;
+                    }
                 }
             } while (m > 0);
             
-            // Dufference in hours
-            let tempBasalTimeDifference = time2 - time1;
+            // Time difference in hours
+            let tempBasalTimeDifference = (time1 - time2) / 36e5;
             
             if (time2Duration < tempBasalTimeDifference) {
                 
@@ -195,23 +199,21 @@ function middleware(iob, currenttemp, glucose, profile, autosens, meal, reservoi
                 for (let k = 0; k < profile.basalprofile.length; ++k) {
                     if (profile.basalprofile[k].start == baseTime) {
                         basalScheduledRate = profile.basalprofile[k].rate;
-                        insulin = basalScheduledRate * timeOfbasal;
                         break;
                     }
                     else if (k+1 < profile.basalprofile.length) {
                         if (profile.basalprofile[k].start < baseTime && profile.basalprofile[k+1].start > baseTime) {
                             basalScheduledRate = profile.basalprofile[k].rate;
-                            insulin = basalScheduledRate * timeOfbasal;
                             break;
                         }
                     }
                     else if (k == (profile.basalprofile.length - 1)) {
                         basalScheduledRate = profile.basalprofile[k].rate;
-                        insulin = basalScheduledRate * timeOfbasal;
                         break;
                     }
                 }
-            
+                
+                insulin = basalScheduledRate * timeOfbasal;
                 // Account for smallest possible pump dosage
                 incrementsRaw = insulin / minimalDose;
                 if (incrementsRaw >= 1) {
@@ -246,7 +248,7 @@ function middleware(iob, currenttemp, glucose, profile, autosens, meal, reservoi
         // Set the new ratio
         autosens.ratio = newRatio;
         // Print to log
-        return log + logTDD + logBolus + logTempBasal + logBasal;
+        return log + logTDD + logBolus + logTempBasal + logBasal; // + " TimeDiff: " + timeOfbasal + " baseTime: " + baseTime + " insulin:" + insulin;
         
     } else { return "Chris' formula is off." }
 }
