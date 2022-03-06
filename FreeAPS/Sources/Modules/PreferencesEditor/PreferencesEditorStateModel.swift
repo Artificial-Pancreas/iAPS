@@ -91,6 +91,27 @@ extension PreferencesEditor {
 
             // MARK: - SMB fields
 
+            let dynamicISF = [
+                Field(
+                    displayName: "Adjustment factor",
+                    type: .decimal(keypath: \.adjustmentFactor),
+                    infoText: NSLocalizedString(
+                        "Adjust Chris' constant",
+                        comment: "Adjust Chris' constant"
+                    ),
+                    settable: self
+                ),
+                Field(
+                    displayName: "Enable Chris' dynamic ISF",
+                    type: .boolean(keypath: \.enableChris),
+                    infoText: NSLocalizedString(
+                        "Enable Chris' dynamif ISF",
+                        comment: "Enable Chris' dynamif ISF"
+                    ),
+                    settable: self
+                )
+            ]
+
             let smbFields = [
                 Field(
                     displayName: "Enable SMB Always",
@@ -581,6 +602,10 @@ extension PreferencesEditor {
             sections = [
                 FieldSection(
                     displayName: NSLocalizedString("OpenAPS main settings", comment: "OpenAPS main settings"), fields: mainFields
+                ),
+                FieldSection(
+                    displayName: NSLocalizedString("Chris' dynamic ISF settings", comment: "Chris' dynamic ISF settings"),
+                    fields: dynamicISF
                 ),
                 FieldSection(
                     displayName: NSLocalizedString("OpenAPS SMB settings", comment: "OpenAPS SMB settings"), fields: smbFields

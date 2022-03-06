@@ -55,6 +55,8 @@ final class OpenAPS {
                 // determine-basal
                 let reservoir = self.loadFileFromStorage(name: Monitor.reservoir)
 
+                let preferences = self.loadFileFromStorage(name: Settings.preferences)
+
                 let suggested = self.determineBasal(
                     glucose: glucose,
                     currentTemp: tempBasal,
@@ -64,7 +66,8 @@ final class OpenAPS {
                     meal: meal,
                     microBolusAllowed: true,
                     reservoir: reservoir,
-                    pumpHistory: pumpHistory
+                    pumpHistory: pumpHistory,
+                    preferences: preferences
                 )
                 debug(.openAPS, "SUGGESTED: \(suggested)")
 
@@ -292,7 +295,8 @@ final class OpenAPS {
         meal: JSON,
         microBolusAllowed: Bool,
         reservoir: JSON,
-        pumpHistory: JSON
+        pumpHistory: JSON,
+        preferences: JSON
     ) -> RawJSON {
         dispatchPrecondition(condition: .onQueue(processQueue))
         return jsWorker.inCommonContext { worker in
@@ -318,7 +322,8 @@ final class OpenAPS {
                     microBolusAllowed,
                     reservoir,
                     false, // clock
-                    pumpHistory
+                    pumpHistory,
+                    preferences
                 ]
             )
         }

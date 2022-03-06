@@ -1,12 +1,12 @@
-function middleware(iob, currenttemp, glucose, profile, autosens, meal, reservoir, clock, pumphistory) {
+function middleware(iob, currenttemp, glucose, profile, autosens, meal, reservoir, clock, pumphistory, preferences) {
      
     // This middleware only works if you have added pumphistory to middleware in FreeAPS X code (my pumphistory branch).
     const BG = glucose[0].glucose;
     // Change to false to turn off Chris Wilson's formula
-    var chrisFormula = true;
+    var chrisFormula = preferences.enableChris;
     const minLimitChris = profile.autosens_min;
     const maxLimitChris = profile.autosens_max;
-    const adjustmentFactor = 1;
+    const adjustmentFactor = preferences.adjustmentFactor;
     const currentMinTarget = profile.min_bg;
     var exerciseSetting = false;
     var enoughData = false;
