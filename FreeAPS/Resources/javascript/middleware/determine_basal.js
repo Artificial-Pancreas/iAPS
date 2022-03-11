@@ -171,6 +171,8 @@ function middleware(iob, currenttemp, glucose, profile, autosens, meal, reservoi
             let oldBasalDuration = pumphistory[n]['duration (min)'] / 60;
             // time of old temp basal
             let oldTime = new Date(pumphistory[n].timestamp);
+            // timestamp in ms after the completed temp basal
+            let oldTimeAfterCompletedTempBasal = oldTime + oldBasalDuration * 36e5
             let newTime = oldTime;
             let o = n;
             do {
@@ -190,8 +192,8 @@ function middleware(iob, currenttemp, glucose, profile, autosens, meal, reservoi
             
             // if duration of scheduled basal is more than 0
             if (timeOfbasal > 0) {
-                let hour = oldTime.getHours();
-                let minutes = oldTime.getMinutes();
+                let hour = oldTimeAfterCompletedTempBasal.getHours();
+                let minutes = oldTimeAfterCompletedTempBasal.getMinutes();
                 let seconds = "00";
                 // "hour:minutes:00"
                 let timeString = "" + hour + ":" + minutes + ":" + seconds;
