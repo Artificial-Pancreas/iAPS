@@ -37,7 +37,7 @@ function middleware(iob, currenttemp, glucose, profile, autosens, meal, reservoi
     if (currentMinTarget >= 118 && exerciseSetting == true) {
         // profile.use_autoisf = false;
         chrisFormula = false;
-        log = "Chris' formula is off due to a high temp target/exercising. Current min target: " + currentMinTarget;
+        log = "Dynamic ISF temporarily off due to a high temp target/exercising. Current min target: " + currentMinTarget;
     }
     
     // Check that there is enough pump history data (>23 hours) for TDD calculation, else end this middleware.
@@ -51,7 +51,7 @@ function middleware(iob, currenttemp, glucose, profile, autosens, meal, reservoi
             enoughData = true;
         } else {
                 chrisFormula = false;
-                return "Chris' formula is temporarily off. 24 hours of data is required for a correct TDD calculation. Currently only " + pumpData.toPrecision(3) + " hours of pump history data available.";
+                return "Dynamic ISF is temporarily off. 24 hours of data is required for a correct TDD calculation. Currently only " + pumpData.toPrecision(3) + " hours of pump history data available.";
         }
     }
     
@@ -242,15 +242,15 @@ function middleware(iob, currenttemp, glucose, profile, autosens, meal, reservoi
     // Chris' formula with added adjustmentFactor for tuning:
     if (chrisFormula == true && TDD > 0) {
         var newRatio = profile.sens / (277700 / (adjustmentFactor  * TDD * BG));
-        log = "New ratio using Chris' formula is " + newRatio.toPrecision(3) + " with ISF: " + (profile.sens / newRatio).toPrecision(3) + " (" + ((profile.sens / newRatio) * 0.0555).toPrecision(3) + " mmol/l/U)";
+        log = "New ratio using Dynamic ISF is " + newRatio.toPrecision(3) + " with ISF: " + (profile.sens / newRatio).toPrecision(3) + " (" + ((profile.sens / newRatio) * 0.0555).toPrecision(3) + " mmol/l/U)";
 
         // Respect autosens.max and autosens.min limits
         if (newRatio > maxLimitChris) {
             newRatio = maxLimitChris;
-            log = "Chris' formula hit limit by autosens_max setting: " + maxLimitChris + ". ISF: " + (profile.sens / maxLimitChrisv).toPrecision(3) + " (" + ((profile.sens / maxLimitChris) * 0.0555).toPrecision(3) + " mmol/l/U)";
+            log = "Dynamic ISF hit limit by autosens_max setting: " + maxLimitChris + ". ISF: " + (profile.sens / maxLimitChrisv).toPrecision(3) + " (" + ((profile.sens / maxLimitChris) * 0.0555).toPrecision(3) + " mmol/l/U)";
         } else if (newRatio < minLimitChris) {
             newRatio = minLimitChris;
-            log = "Chris' formula hit limit by autosens_min setting: " + minLimitChris + ". ISF: " + (profile.sens / minLimitChris).toPrecision(3) + " (" + ((profile.sens / minLimitChris) * 0.0555).toPrecision(3) + " mmol/l/U)";
+            log = "Dynamic ISF hit limit by autosens_min setting: " + minLimitChris + ". ISF: " + (profile.sens / minLimitChris).toPrecision(3) + " (" + ((profile.sens / minLimitChris) * 0.0555).toPrecision(3) + " mmol/l/U)";
           }
 
         // Set the new ratio
@@ -258,5 +258,5 @@ function middleware(iob, currenttemp, glucose, profile, autosens, meal, reservoi
         // Print to log
         return log + logTDD + logBolus + logTempBasal + logBasal;
         
-    } else { return "Chris' formula is off." }
+    } else { return "Dynamic ISF is off." }
 }
