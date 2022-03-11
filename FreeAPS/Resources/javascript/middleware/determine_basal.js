@@ -171,8 +171,7 @@ function middleware(iob, currenttemp, glucose, profile, autosens, meal, reservoi
             let oldBasalDuration = pumphistory[n]['duration (min)'] / 60;
             // time of old temp basal
             let oldTime = new Date(pumphistory[n].timestamp);
-            // timestamp in ms after the completed temp basal
-            let oldTimeAfterCompletedTempBasal = oldTime + oldBasalDuration * 36e5
+                        
             let newTime = oldTime;
             let o = n;
             do {
@@ -188,17 +187,23 @@ function middleware(iob, currenttemp, glucose, profile, autosens, meal, reservoi
             
             // Time difference in hours, new - old
             let tempBasalTimeDifference = (newTime - oldTime) / 36e5;
+            
             let timeOfbasal = tempBasalTimeDifference - oldBasalDuration;
             
             // if duration of scheduled basal is more than 0
             if (timeOfbasal > 0) {
-                let hour = oldTimeAfterCompletedTempBasal.getHours();
-                let minutes = oldTimeAfterCompletedTempBasal.getMinutes();
+                
+                // Timestamp after completed temp basal
+                let timeOfScheduledBasal = new Date(oldTime.getTime() + oldBasalDuration*36e5);
+                
+                //oldTime.setHours( oldTime.getHours() + oldBasalDuration );
+                
+                let hour = timeOfScheduledBasal.getHours();
+                let minutes = timeOfScheduledBasal.getMinutes();
                 let seconds = "00";
                 // "hour:minutes:00"
-                let timeString = "" + hour + ":" + minutes + ":" + seconds;
-                let baseTime = new Date(timeString);
-                
+                let baseTime = "" + hour + ":" + minutes + ":" + seconds;
+                                
                 // Default if correct basal schedule rate not found
                 let basalScheduledRate = profile.basalprofile[0].rate;
     
@@ -235,7 +240,7 @@ function middleware(iob, currenttemp, glucose, profile, autosens, meal, reservoi
     TDD = bolusInsulin + tempInsulin + scheduledBasalInsulin;
     logBolus = ". Bolus insulin: " + bolusInsulin.toPrecision(5) + " U";
     logTempBasal = ". Temporary basal insulin: " + tempInsulin.toPrecision(5) + " U";
-    logBasal = ". Delivered scheduled basal rate insulin: " + scheduledBasalInsulin.toPrecision(5) + " U";
+    logBasal = ". Delivered scheduled basal insulin: " + scheduledBasalInsulin.toPrecision(5) + " U";
     logTDD = ". TDD past 24h is: " + TDD.toPrecision(5) + " U";
     // ----------------------------------------------------
       
@@ -247,7 +252,7 @@ function middleware(iob, currenttemp, glucose, profile, autosens, meal, reservoi
         // Respect autosens.max and autosens.min limits
         if (newRatio > maxLimitChris) {
             newRatio = maxLimitChris;
-            log = "Dynamic ISF hit limit by autosens_max setting: " + maxLimitChris + ". ISF: " + (profile.sens / maxLimitChrisv).toPrecision(3) + " (" + ((profile.sens / maxLimitChris) * 0.0555).toPrecision(3) + " mmol/l/U)";
+            log = "Dynamic ISF hit limit by autosens_max setting: " + maxLimitChris + ". ISF: " + (profile.sens / maxLimitChris).toPrecision(3) + " (" + ((profile.sens / maxLimitChris) * 0.0555).toPrecision(3) + " mmol/l/U)";
         } else if (newRatio < minLimitChris) {
             newRatio = minLimitChris;
             log = "Dynamic ISF hit limit by autosens_min setting: " + minLimitChris + ". ISF: " + (profile.sens / minLimitChris).toPrecision(3) + " (" + ((profile.sens / minLimitChris) * 0.0555).toPrecision(3) + " mmol/l/U)";
