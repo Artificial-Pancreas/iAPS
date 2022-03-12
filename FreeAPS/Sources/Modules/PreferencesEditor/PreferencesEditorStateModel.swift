@@ -173,7 +173,7 @@ extension PreferencesEditor {
                 Field(
                     displayName: "Bolus Increment",
                     type: .decimal(keypath: \.bolusIncrement),
-                    infoText: NSLocalizedString("Smallest possible bolus amount", comment: "Bolus Increment"),
+                    infoText: NSLocalizedString("Smallest possible SMB amount in oref0. For Medtronic the smallest possible amount is 0.1 U. For Omnipod the smallest possible amount is 0.05 U.", comment: "Bolus Increment"),
                     settable: self
                 )
             ]
