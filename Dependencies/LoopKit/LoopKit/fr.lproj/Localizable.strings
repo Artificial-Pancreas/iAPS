@@ -1,8 +1,8 @@
 /* Describes a certain bolus failure (1: size of the bolus in units) */
-"%1$@ U bolus failed" = "Échec de bolus de %1$@ U";
+"%1$@ U bolus failed" = "Échec du bolus de %1$@ U";
 
 /* Describes an uncertain bolus failure (1: size of the bolus in units) */
-"%1$@ U bolus may not have succeeded" = "Le bolus de %1$@ U a peut-être échou";
+"%1$@ U bolus may not have succeeded" = "Le bolus de %1$@ U a peut-être échoué";
 
 /* The error description describing when Health sharing was denied */
 "Authorization Denied" = "Autorisation refusée";
