@@ -137,7 +137,7 @@
 "min" = "dk";
 
 /*  */
-"Autotune" = "Atoayar";
+"Autotune" = "Otoayar";
 
 /*  */
 "Basal profile" = "Bazal profil";
@@ -146,7 +146,7 @@
 "Carb ratio" = "Karbonhidrat oranı";
 
 /*  */
-"Delete autotune data" = "Atoayar verilerini sil";
+"Delete autotune data" = "Otoayar verilerini sil";
 
 /*  */
 "Run now" = "Şimdi çalıştır";
@@ -896,6 +896,9 @@ Enact a temp Basal or a temp target */
 /* */
 "Animated Background" = "Animasyonlu Arka Plan";
 
+/* Sensor day(s) */
+" day(s)" = " gün";
+
 
 /* Headers for settings ----------------------- */
 "OpenAPS main settings" = "OpenAPS ana ayarları";
@@ -1053,7 +1056,7 @@ Enact a temp Basal or a temp target */
 "Minimum duration in minutes between two enacted SMBs" = "Yürürlüğe giren iki SMB arasındaki dakika cinsinden minimum süre";
 
 /* "Bolus Increment" */
-"Smallest possible bolus amount" = "Mümkün olan en küçük bolus miktarı";
+"Smallest SMB / SMB increment in oref0. Minimum amount for Medtronic pumps is 0.1 U, whereas for Omnipod it’s 0.05 U. The default value is 0.1." = "oref0'da mümkün olan en küçük SMB miktarı. Medtronic için mümkün olan en küçük miktar 0,1 Ü'dir. Omnipod için mümkün olan en küçük miktar 0,05 Ü'dir.";
 
 /* "Insulin Peak Time" */
 "Time of maximum blood glucose lowering effect of insulin, in minutes. Beware: Oref assumes for ultra-rapid (Lyumjev) & rapid-acting (Fiasp) curves minimal (35 & 50 min) and maximal (100 & 120 min) applicable insulinPeakTimes. Using a custom insulinPeakTime outside these bounds will result in issues with FreeAPS-X, longer loop calculations and possible red loops." = "İnsülinin maksimum kan şekerini düşürücü etkisinin dakika cinsinden süresi. Dikkat: Oref, ultra-rapid (Lyumjev) ve hızlı etkili (Fiasp) eğrilerin minimum (35 ve 50 dakika) ve maksimum (100 ve 120 dakika) uygulanabilir insülinPeakTimes olduğunu varsayar. Bu sınırların dışında özel bir insülinPeakTime kullanılması, FreeAPS-X, daha uzun döngü hesaplamaları ve olası kırmızı döngülerle ilgili sorunlara neden olacaktır.";

@@ -93,20 +93,20 @@ extension PreferencesEditor {
 
             let dynamicISF = [
                 Field(
-                    displayName: "Adjustment factor",
+                    displayName: "Adjustment Factor",
                     type: .decimal(keypath: \.adjustmentFactor),
                     infoText: NSLocalizedString(
-                        "Adjust Chris' constant",
-                        comment: "Adjust Chris' constant"
+                        "Adjust Dynamic ISF constant",
+                        comment: "Adjust Dynamic ISF constant"
                     ),
                     settable: self
                 ),
                 Field(
-                    displayName: "Enable Chris' dynamic ISF",
+                    displayName: "Enable Dynamic ISF",
                     type: .boolean(keypath: \.enableChris),
                     infoText: NSLocalizedString(
-                        "Enable Chris' dynamif ISF",
-                        comment: "Enable Chris' dynamif ISF"
+                        "Enable Dynamic ISF",
+                        comment: "Enable Dynamic ISF"
                     ),
                     settable: self
                 )
@@ -203,7 +203,7 @@ extension PreferencesEditor {
                 Field(
                     displayName: "Bolus Increment",
                     type: .decimal(keypath: \.bolusIncrement),
-                    infoText: NSLocalizedString("Smallest possible bolus amount", comment: "Bolus Increment"),
+                    infoText: NSLocalizedString("Smallest SMB / SMB increment in oref0. Minimum amount for Medtronic pumps is 0.1 U, whereas for Omnipod it’s 0.05 U. The default value is 0.1.", comment: "Bolus Increment"),
                     settable: self
                 )
             ]
@@ -604,7 +604,7 @@ extension PreferencesEditor {
                     displayName: NSLocalizedString("OpenAPS main settings", comment: "OpenAPS main settings"), fields: mainFields
                 ),
                 FieldSection(
-                    displayName: NSLocalizedString("Chris' dynamic ISF settings", comment: "Chris' dynamic ISF settings"),
+                    displayName: NSLocalizedString("Dynamic ISF settings", comment: "Dynamic ISF settings"),
                     fields: dynamicISF
                 ),
                 FieldSection(
