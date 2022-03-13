@@ -5,28 +5,28 @@
 "Connected" = "Connecté";
 
 /* The in-progress connecting state */
-"Connecting" = "Connexion en cours";
+"Connecting" = "De liaison";
 
 /* The title of the cell showing BLE connection state */
-"Connection State" = "État de la connexion";
+"Connection State" = "Etat de connexion";
 
 /* The title of the section describing the device */
-"Device" = "Appareil";
+"Device" = "Dispositif";
 
 /* The title of the devices table section in RileyLink settings */
-"Devices" = "Appareils";
+"Devices" = "Dispositifs";
 
 /* The disconnected state */
-"Disconnected" = "Déconnecté";
+"Disconnected" = "Débranché";
 
 /* The in-progress disconnecting state */
-"Disconnecting" = "Déconnexion en cours";
+"Disconnecting" = "Se déconnecter";
 
 /* The title of the cell showing firmware version */
-"Firmware" = "Firmware";
+"Firmware" = "Microprogramme";
 
 /* The title of the cell showing current rileylink frequency */
-"Frequency" = "Frequency";
+"Frequency" = "Fréquence";
 
 /* The title of the cell showing device name */
 "Name" = "Nom";
@@ -38,58 +38,58 @@
 "Signal Strength" = "Force du signal";
 
 /* The header of the cells showing connection monitoring */
-"Connection Monitoring" = "Connection Monitoring";
+"Connection Monitoring" = "Supervision";
 
 /* The title of the cell showing uptime */
-"Uptime" = "Uptime";
+"Uptime" = "Temps de fonctionnement";
 
 /* The title of the cell showing battery level */
-"Battery level" = "Battery level";
+"Battery level" = "Niveau de batterie";
 
 /* The title of the cell showing Voltage */
-"Voltage" = "Voltage";
+"Voltage" = "Voltage (Tension)";
 
 /* "The title of the section for alerts" */
-"Alert" = "Alert";
+"Alert" = "Alerte";
 
 /* The title of the cell showing Low Battery Alert */
-"Low Battery Alert" = "Low Battery Alert";
+"Low Battery Alert" = "Alerte de batterie faible";
 
 /* Header of list showing battery level alert options */
-"Battery level Alert" = "Battery level Alert";
+"Battery level Alert" = "Alerte de niveau batterie";
 
 /* Battery level alert OFF in list of options */
-"OFF" = "OFF";
+"OFF" = "Désactivé";
 
 /* The title of the command to update diagnostic LEDs */
-"Diagnostic LEDs" = "Diagnostic LEDs";
+"Diagnostic LEDs" = "Diagnostic";
 
 /* The title of the command to fetch RileyLink statistics */
-"Get RileyLink Statistics" = "Get RileyLink Statistics";
+"Get RileyLink Statistics" = "Obtenir les statistiques de RileyLink";
 
 /* The title of the command to invert BLE connection LED logic */
-"Invert LED Logic" = "Invert LED Logic";
+"Invert LED Logic" = "Inverser la logique des LED";
 
 /* The header of the cells showing test commands */
-"Test Commands" = "Test Commands";
+"Test Commands" = "Commande de test";
 
 /* The title of the cell showing Lighten Yellow LED */
-"Lighten Yellow LED" = "Lighten Yellow LED";
+"Lighten Yellow LED" = "Éclaircir la LED jaune";
 
 /* The title of the cell showing Lighten Yellow LED */
-"Lighten Red LED" = "Lighten Red LED";
+"Lighten Red LED" = "Éclaircir la LED rouge";
 
 /* The title of the cell showing Test Vibration */
-"Test Vibration" = "Test Vibration";
+"Test Vibration" = "Test de la vibration";
 
 /* The title of the cell for sounding device finding piezo */
-"Find Device" = "Find Device";
+"Find Device" = "Localiser l'appareil";
 
 /* The title of the cell for connection LED */
-"Connection LED" = "Connection LED";
+"Connection LED" = "Connectez les LED";
 
 /* The title of the cell for connection vibration */
-"Connection Vibration" = "Connection Vibration";
+"Connection Vibration" = "Vibreur de connexion";
 
 /* Detail text when battery alert disabled. */
 "Off" = "Off";
