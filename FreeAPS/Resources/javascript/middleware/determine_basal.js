@@ -45,6 +45,10 @@ function middleware(iob, currenttemp, glucose, profile, autosens, meal, reservoi
         let ph_length = pumphistory.length;
         let endDate = new Date(pumphistory[ph_length-1].timestamp);
         let startDate = new Date(pumphistory[0].timestamp);
+        // If latest pump event is a temp basal
+        if (pumphistory[0]._type == "TempBasalDuration") {
+            startDate = new Date();
+        }
         // > 23 hours
         pumpData = (startDate - endDate) / 36e5;
         if (pumpData >= 23) {
@@ -184,6 +188,12 @@ function middleware(iob, currenttemp, glucose, profile, autosens, meal, reservoi
                     }
                 }
             } while (o > 0);
+            
+            // When latest temp basal is index 0 in pump history
+            if (n == 0 && pumphistory[0]._type == "TempBasalDuration") {
+                newTime = new Date();
+                oldBasalDuration = pumphistory[n]['duration (min)'] / 60;
+            }
             
             // Time difference in hours, new - old
             let tempBasalTimeDifference = (newTime - oldTime) / 36e5;
