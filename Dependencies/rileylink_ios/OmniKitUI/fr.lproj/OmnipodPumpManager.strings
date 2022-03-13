@@ -59,7 +59,7 @@
 "rcC-ke-lUP.headerTitle" = "Appliquez le POD";
 
 /* Class = "UILabel"; text = "Label"; ObjectID = "vEc-Km-ewe"; */
-"vEc-Km-ewe.text" = "Label";
+"vEc-Km-ewe.text" = "Étiquette";
 
 /* Class = "UILabel"; text = "Fill a new pod with insulin. Listen for 2 beeps from the pod during filling. Keep RileyLink adjacent to the pod during pairing."; ObjectID = "vmF-Dc-3DS"; */
 "vmF-Dc-3DS.text" = "Remplissez un nouveau pod avec de l’insuline. Vérifiez de bien entendre les 2 beeps du pod pendant le remplissage. Gardez le RileyLink à proximité du pod pendant l’appairage.";
