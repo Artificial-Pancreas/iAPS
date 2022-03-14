@@ -63,7 +63,8 @@ final class OpenAPS {
                     autosens: autosens.isEmpty ? .null : autosens,
                     meal: meal,
                     microBolusAllowed: true,
-                    reservoir: reservoir
+                    reservoir: reservoir,
+                    pumpHistory: pumpHistory
                 )
                 debug(.openAPS, "SUGGESTED: \(suggested)")
 
@@ -290,7 +291,8 @@ final class OpenAPS {
         autosens: JSON,
         meal: JSON,
         microBolusAllowed: Bool,
-        reservoir: JSON
+        reservoir: JSON,
+        pumpHistory: JSON
     ) -> RawJSON {
         dispatchPrecondition(condition: .onQueue(processQueue))
         return jsWorker.inCommonContext { worker in
@@ -314,7 +316,9 @@ final class OpenAPS {
                     autosens,
                     meal,
                     microBolusAllowed,
-                    reservoir
+                    reservoir,
+                    false, // clock
+                    pumpHistory
                 ]
             )
         }
