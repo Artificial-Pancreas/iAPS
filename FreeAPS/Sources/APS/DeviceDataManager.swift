@@ -325,7 +325,8 @@ extension BaseDeviceDataManager: PumpManagerDelegate {
 
         // filter buggy TBRs > maxBasal from MDT
         let events = events.filter {
-            guard $0.type == .tempBasal else { return true }
+            // type is optional...
+            guard let type = $0.type, type == .tempBasal else { return true }
             return $0.dose?.unitsPerHour ?? 0 <= Double(settingsManager.pumpSettings.maxBasal)
         }
         pumpHistoryStorage.storePumpEvents(events)
