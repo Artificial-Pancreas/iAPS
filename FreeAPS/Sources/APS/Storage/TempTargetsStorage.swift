@@ -3,7 +3,7 @@ import SwiftDate
 import Swinject
 
 protocol TempTargetsObserver {
-    func tempTargetsDidUpdate(_ targers: [TempTarget])
+    func tempTargetsDidUpdate(_ targets: [TempTarget])
 }
 
 protocol TempTargetsStorage {
