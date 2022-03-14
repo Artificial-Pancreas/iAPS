@@ -888,7 +888,7 @@ Enact a temp Basal or a temp target */
 "Temp Target" = "临时目标";
 
 /* */
-"Resume" = "Resume";
+"Resume" = "恢复";
 
 /* */
 "Suspend" = "暂停";
@@ -897,7 +897,7 @@ Enact a temp Basal or a temp target */
 "Animated Background" = "Animated Background";
 
 /* Sensor day(s) */
-" day(s)" = " day(s)";
+" day(s)" = "天";
 
 
 /* Headers for settings ----------------------- */
@@ -916,7 +916,7 @@ Enact a temp Basal or a temp target */
 "Bluetooth State restored (APS restarted?). Found %d peripherals, and connected to %@ with identifier %@" = "蓝牙状态已恢复(APS 重启?) 找到 %d 个蓝牙，并连接到 %@ 标识符为 %@ 的设备";
 
 /* Shared app group */
-"Shared app group for direct connection with Libre 1 transmitters or European Libre 2 sensors" = "Shared app group for direct connection with Libre 1 transmitters or European Libre 2 sensors";
+"Shared app group for direct connection with Libre 1 transmitters or European Libre 2 sensors" = "将连接瞬感1+发射器及直连瞬感 2 的第三方应用与 FreeAPS X 通过 AppGroup 方式共享数据";
 
 /* Native G6 app */
 "Native G6 app" = "官方G6 App";
@@ -931,7 +931,7 @@ Enact a temp Basal or a temp target */
 "Simple simulator" = "简单模拟器";
 
 /* Direct connection with Libre 1 transmitters or Libre 2 */
-"Direct connection with Libre 1 transmitters or European Libre 2 sensors" = "Direct connection with Libre 1 transmitters or European Libre 2 sensors";
+"Direct connection with Libre 1 transmitters or European Libre 2 sensors" = "直连Libre2或者Libre1发射器组合";
 
 /* Online or internal server */
 "Online or internal server" = "在线或内部服务器";
@@ -1058,7 +1058,7 @@ Enact a temp Basal or a temp target */
 "Minimum duration in minutes between two enacted SMBs" = "两次自动大剂量的最短时间";
 
 /* "Bolus Increment" */
-"Smallest SMB / SMB increment in oref0. Minimum amount for Medtronic pumps is 0.1 U, whereas for Omnipod it’s 0.05 U. The default value is 0.1." = "Smallest SMB / SMB increment in oref0. Minimum amount for Medtronic pumps is 0.1 U, whereas for Omnipod it’s 0.05 U. The default value is 0.1.";
+"Smallest SMB / SMB increment in oref0. Minimum amount for Medtronic pumps is 0.1 U, whereas for Omnipod it’s 0.05 U. The default value is 0.1." = " oref0中SMB最小增量，美敦力为 0.1U, Omnipod 为 0.05U，默认值为 0.1";
 
 /* "Insulin Peak Time" */
 "Time of maximum blood glucose lowering effect of insulin, in minutes. Beware: Oref assumes for ultra-rapid (Lyumjev) & rapid-acting (Fiasp) curves minimal (35 & 50 min) and maximal (100 & 120 min) applicable insulinPeakTimes. Using a custom insulinPeakTime outside these bounds will result in issues with FreeAPS-X, longer loop calculations and possible red loops." = "胰岛素的最大降血糖作用，以分钟为单位";
