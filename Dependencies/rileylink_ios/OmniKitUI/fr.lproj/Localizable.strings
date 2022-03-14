@@ -15,7 +15,7 @@
 "%@ U (Finished)" = "%@ U (Terminé)";
 
 /* Format string for bolus progress. (1: The delivered amount) (2: The programmed amount) (3: the percent progress) */
-"%@ U of %@ U (%@)" = "%1$@ U of %2$@ U (%3$@)";
+"%@ U of %@ U (%@)" = "%1$@ U sur %2$@ U (%3$@)";
 
 /* Format string for temp basal rate. (1: The localized amount) */
 "%@ U/hour" = "%@ U/heure";
@@ -36,7 +36,7 @@
 "Active Time" = "Heure d’activation";
 
 /* The title of the cell showing the Pod Active Clock */
-"Pod Active Clock" = "Pod Active Clock";
+"Pod Active Clock" = "Horloge active Pod";
 
 /* The title of the cell showing alarm status */
 "Alarms" = "Alarmes";
@@ -72,7 +72,7 @@
 "Configuration" = "Configuration";
 
 /* The title of the Insulin Type */
-"Insulin Type" = "Insulin Type";
+"Insulin Type" = "Type d'Insuline";
 
 /* The title of the continue action in an action sheet */
 "Continue" = "Continuer";
@@ -106,16 +106,16 @@
 "Error enabling bolus beeps" = "Erreur lors de l’activation des bips de bolus";
 
 /* The alert title for enable Confirmation Beeps */
-"Enable Confirmation Beeps" = "Enable Confirmation Beeps";
+"Enable Confirmation Beeps" = "Activer les bips de confirmation";
 
 /* The alert title for Disable Confirmation Beep */
-"Disable Confirmation Beeps" = "Disable Confirmation Beeps";
+"Disable Confirmation Beeps" = "Désactiver les bips de confirmation";
 
 /* The alert title for enable Automatic Bolus Beeps */
-"Enable Automatic Bolus Beeps" = "Enable Automatic Bolus Beeps";
+"Enable Automatic Bolus Beeps" = "Activer les bips de Bolus automatiques";
 
 /* The alert title for Disable Automatic Bolus Beeps */
-"Disable Automatic Bolus Beeps" = "Disable Automatic Bolus Beeps";
+"Disable Automatic Bolus Beeps" = "Désactiver les bips de bolus automatiques";
 
 /* The alert title for a resume error */
 "Error Resuming" = "Erreur lors de la reprise";
@@ -249,13 +249,13 @@
 "Unknown" = "Inconnu";
 
 /* The title of the diagnostics section in settings */
-"Diagnostics" = "Diagnostics";
+"Diagnostics" = "Diagnostic";
 
 /* The diagnostic command Read Pod Status */
-"Read Pod Status" = "Read Pod Status";
+"Read Pod Status" = "Lire l’état de la pompe";
 
 /* The diagnostic command Read Pulse Log */
-"Read Pulse Log" = "Read Pulse Log";
+"Read Pulse Log" = "Lecture journal d'impulsion";
 
 /* The title of the pod details section in settings */
-"Pod Details" = "Pod Details";
+"Pod Details" = "Détails du Pod";
