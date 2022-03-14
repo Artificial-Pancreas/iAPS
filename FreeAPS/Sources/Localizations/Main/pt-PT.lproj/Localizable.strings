@@ -2,7 +2,7 @@
   Localizable.strings
   FreeAPS X
 */
-
+/* -------------------------------- */
 /* Bolus screen when adding insulin */
 "Add insulin without actually bolusing" = "Adicionar insulina sem tomar bolus";
 
@@ -129,6 +129,12 @@
 
 /* Upper temp target limit */
 "Top target" = "Limite alto";
+
+/*  Temp target set for ... minutes */
+"for" = "for";
+
+/*  Temp target set for ... minutes */
+"min" = "min";
 
 /*  */
 "Autotune" = "Autotune";
@@ -410,9 +416,18 @@ Enact a temp Basal or a temp target */
 /* Header for Temp targets in Watch app */
 "Temp Targets" = "Temp Targets";
 
+/* Delete carbs from Treatments list*/
+"Delete carbs?" = "Delete carbs?";
 
-/* Calendar and Libre transmitter settings --------------*/
+/* Treatments list */
+"Treatments" = "Treatments";
 
+/* " min" in Treatments list */
+" min" = " min";
+
+
+/* Calendar and Libre transmitter settings ---------------
+ */
 /* */
 "Configure Libre Transmitter" = "Configure Libre Transmitter";
 
@@ -481,9 +496,6 @@ Enact a temp Basal or a temp target */
 
 /* */
 "Remove All" = "Remove All";
-
-/* */
-"Calibrations" = "Calibrations";
 
 /* */
 "About the Process" = "About the Process";
@@ -857,10 +869,38 @@ Enact a temp Basal or a temp target */
 /* */
 "Backfill glucose" = "Backfill glucose";
 
+/* About this source */
+"About this source" = "About this source";
 
-/* Headers for settings ------------------- */
+/* */
+"Bolus failed" = "Bolus failed";
+
+/* */
+"Bolus failed or inaccurate. Check pump history before repeating." = "Bolus failed or inaccurate. Check pump history before repeating.";
+
+/* */
+"Carbs" = "Carbs";
+
+/* */
+"Temp Basal" = "Temp Basal";
+
+/* */
+"Temp Target" = "Temp Target";
+
+/* */
+"Resume" = "Resume";
+
+/* */
+"Suspend" = "Suspend";
+
+/* */
+"Animated Background" = "Animated Background";
+
+/* Sensor day(s) */
+" day(s)" = " day(s)";
 
 
+/* Headers for settings ----------------------- */
 "OpenAPS main settings" = "OpenAPS main settings";
 
 "OpenAPS SMB settings" = "OpenAPS SMB settings";
@@ -869,19 +909,53 @@ Enact a temp Basal or a temp target */
 
 "OpenAPS other settings" = "OpenAPS other settings";
 
-
 /* Glucose Simulator CGM */
 "Glucose Simulator" = "Glucose Simulator";
 
 /* Restored state message */
 "Bluetooth State restored (APS restarted?). Found %d peripherals, and connected to %@ with identifier %@" = "Bluetooth State restored (APS restarted?). Found %d peripherals, and connected to %@ with identifier %@";
 
-/*
+/* Shared app group */
+"Shared app group for direct connection with Libre 1 transmitters or European Libre 2 sensors" = "Shared app group for direct connection with Libre 1 transmitters or European Libre 2 sensors";
+
+/* Native G6 app */
+"Native G6 app" = "Native G6 app";
+
+/* Native G5 app */
+"Native G5 app" = "Native G5 app";
+
+/* Minilink transmitter */
+"Minilink transmitter" = "Minilink transmitter";
+
+/* Simple simulator */
+"Simple simulator" = "Simple simulator";
+
+/* Direct connection with Libre 1 transmitters or Libre 2 */
+"Direct connection with Libre 1 transmitters or European Libre 2 sensors" = "Direct connection with Libre 1 transmitters or European Libre 2 sensors";
+
+/* Online or internal server */
+"Online or internal server" = "Online or internal server";
+
+/* HealthKit intergration --------------------*/
+/* */
+"Apple Health" = "Apple Health";
+
+/* */
+"Connect to Apple Health" = "Connect to Apple Health";
+
+/* Show when have not permissions for writing to Health */
+"For write data to Apple Health you must give permissions in Settings > Health > Data Access" = "For write data to Apple Health you must give permissions in Settings > Health > Data Access";
+
+/* */
+"After you create glucose records in the Health app, please open FreeAPS X to help us guaranteed transfer changed data" = "After you create glucose records in the Health app, please open FreeAPS X to help us guaranteed transfer changed data";
+/* --------------------------------------------
+
+
   Infotexts from openaps.docs and androidaps.docs
   FreeAPS X
 */
-
 /* ”Rewind Resets Autosens” */
+
 "This feature, enabled by default, resets the autosens ratio to neutral when you rewind your pump, on the assumption that this corresponds to a probable site change. Autosens will begin learning sensitivity anew from the time of the rewind, which may take up to 6 hours. If you usually rewind your pump independently of site changes, you may want to consider disabling this feature." = "This feature, enabled by default, resets the autosens ratio to neutral when you rewind your pump, on the assumption that this corresponds to a probable site change. Autosens will begin learning sensitivity anew from the time of the rewind, which may take up to 6 hours. If you usually rewind your pump independently of site changes, you may want to consider disabling this feature.";
 
 /* ”High Temptarget Raises Sensitivity" */
@@ -982,7 +1056,7 @@ Enact a temp Basal or a temp target */
 "Minimum duration in minutes between two enacted SMBs" = "Minimum duration in minutes between two enacted SMBs";
 
 /* "Bolus Increment" */
-"Smallest possible bolus amount" = "Smallest possible bolus amount";
+"Smallest SMB / SMB increment in oref0. Minimum amount for Medtronic pumps is 0.1 U, whereas for Omnipod it’s 0.05 U. The default value is 0.1." = "Smallest SMB / SMB increment in oref0. Minimum amount for Medtronic pumps is 0.1 U, whereas for Omnipod it’s 0.05 U. The default value is 0.1.";
 
 /* "Insulin Peak Time" */
 "Time of maximum blood glucose lowering effect of insulin, in minutes. Beware: Oref assumes for ultra-rapid (Lyumjev) & rapid-acting (Fiasp) curves minimal (35 & 50 min) and maximal (100 & 120 min) applicable insulinPeakTimes. Using a custom insulinPeakTime outside these bounds will result in issues with FreeAPS-X, longer loop calculations and possible red loops." = "Time of maximum blood glucose lowering effect of insulin, in minutes. Beware: Oref assumes for ultra-rapid (Lyumjev) & rapid-acting (Fiasp) curves minimal (35 & 50 min) and maximal (100 & 120 min) applicable insulinPeakTimes. Using a custom insulinPeakTime outside these bounds will result in issues with FreeAPS-X, longer loop calculations and possible red loops.";

@@ -1,53 +1,53 @@
 /* Describes a certain bolus failure (1: size of the bolus in units) */
-"%1$@ U bolus failed" = "Échec du bolus de %1$@ U";
+"%1$@ U bolus failed" = "%1$@ U bolus failed";
 
 /* Describes an uncertain bolus failure (1: size of the bolus in units) */
-"%1$@ U bolus may not have succeeded" = "Le bolus de %1$@ U a peut-être échoué";
+"%1$@ U bolus may not have succeeded" = "%1$@ U bolus may not have succeeded";
 
 /* The error description describing when Health sharing was denied */
-"Authorization Denied" = "Autorisation refusée";
+"Authorization Denied" = "Authorization Denied";
 
 /* Recovery instruction for an uncertain bolus failure */
-"Check your pump before retrying" = "Vérifiez votre pompe avant de réessayer";
+"Check your pump before retrying" = "Check your pump before retrying";
 
 /* The description of an error returned when attempting to delete a sample not shared by the current app */
-"com.loudnate.CarbKit.deleteCarbEntryUnownedErrorDescription" = "Autorisation refusée";
+"com.loudnate.CarbKit.deleteCarbEntryUnownedErrorDescription" = "Authorization Denied";
 
 /* The error recovery suggestion when attempting to delete a sample not shared by the current app */
-"com.loudnate.carbKit.sharingDeniedErrorRecoverySuggestion" = "Cette entrée peut être supprimée de l'application Health";
+"com.loudnate.carbKit.sharingDeniedErrorRecoverySuggestion" = "This sample can be deleted from the Health app";
 
 /* Generic pump error description */
-"Communication Failure" = "Échec de la communication";
+"Communication Failure" = "Communication Failure";
 
 /* Generic pump error description */
-"Connection Failure" = "Échec de connexion";
+"Connection Failure" = "Connection Failure";
 
 /* Generic pump error description */
-"Device Refused" = "Dispositif refusé";
+"Device Refused" = "Device Refused";
 
 /* Recovery suggestion for a no data error */
-"Ensure carb data exists for the specified date" = "S'assurer que les données sur les glucides existent pour la date spécifiée";
+"Ensure carb data exists for the specified date" = "Ensure carb data exists for the specified date";
 
 /* Glucose trend down */
-"Falling" = "Diminue";
+"Falling" = "Falling";
 
 /* Glucose trend down-down */
-"Falling fast" = "Diminue rapidement";
+"Falling fast" = "Falling fast";
 
 /* Glucose trend down-down-down */
-"Falling very fast" = "Diminue très rapidement";
+"Falling very fast" = "Falling very fast";
 
 /* Glucose trend flat */
-"Flat" = "Stable";
+"Flat" = "Flat";
 
 /* The short unit display string for grams per U */
 "g/U" = "g/U";
 
 /* Generic pump error description */
-"Invalid Configuration" = "Configuration non valide";
+"Invalid Configuration" = "Invalid Configuration";
 
 /* Recovery instruction for a certain bolus failure */
-"It is safe to retry" = "Il est prudent de réessayer";
+"It is safe to retry" = "It is safe to retry";
 
 /* The short unit display string for milligrams per deciliter per U */
 "mg/dL/U" = "mg/dL/U";
@@ -59,40 +59,40 @@
 "mmol/L/U" = "mmol/L/U";
 
 /* Sensor state description for the non-valid state */
-"Needs Attention" = "Nécessite de l'attention";
+"Needs Attention" = "Needs Attention";
 
 /* Describes an error for no data found in a CarbStore request */
-"No values found" = "Aucune entrée trouvée";
+"No values found" = "No values found";
 
 /* Sensor state description for the valid state */
 "OK" = "OK";
 
 /* The error recovery suggestion when Health sharing was denied */
-"Please re-enable sharing in Health" = "Veuillez réactiver le partage dans l'application Santé";
+"Please re-enable sharing in Health" = "Please re-enable sharing in Health";
 
 /* Glucose trend up */
-"Rising" = "Augmente";
+"Rising" = "Rising";
 
 /* Glucose trend up-up */
-"Rising fast" = "Augmente rapidement";
+"Rising fast" = "Rising fast";
 
 /* Glucose trend up-up-up */
-"Rising very fast" = "Augmente très rapidement";
+"Rising very fast" = "Rising very fast";
 
 /* The short unit display string for international units of insulin */
 "U" = "U";
 
 /* The short unit display string for international units of insulin per hour */
-"U/hr" = "U/h";
+"U/hr" = "U/hr";
 
 /* The long unit display string for a singular international unit of insulin */
-"Unit" = "Unité";
+"Unit" = "Unit";
 
 /* The long unit display string for a singular international unit of insulin per hour */
-"Unit/hour" = "unité / heure";
+"Unit/hour" = "Unit/hour";
 
 /* The long unit display string for international units of insulin */
-"Units" = "Unités";
+"Units" = "Units";
 
 /* The long unit display string for international units of insulin per hour */
-"Units/hour" = "unités / heure";
+"Units/hour" = "Units/hour";

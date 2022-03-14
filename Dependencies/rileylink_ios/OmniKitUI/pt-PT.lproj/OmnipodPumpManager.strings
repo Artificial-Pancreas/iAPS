@@ -1,68 +1,68 @@
 /* Class = "UITableViewSection"; headerTitle = "Remove POD"; ObjectID = "1LF-te-Bdd"; */
-"1LF-te-Bdd.headerTitle" = "POD entfernen";
+"1LF-te-Bdd.headerTitle" = "Remove POD";
 
 /* Class = "UINavigationItem"; title = "RileyLink Setup"; ObjectID = "3HH-eJ-lRh"; */
-"3HH-eJ-lRh.title" = "RileyLink-Setup";
+"3HH-eJ-lRh.title" = "RileyLink Setup";
 
 /* Class = "UITableViewController"; title = "Pod Settings"; ObjectID = "6vo-Ov-UpE"; */
-"6vo-Ov-UpE.title" = "Pod-Einstellungen";
+"6vo-Ov-UpE.title" = "Pod Settings";
 
 /* Class = "UITableViewController"; title = "Pump Setup"; ObjectID = "91O-Un-vKc"; */
-"91O-Un-vKc.title" = "Pumpen-Installation";
+"91O-Un-vKc.title" = "Pump Setup";
 
 /* Class = "UITableViewSection"; footerTitle = "NOTE: Do not remove the pod's needle cap at this time."; ObjectID = "EUt-xk-Rmp"; */
-"EUt-xk-Rmp.footerTitle" = "HINWEIS: Bitte entfernen Sie die Schutzkappe der Nadel noch nicht vom POD.";
+"EUt-xk-Rmp.footerTitle" = "NOTE: Do not remove the pod's needle cap at this time.";
 
 /* Class = "UITableViewSection"; headerTitle = "Prepare Pod"; ObjectID = "EUt-xk-Rmp"; */
-"EUt-xk-Rmp.headerTitle" = "POD vorbereiten";
+"EUt-xk-Rmp.headerTitle" = "Prepare Pod";
 
 /* Class = "UILabel"; text = "Loop will remind you to change your pod before it expires. You can change this to a time convenient for you."; ObjectID = "Eng-IY-fQ7"; */
-"Eng-IY-fQ7.text" = "Loop sendet Ihnen eine Benachrichtigung, bevor die Nutzungsdauer des Pods abläuft. Sie können die Zeit entsprechend Ihren Bedürfnissen anpassen.";
+"Eng-IY-fQ7.text" = "Loop will remind you to change your pod before it expires. You can change this to a time convenient for you.";
 
 /* Class = "UILabel"; text = "Please deactivate the pod. When deactivation is complete, remove pod from body."; ObjectID = "GK7-jb-tyY"; */
-"GK7-jb-tyY.text" = "Bitte deaktivieren Sie den Pod. Sobald der Pod vollständig deaktiviert ist, können Sie ihn vom Körper entfernen.";
+"GK7-jb-tyY.text" = "Please deactivate the pod. When deactivation is complete, remove pod from body.";
 
 /* Class = "UINavigationItem"; title = "Insert Cannula"; ObjectID = "HwT-30-f0y"; */
-"HwT-30-f0y.title" = "Kanüle setzen";
+"HwT-30-f0y.title" = "Insert Cannula";
 
 /* Class = "UILabel"; text = "Prepare site. Remove the pod's needle cap and adhesive backing. If pod is OK, apply to site."; ObjectID = "Iuv-5M-bDH"; */
-"Iuv-5M-bDH.text" = "Bereiten Sie die Einsetzstelle für den neuen Pod vor. Entfernen Sie die Schutzkappe der Nadel und die Folie. Sofern der Pod in Ordnung ist, bringen Sie diesen auf der Einsetzstelle an.";
+"Iuv-5M-bDH.text" = "Prepare site. Remove the pod's needle cap and adhesive backing. If pod is OK, apply to site.";
 
 /* Class = "UITableViewController"; title = "Pump Setup"; ObjectID = "aNg-mm-Uuy"; */
-"aNg-mm-Uuy.title" = "Pumpen-Installation";
+"aNg-mm-Uuy.title" = "Pump Setup";
 
 /* Class = "UITableViewController"; title = "Pump Setup"; ObjectID = "ack-ra-XH6"; */
-"ack-ra-XH6.title" = "Pumpen-Installation";
+"ack-ra-XH6.title" = "Pump Setup";
 
 /* Class = "UILabel"; text = "Your Pod is ready for use."; ObjectID = "bJ5-iH-fnF"; */
-"bJ5-iH-fnF.text" = "Ihr Pod kann nun verwendet werden.";
+"bJ5-iH-fnF.text" = "Your Pod is ready for use.";
 
 /* Class = "UILabel"; text = "Reminder"; ObjectID = "ePA-6p-q8C"; */
-"ePA-6p-q8C.text" = "Erinnerung";
+"ePA-6p-q8C.text" = "Reminder";
 
 /* Class = "UINavigationItem"; title = "Pod Pairing"; ObjectID = "jVO-Ut-MhL"; */
-"jVO-Ut-MhL.title" = "Kopplung des Pods";
+"jVO-Ut-MhL.title" = "Pod Pairing";
 
 /* Class = "UITableViewController"; title = "Pump Setup"; ObjectID = "k1Y-x4-m0a"; */
-"k1Y-x4-m0a.title" = "Pumpen-Installation";
+"k1Y-x4-m0a.title" = "Pump Setup";
 
 /* Class = "UILabel"; text = "Review your settings below. They will be programmed into the pod during pairing. You can change these settings at any time in Loopʼs Settings screen."; ObjectID = "kLL-SQ-K0a"; */
-"kLL-SQ-K0a.text" = "Überprüfen Sie Ihre Einstellungen. Diese werden während der Kopplung vom Pod übernommen. Sie können Ihre Einstellungen jederzeit bei den Loop-Einstellungen anpassen.";
+"kLL-SQ-K0a.text" = "Review your settings below. They will be programmed into the pod during pairing. You can change these settings at any time in Loopʼs Settings screen.";
 
 /* Class = "UINavigationItem"; title = "Setup Complete"; ObjectID = "nDb-R5-e02"; */
-"nDb-R5-e02.title" = "Installation erfolgreich";
+"nDb-R5-e02.title" = "Setup Complete";
 
 /* Class = "UITableViewSection"; footerTitle = "NOTE: If cannula sticks out, press cancel."; ObjectID = "rcC-ke-lUP"; */
-"rcC-ke-lUP.footerTitle" = "HINWEIS: Sollte die Kanüle hervorstehen, wählen Sie abbrechen.";
+"rcC-ke-lUP.footerTitle" = "NOTE: If cannula sticks out, press cancel.";
 
 /* Class = "UITableViewSection"; headerTitle = "Apply POD"; ObjectID = "rcC-ke-lUP"; */
-"rcC-ke-lUP.headerTitle" = "POD anbringen";
+"rcC-ke-lUP.headerTitle" = "Apply POD";
 
 /* Class = "UILabel"; text = "Label"; ObjectID = "vEc-Km-ewe"; */
-"vEc-Km-ewe.text" = "Beschriftung";
+"vEc-Km-ewe.text" = "Label";
 
 /* Class = "UILabel"; text = "Fill a new pod with insulin. Listen for 2 beeps from the pod during filling. Keep RileyLink adjacent to the pod during pairing."; ObjectID = "vmF-Dc-3DS"; */
-"vmF-Dc-3DS.text" = "Befüllen Sie den neuen Pod mit Insulin. Achten Sie auf die 2 Piepstöne während des Füllvorgangs. Behalten Sie während der Kopplung Ihr RileyLink, OrangeLink, EmaLink oder sonstige in der Nähe des Pods.";
+"vmF-Dc-3DS.text" = "Fill a new pod with insulin. Listen for 2 beeps from the pod during filling. Keep the RileyLink about 6 inches from the pod during pairing.";
 
 /* Class = "UINavigationItem"; title = "Replace Pod"; ObjectID = "yy1-xf-HdR"; */
-"yy1-xf-HdR.title" = "Pod ersetzen";
+"yy1-xf-HdR.title" = "Replace Pod";

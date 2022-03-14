@@ -26,7 +26,7 @@
 "Insulin recommended" = "Anbefalt insulindose";
 
 /*  */
-"Insulin required" = "insulinReq";
+"Insulin required" = "Insulinbehov";
 
 /* Bolus screen */
 "Recommendation" = "Anbefaling";
@@ -53,7 +53,7 @@
 "looping" = "looper";
 
 /* min ago since last loop */
-"min ago" = "min siden";
+"min ago" = "min";
 
 /* Status Title */
 "No suggestion" = "Ingen forslag";
@@ -896,6 +896,9 @@ Enact a temp Basal or a temp target */
 /* */
 "Animated Background" = "Animert bakgrunn";
 
+/* Sensor day(s) */
+" day(s)" = " dag(er)";
+
 
 /* Headers for settings ----------------------- */
 "OpenAPS main settings" = "OpenAPS hovedinnstillinger";
@@ -913,7 +916,7 @@ Enact a temp Basal or a temp target */
 "Bluetooth State restored (APS restarted?). Found %d peripherals, and connected to %@ with identifier %@" = "Bluetooth-status gjenopprettet (APS restartet?). Funnet %d ennheter, og koblet til %@ med identifikator %@";
 
 /* Shared app group */
-"Shared app group" = "Delt app-gruppe";
+"Shared app group for direct connection with Libre 1 transmitters or European Libre 2 sensors" = "Delt appgruppe for direkte tilkobling av Libre 1 med sender, eller direkte tilkobling til europeisk versjon av Libre 2";
 
 /* Native G6 app */
 "Native G6 app" = "Opprinnelig G6-app";
@@ -928,7 +931,7 @@ Enact a temp Basal or a temp target */
 "Simple simulator" = "Enkel simulator";
 
 /* Direct connection with Libre 1 transmitters or Libre 2 */
-"Direct connection with Libre 1 transmitters or Libre 2" = "Direkte tilkobling med Libre 1 sendere eller Libre 2";
+"Direct connection with Libre 1 transmitters or European Libre 2 sensors" = "Direkte tilkobling av Libre 1 med sender, eller direkte tilkobling til europeisk versjon av Libre 2";
 
 /* Online or internal server */
 "Online or internal server" = "Online eller intern server";
@@ -1053,7 +1056,7 @@ Enact a temp Basal or a temp target */
 "Minimum duration in minutes between two enacted SMBs" = "Minimum duration in minutes between two enacted SMBs";
 
 /* "Bolus Increment" */
-"Smallest possible bolus amount" = "Smallest possible bolus amount";
+"Smallest SMB / SMB increment in oref0. Minimum amount for Medtronic pumps is 0.1 U, whereas for Omnipod it’s 0.05 U. The default value is 0.1." = "Minste mulige endring i SMB-dose i oref0. For Medtronic er minste mulig endring 0,1 U. For Omnipod er minste mulige endring 0,05 E.";
 
 /* "Insulin Peak Time" */
 "Time of maximum blood glucose lowering effect of insulin, in minutes. Beware: Oref assumes for ultra-rapid (Lyumjev) & rapid-acting (Fiasp) curves minimal (35 & 50 min) and maximal (100 & 120 min) applicable insulinPeakTimes. Using a custom insulinPeakTime outside these bounds will result in issues with FreeAPS-X, longer loop calculations and possible red loops." = "Time of maximum blood glucose lowering effect of insulin, in minutes. Beware: Oref assumes for ultra-rapid (Lyumjev) & rapid-acting (Fiasp) curves minimal (35 & 50 min) and maximal (100 & 120 min) applicable insulinPeakTimes. Using a custom insulinPeakTime outside these bounds will result in issues with FreeAPS-X, longer loop calculations and possible red loops.";

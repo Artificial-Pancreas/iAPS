@@ -68,7 +68,7 @@
 "Add Carbs" = "Lägg till kolhydrater";
 
 /* Add carbs header and button in Watch app. You can skip the last " " space. It's just for differentiation */
-"Add Carbs " = "Kolhydrater";
+"Add Carbs " = "Lägg till";
 
 /*  */
 "Amount Carbs" = "Mängd kolhydrater";
@@ -896,6 +896,9 @@ Enact a temp Basal or a temp target */
 /* */
 "Animated Background" = "Animerad Bakgrund";
 
+/* Sensor day(s) */
+" day(s)" = " dagar";
+
 
 /* Headers for settings ----------------------- */
 "OpenAPS main settings" = "OpenAPS huvudsakliga inställningar";
@@ -913,7 +916,7 @@ Enact a temp Basal or a temp target */
 "Bluetooth State restored (APS restarted?). Found %d peripherals, and connected to %@ with identifier %@" = "Bluetooth-status återställd (APS startades om?). Hittade %d perifera enheter anslutna till %@ med identifieraren %@";
 
 /* Shared app group */
-"Shared app group" = "Delad appgrupp";
+"Shared app group for direct connection with Libre 1 transmitters or European Libre 2 sensors" = "Delad appgrupp för direkt anslutning till Libre 1-sändare eller europeiska Libre 2-sensorer";
 
 /* Native G6 app */
 "Native G6 app" = "Ursprunglig Dexcom G6-app";
@@ -928,7 +931,7 @@ Enact a temp Basal or a temp target */
 "Simple simulator" = "Enkel Glukossimulator";
 
 /* Direct connection with Libre 1 transmitters or Libre 2 */
-"Direct connection with Libre 1 transmitters or Libre 2" = "Direkt anslutning till Europeisk Libre 2 sensor eller till en Libre 1-sändare";
+"Direct connection with Libre 1 transmitters or European Libre 2 sensors" = "Direkt anslutning till Libre 1-sändare eller europeiska Libre 2-sensorer";
 
 /* Online or internal server */
 "Online or internal server" = "Online eller intern server";
@@ -1053,7 +1056,7 @@ Enact a temp Basal or a temp target */
 "Minimum duration in minutes between two enacted SMBs" = "Minsta tidsintervall mellan två supermikrobolusar.";
 
 /* "Bolus Increment" */
-"Smallest possible bolus amount" = "Minsta möjliga bolusdos";
+"Smallest SMB / SMB increment in oref0. Minimum amount for Medtronic pumps is 0.1 U, whereas for Omnipod it’s 0.05 U. The default value is 0.1." = "Minsta möjliga SMB (supermikrobolus) i oref0. För Medtronic är minsta möjliga dos 0,1 U, medan det för Omnipod är 0,05 U.";
 
 /* "Insulin Peak Time" */
 "Time of maximum blood glucose lowering effect of insulin, in minutes. Beware: Oref assumes for ultra-rapid (Lyumjev) & rapid-acting (Fiasp) curves minimal (35 & 50 min) and maximal (100 & 120 min) applicable insulinPeakTimes. Using a custom insulinPeakTime outside these bounds will result in issues with FreeAPS-X, longer loop calculations and possible red loops." = "Tid i minuter för när insulinet har som störst blodsockersänkande effekt. Observera att inte ange ett lägre värde än 35 min för Lyumjev eller 50 min för Fiasp, eller högre än 100, respektive 120 min. Om du gör så kommer det att leda till problem med FreeAPS X, som röda loopar, långa Loop-beräkningar och överdrivet stora loggfiler.";

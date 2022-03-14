@@ -191,7 +191,7 @@
 "Carb Ratios" = "Углеводные коэффициенты";
 
 /*  */
-"Ratio" = "Коэфициент";
+"Ratio" = "Коэффициент";
 
 /*  */
 "Autosens" = "Автосенс";
@@ -896,6 +896,9 @@ Enact a temp Basal or a temp target */
 /* */
 "Animated Background" = "Анимированный фон";
 
+/* Sensor day(s) */
+" day(s)" = " day(s)";
+
 
 /* Headers for settings ----------------------- */
 "OpenAPS main settings" = "Основные настройки OpenAPS";
@@ -913,7 +916,7 @@ Enact a temp Basal or a temp target */
 "Bluetooth State restored (APS restarted?). Found %d peripherals, and connected to %@ with identifier %@" = "Bluetooth состояние восстановлено (APS перезапущен?). Найдено %d периферийных устройств и подключено к %@ с идентификатором %@";
 
 /* Shared app group */
-"Shared app group" = "Общая группа приложений";
+"Shared app group for direct connection with Libre 1 transmitters or European Libre 2 sensors" = "Shared app group for direct connection with Libre 1 transmitters or European Libre 2 sensors";
 
 /* Native G6 app */
 "Native G6 app" = "Родное приложение G6";
@@ -928,7 +931,7 @@ Enact a temp Basal or a temp target */
 "Simple simulator" = "Простой симулятор";
 
 /* Direct connection with Libre 1 transmitters or Libre 2 */
-"Direct connection with Libre 1 transmitters or Libre 2" = "Прямое соединение с передатчиками Libre 1 или Libre 2";
+"Direct connection with Libre 1 transmitters or European Libre 2 sensors" = "Direct connection with Libre 1 transmitters or European Libre 2 sensors";
 
 /* Online or internal server */
 "Online or internal server" = "Онлайн или внутренний сервер";
@@ -1053,7 +1056,7 @@ Enact a temp Basal or a temp target */
 "Minimum duration in minutes between two enacted SMBs" = "Минимальная продолжительность в минутах между подачей болюсов";
 
 /* "Bolus Increment" */
-"Smallest possible bolus amount" = "Минимально возможный размер болюса";
+"Smallest SMB / SMB increment in oref0. Minimum amount for Medtronic pumps is 0.1 U, whereas for Omnipod it’s 0.05 U. The default value is 0.1." = "Smallest SMB / SMB increment in oref0. Minimum amount for Medtronic pumps is 0.1 U, whereas for Omnipod it’s 0.05 U. The default value is 0.1.";
 
 /* "Insulin Peak Time" */
 "Time of maximum blood glucose lowering effect of insulin, in minutes. Beware: Oref assumes for ultra-rapid (Lyumjev) & rapid-acting (Fiasp) curves minimal (35 & 50 min) and maximal (100 & 120 min) applicable insulinPeakTimes. Using a custom insulinPeakTime outside these bounds will result in issues with FreeAPS-X, longer loop calculations and possible red loops." = "Пиковое время инсулина в минутах. Время необходимое инсулину для достижения максимального воздействия";

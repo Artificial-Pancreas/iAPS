@@ -1,104 +1,104 @@
 /* The title of the section describing commands */
-"Commands" = "Komutlar";
+"Commands" = "Commands";
 
 /* The connected state */
-"Connected" = "Bağlandı";
+"Connected" = "Connected";
 
 /* The in-progress connecting state */
-"Connecting" = "Bağlanıyor";
+"Connecting" = "Connecting";
 
 /* The title of the cell showing BLE connection state */
-"Connection State" = "Bağlantı Durumu";
+"Connection State" = "Connection State";
 
 /* The title of the section describing the device */
-"Device" = "Cihaz";
+"Device" = "Device";
 
 /* The title of the devices table section in RileyLink settings */
-"Devices" = "Cihazlar";
+"Devices" = "Devices";
 
 /* The disconnected state */
-"Disconnected" = "Bağlantı kesildi";
+"Disconnected" = "Disconnected";
 
 /* The in-progress disconnecting state */
-"Disconnecting" = "Bağlantı kesiliyor";
+"Disconnecting" = "Disconnecting";
 
 /* The title of the cell showing firmware version */
-"Firmware" = "Aygıt Yazılımı";
+"Firmware" = "Firmware";
 
 /* The title of the cell showing current rileylink frequency */
-"Frequency" = "Frekans";
+"Frequency" = "Frequency";
 
 /* The title of the cell showing device name */
-"Name" = "Ad";
+"Name" = "Name";
 
 /* RileyLink setup description */
-"RileyLink allows for communication with the pump over Bluetooth Low Energy." = "RileyLink, Bluetooth Low Energy üzerinden pompa ile iletişime izin verir.";
+"RileyLink allows for communication with the pump over Bluetooth Low Energy." = "RileyLink allows for communication with the pump over Bluetooth Low Energy.";
 
 /* The title of the cell showing BLE signal strength (RSSI) */
-"Signal Strength" = "Sinyal Gücü";
+"Signal Strength" = "Signal Strength";
 
 /* The header of the cells showing connection monitoring */
-"Connection Monitoring" = "Bağlantı İzleme";
+"Connection Monitoring" = "Connection Monitoring";
 
 /* The title of the cell showing uptime */
-"Uptime" = "Çalışma süresi";
+"Uptime" = "Uptime";
 
 /* The title of the cell showing battery level */
-"Battery level" = "Pil seviyesi";
+"Battery level" = "Battery level";
 
 /* The title of the cell showing Voltage */
-"Voltage" = "Voltaj";
+"Voltage" = "Voltage";
 
 /* "The title of the section for alerts" */
-"Alert" = "Uyarı";
+"Alert" = "Alert";
 
 /* The title of the cell showing Low Battery Alert */
-"Low Battery Alert" = "Düşük Pil Uyarısı";
+"Low Battery Alert" = "Low Battery Alert";
 
 /* Header of list showing battery level alert options */
-"Battery level Alert" = "Pil seviyesi Uyarısı";
+"Battery level Alert" = "Battery level Alert";
 
 /* Battery level alert OFF in list of options */
-"OFF" = "KAPA";
+"OFF" = "OFF";
 
 /* The title of the command to update diagnostic LEDs */
-"Diagnostic LEDs" = "Sistem kontrol LEDleri";
+"Diagnostic LEDs" = "Diagnostic LEDs";
 
 /* The title of the command to fetch RileyLink statistics */
-"Get RileyLink Statistics" = "RileyLink İstatistiklerini Al";
+"Get RileyLink Statistics" = "Get RileyLink Statistics";
 
 /* The title of the command to invert BLE connection LED logic */
-"Invert LED Logic" = "LED Mantığını Ters Çevir";
+"Invert LED Logic" = "Invert LED Logic";
 
 /* The header of the cells showing test commands */
-"Test Commands" = "Komutları Dene";
+"Test Commands" = "Test Commands";
 
 /* The title of the cell showing Lighten Yellow LED */
-"Lighten Yellow LED" = "Sarı LED'i Aç";
+"Lighten Yellow LED" = "Lighten Yellow LED";
 
 /* The title of the cell showing Lighten Yellow LED */
-"Lighten Red LED" = "Kırmızı LED'i Aç";
+"Lighten Red LED" = "Lighten Red LED";
 
 /* The title of the cell showing Test Vibration */
-"Test Vibration" = "Titreşimi Dene";
+"Test Vibration" = "Test Vibration";
 
 /* The title of the cell for sounding device finding piezo */
-"Find Device" = "Cihazı Bul";
+"Find Device" = "Find Device";
 
 /* The title of the cell for connection LED */
-"Connection LED" = "Bağlantı LED'i";
+"Connection LED" = "Connection LED";
 
 /* The title of the cell for connection vibration */
-"Connection Vibration" = "Bağlanıldığında Titreş";
+"Connection Vibration" = "Connection Vibration";
 
 /* Detail text when battery alert disabled. */
-"Off" = "Kapa";
+"Off" = "Off";
 
 /* Text indicating LED Mode is on */
-"On" = "Aç";
+"On" = "On";
 
 /* Text indicating LED Mode is off */
-"Off" = "Kapa";
+"Off" = "Off";
 
 /* Text indicating LED Mode is auto */
-"Auto" = "Oto";
+"Auto" = "Auto";

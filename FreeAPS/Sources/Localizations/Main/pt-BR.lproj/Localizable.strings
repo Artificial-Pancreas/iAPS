@@ -68,7 +68,7 @@
 "Add Carbs" = "Adicionar carboidratos";
 
 /* Add carbs header and button in Watch app. You can skip the last " " space. It's just for differentiation */
-"Add Carbs " = "Add Carbs ";
+"Add Carbs " = "Adicionar Carbs ";
 
 /*  */
 "Amount Carbs" = "Quantidade de Carboidratos";
@@ -131,7 +131,7 @@
 "Top target" = "Limite alto";
 
 /*  Temp target set for ... minutes */
-"for" = "for";
+"for" = "por";
 
 /*  Temp target set for ... minutes */
 "min" = "min";
@@ -405,22 +405,22 @@ Enact a temp Basal or a temp target */
 "Transmitter ID" = "ID do transmissor";
 
 /* Other CGM setting */
-"Other" = "Outro";
+"Other" = "Outros";
 
 /* Whatch app alert */
-"Set temp targets presets on iPhone first" = "Set temp targets presets on iPhone first";
+"Set temp targets presets on iPhone first" = "Defina primeiro as predefinições dos alvos temporários no iPhone";
 
 /* Updating Watch app */
-"Updating..." = "Updating...";
+"Updating..." = "Atualizando...";
 
 /* Header for Temp targets in Watch app */
-"Temp Targets" = "Temp Targets";
+"Temp Targets" = "Alvos Temporários";
 
 /* Delete carbs from Treatments list*/
-"Delete carbs?" = "Delete carbs?";
+"Delete carbs?" = "Deletar carboidratos?";
 
 /* Treatments list */
-"Treatments" = "Treatments";
+"Treatments" = "Tratamentos";
 
 /* " min" in Treatments list */
 " min" = " min";
@@ -429,40 +429,40 @@ Enact a temp Basal or a temp target */
 /* Calendar and Libre transmitter settings ---------------
  */
 /* */
-"Configure Libre Transmitter" = "Configure Libre Transmitter";
+"Configure Libre Transmitter" = "Configurar Transmissor do Libre";
 
 /* */
-"Calibrations" = "Calibrations";
+"Calibrations" = "Calibragens";
 
 /* */
-"Create events in calendar" = "Create events in calendar";
+"Create events in calendar" = "Criar eventos no calendário";
 
 /* */
-"Calendar" = "Calendar";
+"Calendar" = "Calendário";
 
 /* */
-"Other" = "Other";
+"Other" = "Outros";
 
 /* */
-"Libre Transmitter" = "Libre Transmitter";
+"Libre Transmitter" = "Transmissor do Libre";
 
 /* */
-"Libre Transmitters" = "Libre Transmitters";
+"Libre Transmitters" = "Transmissores do Libre";
 
 /* */
-"Bluetooth Transmitters" = "Bluetooth Transmitters";
+"Bluetooth Transmitters" = "Transmissores Bluetooth";
 
 /* */
-"Modes" = "Modes";
+"Modes" = "Modos";
 
 /* Libre 2 Direct */
-"Libre 2 Direct" = "Libre 2 Direct";
+"Libre 2 Direct" = "Libre 2 Direto";
 
 /* */
-"Select the third party transmitter you want to connect to" = "Select the third party transmitter you want to connect to";
+"Select the third party transmitter you want to connect to" = "Escolha o transmissor de terceiros que você quer conectar";
 
 /* State was restored */
-"State was restored" = "State was restored";
+"State was restored" = "O estado foi restaurado";
 
 /* The short unit display string for millimoles of glucose per liter */
 "mmol/L" = "mmol/L";
@@ -471,82 +471,82 @@ Enact a temp Basal or a temp target */
 "mg/dL" = "mg/dL";
 
 /* */
-"Add calibration" = "Add calibration";
+"Add calibration" = "Adicionar Calibragem";
 
 /* When adding capillary glucose meater reading */
-"Meter glucose" = "Meter glucose";
+"Meter glucose" = "Glicose do medidor";
 
 /* */
-"Info" = "Info";
+"Info" = "Informação";
 
 /*v*/
-"Slope" = "Slope";
+"Slope" = "Inclinação";
 
 /* */
-"Intercept" = "Intercept";
+"Intercept" = "Interceptação";
 
 /* */
-"Chart" = "Chart";
+"Chart" = "Gráfico";
 
 /* */
-"Remove" = "Remove";
+"Remove" = "Remover";
 
 /* */
-"Remove Last" = "Remove Last";
+"Remove Last" = "Remover último";
 
 /* */
-"Remove All" = "Remove All";
+"Remove All" = "Remover Todos";
 
 /* */
-"About the Process" = "About the Process";
+"About the Process" = "Sobre o Processo";
 
 /* */
-"Please make sure that your Libre 2 sensor is already activated and finished warming up. If you have other apps connecting to the sensor via bluetooth, these need to be shut down or uninstalled. \n\n You can only have one app communicating with the sensor via bluetooth. Then press the \"pariring and connection\" button below to start the process. Please note that the bluetooth connection might take up to a couple of minutes before it starts working." = "Please make sure that your Libre 2 sensor is already activated and finished warming up. If you have other apps connecting to the sensor via bluetooth, these need to be shut down or uninstalled. \n\n You can only have one app communicating with the sensor via bluetooth. Then press the \"pariring and connection\" button below to start the process. Please note that the bluetooth connection might take up to a couple of minutes before it starts working.";
+"Please make sure that your Libre 2 sensor is already activated and finished warming up. If you have other apps connecting to the sensor via bluetooth, these need to be shut down or uninstalled. \n\n You can only have one app communicating with the sensor via bluetooth. Then press the \"pariring and connection\" button below to start the process. Please note that the bluetooth connection might take up to a couple of minutes before it starts working." = "Por favor, certifique-se que o seu sensor Libre 2 já está ativado e que o aquecimento acabou. Se você tem outros apps se conectando ao sensor via bluetooth, eles precisam ser desligados. Ou desinstalados. \n\n Você só pode ter um app se comunicando com o sensor via bluetooth. Em seguida, pressione o botão \"pareamento e conexão\" abaixo para iniciar o processo. Por favor, note que a conexão bluetooth pode levar alguns minutos antes de começar a funcionar.";
 
 /* */
-"Pairinginfo" = "Pairinginfo";
+"Pairinginfo" = "Informação de Pareamento";
 
 /* */
-"PatchInfo" = "PatchInfo";
+"PatchInfo" = "Informação do patch";
 
 /* */
-"Calibrationinfo" = "Calibrationinfo";
+"Calibrationinfo" = "Informação de Calibração";
 
 /* */
-"Unknown" = "Unknown";
+"Unknown" = "Desconhecido";
 
 /* */
-"Not paired yet" = "Not paired yet";
+"Not paired yet" = "Ainda não pareado";
 
 /* */
-"Pair Sensor & connect" = "Pair Sensor & connect";
+"Pair Sensor & connect" = "Emparelhar e conectar sensor";
 
 /* */
-"Phone NFC required!" = "Phone NFC required!";
+"Phone NFC required!" = "É preciso um telefone com NFC!";
 
 /* */
-"Your phone or app is not enabled for NFC communications, which is needed to pair to libre2 sensors" = "Your phone or app is not enabled for NFC communications, which is needed to pair to libre2 sensors";
+"Your phone or app is not enabled for NFC communications, which is needed to pair to libre2 sensors" = "Seu telefone ou aplicativo não está habilitado para conexões NFC, que é necessário para emparelhar sensores Libre 2";
 
 /* Bluetooth Power Off */
-"Bluetooth Power Off" = "Bluetooth Power Off";
+"Bluetooth Power Off" = "Desligar Bluetooth";
 
 /* Please turn on Bluetooth */
-"Please turn on Bluetooth" = "Please turn on Bluetooth";
+"Please turn on Bluetooth" = "Por favor, ligue o Bluetooth";
 
 /* No Libre Transmitter Selected */
-"No Libre Transmitter Selected" = "No Libre Transmitter Selected";
+"No Libre Transmitter Selected" = "Nenhum transmissor Libre selecionado";
 
 /* Delete Transmitter and start anew. */
-"Delete CGMManager and start anew. Your libreoopweb credentials will be preserved" = "Delete CGMManager and start anew. Your libreoopweb credentials will be preserved";
+"Delete CGMManager and start anew. Your libreoopweb credentials will be preserved" = "Delete o CGMManager e comece de novo. Suas credenciais libreoopweb serão mantidas";
 
 /* Invalid libre checksum */
-"Invalid libre checksum" = "Invalid libre checksum";
+"Invalid libre checksum" = "Checksum do libre inválido";
 
 /* Libre sensor was incorrectly read, CRCs were not valid */
-"Libre sensor was incorrectly read, CRCs were not valid" = "Libre sensor was incorrectly read, CRCs were not valid";
+"Libre sensor was incorrectly read, CRCs were not valid" = "Sensor Libre foi lido incorretamente, CRCs não eram válidos";
 
 /* Glucose */
-"Glucose" = "Glucose";
+"Glucose" = "Glicose";
 
 /* LOWALERT! */
 "LOWALERT!" = "LOWALERT!";
@@ -702,19 +702,19 @@ Enact a temp Basal or a temp target */
 "Notifications" = "Notifications";
 
 /* */
-"Export logs" = "Export logs";
+"Export logs" = "Exportar logs";
 
 /* */
-"Export not available" = "Export not available";
+"Export not available" = "Exportação não disponível";
 
 /* */
-"Log export requires ios 15" = "Log export requires ios 15";
+"Log export requires ios 15" = "Exportar os logs requer o iOS 15";
 
 /* */
-"Got it!" = "Got it!";
+"Got it!" = "Consegui!";
 
 /* */
-"Saved to %@" = "Saved to %@";
+"Saved to %@" = "Salvo em %@";
 
 /* */
 "No logs available" = "No logs available";
@@ -896,6 +896,9 @@ Enact a temp Basal or a temp target */
 /* */
 "Animated Background" = "Animated Background";
 
+/* Sensor day(s) */
+" day(s)" = " day(s)";
+
 
 /* Headers for settings ----------------------- */
 "OpenAPS main settings" = "OpenAPS main settings";
@@ -913,7 +916,7 @@ Enact a temp Basal or a temp target */
 "Bluetooth State restored (APS restarted?). Found %d peripherals, and connected to %@ with identifier %@" = "Bluetooth State restored (APS restarted?). Found %d peripherals, and connected to %@ with identifier %@";
 
 /* Shared app group */
-"Shared app group" = "Shared app group";
+"Shared app group for direct connection with Libre 1 transmitters or European Libre 2 sensors" = "Shared app group for direct connection with Libre 1 transmitters or European Libre 2 sensors";
 
 /* Native G6 app */
 "Native G6 app" = "Native G6 app";
@@ -928,7 +931,7 @@ Enact a temp Basal or a temp target */
 "Simple simulator" = "Simple simulator";
 
 /* Direct connection with Libre 1 transmitters or Libre 2 */
-"Direct connection with Libre 1 transmitters or Libre 2" = "Direct connection with Libre 1 transmitters or Libre 2";
+"Direct connection with Libre 1 transmitters or European Libre 2 sensors" = "Direct connection with Libre 1 transmitters or European Libre 2 sensors";
 
 /* Online or internal server */
 "Online or internal server" = "Online or internal server";
@@ -1053,7 +1056,7 @@ Enact a temp Basal or a temp target */
 "Minimum duration in minutes between two enacted SMBs" = "Minimum duration in minutes between two enacted SMBs";
 
 /* "Bolus Increment" */
-"Smallest possible bolus amount" = "Smallest possible bolus amount";
+"Smallest SMB / SMB increment in oref0. Minimum amount for Medtronic pumps is 0.1 U, whereas for Omnipod it’s 0.05 U. The default value is 0.1." = "Smallest SMB / SMB increment in oref0. Minimum amount for Medtronic pumps is 0.1 U, whereas for Omnipod it’s 0.05 U. The default value is 0.1.";
 
 /* "Insulin Peak Time" */
 "Time of maximum blood glucose lowering effect of insulin, in minutes. Beware: Oref assumes for ultra-rapid (Lyumjev) & rapid-acting (Fiasp) curves minimal (35 & 50 min) and maximal (100 & 120 min) applicable insulinPeakTimes. Using a custom insulinPeakTime outside these bounds will result in issues with FreeAPS-X, longer loop calculations and possible red loops." = "Time of maximum blood glucose lowering effect of insulin, in minutes. Beware: Oref assumes for ultra-rapid (Lyumjev) & rapid-acting (Fiasp) curves minimal (35 & 50 min) and maximal (100 & 120 min) applicable insulinPeakTimes. Using a custom insulinPeakTime outside these bounds will result in issues with FreeAPS-X, longer loop calculations and possible red loops.";

@@ -50,7 +50,9 @@ struct CarbsView: View {
                 }
                 Button {
                     WKInterfaceDevice.current().play(.click)
-                    state.addCarbs(Int(amount))
+                    // Get amount from displayed string
+                    let amount = Int(numberFormatter.string(from: amount as NSNumber)!) ?? Int(amount.rounded())
+                    state.addCarbs(amount)
                 }
                 label: {
                     HStack {

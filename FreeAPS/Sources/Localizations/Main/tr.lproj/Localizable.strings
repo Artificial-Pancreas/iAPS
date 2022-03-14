@@ -137,7 +137,7 @@
 "min" = "dk";
 
 /*  */
-"Autotune" = "Atoayar";
+"Autotune" = "Otoayar";
 
 /*  */
 "Basal profile" = "Bazal profil";
@@ -146,7 +146,7 @@
 "Carb ratio" = "Karbonhidrat oranı";
 
 /*  */
-"Delete autotune data" = "Atoayar verilerini sil";
+"Delete autotune data" = "Otoayar verilerini sil";
 
 /*  */
 "Run now" = "Şimdi çalıştır";
@@ -579,7 +579,7 @@ Enact a temp Basal or a temp target */
 "Invalid Glucose sample detected, try again later" = "Geçersiz Glikoz örneği tespit edildi, daha sonra tekrar deneyin";
 
 /* ensor might have temporarily stopped, fallen off or is too cold or too warm */
-"Sensor might have temporarily stopped, fallen off or is too cold or too warm" = "Sensör geçici olarak durmuş, düşmüş veya çok soğuk veya çok sıcak olabilir";
+"Sensor might have temporarily stopped, fallen off or is too cold or too warm" = "Sensör geçici olarak durmuş, düşmüş, çok soğuk veya çok sıcak olabilir";
 
 /* Invalid Sensor Detected */
 "Invalid Sensor Detected" = "Geçersiz Sensör Algılandı";
@@ -657,7 +657,7 @@ Enact a temp Basal or a temp target */
 "Hardware" = "Donanım";
 
 /* */
-"Firmware" = "Firmware";
+"Firmware" = "Aygıt Yazılımı";
 
 /* */
 "Connection State" = "Bağlantı Durumu";
@@ -669,10 +669,10 @@ Enact a temp Basal or a temp target */
 "Sensor Type" = "Sensör Tipi";
 
 /* */
-"Factory Calibration Parameters" = "Fabrika Parametre Ayarları";
+"Factory Calibration Parameters" = "Fabrika Kalibrasyon Parametreleri";
 
 /* */
-"Valid for footer" = "Altbilgi için geçerli";
+"Valid for footer" = "Geçerli olan";
 
 /* */
 "Edit calibrations" = "Kalibrasyonları Düzenle";
@@ -705,7 +705,7 @@ Enact a temp Basal or a temp target */
 "Export logs" = "Günlüğü Dışa Aktarın";
 
 /* */
-"Export not available" = "Dışa aktarma mevcut değil";
+"Export not available" = "Dışa aktarma kullanılamıyor";
 
 /* */
 "Log export requires ios 15" = "Günlük dışa aktarma işlemi için ios 15 gerekir";
@@ -738,7 +738,7 @@ Enact a temp Basal or a temp target */
 "Adds Transmitter Battery" = "Verici Pili Ekler";
 
 /* */
-"Also vibrate" = "Ayrıca titreşim";
+"Also vibrate" = "Ayrıca titret";
 
 /* */
 "Additional notification types" = "Ek bildirim çeşitleri";
@@ -777,7 +777,7 @@ Enact a temp Basal or a temp target */
 "Schedules were saved successfully!" = "Programlar başarıyla kaydedildi!";
 
 /* */
-"High Glucose Alarm active" = "Yüksek Glikoz Uyarılarımı aktif";
+"High Glucose Alarm active" = "Yüksek Glikoz Alarmı aktif";
 
 /* */
 "Low Glucose Alarm active" = "Düşük Glikoz Alarmı aktif";
@@ -795,7 +795,7 @@ Enact a temp Basal or a temp target */
 "nothing to see here" = "burada görülecek bir şey yok";
 
 /* */
-"snooze from testview clicked" = "tıklanan testview'ü ertele";
+"snooze from testview clicked" = "tıklanan test görünümü ertele";
 
 /* */
 "will snooze for %@ until %@" = "%@ için %@ tarihine kadar ertelenecek";
@@ -804,7 +804,7 @@ Enact a temp Basal or a temp target */
 "Click to Snooze Alerts" = "Uyarıları Ertelemek için Tıklayın";
 
 /* */
-"Strength" = "Güçü";
+"Strength" = "Güç";
 
 /* */
 "Hold the top of your iPhone near the sensor to pair" = "Eşleştirmek için iPhone'unuzun üst kısmını sensörün yakınında tutun";
@@ -861,13 +861,13 @@ Enact a temp Basal or a temp target */
 "FreeAPS X not active" = "FreeAPS X etkin değil";
 
 /* */
-"Last loop was more then %d min ago" = "Son döngü %d dak daha önceydi";
+"Last loop was more then %d min ago" = "Son döngü %d dak kadar önceydi";
 
 /* Glucose badge */
 "Show glucose on the app badge" = "Uygulama rozetinde glikozu göster";
 
 /* */
-"Backfill glucose" = "Geri doldurma glikoz";
+"Backfill glucose" = "Glikoz geri doldurma";
 
 /* About this source */
 "About this source" = "Bu kaynak hakkında";
@@ -896,6 +896,9 @@ Enact a temp Basal or a temp target */
 /* */
 "Animated Background" = "Animasyonlu Arka Plan";
 
+/* Sensor day(s) */
+" day(s)" = " gün";
+
 
 /* Headers for settings ----------------------- */
 "OpenAPS main settings" = "OpenAPS ana ayarları";
@@ -913,7 +916,7 @@ Enact a temp Basal or a temp target */
 "Bluetooth State restored (APS restarted?). Found %d peripherals, and connected to %@ with identifier %@" = "Bluetooth Durumu geri yüklendi (APS yeniden başlatıldı mı?). %d çevre birimi bulundu ve %@ tanımlayıcısı ile %@'a bağlandı";
 
 /* Shared app group */
-"Shared app group" = "Paylaşılan uygulama grubu";
+"Shared app group for direct connection with Libre 1 transmitters or European Libre 2 sensors" = "Libre 1 vericileri veya Avrupa Libre 2 sensörleriyle doğrudan bağlantı için paylaşılan uygulama grubu";
 
 /* Native G6 app */
 "Native G6 app" = "Yerel G6 uygulaması";
@@ -922,13 +925,13 @@ Enact a temp Basal or a temp target */
 "Native G5 app" = "Yerel G5 uygulaması";
 
 /* Minilink transmitter */
-"Minilink transmitter" = "Minilink Sensörü";
+"Minilink transmitter" = "Minilink vericisi";
 
 /* Simple simulator */
 "Simple simulator" = "Basit simülatör";
 
 /* Direct connection with Libre 1 transmitters or Libre 2 */
-"Direct connection with Libre 1 transmitters or Libre 2" = "Libre 1 veya Libre 2 vericileri ile doğrudan bağlantı";
+"Direct connection with Libre 1 transmitters or European Libre 2 sensors" = "Libre 1 vericileri veya Avrupa Libre 2 sensörleri ile doğrudan bağlantı";
 
 /* Online or internal server */
 "Online or internal server" = "Çevrimiçi veya dahili sunucu";
@@ -953,7 +956,7 @@ Enact a temp Basal or a temp target */
 */
 /* ”Rewind Resets Autosens” */
 
-"This feature, enabled by default, resets the autosens ratio to neutral when you rewind your pump, on the assumption that this corresponds to a probable site change. Autosens will begin learning sensitivity anew from the time of the rewind, which may take up to 6 hours. If you usually rewind your pump independently of site changes, you may want to consider disabling this feature." = "Varsayılan olarak etkinleştirilen bu özellik, pompanızı geri sardığınızda, bunun olası bir yer değişikliğine karşılık geldiği varsayımıyla otoduyarlılık oranını nötr olarak sıfırlar. Otoduyarlılık, 6 saate kadar sürebilen geri sarma zamanından itibaren hassasiyeti yeniden öğrenmeye başlayacaktır. Pompanızı genellikle site değişikliklerinden bağımsız olarak geri sarıyorsanız, bu özelliği devre dışı bırakmayı düşünebilirsiniz.";
+"This feature, enabled by default, resets the autosens ratio to neutral when you rewind your pump, on the assumption that this corresponds to a probable site change. Autosens will begin learning sensitivity anew from the time of the rewind, which may take up to 6 hours. If you usually rewind your pump independently of site changes, you may want to consider disabling this feature." = "Varsayılan olarak etkinleştirilen bu özellik, pompanızı geri sardığınızda, bunun olası bir set değişikliğine karşılık geldiği varsayımıyla otoduyarlılık oranını nötr olarak sıfırlar. Otoduyarlılık, 6 saate kadar sürebilen geri sarma zamanından itibaren hassasiyeti yeniden öğrenmeye başlayacaktır. Pompanızı genellikle set değişikliklerinden bağımsız olarak geri sarıyorsanız, bu özelliği devre dışı bırakmayı düşünebilirsiniz.";
 
 /* ”High Temptarget Raises Sensitivity" */
 "Defaults to false. When set to true, raises sensitivity (lower sensitivity ratio) for temp targets set to >= 111. Synonym for exercise_mode. The higher your temp target above 110 will result in more sensitive (lower) ratios, e.g., temp target of 120 results in sensitivity ratio of 0.75, while 140 results in 0.6 (with default halfBasalTarget of 160)." = "Varsayılan olarak kapalı olup. Açık olarak ayarlandığında, >= 111 olarak ayarlanan geçici hedefler için duyarlılığı artırır (düşük duyarlılık oranı). Egzersiz_modu ile eşanlamlı. Geçici hedefiniz 110'un üzerinde ne kadar yüksek olursa, daha hassas (düşük) oranlar elde edilir, örneğin 120'lik geçici hedef 0,75 hassasiyet oranı ile sonuçlanırken 140 sonuç 0,6 ile sonuçlanır (varsayılan ile HalfBasalTarget 160).";
@@ -1053,7 +1056,7 @@ Enact a temp Basal or a temp target */
 "Minimum duration in minutes between two enacted SMBs" = "Yürürlüğe giren iki SMB arasındaki dakika cinsinden minimum süre";
 
 /* "Bolus Increment" */
-"Smallest possible bolus amount" = "Mümkün olan en küçük bolus miktarı";
+"Smallest SMB / SMB increment in oref0. Minimum amount for Medtronic pumps is 0.1 U, whereas for Omnipod it’s 0.05 U. The default value is 0.1." = "oref0'da mümkün olan en küçük SMB miktarı. Medtronic için mümkün olan en küçük miktar 0,1 Ü'dir. Omnipod için mümkün olan en küçük miktar 0,05 Ü'dir.";
 
 /* "Insulin Peak Time" */
 "Time of maximum blood glucose lowering effect of insulin, in minutes. Beware: Oref assumes for ultra-rapid (Lyumjev) & rapid-acting (Fiasp) curves minimal (35 & 50 min) and maximal (100 & 120 min) applicable insulinPeakTimes. Using a custom insulinPeakTime outside these bounds will result in issues with FreeAPS-X, longer loop calculations and possible red loops." = "İnsülinin maksimum kan şekerini düşürücü etkisinin dakika cinsinden süresi. Dikkat: Oref, ultra-rapid (Lyumjev) ve hızlı etkili (Fiasp) eğrilerin minimum (35 ve 50 dakika) ve maksimum (100 ve 120 dakika) uygulanabilir insülinPeakTimes olduğunu varsayar. Bu sınırların dışında özel bir insülinPeakTime kullanılması, FreeAPS-X, daha uzun döngü hesaplamaları ve olası kırmızı döngülerle ilgili sorunlara neden olacaktır.";

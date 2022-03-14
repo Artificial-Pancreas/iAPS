@@ -1,261 +1,261 @@
 /* Accessibility format string for (1: localized volume)(2: time) */
-"%1$@ units remaining at %2$@" = "%1$@ ünite %2$@'de kaldı";
+"%1$@ units remaining at %2$@" = "%1$@ units remaining at %2$@";
 
 /* The format string for displaying an offset from a time zone: (1: GMT)(2: -)(3: 4:00) */
 "%1$@%2$@%3$@" = "%1$@%2$@%3$@";
 
 /* Format string providing instructions for replacing pod due to a fault. (1: The fault description) */
-"%1$@. Insulin delivery has stopped. Please deactivate and remove pod." = "%1$@. İnsülin iletimi durduruldu. Lütfen pod'u devre dışı bırakın ve çıkartın.";
+"%1$@. Insulin delivery has stopped. Please deactivate and remove pod." = "%1$@. Insulin delivery has stopped. Please deactivate and remove pod.";
 
 /* Format string for delivered insulin. (1: The localized amount)
    Format string for insulin remaining in reservoir. (1: The localized amount) */
-"%@ U" = "%@ Ü";
+"%@ U" = "%@ U";
 
 /* Format string for bolus progress when finished. (1: The localized amount) */
-"%@ U (Finished)" = "%@ Ü (Tamamlandı)";
+"%@ U (Finished)" = "%@ U (Finished)";
 
 /* Format string for bolus progress. (1: The delivered amount) (2: The programmed amount) (3: the percent progress) */
-"%@ U of %@ U (%@)" = "%2$@ Ü den %1$@ Ü (%3$@)";
+"%@ U of %@ U (%@)" = "%1$@ U of %2$@ U (%3$@)";
 
 /* Format string for temp basal rate. (1: The localized amount) */
-"%@ U/hour" = "%@ Ü/Sa";
+"%@ U/hour" = "%@ U/hour";
 
 /* Format string for bolus percent progress. (1: Percent progress) */
 "%@%%" = "%@%%";
 
 /* Format string for reservoir reading when above or equal to maximum reading. (1: The localized amount) */
-"%@+ U" = "%@+ Ü";
+"%@+ U" = "%@+ U";
 
 /* Appends a full-stop to a statement */
 "%@." = "%@.";
 
 /* Format string for reservoir volume. (1: The localized volume) */
-"%@U" = "%@Ü";
+"%@U" = "%@U";
 
 /* The title of the cell showing the pod activated at time */
-"Active Time" = "Aktif Süre";
+"Active Time" = "Active Time";
 
 /* The title of the cell showing the Pod Active Clock */
-"Pod Active Clock" = "Pod Aktif Saati";
+"Pod Active Clock" = "Pod Active Clock";
 
 /* The title of the cell showing alarm status */
-"Alarms" = "Alarmlar";
+"Alarms" = "Alarms";
 
 /* Confirmation message for shutting down a pod */
-"Are you sure you want to shutdown this pod?" = "Bu pod'u iptal etmek istediğinizden emin misiniz?";
+"Are you sure you want to shutdown this pod?" = "Are you sure you want to shutdown this pod?";
 
 /* Confirmation message for removing Omnipod PumpManager */
-"Are you sure you want to stop using Omnipod?" = "Omnipod'u kullanmayı bırakmak istediğinizden emin misiniz?";
+"Are you sure you want to stop using Omnipod?" = "Are you sure you want to stop using Omnipod?";
 
 /* The title text for the address assigned to the pod */
-"Assigned Address" = "Adres Atandı";
+"Assigned Address" = "Assigned Address";
 
 /* The title of the cell showing pod basal status */
-"Basal Delivery" = "Bazal İletimi";
+"Basal Delivery" = "Basal Delivery";
 
 /* The title text for the basal rate schedule */
-"Basal Rates" = "Bazal Oranları";
+"Basal Rates" = "Basal Rates";
 
 /* The title of the cell showing pod bolus status */
-"Bolus Delivery" = "Bolus İletimi";
+"Bolus Delivery" = "Bolus Delivery";
 
 /* The title of the cancel action in an action sheet */
-"Cancel" = "Vazgeç";
+"Cancel" = "Cancel";
 
 /* The title of the command to change pump time zone */
-"Change Time Zone" = "Zaman dilimini Değiştir";
+"Change Time Zone" = "Change Time Zone";
 
 /* Progress message for changing pod time. */
-"Changing time…" = "Zaman değiştiriliyor…";
+"Changing time…" = "Changing time…";
 
 /* The title of the configuration section in settings */
-"Configuration" = "Yapılandırma";
+"Configuration" = "Configuration";
 
 /* The title of the Insulin Type */
-"Insulin Type" = "İnsülin Tipi";
+"Insulin Type" = "Insulin Type";
 
 /* The title of the continue action in an action sheet */
-"Continue" = "Devam et";
+"Continue" = "Continue";
 
 /* Button title to deactivate pod because of fault during setup */
-"Deactivate" = "Devredışı bırak";
+"Deactivate" = "Deactivate";
 
 /* Button title for pod deactivation
    Button title to deactivate pod */
-"Deactivate Pod" = "Pod'u devredışı bırak";
+"Deactivate Pod" = "Deactivate Pod";
 
 /* Button title to delete Omnipod PumpManager */
-"Delete Omnipod" = "Omnipod'u Sill";
+"Delete Omnipod" = "Delete Omnipod";
 
 /* Title text for delivery limits */
-"Delivery Limits" = "İletim Kısıtlamaları";
+"Delivery Limits" = "Delivery Limits";
 
 /* The title of the device information section in settings */
-"Device Information" = "Cihaz Bilgileri";
+"Device Information" = "Device Information";
 
 /* Title text for button to disable bolus beeps */
-"Disable Bolus Beeps" = "Bolus Uyarılarını Devre Dışı Bırak";
+"Disable Bolus Beeps" = "Disable Bolus Beeps";
 
 /* Title text for button to enable bolus beeps */
-"Enable Bolus Beeps" = "Bolus Uyarılarını Etkinleştir";
+"Enable Bolus Beeps" = "Enable Bolus Beeps";
 
 /* The alert title for disable bolus beeps error */
-"Error disabling bolus beeps" = "Bolus uyarılarını devre dışı bırakırken hata oluştu";
+"Error disabling bolus beeps" = "Error disabling bolus beeps";
 
 /* The alert title for enable bolus beeps error */
-"Error enabling bolus beeps" = "Bolus uyarılarını etkinleştirirken hata oluştu";
+"Error enabling bolus beeps" = "Error enabling bolus beeps";
 
 /* The alert title for enable Confirmation Beeps */
-"Enable Confirmation Beeps" = "Onay Uyarılarını Etkinleştir";
+"Enable Confirmation Beeps" = "Enable Confirmation Beeps";
 
 /* The alert title for Disable Confirmation Beep */
-"Disable Confirmation Beeps" = "Onay Uyarılarını Devre Dışı Bırak";
+"Disable Confirmation Beeps" = "Disable Confirmation Beeps";
 
 /* The alert title for enable Automatic Bolus Beeps */
-"Enable Automatic Bolus Beeps" = "Otomatik Bolus Uyarılarını Etkinleştir";
+"Enable Automatic Bolus Beeps" = "Enable Automatic Bolus Beeps";
 
 /* The alert title for Disable Automatic Bolus Beeps */
-"Disable Automatic Bolus Beeps" = "Otomatik Bolus Uyarılarını Devre Dışı Bırak";
+"Disable Automatic Bolus Beeps" = "Disable Automatic Bolus Beeps";
 
 /* The alert title for a resume error */
-"Error Resuming" = "Devam ederken hata oluştu";
+"Error Resuming" = "Error Resuming";
 
 /* The alert title for a suspend error */
-"Error Suspending" = "Askıya alırken Hata";
+"Error Suspending" = "Error Suspending";
 
 /* The title of the cell showing the pod expiration reminder date */
-"Expiration Reminder" = "Süre Sonu Hatırlatıcısı";
+"Expiration Reminder" = "Expiration Reminder";
 
 /* The title of the cell showing the pod expiration after expiry */
-"Expired" = "Süresi doldu";
+"Expired" = "Expired";
 
 /* The title of the cell showing the pod expiration */
-"Expires" = "Bitiyor";
+"Expires" = "Expires";
 
 /* Pod life HUD view label */
-"Fault" = "Hata";
+"Fault" = "Fault";
 
 /* The title of the command to finish pod setup */
-"Finish pod setup" = "Pod kurulumu bitir";
+"Finish pod setup" = "Finish pod setup";
 
 /* Accessibility format string for (1: localized volume)(2: time) */
-"Greater than %1$@ units remaining at %2$@" = "%2$@ 'te %1$@ üniteden fazla kaldı";
+"Greater than %1$@ units remaining at %2$@" = "Greater than %1$@ units remaining at %2$@";
 
 /* Instructions when deactivating pod that has been paired, but not attached. */
-"Incompletely set up pod must be deactivated before pairing with a new one. Please deactivate and discard pod." = "Eksik ayarlanmış pod, yenisiyle eşleştirmeden önce devre dışı bırakılmalıdır. Lütfen pod'u devre dışı bırakın ve atın.";
+"Incompletely set up pod must be deactivated before pairing with a new one. Please deactivate and discard pod." = "Incompletely set up pod must be deactivated before pairing with a new one. Please deactivate and discard pod.";
 
 /* Instructions when deactivating pod that has been paired and possibly attached. */
-"Incompletely set up pod must be deactivated before pairing with a new one. Please deactivate and remove pod." = "Eksik ayarlanmış pod, yenisiyle eşleştirmeden önce devre dışı bırakılmalıdır. Lütfen pod'u devre dışı bırakın ve çıkartın.";
+"Incompletely set up pod must be deactivated before pairing with a new one. Please deactivate and remove pod." = "Incompletely set up pod must be deactivated before pairing with a new one. Please deactivate and remove pod.";
 
 /* Button title to insert cannula during setup */
-"Insert Cannula" = "Kanül Yerleştir";
+"Insert Cannula" = "Insert Cannula";
 
 /* The title of the cell showing delivered insulin */
-"Insulin Delivered" = "İnsülin Gönderildi";
+"Insulin Delivered" = "Insulin Delivered";
 
 /* The error message shown when Loop's basal schedule has an unsupported rate */
-"Invalid entry" = "Geçersiz girdi";
+"Invalid entry" = "Invalid entry";
 
 /* The title of the cell showing the pod lot id */
-"Lot" = "Parti";
+"Lot" = "Lot";
 
 /* The detail text for bolus delivery when no bolus is being delivered */
-"None" = "Hiçbiri";
+"None" = "None";
 
 /* Button title to pair with pod during setup */
-"Pair" = "Eşleştir";
+"Pair" = "Pair";
 
 /* The title of the command to pair new pod */
-"Pair New Pod" = "Yeni Pod Eşleştir";
+"Pair New Pod" = "Pair New Pod";
 
 /* The text of the loading label when pairing */
-"Pairing…" = "Eşlestiriliyor…";
+"Pairing…" = "Pairing…";
 
 /* The title of the cell showing the pod pi version */
-"PI Version" = "PI Sürümü";
+"PI Version" = "PI Version";
 
 /* The title of the command to play test beeps */
-"Play Test Beeps" = "Test Bip Sesi Çal";
+"Play Test Beeps" = "Play Test Beeps";
 
 /* Progress message for play test beeps. */
-"Play Test Beeps…" = "Test Bip Sesi Çal…";
+"Play Test Beeps…" = "Play Test Beeps…";
 
 /* The title of the cell showing the pod pm version */
-"PM Version" = "PM Sürümü";
+"PM Version" = "PM Version";
 
 /* Label describing pod age view */
-"Pod Age" = "Pod Yaşı";
+"Pod Age" = "Pod Age";
 
 /* Title of the pod settings view controller */
-"Pod Settings" = "Pod Ayarları";
+"Pod Settings" = "Pod Settings";
 
 /* The text of the loading label when pod is primed */
-"Primed" = "Hazırlandı";
+"Primed" = "Primed";
 
 /* The text of the loading label when priming */
-"Priming…" = "Hazırlanıyor…";
+"Priming…" = "Priming…";
 
 /* Label describing time remaining view */
-"Remaining" = "Geri Kalan";
+"Remaining" = "Remaining";
 
 /* Label indicating pod replacement necessary
    The title of the command to replace pod */
-"Replace Pod" = "Pod'u değiştir";
+"Replace Pod" = "Replace Pod";
 
 /* The title of the command to replace pod when there is a pod fault */
-"Replace Pod Now" = "Pod'u şimdi değiştir";
+"Replace Pod Now" = "Replace Pod Now";
 
 /* The title of the cell showing reservoir status */
-"Reservoir" = "Rezervuar";
+"Reservoir" = "Reservoir";
 
 /* Button title for retrying pod deactivation */
-"Retry Pod Deactivation" = "Pod Devre Dışı Bırakmayı Tekrar Dene";
+"Retry Pod Deactivation" = "Retry Pod Deactivation";
 
 /* Title of button to save delivery limit settings
    Title of button to sync basal profile when no pod paired */
-"Save" = "Kaydet";
+"Save" = "Save";
 
 /* The detail text of the basal row when pod is running scheduled basal */
-"Schedule" = "Planlama";
+"Schedule" = "Schedule";
 
 /* The title of the status section in settings */
-"Status" = "Durum";
+"Status" = "Status";
 
 /* A message indicating a command succeeded */
-"Succeeded" = "Başarılı oldu";
+"Succeeded" = "Succeeded";
 
 /* The detail text of the basal row when pod is suspended */
-"Suspended" = "Askıya Alındı";
+"Suspended" = "Suspended";
 
 /* Title text for the button to delete Omnipod PumpManager */
-"Switch from Omnipod Pumps" = "Omnipod'u kullanmayı bırak";
+"Switch from Omnipod Pumps" = "Switch from Omnipod Pumps";
 
 /* Title of button to sync basal profile from pod */
-"Sync With Pod" = "Pod'la eşitle";
+"Sync With Pod" = "Sync With Pod";
 
 /* The title of the command to run the test command */
-"Test Command" = "Komut dene";
+"Test Command" = "Test Command";
 
 /* Progress message for testing commands. */
-"Testing Commands…" = "Komutlar deneniyor…";
+"Testing Commands…" = "Testing Commands…";
 
 /* The error message shown when Loop's basal schedule has more entries than the pod can support */
-"Too many entries" = "Çok fazla sayıda giriş";
+"Too many entries" = "Too many entries";
 
 /* Instructions when pod cannot be deactivated */
-"Unable to deactivate pod. Please continue and pair a new one." = "Pod devre dışı bırakılamıyor. Lütfen devam edin ve yeni bir tanesi ile eşleştirin.";
+"Unable to deactivate pod. Please continue and pair a new one." = "Unable to deactivate pod. Please continue and pair a new one.";
 
 /* The detail text for delivered insulin when no measurement is available */
-"Unknown" = "Bilinmiyor";
+"Unknown" = "Unknown";
 
 /* The title of the diagnostics section in settings */
-"Diagnostics" = "Teşhis";
+"Diagnostics" = "Diagnostics";
 
 /* The diagnostic command Read Pod Status */
-"Read Pod Status" = "Pod Durumunu Oku";
+"Read Pod Status" = "Read Pod Status";
 
 /* The diagnostic command Read Pulse Log */
-"Read Pulse Log" = "Nabız Kaydını Oku";
+"Read Pulse Log" = "Read Pulse Log";
 
 /* The title of the pod details section in settings */
-"Pod Details" = "Pod Ayrıntıları";
+"Pod Details" = "Pod Details";

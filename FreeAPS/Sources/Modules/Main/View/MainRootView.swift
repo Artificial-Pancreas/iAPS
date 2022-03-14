@@ -13,11 +13,7 @@ extension Main {
                         .navigationViewStyle(StackNavigationViewStyle())
                 }
                 .sheet(isPresented: $state.isSecondaryModalPresented) {
-                    if let view = state.secondaryModalView {
-                        view
-                    } else {
-                        EmptyView()
-                    }
+                    state.secondaryModalView ?? EmptyView().asAny()
                 }
                 .onAppear(perform: configureView)
         }
