@@ -6,8 +6,7 @@ function middleware(iob, currenttemp, glucose, profile, autosens, meal, reservoi
     var chrisFormula = preferences.enableChris;
     const minLimitChris = profile.autosens_min;
     const maxLimitChris = profile.autosens_max;
-    // If this setting is set to 0 in FAX preferences it will be calculated here in mw
-    var adjustmentFactor = preferences.adjustmentFactor;
+    const adjustmentFactor = preferences.adjustmentFactor;
     const currentMinTarget = profile.min_bg;
     var exerciseSetting = false;
     var enoughData = false;
@@ -255,14 +254,6 @@ function middleware(iob, currenttemp, glucose, profile, autosens, meal, reservoi
     logTDD = ". TDD past 24h is: " + TDD.toPrecision(5) + " U";
     // ----------------------------------------------------
     
-    var logCalculatedAF = "";
-    
-    //Calculate adjustmentFactor (when preferences set to 0)
-    if (adjustmentFactor == 0) {
-        adjustmentFactor = 277700 / (TDD * currentMinTarget * profile.sens);
-        logCalculatedAF = " Calculated adjustmentFactor: " + adjustmentFactor.toPrecision(3);
-    }
-    
     // Chris' formula with added adjustmentFactor for tuning:
     if (chrisFormula == true && TDD > 0) {
         var newRatio = profile.sens / (277700 / (adjustmentFactor  * TDD * BG));
@@ -280,7 +271,7 @@ function middleware(iob, currenttemp, glucose, profile, autosens, meal, reservoi
         // Set the new ratio
         autosens.ratio = newRatio;
         // Print to log
-        return log + logCalculatedAF + logTDD + logBolus + logTempBasal + logBasal;
+        return log + logTDD + logBolus + logTempBasal + logBasal;
         
     } else { return "Dynamic ISF is off." }
 }
