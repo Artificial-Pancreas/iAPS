@@ -894,7 +894,7 @@ Enact a temp Basal or a temp target */
 "Suspend" = "暂停";
 
 /* */
-"Animated Background" = "Animated Background";
+"Animated Background" = "动态背景";
 
 /* Sensor day(s) */
 " day(s)" = "天";
