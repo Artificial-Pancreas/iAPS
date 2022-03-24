@@ -206,8 +206,6 @@ function middleware(iob, currenttemp, glucose, profile, autosens, meal, reservoi
                 // Timestamp after completed temp basal
                 let timeOfScheduledBasal = new Date(oldTime.getTime() + oldBasalDuration*36e5);
                 
-                //oldTime.setHours( oldTime.getHours() + oldBasalDuration );
-                
                 let hour = timeOfScheduledBasal.getHours();
                 let minutes = timeOfScheduledBasal.getMinutes();
                 let seconds = "00";
@@ -267,9 +265,14 @@ function middleware(iob, currenttemp, glucose, profile, autosens, meal, reservoi
             log = "Dynamic ISF hit limit by autosens_min setting: " + minLimitChris + " (" +  newRatio.toPrecision(3) + ")" + ". ISF: " + (profile.sens / minLimitChris).toPrecision(3) + " (" + ((profile.sens / minLimitChris) * 0.0555).toPrecision(3) + " mmol/l/U)";
             newRatio = minLimitChris;
         }
-
+        
+        function round(value, precision) {
+            var multiplier = Math.pow(10, precision || 0);
+            return Math.round(value * multiplier) / multiplier;
+        }
+        
         // Set the new ratio
-        autosens.ratio = newRatio;
+        autosens.ratio = round(newRatio, 2);
         // Print to log
         return log + logTDD + logBolus + logTempBasal + logBasal;
         
