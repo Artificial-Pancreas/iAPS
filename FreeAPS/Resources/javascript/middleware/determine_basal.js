@@ -32,10 +32,15 @@ function middleware(iob, currenttemp, glucose, profile, autosens, meal, reservoi
         exerciseSetting = true;
     }
     
+    // Turns off Auto-ISF when using Dynamic ISF
+    if (profile.use_autoisf == true && chrisFormula) == true) {
+        profile.use_autoisf = false;
+    }
+    
     // Turn off Chris' formula (and AutoISF) when using a temp target >= 118 (6.5 mol/l) and if an exercise setting is enabled.
     // If using AutoISF uncomment the profile.use_autoisf = false
     if (currentMinTarget >= 118 && exerciseSetting == true) {
-        // profile.use_autoisf = false;
+        profile.use_autoisf = false;
         chrisFormula = false;
         log = "Dynamic ISF temporarily off due to a high temp target/exercising. Current min target: " + currentMinTarget;
     }
@@ -206,8 +211,6 @@ function middleware(iob, currenttemp, glucose, profile, autosens, meal, reservoi
                 // Timestamp after completed temp basal
                 let timeOfScheduledBasal = new Date(oldTime.getTime() + oldBasalDuration*36e5);
                 
-                //oldTime.setHours( oldTime.getHours() + oldBasalDuration );
-                
                 let hour = timeOfScheduledBasal.getHours();
                 let minutes = timeOfScheduledBasal.getMinutes();
                 let seconds = "00";
@@ -253,7 +256,7 @@ function middleware(iob, currenttemp, glucose, profile, autosens, meal, reservoi
     logBasal = ". Delivered scheduled basal insulin: " + scheduledBasalInsulin.toPrecision(5) + " U";
     logTDD = ". TDD past 24h is: " + TDD.toPrecision(5) + " U";
     // ----------------------------------------------------
-      
+    
     // Chris' formula with added adjustmentFactor for tuning:
     if (chrisFormula == true && TDD > 0) {
         var newRatio = profile.sens / (277700 / (adjustmentFactor  * TDD * BG));
@@ -261,15 +264,20 @@ function middleware(iob, currenttemp, glucose, profile, autosens, meal, reservoi
 
         // Respect autosens.max and autosens.min limits
         if (newRatio > maxLimitChris) {
+            log = "Dynamic ISF hit limit by autosens_max setting: " + maxLimitChris + " (" +  newRatio.toPrecision(3) + ")" + ". ISF: " + (profile.sens / maxLimitChris).toPrecision(3) + " (" + ((profile.sens / maxLimitChris) * 0.0555).toPrecision(3) + " mmol/l/U)";
             newRatio = maxLimitChris;
-            log = "Dynamic ISF hit limit by autosens_max setting: " + maxLimitChris + ". ISF: " + (profile.sens / maxLimitChris).toPrecision(3) + " (" + ((profile.sens / maxLimitChris) * 0.0555).toPrecision(3) + " mmol/l/U)";
         } else if (newRatio < minLimitChris) {
+            log = "Dynamic ISF hit limit by autosens_min setting: " + minLimitChris + " (" +  newRatio.toPrecision(3) + ")" + ". ISF: " + (profile.sens / minLimitChris).toPrecision(3) + " (" + ((profile.sens / minLimitChris) * 0.0555).toPrecision(3) + " mmol/l/U)";
             newRatio = minLimitChris;
-            log = "Dynamic ISF hit limit by autosens_min setting: " + minLimitChris + ". ISF: " + (profile.sens / minLimitChris).toPrecision(3) + " (" + ((profile.sens / minLimitChris) * 0.0555).toPrecision(3) + " mmol/l/U)";
-          }
-
+        }
+        
+        function round(value, precision) {
+            var multiplier = Math.pow(10, precision || 0);
+            return Math.round(value * multiplier) / multiplier;
+        }
+        
         // Set the new ratio
-        autosens.ratio = newRatio;
+        autosens.ratio = round(newRatio, 2);
         // Print to log
         return log + logTDD + logBolus + logTempBasal + logBasal;
         
