@@ -32,15 +32,21 @@ function middleware(iob, currenttemp, glucose, profile, autosens, meal, reservoi
         exerciseSetting = true;
     }
     
-    // Turns off Auto-ISF when using Dynamic ISF
-    if (profile.use_autoisf == true && chrisFormula) == true) {
-        profile.use_autoisf = false;
+    // Turns off Auto-ISF when using Dynamic ISF.
+    if (typeof if (typeof variable !== 'undefined') {
+        // Checks if the variable is defined, in case Auto-ISF is not installed.
+        if (profile.use_autoisf == true && chrisFormula) == true) {
+            profile.use_autoisf = false;
+        }
     }
     
     // Turn off Chris' formula (and AutoISF) when using a temp target >= 118 (6.5 mol/l) and if an exercise setting is enabled.
     // If using AutoISF uncomment the profile.use_autoisf = false
     if (currentMinTarget >= 118 && exerciseSetting == true) {
-        profile.use_autoisf = false;
+        // Checks if the variable is defined, in case Auto-ISF is not installed.
+        if (typeof if (typeof variable !== 'undefined') {
+            profile.use_autoisf = false;
+        }
         chrisFormula = false;
         log = "Dynamic ISF temporarily off due to a high temp target/exercising. Current min target: " + currentMinTarget;
     }
