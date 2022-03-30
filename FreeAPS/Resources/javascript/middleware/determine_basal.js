@@ -4,6 +4,7 @@ function middleware(iob, currenttemp, glucose, profile, autosens, meal, reservoi
     const BG = glucose[0].glucose;
     // Change to false to turn off Chris Wilson's formula
     var chrisFormula = preferences.enableChris;
+    var useDynamicCR = preferences.enableDynamicCR;
     const minLimitChris = profile.autosens_min;
     const maxLimitChris = profile.autosens_max;
     const adjustmentFactor = preferences.adjustmentFactor;
@@ -277,6 +278,10 @@ function middleware(iob, currenttemp, glucose, profile, autosens, meal, reservoi
         
         // Set the new ratio
         autosens.ratio = round(newRatio, 2);
+        // Set the new Dynamic CR (Test)
+        if (useDynamicCR == true) {
+            profile.carb_ratio = round(profile.carb_ratio/newRatio, 2);
+        }
         // Print to log
         return log + logTDD + logBolus + logTempBasal + logBasal;
         

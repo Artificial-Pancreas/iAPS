@@ -109,6 +109,15 @@ extension PreferencesEditor {
                         comment: "Enable Dynamic ISF"
                     ),
                     settable: self
+                ),
+                Field(
+                    displayName: "Enable Dynamic CR",
+                    type: .boolean(keypath: \.enableDynamicCR),
+                    infoText: NSLocalizedString(
+                        "Use Dynamic CR together with Dynamic ISF",
+                        comment: "Use Dynamic CR together with Dynamic ISF"
+                    ),
+                    settable: self
                 )
             ]
 

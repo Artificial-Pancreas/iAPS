@@ -64,6 +64,7 @@ struct Preferences: JSON {
     var maxDeltaBGthreshold: Decimal = 0.2
     var adjustmentFactor: Decimal = 1.0
     var enableChris: Bool = true
+    var enableDynamicCR: Bool = false
 }
 
 extension Preferences {
@@ -130,6 +131,7 @@ extension Preferences {
         case maxDeltaBGthreshold = "maxDelta_bg_threshold"
         case adjustmentFactor
         case enableChris
+        case enableDynamicCR
     }
 }
 
