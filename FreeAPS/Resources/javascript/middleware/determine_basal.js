@@ -32,9 +32,9 @@ function middleware(iob, currenttemp, glucose, profile, autosens, meal, reservoi
         exerciseSetting = true;
     }
     
-    // Turns off Auto-ISF when using Dynamic ISF.
-    if (typeof if (typeof variable !== 'undefined') {
-        // Checks if the variable is defined, in case Auto-ISF is not installed.
+    // Checks if the variable is defined, in case Auto-ISF is not installed.
+    if (typeof profile.use_autoisf  !== 'undefined') {
+        // Turns off Auto-ISF when using Dynamic ISF.
         if (profile.use_autoisf == true && chrisFormula) == true) {
             profile.use_autoisf = false;
         }
@@ -44,7 +44,7 @@ function middleware(iob, currenttemp, glucose, profile, autosens, meal, reservoi
     // If using AutoISF uncomment the profile.use_autoisf = false
     if (currentMinTarget >= 118 && exerciseSetting == true) {
         // Checks if the variable is defined, in case Auto-ISF is not installed.
-        if (typeof if (typeof variable !== 'undefined') {
+        if (typeof profile.use_autoisf  !== 'undefined') {
             profile.use_autoisf = false;
         }
         chrisFormula = false;
