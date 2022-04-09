@@ -116,12 +116,14 @@ function middleware(iob, currenttemp, glucose, profile, autosens, meal, reservoi
     //  Check and count for when basals are delivered with a scheduled basal rate or an Autotuned basal rate.
     //  1. Check for 0 temp basals with 0 min duration. This is for when ending a manual temp basal and (perhaps) continuing in open loop for a while.
     //  2. Check for temp basals that completes. This is for when disconected from link/iphone, or when in open loop.
-    //  To do: need to check for more circumstances when scheduled basal rates are used.
+    //  3. Account for a punp suspension.
+    //  4. Account for a pump resume (in case pump/cgm is disconnected before next loop).
+    //  To do: are there more circumstances when scheduled basal rates are used?
     //
     for (let k = 0; k < pumphistory.length; k++) {
         // Check for 0 temp basals with 0 min duration.
         insulin = 0;
-        if (pumphistory[k]['duration (min)'] == 0) {
+        if (pumphistory[k]['duration (min)'] == 0 || pumphistory[k]._type == "PumpResume") {
             let time1 = new Date(pumphistory[k].timestamp);
             let time2 = time1;
             let l = k;
