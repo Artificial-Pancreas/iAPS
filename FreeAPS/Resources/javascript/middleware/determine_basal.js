@@ -186,8 +186,8 @@ function middleware(iob, currenttemp, glucose, profile, autosens, meal, reservoi
             do {
                 --o;
                 if (o >= 0) {
-                    if (pumphistory[o]._type == "TempBasal") {
-                        // time of next (new) temp basal
+                    if (pumphistory[o]._type == "TempBasal" || pumphistory[o]._type == "PumpSuspend") {
+                        // time of next (new) temp basal or a pump suspension
                         newTime = new Date(pumphistory[o].timestamp);
                         break;
                     }
