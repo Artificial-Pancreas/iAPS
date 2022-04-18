@@ -142,7 +142,7 @@ function middleware(iob, currenttemp, glucose, profile, autosens, meal, reservoi
                 let seconds = "00";
                 let string = "" + hour + ":" + minutes + ":" + seconds;
                 let baseTime = new Date(string);
-                let basalScheduledRate = profile.basalprofile[0].start;
+                var basalScheduledRate = profile.basalprofile[0].start;
                 for (let m = 0; m < profile.basalprofile.length; m++) {
                     if (profile.basalprofile[m].start == baseTime) {
                         basalScheduledRate = profile.basalprofile[m].rate;
@@ -220,7 +220,7 @@ function middleware(iob, currenttemp, glucose, profile, autosens, meal, reservoi
                 let baseTime = "" + hour + ":" + minutes + ":" + seconds;
                                 
                 // Default if correct basal schedule rate not found
-                let basalScheduledRate = profile.basalprofile[0].rate;
+                var basalScheduledRate = profile.basalprofile[0].rate;
     
                 for (let p = 0; p < profile.basalprofile.length; ++p) {
                     let basalRateTime = new Date(profile.basalprofile[p].start);
