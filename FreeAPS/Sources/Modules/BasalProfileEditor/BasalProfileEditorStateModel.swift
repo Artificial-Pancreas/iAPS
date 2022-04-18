@@ -4,6 +4,7 @@ extension BasalProfileEditor {
     final class StateModel: BaseStateModel<Provider> {
         @Published var syncInProgress = false
         @Published var items: [Item] = []
+        @Published var autotuneProfile: [BasalProfileEntry?] = []
 
         let timeValues = stride(from: 0.0, to: 1.days.timeInterval, by: 30.minutes.timeInterval).map { $0 }
 
@@ -22,6 +23,21 @@ extension BasalProfileEditor {
                 let rateIndex = rateValues.firstIndex(of: value.rate) ?? 0
                 return Item(rateIndex: rateIndex, timeIndex: timeIndex)
             }
+
+            var bp: [BasalProfileEntry?] = []
+            for p in provider.profile {
+                var np: BasalProfileEntry?
+                for b in provider.autotune?.basalProfile ?? [] {
+                    if b.start > p.start {
+                        NSLog("Matched \(p) with \(b)")
+                        break
+                    }
+                    np = b
+                }
+                bp.append(np)
+            }
+            NSLog("basalProfile \(bp)")
+            autotuneProfile = bp
         }
 
         func add() {
@@ -52,6 +68,17 @@ extension BasalProfileEditor {
                 .receive(on: DispatchQueue.main)
                 .sink { _ in
                     self.syncInProgress = false
+                } receiveValue: {}
+                .store(in: &lifetime)
+        }
+
+        func read() {
+            syncInProgress = true
+            provider.readProfile()
+                .receive(on: DispatchQueue.main)
+                .sink { _ in
+                    self.syncInProgress = false
+                    self.subscribe()
                 } receiveValue: {}
                 .store(in: &lifetime)
         }

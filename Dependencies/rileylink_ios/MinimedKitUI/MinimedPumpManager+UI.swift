@@ -109,6 +109,17 @@ extension MinimedPumpManager {
         }
     }
 
+    public func getScheduleValues(for viewController: BasalScheduleTableViewController, completion: @escaping (SyncBasalScheduleResult<Double>) -> Void) {
+        getBasalRateSchedule() { result in
+            switch result {
+            case .success(let schedule):
+                completion(.success(scheduleItems: schedule.items, timeZone: schedule.timeZone))
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        }
+    }
+
     public func syncButtonTitle(for viewController: BasalScheduleTableViewController) -> String {
         return LocalizedString("Save to Pump…", comment: "Title of button to save basal profile to pump")
     }

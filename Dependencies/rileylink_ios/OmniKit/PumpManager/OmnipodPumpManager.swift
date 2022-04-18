@@ -1721,6 +1721,11 @@ extension OmnipodPumpManager: PumpManager {
         }
     }
 
+    public func getBasalRateSchedule(completion: @escaping (Result<BasalRateSchedule, Error>) -> Void) {
+        completion(.failure(PumpManagerError.deviceState(PodCommsError.podSuspended)))
+
+    }
+
     // This cannot be called from within the lockedState lock!
     func store(doses: [UnfinalizedDose], in session: PodCommsSession) -> Bool {
         session.assertOnSessionQueue()

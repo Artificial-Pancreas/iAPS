@@ -37,6 +37,17 @@ extension BasalProfileEditor {
                         }
                         .disabled(state.syncInProgress || state.items.isEmpty)
                     }
+
+                    HStack {
+                        if state.syncInProgress {
+                            ProgressView().padding(.trailing, 10)
+                        }
+                        Button { state.read() }
+                        label: {
+                            Text(state.syncInProgress ? "Readimg..." : "Read from Pump")
+                        }
+                        .disabled(state.syncInProgress || state.items.isEmpty)
+                    }
                 }
             }
             .onAppear(perform: configureView)
@@ -94,16 +105,28 @@ extension BasalProfileEditor {
             List {
                 ForEach(state.items.indexed(), id: \.1.id) { index, item in
                     NavigationLink(destination: pickers(for: index)) {
-                        HStack {
-                            Text("Rate").foregroundColor(.secondary)
-                            Text(
-                                "\(rateFormatter.string(from: state.rateValues[item.rateIndex] as NSNumber) ?? "0") U/hr"
-                            )
-                            Spacer()
-                            Text("starts at").foregroundColor(.secondary)
-                            Text(
-                                "\(dateFormatter.string(from: Date(timeIntervalSince1970: state.timeValues[item.timeIndex])))"
-                            )
+                        VStack {
+                            HStack {
+                                Text("Rate").foregroundColor(.secondary)
+                                Text(
+                                    "\(rateFormatter.string(from: state.rateValues[item.rateIndex] as NSNumber) ?? "0") U/hr"
+                                )
+                                Spacer()
+                                Text("starts at").foregroundColor(.secondary)
+                                Text(
+                                    "\(dateFormatter.string(from: Date(timeIntervalSince1970: state.timeValues[item.timeIndex])))"
+                                )
+                            }
+                            if let basalProfile = state.autotuneProfile[index] {
+                                HStack {
+                                    Text("Autotune")
+                                    Text(rateFormatter.string(from: basalProfile.rate as NSNumber) ?? "0")
+                                    Text("U/hr").foregroundColor(.secondary)
+                                    Spacer()
+                                    Text("@")
+                                    Text(basalProfile.displayTime)
+                                }.font(Font.system(size: 12))
+                            }
                         }
                     }
                     .moveDisabled(true)

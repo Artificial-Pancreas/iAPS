@@ -1244,6 +1244,32 @@ extension MinimedPumpManager: PumpManager {
             }
         }
     }
+
+    public func getBasalRateSchedule(completion: @escaping (Result<BasalRateSchedule, Error>) -> Void) {
+        pumpOps.runSession(withName: "Save Basal Profile", using: rileyLinkDeviceProvider.firstConnectedDevice) { (session) in
+            guard let session = session else {
+                completion(.failure(PumpManagerError.connection(MinimedPumpManagerError.noRileyLink)))
+                return
+            }
+
+            do {
+                if let schedule = try session.getBasalSchedule() {
+                    let dailyItems = schedule.entries.map {
+                        RepeatingScheduleValue<Double>(
+                            startTime: $0.timeOffset,
+                            value: $0.rate)
+                    }
+                    completion(.success(BasalRateSchedule(dailyItems: dailyItems, timeZone: session.pump.timeZone)!))
+                } else {
+                    self.log.error("Get basal profile return no result")
+                    completion(.failure(PumpManagerError.communication("Get Basal failed"  as? LocalizedError)))
+                }
+            } catch let error {
+                self.log.error("Get basal profile failed: %{public}@", String(describing: error))
+                completion(.failure(error))
+            }
+        }
+    }
 }
 
 extension MinimedPumpManager: PumpOpsDelegate {
