@@ -66,27 +66,10 @@ extension AutotuneConfig {
                     Section(header: Text("Basal profile")) {
                         ForEach(0 ..< autotune.basalProfile.count, id: \.self) { index in
                             HStack {
-                                VStack {
-                                    HStack {
-                                        Text(autotune.basalProfile[index].displayTime).foregroundColor(.secondary)
-                                        Spacer()
-                                        Text(rateFormatter.string(from: autotune.basalProfile[index].rate as NSNumber) ?? "0")
-                                        Text("U/hr").foregroundColor(.secondary)
-                                    }
-                                    // To prevent a race condition if Autotune is ran an no profile
-                                    // existed before.
-                                    if state.basalProfile.indices.contains(index),
-                                       let basalProfile = state.basalProfile[index]
-                                    {
-                                        HStack {
-                                            Text("Pump")
-                                            Text(basalProfile.displayTime)
-                                            Spacer()
-                                            Text(rateFormatter.string(from: basalProfile.rate as NSNumber) ?? "0")
-                                            Text("U/hr").foregroundColor(.secondary)
-                                        }.font(Font.system(size: 12))
-                                    }
-                                }
+                                Text(autotune.basalProfile[index].start).foregroundColor(.secondary)
+                                Spacer()
+                                Text(rateFormatter.string(from: autotune.basalProfile[index].rate as NSNumber) ?? "0")
+                                Text("U/hr").foregroundColor(.secondary)
                             }
                         }
                     }
@@ -94,12 +77,6 @@ extension AutotuneConfig {
                     Section {
                         Button { state.delete() }
                         label: { Text("Delete autotune data") }
-                            .foregroundColor(.red)
-                    }
-
-                    Section {
-                        Button { state.copyBasal() }
-                        label: { Text("Copy basal rates to pump") }
                             .foregroundColor(.red)
                     }
                 }

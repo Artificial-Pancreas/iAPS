@@ -17,10 +17,6 @@ extension BasalProfileEntry {
         case rate
     }
 
-    var displayTime: String {
-        String(start.prefix(5))
-    }
-
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         let start = try container.decode(String.self, forKey: .start)
