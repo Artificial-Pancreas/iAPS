@@ -131,10 +131,10 @@
 "Top target" = "Target alto";
 
 /*  Temp target set for ... minutes */
-"for" = "for";
+"for" = "per";
 
 /*  Temp target set for ... minutes */
-"min" = "min";
+"min" = "minuti";
 
 /*  */
 "Autotune" = "Autotune";
@@ -417,13 +417,13 @@ Enact a temp Basal or a temp target */
 "Temp Targets" = "Obiettivi Temporanei";
 
 /* Delete carbs from Treatments list*/
-"Delete carbs?" = "Delete carbs?";
+"Delete carbs?" = "Elimina carboidrati?";
 
 /* Treatments list */
-"Treatments" = "Treatments";
+"Treatments" = "Trattamenti";
 
 /* " min" in Treatments list */
-" min" = " min";
+" min" = " minuti";
 
 
 /* Calendar and Libre transmitter settings ---------------
@@ -624,7 +624,7 @@ Enact a temp Basal or a temp target */
 "Last measurement" = "Ultima misurazione";
 
 /* */
-"Sensor Footer checksum" = "Sensor Footer checksum";
+"Sensor Footer checksum" = "Somma di controllo del piè di pagina del sensore";
 
 /* */
 "Last Blood Sugar prediction" = "Ultima previsione di Zucchero nel Sangue";
@@ -822,82 +822,82 @@ Enact a temp Basal or a temp target */
 "Found devices: %d" = "Dispositivi trovati: %d";
 
 /* */
-"Backfill options" = "Backfill options";
+"Backfill options" = "Opzioni di riempimento";
 
 /* */
-"Backfilling from trend is currently not well supported by Loop" = "Backfilling from trend is currently not well supported by Loop";
+"Backfilling from trend is currently not well supported by Loop" = "Il riempimento dalla tendenza non è attualmente ben supportato da Loop";
 
 /* */
-"Backfill from history" = "Backfill from history";
+"Backfill from history" = "Riempi dalla cronologia";
 
 /* */
-"Backfill from trend" = "Backfill from trend";
+"Backfill from trend" = "Riempimento dalla tendenza";
 
 /* */
-"Debug options" = "Debug options";
+"Debug options" = "Opzioni di Debug";
 
 /* */
-"Adds a lot of data to the Issue Report " = "Adds a lot of data to the Issue Report ";
+"Adds a lot of data to the Issue Report " = "Aggiunge molti dati al Rapporto Problemi ";
 
 /* */
-"Persist sensordata" = "Persist sensordata";
+"Persist sensordata" = "Persistere i dati del sensore";
 
 /* */
-"Battery" = "Battery";
+"Battery" = "Batteria";
 
 /* */
-"Also add source info" = "Also add source info";
+"Also add source info" = "Aggiungi anche informazioni sorgente";
 
 /* */
-"Carbs Required Threshold" = "Carbs Required Threshold";
+"Carbs Required Threshold" = "Soglia carboidrati necessari";
 
 /* */
-"Carbs required: %d g" = "Carbs required: %d g";
+"Carbs required: %d g" = "Carboidrati necessari %d g";
 
 /* */
-"To prevent LOW required %d g of carbs" = "To prevent LOW required %d g of carbs";
+"To prevent LOW required %d g of carbs" = "Per evitare glicemia BASSA servono %d g di carboidrati";
 
 /* */
-"FreeAPS X not active" = "FreeAPS X not active";
+"FreeAPS X not active" = "FreeAPS X non attivo";
 
 /* */
-"Last loop was more then %d min ago" = "Last loop was more then %d min ago";
+"Last loop was more then %d min ago" = "L'ultimo ciclo è stato più di %d min fa";
 
 /* Glucose badge */
 "Show glucose on the app badge" = "Mostra il glucosio sul badge dell'app";
 
 /* */
-"Backfill glucose" = "Backfill glucose";
+"Backfill glucose" = "Riempi glicemia";
 
 /* About this source */
-"About this source" = "About this source";
+"About this source" = "Informazioni su questa fonte";
 
 /* */
-"Bolus failed" = "Bolus failed";
+"Bolus failed" = "Bolo fallito";
 
 /* */
-"Bolus failed or inaccurate. Check pump history before repeating." = "Bolus failed or inaccurate. Check pump history before repeating.";
+"Bolus failed or inaccurate. Check pump history before repeating." = "Bolo fallito o impreciso. Controlla la cronologia del microinfusore prima di ripetere.";
 
 /* */
-"Carbs" = "Carbs";
+"Carbs" = "Carboidrati";
 
 /* */
-"Temp Basal" = "Temp Basal";
+"Temp Basal" = "Basale temporanea";
 
 /* */
-"Temp Target" = "Temp Target";
+"Temp Target" = "Target Temporaneo";
 
 /* */
-"Resume" = "Resume";
+"Resume" = "Riprendi";
 
 /* */
-"Suspend" = "Suspend";
+"Suspend" = "Sospendi";
 
 /* */
-"Animated Background" = "Animated Background";
+"Animated Background" = "Sfondo Animato";
 
 /* Sensor day(s) */
-" day(s)" = " day(s)";
+" day(s)" = " giorno/i";
 
 
 /* Headers for settings ----------------------- */
