@@ -134,7 +134,7 @@
 "for" = "for";
 
 /*  Temp target set for ... minutes */
-"min" = "min";
+"min" = "min.";
 
 /*  */
 "Autotune" = "Autotune";
@@ -513,7 +513,7 @@ Enact a temp Basal or a temp target */
 "Calibrationinfo" = "Calibrationinfo";
 
 /* */
-"Unknown" = "Unknown";
+"Unknown" = "Tuntematon";
 
 /* */
 "Not paired yet" = "Not paired yet";
@@ -657,10 +657,10 @@ Enact a temp Basal or a temp target */
 "Hardware" = "Hardware";
 
 /* */
-"Firmware" = "Firmware";
+"Firmware" = "Laiteohjelmisto";
 
 /* */
-"Connection State" = "Connection State";
+"Connection State" = "Yhteyden tila";
 
 /* */
 "Transmitter Type" = "Transmitter Type";
@@ -693,7 +693,7 @@ Enact a temp Basal or a temp target */
 "Advanced" = "Advanced";
 
 /* */
-"Alarms" = "Alarms";
+"Alarms" = "Hälytykset";
 
 /* */
 "Glucose Settings" = "Glucose Settings";
