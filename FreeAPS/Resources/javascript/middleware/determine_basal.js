@@ -32,24 +32,20 @@ function middleware(iob, currenttemp, glucose, profile, autosens, meal, reservoi
         return Math.round(value * multiplier) / multiplier;
     }
     
-    function addTimeFromDate(objDate, _hours) {
-        console.log("objDate" + objDate);
-        var numberOfMlSeconds = objDate.getTime();
-        var addMlSeconds = _hours * 36e5;
-        var newDateObj = new Date(numberOfMlSeconds + addMlSeconds);
-        console.log("newDateObj" + newDateObj);
+    function addTimeToDate(objDate, _hours) {
+        var ms = objDate.getTime();
+        var add_ms = _hours * 36e5;
+        var newDateObj = new Date(ms + add_ms);
         return newDateObj;
     }
       
     function subtractTimeFromDate(date, hours_) {
-        var miSeconds = date.getTime();
-        console.log("old date put into function SubtractTimeFromDate: " + miSeconds);
-        var addMiSeconds = hours_ * 36e5;
-        var new_date = new Date(miSeconds - addMiSeconds);
-        console.log("new date: " + new_date);
+        var ms_ = date.getTime();
+        var add_ms_ = hours_ * 36e5;
+        var new_date = new Date(ms_ - add_ms_);
         return new_date;
     }
-        
+    
     function accountForIncrements(insulin) {
         // If you have not set this to 0.05 in FAX settings (Omnipod), this will be set to 0.1 (Medtronic) in code.
         var minimalDose = profile.bolus_increment;
@@ -62,20 +58,26 @@ function middleware(iob, currenttemp, glucose, profile, autosens, meal, reservoi
             return round(incrementsRounded * minimalDose, 5);
         } else { return 0; }
     }
-    
-    function addZero(i) {
-        if (i < 10) {i = "0" + i}
-        return i;
-      }
+
+    function makeBaseString(base_timeStamp) {
+        function addZero(i) {
+            if (i < 10) {i = "0" + i}
+            return i;
+        }
+        let hour = addZero(base_timeStamp.getHours());
+        let minutes = addZero(base_timeStamp.getMinutes());
+        let seconds = "00";
+        let string = hour + ":" + minutes + ":" + seconds;
+        return string;
+    }
        
     function timeDifferenceOfString(string1, string2) {
         //Base time strings are in "00:00:00" format
         var time1 = new Date("1/1/1999 " + string1);
         var time2 = new Date("1/1/1999 " + string2);
-        var miS1 = time1.getTime();
-        var miS2 = time2.getTime();
-        var difference = (miS1 - miS2) / 36e5;
-        
+        var ms1 = time1.getTime();
+        var ms2 = time2.getTime();
+        var difference = (ms1 - ms2) / 36e5;
         return difference;
     }
 
@@ -87,17 +89,12 @@ function middleware(iob, currenttemp, glucose, profile, autosens, meal, reservoi
         var basDuration = 0;
         var totalDurationCheck = totalDuration;
         var durationCurrentSchedule = 0;
-        var pp = 0;
         
         do {
 
             if (totalDuration > 0) {
                 
-                let hour = addZero(old.getHours());
-                let minutes = addZero(old.getMinutes());
-                let seconds = "00";
-                let string = hour + ":" + minutes + ":" + seconds;
-                var baseTime_ = string;
+                var baseTime_ = makeBaseString(old);
                 
                 //Default basalrate in case none is found...
                 var basalScheduledRate_ = profile.basalprofile[0].start;
@@ -136,9 +133,9 @@ function middleware(iob, currenttemp, glucose, profile, autosens, meal, reservoi
                         basalScheduledRate_ = profile.basalprofile[m].rate;
                         totalInsulin += accountForIncrements(basalScheduledRate_ * basDuration);
                         totalDuration -= basDuration;
-                        console.log("scheduled insulin added: " + accountForIncrements(basalScheduledRate_ * basDuration) + ", . Bas duration: " + basDuration + " . Base Rate: " + basalScheduledRate_ + " U/h" + ". Time :" + baseTime_);
+                        console.log("scheduled insulin added: " + accountForIncrements(basalScheduledRate_ * basDuration) + " . Bas duration: " + basDuration + " . Base Rate: " + basalScheduledRate_ + " U/h" + ". Time :" + baseTime_);
                         // Move clock to new date
-                        old = addTimeFromDate(old, basDuration);
+                        old = addTimeToDate(old, basDuration);
                     }
                     
                     else if (baseTime_ > timeToTest) {
@@ -160,9 +157,9 @@ function middleware(iob, currenttemp, glucose, profile, autosens, meal, reservoi
                                 basalScheduledRate_ = profile.basalprofile[m].rate;
                                 totalInsulin += accountForIncrements(basalScheduledRate_ * basDuration);
                                 totalDuration -= basDuration;
-                                console.log("scheduled insulin added: " + accountForIncrements(basalScheduledRate_ * basDuration) + ", . Bas duration: " + basDuration + " . Base Rate: " + basalScheduledRate_ + " U/h" + ". Time :" + baseTime_);
+                                console.log("scheduled insulin added: " + accountForIncrements(basalScheduledRate_ * basDuration) + " . Bas duration: " + basDuration + " . Base Rate: " + basalScheduledRate_ + " U/h" + ". Time :" + baseTime_);
                                 // Move clock to new date
-                                old = addTimeFromDate(old, basDuration);
+                                old = addTimeToDate(old, basDuration);
                             }
                         }
                     
@@ -181,9 +178,9 @@ function middleware(iob, currenttemp, glucose, profile, autosens, meal, reservoi
                             basalScheduledRate_ = profile.basalprofile[m].rate;
                             totalInsulin += accountForIncrements(basalScheduledRate_ * basDuration);
                             totalDuration -= basDuration;
-                            console.log("scheduled insulin added: " + accountForIncrements(basalScheduledRate_ * basDuration) + ", . Bas duration: " + basDuration + " . Base Rate: " + basalScheduledRate_ + " U/h" + ". Time :" + baseTime_);
+                            console.log("scheduled insulin added: " + accountForIncrements(basalScheduledRate_ * basDuration) + " . Bas duration: " + basDuration + " . Base Rate: " + basalScheduledRate_ + " U/h" + ". Time :" + baseTime_);
                             // Move clock to new date
-                            old = addTimeFromDate(old, basDuration);
+                            old = addTimeToDate(old, basDuration);
                         }
                     }
                 }
@@ -336,7 +333,7 @@ function middleware(iob, currenttemp, glucose, profile, autosens, meal, reservoi
             if (timeOfbasal > 0) {
 
                 // Timestamp after completed temp basal
-                let timeOfScheduledBasal =  addTimeFromDate(oldTime, oldBasalDuration);
+                let timeOfScheduledBasal =  addTimeToDate(oldTime, oldBasalDuration);
                 scheduledBasalInsulin += calcScheduledBasalInsulin(newTime, timeOfScheduledBasal);
             }
         }
