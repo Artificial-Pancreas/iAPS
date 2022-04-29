@@ -1,8 +1,7 @@
-function middleware(iob, currenttemp, glucose, profile, autosens, meal, reservoir, clock, pumphistory, preferences) {
+function middleware(iob, currenttemp, glucose, profile, autosens, meal, reservoir, clock, pumphistory, preferences, basalProfile) {
      
-    // This middleware will work with my dyn_ISF_and_CR branch and my bdb branch).
+    // This middleware will work with my "dyn_ISF_and_CR branch" and my "bdb" branch.
     const BG = glucose[0].glucose;
-    // Change to false to turn off Chris Wilson's formula
     var chrisFormula = preferences.enableChris;
     var useDynamicCR = preferences.enableDynamicCR;
     const minLimitChris = profile.autosens_min;
@@ -25,8 +24,7 @@ function middleware(iob, currenttemp, glucose, profile, autosens, meal, reservoi
     var bolusInsulin = 0;
     var scheduledBasalInsulin = 0;
     var quota = 0;
-    //
-    //
+    
     function round(value, precision) {
         var multiplier = Math.pow(10, precision || 0);
         return Math.round(value * multiplier) / multiplier;
@@ -82,7 +80,6 @@ function middleware(iob, currenttemp, glucose, profile, autosens, meal, reservoi
     }
 
     function calcScheduledBasalInsulin(lastRealTempTime, addedLastTempTime) {
-        
         var totalInsulin = 0;
         var old = addedLastTempTime;
         var totalDuration = (lastRealTempTime - addedLastTempTime) / 36e5;
@@ -97,16 +94,16 @@ function middleware(iob, currenttemp, glucose, profile, autosens, meal, reservoi
                 var baseTime_ = makeBaseString(old);
                 
                 //Default basalrate in case none is found...
-                var basalScheduledRate_ = profile.basalprofile[0].start;
-                for (let m = 0; m < profile.basalprofile.length; m++) {
+                var basalScheduledRate_ = basalProfile[0].start;
+                for (let m = 0; m < basalProfile.length; m++) {
                     
-                    var timeToTest = profile.basalprofile[m].start;
+                    var timeToTest = basalProfile[m].start;
                     
                     if (baseTime_ == timeToTest) {
                         
-                        if (m + 1 < profile.basalprofile.length) {
-                            let end = profile.basalprofile[m+1].start;
-                            let start = profile.basalprofile[m].start;
+                        if (m + 1 < basalProfile.length) {
+                            let end = basalProfile[m+1].start;
+                            let start = basalProfile[m].start;
                                                         
                             durationCurrentSchedule = timeDifferenceOfString(end, start);
                             
@@ -117,9 +114,9 @@ function middleware(iob, currenttemp, glucose, profile, autosens, meal, reservoi
                             }
                             
                         }
-                        else if (m + 1 == profile.basalprofile.length) {
-                            let end = profile.basalprofile[0].start;
-                            let start = profile.basalprofile[m].start;
+                        else if (m + 1 == basalProfile.length) {
+                            let end = basalProfile[0].start;
+                            let start = basalProfile[m].start;
                             // First schedule is 00:00:00. Changed places of start and end here.
                             durationCurrentSchedule = 24 - (timeDifferenceOfString(start, end));
                             
@@ -130,18 +127,18 @@ function middleware(iob, currenttemp, glucose, profile, autosens, meal, reservoi
                             }
                         
                         }
-                        basalScheduledRate_ = profile.basalprofile[m].rate;
+                        basalScheduledRate_ = basalProfile[m].rate;
                         totalInsulin += accountForIncrements(basalScheduledRate_ * basDuration);
                         totalDuration -= basDuration;
-                        console.log("scheduled insulin added: " + accountForIncrements(basalScheduledRate_ * basDuration) + " . Bas duration: " + basDuration + " . Base Rate: " + basalScheduledRate_ + " U/h" + ". Time :" + baseTime_);
+                        console.log("Dynamic ratios log: scheduled insulin added: " + accountForIncrements(basalScheduledRate_ * basDuration) + " U. Bas duration: " + basDuration.toPrecision(3) + " h. Base Rate: " + basalScheduledRate_ + " U/h" + ". Time :" + baseTime_);
                         // Move clock to new date
                         old = addTimeToDate(old, basDuration);
                     }
                     
                     else if (baseTime_ > timeToTest) {
 
-                        if (m + 1 < profile.basalprofile.length) {
-                            var timeToTest2 = profile.basalprofile[m+1].start
+                        if (m + 1 < basalProfile.length) {
+                            var timeToTest2 = basalProfile[m+1].start
                          
                             if (baseTime_ < timeToTest2) {
                                 
@@ -154,17 +151,17 @@ function middleware(iob, currenttemp, glucose, profile, autosens, meal, reservoi
                                     basDuration = totalDuration;
                                 }
                                  
-                                basalScheduledRate_ = profile.basalprofile[m].rate;
+                                basalScheduledRate_ = basalProfile[m].rate;
                                 totalInsulin += accountForIncrements(basalScheduledRate_ * basDuration);
                                 totalDuration -= basDuration;
-                                console.log("scheduled insulin added: " + accountForIncrements(basalScheduledRate_ * basDuration) + " . Bas duration: " + basDuration + " . Base Rate: " + basalScheduledRate_ + " U/h" + ". Time :" + baseTime_);
+                                console.log("Dynamic ratios log: scheduled insulin added: " + accountForIncrements(basalScheduledRate_ * basDuration) + " U. Bas duration: " + basDuration.toPrecision(3) + " h. Base Rate: " + basalScheduledRate_ + " U/h" + ". Time :" + baseTime_);
                                 // Move clock to new date
                                 old = addTimeToDate(old, basDuration);
                             }
                         }
                     
-                        else if (m == profile.basalprofile.length - 1) {
-                            // let start = profile.basalprofile[m].start;
+                        else if (m == basalProfile.length - 1) {
+                            // let start = basalProfile[m].start;
                             let start = baseTime_;
                             // First schedule is 00:00:00. Changed places of start and end here.
                             durationCurrentSchedule = timeDifferenceOfString("23:59:59", start);
@@ -175,10 +172,10 @@ function middleware(iob, currenttemp, glucose, profile, autosens, meal, reservoi
                                 basDuration = totalDuration;
                             }
                             
-                            basalScheduledRate_ = profile.basalprofile[m].rate;
+                            basalScheduledRate_ = basalProfile[m].rate;
                             totalInsulin += accountForIncrements(basalScheduledRate_ * basDuration);
                             totalDuration -= basDuration;
-                            console.log("scheduled insulin added: " + accountForIncrements(basalScheduledRate_ * basDuration) + " . Bas duration: " + basDuration + " . Base Rate: " + basalScheduledRate_ + " U/h" + ". Time :" + baseTime_);
+                            console.log("Dynamic ratios log: scheduled insulin added: " + accountForIncrements(basalScheduledRate_ * basDuration) + " U. Bas duration: " + basDuration.toPrecision(3) + " h. Base Rate: " + basalScheduledRate_ + " U/h" + ". Time :" + baseTime_);
                             // Move clock to new date
                             old = addTimeToDate(old, basDuration);
                         }
@@ -271,8 +268,8 @@ function middleware(iob, currenttemp, glucose, profile, autosens, meal, reservoi
     }
     //  Check and count for when basals are delivered with a scheduled basal rate or an Autotuned basal rate.
     //  1. Check for 0 temp basals with 0 min duration. This is for when ending a manual temp basal and (perhaps) continuing in open loop for a while.
-    //  2. Check for temp basals that completes. This is for when disconected from link/iphone, or when in open loop.
-    //  3. Account for a punp suspension. This is for when pod screams or MDT or pod is manually pump suspended.
+    //  2. Check for temp basals that completes. This is for when disconnected from link/iphone, or when in open loop.
+    //  3. Account for a punp suspension. This is for when pod screams or when MDT or pod is manually suspended.
     //  4. Account for a pump resume (in case pump/cgm is disconnected before next loop).
     //  To do: are there more circumstances when scheduled basal rates are used?
     //
@@ -342,36 +339,50 @@ function middleware(iob, currenttemp, glucose, profile, autosens, meal, reservoi
     TDD = bolusInsulin + tempInsulin + scheduledBasalInsulin;
     logBolus = ". Bolus insulin: " + bolusInsulin.toPrecision(5) + " U";
     logTempBasal = ". Temporary basal insulin: " + tempInsulin.toPrecision(5) + " U";
-    logBasal = ". Delivered scheduled basal insulin: " + scheduledBasalInsulin.toPrecision(5) + " U";
+    logBasal = ". Insulin with scheduled basal rate: " + scheduledBasalInsulin.toPrecision(5) + " U";
     logTDD = ". TDD past 24h is: " + TDD.toPrecision(5) + " U";
-
     
+    var startLog = "Dynamic ratios log: ";
+    var afLog = "AF: " + adjustmentFactor + ". ";
+    var bgLog = "BG: " + BG + " mg/dl (" + (BG * 0.0555).toPrecision(2) + " mmol/l). ";
+
     // ----------------------------------------------------
     
-    // Chris' formula with added adjustmentFactor for tuning:
+    // Modified Chris' formula with added adjustmentFactor for tuning:
+    var newRatio = profile.sens * adjustmentFactor * TDD * BG / 277700;
+
+    var isf = profile.sens / newRatio;
+
+    // Dynamic CR (Test)
+    var cr = profile.carb_ratio;
+    if (useDynamicCR == true) {
+        cr = round(profile.carb_ratio/newRatio, 2);
+        profile.carb_ratio = cr;
+    }
+    
     if (chrisFormula == true && TDD > 0) {
-        var newRatio = profile.sens / (277700 / (adjustmentFactor  * TDD * BG));
-        log = "New ratio using Dynamic ISF is " + newRatio.toPrecision(3) + " with ISF: " + (profile.sens / newRatio).toPrecision(3) + " (" + ((profile.sens / newRatio) * 0.0555).toPrecision(3) + " mmol/l/U)";
+       
+        log = "Dynamic autosens.ratio set to " + newRatio.toPrecision(3) + " with ISF: " + isf.toPrecision(3) + " mg/dl/U (" + (isf * 0.0555).toPrecision(3) + " mmol/l/U) and CR: " + cr + " g/U";
 
         // Respect autosens.max and autosens.min limits
         if (newRatio > maxLimitChris) {
-            log = "Dynamic ISF hit limit by autosens_max setting: " + maxLimitChris + " (" +  newRatio.toPrecision(3) + ")" + ". ISF: " + (profile.sens / maxLimitChris).toPrecision(3) + " (" + ((profile.sens / maxLimitChris) * 0.0555).toPrecision(3) + " mmol/l/U)";
+            log = "Dynamic ISF hit limit by autosens_max setting: " + maxLimitChris + " (" +  newRatio.toPrecision(3) + ")" + ". ISF: " + (profile.sens / maxLimitChris).toPrecision(3) + " mg/dl/U (" + ((profile.sens / maxLimitChris) * 0.0555).toPrecision(3) + " mmol/l/U) and CR: " + cr + " g/U";
             newRatio = maxLimitChris;
         } else if (newRatio < minLimitChris) {
-            log = "Dynamic ISF hit limit by autosens_min setting: " + minLimitChris + " (" +  newRatio.toPrecision(3) + ")" + ". ISF: " + (profile.sens / minLimitChris).toPrecision(3) + " (" + ((profile.sens / minLimitChris) * 0.0555).toPrecision(3) + " mmol/l/U)";
+            log = "Dynamic ISF hit limit by autosens_min setting: " + minLimitChris + " (" +  newRatio.toPrecision(3) + ")" + ". ISF: " + (profile.sens / minLimitChris).toPrecision(3) + " mg/dl/U (" + ((profile.sens / minLimitChris) * 0.0555).toPrecision(3) + " mmol/l/U) and CR: " + cr + " g/U";
             newRatio = minLimitChris;
         }
         
         // Set the new ratio
         autosens.ratio = round(newRatio, 2);
-        // Set the new Dynamic CR (Test)
-        if (useDynamicCR == true) {
-            profile.carb_ratio = round(profile.carb_ratio/newRatio, 2);
-        }
         
-        // Print to log
-        logOutPut = dataLog + log + logTDD + logBolus + logTempBasal + logBasal;
-    }   else { logOutPut = "Dynamic ISF is off."; }
+        logOutPut = startLog + dataLog + bgLog + afLog + log + logTDD + logBolus + logTempBasal + logBasal;
+    } else if (chrisFormula == false && useDynamicCR == true) {
+        logOutPut = startLog + bgLog + afLog + "Dynamic ISF is off. Dynamic CR: " + cr + " g/U.";
+    } else {
+        logOutPut = startLog + "Dynamic ISF is off. Dynamic CR is off." ;
+    }
 
     return logOutPut;
+
 }

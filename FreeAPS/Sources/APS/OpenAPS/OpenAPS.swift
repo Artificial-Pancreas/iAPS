@@ -67,7 +67,8 @@ final class OpenAPS {
                     microBolusAllowed: true,
                     reservoir: reservoir,
                     pumpHistory: pumpHistory,
-                    preferences: preferences
+                    preferences: preferences,
+                    basalProfile: basalProfile
                 )
                 debug(.openAPS, "SUGGESTED: \(suggested)")
 
@@ -296,7 +297,8 @@ final class OpenAPS {
         microBolusAllowed: Bool,
         reservoir: JSON,
         pumpHistory: JSON,
-        preferences: JSON
+        preferences: JSON,
+        basalProfile: JSON
     ) -> RawJSON {
         dispatchPrecondition(condition: .onQueue(processQueue))
         return jsWorker.inCommonContext { worker in
@@ -323,7 +325,8 @@ final class OpenAPS {
                     reservoir,
                     false, // clock
                     pumpHistory,
-                    preferences
+                    preferences,
+                    basalProfile
                 ]
             )
         }
