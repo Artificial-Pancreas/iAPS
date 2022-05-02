@@ -120,11 +120,11 @@ extension PreferencesEditor {
                     settable: self
                 ),
                 Field(
-                    displayName: "Use logaritmic formula",
+                    displayName: "Use logarithmic formula",
                     type: .boolean(keypath: \.useNewFormula),
                     infoText: NSLocalizedString(
-                        "Use logaritmic formula",
-                        comment: "Use logaritmic formula"
+                        "Use logarithmic formula",
+                        comment: "Use logarithmic formula"
                     ),
                     settable: self
                 )
