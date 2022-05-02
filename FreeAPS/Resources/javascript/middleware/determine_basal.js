@@ -336,6 +336,8 @@ function middleware(iob, currenttemp, glucose, profile, autosens, meal, reservoi
         }
     }
     
+    // ----------------------------------------------------
+
     TDD = bolusInsulin + tempInsulin + scheduledBasalInsulin;
     logBolus = ". Bolus insulin: " + bolusInsulin.toPrecision(5) + " U";
     logTempBasal = ". Temporary basal insulin: " + tempInsulin.toPrecision(5) + " U";
@@ -345,12 +347,33 @@ function middleware(iob, currenttemp, glucose, profile, autosens, meal, reservoi
     var startLog = "Dynamic ratios log: ";
     var afLog = "AF: " + adjustmentFactor + ". ";
     var bgLog = "BG: " + BG + " mg/dl (" + (BG * 0.0555).toPrecision(2) + " mmol/l). ";
+    var formula = "";
 
-    // ----------------------------------------------------
-    
-    // Modified Chris' formula with added adjustmentFactor for tuning:
-    var newRatio = profile.sens * adjustmentFactor * TDD * BG / 277700;
+    const curve = preferences.curve;
+    var insulinFactor = 55;
 
+    switch (curve) {
+        case "rapid_acting":
+            insulinFactor = 55;
+            break;
+        case "ultra_rapid":
+            insulinFactor = 70;
+            break;
+    }
+
+    // Modified Chris Wilson's' formula with added adjustmentFactor for tuning:
+    // var newRatio = profile.sens * adjustmentFactor * TDD * BG / 277700;
+    // Modified new formula : var newRatio = profile.sens * adjustmentFactor * TDD * ln(( BG/55) + 1 )) / 1800
+    if (preferences.useNewFormula == true) {
+        var newRatio = profile.sens * adjustmentFactor * TDD * Math.log(BG/insulinFactor+1) / 1800;
+        formula = "logarithmic formula. InsulinFactor: " + insulinFactor + ". ";
+
+    }
+    else {
+        var newRatio = profile.sens * adjustmentFactor * TDD * BG / 277700;
+        formula = "Original formula. ";
+    }
+            
     var isf = profile.sens / newRatio;
 
     // Dynamic CR (Test)
@@ -376,9 +399,9 @@ function middleware(iob, currenttemp, glucose, profile, autosens, meal, reservoi
         // Set the new ratio
         autosens.ratio = round(newRatio, 2);
         
-        logOutPut = startLog + dataLog + bgLog + afLog + log + logTDD + logBolus + logTempBasal + logBasal;
+        logOutPut = startLog + dataLog + bgLog + afLog + formula + log + logTDD + logBolus + logTempBasal + logBasal;
     } else if (chrisFormula == false && useDynamicCR == true) {
-        logOutPut = startLog + bgLog + afLog + "Dynamic ISF is off. Dynamic CR: " + cr + " g/U.";
+        logOutPut = startLog + bgLog + afLog + formula + "Dynamic ISF is off. Dynamic CR: " + cr + " g/U.";
     } else {
         logOutPut = startLog + "Dynamic ISF is off. Dynamic CR is off." ;
     }
