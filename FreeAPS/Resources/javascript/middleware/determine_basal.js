@@ -366,7 +366,7 @@ function middleware(iob, currenttemp, glucose, profile, autosens, meal, reservoi
     // Modified new formula : var newRatio = profile.sens * adjustmentFactor * TDD * ln(( BG/55) + 1 )) / 1800
     if (preferences.useNewFormula == true) {
         var newRatio = profile.sens * adjustmentFactor * TDD * Math.log(BG/insulinFactor+1) / 1800;
-        formula = "logarithmic formula. InsulinFactor: " + insulinFactor + ". ";
+        formula = "Logarithmic formula. InsulinFactor: " + insulinFactor + ". ";
 
     }
     else {
