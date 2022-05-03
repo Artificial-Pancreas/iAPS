@@ -349,21 +349,27 @@ function middleware(iob, currenttemp, glucose, profile, autosens, meal, reservoi
     var bgLog = "BG: " + BG + " mg/dl (" + (BG * 0.0555).toPrecision(2) + " mmol/l). ";
     var formula = "";
 
+    // Insulin curve
     const curve = preferences.curve;
+    const ipt = preferences.insulinPeakTime;
+    const ucpk = preferences.useCustomPeakTime;
     var insulinFactor = 55;
-
     switch (curve) {
-        case "rapid_acting":
+        case "rapid-acting":
             insulinFactor = 55;
             break;
-        case "ultra_rapid":
-            insulinFactor = 70;
+        case "ultra-rapid":
+            if (ipt < 75 && ucpk == true) {
+                insulinFactor = 120 - ipt;
+            } else { insulinFactor = 70; }
             break;
     }
 
-    // Modified Chris Wilson's' formula with added adjustmentFactor for tuning:
+    // Modified Chris Wilson's' formula with added adjustmentFactor for tuning and use instead of autosens:
     // var newRatio = profile.sens * adjustmentFactor * TDD * BG / 277700;
-    // Modified new formula : var newRatio = profile.sens * adjustmentFactor * TDD * ln(( BG/55) + 1 )) / 1800
+    //
+    // New logarithmic formula : var newRatio = profile.sens * adjustmentFactor * TDD * ln(( BG/insulinFactor) + 1 )) / 1800
+    //
     if (preferences.useNewFormula == true) {
         var newRatio = profile.sens * adjustmentFactor * TDD * Math.log(BG/insulinFactor+1) / 1800;
         formula = "Logarithmic formula. InsulinFactor: " + insulinFactor + ". ";
