@@ -133,7 +133,7 @@ extension Home {
             }
         }
 
-        var infoPanal: some View {
+        var infoPanel: some View {
             HStack(alignment: .center) {
                 if state.pumpSuspended {
                     Text("Pump suspended")
@@ -349,7 +349,7 @@ extension Home {
             GeometryReader { geo in
                 VStack(spacing: 0) {
                     header(geo)
-                    infoPanal
+                    infoPanel
                     mainChart
                     legendPanal
                     bottomPanel(geo)
