@@ -1,6 +1,6 @@
 function middleware(iob, currenttemp, glucose, profile, autosens, meal, reservoir, clock, pumphistory, preferences, basalProfile) {
      
-    // This middleware will work with my "dyn_ISF_and_CR branch" and my "bdb" branch.
+    // This middleware works with my "bdb" branch.
     const BG = glucose[0].glucose;
     var chrisFormula = preferences.enableChris;
     var useDynamicCR = preferences.enableDynamicCR;
