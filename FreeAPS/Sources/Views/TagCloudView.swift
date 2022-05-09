@@ -64,8 +64,6 @@ struct TagCloudView: View {
                     return .loopRed
                 case "Autosens":
                     return .loopGreen
-                // case "Standard":
-                //   return .darkerBlue
                 case "logFormula",
                      "origFormula",
                      "TDD":
