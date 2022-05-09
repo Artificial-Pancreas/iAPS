@@ -1,6 +1,6 @@
 function middleware(iob, currenttemp, glucose, profile, autosens, meal, reservoir, clock, pumphistory, preferences, basalProfile) {
      
-    // This middleware works with my "bdb" branch.
+    // Dynamic ratios and TDD calculation
     const BG = glucose[0].glucose;
     var chrisFormula = preferences.enableChris;
     var useDynamicCR = preferences.enableDynamicCR;
@@ -403,7 +403,7 @@ function middleware(iob, currenttemp, glucose, profile, autosens, meal, reservoi
         }
         
         // Set the new ratio
-        autosens.ratio = round(newRatio, 2);
+        autosens.ratio = round(newRatio, 4);
         
         logOutPut = startLog + dataLog + bgLog + afLog + formula + log + logTDD + logBolus + logTempBasal + logBasal;
     } else if (chrisFormula == false && useDynamicCR == true) {
