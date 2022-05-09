@@ -1,5 +1,5 @@
 function middleware(iob, currenttemp, glucose, profile, autosens, meal, reservoir, clock, pumphistory, preferences, basalProfile) {
-     
+    
     // Dynamic ratios and TDD calculation
     const BG = glucose[0].glucose;
     var chrisFormula = preferences.enableChris;
@@ -403,7 +403,7 @@ function middleware(iob, currenttemp, glucose, profile, autosens, meal, reservoi
         }
         
         // Set the new ratio
-        autosens.ratio = round(newRatio, 4);
+        autosens.ratio = round(newRatio, 5);
         
         logOutPut = startLog + dataLog + bgLog + afLog + formula + log + logTDD + logBolus + logTempBasal + logBasal;
     } else if (chrisFormula == false && useDynamicCR == true) {
