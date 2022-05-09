@@ -51,7 +51,7 @@ struct TagCloudView: View {
 
     private func item(for textTag: String) -> some View {
         var colorOfTag: Color {
-            if textTag.contains("NotFloating") {
+            if textTag.contains("Not Floating") {
                 return .loopYellow } else {
                 switch textTag {
                 case "Floating Carbs:":
@@ -62,8 +62,6 @@ struct TagCloudView: View {
                     return .uam
                 case "Parabolic Fit":
                     return .loopRed
-                // case "Autosens":
-                //    return .loopGreen
                 default:
                     return .insulin
                 }
@@ -72,7 +70,7 @@ struct TagCloudView: View {
         return ZStack { Text(textTag)
             .padding(.vertical, 2)
             .padding(.horizontal, 4)
-            .font(.caption)
+            .font(.subheadline)
             .background(colorOfTag.opacity(0.8))
             .foregroundColor(Color.white)
             .cornerRadius(5) }
