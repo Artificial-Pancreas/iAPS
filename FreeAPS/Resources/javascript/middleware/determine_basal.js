@@ -1,5 +1,5 @@
 function middleware(iob, currenttemp, glucose, profile, autosens, meal, reservoir, clock, pumphistory, preferences, basalProfile) {
-    
+     
     // Dynamic ratios and TDD calculation
     const BG = glucose[0].glucose;
     var chrisFormula = preferences.enableChris;
@@ -206,7 +206,7 @@ function middleware(iob, currenttemp, glucose, profile, autosens, meal, reservoi
         log = "Dynamic ISF temporarily off due to a high temp target/exercising. Current min target: " + currentMinTarget;
     }
     
-    // Check that there is enough pump history data (>23.5 hours) for TDD calculation, else estimate a TDD using using missing hours with scheduled basal rates.
+    // Check that there is enough pump history data (23.5 hours) for TDD calculation, else estimate a TDD using using missing hours with scheduled basal rates.
     if (chrisFormula == true) {
         let ph_length = pumphistory.length;
         var endDate = new Date(pumphistory[ph_length-1].timestamp);
@@ -365,7 +365,7 @@ function middleware(iob, currenttemp, glucose, profile, autosens, meal, reservoi
             break;
     }
 
-    // Modified Chris Wilson's' formula with added adjustmentFactor for tuning and use instead of autosens:
+    // Modified Chris Wilson's' formula with added adjustmentFactor for tuning and to use instead of autosens.ratio:
     // var newRatio = profile.sens * adjustmentFactor * TDD * BG / 277700;
     //
     // New logarithmic formula : var newRatio = profile.sens * adjustmentFactor * TDD * ln(( BG/insulinFactor) + 1 )) / 1800
