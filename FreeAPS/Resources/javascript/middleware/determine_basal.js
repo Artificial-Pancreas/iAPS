@@ -206,7 +206,7 @@ function middleware(iob, currenttemp, glucose, profile, autosens, meal, reservoi
         log = "Dynamic ISF temporarily off due to a high temp target/exercising. Current min target: " + currentMinTarget;
     }
     
-    // Check that there is enough pump history data (23.5 hours) for TDD calculation, else estimate a TDD using using missing hours with scheduled basal rates.
+    // Check that there is enough pump history data (>23.5 hours) for TDD calculation, else estimate a TDD using using missing hours with scheduled basal rates.
     if (chrisFormula == true) {
         let ph_length = pumphistory.length;
         var endDate = new Date(pumphistory[ph_length-1].timestamp);
@@ -380,34 +380,37 @@ function middleware(iob, currenttemp, glucose, profile, autosens, meal, reservoi
         formula = "Original formula. ";
     }
             
-    var isf = profile.sens / newRatio;
-
-    // Dynamic CR (Test)
     var cr = profile.carb_ratio;
-    if (useDynamicCR == true) {
-        cr = round(profile.carb_ratio/newRatio, 2);
-        profile.carb_ratio = cr;
-    }
     
     if (chrisFormula == true && TDD > 0) {
        
-        log = "Dynamic autosens.ratio set to " + newRatio.toPrecision(3) + " with ISF: " + isf.toPrecision(3) + " mg/dl/U (" + (isf * 0.0555).toPrecision(3) + " mmol/l/U) and CR: " + cr + " g/U";
-
         // Respect autosens.max and autosens.min limits
         if (newRatio > maxLimitChris) {
-            log = "Dynamic ISF hit limit by autosens_max setting: " + maxLimitChris + " (" +  newRatio.toPrecision(3) + ")" + ". ISF: " + (profile.sens / maxLimitChris).toPrecision(3) + " mg/dl/U (" + ((profile.sens / maxLimitChris) * 0.0555).toPrecision(3) + " mmol/l/U) and CR: " + cr + " g/U";
+            log = "Dynamic ISF hit limit by autosens_max setting: " + maxLimitChris + " (" +  newRatio.toPrecision(3) + "), ";
             newRatio = maxLimitChris;
         } else if (newRatio < minLimitChris) {
-            log = "Dynamic ISF hit limit by autosens_min setting: " + minLimitChris + " (" +  newRatio.toPrecision(3) + ")" + ". ISF: " + (profile.sens / minLimitChris).toPrecision(3) + " mg/dl/U (" + ((profile.sens / minLimitChris) * 0.0555).toPrecision(3) + " mmol/l/U) and CR: " + cr + " g/U";
+            log = "Dynamic ISF hit limit by autosens_min setting: " + minLimitChris + " (" +  newRatio.toPrecision(3) + "). ";
             newRatio = minLimitChris;
         }
         
+        // Dynamic CR (Test)
+        if (useDynamicCR == true) {
+            cr = round(cr/newRatio, 2);
+            profile.carb_ratio = cr;
+            var logCR = " Dynamic CR: " + cr + " g/U";
+        } else { var logCR = " CR: " + cr + " g/U"; }
+
+        var isf = profile.sens / newRatio;
+
+        log += "Dynamic autosens.ratio set to " + newRatio.toPrecision(3) + " with ISF: " + isf.toPrecision(3) + " mg/dl/U (" + (isf * 0.0555).toPrecision(3) + " mmol/l/U) and" + logCR;
+
         // Set the new ratio
         autosens.ratio = newRatio;
+
         
         logOutPut = startLog + dataLog + bgLog + afLog + formula + log + logTDD + logBolus + logTempBasal + logBasal;
     } else if (chrisFormula == false && useDynamicCR == true) {
-        logOutPut = startLog + bgLog + afLog + formula + "Dynamic ISF is off. Dynamic CR: " + cr + " g/U.";
+        logOutPut = startLog + bgLog + afLog + formula + "Dynamic ISF is off." + logCR;
     } else {
         logOutPut = startLog + "Dynamic ISF is off. Dynamic CR is off." ;
     }
