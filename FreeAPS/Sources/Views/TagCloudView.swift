@@ -51,22 +51,28 @@ struct TagCloudView: View {
 
     private func item(for textTag: String) -> some View {
         var colorOfTag: Color {
-            if textTag.contains("Not Floating") {
-                return .loopYellow } else {
-                switch textTag {
-                case "Floating Carbs:":
-                    return .loopPink
-                case "autoISF":
-                    return .zt
-                case "SMB Delivery Ratio:":
-                    return .uam
-                case "Parabolic Fit":
-                    return .loopRed
-                default:
-                    return .insulin
-                }
+            
+            switch textTag {
+            case textTag where textTag.contains("Not Floating"):
+                return .loopYellow
+            case textTag where textTag.contains("Floating Carbs"):
+                return .loopPink
+            case textTag where textTag.contains("autoISF"):
+                return .zt
+            case textTag where textTag.contains("SMB Delivery Ratio:"):
+                return .uam
+            case textTag where textTag.contains("Parabolic Fit"):
+                return .loopRed
+            case textTag where textTag.contains("TDD:"),
+                 textTag where textTag.contains("Formula:"),
+                 textTag where textTag.contains("AF:"),
+                 textTag where textTag.contains("Dynamic "):
+                return .zt
+            default:
+                return .insulin
             }
         }
+
         return ZStack { Text(textTag)
             .padding(.vertical, 2)
             .padding(.horizontal, 4)
