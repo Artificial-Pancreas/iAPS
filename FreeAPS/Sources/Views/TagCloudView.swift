@@ -64,7 +64,7 @@ struct TagCloudView: View {
             case textTag where textTag.contains("Parabolic Fit"):
                 return .loopRed
             case textTag where textTag.contains("TDD:"),
-                 textTag where textTag.contains("Formula:"),
+                 textTag where textTag.contains("formula."),
                  textTag where textTag.contains("AF:"),
                  textTag where textTag.contains("Dynamic "):
                 return .zt
