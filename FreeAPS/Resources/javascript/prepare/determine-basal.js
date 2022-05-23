@@ -16,6 +16,7 @@ function generate(iob, currenttemp, glucose, profile, autosens = null, meal = nu
     if (autosens) {
         autosens_data = autosens;
     }
+    
 
     var reservoir_data = null;
     if (reservoir) {
@@ -26,6 +27,17 @@ function generate(iob, currenttemp, glucose, profile, autosens = null, meal = nu
     if (meal) {
         meal_data = meal;
     }
-
-    return freeaps_determineBasal(glucose_status, currenttemp, iob, profile, autosens_data, meal_data, freeaps_basalSetTemp, microbolusAllowed, reservoir_data, clock);
+    
+    var pumphistory = {};
+    if (pump_history) {
+        pumphistory = pump_history;
+    }
+    
+    var basalprofile = {};
+    if (basalProfile) {
+        basalprofile = basalProfile;
+    }
+    
+    
+    return freeaps_determineBasal(glucose_status, currenttemp, iob, profile, autosens_data, meal_data, freeaps_basalSetTemp, microbolusAllowed, reservoir_data, clock, pumphistory, preferences, basalprofile);
 }

@@ -49,7 +49,7 @@ extension Suggestion {
         case timestamp
         case recieved
         case isf = "ISF"
-        case tdd
+        case tdd = "TDD"
     }
 }
 
