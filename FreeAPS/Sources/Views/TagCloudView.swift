@@ -76,7 +76,7 @@ struct TagCloudView: View {
         return ZStack { Text(textTag)
             .padding(.vertical, 2)
             .padding(.horizontal, 4)
-            .font(.subheadline)
+            .font(.title3)
             .background(colorOfTag.opacity(0.8))
             .foregroundColor(Color.white)
             .cornerRadius(5) }
