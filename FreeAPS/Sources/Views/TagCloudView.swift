@@ -1,4 +1,7 @@
+import Combine
+import Foundation
 import SwiftUI
+import Swinject
 
 struct TagCloudView: View {
     var tags: [String]
@@ -76,7 +79,7 @@ struct TagCloudView: View {
         return ZStack { Text(textTag)
             .padding(.vertical, 2)
             .padding(.horizontal, 4)
-            .font(.title3)
+            .font(.subheadline)
             .background(colorOfTag.opacity(0.8))
             .foregroundColor(Color.white)
             .cornerRadius(5) }
