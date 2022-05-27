@@ -98,7 +98,7 @@
 "On" = "Zapnuté";
 
 /* Text indicating LED Mode is off */
-"Off" = "Off";
+"Off" = "Vypnuté";
 
 /* Text indicating LED Mode is auto */
 "Auto" = "Auto";

@@ -3,7 +3,7 @@
 "%1$@ %2$@" = "%1$@ %2$@";
 
 /* Accessibility format string for (1: localized volume)(2: time) */
-"%1$@ units remaining at %2$@" = "%1$@ units remaining at %2$@";
+"%1$@ units remaining at %2$@" = "%1$@ одиниць залишилося на %2$@";
 
 /* The format for a glucose target range. (1: min target)(2: max target)(3: glucose unit) */
 "%1$@ – %2$@ %3$@" = "%1$@ – %2$@ %3$@";
@@ -45,7 +45,7 @@
 "Basal, bolus, and correction insulin dose amounts are unaffected." = "Basal, bolus, and correction insulin dose amounts are unaffected.";
 
 /* The title of the cancel action in an action sheet */
-"Cancel" = "Cancel";
+"Cancel" = "Відмінити";
 
 /* The text for the override cancellation button */
 "Cancel Override" = "Cancel Override";
@@ -84,25 +84,25 @@
 "Condition" = "Condition";
 
 /* Title of the setup button to continue */
-"Continue" = "Continue";
+"Continue" = "Продовжити";
 
 /* The section footer of correction range schedule */
 "Correction range is the blood glucose range that you would like Loop to correct to." = "Correction range is the blood glucose range that you would like Loop to correct to.";
 
 /* The text for a custom override */
-"Custom" = "Custom";
+"Custom" = "Своя";
 
 /* The title for the custom override entry screen */
 "Custom Override" = "Custom Override";
 
 /* Title of the carb entry date picker cell */
-"Date" = "Date";
+"Date" = "Дата";
 
 /* Button title to delete all objects */
 "Delete All" = "Delete All";
 
 /* The text for the override duration setting */
-"Duration" = "Duration";
+"Duration" = "Тривалість";
 
 /* The title for the override editing screen */
 "Edit Override" = "Edit Override";
@@ -147,14 +147,14 @@
 "More Info" = "More Info";
 
 /* The text for the override preset name setting */
-"Name" = "Name";
+"Name" = "Ім’я";
 
 /* The title for the new override preset entry screen */
 "New Preset" = "New Preset";
 
 /* Section title for no-carb food
    The title for override emoji miscellaneous section */
-"Other" = "Other";
+"Other" = "Інше";
 
 /* The title text for the insulin sensitivity scaling setting */
 "Overall Insulin Needs" = "Overall Insulin Needs";
@@ -188,7 +188,7 @@
 
 /* Button text for saving glucose correction range schedule
    Button text for saving insulin sensitivity schedule */
-"Save" = "Save";
+"Save" = "Зберегти";
 
 /* The section header text for a scheduled override */
 "SCHEDULED OVERRIDE" = "SCHEDULED OVERRIDE";
@@ -240,7 +240,7 @@
 
 /* Accessibility value for an unknown value
    The default title to use when an entry has none */
-"Unknown" = "Unknown";
+"Unknown" = "Невідомий";
 
 /* Label indicating validation is occurring */
 "Verifying" = "Verifying";
