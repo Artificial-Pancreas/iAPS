@@ -657,10 +657,10 @@ Enact a temp Basal or a temp target */
 "Hardware" = "Hardware";
 
 /* */
-"Firmware" = "Firmware";
+"Firmware" = "Прошивка";
 
 /* */
-"Connection State" = "Connection State";
+"Connection State" = "Стан з'єднання";
 
 /* */
 "Transmitter Type" = "Transmitter Type";
@@ -693,7 +693,7 @@ Enact a temp Basal or a temp target */
 "Advanced" = "Advanced";
 
 /* */
-"Alarms" = "Alarms";
+"Alarms" = "Тривога";
 
 /* */
 "Glucose Settings" = "Glucose Settings";

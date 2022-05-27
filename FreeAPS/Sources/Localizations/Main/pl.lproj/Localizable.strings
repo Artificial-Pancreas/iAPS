@@ -134,7 +134,7 @@
 "for" = "for";
 
 /*  Temp target set for ... minutes */
-"min" = "min";
+"min" = "min.";
 
 /*  */
 "Autotune" = "Autotune";
@@ -515,7 +515,7 @@ Połączono z Nightscout!";
 "Calibrationinfo" = "Calibrationinfo";
 
 /* */
-"Unknown" = "Unknown";
+"Unknown" = "Nieznana";
 
 /* */
 "Not paired yet" = "Not paired yet";
@@ -659,10 +659,10 @@ Połączono z Nightscout!";
 "Hardware" = "Hardware";
 
 /* */
-"Firmware" = "Firmware";
+"Firmware" = "Oprogramowanie";
 
 /* */
-"Connection State" = "Connection State";
+"Connection State" = "Status połączenia";
 
 /* */
 "Transmitter Type" = "Transmitter Type";
@@ -695,7 +695,7 @@ Połączono z Nightscout!";
 "Advanced" = "Advanced";
 
 /* */
-"Alarms" = "Alarms";
+"Alarms" = "Alarmy";
 
 /* */
 "Glucose Settings" = "Glucose Settings";

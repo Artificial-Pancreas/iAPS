@@ -14,7 +14,7 @@
 "Device" = "Device";
 
 /* The title of the devices table section in RileyLink settings */
-"Devices" = "Devices";
+"Devices" = "Dispositivos";
 
 /* The disconnected state */
 "Disconnected" = "Disconnected";
@@ -29,7 +29,7 @@
 "Frequency" = "Frequency";
 
 /* The title of the cell showing device name */
-"Name" = "Name";
+"Name" = "Nome";
 
 /* RileyLink setup description */
 "RileyLink allows for communication with the pump over Bluetooth Low Energy." = "RileyLink allows for communication with the pump over Bluetooth Low Energy.";

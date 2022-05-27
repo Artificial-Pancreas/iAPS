@@ -68,7 +68,7 @@
 "Add Carbs" = "Añadir Carbohidratos";
 
 /* Add carbs header and button in Watch app. You can skip the last " " space. It's just for differentiation */
-"Add Carbs " = "Add Carbs ";
+"Add Carbs " = "Agregar Carbohidratos ";
 
 /*  */
 "Amount Carbs" = "Cantidad de Carbohidratos";
@@ -417,10 +417,10 @@ Enact a temp Basal or a temp target */
 "Temp Targets" = "Temp Targets";
 
 /* Delete carbs from Treatments list*/
-"Delete carbs?" = "Delete carbs?";
+"Delete carbs?" = "¿Eliminar carbohidratos?";
 
 /* Treatments list */
-"Treatments" = "Treatments";
+"Treatments" = "Tratamientos";
 
 /* " min" in Treatments list */
 " min" = " min";
@@ -429,19 +429,19 @@ Enact a temp Basal or a temp target */
 /* Calendar and Libre transmitter settings ---------------
  */
 /* */
-"Configure Libre Transmitter" = "Configure Libre Transmitter";
+"Configure Libre Transmitter" = "Configurar Transmisor Libre";
 
 /* */
-"Calibrations" = "Calibrations";
+"Calibrations" = "Calibraciones";
 
 /* */
-"Create events in calendar" = "Create events in calendar";
+"Create events in calendar" = "Crear eventos en el calendario";
 
 /* */
-"Calendar" = "Calendar";
+"Calendar" = "Calendario";
 
 /* */
-"Other" = "Other";
+"Other" = "Otro";
 
 /* */
 "Libre Transmitter" = "Libre Transmitter";
@@ -450,16 +450,16 @@ Enact a temp Basal or a temp target */
 "Libre Transmitters" = "Libre Transmitters";
 
 /* */
-"Bluetooth Transmitters" = "Bluetooth Transmitters";
+"Bluetooth Transmitters" = "Transmisores Bluetooth";
 
 /* */
-"Modes" = "Modes";
+"Modes" = "Modos";
 
 /* Libre 2 Direct */
-"Libre 2 Direct" = "Libre 2 Direct";
+"Libre 2 Direct" = "Libre 2 Directo";
 
 /* */
-"Select the third party transmitter you want to connect to" = "Select the third party transmitter you want to connect to";
+"Select the third party transmitter you want to connect to" = "Seleccione el transmisor de terceros al que desea conectarse";
 
 /* State was restored */
 "State was restored" = "State was restored";
@@ -471,7 +471,7 @@ Enact a temp Basal or a temp target */
 "mg/dL" = "mg/dL";
 
 /* */
-"Add calibration" = "Add calibration";
+"Add calibration" = "Añadir calibración";
 
 /* When adding capillary glucose meater reading */
 "Meter glucose" = "Meter glucose";
@@ -486,16 +486,16 @@ Enact a temp Basal or a temp target */
 "Intercept" = "Intercept";
 
 /* */
-"Chart" = "Chart";
+"Chart" = "Gráfica";
 
 /* */
-"Remove" = "Remove";
+"Remove" = "Eliminar";
 
 /* */
-"Remove Last" = "Remove Last";
+"Remove Last" = "Eliminar último";
 
 /* */
-"Remove All" = "Remove All";
+"Remove All" = "Eliminar todos";
 
 /* */
 "About the Process" = "About the Process";
@@ -513,10 +513,10 @@ Enact a temp Basal or a temp target */
 "Calibrationinfo" = "Calibrationinfo";
 
 /* */
-"Unknown" = "Unknown";
+"Unknown" = "Desconocido";
 
 /* */
-"Not paired yet" = "Not paired yet";
+"Not paired yet" = "No emparejado aún";
 
 /* */
 "Pair Sensor & connect" = "Pair Sensor & connect";
@@ -615,13 +615,13 @@ Enact a temp Basal or a temp target */
 "Current Sensor is Ending soon! Sensor Life left in %@" = "Current Sensor is Ending soon! Sensor Life left in %@";
 
 /* */
-"Libre Bluetooth" = "Libre Bluetooth";
+"Libre Bluetooth" = "Bluetooth Libre";
 
 /* */
 "Snooze Alerts" = "Snooze Alerts";
 
 /* */
-"Last measurement" = "Last measurement";
+"Last measurement" = "Última medición";
 
 /* */
 "Sensor Footer checksum" = "Sensor Footer checksum";
@@ -660,7 +660,7 @@ Enact a temp Basal or a temp target */
 "Firmware" = "Firmware";
 
 /* */
-"Connection State" = "Connection State";
+"Connection State" = "Estado de Conexión";
 
 /* */
 "Transmitter Type" = "Transmitter Type";
@@ -693,7 +693,7 @@ Enact a temp Basal or a temp target */
 "Advanced" = "Advanced";
 
 /* */
-"Alarms" = "Alarms";
+"Alarms" = "Alarmas";
 
 /* */
 "Glucose Settings" = "Glucose Settings";

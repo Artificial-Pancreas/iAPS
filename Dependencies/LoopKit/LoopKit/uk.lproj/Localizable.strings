@@ -41,7 +41,7 @@
 "Flat" = "Flat";
 
 /* The short unit display string for grams per U */
-"g/U" = "g/U";
+"g/U" = "гр/Од";
 
 /* Generic pump error description */
 "Invalid Configuration" = "Invalid Configuration";
@@ -53,7 +53,7 @@
 "mg/dL/U" = "mg/dL/U";
 
 /* The short unit display string for millimoles per liter */
-"mmol/L" = "mmol/L";
+"mmol/L" = "ммол/л";
 
 /* The short unit display string for millimoles per liter per U */
 "mmol/L/U" = "mmol/L/U";
@@ -83,7 +83,7 @@
 "U" = "U";
 
 /* The short unit display string for international units of insulin per hour */
-"U/hr" = "U/hr";
+"U/hr" = "Од/год";
 
 /* The long unit display string for a singular international unit of insulin */
 "Unit" = "Unit";

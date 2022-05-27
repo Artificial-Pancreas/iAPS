@@ -513,7 +513,7 @@ Enact a temp Basal or a temp target */
 "Calibrationinfo" = "Calibrationinfo";
 
 /* */
-"Unknown" = "Unknown";
+"Unknown" = "Ukendt";
 
 /* */
 "Not paired yet" = "Not paired yet";
@@ -660,7 +660,7 @@ Enact a temp Basal or a temp target */
 "Firmware" = "Firmware";
 
 /* */
-"Connection State" = "Connection State";
+"Connection State" = "Tilslutningstilstand";
 
 /* */
 "Transmitter Type" = "Transmitter Type";
@@ -693,7 +693,7 @@ Enact a temp Basal or a temp target */
 "Advanced" = "Advanced";
 
 /* */
-"Alarms" = "Alarms";
+"Alarms" = "Alarmer";
 
 /* */
 "Glucose Settings" = "Glucose Settings";
