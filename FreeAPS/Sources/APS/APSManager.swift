@@ -586,7 +586,11 @@ final class BaseAPSManager: APSManager, Injectable {
             var enacted = suggestion
             enacted.timestamp = Date()
             enacted.recieved = received
+
+            let tdd_ = TDD(tdd: enacted.tdd ?? 0, timestamp: Date())
+
             storage.save(enacted, as: OpenAPS.Enact.enacted)
+            storage.save(tdd_, as: OpenAPS.Monitor.tdd)
             debug(.apsManager, "Suggestion enacted. Received: \(received)")
             DispatchQueue.main.async {
                 self.broadcaster.notify(EnactedSuggestionObserver.self, on: .main) {

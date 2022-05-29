@@ -1,6 +1,6 @@
 import Foundation
 
 struct TDD: JSON, Equatable {
-    let tdd: Decimal
+    var tdd: Decimal
     var timestamp: Date
 }

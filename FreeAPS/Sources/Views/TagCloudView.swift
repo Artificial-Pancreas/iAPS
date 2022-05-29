@@ -82,7 +82,7 @@ struct TagCloudView: View {
             .font(.subheadline)
             .background(colorOfTag.opacity(0.8))
             .foregroundColor(Color.white)
-            .cornerRadius(5) }
+            .cornerRadius(2) }
     }
 
     private func viewHeightReader(_ binding: Binding<CGFloat>) -> some View {
