@@ -589,20 +589,12 @@ final class BaseAPSManager: APSManager, Injectable {
 
             storage.save(enacted, as: OpenAPS.Enact.enacted)
 
-            // Save to tdd.json
-            let savedTDD = storage.retrieve(OpenAPS.Monitor.tdd, as: TDD.self)
+            let tdd = TDD(
+                TDD: enacted.tdd ?? 0,
+                timestamp: Date()
+            )
 
-            if savedTDD != nil {
-                var results = [savedTDD!]
-
-                results.append(
-                    TDD(
-                        tdd: enacted.tdd ?? 0,
-                        timestamp: Date()
-                    )
-                )
-                storage.save(results, as: OpenAPS.Monitor.tdd)
-            }
+            storage.save(tdd, as: OpenAPS.Monitor.tdd)
 
             debug(.apsManager, "Suggestion enacted. Received: \(received)")
             DispatchQueue.main.async {
