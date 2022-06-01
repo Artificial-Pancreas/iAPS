@@ -68,7 +68,7 @@ struct TagCloudView: View {
             case textTag where textTag.contains("TDD:"),
                  textTag where textTag.contains("Original formula"),
                  textTag where textTag.contains("Logarithmic formula"),
-                 textTag where textTag.contains("AF:"),
+                 textTag where textTag.contains("Autosens/Dynamic Limit:"),
                  textTag where textTag.contains("Dynamic ISF/CR"):
                 return .zt
             default:
