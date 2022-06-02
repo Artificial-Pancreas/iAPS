@@ -63,7 +63,7 @@ struct Preferences: JSON {
     var enableBGacceleration: Bool = false
     var maxDeltaBGthreshold: Decimal = 0.2
     var adjustmentFactor: Decimal = 1.0
-    var enableChris: Bool = true
+    var enableChris: Bool = false
     var enableDynamicCR: Bool = false
     var useNewFormula: Bool = false
 }
