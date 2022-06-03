@@ -589,11 +589,13 @@ final class BaseAPSManager: APSManager, Injectable {
 
             storage.save(enacted, as: OpenAPS.Enact.enacted)
 
+            let currentTDD = enacted.tdd ?? 0
+
             // Add to tdd.json
             let file = OpenAPS.Monitor.tdd
-            
+
             let tdd = TDD(
-                TDD: enacted.tdd ?? 0,
+                TDD: currentTDD,
                 timestamp: Date(),
                 id: UUID().uuidString
             )
@@ -604,9 +606,26 @@ final class BaseAPSManager: APSManager, Injectable {
                 uniqEvents = storage.retrieve(file, as: [TDD].self)?
                     .filter { $0.timestamp.addingTimeInterval(7.days.timeInterval) > Date() }
                     .sorted { $0.timestamp > $1.timestamp } ?? []
+
+                var total: Decimal = 0
+                var indeces: Decimal = 0
+
+                for uniqEvent in uniqEvents {
+                    total += uniqEvent.TDD
+                    indeces += 1
+                }
+
+                let average7 = total / indeces
+                let weighted_average = 0.65 * currentTDD + 0.35 * average7
+                let averages = TDD_averages(
+                    average_7days: average7,
+                    weightedAverage: weighted_average,
+                    date: Date()
+                )
+
+                storage.save(averages, as: OpenAPS.Monitor.tdd_averages)
                 storage.save(Array(uniqEvents), as: file)
             }
-
 
             debug(.apsManager, "Suggestion enacted. Received: \(received)")
             DispatchQueue.main.async {

@@ -14,7 +14,6 @@ struct TDD: JSON, Equatable {
         self.timestamp = timestamp
         self.id = id
     }
-    
 }
 
 extension TDD {

@@ -55,6 +55,7 @@ extension OpenAPS {
         static let cgmState = "monitor/cgm-state.json"
         static let podAge = "monitor/pod-age.json"
         static let tdd = "monitor/tdd.json"
+        static let tdd_averages = "monitor/tdd_averages.json"
     }
 
     enum Enact {
