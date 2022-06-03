@@ -589,6 +589,8 @@ final class BaseAPSManager: APSManager, Injectable {
 
             storage.save(enacted, as: OpenAPS.Enact.enacted)
 
+            let preferences = settingsManager.preferences
+
             let currentTDD = enacted.tdd ?? 0
 
             // Add to tdd.json
@@ -616,7 +618,9 @@ final class BaseAPSManager: APSManager, Injectable {
                 }
 
                 let average7 = total / indeces
-                let weighted_average = 0.65 * currentTDD + 0.35 * average7
+                let weight = preferences.weightPercentage
+
+                let weighted_average = weight * currentTDD + (1 - weight) * average7
                 let averages = TDD_averages(
                     average_7days: average7,
                     weightedAverage: weighted_average,
