@@ -66,6 +66,8 @@ struct Preferences: JSON {
     var enableChris: Bool = false
     var enableDynamicCR: Bool = false
     var useNewFormula: Bool = false
+    var useWeightedAverage: Bool = false
+    var weightPercentage: Decimal = 0.65
 }
 
 extension Preferences {
@@ -134,6 +136,8 @@ extension Preferences {
         case enableChris
         case enableDynamicCR
         case useNewFormula
+        case useWeightedAverage
+        case weightPercentage
     }
 }
 

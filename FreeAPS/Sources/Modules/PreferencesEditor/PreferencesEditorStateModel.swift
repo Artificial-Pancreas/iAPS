@@ -120,11 +120,20 @@ extension PreferencesEditor {
                     settable: self
                 ),
                 Field(
-                    displayName: "Use logarithmic formula",
+                    displayName: "Use Logarithmic Formula",
                     type: .boolean(keypath: \.useNewFormula),
                     infoText: NSLocalizedString(
-                        "Use logarithmic formula",
-                        comment: "Use logarithmic formula"
+                        "Use Logarithmic Formula",
+                        comment: "Use Logarithmic Formula"
+                    ),
+                    settable: self
+                ),
+                Field(
+                    displayName: "Weighted Average of TDD. Weight of past 24 hours of TDD",
+                    type: .decimal(keypath: \.weightPercentage),
+                    infoText: NSLocalizedString(
+                        "Default is 0.65 (65 %) of past 24 hours. The rest will be from 7 days TDD average (35 %). To only use past 24 hours, set this to 1.",
+                        comment: "Weight of past 24 hours of TDD"
                     ),
                     settable: self
                 )
