@@ -132,7 +132,7 @@ extension PreferencesEditor {
                     displayName: "Weighted Average of TDD. Weight of past 24 hours of TDD",
                     type: .decimal(keypath: \.weightPercentage),
                     infoText: NSLocalizedString(
-                        "Default is 0.65 (65 %) of past 24 hours. The rest will be from 7 days TDD average (35 %). To only use past 24 hours, set this to 1.",
+                        "Default is 0.65 (65 %) * past 24 hours. The rest will be from 7 days TDD average (0.35). To only use past 24 hours, set this to 1.",
                         comment: "Weight of past 24 hours of TDD"
                     ),
                     settable: self
