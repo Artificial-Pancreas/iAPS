@@ -62,7 +62,7 @@ struct MainView: View {
             HStack(alignment: .top) {
                 VStack(alignment: .leading) {
                     HStack {
-                        Text(state.glucose).font(.largeTitle)
+                        Text(state.glucose).font(.title)
                         Text(state.trend)
                             .scaledToFill()
                             .minimumScaleFactor(0.5)
