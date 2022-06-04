@@ -626,8 +626,7 @@ final class BaseAPSManager: APSManager, Injectable {
                 storage.save(averages, as: OpenAPS.Monitor.tdd_averages)
                 storage.save(Array(uniqEvents), as: file)
             }
-            
-            
+
             debug(.apsManager, "Suggestion enacted. Received: \(received)")
             DispatchQueue.main.async {
                 self.broadcaster.notify(EnactedSuggestionObserver.self, on: .main) {

@@ -222,6 +222,15 @@ extension PreferencesEditor {
                     settable: self
                 ),
                 Field(
+                    displayName: "SMB DeliveryRatio",
+                    type: .decimal(keypath: \.smbDeliveryRatio),
+                    infoText: NSLocalizedString(
+                        "Default value: 0.5 This is another key OpenAPS safety cap, and specifies what share of the total insulin required can be delivered as SMB. This is to prevent people from getting into dangerous territory by setting SMB requests from the caregivers phone at the same time. Increase this experimental value slowly and with caution.",
+                        comment: "SMB DeliveryRatio"
+                    ),
+                    settable: self
+                ),
+                Field(
                     displayName: "SMB Interval",
                     type: .decimal(keypath: \.smbInterval),
                     infoText: NSLocalizedString("Minimum duration in minutes between two enacted SMBs", comment: "SMB Interval"),
@@ -500,15 +509,6 @@ extension PreferencesEditor {
                     infoText: NSLocalizedString(
                         "Default value: 1. This is another key OpenAPS safety cap, and specifies by what factor you can exceed the regular 120 maxSMB/maxUAM minutes. Increase this experimental value slowly and with caution. Available only when autoISF is enabled.",
                         comment: "SMB Max RangeExtension"
-                    ),
-                    settable: self
-                ),
-                Field(
-                    displayName: "SMB DeliveryRatio",
-                    type: .decimal(keypath: \.smbDeliveryRatio),
-                    infoText: NSLocalizedString(
-                        "Default value: 0.5 This is another key OpenAPS safety cap, and specifies what share of the total insulin required can be delivered as SMB. This is to prevent people from getting into dangerous territory by setting SMB requests from the caregivers phone at the same time. Increase this experimental value slowly and with caution.",
-                        comment: "SMB DeliveryRatio"
                     ),
                     settable: self
                 ),
