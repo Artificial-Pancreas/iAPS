@@ -608,11 +608,15 @@ final class BaseAPSManager: APSManager, Injectable {
 
                 var total: Decimal = 0
                 var indeces: Decimal = 0
+
                 for uniqEvent in uniqEvents {
-                    total += uniqEvent.TDD
-                    indeces += 1
+                    if uniqEvent.TDD > 0 {
+                        total += uniqEvent.TDD
+                        indeces += 1
+                    }
                 }
-                if indeces <= 0 {
+
+                if indeces == 0 {
                     indeces = 1
                 }
                 let average7 = total / indeces
