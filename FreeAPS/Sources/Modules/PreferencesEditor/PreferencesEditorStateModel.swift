@@ -93,19 +93,10 @@ extension PreferencesEditor {
 
             let dynamicISF = [
                 Field(
-                    displayName: "Adjustment Factor",
-                    type: .decimal(keypath: \.adjustmentFactor),
-                    infoText: NSLocalizedString(
-                        "Adjust Dynamic ISF constant",
-                        comment: "Adjust Dynamic ISF constant"
-                    ),
-                    settable: self
-                ),
-                Field(
                     displayName: "Enable Dynamic ISF",
                     type: .boolean(keypath: \.enableChris),
                     infoText: NSLocalizedString(
-                        "Enable Dynamic ISF",
+                        "Change ISF with every loop cycle. New ISF will be based on current BG, TDD if insulin (past 24 hours or a weighted average) and an Adjustment Factor (default is 1). Dynamic ISF and CR ratios will be limited by your autosens.min/max limits. Dynamic ratio replaces the autosens.ratio: New ISF = Static ISF / Dynamic ratio",
                         comment: "Enable Dynamic ISF"
                     ),
                     settable: self
@@ -114,8 +105,17 @@ extension PreferencesEditor {
                     displayName: "Enable Dynamic CR",
                     type: .boolean(keypath: \.enableDynamicCR),
                     infoText: NSLocalizedString(
-                        "Use Dynamic CR together with Dynamic ISF",
+                        "Use Dynamic CR. The dynamic ratio will be used also for CR: New CR = CR / Dynamic ratio. When using toghether with a high Insulin Fraction (>2), the recommended bolus for meals could get too high.",
                         comment: "Use Dynamic CR together with Dynamic ISF"
+                    ),
+                    settable: self
+                ),
+                Field(
+                    displayName: "Adjustment Factor",
+                    type: .decimal(keypath: \.adjustmentFactor),
+                    infoText: NSLocalizedString(
+                        "Adjust Dynamic ratios by a constant. Default is 1. Higher than 1 => lower ISF",
+                        comment: "Adjust Dynamic ISF constant"
                     ),
                     settable: self
                 ),
@@ -123,7 +123,7 @@ extension PreferencesEditor {
                     displayName: "Use Logarithmic Formula",
                     type: .boolean(keypath: \.useNewFormula),
                     infoText: NSLocalizedString(
-                        "Use Logarithmic Formula",
+                        "New Logarithmic Formula. More aggressive at lower and normal BG and less aggressive at really high BG. Use a lower AF (compared to Original Formula) when using the Logaritmic Formula. ",
                         comment: "Use Logarithmic Formula"
                     ),
                     settable: self
@@ -225,7 +225,7 @@ extension PreferencesEditor {
                     displayName: "SMB DeliveryRatio",
                     type: .decimal(keypath: \.smbDeliveryRatio),
                     infoText: NSLocalizedString(
-                        "Default value: 0.5 This is another key OpenAPS safety cap, and specifies what share of the total insulin required can be delivered as SMB. This is to prevent people from getting into dangerous territory by setting SMB requests from the caregivers phone at the same time. Increase this experimental value slowly and with caution.",
+                        "Default value: 0.5 This is another key OpenAPS safety cap, and specifies what share of the total insulin required can be delivered as SMB. Increase this experimental value slowly and with caution.",
                         comment: "SMB DeliveryRatio"
                     ),
                     settable: self

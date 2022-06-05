@@ -1087,7 +1087,7 @@ Enact a temp Basal or a temp target */
 "Default value: 1. This is another key OpenAPS safety cap, and specifies by what factor you can exceed the regular 120 maxSMB/maxUAM minutes. Increase this experimental value slowly and with caution. Available only when autoISF is enabled." = "Standardvärde: 1. Detta är en säkerhetsbegränsning i OpenAPS, som avgör med vilken faktor du kan överskrida maximala värdet för Max SMB- och Max UAM-basalminuter. Öka endast stegvis med försiktighet. Endast tillgänglig när AutoISF är på.";
 
 /* SMB DeliveryRatio */
-"Default value: 0.5 This is another key OpenAPS safety cap, and specifies what share of the total insulin required can be delivered as SMB. This is to prevent people from getting into dangerous territory by setting SMB requests from the caregivers phone at the same time. Increase this experimental value slowly and with caution." = "Standardvärde: 0.5. Detta är en säkerhetsbegränsning i OpenAPS som bestämmer hur stor del av nödvändigt insulin som kan tillföras som en supermikrobolus (SMB). Öka endast stegvis och med stor försiktighet";
+"Default value: 0.5 This is another key OpenAPS safety cap, and specifies what share of the total insulin required can be delivered as SMB. Increase this experimental value slowly and with caution." = "Standardvärde: 0.5. Detta är en säkerhetsbegränsning i OpenAPS som bestämmer hur stor del av nödvändigt insulin som kan tillföras som en supermikrobolus (SMB). Öka endast stegvis och med stor försiktighet";
 
 /* Adjust Dynamic ISF constant */
 "Adjust Dynamic ISF constant" = "Justera dynamisk ISF - konstant";
