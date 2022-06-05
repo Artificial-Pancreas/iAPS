@@ -40,12 +40,12 @@ function generate(iob, currenttemp, glucose, profile, autosens = null, meal = nu
     
     var tdd_ = {};
     if (tdd) {
-        tdd_ = tdd
+        tdd_ = tdd;
     }
     
     var tdd_averages_ = {};
     if (tdd_averages) {
-        tdd_averages_ = tdd_averages
+        tdd_averages_ = tdd_averages;
     }
     
     
