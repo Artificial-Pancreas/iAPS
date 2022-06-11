@@ -4,6 +4,7 @@ extension Settings {
     final class StateModel: BaseStateModel<Provider> {
         @Injected() private var broadcaster: Broadcaster!
         @Injected() private var fileManager: FileManager!
+        @Injected() private var nightscoutManager: NightscoutManager!
 
         @Published var closedLoop = false
         @Published var debugOptions = false
@@ -34,6 +35,16 @@ extension Settings {
             }
 
             return items
+        }
+
+        func uploadProfile() {
+            NSLog("SettingsState Upload Profile")
+            nightscoutManager.uploadProfile()
+        }
+
+        func hideSettingsModal() {
+            nightscoutManager.uploadProfile()
+            hideModal()
         }
     }
 }
