@@ -68,6 +68,7 @@ struct Preferences: JSON {
     var useNewFormula: Bool = false
     var useWeightedAverage: Bool = false
     var weightPercentage: Decimal = 0.65
+    var tddAdjBasal: Bool = false
 }
 
 extension Preferences {
@@ -138,6 +139,7 @@ extension Preferences {
         case useNewFormula
         case useWeightedAverage
         case weightPercentage
+        case tddAdjBasal
     }
 }
 
