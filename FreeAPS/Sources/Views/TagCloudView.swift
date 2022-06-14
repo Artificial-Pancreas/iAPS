@@ -69,7 +69,8 @@ struct TagCloudView: View {
                  textTag where textTag.contains("Original formula"),
                  textTag where textTag.contains("Logarithmic formula"),
                  textTag where textTag.contains("Autosens/Dynamic Limit:"),
-                 textTag where textTag.contains("Dynamic ISF/CR"):
+                 textTag where textTag.contains("Dynamic ISF/CR"),
+                 textTag where textTag.contains("Basal ratio"):
                 return .zt
             default:
                 return .insulin
