@@ -640,7 +640,7 @@ final class BaseAPSManager: APSManager, Injectable {
 
                 let average7 = total / indeces
                 let weight = preferences.weightPercentage
-                let weighted_average = weight * currentTDD + (1 - weight) * average7
+                let weighted_average = weight * average2hours + (1 - weight) * average7
                 let average2hours = totalAmount / nrOfIndeces
 
                 let averages = TDD_averages(
