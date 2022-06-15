@@ -605,7 +605,7 @@ final class BaseAPSManager: APSManager, Injectable {
                 uniqEvents = storage.retrieve(file, as: [TDD].self)?
                     .filter { $0.timestamp.addingTimeInterval(7.days.timeInterval) > Date() }
                     .sorted { $0.timestamp > $1.timestamp } ?? []
-
+                
                 var total: Decimal = 0
                 var indeces: Decimal = 0
 
@@ -616,21 +616,44 @@ final class BaseAPSManager: APSManager, Injectable {
                     }
                 }
 
+                var entriesPast2hours = storage.retrieve(file, as: [TDD].self)?
+                    .filter { $0.timestamp.addingTimeInterval(2.hours.timeInterval) > Date() }
+                    .sorted { $0.timestamp > $1.timestamp } ?? []
+                    
+                var totalAmount: Decimal = 0
+                var nrOfIndeces: Decimal = 0
+
+                for entry in entriesPast2hours {
+                    if entry.TDD > 0 {
+                        totalAmount += entry.TDD
+                        nrOfIndeces += 1
+                    }
+                }
+                
                 if indeces == 0 {
                     indeces = 1
                 }
+                
+                if nrOfIndeces == 0 {
+                    nrOfIndeces = 1
+                }
+                    
                 let average7 = total / indeces
                 let weight = preferences.weightPercentage
                 let weighted_average = weight * currentTDD + (1 - weight) * average7
+                let average2hours = totalAmount / nrOfIndeces
+                    
                 let averages = TDD_averages(
                     average_7days: average7,
                     weightedAverage: weighted_average,
+                    past2hoursAverage: average2hours,
                     date: Date()
                 )
                 storage.save(averages, as: OpenAPS.Monitor.tdd_averages)
                 storage.save(Array(uniqEvents), as: file)
             }
-
+            // End of tdd.json
+            
             debug(.apsManager, "Suggestion enacted. Received: \(received)")
             DispatchQueue.main.async {
                 self.broadcaster.notify(EnactedSuggestionObserver.self, on: .main) {
