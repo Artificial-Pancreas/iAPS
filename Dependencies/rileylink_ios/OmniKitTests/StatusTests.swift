@@ -35,7 +35,7 @@ class StatusTests: XCTestCase {
             XCTAssertEqual(TimeInterval(minutes: 3547), decoded.timeActive)
             XCTAssertEqual(.scheduledBasal, decoded.deliveryStatus)
             XCTAssertEqual(.fiftyOrLessUnits, decoded.podProgressStatus)
-            XCTAssertEqual(129.45, decoded.insulin, accuracy: 0.01)
+            XCTAssertEqual(129.45, decoded.insulinDelivered, accuracy: 0.01)
             XCTAssertEqual(46.00, decoded.reservoirLevel)
             XCTAssertEqual(2.2, decoded.bolusNotDelivered)
             XCTAssertEqual(9, decoded.lastProgrammingMessageSeqNum)

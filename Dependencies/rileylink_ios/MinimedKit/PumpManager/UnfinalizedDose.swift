@@ -64,7 +64,7 @@ public struct UnfinalizedDose: RawRepresentable, Equatable, CustomStringConverti
         return units
     }
 
-    init(bolusAmount: Double, startTime: Date, duration: TimeInterval, insulinType: InsulinType, automatic: Bool, isReconciledWithHistory: Bool = false) {
+    init(bolusAmount: Double, startTime: Date, duration: TimeInterval, insulinType: InsulinType?, automatic: Bool, isReconciledWithHistory: Bool = false) {
         self.doseType = .bolus
         self.units = bolusAmount
         self.startTime = startTime
@@ -76,7 +76,7 @@ public struct UnfinalizedDose: RawRepresentable, Equatable, CustomStringConverti
         self.automatic = automatic
     }
 
-    init(tempBasalRate: Double, startTime: Date, duration: TimeInterval, insulinType: InsulinType, automatic: Bool = true, isReconciledWithHistory: Bool = false) {
+    init(tempBasalRate: Double, startTime: Date, duration: TimeInterval, insulinType: InsulinType?, automatic: Bool = true, isReconciledWithHistory: Bool = false) {
         self.doseType = .tempBasal
         self.units = tempBasalRate * duration.hours
         self.startTime = startTime
@@ -141,7 +141,20 @@ public struct UnfinalizedDose: RawRepresentable, Equatable, CustomStringConverti
             return "\(String(describing: doseType).capitalized) \(startTime)"
         }
     }
-    
+
+    public var eventTitle: String {
+        switch doseType {
+        case .bolus:
+            return NSLocalizedString("Bolus", comment: "Pump Event title for UnfinalizedDose with doseType of .bolus")
+        case .resume:
+            return NSLocalizedString("Resume", comment: "Pump Event title for UnfinalizedDose with doseType of .resume")
+        case .suspend:
+            return NSLocalizedString("Suspend", comment: "Pump Event title for UnfinalizedDose with doseType of .suspend")
+        case .tempBasal:
+            return NSLocalizedString("Temp Basal", comment: "Pump Event title for UnfinalizedDose with doseType of .tempBasal")
+        }
+    }
+
     public mutating func reconcile(with event: NewPumpEvent) {
         isReconciledWithHistory = true
         if let dose = event.dose {
@@ -252,17 +265,18 @@ extension UnfinalizedDose {
 
 // MARK: - NewPumpEvent
 
+
+
 extension NewPumpEvent {
     init(_ dose: UnfinalizedDose) {
-        let title = String(describing: dose)
         let entry = DoseEntry(dose)
         let raw = dose.uuid.asRaw
-        self.init(date: dose.startTime, dose: entry, isMutable: !dose.isFinished || !dose.isReconciledWithHistory, raw: raw, title: title)
+        self.init(date: dose.startTime, dose: entry, raw: raw, title: dose.eventTitle)
     }
     
     func replacingAttributes(raw newRaw: Data, date newDate: Date) -> NewPumpEvent {
         let newDose = dose?.replacingAttributes(startDate: newDate)
-        return NewPumpEvent(date: newDate, dose: newDose, isMutable: isMutable, raw: newRaw, title: title, type: type)
+        return NewPumpEvent(date: newDate, dose: newDose, raw: newRaw, title: title, type: type)
     }
 }
 
@@ -272,9 +286,9 @@ extension DoseEntry {
     init (_ dose: UnfinalizedDose) {
         switch dose.doseType {
         case .bolus:
-            self = DoseEntry(type: .bolus, startDate: dose.startTime, endDate: dose.finishTime, value: dose.programmedUnits ?? dose.units, unit: .units, deliveredUnits: dose.finalizedUnits, insulinType: dose.insulinType, automatic: dose.automatic)
+            self = DoseEntry(type: .bolus, startDate: dose.startTime, endDate: dose.finishTime, value: dose.programmedUnits ?? dose.units, unit: .units, deliveredUnits: dose.finalizedUnits, insulinType: dose.insulinType, automatic: dose.automatic, isMutable: !dose.isFinished || !dose.isReconciledWithHistory)
         case .tempBasal:
-            self = DoseEntry(type: .tempBasal, startDate: dose.startTime, endDate: dose.finishTime, value: dose.programmedTempRate ?? dose.rate, unit: .unitsPerHour, deliveredUnits: dose.finalizedUnits, insulinType: dose.insulinType)
+            self = DoseEntry(type: .tempBasal, startDate: dose.startTime, endDate: dose.finishTime, value: dose.programmedTempRate ?? dose.rate, unit: .unitsPerHour, deliveredUnits: dose.finalizedUnits, insulinType: dose.insulinType, isMutable: !dose.isFinished || !dose.isReconciledWithHistory)
         case .suspend:
             self = DoseEntry(suspendDate: dose.startTime)
         case .resume:
@@ -292,7 +306,7 @@ extension DoseEntry {
         }
         let duration = endDate.timeIntervalSince(startDate)
         let newEndDate = newStartDate.addingTimeInterval(duration)
-        return DoseEntry(type: type, startDate: newStartDate, endDate: newEndDate, value: value, unit: unit, deliveredUnits: deliveredUnits, description: description, syncIdentifier: syncIdentifier, insulinType: insulinType)
+        return DoseEntry(type: type, startDate: newStartDate, endDate: newEndDate, value: value, unit: unit, deliveredUnits: deliveredUnits, description: description, syncIdentifier: syncIdentifier, insulinType: insulinType, isMutable: isMutable, wasProgrammedByPumpUI: wasProgrammedByPumpUI)
     }
 }
 

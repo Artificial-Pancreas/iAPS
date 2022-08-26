@@ -164,11 +164,11 @@ class TempBasalTests: XCTestCase {
             XCTAssertEqual(false, cmd.acknowledgementBeep)
             XCTAssertEqual(true, cmd.completionBeep)
             XCTAssertEqual(.minutes(60), cmd.programReminderInterval)
-            XCTAssertEqual(TimeInterval(seconds: 1800), cmd.delayUntilFirstTenthOfPulse)
+            XCTAssertEqual(TimeInterval(hours: 5), cmd.delayUntilFirstPulse)
             XCTAssertEqual(0, cmd.remainingPulses)
             XCTAssertEqual(1, cmd.rateEntries.count)
             let entry = cmd.rateEntries[0]
-            XCTAssertEqual(TimeInterval(seconds: 1800), entry.delayBetweenPulses)
+            XCTAssertEqual(TimeInterval(hours: 5), entry.delayBetweenPulses)
             XCTAssertEqual(TimeInterval(minutes: 30), entry.duration)
             XCTAssertEqual(0, entry.rate)
             
@@ -188,14 +188,14 @@ class TempBasalTests: XCTestCase {
             XCTAssertEqual(false, cmd.acknowledgementBeep)
             XCTAssertEqual(true, cmd.completionBeep)
             XCTAssertEqual(.minutes(60), cmd.programReminderInterval)
-            XCTAssertEqual(TimeInterval(seconds: 1800), cmd.delayUntilFirstTenthOfPulse)
+            XCTAssertEqual(TimeInterval(hours: 5), cmd.delayUntilFirstPulse)
             XCTAssertEqual(0, cmd.remainingPulses)
             XCTAssertEqual(6, cmd.rateEntries.count)
-            let entry = cmd.rateEntries[0]
-            XCTAssertEqual(TimeInterval(seconds: 1800), entry.delayBetweenPulses)
-            XCTAssertEqual(TimeInterval(minutes: 30), entry.duration)
-            XCTAssertEqual(0, entry.rate)
-            
+            for entry in cmd.rateEntries {
+                XCTAssertEqual(TimeInterval(hours: 5), entry.delayBetweenPulses)
+                XCTAssertEqual(TimeInterval(minutes: 30), entry.duration)
+                XCTAssertEqual(0, entry.rate)
+            }
         } catch (let error) {
             XCTFail("message decoding threw error: \(error)")
         }
@@ -205,6 +205,33 @@ class TempBasalTests: XCTestCase {
         XCTAssertEqual("162c7c0000006b49d20000006b49d20000006b49d20000006b49d20000006b49d20000006b49d20000006b49d200", cmd.data.hexadecimalString)
     }
 
+    func testZeroTempTwelveHoursExtraCommand() {
+        do {
+            // 0 U/h for 12 hours
+            //        16 LL RR MM NNNN XXXXXXXX YYYY ZZZZZZZZ YYYY ZZZZZZZZ YYYY ZZZZZZZZ YYYY ZZZZZZZZ YYYY ZZZZZZZZ YYYY ZZZZZZZZ YYYY ZZZZZZZZ YYYY ZZZZZZZZ YYYY ZZZZZZZZ YYYY ZZZZZZZZ YYYY ZZZZZZZZ YYYY ZZZZZZZZ YYYY ZZZZZZZZ YYYY ZZZZZZZZ YYYY ZZZZZZZZ YYYY ZZZZZZZZ YYYY ZZZZZZZZ YYYY ZZZZZZZZ YYYY ZZZZZZZZ YYYY ZZZZZZZZ YYYY ZZZZZZZZ YYYY ZZZZZZZZ YYYY ZZZZZZZZ YYYY ZZZZZZZZ
+            //        16 98 7c 00 0000 6b49d200 0000 6b49d200 0000 6b49d200 0000 6b49d200 0000 6b49d200 0000 6b49d200 0000 6b49d200 0000 6b49d200 0000 6b49d200 0000 6b49d200 0000 6b49d200 0000 6b49d200 0000 6b49d200 0000 6b49d200 0000 6b49d200 0000 6b49d200 0000 6b49d200 0000 6b49d200 0000 6b49d200 0000 6b49d200 0000 6b49d200 0000 6b49d200 0000 6b49d200 0000 6b49d200 0000 6b49d200
+            let cmd = try TempBasalExtraCommand(encodedData: Data(hexadecimalString: "16987c0000006b49d20000006b49d20000006b49d20000006b49d20000006b49d20000006b49d20000006b49d20000006b49d20000006b49d20000006b49d20000006b49d20000006b49d20000006b49d20000006b49d20000006b49d20000006b49d20000006b49d20000006b49d20000006b49d20000006b49d20000006b49d20000006b49d20000006b49d20000006b49d20000006b49d200")!)
+            XCTAssertEqual(false, cmd.acknowledgementBeep)
+            XCTAssertEqual(true, cmd.completionBeep)
+            XCTAssertEqual(.minutes(60), cmd.programReminderInterval)
+            XCTAssertEqual(TimeInterval(hours: 5), cmd.delayUntilFirstPulse)
+            XCTAssertEqual(0, cmd.remainingPulses)
+            XCTAssertEqual(24, cmd.rateEntries.count)
+            for entry in cmd.rateEntries {
+                XCTAssertEqual(0, entry.totalPulses)
+                XCTAssertEqual(TimeInterval(hours: 5), entry.delayBetweenPulses)
+                XCTAssertEqual(TimeInterval(minutes: 30), entry.duration)
+                XCTAssertEqual(0, entry.rate)
+            }
+
+        } catch (let error) {
+            XCTFail("message decoding threw error: \(error)")
+        }
+
+        // Encode
+        let cmd = TempBasalExtraCommand(rate: 0, duration: .hours(12), acknowledgementBeep: false, completionBeep: true, programReminderInterval: .minutes(60))
+        XCTAssertEqual("16987c0000006b49d20000006b49d20000006b49d20000006b49d20000006b49d20000006b49d20000006b49d20000006b49d20000006b49d20000006b49d20000006b49d20000006b49d20000006b49d20000006b49d20000006b49d20000006b49d20000006b49d20000006b49d20000006b49d20000006b49d20000006b49d20000006b49d20000006b49d20000006b49d20000006b49d200", cmd.data.hexadecimalString)
+    }
 
     func testTempBasalExtremeValues() {
         do {
@@ -244,7 +271,7 @@ class TempBasalTests: XCTestCase {
             XCTAssertEqual(false, cmd.acknowledgementBeep)
             XCTAssertEqual(true, cmd.completionBeep)
             XCTAssertEqual(.minutes(60), cmd.programReminderInterval)
-            XCTAssertEqual(TimeInterval(seconds: 6), cmd.delayUntilFirstTenthOfPulse)
+            XCTAssertEqual(TimeInterval(seconds: 6), cmd.delayUntilFirstPulse)
             XCTAssertEqual(300, cmd.remainingPulses)
             XCTAssertEqual(1, cmd.rateEntries.count)
             let entry = cmd.rateEntries[0]
@@ -292,7 +319,7 @@ class TempBasalTests: XCTestCase {
             XCTAssertEqual(false, cmd.acknowledgementBeep)
             XCTAssertEqual(false, cmd.completionBeep)
             XCTAssertEqual(.minutes(60), cmd.programReminderInterval)
-            XCTAssertEqual(TimeInterval(seconds: 6), cmd.delayUntilFirstTenthOfPulse)
+            XCTAssertEqual(TimeInterval(seconds: 6), cmd.delayUntilFirstPulse)
             XCTAssertEqual(6300, cmd.remainingPulses)
             XCTAssertEqual(2, cmd.rateEntries.count)
             let entry = cmd.rateEntries[0]
@@ -316,7 +343,7 @@ class TempBasalTests: XCTestCase {
             XCTAssertEqual(false, cmd.acknowledgementBeep)
             XCTAssertEqual(false, cmd.completionBeep)
             XCTAssertEqual(.minutes(60), cmd.programReminderInterval)
-            XCTAssertEqual(TimeInterval(seconds: 6.01001), cmd.delayUntilFirstTenthOfPulse)
+            XCTAssertEqual(TimeInterval(seconds: 6.01001), cmd.delayUntilFirstPulse)
             XCTAssertEqual(6289.5, cmd.remainingPulses)
             XCTAssertEqual(2, cmd.rateEntries.count)
             let entry1 = cmd.rateEntries[0]

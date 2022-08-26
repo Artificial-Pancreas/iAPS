@@ -99,9 +99,9 @@ public class RileyLinkDeviceTableViewController: UITableViewController {
             rssiFetchTimer?.invalidate()
         }
     }
-    
+
     private var hasPiezo: Bool = false
-    
+
     private var appeared = false
     
     private var batteryAlertLevel: Int? {
@@ -120,7 +120,7 @@ public class RileyLinkDeviceTableViewController: UITableViewController {
         super.init(style: .grouped)
 
         updateDeviceStatus()
-        
+
         NotificationCenter.default.addObserver(forName: .DeviceStatusUpdated, object: device, queue: .main)
         { (notification) in
             self.updateDeviceStatus()
@@ -165,7 +165,7 @@ public class RileyLinkDeviceTableViewController: UITableViewController {
             sections = [
                 .device,
                 .alert,
-                .emaLinkCommands
+                .rileyLinkCommands
             ]
         case .orange:
             deviceRows = [
@@ -379,7 +379,6 @@ public class RileyLinkDeviceTableViewController: UITableViewController {
         case configureCommand
         case orangeLinkCommands
         case rileyLinkCommands
-        case emaLinkCommands
     }
     
     private var sections: [Section] = []
@@ -403,11 +402,6 @@ public class RileyLinkDeviceTableViewController: UITableViewController {
     
     private enum RileyLinkCommandRow: Int, CaseIterable {
         case diagnosticLEDSMode
-        case getStatistics
-    }
-
-    private enum EmaLinkCommandRow: Int, CaseIterable {
-        case logicLEDSMode
         case getStatistics
     }
 
@@ -456,14 +450,6 @@ public class RileyLinkDeviceTableViewController: UITableViewController {
         return tableView.cellForRow(at: IndexPath(row: row.rawValue, section: sectionIndex))
     }
 
-    private func cellForRow(_ row: EmaLinkCommandRow) -> UITableViewCell? {
-        guard let sectionIndex = sections.firstIndex(of: Section.emaLinkCommands) else
-        {
-            return nil
-        }
-        return tableView.cellForRow(at: IndexPath(row: row.rawValue, section: sectionIndex))
-    }
-
     public override func numberOfSections(in tableView: UITableView) -> Int {
         return sections.count
     }
@@ -478,8 +464,6 @@ public class RileyLinkDeviceTableViewController: UITableViewController {
             return deviceRows.count
         case .rileyLinkCommands:
             return RileyLinkCommandRow.allCases.count
-        case .emaLinkCommands:
-            return EmaLinkCommandRow.allCases.count
         case .configureCommand:
             return OrangeConfigureCommandRow.allCases.count
         case .orangeLinkCommands:
@@ -584,31 +568,23 @@ public class RileyLinkDeviceTableViewController: UITableViewController {
                 cell.textLabel?.text = LocalizedString("Frequency", comment: "The title of the cell showing current rileylink frequency")
                 cell.setDetailFrequency(frequency, formatter: frequencyFormatter)
             case .battery:
-                cell.textLabel?.text = LocalizedString("Battery level", comment: "The title of the cell showing battery level")
+                cell.textLabel?.text = NSLocalizedString("Battery level", comment: "The title of the cell showing battery level")
                 cell.setDetailBatteryLevel(battery)
             case .voltage:
-                cell.textLabel?.text = LocalizedString("Voltage", comment: "The title of the cell showing ORL")
+                cell.textLabel?.text = NSLocalizedString("Voltage", comment: "The title of the cell showing ORL")
                 cell.setVoltage(voltage)
             }
         case .alert:
             switch AlertRow(rawValue: indexPath.row)! {
             case .battery:
                 cell.accessoryType = .disclosureIndicator
-                cell.textLabel?.text = LocalizedString("Low Battery Alert", comment: "The title of the cell showing battery level")
+                cell.textLabel?.text = NSLocalizedString("Low Battery Alert", comment: "The title of the cell showing battery level")
                 cell.setBatteryAlert(batteryAlertLevel, formatter: integerFormatter)
             }
         case .rileyLinkCommands:
             switch RileyLinkCommandRow(rawValue: indexPath.row)! {
             case .diagnosticLEDSMode:
-                cell.textLabel?.text = LocalizedString("Diagnostic LEDs", comment: "The title of the command to update diagnostic LEDs")
-                cell.setLEDMode(ledMode)
-            case .getStatistics:
-                cell.textLabel?.text = LocalizedString("Get RileyLink Statistics", comment: "The title of the command to fetch RileyLink statistics")
-            }
-        case .emaLinkCommands:
-            switch EmaLinkCommandRow(rawValue: indexPath.row)! {
-            case .logicLEDSMode:
-                cell.textLabel?.text = LocalizedString("Invert LED Logic", comment: "The title of the command to invert BLE connection LED logic")
+                cell.textLabel?.text = LocalizedString("Toggle Diagnostic LEDs", comment: "The title of the command to update diagnostic LEDs")
                 cell.setLEDMode(ledMode)
             case .getStatistics:
                 cell.textLabel?.text = LocalizedString("Get RileyLink Statistics", comment: "The title of the command to fetch RileyLink statistics")
@@ -622,19 +598,19 @@ public class RileyLinkDeviceTableViewController: UITableViewController {
                 switchView.isHidden = false
                 cell.accessoryType = .none
                 switchView.isOn = yellowOn
-                cell.textLabel?.text = LocalizedString("Lighten Yellow LED", comment: "The title of the cell showing Lighten Yellow LED")
+                cell.textLabel?.text = NSLocalizedString("Lighten Yellow LED", comment: "The title of the cell showing Lighten Yellow LED")
             case .red:
                 switchView.isHidden = false
                 cell.accessoryType = .none
                 switchView.isOn = redOn
-                cell.textLabel?.text = LocalizedString("Lighten Red LED", comment: "The title of the cell showing Lighten Red LED")
+                cell.textLabel?.text = NSLocalizedString("Lighten Red LED", comment: "The title of the cell showing Lighten Red LED")
             case .shake:
                 switchView.isHidden = false
                 switchView.isOn = shakeOn
                 cell.accessoryType = .none
-                cell.textLabel?.text = LocalizedString("Test Vibration", comment: "The title of the cell showing Test Vibration")
+                cell.textLabel?.text = NSLocalizedString("Test Vibration", comment: "The title of the cell showing Test Vibration")
             case .findDevice:
-                cell.textLabel?.text = LocalizedString("Find Device", comment: "The title of the cell for sounding device finding piezo")
+                cell.textLabel?.text = NSLocalizedString("Find Device", comment: "The title of the cell for sounding device finding piezo")
                 cell.detailTextLabel?.text = nil
             }
         case .configureCommand:
@@ -643,12 +619,12 @@ public class RileyLinkDeviceTableViewController: UITableViewController {
                 switchView.isHidden = false
                 switchView.isOn = ledOn
                 cell.accessoryType = .none
-                cell.textLabel?.text = LocalizedString("Connection LED", comment: "The title of the cell for connection LED")
+                cell.textLabel?.text = NSLocalizedString("Connection LED", comment: "The title of the cell for connection LED")
             case .connectionVibrate:
                 switchView.isHidden = false
                 switchView.isOn = vibrationOn
                 cell.accessoryType = .none
-                cell.textLabel?.text = LocalizedString("Connection Vibration", comment: "The title of the cell for connection vibration")
+                cell.textLabel?.text = NSLocalizedString("Connection Vibration", comment: "The title of the cell for connection vibration")
             }
         }
 
@@ -661,8 +637,6 @@ public class RileyLinkDeviceTableViewController: UITableViewController {
             return LocalizedString("Device", comment: "The title of the section describing the device")
         case .rileyLinkCommands:
             return LocalizedString("Test Commands", comment: "The title of the section for rileylink commands")
-        case .emaLinkCommands:
-            return LocalizedString("Test Commands", comment: "The title of the section for emalink commands")
         case .orangeLinkCommands:
             return LocalizedString("Test Commands", comment: "The title of the section for orangelink commands")
         case .configureCommand:
@@ -693,8 +667,6 @@ public class RileyLinkDeviceTableViewController: UITableViewController {
                 return false
             }
         case .rileyLinkCommands:
-            return device.peripheralState == .connected
-        case .emaLinkCommands:
             return device.peripheralState == .connected
         case .alert:
             return true
@@ -742,30 +714,6 @@ public class RileyLinkDeviceTableViewController: UITableViewController {
                 show(vc, sender: indexPath)
             }
 
-        case .emaLinkCommands:
-            var vc: CommandResponseViewController?
-
-            switch EmaLinkCommandRow(rawValue: indexPath.row)! {
-            case .logicLEDSMode:
-                let nextMode: RileyLinkLEDMode
-                switch ledMode {
-                case.on:
-                    nextMode = .off
-                default:
-                    nextMode = .on
-                }
-                vc = .setDiagnosticLEDMode(device: device, mode: nextMode)
-            case .getStatistics:
-                vc = .getStatistics(device: device)
-            }
-            if let cell = tableView.cellForRow(at: indexPath) {
-                vc?.title = cell.textLabel?.text
-            }
-
-            if let vc = vc {
-                show(vc, sender: indexPath)
-            }
-
         case .orangeLinkCommands:
             switch OrangeLinkCommandRow(rawValue: indexPath.row)! {
             case .findDevice:
@@ -779,8 +727,8 @@ public class RileyLinkDeviceTableViewController: UITableViewController {
         case .alert:
             switch AlertRow(rawValue: indexPath.row)! {
             case .battery:
-                let alert = UIAlertController.init(title: LocalizedString("Battery level Alert", comment: "Header of list showing battery level alert options"), message: nil, preferredStyle: .actionSheet)
-                let action = UIAlertAction.init(title: LocalizedString("OFF", comment: "Battery level alert OFF in list of options"), style: .default) { _ in
+                let alert = UIAlertController.init(title: "Battery level Alert", message: nil, preferredStyle: .actionSheet)
+                let action = UIAlertAction.init(title: "OFF", style: .default) { _ in
                     self.batteryAlertLevel = nil
                     self.tableView.reloadData()
                 }
@@ -893,6 +841,6 @@ private extension UITableViewCell {
     }
     
     func setBatteryAlert(_ level: Int?, formatter: NumberFormatter) {
-        detailTextLabel?.text = formatter.percentString(from: level) ?? LocalizedString("Off", comment: "Detail text when battery alert disabled.")
+        detailTextLabel?.text = formatter.percentString(from: level) ?? NSLocalizedString("Off", comment: "Detail text when battery alert disabled.")
     }
 }

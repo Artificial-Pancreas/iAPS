@@ -2,6 +2,15 @@
   "object": {
     "pins": [
       {
+        "package": "CryptoSwift",
+        "repositoryURL": "https://github.com/krzyzanowskim/CryptoSwift",
+        "state": {
+          "branch": null,
+          "revision": "039f56c5d7960f277087a0be51f5eb04ed0ec073",
+          "version": "1.5.1"
+        }
+      },
+      {
         "package": "swift-algorithms",
         "repositoryURL": "https://github.com/apple/swift-algorithms",
         "state": {
@@ -17,6 +26,15 @@
           "branch": null,
           "revision": "6583ac70c326c3ee080c1d42d9ca3361dca816cd",
           "version": "0.1.0"
+        }
+      },
+      {
+        "package": "SwiftCharts",
+        "repositoryURL": "https://github.com/ivanschuetz/SwiftCharts",
+        "state": {
+          "branch": "master",
+          "revision": "c354c1945bb35a1f01b665b22474f6db28cba4a2",
+          "version": null
         }
       },
       {

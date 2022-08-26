@@ -126,31 +126,31 @@ class MasterViewController: UITableViewController {
         case .configuration:
             let row = ConfigurationRow(rawValue: indexPath.row)!
             switch row {
-            case .basalRate:
-
-                // x22 with max basal rate of 5U/hr
-                let pulsesPerUnit = 20
-                let basalRates = (1...100).map { Double($0) / Double(pulsesPerUnit) }
-
-                // full x23 rates
+//            case .basalRate:
+//
+//                // x22 with max basal rate of 5U/hr
+//                let pulsesPerUnit = 20
+//                let basalRates = (1...100).map { Double($0) / Double(pulsesPerUnit) }
+//
+//                // full x23 rates
 //                let rateGroup1 = ((1...39).map { Double($0) / Double(40) })
 //                let rateGroup2 = ((20...199).map { Double($0) / Double(20) })
 //                let rateGroup3 = ((100...350).map { Double($0) / Double(10) })
 //                let basalRates = rateGroup1 + rateGroup2 + rateGroup3
 
-                let scheduleVC = BasalScheduleTableViewController(allowedBasalRates: basalRates, maximumScheduleItemCount: 5, minimumTimeInterval: .minutes(30))
-
-                if let profile = dataManager?.basalRateSchedule {
-                    scheduleVC.timeZone = profile.timeZone
-
-
-                    scheduleVC.scheduleItems = profile.items
-                }
-                scheduleVC.delegate = self
-                scheduleVC.title = sender?.textLabel?.text
-                scheduleVC.syncSource = self
-
-                show(scheduleVC, sender: sender)
+//                let scheduleVC = BasalScheduleTableViewController(allowedBasalRates: basalRates, maximumScheduleItemCount: 5, minimumTimeInterval: .minutes(30))
+//
+//                if let profile = dataManager?.basalRateSchedule {
+//                    scheduleVC.timeZone = profile.timeZone
+//
+//
+//                    scheduleVC.scheduleItems = profile.items
+//                }
+//                scheduleVC.delegate = self
+//                scheduleVC.title = sender?.textLabel?.text
+//                scheduleVC.syncSource = self
+//
+//                show(scheduleVC, sender: sender)
             case .carbRatio:
                 let scheduleVC = DailyQuantityScheduleTableViewController()
 
@@ -166,21 +166,17 @@ class MasterViewController: UITableViewController {
 
                 show(scheduleVC, sender: sender)
             case .correctionRange:
+                var therapySettings = TherapySettings()
+                therapySettings.glucoseTargetRangeSchedule = self.dataManager?.glucoseTargetRangeSchedule
+                let therapySettingsViewModel = TherapySettingsViewModel(therapySettings: therapySettings)
+                
+                let view = CorrectionRangeScheduleEditor(mode: .settings, therapySettingsViewModel: therapySettingsViewModel, didSave: {
+                    self.dataManager?.glucoseTargetRangeSchedule = therapySettingsViewModel.therapySettings.glucoseTargetRangeSchedule
+                    self.navigationController?.popToViewController(self, animated: true)
+                })
+                    .environmentObject(DisplayGlucoseUnitObservable(displayGlucoseUnit: .milligramsPerDeciliter))
 
-                let unit = dataManager?.glucoseTargetRangeSchedule?.unit ?? dataManager?.glucoseStore.preferredUnit ?? HKUnit.milligramsPerDeciliter
-
-                let scheduleVC = GlucoseRangeScheduleTableViewController(allowedValues: unit.allowedCorrectionRangeValues, unit: unit)
-
-                scheduleVC.delegate = self
-                scheduleVC.title = sender?.textLabel?.text
-
-                if let schedule = dataManager?.glucoseTargetRangeSchedule {
-                    var overrides: [TemporaryScheduleOverride.Context: DoubleRange] = [:]
-                    overrides[.preMeal] = dataManager?.preMealTargetRange
-                    overrides[.legacyWorkout] = dataManager?.legacyWorkoutTargetRange
-                    scheduleVC.setSchedule(schedule, withOverrideRanges: overrides)
-                }
-
+                let scheduleVC = DismissibleHostingController(rootView: view, dismissalMode: .pop(to:  type(of: self)), isModalInPresentation: false)
                 show(scheduleVC, sender: sender)
             case .insulinSensitivity:
                 let unit = dataManager?.insulinSensitivitySchedule?.unit ?? dataManager?.glucoseStore.preferredUnit ?? HKUnit.milligramsPerDeciliter
@@ -204,6 +200,8 @@ class MasterViewController: UITableViewController {
                 textFieldVC.contextHelp = LocalizedString("The pump ID can be found printed on the back, or near the bottom of the STATUS/Esc screen. It is the strictly numerical portion of the serial number (shown as SN or S/N).", comment: "Instructions on where to find the pump ID on a Minimed pump")
 
                 show(textFieldVC, sender: sender)
+            default:
+                break
             }
         case .data:
             switch DataRow(rawValue: indexPath.row)! {
@@ -281,7 +279,7 @@ class MasterViewController: UITableViewController {
                     }
 
                     group.enter()
-                    dataManager.glucoseStore.addGlucoseSamples([NewGlucoseSample(date: Date(), quantity: HKQuantity(unit: .milligramsPerDeciliter, doubleValue: 101), isDisplayOnly: false, wasUserEntered: false, syncIdentifier: UUID().uuidString)], completion: { (result) in
+                    dataManager.glucoseStore.addGlucoseSamples([NewGlucoseSample(date: Date(), quantity: HKQuantity(unit: .milligramsPerDeciliter, doubleValue: 101), condition: nil, trend: nil, trendRate: nil, isDisplayOnly: false, wasUserEntered: false, syncIdentifier: UUID().uuidString)], completion: { (result) in
                         group.leave()
                     })
 
@@ -335,10 +333,10 @@ extension MasterViewController: DailyValueScheduleTableViewControllerDelegate {
             switch Section(rawValue: indexPath.section)! {
             case .configuration:
                 switch ConfigurationRow(rawValue: indexPath.row)! {
-                case .basalRate:
-                    if let controller = controller as? BasalScheduleTableViewController {
-                        dataManager?.basalRateSchedule = BasalRateSchedule(dailyItems: controller.scheduleItems, timeZone: controller.timeZone)
-                    }
+//                case .basalRate:
+//                    if let controller = controller as? BasalScheduleTableViewController {
+//                        dataManager?.basalRateSchedule = BasalRateSchedule(dailyItems: controller.scheduleItems, timeZone: controller.timeZone)
+//                    }
                 default:
                     break
                 }
@@ -352,50 +350,9 @@ extension MasterViewController: DailyValueScheduleTableViewControllerDelegate {
 }
 
 
-extension MasterViewController: BasalScheduleTableViewControllerSyncSource {
-    func basalScheduleTableViewControllerIsReadOnly(_ viewController: BasalScheduleTableViewController) -> Bool {
-        return false
-    }
-
-    func syncButtonDetailText(for viewController: BasalScheduleTableViewController) -> String? {
-        return nil
-    }
-
-    func syncScheduleValues(for viewController: BasalScheduleTableViewController, completion: @escaping (SyncBasalScheduleResult<Double>) -> Void) {
-        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(3)) {
-            let scheduleItems = viewController.scheduleItems
-            let timezone = self.dataManager?.basalRateSchedule?.timeZone ?? .currentFixed
-            let schedule = BasalRateSchedule(dailyItems: scheduleItems, timeZone: timezone)
-            self.dataManager?.basalRateSchedule = schedule
-            completion(.success(scheduleItems: scheduleItems, timeZone: .currentFixed))
-        }
-    }
-
-    func syncButtonTitle(for viewController: BasalScheduleTableViewController) -> String {
-        return LocalizedString("Sync With Pump", comment: "Title of button to sync basal profile from pump")
-    }
-}
-
 extension MasterViewController: InsulinSensitivityScheduleStorageDelegate {
     func saveSchedule(_ schedule: InsulinSensitivitySchedule, for viewController: InsulinSensitivityScheduleViewController, completion: @escaping (SaveInsulinSensitivityScheduleResult) -> Void) {
         self.dataManager?.insulinSensitivitySchedule = schedule
-        completion(.success)
-    }
-}
-
-extension MasterViewController: GlucoseRangeScheduleStorageDelegate {
-    func saveSchedule(for viewController: GlucoseRangeScheduleTableViewController, completion: @escaping (SaveGlucoseRangeScheduleResult) -> Void) {
-        self.dataManager?.glucoseTargetRangeSchedule = viewController.schedule
-        for (context, range) in viewController.overrideRanges {
-            switch context {
-            case .preMeal:
-                self.dataManager?.preMealTargetRange = range
-            case .legacyWorkout:
-                self.dataManager?.legacyWorkoutTargetRange = range
-            default:
-                break
-            }
-        }
         completion(.success)
     }
 }

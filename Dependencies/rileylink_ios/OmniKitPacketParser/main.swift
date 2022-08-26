@@ -88,7 +88,7 @@ class LoopIssueReportParser {
             }
             let date = components[1..<4].joined(separator: " ")
             do {
-                let message = try Message(encodedData: data)
+                let message = try Message(encodedData: data, checkCRC: false)
                 print("\(date) \(direction) \(message)")
             } catch let error as MessageError {
                 if let packet = try? Packet(encodedData: data) {

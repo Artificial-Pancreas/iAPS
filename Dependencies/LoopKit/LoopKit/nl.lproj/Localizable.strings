@@ -41,7 +41,7 @@
 "Flat" = "Gelijk";
 
 /* The short unit display string for grams per U */
-"g/U" = "g/E";
+"g/U" = "g/U";
 
 /* Generic pump error description */
 "Invalid Configuration" = "Ongeldige configuratie";
@@ -53,7 +53,7 @@
 "mg/dL/U" = "mg/dL/E";
 
 /* The short unit display string for millimoles per liter */
-"mmol/L" = "mmol/l";
+"mmol/L" = "mmol/L";
 
 /* The short unit display string for millimoles per liter per U */
 "mmol/L/U" = "mmol/L/E";

@@ -12,14 +12,24 @@ import LoopKitUI
 
 struct InsulinTypeConfirmation: View {
     
-    @State private var insulinType: InsulinType
+    @State private var insulinType: InsulinType?
     private var supportedInsulinTypes: [InsulinType]
     private var didConfirm: (InsulinType) -> Void
+    private var didCancel: () -> Void
     
-    init(initialValue: InsulinType, supportedInsulinTypes: [InsulinType], didConfirm: @escaping (InsulinType) -> Void) {
+    init(initialValue: InsulinType, supportedInsulinTypes: [InsulinType], didConfirm: @escaping (InsulinType) -> Void, didCancel: @escaping () -> Void) {
         self._insulinType = State(initialValue: initialValue)
         self.supportedInsulinTypes = supportedInsulinTypes
         self.didConfirm = didConfirm
+        self.didCancel = didCancel
+    }
+    
+    func continueWithType(_ insulinType: InsulinType?) {
+        if let insulinType = insulinType {
+            didConfirm(insulinType)
+        } else {
+            assertionFailure()
+        }
     }
     
     var body: some View {
@@ -35,10 +45,17 @@ struct InsulinTypeConfirmation: View {
             }
             .insetGroupedListStyle()
             
-            Button(action: { self.didConfirm(insulinType) }) {
+            Button(action: { self.continueWithType(insulinType) }) {
                 Text(LocalizedString("Continue", comment: "Text for continue button"))
                     .actionButtonStyle(.primary)
                     .padding()
+            }
+        }
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button(LocalizedString("Cancel", comment: "Cancel button title"), action: {
+                    didCancel()
+                })
             }
         }
     }
@@ -46,8 +63,6 @@ struct InsulinTypeConfirmation: View {
 
 struct InsulinTypeConfirmation_Previews: PreviewProvider {
     static var previews: some View {
-        InsulinTypeConfirmation(initialValue: .humalog, supportedInsulinTypes: InsulinType.allCases) { (newType) in
-            
-        }
+        InsulinTypeConfirmation(initialValue: .humalog, supportedInsulinTypes: InsulinType.allCases, didConfirm: { (newType) in }, didCancel: {})
     }
 }

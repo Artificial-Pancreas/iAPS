@@ -1,12 +1,3 @@
-/* Accessibility format string for (1: localized volume)(2: time) */
-"%1$@ units remaining at %2$@" = "%1$@ yksikköä jäljellä %2$@";
-
-/* The format string for displaying an offset from a time zone: (1: GMT)(2: -)(3: 4:00) */
-"%1$@%2$@%3$@" = "%1$@%2$@%3$@";
-
-/* Format string providing instructions for replacing pod due to a fault. (1: The fault description) */
-"%1$@. Insulin delivery has stopped. Please deactivate and remove pod." = "%1$@. Insuliinin annostelu on loppunut. Deaktivoi ja poista pumppu.";
-
 /* Format string for delivered insulin. (1: The localized amount)
    Format string for insulin remaining in reservoir. (1: The localized amount) */
 "%@ U" = "%@ U";
@@ -20,23 +11,29 @@
 /* Format string for temp basal rate. (1: The localized amount) */
 "%@ U/hour" = "%@ U/tunti";
 
+/* Appends a full-stop to a statement */
+"%@." = "%@.";
+
 /* Format string for bolus percent progress. (1: Percent progress) */
 "%@%%" = "%@%%";
 
 /* Format string for reservoir reading when above or equal to maximum reading. (1: The localized amount) */
 "%@+ U" = "%@+ U";
 
-/* Appends a full-stop to a statement */
-"%@." = "%@.";
-
 /* Format string for reservoir volume. (1: The localized volume) */
 "%@U" = "%@U";
 
+/* Accessibility format string for (1: localized volume)(2: time) */
+"%1$@ units remaining at %2$@" = "%1$@ yksikköä jäljellä %2$@";
+
+/* Format string providing instructions for replacing pod due to a fault. (1: The fault description) */
+"%1$@. Insulin delivery has stopped. Please deactivate and remove pod." = "%1$@. Insuliinin annostelu on loppunut. Deaktivoi ja poista pumppu.";
+
+/* The format string for displaying an offset from a time zone: (1: GMT)(2: -)(3: 4:00) */
+"%1$@%2$@%3$@" = "%1$@%2$@%3$@";
+
 /* The title of the cell showing the pod activated at time */
 "Active Time" = "Aktiivinen aika";
-
-/* The title of the cell showing the Pod Active Clock */
-"Pod Active Clock" = "Pod Active Clock";
 
 /* The title of the cell showing alarm status */
 "Alarms" = "Hälytykset";
@@ -71,9 +68,6 @@
 /* The title of the configuration section in settings */
 "Configuration" = "Määritykset";
 
-/* The title of the Insulin Type */
-"Insulin Type" = "Insulin Type";
-
 /* The title of the continue action in an action sheet */
 "Continue" = "Jatka";
 
@@ -96,26 +90,29 @@
 /* Title text for button to disable bolus beeps */
 "Disable Bolus Beeps" = "Laita bolusäänet pois";
 
+/* Title text for button to disable confirmation beeps */
+"Disable Confirmation Beeps" = "Laita vahvistusäänet pois";
+
 /* Title text for button to enable bolus beeps */
 "Enable Bolus Beeps" = "Laita bolusäänet päälle";
+
+/* Title text for button to enable confirmation beeps */
+"Enable Confirmation Beeps" = "Laita vahvistusäänet päälle";
 
 /* The alert title for disable bolus beeps error */
 "Error disabling bolus beeps" = "Virhe laitettaessa bolusäänet pois päältä";
 
+/* The alert title for disable confirmation beeps error */
+"Error disabling confirmation beeps" = "Virhe laitettaessa vahvistusäänet pois päältä";
+
+/* The alert title for emitting completion beep error */
+"Error emitting completion confirmation beep" = "Virhe lähetettäessä valmistumisen vahvistusääni";
+
 /* The alert title for enable bolus beeps error */
 "Error enabling bolus beeps" = "Virhe laitettaessa bolusäänet päälle";
 
-/* The alert title for enable Confirmation Beeps */
-"Enable Confirmation Beeps" = "Laita vahvistusäänet päälle";
-
-/* The alert title for Disable Confirmation Beep */
-"Disable Confirmation Beeps" = "Disable Confirmation Beeps";
-
-/* The alert title for enable Automatic Bolus Beeps */
-"Enable Automatic Bolus Beeps" = "Enable Automatic Bolus Beeps";
-
-/* The alert title for Disable Automatic Bolus Beeps */
-"Disable Automatic Bolus Beeps" = "Disable Automatic Bolus Beeps";
+/* The alert title for enable confirmation beeps error */
+"Error enabling confirmation beeps" = "Virhe laitettaessa vahvistusäänet päälle";
 
 /* The alert title for a resume error */
 "Error Resuming" = "Virhe jatkamisessa";
@@ -195,6 +192,18 @@
 /* The text of the loading label when priming */
 "Priming…" = "Alustetaan…";
 
+/* The title of the command to read the pod status */
+"Read Pod Status" = "Lue pumpun tila";
+
+/* Progress message for reading Pod status. */
+"Read Pod Status…" = "Luetaan pumpun tilaa…";
+
+/* The title of the command to read the pulse log */
+"Read Pulse Log" = "Lue pulssiloki";
+
+/* Progress message for reading pulse log. */
+"Reading Pulse Log…" = "Luetaan pulssilokia…";
+
 /* Label describing time remaining view */
 "Remaining" = "Jäljellä";
 
@@ -248,14 +257,3 @@
 /* The detail text for delivered insulin when no measurement is available */
 "Unknown" = "Tuntematon";
 
-/* The title of the diagnostics section in settings */
-"Diagnostics" = "Diagnostics";
-
-/* The diagnostic command Read Pod Status */
-"Read Pod Status" = "Lue pumpun tila";
-
-/* The diagnostic command Read Pulse Log */
-"Read Pulse Log" = "Lue pulssiloki";
-
-/* The title of the pod details section in settings */
-"Pod Details" = "Pod Details";

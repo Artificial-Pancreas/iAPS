@@ -28,7 +28,6 @@ class MinimedPumpManagerTests: XCTestCase {
         let bolusEvent = NewPumpEvent(
             date: bolusEventTime,
             dose: eventDose,
-            isMutable: false,
             raw: Data(hexadecimalString: "abcdef")!,
             title: "Test Bolus",
             type: .bolus)
@@ -65,7 +64,6 @@ class MinimedPumpManagerTests: XCTestCase {
         let bolusEvent = NewPumpEvent(
             date: bolusEventTime,
             dose: eventDose,
-            isMutable: false,
             raw: Data(hexadecimalString: "abcdef")!,
             title: "Test Bolus",
             type: .bolus)
@@ -101,7 +99,6 @@ class MinimedPumpManagerTests: XCTestCase {
         let bolusEvent = NewPumpEvent(
             date: bolusEventTime,
             dose: eventDose,
-            isMutable: false,
             raw: Data(hexadecimalString: "abcdef")!,
             title: "Test Bolus",
             type: .bolus)
