@@ -23,6 +23,7 @@ protocol DeviceDataManager: GlucoseSource {
     var pumpExpiresAtDate: CurrentValueSubject<Date?, Never> { get }
     func heartbeat(date: Date)
     func createBolusProgressReporter() -> DoseProgressReporter?
+    var alertStore: [Alert] { get }
 }
 
 private let staticPumpManagers: [PumpManagerUI.Type] = [
@@ -62,6 +63,7 @@ final class BaseDeviceDataManager: DeviceDataManager, Injectable {
     let bolusTrigger = PassthroughSubject<Bool, Never>()
     let errorSubject = PassthroughSubject<Error, Never>()
     let pumpNewStatus = PassthroughSubject<Void, Never>()
+    var alertStore: [Alert]
     @SyncAccess private var pumpUpdateCancellable: AnyCancellable?
     private var pumpUpdatePromise: Future<Bool, Never>.Promise?
     @SyncAccess var loopInProgress: Bool = false
@@ -108,6 +110,7 @@ final class BaseDeviceDataManager: DeviceDataManager, Injectable {
     let pumpName = CurrentValueSubject<String, Never>("Pump")
 
     init(resolver: Resolver) {
+        alertStore = []
         injectServices(resolver)
         setupPumpManager()
         UIDevice.current.isBatteryMonitoringEnabled = true
@@ -422,13 +425,31 @@ extension BaseDeviceDataManager: PumpManagerDelegate {
 // MARK: - DeviceManagerDelegate
 
 extension BaseDeviceDataManager: DeviceManagerDelegate {
-    func issueAlert(_: Alert) {}
+    func issueAlert(_ alert: Alert) {
+        if !alertStore.contains(where: { $0.identifier.alertIdentifier == alert.identifier.alertIdentifier }) {
+            alertStore.append(alert)
+            broadcaster.notify(pumpNotificationObserver.self, on: processQueue) {
+                $0.pumpNotification(alert: alert)
+            }
+        }
+    }
 
-    func retractAlert(identifier _: Alert.Identifier) {}
+    func retractAlert(identifier: Alert.Identifier) {
+        if let idx = alertStore.firstIndex(where: { $0.identifier.alertIdentifier == identifier.alertIdentifier }) {
+            alertStore.remove(at: idx)
+            broadcaster.notify(pumpNotificationObserver.self, on: processQueue) {
+                $0.pumpRemoveNotification()
+            }
+        }
+    }
 
-    func doesIssuedAlertExist(identifier _: Alert.Identifier, completion _: @escaping (Result<Bool, Error>) -> Void) {}
+    func doesIssuedAlertExist(identifier _: Alert.Identifier, completion _: @escaping (Result<Bool, Error>) -> Void) {
+        debug(.deviceManager, "doesIssueAlertExist")
+    }
 
-    func lookupAllUnretracted(managerIdentifier _: String, completion _: @escaping (Result<[PersistedAlert], Error>) -> Void) {}
+    func lookupAllUnretracted(managerIdentifier _: String, completion _: @escaping (Result<[PersistedAlert], Error>) -> Void) {
+        debug(.deviceManager, "lookupAllUnretracted")
+    }
 
     func lookupAllUnacknowledgedUnretracted(
         managerIdentifier _: String,
@@ -437,28 +458,28 @@ extension BaseDeviceDataManager: DeviceManagerDelegate {
 
     func recordRetractedAlert(_: Alert, at _: Date) {}
 
-    func scheduleNotification(
-        for _: DeviceManager,
-        identifier: String,
-        content: UNNotificationContent,
-        trigger: UNNotificationTrigger?
-    ) {
-        let request = UNNotificationRequest(
-            identifier: identifier,
-            content: content,
-            trigger: trigger
-        )
-
-        DispatchQueue.main.async {
-            UNUserNotificationCenter.current().add(request)
-        }
-    }
-
-    func clearNotification(for _: DeviceManager, identifier: String) {
-        DispatchQueue.main.async {
-            UNUserNotificationCenter.current().removeDeliveredNotifications(withIdentifiers: [identifier])
-        }
-    }
+//    func scheduleNotification(
+//        for _: DeviceManager,
+//        identifier: String,
+//        content: UNNotificationContent,
+//        trigger: UNNotificationTrigger?
+//    ) {
+//        let request = UNNotificationRequest(
+//            identifier: identifier,
+//            content: content,
+//            trigger: trigger
+//        )
+//
+//        DispatchQueue.main.async {
+//            UNUserNotificationCenter.current().add(request)
+//        }
+//    }
+//
+//    func clearNotification(for _: DeviceManager, identifier: String) {
+//        DispatchQueue.main.async {
+//            UNUserNotificationCenter.current().removeDeliveredNotifications(withIdentifiers: [identifier])
+//        }
+//    }
 
     func removeNotificationRequests(for _: DeviceManager, identifiers: [String]) {
         DispatchQueue.main.async {
