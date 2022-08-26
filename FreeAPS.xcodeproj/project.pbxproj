@@ -286,6 +286,9 @@
 		CEB434DD28B8F5B900B70274 /* MKRingProgressView.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = CEB434DB28B8F5B900B70274 /* MKRingProgressView.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		CEB434DF28B8F5C400B70274 /* OmniBLE.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEB434DE28B8F5C400B70274 /* OmniBLE.framework */; };
 		CEB434E028B8F5C400B70274 /* OmniBLE.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = CEB434DE28B8F5C400B70274 /* OmniBLE.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		CEB434E328B8F9DB00B70274 /* BluetoothStateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB434E228B8F9DB00B70274 /* BluetoothStateManager.swift */; };
+		CEB434E528B8FF5D00B70274 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB434E428B8FF5D00B70274 /* UIColor.swift */; };
+		CEB434E728B9053300B70274 /* LoopUIColorPalette+Default.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB434E628B9053300B70274 /* LoopUIColorPalette+Default.swift */; };
 		D2165E9D78EFF692C1DED1C6 /* AddTempTargetDataFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B8A42073A2D03A278914448 /* AddTempTargetDataFlow.swift */; };
 		D6D02515BBFBE64FEBE89856 /* DataTableRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 881E04BA5E0A003DE8E0A9C6 /* DataTableRootView.swift */; };
 		D6DEC113821A7F1056C4AA1E /* NightscoutConfigDataFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F2A13DF0EDEEEDC4106AA2A /* NightscoutConfigDataFlow.swift */; };
@@ -700,6 +703,9 @@
 		C8D1A7CA8C10C4403D4BBFA7 /* BolusDataFlow.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = BolusDataFlow.swift; sourceTree = "<group>"; };
 		CEB434DB28B8F5B900B70274 /* MKRingProgressView.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = MKRingProgressView.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEB434DE28B8F5C400B70274 /* OmniBLE.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = OmniBLE.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		CEB434E228B8F9DB00B70274 /* BluetoothStateManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BluetoothStateManager.swift; sourceTree = "<group>"; };
+		CEB434E428B8FF5D00B70274 /* UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
+		CEB434E628B9053300B70274 /* LoopUIColorPalette+Default.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LoopUIColorPalette+Default.swift"; sourceTree = "<group>"; };
 		CFCFE0781F9074C2917890E8 /* ManualTempBasalStateModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ManualTempBasalStateModel.swift; sourceTree = "<group>"; };
 		D0BDC6993C1087310EDFC428 /* CREditorRootView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CREditorRootView.swift; sourceTree = "<group>"; };
 		D295A3F870E826BE371C0BB5 /* AutotuneConfigStateModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AutotuneConfigStateModel.swift; sourceTree = "<group>"; };
@@ -990,6 +996,7 @@
 		3811DE9125C9D88200A708ED /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				CEB434E128B8F9BC00B70274 /* Bluetooth */,
 				F90692A8274B7A980037068D /* HealthKit */,
 				38E8754D275556E100975559 /* WatchManager */,
 				38E87406274F9AA500975559 /* UserNotifiactions */,
@@ -1310,6 +1317,7 @@
 				38E98A3625F5509500C0CED0 /* String+Extensions.swift */,
 				3811DEE325CA063400A708ED /* PropertyWrappers */,
 				E06B9119275B5EEA003C04B6 /* Array+Extension.swift */,
+				CEB434E428B8FF5D00B70274 /* UIColor.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -1331,6 +1339,7 @@
 			children = (
 				38A5049125DD9C4000C5B9E8 /* UserDefaultsExtensions.swift */,
 				38BF021625E7CBBC00579895 /* PumpManagerExtensions.swift */,
+				CEB434E628B9053300B70274 /* LoopUIColorPalette+Default.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1718,6 +1727,14 @@
 				B9488883C59C31550E0B4CEC /* View */,
 			);
 			path = Bolus;
+			sourceTree = "<group>";
+		};
+		CEB434E128B8F9BC00B70274 /* Bluetooth */ = {
+			isa = PBXGroup;
+			children = (
+				CEB434E228B8F9DB00B70274 /* BluetoothStateManager.swift */,
+			);
+			path = Bluetooth;
 			sourceTree = "<group>";
 		};
 		D533BF261CDC1C3F871E7BFD /* NightscoutConfig */ = {
@@ -2128,6 +2145,7 @@
 				388E595C25AD948C0019842D /* FreeAPSApp.swift in Sources */,
 				38FEF3FC2737E53800574A46 /* MainStateModel.swift in Sources */,
 				38569348270B5DFB0002C50D /* GlucoseSource.swift in Sources */,
+				CEB434E328B8F9DB00B70274 /* BluetoothStateManager.swift in Sources */,
 				3811DE4225C9D4A100A708ED /* SettingsDataFlow.swift in Sources */,
 				3811DE2525C9D48300A708ED /* MainRootView.swift in Sources */,
 				38E44535274E411700EC9A94 /* Disk+Data.swift in Sources */,
@@ -2161,6 +2179,7 @@
 				3811DEAE25C9D88300A708ED /* Cache.swift in Sources */,
 				383420D625FFE38C002D46C1 /* LoopView.swift in Sources */,
 				3811DEAD25C9D88300A708ED /* UserDefaults+Cache.swift in Sources */,
+				CEB434E728B9053300B70274 /* LoopUIColorPalette+Default.swift in Sources */,
 				3811DE2225C9D48300A708ED /* MainProvider.swift in Sources */,
 				3811DE0C25C9D32F00A708ED /* BaseProvider.swift in Sources */,
 				3811DE5C25C9D4D500A708ED /* Formatters.swift in Sources */,
@@ -2170,6 +2189,7 @@
 				38EA05DA261F6E7C0064E39B /* SimpleLogReporter.swift in Sources */,
 				3811DE6125C9D4D500A708ED /* ViewModifiers.swift in Sources */,
 				3811DEAC25C9D88300A708ED /* NightscoutManager.swift in Sources */,
+				CEB434E528B8FF5D00B70274 /* UIColor.swift in Sources */,
 				3811DEA925C9D88300A708ED /* AppearanceManager.swift in Sources */,
 				38D0B3D925EC07C400CB6E88 /* CarbsEntry.swift in Sources */,
 				38A9260525F012D8009E3739 /* CarbRatios.swift in Sources */,
@@ -2485,7 +2505,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -2543,7 +2563,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -2568,7 +2588,7 @@
 				DEVELOPMENT_TEAM = "${DEVELOPER_TEAM}";
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = FreeAPS/Resources/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -2604,7 +2624,7 @@
 				DEVELOPMENT_TEAM = "${DEVELOPER_TEAM}";
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = FreeAPS/Resources/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

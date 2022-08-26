@@ -173,7 +173,10 @@ extension PreferencesEditor {
                 Field(
                     displayName: "Bolus Increment",
                     type: .decimal(keypath: \.bolusIncrement),
-                    infoText: NSLocalizedString("Smallest SMB / SMB increment in oref0. Minimum amount for Medtronic pumps is 0.1 U, whereas for Omnipod it’s 0.05 U. The default value is 0.1.", comment: "Bolus Increment"),
+                    infoText: NSLocalizedString(
+                        "Smallest SMB / SMB increment in oref0. Minimum amount for Medtronic pumps is 0.1 U, whereas for Omnipod it’s 0.05 U. The default value is 0.1.",
+                        comment: "Bolus Increment"
+                    ),
                     settable: self
                 )
             ]

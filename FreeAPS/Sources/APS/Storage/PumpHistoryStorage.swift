@@ -53,7 +53,7 @@ final class BasePumpHistoryStorage: PumpHistoryStorage, Injectable {
                     let delivered = dose.deliveredUnits
                     let date = event.date
 
-                    let isCancel = !event.isMutable && delivered != nil
+                    let isCancel = delivered != nil //! event.isMutable && delivered != nil
                     guard !isCancel else { return [] }
 
                     return [

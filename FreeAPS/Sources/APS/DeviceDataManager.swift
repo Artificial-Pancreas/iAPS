@@ -5,6 +5,7 @@ import LoopKit
 import LoopKitUI
 import MinimedKit
 import MockKit
+import OmniBLE
 import OmniKit
 import SwiftDate
 import Swinject
@@ -12,6 +13,7 @@ import UserNotifications
 
 protocol DeviceDataManager: GlucoseSource {
     var pumpManager: PumpManagerUI? { get set }
+    var bluetoothManager: BluetoothStateManager { get }
     var loopInProgress: Bool { get set }
     var pumpDisplayState: CurrentValueSubject<PumpDisplayState?, Never> { get }
     var recommendsLoop: PassthroughSubject<Void, Never> { get }
@@ -26,12 +28,20 @@ protocol DeviceDataManager: GlucoseSource {
 private let staticPumpManagers: [PumpManagerUI.Type] = [
     MinimedPumpManager.self,
     OmnipodPumpManager.self,
+    OmniBLEPumpManager.self,
     MockPumpManager.self
 ]
 
-private let staticPumpManagersByIdentifier: [String: PumpManagerUI.Type] = staticPumpManagers.reduce(into: [:]) { map, Type in
-    map[Type.managerIdentifier] = Type
-}
+private let staticPumpManagersByIdentifier: [String: PumpManagerUI.Type] = [
+    MinimedPumpManager.managerIdentifier: MinimedPumpManager.self,
+    OmnipodPumpManager.managerIdentifier: OmnipodPumpManager.self,
+    OmniBLEPumpManager.managerIdentifier: OmniBLEPumpManager.self,
+    MockPumpManager.managerIdentifier: MockPumpManager.self
+]
+
+// private let staticPumpManagersByIdentifier: [String: PumpManagerUI.Type] = staticPumpManagers.reduce(into: [:]) { map, Type in
+//    map[Type.managerIdentifier] = Type
+// }
 
 private let accessLock = NSRecursiveLock(label: "BaseDeviceDataManager.accessLock")
 
@@ -42,6 +52,7 @@ final class BaseDeviceDataManager: DeviceDataManager, Injectable {
     @Injected() private var broadcaster: Broadcaster!
     @Injected() private var glucoseStorage: GlucoseStorage!
     @Injected() private var settingsManager: SettingsManager!
+    @Injected() private var bluetoothProvider: BluetoothStateManager!
 
     @Persisted(key: "BaseDeviceDataManager.lastEventDate") var lastEventDate: Date? = nil
     @SyncAccess(lock: accessLock) @Persisted(key: "BaseDeviceDataManager.lastHeartBeatTime") var lastHeartBeatTime: Date =
@@ -71,6 +82,13 @@ final class BaseDeviceDataManager: DeviceDataManager, Injectable {
                     }
                     pumpExpiresAtDate.send(endTime)
                 }
+                if let omnipodBLE = pumpManager as? OmniBLEPumpManager {
+                    guard let endTime = omnipodBLE.state.podState?.expiresAt else {
+                        pumpExpiresAtDate.send(nil)
+                        return
+                    }
+                    pumpExpiresAtDate.send(endTime)
+                }
             } else {
                 pumpDisplayState.value = nil
                 pumpExpiresAtDate.send(nil)
@@ -78,6 +96,8 @@ final class BaseDeviceDataManager: DeviceDataManager, Injectable {
             }
         }
     }
+
+    var bluetoothManager: BluetoothStateManager { bluetoothProvider }
 
     var hasBLEHeartbeat: Bool {
         (pumpManager as? MockPumpManager) == nil
@@ -132,7 +152,7 @@ final class BaseDeviceDataManager: DeviceDataManager, Injectable {
             pumpUpdatePromise = promise
             debug(.deviceManager, "Waiting for pump update and loop recommendation")
             processQueue.safeSync {
-                pumpManager.ensureCurrentPumpData {
+                pumpManager.ensureCurrentPumpData { _ in
                     debug(.deviceManager, "Pump data updated.")
                 }
             }
@@ -197,6 +217,9 @@ final class BaseDeviceDataManager: DeviceDataManager, Injectable {
                     case .noData:
                         debug(.deviceManager, "Minilink glucose is empty")
                         promise(.success([]))
+                    case .unreliableData:
+                        debug(.deviceManager, "Unreliable data received")
+                        promise(.success([]))
                     case let .newData(glucose):
                         let directions: [BloodGlucose.Direction?] = [nil]
                             + glucose.windows(ofCount: 2).map { window -> BloodGlucose.Direction? in
@@ -242,6 +265,15 @@ final class BaseDeviceDataManager: DeviceDataManager, Injectable {
 }
 
 extension BaseDeviceDataManager: PumpManagerDelegate {
+    func pumpManagerPumpWasReplaced(_: PumpManager) {
+        debug(.deviceManager, "pumpManagerPumpWasReplaced")
+    }
+
+    var detectedSystemTimeOffset: TimeInterval {
+        // trustedTimeChecker.detectedSystemTimeOffset
+        0
+    }
+
     func pumpManager(_: PumpManager, didAdjustPumpClockBy adjustment: TimeInterval) {
         debug(.deviceManager, "didAdjustPumpClockBy \(adjustment)")
     }
@@ -299,6 +331,21 @@ extension BaseDeviceDataManager: PumpManagerDelegate {
             }
             pumpExpiresAtDate.send(endTime)
         }
+
+        if let omnipodBLE = pumpManager as? OmnipodPumpManager {
+            let reservoir = omnipodBLE.state.podState?.lastInsulinMeasurements?.reservoirLevel ?? 0xDEAD_BEEF
+
+            storage.save(Decimal(reservoir), as: OpenAPS.Monitor.reservoir)
+            broadcaster.notify(PumpReservoirObserver.self, on: processQueue) {
+                $0.pumpReservoirDidChange(Decimal(reservoir))
+            }
+
+            guard let endTime = omnipodBLE.state.podState?.expiresAt else {
+                pumpExpiresAtDate.send(nil)
+                return
+            }
+            pumpExpiresAtDate.send(endTime)
+        }
     }
 
     func pumpManagerWillDeactivate(_: PumpManager) {
@@ -317,7 +364,7 @@ extension BaseDeviceDataManager: PumpManagerDelegate {
     func pumpManager(
         _: PumpManager,
         hasNewPumpEvents events: [NewPumpEvent],
-        lastReconciliation _: Date?,
+        lastSync _: Date?,
         completion: @escaping (_ error: Error?) -> Void
     ) {
         dispatchPrecondition(condition: .onQueue(processQueue))
@@ -375,6 +422,21 @@ extension BaseDeviceDataManager: PumpManagerDelegate {
 // MARK: - DeviceManagerDelegate
 
 extension BaseDeviceDataManager: DeviceManagerDelegate {
+    func issueAlert(_: Alert) {}
+
+    func retractAlert(identifier _: Alert.Identifier) {}
+
+    func doesIssuedAlertExist(identifier _: Alert.Identifier, completion _: @escaping (Result<Bool, Error>) -> Void) {}
+
+    func lookupAllUnretracted(managerIdentifier _: String, completion _: @escaping (Result<[PersistedAlert], Error>) -> Void) {}
+
+    func lookupAllUnacknowledgedUnretracted(
+        managerIdentifier _: String,
+        completion _: @escaping (Result<[PersistedAlert], Error>) -> Void
+    ) {}
+
+    func recordRetractedAlert(_: Alert, at _: Date) {}
+
     func scheduleNotification(
         for _: DeviceManager,
         identifier: String,
@@ -433,10 +495,10 @@ extension BaseDeviceDataManager: CGMManagerDelegate {
 
 // MARK: - AlertPresenter
 
-extension BaseDeviceDataManager: AlertPresenter {
-    func issueAlert(_: Alert) {}
-    func retractAlert(identifier _: Alert.Identifier) {}
-}
+// extension BaseDeviceDataManager: AlertPresenter {
+//    func issueAlert(_: Alert) {}
+//    func retractAlert(identifier _: Alert.Identifier) {}
+// }
 
 // MARK: Others
 
