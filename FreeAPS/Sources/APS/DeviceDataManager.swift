@@ -432,6 +432,8 @@ extension BaseDeviceDataManager: DeviceManagerDelegate {
     func issueAlert(_ alert: Alert) {
         if !alertStore.contains(where: { $0.identifier.alertIdentifier == alert.identifier.alertIdentifier }) {
             alertStore.append(alert)
+            let infoMessage = APSError.deviceAlert(message: alert.foregroundContent!.body)
+            errorSubject.send(infoMessage)
             broadcaster.notify(pumpNotificationObserver.self, on: processQueue) {
                 $0.pumpNotification(alert: alert)
             }
