@@ -7,27 +7,6 @@
 
 import LoopKit
 
-
-public extension InsulinModelSettings {
-    var title: String {
-        switch self {
-        case .exponentialPreset(let model):
-            return model.title
-        case .walsh(let model):
-            return model.title
-        }
-    }
-    var subtitle: String {
-        switch self {
-        case .exponentialPreset(let model):
-            return model.subtitle
-        case .walsh(let model):
-            return model.subtitle
-        }
-    }
-}
-
-
 public extension ExponentialInsulinModelPreset {
     var title: String {
         switch self {
@@ -39,6 +18,8 @@ public extension ExponentialInsulinModelPreset {
             return LocalizedString("Fiasp", comment: "Title of insulin model preset - fiasp")
         case .lyumjev:
             return LocalizedString("Lyumjev", comment: "Title of insulin model preset - lyumjev")
+        case .afrezza:
+            return LocalizedString("Afrezza", comment: "Title of insulin model preset - afrezza")
         }
     }
 
@@ -51,7 +32,9 @@ public extension ExponentialInsulinModelPreset {
         case .fiasp:
             return LocalizedString("This model assumes peak insulin activity at 55 minutes.", comment: "Subtitle of Fiasp preset")
         case .lyumjev:
-            return LocalizedString("This model assumes peak insulin activity at 45 minutes.", comment: "Subtitle of Lyumjev preset")
+            return LocalizedString("This model assumes peak insulin activity at 55 minutes.", comment: "Subtitle of Lyumjev preset")
+        case .afrezza:
+            return LocalizedString("This model assumes peak insulin activity at 19 minutes.", comment: "Subtitle of afrezza preset")
         }
     }
 }

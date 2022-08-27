@@ -14,6 +14,7 @@ public enum UploadError: Error {
     case invalidResponse(reason: String)
     case unauthorized
     case missingConfiguration
+    case invalidParameters
 }
 
 private enum Endpoint: String {
@@ -22,20 +23,15 @@ private enum Endpoint: String {
     case deviceStatus = "/api/v1/devicestatus"
     case authTest = "/api/v1/experiments/test"
     case profile =  "/api/v1/profile"
+    case currentProfile =  "/api/v1/profile/current"
 }
 
 public class NightscoutUploader {
 
-    enum DexcomSensorError: Int {
-        case sensorNotActive = 1
-        case sensorNotCalibrated = 5
-        case badRF = 12
-    }
-    
     public var siteURL: URL
     public var apiSecret: String
     
-    private(set) var entries = [NightscoutEntry]()
+    private(set) var entries = [GlucoseEntry]()
     private(set) var deviceStatuses = [[String: Any]]()
     private(set) var treatmentsQueue = [NightscoutTreatment]()
 
@@ -63,13 +59,13 @@ public class NightscoutUploader {
     private func url(for endpoint: Endpoint, queryItems: [URLQueryItem]? = nil) -> URL? {
         return url(with: endpoint.rawValue, queryItems: queryItems)
     }
-    
+
     /// Attempts to upload nightscout treatment objects.
     /// This method will not retry if the network task failed.
     ///
     /// - parameter treatments:           An array of nightscout treatments.
     /// - parameter completionHandler:    A closure to execute when the task completes. It has a single argument for any error that might have occurred during the upload.
-    public func upload(_ treatments: [NightscoutTreatment], completionHandler: @escaping (Either<[String],Error>) -> Void) {
+    public func upload(_ treatments: [NightscoutTreatment], completionHandler: @escaping (Result<[String],Error>) -> Void) {
         guard let url = url(for: .treatments) else {
             completionHandler(.failure(UploadError.missingConfiguration))
             return
@@ -171,22 +167,122 @@ public class NightscoutUploader {
         flushAll()
     }
     
-    public func uploadSGV(glucoseMGDL: Int, at date: Date, direction: String?, device: String) {
-        let entry = NightscoutEntry(
-            glucose: glucoseMGDL,
-            timestamp: date,
-            device: device,
-            glucoseType: .Sensor,
-            previousSGV: nil,
-            previousSGVNotActive: nil,
-            direction: direction
-        )
-        entries.append(entry)
-    }
-    
-    // MARK: - Profiles
+    // MARK: - Fetching
 
-    public func uploadProfile(profileSet: ProfileSet, completion: @escaping (Either<[String],Error>) -> Void)  {
+    public func fetchCurrentProfile(completion: @escaping (Result<ProfileSet,Error>) -> Void) {
+        let profileURL = url(for: .currentProfile)!
+        getFromNS(url: profileURL) { (result) in
+            switch result {
+            case .failure(let error):
+                print("Error fetching current profile: \(error)")
+                completion(.failure(error))
+            case .success(let rawResponse):
+                guard let profileRaw = rawResponse as? ProfileSet.RawValue, let profileSet = ProfileSet(rawValue: profileRaw) else {
+                    completion(.failure(UploadError.invalidResponse(reason: "Expected nightscout profile")))
+                    return
+                }
+
+                completion(.success(profileSet))
+            }
+        }
+    }
+
+    public func fetchDeviceStatus(dateInterval: DateInterval, maxCount: Int = 50, completion: @escaping (Result<[DeviceStatus],Error>) -> Void) {
+        var components = URLComponents(url: url(for: .deviceStatus)!, resolvingAgainstBaseURL: false)!
+        components.queryItems = [
+            URLQueryItem(name: "find[created_at][$gte]", value: TimeFormat.timestampStrFromDate(dateInterval.start)),
+            URLQueryItem(name: "find[created_at][$lte]", value: TimeFormat.timestampStrFromDate(dateInterval.end)),
+            URLQueryItem(name: "count", value: String(maxCount))
+        ]
+        if let url = components.url {
+            getFromNS(url: url) { (result) in
+                switch result {
+                case .failure(let error):
+                    print("Error fetching treatments: \(error)")
+                    completion(.failure(error))
+                case .success(let rawResponse):
+                    guard let returnedEntries = rawResponse as? [DeviceStatus.RawValue] else {
+                        completion(.failure(UploadError.invalidResponse(reason: "Expected array of treatments")))
+                        return
+                    }
+
+                    let entries = returnedEntries.compactMap({ (entry: DeviceStatus.RawValue) -> DeviceStatus? in
+                        return DeviceStatus(rawValue: entry)
+                    })
+
+                    completion(.success(entries))
+                }
+            }
+        } else {
+            completion(.failure(UploadError.invalidParameters))
+        }
+    }
+
+
+    public func fetchTreatments(dateInterval: DateInterval, maxCount: Int = 50, completion: @escaping (Result<[NightscoutTreatment],Error>) -> Void) {
+        var components = URLComponents(url: url(for: .treatments)!, resolvingAgainstBaseURL: false)!
+        components.queryItems = [
+            URLQueryItem(name: "find[timestamp][$gte]", value: TimeFormat.timestampStrFromDate(dateInterval.start)),
+            URLQueryItem(name: "find[timestamp][$lte]", value: TimeFormat.timestampStrFromDate(dateInterval.end)),
+            URLQueryItem(name: "count", value: String(maxCount))
+        ]
+        if let url = components.url {
+            getFromNS(url: url) { (result) in
+                switch result {
+                case .failure(let error):
+                    print("Error fetching treatments: \(error)")
+                    completion(.failure(error))
+                case .success(let rawResponse):
+                    guard let returnedEntries = rawResponse as? [[String: Any]] else {
+                        completion(.failure(UploadError.invalidResponse(reason: "Expected array of treatments")))
+                        return
+                    }
+
+                    let entries = returnedEntries.compactMap({ (entry: [String: Any]) -> NightscoutTreatment? in
+                        return NightscoutTreatment.fromServer(entry)
+                    })
+
+                    completion(.success(entries))
+                }
+            }
+        } else {
+            completion(.failure(UploadError.invalidParameters))
+        }
+    }
+
+    public func fetchGlucose(dateInterval: DateInterval, maxCount: Int = 50, completion: @escaping (Result<[GlucoseEntry],Error>) -> Void) {
+        var components = URLComponents(url: url(for: .entries)!, resolvingAgainstBaseURL: false)!
+        components.queryItems = [
+            URLQueryItem(name: "find[dateString][$gte]", value: TimeFormat.timestampStrFromDate(dateInterval.start)),
+            URLQueryItem(name: "find[dateString][$lte]", value: TimeFormat.timestampStrFromDate(dateInterval.end)),
+            URLQueryItem(name: "count", value: String(maxCount))
+        ]
+        if let url = components.url {
+            getFromNS(url: url) { (result) in
+                switch result {
+                case .failure(let error):
+                    print("Error fetching glucose: \(error)")
+                    completion(.failure(error))
+                case .success(let rawResponse):
+                    guard let returnedEntries = rawResponse as? [GlucoseEntry.RawValue] else {
+                        completion(.failure(UploadError.invalidResponse(reason: "Expected array of glucose entries")))
+                        return
+                    }
+
+                    let entries = returnedEntries.compactMap{ GlucoseEntry(rawValue: $0) }
+                    completion(.success(entries))
+                }
+            }
+        } else {
+            completion(.failure(UploadError.invalidParameters))
+        }
+    }
+
+
+    
+    // MARK: - Uploading
+
+    public func uploadProfile(profileSet: ProfileSet, completion: @escaping (Result<[String],Error>) -> Void)  {
         guard let url = url(for: .profile) else {
             completion(.failure(UploadError.missingConfiguration))
             return
@@ -267,7 +363,7 @@ public class NightscoutUploader {
         }
     }
 
-    func postToNS(_ json: [Any], url:URL, completion: @escaping (Either<[String],Error>) -> Void) {
+    func postToNS(_ json: [Any], url:URL, completion: @escaping (Result<[String],Error>) -> Void) {
         if json.count == 0 {
             completion(.success([]))
             return
@@ -277,7 +373,7 @@ public class NightscoutUploader {
             switch result {
             case .success(let postResponse):
                 guard let insertedEntries = postResponse as? [[String: Any]], insertedEntries.count == json.count else {
-                    completion(.failure(UploadError.invalidResponse(reason: "Expected array of \(json.count) objects in JSON response")))
+                    completion(.failure(UploadError.invalidResponse(reason: "Expected array of \(json.count) objects in JSON response: \(postResponse)")))
                     return
                 }
 
@@ -301,7 +397,13 @@ public class NightscoutUploader {
         }
     }
 
-    func callNS(_ json: Any?, url:URL, method:String, completion: @escaping (Either<Any,Error>) -> Void) {
+    func getFromNS(url: URL, completion: @escaping (Result<Any,Error>) -> Void) {
+        callNS(nil, url: url, method: "GET") { (result) in
+            completion(result)
+        }
+    }
+
+    func callNS(_ json: Any?, url:URL, method:String, completion: @escaping (Result<Any,Error>) -> Void) {
         var request = URLRequest(url: url)
         request.httpMethod = method
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
@@ -423,7 +525,8 @@ public class NightscoutUploader {
         }
     }
     
-    public func uploadEntries(_ entries: [NightscoutEntry], completion: @escaping (Result<Bool, Error>) -> Void) {
+    public func uploadEntries(_ entries: [GlucoseEntry], completion: @escaping (Result<Bool, Error>) -> Void) {
+        print("Uploading \(entries)")
         postToNS(entries.map { $0.dictionaryRepresentation }, endpoint: .entries, completion: completion)
     }
 

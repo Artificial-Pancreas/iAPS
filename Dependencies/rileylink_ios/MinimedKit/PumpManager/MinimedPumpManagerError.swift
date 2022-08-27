@@ -10,6 +10,7 @@ import Foundation
 public enum MinimedPumpManagerError: Error {
     case noRileyLink
     case bolusInProgress
+    case pumpSuspended
     case noDate  // TODO: This is less of an error and more of a precondition/assertion state
     case tuneFailed(LocalizedError)
     case commsError(LocalizedError)
@@ -24,6 +25,8 @@ extension MinimedPumpManagerError: LocalizedError {
             return LocalizedString("No RileyLink Connected", comment: "Error description when no rileylink connected")
         case .bolusInProgress:
             return LocalizedString("Bolus in Progress", comment: "Error description when failure due to bolus in progress")
+        case .pumpSuspended:
+            return LocalizedString("Pump is Suspended", comment: "Error description when failure due to pump suspended")
         case .noDate:
             return nil
         case .tuneFailed(let error):

@@ -14,103 +14,51 @@ import LoopKitUI
 import OmniKit
 import RileyLinkKitUI
 
-extension OmnipodPumpManager: PumpManagerUI {
-    
-    static public func setupViewController(insulinTintColor: Color, guidanceColors: GuidanceColors, allowedInsulinTypes: [InsulinType]) -> (UIViewController & PumpManagerSetupViewController & CompletionNotifying) {
-        let navVC = OmnipodPumpManagerSetupViewController.instantiateFromStoryboard()
-        let insulinSelectionView = InsulinTypeConfirmation(initialValue: .novolog, supportedInsulinTypes: allowedInsulinTypes) { (confirmedType) in
-            navVC.insulinType = confirmedType
-            let nextViewController = navVC.storyboard?.instantiateViewController(identifier: "RileyLinkSetup") as! RileyLinkSetupTableViewController
-            navVC.pushViewController(nextViewController, animated: true)
-        }
-        let rootVC = UIHostingController(rootView: insulinSelectionView)
-        rootVC.title = "Insulin Type"
-        navVC.pushViewController(rootVC, animated: false)
-        navVC.navigationBar.backgroundColor = .secondarySystemBackground
-        return navVC
-    }
-    
-    public func settingsViewController(insulinTintColor: Color, guidanceColors: GuidanceColors, allowedInsulinTypes: [InsulinType]) -> (UIViewController & CompletionNotifying) {
-        let settings = OmnipodSettingsViewController(pumpManager: self)
-        let nav = SettingsNavigationViewController(rootViewController: settings)
-        return nav
+extension OmnipodPumpManager: PumpManagerUI {    
+    public static var onboardingImage: UIImage? {
+        return UIImage(named: "Onboarding", in: Bundle(for: OmnipodSettingsViewModel.self), compatibleWith: nil)
     }
 
-    public func deliveryUncertaintyRecoveryViewController(insulinTintColor: Color, guidanceColors: GuidanceColors) -> (UIViewController & CompletionNotifying) {
-        
-        // Return settings for now; uncertainty recovery not implemented yet
-        let settings = OmnipodSettingsViewController(pumpManager: self)
-        let nav = SettingsNavigationViewController(rootViewController: settings)
-        return nav
+    public static func setupViewController(initialSettings settings: PumpManagerSetupSettings, bluetoothProvider: BluetoothProvider, colorPalette: LoopUIColorPalette, allowDebugFeatures: Bool, allowedInsulinTypes: [InsulinType]) -> SetupUIResult<PumpManagerViewController, PumpManagerUI>
+    {
+        let vc = OmnipodUICoordinator(colorPalette: colorPalette, pumpManagerSettings: settings, allowDebugFeatures: allowDebugFeatures, allowedInsulinTypes: allowedInsulinTypes)
+        return .userInteractionRequired(vc)
     }
-    
+
+    public func settingsViewController(bluetoothProvider: BluetoothProvider, colorPalette: LoopUIColorPalette, allowDebugFeatures: Bool, allowedInsulinTypes: [InsulinType]) -> PumpManagerViewController {
+        return OmnipodUICoordinator(pumpManager: self, colorPalette: colorPalette, allowDebugFeatures: allowDebugFeatures, allowedInsulinTypes: allowedInsulinTypes)
+    }
+
+    public func deliveryUncertaintyRecoveryViewController(colorPalette: LoopUIColorPalette, allowDebugFeatures: Bool) -> (UIViewController & CompletionNotifying) {
+        return OmnipodUICoordinator(pumpManager: self, colorPalette: colorPalette, allowDebugFeatures: allowDebugFeatures)
+    }
 
     public var smallImage: UIImage? {
-        return UIImage(named: "Pod", in: Bundle(for: OmnipodSettingsViewController.self), compatibleWith: nil)!
+        return UIImage(named: "Pod", in: Bundle(for: OmnipodSettingsViewModel.self), compatibleWith: nil)!
+    }
+
+    public func hudProvider(bluetoothProvider: BluetoothProvider, colorPalette: LoopUIColorPalette, allowedInsulinTypes: [InsulinType]) -> HUDProvider? {
+        return OmnipodHUDProvider(pumpManager: self, bluetoothProvider: bluetoothProvider, colorPalette: colorPalette, allowedInsulinTypes: allowedInsulinTypes)
     }
     
-    public func hudProvider(insulinTintColor: Color, guidanceColors: GuidanceColors, allowedInsulinTypes: [InsulinType]) -> HUDProvider? {
-        return OmnipodHUDProvider(pumpManager: self, insulinTintColor: insulinTintColor, guidanceColors: guidanceColors, allowedInsulinTypes: allowedInsulinTypes)
-    }
-    
-    public static func createHUDView(rawValue: HUDProvider.HUDViewRawState) -> LevelHUDView? {
+    public static func createHUDView(rawValue: HUDProvider.HUDViewRawState) -> BaseHUDView? {
         return OmnipodHUDProvider.createHUDView(rawValue: rawValue)
     }
 
 }
 
-// MARK: - DeliveryLimitSettingsTableViewControllerSyncSource
+// MARK: - PumpStatusIndicator
 extension OmnipodPumpManager {
-    public func syncDeliveryLimitSettings(for viewController: DeliveryLimitSettingsTableViewController, completion: @escaping (DeliveryLimitSettingsResult) -> Void) {
-        guard let maxBasalRate = viewController.maximumBasalRatePerHour,
-            let maxBolus = viewController.maximumBolus else
-        {
-            completion(.failure(PodCommsError.invalidData))
-            return
-        }
-        
-        completion(.success(maximumBasalRatePerHour: maxBasalRate, maximumBolus: maxBolus))
+    public var pumpStatusHighlight: DeviceStatusHighlight? {
+        buildPumpStatusHighlight(for: state)
     }
     
-    public func syncButtonTitle(for viewController: DeliveryLimitSettingsTableViewController) -> String {
-        return LocalizedString("Save", comment: "Title of button to save delivery limit settings")    }
-    
-    public func syncButtonDetailText(for viewController: DeliveryLimitSettingsTableViewController) -> String? {
-        return nil
+    public var pumpLifecycleProgress: DeviceLifecycleProgress? {
+        return buildPumpLifecycleProgress(for: state)
     }
     
-    public func deliveryLimitSettingsTableViewControllerIsReadOnly(_ viewController: DeliveryLimitSettingsTableViewController) -> Bool {
-        return false
-    }
-}
-
-// MARK: - BasalScheduleTableViewControllerSyncSource
-extension OmnipodPumpManager {
-
-    public func syncScheduleValues(for viewController: BasalScheduleTableViewController, completion: @escaping (SyncBasalScheduleResult<Double>) -> Void) {
-        syncBasalRateSchedule(items: viewController.scheduleItems) { result in
-            switch result {
-            case .success(let schedule):
-                completion(.success(scheduleItems: schedule.items, timeZone: schedule.timeZone))
-            case .failure(let error):
-                completion(.failure(error))
-            }
-        }
-    }
-
-    public func syncButtonTitle(for viewController: BasalScheduleTableViewController) -> String {
-        if self.hasActivePod {
-            return LocalizedString("Sync With Pod", comment: "Title of button to sync basal profile from pod")
-        } else {
-            return LocalizedString("Save", comment: "Title of button to sync basal profile when no pod paired")
-        }
-    }
-
-    public func syncButtonDetailText(for viewController: BasalScheduleTableViewController) -> String? {
+    public var pumpStatusBadge: DeviceStatusBadge? {
         return nil
     }
 
-    public func basalScheduleTableViewControllerIsReadOnly(_ viewController: BasalScheduleTableViewController) -> Bool {
-        return false
-    }
 }

@@ -11,7 +11,7 @@ import LoopKitUI
 import RileyLinkKit
 
 
-open class RileyLinkManagerSetupViewController: UINavigationController, PumpManagerSetupViewController, UINavigationControllerDelegate, CompletionNotifying {
+open class RileyLinkManagerSetupViewController: UINavigationController, PumpManagerOnboarding, UINavigationControllerDelegate, CompletionNotifying {
 
     open var maxBasalRateUnitsPerHour: Double?
 
@@ -19,7 +19,7 @@ open class RileyLinkManagerSetupViewController: UINavigationController, PumpMana
 
     open var basalSchedule: BasalRateSchedule?
 
-    open weak var setupDelegate: PumpManagerSetupViewControllerDelegate?
+    open weak var pumpManagerOnboardingDelegate: PumpManagerOnboardingDelegate?
 
     open weak var completionDelegate: CompletionDelegate?
 

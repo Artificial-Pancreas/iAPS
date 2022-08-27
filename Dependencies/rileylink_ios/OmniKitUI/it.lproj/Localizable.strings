@@ -35,9 +35,6 @@
 /* The title of the cell showing the pod activated at time */
 "Active Time" = "Tempo di attività";
 
-/* The title of the cell showing the Pod Active Clock */
-"Pod Active Clock" = "Pod Active Clock";
-
 /* The title of the cell showing alarm status */
 "Alarms" = "Allarmi";
 
@@ -71,9 +68,6 @@
 /* The title of the configuration section in settings */
 "Configuration" = "Configurazione";
 
-/* The title of the Insulin Type */
-"Insulin Type" = "Tipo di Insulina";
-
 /* The title of the continue action in an action sheet */
 "Continue" = "Continua";
 
@@ -104,18 +98,6 @@
 
 /* The alert title for enable bolus beeps error */
 "Error enabling bolus beeps" = "Errore durante l’attivazione dei bip bolo";
-
-/* The alert title for enable Confirmation Beeps */
-"Enable Confirmation Beeps" = "Abilita Bip di Conferma";
-
-/* The alert title for Disable Confirmation Beep */
-"Disable Confirmation Beeps" = "Disabilita Bip di Conferma";
-
-/* The alert title for enable Automatic Bolus Beeps */
-"Enable Automatic Bolus Beeps" = "Abilita Bip Automatici di Bolus";
-
-/* The alert title for Disable Automatic Bolus Beeps */
-"Disable Automatic Bolus Beeps" = "Disabilita Bip Automatici di Bolus";
 
 /* The alert title for a resume error */
 "Error Resuming" = "Errore durante la ripresa";
@@ -248,14 +230,3 @@
 /* The detail text for delivered insulin when no measurement is available */
 "Unknown" = "Sconosciuto";
 
-/* The title of the diagnostics section in settings */
-"Diagnostics" = "Diagnostica";
-
-/* The diagnostic command Read Pod Status */
-"Read Pod Status" = "Read Pod Status";
-
-/* The diagnostic command Read Pulse Log */
-"Read Pulse Log" = "Leggi Registro Battiti";
-
-/* The title of the pod details section in settings */
-"Pod Details" = "Pod Details";

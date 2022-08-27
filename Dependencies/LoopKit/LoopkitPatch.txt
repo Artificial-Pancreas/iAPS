@@ -1,0 +1,65 @@
+From 3af74b1dbc7e888de53b7dbc5a20e5ec91641e0f Mon Sep 17 00:00:00 2001
+From: Jon Fawcett <jonfawcett10@gmail.com>
+Date: Wed, 2 Mar 2022 20:59:01 -0500
+Subject: [PATCH] Add alternate application factor, strategy switching,
+ negative iob factor
+
+---
+ LoopKit/InsulinKit/InsulinMath.swift | 32 ++++++++++++++++++++++------
+ 1 file changed, 25 insertions(+), 7 deletions(-)
+
+diff --git a/LoopKit/InsulinKit/InsulinMath.swift b/LoopKit/InsulinKit/InsulinMath.swift
+index e2d0f74..b57dcd3 100644
+--- a/LoopKit/InsulinKit/InsulinMath.swift
++++ b/LoopKit/InsulinKit/InsulinMath.swift
+@@ -40,10 +40,18 @@ extension DoseEntry {
+         }
+ 
+         // Consider doses within the delta time window as momentary
++        //ken changes
++        //implement user set negative basal multiplier
++        let negativeBasalMultiplier = UserDefaults.standard.double(forKey: "negativeBasalMultiplier")
++        var modifiednetBasalUnits = netBasalUnits
++        if netBasalUnits < 0.0 {
++            modifiednetBasalUnits = netBasalUnits * negativeBasalMultiplier
++        }
++        //this used netBasalUnits as multiplier originally
+         if endDate.timeIntervalSince(startDate) <= 1.05 * delta {
+-            return netBasalUnits * model.percentEffectRemaining(at: time)
++            return modifiednetBasalUnits * model.percentEffectRemaining(at: time)
+         } else {
+-            return netBasalUnits * continuousDeliveryInsulinOnBoard(at: date, model: model, delta: delta)
++            return modifiednetBasalUnits * continuousDeliveryInsulinOnBoard(at: date, model: model, delta: delta)
+         }
+     }
+ 
+@@ -77,11 +85,21 @@ extension DoseEntry {
+         }
+ 
+         // Consider doses within the delta time window as momentary
+-        if endDate.timeIntervalSince(startDate) <= 1.05 * delta {
+-            return netBasalUnits * -insulinSensitivity * (1.0 - model.percentEffectRemaining(at: time))
+-        } else {
+-            return netBasalUnits * -insulinSensitivity * continuousDeliveryGlucoseEffect(at: date, model: model, delta: delta)
+-        }
++        //ken changes
++            //if net basal is negative use a mulitplier (0-1)
++            //modified in user settings
++            
++            let negativeBasalMultiplier = UserDefaults.standard.double(forKey: "negativeBasalMultiplier")
++            var modifiednetBasalUnits = netBasalUnits
++            if netBasalUnits < 0.0 {
++                modifiednetBasalUnits = netBasalUnits * negativeBasalMultiplier
++            }
++            //originally used netBasalUnits
++            if endDate.timeIntervalSince(startDate) <= 1.05 * delta {
++                return modifiednetBasalUnits * -insulinSensitivity * (1.0 - model.percentEffectRemaining(at: time))
++            } else {
++                return modifiednetBasalUnits * -insulinSensitivity * continuousDeliveryGlucoseEffect(at: date, model: model, delta: delta)
++            }
+     }
+ 
+     func trimmed(from start: Date? = nil, to end: Date? = nil, syncIdentifier: String? = nil) -> DoseEntry {
+-- 
+2.29.2
+

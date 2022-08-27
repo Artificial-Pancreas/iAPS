@@ -8,9 +8,15 @@
       location = "group:Dependencies/CGMBLEKit/CGMBLEKit.xcodeproj">
    </FileRef>
    <FileRef
+      location = "group:Dependencies/LoopKit/LoopKit.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:Dependencies/MKRingProgressView/MKRingProgressView.xcodeproj">
+   </FileRef>
+   <FileRef
       location = "group:Dependencies/rileylink_ios/RileyLink.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:Dependencies/LoopKit/LoopKit.xcodeproj">
+      location = "group:Dependencies/OmniBLE/OmniBLE.xcodeproj">
    </FileRef>
 </Workspace>

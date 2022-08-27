@@ -274,9 +274,9 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 43CABE071C3506F100005705 /* Build configuration list for PBXNativeTarget "CGMBLEKit" */;
 			buildPhases = (
+				43CABDF01C3506F100005705 /* Headers */,
 				43CABDEE1C3506F100005705 /* Sources */,
 				43CABDEF1C3506F100005705 /* Frameworks */,
-				43CABDF01C3506F100005705 /* Headers */,
 				43CABDF11C3506F100005705 /* Resources */,
 			);
 			buildRules = (

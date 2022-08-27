@@ -1,5 +1,5 @@
 /* Accessibility format string for (1: localized volume)(2: time) */
-"%1$@ units remaining at %2$@" = "%1$@ unidades restantes as %2$@";
+"%1$@ units remaining at %2$@" = "%1$@ unidades restantes em %2$@";
 
 /* The format string for displaying an offset from a time zone: (1: GMT)(2: -)(3: 4:00) */
 "%1$@%2$@%3$@" = "%1$@%2$@%3$@";
@@ -35,9 +35,6 @@
 /* The title of the cell showing the pod activated at time */
 "Active Time" = "Tempo Ativo";
 
-/* The title of the cell showing the Pod Active Clock */
-"Pod Active Clock" = "Relógio Ativo do Pod";
-
 /* The title of the cell showing alarm status */
 "Alarms" = "Alarmes";
 
@@ -71,9 +68,6 @@
 /* The title of the configuration section in settings */
 "Configuration" = "Configuração";
 
-/* The title of the Insulin Type */
-"Insulin Type" = "Tipo de Insulina";
-
 /* The title of the continue action in an action sheet */
 "Continue" = "Continuar";
 
@@ -104,18 +98,6 @@
 
 /* The alert title for enable bolus beeps error */
 "Error enabling bolus beeps" = "Erro ao ativar bipes de bolus";
-
-/* The alert title for enable Confirmation Beeps */
-"Enable Confirmation Beeps" = "Ativar Som de Confirmação";
-
-/* The alert title for Disable Confirmation Beep */
-"Disable Confirmation Beeps" = "Disable Confirmation Beeps";
-
-/* The alert title for enable Automatic Bolus Beeps */
-"Enable Automatic Bolus Beeps" = "Ativar Som de Bolus Automático";
-
-/* The alert title for Disable Automatic Bolus Beeps */
-"Disable Automatic Bolus Beeps" = "Disable Automatic Bolus Beeps";
 
 /* The alert title for a resume error */
 "Error Resuming" = "Erro ao Retomar";
@@ -157,7 +139,7 @@
 "Invalid entry" = "Entrada inválida";
 
 /* The title of the cell showing the pod lot id */
-"Lot" = "Lote";
+"Lot" = "Lot";
 
 /* The detail text for bolus delivery when no bolus is being delivered */
 "None" = "Nenhum";
@@ -247,15 +229,3 @@
 
 /* The detail text for delivered insulin when no measurement is available */
 "Unknown" = "Desconhecido";
-
-/* The title of the diagnostics section in settings */
-"Diagnostics" = "Diagnósticos";
-
-/* The diagnostic command Read Pod Status */
-"Read Pod Status" = "Ler Estado do Pod";
-
-/* The diagnostic command Read Pulse Log */
-"Read Pulse Log" = "Ler Log do Pulse";
-
-/* The title of the pod details section in settings */
-"Pod Details" = "Detalhes do Pod";

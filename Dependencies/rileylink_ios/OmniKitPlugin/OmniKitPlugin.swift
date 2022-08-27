@@ -6,25 +6,20 @@
 //  Copyright © 2019 Pete Schwamb. All rights reserved.
 //
 
-import Foundation
+import os.log
 import LoopKitUI
 import OmniKit
 import OmniKitUI
-import os.log
 
-class OmniKitPlugin: NSObject, LoopUIPlugin {
+class OmniKitPlugin: NSObject, PumpManagerUIPlugin {
     private let log = OSLog(category: "OmniKitPlugin")
     
     public var pumpManagerType: PumpManagerUI.Type? {
         return OmnipodPumpManager.self
     }
     
-    public var cgmManagerType: CGMManagerUI.Type? {
-        return nil
-    }
-    
     override init() {
         super.init()
-        log.default("OmniKitPlugin Instantiated")
+        log.default("Instantiated")
     }
 }

@@ -20,6 +20,7 @@ open class RileyLinkPumpManager {
         // Listen for device notifications
         NotificationCenter.default.addObserver(self, selector: #selector(receivedRileyLinkPacketNotification(_:)), name: .DevicePacketReceived, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(receivedRileyLinkTimerTickNotification(_:)), name: .DeviceTimerDidTick, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(receivedRileyLinkBatteryUpdate(_:)), name: .DeviceBatteryLevelUpdated, object: nil)
     }
     
     /// Manages all the RileyLinks - access to management is optional
@@ -80,6 +81,7 @@ extension RileyLinkPumpManager {
         self.device(device, didReceivePacket: packet)
     }
 
+
     @objc private func receivedRileyLinkTimerTickNotification(_ note: Notification) {
         guard let device = note.object as? RileyLinkDevice else {
             return
@@ -88,6 +90,20 @@ extension RileyLinkPumpManager {
         self.lastTimerTick.value = Date()
         self.deviceTimerDidTick(device)
     }
+    
+
+    @objc private func receivedRileyLinkBatteryUpdate(_ note: Notification) {
+        guard let device = note.object as? RileyLinkDevice,
+              let batteryLevel = note.userInfo?[RileyLinkDevice.batteryLevelKey] as? Int
+        else {
+            return
+        }
+
+        device.assertOnSessionQueue()
+
+        self.device(device, didUpdateBattery: batteryLevel)
+    }
+    
     
     open func connectToRileyLink(_ device: RileyLinkDevice) {
         rileyLinkConnectionManager?.connect(device)

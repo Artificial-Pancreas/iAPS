@@ -58,7 +58,11 @@ public class RileyLinkDeviceTableViewCell: UITableViewCell {
 
     public func configureCellWithName(_ name: String?, signal: String?, peripheralState: CBPeripheralState?) {
         textLabel?.text = name
-        detailTextLabel?.text = " \(signal ?? "") "
+        if peripheralState == .connecting {
+            detailTextLabel?.text = "..."
+        } else {
+            detailTextLabel?.text = " \(signal ?? "") "
+        }
         
         if let state = peripheralState {
             switch state {

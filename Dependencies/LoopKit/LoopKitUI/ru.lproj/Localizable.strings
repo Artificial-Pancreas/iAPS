@@ -15,7 +15,7 @@
 "%@." = "%@.";
 
 /* Format string for reservoir volume. (1: The localized volume) */
-"%@U" = "%@ ед";
+"%@U" = "%@U";
 
 /* Title of the carb entry absorption time cell */
 "Absorption Time" = "Длительность усвоения";
@@ -78,7 +78,7 @@
 "com.loudnate.InsulinKit.totalDateLabel" = "после %1$@";
 
 /* The title of the action used to dismiss an error alert */
-"com.loudnate.LoopKit.errorAlertActionTitle" = "ОК";
+"com.loudnate.LoopKit.errorAlertActionTitle" = "OK";
 
 /* The title for the override emoji condition section */
 "Condition" = "Условие";
@@ -153,7 +153,7 @@
 "New Preset" = "Новый параметр";
 
 /* Section title for no-carb food
-   The title for override emoji miscellaneous section */
+The title for override emoji miscellaneous section */
 "Other" = "Другая";
 
 /* The title text for the insulin sensitivity scaling setting */
@@ -239,7 +239,7 @@
 "Units" = "Единицы";
 
 /* Accessibility value for an unknown value
-   The default title to use when an entry has none */
+The default title to use when an entry has none */
 "Unknown" = "Неизвестно";
 
 /* Label indicating validation is occurring */
@@ -250,3 +250,4 @@
 
 /* Title for the workout override range */
 "Workout" = "Физическая нагрузка";
+

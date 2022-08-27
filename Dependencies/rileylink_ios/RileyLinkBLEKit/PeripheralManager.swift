@@ -390,7 +390,7 @@ extension PeripheralManager: CBPeripheralDelegate {
 
     func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?) {
         commandLock.lock()
-        
+
         var notifyDelegate = false
 
         if let index = commandConditions.firstIndex(where: { (condition) -> Bool in

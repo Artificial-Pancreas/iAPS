@@ -26,7 +26,7 @@ public final class OmnipodReservoirView: LevelHUDView, NibLoadable {
             alertLabel.clipsToBounds = true
         }
     }
-    
+
     public class func instantiate() -> OmnipodReservoirView {
         return nib().instantiate(withOwner: nil, options: nil)[0] as! OmnipodReservoirView
     }
@@ -37,67 +37,26 @@ public final class OmnipodReservoirView: LevelHUDView, NibLoadable {
         volumeLabel.isHidden = true
     }
 
-    private var reservoirLevel: Double? {
-        didSet {
-            level = reservoirLevel
+    private var reservoirLevel: ReservoirLevel?
+    private var lastUpdateDate: Date?
+    private var reservoirLevelHighlightState = ReservoirLevelHighlightState.normal
 
-            switch reservoirLevel {
-            case .none:
-                volumeLabel.isHidden = true
-            case let x? where x > 0.25:
-                volumeLabel.isHidden = true
-            case let x? where x > 0.10:
-                volumeLabel.textColor = tintColor
-                volumeLabel.isHidden = false
-            default:
-                volumeLabel.textColor = tintColor
-                volumeLabel.isHidden = false
-            }
-        }
-    }
-    
     override public func tintColorDidChange() {
         super.tintColorDidChange()
         
+        alertLabel?.backgroundColor = tintColor
         volumeLabel.textColor = tintColor
+        levelMaskView.tintColor = tintColor
     }
 
-    
-    private func updateColor() {
-        switch reservoirAlertState {
-        case .lowReservoir, .empty:
-            alertLabel?.backgroundColor = stateColors?.warning
-        case .ok:
-            alertLabel?.backgroundColor = stateColors?.normal
-        }
-    }
-
-    override public func stateColorsDidUpdate() {
-        super.stateColorsDidUpdate()
-        updateColor()
-    }
-
-    
-    private var reservoirAlertState = ReservoirAlertState.ok {
-        didSet {
-            var alertLabelAlpha: CGFloat = 1
-            
-            switch reservoirAlertState {
-            case .ok:
-                alertLabelAlpha = 0
-            case .lowReservoir, .empty:
-                alertLabel?.text = "!"
-            }
-            
-            updateColor()
-
-            if self.superview == nil {
-                self.alertLabel?.alpha = alertLabelAlpha
-            } else {
-                UIView.animate(withDuration: 0.25, animations: {
-                    self.alertLabel?.alpha = alertLabelAlpha
-                })
-            }
+    override public func updateColor() {
+        switch reservoirLevelHighlightState {
+        case .normal:
+            tintColor = stateColors?.normal
+        case .warning:
+            tintColor = stateColors?.warning
+        case .critical:
+            tintColor = stateColors?.error
         }
     }
 
@@ -117,31 +76,52 @@ public final class OmnipodReservoirView: LevelHUDView, NibLoadable {
         return formatter
     }()
 
-    private let insulinFormatter: NumberFormatter = {
-        let formatter = NumberFormatter()
-        formatter.numberStyle = .decimal
-        formatter.maximumFractionDigits = 3
-        return formatter
-    }()
+    private func updateViews() {
+        if let reservoirLevel = reservoirLevel, let date = lastUpdateDate {
 
+            let time = timeFormatter.string(from: date)
+            caption?.text = time
 
-    public func update(volume: Double?, at date: Date, level: Double?, reservoirAlertState: ReservoirAlertState) {
-        self.reservoirLevel = level
+            switch reservoirLevel {
+            case .aboveThreshold:
+                level = nil
+                volumeLabel.isHidden = true
+                if let units = numberFormatter.string(from: Pod.maximumReservoirReading) {
+                    volumeLabel.text = String(format: LocalizedString("%@+ U", comment: "Format string for reservoir volume when above maximum reading. (1: The maximum reading)"), units)
+                    accessibilityValue = String(format: LocalizedString("Greater than %1$@ units remaining at %2$@", comment: "Accessibility format string for (1: localized volume)(2: time)"), units, time)
+                }
+            case .valid(let value):
+                level = reservoirLevel.percentage
+                volumeLabel.isHidden = false
 
-        let time = timeFormatter.string(from: date)
-        caption?.text = time
+                if let units = numberFormatter.string(from: value) {
+                    volumeLabel.text = String(format: LocalizedString("%@U", comment: "Format string for reservoir volume. (1: The localized volume)"), units)
 
-        if let volume = volume {
-            if let units = numberFormatter.string(from: volume) {
-                volumeLabel.text = String(format: LocalizedString("%@U", comment: "Format string for reservoir volume. (1: The localized volume)"), units)
-
-                accessibilityValue = String(format: LocalizedString("%1$@ units remaining at %2$@", comment: "Accessibility format string for (1: localized volume)(2: time)"), units, time)
+                    accessibilityValue = String(format: LocalizedString("%1$@ units remaining at %2$@", comment: "Accessibility format string for (1: localized volume)(2: time)"), units, time)
+                }
             }
-        } else if let maxReservoirReading = insulinFormatter.string(from: Pod.maximumReservoirReading) {
-            accessibilityValue = String(format: LocalizedString("Greater than %1$@ units remaining at %2$@", comment: "Accessibility format string for (1: localized volume)(2: time)"), maxReservoirReading, time)
+        } else {
+            level = 0
+            volumeLabel.isHidden = true
         }
-        self.reservoirAlertState = reservoirAlertState
+
+        var alertLabelAlpha: CGFloat = 1
+        switch reservoirLevelHighlightState {
+        case .normal:
+            alertLabelAlpha = 0
+        case .warning, .critical:
+            alertLabel?.text = "!"
+        }
+
+        UIView.animate(withDuration: 0.25, animations: {
+            self.alertLabel?.alpha = alertLabelAlpha
+        })
+    }
+    
+    public func update(level: ReservoirLevel?, at date: Date, reservoirLevelHighlightState: ReservoirLevelHighlightState) {
+        self.reservoirLevel = level
+        self.lastUpdateDate = date
+        self.reservoirLevelHighlightState = reservoirLevelHighlightState
+        updateViews()
     }
 }
-
-
