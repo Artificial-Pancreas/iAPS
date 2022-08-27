@@ -68,7 +68,10 @@ In the different views :
 - in pump config model, change the PumpConfig.StateModel extension 
 - add the bluetooth and correct new interfaces in settings pump views
 - change the view for settings max basal /bolus in pump 
-- 
+
+In deviceDataManager :
+- add the management of the issue alert (lot of changes with the previous version in the alert management by LoopKit) - Send the alert to UNNotification (modify also)
+
 
 ## issues 
 - unable to display all the screens when setup a new pump
