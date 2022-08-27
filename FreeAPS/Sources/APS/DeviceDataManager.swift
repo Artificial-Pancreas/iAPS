@@ -337,7 +337,7 @@ extension BaseDeviceDataManager: PumpManagerDelegate {
             pumpExpiresAtDate.send(endTime)
         }
 
-        if let omnipodBLE = pumpManager as? OmnipodPumpManager {
+        if let omnipodBLE = pumpManager as? OmniBLEPumpManager {
             let reservoirVal = omnipodBLE.state.podState?.lastInsulinMeasurements?.reservoirLevel ?? 0xDEAD_BEEF
             // TODO: find the value Pod.maximumReservoirReading
             let reservoir = Decimal(reservoirVal) > 50.0 ? 0xDEAD_BEEF : reservoirVal
