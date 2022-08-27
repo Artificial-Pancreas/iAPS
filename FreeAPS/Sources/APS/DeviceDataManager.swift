@@ -321,7 +321,9 @@ extension BaseDeviceDataManager: PumpManagerDelegate {
         }
 
         if let omnipod = pumpManager as? OmnipodPumpManager {
-            let reservoir = omnipod.state.podState?.lastInsulinMeasurements?.reservoirLevel ?? 0xDEAD_BEEF
+            let reservoirVal = omnipod.state.podState?.lastInsulinMeasurements?.reservoirLevel ?? 0xDEAD_BEEF
+            // TODO: find the value Pod.maximumReservoirReading
+            let reservoir = Decimal(reservoirVal) > 50.0 ? 0xDEAD_BEEF : reservoirVal
 
             storage.save(Decimal(reservoir), as: OpenAPS.Monitor.reservoir)
             broadcaster.notify(PumpReservoirObserver.self, on: processQueue) {
@@ -336,7 +338,9 @@ extension BaseDeviceDataManager: PumpManagerDelegate {
         }
 
         if let omnipodBLE = pumpManager as? OmnipodPumpManager {
-            let reservoir = omnipodBLE.state.podState?.lastInsulinMeasurements?.reservoirLevel ?? 0xDEAD_BEEF
+            let reservoirVal = omnipodBLE.state.podState?.lastInsulinMeasurements?.reservoirLevel ?? 0xDEAD_BEEF
+            // TODO: find the value Pod.maximumReservoirReading
+            let reservoir = Decimal(reservoirVal) > 50.0 ? 0xDEAD_BEEF : reservoirVal
 
             storage.save(Decimal(reservoir), as: OpenAPS.Monitor.reservoir)
             broadcaster.notify(PumpReservoirObserver.self, on: processQueue) {
