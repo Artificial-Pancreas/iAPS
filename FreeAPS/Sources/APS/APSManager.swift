@@ -2,6 +2,7 @@ import Combine
 import Foundation
 import LoopKit
 import LoopKitUI
+import OmniBLE
 import RileyLinkKit
 import SwiftDate
 import Swinject
@@ -19,6 +20,7 @@ protocol APSManager {
     var lastLoopDateSubject: PassthroughSubject<Date, Never> { get }
     var bolusProgress: CurrentValueSubject<Decimal?, Never> { get }
     var pumpExpiresAtDate: CurrentValueSubject<Date?, Never> { get }
+    var isManualTempBasal: Bool { get }
     func enactTempBasal(rate: Double, duration: TimeInterval)
     func makeProfiles() -> AnyPublisher<Bool, Never>
     func determineBasal() -> AnyPublisher<Bool, Never>
@@ -36,6 +38,7 @@ enum APSError: LocalizedError {
     case apsError(message: String)
     case deviceSyncError(message: String)
     case deviceAlert(message: String)
+    case manualBasalTemp(message: String)
 
     var errorDescription: String? {
         switch self {
@@ -51,6 +54,8 @@ enum APSError: LocalizedError {
             return "Sync error: \(message)"
         case let .deviceAlert(message):
             return "Pump message: \(message)"
+        case let .manualBasalTemp(message):
+            return "Manual Basal Temp : \(message)"
         }
     }
 }
@@ -84,6 +89,8 @@ final class BaseAPSManager: APSManager, Injectable {
     }
 
     var bluetoothManager: BluetoothStateManager? { deviceDataManager.bluetoothManager }
+
+    var isManualTempBasal: Bool = false
 
     let isLooping = CurrentValueSubject<Bool, Never>(false)
     let lastLoopDateSubject = PassthroughSubject<Date, Never>()
@@ -143,6 +150,21 @@ final class BaseAPSManager: APSManager, Injectable {
                     self.createBolusReporter()
                 } else {
                     self.clearBolusReporter()
+                }
+            }
+            .store(in: &lifetime)
+
+        // manage a manual Temp Basal from OmniPod - Force loop() after stop a temp basal or finished
+        deviceDataManager.manualTempBasal
+            .receive(on: processQueue)
+            .sink { manualBasal in
+                if manualBasal {
+                    self.isManualTempBasal = true
+                } else {
+                    if self.isManualTempBasal {
+                        self.isManualTempBasal = false
+                        self.loop()
+                    }
                 }
             }
             .store(in: &lifetime)
@@ -219,6 +241,11 @@ final class BaseAPSManager: APSManager, Injectable {
 
         guard !status.suspended else {
             return APSError.invalidPumpState(message: "Pump suspended")
+        }
+
+        // block all if manual temp basal
+        if isManualTempBasal {
+            return APSError.manualBasalTemp(message: "Unable to change anything")
         }
 
         let reservoir = storage.retrieve(OpenAPS.Monitor.reservoir, as: Decimal.self) ?? 100

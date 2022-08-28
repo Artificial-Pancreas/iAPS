@@ -18,6 +18,7 @@ protocol DeviceDataManager: GlucoseSource {
     var pumpDisplayState: CurrentValueSubject<PumpDisplayState?, Never> { get }
     var recommendsLoop: PassthroughSubject<Void, Never> { get }
     var bolusTrigger: PassthroughSubject<Bool, Never> { get }
+    var manualTempBasal: PassthroughSubject<Bool, Never> { get }
     var errorSubject: PassthroughSubject<Error, Never> { get }
     var pumpName: CurrentValueSubject<String, Never> { get }
     var pumpExpiresAtDate: CurrentValueSubject<Date?, Never> { get }
@@ -63,6 +64,7 @@ final class BaseDeviceDataManager: DeviceDataManager, Injectable {
     let bolusTrigger = PassthroughSubject<Bool, Never>()
     let errorSubject = PassthroughSubject<Error, Never>()
     let pumpNewStatus = PassthroughSubject<Void, Never>()
+    let manualTempBasal = PassthroughSubject<Bool, Never>()
     var alertStore: [Alert]
     @SyncAccess private var pumpUpdateCancellable: AnyCancellable?
     private var pumpUpdatePromise: Future<Bool, Never>.Promise?
@@ -330,6 +332,17 @@ extension BaseDeviceDataManager: PumpManagerDelegate {
                 $0.pumpReservoirDidChange(Decimal(reservoir))
             }
 
+            if let tempBasal = omnipod.state.podState?.unfinalizedTempBasal, !tempBasal.isFinished(),
+               !tempBasal.automatic
+            {
+                // the manual basal temp is launch - block every thing
+                debug(.deviceManager, "manual temp basal")
+                manualTempBasal.send(true)
+            } else {
+                // no more manual Temp Basal !
+                manualTempBasal.send(false)
+            }
+
             guard let endTime = omnipod.state.podState?.expiresAt else {
                 pumpExpiresAtDate.send(nil)
                 return
@@ -349,6 +362,18 @@ extension BaseDeviceDataManager: PumpManagerDelegate {
             storage.save(Decimal(reservoir), as: OpenAPS.Monitor.reservoir)
             broadcaster.notify(PumpReservoirObserver.self, on: processQueue) {
                 $0.pumpReservoirDidChange(Decimal(reservoir))
+            }
+
+            // manual temp basal on
+            if let tempBasal = omnipodBLE.state.podState?.unfinalizedTempBasal, !tempBasal.isFinished(),
+               !tempBasal.automatic
+            {
+                // the manual basal temp is launch - block every thing
+                debug(.deviceManager, "manual temp basal")
+                manualTempBasal.send(true)
+            } else {
+                // no more manual Temp Basal !
+                manualTempBasal.send(false)
             }
 
             guard let endTime = omnipodBLE.state.podState?.expiresAt else {

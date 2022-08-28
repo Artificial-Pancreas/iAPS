@@ -140,12 +140,22 @@ extension Home {
                         .font(.system(size: 12, weight: .bold)).foregroundColor(.loopGray)
                         .padding(.leading, 8)
                 } else if let tempRate = state.tempRate {
-                    Text(
-                        (numberFormatter.string(from: tempRate as NSNumber) ?? "0") +
-                            NSLocalizedString(" U/hr", comment: "Unit per hour with space")
-                    )
-                    .font(.system(size: 12, weight: .bold)).foregroundColor(.insulin)
-                    .padding(.leading, 8)
+                    if state.apsManager.isManualTempBasal {
+                        Text(
+                            (numberFormatter.string(from: tempRate as NSNumber) ?? "0") +
+                                NSLocalizedString(" U/hr", comment: "Unit per hour with space") +
+                                NSLocalizedString(" -  Manual Basal ⚠️", comment: "Manual Temp basal")
+                        )
+                        .font(.system(size: 12, weight: .bold)).foregroundColor(.insulin)
+                        .padding(.leading, 8)
+                    } else {
+                        Text(
+                            (numberFormatter.string(from: tempRate as NSNumber) ?? "0") +
+                                NSLocalizedString(" U/hr", comment: "Unit per hour with space")
+                        )
+                        .font(.system(size: 12, weight: .bold)).foregroundColor(.insulin)
+                        .padding(.leading, 8)
+                    }
                 }
 
                 if let tempTarget = state.tempTarget {
