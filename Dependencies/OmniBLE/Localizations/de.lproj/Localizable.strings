@@ -4,8 +4,8 @@
   Created by Jon Mårtensson on 2022-08-28.
   Copyright © 2022 Randall Knutson. All rights reserved.
 */
-
 /* Alert content title for multiCommand pod alert */
+
 "Multiple Command Alert" = "Multiple Command Alert";
 
 /* Alert content title for userPodExpiration pod alert */
@@ -75,7 +75,7 @@
 "Pod Activated" = "Pod Activated";
 
 /* */
-"Notification Settings" = "Notification Settings";
+"Notification Settings" = "Benachrichtigungseinstellungen";
 
 /* */
 "Confidence Reminders" = "Confidence Reminders";
@@ -99,7 +99,7 @@
 "Finish deactivation" = "Finish deactivation";
 
 /* Settings page link description when next lifecycle action is to replace pod */
-"Replace Pod" = "Replace Pod";
+"Replace Pod" = "Pod ersetzen";
 
 /* Unit for singular day in pod life remaining */
 "day" = "day";
@@ -111,13 +111,13 @@
 "hour" = "hour";
 
 /* Unit for plural hours in pod life remaining */
-"hours" = "hours";
+"hours" = "Stunden";
 
 /* Unit for singular minute in pod life remaining */
 "minute" = "minute";
 
 /* Unit for plural minutes in pod life remaining */
-"minutes" = "minutes";
+"minutes" = "Minuten";
 
 /* Title of insulin delivery section */
 "Insulin Delivery" = "Insulin Delivery";
@@ -129,13 +129,13 @@
 "Insulin Remaining" = "Insulin Remaining";
 
 /* Section header for activity section */
-"Activity" = "Activity";
+"Activity" = "Aktivität";
 
 /* title for device details page */
 "Device Details" = "Device Details";
 
 /* Section header for configuration section */
-"Configuration" = "Configuration";
+"Configuration" = "Konfiguration";
 
 /* Settings page link description when next lifecycle action is to pair new pod */
 "Pair Pod" = "Pair Pod";
@@ -144,10 +144,10 @@
 "Finish deactivation" = "Finish deactivation";
 
 /* Settings page link description when next lifecycle action is to replace pod */
-"Replace Pod" = "Replace Pod";
+"Replace Pod" = "Pod ersetzen";
 
 /* Settings page link description when next lifecycle action is to replace pod */
-"Replace Pod" = "Replace Pod";
+"Replace Pod" = "Pod ersetzen";
 
 /* Label for pod life state when pod not fully activated */
 "Unfinished Activation" = "Unfinished Activation";
@@ -165,16 +165,16 @@
 "No Pod" = "No Pod";
 
 /* Pod life HUD view label */
-"Fault" = "Fault";
+"Fault" = "Störung";
 
 /* Label describing pod age view */
-"Pod Age" = "Pod Age";
+"Pod Age" = "Pod-Alter";
 
 /* Label describing time remaining view */
-"Remaining" = "Remaining";
+"Remaining" = "Verbleibend";
 
 /* Label indicating pod replacement necessary */
-"Replace Pod" = "Replace Pod";
+"Replace Pod" = "Pod ersetzen";
 
 /* Error message shown when no pod is paired */
 "No pod paired" = "No pod paired";
@@ -255,13 +255,13 @@
 "Skipping Play Test Beeps due to bolus still in progress." = "Skipping Play Test Beeps due to bolus still in progress.";
 
 /* */
-"Play Test Beeps" = "Play Test Beeps";
+"Play Test Beeps" = "Testtöne abspielen";
 
 /* */
 "Skipping Read Pulse Log due to bolus still in progress." = "Skipping Read Pulse Log due to bolus still in progress.";
 
 /* */
-"Read Pulse Log" = "Read Pulse Log";
+"Read Pulse Log" = "Pulse-Log lesen";
 
 /* */
 "Set Confirmation Beeps to %s" = "Set Confirmation Beeps to %s";
@@ -270,13 +270,13 @@
 "Set Confirmation Beeps Preference" = "Set Confirmation Beeps Preference";
 
 /* */
-"Suspend" = "Suspend";
+"Suspend" = "Unterbrechen";
 
 /* */
 "Failed to suspend: %{public}@" = "Failed to suspend: %{public}@";
 
 /* */
-"Resume" = "Resume";
+"Resume" = "Fortsetzen";
 
 /* */
 "Bolus" = "Bolus";
@@ -300,7 +300,7 @@
 "Insulin delivery stopped. Change Pod now." = "Insulin delivery stopped. Change Pod now.";
 
 /* Units for showing temp basal rate */
-"U/hr" = "U/hr";
+"U/hr" = "IE/Std";
 
 /* Header for insulin remaining on pod settings screen */
 "Insulin Remaining" = "Insulin Remaining";
@@ -309,10 +309,10 @@
 "Set Temporary Basal Rate" = "Set Temporary Basal Rate";
 
 /* Section header for activity section */
-"Activity" = "Activity";
+"Activity" = "Aktivität";
 
 /* Section header for configuration section */
-"Configuration" = "Configuration";
+"Configuration" = "Konfiguration";
 
 /* Title for previous pod page */
 "Previous Pod" = "Previous Pod";
@@ -348,13 +348,13 @@
 "Delete Omnipod DASH" = "Delete Omnipod DASH";
 
 /* Text for confidence reminders navigation link" */
-"Insulin Type" = "Insulin Type";
+"Insulin Type" = "Insulin Typ";
 
 /* The title of the command to change pump time zone */
 "Sync to Current Time" = "Sync to Current Time";
 
 /* Title for suspend duration selection action sheet */
-"Suspend Delivery" = "Suspend Delivery";
+"Suspend Delivery" = "Abgabe unterbrechen";
 
 /* Message for suspend duration selection action sheet */
 "Insulin delivery will be stopped until you resume manually. When would you like Loop to remind you to resume delivery?" = "Insulin delivery will be stopped until you resume manually. When would you like Loop to remind you to resume delivery?";
@@ -364,10 +364,8 @@
 
 /* Button text for 1 hour suspend duration" */
 "1 hour" = "1 hour";
-    
- /* Button text for 1 hour 30 minute suspend duration */
+/* Button text for 1 hour 30 minute suspend duration */
 "1 hour 30 minutes" = "1 hour 30 minutes";
-    
 /* Button text for 2 hour suspend duration */
 "2 hours" = "2 hours";
 
@@ -390,7 +388,7 @@
 "Please deactivate the pod. When deactivation is complete, you may pair a new pod." = "Please deactivate the pod. When deactivation is complete, you may pair a new pod.";
 
 /* Deactivate pod action button */
-"Deactivate Pod" = "Deactivate Pod";
+"Deactivate Pod" = "Pod deaktivieren";
 
 /* Deactivate pod action button accessibility label while deactivating */
 "Deactivating." = "Deactivating.";
@@ -402,7 +400,7 @@
 "Retry" = "Retry";
 
 /* Action button description when deactivated */
-"Continue" = "Continue";
+"Continue" = "Fortsetzen";
 
 /* Format string for recovery suggestion during deactivate pod. */
 "There was a problem communicating with the pod. If this problem persists, tap Discard Pod. You can then activate a new Pod." = "There was a problem communicating with the pod. If this problem persists, tap Discard Pod. You can then activate a new Pod.";
@@ -417,4 +415,4 @@
 "Your Pod may still be delivering Insulin.\nRemove it from your body, then tap “Continue.“" = "Your Pod may still be delivering Insulin.\nRemove it from your body, then tap “Continue.“";
 
 /* Insulin Unit */
-"U" = "U";
+"U" = " IE";
