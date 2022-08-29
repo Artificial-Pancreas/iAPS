@@ -141,7 +141,7 @@
 "Medium" = "Orta";
 
 /* Placeholder for minimum value in glucose range */
-"min" = "dk";
+"min" = "min";
 
 /* Alert action title to open error help */
 "More Info" = "Daha Fazla Bilgi";
