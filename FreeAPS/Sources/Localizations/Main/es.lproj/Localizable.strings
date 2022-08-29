@@ -405,7 +405,7 @@ Enact a temp Basal or a temp target */
 "Transmitter ID" = "ID del transmisor";
 
 /* Other CGM setting */
-"Other" = "Otros";
+"Other" = "Otro";
 
 /* Whatch app alert */
 "Set temp targets presets on iPhone first" = "Set temp targets presets on iPhone first";
