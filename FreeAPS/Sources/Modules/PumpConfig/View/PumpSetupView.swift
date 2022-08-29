@@ -79,7 +79,7 @@ extension PumpConfig {
             case let .createdAndOnboarded(pumpManagerUI):
                 debug(.default, "Pump manager  created and onboarded")
                 setupDelegate?.pumpManagerOnboarding(didCreatePumpManager: pumpManagerUI)
-                return UIViewController()            
+                return UIViewController()
             }
         }
 
