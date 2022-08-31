@@ -203,14 +203,14 @@ public struct PodState: RawRepresentable, Equatable, CustomDebugStringConvertibl
     public mutating func updateFromStatusResponse(_ response: StatusResponse) {
         let now = updatePodTimes(timeActive: response.timeActive)
         updateDeliveryStatus(deliveryStatus: response.deliveryStatus, podProgressStatus: response.podProgressStatus, bolusNotDelivered: response.bolusNotDelivered)
-
-        let setupUnits = setupUnitsDelivered != nil ? setupUnitsDelivered! : Pod.primeUnits + Pod.cannulaInsertionUnits
+        
+        let setupUnits = setupUnitsDelivered ?? Pod.primeUnits + Pod.cannulaInsertionUnits + Pod.cannulaInsertionUnitsExtra
 
         // Calculated new delivered value which will be a negative value until setup has completed OR after a pod reset fault
         let calcDelivered = response.insulinDelivered - setupUnits
 
         // insulinDelivered should never be a negative value or decrease from the previous saved delivered value
-        let prevDelivered = lastInsulinMeasurements != nil ? lastInsulinMeasurements!.delivered : 0
+        let prevDelivered = lastInsulinMeasurements?.delivered ?? 0
         let insulinDelivered = max(calcDelivered, prevDelivered)
 
         lastInsulinMeasurements = PodInsulinMeasurements(insulinDelivered: insulinDelivered, reservoirLevel: response.reservoirLevel, validTime: now)
