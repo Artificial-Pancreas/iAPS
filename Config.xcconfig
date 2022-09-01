@@ -5,3 +5,4 @@ BUNDLE_IDENTIFIER = ru.artpancreas.$(DEVELOPMENT_TEAM).FreeAPS
 APP_GROUP_ID = group.com.$(DEVELOPMENT_TEAM).loopkit.LoopGroup
 
 #include? "ConfigOverride.xcconfig"
+#include? "../../ConfigOverride.xcconfig"
