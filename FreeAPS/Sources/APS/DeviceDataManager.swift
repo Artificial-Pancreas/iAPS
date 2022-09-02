@@ -162,7 +162,7 @@ final class BaseDeviceDataManager: DeviceDataManager, Injectable {
                 }
             }
         }
-        .timeout(60, scheduler: processQueue)
+        .timeout(20, scheduler: processQueue)
         .replaceError(with: false)
         .replaceEmpty(with: false)
         .sink(receiveValue: updateUpdateFinished)
