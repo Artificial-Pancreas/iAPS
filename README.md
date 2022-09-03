@@ -77,6 +77,6 @@ In deviceDataManager :
 
 ## issues 
 - unable to display all the screens when setup a new pump 
-- choice of the insulin for the pump. 
+- ~~choice of the insulin for the pump.~~ 
 - unable to use truetime for NTP sync. Not yet used by Loop 
 
