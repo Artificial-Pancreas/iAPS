@@ -419,12 +419,6 @@ extension BaseUserNotificationsManager: pumpNotificationObserver {
                 trigger: nil
             )
         }
-        // Acknowledge in all case the alert to stop beep (in particular)
-        apsManager.pumpManager?.acknowledgeAlert(alertIdentifier: alert.identifier.alertIdentifier) { error in
-            if let error = error {
-                debug(.deviceManager, "acknowledge not succeeded with error \(error.localizedDescription)")
-            }
-        }
     }
 
     func pumpRemoveNotification() {

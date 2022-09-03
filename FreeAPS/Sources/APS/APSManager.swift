@@ -38,7 +38,6 @@ enum APSError: LocalizedError {
     case glucoseError(message: String)
     case apsError(message: String)
     case deviceSyncError(message: String)
-    case deviceAlert(message: String)
     case manualBasalTemp(message: String)
 
     var errorDescription: String? {
@@ -53,8 +52,6 @@ enum APSError: LocalizedError {
             return "APS error: \(message)"
         case let .deviceSyncError(message):
             return "Sync error: \(message)"
-        case let .deviceAlert(message):
-            return "Pump message: \(message)"
         case let .manualBasalTemp(message):
             return "Manual Basal Temp : \(message)"
         }
