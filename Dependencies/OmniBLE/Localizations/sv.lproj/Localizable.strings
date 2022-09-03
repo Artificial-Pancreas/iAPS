@@ -437,3 +437,76 @@
 
 /* Continue pairing button title of in pairing cancel modal */
 "No, Continue With Pod" = "Nej, fortsätt med denna podd";
+
+/* Label text for step one of attach pod instructions */
+"Prepare site." = "Förbered hud.";
+
+/* Label text for step two of attach pod instructions */
+"Remove blue Pod needle cap and check cannula. Then remove paper backing." = "Ta bort det blå kanylskyddet och kontrollera att kanylen inte redan sticker ut. Ta sedan bort skyddspappret.";
+
+/* Label text for step three of attach pod instructions */
+"Check Pod, apply to site, then confirm pod attachment." = "Kontrollera din podd, sätt fast den och bekräfta sedan att den sitter bra.";
+
+
+/* Action button title for attach pod view */
+"Continue" = "Fortsätt";
+
+/* */
+"Attach Pod" = "Fäst podden";
+
+/* Alert title for confirm pod attachment */
+"Confirm Pod Attachment" = "Kontrollera att podden sitter bra";
+
+/* Alert message body for confirm pod attachment */
+"Please confirm that the Pod is securely attached to your body.\n\nThe cannula can be inserted only once with each Pod. Tap “Confirm” when Pod is attached." = "Kontrollera att podden sitter bra på din kropp.\n\nKanylen kan bara föras in en gång. Tryck på \"Bekräfta\" när podden sitter fast.";
+
+/* Button title for confirm attachment option */
+"Confirm" = "Bekräfta";
+
+/* Label text for step one of insert cannula instructions */
+"Tap below to start cannula insertion." = "Tryck nedan för att föra in kanyl.";
+
+/* Label text for step two of insert cannula instructions */
+"Wait until insertion is completed." = "Vänta tills kanyl förts in.";
+
+/* Label text indicating insertion finished. */
+"Inserted" = "Kanyl har förts in";
+
+/* */
+"Check Cannula" = "Kontrollera kanylen";
+
+/* */
+"Is the cannula inserted properly?" = "Är kanylen införd korrekt?";
+
+/* Description of proper cannula insertion */
+"The window on the top of the Pod should be colored pink when the cannula is properly inserted into the skin." = "Det lilla fönstret på podden färgas rosa när kanylen är ordentligt insatt i huden.";
+
+/* Button label for user to answer cannula was properly inserted */
+"Yes" = "Ja";
+
+/* Button label for user to answer cannula was not properly inserted" */
+"No" = "Nej";
+
+/* Pod pairing action button text while pairing */
+"Pairing..." = "Parkopplar...";
+
+/* Pod pairing action button text while priming */
+"Priming..." = "Fyller...";
+
+/* Format string for instructions for setup complete view. (1: app name) */
+"Your Pod is ready for use.\n\n%1$@ will remind you to change your pod before it expires. You can change this to a time convenient for you." = "Din podd är klar att användas.\n\n%1$@ kommer att påminna dig att byta pod innan den utgår. Du kan ändra påminnelsetiden för detta.";
+
+/* */
+"Scheduled Reminder" = "Schemalagd påminnelse";
+
+/* Label for expiration reminder row */
+"Time" = "Tid";
+
+/* Action button title to continue at Setup Complete */
+"Finish Setup" = "Gär färdigt inställning";
+
+/* */
+"Setup Complete" = "Inställning färdig";
+
+/* Value text for no expiration reminder */
+"No Reminder" = "Ingen påminnelse";
