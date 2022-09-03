@@ -5,7 +5,7 @@ import Swinject
 enum MessageType {
     case info
     case warning
-    case error
+    case errorPump
 }
 
 struct MessageContent {
