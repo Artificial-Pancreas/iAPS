@@ -964,7 +964,7 @@ Enact a temp Basal or a temp target */
  /* Error title */
  "Error" = "Fel";
 
- /* ------------------------------------ */
+ /* --------------------------------------
 
   Infotexts from openaps.docs and androidaps.docs
   FreeAPS X
