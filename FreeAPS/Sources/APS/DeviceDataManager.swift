@@ -66,6 +66,7 @@ final class BaseDeviceDataManager: DeviceDataManager, Injectable {
     let pumpNewStatus = PassthroughSubject<Void, Never>()
     let manualTempBasal = PassthroughSubject<Bool, Never>()
     var alertStore: [Alert]
+    private let router = FreeAPSApp.resolver.resolve(Router.self)!
     @SyncAccess private var pumpUpdateCancellable: AnyCancellable?
     private var pumpUpdatePromise: Future<Bool, Never>.Promise?
     @SyncAccess var loopInProgress: Bool = false
@@ -457,8 +458,26 @@ extension BaseDeviceDataManager: DeviceManagerDelegate {
     func issueAlert(_ alert: Alert) {
         if !alertStore.contains(where: { $0.identifier.alertIdentifier == alert.identifier.alertIdentifier }) {
             alertStore.append(alert)
-            let infoMessage = APSError.deviceAlert(message: alert.foregroundContent!.body)
-            errorSubject.send(infoMessage)
+
+            let typeMessage: MessageType
+            let alertUp = alert.identifier.alertIdentifier.uppercased()
+            if alertUp.contains("FAULT") || alertUp.contains("ERROR") {
+                typeMessage = .error
+            } else {
+                typeMessage = .warning
+            }
+
+            DispatchQueue.main.async {
+                let messageCont = MessageContent(content: alert.foregroundContent!.body, type: typeMessage)
+                self.router.alertMessage.send(messageCont)
+                // validation
+                self.pumpManager?.acknowledgeAlert(alertIdentifier: alert.identifier.alertIdentifier) { error in
+                    if let error = error {
+                        debug(.deviceManager, "acknowledge not succeeded with error \(error.localizedDescription)")
+                    }
+                }
+            }
+
             broadcaster.notify(pumpNotificationObserver.self, on: processQueue) {
                 $0.pumpNotification(alert: alert)
             }
