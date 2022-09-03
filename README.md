@@ -42,6 +42,7 @@ _ modify the order of compilation for CGMBLEKit (header before compilation)
     - Added blueTooth manager
     - modify enactTempBasal to respect the new protocol
     - modify enactBolus to respect the new protocol. The new loopkit requires a new parameter to describe the type of bolus - in FAX defaut to .manualRecommendationAccepted
+    - modify the clearBolusReporter to improve the refresh of the state of the pump
  
  - in devicemanager : 
     - Added blueTooth manager
@@ -57,26 +58,25 @@ _ modify the order of compilation for CGMBLEKit (header before compilation)
     - remove setupViewController extension
     - new settingsViewController 
 
-
 - in PumpHistoryStorage  
-    - remove a ismutable metho
+    - remove a ismutable method
  
 - Color and UIColor added and LoopUICOloPalette+Default
+
 
 In the different views : 
 - In home view, add Bluetooth 
 - in pump config model, change the PumpConfig.StateModel extension 
 - add the bluetooth and correct new interfaces in settings pump views
 - change the view for settings max basal /bolus in pump 
+- Improve the log message in MainStateModel + UserNotificationManager + Router 
 
 In deviceDataManager :
 - add the management of the issue alert (lot of changes with the previous version in the alert management by LoopKit) - Send the alert to UNNotification (modify also)
 
 
 ## issues 
-- unable to display all the screens when setup a new pump
-- choice of the insulin for the pump. impact ? 
-- unable to use truetime
-_ update ogm
+- unable to display all the screens when setup a new pump 
+- choice of the insulin for the pump. 
+- unable to use truetime for NTP sync. Not yet used by Loop 
 
-update
