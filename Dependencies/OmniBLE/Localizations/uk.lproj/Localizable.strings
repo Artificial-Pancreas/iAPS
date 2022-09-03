@@ -6,46 +6,46 @@
 */
 /* Alert content title for multiCommand pod alert */
 
-"Multiple Command Alert" = "Multiple Command Alert";
+"Multiple Command Alert" = "Багатокомандне сповіщення";
 
 /* Alert content title for userPodExpiration pod alert */
-"Pod Expiration Reminder" = "Pod Expiration Reminder";
+"Pod Expiration Reminder" = "Нагадування про термін дії Pod";
 
 /* Alert content title for podExpiring pod alert */
-"Pod Expired" = "Pod Expired";
+"Pod Expired" = "Термін дії Pod минув";
 
 /* Alert content title for lowReservoir pod alert */
-"Low Reservoir" = "Low Reservoir";
+"Low Reservoir" = "Пустий резервуар";
 
 /* Alert content title for suspendInProgress pod alert */
-"Suspend In Progress Reminder" = "Suspend In Progress Reminder";
+"Suspend In Progress Reminder" = "Нагадування про призупинення";
 
 /* Alert content title for suspendEnded pod alert */
-"Resume Insulin" = "Resume Insulin";
+"Resume Insulin" = "Відновити інсулін";
 
 /* Alert content title for finishSetupReminder pod alert */
-"Pod Pairing Incomplete" = "Pod Pairing Incomplete";
+"Pod Pairing Incomplete" = "Створення пари не завершено";
 
 /* Alert content title for timeOffsetChangeDetected pod alert */
-"Time Change Detected" = "Time Change Detected";
+"Time Change Detected" = "Виявлено зміну часу";
 
 /* Alert content body for multiCommand pod alert */
-"Multiple Command Alert" = "Multiple Command Alert";
+"Multiple Command Alert" = "Багатокомандне сповіщення";
 
 /* Format string for alert content body for userPodExpiration pod alert. (1: time until expiration) */
-"Pod expires in %1$@." = "Pod expires in %1$@.";
+"Pod expires in %1$@." = "Pod закінчується через %1$@.";
 
 /* Alert content body for podExpiring pod alert */
-"Change Pod now. Pod has been active for 72 hours." = "Change Pod now. Pod has been active for 72 hours.";
+"Change Pod now. Pod has been active for 72 hours." = "Змінити Pod зараз. Pod був активним протягом 72 годин.";
 
 /* Alert content body for podExpireImminent pod alert */
-"Change Pod now. Insulin delivery will stop in 1 hour." = "Change Pod now. Insulin delivery will stop in 1 hour.";
+"Change Pod now. Insulin delivery will stop in 1 hour." = "Змінити Pod зараз. Ізольована доставка зупиниться протягом 1 години.";
 
 /* Format string for alert content body for lowReservoir pod alert. (1: reminder value) */
-"%1$@ insulin or less remaining in Pod. Change Pod soon." = "%1$@ insulin or less remaining in Pod. Change Pod soon.";
+"%1$@ insulin or less remaining in Pod. Change Pod soon." = "%1$@ інсулін або менше залишилися у Pod. Незабаром змініть Pod.";
 
 /* Alert content body for suspendInProgress pod alert */
-"Suspend In Progress Reminder" = "Suspend In Progress Reminder";
+"Suspend In Progress Reminder" = "Нагадування про призупинення";
 
 /* Alert content body for suspendEnded pod alert */
 "The insulin suspension period has ended.\n\nYou can resume delivery from the banner on the home screen or from your pump settings screen. You will be reminded again in 15 minutes." = "The insulin suspension period has ended.\n\nYou can resume delivery from the banner on the home screen or from your pump settings screen. You will be reminded again in 15 minutes.";
@@ -137,9 +137,6 @@
 /* Section header for configuration section */
 "Configuration" = "Налаштування";
 
-/* Settings page link description when next lifecycle action is to pair new pod */
-"Pair Pod" = "Pair Pod";
-
 /* Settings page link description when next lifecycle action is to finish deactivation */
 "Finish deactivation" = "Finish deactivation";
 
@@ -213,7 +210,7 @@
 "No Insulin" = "No Insulin";
 
 /* Status highlight message for podExpired alarm. */
-"Pod Expired" = "Pod Expired";
+"Pod Expired" = "Термін дії Pod минув";
 
 /* Status highlight message for occlusion alarm. */
 "Pod Occlusion" = "Pod Occlusion";
@@ -247,9 +244,6 @@
 
 /* */
 "Save basal profile failed: %{public}@" = "Save basal profile failed: %{public}@";
-
-/* */
-"Deactivate pod" = "Deactivate pod";
 
 /* */
 "Skipping Play Test Beeps due to bolus still in progress." = "Skipping Play Test Beeps due to bolus still in progress.";
@@ -416,3 +410,30 @@
 
 /* Insulin Unit */
 "U" = "U";
+
+/* The action string on pod status page when pod expired */
+"Change Pod now. Insulin delivery will stop 8 hours after the Pod has expired or when no more insulin remains." = "Змінити Pod зараз. Інсулінова доставка зупиниться на 8 годин після того, як Pod закінчиться або більше не залишиться інсуліну.";
+
+/* Label text for step 1 of pair pod instructions */
+"Fill a new pod with U-100 Insulin (leave blue Pod needle cap on)." = "Fill a new pod with U-100 Insulin (leave blue Pod needle cap on).";
+
+/* Label text for step 2 of pair pod instructions */
+"Listen for 2 beeps." = "Listen for 2 beeps.";
+
+/* Label text indicating pairing finished.*/
+"Paired" = "Paired";
+
+/* Cancel button text in navigation bar on pair pod UI */
+"Cancel" = "Відмінити";
+
+/* Alert title for cancel pairing modal */
+"Are you sure you want to cancel Pod setup?" = "Are you sure you want to cancel Pod setup?";
+
+/* Alert message body for confirm pod attachment */
+"If you cancel Pod setup, the current Pod will be deactivated and will be unusable." = "If you cancel Pod setup, the current Pod will be deactivated and will be unusable.";
+
+/* Button title for confirm deactivation option */
+"Yes, Deactivate Pod" = "Yes, Deactivate Pod";
+
+/* Continue pairing button title of in pairing cancel modal */
+"No, Continue With Pod" = "No, Continue With Pod";
