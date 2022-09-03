@@ -1,3 +1,4 @@
+import LoopKitUI
 import SwiftMessages
 import SwiftUI
 import Swinject
@@ -56,14 +57,27 @@ extension Main {
                         config.duration = .forever
                         view.button?.setImage(Icon.warningSubtle.image, for: .normal)
                         titleContent = NSLocalizedString("Warning", comment: "Warning title")
-                        view.buttonTapHandler = { _ in SwiftMessages.hide() }
-                    case .error:
+                        view.buttonTapHandler = { _ in
+                            SwiftMessages.hide()
+                        }
+                    case .errorPump:
                         view.configureTheme(.error, iconStyle: .subtle)
                         config.duration = .forever
                         view.button?.setImage(Icon.errorSubtle.image, for: .normal)
                         titleContent = NSLocalizedString("Error", comment: "Error title")
                         view.buttonTapHandler = { _ in
                             SwiftMessages.hide()
+                            // display the pump configuration immediatly
+                            if let pump = self.provider.deviceManager.pumpManager,
+                               let bluetooth = self.provider.bluetoothProvider
+                            {
+                                let view = PumpConfig.PumpSettingsView(
+                                    pumpManager: pump,
+                                    bluetoothManager: bluetooth,
+                                    completionDelegate: self
+                                ).asAny()
+                                self.router.mainSecondaryModalView.send(view)
+                            }
                         }
                     }
 
@@ -90,5 +104,12 @@ extension Main {
                 }
                 .store(in: &lifetime)
         }
+    }
+}
+
+extension Main.StateModel: CompletionDelegate {
+    func completionNotifyingDidComplete(_: CompletionNotifying) {
+        // close the window
+        router.mainSecondaryModalView.send(nil)
     }
 }

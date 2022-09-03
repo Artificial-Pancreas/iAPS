@@ -466,7 +466,7 @@ extension BaseDeviceDataManager: DeviceManagerDelegate {
             let typeMessage: MessageType
             let alertUp = alert.identifier.alertIdentifier.uppercased()
             if alertUp.contains("FAULT") || alertUp.contains("ERROR") {
-                typeMessage = .error
+                typeMessage = .errorPump
             } else {
                 typeMessage = .warning
             }
