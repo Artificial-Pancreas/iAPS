@@ -427,7 +427,7 @@
 "Cancel" = "Avbryt";
 
 /* Alert title for cancel pairing modal */
-"Are you sure you want to cancel Pod setup?" = "Säkert att du vill avbryta poddinställningen?"
+"Are you sure you want to cancel Pod setup?" = "Säkert att du vill avbryta poddinställningen?";
 
 /* Alert message body for confirm pod attachment */
 "If you cancel Pod setup, the current Pod will be deactivated and will be unusable." = "Om du avbryter kommer din podd att inaktiveras och kommer inte att kunna användas mer.";
