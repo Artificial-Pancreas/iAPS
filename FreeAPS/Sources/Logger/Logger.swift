@@ -228,7 +228,7 @@ final class Logger {
         os_log("%@ - %@ - %d %{public}@", log: log, type: .info, file.file, function, line, printedMessage)
         reporter.log(category.name, printedMessage, file: file, function: function, line: line)
 
-        showAlert(message, type: .warning)
+        showAlert(message, type: .info)
     }
 
     func warning(
