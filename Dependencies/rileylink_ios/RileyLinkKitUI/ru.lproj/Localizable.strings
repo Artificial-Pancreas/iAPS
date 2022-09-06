@@ -14,7 +14,7 @@
 "Device" = "устройство";
 
 /* The title of the devices table section in RileyLink settings */
-"Devices" = "устройства";
+"Devices" = "Устройства";
 
 /* The disconnected state */
 "Disconnected" = "Разъединено";

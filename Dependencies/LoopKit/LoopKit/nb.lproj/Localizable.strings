@@ -83,7 +83,7 @@
 "U" = "E";
 
 /* The short unit display string for international units of insulin per hour */
-"U/hr" = "E/hr";
+"U/hr" = "E/t";
 
 /* The long unit display string for a singular international unit of insulin */
 "Unit" = "Enhet";

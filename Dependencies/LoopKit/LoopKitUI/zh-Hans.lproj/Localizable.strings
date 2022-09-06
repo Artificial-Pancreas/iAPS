@@ -15,7 +15,7 @@
 "%1$@ %2$@" = "%1$@ %2$@";
 
 /* Accessibility format string for (1: localized volume)(2: time) */
-"%1$@ units remaining at %2$@" = "%1$@ 单位剩余在 %2$@";
+"%1$@ units remaining at %2$@" = "在%2$@还剩余%1$@";
 
 /* Title of the carb entry absorption time cell */
 "Absorption Time" = "吸收时间";
@@ -147,7 +147,7 @@
 "More Info" = "更多信息";
 
 /* The text for the override preset name setting */
-"Name" = "名称";
+"Name" = "设备名称";
 
 /* The title for the new override preset entry screen */
 "New Preset" = "新配置";
@@ -188,7 +188,7 @@
 
 /* Button text for saving glucose correction range schedule
    Button text for saving insulin sensitivity schedule */
-"Save" = "保存";
+"Save" = "保存​​";
 
 /* The section header text for a scheduled override */
 "SCHEDULED OVERRIDE" = "计划覆盖";

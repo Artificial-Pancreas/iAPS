@@ -693,7 +693,7 @@ Enact a temp Basal or a temp target */
 "Advanced" = "高级选项";
 
 /* */
-"Alarms" = "报警";
+"Alarms" = "提醒";
 
 /* */
 "Glucose Settings" = "血糖设置";
@@ -948,7 +948,23 @@ Enact a temp Basal or a temp target */
 
 /* */
 "After you create glucose records in the Health app, please open FreeAPS X to help us guaranteed transfer changed data" = "在您在 Health App中创建血糖记录后，请打开 FreeAPS X，以帮助我们保证传输数据已更改";
-/* --------------------------------------------
+
+/* ---------------------------------------
+ DASH strings
+*/
+/* DASH string */
+
+"Attach Pod" = "Attach Pod";
+
+/* DASH string */
+"Deactivate Pod" = "解除Pod";
+
+/* DASH string */
+"Pair Pod" = "Pair Pod";
+
+/* --------------------------------------
+
+ --------------------------------------------
 
 
   Infotexts from openaps.docs and androidaps.docs

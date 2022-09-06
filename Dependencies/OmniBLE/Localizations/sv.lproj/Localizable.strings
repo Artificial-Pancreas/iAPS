@@ -1,11 +1,10 @@
-/* 
+/*
   Localizable.strings
   OmniBLE
   Created by Jon Mårtensson on 2022-08-28.
   Copyright © 2022 Randall Knutson. All rights reserved.
 */
-
- /* Alert content title for multiCommand pod alert */
+/* Alert content title for multiCommand pod alert */
 
 "Multiple Command Alert" = "Multipla kommandoaviseringar";
 
@@ -95,6 +94,18 @@
 
 /* Settings page link description when next lifecycle action is to pair new pod */
 "Pair Pod" = "Parkoppla podd";
+
+/* Pairing action button accessibility label while ready to pair */
+"Pair pod." = "Parkoppla podd.";
+
+/* Pairing action button accessibility label while pairing */
+"Pairing." = "Parkopplar.";
+
+/* Pairing action button accessibility label while priming */
+"Priming. Please wait." = "Fyller podd. Vänligen vänta.";
+
+/* Pairing action button accessibility label when pairing succeeded */
+"Pod paired successfully. Continue." = "Podd har parkopplats. Fortsätt.";
 
 /* Settings page link description when next lifecycle action is to finish deactivation */
 "Finish deactivation" = "Avsluta inaktivering";
@@ -473,7 +484,7 @@
 /* Label text indicating insertion finished. */
 "Inserted" = "Kanyl har förts in";
 
-/* */
+/* Check Cannula */
 "Check Cannula" = "Kontrollera kanylen";
 
 /* */
@@ -482,10 +493,10 @@
 /* Description of proper cannula insertion */
 "The window on the top of the Pod should be colored pink when the cannula is properly inserted into the skin." = "Det lilla fönstret på podden färgas rosa när kanylen är ordentligt insatt i huden.";
 
-/* Button label for user to answer cannula was properly inserted */
+/* Button label for user to answer cannula was properly inserted  */
 "Yes" = "Ja";
 
-/* Button label for user to answer cannula was not properly inserted" */
+/* Button label for user to answer cannula was not properly inserted */
 "No" = "Nej";
 
 /* Pod pairing action button text while pairing */
@@ -511,3 +522,21 @@
 
 /* Value text for no expiration reminder */
 "No Reminder" = "Ingen påminnelse";
+
+/* Error message description for PeripheralManagerError.notReady */
+"Peripheral Not Ready" = "Perifer enhet inte redo";
+
+/* Error message description for PeripheralManagerError.incorrectResponse */
+"Incorrect Response" = "Felaktigt svar";
+
+/* Error message description for PeripheralManagerError.timeout */
+"Timeout" = "Timeout";
+
+/* Error message description for PeripheralManagerError.emptyValue */
+"Empty Value" = "Tomt värde";
+
+/* Error message description for PeripheralManagerError.unknownCharacteristic */
+"Unknown Characteristic" = "Okänd karaktäristik";
+
+/* Error message description for PeripheralManagerError.nack */
+"Nack" = "NACK";
