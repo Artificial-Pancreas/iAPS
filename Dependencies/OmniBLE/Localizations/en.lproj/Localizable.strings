@@ -474,7 +474,7 @@
 /* Label text indicating insertion finished. */
 "Inserted" = "Inserted";
 
-/* */
+/* Check Cannula */
 "Check Cannula" = "Check Cannula";
 
 /* */
@@ -483,10 +483,10 @@
 /* Description of proper cannula insertion */
 "The window on the top of the Pod should be colored pink when the cannula is properly inserted into the skin." = "The window on the top of the Pod should be colored pink when the cannula is properly inserted into the skin.";
 
-/* Button label for user to answer cannula was properly inserted */
+/* Button label for user to answer cannula was properly inserted  */
 "Yes" = "Yes";
 
-/* Button label for user to answer cannula was not properly inserted" */
+/* Button label for user to answer cannula was not properly inserted */
 "No" = "No";
 
 /* Pod pairing action button text while pairing */
