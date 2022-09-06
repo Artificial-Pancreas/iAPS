@@ -309,19 +309,19 @@ Enact a temp Basal or a temp target */
 "Pump Settings" = "Pump Settings";
 
 /* Insulin unit per hour */
-"U/hr" = "U/hr";
+"U/hr" = "E/t";
 
 /* Unit in number of units delivered (keep the space character!) */
-" U" = " U";
+" U" = " E";
 
 /* /Insulin unit */
-"/U" = "/U";
+"/U" = "/E";
 
 /* Insulin unit */
 "U" = "U";
 
 /* Unit per hour with space */
-" U/hr" = " U/hr";
+" U/hr" = " E/t";
 
 /* Number of units per hour*/
 "%@ U/hr" = "%@ U/hr";
@@ -330,7 +330,7 @@ Enact a temp Basal or a temp target */
 "%@ U" = "%@ U";
 
 /*Carb ratio unit */
-"g/U" = "g/U";
+"g/U" = "g/E";
 
 /* grams */
 " g" = " g";
