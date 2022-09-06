@@ -958,7 +958,7 @@ Enact a temp Basal or a temp target */
  "Warning" = "Varning";
 
  /* Error title */
- "Error" = "Fel";
+ "Error" = "Error";
 
 /* ---------------------------------------
   DASH strings
