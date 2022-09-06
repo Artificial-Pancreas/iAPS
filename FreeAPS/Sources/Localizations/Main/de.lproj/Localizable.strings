@@ -134,7 +134,7 @@
 "for" = "für";
 
 /*  Temp target set for ... minutes */
-"min" = "min";
+"min" = "minimal";
 
 /*  */
 "Autotune" = "Autotune";
@@ -948,7 +948,23 @@ Enact a temp Basal or a temp target */
 
 /* */
 "After you create glucose records in the Health app, please open FreeAPS X to help us guaranteed transfer changed data" = "Nachdem Sie Glukosedatensätze in der Health App erstellt oder gelöscht haben, öffnen Sie bitte FreeAPS X, um die Übertragung der geänderten Daten sicher zu gewährleisten";
-/* --------------------------------------------
+
+/* ---------------------------------------
+ DASH strings
+*/
+/* DASH string */
+
+"Attach Pod" = "Attach Pod";
+
+/* DASH string */
+"Deactivate Pod" = "Pod deaktivieren";
+
+/* DASH string */
+"Pair Pod" = "Pair Pod";
+
+/* --------------------------------------
+
+ --------------------------------------------
 
 
   Infotexts from openaps.docs and androidaps.docs

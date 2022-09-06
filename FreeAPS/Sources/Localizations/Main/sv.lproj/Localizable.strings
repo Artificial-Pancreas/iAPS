@@ -948,7 +948,23 @@ Enact a temp Basal or a temp target */
 
 /* */
 "After you create glucose records in the Health app, please open FreeAPS X to help us guaranteed transfer changed data" = "Efter att du lagt till glukos i appen 'Hälsa', öppna FreeAPS X för att bekräfta att överföring skett på rätt sätt";
-/* --------------------------------------------
+
+/* ---------------------------------------
+ DASH strings
+*/
+/* DASH string */
+
+"Attach Pod" = "Fäst podden";
+
+/* DASH string */
+"Deactivate Pod" = "Inaktivera podd";
+
+/* DASH string */
+"Pair Pod" = "Parkoppla podd";
+
+/* --------------------------------------
+
+ --------------------------------------------
 
 
   Infotexts from openaps.docs and androidaps.docs
