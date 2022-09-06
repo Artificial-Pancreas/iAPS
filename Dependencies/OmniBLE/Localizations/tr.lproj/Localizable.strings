@@ -66,7 +66,7 @@
 "Unfinished Activation" = "Bitmemiş Etkinleştirme";
 
 /* Label for pod life state when time remaining */
-"Pod expires in" = "Pod'un süresi şu tarihte doluyor";
+"Pod expires in" = "Pod şu sürede doluyor";
 
 /* */
 "Pod Expires" = "Pod'un Süresi Sona Eriyor";
@@ -162,7 +162,7 @@
 "Unfinished Activation" = "Bitmemiş Etkinleştirme";
 
 /* Label for pod life state when time remaining */
-"Pod expires in" = "Pod'un süresi şu tarihte doluyor";
+"Pod expires in" = "Pod şu sürede doluyor";
 
 /* Label for pod life state when within pod expiration window */
 "Pod expired" = "Pod süreci doldu";
