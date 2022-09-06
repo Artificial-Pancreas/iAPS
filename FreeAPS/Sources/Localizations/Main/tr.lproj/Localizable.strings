@@ -949,23 +949,26 @@ Enact a temp Basal or a temp target */
 /* */
 "After you create glucose records in the Health app, please open FreeAPS X to help us guaranteed transfer changed data" = "Sağlık uygulamasında glikoz kayıtları oluşturduktan sonra, değiştirilen verileri aktarmayı garanti etmemize yardımcı olmak için lütfen FreeAPS X'i açın";
 
-/* ---------------------------------------
- DASH strings
-*/
-/* DASH string */
+/* New ALerts ------------------------- */
+/* Info title */
+"Info" = "Bilgi";
 
+/* Warning title */
+"Warning" = "Varning";
+
+/* Error title */
+"Error" = "Hata";
+
+/* ---------------------------------------
+  DASH strings
+*/
 "Attach Pod" = "Pod'u Ekleyin";
 
-/* DASH string */
 "Deactivate Pod" = "Pod'u devredışı bırak";
 
-/* DASH string */
 "Pair Pod" = "Pod Eşleştir";
 
 /* --------------------------------------
-
- --------------------------------------------
-
 
   Infotexts from openaps.docs and androidaps.docs
   FreeAPS X

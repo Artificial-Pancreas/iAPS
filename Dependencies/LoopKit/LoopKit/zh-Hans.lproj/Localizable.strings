@@ -65,7 +65,7 @@
 "No values found" = "未发现数据";
 
 /* Sensor state description for the valid state */
-"OK" = "OK";
+"OK" = "Ok";
 
 /* The error recovery suggestion when Health sharing was denied */
 "Please re-enable sharing in Health" = "请先在Health Kit中允许Loop读写数据";
@@ -96,4 +96,3 @@
 
 /* The long unit display string for international units of insulin per hour */
 "Units/hour" = "单位/小时";
-

@@ -1,5 +1,5 @@
 /* Accessibility format string for (1: localized volume)(2: time) */
-"%1$@ units remaining at %2$@" = "%1$@ eenheden aanwezig op %2$@";
+"%1$@ units remaining at %2$@" = "%1$@ eenheden aanwezig om %2$@";
 
 /* The format string for displaying an offset from a time zone: (1: GMT)(2: -)(3: 4:00) */
 "%1$@%2$@%3$@" = "%1$@%2$@%3$@";
@@ -34,9 +34,6 @@
 
 /* The title of the cell showing the pod activated at time */
 "Active Time" = "Activatie tijd";
-
-/* The title of the cell showing the Pod Active Clock */
-"Pod Active Clock" = "Pod actieve klok";
 
 /* The title of the cell showing alarm status */
 "Alarms" = "Alarmen";
@@ -91,7 +88,7 @@
 "Device Information" = "Apparaat informatie";
 
 /* Title text for button to disable bolus beeps */
-"Disable Bolus Beeps" = "Stop gebruik Bolus Piepjes";
+"Disable Bolus Beeps" = "Bolus piepjes uitschakelen";
 
 /* Title text for button to enable bolus beeps */
 "Enable Bolus Beeps" = "Pas Bolus Piepjes gebruik toe";
@@ -232,4 +229,3 @@
 
 /* The detail text for delivered insulin when no measurement is available */
 "Unknown" = "Onbekend";
-

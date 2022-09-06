@@ -950,7 +950,6 @@ Enact a temp Basal or a temp target */
 "After you create glucose records in the Health app, please open FreeAPS X to help us guaranteed transfer changed data" = "Efter att du lagt till glukos i appen 'Hälsa', öppna FreeAPS X för att bekräfta att överföring skett på rätt sätt";
 
 /* New ALerts ------------------------- */
-
 /* Info title */
 "Info" = "Info";
 
@@ -958,23 +957,22 @@ Enact a temp Basal or a temp target */
 "Warning" = "Warning";
 
 /* Error title */
-"Error" = "Error";
+"Error" = "Fel";
 
 /* ---------------------------------------
   DASH strings
 */
-
 "Attach Pod" = "Fäst podden";
 
 "Deactivate Pod" = "Inaktivera podd";
 
 "Pair Pod" = "Parkoppla podd";
 
-/* --------------------------------------------
-   Infotexts from openaps.docs and androidaps.docs
+/* --------------------------------------
+
+  Infotexts from openaps.docs and androidaps.docs
   FreeAPS X
 */
-
 /* ”Rewind Resets Autosens” */
 
 "This feature, enabled by default, resets the autosens ratio to neutral when you rewind your pump, on the assumption that this corresponds to a probable site change. Autosens will begin learning sensitivity anew from the time of the rewind, which may take up to 6 hours. If you usually rewind your pump independently of site changes, you may want to consider disabling this feature." = "Denna funktion, på som standard, återställer 'Autosens' kvot till neutralt läge vid reservoarbyten, då det antas att du vid detta tillfälle även byter infusionskanyl. 'Autosens' kommer nu börja lära sig din insulinkänslighet på nytt, vilket kan ta upp till 6 timmar. Om du vanligtvis gör reservoarbyten oberoende av kanylbyten, kanske du ska överväga att inaktivera denna funktion.";

@@ -160,7 +160,7 @@
 "Play Test Beeps" = "Tocar Pitidos de Prueba";
 
 /* Progress message for play test beeps. */
-"Playing Test Beeps…" = "Tocado Pitidos de Prueba...";
+"Play Test Beeps…" = "Play Test Beeps…";
 
 /* The title of the cell showing the pod pm version */
 "PM Version" = "Versión de PM";

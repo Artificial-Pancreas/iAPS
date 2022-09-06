@@ -213,13 +213,13 @@
 "Finish Pairing" = "Eşleştirmeyi Bitir";
 
 /* Status highlight that when pod is deactivating */
-"Finish Deactivation" = "Devre Dışı Bırakmayı, Bitir";
+"Finish Deactivation" = "Devre dışı bırakma işlemini tamamla";
 
 /* Status highlight that when no pod is paired. */
 "No Pod" = "Pod Yok";
 
 /* Status highlight message for emptyReservoir alarm. */
-"No Insulin" = "İnsülin Bulunmuyor";
+"No Insulin" = "İnsülin Yok";
 
 /* Status highlight message for podExpired alarm. */
 "Pod Expired" = "Pod Süreci Doldu";
@@ -231,7 +231,7 @@
 "Pod Error" = "Pod hatası";
 
 /* Status highlight that a pump is out of insulin. */
-"No Insulin" = "İnsülin Bulunmuyor";
+"No Insulin" = "İnsülin Yok";
 
 /* Status highlight that insulin delivery was suspended. */
 "Insulin Suspended" = "İnsülin Durduldu";
@@ -427,7 +427,7 @@
 "Change Pod now. Insulin delivery will stop 8 hours after the Pod has expired or when no more insulin remains." = "Pod'u şimdi değiştirin. İnsülin iletimi, Pod'un süresi dolduktan 8 saat sonra veya daha fazla insülin kalmadığında duracaktır.";
 
 /* Label text for step 1 of pair pod instructions */
-"Fill a new pod with U-100 Insulin (leave blue Pod needle cap on)." = "Yeni bir Pod'u U-100 İnsülin ile doldurun (mavi Pod iğne kapağı üzerinde kalsın).";
+"Fill a new pod with U-100 Insulin (leave blue Pod needle cap on)." = "Yeni bir Pod'u 100 Ü İnsülin ile doldurun (mavi iğne kapağı Pod üzerinde kalsın).";
 
 /* Label text for step 2 of pair pod instructions */
 "Listen for 2 beeps." = "2 bip sesini dinleyin.";

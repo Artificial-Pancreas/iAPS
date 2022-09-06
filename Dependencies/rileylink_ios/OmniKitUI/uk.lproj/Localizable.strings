@@ -35,9 +35,6 @@
 /* The title of the cell showing the pod activated at time */
 "Active Time" = "Активний час";
 
-/* The title of the cell showing the Pod Active Clock */
-"Pod Active Clock" = "Активний POD годин";
-
 /* The title of the cell showing alarm status */
 "Alarms" = "Тривога";
 
@@ -71,9 +68,6 @@
 /* The title of the configuration section in settings */
 "Configuration" = "Налаштування";
 
-/* The title of the Insulin Type */
-"Insulin Type" = "Тип інсуліну";
-
 /* The title of the continue action in an action sheet */
 "Continue" = "Продовжити";
 
@@ -104,18 +98,6 @@
 
 /* The alert title for enable bolus beeps error */
 "Error enabling bolus beeps" = "Помилка увімкнення bolus біп";
-
-/* The alert title for enable Confirmation Beeps */
-"Enable Confirmation Beeps" = "Увімкнути Біп підтвердження";
-
-/* The alert title for Disable Confirmation Beep */
-"Disable Confirmation Beeps" = "Вимкнути Біп підтвердження";
-
-/* The alert title for enable Automatic Bolus Beeps */
-"Enable Automatic Bolus Beeps" = "Увімкнути автоматичні звуки для болюсу";
-
-/* The alert title for Disable Automatic Bolus Beeps */
-"Disable Automatic Bolus Beeps" = "Вимкнути авт звуки для болюсу";
 
 /* The alert title for a resume error */
 "Error Resuming" = "Помилка при відновленні";
@@ -247,15 +229,3 @@
 
 /* The detail text for delivered insulin when no measurement is available */
 "Unknown" = "Невідомий";
-
-/* The title of the diagnostics section in settings */
-"Diagnostics" = "Діагностика";
-
-/* The diagnostic command Read Pod Status */
-"Read Pod Status" = "Читати статус POD";
-
-/* The diagnostic command Read Pulse Log */
-"Read Pulse Log" = "Читати журнал подій";
-
-/* The title of the pod details section in settings */
-"Pod Details" = "Деталі POD";

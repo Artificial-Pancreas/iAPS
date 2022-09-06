@@ -175,7 +175,7 @@
 "Primed" = "Заполнено";
 
 /* The text of the loading label when priming */
-"Priming…" = "";
+"Priming…" = "Заполнение…";
 
 /* Label describing time remaining view */
 "Remaining" = "Заполняется";

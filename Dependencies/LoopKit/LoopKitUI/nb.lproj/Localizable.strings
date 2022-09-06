@@ -1,21 +1,21 @@
-/* Appends a full-stop to a statement */
-"%@." = "%@.";
-
-/* The format for an insulin needs percentage. */
-"%@%% of normal insulin" = "%@%% av normalt insulin";
-
-/* Format string for reservoir volume. (1: The localized volume) */
-"%@U" = "%@E";
-
-/* The format for a glucose target range. (1: min target)(2: max target)(3: glucose unit) */
-"%1$@ – %2$@ %3$@" = "%1$@ – %2$@ %3$@";
-
 /* The format for an override preset cell. (1: symbol)(2: name)
    The format for an override symbol and name (1: symbol)(2: name) */
 "%1$@ %2$@" = "%1$@ %2$@";
 
 /* Accessibility format string for (1: localized volume)(2: time) */
 "%1$@ units remaining at %2$@" = "%1$@ enheter gjennstår klokken %2$@";
+
+/* The format for a glucose target range. (1: min target)(2: max target)(3: glucose unit) */
+"%1$@ – %2$@ %3$@" = "%1$@ – %2$@ %3$@";
+
+/* The format for an insulin needs percentage. */
+"%@%% of normal insulin" = "%@%% av normalt insulin";
+
+/* Appends a full-stop to a statement */
+"%@." = "%@.";
+
+/* Format string for reservoir volume. (1: The localized volume) */
+"%@U" = "%@E";
 
 /* Title of the carb entry absorption time cell */
 "Absorption Time" = "Absorbsjonstid";
@@ -129,7 +129,7 @@
 "Insulin sensitivity describes how your blood glucose should respond to a 1 Unit dose of insulin. Smaller values mean more insulin will be given when above target. Values that are too small can cause dangerously low blood glucose." = "Insulinfølsomhet beskriver hvordan blodsukkeret responderer på 1 enhet insulin. Mindre verdier betyr at mer insulin vil bli gitt når man er over målområdet. Verdier som er for små kan føre til farlig lavt blodsukker. ";
 
 /* Placeholder for maximum value in glucose range */
-"max" = "max";
+"max" = "maks";
 
 /* The title text for the maximum basal rate value */
 "Maximum Basal Rate" = "Maks basalgrense";
@@ -138,7 +138,7 @@
 "Maximum Bolus" = "Maks bolus";
 
 /* Section title for medium absorbing food */
-"Medium" = "Medium";
+"Medium" = "Middels";
 
 /* Placeholder for minimum value in glucose range */
 "min" = "min";
@@ -250,4 +250,3 @@
 
 /* Title for the workout override range */
 "Workout" = "Trening";
-

@@ -951,23 +951,26 @@ Połączono z Nightscout!";
 /* */
 "After you create glucose records in the Health app, please open FreeAPS X to help us guaranteed transfer changed data" = "After you create glucose records in the Health app, please open FreeAPS X to help us guaranteed transfer changed data";
 
-/* ---------------------------------------
- DASH strings
-*/
-/* DASH string */
+/* New ALerts ------------------------- */
+/* Info title */
+"Info" = "Info";
 
+/* Warning title */
+"Warning" = "Varning";
+
+/* Error title */
+"Error" = "Error";
+
+/* ---------------------------------------
+  DASH strings
+*/
 "Attach Pod" = "Attach Pod";
 
-/* DASH string */
 "Deactivate Pod" = "Dezaktywuj PODa";
 
-/* DASH string */
 "Pair Pod" = "Pair Pod";
 
 /* --------------------------------------
-
- --------------------------------------------
-
 
   Infotexts from openaps.docs and androidaps.docs
   FreeAPS X

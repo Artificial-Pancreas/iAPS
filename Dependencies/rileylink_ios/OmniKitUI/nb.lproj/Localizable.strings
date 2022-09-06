@@ -1,5 +1,5 @@
 /* Accessibility format string for (1: localized volume)(2: time) */
-"%1$@ units remaining at %2$@" = "%1$@ units remaining at %2$@";
+"%1$@ units remaining at %2$@" = "%1$@ enheter gjennstår klokken %2$@";
 
 /* The format string for displaying an offset from a time zone: (1: GMT)(2: -)(3: 4:00) */
 "%1$@%2$@%3$@" = "%1$@%2$@%3$@";
@@ -15,7 +15,7 @@
 "%@ U (Finished)" = "%@ E (Ferdig)";
 
 /* Format string for bolus progress. (1: The delivered amount) (2: The programmed amount) (3: the percent progress) */
-"%@ U of %@ U (%@)" = "%@ E av %@ E (%@)";
+"%@ U of %@ U (%@)" = "%1$@ E av %2$@ E (%3$@)";
 
 /* Format string for temp basal rate. (1: The localized amount) */
 "%@ U/hour" = "%@ E/time";
@@ -45,7 +45,7 @@
 "Are you sure you want to stop using Omnipod?" = "Er du sikker på at du vil slutte å bruke Omnipod?";
 
 /* The title text for the address assigned to the pod */
-"Assigned Address" = "Tildelt Adresse";
+"Assigned Address" = "Tildelt adresse";
 
 /* The title of the cell showing pod basal status */
 "Basal Delivery" = "Basalleveranse";
@@ -151,19 +151,19 @@
 "Pair New Pod" = "Koble sammen ny pod";
 
 /* The text of the loading label when pairing */
-"Pairing…" = "Kobler sammen...";
+"Pairing…" = "Kobler sammen…";
 
 /* The title of the cell showing the pod pi version */
-"PI Version" = "PI Versjon";
+"PI Version" = "PI-versjon";
 
 /* The title of the command to play test beeps */
 "Play Test Beeps" = "Spill test-toner";
 
 /* Progress message for play test beeps. */
-"Play Test Beeps…" = "Spill test-toner...";
+"Play Test Beeps…" = "Spill test-toner…";
 
 /* The title of the cell showing the pod pm version */
-"PM Version" = "PM Versjon";
+"PM Version" = "PM-versjon";
 
 /* Label describing pod age view */
 "Pod Age" = "Pod-alder";
@@ -175,7 +175,7 @@
 "Primed" = "Fyllt";
 
 /* The text of the loading label when priming */
-"Priming…" = "Fyller...";
+"Priming…" = "Fyller…";
 
 /* Label describing time remaining view */
 "Remaining" = "Gjenstående";
@@ -219,7 +219,7 @@
 "Test Command" = "Test kommando";
 
 /* Progress message for testing commands. */
-"Testing Commands…" = "Tester kommandoer...";
+"Testing Commands…" = "Tester kommandoer…";
 
 /* The error message shown when Loop's basal schedule has more entries than the pod can support */
 "Too many entries" = "For mange oppføringer";
@@ -229,4 +229,3 @@
 
 /* The detail text for delivered insulin when no measurement is available */
 "Unknown" = "Ukjent";
-

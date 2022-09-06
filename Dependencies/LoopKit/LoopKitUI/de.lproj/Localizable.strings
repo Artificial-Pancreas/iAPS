@@ -1,21 +1,21 @@
-/* Appends a full-stop to a statement */
-"%@." = "%@.";
-
-/* The format for an insulin needs percentage. */
-"%@%% of normal insulin" = "%@%% von normalem Insulin";
-
-/* Format string for reservoir volume. (1: The localized volume) */
-"%@U" = "%@IE";
-
-/* The format for a glucose target range. (1: min target)(2: max target)(3: glucose unit) */
-"%1$@ – %2$@ %3$@" = "%1$@ – %2$@ %3$@";
-
 /* The format for an override preset cell. (1: symbol)(2: name)
    The format for an override symbol and name (1: symbol)(2: name) */
 "%1$@ %2$@" = "%1$@ %2$@";
 
 /* Accessibility format string for (1: localized volume)(2: time) */
 "%1$@ units remaining at %2$@" = "%1$@ Einheiten verbleiben bei %2$@";
+
+/* The format for a glucose target range. (1: min target)(2: max target)(3: glucose unit) */
+"%1$@ – %2$@ %3$@" = "%1$@ – %2$@ %3$@";
+
+/* The format for an insulin needs percentage. */
+"%@%% of normal insulin" = "%@%% von normalem Insulin";
+
+/* Appends a full-stop to a statement */
+"%@." = "%@.";
+
+/* Format string for reservoir volume. (1: The localized volume) */
+"%@U" = "%@IE";
 
 /* Title of the carb entry absorption time cell */
 "Absorption Time" = "Absorbtionszeit";
@@ -65,14 +65,20 @@
 /* Carb entry section footer text explaining absorption time */
 "Choose a longer absorption time for larger meals, or those containing fats and proteins. This is only guidance to the algorithm and need not be exact." = "Wähle eine längere absorbtionszeit für größere Mahlzeiten, oder welche viel Fett und Proteine beinhalten. Dies ist eine Unterstützung für den Algorithmus und muss nicht genau sein.";
 
+/* The format string describing the date of a COB value. The first format argument is the localized date. */
+"com.loudnate.CarbKit.COBDateLabel" = "bei %1$@";
+
+/* The format string describing the starting date of a total value. The first format argument is the localized date. */
+"com.loudnate.CarbKit.totalDateLabel" = "seit %1$@";
+
 /* The format string describing the date of an IOB value. The first format argument is the localized date. */
-"com.loudnate.InsulinKit.IOBDateLabel" = "um %1$@";
+"com.loudnate.InsulinKit.IOBDateLabel" = "bei %1$@";
 
 /* The format string describing the starting date of a total value. The first format argument is the localized date. */
 "com.loudnate.InsulinKit.totalDateLabel" = "seit %1$@";
 
 /* The title of the action used to dismiss an error alert */
-"com.loudnate.LoopKit.errorAlertActionTitle" = "OK";
+"com.loudnate.LoopKit.errorAlertActionTitle" = "Ok";
 
 /* The title for the override emoji condition section */
 "Condition" = "Bedingung";
@@ -110,8 +116,6 @@
 /* The detail text describing an enabled setting */
 "Enabled" = "Aktiviert";
 
-"Enable" = "Aktivieren";
-
 /* The placeholder text instructing users how to enter a maximum bolus */
 "Enter a number of units" = "Eingabe der Einheiten";
 
@@ -125,7 +129,7 @@
 "Insulin sensitivity describes how your blood glucose should respond to a 1 Unit dose of insulin. Smaller values mean more insulin will be given when above target. Values that are too small can cause dangerously low blood glucose." = "Die Insulinempfindlichkeit beschreibt, wie Ihr Blutzucker auf die Insulindosis von 1 Einheit reagiert. Kleinere Werte bedeuten, dass mehr Insulin verabreicht wird, wenn der BZ über dem Ziel liegt. Zu kleine Werte können gefährlich niedrige Blutzuckerwerte verursachen.";
 
 /* Placeholder for maximum value in glucose range */
-"max" = "max";
+"max" = "max.";
 
 /* The title text for the maximum basal rate value */
 "Maximum Basal Rate" = "Maximale Basalrate";
@@ -137,7 +141,7 @@
 "Medium" = "Mittlere";
 
 /* Placeholder for minimum value in glucose range */
-"min" = "min";
+"min" = "minimal";
 
 /* Alert action title to open error help */
 "More Info" = "Weitere Info";
@@ -162,7 +166,7 @@
 "Override presets can be set up under the 'Configuration' section of the settings screen." = "Voreinstellungen der Overrides können im Abschnitt Konfiguration des Einstellungsbildschirms eingerichtet werden.";
 
 /* The section title of glucose overrides */
-"Overrides" = "Overrides";
+"Overrides" = "Zeitliche Anpassungen";
 
 /* Title for the pre-meal override range */
 "Pre-Meal" = "Vor dem Essen";
@@ -246,17 +250,3 @@
 
 /* Title for the workout override range */
 "Workout" = "Training";
-
-/* The title for the custom preset selection screen */
-"Custom Preset" = "Voreinstellung";
-
-/* The text for the override history duration */
-"Active Duration" = "Dauer";
-
-/* The text for the override start time */
-"End Time" = "Endzeit";
-
-/* Title for override history view */
-"Override History" = "Verlauf";
-
-"History" = "Verlauf";

@@ -35,9 +35,6 @@
 /* The title of the cell showing the pod activated at time */
 "Active Time" = "Heure d’activation";
 
-/* The title of the cell showing the Pod Active Clock */
-"Pod Active Clock" = "Horloge active Pod";
-
 /* The title of the cell showing alarm status */
 "Alarms" = "Alarmes";
 
@@ -71,9 +68,6 @@
 /* The title of the configuration section in settings */
 "Configuration" = "Configuration";
 
-/* The title of the Insulin Type */
-"Insulin Type" = "Type d'Insuline";
-
 /* The title of the continue action in an action sheet */
 "Continue" = "Continuer";
 
@@ -104,18 +98,6 @@
 
 /* The alert title for enable bolus beeps error */
 "Error enabling bolus beeps" = "Erreur lors de l’activation des bips de bolus";
-
-/* The alert title for enable Confirmation Beeps */
-"Enable Confirmation Beeps" = "Activer les bips de confirmation";
-
-/* The alert title for Disable Confirmation Beep */
-"Disable Confirmation Beeps" = "Désactiver les bips de confirmation";
-
-/* The alert title for enable Automatic Bolus Beeps */
-"Enable Automatic Bolus Beeps" = "Activer les bips de Bolus automatiques";
-
-/* The alert title for Disable Automatic Bolus Beeps */
-"Disable Automatic Bolus Beeps" = "Désactiver les bips de bolus automatiques";
 
 /* The alert title for a resume error */
 "Error Resuming" = "Erreur lors de la reprise";
@@ -184,7 +166,7 @@
 "PM Version" = "Version PM";
 
 /* Label describing pod age view */
-"Pod Age" = " âge pod";
+"Pod Age" = "Âge du pod";
 
 /* Title of the pod settings view controller */
 "Pod Settings" = "Réglages du pod";
@@ -247,15 +229,3 @@
 
 /* The detail text for delivered insulin when no measurement is available */
 "Unknown" = "Inconnu";
-
-/* The title of the diagnostics section in settings */
-"Diagnostics" = "Diagnostic";
-
-/* The diagnostic command Read Pod Status */
-"Read Pod Status" = "Lire l’état de la pompe";
-
-/* The diagnostic command Read Pulse Log */
-"Read Pulse Log" = "Lecture journal d'impulsion";
-
-/* The title of the pod details section in settings */
-"Pod Details" = "Détails du Pod";
