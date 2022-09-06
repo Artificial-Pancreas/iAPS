@@ -1,4 +1,4 @@
-/* 
+/*
   Localizable.strings
   OmniBLE
   Created by Jon Mårtensson on 2022-08-28.
@@ -94,6 +94,18 @@
 
 /* Settings page link description when next lifecycle action is to pair new pod */
 "Pair Pod" = "Pair Pod";
+
+/* Pairing action button accessibility label while ready to pair */
+"Pair pod." = "Pair pod.";
+
+/* Pairing action button accessibility label while pairing */
+"Pairing." = "Pairing.";
+
+/* Pairing action button accessibility label while priming */
+"Priming. Please wait." = "Priming. Please wait.";
+
+/* Pairing action button accessibility label when pairing succeeded */
+"Pod paired successfully. Continue." = "Pod paired successfully. Continue.";
 
 /* Settings page link description when next lifecycle action is to finish deactivation */
 "Finish deactivation" = "Finish deactivation";
@@ -512,3 +524,21 @@
 
 /* Value text for no expiration reminder */
 "No Reminder" = "No Reminder";
+
+/* Error message description for PeripheralManagerError.notReady */
+"Peripheral Not Ready" = "Peripheral Not Ready";
+
+/* Error message description for PeripheralManagerError.incorrectResponse */
+"Incorrect Response" = "Incorrect Response";
+
+/* Error message description for PeripheralManagerError.timeout */
+"Timeout" = "Timeout";
+
+/* Error message description for PeripheralManagerError.emptyValue */
+"Empty Value" = "Empty Value";
+
+/* Error message description for PeripheralManagerError.unknownCharacteristic */
+"Unknown Characteristic" = "Unknown Characteristic";
+
+/* Error message description for PeripheralManagerError.nack */
+"Nack" = "Nack";

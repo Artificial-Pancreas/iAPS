@@ -4,7 +4,8 @@
   Created by Jon Mårtensson on 2022-08-28.
   Copyright © 2022 Randall Knutson. All rights reserved.
 */
-/* Alert content title for multiCommand pod alert */
+
+ /* Alert content title for multiCommand pod alert */
 
 "Multiple Command Alert" = "Multipla kommandoaviseringar";
 
