@@ -3,7 +3,7 @@
 "%1$@ %2$@" = "%1$@ %2$@";
 
 /* Accessibility format string for (1: localized volume)(2: time) */
-"%1$@ units remaining at %2$@" = "%2$@'de %1$@ ünite kaldı";
+"%1$@ units remaining at %2$@" = "%1$@ ünite %2$@'de kaldı";
 
 /* The format for a glucose target range. (1: min target)(2: max target)(3: glucose unit) */
 "%1$@ – %2$@ %3$@" = "%1$@ – %2$@ %3$@";
@@ -236,7 +236,7 @@
 "U/hour" = "Ü/Sa";
 
 /* The unit string for units */
-"Units" = "Birimler";
+"Units" = "Ünite";
 
 /* Accessibility value for an unknown value
    The default title to use when an entry has none */

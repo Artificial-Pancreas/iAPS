@@ -213,10 +213,10 @@
 
 /* Title of button to save delivery limit settings
    Title of button to sync basal profile when no pod paired */
-"Save" = "Sichern";
+"Save" = "Speichern";
 
 /* The detail text of the basal row when pod is running scheduled basal */
-"Schedule" = "Voreingestellt";
+"Schedule" = "Zeitplan";
 
 /* The title of the status section in settings */
 "Status" = "Status";

@@ -216,7 +216,7 @@
 "Save" = "Kaydet";
 
 /* The detail text of the basal row when pod is running scheduled basal */
-"Schedule" = "Planlama";
+"Schedule" = "Zamanlama";
 
 /* The title of the status section in settings */
 "Status" = "Durum";

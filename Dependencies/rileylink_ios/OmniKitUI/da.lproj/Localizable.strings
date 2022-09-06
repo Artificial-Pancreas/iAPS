@@ -9,7 +9,7 @@
 
 /* Format string for delivered insulin. (1: The localized amount)
    Format string for insulin remaining in reservoir. (1: The localized amount) */
-"%@ U" = "%@ E";
+"%@ U" = "%@ U";
 
 /* Format string for bolus progress when finished. (1: The localized amount) */
 "%@ U (Finished)" = "%@ E (Færdig)";
@@ -60,7 +60,7 @@
 "Bolus Delivery" = "Bolus Indgivelse";
 
 /* The title of the cancel action in an action sheet */
-"Cancel" = "Annuller";
+"Cancel" = "Cancel";
 
 /* The title of the command to change pump time zone */
 "Change Time Zone" = "Skift Tidszone";
@@ -69,7 +69,7 @@
 "Changing time…" = "Skifter tiden…";
 
 /* The title of the configuration section in settings */
-"Configuration" = "Konfiguration";
+"Configuration" = "Configuration";
 
 /* The title of the Insulin Type */
 "Insulin Type" = "Insulin Type";
@@ -213,10 +213,10 @@
 
 /* Title of button to save delivery limit settings
    Title of button to sync basal profile when no pod paired */
-"Save" = "Gem";
+"Save" = "Save";
 
 /* The detail text of the basal row when pod is running scheduled basal */
-"Schedule" = "Tidsplan";
+"Schedule" = "Schedule";
 
 /* The title of the status section in settings */
 "Status" = "Status";

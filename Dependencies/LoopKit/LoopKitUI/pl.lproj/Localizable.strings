@@ -3,7 +3,7 @@
 "%1$@ %2$@" = "%1$@ %2$@";
 
 /* Accessibility format string for (1: localized volume)(2: time) */
-"%1$@ units remaining at %2$@" = "%1$@ jednostek pozostających w %2$@";
+"%1$@ units remaining at %2$@" = "%1$@ jednostek pozostaje w %2$@";
 
 /* The format for a glucose target range. (1: min target)(2: max target)(3: glucose unit) */
 "%1$@ – %2$@ %3$@" = "%1$@ – %2$@ %3$@";
@@ -90,7 +90,7 @@
 "Correction range is the blood glucose range that you would like Loop to correct to." = "Zakres korekty to zakres stężenia glukozy we krwi, względem którego chcesz skorygować algorytm Loop.";
 
 /* The text for a custom override */
-"Custom" = "Niestandardowe";
+"Custom" = "Dostosuj";
 
 /* The title for the custom override entry screen */
 "Custom Override" = "Pominięcie niestandardowe";
@@ -147,14 +147,14 @@
 "More Info" = "Więcej informacji";
 
 /* The text for the override preset name setting */
-"Name" = "Nazwa";
+"Name" = "Name";
 
 /* The title for the new override preset entry screen */
 "New Preset" = "Nowe ustawienie wstępne";
 
 /* Section title for no-carb food
    The title for override emoji miscellaneous section */
-"Other" = "Inne";
+"Other" = "Other";
 
 /* The title text for the insulin sensitivity scaling setting */
 "Overall Insulin Needs" = "Ogólne zapotrzebowanie na insulinę";
@@ -240,7 +240,7 @@
 
 /* Accessibility value for an unknown value
    The default title to use when an entry has none */
-"Unknown" = "Nieznany";
+"Unknown" = "Nieznana";
 
 /* Label indicating validation is occurring */
 "Verifying" = "Weryfikuję";

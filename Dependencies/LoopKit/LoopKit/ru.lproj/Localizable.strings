@@ -80,7 +80,7 @@
 "Rising very fast" = "Очень быстрое повышение";
 
 /* The short unit display string for international units of insulin */
-"U" = "ед";
+"U" = "Ед";
 
 /* The short unit display string for international units of insulin per hour */
 "U/hr" = "Ед/ч";

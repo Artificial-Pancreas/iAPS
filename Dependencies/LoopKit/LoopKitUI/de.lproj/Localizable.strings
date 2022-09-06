@@ -3,7 +3,7 @@
 "%1$@ %2$@" = "%1$@ %2$@";
 
 /* Accessibility format string for (1: localized volume)(2: time) */
-"%1$@ units remaining at %2$@" = "%1$@ Einheiten verbleiben um %2$@";
+"%1$@ units remaining at %2$@" = "%1$@ Einheiten verbleiben bei %2$@";
 
 /* The format for a glucose target range. (1: min target)(2: max target)(3: glucose unit) */
 "%1$@ – %2$@ %3$@" = "%1$@ – %2$@ %3$@";
@@ -84,13 +84,13 @@
 "Condition" = "Bedingung";
 
 /* Title of the setup button to continue */
-"Continue" = "Weiter";
+"Continue" = "Fortsetzen";
 
 /* The section footer of correction range schedule */
 "Correction range is the blood glucose range that you would like Loop to correct to." = "Der Korrekturbereich ist der Blutzuckerbereich, auf den Loop korrigieren soll.";
 
 /* The text for a custom override */
-"Custom" = "Benutzerdefiniert";
+"Custom" = "Benutzerdefiniertes";
 
 /* The title for the custom override entry screen */
 "Custom Override" = "Benutzerdefinierter Override";
@@ -154,7 +154,7 @@
 
 /* Section title for no-carb food
    The title for override emoji miscellaneous section */
-"Other" = "Andere";
+"Other" = "Sonstiges";
 
 /* The title text for the insulin sensitivity scaling setting */
 "Overall Insulin Needs" = "Gesamtinsulinbedarf";
@@ -188,7 +188,7 @@
 
 /* Button text for saving glucose correction range schedule
    Button text for saving insulin sensitivity schedule */
-"Save" = "Sichern";
+"Save" = "Speichern";
 
 /* The section header text for a scheduled override */
 "SCHEDULED OVERRIDE" = "GEPLANTER OVERRIDE";

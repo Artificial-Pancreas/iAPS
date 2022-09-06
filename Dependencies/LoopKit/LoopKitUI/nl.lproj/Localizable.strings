@@ -3,7 +3,7 @@
 "%1$@ %2$@" = "%1$@ %2$@";
 
 /* Accessibility format string for (1: localized volume)(2: time) */
-"%1$@ units remaining at %2$@" = "%1$@ nog actieve eenheden %2$@";
+"%1$@ units remaining at %2$@" = "%1$@ eenheden aanwezig om %2$@";
 
 /* The format for a glucose target range. (1: min target)(2: max target)(3: glucose unit) */
 "%1$@ – %2$@ %3$@" = "%1$@ – %2$@ %3$@";
@@ -84,7 +84,7 @@
 "Condition" = "Gesteldheid";
 
 /* Title of the setup button to continue */
-"Continue" = "Ga verder";
+"Continue" = "Vervolg";
 
 /* The section footer of correction range schedule */
 "Correction range is the blood glucose range that you would like Loop to correct to." = "Correctie bereik is het bereik dat je wilt dat Loop op aanstuurt.";
@@ -188,7 +188,7 @@
 
 /* Button text for saving glucose correction range schedule
    Button text for saving insulin sensitivity schedule */
-"Save" = "Sla op";
+"Save" = "Opslaan";
 
 /* The section header text for a scheduled override */
 "SCHEDULED OVERRIDE" = "GEPLAND TIJDELIJK PROGRAMMA";

@@ -14,7 +14,7 @@
 "Device" = "Cihaz";
 
 /* The title of the devices table section in RileyLink settings */
-"Devices" = "Cihazlar";
+"Devices" = "Aygıtlar";
 
 /* The disconnected state */
 "Disconnected" = "Bağlantı kesildi";
@@ -29,7 +29,7 @@
 "Frequency" = "Frekans";
 
 /* The title of the cell showing device name */
-"Name" = "Ad";
+"Name" = "İsim";
 
 /* RileyLink setup description */
 "RileyLink allows for communication with the pump over Bluetooth Low Energy." = "RileyLink, Bluetooth Low Energy üzerinden pompa ile iletişime izin verir.";

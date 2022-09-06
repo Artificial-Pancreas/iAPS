@@ -69,7 +69,7 @@
 "Changing time…" = "Alterando a hora...";
 
 /* The title of the configuration section in settings */
-"Configuration" = "Configuração";
+"Configuration" = "Ajustes";
 
 /* The title of the Insulin Type */
 "Insulin Type" = "Tipo de Insulina";
@@ -216,7 +216,7 @@
 "Save" = "Salvar";
 
 /* The detail text of the basal row when pod is running scheduled basal */
-"Schedule" = "Agendada";
+"Schedule" = "Agenda";
 
 /* The title of the status section in settings */
 "Status" = "Estado";

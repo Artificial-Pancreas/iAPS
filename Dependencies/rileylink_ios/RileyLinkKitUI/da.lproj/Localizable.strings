@@ -14,7 +14,7 @@
 "Device" = "Enhed";
 
 /* The title of the devices table section in RileyLink settings */
-"Devices" = "Enheder";
+"Devices" = "Devices";
 
 /* The disconnected state */
 "Disconnected" = "Frakoblet";
@@ -29,7 +29,7 @@
 "Frequency" = "Frekvens";
 
 /* The title of the cell showing device name */
-"Name" = "Navn";
+"Name" = "Name";
 
 /* RileyLink setup description */
 "RileyLink allows for communication with the pump over Bluetooth Low Energy." = "RileyLink tillader kommunikation med pumpen vha Bluetooth Lav Energi.";

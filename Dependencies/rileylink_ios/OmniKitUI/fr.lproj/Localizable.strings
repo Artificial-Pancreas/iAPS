@@ -216,7 +216,7 @@
 "Save" = "Sauvegarder";
 
 /* The detail text of the basal row when pod is running scheduled basal */
-"Schedule" = "Programmé";
+"Schedule" = "Programme";
 
 /* The title of the status section in settings */
 "Status" = "Statut";

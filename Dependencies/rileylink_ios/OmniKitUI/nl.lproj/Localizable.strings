@@ -69,7 +69,7 @@
 "Changing time…" = "Vervang tijd…";
 
 /* The title of the configuration section in settings */
-"Configuration" = "Configuratie";
+"Configuration" = "Instellingen";
 
 /* The title of the Insulin Type */
 "Insulin Type" = "Insuline soort";
@@ -213,10 +213,10 @@
 
 /* Title of button to save delivery limit settings
    Title of button to sync basal profile when no pod paired */
-"Save" = "Sla op";
+"Save" = "Opslaan";
 
 /* The detail text of the basal row when pod is running scheduled basal */
-"Schedule" = "Plan";
+"Schedule" = "Schema";
 
 /* The title of the status section in settings */
 "Status" = "Status";

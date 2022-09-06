@@ -9,7 +9,7 @@
 
 /* Format string for delivered insulin. (1: The localized amount)
    Format string for insulin remaining in reservoir. (1: The localized amount) */
-"%@ U" = "%@ J";
+"%@ U" = "%@ U";
 
 /* Format string for bolus progress when finished. (1: The localized amount) */
 "%@ U (Finished)" = "%@ U (Ukončené)";
@@ -60,7 +60,7 @@
 "Bolus Delivery" = "Podávanie Bolusu";
 
 /* The title of the cancel action in an action sheet */
-"Cancel" = "Zrušiť";
+"Cancel" = "Cancel";
 
 /* The title of the command to change pump time zone */
 "Change Time Zone" = "Zmeniť Časové Pásmo";
@@ -69,7 +69,7 @@
 "Changing time…" = "Mení sa čas…";
 
 /* The title of the configuration section in settings */
-"Configuration" = "Konfigurácia";
+"Configuration" = "Configuration";
 
 /* The title of the Insulin Type */
 "Insulin Type" = "Typ Inzulínu";

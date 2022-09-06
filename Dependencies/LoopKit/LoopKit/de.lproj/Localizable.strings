@@ -53,7 +53,7 @@
 "mg/dL/U" = "mg/dL/IE";
 
 /* The short unit display string for millimoles per liter */
-"mmol/L" = "mmol/l";
+"mmol/L" = "mmol/L";
 
 /* The short unit display string for millimoles per liter per U */
 "mmol/L/U" = "mmol/L/IE";
@@ -80,10 +80,10 @@
 "Rising very fast" = "Steigt sehr schnell";
 
 /* The short unit display string for international units of insulin */
-"U" = "IE";
+"U" = " IE";
 
 /* The short unit display string for international units of insulin per hour */
-"U/hr" = "IE/Std.";
+"U/hr" = "IE/Std";
 
 /* The long unit display string for a singular international unit of insulin */
 "Unit" = "Einheit";

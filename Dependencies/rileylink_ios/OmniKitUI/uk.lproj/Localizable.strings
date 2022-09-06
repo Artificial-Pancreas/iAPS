@@ -60,7 +60,7 @@
 "Bolus Delivery" = "Подача болюса";
 
 /* The title of the cancel action in an action sheet */
-"Cancel" = "Скасувати";
+"Cancel" = "Відмінити";
 
 /* The title of the command to change pump time zone */
 "Change Time Zone" = "Змінити часовий пояс";

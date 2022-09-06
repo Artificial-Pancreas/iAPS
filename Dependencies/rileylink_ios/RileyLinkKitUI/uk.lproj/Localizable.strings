@@ -29,7 +29,7 @@
 "Frequency" = "Частота";
 
 /* The title of the cell showing device name */
-"Name" = "Ім'я";
+"Name" = "Ім’я";
 
 /* RileyLink setup description */
 "RileyLink allows for communication with the pump over Bluetooth Low Energy." = "RileyLink дозволяє спілкуватися з помпою через BluetoothLow Energy.";
@@ -98,7 +98,7 @@
 "On" = "УВІМК.";
 
 /* Text indicating LED Mode is off */
-"Off" = "Off";
+"Off" = "ВИМК.";
 
 /* Text indicating LED Mode is auto */
 "Auto" = "Аuto";

@@ -60,7 +60,7 @@
 "Bolus Delivery" = "Somministrazione in bolo";
 
 /* The title of the cancel action in an action sheet */
-"Cancel" = "Annulla";
+"Cancel" = "Cancella";
 
 /* The title of the command to change pump time zone */
 "Change Time Zone" = "Cambia fuso orario";
@@ -69,7 +69,7 @@
 "Changing time…" = "Modifica ora in corso";
 
 /* The title of the configuration section in settings */
-"Configuration" = "Configurazione";
+"Configuration" = "Impostazioni";
 
 /* The title of the Insulin Type */
 "Insulin Type" = "Tipo di Insulina";
@@ -216,7 +216,7 @@
 "Save" = "Salva";
 
 /* The detail text of the basal row when pod is running scheduled basal */
-"Schedule" = "Programma";
+"Schedule" = "Programmazione";
 
 /* The title of the status section in settings */
 "Status" = "Stato";

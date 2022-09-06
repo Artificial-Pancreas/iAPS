@@ -14,7 +14,7 @@
 "Device" = "Dispositif";
 
 /* The title of the devices table section in RileyLink settings */
-"Devices" = "Dispositifs";
+"Devices" = "Appareils";
 
 /* The disconnected state */
 "Disconnected" = "Débranché";

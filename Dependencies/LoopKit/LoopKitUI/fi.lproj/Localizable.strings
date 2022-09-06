@@ -3,7 +3,7 @@
 "%1$@ %2$@" = "%1$@ %2$@";
 
 /* Accessibility format string for (1: localized volume)(2: time) */
-"%1$@ units remaining at %2$@" = "%1$@ yksikköä jäljellä klo %2$@";
+"%1$@ units remaining at %2$@" = "%1$@ yksikköä jäljellä %2$@";
 
 /* The format for a glucose target range. (1: min target)(2: max target)(3: glucose unit) */
 "%1$@ – %2$@ %3$@" = "%1$@ – %2$@ %3$@";
@@ -45,7 +45,7 @@
 "Basal, bolus, and correction insulin dose amounts are unaffected." = "Basaalin, boluksen ja korjaavan insuliiniannoksen määrät pysyvät ennallaan.";
 
 /* The title of the cancel action in an action sheet */
-"Cancel" = "Kumoa";
+"Cancel" = "Cancel";
 
 /* The text for the override cancellation button */
 "Cancel Override" = "Kumoa tilapäisasetus";
@@ -90,19 +90,19 @@
 "Correction range is the blood glucose range that you would like Loop to correct to." = "Korjausalue on glukoositavoitealue, johon haluat Loopin korjaavan.";
 
 /* The text for a custom override */
-"Custom" = "Mukautettu";
+"Custom" = "Custom";
 
 /* The title for the custom override entry screen */
 "Custom Override" = "Mukautettu tilapäisasetus";
 
 /* Title of the carb entry date picker cell */
-"Date" = "Aika";
+"Date" = "Date";
 
 /* Button title to delete all objects */
 "Delete All" = "Poista kaikki";
 
 /* The text for the override duration setting */
-"Duration" = "Kesto";
+"Duration" = "Duration";
 
 /* The title for the override editing screen */
 "Edit Override" = "Muokkaa tilapäisasetusta";
@@ -147,14 +147,14 @@
 "More Info" = "Lisätietoa";
 
 /* The text for the override preset name setting */
-"Name" = "Nimi";
+"Name" = "Name";
 
 /* The title for the new override preset entry screen */
 "New Preset" = "Uusi esiasetus";
 
 /* Section title for no-carb food
    The title for override emoji miscellaneous section */
-"Other" = "Muu";
+"Other" = "Other";
 
 /* The title text for the insulin sensitivity scaling setting */
 "Overall Insulin Needs" = "Kokonaisinsuliinitarve";
@@ -188,7 +188,7 @@
 
 /* Button text for saving glucose correction range schedule
    Button text for saving insulin sensitivity schedule */
-"Save" = "Tallenna";
+"Save" = "Save";
 
 /* The section header text for a scheduled override */
 "SCHEDULED OVERRIDE" = "AJASTETTU TILAPÄISASETUS";
