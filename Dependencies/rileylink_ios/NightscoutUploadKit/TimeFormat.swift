@@ -14,4 +14,8 @@ class TimeFormat: NSObject {
     static func timestampStrFromDate(_ date: Date) -> String {
         return formatterISO8601.string(from: date)
     }
+
+    static func dateFromTimestamp(_ string: String) -> Date? {
+        return formatterISO8601.date(from: string)
+    }
 }

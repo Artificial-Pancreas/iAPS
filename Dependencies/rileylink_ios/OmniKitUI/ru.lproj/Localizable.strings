@@ -35,9 +35,6 @@
 /* The title of the cell showing the pod activated at time */
 "Active Time" = "Активирован в";
 
-/* The title of the cell showing the Pod Active Clock */
-"Pod Active Clock" = "Активные часы Pod-а";
-
 /* The title of the cell showing alarm status */
 "Alarms" = "Оповещения";
 
@@ -71,9 +68,6 @@
 /* The title of the configuration section in settings */
 "Configuration" = "Конфигурация";
 
-/* The title of the Insulin Type */
-"Insulin Type" = "Тип инсулина";
-
 /* The title of the continue action in an action sheet */
 "Continue" = "Продолжить";
 
@@ -104,18 +98,6 @@
 
 /* The alert title for enable bolus beeps error */
 "Error enabling bolus beeps" = "Ошибка подключения звукового сигнала болюса";
-
-/* The alert title for enable Confirmation Beeps */
-"Enable Confirmation Beeps" = "Включить подтверждающие звуковые сигналы";
-
-/* The alert title for Disable Confirmation Beep */
-"Disable Confirmation Beeps" = "Включить подтверждающие звуковые сигналы";
-
-/* The alert title for enable Automatic Bolus Beeps */
-"Enable Automatic Bolus Beeps" = "Включить звуковые сигналы автоматического болюса";
-
-/* The alert title for Disable Automatic Bolus Beeps */
-"Disable Automatic Bolus Beeps" = "Выключить звуковые сигналы автоматического болюса";
 
 /* The alert title for a resume error */
 "Error Resuming" = "Ошибка возобновления";
@@ -193,7 +175,7 @@
 "Primed" = "Заполнено";
 
 /* The text of the loading label when priming */
-"Priming…" = "Заполнение…";
+"Priming…" = "";
 
 /* Label describing time remaining view */
 "Remaining" = "Заполняется";
@@ -247,15 +229,3 @@
 
 /* The detail text for delivered insulin when no measurement is available */
 "Unknown" = "Неизвестно";
-
-/* The title of the diagnostics section in settings */
-"Diagnostics" = "Диагностика";
-
-/* The diagnostic command Read Pod Status */
-"Read Pod Status" = "Прочитать статус помпы";
-
-/* The diagnostic command Read Pulse Log */
-"Read Pulse Log" = "Читать журнал сигналов";
-
-/* The title of the pod details section in settings */
-"Pod Details" = "Подробности пода";

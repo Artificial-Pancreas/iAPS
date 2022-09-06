@@ -78,10 +78,10 @@ extension PumpMessageSender {
     ///     - PumpOpsError.unknownResponse
     func getResponse<T: MessageBody>(to message: PumpMessage, responseType: MessageType = .pumpAck, repeatCount: Int = 0, timeout: TimeInterval = standardPumpResponseWindow, retryCount: Int = 3) throws -> T {
         
-        log.debug("getResponse(%{public}@, %d, %f, %d)", String(describing: message), repeatCount, timeout, retryCount)
+        log.debug("getResponse() Sending: %{public}@, %d, %f, %d)", String(describing: message), repeatCount, timeout, retryCount)
         
         let response = try sendAndListen(message, repeatCount: repeatCount, timeout: timeout, retryCount: retryCount)
-        
+
         guard response.messageType == responseType, let body = response.messageBody as? T else {
             if let body = response.messageBody as? PumpErrorMessageBody {
                 switch body.errorCode {
@@ -91,9 +91,11 @@ extension PumpMessageSender {
                     throw PumpOpsError.unknownPumpErrorCode(code)
                 }
             } else {
+                log.debug("getResponse() Received unexpected response: %{public}@", String(describing: response))
                 throw PumpOpsError.unexpectedResponse(response, from: message)
             }
         }
+        log.debug("getResponse() Received: %{public}@", String(describing: response))
         return body
     }
 

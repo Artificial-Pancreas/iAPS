@@ -228,7 +228,7 @@ final class Logger {
         os_log("%@ - %@ - %d %{public}@", log: log, type: .info, file.file, function, line, printedMessage)
         reporter.log(category.name, printedMessage, file: file, function: function, line: line)
 
-        showAlert(message)
+        showAlert(message, type: .info)
     }
 
     func warning(
@@ -264,9 +264,10 @@ final class Logger {
         )
     }
 
-    private func showAlert(_ message: String) {
+    private func showAlert(_ message: String, type: MessageType = .info) {
         DispatchQueue.main.async {
-            router.alertMessage.send(message)
+            let messageCont = MessageContent(content: message, type: type)
+            router.alertMessage.send(messageCont)
         }
     }
 

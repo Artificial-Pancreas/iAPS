@@ -44,9 +44,18 @@ extension PumpConfig.StateModel: CompletionDelegate {
     }
 }
 
-extension PumpConfig.StateModel: PumpManagerSetupViewControllerDelegate {
-    func pumpManagerSetupViewController(_: PumpManagerSetupViewController, didSetUpPumpManager pumpManager: PumpManagerUI) {
+extension PumpConfig.StateModel: PumpManagerOnboardingDelegate {
+    func pumpManagerOnboarding(didCreatePumpManager pumpManager: PumpManagerUI) {
         provider.setPumpManager(pumpManager)
         setupPump = false
     }
+
+    func pumpManagerOnboarding(didOnboardPumpManager _: PumpManagerUI) {
+        // nothing to do
+    }
+
+//    func pumpManagerSetupViewController(_: PumpManagerSetupViewController, didSetUpPumpManager pumpManager: PumpManagerUI) {
+//        provider.setPumpManager(pumpManager)
+//        setupPump = false
+//    }
 }

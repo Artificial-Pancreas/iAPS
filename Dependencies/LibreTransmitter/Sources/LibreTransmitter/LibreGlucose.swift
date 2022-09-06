@@ -196,7 +196,7 @@ extension LibreGlucose {
                 timestamp: trend.date)
             // if sensor is ripped off body while transmitter is attached, values below 1 might be created
 
-            if glucose.unsmoothedGlucose > 0 {
+            if glucose.unsmoothedGlucose > 0 && glucose.unsmoothedGlucose <= 500 {
                 arr.append(glucose)
             }
 

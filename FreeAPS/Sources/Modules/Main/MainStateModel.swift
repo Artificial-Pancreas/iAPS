@@ -1,3 +1,4 @@
+import LoopKitUI
 import SwiftMessages
 import SwiftUI
 import Swinject
@@ -30,24 +31,60 @@ extension Main {
             router.alertMessage
                 .receive(on: DispatchQueue.main)
                 .sink { message in
-                    SwiftMessages.show {
-                        let view = MessageView.viewFromNib(layout: .messageView)
-                        view.backgroundColor = .secondarySystemGroupedBackground
-                        view.titleLabel?.textColor = .label
-                        view.bodyLabel?.textColor = .label
-                        view.configureContent(
-                            title: NSLocalizedString("Info", comment: "Info title"),
-                            body: NSLocalizedString(message, comment: "Info message"),
-                            iconImage: nil,
-                            iconText: nil,
-                            buttonImage: nil,
-                            buttonTitle: nil,
-                            buttonTapHandler: nil
-                        )
+                    var config = SwiftMessages.defaultConfig
+                    let view = MessageView.viewFromNib(layout: .cardView)
 
-                        view.bodyLabel?.text = message
-                        return view
+                    let titleContent: String
+
+                    view.configureContent(
+                        title: "title",
+                        body: NSLocalizedString(message.content, comment: "Info message"),
+                        iconImage: nil,
+                        iconText: nil,
+                        buttonImage: nil,
+                        buttonTitle: nil,
+                        buttonTapHandler: nil
+                    )
+
+                    switch message.type {
+                    case .info:
+                        view.backgroundColor = .secondarySystemGroupedBackground
+                        config.duration = .automatic
+
+                        titleContent = NSLocalizedString("Info", comment: "Info title")
+                    case .warning:
+                        view.configureTheme(.warning, iconStyle: .subtle)
+                        config.duration = .forever
+                        view.button?.setImage(Icon.warningSubtle.image, for: .normal)
+                        titleContent = NSLocalizedString("Warning", comment: "Warning title")
+                        view.buttonTapHandler = { _ in
+                            SwiftMessages.hide()
+                        }
+                    case .errorPump:
+                        view.configureTheme(.error, iconStyle: .subtle)
+                        config.duration = .forever
+                        view.button?.setImage(Icon.errorSubtle.image, for: .normal)
+                        titleContent = NSLocalizedString("Error", comment: "Error title")
+                        view.buttonTapHandler = { _ in
+                            SwiftMessages.hide()
+                            // display the pump configuration immediatly
+                            if let pump = self.provider.deviceManager.pumpManager,
+                               let bluetooth = self.provider.bluetoothProvider
+                            {
+                                let view = PumpConfig.PumpSettingsView(
+                                    pumpManager: pump,
+                                    bluetoothManager: bluetooth,
+                                    completionDelegate: self
+                                ).asAny()
+                                self.router.mainSecondaryModalView.send(view)
+                            }
+                        }
                     }
+
+                    view.titleLabel?.text = titleContent
+                    config.dimMode = .gray(interactive: true)
+
+                    SwiftMessages.show(config: config, view: view)
                 }
                 .store(in: &lifetime)
 
@@ -67,5 +104,12 @@ extension Main {
                 }
                 .store(in: &lifetime)
         }
+    }
+}
+
+extension Main.StateModel: CompletionDelegate {
+    func completionNotifyingDidComplete(_: CompletionNotifying) {
+        // close the window
+        router.mainSecondaryModalView.send(nil)
     }
 }

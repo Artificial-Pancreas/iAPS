@@ -282,6 +282,15 @@
 		C967DACD3B1E638F8B43BE06 /* ManualTempBasalStateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFCFE0781F9074C2917890E8 /* ManualTempBasalStateModel.swift */; };
 		CA370FC152BC98B3D1832968 /* BasalProfileEditorRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8BCB0C37DEB5EC377B9612 /* BasalProfileEditorRootView.swift */; };
 		CD78BB94E43B249D60CC1A1B /* NotificationsConfigRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22963BD06A9C83959D4914E4 /* NotificationsConfigRootView.swift */; };
+		CEB434DC28B8F5B900B70274 /* MKRingProgressView.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEB434DB28B8F5B900B70274 /* MKRingProgressView.framework */; };
+		CEB434DD28B8F5B900B70274 /* MKRingProgressView.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = CEB434DB28B8F5B900B70274 /* MKRingProgressView.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		CEB434DF28B8F5C400B70274 /* OmniBLE.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEB434DE28B8F5C400B70274 /* OmniBLE.framework */; };
+		CEB434E028B8F5C400B70274 /* OmniBLE.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = CEB434DE28B8F5C400B70274 /* OmniBLE.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		CEB434E328B8F9DB00B70274 /* BluetoothStateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB434E228B8F9DB00B70274 /* BluetoothStateManager.swift */; };
+		CEB434E528B8FF5D00B70274 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB434E428B8FF5D00B70274 /* UIColor.swift */; };
+		CEB434E728B9053300B70274 /* LoopUIColorPalette+Default.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB434E628B9053300B70274 /* LoopUIColorPalette+Default.swift */; };
+		CEB434FD28B90B7C00B70274 /* SwiftCharts in Frameworks */ = {isa = PBXBuildFile; productRef = CEB434FC28B90B7C00B70274 /* SwiftCharts */; };
+		CEB434FE28B90B8C00B70274 /* SwiftCharts in Embed Frameworks */ = {isa = PBXBuildFile; productRef = CEB434FC28B90B7C00B70274 /* SwiftCharts */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		D2165E9D78EFF692C1DED1C6 /* AddTempTargetDataFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B8A42073A2D03A278914448 /* AddTempTargetDataFlow.swift */; };
 		D6D02515BBFBE64FEBE89856 /* DataTableRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 881E04BA5E0A003DE8E0A9C6 /* DataTableRootView.swift */; };
 		D6DEC113821A7F1056C4AA1E /* NightscoutConfigDataFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F2A13DF0EDEEEDC4106AA2A /* NightscoutConfigDataFlow.swift */; };
@@ -349,7 +358,10 @@
 				3818AA6F274C26A500843DB3 /* RileyLinkKitUI.framework in Embed Frameworks */,
 				3818AA4B274C267100843DB3 /* CGMBLEKit.framework in Embed Frameworks */,
 				3818AA67274C26A400843DB3 /* OmniKit.framework in Embed Frameworks */,
+				CEB434E028B8F5C400B70274 /* OmniBLE.framework in Embed Frameworks */,
 				3818AA63274C26A400843DB3 /* MinimedKit.framework in Embed Frameworks */,
+				CEB434DD28B8F5B900B70274 /* MKRingProgressView.framework in Embed Frameworks */,
+				CEB434FE28B90B8C00B70274 /* SwiftCharts in Embed Frameworks */,
 				3818AA6B274C26A500843DB3 /* RileyLinkBLEKit.framework in Embed Frameworks */,
 				3818AA59274C26A300843DB3 /* LoopKit.framework in Embed Frameworks */,
 				3818AA65274C26A400843DB3 /* MinimedKitUI.framework in Embed Frameworks */,
@@ -692,6 +704,11 @@
 		C19984D62EFC0035A9E9644D /* BolusProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = BolusProvider.swift; sourceTree = "<group>"; };
 		C377490C77661D75E8C50649 /* ManualTempBasalRootView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ManualTempBasalRootView.swift; sourceTree = "<group>"; };
 		C8D1A7CA8C10C4403D4BBFA7 /* BolusDataFlow.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = BolusDataFlow.swift; sourceTree = "<group>"; };
+		CEB434DB28B8F5B900B70274 /* MKRingProgressView.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = MKRingProgressView.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		CEB434DE28B8F5C400B70274 /* OmniBLE.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = OmniBLE.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		CEB434E228B8F9DB00B70274 /* BluetoothStateManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BluetoothStateManager.swift; sourceTree = "<group>"; };
+		CEB434E428B8FF5D00B70274 /* UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
+		CEB434E628B9053300B70274 /* LoopUIColorPalette+Default.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LoopUIColorPalette+Default.swift"; sourceTree = "<group>"; };
 		CFCFE0781F9074C2917890E8 /* ManualTempBasalStateModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ManualTempBasalStateModel.swift; sourceTree = "<group>"; };
 		D0BDC6993C1087310EDFC428 /* CREditorRootView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CREditorRootView.swift; sourceTree = "<group>"; };
 		D295A3F870E826BE371C0BB5 /* AutotuneConfigStateModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AutotuneConfigStateModel.swift; sourceTree = "<group>"; };
@@ -726,8 +743,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CEB434DC28B8F5B900B70274 /* MKRingProgressView.framework in Frameworks */,
 				38E87403274F78C000975559 /* libswiftCoreNFC.tbd in Frameworks */,
 				38E87401274F77E400975559 /* CoreNFC.framework in Frameworks */,
+				CEB434DF28B8F5C400B70274 /* OmniBLE.framework in Frameworks */,
 				3818AA71274C278200843DB3 /* LoopTestingKit.framework in Frameworks */,
 				3818AA47274C255A00843DB3 /* LibreTransmitter in Frameworks */,
 				3818AA4A274C267000843DB3 /* CGMBLEKit.framework in Frameworks */,
@@ -744,6 +763,7 @@
 				38B17B6625DD90E0005CAE3D /* SwiftDate in Frameworks */,
 				3818AA60274C26A300843DB3 /* Crypto.framework in Frameworks */,
 				3833B46D26012030003021B3 /* Algorithms in Frameworks */,
+				CEB434FD28B90B7C00B70274 /* SwiftCharts in Frameworks */,
 				38DF1789276FC8C400B3528F /* SwiftMessages in Frameworks */,
 				E0CC2C5C275B9F0F00A7BC71 /* HealthKit.framework in Frameworks */,
 				3818AA62274C26A400843DB3 /* MinimedKit.framework in Frameworks */,
@@ -980,6 +1000,7 @@
 		3811DE9125C9D88200A708ED /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				CEB434E128B8F9BC00B70274 /* Bluetooth */,
 				F90692A8274B7A980037068D /* HealthKit */,
 				38E8754D275556E100975559 /* WatchManager */,
 				38E87406274F9AA500975559 /* UserNotifiactions */,
@@ -1114,6 +1135,8 @@
 		3818AA48274C267000843DB3 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				CEB434DE28B8F5C400B70274 /* OmniBLE.framework */,
+				CEB434DB28B8F5B900B70274 /* MKRingProgressView.framework */,
 				E0CC2C5B275B9DAE00A7BC71 /* HealthKit.framework */,
 				38E87402274F78C000975559 /* libswiftCoreNFC.tbd */,
 				38E873FD274F761800975559 /* CoreNFC.framework */,
@@ -1298,6 +1321,7 @@
 				38E98A3625F5509500C0CED0 /* String+Extensions.swift */,
 				3811DEE325CA063400A708ED /* PropertyWrappers */,
 				E06B9119275B5EEA003C04B6 /* Array+Extension.swift */,
+				CEB434E428B8FF5D00B70274 /* UIColor.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -1319,6 +1343,7 @@
 			children = (
 				38A5049125DD9C4000C5B9E8 /* UserDefaultsExtensions.swift */,
 				38BF021625E7CBBC00579895 /* PumpManagerExtensions.swift */,
+				CEB434E628B9053300B70274 /* LoopUIColorPalette+Default.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1708,6 +1733,14 @@
 			path = Bolus;
 			sourceTree = "<group>";
 		};
+		CEB434E128B8F9BC00B70274 /* Bluetooth */ = {
+			isa = PBXGroup;
+			children = (
+				CEB434E228B8F9DB00B70274 /* BluetoothStateManager.swift */,
+			);
+			path = Bluetooth;
+			sourceTree = "<group>";
+		};
 		D533BF261CDC1C3F871E7BFD /* NightscoutConfig */ = {
 			isa = PBXGroup;
 			children = (
@@ -1867,6 +1900,7 @@
 				3833B46C26012030003021B3 /* Algorithms */,
 				3818AA46274C255A00843DB3 /* LibreTransmitter */,
 				38DF1788276FC8C400B3528F /* SwiftMessages */,
+				CEB434FC28B90B7C00B70274 /* SwiftCharts */,
 			);
 			productName = FreeAPS;
 			productReference = 388E595825AD948C0019842D /* FreeAPS.app */;
@@ -1985,6 +2019,7 @@
 				38B17B6425DD90E0005CAE3D /* XCRemoteSwiftPackageReference "SwiftDate" */,
 				3833B46B26012030003021B3 /* XCRemoteSwiftPackageReference "swift-algorithms" */,
 				38DF1787276FC8C300B3528F /* XCRemoteSwiftPackageReference "SwiftMessages" */,
+				CEB434FB28B90B7C00B70274 /* XCRemoteSwiftPackageReference "SwiftCharts" */,
 			);
 			productRefGroup = 388E595925AD948C0019842D /* Products */;
 			projectDirPath = "";
@@ -2116,6 +2151,7 @@
 				388E595C25AD948C0019842D /* FreeAPSApp.swift in Sources */,
 				38FEF3FC2737E53800574A46 /* MainStateModel.swift in Sources */,
 				38569348270B5DFB0002C50D /* GlucoseSource.swift in Sources */,
+				CEB434E328B8F9DB00B70274 /* BluetoothStateManager.swift in Sources */,
 				3811DE4225C9D4A100A708ED /* SettingsDataFlow.swift in Sources */,
 				3811DE2525C9D48300A708ED /* MainRootView.swift in Sources */,
 				38E44535274E411700EC9A94 /* Disk+Data.swift in Sources */,
@@ -2149,6 +2185,7 @@
 				3811DEAE25C9D88300A708ED /* Cache.swift in Sources */,
 				383420D625FFE38C002D46C1 /* LoopView.swift in Sources */,
 				3811DEAD25C9D88300A708ED /* UserDefaults+Cache.swift in Sources */,
+				CEB434E728B9053300B70274 /* LoopUIColorPalette+Default.swift in Sources */,
 				3811DE2225C9D48300A708ED /* MainProvider.swift in Sources */,
 				3811DE0C25C9D32F00A708ED /* BaseProvider.swift in Sources */,
 				3811DE5C25C9D4D500A708ED /* Formatters.swift in Sources */,
@@ -2158,6 +2195,7 @@
 				38EA05DA261F6E7C0064E39B /* SimpleLogReporter.swift in Sources */,
 				3811DE6125C9D4D500A708ED /* ViewModifiers.swift in Sources */,
 				3811DEAC25C9D88300A708ED /* NightscoutManager.swift in Sources */,
+				CEB434E528B8FF5D00B70274 /* UIColor.swift in Sources */,
 				3811DEA925C9D88300A708ED /* AppearanceManager.swift in Sources */,
 				38D0B3D925EC07C400CB6E88 /* CarbsEntry.swift in Sources */,
 				38A9260525F012D8009E3739 /* CarbRatios.swift in Sources */,
@@ -2473,7 +2511,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -2531,7 +2569,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -2551,12 +2589,12 @@
 				BUNDLE_IDENTIFIER = "$(BUNDLE_IDENTIFIER)";
 				CODE_SIGN_ENTITLEMENTS = FreeAPS/Resources/FreeAPS.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 0.2.7;
 				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = "${DEVELOPER_TEAM}";
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = FreeAPS/Resources/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -2565,7 +2603,7 @@
 					"$(inherited)",
 					"$(SDKROOT)/usr/lib/swift",
 				);
-				MARKETING_VERSION = "$(CURRENT_PROJECT_VERSION)";
+				MARKETING_VERSION = 0.2;
 				OTHER_LDFLAGS = (
 					"-weak_framework",
 					CoreNFC,
@@ -2587,12 +2625,12 @@
 				BUNDLE_IDENTIFIER = "$(BUNDLE_IDENTIFIER)";
 				CODE_SIGN_ENTITLEMENTS = FreeAPS/Resources/FreeAPS.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 0.2.7;
 				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = "${DEVELOPER_TEAM}";
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = FreeAPS/Resources/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -2601,7 +2639,7 @@
 					"$(inherited)",
 					"$(SDKROOT)/usr/lib/swift",
 				);
-				MARKETING_VERSION = "$(CURRENT_PROJECT_VERSION)";
+				MARKETING_VERSION = 0.2;
 				OTHER_LDFLAGS = (
 					"-weak_framework",
 					CoreNFC,
@@ -2624,14 +2662,14 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
 				CODE_SIGN_ENTITLEMENTS = FreeAPSWatch/FreeAPSWatch.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = "$(BUILD_VERSION)";
+				CURRENT_PROJECT_VERSION = 0.2.7;
 				DEVELOPMENT_TEAM = "${DEVELOPER_TEAM}";
 				GENERATE_INFOPLIST_FILE = YES;
 				IBSC_MODULE = FreeAPSWatch_WatchKit_Extension;
-				INFOPLIST_KEY_CFBundleDisplayName = "$(APP_DISPLAY_NAME)";
+				INFOPLIST_KEY_CFBundleDisplayName = "FreeAPS X";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = "$(BUNDLE_IDENTIFIER)";
-				MARKETING_VERSION = 1;
+				MARKETING_VERSION = 0.2;
 				PRODUCT_BUNDLE_IDENTIFIER = "$(BUNDLE_IDENTIFIER).watchkitapp";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;
@@ -2654,14 +2692,14 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
 				CODE_SIGN_ENTITLEMENTS = FreeAPSWatch/FreeAPSWatch.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = "$(BUILD_VERSION)";
+				CURRENT_PROJECT_VERSION = 0.2.7;
 				DEVELOPMENT_TEAM = "${DEVELOPER_TEAM}";
 				GENERATE_INFOPLIST_FILE = YES;
 				IBSC_MODULE = FreeAPSWatch_WatchKit_Extension;
-				INFOPLIST_KEY_CFBundleDisplayName = "$(APP_DISPLAY_NAME)";
+				INFOPLIST_KEY_CFBundleDisplayName = "FreeAPS X";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = "$(BUNDLE_IDENTIFIER)";
-				MARKETING_VERSION = 1;
+				MARKETING_VERSION = 0.2;
 				PRODUCT_BUNDLE_IDENTIFIER = "$(BUNDLE_IDENTIFIER).watchkitapp";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;
@@ -2682,14 +2720,14 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
 				CODE_SIGN_ENTITLEMENTS = "FreeAPSWatch WatchKit Extension/FreeAPSWatch WatchKit Extension.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = "$(BUILD_VERSION)";
+				CURRENT_PROJECT_VERSION = 0.2.7;
 				DEVELOPMENT_ASSET_PATHS = "\"FreeAPSWatch WatchKit Extension/Preview Content\"";
 				DEVELOPMENT_TEAM = "${DEVELOPER_TEAM}";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "FreeAPSWatch WatchKit Extension/Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = "$(APP_DISPLAY_NAME) WatchKit Extension";
-				INFOPLIST_KEY_CLKComplicationPrincipalClass = "$(PRODUCT_MODULE_NAME).ComplicationController";
+				INFOPLIST_KEY_CFBundleDisplayName = "FreeAPS X WatchKit Extension";
+				INFOPLIST_KEY_CLKComplicationPrincipalClass = FreeAPSWatch_WatchKit_Extension.ComplicationController;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INFOPLIST_KEY_WKRunsIndependentlyOfCompanionApp = NO;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -2697,7 +2735,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1;
+				MARKETING_VERSION = 0.2;
 				PRODUCT_BUNDLE_IDENTIFIER = "$(BUNDLE_IDENTIFIER).watchkitapp.watchkitextension";
 				PRODUCT_NAME = "${TARGET_NAME}";
 				SDKROOT = watchos;
@@ -2718,14 +2756,14 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
 				CODE_SIGN_ENTITLEMENTS = "FreeAPSWatch WatchKit Extension/FreeAPSWatch WatchKit Extension.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = "$(BUILD_VERSION)";
+				CURRENT_PROJECT_VERSION = 0.2.7;
 				DEVELOPMENT_ASSET_PATHS = "\"FreeAPSWatch WatchKit Extension/Preview Content\"";
 				DEVELOPMENT_TEAM = "${DEVELOPER_TEAM}";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "FreeAPSWatch WatchKit Extension/Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = "$(APP_DISPLAY_NAME) WatchKit Extension";
-				INFOPLIST_KEY_CLKComplicationPrincipalClass = "$(PRODUCT_MODULE_NAME).ComplicationController";
+				INFOPLIST_KEY_CFBundleDisplayName = "FreeAPS X WatchKit Extension";
+				INFOPLIST_KEY_CLKComplicationPrincipalClass = FreeAPSWatch_WatchKit_Extension.ComplicationController;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INFOPLIST_KEY_WKRunsIndependentlyOfCompanionApp = NO;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -2733,7 +2771,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1;
+				MARKETING_VERSION = 0.2;
 				PRODUCT_BUNDLE_IDENTIFIER = "$(BUNDLE_IDENTIFIER).watchkitapp.watchkitextension";
 				PRODUCT_NAME = "${TARGET_NAME}";
 				SDKROOT = watchos;
@@ -2870,6 +2908,14 @@
 				minimumVersion = 9.0.0;
 			};
 		};
+		CEB434FB28B90B7C00B70274 /* XCRemoteSwiftPackageReference "SwiftCharts" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ivanschuetz/SwiftCharts.git";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -2901,6 +2947,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 38B17B6425DD90E0005CAE3D /* XCRemoteSwiftPackageReference "SwiftDate" */;
 			productName = SwiftDate;
+		};
+		CEB434FC28B90B7C00B70274 /* SwiftCharts */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CEB434FB28B90B7C00B70274 /* XCRemoteSwiftPackageReference "SwiftCharts" */;
+			productName = SwiftCharts;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

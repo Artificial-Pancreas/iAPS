@@ -7,37 +7,45 @@ extension PumpConfig {
         @StateObject var state = StateModel()
 
         var body: some View {
-            Form {
-                Section(header: Text("Model")) {
-                    if let pumpState = state.pumpState {
-                        Button {
-                            state.setupPump = true
-                        } label: {
-                            HStack {
-                                Image(uiImage: pumpState.image ?? UIImage()).padding()
-                                Text(pumpState.name)
+            NavigationView {
+                Form {
+                    Section(header: Text("Model")) {
+                        if let pumpState = state.pumpState {
+                            Button {
+                                state.setupPump = true
+                            } label: {
+                                HStack {
+                                    Image(uiImage: pumpState.image ?? UIImage()).padding()
+                                    Text(pumpState.name)
+                                }
                             }
+                        } else {
+                            Button("Add Medtronic") { state.addPump(.minimed) }
+                            Button("Add Omnipod") { state.addPump(.omnipod) }
+                            Button("Add Omnipod Dash") { state.addPump(.omnipodBLE) }
+                            Button("Add Simulator") { state.addPump(.simulator) }
                         }
-                    } else {
-                        Button("Add Medtronic") { state.addPump(.minimed) }
-                        Button("Add Omnipod") { state.addPump(.omnipod) }
-                        Button("Add Simulator") { state.addPump(.simulator) }
                     }
                 }
-            }
-            .onAppear(perform: configureView)
-            .navigationTitle("Pump config")
-            .navigationBarTitleDisplayMode(.automatic)
-            .sheet(isPresented: $state.setupPump) {
-                if let pumpManager = state.provider.apsManager.pumpManager {
-                    PumpSettingsView(pumpManager: pumpManager, completionDelegate: state)
-                } else {
-                    PumpSetupView(
-                        pumpType: state.setupPumpType,
-                        pumpInitialSettings: state.initialSettings,
-                        completionDelegate: state,
-                        setupDelegate: state
-                    )
+                .onAppear(perform: configureView)
+                .navigationTitle("Pump config")
+                .navigationBarTitleDisplayMode(.automatic)
+                .sheet(isPresented: $state.setupPump) {
+                    if let pumpManager = state.provider.apsManager.pumpManager {
+                        PumpSettingsView(
+                            pumpManager: pumpManager,
+                            bluetoothManager: state.provider.apsManager.bluetoothManager!,
+                            completionDelegate: state
+                        )
+                    } else {
+                        PumpSetupView(
+                            pumpType: state.setupPumpType,
+                            pumpInitialSettings: state.initialSettings,
+                            bluetoothManager: state.provider.apsManager.bluetoothManager!,
+                            completionDelegate: state,
+                            setupDelegate: state
+                        )
+                    }
                 }
             }
         }

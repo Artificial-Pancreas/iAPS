@@ -281,7 +281,7 @@ public final class OverrideSelectionViewController: UICollectionViewController, 
                 customOverrideVC.delegate = self
                 show(customOverrideVC, sender: collectionView.cellForItem(at: indexPath))
             case .history:
-                let model = OverrideHistorystate(
+                let model = OverrideHistoryViewModel(
                     overrides: overrideHistory,
                     glucoseUnit: glucoseUnit
                 )

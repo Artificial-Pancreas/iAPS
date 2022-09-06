@@ -10,7 +10,7 @@ import SwiftUI
 import LoopKit
 import HealthKit
 
-public class OverrideHistorystate: ObservableObject {
+public class OverrideHistoryViewModel: ObservableObject {
     var overrides: [TemporaryScheduleOverride]
     var glucoseUnit: HKUnit
     var didEditOverride: ((TemporaryScheduleOverride) -> Void)?
@@ -26,12 +26,12 @@ public class OverrideHistorystate: ObservableObject {
 }
 
 public struct OverrideSelectionHistory: View {
-    @ObservedObject var model: OverrideHistorystate
+    @ObservedObject var model: OverrideHistoryViewModel
     private var quantityFormatter: QuantityFormatter
     private var glucoseNumberFormatter: NumberFormatter
     private var durationFormatter: DateComponentsFormatter
     
-    public init(model: OverrideHistorystate) {
+    public init(model: OverrideHistoryViewModel) {
         self.model = model
         self.quantityFormatter = {
             let quantityFormatter = QuantityFormatter()
@@ -51,20 +51,8 @@ public struct OverrideSelectionHistory: View {
     
     // Style conditionally based on iOS so we get a grouped list style
     public var body: some View {
-        #if swift(>=5.2)
-            if #available(iOS 14.0, *) {
-                bodyContents
-                .listStyle(InsetGroupedListStyle())
-            } else {
-                bodyContents
-                .listStyle(GroupedListStyle())
-                .environment(\.horizontalSizeClass, .regular)
-            }
-        #else
-            bodyContents
-            .listStyle(GroupedListStyle())
-            .environment(\.horizontalSizeClass, .regular)
-        #endif
+        bodyContents
+            .insetGroupedListStyle()
     }
     
     private var bodyContents: some View {

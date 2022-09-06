@@ -6,84 +6,77 @@ FreeAPS X uses original JavaScript files of oref0 and provides a user interface 
 
 ## Documentation
 
+[freeAPS X original github](https://github.com/ivalkou/freeaps)
+
 [Overview & Onboarding Tips on Loop&Learn](https://www.loopandlearn.org/freeaps-x/)
 
 [OpenAPS documentation](https://openaps.readthedocs.io/en/latest/)
 
-## Smartphone requirements
+## Updated to include dashpod
 
-- All iPhones which support iOS 15 and up.
+- replace the Rileylink package to the Loop version of 2 august 2022
+- replace the Loopkit package to the Loop version of 2 august 2022
+- add the MKRingProgressView from the Loop version of 2 august 2022
+- add the OMNIBLE package from the Loop version of 2 august 2022
+_ modify the order of compilation for CGMBLEKit (header before compilation)
+ 
+ ## Changes in package 
+ 
+ The only change required is the public access to managedIdentifier for omnipod, medtronic et  dash. Loop doesn't use it but FAX requires it. 
 
-## Supported pumps
 
-To control an insulin pump FreeAPS X uses modified [rileylink_ios](https://github.com/ps2/rileylink_ios) library, thus supporting the same pump list:
+    //public let managerIdentifier: String = "Omnipod-Dash" // use a single token to make parsing log files easier
+    
+    public static let managerIdentifier = "Omnipod-Dash"
+    
+    public var managerIdentifier: String {
+        return OmniBLEPumpManager.managerIdentifier
+    }
 
-- Medtronic 515 or 715 (any firmware)
-- Medtronic 522 or 722 (any firmware)
-- Medtronic 523 or 723 (firmware 2.4 or lower)
-- Medtronic Worldwide Veo 554 or 754 (firmware 2.6A or lower)
-- Medtronic Canadian/Australian Veo 554 or 754 (firmware 2.7A or lower)
-- Omnipod "Eros" pods
+ 
+ ## Changes in freeapsx
 
-To control an insulin you need to have a [RileyLink](https://getrileylink.org), OrangeLink, Pickle, GNARL, Emalink, DiaLink or similar device
+ - in info, add the Bundle Display Name used by package 
+ - add Bluetooth service state in Services/Bluetooth required by the new version of the package + add this service as a swift injection in APS resolver
+ - in Aps manager :
+    - Added blueTooth manager
+    - modify enactTempBasal to respect the new protocol
+    - modify enactBolus to respect the new protocol. The new loopkit requires a new parameter to describe the type of bolus - in FAX defaut to .manualRecommendationAccepted
+    - modify the clearBolusReporter to improve the refresh of the state of the pump
+ 
+ - in devicemanager : 
+    - Added blueTooth manager
+    - change the staticPumpManagerByIdentifier 
+    - change the call ensureCurrentPumpData to respect the new version
+    - change the result of fetchNewDataIfNeeded 
+    - change the PumpManagerDelegate extension 
+    - change the alert protocol
+    - add OmniBLE config
 
-## Current state of FreeAPS X
+ - in extension PumpManager
+    - change managerIdentifier
+    - remove setupViewController extension
+    - new settingsViewController 
 
-FreeAPS X is in an active development state and changes frequently.
+- in PumpHistoryStorage  
+    - remove a ismutable method
+ 
+- Color and UIColor added and LoopUICOloPalette+Default
 
-You can find a description of versions on the [releases page](https://github.com/ivalkou/freeaps/releases).
 
-### Stable versions
+In the different views : 
+- In home view, add Bluetooth 
+- in pump config model, change the PumpConfig.StateModel extension 
+- add the bluetooth and correct new interfaces in settings pump views
+- change the view for settings max basal /bolus in pump 
+- Improve the log message in MainStateModel + UserNotificationManager + Router 
 
-A stable version means that it has been tested for a long time and does not contain critical bugs. We consider it ready for everyday use.
+In deviceDataManager :
+- add the management of the issue alert (lot of changes with the previous version in the alert management by LoopKit) - Send the alert to UNNotification (modify also)
 
-Stable version numbers end in **.0**.
 
-### Beta versions
-
-Beta versions are the first to introduce new functionality. They are designed to test and identify issues and bugs.
-
-**Beta versions are fairly stable, but may contain occasional bugs.**
-
-Beta numbers end with a number greater than **0**.
-
-## Contribution
-
-Pull requests are accepted on the [dev branch](https://github.com/ivalkou/freeaps/tree/dev).
-
-Bug reports and feature requests are accepted on the [Issues page](https://github.com/ivalkou/freeaps/issues).
-
-## Implemented
-
-- All base functions of oref0
-- All base functions of oref1 (SMB, UAM and others)
-- Autotune
-- Autosens
-- Nightscout BG data source as a CGM (Online)
-- Applications that mimic Nightscout as a CGM (apps like Spike and Diabox) (Offline)
-- [xDrip4iOS](https://github.com/JohanDegraeve/xdripswift) data source as a CGM via shared app gpoup (Offline)
-- [GlucoseDirectApp](https://github.com/creepymonster/GlucoseDirectApp) data source as a CGM via shared app gpoup (Offline)
-- Libre 1 transmitters and Libre 2 direct as a CGM
-- Simple glucose simulator
-- System state upload to Nightscout
-- Remote carbs enter and temporary targets through Nightscout
-- Remote bolusing and insulin pump control
-- Dexcom offline support (beta)
-- Detailed oref preferences description inside the app (beta)
-- User notifications of the system and connected devices state (beta)
-- Apple Watch app (beta)
-- Enlite support (beta)
-- Apple Health support for blood glucose (beta)
-
-## Not implemented (plans for future)
-
-- Open loop mode
-- Profile upload to Nightscout
-- Home screen widget
-- Apple Health support for carbs and insulin
-
-## Community
-
-- [English Telegram group](https://t.me/freeapsx_eng)
-- [Russian Telegram group](https://t.me/freeapsx)
+## issues 
+- unable to display all the screens when setup a new pump 
+- ~~choice of the insulin for the pump.~~ 
+- unable to use truetime for NTP sync. Not yet used by Loop 
 

@@ -184,7 +184,7 @@
 "PM Version" = "Version PM";
 
 /* Label describing pod age view */
-"Pod Age" = "Âge du pod";
+"Pod Age" = " âge pod";
 
 /* Title of the pod settings view controller */
 "Pod Settings" = "Réglages du pod";

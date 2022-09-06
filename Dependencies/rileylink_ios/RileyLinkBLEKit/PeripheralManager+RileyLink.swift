@@ -111,11 +111,13 @@ extension PeripheralManager.Configuration {
             valueUpdateMacros: [
                 // When the responseCount changes, the data characteristic should be read.
                 MainServiceCharacteristicUUID.responseCount.cbUUID: { (manager: PeripheralManager) in
+                    log.debug("responseCount valueUpdated")
                     guard let dataCharacteristic = manager.peripheral.getCharacteristicWithUUID(.data)
                     else {
+                        log.debug("could not get data characteristic")
                         return
                     }
-
+                    log.debug("Reading data characteristic")
                     manager.peripheral.readValue(for: dataCharacteristic)
                 }
             ]
@@ -569,7 +571,7 @@ extension PeripheralManager {
                             // We don't recognize the contents. Keep listening.
                             return false
                         }
-                        log.debug("RileyLink response: %{public}@", String(describing: response))
+                        log.debug("writeCommand response: %{public}@", String(describing: response))
                         capturedResponse = response
                         return true
                     }
@@ -635,12 +637,12 @@ extension PeripheralManager {
                     for response in buffer.responses {
                         switch response.code {
                         case .rxTimeout, .zeroData, .invalidParam, .unknownCommand:
-                            log.debug("RileyLink response: %{public}@", String(describing: response))
+                            log.debug("writeLegacyCommand response: %{public}@", String(describing: response))
                             capturedResponse = response
                             return true
                         case .commandInterrupted:
                             // This is expected in cases where an "Idle" GetPacket command is running
-                            log.debug("RileyLink response: %{public}@", String(describing: response))
+                            log.debug("writeLegacyCommand response (commandInterrupted): %{public}@", String(describing: response))
                         case .success:
                             capturedResponse = response
                             return true

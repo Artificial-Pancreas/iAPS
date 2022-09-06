@@ -12,7 +12,7 @@ public enum RileyLinkHardwareType {
     case riley
     case orange
     case ema
-
+    
     var monitorsBattery: Bool {
         if self == .riley {
             return false
@@ -33,6 +33,10 @@ public class RileyLinkDevice {
     // Confined to `manager.queue`
     private var radioFirmwareVersion: RadioFirmwareVersion?
 
+    public var isConnected: Bool {
+        return manager.peripheral.state == .connected
+    }
+    
     public var rlFirmwareDescription: String {
         let versions = [radioFirmwareVersion, bleFirmwareVersion].compactMap { (version: CustomStringConvertible?) -> String? in
             if let version = version {
@@ -66,10 +70,10 @@ public class RileyLinkDevice {
 
     // Confined to `lock`
     private var isTimerTickEnabled = true
-
+    
     /// Serializes access to device state
     private var lock = os_unfair_lock()
-
+    
     private var orangeLinkFirmwareHardwareVersion = "v1.x"
     private var orangeLinkHardwareVersionMajorMinor: [Int]?
     private var ledOn: Bool = false
@@ -84,16 +88,16 @@ public class RileyLinkDevice {
        }
         return false
     }
-
+    
     public var hasOrangeLinkService: Bool {
         return self.manager.peripheral.services?.itemWithUUID(RileyLinkServiceUUID.orange.cbUUID) != nil
     }
-
+    
     public var hardwareType: RileyLinkHardwareType? {
         guard let services = self.manager.peripheral.services else {
             return nil
         }
-
+        
         guard let bleComponents = self.bleFirmwareVersion else {
             return nil
         }
@@ -108,7 +112,7 @@ public class RileyLinkDevice {
             return .riley
         }
       }
-
+    
     /// The queue used to serialize sessions and observe when they've drained
     private let sessionQueue: OperationQueue = {
         let queue = OperationQueue()
@@ -120,8 +124,11 @@ public class RileyLinkDevice {
 
     private var sessionQueueOperationCountObserver: NSKeyValueObservation!
 
-    init(peripheralManager: PeripheralManager) {
+    public var rssi: Int?
+
+    init(peripheralManager: PeripheralManager, rssi: Int?) {
         self.manager = peripheralManager
+        self.rssi = rssi
         sessionQueue.underlyingQueue = peripheralManager.queue
 
         peripheralManager.delegate = self
@@ -178,52 +185,48 @@ extension RileyLinkDevice {
             }
         }
     }
-
+    
     public func orangeAction(_ command: OrangeLinkCommand) {
         log.debug("orangeAction: %@", "\(command)")
         manager.orangeAction(command)
     }
-
+    
     public func setOrangeConfig(_ config: OrangeLinkConfigurationSetting, isOn: Bool) {
         log.debug("setOrangeConfig: %@, %@", "\(String(describing: config))", "\(isOn)")
         manager.setOrangeConfig(config, isOn: isOn)
     }
-
+    
     public func orangeWritePwd() {
         log.debug("orangeWritePwd")
         manager.orangeWritePwd()
     }
-
+    
     public func orangeClose() {
         log.debug("orangeClose")
         manager.orangeClose()
     }
-
+    
     public func orangeReadSet() {
         log.debug("orangeReadSet")
         manager.orangeReadSet()
     }
-
+    
     public func orangeReadVDC() {
         log.debug("orangeReadVDC")
         manager.orangeReadVDC()
     }
-
+    
     public func findDevice() {
         log.debug("findDevice")
         manager.findDevice()
     }
-
+    
     public func setDiagnosticeLEDModeForBLEChip(_ mode: RileyLinkLEDMode) {
         manager.setLEDMode(mode: mode)
     }
-
+    
     public func readDiagnosticLEDModeForBLEChip(completion: @escaping (RileyLinkLEDMode?) -> Void) {
         manager.readDiagnosticLEDMode(completion: completion)
-    }
-
-    public func enableBLELEDs() {
-        manager.setLEDMode(mode: .on)
     }
 
     /// Asserts that the caller is currently on the session queue
@@ -259,7 +262,7 @@ extension RileyLinkDevice {
         public let lastIdle: Date?
 
         public let name: String?
-
+        
         public let version: String
 
         public let ledOn: Bool
@@ -419,7 +422,6 @@ extension RileyLinkDevice {
         }
 
         manager.centralManager(central, didConnect: peripheral)
-
         NotificationCenter.default.post(name: .DeviceConnectionStateDidChange, object: self)
     }
 
@@ -439,7 +441,7 @@ extension RileyLinkDevice: PeripheralManagerDelegate {
     func peripheralManager(_ manager: PeripheralManager, didUpdateNotificationStateFor characteristic: CBCharacteristic) {
         log.debug("Did didUpdateNotificationStateFor %@", characteristic)
     }
-
+    
     // If PeripheralManager receives a response on the data queue, without an outstanding request,
     // it will pass the update to this method, which is called on the central's queue.
     // This is how idle listen responses are handled
@@ -498,7 +500,7 @@ extension RileyLinkDevice: PeripheralManagerDelegate {
                             self.log.debug("Idle error received: %@", String(describing: response.code))
                         case .success:
                             if let packet = response.packet {
-                                self.log.debug("Idle packet received: %@", value.hexadecimalString)
+                                self.log.default("Idle packet received: %{public}@", String(describing: packet))
                                 NotificationCenter.default.post(
                                     name: .DevicePacketReceived,
                                     object: self,
@@ -507,7 +509,7 @@ extension RileyLinkDevice: PeripheralManagerDelegate {
                             }
                         }
                     } else {
-                        self.log.error("Unknown idle response: %@", value.hexadecimalString)
+                        self.log.error("Unknown idle response: %{public}@", value.hexadecimalString)
                     }
                 } else {
                     self.log.error("Skipping parsing characteristic value update due to missing BLE firmware version")
@@ -554,6 +556,7 @@ extension RileyLinkDevice: PeripheralManagerDelegate {
     }
 
     func peripheralManager(_ manager: PeripheralManager, didReadRSSI RSSI: NSNumber, error: Error?) {
+        self.rssi = Int(truncating: RSSI)
         NotificationCenter.default.post(
             name: .DeviceRSSIDidChange,
             object: self,
@@ -577,13 +580,14 @@ extension RileyLinkDevice: PeripheralManagerDelegate {
 
         let radioVersionString = try manager.readRadioFirmwareVersion(timeout: 1, responseType: bleFirmwareVersion?.responseType ?? .buffered)
         radioFirmwareVersion = RadioFirmwareVersion(versionString: radioVersionString)
-
+        
         try manager.setOrangeNotifyOn()
     }
 }
 
 
 extension RileyLinkDevice: CustomDebugStringConvertible {
+    
     public var debugDescription: String {
         os_unfair_lock_lock(&lock)
         let lastIdle = self.lastIdle
@@ -611,7 +615,7 @@ extension RileyLinkDevice {
     public static let notificationPacketKey = "com.rileylink.RileyLinkBLEKit.RileyLinkDevice.NotificationPacket"
 
     public static let notificationRSSIKey = "com.rileylink.RileyLinkBLEKit.RileyLinkDevice.NotificationRSSI"
-
+    
     public static let batteryLevelKey = "com.rileylink.RileyLinkBLEKit.RileyLinkDevice.BatteryLevel"
 }
 
@@ -628,7 +632,7 @@ extension Notification.Name {
     public static let DeviceRSSIDidChange = Notification.Name(rawValue: "com.rileylink.RileyLinkBLEKit.RSSIDidChange")
 
     public static let DeviceTimerDidTick = Notification.Name(rawValue: "com.rileylink.RileyLinkBLEKit.TimerTickDidChange")
-
+    
     public static let DeviceStatusUpdated = Notification.Name(rawValue: "com.rileylink.RileyLinkBLEKit.DeviceStatusUpdated")
 
     public static let DeviceBatteryLevelUpdated = Notification.Name(rawValue: "com.rileylink.RileyLinkBLEKit.BatteryLevelUpdated")

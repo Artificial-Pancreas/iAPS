@@ -176,7 +176,7 @@ class MainViewController: RileyLinkSettingsViewController {
         switch Section(rawValue: indexPath.section)! {
         case .rileyLinks:
             let device = devicesDataSource.devices[indexPath.row]
-            let vc = RileyLinkDeviceTableViewController(device: device)
+            let vc = RileyLinkDeviceTableViewController(device: device, batteryAlertLevel: nil, batteryAlertLevelChanged: nil)
             show(vc, sender: indexPath)
         case .pump:
             if let pumpManager = deviceDataManager.pumpManager {
@@ -184,7 +184,7 @@ class MainViewController: RileyLinkSettingsViewController {
                 settings.completionDelegate = self
                 present(settings, animated: true)
             } else {
-                var setupViewController: PumpManagerSetupViewController & UIViewController & CompletionNotifying
+                var setupViewController: UIViewController & PumpManagerOnboarding & CompletionNotifying
                 switch PumpActionRow(rawValue: indexPath.row)! {
                 case .addMinimedPump:
                     setupViewController = UIStoryboard(name: "MinimedPumpManager", bundle: Bundle(for: MinimedPumpManagerSetupViewController.self)).instantiateViewController(withIdentifier: "DevelopmentPumpSetup") as! MinimedPumpManagerSetupViewController
@@ -221,9 +221,14 @@ extension MainViewController: CompletionDelegate {
     }
 }
 
-extension MainViewController: PumpManagerSetupViewControllerDelegate {
-    func pumpManagerSetupViewController(_ pumpManagerSetupViewController: PumpManagerSetupViewController, didSetUpPumpManager pumpManager: PumpManagerUI) {
+extension MainViewController: PumpManagerCreateDelegate {
+    func pumpManagerOnboarding(_ notifying: PumpManagerCreateNotifying, didCreatePumpManager pumpManager: PumpManagerUI) {
         deviceDataManager.pumpManager = pumpManager
+    }
+}
+
+extension MainViewController: PumpManagerOnboardingDelegate {
+    func pumpManagerOnboarding(_ notifying: PumpManagerOnboarding, didOnboardPumpManager pumpManager: PumpManagerUI, withSettings settings: PumpManagerSetupSettings) {
         show(pumpManager.settingsViewController(insulinTintColor: insulinTintColor, guidanceColors: guidanceColors), sender: nil)
         tableView.reloadSections(IndexSet([Section.pump.rawValue]), with: .none)
     }

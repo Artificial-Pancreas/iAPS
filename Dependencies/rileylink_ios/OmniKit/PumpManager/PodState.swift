@@ -56,6 +56,7 @@ public struct PodState: RawRepresentable, Equatable, CustomDebugStringConvertibl
 
     public var activatedAt: Date?
     public var expiresAt: Date?  // set based on StatusResponse timeActive and can change with Pod clock drift and/or system time change
+    public var activeTime: TimeInterval? // Useful after pod deactivated or faulted.
 
     public var setupUnitsDelivered: Double?
 
@@ -65,6 +66,8 @@ public struct PodState: RawRepresentable, Equatable, CustomDebugStringConvertibl
     public let tid: UInt32
     var activeAlertSlots: AlertSet
     public var lastInsulinMeasurements: PodInsulinMeasurements?
+
+    public var unacknowledgedCommand: PendingCommand?
 
     public var unfinalizedBolus: UnfinalizedDose?
     public var unfinalizedTempBasal: UnfinalizedDose?
@@ -91,6 +94,7 @@ public struct PodState: RawRepresentable, Equatable, CustomDebugStringConvertibl
     public var primeFinishTime: Date?
     public var setupProgress: SetupProgress
     public var configuredAlerts: [AlertSlot: PodAlert]
+    public var insulinType: InsulinType
 
     public var activeAlerts: [AlertSlot: PodAlert] {
         var active = [AlertSlot: PodAlert]()
@@ -101,12 +105,14 @@ public struct PodState: RawRepresentable, Equatable, CustomDebugStringConvertibl
         }
         return active
     }
-    
-    public var insulinType: InsulinType
-    
-    // the following two vars are not persistent across app restarts
-    public var deliveryStatusVerified: Bool
-    public var lastCommsOK: Bool
+
+    // Allow a grace period while the unacknowledged command is first being sent.
+    public var needsCommsRecovery: Bool {
+        if let unacknowledgedCommand = unacknowledgedCommand, !unacknowledgedCommand.isInFlight {
+            return true
+        }
+        return false
+    }
 
     public init(address: UInt32, piVersion: String, pmVersion: String, lot: UInt32, tid: UInt32, packetNumber: Int = 0, messageNumber: Int = 0, insulinType: InsulinType) {
         self.address = address
@@ -125,8 +131,6 @@ public struct PodState: RawRepresentable, Equatable, CustomDebugStringConvertibl
         self.setupProgress = .addressAssigned
         self.configuredAlerts = [.slot7: .waitingForPairingReminder]
         self.insulinType = insulinType
-        self.deliveryStatusVerified = false
-        self.lastCommsOK = false
     }
     
     public var unfinishedSetup: Bool {
@@ -188,90 +192,106 @@ public struct PodState: RawRepresentable, Equatable, CustomDebugStringConvertibl
     public mutating func updateFromStatusResponse(_ response: StatusResponse) {
         let now = updatePodTimes(timeActive: response.timeActive)
         updateDeliveryStatus(deliveryStatus: response.deliveryStatus, podProgressStatus: response.podProgressStatus, bolusNotDelivered: response.bolusNotDelivered)
-        lastInsulinMeasurements = PodInsulinMeasurements(insulinDelivered: response.insulin, reservoirLevel: response.reservoirLevel, setupUnitsDelivered: setupUnitsDelivered, validTime: now)
-        activeAlertSlots = response.alerts
-    }
 
-    public mutating func updateFromDetailedStatusResponse(_ response: DetailedStatus) {
-        let now = updatePodTimes(timeActive: response.timeActive)
-        updateDeliveryStatus(deliveryStatus: response.deliveryStatus, podProgressStatus: response.podProgressStatus, bolusNotDelivered: response.bolusNotDelivered)
-        lastInsulinMeasurements = PodInsulinMeasurements(insulinDelivered: response.totalInsulinDelivered, reservoirLevel: response.reservoirLevel, setupUnitsDelivered: setupUnitsDelivered, validTime: now)
-        activeAlertSlots = response.unacknowledgedAlerts
+        let setupUnits = setupUnitsDelivered ?? Pod.primeUnits + Pod.cannulaInsertionUnits + Pod.cannulaInsertionUnitsExtra
+
+        // Calculated new delivered value which will be a negative value until setup has completed OR after a pod reset fault
+        let calcDelivered = response.insulinDelivered - setupUnits
+
+        // insulinDelivered should never be a negative value or decrease from the previous saved delivered value
+        let prevDelivered = lastInsulinMeasurements?.delivered ?? 0
+        let insulinDelivered = max(calcDelivered, prevDelivered)
+
+        lastInsulinMeasurements = PodInsulinMeasurements(insulinDelivered: insulinDelivered, reservoirLevel: response.reservoirLevel, validTime: now)
+
+        activeAlertSlots = response.alerts
     }
 
     public mutating func registerConfiguredAlert(slot: AlertSlot, alert: PodAlert) {
         configuredAlerts[slot] = alert
     }
 
-    public mutating func finalizeFinishedDoses() {
-        if let bolus = unfinalizedBolus, bolus.isFinished {
+    public mutating func finalizeAllDoses() {
+        if let bolus = unfinalizedBolus {
             finalizedDoses.append(bolus)
             unfinalizedBolus = nil
         }
 
-        if let tempBasal = unfinalizedTempBasal, tempBasal.isFinished {
+        if let tempBasal = unfinalizedTempBasal {
             finalizedDoses.append(tempBasal)
             unfinalizedTempBasal = nil
         }
     }
+
+    // Giving up on pod; we will assume commands failed/succeeded in the direction of positive net delivery
+    mutating func resolveAnyPendingCommandWithUncertainty() {
+        guard let pendingCommand = unacknowledgedCommand else {
+            return
+        }
+
+        switch pendingCommand {
+        case .program(let program, _, let commandDate, _):
+
+            if let dose = program.unfinalizedDose(at: commandDate, withCertainty: .uncertain, insulinType: insulinType) {
+                switch dose.doseType {
+                case .bolus:
+                    if dose.isFinished() {
+                        finalizedDoses.append(dose)
+                    } else {
+                        unfinalizedBolus = dose
+                    }
+                case .tempBasal:
+                    // Assume a high temp succeeded, but low temp failed
+                    if case .tempBasal(_, _, let isHighTemp, _) = program, isHighTemp {
+                        if dose.isFinished() {
+                            finalizedDoses.append(dose)
+                        } else {
+                            unfinalizedTempBasal = dose
+                        }
+                    }
+                case .resume:
+                    finalizedDoses.append(dose)
+                case .suspend:
+                    break // start program is never a suspend
+                }
+            }
+        case .stopProgram(let stopProgram, _, let commandDate, _):
+            // All stop programs result in reduced delivery, except for stopping a low temp, so we assume all stop
+            // commands failed, except for low temp
+
+
+            if stopProgram.contains(.tempBasal),
+                let tempBasal = unfinalizedTempBasal,
+                tempBasal.isHighTemp,
+                !tempBasal.isFinished(at: commandDate)
+            {
+                unfinalizedTempBasal?.cancel(at: commandDate)
+            }
+        }
+        self.unacknowledgedCommand = nil
+    }
     
     private mutating func updateDeliveryStatus(deliveryStatus: DeliveryStatus, podProgressStatus: PodProgressStatus, bolusNotDelivered: Double) {
 
-        deliveryStatusVerified = true
         // See if the pod deliveryStatus indicates an active bolus or temp basal that the PodState isn't tracking (possible Loop restart)
         if deliveryStatus.bolusing && unfinalizedBolus == nil { // active bolus that Loop doesn't know about?
-            deliveryStatusVerified = false // remember that we had inconsistent (bolus) delivery status
             if podProgressStatus.readyForDelivery {
                 // Create an unfinalizedBolus with the remaining bolus amount to capture what we can.
-                unfinalizedBolus = UnfinalizedDose(bolusAmount: bolusNotDelivered, startTime: Date(), scheduledCertainty: .certain, insulinType: insulinType, automatic: nil)
-            }
-        }
-        if deliveryStatus.tempBasalRunning && unfinalizedTempBasal == nil { // active temp basal that Loop doesn't know about?
-            deliveryStatusVerified = false // remember that we had inconsistent (temp basal) delivery status
-        }
-
-        finalizeFinishedDoses()
-
-        if let bolus = unfinalizedBolus, bolus.scheduledCertainty == .uncertain {
-            if deliveryStatus.bolusing {
-                // Bolus did schedule
-                unfinalizedBolus?.scheduledCertainty = .certain
-            } else {
-                // Bolus didn't happen
-                unfinalizedBolus = nil
+                unfinalizedBolus = UnfinalizedDose(bolusAmount: bolusNotDelivered, startTime: Date(), scheduledCertainty: .certain, insulinType: insulinType, automatic: false)
             }
         }
 
-        if let tempBasal = unfinalizedTempBasal, tempBasal.scheduledCertainty == .uncertain {
-            if deliveryStatus.tempBasalRunning {
-                // Temp basal did schedule
-                unfinalizedTempBasal?.scheduledCertainty = .certain
-            } else {
-                // Temp basal didn't happen
-                unfinalizedTempBasal = nil
-            }
+        if let bolus = unfinalizedBolus, !deliveryStatus.bolusing {
+            finalizedDoses.append(bolus)
+            unfinalizedBolus = nil
         }
 
-        if let resume = unfinalizedResume, resume.scheduledCertainty == .uncertain {
-            if deliveryStatus != .suspended {
-                // Resume was enacted
-                unfinalizedResume?.scheduledCertainty = .certain
-            } else {
-                // Resume wasn't enacted
-                unfinalizedResume = nil
-            }
+        if let tempBasal = unfinalizedTempBasal, !deliveryStatus.tempBasalRunning {
+            finalizedDoses.append(tempBasal)
+            unfinalizedTempBasal = nil
         }
 
         if let suspend = unfinalizedSuspend {
-            if suspend.scheduledCertainty == .uncertain {
-                if deliveryStatus == .suspended {
-                    // Suspend was enacted
-                    unfinalizedSuspend?.scheduledCertainty = .certain
-                } else {
-                    // Suspend wasn't enacted
-                    unfinalizedSuspend = nil
-                }
-            }
 
             if let resume = unfinalizedResume, suspend.startTime < resume.startTime {
                 finalizedDoses.append(suspend)
@@ -304,6 +324,7 @@ public struct PodState: RawRepresentable, Equatable, CustomDebugStringConvertibl
         self.lot = lot
         self.tid = tid
 
+        self.activeTime = rawValue["activeTime"] as? TimeInterval
 
         if let activatedAt = rawValue["activatedAt"] as? Date {
             self.activatedAt = activatedAt
@@ -329,6 +350,13 @@ public struct PodState: RawRepresentable, Equatable, CustomDebugStringConvertibl
             self.suspendState = suspendState
         } else {
             return nil
+        }
+
+        if let rawPendingCommand = rawValue["unacknowledgedCommand"] as? PendingCommand.RawValue {
+            // When loading from raw state, we know comms are no longer in progress; this helps recover from a crash
+            self.unacknowledgedCommand = PendingCommand(rawValue: rawPendingCommand)?.commsFinished
+        } else {
+            self.unacknowledgedCommand = nil
         }
 
         if let rawUnfinalizedBolus = rawValue["unfinalizedBolus"] as? UnfinalizedDose.RawValue
@@ -406,12 +434,12 @@ public struct PodState: RawRepresentable, Equatable, CustomDebugStringConvertibl
         } else {
             // Assume migration, and set up with alerts that are normally configured
             self.configuredAlerts = [
-                .slot2: .shutdownImminentAlarm(0),
-                .slot3: .expirationAlert(0),
-                .slot4: .lowReservoirAlarm(0),
+                .slot2: .shutdownImminent(0),
+                .slot3: .expirationReminder(0),
+                .slot4: .lowReservoir(0),
                 .slot5: .podSuspendedReminder(active: false, suspendTime: 0),
                 .slot6: .suspendTimeExpired(suspendTime: 0),
-                .slot7: .expirationAdvisoryAlarm(alarmTime: 0, duration: 0)
+                .slot7: .expired(alertTime: 0, duration: 0)
             ]
         }
         
@@ -422,9 +450,6 @@ public struct PodState: RawRepresentable, Equatable, CustomDebugStringConvertibl
         } else {
             insulinType = .novolog
         }
-
-        self.deliveryStatusVerified = false
-        self.lastCommsOK = false
     }
     
     public var rawValue: RawValue {
@@ -442,46 +467,28 @@ public struct PodState: RawRepresentable, Equatable, CustomDebugStringConvertibl
             "setupProgress": setupProgress.rawValue,
             "insulinType": insulinType.rawValue
             ]
-        
-        if let unfinalizedBolus = self.unfinalizedBolus {
-            rawValue["unfinalizedBolus"] = unfinalizedBolus.rawValue
-        }
-        
-        if let unfinalizedTempBasal = self.unfinalizedTempBasal {
-            rawValue["unfinalizedTempBasal"] = unfinalizedTempBasal.rawValue
-        }
 
-        if let unfinalizedSuspend = self.unfinalizedSuspend {
-            rawValue["unfinalizedSuspend"] = unfinalizedSuspend.rawValue
-        }
+        rawValue["unacknowledgedCommand"] = unacknowledgedCommand?.rawValue
 
-        if let unfinalizedResume = self.unfinalizedResume {
-            rawValue["unfinalizedResume"] = unfinalizedResume.rawValue
-        }
+        rawValue["unfinalizedBolus"] = unfinalizedBolus?.rawValue
 
-        if let lastInsulinMeasurements = self.lastInsulinMeasurements {
-            rawValue["lastInsulinMeasurements"] = lastInsulinMeasurements.rawValue
-        }
-        
-        if let fault = self.fault {
-            rawValue["fault"] = fault.rawValue
-        }
+        rawValue["unfinalizedTempBasal"] = unfinalizedTempBasal?.rawValue
 
-        if let primeFinishTime = primeFinishTime {
-            rawValue["primeFinishTime"] = primeFinishTime
-        }
+        rawValue["unfinalizedSuspend"] = unfinalizedSuspend?.rawValue
 
-        if let activatedAt = activatedAt {
-            rawValue["activatedAt"] = activatedAt
-        }
+        rawValue["unfinalizedResume"] = unfinalizedResume?.rawValue
 
-        if let expiresAt = expiresAt {
-            rawValue["expiresAt"] = expiresAt
-        }
+        rawValue["lastInsulinMeasurements"] = lastInsulinMeasurements?.rawValue
 
-        if let setupUnitsDelivered = setupUnitsDelivered {
-            rawValue["setupUnitsDelivered"] = setupUnitsDelivered
-        }
+        rawValue["fault"] = fault?.rawValue
+
+        rawValue["primeFinishTime"] = primeFinishTime
+
+        rawValue["activeTime"] = activeTime
+        rawValue["activatedAt"] = activatedAt
+        rawValue["expiresAt"] = expiresAt
+
+        rawValue["setupUnitsDelivered"] = setupUnitsDelivered
 
         if configuredAlerts.count > 0 {
             let rawConfiguredAlerts = Dictionary(uniqueKeysWithValues:
@@ -506,6 +513,7 @@ public struct PodState: RawRepresentable, Equatable, CustomDebugStringConvertibl
             "* lot: \(lot)",
             "* tid: \(tid)",
             "* suspendState: \(suspendState)",
+            "* unacknowledgedCommand: \(String(describing: unacknowledgedCommand))",
             "* unfinalizedBolus: \(String(describing: unfinalizedBolus))",
             "* unfinalizedTempBasal: \(String(describing: unfinalizedTempBasal))",
             "* unfinalizedSuspend: \(String(describing: unfinalizedSuspend))",
@@ -517,6 +525,7 @@ public struct PodState: RawRepresentable, Equatable, CustomDebugStringConvertibl
             "* primeFinishTime: \(String(describing: primeFinishTime))",
             "* configuredAlerts: \(String(describing: configuredAlerts))",
             "* insulinType: \(String(describing: insulinType))",
+            "* pdmRef: \(String(describing: fault?.pdmRef))",
             "",
             fault != nil ? String(reflecting: fault!) : "fault: nil",
             "",
