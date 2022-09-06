@@ -964,6 +964,15 @@ Enact a temp Basal or a temp target */
  /* Error title */
  "Error" = "Fel";
 
+/* ---------------------------------------
+  DASH strings
+*/
+"Attach Pod" = "Attach Pod";
+
+"Deactivate Pod" = "Deactivate Pod";
+
+"Pair Pod" = "Pair Pod";
+
  /* --------------------------------------
 
   Infotexts from openaps.docs and androidaps.docs
