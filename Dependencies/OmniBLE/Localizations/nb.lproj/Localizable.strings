@@ -1,4 +1,4 @@
-/* 
+/*
   Localizable.strings
   OmniBLE
   Created by Jon Mårtensson on 2022-08-28.
@@ -94,6 +94,18 @@
 
 /* Settings page link description when next lifecycle action is to pair new pod */
 "Pair Pod" = "Pair Pod";
+
+/* Pairing action button accessibility label while ready to pair */
+"Pair pod." = "Pair pod.";
+
+/* Pairing action button accessibility label while pairing */
+"Pairing." = "Pairing.";
+
+/* Pairing action button accessibility label while priming */
+"Priming. Please wait." = "Priming. Please wait.";
+
+/* Pairing action button accessibility label when pairing succeeded */
+"Pod paired successfully. Continue." = "Pod paired successfully. Continue.";
 
 /* Settings page link description when next lifecycle action is to finish deactivation */
 "Finish deactivation" = "Fullfør deaktiveringen";
@@ -472,7 +484,7 @@
 /* Label text indicating insertion finished. */
 "Inserted" = "Inserted";
 
-/* */
+/* Check Cannula */
 "Check Cannula" = "Check Cannula";
 
 /* */
@@ -481,32 +493,50 @@
 /* Description of proper cannula insertion */
 "The window on the top of the Pod should be colored pink when the cannula is properly inserted into the skin." = "The window on the top of the Pod should be colored pink when the cannula is properly inserted into the skin.";
 
-/* Button label for user to answer cannula was properly inserted */
-"Yes" = "Yes";
+/* Button label for user to answer cannula was properly inserted  */
+"Yes" = "Ja";
 
-/* Button label for user to answer cannula was not properly inserted" */
-"No" = "No";
+/* Button label for user to answer cannula was not properly inserted */
+"No" = "Nei";
 
 /* Pod pairing action button text while pairing */
-"Pairing..." = "Pairing...";
+"Pairing..." = "Kobler sammen...";
 
 /* Pod pairing action button text while priming */
-"Priming..." = "Priming...";
+"Priming..." = "Fyller...";
 
 /* Format string for instructions for setup complete view. (1: app name) */
-"Your Pod is ready for use.\n\n%1$@ will remind you to change your pod before it expires. You can change this to a time convenient for you." = "Your Pod is ready for use.\n\n%1$@ will remind you to change your pod before it expires. You can change this to a time convenient for you.";
+"Your Pod is ready for use.\n\n%1$@ will remind you to change your pod before it expires. You can change this to a time convenient for you." = "Pod er klar til bruk.\n\n%1$@ vil minne deg på å bytte pod før den utløper. Du kan sette påminnelsen til et passende tidspunkt.";
 
 /* */
-"Scheduled Reminder" = "Scheduled Reminder";
+"Scheduled Reminder" = "Planlagt påminnelse";
 
 /* Label for expiration reminder row */
 "Time" = "Tidspunkt";
 
 /* Action button title to continue at Setup Complete */
-"Finish Setup" = "Finish Setup";
+"Finish Setup" = "Fullfør oppsett";
 
 /* */
-"Setup Complete" = "Setup Complete";
+"Setup Complete" = "Oppsett ferdig";
 
 /* Value text for no expiration reminder */
-"No Reminder" = "No Reminder";
+"No Reminder" = "Ingen påminnelse";
+
+/* Error message description for PeripheralManagerError.notReady */
+"Peripheral Not Ready" = "Tilbehør er ikke klart";
+
+/* Error message description for PeripheralManagerError.incorrectResponse */
+"Incorrect Response" = "Ugyldig respons";
+
+/* Error message description for PeripheralManagerError.timeout */
+"Timeout" = "Tidsavbrudd";
+
+/* Error message description for PeripheralManagerError.emptyValue */
+"Empty Value" = "Tom verdi";
+
+/* Error message description for PeripheralManagerError.unknownCharacteristic */
+"Unknown Characteristic" = "Ukjent karakteristikk";
+
+/* Error message description for PeripheralManagerError.nack */
+"Nack" = "Nack";

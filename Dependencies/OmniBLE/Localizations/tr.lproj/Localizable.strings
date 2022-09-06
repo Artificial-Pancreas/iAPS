@@ -1,4 +1,4 @@
-/* 
+/*
   Localizable.strings
   OmniBLE
   Created by Jon Mårtensson on 2022-08-28.
@@ -21,7 +21,7 @@
 "Suspend In Progress Reminder" = "Devam Ediyor Hatırlatıcısını, Askıya Al";
 
 /* Alert content title for suspendEnded pod alert */
-"Resume Insulin" = "İnsülin Vermeye Yeniden Başlat";
+"Resume Insulin" = "İnsüline Devam Et";
 
 /* Alert content title for finishSetupReminder pod alert */
 "Pod Pairing Incomplete" = "Pod Eşleştirme Tamamlanmadı";
@@ -42,7 +42,7 @@
 "Change Pod now. Insulin delivery will stop in 1 hour." = "Pod'u şimdi değiştirin. İnsülin iletimi 1 saat içinde duracaktır.";
 
 /* Format string for alert content body for lowReservoir pod alert. (1: reminder value) */
-"%1$@ insulin or less remaining in Pod. Change Pod soon." = "Pod'ta %1$@ veya daha az insülin kaldı. Pod'u en kısa sürede değiştir.";
+"%1$@ insulin or less remaining in Pod. Change Pod soon." = "Pod'ta %1$@ veya daha az insülin kaldı. Pod'u en kısa sürede değiştirin.";
 
 /* Alert content body for suspendInProgress pod alert */
 "Suspend In Progress Reminder" = "Devam Ediyor Hatırlatıcısını, Askıya Al";
@@ -94,6 +94,18 @@
 
 /* Settings page link description when next lifecycle action is to pair new pod */
 "Pair Pod" = "Pod Eşleştir";
+
+/* Pairing action button accessibility label while ready to pair */
+"Pair pod." = "Pod Eşleştir.";
+
+/* Pairing action button accessibility label while pairing */
+"Pairing." = "Eşleştiriliyor.";
+
+/* Pairing action button accessibility label while priming */
+"Priming. Please wait." = "Hazırlanıyor. Lütfen Bekleyin.";
+
+/* Pairing action button accessibility label when pairing succeeded */
+"Pod paired successfully. Continue." = "Pod başarıyla eşleştirildi. Devam edin.";
 
 /* Settings page link description when next lifecycle action is to finish deactivation */
 "Finish deactivation" = "Devre dışı bırakma işlemini tamamla";
@@ -455,7 +467,7 @@
 "Attach Pod" = "Pod'u Ekleyin";
 
 /* Alert title for confirm pod attachment */
-"Confirm Pod Attachment" = "Pod Eklendiğini Onaylayın";
+"Confirm Pod Attachment" = "Pod'un Yapıştırıldığını Onaylayın";
 
 /* Alert message body for confirm pod attachment */
 "Please confirm that the Pod is securely attached to your body.\n\nThe cannula can be inserted only once with each Pod. Tap “Confirm” when Pod is attached." = "Lütfen Pod'un vücudunuza güvenli bir şekilde takıldığından emin olun.\n\nKanül her Pod ile yalnızca bir kez yerleştirilebilir. Pod takıldığında “Onayla”ya dokunun.";
@@ -472,7 +484,7 @@
 /* Label text indicating insertion finished. */
 "Inserted" = "Yerleştirildi";
 
-/* */
+/* Check Cannula */
 "Check Cannula" = "Kanülü Kontrol Edin";
 
 /* */
@@ -481,10 +493,10 @@
 /* Description of proper cannula insertion */
 "The window on the top of the Pod should be colored pink when the cannula is properly inserted into the skin." = "Kanül cilde düzgün bir şekilde yerleştirildiğinde Pod'un üstündeki pencere pembe renkte olmalıdır.";
 
-/* Button label for user to answer cannula was properly inserted */
+/* Button label for user to answer cannula was properly inserted  */
 "Yes" = "Yes";
 
-/* Button label for user to answer cannula was not properly inserted" */
+/* Button label for user to answer cannula was not properly inserted */
 "No" = "Hayır";
 
 /* Pod pairing action button text while pairing */
@@ -497,7 +509,7 @@
 "Your Pod is ready for use.\n\n%1$@ will remind you to change your pod before it expires. You can change this to a time convenient for you." = "Pod'unuz kullanıma hazır.\n\n%1$@ süresi dolmadan önce pod değiştirmeniz için hatırlatacak. Bunu sizin için uygun bir zamana değiştirebilirsiniz.";
 
 /* */
-"Scheduled Reminder" = "Zamanlanmış Hatırlatma";
+"Scheduled Reminder" = "Programlanmış Anımsatıcı";
 
 /* Label for expiration reminder row */
 "Time" = "Saat";
@@ -510,3 +522,21 @@
 
 /* Value text for no expiration reminder */
 "No Reminder" = "Hatırlatıcı Yok";
+
+/* Error message description for PeripheralManagerError.notReady */
+"Peripheral Not Ready" = "Periferal hazır değil";
+
+/* Error message description for PeripheralManagerError.incorrectResponse */
+"Incorrect Response" = "Yanlış Yanıt";
+
+/* Error message description for PeripheralManagerError.timeout */
+"Timeout" = "Zaman Aşımı";
+
+/* Error message description for PeripheralManagerError.emptyValue */
+"Empty Value" = "Boş Değer";
+
+/* Error message description for PeripheralManagerError.unknownCharacteristic */
+"Unknown Characteristic" = "Bilinmeyen Özellik";
+
+/* Error message description for PeripheralManagerError.nack */
+"Nack" = "Nack";

@@ -1,4 +1,4 @@
-/* 
+/*
   Localizable.strings
   OmniBLE
   Created by Jon Mårtensson on 2022-08-28.
@@ -94,6 +94,18 @@
 
 /* Settings page link description when next lifecycle action is to pair new pod */
 "Pair Pod" = "Pair Pod";
+
+/* Pairing action button accessibility label while ready to pair */
+"Pair pod." = "Pair pod.";
+
+/* Pairing action button accessibility label while pairing */
+"Pairing." = "Pairing.";
+
+/* Pairing action button accessibility label while priming */
+"Priming. Please wait." = "Priming. Please wait.";
+
+/* Pairing action button accessibility label when pairing succeeded */
+"Pod paired successfully. Continue." = "Pod paired successfully. Continue.";
 
 /* Settings page link description when next lifecycle action is to finish deactivation */
 "Finish deactivation" = "Finish deactivation";
@@ -439,10 +451,10 @@
 "No, Continue With Pod" = "Non, continuer avec le Pod";
 
 /* Label text for step one of attach pod instructions */
-"Prepare site." = "Préparez le site.";
+"Prepare site." = "Prepare site.";
 
 /* Label text for step two of attach pod instructions */
-"Remove blue Pod needle cap and check cannula. Then remove paper backing." = "Retirez le bouchon d'aiguille bleu et vérifiez la cannule, puis retirez le support papier.";
+"Remove blue Pod needle cap and check cannula. Then remove paper backing." = "Remove blue Pod needle cap and check cannula. Then remove paper backing.";
 
 /* Label text for step three of attach pod instructions */
 "Check Pod, apply to site, then confirm pod attachment." = "Check Pod, apply to site, then confirm pod attachment.";
@@ -452,61 +464,79 @@
 "Continue" = "Continuer";
 
 /* */
-"Attach Pod" = "Collez le Pod";
+"Attach Pod" = "Attach Pod";
 
 /* Alert title for confirm pod attachment */
-"Confirm Pod Attachment" = "Confirmer l'attachement du Pod";
+"Confirm Pod Attachment" = "Confirm Pod Attachment";
 
 /* Alert message body for confirm pod attachment */
-"Please confirm that the Pod is securely attached to your body.\n\nThe cannula can be inserted only once with each Pod. Tap “Confirm” when Pod is attached." = "Veuillez confirmer que le Pod est solidement attaché à votre corps.\n\nLa canule ne peut être insérée qu'une seule fois à chaque Pod. Appuyez sur « Confirmer » lorsque le Pod est attaché.";
+"Please confirm that the Pod is securely attached to your body.\n\nThe cannula can be inserted only once with each Pod. Tap “Confirm” when Pod is attached." = "Please confirm that the Pod is securely attached to your body.\n\nThe cannula can be inserted only once with each Pod. Tap “Confirm” when Pod is attached.";
 
 /* Button title for confirm attachment option */
-"Confirm" = "Confirmer";
+"Confirm" = "Confirm";
 
 /* Label text for step one of insert cannula instructions */
-"Tap below to start cannula insertion." = "Appuyez ci-dessous pour démarrer l'insertion de la cannule.";
+"Tap below to start cannula insertion." = "Tap below to start cannula insertion.";
 
 /* Label text for step two of insert cannula instructions */
-"Wait until insertion is completed." = "Attendez que l'insertion soit terminée.";
+"Wait until insertion is completed." = "Wait until insertion is completed.";
 
 /* Label text indicating insertion finished. */
-"Inserted" = "Inséré";
+"Inserted" = "Inserted";
+
+/* Check Cannula */
+"Check Cannula" = "Check Cannula";
 
 /* */
-"Check Cannula" = "Vérifier la canule";
-
-/* */
-"Is the cannula inserted properly?" = "La canule est-elle insérée correctement ?";
+"Is the cannula inserted properly?" = "Is the cannula inserted properly?";
 
 /* Description of proper cannula insertion */
-"The window on the top of the Pod should be colored pink when the cannula is properly inserted into the skin." = "La zone sur le dessus du Pod devrait être colorée rose lorsque la canule est correctement insérée dans la peau.";
+"The window on the top of the Pod should be colored pink when the cannula is properly inserted into the skin." = "The window on the top of the Pod should be colored pink when the cannula is properly inserted into the skin.";
 
-/* Button label for user to answer cannula was properly inserted */
-"Yes" = "Oui";
+/* Button label for user to answer cannula was properly inserted  */
+"Yes" = "Yes";
 
-/* Button label for user to answer cannula was not properly inserted" */
-"No" = "Non";
+/* Button label for user to answer cannula was not properly inserted */
+"No" = "No";
 
 /* Pod pairing action button text while pairing */
-"Pairing..." = "Appairage en cours...";
+"Pairing..." = "Pairing...";
 
 /* Pod pairing action button text while priming */
-"Priming..." = "Amorçage en cours...";
+"Priming..." = "Priming...";
 
 /* Format string for instructions for setup complete view. (1: app name) */
-"Your Pod is ready for use.\n\n%1$@ will remind you to change your pod before it expires. You can change this to a time convenient for you." = "Votre Paul est prêt à être utilisé.\n\n%1$@ vous rappellera de changer votre pod avant qu'il n'expire. Vous pouvez changer ce rappel à un moment qui vous convient.";
+"Your Pod is ready for use.\n\n%1$@ will remind you to change your pod before it expires. You can change this to a time convenient for you." = "Your Pod is ready for use.\n\n%1$@ will remind you to change your pod before it expires. You can change this to a time convenient for you.";
 
 /* */
-"Scheduled Reminder" = "Planifier un rappel";
+"Scheduled Reminder" = "Scheduled Reminder";
 
 /* Label for expiration reminder row */
 "Time" = "Heure";
 
 /* Action button title to continue at Setup Complete */
-"Finish Setup" = "Terminer la configuration";
+"Finish Setup" = "Finish Setup";
 
 /* */
-"Setup Complete" = "Mise en place terminée";
+"Setup Complete" = "Setup Complete";
 
 /* Value text for no expiration reminder */
-"No Reminder" = "Aucun rappel";
+"No Reminder" = "No Reminder";
+
+/* Error message description for PeripheralManagerError.notReady */
+"Peripheral Not Ready" = "Peripheral Not Ready";
+
+/* Error message description for PeripheralManagerError.incorrectResponse */
+"Incorrect Response" = "Incorrect Response";
+
+/* Error message description for PeripheralManagerError.timeout */
+"Timeout" = "Timeout";
+
+/* Error message description for PeripheralManagerError.emptyValue */
+"Empty Value" = "Empty Value";
+
+/* Error message description for PeripheralManagerError.unknownCharacteristic */
+"Unknown Characteristic" = "Unknown Characteristic";
+
+/* Error message description for PeripheralManagerError.nack */
+"Nack" = "Nack";
