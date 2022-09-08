@@ -954,7 +954,7 @@ Enact a temp Basal or a temp target */
 "Info" = "Bilgi";
 
 /* Warning title */
-"Warning" = "Warning";
+"Warning" = "Uyarı";
 
 /* Error title */
 "Error" = "Hata";
@@ -966,7 +966,103 @@ Enact a temp Basal or a temp target */
 
 "Deactivate Pod" = "Pod'u devredışı bırak";
 
+/* */
+"Deactivating..." = "Devre dışı bırakılıyor...";
+
 "Pair Pod" = "Pod Eşleştir";
+
+/* Text for previous pod information row */
+"Previous Pod Information" = "Önceki Pod Bilgileri";
+
+/* Text for confidence reminders navigation link */
+"Confidence Reminders" = "Onay sesi";
+
+"Confidence reminders are beeps from the pod which can be used to acknowledge selected commands." = "Onay sesleri, seçili komutları onaylamak için kullanılabilen pod'tan gelen bip sesleridir.";
+
+/* button title for saving low reservoir reminder while saving */
+"Saving..." = "Kaydediliyor...";
+
+/* button title for saving low reservoir reminder */
+"Save" = "Kaydet";
+
+/* Alert title for error when updating confidence reminder preference */
+"Failed to update confidence reminder preference." = "Onay sesi tercihi güncellenemedi.";
+
+/* */
+"No Error" = "Hata yok";
+
+/* description label for active time pod details row */
+"Active Time" = "Aktif Süre";
+
+/* Title string for BeepPreference.silent */
+"Disabled" = "Devre dışı";
+
+/* Title string for BeepPreference.manualCommands */
+"Enabled" = "Etkin";
+
+/* Title string for BeepPreference.extended */
+"Extended" = "Genişletilmiş";
+
+/* Description for BeepPreference.silent */
+"No confidence reminders are used." = "Onay sesi kullanılmaz.";
+
+/* Description for BeepPreference.manualCommands */
+"Confidence reminders will sound for commands you initiate, like bolus, cancel bolus, suspend, resume, save notification reminders, etc. When Loop automatically adjusts delivery, no confidence reminders are used." = "Bolus, bolusu iptal et, askıya al, devam ettir, bildirim hatırlatıcılarını kaydet vb. gibi başlattığınız komutlar için Onay sesleri çalacaktır. Döngü, iletimi otomatik olarak ayarladığında, hiçbir onay sesi kullanılmaz.";
+
+/* Description for BeepPreference.extended */
+"Confidence reminders will sound when Loop automatically adjusts delivery as well as for commands you initiate." = "Loop, başlattığınız komutların yanı sıra teslimatı otomatik olarak ayarladığında, onay sesi çalacaktır.";
+
+/* Label text for expiration reminder default row */
+"Expiration Reminder Default" = "Süre Sonu Hatırlatıcı Varsayılan";
+
+/* Value text for no expiration reminder */
+"No Reminder" = "Hatırlatıcı Yok";
+
+/* */
+"Scheduled Reminder" = "Programlanan Anımsatma";
+
+/* */
+"Low Reservoir Reminder" = "Düşük Rezervuar Hatırlatıcısı";
+
+/* The action string on pod status page when pod data is stale */
+"Make sure your phone and pod are close to each other. If communication issues persist, move to a new area." = "Telefonunuzun ve pod'unuzun birbirine yakın olduğundan emin olun. İletişim sorunları devam ederse, yeni bir alana geçin.";
+/* Format string for the action string on pod status page when pod expired. (1: service time remaining) */
+"Change Pod now. Insulin delivery will stop in %1$@ or when no more insulin remains." = "Pod'u şimdi değiştirin. İnsülin iletimi %1$@ içinde veya daha fazla insülin kalmadığında duracaktır.";
+
+/* Label text for temporary basal rate summary */
+"Rate" = "Oran";
+
+/* Summary string for temporary basal rate configuration page */
+"%1$@ for %2$@" = "%2$@ için %1$@";
+
+/* Description text on manual temp basal action sheet */
+"Loop will not automatically adjust your insulin delivery until the temporary basal rate finishes or is canceled." = "Döngü, geçici bazal oran bitene veya iptal edilene kadar insülin iletiminizi otomatik olarak ayarlamaz.";
+/* Button text for setting manual temporary basal rate*/
+"Set Temporary Basal" = "Geçici Bazalı Ayarla";
+
+/* Navigation Title for ManualTempBasalEntryView */
+"Temporary Basal" = "Geçici Bazal";
+
+/* Alert title for a failure to set temporary basal */
+"Temporary Basal Failed" = "Geçici Bazal Başarısız";
+
+/* Alert format string for a failure to set temporary basal with recovery suggestion. (1: error description) (2: recovery text) */
+"Unable to set a temporary basal rate: %1$@\n\n%2$@" = "Geçici bir bazal oran ayarlanamıyor: %1$@\n\n%2$@";
+
+/* Alert format string for a failure to set temporary basal. (1: error description) */
+"Unable to set a temporary basal rate: %1$@" = "Geçici bir bazal oran ayarlanamıyor: %1$@";
+
+/* Alert title for missing temp basal configuration */
+"Missing Config" = "Konfigurasyon Bulunamadı";
+
+/* Alert format string for missing temp basal configuration. */
+"This PumpManager has not been configured with a maximum basal rate because it was added before manual temp basal was a feature. Please go to therapy settings -> delivery limits and set a new maximum basal rate." = "Bu PumpManager, manuel temp bazal bir özellik olmadan önce eklendiğinden maksimum bazal oranı ile yapılandırılmadı. Lütfen terapi ayarları -> iletim limitlerine gidin ve yeni bir maksimum bazal oran ayarlayın.";
+
+"* description label for active time pod details row */
+Active Time" = "Aktif Süre";
+
+/* description label for total delivery pod details row */
+"Total Delivery" = "Toplam Teslimat";
 
 /* --------------------------------------
 
