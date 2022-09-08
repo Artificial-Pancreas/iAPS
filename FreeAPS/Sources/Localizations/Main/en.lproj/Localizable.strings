@@ -955,7 +955,7 @@ Enact a temp Basal or a temp target */
  "Info" = "Info";
 
  /* Warning title */
- "Warning" = "Varning";
+ "Warning" = "Warning";
 
  /* Error title */
  "Error" = "Error";
