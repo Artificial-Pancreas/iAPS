@@ -1082,6 +1082,18 @@ Enact a temp Basal or a temp target */
 /* */
 "Setup Complete" = "Setup Complete";
 
+/* */
+"Insulin Suspended" = "Insulin Suspended";
+
+/* Text for suspend resume button when insulin delivery is suspending */
+"Suspending insulin delivery..." = "Suspending insulin delivery...";
+
+/* Text for suspend resume button when insulin delivery is suspended */
+"Resume Insulin Delivery" = "Resume Insulin Delivery";
+
+/* Text for suspend resume button when insulin delivery is resuming */
+"Resuming insulin delivery..." = "Resuming insulin delivery...";
+
  /* --------------------------------------
 
   Infotexts from openaps.docs and androidaps.docs
