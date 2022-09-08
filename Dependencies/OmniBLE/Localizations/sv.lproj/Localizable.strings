@@ -579,3 +579,21 @@
     
 /* Format string for the action string on pod status page when pod expired. (1: service time remaining) */
 "Change Pod now. Insulin delivery will stop in %1$@ or when no more insulin remains." = "Change Pod now. Insulin delivery will stop in %1$@ or when no more insulin remains.";
+
+/* Title string for BeepPreference.silent */
+"Disabled" = "Av";
+
+/* Title string for BeepPreference.manualCommands */
+"Enabled" = "På";
+
+/* Title string for BeepPreference.extended */
+"Extended" = "Utökad";
+
+/* Description for BeepPreference.silent */
+"No confidence reminders are used." = "Inga ljud på.";
+
+/* Description for BeepPreference.manualCommands */
+"Confidence reminders will sound for commands you initiate, like bolus, cancel bolus, suspend, resume, save notification reminders, etc. When Loop automatically adjusts delivery, no confidence reminders are used." = "Bekräftelseljud kommer att pipa för för ala pumpkommandon du ger, som bolus, avbryt bolus, pausa pump, återuppta insulintillförsel, spara påminnelser etc. När FreeAPS X automatiskt justerar insulintillförsel kommer inga pip att ljuda.";
+
+/* Description for BeepPreference.extended */
+"Confidence reminders will sound when Loop automatically adjusts delivery as well as for commands you initiate." = "Bekräftelsepip kommer att ljuda även vid automatiska pumpkommandon såväl som vid manuella.";
