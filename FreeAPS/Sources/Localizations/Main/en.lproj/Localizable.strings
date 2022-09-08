@@ -971,6 +971,9 @@ Enact a temp Basal or a temp target */
 
 "Deactivate Pod" = "Deactivate Pod";
 
+/* */
+"Deactivating..." = "Deactivating...";
+
 "Pair Pod" = "Pair Pod";
 
 /* Text for previous pod information row */
