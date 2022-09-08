@@ -1066,6 +1066,9 @@ Enact a temp Basal or a temp target */
 /* description label for total delivery pod details row */
 "Total Delivery" = "Total insulinmängd given";
 
+/* */
+"Add Omnipod Dash" = "Lägg till Omnipod Dash";
+
 /* --------------------------------------
 
   Infotexts from openaps.docs and androidaps.docs
