@@ -96,13 +96,13 @@
 "Pair Pod" = "Pair Pod";
 
 /* Pairing action button accessibility label while ready to pair */
-"Pair pod." = "Pair pod.";
+"Pair pod." = "Tilkoble pod.";
 
 /* Pairing action button accessibility label while pairing */
-"Pairing." = "Pairing.";
+"Pairing." = "Kobler sammen.";
 
 /* Pairing action button accessibility label while priming */
-"Priming. Please wait." = "Priming. Please wait.";
+"Priming. Please wait." = "Fyller. Vennligst vent.";
 
 /* Pairing action button accessibility label when pairing succeeded */
 "Pod paired successfully. Continue." = "Pod paired successfully. Continue.";
@@ -403,7 +403,7 @@
 "Pod deactivated successfully. Continue." = "Pod deactivated successfully. Continue.";
 
 /* Action button description for deactivate after failed attempt */
-"Retry" = "Retry";
+"Retry" = "Prøv igjen";
 
 /* Action button description when deactivated */
 "Continue" = "Fortsett";
@@ -412,19 +412,19 @@
 "There was a problem communicating with the pod. If this problem persists, tap Discard Pod. You can then activate a new Pod." = "There was a problem communicating with the pod. If this problem persists, tap Discard Pod. You can then activate a new Pod.";
 
 /* Text for discard pod button */
-"Discard Pod" = "Discard Pod";
+"Discard Pod" = "Forkast pod";
 
 /* Title for remove pod modal */
-"Remove Pod from Body" = "Remove Pod from Body";
+"Remove Pod from Body" = "Fjern pod fra kroppen";
 
 /* Alert message body for confirm pod attachment */
-"Your Pod may still be delivering Insulin.\nRemove it from your body, then tap “Continue.“" = "Your Pod may still be delivering Insulin.\nRemove it from your body, then tap “Continue.“";
+"Your Pod may still be delivering Insulin.\nRemove it from your body, then tap “Continue.“" = "Det kan fortsatt bli levert insulin fra poden.\nFjern den fra kroppen, og trykk \"Fortsett\".";
 
 /* Insulin Unit */
 "U" = "E";
 
 /* The action string on pod status page when pod expired */
-"Change Pod now. Insulin delivery will stop 8 hours after the Pod has expired or when no more insulin remains." = "Change Pod now. Insulin delivery will stop 8 hours after the Pod has expired or when no more insulin remains.";
+"Change Pod now. Insulin delivery will stop 8 hours after the Pod has expired or when no more insulin remains." = "Bytt pod nå. Insulintilførsel stopper 8 timer etter at den er utgått eller når det ikke er mer insulin igjen.";
 
 /* Label text for step 1 of pair pod instructions */
 "Fill a new pod with U-100 Insulin (leave blue Pod needle cap on)." = "Fyll en ny pod med U-100 insulin (la blått beskyttelsesdeksel være på).";
@@ -464,7 +464,7 @@
 "Continue" = "Fortsett";
 
 /* */
-"Attach Pod" = "Attach Pod";
+"Attach Pod" = "Fest pod";
 
 /* Alert title for confirm pod attachment */
 "Confirm Pod Attachment" = "Confirm Pod Attachment";
@@ -473,25 +473,25 @@
 "Please confirm that the Pod is securely attached to your body.\n\nThe cannula can be inserted only once with each Pod. Tap “Confirm” when Pod is attached." = "Please confirm that the Pod is securely attached to your body.\n\nThe cannula can be inserted only once with each Pod. Tap “Confirm” when Pod is attached.";
 
 /* Button title for confirm attachment option */
-"Confirm" = "Confirm";
+"Confirm" = "Bekreft";
 
 /* Label text for step one of insert cannula instructions */
-"Tap below to start cannula insertion." = "Tap below to start cannula insertion.";
+"Tap below to start cannula insertion." = "Trykk under for å begynne innsetting av kanylen.";
 
 /* Label text for step two of insert cannula instructions */
-"Wait until insertion is completed." = "Wait until insertion is completed.";
+"Wait until insertion is completed." = "Vent til innsettingen er fullført.";
 
 /* Label text indicating insertion finished. */
-"Inserted" = "Inserted";
+"Inserted" = "Kanyle er satt inn";
 
 /* Check Cannula */
-"Check Cannula" = "Check Cannula";
+"Check Cannula" = "Kontroller kanyle";
 
 /* */
-"Is the cannula inserted properly?" = "Is the cannula inserted properly?";
+"Is the cannula inserted properly?" = "Er kanylen satt inn riktig?";
 
 /* Description of proper cannula insertion */
-"The window on the top of the Pod should be colored pink when the cannula is properly inserted into the skin." = "The window on the top of the Pod should be colored pink when the cannula is properly inserted into the skin.";
+"The window on the top of the Pod should be colored pink when the cannula is properly inserted into the skin." = "Vinduet på oversiden av pod skal farges rosa når kanylen har blitt satt inn riktig.";
 
 /* Button label for user to answer cannula was properly inserted  */
 "Yes" = "Ja";

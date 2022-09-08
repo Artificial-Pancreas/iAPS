@@ -80,10 +80,10 @@
 "Rising very fast" = "Steigt sehr schnell";
 
 /* The short unit display string for international units of insulin */
-"U" = "IE";
+"U" = " IE";
 
 /* The short unit display string for international units of insulin per hour */
-"U/hr" = "IE/Std.";
+"U/hr" = "IE/Std";
 
 /* The long unit display string for a singular international unit of insulin */
 "Unit" = "Einheit";
@@ -96,4 +96,3 @@
 
 /* The long unit display string for international units of insulin per hour */
 "Units/hour" = "Einheiten/Stunde";
-

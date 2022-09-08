@@ -7,7 +7,7 @@
 "Add insulin without actually bolusing" = "Додати інсулін без подачі болюсу";
 
 /* Add insulin from source outside of pump */
-"Add %@ without bolusing" = "Подати %@ болюсу";
+"Add %@ without bolusing" = "Добавити %@ без болюсу";
 
 "Bolus" = "Болюс";
 
@@ -131,10 +131,10 @@
 "Top target" = "Верхня ціль";
 
 /*  Temp target set for ... minutes */
-"for" = "for";
+"for" = "на";
 
 /*  Temp target set for ... minutes */
-"min" = "min";
+"min" = "хв";
 
 /*  */
 "Autotune" = "Автотюн";
@@ -158,7 +158,7 @@
 "Sensitivity" = "Чутливість";
 
 /*  */
-"Use Autotune" = "використовувати Автотюн";
+"Use Autotune" = "Використовувати Autotune";
 
 /* Add profile basal */
 "Add" = "Додати";
@@ -167,7 +167,7 @@
 "Basal Profile" = "Базальний Профіль";
 
 /* Rate basal profile */
-"Rate" = "Коеф.";
+"Rate" = "Швидкість";
 
 /*  */
 "Save on Pump" = "Зберегти на Помпі";
@@ -179,7 +179,7 @@
 "Schedule" = "Розклад";
 
 /*  */
-"starts at" = "починається об";
+"starts at" = "Починається з";
 
 /* Time basal profile */
 "Time" = "Час";
@@ -194,7 +194,7 @@
 "Ratio" = "Коефіцієнт";
 
 /*  */
-"Autosens" = "Автосенс";
+"Autosens" = "Autosens";
 
 /*  */
 "Calculated Sensitivity" = "Розрахована Чутливість";
@@ -215,20 +215,20 @@
 "Amount" = "Об'єм";
 
 /* */
-"Cancel Temp Basal" = "Відмінити ТБШ";
+"Cancel Temp Basal" = "Відмінити тимчасову базальну швидкість (ТБШ)";
 
 /* Enact
 Enact a temp Basal or a temp target */
 "Enact" = "Запустити";
 
 /* */
-"Manual Temp Basal" = "Ручний ТБШ";
+"Manual Temp Basal" = "Ручна тимчасова базальна швидкість (ТБШ)";
 
 /* Allow uploads tp NS */
 "Allow uploads" = "Дозволити вивантаження";
 
 /* API secret in NS */
-"API secret" = "API секрет";
+"API secret" = "API Secret";
 
 /* Connect to NS */
 "Connect" = "Підключити";
@@ -264,7 +264,7 @@ Enact a temp Basal or a temp target */
 "Glucose units" = "Одиниці виміру глюкози";
 
 /*  */
-"Preferences" = "Параметри";
+"Preferences" = "Налаштування";
 
 /* Recommended Insulin Fraction in preferences */
 "Recommended Insulin Fraction" = "Рекомендований коефіцієнт інсуліну";
@@ -300,10 +300,10 @@ Enact a temp Basal or a temp target */
 "hours" = "годин";
 
 /* Max setting */
-"Max Basal" = "Макс Базал";
+"Max Basal" = "Максимальний Базал";
 
 /* Max setting */
-"Max Bolus" = "Макс Болюс";
+"Max Bolus" = "Максимальний Болюс";
 
 /* */
 "Pump Settings" = "Налаштування Помпи";
@@ -336,13 +336,13 @@ Enact a temp Basal or a temp target */
 " g" = "гр";
 
 /* The short unit display string for grams */
-"g" = "g";
+"g" = "г";
 
 /* when 0 U/hr */
 "0 U/hr" = "0 Од/Год";
 
 /* abbreviation for days */
-"d" = "d";
+"d" = "дн.";
 
 /* abbreviation for hours */
 "h" = "г";
@@ -408,22 +408,22 @@ Enact a temp Basal or a temp target */
 "Other" = "Інше";
 
 /* Whatch app alert */
-"Set temp targets presets on iPhone first" = "Set temp targets presets on iPhone first";
+"Set temp targets presets on iPhone first" = "Спочатку встановіть тимчасові цілі в додатку на iPhone";
 
 /* Updating Watch app */
-"Updating..." = "Updating...";
+"Updating..." = "Оновлення...";
 
 /* Header for Temp targets in Watch app */
-"Temp Targets" = "Temp Targets";
+"Temp Targets" = "Тимчасові цілі";
 
 /* Delete carbs from Treatments list*/
-"Delete carbs?" = "Delete carbs?";
+"Delete carbs?" = "Видалити вуглеводи?";
 
 /* Treatments list */
-"Treatments" = "Treatments";
+"Treatments" = "Терапія";
 
 /* " min" in Treatments list */
-" min" = " min";
+" min" = " хв";
 
 
 /* Calendar and Libre transmitter settings ---------------
@@ -444,7 +444,7 @@ Enact a temp Basal or a temp target */
 "Other" = "Інше";
 
 /* */
-"Libre Transmitter" = "Libre трансміттер";
+"Libre Transmitter" = "Libre Transmitter";
 
 /* */
 "Libre Transmitters" = "Libre трансміттери";
@@ -456,7 +456,7 @@ Enact a temp Basal or a temp target */
 "Modes" = "Режими";
 
 /* Libre 2 Direct */
-"Libre 2 Direct" = "Libre 2 Direct";
+"Libre 2 Direct" = "Libre 2 пряме підключення";
 
 /* */
 "Select the third party transmitter you want to connect to" = "Виберіть сторонній передавач для підключення";
@@ -465,7 +465,7 @@ Enact a temp Basal or a temp target */
 "State was restored" = "Стан було відновлено";
 
 /* The short unit display string for millimoles of glucose per liter */
-"mmol/L" = "ммол/л";
+"mmol/L" = "ммол/Л";
 
 /* The short unit display string for milligrams of glucose per decilter */
 "mg/dL" = "мг/дл";
@@ -501,7 +501,7 @@ Enact a temp Basal or a temp target */
 "About the Process" = "Про процес";
 
 /* */
-"Please make sure that your Libre 2 sensor is already activated and finished warming up. If you have other apps connecting to the sensor via bluetooth, these need to be shut down or uninstalled. \n\n You can only have one app communicating with the sensor via bluetooth. Then press the \"pariring and connection\" button below to start the process. Please note that the bluetooth connection might take up to a couple of minutes before it starts working." = "Будь ласка, переконайтеся, що ваш датчик Libre 2 вже активований і закінчився розігрів. Якщо у вас є інші програми, які підключаються до датчика через bluetooth, їх потрібно вимкнути або видалити. \n\n Ви можете мати лише один додаток, який зв’язується з датчиком через Bluetooth. Потім натисніть кнопку «сполучення та підключення» нижче, щоб почати процес. Зверніть увагу, що з’єднання Bluetooth може зайняти до кількох хвилин, перш ніж воно почне працювати.";
+"Please make sure that your Libre 2 sensor is already activated and finished warming up. If you have other apps connecting to the sensor via bluetooth, these need to be shut down or uninstalled. \n\n You can only have one app communicating with the sensor via bluetooth. Then press the \"pariring and connection\" button below to start the process. Please note that the bluetooth connection might take up to a couple of minutes before it starts working." = "Будь ласка, переконайтеся, що ваш датчик Libre 2 вже активований і закінчився розігрів. Якщо у вас є інші програми, які підключаються до датчика через Bluetooth, їх потрібно вимкнути або видалити. \n\n Ви можете мати лише один додаток, який зв’язується з датчиком через Bluetooth. Потім натисніть кнопку «сполучення та підключення» нижче, щоб почати процес. Зверніть увагу, що з’єднання Bluetooth може зайняти до кількох хвилин, перш ніж воно почне працювати.";
 
 /* */
 "Pairinginfo" = "Інформація про створення пари";
@@ -555,7 +555,7 @@ Enact a temp Basal or a temp target */
 "HIGHALERT!" = "УВАГА ВИСОКИЙ!";
 
 /* (Snoozed)*/
-"(Snoozed)" = "Відкладено";
+"(Snoozed)" = "(Відкладено)";
 
 /* Glucose: %@ */
 "Glucose: %@" = "Глюкоза: %@";
@@ -564,13 +564,13 @@ Enact a temp Basal or a temp target */
 "Transmitter: %@%%" = "Передавач: %@";
 
 /* No Sensor Detected */
-"No Sensor Detected" = "Не виявлено датчиків";
+"No Sensor Detected" = "Не виявлено сенсори";
 
 /* This might be an intermittent problem, but please check that your transmitter is tightly secured over your sensor */
-"This might be an intermittent problem, but please check that your transmitter is tightly secured over your sensor" = "Це може бути періодична проблема, але, будь ласка, перевірте, чи ваш трансмітер міцно закріплений над вашим датчиком";
+"This might be an intermittent problem, but please check that your transmitter is tightly secured over your sensor" = "Це може бути періодична проблема, але, будь ласка, перевірте, чи ваш трансмітер міцно закріплений над вашим сенсором";
 
 /* New Sensor Detected */
-"New Sensor Detected" = "Виявлено новий датчик";
+"New Sensor Detected" = "Виявлено новий Сенсор";
 
 /* Please wait up to 30 minutes before glucose readings are available! */
 "Please wait up to 30 minutes before glucose readings are available!" = "Будь ласка, зачекайте до 30 хвилин, перш ніж буде доступно читання з глюкозою!";
@@ -579,82 +579,82 @@ Enact a temp Basal or a temp target */
 "Invalid Glucose sample detected, try again later" = "Виявлено невірний показник рівня глюкози, повторіть спробу пізніше";
 
 /* ensor might have temporarily stopped, fallen off or is too cold or too warm */
-"Sensor might have temporarily stopped, fallen off or is too cold or too warm" = "Датчики можуть бути тимчасово зупинені, падіння або занадто холодно або тепло.";
+"Sensor might have temporarily stopped, fallen off or is too cold or too warm" = "Сенсор може бути тимчасово зупинений, падіння або занадто холодно або тепло.";
 
 /* Invalid Sensor Detected */
 "Invalid Sensor Detected" = "Помилка визначення сенсора";
 
 /* Detected sensor seems not to be a libre 1 sensor! */
-"Detected sensor seems not to be a libre 1 sensor!" = "Виявлений датчик не є датчиком Libre1!";
+"Detected sensor seems not to be a libre 1 sensor!" = "Виявлений сенсор не є датчиком Libre1!";
 
 /* Detected sensor is invalid: %@ */
-"Detected sensor is invalid: %@" = "Виявлений датчик недійсний: %@";
+"Detected sensor is invalid: %@" = "Виявлений сенсор недійсний: %@";
 
 /* Low Battery */
 "Low battery" = "Низький заряд батареї";
 
 /* */
-"Invalid sensor" = "Invalid sensor";
+"Invalid sensor" = "Сенсор несправний";
 
 /* */
-"Sensor change" = "Sensor change";
+"Sensor change" = "Зміна сенсору";
 
 /* */
-"Sensor expires soon" = "Sensor expires soon";
+"Sensor expires soon" = "Сенсор скоро закінчиться";
 
 /* Battery is running low %@, consider charging your %@ device as soon as possible */
 "Battery is running low %@, consider charging your %@ device as soon as possible" = "Рівень заряду батареї низький %@, зарядіть ваш %@ пристрій найшвидше";
 
 /* Extracting calibrationdata from sensor */
-"Extracting calibrationdata from sensor" = "Вилучення калібрування даних від датчика";
+"Extracting calibrationdata from sensor" = "Вилучення калібрування даних від сенсора";
 
 /* Sensor Ending Soon */
-"Sensor Ending Soon" = "Sensor Ending Soon";
+"Sensor Ending Soon" = "Термін закінчення сенсору";
 
 /* Current Sensor is Ending soon! Sensor Life left in %@ */
-"Current Sensor is Ending soon! Sensor Life left in %@" = "Current Sensor is Ending soon! Sensor Life left in %@";
+"Current Sensor is Ending soon! Sensor Life left in %@" = "Незабаром закінчується Сенсор! Термін дії скінчився у %@";
 
 /* */
-"Libre Bluetooth" = "Libre Bluetooth";
+"Libre Bluetooth" = "Створити пару через Bluetooth";
 
 /* */
-"Snooze Alerts" = "Snooze Alerts";
+"Snooze Alerts" = "Відкласти сповіщення";
 
 /* */
-"Last measurement" = "Last measurement";
+"Last measurement" = "Останнє вимірювання";
 
 /* */
-"Sensor Footer checksum" = "Sensor Footer checksum";
+"Sensor Footer checksum" = "Контрольна сума Сенсора";
 
 /* */
-"Last Blood Sugar prediction" = "Last Blood Sugar prediction";
+"Last Blood Sugar prediction" = "Останнє передбачення цукру крові";
 
 /* */
-"CurrentBG" = "CurrentBG";
+"CurrentBG" = "Поточна глюкоза крові ( BG)";
 
 /* */
-"Sensor Info" = "Sensor Info";
+"Sensor Info" = "Інформація про Сенсор";
 
 /* */
-"Sensor Age" = "Sensor Age";
+"Sensor Age" = "Вік Сенсору";
 
 /* */
-"Sensor Age Left" = "Sensor Age Left";
+"Sensor Age Left" = "Залишилось";
 
 /* */
-"Sensor Endtime" = "Sensor Endtime";
+"Sensor Endtime" = "Час закінчення Сенсору";
 
 /* */
-"Sensor State" = "Sensor State";
+"Sensor State" = "Стан Сенсору";
 
 /* */
-"Sensor Serial" = "Sensor Serial";
+"Sensor Serial" = "Серійний номер Сенсору";
 
 /* */
-"Transmitter Info" = "Transmitter Info";
+"Transmitter Info" = "Інформація про передавач";
 
 /* */
-"Hardware" = "Hardware";
+"Hardware" = "Обладнання";
 
 /* */
 "Firmware" = "Прошивка";
@@ -663,406 +663,425 @@ Enact a temp Basal or a temp target */
 "Connection State" = "Стан з'єднання";
 
 /* */
-"Transmitter Type" = "Transmitter Type";
+"Transmitter Type" = "Тип передавача";
 
 /* */
-"Sensor Type" = "Sensor Type";
+"Sensor Type" = "Тип Сенсору";
 
 /* */
-"Factory Calibration Parameters" = "Factory Calibration Parameters";
+"Factory Calibration Parameters" = "Параметри заводського калібрування";
 
 /* */
-"Valid for footer" = "Valid for footer";
+"Valid for footer" = "Дійсний для футера";
 
 /* */
-"Edit calibrations" = "Edit calibrations";
+"Edit calibrations" = "Редагувати калібрування";
 
 /* */
-"edit calibration clicked" = "edit calibration clicked";
+"edit calibration clicked" = "редагувати калібрування натиснуто";
 
 /* */
-"Delete CGM" = "Delete CGM";
+"Delete CGM" = "Видалити CGM";
 
 /* */
-"Are you sure you want to remove this cgm from loop?" = "Are you sure you want to remove this cgm from loop?";
+"Are you sure you want to remove this cgm from loop?" = "Ви дійсно бажаєте видалити цей CGM?";
 
 /* */
-"There is no undo" = "There is no undo";
+"There is no undo" = "Цю дію неможливо відмінити!";
 
 /* */
-"Advanced" = "Advanced";
+"Advanced" = "Додаткові налаштування";
 
 /* */
 "Alarms" = "Тривога";
 
 /* */
-"Glucose Settings" = "Glucose Settings";
+"Glucose Settings" = "Налаштування Глюкози";
 
 /* */
-"Notifications" = "Notifications";
+"Notifications" = "Сповіщення";
 
 /* */
-"Export logs" = "Export logs";
+"Export logs" = "Експорт журналів";
 
 /* */
-"Export not available" = "Export not available";
+"Export not available" = "Експорт відсутній";
 
 /* */
-"Log export requires ios 15" = "Log export requires ios 15";
+"Log export requires ios 15" = "Експорт журналу потребує iOS 15";
 
 /* */
-"Got it!" = "Got it!";
+"Got it!" = "Зрозуміло!";
 
 /* */
-"Saved to %@" = "Saved to %@";
+"Saved to %@" = "Збережено в %@";
 
 /* */
-"No logs available" = "No logs available";
+"No logs available" = "Немає доступних журналів";
 
 /* */
-"Glucose Notification visibility" = "Glucose Notification visibility";
+"Glucose Notification visibility" = "Видимість сповіщення Глюкози";
 
 /* */
-"Always Notify Glucose" = "Always Notify Glucose";
+"Always Notify Glucose" = "Завжди сповіщати про Глюкозу";
 
 /* */
-"Notify per reading" = "Notify per reading";
+"Notify per reading" = "Сповіщати про читання";
 
 /* */
-"Value" = "Value";
+"Value" = "Значення";
 
 /* */
-"Adds Phone Battery" = "Adds Phone Battery";
+"Adds Phone Battery" = "Показувати заряд батареї телефону";
 
 /* */
-"Adds Transmitter Battery" = "Adds Transmitter Battery";
+"Adds Transmitter Battery" = "Додає акумулятор Transmitter";
 
 /* */
-"Also vibrate" = "Also vibrate";
+"Also vibrate" = "Вібрація";
 
 /* */
-"Additional notification types" = "Additional notification types";
+"Additional notification types" = "Додаткове сповіщення";
 
 /* */
-"Misc" = "Misc";
+"Misc" = "Різне";
 
 /* */
-"Unit override" = "Unit override";
+"Unit override" = "Задати величину";
 
 /* */
-"Low" = "Low";
+"Low" = "Низький";
 
 /* */
-"High" = "High";
+"High" = "Високий";
 
 /* */
-"glucose" = "glucose";
+"glucose" = "глюкоза";
 
 /* */
-"Schedule " = "Schedule ";
+"Schedule " = "Розклад ";
 
 /* */
-"tapped save schedules" = "tapped save schedules";
+"tapped save schedules" = "вибрано збереження роскладу";
 
 /* */
-"Error" = "Error";
+"Error" = "Помилка";
 
 /* */
-"Some ui element was incorrectly specified" = "Some ui element was incorrectly specified";
+"Some ui element was incorrectly specified" = "Деякі елементи ui були неправильно вказані";
 
 /* */
-"Success" = "Success";
+"Success" = "Успішно";
 
 /* */
-"Schedules were saved successfully!" = "Schedules were saved successfully!";
+"Schedules were saved successfully!" = "Розклад збережено успішно!";
 
 /* */
-"High Glucose Alarm active" = "High Glucose Alarm active";
+"High Glucose Alarm active" = "Будильник високої Глюкози увівкнено";
 
 /* */
-"Low Glucose Alarm active" = "Low Glucose Alarm active";
+"Low Glucose Alarm active" = "Будильник низької Глюкози увімкнено";
 
 /* */
-"No Glucose Alarm active" = "No Glucose Alarm active";
+"No Glucose Alarm active" = "Немає активних сигналів Глюкози";
 
 /* */
-"snoozing until %@" = "snoozing until %@";
+"snoozing until %@" = "відкладено до %@";
 
 /* */
-"not snoozing" = "not snoozing";
+"not snoozing" = "не відкладено";
 
 /* */
-"nothing to see here" = "nothing to see here";
+"nothing to see here" = "Тут нічого немає";
 
 /* */
-"snooze from testview clicked" = "snooze from testview clicked";
+"snooze from testview clicked" = "відкладення після натиснутого тесту";
 
 /* */
-"will snooze for %@ until %@" = "will snooze for %@ until %@";
+"will snooze for %@ until %@" = "буде відкладно для %@ до %@";
 
 /* */
-"Click to Snooze Alerts" = "Click to Snooze Alerts";
+"Click to Snooze Alerts" = "Натисніть, щоб відкласти оповіщення";
 
 /* */
-"Strength" = "Strength";
+"Strength" = "Міць";
 
 /* */
-"Hold the top of your iPhone near the sensor to pair" = "Hold the top of your iPhone near the sensor to pair";
+"Hold the top of your iPhone near the sensor to pair" = "Втримуйте верхню частину вашого iPhone біля датчика для парування";
 
 /* */
-"Sensor not found" = "Sensor not found";
+"Sensor not found" = "Сенсор не знайдено";
 
 /* */
-"Also play alert sound" = "Also play alert sound";
+"Also play alert sound" = "Відтворювати звук тревоги";
 
 /* */
-"Notification Settings" = "Notification Settings";
+"Notification Settings" = "Параметри сповіщень";
 
 /* */
-"Found devices: %d" = "Found devices: %d";
+"Found devices: %d" = "Знайдено пристроїв: %d";
 
 /* */
-"Backfill options" = "Backfill options";
+"Backfill options" = "Параметри фонового заповнення";
 
 /* */
-"Backfilling from trend is currently not well supported by Loop" = "Backfilling from trend is currently not well supported by Loop";
+"Backfilling from trend is currently not well supported by Loop" = "Завантаження трендів в даний час не  підтримується в Loop";
 
 /* */
-"Backfill from history" = "Backfill from history";
+"Backfill from history" = "Резервне копіювання з історії";
 
 /* */
-"Backfill from trend" = "Backfill from trend";
+"Backfill from trend" = "Резервне копіювання з тренду";
 
 /* */
-"Debug options" = "Debug options";
+"Debug options" = "Параметри налагодження";
 
 /* */
-"Adds a lot of data to the Issue Report " = "Adds a lot of data to the Issue Report ";
+"Adds a lot of data to the Issue Report " = "Додає багато даних у звіт про помилки";
 
 /* */
-"Persist sensordata" = "Persist sensordata";
+"Persist sensordata" = "Зберегти данні сенсору";
 
 /* */
-"Battery" = "Battery";
+"Battery" = "Батарея";
 
 /* */
-"Also add source info" = "Also add source info";
+"Also add source info" = "Дотаткова інформацію про джерело";
 
 /* */
-"Carbs Required Threshold" = "Carbs Required Threshold";
+"Carbs Required Threshold" = "Межа необхідних вуглеводів";
 
 /* */
-"Carbs required: %d g" = "Carbs required: %d g";
+"Carbs required: %d g" = "Потрібні вуглеводи: %d g";
 
 /* */
-"To prevent LOW required %d g of carbs" = "To prevent LOW required %d g of carbs";
+"To prevent LOW required %d g of carbs" = "Для запобігання ГІПО потрібно %d g вуглеводів";
 
 /* */
-"FreeAPS X not active" = "FreeAPS X not active";
+"FreeAPS X not active" = "FreeAPS X не активний";
 
 /* */
-"Last loop was more then %d min ago" = "Last loop was more then %d min ago";
+"Last loop was more then %d min ago" = "Останній цикл був більше, ніж %d хв тому";
 
 /* Glucose badge */
-"Show glucose on the app badge" = "Show glucose on the app badge";
+"Show glucose on the app badge" = "Показувати глюкозу на значку додатку";
 
 /* */
-"Backfill glucose" = "Backfill glucose";
+"Backfill glucose" = "Завантажити глюкозу";
 
 /* About this source */
-"About this source" = "About this source";
+"About this source" = "Про це джерело";
 
 /* */
-"Bolus failed" = "Bolus failed";
+"Bolus failed" = "Болюс не вдався";
 
 /* */
-"Bolus failed or inaccurate. Check pump history before repeating." = "Bolus failed or inaccurate. Check pump history before repeating.";
+"Bolus failed or inaccurate. Check pump history before repeating." = "Болюс не пройшов або неточний. Перевір історію помпи, перш ніж повторити.";
 
 /* */
-"Carbs" = "Carbs";
+"Carbs" = "Вуглеводи";
 
 /* */
-"Temp Basal" = "Temp Basal";
+"Temp Basal" = "Тимчасовий  Базал";
 
 /* */
-"Temp Target" = "Temp Target";
+"Temp Target" = "Тимчасові цілі";
 
 /* */
-"Resume" = "Resume";
+"Resume" = "Відновити";
 
 /* */
-"Suspend" = "Suspend";
+"Suspend" = "Призупинити";
 
 /* */
-"Animated Background" = "Animated Background";
+"Animated Background" = "Анімоване тло";
 
 /* Sensor day(s) */
-" day(s)" = " day(s)";
+" day(s)" = "день(днів)";
 
 
 /* Headers for settings ----------------------- */
-"OpenAPS main settings" = "OpenAPS main settings";
+"OpenAPS main settings" = "Головні налаштування OpenAPS";
 
-"OpenAPS SMB settings" = "OpenAPS SMB settings";
+"OpenAPS SMB settings" = "Налаштування SMB OpenAPS";
 
-"OpenAPS targets settings" = "OpenAPS targets settings";
+"OpenAPS targets settings" = "Налаштування цілей OpenAPS";
 
-"OpenAPS other settings" = "OpenAPS other settings";
+"OpenAPS other settings" = "Інші налаштування OpenAPS";
 
 /* Glucose Simulator CGM */
-"Glucose Simulator" = "Glucose Simulator";
+"Glucose Simulator" = "Симулятор Глюкози";
 
 /* Restored state message */
-"Bluetooth State restored (APS restarted?). Found %d peripherals, and connected to %@ with identifier %@" = "Bluetooth State restored (APS restarted?). Found %d peripherals, and connected to %@ with identifier %@";
+"Bluetooth State restored (APS restarted?). Found %d peripherals, and connected to %@ with identifier %@" = "Стан Bluetooth відновлений (APS перезапущено?). Виявили %d периферійних пристроїв та  під'єднано до %@ з ідентифікатором %@";
 
 /* Shared app group */
-"Shared app group for direct connection with Libre 1 transmitters or European Libre 2 sensors" = "Shared app group for direct connection with Libre 1 transmitters or European Libre 2 sensors";
+"Shared app group for direct connection with Libre 1 transmitters or European Libre 2 sensors" = "Спільна група програм для прямого з'єднання з трансмітерами Libre 1  або Європейськими сенсорами Libre 2";
 
 /* Native G6 app */
-"Native G6 app" = "Native G6 app";
+"Native G6 app" = "Вбудований додаток G6";
 
 /* Native G5 app */
-"Native G5 app" = "Native G5 app";
+"Native G5 app" = "Вбудований додаток G5";
 
 /* Minilink transmitter */
-"Minilink transmitter" = "Minilink transmitter";
+"Minilink transmitter" = "трансмітер Minilink";
 
 /* Simple simulator */
-"Simple simulator" = "Simple simulator";
+"Simple simulator" = "Звичайний симулятор";
 
 /* Direct connection with Libre 1 transmitters or Libre 2 */
-"Direct connection with Libre 1 transmitters or European Libre 2 sensors" = "Direct connection with Libre 1 transmitters or European Libre 2 sensors";
+"Direct connection with Libre 1 transmitters or European Libre 2 sensors" = "Прямий зв'язок з трансмітером  Libre 1  або Європейськими сенсором Libre 2";
 
 /* Online or internal server */
-"Online or internal server" = "Online or internal server";
+"Online or internal server" = "Онлайн або внутрішній сервер";
 
 /* HealthKit intergration --------------------*/
 /* */
 "Apple Health" = "Apple Health";
 
 /* */
-"Connect to Apple Health" = "Connect to Apple Health";
+"Connect to Apple Health" = "З'єднатися з Apple Health";
 
 /* Show when have not permissions for writing to Health */
-"For write data to Apple Health you must give permissions in Settings > Health > Data Access" = "For write data to Apple Health you must give permissions in Settings > Health > Data Access";
+"For write data to Apple Health you must give permissions in Settings > Health > Data Access" = "Для запису даних в Apple Health ви повинні надати дозволи в Налаштування > Здоров’я > Доступ до даних";
 
 /* */
-"After you create glucose records in the Health app, please open FreeAPS X to help us guaranteed transfer changed data" = "After you create glucose records in the Health app, please open FreeAPS X to help us guaranteed transfer changed data";
-/* --------------------------------------------
+"After you create glucose records in the Health app, please open FreeAPS X to help us guaranteed transfer changed data" = "Після створення записів глюкози в програмі Охорони здоров'я, будь ласка, відкрийте FreeAPS X, щоб допомогти нам гарантувати передачу змінених даних";
 
+/* New ALerts ------------------------- */
+/* Info title */
+"Info" = "Інформація";
+
+/* Warning title */
+"Warning" = "Varning";
+
+/* Error title */
+"Error" = "Помилка";
+
+/* ---------------------------------------
+  DASH strings
+*/
+"Attach Pod" = "Attach Pod";
+
+"Deactivate Pod" = "Деактивувати POD";
+
+"Pair Pod" = "Pair Pod";
+
+/* --------------------------------------
 
   Infotexts from openaps.docs and androidaps.docs
   FreeAPS X
 */
 /* ”Rewind Resets Autosens” */
 
-"This feature, enabled by default, resets the autosens ratio to neutral when you rewind your pump, on the assumption that this corresponds to a probable site change. Autosens will begin learning sensitivity anew from the time of the rewind, which may take up to 6 hours. If you usually rewind your pump independently of site changes, you may want to consider disabling this feature." = "This feature, enabled by default, resets the autosens ratio to neutral when you rewind your pump, on the assumption that this corresponds to a probable site change. Autosens will begin learning sensitivity anew from the time of the rewind, which may take up to 6 hours. If you usually rewind your pump independently of site changes, you may want to consider disabling this feature.";
+"This feature, enabled by default, resets the autosens ratio to neutral when you rewind your pump, on the assumption that this corresponds to a probable site change. Autosens will begin learning sensitivity anew from the time of the rewind, which may take up to 6 hours. If you usually rewind your pump independently of site changes, you may want to consider disabling this feature." = "Ця функція увімкнена за замовчуванням, скидає співвідношення авто до нейтрального, коли ви скидаєте помпу, за припущенням, що це відповідає за заміну конюлі. Авторани почнуть вивчати чутливість до навчання, з часу вітру, що може зайняти до 6 годин. Якщо ви зазвичай скидаєте помпу незалежно від заміни конюлі, можете подумати про вимкнення цієї функції.";
 
 /* ”High Temptarget Raises Sensitivity" */
-"Defaults to false. When set to true, raises sensitivity (lower sensitivity ratio) for temp targets set to >= 111. Synonym for exercise_mode. The higher your temp target above 110 will result in more sensitive (lower) ratios, e.g., temp target of 120 results in sensitivity ratio of 0.75, while 140 results in 0.6 (with default halfBasalTarget of 160)." = "Defaults to false. When set to true, raises sensitivity (lower sensitivity ratio) for temp targets set to >= 111. Synonym for exercise_mode. The higher your temp target above 110 will result in more sensitive (lower) ratios, e.g., temp target of 120 results in sensitivity ratio of 0.75, while 140 results in 0.6 (with default halfBasalTarget of 160).";
+"Defaults to false. When set to true, raises sensitivity (lower sensitivity ratio) for temp targets set to >= 111. Synonym for exercise_mode. The higher your temp target above 110 will result in more sensitive (lower) ratios, e.g., temp target of 120 results in sensitivity ratio of 0.75, while 140 results in 0.6 (with default halfBasalTarget of 160)." = "За замовчуванням встановлено значення false. Якщо встановлено значення true, підвищує чутливість (зниження коефіцієнта чутливості) для встановлених цілей  >= 111. Синонім для вправ. Чим вище встановленою ціллю вашого шаблону вище 110, тим більш чутливими будуть (нижчі) співвідношення, наприклад  120 результатів у співвідношенні чутливості 0.75, тоді як 140 результатів в 0.6 (з стандартною половинною основною ціллю 160).";
 
 /* ”Low Temptarget Lowers Sensitivity" */
-"Defaults to false. When set to true, can lower sensitivity (higher sensitivity ratio) for temptargets <= 99. The lower your temp target below 100 will result in less sensitive (higher) ratios, e.g., temp target of 95 results in sensitivity ratio of 1.09, while 85 results in 1.33 (with default halfBasalTarget of 160)." = "Defaults to false. When set to true, can lower sensitivity (higher sensitivity ratio) for temptargets <= 99. The lower your temp target below 100 will result in less sensitive (higher) ratios, e.g., temp target of 95 results in sensitivity ratio of 1.09, while 85 results in 1.33 (with default halfBasalTarget of 160).";
+"Defaults to false. When set to true, can lower sensitivity (higher sensitivity ratio) for temptargets <= 99. The lower your temp target below 100 will result in less sensitive (higher) ratios, e.g., temp target of 95 results in sensitivity ratio of 1.09, while 85 results in 1.33 (with default halfBasalTarget of 160)." = "За замовчуванням встановлено значення false. Якщо встановлено значення true, підвищує чутливість (зниження коефіцієнта чутливості) для встановлених цілей  >= 99. Синонім для вправ. Чим вище встановленою ціллю вашого шаблону вище 100, тим більш чутливими будуть (нижчі) співвідношення, наприклад  95 результатів у співвідношенні чутливості 1.09, тоді як 85 результатів в 1.33 (з стандартною половинною основною ціллю 160).";
 
 /* ”Sensitivity Raises Target" */
-"When true, raises BG target when autosens detects sensitivity" = "When true, raises BG target when autosens detects sensitivity";
+"When true, raises BG target when autosens detects sensitivity" = "Коли TRUE, підвищує BG (цільовий діапазон) при підвищеній чутливості";
 
 /* ”Resistance Lowers Target" */
-"Defaults to false. When true, will lower BG target when autosens detects resistance" = "Defaults to false. When true, will lower BG target when autosens detects resistance";
+"Defaults to false. When true, will lower BG target when autosens detects resistance" = "За замовчуванням значення false. Коли значення true, знизить BG (цильовий діапазон) при обладнанні зниженої чутливості";
 
 /* ”Advanced Target Adjustments" */
-"This feature was previously enabled by default but will now default to false (will NOT be enabled automatically) in oref0 0.6.0 and beyond. (There is no need for this with 0.6.0). This feature lowers oref0’s target BG automatically when current BG and eventualBG are high. This helps prevent and mitigate high BG, but automatically switches to low-temping to ensure that BG comes down smoothly toward your actual target. If you find this behavior too aggressive, you can disable this feature. If you do so, please let us know so we can better understand what settings work best for everyone." = "This feature was previously enabled by default but will now default to false (will NOT be enabled automatically) in oref0 0.6.0 and beyond. (There is no need for this with 0.6.0). This feature lowers oref0’s target BG automatically when current BG and eventualBG are high. This helps prevent and mitigate high BG, but automatically switches to low-temping to ensure that BG comes down smoothly toward your actual target. If you find this behavior too aggressive, you can disable this feature. If you do so, please let us know so we can better understand what settings work best for everyone.";
+"This feature was previously enabled by default but will now default to false (will NOT be enabled automatically) in oref0 0.6.0 and beyond. (There is no need for this with 0.6.0). This feature lowers oref0’s target BG automatically when current BG and eventualBG are high. This helps prevent and mitigate high BG, but automatically switches to low-temping to ensure that BG comes down smoothly toward your actual target. If you find this behavior too aggressive, you can disable this feature. If you do so, please let us know so we can better understand what settings work best for everyone." = "Ця функція раніше булу увімкнена за умовченням, але зараз за умовченням вона не буде включена (НЕ буде включена автоматично) в oref0 0.6.0 и выше. (Це не потрібно починає з 0.6.0), ця функція автоматично зменьшує цільовий діапазон (BG) oref0, коли поточний BG та можливий BG зависокі. Це допомогає запровадити  та полехшити зависокі значення BG, але  автоматично переключається на режим пониження цілі, щоб впевнитися, що  BG повільно спускается до вашої реальної цілі. Якщо ця поведінка доволі агрессивна, ви можете відключити цю функцію. Якщо ви це зробите, Будь Ласка, дайте нам знати, щоб ми могли кращє зрозуміти, які налоштування працюють кращє інших.";
 
 /* "Exercise Mode" */
-"Defaults to false. When true, > 105 mg/dL high temp target adjusts sensitivityRatio for exercise_mode. Synonym for high_temptarget_raises_sensitivity" = "Defaults to false. When true, > 105 mg/dL high temp target adjusts sensitivityRatio for exercise_mode. Synonym for high_temptarget_raises_sensitivity";
+"Defaults to false. When true, > 105 mg/dL high temp target adjusts sensitivityRatio for exercise_mode. Synonym for high_temptarget_raises_sensitivity" = "За замовчуванням значення false. Коли true, > 105 mg/dL high temp target регулювання чутливості щодо exercise_mode. Синонім для high_temptarget_raises_sensities_sensitivity";
 
 /* "Wide BG Target Range" */
-"Defaults to false, which means by default only the low end of the pump’s BG target range is used as OpenAPS target. This is a safety feature to prevent too-wide targets and less-optimal outcomes. Therefore the higher end of the target range is used only for avoiding bolus wizard overcorrections. Use wide_bg_target_range: true to force neutral temps over a wider range of eventualBGs." = "Defaults to false, which means by default only the low end of the pump’s BG target range is used as OpenAPS target. This is a safety feature to prevent too-wide targets and less-optimal outcomes. Therefore the higher end of the target range is used only for avoiding bolus wizard overcorrections. Use wide_bg_target_range: true to force neutral temps over a wider range of eventualBGs.";
+"Defaults to false, which means by default only the low end of the pump’s BG target range is used as OpenAPS target. This is a safety feature to prevent too-wide targets and less-optimal outcomes. Therefore the higher end of the target range is used only for avoiding bolus wizard overcorrections. Use wide_bg_target_range: true to force neutral temps over a wider range of eventualBGs." = "За замовчуванням false, це означає лише низький кінець діапазону цілі BG по замовчуванню використовується як мета OpenAPS. Це функція безпеки для запобігання занадто широким цілям та менш оптимальним результатами. Тому найвищий кінець цільового діапазону використовується лише для уникнення виправлень майстра. Користуйтеся wide_bg_target_range: true для примушення нейтральних настроїв над ширшим діапазоном кінцевих BG.";
 
 /* "Skip Neutral Temps" */
-"Defaults to false, so that FreeAPS X will set temps whenever it can, so it will be easier to see if the system is working, even when you are offline. This means FreeAPS X will set a “neutral” temp (same as your default basal) if no adjustments are needed. This is an old setting for OpenAPS to have the options to minimise sounds and notifications from the 'rig', that may wake you up during the night." = "Defaults to false, so that FreeAPS X will set temps whenever it can, so it will be easier to see if the system is working, even when you are offline. This means OpenAPS will set a “neutral” temp (same as your default basal) if no adjustments are needed. This is an old setting for OpenAPS to have the options to minimise sounds and notifications form the 'rig', that may wake you up during the night. ";
+"Defaults to false, so that FreeAPS X will set temps whenever it can, so it will be easier to see if the system is working, even when you are offline. This means FreeAPS X will set a “neutral” temp (same as your default basal) if no adjustments are needed. This is an old setting for OpenAPS to have the options to minimise sounds and notifications from the 'rig', that may wake you up during the night." = "Використовувати значення за замовчуванням false, так що FreeAPS X буде настроїти шматочки кожного разу, коли він може, так що буде легше перевірити, чи працює система, навіть в автономному режимі. Це означає, що OpenAPS встановить \"нейтральний\" шаблон (такий самий як і ваш базовий за замовчуванням) якщо ніяких змін не потрібен. Це стара настройка для OpenAPS мати опції, щоб мінімізувати звуки та сповіщення формували 'rig', це може розбудити вас вночі. ";
 
 /* "Unsuspend If No Temp” */
-"Many people occasionally forget to resume / unsuspend their pump after reconnecting it. If you’re one of them, and you are willing to reliably set a zero temp basal whenever suspending and disconnecting your pump, this feature has your back. If enabled, it will automatically resume / unsuspend the pump if you forget to do so before your zero temp expires. As long as the zero temp is still running, it will leave the pump suspended." = "Many people occasionally forget to resume / unsuspend their pump after reconnecting it. If you’re one of them, and you are willing to reliably set a zero temp basal whenever suspending and disconnecting your pump, this feature has your back. If enabled, it will automatically resume / unsuspend the pump if you forget to do so before your zero temp expires. As long as the zero temp is still running, it will leave the pump suspended.";
+"Many people occasionally forget to resume / unsuspend their pump after reconnecting it. If you’re one of them, and you are willing to reliably set a zero temp basal whenever suspending and disconnecting your pump, this feature has your back. If enabled, it will automatically resume / unsuspend the pump if you forget to do so before your zero temp expires. As long as the zero temp is still running, it will leave the pump suspended." = "Багато людей іноді забувають відновити подачу на помпі після повторного підключення. Якщо цей параметр включен, то він автоматично відновить / разблокує помпу, якщо ви забули зробити це до того, як термін ВБС сплине. До тої пори, поки ВБС працює, помпа буде призупинена.";
 
 /* "Enable UAM" */
-"With this option enabled, the SMB algorithm can recognize unannounced meals. This is helpful, if you forget to tell FreeAPS X about your carbs or estimate your carbs wrong and the amount of entered carbs is wrong or if a meal with lots of fat and protein has a longer duration than expected. Without any carb entry, UAM can recognize fast glucose increasments caused by carbs, adrenaline, etc, and tries to adjust it with SMBs. This also works the opposite way: if there is a fast glucose decreasement, it can stop SMBs earlier." = "With this option enabled, the SMB algorithm can recognize unannounced meals. This is helpful, if you forget to tell FreeAPS X about your carbs or estimate your carbs wrong and the amount of entered carbs is wrong or if a meal with lots of fat and protein has a longer duration than expected. Without any carb entry, UAM can recognize fast glucose increasments caused by carbs, adrenaline, etc, and tries to adjust it with SMBs. This also works the opposite way: if there is a fast glucose decreasement, it can stop SMBs earlier.";
+"With this option enabled, the SMB algorithm can recognize unannounced meals. This is helpful, if you forget to tell FreeAPS X about your carbs or estimate your carbs wrong and the amount of entered carbs is wrong or if a meal with lots of fat and protein has a longer duration than expected. Without any carb entry, UAM can recognize fast glucose increasments caused by carbs, adrenaline, etc, and tries to adjust it with SMBs. This also works the opposite way: if there is a fast glucose decreasement, it can stop SMBs earlier." = "Режим не оголошених вуглеводів. При включенні опції алгоритм SMB може роспізновати не оголошені вуглеводи. Це корисно, якщо ви забули оголосити про прийом їжі або неправильно оцінили ваші вуглеводи. Також, якщо їжа з більшою колькостю жира та білка всмоктування вуглеводів довше, чим бажалось. Без ввода кількості вуглеводів механізм UAM може распізнавати швидке збільшення рівня глюкози, визвані вуглеводами, адреналіном та т. п., та нейтралізовати тих за допомогою SMB. Це також працюї навпаки: якщо є швидке знизення рівня глюкози, то це може припинити SMB раніше.";
 
 /* Enable SMB With COB" */
 
-"This enables supermicrobolus (SMB) while carbs on board (COB) are positive." = "This enables supermicrobolus (SMB) while carbs on board (COB) are positive.";
+"This enables supermicrobolus (SMB) while carbs on board (COB) are positive." = "Дозволити SMB при позитивних вуглеводах на борту.";
 
 /* "Enable SMB With Temptarget” */
-"This enables supermicrobolus (SMB) with eating soon / low temp targets. With this feature enabled, any temporary target below 100mg/dL, such as a temp target of 99 (or 80, the typical eating soon target) will enable SMB." = "This enables supermicrobolus (SMB) with eating soon / low temp targets. With this feature enabled, any temporary target below 100mg/dL, such as a temp target of 99 (or 80, the typical eating soon target) will enable SMB.";
+"This enables supermicrobolus (SMB) with eating soon / low temp targets. With this feature enabled, any temporary target below 100mg/dL, such as a temp target of 99 (or 80, the typical eating soon target) will enable SMB." = "Дозволяє супермікроболюсы (SMB) з режимом скоро їжа / низкіми цілями. При включеній опції люба тимчасова ціль нижчє 5.6 ммоль/л (100mg/dL), наприклад тимчасова ціль 5.5 (або 4.4, типова для швидкого прийому їжі) дозволить SMB.";
 
 /* "Enable SMB Always" */
-"Defaults to false. When true, always enable supermicrobolus (unless disabled by high temptarget)." = "Defaults to false. When true, always enable supermicrobolus (unless disabled by high temptarget).";
+"Defaults to false. When true, always enable supermicrobolus (unless disabled by high temptarget)." = "Дозволити SMB завжди. За замовчуванням вимкнено. Коли увімкнено, завжди дозволяє супермікроболюсы SMB (якщо не заборонено для высокої мети).";
 
 /* "Enable SMB After Carbs" */
-"Defaults to false. When true, enables supermicrobolus (SMB) for 6h after carbs, even with 0 carbs on board (COB)." = "Defaults to false. When true, enables supermicrobolus (SMB) for 6h after carbs, even with 0 carbs on board (COB).";
+"Defaults to false. When true, enables supermicrobolus (SMB) for 6h after carbs, even with 0 carbs on board (COB)." = "За замовченням вемкнено. Вмикання дозволяє супермікроболюси (SMB) на 6 годин після останнього ввода вуглеводів, навіть с 0 вуглеводів на борту (COB).";
 
 /* "Allow SMB With High Temptarget" */
-"Defaults to false. When true, allows supermicrobolus (if otherwise enabled) even with high temp targets." = "Defaults to false. When true, allows supermicrobolus (if otherwise enabled) even with high temp targets.";
+"Defaults to false. When true, allows supermicrobolus (if otherwise enabled) even with high temp targets." = "За замовченням вимкнено. Включення дозволяє супермікроболюси (SMB) навіть з високими тимчасовими цілями.";
 
 /* "Use Custom Peak Time” */
-"Defaults to false. Setting to true allows changing insulinPeakTime" = "Defaults to false. Setting to true allows changing insulinPeakTime";
+"Defaults to false. Setting to true allows changing insulinPeakTime" = "За замовченням значення вимкнено. Включення параметра дозволяє змінювати піковий час інсуліна (insulinPeakTime)";
 
 /* "Suspend Zeros IOB” */
-"Default is false. Any existing temp basals during times the pump was suspended will be deleted and 0 temp basals to negate the profile basal rates during times pump is suspended will be added." = "Default is false. Any existing temp basals during times the pump was suspended will be deleted and 0 temp basals to negate the profile basal rates during times pump is suspended will be added.";
+"Default is false. Any existing temp basals during times the pump was suspended will be deleted and 0 temp basals to negate the profile basal rates during times pump is suspended will be added." = "За замовченням false. Любі існуючі ПБШ за час зупинки помпи будуть видалені та замінені на нульову ПБШ шоб прибрати профільні базальні швидкості.";
 
 /* "Max IOB" */
-"Max IOB is the maximum amount of insulin on board from all sources – both basal (or SMB correction) and bolus insulin – that your loop is allowed to accumulate to treat higher-than-target BG. Unlike the other two OpenAPS safety settings (max_daily_safety_multiplier and current_basal_safety_multiplier), max_iob is set as a fixed number of units of insulin. As of now manual boluses are NOT limited by this setting. \n\n To test your basal rates during nighttime, you can modify the Max IOB setting to zero while in Closed Loop. This will enable low glucose suspend mode while testing your basal rates settings\n\n(Tip from https://www.loopandlearn.org/freeaps-x/#open-loop)." = "Max IOB is the maximum amount of insulin on board from all sources – both basal (or SMB correction) and bolus insulin – that your loop is allowed to accumulate to treat higher-than-target BG. Unlike the other two OpenAPS safety settings (max_daily_safety_multiplier and current_basal_safety_multiplier), max_iob is set as a fixed number of units of insulin. As of now manual boluses are NOT limited by this setting. \n\n To test your basal rates during nighttime, you can modify the Max IOB setting to zero while in Closed Loop. This will enable low glucose suspend mode while testing your basal rates settings\n\n(Tip from https://www.loopandlearn.org/freeaps-x/#open-loop).";
+"Max IOB is the maximum amount of insulin on board from all sources – both basal (or SMB correction) and bolus insulin – that your loop is allowed to accumulate to treat higher-than-target BG. Unlike the other two OpenAPS safety settings (max_daily_safety_multiplier and current_basal_safety_multiplier), max_iob is set as a fixed number of units of insulin. As of now manual boluses are NOT limited by this setting. \n\n To test your basal rates during nighttime, you can modify the Max IOB setting to zero while in Closed Loop. This will enable low glucose suspend mode while testing your basal rates settings\n\n(Tip from https://www.loopandlearn.org/freeaps-x/#open-loop)." = "Макс IOB - це максимальна кількість інсуліна на борту з усіх джерел – як базального (або болюсів коррекції), так і болюсного інсуліна – котрий ваш цикл може накопичувати для компенсації високого СК. На відмінність від двух іншіх параметрів безпеки (max_daily_safety_multiplier и current_basal_safety_multiplier), max_iob встановлюється, як фіксована кількість одиниць інсуліна. На цей час ручні болюсы НЕ обмежені цим налаштуванням. Для тестування базальних швидкостей в нічний час, ви можете змінювати значення цього параметра на нуль находячись у замкнутому циклі. Це вмикне режим призупенення на низькому цукрі, при тестуванні налаштуваннь базальних швидкостей. (https://www.loopandlearn.org/freeaps-x/#open-loop).";
 
 /* "Max Daily Safety Multiplier" */
-"This is an important OpenAPS safety limit. The default setting (which is unlikely to need adjusting) is 3. This means that OpenAPS will never be allowed to set a temporary basal rate that is more than 3x the highest hourly basal rate programmed in a user’s pump, or, if enabled, determined by autotune." = "This is an important OpenAPS safety limit. The default setting (which is unlikely to need adjusting) is 3. This means that OpenAPS will never be allowed to set a temporary basal rate that is more than 3x the highest hourly basal rate programmed in a user’s pump, or, if enabled, determined by autotune.";
+"This is an important OpenAPS safety limit. The default setting (which is unlikely to need adjusting) is 3. This means that OpenAPS will never be allowed to set a temporary basal rate that is more than 3x the highest hourly basal rate programmed in a user’s pump, or, if enabled, determined by autotune." = "За замовчуванням (яке наврядши потрібно змінити) дорівнює 3. Важлива межа беспеки. Це значить, шо тимчасова базальна швидкість ніколи не збільшить 3x наибільшої погодинної базальної швидкості, запрограмованої в помпі, або, якщо увімкнено, визначається autotune.";
 
 /* "Current Basal Safety Multiplier" */
-"This is another important OpenAPS safety limit. The default setting (which is also unlikely to need adjusting) is 4. This means that OpenAPS will never be allowed to set a temporary basal rate that is more than 4x the current hourly basal rate programmed in a user’s pump, or, if enabled, determined by autotune." = "This is another important OpenAPS safety limit. The default setting (which is also unlikely to need adjusting) is 4. This means that OpenAPS will never be allowed to set a temporary basal rate that is more than 4x the current hourly basal rate programmed in a user’s pump, or, if enabled, determined by autotune.";
+"This is another important OpenAPS safety limit. The default setting (which is also unlikely to need adjusting) is 4. This means that OpenAPS will never be allowed to set a temporary basal rate that is more than 4x the current hourly basal rate programmed in a user’s pump, or, if enabled, determined by autotune." = "Значення за замовчуванням (яке наврядши треба змінювати) 4. Це щє одна важлива межа безпеки. Це означає, що тимчасова базальна швидкість встановлена алгоритмом, ніколи НЕ збільшить 4x поточну базальну швидкість, запрограмовану в помпі, або, якщо увімкнено, визначається autotune.";
 
 /* "Autosens Max" */
-"This is a multiplier cap for autosens (and autotune) to set a 20% max limit on how high the autosens ratio can be, which in turn determines how high autosens can adjust basals, how low it can adjust ISF, and how low it can set the BG target." = "This is a multiplier cap for autosens (and autotune) to set a 20% max limit on how high the autosens ratio can be, which in turn determines how high autosens can adjust basals, how low it can adjust ISF, and how low it can set the BG target.";
+"This is a multiplier cap for autosens (and autotune) to set a 20% max limit on how high the autosens ratio can be, which in turn determines how high autosens can adjust basals, how low it can adjust ISF, and how low it can set the BG target." = "Значення за замовчуванням: 1,2. Це множник для autosens (та autotune) з лімітом 20% котрий визначає наскількі високо autosens може підняти базал, наскільки низько зменьшити ISF (чутливість до інсуліну), та наскільки низько зменьшити цільовий СК.";
 
 /* "Autosens Min" */
-"The other side of the autosens safety limits, putting a cap on how low autosens can adjust basals, and how high it can adjust ISF and BG targets." = "The other side of the autosens safety limits, putting a cap on how low autosens can adjust basals, and how high it can adjust ISF and BG targets.";
+"The other side of the autosens safety limits, putting a cap on how low autosens can adjust basals, and how high it can adjust ISF and BG targets." = "За замовчуванням: 0.7 Якщо один параметр безпеки autosens, визначальний, як низько він може зменьшувати базал та як високо поднімати ISF (чутливість до інсуліну) та цільове СК.";
 
 /* "Half Basal Exercise Target" */
-"Set to a number, e.g. 160, which means when temp target is 160 mg/dL and exercise_mode=true, run 50% basal at this level (120 = 75%; 140 = 60%). This can be adjusted, to give you more control over your exercise modes." = "Set to a number, e.g. 160, which means when temp target is 160 mg/dL and exercise_mode=true, run 50% basal at this level (120 = 75%; 140 = 60%). This can be adjusted, to give you more control over your exercise modes.";
+"Set to a number, e.g. 160, which means when temp target is 160 mg/dL and exercise_mode=true, run 50% basal at this level (120 = 75%; 140 = 60%). This can be adjusted, to give you more control over your exercise modes." = "Встановіть число, - напр. 160, - означає, що при досягненні тимчасової цілі 160 мг/дл и exercise_mode=true, запустить 50% базала на цьому рівні (120 = 75%; 140 = 60%). Налоштування може бути змінене, щоб дати вам більше контролю над режимом вправ.";
 
 /* "Max COB" */
-"This defaults maxCOB to 120 because that’s the most a typical body can absorb over 4 hours. (If someone enters more carbs or stacks more; OpenAPS will just truncate dosing based on 120. Essentially, this just limits AMA as a safety cap against weird COB calculations due to fluky data.)" = "This defaults maxCOB to 120 because that’s the most a typical body can absorb over 4 hours. (If someone enters more carbs or stacks more; OpenAPS will just truncate dosing based on 120. Essentially, this just limits AMA as a safety cap against weird COB calculations due to fluky data.)";
+"This defaults maxCOB to 120 because that’s the most a typical body can absorb over 4 hours. (If someone enters more carbs or stacks more; OpenAPS will just truncate dosing based on 120. Essentially, this just limits AMA as a safety cap against weird COB calculations due to fluky data.)" = "Максимальне значення вуглеводів. За замовчуванням maxCOB складає 120, тому що це максимальне значення, котре типовий організм може поглинути за 4 години. (Якщо хтось вводить більше вуглеводів OpenAPS просто скорочує дозировку приймає за розрахунок 120. По суті, це просто межа безпеки захищающа від дивних розрахунків COB через непостійні дані.)";
 
 /* "Bolus Snooze DIA Divisor" */
-"Bolus snooze is enacted after you do a meal bolus, so the loop won’t counteract with low temps when you’ve just eaten. The example here and default is 2; so a 3 hour DIA means that bolus snooze will be gradually phased out over 1.5 hours (3DIA/2)." = "Bolus snooze is enacted after you do a meal bolus, so the loop won’t counteract with low temps when you’ve just eaten. The example here and default is 2; so a 3 hour DIA means that bolus snooze will be gradually phased out over 1.5 hours (3DIA/2).";
+"Bolus snooze is enacted after you do a meal bolus, so the loop won’t counteract with low temps when you’ve just eaten. The example here and default is 2; so a 3 hour DIA means that bolus snooze will be gradually phased out over 1.5 hours (3DIA/2)." = "Відкладання болюсів (SMB) станеться після того, як ви зробите болюс на їжу, та цикл не буде протистояти низький тимчасовій цілі, коли ви просто поїли. Наприклад: тут та за замовчуванням 2; тому 5 годин DIA означає, що SMB буде відкладено на 2,5 години (5 DIA/2).";
 
 /* "Min 5m Carbimpact" */
-"This is a setting for default carb absorption impact per 5 minutes. The default is an expected 8 mg/dL/5min. This affects how fast COB is decayed in situations when carb absorption is not visible in BG deviations. The default of 8 mg/dL/5min corresponds to a minimum carb absorption rate of 24g/hr at a CSF of 4 mg/dL/g." = "This is a setting for default carb absorption impact per 5 minutes. The default is an expected 8 mg/dL/5min. This affects how fast COB is decayed in situations when carb absorption is not visible in BG deviations. The default of 8 mg/dL/5min corresponds to a minimum carb absorption rate of 24g/hr at a CSF of 4 mg/dL/g.";
+"This is a setting for default carb absorption impact per 5 minutes. The default is an expected 8 mg/dL/5min. This affects how fast COB is decayed in situations when carb absorption is not visible in BG deviations. The default of 8 mg/dL/5min corresponds to a minimum carb absorption rate of 24g/hr at a CSF of 4 mg/dL/g." = "Ця кількість вуглеводів поглинається за 5 хвилин. За замовчуванням очікується 8 мг/дл/5 хв. Це впливає на швідкість списання вуглеводів алгоритмом в ситуаціях, коли при відхиленнях СК поглинання вуглеводів не помітно. За замовчуванням 8 мг/дл/5 хв що відповідає мінімальній швидкості поглинання вуглеводів 24 г/г при CSF в 4 мг/дл/г.";
 
 /* "Autotune ISF Adjustment Fraction" */
 "The default of 0.5 for this value keeps autotune ISF closer to pump ISF via a weighted average of fullNewISF and pumpISF. 1.0 allows full adjustment, 0 is no adjustment from pump ISF." = "The default of 0.5 for this value keeps autotune ISF closer to pump ISF via a weighted average of fullNewISF and pumpISF. 1.0 allows full adjustment, 0 is no adjustment from pump ISF.";
 
 /* "Remaining Carbs Fraction" */
-"This is the fraction of carbs we’ll assume will absorb over 4h if we don’t yet see carb absorption." = "This is the fraction of carbs we’ll assume will absorb over 4h if we don’t yet see carb absorption.";
+"This is the fraction of carbs we’ll assume will absorb over 4h if we don’t yet see carb absorption." = "Це частка вуглеводів, які імовірно будут поглинені через 4 години, якщо алгоритм не побачить поглинання вуглеводів.";
 
 /* "Remaining Carbs Cap" */
-"This is the amount of the maximum number of carbs we’ll assume will absorb over 4h if we don’t yet see carb absorption." = "This is the amount of the maximum number of carbs we’ll assume will absorb over 4h if we don’t yet see carb absorption.";
+"This is the amount of the maximum number of carbs we’ll assume will absorb over 4h if we don’t yet see carb absorption." = "Це значення максимальної кількості вуглеводів, яке імовірно буде поглинено через 4 години, якщо алгоритм не побачить поглинання вуглеводів.";
 
 /* ”Max SMB Basal Minutes" */
-"Defaults to start at 30. This is the maximum minutes of basal that can be delivered as a single SMB with uncovered COB. This gives the ability to make SMB more aggressive if you choose. It is recommended that the value is set to start at 30, in line with the default, and if you choose to increase this value, do so in no more than 15 minute increments, keeping a close eye on the effects of the changes. It is not recommended to set this value higher than 90 mins, as this may affect the ability for the algorithm to safely zero temp. It is also recommended that pushover is used when setting the value to be greater than default, so that alerts are generated for any predicted lows or highs." = "Defaults to start at 30. This is the maximum minutes of basal that can be delivered as a single SMB with uncovered COB. This gives the ability to make SMB more aggressive if you choose. It is recommended that the value is set to start at 30, in line with the default, and if you choose to increase this value, do so in no more than 15 minute increments, keeping a close eye on the effects of the changes. It is not recommended to set this value higher than 90 mins, as this may affect the ability for the algorithm to safely zero temp. It is also recommended that pushover is used when setting the value to be greater than default, so that alerts are generated for any predicted lows or highs.";
+"Defaults to start at 30. This is the maximum minutes of basal that can be delivered as a single SMB with uncovered COB. This gives the ability to make SMB more aggressive if you choose. It is recommended that the value is set to start at 30, in line with the default, and if you choose to increase this value, do so in no more than 15 minute increments, keeping a close eye on the effects of the changes. It is not recommended to set this value higher than 90 mins, as this may affect the ability for the algorithm to safely zero temp. It is also recommended that pushover is used when setting the value to be greater than default, so that alerts are generated for any predicted lows or highs." = "За замовчуванням починається с 30 хв. Максимальна кількість базальних хвилин, яке може бути доставлено як один SMB с непокритими вуглеводами. Це дає можливість зробити SMB більш агрессивним. Рекомендується, щоб значення починалося с 30. Збільшуйте значення не більш чим на 15 хвилин, не забуваючи  при цьому про контроль. Не рекомендується встановлювати це значення більше 90 хвилин, так як це може вплинути на здібность алгоритма беспечного відключення бази. Також рекомендується використовувати pushover при встановленні значення більше 30, щоб оповіщення генерувалися для будь-яких прогнозованих низьких або високих значеннях СК.";
 
 /* "Max UAM SMB Basal Minutes" */
-"Defaults to start at 30. This is the maximum minutes of basal that can be delivered by UAM as a single SMB when IOB exceeds COB. This gives the ability to make UAM more or less aggressive if you choose. It is recommended that the value is set to start at 30, in line with the default, and if you choose to increase this value, do so in no more than 15 minute increments, keeping a close eye on the effects of the changes. Reducing the value will cause UAM to dose less insulin for each SMB. It is not recommended to set this value higher than 60 mins, as this may affect the ability for the algorithm to safely zero temp. It is also recommended that pushover is used when setting the value to be greater than default, so that alerts are generated for any predicted lows or highs." = "Defaults to start at 30. This is the maximum minutes of basal that can be delivered by UAM as a single SMB when IOB exceeds COB. This gives the ability to make UAM more or less aggressive if you choose. It is recommended that the value is set to start at 30, in line with the default, and if you choose to increase this value, do so in no more than 15 minute increments, keeping a close eye on the effects of the changes. Reducing the value will cause UAM to dose less insulin for each SMB. It is not recommended to set this value higher than 60 mins, as this may affect the ability for the algorithm to safely zero temp. It is also recommended that pushover is used when setting the value to be greater than default, so that alerts are generated for any predicted lows or highs.";
+"Defaults to start at 30. This is the maximum minutes of basal that can be delivered by UAM as a single SMB when IOB exceeds COB. This gives the ability to make UAM more or less aggressive if you choose. It is recommended that the value is set to start at 30, in line with the default, and if you choose to increase this value, do so in no more than 15 minute increments, keeping a close eye on the effects of the changes. Reducing the value will cause UAM to dose less insulin for each SMB. It is not recommended to set this value higher than 60 mins, as this may affect the ability for the algorithm to safely zero temp. It is also recommended that pushover is used when setting the value to be greater than default, so that alerts are generated for any predicted lows or highs." = "За замовчуванням починається с 30. Це максимальний розмір базальних хвилин, який може бути доставлений UAM в якості одного SMB зі співставленням з IOB COB. Це дає можливість зробити UAM більш чи меньш агрессивним. Рекомендується, щоби значення починалося с 30. Якщо ви забажаєте збільшити це значення, збільшуйте не більш чим  на 15 хвилин, не забуваючи при при цьому контролювати СК. Зменьшення значення привиде до зменьшення дози інсуліна для кажного SMB. Не рекомендується встановлювати це значення більше 60 хвилин, так як це може вплинути на здібність алгоритма безпечно відключати  базу. Також рекомендується використовувати оповіщення pushover при встановленні значення більше 30, щоб оповіщення генерувалися для будь-яких прогнозованих низьких або високих значеннях СК.";
 
 /* "SMB Interval" */
-"Minimum duration in minutes between two enacted SMBs" = "Minimum duration in minutes between two enacted SMBs";
+"Minimum duration in minutes between two enacted SMBs" = "Мінімальна тривалість у хвилинах між двома подачами SMB";
 
 /* "Bolus Increment" */
-"Smallest SMB / SMB increment in oref0. Minimum amount for Medtronic pumps is 0.1 U, whereas for Omnipod it’s 0.05 U. The default value is 0.1." = "Smallest SMB / SMB increment in oref0. Minimum amount for Medtronic pumps is 0.1 U, whereas for Omnipod it’s 0.05 U. The default value is 0.1.";
+"Smallest SMB / SMB increment in oref0. Minimum amount for Medtronic pumps is 0.1 U, whereas for Omnipod it’s 0.05 U. The default value is 0.1." = "Самий маленький SMB / приріст SMB в oref0. Мінімум для помп Медтронік дорівнює 0.1 Од., в той-же час  для Omnipod це 0.05 Од. За замовчуванням 0.1.";
 
 /* "Insulin Peak Time" */
-"Time of maximum blood glucose lowering effect of insulin, in minutes. Beware: Oref assumes for ultra-rapid (Lyumjev) & rapid-acting (Fiasp) curves minimal (35 & 50 min) and maximal (100 & 120 min) applicable insulinPeakTimes. Using a custom insulinPeakTime outside these bounds will result in issues with FreeAPS-X, longer loop calculations and possible red loops." = "Time of maximum blood glucose lowering effect of insulin, in minutes. Beware: Oref assumes for ultra-rapid (Lyumjev) & rapid-acting (Fiasp) curves minimal (35 & 50 min) and maximal (100 & 120 min) applicable insulinPeakTimes. Using a custom insulinPeakTime outside these bounds will result in issues with FreeAPS-X, longer loop calculations and possible red loops.";
+"Time of maximum blood glucose lowering effect of insulin, in minutes. Beware: Oref assumes for ultra-rapid (Lyumjev) & rapid-acting (Fiasp) curves minimal (35 & 50 min) and maximal (100 & 120 min) applicable insulinPeakTimes. Using a custom insulinPeakTime outside these bounds will result in issues with FreeAPS-X, longer loop calculations and possible red loops." = "Піковий час інсуліна в хвилинах. Час необхідний інсуліну для досягнення максимального впливу. Будьте обережні: Oref припускає за ультрашвидкі (Lyumjev) та швидке виконання (Fiasp) криві є мінімальними (35 та 50 хвилин) і максимальними (100 та 120 хвилин) придатними для інсулініпінг-таймерів. Використання користувацького інсулінутого PeakTime поза цими межами призведе до проблем з FreeAPS-X, більш довшими обчисленнями циклів та можливими червоними циклами.";
 
 /* "Carbs Req Threshold" */
-"Grams of carbsReq to trigger a pushover. Defaults to 1 (for 1 gram of carbohydrate). Can be increased if you only want to get Pushover for carbsReq at X threshold." = "Grams of carbsReq to trigger a pushover. Defaults to 1 (for 1 gram of carbohydrate). Can be increased if you only want to get Pushover for carbsReq at X threshold.";
+"Grams of carbsReq to trigger a pushover. Defaults to 1 (for 1 gram of carbohydrate). Can be increased if you only want to get Pushover for carbsReq at X threshold." = "Потрібна кількість грам вуглеводів для спрацювання оповіщення pushover. За замовчуванням 1 (для 1 грама вуглеводів). Можливо збільшити тільки якщо ви хочите отримати Pushover для carbsReq при X порозі.";
 
 /* "Noisy CGM Target Multiplier" */
-"Defaults to 1.3. Increase target by this amount when looping off raw/noisy CGM data" = "Defaults to 1.3. Increase target by this amount when looping off raw/noisy CGM data";
+"Defaults to 1.3. Increase target by this amount when looping off raw/noisy CGM data" = "За зомовчуванням 1,3. Збільшує значення на цю величину, коли цикл відключається  з-за шуму сенсора CGM";

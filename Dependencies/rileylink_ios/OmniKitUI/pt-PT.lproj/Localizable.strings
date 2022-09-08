@@ -35,9 +35,6 @@
 /* The title of the cell showing the pod activated at time */
 "Active Time" = "Active Time";
 
-/* The title of the cell showing the Pod Active Clock */
-"Pod Active Clock" = "Pod Active Clock";
-
 /* The title of the cell showing alarm status */
 "Alarms" = "Alarms";
 
@@ -71,9 +68,6 @@
 /* The title of the configuration section in settings */
 "Configuration" = "Ajustes";
 
-/* The title of the Insulin Type */
-"Insulin Type" = "Insulin Type";
-
 /* The title of the continue action in an action sheet */
 "Continue" = "Continue";
 
@@ -104,18 +98,6 @@
 
 /* The alert title for enable bolus beeps error */
 "Error enabling bolus beeps" = "Error enabling bolus beeps";
-
-/* The alert title for enable Confirmation Beeps */
-"Enable Confirmation Beeps" = "Enable Confirmation Beeps";
-
-/* The alert title for Disable Confirmation Beep */
-"Disable Confirmation Beeps" = "Disable Confirmation Beeps";
-
-/* The alert title for enable Automatic Bolus Beeps */
-"Enable Automatic Bolus Beeps" = "Enable Automatic Bolus Beeps";
-
-/* The alert title for Disable Automatic Bolus Beeps */
-"Disable Automatic Bolus Beeps" = "Disable Automatic Bolus Beeps";
 
 /* The alert title for a resume error */
 "Error Resuming" = "Error Resuming";
@@ -247,15 +229,3 @@
 
 /* The detail text for delivered insulin when no measurement is available */
 "Unknown" = "Unknown";
-
-/* The title of the diagnostics section in settings */
-"Diagnostics" = "Diagnostics";
-
-/* The diagnostic command Read Pod Status */
-"Read Pod Status" = "Read Pod Status";
-
-/* The diagnostic command Read Pulse Log */
-"Read Pulse Log" = "Read Pulse Log";
-
-/* The title of the pod details section in settings */
-"Pod Details" = "Pod Details";

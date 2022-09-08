@@ -9,7 +9,7 @@
 
 /* Format string for delivered insulin. (1: The localized amount)
    Format string for insulin remaining in reservoir. (1: The localized amount) */
-"%@ U" = "%@ ед";
+"%@ U" = "%@ Eд";
 
 /* Format string for bolus progress when finished. (1: The localized amount) */
 "%@ U (Finished)" = "%@ ед (подано)";
@@ -175,7 +175,7 @@
 "Primed" = "Заполнено";
 
 /* The text of the loading label when priming */
-"Priming…" = "";
+"Priming…" = "Заполнение…";
 
 /* Label describing time remaining view */
 "Remaining" = "Заполняется";
@@ -198,7 +198,7 @@
 "Save" = "Сохранить";
 
 /* The detail text of the basal row when pod is running scheduled basal */
-"Schedule" = "По графику";
+"Schedule" = "График";
 
 /* The title of the status section in settings */
 "Status" = "Состояние";

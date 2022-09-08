@@ -1,5 +1,5 @@
 /* Accessibility format string for (1: localized volume)(2: time) */
-"%1$@ units remaining at %2$@" = "%1$@ units remaining at %2$@";
+"%1$@ units remaining at %2$@" = "在%2$@还剩余%1$@";
 
 /* The format string for displaying an offset from a time zone: (1: GMT)(2: -)(3: 4:00) */
 "%1$@%2$@%3$@" = "%1$@%2$@%3$@";
@@ -15,7 +15,7 @@
 "%@ U (Finished)" = "%@ U (已输注)";
 
 /* Format string for bolus progress. (1: The delivered amount) (2: The programmed amount) (3: the percent progress) */
-"%@ U of %@ U (%@)" = "%1$@ U of %2$@ U (%3$@)";
+"%@ U of %@ U (%@)" = "%1$@ U%2$@ U (%3$@)";
 
 /* Format string for temp basal rate. (1: The localized amount) */
 "%@ U/hour" = "%@ U/小时";
@@ -24,7 +24,7 @@
 "%@%%" = "%@%%";
 
 /* Format string for reservoir reading when above or equal to maximum reading. (1: The localized amount) */
-"%@+ U" = "%@+ U";
+"%@+ U" = "%@ + U";
 
 /* Appends a full-stop to a statement */
 "%@." = "%@.";
@@ -118,10 +118,10 @@
 "Fault" = "错误";
 
 /* The title of the command to finish pod setup */
-"Finish pod setup" = "完成设置";
+"Finish pod setup" = "完成Pod设置";
 
 /* Accessibility format string for (1: localized volume)(2: time) */
-"Greater than %1$@ units remaining at %2$@" = "";
+"Greater than %1$@ units remaining at %2$@" = "在%2$@ 还有%1$@ 单位剩余";
 
 /* Instructions when deactivating pod that has been paired, but not attached. */
 "Incompletely set up pod must be deactivated before pairing with a new one. Please deactivate and discard pod." = "Pod设置失败，请解除该从身体移除Pod,然后配对新Pod";
@@ -195,10 +195,10 @@
 
 /* Title of button to save delivery limit settings
    Title of button to sync basal profile when no pod paired */
-"Save" = "保存";
+"Save" = "保存​​";
 
 /* The detail text of the basal row when pod is running scheduled basal */
-"Schedule" = "预设";
+"Schedule" = "设定时间";
 
 /* The title of the status section in settings */
 "Status" = "状态";

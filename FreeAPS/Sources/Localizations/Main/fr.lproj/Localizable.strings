@@ -660,7 +660,7 @@ Enact a temp Basal or a temp target */
 "Firmware" = "Microprogramme";
 
 /* */
-"Connection State" = "État de la connexion";
+"Connection State" = "Etat de connexion";
 
 /* */
 "Transmitter Type" = "Type de Transmetteur";
@@ -948,8 +948,27 @@ Enact a temp Basal or a temp target */
 
 /* */
 "After you create glucose records in the Health app, please open FreeAPS X to help us guaranteed transfer changed data" = "Une fois que vous avez créé des enregistrements de glucose dans l'application Santé, veuillez ouvrir FreeAPS X pour nous aider à garantir le transfert des données";
-/* --------------------------------------------
 
+/* New ALerts ------------------------- */
+/* Info title */
+"Info" = "Info";
+
+/* Warning title */
+"Warning" = "Varning";
+
+/* Error title */
+"Error" = "Erreur";
+
+/* ---------------------------------------
+  DASH strings
+*/
+"Attach Pod" = "Attach Pod";
+
+"Deactivate Pod" = "Désactiver le pod";
+
+"Pair Pod" = "Pair Pod";
+
+/* --------------------------------------
 
   Infotexts from openaps.docs and androidaps.docs
   FreeAPS X
