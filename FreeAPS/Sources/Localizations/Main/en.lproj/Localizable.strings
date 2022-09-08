@@ -425,6 +425,9 @@ Enact a temp Basal or a temp target */
 /* " min" in Treatments list */
 " min" = " min";
 
+/* */
+"Unable to change anything" = "Unable to change anything";
+
 
 /* Calendar and Libre transmitter settings ---------------
  */
@@ -1062,13 +1065,23 @@ Enact a temp Basal or a temp target */
 "This PumpManager has not been configured with a maximum basal rate because it was added before manual temp basal was a feature. Please go to therapy settings -> delivery limits and set a new maximum basal rate." = "This PumpManager has not been configured with a maximum basal rate because it was added before manual temp basal was a feature. Please go to therapy settings -> delivery limits and set a new maximum basal rate.";
 
 /* description label for active time pod details row */
-"Active Time"= "Active Time";
+"Active Time" = "Active Time";
 
 /* description label for total delivery pod details row */
 "Total Delivery" = "Total Delivery";
 
 /* */
 "Add Omnipod Dash" = "Add Omnipod Dash";
+
+/* */
+"Insert Cannula" = "Insert Cannula";
+
+/* */
+"Check Cannula" = "Check Cannula";
+
+/* */
+"Setup Complete" = "Setup Complete";
+
  /* --------------------------------------
 
   Infotexts from openaps.docs and androidaps.docs
