@@ -968,6 +968,95 @@ Enact a temp Basal or a temp target */
 
 "Pair Pod" = "Parkoppla podd";
 
+/* Text for confidence reminders navigation link */
+"Confidence Reminders" = "Bekräftelseljud";
+
+"Confidence reminders are beeps from the pod which can be used to acknowledge selected commands." = "Bekräftelseljud är pip från podden som kan användas som bekräftelser på utförda kommandon";
+
+/* button title for saving low reservoir reminder while saving */
+"Saving..." = "Sparar...";
+
+/* button title for saving low reservoir reminder */
+"Save" = "Spara";
+
+/* Alert title for error when updating confidence reminder preference */
+"Failed to update confidence reminder preference." = "Misslyckades att uppdatera inställning för bekräftelseljud";
+
+/* */
+"No Error" = "Inget fel";
+
+/* description label for active time pod details row */
+"Active Time"= "Poddålder";
+
+/* Text for previous pod information row */
+"Previous Pod Information" = "Information om tidigare podd";
+
+/* Title string for BeepPreference.silent */
+"Disabled" = "Av";
+
+/* Title string for BeepPreference.manualCommands */
+"Enabled" = "På";
+
+/* Title string for BeepPreference.extended */
+"Extended" = "Utökad";
+
+/* Description for BeepPreference.silent */
+"No confidence reminders are used." = "Inga ljud på.";
+
+/* Description for BeepPreference.manualCommands */
+"Confidence reminders will sound for commands you initiate, like bolus, cancel bolus, suspend, resume, save notification reminders, etc. When Loop automatically adjusts delivery, no confidence reminders are used." = "Bekräftelseljud kommer att pipa för för ala pumpkommandon du ger, som bolus, avbryt bolus, pausa pump, återuppta insulintillförsel, spara påminnelser etc. När FreeAPS X automatiskt justerar insulintillförsel kommer inga pip att ljuda.";
+
+/* Description for BeepPreference.extended */
+"Confidence reminders will sound when Loop automatically adjusts delivery as well as for commands you initiate." = "Bekräftelsepip kommer att ljuda även vid automatiska pumpkommandon såväl som vid manuella.";
+
+/* Label text for expiration reminder default row */
+"Expiration Reminder Default" = "Standard påminnelsetid";
+
+/* Value text for no expiration reminder */
+"No Reminder" = "Ingen påminnelse";
+
+/* */
+"Scheduled Reminder" = "Schemalagd påminnelse";
+
+/* */
+"Low Reservoir Reminder" = "Påminnelse om låg insulinnivå";
+
+/* The action string on pod status page when pod data is stale */
+"Make sure your phone and pod are close to each other. If communication issues persist, move to a new area." = "Säkerställ att din telefon och podd är nära varandra. Om problemet kvarstår, flytta till annan plats.";
+    
+/* Format string for the action string on pod status page when pod expired. (1: service time remaining) */
+"Change Pod now. Insulin delivery will stop in %1$@ or when no more insulin remains." = "Byt podd nu. Insulintillförsel kommer att stoppas om %1$@ eller när insulinet är slut.";
+
+/* Label text for temporary basal rate summary */
+"Rate" = "Basaldos";
+
+/* Summary string for temporary basal rate configuration page */
+"%1$@ for %2$@" = "%1$@ i %2$@";
+
+/* Description text on manual temp basal action sheet */
+"Loop will not automatically adjust your insulin delivery until the temporary basal rate finishes or is canceled." = "FreeAPS X kommer inte automatiskt att justera dina insulindoser förrän den temporära basalen är färdig eller har avbrytits.";
+    
+/* Button text for setting manual temporary basal rate*/
+"Set Temporary Basal" = "Ställ in temporaär basal";
+
+/* Navigation Title for ManualTempBasalEntryView */
+"Temporary Basal" = "Temporär basal";
+
+/* Alert title for a failure to set temporary basal */
+"Temporary Basal Failed" = "Temporär basal misslyckades";
+
+/* Alert format string for a failure to set temporary basal with recovery suggestion. (1: error description) (2: recovery text) */
+"Unable to set a temporary basal rate: %1$@\n\n%2$@" = "Kunde inte ställa in en temporär basaldos: %1$@\n\n%2$@";
+
+/* Alert format string for a failure to set temporary basal. (1: error description) */
+"Unable to set a temporary basal rate: %1$@" = "Kunde inte ställa in en temporär basaldos: %1$@";
+
+/* Alert title for missing temp basal configuration */
+"Missing Config" = "Konfiguration saknas";
+
+/* Alert format string for missing temp basal configuration. */
+"This PumpManager has not been configured with a maximum basal rate because it was added before manual temp basal was a feature. Please go to therapy settings -> delivery limits and set a new maximum basal rate." = "En maximal basaldos har inte ställts in. Gå till inställningen 'Maxdoser' för att ställa in den maximala basaldosen";
+
 /* --------------------------------------
 
   Infotexts from openaps.docs and androidaps.docs
