@@ -60,8 +60,8 @@ public struct PodState: RawRepresentable, Equatable, CustomDebugStringConvertibl
 
     public var setupUnitsDelivered: Double?
 
-    public let piVersion: String
     public let pmVersion: String
+    public let piVersion: String
     public let lot: UInt32
     public let tid: UInt32
     var activeAlertSlots: AlertSet
@@ -114,11 +114,11 @@ public struct PodState: RawRepresentable, Equatable, CustomDebugStringConvertibl
         return false
     }
 
-    public init(address: UInt32, piVersion: String, pmVersion: String, lot: UInt32, tid: UInt32, packetNumber: Int = 0, messageNumber: Int = 0, insulinType: InsulinType) {
+    public init(address: UInt32, pmVersion: String, piVersion: String, lot: UInt32, tid: UInt32, packetNumber: Int = 0, messageNumber: Int = 0, insulinType: InsulinType) {
         self.address = address
         self.nonceState = NonceState(lot: lot, tid: tid)
-        self.piVersion = piVersion
         self.pmVersion = pmVersion
+        self.piVersion = piVersion
         self.lot = lot
         self.tid = tid
         self.lastInsulinMeasurements = nil

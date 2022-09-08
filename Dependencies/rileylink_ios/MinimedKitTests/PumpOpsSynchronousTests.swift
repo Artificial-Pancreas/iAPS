@@ -20,7 +20,7 @@ class PumpOpsSynchronousTests: XCTestCase {
     var pumpID: String!
     var pumpRegion: PumpRegion!
     var pumpModel: PumpModel!
-    var messageSenderStub: PumpMessageSenderStub!
+    var mockMessageSender: MockPumpMessageSender!
 
     let dateComponents2007 = DateComponents(calendar: Calendar.current, year: 2007, month: 1, day: 1)
     let dateComponents2017 = DateComponents(calendar: Calendar.current, year: 2017, month: 1, day: 1)
@@ -46,7 +46,7 @@ class PumpOpsSynchronousTests: XCTestCase {
         pumpRegion = .worldWide
         pumpModel = PumpModel.model523
 
-        messageSenderStub = PumpMessageSenderStub()
+        mockMessageSender = MockPumpMessageSender()
         
         setUpSUT()
     }
@@ -58,7 +58,7 @@ class PumpOpsSynchronousTests: XCTestCase {
         pumpState.pumpModel = pumpModel
         pumpState.awakeUntil = Date(timeIntervalSinceNow: 100) // pump is awake
         
-        sut = PumpOpsSession(settings: pumpSettings, pumpState: pumpState, session: messageSenderStub, delegate: messageSenderStub)
+        sut = PumpOpsSession(settings: pumpSettings, pumpState: pumpState, messageSender: mockMessageSender, delegate: mockMessageSender)
     }
     
     /// Duplicates logic in setUp with a new PumpModel
@@ -312,7 +312,13 @@ func randomDataString(length:Int) -> String {
     return s
 }
 
-class PumpMessageSenderStub: PumpMessageSender {
+class MockPumpMessageSender: PumpMessageSender {
+
+    func listenForPacket(onChannel channel: Int, timeout: TimeInterval) throws -> RileyLinkBLEKit.RFPacket? {
+        // do nothing
+        return nil
+    }
+
     func getRileyLinkStatistics() throws -> RileyLinkStatistics {
         throw PumpOpsError.noResponse(during: "Tests")
     }
@@ -344,7 +350,8 @@ class PumpMessageSenderStub: PumpMessageSender {
 
             response = responseArray[numberOfResponsesReceived]
         } else {
-            response = PumpMessage(rxData: Data())!
+            let packet = MinimedPacket(encodedData: Data(hexadecimalString: "a969a39966b1566555b235")!)!
+            response = PumpMessage(rxData: packet.data)!
         }
 
         var encoded = MinimedPacket(outgoingData: response.txData).encodedData()
@@ -357,11 +364,83 @@ class PumpMessageSenderStub: PumpMessageSender {
         return rfPacket
     }
 
+    func getResponse<T: MessageBody>(to message: PumpMessage, responseType: MessageType, repeatCount: Int, timeout: TimeInterval, retryCount: Int) throws -> T {
+
+        let response = try sendAndListen(message, repeatCount: repeatCount, timeout: timeout, retryCount: retryCount)
+
+        guard response.messageType == responseType, let body = response.messageBody as? T else {
+            if let body = response.messageBody as? PumpErrorMessageBody {
+                switch body.errorCode {
+                case .known(let code):
+                    throw PumpOpsError.pumpError(code)
+                case .unknown(let code):
+                    throw PumpOpsError.unknownPumpErrorCode(code)
+                }
+            } else {
+                throw PumpOpsError.unexpectedResponse(response, from: message)
+            }
+        }
+        return body
+    }
+
+    /// Sends a message to the pump, listening for a any known PumpMessage in reply
+    ///
+    /// - Parameters:
+    ///   - message: The message to send
+    ///   - repeatCount: The number of times to repeat the message before listening begins
+    ///   - timeout: The length of time to listen for a pump response
+    ///   - retryCount: The number of times to repeat the send & listen sequence
+    /// - Returns: The message reply
+    /// - Throws: An error describing a failure in the sending or receiving of a message:
+    ///     - PumpOpsError.couldNotDecode
+    ///     - PumpOpsError.crosstalk
+    ///     - PumpOpsError.deviceError
+    ///     - PumpOpsError.noResponse
+    ///     - PumpOpsError.unknownResponse
+    func sendAndListen(_ message: PumpMessage, repeatCount: Int, timeout: TimeInterval, retryCount: Int) throws -> PumpMessage {
+        let rfPacket = try sendAndListenForPacket(message, repeatCount: repeatCount, timeout: timeout, retryCount: retryCount)
+
+        guard let packet = MinimedPacket(encodedData: rfPacket.data) else {
+            throw PumpOpsError.couldNotDecode(rx: rfPacket.data, during: message)
+        }
+
+        guard let response = PumpMessage(rxData: packet.data) else {
+            // Unknown packet type or message type
+            throw PumpOpsError.unknownResponse(rx: packet.data, during: message)
+        }
+
+        guard response.address == message.address else {
+            throw PumpOpsError.crosstalk(response, during: message)
+        }
+
+        return response
+    }
+
+    // Send a PumpMessage, and listens for a packet; used by callers who need to see RSSI
+    /// - Throws:
+    ///     - PumpOpsError.noResponse
+    ///     - PumpOpsError.deviceError
+    func sendAndListenForPacket(_ message: PumpMessage, repeatCount: Int, timeout: TimeInterval, retryCount: Int) throws -> RFPacket {
+        let packet: RFPacket?
+
+        do {
+            packet = try sendAndListen(MinimedPacket(outgoingData: message.txData).encodedData(), repeatCount: repeatCount, timeout: timeout, retryCount: retryCount)
+        } catch let error as LocalizedError {
+            throw PumpOpsError.deviceError(error)
+        }
+
+        guard let rfPacket = packet else {
+            throw PumpOpsError.noResponse(during: message)
+        }
+
+        return rfPacket
+    }
+
     func listen(onChannel channel: Int, timeout: TimeInterval) throws -> RFPacket? {
         throw PumpOpsError.noResponse(during: "Tests")
     }
 
-    func send(_ data: Data, onChannel channel: Int, timeout: TimeInterval) throws {
+    func send(_ msg: MinimedKit.PumpMessage) throws {
         // Do nothing
     }
 
@@ -377,17 +456,13 @@ class PumpMessageSenderStub: PumpMessageSender {
         throw PumpOpsError.noResponse(during: "Tests")
     }
     
-    func setCCLEDMode(_ mode: RileyLinkLEDMode) throws {
-        throw PumpOpsError.noResponse(during: "Tests")
-    }
-    
     var responses = [MessageType: [PumpMessage]]()
     
     // internal tracking of how many times a response type has been received
     private var responsesHaveOccured = [MessageType: Int]()
 }
 
-extension PumpMessageSenderStub: PumpOpsSessionDelegate {
+extension MockPumpMessageSender: PumpOpsSessionDelegate {
     func pumpOpsSession(_ session: PumpOpsSession, didChange state: PumpState) {
 
     }

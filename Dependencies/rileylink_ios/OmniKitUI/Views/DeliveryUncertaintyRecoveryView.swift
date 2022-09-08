@@ -29,7 +29,7 @@ struct DeliveryUncertaintyRecoveryView: View {
                 Spacer()
                 ProgressView()
             }) {
-                ForEach(rileyLinkListDataSource.devices) { device in
+                ForEach(rileyLinkListDataSource.devices, id: \.peripheralIdentifier) { device in
                     Toggle(isOn: rileyLinkListDataSource.autoconnectBinding(for: device)) {
                         HStack {
                             Text(device.name ?? "Unknown")

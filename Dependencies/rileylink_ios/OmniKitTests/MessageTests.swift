@@ -78,8 +78,8 @@ class MessageTests: XCTestCase {
         do {
             let config = try VersionResponse(encodedData: Data(hexadecimalString: "011502070002070002020000a64000097c279c1f08ced2")!)
             XCTAssertEqual(23, config.data.count)
-            XCTAssertEqual("2.7.0", String(describing: config.piVersion))
-            XCTAssertEqual("2.7.0", String(describing: config.pmVersion))
+            XCTAssertEqual("2.7.0", String(describing: config.firmwareVersion))
+            XCTAssertEqual("2.7.0", String(describing: config.iFirmwareVersion))
             XCTAssertEqual(42560, config.lot)
             XCTAssertEqual(621607, config.tid)
             XCTAssertEqual(0x1f08ced2, config.address)
@@ -103,8 +103,8 @@ class MessageTests: XCTestCase {
             let message = try Message(encodedData: Data(hexadecimalString: "ffffffff041d011b13881008340a5002070002070002030000a62b000447941f00ee878352")!)
             let config = message.messageBlocks[0] as! VersionResponse
             XCTAssertEqual(29, config.data.count)
-            XCTAssertEqual("2.7.0", String(describing: config.piVersion))
-            XCTAssertEqual("2.7.0", String(describing: config.pmVersion))
+            XCTAssertEqual("2.7.0", String(describing: config.firmwareVersion))
+            XCTAssertEqual("2.7.0", String(describing: config.iFirmwareVersion))
             XCTAssertEqual(42539, config.lot)
             XCTAssertEqual(280468, config.tid)
             XCTAssertEqual(0x1f00ee87, config.address)
@@ -127,8 +127,8 @@ class MessageTests: XCTestCase {
         do {
             let config = try VersionResponse(encodedData: Data(hexadecimalString: "0115031b0008080004020812a011000c175700ffffffff")!)
             XCTAssertEqual(23, config.data.count)
-            XCTAssertEqual("3.27.0", String(describing: config.pmVersion))
-            XCTAssertEqual("8.8.0", String(describing: config.piVersion))
+            XCTAssertEqual("3.27.0", String(describing: config.firmwareVersion))
+            XCTAssertEqual("8.8.0", String(describing: config.iFirmwareVersion))
             XCTAssertEqual(135438353, config.lot)
             XCTAssertEqual(792407, config.tid)
             XCTAssertEqual(0xFFFFFFFF, config.address)
@@ -152,8 +152,8 @@ class MessageTests: XCTestCase {
             let message = try Message(encodedData: Data(hexadecimalString: "ffffffff0c1d011b13881008340a50031b0008080004030812a011000c175717244389816c")!)
             let config = message.messageBlocks[0] as! VersionResponse
             XCTAssertEqual(29, config.data.count)
-            XCTAssertEqual("3.27.0", String(describing: config.pmVersion))
-            XCTAssertEqual("8.8.0", String(describing: config.piVersion))
+            XCTAssertEqual("3.27.0", String(describing: config.firmwareVersion))
+            XCTAssertEqual("8.8.0", String(describing: config.iFirmwareVersion))
             XCTAssertEqual(135438353, config.lot)
             XCTAssertEqual(792407, config.tid)
             XCTAssertEqual(0x17244389, config.address)
@@ -176,8 +176,8 @@ class MessageTests: XCTestCase {
         do {
             let message = try Message(encodedData: Data(hexadecimalString: "ffffffff04170115020700020700020e0000a5ad00053030971f08686301fd")!)
             let config = message.messageBlocks[0] as! VersionResponse
-            XCTAssertEqual("2.7.0", String(describing: config.piVersion))
-            XCTAssertEqual("2.7.0", String(describing: config.pmVersion))
+            XCTAssertEqual("2.7.0", String(describing: config.firmwareVersion))
+            XCTAssertEqual("2.7.0", String(describing: config.iFirmwareVersion))
             XCTAssertEqual(0x0000a5ad, config.lot)
             XCTAssertEqual(0x00053030, config.tid)
             XCTAssertEqual(0x1f086863, config.address)

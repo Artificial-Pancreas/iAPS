@@ -253,7 +253,7 @@ class OmnipodSettingsViewModel: ObservableObject {
     }
 
     func updateConnectionStatus() {
-        pumpManager.rileyLinkConnectionManager?.deviceProvider.getDevices { (devices) in
+        pumpManager.rileyLinkDeviceProvider.getDevices { (devices) in
             DispatchQueue.main.async { [weak self] in
                 self?.rileylinkConnected = devices.firstConnected != nil
             }

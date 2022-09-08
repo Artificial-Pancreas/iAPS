@@ -11,6 +11,7 @@ public enum MinimedPumpManagerError: Error {
     case noRileyLink
     case bolusInProgress
     case pumpSuspended
+    case insulinTypeNotConfigured
     case noDate  // TODO: This is less of an error and more of a precondition/assertion state
     case tuneFailed(LocalizedError)
     case commsError(LocalizedError)
@@ -27,6 +28,8 @@ extension MinimedPumpManagerError: LocalizedError {
             return LocalizedString("Bolus in Progress", comment: "Error description when failure due to bolus in progress")
         case .pumpSuspended:
             return LocalizedString("Pump is Suspended", comment: "Error description when failure due to pump suspended")
+        case .insulinTypeNotConfigured:
+            return LocalizedString("Insulin Type is not configured", comment: "Error description for MinimedPumpManagerError.insulinTypeNotConfigured")
         case .noDate:
             return nil
         case .tuneFailed(let error):
@@ -51,6 +54,8 @@ extension MinimedPumpManagerError: LocalizedError {
         switch self {
         case .noRileyLink:
             return LocalizedString("Make sure your RileyLink is nearby and powered on", comment: "Recovery suggestion")
+        case .insulinTypeNotConfigured:
+            return LocalizedString("Go to pump settings and select insulin type", comment: "Recovery suggestion for MinimedPumpManagerError.insulinTypeNotConfigured")
         case .tuneFailed(let error):
             return error.recoverySuggestion
         default:

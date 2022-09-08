@@ -69,6 +69,11 @@ class TimestampedHistoryEventTests: XCTestCase {
 
     }
 
+    func testBolusOnX22() {
+        let bolus = BolusNormalPumpEvent(availableData: Data(hexadecimalString: "567901e443494eda97dbfd38150216f3")!, pumpModel: .model522)!
+        XCTAssertEqual(bolus.wasRemotelyTriggered, true)
+    }
+
     func testSquareWaveIsMutableOnX23() {
         let squareBolus = BolusNormalPumpEvent(availableData: Data(hexadecimalString: "010080008000240209a24a1510")!, pumpModel: .model523)!
         let squareBolusTimestamp = squareBolus.timestamp.date!

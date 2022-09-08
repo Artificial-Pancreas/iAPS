@@ -397,7 +397,7 @@ extension BaseDeviceDataManager: PumpManagerDelegate {
     func pumpManager(
         _: PumpManager,
         hasNewPumpEvents events: [NewPumpEvent],
-        lastSync _: Date?,
+        lastReconciliation _: Date?,
         completion: @escaping (_ error: Error?) -> Void
     ) {
         dispatchPrecondition(condition: .onQueue(processQueue))

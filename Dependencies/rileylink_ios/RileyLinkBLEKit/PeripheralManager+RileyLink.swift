@@ -275,7 +275,7 @@ extension PeripheralManager {
 
     func setCustomName(_ name: String, timeout: TimeInterval = expectedMaxBLELatency, completion: ((_ error: RileyLinkDeviceError?) -> Void)? = nil) {
         guard let value = name.data(using: .utf8) else {
-            completion?(.invalidInput(name))
+            completion?(.errorResponse(name))
             return
         }
 

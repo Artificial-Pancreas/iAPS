@@ -15,6 +15,8 @@ import LoopKit
 class MinimedPumpSettingsViewController: RileyLinkSettingsViewController {
 
     let pumpManager: MinimedPumpManager
+
+    let supportedInsulinTypes: [InsulinType]
     
     private var ops: PumpOps {
         return pumpManager.pumpOps
@@ -63,8 +65,9 @@ class MinimedPumpSettingsViewController: RileyLinkSettingsViewController {
     }
 
     
-    init(pumpManager: MinimedPumpManager) {
+    init(pumpManager: MinimedPumpManager, supportedInsulinTypes: [InsulinType]) {
         self.pumpManager = pumpManager
+        self.supportedInsulinTypes = supportedInsulinTypes
         super.init(rileyLinkPumpManager: pumpManager, devicesSectionIndex: Section.rileyLinks.rawValue, style: .grouped)
     }
 
@@ -96,7 +99,7 @@ class MinimedPumpSettingsViewController: RileyLinkSettingsViewController {
         let mainQueue = OperationQueue.main
 
         center.addObserver(forName: .PumpOpsStateDidChange, object: pumpManager.pumpOps, queue: mainQueue) { [weak self] (note) in
-            if let state = note.userInfo?[PumpOps.notificationPumpStateKey] as? PumpState {
+            if let state = note.userInfo?[MinimedPumpOps.notificationPumpStateKey] as? PumpState {
                 self?.pumpState = state
             }
         }
@@ -106,7 +109,7 @@ class MinimedPumpSettingsViewController: RileyLinkSettingsViewController {
         let button = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(doneTapped(_:)))
         self.navigationItem.setRightBarButton(button, animated: false)
         
-        self.pumpState = pumpManager.pumpOps.pumpState.value
+        self.pumpState = pumpManager.state.pumpState
     }
 
     @objc func doneTapped(_ sender: Any) {
@@ -373,7 +376,7 @@ class MinimedPumpSettingsViewController: RileyLinkSettingsViewController {
 
                 show(vc, sender: sender)
             case .insulinType:
-                let view = InsulinTypeSetting(initialValue: pumpManager.insulinType ?? .novolog, supportedInsulinTypes: InsulinType.allCases, allowUnsetInsulinType: false) { (newType) in
+                let view = InsulinTypeSetting(initialValue: pumpManager.insulinType ?? .novolog, supportedInsulinTypes: supportedInsulinTypes, allowUnsetInsulinType: false) { (newType) in
                     self.pumpManager.insulinType = newType
                 }
                 let vc = DismissibleHostingController(rootView: view)
@@ -397,8 +400,8 @@ class MinimedPumpSettingsViewController: RileyLinkSettingsViewController {
             let vc = RileyLinkDeviceTableViewController(
                 device: device,
                 batteryAlertLevel: pumpManager.rileyLinkBatteryAlertLevel,
-                batteryAlertLevelChanged: { value in
-                    self.pumpManager.rileyLinkBatteryAlertLevel = value
+                batteryAlertLevelChanged: { [weak self] value in
+                    self?.pumpManager.rileyLinkBatteryAlertLevel = value
                 }
             )
 

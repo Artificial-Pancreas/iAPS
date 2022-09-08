@@ -23,11 +23,8 @@ public class RileyLinkSetupTableViewController: SetupTableViewController {
     }()
     
     public required init?(coder aDecoder: NSCoder) {
-        let rileyLinkConnectionManager = RileyLinkConnectionManager(autoConnectIDs: [])        
-        rileyLinkPumpManager = RileyLinkPumpManager(rileyLinkDeviceProvider: rileyLinkConnectionManager.deviceProvider, rileyLinkConnectionManager: rileyLinkConnectionManager)
-        
-        rileyLinkConnectionManager.delegate = rileyLinkPumpManager
-        
+        let deviceProvider = RileyLinkBluetoothDeviceProvider(autoConnectIDs: [])
+        rileyLinkPumpManager = RileyLinkPumpManager(rileyLinkDeviceProvider: deviceProvider)
         super.init(coder: aDecoder)
     }
 
@@ -149,12 +146,7 @@ public class RileyLinkSetupTableViewController: SetupTableViewController {
         #if targetEnvironment(simulator)
         return true
         #else
-        
-        guard let connectionManager = rileyLinkPumpManager.rileyLinkConnectionManager else {
-            return false
-        }
-        
-        return connectionManager.connectingCount > 0
+        return rileyLinkPumpManager.rileyLinkDeviceProvider.connectingCount > 0
         #endif
     }
 

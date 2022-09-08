@@ -39,6 +39,7 @@ struct ExpirationReminderSetupView: View {
             .padding()
         }
         .navigationBarTitle("Expiration Reminder", displayMode: .automatic)
+        .navigationBarHidden(false)
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button(LocalizedString("Cancel", comment: "Cancel button title"), action: {

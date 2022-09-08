@@ -169,7 +169,7 @@ class DashUICoordinator: UINavigationController, PumpManagerOnboarding, Completi
             viewModel.navigateTo = { [weak self] (screen) in
                 self?.navigateTo(screen)
             }
-            let view = OmniBLESettingsView(viewModel: viewModel)
+            let view = OmniBLESettingsView(viewModel: viewModel, supportedInsulinTypes: allowedInsulinTypes)
             return hostingController(rootView: view)
         case .pairPod:
             pumpManagerOnboardingDelegate?.pumpManagerOnboarding(didCreatePumpManager: pumpManager)

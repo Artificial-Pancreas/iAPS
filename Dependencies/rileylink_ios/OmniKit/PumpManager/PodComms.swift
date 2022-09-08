@@ -19,7 +19,7 @@ protocol PodCommsDelegate: AnyObject {
 
 class PodComms: CustomDebugStringConvertible {
     
-    private let configuredDevices: Locked<Set<RileyLinkDevice>> = Locked(Set())
+    private let configuredDevices: Locked<Set<UUID>> = Locked(Set())
 
     weak var delegate: PodCommsDelegate?
     
@@ -189,8 +189,8 @@ class PodComms: CustomDebugStringConvertible {
                 log.default("Creating PodState for address %{public}@ [lot %u tid %u], packet #%d, message #%d", String(format: "%04X", config.address), config.lot, config.tid, transport.packetNumber, transport.messageNumber)
                 self.podState = PodState(
                     address: config.address,
-                    piVersion: String(describing: config.piVersion),
-                    pmVersion: String(describing: config.pmVersion),
+                    pmVersion: String(describing: config.firmwareVersion),
+                    piVersion: String(describing: config.iFirmwareVersion),
                     lot: config.lot,
                     tid: config.tid,
                     packetNumber: transport.packetNumber,
@@ -412,7 +412,7 @@ class PodComms: CustomDebugStringConvertible {
     private func configureDevice(_ device: RileyLinkDevice, with session: CommandSession) {
         session.assertOnSessionQueue()
 
-        guard !self.configuredDevices.value.contains(device) else {
+        guard !self.configuredDevices.value.contains(device.peripheralIdentifier) else {
             return
         }
         
@@ -431,7 +431,7 @@ class PodComms: CustomDebugStringConvertible {
         
         log.debug("added device %{public}@ to configuredDevices", device.name ?? "unknown")
         _ = configuredDevices.mutate { (value) in
-            value.insert(device)
+            value.insert(device.peripheralIdentifier)
         }
     }
     
@@ -445,7 +445,7 @@ class PodComms: CustomDebugStringConvertible {
         NotificationCenter.default.removeObserver(self, name: .DeviceConnectionStateDidChange, object: device)
 
         _ = configuredDevices.mutate { (value) in
-            value.remove(device)
+            value.remove(device.peripheralIdentifier)
         }
     }
     
@@ -455,7 +455,7 @@ class PodComms: CustomDebugStringConvertible {
         return [
             "## PodComms",
             "podState: \(String(reflecting: podState))",
-            "configuredDevices: \(configuredDevices.value.map { $0.peripheralIdentifier.uuidString })",
+            "configuredDevices: \(configuredDevices.value.map { $0.uuidString })",
             "delegate: \(String(describing: delegate != nil))",
             ""
         ].joined(separator: "\n")
