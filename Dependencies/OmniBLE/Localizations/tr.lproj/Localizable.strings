@@ -243,7 +243,16 @@
 "Manual Basal" = "Manuel Bazal";
 
 /* */
-"Insert cannula" = "Kanül yerleştir";
+"Insert Cannula" = "Kanül Yerleştir";
+
+/* Cannula insertion button text while inserting */
+"Inserting..." = "Yerleştiriliyor...";
+
+/* Cannula insertion button text while showing error */
+"Retry" = "Tekrar Dene";
+
+/* Cannula insertion button text while checking insertion */
+"Checking..." = "Denetleniyor...";
 
 /* */
 "Check cannula insertion finished" = "Kanül yerleştirmenin bittiğini kontrol edin";
@@ -255,7 +264,7 @@
 "Save Basal Profile" = "Bazal Profili Kaydet";
 
 /* */
-"Save basal profile failed: %{public}@" = "Bazal profili kaydetme başarısız oldu: %{public}@";
+"Save basal profile failed: %{public}@" = "Bazal profil kaydedilemedi: %{public}@";
 
 /* */
 "Skipping Play Test Beeps due to bolus still in progress." = "Devam eden bolus nedeniyle Deneme Testi Bip Sesleri atlanıyor.";
@@ -264,7 +273,7 @@
 "Play Test Beeps" = "Test Bip Sesi Çal";
 
 /* */
-"Skipping Read Pulse Log due to bolus still in progress." = "Hala devam eden bolus nedeniyle Nabız Okuma Günlüğünü atlanıyor.";
+"Skipping Read Pulse Log due to bolus still in progress." = "Devam eden bolus nedeniyle Nabız Okuma Günlüğü atlanıyor.";
 
 /* */
 "Read Pulse Log" = "Nabız Kaydını Oku";
@@ -339,10 +348,10 @@
 "The time on your pump is different from the current time. Do you want to update the time on your pump to the current time?" = "Pompanızdaki saat, mevcut saatten farklı. Pompanızdaki saati şu anki saate güncellemek ister misiniz?";
 
 /* Button text to confirm pump time sync */
-"Yes, Sync to Current Time" = "Evet, Geçerli Saate Eşitle";
+"Yes, Sync to Current Time" = "Evet güncelle";
 
 /* Button text to cancel pump time sync */
-"No, Keep Pump As Is" = "Hayır, Pompayı Olduğu Gibi Tutun";
+"No, Keep Pump As Is" = "Hayır güncelleme";
 
 /* Title for Omnipod DASH PumpManager deletion action sheet. */
 "Remove Pump" = "Pompayı Çıkart";
@@ -376,7 +385,7 @@
 "2 hours" = "2 saat";
 
 /* Alert title for suspend error */
-"Failed to Suspend Insulin Delivery" = "İnsülin Teslimatı Askıya Alınamadı";
+"Failed to Suspend Insulin Delivery" = "İnsülin İletimi Askıya Alınamadı";
 
 /* Alert title for resume error */
 "Failed to Resume Insulin Delivery" = "İnsülin İletimi Tekrar Başlatılamadı";
@@ -388,7 +397,7 @@
 "Failed to Cancel Manual Basal" = "Manuel Bazal İptal Edilemedi";
 
 /* */
-"Please deactivate the pod. When deactivation is complete, you may remove it and pair a new pod." = "Lütfen pod'u devre dışı bırakın. Devre dışı bırakma işlemi tamamlandığında, onu kaldırabilir ve yeni bir bölme eşleştirebilirsiniz.";
+"Please deactivate the pod. When deactivation is complete, you may remove it and pair a new pod." = "Lütfen pod'u devre dışı bırakın. Devre dışı bırakma tamamlandığında, onu kaldırabilir ve yeni bir pod eşleştirebilirsiniz.";
 
 /* Instructions for deactivate pod when pod not on body */
 "Please deactivate the pod. When deactivation is complete, you may pair a new pod." = "Lütfen pod'u devre dışı bırakın. Devre dışı bırakma tamamlandığında, yeni bir pod eşleştirebilirsiniz.";
@@ -459,7 +468,6 @@
 /* Label text for step three of attach pod instructions */
 "Check Pod, apply to site, then confirm pod attachment." = "Pod'u kontrol edin, infüzyon bölgesine uygulayın, ardından pod ekini onaylayın.";
 
-
 /* Action button title for attach pod view */
 "Continue" = "Devam et";
 
@@ -494,7 +502,7 @@
 "The window on the top of the Pod should be colored pink when the cannula is properly inserted into the skin." = "Kanül cilde düzgün bir şekilde yerleştirildiğinde Pod'un üstündeki pencere pembe renkte olmalıdır.";
 
 /* Button label for user to answer cannula was properly inserted  */
-"Yes" = "Yes";
+"Yes" = "Evet";
 
 /* Button label for user to answer cannula was not properly inserted */
 "No" = "Hayır";
@@ -505,11 +513,17 @@
 /* Pod pairing action button text while priming */
 "Priming..." = "Hazırlanıyor...";
 
+/* */
+"Deactivating..." = "Devre dışı bırakılıyor...";
+
+/* Pod state when pod has been deactivated */
+"Deactivated" = "Devre dışı";
+
 /* Format string for instructions for setup complete view. (1: app name) */
 "Your Pod is ready for use.\n\n%1$@ will remind you to change your pod before it expires. You can change this to a time convenient for you." = "Pod'unuz kullanıma hazır.\n\n%1$@ süresi dolmadan önce pod değiştirmeniz için hatırlatacak. Bunu sizin için uygun bir zamana değiştirebilirsiniz.";
 
 /* */
-"Scheduled Reminder" = "Programlanmış Anımsatıcı";
+"Scheduled Reminder" = "Programlanan Anımsatma";
 
 /* Label for expiration reminder row */
 "Time" = "Saat";
@@ -524,7 +538,7 @@
 "No Reminder" = "Hatırlatıcı Yok";
 
 /* Error message description for PeripheralManagerError.notReady */
-"Peripheral Not Ready" = "Periferal hazır değil";
+"Peripheral Not Ready" = "Çevre birimi hazır değil";
 
 /* Error message description for PeripheralManagerError.incorrectResponse */
 "Incorrect Response" = "Yanlış Yanıt";
@@ -540,3 +554,102 @@
 
 /* Error message description for PeripheralManagerError.nack */
 "Nack" = "Nack";
+
+/* Title for omnipod reminders section */
+"Omnipod Reminders" = "Omnipod Hatırlatıcıları";
+
+/* Footer text for omnipod reminders section */
+"The app configures a reminder on the pod to notify you in advance of Pod expiration. Set the number of hours advance notice you would like to configure when pairing a new Pod." = "Uygulama, Pod'un sona ermesinden önce sizi bilgilendirmek için pod üzerinde bir hatırlatıcı yapılandırır. Yeni bir Pod'u eşleştirirken yapılandırmak istediğiniz saat önceden bildirim sayısını ayarlayın.";
+
+/* Footer text for scheduled reminder area */
+"This is a reminder that you scheduled when you paired your current Pod." = "Bu mevcut Pod'unuzu eşleştirdiğinizde planladığınız bir hatırlatıcıdır.";
+
+/* */
+"Scheduled Reminder" = "Programlanan Anımsatma";
+
+/* Footer text for low reservoir value row */
+"The App notifies you when the amount of insulin in the Pod reaches this level." = "Uygulama, Pod'daki insülin miktarı bu seviyeye ulaştığında sizi bilgilendirir.";
+
+/* Description text for critical alerts */
+"Critical Alerts" = "Kritik Uyarılar";
+
+/* Description text for critical alerts */
+"The reminders above will not sound if your device is in Silent or Do Not Disturb mode.\n\nThere are other critical Pod alerts and alarms that will sound even if you device is set to Silent or Do Not Disturb mode." = "Cihazınız Sessiz veya Rahatsız Etmeyin modundaysa yukarıdaki hatırlatıcılar çalmaz.\n\nCihazınız Sessiz veya Rahatsız Etmeyin moduna ayarlanmış olsa bile çalacak başka kritik Pod uyarıları ve alarmları vardır.";
+/* navigation title for notification settings */
+"Notification Settings" = "Bildirim ayarları";
+
+/* Label for scheduled reminder value row */
+"Time" = "Saat";
+
+/* Value text for no expiration reminder */
+"No Reminder" = "Hatırlatıcı Yok";
+
+/* Label for low reservoir reminder row */
+"Low Reservoir Reminder" = "Düşük Rezervuar Hatırlatıcısı";
+
+/* The action string on pod status page when pod data is stale */
+"Make sure your phone and pod are close to each other. If communication issues persist, move to a new area." = "Telefonunuzun ve pod'unuzun birbirine yakın olduğundan emin olun. İletişim sorunları devam ederse, yeni bir alana geçin.";
+/* Format string for the action string on pod status page when pod expired. (1: service time remaining) */
+"Change Pod now. Insulin delivery will stop in %1$@ or when no more insulin remains." = "Pod'u şimdi değiştirin. İnsülin iletimi %1$@ içinde veya daha fazla insülin kalmadığında duracaktır.";
+
+/* Title string for BeepPreference.silent */
+"Disabled" = "Devre dışı";
+
+/* Title string for BeepPreference.manualCommands */
+"Enabled" = "Etkin";
+
+/* Title string for BeepPreference.extended */
+"Extended" = "Genişletilmiş";
+
+/* Description for BeepPreference.silent */
+"No confidence reminders are used." = "Onay sesi kullanılmaz.";
+
+/* Description for BeepPreference.manualCommands */
+"Confidence reminders will sound for commands you initiate, like bolus, cancel bolus, suspend, resume, save notification reminders, etc. When Loop automatically adjusts delivery, no confidence reminders are used." = "Bolus, bolusu iptal et, askıya al, devam ettir, bildirim hatırlatıcılarını kaydet vb. gibi başlattığınız komutlar için Onay sesleri çalacaktır. Döngü, iletimi otomatik olarak ayarladığında, hiçbir onay sesi kullanılmaz.";
+
+/* Description for BeepPreference.extended */
+"Confidence reminders will sound when Loop automatically adjusts delivery as well as for commands you initiate." = "Loop, başlattığınız komutların yanı sıra teslimatı otomatik olarak ayarladığında, onay sesi çalacaktır.";
+
+/* Label text for temporary basal rate summary */
+"Rate" = "Oran";
+
+/* Summary string for temporary basal rate configuration page */
+"%1$@ for %2$@" = "%2$@ için %1$@";
+
+/* Description text on manual temp basal action sheet */
+"Loop will not automatically adjust your insulin delivery until the temporary basal rate finishes or is canceled." = "Döngü, geçici bazal oran bitene veya iptal edilene kadar insülin iletiminizi otomatik olarak ayarlamaz.";
+/* Button text for setting manual temporary basal rate*/
+"Set Temporary Basal" = "Geçici Bazalı Ayarla";
+
+/* Navigation Title for ManualTempBasalEntryView */
+"Temporary Basal" = "Geçici Bazal";
+
+/* Alert title for a failure to set temporary basal */
+"Temporary Basal Failed" = "Geçici Bazal Başarısız";
+
+/* Alert format string for a failure to set temporary basal with recovery suggestion. (1: error description) (2: recovery text) */
+"Unable to set a temporary basal rate: %1$@\n\n%2$@" = "Geçici bir bazal oran ayarlanamıyor: %1$@\n\n%2$@";
+
+/* Alert format string for a failure to set temporary basal. (1: error description) */
+"Unable to set a temporary basal rate: %1$@" = "Geçici bir bazal oran ayarlanamıyor: %1$@";
+
+/* Alert title for missing temp basal configuration */
+"Missing Config" = "Konfigurasyon Bulunamadı";
+
+/* Alert format string for missing temp basal configuration. */
+"This PumpManager has not been configured with a maximum basal rate because it was added before manual temp basal was a feature. Please go to therapy settings -> delivery limits and set a new maximum basal rate." = "Bu PumpManager, manuel temp bazal bir özellik olmadan önce eklendiğinden maksimum bazal oranı ile yapılandırılmadı. Lütfen terapi ayarları -> iletim limitlerine gidin ve yeni bir maksimum bazal oran ayarlayın.";
+
+/* Label text for expiration reminder default row */
+"Expiration Reminder Default" = "Süre Sonu Hatırlatıcı Varsayılan";
+
+/* Text for previous pod information row */
+"Previous Pod Information" = "Önceki Pod Bilgileri";
+
+/* Text shown in insulin remaining space when no pod is paired (Please keep the '\n' while translating!) */
+"No\nDelivery" = "Teslimat \nYok";
+
+"* description label for active time pod details row */
+Active Time" = "Aktif Süre";
+
+/* description label for total delivery pod details row */
+"Total Delivery" = "Toplam Teslimat";

@@ -243,7 +243,7 @@
 "Manual Basal" = "Manuell temporär basal";
 
 /* */
-"Insert Cannula" = "För in kanylen";
+"Insert Cannula" = "För in kanyl";
 
 /* Cannula insertion button text while inserting */
 "Inserting..." = "Kanylen förs in...";
@@ -575,7 +575,6 @@
 
 /* Description text for critical alerts */
 "The reminders above will not sound if your device is in Silent or Do Not Disturb mode.\n\nThere are other critical Pod alerts and alarms that will sound even if you device is set to Silent or Do Not Disturb mode." = "Påminnelser kommer vara tysta ifall att du har tyst läge eller stör ej - läge på. \n\nDet finns andra varningar som kommer att ljuda även vid tyst läge leer stör ej - läge.";
-    
 /* navigation title for notification settings */
 "Notification Settings" = "Notisinställningar";
 
@@ -586,13 +585,12 @@
 "No Reminder" = "Ingen påminnelse";
 
 /* Label for low reservoir reminder row */
-"Low Reservoir Reminder" = "Påminnelse om låg insulinreservoarvolym";
+"Low Reservoir Reminder" = "Påminnelse om låg insulinnivå";
 
 /* The action string on pod status page when pod data is stale */
 "Make sure your phone and pod are close to each other. If communication issues persist, move to a new area." = "Säkerställ att din telefon och podd är nära varandra. Om problemet kvarstår, flytta till annan plats.";
-    
 /* Format string for the action string on pod status page when pod expired. (1: service time remaining) */
-"Change Pod now. Insulin delivery will stop in %1$@ or when no more insulin remains." = "Change Pod now. Insulin delivery will stop in %1$@ or when no more insulin remains.";
+"Change Pod now. Insulin delivery will stop in %1$@ or when no more insulin remains." = "Byt podd nu. Insulintillförsel kommer att stoppas om %1$@ eller när insulinet är slut.";
 
 /* Title string for BeepPreference.silent */
 "Disabled" = "Av";
@@ -620,7 +618,7 @@
 
 /* Description text on manual temp basal action sheet */
 "Loop will not automatically adjust your insulin delivery until the temporary basal rate finishes or is canceled." = "FreeAPS X kommer inte automatiskt att justera dina insulindoser förrän den temporära basalen är färdig eller har avbrytits.";
-    
+
 /* Button text for setting manual temporary basal rate*/
 "Set Temporary Basal" = "Ställ in temporaär basal";
 
@@ -651,8 +649,8 @@
 /* Text shown in insulin remaining space when no pod is paired (Please keep the '\n' while translating!) */
 "No\nDelivery" = "Inget\ninsulin";
 
-* description label for active time pod details row */
-"Active Time"= "Aktiv tid";
+"* description label for active time pod details row */
+Active Time" = "Aktiv tid";
 
 /* description label for total delivery pod details row */
-"Total Delivery" = "Total insulinmängd given";
+"Total Delivery" = "Total mängd insulin given";

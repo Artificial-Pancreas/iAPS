@@ -954,7 +954,7 @@ Enact a temp Basal or a temp target */
 "Info" = "Info";
 
 /* Warning title */
-"Warning" = "Warning";
+"Warning" = "Varning";
 
 /* Error title */
 "Error" = "Fel";
@@ -970,6 +970,9 @@ Enact a temp Basal or a temp target */
 "Deactivating..." = "Inaktiverar...";
 
 "Pair Pod" = "Parkoppla podd";
+
+/* Text for previous pod information row */
+"Previous Pod Information" = "Info om tidigare podd";
 
 /* Text for confidence reminders navigation link */
 "Confidence Reminders" = "Bekräftelseljud";
@@ -990,9 +993,6 @@ Enact a temp Basal or a temp target */
 
 /* description label for active time pod details row */
 "Active Time"= "Poddålder";
-
-/* Text for previous pod information row */
-"Previous Pod Information" = "Information om tidigare podd";
 
 /* Title string for BeepPreference.silent */
 "Disabled" = "Av";
@@ -1026,7 +1026,6 @@ Enact a temp Basal or a temp target */
 
 /* The action string on pod status page when pod data is stale */
 "Make sure your phone and pod are close to each other. If communication issues persist, move to a new area." = "Säkerställ att din telefon och podd är nära varandra. Om problemet kvarstår, flytta till annan plats.";
-    
 /* Format string for the action string on pod status page when pod expired. (1: service time remaining) */
 "Change Pod now. Insulin delivery will stop in %1$@ or when no more insulin remains." = "Byt podd nu. Insulintillförsel kommer att stoppas om %1$@ eller när insulinet är slut.";
 
@@ -1038,7 +1037,7 @@ Enact a temp Basal or a temp target */
 
 /* Description text on manual temp basal action sheet */
 "Loop will not automatically adjust your insulin delivery until the temporary basal rate finishes or is canceled." = "FreeAPS X kommer inte automatiskt att justera dina insulindoser förrän den temporära basalen är färdig eller har avbrytits.";
-    
+
 /* Button text for setting manual temporary basal rate*/
 "Set Temporary Basal" = "Ställ in temporaär basal";
 
@@ -1060,11 +1059,11 @@ Enact a temp Basal or a temp target */
 /* Alert format string for missing temp basal configuration. */
 "This PumpManager has not been configured with a maximum basal rate because it was added before manual temp basal was a feature. Please go to therapy settings -> delivery limits and set a new maximum basal rate." = "En maximal basaldos har inte ställts in. Gå till inställningen 'Maxdoser' för att ställa in den maximala basaldosen";
 
-/* description label for active time pod details row */
-"Active Time"= "Aktiv tid";
+"* description label for active time pod details row */
+Active Time" = "Aktiv tid";
 
 /* description label for total delivery pod details row */
-"Total Delivery" = "Total insulinmängd given";
+"Total Delivery" = "Total mängd insulin given";
 
 /* */
 "Add Omnipod Dash" = "Lägg till Omnipod Dash";
