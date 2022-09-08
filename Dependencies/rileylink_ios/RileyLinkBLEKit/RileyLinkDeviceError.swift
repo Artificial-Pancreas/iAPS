@@ -8,7 +8,7 @@
 
 public enum RileyLinkDeviceError: Error {
     case peripheralManagerError(LocalizedError)
-    case invalidInput(String)
+    case errorResponse(String)
     case writeSizeLimitExceeded(maxLength: Int)
     case invalidResponse(Data)
     case responseTimeout
@@ -22,8 +22,8 @@ extension RileyLinkDeviceError: LocalizedError {
         switch self {
         case .peripheralManagerError(let error):
             return error.errorDescription
-        case .invalidInput(let input):
-            return String(format: LocalizedString("Input %@ is invalid", comment: "Invalid input error description (1: input)"), String(describing: input))
+        case .errorResponse(let message):
+            return message
         case .invalidResponse(let response):
             return String(format: LocalizedString("Response %@ is invalid", comment: "Invalid response error description (1: response)"), String(describing: response))
         case .writeSizeLimitExceeded(let maxLength):

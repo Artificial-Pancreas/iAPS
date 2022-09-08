@@ -276,7 +276,7 @@ public class RileyLinkDeviceTableViewController: UITableViewController {
             }
         },
             center.addObserver(forName: .DeviceRSSIDidChange, object: device, queue: mainQueue) { [weak self] (note) -> Void in
-            self?.bleRSSI = note.userInfo?[RileyLinkDevice.notificationRSSIKey] as? Int
+            self?.bleRSSI = note.userInfo?[RileyLinkBluetoothDevice.notificationRSSIKey] as? Int
             
             if let cell = self?.cellForRow(.rssi), let formatter = self?.integerFormatter {
                 cell.setDetailRSSI(self?.bleRSSI, formatter: formatter)
@@ -667,7 +667,7 @@ public class RileyLinkDeviceTableViewController: UITableViewController {
                 return false
             }
         case .rileyLinkCommands:
-            return device.peripheralState == .connected
+            return device.isConnected
         case .alert:
             return true
         }

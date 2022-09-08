@@ -20,7 +20,7 @@ class PodCommsSessionTests: XCTestCase {
 
 
     override func setUp() {
-        podState = PodState(address: address, piVersion: "2.7.0", pmVersion: "2.7.0", lot: 43620, tid: 560313, insulinType: .novolog)
+        podState = PodState(address: address, pmVersion: "2.7.0", piVersion: "2.7.0", lot: 43620, tid: 560313, insulinType: .novolog)
         mockTransport = MockMessageTransport(address: podState.address, messageNumber: 5)
     }
 

@@ -40,6 +40,8 @@ public class MinimedPumpManagerSetupViewController: RileyLinkManagerSetupViewCon
     
     internal var insulinType: InsulinType?
 
+    internal var supportedInsulinTypes: [InsulinType]?
+
     /*
      1. RileyLink
      - RileyLinkPumpManagerState
@@ -119,7 +121,7 @@ public class MinimedPumpManagerSetupViewController: RileyLinkManagerSetupViewCon
 
             pumpManagerOnboardingDelegate?.pumpManagerOnboarding(didOnboardPumpManager: pumpManager)
 
-            let settingsViewController = MinimedPumpSettingsViewController(pumpManager: pumpManager)
+            let settingsViewController = MinimedPumpSettingsViewController(pumpManager: pumpManager, supportedInsulinTypes: supportedInsulinTypes!)
             setViewControllers([settingsViewController], animated: true)
         }
     }

@@ -34,7 +34,7 @@ class RileyLinkListDataSource: ObservableObject {
     func autoconnectBinding(for device: RileyLinkDevice) -> Binding<Bool> {
         return Binding(
             get: { [weak self] in
-                if let connectionManager = self?.rileyLinkPumpManager.rileyLinkConnectionManager {
+                if let connectionManager = self?.rileyLinkPumpManager.rileyLinkDeviceProvider {
                     return connectionManager.shouldConnect(to: device.peripheralIdentifier.uuidString)
                 } else {
                     return false
@@ -59,7 +59,7 @@ class RileyLinkListDataSource: ObservableObject {
 
     public var isScanningEnabled: Bool = false {
         didSet {
-            rileyLinkPumpManager.rileyLinkConnectionManager?.setScanningEnabled(isScanningEnabled)
+            rileyLinkPumpManager.rileyLinkDeviceProvider.setScanningEnabled(isScanningEnabled)
 
             if isScanningEnabled {
                 rssiFetchTimer = Timer.scheduledTimer(timeInterval: 3, target: self, selector: #selector(updateRSSI), userInfo: nil, repeats: true)
@@ -75,11 +75,7 @@ class RileyLinkListDataSource: ObservableObject {
         return true
         #else
 
-        guard let connectionManager = rileyLinkPumpManager.rileyLinkConnectionManager else {
-            return false
-        }
-
-        return connectionManager.connectingCount > 0
+        return rileyLinkPumpManager.rileyLinkDeviceProvider.connectingCount > 0
         #endif
     }
 
@@ -96,6 +92,3 @@ class RileyLinkListDataSource: ObservableObject {
         }
     }
 }
-
-
-extension RileyLinkDevice: Identifiable {}

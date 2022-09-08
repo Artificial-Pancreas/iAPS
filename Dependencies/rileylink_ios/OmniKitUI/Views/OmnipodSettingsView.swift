@@ -33,6 +33,8 @@ struct OmnipodSettingsView: View  {
 
     @State private var cancelingTempBasal = false
 
+    var supportedInsulinTypes: [InsulinType]
+
 
     @Environment(\.guidanceColors) var guidanceColors
     @Environment(\.insulinTintColor) var insulinTintColor
@@ -355,7 +357,7 @@ struct OmnipodSettingsView: View  {
                 Spacer()
                 ProgressView()
             }) {
-                ForEach(rileyLinkListDataSource.devices) { device in
+                ForEach(rileyLinkListDataSource.devices, id: \.peripheralIdentifier) { device in
                     Toggle(isOn: rileyLinkListDataSource.autoconnectBinding(for: device)) {
                         HStack {
                             Text(device.name ?? "Unknown")
@@ -445,7 +447,7 @@ struct OmnipodSettingsView: View  {
                             .foregroundColor(.secondary)
                     }
                 }
-                NavigationLink(destination: InsulinTypeSetting(initialValue: viewModel.insulinType, supportedInsulinTypes: InsulinType.allCases, allowUnsetInsulinType: false, didChange: viewModel.didChangeInsulinType)) {
+                NavigationLink(destination: InsulinTypeSetting(initialValue: viewModel.insulinType, supportedInsulinTypes: supportedInsulinTypes, allowUnsetInsulinType: false, didChange: viewModel.didChangeInsulinType)) {
                     HStack {
                         FrameworkLocalText("Insulin Type", comment: "Text for confidence reminders navigation link").foregroundColor(Color.primary)
                         if let currentTitle = viewModel.insulinType?.brandName {

@@ -9,7 +9,7 @@ import HealthKit
 import RileyLinkBLEKit
 
 
-extension RileyLinkDevice.Status {
+extension RileyLinkDeviceStatus {
     func device(pumpID: String, pumpModel: PumpModel) -> HKDevice {
         return HKDevice(
             name: name,

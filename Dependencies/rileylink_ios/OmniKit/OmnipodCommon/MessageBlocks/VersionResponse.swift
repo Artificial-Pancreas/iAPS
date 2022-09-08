@@ -31,9 +31,9 @@ public struct VersionResponse : MessageBlock {
     
     public let blockType: MessageBlockType = .versionResponse
 
-    public let pmVersion: FirmwareVersion           // for Eros (PM) 2.x.y, for NXP Dash 3.x.y, for TWI Dash 4.x.y
-    public let piVersion: FirmwareVersion           // for Eros (PI) same as PM, for Dash BLE firmware version #
-    public let productId: UInt8                     // 02 for Eros, 04 for Dash, and perhaps 05 for Omnipod 5
+    public let firmwareVersion: FirmwareVersion     // for Eros (PM) 2.x.y, for NXP Dash 3.x.y, for TWI Dash 4.x.y
+    public let iFirmwareVersion: FirmwareVersion    // for Eros (PI) same as PM, for Dash BLE firmware version #
+    public let productId: UInt8                     // 02 for Eros, 04 for Dash, perhaps 05 for Omnipod 5
     public let lot: UInt32
     public let tid: UInt32
     public let address: UInt32
@@ -74,8 +74,8 @@ public struct VersionResponse : MessageBlock {
             // GS = ggssssss (Gain/RSSI for Eros only)
             // IIIIIIII = connection ID address
 
-            pmVersion = FirmwareVersion(encodedData: encodedData.subdata(in: 2..<5))
-            piVersion = FirmwareVersion(encodedData: encodedData.subdata(in: 5..<8))
+            firmwareVersion = FirmwareVersion(encodedData: encodedData.subdata(in: 2..<5))
+            iFirmwareVersion = FirmwareVersion(encodedData: encodedData.subdata(in: 5..<8))
             productId = encodedData[8]
             guard let progressStatus = PodProgressStatus(rawValue: encodedData[9]) else {
                 throw MessageBlockError.parseError
@@ -116,8 +116,8 @@ public struct VersionResponse : MessageBlock {
             // TTTTTTTT = Tid
             // IIIIIIII = connection ID address
 
-            pmVersion = FirmwareVersion(encodedData: encodedData.subdata(in: 9..<12))
-            piVersion = FirmwareVersion(encodedData: encodedData.subdata(in: 12..<15))
+            firmwareVersion = FirmwareVersion(encodedData: encodedData.subdata(in: 9..<12))
+            iFirmwareVersion = FirmwareVersion(encodedData: encodedData.subdata(in: 12..<15))
             productId = encodedData[15]
             guard let progressStatus = PodProgressStatus(rawValue: encodedData[16]) else {
                 throw MessageBlockError.parseError
@@ -155,7 +155,7 @@ public struct VersionResponse : MessageBlock {
 
 extension VersionResponse: CustomDebugStringConvertible {
     public var debugDescription: String {
-        return "VersionResponse(lot:\(lot), tid:\(tid), address:\(Data(bigEndian: address).hexadecimalString), pmVersion:\(pmVersion), piVersion:\(piVersion), productId:\(productId), podProgressStatus:\(podProgressStatus), gain:\(gain?.description ?? "NA"), rssi:\(rssi?.description ?? "NA"), pulseSize:\(pulseSize?.description ?? "NA"), secondsPerBolusPulse:\(secondsPerBolusPulse?.description ?? "NA"), secondsPerPrimePulse:\(secondsPerPrimePulse?.description ?? "NA"), primeUnits:\(primeUnits?.description ?? "NA"), cannulaInsertionUnits:\(cannulaInsertionUnits?.description ?? "NA"), serviceDuration:\(serviceDuration?.description ?? "NA"), )"
+        return "VersionResponse(lot:\(lot), tid:\(tid), address:\(Data(bigEndian: address).hexadecimalString), firmwareVersion:\(firmwareVersion), iFirmwareVersion:\(iFirmwareVersion), productId:\(productId), podProgressStatus:\(podProgressStatus), gain:\(gain?.description ?? "NA"), rssi:\(rssi?.description ?? "NA"), pulseSize:\(pulseSize?.description ?? "NA"), secondsPerBolusPulse:\(secondsPerBolusPulse?.description ?? "NA"), secondsPerPrimePulse:\(secondsPerPrimePulse?.description ?? "NA"), primeUnits:\(primeUnits?.description ?? "NA"), cannulaInsertionUnits:\(cannulaInsertionUnits?.description ?? "NA"), serviceDuration:\(serviceDuration?.description ?? "NA"), )"
     }
 }
 

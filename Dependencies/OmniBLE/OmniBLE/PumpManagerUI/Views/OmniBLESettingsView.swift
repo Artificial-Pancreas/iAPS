@@ -17,15 +17,17 @@ struct OmniBLESettingsView: View  {
     
     @State private var showingDeleteConfirmation = false
     
-    @State private var showSuspendOptions = false;
+    @State private var showSuspendOptions = false
 
-    @State private var showManualTempBasalOptions = false;
+    @State private var showManualTempBasalOptions = false
 
-    @State private var showSyncTimeOptions = false;
+    @State private var showSyncTimeOptions = false
 
-    @State private var sendingTestBeepsCommand = false;
+    @State private var sendingTestBeepsCommand = false
 
     @State private var cancelingTempBasal = false
+
+    var supportedInsulinTypes: [InsulinType]
     
     @Environment(\.guidanceColors) var guidanceColors
     @Environment(\.insulinTintColor) var insulinTintColor
@@ -407,7 +409,7 @@ struct OmniBLESettingsView: View  {
                             .foregroundColor(.secondary)
                     }
                 }
-                NavigationLink(destination: InsulinTypeSetting(initialValue: viewModel.insulinType, supportedInsulinTypes: InsulinType.allCases, allowUnsetInsulinType: false, didChange: viewModel.didChangeInsulinType)) {
+                NavigationLink(destination: InsulinTypeSetting(initialValue: viewModel.insulinType, supportedInsulinTypes: supportedInsulinTypes, allowUnsetInsulinType: false, didChange: viewModel.didChangeInsulinType)) {
                     HStack {
                         FrameworkLocalText("Insulin Type", comment: "Text for confidence reminders navigation link").foregroundColor(Color.primary)
                         if let currentTitle = viewModel.insulinType?.brandName {

@@ -90,16 +90,18 @@ class MinimedPumpIDSetupViewController: SetupTableViewController {
             
             return MinimedPumpManagerState(
                 isOnboarded: false,
-                useMySentry: true,
+                useMySentry: pumpState?.useMySentry ?? true,
                 pumpColor: pumpColor,
                 pumpID: pumpID,
                 pumpModel: pumpModel,
                 pumpFirmwareVersion: pumpFirmwareVersion,
                 pumpRegion: pumpRegion,
-                rileyLinkConnectionManagerState: rileyLinkPumpManager.rileyLinkConnectionManagerState,
+                rileyLinkConnectionState: rileyLinkPumpManager.rileyLinkConnectionManagerState,
                 timeZone: timeZone,
                 suspendState: .resumed(Date()),
-                insulinType: insulinType
+                insulinType: insulinType,
+                lastTuned: pumpState?.lastTuned,
+                lastValidFrequency: pumpState?.lastValidFrequency
             )
         }
     }
@@ -111,9 +113,7 @@ class MinimedPumpIDSetupViewController: SetupTableViewController {
 
         return MinimedPumpManager(
             state: pumpManagerState,
-            rileyLinkDeviceProvider: rileyLinkPumpManager.rileyLinkDeviceProvider,
-            rileyLinkConnectionManager: rileyLinkPumpManager.rileyLinkConnectionManager,
-            pumpOps: self.pumpOps)
+            rileyLinkDeviceProvider: rileyLinkPumpManager.rileyLinkDeviceProvider)
     }
 
     // MARK: -
@@ -247,9 +247,9 @@ class MinimedPumpIDSetupViewController: SetupTableViewController {
     private func setupPump(with settings: PumpSettings) {
         continueState = .reading
 
-        let pumpOps = PumpOps(pumpSettings: settings, pumpState: pumpState, delegate: self)
+        let pumpOps = MinimedPumpOps(pumpSettings: settings, pumpState: pumpState, delegate: self)
         self.pumpOps = pumpOps
-        pumpOps.runSession(withName: "Pump ID Setup", using: rileyLinkPumpManager.rileyLinkDeviceProvider.firstConnectedDevice, { (session) in
+        pumpOps.runSession(withName: "Pump ID Setup", usingSelector: rileyLinkPumpManager.rileyLinkDeviceProvider.firstConnectedDevice, { (session) in
             guard let session = session else {
                 DispatchQueue.main.async {
                     self.lastError = PumpManagerError.connection(MinimedPumpManagerError.noRileyLink)
@@ -436,6 +436,12 @@ extension MinimedPumpIDSetupViewController: UITextFieldDelegate {
 
 
 extension MinimedPumpIDSetupViewController: PumpOpsDelegate {
+    // TODO: create PumpManager and report it to Loop before pump setup
+    // No pumpManager available yet, so no device logs.
+    func willSend(_ message: String) {}
+    func didReceive(_ message: String) {}
+    func didError(_ message: String) {}
+
     func pumpOps(_ pumpOps: PumpOps, didChange state: PumpState) {
         DispatchQueue.main.async {
             self.pumpState = state

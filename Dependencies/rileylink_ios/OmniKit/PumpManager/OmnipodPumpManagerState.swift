@@ -31,7 +31,7 @@ public struct OmnipodPumpManagerState: RawRepresentable, Equatable {
     
     public var basalSchedule: BasalSchedule
     
-    public var rileyLinkConnectionManagerState: RileyLinkConnectionManagerState?
+    public var rileyLinkConnectionManagerState: RileyLinkConnectionState?
 
     public var unstoredDoses: [UnfinalizedDose]
 
@@ -93,7 +93,7 @@ public struct OmnipodPumpManagerState: RawRepresentable, Equatable {
 
     // MARK: -
 
-    public init(isOnboarded: Bool, podState: PodState?, timeZone: TimeZone, basalSchedule: BasalSchedule, rileyLinkConnectionManagerState: RileyLinkConnectionManagerState?, insulinType: InsulinType?, maximumTempBasalRate: Double) {
+    public init(isOnboarded: Bool, podState: PodState?, timeZone: TimeZone, basalSchedule: BasalSchedule, rileyLinkConnectionManagerState: RileyLinkConnectionState?, insulinType: InsulinType?, maximumTempBasalRate: Double) {
         self.isOnboarded = isOnboarded
         self.podState = podState
         self.timeZone = timeZone
@@ -154,11 +154,11 @@ public struct OmnipodPumpManagerState: RawRepresentable, Equatable {
             timeZone = TimeZone.currentFixed
         }
         
-        let rileyLinkConnectionManagerState: RileyLinkConnectionManagerState?
-        if let rileyLinkConnectionManagerStateRaw = rawValue["rileyLinkConnectionManagerState"] as? RileyLinkConnectionManagerState.RawValue {
-            rileyLinkConnectionManagerState = RileyLinkConnectionManagerState(rawValue: rileyLinkConnectionManagerStateRaw)
+        let rileyLinkConnectionManagerState: RileyLinkConnectionState?
+        if let rileyLinkConnectionManagerStateRaw = rawValue["rileyLinkConnectionManagerState"] as? RileyLinkConnectionState.RawValue {
+            rileyLinkConnectionManagerState = RileyLinkConnectionState(rawValue: rileyLinkConnectionManagerStateRaw)
         } else {
-            rileyLinkConnectionManagerState = RileyLinkConnectionManagerState(autoConnectIDs: [])
+            rileyLinkConnectionManagerState = RileyLinkConnectionState(autoConnectIDs: [])
         }
         
         var insulinType: InsulinType?

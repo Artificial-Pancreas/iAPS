@@ -85,7 +85,7 @@ class MainViewController: RileyLinkSettingsViewController {
         case setupOmnipod
     }
     
-    weak var rileyLinkManager: RileyLinkDeviceManager!
+    weak var rileyLinkManager: RileyLinkBluetoothDeviceProvider!
     
     @objc private func deviceConnectionStateDidChange() {
         DispatchQueue.main.async {
@@ -94,7 +94,7 @@ class MainViewController: RileyLinkSettingsViewController {
     }
     
     private var shouldAllowAddingPump: Bool {
-        return deviceDataManager.rileyLinkConnectionManager.connectingCount > 0
+        return rileyLinkManager.connectingCount > 0
     }
 
     // MARK: Data Source
