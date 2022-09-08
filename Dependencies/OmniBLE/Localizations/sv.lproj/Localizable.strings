@@ -647,3 +647,6 @@
 
 /* Text for previous pod information row */
 "Previous Pod Information" = "Info om tidigare podd";
+
+/* Text shown in insulin remaining space when no pod is paired (Please keep the '\n' while translating!) */
+"No\nDelivery" = "Inget\ninsulin";

@@ -649,3 +649,6 @@
 
 /* Text for previous pod information row */
 "Previous Pod Information" = "Previous Pod Information";
+
+/* Text shown in insulin remaining space when no pod is paired (Please keep the '\n' while translating!) */
+"No\nDelivery" = "No\nDelivery";
