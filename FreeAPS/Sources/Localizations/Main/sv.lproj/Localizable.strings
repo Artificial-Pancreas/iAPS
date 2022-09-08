@@ -966,6 +966,9 @@ Enact a temp Basal or a temp target */
 
 "Deactivate Pod" = "Inaktivera podd";
 
+/* */
+"Deactivating..." = "Inaktiverar...";
+
 "Pair Pod" = "Parkoppla podd";
 
 /* Text for confidence reminders navigation link */
