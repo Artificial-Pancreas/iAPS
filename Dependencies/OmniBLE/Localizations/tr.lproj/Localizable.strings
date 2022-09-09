@@ -314,9 +314,6 @@
 /* The default notification body for AlarmCodes */
 "Insulin delivery stopped. Change Pod now." = "İnsülin iletimi durduruldu. Pod'u şimdi değiştirin.";
 
-/* Units for showing temp basal rate */
-"U/hr" = "Ü/Sa";
-
 /* Header for insulin remaining on pod settings screen */
 "Insulin Remaining" = "Kalan İnsülin";
 
@@ -613,6 +610,9 @@
 /* Label text for temporary basal rate summary */
 "Rate" = "Oran";
 
+/* Insulin unit per hour */
+"U/hr" = "Ü/Sa";
+
 /* Summary string for temporary basal rate configuration page */
 "%1$@ for %2$@" = "%2$@ için %1$@";
 
@@ -637,7 +637,7 @@
 "Missing Config" = "Konfigurasyon Bulunamadı";
 
 /* Alert format string for missing temp basal configuration. */
-"This PumpManager has not been configured with a maximum basal rate because it was added before manual temp basal was a feature. Please go to therapy settings -> delivery limits and set a new maximum basal rate." = "Bu PumpManager, manuel temp bazal bir özellik olmadan önce eklendiğinden maksimum bazal oranı ile yapılandırılmadı. Lütfen terapi ayarları -> iletim limitlerine gidin ve yeni bir maksimum bazal oran ayarlayın.";
+"This PumpManager has not been configured with a maximum basal rate because it was added before manual temp basal was a feature. Please go to therapy settings -> delivery limits and set a new maximum basal rate." = "Pompa Yönetimi, daha önce manuel geçici bazal eklendiğinden, maksimum bazal oranı ile yapılandırılmadı. Lütfen terapi ayarları -> iletim limitlerine gidin ve yeni bir maksimum bazal oran ayarlayın.";
 
 /* Label text for expiration reminder default row */
 "Expiration Reminder Default" = "Süre Sonu Hatırlatıcı Varsayılan";
@@ -653,6 +653,33 @@
 
 /* description label for total delivery pod details row */
 "Total Delivery" = "Toplam İletim";
+
+/* description label for device name pod details row */
+"Device Name" = "Cihaz adı";
+
+/* description label for lot number pod details row */
+"Lot Number" = "Parti Numarası";
+
+/* description label for sequence number pod details row */
+"Sequence Number" = "Sıra Numarası";
+
+/* description label for firmware version pod details row */
+"Firmware Version" = "Aygıt Yazılımı Sürümü";
+
+/* description label for ble firmware version pod details row */
+"BLE Firmware Version" = "BLE Donanım Yazılımı Sürümü";
+
+/* description label for activated at timne pod details row */
+"Pod Activated" = "Pod Etkinleştirildi";
+
+/* description label for active time pod details row */
+"Active Time" = "Aktif Süre";
+
+/* description label for last status date pod details row */
+"Last Status" = "Son Durum";
+
+/* description label for pod fault details */
+"Pod Fault Details" = "Pod Arıza Ayrıntıları";
 
 /* Title for PodSetupView */
 "Pod Setup" = "Pod Kurulumu";
@@ -683,3 +710,9 @@
 
 /* Label text for low reservoir value row */
 "Low Reservoir" = "Düşük Rezervuar";
+
+/* */
+"Save" = "Kaydet";
+
+/* hr (short for hour) */
+"hr" = "sa";

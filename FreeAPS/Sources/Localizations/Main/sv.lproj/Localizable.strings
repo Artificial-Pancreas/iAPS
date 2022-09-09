@@ -1018,6 +1018,12 @@ Enact a temp Basal or a temp target */
 /* Label text for expiration reminder default row */
 "Expiration Reminder Default" = "Standard påminnelsetid";
 
+/* */
+"Expiration Reminder" = "Påminnelse om utgångsdatum";
+
+/* */
+"Low Reservoir" = "Låg reservoarvolym";
+
 /* Value text for no expiration reminder */
 "No Reminder" = "Ingen påminnelse";
 
@@ -1086,7 +1092,7 @@ Enact a temp Basal or a temp target */
 "Setup Complete" = "Inställning färdig";
 
 /* */
-"Insulin Suspended" = "Pump pausad";
+"Insulin Suspended" = "Insulintillförsel pausad";
 
 /* Text for suspend resume button when insulin delivery is suspending */
 "Suspending insulin delivery..." = "Pausar pump...";

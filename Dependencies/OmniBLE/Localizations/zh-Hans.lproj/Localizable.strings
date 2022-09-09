@@ -314,9 +314,6 @@
 /* The default notification body for AlarmCodes */
 "Insulin delivery stopped. Change Pod now." = "Insulin delivery stopped. Change Pod now.";
 
-/* Units for showing temp basal rate */
-"U/hr" = "U/小时";
-
 /* Header for insulin remaining on pod settings screen */
 "Insulin Remaining" = "Insulin Remaining";
 
@@ -613,6 +610,9 @@
 /* Label text for temporary basal rate summary */
 "Rate" = "输注率";
 
+/* Insulin unit per hour */
+"U/hr" = "U/小时";
+
 /* Summary string for temporary basal rate configuration page */
 "%1$@ for %2$@" = "%1$@ for %2$@";
 
@@ -654,6 +654,33 @@
 /* description label for total delivery pod details row */
 "Total Delivery" = "Total Delivery";
 
+/* description label for device name pod details row */
+"Device Name" = "Device Name";
+
+/* description label for lot number pod details row */
+"Lot Number" = "Lot Number";
+
+/* description label for sequence number pod details row */
+"Sequence Number" = "Sequence Number";
+
+/* description label for firmware version pod details row */
+"Firmware Version" = "Firmware Version";
+
+/* description label for ble firmware version pod details row */
+"BLE Firmware Version" = "BLE Firmware Version";
+
+/* description label for activated at timne pod details row */
+"Pod Activated" = "Pod Activated";
+
+/* description label for active time pod details row */
+"Active Time" = "Pod启动时间";
+
+/* description label for last status date pod details row */
+"Last Status" = "Last Status";
+
+/* description label for pod fault details */
+"Pod Fault Details" = "Pod Fault Details";
+
 /* Title for PodSetupView */
 "Pod Setup" = "Pod Setup";
 
@@ -683,3 +710,9 @@
 
 /* Label text for low reservoir value row */
 "Low Reservoir" = "Low Reservoir";
+
+/* */
+"Save" = "保存​​";
+
+/* hr (short for hour) */
+"hr" = "hr";

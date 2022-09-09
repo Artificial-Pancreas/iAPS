@@ -314,9 +314,6 @@
 /* The default notification body for AlarmCodes */
 "Insulin delivery stopped. Change Pod now." = "Insulintilförsel stoppad. Byt podd nu.";
 
-/* Units for showing temp basal rate */
-"U/hr" = "IE/h";
-
 /* Header for insulin remaining on pod settings screen */
 "Insulin Remaining" = "Insulin kvar";
 
@@ -493,7 +490,7 @@
 "Inserted" = "Kanyl har förts in";
 
 /* Check Cannula */
-"Check Cannula" = "Kontrollera kanylen";
+"Check Cannula" = "Kontrollera kanyl";
 
 /* */
 "Is the cannula inserted properly?" = "Är kanylen införd korrekt?";
@@ -613,6 +610,9 @@
 /* Label text for temporary basal rate summary */
 "Rate" = "Basaldos";
 
+/* Insulin unit per hour */
+"U/hr" = "IE/h";
+
 /* Summary string for temporary basal rate configuration page */
 "%1$@ for %2$@" = "%1$@ i %2$@";
 
@@ -694,7 +694,7 @@
 "Continue" = "Fortsätt";
 
 /* Are you sure you want to skip Omnipod Onboarding? */
-"Skip Omnipod Onboarding?" = "Skip Omnipod Onboarding?";
+"Skip Omnipod Onboarding?" = "Hoppa över Omnipod-introduktionen?";
 
 /* Description text on ExpirationReminderSetupView */
 "The App notifies you in advance of Pod expiration.\n\nScroll to set the number of hours advance notice you would like to have." = "Appen meddelar dig i förväg om när din podd går ut.\n\nSkrolla för att ställa in hur många timmar i förväg du vill bli påmind.";

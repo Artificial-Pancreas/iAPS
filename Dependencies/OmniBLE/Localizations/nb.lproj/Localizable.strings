@@ -314,9 +314,6 @@
 /* The default notification body for AlarmCodes */
 "Insulin delivery stopped. Change Pod now." = "Insulintilførselen har stanset. Bytt pod nå.";
 
-/* Units for showing temp basal rate */
-"U/hr" = "E/t";
-
 /* Header for insulin remaining on pod settings screen */
 "Insulin Remaining" = "Insulin som gjenstår";
 
@@ -613,6 +610,9 @@
 /* Label text for temporary basal rate summary */
 "Rate" = "Rate";
 
+/* Insulin unit per hour */
+"U/hr" = "E/t";
+
 /* Summary string for temporary basal rate configuration page */
 "%1$@ for %2$@" = "%1$@ i %2$@";
 
@@ -654,11 +654,38 @@
 /* description label for total delivery pod details row */
 "Total Delivery" = "Total leveranse";
 
+/* description label for device name pod details row */
+"Device Name" = "Enhetsnavn";
+
+/* description label for lot number pod details row */
+"Lot Number" = "Lot-nummer";
+
+/* description label for sequence number pod details row */
+"Sequence Number" = "Sekvensnummer";
+
+/* description label for firmware version pod details row */
+"Firmware Version" = "Fastvareversjon";
+
+/* description label for ble firmware version pod details row */
+"BLE Firmware Version" = "BLE fastvareversjon";
+
+/* description label for activated at timne pod details row */
+"Pod Activated" = "Pod aktivert";
+
+/* description label for active time pod details row */
+"Active Time" = "Aktiveringstidspunkt";
+
+/* description label for last status date pod details row */
+"Last Status" = "Siste status";
+
+/* description label for pod fault details */
+"Pod Fault Details" = "Detaljer om pod-feil";
+
 /* Title for PodSetupView */
 "Pod Setup" = "Pumpeoppsett";
 
 /* bodyText for PodSetupView */
-"You will now begin the process of configuring your reminders, filling your Pod with insulin, pairing to your device and placing it on your body." = "You will now begin the process of configuring your reminders, filling your Pod with insulin, pairing to your device and placing it on your body.";
+"You will now begin the process of configuring your reminders, filling your Pod with insulin, pairing to your device and placing it on your body." = "Du vil nå starte prosessen med å konfigurere påminnelser, fylle pod med insulin, koble den til telefonen, og plassere den på kroppen.";
 
 /* Cancel button title */
 "Cancel" = "Avbryt";
@@ -670,7 +697,7 @@
 "Skip Omnipod Onboarding?" = "Hopp over Omnipod onboarding?";
 
 /* Description text on ExpirationReminderSetupView */
-"The App notifies you in advance of Pod expiration.\n\nScroll to set the number of hours advance notice you would like to have." = "The App notifies you in advance of Pod expiration.\n\nScroll to set the number of hours advance notice you would like to have.";
+"The App notifies you in advance of Pod expiration.\n\nScroll to set the number of hours advance notice you would like to have." = "Appen varsler deg før pod utløper.\n\nAngi hvor mange timer i forkant du vil varsles.";
 
 /* Text of continue button on ExpirationReminderSetupView" */
 "Next" = "Neste";
@@ -679,7 +706,13 @@
 "Expiration Reminder" = "Utløpspåminnelse";
 
 /* Description text on LowReservoirReminderSetupView */
-"The App notifies you when the amount of insulin in the Pod reaches this level (50-10 U).\n\nScroll to set the number of units at which you would like to be reminded." = "The App notifies you when the amount of insulin in the Pod reaches this level (50-10 U).\n\nScroll to set the number of units at which you would like to be reminded.";
+"The App notifies you when the amount of insulin in the Pod reaches this level (50-10 U).\n\nScroll to set the number of units at which you would like to be reminded." = "Appen varsler deg når mengden insulin i pod kommer ned på dette nivået (50-10 E).\n\nAngi insulinnivå som skal utløse denne påminnelsen.";
 
 /* Label text for low reservoir value row */
 "Low Reservoir" = "Lite insulin i pod";
+
+/* */
+"Save" = "Lagre";
+
+/* hr (short for hour) */
+"hr" = "t";

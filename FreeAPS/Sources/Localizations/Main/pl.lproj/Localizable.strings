@@ -1020,6 +1020,12 @@ Połączono z Nightscout!";
 /* Label text for expiration reminder default row */
 "Expiration Reminder Default" = "Expiration Reminder Default";
 
+/* */
+"Expiration Reminder" = "Przypomnienie o terminie ważności";
+
+/* */
+"Low Reservoir" = "Low Reservoir";
+
 /* Value text for no expiration reminder */
 "No Reminder" = "No Reminder";
 
