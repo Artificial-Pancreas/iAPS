@@ -716,3 +716,6 @@
 
 /* hr (short for hour) */
 "hr" = "h";
+
+/* Button title to cancel manual basal */
+"Cancel Manual Basal" = "Avbryt manuell basal";
