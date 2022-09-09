@@ -425,6 +425,9 @@ Enact a temp Basal or a temp target */
 /* " min" in Treatments list */
 " min" = " min";
 
+/* */
+"Unable to change anything" = "Unable to change anything";
+
 
 /* Calendar and Libre transmitter settings ---------------
  */
@@ -1058,11 +1061,35 @@ Enact a temp Basal or a temp target */
 /* Alert format string for missing temp basal configuration. */
 "This PumpManager has not been configured with a maximum basal rate because it was added before manual temp basal was a feature. Please go to therapy settings -> delivery limits and set a new maximum basal rate." = "Denne pumpedriveren har ikke blitt konfigurert med en maksimal basalrate fordi den ble lagt til før manuell midlertidig basal var en tilgjengelig funksjon. Gå til Pumpeinnstillinger -> leveringsgrenser og sett en ny maksimal basal rate.";
 
-"* description label for active time pod details row */
-Active Time" = "Tid i bruk";
+/* description label for active time pod details row */
+"Active Time" = "Aktiveringstidspunkt";
 
 /* description label for total delivery pod details row */
 "Total Delivery" = "Total leveranse";
+
+/* */
+"Add Omnipod Dash" = "Legg til Omnipod Dash";
+
+/* */
+"Insert Cannula" = "Sett inn kanyle";
+
+/* */
+"Check Cannula" = "Kontroller kanyle";
+
+/* */
+"Setup Complete" = "Oppsett ferdig";
+
+/* */
+"Insulin Suspended" = "Insulinleveranse pauset";
+
+/* Text for suspend resume button when insulin delivery is suspending */
+"Suspending insulin delivery..." = "Suspending insulin delivery...";
+
+/* Text for suspend resume button when insulin delivery is suspended */
+"Resume Insulin Delivery" = "Resume Insulin Delivery";
+
+/* Text for suspend resume button when insulin delivery is resuming */
+"Resuming insulin delivery..." = "Resuming insulin delivery...";
 
 /* --------------------------------------
 

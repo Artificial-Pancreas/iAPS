@@ -648,8 +648,38 @@
 /* Text shown in insulin remaining space when no pod is paired (Please keep the '\n' while translating!) */
 "No\nDelivery" = "No\nDelivery";
 
-"* description label for active time pod details row */
-Active Time" = "Active Time";
+/* description label for active time pod details row */
+"Active Time" = "Tempo di attività";
 
 /* description label for total delivery pod details row */
 "Total Delivery" = "Total Delivery";
+
+/* Title for PodSetupView */
+"Pod Setup" = "Pod Setup";
+
+/* bodyText for PodSetupView */
+"You will now begin the process of configuring your reminders, filling your Pod with insulin, pairing to your device and placing it on your body." = "You will now begin the process of configuring your reminders, filling your Pod with insulin, pairing to your device and placing it on your body.";
+
+/* Cancel button title */
+"Cancel" = "Cancella";
+
+/* Text for continue button on PodSetupView */
+"Continue" = "Continua";
+
+/* Are you sure you want to skip Omnipod Onboarding? */
+"Skip Omnipod Onboarding?" = "Skip Omnipod Onboarding?";
+
+/* Description text on ExpirationReminderSetupView */
+"The App notifies you in advance of Pod expiration.\n\nScroll to set the number of hours advance notice you would like to have." = "The App notifies you in advance of Pod expiration.\n\nScroll to set the number of hours advance notice you would like to have.";
+
+/* Text of continue button on ExpirationReminderSetupView" */
+"Next" = "Next";
+
+/* */
+"Expiration Reminder" = "Promemoria di scadenza";
+
+/* Description text on LowReservoirReminderSetupView */
+"The App notifies you when the amount of insulin in the Pod reaches this level (50-10 U).\n\nScroll to set the number of units at which you would like to be reminded." = "The App notifies you when the amount of insulin in the Pod reaches this level (50-10 U).\n\nScroll to set the number of units at which you would like to be reminded.";
+
+/* Label text for low reservoir value row */
+"Low Reservoir" = "Low Reservoir";

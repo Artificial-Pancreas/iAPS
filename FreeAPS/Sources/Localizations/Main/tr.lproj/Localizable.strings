@@ -425,6 +425,9 @@ Enact a temp Basal or a temp target */
 /* " min" in Treatments list */
 " min" = " dk";
 
+/* */
+"Unable to change anything" = "Hiçbir şey değiştirilemiyor";
+
 
 /* Calendar and Libre transmitter settings ---------------
  */
@@ -1058,11 +1061,35 @@ Enact a temp Basal or a temp target */
 /* Alert format string for missing temp basal configuration. */
 "This PumpManager has not been configured with a maximum basal rate because it was added before manual temp basal was a feature. Please go to therapy settings -> delivery limits and set a new maximum basal rate." = "Bu PumpManager, manuel temp bazal bir özellik olmadan önce eklendiğinden maksimum bazal oranı ile yapılandırılmadı. Lütfen terapi ayarları -> iletim limitlerine gidin ve yeni bir maksimum bazal oran ayarlayın.";
 
-"* description label for active time pod details row */
-Active Time" = "Aktif Süre";
+/* description label for active time pod details row */
+"Active Time" = "Aktif Süre";
 
 /* description label for total delivery pod details row */
-"Total Delivery" = "Toplam Teslimat";
+"Total Delivery" = "Toplam İletim";
+
+/* */
+"Add Omnipod Dash" = "Omnipod Dash'ı ekle";
+
+/* */
+"Insert Cannula" = "Kanül Yerleştir";
+
+/* */
+"Check Cannula" = "Kanülü Kontrol Edin";
+
+/* */
+"Setup Complete" = "Kurulum tamamlandı";
+
+/* */
+"Insulin Suspended" = "İnsülin Durduldu";
+
+/* Text for suspend resume button when insulin delivery is suspending */
+"Suspending insulin delivery..." = "İnsülin iletimi askıya alınıyor...";
+
+/* Text for suspend resume button when insulin delivery is suspended */
+"Resume Insulin Delivery" = "Resume Insulin Delivery";
+
+/* Text for suspend resume button when insulin delivery is resuming */
+"Resuming insulin delivery..." = "İnsülin iletimini sürdür...";
 
 /* --------------------------------------
 
