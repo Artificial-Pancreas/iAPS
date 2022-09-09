@@ -1019,6 +1019,12 @@ Enact a temp Basal or a temp target */
 /* Label text for expiration reminder default row */
 "Expiration Reminder Default" = "Expiration Reminder Default";
 
+/* */
+"Expiration Reminder" = "Expiration Reminder";
+
+/* */
+"Low Reservoir" = "Low Reservoir";
+
 /* Value text for no expiration reminder */
 "No Reminder" = "No Reminder";
 
