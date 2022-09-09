@@ -654,6 +654,33 @@
 /* description label for total delivery pod details row */
 "Total Delivery" = "Total mängd insulin given";
 
+/* description label for device name pod details row */
+"Device Name" = "Enhetsnamn";
+
+/* description label for lot number pod details row */
+"Lot Number" = "Lot-nummer";
+
+/* description label for sequence number pod details row */
+"Sequence Number" = "Sekvensnummer";
+
+/* description label for firmware version pod details row */
+"Firmware Version" = "Firmware-version";
+
+/* description label for ble firmware version pod details row */
+"BLE Firmware Version" = "BLE Firmware - version";
+
+/* description label for activated at timne pod details row */
+"Pod Activated" = "Podd aktiverades";
+
+/* description label for active time pod details row */
+"Active Time" = "Aktiv tid";
+
+/* description label for last status date pod details row */
+"Last Status" = "Senaste status";
+
+/* description label for pod fault details */
+"Pod Fault Details" = "Poddfelsdetaljer ";
+
 /* Title for PodSetupView */
 "Pod Setup" = "Pumpinställning";
 
