@@ -124,10 +124,10 @@
 "Greater than %1$@ units remaining at %2$@" = "Flere enn %1$@ enheter gjenstår klokken %2$@";
 
 /* Instructions when deactivating pod that has been paired, but not attached. */
-"Incompletely set up pod must be deactivated before pairing with a new one. Please deactivate and discard pod." = "Ufullstendig oppsatt pod må deaktiveres før sammenkobling med en ny. Vennligst deaktiver og kast pod.";
+"Incompletely set up pod must be deactivated before pairing with a new one. Please deactivate and discard pod." = "Ufullstendig parkoblet pod må deaktiveres før sammenkobling med en ny. Vennligst deaktiver og kast pod.";
 
 /* Instructions when deactivating pod that has been paired and possibly attached. */
-"Incompletely set up pod must be deactivated before pairing with a new one. Please deactivate and remove pod." = "Ufullstendig oppsatt pod må deaktiveres før sammenkobling med en ny. Vennligst deaktiver og fjern pod.";
+"Incompletely set up pod must be deactivated before pairing with a new one. Please deactivate and remove pod." = "Ufullstendig parkoblet pod må deaktiveres før sammenkobling med en ny. Vennligst deaktiver og fjern pod.";
 
 /* Button title to insert cannula during setup */
 "Insert Cannula" = "Sett inn kanyle";

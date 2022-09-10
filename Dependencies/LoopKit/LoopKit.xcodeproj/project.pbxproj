@@ -987,6 +987,13 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		19AAC5CA28CBD4E500B24E64 /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = sv.lproj/Localizable.strings; sourceTree = "<group>"; };
+		19AAC5CB28CBD92F00B24E64 /* da */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = da; path = da.lproj/Localizable.strings; sourceTree = "<group>"; };
+		19AAC5CC28CBD93200B24E64 /* fi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fi; path = fi.lproj/Localizable.strings; sourceTree = "<group>"; };
+		19AAC5CD28CBD93400B24E64 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Localizable.strings; sourceTree = "<group>"; };
+		19AAC5CE28CBD93700B24E64 /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		19AAC5CF28CBD93900B24E64 /* ro */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ro; path = ro.lproj/Localizable.strings; sourceTree = "<group>"; };
+		19AAC5D028CBD93B00B24E64 /* vi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = vi; path = vi.lproj/Localizable.strings; sourceTree = "<group>"; };
 		1D096BF924C242300078B6B5 /* CheckmarkListItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckmarkListItem.swift; sourceTree = "<group>"; };
 		1D096BFF24C24C220078B6B5 /* InsulinModelProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InsulinModelProvider.swift; sourceTree = "<group>"; };
 		1D096C0024C24C220078B6B5 /* ExponentialInsulinModelPreset.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExponentialInsulinModelPreset.swift; sourceTree = "<group>"; };
@@ -4341,6 +4348,13 @@
 				1F50C324212B20D300C18FAB /* pl */,
 				F5E0BDF327E1D9EC0033557E /* he */,
 				F5E0BE0F27E1DC490033557E /* tr */,
+				19AAC5CA28CBD4E500B24E64 /* sv */,
+				19AAC5CB28CBD92F00B24E64 /* da */,
+				19AAC5CC28CBD93200B24E64 /* fi */,
+				19AAC5CD28CBD93400B24E64 /* ja */,
+				19AAC5CE28CBD93700B24E64 /* pt-BR */,
+				19AAC5CF28CBD93900B24E64 /* ro */,
+				19AAC5D028CBD93B00B24E64 /* vi */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
