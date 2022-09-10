@@ -237,6 +237,33 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
                 } receiveValue: {}
                 .store(in: &self.lifetime)
         }
+
+        uploadPodAge()
+    }
+
+    func uploadPodAge() {
+        let uploadedPodAge = storage.retrieve(OpenAPS.Nightscout.uploadedPodAge, as: [NigtscoutTreatment].self) ?? []
+        if let podAge = storage.retrieve(OpenAPS.Monitor.podAge, as: Date.self),
+           uploadedPodAge.last?.createdAt == nil || podAge != uploadedPodAge.last!.createdAt!
+        {
+            let siteTreatment = NigtscoutTreatment(
+                duration: nil,
+                rawDuration: nil,
+                rawRate: nil,
+                absolute: nil,
+                rate: nil,
+                eventType: .nsSiteChange,
+                createdAt: podAge,
+                enteredBy: NigtscoutTreatment.local,
+                bolus: nil,
+                insulin: nil,
+                notes: nil,
+                carbs: nil,
+                targetTop: nil,
+                targetBottom: nil
+            )
+            uploadTreatments([siteTreatment], fileToSave: OpenAPS.Nightscout.uploadedPodAge)
+        }
     }
 
     func uploadProfile() {

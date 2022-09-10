@@ -349,6 +349,10 @@ extension BaseDeviceDataManager: PumpManagerDelegate {
                 return
             }
             pumpExpiresAtDate.send(endTime)
+
+            if let startTime = omnipod.state.podState?.activatedAt {
+                storage.save(startTime, as: OpenAPS.Monitor.podAge)
+            }
         }
 
         if let omnipodBLE = pumpManager as? OmniBLEPumpManager {
@@ -378,6 +382,10 @@ extension BaseDeviceDataManager: PumpManagerDelegate {
                 return
             }
             pumpExpiresAtDate.send(endTime)
+
+            if let startTime = omnipodBLE.state.podState?.activatedAt {
+                storage.save(startTime, as: OpenAPS.Monitor.podAge)
+            }
         }
     }
 
