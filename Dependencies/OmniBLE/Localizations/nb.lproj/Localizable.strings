@@ -21,7 +21,7 @@
 "Suspend In Progress Reminder" = "Påminnelse om pauset insulinleveranse";
 
 /* Alert content title for suspendEnded pod alert */
-"Resume Insulin" = "Gjenoppta insulinleveranse";
+"Resume Insulin" = "Gjenoppta insulintilførsel";
 
 /* Alert content title for finishSetupReminder pod alert */
 "Pod Pairing Incomplete" = "Parkobling av pod var ufullstendig";
@@ -81,7 +81,7 @@
 "Confidence Reminders" = "Bekreftelseslyder";
 
 /* Text for suspend resume button when insulin delivery active */
-"Suspend Insulin Delivery" = "Stopp insulintilførsel";
+"Suspend Insulin Delivery" = "Sett insulintilførsel på pause";
 
 /* Label for pod life state when within pod expiration window */
 "Pod expired" = "Utløpt pod";
@@ -234,7 +234,7 @@
 "No Insulin" = "Tom for insulin";
 
 /* Status highlight that insulin delivery was suspended. */
-"Insulin Suspended" = "Insulinleveranse pauset";
+"Insulin Suspended" = "Insulintilførsel pauset";
 
 /* Status highlight when communications with the pod haven't happened recently. */
 "Signal Loss" = "Signaltap";
@@ -382,7 +382,7 @@
 "2 hours" = "2 timer";
 
 /* Alert title for suspend error */
-"Failed to Suspend Insulin Delivery" = "Insulinleveringen kunne ikke settes på pause";
+"Failed to Suspend Insulin Delivery" = "Insulintilførselen kunne ikke settes på pause";
 
 /* Alert title for resume error */
 "Failed to Resume Insulin Delivery" = "Insulinleveringen kunne ikke gjenopptas";
@@ -716,3 +716,28 @@
 
 /* hr (short for hour) */
 "hr" = "t";
+
+/* Button title to cancel manual basal */
+"Cancel Manual Basal" = "Avbryt manuell basal";
+
+/* Insulin\nSuspended
+Text shown in insulin delivery space when insulin suspended (Please don't touch the '\n' ) */
+"Insulin\nSuspended" = "Insulintilførsel\npauset";
+
+/* Text for suspend resume button when insulin delivery is suspended */
+"Resume Insulin Delivery" = "Gjenoppta insulintilførsel";
+
+/* Recovery suggestion when no pod is available */
+"Make sure your pod is nearby and try again." = "Pass på at poden er i nærheten, og prøv igjen.";
+
+/* Error message shown when the pod is not connected */
+"Pod not connected" = "Pod er ikke tilkoblet";
+
+/* Label for suspended at time */
+"Suspended At" = "Pauset kl";
+
+/* Text for suspend resume button when insulin delivery is resuming */
+"Resuming insulin delivery..." = "Gjenopptar insulintilførselen...";
+
+/* Text for suspend resume button when insulin delivery is suspending */
+"Suspending insulin delivery..." = "Stopper insulintilførsel...";

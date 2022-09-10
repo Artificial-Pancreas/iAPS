@@ -716,3 +716,28 @@
 
 /* hr (short for hour) */
 "hr" = "sa";
+
+/* Button title to cancel manual basal */
+"Cancel Manual Basal" = "Manuel Bazalı İptal Et";
+
+/* Insulin\nSuspended
+Text shown in insulin delivery space when insulin suspended (Please don't touch the '\n' ) */
+"Insulin\nSuspended" = "İnsülin\nDurduldu";
+
+/* Text for suspend resume button when insulin delivery is suspended */
+"Resume Insulin Delivery" = "İnsülin İletimine Devam et";
+
+/* Recovery suggestion when no pod is available */
+"Make sure your pod is nearby and try again." = "Pod'unuzun yakında olduğundan emin olun ve tekrar deneyin.";
+
+/* Error message shown when the pod is not connected */
+"Pod not connected" = "Pod bağlı değil";
+
+/* Label for suspended at time */
+"Suspended At" = "Askıya Alındı";
+
+/* Text for suspend resume button when insulin delivery is resuming */
+"Resuming insulin delivery..." = "İnsülin iletimi devam ediyor...";
+
+/* Text for suspend resume button when insulin delivery is suspending */
+"Suspending insulin delivery..." = "İnsülin iletimi askıya alınıyor...";

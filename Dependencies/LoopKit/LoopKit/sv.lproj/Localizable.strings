@@ -97,9 +97,6 @@
 /* The long unit display string for international units of insulin per hour */
 "Units/hour" = "Enhet/timme";
 
-/* The long unit display string for international units of insulin per hour */
-"Units/hour" = "Enheter/timme";
-
 /* The long unit display string for a singular hour */
 "Hour" = "Timme";
 

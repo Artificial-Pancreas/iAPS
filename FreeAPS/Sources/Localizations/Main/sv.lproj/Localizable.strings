@@ -1031,12 +1031,6 @@ Enact a temp Basal or a temp target */
 "Scheduled Reminder" = "Schemalagd påminnelse";
 
 /* */
-"Expiration Reminder" = "Utgångsdatum";
-
-/* */
-"Low Reservoir" = "Insulinnivå";
-
-/* */
 "Low Reservoir Reminder" = "Påminnelse om låg insulinnivå";
 
 /* The action string on pod status page when pod data is stale */
@@ -1045,7 +1039,7 @@ Enact a temp Basal or a temp target */
 "Change Pod now. Insulin delivery will stop in %1$@ or when no more insulin remains." = "Byt podd nu. Insulintillförsel kommer att stoppas om %1$@ eller när insulinet är slut.";
 
 /* Label text for temporary basal rate summary */
-"Rate" = "Basaldos";
+"Rate" = "Värde";
 
 /* Summary string for temporary basal rate configuration page */
 "%1$@ for %2$@" = "%1$@ i %2$@";
