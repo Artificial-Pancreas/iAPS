@@ -736,3 +736,12 @@
 
 /* Error message shown when the pod is not connected */
 "Pod not connected" = "Pod not connected";
+
+/* Label for suspended at time */
+"Suspended At" = "Pausad kl.;";
+
+/* Text for suspend resume button when insulin delivery is resuming */
+"Resuming insulin delivery..." = "Resuming insulin delivery...";
+
+/* Text for suspend resume button when insulin delivery is suspending */
+"Suspending insulin delivery..." = "Suspending insulin delivery...";
