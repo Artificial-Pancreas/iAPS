@@ -26,10 +26,11 @@ Please understand that these version are :
 
 WARNING 
 - The settings of your current FAX should not be re-init when you update to this version but check it before close loop 
-- The update MUST ONLY be done when you change of a pod. The previous pod was not available. So, first, desactivate your current pod then compile and update your FAX on your phone and add dash pump. 
+- The update MUST ONLY be done when you change of a pod. The previous pod would be not accessible. So, first, desactivate your current pod then compile and update your FAX on your phone and add a new pod with the dash pump menu.
 
 
-These version were tested by few developers. Don't hesitate to create issues if you find bugs.
+These version were tested by few developers with success. But...Don't hesitate to create issues if you find bugs or issues. 
+
 :warning: :warning: :warning: 
 
 
