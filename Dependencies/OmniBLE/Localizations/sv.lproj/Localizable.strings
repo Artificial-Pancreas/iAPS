@@ -731,3 +731,6 @@
 
 /* Error message shown when the pod is not connected */
 "Pod not connected" = "Podd inte ansluten";
+
+/* Label for suspended at time */
+"Suspended At" = "Pausad kl.;
