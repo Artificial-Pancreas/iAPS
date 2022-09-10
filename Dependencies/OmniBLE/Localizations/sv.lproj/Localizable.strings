@@ -719,3 +719,15 @@
 
 /* Button title to cancel manual basal */
 "Cancel Manual Basal" = "Avbryt manuell basal";
+
+/* Text shown in insulin delivery space when insulin suspended */
+"Insulin\nSuspended" = "Pump\npausad";
+
+/* Text for suspend resume button when insulin delivery is suspended */
+"Resume Insulin Delivery" = "Starta pump igen";
+
+/* Recovery suggestion when no pod is available */
+"Make sure your pod is nearby and try again." = "Kontrollera att din podd är nära och försök igen";
+
+/* Error message shown when the pod is not connected */
+"Pod not connected" = "Podd inte ansluten";
