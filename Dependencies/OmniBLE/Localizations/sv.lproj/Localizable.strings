@@ -608,7 +608,7 @@
 "Confidence reminders will sound when Loop automatically adjusts delivery as well as for commands you initiate." = "Bekräftelsepip kommer att ljuda även vid automatiska pumpkommandon såväl som vid manuella.";
 
 /* Label text for temporary basal rate summary */
-"Rate" = "Basaldos";
+"Rate" = "Värde";
 
 /* Insulin unit per hour */
 "U/hr" = "IE/h";
@@ -704,13 +704,13 @@
 "Next" = "Nästa";
 
 /* */
-"Expiration Reminder" = "Utgångsdatum";
+"Expiration Reminder" = "Påminnelse om utgångsdatum";
 
 /* Description text on LowReservoirReminderSetupView */
 "The App notifies you when the amount of insulin in the Pod reaches this level (50-10 U).\n\nScroll to set the number of units at which you would like to be reminded." = "Appen meddelar dig när mängden insulin i podden når denna nivå (50-10 U).\n\nSkrolla för att ange vid vilket antal enheter som du vill bli påmind.";
 
 /* Label text for low reservoir value row */
-"Low Reservoir" = "Insulinnivå";
+"Low Reservoir" = "Låg reservoarvolym";
 
 /* */
 "Save" = "Spara";
