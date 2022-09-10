@@ -12,7 +12,7 @@ This repo includes two branchs allowing to use OmniPod Dash pumps :
 
 To use this branch : 
 
-git clone -b dash_dev <remote-repo-url> or git clone -b dash_garmin_disf_dev <remote-repo-url> 
+git clone -b dash_dev remote-repo-url or git clone -b dash_garmin_disf_dev remote-repo-url 
 
 or use directly Xcode to use one specific branch. 
 
