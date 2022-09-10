@@ -16,6 +16,8 @@ git clone -b dash_dev remote-repo-url or git clone -b dash_garmin_disf_dev remot
 
 or use directly Xcode to use one specific branch. 
 
+Don't forget to copy / reference your ConfigOverride 
+
 :warning: :warning: :warning: :warning:
 
 # Precaution 
