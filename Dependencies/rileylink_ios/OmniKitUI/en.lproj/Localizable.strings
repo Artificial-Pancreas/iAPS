@@ -429,7 +429,7 @@
 "Please pair a new pod" = "Please pair a new pod";
 
 /* Generic title of the OmniBLE pump manager */
-"Omnipod DASH" = "Omnipod DASH";
+"Omnipod" = "Omnipod";
 
 /* Status highlight that delivery is uncertain. */
 "Comms Issue" = "Comms Issue";
@@ -575,14 +575,11 @@
 /* Button text to cancel pump time sync */
 "No, Keep Pump As Is" = "No, Keep Pump As Is";
 
-/* Title for Omnipod DASH PumpManager deletion action sheet. */
+/* Title for Omnipod PumpManager deletion action sheet. */
 "Remove Pump" = "Remove Pump";
 
-/* Message for Omnipod DASH PumpManager deletion action sheet */
-"Are you sure you want to stop using Omnipod DASH?" = "Are you sure you want to stop using Omnipod DASH?";
-
-/* Button text to confirm Omnipod DASH PumpManager deletion */
-"Delete Omnipod DASH" = "Delete Omnipod DASH";
+/* Message for Omnipod PumpManager deletion action sheet */
+"Are you sure you want to stop using Omnipod?" = "Are you sure you want to stop using Omnipod?";
 
 /* Text for confidence reminders navigation link" */
 "Insulin Type" = "Insulin Type";
