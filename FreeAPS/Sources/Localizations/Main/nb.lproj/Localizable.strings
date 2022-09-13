@@ -215,7 +215,7 @@
 "Amount" = "Mengde";
 
 /* */
-"Cancel Temp Basal" = "Avbryt midlertidig basal";
+"Cancel Temp Basal" = "Avbryt manuell basal";
 
 /* Enact
 Enact a temp Basal or a temp target */
@@ -828,7 +828,7 @@ Enact a temp Basal or a temp target */
 "Backfill options" = "Alternativer for etterfylling";
 
 /* */
-"Backfilling from trend is currently not well supported by Loop" = "Etterfylling av data fra trenden er for øyeblikket ikke støttet av Loop";
+"Backfilling from trend is currently not well supported by Loop" = "Etterfylling av data fra trenden er for øyeblikket ikke godt støttet";
 
 /* */
 "Backfill from history" = "Etterfylling fra historikk";
@@ -1045,21 +1045,21 @@ Enact a temp Basal or a temp target */
 "%1$@ for %2$@" = "%1$@ i %2$@";
 
 /* Description text on manual temp basal action sheet */
-"Loop will not automatically adjust your insulin delivery until the temporary basal rate finishes or is canceled." = "Appen vil ikke automatisk justere insulintilførselen før den midlertidige basalraten er fullført eller kansellert.";
+"Loop will not automatically adjust your insulin delivery until the temporary basal rate finishes or is canceled." = "Appen vil ikke automatisk justere insulintilførselen før den manuelle basalraten er fullført eller kansellert.";
 /* Button text for setting manual temporary basal rate*/
-"Set Temporary Basal" = "Angi midlertidig basal";
+"Set Temporary Basal" = "Angi manuell basal";
 
 /* Navigation Title for ManualTempBasalEntryView */
-"Temporary Basal" = "Midlertidig basal";
+"Temporary Basal" = "Manuell basal";
 
 /* Alert title for a failure to set temporary basal */
-"Temporary Basal Failed" = "Midlertidig basaltall mislyktes";
+"Temporary Basal Failed" = "Manuell basal mislyktes";
 
 /* Alert format string for a failure to set temporary basal with recovery suggestion. (1: error description) (2: recovery text) */
-"Unable to set a temporary basal rate: %1$@\n\n%2$@" = "Kunne ikke angi en midlertidig basalrate: %1$@\n\n%2$@";
+"Unable to set a temporary basal rate: %1$@\n\n%2$@" = "Kunne ikke angi en manuell basalrate: %1$@\n\n%2$@";
 
 /* Alert format string for a failure to set temporary basal. (1: error description) */
-"Unable to set a temporary basal rate: %1$@" = "Kunne ikke angi en midlertidig basalrate: %1$@";
+"Unable to set a temporary basal rate: %1$@" = "Kunne ikke angi en manuell basalrate: %1$@";
 
 /* Alert title for missing temp basal configuration */
 "Missing Config" = "Manglende konfigurasjon";
@@ -1096,6 +1096,9 @@ Enact a temp Basal or a temp target */
 
 /* Text for suspend resume button when insulin delivery is resuming */
 "Resuming insulin delivery..." = "Gjenopptar insulintilførselen...";
+
+/* Alert title for suspend error */
+"Failed to Suspend Insulin Delivery" = "Insulintilførselen kunne ikke settes på pause";
 
 /* --------------------------------------
 

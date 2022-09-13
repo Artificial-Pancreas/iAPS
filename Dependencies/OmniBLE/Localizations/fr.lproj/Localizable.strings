@@ -720,7 +720,8 @@
 /* Button title to cancel manual basal */
 "Cancel Manual Basal" = "Annuler le basal manuel";
 
-/* Text shown in insulin delivery space when insulin suspended */
+/* Insulin\nSuspended
+Text shown in insulin delivery space when insulin suspended (Please don't touch the '\n' ) */
 "Insulin\nSuspended" = "Insulin\nSuspended";
 
 /* Text for suspend resume button when insulin delivery is suspended */

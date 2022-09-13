@@ -1099,6 +1099,9 @@ Połączono z Nightscout!";
 /* Text for suspend resume button when insulin delivery is resuming */
 "Resuming insulin delivery..." = "Resuming insulin delivery...";
 
+/* Alert title for suspend error */
+"Failed to Suspend Insulin Delivery" = "Failed to Suspend Insulin Delivery";
+
 /* --------------------------------------
 
   Infotexts from openaps.docs and androidaps.docs

@@ -738,7 +738,7 @@
 "Pod not connected" = "Pod not connected";
 
 /* Label for suspended at time */
-"Suspended At" = "Pausad kl.;";
+"Suspended At" = "Suspended At";
 
 /* Text for suspend resume button when insulin delivery is resuming */
 "Resuming insulin delivery..." = "Resuming insulin delivery...";

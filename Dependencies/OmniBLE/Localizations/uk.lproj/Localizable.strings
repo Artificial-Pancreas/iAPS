@@ -48,52 +48,52 @@
 "Suspend In Progress Reminder" = "Нагадування про призупинення";
 
 /* Alert content body for suspendEnded pod alert */
-"The insulin suspension period has ended.\n\nYou can resume delivery from the banner on the home screen or from your pump settings screen. You will be reminded again in 15 minutes." = "The insulin suspension period has ended.\n\nYou can resume delivery from the banner on the home screen or from your pump settings screen. You will be reminded again in 15 minutes.";
+"The insulin suspension period has ended.\n\nYou can resume delivery from the banner on the home screen or from your pump settings screen. You will be reminded again in 15 minutes." = "Період призупинення інсуліну закінчився.\n\n Ви можете відновити введення з банера на головному екрані або з екрана налаштувань помпи. Вам буде нагадано знову через 15 хвилин.";
 
 /* Alert content body for finishSetupReminder pod alert */
-"Please finish pairing your pod." = "Please finish pairing your pod.";
+"Please finish pairing your pod." = "Будь Ласка, завершіть підключення Pod.";
 
 /* Alert content body for timeOffsetChangeDetected pod alert */
-"The time on your pump is different from the current time. You can review the pump time and and sync to current time in settings." = "The time on your pump is different from the current time. You can review the pump time and and sync to current time in settings.";
+"The time on your pump is different from the current time. You can review the pump time and and sync to current time in settings." = "Час на вашоій помпі відрізняється від поточного часу. Ви можете переглянути час помпи та синхронізувати його з поточним часом у налаштуваннях.";
 
 /* Alert notification body for suspendEnded pod alert user notification */
-"Suspension time is up. Open the app and resume." = "Suspension time is up. Open the app and resume.";
+"Suspension time is up. Open the app and resume." = "Час призупинення вже вичерпано. Відкрийте додаток та продовжуйте роботу.";
 
 /* Action button default text for PodAlerts */
-"Ok" = "Ok";
+"Ok" = "Ок";
 
 /* Label for pod life state when pod not fully activated */
-"Unfinished Activation" = "Unfinished Activation";
+"Unfinished Activation" = "Незавершена активація";
 
 /* Label for pod life state when time remaining */
-"Pod expires in" = "Pod expires in";
+"Pod expires in" = "Pod закінчується через";
 
 /* */
-"Pod Expires" = "Pod Expires";
+"Pod Expires" = "Термін дії Pod минув";
 
 /* */
-"Pod Activated" = "Pod Activated";
+"Pod Activated" = "Pod активований";
 
 /* */
 "Notification Settings" = "Параметри сповіщень";
 
 /* */
-"Confidence Reminders" = "Confidence Reminders";
+"Confidence Reminders" = "Нагадування про Впевненість";
 
 /* Text for suspend resume button when insulin delivery active */
-"Suspend Insulin Delivery" = "Suspend Insulin Delivery";
+"Suspend Insulin Delivery" = "Призупинити введення інсуліну";
 
 /* Label for pod life state when within pod expiration window */
-"Pod expired" = "Pod expired";
+"Pod expired" = "Термін дії Pod минув";
 
 /* Label for pod life state when pod not fully deactivated */
-"Unfinished deactivation" = "Unfinished deactivation";
+"Unfinished deactivation" = "Незавершена активація";
 
 /* Label for pod life state when no pod paired */
-"No Pod" = "No Pod";
+"No Pod" = "Немає Pod";
 
 /* Settings page link description when next lifecycle action is to pair new pod */
-"Pair Pod" = "Pair Pod";
+"Pair Pod" = "Парний Pod";
 
 /* Pairing action button accessibility label while ready to pair */
 "Pair pod." = "Pair pod.";
@@ -108,49 +108,49 @@
 "Pod paired successfully. Continue." = "Pod paired successfully. Continue.";
 
 /* Settings page link description when next lifecycle action is to finish deactivation */
-"Finish deactivation" = "Finish deactivation";
+"Finish deactivation" = "Завершення деактивації";
 
 /* Settings page link description when next lifecycle action is to replace pod */
 "Replace Pod" = "Замініть POD";
 
 /* Unit for singular day in pod life remaining */
-"day" = "day";
+"day" = "день";
 
 /* Unit for plural days in pod life remaining */
-"days" = "days";
+"days" = "дні";
 
 /* Unit for singular hour in pod life remaining */
-"hour" = "hour";
+"hour" = "годин";
 
 /* Unit for plural hours in pod life remaining */
 "hours" = "годин";
 
 /* Unit for singular minute in pod life remaining */
-"minute" = "minute";
+"minute" = "хвилин";
 
 /* Unit for plural minutes in pod life remaining */
 "minutes" = "хвилин";
 
 /* Title of insulin delivery section */
-"Insulin Delivery" = "Insulin Delivery";
+"Insulin Delivery" = "Доставка інсуліну";
 
 /* */
-"Scheduled Basal" = "Scheduled Basal";
+"Scheduled Basal" = "Запланований базал";
 
 /* Header for insulin remaining on pod settings screen */
-"Insulin Remaining" = "Insulin Remaining";
+"Insulin Remaining" = "Залишок інсуліну";
 
 /* Section header for activity section */
 "Activity" = "Активність";
 
 /* title for device details page */
-"Device Details" = "Device Details";
+"Device Details" = "Деталі пристрою";
 
 /* Section header for configuration section */
 "Configuration" = "Налаштування";
 
 /* Settings page link description when next lifecycle action is to finish deactivation */
-"Finish deactivation" = "Finish deactivation";
+"Finish deactivation" = "Завершення деактивації";
 
 /* Settings page link description when next lifecycle action is to replace pod */
 "Replace Pod" = "Замініть POD";
@@ -159,19 +159,19 @@
 "Replace Pod" = "Замініть POD";
 
 /* Label for pod life state when pod not fully activated */
-"Unfinished Activation" = "Unfinished Activation";
+"Unfinished Activation" = "Незавершена активація";
 
 /* Label for pod life state when time remaining */
-"Pod expires in" = "Pod expires in";
+"Pod expires in" = "Pod закінчується через";
 
 /* Label for pod life state when within pod expiration window */
-"Pod expired" = "Pod expired";
+"Pod expired" = "Термін дії Pod минув";
 
 /* Label for pod life state when pod not fully deactivated */
-"Unfinished deactivation" = "Unfinished deactivation";
+"Unfinished deactivation" = "Незавершена активація";
 
 /* Label for pod life state when no pod paired */
-"No Pod" = "No Pod";
+"No Pod" = "Немає Pod";
 
 /* Pod life HUD view label */
 "Fault" = "Збій";
@@ -186,61 +186,61 @@
 "Replace Pod" = "Замініть POD";
 
 /* Error message shown when no pod is paired */
-"No pod paired" = "No pod paired";
+"No pod paired" = "Немає підключеного Pod";
 
 /* Error message shown when user cannot pair because pod is already paired */
-"Pod already paired" = "Pod already paired";
+"Pod already paired" = "Pod вже з'єднано";
 
 /* Error description for OmniBLEPumpManagerError.insulinTypeNotConfigured */
-"Insulin type not configured" = "Insulin type not configured";
+"Insulin type not configured" = "Тип інсуліну не налаштований";
 
 /* Error message when cannula insertion fails because the pod is in an unexpected state */
-"Pod is not in a state ready for cannula insertion." = "Pod is not in a state ready for cannula insertion.";
+"Pod is not in a state ready for cannula insertion." = "Pod не готовий для введення канюли.";
 
 /* Error description for OmniBLEPumpManagerError.invalidSetting */
-"Invalid Setting" = "Invalid Setting";
+"Invalid Setting" = "Непридатні параметри";
 
 /* Recovery suggestion shown when no pod is paired */
-"Please pair a new pod" = "Please pair a new pod";
+"Please pair a new pod" = "Будь ласка, підключіть новий Pod";
 
 /* Generic title of the OmniBLE pump manager */
 "Omnipod DASH" = "Omnipod DASH";
 
 /* Status highlight that delivery is uncertain. */
-"Comms Issue" = "Comms Issue";
+"Comms Issue" = "Комунікаційне питання";
 
 /* */
-"Finish Pairing" = "Finish Pairing";
+"Finish Pairing" = "Завершити створення пари";
 
 /* Status highlight that when pod is deactivating */
-"Finish Deactivation" = "Finish Deactivation";
+"Finish Deactivation" = "Завершення деактивації";
 
 /* Status highlight that when no pod is paired. */
-"No Pod" = "No Pod";
+"No Pod" = "Немає Pod";
 
 /* Status highlight message for emptyReservoir alarm. */
-"No Insulin" = "No Insulin";
+"No Insulin" = "Без інсуліну";
 
 /* Status highlight message for podExpired alarm. */
 "Pod Expired" = "Термін дії Pod минув";
 
 /* Status highlight message for occlusion alarm. */
-"Pod Occlusion" = "Pod Occlusion";
+"Pod Occlusion" = "Помпа забита";
 
 /* Status highlight message for other alarm. */
-"Pod Error" = "Pod Error";
+"Pod Error" = "Помилка Pod";
 
 /* Status highlight that a pump is out of insulin. */
-"No Insulin" = "No Insulin";
+"No Insulin" = "Без інсуліну";
 
 /* Status highlight that insulin delivery was suspended. */
-"Insulin Suspended" = "Insulin Suspended";
+"Insulin Suspended" = "Інсулін призупинено";
 
 /* Status highlight when communications with the pod haven't happened recently. */
-"Signal Loss" = "Signal Loss";
+"Signal Loss" = "Втрата сигналу";
 
 /* Status highlight when manual temp basal is running. */
-"Manual Basal" = "Manual Basal";
+"Manual Basal" = "Ручна тимчасова базальна швидкість (ТБШ)";
 
 /* */
 "Insert Cannula" = "Вставте канюлю";
@@ -249,46 +249,46 @@
 "Inserting..." = "Inserting...";
 
 /* Cannula insertion button text while showing error */
-"Retry" = "Retry";
+"Retry" = "Спробувати знову";
 
 /* Cannula insertion button text while checking insertion */
 "Checking..." = "Checking...";
 
 /* */
-"Check cannula insertion finished" = "Check cannula insertion finished";
+"Check cannula insertion finished" = "Перевірте завершення введення канюлі";
 
 /* */
-"Get pod status" = "Get pod status";
+"Get pod status" = "Отримати статус Pod";
 
 /* */
-"Save Basal Profile" = "Save Basal Profile";
+"Save Basal Profile" = "Зберегти Базальний профіль";
 
 /* */
-"Save basal profile failed: %{public}@" = "Save basal profile failed: %{public}@";
+"Save basal profile failed: %{public}@" = "Не вдалося зберегти базальний профіль:%{public}@";
 
 /* */
-"Skipping Play Test Beeps due to bolus still in progress." = "Skipping Play Test Beeps due to bolus still in progress.";
+"Skipping Play Test Beeps due to bolus still in progress." = "Пропуск  звукових сигналів через те, що болюс ще триває.";
 
 /* */
 "Play Test Beeps" = "Програти тестовий звук";
 
 /* */
-"Skipping Read Pulse Log due to bolus still in progress." = "Skipping Read Pulse Log due to bolus still in progress.";
+"Skipping Read Pulse Log due to bolus still in progress." = "Пропуск  журналу пульсу через те, що болюс ще триває.";
 
 /* */
 "Read Pulse Log" = "Читати журнал подій";
 
 /* */
-"Set Confirmation Beeps to %s" = "Set Confirmation Beeps to %s";
+"Set Confirmation Beeps to %s" = "Установіть значення для звукових сигналів підтвердження %s";
 
 /* */
-"Set Confirmation Beeps Preference" = "Set Confirmation Beeps Preference";
+"Set Confirmation Beeps Preference" = "Встановіть налаштування звукових сигналів підтвердження";
 
 /* */
 "Suspend" = "Призупинити";
 
 /* */
-"Failed to suspend: %{public}@" = "Failed to suspend: %{public}@";
+"Failed to suspend: %{public}@" = "Не вдалося призупинити";
 
 /* */
 "Resume" = "Відновити";
@@ -297,28 +297,28 @@
 "Bolus" = "Болюс";
 
 /* */
-"Cancel Bolus" = "Cancel Bolus";
+"Cancel Bolus" = "Скасувати Болюс";
 
 /* Alert acknowledgment OK button */
 "OK" = "OK";
 
 /* The title for Empty Reservoir alarm notification */
-"Empty Reservoir" = "Empty Reservoir";
+"Empty Reservoir" = "Порожній резервуар";
 
 /* The title for Occlusion alarm notification */
-"Occlusion Detected" = "Occlusion Detected";
+"Occlusion Detected" = "Виявлено оклюзію";
 
 /* The title for AlarmCode.other notification */
-"Critical Pod Error" = "Critical Pod Error";
+"Critical Pod Error" = "Критична Помилка";
 
 /* The default notification body for AlarmCodes */
-"Insulin delivery stopped. Change Pod now." = "Insulin delivery stopped. Change Pod now.";
+"Insulin delivery stopped. Change Pod now." = "Введення інсуліну припинено. Змініть Pod зараз.";
 
 /* Header for insulin remaining on pod settings screen */
-"Insulin Remaining" = "Insulin Remaining";
+"Insulin Remaining" = "Залишок інсуліну";
 
 /* Button title to set temporary basal rate */
-"Set Temporary Basal Rate" = "Set Temporary Basal Rate";
+"Set Temporary Basal Rate" = "Встановіть тимчасову базальну швидкість";
 
 /* Section header for activity section */
 "Activity" = "Активність";
@@ -327,104 +327,104 @@
 "Configuration" = "Налаштування";
 
 /* Title for previous pod page */
-"Previous Pod" = "Previous Pod";
+"Previous Pod" = "Попередній Pod";
 
 /* The title of the command to change pump time zone */
-"Pump Time" = "Pump Time";
+"Pump Time" = "Час помпи";
 
 /* Text indicating ongoing pump time synchronization */
-"Adjusting Pump Time..." = "Adjusting Pump Time...";
+"Adjusting Pump Time..." = "Налаштування часу помпи...";
 
 /* The title of the command to change pump time zone */
-"Sync to Current Time" = "Sync to Current Time";
+"Sync to Current Time" = "Встановити поточний час";
 
 /* Label for PumpManager deletion button */
-"Switch to other insulin delivery device" = "Switch to other insulin delivery device";
+"Switch to other insulin delivery device" = "Перейдіть на інший пристрій для введення інсуліну";
 
 /* Title for pod sync time action sheet. */
-"The time on your pump is different from the current time. Do you want to update the time on your pump to the current time?" = "The time on your pump is different from the current time. Do you want to update the time on your pump to the current time?";
+"The time on your pump is different from the current time. Do you want to update the time on your pump to the current time?" = "Час на вашому насосі відрізняється від поточного часу. Хочете оновити час на насосі до поточного?";
 
 /* Button text to confirm pump time sync */
-"Yes, Sync to Current Time" = "Yes, Sync to Current Time";
+"Yes, Sync to Current Time" = "Так, синхронізувати з поточним часом";
 
 /* Button text to cancel pump time sync */
-"No, Keep Pump As Is" = "No, Keep Pump As Is";
+"No, Keep Pump As Is" = "Ні, залишити  як є";
 
 /* Title for Omnipod DASH PumpManager deletion action sheet. */
-"Remove Pump" = "Remove Pump";
+"Remove Pump" = "Зніміть помпу";
 
 /* Message for Omnipod DASH PumpManager deletion action sheet */
-"Are you sure you want to stop using Omnipod DASH?" = "Are you sure you want to stop using Omnipod DASH?";
+"Are you sure you want to stop using Omnipod DASH?" = "Ви впевнені, що хочете припинити використовувати Omnipod DASH?";
 
 /* Button text to confirm Omnipod DASH PumpManager deletion */
-"Delete Omnipod DASH" = "Delete Omnipod DASH";
+"Delete Omnipod DASH" = "Видалити Omnipod DASH";
 
 /* Text for confidence reminders navigation link" */
 "Insulin Type" = "Тип інсуліну";
 
 /* The title of the command to change pump time zone */
-"Sync to Current Time" = "Sync to Current Time";
+"Sync to Current Time" = "Встановити поточний час";
 
 /* Title for suspend duration selection action sheet */
 "Suspend Delivery" = "Призупинити доставку";
 
 /* Message for suspend duration selection action sheet */
-"Insulin delivery will be stopped until you resume manually. When would you like Loop to remind you to resume delivery?" = "Insulin delivery will be stopped until you resume manually. When would you like Loop to remind you to resume delivery?";
+"Insulin delivery will be stopped until you resume manually. When would you like Loop to remind you to resume delivery?" = "Введення інсуліну буде припинено, доки ви не відновите його вручну. Коли ви хочете, щоб Loop нагадав вам відновити доставку?";
 
 /* Button text for 30 minute suspend duration */
-"30 minutes" = "30 minutes";
+"30 minutes" = "30 хвилин";
 
 /* Button text for 1 hour suspend duration" */
-"1 hour" = "1 hour";
+"1 hour" = "1 годину";
 /* Button text for 1 hour 30 minute suspend duration */
-"1 hour 30 minutes" = "1 hour 30 minutes";
+"1 hour 30 minutes" = "1 годину 30 хвилин";
 /* Button text for 2 hour suspend duration */
-"2 hours" = "2 hours";
+"2 hours" = "2 години";
 
 /* Alert title for suspend error */
-"Failed to Suspend Insulin Delivery" = "Failed to Suspend Insulin Delivery";
+"Failed to Suspend Insulin Delivery" = "Не вдалося призупинити доставку інсуліну";
 
 /* Alert title for resume error */
-"Failed to Resume Insulin Delivery" = "Failed to Resume Insulin Delivery";
+"Failed to Resume Insulin Delivery" = "Не вдалося відновити доставку інсуліну";
 
 /* Alert title for time sync error */
-"Failed to Set Pump Time" = "Failed to Set Pump Time";
+"Failed to Set Pump Time" = "Не вдалося встановити час насоса";
 
 /* Alert title for failing to cancel manual basal error */
-"Failed to Cancel Manual Basal" = "Failed to Cancel Manual Basal";
+"Failed to Cancel Manual Basal" = "Не вдалося скасувати ручний базал";
 
 /* */
-"Please deactivate the pod. When deactivation is complete, you may remove it and pair a new pod." = "Please deactivate the pod. When deactivation is complete, you may remove it and pair a new pod.";
+"Please deactivate the pod. When deactivation is complete, you may remove it and pair a new pod." = "Будь ласка, деактивуйте Pod. Після завершення деактивації ви можете видалити його та створити пару з новим Pod.";
 
 /* Instructions for deactivate pod when pod not on body */
-"Please deactivate the pod. When deactivation is complete, you may pair a new pod." = "Please deactivate the pod. When deactivation is complete, you may pair a new pod.";
+"Please deactivate the pod. When deactivation is complete, you may pair a new pod." = "Будь ласка, деактивуйте Pod. Після завершення деактивації ви можете об’єднати новий Pod.";
 
 /* Deactivate pod action button */
 "Deactivate Pod" = "Деактивувати POD";
 
 /* Deactivate pod action button accessibility label while deactivating */
-"Deactivating." = "Deactivating.";
+"Deactivating." = "Деактивувати.";
 
 /* Deactivate pod action button accessibility label when deactivation complete */
-"Pod deactivated successfully. Continue." = "Pod deactivated successfully. Continue.";
+"Pod deactivated successfully. Continue." = "Pod успішно деактивовано. Продовжити.";
 
 /* Action button description for deactivate after failed attempt */
-"Retry" = "Retry";
+"Retry" = "Спробувати знову";
 
 /* Action button description when deactivated */
 "Continue" = "Продовжити";
 
 /* Format string for recovery suggestion during deactivate pod. */
-"There was a problem communicating with the pod. If this problem persists, tap Discard Pod. You can then activate a new Pod." = "There was a problem communicating with the pod. If this problem persists, tap Discard Pod. You can then activate a new Pod.";
+"There was a problem communicating with the pod. If this problem persists, tap Discard Pod. You can then activate a new Pod." = "Виникла проблема зв’язку з Pod. Якщо проблема не зникає, торкніться «Відхилити Pod». Потім ви можете активувати новий Pod.";
 
 /* Text for discard pod button */
-"Discard Pod" = "Discard Pod";
+"Discard Pod" = "Відхилити Pod";
 
 /* Title for remove pod modal */
-"Remove Pod from Body" = "Remove Pod from Body";
+"Remove Pod from Body" = "Видалити Pod з тіла";
 
 /* Alert message body for confirm pod attachment */
-"Your Pod may still be delivering Insulin.\nRemove it from your body, then tap “Continue.“" = "Your Pod may still be delivering Insulin.\nRemove it from your body, then tap “Continue.“";
+"Your Pod may still be delivering Insulin.\nRemove it from your body, then tap “Continue.“" = "Ваш Pod може все ще доставляти інсулін.\nВийміть його зі свого тіла, а потім натисніть «Продовжити».";
 
 /* Insulin Unit */
 "U" = "U";
@@ -433,28 +433,28 @@
 "Change Pod now. Insulin delivery will stop 8 hours after the Pod has expired or when no more insulin remains." = "Змінити Pod зараз. Інсулінова доставка зупиниться на 8 годин після того, як Pod закінчиться або більше не залишиться інсуліну.";
 
 /* Label text for step 1 of pair pod instructions */
-"Fill a new pod with U-100 Insulin (leave blue Pod needle cap on)." = "Fill a new pod with U-100 Insulin (leave blue Pod needle cap on).";
+"Fill a new pod with U-100 Insulin (leave blue Pod needle cap on)." = "Наповніть нову капсулу інсуліном U-100 (залиште синю кришку капсули на голці).";
 
 /* Label text for step 2 of pair pod instructions */
-"Listen for 2 beeps." = "Listen for 2 beeps.";
+"Listen for 2 beeps." = "Прослухайте 2 звукові сигнали.";
 
 /* Label text indicating pairing finished.*/
-"Paired" = "Paired";
+"Paired" = "Пов'язані";
 
 /* Cancel button text in navigation bar on pair pod UI */
 "Cancel" = "Відмінити";
 
 /* Alert title for cancel pairing modal */
-"Are you sure you want to cancel Pod setup?" = "Are you sure you want to cancel Pod setup?";
+"Are you sure you want to cancel Pod setup?" = "Ви впевнені, що бажаєте скасувати налаштування Pod? ";
 
 /* Alert message body for confirm pod attachment */
-"If you cancel Pod setup, the current Pod will be deactivated and will be unusable." = "If you cancel Pod setup, the current Pod will be deactivated and will be unusable.";
+"If you cancel Pod setup, the current Pod will be deactivated and will be unusable." = "Якщо ви скасуєте налаштування Pod, поточний Pod буде дезактивовано та стане непридатним для використання.";
 
 /* Button title for confirm deactivation option */
-"Yes, Deactivate Pod" = "Yes, Deactivate Pod";
+"Yes, Deactivate Pod" = "Так, відключити Pod";
 
 /* Continue pairing button title of in pairing cancel modal */
-"No, Continue With Pod" = "No, Continue With Pod";
+"No, Continue With Pod" = "Ні, продовжити з Pod";
 
 /* Label text for step one of attach pod instructions */
 "Prepare site." = "Prepare site.";
@@ -670,7 +670,7 @@
 "BLE Firmware Version" = "BLE Firmware Version";
 
 /* description label for activated at timne pod details row */
-"Pod Activated" = "Pod Activated";
+"Pod Activated" = "Pod активований";
 
 /* description label for active time pod details row */
 "Active Time" = "Активний час";
@@ -720,7 +720,8 @@
 /* Button title to cancel manual basal */
 "Cancel Manual Basal" = "Cancel Manual Basal";
 
-/* Text shown in insulin delivery space when insulin suspended */
+/* Insulin\nSuspended
+Text shown in insulin delivery space when insulin suspended (Please don't touch the '\n' ) */
 "Insulin\nSuspended" = "Insulin\nSuspended";
 
 /* Text for suspend resume button when insulin delivery is suspended */

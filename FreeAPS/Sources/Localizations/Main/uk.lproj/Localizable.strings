@@ -972,13 +972,13 @@ Enact a temp Basal or a temp target */
 /* */
 "Deactivating..." = "Deactivating...";
 
-"Pair Pod" = "Pair Pod";
+"Pair Pod" = "Парний Pod";
 
 /* Text for previous pod information row */
 "Previous Pod Information" = "Previous Pod Information";
 
 /* Text for confidence reminders navigation link */
-"Confidence Reminders" = "Confidence Reminders";
+"Confidence Reminders" = "Нагадування про Впевненість";
 
 "Confidence reminders are beeps from the pod which can be used to acknowledge selected commands." = "Confidence reminders are beeps from the pod which can be used to acknowledge selected commands.";
 
@@ -1086,7 +1086,7 @@ Enact a temp Basal or a temp target */
 "Setup Complete" = "Setup Complete";
 
 /* */
-"Insulin Suspended" = "Insulin Suspended";
+"Insulin Suspended" = "Інсулін призупинено";
 
 /* Text for suspend resume button when insulin delivery is suspending */
 "Suspending insulin delivery..." = "Suspending insulin delivery...";
@@ -1096,6 +1096,9 @@ Enact a temp Basal or a temp target */
 
 /* Text for suspend resume button when insulin delivery is resuming */
 "Resuming insulin delivery..." = "Resuming insulin delivery...";
+
+/* Alert title for suspend error */
+"Failed to Suspend Insulin Delivery" = "Не вдалося призупинити доставку інсуліну";
 
 /* --------------------------------------
 
