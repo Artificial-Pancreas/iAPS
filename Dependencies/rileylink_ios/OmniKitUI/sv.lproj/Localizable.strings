@@ -297,7 +297,7 @@
 "Pod Expires" = "Podd går ut";
 
 /* */
-"Pod Activated" = "Podd startades";
+"Pod Activated" = "Podd aktiverades";
 
 /* */
 "Notification Settings" = "Notisinställningar";
@@ -429,7 +429,7 @@
 "Please pair a new pod" = "Var god parkoppla ny podd";
 
 /* Generic title of the OmniBLE pump manager */
-"Omnipod DASH" = "Omnipod DASH";
+"Omnipod" = "Omnipod";
 
 /* Status highlight that delivery is uncertain. */
 "Comms Issue" = "Kommunikationsproblem";
@@ -575,14 +575,11 @@
 /* Button text to cancel pump time sync */
 "No, Keep Pump As Is" = "Nej, behåll pumptid";
 
-/* Title for Omnipod DASH PumpManager deletion action sheet. */
+/* Title for Omnipod PumpManager deletion action sheet. */
 "Remove Pump" = "Ta bort podd";
 
-/* Message for Omnipod DASH PumpManager deletion action sheet */
-"Are you sure you want to stop using Omnipod DASH?" = "Säkert att du vill sluta använda Omnipod Dash?";
-
-/* Button text to confirm Omnipod DASH PumpManager deletion */
-"Delete Omnipod DASH" = "Ta bort Omnipod Dash";
+/* Message for Omnipod PumpManager deletion action sheet */
+"Are you sure you want to stop using Omnipod?" = "Är du säker att du vill sluta använda Omnipod?";
 
 /* Text for confidence reminders navigation link" */
 "Insulin Type" = "Typ av insulin";
@@ -657,7 +654,7 @@
 /* The action string on pod status page when pod expired */
 "Change Pod now. Insulin delivery will stop 8 hours after the Pod has expired or when no more insulin remains." = "Byt podd nu. Insulintillförsel kommer att upphöra 8 timmar efter att podd går ut eller tills att inget insulin återstår.";
 
-/* Label text for step 1 of pair pod instructions */
+/* Label text for step 2 of pair pod instructions */
 "Fill a new pod with U-100 Insulin (leave Pod needle cap on). Keep the RileyLink about 6 inches from the pod during pairing." = "Fyll en ny podd med insulin (låt kanlyskyddet sitta kvar).";
 
 /* Label text for step 2 of pair pod instructions */
@@ -843,7 +840,6 @@
 
 /* Description text on manual temp basal action sheet */
 "Loop will not automatically adjust your insulin delivery until the temporary basal rate finishes or is canceled." = "FreeAPS X kommer inte automatiskt att justera dina insulindoser förrän den temporära basalen är färdig eller har avbrytits.";
-    
 /* Button text for setting manual temporary basal rate*/
 "Set Temporary Basal" = "Ställ in temporaär basal";
 
@@ -950,7 +946,7 @@
 "Insulin\nSuspended" = "Pump\npausad";
 
 /* Text for suspend resume button when insulin delivery is suspended */
-"Resume Insulin Delivery" = "Starta pump igen";
+"Resume Insulin Delivery" = "Återuppta pump";
 
 /* Recovery suggestion when no pod is available */
 "Make sure your pod is nearby and try again." = "Kontrollera att din podd är nära och försök igen";
@@ -962,7 +958,16 @@
 "Suspended At" = "Pausad kl.";
 
 /* Text for suspend resume button when insulin delivery is resuming */
-"Resuming insulin delivery..." = "Startar pump...";
+"Resuming insulin delivery..." = "Återupptar pump...";
 
 /* Text for suspend resume button when insulin delivery is suspending */
 "Suspending insulin delivery..." = "Pausar pump...";
+
+/* Header for devices section of RileyLinkSetupView */
+"Devices" = "Enheter";
+
+/* Navigation title for RileyLinkSetupView" */
+"RileyLink Setup" = "RileyLink-inställning";
+
+/* bodyText for RileyLinkSetupView" */
+"RileyLink allows for communication with the pump over Bluetooth" = "RileyLink kommunicerar med pumpen via Bluetooth";

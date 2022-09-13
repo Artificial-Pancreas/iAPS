@@ -4,8 +4,8 @@
   Created by Jon Mårtensson on 2022-08-28.
   Copyright © 2022 Randall Knutson. All rights reserved.
 */
-
 /* Alert content title for multiCommand pod alert */
+
 "Multiple Command Alert" = "Multipla kommandoaviseringar";
 
 /* Alert content title for userPodExpiration pod alert */
@@ -72,7 +72,7 @@
 "Pod Expires" = "Podd går ut";
 
 /* */
-"Pod Activated" = "Podd startades";
+"Pod Activated" = "Podd aktiverades";
 
 /* */
 "Notification Settings" = "Notisinställningar";
@@ -618,7 +618,6 @@
 
 /* Description text on manual temp basal action sheet */
 "Loop will not automatically adjust your insulin delivery until the temporary basal rate finishes or is canceled." = "FreeAPS X kommer inte automatiskt att justera dina insulindoser förrän den temporära basalen är färdig eller har avbrytits.";
-    
 /* Button text for setting manual temporary basal rate*/
 "Set Temporary Basal" = "Ställ in temporaär basal";
 
@@ -721,11 +720,12 @@
 /* Button title to cancel manual basal */
 "Cancel Manual Basal" = "Avbryt manuell basal";
 
-/* Text shown in insulin delivery space when insulin suspended */
+/* Insulin\nSuspended
+Text shown in insulin delivery space when insulin suspended (Please don't touch the '\n' ) */
 "Insulin\nSuspended" = "Pump\npausad";
 
 /* Text for suspend resume button when insulin delivery is suspended */
-"Resume Insulin Delivery" = "Starta pump igen";
+"Resume Insulin Delivery" = "Återuppta pump";
 
 /* Recovery suggestion when no pod is available */
 "Make sure your pod is nearby and try again." = "Kontrollera att din podd är nära och försök igen";
@@ -737,7 +737,7 @@
 "Suspended At" = "Pausad kl.";
 
 /* Text for suspend resume button when insulin delivery is resuming */
-"Resuming insulin delivery..." = "Startar pump...";
+"Resuming insulin delivery..." = "Återupptar pump...";
 
 /* Text for suspend resume button when insulin delivery is suspending */
 "Suspending insulin delivery..." = "Pausar pump...";

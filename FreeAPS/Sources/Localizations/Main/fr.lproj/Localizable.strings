@@ -1097,6 +1097,9 @@ Enact a temp Basal or a temp target */
 /* Text for suspend resume button when insulin delivery is resuming */
 "Resuming insulin delivery..." = "Reprendre l'injection d'insuline...";
 
+/* Alert title for suspend error */
+"Failed to Suspend Insulin Delivery" = "Failed to Suspend Insulin Delivery";
+
 /* --------------------------------------
 
   Infotexts from openaps.docs and androidaps.docs
