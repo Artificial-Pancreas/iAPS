@@ -3,7 +3,7 @@
 "%1$@ %2$@" = "%1$@ %2$@";
 
 /* Accessibility format string for (1: localized volume)(2: time) */
-"%1$@ units remaining at %2$@" = "%1$@ unidades restantes a %2$@";
+"%1$@ units remaining at %2$@" = "quedan %1$@ unidades a las %2$@";
 
 /* The format for a glucose target range. (1: min target)(2: max target)(3: glucose unit) */
 "%1$@ – %2$@ %3$@" = "%1$@ – %2$@ %3$@";
@@ -188,7 +188,7 @@
 
 /* Button text for saving glucose correction range schedule
    Button text for saving insulin sensitivity schedule */
-"Save" = "Agregar";
+"Save" = "Guardar";
 
 /* The section header text for a scheduled override */
 "SCHEDULED OVERRIDE" = "SOBREESCRITURA PROGRAMADA";

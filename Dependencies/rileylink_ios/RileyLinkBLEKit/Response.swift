@@ -47,7 +47,7 @@ struct ReadRegisterResponse: Response {
     let value: UInt8
     
     init?(data: Data) {
-        guard data.count > 0, let code = ResponseCode(rawValue: data[data.startIndex]) else {
+        guard data.count > 1, let code = ResponseCode(rawValue: data[data.startIndex]) else {
             return nil
         }
         
@@ -103,7 +103,7 @@ struct GetVersionResponse: Response {
     let version: String
 
     init?(data: Data) {
-        guard data.count > 0, let code = ResponseCode(rawValue: data[data.startIndex]) else {
+        guard data.count > 1, let code = ResponseCode(rawValue: data[data.startIndex]) else {
             return nil
         }
 
@@ -131,7 +131,7 @@ struct GetStatisticsResponse: Response {
     let statistics: RileyLinkStatistics
 
     init?(data: Data) {
-        guard data.count > 0, let code = ResponseCode(rawValue: data[data.startIndex]) else {
+        guard data.count > 1, let code = ResponseCode(rawValue: data[data.startIndex]) else {
             return nil
         }
         
@@ -173,7 +173,7 @@ struct PacketResponse: Response {
 
         switch code {
         case .success:
-            guard let packet = RFPacket(rfspyResponse: data[data.startIndex.advanced(by: 1)...]) else {
+            guard data.count > 1, let packet = RFPacket(rfspyResponse: data[data.startIndex.advanced(by: 1)...]) else {
                 return nil
             }
             self.packet = packet

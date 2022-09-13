@@ -83,7 +83,7 @@
 "U" = "E";
 
 /* The short unit display string for international units of insulin per hour */
-"U/hr" = "E/hr";
+"U/hr" = "E/uur";
 
 /* The long unit display string for a singular international unit of insulin */
 "Unit" = "Unit";
@@ -96,3 +96,9 @@
 
 /* The long unit display string for international units of insulin per hour */
 "Units/hour" = "Units/hour";
+
+/* The long unit display string for a singular hour */
+"Hour" = "Hour";
+
+/* The long unit display string for hours */
+"Hours" = "Hours";

@@ -18,7 +18,7 @@ class MinimedPumpIDSetupViewController: SetupTableViewController {
 
     private enum RegionCode: String {
         case northAmerica = "NA"
-        case canada = "CA"
+        case canada = "CA/CM"
         case worldWide = "WW"
 
         var region: PumpRegion {
@@ -87,16 +87,21 @@ class MinimedPumpIDSetupViewController: SetupTableViewController {
             else {
                 return nil
             }
+            
             return MinimedPumpManagerState(
+                isOnboarded: false,
+                useMySentry: pumpState?.useMySentry ?? true,
                 pumpColor: pumpColor,
                 pumpID: pumpID,
                 pumpModel: pumpModel,
                 pumpFirmwareVersion: pumpFirmwareVersion,
                 pumpRegion: pumpRegion,
-                rileyLinkConnectionManagerState: rileyLinkPumpManager.rileyLinkConnectionManagerState,
+                rileyLinkConnectionState: rileyLinkPumpManager.rileyLinkConnectionManagerState,
                 timeZone: timeZone,
                 suspendState: .resumed(Date()),
-                insulinType: insulinType
+                insulinType: insulinType,
+                lastTuned: pumpState?.lastTuned,
+                lastValidFrequency: pumpState?.lastValidFrequency
             )
         }
     }
@@ -108,9 +113,7 @@ class MinimedPumpIDSetupViewController: SetupTableViewController {
 
         return MinimedPumpManager(
             state: pumpManagerState,
-            rileyLinkDeviceProvider: rileyLinkPumpManager.rileyLinkDeviceProvider,
-            rileyLinkConnectionManager: rileyLinkPumpManager.rileyLinkConnectionManager,
-            pumpOps: self.pumpOps)
+            rileyLinkDeviceProvider: rileyLinkPumpManager.rileyLinkDeviceProvider)
     }
 
     // MARK: -
@@ -244,9 +247,9 @@ class MinimedPumpIDSetupViewController: SetupTableViewController {
     private func setupPump(with settings: PumpSettings) {
         continueState = .reading
 
-        let pumpOps = PumpOps(pumpSettings: settings, pumpState: pumpState, delegate: self)
+        let pumpOps = MinimedPumpOps(pumpSettings: settings, pumpState: pumpState, delegate: self)
         self.pumpOps = pumpOps
-        pumpOps.runSession(withName: "Pump ID Setup", using: rileyLinkPumpManager.rileyLinkDeviceProvider.firstConnectedDevice, { (session) in
+        pumpOps.runSession(withName: "Pump ID Setup", usingSelector: rileyLinkPumpManager.rileyLinkDeviceProvider.firstConnectedDevice, { (session) in
             guard let session = session else {
                 DispatchQueue.main.async {
                     self.lastError = PumpManagerError.connection(MinimedPumpManagerError.noRileyLink)
@@ -314,21 +317,21 @@ class MinimedPumpIDSetupViewController: SetupTableViewController {
 
     override func continueButtonPressed(_ sender: Any) {
         if case .completed = continueState {
+            if let setupViewController = navigationController as? MinimedPumpManagerSetupViewController,
+                let pumpManager = pumpManager // create mdt 1
+            {
+                setupViewController.pumpManagerSetupComplete(pumpManager)
+            }
             if isSentrySetUpNeeded {
                 performSegue(withIdentifier: "Sentry", sender: sender)
             } else {
-                if let setupViewController = navigationController as? MinimedPumpManagerSetupViewController,
-                    let pumpManager = pumpManager
-                {
-                    super.continueButtonPressed(sender)
-                    setupViewController.pumpManagerSetupComplete(pumpManager)
-                }
+                super.continueButtonPressed(sender)
             }
         } else if case .readyToRead = continueState, let pumpID = pumpID, let pumpRegion = pumpRegionCode?.region {
 #if targetEnvironment(simulator)
             self.continueState = .completed
             self.pumpState = PumpState(timeZone: .currentFixed, pumpModel: PumpModel(rawValue:
-                                                                                        "523")!, useMySentry: false)
+                "523")!, useMySentry: false)
             self.pumpFirmwareVersion = "2.4Mock"
 #else
             setupPump(with: PumpSettings(pumpID: pumpID, pumpRegion: pumpRegion))
@@ -433,6 +436,12 @@ extension MinimedPumpIDSetupViewController: UITextFieldDelegate {
 
 
 extension MinimedPumpIDSetupViewController: PumpOpsDelegate {
+    // TODO: create PumpManager and report it to Loop before pump setup
+    // No pumpManager available yet, so no device logs.
+    func willSend(_ message: String) {}
+    func didReceive(_ message: String) {}
+    func didError(_ message: String) {}
+
     func pumpOps(_ pumpOps: PumpOps, didChange state: PumpState) {
         DispatchQueue.main.async {
             self.pumpState = state

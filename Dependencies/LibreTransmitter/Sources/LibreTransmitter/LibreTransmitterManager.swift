@@ -797,9 +797,10 @@ extension LibreTransmitterManager {
     }
 
     public var sensorStartDate: Date? {
-        proxy?.sensorData?.sensorStartTime
-    }
-
+            proxy?.sensorData?.sensorStartTime
+        }
+    
+    
     //cannot be called from managerQueue
     public var sensorAge: String {
         //proxy?.OnQueue_sensorData?.humanReadableSensorAge ?? "n/a"

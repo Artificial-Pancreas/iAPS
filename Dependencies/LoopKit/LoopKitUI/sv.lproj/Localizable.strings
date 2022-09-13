@@ -3,7 +3,7 @@
 "%1$@ %2$@" = "%1$@ %2$@";
 
 /* Accessibility format string for (1: localized volume)(2: time) */
-"%1$@ units remaining at %2$@" = "%1$@ enheter återstår kl %2$@";
+"%1$@ units remaining at %2$@" = "%1$@ enheter återstår kl. %2$@";
 
 /* The format for a glucose target range. (1: min target)(2: max target)(3: glucose unit) */
 "%1$@ – %2$@ %3$@" = "%1$@ – %2$@ %3$@";
@@ -15,7 +15,7 @@
 "%@." = "%@.";
 
 /* Format string for reservoir volume. (1: The localized volume) */
-"%@U" = "%@IE";
+"%@U" = "%@E";
 
 /* Title of the carb entry absorption time cell */
 "Absorption Time" = "Absorptionstid";
@@ -96,7 +96,7 @@
 "Custom Override" = "Anpassad Override";
 
 /* Title of the carb entry date picker cell */
-"Date" = "Tid";
+"Date" = "Datum";
 
 /* Button title to delete all objects */
 "Delete All" = "Radera allt";
@@ -236,7 +236,7 @@
 "U/hour" = "E/timme";
 
 /* The unit string for units */
-"Units" = "Eheter";
+"Units" = "Enheter";
 
 /* Accessibility value for an unknown value
    The default title to use when an entry has none */

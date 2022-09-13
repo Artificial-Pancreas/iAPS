@@ -20,7 +20,7 @@ class PumpOpsSynchronousBuildFromFramesTests: XCTestCase {
     var pumpID: String!
     var pumpRegion: PumpRegion!
     var pumpModel: PumpModel!
-    var messageSenderStub: PumpMessageSenderStub!
+    var mockPumpMessageSender: MockPumpMessageSender!
     var timeZone: TimeZone!
     
     override func setUp() {
@@ -30,7 +30,7 @@ class PumpOpsSynchronousBuildFromFramesTests: XCTestCase {
         pumpRegion = .worldWide
         pumpModel = PumpModel.model523
 
-        messageSenderStub = PumpMessageSenderStub()
+        mockPumpMessageSender = MockPumpMessageSender()
         timeZone = TimeZone(secondsFromGMT: 0)
         
         loadSUT()
@@ -42,11 +42,11 @@ class PumpOpsSynchronousBuildFromFramesTests: XCTestCase {
         pumpState.pumpModel = pumpModel
         pumpState.awakeUntil = Date(timeIntervalSinceNow: 100) // pump is awake
         
-        sut = PumpOpsSession(settings: pumpSettings, pumpState: pumpState, session: messageSenderStub, delegate: messageSenderStub)
+        sut = PumpOpsSession(settings: pumpSettings, pumpState: pumpState, messageSender: mockPumpMessageSender, delegate: mockPumpMessageSender)
     }
     
     func testErrorIsntThrown() {
-        messageSenderStub.responses = buildResponsesDictionary()
+        mockPumpMessageSender.responses = buildResponsesDictionary()
         
         assertNoThrow(try _ = sut.getHistoryEvents(since: Date()))
     }
@@ -58,7 +58,7 @@ class PumpOpsSynchronousBuildFromFramesTests: XCTestCase {
         pumpAckArray.insert(message, at: 0)
         responseDictionary[.getHistoryPage]! = pumpAckArray
         
-        messageSenderStub.responses = responseDictionary
+        mockPumpMessageSender.responses = responseDictionary
         
         // Didn't receive a .pumpAck short reponse so throw an error
         assertThrows(try _ = sut.getHistoryEvents(since: Date()))
@@ -71,14 +71,14 @@ class PumpOpsSynchronousBuildFromFramesTests: XCTestCase {
         pumpAckArray.insert(message, at: 1)
         responseDictionary[.getHistoryPage]! = pumpAckArray
         
-        messageSenderStub.responses = responseDictionary
+        mockPumpMessageSender.responses = responseDictionary
         
         // Didn't receive a .getHistoryPage as 2nd response so throw an error
         assertThrows(try _ = sut.getHistoryEvents(since: Date()))
     }
     
     func test332EventsReturnedUntilOutOrder() {
-        messageSenderStub.responses = buildResponsesDictionary()
+        mockPumpMessageSender.responses = buildResponsesDictionary()
         
         let date = Date(timeIntervalSince1970: 0)
         do {
@@ -91,7 +91,7 @@ class PumpOpsSynchronousBuildFromFramesTests: XCTestCase {
     }
     
     func testEventsReturnedAfterTime() {
-        messageSenderStub.responses = buildResponsesDictionary()
+        mockPumpMessageSender.responses = buildResponsesDictionary()
         timeZone = TimeZone.current
         
         loadSUT()
@@ -109,7 +109,7 @@ class PumpOpsSynchronousBuildFromFramesTests: XCTestCase {
     }
     
     func testGMTEventsAreTheSame() {
-        messageSenderStub.responses = buildResponsesDictionary()
+        mockPumpMessageSender.responses = buildResponsesDictionary()
         timeZone = TimeZone(secondsFromGMT:0)
         
         loadSUT()
@@ -126,7 +126,7 @@ class PumpOpsSynchronousBuildFromFramesTests: XCTestCase {
     }
     
     func testEventsReturnedAreAscendingOrder() {
-        messageSenderStub.responses = buildResponsesDictionary()
+        mockPumpMessageSender.responses = buildResponsesDictionary()
         
         //02/11/2017 @ 12:00am (UTC)
         let date = DateComponents(calendar: Calendar.current, timeZone: pumpState.timeZone, year: 2017, month: 2, day: 11, hour: 0, minute: 0, second: 0).date!

@@ -90,7 +90,7 @@
 "Correction range is the blood glucose range that you would like Loop to correct to." = "L’intervallo di correzione è l’intervallo di glicemia al quale vuoi che si regoli Loop.";
 
 /* The text for a custom override */
-"Custom" = "Personalizzata";
+"Custom" = "Personalizzato";
 
 /* The title for the custom override entry screen */
 "Custom Override" = "Regolazione manuale personalizzata";

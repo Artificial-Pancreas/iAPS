@@ -10,7 +10,7 @@ import SwiftUI
 import LoopKitUI
 
 struct DeliveryUncertaintyRecoveryView: View, HorizontalSizeClassOverride {
-    @Environment(\.dismiss) private var dismiss
+    @Environment(\.dismissAction) private var dismiss
 
     let appName: String
     let uncertaintyStartedAt: Date
@@ -32,7 +32,11 @@ struct DeliveryUncertaintyRecoveryView: View, HorizontalSizeClassOverride {
             }
             .environment(\.horizontalSizeClass, horizontalOverride)
             .navigationBarTitle(Text("Comms Recovery"), displayMode: .large)
-            .navigationBarItems(leading: backButton)
+            .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    backButton
+                }
+            }
         }
     }
     
@@ -59,7 +63,7 @@ struct DeliveryUncertaintyRecoveryView_Previews: PreviewProvider {
 // Wrapper to provide a CompletionNotifying ViewController
 class DeliveryUncertaintyRecoveryViewController: UIHostingController<AnyView>, CompletionNotifying {
     
-    var completionDelegate: CompletionDelegate?
+    public weak var completionDelegate: CompletionDelegate?
     
     init(appName: String, uncertaintyStartedAt: Date, recoverCommsTapped: @escaping () -> Void) {
         
@@ -69,7 +73,7 @@ class DeliveryUncertaintyRecoveryViewController: UIHostingController<AnyView>, C
             recoverCommsTapped()
             dismiss()
         }
-        .environment(\.dismiss, { dismiss() })
+        .environment(\.dismissAction, { dismiss() })
         
         super.init(rootView: AnyView(view))
         

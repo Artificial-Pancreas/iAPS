@@ -14,46 +14,57 @@ import os.log
 fileprivate var diagnosePairingRssi = false
 
 protocol PodCommsDelegate: AnyObject {
-    func podComms(_ podComms: PodComms, didChange podState: PodState)
+    func podComms(_ podComms: PodComms, didChange podState: PodState?)
 }
 
 class PodComms: CustomDebugStringConvertible {
     
-    private let configuredDevices: Locked<Set<RileyLinkDevice>> = Locked(Set())
-    
+    private let configuredDevices: Locked<Set<UUID>> = Locked(Set())
+
     weak var delegate: PodCommsDelegate?
     
     weak var messageLogger: MessageLogger?
 
     public let log = OSLog(category: "PodComms")
 
-    private var startingPacketNumber = 0
+    private var podStateLock = NSLock()
 
-    // Only valid to access on the session serial queue
     private var podState: PodState? {
         didSet {
-            if let newValue = podState, newValue != oldValue {
-                //log.debug("Notifying delegate of new podState: %{public}@", String(reflecting: newValue))
-                delegate?.podComms(self, didChange: newValue)
+            if podState != oldValue {
+                delegate?.podComms(self, didChange: podState)
             }
         }
     }
+
+    private var startingPacketNumber = 0
+
     
     init(podState: PodState?) {
         self.podState = podState
         self.delegate = nil
         self.messageLogger = nil
     }
-    
-    var insulinType: InsulinType? {
-        get { podState?.insulinType }
-        set {
-            if let insulinType = newValue {
-                podState?.insulinType = insulinType
-            }
-        }
+
+    public func updateInsulinType(_ insulinType: InsulinType) {
+        podStateLock.lock()
+        podState?.insulinType = insulinType
+        podStateLock.unlock()
     }
-    
+
+    func forgetPod() {
+        podStateLock.lock()
+        self.podState?.resolveAnyPendingCommandWithUncertainty()
+        self.podState?.finalizeAllDoses()
+        podStateLock.unlock()
+    }
+
+    func mockPodStateChanges(_ changes: (_ podState: inout PodState) -> Void) -> Void {
+        podStateLock.lock()
+        changes(&self.podState!)
+        podStateLock.unlock()
+    }
+
     /// Handles all the common work to send and verify the version response for the two pairing commands, AssignAddress and SetupPod.
     ///  Has side effects of creating pod state, assigning startingPacketNumber, and updating pod state.
     ///
@@ -73,6 +84,7 @@ class PodComms: CustomDebugStringConvertible {
     ///     - PodCommsError.activationTimeExceeded
     ///     - PodCommsError.rssiTooLow
     ///     - PodCommsError.rssiTooHigh
+    ///     - PodCommsError.podFault
     ///     - PodCommsError.diagnosticMessage
     ///     - PodCommsError.podIncompatible
     ///     - MessageError.invalidCrc
@@ -80,6 +92,9 @@ class PodComms: CustomDebugStringConvertible {
     ///     - MessageError.invalidAddress
     ///     - RileyLinkDeviceError
     private func sendPairMessage(address: UInt32, transport: PodMessageTransport, message: Message, insulinType: InsulinType) throws -> VersionResponse {
+
+        // We should already be holding podStateLock during calls to this function, so try() should fail
+        assert(!podStateLock.try(), "\(#function) should be invoked while holding podStateLock")
 
         defer {
             log.debug("sendPairMessage saving current transport packet #%d", transport.packetNumber)
@@ -174,8 +189,8 @@ class PodComms: CustomDebugStringConvertible {
                 log.default("Creating PodState for address %{public}@ [lot %u tid %u], packet #%d, message #%d", String(format: "%04X", config.address), config.lot, config.tid, transport.packetNumber, transport.messageNumber)
                 self.podState = PodState(
                     address: config.address,
-                    piVersion: String(describing: config.piVersion),
-                    pmVersion: String(describing: config.pmVersion),
+                    pmVersion: String(describing: config.firmwareVersion),
+                    piVersion: String(describing: config.iFirmwareVersion),
                     lot: config.lot,
                     tid: config.tid,
                     packetNumber: transport.packetNumber,
@@ -237,6 +252,9 @@ class PodComms: CustomDebugStringConvertible {
     }
 
     private func assignAddress(address: UInt32, commandSession: CommandSession, insulinType: InsulinType) throws {
+        // We should already be holding podStateLock during calls to this function, so try() should fail
+        assert(!podStateLock.try(), "\(#function) should be invoked while holding podStateLock")
+
         commandSession.assertOnSessionQueue()
 
         let packetNumber, messageNumber: Int
@@ -261,6 +279,9 @@ class PodComms: CustomDebugStringConvertible {
     }
     
     private func setupPod(podState: PodState, timeZone: TimeZone, commandSession: CommandSession, insulinType: InsulinType) throws {
+        // We should already be holding podStateLock during calls to this function, so try() should fail
+        assert(!podStateLock.try(), "\(#function) should be invoked while holding podStateLock")
+
         commandSession.assertOnSessionQueue()
         
         let transport = PodMessageTransport(session: commandSession, address: 0xffffffff, ackAddress: podState.address, state: podState.messageTransportState)
@@ -308,7 +329,14 @@ class PodComms: CustomDebugStringConvertible {
             }
 
             device.runSession(withName: "Pair Pod") { (commandSession) in
+                // Synchronize access to podState
+                self.podStateLock.lock()
+                defer {
+                    self.podStateLock.unlock()
+                }
+
                 do {
+
                     self.configureDevice(device, with: commandSession)
                     
                     if self.podState == nil {
@@ -349,7 +377,7 @@ class PodComms: CustomDebugStringConvertible {
         case success(session: PodCommsSession)
         case failure(PodCommsError)
     }
-    
+
     func runSession(withName name: String, using deviceSelector: @escaping (_ completion: @escaping (_ device: RileyLinkDevice?) -> Void) -> Void, _ block: @escaping (_ result: SessionRunResult) -> Void) {
 
         deviceSelector { (device) in
@@ -359,6 +387,13 @@ class PodComms: CustomDebugStringConvertible {
             }
 
             device.runSession(withName: name) { (commandSession) in
+
+                // Synchronize access to podState
+                self.podStateLock.lock()
+                defer {
+                    self.podStateLock.unlock()
+                }
+
                 guard self.podState != nil else {
                     block(.failure(PodCommsError.noPodPaired))
                     return
@@ -377,7 +412,7 @@ class PodComms: CustomDebugStringConvertible {
     private func configureDevice(_ device: RileyLinkDevice, with session: CommandSession) {
         session.assertOnSessionQueue()
 
-        guard !self.configuredDevices.value.contains(device) else {
+        guard !self.configuredDevices.value.contains(device.peripheralIdentifier) else {
             return
         }
         
@@ -396,7 +431,7 @@ class PodComms: CustomDebugStringConvertible {
         
         log.debug("added device %{public}@ to configuredDevices", device.name ?? "unknown")
         _ = configuredDevices.mutate { (value) in
-            value.insert(device)
+            value.insert(device.peripheralIdentifier)
         }
     }
     
@@ -410,7 +445,7 @@ class PodComms: CustomDebugStringConvertible {
         NotificationCenter.default.removeObserver(self, name: .DeviceConnectionStateDidChange, object: device)
 
         _ = configuredDevices.mutate { (value) in
-            value.remove(device)
+            value.remove(device.peripheralIdentifier)
         }
     }
     
@@ -420,7 +455,7 @@ class PodComms: CustomDebugStringConvertible {
         return [
             "## PodComms",
             "podState: \(String(reflecting: podState))",
-            "configuredDevices: \(configuredDevices.value.map { $0.peripheralIdentifier.uuidString })",
+            "configuredDevices: \(configuredDevices.value.map { $0.uuidString })",
             "delegate: \(String(describing: delegate != nil))",
             ""
         ].joined(separator: "\n")
@@ -430,6 +465,10 @@ class PodComms: CustomDebugStringConvertible {
 
 extension PodComms: PodCommsSessionDelegate {
     func podCommsSession(_ podCommsSession: PodCommsSession, didChange state: PodState) {
+        
+        // We should already be holding podStateLock during calls to this function, so try() should fail
+        assert(!podStateLock.try(), "\(#function) should be invoked while holding podStateLock")
+
         podCommsSession.assertOnSessionQueue()
         self.podState = state
     }

@@ -15,6 +15,7 @@ protocol MessageLogger: AnyObject {
     // Comms logging
     func didSend(_ message: Data)
     func didReceive(_ message: Data)
+    func didError(_ message: String)
 }
 
 public struct MessageTransportState: Equatable, RawRepresentable {
@@ -212,14 +213,13 @@ class PodMessageTransport: MessageTransport {
     ///     - PodCommsError.podAckedInsteadOfReturningResponse
     ///     - PodCommsError.unexpectedPacketType
     ///     - PodCommsError.emptyResponse
-    ///     - MessageError.invalidCrc
-    ///     - MessageError.invalidSequence
-    ///     - MessageError.invalidAddress
-    ///     - RileyLinkDeviceError
+    ///     - PodCommsError.unacknowledgedMessage
+    ///     - PodCommsError.commsError
     func sendMessage(_ message: Message) throws -> Message {
         
         messageNumber = message.sequenceNum
         incrementMessageNumber()
+        var sentFullMessage = false
 
         do {
             let responsePacket = try { () throws -> Packet in
@@ -233,6 +233,9 @@ class PodMessageTransport: MessageTransport {
                     let sendPacket = Packet(address: address, packetType: packetType, sequenceNum: self.packetNumber, data: dataRemaining)
                     dataRemaining = dataRemaining.subdata(in: sendPacket.data.count..<dataRemaining.count)
                     firstPacket = false
+                    if dataRemaining.count == 0 {
+                        sentFullMessage = true
+                    }
                     let response = try self.exchangePackets(packet: sendPacket)
                     if dataRemaining.count == 0 {
                         return response
@@ -293,8 +296,14 @@ class PodMessageTransport: MessageTransport {
             
             return response
         } catch let error {
-            log.error("Error during communication with POD: %@", String(describing: error))
-            throw error
+            if sentFullMessage {
+                messageLogger?.didError("Unacknowledged message. seq:\(message.sequenceNum), error = \(error)")
+                throw PodCommsError.unacknowledgedMessage(sequenceNumber: message.sequenceNum, error: error)
+            } else if let podCommsError = error as? PodCommsError {
+                throw podCommsError
+            } else {
+                throw PodCommsError.commsError(error: error)
+            }
         }
     }
 

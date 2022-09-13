@@ -40,6 +40,8 @@ public class MinimedPumpManagerSetupViewController: RileyLinkManagerSetupViewCon
     
     internal var insulinType: InsulinType?
 
+    internal var supportedInsulinTypes: [InsulinType]?
+
     /*
      1. RileyLink
      - RileyLinkPumpManagerState
@@ -63,22 +65,6 @@ public class MinimedPumpManagerSetupViewController: RileyLinkManagerSetupViewCon
 
     override public func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) {
         super.navigationController(navigationController, willShow: viewController, animated: animated)
-
-        // Read state values
-        let viewControllers = navigationController.viewControllers
-        let count = navigationController.viewControllers.count
-
-        if count >= 2 {
-            switch viewControllers[count - 2] {
-            case let vc as MinimedPumpIDSetupViewController:
-                pumpManager = vc.pumpManager
-                maxBasalRateUnitsPerHour = vc.maxBasalRateUnitsPerHour
-                maxBolusUnits = vc.maxBolusUnits
-                basalSchedule = vc.basalSchedule
-            default:
-                break
-            }
-        }
 
         if let setupViewController = viewController as? SetupTableViewController {
             setupViewController.delegate = self
@@ -124,24 +110,33 @@ public class MinimedPumpManagerSetupViewController: RileyLinkManagerSetupViewCon
         }
     }
 
-    public func pumpManagerSetupComplete(_ pumpManager: PumpManagerUI) {
-        setupDelegate?.pumpManagerSetupViewController(self, didSetUpPumpManager: pumpManager)
+    public func pumpManagerSetupComplete(_ pumpManager: MinimedPumpManager) {
+        self.pumpManager = pumpManager
+        pumpManagerOnboardingDelegate?.pumpManagerOnboarding(didCreatePumpManager: pumpManager)
     }
 
     override open func finishedSetup() {
         if let pumpManager = pumpManager {
-            let settings = MinimedPumpSettingsViewController(pumpManager: pumpManager)
-            setViewControllers([settings], animated: true)
+            pumpManager.completeOnboard()
+
+            pumpManagerOnboardingDelegate?.pumpManagerOnboarding(didOnboardPumpManager: pumpManager)
+
+            let settingsViewController = MinimedPumpSettingsViewController(pumpManager: pumpManager, supportedInsulinTypes: supportedInsulinTypes!)
+            setViewControllers([settingsViewController], animated: true)
         }
     }
 
     public func finishedSettingsDisplay() {
         completionDelegate?.completionNotifyingDidComplete(self)
     }
+    
+    public func didCancel() {
+        completionDelegate?.completionNotifyingDidComplete(self)
+    }
 }
 
 extension MinimedPumpManagerSetupViewController: SetupTableViewControllerDelegate {
     public func setupTableViewControllerCancelButtonPressed(_ viewController: SetupTableViewController) {
-        completionDelegate?.completionNotifyingDidComplete(self)
+        didCancel()
     }
 }

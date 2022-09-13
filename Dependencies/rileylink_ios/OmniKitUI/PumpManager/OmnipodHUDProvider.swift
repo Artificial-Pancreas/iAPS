@@ -2,8 +2,9 @@
 //  OmnipodHUDProvider.swift
 //  OmniKitUI
 //
+//  Based on OmniKitUI/PumpManager/OmniBLEHUDProvider.swift
 //  Created by Pete Schwamb on 11/26/18.
-//  Copyright © 2018 Pete Schwamb. All rights reserved.
+//  Copyright © 2021 LoopKit Authors. All rights reserved.
 //
 
 import UIKit
@@ -12,147 +13,153 @@ import LoopKit
 import LoopKitUI
 import OmniKit
 
-internal class OmnipodHUDProvider: NSObject, HUDProvider, PodStateObserver {
+public enum ReservoirAlertState {
+    case ok
+    case lowReservoir
+    case empty
+}
+
+internal class OmnipodHUDProvider: NSObject, HUDProvider {
     var managerIdentifier: String {
-        return OmnipodPumpManager.managerIdentifier
+        return pumpManager.managerIdentifier
     }
-    
-    private var podState: PodState? {
-        didSet {
-            guard visible else {
-                return
-            }
 
-            guard oldValue != podState else {
-                return
-            }
-
-            if oldValue?.lastInsulinMeasurements != podState?.lastInsulinMeasurements {
-                updateReservoirView()
-            }
-            
-            if oldValue != nil && podState == nil {
-                updateReservoirView()
-            }
-        }
-    }
-    
     private let pumpManager: OmnipodPumpManager
-    
+
     private var reservoirView: OmnipodReservoirView?
-    
+
+    private let bluetoothProvider: BluetoothProvider
+
+    private let colorPalette: LoopUIColorPalette
+
+    private var refreshTimer: Timer?
+
+    private let allowedInsulinTypes: [InsulinType]
+
     var visible: Bool = false {
         didSet {
             if oldValue != visible && visible {
                 hudDidAppear()
+            } else if oldValue != visible && !visible {
+                stopRefreshTimer()
             }
         }
     }
-    
-    private let insulinTintColor: Color
-    
-    private let guidanceColors: GuidanceColors
-    
-    private let allowedInsulinTypes: [InsulinType]
-    
-    public init(pumpManager: OmnipodPumpManager, insulinTintColor: Color, guidanceColors: GuidanceColors, allowedInsulinTypes: [InsulinType]) {
+
+    public init(pumpManager: OmnipodPumpManager, bluetoothProvider: BluetoothProvider, colorPalette: LoopUIColorPalette, allowedInsulinTypes: [InsulinType]) {
         self.pumpManager = pumpManager
-        self.podState = pumpManager.state.podState
-        self.insulinTintColor = insulinTintColor
-        self.guidanceColors = guidanceColors
+        self.bluetoothProvider = bluetoothProvider
+        self.colorPalette = colorPalette
         self.allowedInsulinTypes = allowedInsulinTypes
         super.init()
         self.pumpManager.addPodStateObserver(self, queue: .main)
     }
-    
-    private func updateReservoirView() {
-        if let lastInsulinMeasurements = podState?.lastInsulinMeasurements,
-            let reservoirView = reservoirView,
-            let podState = podState
-        {
-            let reservoirVolume = lastInsulinMeasurements.reservoirLevel
 
-            let reservoirLevel = reservoirVolume?.asReservoirPercentage()
-
-            var reservoirAlertState: ReservoirAlertState = .ok
-            for (_, alert) in podState.activeAlerts {
-                if case .lowReservoirAlarm = alert {
-                    reservoirAlertState = .lowReservoir
-                    break
-                }
-            }
-
-            reservoirView.update(volume: reservoirVolume, at: lastInsulinMeasurements.validTime, level: reservoirLevel, reservoirAlertState: reservoirAlertState)
-        }
-    }
-        
-    public func createHUDView() -> LevelHUDView? {
-        self.reservoirView = OmnipodReservoirView.instantiate()
-        self.updateReservoirView()
+    public func createHUDView() -> BaseHUDView? {
+        reservoirView = OmnipodReservoirView.instantiate()
+        updateReservoirView()
 
         return reservoirView
     }
-    
-    public func didTapOnHUDView(_ view: BaseHUDView) -> HUDTapAction? {
-        if let podState = self.podState, podState.isFaulted {
-            return HUDTapAction.presentViewController(PodReplacementNavigationController.instantiatePodReplacementFlow(pumpManager))
-        } else {
-            return HUDTapAction.presentViewController(pumpManager.settingsViewController(insulinTintColor: insulinTintColor, guidanceColors: guidanceColors, allowedInsulinTypes: allowedInsulinTypes))
-        }
+
+    public func didTapOnHUDView(_ view: BaseHUDView, allowDebugFeatures: Bool) -> HUDTapAction? {
+        let vc = pumpManager.settingsViewController(bluetoothProvider: bluetoothProvider, colorPalette: colorPalette, allowDebugFeatures: allowDebugFeatures, allowedInsulinTypes: allowedInsulinTypes)
+        return HUDTapAction.presentViewController(vc)
     }
-    
+
     func hudDidAppear() {
         updateReservoirView()
-        pumpManager.refreshStatus(emitConfirmationBeep: false)
+        refresh()
+        updateRefreshTimer()
     }
 
     public var hudViewRawState: HUDProvider.HUDViewRawState {
         var rawValue: HUDProvider.HUDViewRawState = [:]
-        
-        if let podState = podState {
-            rawValue["alerts"] = podState.activeAlerts.values.map { $0.rawValue }
+
+        rawValue["lastStatusDate"] = pumpManager.lastStatusDate
+
+        if let reservoirLevel = pumpManager.reservoirLevel {
+            rawValue["reservoirLevel"] = reservoirLevel.rawValue
         }
-        
-        if let lastInsulinMeasurements = podState?.lastInsulinMeasurements {
-            rawValue["reservoirVolume"] = lastInsulinMeasurements.reservoirLevel
-            rawValue["validTime"] = lastInsulinMeasurements.validTime
+
+        if let reservoirLevelHighlightState = pumpManager.reservoirLevelHighlightState {
+            rawValue["reservoirLevelHighlightState"] = reservoirLevelHighlightState.rawValue
         }
-        
+
         return rawValue
     }
-    
-    public static func createHUDView(rawValue: HUDProvider.HUDViewRawState) -> LevelHUDView? {
-        guard let rawAlerts = rawValue["alerts"] as? [PodAlert.RawValue] else {
+
+    public static func createHUDView(rawValue: HUDProvider.HUDViewRawState) -> BaseHUDView? {
+        guard let rawReservoirLevel = rawValue["reservoirLevel"] as? ReservoirLevel.RawValue,
+              let rawReservoirLevelHighlightState = rawValue["reservoirLevelHighlightState"] as? ReservoirLevelHighlightState.RawValue,
+              let reservoirLevelHighlightState = ReservoirLevelHighlightState(rawValue: rawReservoirLevelHighlightState)
+        else {
             return nil
         }
-        
-        let alerts = rawAlerts.compactMap { PodAlert.init(rawValue: $0) }
-        let reservoirVolume = rawValue["reservoirVolume"] as? Double
-        let validTime = rawValue["validTime"] as? Date
-        
-        let reservoirView = OmnipodReservoirView.instantiate()
-        if let validTime = validTime
-        {
-            let reservoirLevel = reservoirVolume?.asReservoirPercentage()
-            var reservoirAlertState: ReservoirAlertState = .ok
-            for alert in alerts {
-                if case .lowReservoirAlarm = alert {
-                    reservoirAlertState = .lowReservoir
-                }
-            }
-            reservoirView.update(volume: reservoirVolume, at: validTime, level: reservoirLevel, reservoirAlertState: reservoirAlertState)
+
+        let reservoirView: OmnipodReservoirView?
+
+        let reservoirLevel = ReservoirLevel(rawValue: rawReservoirLevel)
+
+        if let lastStatusDate = rawValue["lastStatusDate"] as? Date {
+            reservoirView = OmnipodReservoirView.instantiate()
+            reservoirView!.update(level: reservoirLevel, at: lastStatusDate, reservoirLevelHighlightState: reservoirLevelHighlightState)
+        } else {
+            reservoirView = nil
         }
-                
+
         return reservoirView
     }
-    
-    func podStateDidUpdate(_ podState: PodState?) {
-        self.podState = podState
+
+    private func refresh() {
+        pumpManager.getPodStatus() { _ in
+            DispatchQueue.main.async {
+                self.updateReservoirView()
+            }
+        }
+    }
+
+    private func updateReservoirView() {
+        guard let reservoirView = reservoirView,
+              let lastStatusDate = pumpManager.lastStatusDate,
+            let reservoirLevelHighlightState = pumpManager.reservoirLevelHighlightState else
+        {
+            return
+        }
+
+        reservoirView.update(level: pumpManager.reservoirLevel, at: lastStatusDate, reservoirLevelHighlightState: reservoirLevelHighlightState)
+    }
+
+    private func ensureRefreshTimerRunning() {
+        guard refreshTimer == nil else {
+            return
+        }
+
+        refreshTimer = Timer(timeInterval: .seconds(60) , repeats: true) { [weak self] _ in
+            self?.refresh()
+        }
+        RunLoop.main.add(refreshTimer!, forMode: .default)
+    }
+
+    private func stopRefreshTimer() {
+        refreshTimer?.invalidate()
+        refreshTimer = nil
+    }
+
+    private func updateRefreshTimer() {
+        if visible {
+            ensureRefreshTimerRunning()
+        }
     }
 }
 
-extension Double {
-    func asReservoirPercentage() -> Double {
-        return min(1, max(0, self / Pod.reservoirCapacity))
+extension OmnipodHUDProvider: PodStateObserver {
+    func podConnectionStateDidChange(isConnected: Bool) {
+        // ignore for now
+    }
+
+    func podStateDidUpdate(_ state: PodState?) {
+        updateRefreshTimer()
+        updateReservoirView()
     }
 }

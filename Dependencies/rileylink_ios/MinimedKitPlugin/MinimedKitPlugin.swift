@@ -6,25 +6,20 @@
 //  Copyright © 2019 Pete Schwamb. All rights reserved.
 //
 
-import Foundation
+import os.log
 import LoopKitUI
 import MinimedKit
 import MinimedKitUI
-import os.log
 
-class MinimedKitPlugin: NSObject, LoopUIPlugin {
+class MinimedKitPlugin: NSObject, PumpManagerUIPlugin {
     private let log = OSLog(category: "MinimedKitPlugin")
     
     public var pumpManagerType: PumpManagerUI.Type? {
         return MinimedPumpManager.self
     }
     
-    public var cgmManagerType: CGMManagerUI.Type? {
-        return nil
-    }
-    
     override init() {
         super.init()
-        log.default("MinimedKitPlugin Instantiated")
+        log.default("Instantiated")
     }
 }

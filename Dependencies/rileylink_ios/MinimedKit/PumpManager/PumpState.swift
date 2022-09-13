@@ -48,14 +48,13 @@ public struct PumpState: RawRepresentable, Equatable {
     public init?(rawValue: RawValue) {
         guard
             let timeZoneSeconds = rawValue["timeZone"] as? Int,
-            let timeZone = TimeZone(secondsFromGMT: timeZoneSeconds),
-            let useMySentry = rawValue["useMySentry"] as? Bool
+            let timeZone = TimeZone(secondsFromGMT: timeZoneSeconds)
         else {
             return nil
         }
 
         self.timeZone = timeZone
-        self.useMySentry = useMySentry
+        self.useMySentry = rawValue["useMySentry"] as? Bool ?? true
 
         if let pumpModelNumber = rawValue["pumpModel"] as? PumpModel.RawValue {
             pumpModel = PumpModel(rawValue: pumpModelNumber)

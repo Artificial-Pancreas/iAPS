@@ -17,7 +17,7 @@ enum RileyLinkCommand: UInt8 {
     case sendAndListen    = 5
     case updateRegister   = 6
     case reset            = 7
-    case led              = 8
+    case setLEDMode       = 8
     case readRegister     = 9
     case setModeRegisters = 10
     case setSWEncoding    = 11
@@ -309,7 +309,7 @@ struct SetLEDMode: Command {
     }
     
     var data: Data {
-        return Data([RileyLinkCommand.led.rawValue, led.rawValue, mode.rawValue])
+        return Data([RileyLinkCommand.setLEDMode.rawValue, led.rawValue, mode.rawValue])
     }
 }
 

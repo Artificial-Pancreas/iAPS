@@ -99,8 +99,10 @@ public struct CommandSession {
             throw RileyLinkDeviceError.responseTimeout
         case .zeroData:
             throw RileyLinkDeviceError.invalidResponse(Data())
-        case .invalidParam, .unknownCommand:
-            throw RileyLinkDeviceError.invalidInput(command.data.hexadecimalString)
+        case .invalidParam:
+            throw RileyLinkDeviceError.errorResponse("RileyLink reported invalid param: " + command.data.hexadecimalString)
+        case .unknownCommand:
+            throw RileyLinkDeviceError.errorResponse("RileyLink reported unknown command: " + command.data.hexadecimalString)
         case .success:
             return response
         }
@@ -138,7 +140,7 @@ public struct CommandSession {
         let response: ReadRegisterResponse = try writeCommand(command, timeout: 0)
         
         guard response.code == .success else {
-            throw RileyLinkDeviceError.invalidInput("Unsupported register: \(String(describing: address))")
+            throw RileyLinkDeviceError.errorResponse("Unsupported register: \(String(describing: address))")
         }
 
         return response.value
@@ -273,7 +275,7 @@ public struct CommandSession {
         let response = try writeCommand(command, timeout: 0)
         
         guard response.code == .success else {
-            throw RileyLinkDeviceError.invalidInput(String(describing: swEncodingType))
+            throw RileyLinkDeviceError.unsupportedCommand("Set Software Encoding error")
         }
     }
     

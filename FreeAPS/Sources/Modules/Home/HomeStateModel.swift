@@ -152,8 +152,14 @@ extension Home {
             $setupPump
                 .sink { [weak self] show in
                     guard let self = self else { return }
-                    if show, let pumpManager = self.provider.apsManager.pumpManager {
-                        let view = PumpConfig.PumpSettingsView(pumpManager: pumpManager, completionDelegate: self).asAny()
+                    if show, let pumpManager = self.provider.apsManager.pumpManager,
+                       let bluetoothProvider = self.provider.apsManager.bluetoothManager
+                    {
+                        let view = PumpConfig.PumpSettingsView(
+                            pumpManager: pumpManager,
+                            bluetoothManager: bluetoothProvider,
+                            completionDelegate: self
+                        ).asAny()
                         self.router.mainSecondaryModalView.send(view)
                     } else {
                         self.router.mainSecondaryModalView.send(nil)

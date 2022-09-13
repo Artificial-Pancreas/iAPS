@@ -31,18 +31,18 @@ class MinimedHUDProvider: HUDProvider {
     }
 
     private let pumpManager: MinimedPumpManager
+
+    private let bluetoothProvider: BluetoothProvider
     
-    private let insulinTintColor: Color
-    
-    private let guidanceColors: GuidanceColors
+    private let colorPalette: LoopUIColorPalette
 
     private let allowedInsulinTypes: [InsulinType]
     
-    public init(pumpManager: MinimedPumpManager, insulinTintColor: Color, guidanceColors: GuidanceColors, allowedInsulinTypes: [InsulinType]) {
+    public init(pumpManager: MinimedPumpManager, bluetoothProvider: BluetoothProvider, colorPalette: LoopUIColorPalette, allowedInsulinTypes: [InsulinType]) {
         self.pumpManager = pumpManager
+        self.bluetoothProvider = bluetoothProvider
         self.state = pumpManager.state
-        self.insulinTintColor = insulinTintColor
-        self.guidanceColors = guidanceColors
+        self.colorPalette = colorPalette
         self.allowedInsulinTypes = allowedInsulinTypes
         pumpManager.stateObservers.insert(self, queue: .main)
     }
@@ -67,7 +67,7 @@ class MinimedHUDProvider: HUDProvider {
         }
     }
 
-    public func createHUDView() -> LevelHUDView? {
+    public func createHUDView() -> BaseHUDView? {
 
         reservoirView = ReservoirHUDView.instantiate()
 
@@ -78,8 +78,9 @@ class MinimedHUDProvider: HUDProvider {
         return reservoirView
     }
 
-    public func didTapOnHUDView(_ view: BaseHUDView) -> HUDTapAction? {
-        return HUDTapAction.presentViewController(pumpManager.settingsViewController(insulinTintColor: insulinTintColor, guidanceColors: guidanceColors, allowedInsulinTypes: allowedInsulinTypes))
+    public func didTapOnHUDView(_ view: BaseHUDView, allowDebugFeatures: Bool) -> HUDTapAction? {
+        let vc = pumpManager.settingsViewController(bluetoothProvider: bluetoothProvider, colorPalette: colorPalette, allowDebugFeatures: allowDebugFeatures, allowedInsulinTypes: allowedInsulinTypes)
+        return HUDTapAction.presentViewController(vc)
     }
 
     public var hudViewRawState: HUDProvider.HUDViewRawState {
@@ -94,7 +95,7 @@ class MinimedHUDProvider: HUDProvider {
         return rawValue
     }
 
-    public static func createHUDView(rawValue: HUDProvider.HUDViewRawState) -> LevelHUDView? {
+    public static func createHUDView(rawValue: HUDProvider.HUDViewRawState) -> BaseHUDView? {
         guard let pumpReservoirCapacity = rawValue["pumpReservoirCapacity"] as? Double else {
             return nil
         }

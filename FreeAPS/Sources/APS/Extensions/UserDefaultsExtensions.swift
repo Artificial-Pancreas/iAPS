@@ -18,13 +18,13 @@ extension UserDefaults {
         }
     }
 
-    var rileyLinkConnectionManagerState: RileyLinkConnectionManagerState? {
+    var rileyLinkConnectionManagerState: RileyLinkConnectionState? {
         get {
             guard let rawValue = dictionary(forKey: Key.rileyLinkConnectionManagerState.rawValue)
             else {
                 return nil
             }
-            return RileyLinkConnectionManagerState(rawValue: rawValue)
+            return RileyLinkConnectionState(rawValue: rawValue)
         }
         set {
             set(newValue?.rawValue, forKey: Key.rileyLinkConnectionManagerState.rawValue)

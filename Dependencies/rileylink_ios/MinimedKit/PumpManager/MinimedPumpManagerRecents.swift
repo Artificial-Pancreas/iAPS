@@ -8,7 +8,7 @@
 import Foundation
 import LoopKit
 
-struct MinimedPumpManagerRecents: Equatable {
+public struct MinimedPumpManagerRecents: Equatable {
 
     internal enum EngageablePumpState: Equatable {
         case engaging
@@ -23,6 +23,8 @@ struct MinimedPumpManagerRecents: Equatable {
     internal var tempBasalEngageState: EngageablePumpState = .stable
 
     var lastAddedPumpEvents: Date = .distantPast
+    
+    var lastContinuousReservoir: Date = .distantPast
 
     var latestPumpStatus: PumpStatus? = nil
 
@@ -38,7 +40,7 @@ struct MinimedPumpManagerRecents: Equatable {
 }
 
 extension MinimedPumpManagerRecents: CustomDebugStringConvertible {
-    var debugDescription: String {
+    public var debugDescription: String {
         return """
         ### MinimedPumpManagerRecents
         suspendEngageState: \(suspendEngageState)
@@ -46,6 +48,7 @@ extension MinimedPumpManagerRecents: CustomDebugStringConvertible {
         tempBasalEngageState: \(tempBasalEngageState)
         lastAddedPumpEvents: \(lastAddedPumpEvents)
         latestPumpStatus: \(String(describing: latestPumpStatus))
+        lastContinuousReservoir: \(lastContinuousReservoir)
         latestPumpStatusFromMySentry: \(String(describing: latestPumpStatusFromMySentry))
         sensorState: \(String(describing: sensorState))
         """

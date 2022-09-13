@@ -1,5 +1,7 @@
 import AudioToolbox
 import Foundation
+import LoopKit
+import SwiftUI
 import Swinject
 import UIKit
 import UserNotifications
@@ -22,6 +24,11 @@ protocol BolusFailureObserver {
     func bolusDidFail()
 }
 
+protocol pumpNotificationObserver {
+    func pumpNotification(alert: LoopKit.Alert)
+    func pumpRemoveNotification()
+}
+
 final class BaseUserNotificationsManager: NSObject, UserNotificationsManager, Injectable {
     private enum Identifier: String {
         case glucocoseNotification = "FreeAPS.glucoseNotification"
@@ -29,6 +36,7 @@ final class BaseUserNotificationsManager: NSObject, UserNotificationsManager, In
         case noLoopFirstNotification = "FreeAPS.noLoopFirstNotification"
         case noLoopSecondNotification = "FreeAPS.noLoopSecondNotification"
         case bolusFailedNotification = "FreeAPS.bolusFailedNotification"
+        case pumpNotification = "FreeAPS.pumpNotification"
     }
 
     @Injected() private var settingsManager: SettingsManager!
@@ -36,6 +44,7 @@ final class BaseUserNotificationsManager: NSObject, UserNotificationsManager, In
     @Injected() private var glucoseStorage: GlucoseStorage!
     @Injected() private var apsManager: APSManager!
     @Injected() private var router: Router!
+
     @Injected(as: FetchGlucoseManager.self) private var sourceInfoProvider: SourceInfoProvider!
 
     @Persisted(key: "UserNotificationsManager.snoozeUntilDate") private var snoozeUntilDate: Date = .distantPast
@@ -50,6 +59,7 @@ final class BaseUserNotificationsManager: NSObject, UserNotificationsManager, In
         broadcaster.register(GlucoseObserver.self, observer: self)
         broadcaster.register(SuggestionObserver.self, observer: self)
         broadcaster.register(BolusFailureObserver.self, observer: self)
+        broadcaster.register(pumpNotificationObserver.self, observer: self)
 
         requestNotificationPermissionsIfNeeded()
         sendGlucoseNotification()
@@ -391,6 +401,32 @@ final class BaseUserNotificationsManager: NSObject, UserNotificationsManager, In
 extension BaseUserNotificationsManager: GlucoseObserver {
     func glucoseDidUpdate(_: [BloodGlucose]) {
         sendGlucoseNotification()
+    }
+}
+
+extension BaseUserNotificationsManager: pumpNotificationObserver {
+    func pumpNotification(alert: LoopKit.Alert) {
+        ensureCanSendNotification {
+            let contentAlert = alert.foregroundContent!
+            let content = UNMutableNotificationContent()
+            content.title = contentAlert.title
+            content.body = contentAlert.body
+            content.sound = .default
+            self.addRequest(
+                identifier: .pumpNotification,
+                content: content,
+                deleteOld: true,
+                trigger: nil
+            )
+        }
+    }
+
+    func pumpRemoveNotification() {
+        let identifier: Identifier = .pumpNotification
+        DispatchQueue.main.async {
+            self.center.removeDeliveredNotifications(withIdentifiers: [identifier.rawValue])
+            self.center.removePendingNotificationRequests(withIdentifiers: [identifier.rawValue])
+        }
     }
 }
 

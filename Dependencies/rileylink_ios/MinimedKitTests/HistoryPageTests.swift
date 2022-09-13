@@ -33,7 +33,7 @@ class HistoryPageTests: XCTestCase {
             let startDate = ISO8601DateFormatter().date(from: "2020-11-20T00:00:00Z")!
             let timeZone = TimeZone(secondsFromGMT: -21600)!
             
-            let (timestampedEvents, hasMoreEvents, _) = page.timestampedEvents(after: startDate, timeZone: timeZone, model: .model522)
+            let (timestampedEvents, _, _) = page.timestampedEvents(after: startDate, timeZone: timeZone, model: .model522)
             
             XCTAssertEqual(11, timestampedEvents.count)
 
@@ -69,16 +69,23 @@ class HistoryPageTests: XCTestCase {
             let duration = events[0] as! TempBasalDurationPumpEvent
             XCTAssertEqual(duration.duration, 30)
             XCTAssertEqual(duration.timestamp, DateComponents(gregorianYear: 2016, month: 4, day: 18, hour: 12, minute: 35, second: 57))
-            
+
             let tempBasal = events[1] as! TempBasalPumpEvent
             XCTAssertEqual(tempBasal.rateType, TempBasalPumpEvent.RateType.Absolute)
             XCTAssertEqual(tempBasal.rate, 0.4)
+            XCTAssertEqual(tempBasal.wasRemotelyTriggered, false)
             XCTAssertEqual(tempBasal.timestamp, DateComponents(gregorianYear: 2016, month: 4, day: 18, hour: 12, minute: 42, second: 10))
             
             let duration2 = events[2] as! TempBasalDurationPumpEvent
             XCTAssertEqual(duration2.duration, 30)
             XCTAssertEqual(duration2.timestamp, DateComponents(gregorianYear: 2016, month: 4, day: 18, hour: 12, minute: 42, second: 10))
-            
+
+            let tempBasal2 = events[3] as! TempBasalPumpEvent
+            XCTAssertEqual(tempBasal2.rateType, TempBasalPumpEvent.RateType.Absolute)
+            XCTAssertEqual(tempBasal2.rate, 0.2)
+            XCTAssertEqual(tempBasal2.wasRemotelyTriggered, false)
+            XCTAssertEqual(tempBasal2.timestamp, DateComponents(gregorianYear: 2016, month: 4, day: 18, hour: 13, minute: 0, second: 20))
+
         } catch HistoryPageError.invalidCRC {
             XCTFail("page decoding threw invalid crc")
         } catch HistoryPageError.unknownEventType(_) {
@@ -117,7 +124,8 @@ class HistoryPageTests: XCTestCase {
             XCTAssertEqual(bolus.programmed, 3.2)
             XCTAssertEqual(bolus.unabsorbedInsulinTotal, 0.9)
             XCTAssertEqual(bolus.timestamp, DateComponents(gregorianYear: 2016, month: 2, day: 21, hour: 10, minute: 34, second: 9))
-            
+            XCTAssertEqual(bolus.wasRemotelyTriggered, false)
+
             let unabsorbedInsulinRecords = bolus.unabsorbedInsulinRecord!.records
             XCTAssertEqual(unabsorbedInsulinRecords.count, 3)
             XCTAssertEqual(unabsorbedInsulinRecords[0].amount, 1.6)

@@ -7,21 +7,33 @@
 //
 
 import UIKit
+import Combine
 import HealthKit
 import LoopKit
 import LoopKitUI
 import MockKit
 
-
 final class MockCGMManagerSettingsViewController: UITableViewController {
     let cgmManager: MockCGMManager
-    let glucoseUnit: HKUnit
 
-    init(cgmManager: MockCGMManager, glucoseUnit: HKUnit) {
+    private let displayGlucoseUnitObservable: DisplayGlucoseUnitObservable
+
+    private lazy var cancellables = Set<AnyCancellable>()
+
+    private var glucoseUnit: HKUnit {
+        displayGlucoseUnitObservable.displayGlucoseUnit
+    }
+
+    init(cgmManager: MockCGMManager, displayGlucoseUnitObservable: DisplayGlucoseUnitObservable) {
         self.cgmManager = cgmManager
-        self.glucoseUnit = glucoseUnit
+        self.displayGlucoseUnitObservable = displayGlucoseUnitObservable
+
         super.init(style: .grouped)
         title = NSLocalizedString("CGM Settings", comment: "Title for CGM simulator settings")
+
+        displayGlucoseUnitObservable.$displayGlucoseUnit
+            .sink { [weak self] _ in self?.tableView.reloadData() }
+            .store(in: &cancellables)
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -50,9 +62,6 @@ final class MockCGMManagerSettingsViewController: UITableViewController {
         if let nav = navigationController as? SettingsNavigationViewController {
             nav.notifyComplete()
         }
-        if let nav = navigationController as? MockPumpManagerSetupViewController {
-            nav.finishedSettingsDisplay()
-        }
     }
 
     // MARK: - Data Source
@@ -61,9 +70,12 @@ final class MockCGMManagerSettingsViewController: UITableViewController {
         case model = 0
         case glucoseThresholds
         case effects
+        case cgmStatus
         case history
         case alerts
         case lifecycleProgress
+        case healthKit
+        case uploading
         case deleteCGM
     }
 
@@ -72,6 +84,7 @@ final class MockCGMManagerSettingsViewController: UITableViewController {
         case sineCurve
         case noData
         case signalLoss
+        case unreliableData
         case frequency
     }
     
@@ -90,6 +103,11 @@ final class MockCGMManagerSettingsViewController: UITableViewController {
         case highOutlier
         case error
     }
+    
+    private enum CGMStatusRow: Int, CaseIterable {
+        case batteryRemaining = 0
+        case requestCalibration
+    }
 
     private enum HistoryRow: Int, CaseIterable {
         case trend = 0
@@ -105,7 +123,15 @@ final class MockCGMManagerSettingsViewController: UITableViewController {
         case warningThreshold
         case criticalThreshold
     }
-        
+    
+    private enum HealthKitRow: Int, CaseIterable {
+        case healthKitStorageDelayEnabled = 0
+    }
+
+    private enum UploadingRow: Int, CaseIterable {
+        case uploadEnabled = 0
+    }
+
     // MARK: - UITableViewDataSource
 
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -120,12 +146,18 @@ final class MockCGMManagerSettingsViewController: UITableViewController {
             return GlucoseThresholds.allCases.count
         case .effects:
             return EffectsRow.allCases.count
+        case .cgmStatus:
+            return CGMStatusRow.allCases.count
         case .history:
             return HistoryRow.allCases.count
         case .alerts:
             return AlertsRow.allCases.count
         case .lifecycleProgress:
             return LifecycleProgressRow.allCases.count
+        case .healthKit:
+            return HealthKitRow.allCases.count
+        case .uploading:
+            return UploadingRow.allCases.count
         case .deleteCGM:
             return 1
         }
@@ -139,14 +171,29 @@ final class MockCGMManagerSettingsViewController: UITableViewController {
             return "Glucose Thresholds"
         case .effects:
             return "Effects"
+        case .cgmStatus:
+            return "CGM Status"
         case .history:
             return "History"
         case .alerts:
             return "Alerts"
         case .lifecycleProgress:
             return "Lifecycle Progress"
+        case .healthKit:
+            return "HealthKit"
+        case .uploading:
+            return "Uploading"
         case .deleteCGM:
             return " " // Use an empty string for more dramatic spacing
+        }
+    }
+
+    override func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
+        switch Section(rawValue: section) {
+        case .healthKit:
+            return "Amount of time to wait before storing CGM samples to HealthKit. If enabled, the delay is \(cgmManager.fixedHealthKitStorageDelay.minutes) minutes. NOTE: after changing this, you will need to delete and re-add the CGM simulator!"
+        default:
+            return nil
         }
     }
 
@@ -159,6 +206,13 @@ final class MockCGMManagerSettingsViewController: UITableViewController {
         return formatter
     }()
     
+    private lazy var durationFormatter: DateComponentsFormatter = {
+        let durationFormatter = DateComponentsFormatter()
+        durationFormatter.allowedUnits = [.hour, .minute]
+        durationFormatter.unitsStyle = .full
+        return durationFormatter
+    }()
+
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch Section(rawValue: indexPath.section)! {
         case .model:
@@ -191,6 +245,11 @@ final class MockCGMManagerSettingsViewController: UITableViewController {
             case .signalLoss:
                 cell.textLabel?.text = "Signal Loss"
                 if case .signalLoss = cgmManager.dataSource.model {
+                    cell.accessoryType = .checkmark
+                }
+            case .unreliableData:
+                cell.textLabel?.text = "Unreliable Data"
+                if case .unreliableData = cgmManager.dataSource.model {
                     cell.accessoryType = .checkmark
                 }
             case .frequency:
@@ -270,6 +329,26 @@ final class MockCGMManagerSettingsViewController: UITableViewController {
 
             cell.accessoryType = .disclosureIndicator
             return cell
+        case .cgmStatus:
+            let cell = tableView.dequeueReusableCell(withIdentifier: SettingsTableViewCell.className, for: indexPath)
+            switch CGMStatusRow(rawValue: indexPath.row)! {
+            case .batteryRemaining:
+                let cell = tableView.dequeueReusableCell(withIdentifier: SettingsTableViewCell.className, for: indexPath)
+                cell.textLabel?.text = "Battery Remaining"
+                if let remainingCharge = cgmManager.cgmBatteryChargeRemaining {
+                    cell.detailTextLabel?.text = "\(Int(round(remainingCharge * 100)))%"
+                } else {
+                    cell.detailTextLabel?.text = SettingsTableViewCell.NoValueString
+                }
+                cell.accessoryType = .disclosureIndicator
+                return cell
+            case .requestCalibration:
+                cell.textLabel?.text = "Request Calibration"
+                if cgmManager.isCalibrationRequested {
+                    cell.accessoryType = .checkmark
+                }
+            }
+            return cell
         case .history:
             let cell = tableView.dequeueReusableCell(withIdentifier: SettingsTableViewCell.className, for: indexPath)
             switch HistoryRow(rawValue: indexPath.row)! {
@@ -316,6 +395,41 @@ final class MockCGMManagerSettingsViewController: UITableViewController {
             }
             cell.accessoryType = .disclosureIndicator
             return cell
+        case .healthKit:
+            switch HealthKitRow(rawValue: indexPath.row)! {
+            case .healthKitStorageDelayEnabled:
+                let cell = tableView.dequeueReusableCell(withIdentifier: BoundSwitchTableViewCell.className, for: indexPath) as! BoundSwitchTableViewCell
+                cell.textLabel?.text = "Storage Delay"
+                cell.switch?.isOn = cgmManager.healthKitStorageDelayEnabled
+                cell.onToggle = { isOn in
+                    let confirmVC = UIAlertController(cgmDeletionHandler: {
+                        self.cgmManager.healthKitStorageDelayEnabled = isOn
+                        self.cgmManager.notifyDelegateOfDeletion {
+                            DispatchQueue.main.async {
+                                self.done()
+                            }
+                        }
+                    }, cancelHandler: { cell.switch?.isOn = self.cgmManager.healthKitStorageDelayEnabled })
+
+                    self.present(confirmVC, animated: true) {
+                        tableView.deselectRow(at: indexPath, animated: true)
+                    }
+                }
+                cell.selectionStyle = .none
+                return cell
+            }
+        case .uploading:
+            switch UploadingRow(rawValue: indexPath.row)! {
+            case .uploadEnabled:
+                let cell = tableView.dequeueReusableCell(withIdentifier: BoundSwitchTableViewCell.className, for: indexPath) as! BoundSwitchTableViewCell
+                cell.textLabel?.text = "Upload CGM Samples"
+                cell.switch?.isOn = cgmManager.mockSensorState.samplesShouldBeUploaded
+                cell.onToggle = { [weak cgmManager] isOn in
+                    cgmManager?.mockSensorState.samplesShouldBeUploaded = isOn
+                }
+                cell.selectionStyle = .none
+                return cell
+            }
         case .deleteCGM:
             let cell = tableView.dequeueReusableCell(withIdentifier: TextButtonTableViewCell.className, for: indexPath) as! TextButtonTableViewCell
             cell.textLabel?.text = "Delete CGM"
@@ -358,6 +472,9 @@ final class MockCGMManagerSettingsViewController: UITableViewController {
             case .signalLoss:
                 cgmManager.dataSource.model = .signalLoss
                 cgmManager.issueSignalLossAlert()
+                tableView.reloadRows(at: indexPaths(forSection: .model, rows: ModelRow.self), with: .automatic)
+            case .unreliableData:
+                cgmManager.dataSource.model = .unreliableData
                 tableView.reloadRows(at: indexPaths(forSection: .model, rows: ModelRow.self), with: .automatic)
             case .frequency:
                 let vc = MeasurementFrequencyTableViewController()
@@ -429,6 +546,18 @@ final class MockCGMManagerSettingsViewController: UITableViewController {
                 vc.percentageDelegate = self
                 show(vc, sender: sender)
             }
+        case .cgmStatus:
+            switch CGMStatusRow(rawValue: indexPath.row)! {
+            case .batteryRemaining:
+                let vc = PercentageTextFieldTableViewController()
+                vc.percentage = cgmManager.cgmBatteryChargeRemaining
+                vc.indexPath = indexPath
+                vc.percentageDelegate = self
+                show(vc, sender: sender)
+            case .requestCalibration:
+                cgmManager.requestCalibration(!cgmManager.isCalibrationRequested)
+                tableView.reloadRows(at: [indexPath], with: .automatic)
+            }
         case .history:
             switch HistoryRow(rawValue: indexPath.row)! {
             case .trend:
@@ -471,6 +600,10 @@ final class MockCGMManagerSettingsViewController: UITableViewController {
                 vc.percentage = cgmManager.mockSensorState.progressCriticalThresholdPercentValue
             }
             show(vc, sender: sender)
+        case .healthKit:
+            return
+        case .uploading:
+            return
         case .deleteCGM:
             let confirmVC = UIAlertController(cgmDeletionHandler: {
                 self.cgmManager.notifyDelegateOfDeletion {
@@ -596,8 +729,15 @@ extension MockCGMManagerSettingsViewController: PercentageTextFieldTableViewCont
         case .effects:
             switch EffectsRow(rawValue: indexPath.row)! {
             case .error:
-                if let chance = controller.percentage {
-                    cgmManager.dataSource.effects.randomErrorChance = chance.clamped(to: 0...100)
+                cgmManager.dataSource.effects.randomErrorChance = controller.percentage?.clamped(to: 0...1)
+            default:
+                assertionFailure()
+            }
+        case .cgmStatus:
+            switch CGMStatusRow(rawValue: indexPath.row)! {
+            case .batteryRemaining:
+                if let batteryRemaining = controller.percentage.map({ $0.clamped(to: 0...1) }) {
+                    cgmManager.cgmBatteryChargeRemaining = batteryRemaining
                 }
             default:
                 assertionFailure()
@@ -640,7 +780,7 @@ extension MockCGMManagerSettingsViewController: MeasurementFrequencyTableViewCon
 }
 
 private extension UIAlertController {
-    convenience init(cgmDeletionHandler handler: @escaping () -> Void) {
+    convenience init(cgmDeletionHandler confirmHandler: @escaping () -> Void, cancelHandler: (() -> Void)? = nil) {
         self.init(
             title: nil,
             message: "Are you sure you want to delete this CGM?",
@@ -651,11 +791,11 @@ private extension UIAlertController {
             title: "Delete CGM",
             style: .destructive,
             handler: { _ in
-                handler()
+                confirmHandler()
             }
         ))
 
         let cancel = "Cancel"
-        addAction(UIAlertAction(title: cancel, style: .cancel, handler: nil))
+        addAction(UIAlertAction(title: cancel, style: .cancel, handler: { _ in cancelHandler?() }))
     }
 }

@@ -215,7 +215,7 @@
 "Amount" = "Mengde";
 
 /* */
-"Cancel Temp Basal" = "Avbryt midlertidig basal";
+"Cancel Temp Basal" = "Avbryt manuell basal";
 
 /* Enact
 Enact a temp Basal or a temp target */
@@ -425,6 +425,9 @@ Enact a temp Basal or a temp target */
 /* " min" in Treatments list */
 " min" = " min";
 
+/* */
+"Unable to change anything" = "Kan ikke utføre endringer";
+
 
 /* Calendar and Libre transmitter settings ---------------
  */
@@ -504,7 +507,7 @@ Enact a temp Basal or a temp target */
 "Please make sure that your Libre 2 sensor is already activated and finished warming up. If you have other apps connecting to the sensor via bluetooth, these need to be shut down or uninstalled. \n\n You can only have one app communicating with the sensor via bluetooth. Then press the \"pariring and connection\" button below to start the process. Please note that the bluetooth connection might take up to a couple of minutes before it starts working." = "Sørg for at Libre 2-sensoren allerede er aktivert og ferdig med oppvarmingen. Hvis du har andre apper som kobler til sensoren via bluetooth, må disse stoppes eller avinstalleres. \n\n Kun én app kan kommunisere med sensoren om gangen. Trykk på \\«Parkobling»\\ knappen nedenfor for å starte prosessen. Vær oppmerksom på at blåtannforbindelsen kan ta opp til et par minutter før den begynner å virke.";
 
 /* */
-"Pairinginfo" = "Parings-info";
+"Pairinginfo" = "Info om parkobling";
 
 /* */
 "PatchInfo" = "Patch-info";
@@ -516,7 +519,7 @@ Enact a temp Basal or a temp target */
 "Unknown" = "Ukjent";
 
 /* */
-"Not paired yet" = "Ikke paret ennå";
+"Not paired yet" = "Ikke parkoblet ennå";
 
 /* */
 "Pair Sensor & connect" = "Parkoble sensor";
@@ -825,7 +828,7 @@ Enact a temp Basal or a temp target */
 "Backfill options" = "Alternativer for etterfylling";
 
 /* */
-"Backfilling from trend is currently not well supported by Loop" = "Etterfylling av data fra trenden er for øyeblikket ikke støttet av Loop";
+"Backfilling from trend is currently not well supported by Loop" = "Etterfylling av data fra trenden er for øyeblikket ikke godt støttet";
 
 /* */
 "Backfill from history" = "Etterfylling fra historikk";
@@ -948,8 +951,156 @@ Enact a temp Basal or a temp target */
 
 /* */
 "After you create glucose records in the Health app, please open FreeAPS X to help us guaranteed transfer changed data" = "Etter at du har lagt til blodsukker i Helse-appen, vennligst åpne FreeAPS X for å sikre overføring av endrede data";
-/* --------------------------------------------
 
+/* New ALerts ------------------------- */
+/* Info title */
+"Info" = "Info";
+
+/* Warning title */
+"Warning" = "Advarsel";
+
+/* Error title */
+"Error" = "Feil";
+
+/* ---------------------------------------
+  DASH strings
+*/
+"Attach Pod" = "Fest pod";
+
+"Deactivate Pod" = "Deaktiver Pod";
+
+/* */
+"Deactivating..." = "Deaktiverer...";
+
+"Pair Pod" = "Parkoble pod";
+
+/* Text for previous pod information row */
+"Previous Pod Information" = "Informasjon om forrige pod";
+
+/* Text for confidence reminders navigation link */
+"Confidence Reminders" = "Bekreftelseslyder";
+
+"Confidence reminders are beeps from the pod which can be used to acknowledge selected commands." = "Bekreftelseslyder er pipelyder fra pod som kan brukes som kvittering for utførte kommandoer.";
+
+/* button title for saving low reservoir reminder while saving */
+"Saving..." = "Lagrer...";
+
+/* button title for saving low reservoir reminder */
+"Save" = "Lagre";
+
+/* Alert title for error when updating confidence reminder preference */
+"Failed to update confidence reminder preference." = "Kunne ikke oppdatere innstillinger for bekreftelseslyder.";
+
+/* */
+"No Error" = "Ingen feil";
+
+/* description label for active time pod details row */
+"Active Time" = "Aktiveringstidspunkt";
+
+/* Title string for BeepPreference.silent */
+"Disabled" = "Deaktivert";
+
+/* Title string for BeepPreference.manualCommands */
+"Enabled" = "Aktivert";
+
+/* Title string for BeepPreference.extended */
+"Extended" = "Utvidet";
+
+/* Description for BeepPreference.silent */
+"No confidence reminders are used." = "Det brukes ingen bekreftelseslyder.";
+
+/* Description for BeepPreference.manualCommands */
+"Confidence reminders will sound for commands you initiate, like bolus, cancel bolus, suspend, resume, save notification reminders, etc. When Loop automatically adjusts delivery, no confidence reminders are used." = "Bekreftelseslyder vil høres ved manuelle kommandoer som bolus, avbryt bolus, pause leveranse, gjenoppta leveranse, lagre varsler, etc. Det er ikke bekreftelseslyder når appen endrer insulintiførsel automatisk.";
+
+/* Description for BeepPreference.extended */
+"Confidence reminders will sound when Loop automatically adjusts delivery as well as for commands you initiate." = "Bekreftelseslyder vil høres ved endret insulintiførsel, både fra automatiske justeringer og manuelle kommandoer.";
+
+/* Label text for expiration reminder default row */
+"Expiration Reminder Default" = "Utløpspåminnelse";
+
+/* */
+"Expiration Reminder" = "Utløpspåminnelse";
+
+/* */
+"Low Reservoir" = "Lite insulin i pod";
+
+/* Value text for no expiration reminder */
+"No Reminder" = "Ingen påminnelse";
+
+/* */
+"Scheduled Reminder" = "Planlagt påminnelse";
+
+/* */
+"Low Reservoir Reminder" = "Påminnelse om lite insulin i pod";
+
+/* The action string on pod status page when pod data is stale */
+"Make sure your phone and pod are close to each other. If communication issues persist, move to a new area." = "Sørg for at telefonen og poden er nær hverandre. Gå til et nytt område hvis kommunikasjonsproblemene vedvarer.";
+/* Format string for the action string on pod status page when pod expired. (1: service time remaining) */
+"Change Pod now. Insulin delivery will stop in %1$@ or when no more insulin remains." = "Bytt pod nå. Insulintilførselen stopper om %1$@, eller når det er tomt for insulin.";
+
+/* Label text for temporary basal rate summary */
+"Rate" = "Rate";
+
+/* Summary string for temporary basal rate configuration page */
+"%1$@ for %2$@" = "%1$@ i %2$@";
+
+/* Description text on manual temp basal action sheet */
+"Loop will not automatically adjust your insulin delivery until the temporary basal rate finishes or is canceled." = "Appen vil ikke automatisk justere insulintilførselen før den manuelle basalraten er fullført eller kansellert.";
+/* Button text for setting manual temporary basal rate*/
+"Set Temporary Basal" = "Angi manuell basal";
+
+/* Navigation Title for ManualTempBasalEntryView */
+"Temporary Basal" = "Manuell basal";
+
+/* Alert title for a failure to set temporary basal */
+"Temporary Basal Failed" = "Manuell basal mislyktes";
+
+/* Alert format string for a failure to set temporary basal with recovery suggestion. (1: error description) (2: recovery text) */
+"Unable to set a temporary basal rate: %1$@\n\n%2$@" = "Kunne ikke angi en manuell basalrate: %1$@\n\n%2$@";
+
+/* Alert format string for a failure to set temporary basal. (1: error description) */
+"Unable to set a temporary basal rate: %1$@" = "Kunne ikke angi en manuell basalrate: %1$@";
+
+/* Alert title for missing temp basal configuration */
+"Missing Config" = "Manglende konfigurasjon";
+
+/* Alert format string for missing temp basal configuration. */
+"This PumpManager has not been configured with a maximum basal rate because it was added before manual temp basal was a feature. Please go to therapy settings -> delivery limits and set a new maximum basal rate." = "Denne pumpedriveren har ikke blitt konfigurert med en maksimal basalrate fordi den ble lagt til før manuell midlertidig basal var en tilgjengelig funksjon. Gå til Pumpeinnstillinger -> leveringsgrenser og sett en ny maksimal basal rate.";
+
+/* description label for active time pod details row */
+"Active Time" = "Aktiveringstidspunkt";
+
+/* description label for total delivery pod details row */
+"Total Delivery" = "Total leveranse";
+
+/* */
+"Add Omnipod Dash" = "Legg til Omnipod Dash";
+
+/* */
+"Insert Cannula" = "Sett inn kanyle";
+
+/* */
+"Check Cannula" = "Kontroller kanyle";
+
+/* */
+"Setup Complete" = "Oppsett ferdig";
+
+/* */
+"Insulin Suspended" = "Insulintilførsel pauset";
+
+/* Text for suspend resume button when insulin delivery is suspending */
+"Suspending insulin delivery..." = "Stopper insulintilførsel...";
+
+/* Text for suspend resume button when insulin delivery is suspended */
+"Resume Insulin Delivery" = "Gjenoppta insulintilførsel";
+
+/* Text for suspend resume button when insulin delivery is resuming */
+"Resuming insulin delivery..." = "Gjenopptar insulintilførselen...";
+
+/* Alert title for suspend error */
+"Failed to Suspend Insulin Delivery" = "Insulintilførselen kunne ikke settes på pause";
+
+/* --------------------------------------
 
   Infotexts from openaps.docs and androidaps.docs
   FreeAPS X

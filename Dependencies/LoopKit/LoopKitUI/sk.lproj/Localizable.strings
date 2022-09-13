@@ -3,7 +3,7 @@
 "%1$@ %2$@" = "%1$@ %2$@";
 
 /* Accessibility format string for (1: localized volume)(2: time) */
-"%1$@ units remaining at %2$@" = "%1$@ jednotiek zostávajúcich o %2$@";
+"%1$@ units remaining at %2$@" = "%1$@ jednotiek zostáva o %2$@";
 
 /* The format for a glucose target range. (1: min target)(2: max target)(3: glucose unit) */
 "%1$@ – %2$@ %3$@" = "%1$@ – %2$@ %3$@";
@@ -45,7 +45,7 @@
 "Basal, bolus, and correction insulin dose amounts are unaffected." = "Bazál, Bolus, a korekčná dávka inzulínu nie sú ovplyvnené.";
 
 /* The title of the cancel action in an action sheet */
-"Cancel" = "Zrušiť";
+"Cancel" = "Cancel";
 
 /* The text for the override cancellation button */
 "Cancel Override" = "Cancel Override";
@@ -90,19 +90,19 @@
 "Correction range is the blood glucose range that you would like Loop to correct to." = "Korekčný rozsah je hranica krvného cukru ku ktorej chcete aby Slučka krvný cukor korigovala.";
 
 /* The text for a custom override */
-"Custom" = "Vlastné";
+"Custom" = "Custom";
 
 /* The title for the custom override entry screen */
 "Custom Override" = "Vlastné Nastavenie";
 
 /* Title of the carb entry date picker cell */
-"Date" = "Dátum";
+"Date" = "Date";
 
 /* Button title to delete all objects */
 "Delete All" = "Vymazať všetko";
 
 /* The text for the override duration setting */
-"Duration" = "Trvanie";
+"Duration" = "Duration";
 
 /* The title for the override editing screen */
 "Edit Override" = "Uprav Override";
@@ -147,14 +147,14 @@
 "More Info" = "Viac Info";
 
 /* The text for the override preset name setting */
-"Name" = "Názov";
+"Name" = "Name";
 
 /* The title for the new override preset entry screen */
 "New Preset" = "Nové Nastavenie";
 
 /* Section title for no-carb food
    The title for override emoji miscellaneous section */
-"Other" = "Iné";
+"Other" = "Other";
 
 /* The title text for the insulin sensitivity scaling setting */
 "Overall Insulin Needs" = "Celková Potreba Inzulínu";

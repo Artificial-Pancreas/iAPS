@@ -90,7 +90,7 @@
 "Correction range is the blood glucose range that you would like Loop to correct to." = "Korreksjonsområde er området du ønsker at Loop skal korrigere blodsukker til.";
 
 /* The text for a custom override */
-"Custom" = "Tilpasset";
+"Custom" = "Egendefinert";
 
 /* The title for the custom override entry screen */
 "Custom Override" = "Tilpasset overstyring";
