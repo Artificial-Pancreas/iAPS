@@ -47,6 +47,7 @@ extension Home {
         @Published var pumpDisplayState: PumpDisplayState?
         @Published var alarm: GlucoseAlarm?
         @Published var animatedBackground = false
+        @Published var manualTempBasal = false
 
         override func subscribe() {
             setupGlucose()
@@ -68,6 +69,7 @@ extension Home {
             lastLoopDate = apsManager.lastLoopDate
             carbsRequired = suggestion?.carbsReq
             alarm = provider.glucoseStorage.alarm
+            manualTempBasal = apsManager.isManualTempBasal
 
             setStatusTitle()
             setupCurrentTempTarget()
@@ -197,6 +199,7 @@ extension Home {
         private func setupBasals() {
             DispatchQueue.main.async { [weak self] in
                 guard let self = self else { return }
+                self.manualTempBasal = self.apsManager.isManualTempBasal
                 self.tempBasals = self.provider.pumpHistory(hours: self.filteredHours).filter {
                     $0.type == .tempBasal || $0.type == .tempBasalDuration
                 }
@@ -260,6 +263,7 @@ extension Home {
         private func setupTempTargets() {
             DispatchQueue.main.async { [weak self] in
                 guard let self = self else { return }
+                self.manualTempBasal = self.apsManager.isManualTempBasal
                 self.tempTargets = self.provider.tempTargets(hours: self.filteredHours)
             }
         }
@@ -357,6 +361,7 @@ extension Home.StateModel:
         closedLoop = settingsManager.settings.closedLoop
         units = settingsManager.settings.units
         animatedBackground = settingsManager.settings.animatedBackground
+        manualTempBasal = apsManager.isManualTempBasal
         setupGlucose()
     }
 
