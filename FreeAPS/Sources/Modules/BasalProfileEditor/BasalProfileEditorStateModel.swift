@@ -4,6 +4,7 @@ extension BasalProfileEditor {
     final class StateModel: BaseStateModel<Provider> {
         @Published var syncInProgress = false
         @Published var items: [Item] = []
+        @Published var total: Decimal = 0.0
 
         let timeValues = stride(from: 0.0, to: 1.days.timeInterval, by: 30.minutes.timeInterval).map { $0 }
 
@@ -22,6 +23,24 @@ extension BasalProfileEditor {
                 let rateIndex = rateValues.firstIndex(of: value.rate) ?? 0
                 return Item(rateIndex: rateIndex, timeIndex: timeIndex)
             }
+            calcTotal()
+        }
+
+        func calcTotal() {
+            let profile = items.map { item -> BasalProfileEntry in
+                let fotmatter = DateFormatter()
+                fotmatter.timeZone = TimeZone(secondsFromGMT: 0)
+                fotmatter.dateFormat = "HH:mm:ss"
+                let date = Date(timeIntervalSince1970: self.timeValues[item.timeIndex])
+                let minutes = Int(date.timeIntervalSince1970 / 60)
+                let rate = self.rateValues[item.rateIndex]
+                return BasalProfileEntry(start: fotmatter.string(from: date), minutes: minutes, rate: rate)
+            }
+
+            var profileWith24hours = profile.map(\.minutes)
+            profileWith24hours.append(24 * 60)
+            let pr2 = zip(profile, profileWith24hours.dropFirst())
+            total = pr2.reduce(0) { $0 + (Decimal($1.1 - $1.0.minutes) / 60) * $1.0.rate }
         }
 
         func add() {
@@ -35,6 +54,7 @@ extension BasalProfileEditor {
             let newItem = Item(rateIndex: rate, timeIndex: time)
 
             items.append(newItem)
+            calcTotal()
         }
 
         func save() {
