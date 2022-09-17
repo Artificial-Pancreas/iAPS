@@ -972,6 +972,9 @@ Enact a temp Basal or a temp target */
 /* Current Manual Temp basal */
 " -  Manual Basal ⚠️" = " -  Manual Basal ⚠️";
 
+/* Total AT / Scheduled basal insulin */
+" U/day" = " U/day";
+
 /* ---------------------------------------
   DASH strings
 */
