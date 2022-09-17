@@ -13,6 +13,7 @@ struct LoopView: View {
     @Binding var timerDate: Date
     @Binding var isLooping: Bool
     @Binding var lastLoopDate: Date
+    @Binding var manualTempBasal: Bool
 
     private var dateFormatter: DateFormatter {
         let formatter = DateFormatter()
@@ -34,6 +35,8 @@ struct LoopView: View {
             }
             if isLooping {
                 Text("looping").font(.caption2)
+            } else if manualTempBasal {
+                Text("Manual").font(.caption2)
             } else if actualSuggestion?.timestamp != nil {
                 Text(timeString).font(.caption2)
                     .foregroundColor(.secondary)
@@ -55,6 +58,9 @@ struct LoopView: View {
         guard actualSuggestion?.timestamp != nil else {
             return .loopGray
         }
+        guard manualTempBasal == false else {
+            return .loopManualTemp
+        }
         let delta = timerDate.timeIntervalSince(lastLoopDate) - Config.lag
 
         if delta <= 5.minutes.timeInterval {
@@ -71,7 +77,7 @@ struct LoopView: View {
 
     func mask(in rect: CGRect) -> Path {
         var path = Rectangle().path(in: rect)
-        if !closedLoop {
+        if !closedLoop || manualTempBasal {
             path.addPath(Rectangle().path(in: CGRect(x: rect.minX, y: rect.midY - 5, width: rect.width, height: 10)))
         }
         return path

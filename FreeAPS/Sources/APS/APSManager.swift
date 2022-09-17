@@ -88,7 +88,7 @@ final class BaseAPSManager: APSManager, Injectable {
 
     var bluetoothManager: BluetoothStateManager? { deviceDataManager.bluetoothManager }
 
-    var isManualTempBasal: Bool = false
+    @Persisted(key: "isManualTempBasal") var isManualTempBasal: Bool = false
 
     let isLooping = CurrentValueSubject<Bool, Never>(false)
     let lastLoopDateSubject = PassthroughSubject<Date, Never>()
@@ -239,11 +239,6 @@ final class BaseAPSManager: APSManager, Injectable {
 
         guard !status.suspended else {
             return APSError.invalidPumpState(message: "Pump suspended")
-        }
-
-        // block all if manual temp basal
-        if isManualTempBasal {
-            return APSError.manualBasalTemp(message: "Unable to change anything")
         }
 
         let reservoir = storage.retrieve(OpenAPS.Monitor.reservoir, as: Decimal.self) ?? 100
@@ -415,6 +410,13 @@ final class BaseAPSManager: APSManager, Injectable {
         }
 
         guard let pump = pumpManager else { return }
+
+        // unable to do temp basal during manual temp basal 😁
+        if isManualTempBasal {
+            processError(APSError.manualBasalTemp(message: "Loop not possible during the manual basal temp"))
+            return
+        }
+
         debug(.apsManager, "Enact temp basal \(rate) - \(duration)")
 
         let roundedAmout = pump.roundToSupportedBasalRate(unitsPerHour: rate)
@@ -529,6 +531,11 @@ final class BaseAPSManager: APSManager, Injectable {
                 processError(error)
                 return
             }
+            // unable to do temp basal during manual temp basal 😁
+            if isManualTempBasal {
+                processError(APSError.manualBasalTemp(message: "Loop not possible during the manual basal temp"))
+                return
+            }
             guard !settings.closedLoop else {
                 return
             }
@@ -578,6 +585,12 @@ final class BaseAPSManager: APSManager, Injectable {
 
         guard let pump = pumpManager else {
             return Fail(error: APSError.apsError(message: "Pump not set")).eraseToAnyPublisher()
+        }
+
+        // unable to do temp basal during manual temp basal 😁
+        if isManualTempBasal {
+            return Fail(error: APSError.manualBasalTemp(message: "Loop not possible during the manual basal temp"))
+                .eraseToAnyPublisher()
         }
 
         let basalPublisher: AnyPublisher<Void, Error> = Deferred { () -> AnyPublisher<Void, Error> in
