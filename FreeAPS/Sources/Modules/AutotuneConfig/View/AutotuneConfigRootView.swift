@@ -16,7 +16,7 @@ extension AutotuneConfig {
         private var rateFormatter: NumberFormatter {
             let formatter = NumberFormatter()
             formatter.numberStyle = .decimal
-            formatter.maximumFractionDigits = 3
+            formatter.maximumFractionDigits = 2
             return formatter
         }
 
