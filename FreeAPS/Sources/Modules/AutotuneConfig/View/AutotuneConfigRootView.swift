@@ -72,6 +72,16 @@ extension AutotuneConfig {
                                 Text("U/hr").foregroundColor(.secondary)
                             }
                         }
+                        HStack {
+                            Text("Total")
+                                .bold()
+                                .foregroundColor(.primary)
+                            Spacer()
+                            Text(rateFormatter.string(from: autotune.basalProfile.reduce(0) { $0 + $1.rate } as NSNumber) ?? "0")
+                                .foregroundColor(.primary) +
+                                Text(" U/day")
+                                .foregroundColor(.secondary)
+                        }
                     }
 
                     Section {
