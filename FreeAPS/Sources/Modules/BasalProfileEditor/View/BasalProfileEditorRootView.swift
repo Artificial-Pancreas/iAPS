@@ -28,6 +28,18 @@ extension BasalProfileEditor {
                 }
                 Section {
                     HStack {
+                        Text("Total")
+                            .bold()
+                            .foregroundColor(.primary)
+                        Spacer()
+                        Text(rateFormatter.string(from: state.total as NSNumber) ?? "0")
+                            .foregroundColor(.primary) +
+                            Text(" U/day")
+                            .foregroundColor(.secondary)
+                    }
+                }
+                Section {
+                    HStack {
                         if state.syncInProgress {
                             ProgressView().padding(.trailing, 10)
                         }
@@ -69,6 +81,7 @@ extension BasalProfileEditor {
                                 ).tag(i)
                             }
                         }
+                        .onChange(of: state.items[index].rateIndex, perform: { _ in state.calcTotal() })
                         .frame(maxWidth: geometry.size.width / 2)
                         .clipped()
 
@@ -83,6 +96,7 @@ extension BasalProfileEditor {
                                 ).tag(i)
                             }
                         }
+                        .onChange(of: state.items[index].timeIndex, perform: { _ in state.calcTotal() })
                         .frame(maxWidth: geometry.size.width / 2)
                         .clipped()
                     }
@@ -132,6 +146,7 @@ extension BasalProfileEditor {
         private func onDelete(offsets: IndexSet) {
             state.items.remove(atOffsets: offsets)
             state.validate()
+            state.calcTotal()
         }
     }
 }
