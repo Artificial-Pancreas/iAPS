@@ -966,6 +966,15 @@ Enact a temp Basal or a temp target */
 /* Error title */
 "Error" = "Fel";
 
+/* Manual temp basal mode */
+"Manual" = "Manuellt";
+
+/* Status highlight when manual temp basal is running. */
+"Manual Basal" = "Manuell basal";
+
+/* Current Manual Temp basal */
+" -  Manual Basal ⚠️" = " -  Manuell basal ⚠️";
+
 /* ---------------------------------------
   DASH strings
 */
