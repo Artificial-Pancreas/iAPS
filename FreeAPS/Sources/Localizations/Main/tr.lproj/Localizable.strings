@@ -962,6 +962,21 @@ Enact a temp Basal or a temp target */
 /* Error title */
 "Error" = "Hata";
 
+/* Manual temp basal mode */
+"Manual" = "Manuel";
+
+/* Status highlight when manual temp basal is running. */
+"Manual Basal" = "Manuel Bazal";
+
+/* Current Manual Temp basal */
+" -  Manual Basal ⚠️" = " -  Manuel Bazal ⚠️";
+
+/* Total AT / Scheduled basal insulin */
+" U/day" = " Ü/gün";
+
+/* Total AT / Scheduled basal insulin */
+"Total" = "Toplam";
+
 /* ---------------------------------------
   DASH strings
 */
