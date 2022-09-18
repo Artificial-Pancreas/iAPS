@@ -87,7 +87,7 @@
 "Continue" = "Fortsett";
 
 /* The section footer of correction range schedule */
-"Correction range is the blood glucose range that you would like Loop to correct to." = "Korreksjonsområde er området du ønsker at Loop skal korrigere blodsukker til.";
+"Correction range is the blood glucose range that you would like Loop to correct to." = "Korreksjonsområde er området du ønsker at appen skal korrigere blodsukker til.";
 
 /* The text for a custom override */
 "Custom" = "Egendefinert";
