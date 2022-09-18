@@ -8,17 +8,17 @@
 
 import Foundation
 
-public struct DeviceLinkMessageBody: MessageBody {
+public struct DeviceLinkMessageBody: DecodableMessageBody {
     
     public static let length = 5
     
     public let deviceAddress: Data
     public let sequence: UInt8
-    let rxData: Data
+    public var txData: Data
     
     
     public init?(rxData: Data) {
-        self.rxData = rxData
+        self.txData = rxData
         
         if rxData.count == type(of: self).length {
             self.deviceAddress = rxData.subdata(in: 1..<4)
@@ -28,15 +28,7 @@ public struct DeviceLinkMessageBody: MessageBody {
         }
     }
     
-    public var txData: Data {
-        return rxData
+    public var description: String {
+        return "DeviceLink(\(deviceAddress.hexadecimalString), \(sequence))"
     }
-    
-    public var dictionaryRepresentation: [String: Any] {
-        return [
-            "sequence": Int(sequence),
-            "deviceAddress": deviceAddress.hexadecimalString,
-        ]
-    }
-    
 }

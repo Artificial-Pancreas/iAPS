@@ -145,13 +145,13 @@ public struct UnfinalizedDose: RawRepresentable, Equatable, CustomStringConverti
     public var eventTitle: String {
         switch doseType {
         case .bolus:
-            return NSLocalizedString("Bolus", comment: "Pump Event title for UnfinalizedDose with doseType of .bolus")
+            return LocalizedString("Bolus", comment: "Pump Event title for UnfinalizedDose with doseType of .bolus")
         case .resume:
-            return NSLocalizedString("Resume", comment: "Pump Event title for UnfinalizedDose with doseType of .resume")
+            return LocalizedString("Resume", comment: "Pump Event title for UnfinalizedDose with doseType of .resume")
         case .suspend:
-            return NSLocalizedString("Suspend", comment: "Pump Event title for UnfinalizedDose with doseType of .suspend")
+            return LocalizedString("Suspend", comment: "Pump Event title for UnfinalizedDose with doseType of .suspend")
         case .tempBasal:
-            return NSLocalizedString("Temp Basal", comment: "Pump Event title for UnfinalizedDose with doseType of .tempBasal")
+            return LocalizedString("Temp Basal", comment: "Pump Event title for UnfinalizedDose with doseType of .tempBasal")
         }
     }
 
@@ -273,11 +273,6 @@ extension NewPumpEvent {
         let raw = dose.uuid.asRaw
         self.init(date: dose.startTime, dose: entry, raw: raw, title: dose.eventTitle)
     }
-    
-    func replacingAttributes(raw newRaw: Data, date newDate: Date) -> NewPumpEvent {
-        let newDose = dose?.replacingAttributes(startDate: newDate)
-        return NewPumpEvent(date: newDate, dose: newDose, raw: newRaw, title: title, type: type)
-    }
 }
 
 // MARK: - DoseEntry
@@ -286,28 +281,15 @@ extension DoseEntry {
     init (_ dose: UnfinalizedDose, forceFinalization: Bool = false) {
         switch dose.doseType {
         case .bolus:
-            self = DoseEntry(type: .bolus, startDate: dose.startTime, endDate: dose.finishTime, value: dose.programmedUnits ?? dose.units, unit: .units, deliveredUnits: dose.finalizedUnits, insulinType: dose.insulinType, automatic: dose.automatic, isMutable: (!dose.isFinished || !dose.isReconciledWithHistory) && !forceFinalization)
+            self = DoseEntry(type: .bolus, startDate: dose.startTime, endDate: dose.finishTime, value: dose.programmedUnits ?? dose.units, unit: .units, deliveredUnits: dose.finalizedUnits, insulinType: dose.insulinType, automatic: dose.automatic, isMutable: !dose.isReconciledWithHistory && !forceFinalization)
         case .tempBasal:
-            self = DoseEntry(type: .tempBasal, startDate: dose.startTime, endDate: dose.finishTime, value: dose.programmedTempRate ?? dose.rate, unit: .unitsPerHour, deliveredUnits: dose.finalizedUnits, insulinType: dose.insulinType, isMutable: (!dose.isFinished || !dose.isReconciledWithHistory) && !forceFinalization)
+            self = DoseEntry(type: .tempBasal, startDate: dose.startTime, endDate: dose.finishTime, value: dose.programmedTempRate ?? dose.rate, unit: .unitsPerHour, deliveredUnits: dose.finalizedUnits, insulinType: dose.insulinType, automatic: dose.automatic, isMutable: !dose.isReconciledWithHistory && !forceFinalization)
         case .suspend:
-            self = DoseEntry(suspendDate: dose.startTime)
+            self = DoseEntry(suspendDate: dose.startTime, isMutable: !dose.isReconciledWithHistory)
         case .resume:
-            self = DoseEntry(resumeDate: dose.startTime, insulinType: dose.insulinType)
+            self = DoseEntry(resumeDate: dose.startTime, insulinType: dose.insulinType, isMutable: !dose.isReconciledWithHistory)
         }
-    }
-    
-    func replacingAttributes(startDate newStartDate: Date) -> DoseEntry {
-        let value: Double
-        switch unit {
-        case .units:
-            value = programmedUnits
-        case .unitsPerHour:
-            value = unitsPerHour
-        }
-        let duration = endDate.timeIntervalSince(startDate)
-        let newEndDate = newStartDate.addingTimeInterval(duration)
-        return DoseEntry(type: type, startDate: newStartDate, endDate: newEndDate, value: value, unit: unit, deliveredUnits: deliveredUnits, description: description, syncIdentifier: syncIdentifier, insulinType: insulinType, isMutable: isMutable, wasProgrammedByPumpUI: wasProgrammedByPumpUI)
-    }
+    }    
 }
 
 extension Collection where Element == NewPumpEvent {

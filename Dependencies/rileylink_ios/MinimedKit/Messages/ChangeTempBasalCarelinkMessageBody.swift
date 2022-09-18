@@ -9,9 +9,18 @@
 import Foundation
 
 
-public class ChangeTempBasalCarelinkMessageBody: CarelinkLongMessageBody {
+public class ChangeTempBasalCarelinkMessageBody: MessageBody {
+    public static var length: Int = 65
 
-    public convenience init(unitsPerHour: Double, duration: TimeInterval) {
+    public var txData: Data
+
+    let unitsPerHour: Double
+    let duration: TimeInterval
+
+    public init(unitsPerHour: Double, duration: TimeInterval) {
+
+        self.unitsPerHour = unitsPerHour
+        self.duration = duration
 
         let length = 3
         let strokesPerUnit: Double = 40
@@ -20,7 +29,11 @@ public class ChangeTempBasalCarelinkMessageBody: CarelinkLongMessageBody {
 
         let data = Data(hexadecimalString: String(format: "%02x%04x%02x", length, strokes, timeSegments))!
 
-        self.init(rxData: data)!
+        self.txData = data.paddedTo(length: type(of: self).length)
+    }
+
+    public var description: String {
+        return "ChangeTempBasal(rate:\(unitsPerHour) U/hr duration:\(duration)"
     }
 
 }

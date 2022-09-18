@@ -30,5 +30,11 @@ public class ReadRemainingInsulinMessageBody: CarelinkLongMessageBody {
         }
 
         super.init(rxData: rxData)
+
     }
+
+    override public var description: String {
+        return "ReadRemainingInsulin(x23:\(getUnitsRemaining(insulinBitPackingScale: PumpModel.model523.insulinBitPackingScale)), x22:\(getUnitsRemaining(insulinBitPackingScale: PumpModel.model522.insulinBitPackingScale)))"
+    }
+
 }

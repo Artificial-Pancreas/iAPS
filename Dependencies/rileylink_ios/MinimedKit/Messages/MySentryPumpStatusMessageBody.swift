@@ -98,7 +98,7 @@ public enum ClockType {
  a2 594040 04 87 51 0f18150f0907 01 03 71 00 045e 04 02 07 2c 04 44 ff ff 005e 02 00 00 73 0f16000f0907 0000 35
  ```
  */
-public struct MySentryPumpStatusMessageBody: MessageBody, DictionaryRepresentable {
+public struct MySentryPumpStatusMessageBody: DecodableMessageBody, MessageBody, DictionaryRepresentable {
     private static let reservoirMultiplier: Double = 10
     private static let iobMultiplier: Double = 40
     public static let length = 36
@@ -262,6 +262,10 @@ public struct MySentryPumpStatusMessageBody: MessageBody, DictionaryRepresentabl
     
     public var txData: Data {
         return rxData
+    }
+
+    public var description: String {
+        return "MySentryPumpStatus(seq:\(sequence), pumpDate:\(pumpDateComponents), batt:\(batteryRemainingPercent), iob:\(iob), reservoir:\(reservoirRemainingUnits), reservoir_percent:\(reservoirRemainingPercent), reservoir_minutes:\(reservoirRemainingMinutes), glucose_trend:\(glucoseTrend), glucose_date:\(glucoseDateComponents), glucose:\(glucose), previous_glucose:\(previousGlucose), sensor_age:\(sensorAgeHours), sensor_remaining:\(sensorRemainingHours), clock_type:\(clockType), next_cal:\(nextSensorCalibrationDateComponents))"
     }
 }
 

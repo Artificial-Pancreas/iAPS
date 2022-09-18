@@ -8,25 +8,31 @@
 
 import Foundation
 
+extension Data {
+    func paddedTo(length: Int) -> Data {
+        var data = self
+        data.append(contentsOf: [UInt8](repeating: 0, count: length - data.count))
+        return data
+    }
+}
 
-public class CarelinkLongMessageBody: MessageBody {
+public class CarelinkLongMessageBody: DecodableMessageBody {
     public static var length: Int = 65
 
     let rxData: Data
 
     public required init?(rxData: Data) {
-        var data: Data = rxData
-
-        if data.count < type(of: self).length {
-            data.append(contentsOf: [UInt8](repeating: 0, count: type(of: self).length - data.count))
-        }
-
-        self.rxData = data
+        self.rxData = rxData.paddedTo(length: type(of: self).length)
     }
 
     public var txData: Data {
         return rxData
     }
+
+    public var description: String {
+        return "CarelinkLongMessage(\(rxData.hexadecimalString))"
+    }
+
 }
 
 
@@ -50,4 +56,9 @@ public class CarelinkShortMessageBody: MessageBody {
     public var txData: Data {
         return data
     }
+
+    public var description: String {
+        return "CarelinkShortMessage(\(data.hexadecimalString))"
+    }
+
 }

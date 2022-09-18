@@ -568,17 +568,17 @@ public class RileyLinkDeviceTableViewController: UITableViewController {
                 cell.textLabel?.text = LocalizedString("Frequency", comment: "The title of the cell showing current rileylink frequency")
                 cell.setDetailFrequency(frequency, formatter: frequencyFormatter)
             case .battery:
-                cell.textLabel?.text = NSLocalizedString("Battery level", comment: "The title of the cell showing battery level")
+                cell.textLabel?.text = LocalizedString("Battery level", comment: "The title of the cell showing battery level")
                 cell.setDetailBatteryLevel(battery)
             case .voltage:
-                cell.textLabel?.text = NSLocalizedString("Voltage", comment: "The title of the cell showing ORL")
+                cell.textLabel?.text = LocalizedString("Voltage", comment: "The title of the cell showing ORL")
                 cell.setVoltage(voltage)
             }
         case .alert:
             switch AlertRow(rawValue: indexPath.row)! {
             case .battery:
                 cell.accessoryType = .disclosureIndicator
-                cell.textLabel?.text = NSLocalizedString("Low Battery Alert", comment: "The title of the cell showing battery level")
+                cell.textLabel?.text = LocalizedString("Low Battery Alert", comment: "The title of the cell showing battery level")
                 cell.setBatteryAlert(batteryAlertLevel, formatter: integerFormatter)
             }
         case .rileyLinkCommands:
@@ -598,19 +598,19 @@ public class RileyLinkDeviceTableViewController: UITableViewController {
                 switchView.isHidden = false
                 cell.accessoryType = .none
                 switchView.isOn = yellowOn
-                cell.textLabel?.text = NSLocalizedString("Lighten Yellow LED", comment: "The title of the cell showing Lighten Yellow LED")
+                cell.textLabel?.text = LocalizedString("Lighten Yellow LED", comment: "The title of the cell showing Lighten Yellow LED")
             case .red:
                 switchView.isHidden = false
                 cell.accessoryType = .none
                 switchView.isOn = redOn
-                cell.textLabel?.text = NSLocalizedString("Lighten Red LED", comment: "The title of the cell showing Lighten Red LED")
+                cell.textLabel?.text = LocalizedString("Lighten Red LED", comment: "The title of the cell showing Lighten Red LED")
             case .shake:
                 switchView.isHidden = false
                 switchView.isOn = shakeOn
                 cell.accessoryType = .none
-                cell.textLabel?.text = NSLocalizedString("Test Vibration", comment: "The title of the cell showing Test Vibration")
+                cell.textLabel?.text = LocalizedString("Test Vibration", comment: "The title of the cell showing Test Vibration")
             case .findDevice:
-                cell.textLabel?.text = NSLocalizedString("Find Device", comment: "The title of the cell for sounding device finding piezo")
+                cell.textLabel?.text = LocalizedString("Find Device", comment: "The title of the cell for sounding device finding piezo")
                 cell.detailTextLabel?.text = nil
             }
         case .configureCommand:
@@ -619,12 +619,12 @@ public class RileyLinkDeviceTableViewController: UITableViewController {
                 switchView.isHidden = false
                 switchView.isOn = ledOn
                 cell.accessoryType = .none
-                cell.textLabel?.text = NSLocalizedString("Connection LED", comment: "The title of the cell for connection LED")
+                cell.textLabel?.text = LocalizedString("Connection LED", comment: "The title of the cell for connection LED")
             case .connectionVibrate:
                 switchView.isHidden = false
                 switchView.isOn = vibrationOn
                 cell.accessoryType = .none
-                cell.textLabel?.text = NSLocalizedString("Connection Vibration", comment: "The title of the cell for connection vibration")
+                cell.textLabel?.text = LocalizedString("Connection Vibration", comment: "The title of the cell for connection vibration")
             }
         }
 
@@ -841,6 +841,6 @@ private extension UITableViewCell {
     }
     
     func setBatteryAlert(_ level: Int?, formatter: NumberFormatter) {
-        detailTextLabel?.text = formatter.percentString(from: level) ?? NSLocalizedString("Off", comment: "Detail text when battery alert disabled.")
+        detailTextLabel?.text = formatter.percentString(from: level) ?? LocalizedString("Off", comment: "Detail text when battery alert disabled.")
     }
 }
