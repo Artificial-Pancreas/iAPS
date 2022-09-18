@@ -51,4 +51,8 @@ public class ReadTempBasalCarelinkMessageBody: CarelinkLongMessageBody {
     public required init?(rxData: NSData) {
         fatalError("init(rxData:) has not been implemented")
     }
+
+    override public var description: String {
+        return String(format: "ReadTempBasal(time_remaining:%1$@s, rate:%2$@, rate_type:%3$@)", String(describing: timeRemaining), String(describing: rate), String(describing: rateType))
+    }
 }

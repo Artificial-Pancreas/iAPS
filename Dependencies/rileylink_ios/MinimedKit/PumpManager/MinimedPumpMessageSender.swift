@@ -82,6 +82,7 @@ struct MinimedPumpMessageSender: PumpMessageSender {
 
             guard response.messageType == responseType, let body = response.messageBody as? T else {
                 if let body = response.messageBody as? PumpErrorMessageBody {
+                    commsLogger?.didReceive(String(describing: response))
                     switch body.errorCode {
                     case .known(let code):
                         throw PumpOpsError.pumpError(code)
@@ -93,6 +94,7 @@ struct MinimedPumpMessageSender: PumpMessageSender {
                 }
             }
             commsLogger?.didReceive(String(describing: response))
+            usleep(200000) // 0.2s
             return body
         } catch {
             commsLogger?.didError(error.localizedDescription)

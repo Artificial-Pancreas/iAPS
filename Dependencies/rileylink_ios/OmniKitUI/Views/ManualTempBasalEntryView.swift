@@ -122,7 +122,7 @@ struct ManualTempBasalEntryView: View {
                 .buttonStyle(ActionButtonStyle(.primary))
                 .padding()
             }
-            .navigationTitle(NSLocalizedString("Temporary Basal", comment: "Navigation Title for ManualTempBasalEntryView"))
+            .navigationTitle(LocalizedString("Temporary Basal", comment: "Navigation Title for ManualTempBasalEntryView"))
             .navigationBarItems(trailing: cancelButton)
             .alert(isPresented: $showingErrorAlert, content: { errorAlert })
             .disabled(enacting)
@@ -153,7 +153,7 @@ struct ManualTempBasalEntryView: View {
 
 
     var cancelButton: some View {
-        Button(NSLocalizedString("Cancel", comment: "Cancel button text in navigation bar on insert cannula screen")) {
+        Button(LocalizedString("Cancel", comment: "Cancel button text in navigation bar on insert cannula screen")) {
             didCancel?()
         }
         .accessibility(identifier: "button_cancel")
