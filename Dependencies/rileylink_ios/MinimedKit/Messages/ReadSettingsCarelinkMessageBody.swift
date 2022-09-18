@@ -49,7 +49,11 @@ public enum BasalProfile {
  a7 594040 c0 19 00 01 00 01 01 00 96 008c 00 00 00 00000064010400 14 00 1901 01 01 00 00 000000000000 000000 00000000000000000000000000000000000000000000000000000000 e9
  ```
  */
-public class ReadSettingsCarelinkMessageBody: CarelinkLongMessageBody {
+public class ReadSettingsCarelinkMessageBody: DecodableMessageBody {
+    public static var length: Int = 65
+
+    public var txData: Data
+
     private static let maxBolusMultiplier: Double = 10
     private static let maxBasalMultiplier: Double = 40
 
@@ -85,18 +89,11 @@ public class ReadSettingsCarelinkMessageBody: CarelinkLongMessageBody {
 
         let rawInsulinActionCurveHours: UInt8 = rxData[18]
         insulinActionCurveHours = Int(rawInsulinActionCurveHours)
-
-        super.init(rxData: rxData)
+        txData = rxData
     }
 
-    public required init?(rxData: NSData) {
-        fatalError("init(rxData:) has not been implemented")
+    public var description: String {
+        return "ReadSettings(maxBasal:\(maxBasal), maxBolus:\(maxBolus), insulinActionCurveHours:\(insulinActionCurveHours), selectedBasalProfile:\(selectedBasalProfile))"
     }
-}
 
-
-extension ReadSettingsCarelinkMessageBody: DictionaryRepresentable {
-    public var dictionaryRepresentation: [String: Any] {
-        return [:]
-    }
 }

@@ -25,7 +25,7 @@ public struct PumpMessage : CustomStringConvertible {
         guard rxData.count >= 6,
             let packetType = PacketType(rawValue: rxData[0]), packetType != .meter,
             let messageType = MessageType(rawValue: rxData[4]),
-            let messageBody = messageType.bodyType.init(rxData: rxData.subdata(in: 5..<rxData.count))
+            let messageBody = messageType.decodeType.init(rxData: rxData.subdata(in: 5..<rxData.count))
         else {
             return nil
         }
@@ -48,7 +48,7 @@ public struct PumpMessage : CustomStringConvertible {
     }
     
     public var description: String {
-        return String(format: "PumpMessage(%1$@, %2$@, %3$@, %4$@)", String(describing: packetType), String(describing: messageType), address.hexadecimalString, self.messageBody.txData.hexadecimalString)
+        return "PumpMessage(\(packetType), \(messageType), \(address.hexadecimalString), \(messageBody))"
     }
 
 }

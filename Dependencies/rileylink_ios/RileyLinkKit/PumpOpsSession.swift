@@ -390,7 +390,7 @@ extension PumpOpsSession {
 // MARK: - Command messages
 extension PumpOpsSession {
     /// - Throws: `PumpCommandError` specifying the failure sequence
-    private func runCommandWithArguments<T: MessageBody>(_ message: PumpMessage, responseType: MessageType = .pumpAck) throws -> T {
+    private func runCommandWithArguments<T: MessageBody>(_ message: PumpMessage, responseType: MessageType = .pumpAck, retryCount: Int = 3) throws -> T {
         do {
             try wakeup()
 
@@ -401,7 +401,7 @@ extension PumpOpsSession {
         }
 
         do {
-            return try messageSender.getResponse(to: message, responseType: responseType, repeatCount: 0, timeout: MinimedPumpMessageSender.standardPumpResponseWindow,  retryCount: 3)
+            return try messageSender.getResponse(to: message, responseType: responseType, repeatCount: 0, timeout: MinimedPumpMessageSender.standardPumpResponseWindow,  retryCount: retryCount)
         } catch let error as PumpOpsError {
             throw PumpCommandError.arguments(error)
         }
@@ -455,61 +455,59 @@ extension PumpOpsSession {
     /// - Parameters:
     ///   - unitsPerHour: The new basal rate, in Units per hour
     ///   - duration: The duration of the rate
-    /// - Returns: A result containing the pump message body describing the new basal rate or an error
-    public func setTempBasal(_ unitsPerHour: Double, duration: TimeInterval) -> Result<ReadTempBasalCarelinkMessageBody,PumpCommandError> {
-        var lastError: PumpCommandError?
-        
+    /// - Returns:
+    ///   - .success: A bool that indicates if the dose was confirmed successful
+    ///   - .failure: An error describing why the command failed
+    public func setTempBasal(_ unitsPerHour: Double, duration: TimeInterval) -> Result<Bool,PumpCommandError> {
+
         let message = PumpMessage(settings: settings, type: .changeTempBasal, body: ChangeTempBasalCarelinkMessageBody(unitsPerHour: unitsPerHour, duration: duration))
 
-        for attempt in 1..<4 {
-            do {
-                do {
-                    try wakeup()
-
-                    let shortMessage = PumpMessage(packetType: message.packetType, address: message.address.hexadecimalString, messageType: message.messageType, messageBody: CarelinkShortMessageBody())
-                    let _: PumpAckMessageBody = try messageSender.getResponse(to: shortMessage, responseType: .pumpAck, repeatCount: 0, timeout: MinimedPumpMessageSender.standardPumpResponseWindow,  retryCount: 3)
-                } catch let error as PumpOpsError {
-                    throw PumpCommandError.command(error)
-                }
-
-                do {
-                    let _: PumpAckMessageBody = try messageSender.getResponse(to: message, responseType: .pumpAck, repeatCount: 0, timeout: MinimedPumpMessageSender.standardPumpResponseWindow,  retryCount: 3)
-                } catch PumpOpsError.pumpError(let errorCode) {
-                    lastError = .arguments(.pumpError(errorCode))
-                    break  // Stop because we have a pump error response
-                } catch PumpOpsError.unknownPumpErrorCode(let errorCode) {
-                    lastError = .arguments(.unknownPumpErrorCode(errorCode))
-                    break  // Stop because we have a pump error response
-                } catch {
-                    // The pump does not ACK a successful temp basal. We'll check manually below if it was successful.
-                }
-
-                let response: ReadTempBasalCarelinkMessageBody = try messageSender.getResponse(to: PumpMessage(settings: settings, type: .readTempBasal), responseType: .readTempBasal, repeatCount: 0, timeout: MinimedPumpMessageSender.standardPumpResponseWindow,  retryCount: 3)
-
-                if response.timeRemaining == duration && response.rateType == .absolute {
-                    return .success(response)
-                } else {
-                    return .failure(PumpCommandError.arguments(PumpOpsError.rfCommsFailure("Could not verify TempBasal on attempt \(attempt). ")))
-                }
-            } catch let error as PumpCommandError {
-                lastError = error
-            } catch let error as PumpOpsError {
-                lastError = .command(error)
-            } catch {
-                lastError = .command(.noResponse(during: "Set temp basal"))
-            }
+        do {
+            try wakeup()
+        } catch {
+            // Certain failure, as we haven't sent actual command yet; wakeup failed
+            return .failure(.command(error as? PumpOpsError ?? PumpOpsError.rfCommsFailure(String(describing: error))))
         }
-        
-        return .failure(lastError!)
-    }
 
-    public func readTempBasal() throws -> Double {
-        
-        try wakeup()
-        
-        let response: ReadTempBasalCarelinkMessageBody = try messageSender.getResponse(to: PumpMessage(settings: settings, type: .readTempBasal), responseType: .readTempBasal, repeatCount: 0, timeout: MinimedPumpMessageSender.standardPumpResponseWindow,  retryCount: 3)
-        
-        return response.rate
+        do {
+            let shortMessage = PumpMessage(packetType: message.packetType, address: message.address.hexadecimalString, messageType: message.messageType, messageBody: CarelinkShortMessageBody())
+            let _: PumpAckMessageBody = try messageSender.getResponse(to: shortMessage, responseType: .pumpAck, repeatCount: 0, timeout: MinimedPumpMessageSender.standardPumpResponseWindow,  retryCount: 3)
+        } catch {
+            // Certain failure, as we haven't sent actual command yet; just preflight short command
+            return .failure(.command(error as? PumpOpsError ?? PumpOpsError.rfCommsFailure(String(describing: error))))
+        }
+
+        var uncertainFailureError: PumpCommandError?
+
+        do {
+            let _: PumpAckMessageBody = try messageSender.getResponse(to: message, responseType: .pumpAck, repeatCount: 0, timeout: MinimedPumpMessageSender.standardPumpResponseWindow,  retryCount: 1)
+            // Even in success case, we try to verify, below
+        } catch PumpOpsError.pumpError(let errorCode) {
+            return .failure(.arguments(.pumpError(errorCode)))
+        } catch PumpOpsError.unknownPumpErrorCode(let errorCode) {
+            return .failure(.arguments(.unknownPumpErrorCode(errorCode)))
+        } catch {
+            // Some pumps do not ACK a successful temp basal. Check manually to see if it was successful.
+            uncertainFailureError = .command(error as? PumpOpsError ?? PumpOpsError.rfCommsFailure(String(describing: error)))
+        }
+
+        do {
+            let response: ReadTempBasalCarelinkMessageBody = try messageSender.getResponse(to: PumpMessage(settings: settings, type: .readTempBasal), responseType: .readTempBasal, repeatCount: 0, timeout: MinimedPumpMessageSender.standardPumpResponseWindow,  retryCount: 3)
+            // Duration is always whole minute values
+            if response.timeRemaining == duration && response.rateType == .absolute {
+                return .success(true)
+            } else {
+                // readTempBasal does not match what we attempted to command
+                if let failureError = uncertainFailureError {
+                    return .failure(failureError)
+                }
+                // successful readTempBasal shows no temp basal running, so we failed
+                return .failure(PumpCommandError.arguments(PumpOpsError.rfCommsFailure("Confirmed that temp basal failed, and ")))
+            }
+        } catch {
+            // unsuccessful readTempBasal; assume command reached pump, but we're uncertain
+            return .success(false)
+        }
     }
 
     /// Changes the pump's clock to the specified date components in the system time zone
@@ -556,7 +554,7 @@ extension PumpOpsSession {
     ///   - units: The number of units to deliver
     ///   - cancelExistingTemp: If true, additional pump commands will be issued to clear any running temp basal. Defaults to false.
     /// - Throws: SetBolusError describing the certainty of the underlying error
-    public func setNormalBolus(units: Double, cancelExistingTemp: Bool = false) throws {
+    public func setNormalBolus(units: Double) throws {
         let pumpModel: PumpModel
 
         try wakeup()
@@ -572,13 +570,9 @@ extension PumpOpsSession {
             throw PumpOpsError.pumpSuspended
         }
 
-        if cancelExistingTemp {
-            _ = setTempBasal(0, duration: 0)
-        }
-
         let message = PumpMessage(settings: settings, type: .bolus, body: BolusCarelinkMessageBody(units: units, insulinBitPackingScale: pumpModel.insulinBitPackingScale))
 
-        let _: PumpAckMessageBody = try runCommandWithArguments(message)
+        let _: PumpAckMessageBody = try runCommandWithArguments(message, retryCount: 0)
         return
     }
 

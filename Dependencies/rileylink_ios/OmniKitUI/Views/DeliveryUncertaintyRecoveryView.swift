@@ -68,7 +68,7 @@ struct DeliveryUncertaintyRecoveryView: View {
                     self.model.podDeactivationChosen()
                 }) {
                     Text(LocalizedString("Deactivate Pod", comment: "Button title to deactive pod on uncertain program"))
-                    .actionButtonStyle()
+                    .actionButtonStyle(.destructive)
                     .padding()
                 }
             }

@@ -11,7 +11,23 @@ import RileyLinkBLEKit
 @testable import MinimedKit
 import LoopKit
 
+extension DateFormatter {
+    static var descriptionFormatter: DateFormatter {
+        let formatter = self.init()
+        formatter.dateFormat = "yyyy-MM-dd HH:mm:ssZZZZZ"
+
+        return formatter
+    }
+}
+
+
 final class ReconciliationTests: XCTestCase {
+
+    let testingDateFormatter = DateFormatter.descriptionFormatter
+
+    func testingDate(_ input: String) -> Date {
+        return testingDateFormatter.date(from: input)!
+    }
 
     func testPendingDoseUpdatesWithActualDeliveryFromHistoryDose() {
 

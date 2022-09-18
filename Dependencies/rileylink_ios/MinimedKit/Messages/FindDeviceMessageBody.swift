@@ -8,7 +8,7 @@
 
 import Foundation
 
-public struct FindDeviceMessageBody: MessageBody {
+public struct FindDeviceMessageBody: DecodableMessageBody {
     
     public static let length = 5
     
@@ -38,5 +38,8 @@ public struct FindDeviceMessageBody: MessageBody {
             "deviceAddress": deviceAddress.hexadecimalString,
         ]
     }
-    
+
+    public var description: String {
+        return "FindDevice(\(deviceAddress.hexadecimalString), \(sequence))"
+    }
 }

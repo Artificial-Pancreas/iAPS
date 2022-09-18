@@ -9,16 +9,21 @@
 import Foundation
 
 
-public class PowerOnCarelinkMessageBody: CarelinkLongMessageBody {
+public struct PowerOnCarelinkMessageBody: MessageBody {
+    public static var length: Int = 65
 
-    public convenience init(duration: TimeInterval) {
+    public var txData: Data
+    let duration: TimeInterval
+
+    public init(duration: TimeInterval) {
+        self.duration = duration
         let numArgs = 2
         let on = 1
         let durationMinutes: Int = Int(ceil(duration / 60.0))
-
-        let data = Data(hexadecimalString: String(format: "%02x%02x%02x", numArgs, on, durationMinutes))!
-
-        self.init(rxData: data)!
+        self.txData = Data(hexadecimalString: String(format: "%02x%02x%02x", numArgs, on, durationMinutes))!.paddedTo(length: PowerOnCarelinkMessageBody.length)
     }
-  
+
+    public var description: String {
+        return "PowerOn(duration:\(duration))"
+    }
 }

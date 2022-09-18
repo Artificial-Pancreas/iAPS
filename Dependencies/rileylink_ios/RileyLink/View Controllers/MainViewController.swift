@@ -32,7 +32,7 @@ class MainViewController: RileyLinkSettingsViewController {
 
         super.init(rileyLinkPumpManager: rileyLinkPumpManager, devicesSectionIndex: Section.rileyLinks.rawValue, style: .grouped)
         
-        self.title = NSLocalizedString("RileyLink Testing", comment: "Title for RileyLink Testing main view controller")
+        self.title = LocalizedString("RileyLink Testing", comment: "Title for RileyLink Testing main view controller")
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -136,13 +136,13 @@ class MainViewController: RileyLinkSettingsViewController {
                     let textButtonCell = cell as? TextButtonTableViewCell
                     textButtonCell?.isEnabled = shouldAllowAddingPump
                     textButtonCell?.isUserInteractionEnabled = shouldAllowAddingPump
-                    cell.textLabel?.text = NSLocalizedString("Add Minimed Pump", comment: "Title text for button to set up a new minimed pump")
+                    cell.textLabel?.text = LocalizedString("Add Minimed Pump", comment: "Title text for button to set up a new minimed pump")
                 case .setupOmnipod:
                     cell = tableView.dequeueReusableCell(withIdentifier: TextButtonTableViewCell.className, for: indexPath)
                     let textButtonCell = cell as? TextButtonTableViewCell
                     textButtonCell?.isEnabled = shouldAllowAddingPump
                     textButtonCell?.isUserInteractionEnabled = shouldAllowAddingPump
-                    cell.textLabel?.text = NSLocalizedString("Setup Omnipod", comment: "Title text for button to set up omnipod")
+                    cell.textLabel?.text = LocalizedString("Setup Omnipod", comment: "Title text for button to set up omnipod")
                 }
             }
         }
@@ -154,7 +154,7 @@ class MainViewController: RileyLinkSettingsViewController {
         case .rileyLinks:
             return super.tableView(tableView, titleForHeaderInSection: section)
         case .pump:
-            return NSLocalizedString("Pumps", comment: "Title text for section listing configured pumps")
+            return LocalizedString("Pumps", comment: "Title text for section listing configured pumps")
         }
     }
     
