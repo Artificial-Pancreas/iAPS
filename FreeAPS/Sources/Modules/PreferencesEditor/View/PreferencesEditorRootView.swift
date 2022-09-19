@@ -37,7 +37,7 @@ extension PreferencesEditor {
 
                     Toggle("Skip Bolus screen after carbs", isOn: $state.skipBolusScreenAfterCarbs)
 
-                    Toggle("Display HR on Watch instead of eventual BG", isOn: $state.displayHR)
+                    Toggle("Display HR on Watch", isOn: $state.displayHR)
                 }
 
                 ForEach(state.sections.indexed(), id: \.1.id) { sectionIndex, section in

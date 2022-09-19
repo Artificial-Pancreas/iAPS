@@ -128,6 +128,7 @@ struct MainView: View {
                 }
             }
             Spacer()
+                .onAppear(perform: start)
         }.padding()
     }
 
@@ -237,7 +238,7 @@ struct MainView: View {
             return .loopGray
         }
         let delta = Date().timeIntervalSince(lastLoopDate) - Config.lag
-        
+
         if delta <= 5.minutes.timeInterval {
             return .loopGreen
         } else if delta <= 10.minutes.timeInterval {
