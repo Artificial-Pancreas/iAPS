@@ -902,6 +902,9 @@ Enact a temp Basal or a temp target */
 /* Sensor day(s) */
 " day(s)" = " dagar";
 
+/* Option to show HR in Watch app*/
+"Display HR on Watch instead of eventual BG" = "Visa puls på klocka istället för förväntat blodglukos";
+
 
 /* Headers for settings ----------------------- */
 "OpenAPS main settings" = "OpenAPS huvudsakliga inställningar";
