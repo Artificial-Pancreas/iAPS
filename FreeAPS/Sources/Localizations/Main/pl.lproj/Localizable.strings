@@ -905,7 +905,7 @@ Połączono z Nightscout!";
 " day(s)" = " day(s)";
 
 /* Option to show HR in Watch app*/
-"Display HR on Watch instead of eventual BG" = "Display HR on Watch instead of eventual BG";
+"Display HR on Watch" = "Display HR on Watch";
 
 
 /* Headers for settings ----------------------- */
