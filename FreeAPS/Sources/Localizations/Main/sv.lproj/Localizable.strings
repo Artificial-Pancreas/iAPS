@@ -903,7 +903,7 @@ Enact a temp Basal or a temp target */
 " day(s)" = " dagar";
 
 /* Option to show HR in Watch app*/
-"Display HR on Watch instead of eventual BG" = "Visa puls på klocka istället för förväntat blodglukos";
+"Display HR on Watch" = "Visa din puls på klockan";
 
 
 /* Headers for settings ----------------------- */

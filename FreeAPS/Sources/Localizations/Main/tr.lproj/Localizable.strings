@@ -903,7 +903,7 @@ Enact a temp Basal or a temp target */
 " day(s)" = " gün(ler)";
 
 /* Option to show HR in Watch app*/
-"Display HR on Watch instead of eventual BG" = "Kalp Atış Hızını nihai KŞ yerine Saatte görüntüleyin";
+"Display HR on Watch" = "Display HR on Watch";
 
 
 /* Headers for settings ----------------------- */

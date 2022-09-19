@@ -903,7 +903,7 @@ Enact a temp Basal or a temp target */
 " day(s)" = " jour(s)";
 
 /* Option to show HR in Watch app*/
-"Display HR on Watch instead of eventual BG" = "Display HR on Watch instead of eventual BG";
+"Display HR on Watch" = "Display HR on Watch";
 
 
 /* Headers for settings ----------------------- */
