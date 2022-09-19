@@ -1104,7 +1104,7 @@ Enact a temp Basal or a temp target */
 "Setup Complete" = "Inställning färdig";
 
 /* */
-"Insulin Suspended" = "Insulintillförsel pausad";
+"Insulin Suspended" = "Pump pausad";
 
 /* Text for suspend resume button when insulin delivery is suspending */
 "Suspending insulin delivery..." = "Pausar pump...";
@@ -1116,7 +1116,7 @@ Enact a temp Basal or a temp target */
 "Resuming insulin delivery..." = "Återupptar pump...";
 
 /* Alert title for suspend error */
-"Failed to Suspend Insulin Delivery" = "Misslyckades att återuppta insulintillförsel";
+"Failed to Suspend Insulin Delivery" = "Kunde inte pausa pump";
 
 /* --------------------------------------
 
