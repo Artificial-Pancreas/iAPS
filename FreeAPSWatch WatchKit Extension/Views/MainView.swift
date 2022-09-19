@@ -84,22 +84,51 @@ struct MainView: View {
                 }
             }
             Spacer()
-            Spacer()
-            HStack {
-                Text(iobFormatter.string(from: (state.cob ?? 0) as NSNumber)!).font(.caption2)
+            HStack(alignment: .firstTextBaseline) {
+                Text(iobFormatter.string(from: (state.cob ?? 0) as NSNumber)!)
+                    .font(.caption2)
+                    .scaledToFill()
+                    .foregroundColor(Color.white)
+                    .minimumScaleFactor(0.5)
                 Text("g").foregroundColor(.loopGreen)
+                    .font(.caption2)
+                    .scaledToFill()
+                    .foregroundColor(.loopGreen)
+                    .minimumScaleFactor(0.5)
                 Spacer()
-                Text(iobFormatter.string(from: (state.iob ?? 0) as NSNumber)!).font(.caption2)
+                Text(iobFormatter.string(from: (state.iob ?? 0) as NSNumber)!)
+                    .font(.caption2)
+                    .scaledToFill()
+                    .foregroundColor(Color.white)
+                    .minimumScaleFactor(0.5)
+
                 Text("U").foregroundColor(.insulin)
-                Spacer()
-                Text("❤️" + " \(pulse)")
-                    .fontWeight(.regular)
-                    .font(.system(size: 18)).foregroundColor(Color.white)
+                    .font(.caption2)
+                    .scaledToFill()
+                    .foregroundColor(.loopGreen)
+                    .minimumScaleFactor(0.5)
+
+                if !state.displayHR {
+                    Spacer()
+                    HStack {
+                        Text("❤️" + " \(pulse)")
+                            .fontWeight(.regular)
+                            .font(.system(size: 18)).foregroundColor(Color.white)
+                    }
+
+                } else if let eventualBG = state.eventualBG.nonEmpty {
+                    Spacer()
+                    HStack {
+                        Text(eventualBG)
+                            .font(.caption2)
+                            .scaledToFill()
+                            .foregroundColor(.secondary)
+                            .minimumScaleFactor(0.5)
+                    }
+                }
             }
             Spacer()
-            Spacer()
         }.padding()
-            .onAppear(perform: start)
     }
 
     var buttons: some View {
@@ -113,17 +142,6 @@ struct MainView: View {
                     .resizable()
                     .frame(width: 24, height: 24)
                     .foregroundColor(.loopGreen)
-            }
-
-            NavigationLink(isActive: $state.isBolusViewActive) {
-                BolusView()
-                    .environmentObject(state)
-            } label: {
-                Image("bolus", bundle: nil)
-                    .renderingMode(.template)
-                    .resizable()
-                    .frame(width: 24, height: 24)
-                    .foregroundColor(.insulin)
             }
 
             NavigationLink(isActive: $state.isTempTargetViewActive) {
@@ -142,6 +160,17 @@ struct MainView: View {
                             .font(.system(size: 8))
                     }
                 }
+            }
+
+            NavigationLink(isActive: $state.isBolusViewActive) {
+                BolusView()
+                    .environmentObject(state)
+            } label: {
+                Image("bolus", bundle: nil)
+                    .renderingMode(.template)
+                    .resizable()
+                    .frame(width: 24, height: 24)
+                    .foregroundColor(.insulin)
             }
         }
     }
@@ -208,7 +237,7 @@ struct MainView: View {
             return .loopGray
         }
         let delta = Date().timeIntervalSince(lastLoopDate) - Config.lag
-
+        
         if delta <= 5.minutes.timeInterval {
             return .loopGreen
         } else if delta <= 10.minutes.timeInterval {

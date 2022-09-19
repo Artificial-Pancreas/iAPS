@@ -79,6 +79,9 @@ final class BaseWatchManager: NSObject, WatchManager, Injectable {
                     )
                 }
             self.state.bolusAfterCarbs = !self.settingsManager.settings.skipBolusScreenAfterCarbs
+
+            self.state.displayHR = !self.settingsManager.settings.displayHR
+
             self.state.eventualBG = self.evetualBGStraing()
 
             self.sendState()

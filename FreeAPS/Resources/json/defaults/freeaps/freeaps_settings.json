@@ -9,6 +9,7 @@
     "debugOptions": false,
     "insulinReqFraction": 2.0,
     "skipBolusScreenAfterCarbs": false,
+    "displayHR": false,
     "cgm": "nightscout",
     "uploadGlucose": false,
     "glucoseBadge": false,
