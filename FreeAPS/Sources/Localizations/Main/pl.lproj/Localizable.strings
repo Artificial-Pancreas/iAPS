@@ -904,6 +904,9 @@ Połączono z Nightscout!";
 /* Sensor day(s) */
 " day(s)" = " day(s)";
 
+/* Option to show HR in Watch app*/
+"Display HR on Watch instead of eventual BG" = "Display HR on Watch instead of eventual BG";
+
 
 /* Headers for settings ----------------------- */
 "OpenAPS main settings" = "OpenAPS main settings";
