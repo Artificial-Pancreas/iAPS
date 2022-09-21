@@ -903,7 +903,7 @@ Enact a temp Basal or a temp target */
 " day(s)" = "день(днів)";
 
 /* Option to show HR in Watch app*/
-"Display HR on Watch" = "Display HR on Watch";
+"Display HR on Watch" = "Відображати HR на годиннику";
 
 
 /* Headers for settings ----------------------- */
