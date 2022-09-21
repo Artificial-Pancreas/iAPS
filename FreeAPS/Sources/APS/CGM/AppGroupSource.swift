@@ -1,5 +1,6 @@
 import Combine
 import Foundation
+import LibreTransmitter
 
 struct AppGroupSource: GlucoseSource {
     let from: String
@@ -19,19 +20,36 @@ struct AppGroupSource: GlucoseSource {
             return []
         }
 
+        HeartBeatManager.shared.checkCGMBluetoothTransmitter(sharedUserDefaults: sharedDefaults)
+
         let decoded = try? JSONSerialization.jsonObject(with: sharedData, options: [])
         guard let sgvs = decoded as? [AnyObject] else {
             return []
         }
 
         var results: [BloodGlucose] = []
+
         for sgv in sgvs.prefix(count) {
             guard
                 let glucose = sgv["Value"] as? Int,
-                let direction = sgv["direction"] as? String,
                 let timestamp = sgv["DT"] as? String,
                 let date = parseDate(timestamp)
             else { continue }
+
+            var direction: String?
+
+            // Dexcom changed the format of trend in 2021 so we accept both String/Int types
+            if let directionString = sgv["direction"] as? String {
+                direction = directionString
+            } else if let intTrend = sgv["trend"] as? Int {
+                direction = GlucoseTrend(rawValue: intTrend)?.direction
+            } else if let intTrend = sgv["Trend"] as? Int {
+                direction = GlucoseTrend(rawValue: intTrend)?.direction
+            } else if let stringTrend = sgv["trend"] as? String, let intTrend = Int(stringTrend) {
+                direction = GlucoseTrend(rawValue: intTrend)?.direction
+            }
+
+            guard let direction = direction else { continue }
 
             if let from = sgv["from"] as? String {
                 guard from == self.from else { continue }
