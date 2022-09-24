@@ -47,6 +47,9 @@ extension PumpConfig.StateModel: CompletionDelegate {
 extension PumpConfig.StateModel: PumpManagerOnboardingDelegate {
     func pumpManagerOnboarding(didCreatePumpManager pumpManager: PumpManagerUI) {
         provider.setPumpManager(pumpManager)
+        if let insulinType = pumpManager.status.insulinType {
+            settingsManager.updateInsulinCurve(insulinType)
+        }
         setupPump = false
     }
 
