@@ -720,8 +720,7 @@
 /* Button title to cancel manual basal */
 "Cancel Manual Basal" = "Avbryt manuell basal";
 
-/* Insulin\nSuspended
-Text shown in insulin delivery space when insulin suspended (Please don't touch the '\n' ) */
+/* Text shown in insulin delivery space when insulin suspended */
 "Insulin\nSuspended" = "Insulintilførsel\npauset";
 
 /* Text for suspend resume button when insulin delivery is suspended */
@@ -741,3 +740,45 @@ Text shown in insulin delivery space when insulin suspended (Please don't touch 
 
 /* Text for suspend resume button when insulin delivery is suspending */
 "Suspending insulin delivery..." = "Stopper insulintilførsel...";
+
+/* Error message for PodCommsError.noPodsFound */
+"No pods found" = "Finner ikke pod";
+
+/* Error message for PodCommsError.tooManyPodsFound */
+"Too many pods found" = "Fant for mange poder";
+
+/* Recovery suggestion when no response is received from pod */
+"Make sure iPhone is nearby the active pod" = "Pass på at iPhone er i nærheten av den aktive poden";
+
+/* Recovery suggestion when ack received instead of response */
+"Try again" = "Prøv på nytt";
+
+/* Recovery suggestion for PodCommsError.tooManyPodsFound */
+"Move to a new area away from any other pods and try again." = "Prøv på nytt et annet sted, utenfor rekkevidde av andre poder.";
+
+/* Recovery suggestion for PodCommsError.noPodsFound */
+"Make sure your pod is filled and nearby." = "Pass på at poden er fylt, og i nærheten av telefonen.";
+
+/* Recovery suggestion when pairing signal strength is too high */
+"Please reposition iPhone further from the pod" = "Vennligst flytt iPhone lenger bort fra poden";
+
+/* Recovery suggestion when pairing signal strength is too low */
+"Please reposition iPhone relative to the pod" = "Vennligst flytt iPhone relativt til pod";
+
+/* Recovery suggestion on unexpected pod change */
+"Please bring only original pod in range or deactivate original pod" = "Vennligst ha bare den opprinnelige poden innenfor rekkevidde, eller deaktiver den opprinnelige poden";
+
+/* Recovery suggestion when unexpected address received */
+"Crosstalk possible. Please move to a new location" = "Elektronisk støy i omgivelsene? Prøv på ny i et annet rom.";
+
+/* Recovery suggestion when no pod is available */
+"Make sure your pod is nearby and try again." = "Pass på at poden er i nærheten, og prøv igjen.";
+
+/* Recovery suggestion when operation could not be completed due to existing bolus in progress */
+"Wait for existing bolus to finish, or cancel bolus" = "Vent til eksisterende bolus er ferdig, eller avbryt bolus.";
+
+/* Recovery suggestion when operation could not be completed due to existing bolus in progress */
+"Wait for existing bolus to finish, or cancel bolus" = "Vent til eksisterende bolus er ferdig, eller avbryt bolus.";
+
+/* Recovery suggestion when operation could not be completed due to existing temp basal in progress */
+"Wait for existing temp basal to finish, or suspend to cancel" = "Vent til eksisterende midlertidig basal er ferdig, eller sett insulintilførsel på pause for å avbryte.";

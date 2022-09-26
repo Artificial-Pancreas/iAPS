@@ -721,8 +721,7 @@
 /* Button title to cancel manual basal */
 "Cancel Manual Basal" = "Avbryt manuell basal";
 
-/* Insulin\nSuspended
-Text shown in insulin delivery space when insulin suspended (Please don't touch the '\n' ) */
+/* Text shown in insulin delivery space when insulin suspended */
 "Insulin\nSuspended" = "Pump\npausad";
 
 /* Text for suspend resume button when insulin delivery is suspended */
@@ -742,3 +741,45 @@ Text shown in insulin delivery space when insulin suspended (Please don't touch 
 
 /* Text for suspend resume button when insulin delivery is suspending */
 "Suspending insulin delivery..." = "Pausar pump...";
+
+/* Error message for PodCommsError.noPodsFound */
+"No pods found" = "Hittade ingen podd";
+
+/* Error message for PodCommsError.tooManyPodsFound */
+"Too many pods found" = "För många poddar hittades";
+
+/* Recovery suggestion when no response is received from pod */
+"Make sure iPhone is nearby the active pod" = "Säkerställ att du ar din iPhone nära din podd";
+
+/* Recovery suggestion when ack received instead of response */
+"Try again" = "Försök igen";
+
+/* Recovery suggestion for PodCommsError.tooManyPodsFound */
+"Move to a new area away from any other pods and try again." = "Pröva att gå till ett annat rum och försök igen.";
+
+/* Recovery suggestion for PodCommsError.noPodsFound */
+"Make sure your pod is filled and nearby." = "Säkerställ att din podd är nära och fylld med insulin.";
+
+/* Recovery suggestion when pairing signal strength is too high */
+"Please reposition iPhone further from the pod" = "Pröva att flytta din iPhone längre ifrån podden";
+
+/* Recovery suggestion when pairing signal strength is too low */
+"Please reposition iPhone relative to the pod" = "Flytta din iPhone i förhållande till din podd";
+
+/* Recovery suggestion on unexpected pod change */
+"Please bring only original pod in range or deactivate original pod" = "Ha endast din ursprungliga podd nära dig eller inaktivera denna podd";
+
+/* Recovery suggestion when unexpected address received */
+"Crosstalk possible. Please move to a new location" = "Möjlig överhörning. Pröva att flytta dig till ett annat rum/annan plats";
+
+/* Recovery suggestion when no pod is available */
+"Make sure your pod is nearby and try again." = "Kontrollera att din podd är nära och försök igen";
+
+/* Recovery suggestion when operation could not be completed due to existing bolus in progress */
+"Wait for existing bolus to finish, or cancel bolus" = "Vänta på att pågående bolus blir färdig eller avbryt bolus";
+
+/* Recovery suggestion when operation could not be completed due to existing bolus in progress */
+"Wait for existing bolus to finish, or cancel bolus" = "Vänta på att pågående bolus blir färdig eller avbryt bolus";
+
+/* Recovery suggestion when operation could not be completed due to existing temp basal in progress */
+"Wait for existing temp basal to finish, or suspend to cancel" = "Vänta på pågående temp. basal är färdig, alternativt pausa eller avbryt";
