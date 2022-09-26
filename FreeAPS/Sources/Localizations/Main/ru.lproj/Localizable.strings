@@ -990,13 +990,13 @@ Enact a temp Basal or a temp target */
 /* */
 "Deactivating..." = "Deactivating...";
 
-"Pair Pod" = "Pair Pod";
+"Pair Pod" = "Сопряжение пода";
 
 /* Text for previous pod information row */
 "Previous Pod Information" = "Previous Pod Information";
 
 /* Text for confidence reminders navigation link */
-"Confidence Reminders" = "Confidence Reminders";
+"Confidence Reminders" = "Напоминания о верификации";
 
 "Confidence reminders are beeps from the pod which can be used to acknowledge selected commands." = "Confidence reminders are beeps from the pod which can be used to acknowledge selected commands.";
 
@@ -1040,7 +1040,7 @@ Enact a temp Basal or a temp target */
 "Expiration Reminder" = "Напоминание об истечении срока";
 
 /* */
-"Low Reservoir" = "Low Reservoir";
+"Low Reservoir" = "В резервуаре мало инсулина";
 
 /* Value text for no expiration reminder */
 "No Reminder" = "No Reminder";

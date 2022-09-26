@@ -969,7 +969,7 @@ Enact a temp Basal or a temp target */
 "Manual" = "Manual";
 
 /* Status highlight when manual temp basal is running. */
-"Manual Basal" = "Manual Basal";
+"Manual Basal" = "Manuelle Temporäre Basalrate";
 
 /* Current Manual Temp basal */
 " -  Manual Basal ⚠️" = " -  Manual Basal ⚠️";
@@ -990,7 +990,7 @@ Enact a temp Basal or a temp target */
 /* */
 "Deactivating..." = "Deactivating...";
 
-"Pair Pod" = "Pair Pod";
+"Pair Pod" = "POD verbinden";
 
 /* Text for previous pod information row */
 "Previous Pod Information" = "Previous Pod Information";
@@ -1040,7 +1040,7 @@ Enact a temp Basal or a temp target */
 "Expiration Reminder" = "Erinnerung an den Ablauf der Nutzungsdauer";
 
 /* */
-"Low Reservoir" = "Low Reservoir";
+"Low Reservoir" = "Niedriger Reservoirstand";
 
 /* Value text for no expiration reminder */
 "No Reminder" = "No Reminder";
@@ -1104,7 +1104,7 @@ Enact a temp Basal or a temp target */
 "Setup Complete" = "Setup Complete";
 
 /* */
-"Insulin Suspended" = "Insulin Suspended";
+"Insulin Suspended" = "Insulin ausgesetzt";
 
 /* Text for suspend resume button when insulin delivery is suspending */
 "Suspending insulin delivery..." = "Suspending insulin delivery...";

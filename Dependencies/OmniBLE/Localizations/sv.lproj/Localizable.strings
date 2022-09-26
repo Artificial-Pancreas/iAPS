@@ -234,7 +234,7 @@
 "No Insulin" = "Inget insulin";
 
 /* Status highlight that insulin delivery was suspended. */
-"Insulin Suspended" = "Insulintillförsel pausad";
+"Insulin Suspended" = "Pump pausad";
 
 /* Status highlight when communications with the pod haven't happened recently. */
 "Signal Loss" = "Signalförlust";
@@ -366,7 +366,7 @@
 "Sync to Current Time" = "Synkronisera med aktuell tid";
 
 /* Title for suspend duration selection action sheet */
-"Suspend Delivery" = "Pausa insulintillförsel";
+"Suspend Delivery" = "Pausa pump";
 
 /* Message for suspend duration selection action sheet */
 "Insulin delivery will be stopped until you resume manually. When would you like Loop to remind you to resume delivery?" = "Insulintillförsel kommer att stoppas tills du återupptar dennamanuellt. När vill du att FreeAPS X ska påminna dig om att återuppta insulintillförsel?";
@@ -382,7 +382,7 @@
 "2 hours" = "2 timmar";
 
 /* Alert title for suspend error */
-"Failed to Suspend Insulin Delivery" = "Misslyckades att återuppta insulintillförsel";
+"Failed to Suspend Insulin Delivery" = "Kunde inte pausa pump";
 
 /* Alert title for resume error */
 "Failed to Resume Insulin Delivery" = "Misslyckades att återuppta insulintillförsel";
