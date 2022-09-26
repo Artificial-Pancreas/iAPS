@@ -203,7 +203,7 @@
 "Starting Temp Basal" = "Börjar temporär basal";
 
 /* Title text for button to suspend insulin delivery */
-"Suspend Delivery" = "Pausa insulintillförsel";
+"Suspend Delivery" = "Pausa pump";
 
 /* Title text for button when insulin delivery is in the process of being stopped */
 "Suspending" = "Pausar";
