@@ -720,8 +720,7 @@
 /* Button title to cancel manual basal */
 "Cancel Manual Basal" = "Cancel Manual Basal";
 
-/* Insulin\nSuspended
-Text shown in insulin delivery space when insulin suspended (Please don't touch the '\n' ) */
+/* Text shown in insulin delivery space when insulin suspended */
 "Insulin\nSuspended" = "Insulin\nSuspended";
 
 /* Text for suspend resume button when insulin delivery is suspended */
@@ -741,3 +740,45 @@ Text shown in insulin delivery space when insulin suspended (Please don't touch 
 
 /* Text for suspend resume button when insulin delivery is suspending */
 "Suspending insulin delivery..." = "Suspending insulin delivery...";
+
+/* Error message for PodCommsError.noPodsFound */
+"No pods found" = "No pods found";
+
+/* Error message for PodCommsError.tooManyPodsFound */
+"Too many pods found" = "Too many pods found";
+
+/* Recovery suggestion when no response is received from pod */
+"Make sure iPhone is nearby the active pod" = "Make sure iPhone is nearby the active pod";
+
+/* Recovery suggestion when ack received instead of response */
+"Try again" = "Try again";
+
+/* Recovery suggestion for PodCommsError.tooManyPodsFound */
+"Move to a new area away from any other pods and try again." = "Move to a new area away from any other pods and try again.";
+
+/* Recovery suggestion for PodCommsError.noPodsFound */
+"Make sure your pod is filled and nearby." = "Make sure your pod is filled and nearby.";
+
+/* Recovery suggestion when pairing signal strength is too high */
+"Please reposition iPhone further from the pod" = "Please reposition iPhone further from the pod";
+
+/* Recovery suggestion when pairing signal strength is too low */
+"Please reposition iPhone relative to the pod" = "Please reposition iPhone relative to the pod";
+
+/* Recovery suggestion on unexpected pod change */
+"Please bring only original pod in range or deactivate original pod" = "Please bring only original pod in range or deactivate original pod";
+
+/* Recovery suggestion when unexpected address received */
+"Crosstalk possible. Please move to a new location" = "Crosstalk possible. Please move to a new location";
+
+/* Recovery suggestion when no pod is available */
+"Make sure your pod is nearby and try again." = "Make sure your pod is nearby and try again.";
+
+/* Recovery suggestion when operation could not be completed due to existing bolus in progress */
+"Wait for existing bolus to finish, or cancel bolus" = "Wait for existing bolus to finish, or cancel bolus";
+
+/* Recovery suggestion when operation could not be completed due to existing bolus in progress */
+"Wait for existing bolus to finish, or cancel bolus" = "Wait for existing bolus to finish, or cancel bolus";
+
+/* Recovery suggestion when operation could not be completed due to existing temp basal in progress */
+"Wait for existing temp basal to finish, or suspend to cancel" = "Wait for existing temp basal to finish, or suspend to cancel";
