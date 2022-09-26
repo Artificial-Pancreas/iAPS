@@ -720,8 +720,7 @@
 /* Button title to cancel manual basal */
 "Cancel Manual Basal" = "Manuel Bazalı İptal Et";
 
-/* Insulin\nSuspended
-Text shown in insulin delivery space when insulin suspended (Please don't touch the '\n' ) */
+/* Text shown in insulin delivery space when insulin suspended */
 "Insulin\nSuspended" = "İnsülin\nDurduldu";
 
 /* Text for suspend resume button when insulin delivery is suspended */
@@ -741,3 +740,45 @@ Text shown in insulin delivery space when insulin suspended (Please don't touch 
 
 /* Text for suspend resume button when insulin delivery is suspending */
 "Suspending insulin delivery..." = "İnsülin iletimi askıya alınıyor...";
+
+/* Error message for PodCommsError.noPodsFound */
+"No pods found" = "Pod bulunamadı";
+
+/* Error message for PodCommsError.tooManyPodsFound */
+"Too many pods found" = "Çok fazla pod bulundu";
+
+/* Recovery suggestion when no response is received from pod */
+"Make sure iPhone is nearby the active pod" = "IPhone'un etkin pod'a yakın olduğundan emin olun";
+
+/* Recovery suggestion when ack received instead of response */
+"Try again" = "Tekrar deneyin";
+
+/* Recovery suggestion for PodCommsError.tooManyPodsFound */
+"Move to a new area away from any other pods and try again." = "Diğer pod'lardan uzakta yeni bir alana gidin ve tekrar deneyin.";
+
+/* Recovery suggestion for PodCommsError.noPodsFound */
+"Make sure your pod is filled and nearby." = "Pod'unuzun dolu ve yakında olduğundan emin olun.";
+
+/* Recovery suggestion when pairing signal strength is too high */
+"Please reposition iPhone further from the pod" = "Lütfen iPhone'u pod'tan daha uzağa konumlandırın";
+
+/* Recovery suggestion when pairing signal strength is too low */
+"Please reposition iPhone relative to the pod" = "Lütfen iPhone'u pod'a göre yeniden konumlandırın";
+
+/* Recovery suggestion on unexpected pod change */
+"Please bring only original pod in range or deactivate original pod" = "Lütfen kapsama alanına yalnızca orijinal pod'u getirin veya orijinal pod'u devre dışı bırakın";
+
+/* Recovery suggestion when unexpected address received */
+"Crosstalk possible. Please move to a new location" = "Çakışma olasılığı mümkün. Lütfen yeni bir konuma geçin";
+
+/* Recovery suggestion when no pod is available */
+"Make sure your pod is nearby and try again." = "Pod'unuzun yakında olduğundan emin olun ve tekrar deneyin.";
+
+/* Recovery suggestion when operation could not be completed due to existing bolus in progress */
+"Wait for existing bolus to finish, or cancel bolus" = "Mevcut bolusun bitmesini bekleyin veya bolusu iptal edin";
+
+/* Recovery suggestion when operation could not be completed due to existing bolus in progress */
+"Wait for existing bolus to finish, or cancel bolus" = "Mevcut bolusun bitmesini bekleyin veya bolusu iptal edin";
+
+/* Recovery suggestion when operation could not be completed due to existing temp basal in progress */
+"Wait for existing temp basal to finish, or suspend to cancel" = "Mevcut geçici bazalın bitmesini bekleyin veya askıya almak için iptal edin";

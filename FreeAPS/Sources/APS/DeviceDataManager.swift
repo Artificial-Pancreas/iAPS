@@ -300,7 +300,7 @@ extension BaseDeviceDataManager: PumpManagerDelegate {
         true
     }
 
-    func pumpManager(_ pumpManager: PumpManager, didUpdate status: PumpManagerStatus, oldStatus _: PumpManagerStatus) {
+    func pumpManager(_ pumpManager: PumpManager, didUpdate status: PumpManagerStatus, oldStatus: PumpManagerStatus) {
         dispatchPrecondition(condition: .onQueue(processQueue))
         debug(.deviceManager, "New pump status Bolus: \(status.bolusState)")
         debug(.deviceManager, "New pump status Basal: \(String(describing: status.basalDeliveryState))")
@@ -309,6 +309,10 @@ extension BaseDeviceDataManager: PumpManagerDelegate {
             bolusTrigger.send(true)
         } else {
             bolusTrigger.send(false)
+        }
+
+        if status.insulinType != oldStatus.insulinType {
+            settingsManager.updateInsulinCurve(status.insulinType)
         }
 
         let batteryPercent = Int((status.pumpBatteryChargeRemaining ?? 1) * 100)
