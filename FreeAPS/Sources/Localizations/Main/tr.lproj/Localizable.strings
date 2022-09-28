@@ -1034,7 +1034,7 @@ Enact a temp Basal or a temp target */
 "Confidence reminders will sound when Loop automatically adjusts delivery as well as for commands you initiate." = "Loop, başlattığınız komutların yanı sıra teslimatı otomatik olarak ayarladığında, onay sesi çalacaktır.";
 
 /* Label text for expiration reminder default row */
-"Expiration Reminder Default" = "Süre Sonu Hatırlatıcı Varsayılan";
+"Expiration Reminder Default" = "Varsayılan Süre Sonu Hatırlatıcı";
 
 /* */
 "Expiration Reminder" = "Süre Sonu Hatırlatıcısı";
