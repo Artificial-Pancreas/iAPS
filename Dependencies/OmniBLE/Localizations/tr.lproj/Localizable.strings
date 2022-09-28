@@ -640,7 +640,7 @@
 "This PumpManager has not been configured with a maximum basal rate because it was added before manual temp basal was a feature. Please go to therapy settings -> delivery limits and set a new maximum basal rate." = "Pompa Yönetimi, daha önce manuel geçici bazal eklendiğinden, maksimum bazal oranı ile yapılandırılmadı. Lütfen terapi ayarları -> iletim limitlerine gidin ve yeni bir maksimum bazal oran ayarlayın.";
 
 /* Label text for expiration reminder default row */
-"Expiration Reminder Default" = "Süre Sonu Hatırlatıcı Varsayılan";
+"Expiration Reminder Default" = "Varsayılan Süre Sonu Hatırlatıcı";
 
 /* Text for previous pod information row */
 "Previous Pod Information" = "Önceki Pod Bilgileri";
