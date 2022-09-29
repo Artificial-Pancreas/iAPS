@@ -23,6 +23,13 @@ class HeartBeatManager {
     /// - parameters:
     ///     - sharedData : shared User Defaults
     public func checkCGMBluetoothTransmitter(sharedUserDefaults: UserDefaults) {
+
+        if let sharedTransmitterAddress = sharedUserDefaults.string(forKey: keyForcgmTransmitterDeviceAddress) {
+            debug(.deviceManager, "in checkCGMBluetoothTransmitter, sharedTransmitterAddress = \(sharedTransmitterAddress)")
+        } else {
+            debug(.deviceManager, "in checkCGMBluetoothTransmitter, sharedTransmitterAddress = nil")
+        }
+
         if !initialSetupDone {
             debug(.deviceManager, "in checkCGMBluetoothTransmitter, initial setup")
 
@@ -39,11 +46,6 @@ class HeartBeatManager {
                 .deviceManager,
                 "UserDefaults.standard.cgmTransmitterDeviceAddress != sharedUserDefaults.string(forKey: keyForcgmTransmitterDeviceAddress)"
             )
-            if let sharedTransmitterAddress = sharedUserDefaults.string(forKey: keyForcgmTransmitterDeviceAddress) {
-                debug(.deviceManager, "in checkCGMBluetoothTransmitter, sharedTransmitterAddress = \(sharedTransmitterAddress)")
-            } else {
-                debug(.deviceManager, "in checkCGMBluetoothTransmitter, sharedTransmitterAddress = nil")
-            }
 
             // assign local copy of cgmTransmitterDeviceAddress to the value stored in sharedUserDefaults (possibly nil value)
             UserDefaults.standard.cgmTransmitterDeviceAddress = sharedUserDefaults

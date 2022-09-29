@@ -20,7 +20,7 @@ struct AppGroupSource: GlucoseSource {
             return []
         }
 
-        debug(.deviceManager, "BluetoothTransmitter.swift in fetchLastBGs")
+        debug(.deviceManager, "in fetchLastBGs")
 
         HeartBeatManager.shared.checkCGMBluetoothTransmitter(sharedUserDefaults: sharedDefaults)
 
