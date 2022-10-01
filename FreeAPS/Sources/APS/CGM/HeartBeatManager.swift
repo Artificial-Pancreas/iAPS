@@ -23,7 +23,6 @@ class HeartBeatManager {
     /// - parameters:
     ///     - sharedData : shared User Defaults
     public func checkCGMBluetoothTransmitter(sharedUserDefaults: UserDefaults) {
-
         if let sharedTransmitterAddress = sharedUserDefaults.string(forKey: keyForcgmTransmitterDeviceAddress) {
             debug(.deviceManager, "in checkCGMBluetoothTransmitter, sharedTransmitterAddress = \(sharedTransmitterAddress)")
         } else {
