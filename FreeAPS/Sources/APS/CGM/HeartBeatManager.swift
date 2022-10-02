@@ -23,11 +23,15 @@ class HeartBeatManager {
     /// - parameters:
     ///     - sharedData : shared User Defaults
     public func checkCGMBluetoothTransmitter(sharedUserDefaults: UserDefaults) {
-        
+        if let sharedTransmitterAddress = sharedUserDefaults.string(forKey: keyForcgmTransmitterDeviceAddress) {
+            debug(.deviceManager, "in checkCGMBluetoothTransmitter, sharedTransmitterAddress = \(sharedTransmitterAddress)")
+        } else {
+            debug(.deviceManager, "in checkCGMBluetoothTransmitter, sharedTransmitterAddress = nil")
+        }
+
         if !initialSetupDone {
-            
             debug(.deviceManager, "in checkCGMBluetoothTransmitter, initial setup")
-            
+
             initialSetupDone = true
 
             // set to nil, this will force recreation of bluetooth transmitter at app startup
@@ -38,6 +42,10 @@ class HeartBeatManager {
         if UserDefaults.standard.cgmTransmitterDeviceAddress != sharedUserDefaults
             .string(forKey: keyForcgmTransmitterDeviceAddress)
         {
+            debug(
+                .deviceManager,
+                "UserDefaults.standard.cgmTransmitterDeviceAddress != sharedUserDefaults.string(forKey: keyForcgmTransmitterDeviceAddress)"
+            )
 
             debug(.deviceManager, "UserDefaults.standard.cgmTransmitterDeviceAddress != sharedUserDefaults.string(forKey: keyForcgmTransmitterDeviceAddress)")
             if let sharedTransmitterAddress = sharedUserDefaults.string(forKey: keyForcgmTransmitterDeviceAddress) {
@@ -75,8 +83,11 @@ class HeartBeatManager {
                     heartbeat: {}
                 )
 
-                debug(.deviceManager, "in setupBluetoothTransmitter, cgmTransmitterDeviceAddress in shared user defaults is not nil")
-                
+                debug(
+                    .deviceManager,
+                    "in setupBluetoothTransmitter, cgmTransmitterDeviceAddress in shared user defaults is not nil"
+                )
+
                 return newBluetoothTransmitter
 
             } else {
@@ -87,7 +98,7 @@ class HeartBeatManager {
         }
 
         debug(.deviceManager, "in setupBluetoothTransmitter, cgmTransmitterDeviceAddress in shared user defaults is nil")
-        
+
         return nil
     }
 }

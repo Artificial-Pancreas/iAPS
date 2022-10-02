@@ -13,12 +13,14 @@ extension CGM {
         @Published var calendarIDs: [String] = []
         @Published var currentCalendarID: String = ""
         @Persisted(key: "CalendarManager.currentCalendarID") var storedCalendarID: String? = nil
+        @Published var cgmTransmitterDeviceAddress: String? = nil
 
         override func subscribe() {
             cgm = settingsManager.settings.cgm
             transmitterID = UserDefaults.standard.dexcomTransmitterID ?? ""
             currentCalendarID = storedCalendarID ?? ""
             calendarIDs = calendarManager.calendarIDs()
+            cgmTransmitterDeviceAddress = UserDefaults.standard.cgmTransmitterDeviceAddress
 
             subscribeSetting(\.useCalendar, on: $createCalendarEvents) { createCalendarEvents = $0 }
             subscribeSetting(\.uploadGlucose, on: $uploadGlucose) { uploadGlucose = $0 }
