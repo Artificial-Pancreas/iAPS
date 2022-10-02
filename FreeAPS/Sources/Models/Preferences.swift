@@ -69,6 +69,8 @@ struct Preferences: JSON {
     var useWeightedAverage: Bool = false
     var weightPercentage: Decimal = 0.65
     var tddAdjBasal: Bool = false
+    var enableSMB_high_bg: Bool = false
+    var enableSMB_high_bg_target: Decimal = 110
 }
 
 extension Preferences {
@@ -140,6 +142,8 @@ extension Preferences {
         case useWeightedAverage
         case weightPercentage
         case tddAdjBasal
+        case enableSMB_high_bg
+        case enableSMB_high_bg_target
     }
 }
 

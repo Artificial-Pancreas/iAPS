@@ -91,8 +91,6 @@ extension PreferencesEditor {
                 )
             ]
 
-            // MARK: - SMB fields
-
             let dynamicISF = [
                 Field(
                     displayName: "Enable Dynamic ISF",
@@ -202,6 +200,24 @@ extension PreferencesEditor {
                     infoText: NSLocalizedString(
                         "Defaults to false. When true, allows supermicrobolus (if otherwise enabled) even with high temp targets.",
                         comment: "Allow SMB With High Temptarget"
+                    ),
+                    settable: self
+                ),
+                Field(
+                    displayName: "Enable SMB With High BG",
+                    type: .boolean(keypath: \.enableSMB_high_bg),
+                    infoText: NSLocalizedString(
+                        "Enable SMBs when a high BG is detected, based on the high BG target (adjusted or profile)",
+                        comment: "Enable SMB With High BG"
+                    ),
+                    settable: self
+                ),
+                Field(
+                    displayName: "Enable SMB over this BG",
+                    type: .decimal(keypath: \.enableSMB_high_bg_target),
+                    infoText: NSLocalizedString(
+                        "Set the value enableSMB_high_bg will compare against to enable SMB. If BG > than this value, SMBs should enable.",
+                        comment: "Over This BG (mg/dl):"
                     ),
                     settable: self
                 ),
