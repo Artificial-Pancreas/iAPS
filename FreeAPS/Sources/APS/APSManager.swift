@@ -654,7 +654,7 @@ final class BaseAPSManager: APSManager, Injectable {
             storage.transaction { storage in
                 storage.append(tdd, to: file, uniqBy: \.id)
                 uniqEvents = storage.retrieve(file, as: [TDD].self)?
-                    .filter { $0.timestamp.addingTimeInterval(7.days.timeInterval) > Date() }
+                    .filter { $0.timestamp.addingTimeInterval(14.days.timeInterval) > Date() }
                     .sorted { $0.timestamp > $1.timestamp } ?? []
 
                 var total: Decimal = 0
@@ -689,13 +689,13 @@ final class BaseAPSManager: APSManager, Injectable {
                     nrOfIndeces = 1
                 }
 
-                let average7 = total / indeces
+                let average14 = total / indeces
                 let average2hours = totalAmount / nrOfIndeces
                 let weight = preferences.weightPercentage
-                let weighted_average = weight * average2hours + (1 - weight) * average7
+                let weighted_average = weight * average2hours + (1 - weight) * average14
 
                 let averages = TDD_averages(
-                    average_7days: average7,
+                    average_total_data: average14,
                     weightedAverage: weighted_average,
                     past2hoursAverage: average2hours,
                     date: Date()
