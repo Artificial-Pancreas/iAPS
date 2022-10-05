@@ -63,11 +63,12 @@ struct TagCloudView: View {
                 return .zt
             case textTag where textTag.contains("SMB Delivery Ratio:"):
                 return .uam
+            case textTag where textTag.contains("Weighted avg:"),
+                 textTag where textTag.contains("Total data avg:"):
+                return .gray
             case textTag where textTag.contains("Parabolic Fit"):
                 return .loopRed
             case textTag where textTag.contains("TDD:"),
-                 textTag where textTag.contains("Weighted avg:"),
-                 textTag where textTag.contains("Total data avg:"),
                  textTag where textTag.contains("Original formula"),
                  textTag where textTag.contains("Logarithmic formula"),
                  textTag where textTag.contains("AF:"),

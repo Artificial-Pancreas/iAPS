@@ -6,6 +6,8 @@ extension CGM {
         let resolver: Resolver
         @StateObject var state = StateModel()
 
+        // @AppStorage(UserDefaults.BTKey.cgmTransmitterDeviceAddress.rawValue) private var cgmTransmitterDeviceAddress: String? = nil
+
         var body: some View {
             Form {
                 Section {
@@ -43,6 +45,19 @@ extension CGM {
                         state.showModal(for: .libreConfig)
                     }
                     Text("Calibrations").navigationLink(to: .calibrations, from: self)
+                }
+
+                if state.cgm == .xdrip {
+                    Section(header: Text("Heartbeat")) {
+                        VStack(alignment: .leading) {
+                            if let cgmTransmitterDeviceAddress = state.cgmTransmitterDeviceAddress {
+                                Text("CGM address :")
+                                Text(cgmTransmitterDeviceAddress)
+                            } else {
+                                Text("CGM is not used as heartbeat.")
+                            }
+                        }
+                    }
                 }
 
                 Section(header: Text("Calendar")) {
