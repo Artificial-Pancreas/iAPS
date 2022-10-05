@@ -213,11 +213,11 @@ extension PreferencesEditor {
                     settable: self
                 ),
                 Field(
-                    displayName: "Enable SMB over this BG",
+                    displayName: "... When Blood Glucose Is Over (mg/dl):",
                     type: .decimal(keypath: \.enableSMB_high_bg_target),
                     infoText: NSLocalizedString(
                         "Set the value enableSMB_high_bg will compare against to enable SMB. If BG > than this value, SMBs should enable.",
-                        comment: "Over This BG (mg/dl):"
+                        comment: "... When Blood Glucose Is Over (mg/dl):"
                     ),
                     settable: self
                 ),
