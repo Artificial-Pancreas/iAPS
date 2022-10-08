@@ -287,7 +287,7 @@ final class BaseHealthKitManager: HealthKitManager, Injectable {
         )
     }
 
-    func fetch() -> AnyPublisher<[BloodGlucose], Never> {
+    func fetch(_: DispatchTimer?) -> AnyPublisher<[BloodGlucose], Never> {
         Future { [weak self] promise in
             guard let self = self else {
                 promise(.success([]))

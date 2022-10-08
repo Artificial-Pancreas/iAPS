@@ -5,22 +5,22 @@ import LibreTransmitter
 struct AppGroupSource: GlucoseSource {
     let from: String
 
-    func fetch() -> AnyPublisher<[BloodGlucose], Never> {
+    func fetch(_ heartbeat: DispatchTimer?) -> AnyPublisher<[BloodGlucose], Never> {
         guard let suiteName = Bundle.main.appGroupSuiteName,
               let sharedDefaults = UserDefaults(suiteName: suiteName)
         else {
             return Just([]).eraseToAnyPublisher()
         }
 
-        return Just(fetchLastBGs(60, sharedDefaults)).eraseToAnyPublisher()
+        return Just(fetchLastBGs(60, sharedDefaults, heartbeat)).eraseToAnyPublisher()
     }
 
-    private func fetchLastBGs(_ count: Int, _ sharedDefaults: UserDefaults) -> [BloodGlucose] {
+    private func fetchLastBGs(_ count: Int, _ sharedDefaults: UserDefaults, _ heartbeat: DispatchTimer?) -> [BloodGlucose] {
         guard let sharedData = sharedDefaults.data(forKey: "latestReadings") else {
             return []
         }
 
-        HeartBeatManager.shared.checkCGMBluetoothTransmitter(sharedUserDefaults: sharedDefaults)
+        HeartBeatManager.shared.checkCGMBluetoothTransmitter(sharedUserDefaults: sharedDefaults, heartbeat: heartbeat)
 
         let decoded = try? JSONSerialization.jsonObject(with: sharedData, options: [])
         guard let sgvs = decoded as? [AnyObject] else {

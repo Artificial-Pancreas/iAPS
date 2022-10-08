@@ -16,7 +16,7 @@ final class BaseFetchGlucoseManager: FetchGlucoseManager, Injectable {
     @Injected() var deviceDataManager: DeviceDataManager!
 
     private var lifetime = Lifetime()
-    private let timer = DispatchTimer(timeInterval: TimeInterval(1.0))
+    private let timer = DispatchTimer(timeInterval: 1.minutes.timeInterval)
 
     private lazy var dexcomSource = DexcomSource()
     private lazy var simulatorSource = GlucoseSimulatorSource()
@@ -57,19 +57,19 @@ final class BaseFetchGlucoseManager: FetchGlucoseManager, Injectable {
         timer.publisher
             .receive(on: processQueue)
             .flatMap { date -> AnyPublisher<(Date, Date, [BloodGlucose], [BloodGlucose]), Never> in
-                // debug(.nightscout, "FetchGlucoseManager heartbeat")
+                debug(.nightscout, "FetchGlucoseManager heartbeat")
                 // debug(.nightscout, "Start fetching glucose")
                 self.updateGlucoseSource()
                 return Publishers.CombineLatest4(
                     Just(date),
                     Just(self.glucoseStorage.syncDate()),
-                    self.glucoseSource.fetch(),
-                    self.healthKitManager.fetch()
+                    self.glucoseSource.fetch(self.timer),
+                    self.healthKitManager.fetch(nil)
                 )
                 .eraseToAnyPublisher()
             }
             .sink { date, syncDate, glucose, glucoseFromHealth in
-                //  debug(.nightscout, "SyncDate is \(syncDate)")
+                debug(.nightscout, "SyncDate is \(syncDate)")
                 let allGlucose = glucose + glucoseFromHealth
                 guard allGlucose.isNotEmpty else { return }
 
