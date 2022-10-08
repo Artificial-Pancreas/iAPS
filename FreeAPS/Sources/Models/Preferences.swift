@@ -71,6 +71,7 @@ struct Preferences: JSON {
     var tddAdjBasal: Bool = false
     var enableSMB_high_bg: Bool = false
     var enableSMB_high_bg_target: Decimal = 110
+    var threshold_setting: Decimal = 65
 }
 
 extension Preferences {
@@ -144,6 +145,7 @@ extension Preferences {
         case tddAdjBasal
         case enableSMB_high_bg
         case enableSMB_high_bg_target
+        case threshold_setting
     }
 }
 

@@ -145,6 +145,15 @@ extension PreferencesEditor {
                         comment: "Enable adjustment of basal based on the ratio of 24 h : 7 day average TDD"
                     ),
                     settable: self
+                ),
+                Field(
+                    displayName: "Threshold Setting",
+                    type: .decimal(keypath: \.threshold_setting),
+                    infoText: NSLocalizedString(
+                        "The default threshold in FAX depends on your current minimum BG target. If your minimum BG target = 90 mg/dl -> threshold of 65 mg/dl, if min_bg = 100 -> threshold of 70, if min_bg = 110 -> threshold of 75, and if min_bg = 130 -> threshold of 85. This settings allows you to change the default  to a higher threshold for a possibly safer looping with dynISF. Valid values are 65 <= Threshold Setting <= 120 for this setting. ",
+                        comment: "Threshold Setting"
+                    ),
+                    settable: self
                 )
             ]
 
