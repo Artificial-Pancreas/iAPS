@@ -53,6 +53,7 @@ extension OpenAPS {
         static let glucose = "monitor/glucose.json"
         static let iob = "monitor/iob.json"
         static let podAge = "monitor/pod-age.json"
+        static let alertHistory = "monitor/alerthistory.json"
     }
 
     enum Enact {

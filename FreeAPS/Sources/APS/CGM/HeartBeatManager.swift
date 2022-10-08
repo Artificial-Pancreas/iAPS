@@ -33,7 +33,6 @@ class HeartBeatManager {
         if UserDefaults.standard.cgmTransmitterDeviceAddress != sharedUserDefaults
             .string(forKey: keyForcgmTransmitterDeviceAddress)
         {
-
             // assign local copy of cgmTransmitterDeviceAddress to the value stored in sharedUserDefaults (possibly nil value)
             UserDefaults.standard.cgmTransmitterDeviceAddress = sharedUserDefaults
                 .string(forKey: keyForcgmTransmitterDeviceAddress)

@@ -9,11 +9,18 @@ extension PumpConfig {
         private(set) var setupPumpType: PumpType = .minimed
         @Published var pumpState: PumpDisplayState?
         private(set) var initialSettings: PumpInitialSettings = .default
+        @Published var alertNotAck: Bool = false
 
         override func subscribe() {
             provider.pumpDisplayState
                 .receive(on: DispatchQueue.main)
                 .assign(to: \.pumpState, on: self)
+                .store(in: &lifetime)
+
+            alertNotAck = provider.initialAlertNotAck()
+            provider.alertNotAck
+                .receive(on: DispatchQueue.main)
+                .assign(to: \.alertNotAck, on: self)
                 .store(in: &lifetime)
 
             let basalSchedule = BasalRateSchedule(
@@ -34,6 +41,10 @@ extension PumpConfig {
         func addPump(_ type: PumpType) {
             setupPump = true
             setupPumpType = type
+        }
+
+        func ack() {
+            provider.deviceManager.alertHistoryStorage.forceNotification()
         }
     }
 }

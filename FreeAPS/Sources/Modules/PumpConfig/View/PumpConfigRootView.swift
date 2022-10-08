@@ -19,6 +19,10 @@ extension PumpConfig {
                                     Text(pumpState.name)
                                 }
                             }
+                            if state.alertNotAck {
+                                Spacer()
+                                Button("Acknowledge all alerts") { state.ack() }
+                            }
                         } else {
                             Button("Add Medtronic") { state.addPump(.minimed) }
                             Button("Add Omnipod") { state.addPump(.omnipod) }
