@@ -36,12 +36,12 @@ function generate(pumpsettings_data, bgtargets_data, isf_data, basalprofile_data
     }
 
     var model_data = { };
-    if(model_input){
+    if (model_input) {
         model_data = model_input.replace(/"/gi, '');
     }
 
     var carbratio_data = { };
-    if (carbratio_input){
+    if (carbratio_input) {
         var errors = [ ];
         if (!(carbratio_input.schedule && carbratio_input.schedule[0].start && carbratio_input.schedule[0].ratio)) {
           errors.push("Carb ratio data should have an array called schedule with a start and ratio fields.");
@@ -56,7 +56,7 @@ function generate(pumpsettings_data, bgtargets_data, isf_data, basalprofile_data
     }
 
     var preferences = { };
-    if(preferences_input){
+    if (preferences_input) {
         preferences = preferences_input;
     }
 
