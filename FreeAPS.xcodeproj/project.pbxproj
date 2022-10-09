@@ -284,6 +284,7 @@
 		CD78BB94E43B249D60CC1A1B /* NotificationsConfigRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22963BD06A9C83959D4914E4 /* NotificationsConfigRootView.swift */; };
 		CE48C86428CA69D5007C0598 /* OmniBLEPumpManagerExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE48C86328CA69D5007C0598 /* OmniBLEPumpManagerExtensions.swift */; };
 		CE48C86628CA6B48007C0598 /* OmniPodManagerExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE48C86528CA6B48007C0598 /* OmniPodManagerExtensions.swift */; };
+		CE6B025528F347C3000C5502 /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE6B025428F347C3000C5502 /* HealthKit.framework */; };
 		CE82E02528E867BA00473A9C /* AlertStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE82E02428E867BA00473A9C /* AlertStorage.swift */; };
 		CE82E02728E869DF00473A9C /* AlertEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE82E02628E869DF00473A9C /* AlertEntry.swift */; };
 		CEB434DC28B8F5B900B70274 /* MKRingProgressView.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEB434DB28B8F5B900B70274 /* MKRingProgressView.framework */; };
@@ -787,6 +788,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CE6B025528F347C3000C5502 /* HealthKit.framework in Frameworks */,
 				38E8755827567AE400975559 /* SwiftDate in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1308,6 +1310,8 @@
 				3871F39B25ED892B0013ECB5 /* TempTarget.swift */,
 				3811DE8E25C9D80400A708ED /* User.swift */,
 				E0D4F80427513ECF00BDF1FE /* HealthKitSample.swift */,
+				CEEF74AD28C4D41D00314CB5 /* TDD.swift */,
+				CEEF74AF28C4D43700314CB5 /* TDD_averages.swift */,
 				CE82E02628E869DF00473A9C /* AlertEntry.swift */,
 			);
 			path = Models;
