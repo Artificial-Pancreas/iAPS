@@ -24,5 +24,13 @@ extension PumpConfig {
                 ?? PumpSettings(from: OpenAPS.defaults(for: OpenAPS.Settings.settings))
                 ?? PumpSettings(insulinActionCurve: 5, maxBolus: 10, maxBasal: 2)
         }
+
+        var alertNotAck: AnyPublisher<Bool, Never> {
+            deviceManager.alertHistoryStorage.alertNotAck.eraseToAnyPublisher()
+        }
+
+        func initialAlertNotAck() -> Bool {
+            deviceManager.alertHistoryStorage.recentNotAck().isNotEmpty
+        }
     }
 }

@@ -295,7 +295,7 @@ final class BaseHealthKitManager: HealthKitManager, Injectable {
             }
 
             self.processQueue.async {
-                debug(.service, "Start fetching HealthKitManager")
+                //   debug(.service, "Start fetching HealthKitManager")
                 guard self.settingsManager.settings.useAppleHealth else {
                     debug(.service, "HealthKitManager cant return any data, because useAppleHealth option is disable")
                     promise(.success([]))
@@ -312,9 +312,9 @@ final class BaseHealthKitManager: HealthKitManager, Injectable {
                 self.newGlucose = self.newGlucose
                     .filter { !actualGlucose.contains($0) }
 
-                debug(.service, "Actual glucose is \(actualGlucose)")
+                //  debug(.service, "Actual glucose is \(actualGlucose)")
 
-                debug(.service, "Current state of newGlucose is \(self.newGlucose)")
+                //  debug(.service, "Current state of newGlucose is \(self.newGlucose)")
 
                 promise(.success(actualGlucose))
             }

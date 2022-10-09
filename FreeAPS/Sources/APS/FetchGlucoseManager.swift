@@ -57,8 +57,8 @@ final class BaseFetchGlucoseManager: FetchGlucoseManager, Injectable {
         timer.publisher
             .receive(on: processQueue)
             .flatMap { date -> AnyPublisher<(Date, Date, [BloodGlucose], [BloodGlucose]), Never> in
-                debug(.nightscout, "FetchGlucoseManager heartbeat")
-                debug(.nightscout, "Start fetching glucose")
+                // debug(.nightscout, "FetchGlucoseManager heartbeat")
+                // debug(.nightscout, "Start fetching glucose")
                 self.updateGlucoseSource()
                 return Publishers.CombineLatest4(
                     Just(date),
@@ -69,7 +69,7 @@ final class BaseFetchGlucoseManager: FetchGlucoseManager, Injectable {
                 .eraseToAnyPublisher()
             }
             .sink { date, syncDate, glucose, glucoseFromHealth in
-                debug(.nightscout, "SyncDate is \(syncDate)")
+                //  debug(.nightscout, "SyncDate is \(syncDate)")
                 let allGlucose = glucose + glucoseFromHealth
                 guard allGlucose.isNotEmpty else { return }
 

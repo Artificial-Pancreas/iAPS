@@ -64,8 +64,7 @@ final class BaseSettingsManager: SettingsManager, Injectable {
              .novolog:
             prefs.curve = .rapidActing
 
-        case .afrezza,
-             .fiasp,
+        case .fiasp,
              .lyumjev:
             prefs.curve = .ultraRapid
         default:
