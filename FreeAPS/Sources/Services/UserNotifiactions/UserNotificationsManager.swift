@@ -25,7 +25,7 @@ protocol BolusFailureObserver {
 }
 
 protocol pumpNotificationObserver {
-    func pumpNotification(alert: LoopKit.Alert)
+    func pumpNotification(alert: AlertEntry)
     func pumpRemoveNotification()
 }
 
@@ -405,12 +405,11 @@ extension BaseUserNotificationsManager: GlucoseObserver {
 }
 
 extension BaseUserNotificationsManager: pumpNotificationObserver {
-    func pumpNotification(alert: LoopKit.Alert) {
+    func pumpNotification(alert: AlertEntry) {
         ensureCanSendNotification {
-            let contentAlert = alert.foregroundContent!
             let content = UNMutableNotificationContent()
-            content.title = contentAlert.title
-            content.body = contentAlert.body
+            content.title = alert.contentTitle ?? "Unknown"
+            content.body = alert.contentBody ?? "Unknown"
             content.sound = .default
             self.addRequest(
                 identifier: .pumpNotification,

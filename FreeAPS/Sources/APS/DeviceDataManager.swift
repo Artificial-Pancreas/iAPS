@@ -24,7 +24,7 @@ protocol DeviceDataManager: GlucoseSource {
     var pumpExpiresAtDate: CurrentValueSubject<Date?, Never> { get }
     func heartbeat(date: Date)
     func createBolusProgressReporter() -> DoseProgressReporter?
-    var alertStore: [Alert] { get }
+    var alertHistoryStorage: AlertHistoryStorage! { get }
 }
 
 private let staticPumpManagers: [PumpManagerUI.Type] = [
@@ -50,6 +50,7 @@ private let accessLock = NSRecursiveLock(label: "BaseDeviceDataManager.accessLoc
 final class BaseDeviceDataManager: DeviceDataManager, Injectable {
     private let processQueue = DispatchQueue.markedQueue(label: "BaseDeviceDataManager.processQueue")
     @Injected() private var pumpHistoryStorage: PumpHistoryStorage!
+    @Injected() var alertHistoryStorage: AlertHistoryStorage!
     @Injected() private var storage: FileStorage!
     @Injected() private var broadcaster: Broadcaster!
     @Injected() private var glucoseStorage: GlucoseStorage!
@@ -65,7 +66,6 @@ final class BaseDeviceDataManager: DeviceDataManager, Injectable {
     let errorSubject = PassthroughSubject<Error, Never>()
     let pumpNewStatus = PassthroughSubject<Void, Never>()
     let manualTempBasal = PassthroughSubject<Bool, Never>()
-    var alertStore: [Alert]
     private let router = FreeAPSApp.resolver.resolve(Router.self)!
     @SyncAccess private var pumpUpdateCancellable: AnyCancellable?
     private var pumpUpdatePromise: Future<Bool, Never>.Promise?
@@ -113,10 +113,10 @@ final class BaseDeviceDataManager: DeviceDataManager, Injectable {
     let pumpName = CurrentValueSubject<String, Never>("Pump")
 
     init(resolver: Resolver) {
-        alertStore = []
         injectServices(resolver)
         setupPumpManager()
         UIDevice.current.isBatteryMonitoringEnabled = true
+        broadcaster.register(AlertObserver.self, observer: self)
     }
 
     func setupPumpManager() {
@@ -468,41 +468,22 @@ extension BaseDeviceDataManager: PumpManagerDelegate {
 
 extension BaseDeviceDataManager: DeviceManagerDelegate {
     func issueAlert(_ alert: Alert) {
-        if !alertStore.contains(where: { $0.identifier.alertIdentifier == alert.identifier.alertIdentifier }) {
-            alertStore.append(alert)
-
-            let typeMessage: MessageType
-            let alertUp = alert.identifier.alertIdentifier.uppercased()
-            if alertUp.contains("FAULT") || alertUp.contains("ERROR") {
-                typeMessage = .errorPump
-            } else {
-                typeMessage = .warning
-            }
-
-            DispatchQueue.main.async {
-                let messageCont = MessageContent(content: alert.foregroundContent!.body, type: typeMessage)
-                self.router.alertMessage.send(messageCont)
-                // validation
-                self.pumpManager?.acknowledgeAlert(alertIdentifier: alert.identifier.alertIdentifier) { error in
-                    if let error = error {
-                        debug(.deviceManager, "acknowledge not succeeded with error \(error.localizedDescription)")
-                    }
-                }
-            }
-
-            broadcaster.notify(pumpNotificationObserver.self, on: processQueue) {
-                $0.pumpNotification(alert: alert)
-            }
-        }
+        alertHistoryStorage.storeAlert(
+            AlertEntry(
+                alertIdentifier: alert.identifier.alertIdentifier,
+                primitiveInterruptionLevel: alert.interruptionLevel.storedValue as? Decimal,
+                issuedDate: Date(),
+                managerIdentifier: alert.identifier.managerIdentifier,
+                triggerType: alert.trigger.storedType,
+                triggerInterval: alert.trigger.storedInterval as? Decimal,
+                contentTitle: alert.foregroundContent?.title,
+                contentBody: alert.foregroundContent?.body
+            )
+        )
     }
 
     func retractAlert(identifier: Alert.Identifier) {
-        if let idx = alertStore.firstIndex(where: { $0.identifier.alertIdentifier == identifier.alertIdentifier }) {
-            alertStore.remove(at: idx)
-            broadcaster.notify(pumpNotificationObserver.self, on: processQueue) {
-                $0.pumpRemoveNotification()
-            }
-        }
+        alertHistoryStorage.deleteAlert(identifier: identifier.alertIdentifier)
     }
 
     func doesIssuedAlertExist(identifier _: Alert.Identifier, completion _: @escaping (Result<Bool, Error>) -> Void) {
@@ -577,6 +558,60 @@ extension BaseDeviceDataManager: CGMManagerDelegate {
 }
 
 // MARK: - AlertPresenter
+
+extension BaseDeviceDataManager: AlertObserver {
+    func AlertDidUpdate(_ alerts: [AlertEntry]) {
+        alerts.forEach { alert in
+            if alert.acknowledgedDate == nil {
+                ackAlert(alert: alert)
+            }
+        }
+    }
+
+    private func ackAlert(alert: AlertEntry) {
+        let typeMessage: MessageType
+        let alertUp = alert.alertIdentifier.uppercased()
+        if alertUp.contains("FAULT") || alertUp.contains("ERROR") {
+            typeMessage = .errorPump
+        } else {
+            typeMessage = .warning
+        }
+
+        let messageCont = MessageContent(content: alert.contentBody ?? "Unknown", type: typeMessage)
+        let alertIssueDate = alert.issuedDate
+
+        processQueue.async {
+            // if not alert in OmniPod/BLE, the acknowledgeAlert didn't do callbacks- Hack to manage this case
+            if let omnipodBLE = self.pumpManager as? OmniBLEPumpManager {
+                if omnipodBLE.state.activeAlerts.isEmpty {
+                    // force to ack alert in the alertStorage
+                    self.alertHistoryStorage.ackAlert(alertIssueDate, nil)
+                }
+            }
+
+            if let omniPod = self.pumpManager as? OmnipodPumpManager {
+                if omniPod.state.activeAlerts.isEmpty {
+                    // force to ack alert in the alertStorage
+                    self.alertHistoryStorage.ackAlert(alertIssueDate, nil)
+                }
+            }
+
+            self.pumpManager?.acknowledgeAlert(alertIdentifier: alert.alertIdentifier) { error in
+                self.router.alertMessage.send(messageCont)
+                if let error = error {
+                    self.alertHistoryStorage.ackAlert(alertIssueDate, error.localizedDescription)
+                    debug(.deviceManager, "acknowledge not succeeded with error \(error.localizedDescription)")
+                } else {
+                    self.alertHistoryStorage.ackAlert(alertIssueDate, nil)
+                }
+            }
+
+            self.broadcaster.notify(pumpNotificationObserver.self, on: self.processQueue) {
+                $0.pumpNotification(alert: alert)
+            }
+        }
+    }
+}
 
 // extension BaseDeviceDataManager: AlertPresenter {
 //    func issueAlert(_: Alert) {}

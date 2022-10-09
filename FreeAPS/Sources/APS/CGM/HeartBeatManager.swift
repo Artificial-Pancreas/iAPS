@@ -23,15 +23,7 @@ class HeartBeatManager {
     /// - parameters:
     ///     - sharedData : shared User Defaults
     public func checkCGMBluetoothTransmitter(sharedUserDefaults: UserDefaults) {
-        if let sharedTransmitterAddress = sharedUserDefaults.string(forKey: keyForcgmTransmitterDeviceAddress) {
-            debug(.deviceManager, "in checkCGMBluetoothTransmitter, sharedTransmitterAddress = \(sharedTransmitterAddress)")
-        } else {
-            debug(.deviceManager, "in checkCGMBluetoothTransmitter, sharedTransmitterAddress = nil")
-        }
-
         if !initialSetupDone {
-            debug(.deviceManager, "in checkCGMBluetoothTransmitter, initial setup")
-
             initialSetupDone = true
 
             // set to nil, this will force recreation of bluetooth transmitter at app startup
@@ -41,16 +33,6 @@ class HeartBeatManager {
         if UserDefaults.standard.cgmTransmitterDeviceAddress != sharedUserDefaults
             .string(forKey: keyForcgmTransmitterDeviceAddress)
         {
-            debug(
-                .deviceManager,
-                "UserDefaults.standard.cgmTransmitterDeviceAddress != sharedUserDefaults.string(forKey: keyForcgmTransmitterDeviceAddress)"
-            )
-            if let sharedTransmitterAddress = sharedUserDefaults.string(forKey: keyForcgmTransmitterDeviceAddress) {
-                debug(.deviceManager, "in checkCGMBluetoothTransmitter, sharedTransmitterAddress = \(sharedTransmitterAddress)")
-            } else {
-                debug(.deviceManager, "in checkCGMBluetoothTransmitter, sharedTransmitterAddress = nil")
-            }
-
             // assign local copy of cgmTransmitterDeviceAddress to the value stored in sharedUserDefaults (possibly nil value)
             UserDefaults.standard.cgmTransmitterDeviceAddress = sharedUserDefaults
                 .string(forKey: keyForcgmTransmitterDeviceAddress)
@@ -76,21 +58,14 @@ class HeartBeatManager {
                     heartbeat: {}
                 )
 
-                debug(
-                    .deviceManager,
-                    "in setupBluetoothTransmitter, cgmTransmitterDeviceAddress in shared user defaults is not nil"
-                )
-
                 return newBluetoothTransmitter
 
             } else {
                 // looks like a coding error, xdrip4iOS did set a value for cgmTransmitterDeviceAddress in sharedUserDefaults but did not set a value for cgmTransmitter_CBUUID_Service or cgmTransmitter_CBUUID_Receive
-                debug(.deviceManager, "in setupBluetoothTransmitter, possible coding error")
+
                 return nil
             }
         }
-
-        debug(.deviceManager, "in setupBluetoothTransmitter, cgmTransmitterDeviceAddress in shared user defaults is nil")
 
         return nil
     }

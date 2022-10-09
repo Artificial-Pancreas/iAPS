@@ -38,7 +38,7 @@ extension PumpConfig {
                     bluetoothProvider: bluetoothManager,
                     colorPalette: .default,
                     allowDebugFeatures: false,
-                    allowedInsulinTypes: [.apidra, .humalog, .novolog, .fiasp, .lyumjev, .afrezza]
+                    allowedInsulinTypes: [.apidra, .humalog, .novolog, .fiasp, .lyumjev]
                 )
             case .omnipod:
                 setupViewController = OmnipodPumpManager.setupViewController(
@@ -46,7 +46,7 @@ extension PumpConfig {
                     bluetoothProvider: bluetoothManager,
                     colorPalette: .default,
                     allowDebugFeatures: false,
-                    allowedInsulinTypes: [.apidra, .humalog, .novolog, .fiasp, .lyumjev, .afrezza]
+                    allowedInsulinTypes: [.apidra, .humalog, .novolog, .fiasp, .lyumjev]
                 )
             case .omnipodBLE:
                 setupViewController = OmniBLEPumpManager.setupViewController(
@@ -54,7 +54,7 @@ extension PumpConfig {
                     bluetoothProvider: bluetoothManager,
                     colorPalette: .default,
                     allowDebugFeatures: false,
-                    allowedInsulinTypes: [.apidra, .humalog, .novolog, .fiasp, .lyumjev, .afrezza]
+                    allowedInsulinTypes: [.apidra, .humalog, .novolog, .fiasp, .lyumjev]
                 )
             case .simulator:
                 setupViewController = MockPumpManager.setupViewController(
@@ -62,7 +62,7 @@ extension PumpConfig {
                     bluetoothProvider: bluetoothManager,
                     colorPalette: .default,
                     allowDebugFeatures: false,
-                    allowedInsulinTypes: [.apidra, .humalog, .novolog, .fiasp, .lyumjev, .afrezza]
+                    allowedInsulinTypes: [.apidra, .humalog, .novolog, .fiasp, .lyumjev]
                 )
             }
 

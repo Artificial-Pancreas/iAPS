@@ -1,16 +1,53 @@
 # FreeAPS X
 
+## Introduction 
+
 FreeAPS X - an artificial pancreas system for iOS based on [OpenAPS Reference](https://github.com/openaps/oref0) algorithms
 
-FreeAPS X uses original JavaScript files of oref0 and provides a user interface (UI) to control and set up the system
+FreeAPS X uses original JavaScript files of oref0 and provides a user interface (UI) to control and set up the system. 
 
-## Documentation
+This repo includes two branchs allowing to use OmniPod Dash pumps : 
+- the branch dash_dev includes the dash pump in the setting pump 
+- the branch dash_garmin_disf_dev includes the dash pump, but also the dISF implementation (with update of openAPS) and the garmin service to connect with garmin watches. 
+
+To use this branch : 
+
+git clone -b dash_dev remote-repo-url or git clone -b dash_garmin_disf_dev remote-repo-url 
+
+or use directly Xcode to use one specific branch. 
+
+Don't forget to copy / reference your ConfigOverride 
+
+:warning: :warning: :warning: :warning:
+
+# Precaution 
+
+Please understand that these version are :
+- highly experimental
+- not approved for therapy
+
+WARNING 
+- The settings of your current FAX should not be re-init when you update to this version but check it before close loop 
+- The update MUST ONLY be done when you change of a pod. The previous pod would be not accessible. So, first, desactivate your current pod then compile and update your FAX on your phone and add a new pod with the dash pump menu.
+
+
+These version were tested by few developers with success. But...Don't hesitate to create issues if you find bugs or issues. 
+
+:warning: :warning: :warning: 
+
+
+# Documentation
 
 [freeAPS X original github](https://github.com/ivalkou/freeaps)
+
+[ADD DASH PUMP and SETTINGS](https://loopkit.github.io/loopdocs/loop-3/omnipod/)
 
 [Overview & Onboarding Tips on Loop&Learn](https://www.loopandlearn.org/freeaps-x/)
 
 [OpenAPS documentation](https://openaps.readthedocs.io/en/latest/)
+
+
+# Technical updates 
 
 ## Updated to include dashpod
 
@@ -22,16 +59,7 @@ _ modify the order of compilation for CGMBLEKit (header before compilation)
  
  ## Changes in package 
  
- The only change required is the public access to managedIdentifier for omnipod, medtronic et  dash. Loop doesn't use it but FAX requires it. 
-
-
-    //public let managerIdentifier: String = "Omnipod-Dash" // use a single token to make parsing log files easier
-    
-    public static let managerIdentifier = "Omnipod-Dash"
-    
-    public var managerIdentifier: String {
-        return OmniBLEPumpManager.managerIdentifier
-    }
+No change 😁. Use extension in FAX to include the managerIdentifier
 
  
  ## Changes in freeapsx

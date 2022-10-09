@@ -100,6 +100,8 @@ extension Settings {
                                 .navigationLink(to: .configEditor(file: OpenAPS.Nightscout.uploadedCGMState), from: self)
                         }
                         Group {
+                            Text("Alerts")
+                                .navigationLink(to: .configEditor(file: OpenAPS.Monitor.alertHistory), from: self)
                             Text("Target presets")
                                 .navigationLink(to: .configEditor(file: OpenAPS.FreeAPS.tempTargetsPresets), from: self)
                             Text("Calibrations")
