@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class PumpAckMessageBody: MessageBody {
+public class PumpAckMessageBody: DecodableMessageBody {
     public static let length = 1
     
     let rxData: Data
@@ -20,4 +20,9 @@ public class PumpAckMessageBody: MessageBody {
     public var txData: Data {
         return rxData
     }
+
+    public var description: String {
+        return "PumpAck(\(rxData.hexadecimalString))"
+    }
+
 }

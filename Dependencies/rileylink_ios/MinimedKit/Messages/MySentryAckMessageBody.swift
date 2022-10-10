@@ -48,4 +48,9 @@ public struct MySentryAckMessageBody: MessageBody {
 
         return Data(buffer)
     }
+
+    public var description: String {
+        return "MySentryAck(\(sequence), \(mySentryID.hexadecimalString), \(responseMessageTypes))"
+    }
+
 }

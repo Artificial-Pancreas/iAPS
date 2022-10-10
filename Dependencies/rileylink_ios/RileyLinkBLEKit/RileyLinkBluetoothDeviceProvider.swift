@@ -9,8 +9,7 @@ import CoreBluetooth
 import os.log
 import LoopKit
 
-
-public class RileyLinkDeviceManager: NSObject {
+public class RileyLinkBluetoothDeviceProvider: NSObject {
     private let log = OSLog(category: "RileyLinkDeviceManager")
 
     // Isolated to centralQueue
@@ -20,15 +19,25 @@ public class RileyLinkDeviceManager: NSObject {
 
     internal let sessionQueue = DispatchQueue(label: "com.rileylink.RileyLinkBLEKit.RileyLinkDeviceManager.sessionQueue", qos: .unspecified)
 
+    public weak var delegate: RileyLinkDeviceProviderDelegate?
+
     // Isolated to centralQueue
-    private var devices: [RileyLinkDevice] = [] {
+    private var devices: [RileyLinkBluetoothDevice] = [] {
         didSet {
             NotificationCenter.default.post(name: .ManagerDevicesDidChange, object: self)
         }
     }
 
     // Isolated to centralQueue
-    private var autoConnectIDs: Set<String>
+    private var autoConnectIDs: Set<String> {
+        didSet {
+            delegate?.rileylinkDeviceProvider(self, didChange: RileyLinkConnectionState(autoConnectIDs: autoConnectIDs))
+        }
+    }
+
+    public var connectingCount: Int {
+        return self.autoConnectIDs.count
+    }
 
     // Isolated to centralQueue
     private var isScanningEnabled = false
@@ -59,7 +68,7 @@ public class RileyLinkDeviceManager: NSObject {
         }
     }
 
-    public var idleListeningState: RileyLinkDevice.IdleListeningState {
+    public var idleListeningState: RileyLinkBluetoothDevice.IdleListeningState {
         get {
             return lockedIdleListeningState.value
         }
@@ -72,7 +81,7 @@ public class RileyLinkDeviceManager: NSObject {
             }
         }
     }
-    private let lockedIdleListeningState = Locked(RileyLinkDevice.IdleListeningState.disabled)
+    private let lockedIdleListeningState = Locked(RileyLinkBluetoothDevice.IdleListeningState.disabled)
 
     public var timerTickEnabled: Bool {
         get {
@@ -82,7 +91,7 @@ public class RileyLinkDeviceManager: NSObject {
             lockedTimerTickEnabled.value = newValue
             centralQueue.async {
                 for device in self.devices {
-                    if device.peripheralState == .connected {
+                    if device.isConnected {
                         device.setTimerTickEnabled(newValue)
                     }
                 }
@@ -94,64 +103,40 @@ public class RileyLinkDeviceManager: NSObject {
 
 
 // MARK: - Connecting
-extension RileyLinkDeviceManager {
+extension RileyLinkBluetoothDeviceProvider {
     public func getAutoConnectIDs(_ completion: @escaping (_ autoConnectIDs: Set<String>) -> Void) {
         centralQueue.async {
             completion(self.autoConnectIDs)
         }
     }
     
-    public func connect(_ device: RileyLinkDevice) {
-        centralQueue.async {
-            self.autoConnectIDs.insert(device.manager.peripheral.identifier.uuidString)
-
-            guard let peripheral = self.reloadPeripheral(for: device) else {
-                return
-            }
-
-            self.central.connectIfNecessary(peripheral)
-        }
-    }
-
-    public func disconnect(_ device: RileyLinkDevice) {
-        centralQueue.async {
-            self.autoConnectIDs.remove(device.manager.peripheral.identifier.uuidString)
-
-            guard let peripheral = self.reloadPeripheral(for: device) else {
-                return
-            }
-
-            self.central.cancelPeripheralConnectionIfNecessary(peripheral)
-        }
-    }
-
     /// Asks the central manager for its peripheral instance for a given device.
     /// It seems to be possible that this reference changes across a bluetooth reset, and not updating the reference can result in API MISUSE warnings
     ///
     /// - Parameter device: The device to reload
     /// - Returns: The peripheral instance returned by the central manager
-    private func reloadPeripheral(for device: RileyLinkDevice) -> CBPeripheral? {
+    private func reloadPeripheral(for device: RileyLinkBluetoothDevice) -> CBPeripheral? {
         dispatchPrecondition(condition: .onQueue(centralQueue))
 
-        guard let peripheral = central.retrievePeripherals(withIdentifiers: [device.manager.peripheral.identifier]).first else {
+        guard let peripheral = central.retrievePeripherals(withIdentifiers: [device.peripheralIdentifier]).first else {
             return nil
         }
 
-        device.manager.peripheral = peripheral
+        device.setPeripheral(peripheral)
         return peripheral
     }
 
     private var hasDiscoveredAllAutoConnectDevices: Bool {
         dispatchPrecondition(condition: .onQueue(centralQueue))
 
-        return autoConnectIDs.isSubset(of: devices.map { $0.manager.peripheral.identifier.uuidString })
+        return autoConnectIDs.isSubset(of: devices.map { $0.peripheralIdentifier.uuidString })
     }
 
     private func autoConnectDevices() {
         dispatchPrecondition(condition: .onQueue(centralQueue))
 
-        for device in devices where autoConnectIDs.contains(device.manager.peripheral.identifier.uuidString) {
-            log.info("Attempting reconnect to %@", device.manager.peripheral)
+        for device in devices where autoConnectIDs.contains(device.peripheralIdentifier.uuidString) {
+            log.info("Attempting reconnect to %@", String(describing: device))
             connect(device)
         }
     }
@@ -159,12 +144,12 @@ extension RileyLinkDeviceManager {
     private func addPeripheral(_ peripheral: CBPeripheral, rssi: Int? = nil) {
         dispatchPrecondition(condition: .onQueue(centralQueue))
 
-        var device: RileyLinkDevice! = devices.first(where: { $0.manager.peripheral.identifier == peripheral.identifier })
+        var device: RileyLinkBluetoothDevice! = devices.first(where: { $0.peripheralIdentifier == peripheral.identifier })
 
         if let device = device {
-            device.manager.peripheral = peripheral
+            device.setPeripheral(peripheral)
         } else {
-            device = RileyLinkDevice(peripheralManager: PeripheralManager(peripheral: peripheral, configuration: .rileyLink, centralManager: central, queue: sessionQueue), rssi: rssi)
+            device = RileyLinkBluetoothDevice(peripheralManager: PeripheralManager(peripheral: peripheral, configuration: .rileyLink, centralManager: central, queue: sessionQueue), rssi: rssi)
             if peripheral.state == .connected {
                 device.setTimerTickEnabled(timerTickEnabled)
                 device.setIdleListeningState(idleListeningState)
@@ -181,8 +166,31 @@ extension RileyLinkDeviceManager {
     }
 }
 
+extension RileyLinkBluetoothDeviceProvider: RileyLinkDeviceProvider {
+    public func connect(_ device: RileyLinkDevice) {
+        centralQueue.async {
+            self.autoConnectIDs.insert(device.peripheralIdentifier.uuidString)
 
-extension RileyLinkDeviceManager {
+            guard let peripheral = self.reloadPeripheral(for: device as! RileyLinkBluetoothDevice) else {
+                return
+            }
+
+            self.central.connectIfNecessary(peripheral)
+        }
+    }
+
+    public func disconnect(_ device: RileyLinkDevice) {
+        centralQueue.async {
+            self.autoConnectIDs.remove(device.peripheralIdentifier.uuidString)
+
+            guard let peripheral = self.reloadPeripheral(for: device as! RileyLinkBluetoothDevice) else {
+                return
+            }
+
+            self.central.cancelPeripheralConnectionIfNecessary(peripheral)
+        }
+    }
+
     public func getDevices(_ completion: @escaping (_ devices: [RileyLinkDevice]) -> Void) {
         centralQueue.async {
             completion(self.devices)
@@ -191,29 +199,11 @@ extension RileyLinkDeviceManager {
 
     public func deprioritize(_ device: RileyLinkDevice, completion: (() -> Void)? = nil) {
         centralQueue.async {
-            self.devices.deprioritize(device)
+            self.devices.deprioritize(device as! RileyLinkBluetoothDevice)
             completion?()
         }
     }
-}
-
-extension Array where Element == RileyLinkDevice {
-    public var firstConnected: Element? {
-        return self.first { (device) -> Bool in
-            return device.manager.peripheral.state == .connected
-        }
-    }
-
-    mutating func deprioritize(_ element: Element) {
-        if let index = self.firstIndex(where: { $0 === element }) {
-            self.swapAt(index, self.count - 1)
-        }
-    }
-}
-
-
-// MARK: - Scanning
-extension RileyLinkDeviceManager {
+    
     public func setScanningEnabled(_ enabled: Bool) {
         centralQueue.async {
             self.isScanningEnabled = enabled
@@ -235,11 +225,23 @@ extension RileyLinkDeviceManager {
             }
         }
     }
+
+    public func shouldConnect(to deviceID: String) -> Bool {
+        return self.autoConnectIDs.contains(deviceID)
+    }
+}
+
+extension Array where Element == RileyLinkBluetoothDevice {
+    mutating func deprioritize(_ element: Element) {
+        if let index = self.firstIndex(where: { $0 === element }) {
+            self.swapAt(index, self.count - 1)
+        }
+    }
 }
 
 
 // MARK: - Delegate methods called on `centralQueue`
-extension RileyLinkDeviceManager: CBCentralManagerDelegate {
+extension RileyLinkBluetoothDeviceProvider: CBCentralManagerDelegate {
     public func centralManager(_ central: CBCentralManager, willRestoreState dict: [String : Any]) {
         log.default("%@", #function)
 
@@ -283,13 +285,13 @@ extension RileyLinkDeviceManager: CBCentralManagerDelegate {
 
     public func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
         // Notify the device so it can begin configuration
-        for device in devices where device.manager.peripheral.identifier == peripheral.identifier {
+        for device in devices where device.peripheralIdentifier == peripheral.identifier {
             device.centralManager(central, didConnect: peripheral)
         }
     }
 
     public func centralManager(_ central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: Error?) {
-        for device in devices where device.manager.peripheral.identifier == peripheral.identifier {
+        for device in devices where device.peripheralIdentifier == peripheral.identifier {
             device.centralManager(central, didDisconnectPeripheral: peripheral, error: error)
         }
 
@@ -299,7 +301,7 @@ extension RileyLinkDeviceManager: CBCentralManagerDelegate {
     public func centralManager(_ central: CBCentralManager, didFailToConnect peripheral: CBPeripheral, error: Error?) {
         log.error("%@: %@: %@", #function, peripheral, String(describing: error))
 
-        for device in devices where device.manager.peripheral.identifier == peripheral.identifier {
+        for device in devices where device.peripheralIdentifier == peripheral.identifier {
             device.centralManager(central, didFailToConnect: peripheral, error: error)
         }
 
@@ -308,7 +310,7 @@ extension RileyLinkDeviceManager: CBCentralManagerDelegate {
 }
 
 
-extension RileyLinkDeviceManager {
+extension RileyLinkBluetoothDeviceProvider {
     public override var debugDescription: String {
         var report = [
             "## RileyLinkDeviceManager",
@@ -332,7 +334,7 @@ extension Notification.Name {
     public static let ManagerDevicesDidChange = Notification.Name("com.rileylink.RileyLinkBLEKit.DevicesDidChange")
 }
 
-extension RileyLinkDeviceManager {
+extension RileyLinkBluetoothDeviceProvider {
     public static let autoConnectIDsStateKey = "com.rileylink.RileyLinkBLEKit.AutoConnectIDs"
 }
 

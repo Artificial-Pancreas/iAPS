@@ -9,7 +9,7 @@
 import Foundation
 
 
-public struct UnknownMessageBody: MessageBody, DictionaryRepresentable {
+public struct UnknownMessageBody: DecodableMessageBody, DictionaryRepresentable {
     public static var length = 0
 
     let rxData: Data
@@ -24,5 +24,9 @@ public struct UnknownMessageBody: MessageBody, DictionaryRepresentable {
 
     public var dictionaryRepresentation: [String: Any] {
         return ["rawData": rxData]
+    }
+
+    public var description: String {
+        return "UnknownMessage(\(rxData.hexadecimalString))"
     }
 }

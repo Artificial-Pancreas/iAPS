@@ -213,7 +213,7 @@ class PodMessageTransport: MessageTransport {
 
         let sendMessage = try getCmdMessage(cmd: message)
 
-        let writeResult = manager.sendPacket(sendMessage)
+        let writeResult = manager.sendMessagePacket(sendMessage)
         switch writeResult {
         case .sentWithAcknowledgment:
             break;
@@ -264,7 +264,7 @@ class PodMessageTransport: MessageTransport {
     func readAndAckResponse() throws -> Message {
         guard let enDecrypt = self.enDecrypt else { throw PodCommsError.podNotConnected }
 
-        let readResponse = try manager.readMessage()
+        let readResponse = try manager.readMessagePacket()
         guard let readMessage = readResponse else {
             throw PodProtocolError.messageIOException("Could not read response")
         }
@@ -280,7 +280,7 @@ class PodMessageTransport: MessageTransport {
         incrementNonceSeq()
         let ack = try getAck(response: decrypted)
         log.debug("Sending ACK: %@ in packet $ack", ack.payload.hexadecimalString)
-        let ackResult = manager.sendPacket(ack)
+        let ackResult = manager.sendMessagePacket(ack)
         guard case .sentWithAcknowledgment = ackResult else {
             throw PodProtocolError.messageIOException("Could not write $msgType: \(ackResult)")
         }

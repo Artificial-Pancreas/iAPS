@@ -80,13 +80,7 @@ extension OmniBLEPumpManagerError: LocalizedError {
 
 public class OmniBLEPumpManager: DeviceManager {
 
-    //public let managerIdentifier: String = "Omnipod-Dash" // use a single token to make parsing log files easier
-    
-    public static let managerIdentifier = "Omnipod-Dash"
-    
-    public var managerIdentifier: String {
-        return OmniBLEPumpManager.managerIdentifier
-    }
+    public let managerIdentifier: String = "Omnipod-Dash" // use a single token to make parsing log files easier
 
     public let localizedTitle = LocalizedString("Omnipod DASH", comment: "Generic title of the OmniBLE pump manager")
 
@@ -2064,7 +2058,7 @@ extension OmniBLEPumpManager: PumpManager {
             }
 
 
-            delegate.pumpManager(self, hasNewPumpEvents: doses.map { NewPumpEvent($0) }, lastSync: lastSync, completion: { (error) in
+            delegate.pumpManager(self, hasNewPumpEvents: doses.map { NewPumpEvent($0) }, lastReconciliation: lastSync, completion: { (error) in
                 if let error = error {
                     self.log.error("Error storing pod events: %@", String(describing: error))
                 } else {

@@ -56,7 +56,7 @@ class LTKExchanger {
         try throwOnSendError(sps1.message, LTKExchanger.SPS1)
 
         log.debug("Reading sps1")
-        let podSps1 = try manager.readMessage()
+        let podSps1 = try manager.readMessagePacket()
         guard let _ = podSps1 else {
             throw PodProtocolError.pairingException("Could not read SPS1")
         }
@@ -74,7 +74,7 @@ class LTKExchanger {
         )
         try throwOnSendError(sps2.message, LTKExchanger.SPS2)
 
-        let podSps2 = try manager.readMessage()
+        let podSps2 = try manager.readMessagePacket()
         guard let _ = podSps2 else {
             throw PodProtocolError.pairingException("Could not read SPS2")
         }
@@ -90,12 +90,12 @@ class LTKExchanger {
             keys: [LTKExchanger.SP0GP0],
             payloads: [Data()]
         )
-        let result = manager.sendPacket(sp0gp0.message)
+        let result = manager.sendMessagePacket(sp0gp0.message)
         guard case .sentWithAcknowledgment = result else {
             throw PodProtocolError.pairingException("Error sending SP0GP0: \(result)")
         }
 
-        let p0 = try manager.readMessage()
+        let p0 = try manager.readMessagePacket()
         guard let _ = p0 else {
             throw PodProtocolError.pairingException("Could not read P0")
         }
@@ -113,7 +113,7 @@ class LTKExchanger {
     }
 
     private func throwOnSendError(_ msg: MessagePacket, _ msgType: String) throws {
-        let result = manager.sendPacket(msg)
+        let result = manager.sendMessagePacket(msg)
         guard case .sentWithAcknowledgment = result else {
             throw PodProtocolError.pairingException("Send failure: \(result)")
         }

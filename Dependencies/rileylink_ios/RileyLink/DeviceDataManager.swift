@@ -21,7 +21,7 @@ import UserNotifications
 
 class DeviceDataManager {
 
-    let rileyLinkConnectionManager: RileyLinkConnectionManager
+    let rileyLinkDeviceProvider: RileyLinkDeviceProvider
     
     var pumpManager: PumpManagerUI? {
         didSet {
@@ -35,30 +35,32 @@ class DeviceDataManager {
     
     init() {
         
-        if let connectionManagerState = UserDefaults.standard.rileyLinkConnectionManagerState {
-            rileyLinkConnectionManager = RileyLinkConnectionManager(state: connectionManagerState)
-        } else {
-            rileyLinkConnectionManager = RileyLinkConnectionManager(autoConnectIDs: [])
-        }
-        rileyLinkConnectionManager.delegate = self
-        rileyLinkConnectionManager.setScanningEnabled(true)
+        let connectionManagerState = UserDefaults.standard.rileyLinkConnectionManagerState
+        rileyLinkDeviceProvider = RileyLinkBluetoothDeviceProvider(autoConnectIDs: connectionManagerState?.autoConnectIDs ?? [])
+        rileyLinkDeviceProvider.delegate = self
+        rileyLinkDeviceProvider.setScanningEnabled(true)
 
         if let pumpManagerRawValue = UserDefaults.standard.pumpManagerRawValue {
-            pumpManager = PumpManagerFromRawValue(pumpManagerRawValue, rileyLinkDeviceProvider: rileyLinkConnectionManager.deviceProvider) as? PumpManagerUI
+            pumpManager = PumpManagerFromRawValue(pumpManagerRawValue, rileyLinkDeviceProvider: rileyLinkDeviceProvider) as? PumpManagerUI
             pumpManager?.pumpManagerDelegate = self
         }
     }
 }
 
-extension DeviceDataManager: RileyLinkConnectionManagerDelegate {
-    func rileyLinkConnectionManager(_ rileyLinkConnectionManager: RileyLinkConnectionManager, didChange state: RileyLinkConnectionManagerState)
-    {
+extension DeviceDataManager: RileyLinkDeviceProviderDelegate {
+    func rileylinkDeviceProvider(_ rileylinkDeviceProvider: RileyLinkBLEKit.RileyLinkDeviceProvider, didChange state: RileyLinkBLEKit.RileyLinkConnectionState) {
         UserDefaults.standard.rileyLinkConnectionManagerState = state
-    }    
+    }
 }
 
 extension DeviceDataManager: PumpManagerDelegate {
-    
+    func pumpManagerPumpWasReplaced(_ pumpManager: LoopKit.PumpManager) {
+    }
+
+    var detectedSystemTimeOffset: TimeInterval {
+        return 0;
+    }
+
     func pumpManager(_ pumpManager: PumpManager, didAdjustPumpClockBy adjustment: TimeInterval) {
         log.debug("didAdjustPumpClockBy %@", adjustment)
     }
@@ -88,7 +90,7 @@ extension DeviceDataManager: PumpManagerDelegate {
         log.error("pumpManager didError %@", String(describing: error))
     }
     
-    func pumpManager(_ pumpManager: PumpManager, hasNewPumpEvents events: [NewPumpEvent], lastReconciliation: Date?, completion: @escaping (_ error: Error?) -> Void) {
+    func pumpManager(_ pumpManager: PumpManager, hasNewPumpEvents events: [NewPumpEvent], lastSync lastReconciliation: Date?, completion: @escaping (_ error: Error?) -> Void) {
     }
     
     func pumpManager(_ pumpManager: PumpManager, didReadReservoirValue units: Double, at date: Date, completion: @escaping (Result<(newValue: ReservoirValue, lastValue: ReservoirValue?, areStoredValuesContinuous: Bool), Error>) -> Void) {
@@ -104,11 +106,23 @@ extension DeviceDataManager: PumpManagerDelegate {
 
 // MARK: - DeviceManagerDelegate
 extension DeviceDataManager: DeviceManagerDelegate {
+    func doesIssuedAlertExist(identifier: LoopKit.Alert.Identifier, completion: @escaping (Result<Bool, Error>) -> Void) {
+    }
+
+    func lookupAllUnretracted(managerIdentifier: String, completion: @escaping (Result<[LoopKit.PersistedAlert], Error>) -> Void) {
+    }
+
+    func lookupAllUnacknowledgedUnretracted(managerIdentifier: String, completion: @escaping (Result<[LoopKit.PersistedAlert], Error>) -> Void) {
+    }
+
+    func recordRetractedAlert(_ alert: LoopKit.Alert, at date: Date) {
+    }
+
     func deviceManager(_ manager: DeviceManager, logEventForDeviceIdentifier deviceIdentifier: String?, type: DeviceLogEntryType, message: String, completion: ((Error?) -> Void)?) {}
 }
 
 // MARK: - AlertPresenter
-extension DeviceDataManager: AlertPresenter {
+extension DeviceDataManager: AlertIssuer {
     func issueAlert(_ alert: Alert) {
     }
     

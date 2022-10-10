@@ -46,6 +46,33 @@ public enum PumpAlarmType {
     }
 }
 
+extension PumpAlarmType {
+    var localizedString: String {
+        switch self {
+        case .autoOff:
+            return LocalizedString("Auto-Off Alarm", comment: "Title for PumpAlarmType.autoOff")
+        case .batteryOutLimitExceeded:
+            return LocalizedString("Battery Out Limit", comment: "Title for PumpAlarmType.batteryOutLimitExceeded")
+        case .noDelivery:
+            return LocalizedString("No Delivery Alarm", comment: "Title for PumpAlarmType.noDelivery")
+        case .batteryDepleted:
+            return LocalizedString("Battery Depleted", comment: "Title for PumpAlarmType.batteryDepleted")
+        case .deviceReset:
+            return LocalizedString("Device Reset", comment: "Title for deviceReset")
+        case .deviceResetBatteryIssue17:
+            return LocalizedString("BatteryIssue17", comment: "Title for PumpAlarmType.deviceResetBatteryIssue17")
+        case .deviceResetBatteryIssue21:
+            return LocalizedString("BatteryIssue21", comment: "Title for PumpAlarmType.deviceResetBatteryIssue21")
+        case .reprogramError:
+            return LocalizedString("Reprogram Error", comment: "Title for PumpAlarmType.reprogramError")
+        case .emptyReservoir:
+            return LocalizedString("Empty Reservoir", comment: "Title for PumpAlarmType.emptyReservoir")
+        case .unknownType:
+            return LocalizedString("Unknown Alarm", comment: "Title for PumpAlarmType.unknownType")
+        }
+    }
+}
+
 public struct PumpAlarmPumpEvent: TimestampedPumpEvent {
     public let length: Int
     public let rawData: Data

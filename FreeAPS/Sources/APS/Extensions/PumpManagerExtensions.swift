@@ -24,7 +24,7 @@ extension PumpManagerUI {
             bluetoothProvider: bluetoothProvider,
             colorPalette: .default,
             allowDebugFeatures: false,
-            allowedInsulinTypes: [.apidra, .humalog, .novolog, .fiasp, .lyumjev, .afrezza]
+            allowedInsulinTypes: [.apidra, .humalog, .novolog, .fiasp, .lyumjev]
         )
     }
 

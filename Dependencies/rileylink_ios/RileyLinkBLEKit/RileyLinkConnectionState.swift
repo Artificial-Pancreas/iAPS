@@ -8,9 +8,9 @@
 
 import Foundation
 
-public struct RileyLinkConnectionManagerState: RawRepresentable, Equatable {
+public struct RileyLinkConnectionState: RawRepresentable, Equatable {
     
-    public typealias RawValue = RileyLinkConnectionManager.RawStateValue
+    public typealias RawValue = RileyLinkDeviceProvider.RawStateValue
     
     public var autoConnectIDs: Set<String>
 
@@ -18,7 +18,7 @@ public struct RileyLinkConnectionManagerState: RawRepresentable, Equatable {
         self.autoConnectIDs = autoConnectIDs
     }
     
-    public init?(rawValue: RileyLinkConnectionManager.RawStateValue) {
+    public init?(rawValue: RileyLinkDeviceProvider.RawStateValue) {
         guard
             let autoConnectIDs = rawValue["autoConnectIDs"] as? [String]
             else {

@@ -18,7 +18,7 @@ See: [MinimedRF Class](https://github.com/ps2/minimed_rf/blob/master/lib/minimed
 a2 594040 01 7c 65 0727070f0906 0175 4c
 ```
 */
-public struct MySentryAlertMessageBody: MessageBody, DictionaryRepresentable {
+public struct MySentryAlertMessageBody: DecodableMessageBody, DictionaryRepresentable {
     public static let length = 10
 
     public let alertType: MySentryAlertType?
@@ -54,6 +54,10 @@ public struct MySentryAlertMessageBody: MessageBody, DictionaryRepresentable {
             "alertType": (alertType != nil ? String(describing: alertType!) : rxData.subdata(in: 1..<2).hexadecimalString),
             "byte89": rxData.subdata(in: 8..<10).hexadecimalString
         ]
-
     }
+
+    public var description: String {
+        return "MySentryAlert(\(String(describing: alertType)), \(alertDate))"
+    }
+
 }

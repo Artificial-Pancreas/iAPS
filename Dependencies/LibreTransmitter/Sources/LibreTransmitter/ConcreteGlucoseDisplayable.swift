@@ -95,6 +95,26 @@ public enum GlucoseTrend: Int, CaseIterable {
             return LocalizedString("Falling very fast", comment: "Glucose trend down-down-down")
         }
     }
+    
+    public var direction: String {
+        switch self {
+        case .upUpUp:
+            return "DoubleUp"
+        case .upUp:
+            return "SingleUp"
+        case .up:
+            return "FortyFiveUp"
+        case .flat:
+            return "Flat"
+        case .down:
+            return "FortyFiveDown"
+        case .downDown:
+            return "SingleDown"
+        case .downDownDown:
+            return "DoubleDown"
+        }
+    }
+
 }
 
 public protocol GlucoseDisplayable {

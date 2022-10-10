@@ -40,18 +40,10 @@ extension DoseEntry {
         }
 
         // Consider doses within the delta time window as momentary
-        //ken changes
-        //implement user set negative basal multiplier
-        let negativeBasalMultiplier = UserDefaults.standard.double(forKey: "negativeBasalMultiplier")
-        var modifiednetBasalUnits = netBasalUnits
-        if netBasalUnits < 0.0 {
-            modifiednetBasalUnits = netBasalUnits * negativeBasalMultiplier
-        }
-        //this used netBasalUnits as multiplier originally
         if endDate.timeIntervalSince(startDate) <= 1.05 * delta {
-            return modifiednetBasalUnits * model.percentEffectRemaining(at: time)
+            return netBasalUnits * model.percentEffectRemaining(at: time)
         } else {
-            return modifiednetBasalUnits * continuousDeliveryInsulinOnBoard(at: date, model: model, delta: delta)
+            return netBasalUnits * continuousDeliveryInsulinOnBoard(at: date, model: model, delta: delta)
         }
     }
 
@@ -85,21 +77,11 @@ extension DoseEntry {
         }
 
         // Consider doses within the delta time window as momentary
-        //ken changes
-            //if net basal is negative use a mulitplier (0-1)
-            //modified in user settings
-            
-            let negativeBasalMultiplier = UserDefaults.standard.double(forKey: "negativeBasalMultiplier")
-            var modifiednetBasalUnits = netBasalUnits
-            if netBasalUnits < 0.0 {
-                modifiednetBasalUnits = netBasalUnits * negativeBasalMultiplier
-            }
-            //originally used netBasalUnits
-            if endDate.timeIntervalSince(startDate) <= 1.05 * delta {
-                return modifiednetBasalUnits * -insulinSensitivity * (1.0 - model.percentEffectRemaining(at: time))
-            } else {
-                return modifiednetBasalUnits * -insulinSensitivity * continuousDeliveryGlucoseEffect(at: date, model: model, delta: delta)
-            }
+        if endDate.timeIntervalSince(startDate) <= 1.05 * delta {
+            return netBasalUnits * -insulinSensitivity * (1.0 - model.percentEffectRemaining(at: time))
+        } else {
+            return netBasalUnits * -insulinSensitivity * continuousDeliveryGlucoseEffect(at: date, model: model, delta: delta)
+        }
     }
 
     func trimmed(from start: Date? = nil, to end: Date? = nil, syncIdentifier: String? = nil) -> DoseEntry {
@@ -400,6 +382,21 @@ extension Collection where Element == DoseEntry {
                     if endDate > last.startDate {
                         reconciled.append(last.trimmed(from: nil, to: endDate, syncIdentifier: last.syncIdentifier))
                     }
+                } else if let suspend = lastSuspend {
+                    // Handle missing resume. Basal following suspend, with no resume.
+                    reconciled.append(DoseEntry(
+                        type: suspend.type,
+                        startDate: suspend.startDate,
+                        endDate: dose.startDate,
+                        value: suspend.value,
+                        unit: suspend.unit,
+                        description: suspend.description ?? dose.description,
+                        syncIdentifier: suspend.syncIdentifier,
+                        insulinType: suspend.insulinType,
+                        isMutable: suspend.isMutable,
+                        wasProgrammedByPumpUI: suspend.wasProgrammedByPumpUI
+                    ))
+                    lastSuspend = nil
                 }
 
                 lastBasal = dose

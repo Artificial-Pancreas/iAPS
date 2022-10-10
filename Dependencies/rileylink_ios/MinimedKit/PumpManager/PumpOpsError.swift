@@ -38,35 +38,6 @@ extension PumpOpsError: LocalizedError {
     public var errorDescription: String? {
         switch self {
         case .bolusInProgress:
-            return nil
-        case .couldNotDecode:
-            return LocalizedString("Decoding Error", comment: "Error description")
-        case .crosstalk:
-            return nil
-        case .deviceError:
-            return LocalizedString("Device Error", comment: "Error description")
-        case .noResponse:
-            return nil
-        case .pumpError:
-            return LocalizedString("Pump Error", comment: "Error description")
-        case .pumpSuspended:
-            return nil
-        case .rfCommsFailure:
-            return nil
-        case .unexpectedResponse:
-            return nil
-        case .unknownPumpErrorCode:
-            return nil
-        case .unknownPumpModel:
-            return nil
-        case .unknownResponse:
-            return nil
-        }
-    }
-
-    public var failureReason: String? {
-        switch self {
-        case .bolusInProgress:
             return LocalizedString("A bolus is already in progress", comment: "Communications error for a bolus currently running")
         case .couldNotDecode(rx: let data, during: let during):
             return String(format: LocalizedString("Invalid response during %1$@: %2$@", comment: "Format string for failure reason. (1: The operation being performed) (2: The response data)"), String(describing: during), data.hexadecimalString)
@@ -78,8 +49,8 @@ extension PumpOpsError: LocalizedError {
             return LocalizedString("Pump is suspended", comment: "")
         case .rfCommsFailure(let msg):
             return msg
-        case .unexpectedResponse:
-            return LocalizedString("Pump responded unexpectedly", comment: "")
+        case .unexpectedResponse(let response, _):
+            return String(format: LocalizedString("Unexpected response %1$@", comment: "Format string for an unexpectedResponse. (2: The response)"), String(describing: response))
         case .unknownPumpErrorCode(let code):
             return String(format: LocalizedString("Unknown pump error code: %1$@", comment: "The format string description of an unknown pump error code. (1: The specific error code raw value)"), String(describing: code))
         case .unknownPumpModel(let model):

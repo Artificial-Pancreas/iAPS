@@ -41,4 +41,8 @@ public struct MeterMessage: MessageBody, DictionaryRepresentable {
             "ackFlag": ackFlag,
         ]
     }
+
+    public var description: String {
+        return "Meter(\(glucose), \(ackFlag))"
+    }
 }

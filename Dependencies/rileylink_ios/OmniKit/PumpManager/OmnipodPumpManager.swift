@@ -92,21 +92,15 @@ extension OmnipodPumpManagerError: LocalizedError {
 
 public class OmnipodPumpManager: RileyLinkPumpManager {
     
-    //public let managerIdentifier: String = "Omnipod"
-    
-    public static let managerIdentifier = "Omnipod"
-    
-    public var managerIdentifier: String {
-        return OmnipodPumpManager.managerIdentifier
-    }
+    public let managerIdentifier: String = "Omnipod"
     
     public let localizedTitle = LocalizedString("Omnipod", comment: "Generic title of the omnipod pump manager")
     
-    public init(state: OmnipodPumpManagerState, rileyLinkDeviceProvider: RileyLinkDeviceProvider, rileyLinkConnectionManager: RileyLinkConnectionManager? = nil, dateGenerator: @escaping () -> Date = Date.init) {
+    public init(state: OmnipodPumpManagerState, rileyLinkDeviceProvider: RileyLinkDeviceProvider, dateGenerator: @escaping () -> Date = Date.init) {
         self.lockedState = Locked(state)
         self.lockedPodComms = Locked(PodComms(podState: state.podState))
         self.dateGenerator = dateGenerator
-        super.init(rileyLinkDeviceProvider: rileyLinkDeviceProvider, rileyLinkConnectionManager: rileyLinkConnectionManager)
+        super.init(rileyLinkDeviceProvider: rileyLinkDeviceProvider)
 
         self.podComms.delegate = self
         self.podComms.messageLogger = self
@@ -119,11 +113,11 @@ public class OmnipodPumpManager: RileyLinkPumpManager {
             return nil
         }
 
-        let rileyLinkConnectionManager = RileyLinkConnectionManager(state: connectionManagerState)
+        let deviceProvider = RileyLinkBluetoothDeviceProvider(autoConnectIDs: connectionManagerState.autoConnectIDs)
 
-        self.init(state: state, rileyLinkDeviceProvider: rileyLinkConnectionManager.deviceProvider, rileyLinkConnectionManager: rileyLinkConnectionManager)
+        self.init(state: state, rileyLinkDeviceProvider: deviceProvider)
 
-        rileyLinkConnectionManager.delegate = self
+        deviceProvider.delegate = self
     }
 
     private var podComms: PodComms {
@@ -175,7 +169,10 @@ public class OmnipodPumpManager: RileyLinkPumpManager {
             }
 
             if oldValue.podState?.lastInsulinMeasurements?.reservoirLevel != newValue.podState?.lastInsulinMeasurements?.reservoirLevel {
-                if let lastInsulinMeasurements = newValue.podState?.lastInsulinMeasurements, let reservoirLevel = lastInsulinMeasurements.reservoirLevel {
+                if let lastInsulinMeasurements = newValue.podState?.lastInsulinMeasurements,
+                   let reservoirLevel = lastInsulinMeasurements.reservoirLevel,
+                   reservoirLevel != Pod.reservoirLevelAboveThresholdMagicNumber
+                {
                     self.pumpDelegate.notify({ (delegate) in
                         self.log.info("DU: updating reservoir level %{public}@", String(describing: reservoirLevel))
                         delegate?.pumpManager(self, didReadReservoirValue: reservoirLevel, at: lastInsulinMeasurements.validTime) { _ in }
@@ -233,7 +230,7 @@ public class OmnipodPumpManager: RileyLinkPumpManager {
     
     // MARK: - RileyLink Updates
 
-    override public var rileyLinkConnectionManagerState: RileyLinkConnectionManagerState? {
+    override public var rileyLinkConnectionManagerState: RileyLinkConnectionState? {
         get {
             return state.rileyLinkConnectionManagerState
         }
@@ -321,7 +318,7 @@ extension OmnipodPumpManager {
     
     public func buildPumpStatusHighlight(for state: OmnipodPumpManagerState, andDate date: Date = Date()) -> PumpStatusHighlight? {
         if state.podState?.needsCommsRecovery == true {
-            return PumpStatusHighlight(localizedMessage: NSLocalizedString("Comms Issue", comment: "Status highlight that delivery is uncertain."),
+            return PumpStatusHighlight(localizedMessage: LocalizedString("Comms Issue", comment: "Status highlight that delivery is uncertain."),
                                                          imageName: "exclamationmark.circle.fill",
                                                          state: .critical)
         }
@@ -329,17 +326,17 @@ extension OmnipodPumpManager {
         switch podCommState(for: state) {
         case .activating:
             return PumpStatusHighlight(
-                localizedMessage: NSLocalizedString("Finish Pairing", comment: "Status highlight that when pod is activating."),
+                localizedMessage: LocalizedString("Finish Pairing", comment: "Status highlight that when pod is activating."),
                 imageName: "exclamationmark.circle.fill",
                 state: .warning)
         case .deactivating:
             return PumpStatusHighlight(
-                localizedMessage: NSLocalizedString("Finish Deactivation", comment: "Status highlight that when pod is deactivating."),
+                localizedMessage: LocalizedString("Finish Deactivation", comment: "Status highlight that when pod is deactivating."),
                 imageName: "exclamationmark.circle.fill",
                 state: .warning)
         case .noPod:
             return PumpStatusHighlight(
-                localizedMessage: NSLocalizedString("No Pod", comment: "Status highlight that when no pod is paired."),
+                localizedMessage: LocalizedString("No Pod", comment: "Status highlight that when no pod is paired."),
                 imageName: "exclamationmark.circle.fill",
                 state: .warning)
         case .fault(let detail):
@@ -361,22 +358,22 @@ extension OmnipodPumpManager {
         case .active:
             if let reservoirPercent = state.reservoirLevel?.percentage, reservoirPercent == 0 {
                 return PumpStatusHighlight(
-                    localizedMessage: NSLocalizedString("No Insulin", comment: "Status highlight that a pump is out of insulin."),
+                    localizedMessage: LocalizedString("No Insulin", comment: "Status highlight that a pump is out of insulin."),
                     imageName: "exclamationmark.circle.fill",
                     state: .critical)
             } else if state.podState?.isSuspended == true {
                 return PumpStatusHighlight(
-                    localizedMessage: NSLocalizedString("Insulin Suspended", comment: "Status highlight that insulin delivery was suspended."),
+                    localizedMessage: LocalizedString("Insulin Suspended", comment: "Status highlight that insulin delivery was suspended."),
                     imageName: "pause.circle.fill",
                     state: .warning)
             } else if date.timeIntervalSince(state.lastPumpDataReportDate ?? .distantPast) > .minutes(12) {
                 return PumpStatusHighlight(
-                    localizedMessage: NSLocalizedString("Signal Loss", comment: "Status highlight when communications with the pod haven't happened recently."),
+                    localizedMessage: LocalizedString("Signal Loss", comment: "Status highlight when communications with the pod haven't happened recently."),
                     imageName: "exclamationmark.circle.fill",
                     state: .critical)
             } else if isRunningManualTempBasal(for: state) {
                 return PumpStatusHighlight(
-                    localizedMessage: NSLocalizedString("Manual Basal", comment: "Status highlight when manual temp basal is running."),
+                    localizedMessage: LocalizedString("Manual Basal", comment: "Status highlight when manual temp basal is running."),
                     imageName: "exclamationmark.circle.fill",
                     state: .warning)
             }
@@ -696,7 +693,7 @@ extension OmnipodPumpManager {
     #if targetEnvironment(simulator)
     private func jumpStartPod(address: UInt32, lot: UInt32, tid: UInt32, fault: DetailedStatus? = nil, startDate: Date? = nil, mockFault: Bool) {
         let start = startDate ?? Date()
-        var podState = PodState(address: address, piVersion: "jumpstarted", pmVersion: "jumpstarted", lot: lot, tid: tid, insulinType: .novolog)
+        var podState = PodState(address: address, pmVersion: "jumpstarted", piVersion: "jumpstarted", lot: lot, tid: tid, insulinType: .novolog)
         podState.setupProgress = .podPaired
         podState.activatedAt = start
         podState.expiresAt = start + .hours(72)
@@ -744,22 +741,22 @@ extension OmnipodPumpManager {
         let deviceSelector = self.rileyLinkDeviceProvider.firstConnectedDevice
         let primeSession = { (result: PodComms.SessionRunResult) in
             switch result {
-            case .success(let session):
+            case .success(let messageSender):
                 // We're on the session queue
-                session.assertOnSessionQueue()
+                messageSender.assertOnSessionQueue()
 
                 self.log.default("Beginning pod prime")
 
                 // Clean up any previously un-stored doses if needed
                 let unstoredDoses = self.state.unstoredDoses
-                if self.store(doses: unstoredDoses, in: session) {
+                if self.store(doses: unstoredDoses, in: messageSender) {
                     self.setState({ (state) in
                         state.unstoredDoses.removeAll()
                     })
                 }
 
                 do {
-                    let primeFinishedAt = try session.prime()
+                    let primeFinishedAt = try messageSender.prime()
                     completion(.success(primeFinishedAt))
                 } catch let error {
                     completion(.failure(PumpManagerError.communication(error as? LocalizedError)))
@@ -867,14 +864,14 @@ extension OmnipodPumpManager {
         let rileyLinkSelector = self.rileyLinkDeviceProvider.firstConnectedDevice
         self.podComms.runSession(withName:  "Insert cannula", using: rileyLinkSelector) { (result) in
             switch result {
-            case .success(let session):
+            case .success(let messageSender):
                 do {
                     if self.state.podState?.setupProgress.needsInitialBasalSchedule == true {
                         let scheduleOffset = timeZone.scheduleOffset(forDate: Date())
-                        try session.programInitialBasalSchedule(self.state.basalSchedule, scheduleOffset: scheduleOffset)
+                        try messageSender.programInitialBasalSchedule(self.state.basalSchedule, scheduleOffset: scheduleOffset)
 
-                        session.dosesForStorage() { (doses) -> Bool in
-                            return self.store(doses: doses, in: session)
+                        messageSender.dosesForStorage() { (doses) -> Bool in
+                            return self.store(doses: doses, in: messageSender)
                         }
                     }
 
@@ -886,7 +883,7 @@ extension OmnipodPumpManager {
                         .lowReservoir(self.state.lowReservoirReminderValue)
                     ]
 
-                    let finishWait = try session.insertCannula(optionalAlerts: alerts)
+                    let finishWait = try messageSender.insertCannula(optionalAlerts: alerts)
                     completion(.success(finishWait))
                 } catch let error {
                     completion(.failure(.communication(error)))
@@ -905,9 +902,9 @@ extension OmnipodPumpManager {
         let deviceSelector = self.rileyLinkDeviceProvider.firstConnectedDevice
         self.podComms.runSession(withName: "Check cannula insertion finished", using: deviceSelector) { (result) in
             switch result {
-            case .success(let session):
+            case .success(let messageSender):
                 do {
-                    try session.checkInsertionCompleted()
+                    try messageSender.checkInsertionCompleted()
                     completion(nil)
                 } catch let error {
                     self.log.error("Failed to fetch pod status: %{public}@", String(describing: error))
@@ -1059,9 +1056,9 @@ extension OmnipodPumpManager {
         let rileyLinkSelector = self.rileyLinkDeviceProvider.firstConnectedDevice
         self.podComms.runSession(withName: "Deactivate pod", using: rileyLinkSelector) { (result) in
             switch result {
-            case .success(let session):
+            case .success(let messageSender):
                 do {
-                    try session.deactivatePod()
+                    try messageSender.deactivatePod()
                     completion(nil)
                 } catch let error {
                     completion(OmnipodPumpManagerError.communication(error))
@@ -2056,7 +2053,7 @@ extension OmnipodPumpManager: PumpManager {
                 preconditionFailure("pumpManagerDelegate cannot be nil")
             }
 
-            delegate.pumpManager(self, hasNewPumpEvents: doses.map { NewPumpEvent($0) }, lastSync: lastSync, completion: { (error) in
+            delegate.pumpManager(self, hasNewPumpEvents: doses.map { NewPumpEvent($0) }, lastReconciliation: lastSync, completion: { (error) in
                 if let error = error {
                     self.log.error("Error storing pod events: %@", String(describing: error))
                 } else {

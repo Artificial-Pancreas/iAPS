@@ -31,4 +31,8 @@ public class ReadTimeCarelinkMessageBody: CarelinkLongMessageBody {
 
         super.init(rxData: rxData)
     }
+
+    override public var description: String {
+        return "ReadTime(\(dateComponents))"
+    }
 }

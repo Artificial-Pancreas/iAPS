@@ -11,7 +11,7 @@ import LoopKit
 import RileyLinkBLEKit
 
 
-protocol PumpOpsSessionDelegate: AnyObject {
+public protocol PumpOpsSessionDelegate: AnyObject {
     func pumpOpsSession(_ session: PumpOpsSession, didChange state: PumpState)
     func pumpOpsSessionDidChangeRadioConfig(_ session: PumpOpsSession)
 }
@@ -25,14 +25,14 @@ public class PumpOpsSession {
         }
     }
     public let settings: PumpSettings
-    private let session: PumpMessageSender
+    private let messageSender: PumpMessageSender
 
     private unowned let delegate: PumpOpsSessionDelegate
     
-    internal init(settings: PumpSettings, pumpState: PumpState, session: PumpMessageSender, delegate: PumpOpsSessionDelegate) {
+    public init(settings: PumpSettings, pumpState: PumpState, messageSender: PumpMessageSender, delegate: PumpOpsSessionDelegate) {
         self.settings = settings
         self.pump = pumpState
-        self.session = session
+        self.messageSender = messageSender
         self.delegate = delegate
     }
 }
@@ -68,13 +68,13 @@ extension PumpOpsSession {
         if pump.pumpModel == nil || !pump.pumpModel!.hasMySentry {
             // Older pumps have a longer sleep cycle between wakeups, so send an initial burst
             do {
-                let _: PumpAckMessageBody = try session.getResponse(to: shortPowerMessage, repeatCount: 255, timeout: .milliseconds(1), retryCount: 0)
+                let _: PumpAckMessageBody = try messageSender.getResponse(to: shortPowerMessage, responseType: .pumpAck, repeatCount: 255, timeout: .milliseconds(1), retryCount: 0)
             }
             catch { }
         }
 
         do {
-            let _: PumpAckMessageBody = try session.getResponse(to: shortPowerMessage, repeatCount: 255, timeout: .seconds(12), retryCount: 0)
+            let _: PumpAckMessageBody = try messageSender.getResponse(to: shortPowerMessage, responseType: .pumpAck, repeatCount: 255, timeout: .seconds(12), retryCount: 0)
         } catch let error as PumpOpsError {
             throw PumpCommandError.command(error)
         }
@@ -82,7 +82,7 @@ extension PumpOpsSession {
 
     private func isPumpResponding() -> Bool {
         do {
-            let _: GetPumpModelCarelinkMessageBody = try session.getResponse(to: PumpMessage(settings: settings, type: .getPumpModel), responseType: .getPumpModel, retryCount: 1)
+            let _: GetPumpModelCarelinkMessageBody = try messageSender.getResponse(to: PumpMessage(settings: settings, type: .getPumpModel), responseType: .getPumpModel, repeatCount: 0, timeout: MinimedPumpMessageSender.standardPumpResponseWindow,  retryCount: 1)
             return true
         } catch {
             return false
@@ -119,7 +119,7 @@ extension PumpOpsSession {
         // Arguments
         do {
             let longPowerMessage = PumpMessage(settings: settings, type: .powerOn, body: PowerOnCarelinkMessageBody(duration: duration))
-            let _: PumpAckMessageBody = try session.getResponse(to: longPowerMessage)
+            let _: PumpAckMessageBody = try messageSender.getResponse(to: longPowerMessage, responseType: .pumpAck, repeatCount: 0, timeout: MinimedPumpMessageSender.standardPumpResponseWindow,  retryCount: 3)
         } catch let error as PumpOpsError {
             throw PumpCommandError.arguments(error)
         } catch {
@@ -153,7 +153,7 @@ extension PumpOpsSession {
         }
 
         try wakeup()
-        let body: GetPumpModelCarelinkMessageBody = try session.getResponse(to: PumpMessage(settings: settings, type: .getPumpModel), responseType: .getPumpModel)
+        let body: GetPumpModelCarelinkMessageBody = try messageSender.getResponse(to: PumpMessage(settings: settings, type: .getPumpModel), responseType: .getPumpModel, repeatCount: 0, timeout: MinimedPumpMessageSender.standardPumpResponseWindow,  retryCount: 3)
 
         guard let pumpModel = PumpModel(rawValue: body.model) else {
             throw PumpOpsError.unknownPumpModel(body.model)
@@ -179,7 +179,7 @@ extension PumpOpsSession {
     public func getPumpFirmwareVersion() throws -> String {
         
         try wakeup()
-        let body: GetPumpFirmwareVersionMessageBody = try session.getResponse(to: PumpMessage(settings: settings, type: .readFirmwareVersion), responseType: .readFirmwareVersion)
+        let body: GetPumpFirmwareVersionMessageBody = try messageSender.getResponse(to: PumpMessage(settings: settings, type: .readFirmwareVersion), responseType: .readFirmwareVersion, repeatCount: 0, timeout: MinimedPumpMessageSender.standardPumpResponseWindow,  retryCount: 3)
         
         return body.version
     }
@@ -195,7 +195,7 @@ extension PumpOpsSession {
     ///     - PumpOpsError.unknownResponse
     public func getBatteryStatus() throws -> GetBatteryCarelinkMessageBody {
         try wakeup()
-        return try session.getResponse(to: PumpMessage(settings: settings, type: .getBattery), responseType: .getBattery)
+        return try messageSender.getResponse(to: PumpMessage(settings: settings, type: .getBattery), responseType: .getBattery, repeatCount: 0, timeout: MinimedPumpMessageSender.standardPumpResponseWindow,  retryCount: 3)
     }
 
     /// - Throws:
@@ -209,7 +209,7 @@ extension PumpOpsSession {
     ///     - PumpOpsError.unknownResponse
     internal func getPumpStatus() throws -> ReadPumpStatusMessageBody {
         try wakeup()
-        return try session.getResponse(to: PumpMessage(settings: settings, type: .readPumpStatus), responseType: .readPumpStatus)
+        return try messageSender.getResponse(to: PumpMessage(settings: settings, type: .readPumpStatus), responseType: .readPumpStatus, repeatCount: 0, timeout: MinimedPumpMessageSender.standardPumpResponseWindow,  retryCount: 3)
     }
 
     /// - Throws:
@@ -223,7 +223,7 @@ extension PumpOpsSession {
     ///     - PumpOpsError.unknownResponse
     public func getSettings() throws -> ReadSettingsCarelinkMessageBody {
         try wakeup()
-        return try session.getResponse(to: PumpMessage(settings: settings, type: .readSettings), responseType: .readSettings)
+        return try messageSender.getResponse(to: PumpMessage(settings: settings, type: .readSettings), responseType: .readSettings, repeatCount: 0, timeout: MinimedPumpMessageSender.standardPumpResponseWindow,  retryCount: 3)
     }
 
     /// Reads the pump's time, returning a set of DateComponents in the pump's presumed time zone.
@@ -240,7 +240,7 @@ extension PumpOpsSession {
     ///     - PumpOpsError.unknownResponse
     public func getTime() throws -> DateComponents {
         try wakeup()
-        let response: ReadTimeCarelinkMessageBody = try session.getResponse(to: PumpMessage(settings: settings, type: .readTime), responseType: .readTime)
+        let response: ReadTimeCarelinkMessageBody = try messageSender.getResponse(to: PumpMessage(settings: settings, type: .readTime), responseType: .readTime, repeatCount: 0, timeout: MinimedPumpMessageSender.standardPumpResponseWindow,  retryCount: 3)
         var components = response.dateComponents
         components.timeZone = pump.timeZone
         return components
@@ -265,7 +265,7 @@ extension PumpOpsSession {
         var message = PumpMessage(settings: settings, type: profile.readMessageType)
         var scheduleData = Data()
         while (!isFinished) {
-            let body: DataFrameMessageBody = try session.getResponse(to: message, responseType: profile.readMessageType)
+            let body: DataFrameMessageBody = try messageSender.getResponse(to: message, responseType: profile.readMessageType, repeatCount: 0, timeout: MinimedPumpMessageSender.standardPumpResponseWindow,  retryCount: 3)
 
             scheduleData.append(body.contents)
             isFinished = body.isLastFrame
@@ -285,7 +285,7 @@ extension PumpOpsSession {
     public func getOtherDevicesIDs() throws -> ReadOtherDevicesIDsMessageBody {
         try wakeup()
 
-        return try session.getResponse(to: PumpMessage(settings: settings, type: .readOtherDevicesIDs), responseType: .readOtherDevicesIDs)
+        return try messageSender.getResponse(to: PumpMessage(settings: settings, type: .readOtherDevicesIDs), responseType: .readOtherDevicesIDs, repeatCount: 0, timeout: MinimedPumpMessageSender.standardPumpResponseWindow,  retryCount: 3)
     }
 
     /// - Throws:
@@ -298,7 +298,7 @@ extension PumpOpsSession {
     public func getOtherDevicesEnabled() throws -> Bool {
         try wakeup()
 
-        let response: ReadOtherDevicesStatusMessageBody = try session.getResponse(to: PumpMessage(settings: settings, type: .readOtherDevicesStatus), responseType: .readOtherDevicesStatus)
+        let response: ReadOtherDevicesStatusMessageBody = try messageSender.getResponse(to: PumpMessage(settings: settings, type: .readOtherDevicesStatus), responseType: .readOtherDevicesStatus, repeatCount: 0, timeout: MinimedPumpMessageSender.standardPumpResponseWindow,  retryCount: 3)
         return response.isEnabled
     }
 
@@ -312,7 +312,7 @@ extension PumpOpsSession {
     public func getRemoteControlIDs() throws -> ReadRemoteControlIDsMessageBody {
         try wakeup()
 
-        return try session.getResponse(to: PumpMessage(settings: settings, type: .readRemoteControlIDs), responseType: .readRemoteControlIDs)
+        return try messageSender.getResponse(to: PumpMessage(settings: settings, type: .readRemoteControlIDs), responseType: .readRemoteControlIDs, repeatCount: 0, timeout: MinimedPumpMessageSender.standardPumpResponseWindow,  retryCount: 3)
     }
 }
 
@@ -350,7 +350,7 @@ extension PumpOpsSession {
         let pumpModel = try getPumpModel()
         let pumpClock = try getTime()
 
-        let reservoir: ReadRemainingInsulinMessageBody = try session.getResponse(to: PumpMessage(settings: settings, type: .readRemainingInsulin), responseType: .readRemainingInsulin)
+        let reservoir: ReadRemainingInsulinMessageBody = try messageSender.getResponse(to: PumpMessage(settings: settings, type: .readRemainingInsulin), responseType: .readRemainingInsulin, repeatCount: 0, timeout: MinimedPumpMessageSender.standardPumpResponseWindow,  retryCount: 3)
 
         return (
             units: reservoir.getUnitsRemaining(insulinBitPackingScale: pumpModel.insulinBitPackingScale),
@@ -390,18 +390,18 @@ extension PumpOpsSession {
 // MARK: - Command messages
 extension PumpOpsSession {
     /// - Throws: `PumpCommandError` specifying the failure sequence
-    private func runCommandWithArguments<T: MessageBody>(_ message: PumpMessage, responseType: MessageType = .pumpAck) throws -> T {
+    private func runCommandWithArguments<T: MessageBody>(_ message: PumpMessage, responseType: MessageType = .pumpAck, retryCount: Int = 3) throws -> T {
         do {
             try wakeup()
 
             let shortMessage = PumpMessage(packetType: message.packetType, address: message.address.hexadecimalString, messageType: message.messageType, messageBody: CarelinkShortMessageBody())
-            let _: PumpAckMessageBody = try session.getResponse(to: shortMessage)
+            let _: PumpAckMessageBody = try messageSender.getResponse(to: shortMessage, responseType: .pumpAck, repeatCount: 0, timeout: MinimedPumpMessageSender.standardPumpResponseWindow,  retryCount: 3)
         } catch let error as PumpOpsError {
             throw PumpCommandError.command(error)
         }
 
         do {
-            return try session.getResponse(to: message, responseType: responseType)
+            return try messageSender.getResponse(to: message, responseType: responseType, repeatCount: 0, timeout: MinimedPumpMessageSender.standardPumpResponseWindow,  retryCount: retryCount)
         } catch let error as PumpOpsError {
             throw PumpCommandError.arguments(error)
         }
@@ -455,61 +455,59 @@ extension PumpOpsSession {
     /// - Parameters:
     ///   - unitsPerHour: The new basal rate, in Units per hour
     ///   - duration: The duration of the rate
-    /// - Returns: A result containing the pump message body describing the new basal rate or an error
-    public func setTempBasal(_ unitsPerHour: Double, duration: TimeInterval) -> Result<ReadTempBasalCarelinkMessageBody,PumpCommandError> {
-        var lastError: PumpCommandError?
-        
+    /// - Returns:
+    ///   - .success: A bool that indicates if the dose was confirmed successful
+    ///   - .failure: An error describing why the command failed
+    public func setTempBasal(_ unitsPerHour: Double, duration: TimeInterval) -> Result<Bool,PumpCommandError> {
+
         let message = PumpMessage(settings: settings, type: .changeTempBasal, body: ChangeTempBasalCarelinkMessageBody(unitsPerHour: unitsPerHour, duration: duration))
 
-        for attempt in 1..<4 {
-            do {
-                do {
-                    try wakeup()
-
-                    let shortMessage = PumpMessage(packetType: message.packetType, address: message.address.hexadecimalString, messageType: message.messageType, messageBody: CarelinkShortMessageBody())
-                    let _: PumpAckMessageBody = try session.getResponse(to: shortMessage)
-                } catch let error as PumpOpsError {
-                    throw PumpCommandError.command(error)
-                }
-
-                do {
-                    let _: PumpAckMessageBody = try session.getResponse(to: message, retryCount: 0)
-                } catch PumpOpsError.pumpError(let errorCode) {
-                    lastError = .arguments(.pumpError(errorCode))
-                    break  // Stop because we have a pump error response
-                } catch PumpOpsError.unknownPumpErrorCode(let errorCode) {
-                    lastError = .arguments(.unknownPumpErrorCode(errorCode))
-                    break  // Stop because we have a pump error response
-                } catch {
-                    // The pump does not ACK a successful temp basal. We'll check manually below if it was successful.
-                }
-
-                let response: ReadTempBasalCarelinkMessageBody = try session.getResponse(to: PumpMessage(settings: settings, type: .readTempBasal), responseType: .readTempBasal)
-
-                if response.timeRemaining == duration && response.rateType == .absolute {
-                    return .success(response)
-                } else {
-                    return .failure(PumpCommandError.arguments(PumpOpsError.rfCommsFailure("Could not verify TempBasal on attempt \(attempt). ")))
-                }
-            } catch let error as PumpCommandError {
-                lastError = error
-            } catch let error as PumpOpsError {
-                lastError = .command(error)
-            } catch {
-                lastError = .command(.noResponse(during: "Set temp basal"))
-            }
+        do {
+            try wakeup()
+        } catch {
+            // Certain failure, as we haven't sent actual command yet; wakeup failed
+            return .failure(.command(error as? PumpOpsError ?? PumpOpsError.rfCommsFailure(String(describing: error))))
         }
-        
-        return .failure(lastError!)
-    }
 
-    public func readTempBasal() throws -> Double {
-        
-        try wakeup()
-        
-        let response: ReadTempBasalCarelinkMessageBody = try session.getResponse(to: PumpMessage(settings: settings, type: .readTempBasal), responseType: .readTempBasal)
-        
-        return response.rate
+        do {
+            let shortMessage = PumpMessage(packetType: message.packetType, address: message.address.hexadecimalString, messageType: message.messageType, messageBody: CarelinkShortMessageBody())
+            let _: PumpAckMessageBody = try messageSender.getResponse(to: shortMessage, responseType: .pumpAck, repeatCount: 0, timeout: MinimedPumpMessageSender.standardPumpResponseWindow,  retryCount: 3)
+        } catch {
+            // Certain failure, as we haven't sent actual command yet; just preflight short command
+            return .failure(.command(error as? PumpOpsError ?? PumpOpsError.rfCommsFailure(String(describing: error))))
+        }
+
+        var uncertainFailureError: PumpCommandError?
+
+        do {
+            let _: PumpAckMessageBody = try messageSender.getResponse(to: message, responseType: .pumpAck, repeatCount: 0, timeout: MinimedPumpMessageSender.standardPumpResponseWindow,  retryCount: 1)
+            // Even in success case, we try to verify, below
+        } catch PumpOpsError.pumpError(let errorCode) {
+            return .failure(.arguments(.pumpError(errorCode)))
+        } catch PumpOpsError.unknownPumpErrorCode(let errorCode) {
+            return .failure(.arguments(.unknownPumpErrorCode(errorCode)))
+        } catch {
+            // Some pumps do not ACK a successful temp basal. Check manually to see if it was successful.
+            uncertainFailureError = .command(error as? PumpOpsError ?? PumpOpsError.rfCommsFailure(String(describing: error)))
+        }
+
+        do {
+            let response: ReadTempBasalCarelinkMessageBody = try messageSender.getResponse(to: PumpMessage(settings: settings, type: .readTempBasal), responseType: .readTempBasal, repeatCount: 0, timeout: MinimedPumpMessageSender.standardPumpResponseWindow,  retryCount: 3)
+            // Duration is always whole minute values
+            if response.timeRemaining == duration && response.rateType == .absolute {
+                return .success(true)
+            } else {
+                // readTempBasal does not match what we attempted to command
+                if let failureError = uncertainFailureError {
+                    return .failure(failureError)
+                }
+                // successful readTempBasal shows no temp basal running, so we failed
+                return .failure(PumpCommandError.arguments(PumpOpsError.rfCommsFailure("Confirmed that temp basal failed, and ")))
+            }
+        } catch {
+            // unsuccessful readTempBasal; assume command reached pump, but we're uncertain
+            return .success(false)
+        }
     }
 
     /// Changes the pump's clock to the specified date components in the system time zone
@@ -521,7 +519,7 @@ extension PumpOpsSession {
 
         do {
             let shortMessage = PumpMessage(settings: settings, type: .changeTime)
-            let _: PumpAckMessageBody = try session.getResponse(to: shortMessage)
+            let _: PumpAckMessageBody = try messageSender.getResponse(to: shortMessage, responseType: .pumpAck, repeatCount: 0, timeout: MinimedPumpMessageSender.standardPumpResponseWindow,  retryCount: 3)
         } catch let error as PumpOpsError {
             throw PumpCommandError.command(error)
         }
@@ -529,7 +527,7 @@ extension PumpOpsSession {
         do {
             let components = generator()
             let message = PumpMessage(settings: settings, type: .changeTime, body: ChangeTimeCarelinkMessageBody(dateComponents: components)!)
-            let _: PumpAckMessageBody = try session.getResponse(to: message)
+            let _: PumpAckMessageBody = try messageSender.getResponse(to: message, responseType: .pumpAck, repeatCount: 0, timeout: MinimedPumpMessageSender.standardPumpResponseWindow,  retryCount: 3)
             self.pump.timeZone = components.timeZone?.fixed ?? .currentFixed
         } catch let error as PumpOpsError {
             throw PumpCommandError.arguments(error)
@@ -556,7 +554,7 @@ extension PumpOpsSession {
     ///   - units: The number of units to deliver
     ///   - cancelExistingTemp: If true, additional pump commands will be issued to clear any running temp basal. Defaults to false.
     /// - Throws: SetBolusError describing the certainty of the underlying error
-    public func setNormalBolus(units: Double, cancelExistingTemp: Bool = false) throws {
+    public func setNormalBolus(units: Double) throws {
         let pumpModel: PumpModel
 
         try wakeup()
@@ -572,13 +570,9 @@ extension PumpOpsSession {
             throw PumpOpsError.pumpSuspended
         }
 
-        if cancelExistingTemp {
-            _ = setTempBasal(0, duration: 0)
-        }
-
         let message = PumpMessage(settings: settings, type: .bolus, body: BolusCarelinkMessageBody(units: units, insulinBitPackingScale: pumpModel.insulinBitPackingScale))
 
-        let _: PumpAckMessageBody = try runCommandWithArguments(message)
+        let _: PumpAckMessageBody = try runCommandWithArguments(message, retryCount: 0)
         return
     }
 
@@ -636,7 +630,7 @@ extension PumpOpsSession {
         for nextFrame in frames.dropFirst() {
             let message = PumpMessage(settings: settings, type: type, body: nextFrame)
             do {
-                let _: PumpAckMessageBody = try session.getResponse(to: message)
+                let _: PumpAckMessageBody = try messageSender.getResponse(to: message, responseType: .pumpAck, repeatCount: 0, timeout: MinimedPumpMessageSender.standardPumpResponseWindow,  retryCount: 3)
             } catch let error as PumpOpsError {
                 throw PumpCommandError.arguments(error)
             }
@@ -644,7 +638,7 @@ extension PumpOpsSession {
     }
     
     public func getStatistics() throws -> RileyLinkStatistics {
-        return try session.getRileyLinkStatistics()
+        return try messageSender.getRileyLinkStatistics()
     }
 }
 
@@ -665,7 +659,7 @@ extension PumpOpsSession {
         let commandTimeout = TimeInterval(seconds: 30)
 
         // Wait for the pump to start polling
-        guard let encodedData = try session.listenForPacket(onChannel: 0, timeout: commandTimeout)?.data else {
+        guard let encodedData = try messageSender.listenForPacket(onChannel: 0, timeout: commandTimeout)?.data else {
             throw PumpOpsError.noResponse(during: "Watchdog listening")
         }
 
@@ -687,7 +681,7 @@ extension PumpOpsSession {
         // Identify as a MySentry device
         let findMessageResponse = PumpMessage(packetType: .mySentry, address: settings.pumpID, messageType: .pumpAck, messageBody: findMessageResponseBody)
 
-        let linkMessage = try session.sendAndListen(findMessageResponse, timeout: commandTimeout)
+        let linkMessage = try messageSender.sendAndListen(findMessageResponse, repeatCount: 0, timeout: commandTimeout, retryCount: 3)
 
         guard let
             linkMessageBody = linkMessage.messageBody as? DeviceLinkMessageBody,
@@ -699,7 +693,7 @@ extension PumpOpsSession {
         // Acknowledge the pump linked with us
         let linkMessageResponse = PumpMessage(packetType: .mySentry, address: settings.pumpID, messageType: .pumpAck, messageBody: linkMessageResponseBody)
 
-        try session.send(linkMessageResponse)
+        try messageSender.send(linkMessageResponse)
     }
 }
 
@@ -772,7 +766,7 @@ extension PumpOpsSession {
         let drate_e = UInt8(0x9) // exponent of symbol rate (16kbps)
         let chanbw = mode.rawValue
         do {
-            try session.updateRegister(.mdmcfg4, value: chanbw | drate_e)
+            try messageSender.updateRegister(.mdmcfg4, value: chanbw | drate_e)
         } catch let error as LocalizedError {
             throw PumpOpsError.deviceError(error)
         }
@@ -782,7 +776,7 @@ extension PumpOpsSession {
     ///     - PumpOpsError.deviceError
     ///     - RileyLinkDeviceError
     func configureRadio(for region: PumpRegion, frequency: Measurement<UnitFrequency>?) throws {
-        try session.resetRadioConfig()
+        try messageSender.resetRadioConfig()
         
         switch region {
         case .worldWide:
@@ -790,21 +784,21 @@ extension PumpOpsSession {
             try setRXFilterMode(.wide)
             //try session.updateRegister(.mdmcfg3, value: 0x66)
             //try session.updateRegister(.mdmcfg2, value: 0x33)
-            try session.updateRegister(.mdmcfg1, value: 0x62)
-            try session.updateRegister(.mdmcfg0, value: 0x1A)
-            try session.updateRegister(.deviatn, value: 0x13)
+            try messageSender.updateRegister(.mdmcfg1, value: 0x62)
+            try messageSender.updateRegister(.mdmcfg0, value: 0x1A)
+            try messageSender.updateRegister(.deviatn, value: 0x13)
         case .northAmerica, .canada:
             //try session.updateRegister(.mdmcfg4, value: 0x99)
             try setRXFilterMode(.narrow)
             //try session.updateRegister(.mdmcfg3, value: 0x66)
             //try session.updateRegister(.mdmcfg2, value: 0x33)
-            try session.updateRegister(.mdmcfg1, value: 0x61)
-            try session.updateRegister(.mdmcfg0, value: 0x7E)
-            try session.updateRegister(.deviatn, value: 0x15)
+            try messageSender.updateRegister(.mdmcfg1, value: 0x61)
+            try messageSender.updateRegister(.mdmcfg0, value: 0x7E)
+            try messageSender.updateRegister(.deviatn, value: 0x15)
         }
         
         if let frequency = frequency {
-            try session.setBaseFrequency(frequency)
+            try messageSender.setBaseFrequency(frequency)
         }
     }
 
@@ -821,7 +815,7 @@ extension PumpOpsSession {
         
         do {
             // Needed to put the pump in listen mode
-            try session.setBaseFrequency(middleFreq)
+            try messageSender.setBaseFrequency(middleFreq)
             try wakeup()
         } catch {
             // Continue anyway; the pump likely heard us, even if we didn't hear it.
@@ -830,11 +824,11 @@ extension PumpOpsSession {
         for freq in frequencies {
             var trial = FrequencyTrial(frequency: freq)
 
-            try session.setBaseFrequency(freq)
+            try messageSender.setBaseFrequency(freq)
             var sumRSSI = 0
             for _ in 1...tries {
                 // Ignore failures here
-                let rfPacket = try? session.sendAndListenForPacket(PumpMessage(settings: settings, type: .getPumpModel), timeout: .milliseconds(130))
+                let rfPacket = try? messageSender.sendAndListenForPacket(PumpMessage(settings: settings, type: .getPumpModel), repeatCount: 0, timeout: .milliseconds(130), retryCount: 3)
                 if  let rfPacket = rfPacket,
                     let pkt = MinimedPacket(encodedData: rfPacket.data),
                     let response = PumpMessage(rxData: pkt.data), response.messageType == .getPumpModel
@@ -854,7 +848,7 @@ extension PumpOpsSession {
         })
 
         guard sortedTrials.first!.successes > 0 else {
-            try session.setBaseFrequency(fallback ?? middleFreq)
+            try messageSender.setBaseFrequency(fallback ?? middleFreq)
             throw PumpOpsError.rfCommsFailure("No pump responses during scan")
         }
 
@@ -863,7 +857,7 @@ extension PumpOpsSession {
             bestFrequency: sortedTrials.first!.frequency
         )
         
-        try session.setBaseFrequency(results.bestFrequency)
+        try messageSender.setBaseFrequency(results.bestFrequency)
 
         return results
     }
@@ -950,9 +944,9 @@ extension PumpOpsSession {
             expectedFrameNum += 1
             let msg = PumpMessage(settings: settings, type: .pumpAck)
             if !curResp.lastFrame {
-                curResp = try session.getResponse(to: msg, responseType: .getHistoryPage)
+                curResp = try messageSender.getResponse(to: msg, responseType: .getHistoryPage, repeatCount: 0, timeout: MinimedPumpMessageSender.standardPumpResponseWindow,  retryCount: 3)
             } else {
-                try session.send(msg)
+                try messageSender.send(msg)
                 break
             }
         }
@@ -991,7 +985,7 @@ extension PumpOpsSession {
         
         var events = [TimestampedGlucoseEvent]()
         
-        let currentGlucosePage: ReadCurrentGlucosePageMessageBody = try session.getResponse(to: PumpMessage(settings: settings, type: .readCurrentGlucosePage), responseType: .readCurrentGlucosePage)
+        let currentGlucosePage: ReadCurrentGlucosePageMessageBody = try messageSender.getResponse(to: PumpMessage(settings: settings, type: .readCurrentGlucosePage), responseType: .readCurrentGlucosePage, repeatCount: 0, timeout: MinimedPumpMessageSender.standardPumpResponseWindow,  retryCount: 3)
         let startPage = Int(currentGlucosePage.pageNum)
         //max lookback of 15 pages or when page is 0
         let endPage = max(startPage - 15, 0)
@@ -1057,9 +1051,9 @@ extension PumpOpsSession {
             expectedFrameNum += 1
             let msg = PumpMessage(settings: settings, type: .pumpAck)
             if !curResp.lastFrame {
-                curResp = try session.getResponse(to: msg, responseType: .getGlucosePage)
+                curResp = try messageSender.getResponse(to: msg, responseType: .getGlucosePage, repeatCount: 0, timeout: MinimedPumpMessageSender.standardPumpResponseWindow,  retryCount: 3)
             } else {
-                try session.send(msg)
+                try messageSender.send(msg)
                 break
             }
         }
@@ -1074,6 +1068,6 @@ extension PumpOpsSession {
         try wakeup()
 
         let shortWriteTimestamp = PumpMessage(settings: settings, type: .writeGlucoseHistoryTimestamp)
-        let _: PumpAckMessageBody = try session.getResponse(to: shortWriteTimestamp, timeout: .seconds(12))
+        let _: PumpAckMessageBody = try messageSender.getResponse(to: shortWriteTimestamp, responseType: .pumpAck, repeatCount: 0, timeout: .seconds(12),  retryCount: 3)
     }
 }

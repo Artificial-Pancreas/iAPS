@@ -38,7 +38,7 @@ public enum PumpErrorCode: UInt8, CustomStringConvertible {
     }
 }
 
-public class PumpErrorMessageBody: MessageBody {
+public class PumpErrorMessageBody: DecodableMessageBody {
     public static let length = 1
     
     let rxData: Data
@@ -56,5 +56,9 @@ public class PumpErrorMessageBody: MessageBody {
     
     public var txData: Data {
         return rxData
+    }
+
+    public var description: String {
+        return "PumpError(\(errorCode))"
     }
 }
