@@ -63,7 +63,7 @@ final class GlucoseSimulatorSource: GlucoseSource {
         }
     }
 
-    func fetch() -> AnyPublisher<[BloodGlucose], Never> {
+    func fetch(_: DispatchTimer?) -> AnyPublisher<[BloodGlucose], Never> {
         guard canGenerateNewValues else {
             return Just([]).eraseToAnyPublisher()
         }

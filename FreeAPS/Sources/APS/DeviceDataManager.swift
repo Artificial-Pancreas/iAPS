@@ -204,7 +204,7 @@ final class BaseDeviceDataManager: DeviceDataManager, Injectable {
 
     @Persisted(key: "BaseDeviceDataManager.lastFetchGlucoseDate") private var lastFetchGlucoseDate: Date = .distantPast
 
-    func fetch() -> AnyPublisher<[BloodGlucose], Never> {
+    func fetch(_: DispatchTimer?) -> AnyPublisher<[BloodGlucose], Never> {
         guard let medtronic = pumpManager as? MinimedPumpManager else {
             warning(.deviceManager, "Fetch minilink glucose failed: Pump is not Medtronic")
             return Just([]).eraseToAnyPublisher()

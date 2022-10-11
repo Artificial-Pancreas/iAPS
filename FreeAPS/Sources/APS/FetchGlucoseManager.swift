@@ -1,6 +1,5 @@
 import Combine
 import Foundation
-import SpriteKit
 import SwiftDate
 import Swinject
 
@@ -8,9 +7,6 @@ protocol FetchGlucoseManager: SourceInfoProvider {}
 
 final class BaseFetchGlucoseManager: FetchGlucoseManager, Injectable {
     private let processQueue = DispatchQueue(label: "BaseGlucoseManager.processQueue")
-
-    private let notificationCenter = Foundation.NotificationCenter.default
-
     @Injected() var glucoseStorage: GlucoseStorage!
     @Injected() var nightscoutManager: NightscoutManager!
     @Injected() var apsManager: APSManager!
@@ -20,9 +16,7 @@ final class BaseFetchGlucoseManager: FetchGlucoseManager, Injectable {
     @Injected() var deviceDataManager: DeviceDataManager!
 
     private var lifetime = Lifetime()
-
-    /// timer to fetch glucose, initially set to 1 minute. If app goes to background it will be changed to 1 second
-    private var timer = DispatchTimer(timeInterval: TimeInterval(minutes: 1.0))
+    private let timer = DispatchTimer(timeInterval: 1.minutes.timeInterval)
 
     private lazy var dexcomSource = DexcomSource()
     private lazy var simulatorSource = GlucoseSimulatorSource()
@@ -31,35 +25,9 @@ final class BaseFetchGlucoseManager: FetchGlucoseManager, Injectable {
         injectServices(resolver)
         updateGlucoseSource()
         subscribe()
-
-        notificationCenter.addObserver(
-            self,
-            selector: #selector(didEnterBackground(_:)),
-            name: UIApplication.didEnterBackgroundNotification,
-            object: nil
-        )
-
-        notificationCenter.addObserver(
-            self,
-            selector: #selector(willEnterForeground(_:)),
-            name: UIApplication.willEnterForegroundNotification,
-            object: nil
-        )
     }
 
     var glucoseSource: GlucoseSource!
-
-    /// change timer to 1 second
-    @objc private func didEnterBackground(_: Notification) {
-        timer = DispatchTimer(timeInterval: TimeInterval(1.0))
-        subscribe()
-    }
-
-    /// change timer to 1 minute
-    @objc private func willEnterForeground(_: Notification) {
-        timer = DispatchTimer(timeInterval: TimeInterval(minutes: 1.0))
-        subscribe()
-    }
 
     private func updateGlucoseSource() {
         switch settingsManager.settings.cgm {
@@ -89,19 +57,19 @@ final class BaseFetchGlucoseManager: FetchGlucoseManager, Injectable {
         timer.publisher
             .receive(on: processQueue)
             .flatMap { date -> AnyPublisher<(Date, Date, [BloodGlucose], [BloodGlucose]), Never> in
-                // debug(.nightscout, "FetchGlucoseManager heartbeat")
+                debug(.nightscout, "FetchGlucoseManager heartbeat")
                 // debug(.nightscout, "Start fetching glucose")
                 self.updateGlucoseSource()
                 return Publishers.CombineLatest4(
                     Just(date),
                     Just(self.glucoseStorage.syncDate()),
-                    self.glucoseSource.fetch(),
-                    self.healthKitManager.fetch()
+                    self.glucoseSource.fetch(self.timer),
+                    self.healthKitManager.fetch(nil)
                 )
                 .eraseToAnyPublisher()
             }
             .sink { date, syncDate, glucose, glucoseFromHealth in
-                //  debug(.nightscout, "SyncDate is \(syncDate)")
+                debug(.nightscout, "SyncDate is \(syncDate)")
                 let allGlucose = glucose + glucoseFromHealth
                 guard allGlucose.isNotEmpty else { return }
 

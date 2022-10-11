@@ -33,7 +33,7 @@ final class BaseLibreTransmitterSource: LibreTransmitterSource, Injectable {
         injectServices(resolver)
     }
 
-    func fetch() -> AnyPublisher<[BloodGlucose], Never> {
+    func fetch(_: DispatchTimer?) -> AnyPublisher<[BloodGlucose], Never> {
         Future<[BloodGlucose], Error> { [weak self] promise in
             self?.promise = promise
         }

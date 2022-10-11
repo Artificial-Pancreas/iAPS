@@ -5,7 +5,7 @@ protocol SourceInfoProvider {
 }
 
 protocol GlucoseSource: SourceInfoProvider {
-    func fetch() -> AnyPublisher<[BloodGlucose], Never>
+    func fetch(_ heartbeat: DispatchTimer?) -> AnyPublisher<[BloodGlucose], Never>
 }
 
 extension GlucoseSource {

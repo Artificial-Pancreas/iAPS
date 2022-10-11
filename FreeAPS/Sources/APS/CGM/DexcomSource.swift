@@ -19,7 +19,7 @@ final class DexcomSource: GlucoseSource {
         dexcomManager.transmitter.ID
     }
 
-    func fetch() -> AnyPublisher<[BloodGlucose], Never> {
+    func fetch(_: DispatchTimer?) -> AnyPublisher<[BloodGlucose], Never> {
         dexcomManager.transmitter.resumeScanning()
         return Future<[BloodGlucose], Error> { [weak self] promise in
             self?.promise = promise
