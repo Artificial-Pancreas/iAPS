@@ -641,70 +641,11 @@ final class BaseAPSManager: APSManager, Injectable {
 
             storage.save(enacted, as: OpenAPS.Enact.enacted)
 
-            // Add to tdd.json:
-            //
-            let preferences = settingsManager.preferences
-            let currentTDD = enacted.tdd ?? 0
-            let file = OpenAPS.Monitor.tdd
-            let tdd = TDD(
-                TDD: currentTDD,
-                timestamp: Date(),
-                id: UUID().uuidString
-            )
-            var uniqEvents: [TDD] = []
-            storage.transaction { storage in
-                storage.append(tdd, to: file, uniqBy: \.id)
-                uniqEvents = storage.retrieve(file, as: [TDD].self)?
-                    .filter { $0.timestamp.addingTimeInterval(14.days.timeInterval) > Date() }
-                    .sorted { $0.timestamp > $1.timestamp } ?? []
+            // Create a tdd.json
+            tdd(enacted_: enacted)
 
-                var total: Decimal = 0
-                var indeces: Decimal = 0
-
-                for uniqEvent in uniqEvents {
-                    if uniqEvent.TDD > 0 {
-                        total += uniqEvent.TDD
-                        indeces += 1
-                    }
-                }
-
-                let entriesPast2hours = storage.retrieve(file, as: [TDD].self)?
-                    .filter { $0.timestamp.addingTimeInterval(2.hours.timeInterval) > Date() }
-                    .sorted { $0.timestamp > $1.timestamp } ?? []
-
-                var totalAmount: Decimal = 0
-                var nrOfIndeces: Decimal = 0
-
-                for entry in entriesPast2hours {
-                    if entry.TDD > 0 {
-                        totalAmount += entry.TDD
-                        nrOfIndeces += 1
-                    }
-                }
-
-                if indeces == 0 {
-                    indeces = 1
-                }
-
-                if nrOfIndeces == 0 {
-                    nrOfIndeces = 1
-                }
-
-                let average14 = total / indeces
-                let average2hours = totalAmount / nrOfIndeces
-                let weight = preferences.weightPercentage
-                let weighted_average = weight * average2hours + (1 - weight) * average14
-
-                let averages = TDD_averages(
-                    average_total_data: average14,
-                    weightedAverage: weighted_average,
-                    past2hoursAverage: average2hours,
-                    date: Date()
-                )
-                storage.save(averages, as: OpenAPS.Monitor.tdd_averages)
-                storage.save(Array(uniqEvents), as: file)
-            }
-            // End of tdd.json
+            // Create a dailyStats.json
+            dailyStats()
 
             debug(.apsManager, "Suggestion enacted. Received: \(received)")
             DispatchQueue.main.async {
@@ -714,6 +655,184 @@ final class BaseAPSManager: APSManager, Injectable {
             }
             nightscout.uploadStatus()
         }
+    }
+
+    func tdd(enacted_: Suggestion) {
+        // Add to tdd.json:
+        let preferences = settingsManager.preferences
+        let currentTDD = enacted_.tdd ?? 0
+        let file = OpenAPS.Monitor.tdd
+        let tdd = TDD(
+            TDD: currentTDD,
+            timestamp: Date(),
+            id: UUID().uuidString
+        )
+        var uniqEvents: [TDD] = []
+        storage.transaction { storage in
+            storage.append(tdd, to: file, uniqBy: \.id)
+            uniqEvents = storage.retrieve(file, as: [TDD].self)?
+                .filter { $0.timestamp.addingTimeInterval(14.days.timeInterval) > Date() }
+                .sorted { $0.timestamp > $1.timestamp } ?? []
+            var total: Decimal = 0
+            var indeces: Decimal = 0
+            for uniqEvent in uniqEvents {
+                if uniqEvent.TDD > 0 {
+                    total += uniqEvent.TDD
+                    indeces += 1
+                }
+            }
+            let entriesPast2hours = storage.retrieve(file, as: [TDD].self)?
+                .filter { $0.timestamp.addingTimeInterval(2.hours.timeInterval) > Date() }
+                .sorted { $0.timestamp > $1.timestamp } ?? []
+            var totalAmount: Decimal = 0
+            var nrOfIndeces: Decimal = 0
+            for entry in entriesPast2hours {
+                if entry.TDD > 0 {
+                    totalAmount += entry.TDD
+                    nrOfIndeces += 1
+                }
+            }
+            if indeces == 0 {
+                indeces = 1
+            }
+            if nrOfIndeces == 0 {
+                nrOfIndeces = 1
+            }
+            let average14 = total / indeces
+            let average2hours = totalAmount / nrOfIndeces
+            let weight = preferences.weightPercentage
+            let weighted_average = weight * average2hours + (1 - weight) * average14
+            let averages = TDD_averages(
+                average_total_data: average14,
+                weightedAverage: weighted_average,
+                past2hoursAverage: average2hours,
+                date: Date()
+            )
+            storage.save(averages, as: OpenAPS.Monitor.tdd_averages)
+            storage.save(Array(uniqEvents), as: file)
+        }
+    }
+
+    func dailyStats() {
+        // Add to dailyStats.JSON
+        let preferences = settingsManager.preferences
+        let glucose = storage.retrieve(OpenAPS.Monitor.glucose, as: [BloodGlucose].self)
+        let carbs = storage.retrieve(OpenAPS.Monitor.carbHistory, as: [CarbsEntry].self)
+        let tdds = storage.retrieve(OpenAPS.Monitor.tdd, as: [TDD].self)
+        let currentTDD = tdds?[0].TDD
+        var bg: Decimal = 0
+        var nr_bgs: Decimal = 0
+
+        for entry in glucose! {
+            if entry.glucose! > 0 {
+                bg += Decimal(entry.glucose!)
+                nr_bgs += 1
+            }
+        }
+
+        var carbTotal: Decimal = 0
+
+        for each in carbs! {
+            if each.carbs != 0 {
+                carbTotal += each.carbs
+            }
+        }
+
+        var bgAvg = bg / nr_bgs
+        // Round to two decimals
+        bgAvg = Decimal(round(Double(bgAvg * 100)) / 100)
+
+        var algo_ = "oref0"
+        if preferences.enableChris, preferences.useNewFormula {
+            algo_ = "Dynamic ISF, Logarithmic Formula"
+        } else if !preferences.useNewFormula, preferences.enableChris {
+            algo_ = "Dynamic ISF, Original Formula"
+        }
+
+        let af = preferences.adjustmentFactor
+        let insulin_type = preferences.curve
+
+        var buildDate: Date {
+            if let infoPath = Bundle.main.path(forResource: "Info", ofType: "plist"),
+               let infoAttr = try? FileManager.default.attributesOfItem(atPath: infoPath),
+               let infoDate = infoAttr[.modificationDate] as? Date
+            {
+                return infoDate
+            }
+            return Date()
+        }
+
+        let nsObject: AnyObject? = Bundle.main.infoDictionary!["CFBundleShortVersionString"] as AnyObject
+        let version = nsObject as! String
+        let pump_ = pumpManager?.localizedTitle ?? ""
+        let cgm = settingsManager.settings.cgm
+        let file = OpenAPS.Monitor.dailyStats
+        let date_ = Date()
+
+        let dailystat = DailyStats(
+            date: date_,
+            Pump: pump_,
+            CGM: cgm.rawValue,
+            TIR_Percentage: Decimal(tir().tir),
+            Hypoglucemias_Percentage: Decimal(tir().hypos),
+            Hyperglucemias_Percentage: Decimal(tir().hypers),
+            BG_daily_Average: bgAvg,
+            TDD: currentTDD ?? 0,
+            Carbs_24h: carbTotal,
+            Algorithm: algo_,
+            AdjustmentFactor: af,
+            insulinType: insulin_type.rawValue,
+            FAX_Build_Version: version,
+            FAX_Build_Date: buildDate,
+            id: UUID().uuidString
+        )
+
+        // If empty daily_stats.json, create a first entry
+        if file.rawJSON.algo == nil {
+            storage.save(dailystat, as: file)
+        } else {
+            var items: [DailyStats] = []
+
+            storage.transaction { storage in
+                storage.append(dailystat, to: file, uniqBy: \.id)
+                items = storage.retrieve(file, as: [DailyStats].self)?
+                    .filter { $0.date.addingTimeInterval(-1435.minutes.timeInterval) < Date() }
+                    .sorted { $0.date > $1.date } ?? []
+                storage.save(Array(items), as: file)
+            }
+        }
+    }
+
+    func tir() -> (hypos: Double, hypers: Double, tir: Double) {
+        let glucose = storage.retrieve(OpenAPS.Monitor.glucose, as: [BloodGlucose].self)
+        let length_ = glucose!.count
+        let endIndex = length_ - 1
+        let fullTime = glucose![0].date - glucose![endIndex].date
+        var timeInHypo = 0.0
+        var timeInHyper = 0.0
+        var i = 0
+
+        repeat {
+            let currentTime = glucose![i].date
+            var x = i
+            while x < endIndex {
+                x += 1
+                if x < endIndex {
+                    if glucose![x].glucose! < 80 {
+                        timeInHypo += Double(currentTime - glucose![x].date)
+                    } else if glucose![x].glucose! > 200 {
+                        timeInHyper += Double(currentTime - glucose![x].date)
+                    } else { break }
+                }
+            }
+            i += 1
+        } while i <= endIndex
+
+        let hypos = (timeInHypo / Double(fullTime)) * 100
+        let hypers = (timeInHyper / Double(fullTime)) * 100
+        let tir = 100 - (round(hypos) + round(hypers))
+
+        return (round(hypos), round(hypers), round(tir))
     }
 
     private func processError(_ error: Error) {
