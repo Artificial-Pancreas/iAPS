@@ -806,15 +806,13 @@ final class BaseAPSManager: APSManager, Injectable {
         // If empty daily_stats.json, create a first entry
         if file_3.isEmpty {
             storage.save(dailystat, as: file)
-            print("Empty daily_stats.json")
         } else {
-            print("Creating new entry in daily_stats.json")
             var newEntries: [DailyStats] = []
 
-            let isDateOldEnough = file_2?[0].date ?? Date()
+            var isDateOldEnough = file_2?[0].date ?? Date("2999-10-24T14:29:23.893Z")
 
-            if date_ > isDateOldEnough.addingTimeInterval(-1.days.timeInterval) {
-                print("Time Dffererence: \(date_ - isDateOldEnough.addingTimeInterval(-1.days.timeInterval))")
+            if Date() > isDateOldEnough!.addingTimeInterval(1.days.timeInterval) {
+            
                 storage.transaction { storage in
                     storage.append(dailystat, to: file, uniqBy: \.id)
                     newEntries = storage.retrieve(file, as: [DailyStats].self)?
@@ -833,14 +831,11 @@ final class BaseAPSManager: APSManager, Injectable {
         let endIndex = length_ - 1
         // Full time interval of glucose.json in ms
         let fullTime = glucose![0].date - glucose![endIndex].date
-        // Full time interval in Date format
-        let dateStringInterval = glucose![0].dateString - glucose![endIndex].dateString
-
         // If empty json
         guard fullTime != 0 else {
             return (0, 0, 0)
         }
-
+        
         var timeInHypo: Decimal = 0
         var timeInHyper: Decimal = 0
         var hypos: Decimal = 0
@@ -887,9 +882,11 @@ final class BaseAPSManager: APSManager, Injectable {
 
         let TIR = 100 - (hypos + hypers)
 
-        print(
-            "Total time (ms) : \(fullTime), Hypo time (ms) : \(timeInHypo), Hyper time (ms) : \(timeInHyper), Hypos: \(Int(hypos)) %, Hypers: \(Int(hypers)) % and TIR: \(Int(TIR)) %, Total Time interval (Date Format): \(dateStringInterval)"
-        )
+        /*
+         print(
+             "Total time (ms) : \(fullTime), Hypo time (ms) : \(timeInHypo), Hyper time (ms) : \(timeInHyper), Hypos: \(Int(hypos)) %, Hypers: \(Int(hypers)) % and TIR: \(Int(TIR)) %")
+         )
+          */
 
         return (Int(hypos), Int(hypers), Int(TIR))
     }
