@@ -764,6 +764,9 @@ final class BaseAPSManager: APSManager, Injectable {
 
         let nsObject: AnyObject? = Bundle.main.infoDictionary!["CFBundleShortVersionString"] as AnyObject
         let version = nsObject as! String
+
+        let build = Bundle.main.infoDictionary?["CFBundleVersion"] as? String
+
         let pump_ = pumpManager?.localizedTitle ?? ""
         let cgm = settingsManager.settings.cgm
         let file = OpenAPS.Monitor.dailyStats
@@ -792,33 +795,32 @@ final class BaseAPSManager: APSManager, Injectable {
             insulinType: insulin_type.rawValue,
             peakActivityTime: iPa,
             FAX_Build_Version: version,
+            FAX_Build_Number: build ?? "1",
             FAX_Build_Date: buildDate,
             id: UUID().uuidString
         )
 
+        let file_2 = storage.retrieve(OpenAPS.Monitor.dailyStats, as: [DailyStats].self)
+        let file_3 = loadFileFromStorage(name: OpenAPS.Monitor.dailyStats)
+
         // If empty daily_stats.json, create a first entry
-        if file.rawJSON.algo == nil {
+        if file_3.isEmpty {
             storage.save(dailystat, as: file)
+            print("Empty daily_stats.json")
         } else {
-            // var items: [DailyStats] = []
+            print("Creating new entry in daily_stats.json")
+            var newEntries: [DailyStats] = []
 
-            let file_2 = storage.retrieve(OpenAPS.Monitor.dailyStats, as: [DailyStats].self)
-            let isDateOldEnough = file_2?[0].date
+            let isDateOldEnough = file_2?[0].date ?? Date()
 
-            if date_ > (isDateOldEnough?.addingTimeInterval(-1.days.timeInterval))! {
+            if date_ > isDateOldEnough.addingTimeInterval(-1.days.timeInterval) {
+                print("Time Dffererence: \(date_ - isDateOldEnough.addingTimeInterval(-1.days.timeInterval))")
                 storage.transaction { storage in
-                    // storage.append(dailystat, to: file, uniqBy: \.id)
-                    // .filter { $0.date.addingTimeInterval(-1.days.timeInterval) < Date() }
-                    // .sorted { $0.date > $1.date } ?? []
-
-                    storage.retrieve(file, as: [DailyStats].self)?
+                    storage.append(dailystat, to: file, uniqBy: \.id)
+                    newEntries = storage.retrieve(file, as: [DailyStats].self)?
                         .sorted { $0.date > $1.date } ?? []
-                    storage.append(Array(arrayLiteral: dailystat), to: file, uniqBy: \.id)
-
-                    // storage.append(dailystat, to: file, uniqBy: \.id)
-                    // storage.append(Array(items), to: file, uniqBy: \.id)
-                    storage.save(Array(arrayLiteral: dailystat), as: file)
-                    // storage.save(file, as: OpenAPS.Monitor.dailyStats)
+                    print("\(newEntries)")
+                    storage.save(Array(newEntries), as: file)
                 }
             }
         }
@@ -829,7 +831,10 @@ final class BaseAPSManager: APSManager, Injectable {
         let glucose = storage.retrieve(OpenAPS.Monitor.glucose, as: [BloodGlucose].self)
         let length_ = glucose!.count
         let endIndex = length_ - 1
+        // Full time interval of glucose.json in ms
         let fullTime = glucose![0].date - glucose![endIndex].date
+        // Full time interval in Date format
+        let dateStringInterval = glucose![0].dateString - glucose![endIndex].dateString
 
         // If empty json
         guard fullTime != 0 else {
@@ -849,6 +854,7 @@ final class BaseAPSManager: APSManager, Injectable {
             } else {
                 currentTime = glucose![i].date
             }
+
             var x = i
 
             while x < endIndex {
@@ -882,10 +888,14 @@ final class BaseAPSManager: APSManager, Injectable {
         let TIR = 100 - (hypos + hypers)
 
         print(
-            "Total time: \(fullTime), Hypo time: \(timeInHypo), Hyper time: \(timeInHyper), Hypos: \(hypos) %, Hypers: \(hypers) % and TIR: \(TIR) %, Current Time: \(currentTime)"
+            "Total time (ms) : \(fullTime), Hypo time (ms) : \(timeInHypo), Hyper time (ms) : \(timeInHyper), Hypos: \(Int(hypos)) %, Hypers: \(Int(hypers)) % and TIR: \(Int(TIR)) %, Total Time interval (Date Format): \(dateStringInterval)"
         )
 
         return (Int(hypos), Int(hypers), Int(TIR))
+    }
+
+    private func loadFileFromStorage(name: String) -> RawJSON {
+        storage.retrieveRaw(name) ?? OpenAPS.defaults(for: name)
     }
 
     private func processError(_ error: Error) {

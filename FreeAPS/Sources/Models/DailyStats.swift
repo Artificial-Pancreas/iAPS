@@ -15,6 +15,7 @@ struct DailyStats: JSON, Equatable {
     var insulinType: String
     var peakActivityTime: Decimal
     var FAX_Build_Version: String
+    var FAX_Build_Number: String
     var FAX_Build_Date: Date
     var id: String
 
@@ -33,6 +34,7 @@ struct DailyStats: JSON, Equatable {
         insulinType: String,
         peakActivityTime: Decimal,
         FAX_Build_Version: String,
+        FAX_Build_Number: String,
         FAX_Build_Date: Date,
         id: String
     ) {
@@ -50,6 +52,7 @@ struct DailyStats: JSON, Equatable {
         self.insulinType = insulinType
         self.peakActivityTime = peakActivityTime
         self.FAX_Build_Version = FAX_Build_Version
+        self.FAX_Build_Number = FAX_Build_Number
         self.FAX_Build_Date = FAX_Build_Date
         self.id = id
     }
@@ -71,6 +74,7 @@ extension DailyStats {
         case insulinType
         case peakActivityTime
         case FAX_Build_Version
+        case FAX_Build_Number
         case FAX_Build_Date
         case id
     }
