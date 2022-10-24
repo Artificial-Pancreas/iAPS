@@ -740,7 +740,7 @@ final class BaseAPSManager: APSManager, Injectable {
 
         var bgAvg = bg / nr_bgs
         // Round to two decimals
-        bgAvg = Decimal(round(Double(bgAvg * 100)) / 100)
+        bgAvg = Decimal(round(Double(bgAvg)))
 
         var algo_ = "oref0"
         if preferences.enableChris, preferences.useNewFormula {
@@ -768,20 +768,29 @@ final class BaseAPSManager: APSManager, Injectable {
         let cgm = settingsManager.settings.cgm
         let file = OpenAPS.Monitor.dailyStats
         let date_ = Date()
+        var iPa: Decimal = 75
+        if preferences.useCustomPeakTime {
+            iPa = preferences.insulinPeakTime
+        } else if preferences.curve.rawValue == "rapid-acting" {
+            iPa = 65
+        } else if preferences.curve.rawValue == "ultra-rapid" {
+            iPa = 50
+        }
 
         let dailystat = DailyStats(
             date: date_,
             Pump: pump_,
             CGM: cgm.rawValue,
-            TIR_Percentage: Decimal(tir().tir),
-            Hypoglucemias_Percentage: Decimal(tir().hypos),
-            Hyperglucemias_Percentage: Decimal(tir().hypers),
+            TIR_Percentage: tir().TIR,
+            Hypoglucemias_Percentage: tir().hypos,
+            Hyperglucemias_Percentage: tir().hypers,
             BG_daily_Average: bgAvg,
             TDD: currentTDD ?? 0,
             Carbs_24h: carbTotal,
             Algorithm: algo_,
             AdjustmentFactor: af,
             insulinType: insulin_type.rawValue,
+            peakActivityTime: iPa,
             FAX_Build_Version: version,
             FAX_Build_Date: buildDate,
             id: UUID().uuidString
@@ -791,48 +800,92 @@ final class BaseAPSManager: APSManager, Injectable {
         if file.rawJSON.algo == nil {
             storage.save(dailystat, as: file)
         } else {
-            var items: [DailyStats] = []
+            // var items: [DailyStats] = []
 
-            storage.transaction { storage in
-                storage.append(dailystat, to: file, uniqBy: \.id)
-                items = storage.retrieve(file, as: [DailyStats].self)?
-                    .filter { $0.date.addingTimeInterval(-1435.minutes.timeInterval) < Date() }
-                    .sorted { $0.date > $1.date } ?? []
-                storage.save(Array(items), as: file)
+            let file_2 = storage.retrieve(OpenAPS.Monitor.dailyStats, as: [DailyStats].self)
+            let isDateOldEnough = file_2?[0].date
+
+            if date_ > (isDateOldEnough?.addingTimeInterval(-1.days.timeInterval))! {
+                storage.transaction { storage in
+                    // storage.append(dailystat, to: file, uniqBy: \.id)
+                    // .filter { $0.date.addingTimeInterval(-1.days.timeInterval) < Date() }
+                    // .sorted { $0.date > $1.date } ?? []
+
+                    storage.retrieve(file, as: [DailyStats].self)?
+                        .sorted { $0.date > $1.date } ?? []
+                    storage.append(Array(arrayLiteral: dailystat), to: file, uniqBy: \.id)
+
+                    // storage.append(dailystat, to: file, uniqBy: \.id)
+                    // storage.append(Array(items), to: file, uniqBy: \.id)
+                    storage.save(Array(arrayLiteral: dailystat), as: file)
+                    // storage.save(file, as: OpenAPS.Monitor.dailyStats)
+                }
             }
         }
     }
 
-    func tir() -> (hypos: Double, hypers: Double, tir: Double) {
+    // Time In Range (%)
+    func tir() -> (hypos: Int, hypers: Int, TIR: Int) {
         let glucose = storage.retrieve(OpenAPS.Monitor.glucose, as: [BloodGlucose].self)
         let length_ = glucose!.count
         let endIndex = length_ - 1
         let fullTime = glucose![0].date - glucose![endIndex].date
-        var timeInHypo = 0.0
-        var timeInHyper = 0.0
-        var i = 0
 
-        repeat {
-            let currentTime = glucose![i].date
+        // If empty json
+        guard fullTime != 0 else {
+            return (0, 0, 0)
+        }
+
+        var timeInHypo: Decimal = 0
+        var timeInHyper: Decimal = 0
+        var hypos: Decimal = 0
+        var hypers: Decimal = 0
+        var i = 0
+        var currentTime = glucose![i].date
+
+        while i < endIndex {
+            if i == 0 {
+                currentTime = glucose![0].date
+            } else {
+                currentTime = glucose![i].date
+            }
             var x = i
+
             while x < endIndex {
-                x += 1
-                if x < endIndex {
-                    if glucose![x].glucose! < 80 {
-                        timeInHypo += Double(currentTime - glucose![x].date)
-                    } else if glucose![x].glucose! > 200 {
-                        timeInHyper += Double(currentTime - glucose![x].date)
+                if x <= endIndex {
+                    if glucose![x].glucose! < 72 {
+                        timeInHypo += currentTime - glucose![x].date
+                        currentTime = glucose![x].date
+                        x += 1
+                        continue
+                    } else if glucose![x].glucose! > 180 {
+                        timeInHyper += currentTime - glucose![x].date
+                        currentTime = glucose![x].date
+                        x += 1
+                        continue
                     } else { break }
                 }
             }
             i += 1
-        } while i <= endIndex
+        }
 
-        let hypos = (timeInHypo / Double(fullTime)) * 100
-        let hypers = (timeInHyper / Double(fullTime)) * 100
-        let tir = 100 - (round(hypos) + round(hypers))
+        if timeInHypo == 0 {
+            hypos = 0
+        } else { hypos = (timeInHypo / fullTime) * 100
+        }
 
-        return (round(hypos), round(hypers), round(tir))
+        if timeInHyper == 0 {
+            hypers = 0
+        } else { hypers = (timeInHyper / fullTime) * 100
+        }
+
+        let TIR = 100 - (hypos + hypers)
+
+        print(
+            "Total time: \(fullTime), Hypo time: \(timeInHypo), Hyper time: \(timeInHyper), Hypos: \(hypos) %, Hypers: \(hypers) % and TIR: \(TIR) %, Current Time: \(currentTime)"
+        )
+
+        return (Int(hypos), Int(hypers), Int(TIR))
     }
 
     private func processError(_ error: Error) {
