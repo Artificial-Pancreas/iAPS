@@ -809,10 +809,11 @@ final class BaseAPSManager: APSManager, Injectable {
         } else {
             var newEntries: [DailyStats] = []
 
-            var isDateOldEnough = file_2?[0].date ?? Date("2999-10-24T14:29:23.893Z")
+            let isDateOldEnough = file_2?[0].date ?? Date("2999-10-24T14:29:23.893Z")
 
-            if Date() > isDateOldEnough!.addingTimeInterval(1.days.timeInterval) {
-            
+            if Date() > isDateOldEnough!.addingTimeInterval(1.days.timeInterval),
+               Calendar.current.component(.hour, from: Date()) > 23, Calendar.current.component(.minute, from: Date()) > 45
+            {
                 storage.transaction { storage in
                     storage.append(dailystat, to: file, uniqBy: \.id)
                     newEntries = storage.retrieve(file, as: [DailyStats].self)?
@@ -829,45 +830,39 @@ final class BaseAPSManager: APSManager, Injectable {
         let glucose = storage.retrieve(OpenAPS.Monitor.glucose, as: [BloodGlucose].self)
         let length_ = glucose!.count
         let endIndex = length_ - 1
-        // Full time interval of glucose.json in ms
+
         let fullTime = glucose![0].date - glucose![endIndex].date
+
         // If empty json
         guard fullTime != 0 else {
             return (0, 0, 0)
         }
-        
+
         var timeInHypo: Decimal = 0
         var timeInHyper: Decimal = 0
         var hypos: Decimal = 0
         var hypers: Decimal = 0
-        var i = 0
-        var currentTime = glucose![i].date
+        var i = -1
+
+        var lastIndex = false
 
         while i < endIndex {
-            if i == 0 {
-                currentTime = glucose![0].date
-            } else {
-                currentTime = glucose![i].date
-            }
-
-            var x = i
-
-            while x < endIndex {
-                if x <= endIndex {
-                    if glucose![x].glucose! < 72 {
-                        timeInHypo += currentTime - glucose![x].date
-                        currentTime = glucose![x].date
-                        x += 1
-                        continue
-                    } else if glucose![x].glucose! > 180 {
-                        timeInHyper += currentTime - glucose![x].date
-                        currentTime = glucose![x].date
-                        x += 1
-                        continue
-                    } else { break }
-                }
-            }
             i += 1
+
+            let currentTime = glucose![i].date
+            var previousTime = currentTime
+
+            if i + 1 <= endIndex {
+                previousTime = glucose![i + 1].date
+            } else {
+                lastIndex = true
+            }
+
+            if glucose![i].glucose! < 72 {
+                timeInHypo += currentTime - previousTime
+            } else if glucose![i].glucose! > 180 {
+                timeInHyper += currentTime - previousTime
+            } else { continue }
         }
 
         if timeInHypo == 0 {
@@ -881,12 +876,6 @@ final class BaseAPSManager: APSManager, Injectable {
         }
 
         let TIR = 100 - (hypos + hypers)
-
-        /*
-         print(
-             "Total time (ms) : \(fullTime), Hypo time (ms) : \(timeInHypo), Hyper time (ms) : \(timeInHyper), Hypos: \(Int(hypos)) %, Hypers: \(Int(hypers)) % and TIR: \(Int(TIR)) %")
-         )
-          */
 
         return (Int(hypos), Int(hypers), Int(TIR))
     }
