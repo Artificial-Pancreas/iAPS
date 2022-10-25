@@ -787,7 +787,7 @@ final class BaseAPSManager: APSManager, Injectable {
             TIR_Percentage: tir().TIR,
             Hypoglucemias_Percentage: tir().hypos,
             Hyperglucemias_Percentage: tir().hypers,
-            BG_daily_Average: bgAvg,
+            BG_daily_Average_mg_dl: bgAvg,
             TDD: currentTDD ?? 0,
             Carbs_24h: carbTotal,
             Algorithm: algo_,

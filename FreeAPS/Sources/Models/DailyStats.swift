@@ -7,7 +7,7 @@ struct DailyStats: JSON, Equatable {
     var TIR_Percentage: Decimal
     var Hypoglucemias_Percentage: Decimal
     var Hyperglucemias_Percentage: Decimal
-    var BG_daily_Average: Decimal
+    var BG_daily_Average_mg_dl: Decimal
     var TDD: Decimal
     var Carbs_24h: Decimal
     var Algorithm: String
@@ -26,7 +26,7 @@ struct DailyStats: JSON, Equatable {
         TIR_Percentage: Decimal,
         Hypoglucemias_Percentage: Decimal,
         Hyperglucemias_Percentage: Decimal,
-        BG_daily_Average: Decimal,
+        BG_daily_Average_mg_dl: Decimal,
         TDD: Decimal,
         Carbs_24h: Decimal,
         Algorithm: String,
@@ -44,7 +44,7 @@ struct DailyStats: JSON, Equatable {
         self.TIR_Percentage = TIR_Percentage
         self.Hypoglucemias_Percentage = Hypoglucemias_Percentage
         self.Hyperglucemias_Percentage = Hyperglucemias_Percentage
-        self.BG_daily_Average = BG_daily_Average
+        self.BG_daily_Average_mg_dl = BG_daily_Average_mg_dl
         self.TDD = TDD
         self.Carbs_24h = Carbs_24h
         self.Algorithm = Algorithm
@@ -66,7 +66,7 @@ extension DailyStats {
         case TIR_Percentage
         case Hypoglucemias_Percentage
         case Hyperglucemias_Percentage
-        case BG_daily_Average
+        case BG_daily_Average_mg_dl
         case TDD
         case Carbs_24h
         case Algorithm

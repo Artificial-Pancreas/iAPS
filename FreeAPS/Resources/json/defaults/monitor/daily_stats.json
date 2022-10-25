@@ -14,6 +14,6 @@
     "Hypoglucemias_Percentage" : 0,
     "TIR_Percentage" : 100,
     "Hyperglucemias_Percentage" : 0,
-    "BG_daily_Average" : 100,
+    "BG_daily_Average_mg_dl" : 100,
     "id" : "Default JSON"
   }
