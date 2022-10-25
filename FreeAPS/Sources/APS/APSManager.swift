@@ -804,21 +804,21 @@ final class BaseAPSManager: APSManager, Injectable {
         let file_3 = loadFileFromStorage(name: OpenAPS.Monitor.dailyStats)
 
         // If empty daily_stats.json, create a first entry
-        if file_3.isEmpty {
+        if file_3.isEmpty, Calendar.current.component(.hour, from: Date()) == 23,
+           Calendar.current.component(.minute, from: Date()) > 45
+        {
             storage.save(dailystat, as: file)
         } else {
             var newEntries: [DailyStats] = []
-
             let isDateOldEnough = file_2?[0].date ?? Date("2999-10-24T14:29:23.893Z")
 
             if Date() > isDateOldEnough!.addingTimeInterval(1.days.timeInterval),
-               Calendar.current.component(.hour, from: Date()) > 23, Calendar.current.component(.minute, from: Date()) > 45
+               Calendar.current.component(.hour, from: Date()) == 23, Calendar.current.component(.minute, from: Date()) > 45
             {
                 storage.transaction { storage in
                     storage.append(dailystat, to: file, uniqBy: \.id)
                     newEntries = storage.retrieve(file, as: [DailyStats].self)?
                         .sorted { $0.date > $1.date } ?? []
-                    print("\(newEntries)")
                     storage.save(Array(newEntries), as: file)
                 }
             }
@@ -826,7 +826,7 @@ final class BaseAPSManager: APSManager, Injectable {
     }
 
     // Time In Range (%)
-    func tir() -> (hypos: Int, hypers: Int, TIR: Int) {
+    func tir() -> (hypos: Decimal, hypers: Decimal, TIR: Decimal) {
         let glucose = storage.retrieve(OpenAPS.Monitor.glucose, as: [BloodGlucose].self)
         let length_ = glucose!.count
         let endIndex = length_ - 1
@@ -858,11 +858,11 @@ final class BaseAPSManager: APSManager, Injectable {
                 lastIndex = true
             }
 
-            if glucose![i].glucose! < 72 {
+            if glucose![i].glucose! < 72, !lastIndex {
                 timeInHypo += currentTime - previousTime
-            } else if glucose![i].glucose! > 180 {
+            } else if glucose![i].glucose! > 180, !lastIndex {
                 timeInHyper += currentTime - previousTime
-            } else { continue }
+            }
         }
 
         if timeInHypo == 0 {
@@ -875,9 +875,14 @@ final class BaseAPSManager: APSManager, Injectable {
         } else { hypers = (timeInHyper / fullTime) * 100
         }
 
-        let TIR = 100 - (hypos + hypers)
+        // round to 1 decimal
+        let hypoRounded = round(Double(hypos) * 10) / 10
+        let hyperRounded = round(Double(hypers) * 10) / 10
+        let TIRrounded = round((100 - (hypoRounded + hyperRounded)) * 10) / 10
 
-        return (Int(hypos), Int(hypers), Int(TIR))
+        print("TIR: \(TIRrounded) %, Hypos: \(hypoRounded) %, Hypers: \(hyperRounded) %")
+
+        return (Decimal(hypoRounded), Decimal(hyperRounded), Decimal(TIRrounded))
     }
 
     private func loadFileFromStorage(name: String) -> RawJSON {

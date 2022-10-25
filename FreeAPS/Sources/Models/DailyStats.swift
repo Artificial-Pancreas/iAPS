@@ -4,9 +4,9 @@ struct DailyStats: JSON, Equatable {
     var date: Date
     var Pump: String
     var CGM: String
-    var TIR_Percentage: Int
-    var Hypoglucemias_Percentage: Int
-    var Hyperglucemias_Percentage: Int
+    var TIR_Percentage: Decimal
+    var Hypoglucemias_Percentage: Decimal
+    var Hyperglucemias_Percentage: Decimal
     var BG_daily_Average: Decimal
     var TDD: Decimal
     var Carbs_24h: Decimal
@@ -23,9 +23,9 @@ struct DailyStats: JSON, Equatable {
         date: Date,
         Pump: String,
         CGM: String,
-        TIR_Percentage: Int,
-        Hypoglucemias_Percentage: Int,
-        Hyperglucemias_Percentage: Int,
+        TIR_Percentage: Decimal,
+        Hypoglucemias_Percentage: Decimal,
+        Hyperglucemias_Percentage: Decimal,
         BG_daily_Average: Decimal,
         TDD: Decimal,
         Carbs_24h: Decimal,
