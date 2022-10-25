@@ -804,7 +804,7 @@ final class BaseAPSManager: APSManager, Injectable {
         let file_3 = loadFileFromStorage(name: OpenAPS.Monitor.dailyStats)
 
         // If empty daily_stats.json, create a first entry
-        if file_3.isEmpty, Calendar.current.component(.hour, from: Date()) == 23,
+        if file_2?[0].Algorithm == "Default", Calendar.current.component(.hour, from: Date()) == 23,
            Calendar.current.component(.minute, from: Date()) > 45
         {
             storage.save(dailystat, as: file)
