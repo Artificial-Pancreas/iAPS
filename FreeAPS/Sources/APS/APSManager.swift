@@ -764,9 +764,8 @@ final class BaseAPSManager: APSManager, Injectable {
 
         let nsObject: AnyObject? = Bundle.main.infoDictionary!["CFBundleShortVersionString"] as AnyObject
         let version = nsObject as! String
-
         let build = Bundle.main.infoDictionary?["CFBundleVersion"] as? String
-
+        let branch = Bundle.main.infoDictionary?["NSHumanReadableCopyright"] as? String
         let pump_ = pumpManager?.localizedTitle ?? ""
         let cgm = settingsManager.settings.cgm
         let file = OpenAPS.Monitor.dailyStats
@@ -782,43 +781,50 @@ final class BaseAPSManager: APSManager, Injectable {
 
         let dailystat = DailyStats(
             date: date_,
-            Pump: pump_,
-            CGM: cgm.rawValue,
-            TIR_Percentage: tir().TIR,
-            Hypoglucemias_Percentage: tir().hypos,
-            Hyperglucemias_Percentage: tir().hypers,
-            BG_daily_Average_mg_dl: bgAvg,
-            TDD: currentTDD ?? 0,
-            Carbs_24h: carbTotal,
-            Algorithm: algo_,
-            AdjustmentFactor: af,
-            insulinType: insulin_type.rawValue,
-            peakActivityTime: iPa,
             FAX_Build_Version: version,
             FAX_Build_Number: build ?? "1",
+            FAX_Branch: branch ?? "N/A",
             FAX_Build_Date: buildDate,
+            Algorithm: algo_,
+            AdjustmentFactor: af,
+            Pump: pump_,
+            CGM: cgm.rawValue,
+            insulinType: insulin_type.rawValue,
+            peakActivityTime: iPa,
+            TDD: currentTDD ?? 0,
+            Carbs_24h: carbTotal,
+            Hypoglucemias_Percentage: tir().hypos,
+            TIR_Percentage: tir().TIR,
+            Hyperglucemias_Percentage: tir().hypers,
+            BG_daily_Average_mg_dl: bgAvg,
             id: UUID().uuidString
         )
 
-        let file_2 = storage.retrieve(OpenAPS.Monitor.dailyStats, as: [DailyStats].self)
+        var newEntries: [DailyStats] = []
+
+        // If file is empty
         let file_3 = loadFileFromStorage(name: OpenAPS.Monitor.dailyStats)
+        var isJSONempty = false
+        if file_3.rawJSON.isEmpty {
+            print("Empty")
+            isJSONempty = true
+        }
 
-        // If empty daily_stats.json, create a first entry
-        if file_2?[0].Algorithm == "Default", Calendar.current.component(.hour, from: Date()) == 23,
-           Calendar.current.component(.minute, from: Date()) > 45
+        let now = Date()
+        let calender = Calendar.current
+
+        // If current local time is 23:41 or later
+        if calender.component(.hour, from: now) > 22,
+           calender.component(.minute, from: now) > 40
         {
-            storage.save(dailystat, as: file)
-        } else {
-            var newEntries: [DailyStats] = []
-            let isDateOldEnough = file_2?[0].date ?? Date("2999-10-24T14:29:23.893Z")
-
-            if Date() > isDateOldEnough!.addingTimeInterval(1.days.timeInterval),
-               Calendar.current.component(.hour, from: Date()) == 23, Calendar.current.component(.minute, from: Date()) > 45
-            {
+            if isJSONempty {
+                storage.save(dailystat, as: file)
+            } else {
                 storage.transaction { storage in
                     storage.append(dailystat, to: file, uniqBy: \.id)
                     newEntries = storage.retrieve(file, as: [DailyStats].self)?
                         .sorted { $0.date > $1.date } ?? []
+                        .filter { $0.date.addingTimeInterval(1.days.timeInterval) < now }
                     storage.save(Array(newEntries), as: file)
                 }
             }
