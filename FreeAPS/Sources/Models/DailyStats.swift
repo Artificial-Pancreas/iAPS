@@ -18,6 +18,7 @@ struct DailyStats: JSON, Equatable {
     var TIR_Percentage: Decimal
     var Hyperglucemias_Percentage: Decimal
     var BG_daily_Average_mg_dl: Decimal
+    var HbA1c: String
     var id: String
 
     init(
@@ -38,6 +39,7 @@ struct DailyStats: JSON, Equatable {
         TIR_Percentage: Decimal,
         Hyperglucemias_Percentage: Decimal,
         BG_daily_Average_mg_dl: Decimal,
+        HbA1c: String,
         id: String
     ) {
         self.date = date
@@ -57,6 +59,7 @@ struct DailyStats: JSON, Equatable {
         self.TIR_Percentage = TIR_Percentage
         self.Hyperglucemias_Percentage = Hyperglucemias_Percentage
         self.BG_daily_Average_mg_dl = BG_daily_Average_mg_dl
+        self.HbA1c = HbA1c
         self.id = id
     }
 }
@@ -80,6 +83,7 @@ extension DailyStats {
         case TIR_Percentage
         case Hyperglucemias_Percentage
         case BG_daily_Average_mg_dl
+        case HbA1c
         case id
     }
 }
