@@ -720,15 +720,6 @@ final class BaseAPSManager: APSManager, Injectable {
         let carbs = storage.retrieve(OpenAPS.Monitor.carbHistory, as: [CarbsEntry].self)
         let tdds = storage.retrieve(OpenAPS.Monitor.tdd, as: [TDD].self)
         let currentTDD = tdds?[0].TDD
-        var bg: Decimal = 0
-        var nr_bgs: Decimal = 0
-
-        for entry in glucose! {
-            if entry.glucose! > 0 {
-                bg += Decimal(entry.glucose!)
-                nr_bgs += 1
-            }
-        }
 
         var carbTotal: Decimal = 0
 
@@ -737,10 +728,6 @@ final class BaseAPSManager: APSManager, Injectable {
                 carbTotal += each.carbs
             }
         }
-
-        var bgAvg = bg / nr_bgs
-        // Round to two decimals
-        bgAvg = Decimal(round(Double(bgAvg)))
 
         var algo_ = "oref0"
         if preferences.enableChris, preferences.useNewFormula {
@@ -778,6 +765,8 @@ final class BaseAPSManager: APSManager, Injectable {
         } else if preferences.curve.rawValue == "ultra-rapid" {
             iPa = 50
         }
+        let HbA1c_string =
+            "Estimated HbA1c: \(tir().HbA1cIFCC) mmol/mol (IFCC) and \(tir().HbA1cNGSP) % (NGSP) for the previous day, 00:00-23:59."
 
         let dailystat = DailyStats(
             date: date_,
@@ -796,7 +785,8 @@ final class BaseAPSManager: APSManager, Injectable {
             Hypoglucemias_Percentage: tir().hypos,
             TIR_Percentage: tir().TIR,
             Hyperglucemias_Percentage: tir().hypers,
-            BG_daily_Average_mg_dl: bgAvg,
+            BG_daily_Average_mg_dl: tir().averageGlucose,
+            HbA1c: HbA1c_string,
             id: UUID().uuidString
         )
 
@@ -831,16 +821,31 @@ final class BaseAPSManager: APSManager, Injectable {
         }
     }
 
-    // Time In Range (%)
-    func tir() -> (hypos: Decimal, hypers: Decimal, TIR: Decimal) {
+    // Time In Range (%), Average Glucose (24 hours) and HbA1c
+    func tir()
+        -> (averageGlucose: Decimal, hypos: Decimal, hypers: Decimal, TIR: Decimal, HbA1cIFCC: Decimal, HbA1cNGSP: Decimal)
+    {
         let glucose = storage.retrieve(OpenAPS.Monitor.glucose, as: [BloodGlucose].self)
         let length_ = glucose!.count
         let endIndex = length_ - 1
 
         guard glucose?[0].date != nil else {
             print("glucose.json is empty")
-            return (0, 0, 0)
+            return (0, 0, 0, 0, 0, 0)
         }
+
+        var bg: Decimal = 0
+        var nr_bgs: Decimal = 0
+
+        for entry in glucose! {
+            if entry.glucose! > 0 {
+                bg += Decimal(entry.glucose!)
+                nr_bgs += 1
+            }
+        }
+        var averageGlucose = bg / nr_bgs
+        // Round
+        averageGlucose = Decimal(round(Double(averageGlucose)))
 
         let fullTime = glucose![0].date - glucose![endIndex].date
         var timeInHypo: Decimal = 0
@@ -885,10 +890,27 @@ final class BaseAPSManager: APSManager, Injectable {
         let hyperRounded = round(Double(hypers) * 10) / 10
         let TIRrounded = round((100 - (hypoRounded + hyperRounded)) * 10) / 10
 
-        // For testing. See in Xcode console each loop.
-        print("TIR: \(TIRrounded) %, Hypos: \(hypoRounded) %, Hypers: \(hyperRounded) %")
+        // HbA1c estimation (%, mmol/mol
+        let NGSPa1CStatisticValue = (46.7 + averageGlucose) / 28.7 // NGSP (%)
+        let IFCCa1CStatisticValue = 10.929 *
+            (NGSPa1CStatisticValue - 2.152) // IFCC (mmol/mol)  A1C(mmol/mol) = 10.929 * (A1C(%) - 2.15)
 
-        return (Decimal(hypoRounded), Decimal(hyperRounded), Decimal(TIRrounded))
+        let HbA1cRoundedIFCC = round(Double(IFCCa1CStatisticValue) * 10) / 10
+        let HbA1cRoundedNGSP = round(Double(NGSPa1CStatisticValue) * 10) / 10
+
+        // For testing. See in Xcode console each loop.
+        print(
+            "Average Glucose: \(averageGlucose) mg/dl, TIR: \(TIRrounded) %, Hypos: \(hypoRounded) %, Hypers: \(hyperRounded) %, HbA1c : \(HbA1cRoundedIFCC) mmol/mol / \(HbA1cRoundedNGSP) %"
+        )
+
+        return (
+            averageGlucose,
+            Decimal(hypoRounded),
+            Decimal(hyperRounded),
+            Decimal(TIRrounded),
+            Decimal(HbA1cRoundedIFCC),
+            Decimal(HbA1cRoundedNGSP)
+        )
     }
 
     private func loadFileFromStorage(name: String) -> RawJSON {
