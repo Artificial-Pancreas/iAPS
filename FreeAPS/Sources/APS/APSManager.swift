@@ -766,7 +766,7 @@ final class BaseAPSManager: APSManager, Injectable {
             iPa = 50
         }
         let HbA1c_string =
-            "Estimated HbA1c: \(tir().HbA1cIFCC) mmol/mol (IFCC) and \(tir().HbA1cNGSP) % (NGSP) for the previous day, 00:00-23:59."
+            "Estimated HbA1c: \(tir().HbA1cIFCC) mmol/mol / \(tir().HbA1cNGSP) % for the previous day, 00:00-23:59."
 
         let dailystat = DailyStats(
             date: date_,
