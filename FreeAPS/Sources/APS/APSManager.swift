@@ -837,13 +837,12 @@ final class BaseAPSManager: APSManager, Injectable {
         let length_ = glucose!.count
         let endIndex = length_ - 1
 
-        let fullTime = glucose![0].date - glucose![endIndex].date
-
-        // If empty json
-        guard fullTime != 0 else {
+        guard glucose?[0].date != nil else {
+            print("glucose.json is empty")
             return (0, 0, 0)
         }
 
+        let fullTime = glucose![0].date - glucose![endIndex].date
         var timeInHypo: Decimal = 0
         var timeInHyper: Decimal = 0
         var hypos: Decimal = 0
@@ -886,6 +885,7 @@ final class BaseAPSManager: APSManager, Injectable {
         let hyperRounded = round(Double(hypers) * 10) / 10
         let TIRrounded = round((100 - (hypoRounded + hyperRounded)) * 10) / 10
 
+        // For testing. See in Xcode console each loop.
         print("TIR: \(TIRrounded) %, Hypos: \(hypoRounded) %, Hypers: \(hyperRounded) %")
 
         return (Decimal(hypoRounded), Decimal(hyperRounded), Decimal(TIRrounded))
