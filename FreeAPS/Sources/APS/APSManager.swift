@@ -815,12 +815,11 @@ final class BaseAPSManager: APSManager, Injectable {
         let IFCCa1CStatisticValue_total = 10.929 * (NGSPa1CStatisticValue_total - 2.152)
 
         // HbA1c string:
-        let length__ = stats?.count ?? 0
         var string7Days = ""
         var string30Days = ""
         var stringTotal = ""
 
-        switch length__ {
+        switch arraysInjson {
         case 7...:
             string7Days =
                 " HbA1c 7 days: \(roundDecimal(IFCCa1CStatisticValue_7, 1)) mmol/mol / \(roundDecimal(NGSPa1CStatisticValue_7, 1)) %."
@@ -831,7 +830,7 @@ final class BaseAPSManager: APSManager, Injectable {
             fallthrough
         case 2...:
             stringTotal =
-                " HbA1c \(length__) days: \(roundDecimal(IFCCa1CStatisticValue_total, 1)) mmol/mol / \(roundDecimal(NGSPa1CStatisticValue_total, 1)) %."
+                " HbA1c \(arraysInjson) days: \(roundDecimal(IFCCa1CStatisticValue_total, 1)) mmol/mol / \(roundDecimal(NGSPa1CStatisticValue_total, 1)) %."
         default:
             stringTotal = ""
         }
