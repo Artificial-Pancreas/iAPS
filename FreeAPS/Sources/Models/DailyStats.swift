@@ -14,9 +14,7 @@ struct DailyStats: JSON, Equatable {
     var peakActivityTime: Decimal
     var TDD: Decimal
     var Carbs_24h: Decimal
-    var Hypoglucemias_Percentage: Decimal
-    var TIR_Percentage: Decimal
-    var Hyperglucemias_Percentage: Decimal
+    var TIR: String
     var BG_daily_Average_mg_dl: Decimal
     var HbA1c: String
     var id: String
@@ -35,9 +33,7 @@ struct DailyStats: JSON, Equatable {
         peakActivityTime: Decimal,
         TDD: Decimal,
         Carbs_24h: Decimal,
-        Hypoglucemias_Percentage: Decimal,
-        TIR_Percentage: Decimal,
-        Hyperglucemias_Percentage: Decimal,
+        TIR: String,
         BG_daily_Average_mg_dl: Decimal,
         HbA1c: String,
         id: String
@@ -55,9 +51,7 @@ struct DailyStats: JSON, Equatable {
         self.peakActivityTime = peakActivityTime
         self.TDD = TDD
         self.Carbs_24h = Carbs_24h
-        self.Hypoglucemias_Percentage = Hypoglucemias_Percentage
-        self.TIR_Percentage = TIR_Percentage
-        self.Hyperglucemias_Percentage = Hyperglucemias_Percentage
+        self.TIR = TIR
         self.BG_daily_Average_mg_dl = BG_daily_Average_mg_dl
         self.HbA1c = HbA1c
         self.id = id
@@ -79,9 +73,7 @@ extension DailyStats {
         case peakActivityTime
         case TDD
         case Carbs_24h
-        case Hypoglucemias_Percentage
-        case TIR_Percentage
-        case Hyperglucemias_Percentage
+        case TIR
         case BG_daily_Average_mg_dl
         case HbA1c
         case id

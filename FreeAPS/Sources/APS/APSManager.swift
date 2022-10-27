@@ -671,8 +671,8 @@ final class BaseAPSManager: APSManager, Injectable {
         storage.transaction { storage in
             storage.append(tdd, to: file, uniqBy: \.id)
             uniqEvents = storage.retrieve(file, as: [TDD].self)?
-                .filter { $0.timestamp.addingTimeInterval(14.days.timeInterval) > Date() }
                 .sorted { $0.timestamp > $1.timestamp } ?? []
+                .filter { $0.timestamp.addingTimeInterval(14.days.timeInterval) > Date() }
             var total: Decimal = 0
             var indeces: Decimal = 0
             for uniqEvent in uniqEvents {
@@ -682,8 +682,8 @@ final class BaseAPSManager: APSManager, Injectable {
                 }
             }
             let entriesPast2hours = storage.retrieve(file, as: [TDD].self)?
-                .filter { $0.timestamp.addingTimeInterval(2.hours.timeInterval) > Date() }
                 .sorted { $0.timestamp > $1.timestamp } ?? []
+                .filter { $0.timestamp.addingTimeInterval(2.hours.timeInterval) > Date() }
             var totalAmount: Decimal = 0
             var nrOfIndeces: Decimal = 0
             for entry in entriesPast2hours {
@@ -703,14 +703,19 @@ final class BaseAPSManager: APSManager, Injectable {
             let weight = preferences.weightPercentage
             let weighted_average = weight * average2hours + (1 - weight) * average14
             let averages = TDD_averages(
-                average_total_data: average14,
-                weightedAverage: weighted_average,
-                past2hoursAverage: average2hours,
+                average_total_data: roundDecimal(average14, 1),
+                weightedAverage: roundDecimal(weighted_average, 1),
+                past2hoursAverage: roundDecimal(average2hours, 1),
                 date: Date()
             )
             storage.save(averages, as: OpenAPS.Monitor.tdd_averages)
             storage.save(Array(uniqEvents), as: file)
         }
+    }
+
+    func roundDecimal(_ decimal: Decimal, _ digits: Double) -> Decimal {
+        let rounded = round(Double(decimal) * pow(10, digits)) / pow(10, digits)
+        return Decimal(rounded)
     }
 
     func dailyStats() {
@@ -720,10 +725,14 @@ final class BaseAPSManager: APSManager, Injectable {
         let tdds = storage.retrieve(OpenAPS.Monitor.tdd, as: [TDD].self)
         let currentTDD = tdds?[0].TDD
 
+        let carbs_length = carbs?.count ?? 0
         var carbTotal: Decimal = 0
-        for each in carbs! {
-            if each.carbs != 0 {
-                carbTotal += each.carbs
+
+        if carbs_length != 0 {
+            for each in carbs! {
+                if each.carbs != 0 {
+                    carbTotal += each.carbs
+                }
             }
         }
 
@@ -801,43 +810,38 @@ final class BaseAPSManager: APSManager, Injectable {
         // 14 days
         let NGSPa1CStatisticValue_30 = (46.7 + thirtyDaysAverage) / 28.7
         let IFCCa1CStatisticValue_30 = 10.929 * (NGSPa1CStatisticValue_30 - 2.152)
-        // A
+        // All days
         let NGSPa1CStatisticValue_total = (46.7 + totalDataAvg) / 28.7
         let IFCCa1CStatisticValue_total = 10.929 * (NGSPa1CStatisticValue_total - 2.152)
-
-        // Round
-        let HbA1cRoundedIFCC = round(Double(IFCCa1CStatisticValue) * 10) / 10
-        let HbA1cRoundedNGSP = round(Double(NGSPa1CStatisticValue) * 10) / 10
-        let HbA1cRoundedIFCC_7 = round(Double(IFCCa1CStatisticValue_7) * 10) / 10
-        let HbA1cRoundedNGSP_7 = round(Double(NGSPa1CStatisticValue_7) * 10) / 10
-        let HbA1cRoundedIFCC_30 = round(Double(IFCCa1CStatisticValue_30) * 10) / 10
-        let HbA1cRoundedNGSP_30 = round(Double(NGSPa1CStatisticValue_30) * 10) / 10
-        let HbA1cRoundedIFCC_total = round(Double(IFCCa1CStatisticValue_total) * 10) / 10
-        let HbA1cRoundedNGSP_total = round(Double(NGSPa1CStatisticValue_total) * 10) / 10
 
         // HbA1c string:
         let length__ = stats?.count ?? 0
         var string7Days = ""
-        var string14Days = ""
+        var string30Days = ""
         var stringTotal = ""
 
         switch length__ {
         case 7...:
-            string7Days = " HbA1c for previous 7 days: \(HbA1cRoundedIFCC_7) mmol/mol / \(HbA1cRoundedNGSP_7) %."
+            string7Days =
+                " HbA1c 7 days: \(roundDecimal(IFCCa1CStatisticValue_7, 1)) mmol/mol / \(roundDecimal(NGSPa1CStatisticValue_7, 1)) %."
             fallthrough
-        case 14...:
-            string14Days = " HbA1c for previous 30 days: \(HbA1cRoundedIFCC_30) mmol/mol / \(HbA1cRoundedNGSP_30) %."
+        case 30...:
+            string30Days =
+                " HbA1c 30 days: \(roundDecimal(IFCCa1CStatisticValue_30, 1)) mmol/mol / \(roundDecimal(NGSPa1CStatisticValue_30, 1)) %."
             fallthrough
         case 2...:
             stringTotal =
-                " HbA1c for total number of days(\(length__)): \(HbA1cRoundedIFCC_total) mmol/mol / \(HbA1cRoundedNGSP_total) %."
+                " HbA1c \(length__) days: \(roundDecimal(IFCCa1CStatisticValue_total, 1)) mmol/mol / \(roundDecimal(NGSPa1CStatisticValue_total, 1)) %."
         default:
             stringTotal = ""
         }
 
         let HbA1c_string =
-            "Estimated HbA1c: \(HbA1cRoundedIFCC) mmol/mol / \(HbA1cRoundedNGSP) % and Average Blood Glucose: \(tir().averageGlucose) mg/dl / \(round(Double(tir().averageGlucose * 0.0555) * 10) / 10) mmol/l for the previous day, 00:00-23:59." +
-            string7Days + string14Days + stringTotal
+            "Estimated HbA1c (1day): \(roundDecimal(IFCCa1CStatisticValue, 1)) mmol/mol / \(roundDecimal(NGSPa1CStatisticValue, 1)) %. Average Blood Glucose: \(tir().averageGlucose) mg/dl / \(roundDecimal(tir().averageGlucose * 0.0555, 1)) mmol/l." +
+            string7Days + string30Days + stringTotal
+
+        let tirString =
+            " \(tir().TIR) %. Time with Hypoglucemia: \(tir().hypos) % (> 10 mmol/l / 180 mg/dl). Time with Hyperglucemia: \(tir().hypers) % (< 4 mmol/l / 72 mg/dl)."
 
         let dailystat = DailyStats(
             date: date_,
@@ -853,9 +857,7 @@ final class BaseAPSManager: APSManager, Injectable {
             peakActivityTime: iPa,
             TDD: currentTDD ?? 0,
             Carbs_24h: carbTotal,
-            Hypoglucemias_Percentage: tir().hypos,
-            TIR_Percentage: tir().TIR,
-            Hyperglucemias_Percentage: tir().hypers,
+            TIR: tirString,
             BG_daily_Average_mg_dl: tir().averageGlucose,
             HbA1c: HbA1c_string,
             id: UUID().uuidString
@@ -883,17 +885,17 @@ final class BaseAPSManager: APSManager, Injectable {
                 storage.transaction { storage in
                     storage.append(dailystat, to: file, uniqBy: \.id)
                     newEntries = storage.retrieve(file, as: [DailyStats].self)?
-                        .sorted { $0.date > $1.date } ?? []
                         .filter {
-                            $0.date.addingTimeInterval(1.days.timeInterval) < now && $0.date
+                            $0.date.addingTimeInterval(1.days.timeInterval) < Date() && $0.date
                                 .addingTimeInterval(120.days.timeInterval) > Date() }
+                        .sorted { $0.date > $1.date } ?? []
                     storage.save(Array(newEntries), as: file)
                 }
             }
         }
     }
 
-    // Time In Range (%), Average Glucose (24 hours)
+    // Time In Range (%) and Average Glucose (24 hours)
     func tir()
         -> (
             averageGlucose: Decimal,
@@ -920,9 +922,8 @@ final class BaseAPSManager: APSManager, Injectable {
                 nr_bgs += 1
             }
         }
-        var averageGlucose_ = bg / nr_bgs
-        // Round
-        averageGlucose_ = Decimal(round(Double(averageGlucose_)))
+
+        let averageGlucose_ = bg / nr_bgs
 
         let fullTime = glucose![0].date - glucose![endIndex].date
         var timeInHypo: Decimal = 0
@@ -962,23 +963,13 @@ final class BaseAPSManager: APSManager, Injectable {
         } else { hypers = (timeInHyper / fullTime) * 100
         }
 
-        // round to 1 decimal
-        let hypoRounded = round(Double(hypos) * 10) / 10
-        let hyperRounded = round(Double(hypers) * 10) / 10
-        let TIRrounded = round((100 - (hypoRounded + hyperRounded)) * 10) / 10
-
-        // For testing. See in Xcode console each loop.
-        /*
-         print(
-             "Average Glucose: \(averageGlucose) mg/dl, TIR: \(TIRrounded) %, Hypos: \(hypoRounded) %, Hypers: \(hyperRounded) %, HbA1c : \(HbA1cRoundedIFCC) mmol/mol / \(HbA1cRoundedNGSP) %"
-         )
-         */
+        let TIR = 100 - (hypos + hypers)
 
         return (
-            averageGlucose_,
-            Decimal(hypoRounded),
-            Decimal(hyperRounded),
-            Decimal(TIRrounded)
+            roundDecimal(averageGlucose_, 0),
+            roundDecimal(hypos, 1),
+            roundDecimal(hypers, 1),
+            roundDecimal(TIR, 1)
         )
     }
 
