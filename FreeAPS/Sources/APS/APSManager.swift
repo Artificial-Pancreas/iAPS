@@ -771,9 +771,11 @@ final class BaseAPSManager: APSManager, Injectable {
         switch length__ {
         case 7...:
             string7Days = " HbA1c for previous 7 days: \(tir().HbA1cIFCC_7) mmol/mol / \(tir().HbA1cNGSP_7) %."
+            fallthrough
         case 14...:
             string14Days = " HbA1c for previous 14 days: \(tir().HbA1cIFCC_14) mmol/mol / \(tir().HbA1cNGSP_14) %."
-        case 1...:
+            fallthrough
+        case 2...:
             stringTotal =
                 " HbA1c for total number of days(\(length__)): \(tir().HbA1cIFCC_total) mmol/mol / \(tir().HbA1cNGSP_total) %."
         default:
@@ -812,7 +814,6 @@ final class BaseAPSManager: APSManager, Injectable {
         let file_3 = loadFileFromStorage(name: OpenAPS.Monitor.dailyStats)
         var isJSONempty = false
         if file_3.rawJSON.isEmpty {
-            print("Empty")
             isJSONempty = true
         }
 
@@ -829,8 +830,8 @@ final class BaseAPSManager: APSManager, Injectable {
                 storage.transaction { storage in
                     storage.append(dailystat, to: file, uniqBy: \.id)
                     newEntries = storage.retrieve(file, as: [DailyStats].self)?
-                        .sorted { $0.date > $1.date } ?? []
                         .filter { $0.date.addingTimeInterval(1.days.timeInterval) < now }
+                        .sorted { $0.date > $1.date } ?? []
                     storage.save(Array(newEntries), as: file)
                 }
             }
@@ -855,10 +856,11 @@ final class BaseAPSManager: APSManager, Injectable {
         )
     {
         let glucose = storage.retrieve(OpenAPS.Monitor.glucose, as: [BloodGlucose].self)
-        let length_ = glucose!.count
+
+        let length_ = glucose?.count ?? 0
         let endIndex = length_ - 1
 
-        guard glucose?[0].date != nil else {
+        guard length_ != 0 else {
             return (0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
         }
 
@@ -877,26 +879,30 @@ final class BaseAPSManager: APSManager, Injectable {
 
         // If more than l day of stats:
         let stats = storage.retrieve(OpenAPS.Monitor.dailyStats, as: [DailyStats].self)
+        
         var avgS: Decimal = 0
         var nrAvgs: Decimal = 0
         var sevenDaysAvg: Decimal = 0
         var fourteenDaysAvg: Decimal = 0
         var totalDataAvg: Decimal = 0
+        let arraysInjson = stats?.count ?? 0
 
-        if stats != nil {
+        if arraysInjson > 1 {
             for entry in stats! {
                 if stats?.BG_daily_Average_mg_dl != nil {
                     avgS += entry.BG_daily_Average_mg_dl
+                    print("Average: \(entry.BG_daily_Average_mg_dl)")
                     nrAvgs += 1
-                }
-                if nrAvgs > 1 {
-                    totalDataAvg = avgS / nrAvgs
-                }
-                if nrAvgs == 7 {
-                    sevenDaysAvg = avgS / nrAvgs
-                }
-                if nrAvgs == 14 {
-                    fourteenDaysAvg = avgS / nrAvgs
+
+                    if nrAvgs >= 1 {
+                        totalDataAvg = avgS / nrAvgs
+                    }
+                    if nrAvgs == 7 {
+                        sevenDaysAvg = avgS / nrAvgs
+                    }
+                    if nrAvgs == 14 {
+                        fourteenDaysAvg = avgS / nrAvgs
+                    }
                 }
             }
         }
