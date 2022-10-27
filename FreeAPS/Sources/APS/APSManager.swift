@@ -830,8 +830,8 @@ final class BaseAPSManager: APSManager, Injectable {
                 storage.transaction { storage in
                     storage.append(dailystat, to: file, uniqBy: \.id)
                     newEntries = storage.retrieve(file, as: [DailyStats].self)?
-                        .filter { $0.date.addingTimeInterval(1.days.timeInterval) < now }
                         .sorted { $0.date > $1.date } ?? []
+                        .filter { $0.date.addingTimeInterval(1.days.timeInterval) < now && $0.date.addingTimeInterval(120.days.timeInterval) > Date() }
                     storage.save(Array(newEntries), as: file)
                 }
             }
