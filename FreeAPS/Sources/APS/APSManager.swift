@@ -671,8 +671,8 @@ final class BaseAPSManager: APSManager, Injectable {
         storage.transaction { storage in
             storage.append(tdd, to: file, uniqBy: \.id)
             uniqEvents = storage.retrieve(file, as: [TDD].self)?
-                .sorted { $0.timestamp > $1.timestamp } ?? []
                 .filter { $0.timestamp.addingTimeInterval(14.days.timeInterval) > Date() }
+                .sorted { $0.timestamp > $1.timestamp } ?? []
             var total: Decimal = 0
             var indeces: Decimal = 0
             for uniqEvent in uniqEvents {
@@ -682,8 +682,8 @@ final class BaseAPSManager: APSManager, Injectable {
                 }
             }
             let entriesPast2hours = storage.retrieve(file, as: [TDD].self)?
-                .sorted { $0.timestamp > $1.timestamp } ?? []
                 .filter { $0.timestamp.addingTimeInterval(2.hours.timeInterval) > Date() }
+                .sorted { $0.timestamp > $1.timestamp } ?? []
             var totalAmount: Decimal = 0
             var nrOfIndeces: Decimal = 0
             for entry in entriesPast2hours {
