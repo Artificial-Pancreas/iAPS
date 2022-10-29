@@ -759,8 +759,7 @@ final class BaseAPSManager: APSManager, Injectable {
         let branch = Bundle.main.infoDictionary?["NSHumanReadableCopyright"] as? String
         let pump_ = pumpManager?.localizedTitle ?? ""
         let cgm = settingsManager.settings.cgm
-        let file = OpenAPS.Monitor.dailyStats
-        let date_ = Date()
+        var file = OpenAPS.Monitor.dailyStats
         var iPa: Decimal = 75
         if preferences.useCustomPeakTime {
             iPa = preferences.insulinPeakTime
@@ -781,6 +780,7 @@ final class BaseAPSManager: APSManager, Injectable {
         var totalDataAvg: Decimal = 0
         let arraysInjson = stats?.count ?? 0
         // let end = arraysInjson - 1
+        print("arraysInjson: \(arraysInjson)")
         var i = 0
 
         if arraysInjson > 1 {
@@ -800,7 +800,7 @@ final class BaseAPSManager: APSManager, Injectable {
             }
         }
 
-        // HbA1c estimation (%, mmol/mol
+        // HbA1c estimation (%, mmol/mol)
         let NGSPa1CStatisticValue = (46.7 + tir().averageGlucose) / 28.7 // NGSP (%)
         let IFCCa1CStatisticValue = 10.929 *
             (NGSPa1CStatisticValue - 2.152) // IFCC (mmol/mol)  A1C(mmol/mol) = 10.929 * (A1C(%) - 2.15)
@@ -836,14 +836,16 @@ final class BaseAPSManager: APSManager, Injectable {
         }
 
         let HbA1c_string =
-            "Estimated HbA1c (1day): \(roundDecimal(IFCCa1CStatisticValue, 1)) mmol/mol / \(roundDecimal(NGSPa1CStatisticValue, 1)) %. Average Blood Glucose: \(tir().averageGlucose) mg/dl / \(roundDecimal(tir().averageGlucose * 0.0555, 1)) mmol/l." +
+            "Estimated HbA1c (%): \(roundDecimal(NGSPa1CStatisticValue, 1)). Estimated HbA1c (mmol/mol): \(roundDecimal(IFCCa1CStatisticValue, 1))." +
             string7Days + string30Days + stringTotal
 
         let tirString =
-            " \(tir().TIR) %. Time with Hypoglucemia: \(tir().hypos) % (> 10 mmol/l / 180 mg/dl). Time with Hyperglucemia: \(tir().hypers) % (< 4 mmol/l / 72 mg/dl)."
+            "\(tir().TIR) %. Time with Hypoglucemia: \(tir().hypos) % (< 4 mmol/l or 72 mg/dl). Time with Hyperglucemia: \(tir().hypers) % (> 10 mmol/l or 180 mg/dl)."
+
+        let averageBG = tir().averageGlucose
 
         let dailystat = DailyStats(
-            date: date_,
+            date: Date(),
             FAX_Build_Version: version,
             FAX_Build_Number: build ?? "1",
             FAX_Branch: branch ?? "N/A",
@@ -857,7 +859,8 @@ final class BaseAPSManager: APSManager, Injectable {
             TDD: currentTDD ?? 0,
             Carbs_24h: carbTotal,
             TIR: tirString,
-            BG_daily_Average_mg_dl: tir().averageGlucose,
+            BG_daily_Average_mg_dl: averageBG,
+            BG_daily_Average_mmol_l: roundDecimal(averageBG * 0.0555, 2),
             HbA1c: HbA1c_string,
             id: UUID().uuidString
         )
@@ -874,21 +877,32 @@ final class BaseAPSManager: APSManager, Injectable {
         let now = Date()
         let calender = Calendar.current
 
+        file = OpenAPS.Monitor.dailyStats
+
+        let stats_ = storage.retrieve(OpenAPS.Monitor.dailyStats, as: [DailyStats].self)
+
+        let arraysInjson_ = stats_?.count ?? 0
+        var time_ = Date()
+        var timePlus = Date()
+
+        if arraysInjson_ > 0 {
+            time_ = stats_?[0].date ?? Date()
+            timePlus = time_.addingTimeInterval(20.hours.timeInterval)
+        }
+
         // If current local time is 23:41 or later
-        if calender.component(.hour, from: now) > 22,
-           calender.component(.minute, from: now) > 40
+        if calender.component(.hour, from: now) == 0,
+           calender.component(.minute, from: now) > 0
         {
-            if isJSONempty {
+            if isJSONempty || arraysInjson == 0 {
                 storage.save(dailystat, as: file)
-            } else {
+            } else if now > timePlus {
                 storage.transaction { storage in
                     storage.append(dailystat, to: file, uniqBy: \.id)
                     newEntries = storage.retrieve(file, as: [DailyStats].self)?
-                        .filter {
-                            $0.date.addingTimeInterval(1.days.timeInterval) < Date() && $0.date
-                                .addingTimeInterval(120.days.timeInterval) > Date() }
+                        .filter { $0.date.addingTimeInterval(120.days.timeInterval) > Date() }
                         .sorted { $0.date > $1.date } ?? []
-                    storage.save(Array(newEntries), as: file)
+                    storage.save(newEntries, as: OpenAPS.Monitor.dailyStats)
                 }
             }
         }
