@@ -67,6 +67,8 @@
 	<string>Health App is used to store blood glucose data</string>
 	<key>NSHealthUpdateUsageDescription</key>
 	<string>Health App is used to store blood glucose data</string>
+	<key>NSHumanReadableCopyright</key>
+	<string>$(BRANCH)</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>

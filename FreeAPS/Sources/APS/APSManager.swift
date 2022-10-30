@@ -641,70 +641,11 @@ final class BaseAPSManager: APSManager, Injectable {
 
             storage.save(enacted, as: OpenAPS.Enact.enacted)
 
-            // Add to tdd.json:
-            //
-            let preferences = settingsManager.preferences
-            let currentTDD = enacted.tdd ?? 0
-            let file = OpenAPS.Monitor.tdd
-            let tdd = TDD(
-                TDD: currentTDD,
-                timestamp: Date(),
-                id: UUID().uuidString
-            )
-            var uniqEvents: [TDD] = []
-            storage.transaction { storage in
-                storage.append(tdd, to: file, uniqBy: \.id)
-                uniqEvents = storage.retrieve(file, as: [TDD].self)?
-                    .filter { $0.timestamp.addingTimeInterval(14.days.timeInterval) > Date() }
-                    .sorted { $0.timestamp > $1.timestamp } ?? []
+            // Create a tdd.json
+            tdd(enacted_: enacted)
 
-                var total: Decimal = 0
-                var indeces: Decimal = 0
-
-                for uniqEvent in uniqEvents {
-                    if uniqEvent.TDD > 0 {
-                        total += uniqEvent.TDD
-                        indeces += 1
-                    }
-                }
-
-                let entriesPast2hours = storage.retrieve(file, as: [TDD].self)?
-                    .filter { $0.timestamp.addingTimeInterval(2.hours.timeInterval) > Date() }
-                    .sorted { $0.timestamp > $1.timestamp } ?? []
-
-                var totalAmount: Decimal = 0
-                var nrOfIndeces: Decimal = 0
-
-                for entry in entriesPast2hours {
-                    if entry.TDD > 0 {
-                        totalAmount += entry.TDD
-                        nrOfIndeces += 1
-                    }
-                }
-
-                if indeces == 0 {
-                    indeces = 1
-                }
-
-                if nrOfIndeces == 0 {
-                    nrOfIndeces = 1
-                }
-
-                let average14 = total / indeces
-                let average2hours = totalAmount / nrOfIndeces
-                let weight = preferences.weightPercentage
-                let weighted_average = weight * average2hours + (1 - weight) * average14
-
-                let averages = TDD_averages(
-                    average_total_data: average14,
-                    weightedAverage: weighted_average,
-                    past2hoursAverage: average2hours,
-                    date: Date()
-                )
-                storage.save(averages, as: OpenAPS.Monitor.tdd_averages)
-                storage.save(Array(uniqEvents), as: file)
-            }
-            // End of tdd.json
+            // Create a dailyStats.json
+            dailyStats()
 
             debug(.apsManager, "Suggestion enacted. Received: \(received)")
             DispatchQueue.main.async {
@@ -714,6 +655,319 @@ final class BaseAPSManager: APSManager, Injectable {
             }
             nightscout.uploadStatus()
         }
+    }
+
+    func tdd(enacted_: Suggestion) {
+        // Add to tdd.json:
+        let preferences = settingsManager.preferences
+        let currentTDD = enacted_.tdd ?? 0
+        let file = OpenAPS.Monitor.tdd
+        let tdd = TDD(
+            TDD: currentTDD,
+            timestamp: Date(),
+            id: UUID().uuidString
+        )
+        var uniqEvents: [TDD] = []
+        storage.transaction { storage in
+            storage.append(tdd, to: file, uniqBy: \.id)
+            uniqEvents = storage.retrieve(file, as: [TDD].self)?
+                .filter { $0.timestamp.addingTimeInterval(14.days.timeInterval) > Date() }
+                .sorted { $0.timestamp > $1.timestamp } ?? []
+            var total: Decimal = 0
+            var indeces: Decimal = 0
+            for uniqEvent in uniqEvents {
+                if uniqEvent.TDD > 0 {
+                    total += uniqEvent.TDD
+                    indeces += 1
+                }
+            }
+            let entriesPast2hours = storage.retrieve(file, as: [TDD].self)?
+                .filter { $0.timestamp.addingTimeInterval(2.hours.timeInterval) > Date() }
+                .sorted { $0.timestamp > $1.timestamp } ?? []
+            var totalAmount: Decimal = 0
+            var nrOfIndeces: Decimal = 0
+            for entry in entriesPast2hours {
+                if entry.TDD > 0 {
+                    totalAmount += entry.TDD
+                    nrOfIndeces += 1
+                }
+            }
+            if indeces == 0 {
+                indeces = 1
+            }
+            if nrOfIndeces == 0 {
+                nrOfIndeces = 1
+            }
+            let average14 = total / indeces
+            let average2hours = totalAmount / nrOfIndeces
+            let weight = preferences.weightPercentage
+            let weighted_average = weight * average2hours + (1 - weight) * average14
+            let averages = TDD_averages(
+                average_total_data: roundDecimal(average14, 1),
+                weightedAverage: roundDecimal(weighted_average, 1),
+                past2hoursAverage: roundDecimal(average2hours, 1),
+                date: Date()
+            )
+            storage.save(averages, as: OpenAPS.Monitor.tdd_averages)
+            storage.save(Array(uniqEvents), as: file)
+        }
+    }
+
+    func roundDecimal(_ decimal: Decimal, _ digits: Double) -> Decimal {
+        let rounded = round(Double(decimal) * pow(10, digits)) / pow(10, digits)
+        return Decimal(rounded)
+    }
+
+    func dailyStats() {
+        // Add to dailyStats.JSON
+        let preferences = settingsManager.preferences
+        let carbs = storage.retrieve(OpenAPS.Monitor.carbHistory, as: [CarbsEntry].self)
+        let tdds = storage.retrieve(OpenAPS.Monitor.tdd, as: [TDD].self)
+        let currentTDD = tdds?[0].TDD
+        let carbs_length = carbs?.count ?? 0
+        var carbTotal: Decimal = 0
+
+        if carbs_length != 0 {
+            for each in carbs! {
+                if each.carbs != 0 {
+                    carbTotal += each.carbs
+                }
+            }
+        }
+
+        var algo_ = "oref0"
+        if preferences.enableChris, preferences.useNewFormula {
+            algo_ = "Dynamic ISF, Logarithmic Formula"
+        } else if !preferences.useNewFormula, preferences.enableChris {
+            algo_ = "Dynamic ISF, Original Formula"
+        }
+        let af = preferences.adjustmentFactor
+        let insulin_type = preferences.curve
+        var buildDate: Date {
+            if let infoPath = Bundle.main.path(forResource: "Info", ofType: "plist"),
+               let infoAttr = try? FileManager.default.attributesOfItem(atPath: infoPath),
+               let infoDate = infoAttr[.modificationDate] as? Date
+            {
+                return infoDate
+            }
+            return Date()
+        }
+        let nsObject: AnyObject? = Bundle.main.infoDictionary!["CFBundleShortVersionString"] as AnyObject
+        let version = nsObject as! String
+        let build = Bundle.main.infoDictionary?["CFBundleVersion"] as? String
+        let branch = Bundle.main.infoDictionary?["NSHumanReadableCopyright"] as? String
+        let pump_ = pumpManager?.localizedTitle ?? ""
+        let cgm = settingsManager.settings.cgm
+        var file = OpenAPS.Monitor.dailyStats
+        var iPa: Decimal = 75
+        if preferences.useCustomPeakTime {
+            iPa = preferences.insulinPeakTime
+        } else if preferences.curve.rawValue == "rapid-acting" {
+            iPa = 65
+        } else if preferences.curve.rawValue == "ultra-rapid" {
+            iPa = 50
+        }
+
+        // HbA1c estimation (%, mmol/mol)
+        let NGSPa1CStatisticValue = (46.7 + tir().averageGlucose_1) / 28.7 // NGSP (%)
+        let IFCCa1CStatisticValue = 10.929 *
+            (NGSPa1CStatisticValue - 2.152) // IFCC (mmol/mol)  A1C(mmol/mol) = 10.929 * (A1C(%) - 2.15)
+        // 7 days
+        let NGSPa1CStatisticValue_7 = (46.7 + tir().averageGlucose_7) / 28.7
+        let IFCCa1CStatisticValue_7 = 10.929 * (NGSPa1CStatisticValue_7 - 2.152)
+        // 14 days
+        let NGSPa1CStatisticValue_30 = (46.7 + tir().averageGlucose_30) / 28.7
+        let IFCCa1CStatisticValue_30 = 10.929 * (NGSPa1CStatisticValue_30 - 2.152)
+        // All days
+        let NGSPa1CStatisticValue_total = (46.7 + tir().averageGlucose) / 28.7
+        let IFCCa1CStatisticValue_total = 10.929 * (NGSPa1CStatisticValue_total - 2.152)
+
+        // HbA1c string and BG string:
+
+        var HbA1c_string_1 = ""
+        var string7Days = ""
+        var string30Days = ""
+        var stringTotal = ""
+
+        var bgString1day = ""
+        var bgString7Days = ""
+        var bgString30Days = ""
+        var bgAverageTotalString = ""
+
+        let daysBG = tir().daysWithBG
+        print("Days with BG: \(daysBG)")
+
+        let avg1 = tir().averageGlucose_1
+        let avg7 = tir().averageGlucose_7
+        let avg30 = tir().averageGlucose_30
+        let avgTot = tir().averageGlucose
+
+        if avg1 != 0 {
+            bgString1day = " Average BG (mmol/l, 1 day): \(roundDecimal(avg1 * 0.0555, 2)). Average BG (mmg/dl, 1 day): \(avg1)."
+            HbA1c_string_1 =
+                "Estimated HbA1c (%, 1 day): \(roundDecimal(NGSPa1CStatisticValue, 1)). Estimated HbA1c (mmol/mol, 1 day): \(roundDecimal(IFCCa1CStatisticValue, 1))."
+        }
+        if avg7 != 0 {
+            string7Days =
+                " HbA1c 7 days (mmol/mol): \(roundDecimal(IFCCa1CStatisticValue_7, 1)). HbA1c 7 days (%): \(roundDecimal(NGSPa1CStatisticValue_7, 1))."
+            bgString7Days = " Average BG (mmol/l) 7 days: \(roundDecimal(avg7 * 0.0555, 2)). Average BG (mg/dl) 7 days: \(avg7)."
+        }
+        if avg30 != 0 {
+            string30Days =
+                " HbA1c 30 days (mmol/mol): \(roundDecimal(IFCCa1CStatisticValue_30, 1)).  HbA1c 30 days (%): \(roundDecimal(NGSPa1CStatisticValue_30, 1))."
+            bgString30Days =
+                " Average BG 30 days (mmol/l): \(roundDecimal(avg30 * 0.0555, 2)). Average BG 30 days (mg/dl): \(avg30). "
+        }
+        if avgTot != 0, daysBG >= 2 {
+            stringTotal =
+                " HbA1c Total (\(daysBG)) Days (mmol/mol): \(roundDecimal(IFCCa1CStatisticValue_total, 1)). HbA1c Total (\(daysBG)) Days (mg/dl): \(roundDecimal(NGSPa1CStatisticValue_total, 1)) %."
+            bgAverageTotalString =
+                "BG Average Total (\(daysBG)) Days (mmol/l): \(roundDecimal(avgTot * 0.0555, 2)). BG Average Total (\(daysBG)) Days (mmg/dl): \(avgTot)."
+        }
+
+        let HbA1c_string = HbA1c_string_1 + string7Days + string30Days + stringTotal
+
+        let tirString =
+            "\(tir().TIR) %. Time with Hypoglucemia: \(tir().hypos) % (< 4 mmol/l or 72 mg/dl). Time with Hyperglucemia: \(tir().hypers) % (> 10 mmol/l or 180 mg/dl)."
+
+        let bgAverageString = bgString1day + bgString7Days + bgString30Days + bgAverageTotalString
+
+        let dailystat = DailyStats(
+            createdAt: Date(),
+            FAX_Build_Version: version,
+            FAX_Build_Number: build ?? "1",
+            FAX_Branch: branch ?? "N/A",
+            FAX_Build_Date: buildDate,
+            Algorithm: algo_,
+            AdjustmentFactor: af,
+            Pump: pump_,
+            CGM: cgm.rawValue,
+            insulinType: insulin_type.rawValue,
+            peakActivityTime: iPa,
+            TDD: currentTDD ?? 0,
+            Carbs_24h: carbTotal,
+            TIR: tirString,
+            BG_Average: bgAverageString,
+            HbA1c: HbA1c_string,
+            id: UUID().uuidString
+        )
+
+        file = OpenAPS.Monitor.dailyStats
+
+        storage.save(dailystat, as: file)
+    }
+
+    // Time In Range (%) and Average Glucose (24 hours)
+    func tir()
+        -> (
+            averageGlucose: Decimal,
+            averageGlucose_1: Decimal,
+            averageGlucose_7: Decimal,
+            averageGlucose_30: Decimal,
+            hypos: Decimal,
+            hypers: Decimal,
+            TIR: Decimal,
+            daysWithBG: Decimal
+        )
+    {
+        let glucose = storage.retrieve(OpenAPS.Monitor.glucose, as: [BloodGlucose].self)
+
+        let length_ = glucose?.count ?? 0
+        let endIndex = length_ - 1
+
+        guard length_ != 0 else {
+            return (0, 0, 0, 0, 0, 0, 0, 0)
+        }
+
+        var bg: Decimal = 0
+        var nr_bgs: Decimal = 0
+        let startDate = glucose![0].date
+        var end1 = false
+        var end7 = false
+        var end30 = false
+        var bg_1: Decimal = 0
+        var bg_7: Decimal = 0
+        var bg_30: Decimal = 0
+
+        for entry in glucose! {
+            if entry.glucose! > 0 {
+                bg += Decimal(entry.glucose!)
+                nr_bgs += 1
+
+                if startDate - entry.date > 8.64E7, !end1 {
+                    end1 = true
+                    bg_1 = bg / nr_bgs
+                }
+
+                if startDate - entry.date > 6.045E8, !end7 {
+                    end7 = true
+                    bg_7 = bg / nr_bgs
+                }
+                if startDate - entry.date > 2.59E9, !end30 {
+                    end30 = true
+                    bg_30 = bg / nr_bgs
+                }
+            }
+        }
+
+        let bg_120 = bg / nr_bgs
+        let fullTime = glucose![0].date - glucose![endIndex].date
+
+        let daysBG = fullTime / 8.64E7
+
+        var timeInHypo: Decimal = 0
+        var timeInHyper: Decimal = 0
+        var hypos: Decimal = 0
+        var hypers: Decimal = 0
+        var i = -1
+
+        var lastIndex = false
+
+        while i < endIndex {
+            i += 1
+
+            let currentTime = glucose![i].date
+            var previousTime = currentTime
+
+            if i + 1 <= endIndex {
+                previousTime = glucose![i + 1].date
+            } else {
+                lastIndex = true
+            }
+
+            if glucose![i].glucose! < 72, !lastIndex {
+                timeInHypo += currentTime - previousTime
+            } else if glucose![i].glucose! > 180, !lastIndex {
+                timeInHyper += currentTime - previousTime
+            }
+        }
+
+        if timeInHypo == 0 {
+            hypos = 0
+        } else { hypos = (timeInHypo / fullTime) * 100
+        }
+
+        if timeInHyper == 0 {
+            hypers = 0
+        } else { hypers = (timeInHyper / fullTime) * 100
+        }
+
+        let TIR = 100 - (hypos + hypers)
+
+        return (
+            roundDecimal(bg_120, 0),
+            roundDecimal(bg_1, 0),
+            roundDecimal(bg_7, 0),
+            roundDecimal(bg_30, 0),
+            roundDecimal(hypos, 1),
+            roundDecimal(hypers, 1),
+            roundDecimal(TIR, 1),
+            roundDecimal(daysBG, 1)
+        )
+    }
+
+    private func loadFileFromStorage(name: String) -> RawJSON {
+        storage.retrieveRaw(name) ?? OpenAPS.defaults(for: name)
     }
 
     private func processError(_ error: Error) {
