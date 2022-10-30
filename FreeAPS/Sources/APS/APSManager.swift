@@ -828,7 +828,7 @@ final class BaseAPSManager: APSManager, Injectable {
         let HbA1c_string = HbA1c_string_1 + string7Days + string30Days + stringTotal
 
         let tirString =
-            "\(tir().TIR) %. Time with Hypoglucemia: \(tir().hypos) % (< 4 mmol/l or 72 mg/dl). Time with Hyperglucemia: \(tir().hypers) % (> 10 mmol/l or 180 mg/dl)."
+            "\(tir().TIR) %. Time with Hypoglucemia: \(tir().hypos) % (< 4 / 72). Time with Hyperglucemia: \(tir().hypers) % (> 10 / 180)."
 
         let bgAverageString = bgString1day + bgString7Days + bgString30Days + bgAverageTotalString
 
