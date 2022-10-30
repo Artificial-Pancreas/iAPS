@@ -724,7 +724,6 @@ final class BaseAPSManager: APSManager, Injectable {
         let carbs = storage.retrieve(OpenAPS.Monitor.carbHistory, as: [CarbsEntry].self)
         let tdds = storage.retrieve(OpenAPS.Monitor.tdd, as: [TDD].self)
         let currentTDD = tdds?[0].TDD
-
         let carbs_length = carbs?.count ?? 0
         var carbTotal: Decimal = 0
 
@@ -769,83 +768,72 @@ final class BaseAPSManager: APSManager, Injectable {
             iPa = 50
         }
 
-        // Averages:
-        // If more than l day of stats:
-        let stats = storage.retrieve(OpenAPS.Monitor.dailyStats, as: [DailyStats].self)
-
-        var avgS: Decimal = 0
-        var nrAvgs: Decimal = 0
-        var sevenDaysAvg: Decimal = 0
-        var thirtyDaysAverage: Decimal = 0
-        var totalDataAvg: Decimal = 0
-        let arraysInjson = stats?.count ?? 0
-        // let end = arraysInjson - 1
-        print("arraysInjson: \(arraysInjson)")
-        var i = 0
-
-        if arraysInjson > 1 {
-            while i < arraysInjson {
-                avgS += stats?[i].BG_daily_Average_mg_dl as! Decimal
-                nrAvgs += 1
-                if nrAvgs >= 1 {
-                    totalDataAvg = avgS / nrAvgs
-                }
-                if nrAvgs == 7 {
-                    sevenDaysAvg = avgS / nrAvgs
-                }
-                if nrAvgs == 30 {
-                    thirtyDaysAverage = avgS / nrAvgs
-                }
-                i += 1
-            }
-        }
-
         // HbA1c estimation (%, mmol/mol)
-        let NGSPa1CStatisticValue = (46.7 + tir().averageGlucose) / 28.7 // NGSP (%)
+        let NGSPa1CStatisticValue = (46.7 + tir().averageGlucose_1) / 28.7 // NGSP (%)
         let IFCCa1CStatisticValue = 10.929 *
             (NGSPa1CStatisticValue - 2.152) // IFCC (mmol/mol)  A1C(mmol/mol) = 10.929 * (A1C(%) - 2.15)
         // 7 days
-        let NGSPa1CStatisticValue_7 = (46.7 + sevenDaysAvg) / 28.7
+        let NGSPa1CStatisticValue_7 = (46.7 + tir().averageGlucose_7) / 28.7
         let IFCCa1CStatisticValue_7 = 10.929 * (NGSPa1CStatisticValue_7 - 2.152)
         // 14 days
-        let NGSPa1CStatisticValue_30 = (46.7 + thirtyDaysAverage) / 28.7
+        let NGSPa1CStatisticValue_30 = (46.7 + tir().averageGlucose_30) / 28.7
         let IFCCa1CStatisticValue_30 = 10.929 * (NGSPa1CStatisticValue_30 - 2.152)
         // All days
-        let NGSPa1CStatisticValue_total = (46.7 + totalDataAvg) / 28.7
+        let NGSPa1CStatisticValue_total = (46.7 + tir().averageGlucose) / 28.7
         let IFCCa1CStatisticValue_total = 10.929 * (NGSPa1CStatisticValue_total - 2.152)
 
-        // HbA1c string:
+        // HbA1c string and BG string:
+
+        var HbA1c_string_1 = ""
         var string7Days = ""
         var string30Days = ""
         var stringTotal = ""
 
-        switch arraysInjson {
-        case 7...:
+        var bgString1day = ""
+        var bgString7Days = ""
+        var bgString30Days = ""
+        var bgAverageTotalString = ""
+
+        let daysBG = tir().daysWithBG
+        print("Days with BG: \(daysBG)")
+
+        let avg1 = tir().averageGlucose_1
+        let avg7 = tir().averageGlucose_7
+        let avg30 = tir().averageGlucose_30
+        let avgTot = tir().averageGlucose
+
+        if avg1 != 0 {
+            bgString1day = " Average BG (mmol/l, 1 day): \(roundDecimal(avg1 * 0.0555, 1)). Average BG (mmg/dl, 1 day): \(avg1)."
+            HbA1c_string_1 =
+                "Estimated HbA1c (%, 1 day): \(roundDecimal(NGSPa1CStatisticValue, 1)). Estimated HbA1c (mmol/mol, 1 day): \(roundDecimal(IFCCa1CStatisticValue, 1))."
+        }
+        if avg7 != 0 {
             string7Days =
-                " HbA1c 7 days: \(roundDecimal(IFCCa1CStatisticValue_7, 1)) mmol/mol / \(roundDecimal(NGSPa1CStatisticValue_7, 1)) %."
-            fallthrough
-        case 30...:
+                " HbA1c 7 days (mmol/mol): \(roundDecimal(IFCCa1CStatisticValue_7, 1)). HbA1c 7 days (%): \(roundDecimal(NGSPa1CStatisticValue_7, 1))."
+            bgString7Days = " Average BG (mmol/l) 7 days: \(roundDecimal(avg7 * 0.0555, 1)). Average BG (mg/dl) 7 days: \(avg7)."
+        }
+        if avg30 != 0 {
             string30Days =
-                " HbA1c 30 days: \(roundDecimal(IFCCa1CStatisticValue_30, 1)) mmol/mol / \(roundDecimal(NGSPa1CStatisticValue_30, 1)) %."
-            fallthrough
-        case 2...:
+                " HbA1c 30 days (mmol/mol): \(roundDecimal(IFCCa1CStatisticValue_30, 1)).  HbA1c 30 days (%): \(roundDecimal(NGSPa1CStatisticValue_30, 1))."
+            bgString30Days =
+                " Average BG 30 days (mmol/l): \(roundDecimal(avg30 * 0.0555, 1)). Average BG 30 days (mg/dl): \(avg30). "
+        }
+        if avgTot != 0, daysBG >= 2 {
             stringTotal =
-                " HbA1c \(arraysInjson) days: \(roundDecimal(IFCCa1CStatisticValue_total, 1)) mmol/mol / \(roundDecimal(NGSPa1CStatisticValue_total, 1)) %."
-        default:
-            stringTotal = ""
+                " HbA1c Total (\(daysBG)) Days (mmol/mol): \(roundDecimal(IFCCa1CStatisticValue_total, 1)). HbA1c Total (\(daysBG)) Days (mg/dl): \(roundDecimal(NGSPa1CStatisticValue_total, 1)) %."
+            bgAverageTotalString =
+                "BG Average Total (\(daysBG)) Days (mmol/l): \(roundDecimal(avgTot * 0.0555, 1)). BG Average Total (\(daysBG)) Days (mmg/dl): \(avgTot)."
         }
 
-        let HbA1c_string =
-            "Estimated HbA1c (%): \(roundDecimal(NGSPa1CStatisticValue, 1)). Estimated HbA1c (mmol/mol): \(roundDecimal(IFCCa1CStatisticValue, 1))." +
-            string7Days + string30Days + stringTotal
+        let HbA1c_string = HbA1c_string_1 + string7Days + string30Days + stringTotal
 
         let tirString =
             "\(tir().TIR) %. Time with Hypoglucemia: \(tir().hypos) % (< 4 mmol/l or 72 mg/dl). Time with Hyperglucemia: \(tir().hypers) % (> 10 mmol/l or 180 mg/dl)."
 
-        let averageBG = tir().averageGlucose
+        let bgAverageString = bgString1day + bgString7Days + bgString30Days + bgAverageTotalString
 
         let dailystat = DailyStats(
-            date: Date(),
+            createdAt: Date(),
             FAX_Build_Version: version,
             FAX_Build_Number: build ?? "1",
             FAX_Branch: branch ?? "N/A",
@@ -859,62 +847,27 @@ final class BaseAPSManager: APSManager, Injectable {
             TDD: currentTDD ?? 0,
             Carbs_24h: carbTotal,
             TIR: tirString,
-            BG_daily_Average_mg_dl: averageBG,
-            BG_daily_Average_mmol_l: roundDecimal(averageBG * 0.0555, 2),
+            BG_Average: bgAverageString,
             HbA1c: HbA1c_string,
             id: UUID().uuidString
         )
 
-        var newEntries: [DailyStats] = []
-
-        // If file is empty
-        let file_3 = loadFileFromStorage(name: OpenAPS.Monitor.dailyStats)
-        var isJSONempty = false
-        if file_3.rawJSON.isEmpty {
-            isJSONempty = true
-        }
-
-        let now = Date()
-        let calender = Calendar.current
-
         file = OpenAPS.Monitor.dailyStats
 
-        let stats_ = storage.retrieve(OpenAPS.Monitor.dailyStats, as: [DailyStats].self)
-
-        let arraysInjson_ = stats_?.count ?? 0
-        var time_ = Date()
-        var timePlus = Date()
-
-        if arraysInjson_ > 0 {
-            time_ = stats_?[0].date ?? Date()
-            timePlus = time_.addingTimeInterval(20.hours.timeInterval)
-        }
-
-        // If current local time is 23:41 or later
-        if calender.component(.hour, from: now) == 0,
-           calender.component(.minute, from: now) > 0
-        {
-            if isJSONempty || arraysInjson == 0 {
-                storage.save(dailystat, as: file)
-            } else if now > timePlus {
-                storage.transaction { storage in
-                    storage.append(dailystat, to: file, uniqBy: \.id)
-                    newEntries = storage.retrieve(file, as: [DailyStats].self)?
-                        .filter { $0.date.addingTimeInterval(120.days.timeInterval) > Date() }
-                        .sorted { $0.date > $1.date } ?? []
-                    storage.save(newEntries, as: OpenAPS.Monitor.dailyStats)
-                }
-            }
-        }
+        storage.save(dailystat, as: file)
     }
 
     // Time In Range (%) and Average Glucose (24 hours)
     func tir()
         -> (
             averageGlucose: Decimal,
+            averageGlucose_1: Decimal,
+            averageGlucose_7: Decimal,
+            averageGlucose_30: Decimal,
             hypos: Decimal,
             hypers: Decimal,
-            TIR: Decimal
+            TIR: Decimal,
+            daysWithBG: Decimal
         )
     {
         let glucose = storage.retrieve(OpenAPS.Monitor.glucose, as: [BloodGlucose].self)
@@ -923,22 +876,45 @@ final class BaseAPSManager: APSManager, Injectable {
         let endIndex = length_ - 1
 
         guard length_ != 0 else {
-            return (0, 0, 0, 0)
+            return (0, 0, 0, 0, 0, 0, 0, 0)
         }
 
         var bg: Decimal = 0
         var nr_bgs: Decimal = 0
+        let startDate = glucose![0].date
+        var end1 = false
+        var end7 = false
+        var end30 = false
+        var bg_1: Decimal = 0
+        var bg_7: Decimal = 0
+        var bg_30: Decimal = 0
 
         for entry in glucose! {
             if entry.glucose! > 0 {
                 bg += Decimal(entry.glucose!)
                 nr_bgs += 1
+
+                if startDate - entry.date > 8.64E7, !end1 {
+                    end1 = true
+                    bg_1 = bg / nr_bgs
+                }
+
+                if startDate - entry.date > 6.045E8, !end7 {
+                    end7 = true
+                    bg_7 = bg / nr_bgs
+                }
+                if startDate - entry.date > 2.59E9, !end30 {
+                    end30 = true
+                    bg_30 = bg / nr_bgs
+                }
             }
         }
 
-        let averageGlucose_ = bg / nr_bgs
-
+        let bg_120 = bg / nr_bgs
         let fullTime = glucose![0].date - glucose![endIndex].date
+
+        let daysBG = fullTime / 8.64E7
+
         var timeInHypo: Decimal = 0
         var timeInHyper: Decimal = 0
         var hypos: Decimal = 0
@@ -979,10 +955,14 @@ final class BaseAPSManager: APSManager, Injectable {
         let TIR = 100 - (hypos + hypers)
 
         return (
-            roundDecimal(averageGlucose_, 0),
+            roundDecimal(bg_120, 0),
+            roundDecimal(bg_1, 0),
+            roundDecimal(bg_7, 0),
+            roundDecimal(bg_30, 0),
             roundDecimal(hypos, 1),
             roundDecimal(hypers, 1),
-            roundDecimal(TIR, 1)
+            roundDecimal(TIR, 1),
+            roundDecimal(daysBG, 1)
         )
     }
 

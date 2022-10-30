@@ -1,7 +1,7 @@
 import Foundation
 
 struct DailyStats: JSON, Equatable {
-    var date: Date
+    var createdAt: Date
     var FAX_Build_Version: String
     var FAX_Build_Number: String
     var FAX_Branch: String
@@ -15,13 +15,12 @@ struct DailyStats: JSON, Equatable {
     var TDD: Decimal
     var Carbs_24h: Decimal
     var TIR: String
-    var BG_daily_Average_mg_dl: Decimal
-    var BG_daily_Average_mmol_l: Decimal
+    var BG_Average: String
     var HbA1c: String
     var id: String
 
     init(
-        date: Date,
+        createdAt: Date,
         FAX_Build_Version: String,
         FAX_Build_Number: String,
         FAX_Branch: String,
@@ -35,12 +34,11 @@ struct DailyStats: JSON, Equatable {
         TDD: Decimal,
         Carbs_24h: Decimal,
         TIR: String,
-        BG_daily_Average_mg_dl: Decimal,
-        BG_daily_Average_mmol_l: Decimal,
+        BG_Average: String,
         HbA1c: String,
         id: String
     ) {
-        self.date = date
+        self.createdAt = createdAt
         self.FAX_Build_Version = FAX_Build_Version
         self.FAX_Build_Number = FAX_Build_Number
         self.FAX_Branch = FAX_Branch
@@ -54,16 +52,23 @@ struct DailyStats: JSON, Equatable {
         self.TDD = TDD
         self.Carbs_24h = Carbs_24h
         self.TIR = TIR
-        self.BG_daily_Average_mg_dl = BG_daily_Average_mg_dl
-        self.BG_daily_Average_mmol_l = BG_daily_Average_mmol_l
+        self.BG_Average = BG_Average
         self.HbA1c = HbA1c
         self.id = id
+    }
+
+    static func == (lhs: DailyStats, rhs: DailyStats) -> Bool {
+        lhs.createdAt == rhs.createdAt
+    }
+
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(createdAt)
     }
 }
 
 extension DailyStats {
     private enum CodingKeys: String, CodingKey {
-        case date
+        case createdAt
         case FAX_Build_Version
         case FAX_Build_Number
         case FAX_Branch
@@ -77,8 +82,7 @@ extension DailyStats {
         case TDD
         case Carbs_24h
         case TIR
-        case BG_daily_Average_mg_dl
-        case BG_daily_Average_mmol_l
+        case BG_Average
         case HbA1c
         case id
     }
