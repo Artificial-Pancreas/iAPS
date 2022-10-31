@@ -713,7 +713,7 @@ final class BaseAPSManager: APSManager, Injectable {
         }
     }
 
-    func roundDecimal(_ decimal: Decimal, _ digits: Double) -> Decimal {
+    private func roundDecimal(_ decimal: Decimal, _ digits: Double) -> Decimal {
         let rounded = round(Double(decimal) * pow(10, digits)) / pow(10, digits)
         return Decimal(rounded)
     }
@@ -803,26 +803,26 @@ final class BaseAPSManager: APSManager, Injectable {
         let avgTot = tir().averageGlucose
 
         if avg1 != 0 {
-            bgString1day = " Average BG (mmol/l, 1 day): \(roundDecimal(avg1 * 0.0555, 2)). Average BG (mmg/dl, 1 day): \(avg1)."
+            bgString1day = " Average BG (mmol/l, 1 day): \(roundDecimal(avg1 * 0.0555, 1)). Average BG (mmg/dl, 1 day): \(avg1)."
             HbA1c_string_1 =
                 "Estimated HbA1c (%, 1 day): \(roundDecimal(NGSPa1CStatisticValue, 1)). Estimated HbA1c (mmol/mol, 1 day): \(roundDecimal(IFCCa1CStatisticValue, 1))."
         }
         if avg7 != 0 {
             string7Days =
                 " HbA1c 7 days (mmol/mol): \(roundDecimal(IFCCa1CStatisticValue_7, 1)). HbA1c 7 days (%): \(roundDecimal(NGSPa1CStatisticValue_7, 1))."
-            bgString7Days = " Average BG (mmol/l) 7 days: \(roundDecimal(avg7 * 0.0555, 2)). Average BG (mg/dl) 7 days: \(avg7)."
+            bgString7Days = " Average BG (mmol/l) 7 days: \(roundDecimal(avg7 * 0.0555, 1)). Average BG (mg/dl) 7 days: \(avg7)."
         }
         if avg30 != 0 {
             string30Days =
                 " HbA1c 30 days (mmol/mol): \(roundDecimal(IFCCa1CStatisticValue_30, 1)).  HbA1c 30 days (%): \(roundDecimal(NGSPa1CStatisticValue_30, 1))."
             bgString30Days =
-                " Average BG 30 days (mmol/l): \(roundDecimal(avg30 * 0.0555, 2)). Average BG 30 days (mg/dl): \(avg30). "
+                " Average BG 30 days (mmol/l): \(roundDecimal(avg30 * 0.0555, 1)). Average BG 30 days (mg/dl): \(avg30). "
         }
         if avgTot != 0, daysBG >= 2 {
             stringTotal =
                 " HbA1c Total (\(daysBG)) Days (mmol/mol): \(roundDecimal(IFCCa1CStatisticValue_total, 1)). HbA1c Total (\(daysBG)) Days (mg/dl): \(roundDecimal(NGSPa1CStatisticValue_total, 1)) %."
             bgAverageTotalString =
-                "BG Average Total (\(daysBG)) Days (mmol/l): \(roundDecimal(avgTot * 0.0555, 2)). BG Average Total (\(daysBG)) Days (mmg/dl): \(avgTot)."
+                "BG Average Total (\(daysBG)) Days (mmol/l): \(roundDecimal(avgTot * 0.0555, 1)). BG Average Total (\(daysBG)) Days (mmg/dl): \(avgTot)."
         }
 
         let HbA1c_string = HbA1c_string_1 + string7Days + string30Days + stringTotal
