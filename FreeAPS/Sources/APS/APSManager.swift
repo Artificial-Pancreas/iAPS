@@ -848,8 +848,7 @@ final class BaseAPSManager: APSManager, Injectable {
             Carbs_24h: carbTotal,
             TIR: tirString,
             BG_Average: bgAverageString,
-            HbA1c: HbA1c_string,
-            id: UUID().uuidString
+            HbA1c: HbA1c_string
         )
 
         file = OpenAPS.Monitor.dailyStats
