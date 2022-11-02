@@ -315,6 +315,7 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
                 timeAsSeconds: item.minutes * 60
             )
         }
+
         var nsUnits = ""
         switch settingsManager.settings.units {
         case .mgdL:

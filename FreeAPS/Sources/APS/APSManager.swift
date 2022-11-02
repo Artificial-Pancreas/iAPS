@@ -827,8 +827,13 @@ final class BaseAPSManager: APSManager, Injectable {
 
         let HbA1c_string = HbA1c_string_1 + string7Days + string30Days + stringTotal
 
-        let tirString =
-            "\(tir().TIR) %. Time with Hypoglucemia: \(tir().hypos) % (< 4 / 72). Time with Hyperglucemia: \(tir().hypers) % (> 10 / 180)."
+        var tirString =
+            "TIR (24 hours): \(tir().TIR_1) %. Time with Hypoglucemia: \(tir().hypos_1) % (< 4 / 72). Time with Hyperglucemia: \(tir().hypers_1) % (> 10 / 180)."
+        
+        if daysBG >= 2 {
+            tirString +=
+                " Total days (\(daysBG)) TIR: \(tir().TIR) %. Time with Hypoglucemia: \(tir().hypos) % (< 4 / 72). Time with Hyperglucemia: \(tir().hypers) % (> 10 / 180)."
+        }
 
         let bgAverageString = bgString1day + bgString7Days + bgString30Days + bgAverageTotalString
 
@@ -856,7 +861,7 @@ final class BaseAPSManager: APSManager, Injectable {
         storage.save(dailystat, as: file)
     }
 
-    // Time In Range (%) and Average Glucose (24 hours)
+    // Time In Range (%) and Average Glucose (24 hours). This function looks dumb. I will refactor it later.
     func tir()
         -> (
             averageGlucose: Decimal,
@@ -866,6 +871,9 @@ final class BaseAPSManager: APSManager, Injectable {
             hypos: Decimal,
             hypers: Decimal,
             TIR: Decimal,
+            hypos_1: Decimal,
+            hypers_1: Decimal,
+            TIR_1: Decimal,
             daysWithBG: Decimal
         )
     {
@@ -873,9 +881,10 @@ final class BaseAPSManager: APSManager, Injectable {
 
         let length_ = glucose?.count ?? 0
         let endIndex = length_ - 1
+        var oneDayGlucoseIndex = endIndex
 
         guard length_ != 0 else {
-            return (0, 0, 0, 0, 0, 0, 0, 0)
+            return (0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
         }
 
         var bg: Decimal = 0
@@ -887,18 +896,22 @@ final class BaseAPSManager: APSManager, Injectable {
         var bg_1: Decimal = 0
         var bg_7: Decimal = 0
         var bg_30: Decimal = 0
+        var j = -1
+        
 
         for entry in glucose! {
+            j += 1
             if entry.glucose! > 0 {
                 bg += Decimal(entry.glucose!)
                 nr_bgs += 1
 
-                if startDate - entry.date > 8.64E7, !end1 {
+                if startDate - entry.date >= 8.64E7, !end1 {
                     end1 = true
+                    oneDayGlucoseIndex = j
                     bg_1 = bg / nr_bgs
                 }
 
-                if startDate - entry.date > 6.045E8, !end7 {
+                if startDate - entry.date >= 6.045E8, !end7 {
                     end7 = true
                     bg_7 = bg / nr_bgs
                 }
@@ -909,8 +922,9 @@ final class BaseAPSManager: APSManager, Injectable {
             }
         }
 
-        let bg_120 = bg / nr_bgs
+        let bg_90 = bg / nr_bgs
         let fullTime = glucose![0].date - glucose![endIndex].date
+        var fullTime_1 = glucose![0].date - glucose![oneDayGlucoseIndex].date
 
         let daysBG = fullTime / 8.64E7
 
@@ -953,14 +967,56 @@ final class BaseAPSManager: APSManager, Injectable {
 
         let TIR = 100 - (hypos + hypers)
 
+        // Do the loop again but with for 1 day. I will change this later, because this looks really dumb:
+        var timeInHypo_1: Decimal = 0
+        var timeInHyper_1: Decimal = 0
+        var hypos_1: Decimal = 0
+        var hypers_1: Decimal = 0
+        i = -1
+        lastIndex = false
+
+        while i < oneDayGlucoseIndex {
+            i += 1
+
+            let currentTime = glucose![i].date
+            var previousTime = currentTime
+
+            if i + 1 <= oneDayGlucoseIndex {
+                previousTime = glucose![i + 1].date
+            } else {
+                lastIndex = true
+            }
+
+            if glucose![i].glucose! < 72, !lastIndex {
+                timeInHypo_1 += currentTime - previousTime
+            } else if glucose![i].glucose! > 180, !lastIndex {
+                timeInHyper_1 += currentTime - previousTime
+            }
+        }
+
+        if timeInHypo_1 == 0 {
+            hypos_1 = 0
+        } else { hypos_1 = (timeInHypo_1 / fullTime_1) * 100
+        }
+
+        if timeInHyper_1 == 0 {
+            hypers_1 = 0
+        } else { hypers_1 = (timeInHyper_1 / fullTime_1) * 100
+        }
+
+        let TIR_1 = 100 - (hypos_1 + hypers_1)
+
         return (
-            roundDecimal(bg_120, 0),
+            roundDecimal(bg_90, 0),
             roundDecimal(bg_1, 0),
             roundDecimal(bg_7, 0),
             roundDecimal(bg_30, 0),
             roundDecimal(hypos, 1),
             roundDecimal(hypers, 1),
             roundDecimal(TIR, 1),
+            roundDecimal(hypos_1, 1),
+            roundDecimal(hypers_1, 1),
+            roundDecimal(TIR_1, 1),
             roundDecimal(daysBG, 1)
         )
     }
