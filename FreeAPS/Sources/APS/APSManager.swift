@@ -803,9 +803,10 @@ final class BaseAPSManager: APSManager, Injectable {
         let avgTot = tir().averageGlucose
 
         if avg1 != 0 {
-            bgString1day = " Average BG (mmol/l, 1 day): \(roundDecimal(avg1 * 0.0555, 1)). Average BG (mmg/dl, 1 day): \(avg1)."
+            bgString1day =
+                " Average BG (mmol/l) 24 hours): \(roundDecimal(avg1 * 0.0555, 1)). Average BG (mmg/dl) 24 hours: \(avg1)."
             HbA1c_string_1 =
-                "Estimated HbA1c (%, 1 day): \(roundDecimal(NGSPa1CStatisticValue, 1)). Estimated HbA1c (mmol/mol, 1 day): \(roundDecimal(IFCCa1CStatisticValue, 1))."
+                "Estimated HbA1c (mmol/mol, 1 day): \(roundDecimal(IFCCa1CStatisticValue, 1)). Estimated HbA1c (%, 1 day): \(roundDecimal(NGSPa1CStatisticValue, 1)). "
         }
         if avg7 != 0 {
             string7Days =
@@ -829,7 +830,7 @@ final class BaseAPSManager: APSManager, Injectable {
 
         var tirString =
             "TIR (24 hours): \(tir().TIR_1) %. Time with Hypoglucemia: \(tir().hypos_1) % (< 4 / 72). Time with Hyperglucemia: \(tir().hypers_1) % (> 10 / 180)."
-        
+
         if daysBG >= 2 {
             tirString +=
                 " Total days (\(daysBG)) TIR: \(tir().TIR) %. Time with Hypoglucemia: \(tir().hypos) % (< 4 / 72). Time with Hyperglucemia: \(tir().hypers) % (> 10 / 180)."
@@ -897,7 +898,6 @@ final class BaseAPSManager: APSManager, Injectable {
         var bg_7: Decimal = 0
         var bg_30: Decimal = 0
         var j = -1
-        
 
         for entry in glucose! {
             j += 1
