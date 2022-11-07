@@ -735,7 +735,7 @@ final class BaseAPSManager: APSManager, Injectable {
             }
         }
 
-        var algo_ = "oref0"
+        var algo_ = "oref0" //Default
         if preferences.enableChris, preferences.useNewFormula {
             algo_ = "Dynamic ISF, Logarithmic Formula"
         } else if !preferences.useNewFormula, preferences.enableChris {
@@ -795,7 +795,6 @@ final class BaseAPSManager: APSManager, Injectable {
         var bgAverageTotalString = ""
 
         let daysBG = tir().daysWithBG
-        print("Days with BG: \(daysBG)")
 
         let avg1 = tir().averageGlucose_1
         let avg7 = tir().averageGlucose_7
@@ -850,7 +849,7 @@ final class BaseAPSManager: APSManager, Injectable {
             CGM: cgm.rawValue,
             insulinType: insulin_type.rawValue,
             peakActivityTime: iPa,
-            TDD: currentTDD ?? 0,
+            TDD: currentTDD,
             Carbs_24h: carbTotal,
             TIR: tirString,
             BG_Average: bgAverageString,
@@ -858,7 +857,6 @@ final class BaseAPSManager: APSManager, Injectable {
         )
 
         file = OpenAPS.Monitor.dailyStats
-
         storage.save(dailystat, as: file)
     }
 
