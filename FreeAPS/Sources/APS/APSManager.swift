@@ -659,7 +659,7 @@ final class BaseAPSManager: APSManager, Injectable {
         }
     }
 
-    func tdd(enacted_: Suggestion) {
+    private func tdd(enacted_: Suggestion) {
         // Add to tdd.json:
         let preferences = settingsManager.preferences
         let currentTDD = enacted_.tdd ?? 0
@@ -720,7 +720,7 @@ final class BaseAPSManager: APSManager, Injectable {
         return Decimal(rounded)
     }
 
-    func dailyStats() {
+    private func dailyStats() {
         // Add to dailyStats.JSON
         let preferences = settingsManager.preferences
         let carbs = storage.retrieve(OpenAPS.Monitor.carbHistory, as: [CarbsEntry].self)
@@ -837,7 +837,7 @@ final class BaseAPSManager: APSManager, Injectable {
         var bgString30Days = ""
         var bgString90Days = ""
         var bgAverageTotalString = ""
-        
+
         let daysBG = tir().daysWithBG
         let avg1 = tir().averageGlucose_1
         let avg7 = tir().averageGlucose_7
@@ -909,23 +909,22 @@ final class BaseAPSManager: APSManager, Injectable {
         let savedDailyStas = storage.retrieve(OpenAPS.Monitor.dailyStats, as: [DailyStats].self)?
             .sorted { $0.createdAt > $1.createdAt } ?? []
         let lastDailyStatsEntry = savedDailyStas.count - 1
-
         var uniqeEvents: [DailyStats] = []
 
-        if lastDailyStatsEntry <= 0 {
+        if lastDailyStatsEntry < 0 {
             storage.save(dailystat, as: file)
         } else if Date() > savedDailyStas[0].createdAt.addingTimeInterval(1.days.timeInterval) {
             storage.transaction { storage in
                 storage.append(dailystat, to: file, uniqBy: \.createdAt)
                 uniqeEvents = storage.retrieve(file, as: [DailyStats].self)?
-                    .filter { $0.createdAt.addingTimeInterval(365.days.timeInterval) > Date() }
+                    .filter { $0.createdAt.addingTimeInterval(90.days.timeInterval) > Date() }
                     .sorted { $0.createdAt > $1.createdAt } ?? []
                 storage.save(Array(uniqeEvents), as: file)
             }
         }
     }
 
-    func loopStats(error: Error? = nil) {
+    private func loopStats(error: Error? = nil) {
         let file = OpenAPS.Monitor.loopStats
         var errString = "Success"
 
@@ -936,7 +935,6 @@ final class BaseAPSManager: APSManager, Injectable {
             createdAt: Date(),
             loopStatus: errString
         )
-
         var uniqEvents: [LoopStats] = []
 
         storage.transaction { storage in
@@ -950,7 +948,7 @@ final class BaseAPSManager: APSManager, Injectable {
     }
 
     // Time In Range (%) and Average Glucose (24 hours). This function looks dumb. I will refactor it later.
-    func tir()
+    private func tir()
         -> (
             averageGlucose: Decimal,
             averageGlucose_1: Decimal,
@@ -1023,7 +1021,6 @@ final class BaseAPSManager: APSManager, Injectable {
         var hypos: Decimal = 0
         var hypers: Decimal = 0
         var i = -1
-
         var lastIndex = false
 
         while i < endIndex {
@@ -1099,7 +1096,6 @@ final class BaseAPSManager: APSManager, Injectable {
         // Add 10 day average to weeklyStats.json
         let file_10 = OpenAPS.Monitor.tenDaysStats
         let tensDaysStats = storage.retrieve(file_10, as: [TenDaysStats].self)
-
         let lastTenDaysStatEntry = tensDaysStats?[0].past10daysAverage ?? 0
 
         print("Count entries on TenDaysData: \(lastTenDaysStatEntry)")
@@ -1134,10 +1130,6 @@ final class BaseAPSManager: APSManager, Injectable {
             roundDecimal(TIR_1, 1),
             roundDecimal(daysBG, 1)
         )
-    }
-
-    private func loadFileFromStorage(name: String) -> RawJSON {
-        storage.retrieveRaw(name) ?? OpenAPS.defaults(for: name)
     }
 
     private func processError(_ error: Error) {
