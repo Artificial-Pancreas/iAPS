@@ -114,8 +114,10 @@ extension Settings {
                                 .navigationLink(to: .configEditor(file: OpenAPS.Monitor.tdd), from: self)
                             Text("TDD Averages")
                                 .navigationLink(to: .configEditor(file: OpenAPS.Monitor.tdd_averages), from: self)
-                            Text("Daily Statistics")
+                            Text("Statistics")
                                 .navigationLink(to: .configEditor(file: OpenAPS.Monitor.dailyStats), from: self)
+                            Text("Ten Days Data")
+                                .navigationLink(to: .configEditor(file: OpenAPS.Monitor.tenDaysStats), from: self)
                             Text("Edit settings json")
                                 .navigationLink(to: .configEditor(file: OpenAPS.FreeAPS.settings), from: self)
                         }
