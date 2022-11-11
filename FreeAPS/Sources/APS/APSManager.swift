@@ -782,7 +782,7 @@ final class BaseAPSManager: APSManager, Injectable {
             successRate = (successNR / Double(i)) * 100
 
             let loopDataTime = lsData[0].createdAt - lsData[Int(i) - 1].createdAt
-            let minutesBetweenLoops = (loopDataTime.timeInterval / Double(i)) / 60
+            let minutesBetweenLoops = (loopDataTime.timeInterval / Double(successNR)) / 60
             roundedMinutesBetweenLoops = round(minutesBetweenLoops * 10) / 10
         }
 
