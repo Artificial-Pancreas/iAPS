@@ -899,12 +899,12 @@ final class BaseAPSManager: APSManager, Injectable {
             CGM: cgm.rawValue,
             insulinType: insulin_type.rawValue,
             peakActivityTime: iPa,
-            TDD: currentTDD,
+            TDD: roundDecimal(currentTDD, 2),
             Carbs_24h: carbTotal,
             TIR: tirString,
             BG_Average: bgAverageString,
             HbA1c: HbA1c_string,
-            Loop_Cycles: "Success Rate : \(round(successRate ?? 0)) %. Average Time Between Loop Cycles: \(roundedMinutesBetweenLoops ?? 0) min. Loops/Errors: \(Int(successNR))/\(Int(errorNR))."
+            Loop_Cycles: "Success Rate : \(round(successRate ?? 0)) %. Average Time Between Loop Cycles: \(roundedMinutesBetweenLoops ?? 0) min. Loops/Errors: \(Int(successNR))/\(Int(errorNR))"
         )
 
         var uniqeEvents: [DailyStats] = []
