@@ -921,7 +921,7 @@ final class BaseAPSManager: APSManager, Injectable {
             TIR: tirString,
             BG_Average: bgAverageString,
             HbA1c: HbA1c_string,
-            Loop_Cycles: "Success Rate : \(round(successRate ?? 0)) %. Average Time Between Loop Cycles: \(roundedMinutesBetweenLoops ?? 0) min. Loops/Errors: \(Int(successNR))/\(Int(errorNR)). Minimum Time Interval: \(minimumInt) min, Maximum Time Interval: \(maximumInt) min"
+            Loop_Cycles: "Success Rate : \(round(successRate ?? 0)) %. Average Time Between Loop Cycles: \(roundedMinutesBetweenLoops ?? 0) min. Loops/Errors: \(Int(successNR))/\(Int(errorNR)). Shortest Time Interval: \(minimumInt) min, Longest Time Interval: \(maximumInt) min"
         )
 
         var uniqeEvents: [DailyStats] = []
