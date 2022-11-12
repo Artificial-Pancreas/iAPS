@@ -769,7 +769,7 @@ final class BaseAPSManager: APSManager, Injectable {
         var roundedMinutesBetweenLoops: Double?
         var successNR = 0.0
         var errorNR = 0.0
-        var minimumInt = 99.0
+        var minimumInt = 999.0
         var maximumInt = 0.0
         var timeIntervalLoops = 0.0
         var previousTimeLoop = Date()
@@ -904,6 +904,15 @@ final class BaseAPSManager: APSManager, Injectable {
 
         let bgAverageString = bgString1day + bgString7Days + bgString30Days + bgString90Days + bgAverageTotalString
 
+        var minString = ""
+        if minimumInt == 999.00 {
+            minString = "Shortest Time Interval: N/A min, "
+        } else { minString = "Shortest Time Interval: \(minimumInt) min," }
+        var maxString = ""
+        if maximumInt == 0.0 {
+            maxString = "Longest Time Interval: N/A min"
+        } else { maxString = "Longest Time Interval: \(maximumInt) min" }
+
         let dailystat = DailyStats(
             createdAt: Date(),
             Build_Version: version ?? "",
@@ -921,7 +930,8 @@ final class BaseAPSManager: APSManager, Injectable {
             TIR: tirString,
             BG_Average: bgAverageString,
             HbA1c: HbA1c_string,
-            Loop_Cycles: "Success Rate : \(round(successRate ?? 0)) %. Average Time Between Loop Cycles: \(roundedMinutesBetweenLoops ?? 0) min. Loops/Errors: \(Int(successNR))/\(Int(errorNR)). Shortest Time Interval: \(minimumInt) min, Longest Time Interval: \(maximumInt) min"
+            Loop_Cycles: "Success Rate : \(round(successRate ?? 0)) %. Average Time Between Loop Cycles: \(roundedMinutesBetweenLoops ?? 0) min. Loops/Errors: \(Int(successNR))/\(Int(errorNR)). " +
+                minString + maxString
         )
 
         var uniqeEvents: [DailyStats] = []
