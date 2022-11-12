@@ -767,11 +767,11 @@ final class BaseAPSManager: APSManager, Injectable {
 
         var successRate: Double?
         var roundedMinutesBetweenLoops: Double?
+        var successNR = 0.0
+        var errorNR = 0.0
 
         if !lsData.isEmpty {
             var i = 0.0
-            var successNR = 0.0
-            var errorNR = 0.0
             for each in lsData {
                 i += 1
                 if each.loopStatus.contains("Success") {
@@ -904,7 +904,7 @@ final class BaseAPSManager: APSManager, Injectable {
             TIR: tirString,
             BG_Average: bgAverageString,
             HbA1c: HbA1c_string,
-            Loop_Cycles: "Success Rate : \(round(successRate ?? 0)) %. Average Time Between Loop Cycles: \(roundedMinutesBetweenLoops ?? 0) min."
+            Loop_Cycles: "Success Rate : \(round(successRate ?? 0)) %. Average Time Between Loop Cycles: \(roundedMinutesBetweenLoops ?? 0) min. Loops/Errors: \(Int(successNR))/\(Int(errorNR))."
         )
 
         var uniqeEvents: [DailyStats] = []

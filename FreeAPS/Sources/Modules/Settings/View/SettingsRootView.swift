@@ -110,8 +110,6 @@ extension Settings {
                                 .navigationLink(to: .configEditor(file: OpenAPS.Monitor.tempBasal), from: self)
                             Text("Middleware")
                                 .navigationLink(to: .configEditor(file: OpenAPS.Middleware.determineBasal), from: self)
-                            Text("TDD")
-                                .navigationLink(to: .configEditor(file: OpenAPS.Monitor.tdd), from: self)
                             Text("Statistics")
                                 .navigationLink(to: .configEditor(file: OpenAPS.Monitor.dailyStats), from: self)
                             Text("Loop Cycles")
