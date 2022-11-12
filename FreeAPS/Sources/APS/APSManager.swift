@@ -769,13 +769,28 @@ final class BaseAPSManager: APSManager, Injectable {
         var roundedMinutesBetweenLoops: Double?
         var successNR = 0.0
         var errorNR = 0.0
+        var minimumInt = 99.0
+        var maximumInt = 0.0
+        var timeIntervalLoops = 0.0
+        var previousTimeLoop = Date()
 
         if !lsData.isEmpty {
             var i = 0.0
+            previousTimeLoop = lsData[0].createdAt
+
             for each in lsData {
                 i += 1
+
                 if each.loopStatus.contains("Success") {
                     successNR += 1
+                    timeIntervalLoops = (previousTimeLoop - each.createdAt).timeInterval / 60
+                    if timeIntervalLoops > maximumInt {
+                        maximumInt = timeIntervalLoops
+                    }
+                    if timeIntervalLoops < minimumInt, timeIntervalLoops != 0.0 {
+                        minimumInt = timeIntervalLoops
+                    }
+                    previousTimeLoop = each.createdAt
                 } else {
                     errorNR += 1
                 }
@@ -785,10 +800,12 @@ final class BaseAPSManager: APSManager, Injectable {
             let loopDataTime = lsData[0].createdAt - lsData[Int(i) - 1].createdAt
             let minutesBetweenLoops = (loopDataTime.timeInterval / Double(successNR)) / 60
             roundedMinutesBetweenLoops = round(minutesBetweenLoops * 10) / 10
+            minimumInt = round(minimumInt * 10) / 10
+            maximumInt = round(maximumInt * 10) / 10
         }
 
         // Retrieve the 10 days data array
-        var uniqEvents_1 = storage.retrieve(OpenAPS.Monitor.tenDaysStats, as: [TenDaysStats].self)?
+        let uniqEvents_1 = storage.retrieve(OpenAPS.Monitor.tenDaysStats, as: [TenDaysStats].self)?
             .filter { $0.createdAt.addingTimeInterval(365.days.timeInterval) > Date() }
             .sorted { $0.createdAt > $1.createdAt } ?? []
 
@@ -904,7 +921,7 @@ final class BaseAPSManager: APSManager, Injectable {
             TIR: tirString,
             BG_Average: bgAverageString,
             HbA1c: HbA1c_string,
-            Loop_Cycles: "Success Rate : \(round(successRate ?? 0)) %. Average Time Between Loop Cycles: \(roundedMinutesBetweenLoops ?? 0) min. Loops/Errors: \(Int(successNR))/\(Int(errorNR))"
+            Loop_Cycles: "Success Rate : \(round(successRate ?? 0)) %. Average Time Between Loop Cycles: \(roundedMinutesBetweenLoops ?? 0) min. Loops/Errors: \(Int(successNR))/\(Int(errorNR)). Minimum Time Interval: \(minimumInt) min, Maximum Time Interval: \(maximumInt) min"
         )
 
         var uniqeEvents: [DailyStats] = []
