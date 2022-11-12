@@ -764,6 +764,7 @@ final class BaseAPSManager: APSManager, Injectable {
         // Retrieve the loopStats data
         let lsData = storage.retrieve(OpenAPS.Monitor.loopStats, as: [LoopStats].self)?
             .sorted { $0.createdAt > $1.createdAt } ?? []
+
         var successRate: Double?
         var roundedMinutesBetweenLoops: Double?
 
@@ -782,7 +783,7 @@ final class BaseAPSManager: APSManager, Injectable {
             successRate = (successNR / Double(i)) * 100
 
             let loopDataTime = lsData[0].createdAt - lsData[Int(i) - 1].createdAt
-            let minutesBetweenLoops = (loopDataTime.timeInterval / Double(i)) / 60
+            let minutesBetweenLoops = (loopDataTime.timeInterval / Double(successNR)) / 60
             roundedMinutesBetweenLoops = round(minutesBetweenLoops * 10) / 10
         }
 
@@ -888,10 +889,10 @@ final class BaseAPSManager: APSManager, Injectable {
 
         let dailystat = DailyStats(
             createdAt: Date(),
-            FAX_Build_Version: version ?? "",
-            FAX_Build_Number: build ?? "1",
-            FAX_Branch: branch ?? "N/A",
-            FAX_Build_Date: buildDate,
+            Build_Version: version ?? "",
+            Build_Number: build ?? "1",
+            Branch: branch ?? "N/A",
+            Build_Date: buildDate,
             Algorithm: algo_,
             AdjustmentFactor: af,
             Pump: pump_,
@@ -906,21 +907,14 @@ final class BaseAPSManager: APSManager, Injectable {
             Loop_Cycles: "Success Rate : \(round(successRate ?? 0)) %. Average Time Between Loop Cycles: \(roundedMinutesBetweenLoops ?? 0) min."
         )
 
-        let savedDailyStas = storage.retrieve(OpenAPS.Monitor.dailyStats, as: [DailyStats].self)?
-            .sorted { $0.createdAt > $1.createdAt } ?? []
-        let lastDailyStatsEntry = savedDailyStas.count - 1
         var uniqeEvents: [DailyStats] = []
 
-        if lastDailyStatsEntry < 0 {
-            storage.save(dailystat, as: file)
-        } else if Date() > savedDailyStas[0].createdAt.addingTimeInterval(1.days.timeInterval) {
-            storage.transaction { storage in
-                storage.append(dailystat, to: file, uniqBy: \.createdAt)
-                uniqeEvents = storage.retrieve(file, as: [DailyStats].self)?
-                    .filter { $0.createdAt.addingTimeInterval(90.days.timeInterval) > Date() }
-                    .sorted { $0.createdAt > $1.createdAt } ?? []
-                storage.save(Array(uniqeEvents), as: file)
-            }
+        storage.transaction { storage in
+            storage.append(dailystat, to: file, uniqBy: \.createdAt)
+            uniqeEvents = storage.retrieve(file, as: [DailyStats].self)?
+                .filter { $0.createdAt.addingTimeInterval(24.hours.timeInterval) > Date() }
+                .sorted { $0.createdAt > $1.createdAt } ?? []
+            storage.save(Array(uniqeEvents), as: file)
         }
     }
 

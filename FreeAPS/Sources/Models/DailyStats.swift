@@ -2,10 +2,10 @@ import Foundation
 
 struct DailyStats: JSON, Equatable {
     var createdAt: Date
-    var FAX_Build_Version: String
-    var FAX_Build_Number: String
-    var FAX_Branch: String
-    var FAX_Build_Date: Date
+    var Build_Version: String
+    var Build_Number: String
+    var Branch: String
+    var Build_Date: Date
     var Algorithm: String
     var AdjustmentFactor: Decimal
     var Pump: String
@@ -21,10 +21,10 @@ struct DailyStats: JSON, Equatable {
 
     init(
         createdAt: Date,
-        FAX_Build_Version: String,
-        FAX_Build_Number: String,
-        FAX_Branch: String,
-        FAX_Build_Date: Date,
+        Build_Version: String,
+        Build_Number: String,
+        Branch: String,
+        Build_Date: Date,
         Algorithm: String,
         AdjustmentFactor: Decimal,
         Pump: String,
@@ -39,10 +39,10 @@ struct DailyStats: JSON, Equatable {
         Loop_Cycles: String
     ) {
         self.createdAt = createdAt
-        self.FAX_Build_Version = FAX_Build_Version
-        self.FAX_Build_Number = FAX_Build_Number
-        self.FAX_Branch = FAX_Branch
-        self.FAX_Build_Date = FAX_Build_Date
+        self.Build_Version = Build_Version
+        self.Build_Number = Build_Number
+        self.Branch = Branch
+        self.Build_Date = Build_Date
         self.Algorithm = Algorithm
         self.AdjustmentFactor = AdjustmentFactor
         self.Pump = Pump
@@ -69,10 +69,10 @@ struct DailyStats: JSON, Equatable {
 extension DailyStats {
     private enum CodingKeys: String, CodingKey {
         case createdAt
-        case FAX_Build_Version
-        case FAX_Build_Number
-        case FAX_Branch
-        case FAX_Build_Date
+        case Build_Version
+        case Build_Number
+        case Branch
+        case Build_Date
         case Algorithm
         case AdjustmentFactor
         case Pump
