@@ -939,10 +939,10 @@ final class BaseAPSManager: APSManager, Injectable {
         } else { maxString = "Longest Time Interval: \(maximumInt) min." }
 
         if minimumLoopTime != 9999.0 {
-            loopString += " Shortest Loop Cycle: \(minimumLoopTime) min. "
+            loopString += " Shortest Loop: \(minimumLoopTime) min. "
         }
         if maximumLoopTime != 0.0 {
-            loopString += "Longest Loop Cycle Duration: \(maximumLoopTime) min"
+            loopString += "Longest Loop: \(maximumLoopTime) min"
         }
 
         let dailystat = DailyStats(
