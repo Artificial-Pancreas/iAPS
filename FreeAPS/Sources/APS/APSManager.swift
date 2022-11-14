@@ -721,6 +721,21 @@ final class BaseAPSManager: APSManager, Injectable {
         return Decimal(rounded)
     }
 
+    private func roundDouble(_ double: Double, _ digits: Double) -> Double {
+        let rounded = round(Double(double) * pow(10, digits)) / pow(10, digits)
+        return rounded
+    }
+
+    private func medianCalculation(array: [Double]) -> Double {
+        let sorted = array.sorted()
+        let length = array.count
+
+        if length % 2 == 0 {
+            return (sorted[length / 2 - 1] + sorted[length / 2]) / 2.0
+        }
+        return Double(sorted[length / 2])
+    }
+
     private func dailyStats() {
         // Add to dailyStats.JSON
         let preferences = settingsManager.preferences
@@ -779,6 +794,10 @@ final class BaseAPSManager: APSManager, Injectable {
         var endTimeForOneLoop = Date()
         var timeForOneLoop = 0.0
         var averageLoopTime = 0.0
+        var timeForOneLoopArray: [Double] = []
+        var medianLoopTime = 0.0
+        var timeIntervalLoopArray: [Double] = []
+        var medianInterval = 0.0
         var successIs = false
 
         if !lsData.isEmpty {
@@ -795,6 +814,10 @@ final class BaseAPSManager: APSManager, Injectable {
                     successNR += 1
 
                     timeIntervalLoops = (previousTimeLoop - each.createdAt).timeInterval / 60
+
+                    if timeIntervalLoops > 0.0 {
+                        timeIntervalLoopArray.append(timeIntervalLoops)
+                    }
 
                     endTimeForOneLoop = each.createdAt
                     successIs = true
@@ -815,9 +838,10 @@ final class BaseAPSManager: APSManager, Injectable {
 
                         if test > 0 {
                             timeForOneLoop = test
-                            print("timeForOneLoop: \(timeForOneLoop)")
+
+                            timeForOneLoopArray.append(timeForOneLoop)
                             averageLoopTime += timeForOneLoop
-                            timeForOneLoop = round(timeForOneLoop * 10) / 10
+                            timeForOneLoop = roundDouble(timeForOneLoop, 1)
                         }
 
                         if timeForOneLoop >= maximumLoopTime, timeForOneLoop != 0.0 {
@@ -844,10 +868,17 @@ final class BaseAPSManager: APSManager, Injectable {
 
             let minutesBetweenLoops = (loopDataTime.timeInterval / successNR) / 60
             averageLoopTime /= Double(j)
-            averageLoopTime = round(averageLoopTime * 10) / 10
-            roundedMinutesBetweenLoops = round(minutesBetweenLoops * 10) / 10
-            minimumInt = round(minimumInt * 10) / 10
-            maximumInt = round(maximumInt * 10) / 10
+
+            // Median values
+            medianLoopTime = medianCalculation(array: timeForOneLoopArray)
+            medianInterval = medianCalculation(array: timeIntervalLoopArray)
+
+            medianInterval = roundDouble(medianInterval, 1)
+            medianLoopTime = roundDouble(medianLoopTime, 1)
+            averageLoopTime = roundDouble(averageLoopTime, 1)
+            roundedMinutesBetweenLoops = roundDouble(minutesBetweenLoops, 1)
+            minimumInt = roundDouble(minimumInt, 1)
+            maximumInt = roundDouble(maximumInt, 1)
         }
 
         // Retrieve the 10 days data array
@@ -907,6 +938,7 @@ final class BaseAPSManager: APSManager, Injectable {
         let avg1 = tir().averageGlucose_1
         let avg7 = tir().averageGlucose_7
         let avgTot = tir().averageGlucose
+        let medianTot = tir().medianTotalGlucose
 
         if avg1 != 0 {
             bgString1day =
@@ -936,7 +968,7 @@ final class BaseAPSManager: APSManager, Injectable {
             stringTotal =
                 " HbA1c Total (\(daysBG)) Days (mmol/mol): \(roundDecimal(IFCCa1CStatisticValue_total, 1)). HbA1c Total (\(daysBG)) Days (mg/dl): \(roundDecimal(NGSPa1CStatisticValue_total, 1)) %."
             bgAverageTotalString =
-                "BG Average Total (\(daysBG)) Days (mmol/l): \(roundDecimal(avgTot * 0.0555, 1)). BG Average Total (\(daysBG)) Days (mmg/dl): \(avgTot)."
+                " BG Median Total (\(daysBG)) Days (mmol/l): \(roundDouble(medianTot * 0.0555, 1)). BG Median Total (\(daysBG)) Days (mg/dl): \(medianTot). BG Average Total (\(daysBG)) Days (mmg/dl): \(avgTot)."
         }
 
         let HbA1c_string = HbA1c_string_1 + string7Days + string30Days + string90Days + stringTotal
@@ -984,8 +1016,9 @@ final class BaseAPSManager: APSManager, Injectable {
             TIR: tirString,
             BG_Average: bgAverageString,
             HbA1c: HbA1c_string,
-            Loop_Cycles: "Success Rate : \(round(successRate ?? 0)) %. Average Time Between Loop Cycles: \(roundedMinutesBetweenLoops ?? 0) min. Loops/Errors: \(Int(successNR))/\(Int(errorNR)). " +
-                minString + maxString + loopString + " Average Loop Duration: \(averageLoopTime) min"
+            Loop_Cycles: "Success Rate : \(round(successRate ?? 0)) %. Loops/Errors: \(Int(successNR))/\(Int(errorNR)). Median Time Between Loop Cycles: \(medianInterval) min. Average Time Between Loop Cycles: \(roundedMinutesBetweenLoops ?? 0) min.  " +
+                minString + maxString + loopString +
+                " Median Loop Duration: \(medianLoopTime) min. Average Loop Duration: \(averageLoopTime) min. "
         )
 
         var uniqeEvents: [DailyStats] = []
@@ -1032,6 +1065,7 @@ final class BaseAPSManager: APSManager, Injectable {
     private func tir()
         -> (
             averageGlucose: Decimal,
+            medianTotalGlucose: Double,
             averageGlucose_1: Decimal,
             averageGlucose_7: Decimal,
             averageGlucose_10: Decimal,
@@ -1051,10 +1085,12 @@ final class BaseAPSManager: APSManager, Injectable {
         var oneDayGlucoseIndex = endIndex
 
         guard length_ != 0 else {
-            return (0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+            return (0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
         }
 
         var bg: Decimal = 0
+        var bgArray: [Double] = []
+        var medianBG = 0.0
         var nr_bgs: Decimal = 0
         let startDate = glucose![0].date
         var end1 = false
@@ -1070,6 +1106,7 @@ final class BaseAPSManager: APSManager, Injectable {
             j += 1
             if entry.glucose! > 0 {
                 bg += Decimal(entry.glucose!)
+                bgArray.append(Double(entry.glucose!))
                 nr_bgs += 1
 
                 if startDate - entry.date >= 8.64E7, !end1 {
@@ -1091,6 +1128,8 @@ final class BaseAPSManager: APSManager, Injectable {
         }
 
         bg_total = bg / nr_bgs
+
+        medianBG = medianCalculation(array: bgArray)
 
         let fullTime = glucose![0].date - glucose![endIndex].date
         let fullTime_1 = glucose![0].date - glucose![oneDayGlucoseIndex].date
@@ -1198,6 +1237,7 @@ final class BaseAPSManager: APSManager, Injectable {
 
         return (
             roundDecimal(bg_total, 0),
+            medianBG,
             roundDecimal(bg_1, 0),
             roundDecimal(bg_7, 0),
             roundDecimal(bg_10, 0),
