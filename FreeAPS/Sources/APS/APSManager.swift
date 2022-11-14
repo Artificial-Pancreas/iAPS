@@ -832,7 +832,11 @@ final class BaseAPSManager: APSManager, Injectable {
 
             successRate = (successNR / Double(i)) * 100
 
-            let loopDataTime = lsData[0].createdAt - lsData[Int(i) - 1].createdAt
+            let endI = lsData.count - 1
+            let loopDataTime = lsData[0].createdAt - lsData[endI].createdAt
+            print("loopDataTime: \(loopDataTime)")
+            print("successNR: \(successNR)")
+
             let minutesBetweenLoops = (loopDataTime.timeInterval / successNR) / 60
             roundedMinutesBetweenLoops = round(minutesBetweenLoops * 10) / 10
             minimumInt = round(minimumInt * 10) / 10
@@ -984,6 +988,7 @@ final class BaseAPSManager: APSManager, Injectable {
             uniqeEvents = storage.retrieve(file, as: [DailyStats].self)?
                 .filter { $0.createdAt.addingTimeInterval(24.hours.timeInterval) > Date() }
                 .sorted { $0.createdAt > $1.createdAt } ?? []
+
             storage.save(Array(uniqeEvents), as: file)
         }
     }
