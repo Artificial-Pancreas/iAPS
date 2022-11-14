@@ -776,53 +776,64 @@ final class BaseAPSManager: APSManager, Injectable {
         var maximumLoopTime = 0.0
         var timeIntervalLoops = 0.0
         var previousTimeLoop = Date()
-        var startTimeForOneLoop = Date()
+        var endTimeForOneLoop = Date()
         var timeForOneLoop = 0.0
-        var starting = false
+        var successIs = false
 
         if !lsData.isEmpty {
             var i = 0.0
-            previousTimeLoop = lsData[0].createdAt
+
+            if lsData[0].loopStatus.contains("Success") {
+                previousTimeLoop = lsData[0].createdAt
+            }
 
             for each in lsData {
-                if each.loopStatus.contains("Starting") {
-                    startTimeForOneLoop = each.createdAt
-                    starting = true
-                } else {
+                if each.loopStatus.contains("Success") {
                     i += 1
+                    successNR += 1
 
-                    if each.loopStatus.contains("Success") {
-                        successNR += 1
-                        timeIntervalLoops = (previousTimeLoop - each.createdAt).timeInterval / 60
-                        if starting {
-                            timeForOneLoop = (startTimeForOneLoop - each.createdAt).timeInterval / 60
+                    timeIntervalLoops = (previousTimeLoop - each.createdAt).timeInterval / 60
+
+                    endTimeForOneLoop = each.createdAt
+                    successIs = true
+
+                    if timeIntervalLoops > maximumInt {
+                        maximumInt = timeIntervalLoops
+                    }
+                    if timeIntervalLoops < minimumInt, timeIntervalLoops != 0.0 {
+                        minimumInt = timeIntervalLoops
+                    }
+
+                    previousTimeLoop = each.createdAt
+
+                } else if each.loopStatus.contains("Starting") {
+                    if successIs {
+                        let test = (endTimeForOneLoop - each.createdAt).timeInterval / 60
+
+                        if test > 0 {
+                            timeForOneLoop = test
                             timeForOneLoop = round(timeForOneLoop * 10) / 10
-                            starting = false
                         }
-                        if timeIntervalLoops > maximumInt {
-                            maximumInt = timeIntervalLoops
-                        }
-                        if timeIntervalLoops < minimumInt, timeIntervalLoops != 0.0 {
-                            minimumInt = timeIntervalLoops
-                        }
-                        if timeForOneLoop >= maximumLoopTime {
+
+                        if timeForOneLoop >= maximumLoopTime, timeForOneLoop != 0.0 {
                             maximumLoopTime = timeForOneLoop
                         }
                         if timeForOneLoop <= minimumLoopTime, timeForOneLoop != 0.0 {
                             minimumLoopTime = timeForOneLoop
                         }
 
-                        previousTimeLoop = each.createdAt
-                    } else {
-                        errorNR += 1
-                        starting = false
+                        successIs = false
                     }
-                }
+                } else if each.loopStatus.contains("Error") {
+                    errorNR += 1
+                    i += 1
+                } else { i += 1 }
             }
+
             successRate = (successNR / Double(i)) * 100
 
             let loopDataTime = lsData[0].createdAt - lsData[Int(i) - 1].createdAt
-            let minutesBetweenLoops = (loopDataTime.timeInterval / Double(successNR)) / 60
+            let minutesBetweenLoops = (loopDataTime.timeInterval / successNR) / 60
             roundedMinutesBetweenLoops = round(minutesBetweenLoops * 10) / 10
             minimumInt = round(minimumInt * 10) / 10
             maximumInt = round(maximumInt * 10) / 10
@@ -986,7 +997,7 @@ final class BaseAPSManager: APSManager, Injectable {
         }
 
         if starting {
-            errString = "Starting Loop"
+            errString = "Starting"
         }
 
         let loopstat = LoopStats(
