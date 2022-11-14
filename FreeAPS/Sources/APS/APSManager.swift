@@ -778,10 +778,12 @@ final class BaseAPSManager: APSManager, Injectable {
         var previousTimeLoop = Date()
         var endTimeForOneLoop = Date()
         var timeForOneLoop = 0.0
+        var averageLoopTime = 0.0
         var successIs = false
 
         if !lsData.isEmpty {
             var i = 0.0
+            var j = 0.0
 
             if lsData[0].loopStatus.contains("Success") {
                 previousTimeLoop = lsData[0].createdAt
@@ -807,11 +809,14 @@ final class BaseAPSManager: APSManager, Injectable {
                     previousTimeLoop = each.createdAt
 
                 } else if each.loopStatus.contains("Starting") {
+                    j += 1
                     if successIs {
                         let test = (endTimeForOneLoop - each.createdAt).timeInterval / 60
 
                         if test > 0 {
                             timeForOneLoop = test
+                            print("timeForOneLoop: \(timeForOneLoop)")
+                            averageLoopTime += timeForOneLoop
                             timeForOneLoop = round(timeForOneLoop * 10) / 10
                         }
 
@@ -838,6 +843,8 @@ final class BaseAPSManager: APSManager, Injectable {
             print("successNR: \(successNR)")
 
             let minutesBetweenLoops = (loopDataTime.timeInterval / successNR) / 60
+            averageLoopTime /= Double(j)
+            averageLoopTime = round(averageLoopTime * 10) / 10
             roundedMinutesBetweenLoops = round(minutesBetweenLoops * 10) / 10
             minimumInt = round(minimumInt * 10) / 10
             maximumInt = round(maximumInt * 10) / 10
@@ -957,7 +964,7 @@ final class BaseAPSManager: APSManager, Injectable {
             loopString += " Shortest Loop: \(minimumLoopTime) min. "
         }
         if maximumLoopTime != 0.0 {
-            loopString += "Longest Loop: \(maximumLoopTime) min"
+            loopString += "Longest Loop: \(maximumLoopTime) min."
         }
 
         let dailystat = DailyStats(
@@ -978,7 +985,7 @@ final class BaseAPSManager: APSManager, Injectable {
             BG_Average: bgAverageString,
             HbA1c: HbA1c_string,
             Loop_Cycles: "Success Rate : \(round(successRate ?? 0)) %. Average Time Between Loop Cycles: \(roundedMinutesBetweenLoops ?? 0) min. Loops/Errors: \(Int(successNR))/\(Int(errorNR)). " +
-                minString + maxString + loopString
+                minString + maxString + loopString + " Average Loop Duration: \(averageLoopTime) min"
         )
 
         var uniqeEvents: [DailyStats] = []
