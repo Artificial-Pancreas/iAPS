@@ -888,10 +888,6 @@ final class BaseAPSManager: APSManager, Injectable {
         let endIndex = length_ - 1
         var oneDayGlucoseIndex = endIndex
 
-        guard length_ != 0 else {
-            return
-        }
-
         var bg: Decimal = 0
         var bgArray: [Double] = []
         var medianBG = 0.0
@@ -906,33 +902,37 @@ final class BaseAPSManager: APSManager, Injectable {
         var bg_total: Decimal = 0
         var j = -1
 
-        for entry in glucose! {
-            j += 1
-            if entry.glucose! > 0 {
-                bg += Decimal(entry.glucose!)
-                bgArray.append(Double(entry.glucose!))
-                nr_bgs += 1
+        if length_ != 0 {
+            for entry in glucose! {
+                j += 1
+                if entry.glucose! > 0 {
+                    bg += Decimal(entry.glucose!)
+                    bgArray.append(Double(entry.glucose!))
+                    nr_bgs += 1
 
-                if startDate - entry.date >= 8.64E7, !end1 {
-                    end1 = true
-                    oneDayGlucoseIndex = j
-                    bg_1 = bg / nr_bgs
-                }
+                    if startDate - entry.date >= 8.64E7, !end1 {
+                        end1 = true
+                        oneDayGlucoseIndex = j
+                        bg_1 = bg / nr_bgs
+                    }
 
-                if startDate - entry.date >= 6.045E8, !end7 {
-                    end7 = true
-                    bg_7 = bg / nr_bgs
-                }
+                    if startDate - entry.date >= 6.045E8, !end7 {
+                        end7 = true
+                        bg_7 = bg / nr_bgs
+                    }
 
-                if startDate - entry.date >= 8.64E8, !end10 {
-                    end10 = true
-                    bg_10 = bg / nr_bgs
+                    if startDate - entry.date >= 8.64E8, !end10 {
+                        end10 = true
+                        bg_10 = bg / nr_bgs
+                    }
                 }
             }
         }
 
-        bg_total = bg / nr_bgs
-
+        if nr_bgs != 0  {
+            bg_total = bg / nr_bgs
+        }
+        
         medianBG = medianCalculation(array: bgArray)
 
         let fullTime = glucose![0].date - glucose![endIndex].date
@@ -1112,7 +1112,7 @@ final class BaseAPSManager: APSManager, Injectable {
             bgString1day =
                 " Average BG (mmol/l) 24 hours): \(roundDecimal(bg_1 * 0.0555, 1)). Average BG (mmg/dl) 24 hours: \(roundDecimal(bg_1, 0))."
             HbA1c_string_1 =
-                "Estimated HbA1c (mmol/mol, 1 day): \(roundDecimal(IFCCa1CStatisticValue, 1)). Estimated HbA1c (%, 1 day): \(roundDecimal(NGSPa1CStatisticValue, 0)). "
+                "Estimated HbA1c (mmol/mol, 1 day): \(roundDecimal(IFCCa1CStatisticValue, 1)). Estimated HbA1c (%, 1 day): \(roundDecimal(NGSPa1CStatisticValue, 1)). "
         }
         if bg_7 != 0 {
             string7Days =
