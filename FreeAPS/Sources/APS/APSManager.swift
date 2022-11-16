@@ -1083,7 +1083,7 @@ final class BaseAPSManager: APSManager, Injectable {
         let NGSPa1CStatisticValue_7 = (46.7 + bg_7) / 28.7
         let IFCCa1CStatisticValue_7 = 10.929 * (NGSPa1CStatisticValue_7 - 2.152)
         // 30 days
-        let NGSPa1CStatisticValue_30 = (46.7 + bg) / 28.7
+        let NGSPa1CStatisticValue_30 = (46.7 + thirtyDays) / 28.7
         let IFCCa1CStatisticValue_30 = 10.929 * (NGSPa1CStatisticValue_30 - 2.152)
         // Total days (up t0 10 days)
         let NGSPa1CStatisticValue_total = (46.7 + bg_total) / 28.7
