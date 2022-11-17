@@ -335,6 +335,7 @@
 		F90692D3274B9A130037068D /* AppleHealthKitRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F90692D2274B9A130037068D /* AppleHealthKitRootView.swift */; };
 		F90692D6274B9A450037068D /* HealthKitStateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F90692D5274B9A450037068D /* HealthKitStateModel.swift */; };
 		FA630397F76B582C8D8681A7 /* BasalProfileEditorProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42369F66CF91F30624C0B3A6 /* BasalProfileEditorProvider.swift */; };
+		FE66D16B291F74F8005D6F77 /* Bundle+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE66D16A291F74F8005D6F77 /* Bundle+Extensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -762,6 +763,7 @@
 		F90692D2274B9A130037068D /* AppleHealthKitRootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleHealthKitRootView.swift; sourceTree = "<group>"; };
 		F90692D5274B9A450037068D /* HealthKitStateModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthKitStateModel.swift; sourceTree = "<group>"; };
 		FBB3BAE7494CB771ABAC7B8B /* ISFEditorRootView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ISFEditorRootView.swift; sourceTree = "<group>"; };
+		FE66D16A291F74F8005D6F77 /* Bundle+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+Extensions.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1368,6 +1370,7 @@
 				3811DEE325CA063400A708ED /* PropertyWrappers */,
 				E06B9119275B5EEA003C04B6 /* Array+Extension.swift */,
 				CEB434E428B8FF5D00B70274 /* UIColor.swift */,
+				FE66D16A291F74F8005D6F77 /* Bundle+Extensions.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -2263,6 +2266,7 @@
 				38BF021F25E7F0DE00579895 /* DeviceDataManager.swift in Sources */,
 				38A504A425DD9C4000C5B9E8 /* UserDefaultsExtensions.swift in Sources */,
 				38FE826A25CC82DB001FF17A /* NetworkService.swift in Sources */,
+				FE66D16B291F74F8005D6F77 /* Bundle+Extensions.swift in Sources */,
 				3883581C25EE79BB00E024B2 /* DecimalTextField.swift in Sources */,
 				38DAB28A260D349500F74C1A /* FetchGlucoseManager.swift in Sources */,
 				38F37828261260DC009DB701 /* Color+Extensions.swift in Sources */,
