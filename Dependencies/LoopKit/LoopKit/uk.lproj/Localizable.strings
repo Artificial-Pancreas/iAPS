@@ -98,7 +98,7 @@
 "Units/hour" = "Units/hour";
 
 /* The long unit display string for a singular hour */
-"Hour" = "Hour";
+"Hour" = "Година";
 
 /* The long unit display string for hours */
-"Hours" = "Hours";
+"Hours" = "Години";
