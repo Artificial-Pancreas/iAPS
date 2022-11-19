@@ -60,10 +60,6 @@ extension Settings {
                                 .navigationLink(to: .configEditor(file: OpenAPS.Settings.basalProfile), from: self)
                             Text("Targets ranges")
                                 .navigationLink(to: .configEditor(file: OpenAPS.Settings.bgTargets), from: self)
-                            Text("Carb ratios")
-                                .navigationLink(to: .configEditor(file: OpenAPS.Settings.carbRatios), from: self)
-                            Text("Insulin sensitivities")
-                                .navigationLink(to: .configEditor(file: OpenAPS.Settings.insulinSensitivities), from: self)
                             Text("Temp targets")
                                 .navigationLink(to: .configEditor(file: OpenAPS.Settings.tempTargets), from: self)
                             Text("Meal")
@@ -71,19 +67,12 @@ extension Settings {
                         }
 
                         Group {
-                            Text("IOB")
-                                .navigationLink(to: .configEditor(file: OpenAPS.Monitor.iob), from: self)
                             Text("Pump profile")
                                 .navigationLink(to: .configEditor(file: OpenAPS.Settings.pumpProfile), from: self)
                             Text("Profile")
                                 .navigationLink(to: .configEditor(file: OpenAPS.Settings.profile), from: self)
-                            Text("Glucose")
-                                .navigationLink(to: .configEditor(file: OpenAPS.Monitor.glucose), from: self)
-
                             Text("Carbs")
                                 .navigationLink(to: .configEditor(file: OpenAPS.Monitor.carbHistory), from: self)
-                            Text("Suggested")
-                                .navigationLink(to: .configEditor(file: OpenAPS.Enact.suggested), from: self)
                             Text("Enacted")
                                 .navigationLink(to: .configEditor(file: OpenAPS.Enact.enacted), from: self)
                             Text("Announcements")
@@ -93,17 +82,12 @@ extension Settings {
                             Text("Autotune")
                                 .navigationLink(to: .configEditor(file: OpenAPS.Settings.autotune), from: self)
                         }
-                        Group {
-                            Text("CGM Events")
-                                .navigationLink(to: .configEditor(file: OpenAPS.Monitor.cgmState), from: self)
-                        }
+
                         Group {
                             Text("Target presets")
                                 .navigationLink(to: .configEditor(file: OpenAPS.FreeAPS.tempTargetsPresets), from: self)
                             Text("Calibrations")
                                 .navigationLink(to: .configEditor(file: OpenAPS.FreeAPS.calibrations), from: self)
-                            Text("Current Temp")
-                                .navigationLink(to: .configEditor(file: OpenAPS.Monitor.tempBasal), from: self)
                             Text("Middleware")
                                 .navigationLink(to: .configEditor(file: OpenAPS.Middleware.determineBasal), from: self)
                             Text("Statistics")
