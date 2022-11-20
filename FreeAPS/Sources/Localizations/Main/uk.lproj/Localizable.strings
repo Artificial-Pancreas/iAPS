@@ -426,7 +426,7 @@ Enact a temp Basal or a temp target */
 " min" = " хв";
 
 /* */
-"Unable to change anything" = "Unable to change anything";
+"Unable to change anything" = "Неможливо змінити статус";
 
 
 /* Calendar and Libre transmitter settings ---------------
@@ -975,30 +975,30 @@ Enact a temp Basal or a temp target */
 " -  Manual Basal ⚠️" = "Ручний ТБШ ⚠️";
 
 /* Total AT / Scheduled basal insulin */
-" U/day" = " U/day";
+" U/day" = " ОД/день";
 
 /* Total AT / Scheduled basal insulin */
-"Total" = "Total";
+"Total" = "Всього";
 
 /* ---------------------------------------
   DASH strings
 */
-"Attach Pod" = "Attach Pod";
+"Attach Pod" = "Прикріпіть Pod";
 
 "Deactivate Pod" = "Деактивувати POD";
 
 /* */
-"Deactivating..." = "Deactivating...";
+"Deactivating..." = "Деактивувати...";
 
 "Pair Pod" = "Парний Pod";
 
 /* Text for previous pod information row */
-"Previous Pod Information" = "Previous Pod Information";
+"Previous Pod Information" = "Попередня інформація про Pod";
 
 /* Text for confidence reminders navigation link */
 "Confidence Reminders" = "Нагадування про Впевненість";
 
-"Confidence reminders are beeps from the pod which can be used to acknowledge selected commands." = "Confidence reminders are beeps from the pod which can be used to acknowledge selected commands.";
+"Confidence reminders are beeps from the pod which can be used to acknowledge selected commands." = "Нагадування про довіру — це звукові сигнали Pod, які можна використовувати для підтвердження вибраних команд.";
 
 /* button title for saving low reservoir reminder while saving */
 "Saving..." = "Збереження...";
@@ -1007,34 +1007,34 @@ Enact a temp Basal or a temp target */
 "Save" = "Зберегти";
 
 /* Alert title for error when updating confidence reminder preference */
-"Failed to update confidence reminder preference." = "Failed to update confidence reminder preference.";
+"Failed to update confidence reminder preference." = "Не вдалося оновити налаштування нагадування про конфіденційність.";
 
 /* */
-"No Error" = "No Error";
+"No Error" = "Помилок немає";
 
 /* description label for active time pod details row */
 "Active Time" = "Активний час";
 
 /* Title string for BeepPreference.silent */
-"Disabled" = "Disabled";
+"Disabled" = "Вимкнено";
 
 /* Title string for BeepPreference.manualCommands */
 "Enabled" = "Активовано";
 
 /* Title string for BeepPreference.extended */
-"Extended" = "Extended";
+"Extended" = "Розширений";
 
 /* Description for BeepPreference.silent */
-"No confidence reminders are used." = "No confidence reminders are used.";
+"No confidence reminders are used." = "Нагадування про довіру не використовуються.";
 
 /* Description for BeepPreference.manualCommands */
-"Confidence reminders will sound for commands you initiate, like bolus, cancel bolus, suspend, resume, save notification reminders, etc. When Loop automatically adjusts delivery, no confidence reminders are used." = "Confidence reminders will sound for commands you initiate, like bolus, cancel bolus, suspend, resume, save notification reminders, etc. When Loop automatically adjusts delivery, no confidence reminders are used.";
+"Confidence reminders will sound for commands you initiate, like bolus, cancel bolus, suspend, resume, save notification reminders, etc. When Loop automatically adjusts delivery, no confidence reminders are used." = "Нагадування про достовірність лунатимуть для команд, які ви ініціюєте, як-от болюс, скасування болюсу, призупинення, відновлення, збереження сповіщень тощо. Коли Loop автоматично регулює доставку, нагадування про довіру не використовуються.";
 
 /* Description for BeepPreference.extended */
-"Confidence reminders will sound when Loop automatically adjusts delivery as well as for commands you initiate." = "Confidence reminders will sound when Loop automatically adjusts delivery as well as for commands you initiate.";
+"Confidence reminders will sound when Loop automatically adjusts delivery as well as for commands you initiate." = "Нагадування про довіру лунатимуть, коли Loop автоматично регулює доставку, а також для команд, які ви ініціюєте.";
 
 /* Label text for expiration reminder default row */
-"Expiration Reminder Default" = "Expiration Reminder Default";
+"Expiration Reminder Default" = "Нагадування про закінчення терміну дії за умовчанням";
 
 /* */
 "Expiration Reminder" = "Нагадування про термін дії";
@@ -1043,77 +1043,77 @@ Enact a temp Basal or a temp target */
 "Low Reservoir" = "Пустий резервуар";
 
 /* Value text for no expiration reminder */
-"No Reminder" = "No Reminder";
+"No Reminder" = "Немає нагадувань";
 
 /* */
-"Scheduled Reminder" = "Scheduled Reminder";
+"Scheduled Reminder" = "Заплановане нагадування";
 
 /* */
-"Low Reservoir Reminder" = "Low Reservoir Reminder";
+"Low Reservoir Reminder" = "Нагадування про низький рівень резервуару";
 
 /* The action string on pod status page when pod data is stale */
-"Make sure your phone and pod are close to each other. If communication issues persist, move to a new area." = "Make sure your phone and pod are close to each other. If communication issues persist, move to a new area.";
+"Make sure your phone and pod are close to each other. If communication issues persist, move to a new area." = "Переконайтеся, що ваш телефон і Pod знаходяться поруч один з одним. Якщо проблеми звʼязку не зникають, перейдіть у інше місце.";
 /* Format string for the action string on pod status page when pod expired. (1: service time remaining) */
-"Change Pod now. Insulin delivery will stop in %1$@ or when no more insulin remains." = "Change Pod now. Insulin delivery will stop in %1$@ or when no more insulin remains.";
+"Change Pod now. Insulin delivery will stop in %1$@ or when no more insulin remains." = "Змініть Pod зараз. Введення інсуліну припиниться через %1$@ або коли інсулін закінчиться.";
 
 /* Label text for temporary basal rate summary */
 "Rate" = "Швидкість";
 
 /* Summary string for temporary basal rate configuration page */
-"%1$@ for %2$@" = "%1$@ for %2$@";
+"%1$@ for %2$@" = "%1$@ для %2$@";
 
 /* Description text on manual temp basal action sheet */
-"Loop will not automatically adjust your insulin delivery until the temporary basal rate finishes or is canceled." = "Loop will not automatically adjust your insulin delivery until the temporary basal rate finishes or is canceled.";
+"Loop will not automatically adjust your insulin delivery until the temporary basal rate finishes or is canceled." = "Loop не регулюватиме подачу інсуліну автоматично, доки тимчасова базальна доза не закінчиться або не буде скасована.";
 /* Button text for setting manual temporary basal rate*/
-"Set Temporary Basal" = "Set Temporary Basal";
+"Set Temporary Basal" = "Встановіть тимчасову базальну швидкість";
 
 /* Navigation Title for ManualTempBasalEntryView */
-"Temporary Basal" = "Temporary Basal";
+"Temporary Basal" = "Тимчасовий базал";
 
 /* Alert title for a failure to set temporary basal */
-"Temporary Basal Failed" = "Temporary Basal Failed";
+"Temporary Basal Failed" = "Тимчасовий базал не виконан";
 
 /* Alert format string for a failure to set temporary basal with recovery suggestion. (1: error description) (2: recovery text) */
-"Unable to set a temporary basal rate: %1$@\n\n%2$@" = "Unable to set a temporary basal rate: %1$@\n\n%2$@";
+"Unable to set a temporary basal rate: %1$@\n\n%2$@" = "Не вдалося встановити тимчасову базальну дозу: %1$@\n\n%2$@";
 
 /* Alert format string for a failure to set temporary basal. (1: error description) */
-"Unable to set a temporary basal rate: %1$@" = "Unable to set a temporary basal rate: %1$@";
+"Unable to set a temporary basal rate: %1$@" = "Неможливо встановити тимчасову базальну дозу: %1$@";
 
 /* Alert title for missing temp basal configuration */
-"Missing Config" = "Missing Config";
+"Missing Config" = "Відсутня конфігурація";
 
 /* Alert format string for missing temp basal configuration. */
-"This PumpManager has not been configured with a maximum basal rate because it was added before manual temp basal was a feature. Please go to therapy settings -> delivery limits and set a new maximum basal rate." = "This PumpManager has not been configured with a maximum basal rate because it was added before manual temp basal was a feature. Please go to therapy settings -> delivery limits and set a new maximum basal rate.";
+"This PumpManager has not been configured with a maximum basal rate because it was added before manual temp basal was a feature. Please go to therapy settings -> delivery limits and set a new maximum basal rate." = "Цей PumpManager не було налаштовано на максимальну базальну швидкість, оскільки її було додано до того, як функція тимчасового базального введення вручну з’явилася. Будь ласка, перейдіть до налаштувань терапії -> межі доставки та встановіть нову максимальну базальну дозу.";
 
 /* description label for active time pod details row */
 "Active Time" = "Активний час";
 
 /* description label for total delivery pod details row */
-"Total Delivery" = "Total Delivery";
+"Total Delivery" = "Повна доставка";
 
 /* */
-"Add Omnipod Dash" = "Add Omnipod Dash";
+"Add Omnipod Dash" = "Додайте Omnipod Dash";
 
 /* */
 "Insert Cannula" = "Вставте канюлю";
 
 /* */
-"Check Cannula" = "Check Cannula";
+"Check Cannula" = "Перевірте канюлю";
 
 /* */
-"Setup Complete" = "Setup Complete";
+"Setup Complete" = "Налаштування завершено";
 
 /* */
 "Insulin Suspended" = "Інсулін призупинено";
 
 /* Text for suspend resume button when insulin delivery is suspending */
-"Suspending insulin delivery..." = "Suspending insulin delivery...";
+"Suspending insulin delivery..." = "Призупинення введення інсуліну...";
 
 /* Text for suspend resume button when insulin delivery is suspended */
-"Resume Insulin Delivery" = "Resume Insulin Delivery";
+"Resume Insulin Delivery" = "Відновити введення інсуліну";
 
 /* Text for suspend resume button when insulin delivery is resuming */
-"Resuming insulin delivery..." = "Resuming insulin delivery...";
+"Resuming insulin delivery..." = "Відновлення введення інсуліну...";
 
 /* Alert title for suspend error */
 "Failed to Suspend Insulin Delivery" = "Не вдалося призупинити доставку інсуліну";
