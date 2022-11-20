@@ -1143,11 +1143,11 @@ final class BaseAPSManager: APSManager, Injectable {
         let HbA1c_string = HbA1c_string_1 + string7Days + string30Days + string90Days + stringTotal
 
         var tirString =
-            "TIR (24 hours): \(roundDecimal(TIR_1, 0)) %. Time with Hypolycaemia: \(roundDecimal(hypos_1, 0)) % (< 4 / 72). Time with Hyperlycaemia:  \(roundDecimal(hypers_1, 0)) % (> 10 / 180)."
+            "TIR (24 hours): \(roundDecimal(TIR_1, 0)) %. Time with Hypoglycaemia: \(roundDecimal(hypos_1, 0)) % (< 4 / 72). Time with Hyperglycaemia:  \(roundDecimal(hypers_1, 0)) % (> 10 / 180)."
 
         if daysBG >= 2 {
             tirString +=
-                " Total days (\(daysBG) TIR: \(roundDecimal(TIR, 1)) %. Time with Hypolycaemia: \(roundDecimal(hypos, 1)) % (< 4 / 72). Time with Hyperlycaemia: \(roundDecimal(hypers, 1)) % (> 10 / 180)."
+                " Total days (\(daysBG) TIR: \(roundDecimal(TIR, 1)) %. Time with Hypoglycaemia: \(roundDecimal(hypos, 1)) % (< 4 / 72). Time with Hyperglycaemia: \(roundDecimal(hypers, 1)) % (> 10 / 180)."
         }
 
         let bgAverageString = bgString1day + bgString7Days + bgString30Days + bgString90Days + bgAverageTotalString
