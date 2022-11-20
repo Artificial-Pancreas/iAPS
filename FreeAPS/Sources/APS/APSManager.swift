@@ -727,6 +727,10 @@ final class BaseAPSManager: APSManager, Injectable {
     }
 
     private func medianCalculation(array: [Double]) -> Double {
+        guard !array.isEmpty else {
+            return 0
+        }
+
         let sorted = array.sorted()
         let length = array.count
 
