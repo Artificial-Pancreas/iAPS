@@ -742,6 +742,19 @@ final class BaseAPSManager: APSManager, Injectable {
 
     // Add to dailyStats.JSON
     private func dailyStats() {
+        var testFile: [DailyStats] = []
+        var testIfEmpty = 0
+        storage.transaction { storage in
+            testFile = storage.retrieve(OpenAPS.Monitor.dailyStats, as: [DailyStats].self) ?? []
+            testIfEmpty = testFile.count
+        }
+        // Only run every hour
+        if testIfEmpty != 0 {
+            guard testFile[0].createdAt.addingTimeInterval(1.hours.timeInterval) < Date() else {
+                return
+            }
+        }
+
         let preferences = settingsManager.preferences
         let carbs = storage.retrieve(OpenAPS.Monitor.carbHistory, as: [CarbsEntry].self)
         let tdds = storage.retrieve(OpenAPS.Monitor.tdd, as: [TDD].self)
