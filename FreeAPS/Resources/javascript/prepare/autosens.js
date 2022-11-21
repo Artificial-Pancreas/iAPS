@@ -2,8 +2,9 @@
 
 function generate(glucose_data, pumphistory_data, basalprofile, profile_data, carb_data = {}, temptarget_data = {}) {
     if (glucose_data.length < 72) {
-        return {"ratio": 1, "error": "not enough glucose data to calculate autosens"};
-    }
+        return { "ratio": 1, "error": "not enough glucose data to calculate autosens" };
+    };
+    
     var iob_inputs = {
         history: pumphistory_data,
         profile: profile_data

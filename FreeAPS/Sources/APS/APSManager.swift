@@ -1114,7 +1114,7 @@ final class BaseAPSManager: APSManager, Injectable {
         // round output values
         daysBG = roundDecimal(daysBG, 1)
 
-        if bg_7 != 0 {
+        if bg_1 != 0 {
             bgString1day =
                 " Average BG (mmol/l) 24 hours): \(roundDecimal(bg_1 * 0.0555, 1)). Average BG (mmg/dl) 24 hours: \(roundDecimal(bg_1, 0))."
             HbA1c_string_1 =

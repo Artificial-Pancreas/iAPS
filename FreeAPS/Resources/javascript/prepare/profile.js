@@ -1,7 +1,7 @@
 //для pumpprofile.json параметры: settings/settings.json settings/bg_targets.json settings/insulin_sensitivities.json settings/basal_profile.json preferences.json settings/carb_ratios.json settings/temptargets.json settings/model.json
 //для profile.json параметры: settings/settings.json settings/bg_targets.json settings/insulin_sensitivities.json settings/basal_profile.json preferences.json settings/carb_ratios.json settings/temptargets.json settings/model.json settings/autotune.json
 
-function generate(pumpsettings_data, bgtargets_data, isf_data, basalprofile_data, preferences_input = false, carbratio_input = false, temptargets_input = false, model_input = false, autotune_input = false){
+function generate(pumpsettings_data, bgtargets_data, isf_data, basalprofile_data, preferences_input = false, carbratio_input = false, temptargets_input = false, model_input = false, autotune_input = false) {
     if (bgtargets_data.units !== 'mg/dL') {
         if (bgtargets_data.units === 'mmol/L') {
             for (var i = 0, len = bgtargets_data.targets.length; i < len; i++) {
@@ -10,7 +10,7 @@ function generate(pumpsettings_data, bgtargets_data, isf_data, basalprofile_data
             }
             bgtargets_data.units = 'mg/dL';
         } else {
-            return { "error" : 'BG Target data is expected to be expressed in mg/dL or mmol/L. Found '+bgtargets_data.units};
+            return { "error" : 'BG Target data is expected to be expressed in mg/dL or mmol/L. Found '+ bgtargets_data.units };
         }
     }
 
@@ -21,7 +21,7 @@ function generate(pumpsettings_data, bgtargets_data, isf_data, basalprofile_data
             }
             isf_data.units = 'mg/dL';
         } else {
-            return { "error" : 'ISF is expected to be expressed in mg/dL or mmol/L. Found '+isf_data.units};
+            return { "error" : 'ISF is expected to be expressed in mg/dL or mmol/L. Found '+ isf_data.units };
         }
     }
 
@@ -50,7 +50,7 @@ function generate(pumpsettings_data, bgtargets_data, isf_data, basalprofile_data
           errors.push("Carb ratio should have units field set to 'grams' or 'exchanges'.");
         }
         if (errors.length) {
-          return { "error" : errors.join(' ')};
+          return { "error" : errors.join(' ') };
         }
         carbratio_data = carbratio_input;
     }
