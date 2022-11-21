@@ -2,8 +2,8 @@ import Foundation
 
 struct DailyStats: JSON, Equatable {
     var createdAt: Date
-    var iPhoneType: String
-    var iOSVersion: String
+    var iPhone: String
+    var iOS: String
     var Build_Version: String
     var Build_Number: String
     var Branch: String
@@ -23,8 +23,8 @@ struct DailyStats: JSON, Equatable {
 
     init(
         createdAt: Date,
-        iPhoneType: String,
-        iOSVersion: String,
+        iPhone: String,
+        iOS: String,
         Build_Version: String,
         Build_Number: String,
         Branch: String,
@@ -43,8 +43,8 @@ struct DailyStats: JSON, Equatable {
         Loop_Cycles: String
     ) {
         self.createdAt = createdAt
-        self.iPhoneType = iPhoneType
-        self.iOSVersion = iOSVersion
+        self.iPhone = iPhone
+        self.iOS = iOS
         self.Build_Version = Build_Version
         self.Build_Number = Build_Number
         self.Branch = Branch
@@ -75,8 +75,8 @@ struct DailyStats: JSON, Equatable {
 extension DailyStats {
     private enum CodingKeys: String, CodingKey {
         case createdAt
-        case iPhoneType
-        case iOSVersion
+        case iPhone
+        case iOS
         case Build_Version
         case Build_Number
         case Branch

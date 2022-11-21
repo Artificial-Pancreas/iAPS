@@ -1176,8 +1176,8 @@ final class BaseAPSManager: APSManager, Injectable {
 
         let dailystat = DailyStats(
             createdAt: Date(),
-            iPhoneType: UIDevice.current.getDeviceId,
-            iOSVersion: UIDevice.current.getOSInfo,
+            iPhone: UIDevice.current.getDeviceId,
+            iOS: UIDevice.current.getOSInfo,
             Build_Version: version ?? "",
             Build_Number: build ?? "1",
             Branch: branch ?? "N/A",
