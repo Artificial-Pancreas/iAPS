@@ -727,6 +727,10 @@ final class BaseAPSManager: APSManager, Injectable {
     }
 
     private func medianCalculation(array: [Double]) -> Double {
+        guard !array.isEmpty else {
+            return 0
+        }
+
         let sorted = array.sorted()
         let length = array.count
 
@@ -854,19 +858,16 @@ final class BaseAPSManager: APSManager, Injectable {
 
                         successIs = false
                     }
-                } else if each.loopStatus.contains("Error") || each.loopStatus.contains("APS error") {
+                } else {
                     errorNR += 1
                     i += 1
-                } else { i += 1 }
+                }
             }
 
             successRate = (successNR / Double(i)) * 100
 
             let endI = lsData.count - 1
             let loopDataTime = lsData[0].createdAt - lsData[endI].createdAt
-            print("loopDataTime: \(loopDataTime)")
-            print("successNR: \(successNR)")
-
             let minutesBetweenLoops = (loopDataTime.timeInterval / successNR) / 60
             averageLoopTime /= Double(j)
 
