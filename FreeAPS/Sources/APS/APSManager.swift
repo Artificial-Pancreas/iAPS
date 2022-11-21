@@ -745,9 +745,13 @@ final class BaseAPSManager: APSManager, Injectable {
         let preferences = settingsManager.preferences
         let carbs = storage.retrieve(OpenAPS.Monitor.carbHistory, as: [CarbsEntry].self)
         let tdds = storage.retrieve(OpenAPS.Monitor.tdd, as: [TDD].self)
-        let currentTDD = tdds?[0].TDD ?? 0
-        let carbs_length = carbs?.count ?? 0
+        var currentTDD: Decimal = 0
 
+        if tdds?.count ?? 0 > 0 {
+            currentTDD = tdds?[0].TDD ?? 0
+        }
+
+        let carbs_length = carbs?.count ?? 0
         var carbTotal: Decimal = 0
 
         if carbs_length != 0 {
