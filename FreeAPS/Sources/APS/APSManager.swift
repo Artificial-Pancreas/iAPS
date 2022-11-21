@@ -747,6 +747,7 @@ final class BaseAPSManager: APSManager, Injectable {
         let tdds = storage.retrieve(OpenAPS.Monitor.tdd, as: [TDD].self)
         let currentTDD = tdds?[0].TDD ?? 0
         let carbs_length = carbs?.count ?? 0
+
         var carbTotal: Decimal = 0
 
         if carbs_length != 0 {
@@ -1171,6 +1172,8 @@ final class BaseAPSManager: APSManager, Injectable {
 
         let dailystat = DailyStats(
             createdAt: Date(),
+            iPhoneType: UIDevice.current.getDeviceId,
+            iOSVersion: UIDevice.current.getOSInfo,
             Build_Version: version ?? "",
             Build_Number: build ?? "1",
             Branch: branch ?? "N/A",
