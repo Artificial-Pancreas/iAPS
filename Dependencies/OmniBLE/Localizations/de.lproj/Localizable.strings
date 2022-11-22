@@ -33,7 +33,7 @@
 "Multiple Command Alert" = "Multiple Command Alert";
 
 /* Format string for alert content body for userPodExpiration pod alert. (1: time until expiration) */
-"Pod expires in %1$@." = "Pod expires in %1$@.";
+"Pod expires in %1$@." = "Pod läuft ab in %1$@.";
 
 /* Alert content body for podExpiring pod alert */
 "Change Pod now. Pod has been active for 72 hours." = "Ersetze den POD jetzt. POD ist seit 72 Stunden aktiv.";

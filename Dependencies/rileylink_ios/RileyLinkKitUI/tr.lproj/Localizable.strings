@@ -37,5 +37,68 @@
 /* The title of the cell showing BLE signal strength (RSSI) */
 "Signal Strength" = "Sinyal Gücü";
 
+/* The header of the cells showing connection monitoring */
+"Connection Monitoring" = "Bağlantı İzleme";
+
 /* The title of the cell showing uptime */
 "Uptime" = "Çalışma süresi";
+
+/* The title of the cell showing battery level */
+"Battery level" = "Pil seviyesi";
+
+/* The title of the cell showing Voltage */
+"Voltage" = "Voltaj";
+
+/* "The title of the section for alerts" */
+"Alert" = "Uyarı";
+
+/* The title of the cell showing Low Battery Alert */
+"Low Battery Alert" = "Düşük Pil Uyarısı";
+
+/* Header of list showing battery level alert options */
+"Battery level Alert" = "Pil seviyesi Uyarısı";
+
+/* Battery level alert OFF in list of options */
+"OFF" = "KAPA";
+
+/* The title of the command to update diagnostic LEDs */
+"Diagnostic LEDs" = "Sistem kontrol LEDleri";
+
+/* The title of the command to fetch RileyLink statistics */
+"Get RileyLink Statistics" = "RileyLink İstatistiklerini Al";
+
+/* The title of the command to invert BLE connection LED logic */
+"Invert LED Logic" = "LED Mantığını Ters Çevir";
+
+/* The header of the cells showing test commands */
+"Test Commands" = "Komutları Dene";
+
+/* The title of the cell showing Lighten Yellow LED */
+"Lighten Yellow LED" = "Sarı LED'i Aç";
+
+/* The title of the cell showing Lighten Yellow LED */
+"Lighten Red LED" = "Kırmızı LED'i Aç";
+
+/* The title of the cell showing Test Vibration */
+"Test Vibration" = "Titreşimi Dene";
+
+/* The title of the cell for sounding device finding piezo */
+"Find Device" = "Cihazı Bul";
+
+/* The title of the cell for connection LED */
+"Connection LED" = "Bağlantı LED'i";
+
+/* The title of the cell for connection vibration */
+"Connection Vibration" = "Bağlanıldığında Titreş";
+
+/* Detail text when battery alert disabled. */
+"Off" = "Kapa";
+
+/* Text indicating LED Mode is on */
+"On" = "Aç";
+
+/* Text indicating LED Mode is off */
+"Off" = "Kapa";
+
+/* Text indicating LED Mode is auto */
+"Auto" = "Oto";

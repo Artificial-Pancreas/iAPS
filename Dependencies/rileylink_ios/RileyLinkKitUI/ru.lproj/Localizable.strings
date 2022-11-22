@@ -37,5 +37,68 @@
 /* The title of the cell showing BLE signal strength (RSSI) */
 "Signal Strength" = "Уровень сигнала";
 
+/* The header of the cells showing connection monitoring */
+"Connection Monitoring" = "Проверка подключения";
+
 /* The title of the cell showing uptime */
 "Uptime" = "Время непрерывной работы";
+
+/* The title of the cell showing battery level */
+"Battery level" = "Уровень заряда батареи";
+
+/* The title of the cell showing Voltage */
+"Voltage" = "Напряжение";
+
+/* "The title of the section for alerts" */
+"Alert" = "Тревога";
+
+/* The title of the cell showing Low Battery Alert */
+"Low Battery Alert" = "Предупредить при уровне заряда";
+
+/* Header of list showing battery level alert options */
+"Battery level Alert" = "Уровень предупреждения о низком заряде";
+
+/* Battery level alert OFF in list of options */
+"OFF" = "Не предупреждать";
+
+/* The title of the command to update diagnostic LEDs */
+"Diagnostic LEDs" = "Индикатор диагностики";
+
+/* The title of the command to fetch RileyLink statistics */
+"Get RileyLink Statistics" = "Статистика RileyLink";
+
+/* The title of the command to invert BLE connection LED logic */
+"Invert LED Logic" = "Обратная логика индикации";
+
+/* The header of the cells showing test commands */
+"Test Commands" = "Проверочные команды";
+
+/* The title of the cell showing Lighten Yellow LED */
+"Lighten Yellow LED" = "Светло-желтый индикатор";
+
+/* The title of the cell showing Lighten Yellow LED */
+"Lighten Red LED" = "Светло-красный индикатор";
+
+/* The title of the cell showing Test Vibration */
+"Test Vibration" = "Проверка вибрации";
+
+/* The title of the cell for sounding device finding piezo */
+"Find Device" = "Поиск устройства";
+
+/* The title of the cell for connection LED */
+"Connection LED" = "Индикатор подключения";
+
+/* The title of the cell for connection vibration */
+"Connection Vibration" = "Вибрировать при потере связи";
+
+/* Detail text when battery alert disabled. */
+"Off" = "Выкл";
+
+/* Text indicating LED Mode is on */
+"On" = "Вкл";
+
+/* Text indicating LED Mode is off */
+"Off" = "Выкл";
+
+/* Text indicating LED Mode is auto */
+"Auto" = "Авто";

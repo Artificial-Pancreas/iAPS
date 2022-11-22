@@ -37,5 +37,68 @@
 /* The title of the cell showing BLE signal strength (RSSI) */
 "Signal Strength" = "Signalstyrke";
 
+/* The header of the cells showing connection monitoring */
+"Connection Monitoring" = "Overvåking av tilkobling";
+
 /* The title of the cell showing uptime */
 "Uptime" = "Oppetid";
+
+/* The title of the cell showing battery level */
+"Battery level" = "Batterinivå";
+
+/* The title of the cell showing Voltage */
+"Voltage" = "Spenning";
+
+/* "The title of the section for alerts" */
+"Alert" = "Varsel";
+
+/* The title of the cell showing Low Battery Alert */
+"Low Battery Alert" = "Varsel om lavt batterinivå";
+
+/* Header of list showing battery level alert options */
+"Battery level Alert" = "Nivå for batterivarsel";
+
+/* Battery level alert OFF in list of options */
+"OFF" = "AV";
+
+/* The title of the command to update diagnostic LEDs */
+"Diagnostic LEDs" = "Diagnostiske lysdioder";
+
+/* The title of the command to fetch RileyLink statistics */
+"Get RileyLink Statistics" = "Hent RileyLink-statistikk";
+
+/* The title of the command to invert BLE connection LED logic */
+"Invert LED Logic" = "Inverter LED-logikk";
+
+/* The header of the cells showing test commands */
+"Test Commands" = "Test kommandoer";
+
+/* The title of the cell showing Lighten Yellow LED */
+"Lighten Yellow LED" = "Slå på gul LED";
+
+/* The title of the cell showing Lighten Yellow LED */
+"Lighten Red LED" = "Slå på rød LED";
+
+/* The title of the cell showing Test Vibration */
+"Test Vibration" = "Test vibrering";
+
+/* The title of the cell for sounding device finding piezo */
+"Find Device" = "Finn enhet";
+
+/* The title of the cell for connection LED */
+"Connection LED" = "LED-lys ved tilkobling";
+
+/* The title of the cell for connection vibration */
+"Connection Vibration" = "Vibrasjon ved tilkobling";
+
+/* Detail text when battery alert disabled. */
+"Off" = "Av";
+
+/* Text indicating LED Mode is on */
+"On" = "På";
+
+/* Text indicating LED Mode is off */
+"Off" = "Av";
+
+/* Text indicating LED Mode is auto */
+"Auto" = "Automatisk";
