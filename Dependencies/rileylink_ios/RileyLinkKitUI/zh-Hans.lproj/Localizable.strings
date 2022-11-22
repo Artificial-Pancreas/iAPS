@@ -37,5 +37,68 @@
 /* The title of the cell showing BLE signal strength (RSSI) */
 "Signal Strength" = "信号强度";
 
+/* The header of the cells showing connection monitoring */
+"Connection Monitoring" = "连接状态设置";
+
 /* The title of the cell showing uptime */
 "Uptime" = "Uptime";
+
+/* The title of the cell showing battery level */
+"Battery level" = "电池电量";
+
+/* The title of the cell showing Voltage */
+"Voltage" = "电压";
+
+/* "The title of the section for alerts" */
+"Alert" = "警报";
+
+/* The title of the cell showing Low Battery Alert */
+"Low Battery Alert" = "电池报警";
+
+/* Header of list showing battery level alert options */
+"Battery level Alert" = "电池电量警报";
+
+/* Battery level alert OFF in list of options */
+"OFF" = "关闭";
+
+/* The title of the command to update diagnostic LEDs */
+"Diagnostic LEDs" = "诊断指示灯";
+
+/* The title of the command to fetch RileyLink statistics */
+"Get RileyLink Statistics" = "获取 RileyLink 统计";
+
+/* The title of the command to invert BLE connection LED logic */
+"Invert LED Logic" = "反转指示灯逻辑。";
+
+/* The header of the cells showing test commands */
+"Test Commands" = "测试命令";
+
+/* The title of the cell showing Lighten Yellow LED */
+"Lighten Yellow LED" = "点亮黄色指示灯";
+
+/* The title of the cell showing Lighten Yellow LED */
+"Lighten Red LED" = "点亮红色指示灯";
+
+/* The title of the cell showing Test Vibration */
+"Test Vibration" = "测试振动";
+
+/* The title of the cell for sounding device finding piezo */
+"Find Device" = "寻找设备";
+
+/* The title of the cell for connection LED */
+"Connection LED" = "连接指示灯";
+
+/* The title of the cell for connection vibration */
+"Connection Vibration" = "连接振动";
+
+/* Detail text when battery alert disabled. */
+"Off" = "关闭";
+
+/* Text indicating LED Mode is on */
+"On" = "开启";
+
+/* Text indicating LED Mode is off */
+"Off" = "关闭";
+
+/* Text indicating LED Mode is auto */
+"Auto" = "自动";

@@ -37,5 +37,68 @@
 /* The title of the cell showing BLE signal strength (RSSI) */
 "Signal Strength" = "Signalstärke";
 
+/* The header of the cells showing connection monitoring */
+"Connection Monitoring" = "Verbindungsüberwachung";
+
 /* The title of the cell showing uptime */
 "Uptime" = "Betriebszeit";
+
+/* The title of the cell showing battery level */
+"Battery level" = "Ladezustand";
+
+/* The title of the cell showing Voltage */
+"Voltage" = "Spannung";
+
+/* "The title of the section for alerts" */
+"Alert" = "Alarmierung";
+
+/* The title of the cell showing Low Battery Alert */
+"Low Battery Alert" = "Warnung bei schwacher Batterie";
+
+/* Header of list showing battery level alert options */
+"Battery level Alert" = "Ladezustandswarnung";
+
+/* Battery level alert OFF in list of options */
+"OFF" = "Aus";
+
+/* The title of the command to update diagnostic LEDs */
+"Diagnostic LEDs" = "Diagnose LEDs";
+
+/* The title of the command to fetch RileyLink statistics */
+"Get RileyLink Statistics" = "RileyLink Messwerte abrufen";
+
+/* The title of the command to invert BLE connection LED logic */
+"Invert LED Logic" = "LED Logik umkehren";
+
+/* The header of the cells showing test commands */
+"Test Commands" = "Testbefehle";
+
+/* The title of the cell showing Lighten Yellow LED */
+"Lighten Yellow LED" = "Gelbe LED aktivieren";
+
+/* The title of the cell showing Lighten Yellow LED */
+"Lighten Red LED" = "Rote LED aktivieren";
+
+/* The title of the cell showing Test Vibration */
+"Test Vibration" = "Vibration aktivieren";
+
+/* The title of the cell for sounding device finding piezo */
+"Find Device" = "Gerät lokalisieren";
+
+/* The title of the cell for connection LED */
+"Connection LED" = "Verbindungs-LED";
+
+/* The title of the cell for connection vibration */
+"Connection Vibration" = "Vibrieren bei Verbindung";
+
+/* Detail text when battery alert disabled. */
+"Off" = "Aus";
+
+/* Text indicating LED Mode is on */
+"On" = "An";
+
+/* Text indicating LED Mode is off */
+"Off" = "Aus";
+
+/* Text indicating LED Mode is auto */
+"Auto" = "Auto";

@@ -14,7 +14,7 @@
 "com.loudnate.CarbKit.deleteCarbEntryUnownedErrorDescription" = "Autorisierung verweigert";
 
 /* The error recovery suggestion when attempting to delete a sample not shared by the current app */
-"com.loudnate.carbKit.sharingDeniedErrorRecoverySuggestion" = "Dieses Beispiel kann in der Healt-App gelöscht werden.";
+"com.loudnate.carbKit.sharingDeniedErrorRecoverySuggestion" = "Dieses Beispiel kann in der Health-App gelöscht werden.";
 
 /* Generic pump error description */
 "Communication Failure" = "Kommunikationsfehler";
@@ -68,7 +68,7 @@
 "OK" = "OK";
 
 /* The error recovery suggestion when Health sharing was denied */
-"Please re-enable sharing in Health" = "Bitte aktiviere das sharing in Healt erneut";
+"Please re-enable sharing in Health" = "Bitte aktiviere das Teilen in der Health-App erneut";
 
 /* Glucose trend up */
 "Rising" = "Steigt";

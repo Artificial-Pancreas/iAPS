@@ -63,7 +63,7 @@
 "Changes will only apply this time you enable the override. The default settings of %@ will not be affected." = "Änderungen werden nur dann wirksam, wenn Sie den Override aktivieren. Die Standardeinstellungen von %@ werden nicht beeinflusst.";
 
 /* Carb entry section footer text explaining absorption time */
-"Choose a longer absorption time for larger meals, or those containing fats and proteins. This is only guidance to the algorithm and need not be exact." = "Wähle eine längere absorbtionszeit für größere Mahlzeiten, oder welche viel Fett und Proteine beinhalten. Dies ist eine Unterstützung für den Algorithmus und muss nicht genau sein.";
+"Choose a longer absorption time for larger meals, or those containing fats and proteins. This is only guidance to the algorithm and need not be exact." = "Wähle eine längere Absorbtionszeit für größere Mahlzeiten, oder welche viel Fett und Proteine beinhalten. Dies ist eine Unterstützung für den Algorithmus und muss nicht genau sein.";
 
 /* The format string describing the date of a COB value. The first format argument is the localized date. */
 "com.loudnate.CarbKit.COBDateLabel" = "bei %1$@";
