@@ -41,4 +41,5 @@ Code contributions as PRs are welcome! There is a need for more developers revie
 
 Translators can click the Crowdin link above. 
 
-Code is open (and free) for everyone. For those of you who have asked about buying me a coffe for me to stay awake at night, my PayPal account is jon.m@live.se, but it's not anything I expect or will ever ask for from you. 
+Code is open (and free) for everyone. For those of you who have asked about buying me a coffe for me to stay awake at night, 
+my PayPal account is jon.m@live.se (Sweden, Europe), but it's not anything I expect or will ever ask for from you. 
