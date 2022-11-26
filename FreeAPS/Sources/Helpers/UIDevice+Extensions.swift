@@ -10,7 +10,41 @@ extension UIDevice {
             return identifier + String(UnicodeScalar(UInt8(value)))
         }
 
-        return identifier
+        func mapToDevice(identifier: String) -> String {
+            switch identifier {
+            case "iPhone11,8":
+                return "iPhone XR (A12)"
+
+            case "iPhone12,1":
+                return "iPhone 11 (A13)"
+            case "iPhone12,8":
+                return "iPhone SE (2nd Gen) (A13)"
+
+            case "iPhone13,2":
+                return "iPhone 12 (A14)"
+            case "iPhone13,3":
+                return "iPhone 12 Pro (A14)"
+            case "iPhone13,4":
+                return "iPhone 12 Pro Max (A14)"
+
+            case "iPhone14,4":
+                return "iPhone 13 mini (A15)"
+            case "iPhone14,5":
+                return "iPhone 13 (A15)"
+            case "iPhone14,6":
+                return "iPhone SE (3rd Gen) (A15)"
+            case "iPhone14,7":
+                return "iPhone 14 (A15)"
+
+            case "iPhone15,2":
+                return "iPhone 14 Pro (A16)"
+
+            default:
+                return identifier
+            }
+        }
+
+        return mapToDevice(identifier: identifier)
     }
 
     var getOSInfo: String {
