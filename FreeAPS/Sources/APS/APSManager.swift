@@ -183,7 +183,7 @@ final class BaseAPSManager: APSManager, Injectable {
         debug(.apsManager, "Starting loop")
 
         var loopStatRecord = LoopStats(
-            createdAt: Date(),
+            start: Date(),
             loopStatus: "Starting"
         )
 
@@ -207,10 +207,10 @@ final class BaseAPSManager: APSManager, Injectable {
             }
             .sink { [weak self] completion in
                 guard let self = self else { return }
-                loopStatRecord.loopEnd = Date()
-                loopStatRecord.loopDuration = self.roundDouble(
-                    (loopStatRecord.loopEnd! - loopStatRecord.createdAt).timeInterval / 60,
-                    1
+                loopStatRecord.end = Date()
+                loopStatRecord.duration = self.roundDouble(
+                    (loopStatRecord.end! - loopStatRecord.start).timeInterval / 60,
+                    2
                 )
                 if case let .failure(error) = completion {
                     loopStatRecord.loopStatus = error.localizedDescription
@@ -813,7 +813,7 @@ final class BaseAPSManager: APSManager, Injectable {
 
         // Retrieve the loopStats data
         let lsData = storage.retrieve(OpenAPS.Monitor.loopStats, as: [LoopStats].self)?
-            .sorted { $0.createdAt > $1.createdAt } ?? []
+            .sorted { $0.start > $1.start } ?? []
 
         var successRate: Double?
         var successNR = 0.0
@@ -824,7 +824,6 @@ final class BaseAPSManager: APSManager, Injectable {
         var maximumLoopTime = 0.0
         var timeIntervalLoops = 0.0
         var previousTimeLoop = Date()
-        var endTimeForOneLoop = Date()
         var timeForOneLoop = 0.0
         var averageLoopTime = 0.0
         var timeForOneLoopArray: [Double] = []
@@ -832,18 +831,16 @@ final class BaseAPSManager: APSManager, Injectable {
         var timeIntervalLoopArray: [Double] = []
         var medianInterval = 0.0
         var averageIntervalLoops = 0.0
-        var successIs = false
 
         if !lsData.isEmpty {
             var i = 0.0
-            var j = 0.0
 
-            if let loopEnd = lsData[0].loopEnd {
+            if let loopEnd = lsData[0].end {
                 previousTimeLoop = loopEnd
             }
 
             for each in lsData {
-                if let loopEnd = each.loopEnd, let loopDuration = each.loopDuration {
+                if let loopEnd = each.end, let loopDuration = each.duration {
                     if each.loopStatus.contains("Success") {
                         successNR += 1
                     } else {
@@ -852,7 +849,7 @@ final class BaseAPSManager: APSManager, Injectable {
                     i += 1
 
                     if previousTimeLoop != loopEnd {
-                        timeIntervalLoops = (previousTimeLoop - each.createdAt).timeInterval / 60
+                        timeIntervalLoops = (previousTimeLoop - each.start).timeInterval / 60
                     } else {
                         timeIntervalLoops = 0.0
                     }
@@ -894,14 +891,15 @@ final class BaseAPSManager: APSManager, Injectable {
             // Median values
             medianLoopTime = medianCalculation(array: timeForOneLoopArray)
             medianInterval = medianCalculation(array: timeIntervalLoopArray)
-
-            averageIntervalLoops = roundDouble(averageIntervalLoops, 1)
-            medianInterval = roundDouble(medianInterval, 1)
-            medianLoopTime = roundDouble(medianLoopTime, 1)
-            averageLoopTime = roundDouble(averageLoopTime, 1)
-            minimumInt = roundDouble(minimumInt, 1)
-            maximumInt = roundDouble(maximumInt, 1)
         }
+
+        if minimumInt == 999.0 {
+            minimumInt = 0.0
+        } else { minimumInt = roundDouble(minimumInt, 1) }
+
+        if minimumLoopTime == 9999.0 {
+            minimumLoopTime = 0.0
+        } else { minimumLoopTime = roundDouble(minimumLoopTime, 2) }
 
         // Time In Range (%) and Average Glucose (24 hours). This looks dumb and I will refactor it later.
         let glucose = storage.retrieve(OpenAPS.Monitor.glucose, as: [BloodGlucose].self)
@@ -1125,7 +1123,6 @@ final class BaseAPSManager: APSManager, Injectable {
         var bgString30Days = ""
         var bgString90Days = ""
         var bgAverageTotalString = ""
-        var loopString = ""
 
         // round output values
         daysBG = roundDecimal(daysBG, 1)
@@ -1174,34 +1171,18 @@ final class BaseAPSManager: APSManager, Injectable {
 
         let bgAverageString = bgString1day + bgString7Days + bgString30Days + bgString90Days + bgAverageTotalString
 
-        var minString = ""
-        if minimumInt == 999.00 {
-            minString = "Shortest Time Interval: N/A min, "
-        } else { minString = "Shortest Time Interval: \(minimumInt) min," }
-        var maxString = ""
-        if maximumInt == 0.0 {
-            maxString = "Longest Time Interval: N/A min."
-        } else { maxString = "Longest Time Interval: \(maximumInt) min." }
-
-        if minimumLoopTime != 9999.0 {
-            loopString += " Shortest Loop: \(minimumLoopTime) min. "
-        }
-        if maximumLoopTime != 0.0 {
-            loopString += "Longest Loop: \(maximumLoopTime) min."
-        }
-
         let loopstat = LoopCycles(
-            success_perc: Int(round(successRate ?? 0)),
+            success_rate: Decimal(round(successRate ?? 0)),
             loops: Int(successNR),
             errors: Int(errorNR),
-            median_interval: String(medianInterval),
-            avg_interval: String(averageIntervalLoops),
-            max_interval: String(maximumInt),
-            min_interval: String(minimumInt),
-            median_loop: String(medianLoopTime),
-            avg_loop: String(averageLoopTime),
-            max_loop: String(maximumLoopTime),
-            min_loop: String(minimumLoopTime)
+            median_interval: roundDecimal(Decimal(medianInterval), 1),
+            avg_interval: roundDecimal(Decimal(averageIntervalLoops), 1),
+            min_interval: roundDecimal(Decimal(minimumInt), 1),
+            max_interval: roundDecimal(Decimal(maximumInt), 1),
+            median_duration: roundDecimal(Decimal(medianLoopTime), 2),
+            avg_duration: roundDecimal(Decimal(averageLoopTime), 1),
+            min_duration: roundDecimal(Decimal(minimumLoopTime), 1),
+            max_duration: roundDecimal(Decimal(maximumLoopTime), 1)
         )
 
         let dailystat = DailyStats(
@@ -1244,10 +1225,10 @@ final class BaseAPSManager: APSManager, Injectable {
         var uniqEvents: [LoopStats] = []
 
         storage.transaction { storage in
-            storage.append(loopStatRecord, to: file, uniqBy: \.createdAt)
+            storage.append(loopStatRecord, to: file, uniqBy: \.start)
             uniqEvents = storage.retrieve(file, as: [LoopStats].self)?
-                .filter { $0.createdAt.addingTimeInterval(24.hours.timeInterval) > Date() }
-                .sorted { $0.createdAt > $1.createdAt } ?? []
+                .filter { $0.start.addingTimeInterval(24.hours.timeInterval) > Date() }
+                .sorted { $0.start > $1.start } ?? []
 
             storage.save(Array(uniqEvents), as: file)
         }
