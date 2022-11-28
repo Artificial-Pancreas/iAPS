@@ -1168,7 +1168,7 @@ final class BaseAPSManager: APSManager, Injectable {
 
         let loopstat = LoopCycles(
             success_rate: Decimal(round(successRate ?? 0)),
-            loops: Int(successNR),
+            loops: Int(successNR + errorNR),
             errors: Int(errorNR),
             median_interval: roundDecimal(Decimal(medianInterval), 1),
             avg_interval: roundDecimal(Decimal(averageIntervalLoops), 1),
