@@ -849,14 +849,14 @@ final class BaseAPSManager: APSManager, Injectable {
                     i += 1
 
                     timeIntervalLoops = (previousTimeLoop - each.start).timeInterval / 60
-                    if timeIntervalLoops > 0.0 {
+                    if timeIntervalLoops > 0.0, i != 1 {
                         timeIntervalLoopArray.append(timeIntervalLoops)
                     }
 
                     if timeIntervalLoops > maximumInt {
                         maximumInt = timeIntervalLoops
                     }
-                    if timeIntervalLoops < minimumInt, timeIntervalLoops != 0.0 {
+                    if timeIntervalLoops < minimumInt, i != 1 {
                         minimumInt = timeIntervalLoops
                     }
 
@@ -868,6 +868,7 @@ final class BaseAPSManager: APSManager, Injectable {
                     if timeForOneLoop >= maximumLoopTime, timeForOneLoop != 0.0 {
                         maximumLoopTime = timeForOneLoop
                     }
+
                     if timeForOneLoop <= minimumLoopTime, timeForOneLoop != 0.0 {
                         minimumLoopTime = timeForOneLoop
                     }
@@ -882,7 +883,6 @@ final class BaseAPSManager: APSManager, Injectable {
                 .timeInterval / 60 / Double(i)
 
             averageLoopTime /= Double(i)
-
             // Median values
             medianLoopTime = medianCalculation(array: timeForOneLoopArray)
             medianInterval = medianCalculation(array: timeIntervalLoopArray)
@@ -890,11 +890,11 @@ final class BaseAPSManager: APSManager, Injectable {
 
         if minimumInt == 999.0 {
             minimumInt = 0.0
-        } else { minimumInt = roundDouble(minimumInt, 1) }
+        }
 
         if minimumLoopTime == 9999.0 {
             minimumLoopTime = 0.0
-        } else { minimumLoopTime = roundDouble(minimumLoopTime, 2) }
+        }
 
         // Time In Range (%) and Average Glucose (24 hours). This looks dumb and I will refactor it later.
         let glucose = storage.retrieve(OpenAPS.Monitor.glucose, as: [BloodGlucose].self)
@@ -1175,9 +1175,9 @@ final class BaseAPSManager: APSManager, Injectable {
             min_interval: roundDecimal(Decimal(minimumInt), 1),
             max_interval: roundDecimal(Decimal(maximumInt), 1),
             median_duration: roundDecimal(Decimal(medianLoopTime), 2),
-            avg_duration: roundDecimal(Decimal(averageLoopTime), 1),
-            min_duration: roundDecimal(Decimal(minimumLoopTime), 1),
-            max_duration: roundDecimal(Decimal(maximumLoopTime), 1)
+            avg_duration: roundDecimal(Decimal(averageLoopTime), 2),
+            min_duration: roundDecimal(Decimal(minimumLoopTime), 2),
+            max_duration: roundDecimal(Decimal(maximumLoopTime), 2)
         )
 
         let dailystat = DailyStats(
