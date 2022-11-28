@@ -834,7 +834,7 @@ final class BaseAPSManager: APSManager, Injectable {
 
         if !lsData.isEmpty {
             var i = 0.0
-
+            
             if let loopEnd = lsData[0].end {
                 previousTimeLoop = loopEnd
             }
@@ -848,12 +848,7 @@ final class BaseAPSManager: APSManager, Injectable {
                     }
                     i += 1
 
-                    if previousTimeLoop != loopEnd {
-                        timeIntervalLoops = (previousTimeLoop - each.start).timeInterval / 60
-                    } else {
-                        timeIntervalLoops = 0.0
-                    }
-
+                    timeIntervalLoops = (previousTimeLoop - each.start).timeInterval / 60
                     if timeIntervalLoops > 0.0 {
                         timeIntervalLoopArray.append(timeIntervalLoops)
                     }
@@ -884,7 +879,8 @@ final class BaseAPSManager: APSManager, Injectable {
 
             successRate = (successNR / Double(i)) * 100
 
-            averageIntervalLoops = timeIntervalLoopArray.reduce(0,+) / Double(timeIntervalLoopArray.count)
+            averageIntervalLoops = ((lsData[0].end ?? lsData[lsData.count - 1].start) - lsData[lsData.count - 1].start)
+                .timeInterval / 60 / Double(i)
 
             averageLoopTime /= Double(i)
 
