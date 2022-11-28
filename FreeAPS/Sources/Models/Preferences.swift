@@ -6,12 +6,7 @@ struct Preferences: JSON {
     var currentBasalSafetyMultiplier: Decimal = 4
     var autosensMax: Decimal = 1.2
     var autosensMin: Decimal = 0.7
-    var autoisf: Bool = false
-    var autoISFhourlyChange: Decimal = 0.25
-    var autoISFmax: Decimal = 1.3
-    var autoISFmin: Decimal = 1
     var smbDeliveryRatio: Decimal = 0.5
-    var smbMaxRangeExtension: Decimal = 1
     var rewindResetsAutosens: Bool = true
     var highTemptargetRaisesSensitivity: Bool = false
     var lowTemptargetLowersSensitivity: Bool = false
@@ -47,20 +42,6 @@ struct Preferences: JSON {
     var noisyCGMTargetMultiplier: Decimal = 1.3
     var suspendZerosIOB: Bool = true
     var timestamp: Date?
-    var floatingcarbs: Bool = false
-    var smbDeliveryRatioBGrange: Decimal = 0
-    var smbDeliveryRatioMin: Decimal = 0.5
-    var smbDeliveryRatioMax: Decimal = 0.75
-    var enableautoISFwithCOB: Bool = false
-    var higherISFrangeWeight: Decimal = 0
-    var lowerISFrangeWeight: Decimal = 0
-    var deltaISFrangeWeight: Decimal = 0
-    var postMealISFweight: Decimal = 0
-    var postMealISFduration: Decimal = 3
-    var postMealISFalways: Bool = false
-    var bgAccelISFweight: Decimal = 0
-    var bgBrakeISFweight: Decimal = 0
-    var enableBGacceleration: Bool = false
     var maxDeltaBGthreshold: Decimal = 0.2
     var adjustmentFactor: Decimal = 1.0
     var enableChris: Bool = false
@@ -81,12 +62,7 @@ extension Preferences {
         case currentBasalSafetyMultiplier = "current_basal_safety_multiplier"
         case autosensMax = "autosens_max"
         case autosensMin = "autosens_min"
-        case autoisf = "use_autoisf"
-        case autoISFhourlyChange = "autoisf_hourlychange"
-        case autoISFmax = "autoisf_max"
-        case autoISFmin = "autoisf_min"
         case smbDeliveryRatio = "smb_delivery_ratio"
-        case smbMaxRangeExtension = "smb_max_range_extension"
         case rewindResetsAutosens = "rewind_resets_autosens"
         case highTemptargetRaisesSensitivity = "high_temptarget_raises_sensitivity"
         case lowTemptargetLowersSensitivity = "low_temptarget_lowers_sensitivity"
@@ -121,20 +97,6 @@ extension Preferences {
         case carbsReqThreshold
         case noisyCGMTargetMultiplier
         case suspendZerosIOB = "suspend_zeros_iob"
-        case floatingcarbs = "floating_carbs"
-        case smbDeliveryRatioBGrange = "smb_delivery_ratio_bg_range"
-        case smbDeliveryRatioMin = "smb_delivery_ratio_min"
-        case smbDeliveryRatioMax = "smb_delivery_ratio_max"
-        case enableautoISFwithCOB = "enableautoisf_with_COB"
-        case higherISFrangeWeight = "higher_ISFrange_weight"
-        case lowerISFrangeWeight = "lower_ISFrange_weight"
-        case deltaISFrangeWeight = "delta_ISFrange_weight"
-        case postMealISFweight = "postmeal_ISF_weight"
-        case postMealISFduration = "postmeal_ISF_duration"
-        case postMealISFalways = "enableppisf_always"
-        case bgAccelISFweight = "bgAccel_ISF_weight"
-        case bgBrakeISFweight = "bgBrake_ISF_weight"
-        case enableBGacceleration = "enable_BG_acceleration"
         case maxDeltaBGthreshold = "maxDelta_bg_threshold"
         case adjustmentFactor
         case enableChris
