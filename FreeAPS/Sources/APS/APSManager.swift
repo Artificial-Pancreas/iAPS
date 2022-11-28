@@ -834,7 +834,7 @@ final class BaseAPSManager: APSManager, Injectable {
 
         if !lsData.isEmpty {
             var i = 0.0
-            
+
             if let loopEnd = lsData[0].end {
                 previousTimeLoop = loopEnd
             }
@@ -864,7 +864,6 @@ final class BaseAPSManager: APSManager, Injectable {
 
                     timeForOneLoopArray.append(timeForOneLoop)
                     averageLoopTime += timeForOneLoop
-                    timeForOneLoop = roundDouble(timeForOneLoop, 1)
 
                     if timeForOneLoop >= maximumLoopTime, timeForOneLoop != 0.0 {
                         maximumLoopTime = timeForOneLoop
