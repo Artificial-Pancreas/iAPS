@@ -321,10 +321,10 @@
 "Pair Pod" = "Сопряжение пода";
 
 /* Pairing action button accessibility label while ready to pair */
-"Pair pod." = "Pair pod.";
+"Pair pod." = "Сопряжение пода.";
 
 /* Pairing action button accessibility label while pairing */
-"Pairing." = "Pairing.";
+"Pairing." = "Сопряжение";
 
 /* Pairing action button accessibility label while priming */
 "Priming. Please wait." = "Priming. Please wait.";
@@ -474,7 +474,7 @@
 "Inserting..." = "Inserting...";
 
 /* Cannula insertion button text while showing error */
-"Retry" = "Retry";
+"Retry" = "Повторить";
 
 /* Cannula insertion button text while checking insertion */
 "Checking..." = "Checking...";
@@ -631,7 +631,7 @@
 "Pod deactivated successfully. Continue." = "Pod deactivated successfully. Continue.";
 
 /* Action button description for deactivate after failed attempt */
-"Retry" = "Retry";
+"Retry" = "Повторить";
 
 /* Action button description when deactivated */
 "Continue" = "Продолжить";
@@ -640,10 +640,10 @@
 "There was a problem communicating with the pod. If this problem persists, tap Discard Pod. You can then activate a new Pod." = "There was a problem communicating with the pod. If this problem persists, tap Discard Pod. You can then activate a new Pod.";
 
 /* Text for discard pod button */
-"Discard Pod" = "Discard Pod";
+"Discard Pod" = "Отклонить под";
 
 /* Title for remove pod modal */
-"Remove Pod from Body" = "Remove Pod from Body";
+"Remove Pod from Body" = "Удалить под из тела";
 
 /* Alert message body for confirm pod attachment */
 "Your Pod may still be delivering Insulin.\nRemove it from your body, then tap “Continue.“" = "Your Pod may still be delivering Insulin.\nRemove it from your body, then tap “Continue.“";
@@ -661,7 +661,7 @@
 "Listen for 2 beeps." = "Listen for 2 beeps.";
 
 /* Label text indicating pairing finished.*/
-"Paired" = "Paired";
+"Paired" = "Сопряжен";
 
 /* Cancel button text in navigation bar on pair pod UI */
 "Cancel" = "Отмена";
