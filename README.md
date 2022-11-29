@@ -12,7 +12,6 @@ To use this branch :
 git clone --branch=bdb https://github.com/Jon-b-m/freeaps.git
 
 The bdb branch includes my implementation of dynamic ISF and a some other extra features. Dyn ISF and dyn CR are off by default. 
-The Auto ISF js algorithms originates from work of others, Gazelle et al. 
 
 Please understand that this version is :
 - highly experimental
