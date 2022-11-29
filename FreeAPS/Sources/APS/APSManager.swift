@@ -749,7 +749,7 @@ final class BaseAPSManager: APSManager, Injectable {
         if length % 2 == 0 {
             return (sorted[length / 2 - 1] + sorted[length / 2]) / 2.0
         }
-        return Double(sorted[length / 2])
+        return sorted[length / 2]
     }
 
     // Add to dailyStats.JSON
@@ -1174,10 +1174,10 @@ final class BaseAPSManager: APSManager, Injectable {
             avg_interval: roundDecimal(Decimal(averageIntervalLoops), 1),
             min_interval: roundDecimal(Decimal(minimumInt), 1),
             max_interval: roundDecimal(Decimal(maximumInt), 1),
-            median_duration: roundDecimal(Decimal(medianLoopTime), 2),
-            avg_duration: roundDecimal(Decimal(averageLoopTime), 2),
+            median_duration: Decimal(roundDouble(medianLoopTime, 1)),
+            avg_duration: Decimal(roundDouble(averageLoopTime, 2)),
             min_duration: roundDecimal(Decimal(minimumLoopTime), 2),
-            max_duration: roundDecimal(Decimal(maximumLoopTime), 2)
+            max_duration: Decimal(roundDouble(maximumLoopTime, 1))
         )
 
         let dailystat = DailyStats(

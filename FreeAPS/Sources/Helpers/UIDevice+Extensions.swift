@@ -12,7 +12,6 @@ extension UIDevice {
 
         func mapToDevice(identifier: String) -> String {
             switch identifier {
-
             case "iPhone10,6":
                 return "iPhone X"
 
