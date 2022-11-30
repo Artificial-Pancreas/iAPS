@@ -11,7 +11,7 @@ To use this branch :
 
 git clone --branch=Crowdin https://github.com/Jon-b-m/freeaps.git
 
-The Crowdin branch includes lastest localizations by translators and me. Based on Ivan's dev branch, but with added DASH support and some later fixes.
+The Crowdin branch includes latest localizations by translators and me. Based on Ivan's dev branch, but with added DASH support and some later fixes.
 
 Please understand that this version is :
 - highly experimental
