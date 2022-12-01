@@ -1149,9 +1149,9 @@ final class BaseAPSManager: APSManager, Injectable {
 
         if bg_total != 0, daysBG >= 2 {
             stringTotal =
-                " HbA1c (\(daysBG)) Days (mmol/mol): \(roundDecimal(IFCCa1CStatisticValue_total, 1)). HbA1c (\(daysBG)) Days (mg/dl): \(roundDecimal(NGSPa1CStatisticValue_total, 1)) %."
+                " HbA1c \(daysBG) Days (mmol/mol): \(roundDecimal(IFCCa1CStatisticValue_total, 1)). HbA1c \(daysBG) Days (mg/dl): \(roundDecimal(NGSPa1CStatisticValue_total, 1)) %."
             bgAverageTotalString =
-                " BG Median (\(daysBG)) Days (mmol/l): \(roundDouble(medianBG * 0.0555, 1)). BG Median (\(daysBG)) Days (mg/dl): \(roundDouble(medianBG, 0)). BG Average (\(daysBG)) Days (mmg/dl): \(roundDecimal(bg_total, 0))."
+                " BG Median \(daysBG) Days (mmol/l): \(roundDouble(medianBG * 0.0555, 1)). BG Median \(daysBG) Days (mg/dl): \(roundDouble(medianBG, 0)). BG Average \(daysBG) Days (mmg/dl): \(roundDecimal(bg_total, 0))."
         }
 
         let HbA1c_string = HbA1c_string_1 + string7Days + string30Days + string90Days + stringTotal
