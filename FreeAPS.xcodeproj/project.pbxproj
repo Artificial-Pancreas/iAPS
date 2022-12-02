@@ -16,7 +16,7 @@
 		19012CDC291D2CB900FB8210 /* LoopStats.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19012CDB291D2CB900FB8210 /* LoopStats.swift */; };
 		1927C8E62744606D00347C69 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1927C8E82744606D00347C69 /* InfoPlist.strings */; };
 		1935364028496F7D001E0B16 /* TDD_averages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1935363F28496F7D001E0B16 /* TDD_averages.swift */; };
-		193B6FAA291AB9AC0087410F /* TenDaysStats.swift in Sources */ = {isa = PBXBuildFile; fileRef = 193B6FA9291AB9AC0087410F /* TenDaysStats.swift */; };
+		193B6FAA291AB9AC0087410F /* TwoDaysStats.swift in Sources */ = {isa = PBXBuildFile; fileRef = 193B6FA9291AB9AC0087410F /* TwoDaysStats.swift */; };
 		19795118275953E50044850D /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 198377D4266BFFF6004DE65E /* Localizable.strings */; };
 		198377D2266BFFF6004DE65E /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 198377D4266BFFF6004DE65E /* Localizable.strings */; };
 		199561C1275E61A50077B976 /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 199561C0275E61A50077B976 /* HealthKit.framework */; };
@@ -443,7 +443,7 @@
 		1927C8FB2744612600347C69 /* uk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uk; path = uk.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		1927C8FE274489BA00347C69 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		1935363F28496F7D001E0B16 /* TDD_averages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TDD_averages.swift; sourceTree = "<group>"; };
-		193B6FA9291AB9AC0087410F /* TenDaysStats.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TenDaysStats.swift; sourceTree = "<group>"; };
+		193B6FA9291AB9AC0087410F /* TwoDaysStats.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoDaysStats.swift; sourceTree = "<group>"; };
 		198377D3266BFFF6004DE65E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		198377D5266C0A05004DE65E /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/Localizable.strings; sourceTree = "<group>"; };
 		198377D6266C0A0A004DE65E /* ca */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ca; path = ca.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -1342,7 +1342,7 @@
 				1935363F28496F7D001E0B16 /* TDD_averages.swift */,
 				CE82E02628E869DF00473A9C /* AlertEntry.swift */,
 				19B0EF2028F6D66200069496 /* DailyStats.swift */,
-				193B6FA9291AB9AC0087410F /* TenDaysStats.swift */,
+				193B6FA9291AB9AC0087410F /* TwoDaysStats.swift */,
 				19012CDB291D2CB900FB8210 /* LoopStats.swift */,
 			);
 			path = Models;
@@ -2309,7 +2309,7 @@
 				389ECDFE2601061500D86C4F /* View+Snapshot.swift in Sources */,
 				38FEF3FE2738083E00574A46 /* CGMProvider.swift in Sources */,
 				38E98A3725F5509500C0CED0 /* String+Extensions.swift in Sources */,
-				193B6FAA291AB9AC0087410F /* TenDaysStats.swift in Sources */,
+				193B6FAA291AB9AC0087410F /* TwoDaysStats.swift in Sources */,
 				F90692D1274B99B60037068D /* HealthKitProvider.swift in Sources */,
 				385CEAC125F2EA52002D6D5B /* Announcement.swift in Sources */,
 				8B759CFCF47B392BB365C251 /* BasalProfileEditorDataFlow.swift in Sources */,

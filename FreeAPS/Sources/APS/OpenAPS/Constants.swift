@@ -58,7 +58,7 @@ extension OpenAPS {
         static let tdd_averages = "monitor/tdd_averages.json"
         static let alertHistory = "monitor/alerthistory.json"
         static let dailyStats = "monitor/statistics.json"
-        static let tenDaysStats = "monitor/tenDays.json"
+        static let twoDaysStats = "monitor/twoDays.json"
         static let loopStats = "monitor/loopStats.json"
     }
 
