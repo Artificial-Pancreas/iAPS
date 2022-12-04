@@ -471,7 +471,7 @@
 "Insert Cannula" = "Kanüle einsetzen";
 
 /* Cannula insertion button text while inserting */
-"Inserting..." = "Einfügen...";
+"Inserting..." = "Kanüle einsetzen...";
 
 /* Cannula insertion button text while showing error */
 "Retry" = "Retry";
@@ -733,7 +733,7 @@
 "Priming..." = "Priming...";
 
 /* */
-"Deactivating..." = "Deactivating...";
+"Deactivating..." = "Deaktivierung...";
 
 /* Pod state when pod has been deactivated */
 "Deactivated" = "Deaktiviert";
@@ -778,22 +778,22 @@
 "Omnipod Reminders" = "Omnipod Erinnerungen";
 
 /* Footer text for omnipod reminders section */
-"The app configures a reminder on the pod to notify you in advance of Pod expiration. Set the number of hours advance notice you would like to configure when pairing a new Pod." = "The app configures a reminder on the pod to notify you in advance of Pod expiration. Set the number of hours advance notice you would like to configure when pairing a new Pod.";
+"The app configures a reminder on the pod to notify you in advance of Pod expiration. Set the number of hours advance notice you would like to configure when pairing a new Pod." = "Die App erstellt eine Erinnerung, um dich vor dem Ablauf des Pods zu benachrichtigen. Wähle die Anzahl der Stunden, die du vor der Kopplung eines neuen Pods benachrichtigt werden möchtest.";
 
 /* Footer text for scheduled reminder area */
-"This is a reminder that you scheduled when you paired your current Pod." = "This is a reminder that you scheduled when you paired your current Pod.";
+"This is a reminder that you scheduled when you paired your current Pod." = "Dies ist eine Erinnerung, die du beim Koppeln deines aktuellen Pods erstellt hast.";
 
 /* */
 "Scheduled Reminder" = "Scheduled Reminder";
 
 /* Footer text for low reservoir value row */
-"The App notifies you when the amount of insulin in the Pod reaches this level." = "The App notifies you when the amount of insulin in the Pod reaches this level.";
+"The App notifies you when the amount of insulin in the Pod reaches this level." = "Die App benachrichtigt dich, wenn die Insulinmenge im Pod diesen Wert erreicht.";
 
 /* Description text for critical alerts */
 "Critical Alerts" = "Kritische Warnungen";
 
 /* Description text for critical alerts */
-"The reminders above will not sound if your device is in Silent or Do Not Disturb mode.\n\nThere are other critical Pod alerts and alarms that will sound even if you device is set to Silent or Do Not Disturb mode." = "The reminders above will not sound if your device is in Silent or Do Not Disturb mode.\n\nThere are other critical Pod alerts and alarms that will sound even if you device is set to Silent or Do Not Disturb mode.";
+"The reminders above will not sound if your device is in Silent or Do Not Disturb mode.\n\nThere are other critical Pod alerts and alarms that will sound even if you device is set to Silent or Do Not Disturb mode." = "Die obigen Hinweise ertönen nicht, wenn sich dein Gerät im Modus Lautlos oder Nicht stören befindet.\n\n Es gibt weitere kritische Pod-Warnungen und Alarme, die auch dann ertönen, wenn dein Gerät auf \"Lautlos\" oder \"Nicht stören\" eingestellt ist.";
 /* navigation title for notification settings */
 "Notification Settings" = "Benachrichtigungseinstellungen";
 
@@ -804,30 +804,30 @@
 "No Reminder" = "No Reminder";
 
 /* Label for low reservoir reminder row */
-"Low Reservoir Reminder" = "Low Reservoir Reminder";
+"Low Reservoir Reminder" = "Erinnerung bei niedrigem Füllstand";
 
 /* The action string on pod status page when pod data is stale */
-"Make sure your phone and pod are close to each other. If communication issues persist, move to a new area." = "Make sure your phone and pod are close to each other. If communication issues persist, move to a new area.";
+"Make sure your phone and pod are close to each other. If communication issues persist, move to a new area." = "Vergewissere dich, dass sich dein iPhone und Pod in unmittelbarer Nähe zueinander befinden. Wenn die Kommunikationsprobleme fortbestehen, dann wechsle den Standort.";
 /* Format string for the action string on pod status page when pod expired. (1: service time remaining) */
-"Change Pod now. Insulin delivery will stop in %1$@ or when no more insulin remains." = "Change Pod now. Insulin delivery will stop in %1$@ or when no more insulin remains.";
+"Change Pod now. Insulin delivery will stop in %1$@ or when no more insulin remains." = "Wechsle jetzt den Pod! Die Insulinabgabe wird in %1$@ unterbrochen, spätestens wenn kein Insulin mehr vorhanden ist.";
 
 /* Title string for BeepPreference.silent */
-"Disabled" = "Disabled";
+"Disabled" = "Deaktiviert";
 
 /* Title string for BeepPreference.manualCommands */
 "Enabled" = "Aktiviert";
 
 /* Title string for BeepPreference.extended */
-"Extended" = "Extended";
+"Extended" = "Verlängert";
 
 /* Description for BeepPreference.silent */
-"No confidence reminders are used." = "No confidence reminders are used.";
+"No confidence reminders are used." = "Keine Erinnerungseinstellungen in Verwendung.";
 
 /* Description for BeepPreference.manualCommands */
-"Confidence reminders will sound for commands you initiate, like bolus, cancel bolus, suspend, resume, save notification reminders, etc. When Loop automatically adjusts delivery, no confidence reminders are used." = "Confidence reminders will sound for commands you initiate, like bolus, cancel bolus, suspend, resume, save notification reminders, etc. When Loop automatically adjusts delivery, no confidence reminders are used.";
+"Confidence reminders will sound for commands you initiate, like bolus, cancel bolus, suspend, resume, save notification reminders, etc. When Loop automatically adjusts delivery, no confidence reminders are used." = "Erinnerungssignale ertönen gemäß deiner Einstellungen, wie Bolusabgabe, Bolus abbrechen, Unterbrechung, Wiederaufnahme, Speicherung von Benachrichtigungen usw. Wenn Loop automatisch Insulin abgibt, ertönen keine Erinnerungssignale.";
 
 /* Description for BeepPreference.extended */
-"Confidence reminders will sound when Loop automatically adjusts delivery as well as for commands you initiate." = "Confidence reminders will sound when Loop automatically adjusts delivery as well as for commands you initiate.";
+"Confidence reminders will sound when Loop automatically adjusts delivery as well as for commands you initiate." = "Erinnerungssignale ertönen, wenn Loop die Abgabe automatisch anpasst sowie bei Befehlen, die von dir ausgelöst werden.";
 
 /* Label text for temporary basal rate summary */
 "Rate" = "BR";
@@ -836,45 +836,45 @@
 "U/hr" = "IE/Std";
 
 /* Summary string for temporary basal rate configuration page */
-"%1$@ for %2$@" = "%1$@ for %2$@";
+"%1$@ for %2$@" = "%1$@ für %2$@";
 
 /* Description text on manual temp basal action sheet */
-"Loop will not automatically adjust your insulin delivery until the temporary basal rate finishes or is canceled." = "Loop will not automatically adjust your insulin delivery until the temporary basal rate finishes or is canceled.";
+"Loop will not automatically adjust your insulin delivery until the temporary basal rate finishes or is canceled." = "Loop passt deine Insulinabgabe nicht automatisch an, bis die temporäre Basalrate beendet oder abgebrochen wird.";
 /* Button text for setting manual temporary basal rate*/
-"Set Temporary Basal" = "Set Temporary Basal";
+"Set Temporary Basal" = "Temporäre Basalrate festlegen";
 
 /* Navigation Title for ManualTempBasalEntryView */
-"Temporary Basal" = "Temporary Basal";
+"Temporary Basal" = "Temporäre Basalrate";
 
 /* Alert title for a failure to set temporary basal */
-"Temporary Basal Failed" = "Temporary Basal Failed";
+"Temporary Basal Failed" = "Temporäre Basalrate fehlgeschlagen";
 
 /* Alert format string for a failure to set temporary basal with recovery suggestion. (1: error description) (2: recovery text) */
-"Unable to set a temporary basal rate: %1$@\n\n%2$@" = "Unable to set a temporary basal rate: %1$@\n\n%2$@";
+"Unable to set a temporary basal rate: %1$@\n\n%2$@" = "Konnte keine temporäre Basalrate festlegen: %1$@\n\n%2$@";
 
 /* Alert format string for a failure to set temporary basal. (1: error description) */
-"Unable to set a temporary basal rate: %1$@" = "Unable to set a temporary basal rate: %1$@";
+"Unable to set a temporary basal rate: %1$@" = "Konnte keine temporäre Basalrate festlegen: %1$@";
 
 /* Alert title for missing temp basal configuration */
-"Missing Config" = "Missing Config";
+"Missing Config" = "Fehlende Konfiguration";
 
 /* Alert format string for missing temp basal configuration. */
-"This PumpManager has not been configured with a maximum basal rate because it was added before manual temp basal was a feature. Please go to therapy settings -> delivery limits and set a new maximum basal rate." = "This PumpManager has not been configured with a maximum basal rate because it was added before manual temp basal was a feature. Please go to therapy settings -> delivery limits and set a new maximum basal rate.";
+"This PumpManager has not been configured with a maximum basal rate because it was added before manual temp basal was a feature. Please go to therapy settings -> delivery limits and set a new maximum basal rate." = "Dieser PumpManager wurde nicht mit einer maximalen Basalrate konfiguriert, da er hinzugefügt wurde, bevor es die Funktion \"manuelle temporäre Basalrate\" gab. Bitte gehe zum Menü Therapieeinstellungen -> Verabreichungsgrenzen und lege eine neue maximale Basalrate fest.";
 
 /* Label text for expiration reminder default row */
-"Expiration Reminder Default" = "Expiration Reminder Default";
+"Expiration Reminder Default" = "Standard Ablauf-Erinnerung";
 
 /* Text for previous pod information row */
-"Previous Pod Information" = "Previous Pod Information";
+"Previous Pod Information" = "Informationen zum vorherigen Pod";
 
 /* Text shown in insulin remaining space when no pod is paired (Please keep the '\n' while translating!) */
-"No\nDelivery" = "No\nDelivery";
+"No\nDelivery" = "keine\nAbgabe";
 
 /* description label for active time pod details row */
 "Active Time" = "Laufzeit";
 
 /* description label for total delivery pod details row */
-"Total Delivery" = "Total Delivery";
+"Total Delivery" = "gesamte Abgabe";
 
 /* description label for device name pod details row */
 "Device Name" = "Gerätename";
@@ -907,7 +907,7 @@
 "Pod Setup" = "Pod Setup";
 
 /* bodyText for PodSetupView */
-"You will now begin the process of configuring your reminders, filling your Pod with insulin, pairing to your device and placing it on your body." = "You will now begin the process of configuring your reminders, filling your Pod with insulin, pairing to your device and placing it on your body.";
+"You will now begin the process of configuring your reminders, filling your Pod with insulin, pairing to your device and placing it on your body." = "Im nächsten Schritt wirst du deine Erinnerungen konfigurieren, deinen Pod mit Insulin füllen, ihn mit deinem Gerät koppeln und an deinem Körper anbringen.";
 
 /* Cancel button title */
 "Cancel" = "Abbrechen";
@@ -916,19 +916,19 @@
 "Continue" = "Fortsetzen";
 
 /* Are you sure you want to skip Omnipod Onboarding? */
-"Skip Omnipod Onboarding?" = "Skip Omnipod Onboarding?";
+"Skip Omnipod Onboarding?" = "Das Omnipod Onboarding überspringen?";
 
 /* Description text on ExpirationReminderSetupView */
-"The App notifies you in advance of Pod expiration.\n\nScroll to set the number of hours advance notice you would like to have." = "The App notifies you in advance of Pod expiration.\n\nScroll to set the number of hours advance notice you would like to have.";
+"The App notifies you in advance of Pod expiration.\n\nScroll to set the number of hours advance notice you would like to have." = "Die App benachrichtigt dich vor dem Ablauf des Pods.\n\nScrolle zur Einstellung der gewünschten Vorlaufzeit für die Erinnerung.";
 
 /* Text of continue button on ExpirationReminderSetupView" */
-"Next" = "Next";
+"Next" = "weiter";
 
 /* */
 "Expiration Reminder" = "Erinnerung an den Ablauf der Nutzungsdauer";
 
 /* Description text on LowReservoirReminderSetupView */
-"The App notifies you when the amount of insulin in the Pod reaches this level (50-10 U).\n\nScroll to set the number of units at which you would like to be reminded." = "The App notifies you when the amount of insulin in the Pod reaches this level (50-10 U).\n\nScroll to set the number of units at which you would like to be reminded.";
+"The App notifies you when the amount of insulin in the Pod reaches this level (50-10 U).\n\nScroll to set the number of units at which you would like to be reminded." = "Die App benachrichtigt dich, wenn die Insulinmenge im Pod diesen Wert (50-10 U) erreicht.\n\nScrolle, um die Anzahl der Einheiten einzustellen, bei denen du erinnert werden möchtest.";
 
 /* Label text for low reservoir value row */
 "Low Reservoir" = "Niedriger Reservoirstand";
@@ -937,31 +937,31 @@
 "Save" = "Speichern";
 
 /* hr (short for hour) */
-"hr" = "hr";
+"hr" = "h";
 
 /* Button title to cancel manual basal */
-"Cancel Manual Basal" = "Cancel Manual Basal";
+"Cancel Manual Basal" = "manuelle Basalrate abbrechen";
 
 /* Text shown in insulin delivery space when insulin suspended */
-"Insulin\nSuspended" = "Insulin\nSuspended";
+"Insulin\nSuspended" = "Insulinabgabe\nunterbrochen";
 
 /* Text for suspend resume button when insulin delivery is suspended */
-"Resume Insulin Delivery" = "Resume Insulin Delivery";
+"Resume Insulin Delivery" = "Insulinabgabe fortsetzen";
 
 /* Recovery suggestion when no pod is available */
-"Make sure your pod is nearby and try again." = "Make sure your pod is nearby and try again.";
+"Make sure your pod is nearby and try again." = "Stelle sicher, dass dein Pod in der Nähe liegt und versuche es erneut.";
 
 /* Error message shown when the pod is not connected */
-"Pod not connected" = "Pod not connected";
+"Pod not connected" = "Pod ist nicht verbunden";
 
 /* Label for suspended at time */
-"Suspended At" = "Suspended At";
+"Suspended At" = "Unterbrochen um";
 
 /* Text for suspend resume button when insulin delivery is resuming */
-"Resuming insulin delivery..." = "Resuming insulin delivery...";
+"Resuming insulin delivery..." = "Insulinabgabe fortsetzen...";
 
 /* Text for suspend resume button when insulin delivery is suspending */
-"Suspending insulin delivery..." = "Suspending insulin delivery...";
+"Suspending insulin delivery..." = "Insulinabgabe unterbrechen...";
 
 /* Header for devices section of RileyLinkSetupView */
 "Devices" = "Geräte";
