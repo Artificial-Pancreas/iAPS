@@ -71,25 +71,25 @@
 "Invert LED Logic" = "Inverti Logica LED";
 
 /* The header of the cells showing test commands */
-"Test Commands" = "Test Commands";
+"Test Commands" = "Provare i comandi";
 
 /* The title of the cell showing Lighten Yellow LED */
-"Lighten Yellow LED" = "Lighten Yellow LED";
+"Lighten Yellow LED" = "Illuminare LED giallo";
 
 /* The title of the cell showing Lighten Yellow LED */
-"Lighten Red LED" = "Lighten Red LED";
+"Lighten Red LED" = "Illuminare LED Rosso";
 
 /* The title of the cell showing Test Vibration */
-"Test Vibration" = "Test Vibration";
+"Test Vibration" = "Prova Vibrazione";
 
 /* The title of the cell for sounding device finding piezo */
-"Find Device" = "Find Device";
+"Find Device" = "Trova dispositivo";
 
 /* The title of the cell for connection LED */
-"Connection LED" = "Connection LED";
+"Connection LED" = "Connessione LED";
 
 /* The title of the cell for connection vibration */
-"Connection Vibration" = "Connection Vibration";
+"Connection Vibration" = "Vibrazione Connessione";
 
 /* Detail text when battery alert disabled. */
 "Off" = "Off";
