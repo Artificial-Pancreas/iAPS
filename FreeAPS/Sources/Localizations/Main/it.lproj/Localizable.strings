@@ -134,7 +134,7 @@
 "for" = "per";
 
 /*  Temp target set for ... minutes */
-"min" = "min";
+"min" = "minimo";
 
 /*  */
 "Autotune" = "Autotune";
@@ -969,7 +969,7 @@ Enact a temp Basal or a temp target */
 "Manual" = "Manual";
 
 /* Status highlight when manual temp basal is running. */
-"Manual Basal" = "Manual Basal";
+"Manual Basal" = "Basale manuale temporanea";
 
 /* Current Manual Temp basal */
 " -  Manual Basal ⚠️" = " -  Manual Basal ⚠️";
@@ -983,20 +983,20 @@ Enact a temp Basal or a temp target */
 /* ---------------------------------------
   DASH strings
 */
-"Attach Pod" = "Attach Pod";
+"Attach Pod" = "Applica pod";
 
 "Deactivate Pod" = "Disattiva Pod";
 
 /* */
 "Deactivating..." = "Deactivating...";
 
-"Pair Pod" = "Pair Pod";
+"Pair Pod" = "Connetti Pod";
 
 /* Text for previous pod information row */
 "Previous Pod Information" = "Previous Pod Information";
 
 /* Text for confidence reminders navigation link */
-"Confidence Reminders" = "Confidence Reminders";
+"Confidence Reminders" = "Promemoria Di Sicurezza";
 
 "Confidence reminders are beeps from the pod which can be used to acknowledge selected commands." = "Confidence reminders are beeps from the pod which can be used to acknowledge selected commands.";
 
@@ -1040,7 +1040,7 @@ Enact a temp Basal or a temp target */
 "Expiration Reminder" = "Promemoria di scadenza";
 
 /* */
-"Low Reservoir" = "Low Reservoir";
+"Low Reservoir" = "Livello serbatoio basso";
 
 /* Value text for no expiration reminder */
 "No Reminder" = "No Reminder";
@@ -1098,13 +1098,13 @@ Enact a temp Basal or a temp target */
 "Insert Cannula" = "Inserisci cannula";
 
 /* */
-"Check Cannula" = "Check Cannula";
+"Check Cannula" = "Controlla cannula";
 
 /* */
 "Setup Complete" = "Setup Complete";
 
 /* */
-"Insulin Suspended" = "Insulin Suspended";
+"Insulin Suspended" = "Insulina Sospesa";
 
 /* Text for suspend resume button when insulin delivery is suspending */
 "Suspending insulin delivery..." = "Suspending insulin delivery...";
@@ -1116,7 +1116,7 @@ Enact a temp Basal or a temp target */
 "Resuming insulin delivery..." = "Resuming insulin delivery...";
 
 /* Alert title for suspend error */
-"Failed to Suspend Insulin Delivery" = "Failed to Suspend Insulin Delivery";
+"Failed to Suspend Insulin Delivery" = "Sospensione della consegna dell'insulina non riuscita";
 
 /* --------------------------------------
 

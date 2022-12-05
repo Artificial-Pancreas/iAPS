@@ -21,7 +21,7 @@
 "Absorption Time" = "Tempo di assorbimento";
 
 /* The title for the override emoji activity section */
-"Activity" = "Activity";
+"Activity" = "Attività";
 
 /* Action sheet confirmation message for pump history deletion */
 "Are you sure you want to delete all history entries?" = "Sei sicuro di voler eliminare tutti gli inserimenti storiche?";
@@ -129,7 +129,7 @@
 "Insulin sensitivity describes how your blood glucose should respond to a 1 Unit dose of insulin. Smaller values mean more insulin will be given when above target. Values that are too small can cause dangerously low blood glucose." = "La sensibilità all’insulina descrive il modo in cui la tua glicemia dovrebbe rispondere a una dose di insulina pari a 1 Unità. In caso di valori inferiori, al superamento del target verrà somministrata più insulina. Valori troppo bassi possono causare livelli di glicemia pericolosamente bassi.";
 
 /* Placeholder for maximum value in glucose range */
-"max" = "max";
+"max" = "massimo";
 
 /* The title text for the maximum basal rate value */
 "Maximum Basal Rate" = "Profilo Basale Massimo";
@@ -141,7 +141,7 @@
 "Medium" = "Medio";
 
 /* Placeholder for minimum value in glucose range */
-"min" = "min";
+"min" = "minimo";
 
 /* Alert action title to open error help */
 "More Info" = "Piu info";
@@ -230,7 +230,7 @@
 "The maximum allowed amount is %@ grams" = "La massima quantita permessa %@ grams";
 
 /* The schedule table view header describing the configured time zone difference from the default time zone. The substitution parameters are: (1: time zone name)(2: +/-)(3: time interval) */
-"Times in %1$@%2$@%3$@" = "Times in %1$@%2$@%3$@";
+"Times in %1$@%2$@%3$@" = "Volte tra %1$@%2$@%3$@";
 
 /* The unit string for units per hour */
 "U/hour" = "U/ora";
