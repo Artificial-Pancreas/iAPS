@@ -20,6 +20,8 @@ extension UIDevice {
 
             case "iPhone12,1":
                 return "iPhone 11"
+            case "iPhone12,5":
+                return "iPhone 11 Pro Max"
             case "iPhone12,8":
                 return "iPhone SE (2nd Gen)"
 
@@ -34,6 +36,8 @@ extension UIDevice {
 
             case "iPhone14,2":
                 return "iPhone 13 Pro"
+            case "iPhone14,3":
+                return "iPhone 13 Pro Max"
             case "iPhone14,4":
                 return "iPhone 13 mini"
             case "iPhone14,5":
@@ -45,6 +49,8 @@ extension UIDevice {
 
             case "iPhone15,2":
                 return "iPhone 14 Pro"
+            case "iPhone15,3":
+                return "iPhone 14 Pro Max"
 
             default:
                 return identifier

@@ -6,6 +6,7 @@ struct NightscoutStatus: JSON {
     let pump: NSPumpStatus
     let preferences: Preferences
     let uploader: Uploader
+    let dailystats: DailyStats?
 }
 
 struct OpenAPSStatus: JSON {

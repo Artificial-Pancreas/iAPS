@@ -212,13 +212,29 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
 
         let uploader = Uploader(batteryVoltage: nil, battery: Int(device.batteryLevel * 100))
 
-        let status = NightscoutStatus(
-            device: NigtscoutTreatment.local,
-            openaps: openapsStatus,
-            pump: pump,
-            preferences: preferences,
-            uploader: uploader
-        )
+        let dailyStats = storage.retrieve(OpenAPS.Monitor.dailyStats, as: [DailyStats].self) ?? []
+
+        let status: NightscoutStatus
+
+        if !dailyStats.isEmpty {
+            status = NightscoutStatus(
+                device: NigtscoutTreatment.local,
+                openaps: openapsStatus,
+                pump: pump,
+                preferences: preferences,
+                uploader: uploader,
+                dailystats: dailyStats[0]
+            )
+        } else {
+            status = NightscoutStatus(
+                device: NigtscoutTreatment.local,
+                openaps: openapsStatus,
+                pump: pump,
+                preferences: preferences,
+                uploader: uploader,
+                dailystats: nil
+            )
+        }
 
         storage.save(status, as: OpenAPS.Upload.nsStatus)
 
