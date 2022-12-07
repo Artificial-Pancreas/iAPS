@@ -102,10 +102,10 @@
 "Pairing." = "Сопряжение";
 
 /* Pairing action button accessibility label while priming */
-"Priming. Please wait." = "Priming. Please wait.";
+"Priming. Please wait." = "Заправка. Пожалуйста, подождите.";
 
 /* Pairing action button accessibility label when pairing succeeded */
-"Pod paired successfully. Continue." = "Pod paired successfully. Continue.";
+"Pod paired successfully. Continue." = "Под успешно сопряжен. Продолжить.";
 
 /* Settings page link description when next lifecycle action is to finish deactivation */
 "Finish deactivation" = "Завершить деактивацию";
@@ -457,58 +457,58 @@
 "No, Continue With Pod" = "No, Continue With Pod";
 
 /* Label text for step one of attach pod instructions */
-"Prepare site." = "Prepare site.";
+"Prepare site." = "Подготовьте место.";
 
 /* Label text for step two of attach pod instructions */
-"Remove blue Pod needle cap and check cannula. Then remove paper backing." = "Remove blue Pod needle cap and check cannula. Then remove paper backing.";
+"Remove blue Pod needle cap and check cannula. Then remove paper backing." = "Удалите синюю крышку иглы Пода и проверьте канюлю. Затем удалите защитные пленки.";
 
 /* Label text for step three of attach pod instructions */
-"Check Pod, apply to site, then confirm pod attachment." = "Check Pod, apply to site, then confirm pod attachment.";
+"Check Pod, apply to site, then confirm pod attachment." = "Проверьте Под, установите его на теле, затем подтвердите установку Пода.";
 
 /* Action button title for attach pod view */
 "Continue" = "Продолжить";
 
 /* */
-"Attach Pod" = "Attach Pod";
+"Attach Pod" = "Прикрепите Под";
 
 /* Alert title for confirm pod attachment */
-"Confirm Pod Attachment" = "Confirm Pod Attachment";
+"Confirm Pod Attachment" = "Подтвердите прикрепление Пода";
 
 /* Alert message body for confirm pod attachment */
-"Please confirm that the Pod is securely attached to your body.\n\nThe cannula can be inserted only once with each Pod. Tap “Confirm” when Pod is attached." = "Please confirm that the Pod is securely attached to your body.\n\nThe cannula can be inserted only once with each Pod. Tap “Confirm” when Pod is attached.";
+"Please confirm that the Pod is securely attached to your body.\n\nThe cannula can be inserted only once with each Pod. Tap “Confirm” when Pod is attached." = "Пожалуйста, подтвердите, что Под надежно прикреплен к телу.\n\nКанюля может быть вставлена только один раз с каждым Подом. Нажмите \"Подтверждаю\", когда Под будет прикреплен.";
 
 /* Button title for confirm attachment option */
-"Confirm" = "Confirm";
+"Confirm" = "Подтверждаю";
 
 /* Label text for step one of insert cannula instructions */
-"Tap below to start cannula insertion." = "Tap below to start cannula insertion.";
+"Tap below to start cannula insertion." = "Нажмите ниже, чтобы начать установку канюли.";
 
 /* Label text for step two of insert cannula instructions */
-"Wait until insertion is completed." = "Wait until insertion is completed.";
+"Wait until insertion is completed." = "Дождитесь окончания введения канюли.";
 
 /* Label text indicating insertion finished. */
-"Inserted" = "Inserted";
+"Inserted" = "Введено";
 
 /* Check Cannula */
-"Check Cannula" = "Check Cannula";
+"Check Cannula" = "Проверьте канюлю";
 
 /* */
-"Is the cannula inserted properly?" = "Is the cannula inserted properly?";
+"Is the cannula inserted properly?" = "Правильно ли вставлена канюля?";
 
 /* Description of proper cannula insertion */
-"The window on the top of the Pod should be colored pink when the cannula is properly inserted into the skin." = "The window on the top of the Pod should be colored pink when the cannula is properly inserted into the skin.";
+"The window on the top of the Pod should be colored pink when the cannula is properly inserted into the skin." = "Окно в верхней части Пода - должно окрасится в розовый цвет, когда канюля правильно установлена под кожу.";
 
 /* Button label for user to answer cannula was properly inserted  */
-"Yes" = "Yes";
+"Yes" = "Да";
 
 /* Button label for user to answer cannula was not properly inserted */
-"No" = "No";
+"No" = "Нет";
 
 /* Pod pairing action button text while pairing */
-"Pairing..." = "Pairing...";
+"Pairing..." = "Сопряжение...";
 
 /* Pod pairing action button text while priming */
-"Priming..." = "Priming...";
+"Priming..." = "Заправка...";
 
 /* */
 "Deactivating..." = "Deactivating...";
@@ -517,37 +517,37 @@
 "Deactivated" = "Deactivated";
 
 /* Format string for instructions for setup complete view. (1: app name) */
-"Your Pod is ready for use.\n\n%1$@ will remind you to change your pod before it expires. You can change this to a time convenient for you." = "Your Pod is ready for use.\n\n%1$@ will remind you to change your pod before it expires. You can change this to a time convenient for you.";
+"Your Pod is ready for use.\n\n%1$@ will remind you to change your pod before it expires. You can change this to a time convenient for you." = "Ваш Под готов к использованию.\n\n%1$@ напомнит Вам поменять Под до истечения срока его использования. Можно изменить это время на удобное для Вас.";
 
 /* */
-"Scheduled Reminder" = "Scheduled Reminder";
+"Scheduled Reminder" = "Запланировать напоминание";
 
 /* Label for expiration reminder row */
 "Time" = "Время";
 
 /* Action button title to continue at Setup Complete */
-"Finish Setup" = "Finish Setup";
+"Finish Setup" = "Завершить настройку";
 
 /* */
-"Setup Complete" = "Setup Complete";
+"Setup Complete" = "Настройка завершена";
 
 /* Value text for no expiration reminder */
-"No Reminder" = "No Reminder";
+"No Reminder" = "Не напоминать";
 
 /* Error message description for PeripheralManagerError.notReady */
-"Peripheral Not Ready" = "Peripheral Not Ready";
+"Peripheral Not Ready" = "Периферия не готова";
 
 /* Error message description for PeripheralManagerError.incorrectResponse */
-"Incorrect Response" = "Incorrect Response";
+"Incorrect Response" = "Неверный отклик";
 
 /* Error message description for PeripheralManagerError.timeout */
-"Timeout" = "Timeout";
+"Timeout" = "Время ожидания истекло";
 
 /* Error message description for PeripheralManagerError.emptyValue */
-"Empty Value" = "Empty Value";
+"Empty Value" = "Отсутствует значение";
 
 /* Error message description for PeripheralManagerError.unknownCharacteristic */
-"Unknown Characteristic" = "Unknown Characteristic";
+"Unknown Characteristic" = "Неизвестная характеристика";
 
 /* Error message description for PeripheralManagerError.nack */
 "Nack" = "Nack";
@@ -562,7 +562,7 @@
 "This is a reminder that you scheduled when you paired your current Pod." = "This is a reminder that you scheduled when you paired your current Pod.";
 
 /* */
-"Scheduled Reminder" = "Scheduled Reminder";
+"Scheduled Reminder" = "Запланировать напоминание";
 
 /* Footer text for low reservoir value row */
 "The App notifies you when the amount of insulin in the Pod reaches this level." = "The App notifies you when the amount of insulin in the Pod reaches this level.";
@@ -579,7 +579,7 @@
 "Time" = "Время";
 
 /* Value text for no expiration reminder */
-"No Reminder" = "No Reminder";
+"No Reminder" = "Не напоминать";
 
 /* Label for low reservoir reminder row */
 "Low Reservoir Reminder" = "Low Reservoir Reminder";

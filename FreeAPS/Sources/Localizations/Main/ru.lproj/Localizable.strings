@@ -983,7 +983,7 @@ Enact a temp Basal or a temp target */
 /* ---------------------------------------
   DASH strings
 */
-"Attach Pod" = "Attach Pod";
+"Attach Pod" = "Прикрепите Под";
 
 "Deactivate Pod" = "Деактивировать Pod";
 
@@ -1043,10 +1043,10 @@ Enact a temp Basal or a temp target */
 "Low Reservoir" = "В резервуаре мало инсулина";
 
 /* Value text for no expiration reminder */
-"No Reminder" = "No Reminder";
+"No Reminder" = "Не напоминать";
 
 /* */
-"Scheduled Reminder" = "Scheduled Reminder";
+"Scheduled Reminder" = "Запланировать напоминание";
 
 /* */
 "Low Reservoir Reminder" = "Low Reservoir Reminder";
@@ -1098,10 +1098,10 @@ Enact a temp Basal or a temp target */
 "Insert Cannula" = "Вставьте катетер";
 
 /* */
-"Check Cannula" = "Check Cannula";
+"Check Cannula" = "Проверьте канюлю";
 
 /* */
-"Setup Complete" = "Setup Complete";
+"Setup Complete" = "Настройка завершена";
 
 /* */
 "Insulin Suspended" = "Insulin Suspended";
