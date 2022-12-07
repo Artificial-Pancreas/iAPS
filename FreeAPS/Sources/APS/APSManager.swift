@@ -659,8 +659,8 @@ final class BaseAPSManager: APSManager, Injectable {
             // Create a tdd.json
             tdd(enacted_: enacted)
 
-            // Create a dailyStats.json
-            dailyStats()
+            // Create a statistics.json
+            statistics()
 
             debug(.apsManager, "Suggestion enacted. Received: \(received)")
             DispatchQueue.main.async {
@@ -747,17 +747,17 @@ final class BaseAPSManager: APSManager, Injectable {
         let length = array.count
 
         if length % 2 == 0 {
-            return (sorted[length / 2 - 1] + sorted[length / 2]) / 2.0
+            return (sorted[length / 2 - 1] + sorted[length / 2]) / 2
         }
         return sorted[length / 2]
     }
 
-    // Add to dailyStats.JSON
-    private func dailyStats() {
-        var testFile: [DailyStats] = []
+    // Add to statistics.JSON
+    private func statistics() {
+        var testFile: [Statistics] = []
         var testIfEmpty = 0
         storage.transaction { storage in
-            testFile = storage.retrieve(OpenAPS.Monitor.dailyStats, as: [DailyStats].self) ?? []
+            testFile = storage.retrieve(OpenAPS.Monitor.statistics, as: [Statistics].self) ?? []
             testIfEmpty = testFile.count
         }
         // Only run every hour
@@ -771,14 +771,11 @@ final class BaseAPSManager: APSManager, Injectable {
         let carbs = storage.retrieve(OpenAPS.Monitor.carbHistory, as: [CarbsEntry].self)
         let tdds = storage.retrieve(OpenAPS.Monitor.tdd, as: [TDD].self)
         var currentTDD: Decimal = 0
-
         if tdds?.count ?? 0 > 0 {
             currentTDD = tdds?[0].TDD ?? 0
         }
-
         let carbs_length = carbs?.count ?? 0
         var carbTotal: Decimal = 0
-
         if carbs_length != 0 {
             for each in carbs! {
                 if each.carbs != 0 {
@@ -786,7 +783,6 @@ final class BaseAPSManager: APSManager, Injectable {
                 }
             }
         }
-
         var algo_ = "oref0" // Default
         if preferences.enableChris, preferences.useNewFormula {
             algo_ = "Dynamic ISF, Logarithmic Formula"
@@ -801,7 +797,7 @@ final class BaseAPSManager: APSManager, Injectable {
         let branch = Bundle.main.infoDictionary?["NSHumanReadableCopyright"] as? String
         let pump_ = pumpManager?.localizedTitle ?? ""
         let cgm = settingsManager.settings.cgm
-        let file = OpenAPS.Monitor.dailyStats
+        let file = OpenAPS.Monitor.statistics
         var iPa: Decimal = 75
         if preferences.useCustomPeakTime {
             iPa = preferences.insulinPeakTime
@@ -810,11 +806,9 @@ final class BaseAPSManager: APSManager, Injectable {
         } else if preferences.curve.rawValue == "ultra-rapid" {
             iPa = 50
         }
-
         // Retrieve the loopStats data
         let lsData = storage.retrieve(OpenAPS.Monitor.loopStats, as: [LoopStats].self)?
             .sorted { $0.start > $1.start } ?? []
-
         var successRate: Double?
         var successNR = 0.0
         var errorNR = 0.0
@@ -878,310 +872,293 @@ final class BaseAPSManager: APSManager, Injectable {
             }
 
             successRate = (successNR / Double(i)) * 100
-
             averageIntervalLoops = ((lsData[0].end ?? lsData[lsData.count - 1].start) - lsData[lsData.count - 1].start)
                 .timeInterval / 60 / Double(i)
-
             averageLoopTime /= Double(i)
             // Median values
             medianLoopTime = medianCalculation(array: timeForOneLoopArray)
             medianInterval = medianCalculation(array: timeIntervalLoopArray)
         }
-
         if minimumInt == 999.0 {
             minimumInt = 0.0
         }
-
         if minimumLoopTime == 9999.0 {
             minimumLoopTime = 0.0
         }
-
-        // Time In Range (%) and Average Glucose (24 hours). This looks dumb and I will refactor it later.
-        let glucose = storage.retrieve(OpenAPS.Monitor.glucose, as: [BloodGlucose].self)
-
+        // Time In Range (%) and Average Glucose (24 hours). This will be refactored later after some testing.
+        let glucose = storage.retrieve(OpenAPS.Monitor.glucose_data, as: [GlucoseDataForStats].self)
         let length_ = glucose?.count ?? 0
         let endIndex = length_ - 1
-        var oneDayGlucoseIndex = endIndex
-
         var bg: Decimal = 0
         var bgArray: [Double] = []
+        var bgArrayForTIR: [(bg_: Double, date_: Date)] = []
+        var bgArray_1: [(bg_: Double, date_: Date)] = []
+        var bgArray_7: [(bg_: Double, date_: Date)] = []
+        var bgArray_30: [(bg_: Double, date_: Date)] = []
+        var bgArray_90: [(bg_: Double, date_: Date)] = []
         var medianBG = 0.0
         var nr_bgs: Decimal = 0
-        let startDate = glucose![0].date
+
+        var startDate = Date("1978-02-22T11:43:54.659Z")
+        if endIndex >= 0 {
+            startDate = glucose?[0].date
+        }
         var end1 = false
-        var end2 = false
+        var end7 = false
+        var end30 = false
+        var end90 = false
         var bg_1: Decimal = 0
-        var bg_2: Decimal = 0
+        var bg_7: Decimal = 0
+        var bg_30: Decimal = 0
+        var bg_90: Decimal = 0
         var bg_total: Decimal = 0
         var j = -1
 
-        if length_ != 0 {
+        // Make arrays for median calculations and calculate averages
+        if endIndex >= 0 {
             for entry in glucose! {
                 j += 1
-                if entry.glucose! > 0 {
-                    bg += Decimal(entry.glucose!)
-                    bgArray.append(Double(entry.glucose!))
+                if entry.glucose > 0 {
+                    bg += Decimal(entry.glucose)
+                    bgArray.append(Double(entry.glucose))
+                    bgArrayForTIR.append((Double(entry.glucose), entry.date))
                     nr_bgs += 1
 
-                    if startDate - entry.date >= 8.64E7, !end1 {
+                    if (startDate! - entry.date).timeInterval >= 8.64E4, !end1 {
                         end1 = true
-                        oneDayGlucoseIndex = j
                         bg_1 = bg / nr_bgs
+                        bgArray_1 = bgArrayForTIR
+                        // time_1 = ((startDate ?? Date()) - entry.date).timeInterval
                     }
-                    if startDate - entry.date >= 1.72E8, !end2 {
-                        end2 = true
-                        oneDayGlucoseIndex = j
-                        bg_2 = bg / nr_bgs
+                    if (startDate! - entry.date).timeInterval >= 6.048E5, !end7 {
+                        end7 = true
+                        bg_7 = bg / nr_bgs
+                        bgArray_7 = bgArrayForTIR
+                        // time_7 = ((startDate ?? Date()) - entry.date).timeInterval
+                    }
+                    if (startDate! - entry.date).timeInterval >= 2.592E6, !end30 {
+                        end30 = true
+                        bg_30 = bg / nr_bgs
+                        bgArray_30 = bgArrayForTIR
+                        // time_30 = ((startDate ?? Date()) - entry.date).timeInterval
+                    }
+                    if (startDate! - entry.date).timeInterval >= 7.776E6, !end90 {
+                        end90 = true
+                        bg_90 = bg / nr_bgs
+                        bgArray_90 = bgArrayForTIR
+                        // time_90 = ((startDate ?? Date()) - entry.date).timeInterval
                     }
                 }
             }
         }
 
-        if nr_bgs != 0 {
-            // Up tp two days
+        if nr_bgs > 0 {
+            // Up to 91 days
             bg_total = bg / nr_bgs
         }
 
+        // Total median
         medianBG = medianCalculation(array: bgArray)
+        var daysBG = 0.0
+        var fullTime = 0.0
 
-        let fullTime = glucose![0].date - glucose![endIndex].date
-        let fullTime_1 = glucose![0].date - glucose![oneDayGlucoseIndex].date
-
-        var daysBG = fullTime / 8.64E7
-
-        var timeInHypo: Decimal = 0
-        var timeInHyper: Decimal = 0
-        var hypos: Decimal = 0
-        var hypers: Decimal = 0
-        var i = -1
-        var lastIndex = false
-
-        while i < endIndex {
-            i += 1
-
-            let currentTime = glucose![i].date
-            var previousTime = currentTime
-
-            if i + 1 <= endIndex {
-                previousTime = glucose![i + 1].date
-            } else {
-                lastIndex = true
-            }
-
-            if glucose![i].glucose! < 72, !lastIndex {
-                timeInHypo += currentTime - previousTime
-            } else if glucose![i].glucose! > 180, !lastIndex {
-                timeInHyper += currentTime - previousTime
-            }
+        if endIndex >= 0 {
+            fullTime = (startDate! - glucose![endIndex].date).timeInterval
+            daysBG = fullTime / 8.64E4
         }
 
-        if timeInHypo == 0 {
-            hypos = 0
-        } else { hypos = (timeInHypo / fullTime) * 100
-        }
-
-        if timeInHyper == 0 {
-            hypers = 0
-        } else { hypers = (timeInHyper / fullTime) * 100
-        }
-
-        let TIR = 100 - (hypos + hypers)
-
-        // Do the loop again but with for 1 day. I will change this later, because this looks really dumb:
-        var timeInHypo_1: Decimal = 0
-        var timeInHyper_1: Decimal = 0
-        var hypos_1: Decimal = 0
-        var hypers_1: Decimal = 0
-        i = -1
-        lastIndex = false
-
-        while i < oneDayGlucoseIndex {
-            i += 1
-
-            let currentTime = glucose![i].date
-            var previousTime = currentTime
-
-            if i + 1 <= oneDayGlucoseIndex {
-                previousTime = glucose![i + 1].date
-            } else {
-                lastIndex = true
-            }
-
-            if glucose![i].glucose! < 72, !lastIndex {
-                timeInHypo_1 += currentTime - previousTime
-            } else if glucose![i].glucose! > 180, !lastIndex {
-                timeInHyper_1 += currentTime - previousTime
-            }
-        }
-
-        if timeInHypo_1 == 0 {
-            hypos_1 = 0
-        } else { hypos_1 = (timeInHypo_1 / fullTime_1) * 100
-        }
-
-        if timeInHyper_1 == 0 {
-            hypers_1 = 0
-        } else { hypers_1 = (timeInHyper_1 / fullTime_1) * 100
-        }
-
-        let TIR_1 = 100 - (hypos_1 + hypers_1)
-
-        // Add a 2 day average to twoDaysStats.json
-        let file_10 = OpenAPS.Monitor.twoDaysStats
-
-        let twoStats = TwoDaysStats(
-            createdAt: Date(), past2daysAverage: roundDecimal(bg_2, 1)
-        )
-        var uniqEvents: [TwoDaysStats] = []
-        var test1 = uniqEvents
-        let test2: [TwoDaysStats] = [twoStats]
-        var countIndeces = 0
-
-        storage.transaction { storage in
-            test1 = storage.retrieve(file_10, as: [TwoDaysStats].self) ?? []
-            countIndeces = test1.count
-        }
-
-        if daysBG >= 2 {
-            if countIndeces == 0 {
-                storage.transaction { storage in
-                    storage.save(test2, as: file_10)
-                    daysBG = Decimal(countIndeces * 2)
+        func tir(_ array: [(bg_: Double, date_: Date)]) -> (TIR: Double, hypos: Double, hypers: Double) {
+            var timeInHypo = 0.0
+            var timeInHyper = 0.0
+            var hypos = 0.0
+            var hypers = 0.0
+            var i = -1
+            var lastIndex = false
+            let endIndex = array.count - 1
+            while i < endIndex {
+                i += 1
+                let currentTime = array[i].date_
+                var previousTime = currentTime
+                if i + 1 <= endIndex {
+                    previousTime = array[i + 1].date_
+                } else {
+                    lastIndex = true
                 }
-
-                // Keep 2 days apart from each array
-            } else if test1[0].createdAt.addingTimeInterval(2.days.timeInterval) < Date() {
-                storage.transaction { storage in
-                    storage.append(twoStats, to: file_10, uniqBy: \.createdAt)
-                    uniqEvents = storage.retrieve(file_10, as: [TwoDaysStats].self)?
-                        .filter { $0.createdAt.addingTimeInterval(365.days.timeInterval) > Date() }
-                        .sorted { $0.createdAt > $1.createdAt } ?? []
-                    storage.save(Array(uniqEvents), as: file_10)
+                if array[i].bg_ < 72.0, !lastIndex {
+                    timeInHypo += (currentTime - previousTime).timeInterval
+                } else if array[i].bg_ > 180, !lastIndex {
+                    timeInHyper += (currentTime - previousTime).timeInterval
                 }
             }
+            if timeInHypo == 0 {
+                hypos = 0
+            } else if fullTime != 0.0 { hypos = (timeInHypo / fullTime) * 100
+            }
+            if timeInHyper == 0 {
+                hypers = 0
+            } else if fullTime != 0.0 { hypers = (timeInHyper / fullTime) * 100
+            }
+            let TIR = 100 - (hypos + hypers)
+            return (roundDouble(TIR, 1), roundDouble(hypos, 1), roundDouble(hypers, 1))
         }
 
-        // Retrieve the 2 days data array
-        let uniqEvents_1 = storage.retrieve(OpenAPS.Monitor.twoDaysStats, as: [TwoDaysStats].self)?
-            .filter { $0.createdAt.addingTimeInterval(365.days.timeInterval) > Date() }
-            .sorted { $0.createdAt > $1.createdAt } ?? []
-
-        var index = 0
-        var total: Decimal = 0
-        var thirtyDays: Decimal = 0
-        var ninetyDays: Decimal = 0
-        var tenDays: Decimal = 0
-
-        for uniqEvent in uniqEvents_1 {
-            if uniqEvent.past2daysAverage != 0 {
-                total += uniqEvent.past2daysAverage
-                index += 1
-            }
-            if index == 15 {
-                thirtyDays = total / 15
-            }
-            if index == 5 {
-                tenDays = total / 5
-            }
-            if index == 45 {
-                ninetyDays = total / 45
-            }
+        // HbA1c estimation (%, mmol/mol) 1 day
+        var NGSPa1CStatisticValue: Decimal = 0.0
+        var IFCCa1CStatisticValue: Decimal = 0.0
+        if end1 {
+            NGSPa1CStatisticValue = (46.7 + bg_1) / 28.7 // NGSP (%)
+            IFCCa1CStatisticValue = 10.929 *
+                (NGSPa1CStatisticValue - 2.152) // IFCC (mmol/mol)  A1C(mmol/mol) = 10.929 * (A1C(%) - 2.15)
         }
-        if index != 0 {
-            total /= Decimal(index)
-        } else { total = bg_total }
-
-        // HbA1c estimation (%, mmol/mol)
-        let NGSPa1CStatisticValue = (46.7 + bg_1) / 28.7 // NGSP (%)
-        let IFCCa1CStatisticValue = 10.929 *
-            (NGSPa1CStatisticValue - 2.152) // IFCC (mmol/mol)  A1C(mmol/mol) = 10.929 * (A1C(%) - 2.15)
-        // 10 days
-        let NGSPa1CStatisticValue_10 = (46.7 + tenDays) / 28.7
-        let IFCCa1CStatisticValue_10 = 10.929 * (NGSPa1CStatisticValue_10 - 2.152)
+        // 7 days
+        var NGSPa1CStatisticValue_7: Decimal = 0.0
+        var IFCCa1CStatisticValue_7: Decimal = 0.0
+        if end7 {
+            NGSPa1CStatisticValue_7 = (46.7 + bg_7) / 28.7 // NGSP (%)
+            IFCCa1CStatisticValue_7 = 10.929 *
+                (NGSPa1CStatisticValue_7 - 2.152) // IFCC (mmol/mol)  A1C(mmol/mol) = 10.929 * (A1C(%) - 2.15)
+        }
         // 30 days
-        let NGSPa1CStatisticValue_30 = (46.7 + thirtyDays) / 28.7
-        let IFCCa1CStatisticValue_30 = 10.929 * (NGSPa1CStatisticValue_30 - 2.152)
-        // Total days
-        let NGSPa1CStatisticValue_total = (46.7 + total) / 28.7
-        let IFCCa1CStatisticValue_total = 10.929 * (NGSPa1CStatisticValue_total - 2.152)
+        var NGSPa1CStatisticValue_30: Decimal = 0.0
+        var IFCCa1CStatisticValue_30: Decimal = 0.0
+        if end30 {
+            NGSPa1CStatisticValue_30 = (46.7 + bg_30) / 28.7 // NGSP (%)
+            IFCCa1CStatisticValue_30 = 10.929 *
+                (NGSPa1CStatisticValue_30 - 2.152) // IFCC (mmol/mol)  A1C(mmol/mol) = 10.929 * (A1C(%) - 2.15)
+        }
         // 90 Days
-        let NGSPa1CStatisticValue_90 = (46.7 + ninetyDays) / 28.7
-        let IFCCa1CStatisticValue_90 = 10.929 * (NGSPa1CStatisticValue_90 - 2.152)
-
-        // HbA1c string and BG string:
-        var HbA1c_string_1 = ""
-        var string10Days = ""
-        var string30Days = ""
-        var string90Days = ""
-        var stringTotal = ""
-        var bgString1day = ""
-        var bgString10Days = ""
-        var bgString30Days = ""
-        var bgString90Days = ""
-        var bgAverageTotalString = ""
+        var NGSPa1CStatisticValue_90: Decimal = 0.0
+        var IFCCa1CStatisticValue_90: Decimal = 0.0
+        if end90 {
+            NGSPa1CStatisticValue_90 = (46.7 + bg_90) / 28.7 // NGSP (%)
+            IFCCa1CStatisticValue_90 = 10.929 *
+                (NGSPa1CStatisticValue_90 - 2.152) // IFCC (mmol/mol)  A1C(mmol/mol) = 10.929 * (A1C(%) - 2.15)
+        }
+        // Total days
+        var NGSPa1CStatisticValue_total: Decimal = 0.0
+        var IFCCa1CStatisticValue_total: Decimal = 0.0
+        if nr_bgs > 0 {
+            NGSPa1CStatisticValue_total = (46.7 + bg_total) / 28.7 // NGSP (%)
+            IFCCa1CStatisticValue_total = 10.929 *
+                (NGSPa1CStatisticValue_total - 2.152) // IFCC (mmol/mol)  A1C(mmol/mol) = 10.929 * (A1C(%) - 2.15)
+        }
 
         // round output values
-        daysBG = roundDecimal(daysBG, 1)
-
-        if bg_1 != 0 {
-            bgString1day =
-                " Average BG (mmol/l) 24 hours): \(roundDecimal(bg_1 * 0.0555, 1)). Average BG (mmg/dl) 24 hours: \(roundDecimal(bg_1, 0))."
-            HbA1c_string_1 =
-                "Estimated HbA1c (mmol/mol, 1 day): \(roundDecimal(IFCCa1CStatisticValue, 1)). Estimated HbA1c (%, 1 day): \(roundDecimal(NGSPa1CStatisticValue, 1)). "
-        }
-        if tenDays != 0 {
-            string10Days =
-                " HbA1c 10 days (mmol/mol): \(roundDecimal(IFCCa1CStatisticValue_10, 1)). HbA1c 7 days (%): \(roundDecimal(NGSPa1CStatisticValue_10, 1))."
-            bgString10Days =
-                " Average BG (mmol/l) 10 days: \(roundDecimal(tenDays * 0.0555, 1)). Average BG (mg/dl) 10 days: \(roundDecimal(tenDays, 0))."
-        }
-        if thirtyDays != 0 {
-            string30Days =
-                " HbA1c 30 days (mmol/mol): \(roundDecimal(IFCCa1CStatisticValue_30, 1)).  HbA1c 30 days (%): \(roundDecimal(NGSPa1CStatisticValue_30, 1))."
-            bgString30Days =
-                " Average BG 30 days (mmol/l): \(roundDecimal(thirtyDays * 0.0555, 1)). Average BG 30 days (mg/dl): \(roundDecimal(thirtyDays, 0)). "
-        }
-        if ninetyDays != 0 {
-            string90Days =
-                " HbA1c 90 days (mmol/mol): \(roundDecimal(IFCCa1CStatisticValue_90, 1)).  HbA1c 90 days (%): \(roundDecimal(NGSPa1CStatisticValue_90, 1))."
-            bgString90Days =
-                " Average BG 90 days (mmol/l): \(roundDecimal(ninetyDays * 0.0555, 1)). Average BG 90 days (mg/dl): \(roundDecimal(ninetyDays, 0)). "
-        }
-
-        if total != 0, daysBG >= 2 {
-            stringTotal =
-                " HbA1c \(daysBG) Days (mmol/mol): \(roundDecimal(IFCCa1CStatisticValue_total, 1)). HbA1c \(daysBG) Days (mg/dl): \(roundDecimal(NGSPa1CStatisticValue_total, 1)) %."
-            bgAverageTotalString =
-                " BG Median 2 Days (mmol/l): \(roundDouble(medianBG * 0.0555, 1)). BG Median 2 Days (mg/dl): \(roundDouble(medianBG, 0)). BG Average \(daysBG) Days (mmg/dl): \(roundDecimal(total, 0))."
-        }
-
-        let HbA1c_string = HbA1c_string_1 + string10Days + string30Days + string90Days + stringTotal
-
-        var tirString =
-            "TIR (24 hours): \(roundDecimal(TIR_1, 0)) %. Time with Hypoglycaemia: \(roundDecimal(hypos_1, 0)) % (< 4 / 72). Time with Hyperglycaemia:  \(roundDecimal(hypers_1, 0)) % (> 10 / 180)."
-
-        if daysBG >= 2 {
-            tirString +=
-                " (2 days  TIR: \(roundDecimal(TIR, 1)) %. Time with Hypoglycaemia: \(roundDecimal(hypos, 1)) % (< 4 / 72). Time with Hyperglycaemia: \(roundDecimal(hypers, 1)) % (> 10 / 180)."
-        }
-
-        let bgAverageString = bgString1day + bgString10Days + bgString30Days + bgString90Days + bgAverageTotalString
+        daysBG = roundDouble(daysBG, 1)
 
         let loopstat = LoopCycles(
-            success_rate: Decimal(round(successRate ?? 0)),
             loops: Int(successNR + errorNR),
             errors: Int(errorNR),
-            median_interval: roundDecimal(Decimal(medianInterval), 1),
+            success_rate: Decimal(round(successRate ?? 0)),
             avg_interval: roundDecimal(Decimal(averageIntervalLoops), 1),
+            median_interval: roundDecimal(Decimal(medianInterval), 1),
             min_interval: roundDecimal(Decimal(minimumInt), 1),
             max_interval: roundDecimal(Decimal(maximumInt), 1),
-            median_duration: Decimal(roundDouble(medianLoopTime, 1)),
             avg_duration: Decimal(roundDouble(averageLoopTime, 2)),
+            median_duration: Decimal(roundDouble(medianLoopTime, 1)),
             min_duration: roundDecimal(Decimal(minimumLoopTime), 2),
             max_duration: Decimal(roundDouble(maximumLoopTime, 1))
         )
 
-        let dailystat = DailyStats(
+        // TIR calcs for every case
+        var oneDay_: (TIR: Double, hypos: Double, hypers: Double) = (0.0, 0.0, 0.0)
+        var sevenDays_: (TIR: Double, hypos: Double, hypers: Double) = (0.0, 0.0, 0.0)
+        var thirtyDays_: (TIR: Double, hypos: Double, hypers: Double) = (0.0, 0.0, 0.0)
+        var ninetyDays_: (TIR: Double, hypos: Double, hypers: Double) = (0.0, 0.0, 0.0)
+        var totalDays_: (TIR: Double, hypos: Double, hypers: Double) = (0.0, 0.0, 0.0)
+
+        // Get all TIR calcs for every case
+        if end1 {
+            oneDay_ = tir(bgArray_1)
+        }
+        if end7 {
+            sevenDays_ = tir(bgArray_7)
+        }
+        if end30 {
+            thirtyDays_ = tir(bgArray_30)
+        }
+        if end90 {
+            ninetyDays_ = tir(bgArray_90)
+        }
+
+        if nr_bgs > 0 {
+            totalDays_ = tir(bgArrayForTIR)
+        }
+
+        let tir = TIR(
+            oneDay: Decimal(oneDay_.TIR),
+            sevenDays: Decimal(sevenDays_.TIR),
+            thirtyDays: Decimal(thirtyDays_.TIR),
+            ninetyDays: Decimal(ninetyDays_.TIR),
+            totalDays: Decimal(totalDays_.TIR)
+        )
+
+        /*
+         var TIR: [TIR]
+         var Hypos: [Hypos]
+         var Hypers: [Hypers]
+          */
+
+        let hypo = Hypos(
+            oneDay: Decimal(oneDay_.hypos),
+            sevenDays: Decimal(sevenDays_.hypos),
+            thirtyDays: Decimal(thirtyDays_.hypos),
+            ninetyDays: Decimal(ninetyDays_.hypos),
+            totalDays: Decimal(totalDays_.hypos)
+        )
+
+        let hyper = Hypers(
+            oneDay: Decimal(oneDay_.hypers),
+            sevenDays: Decimal(sevenDays_.hypers),
+            thirtyDays: Decimal(thirtyDays_.hypers),
+            ninetyDays: Decimal(ninetyDays_.hypers),
+            totalDays: Decimal(totalDays_.hypers)
+        )
+
+        let TimeInRange = TIRs(TIR: [tir], Hypos: [hypo], Hypers: [hyper])
+
+        let median = Median(
+            oneDay_mmol: medianCalculation(array: bgArray_1.map(\.bg_)).asMmolL,
+            oneDay: Decimal(medianCalculation(array: bgArray_1.map(\.bg_))),
+            sevenDays_mmol: medianCalculation(array: bgArray_7.map(\.bg_)).asMmolL,
+            sevenDays: Decimal(medianCalculation(array: bgArray_7.map(\.bg_))),
+            thirtyDays_mmol: medianCalculation(array: bgArray_30.map(\.bg_)).asMmolL,
+            thirtyDays: Decimal(medianCalculation(array: bgArray_30.map(\.bg_))),
+            ninetyDays_mmol: medianCalculation(array: bgArray_90.map(\.bg_)).asMmolL,
+            ninetyDays: Decimal(medianCalculation(array: bgArray_90.map(\.bg_))),
+            totalDays_mmol: roundDecimal(Decimal(medianBG).asMmolL, 2),
+            totalDays: Decimal(medianBG)
+        )
+
+        let avgs = Average(
+            oneDay_mmol: roundDecimal(bg_1.asMmolL, 2),
+            oneDay: roundDecimal(bg_1, 0),
+            sevenDays_mmol: roundDecimal(bg_7.asMmolL, 2),
+            sevenDays: roundDecimal(bg_7, 0),
+            thirtyDays_mmol: roundDecimal(bg_30.asMmolL, 2),
+            thirtyDays: roundDecimal(bg_30, 0),
+            ninetyDays_mmol: roundDecimal(bg_90.asMmolL, 2),
+            ninetyDays: roundDecimal(bg_90, 0),
+            totalDays_mmol: roundDecimal(bg_total.asMmolL, 2),
+            totalDays: roundDecimal(bg_total, 0)
+        )
+
+        let avg = Averages(Average: [avgs], Median: [median])
+
+        let hbs = Hbs(
+            oneDay_mmolMol: roundDecimal(IFCCa1CStatisticValue, 1),
+            oneDay: roundDecimal(NGSPa1CStatisticValue, 1),
+            sevenDays_mmolMol: roundDecimal(IFCCa1CStatisticValue_7, 1),
+            sevenDays: roundDecimal(NGSPa1CStatisticValue_7, 1),
+            thirtyDays_mmolMol: roundDecimal(IFCCa1CStatisticValue_30, 1),
+            thirtyDays: roundDecimal(NGSPa1CStatisticValue_30, 1),
+            ninetyDays_mmolMol: roundDecimal(IFCCa1CStatisticValue_90, 1),
+            ninetyDays: roundDecimal(NGSPa1CStatisticValue_90, 1),
+            totalDays_mmolMol: roundDecimal(IFCCa1CStatisticValue_total, 1),
+            totalDays: roundDecimal(NGSPa1CStatisticValue_total, 1)
+        )
+
+        let dailystat = Statistics(
             createdAt: Date(),
             iPhone: UIDevice.current.getDeviceId,
             iOS: UIDevice.current.getOSInfo,
@@ -1197,17 +1174,17 @@ final class BaseAPSManager: APSManager, Injectable {
             peakActivityTime: iPa,
             TDD: roundDecimal(currentTDD, 2),
             Carbs_24h: carbTotal,
-            TIR: tirString,
-            BG_Average: bgAverageString,
-            HbA1c: HbA1c_string,
+            GlucoseStorage_Days: Decimal(daysBG),
+            TIR: [TimeInRange],
+            Glucose: [avg],
+            HbA1c: [hbs],
             LoopStats: [loopstat]
         )
-
-        var uniqeEvents: [DailyStats] = []
+        // var uniqeEvents: [Statistics]
 
         storage.transaction { storage in
             storage.append(dailystat, to: file, uniqBy: \.createdAt)
-            uniqeEvents = storage.retrieve(file, as: [DailyStats].self)?
+            var uniqeEvents: [Statistics] = storage.retrieve(file, as: [Statistics].self)?
                 .filter { $0.createdAt.addingTimeInterval(24.hours.timeInterval) > Date() }
                 .sorted { $0.createdAt > $1.createdAt } ?? []
 

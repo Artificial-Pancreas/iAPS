@@ -81,6 +81,8 @@ extension Settings {
                                 .navigationLink(to: .configEditor(file: OpenAPS.FreeAPS.announcementsEnacted), from: self)
                             Text("Autotune")
                                 .navigationLink(to: .configEditor(file: OpenAPS.Settings.autotune), from: self)
+                            Text("Glucose")
+                                .navigationLink(to: .configEditor(file: OpenAPS.Monitor.glucose), from: self)
                         }
 
                         Group {
@@ -91,9 +93,11 @@ extension Settings {
                             Text("Middleware")
                                 .navigationLink(to: .configEditor(file: OpenAPS.Middleware.determineBasal), from: self)
                             Text("Statistics")
-                                .navigationLink(to: .configEditor(file: OpenAPS.Monitor.dailyStats), from: self)
+                                .navigationLink(to: .configEditor(file: OpenAPS.Monitor.statistics), from: self)
                             Text("Loop Cycles")
                                 .navigationLink(to: .configEditor(file: OpenAPS.Monitor.loopStats), from: self)
+                            Text("Glucose Data used for statistics")
+                                .navigationLink(to: .configEditor(file: OpenAPS.Monitor.glucose_data), from: self)
                             Text("Edit settings json")
                                 .navigationLink(to: .configEditor(file: OpenAPS.FreeAPS.settings), from: self)
                         }

@@ -38,7 +38,7 @@ final class BaseGlucoseStorage: GlucoseStorage, Injectable {
             self.storage.transaction { storage in
                 storage.append(glucose, to: file, uniqBy: \.dateString)
                 let uniqEvents = storage.retrieve(file, as: [BloodGlucose].self)?
-                    .filter { $0.dateString.addingTimeInterval(49.hours.timeInterval) > Date() }
+                    .filter { $0.dateString.addingTimeInterval(24.hours.timeInterval) > Date() }
                     .sorted { $0.dateString > $1.dateString } ?? []
                 let glucose = Array(uniqEvents)
                 storage.save(glucose, as: file)
@@ -47,6 +47,24 @@ final class BaseGlucoseStorage: GlucoseStorage, Injectable {
                     self.broadcaster.notify(GlucoseObserver.self, on: .main) {
                         $0.glucoseDidUpdate(glucose.reversed())
                     }
+                }
+
+                // Save to glucoseForStats also.
+                var bg_ = 0
+                var bgDate = Date()
+
+                if glucose.isNotEmpty {
+                    bg_ = glucose[0].glucose ?? 0
+                    bgDate = glucose[0].dateString
+                }
+                if bg_ != 0 {
+                    let dataForStats = GlucoseDataForStats(date: bgDate, glucose: bg_)
+                    storage.append(dataForStats, to: OpenAPS.Monitor.glucose_data, uniqBy: \.date)
+                    let uniqEvents_1 = storage.retrieve(OpenAPS.Monitor.glucose_data, as: [GlucoseDataForStats].self)?
+                        .filter { $0.date.addingTimeInterval(90.days.timeInterval) > Date() }
+                        .sorted { $0.date > $1.date } ?? []
+                    let dataForStats_ = Array(uniqEvents_1)
+                    storage.save(dataForStats_, as: OpenAPS.Monitor.glucose_data)
                 }
             }
 

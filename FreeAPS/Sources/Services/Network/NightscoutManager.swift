@@ -212,7 +212,7 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
 
         let uploader = Uploader(batteryVoltage: nil, battery: Int(device.batteryLevel * 100))
 
-        let dailyStats = storage.retrieve(OpenAPS.Monitor.dailyStats, as: [DailyStats].self) ?? []
+        let dailyStats = storage.retrieve(OpenAPS.Monitor.statistics, as: [Statistics].self) ?? []
 
         let status: NightscoutStatus
 
