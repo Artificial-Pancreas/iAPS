@@ -1086,18 +1086,12 @@ final class BaseAPSManager: APSManager, Injectable {
         }
 
         let tir = TIR(
-            oneDay: Decimal(oneDay_.TIR),
-            sevenDays: Decimal(sevenDays_.TIR),
-            thirtyDays: Decimal(thirtyDays_.TIR),
-            ninetyDays: Decimal(ninetyDays_.TIR),
-            totalDays: Decimal(totalDays_.TIR)
+            oneDay: roundDecimal(Decimal(oneDay_.TIR), 1),
+            sevenDays: roundDecimal(Decimal(sevenDays_.TIR), 1),
+            thirtyDays: roundDecimal(Decimal(thirtyDays_.TIR), 1),
+            ninetyDays: roundDecimal(Decimal(ninetyDays_.TIR), 1),
+            totalDays: roundDecimal(Decimal(totalDays_.TIR), 1)
         )
-
-        /*
-         var TIR: [TIR]
-         var Hypos: [Hypos]
-         var Hypers: [Hypers]
-          */
 
         let hypo = Hypos(
             oneDay: Decimal(oneDay_.hypos),
@@ -1118,28 +1112,28 @@ final class BaseAPSManager: APSManager, Injectable {
         let TimeInRange = TIRs(TIR: [tir], Hypos: [hypo], Hypers: [hyper])
 
         let median = Median(
-            oneDay_mmol: medianCalculation(array: bgArray_1.map(\.bg_)).asMmolL,
+            oneDay_mmol: roundDecimal(medianCalculation(array: bgArray_1.map(\.bg_)).asMmolL, 1),
             oneDay: Decimal(medianCalculation(array: bgArray_1.map(\.bg_))),
-            sevenDays_mmol: medianCalculation(array: bgArray_7.map(\.bg_)).asMmolL,
+            sevenDays_mmol: roundDecimal(medianCalculation(array: bgArray_7.map(\.bg_)).asMmolL, 1),
             sevenDays: Decimal(medianCalculation(array: bgArray_7.map(\.bg_))),
-            thirtyDays_mmol: medianCalculation(array: bgArray_30.map(\.bg_)).asMmolL,
+            thirtyDays_mmol: roundDecimal(medianCalculation(array: bgArray_30.map(\.bg_)).asMmolL, 1),
             thirtyDays: Decimal(medianCalculation(array: bgArray_30.map(\.bg_))),
-            ninetyDays_mmol: medianCalculation(array: bgArray_90.map(\.bg_)).asMmolL,
+            ninetyDays_mmol: roundDecimal(medianCalculation(array: bgArray_90.map(\.bg_)).asMmolL, 1),
             ninetyDays: Decimal(medianCalculation(array: bgArray_90.map(\.bg_))),
             totalDays_mmol: roundDecimal(Decimal(medianBG).asMmolL, 2),
             totalDays: Decimal(medianBG)
         )
 
         let avgs = Average(
-            oneDay_mmol: roundDecimal(bg_1.asMmolL, 2),
+            oneDay_mmol: roundDecimal(bg_1.asMmolL, 1),
             oneDay: roundDecimal(bg_1, 0),
-            sevenDays_mmol: roundDecimal(bg_7.asMmolL, 2),
+            sevenDays_mmol: roundDecimal(bg_7.asMmolL, 1),
             sevenDays: roundDecimal(bg_7, 0),
-            thirtyDays_mmol: roundDecimal(bg_30.asMmolL, 2),
+            thirtyDays_mmol: roundDecimal(bg_30.asMmolL, 1),
             thirtyDays: roundDecimal(bg_30, 0),
-            ninetyDays_mmol: roundDecimal(bg_90.asMmolL, 2),
+            ninetyDays_mmol: roundDecimal(bg_90.asMmolL, 1),
             ninetyDays: roundDecimal(bg_90, 0),
-            totalDays_mmol: roundDecimal(bg_total.asMmolL, 2),
+            totalDays_mmol: roundDecimal(bg_total.asMmolL, 1),
             totalDays: roundDecimal(bg_total, 0)
         )
 
@@ -1175,12 +1169,9 @@ final class BaseAPSManager: APSManager, Injectable {
             TDD: roundDecimal(currentTDD, 2),
             Carbs_24h: carbTotal,
             GlucoseStorage_Days: Decimal(daysBG),
-            TIR: [TimeInRange],
-            Glucose: [avg],
-            HbA1c: [hbs],
-            LoopStats: [loopstat]
+            Statistics: Stats(Distribution: [TimeInRange], Glucose: [avg], HbA1c: [hbs], LoopCycles: [loopstat])
+            // LoopStats: [loopstat]
         )
-        // var uniqeEvents: [Statistics]
 
         storage.transaction { storage in
             storage.append(dailystat, to: file, uniqBy: \.createdAt)

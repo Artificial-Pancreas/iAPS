@@ -17,10 +17,7 @@ struct Statistics: JSON, Equatable {
     var TDD: Decimal
     var Carbs_24h: Decimal
     var GlucoseStorage_Days: Decimal
-    var TIR: [TIRs]
-    var Glucose: [Averages]
-    var HbA1c: [Hbs]
-    var LoopStats: [LoopCycles]
+    var Statistics: Stats
 
     init(
         createdAt: Date,
@@ -39,10 +36,7 @@ struct Statistics: JSON, Equatable {
         TDD: Decimal,
         Carbs_24h: Decimal,
         GlucoseStorage_Days: Decimal,
-        TIR: [TIRs],
-        Glucose: [Averages],
-        HbA1c: [Hbs],
-        LoopStats: [LoopCycles]
+        Statistics: Stats
     ) {
         self.createdAt = createdAt
         self.iPhone = iPhone
@@ -60,10 +54,7 @@ struct Statistics: JSON, Equatable {
         self.TDD = TDD
         self.Carbs_24h = Carbs_24h
         self.GlucoseStorage_Days = GlucoseStorage_Days
-        self.TIR = TIR
-        self.Glucose = Glucose
-        self.HbA1c = HbA1c
-        self.LoopStats = LoopStats
+        self.Statistics = Statistics
     }
 
     static func == (lhs: Statistics, rhs: Statistics) -> Bool {
@@ -93,10 +84,7 @@ extension Statistics {
         case TDD
         case Carbs_24h
         case GlucoseStorage_Days
-        case TIR
-        case Glucose
-        case HbA1c
-        case LoopStats
+        case Statistics
     }
 }
 
@@ -188,6 +176,13 @@ struct Hypers: JSON, Equatable {
     var totalDays: Decimal
 }
 
+struct Stats: JSON, Equatable {
+    var Distribution: [TIRs]
+    var Glucose: [Averages]
+    var HbA1c: [Hbs]
+    var LoopCycles: [LoopCycles]
+}
+
 extension LoopCycles {
     private enum CodingKeys: String, CodingKey {
         case loops
@@ -266,5 +261,14 @@ extension Hypers {
         case thirtyDays
         case ninetyDays
         case totalDays
+    }
+}
+
+extension Stats {
+    private enum CodingKeys: String, CodingKey {
+        case Distribution
+        case Glucose
+        case HbA1c
+        case LoopCycles
     }
 }

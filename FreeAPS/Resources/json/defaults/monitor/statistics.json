@@ -16,97 +16,99 @@
     "TDD" : 0,
     "Carbs_24h":  0,
     "GlucoseStorage_Days" : 0,
-    "TIR" : [
-      {
-        "TIR" : [
-          {
-            "oneDay" : 0,
-            "sevenDays" : 0,
-            "thirtyDays" : 0,
-            "ninetyDays" : 0,
-            "totalDays" : 0
-          }
-        ],
-        "Hypos" : [
-          {
-            "oneDay" : 0,
-            "sevenDays" : 0,
-            "thirtyDays" : 0,
-            "ninetyDays" : 0,
-            "totalDays" : 0
-          }
-        ],
-        "Hypers" : [
-          {
-            "oneDay" : 0,
-            "sevenDays" : 0,
-            "thirtyDays" : 0,
-            "ninetyDays" : 0,
-            "totalDays" : 0
-          }
-        ]
-      }
-    ],
-    "Glucose" : [
-      {
-        "Average" : [
-          {
-            "oneDay_mmol" : 0,
-            "oneDay" : 0,
-            "sevenDays_mmol" : 0,
-            "sevenDays" : 0,
-            "thirtyDays_mmol" : 0,
-            "thirtyDays" : 0,
-            "ninetyDays_mmol" : 0,
-            "ninetyDays" : 0,
-            "totalDays_mmol" : 0,
-            "totalDays" : 0
-          }
-        ],
-        "Median" : [
-          {
-            "oneDay_mmol" : 0,
-            "oneDay" : 0,
-            "sevenDays_mmol" : 0,
-            "sevenDays" : 0,
-            "thirtyDays_mmol":  0,
-            "thirtyDays" : 0,
-            "ninetyDays_mmol" : 0,
-            "ninetyDays" : 0,
-            "totalDays_mmol" : 0,
-            "totalDays" : 0
-          }
-        ]
-      }
-    ],
-    "HbA1c" : [
-      {
-        "oneDay_mmolMol" : 0,
-        "oneDay" : 0,
-        "sevenDays_mmolMol" : 0,
-        "sevenDays" : 0,
-        "thirtyDays_mmolMol" : 0,
-        "thirtyDays" : 0,
-        "ninetyDays_mmolMol" : 0,
-        "ninetyDays" : 0,
-        "totalDays_mmolMol" : 0,
-        "totalDays" : 0
-      }
-    ],
-    "LoopStats" : [
-      {
-        "loops" : 0,
-        "errors" : 0,
-        "success_rate" : 0,
-        "avg_interval" : 0,
-        "median_interval" : 0,
-        "min_interval" : 0,
-        "max_interval" : 0,
-        "avg_duration" : 0,
-        "median_duration" : 0,
-        "min_duration" : 0,
-        "max_duration" : 0
-      }
-    ]
+    "Statistics" : {
+      "Distribution" : [
+        {
+          "TIR" : [
+            {
+              "oneDay" : 0,
+              "sevenDays" : 0,
+              "thirtyDays" : 0,
+              "ninetyDays" : 0,
+              "totalDays" : 0
+            }
+          ],
+          "Hypos" : [
+            {
+              "oneDay" : 0,
+              "sevenDays" : 0,
+              "thirtyDays" : 0,
+              "ninetyDays" : 0,
+              "totalDays" : 0
+            }
+          ],
+          "Hypers" : [
+            {
+              "oneDay" : 0,
+              "sevenDays" : 0,
+              "thirtyDays" : 0,
+              "ninetyDays" : 0,
+              "totalDays" : 0
+            }
+          ]
+        }
+      ],
+      "Glucose" : [
+        {
+          "Average" : [
+            {
+              "oneDay_mmol" : 0,
+              "oneDay" : 0,
+              "sevenDays_mmol" : 0,
+              "sevenDays" : 0,
+              "thirtyDays_mmol" : 0,
+              "thirtyDays" : 0,
+              "ninetyDays_mmol" : 0,
+              "ninetyDays" : 0,
+              "totalDays_mmol" : 0,
+              "totalDays" : 0
+            }
+          ],
+          "Median" : [
+            {
+              "oneDay_mmol" : 0,
+              "oneDay" : 0,
+              "sevenDays_mmol" : 0,
+              "sevenDays" : 0,
+              "thirtyDays_mmol":  0,
+              "thirtyDays" : 0,
+              "ninetyDays_mmol" : 0,
+              "ninetyDays" : 0,
+              "totalDays_mmol" : 0,
+              "totalDays" : 0
+            }
+          ]
+        }
+      ],
+      "HbA1c" : [
+        {
+          "oneDay_mmolMol" : 0,
+          "oneDay" : 0,
+          "sevenDays_mmolMol" : 0,
+          "sevenDays" : 0,
+          "thirtyDays_mmolMol" : 0,
+          "thirtyDays" : 0,
+          "ninetyDays_mmolMol" : 0,
+          "ninetyDays" : 0,
+          "totalDays_mmolMol" : 0,
+          "totalDays" : 0
+        }
+      ],
+      "LoopCycles" : [
+        {
+          "loops" : 0,
+          "errors" : 0,
+          "success_rate" : 0,
+          "avg_interval" : 0,
+          "median_interval" : 0,
+          "min_interval" : 0,
+          "max_interval" : 0,
+          "avg_duration" : 0,
+          "median_duration" : 0,
+          "min_duration" : 0,
+          "max_duration" : 0
+        }
+      ]
+    }
   }
 ]
