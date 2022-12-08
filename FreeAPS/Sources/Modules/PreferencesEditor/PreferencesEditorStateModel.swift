@@ -94,9 +94,9 @@ extension PreferencesEditor {
             let dynamicISF = [
                 Field(
                     displayName: "Enable Dynamic ISF",
-                    type: .boolean(keypath: \.enableChris),
+                    type: .boolean(keypath: \.useNewFormula),
                     infoText: NSLocalizedString(
-                        "Changes ISF with every loop cycle. New ISF will be based on current BG, TDD of insulin (past 24 hours or a weighted average) and an Adjustment Factor (default is 1). Dynamic ISF and CR ratios will be limited by your autosens.min/max limits. Dynamic ratio replaces the autosens.ratio: New ISF = Static ISF / Dynamic ratio",
+                        "Calculate a new ISF with every loop cycle. New ISF will be based on current BG, TDD of insulin (past 24 hours or a weighted average) and an Adjustment Factor (default is 1).\n\nDynamic ISF and CR ratios will be limited by your autosens.min/max limits.\n\nDynamic ratio replaces the autosens.ratio:\n\nNew ISF = Static ISF / Dynamic ratio,\n\nDynamic ratio = profile.sens * adjustmentFactor * tdd * Math.log(BG/insulinFactor+1) / 1800,\n\ninsulinFactor = 120 - InsulinPeakTimeInMinutes",
                         comment: "Enable Dynamic ISF"
                     ),
                     settable: self
@@ -105,7 +105,7 @@ extension PreferencesEditor {
                     displayName: "Enable Dynamic CR",
                     type: .boolean(keypath: \.enableDynamicCR),
                     infoText: NSLocalizedString(
-                        "Use Dynamic CR. The dynamic ratio will be used also for CR. When ratio > 1:  dynCR = (newRatio - 1) / 2 + 1. Otherwise dynCR = CR/dynCR.  Don't use toghether with a high Insulin Fraction (>2)",
+                        "Use Dynamic CR. The dynamic ratio will be used for CR as follows:\n\n When ratio > 1:  dynCR = (newRatio - 1) / 2 + 1.\nWhen ratio < 1: dynCR = CR/dynCR.\n\nDon't use toghether with a high Insulin Fraction (> 2)",
                         comment: "Use Dynamic CR together with Dynamic ISF"
                     ),
                     settable: self
@@ -120,11 +120,11 @@ extension PreferencesEditor {
                     settable: self
                 ),
                 Field(
-                    displayName: "Use Logarithmic Formula",
-                    type: .boolean(keypath: \.useNewFormula),
+                    displayName: "Use Sigmoid Function",
+                    type: .boolean(keypath: \.sigmoid),
                     infoText: NSLocalizedString(
-                        "New Logarithmic Formula. More aggressive at lower and normal BG and less aggressive at really high BG. Use a lower AF (compared to Original Formula) when using the Logaritmic Formula. ",
-                        comment: "Use Logarithmic Formula"
+                        "Use a sigmoid function for ISF (and for CR, when enabled), instead of the Logarithmic formula. Is only used when the Dynamic ISF setting is enabled in settings\n\nThe autosens.min/max settings determines the power with which dynamic ratio is adjusted, the height of the graph (Y-interval, Y: Dynamic ratio) and where the sigmoid curve flattens out, thus also limiting how high and how low the the ISF can be adjusted.\n\nThe Adjustment settings adjusts the slope of the curve. A lower value ==> less steep == less aggressive./n/nYour scheduled/autotuned ISF setting and your min BG target determines when Dynamic ratio = 1 (ISF unchanged), meaning when current BG = minimum target BG => new ISF will always be set to your current scheduled/autotuned ISF, unlike the default logarithmic formula.\n\nDynamic CR is used when the setting 'Enable Dynamic CR' is enabled in settings.\n\nAutosens.max > 2 is not recommended with sigmoid function.",
+                        comment: "Use Sigmoid Function"
                     ),
                     settable: self
                 ),
@@ -132,7 +132,7 @@ extension PreferencesEditor {
                     displayName: "Weighted Average of TDD. Weight of past 24 hours:",
                     type: .decimal(keypath: \.weightPercentage),
                     infoText: NSLocalizedString(
-                        "Has to be > 0 and <= 1.\nDefault is 0.65 (65 %) * past 24 hours. The rest will be from average of total data (up to 14 days) of all TDD calculations (0.35). To only use past 24 hours, set this to 1.\nTo avoid sudden fluctuations, for instance after a big mesl, an average of the past 2 hours of TDD calcs is used instead of just the current TDD (past 24 hours at this moment).",
+                        "Has to be > 0 and <= 1.\nDefault is 0.65 (65 %) * TDD. The rest will be from average of total data (up to 14 days) of all TDD calculations (35 %). To only use past 24 hours, set this to 1.\n\nTo avoid sudden fluctuations, for instance after a big meal, an average of the past 2 hours of TDD calculations is used instead of just the current TDD (past 24 hours at this moment).",
                         comment: "Weight of past 24 hours of insulin"
                     ),
                     settable: self
@@ -142,7 +142,7 @@ extension PreferencesEditor {
                     type: .boolean(keypath: \.tddAdjBasal),
                     infoText: NSLocalizedString(
                         "Enable adjustment of basal based on the ratio of current TDD / 7 day average TDD",
-                        comment: "Enable adjustment of basal based on the ratio of current TDD / 7 day average TDD"
+                        comment: "Enable adjustment of basal profile"
                     ),
                     settable: self
                 ),
@@ -150,7 +150,7 @@ extension PreferencesEditor {
                     displayName: "Threshold Setting",
                     type: .decimal(keypath: \.threshold_setting),
                     infoText: NSLocalizedString(
-                        "The default threshold in FAX depends on your current minimum BG target. If your minimum BG target = 90 mg/dl -> threshold of 65 mg/dl, if min_bg = 100 -> threshold of 70, if min_bg = 110 -> threshold of 75, and if min_bg = 130 -> threshold of 85. This settings allows you to change the default  to a higher threshold for a possibly safer looping with dynISF. Valid values are 65 <= Threshold Setting <= 120 for this setting. ",
+                        "The default threshold in FAX depends on your current minimum BG target, as follows:\n\nIf your minimum BG target = 90 mg/dl -> threshold = 65 mg/dl,\n\nif minimum BG target = 100 mg/dl -> threshold = 70 mg/dl,\n\nminimum BG target = 110 mg/dl -> threshold = 75 mg/dl,\n\nand if minimum BG target = 130 mg/dl  -> threshold = 85 mg/dl.\n\nThis setting allows you to change the default to a higher threshold for looping with dynISF. Valid values are 65 mg/dl<= Threshold Setting <= 120 mg/dl.",
                         comment: "Threshold Setting"
                     ),
                     settable: self
