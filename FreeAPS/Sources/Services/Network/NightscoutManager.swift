@@ -213,10 +213,13 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
         let uploader = Uploader(batteryVoltage: nil, battery: Int(device.batteryLevel * 100))
 
         let dailyStats = storage.retrieve(OpenAPS.Monitor.statistics, as: [Statistics].self) ?? []
+        var testIfEmpty = 0
+        testIfEmpty = dailyStats.count
 
-        let status: NightscoutStatus
+        var status: NightscoutStatus
 
-        if !dailyStats.isEmpty {
+        // Upload statistics and preferences only every hour. Using statistics.json timestamp as a timer of sorts.
+        if testIfEmpty != 0, dailyStats[0].createdAt.addingTimeInterval(1.hours.timeInterval) < Date() {
             status = NightscoutStatus(
                 device: NigtscoutTreatment.local,
                 openaps: openapsStatus,
@@ -230,7 +233,7 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
                 device: NigtscoutTreatment.local,
                 openaps: openapsStatus,
                 pump: pump,
-                preferences: preferences,
+                preferences: nil,
                 uploader: uploader,
                 dailystats: nil
             )
