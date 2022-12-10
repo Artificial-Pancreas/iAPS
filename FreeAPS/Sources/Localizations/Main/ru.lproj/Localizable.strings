@@ -426,7 +426,7 @@ Enact a temp Basal or a temp target */
 " min" = " мин";
 
 /* */
-"Unable to change anything" = "Unable to change anything";
+"Unable to change anything" = "Не удалось ничего изменить";
 
 
 /* Calendar and Libre transmitter settings ---------------
@@ -903,7 +903,7 @@ Enact a temp Basal or a temp target */
 " day(s)" = "дн.";
 
 /* Option to show HR in Watch app*/
-"Display HR on Watch" = "Display HR on Watch";
+"Display HR on Watch" = "Отображать пульс на часах";
 
 
 /* Headers for settings ----------------------- */
@@ -966,19 +966,19 @@ Enact a temp Basal or a temp target */
 "Error" = "Ошибка";
 
 /* Manual temp basal mode */
-"Manual" = "Manual";
+"Manual" = "Ручной режим";
 
 /* Status highlight when manual temp basal is running. */
-"Manual Basal" = "Manual Basal";
+"Manual Basal" = "Ручная ВБС";
 
 /* Current Manual Temp basal */
-" -  Manual Basal ⚠️" = " -  Manual Basal ⚠️";
+" -  Manual Basal ⚠️" = " -  Ручная ВБС ⚠️";
 
 /* Total AT / Scheduled basal insulin */
-" U/day" = " U/day";
+" U/day" = " Ед/день";
 
 /* Total AT / Scheduled basal insulin */
-"Total" = "Total";
+"Total" = "Всего";
 
 /* ---------------------------------------
   DASH strings
@@ -988,17 +988,17 @@ Enact a temp Basal or a temp target */
 "Deactivate Pod" = "Деактивировать Pod";
 
 /* */
-"Deactivating..." = "Deactivating...";
+"Deactivating..." = "Деактивация...";
 
 "Pair Pod" = "Сопряжение пода";
 
 /* Text for previous pod information row */
-"Previous Pod Information" = "Previous Pod Information";
+"Previous Pod Information" = "Информация о предыдущем Поде";
 
 /* Text for confidence reminders navigation link */
 "Confidence Reminders" = "Напоминания о верификации";
 
-"Confidence reminders are beeps from the pod which can be used to acknowledge selected commands." = "Confidence reminders are beeps from the pod which can be used to acknowledge selected commands.";
+"Confidence reminders are beeps from the pod which can be used to acknowledge selected commands." = "Доверенные звуковые сигналы от Пода, которые позволяют распознать выбранные команды.";
 
 /* button title for saving low reservoir reminder while saving */
 "Saving..." = "Сохранение...";
@@ -1007,34 +1007,34 @@ Enact a temp Basal or a temp target */
 "Save" = "Сохранить";
 
 /* Alert title for error when updating confidence reminder preference */
-"Failed to update confidence reminder preference." = "Failed to update confidence reminder preference.";
+"Failed to update confidence reminder preference." = "Не удалось обновить настройки доверенных звуковых сигналов.";
 
 /* */
-"No Error" = "No Error";
+"No Error" = "Нет ошибки";
 
 /* description label for active time pod details row */
 "Active Time" = "Активирован в";
 
 /* Title string for BeepPreference.silent */
-"Disabled" = "Disabled";
+"Disabled" = "Отключены";
 
 /* Title string for BeepPreference.manualCommands */
 "Enabled" = "Активировано";
 
 /* Title string for BeepPreference.extended */
-"Extended" = "Extended";
+"Extended" = "Расширенные";
 
 /* Description for BeepPreference.silent */
-"No confidence reminders are used." = "No confidence reminders are used.";
+"No confidence reminders are used." = "Доверенные звуковые сигналы не используются.";
 
 /* Description for BeepPreference.manualCommands */
-"Confidence reminders will sound for commands you initiate, like bolus, cancel bolus, suspend, resume, save notification reminders, etc. When Loop automatically adjusts delivery, no confidence reminders are used." = "Confidence reminders will sound for commands you initiate, like bolus, cancel bolus, suspend, resume, save notification reminders, etc. When Loop automatically adjusts delivery, no confidence reminders are used.";
+"Confidence reminders will sound for commands you initiate, like bolus, cancel bolus, suspend, resume, save notification reminders, etc. When Loop automatically adjusts delivery, no confidence reminders are used." = "Доверенные звуковые сигналы сработают для операций, которые Вы инициируете - Болюс, Отмена Болюса, Приостановка подачи, Возобновление подачи, Сохранение напоминаний и т.д. Когда петля автоматически меняет подачу инсулина - звуковые сигналы не используются.";
 
 /* Description for BeepPreference.extended */
-"Confidence reminders will sound when Loop automatically adjusts delivery as well as for commands you initiate." = "Confidence reminders will sound when Loop automatically adjusts delivery as well as for commands you initiate.";
+"Confidence reminders will sound when Loop automatically adjusts delivery as well as for commands you initiate." = "Доверенные звуковые сигналы сработают даже тогда, когда петля автоматически изменит подачу инсулина, а также для команд, которые Вы инициируете.";
 
 /* Label text for expiration reminder default row */
-"Expiration Reminder Default" = "Expiration Reminder Default";
+"Expiration Reminder Default" = "Напоминание об истечении срока";
 
 /* */
 "Expiration Reminder" = "Напоминание об истечении срока";
@@ -1049,50 +1049,50 @@ Enact a temp Basal or a temp target */
 "Scheduled Reminder" = "Запланировать напоминание";
 
 /* */
-"Low Reservoir Reminder" = "Low Reservoir Reminder";
+"Low Reservoir Reminder" = "Напоминание об уровне резервуара";
 
 /* The action string on pod status page when pod data is stale */
-"Make sure your phone and pod are close to each other. If communication issues persist, move to a new area." = "Make sure your phone and pod are close to each other. If communication issues persist, move to a new area.";
+"Make sure your phone and pod are close to each other. If communication issues persist, move to a new area." = "Убедитесь, что Ваш телефон и Под рядом друг с другом. Если проблемы сохранятся, переместитесь в другое помещение.";
 /* Format string for the action string on pod status page when pod expired. (1: service time remaining) */
-"Change Pod now. Insulin delivery will stop in %1$@ or when no more insulin remains." = "Change Pod now. Insulin delivery will stop in %1$@ or when no more insulin remains.";
+"Change Pod now. Insulin delivery will stop in %1$@ or when no more insulin remains." = "Замените Под сейчас. Подача инсулина будет остановлена спустя %1$@ или когда резервуар будет пуст.";
 
 /* Label text for temporary basal rate summary */
 "Rate" = "Скорость";
 
 /* Summary string for temporary basal rate configuration page */
-"%1$@ for %2$@" = "%1$@ for %2$@";
+"%1$@ for %2$@" = "%1$@ на %2$@";
 
 /* Description text on manual temp basal action sheet */
-"Loop will not automatically adjust your insulin delivery until the temporary basal rate finishes or is canceled." = "Loop will not automatically adjust your insulin delivery until the temporary basal rate finishes or is canceled.";
+"Loop will not automatically adjust your insulin delivery until the temporary basal rate finishes or is canceled." = "Петля не будет автоматически изменять подачу инсулина, пока Временная Базальная Скорость не завершится, либо не будет отменена пользователем.";
 /* Button text for setting manual temporary basal rate*/
-"Set Temporary Basal" = "Set Temporary Basal";
+"Set Temporary Basal" = "Установить Временный Базал";
 
 /* Navigation Title for ManualTempBasalEntryView */
-"Temporary Basal" = "Temporary Basal";
+"Temporary Basal" = "Временный базал";
 
 /* Alert title for a failure to set temporary basal */
-"Temporary Basal Failed" = "Temporary Basal Failed";
+"Temporary Basal Failed" = "Не удалось установить базал";
 
 /* Alert format string for a failure to set temporary basal with recovery suggestion. (1: error description) (2: recovery text) */
-"Unable to set a temporary basal rate: %1$@\n\n%2$@" = "Unable to set a temporary basal rate: %1$@\n\n%2$@";
+"Unable to set a temporary basal rate: %1$@\n\n%2$@" = "Не удалось установить ВБС: %1$@\n\n%2$@";
 
 /* Alert format string for a failure to set temporary basal. (1: error description) */
-"Unable to set a temporary basal rate: %1$@" = "Unable to set a temporary basal rate: %1$@";
+"Unable to set a temporary basal rate: %1$@" = "Не удалось установить ВБС: %1$@";
 
 /* Alert title for missing temp basal configuration */
-"Missing Config" = "Missing Config";
+"Missing Config" = "Отсутствует конфигурация";
 
 /* Alert format string for missing temp basal configuration. */
-"This PumpManager has not been configured with a maximum basal rate because it was added before manual temp basal was a feature. Please go to therapy settings -> delivery limits and set a new maximum basal rate." = "This PumpManager has not been configured with a maximum basal rate because it was added before manual temp basal was a feature. Please go to therapy settings -> delivery limits and set a new maximum basal rate.";
+"This PumpManager has not been configured with a maximum basal rate because it was added before manual temp basal was a feature. Please go to therapy settings -> delivery limits and set a new maximum basal rate." = "Помощник настройки помпы не был сконфигурирован относительно максимального уровня базального инсулина. Пожалуйста, перейдите в \"Настройки помпы\" -> \"Предел подачи\" и установите новый максимальный уровень базального инсулина.";
 
 /* description label for active time pod details row */
 "Active Time" = "Активирован в";
 
 /* description label for total delivery pod details row */
-"Total Delivery" = "Total Delivery";
+"Total Delivery" = "Всего доставлено";
 
 /* */
-"Add Omnipod Dash" = "Add Omnipod Dash";
+"Add Omnipod Dash" = "Добавить Omnipod Dash";
 
 /* */
 "Insert Cannula" = "Вставьте катетер";
@@ -1104,19 +1104,19 @@ Enact a temp Basal or a temp target */
 "Setup Complete" = "Настройка завершена";
 
 /* */
-"Insulin Suspended" = "Insulin Suspended";
+"Insulin Suspended" = "Подача приостановлена";
 
 /* Text for suspend resume button when insulin delivery is suspending */
-"Suspending insulin delivery..." = "Suspending insulin delivery...";
+"Suspending insulin delivery..." = "Приостановка подачи инсулина...";
 
 /* Text for suspend resume button when insulin delivery is suspended */
-"Resume Insulin Delivery" = "Resume Insulin Delivery";
+"Resume Insulin Delivery" = "Возобновить подачу инсулина";
 
 /* Text for suspend resume button when insulin delivery is resuming */
-"Resuming insulin delivery..." = "Resuming insulin delivery...";
+"Resuming insulin delivery..." = "Возобновление подачи инсулина...";
 
 /* Alert title for suspend error */
-"Failed to Suspend Insulin Delivery" = "Failed to Suspend Insulin Delivery";
+"Failed to Suspend Insulin Delivery" = "Не удалось приостановить подачу инсулина";
 
 /* --------------------------------------
 
@@ -1236,11 +1236,31 @@ Enact a temp Basal or a temp target */
 /* "Noisy CGM Target Multiplier" */
 "Defaults to 1.3. Increase target by this amount when looping off raw/noisy CGM data" = "По умолчанию 1,3. Увеличивает цель на эту величину, когда цикл отключается из за шума сенсора";
 
-/* */
-"Apple Health" = "Apple Health";
+// Dynamic ISF + CR Settings:
+/* Adjust Dynamic ISF constant */
 
-/* */
-"Connect to Apple Health" = "Подключить к Apple Health";
+"Adjust Dynamic ISF constant" = "Adjust Dynamic ISF constant";
 
-/* Show when have not permissions for writing to Health */
-"For write data to Apple Health you must give permissions in Settings > Health > Data Access" = "Чтобы записывать данные в Apple Health вам необходимо дать соответствующие разрешения, перейдя к меню Настройки > Здоровье > Доступ к данным";
+/* Enable Dynamic ISF, Headline */
+"Enable Dynamif ISF" = "Enable Dynamif ISF";
+
+/* Enable Dynamic ISF */
+"Calculate a new ISF with every loop cycle. New ISF will be based on current BG, TDD of insulin (past 24 hours or a weighted average) and an Adjustment Factor (default is 1).\n\nDynamic ISF and CR ratios will be limited by your autosens.min/max limits.\n\nDynamic ratio replaces the autosens.ratio: New ISF = Static ISF / Dynamic ratio,\nDynamic ratio = profile.sens * adjustmentFactor * tdd * Math.log(BG/insulinFactor+1) / 1800,\ninsulinFactor = 120 - InsulinPeakTimeInMinutes" = "Считать новый ISF с каждым циклом петли. Новый ISF будет зависеть от текущего BG, TDD (за последние 24 часа или взвешенное среднее значение) и Adjustment Factor (по-умолчанию - 1).\n\nDynamic ratio ISF и CR будет ограничен настройками autosens.min/max.\n\nDynamic ratio заменяет autosens.ratio: Новый ISF = Постоянный ISF/ Dynamic ratio,\nDynamic ratio = profile.sens*adjustmentFactor * tdd * Math.log(BG/insulinFactor+1) / 1800,\ninsulinFactor = 120 - InsulinPeakTimeInMinutes";
+
+/* Enable Dynamic CR */
+"Use Dynamic CR. The dynamic ratio will be used for CR as follows:\n\n When ratio > 1:  dynCR = (newRatio - 1) / 2 + 1.\nWhen ratio < 1: dynCR = CR/dynCR.\n\nDon't use toghether with a high Insulin Fraction (> 2)" = "Использовать Dynamic CR. Dynamic ratio будет также влиять и на CR:\n\n Когда ratio > 1: dynCR = (newRatio - 1) / 2 + 1.\nКогда ratio <1: dynCR = CR/dynCR.\n\nНе используйте совместно с высоким Insulin Fraction (> 2)";
+
+/* Adjust Dynamic ISF constant */
+"Adjust Dynamic ratios by a constant. Default is 1. Higher than 1 => lower ISF" = "Регулировка Dynamic ratios с помощью константы. По-умолчанию - 1. Чем выше 1 => тем ниже ISF";
+
+/* Use Sigmoid Function */
+"Use a sigmoid function for ISF (and for CR, when enabled), instead of the Logarithmic formula. Is only used when the Dynamic ISF setting is enabled in settings\n\nThe autosens.min/max settings determines the power with which dynamic ratio is adjusted, the height of the graph (Y-interval, Y: Dynamic ratio) and where the sigmoid curve flattens out, thus also limiting how high and how low the the ISF can be adjusted.\n\nThe Adjustment settings adjusts the slope of the curve. A lower value ==> less steep == less aggressive.\n\nYour scheduled/autotuned ISF setting and your min BG target determines when Dynamic ratio = 1 (ISF unchanged), meaning when current BG = minimum target BG => new ISF will always be set to your current scheduled/autotuned ISF, unlike the default logarithmic formula.\n\nDynamic CR is used when the setting 'Enable Dynamic CR' is enabled in settings." = "Использовать Сигмоидную функцию для ISF (и для CR, если включено), вместо Логарифмической функции. Используется только если включена функция Dynamic ISF\n\nПараметры autosens.min/max определяют мощность, с которой dynamic ratio регулируется, высоту графика (Y-интервал, Y: Dynamic ratio) и где кривая Сигмоидной функции сглаживается, что также ограничивает диапазон корректировки ISF.\n\nAdjustment settings регулирует наклон кривой. Более низкое значение ==> меньше крутизна == меньше аггрессивность.\n\nВаши профильные/автотюн ISF коэффициенты и Ваша минимальная цель BG определяют когда Dynamic ratio = 1 (ISF неизменен), это значит, что когда текущий BG = минимальному целевому BG => новый ISF всегда будет соответствовать значению в профиле/автотюне, в отличие от логарифмической функции, по-умолчанию.\n\nDynamic CR используется, когда опция 'Enable Dynamic CR' включена в настройках.";
+
+/* Threshold Setting */
+"The default threshold in FAX depends on your current minimum BG target, as follows:\n\nIf your minimum BG target = 90 mg/dl -> threshold = 65 mg/dl,\n\nif minimum BG target = 100 mg/dl -> threshold = 70 mg/dl,\n\nminimum BG target = 110 mg/dl -> threshold = 75 mg/dl,\n\nand if minimum BG target = 130 mg/dl  -> threshold = 85 mg/dl.\n\nThis setting allows you to change the default to a higher threshold for looping with dynISF. Valid values are 65 mg/dl<= Threshold Setting <= 120 mg/dl." = "Порог, в мг/дл, в FAX по-умолчанию зависит от Вашей текущей минимальной цели BG, следующим образом:\n\nЕсли минимальная цель BG = 5 ммоль/л -> порог = 3,6 ммоль/л,\n\nесли минимальная цель BG = 5.6 ммоль/л -> порог = 3,9 ммоль/л,\n\nминимальная цель BG  = 6.1 ммоль/л -> порог = 4,2 ммоль/л,\n\nи если минимальная цель BG = 7.2 ммоль/л  -> порог = 4,7 ммоль/л.\n\nЭта настройка позволяет Вам увеличить уровень порога для более безопасной работы с dynISF. Валидным будет значение 65 мг/дл=3,6 ммоль/л <= Threshold Setting <= 120 мг/дл=6,7 ммоль/л.";
+
+/* Weight of past 24 hours of insulin */
+"Has to be > 0 and <= 1.\nDefault is 0.65 (65 %) * TDD. The rest will be from average of total data (up to 14 days) of all TDD calculations (35 %). To only use past 24 hours, set this to 1.\n\nTo avoid sudden fluctuations, for instance after a big meal, an average of the past 2 hours of TDD calculations is used instead of just the current TDD (past 24 hours at this moment)." = "Должно быть > 0 и <= 1.\n По-умолчанию 0.65 (65 %) * TDD. Остальное будет вычислено из среднего общего инсулина (вплоть до 14 дней) всех TDD расчетов (35 %). Для того чтобы использовать только последние 24 часа, установите значение = 1.\n\nЧтобы исключить внезапные колебания, например после объемного приема пищи - используется среднее значение TDD за последние 2 часа, вместо просто текущего TDD (за последние 24 часа на данный момент).";
+
+/* Enable adjustment of basal profile */
+"Enable adjustment of basal based on the ratio of current TDD / 7 day average TDD" = "Включить регулировку базы, основанную на соотношении текущего TDD / 7 дней среднего TDD";
