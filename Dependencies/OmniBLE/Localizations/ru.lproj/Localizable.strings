@@ -207,88 +207,88 @@
 "Omnipod DASH" = "Omnipod DASH";
 
 /* Status highlight that delivery is uncertain. */
-"Comms Issue" = "Comms Issue";
+"Comms Issue" = "Проблемы с сообщением";
 
 /* */
-"Finish Pairing" = "Finish Pairing";
+"Finish Pairing" = "Завершить сопряжение";
 
 /* Status highlight that when pod is deactivating */
-"Finish Deactivation" = "Finish Deactivation";
+"Finish Deactivation" = "Завершить деактивацию";
 
 /* Status highlight that when no pod is paired. */
 "No Pod" = "Нет пода";
 
 /* Status highlight message for emptyReservoir alarm. */
-"No Insulin" = "No Insulin";
+"No Insulin" = "Нет инсулина";
 
 /* Status highlight message for podExpired alarm. */
 "Pod Expired" = "Истёк срок действия пода";
 
 /* Status highlight message for occlusion alarm. */
-"Pod Occlusion" = "Pod Occlusion";
+"Pod Occlusion" = "Окклюзия Пода";
 
 /* Status highlight message for other alarm. */
-"Pod Error" = "Pod Error";
+"Pod Error" = "Ошибка Пода";
 
 /* Status highlight that a pump is out of insulin. */
-"No Insulin" = "No Insulin";
+"No Insulin" = "Нет инсулина";
 
 /* Status highlight that insulin delivery was suspended. */
-"Insulin Suspended" = "Insulin Suspended";
+"Insulin Suspended" = "Подача приостановлена";
 
 /* Status highlight when communications with the pod haven't happened recently. */
-"Signal Loss" = "Signal Loss";
+"Signal Loss" = "Сигнал потерян";
 
 /* Status highlight when manual temp basal is running. */
-"Manual Basal" = "Manual Basal";
+"Manual Basal" = "Ручная ВБС";
 
 /* */
 "Insert Cannula" = "Вставьте катетер";
 
 /* Cannula insertion button text while inserting */
-"Inserting..." = "Inserting...";
+"Inserting..." = "Введение...";
 
 /* Cannula insertion button text while showing error */
 "Retry" = "Повторить";
 
 /* Cannula insertion button text while checking insertion */
-"Checking..." = "Checking...";
+"Checking..." = "Проверка...";
 
 /* */
-"Check cannula insertion finished" = "Check cannula insertion finished";
+"Check cannula insertion finished" = "Проверьте - завершилось ли введение канюли";
 
 /* */
-"Get pod status" = "Get pod status";
+"Get pod status" = "Получить статус Пода";
 
 /* */
-"Save Basal Profile" = "Save Basal Profile";
+"Save Basal Profile" = "Сохранить Базальный профиль";
 
 /* */
-"Save basal profile failed: %{public}@" = "Save basal profile failed: %{public}@";
+"Save basal profile failed: %{public}@" = "Базальный профиль не сохранен: %{public}@";
 
 /* */
-"Skipping Play Test Beeps due to bolus still in progress." = "Skipping Play Test Beeps due to bolus still in progress.";
+"Skipping Play Test Beeps due to bolus still in progress." = "Пропуск звуковых тестовых сигналов, пока идет болюс.";
 
 /* */
 "Play Test Beeps" = "Включить проверку сигналов";
 
 /* */
-"Skipping Read Pulse Log due to bolus still in progress." = "Skipping Read Pulse Log due to bolus still in progress.";
+"Skipping Read Pulse Log due to bolus still in progress." = "Пропуск чтения журнала пульса, пока идет болюс.";
 
 /* */
 "Read Pulse Log" = "Читать журнал сигналов";
 
 /* */
-"Set Confirmation Beeps to %s" = "Set Confirmation Beeps to %s";
+"Set Confirmation Beeps to %s" = "Задать подтверждающие сигналы на %s";
 
 /* */
-"Set Confirmation Beeps Preference" = "Set Confirmation Beeps Preference";
+"Set Confirmation Beeps Preference" = "Настройка подтверждающих звуковых сигналов";
 
 /* */
 "Suspend" = "Остановка";
 
 /* */
-"Failed to suspend: %{public}@" = "Failed to suspend: %{public}@";
+"Failed to suspend: %{public}@" = "Не удалось приостановить подачу: %{public}@";
 
 /* */
 "Resume" = "Возобновление";
@@ -297,28 +297,28 @@
 "Bolus" = "Болюс";
 
 /* */
-"Cancel Bolus" = "Cancel Bolus";
+"Cancel Bolus" = "Отменить болюс";
 
 /* Alert acknowledgment OK button */
 "OK" = "ОК";
 
 /* The title for Empty Reservoir alarm notification */
-"Empty Reservoir" = "Empty Reservoir";
+"Empty Reservoir" = "Резервуар пуст";
 
 /* The title for Occlusion alarm notification */
-"Occlusion Detected" = "Occlusion Detected";
+"Occlusion Detected" = "Обнаружена закупорка";
 
 /* The title for AlarmCode.other notification */
-"Critical Pod Error" = "Critical Pod Error";
+"Critical Pod Error" = "Критическая ошибка Пода";
 
 /* The default notification body for AlarmCodes */
-"Insulin delivery stopped. Change Pod now." = "Insulin delivery stopped. Change Pod now.";
+"Insulin delivery stopped. Change Pod now." = "Подача инсулина остановлена. Замените Под.";
 
 /* Header for insulin remaining on pod settings screen */
 "Insulin Remaining" = "Осталось инсулина";
 
 /* Button title to set temporary basal rate */
-"Set Temporary Basal Rate" = "Set Temporary Basal Rate";
+"Set Temporary Basal Rate" = "Установить Временную Базальную Скорость";
 
 /* Section header for activity section */
 "Activity" = "Нагрузка";
@@ -327,86 +327,86 @@
 "Configuration" = "Конфигурация";
 
 /* Title for previous pod page */
-"Previous Pod" = "Previous Pod";
+"Previous Pod" = "Предыдущий Под";
 
 /* The title of the command to change pump time zone */
-"Pump Time" = "Pump Time";
+"Pump Time" = "Время помпы";
 
 /* Text indicating ongoing pump time synchronization */
-"Adjusting Pump Time..." = "Adjusting Pump Time...";
+"Adjusting Pump Time..." = "Настройка времени помпы...";
 
 /* The title of the command to change pump time zone */
-"Sync to Current Time" = "Sync to Current Time";
+"Sync to Current Time" = "Синхронизировать с текущим временем";
 
 /* Label for PumpManager deletion button */
-"Switch to other insulin delivery device" = "Switch to other insulin delivery device";
+"Switch to other insulin delivery device" = "Переключиться на другое устройство подачи инсулина";
 
 /* Title for pod sync time action sheet. */
-"The time on your pump is different from the current time. Do you want to update the time on your pump to the current time?" = "The time on your pump is different from the current time. Do you want to update the time on your pump to the current time?";
+"The time on your pump is different from the current time. Do you want to update the time on your pump to the current time?" = "Время на помпе отличается от текущего времени. Обновить время на помпе до текущего времени?";
 
 /* Button text to confirm pump time sync */
-"Yes, Sync to Current Time" = "Yes, Sync to Current Time";
+"Yes, Sync to Current Time" = "Да, синхронизировать с текущим временем";
 
 /* Button text to cancel pump time sync */
-"No, Keep Pump As Is" = "No, Keep Pump As Is";
+"No, Keep Pump As Is" = "Нет, оставить как есть";
 
 /* Title for Omnipod DASH PumpManager deletion action sheet. */
-"Remove Pump" = "Remove Pump";
+"Remove Pump" = "Снимите Под";
 
 /* Message for Omnipod DASH PumpManager deletion action sheet */
-"Are you sure you want to stop using Omnipod DASH?" = "Are you sure you want to stop using Omnipod DASH?";
+"Are you sure you want to stop using Omnipod DASH?" = "Вы уверены, что хотите прекратить использование Omnipod DASH?";
 
 /* Button text to confirm Omnipod DASH PumpManager deletion */
-"Delete Omnipod DASH" = "Delete Omnipod DASH";
+"Delete Omnipod DASH" = "Удалить Omnipod DASH";
 
 /* Text for confidence reminders navigation link" */
 "Insulin Type" = "Тип инсулина";
 
 /* The title of the command to change pump time zone */
-"Sync to Current Time" = "Sync to Current Time";
+"Sync to Current Time" = "Синхронизировать с текущим временем";
 
 /* Title for suspend duration selection action sheet */
 "Suspend Delivery" = "Остановить подачу";
 
 /* Message for suspend duration selection action sheet */
-"Insulin delivery will be stopped until you resume manually. When would you like Loop to remind you to resume delivery?" = "Insulin delivery will be stopped until you resume manually. When would you like Loop to remind you to resume delivery?";
+"Insulin delivery will be stopped until you resume manually. When would you like Loop to remind you to resume delivery?" = "Подача инсулина будет остановлена, пока Вы не возобновите ее вручную. Когда Вы хотели бы, чтобы Loop напомнил Вам возобновить подачу?";
 
 /* Button text for 30 minute suspend duration */
-"30 minutes" = "30 minutes";
+"30 minutes" = "30 минут";
 
 /* Button text for 1 hour suspend duration" */
-"1 hour" = "1 hour";
+"1 hour" = "1 час";
 /* Button text for 1 hour 30 minute suspend duration */
-"1 hour 30 minutes" = "1 hour 30 minutes";
+"1 hour 30 minutes" = "1 час и 30 минут";
 /* Button text for 2 hour suspend duration */
-"2 hours" = "2 hours";
+"2 hours" = "2 часа";
 
 /* Alert title for suspend error */
-"Failed to Suspend Insulin Delivery" = "Failed to Suspend Insulin Delivery";
+"Failed to Suspend Insulin Delivery" = "Не удалось приостановить подачу инсулина";
 
 /* Alert title for resume error */
-"Failed to Resume Insulin Delivery" = "Failed to Resume Insulin Delivery";
+"Failed to Resume Insulin Delivery" = "Не удалось возобновить подачу инсулина";
 
 /* Alert title for time sync error */
-"Failed to Set Pump Time" = "Failed to Set Pump Time";
+"Failed to Set Pump Time" = "Не удалось настроить время на помпе";
 
 /* Alert title for failing to cancel manual basal error */
-"Failed to Cancel Manual Basal" = "Failed to Cancel Manual Basal";
+"Failed to Cancel Manual Basal" = "Не удалось отменить ручной базал";
 
 /* */
-"Please deactivate the pod. When deactivation is complete, you may remove it and pair a new pod." = "Please deactivate the pod. When deactivation is complete, you may remove it and pair a new pod.";
+"Please deactivate the pod. When deactivation is complete, you may remove it and pair a new pod." = "Пожалуйста, деактивируйте Под. Когда деактивация завершится, Вы можете снять Под и установить новый.";
 
 /* Instructions for deactivate pod when pod not on body */
-"Please deactivate the pod. When deactivation is complete, you may pair a new pod." = "Please deactivate the pod. When deactivation is complete, you may pair a new pod.";
+"Please deactivate the pod. When deactivation is complete, you may pair a new pod." = "Пожалуйста, деактивируйте Под. Когда деактивация завершится, Вы можете установить новый Под.";
 
 /* Deactivate pod action button */
 "Deactivate Pod" = "Деактивировать Pod";
 
 /* Deactivate pod action button accessibility label while deactivating */
-"Deactivating." = "Deactivating.";
+"Deactivating." = "Деактивировать.";
 
 /* Deactivate pod action button accessibility label when deactivation complete */
-"Pod deactivated successfully. Continue." = "Pod deactivated successfully. Continue.";
+"Pod deactivated successfully. Continue." = "Под успешно деактивирован. Продолжить.";
 
 /* Action button description for deactivate after failed attempt */
 "Retry" = "Повторить";
@@ -415,7 +415,7 @@
 "Continue" = "Продолжить";
 
 /* Format string for recovery suggestion during deactivate pod. */
-"There was a problem communicating with the pod. If this problem persists, tap Discard Pod. You can then activate a new Pod." = "There was a problem communicating with the pod. If this problem persists, tap Discard Pod. You can then activate a new Pod.";
+"There was a problem communicating with the pod. If this problem persists, tap Discard Pod. You can then activate a new Pod." = "Возникла проблема связи с Подом. Если эта проблема сохраняется, нажмите Отменить Под. Затем, Вы можете активировать новый.";
 
 /* Text for discard pod button */
 "Discard Pod" = "Отклонить под";
@@ -424,19 +424,19 @@
 "Remove Pod from Body" = "Удалить под из тела";
 
 /* Alert message body for confirm pod attachment */
-"Your Pod may still be delivering Insulin.\nRemove it from your body, then tap “Continue.“" = "Your Pod may still be delivering Insulin.\nRemove it from your body, then tap “Continue.“";
+"Your Pod may still be delivering Insulin.\nRemove it from your body, then tap “Continue.“" = "Ваш Под все еще может доставлять инсулин.\nСнимите его с тела, затем нажмите - \"Продолжить.\"";
 
 /* Insulin Unit */
 "U" = "Ед";
 
 /* The action string on pod status page when pod expired */
-"Change Pod now. Insulin delivery will stop 8 hours after the Pod has expired or when no more insulin remains." = "Change Pod now. Insulin delivery will stop 8 hours after the Pod has expired or when no more insulin remains.";
+"Change Pod now. Insulin delivery will stop 8 hours after the Pod has expired or when no more insulin remains." = "Замените Под. Подача инсулина будет остановлена спустя 8 часов после истечения срока действия Пода, либо когда резервуар будет пуст.";
 
 /* Label text for step 1 of pair pod instructions */
-"Fill a new pod with U-100 Insulin (leave blue Pod needle cap on)." = "Fill a new pod with U-100 Insulin (leave blue Pod needle cap on).";
+"Fill a new pod with U-100 Insulin (leave blue Pod needle cap on)." = "Заполните новый Под U-100 инсулином (оставьте синюю защитную крышку Пода).";
 
 /* Label text for step 2 of pair pod instructions */
-"Listen for 2 beeps." = "Listen for 2 beeps.";
+"Listen for 2 beeps." = "Прослушайте 2 звуковых сигнала.";
 
 /* Label text indicating pairing finished.*/
 "Paired" = "Сопряжен";
@@ -445,16 +445,16 @@
 "Cancel" = "Отмена";
 
 /* Alert title for cancel pairing modal */
-"Are you sure you want to cancel Pod setup?" = "Are you sure you want to cancel Pod setup?";
+"Are you sure you want to cancel Pod setup?" = "Вы уверены, что хотите отменить установку Пода?";
 
 /* Alert message body for confirm pod attachment */
-"If you cancel Pod setup, the current Pod will be deactivated and will be unusable." = "If you cancel Pod setup, the current Pod will be deactivated and will be unusable.";
+"If you cancel Pod setup, the current Pod will be deactivated and will be unusable." = "Если отменить установку Пода, текущий Под будет деактивирован и его невозможно будет использовать.";
 
 /* Button title for confirm deactivation option */
-"Yes, Deactivate Pod" = "Yes, Deactivate Pod";
+"Yes, Deactivate Pod" = "Да, деактивировать Под";
 
 /* Continue pairing button title of in pairing cancel modal */
-"No, Continue With Pod" = "No, Continue With Pod";
+"No, Continue With Pod" = "Нет, продолжить с текущим Подом";
 
 /* Label text for step one of attach pod instructions */
 "Prepare site." = "Подготовьте место.";
@@ -511,10 +511,10 @@
 "Priming..." = "Заправка...";
 
 /* */
-"Deactivating..." = "Deactivating...";
+"Deactivating..." = "Деактивация...";
 
 /* Pod state when pod has been deactivated */
-"Deactivated" = "Deactivated";
+"Deactivated" = "Деактивирован";
 
 /* Format string for instructions for setup complete view. (1: app name) */
 "Your Pod is ready for use.\n\n%1$@ will remind you to change your pod before it expires. You can change this to a time convenient for you." = "Ваш Под готов к использованию.\n\n%1$@ напомнит Вам поменять Под до истечения срока его использования. Можно изменить это время на удобное для Вас.";
@@ -553,25 +553,25 @@
 "Nack" = "Nack";
 
 /* Title for omnipod reminders section */
-"Omnipod Reminders" = "Omnipod Reminders";
+"Omnipod Reminders" = "Напоминания Omnipod";
 
 /* Footer text for omnipod reminders section */
-"The app configures a reminder on the pod to notify you in advance of Pod expiration. Set the number of hours advance notice you would like to configure when pairing a new Pod." = "The app configures a reminder on the pod to notify you in advance of Pod expiration. Set the number of hours advance notice you would like to configure when pairing a new Pod.";
+"The app configures a reminder on the pod to notify you in advance of Pod expiration. Set the number of hours advance notice you would like to configure when pairing a new Pod." = "Настройте напоминание, чтобы заранее получить уведомление об истечении срока действия Пода. Укажите за сколько часов до истечения срока действия Пода получать уведомление, при сопряжении с новым Подом.";
 
 /* Footer text for scheduled reminder area */
-"This is a reminder that you scheduled when you paired your current Pod." = "This is a reminder that you scheduled when you paired your current Pod.";
+"This is a reminder that you scheduled when you paired your current Pod." = "Это напоминание, которое Вы запланировали, когда установили сопряжение с текущим Подом.";
 
 /* */
 "Scheduled Reminder" = "Запланировать напоминание";
 
 /* Footer text for low reservoir value row */
-"The App notifies you when the amount of insulin in the Pod reaches this level." = "The App notifies you when the amount of insulin in the Pod reaches this level.";
+"The App notifies you when the amount of insulin in the Pod reaches this level." = "Приложение оповестит Вас, когда количество инсулина в Поде достигнет этого уровня.";
 
 /* Description text for critical alerts */
-"Critical Alerts" = "Critical Alerts";
+"Critical Alerts" = "Критические предупреждения";
 
 /* Description text for critical alerts */
-"The reminders above will not sound if your device is in Silent or Do Not Disturb mode.\n\nThere are other critical Pod alerts and alarms that will sound even if you device is set to Silent or Do Not Disturb mode." = "The reminders above will not sound if your device is in Silent or Do Not Disturb mode.\n\nThere are other critical Pod alerts and alarms that will sound even if you device is set to Silent or Do Not Disturb mode.";
+"The reminders above will not sound if your device is in Silent or Do Not Disturb mode.\n\nThere are other critical Pod alerts and alarms that will sound even if you device is set to Silent or Do Not Disturb mode." = "Напоминания выше не будут издавать звуков, если Ваше устройство в беззвучном режиме или в режиме не беспокоить.\n\nСуществуют другие критические предупреждения Пода и будильники, которые будут звучать, даже если Ваш телефон в беззвучном режиме или в режиме не беспокоить.";
 /* navigation title for notification settings */
 "Notification Settings" = "Настройки уведомлений";
 
@@ -582,30 +582,30 @@
 "No Reminder" = "Не напоминать";
 
 /* Label for low reservoir reminder row */
-"Low Reservoir Reminder" = "Low Reservoir Reminder";
+"Low Reservoir Reminder" = "Напоминание об уровне резервуара";
 
 /* The action string on pod status page when pod data is stale */
-"Make sure your phone and pod are close to each other. If communication issues persist, move to a new area." = "Make sure your phone and pod are close to each other. If communication issues persist, move to a new area.";
+"Make sure your phone and pod are close to each other. If communication issues persist, move to a new area." = "Убедитесь, что Ваш телефон и Под рядом друг с другом. Если проблемы сохранятся, переместитесь в другое помещение.";
 /* Format string for the action string on pod status page when pod expired. (1: service time remaining) */
-"Change Pod now. Insulin delivery will stop in %1$@ or when no more insulin remains." = "Change Pod now. Insulin delivery will stop in %1$@ or when no more insulin remains.";
+"Change Pod now. Insulin delivery will stop in %1$@ or when no more insulin remains." = "Замените Под сейчас. Подача инсулина будет остановлена спустя %1$@ или когда резервуар будет пуст.";
 
 /* Title string for BeepPreference.silent */
-"Disabled" = "Disabled";
+"Disabled" = "Отключены";
 
 /* Title string for BeepPreference.manualCommands */
 "Enabled" = "Активировано";
 
 /* Title string for BeepPreference.extended */
-"Extended" = "Extended";
+"Extended" = "Расширенные";
 
 /* Description for BeepPreference.silent */
-"No confidence reminders are used." = "No confidence reminders are used.";
+"No confidence reminders are used." = "Доверенные звуковые сигналы не используются.";
 
 /* Description for BeepPreference.manualCommands */
-"Confidence reminders will sound for commands you initiate, like bolus, cancel bolus, suspend, resume, save notification reminders, etc. When Loop automatically adjusts delivery, no confidence reminders are used." = "Confidence reminders will sound for commands you initiate, like bolus, cancel bolus, suspend, resume, save notification reminders, etc. When Loop automatically adjusts delivery, no confidence reminders are used.";
+"Confidence reminders will sound for commands you initiate, like bolus, cancel bolus, suspend, resume, save notification reminders, etc. When Loop automatically adjusts delivery, no confidence reminders are used." = "Доверенные звуковые сигналы сработают для операций, которые Вы инициируете - Болюс, Отмена Болюса, Приостановка подачи, Возобновление подачи, Сохранение напоминаний и т.д. Когда петля автоматически меняет подачу инсулина - звуковые сигналы не используются.";
 
 /* Description for BeepPreference.extended */
-"Confidence reminders will sound when Loop automatically adjusts delivery as well as for commands you initiate." = "Confidence reminders will sound when Loop automatically adjusts delivery as well as for commands you initiate.";
+"Confidence reminders will sound when Loop automatically adjusts delivery as well as for commands you initiate." = "Доверенные звуковые сигналы сработают даже тогда, когда петля автоматически изменит подачу инсулина, а также для команд, которые Вы инициируете.";
 
 /* Label text for temporary basal rate summary */
 "Rate" = "Скорость";
@@ -614,60 +614,60 @@
 "U/hr" = "Ед/ч";
 
 /* Summary string for temporary basal rate configuration page */
-"%1$@ for %2$@" = "%1$@ for %2$@";
+"%1$@ for %2$@" = "%1$@ на %2$@";
 
 /* Description text on manual temp basal action sheet */
-"Loop will not automatically adjust your insulin delivery until the temporary basal rate finishes or is canceled." = "Loop will not automatically adjust your insulin delivery until the temporary basal rate finishes or is canceled.";
+"Loop will not automatically adjust your insulin delivery until the temporary basal rate finishes or is canceled." = "Петля не будет автоматически изменять подачу инсулина, пока Временная Базальная Скорость не завершится, либо не будет отменена пользователем.";
 /* Button text for setting manual temporary basal rate*/
-"Set Temporary Basal" = "Set Temporary Basal";
+"Set Temporary Basal" = "Установить Временный Базал";
 
 /* Navigation Title for ManualTempBasalEntryView */
-"Temporary Basal" = "Temporary Basal";
+"Temporary Basal" = "Временный базал";
 
 /* Alert title for a failure to set temporary basal */
-"Temporary Basal Failed" = "Temporary Basal Failed";
+"Temporary Basal Failed" = "Не удалось установить базал";
 
 /* Alert format string for a failure to set temporary basal with recovery suggestion. (1: error description) (2: recovery text) */
-"Unable to set a temporary basal rate: %1$@\n\n%2$@" = "Unable to set a temporary basal rate: %1$@\n\n%2$@";
+"Unable to set a temporary basal rate: %1$@\n\n%2$@" = "Не удалось установить ВБС: %1$@\n\n%2$@";
 
 /* Alert format string for a failure to set temporary basal. (1: error description) */
-"Unable to set a temporary basal rate: %1$@" = "Unable to set a temporary basal rate: %1$@";
+"Unable to set a temporary basal rate: %1$@" = "Не удалось установить ВБС: %1$@";
 
 /* Alert title for missing temp basal configuration */
-"Missing Config" = "Missing Config";
+"Missing Config" = "Отсутствует конфигурация";
 
 /* Alert format string for missing temp basal configuration. */
-"This PumpManager has not been configured with a maximum basal rate because it was added before manual temp basal was a feature. Please go to therapy settings -> delivery limits and set a new maximum basal rate." = "This PumpManager has not been configured with a maximum basal rate because it was added before manual temp basal was a feature. Please go to therapy settings -> delivery limits and set a new maximum basal rate.";
+"This PumpManager has not been configured with a maximum basal rate because it was added before manual temp basal was a feature. Please go to therapy settings -> delivery limits and set a new maximum basal rate." = "Помощник настройки помпы не был сконфигурирован относительно максимального уровня базального инсулина. Пожалуйста, перейдите в \"Настройки помпы\" -> \"Предел подачи\" и установите новый максимальный уровень базального инсулина.";
 
 /* Label text for expiration reminder default row */
-"Expiration Reminder Default" = "Expiration Reminder Default";
+"Expiration Reminder Default" = "Напоминание об истечении срока";
 
 /* Text for previous pod information row */
-"Previous Pod Information" = "Previous Pod Information";
+"Previous Pod Information" = "Информация о предыдущем Поде";
 
 /* Text shown in insulin remaining space when no pod is paired (Please keep the '\n' while translating!) */
-"No\nDelivery" = "No\nDelivery";
+"No\nDelivery" = "Нет\nПодачи";
 
 /* description label for active time pod details row */
 "Active Time" = "Активирован в";
 
 /* description label for total delivery pod details row */
-"Total Delivery" = "Total Delivery";
+"Total Delivery" = "Всего доставлено";
 
 /* description label for device name pod details row */
-"Device Name" = "Device Name";
+"Device Name" = "Имя устройства";
 
 /* description label for lot number pod details row */
-"Lot Number" = "Lot Number";
+"Lot Number" = "Номер партии";
 
 /* description label for sequence number pod details row */
-"Sequence Number" = "Sequence Number";
+"Sequence Number" = "Порядковый номер";
 
 /* description label for firmware version pod details row */
-"Firmware Version" = "Firmware Version";
+"Firmware Version" = "Версия прошивки";
 
 /* description label for ble firmware version pod details row */
-"BLE Firmware Version" = "BLE Firmware Version";
+"BLE Firmware Version" = "BLE версия прошивки";
 
 /* description label for activated at timne pod details row */
 "Pod Activated" = "Под активирован";
@@ -676,16 +676,16 @@
 "Active Time" = "Активирован в";
 
 /* description label for last status date pod details row */
-"Last Status" = "Last Status";
+"Last Status" = "Последний статус";
 
 /* description label for pod fault details */
-"Pod Fault Details" = "Pod Fault Details";
+"Pod Fault Details" = "Детали о сбое";
 
 /* Title for PodSetupView */
-"Pod Setup" = "Pod Setup";
+"Pod Setup" = "Настройка Пода";
 
 /* bodyText for PodSetupView */
-"You will now begin the process of configuring your reminders, filling your Pod with insulin, pairing to your device and placing it on your body." = "You will now begin the process of configuring your reminders, filling your Pod with insulin, pairing to your device and placing it on your body.";
+"You will now begin the process of configuring your reminders, filling your Pod with insulin, pairing to your device and placing it on your body." = "Сейчас Вы начнете процесс конфигурации напоминаний, заполнения Пода инсулином, сопряжения с телефоном и установку его на тело.";
 
 /* Cancel button title */
 "Cancel" = "Отмена";
@@ -694,19 +694,19 @@
 "Continue" = "Продолжить";
 
 /* Are you sure you want to skip Omnipod Onboarding? */
-"Skip Omnipod Onboarding?" = "Skip Omnipod Onboarding?";
+"Skip Omnipod Onboarding?" = "Пропустить Omnipod Onboarding?";
 
 /* Description text on ExpirationReminderSetupView */
-"The App notifies you in advance of Pod expiration.\n\nScroll to set the number of hours advance notice you would like to have." = "The App notifies you in advance of Pod expiration.\n\nScroll to set the number of hours advance notice you would like to have.";
+"The App notifies you in advance of Pod expiration.\n\nScroll to set the number of hours advance notice you would like to have." = "Приложение заранее оповестит Вас об истечении срока действия Пода.\n\nПрокрутите, чтобы установить количество часов до такого оповещения.";
 
 /* Text of continue button on ExpirationReminderSetupView" */
-"Next" = "Next";
+"Next" = "Далее";
 
 /* */
 "Expiration Reminder" = "Напоминание об истечении срока";
 
 /* Description text on LowReservoirReminderSetupView */
-"The App notifies you when the amount of insulin in the Pod reaches this level (50-10 U).\n\nScroll to set the number of units at which you would like to be reminded." = "The App notifies you when the amount of insulin in the Pod reaches this level (50-10 U).\n\nScroll to set the number of units at which you would like to be reminded.";
+"The App notifies you when the amount of insulin in the Pod reaches this level (50-10 U).\n\nScroll to set the number of units at which you would like to be reminded." = "Приложение оповестит Вас, когда количество инсулина в Поде достигнет этого уровеня (50-10 Ед.).\n\nПрокрутите, чтобы установить количество единиц для напоминания.";
 
 /* Label text for low reservoir value row */
 "Low Reservoir" = "В резервуаре мало инсулина";
@@ -715,70 +715,70 @@
 "Save" = "Сохранить";
 
 /* hr (short for hour) */
-"hr" = "hr";
+"hr" = "ч";
 
 /* Button title to cancel manual basal */
-"Cancel Manual Basal" = "Cancel Manual Basal";
+"Cancel Manual Basal" = "Отменить Ручной Базал";
 
 /* Text shown in insulin delivery space when insulin suspended */
-"Insulin\nSuspended" = "Insulin\nSuspended";
+"Insulin\nSuspended" = "Подача\nПриостановлена";
 
 /* Text for suspend resume button when insulin delivery is suspended */
-"Resume Insulin Delivery" = "Resume Insulin Delivery";
+"Resume Insulin Delivery" = "Возобновить подачу инсулина";
 
 /* Recovery suggestion when no pod is available */
-"Make sure your pod is nearby and try again." = "Make sure your pod is nearby and try again.";
+"Make sure your pod is nearby and try again." = "Убедитесь, что Ваш Под поблизости и попробуйте снова.";
 
 /* Error message shown when the pod is not connected */
-"Pod not connected" = "Pod not connected";
+"Pod not connected" = "Под не подключен";
 
 /* Label for suspended at time */
-"Suspended At" = "Suspended At";
+"Suspended At" = "Приостановлено в";
 
 /* Text for suspend resume button when insulin delivery is resuming */
-"Resuming insulin delivery..." = "Resuming insulin delivery...";
+"Resuming insulin delivery..." = "Возобновление подачи инсулина...";
 
 /* Text for suspend resume button when insulin delivery is suspending */
-"Suspending insulin delivery..." = "Suspending insulin delivery...";
+"Suspending insulin delivery..." = "Приостановка подачи инсулина...";
 
 /* Error message for PodCommsError.noPodsFound */
-"No pods found" = "No pods found";
+"No pods found" = "Поды не найдены";
 
 /* Error message for PodCommsError.tooManyPodsFound */
-"Too many pods found" = "Too many pods found";
+"Too many pods found" = "Найдено слишком много подов";
 
 /* Recovery suggestion when no response is received from pod */
-"Make sure iPhone is nearby the active pod" = "Make sure iPhone is nearby the active pod";
+"Make sure iPhone is nearby the active pod" = "Убедитесь, что iPhone находится рядом с активным Подом";
 
 /* Recovery suggestion when ack received instead of response */
-"Try again" = "Try again";
+"Try again" = "Попробуйте снова";
 
 /* Recovery suggestion for PodCommsError.tooManyPodsFound */
-"Move to a new area away from any other pods and try again." = "Move to a new area away from any other pods and try again.";
+"Move to a new area away from any other pods and try again." = "Переместитесь в другое помещение подальше любых других Подов и попробуйте снова.";
 
 /* Recovery suggestion for PodCommsError.noPodsFound */
-"Make sure your pod is filled and nearby." = "Make sure your pod is filled and nearby.";
+"Make sure your pod is filled and nearby." = "Убедитесь, что Под заполнен и поблизости.";
 
 /* Recovery suggestion when pairing signal strength is too high */
-"Please reposition iPhone further from the pod" = "Please reposition iPhone further from the pod";
+"Please reposition iPhone further from the pod" = "Пожалуйста, переместите iPhone подальше от Пода";
 
 /* Recovery suggestion when pairing signal strength is too low */
-"Please reposition iPhone relative to the pod" = "Please reposition iPhone relative to the pod";
+"Please reposition iPhone relative to the pod" = "Пожалуйста, переместите iPhone относительно Пода";
 
 /* Recovery suggestion on unexpected pod change */
-"Please bring only original pod in range or deactivate original pod" = "Please bring only original pod in range or deactivate original pod";
+"Please bring only original pod in range or deactivate original pod" = "Пожалуйста, держите только исходный Под в зоне действия или деактивируйте оригинальный Под";
 
 /* Recovery suggestion when unexpected address received */
-"Crosstalk possible. Please move to a new location" = "Crosstalk possible. Please move to a new location";
+"Crosstalk possible. Please move to a new location" = "Возможна коммуникация с чужой помпой. Пожалуйста, переместитесь в новое место";
 
 /* Recovery suggestion when no pod is available */
-"Make sure your pod is nearby and try again." = "Make sure your pod is nearby and try again.";
+"Make sure your pod is nearby and try again." = "Убедитесь, что Ваш Под поблизости и попробуйте снова.";
 
 /* Recovery suggestion when operation could not be completed due to existing bolus in progress */
-"Wait for existing bolus to finish, or cancel bolus" = "Wait for existing bolus to finish, or cancel bolus";
+"Wait for existing bolus to finish, or cancel bolus" = "Дождитесь окончания болюса или отмените его";
 
 /* Recovery suggestion when operation could not be completed due to existing bolus in progress */
-"Wait for existing bolus to finish, or cancel bolus" = "Wait for existing bolus to finish, or cancel bolus";
+"Wait for existing bolus to finish, or cancel bolus" = "Дождитесь окончания болюса или отмените его";
 
 /* Recovery suggestion when operation could not be completed due to existing temp basal in progress */
-"Wait for existing temp basal to finish, or suspend to cancel" = "Wait for existing temp basal to finish, or suspend to cancel";
+"Wait for existing temp basal to finish, or suspend to cancel" = "Дождитесь окончания текущего временного базала или отмените его";

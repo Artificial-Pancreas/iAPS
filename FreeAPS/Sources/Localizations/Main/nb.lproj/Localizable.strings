@@ -1235,3 +1235,32 @@ Enact a temp Basal or a temp target */
 
 /* "Noisy CGM Target Multiplier" */
 "Defaults to 1.3. Increase target by this amount when looping off raw/noisy CGM data" = "Standardverdi er 1.3. Øker BS-mål med denne mengden når du looper med rå/støyende CGM-data";
+
+// Dynamic ISF + CR Settings:
+/* Adjust Dynamic ISF constant */
+
+"Adjust Dynamic ISF constant" = "Juster konstant for dynamisk ISF";
+
+/* Enable Dynamic ISF, Headline */
+"Enable Dynamif ISF" = "Aktivere dynamisk ISF";
+
+/* Enable Dynamic ISF */
+"Calculate a new ISF with every loop cycle. New ISF will be based on current BG, TDD of insulin (past 24 hours or a weighted average) and an Adjustment Factor (default is 1).\n\nDynamic ISF and CR ratios will be limited by your autosens.min/max limits.\n\nDynamic ratio replaces the autosens.ratio: New ISF = Static ISF / Dynamic ratio,\nDynamic ratio = profile.sens * adjustmentFactor * tdd * Math.log(BG/insulinFactor+1) / 1800,\ninsulinFactor = 120 - InsulinPeakTimeInMinutes" = "Beregn ny ISF ved hver loop-syklus. Ny ISF vil baseres på nåværende BS, TDD med insulin (siste 24 timer eller vektet gjennomsnitt) og en justeringsfaktor (standardverdi er 1).\n\nDynamisk ISF og CR-ratier vil bli begrenset av dine autosens-innstillinger.\n\nDynamisk ratio erstatter autosens-ratio: Ny ISF = Statisk ISF / Dyamisk ratio,\nDynamisk ratio = profile.sens * adjustmentFactor * tdd * Math.log(BS/insulinFactor+1) / 1800,\ninsulinFactor = 120 - InsulinPeakTimeInMinutes";
+
+/* Enable Dynamic CR */
+"Use Dynamic CR. The dynamic ratio will be used for CR as follows:\n\n When ratio > 1:  dynCR = (newRatio - 1) / 2 + 1.\nWhen ratio < 1: dynCR = CR/dynCR.\n\nDon't use toghether with a high Insulin Fraction (> 2)" = "Bruk dynamisk CR. Dynamisk ratio brukes for CR som følger:\n\n Når ratio > 1: dynCR = (newRatio - 1) / 2 + 1.\nNår ratio < 1: dynCR = CR/dynCR.\n\nIkke bruk denne innstillingen sammen med en høy insulinbrøk (Insulin Fraction > 2)";
+
+/* Adjust Dynamic ISF constant */
+"Adjust Dynamic ratios by a constant. Default is 1. Higher than 1 => lower ISF" = "Juster dynamisk ratio med en konstant. Standard er 1. Høyere enn 1 => lavere ISF";
+
+/* Use Sigmoid Function */
+"Use a sigmoid function for ISF (and for CR, when enabled), instead of the Logarithmic formula. Is only used when the Dynamic ISF setting is enabled in settings\n\nThe autosens.min/max settings determines the power with which dynamic ratio is adjusted, the height of the graph (Y-interval, Y: Dynamic ratio) and where the sigmoid curve flattens out, thus also limiting how high and how low the the ISF can be adjusted.\n\nThe Adjustment settings adjusts the slope of the curve. A lower value ==> less steep == less aggressive.\n\nYour scheduled/autotuned ISF setting and your min BG target determines when Dynamic ratio = 1 (ISF unchanged), meaning when current BG = minimum target BG => new ISF will always be set to your current scheduled/autotuned ISF, unlike the default logarithmic formula.\n\nDynamic CR is used when the setting 'Enable Dynamic CR' is enabled in settings." = "Bruk en sigmoidfunksjon for ISF (og for CR, når aktivert), i stedet for en Logaritmisk formel. Er bare brukt når innstillingen Dynamisk ISF er aktivert i innstillinger\n\nAutosens-innstillingene bestemmer effekten som det dynamiske forhold justeres med, høyden på grafen (Y-intervallet, Y: Dynamisk ratio) og der sigmoid-kurven flater ut, dermed begrenses også hvor høyt og hvor lavt ISF kan justeres.\n\nJusteringsinnstillingene justerer helningen på kurven. En lavere verdi ==> mindre bratt == mindre aggressiv.\n\nDin planlagte / automatiske ISF-innstilling og minimum BS-mål bestemmer når Dynamisk forhold = 1 (ISF uforandret), hvilket betyr at når nåværende BS = minimum mål BS => ny ISF vil alltid bli satt til din nåværende planlagt/automatisk ISF, i motsetning til standard logaritmisk formel.\n\nDynamisk CR brukes når innstillingen 'Aktiver dynamisk CR' er aktivert i innstillinger.";
+
+/* Threshold Setting */
+"The default threshold in FAX depends on your current minimum BG target, as follows:\n\nIf your minimum BG target = 90 mg/dl -> threshold = 65 mg/dl,\n\nif minimum BG target = 100 mg/dl -> threshold = 70 mg/dl,\n\nminimum BG target = 110 mg/dl -> threshold = 75 mg/dl,\n\nand if minimum BG target = 130 mg/dl  -> threshold = 85 mg/dl.\n\nThis setting allows you to change the default to a higher threshold for looping with dynISF. Valid values are 65 mg/dl<= Threshold Setting <= 120 mg/dl." = "Standard terskel i FAX er avhengig av ditt nåværende laveste BS-mål, som følger:\n\nDersom ditt laveste BS-mål = 90 mg/dL -> terskel = 65 mg/dL,\n\ndersom laveste BS-mål = 100 mg/dL -> terskel = 70 mg/dL,\n\nlaveste BS-mål = 110 mg/dL -> terskel = 75 mg/dL,\n\nog dersom laveste BS-mål = 130 mg/dL -> terskel = 85 mg/dL.\n\nDenne innstillingen tillater deg å endre til en høyere terskel for å loope med dynamisk ISF. Gyldige verdier er 65 mg/dL <= terskel-innstilling <= 120 mg/dL.";
+
+/* Weight of past 24 hours of insulin */
+"Has to be > 0 and <= 1.\nDefault is 0.65 (65 %) * TDD. The rest will be from average of total data (up to 14 days) of all TDD calculations (35 %). To only use past 24 hours, set this to 1.\n\nTo avoid sudden fluctuations, for instance after a big meal, an average of the past 2 hours of TDD calculations is used instead of just the current TDD (past 24 hours at this moment)." = "Må være > 0 og <= 1.\nStandardverdi er 0.65 (65%) * TDD. Resten vil være fra gjennomsnittet av totalen (opp til 14 dager) av alle TDD-beregninger (35%). For å bruke bare de siste 24 timene, sett denne til 1.\n\nFor å unngå plutselige svingninger, for eksempel etter et stort måltid, vil et gjennomsnitt av de siste 2 timers TDD-beregning benyttes i stedet for bare nåværende TDD (siste 24 timer).";
+
+/* Enable adjustment of basal profile */
+"Enable adjustment of basal based on the ratio of current TDD / 7 day average TDD" = "Aktiverer justering av basal basert på forholdet mellom nåværende TDD / 7-dagers gjennomsnittlig TDD";
