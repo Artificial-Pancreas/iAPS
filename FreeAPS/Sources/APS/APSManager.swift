@@ -197,6 +197,7 @@ final class BaseAPSManager: APSManager, Injectable {
 
                 // Open loop completed
                 guard self.settings.closedLoop else {
+                    self.nightscout.uploadStatus()
                     return Just(()).setFailureType(to: Error.self).eraseToAnyPublisher()
                 }
 
@@ -237,6 +238,9 @@ final class BaseAPSManager: APSManager, Injectable {
         }
 
         loopStats(loopStatRecord: loopStatRecord)
+
+        // Create a statistics.json
+        statistics()
 
         if settings.closedLoop {
             reportEnacted(received: error == nil)
@@ -658,9 +662,6 @@ final class BaseAPSManager: APSManager, Injectable {
 
             // Create a tdd.json
             tdd(enacted_: enacted)
-
-            // Create a statistics.json
-            statistics()
 
             debug(.apsManager, "Suggestion enacted. Received: \(received)")
             DispatchQueue.main.async {
