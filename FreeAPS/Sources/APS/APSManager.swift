@@ -785,16 +785,17 @@ final class BaseAPSManager: APSManager, Injectable {
             }
         }
         var algo_ = "Oref0"
-        if preferences.useNewFormula {
-            algo_ = "Dynamic ISF, Logarithmic Formula"
-        } else if preferences.useNewFormula, preferences.enableDynamicCR {
-            algo_ = "Dynamic ISF + Dynamic CR, Logarithmic Formula"
-        } else if preferences.sigmoid, preferences.enableDynamicCR {
-            algo_ = "Dynamic ISF + Dynamic CR, Sigmoid Function"
+    
+        if preferences.sigmoid, preferences.enableDynamicCR {
+            algo_ = "Dynamic ISF + CR: Sigmoid"
         } else if preferences.sigmoid, !preferences.enableDynamicCR {
-            algo_ = "Dynamic ISF, Sigmoid Function"
+            algo_ = "Dynamic ISF: Sigmoid"
+        } else if preferences.useNewFormula, preferences.enableDynamicCR {
+            algo_ = "Dynamic ISF + CR: Logarithmic"
+        } else if preferences.useNewFormula, !preferences.sigmoid,!preferences.enableDynamicCR {
+            algo_ = "Dynamic ISF: Logarithmic"
         }
-
+        
         let af = preferences.adjustmentFactor
         let insulin_type = preferences.curve
         let buildDate = Bundle.main.buildDate
