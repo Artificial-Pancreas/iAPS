@@ -1,14 +1,14 @@
 /* Describes a certain bolus failure (1: size of the bolus in units) */
-"%1$@ U bolus failed" = "%1$@ IE bolus fehlgeschlagen";
+"%1$@ U bolus failed" = "%1$@ IE Bolus fehlgeschlagen";
 
 /* Describes an uncertain bolus failure (1: size of the bolus in units) */
-"%1$@ U bolus may not have succeeded" = "%1$@ IE bolus wurde wohl nicht abgegeben";
+"%1$@ U bolus may not have succeeded" = "%1$@ IE Bolus möglicherweise nicht abgegeben";
 
 /* The error description describing when Health sharing was denied */
 "Authorization Denied" = "Autorisierung verweigert";
 
 /* Recovery instruction for an uncertain bolus failure */
-"Check your pump before retrying" = "Prüfe deine Pumpe, bevor du es erneut versuchsts";
+"Check your pump before retrying" = "Prüfe deine Pumpe, bevor du es erneut versuchst";
 
 /* The description of an error returned when attempting to delete a sample not shared by the current app */
 "com.loudnate.CarbKit.deleteCarbEntryUnownedErrorDescription" = "Autorisierung verweigert";
@@ -23,10 +23,10 @@
 "Connection Failure" = "Verbindungsfehler";
 
 /* Generic pump error description */
-"Device Refused" = "Device verweigert";
+"Device Refused" = "Gerät abgelehnt";
 
 /* Recovery suggestion for a no data error */
-"Ensure carb data exists for the specified date" = "Stelle sicher, das die Kohlenhydrate für den ausgewählten Zeitraum eingegeben wurden";
+"Ensure carb data exists for the specified date" = "Stelle sicher, dass die Kohlenhydrate für den ausgewählten Zeitraum eingegeben wurden";
 
 /* Glucose trend down */
 "Falling" = "Fällt";
@@ -47,7 +47,7 @@
 "Invalid Configuration" = "Fehlerhafte Konfiguration";
 
 /* Recovery instruction for a certain bolus failure */
-"It is safe to retry" = "Es ist sicher um es noch mal zu versuchen";
+"It is safe to retry" = "Ein erneuter Versuch ist gefahrlos möglich";
 
 /* The short unit display string for milligrams per deciliter per U */
 "mg/dL/U" = "mg/dL/IE";
@@ -68,7 +68,7 @@
 "OK" = "OK";
 
 /* The error recovery suggestion when Health sharing was denied */
-"Please re-enable sharing in Health" = "Bitte aktiviere das Teilen in der Health-App erneut";
+"Please re-enable sharing in Health" = "Bitte aktiviere die Freigabe in der Health-App wieder";
 
 /* Glucose trend up */
 "Rising" = "Steigt";

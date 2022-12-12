@@ -793,7 +793,7 @@
 "Critical Alerts" = "Критические предупреждения";
 
 /* Description text for critical alerts */
-"The reminders above will not sound if your device is in Silent or Do Not Disturb mode.\n\nThere are other critical Pod alerts and alarms that will sound even if you device is set to Silent or Do Not Disturb mode." = "Напоминания выше не будут издавать звуков, если Ваше устройстов в беззвучном режиме или в режиме не беспокоить.\n\nСуществуют другие критические предупреждения Пода и будильники, которые будут звучать, даже если Ваш телефон в беззвучном режиме или в режиме не беспокоить.";
+"The reminders above will not sound if your device is in Silent or Do Not Disturb mode.\n\nThere are other critical Pod alerts and alarms that will sound even if you device is set to Silent or Do Not Disturb mode." = "Напоминания выше не будут издавать звуков, если Ваше устройство в беззвучном режиме или в режиме не беспокоить.\n\nСуществуют другие критические предупреждения Пода и будильники, которые будут звучать, даже если Ваш телефон в беззвучном режиме или в режиме не беспокоить.";
 /* navigation title for notification settings */
 "Notification Settings" = "Настройки уведомлений";
 
@@ -809,7 +809,7 @@
 /* The action string on pod status page when pod data is stale */
 "Make sure your phone and pod are close to each other. If communication issues persist, move to a new area." = "Убедитесь, что Ваш телефон и Под рядом друг с другом. Если проблемы сохранятся, переместитесь в другое помещение.";
 /* Format string for the action string on pod status page when pod expired. (1: service time remaining) */
-"Change Pod now. Insulin delivery will stop in %1$@ or when no more insulin remains." = "Замените Под сейчас. Подача инсулина будет остановлена спустя %1$@, либо когда резервуар будет пуст.";
+"Change Pod now. Insulin delivery will stop in %1$@ or when no more insulin remains." = "Замените Под сейчас. Подача инсулина будет остановлена спустя %1$@ или когда резервуар будет пуст.";
 
 /* Title string for BeepPreference.silent */
 "Disabled" = "Отключены";
@@ -859,7 +859,7 @@
 "Missing Config" = "Отсутствует конфигурация";
 
 /* Alert format string for missing temp basal configuration. */
-"This PumpManager has not been configured with a maximum basal rate because it was added before manual temp basal was a feature. Please go to therapy settings -> delivery limits and set a new maximum basal rate." = "Помощник настройки помпы не был сконфигурирован относительно максимального уровня базала. Пожалуйста, перейдите в \"Настройки помпы\" -> \"Предел подачи\" и установите новый максимальный уровень базала.";
+"This PumpManager has not been configured with a maximum basal rate because it was added before manual temp basal was a feature. Please go to therapy settings -> delivery limits and set a new maximum basal rate." = "Помощник настройки помпы не был сконфигурирован относительно максимального уровня базального инсулина. Пожалуйста, перейдите в \"Настройки помпы\" -> \"Предел подачи\" и установите новый максимальный уровень базального инсулина.";
 
 /* Label text for expiration reminder default row */
 "Expiration Reminder Default" = "Напоминание об истечении срока";
