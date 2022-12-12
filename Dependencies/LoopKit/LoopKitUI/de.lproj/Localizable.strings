@@ -141,7 +141,7 @@
 "Medium" = "Mittlere";
 
 /* Placeholder for minimum value in glucose range */
-"min" = "minimal";
+"min" = "min";
 
 /* Alert action title to open error help */
 "More Info" = "Weitere Info";
