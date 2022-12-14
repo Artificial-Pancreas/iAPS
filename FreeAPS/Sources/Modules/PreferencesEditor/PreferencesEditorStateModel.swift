@@ -35,7 +35,7 @@ extension PreferencesEditor {
                     settable: self
                 ),
                 Field(
-                    displayName: "Max IOB",
+                    displayName: NSLocalizedString("Max IOB", comment: "Max IOB"),
                     type: .decimal(keypath: \.maxIOB),
                     infoText: NSLocalizedString(
                         "Max IOB is the maximum amount of insulin on board from all sources – both basal (or SMB correction) and bolus insulin – that your loop is allowed to accumulate to treat higher-than-target BG. Unlike the other two OpenAPS safety settings (max_daily_safety_multiplier and current_basal_safety_multiplier), max_iob is set as a fixed number of units of insulin. As of now manual boluses are NOT limited by this setting. \n\n To test your basal rates during nighttime, you can modify the Max IOB setting to zero while in Closed Loop. This will enable low glucose suspend mode while testing your basal rates settings\n\n(Tip from https://www.loopandlearn.org/freeaps-x/#open-loop).",
@@ -44,7 +44,7 @@ extension PreferencesEditor {
                     settable: self
                 ),
                 Field(
-                    displayName: "Max COB",
+                    displayName: NSLocalizedString("Max COB", comment: "Max COB"),
                     type: .decimal(keypath: \.maxCOB),
                     infoText: NSLocalizedString(
                         "This defaults maxCOB to 120 because that’s the most a typical body can absorb over 4 hours. (If someone enters more carbs or stacks more; OpenAPS will just truncate dosing based on 120. Essentially, this just limits AMA as a safety cap against weird COB calculations due to fluky data.)",
@@ -53,7 +53,7 @@ extension PreferencesEditor {
                     settable: self
                 ),
                 Field(
-                    displayName: "Max Daily Safety Multiplier",
+                    displayName: NSLocalizedString("Max Daily Safety Multiplier", comment: "Max Daily Safety Multiplier"),
                     type: .decimal(keypath: \.maxDailySafetyMultiplier),
                     infoText: NSLocalizedString(
                         "This is an important OpenAPS safety limit. The default setting (which is unlikely to need adjusting) is 3. This means that OpenAPS will never be allowed to set a temporary basal rate that is more than 3x the highest hourly basal rate programmed in a user’s pump, or, if enabled, determined by autotune.",
@@ -62,7 +62,7 @@ extension PreferencesEditor {
                     settable: self
                 ),
                 Field(
-                    displayName: "Current Basal Safety Multiplier",
+                    displayName: NSLocalizedString("Current Basal Safety Multiplier", comment: "Current Basal Safety Multiplier"),
                     type: .decimal(keypath: \.currentBasalSafetyMultiplier),
                     infoText: NSLocalizedString(
                         "This is another important OpenAPS safety limit. The default setting (which is also unlikely to need adjusting) is 4. This means that OpenAPS will never be allowed to set a temporary basal rate that is more than 4x the current hourly basal rate programmed in a user’s pump, or, if enabled, determined by autotune.",
@@ -72,7 +72,7 @@ extension PreferencesEditor {
                 ),
 
                 Field(
-                    displayName: "Autosens Max",
+                    displayName: NSLocalizedString("Autosens Max", comment: "Autosens Max"),
                     type: .decimal(keypath: \.autosensMax),
                     infoText: NSLocalizedString(
                         "This is a multiplier cap for autosens (and autotune) to set a 20% max limit on how high the autosens ratio can be, which in turn determines how high autosens can adjust basals, how low it can adjust ISF, and how low it can set the BG target.",
@@ -81,7 +81,7 @@ extension PreferencesEditor {
                     settable: self
                 ),
                 Field(
-                    displayName: "Autosens Min",
+                    displayName: NSLocalizedString("Autosens Min", comment: "Autosens Min"),
                     type: .decimal(keypath: \.autosensMin),
                     infoText: NSLocalizedString(
                         "The other side of the autosens safety limits, putting a cap on how low autosens can adjust basals, and how high it can adjust ISF and BG targets.",
@@ -93,7 +93,7 @@ extension PreferencesEditor {
 
             let dynamicISF = [
                 Field(
-                    displayName: "Enable Dynamic ISF",
+                    displayName: NSLocalizedString("Enable Dynamic ISF", comment: "Enable Dynamic ISF"),
                     type: .boolean(keypath: \.useNewFormula),
                     infoText: NSLocalizedString(
                         "Calculate a new ISF with every loop cycle. New ISF will be based on current BG, TDD of insulin (past 24 hours or a weighted average) and an Adjustment Factor (default is 1).\n\nDynamic ISF and CR ratios will be limited by your autosens.min/max limits.\n\nDynamic ratio replaces the autosens.ratio:\n\nNew ISF = Static ISF / Dynamic ratio,\n\nDynamic ratio = profile.sens * adjustmentFactor * tdd * Math.log(BG/insulinFactor+1) / 1800,\n\ninsulinFactor = 120 - InsulinPeakTimeInMinutes",
@@ -102,7 +102,7 @@ extension PreferencesEditor {
                     settable: self
                 ),
                 Field(
-                    displayName: "Enable Dynamic CR",
+                    displayName: NSLocalizedString("Enable Dynamic CR", comment: "Use Dynamic CR together with Dynamic ISF"),
                     type: .boolean(keypath: \.enableDynamicCR),
                     infoText: NSLocalizedString(
                         "Use Dynamic CR. The dynamic ratio will be used for CR as follows:\n\n When ratio > 1:  dynCR = (newRatio - 1) / 2 + 1.\nWhen ratio < 1: dynCR = CR/dynCR.\n\nDon't use toghether with a high Insulin Fraction (> 2)",
@@ -111,7 +111,7 @@ extension PreferencesEditor {
                     settable: self
                 ),
                 Field(
-                    displayName: "Adjustment Factor",
+                    displayName: NSLocalizedString("Adjustment Factor", comment: "Adjust Dynamic ISF constant"),
                     type: .decimal(keypath: \.adjustmentFactor),
                     infoText: NSLocalizedString(
                         "Adjust Dynamic ratios by a constant. Default is 1. Higher than 1 => lower ISF",
@@ -120,7 +120,7 @@ extension PreferencesEditor {
                     settable: self
                 ),
                 Field(
-                    displayName: "Use Sigmoid Function",
+                    displayName: NSLocalizedString("Use Sigmoid Function", comment: "Use Sigmoid Function"),
                     type: .boolean(keypath: \.sigmoid),
                     infoText: NSLocalizedString(
                         "Use a sigmoid function for ISF (and for CR, when enabled), instead of the Logarithmic formula. Is only used when the Dynamic ISF setting is enabled in settings\n\nThe autosens.min/max settings determines the power with which dynamic ratio is adjusted, the height of the graph (Y-interval, Y: Dynamic ratio) and where the sigmoid curve flattens out, thus also limiting how high and how low the the ISF can be adjusted.\n\nThe Adjustment settings adjusts the slope of the curve. A lower value ==> less steep == less aggressive.\n\nYour scheduled/autotuned ISF setting and your min BG target determines when Dynamic ratio = 1 (ISF unchanged), meaning when current BG = minimum target BG => new ISF will always be set to your current scheduled/autotuned ISF, unlike the default logarithmic formula.\n\nDynamic CR is used when the setting 'Enable Dynamic CR' is enabled in settings.\n\nAutosens.max > 2 is not recommended with sigmoid function.",
@@ -129,7 +129,10 @@ extension PreferencesEditor {
                     settable: self
                 ),
                 Field(
-                    displayName: "Weighted Average of TDD. Weight of past 24 hours:",
+                    displayName: NSLocalizedString(
+                        "Weighted Average of TDD. Weight of past 24 hours:",
+                        comment: "Weight of past 24 hours of insulin"
+                    ),
                     type: .decimal(keypath: \.weightPercentage),
                     infoText: NSLocalizedString(
                         "Has to be > 0 and <= 1.\nDefault is 0.65 (65 %) * TDD. The rest will be from average of total data (up to 14 days) of all TDD calculations (35 %). To only use past 24 hours, set this to 1.\n\nTo avoid sudden fluctuations, for instance after a big meal, an average of the past 2 hours of TDD calculations is used instead of just the current TDD (past 24 hours at this moment).",
@@ -138,7 +141,7 @@ extension PreferencesEditor {
                     settable: self
                 ),
                 Field(
-                    displayName: "Adjust basal",
+                    displayName: NSLocalizedString("Adjust basal", comment: "Enable adjustment of basal profile"),
                     type: .boolean(keypath: \.tddAdjBasal),
                     infoText: NSLocalizedString(
                         "Enable adjustment of basal based on the ratio of current TDD / 7 day average TDD",
@@ -147,7 +150,7 @@ extension PreferencesEditor {
                     settable: self
                 ),
                 Field(
-                    displayName: "Threshold Setting",
+                    displayName: NSLocalizedString("Threshold Setting", comment: "Threshold Setting"),
                     type: .decimal(keypath: \.threshold_setting),
                     infoText: NSLocalizedString(
                         "The default threshold in FAX depends on your current minimum BG target, as follows:\n\nIf your minimum BG target = 90 mg/dl -> threshold = 65 mg/dl,\n\nif minimum BG target = 100 mg/dl -> threshold = 70 mg/dl,\n\nminimum BG target = 110 mg/dl -> threshold = 75 mg/dl,\n\nand if minimum BG target = 130 mg/dl  -> threshold = 85 mg/dl.\n\nThis setting allows you to change the default to a higher threshold for looping with dynISF. Valid values are 65 mg/dl<= Threshold Setting <= 120 mg/dl.",
@@ -159,7 +162,7 @@ extension PreferencesEditor {
 
             let smbFields = [
                 Field(
-                    displayName: "Enable SMB Always",
+                    displayName: NSLocalizedString("Enable SMB Always", comment: "Enable SMB Always"),
                     type: .boolean(keypath: \.enableSMBAlways),
                     infoText: NSLocalizedString(
                         "Defaults to false. When true, always enable supermicrobolus (unless disabled by high temptarget).",
@@ -168,7 +171,7 @@ extension PreferencesEditor {
                     settable: self
                 ),
                 Field(
-                    displayName: "Max Delta-BG Threshold SMB",
+                    displayName: NSLocalizedString("Max Delta-BG Threshold SMB", comment: "Max Delta-BG Threshold"),
                     type: .decimal(keypath: \.maxDeltaBGthreshold),
                     infoText: NSLocalizedString(
                         "Defaults to 0.2 (20%). Maximum positiv %change of BG level to use SMB, above that will disable SMB. Hardcoded cap of 40%. For UAM fully-closed-loop 30% is advisable. Observe in log and popup (maxDelta 27 > 20% of BG 100 - disabling SMB!).",
@@ -177,7 +180,7 @@ extension PreferencesEditor {
                     settable: self
                 ),
                 Field(
-                    displayName: "Enable SMB With COB",
+                    displayName: NSLocalizedString("Enable SMB With COB", comment: "Enable SMB With COB"),
                     type: .boolean(keypath: \.enableSMBWithCOB),
                     infoText: NSLocalizedString(
                         "This enables supermicrobolus (SMB) while carbs on board (COB) are positive.",
@@ -186,7 +189,7 @@ extension PreferencesEditor {
                     settable: self
                 ),
                 Field(
-                    displayName: "Enable SMB With Temptarget",
+                    displayName: NSLocalizedString("Enable SMB With Temptarget", comment: "Enable SMB With Temptarget"),
                     type: .boolean(keypath: \.enableSMBWithTemptarget),
                     infoText: NSLocalizedString(
                         "This enables supermicrobolus (SMB) with eating soon / low temp targets. With this feature enabled, any temporary target below 100mg/dL, such as a temp target of 99 (or 80, the typical eating soon target) will enable SMB.",
@@ -195,7 +198,7 @@ extension PreferencesEditor {
                     settable: self
                 ),
                 Field(
-                    displayName: "Enable SMB After Carbs",
+                    displayName: NSLocalizedString("Enable SMB After Carbs", comment: "Enable SMB After Carbs"),
                     type: .boolean(keypath: \.enableSMBAfterCarbs),
                     infoText: NSLocalizedString(
                         "Defaults to false. When true, enables supermicrobolus (SMB) for 6h after carbs, even with 0 carbs on board (COB).",
@@ -204,7 +207,7 @@ extension PreferencesEditor {
                     settable: self
                 ),
                 Field(
-                    displayName: "Allow SMB With High Temptarget",
+                    displayName: NSLocalizedString("Allow SMB With High Temptarget", comment: "Allow SMB With High Temptarget"),
                     type: .boolean(keypath: \.allowSMBWithHighTemptarget),
                     infoText: NSLocalizedString(
                         "Defaults to false. When true, allows supermicrobolus (if otherwise enabled) even with high temp targets.",
@@ -213,7 +216,7 @@ extension PreferencesEditor {
                     settable: self
                 ),
                 Field(
-                    displayName: "Enable SMB With High BG",
+                    displayName: NSLocalizedString("Enable SMB With High BG", comment: "Enable SMB With High BG"),
                     type: .boolean(keypath: \.enableSMB_high_bg),
                     infoText: NSLocalizedString(
                         "Enable SMBs when a high BG is detected, based on the high BG target (adjusted or profile)",
@@ -222,7 +225,10 @@ extension PreferencesEditor {
                     settable: self
                 ),
                 Field(
-                    displayName: "... When Blood Glucose Is Over (mg/dl):",
+                    displayName: NSLocalizedString(
+                        "... When Blood Glucose Is Over (mg/dl):",
+                        comment: "... When Blood Glucose Is Over (mg/dl):"
+                    ),
                     type: .decimal(keypath: \.enableSMB_high_bg_target),
                     infoText: NSLocalizedString(
                         "Set the value enableSMB_high_bg will compare against to enable SMB. If BG > than this value, SMBs should enable.",
@@ -231,7 +237,7 @@ extension PreferencesEditor {
                     settable: self
                 ),
                 Field(
-                    displayName: "Enable UAM",
+                    displayName: NSLocalizedString("Enable UAM", comment: "Enable UAM"),
                     type: .boolean(keypath: \.enableUAM),
                     infoText: NSLocalizedString(
                         "With this option enabled, the SMB algorithm can recognize unannounced meals. This is helpful, if you forget to tell FreeAPS X about your carbs or estimate your carbs wrong and the amount of entered carbs is wrong or if a meal with lots of fat and protein has a longer duration than expected. Without any carb entry, UAM can recognize fast glucose increasments caused by carbs, adrenaline, etc, and tries to adjust it with SMBs. This also works the opposite way: if there is a fast glucose decreasement, it can stop SMBs earlier.",
@@ -240,7 +246,7 @@ extension PreferencesEditor {
                     settable: self
                 ),
                 Field(
-                    displayName: "Max SMB Basal Minutes",
+                    displayName: NSLocalizedString("Max SMB Basal Minutes", comment: "Max SMB Basal Minutes"),
                     type: .decimal(keypath: \.maxSMBBasalMinutes),
                     infoText: NSLocalizedString(
                         "Defaults to start at 30. This is the maximum minutes of basal that can be delivered as a single SMB with uncovered COB. This gives the ability to make SMB more aggressive if you choose. It is recommended that the value is set to start at 30, in line with the default, and if you choose to increase this value, do so in no more than 15 minute increments, keeping a close eye on the effects of the changes. It is not recommended to set this value higher than 90 mins, as this may affect the ability for the algorithm to safely zero temp. It is also recommended that pushover is used when setting the value to be greater than default, so that alerts are generated for any predicted lows or highs.",
@@ -249,7 +255,7 @@ extension PreferencesEditor {
                     settable: self
                 ),
                 Field(
-                    displayName: "Max UAM SMB Basal Minutes",
+                    displayName: NSLocalizedString("Max UAM SMB Basal Minutes", comment: "Max UAM SMB Basal Minutes"),
                     type: .decimal(keypath: \.maxUAMSMBBasalMinutes),
                     infoText: NSLocalizedString(
                         "Defaults to start at 30. This is the maximum minutes of basal that can be delivered by UAM as a single SMB when IOB exceeds COB. This gives the ability to make UAM more or less aggressive if you choose. It is recommended that the value is set to start at 30, in line with the default, and if you choose to increase this value, do so in no more than 15 minute increments, keeping a close eye on the effects of the changes. Reducing the value will cause UAM to dose less insulin for each SMB. It is not recommended to set this value higher than 60 mins, as this may affect the ability for the algorithm to safely zero temp. It is also recommended that pushover is used when setting the value to be greater than default, so that alerts are generated for any predicted lows or highs.",
@@ -258,7 +264,7 @@ extension PreferencesEditor {
                     settable: self
                 ),
                 Field(
-                    displayName: "SMB DeliveryRatio",
+                    displayName: NSLocalizedString("SMB DeliveryRatio", comment: "SMB DeliveryRatio"),
                     type: .decimal(keypath: \.smbDeliveryRatio),
                     infoText: NSLocalizedString(
                         "Default value: 0.5 This is another key OpenAPS safety cap, and specifies what share of the total insulin required can be delivered as SMB. Increase this experimental value slowly and with caution.",
@@ -267,13 +273,13 @@ extension PreferencesEditor {
                     settable: self
                 ),
                 Field(
-                    displayName: "SMB Interval",
+                    displayName: NSLocalizedString("SMB Interval", comment: "SMB Interval"),
                     type: .decimal(keypath: \.smbInterval),
                     infoText: NSLocalizedString("Minimum duration in minutes between two enacted SMBs", comment: "SMB Interval"),
                     settable: self
                 ),
                 Field(
-                    displayName: "Bolus Increment",
+                    displayName: NSLocalizedString("Bolus Increment", comment: "Bolus Increment"),
                     type: .decimal(keypath: \.bolusIncrement),
                     infoText: NSLocalizedString(
                         "Smallest SMB / SMB increment in oref0. Minimum amount for Medtronic pumps is 0.1 U, whereas for Omnipod it’s 0.05 U. The default value is 0.1.",
@@ -287,7 +293,10 @@ extension PreferencesEditor {
 
             let targetSettings = [
                 Field(
-                    displayName: "High Temptarget Raises Sensitivity",
+                    displayName: NSLocalizedString(
+                        "High Temptarget Raises Sensitivity",
+                        comment: "High Temptarget Raises Sensitivity"
+                    ),
                     type: .boolean(keypath: \.highTemptargetRaisesSensitivity),
                     infoText: NSLocalizedString(
                         "Defaults to false. When set to true, raises sensitivity (lower sensitivity ratio) for temp targets set to >= 111. Synonym for exercise_mode. The higher your temp target above 110 will result in more sensitive (lower) ratios, e.g., temp target of 120 results in sensitivity ratio of 0.75, while 140 results in 0.6 (with default halfBasalTarget of 160).",
@@ -296,7 +305,10 @@ extension PreferencesEditor {
                     settable: self
                 ),
                 Field(
-                    displayName: "Low Temptarget Lowers Sensitivity",
+                    displayName: NSLocalizedString(
+                        "Low Temptarget Lowers Sensitivity",
+                        comment: "Low Temptarget Lowers Sensitivity"
+                    ),
                     type: .boolean(keypath: \.lowTemptargetLowersSensitivity),
                     infoText: NSLocalizedString(
                         "Defaults to false. When set to true, can lower sensitivity (higher sensitivity ratio) for temptargets <= 99. The lower your temp target below 100 will result in less sensitive (higher) ratios, e.g., temp target of 95 results in sensitivity ratio of 1.09, while 85 results in 1.33 (with default halfBasalTarget of 160).",
@@ -305,7 +317,7 @@ extension PreferencesEditor {
                     settable: self
                 ),
                 Field(
-                    displayName: "Sensitivity Raises Target",
+                    displayName: NSLocalizedString("Sensitivity Raises Target", comment: "Sensitivity Raises Target"),
                     type: .boolean(keypath: \.sensitivityRaisesTarget),
                     infoText: NSLocalizedString(
                         "When true, raises BG target when autosens detects sensitivity",
@@ -314,7 +326,7 @@ extension PreferencesEditor {
                     settable: self
                 ),
                 Field(
-                    displayName: "Resistance Lowers Target",
+                    displayName: NSLocalizedString("Resistance Lowers Target", comment: "Resistance Lowers Target"),
                     type: .boolean(keypath: \.resistanceLowersTarget),
                     infoText: NSLocalizedString(
                         "Defaults to false. When true, will lower BG target when autosens detects resistance",
@@ -323,7 +335,7 @@ extension PreferencesEditor {
                     settable: self
                 ),
                 Field(
-                    displayName: "Advanced Target Adjustments",
+                    displayName: NSLocalizedString("Advanced Target Adjustments", comment: "Advanced Target Adjustments"),
                     type: .boolean(keypath: \.advTargetAdjustments),
                     infoText: NSLocalizedString(
                         "This feature was previously enabled by default but will now default to false (will NOT be enabled automatically) in oref0 0.6.0 and beyond. (There is no need for this with 0.6.0). This feature lowers oref0’s target BG automatically when current BG and eventualBG are high. This helps prevent and mitigate high BG, but automatically switches to low-temping to ensure that BG comes down smoothly toward your actual target. If you find this behavior too aggressive, you can disable this feature. If you do so, please let us know so we can better understand what settings work best for everyone.",
@@ -332,7 +344,7 @@ extension PreferencesEditor {
                     settable: self
                 ),
                 Field(
-                    displayName: "Exercise Mode",
+                    displayName: NSLocalizedString("Exercise Mode", comment: "Exercise Mode"),
                     type: .boolean(keypath: \.exerciseMode),
                     infoText: NSLocalizedString(
                         "Defaults to false. When true, > 105 mg/dL high temp target adjusts sensitivityRatio for exercise_mode. Synonym for high_temptarget_raises_sensitivity",
@@ -341,7 +353,7 @@ extension PreferencesEditor {
                     settable: self
                 ),
                 Field(
-                    displayName: "Half Basal Exercise Target",
+                    displayName: NSLocalizedString("Half Basal Exercise Target", comment: "Half Basal Exercise Target"),
                     type: .decimal(keypath: \.halfBasalExerciseTarget),
                     infoText: NSLocalizedString(
                         "Set to a number, e.g. 160, which means when temp target is 160 mg/dL and exercise_mode=true, run 50% basal at this level (120 = 75%; 140 = 60%). This can be adjusted, to give you more control over your exercise modes.",
@@ -350,7 +362,7 @@ extension PreferencesEditor {
                     settable: self
                 ),
                 Field(
-                    displayName: "Wide BG Target Range",
+                    displayName: NSLocalizedString("Wide BG Target Range", comment: "Wide BG Target Range"),
                     type: .boolean(keypath: \.wideBGTargetRange),
                     infoText: NSLocalizedString(
                         "Defaults to false, which means by default only the low end of the pump’s BG target range is used as OpenAPS target. This is a safety feature to prevent too-wide targets and less-optimal outcomes. Therefore the higher end of the target range is used only for avoiding bolus wizard overcorrections. Use wide_bg_target_range: true to force neutral temps over a wider range of eventualBGs.",
@@ -364,7 +376,7 @@ extension PreferencesEditor {
 
             let otherSettings = [
                 Field(
-                    displayName: "Rewind Resets Autosens",
+                    displayName: NSLocalizedString("Rewind Resets Autosens", comment: "Rewind Resets Autosens"),
                     type: .boolean(keypath: \.rewindResetsAutosens),
                     infoText: NSLocalizedString(
                         "This feature, enabled by default, resets the autosens ratio to neutral when you rewind your pump, on the assumption that this corresponds to a probable site change. Autosens will begin learning sensitivity anew from the time of the rewind, which may take up to 6 hours. If you usually rewind your pump independently of site changes, you may want to consider disabling this feature.",
@@ -373,7 +385,7 @@ extension PreferencesEditor {
                     settable: self
                 ),
                 Field(
-                    displayName: "Use Custom Peak Time",
+                    displayName: NSLocalizedString("Use Custom Peak Time", comment: "Use Custom Peak Time"),
                     type: .boolean(keypath: \.useCustomPeakTime),
                     infoText: NSLocalizedString(
                         "Defaults to false. Setting to true allows changing insulinPeakTime", comment: "Use Custom Peak Time"
@@ -381,7 +393,7 @@ extension PreferencesEditor {
                     settable: self
                 ),
                 Field(
-                    displayName: "Insulin Peak Time",
+                    displayName: NSLocalizedString("Insulin Peak Time", comment: "Insulin Peak Time"),
                     type: .decimal(keypath: \.insulinPeakTime),
                     infoText: NSLocalizedString(
                         "Time of maximum blood glucose lowering effect of insulin, in minutes. Beware: Oref assumes for ultra-rapid (Lyumjev) & rapid-acting (Fiasp) curves minimal (35 & 50 min) and maximal (100 & 120 min) applicable insulinPeakTimes. Using a custom insulinPeakTime outside these bounds will result in issues with FreeAPS-X, longer loop calculations and possible red loops.",
@@ -389,17 +401,8 @@ extension PreferencesEditor {
                     ),
                     settable: self
                 ),
-//                Field(
-//                    displayName: "Carbs Req Threshold",
-//                    type: .decimal(keypath: \.carbsReqThreshold),
-//                    infoText: NSLocalizedString(
-//                        "Grams of carbsReq to trigger a pushover. Defaults to 1 (for 1 gram of carbohydrate). Can be increased if you only want to get Pushover for carbsReq at X threshold.",
-//                        comment: "Carbs Req Threshold"
-//                    ),
-//                    settable: self
-//                ),
                 Field(
-                    displayName: "Skip Neutral Temps",
+                    displayName: NSLocalizedString("Skip Neutral Temps", comment: "Skip Neutral Temps"),
                     type: .boolean(keypath: \.skipNeutralTemps),
                     infoText: NSLocalizedString(
                         "Defaults to false, so that FreeAPS X will set temps whenever it can, so it will be easier to see if the system is working, even when you are offline. This means FreeAPS X will set a “neutral” temp (same as your default basal) if no adjustments are needed. This is an old setting for OpenAPS to have the options to minimise sounds and notifications from the 'rig', that may wake you up during the night.",
@@ -408,7 +411,7 @@ extension PreferencesEditor {
                     settable: self
                 ),
                 Field(
-                    displayName: "Unsuspend If No Temp",
+                    displayName: NSLocalizedString("Unsuspend If No Temp", comment: "Unsuspend If No Temp"),
                     type: .boolean(keypath: \.unsuspendIfNoTemp),
                     infoText: NSLocalizedString(
                         "Many people occasionally forget to resume / unsuspend their pump after reconnecting it. If you’re one of them, and you are willing to reliably set a zero temp basal whenever suspending and disconnecting your pump, this feature has your back. If enabled, it will automatically resume / unsuspend the pump if you forget to do so before your zero temp expires. As long as the zero temp is still running, it will leave the pump suspended.",
@@ -417,7 +420,7 @@ extension PreferencesEditor {
                     settable: self
                 ),
                 Field(
-                    displayName: "Suspend Zeros IOB",
+                    displayName: NSLocalizedString("Suspend Zeros IOB", comment: "Suspend Zeros IOB"),
                     type: .boolean(keypath: \.suspendZerosIOB),
                     infoText: NSLocalizedString(
                         "Default is false. Any existing temp basals during times the pump was suspended will be deleted and 0 temp basals to negate the profile basal rates during times pump is suspended will be added.",
@@ -426,7 +429,7 @@ extension PreferencesEditor {
                     settable: self
                 ),
                 Field(
-                    displayName: "Bolus Snooze DIA Divisor",
+                    displayName: NSLocalizedString("Bolus Snooze DIA Divisor", comment: "Bolus Snooze DIA Divisor"),
                     type: .decimal(keypath: \.bolusSnoozeDIADivisor),
                     infoText: NSLocalizedString(
                         "Bolus snooze is enacted after you do a meal bolus, so the loop won’t counteract with low temps when you’ve just eaten. The example here and default is 2; so a 3 hour DIA means that bolus snooze will be gradually phased out over 1.5 hours (3DIA/2).",
@@ -435,7 +438,7 @@ extension PreferencesEditor {
                     settable: self
                 ),
                 Field(
-                    displayName: "Min 5m Carbimpact",
+                    displayName: NSLocalizedString("Min 5m Carbimpact", comment: "Min 5m Carbimpact"),
                     type: .decimal(keypath: \.min5mCarbimpact),
                     infoText: NSLocalizedString(
                         "This is a setting for default carb absorption impact per 5 minutes. The default is an expected 8 mg/dL/5min. This affects how fast COB is decayed in situations when carb absorption is not visible in BG deviations. The default of 8 mg/dL/5min corresponds to a minimum carb absorption rate of 24g/hr at a CSF of 4 mg/dL/g.",
@@ -444,7 +447,10 @@ extension PreferencesEditor {
                     settable: self
                 ),
                 Field(
-                    displayName: "Autotune ISF Adjustment Fraction",
+                    displayName: NSLocalizedString(
+                        "Autotune ISF Adjustment Fraction",
+                        comment: "Autotune ISF Adjustment Fraction"
+                    ),
                     type: .decimal(keypath: \.autotuneISFAdjustmentFraction),
                     infoText: NSLocalizedString(
                         "The default of 0.5 for this value keeps autotune ISF closer to pump ISF via a weighted average of fullNewISF and pumpISF. 1.0 allows full adjustment, 0 is no adjustment from pump ISF.",
@@ -453,7 +459,7 @@ extension PreferencesEditor {
                     settable: self
                 ),
                 Field(
-                    displayName: "Remaining Carbs Fraction",
+                    displayName: NSLocalizedString("Remaining Carbs Fraction", comment: "Remaining Carbs Fraction"),
                     type: .decimal(keypath: \.remainingCarbsFraction),
                     infoText: NSLocalizedString(
                         "This is the fraction of carbs we’ll assume will absorb over 4h if we don’t yet see carb absorption.",
@@ -462,7 +468,7 @@ extension PreferencesEditor {
                     settable: self
                 ),
                 Field(
-                    displayName: "Remaining Carbs Cap",
+                    displayName: NSLocalizedString("Remaining Carbs Cap", comment: "Remaining Carbs Cap"),
                     type: .decimal(keypath: \.remainingCarbsCap),
                     infoText: NSLocalizedString(
                         "This is the amount of the maximum number of carbs we’ll assume will absorb over 4h if we don’t yet see carb absorption.",
@@ -471,7 +477,7 @@ extension PreferencesEditor {
                     settable: self
                 ),
                 Field(
-                    displayName: "Noisy CGM Target Multiplier",
+                    displayName: NSLocalizedString("Noisy CGM Target Multiplier", comment: "Noisy CGM Target Multiplier"),
                     type: .decimal(keypath: \.noisyCGMTargetMultiplier),
                     infoText: NSLocalizedString(
                         "Defaults to 1.3. Increase target by this amount when looping off raw/noisy CGM data",
