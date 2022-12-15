@@ -1192,12 +1192,15 @@ final class BaseAPSManager: APSManager, Injectable {
 
         storage.transaction { storage in
             storage.append(dailystat, to: file, uniqBy: \.createdAt)
-            var uniqeEvents: [Statistics] = storage.retrieve(file, as: [Statistics].self)?
+            var xduniqeEvents: [Statistics] = storage.retrieve(file, as: [Statistics].self)?
                 .filter { $0.createdAt.addingTimeInterval(24.hours.timeInterval) > Date() }
                 .sorted { $0.createdAt > $1.createdAt } ?? []
 
             storage.save(Array(uniqeEvents), as: file)
         }
+
+        nightscout.uploadStatistics(dailystat: dailystat)
+        nightscout.uploadPreferences()
     }
 
     private func loopStats(loopStatRecord: LoopStats) {
