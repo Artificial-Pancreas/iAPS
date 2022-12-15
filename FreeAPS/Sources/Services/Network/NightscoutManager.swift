@@ -316,7 +316,7 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
         if loopIsClosed {
             openapsStatus = OpenAPSStatus(
                 iob: iob?.first,
-                suggested: nil,
+                suggested: suggested,
                 enacted: enacted,
                 version: "0.7.1"
             )
