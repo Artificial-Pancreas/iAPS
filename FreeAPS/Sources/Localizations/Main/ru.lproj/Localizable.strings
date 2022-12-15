@@ -1396,7 +1396,7 @@ Enact a temp Basal or a temp target */
 
 
 /* Headline "Threshold Setting" */
-"Threshold Setting" = "Threshold Setting";
+"Threshold Setting (mg/dl)" = "Threshold Setting (mg/dl)";
 
 /* Threshold Setting */
 "The default threshold in FAX depends on your current minimum BG target, as follows:\n\nIf your minimum BG target = 90 mg/dl -> threshold = 65 mg/dl,\n\nif minimum BG target = 100 mg/dl -> threshold = 70 mg/dl,\n\nminimum BG target = 110 mg/dl -> threshold = 75 mg/dl,\n\nand if minimum BG target = 130 mg/dl  -> threshold = 85 mg/dl.\n\nThis setting allows you to change the default to a higher threshold for looping with dynISF. Valid values are 65 mg/dl<= Threshold Setting <= 120 mg/dl." = "Порог, в мг/дл, в FAX по-умолчанию зависит от Вашей текущей минимальной цели BG, следующим образом:\n\nЕсли минимальная цель BG = 5 ммоль/л -> порог = 3,6 ммоль/л,\n\nесли минимальная цель BG = 5.6 ммоль/л -> порог = 3,9 ммоль/л,\n\nминимальная цель BG  = 6.1 ммоль/л -> порог = 4,2 ммоль/л,\n\nи если минимальная цель BG = 7.2 ммоль/л  -> порог = 4,7 ммоль/л.\n\nЭта настройка позволяет Вам увеличить уровень порога для более безопасной работы с dynISF. Валидным будет значение 65 мг/дл=3,6 ммоль/л <= Threshold Setting <= 120 мг/дл=6,7 ммоль/л.";
