@@ -1433,3 +1433,6 @@ Enact a temp Basal or a temp target */
 
 /* "Enable SMB With High BG" */
 "Enable SMBs when a high BG is detected, based on the high BG target (adjusted or profile)" = "Aktivera SMB: er (autobolusar) vid högt blodsocker, eller enligt inställning nedan";
+
+/* Headline "Dynamic settings" */
+"Dynamic settings" = "Dynamiska inställningar";
