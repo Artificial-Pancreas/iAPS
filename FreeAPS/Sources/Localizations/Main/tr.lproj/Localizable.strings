@@ -1123,144 +1123,292 @@ Enact a temp Basal or a temp target */
   Infotexts from openaps.docs and androidaps.docs
   FreeAPS X
 */
-/* ”Rewind Resets Autosens” */
+/* Headline Rewind Resets Autosens */
 
+"Rewind Resets Autosens" = "Rewind Resets Autosens";
+
+/* ”Rewind Resets Autosens” */
 "This feature, enabled by default, resets the autosens ratio to neutral when you rewind your pump, on the assumption that this corresponds to a probable site change. Autosens will begin learning sensitivity anew from the time of the rewind, which may take up to 6 hours. If you usually rewind your pump independently of site changes, you may want to consider disabling this feature." = "Varsayılan olarak etkinleştirilen bu özellik, pompanızı geri sardığınızda, bunun olası bir set değişikliğine karşılık geldiği varsayımıyla otoduyarlılık oranını nötr olarak sıfırlar. Otoduyarlılık, 6 saate kadar sürebilen geri sarma zamanından itibaren hassasiyeti yeniden öğrenmeye başlayacaktır. Pompanızı genellikle set değişikliklerinden bağımsız olarak geri sarıyorsanız, bu özelliği devre dışı bırakmayı düşünebilirsiniz.";
+
+/* Headline "High Temptarget Raises Sensitivity" */
+"High Temptarget Raises Sensitivity" = "High Temptarget Raises Sensitivity";
 
 /* ”High Temptarget Raises Sensitivity" */
 "Defaults to false. When set to true, raises sensitivity (lower sensitivity ratio) for temp targets set to >= 111. Synonym for exercise_mode. The higher your temp target above 110 will result in more sensitive (lower) ratios, e.g., temp target of 120 results in sensitivity ratio of 0.75, while 140 results in 0.6 (with default halfBasalTarget of 160)." = "Varsayılan olarak kapalı olup. Açık olarak ayarlandığında, >= 111 olarak ayarlanan geçici hedefler için duyarlılığı artırır (düşük duyarlılık oranı). Egzersiz_modu ile eşanlamlı. Geçici hedefiniz 110'un üzerinde ne kadar yüksek olursa, daha hassas (düşük) oranlar elde edilir, örneğin 120'lik geçici hedef 0,75 hassasiyet oranı ile sonuçlanırken 140 sonuç 0,6 ile sonuçlanır (varsayılan ile HalfBasalTarget 160).";
 
+/* Headline ”Low Temptarget Lowers Sensitivity" */
+"Low Temptarget Lowers Sensitivity" = "Low Temptarget Lowers Sensitivity";
+
 /* ”Low Temptarget Lowers Sensitivity" */
 "Defaults to false. When set to true, can lower sensitivity (higher sensitivity ratio) for temptargets <= 99. The lower your temp target below 100 will result in less sensitive (higher) ratios, e.g., temp target of 95 results in sensitivity ratio of 1.09, while 85 results in 1.33 (with default halfBasalTarget of 160)." = "Varsayılan olarak kapalı olup. Açık olarak ayarlandığında, <= 99 temptarget'lar için hassasiyeti (daha yüksek hassasiyet oranı) düşürebilir. Geçici hedefiniz 100'ün altına ne kadar düşükse, daha az hassas (daha yüksek) oranlar elde edilir, örneğin, 95'lik geçici hedef 1,09 hassasiyet oranıyla sonuçlanırken 85, 1,33 ile sonuçlanır (varsayılan HalfBasalTarget ile 160).";
+
+/* Headline ”Sensitivity Raises Target" */
+"Sensitivity Raises Target" = "Sensitivity Raises Target";
 
 /* ”Sensitivity Raises Target" */
 "When true, raises BG target when autosens detects sensitivity" = "Etkinleştirildiğinde, otoduyarlılık duyarlılık algıladığında KŞ hedefini yükseltir";
 
+/* Headline ”Resistance Lowers Target" */
+"Resistance Lowers Target" = "Resistance Lowers Target";
+
 /* ”Resistance Lowers Target" */
 "Defaults to false. When true, will lower BG target when autosens detects resistance" = "Varsayılan olarak geçersizdir. Geçerli yapıldığında, otoduyarlılık direnci tespit ettiğinde KŞ hedefini düşürür";
+
+/* Headline ”Advanced Target Adjustments" */
+"Advanced Target Adjustments" = "Advanced Target Adjustments";
 
 /* ”Advanced Target Adjustments" */
 "This feature was previously enabled by default but will now default to false (will NOT be enabled automatically) in oref0 0.6.0 and beyond. (There is no need for this with 0.6.0). This feature lowers oref0’s target BG automatically when current BG and eventualBG are high. This helps prevent and mitigate high BG, but automatically switches to low-temping to ensure that BG comes down smoothly toward your actual target. If you find this behavior too aggressive, you can disable this feature. If you do so, please let us know so we can better understand what settings work best for everyone." = "Bu özellik daha önce varsayılan olarak etkinleştirilmiştir, ancak şimdi oref0 0.6.0 ve sonrasında varsayılan olarak kapalı (otomatik olarak ETKİNLEŞTİRİLMEYECEK) olacaktır. (0.6.0 ile buna gerek yoktur). Bu özellik, mevcut KŞ ve nihai KŞ yüksek olduğunda oref0'ın hedef KŞ'sini otomatik olarak düşürür. Bu yüksek KŞ'yi önlemeye ve azaltmaya yardımcı olur, ancak KŞ'nin gerçek hedefinize düzgün bir şekilde inmesini sağlamak için otomatik olarak düşük geçici bazal geçer. Bu davranışı çok agresif bulursanız, bu özelliği devre dışı bırakabilirsiniz. Bunu yaparsanız, hangi ayarların herkes için en iyi sonucu verdiğini daha iyi anlayabilmemiz için lütfen bize bildirin.";
 
+/* Headline "Exercise Mode" */
+"Exercise Mode" = "Exercise Mode";
+
 /* "Exercise Mode" */
 "Defaults to false. When true, > 105 mg/dL high temp target adjusts sensitivityRatio for exercise_mode. Synonym for high_temptarget_raises_sensitivity" = "Varsayılan olarak geçersizdir. Etkinleştirildiğinde > 105 mg/dL yüksek geçici hedefi, egzersiz_modu için duyarlılık Oranını ayarlar. high_temptarget_raises_sensitivity ile eşanlamlı";
+
+
+/* Headline "Wide BG Target Range" */
+"Wide BG Target Range" = "Wide BG Target Range";
 
 /* "Wide BG Target Range" */
 "Defaults to false, which means by default only the low end of the pump’s BG target range is used as OpenAPS target. This is a safety feature to prevent too-wide targets and less-optimal outcomes. Therefore the higher end of the target range is used only for avoiding bolus wizard overcorrections. Use wide_bg_target_range: true to force neutral temps over a wider range of eventualBGs." = "Varsayılan olarak kapalıdır. Bu varsayılan olarak yalnızca pompanın KŞ hedef aralığının alt uc değerini OpenAPS hedefi olarak kullanıldığı anlamına gelir. Bu çok geniş hedefleri ve daha az optimal sonuçları önlemek için bir güvenlik özelliğidir. Bu nedenle, hedef aralığın üst uc değeri yalnızca bolus sihirbazı aşırı düzeltmelerinden kaçınmak için kullanılır. Daha geniş bir nihai KŞ aralığında doğal geçicileri (hedef-bazal) zorlamak için wide_bg_target_range: true kullanın.";
 
+
+/* Headline "Skip Neutral Temps" */
+"Skip Neutral Temps" = "Skip Neutral Temps";
+
 /* "Skip Neutral Temps" */
 "Defaults to false, so that FreeAPS X will set temps whenever it can, so it will be easier to see if the system is working, even when you are offline. This means FreeAPS X will set a “neutral” temp (same as your default basal) if no adjustments are needed. This is an old setting for OpenAPS to have the options to minimise sounds and notifications from the 'rig', that may wake you up during the night." = "Varsayılan olarak kapalı olarak ayarlıdır, böylece FreeAPS X mümkün olduğu kadar geçici süreler ayarlayacaktır, böylece çevrimdışı olduğunuzda bile sistemin çalışıp çalışmadığını görmek daha kolay olacaktır. Bu herhangi bir ayar gerekmiyorsa OpenAPS'nin \"nötr\" bir geçeci bazal ayarlayacağı (varsayılan bazalınızla aynı) anlamına gelir. Bu OpenAPS'in sizi gece uyandırabilecek \"rig\"tan gelen sesleri ve bildirimleri en aza indirme seçeneklerine sahip olduğu eski bir ayardır. ";
+
+/* Headline "Unsuspend If No Temp” */
+"Unsuspend If No Temp" = "Unsuspend If No Temp";
 
 /* "Unsuspend If No Temp” */
 "Many people occasionally forget to resume / unsuspend their pump after reconnecting it. If you’re one of them, and you are willing to reliably set a zero temp basal whenever suspending and disconnecting your pump, this feature has your back. If enabled, it will automatically resume / unsuspend the pump if you forget to do so before your zero temp expires. As long as the zero temp is still running, it will leave the pump suspended." = "Birçok kişi, pompayı yeniden bağladıktan sonra ara sıra pompasını çalıştırmayı / askıya alınmız pompayı tekrar çalıştırmayı unutur. Onlardan biriyseniz ve pompanızı askıya alırken ve bağlantısını keserken güvenilir bir şekilde sıfır geçici bazal ayarlamak istiyorsanız, bu özellik arkanızda. Etkinleştirildiği taktirde sıfır geçici oranı sona ermeden önce, pompayı otomatik olarak sürdürür / askıya alır. Sıfır geçici hala çalıştığı sürece, pompayı askıda bırakacaktır.";
 
+/* Headline "Enable UAM" */
+"Enable UAM" = "Enable UAM";
+
 /* "Enable UAM" */
 "With this option enabled, the SMB algorithm can recognize unannounced meals. This is helpful, if you forget to tell FreeAPS X about your carbs or estimate your carbs wrong and the amount of entered carbs is wrong or if a meal with lots of fat and protein has a longer duration than expected. Without any carb entry, UAM can recognize fast glucose increasments caused by carbs, adrenaline, etc, and tries to adjust it with SMBs. This also works the opposite way: if there is a fast glucose decreasement, it can stop SMBs earlier." = "Bu seçenek etkinleştirildiğinde, SMB algoritması bildirilmeyen öğünleri tanıyabilir. FreeAPS X'e karbonhidratlarınızı girmeyi unutursanız veya karbonhidratlarınızı yanlış tahmin ederseniz ve girilen karbonhidrat miktarı yanlışsa veya çok miktarda yağ ve protein içeren bir öğün beklenenden daha uzun sürerse bu yararlıdır. Herhangi bir karbonhidrat girişi olmadan, UAM karbonhidrat, adrenalin vb. kaynaklı hızlı glikoz artışlarını algılayabilir ve SMB'ler ile ayarlamaya çalışır. Bu aynı zamanda tam tersi şekilde çalışır: hızlı bir glikoz düşüşü varsa, SMB'leri daha erken durdurabilir.";
 
-/* Enable SMB With COB" */
+/* Headline "Enable SMB With COB" */
+"Enable SMB With COB" = "Enable SMB With COB";
 
+/* Enable SMB With COB" */
 "This enables supermicrobolus (SMB) while carbs on board (COB) are positive." = "Bu aktif karbonhidrat (AKRB) pozitifken, süpermikrobolusu (SMB) sağlar.";
+
+/* Headline "Enable SMB With Temptarget” */
+"Enable SMB With Temptarget" = "Enable SMB With Temptarget";
 
 /* "Enable SMB With Temptarget” */
 "This enables supermicrobolus (SMB) with eating soon / low temp targets. With this feature enabled, any temporary target below 100mg/dL, such as a temp target of 99 (or 80, the typical eating soon target) will enable SMB." = "Bu yakında yemek / düşük geçici hedefler ile süpermikrobolus (SMB) sağlar. Bu özellik etkinleştirildiğinde geçici hedef 99 (veya 80, tipik yakında yeme hedefi) gibi herhangi bir geçici hedef 100mg/dL'nin altında SMB'yi etkinleştirecektir.";
 
+/* Headline "Enable SMB Always" */
+"Enable SMB Always" = "Enable SMB Always";
+
 /* "Enable SMB Always" */
 "Defaults to false. When true, always enable supermicrobolus (unless disabled by high temptarget)." = "Varsayılan olarak geçersizdir. Geçerli olduğunda, her zaman supermicrobolus'u etkinleştirir (yüksek geçicihedef tarafından devre dışı bırakılmadığı sürece).";
+
+/* Headline "Enable SMB After Carbs" */
+"Enable SMB After Carbs" = "Enable SMB After Carbs";
 
 /* "Enable SMB After Carbs" */
 "Defaults to false. When true, enables supermicrobolus (SMB) for 6h after carbs, even with 0 carbs on board (COB)." = "Varsayılan olarak geçersizdir. Geçerli olduğunda aktif karbonhidrat (AKRB) 0 olsa bile karbonhidratlardan sonra 6 saat boyunca süpermikrobolosu (SMB) etkinleştirir.";
 
+/* Enable "Allow SMB With High Temptarget" */
+"Allow SMB With High Temptarget" = "Allow SMB With High Temptarget";
+
+/* Headline "Allow SMB With High Temptarget" */
+"Allow SMB With High Temptarget" = "Allow SMB With High Temptarget";
+
 /* "Allow SMB With High Temptarget" */
 "Defaults to false. When true, allows supermicrobolus (if otherwise enabled) even with high temp targets." = "Varsayılan olarak geçersizdir. Geçerli olduğunda, yüksek geçici hedeflerinde bile süpermikrobolusa (aksi takdirde etkinleştirildiyse) izin verir.";
+
+/* Headline "Use Custom Peak Time” */
+"Use Custom Peak Time" = "Use Custom Peak Time";
 
 /* "Use Custom Peak Time” */
 "Defaults to false. Setting to true allows changing insulinPeakTime" = "Varsayılan olarak kapalıdır. Açılırsa, 'insulinPeakTime' değerinin değişmesine izin verir";
 
+/* Headline "Suspend Zeros IOB” */
+"Suspend Zeros IOB" = "Suspend Zeros IOB";
+
 /* "Suspend Zeros IOB” */
 "Default is false. Any existing temp basals during times the pump was suspended will be deleted and 0 temp basals to negate the profile basal rates during times pump is suspended will be added." = "Varsayılan geçersizdir. Pompanın askıya alındığı zamanlarda mevcut tüm geçici bazallar silinecek ve pompanın askıya alındığı zamanlarda profil bazal oranlarını geçersizleştirmek için 0 geçici bazal eklenecektir.";
+
+/* Headline "Max IOB" */
+"Max IOB" = "Max IOB";
 
 /* "Max IOB" */
 "Max IOB is the maximum amount of insulin on board from all sources – both basal (or SMB correction) and bolus insulin – that your loop is allowed to accumulate to treat higher-than-target BG. Unlike the other two OpenAPS safety settings (max_daily_safety_multiplier and current_basal_safety_multiplier), max_iob is set as a fixed number of units of insulin. As of now manual boluses are NOT limited by this setting. \n\n To test your basal rates during nighttime, you can modify the Max IOB setting to zero while in Closed Loop. This will enable low glucose suspend mode while testing your basal rates settings\n\n(Tip from https://www.loopandlearn.org/freeaps-x/#open-loop)." = "Maks AİNS, hedeften daha yüksek KŞ'yi tedavi etmek için döngünüzün biriktirmesine izin verilen, hem bazal (veya SMB düzeltmesi) hem de bolus insülin olmak üzere tüm kaynaklardan alınan maksimum insülin miktarıdır. Diğer iki OpenAPS güvenlik ayarının (max_daily_safety_multiplier ve current_basal_safety_multiplier) aksine, max_ains, sabit sayıda insülin birimi olarak ayarlanır. Şu anda manuel boluslar bu ayarla SINIRLI DEĞİLDİR.\n\n Bazal oranlarınızı gece boyunca test etmek için Kapalı Döngüdeyken Maks AİNS ayarını sıfır olarak değiştirebilirsiniz. Bu, bazal oran ayarlarınızı test ederken düşük glikoz askıya alma modunu etkinleştirir\n\n(Ayrıntı için bağlantı https://www.loopandlearn.org/freeaps-x/#open-loop).";
 
+/* Headline "Max Daily Safety Multiplier" */
+"Max Daily Safety Multiplier" = "Max Daily Safety Multiplier";
+
 /* "Max Daily Safety Multiplier" */
 "This is an important OpenAPS safety limit. The default setting (which is unlikely to need adjusting) is 3. This means that OpenAPS will never be allowed to set a temporary basal rate that is more than 3x the highest hourly basal rate programmed in a user’s pump, or, if enabled, determined by autotune." = "Bu önemli bir OpenAPS güvenlik sınırıdır. Varsayılan ayar (değiştirilmesine pek gerek duyulmaz) 3'tür. Bu, OpenAPS'nin bir kullanıcının pompasında programlanan en yüksek saatlik bazal hızın 3 katından daha fazla olan veya etkinleştirilirse belirlenen geçici bir bazal hızı ayarlamasına asla izin verilmeyeceği anlamına gelir. Belirlenen otoayar ile.";
+
+/* Headline "Current Basal Safety Multiplier" */
+"Current Basal Safety Multiplier" = "Current Basal Safety Multiplier";
 
 /* "Current Basal Safety Multiplier" */
 "This is another important OpenAPS safety limit. The default setting (which is also unlikely to need adjusting) is 4. This means that OpenAPS will never be allowed to set a temporary basal rate that is more than 4x the current hourly basal rate programmed in a user’s pump, or, if enabled, determined by autotune." = "Bu bir başka önemli OpenAPS güvenlik önlemidir. Varsayılan ayar (değiştirilmesine pek gerek duyulmaz) 4'tür. Bu OpenAPS'nin bir kullanıcının pompasında programlanan mevcut saatlik geçici bazal hızın 4 katından daha fazla geçici bir bazal hızı ayarlamasına asla izin verilmeyecektir ve etkinleştirildiyse, otoayar tarafından belirlenir.";
 
+/* Headline "Autosens Max" */
+"Autosens Max" = "Autosens Max";
+
 /* "Autosens Max" */
 "This is a multiplier cap for autosens (and autotune) to set a 20% max limit on how high the autosens ratio can be, which in turn determines how high autosens can adjust basals, how low it can adjust ISF, and how low it can set the BG target." = "Bu otoduyarlılık oranının ne kadar yüksek olabileceğine dair %20'lik bir maksimum sınır belirlemek üzere otoduyarlılık (ve otoayar) için bir çarpan üst sınırıdır; bu otoduyarlılık bazallerı ne kadar yüksek ayarlayabileceğini, IDF'yi ne kadar düşük ayarlayabileceğini, KŞ hedefini kadar düşük ayarlayabileceğini belirler.";
+
+
+/* Headline "Autosens Min" */
+"Autosens Min" = "Autosens Min";
 
 /* "Autosens Min" */
 "The other side of the autosens safety limits, putting a cap on how low autosens can adjust basals, and how high it can adjust ISF and BG targets." = "Otoduyarlılık güvenlik sınırlarının diğer yönü, otoduyarlılığın bazallerı ne kadar düşük ayarlayabileceğine ve İDF ve KŞ hedeflerini ne kadar yüksek ayarlayabileceğine bir sınır koymasıdır.";
 
+/* Headline "Half Basal Exercise Target" */
+"Half Basal Exercise Target" = "Half Basal Exercise Target";
+
 /* "Half Basal Exercise Target" */
 "Set to a number, e.g. 160, which means when temp target is 160 mg/dL and exercise_mode=true, run 50% basal at this level (120 = 75%; 140 = 60%). This can be adjusted, to give you more control over your exercise modes." = "Bir sayıya ayarlayın, örn. 160, yani geçici hedef 160 mg/dL ve egzersiz_modu=açık olduğunda, bu seviyede %50 bazal çalıştırın (120 = %75; 140 = %60). Bu egzersiz modlarınız üzerinde daha fazla kontrol sahibi olmanız için ayarlanabilir.";
+
+/* Headline "Max COB" */
+"Max COB" = "Max COB";
 
 /* "Max COB" */
 "This defaults maxCOB to 120 because that’s the most a typical body can absorb over 4 hours. (If someone enters more carbs or stacks more; OpenAPS will just truncate dosing based on 120. Essentially, this just limits AMA as a safety cap against weird COB calculations due to fluky data.)" = "Bu varsayılan olarak maxAKRB'u 120'ye ayarlar çünkü bu, tipik bir vücudun 4 saatten fazla emebileceği en fazla değerdir. (Birisi daha fazla karbonhidrat yerse; OpenAPS, 120'ye dayalı dozlamayı keser. Esasen, bu, AMA'yı (Gelişmiş Yemek Asistanı), rastgele verilerden kaynaklanan tuhaf AKRB hesaplamalarına karşı bir güvenlik sınırı olarak sınırlar.)";
 
+/* Headline "Bolus Snooze DIA Divisor" */
+"Bolus Snooze DIA Divisor" = "Bolus Snooze DIA Divisor";
+
 /* "Bolus Snooze DIA Divisor" */
 "Bolus snooze is enacted after you do a meal bolus, so the loop won’t counteract with low temps when you’ve just eaten. The example here and default is 2; so a 3 hour DIA means that bolus snooze will be gradually phased out over 1.5 hours (3DIA/2)." = "Bolus erteleme, bir yemek bolusu yaptıktan sonra yürürlüğe girer, bu nedenle döngü, az önce yemek yediğinizde geçici düşük bazala etki etmez. Burada varsayılan örnek 2'dir; Dolayısıyla 3 saatlik bir İES, bolus ertelemenin kademeli olarak 1,5 saat (3İES/ 2) üzerinden aşamalı olarak sonlandırılacağı anlamına gelir.";
+
+/* Headline "Min 5m Carbimpact" */
+"Min 5m Carbimpact" = "Min 5m Carbimpact";
 
 /* "Min 5m Carbimpact" */
 "This is a setting for default carb absorption impact per 5 minutes. The default is an expected 8 mg/dL/5min. This affects how fast COB is decayed in situations when carb absorption is not visible in BG deviations. The default of 8 mg/dL/5min corresponds to a minimum carb absorption rate of 24g/hr at a CSF of 4 mg/dL/g." = "Bu, 5 dakikada bir varsayılan karbonhidrat emilim etkisi için bir ayardır. Beklenen varsayılan değer 8 mg/dL/5dk'dır. Bu, KŞ sapmalarında karbonhidrat emiliminin görünmediği durumlarda AKRB'ın ne kadar hızlı bozulduğunu etkiler. Varsayılan 8 mg/dL/5dk, 4 mg/dL/g'lik bir BOS'ta 24g/saatlik minimum karbonhidrat emilim oranına karşılık gelir.";
 
+/* Headline "Autotune ISF Adjustment Fraction" */
+"Autotune ISF Adjustment Fraction" = "Autotune ISF Adjustment Fraction";
+
 /* "Autotune ISF Adjustment Fraction" */
 "The default of 0.5 for this value keeps autotune ISF closer to pump ISF via a weighted average of fullNewISF and pumpISF. 1.0 allows full adjustment, 0 is no adjustment from pump ISF." = "The default of 0.5 for this value keeps autotune ISF closer to pump ISF via a weighted average of fullNewISF and pumpISF. 1.0 allows full adjustment, 0 is no adjustment from pump ISF.";
+
+/* Headline "Remaining Carbs Fraction" */
+"Remaining Carbs Fraction" = "Remaining Carbs Fraction";
 
 /* "Remaining Carbs Fraction" */
 "This is the fraction of carbs we’ll assume will absorb over 4h if we don’t yet see carb absorption." = "Bu değer henüz karbonhidrat emilimini görmediğimiz, 4 saatten fazla sürede emileceğini varsaydığımız karbonhidrat oranıdır.";
 
+/* Headline "Remaining Carbs Cap" */
+"Remaining Carbs Cap" = "Remaining Carbs Cap";
+
 /* "Remaining Carbs Cap" */
 "This is the amount of the maximum number of carbs we’ll assume will absorb over 4h if we don’t yet see carb absorption." = "Bu henüz karbonhidrat emilimini görmezsek, 4 saatten fazla emeceğini varsaydığımız maksimum karbonhidrat miktarıdır.";
+
+/* Headline ”Max SMB Basal Minutes" */
+"Max SMB Basal Minutes" = "Max SMB Basal Minutes";
 
 /* ”Max SMB Basal Minutes" */
 "Defaults to start at 30. This is the maximum minutes of basal that can be delivered as a single SMB with uncovered COB. This gives the ability to make SMB more aggressive if you choose. It is recommended that the value is set to start at 30, in line with the default, and if you choose to increase this value, do so in no more than 15 minute increments, keeping a close eye on the effects of the changes. It is not recommended to set this value higher than 90 mins, as this may affect the ability for the algorithm to safely zero temp. It is also recommended that pushover is used when setting the value to be greater than default, so that alerts are generated for any predicted lows or highs." = "Varsayılan değer 30'dan başlar. Bu, AKRB'ı tek bir SMB olarak teslim edilebilecek maksimum bazal dakikadır. Bu isterseniz SMB'leri daha agresif hale getirme yeteneği verir. Değerin varsayılana uygun olarak 30'da başlayacak şekilde ayarlanması ve bu değeri artırmayı seçerseniz, değişikliklerin etkilerini yakından takip ederek bunu 15 dakikalık artışlarla yapmanız önerilir. Algoritmanın güvenli bir şekilde geçici bazal'ı sıfırlayabilme yeteneğini etkileyebileceğinden, bu değeri 90 dakikadan daha yükseğe ayarlamanız önerilmez. Ayrıca, değeri varsayılandan daha büyük olarak ayarlarken bildirim özelliğinin kullanılması önerilir, böylece tahmin edilen herhangi bir düşük veya yüksek seviye için uyarılar oluşturulur.";
 
+/* Headline "Max UAM SMB Basal Minutes" */
+"Max UAM SMB Basal Minutes" = "Max UAM SMB Basal Minutes";
+
 /* "Max UAM SMB Basal Minutes" */
 "Defaults to start at 30. This is the maximum minutes of basal that can be delivered by UAM as a single SMB when IOB exceeds COB. This gives the ability to make UAM more or less aggressive if you choose. It is recommended that the value is set to start at 30, in line with the default, and if you choose to increase this value, do so in no more than 15 minute increments, keeping a close eye on the effects of the changes. Reducing the value will cause UAM to dose less insulin for each SMB. It is not recommended to set this value higher than 60 mins, as this may affect the ability for the algorithm to safely zero temp. It is also recommended that pushover is used when setting the value to be greater than default, so that alerts are generated for any predicted lows or highs." = "Varsayılan değer 30'dan başlar. Bu AİNS AKRB'yi aştığında UAM tarafından tek bir SMB olarak teslim edilebilecek maksimum bazal dakikadır. Bu isterseniz UAM'yi daha fazla veya daha az agresif hale getirme yeteneği verir. Değerin varsayılana uygun olarak 30'da başlayacak şekilde ayarlanması ve bu değeri artırmayı seçerseniz, değişikliklerin etkilerini yakından takip ederek bunu 15 dakikalık artışlarla yapmanız önerilir. Değerin düşürülmesi, UAM'nin her SMB için daha az insülin dozlamasına neden olacaktır. Algoritmanın güvenli bir şekilde geçici sıfırlayabilme yeteneğini etkileyebileceğinden, bu değeri 60 dakikadan daha yükseğe ayarlamanız önerilmez. Ayrıca değeri varsayılandan daha büyük olarak ayarlarken pushover'ın kullanılması önerilir, böylece tahmin edilen herhangi bir düşük veya yüksek seviye için uyarılar oluşturulur.";
+
+/* Headline "SMB Interval" */
+"SMB Interval" = "SMB Interval";
 
 /* "SMB Interval" */
 "Minimum duration in minutes between two enacted SMBs" = "Yürürlüğe giren iki SMB arasındaki dakika cinsinden minimum süre";
 
+/* Headline "Bolus Increment" */
+"Bolus Increment" = "Bolus Increment";
+
 /* "Bolus Increment" */
 "Smallest SMB / SMB increment in oref0. Minimum amount for Medtronic pumps is 0.1 U, whereas for Omnipod it’s 0.05 U. The default value is 0.1." = "oref0'da mümkün olan en küçük SMB miktarı. Medtronic için mümkün olan en küçük miktar 0,1 Ü'dir. Omnipod için mümkün olan en küçük miktar 0,05 Ü'dir.";
+
+/* Headline "Insulin Peak Time" */
+"Insulin Peak Time" = "Insulin Peak Time";
 
 /* "Insulin Peak Time" */
 "Time of maximum blood glucose lowering effect of insulin, in minutes. Beware: Oref assumes for ultra-rapid (Lyumjev) & rapid-acting (Fiasp) curves minimal (35 & 50 min) and maximal (100 & 120 min) applicable insulinPeakTimes. Using a custom insulinPeakTime outside these bounds will result in issues with FreeAPS-X, longer loop calculations and possible red loops." = "İnsülinin maksimum kan şekerini düşürücü etkisinin dakika cinsinden süresi. Dikkat: Oref, ultra-rapid (Lyumjev) ve hızlı etkili (Fiasp) eğrilerin minimum (35 ve 50 dakika) ve maksimum (100 ve 120 dakika) uygulanabilir insülinPeakTimes olduğunu varsayar. Bu sınırların dışında özel bir insülinPeakTime kullanılması, FreeAPS-X, daha uzun döngü hesaplamaları ve olası kırmızı döngülerle ilgili sorunlara neden olacaktır.";
 
+/* Headline "Carbs Req Threshold" */
+"Carbs Req Threshold" = "Carbs Req Threshold";
+
 /* "Carbs Req Threshold" */
 "Grams of carbsReq to trigger a pushover. Defaults to 1 (for 1 gram of carbohydrate). Can be increased if you only want to get Pushover for carbsReq at X threshold." = "Bir itmeyi tetiklemek için gram karbonhidrat. Varsayılan 1'dir (1 gram karbonhidrat için). Yalnızca X eşiğinde carbsReq için itme almak istiyorsanız artırılabilir.";
+
+/* Headline "Noisy CGM Target Multiplier" */
+"Noisy CGM Target Multiplier" = "Noisy CGM Target Multiplier";
 
 /* "Noisy CGM Target Multiplier" */
 "Defaults to 1.3. Increase target by this amount when looping off raw/noisy CGM data" = "Varsayılan olarak 1.3'tür. Ham/Gürültülü CGM verilerini devre dışı bırakırken hedefi bu miktarda artır";
 
+/* Headline "SMB DeliveryRatio" */
+"SMB DeliveryRatio" = "SMB DeliveryRatio";
+
+/* SMB DeliveryRatio */
+"Default value: 0.5 This is another key OpenAPS safety cap, and specifies what share of the total insulin required can be delivered as SMB. Increase this experimental value slowly and with caution." = "Default value: 0.5 This is another key OpenAPS safety cap, and specifies what share of the total insulin required can be delivered as SMB. Increase this experimental value slowly and with caution.";
+
 // Dynamic ISF + CR Settings:
-/* Adjust Dynamic ISF constant */
+/* Headline "Adjust Dynamic ISF constant" */
 
 "Adjust Dynamic ISF constant" = "Dinamik İDF sabitini ayarla";
 
+/* Adjust Dynamic ISF constant */
+"Adjust Dynamic ISF constant" = "Dinamik İDF sabitini ayarla";
+
 /* Enable Dynamic ISF, Headline */
-"Enable Dynamif ISF" = "Dynamik İDF'yi etkinleştir";
+"Enable Dynamic ISF" = "Enable Dynamic ISF";
+
+/* Headline "Enable Dynamic ISF" */
+"Enable Dynamic ISF" = "Enable Dynamic ISF";
 
 /* Enable Dynamic ISF */
 "Calculate a new ISF with every loop cycle. New ISF will be based on current BG, TDD of insulin (past 24 hours or a weighted average) and an Adjustment Factor (default is 1).\n\nDynamic ISF and CR ratios will be limited by your autosens.min/max limits.\n\nDynamic ratio replaces the autosens.ratio: New ISF = Static ISF / Dynamic ratio,\nDynamic ratio = profile.sens * adjustmentFactor * tdd * Math.log(BG/insulinFactor+1) / 1800,\ninsulinFactor = 120 - InsulinPeakTimeInMinutes" = "Her döngü döngüsünde yeni bir İDF hesaplayın. Yeni İDF, mevcut BG'ye dayalı olacaktır, GTD'unuz (son 24 saat veya ağırlıklı bir ortalama) ve bir Ayarlama Faktörüne (varsayılan 1'dir) dayalı olacaktır.\n\nDinamik İDF ve KHO oranları, autosens.min/maks limitlerinizle sınırlanacaktır. .\n\nDinamik oran, autosens.ratio'nun yerini alır: Yeni İDF = Statik İDF / Dinamik oran,\nDynamic oran = profile.sens * AdjustFactor * tdd * Math.log(BG/insulinFactor+1) / 1800,\ninsulinFactor = 120 - İnsülinPeakTimeInMinutes";
 
+/* Headline "Enable Dynamic CR" */
+"Enable Dynamic CR" = "Enable Dynamic CR";
+
 /* Enable Dynamic CR */
 "Use Dynamic CR. The dynamic ratio will be used for CR as follows:\n\n When ratio > 1:  dynCR = (newRatio - 1) / 2 + 1.\nWhen ratio < 1: dynCR = CR/dynCR.\n\nDon't use toghether with a high Insulin Fraction (> 2)" = "Dinamik KHO kullanın. Dinamik oran, KHO için şu şekilde kullanılacaktır:\n\n Oran > 1 olduğunda: dynCR = (newRatio - 1) / 2 + 1.\nOran < 1 olduğunda: dynCR = CR/dynCR.\n\nYüksek İnsülin Fraksiyonu (> 2) ile birlikte kullanmayın.";
+
+/* Headline "Adjust Dynamic ISF constant" */
+"Adjust Dynamic ISF constant" = "Dinamik İDF sabitini ayarla";
 
 /* Adjust Dynamic ISF constant */
 "Adjust Dynamic ratios by a constant. Default is 1. Higher than 1 => lower ISF" = "Dinamik oranları bir sabite göre ayarlayın. Varsayılan 1'dir. 1'den yüksek => daha düşük İDF";
 
+
+/* Headline "Use Sigmoid Function" */
+"Use Sigmoid Function" = "Use Sigmoid Function";
+
 /* Use Sigmoid Function */
 "Use a sigmoid function for ISF (and for CR, when enabled), instead of the Logarithmic formula. Is only used when the Dynamic ISF setting is enabled in settings\n\nThe autosens.min/max settings determines the power with which dynamic ratio is adjusted, the height of the graph (Y-interval, Y: Dynamic ratio) and where the sigmoid curve flattens out, thus also limiting how high and how low the the ISF can be adjusted.\n\nThe Adjustment settings adjusts the slope of the curve. A lower value ==> less steep == less aggressive.\n\nYour scheduled/autotuned ISF setting and your min BG target determines when Dynamic ratio = 1 (ISF unchanged), meaning when current BG = minimum target BG => new ISF will always be set to your current scheduled/autotuned ISF, unlike the default logarithmic formula.\n\nDynamic CR is used when the setting 'Enable Dynamic CR' is enabled in settings." = "Use a sigmoid function for ISF (and for CR, when enabled), instead of the Logarithmic formula. Is only used when the Dynamic ISF setting is enabled in settings\n\nThe autosens.min/max settings determines the power with which dynamic ratio is adjusted, the height of the graph (Y-interval, Y: Dynamic ratio) and where the sigmoid curve flattens out, thus also limiting how high and how low the the ISF can be adjusted.\n\nThe Adjustment settings adjusts the slope of the curve. A lower value ==> less steep == less aggressive.\n\nYour scheduled/autotuned ISF setting and your min BG target determines when Dynamic ratio = 1 (ISF unchanged), meaning when current BG = minimum target BG => new ISF will always be set to your current scheduled/autotuned ISF, unlike the default logarithmic formula.\n\nDynamic CR is used when the setting 'Enable Dynamic CR' is enabled in settings.";
+
+
+/* Headline "Threshold Setting" */
+"Threshold Setting" = "Threshold Setting";
 
 /* Threshold Setting */
 "The default threshold in FAX depends on your current minimum BG target, as follows:\n\nIf your minimum BG target = 90 mg/dl -> threshold = 65 mg/dl,\n\nif minimum BG target = 100 mg/dl -> threshold = 70 mg/dl,\n\nminimum BG target = 110 mg/dl -> threshold = 75 mg/dl,\n\nand if minimum BG target = 130 mg/dl  -> threshold = 85 mg/dl.\n\nThis setting allows you to change the default to a higher threshold for looping with dynISF. Valid values are 65 mg/dl<= Threshold Setting <= 120 mg/dl." = "The default threshold in FAX depends on your current minimum BG target, as follows:\n\nIf your minimum BG target = 90 mg/dl -> threshold = 65 mg/dl,\n\nif minimum BG target = 100 mg/dl -> threshold = 70 mg/dl,\n\nminimum BG target = 110 mg/dl -> threshold = 75 mg/dl,\n\nand if minimum BG target = 130 mg/dl  -> threshold = 85 mg/dl.\n\nThis setting allows you to change the default to a higher threshold for looping with dynISF. Valid values are 65 mg/dl<= Threshold Setting <= 120 mg/dl.";
 
+/* Headline "Weighted Average of TDD. Weight of past 24 hours:" */
+"Weighted Average of TDD. Weight of past 24 hours:" = "Weighted Average of TDD. Weight of past 24 hours:";
+
 /* Weight of past 24 hours of insulin */
 "Has to be > 0 and <= 1.\nDefault is 0.65 (65 %) * TDD. The rest will be from average of total data (up to 14 days) of all TDD calculations (35 %). To only use past 24 hours, set this to 1.\n\nTo avoid sudden fluctuations, for instance after a big meal, an average of the past 2 hours of TDD calculations is used instead of just the current TDD (past 24 hours at this moment)." = "Has to be > 0 and <= 1.\nDefault is 0.65 (65 %) * TDD. The rest will be from average of total data (up to 14 days) of all TDD calculations (35 %). To only use past 24 hours, set this to 1.\n\nTo avoid sudden fluctuations, for instance after a big meal, an average of the past 2 hours of TDD calculations is used instead of just the current TDD (past 24 hours at this moment).";
+
+/* Headline "Adjust basal" */
+"Adjust basal" = "Adjust basal";
 
 /* Enable adjustment of basal profile */
 "Enable adjustment of basal based on the ratio of current TDD / 7 day average TDD" = "Geçerli GTD oranına göre bazal ayarı etkinleştirin / 7 günlük ortalama GTD";
