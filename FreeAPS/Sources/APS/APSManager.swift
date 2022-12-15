@@ -748,14 +748,9 @@ final class BaseAPSManager: APSManager, Injectable {
         let length = array.count
 
         if length % 2 == 0 {
-            if units == .mmolL {
-                return Double(((sorted[length / 2 - 1] + sorted[length / 2]) / 2).asMmolL)
-            } else { return (sorted[length / 2 - 1] + sorted[length / 2]) / 2 }
+            return (sorted[length / 2 - 1] + sorted[length / 2]) / 2
         }
-
-        if units == .mmolL {
-            return Double(sorted[length / 2].asMmolL)
-        } else { return sorted[length / 2] }
+        return sorted[length / 2]
     }
 
     // Add to statistics.JSON
@@ -1056,6 +1051,22 @@ final class BaseAPSManager: APSManager, Injectable {
                 (NGSPa1CStatisticValue_total - 2.152) // IFCC (mmol/mol)  A1C(mmol/mol) = 10.929 * (A1C(%) - 2.15)
         }
 
+        var median = Median(
+            oneDay: roundDecimal(Decimal(medianCalculation(array: bgArray_1.map(\.bg_))), 1),
+            week: roundDecimal(Decimal(medianCalculation(array: bgArray_7.map(\.bg_))), 1),
+            month: roundDecimal(Decimal(medianCalculation(array: bgArray_30.map(\.bg_))), 1),
+            ninetyDays: roundDecimal(Decimal(medianCalculation(array: bgArray_90.map(\.bg_))), 1),
+            total: roundDecimal(Decimal(medianBG), 1)
+        )
+
+        var hbs = Hbs(
+            oneDay: roundDecimal(NGSPa1CStatisticValue, 1),
+            week: roundDecimal(NGSPa1CStatisticValue_7, 1),
+            month: roundDecimal(NGSPa1CStatisticValue_30, 1),
+            ninetyDays: roundDecimal(NGSPa1CStatisticValue_90, 1),
+            total: roundDecimal(NGSPa1CStatisticValue_total, 1)
+        )
+
         // Convert to user-preferred unit
         if units == .mmolL {
             bg_1 = bg_1.asMmolL
@@ -1063,6 +1074,22 @@ final class BaseAPSManager: APSManager, Injectable {
             bg_30 = bg_30.asMmolL
             bg_90 = bg_90.asMmolL
             bg_total = bg_total.asMmolL
+
+            median = Median(
+                oneDay: roundDecimal(Decimal(medianCalculation(array: bgArray_1.map(\.bg_))).asMmolL, 1),
+                week: roundDecimal(Decimal(medianCalculation(array: bgArray_7.map(\.bg_))).asMmolL, 1),
+                month: roundDecimal(Decimal(medianCalculation(array: bgArray_30.map(\.bg_))).asMmolL, 1),
+                ninetyDays: roundDecimal(Decimal(medianCalculation(array: bgArray_90.map(\.bg_))).asMmolL, 1),
+                total: roundDecimal(Decimal(medianBG).asMmolL, 1)
+            )
+
+            hbs = Hbs(
+                oneDay: roundDecimal(IFCCa1CStatisticValue, 1),
+                week: roundDecimal(IFCCa1CStatisticValue_7, 1),
+                month: roundDecimal(IFCCa1CStatisticValue_30, 1),
+                ninetyDays: roundDecimal(IFCCa1CStatisticValue_90, 1),
+                total: roundDecimal(IFCCa1CStatisticValue_total, 1)
+            )
         }
 
         // round output values
@@ -1133,14 +1160,6 @@ final class BaseAPSManager: APSManager, Injectable {
 
         let TimeInRange = TIRs(TIR: [tir], Hypos: [hypo], Hypers: [hyper])
 
-        let median = Median(
-            oneDay: roundDecimal(Decimal(medianCalculation(array: bgArray_1.map(\.bg_))), 1),
-            week: roundDecimal(Decimal(medianCalculation(array: bgArray_7.map(\.bg_))), 1),
-            month: roundDecimal(Decimal(medianCalculation(array: bgArray_30.map(\.bg_))), 1),
-            ninetyDays: roundDecimal(Decimal(medianCalculation(array: bgArray_90.map(\.bg_))), 1),
-            total: roundDecimal(Decimal(medianBG), 1)
-        )
-
         let avgs = Average(
             oneDay: roundDecimal(bg_1, 1),
             week: roundDecimal(bg_7, 1),
@@ -1150,24 +1169,6 @@ final class BaseAPSManager: APSManager, Injectable {
         )
 
         let avg = Averages(Average: [avgs], Median: [median])
-
-        var hbs = Hbs(
-            oneDay: roundDecimal(NGSPa1CStatisticValue, 1),
-            week: roundDecimal(NGSPa1CStatisticValue_7, 1),
-            month: roundDecimal(NGSPa1CStatisticValue_30, 1),
-            ninetyDays: roundDecimal(NGSPa1CStatisticValue_90, 1),
-            total: roundDecimal(NGSPa1CStatisticValue_total, 1)
-        )
-
-        if units == .mmolL {
-            hbs = Hbs(
-                oneDay: roundDecimal(IFCCa1CStatisticValue, 1),
-                week: roundDecimal(IFCCa1CStatisticValue_7, 1),
-                month: roundDecimal(IFCCa1CStatisticValue_30, 1),
-                ninetyDays: roundDecimal(IFCCa1CStatisticValue_90, 1),
-                total: roundDecimal(IFCCa1CStatisticValue_total, 1)
-            )
-        }
 
         let dailystat = Statistics(
             createdAt: Date(),
