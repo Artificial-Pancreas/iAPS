@@ -1436,3 +1436,9 @@ Un 1.0 de valor permite un ajuste completo con el nuevo factor de sensibilidad d
 
 /* "Enable SMB With High BG" */
 "Enable SMBs when a high BG is detected, based on the high BG target (adjusted or profile)" = "Enable SMBs when a high BG is detected, based on the high BG target (adjusted or profile)";
+
+/* Headline "Dynamic settings" */
+"Dynamic settings" = "Dynamic settings";
+
+/* Insulin curve */
+"Insulin curve" = "Insulin curve";
