@@ -108,7 +108,7 @@ struct Averages: JSON, Equatable {
 }
 
 struct Average: JSON, Equatable {
-    var oneDay: Decimal
+    var day: Decimal
     var week: Decimal
     var month: Decimal
     var ninetyDays: Decimal
@@ -116,7 +116,7 @@ struct Average: JSON, Equatable {
 }
 
 struct Median: JSON, Equatable {
-    var oneDay: Decimal
+    var day: Decimal
     var week: Decimal
     var month: Decimal
     var ninetyDays: Decimal
@@ -124,7 +124,7 @@ struct Median: JSON, Equatable {
 }
 
 struct Hbs: JSON, Equatable {
-    var oneDay: Decimal
+    var day: Decimal
     var week: Decimal
     var month: Decimal
     var ninetyDays: Decimal
@@ -138,7 +138,7 @@ struct TIRs: JSON, Equatable {
 }
 
 struct TIR: JSON, Equatable {
-    var oneDay: Decimal
+    var day: Decimal
     var week: Decimal
     var month: Decimal
     var ninetyDays: Decimal
@@ -146,7 +146,7 @@ struct TIR: JSON, Equatable {
 }
 
 struct Hypos: JSON, Equatable {
-    var oneDay: Decimal
+    var day: Decimal
     var week: Decimal
     var month: Decimal
     var ninetyDays: Decimal
@@ -154,7 +154,7 @@ struct Hypos: JSON, Equatable {
 }
 
 struct Hypers: JSON, Equatable {
-    var oneDay: Decimal
+    var day: Decimal
     var week: Decimal
     var month: Decimal
     var ninetyDays: Decimal
@@ -193,7 +193,7 @@ extension Averages {
 
 extension Average {
     private enum CodingKeys: String, CodingKey {
-        case oneDay
+        case day
         case week
         case month
         case ninetyDays
@@ -203,7 +203,7 @@ extension Average {
 
 extension Median {
     private enum CodingKeys: String, CodingKey {
-        case oneDay
+        case day
         case week
         case month
         case ninetyDays
@@ -213,7 +213,7 @@ extension Median {
 
 extension Hbs {
     private enum CodingKeys: String, CodingKey {
-        case oneDay
+        case day
         case week
         case month
         case ninetyDays
@@ -231,7 +231,7 @@ extension TIRs {
 
 extension Hypos {
     private enum CodingKeys: String, CodingKey {
-        case oneDay
+        case day
         case week
         case month
         case ninetyDays
@@ -241,7 +241,7 @@ extension Hypos {
 
 extension Hypers {
     private enum CodingKeys: String, CodingKey {
-        case oneDay
+        case day
         case week
         case month
         case ninetyDays

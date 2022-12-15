@@ -1052,7 +1052,7 @@ final class BaseAPSManager: APSManager, Injectable {
         }
 
         var median = Median(
-            oneDay: roundDecimal(Decimal(medianCalculation(array: bgArray_1.map(\.bg_))), 1),
+            day: roundDecimal(Decimal(medianCalculation(array: bgArray_1.map(\.bg_))), 1),
             week: roundDecimal(Decimal(medianCalculation(array: bgArray_7.map(\.bg_))), 1),
             month: roundDecimal(Decimal(medianCalculation(array: bgArray_30.map(\.bg_))), 1),
             ninetyDays: roundDecimal(Decimal(medianCalculation(array: bgArray_90.map(\.bg_))), 1),
@@ -1060,7 +1060,7 @@ final class BaseAPSManager: APSManager, Injectable {
         )
 
         var hbs = Hbs(
-            oneDay: roundDecimal(NGSPa1CStatisticValue, 1),
+            day: roundDecimal(NGSPa1CStatisticValue, 1),
             week: roundDecimal(NGSPa1CStatisticValue_7, 1),
             month: roundDecimal(NGSPa1CStatisticValue_30, 1),
             ninetyDays: roundDecimal(NGSPa1CStatisticValue_90, 1),
@@ -1076,7 +1076,7 @@ final class BaseAPSManager: APSManager, Injectable {
             bg_total = bg_total.asMmolL
 
             median = Median(
-                oneDay: roundDecimal(Decimal(medianCalculation(array: bgArray_1.map(\.bg_))).asMmolL, 1),
+                day: roundDecimal(Decimal(medianCalculation(array: bgArray_1.map(\.bg_))).asMmolL, 1),
                 week: roundDecimal(Decimal(medianCalculation(array: bgArray_7.map(\.bg_))).asMmolL, 1),
                 month: roundDecimal(Decimal(medianCalculation(array: bgArray_30.map(\.bg_))).asMmolL, 1),
                 ninetyDays: roundDecimal(Decimal(medianCalculation(array: bgArray_90.map(\.bg_))).asMmolL, 1),
@@ -1084,7 +1084,7 @@ final class BaseAPSManager: APSManager, Injectable {
             )
 
             hbs = Hbs(
-                oneDay: roundDecimal(IFCCa1CStatisticValue, 1),
+                day: roundDecimal(IFCCa1CStatisticValue, 1),
                 week: roundDecimal(IFCCa1CStatisticValue_7, 1),
                 month: roundDecimal(IFCCa1CStatisticValue_30, 1),
                 ninetyDays: roundDecimal(IFCCa1CStatisticValue_90, 1),
@@ -1135,7 +1135,7 @@ final class BaseAPSManager: APSManager, Injectable {
         }
 
         let tir = TIR(
-            oneDay: roundDecimal(Decimal(oneDay_.TIR), 1),
+            day: roundDecimal(Decimal(oneDay_.TIR), 1),
             week: roundDecimal(Decimal(sevenDays_.TIR), 1),
             month: roundDecimal(Decimal(thirtyDays_.TIR), 1),
             ninetyDays: roundDecimal(Decimal(ninetyDays_.TIR), 1),
@@ -1143,7 +1143,7 @@ final class BaseAPSManager: APSManager, Injectable {
         )
 
         let hypo = Hypos(
-            oneDay: Decimal(oneDay_.hypos),
+            day: Decimal(oneDay_.hypos),
             week: Decimal(sevenDays_.hypos),
             month: Decimal(thirtyDays_.hypos),
             ninetyDays: Decimal(ninetyDays_.hypos),
@@ -1151,7 +1151,7 @@ final class BaseAPSManager: APSManager, Injectable {
         )
 
         let hyper = Hypers(
-            oneDay: Decimal(oneDay_.hypers),
+            day: Decimal(oneDay_.hypers),
             week: Decimal(sevenDays_.hypers),
             month: Decimal(thirtyDays_.hypers),
             ninetyDays: Decimal(ninetyDays_.hypers),
@@ -1161,7 +1161,7 @@ final class BaseAPSManager: APSManager, Injectable {
         let TimeInRange = TIRs(TIR: [tir], Hypos: [hypo], Hypers: [hyper])
 
         let avgs = Average(
-            oneDay: roundDecimal(bg_1, 1),
+            day: roundDecimal(bg_1, 1),
             week: roundDecimal(bg_7, 1),
             month: roundDecimal(bg_30, 1),
             ninetyDays: roundDecimal(bg_90, 1),

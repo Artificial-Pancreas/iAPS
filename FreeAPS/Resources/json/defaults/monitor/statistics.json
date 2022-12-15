@@ -21,7 +21,7 @@
         {
           "TIR" : [
             {
-              "oneDay" : 0,
+              "day" : 0,
               "sevenDays" : 0,
               "thirtyDays" : 0,
               "ninetyDays" : 0,
@@ -30,7 +30,7 @@
           ],
           "Hypos" : [
             {
-              "oneDay" : 0,
+              "day" : 0,
               "sevenDays" : 0,
               "thirtyDays" : 0,
               "ninetyDays" : 0,
@@ -39,7 +39,7 @@
           ],
           "Hypers" : [
             {
-              "oneDay" : 0,
+              "day" : 0,
               "sevenDays" : 0,
               "thirtyDays" : 0,
               "ninetyDays" : 0,
@@ -53,7 +53,7 @@
           "Average" : [
             {
               "oneDay_mmol" : 0,
-              "oneDay" : 0,
+              "day" : 0,
               "sevenDays_mmol" : 0,
               "sevenDays" : 0,
               "thirtyDays_mmol" : 0,
@@ -67,7 +67,7 @@
           "Median" : [
             {
               "oneDay_mmol" : 0,
-              "oneDay" : 0,
+              "day" : 0,
               "sevenDays_mmol" : 0,
               "sevenDays" : 0,
               "thirtyDays_mmol":  0,
@@ -83,7 +83,7 @@
       "HbA1c" : [
         {
           "oneDay_mmolMol" : 0,
-          "oneDay" : 0,
+          "day" : 0,
           "sevenDays_mmolMol" : 0,
           "sevenDays" : 0,
           "thirtyDays_mmolMol" : 0,
