@@ -743,14 +743,19 @@ final class BaseAPSManager: APSManager, Injectable {
         guard !array.isEmpty else {
             return 0
         }
-
+        let units = settingsManager.settings.units
         let sorted = array.sorted()
         let length = array.count
 
         if length % 2 == 0 {
-            return (sorted[length / 2 - 1] + sorted[length / 2]) / 2
+            if units == .mmolL {
+                return Double(((sorted[length / 2 - 1] + sorted[length / 2]) / 2).asMmolL)
+            } else { return (sorted[length / 2 - 1] + sorted[length / 2]) / 2 }
         }
-        return sorted[length / 2]
+
+        if units == .mmolL {
+            return Double(sorted[length / 2].asMmolL)
+        } else { return sorted[length / 2] }
     }
 
     // Add to statistics.JSON
@@ -768,6 +773,7 @@ final class BaseAPSManager: APSManager, Injectable {
             }
         }
 
+        let units = settingsManager.settings.units
         let preferences = settingsManager.preferences
         let carbs = storage.retrieve(OpenAPS.Monitor.carbHistory, as: [CarbsEntry].self)
         let tdds = storage.retrieve(OpenAPS.Monitor.tdd, as: [TDD].self)
@@ -1050,6 +1056,15 @@ final class BaseAPSManager: APSManager, Injectable {
                 (NGSPa1CStatisticValue_total - 2.152) // IFCC (mmol/mol)  A1C(mmol/mol) = 10.929 * (A1C(%) - 2.15)
         }
 
+        // Convert to user-preferred unit
+        if units == .mmolL {
+            bg_1 = bg_1.asMmolL
+            bg_7 = bg_7.asMmolL
+            bg_30 = bg_30.asMmolL
+            bg_90 = bg_90.asMmolL
+            bg_total = bg_total.asMmolL
+        }
+
         // round output values
         daysBG = roundDouble(daysBG, 1)
 
@@ -1062,7 +1077,7 @@ final class BaseAPSManager: APSManager, Injectable {
             min_interval: roundDecimal(Decimal(minimumInt), 1),
             max_interval: roundDecimal(Decimal(maximumInt), 1),
             avg_duration: Decimal(roundDouble(averageLoopTime, 2)),
-            median_duration: Decimal(roundDouble(medianLoopTime, 1)),
+            median_duration: Decimal(roundDouble(medianLoopTime, 2)),
             min_duration: roundDecimal(Decimal(minimumLoopTime), 2),
             max_duration: Decimal(roundDouble(maximumLoopTime, 1))
         )
@@ -1094,70 +1109,65 @@ final class BaseAPSManager: APSManager, Injectable {
 
         let tir = TIR(
             oneDay: roundDecimal(Decimal(oneDay_.TIR), 1),
-            sevenDays: roundDecimal(Decimal(sevenDays_.TIR), 1),
-            thirtyDays: roundDecimal(Decimal(thirtyDays_.TIR), 1),
+            week: roundDecimal(Decimal(sevenDays_.TIR), 1),
+            month: roundDecimal(Decimal(thirtyDays_.TIR), 1),
             ninetyDays: roundDecimal(Decimal(ninetyDays_.TIR), 1),
-            totalDays: roundDecimal(Decimal(totalDays_.TIR), 1)
+            total: roundDecimal(Decimal(totalDays_.TIR), 1)
         )
 
         let hypo = Hypos(
             oneDay: Decimal(oneDay_.hypos),
-            sevenDays: Decimal(sevenDays_.hypos),
-            thirtyDays: Decimal(thirtyDays_.hypos),
+            week: Decimal(sevenDays_.hypos),
+            month: Decimal(thirtyDays_.hypos),
             ninetyDays: Decimal(ninetyDays_.hypos),
-            totalDays: Decimal(totalDays_.hypos)
+            total: Decimal(totalDays_.hypos)
         )
 
         let hyper = Hypers(
             oneDay: Decimal(oneDay_.hypers),
-            sevenDays: Decimal(sevenDays_.hypers),
-            thirtyDays: Decimal(thirtyDays_.hypers),
+            week: Decimal(sevenDays_.hypers),
+            month: Decimal(thirtyDays_.hypers),
             ninetyDays: Decimal(ninetyDays_.hypers),
-            totalDays: Decimal(totalDays_.hypers)
+            total: Decimal(totalDays_.hypers)
         )
 
         let TimeInRange = TIRs(TIR: [tir], Hypos: [hypo], Hypers: [hyper])
 
         let median = Median(
-            oneDay_mmol: roundDecimal(medianCalculation(array: bgArray_1.map(\.bg_)).asMmolL, 1),
-            oneDay: Decimal(medianCalculation(array: bgArray_1.map(\.bg_))),
-            sevenDays_mmol: roundDecimal(medianCalculation(array: bgArray_7.map(\.bg_)).asMmolL, 1),
-            sevenDays: Decimal(medianCalculation(array: bgArray_7.map(\.bg_))),
-            thirtyDays_mmol: roundDecimal(medianCalculation(array: bgArray_30.map(\.bg_)).asMmolL, 1),
-            thirtyDays: Decimal(medianCalculation(array: bgArray_30.map(\.bg_))),
-            ninetyDays_mmol: roundDecimal(medianCalculation(array: bgArray_90.map(\.bg_)).asMmolL, 1),
-            ninetyDays: Decimal(medianCalculation(array: bgArray_90.map(\.bg_))),
-            totalDays_mmol: roundDecimal(Decimal(medianBG).asMmolL, 2),
-            totalDays: Decimal(medianBG)
+            oneDay: roundDecimal(Decimal(medianCalculation(array: bgArray_1.map(\.bg_))), 1),
+            week: roundDecimal(Decimal(medianCalculation(array: bgArray_7.map(\.bg_))), 1),
+            month: roundDecimal(Decimal(medianCalculation(array: bgArray_30.map(\.bg_))), 1),
+            ninetyDays: roundDecimal(Decimal(medianCalculation(array: bgArray_90.map(\.bg_))), 1),
+            total: roundDecimal(Decimal(medianBG), 1)
         )
 
         let avgs = Average(
-            oneDay_mmol: roundDecimal(bg_1.asMmolL, 1),
-            oneDay: roundDecimal(bg_1, 0),
-            sevenDays_mmol: roundDecimal(bg_7.asMmolL, 1),
-            sevenDays: roundDecimal(bg_7, 0),
-            thirtyDays_mmol: roundDecimal(bg_30.asMmolL, 1),
-            thirtyDays: roundDecimal(bg_30, 0),
-            ninetyDays_mmol: roundDecimal(bg_90.asMmolL, 1),
-            ninetyDays: roundDecimal(bg_90, 0),
-            totalDays_mmol: roundDecimal(bg_total.asMmolL, 1),
-            totalDays: roundDecimal(bg_total, 0)
+            oneDay: roundDecimal(bg_1, 1),
+            week: roundDecimal(bg_7, 1),
+            month: roundDecimal(bg_30, 1),
+            ninetyDays: roundDecimal(bg_90, 1),
+            total: roundDecimal(bg_total, 1)
         )
 
         let avg = Averages(Average: [avgs], Median: [median])
 
-        let hbs = Hbs(
-            oneDay_mmolMol: roundDecimal(IFCCa1CStatisticValue, 1),
+        var hbs = Hbs(
             oneDay: roundDecimal(NGSPa1CStatisticValue, 1),
-            sevenDays_mmolMol: roundDecimal(IFCCa1CStatisticValue_7, 1),
-            sevenDays: roundDecimal(NGSPa1CStatisticValue_7, 1),
-            thirtyDays_mmolMol: roundDecimal(IFCCa1CStatisticValue_30, 1),
-            thirtyDays: roundDecimal(NGSPa1CStatisticValue_30, 1),
-            ninetyDays_mmolMol: roundDecimal(IFCCa1CStatisticValue_90, 1),
+            week: roundDecimal(NGSPa1CStatisticValue_7, 1),
+            month: roundDecimal(NGSPa1CStatisticValue_30, 1),
             ninetyDays: roundDecimal(NGSPa1CStatisticValue_90, 1),
-            totalDays_mmolMol: roundDecimal(IFCCa1CStatisticValue_total, 1),
-            totalDays: roundDecimal(NGSPa1CStatisticValue_total, 1)
+            total: roundDecimal(NGSPa1CStatisticValue_total, 1)
         )
+
+        if units == .mmolL {
+            hbs = Hbs(
+                oneDay: roundDecimal(IFCCa1CStatisticValue, 1),
+                week: roundDecimal(IFCCa1CStatisticValue_7, 1),
+                month: roundDecimal(IFCCa1CStatisticValue_30, 1),
+                ninetyDays: roundDecimal(IFCCa1CStatisticValue_90, 1),
+                total: roundDecimal(IFCCa1CStatisticValue_total, 1)
+            )
+        }
 
         let dailystat = Statistics(
             createdAt: Date(),
