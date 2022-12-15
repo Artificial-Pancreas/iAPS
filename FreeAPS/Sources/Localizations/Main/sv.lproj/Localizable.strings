@@ -1287,7 +1287,7 @@ Enact a temp Basal or a temp target */
 "Bolus snooze is enacted after you do a meal bolus, so the loop won’t counteract with low temps when you’ve just eaten. The example here and default is 2; so a 3 hour DIA means that bolus snooze will be gradually phased out over 1.5 hours (3DIA/2)." = "Denna är aktiv efter att du har gett en måltidsbolus, för att motverka en låg temporär basal när du just ätit. I detta exempel med standardvärdet 2 och med DIA-inställning på 3 h kommer 'Bolus Snooze' att fasas ut över 1,5 h (3 DIA / 2).";
 
 /* Headline "Min 5m Carbimpact" */
-"Min 5m Carbimpact" = "Kolhydratsabsorption lägsta hastighet";
+"Min 5m Carbimpact" = "Lägsta absorptionshastighet";
 
 /* "Min 5m Carbimpact" */
 "This is a setting for default carb absorption impact per 5 minutes. The default is an expected 8 mg/dL/5min. This affects how fast COB is decayed in situations when carb absorption is not visible in BG deviations. The default of 8 mg/dL/5min corresponds to a minimum carb absorption rate of 24g/hr at a CSF of 4 mg/dL/g." = "Standardvärde är 8 mg/dl/5min (0,4 mmol/l/5 min). Detta är en inställning för kolhydratsabsorptionseffekt per 5 minuter, som påverkar hur snabbt aktiva kolhydrater klingar av i situationer när kolhydratsabsorption inte syns i BS-avvikelser. Standarden på 0,4 mmol/l/5 min motsvarar en minsta absorptionshastighet på 24g/h vid en CSF ('Carb Sensitivity Factor', hur mycket ditt blodsocker stiger per gram kolhydrat) på 0,2 mmol/l/g.";
