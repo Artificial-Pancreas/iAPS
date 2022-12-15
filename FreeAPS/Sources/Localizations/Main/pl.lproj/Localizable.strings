@@ -1414,3 +1414,21 @@ Połączono z Nightscout!";
 
 /* Enable adjustment of basal profile */
 "Enable adjustment of basal based on the ratio of current TDD / 7 day average TDD" = "Enable adjustment of basal based on the ratio of current TDD / 7 day average TDD";
+
+/* Headline "Max Delta-BG Threshold SMB" */
+"Max Delta-BG Threshold SMB" = "Max Delta-BG Threshold SMB";
+
+/* Max Delta-BG Threshold SMB */
+"Defaults to 0.2 (20%). Maximum positiv %change of BG level to use SMB, above that will disable SMB. Hardcoded cap of 40%. For UAM fully-closed-loop 30% is advisable. Observe in log and popup (maxDelta 27 > 20% of BG 100 - disabling SMB!)." = "Defaults to 0.2 (20%). Maximum positiv %change of BG level to use SMB, above that will disable SMB. Hardcoded cap of 40%. For UAM fully-closed-loop 30% is advisable. Observe in log and popup (maxDelta 27 > 20% of BG 100 - disabling SMB!).";
+
+/* Headline "... When Blood Glucose Is Over (mg/dl):" */
+"... When Blood Glucose Is Over (mg/dl):" = "... When Blood Glucose Is Over (mg/dl):";
+
+/* ... When Blood Glucose Is Over (mg/dl): */
+"Set the value enableSMB_high_bg will compare against to enable SMB. If BG > than this value, SMBs should enable." = "Set the value enableSMB_high_bg will compare against to enable SMB. If BG > than this value, SMBs should enable.";
+
+/* Headline "Enable SMB With High BG" */
+"Enable SMB With High BG" = "Enable SMB With High BG";
+
+/* "Enable SMB With High BG" */
+"Enable SMBs when a high BG is detected, based on the high BG target (adjusted or profile)" = "Enable SMBs when a high BG is detected, based on the high BG target (adjusted or profile)";
