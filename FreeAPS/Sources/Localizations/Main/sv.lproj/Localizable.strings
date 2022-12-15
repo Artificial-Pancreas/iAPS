@@ -1433,3 +1433,6 @@ Enact a temp Basal or a temp target */
 
 /* Headline "Dynamic settings" */
 "Dynamic settings" = "Dynamiska inställningar";
+
+/* Insulin curve */
+"Insulin curve" = "Insulintyp";"
