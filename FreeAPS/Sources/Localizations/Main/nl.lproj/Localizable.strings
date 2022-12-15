@@ -1123,144 +1123,292 @@ Enact a temp Basal or a temp target */
   Infotexts from openaps.docs and androidaps.docs
   FreeAPS X
 */
-/* ”Rewind Resets Autosens” */
+/* Headline Rewind Resets Autosens */
 
+"Rewind Resets Autosens" = "Rewind Resets Autosens";
+
+/* ”Rewind Resets Autosens” */
 "This feature, enabled by default, resets the autosens ratio to neutral when you rewind your pump, on the assumption that this corresponds to a probable site change. Autosens will begin learning sensitivity anew from the time of the rewind, which may take up to 6 hours. If you usually rewind your pump independently of site changes, you may want to consider disabling this feature." = "Deze functie, die standaard is ingeschakeld, zet Autosense de ratio terug op neutraal wanneer je pomp terugdraait, ervan uitgaande dat dit een katheter- en reservoirwissel betekent. Autosens start opnieuw op vanaf het moment van terugkeer en het kan tot 6 uur duren om de gevoeligheid opnieuw te beoordelen. Als u uw pomp normaal gesproken onafhankelijk van de resevoir- en katheterwissel terugdraait, kunt u overwegen om deze functie uit te schakelen.";
+
+/* Headline "High Temptarget Raises Sensitivity" */
+"High Temptarget Raises Sensitivity" = "High Temptarget Raises Sensitivity";
 
 /* ”High Temptarget Raises Sensitivity" */
 "Defaults to false. When set to true, raises sensitivity (lower sensitivity ratio) for temp targets set to >= 111. Synonym for exercise_mode. The higher your temp target above 110 will result in more sensitive (lower) ratios, e.g., temp target of 120 results in sensitivity ratio of 0.75, while 140 results in 0.6 (with default halfBasalTarget of 160)." = "Is standaard uitgeschakeld. Wanneer ingeschakeld, verhoogt dit de gevoeligheid (lagere gevoeligheidsratio) voor tijdelijk doel tot >= 111 exercise_mode. Hoe hoger je doel boven de 110 ligt, hoe gevoeliger (lagere) ratio's, bijvoorbeeld tijdelijk streefdoel van 120 resulteert in de sensitiviteitsratio van 0,75, terwijl 140 resulteert in 0,6 (met standaard half-basaal doel van 160).";
 
+/* Headline ”Low Temptarget Lowers Sensitivity" */
+"Low Temptarget Lowers Sensitivity" = "Low Temptarget Lowers Sensitivity";
+
 /* ”Low Temptarget Lowers Sensitivity" */
 "Defaults to false. When set to true, can lower sensitivity (higher sensitivity ratio) for temptargets <= 99. The lower your temp target below 100 will result in less sensitive (higher) ratios, e.g., temp target of 95 results in sensitivity ratio of 1.09, while 85 results in 1.33 (with default halfBasalTarget of 160)." = "Is standaard uitgeschakeld. Indien ingeschakeld, kan de gevoeligheid (hogere gevoeligheidsratio) voor tijdelijke doelen worden verlaagd < = 99. Hoe lager je tijdelijke doel onder de 100 ligt, hoe hoger de gevoeligheid zal zijn. Zo levert een tijdelijk koersdoel van 95 een gevoeligheidsratio van 1,09 op, terwijl 85 een waarde van 1,33 geeft.";
+
+/* Headline ”Sensitivity Raises Target" */
+"Sensitivity Raises Target" = "Sensitivity Raises Target";
 
 /* ”Sensitivity Raises Target" */
 "When true, raises BG target when autosens detects sensitivity" = "Wanneer waar, verhoogt het BG streefdoel als autosens gevoeligheid detecteert";
 
+/* Headline ”Resistance Lowers Target" */
+"Resistance Lowers Target" = "Resistance Lowers Target";
+
 /* ”Resistance Lowers Target" */
 "Defaults to false. When true, will lower BG target when autosens detects resistance" = "Standaard op onwaar. Wanneer waar, zal het BG doel verlagen als autosens minder gevoeligheid detecteert";
+
+/* Headline ”Advanced Target Adjustments" */
+"Advanced Target Adjustments" = "Advanced Target Adjustments";
 
 /* ”Advanced Target Adjustments" */
 "This feature was previously enabled by default but will now default to false (will NOT be enabled automatically) in oref0 0.6.0 and beyond. (There is no need for this with 0.6.0). This feature lowers oref0’s target BG automatically when current BG and eventualBG are high. This helps prevent and mitigate high BG, but automatically switches to low-temping to ensure that BG comes down smoothly toward your actual target. If you find this behavior too aggressive, you can disable this feature. If you do so, please let us know so we can better understand what settings work best for everyone." = "Deze functie was in het verleden altijd geactiveerd, maar is nu standaard ingesteld op \"Uit\". Dit is niet langer nodig met oref 0.6.0. Deze functie verlaagt automatisch de bloedglucosedoelstelling van oref0 als de huidige BG of de verwachte BG hoog zijn. Dit helpt hoge BG te voorkomen en te beperken, maar schakelt automatisch over op lage gevoeligheid om ervoor te zorgen dat de BG zich soepel naar uw eigenlijke doel beweegt. Als u dit gedrag te agressief vindt, kunt u deze functie uitschakelen. Als u dat doet, laat het ons dan weten, zodat we beter kunnen begrijpen welke instellingen voor iedereen het beste werken.";
 
+/* Headline "Exercise Mode" */
+"Exercise Mode" = "Exercise Mode";
+
 /* "Exercise Mode" */
 "Defaults to false. When true, > 105 mg/dL high temp target adjusts sensitivityRatio for exercise_mode. Synonym for high_temptarget_raises_sensitivity" = "Standaard uit. Indien aan, > 105 mg/dL hoge tijdelijke doelstelling past gevoeligheid voor Oefening_Modus aan. Synoniem voor hoge tijdelijk doel verhoging gevoeligheid";
+
+
+/* Headline "Wide BG Target Range" */
+"Wide BG Target Range" = "Wide BG Target Range";
 
 /* "Wide BG Target Range" */
 "Defaults to false, which means by default only the low end of the pump’s BG target range is used as OpenAPS target. This is a safety feature to prevent too-wide targets and less-optimal outcomes. Therefore the higher end of the target range is used only for avoiding bolus wizard overcorrections. Use wide_bg_target_range: true to force neutral temps over a wider range of eventualBGs." = "Standaard uit betekent dat standaard alleen de laagste BG van de pomp wordt gebruikt als OpenAPS doel. Dit is een veiligheidsvoorziening om al te brede doelen en minder optimale resultaten te voorkomen. Daarom wordt het hoogste eind van het streefbereik alleen gebruikt om teveel compenseren van de bolus assistent te voorkomen. Gebruik wide_bg_target_range: true om neutrale temps af te dwingen over een breder bereik van de uiteindelijke BG.";
 
+
+/* Headline "Skip Neutral Temps" */
+"Skip Neutral Temps" = "Skip Neutral Temps";
+
 /* "Skip Neutral Temps" */
 "Defaults to false, so that FreeAPS X will set temps whenever it can, so it will be easier to see if the system is working, even when you are offline. This means FreeAPS X will set a “neutral” temp (same as your default basal) if no adjustments are needed. This is an old setting for OpenAPS to have the options to minimise sounds and notifications from the 'rig', that may wake you up during the night." = "Standaard ingesteld op uit, zodat FreeAPS X tijdelijke basaal waardes zal instellen wanneer dat maar kan. het zal dus makkelijker zijn om te zien of het systeem werkt, zelfs als je offline bent. Dit betekent dat OpenAPS een \"neutraal\" basaal (hetzelfde als jouw standaard basaal) zal instellen als er geen aanpassingen nodig zijn. Dit is een oude instelling van OpenAPS om de optie te hebben om geluiden en meldingen te beperken waarvan je 's nachts misschien wakker kan worden. ";
+
+/* Headline "Unsuspend If No Temp” */
+"Unsuspend If No Temp" = "Unsuspend If No Temp";
 
 /* "Unsuspend If No Temp” */
 "Many people occasionally forget to resume / unsuspend their pump after reconnecting it. If you’re one of them, and you are willing to reliably set a zero temp basal whenever suspending and disconnecting your pump, this feature has your back. If enabled, it will automatically resume / unsuspend the pump if you forget to do so before your zero temp expires. As long as the zero temp is still running, it will leave the pump suspended." = "Veel mensen vergeten af en toe hun pomp te hervatten nadat ze opnieuw zijn aangesloten. Herken je jezelf hierin en ben je bereid voordat je je afkoppelt een tijdelijk basaal van 0 in te stellen kan deze instelling helpen. Indien ingeschakeld zal de pomp automatisch hervatten, als je dit zelf vergeet te doen voordat het tijdelijk 0 basaal verloopt. Zolang het tijdelijk 0 basaal nog actief is, laat FreeAPS X de pomp opgeschort.";
 
+/* Headline "Enable UAM" */
+"Enable UAM" = "Enable UAM";
+
 /* "Enable UAM" */
 "With this option enabled, the SMB algorithm can recognize unannounced meals. This is helpful, if you forget to tell FreeAPS X about your carbs or estimate your carbs wrong and the amount of entered carbs is wrong or if a meal with lots of fat and protein has a longer duration than expected. Without any carb entry, UAM can recognize fast glucose increasments caused by carbs, adrenaline, etc, and tries to adjust it with SMBs. This also works the opposite way: if there is a fast glucose decreasement, it can stop SMBs earlier." = "Als deze optie is ingeschakeld, herkent het SMB-algoritme onaangekondigde maaltijden. Dit is nuttig, als je vergeet om koolhydraten in te voeren, je koolhydraten verkeerd inschat, de hoeveelheid ingevoerde koolhydraten verkeerd is of als een maaltijd met veel vet en eiwit een langere duur heeft dan verwacht. Zonder koolhydraten in te voeren, kan UAM snelle glucoseverhogingen veroorzaakt door koolhydraten, adrenaline, etc. herkennen en dit proberen op te lossen met SMB's. Dit werkt ook andersom: als er een snelle glucose daling is, kan het eerder stoppen met SMBs.";
 
-/* Enable SMB With COB" */
+/* Headline "Enable SMB With COB" */
+"Enable SMB With COB" = "Enable SMB With COB";
 
+/* Enable SMB With COB" */
 "This enables supermicrobolus (SMB) while carbs on board (COB) are positive." = "Dit activeert supermicrobolus (SMB) wanneer er koolhydraten actief zijn (COB).";
+
+/* Headline "Enable SMB With Temptarget” */
+"Enable SMB With Temptarget" = "Enable SMB With Temptarget";
 
 /* "Enable SMB With Temptarget” */
 "This enables supermicrobolus (SMB) with eating soon / low temp targets. With this feature enabled, any temporary target below 100mg/dL, such as a temp target of 99 (or 80, the typical eating soon target) will enable SMB." = "Dit maakt kleine microbolussen (SMB, supermicrobolus) mogelijk wanneer \"eating soon/pre-maaltijd\" of een lage tijdelijke streefwaarde is ingesteld. Als dit is ingesteld zal elke tijdelijke streefwaarde onder 100mg/dL (5.5 mmol/l) bijvoorbeeld 5.4 (of 4.5, de typische pre-maaltijd streefwaarde) SMB inschakelen.";
 
+/* Headline "Enable SMB Always" */
+"Enable SMB Always" = "Enable SMB Always";
+
 /* "Enable SMB Always" */
 "Defaults to false. When true, always enable supermicrobolus (unless disabled by high temptarget)." = "Standaard uit. Als het aangezet wordt zullen altijd supermicrobolussen (SMBs) gebruikt worden. Tenzij deze uitgezet zijn door een hoge streefwaarde.";
+
+/* Headline "Enable SMB After Carbs" */
+"Enable SMB After Carbs" = "Enable SMB After Carbs";
 
 /* "Enable SMB After Carbs" */
 "Defaults to false. When true, enables supermicrobolus (SMB) for 6h after carbs, even with 0 carbs on board (COB)." = "Standaard uit. Als het aangezet wordt zullen supermicrobolussen (SMBs) gebruikt worden voor 6 uur na ingevoerde koolhydraten, zelfs als er nog 0 koolhydraten aan boord zijn (COB).";
 
+/* Enable "Allow SMB With High Temptarget" */
+"Allow SMB With High Temptarget" = "Allow SMB With High Temptarget";
+
+/* Headline "Allow SMB With High Temptarget" */
+"Allow SMB With High Temptarget" = "Allow SMB With High Temptarget";
+
 /* "Allow SMB With High Temptarget" */
 "Defaults to false. When true, allows supermicrobolus (if otherwise enabled) even with high temp targets." = "Standaard uit. Als het aangezet wordt zullen altijd supermicrobolussen (SMBs) altijd gebruikt worden (mits elders aangezet).";
+
+/* Headline "Use Custom Peak Time” */
+"Use Custom Peak Time" = "Use Custom Peak Time";
 
 /* "Use Custom Peak Time” */
 "Defaults to false. Setting to true allows changing insulinPeakTime" = "Is standaard ingesteld op uit. Indien ingeschakeld, kunt u de insuline piektijd veranderen";
 
+/* Headline "Suspend Zeros IOB” */
+"Suspend Zeros IOB" = "Suspend Zeros IOB";
+
 /* "Suspend Zeros IOB” */
 "Default is false. Any existing temp basals during times the pump was suspended will be deleted and 0 temp basals to negate the profile basal rates during times pump is suspended will be added." = "Standaard uit. Alle reeds ingevoerde tijdelijke basaalstanden die ingevoerd zijn wanneer de pomp is opgeschort, worden verwijderd. Een 0 tijdelijk basaal wordt toegevoegd om de in het profiel opgegeven basaal te overschijven gedurende de tijd dat de pomp was opgeschort.";
+
+/* Headline "Max IOB" */
+"Max IOB" = "Max IOB";
 
 /* "Max IOB" */
 "Max IOB is the maximum amount of insulin on board from all sources – both basal (or SMB correction) and bolus insulin – that your loop is allowed to accumulate to treat higher-than-target BG. Unlike the other two OpenAPS safety settings (max_daily_safety_multiplier and current_basal_safety_multiplier), max_iob is set as a fixed number of units of insulin. As of now manual boluses are NOT limited by this setting. \n\n To test your basal rates during nighttime, you can modify the Max IOB setting to zero while in Closed Loop. This will enable low glucose suspend mode while testing your basal rates settings\n\n(Tip from https://www.loopandlearn.org/freeaps-x/#open-loop)." = "De Max IOB is de maximale hoeveelheid insuline aan boord van alle bronnen - zowel basaal (of SMB correcties) en bolus insuline die door FreeAPS X gegeven mag worden om alles hoger dan de streefwaarde te behandelen. Anders dan de andere twee veiligheid instelingen (max_daily_safety_multiplier and current_basal_safety_multiplier) wordt bij deze instelling een vaste aantal eenheden insuline opgegeven. Voorlopig worden handmatige bolussen NIET beperkt door deze instelling. \n\n Om je basaal waarden te testen gedurende de nacht kun je deze instelling op 0 zetten tijdens een gesloten Loop. Dit zorgt er voor dat stop voor laag geactiveerd worden wanneer je je instelling aan het testen bent. \n\n(Tip van https://www.loopandlearn.org/freeaps-x/#open-loop).";
 
+/* Headline "Max Daily Safety Multiplier" */
+"Max Daily Safety Multiplier" = "Max Daily Safety Multiplier";
+
 /* "Max Daily Safety Multiplier" */
 "This is an important OpenAPS safety limit. The default setting (which is unlikely to need adjusting) is 3. This means that OpenAPS will never be allowed to set a temporary basal rate that is more than 3x the highest hourly basal rate programmed in a user’s pump, or, if enabled, determined by autotune." = "Dit is een belangrijke OpenAPS veiligheidslimiet. De standaardinstelling (die waarschijnlijk geen aanpassingen nodig zal hebben) is 3. Dit betekent dat OpenAPS nooit zal worden toegestaan om een tijdelijke basaalstand in te stellen die groter is dan 3 x de hoogste basaalstand per uur, geprogrammeerd in een gebruikerspomp, of indien ingeschakeld, bepaald door autotune.";
+
+/* Headline "Current Basal Safety Multiplier" */
+"Current Basal Safety Multiplier" = "Current Basal Safety Multiplier";
 
 /* "Current Basal Safety Multiplier" */
 "This is another important OpenAPS safety limit. The default setting (which is also unlikely to need adjusting) is 4. This means that OpenAPS will never be allowed to set a temporary basal rate that is more than 4x the current hourly basal rate programmed in a user’s pump, or, if enabled, determined by autotune." = "Dit is ook een belangrijke OpenAPS veiligheidslimiet. De standaard instelling (die waarschijnlijk niet aangepast hoeft te worden) is 4. Dit betekend dat OpenAPS niet een hoger tijdelijk basaal waarde mag instellen dan 4 keer het huidige basaal van dit uur ingesteld in de pomp, of als dit is ingesteld bepaald door autotune.";
 
+/* Headline "Autosens Max" */
+"Autosens Max" = "Autosens Max";
+
 /* "Autosens Max" */
 "This is a multiplier cap for autosens (and autotune) to set a 20% max limit on how high the autosens ratio can be, which in turn determines how high autosens can adjust basals, how low it can adjust ISF, and how low it can set the BG target." = "Dit is een vermenigvuldigingsfactor voor Autosens (en Autotune) om een maximum te zetten van 20% op hoe hoog de Autosens ratio kan zijn. Dit bepaald hoe hoog Autosens het basaal kan aanpassen, hoe laag het de ISF kan instellen en hoe laag het de streefwaarde kan maken.";
+
+
+/* Headline "Autosens Min" */
+"Autosens Min" = "Autosens Min";
 
 /* "Autosens Min" */
 "The other side of the autosens safety limits, putting a cap on how low autosens can adjust basals, and how high it can adjust ISF and BG targets." = "De andere kant van de Autosens veiligheidslimiet, dit set een limiet op hoe laag Autosens de basaal kan zetten, hoe hoog het de ISF kan zetten en hoe hoog de streefwaarde ingesteld kan worden.";
 
+/* Headline "Half Basal Exercise Target" */
+"Half Basal Exercise Target" = "Half Basal Exercise Target";
+
 /* "Half Basal Exercise Target" */
 "Set to a number, e.g. 160, which means when temp target is 160 mg/dL and exercise_mode=true, run 50% basal at this level (120 = 75%; 140 = 60%). This can be adjusted, to give you more control over your exercise modes." = "Stel in op nummer, b.v. 160, wat betekent dat wanneer een tijdelijk streefdoel 160 mg/dL (9 mmol/l) en bewegingen_mode=true is, 50% basaal op dit niveau (120 (6,7) = 75%; 140 (7,8) = 60%). Dit kan worden aangepast, om u meer controle te geven over uw oefeningsmodi.";
+
+/* Headline "Max COB" */
+"Max COB" = "Max COB";
 
 /* "Max COB" */
 "This defaults maxCOB to 120 because that’s the most a typical body can absorb over 4 hours. (If someone enters more carbs or stacks more; OpenAPS will just truncate dosing based on 120. Essentially, this just limits AMA as a safety cap against weird COB calculations due to fluky data.)" = "De standaard maximum COB van 120 is omdat een normaal lichaam niet meer dan dit in 4 uur kan absorberen. (Als er meer koolhydraten gestapeld worden; zal OpenAPS de dosering beperken tot de basis van 120 koolhydraten aan boord. In wezen beperkt dit alleen AMA als een veiligheidslimiet tegen afwijkende COB-berekeningen vanwege verkeerde gegevens)";
 
+/* Headline "Bolus Snooze DIA Divisor" */
+"Bolus Snooze DIA Divisor" = "Bolus Snooze DIA Divisor";
+
 /* "Bolus Snooze DIA Divisor" */
 "Bolus snooze is enacted after you do a meal bolus, so the loop won’t counteract with low temps when you’ve just eaten. The example here and default is 2; so a 3 hour DIA means that bolus snooze will be gradually phased out over 1.5 hours (3DIA/2)." = "Bolus snooze is geactiveerd nadat je een maaltijdbolus hebt gedaan, zodat de Loop geen lage streefwaardes zal instellen wanneer je net hebt gegeten. Het voorbeeld hier en de standaard waarde is 2; dus een DIA van 3 uur betekent dat bolus snooze geleidelijk aan zal verdwijnen binnen 1,5 uur (3DIA/2).";
+
+/* Headline "Min 5m Carbimpact" */
+"Min 5m Carbimpact" = "Min 5m Carbimpact";
 
 /* "Min 5m Carbimpact" */
 "This is a setting for default carb absorption impact per 5 minutes. The default is an expected 8 mg/dL/5min. This affects how fast COB is decayed in situations when carb absorption is not visible in BG deviations. The default of 8 mg/dL/5min corresponds to a minimum carb absorption rate of 24g/hr at a CSF of 4 mg/dL/g." = "Dit is een instelling voor de standaard koolhydraten absorptie per 5 minuten. De standaard waarde is een verwachte 8 mg/dL/5min. Dit beïnvloedt hoe snel COB afneemt in situaties waarin koolhydraat absorptie niet zichtbaar is in BG afwijkingen. De standaard van 8 mg/dL/5 min komt overeen met een minimale koolhydraten absorptie van 24g/hr op een CSF (koolhydraat gevoeligheid factor) van 4 mg/dL/g.";
 
+/* Headline "Autotune ISF Adjustment Fraction" */
+"Autotune ISF Adjustment Fraction" = "Autotune ISF Adjustment Fraction";
+
 /* "Autotune ISF Adjustment Fraction" */
 "The default of 0.5 for this value keeps autotune ISF closer to pump ISF via a weighted average of fullNewISF and pumpISF. 1.0 allows full adjustment, 0 is no adjustment from pump ISF." = "The default of 0.5 for this value keeps autotune ISF closer to pump ISF via a weighted average of fullNewISF and pumpISF. 1.0 allows full adjustment, 0 is no adjustment from pump ISF.";
+
+/* Headline "Remaining Carbs Fraction" */
+"Remaining Carbs Fraction" = "Remaining Carbs Fraction";
 
 /* "Remaining Carbs Fraction" */
 "This is the fraction of carbs we’ll assume will absorb over 4h if we don’t yet see carb absorption." = "Dit is de fractie van koolhydraten waarvan we aannemen dat ze gedurende 4 uur zullen absorberen, als we nog geen koolhydraten absorptie zien.";
 
+/* Headline "Remaining Carbs Cap" */
+"Remaining Carbs Cap" = "Remaining Carbs Cap";
+
 /* "Remaining Carbs Cap" */
 "This is the amount of the maximum number of carbs we’ll assume will absorb over 4h if we don’t yet see carb absorption." = "Dit is het maximale aantal koolhydraten waarvan we aannemen dat ze over een periode van 4 uur geabsorbeerd worden als we nog geen absorptie zien.";
+
+/* Headline ”Max SMB Basal Minutes" */
+"Max SMB Basal Minutes" = "Max SMB Basal Minutes";
 
 /* ”Max SMB Basal Minutes" */
 "Defaults to start at 30. This is the maximum minutes of basal that can be delivered as a single SMB with uncovered COB. This gives the ability to make SMB more aggressive if you choose. It is recommended that the value is set to start at 30, in line with the default, and if you choose to increase this value, do so in no more than 15 minute increments, keeping a close eye on the effects of the changes. It is not recommended to set this value higher than 90 mins, as this may affect the ability for the algorithm to safely zero temp. It is also recommended that pushover is used when setting the value to be greater than default, so that alerts are generated for any predicted lows or highs." = "Staat standaard op 30. Dit is het maximum aantal minuten van basaal dat kan worden toegediend als een enkele supermicrobolus (SMB) zonder dat dit compenseert wordt door COB. Dit zorgt er voor dat SMB agressiever kan worden ingesteld, als je daarvoor kiest. Het is aanbevolen om te beginnen met een waarde van 30 minuten, de standaard waarde en als je er voor kiest om de waarde te verhogen dat je dit met niet grotere stappen doet dan stappen van 15 minuten. Het is niet aanbevolen om het hoger dan 90 minuten in te stellen, dit beperkt de mogelijkheid van het algoritme om veilig een tijdelijk 0 basaal in te stellen. Het wordt ook aanbevolen om push berichten aan te zetten voor wanneer de glucose waardes hoog of laag dreigen te raken.";
 
+/* Headline "Max UAM SMB Basal Minutes" */
+"Max UAM SMB Basal Minutes" = "Max UAM SMB Basal Minutes";
+
 /* "Max UAM SMB Basal Minutes" */
 "Defaults to start at 30. This is the maximum minutes of basal that can be delivered by UAM as a single SMB when IOB exceeds COB. This gives the ability to make UAM more or less aggressive if you choose. It is recommended that the value is set to start at 30, in line with the default, and if you choose to increase this value, do so in no more than 15 minute increments, keeping a close eye on the effects of the changes. Reducing the value will cause UAM to dose less insulin for each SMB. It is not recommended to set this value higher than 60 mins, as this may affect the ability for the algorithm to safely zero temp. It is also recommended that pushover is used when setting the value to be greater than default, so that alerts are generated for any predicted lows or highs." = "Staat standaard op 30. Dit is het maximum aantal minuten van basaal dat kan worden toegediend door UAM as een enkele supermicrobolus wanneer de IOB groter is dan dan COB. Dit zorgt er voor dat UAM agressiever kan worden ingesteld, als je daarvoor kiest. Het is aanbevolen om te beginnen met een waarde van 30 minuten, de standaard waarde en als je er voor kiest om de waarde te verhogen dat je dit met niet grotere stappen doet dan stappen van 15 minuten, terwijl je het effect goed in de gaten houd. Het is niet aanbevolen om het hoger dan 60 minuten in te stellen, dit beperkt de mogelijkheid van het algoritme om veilig een tijdelijk 0 basaal in te stellen. Het wordt ook aanbevolen om push berichten aan te zetten voor wanneer de glucose waardes hoog of laag dreigen te raken.";
+
+/* Headline "SMB Interval" */
+"SMB Interval" = "SMB Interval";
 
 /* "SMB Interval" */
 "Minimum duration in minutes between two enacted SMBs" = "Minimale duur in minuten tussen twee uitgevoerde SMBs";
 
+/* Headline "Bolus Increment" */
+"Bolus Increment" = "Bolus Increment";
+
 /* "Bolus Increment" */
 "Smallest SMB / SMB increment in oref0. Minimum amount for Medtronic pumps is 0.1 U, whereas for Omnipod it’s 0.05 U. The default value is 0.1." = "Kleinste SMB / SMB Verhoging in de oranje. Minimale hoeveelheid voor Medtronic pompen is 0. U, en voor Omnipod is het 0,05 U. De standaardwaarde is 0,1.";
+
+/* Headline "Insulin Peak Time" */
+"Insulin Peak Time" = "Insulin Peak Time";
 
 /* "Insulin Peak Time" */
 "Time of maximum blood glucose lowering effect of insulin, in minutes. Beware: Oref assumes for ultra-rapid (Lyumjev) & rapid-acting (Fiasp) curves minimal (35 & 50 min) and maximal (100 & 120 min) applicable insulinPeakTimes. Using a custom insulinPeakTime outside these bounds will result in issues with FreeAPS-X, longer loop calculations and possible red loops." = "Tijd van maximale bloedglucose verlagend effect van insuline in hele minuten (insuline piek tijd). Let op: Oref gaat er van uit dat ultra-snelle (Lyumjev) & snelle werking (Fiasp) curves minimaal (35 & 50 min) en maximaal (100 en 120 min) hebben als insulinPeakTimes. Het gebruik van een aangepaste insulinPeakTime buiten deze grenzen leidt tot problemen met FreeAPS-X, langere loopberekeningen en mogelijke een rode Loop.";
 
+/* Headline "Carbs Req Threshold" */
+"Carbs Req Threshold" = "Carbs Req Threshold";
+
 /* "Carbs Req Threshold" */
 "Grams of carbsReq to trigger a pushover. Defaults to 1 (for 1 gram of carbohydrate). Can be increased if you only want to get Pushover for carbsReq at X threshold." = "Aantal gram koolhydraten benodigd om een push bericht te versturen. Standaard ingesteld op 1 (voor 1 gram aan koolhydraten). Kan worden verhoogd als alleen voor push berichten wil krijgen boven de ingestelde drempelwaarde.";
+
+/* Headline "Noisy CGM Target Multiplier" */
+"Noisy CGM Target Multiplier" = "Noisy CGM Target Multiplier";
 
 /* "Noisy CGM Target Multiplier" */
 "Defaults to 1.3. Increase target by this amount when looping off raw/noisy CGM data" = "De standaardwaarde is 1.3. De streefwaarde wordt met deze factor verhoogd als er CGM-waarden met ruis aanwezig zijn";
 
+/* Headline "SMB DeliveryRatio" */
+"SMB DeliveryRatio" = "SMB DeliveryRatio";
+
+/* SMB DeliveryRatio */
+"Default value: 0.5 This is another key OpenAPS safety cap, and specifies what share of the total insulin required can be delivered as SMB. Increase this experimental value slowly and with caution." = "Default value: 0.5 This is another key OpenAPS safety cap, and specifies what share of the total insulin required can be delivered as SMB. Increase this experimental value slowly and with caution.";
+
 // Dynamic ISF + CR Settings:
-/* Adjust Dynamic ISF constant */
+/* Headline "Adjust Dynamic ISF constant" */
 
 "Adjust Dynamic ISF constant" = "Adjust Dynamic ISF constant";
 
+/* Adjust Dynamic ISF constant */
+"Adjust Dynamic ISF constant" = "Adjust Dynamic ISF constant";
+
 /* Enable Dynamic ISF, Headline */
-"Enable Dynamif ISF" = "Enable Dynamif ISF";
+"Enable Dynamic ISF" = "Enable Dynamic ISF";
+
+/* Headline "Enable Dynamic ISF" */
+"Enable Dynamic ISF" = "Enable Dynamic ISF";
 
 /* Enable Dynamic ISF */
 "Calculate a new ISF with every loop cycle. New ISF will be based on current BG, TDD of insulin (past 24 hours or a weighted average) and an Adjustment Factor (default is 1).\n\nDynamic ISF and CR ratios will be limited by your autosens.min/max limits.\n\nDynamic ratio replaces the autosens.ratio: New ISF = Static ISF / Dynamic ratio,\nDynamic ratio = profile.sens * adjustmentFactor * tdd * Math.log(BG/insulinFactor+1) / 1800,\ninsulinFactor = 120 - InsulinPeakTimeInMinutes" = "Calculate a new ISF with every loop cycle. New ISF will be based on current BG, TDD of insulin (past 24 hours or a weighted average) and an Adjustment Factor (default is 1).\n\nDynamic ISF and CR ratios will be limited by your autosens.min/max limits.\n\nDynamic ratio replaces the autosens.ratio: New ISF = Static ISF / Dynamic ratio,\nDynamic ratio = profile.sens * adjustmentFactor * tdd * Math.log(BG/insulinFactor+1) / 1800,\ninsulinFactor = 120 - InsulinPeakTimeInMinutes";
 
+/* Headline "Enable Dynamic CR" */
+"Enable Dynamic CR" = "Enable Dynamic CR";
+
 /* Enable Dynamic CR */
 "Use Dynamic CR. The dynamic ratio will be used for CR as follows:\n\n When ratio > 1:  dynCR = (newRatio - 1) / 2 + 1.\nWhen ratio < 1: dynCR = CR/dynCR.\n\nDon't use toghether with a high Insulin Fraction (> 2)" = "Use Dynamic CR. The dynamic ratio will be used for CR as follows:\n\n When ratio > 1:  dynCR = (newRatio - 1) / 2 + 1.\nWhen ratio < 1: dynCR = CR/dynCR.\n\nDon't use toghether with a high Insulin Fraction (> 2)";
+
+/* Headline "Adjust Dynamic ISF constant" */
+"Adjust Dynamic ISF constant" = "Adjust Dynamic ISF constant";
 
 /* Adjust Dynamic ISF constant */
 "Adjust Dynamic ratios by a constant. Default is 1. Higher than 1 => lower ISF" = "Adjust Dynamic ratios by a constant. Default is 1. Higher than 1 => lower ISF";
 
+
+/* Headline "Use Sigmoid Function" */
+"Use Sigmoid Function" = "Use Sigmoid Function";
+
 /* Use Sigmoid Function */
 "Use a sigmoid function for ISF (and for CR, when enabled), instead of the Logarithmic formula. Is only used when the Dynamic ISF setting is enabled in settings\n\nThe autosens.min/max settings determines the power with which dynamic ratio is adjusted, the height of the graph (Y-interval, Y: Dynamic ratio) and where the sigmoid curve flattens out, thus also limiting how high and how low the the ISF can be adjusted.\n\nThe Adjustment settings adjusts the slope of the curve. A lower value ==> less steep == less aggressive.\n\nYour scheduled/autotuned ISF setting and your min BG target determines when Dynamic ratio = 1 (ISF unchanged), meaning when current BG = minimum target BG => new ISF will always be set to your current scheduled/autotuned ISF, unlike the default logarithmic formula.\n\nDynamic CR is used when the setting 'Enable Dynamic CR' is enabled in settings." = "Use a sigmoid function for ISF (and for CR, when enabled), instead of the Logarithmic formula. Is only used when the Dynamic ISF setting is enabled in settings\n\nThe autosens.min/max settings determines the power with which dynamic ratio is adjusted, the height of the graph (Y-interval, Y: Dynamic ratio) and where the sigmoid curve flattens out, thus also limiting how high and how low the the ISF can be adjusted.\n\nThe Adjustment settings adjusts the slope of the curve. A lower value ==> less steep == less aggressive.\n\nYour scheduled/autotuned ISF setting and your min BG target determines when Dynamic ratio = 1 (ISF unchanged), meaning when current BG = minimum target BG => new ISF will always be set to your current scheduled/autotuned ISF, unlike the default logarithmic formula.\n\nDynamic CR is used when the setting 'Enable Dynamic CR' is enabled in settings.";
+
+
+/* Headline "Threshold Setting" */
+"Threshold Setting" = "Threshold Setting";
 
 /* Threshold Setting */
 "The default threshold in FAX depends on your current minimum BG target, as follows:\n\nIf your minimum BG target = 90 mg/dl -> threshold = 65 mg/dl,\n\nif minimum BG target = 100 mg/dl -> threshold = 70 mg/dl,\n\nminimum BG target = 110 mg/dl -> threshold = 75 mg/dl,\n\nand if minimum BG target = 130 mg/dl  -> threshold = 85 mg/dl.\n\nThis setting allows you to change the default to a higher threshold for looping with dynISF. Valid values are 65 mg/dl<= Threshold Setting <= 120 mg/dl." = "The default threshold in FAX depends on your current minimum BG target, as follows:\n\nIf your minimum BG target = 90 mg/dl -> threshold = 65 mg/dl,\n\nif minimum BG target = 100 mg/dl -> threshold = 70 mg/dl,\n\nminimum BG target = 110 mg/dl -> threshold = 75 mg/dl,\n\nand if minimum BG target = 130 mg/dl  -> threshold = 85 mg/dl.\n\nThis setting allows you to change the default to a higher threshold for looping with dynISF. Valid values are 65 mg/dl<= Threshold Setting <= 120 mg/dl.";
 
+/* Headline "Weighted Average of TDD. Weight of past 24 hours:" */
+"Weighted Average of TDD. Weight of past 24 hours:" = "Weighted Average of TDD. Weight of past 24 hours:";
+
 /* Weight of past 24 hours of insulin */
 "Has to be > 0 and <= 1.\nDefault is 0.65 (65 %) * TDD. The rest will be from average of total data (up to 14 days) of all TDD calculations (35 %). To only use past 24 hours, set this to 1.\n\nTo avoid sudden fluctuations, for instance after a big meal, an average of the past 2 hours of TDD calculations is used instead of just the current TDD (past 24 hours at this moment)." = "Has to be > 0 and <= 1.\nDefault is 0.65 (65 %) * TDD. The rest will be from average of total data (up to 14 days) of all TDD calculations (35 %). To only use past 24 hours, set this to 1.\n\nTo avoid sudden fluctuations, for instance after a big meal, an average of the past 2 hours of TDD calculations is used instead of just the current TDD (past 24 hours at this moment).";
+
+/* Headline "Adjust basal" */
+"Adjust basal" = "Adjust basal";
 
 /* Enable adjustment of basal profile */
 "Enable adjustment of basal based on the ratio of current TDD / 7 day average TDD" = "Enable adjustment of basal based on the ratio of current TDD / 7 day average TDD";
