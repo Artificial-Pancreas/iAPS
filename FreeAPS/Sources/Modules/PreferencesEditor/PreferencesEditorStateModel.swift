@@ -27,7 +27,7 @@ extension PreferencesEditor {
 
             let mainFields = [
                 Field(
-                    displayName: "Insulin curve",
+                    displayName: NSLocalizedString("Insulin curve", comment: "Insulin curve"),
                     type: .insulinCurve(keypath: \.curve),
                     infoText: "Insulin curve info",
                     settable: self
