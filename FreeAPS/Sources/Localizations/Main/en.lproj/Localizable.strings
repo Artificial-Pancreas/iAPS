@@ -1438,4 +1438,7 @@ Enact a temp Basal or a temp target */
 "Dynamic settings" = "Dynamic settings";
 
 /* Insulin curve */
-"Insulin curve" = "Insulin curve";"
+"Insulin curve" = "Insulin curve";
+
+/* Headline "Adjustment Factor" */
+"Adjustment Factor" = "Adjustment Factor";
