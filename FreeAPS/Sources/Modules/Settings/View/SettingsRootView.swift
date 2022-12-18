@@ -16,11 +16,11 @@ extension Settings {
 
                 Section(header: Text("Devices")) {
                     Text("Pump").navigationLink(to: .pumpConfig, from: self)
+                    Text("CGM").navigationLink(to: .cgm, from: self)
                 }
 
                 Section(header: Text("Services")) {
                     Text("Nightscout").navigationLink(to: .nighscoutConfig, from: self)
-                    Text("CGM").navigationLink(to: .cgm, from: self)
                     if HKHealthStore.isHealthDataAvailable() {
                         Text("Apple Health").navigationLink(to: .healthkit, from: self)
                     }
