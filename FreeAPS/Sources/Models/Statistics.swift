@@ -14,7 +14,6 @@ struct Statistics: JSON, Equatable {
     var CGM: String
     var insulinType: String
     var peakActivityTime: Decimal
-    var TDD: Decimal
     var Carbs_24h: Decimal
     var GlucoseStorage_Days: Decimal
     var Statistics: Stats
@@ -33,7 +32,6 @@ struct Statistics: JSON, Equatable {
         CGM: String,
         insulinType: String,
         peakActivityTime: Decimal,
-        TDD: Decimal,
         Carbs_24h: Decimal,
         GlucoseStorage_Days: Decimal,
         Statistics: Stats
@@ -51,7 +49,6 @@ struct Statistics: JSON, Equatable {
         self.CGM = CGM
         self.insulinType = insulinType
         self.peakActivityTime = peakActivityTime
-        self.TDD = TDD
         self.Carbs_24h = Carbs_24h
         self.GlucoseStorage_Days = GlucoseStorage_Days
         self.Statistics = Statistics
@@ -81,7 +78,6 @@ extension Statistics {
         case CGM
         case insulinType
         case peakActivityTime
-        case TDD
         case Carbs_24h
         case GlucoseStorage_Days
         case Statistics
@@ -161,11 +157,19 @@ struct Hypers: JSON, Equatable {
     var total: Decimal
 }
 
+struct Ins: JSON, Equatable {
+    let TDD: Decimal?
+    let bolus: Decimal?
+    let temp_basal: Decimal?
+    let scheduled_basal: Decimal?
+}
+
 struct Stats: JSON, Equatable {
     var Distribution: [TIRs]
     var Glucose: [Averages]
     var HbA1c: [Hbs]
     var LoopCycles: [LoopCycles]
+    var Insulin: [Ins]
 }
 
 extension LoopCycles {
@@ -249,11 +253,21 @@ extension Hypers {
     }
 }
 
+extension Ins {
+    private enum CodingKeys: String, CodingKey {
+        case TDD
+        case bolus
+        case temp_basal
+        case scheduled_basal
+    }
+}
+
 extension Stats {
     private enum CodingKeys: String, CodingKey {
         case Distribution
         case Glucose
         case HbA1c
         case LoopCycles
+        case Insulin
     }
 }
