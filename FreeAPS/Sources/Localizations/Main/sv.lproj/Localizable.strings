@@ -1199,7 +1199,7 @@ Enact a temp Basal or a temp target */
 "This enables supermicrobolus (SMB) while carbs on board (COB) are positive." = "Detta tillåter supermikrobolusar (SMB) medan det finns aktiva kolhydrater (COB).";
 
 /* Headline "Enable SMB With Temptarget” */
-"Enable SMB With Temptarget" = "Använd SMB vid temp målvärde";
+"Enable SMB With Temptarget" = "Använd SMB vid ett temporärt målvärde";
 
 /* "Enable SMB With Temptarget” */
 "This enables supermicrobolus (SMB) with eating soon / low temp targets. With this feature enabled, any temporary target below 100mg/dL, such as a temp target of 99 (or 80, the typical eating soon target) will enable SMB." = "Detta tillåter supermikrobolusar (SMB) vid låga tillfälliga målvärden (tex 'Äter snart'). Med denna funktion aktiverad, kommer SMB:ar vara aktiva även vid tillfälliga målvärden under 100mg/dL (5,6 mmol/l).";
@@ -1211,7 +1211,7 @@ Enact a temp Basal or a temp target */
 "Defaults to false. When true, always enable supermicrobolus (unless disabled by high temptarget)." = "Av som standard. Vid läge på, tillåts alltid supermikrobolusar (SMB) (såvida inte automatiskt inaktiverat av ett högt målvärde).";
 
 /* Headline "Enable SMB After Carbs" */
-"Enable SMB After Carbs" = "Använd SMB efter kolhydrater";
+"Enable SMB After Carbs" = "Använd SMB även efter kolhydrater";
 
 /* "Enable SMB After Carbs" */
 "Defaults to false. When true, enables supermicrobolus (SMB) for 6h after carbs, even with 0 carbs on board (COB)." = "Av som standard. Tillåter supermikrobolusar (SMB) även 6h efter kolhydrater, också vid 0 aktiva kolhydrater (COB).";
@@ -1414,7 +1414,7 @@ Enact a temp Basal or a temp target */
 "Enable adjustment of basal based on the ratio of current TDD / 7 day average TDD" = "Justera även basal enligt följande: ny basal = basal * (TDD / 7-dagars medelvärde av TDD)";
 
 /* Headline "Max Delta-BG Threshold SMB" */
-"Max Delta-BG Threshold SMB" = "Max glukosökning för SMB";
+"Max Delta-BG Threshold SMB" = "Högsta tillåtna blodsockerförändring";
 
 /* Max Delta-BG Threshold SMB */
 "Defaults to 0.2 (20%). Maximum positive percentual change of BG level to use SMB, above that will disable SMB. Hardcoded cap of 40%. For UAM fully-closed-loop 30% is advisable. Observe in log and popup (maxDelta 27 > 20% of BG 100 - disabling SMB!)." = "Standardvärde 0,2 (20%). Maximal blodsockerförändring (ökning) som tillåter användning av SMB (autobolus). Över detta värde kommer SMB tillfälligt att avaktiveras. Högsta tillåtna värde är 0,4 (40%). Om du loopar utan att ange kolhydrater (UAM fully-closed-loop) rekommederas 30%. I loggar kommer detta registreras likt exempel: '(maxDelta 27 > 20% of BG 100 - disabling SMB!'.";
@@ -1423,16 +1423,19 @@ Enact a temp Basal or a temp target */
 "... When Blood Glucose Is Over (mg/dl):" = "... när blodsocker är över (mg/dl):";
 
 /* ... When Blood Glucose Is Over (mg/dl): */
-"Set the value enableSMB_high_bg will compare against to enable SMB. If BG > than this value, SMBs should enable." = "Ange värdet vid vilket SMB kommer att aktiveras. När blodsocker > än detta värde bör SMB aktiveras, även om andra inställningar för SMB är av.";
+"Set the value enableSMB_high_bg will compare against to enable SMB. If BG > than this value, SMBs should enable." = "Ange blodsockervärdet vid vilket SMB kommer att aktiveras. När blodsocker är högre än detta värde bör SMB aktiveras, även om andra inställningar för SMB är av.";
 
 /* Headline "Enable SMB With High BG" */
-"Enable SMB With High BG" = "Aktivera SMB (autobolus) vid högt blodsocker";
+"Enable SMB With High BG" = "Aktivera SMB vid ett högt blodsocker";
 
 /* "Enable SMB With High BG" */
-"Enable SMBs when a high BG is detected, based on the high BG target (adjusted or profile)" = "Aktivera SMB: er (autobolusar) vid högt blodsocker, eller enligt inställning nedan";
+"Enable SMBs when a high BG is detected, based on the high BG target (adjusted or profile)" = "Aktivera SMB: er vid högt blodsocker, eller enligt inställning nedan";
 
 /* Headline "Dynamic settings" */
 "Dynamic settings" = "Dynamiska inställningar";
 
 /* Insulin curve */
 "Insulin curve" = "Insulintyp";
+
+/* Headline "Adjustment Factor" */
+"Adjustment Factor" = "Justeringskonstant";

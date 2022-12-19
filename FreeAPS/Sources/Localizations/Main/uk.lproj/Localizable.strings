@@ -309,28 +309,28 @@ Enact a temp Basal or a temp target */
 "Pump Settings" = "Налаштування Помпи";
 
 /* Insulin unit per hour */
-"U/hr" = "Од/год";
+"U/hr" = "U/год";
 
 /* Unit in number of units delivered (keep the space character!) */
-" U" = "Од";
+" U" = "U";
 
 /* /Insulin unit */
-"/U" = "/Од";
+"/U" = "/U";
 
 /* Insulin unit */
 "U" = "U";
 
 /* Unit per hour with space */
-" U/hr" = " Од/год";
+" U/hr" = " U/год";
 
 /* Number of units per hour*/
-"%@ U/hr" = " %@ Од/год";
+"%@ U/hr" = " %@U/год";
 
 /* Number of units insulin delivered */
-"%@ U" = "%@ Од";
+"%@ U" = "%@ U";
 
 /*Carb ratio unit */
-"g/U" = "гр/Од";
+"g/U" = "гр/U";
 
 /* grams */
 " g" = "гр";
@@ -339,7 +339,7 @@ Enact a temp Basal or a temp target */
 "g" = "г";
 
 /* when 0 U/hr */
-"0 U/hr" = "0 Од/Год";
+"0 U/hr" = "0 U/год";
 
 /* abbreviation for days */
 "d" = "дн.";
@@ -1411,28 +1411,31 @@ Enact a temp Basal or a temp target */
 "Adjust basal" = "Регулювати базал";
 
 /* Enable adjustment of basal profile */
-"Enable adjustment of basal based on the ratio of current TDD / 7 day average TDD" = "Enable adjustment of basal based on the ratio of current TDD / 7 day average TDD";
+"Enable adjustment of basal based on the ratio of current TDD / 7 day average TDD" = "Включити регулювання бази, що базується на співвідношенні поточного TDD / 7 днів середнього TDD";
 
 /* Headline "Max Delta-BG Threshold SMB" */
-"Max Delta-BG Threshold SMB" = "Max Delta-BG Threshold SMB";
+"Max Delta-BG Threshold SMB" = "Максимальний поріг зміни рівня глюкози для SMB";
 
 /* Max Delta-BG Threshold SMB */
 "Defaults to 0.2 (20%). Maximum positive percentual change of BG level to use SMB, above that will disable SMB. Hardcoded cap of 40%. For UAM fully-closed-loop 30% is advisable. Observe in log and popup (maxDelta 27 > 20% of BG 100 - disabling SMB!)." = "За замовчуванням 0.2 (20%). Максимальна позитивна зміна відсоткового рівня глюкози в крові для спрацьовування SMB, при перевищенні цього порога - відбудеться відключення SMB та перехід в керування лише базою. Запрограмована межа – 40%. Для повністю закритої петлі UAM рекомендується 30%. Результат можна спостерігати в журналі роботи та спливаючому вікні статусу петлі (maxDelta 27 > 20% of BG 100 - disabling SMB!).";
 
 /* Headline "... When Blood Glucose Is Over (mg/dl):" */
-"... When Blood Glucose Is Over (mg/dl):" = "... When Blood Glucose Is Over (mg/dl):";
+"... When Blood Glucose Is Over (mg/dl):" = "... Коли рівень глюкози вищий (мг/дл):";
 
 /* ... When Blood Glucose Is Over (mg/dl): */
-"Set the value enableSMB_high_bg will compare against to enable SMB. If BG > than this value, SMBs should enable." = "Set the value enableSMB_high_bg will compare against to enable SMB. If BG > than this value, SMBs should enable.";
+"Set the value enableSMB_high_bg will compare against to enable SMB. If BG > than this value, SMBs should enable." = "Налаштуйте рівень для опції \"Увімкнути SMB за високого BG\". Якщо рівень BG вищий за дане значення, SMB будуть включені.";
 
 /* Headline "Enable SMB With High BG" */
-"Enable SMB With High BG" = "Enable SMB With High BG";
+"Enable SMB With High BG" = "Увімкнути SMB за високого BG";
 
 /* "Enable SMB With High BG" */
-"Enable SMBs when a high BG is detected, based on the high BG target (adjusted or profile)" = "Enable SMBs when a high BG is detected, based on the high BG target (adjusted or profile)";
+"Enable SMBs when a high BG is detected, based on the high BG target (adjusted or profile)" = "Увімкнути SMB коли виявлено високий рівень BG, заснований на підвищеній меті BG (скоригованої або з профілю)";
 
 /* Headline "Dynamic settings" */
 "Dynamic settings" = "Налаштування динамічних опцій";
 
 /* Insulin curve */
 "Insulin curve" = "Тип лінії інсуліну";
+
+/* Headline "Adjustment Factor" */
+"Adjustment Factor" = "Коефіцієнт регулювання";

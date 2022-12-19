@@ -1436,3 +1436,6 @@ Enact a temp Basal or a temp target */
 
 /* Insulin curve */
 "Insulin curve" = "İnsülin eğrisi";
+
+/* Headline "Adjustment Factor" */
+"Adjustment Factor" = "Adjustment Factor";

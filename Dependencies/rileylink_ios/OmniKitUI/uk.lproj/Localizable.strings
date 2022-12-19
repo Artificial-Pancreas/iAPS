@@ -231,7 +231,7 @@
 "Unknown" = "Невідомий";
 
 /* Alert content title for multiCommand pod alert */
-"Multiple Command Alert" = "Багатокомандне сповіщення";
+"Multiple Command Alert" = "Попередження про кілька команд";
 
 /* Alert content title for userPodExpiration pod alert */
 "Pod Expiration Reminder" = "Нагадування про термін дії Pod";
@@ -255,7 +255,7 @@
 "Time Change Detected" = "Виявлено зміну часу";
 
 /* Alert content body for multiCommand pod alert */
-"Multiple Command Alert" = "Багатокомандне сповіщення";
+"Multiple Command Alert" = "Попередження про кілька команд";
 
 /* Format string for alert content body for userPodExpiration pod alert. (1: time until expiration) */
 "Pod expires in %1$@." = "Pod закінчується через %1$@.";
