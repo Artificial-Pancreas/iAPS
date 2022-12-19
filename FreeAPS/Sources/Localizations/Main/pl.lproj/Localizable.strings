@@ -1438,3 +1438,6 @@ Połączono z Nightscout!";
 
 /* Insulin curve */
 "Insulin curve" = "Insulin curve";
+
+/* Headline "Adjustment Factor" */
+"Adjustment Factor" = "Adjustment Factor";
