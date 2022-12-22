@@ -1195,11 +1195,11 @@ final class BaseAPSManager: APSManager, Injectable {
             Carbs_24h: carbTotal,
             GlucoseStorage_Days: Decimal(daysBG),
             Statistics: Stats(
-                Distribution: [TimeInRange],
-                Glucose: [avg],
-                HbA1c: [hbs],
-                LoopCycles: [loopstat],
-                Insulin: [insulin]
+                Distribution: TimeInRange,
+                Glucose: avg,
+                HbA1c: hbs,
+                LoopCycles: loopstat,
+                Insulin: insulin
             )
         )
 

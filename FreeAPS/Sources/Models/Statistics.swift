@@ -165,11 +165,11 @@ struct Ins: JSON, Equatable {
 }
 
 struct Stats: JSON, Equatable {
-    var Distribution: [TIRs]
-    var Glucose: [Averages]
-    var HbA1c: [Hbs]
-    var LoopCycles: [LoopCycles]
-    var Insulin: [Ins]
+    var Distribution: TIRs
+    var Glucose: Averages
+    var HbA1c: Hbs
+    var LoopCycles: LoopCycles
+    var Insulin: Ins
 }
 
 extension LoopCycles {
