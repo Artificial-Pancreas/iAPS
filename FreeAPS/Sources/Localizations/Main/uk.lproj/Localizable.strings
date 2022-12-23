@@ -924,8 +924,8 @@ Enact a temp Basal or a temp target */
 /* Shared app group */
 "Shared app group for direct connection with Libre 1 transmitters or European Libre 2 sensors" = "Спільна група програм для прямого з'єднання з трансмітерами Libre 1  або Європейськими сенсорами Libre 2";
 
-/* Native G6 app */
-"Native G6 app" = "Вбудований додаток G6";
+/* Dexcom G6 app */
+"Dexcom G6 app" = "Вбудований додаток G6";
 
 /* Native G5 app */
 "Native G5 app" = "Вбудований додаток G5";
