@@ -762,7 +762,7 @@ final class BaseAPSManager: APSManager, Injectable {
         }
         // Only run every hour
         if testIfEmpty != 0 {
-            guard testFile[0].createdAt.addingTimeInterval(1.hours.timeInterval) < Date() else {
+            guard testFile[0].created_at.addingTimeInterval(1.hours.timeInterval) < Date() else {
                 return
             }
         }
@@ -1179,7 +1179,7 @@ final class BaseAPSManager: APSManager, Injectable {
         )
 
         let dailystat = Statistics(
-            createdAt: Date(),
+            created_at: Date(),
             iPhone: UIDevice.current.getDeviceId,
             iOS: UIDevice.current.getOSInfo,
             Build_Version: version ?? "",
@@ -1204,10 +1204,10 @@ final class BaseAPSManager: APSManager, Injectable {
         )
 
         storage.transaction { storage in
-            storage.append(dailystat, to: file, uniqBy: \.createdAt)
+            storage.append(dailystat, to: file, uniqBy: \.created_at)
             var uniqeEvents: [Statistics] = storage.retrieve(file, as: [Statistics].self)?
-                .filter { $0.createdAt.addingTimeInterval(24.hours.timeInterval) > Date() }
-                .sorted { $0.createdAt > $1.createdAt } ?? []
+                .filter { $0.created_at.addingTimeInterval(24.hours.timeInterval) > Date() }
+                .sorted { $0.created_at > $1.created_at } ?? []
 
             storage.save(Array(uniqeEvents), as: file)
         }
