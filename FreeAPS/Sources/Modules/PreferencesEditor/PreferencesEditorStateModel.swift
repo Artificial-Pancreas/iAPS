@@ -132,7 +132,7 @@ extension PreferencesEditor {
                     displayName: NSLocalizedString("Allow SMB With High Temptarget", comment: "Allow SMB With High Temptarget"),
                     type: .boolean(keypath: \.allowSMBWithHighTemptarget),
                     infoText: NSLocalizedString(
-                        "Defaults to false. When true, allows supermicrobolus (if otherwise enabled) even with high temp targets.",
+                        "Defaults to false. When true, allows supermicrobolus (if otherwise enabled) even with high temp targets (> 100 mg/dl).",
                         comment: "Allow SMB With High Temptarget"
                     ),
                     settable: self

@@ -1223,7 +1223,7 @@ Enact a temp Basal or a temp target */
 "Allow SMB With High Temptarget" = "Allow SMB With High Temptarget";
 
 /* "Allow SMB With High Temptarget" */
-"Defaults to false. When true, allows supermicrobolus (if otherwise enabled) even with high temp targets." = "Varsayılan olarak geçersizdir. Geçerli olduğunda, yüksek geçici hedeflerinde bile süpermikrobolusa (aksi takdirde etkinleştirildiyse) izin verir.";
+"Defaults to false. When true, allows supermicrobolus (if otherwise enabled) even with high temp targets (> 100 mg/dl)." = "Varsayılan olarak geçersizdir. Geçerli olduğunda, yüksek geçici hedeflerinde bile süpermikrobolusa (aksi takdirde etkinleştirildiyse) izin verir.";
 
 /* Headline "Use Custom Peak Time” */
 "Use Custom Peak Time" = "Özel Tepe Zamanı Kullan";
