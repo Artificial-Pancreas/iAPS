@@ -924,8 +924,8 @@ Enact a temp Basal or a temp target */
 /* Shared app group */
 "Shared app group for direct connection with Libre 1 transmitters or European Libre 2 sensors" = "将连接瞬感1+发射器及直连瞬感 2 的第三方应用与 FreeAPS X 通过 AppGroup 方式共享数据";
 
-/* Native G6 app */
-"Native G6 app" = "官方G6 App";
+/* Dexcom G6 app */
+"Dexcom G6 app" = "官方G6 App";
 
 /* Native G5 app */
 "Native G5 app" = "官方G5 App";
