@@ -1223,7 +1223,7 @@ Enact a temp Basal or a temp target */
 "Allow SMB With High Temptarget" = "Дозволити SMB з високою тимчасовою метою";
 
 /* "Allow SMB With High Temptarget" */
-"Defaults to false. When true, allows supermicrobolus (if otherwise enabled) even with high temp targets." = "За замовченням вимкнено. Включення дозволяє супермікроболюси (SMB) навіть з високими тимчасовими цілями.";
+"Defaults to false. When true, allows supermicrobolus (if otherwise enabled) even with high temp targets (> 100 mg/dl)." = "За замовченням вимкнено. Включення дозволяє супермікроболюси (SMB) навіть з високими тимчасовими цілями.";
 
 /* Headline "Use Custom Peak Time” */
 "Use Custom Peak Time" = "Використовувати свій пік дії інсуліну";

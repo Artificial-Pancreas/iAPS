@@ -1225,7 +1225,7 @@ Enact a temp Basal or a temp target */
 "Allow SMB With High Temptarget" = "Allow SMB With High Temptarget";
 
 /* "Allow SMB With High Temptarget" */
-"Defaults to false. When true, allows supermicrobolus (if otherwise enabled) even with high temp targets." = "默认为禁用。当启用时，允许SMB(如果其他情况下启用)，即使是比较高的临时目标。";
+"Defaults to false. When true, allows supermicrobolus (if otherwise enabled) even with high temp targets (> 100 mg/dl)." = "默认为禁用。当启用时，允许SMB(如果其他情况下启用)，即使是比较高的临时目标。";
 
 /* Headline "Use Custom Peak Time” */
 "Use Custom Peak Time" = "Use Custom Peak Time";

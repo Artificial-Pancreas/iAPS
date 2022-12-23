@@ -1226,7 +1226,7 @@ Enact a temp Basal or a temp target */
 "Allow SMB With High Temptarget" = "Tillåt SMB vid högt temporärt målvärde";
 
 /* "Allow SMB With High Temptarget" */
-"Defaults to false. When true, allows supermicrobolus (if otherwise enabled) even with high temp targets." = "Av som standard. När läge på, tillåts SMB:ar även vid höga temporära målvärden.";
+"Defaults to false. When true, allows supermicrobolus (if otherwise enabled) even with high temp targets (> 100 mg/dl)." = "Av som standard. När läge på, tillåts SMB:ar även vid höga temporära målvärden.";
 
 /* Headline "Use Custom Peak Time” */
 "Use Custom Peak Time" = "Använd anpassad tid, i minuter, för insulinets maximala blodsockersänkande effekt";

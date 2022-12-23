@@ -1224,7 +1224,7 @@ Con esta característica activada, cualquier objetivo temporal por debajo de 100
 "Allow SMB With High Temptarget" = "Allow SMB With High Temptarget";
 
 /* "Allow SMB With High Temptarget" */
-"Defaults to false. When true, allows supermicrobolus (if otherwise enabled) even with high temp targets." = "Por defecto es falso. Cuando es verdadero, permite supermicrobolos (si se habilita de otra manera) incluso con objetivos temporales altos.";
+"Defaults to false. When true, allows supermicrobolus (if otherwise enabled) even with high temp targets (> 100 mg/dl)." = "Por defecto es falso. Cuando es verdadero, permite supermicrobolos (si se habilita de otra manera) incluso con objetivos temporales altos.";
 
 /* Headline "Use Custom Peak Time” */
 "Use Custom Peak Time" = "Use Custom Peak Time";
