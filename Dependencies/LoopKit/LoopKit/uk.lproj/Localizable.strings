@@ -1,8 +1,8 @@
 /* Describes a certain bolus failure (1: size of the bolus in units) */
-"%1$@ U bolus failed" = "%1$@ U помилка болюс";
+"%1$@ U bolus failed" = "%1$@ од Болюс не відбувся";
 
 /* Describes an uncertain bolus failure (1: size of the bolus in units) */
-"%1$@ U bolus may not have succeeded" = "%1$@ U можлива невдача подачі болюса";
+"%1$@ U bolus may not have succeeded" = "%1$@ од. можлива невдача подачі болюса";
 
 /* The error description describing when Health sharing was denied */
 "Authorization Denied" = "В авторизації відмовлено";
@@ -41,7 +41,7 @@
 "Flat" = "Стабільний";
 
 /* The short unit display string for grams per U */
-"g/U" = "гр/Од";
+"g/U" = "гр/U";
 
 /* Generic pump error description */
 "Invalid Configuration" = "Недопустима конфігурація";
@@ -83,7 +83,7 @@
 "U" = "U";
 
 /* The short unit display string for international units of insulin per hour */
-"U/hr" = "Од/год";
+"U/hr" = "U/год";
 
 /* The long unit display string for a singular international unit of insulin */
 "Unit" = "Unit";

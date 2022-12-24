@@ -9,7 +9,7 @@
 
 /* Format string for delivered insulin. (1: The localized amount)
    Format string for insulin remaining in reservoir. (1: The localized amount) */
-"%@ U" = "%@ Од";
+"%@ U" = "%@ U";
 
 /* Format string for bolus progress when finished. (1: The localized amount) */
 "%@ U (Finished)" = "%@ U (Завершено)";
@@ -18,13 +18,13 @@
 "%@ U of %@ U (%@)" = "%1$@ U з %2$@ U (%3$@)";
 
 /* Format string for temp basal rate. (1: The localized amount) */
-"%@ U/hour" = " %@Од/год";
+"%@ U/hour" = " %@U/год";
 
 /* Format string for bolus percent progress. (1: Percent progress) */
 "%@%%" = "%@%%";
 
 /* Format string for reservoir reading when above or equal to maximum reading. (1: The localized amount) */
-"%@+ U" = "%@ Од";
+"%@+ U" = "%@ U";
 
 /* Appends a full-stop to a statement */
 "%@." = "%@.";
@@ -833,7 +833,7 @@
 "Rate" = "Швидкість";
 
 /* Insulin unit per hour */
-"U/hr" = "Од/год";
+"U/hr" = "U/год";
 
 /* Summary string for temporary basal rate configuration page */
 "%1$@ for %2$@" = "%1$@ для %2$@";

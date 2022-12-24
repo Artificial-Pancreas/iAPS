@@ -233,7 +233,7 @@
 "Times in %1$@%2$@%3$@" = "Разів за %1$@%2$@%3$@";
 
 /* The unit string for units per hour */
-"U/hour" = "Од/год";
+"U/hour" = "од/год";
 
 /* The unit string for units */
 "Units" = "Одиниці";

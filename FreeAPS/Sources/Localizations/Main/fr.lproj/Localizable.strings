@@ -921,8 +921,11 @@ Enact a temp Basal or a temp target */
 /* Restored state message */
 "Bluetooth State restored (APS restarted?). Found %d peripherals, and connected to %@ with identifier %@" = "Etat Bluetooth restoré (APS relancé ?). Trouvé %d périphériques, et connectés à %@ avec ID %@";
 
-/* Shared app group */
-"Shared app group for direct connection with Libre 1 transmitters or European Libre 2 sensors" = "Nom du groupe partagé pour la connexion directe avec les émetteurs Libre 1 ou les capteurs européens Libre 2";
+/* Shared app group xDrip4iOS */
+"Using shared app group with external CGM app xDrip4iOS" = "Using shared app group with external CGM app xDrip4iOS";
+
+/* Shared app group GlucoseDirect */
+"Using shared app group with external CGM app GlucoseDirect" = "Using shared app group with external CGM app GlucoseDirect";
 
 /* Dexcom G6 app */
 "Dexcom G6 app" = "App G6 native";

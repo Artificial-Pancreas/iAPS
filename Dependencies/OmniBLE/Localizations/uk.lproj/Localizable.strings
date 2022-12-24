@@ -611,7 +611,7 @@
 "Rate" = "Швидкість";
 
 /* Insulin unit per hour */
-"U/hr" = "Од/год";
+"U/hr" = "U/год";
 
 /* Summary string for temporary basal rate configuration page */
 "%1$@ for %2$@" = "%1$@ для %2$@";
