@@ -24,6 +24,7 @@ struct FreeAPSSettings: JSON, Equatable {
     var highGlucose: Decimal = 270
     var carbsRequiredThreshold: Decimal = 10
     var animatedBackground: Bool = false
+    var displayStatistics: Bool = false
 }
 
 extension FreeAPSSettings: Decodable {
@@ -125,6 +126,10 @@ extension FreeAPSSettings: Decodable {
 
         if let animatedBackground = try? container.decode(Bool.self, forKey: .animatedBackground) {
             settings.animatedBackground = animatedBackground
+        }
+
+        if let displayStatistics = try? container.decode(Bool.self, forKey: .displayStatistics) {
+            settings.displayStatistics = displayStatistics
         }
 
         self = settings

@@ -20,5 +20,6 @@
     "highGlucose": 270,
     "carbsRequiredThreshold": 10,
     "useAppleHealth": false,
-    "animatedBackground": false
+    "animatedBackground": false,
+    "displayStatistics": false
 }

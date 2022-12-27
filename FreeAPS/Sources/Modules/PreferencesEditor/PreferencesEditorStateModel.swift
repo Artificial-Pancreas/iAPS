@@ -8,15 +8,15 @@ extension PreferencesEditor {
         @Published var insulinReqFraction: Decimal = 2.0
         @Published var skipBolusScreenAfterCarbs = false
         @Published var displayHR = false
-
+        @Published var displayStatistics = false
         @Published var sections: [FieldSection] = []
 
         override func subscribe() {
             preferences = provider.preferences
-
             subscribeSetting(\.allowAnnouncements, on: $allowAnnouncements) { allowAnnouncements = $0 }
             subscribeSetting(\.insulinReqFraction, on: $insulinReqFraction) { insulinReqFraction = $0 }
             subscribeSetting(\.displayHR, on: $displayHR) { displayHR = $0 }
+            subscribeSetting(\.displayStatistics, on: $displayStatistics) { displayStatistics = $0 }
             subscribeSetting(\.skipBolusScreenAfterCarbs, on: $skipBolusScreenAfterCarbs) { skipBolusScreenAfterCarbs = $0 }
 
             subscribeSetting(\.units, on: $unitsIndex.map { $0 == 0 ? GlucoseUnits.mgdL : .mmolL }) {
@@ -25,7 +25,34 @@ extension PreferencesEditor {
                 self?.provider.migrateUnits()
             }
 
-            // MARK: - Main fields
+            let statFields = [
+                Field(
+                    displayName: NSLocalizedString(
+                        "Low Glucose Limit",
+                        comment: "Display As Low Glucose Percantage Under This Value"
+                    ) + " (\(settingsManager.settings.units.rawValue))",
+
+                    type: .decimal(keypath: \.low),
+                    infoText: NSLocalizedString(
+                        "Blood Glucoses Under This Value Will Added To And Displayed as Low Glucose Percantage",
+                        comment: "Description for Low Glucose Limit"
+                    ),
+                    settable: self
+                ),
+                Field(
+                    displayName: NSLocalizedString(
+                        "High Glucose Limit",
+                        comment: "Limit For High Glucose in Statistics View"
+                    ) + " (\(settingsManager.settings.units.rawValue))",
+
+                    type: .decimal(keypath: \.high),
+                    infoText: NSLocalizedString(
+                        "Blood Glucoses Over This Value Will Added To And Displaved as High Glucose Percantage",
+                        comment: "High Glucose Limit"
+                    ),
+                    settable: self
+                )
+            ]
 
             let mainFields = [
                 Field(
@@ -488,6 +515,9 @@ extension PreferencesEditor {
             ]
 
             sections = [
+                FieldSection(
+                    displayName: NSLocalizedString("Statistics", comment: "Options for Statistics"), fields: statFields
+                ),
                 FieldSection(
                     displayName: NSLocalizedString("OpenAPS main settings", comment: "OpenAPS main settings"), fields: mainFields
                 ),

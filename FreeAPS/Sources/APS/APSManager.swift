@@ -760,9 +760,9 @@ final class BaseAPSManager: APSManager, Injectable {
             testFile = storage.retrieve(OpenAPS.Monitor.statistics, as: [Statistics].self) ?? []
             testIfEmpty = testFile.count
         }
-        // Only run every hour
+        // Only run every 30 minutes
         if testIfEmpty != 0 {
-            guard testFile[0].created_at.addingTimeInterval(1.hours.timeInterval) < Date() else {
+            guard testFile[0].created_at.addingTimeInterval(30.minutes.timeInterval) < Date() else {
                 return
             }
         }
@@ -969,7 +969,7 @@ final class BaseAPSManager: APSManager, Injectable {
         var daysBG = 0.0
         var fullTime = 0.0
 
-        if endIndex >= 0 {
+        if length_ > 0 {
             fullTime = (startDate! - glucose![endIndex].date).timeInterval
             daysBG = fullTime / 8.64E4
         }
@@ -982,28 +982,42 @@ final class BaseAPSManager: APSManager, Injectable {
             var i = -1
             var lastIndex = false
             let endIndex = array.count - 1
+
+            var hypoLimit = settingsManager.preferences.low
+            var hyperLimit = settingsManager.preferences.high
+            if units == .mmolL {
+                hypoLimit = hypoLimit / 0.0555
+                hyperLimit = hyperLimit / 0.0555
+            }
+
+            var full_time = 0.0
+            if endIndex > 0 {
+                full_time = (array[0].date_ - array[endIndex].date_).timeInterval
+            }
+
             while i < endIndex {
                 i += 1
                 let currentTime = array[i].date_
                 var previousTime = currentTime
+
                 if i + 1 <= endIndex {
                     previousTime = array[i + 1].date_
                 } else {
                     lastIndex = true
                 }
-                if array[i].bg_ < 72.0, !lastIndex {
+                if array[i].bg_ < Double(hypoLimit), !lastIndex {
                     timeInHypo += (currentTime - previousTime).timeInterval
-                } else if array[i].bg_ > 180, !lastIndex {
+                } else if array[i].bg_ >= Double(hyperLimit), !lastIndex {
                     timeInHyper += (currentTime - previousTime).timeInterval
                 }
             }
-            if timeInHypo == 0 {
+            if timeInHypo == 0.0 {
                 hypos = 0
-            } else if fullTime != 0.0 { hypos = (timeInHypo / fullTime) * 100
+            } else if full_time != 0.0 { hypos = (timeInHypo / full_time) * 100
             }
-            if timeInHyper == 0 {
+            if timeInHyper == 0.0 {
                 hypers = 0
-            } else if fullTime != 0.0 { hypers = (timeInHyper / fullTime) * 100
+            } else if full_time != 0.0 { hypers = (timeInHyper / full_time) * 100
             }
             let TIR = 100 - (hypos + hypers)
             return (roundDouble(TIR, 1), roundDouble(hypos, 1), roundDouble(hypers, 1))
@@ -1050,7 +1064,7 @@ final class BaseAPSManager: APSManager, Injectable {
                 (NGSPa1CStatisticValue_total - 2.152) // IFCC (mmol/mol)  A1C(mmol/mol) = 10.929 * (A1C(%) - 2.15)
         }
 
-        var median = Median(
+        var median = Durations(
             day: roundDecimal(Decimal(medianCalculation(array: bgArray_1.map(\.bg_))), 1),
             week: roundDecimal(Decimal(medianCalculation(array: bgArray_7.map(\.bg_))), 1),
             month: roundDecimal(Decimal(medianCalculation(array: bgArray_30.map(\.bg_))), 1),
@@ -1058,7 +1072,7 @@ final class BaseAPSManager: APSManager, Injectable {
             total: roundDecimal(Decimal(medianBG), 1)
         )
 
-        var hbs = Hbs(
+        var hbs = Durations(
             day: roundDecimal(NGSPa1CStatisticValue, 1),
             week: roundDecimal(NGSPa1CStatisticValue_7, 1),
             month: roundDecimal(NGSPa1CStatisticValue_30, 1),
@@ -1074,7 +1088,7 @@ final class BaseAPSManager: APSManager, Injectable {
             bg_90 = bg_90.asMmolL
             bg_total = bg_total.asMmolL
 
-            median = Median(
+            median = Durations(
                 day: roundDecimal(Decimal(medianCalculation(array: bgArray_1.map(\.bg_))).asMmolL, 1),
                 week: roundDecimal(Decimal(medianCalculation(array: bgArray_7.map(\.bg_))).asMmolL, 1),
                 month: roundDecimal(Decimal(medianCalculation(array: bgArray_30.map(\.bg_))).asMmolL, 1),
@@ -1082,7 +1096,7 @@ final class BaseAPSManager: APSManager, Injectable {
                 total: roundDecimal(Decimal(medianBG).asMmolL, 1)
             )
 
-            hbs = Hbs(
+            hbs = Durations(
                 day: roundDecimal(IFCCa1CStatisticValue, 1),
                 week: roundDecimal(IFCCa1CStatisticValue_7, 1),
                 month: roundDecimal(IFCCa1CStatisticValue_30, 1),
@@ -1133,7 +1147,7 @@ final class BaseAPSManager: APSManager, Injectable {
             totalDays_ = tir(bgArrayForTIR)
         }
 
-        let tir = TIR(
+        let tir = Durations(
             day: roundDecimal(Decimal(oneDay_.TIR), 1),
             week: roundDecimal(Decimal(sevenDays_.TIR), 1),
             month: roundDecimal(Decimal(thirtyDays_.TIR), 1),
@@ -1141,7 +1155,7 @@ final class BaseAPSManager: APSManager, Injectable {
             total: roundDecimal(Decimal(totalDays_.TIR), 1)
         )
 
-        let hypo = Hypos(
+        let hypo = Durations(
             day: Decimal(oneDay_.hypos),
             week: Decimal(sevenDays_.hypos),
             month: Decimal(thirtyDays_.hypos),
@@ -1149,7 +1163,7 @@ final class BaseAPSManager: APSManager, Injectable {
             total: Decimal(totalDays_.hypos)
         )
 
-        let hyper = Hypers(
+        let hyper = Durations(
             day: Decimal(oneDay_.hypers),
             week: Decimal(sevenDays_.hypers),
             month: Decimal(thirtyDays_.hypers),
@@ -1159,7 +1173,7 @@ final class BaseAPSManager: APSManager, Injectable {
 
         let TimeInRange = TIRs(TIR: tir, Hypos: hypo, Hypers: hyper)
 
-        let avgs = Average(
+        let avgs = Durations(
             day: roundDecimal(bg_1, 1),
             week: roundDecimal(bg_7, 1),
             month: roundDecimal(bg_30, 1),

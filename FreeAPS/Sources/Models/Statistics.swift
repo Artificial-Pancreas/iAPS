@@ -99,27 +99,11 @@ struct LoopCycles: JSON, Equatable {
 }
 
 struct Averages: JSON, Equatable {
-    var Average: Average
-    var Median: Median
+    var Average: Durations
+    var Median: Durations
 }
 
-struct Average: JSON, Equatable {
-    var day: Decimal
-    var week: Decimal
-    var month: Decimal
-    var ninetyDays: Decimal
-    var total: Decimal
-}
-
-struct Median: JSON, Equatable {
-    var day: Decimal
-    var week: Decimal
-    var month: Decimal
-    var ninetyDays: Decimal
-    var total: Decimal
-}
-
-struct Hbs: JSON, Equatable {
+struct Durations: JSON, Equatable {
     var day: Decimal
     var week: Decimal
     var month: Decimal
@@ -128,33 +112,9 @@ struct Hbs: JSON, Equatable {
 }
 
 struct TIRs: JSON, Equatable {
-    var TIR: TIR
-    var Hypos: Hypos
-    var Hypers: Hypers
-}
-
-struct TIR: JSON, Equatable {
-    var day: Decimal
-    var week: Decimal
-    var month: Decimal
-    var ninetyDays: Decimal
-    var total: Decimal
-}
-
-struct Hypos: JSON, Equatable {
-    var day: Decimal
-    var week: Decimal
-    var month: Decimal
-    var ninetyDays: Decimal
-    var total: Decimal
-}
-
-struct Hypers: JSON, Equatable {
-    var day: Decimal
-    var week: Decimal
-    var month: Decimal
-    var ninetyDays: Decimal
-    var total: Decimal
+    var TIR: Durations
+    var Hypos: Durations
+    var Hypers: Durations
 }
 
 struct Ins: JSON, Equatable {
@@ -167,7 +127,7 @@ struct Ins: JSON, Equatable {
 struct Stats: JSON, Equatable {
     var Distribution: TIRs
     var Glucose: Averages
-    var HbA1c: Hbs
+    var HbA1c: Durations
     var LoopCycles: LoopCycles
     var Insulin: Ins
 }
@@ -195,61 +155,11 @@ extension Averages {
     }
 }
 
-extension Average {
-    private enum CodingKeys: String, CodingKey {
-        case day
-        case week
-        case month
-        case ninetyDays
-        case total
-    }
-}
-
-extension Median {
-    private enum CodingKeys: String, CodingKey {
-        case day
-        case week
-        case month
-        case ninetyDays
-        case total
-    }
-}
-
-extension Hbs {
-    private enum CodingKeys: String, CodingKey {
-        case day
-        case week
-        case month
-        case ninetyDays
-        case total
-    }
-}
-
 extension TIRs {
     private enum CodingKeys: String, CodingKey {
         case TIR
         case Hypos
         case Hypers
-    }
-}
-
-extension Hypos {
-    private enum CodingKeys: String, CodingKey {
-        case day
-        case week
-        case month
-        case ninetyDays
-        case total
-    }
-}
-
-extension Hypers {
-    private enum CodingKeys: String, CodingKey {
-        case day
-        case week
-        case month
-        case ninetyDays
-        case total
     }
 }
 

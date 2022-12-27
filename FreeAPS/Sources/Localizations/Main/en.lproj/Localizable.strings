@@ -1128,6 +1128,64 @@ Enact a temp Basal or a temp target */
 /* Alert title for suspend error */
 "Failed to Suspend Insulin Delivery" = "Failed to Suspend Insulin Delivery";
 
+//* -----------------------------------------------------------------------*/
+
+/* ----------------------Statistics strings -------------------------------*/
+
+/* Option in preferences */
+"Display Statistics" = "Display Statistics";
+
+/* infoText: Description for Display Statistics */
+"Displays Statistics under the chart view" = "Displays Statistics under the chart view";
+
+/* Low Glucose Limit option in preferences */
+"Low Glucose Limit" = "Low Glucose Limit";
+
+/* High Glucose Limit option in preferences */
+"High Glucose Limit" = "High Glucose Limit";
+
+/* infoText: Description for Low Glucose Limit */
+"BG Under This Value Will Be Displayed As Low Glucose Percentage" = "BG Under This Value Will Be Displayed As Low Glucose Percentage";
+    
+/* infoText: Description for High Glucose Limit */
+"BG Under This Value Will Be Displayed As High Glucose Percentage" = "BG Under This Value Will Be Displayed As High Glucose Percentage";
+
+/* When statistics.json was last updated */
+"Updated" = "Updated";
+
+/* Average BG = */
+"Average" = "Average";
+
+/* Median BG */
+"Median" = "Median";
+
+/* Normal BG (within TIR) */
+"Normal (24h)" = "Normal (24h)";
+
+/* Title High BG in statPanel */
+"High (>" = "High (>";
+
+/* Title Low BG in statPanel */
+"Low (<" = "Low (<";
+
+/* HbA1c estimation for one day of data */
+"HbA1c (24h)" = "HbA1c (24h)";
+
+/* Total number of days of data for HbA1c estimation, part 1/2*/
+"All " = "All ";
+
+/* Total number of days of data for HbA1c estimation, part 2/2*/
+" days" = " days";
+
+/* Nr of loops last 24 hours */
+"Loops" = "Loops";
+
+/* Average loop interval */
+"Average Interval" = "Avgerage Interval";
+
+/* Median loop interval */
+"Median Duration" = "Median Duration";
+
  /* --------------------------------------
 
   Infotexts from openaps.docs and androidaps.docs

@@ -38,6 +38,7 @@ struct MainChartView: View {
 
     @Binding var glucose: [BloodGlucose]
     @Binding var suggestion: Suggestion?
+    @Binding var statistcs: Statistics?
     @Binding var tempBasals: [PumpHistoryEvent]
     @Binding var boluses: [PumpHistoryEvent]
     @Binding var suspensions: [PumpHistoryEvent]

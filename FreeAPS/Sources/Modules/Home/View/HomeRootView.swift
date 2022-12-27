@@ -217,7 +217,134 @@ extension Home {
             .frame(maxWidth: .infinity, maxHeight: 30)
         }
 
-        var legendPanal: some View {
+        @ViewBuilder private func statPanel() -> some View {
+            if state.displayStatistics {
+                VStack(alignment: .center, spacing: 6) {
+                    HStack {
+                        Group {
+                            Text("Updated").font(.caption2)
+                                .foregroundColor(.secondary)
+                            Text(
+                                dateFormatter.string(from: state.statistics?.created_at ?? Date())
+                            ).font(.system(size: 12))
+
+                            Text(
+                                NSLocalizedString("Average", comment: "") + " " + state.settingsManager.settings.units.rawValue
+                            ).font(.caption2).foregroundColor(.secondary)
+                            Text(
+                                numberFormatter
+                                    .string(from: (state.statistics?.Statistics.Glucose.Average.day ?? 0) as NSNumber) ??
+                                    ""
+                            ).font(.system(size: 12))
+                            Text("Median")
+                                .font(.caption2).foregroundColor(.secondary)
+                            Text(
+                                numberFormatter
+                                    .string(from: (state.statistics?.Statistics.Glucose.Median.day ?? 0) as NSNumber) ??
+                                    ""
+                            ).font(.system(size: 12))
+                        }
+                    }
+
+                    HStack {
+                        Group {
+                            Text("Normal (24h)").font(.caption2).foregroundColor(.secondary)
+                            Text(
+                                (
+                                    numberFormatter
+                                        .string(from: (state.statistics?.Statistics.Distribution.TIR.day ?? 0) as NSNumber) ??
+                                        "0"
+                                ) + " %"
+                            ).font(.system(size: 12)).foregroundColor(.loopGreen)
+
+                            Text(
+                                NSLocalizedString("Low (<", comment: " ") +
+                                    (numberFormatter.string(from: state.settingsManager.preferences.low as NSNumber) ?? "") + ")"
+                            ).font(.caption2).foregroundColor(.secondary)
+                            Text(
+                                (
+                                    numberFormatter
+                                        .string(from: (
+                                            state.statistics?.Statistics.Distribution.Hypos.day ?? 0
+                                        ) as NSNumber) ??
+                                        "0"
+                                ) + " %"
+                            ).font(.system(size: 12)).foregroundColor(.loopRed)
+                            Text(
+                                NSLocalizedString("High (>", comment: " ") +
+                                    (numberFormatter.string(from: state.settingsManager.preferences.high as NSNumber) ?? "") + ")"
+                            ).font(.caption2).foregroundColor(.secondary)
+                            Text(
+                                (
+                                    numberFormatter
+                                        .string(from: (
+                                            state.statistics?.Statistics.Distribution.Hypers.day ?? 0
+                                        ) as NSNumber) ??
+                                        "0"
+                                ) + " %"
+                            ).font(.system(size: 12)).foregroundColor(.loopYellow)
+                        }
+                    }
+
+                    HStack {
+                        Group {
+                            Text("HbA1c (24h)").font(.caption2).foregroundColor(.secondary)
+                            Text(
+                                numberFormatter
+                                    .string(from: (state.statistics?.Statistics.HbA1c.day ?? 0) as NSNumber) ??
+                                    ""
+                            ).font(.system(size: 12))
+
+                            Text(
+                                NSLocalizedString("All ", comment: "") +
+                                    (
+                                        numberFormatter
+                                            .string(from: (state.statistics?.GlucoseStorage_Days ?? 0) as NSNumber) ?? ""
+                                    ) +
+                                    NSLocalizedString(" days", comment: "")
+                            ).font(.caption2).foregroundColor(.secondary)
+
+                            Text(
+                                numberFormatter
+                                    .string(from: (state.statistics?.Statistics.HbA1c.total ?? 0) as NSNumber) ??
+                                    ""
+                            ).font(.system(size: 12))
+                        }
+                    }
+
+                    HStack {
+                        Group {
+                            Text("Loops").font(.caption2).foregroundColor(.secondary)
+                            Text(
+                                numberFormatter
+                                    .string(from: (state.statistics?.Statistics.LoopCycles.loops ?? 0) as NSNumber) ??
+                                    "0"
+                            ).font(.system(size: 12))
+
+                            Text("Average Interval").font(.caption2).foregroundColor(.secondary)
+                            Text(
+                                numberFormatter
+                                    .string(from: (state.statistics?.Statistics.LoopCycles.avg_interval ?? 0) as NSNumber) ??
+                                    "0"
+                            ).font(.system(size: 12))
+
+                            Text("Median Duration").font(.caption2).foregroundColor(.secondary)
+                            Text(
+                                numberFormatter
+                                    .string(from: (
+                                        state.statistics?.Statistics.LoopCycles
+                                            .median_duration ?? 0
+                                    ) as NSNumber) ??
+                                    "0"
+                            ).font(.system(size: 12))
+                        }
+                    }
+                }
+                .frame(maxWidth: .infinity, maxHeight: 100, alignment: .center)
+            }
+        }
+
+        var legendPanel: some View {
             HStack(alignment: .center) {
                 Group {
                     Circle().fill(Color.loopGreen).frame(width: 8, height: 8)
@@ -272,6 +399,7 @@ extension Home {
                 MainChartView(
                     glucose: $state.glucose,
                     suggestion: $state.suggestion,
+                    statistcs: $state.statistics,
                     tempBasals: $state.tempBasals,
                     boluses: $state.boluses,
                     suspensions: $state.suspensions,
@@ -362,7 +490,8 @@ extension Home {
                     header(geo)
                     infoPanel
                     mainChart
-                    legendPanal
+                    legendPanel
+                    statPanel()
                     bottomPanel(geo)
                 }
                 .edgesIgnoringSafeArea(.vertical)
@@ -411,6 +540,20 @@ extension Home {
                         .padding(.top, 8)
                     Text(errorMessage).font(.caption).foregroundColor(.loopRed)
                 }
+            }
+        }
+
+        private func colorOfGlucose(_ glucose: Decimal) -> Color {
+            switch glucose {
+            case 4 ... 8,
+                 30 ... 46,
+                 72 ... 144:
+                return .loopGreen
+            case 0 ... 4,
+                 20 ... 71:
+                return .loopRed
+            default:
+                return .loopYellow
             }
         }
     }
