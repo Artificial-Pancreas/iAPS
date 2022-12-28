@@ -53,7 +53,7 @@
 "Alert" = "Waarschuwing";
 
 /* The title of the cell showing Low Battery Alert */
-"Low Battery Alert" = "'Lege batterij'-waarschuwing";
+"Low Battery Alert" = "'Lege batterij' waarschuwing";
 
 /* Header of list showing battery level alert options */
 "Battery level Alert" = "Batterijniveau waarschuwing";
