@@ -81,7 +81,7 @@
 "com.loudnate.LoopKit.errorAlertActionTitle" = "Ok";
 
 /* The title for the override emoji condition section */
-"Condition" = "Gesteldheid";
+"Condition" = "Conditie";
 
 /* Title of the setup button to continue */
 "Continue" = "Vervolg";
@@ -181,7 +181,7 @@
 "Resume Delivery" = "Hervat toediening";
 
 /* Title text for button when insulin delivery is in the process of being resumed */
-"Resuming" = "Hervat";
+"Resuming" = "Hervatten";
 
 /* The text for the override preset name field placeholder */
 "Running" = "Hardlopen";
@@ -206,7 +206,7 @@
 "Suspend Delivery" = "Onderbreek toediening";
 
 /* Title text for button when insulin delivery is in the process of being stopped */
-"Suspending" = "Onderbreek";
+"Suspending" = "Onderbreken";
 
 /* The text for the override preset symbol setting */
 "Symbol" = "Symbool";
@@ -230,7 +230,7 @@
 "The maximum allowed amount is %@ grams" = "De maximum toegestane waarde is %@ gram";
 
 /* The schedule table view header describing the configured time zone difference from the default time zone. The substitution parameters are: (1: time zone name)(2: +/-)(3: time interval) */
-"Times in %1$@%2$@%3$@" = "keer in %1$@%2$@%3$@";
+"Times in %1$@%2$@%3$@" = "Aantal keren in %1$@%2$@%3$@";
 
 /* The unit string for units per hour */
 "U/hour" = "E/uur";

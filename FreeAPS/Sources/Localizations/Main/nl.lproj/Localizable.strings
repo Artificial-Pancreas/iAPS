@@ -53,7 +53,7 @@
 "looping" = "Loopen";
 
 /* min ago since last loop */
-"min ago" = "minuten geleden";
+"min ago" = "min. terug";
 
 /* Status Title */
 "No suggestion" = "Geen suggestie";
@@ -237,7 +237,7 @@ Enact a temp Basal or a temp target */
 "Connected!" = "Verbonden!";
 
 /* Connecting to NS */
-"Connecting..." = "Verbinden...";
+"Connecting..." = "Bezig met verbinden...";
 
 /*  */
 "Invalid URL" = "Ongeldige URL";
@@ -294,16 +294,16 @@ Enact a temp Basal or a temp target */
 "Delivery limits" = "Toediening limieten";
 
 /*  */
-"Duration of Insulin Action" = "DIA (Duur van Insuline Activiteit)";
+"Duration of Insulin Action" = "Duur Insuline Activiteit (DIA)";
 
 /* hours of duration of insulin activity */
 "hours" = "uur";
 
 /* Max setting */
-"Max Basal" = "Max Basaal";
+"Max Basal" = "Max basaal";
 
 /* Max setting */
-"Max Bolus" = "Max. bolus";
+"Max Bolus" = "Max bolus";
 
 /* */
 "Pump Settings" = "Pomp instellingen";
@@ -369,7 +369,7 @@ Enact a temp Basal or a temp target */
 "Settings" = "Instellingen";
 
 /* 2 log files to share */
-"Share logs" = "Deel Log";
+"Share logs" = "Deel logbestanden";
 
 /* Upper target */
 "High target" = "Bovengrens doel";
@@ -456,7 +456,7 @@ Enact a temp Basal or a temp target */
 "Bluetooth Transmitters" = "Bluetooth zenders";
 
 /* */
-"Modes" = "Modes";
+"Modes" = "Modussen";
 
 /* Libre 2 Direct */
 "Libre 2 Direct" = "Libre 2 Direct";
@@ -486,7 +486,7 @@ Enact a temp Basal or a temp target */
 "Slope" = "Toename";
 
 /* */
-"Intercept" = "Onderschep";
+"Intercept" = "Ondervangen";
 
 /* */
 "Chart" = "Grafiek";
@@ -510,16 +510,16 @@ Enact a temp Basal or a temp target */
 "Pairinginfo" = "Koppeling informatie";
 
 /* */
-"PatchInfo" = "PatchInfo";
+"PatchInfo" = "Patch info";
 
 /* */
-"Calibrationinfo" = "Kalibratie-info";
+"Calibrationinfo" = "Kalibratie info";
 
 /* */
 "Unknown" = "Onbekend";
 
 /* */
-"Not paired yet" = "Niet gekoppeld apparaat";
+"Not paired yet" = "Nog niet gekoppeld";
 
 /* */
 "Pair Sensor & connect" = "Sensor koppelen en verbinden";
@@ -552,10 +552,10 @@ Enact a temp Basal or a temp target */
 "Glucose" = "Glucosewaarde";
 
 /* LOWALERT! */
-"LOWALERT!" = "Waarschuwing Laag!";
+"LOWALERT!" = "Waarschuwing laag!";
 
 /* HIGHALERT! */
-"HIGHALERT!" = "Waarschuwing Hoog!";
+"HIGHALERT!" = "Waarschuwing hoog!";
 
 /* (Snoozed)*/
 "(Snoozed)" = "(Uitstellen)";
@@ -567,16 +567,16 @@ Enact a temp Basal or a temp target */
 "Transmitter: %@%%" = "Zender: %@%%";
 
 /* No Sensor Detected */
-"No Sensor Detected" = "Geen Sensor Gevonden";
+"No Sensor Detected" = "Geen sensor gevonden";
 
 /* This might be an intermittent problem, but please check that your transmitter is tightly secured over your sensor */
 "This might be an intermittent problem, but please check that your transmitter is tightly secured over your sensor" = "Dit kan een tijdelijk probleem zijn, maar controleer of uw zender stevig vastzit op uw sensor";
 
 /* New Sensor Detected */
-"New Sensor Detected" = "Nieuwe Sensor Gevonden";
+"New Sensor Detected" = "Nieuwe sensor gevonden";
 
 /* Please wait up to 30 minutes before glucose readings are available! */
-"Please wait up to 30 minutes before glucose readings are available!" = "Gelieve tot 30 minuten te wachten voordat glucosewaardes beschikbaar zijn!";
+"Please wait up to 30 minutes before glucose readings are available!" = "Wacht tot 30 minuten voordat glucosewaardes beschikbaar zijn!";
 
 /* Invalid Glucose sample detected, try again later */
 "Invalid Glucose sample detected, try again later" = "Ongeldige glucosewaarde ontdekt, probeer het later opnieuw";
@@ -585,7 +585,7 @@ Enact a temp Basal or a temp target */
 "Sensor might have temporarily stopped, fallen off or is too cold or too warm" = "Mogelijk is de sensor tijdelijk gestopt, losgeraakt of te koud of te warm";
 
 /* Invalid Sensor Detected */
-"Invalid Sensor Detected" = "Ongeldige Sensor Gevonden";
+"Invalid Sensor Detected" = "Ongeldige sensor gevonden";
 
 /* Detected sensor seems not to be a libre 1 sensor! */
 "Detected sensor seems not to be a libre 1 sensor!" = "Gevonden sensor lijkt geen Libre 1 sensor te zijn!";
@@ -615,7 +615,7 @@ Enact a temp Basal or a temp target */
 "Sensor Ending Soon" = "Sensor verloopt binnenkort";
 
 /* Current Sensor is Ending soon! Sensor Life left in %@ */
-"Current Sensor is Ending soon! Sensor Life left in %@" = "Sensor verloopt binnenkort! Sensor verloopt in %@";
+"Current Sensor is Ending soon! Sensor Life left in %@" = "Huidige sensor verloopt binnenkort! Sensor verloopt in %@";
 
 /* */
 "Libre Bluetooth" = "Libre Bluetooth";
@@ -630,10 +630,10 @@ Enact a temp Basal or a temp target */
 "Sensor Footer checksum" = "Sensor voettekst controlesom";
 
 /* */
-"Last Blood Sugar prediction" = "Laatste Bloedsuikervoorspelling";
+"Last Blood Sugar prediction" = "Laatste bloedsuikervoorspelling";
 
 /* */
-"CurrentBG" = "HuidigeBG";
+"CurrentBG" = "Huidige BG";
 
 /* */
 "Sensor Info" = "Sensor Info";
@@ -654,7 +654,7 @@ Enact a temp Basal or a temp target */
 "Sensor Serial" = "Sensor serienummer";
 
 /* */
-"Transmitter Info" = "Zender Informatie";
+"Transmitter Info" = "Zender informatie";
 
 /* */
 "Hardware" = "Hardware";
@@ -669,10 +669,10 @@ Enact a temp Basal or a temp target */
 "Transmitter Type" = "Type zender";
 
 /* */
-"Sensor Type" = "Type Sensor";
+"Sensor Type" = "Type sensor";
 
 /* */
-"Factory Calibration Parameters" = "Fabriekskalibratie voor Parameters";
+"Factory Calibration Parameters" = "Fabriekskalibratie voor parameters";
 
 /* */
 "Valid for footer" = "Geldig voor voettekst";
@@ -681,7 +681,7 @@ Enact a temp Basal or a temp target */
 "Edit calibrations" = "Kalibraties bewerken";
 
 /* */
-"edit calibration clicked" = "bewerken geselecteerde kalibratie";
+"edit calibration clicked" = "Bewerken geselecteerde kalibratie";
 
 /* */
 "Delete CGM" = "Verwijder CGM";
@@ -711,7 +711,7 @@ Enact a temp Basal or a temp target */
 "Export not available" = "Exporteren niet beschikbaar";
 
 /* */
-"Log export requires ios 15" = "Log export vereist ios 15";
+"Log export requires ios 15" = "Log export vereist ten minste iOS 15 of hoger";
 
 /* */
 "Got it!" = "Begrepen!";
@@ -723,10 +723,10 @@ Enact a temp Basal or a temp target */
 "No logs available" = "Geen logboeken beschikbaar";
 
 /* */
-"Glucose Notification visibility" = "Zichtbaarheid Glucose melding";
+"Glucose Notification visibility" = "Zichtbaarheid glucose melding";
 
 /* */
-"Always Notify Glucose" = "Altijd Glucose Melden";
+"Always Notify Glucose" = "Altijd glucose melden";
 
 /* */
 "Notify per reading" = "Melding bij elke meting";
@@ -735,10 +735,10 @@ Enact a temp Basal or a temp target */
 "Value" = "Waarde";
 
 /* */
-"Adds Phone Battery" = "Telefoonbatterij Toevoegen";
+"Adds Phone Battery" = "Telefoonbatterij toevoegen";
 
 /* */
-"Adds Transmitter Battery" = "Zender Batterij Toevoegen";
+"Adds Transmitter Battery" = "Zender batterij toevoegen";
 
 /* */
 "Also vibrate" = "Ook trillen";
@@ -780,13 +780,13 @@ Enact a temp Basal or a temp target */
 "Schedules were saved successfully!" = "Schema's zijn succesvol opgeslagen!";
 
 /* */
-"High Glucose Alarm active" = "Hoge Glucose Alarm actief";
+"High Glucose Alarm active" = "Glucose alarm bij HOOG actief";
 
 /* */
-"Low Glucose Alarm active" = "Laag Glucose Alarm actief";
+"Low Glucose Alarm active" = "Glucose alarm bij LAAG actief";
 
 /* */
-"No Glucose Alarm active" = "Geen Glucose Alarm actief";
+"No Glucose Alarm active" = "Geen glucose alarm actief";
 
 /* */
 "snoozing until %@" = "sluimeren tot %@";
@@ -861,13 +861,13 @@ Enact a temp Basal or a temp target */
 "To prevent LOW required %d g of carbs" = "Om LAAG te voorkomen zijn %d g koolhydraten nodig";
 
 /* */
-"FreeAPS X not active" = "FreeAPS X niet actief";
+"FreeAPS X not active" = "FreeAPS X is niet actief!";
 
 /* */
 "Last loop was more then %d min ago" = "Laatste loop was meer dan %d min geleden";
 
 /* Glucose badge */
-"Show glucose on the app badge" = "Toon glucose op de app icoon";
+"Show glucose on the app badge" = "Toon glucosewaarde op de app icoon";
 
 /* */
 "Backfill glucose" = "Terugzetten glucose";
@@ -916,10 +916,10 @@ Enact a temp Basal or a temp target */
 "OpenAPS other settings" = "OpenAPS overige instellingen";
 
 /* Glucose Simulator CGM */
-"Glucose Simulator" = "Glucose Simulator";
+"Glucose Simulator" = "Glucose simulator";
 
 /* Restored state message */
-"Bluetooth State restored (APS restarted?). Found %d peripherals, and connected to %@ with identifier %@" = "Herstelde Bluetooth-status (APS opnieuw opgestart?). %d randapparatuur gevonden en verbonden met %@ met de identificatie %@";
+"Bluetooth State restored (APS restarted?). Found %d peripherals, and connected to %@ with identifier %@" = "Herstelde Bluetooth-status (FreeAPS X opnieuw opgestart?). %d randapparatuur gevonden en verbonden met %@ met de identificatie %@";
 
 /* Shared app group xDrip4iOS */
 "Using shared app group with external CGM app xDrip4iOS" = "Gedeelde app-groep wordt gebruikt met externe CGM app xDrip4iOS";
@@ -1137,13 +1137,13 @@ Enact a temp Basal or a temp target */
 "High Temptarget Raises Sensitivity" = "Hoog tijdelijk streefdoel verhoogt gevoeligheid";
 
 /* ”High Temptarget Raises Sensitivity" */
-"Defaults to false. When set to true, raises sensitivity (lower sensitivity ratio) for temp targets set to >= 111. Synonym for exercise_mode. The higher your temp target above 110 will result in more sensitive (lower) ratios, e.g., temp target of 120 results in sensitivity ratio of 0.75, while 140 results in 0.6 (with default halfBasalTarget of 160)." = "Is standaard uitgeschakeld. Wanneer ingeschakeld, verhoogt dit de gevoeligheid (lagere gevoeligheidsratio) voor tijdelijk doel tot >= 111 exercise_mode. Hoe hoger je doel boven de 110 ligt, hoe gevoeliger (lagere) ratio's, bijvoorbeeld tijdelijk streefdoel van 120 resulteert in de sensitiviteitsratio van 0,75, terwijl 140 resulteert in 0,6 (met standaard half-basaal doel van 160).";
+"Defaults to false. When set to true, raises sensitivity (lower sensitivity ratio) for temp targets set to >= 111. Synonym for exercise_mode. The higher your temp target above 110 will result in more sensitive (lower) ratios, e.g., temp target of 120 results in sensitivity ratio of 0.75, while 140 results in 0.6 (with default halfBasalTarget of 160)." = "Is standaard uitgeschakeld. Wanneer ingeschakeld, verhoogt dit de gevoeligheid (lagere gevoeligheidsratio) voor tijdelijk doel tot >= 6,2 mmol/l  exercise_mode. Hoe hoger je doel boven de 6,2 mmol/l  ligt, hoe gevoeliger (lagere) ratio's, bijvoorbeeld tijdelijk streefdoel van 6,6 mmol/l resulteert in de sensitiviteitsratio van 0,75, terwijl 7,7 mmol/l resulteert in 0,6 (met standaard half-basaal doel van 8,9 mmol/l).";
 
 /* Headline ”Low Temptarget Lowers Sensitivity" */
 "Low Temptarget Lowers Sensitivity" = "Laag tijdelijk streefdoel verlaagt gevoeligheid";
 
 /* ”Low Temptarget Lowers Sensitivity" */
-"Defaults to false. When set to true, can lower sensitivity (higher sensitivity ratio) for temptargets <= 99. The lower your temp target below 100 will result in less sensitive (higher) ratios, e.g., temp target of 95 results in sensitivity ratio of 1.09, while 85 results in 1.33 (with default halfBasalTarget of 160)." = "Is standaard uitgeschakeld. Indien ingeschakeld, kan de gevoeligheid (hogere gevoeligheidsratio) voor tijdelijke doelen worden verlaagd < = 99. Hoe lager je tijdelijke doel onder de 100 ligt, hoe hoger de gevoeligheid zal zijn. Zo levert een tijdelijk koersdoel van 95 een gevoeligheidsratio van 1,09 op, terwijl 85 een waarde van 1,33 geeft.";
+"Defaults to false. When set to true, can lower sensitivity (higher sensitivity ratio) for temptargets <= 99. The lower your temp target below 100 will result in less sensitive (higher) ratios, e.g., temp target of 95 results in sensitivity ratio of 1.09, while 85 results in 1.33 (with default halfBasalTarget of 160)." = "Is standaard uitgeschakeld. Indien ingeschakeld, kan de gevoeligheid (hogere gevoeligheidsratio) voor tijdelijke doelen worden verlaagd < = 5,5 mmol. Hoe lager je tijdelijke doel onder de 5,6 mmol ligt, hoe hoger de gevoeligheid zal zijn. Zo levert een tijdelijk koersdoel van 5,3 mmol een gevoeligheidsratio van 1,09 op, terwijl 4,7 mmol een waarde van 1,33 geeft.";
 
 /* Headline ”Sensitivity Raises Target" */
 "Sensitivity Raises Target" = "Gevoeligheid verhoogt het doel";
@@ -1167,14 +1167,14 @@ Enact a temp Basal or a temp target */
 "Exercise Mode" = "Beweging modus";
 
 /* "Exercise Mode" */
-"Defaults to false. When true, > 105 mg/dL high temp target adjusts sensitivityRatio for exercise_mode. Synonym for high_temptarget_raises_sensitivity" = "Standaard uit. Indien aan, > 105 mg/dL hoge tijdelijke doelstelling past gevoeligheid voor Oefening_Modus aan. Synoniem voor hoge tijdelijk doel verhoging gevoeligheid";
+"Defaults to false. When true, > 105 mg/dL high temp target adjusts sensitivityRatio for exercise_mode. Synonym for high_temptarget_raises_sensitivity" = "Standaard uit. Indien aan, > 5,8 mmol/l hoge tijdelijke doelstelling past gevoeligheid voor Trainingsmodus aan. Gelijk aan 'hoge tijdelijk doel verhoogt gevoeligheid'";
 
 
 /* Headline "Wide BG Target Range" */
 "Wide BG Target Range" = "Brede BG doelbereik";
 
 /* "Wide BG Target Range" */
-"Defaults to false, which means by default only the low end of the pump’s BG target range is used as OpenAPS target. This is a safety feature to prevent too-wide targets and less-optimal outcomes. Therefore the higher end of the target range is used only for avoiding bolus wizard overcorrections. Use wide_bg_target_range: true to force neutral temps over a wider range of eventualBGs." = "Standaard uit betekent dat standaard alleen de laagste BG van de pomp wordt gebruikt als OpenAPS doel. Dit is een veiligheidsvoorziening om al te brede doelen en minder optimale resultaten te voorkomen. Daarom wordt het hoogste eind van het streefbereik alleen gebruikt om teveel compenseren van de bolus assistent te voorkomen. Gebruik wide_bg_target_range: true om neutrale temps af te dwingen over een breder bereik van de uiteindelijke BG.";
+"Defaults to false, which means by default only the low end of the pump’s BG target range is used as OpenAPS target. This is a safety feature to prevent too-wide targets and less-optimal outcomes. Therefore the higher end of the target range is used only for avoiding bolus wizard overcorrections. Use wide_bg_target_range: true to force neutral temps over a wider range of eventualBGs." = "Standaard uit betekent dat standaard alleen de laagste BG van de pomp wordt gebruikt als OpenAPS doel. Dit is een veiligheidsvoorziening om al te brede doelen en minder optimale resultaten te voorkomen. Daarom wordt het hoogste eind van het streefbereik alleen gebruikt om teveel compenseren van de bolus assistent te voorkomen. Gebruik wide_bg_target_range: Waar om neutrale temps af te dwingen over een breder bereik van de uiteindelijke BG.";
 
 
 /* Headline "Skip Neutral Temps" */
@@ -1269,7 +1269,7 @@ Enact a temp Basal or a temp target */
 "Autosens Min" = "Autosens Min";
 
 /* "Autosens Min" */
-"The other side of the autosens safety limits, putting a cap on how low autosens can adjust basals, and how high it can adjust ISF and BG targets." = "De andere kant van de Autosens veiligheidslimiet, dit set een limiet op hoe laag Autosens de basaal kan zetten, hoe hoog het de ISF kan zetten en hoe hoog de streefwaarde ingesteld kan worden.";
+"The other side of the autosens safety limits, putting a cap on how low autosens can adjust basals, and how high it can adjust ISF and BG targets." = "De andere kant van de Autosens veiligheidslimiet, dit set een limiet op hoe laag Autosens de basaal kan zetten, hoe hoog Autosens de ISF kan zetten en hoe hoog de streefwaarde ingesteld kan worden.";
 
 /* Headline "Half Basal Exercise Target" */
 "Half Basal Exercise Target" = "Halve basaal bewegingsdoel";
@@ -1287,13 +1287,13 @@ Enact a temp Basal or a temp target */
 "Bolus Snooze DIA Divisor" = "Bolus snooze DIA deler";
 
 /* "Bolus Snooze DIA Divisor" */
-"Bolus snooze is enacted after you do a meal bolus, so the loop won’t counteract with low temps when you’ve just eaten. The example here and default is 2; so a 3 hour DIA means that bolus snooze will be gradually phased out over 1.5 hours (3DIA/2)." = "Bolus snooze is geactiveerd nadat je een maaltijdbolus hebt gedaan, zodat de Loop geen lage streefwaardes zal instellen wanneer je net hebt gegeten. Het voorbeeld hier en de standaard waarde is 2; dus een DIA van 3 uur betekent dat bolus snooze geleidelijk aan zal verdwijnen binnen 1,5 uur (3DIA/2).";
+"Bolus snooze is enacted after you do a meal bolus, so the loop won’t counteract with low temps when you’ve just eaten. The example here and default is 2; so a 3 hour DIA means that bolus snooze will be gradually phased out over 1.5 hours (3DIA/2)." = "Bolus sluimeren is geactiveerd nadat je een maaltijdbolus hebt gedaan, zodat de Loop geen lage streefwaardes zal instellen wanneer je net hebt gegeten. Het voorbeeld hier en de standaard waarde is 2; dus een DIA van 3 uur betekent dat de bolus sluimer geleidelijk aan zal verdwijnen binnen 1,5 uur (3DIA/2).";
 
 /* Headline "Min 5m Carbimpact" */
 "Min 5m Carbimpact" = "Min 5m koolhydraat effect";
 
 /* "Min 5m Carbimpact" */
-"This is a setting for default carb absorption impact per 5 minutes. The default is an expected 8 mg/dL/5min. This affects how fast COB is decayed in situations when carb absorption is not visible in BG deviations. The default of 8 mg/dL/5min corresponds to a minimum carb absorption rate of 24g/hr at a CSF of 4 mg/dL/g." = "Dit is een instelling voor de standaard koolhydraten absorptie per 5 minuten. De standaard waarde is een verwachte 8 mg/dL/5min. Dit beïnvloedt hoe snel COB afneemt in situaties waarin koolhydraat absorptie niet zichtbaar is in BG afwijkingen. De standaard van 8 mg/dL/5 min komt overeen met een minimale koolhydraten absorptie van 24g/hr op een CSF (koolhydraat gevoeligheid factor) van 4 mg/dL/g.";
+"This is a setting for default carb absorption impact per 5 minutes. The default is an expected 8 mg/dL/5min. This affects how fast COB is decayed in situations when carb absorption is not visible in BG deviations. The default of 8 mg/dL/5min corresponds to a minimum carb absorption rate of 24g/hr at a CSF of 4 mg/dL/g." = "Dit is een instelling voor de standaard koolhydraten absorptie per 5 minuten. De standaard waarde is een verwachte 0,4 mmol/l/5min. Dit beïnvloedt hoe snel COB afneemt in situaties waarin koolhydraat absorptie niet zichtbaar is in BG afwijkingen. De standaard van 0,4 mmol/l/5min komt overeen met een minimale koolhydraten absorptie van 24gr/uur op een CSF (koolhydraat gevoeligheid factor) van 0,2 mmol/l/g.";
 
 /* Headline "Autotune ISF Adjustment Fraction" */
 "Autotune ISF Adjustment Fraction" = "Autotune ISF-aanpassingsfractie";
@@ -1320,7 +1320,7 @@ Enact a temp Basal or a temp target */
 "Defaults to start at 30. This is the maximum minutes of basal that can be delivered as a single SMB with uncovered COB. This gives the ability to make SMB more aggressive if you choose. It is recommended that the value is set to start at 30, in line with the default, and if you choose to increase this value, do so in no more than 15 minute increments, keeping a close eye on the effects of the changes. It is not recommended to set this value higher than 90 mins, as this may affect the ability for the algorithm to safely zero temp. It is also recommended that pushover is used when setting the value to be greater than default, so that alerts are generated for any predicted lows or highs." = "Staat standaard op 30. Dit is het maximum aantal minuten van basaal dat kan worden toegediend als een enkele supermicrobolus (SMB) zonder dat dit compenseert wordt door COB. Dit zorgt er voor dat SMB agressiever kan worden ingesteld, als je daarvoor kiest. Het is aanbevolen om te beginnen met een waarde van 30 minuten, de standaard waarde en als je er voor kiest om de waarde te verhogen dat je dit met niet grotere stappen doet dan stappen van 15 minuten. Het is niet aanbevolen om het hoger dan 90 minuten in te stellen, dit beperkt de mogelijkheid van het algoritme om veilig een tijdelijk 0 basaal in te stellen. Het wordt ook aanbevolen om push berichten aan te zetten voor wanneer de glucose waardes hoog of laag dreigen te raken.";
 
 /* Headline "Max UAM SMB Basal Minutes" */
-"Max UAM SMB Basal Minutes" = "Max UAM SMB Basale minuten";
+"Max UAM SMB Basal Minutes" = "Max UAM SMB basale minuten";
 
 /* "Max UAM SMB Basal Minutes" */
 "Defaults to start at 30. This is the maximum minutes of basal that can be delivered by UAM as a single SMB when IOB exceeds COB. This gives the ability to make UAM more or less aggressive if you choose. It is recommended that the value is set to start at 30, in line with the default, and if you choose to increase this value, do so in no more than 15 minute increments, keeping a close eye on the effects of the changes. Reducing the value will cause UAM to dose less insulin for each SMB. It is not recommended to set this value higher than 60 mins, as this may affect the ability for the algorithm to safely zero temp. It is also recommended that pushover is used when setting the value to be greater than default, so that alerts are generated for any predicted lows or highs." = "Staat standaard op 30. Dit is het maximum aantal minuten van basaal dat kan worden toegediend door UAM as een enkele supermicrobolus wanneer de IOB groter is dan dan COB. Dit zorgt er voor dat UAM agressiever kan worden ingesteld, als je daarvoor kiest. Het is aanbevolen om te beginnen met een waarde van 30 minuten, de standaard waarde en als je er voor kiest om de waarde te verhogen dat je dit met niet grotere stappen doet dan stappen van 15 minuten, terwijl je het effect goed in de gaten houd. Het is niet aanbevolen om het hoger dan 60 minuten in te stellen, dit beperkt de mogelijkheid van het algoritme om veilig een tijdelijk 0 basaal in te stellen. Het wordt ook aanbevolen om push berichten aan te zetten voor wanneer de glucose waardes hoog of laag dreigen te raken.";
@@ -1402,7 +1402,7 @@ Enact a temp Basal or a temp target */
 "Threshold Setting (mg/dl)" = "Drempelinstelling (mg/dl)";
 
 /* Threshold Setting */
-"The default threshold in FAX depends on your current minimum BG target, as follows:\n\nIf your minimum BG target = 90 mg/dl -> threshold = 65 mg/dl,\n\nif minimum BG target = 100 mg/dl -> threshold = 70 mg/dl,\n\nminimum BG target = 110 mg/dl -> threshold = 75 mg/dl,\n\nand if minimum BG target = 130 mg/dl  -> threshold = 85 mg/dl.\n\nThis setting allows you to change the default to a higher threshold for looping with dynISF. Valid values are 65 mg/dl<= Threshold Setting <= 120 mg/dl." = "De standaarddrempelwaarde in FAX is afhankelijk van je huidige minimale BG streefdoel: als volgt:\n\nAls uw minimum BG = 5,0 mmol/dl -> drempel = 3,6 mmol/dl,\n\nals minimum BG doel = 5,5 mmol/dl -> drempel = 3,8 mmol/dl,\n\nminimum BG doel = 6,1 mmol/dl -> drempel= 3,8 mmol/dl,\n\nen als minimum BG doel = 7,2 mmol/dl -> drempel= 4,7 mmol/dl.\n\nMet deze instelling kunt u de standaard instelling wijzigen naar een hogere drempel voor het herhalen met dynISF. Geldige waarden zijn 3,6 mmol/dl<= Drempel instelling <= 6,6 mmol/dl.";
+"The default threshold in FAX depends on your current minimum BG target, as follows:\n\nIf your minimum BG target = 90 mg/dl -> threshold = 65 mg/dl,\n\nif minimum BG target = 100 mg/dl -> threshold = 70 mg/dl,\n\nminimum BG target = 110 mg/dl -> threshold = 75 mg/dl,\n\nand if minimum BG target = 130 mg/dl  -> threshold = 85 mg/dl.\n\nThis setting allows you to change the default to a higher threshold for looping with dynISF. Valid values are 65 mg/dl<= Threshold Setting <= 120 mg/dl." = "De standaarddrempelwaarde in FAX is afhankelijk van je huidige minimale BG streefdoel: als volgt:\n\nAls uw minimum BG = 5,0 mmol/l -> drempel = 3,6 mmol/dl,\n\nals minimum BG doel = 5,5 mmol/l -> drempel = 3,8 mmol/l,\n\nminimum BG doel = 6,1 mmol/l -> drempel= 3,8 mmol/l,\n\nen als minimum BG doel = 7,2 mmol/l -> drempel= 4,7 mmol/l.\n\nMet deze instelling kunt u de standaard instelling wijzigen naar een hogere drempel voor het herhalen met dynISF. Geldige waarden zijn 3,6 mmol/l<= Drempel instelling <= 6,6 mmol/l.";
 
 /* Headline "Weighted Average of TDD. Weight of past 24 hours:" */
 "Weighted Average of TDD. Weight of past 24 hours:" = "Gewogen gemiddelde van TDD van afgelopen 24 uur:";

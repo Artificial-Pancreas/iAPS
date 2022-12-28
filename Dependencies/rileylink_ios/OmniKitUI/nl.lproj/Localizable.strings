@@ -139,7 +139,7 @@
 "Invalid entry" = "Ongeldige mogelijkheid";
 
 /* The title of the cell showing the pod lot id */
-"Lot" = "Partij";
+"Lot" = "Lot";
 
 /* The detail text for bolus delivery when no bolus is being delivered */
 "None" = "Geen";
@@ -151,7 +151,7 @@
 "Pair New Pod" = "Verbind nieuwe pod";
 
 /* The text of the loading label when pairing */
-"Pairing…" = "Verbinden…";
+"Pairing…" = "Aan het verbinden…";
 
 /* The title of the cell showing the pod pi version */
 "PI Version" = "PI versie";
@@ -175,7 +175,7 @@
 "Primed" = "Klaar gemaakt";
 
 /* The text of the loading label when priming */
-"Priming…" = "Klaar maken…";
+"Priming…" = "Aan het klaar maken…";
 
 /* Label describing time remaining view */
 "Remaining" = "Resterend";
@@ -204,7 +204,7 @@
 "Status" = "Status";
 
 /* A message indicating a command succeeded */
-"Succeeded" = "Geslaagd";
+"Succeeded" = "Geslaagd 👍";
 
 /* The detail text of the basal row when pod is suspended */
 "Suspended" = "Onderbroken";

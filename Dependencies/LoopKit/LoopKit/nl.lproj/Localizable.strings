@@ -59,7 +59,7 @@
 "mmol/L/U" = "mmol/L/E";
 
 /* Sensor state description for the non-valid state */
-"Needs Attention" = "aandacht nodig";
+"Needs Attention" = "Aandacht nodig";
 
 /* Describes an error for no data found in a CarbStore request */
 "No values found" = "Geen waardes gevonden";
