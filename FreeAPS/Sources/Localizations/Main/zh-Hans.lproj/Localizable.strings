@@ -1121,6 +1121,63 @@ Enact a temp Basal or a temp target */
 /* Alert title for suspend error */
 "Failed to Suspend Insulin Delivery" = "Failed to Suspend Insulin Delivery";
 
+//* -----------------------------------------------------------------------*/
+/* ----------------------Statistics strings -------------------------------*/
+/* Option in preferences */
+
+
+"Display Statistics" = "Display Statistics";
+
+/* infoText: Description for Display Statistics */
+"Displays Statistics under the chart view" = "Displays Statistics under the chart view";
+
+/* Low Glucose Limit option in preferences */
+"Low Glucose Limit" = "Low Glucose Limit";
+
+/* High Glucose Limit option in preferences */
+"High Glucose Limit" = "High Glucose Limit";
+
+/* infoText: Description for Low Glucose Limit */
+"BG Under This Value Will Be Displayed As Low Glucose Percentage" = "BG Under This Value Will Be Displayed As Low Glucose Percentage";
+/* infoText: Description for High Glucose Limit */
+"BG Under This Value Will Be Displayed As High Glucose Percentage" = "BG Under This Value Will Be Displayed As High Glucose Percentage";
+
+/* When statistics.json was last updated */
+"Updated" = "Updated";
+
+/* Average BG = */
+"Average" = "Average";
+
+/* Median BG */
+"Median" = "Median";
+
+/* Normal BG (within TIR) */
+"Normal (24h)" = "Normal (24h)";
+
+/* Title High BG in statPanel */
+"High (>" = "High (>";
+
+/* Title Low BG in statPanel */
+"Low (<" = "Low (<";
+
+/* HbA1c estimation for one day of data */
+"HbA1c (24h)" = "HbA1c (24h)";
+
+/* Total number of days of data for HbA1c estimation, part 1/2*/
+"All " = "All ";
+
+/* Total number of days of data for HbA1c estimation, part 2/2*/
+" days" = " days";
+
+/* Nr of loops last 24 hours */
+"Loops" = "Loops";
+
+/* Average loop interval */
+"Average Interval" = "Avgerage Interval";
+
+/* Median loop interval */
+"Median Duration" = "Median Duration";
+
 /* --------------------------------------
 
   Infotexts from openaps.docs and androidaps.docs
@@ -1170,13 +1227,11 @@ Enact a temp Basal or a temp target */
 /* "Exercise Mode" */
 "Defaults to false. When true, > 105 mg/dL high temp target adjusts sensitivityRatio for exercise_mode. Synonym for high_temptarget_raises_sensitivity" = "默认为false。当启用时，>105 mg/dL的高临时目标会调整运动模式下的敏感系数。与high_temptarget_raises_sensitivity同义。";
 
-
 /* Headline "Wide BG Target Range" */
 "Wide BG Target Range" = "Wide BG Target Range";
 
 /* "Wide BG Target Range" */
 "Defaults to false, which means by default only the low end of the pump’s BG target range is used as OpenAPS target. This is a safety feature to prevent too-wide targets and less-optimal outcomes. Therefore the higher end of the target range is used only for avoiding bolus wizard overcorrections. Use wide_bg_target_range: true to force neutral temps over a wider range of eventualBGs." = "默认禁用，这意味着默认情况下只有泵上设备的低血糖限制被用作OpenAPS目标。这是一个安全功能，以防止目标范围过宽和不理想的结果。因此，高的血糖目标范围仅用于大剂量向导的过度校正。使用 wide_bg_target_range: true使用适中的目标血糖来约束更宽的血糖控制目标。";
-
 
 /* Headline "Skip Neutral Temps" */
 "Skip Neutral Temps" = "Skip Neutral Temps";
@@ -1265,7 +1320,6 @@ Enact a temp Basal or a temp target */
 
 /* "Autosens Max" */
 "This is a multiplier cap for autosens (and autotune) to set a 20% max limit on how high the autosens ratio can be, which in turn determines how high autosens can adjust basals, how low it can adjust ISF, and how low it can set the BG target." = "这是Antosens(和AutoTune)的一个倍数上限，将调高Autosens比率最大限制设定为20%，这反过来又决定了AutoTune可以跳高基础率，调低的ISF，以及可以设定多低的BG目标。";
-
 
 /* Headline "Autosens Min" */
 "Autosens Min" = "Autosens Min";
