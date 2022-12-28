@@ -840,7 +840,7 @@ Enact a temp Basal or a temp target */
 "Debug options" = "Felsökningsalternativ";
 
 /* */
-"Adds a lot of data to the Issue Report " = "Lägger till en hel del data till rapporten";
+"Adds a lot of data to the Issue Report " = "Lägger till en hel del data till rapporten ";
 
 /* */
 "Persist sensordata" = "Bevara sensordata";
@@ -914,10 +914,6 @@ Enact a temp Basal or a temp target */
 "OpenAPS targets settings" = "OpenAPS målvärdesinställningar";
 
 "OpenAPS other settings" = "OpenAPS andra inställningar";
-
-/* Experimental stuff settings */
-"XPM settings" = "XPM-inställningar";
-
 
 /* Glucose Simulator CGM */
 "Glucose Simulator" = "Glukossimulator";
@@ -1126,10 +1122,10 @@ Enact a temp Basal or a temp target */
 "Failed to Suspend Insulin Delivery" = "Kunde inte pausa pump";
 
 //* -----------------------------------------------------------------------*/
-
 /* ----------------------Statistics strings -------------------------------*/
-
 /* Option in preferences */
+
+
 "Display Statistics" = "Visa statistik";
 
 /* infoText: Description for Display Statistics */
@@ -1143,7 +1139,6 @@ Enact a temp Basal or a temp target */
 
 /* infoText: Description for Low Glucose Limit */
 "BG Under This Value Will Be Displayed As Low Glucose Percentage" = "Blodsocker under detta värde kommer att visas som lågt blodsocker i statistiken.";
-    
 /* infoText: Description for High Glucose Limit */
 "BG Under This Value Will Be Displayed As High Glucose Percentage" = "Blodsocker under detta värde kommer att visas som högt blodsocker i statistiken";
 
@@ -1156,16 +1151,22 @@ Enact a temp Basal or a temp target */
 /* Median BG */
 "Median" = "Medianvärde";
 
-/* Normal (percentage within TIR) */
+/* Normal BG (within TIR) */
 "Normal (24h)" = "Normalvärde (24h)";
+
+/* Title High BG in statPanel */
+"High (>" = "Högt (>";
+
+/* Title Low BG in statPanel */
+"Low (<" = "Lågt (<";
 
 /* HbA1c estimation for one day of data */
 "HbA1c (24h)" = "HbA1c (24h)";
 
-/* Total number of days of data for HbA1c estimation, part 1/2 */
+/* Total number of days of data for HbA1c estimation, part 1/2*/
 "All " = "Alla ";
 
-/* Total number of days of data for HbA1c estimation, part 2/2 */
+/* Total number of days of data for HbA1c estimation, part 2/2*/
 " days" = " dagar";
 
 /* Nr of loops last 24 hours */
@@ -1177,18 +1178,13 @@ Enact a temp Basal or a temp target */
 /* Median loop interval */
 "Median Duration" = "Medianduration";
 
-/* Title High BG in statPanel */
-"High (>" = "Högt (>";
-
-/* Title Low BG in statPanel */
-"Low (<" = "Lågt (<";
-
 /* --------------------------------------
 
   Infotexts from openaps.docs and androidaps.docs
   FreeAPS X
 */
 /* Headline Rewind Resets Autosens */
+
 "Rewind Resets Autosens" = "Återställ autosens vid reservoarbyte";
 
 /* ”Rewind Resets Autosens” */
@@ -1230,13 +1226,11 @@ Enact a temp Basal or a temp target */
 /* "Exercise Mode" */
 "Defaults to false. When true, > 105 mg/dL high temp target adjusts sensitivityRatio for exercise_mode. Synonym for high_temptarget_raises_sensitivity" = "Av som standard. Synonymt med 'High Temptarget Raises Sensitivity'. Vid ett temporärt målvärde > 5,8 mmol/l justeras 'sensitivityRatio' när 'Exercise Mode' är på.";
 
-
 /* Headline "Wide BG Target Range" */
 "Wide BG Target Range" = "Brett blodsockermålintervall";
 
 /* "Wide BG Target Range" */
 "Defaults to false, which means by default only the low end of the pump’s BG target range is used as OpenAPS target. This is a safety feature to prevent too-wide targets and less-optimal outcomes. Therefore the higher end of the target range is used only for avoiding bolus wizard overcorrections. Use wide_bg_target_range: true to force neutral temps over a wider range of eventualBGs." = "Av som standard, vilket innebär att endast det nedre intervallet av dina inställda målvärden kommer att användas som målvärde i FreeAPS X. Detta är en säkerhetsfunktion för att förhindra alltför omfattande målintervall med mindre optimala resultat som följd. Den övre delen av målvärdet används endast för att undvika överkorrigeringar av bolusguiden. Använd 'Wide BG Target Range' för att forcera neutrala temporära basaldoser att användas över ett bredare intervall av förväntade blodsocker.";
-
 
 /* Headline "Skip Neutral Temps" */
 "Skip Neutral Temps" = "Hoppa över neutrala temporära basaler";
@@ -1324,7 +1318,6 @@ Enact a temp Basal or a temp target */
 
 /* "Autosens Max" */
 "This is a multiplier cap for autosens (and autotune) to set a 20% max limit on how high the autosens ratio can be, which in turn determines how high autosens can adjust basals, how low it can adjust ISF, and how low it can set the BG target." = "Standardvärde: 1.2. Denna multipel begränsar hur mycket autosens (och autotune) automatiskt kan justera upp basaler, sänka insulinkänslighet och/eller målvärde. Med standardvärde upp till 20%.";
-
 
 /* Headline "Autosens Min" */
 "Autosens Min" = "Autosens minimuminställning";

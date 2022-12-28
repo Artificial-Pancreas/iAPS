@@ -1121,6 +1121,63 @@ Enact a temp Basal or a temp target */
 /* Alert title for suspend error */
 "Failed to Suspend Insulin Delivery" = "Sospensione della consegna dell'insulina non riuscita";
 
+//* -----------------------------------------------------------------------*/
+/* ----------------------Statistics strings -------------------------------*/
+/* Option in preferences */
+
+
+"Display Statistics" = "Display Statistics";
+
+/* infoText: Description for Display Statistics */
+"Displays Statistics under the chart view" = "Displays Statistics under the chart view";
+
+/* Low Glucose Limit option in preferences */
+"Low Glucose Limit" = "Low Glucose Limit";
+
+/* High Glucose Limit option in preferences */
+"High Glucose Limit" = "High Glucose Limit";
+
+/* infoText: Description for Low Glucose Limit */
+"BG Under This Value Will Be Displayed As Low Glucose Percentage" = "BG Under This Value Will Be Displayed As Low Glucose Percentage";
+/* infoText: Description for High Glucose Limit */
+"BG Under This Value Will Be Displayed As High Glucose Percentage" = "BG Under This Value Will Be Displayed As High Glucose Percentage";
+
+/* When statistics.json was last updated */
+"Updated" = "Updated";
+
+/* Average BG = */
+"Average" = "Average";
+
+/* Median BG */
+"Median" = "Median";
+
+/* Normal BG (within TIR) */
+"Normal (24h)" = "Normal (24h)";
+
+/* Title High BG in statPanel */
+"High (>" = "High (>";
+
+/* Title Low BG in statPanel */
+"Low (<" = "Low (<";
+
+/* HbA1c estimation for one day of data */
+"HbA1c (24h)" = "HbA1c (24h)";
+
+/* Total number of days of data for HbA1c estimation, part 1/2*/
+"All " = "All ";
+
+/* Total number of days of data for HbA1c estimation, part 2/2*/
+" days" = " days";
+
+/* Nr of loops last 24 hours */
+"Loops" = "Loops";
+
+/* Average loop interval */
+"Average Interval" = "Avgerage Interval";
+
+/* Median loop interval */
+"Median Duration" = "Median Duration";
+
 /* --------------------------------------
 
   Infotexts from openaps.docs and androidaps.docs
@@ -1169,13 +1226,11 @@ Enact a temp Basal or a temp target */
 /* "Exercise Mode" */
 "Defaults to false. When true, > 105 mg/dL high temp target adjusts sensitivityRatio for exercise_mode. Synonym for high_temptarget_raises_sensitivity" = "I valori predefiniti sono falsi. Quando Vero, valori di target maggiore > 105 mg/dL regolano la sensitivityRatio per la modalità esercizio. Sinonimo di high_temptarget_raises_sensitivity";
 
-
 /* Headline "Wide BG Target Range" */
 "Wide BG Target Range" = "Wide BG Target Range";
 
 /* "Wide BG Target Range" */
 "Defaults to false, which means by default only the low end of the pump’s BG target range is used as OpenAPS target. This is a safety feature to prevent too-wide targets and less-optimal outcomes. Therefore the higher end of the target range is used only for avoiding bolus wizard overcorrections. Use wide_bg_target_range: true to force neutral temps over a wider range of eventualBGs." = "Predefiniti a false, il che significa per impostazione predefinita solo l'estremità bassa del campo di destinazione BG della pompa viene utilizzato come obiettivo OpenAPS. Si tratta di una caratteristica di sicurezza per evitare obiettivi troppo ampi e risultati meno ottimali. Pertanto l'estremità superiore dell'intervallo di riferimento viene utilizzata solo per evitare correzioni guidate in bolo. Usare wide_bg_target_range: true per forzare basali temporanee neutre su un più ampio intervallo di eventualBG.";
-
 
 /* Headline "Skip Neutral Temps" */
 "Skip Neutral Temps" = "Skip Neutral Temps";
@@ -1263,7 +1318,6 @@ Enact a temp Basal or a temp target */
 
 /* "Autosens Max" */
 "This is a multiplier cap for autosens (and autotune) to set a 20% max limit on how high the autosens ratio can be, which in turn determines how high autosens can adjust basals, how low it can adjust ISF, and how low it can set the BG target." = "Questo è un valore di moltiplicatore per autosens (e presto autotune) per impostare un limite massimo del 20% su quanto in alto può essere il rapporto di autosens, che a sua volta determina quanto in alto autosens possibile regolare basalsi, quanto in basso può regolare ISF e quanto in basso è possibile impostare il target glicemico.";
-
 
 /* Headline "Autosens Min" */
 "Autosens Min" = "Autosens Min";
