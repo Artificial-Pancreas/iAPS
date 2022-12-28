@@ -840,7 +840,7 @@ Enact a temp Basal or a temp target */
 "Debug options" = "Felsökningsalternativ";
 
 /* */
-"Adds a lot of data to the Issue Report " = "Lägger till en hel del data till rapporten ";
+"Adds a lot of data to the Issue Report " = "Lägger till en hel del data till rapporten";
 
 /* */
 "Persist sensordata" = "Bevara sensordata";
@@ -914,6 +914,10 @@ Enact a temp Basal or a temp target */
 "OpenAPS targets settings" = "OpenAPS målvärdesinställningar";
 
 "OpenAPS other settings" = "OpenAPS andra inställningar";
+
+/* Experimental stuff settings */
+"XPM settings" = "XPM-inställningar";
+
 
 /* Glucose Simulator CGM */
 "Glucose Simulator" = "Glukossimulator";
@@ -1121,13 +1125,70 @@ Enact a temp Basal or a temp target */
 /* Alert title for suspend error */
 "Failed to Suspend Insulin Delivery" = "Kunde inte pausa pump";
 
+//* -----------------------------------------------------------------------*/
+
+/* ----------------------Statistics strings -------------------------------*/
+
+/* Option in preferences */
+"Display Statistics" = "Visa statistik";
+
+/* infoText: Description for Display Statistics */
+"Displays Statistics under the chart view" = "Visa statistik under diagram";
+
+/* Low Glucose Limit option in preferences */
+"Low Glucose Limit" = "Lågt blodsocker";
+
+/* High Glucose Limit option in preferences */
+"High Glucose Limit" = "Högt blodsocker";
+
+/* infoText: Description for Low Glucose Limit */
+"BG Under This Value Will Be Displayed As Low Glucose Percentage" = "Blodsocker under detta värde kommer att visas som lågt blodsocker i statistiken.";
+    
+/* infoText: Description for High Glucose Limit */
+"BG Under This Value Will Be Displayed As High Glucose Percentage" = "Blodsocker under detta värde kommer att visas som högt blodsocker i statistiken";
+
+/* When statistics.json was last updated */
+"Updated" = "Uppdaterades";
+
+/* Average BG = */
+"Average" = "Medelvärde";
+
+/* Median BG */
+"Median" = "Medianvärde";
+
+/* Normal (percentage within TIR) */
+"Normal (24h)" = "Normalvärde (24h)";
+
+/* HbA1c estimation for one day of data */
+"HbA1c (24h)" = "HbA1c (24h)";
+
+/* Total number of days of data for HbA1c estimation, part 1/2 */
+"All " = "Alla ";
+
+/* Total number of days of data for HbA1c estimation, part 2/2 */
+" days" = " dagar";
+
+/* Nr of loops last 24 hours */
+"Loops" = "Loopar";
+
+/* Average loop interval */
+"Average Interval" = "Medelintervall";
+
+/* Median loop interval */
+"Median Duration" = "Medianduration";
+
+/* Title High BG in statPanel */
+"High (>" = "Högt (>";
+
+/* Title Low BG in statPanel */
+"Low (<" = "Lågt (<";
+
 /* --------------------------------------
 
   Infotexts from openaps.docs and androidaps.docs
   FreeAPS X
 */
 /* Headline Rewind Resets Autosens */
-
 "Rewind Resets Autosens" = "Återställ autosens vid reservoarbyte";
 
 /* ”Rewind Resets Autosens” */
