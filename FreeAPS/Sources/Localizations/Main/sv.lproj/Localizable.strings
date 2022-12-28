@@ -1125,6 +1125,8 @@ Enact a temp Basal or a temp target */
 /* ----------------------Statistics strings -------------------------------*/
 /* Option in preferences */
 
+/* Headline Statistics */
+"Statistics" = "Statistik";
 
 "Display Statistics" = "Visa statistik";
 
