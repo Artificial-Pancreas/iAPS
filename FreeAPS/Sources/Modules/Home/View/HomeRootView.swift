@@ -248,15 +248,6 @@ extension Home {
 
                     HStack {
                         Group {
-                            Text("Normal (24h)").font(.caption2).foregroundColor(.secondary)
-                            Text(
-                                (
-                                    numberFormatter
-                                        .string(from: (state.statistics?.Statistics.Distribution.TIR.day ?? 0) as NSNumber) ??
-                                        "0"
-                                ) + " %"
-                            ).font(.system(size: 12)).foregroundColor(.loopGreen)
-
                             Text(
                                 NSLocalizedString("Low (<", comment: " ") +
                                     (numberFormatter.string(from: state.settingsManager.preferences.low as NSNumber) ?? "") + ")"
@@ -270,6 +261,14 @@ extension Home {
                                         "0"
                                 ) + " %"
                             ).font(.system(size: 12)).foregroundColor(.loopRed)
+                            Text("Normal (24h)").font(.caption2).foregroundColor(.secondary)
+                            Text(
+                                (
+                                    numberFormatter
+                                        .string(from: (state.statistics?.Statistics.Distribution.TIR.day ?? 0) as NSNumber) ??
+                                        "0"
+                                ) + " %"
+                            ).font(.system(size: 12)).foregroundColor(.loopGreen)
                             Text(
                                 NSLocalizedString("High (>", comment: " ") +
                                     (numberFormatter.string(from: state.settingsManager.preferences.high as NSNumber) ?? "") + ")"

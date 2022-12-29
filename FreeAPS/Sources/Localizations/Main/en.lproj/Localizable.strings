@@ -1184,7 +1184,7 @@ Enact a temp Basal or a temp target */
 "Loops" = "Loops";
 
 /* Average loop interval */
-"Average Interval" = "Avgerage Interval";
+"Average Interval" = "Average Interval";
 
 /* Median loop interval */
 "Median Duration" = "Median Duration";
