@@ -1178,6 +1178,18 @@ Enact a temp Basal or a temp target */
 /* Median loop interval */
 "Median Duration" = "Medianduration";
 
+/* "Display SD */
+"Display SD instead of CV" = "Visa SD istället för CV";
+
+/* Description for display SD */
+"Display Standard Deviation (SD) instead of Coefficient of Variation (CV) in statPanel" = "Visa standardavikelse (SD) istället för variationskoefficient (CV) på hemskärmen";
+
+/* How often to update the statistics */
+"Update every number of minutes:" = "Uppdatera varje antal minuter:";
+
+/* Description for update interval for statistics */
+"Default is 30 minutes. How often to update and save the statistics.json and to upload last array, when enabled, to Nightscout. A lower interval than for glucose updates (5 min) is pointless." = "Standardinställning är 30 minuter. Med denna inställning ställer du in hur ofta statistiken uppdateras och hur ofta filen statistics.json sparas och laddas upp till till Nightscout, om aktiverad. Att ha ett lägre intervall än för nytt blodoscker (5 min) är meningslöst.";
+
 /* --------------------------------------
 
   Infotexts from openaps.docs and androidaps.docs
