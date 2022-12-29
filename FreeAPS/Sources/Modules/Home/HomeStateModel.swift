@@ -48,6 +48,7 @@ extension Home {
         @Published var units: GlucoseUnits = .mmolL
         @Published var low: Decimal = 4
         @Published var high: Decimal = 10
+        @Published var displaySD = false
         @Published var pumpDisplayState: PumpDisplayState?
         @Published var alarm: GlucoseAlarm?
         @Published var animatedBackground = false
@@ -71,6 +72,7 @@ extension Home {
             displayStatistics = settingsManager.settings.displayStatistics
             low = settingsManager.preferences.low
             high = settingsManager.preferences.high
+            displaySD = settingsManager.preferences.displaySD
             enactedSuggestion = provider.enactedSuggestion
             units = settingsManager.settings.units
             allowManualTemp = !settingsManager.settings.closedLoop
@@ -378,6 +380,7 @@ extension Home.StateModel:
         closedLoop = settingsManager.settings.closedLoop
         low = settingsManager.preferences.low
         high = settingsManager.preferences.high
+        displaySD = settingsManager.preferences.displaySD
         units = settingsManager.settings.units
         animatedBackground = settingsManager.settings.animatedBackground
         manualTempBasal = apsManager.isManualTempBasal

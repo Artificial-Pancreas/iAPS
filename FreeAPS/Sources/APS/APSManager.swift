@@ -760,9 +760,13 @@ final class BaseAPSManager: APSManager, Injectable {
             testFile = storage.retrieve(OpenAPS.Monitor.statistics, as: [Statistics].self) ?? []
             testIfEmpty = testFile.count
         }
-        // Only run every 30 minutes
+
+        let updateThisOften = Int(settingsManager.preferences.updateInterval)
+
+        // Only run every 30 minutes or when pressing statPanel
         if testIfEmpty != 0 {
-            guard testFile[0].created_at.addingTimeInterval(30.minutes.timeInterval) < Date() else {
+            guard testFile[0].created_at.addingTimeInterval(updateThisOften.minutes.timeInterval) < Date()
+            else {
                 return
             }
         }
@@ -898,6 +902,10 @@ final class BaseAPSManager: APSManager, Injectable {
         let endIndex = length_ - 1
         var bg: Decimal = 0
         var bgArray: [Double] = []
+        var bgArray_1_: [Double] = []
+        var bgArray_7_: [Double] = []
+        var bgArray_30_: [Double] = []
+        var bgArray_90_: [Double] = []
         var bgArrayForTIR: [(bg_: Double, date_: Date)] = []
         var bgArray_1: [(bg_: Double, date_: Date)] = []
         var bgArray_7: [(bg_: Double, date_: Date)] = []
@@ -905,6 +913,10 @@ final class BaseAPSManager: APSManager, Injectable {
         var bgArray_90: [(bg_: Double, date_: Date)] = []
         var medianBG = 0.0
         var nr_bgs: Decimal = 0
+        var nr_bgs_1: Decimal = 0
+        var nr_bgs_7: Decimal = 0
+        var nr_bgs_30: Decimal = 0
+        var nr_bgs_90: Decimal = 0
 
         var startDate = Date("1978-02-22T11:43:54.659Z")
         if endIndex >= 0 {
@@ -935,24 +947,32 @@ final class BaseAPSManager: APSManager, Injectable {
                         end1 = true
                         bg_1 = bg / nr_bgs
                         bgArray_1 = bgArrayForTIR
+                        bgArray_1_ = bgArray
+                        nr_bgs_1 = nr_bgs
                         // time_1 = ((startDate ?? Date()) - entry.date).timeInterval
                     }
                     if (startDate! - entry.date).timeInterval >= 6.048E5, !end7 {
                         end7 = true
                         bg_7 = bg / nr_bgs
                         bgArray_7 = bgArrayForTIR
+                        bgArray_7_ = bgArray
+                        nr_bgs_7 = nr_bgs
                         // time_7 = ((startDate ?? Date()) - entry.date).timeInterval
                     }
                     if (startDate! - entry.date).timeInterval >= 2.592E6, !end30 {
                         end30 = true
                         bg_30 = bg / nr_bgs
                         bgArray_30 = bgArrayForTIR
+                        bgArray_30_ = bgArray
+                        nr_bgs_30 = nr_bgs
                         // time_30 = ((startDate ?? Date()) - entry.date).timeInterval
                     }
                     if (startDate! - entry.date).timeInterval >= 7.776E6, !end90 {
                         end90 = true
                         bg_90 = bg / nr_bgs
                         bgArray_90 = bgArrayForTIR
+                        bgArray_90_ = bgArray
+                        nr_bgs_90 = nr_bgs
                         // time_90 = ((startDate ?? Date()) - entry.date).timeInterval
                     }
                 }
@@ -1192,6 +1212,106 @@ final class BaseAPSManager: APSManager, Injectable {
             scheduled_basal: suggestion?.insulin?.scheduled_basal ?? 0
         )
 
+        // SD and CV calculations for all durations:
+
+        var sumOfSquares: Decimal = 0
+        var sumOfSquares_1: Decimal = 0
+        var sumOfSquares_7: Decimal = 0
+        var sumOfSquares_30: Decimal = 0
+        var sumOfSquares_90: Decimal = 0
+
+        // Total
+        for array in bgArray {
+            if units == .mmolL {
+                sumOfSquares += pow(Decimal(array).asMmolL - bg_total, 2)
+            } else { sumOfSquares += pow(Decimal(array) - bg_total, 2) }
+        }
+        // One day
+        for array_1 in bgArray_1_ {
+            if units == .mmolL {
+                sumOfSquares_1 += pow(Decimal(array_1).asMmolL - bg_1, 2)
+            } else { sumOfSquares_1 += pow(Decimal(array_1) - bg_1, 2) }
+        }
+        // week
+        for array_7 in bgArray_7_ {
+            if units == .mmolL {
+                sumOfSquares_7 += pow(Decimal(array_7).asMmolL - bg_7, 2)
+            } else { sumOfSquares_7 += pow(Decimal(array_7) - bg_7, 2) }
+        }
+        // month
+        for array_30 in bgArray_30_ {
+            if units == .mmolL {
+                sumOfSquares_30 += pow(Decimal(array_30).asMmolL - bg_30, 2)
+            } else { sumOfSquares_30 += pow(Decimal(array_30) - bg_30, 2) }
+        }
+        // 90 days
+        for array_90 in bgArray_90_ {
+            if units == .mmolL {
+                sumOfSquares_90 += pow(Decimal(array_90).asMmolL - bg_90, 2)
+            } else { sumOfSquares_90 += pow(Decimal(array_90) - bg_90, 2) }
+        }
+
+        // Standard deviation and Coefficient of variation
+        var sd_total = 0.0
+        var cv_total = 0.0
+        var sd_1 = 0.0
+        var cv_1 = 0.0
+        var sd_7 = 0.0
+        var cv_7 = 0.0
+        var sd_30 = 0.0
+        var cv_30 = 0.0
+        var sd_90 = 0.0
+        var cv_90 = 0.0
+
+        // Avoid division by zero
+        if avgs.total < 1 || nr_bgs < 1 { sd_total = 0
+            cv_total = 0 } else {
+            sd_total = sqrt(Double(sumOfSquares / nr_bgs))
+            cv_total = sd_total / Double(bg_total) * 100
+        }
+        if avgs.day < 1 || nr_bgs_1 < 1 {
+            sd_1 = 0
+            cv_1 = 0
+        } else {
+            sd_1 = sqrt(Double(sumOfSquares_1 / nr_bgs_1))
+            cv_1 = sd_1 / Double(bg_1) * 100
+        }
+        if avgs.week < 1 || nr_bgs_7 < 1 {
+            sd_7 = 0
+            cv_7 = 0
+        } else {
+            sd_7 = sqrt(Double(sumOfSquares_7 / nr_bgs_7))
+            cv_7 = sd_7 / Double(bg_7) * 100
+        }
+        if avgs.month < 1 || nr_bgs_30 < 1 { sd_30 = 0
+            cv_30 = 0 } else { sd_30 = sqrt(Double(sumOfSquares_30 / nr_bgs_30))
+            cv_30 = sd_30 / Double(bg_30) * 100
+        }
+        if avgs.ninetyDays < 1 || nr_bgs_90 < 1 { sd_90 = 0
+            cv_90 = 0 } else { sd_90 = sqrt(Double(sumOfSquares_90 / nr_bgs_90))
+            cv_90 = sd_90 / Double(bg_90) * 100
+        }
+
+        // Standard Deviations
+        let standardDeviations = Durations(
+            day: roundDecimal(Decimal(sd_1), 1),
+            week: roundDecimal(Decimal(sd_7), 1),
+            month: roundDecimal(Decimal(sd_30), 1),
+            ninetyDays: roundDecimal(Decimal(sd_90), 1),
+            total: roundDecimal(Decimal(sd_total), 1)
+        )
+
+        // CV = standard deviation / sample mean x 100
+        let cvs = Durations(
+            day: roundDecimal(Decimal(cv_1), 1),
+            week: roundDecimal(Decimal(cv_7), 1),
+            month: roundDecimal(Decimal(cv_30), 1),
+            ninetyDays: roundDecimal(Decimal(cv_90), 1),
+            total: roundDecimal(Decimal(cv_total), 1)
+        )
+
+        let variance = Variance(SD: standardDeviations, CV: cvs)
+
         let dailystat = Statistics(
             created_at: Date(),
             iPhone: UIDevice.current.getDeviceId,
@@ -1213,7 +1333,8 @@ final class BaseAPSManager: APSManager, Injectable {
                 Glucose: avg,
                 HbA1c: hbs,
                 LoopCycles: loopstat,
-                Insulin: insulin
+                Insulin: insulin,
+                Variance: variance
             )
         )
 

@@ -55,6 +55,8 @@ struct Preferences: JSON {
     var threshold_setting: Decimal = 65
     var high: Decimal = 10
     var low: Decimal = 4
+    var updateInterval: Decimal = 30
+    var displaySD: Bool = false
 }
 
 extension Preferences {
@@ -112,6 +114,8 @@ extension Preferences {
         case threshold_setting
         case high
         case low
+        case updateInterval
+        case displaySD
     }
 }
 

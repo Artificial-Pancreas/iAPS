@@ -124,12 +124,18 @@ struct Ins: JSON, Equatable {
     let scheduled_basal: Decimal?
 }
 
+struct Variance: JSON, Equatable {
+    var SD: Durations
+    var CV: Durations
+}
+
 struct Stats: JSON, Equatable {
     var Distribution: TIRs
     var Glucose: Averages
     var HbA1c: Durations
     var LoopCycles: LoopCycles
     var Insulin: Ins
+    var Variance: Variance
 }
 
 extension LoopCycles {
@@ -172,6 +178,13 @@ extension Ins {
     }
 }
 
+extension Variance {
+    private enum CodingKeys: String, CodingKey {
+        case SD
+        case CV
+    }
+}
+
 extension Stats {
     private enum CodingKeys: String, CodingKey {
         case Distribution
@@ -179,5 +192,6 @@ extension Stats {
         case HbA1c
         case LoopCycles
         case Insulin
+        case Variance
     }
 }

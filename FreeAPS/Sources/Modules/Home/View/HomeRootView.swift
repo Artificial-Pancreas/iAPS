@@ -308,6 +308,28 @@ extension Home {
                                     .string(from: (state.statistics?.Statistics.HbA1c.total ?? 0) as NSNumber) ??
                                     ""
                             ).font(.system(size: 12))
+
+                            if !state.settingsManager.preferences.displaySD {
+                                Text(
+                                    NSLocalizedString("CV (%)", comment: "CV")
+                                ).font(.caption2).foregroundColor(.secondary)
+
+                                Text(
+                                    numberFormatter
+                                        .string(from: (state.statistics?.Statistics.Variance.CV.total ?? 0) as NSNumber) ??
+                                        ""
+                                ).font(.system(size: 12))
+                            } else {
+                                Text(
+                                    NSLocalizedString("SD (", comment: "SD") + state.settingsManager.settings.units.rawValue + ")"
+                                ).font(.caption2).foregroundColor(.secondary)
+
+                                Text(
+                                    numberFormatter
+                                        .string(from: (state.statistics?.Statistics.Variance.SD.total ?? 0) as NSNumber) ??
+                                        ""
+                                ).font(.system(size: 12))
+                            }
                         }
                     }
 
