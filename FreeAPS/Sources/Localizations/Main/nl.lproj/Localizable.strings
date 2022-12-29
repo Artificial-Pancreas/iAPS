@@ -53,7 +53,7 @@
 "looping" = "Loopen";
 
 /* min ago since last loop */
-"min ago" = "min. terug";
+"min ago" = "⏰ min.";
 
 /* Status Title */
 "No suggestion" = "Geen suggestie";
@@ -179,7 +179,7 @@
 "Schedule" = "Schema";
 
 /*  */
-"starts at" = "Begint om";
+"starts at" = "Start";
 
 /* Time basal profile */
 "Time" = "Tijd";
@@ -203,7 +203,7 @@
 "Insulin Sensitivities" = "Insuline gevoeligheden";
 
 /* */
-"Sensitivity Ratio" = "Gevoeligheid ratio";
+"Sensitivity Ratio" = "Gevoeligheidsratio";
 
 /*  */
 "Dismiss" = "Negeren";
@@ -246,7 +246,7 @@ Enact a temp Basal or a temp target */
 "Local glucose source" = "Lokale glucose bron";
 
 /* Header */
-"Nightscout Config" = "Nightscout configuratie";
+"Nightscout Config" = "Nightscout 🦉";
 
 /*  */
 "Port" = "Poort";
@@ -270,10 +270,10 @@ Enact a temp Basal or a temp target */
 "Recommended Insulin Fraction" = "Aanbevolen insuline fractie";
 
 /* Do you want to show bolus screen after added carbs? */
-"Skip Bolus screen after carbs" = "Sla bolus scherm over na koolhydraten";
+"Skip Bolus screen after carbs" = "Sla bolusscherm over na koolhydraten";
 
 /* Allow remote control from NS */
-"Remote control" = "Controle op afstand";
+"Remote control" = "Afstandsbediening";
 
 /* Add Medtronic pump */
 "Add Medtronic" = "Medtronic toevoegen";
@@ -291,13 +291,13 @@ Enact a temp Basal or a temp target */
 "Pump config" = "Pomp configuratie";
 
 /*  */
-"Delivery limits" = "Toediening limieten";
+"Delivery limits" = "Limiet op toediening";
 
 /*  */
 "Duration of Insulin Action" = "Duur Insuline Activiteit (DIA)";
 
 /* hours of duration of insulin activity */
-"hours" = "uur";
+"hours" = "uren";
 
 /* Max setting */
 "Max Basal" = "Max basaal";
@@ -333,7 +333,7 @@ Enact a temp Basal or a temp target */
 "g/U" = "g/E";
 
 /* grams */
-" g" = " gr";
+" g" = " gr ";
 
 /* The short unit display string for grams */
 "g" = "gr";
@@ -558,7 +558,7 @@ Enact a temp Basal or a temp target */
 "HIGHALERT!" = "Waarschuwing hoog!";
 
 /* (Snoozed)*/
-"(Snoozed)" = "(Uitstellen)";
+"(Snoozed)" = "(Gesluimerd)";
 
 /* Glucose: %@ */
 "Glucose: %@" = "Bloedsuiker: %@";
@@ -1126,57 +1126,57 @@ Enact a temp Basal or a temp target */
 /* Option in preferences */
 
 
-"Display Statistics" = "Display Statistics";
+"Display Statistics" = "Statistieken weergeven";
 
 /* infoText: Description for Display Statistics */
-"Displays Statistics under the chart view" = "Displays Statistics under the chart view";
+"Displays Statistics under the chart view" = "Geef statistieken weer onder grafiekweergave";
 
 /* Low Glucose Limit option in preferences */
-"Low Glucose Limit" = "Low Glucose Limit";
+"Low Glucose Limit" = "Laag glucose limiet";
 
 /* High Glucose Limit option in preferences */
-"High Glucose Limit" = "High Glucose Limit";
+"High Glucose Limit" = "Hoog glucose limiet";
 
 /* infoText: Description for Low Glucose Limit */
-"BG Under This Value Will Be Displayed As Low Glucose Percentage" = "BG Under This Value Will Be Displayed As Low Glucose Percentage";
+"BG Under This Value Will Be Displayed As Low Glucose Percentage" = "BG onder deze waarde wordt weergegeven als laag percentage";
 /* infoText: Description for High Glucose Limit */
-"BG Under This Value Will Be Displayed As High Glucose Percentage" = "BG Under This Value Will Be Displayed As High Glucose Percentage";
+"BG Under This Value Will Be Displayed As High Glucose Percentage" = "BG onder deze waarde wordt weergegeven als hoog percentage";
 
 /* When statistics.json was last updated */
-"Updated" = "Updated";
+"Updated" = "Bijgewerkt";
 
 /* Average BG = */
-"Average" = "Average";
+"Average" = "Gemiddeld";
 
 /* Median BG */
-"Median" = "Median";
+"Median" = "Mediaan";
 
 /* Normal BG (within TIR) */
-"Normal (24h)" = "Normal (24h)";
+"Normal (24h)" = "TIR";
 
 /* Title High BG in statPanel */
-"High (>" = "High (>";
+"High (>" = "Hoog (>";
 
 /* Title Low BG in statPanel */
-"Low (<" = "Low (<";
+"Low (<" = "Laag (<";
 
 /* HbA1c estimation for one day of data */
 "HbA1c (24h)" = "HbA1c (24h)";
 
 /* Total number of days of data for HbA1c estimation, part 1/2*/
-"All " = "All ";
+"All " = "Alle ";
 
 /* Total number of days of data for HbA1c estimation, part 2/2*/
-" days" = " days";
+" days" = " dagen";
 
 /* Nr of loops last 24 hours */
 "Loops" = "Loops";
 
 /* Average loop interval */
-"Average Interval" = "Avgerage Interval";
+"Average Interval" = "Gem. interval";
 
 /* Median loop interval */
-"Median Duration" = "Median Duration";
+"Median Duration" = "Duur mediaan";
 
 /* --------------------------------------
 
@@ -1449,7 +1449,7 @@ Enact a temp Basal or a temp target */
 "Use Sigmoid Function" = "Gebruik Sigmoid functie";
 
 /* Use Sigmoid Function */
-"Use a sigmoid function for ISF (and for CR, when enabled), instead of the Logarithmic formula. Is only used when the Dynamic ISF setting is enabled in settings\n\nThe autosens.min/max settings determines the power with which dynamic ratio is adjusted, the height of the graph (Y-interval, Y: Dynamic ratio) and where the sigmoid curve flattens out, thus also limiting how high and how low the the ISF can be adjusted.\n\nThe Adjustment settings adjusts the slope of the curve. A lower value ==> less steep == less aggressive.\n\nYour scheduled/autotuned ISF setting and your min BG target determines when Dynamic ratio = 1 (ISF unchanged), meaning when current BG = minimum target BG => new ISF will always be set to your current scheduled/autotuned ISF, unlike the default logarithmic formula.\n\nDynamic CR is used when the setting 'Enable Dynamic CR' is enabled in settings." = "Gebruik een sigmoïde functie voor ISF (en voor CR, wanneer ingeschakeld) in plaats van de Logaritmische formule. Wordt alleen gebruikt wanneer de dynamische ISF-instelling is ingeschakeld in de instellingen\n\nde autosens.min/max instellingen bepalen de kracht waarmee de dynamische verhouding wordt aangepast, de hoogte van de grafiek (Y-interval, Y: Dynamische ratio) en waar de gesigneerde curve flattens, waardoor ook de hoogte en hoe laag het ISF kan worden aangepast.\n\nDe aanpassingsinstellingen passen de richtingscoëfficiënt van de curve aan. Een lagere waarde ==> minder steep == minder agressief.\n\nJe ingestelde ISF en je minimum BG doel bepalen wanneer dynamische verhouding = 1 (ISF ongewijzigd), betekent dat wanneer huidige BG = minimum streefdoel BG => nieuwe ISF altijd zal worden ingesteld op je huidige geplande/autotuned ISF, in tegenstelling tot de standaard logarthmische formule.\n\nDynamische CR wordt gebruikt wanneer de instelling 'Dynamic CR inschakelen' is ingeschakeld in de instellingen.";
+"Use a sigmoid function for ISF (and for CR, when enabled), instead of the Logarithmic formula. Is only used when the Dynamic ISF setting is enabled in settings\n\nThe autosens.min/max settings determines the power with which dynamic ratio is adjusted, the height of the graph (Y-interval, Y: Dynamic ratio) and where the sigmoid curve flattens out, thus also limiting how high and how low the the ISF can be adjusted.\n\nThe Adjustment settings adjusts the slope of the curve. A lower value ==> less steep == less aggressive.\n\nYour scheduled/autotuned ISF setting and your min BG target determines when Dynamic ratio = 1 (ISF unchanged), meaning when current BG = minimum target BG => new ISF will always be set to your current scheduled/autotuned ISF, unlike the default logarithmic formula.\n\nDynamic CR is used when the setting 'Enable Dynamic CR' is enabled in settings." = "Gebruik Sigmoid functie voor ISF (en voor CR, wanneer ingeschakeld) in plaats van de Logaritmische formule. Wordt alleen gebruikt wanneer de dynamische ISF-instelling is ingeschakeld in de instellingen\n\nde autosens.min/max instellingen bepalen de kracht waarmee de dynamische verhouding wordt aangepast, de hoogte van de grafiek (Y-interval, Y: Dynamische ratio) en waar de gesigneerde curve flattens, waardoor ook de hoogte en hoe laag het ISF kan worden aangepast.\n\nDe aanpassingsinstellingen passen de richtingscoëfficiënt van de curve aan. Een lagere waarde ==> minder steep == minder agressief.\n\nJe ingestelde ISF en je minimum BG doel bepalen wanneer dynamische verhouding = 1 (ISF ongewijzigd), betekent dat wanneer huidige BG = minimum streefdoel BG => nieuwe ISF altijd zal worden ingesteld op je huidige geplande/autotuned ISF, in tegenstelling tot de standaard logarthmische formule.\n\nDynamische CR wordt gebruikt wanneer de instelling 'Dynamic CR inschakelen' is ingeschakeld in de instellingen.";
 
 
 /* Headline "Threshold Setting" */
@@ -1477,7 +1477,7 @@ Enact a temp Basal or a temp target */
 "Defaults to 0.2 (20%). Maximum positive percentual change of BG level to use SMB, above that will disable SMB. Hardcoded cap of 40%. For UAM fully-closed-loop 30% is advisable. Observe in log and popup (maxDelta 27 > 20% of BG 100 - disabling SMB!)." = "Staat standaard op 0,2 (20%). Maximale positieve procentuele verandering van BG-niveau om SMB te gebruiken, daarboven wordt SMB uitgeschakeld. Hardcoded maximum van 40%. Voor volledig gesloten UAM-loop is 30% raadzaam. Zie in log en popup (maxDelta 27 > 20% van BG 100 - uitschakelen SMB!).";
 
 /* Headline "... When Blood Glucose Is Over (mg/dl):" */
-"... When Blood Glucose Is Over (mg/dl):" = "... Wanneer de bloedglucose hoger is dan (mg/dl):";
+"... When Blood Glucose Is Over (mg/dl):" = "... Als de bloedsuiker hoger is dan (mg/dl):";
 
 /* ... When Blood Glucose Is Over (mg/dl): */
 "Set the value enableSMB_high_bg will compare against to enable SMB. If BG > than this value, SMBs should enable." = "Stel de waarde in waarmee 'enableSMB_high_bg' wordt vergeleken om SMB in te schakelen. Als BG hoger is dan deze waarde, moet SMB worden ingeschakeld.";
