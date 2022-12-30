@@ -102,7 +102,7 @@
 "Firmware" = "Firmware";
 
 /* The title of the cell showing the pump firmware version */
-"Firmware Version" = "Firmware Version";
+"Firmware Version" = "Firmware versie";
 
 /* The title of the command to get pump model */
 "Get Pump Model" = "Lees pompmodel";
