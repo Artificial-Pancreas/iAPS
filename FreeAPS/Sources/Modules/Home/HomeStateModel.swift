@@ -298,9 +298,11 @@ extension Home {
                let timestamp = enactedSuggestion.timestamp,
                enactedSuggestion.deliverAt == suggestion.deliverAt, enactedSuggestion.recieved == true
             {
-                statusTitle = "Enacted at \(dateFormatter.string(from: timestamp))"
+                statusTitle = NSLocalizedString("Enacted at", comment: "Headline in enacted pop up") + " " + dateFormatter
+                    .string(from: timestamp)
             } else if let suggestedDate = suggestion.deliverAt {
-                statusTitle = "Suggested at \(dateFormatter.string(from: suggestedDate))"
+                statusTitle = NSLocalizedString("Suggested at", comment: "Headline in suggested pop up") + " " + dateFormatter
+                    .string(from: suggestedDate)
             } else {
                 statusTitle = "Suggested"
             }

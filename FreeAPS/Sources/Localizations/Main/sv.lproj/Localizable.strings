@@ -43,8 +43,11 @@
 /*  */
 "Agree and continue" = "Godkänn och fortsätt";
 
-/* Enacted at a date */
-"Enacted at %@" = "Utfört kl %@";
+/* Headline in enacted pop up (at: at what time) */
+"Enacted at" = "Utfört kl.";
+
+/* Headline in suggested pop up (at: at what time) */
+"Suggested at" = "Föreslaget kl.";
 
 /* Home title */
 "Home" = "Hem";
