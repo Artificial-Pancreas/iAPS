@@ -44,10 +44,10 @@
 "Agree and continue" = "Godkänn och fortsätt";
 
 /* Headline in enacted pop up (at: at what time) */
-"Enacted at" = "Utfört kl.";
+"Enacted at" = "Utfört klockan";
 
 /* Headline in suggested pop up (at: at what time) */
-"Suggested at" = "Föreslaget kl.";
+"Suggested at" = "Föreslaget klockan";
 
 /* Home title */
 "Home" = "Hem";
@@ -63,9 +63,6 @@
 
 /* Replace pod text in Header */
 "Replace pod" = "Byt podd";
-
-/* Suggested at a date */
-"Suggested at %@" = "Föreslaget kl. %@";
 
 /* Add carbs screen */
 "Add Carbs" = "Lägg till kolhydrater";
@@ -1001,7 +998,8 @@ Enact a temp Basal or a temp target */
 /* Debug option view Saved Glucose Data used for statistics */
 "Glucose Data used for statistics" = "Sparade blodglukosvärden för statistik";
 
-/* HealthKit intergration --------------------*/
+/* --------------- HealthKit intergration --------------------*/
+
 /* */
 "Apple Health" = "Apple Hälsa";
 

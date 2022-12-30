@@ -132,7 +132,7 @@
 "On Idle" = "Inactief";
 
 /* Pump find device instruction */
-"On your pump, go to the Find Device screen and select \"Find Device\".\n\nMain Menu >\nUtilities >\nConnect Devices >\nOther Devices >\nOn >\nFind Device" = "On your pump, go to the Find Device screen and select \"Find Device\".\n\nMain Menu >\nUtilities >\nConnect Devices >\nOther Devices >\nOn >\nFind Device";
+"On your pump, go to the Find Device screen and select \"Find Device\".\n\nMain Menu >\nUtilities >\nConnect Devices >\nOther Devices >\nOn >\nFind Device" = "Ga op uw pomp naar het hoofdmenu om uw apparaat te zoeken. Selecteer in Hoofdmenu: Hulpprogramma's>\nApparaten koppelen>\nOverige apparaten >\nAan>\nApparaat zoeken";
 
 /* The title text for the preferred insulin data source config */
 "Preferred Data Source" = "Voorkeur databron";
@@ -166,7 +166,7 @@
 "Reading pump status…" = "Lees pomp gegevens…";
 
 /* The title of the cell showing the pump region */
-"Region" = "Region";
+"Region" = "Regio";
 
 /* Button title to retry sentry setup */
 "Retry" = "Opnieuw proberen";
