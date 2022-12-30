@@ -44,10 +44,10 @@
 "Agree and continue" = "Akkoord en doorgaan";
 
 /* Headline in enacted pop up (at: at what time) */
-"Enacted at" = "Enacted at";
+"Enacted at" = "Toegediend op";
 
 /* Headline in suggested pop up (at: at what time) */
-"Suggested at" = "Suggested at";
+"Suggested at" = "Voorgesteld op";
 
 /* Home title */
 "Home" = "Hoofdmenu";
@@ -948,55 +948,55 @@ Enact a temp Basal or a temp target */
 /* -------------- Developer settings ---------------------- */
 /* Debug options */
 
-"Developer" = "Developer";
+"Developer" = "Ontwikkelaar";
 
 /* Debug option view NS Upload Profile */
-"NS Upload Profile" = "NS Upload Profile";
+"NS Upload Profile" = "NS Upload profiel";
 
 /* Debug option view NS Uploaded Profile */
-"NS Uploaded Profile" = "NS Uploaded Profile";
+"NS Uploaded Profile" = "NS geüpload profiel";
 
 /* Debug option view Autosense */
 "Autosense" = "Autosense";
 
 /* Debug option view Pump History */
-"Pump History" = "Pump History";
+"Pump History" = "Pomp geschiedenis";
 
 /* Debug option view Target Ranges */
-"Target ranges" = "Target ranges";
+"Target ranges" = "Doelbereiken";
 
 /* Debug option view Temp targets */
-"Temp targets" = "Temp targets";
+"Temp targets" = "Tijdelijke doelen";
 
 /* Debug option view Meal */
-"Meal" = "Meal";
+"Meal" = "Maaltijd";
 
 /* Debug option view Pump profile */
-"Pump profile" = "Pump profile";
+"Pump profile" = "Pomp profiel";
 
 /* Debug option view Profile */
-"Profile" = "Profile";
+"Profile" = "Profiel";
 
 /* Debug option view Enacted */
-"Enacted" = "Enacted";
+"Enacted" = "Vastgesteld";
 
 /* Debug option view Announcements (from NS) */
-"Announcements" = "Announcements";
+"Announcements" = "Meldingen";
 
 /* Debug option view Enacted announcements announcements (from NS) */
-"Enacted announcements" = "Enacted announcements";
+"Enacted announcements" = "Ingevoerde meldingen";
 
 /* Debug option view Autotune */
 "Autotune" = "Autotune";
 
 /* Debug option view Target presets */
-"Target presets" = "Target presets";
+"Target presets" = "Doelvoorinstellingen";
 
 /* Debug option view */
-"Loop Cycles" = "Loop Cycles";
+"Loop Cycles" = "Loop cyclussen";
 
 /* Debug option view Glucose Data used for statistics */
-"Glucose Data used for statistics" = "Glucose Data used for statistics";
+"Glucose Data used for statistics" = "Glucose data gebruikt voor statistieken";
 
 /* --------------- HealthKit intergration --------------------*/
 /* */
