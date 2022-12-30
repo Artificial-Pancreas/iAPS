@@ -36,3 +36,5 @@ files:
     translation: /Dependencies/rileylink_ios/OmniKitUI/%osx_locale%.lproj/OmnipodPumpManager.strings
   - source: /Dependencies/OmniBLE/Localizations/en.lproj/Localizable.strings
     translation: /Dependencies/OmniBLE/Localizations/%osx_locale%.lproj/Localizable.strings
+  - source: /Dependencies/rileylink_ios/MinimedKitUI/Base.lproj/Localizable.strings
+    translation: /Dependencies/rileylink_ios/MinimedKitUI/%osx_locale%.lproj/Localizable.strings
