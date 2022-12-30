@@ -20,7 +20,7 @@
 "Awake Until" = "Aktywny od";
 
 /* The title text for the basal rate schedule */
-"Basal Rates" = "Dawka podstawowa";
+"Basal Rates" = "Dawki podstawowe";
 
 /* The format string describing pump battery voltage: (1: battery voltage) */
 "Battery: %1$@ volts\n" = "Bateria: %1$@ V\n";
@@ -41,13 +41,13 @@
 "Change Time Zone" = "Zmień strefę czasową";
 
 /* Progress message for changing pump time. */
-"Changing time…" = "Zmieniam godzinę…";
+"Changing time…" = "Zmiana czasu…";
 
 /* The title of the section describing commands */
-"Commands" = "Komunikaty";
+"Commands" = "Komendy";
 
 /* The title of the configuration section in settings */
-"Configuration" = "Konfiguracja";
+"Configuration" = "Configuration";
 
 /* Button title to connect to pump during setup */
 "Connect" = "Połącz";
@@ -60,7 +60,7 @@
 "Delete Pump" = "Usuń pompę";
 
 /* Title text for delivery limits */
-"Delivery Limits" = "Limit podawania";
+"Delivery Limits" = "Limity podawania";
 
 /* The title of the section describing the device */
 "Device" = "Urządzenie";
@@ -78,10 +78,10 @@
 "Enabled Diagnostic LEDs" = "Diagnostyczne LEDy włączone";
 
 /* The alert title for a resume error */
-"Error Resuming" = "Error Resuming";
+"Error Resuming" = "Błąd wznawiania";
 
 /* The alert title for a suspend error */
-"Error Suspending" = "Error Suspending";
+"Error Suspending" = "Błąd wstrzymywania";
 
 /* The title of the command to fetch recent glucose */
 "Fetch Enlite Glucose" = "Pobierz glukozę z Enlite";
@@ -123,7 +123,7 @@
 "MySentry Pair" = "Połącz z MySentry";
 
 /* The title of the cell showing device name */
-"Name" = "Nazwa";
+"Name" = "Name";
 
 /* Message display when no response from tuning pump */
 "No response" = "Brak odpowiedzi";
@@ -138,7 +138,7 @@
 "Preferred Data Source" = "Preferowane źródło danych";
 
 /* The title of the section describing the pump */
-"Pump" = "Pompa";
+"Pump" = "Pump";
 
 /* The title text for the battery type value */
 "Pump Battery Type" = "Rodzaj baterii w pompie";
@@ -151,7 +151,7 @@
 "Pump Model" = "Model pompy";
 
 /* Title of the pump settings view controller */
-"Pump Settings" = "Ustawienia pompy";
+"Pump Settings" = "Pump Settings";
 
 /* The title of the command to read basal schedule */
 "Read Basal Schedule" = "Sprawdź dawkę podstawową";
@@ -169,7 +169,7 @@
 "Region" = "Region";
 
 /* Button title to retry sentry setup */
-"Retry" = "Spróbuj ponownie";
+"Retry" = "Retry";
 
 /* The title of the command to fetch RileyLink statistics */
 "RileyLink Statistics" = "Statystyki RileyLink";
@@ -188,7 +188,7 @@
 "Signal Strength" = "Siła sygnału";
 
 /* A message indicating a command succeeded */
-"Succeeded" = "Udało się!";
+"Succeeded" = "Zakończone powodzeniem";
 
 /* The format string describing pump suspended state: (1: suspended) */
 "Suspended: %1$@\n" = "Zawieszona: %1$@\n";
@@ -203,7 +203,7 @@
 "Tuning radio…" = "Dostrajanie radia…";
 
 /* The detail text for an unknown pump model */
-"Unknown" = "Nieznany";
+"Unknown" = "Nieznana";
 
 /* The title of the cell showing uptime */
 "Uptime" = "Uptime";

@@ -11,7 +11,7 @@
 "%1$@%2$@%3$@" = "%1$@%2$@%3$@";
 
 /* Instructions on selecting battery chemistry type */
-"Alkaline and Lithium batteries decay at differing rates. Alkaline tend to have a linear voltage drop over time whereas lithium cell batteries tend to maintain voltage until halfway through their lifespan. Under normal usage in a Non-MySentry compatible Minimed (x22/x15) insulin pump running Loop, Alkaline batteries last approximately 4 to 5 days. Lithium batteries last between 1-2 weeks. This selection will use different battery voltage decay rates for each of the battery chemistry types and alert the user when a battery is approximately 8 to 10 hours from failure." = "Alkaline and Lithium batteries decay at differing rates. Alkaline tend to have a linear voltage drop over time whereas lithium cell batteries tend to maintain voltage until halfway through their lifespan. Under normal usage in a Non-MySentry compatible Minimed (x22/x15) insulin pump running Loop, Alkaline batteries last approximately 4 to 5 days. Lithium batteries last between 1-2 weeks. This selection will use different battery voltage decay rates for each of the battery chemistry types and alert the user when a battery is approximately 8 to 10 hours from failure.";
+"Alkaline and Lithium batteries decay at differing rates. Alkaline tend to have a linear voltage drop over time whereas lithium cell batteries tend to maintain voltage until halfway through their lifespan. Under normal usage in a Non-MySentry compatible Minimed (x22/x15) insulin pump running Loop, Alkaline batteries last approximately 4 to 5 days. Lithium batteries last between 1-2 weeks. This selection will use different battery voltage decay rates for each of the battery chemistry types and alert the user when a battery is approximately 8 to 10 hours from failure." = "Alkaliska och litiumbatterier tappar spänning med olika hastighet. Alkaliska tenderar att ha ett linjärt spänningsfall över tiden, medan litiumcellsbatterier tenderar att behålla spänning fram till halva deras livslängd. Under normal användning, i en icke-MySentry-kompatibel Minimed (x22/x15) insulinpump som kör Loop, varar alkaliska batterier cirka 4 till 5 dagar. Litiumbatterier håller mellan 1-2 veckor. Detta val kommer att använda olika spänningsfall beroende på batterityp och varna användaren när ett batteri har cirka 8 till 10 timmar kvar av sin livslängd.";
 
 /* Confirmation message for deleting a pump */
 "Are you sure you want to delete this pump?" = "Säkert att du vill radera den här pumpen?";
@@ -41,7 +41,7 @@
 "Change Time Zone" = "Ändra tidszon";
 
 /* Progress message for changing pump time. */
-"Changing time…" = "Ändrar tid…";
+"Changing time…" = "Ändra tid…";
 
 /* The title of the section describing commands */
 "Commands" = "Kommandon";
@@ -60,7 +60,7 @@
 "Delete Pump" = "Radera pump";
 
 /* Title text for delivery limits */
-"Delivery Limits" = "Maxdoser";
+"Delivery Limits" = "Maxdosvärde";
 
 /* The title of the section describing the device */
 "Device" = "Enhet";
@@ -78,10 +78,10 @@
 "Enabled Diagnostic LEDs" = "Diagnostiska LED på";
 
 /* The alert title for a resume error */
-"Error Resuming" = "Fel vid återgång";
+"Error Resuming" = "Fel vid återupptagande";
 
 /* The alert title for a suspend error */
-"Error Suspending" = "Fel vid försök till paus";
+"Error Suspending" = "Kunde inte pausa pump";
 
 /* The title of the command to fetch recent glucose */
 "Fetch Enlite Glucose" = "Hämta Enlite Glukos";
@@ -102,7 +102,7 @@
 "Firmware" = "Firmware";
 
 /* The title of the cell showing the pump firmware version */
-"Firmware Version" = "Firmware";
+"Firmware Version" = "Firmware-version";
 
 /* The title of the command to get pump model */
 "Get Pump Model" = "Hämtar Pumpmodell";
@@ -111,7 +111,7 @@
 "Get Statistics…" = "Hämtar statistik…";
 
 /* Instructions on selecting an insulin data source */
-"Insulin delivery can be determined from the pump by either interpreting the event history or comparing the reservoir volume over time. Reading event history allows for a more accurate status graph and uploading up-to-date treatment data to Nightscout, at the cost of faster pump battery drain and the possibility of a higher radio error rate compared to reading only reservoir volume. If the selected source cannot be used for any reason, the system will attempt to fall back to the other option." = "Insulin delivery can be determined from the pump by either interpreting the event history or comparing the reservoir volume over time. Reading event history allows for a more accurate status graph and uploading up-to-date treatment data to Nightscout, at the cost of faster pump battery drain and the possibility of a higher radio error rate compared to reading only reservoir volume. If the selected source cannot be used for any reason, the system will attempt to fall back to the other option.";
+"Insulin delivery can be determined from the pump by either interpreting the event history or comparing the reservoir volume over time. Reading event history allows for a more accurate status graph and uploading up-to-date treatment data to Nightscout, at the cost of faster pump battery drain and the possibility of a higher radio error rate compared to reading only reservoir volume. If the selected source cannot be used for any reason, the system will attempt to fall back to the other option." = "Mängd doserat insulin kan bestämmas antingen genom att tolka händelsehistoriken från pumpen eller genom att jämföra reservoarvolymen över tid. Att läsa av händelsehistoriken tillåter ett mer korrekt status-diagram och mer aktuella behandlingsdata för uppladdning till Nightscout, men laddar ur batteriet snabbare och ökar risken för andel eventuella radiofel jämfört med avläsning av endast reservoarvolym. Om det ena alternativet av någon anledning inte kan användas, försöker systemet med det andra alternativet.";
 
 /* The title of the cell describing an awake radio */
 "Last Awake" = "Senast vaken";
@@ -120,7 +120,7 @@
 "Listening Off" = "Avlyssning av";
 
 /* The title of the command to pair with mysentry */
-"MySentry Pair" = "MySentry Pair";
+"MySentry Pair" = "MySentry parkoppling";
 
 /* The title of the cell showing device name */
 "Name" = "Namn";
@@ -129,7 +129,7 @@
 "No response" = "Inget svar";
 
 /* The title of the cell showing the last idle */
-"On Idle" = "On Idle";
+"On Idle" = "I viloläge";
 
 /* Pump find device instruction */
 "On your pump, go to the Find Device screen and select \"Find Device\".\n\nMain Menu >\nUtilities >\nConnect Devices >\nOther Devices >\nOn >\nFind Device" = "On your pump, go to the Find Device screen and select \"Find Device\".\n\nMain Menu >\nUtilities >\nConnect Devices >\nOther Devices >\nOn >\nFind Device";
@@ -206,4 +206,4 @@
 "Unknown" = "Okänd";
 
 /* The title of the cell showing uptime */
-"Uptime" = "Uptime";
+"Uptime" = "Körs sedan";
