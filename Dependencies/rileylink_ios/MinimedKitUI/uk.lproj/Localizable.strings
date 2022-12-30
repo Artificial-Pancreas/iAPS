@@ -2,40 +2,40 @@
 "%1$@  %2$@/%3$@  %4$@" = "%1$@  %2$@/%3$@  %4$@";
 
 /* The format string describing number of basal schedule entries: (1: number of entries) */
-"%1$@ basal schedule entries\n" = "%1$@ basal schedule entries\n";
+"%1$@ basal schedule entries\n" = "%1$@ записи базального графіка\n";
 
 /* The format string describing units of insulin remaining: (1: number of units) */
-"%1$@ Units of insulin remaining\n" = "%1$@ Units of insulin remaining\n";
+"%1$@ Units of insulin remaining\n" = "%1$@ Залишилося одиниць інсуліну\n";
 
 /* The format string for displaying an offset from a time zone: (1: GMT)(2: -)(3: 4:00) */
 "%1$@%2$@%3$@" = "%1$@%2$@%3$@";
 
 /* Instructions on selecting battery chemistry type */
-"Alkaline and Lithium batteries decay at differing rates. Alkaline tend to have a linear voltage drop over time whereas lithium cell batteries tend to maintain voltage until halfway through their lifespan. Under normal usage in a Non-MySentry compatible Minimed (x22/x15) insulin pump running Loop, Alkaline batteries last approximately 4 to 5 days. Lithium batteries last between 1-2 weeks. This selection will use different battery voltage decay rates for each of the battery chemistry types and alert the user when a battery is approximately 8 to 10 hours from failure." = "Alkaline and Lithium batteries decay at differing rates. Alkaline tend to have a linear voltage drop over time whereas lithium cell batteries tend to maintain voltage until halfway through their lifespan. Under normal usage in a Non-MySentry compatible Minimed (x22/x15) insulin pump running Loop, Alkaline batteries last approximately 4 to 5 days. Lithium batteries last between 1-2 weeks. This selection will use different battery voltage decay rates for each of the battery chemistry types and alert the user when a battery is approximately 8 to 10 hours from failure.";
+"Alkaline and Lithium batteries decay at differing rates. Alkaline tend to have a linear voltage drop over time whereas lithium cell batteries tend to maintain voltage until halfway through their lifespan. Under normal usage in a Non-MySentry compatible Minimed (x22/x15) insulin pump running Loop, Alkaline batteries last approximately 4 to 5 days. Lithium batteries last between 1-2 weeks. This selection will use different battery voltage decay rates for each of the battery chemistry types and alert the user when a battery is approximately 8 to 10 hours from failure." = "Лужні та літієві батареї сідають з різною швидкістю. У лужних падіння лінійне, тоді як літієві зберігають напругу протягом половини терміну служби. При нормальному користуванні в помпі Minimed без Mysentry (x22/x15) із застосуванням алгоритму ІПЗ лужні батареї служать приблизно від 4 до 5 днів. Літієві служать від 1 до 2 тижнів. Це налаштування буде використовувати різну швидкість падіння напруги батарейок залежно від їх хімічного типу і попереджати користувача за 8-10 годин до відмови";
 
 /* Confirmation message for deleting a pump */
-"Are you sure you want to delete this pump?" = "Are you sure you want to delete this pump?";
+"Are you sure you want to delete this pump?" = "Ви впевнені, що хочете видалити цю помпу?";
 
 /* The title of the cell describing an awake radio */
-"Awake Until" = "Awake Until";
+"Awake Until" = "Робочий стан до";
 
 /* The title text for the basal rate schedule */
 "Basal Rates" = "Дози базалу";
 
 /* The format string describing pump battery voltage: (1: battery voltage) */
-"Battery: %1$@ volts\n" = "Battery: %1$@ volts\n";
+"Battery: %1$@ volts\n" = "Батарея: %1$@ вольт\n";
 
 /* The label indicating the best radio frequency */
-"Best Frequency" = "Best Frequency";
+"Best Frequency" = "Найкраща частота";
 
 /* The format string describing pump bolusing state: (1: bolusing) */
-"Bolusing: %1$@\n" = "Bolusing: %1$@\n";
+"Bolusing: %1$@\n" = "Болюс: %1$@\n";
 
 /* The title of the cancel action in an action sheet */
 "Cancel" = "Відмінити";
 
 /* The title of the command to change pump time */
-"Change Time" = "Change Time";
+"Change Time" = "Змінити час";
 
 /* The title of the command to change pump time zone */
 "Change Time Zone" = "Змінити часовий пояс";
@@ -57,7 +57,7 @@
 
 /* Button title to delete pump
    Title text for the button to remove a pump from Loop */
-"Delete Pump" = "Delete Pump";
+"Delete Pump" = "Видалити помпу";
 
 /* Title text for delivery limits */
 "Delivery Limits" = "Ліміт доставки";
@@ -66,16 +66,16 @@
 "Device" = "Пристрій";
 
 /* The title of the command to discover commands */
-"Discover Commands" = "Discover Commands";
+"Discover Commands" = "Відкрийте для себе команди";
 
 /* Progress message for discovering commands. */
-"Discovering commands…" = "Discovering commands…";
+"Discovering commands…" = "Виявлення команд…";
 
 /* The title of the command to enable diagnostic LEDs */
-"Enable Diagnostic LEDs" = "Enable Diagnostic LEDs";
+"Enable Diagnostic LEDs" = "Увімкнути LED лампочки діагностики";
 
 /* Progress message for enabling diagnostic LEDs */
-"Enabled Diagnostic LEDs" = "Enabled Diagnostic LEDs";
+"Enabled Diagnostic LEDs" = "LED лампочки діагностики включені";
 
 /* The alert title for a resume error */
 "Error Resuming" = "Помилка при відновленні";
@@ -84,19 +84,19 @@
 "Error Suspending" = "Помилка призупинення";
 
 /* The title of the command to fetch recent glucose */
-"Fetch Enlite Glucose" = "Fetch Enlite Glucose";
+"Fetch Enlite Glucose" = "Отримати дані глюкози з Enlite";
 
 /* The title of the command to fetch recent history */
-"Fetch Recent History" = "Fetch Recent History";
+"Fetch Recent History" = "Отримати логі недавньої історії";
 
 /* Progress message for fetching pump glucose. */
-"Fetching glucose…" = "Fetching glucose…";
+"Fetching glucose…" = "Отримання глюкози…";
 
 /* Progress message for fetching pump history. */
-"Fetching history…" = "Fetching history…";
+"Fetching history…" = "Отримання історії…";
 
 /* Progress message for fetching pump model. */
-"Fetching pump model…" = "Fetching pump model…";
+"Fetching pump model…" = "Отримання моделі насоса…";
 
 /* The title of the cell showing firmware version */
 "Firmware" = "Прошивка";
