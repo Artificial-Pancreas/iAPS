@@ -922,10 +922,10 @@ Enact a temp Basal or a temp target */
 "Bluetooth State restored (APS restarted?). Found %d peripherals, and connected to %@ with identifier %@" = "Стан Bluetooth відновлений (APS перезапущено?). Виявили %d периферійних пристроїв та  під'єднано до %@ з ідентифікатором %@";
 
 /* Shared app group xDrip4iOS */
-"Using shared app group with external CGM app xDrip4iOS" = "Using shared app group with external CGM app xDrip4iOS";
+"Using shared app group with external CGM app xDrip4iOS" = "Використання спільної групи програм із зовнішньою програмою CGM xDrip4iOS";
 
 /* Shared app group GlucoseDirect */
-"Using shared app group with external CGM app GlucoseDirect" = "Using shared app group with external CGM app GlucoseDirect";
+"Using shared app group with external CGM app GlucoseDirect" = "Використання спільної групи програм із зовнішньою програмою CGM GlucoseDirect";
 
 /* Dexcom G6 app */
 "Dexcom G6 app" = "Вбудований додаток G6";
@@ -1031,7 +1031,7 @@ Enact a temp Basal or a temp target */
 " -  Manual Basal ⚠️" = "Ручний ТБШ ⚠️";
 
 /* Total AT / Scheduled basal insulin */
-" U/day" = " ОД/день";
+" U/day" = " U/день";
 
 /* Total AT / Scheduled basal insulin */
 "Total" = "Всього";
@@ -1179,69 +1179,69 @@ Enact a temp Basal or a temp target */
 /* Option in preferences */
 
 
-"Display Statistics" = "Display Statistics";
+"Display Statistics" = "Показати статистику";
 
 /* infoText: Description for Display Statistics */
-"Displays Statistics under the chart view" = "Displays Statistics under the chart view";
+"Displays Statistics under the chart view" = "Відображає статистику під вікном діаграми";
 
 /* Low Glucose Limit option in preferences */
-"Low Glucose Limit" = "Low Glucose Limit";
+"Low Glucose Limit" = "Низька межа глюкози";
 
 /* High Glucose Limit option in preferences */
-"High Glucose Limit" = "High Glucose Limit";
+"High Glucose Limit" = "Висока межа глюкози";
 
 /* infoText: Description for Low Glucose Limit */
-"BG Under This Value Will Be Displayed As Low Glucose Percentage" = "BG Under This Value Will Be Displayed As Low Glucose Percentage";
+"BG Under This Value Will Be Displayed As Low Glucose Percentage" = "BG під цим значенням відображатиметься як низький відсоток глюкози";
 /* infoText: Description for High Glucose Limit */
-"BG Under This Value Will Be Displayed As High Glucose Percentage" = "BG Under This Value Will Be Displayed As High Glucose Percentage";
+"BG Under This Value Will Be Displayed As High Glucose Percentage" = "BG під цим значенням відображатиметься як високий відсоток глюкози";
 
 /* When statistics.json was last updated */
-"Updated" = "Updated";
+"Updated" = "Оновлено";
 
 /* Average BG = */
-"Average" = "Average";
+"Average" = "Середній";
 
 /* Median BG */
-"Median" = "Median";
+"Median" = "Медіана";
 
 /* Normal BG (within TIR) */
-"Normal (24h)" = "Normal (24h)";
+"Normal (24h)" = "Нормальний (24 години)";
 
 /* Title High BG in statPanel */
-"High (>" = "High (>";
+"High (>" = "Високий (>";
 
 /* Title Low BG in statPanel */
-"Low (<" = "Low (<";
+"Low (<" = "Низький (<";
 
 /* HbA1c estimation for one day of data */
-"HbA1c (24h)" = "HbA1c (24h)";
+"HbA1c (24h)" = "HbA1c (24 години)";
 
 /* Total number of days of data for HbA1c estimation, part 1/2*/
-"All " = "All ";
+"All " = "Все";
 
 /* Total number of days of data for HbA1c estimation, part 2/2*/
-" days" = " days";
+" days" = " дні";
 
 /* Nr of loops last 24 hours */
-"Loops" = "Loops";
+"Loops" = "Петлі";
 
 /* Average loop interval */
-"Average Interval" = "Avgerage Interval";
+"Average Interval" = "Середній інтервал";
 
 /* Median loop interval */
-"Median Duration" = "Median Duration";
+"Median Duration" = "Середня тривалість";
 
 /* "Display SD */
-"Display SD instead of CV" = "Display SD instead of CV";
+"Display SD instead of CV" = "Показати SD замість CV";
 
 /* Description for display SD */
-"Display Standard Deviation (SD) instead of Coefficient of Variation (CV) in statPanel" = "Display Standard Deviation (SD) instead of Coefficient of Variation (CV) in statPanel";
+"Display Standard Deviation (SD) instead of Coefficient of Variation (CV) in statPanel" = "Показувати стандартне відхилення (SD) замість Коефіцієнту варіації (CV) у панелі стану";
 
 /* How often to update the statistics */
-"Update every number of minutes:" = "Update every number of minutes:";
+"Update every number of minutes:" = "Оновлюйте кожну кількість хвилин:";
 
 /* Description for update interval for statistics */
-"Default is 30 minutes. How often to update and save the statistics.json and to upload last array, when enabled, to Nightscout. A lower interval than for glucose updates (5 min) is pointless." = "Default is 30 minutes. How often to update and save the statistics.json and to upload last array, when enabled, to Nightscout. A lower interval than for glucose updates (5 min) is pointless.";
+"Default is 30 minutes. How often to update and save the statistics.json and to upload last array, when enabled, to Nightscout. A lower interval than for glucose updates (5 min) is pointless." = "За замовчуванням 30 хвилин. Як часто оновлювати та зберігати statistics.json і завантажувати останній масив, якщо ввімкнено, у Nightscout. Менший інтервал, ніж для оновлення рівня глюкози (5 хв), не має сенсу.";
 
 /* --------------------------------------
 
