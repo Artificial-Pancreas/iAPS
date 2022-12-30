@@ -24,6 +24,13 @@ extension Home {
             return formatter
         }
 
+        private var tirFormatter: NumberFormatter {
+            let formatter = NumberFormatter()
+            formatter.numberStyle = .decimal
+            formatter.maximumFractionDigits = 0
+            return formatter
+        }
+
         private var dateFormatter: DateFormatter {
             let dateFormatter = DateFormatter()
             dateFormatter.timeStyle = .short
@@ -254,7 +261,7 @@ extension Home {
                             ).font(.caption2).foregroundColor(.secondary)
                             Text(
                                 (
-                                    numberFormatter
+                                    tirFormatter
                                         .string(from: (
                                             state.statistics?.Statistics.Distribution.Hypos.day ?? 0
                                         ) as NSNumber) ??
@@ -264,7 +271,7 @@ extension Home {
                             Text("Normal (24h)").font(.caption2).foregroundColor(.secondary)
                             Text(
                                 (
-                                    numberFormatter
+                                    tirFormatter
                                         .string(from: (state.statistics?.Statistics.Distribution.TIR.day ?? 0) as NSNumber) ??
                                         "0"
                                 ) + " %"
@@ -275,7 +282,7 @@ extension Home {
                             ).font(.caption2).foregroundColor(.secondary)
                             Text(
                                 (
-                                    numberFormatter
+                                    tirFormatter
                                         .string(from: (
                                             state.statistics?.Statistics.Distribution.Hypers.day ?? 0
                                         ) as NSNumber) ??
