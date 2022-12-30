@@ -43,8 +43,11 @@
 /*  */
 "Agree and continue" = "Согласиться и Продолжить";
 
-/* Enacted at a date */
-"Enacted at %@" = "Введено в %@";
+/* Headline in enacted pop up (at: at what time) */
+"Enacted at" = "Enacted at";
+
+/* Headline in suggested pop up (at: at what time) */
+"Suggested at" = "Suggested at";
 
 /* Home title */
 "Home" = "Главная";
@@ -60,9 +63,6 @@
 
 /* Replace pod text in Header */
 "Replace pod" = "Замените под";
-
-/* Suggested at a date */
-"Suggested at %@" = "Предложено в %@";
 
 /* Add carbs screen */
 "Add Carbs" = "Ввод углеводов";
@@ -945,7 +945,60 @@ Enact a temp Basal or a temp target */
 /* Online or internal server */
 "Online or internal server" = "Онлайн или внутренний сервер";
 
-/* HealthKit intergration --------------------*/
+/* -------------- Developer settings ---------------------- */
+/* Debug options */
+
+"Developer" = "Developer";
+
+/* Debug option view NS Upload Profile */
+"NS Upload Profile" = "NS Upload Profile";
+
+/* Debug option view NS Uploaded Profile */
+"NS Uploaded Profile" = "NS Uploaded Profile";
+
+/* Debug option view Autosense */
+"Autosense" = "Autosense";
+
+/* Debug option view Pump History */
+"Pump History" = "Pump History";
+
+/* Debug option view Target Ranges */
+"Target ranges" = "Target ranges";
+
+/* Debug option view Temp targets */
+"Temp targets" = "Temp targets";
+
+/* Debug option view Meal */
+"Meal" = "Meal";
+
+/* Debug option view Pump profile */
+"Pump profile" = "Pump profile";
+
+/* Debug option view Profile */
+"Profile" = "Profile";
+
+/* Debug option view Enacted */
+"Enacted" = "Enacted";
+
+/* Debug option view Announcements (from NS) */
+"Announcements" = "Announcements";
+
+/* Debug option view Enacted announcements announcements (from NS) */
+"Enacted announcements" = "Enacted announcements";
+
+/* Debug option view Autotune */
+"Autotune" = "Автотюн";
+
+/* Debug option view Target presets */
+"Target presets" = "Target presets";
+
+/* Debug option view */
+"Loop Cycles" = "Loop Cycles";
+
+/* Debug option view Glucose Data used for statistics */
+"Glucose Data used for statistics" = "Glucose Data used for statistics";
+
+/* --------------- HealthKit intergration --------------------*/
 /* */
 "Apple Health" = "Apple Health";
 
