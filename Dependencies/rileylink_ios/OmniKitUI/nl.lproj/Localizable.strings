@@ -966,8 +966,8 @@
 /* Header for devices section of RileyLinkSetupView */
 "Devices" = "Apparaten";
 
-/* Navigation title for RileyLinkSetupView" */
+/* Navigation title for RileyLinkSetupView */
 "RileyLink Setup" = "RileyLink setup";
 
-/* bodyText for RileyLinkSetupView" */
+/* bodyText for RileyLinkSetupView */
 "RileyLink allows for communication with the pump over Bluetooth" = "RileyLink staat verbinding met de pomp toe via Bluetooth Low Energy (BLE) of Bluetooth Smart";
