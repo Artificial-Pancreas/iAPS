@@ -1433,7 +1433,7 @@ Enact a temp Basal or a temp target */
 "Calculate a new ISF with every loop cycle. New ISF will be based on current BG, TDD of insulin (past 24 hours or a weighted average) and an Adjustment Factor (default is 1).\n\nDynamic ISF and CR ratios will be limited by your autosens.min/max limits.\n\nDynamic ratio replaces the autosens.ratio: New ISF = Static ISF / Dynamic ratio,\nDynamic ratio = profile.sens * adjustmentFactor * tdd * Math.log(BG/insulinFactor+1) / 1800,\ninsulinFactor = 120 - InsulinPeakTimeInMinutes" = "Bereken een nieuwe ISF bij elke loopcyclus. Nieuwe ISF wordt gebaseerd op de huidige BG, TDD van insuline (afgelopen 24 uur of een gewogen gemiddelde) en een aanpassingsfactor (standaard 1).\n\nDynamische ISF en CR ratio's worden beperkt door uw autosens.min/max grenzen.\n\nDynamische ratio vervangt de autosens.ratio: Nieuwe ISF = Static ISF / Dynamic ratio,\nDynamic ratio = profile.sens * adjustmentFactor * tdd * Math.log(BG/insulinFactor+1) / 1800,\ninsulinFactor = 120 - InsulinPeakTimeInMinutes";
 
 /* Headline "Enable Dynamic CR" */
-"Enable Dynamic CR" = "Dynamische ISF inschakelen";
+"Enable Dynamic CR" = "Dynamische CR inschakelen";
 
 /* Enable Dynamic CR */
 "Use Dynamic CR. The dynamic ratio will be used for CR as follows:\n\n When ratio > 1:  dynCR = (newRatio - 1) / 2 + 1.\nWhen ratio < 1: dynCR = CR/dynCR.\n\nDon't use toghether with a high Insulin Fraction (> 2)" = "Dynamische CR gebruiken. De dynamische verhouding wordt gebruikt voor CR op de volgende manier:\n\n Wanneer verhouding > 1: dynCR = (newRatio - 1) / 2 + 1.\nWanneer verhouding < 1: dynCR = CR/dynCR.\n\nGebruik niet samen met een hoge insuline fractie (> 2)";
