@@ -43,8 +43,11 @@
 /*  */
 "Agree and continue" = "Godkänn och fortsätt";
 
-/* Enacted at a date */
-"Enacted at %@" = "Utfört kl %@";
+/* Headline in enacted pop up (at: at what time) */
+"Enacted at" = "Utfört klockan";
+
+/* Headline in suggested pop up (at: at what time) */
+"Suggested at" = "Föreslaget klockan";
 
 /* Home title */
 "Home" = "Hem";
@@ -60,9 +63,6 @@
 
 /* Replace pod text in Header */
 "Replace pod" = "Byt podd";
-
-/* Suggested at a date */
-"Suggested at %@" = "Föreslaget kl. %@";
 
 /* Add carbs screen */
 "Add Carbs" = "Lägg till kolhydrater";
@@ -945,7 +945,61 @@ Enact a temp Basal or a temp target */
 /* Online or internal server */
 "Online or internal server" = "Online eller intern server";
 
-/* HealthKit intergration --------------------*/
+/* -------------- Developer settings ---------------------- */
+
+/* Debug options */
+"Developer" = "Utvecklare";
+
+/* Debug option view Upload Profile */
+"NS Upload Profile" = "Ladda upp profil till NS";
+
+/* Debug option view NS Uploaded Profile */
+"NS Uploaded Profile" = "Uppladdad profil";
+
+/* Debug option view Autosense */
+"Autosense" = "Autosense";
+
+/* Debug option view Pump History */
+"Pump History" = "Pumphistorik";
+
+/* Debug option view Target Ranges */
+"Target ranges" = "Målvärden";
+
+/* Debug option view Temp targets */
+"Temp targets" = "Tillfälliga målvärden";
+
+/* Debug option view Meal */
+"Meal" = "Måltid";
+
+/* Debug option view Pump profile */
+"Pump profile" = "Pumpprofil";
+
+/* Debug option view Profile */
+"Profile" = "Profil";
+
+/* Debug option view Enacted */
+"Enacted" = "Utfört";
+
+/* Debug option view Announcements (from NS) */
+"Announcements" = "Meddelanden (via NS)";
+
+/* Debug option view Enacted announcements announcements (from NS) */
+"Enacted announcements" = "Överförda meddelanden";
+
+/* Debug option view Autotune */
+"Autotune" = "Autotune";
+
+/* Debug option view Target presets */
+"Target presets" = "Målvärden, förinställningar";
+
+/* Debug option view */
+"Loop Cycles" = "Loopar";
+
+/* Debug option view Saved Glucose Data used for statistics */
+"Glucose Data used for statistics" = "Sparade blodglukosvärden för statistik";
+
+/* --------------- HealthKit intergration --------------------*/
+
 /* */
 "Apple Health" = "Apple Hälsa";
 

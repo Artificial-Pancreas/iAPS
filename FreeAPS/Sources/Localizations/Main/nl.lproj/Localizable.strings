@@ -43,8 +43,11 @@
 /*  */
 "Agree and continue" = "Akkoord en doorgaan";
 
-/* Enacted at a date */
-"Enacted at %@" = "Toegediend op %@";
+/* Headline in enacted pop up (at: at what time) */
+"Enacted at" = "Enacted at";
+
+/* Headline in suggested pop up (at: at what time) */
+"Suggested at" = "Suggested at";
 
 /* Home title */
 "Home" = "Hoofdmenu";
@@ -53,16 +56,13 @@
 "looping" = "Loopen";
 
 /* min ago since last loop */
-"min ago" = "min. terug";
+"min ago" = "⏰ min.";
 
 /* Status Title */
 "No suggestion" = "Geen suggestie";
 
 /* Replace pod text in Header */
 "Replace pod" = "Vervang Pod";
-
-/* Suggested at a date */
-"Suggested at %@" = "Voorgesteld op %@";
 
 /* Add carbs screen */
 "Add Carbs" = "Koolhydraten toevoegen";
@@ -179,7 +179,7 @@
 "Schedule" = "Schema";
 
 /*  */
-"starts at" = "Begint om";
+"starts at" = "Start";
 
 /* Time basal profile */
 "Time" = "Tijd";
@@ -203,7 +203,7 @@
 "Insulin Sensitivities" = "Insuline gevoeligheden";
 
 /* */
-"Sensitivity Ratio" = "Gevoeligheid ratio";
+"Sensitivity Ratio" = "Gevoeligheidsratio";
 
 /*  */
 "Dismiss" = "Negeren";
@@ -246,7 +246,7 @@ Enact a temp Basal or a temp target */
 "Local glucose source" = "Lokale glucose bron";
 
 /* Header */
-"Nightscout Config" = "Nightscout configuratie";
+"Nightscout Config" = "Nightscout instellingen";
 
 /*  */
 "Port" = "Poort";
@@ -270,10 +270,10 @@ Enact a temp Basal or a temp target */
 "Recommended Insulin Fraction" = "Aanbevolen insuline fractie";
 
 /* Do you want to show bolus screen after added carbs? */
-"Skip Bolus screen after carbs" = "Sla bolus scherm over na koolhydraten";
+"Skip Bolus screen after carbs" = "Sla bolusscherm over na koolhydraten";
 
 /* Allow remote control from NS */
-"Remote control" = "Controle op afstand";
+"Remote control" = "Afstandsbediening";
 
 /* Add Medtronic pump */
 "Add Medtronic" = "Medtronic toevoegen";
@@ -291,13 +291,13 @@ Enact a temp Basal or a temp target */
 "Pump config" = "Pomp configuratie";
 
 /*  */
-"Delivery limits" = "Toediening limieten";
+"Delivery limits" = "Limiet op toediening";
 
 /*  */
 "Duration of Insulin Action" = "Duur Insuline Activiteit (DIA)";
 
 /* hours of duration of insulin activity */
-"hours" = "uur";
+"hours" = "uren";
 
 /* Max setting */
 "Max Basal" = "Max basaal";
@@ -333,7 +333,7 @@ Enact a temp Basal or a temp target */
 "g/U" = "g/E";
 
 /* grams */
-" g" = " gr";
+" g" = " gr ";
 
 /* The short unit display string for grams */
 "g" = "gr";
@@ -363,7 +363,7 @@ Enact a temp Basal or a temp target */
 "Pump" = "Pomp";
 
 /*  */
-"Services" = "Diensten";
+"Services" = "Apps";
 
 /*  */
 "Settings" = "Instellingen";
@@ -552,13 +552,13 @@ Enact a temp Basal or a temp target */
 "Glucose" = "Glucosewaarde";
 
 /* LOWALERT! */
-"LOWALERT!" = "Waarschuwing laag!";
+"LOWALERT!" = "Waarschuwing LAAG!";
 
 /* HIGHALERT! */
-"HIGHALERT!" = "Waarschuwing hoog!";
+"HIGHALERT!" = "Waarschuwing HOOG!";
 
 /* (Snoozed)*/
-"(Snoozed)" = "(Uitstellen)";
+"(Snoozed)" = "(Gesluimerd)";
 
 /* Glucose: %@ */
 "Glucose: %@" = "Bloedsuiker: %@";
@@ -615,7 +615,7 @@ Enact a temp Basal or a temp target */
 "Sensor Ending Soon" = "Sensor verloopt binnenkort";
 
 /* Current Sensor is Ending soon! Sensor Life left in %@ */
-"Current Sensor is Ending soon! Sensor Life left in %@" = "Huidige sensor verloopt binnenkort! Sensor verloopt in %@";
+"Current Sensor is Ending soon! Sensor Life left in %@" = "Huidige sensor verloopt in %@";
 
 /* */
 "Libre Bluetooth" = "Libre Bluetooth";
@@ -711,7 +711,7 @@ Enact a temp Basal or a temp target */
 "Export not available" = "Exporteren niet beschikbaar";
 
 /* */
-"Log export requires ios 15" = "Log export vereist ten minste iOS 15 of hoger";
+"Log export requires ios 15" = "Log export vereist iOS 15 of hoger";
 
 /* */
 "Got it!" = "Begrepen!";
@@ -876,7 +876,7 @@ Enact a temp Basal or a temp target */
 "About this source" = "Over deze bron";
 
 /* */
-"Bolus failed" = "Bolus mislukt";
+"Bolus failed" = "Bolus is mislukt";
 
 /* */
 "Bolus failed or inaccurate. Check pump history before repeating." = "Bolus mislukt of onjuist. Controleer de pompgeschiedenis voordat je herhaalt.";
@@ -907,13 +907,13 @@ Enact a temp Basal or a temp target */
 
 
 /* Headers for settings ----------------------- */
-"OpenAPS main settings" = "OpenAPS hoofdinstellingen";
+"OpenAPS main settings" = "Oref0 hoofdinstellingen";
 
-"OpenAPS SMB settings" = "OpenAPS SMB instellingen";
+"OpenAPS SMB settings" = "Oref0 SMB instellingen";
 
-"OpenAPS targets settings" = "OpenAPS doel instellingen";
+"OpenAPS targets settings" = "Oref0 doel instellingen";
 
-"OpenAPS other settings" = "OpenAPS overige instellingen";
+"OpenAPS other settings" = "Oref0 overige instellingen";
 
 /* Glucose Simulator CGM */
 "Glucose Simulator" = "Glucose simulator";
@@ -945,7 +945,60 @@ Enact a temp Basal or a temp target */
 /* Online or internal server */
 "Online or internal server" = "Online of interne server";
 
-/* HealthKit intergration --------------------*/
+/* -------------- Developer settings ---------------------- */
+/* Debug options */
+
+"Developer" = "Developer";
+
+/* Debug option view NS Upload Profile */
+"NS Upload Profile" = "NS Upload Profile";
+
+/* Debug option view NS Uploaded Profile */
+"NS Uploaded Profile" = "NS Uploaded Profile";
+
+/* Debug option view Autosense */
+"Autosense" = "Autosense";
+
+/* Debug option view Pump History */
+"Pump History" = "Pump History";
+
+/* Debug option view Target Ranges */
+"Target ranges" = "Target ranges";
+
+/* Debug option view Temp targets */
+"Temp targets" = "Temp targets";
+
+/* Debug option view Meal */
+"Meal" = "Meal";
+
+/* Debug option view Pump profile */
+"Pump profile" = "Pump profile";
+
+/* Debug option view Profile */
+"Profile" = "Profile";
+
+/* Debug option view Enacted */
+"Enacted" = "Enacted";
+
+/* Debug option view Announcements (from NS) */
+"Announcements" = "Announcements";
+
+/* Debug option view Enacted announcements announcements (from NS) */
+"Enacted announcements" = "Enacted announcements";
+
+/* Debug option view Autotune */
+"Autotune" = "Autotune";
+
+/* Debug option view Target presets */
+"Target presets" = "Target presets";
+
+/* Debug option view */
+"Loop Cycles" = "Loop Cycles";
+
+/* Debug option view Glucose Data used for statistics */
+"Glucose Data used for statistics" = "Glucose Data used for statistics";
+
+/* --------------- HealthKit intergration --------------------*/
 /* */
 "Apple Health" = "Apple Gezondheid";
 
@@ -1126,57 +1179,69 @@ Enact a temp Basal or a temp target */
 /* Option in preferences */
 
 
-"Display Statistics" = "Display Statistics";
+"Display Statistics" = "Statistieken weergeven";
 
 /* infoText: Description for Display Statistics */
-"Displays Statistics under the chart view" = "Displays Statistics under the chart view";
+"Displays Statistics under the chart view" = "Geef statistieken weer onder grafiekweergave";
 
 /* Low Glucose Limit option in preferences */
-"Low Glucose Limit" = "Low Glucose Limit";
+"Low Glucose Limit" = "Laag glucose limiet";
 
 /* High Glucose Limit option in preferences */
-"High Glucose Limit" = "High Glucose Limit";
+"High Glucose Limit" = "Hoog glucose limiet";
 
 /* infoText: Description for Low Glucose Limit */
-"BG Under This Value Will Be Displayed As Low Glucose Percentage" = "BG Under This Value Will Be Displayed As Low Glucose Percentage";
+"BG Under This Value Will Be Displayed As Low Glucose Percentage" = "BG onder deze waarde wordt weergegeven als laag percentage";
 /* infoText: Description for High Glucose Limit */
-"BG Under This Value Will Be Displayed As High Glucose Percentage" = "BG Under This Value Will Be Displayed As High Glucose Percentage";
+"BG Under This Value Will Be Displayed As High Glucose Percentage" = "BG onder deze waarde wordt weergegeven als hoog percentage";
 
 /* When statistics.json was last updated */
-"Updated" = "Updated";
+"Updated" = "Bijgewerkt";
 
 /* Average BG = */
-"Average" = "Average";
+"Average" = "Gem.";
 
 /* Median BG */
-"Median" = "Median";
+"Median" = "Mediaan";
 
 /* Normal BG (within TIR) */
-"Normal (24h)" = "Normal (24h)";
+"Normal (24h)" = "TIR (24h)";
 
 /* Title High BG in statPanel */
-"High (>" = "High (>";
+"High (>" = "Hoog (>";
 
 /* Title Low BG in statPanel */
-"Low (<" = "Low (<";
+"Low (<" = "Laag (<";
 
 /* HbA1c estimation for one day of data */
 "HbA1c (24h)" = "HbA1c (24h)";
 
 /* Total number of days of data for HbA1c estimation, part 1/2*/
-"All " = "All ";
+"All " = "Alle ";
 
 /* Total number of days of data for HbA1c estimation, part 2/2*/
-" days" = " days";
+" days" = " dagen";
 
 /* Nr of loops last 24 hours */
 "Loops" = "Loops";
 
 /* Average loop interval */
-"Average Interval" = "Avgerage Interval";
+"Average Interval" = "Interval";
 
 /* Median loop interval */
-"Median Duration" = "Median Duration";
+"Median Duration" = "Median duur";
+
+/* "Display SD */
+"Display SD instead of CV" = "Toon SD in plaats van CV";
+
+/* Description for display SD */
+"Display Standard Deviation (SD) instead of Coefficient of Variation (CV) in statPanel" = "Toon standaard afwijkingen (SD) in plaats van coëfficiënt van variatie (CV) in het hoofdscherm bij de statistieken";
+
+/* How often to update the statistics */
+"Update every number of minutes:" = "Werk elk aantal minuten bij:";
+
+/* Description for update interval for statistics */
+"Default is 30 minutes. How often to update and save the statistics.json and to upload last array, when enabled, to Nightscout. A lower interval than for glucose updates (5 min) is pointless." = "Standaard is 30 minuten. Hoe vaak de statistics.json moet worden bijgewerkt en opgeslagen en hoe vaak de laatste reeks, indien ingeschakeld, moet worden geüpload naar Nightscout. Een lager interval dan voor glucose-updates (5 min) is zinloos.";
 
 /* --------------------------------------
 
@@ -1199,17 +1264,11 @@ Enact a temp Basal or a temp target */
 /* Headline ”Low Temptarget Lowers Sensitivity" */
 "Low Temptarget Lowers Sensitivity" = "Laag tijdelijk streefdoel verlaagt gevoeligheid";
 
-/* Headline ”Low Temptarget Lowers Sensitivity" */
-"Low Temptarget Lowers Sensitivity" = "Low Temptarget Lowers Sensitivity";
-
 /* ”Low Temptarget Lowers Sensitivity" */
 "Defaults to false. When set to true, can lower sensitivity (higher sensitivity ratio) for temptargets <= 99. The lower your temp target below 100 will result in less sensitive (higher) ratios, e.g., temp target of 95 results in sensitivity ratio of 1.09, while 85 results in 1.33 (with default halfBasalTarget of 160)." = "Is standaard uitgeschakeld. Indien ingeschakeld, kan de gevoeligheid (hogere gevoeligheidsratio) voor tijdelijke doelen worden verlaagd < = 5,5 mmol. Hoe lager je tijdelijke doel onder de 5,6 mmol ligt, hoe hoger de gevoeligheid zal zijn. Zo levert een tijdelijk koersdoel van 5,3 mmol een gevoeligheidsratio van 1,09 op, terwijl 4,7 mmol een waarde van 1,33 geeft.";
 
 /* Headline ”Sensitivity Raises Target" */
 "Sensitivity Raises Target" = "Gevoeligheid verhoogt het doel";
-
-/* Headline ”Sensitivity Raises Target" */
-"Sensitivity Raises Target" = "Sensitivity Raises Target";
 
 /* ”Sensitivity Raises Target" */
 "When true, raises BG target when autosens detects sensitivity" = "Wanneer waar, verhoogt het BG streefdoel als autosens gevoeligheid detecteert";
@@ -1234,10 +1293,6 @@ Enact a temp Basal or a temp target */
 
 /* Headline "Wide BG Target Range" */
 "Wide BG Target Range" = "Brede BG doelbereik";
-
-
-/* Headline "Wide BG Target Range" */
-"Wide BG Target Range" = "Wide BG Target Range";
 
 /* "Wide BG Target Range" */
 "Defaults to false, which means by default only the low end of the pump’s BG target range is used as OpenAPS target. This is a safety feature to prevent too-wide targets and less-optimal outcomes. Therefore the higher end of the target range is used only for avoiding bolus wizard overcorrections. Use wide_bg_target_range: true to force neutral temps over a wider range of eventualBGs." = "Standaard uit betekent dat standaard alleen de laagste BG van de pomp wordt gebruikt als OpenAPS doel. Dit is een veiligheidsvoorziening om al te brede doelen en minder optimale resultaten te voorkomen. Daarom wordt het hoogste eind van het streefbereik alleen gebruikt om teveel compenseren van de bolus assistent te voorkomen. Gebruik wide_bg_target_range: Waar om neutrale temps af te dwingen over een breder bereik van de uiteindelijke BG.";
@@ -1333,13 +1388,10 @@ Enact a temp Basal or a temp target */
 "Autosens Min" = "Autosens Min";
 
 /* "Autosens Min" */
-"The other side of the autosens safety limits, putting a cap on how low autosens can adjust basals, and how high it can adjust ISF and BG targets." = "De andere kant van de Autosens veiligheidslimiet, dit set een limiet op hoe laag Autosens de basaal kan zetten, hoe hoog Autosens de ISF kan zetten en hoe hoog de streefwaarde ingesteld kan worden.";
+"The other side of the autosens safety limits, putting a cap on how low autosens can adjust basals, and how high it can adjust ISF and BG targets." = "De andere kant van de Autosens veiligheidslimiet, dit zet een limiet op hoe laag Autosens de basaal kan zetten, hoe hoog Autosens de ISF kan zetten en hoe hoog de streefwaarde ingesteld kan worden.";
 
 /* Headline "Half Basal Exercise Target" */
 "Half Basal Exercise Target" = "Halve basaal bewegingsdoel";
-
-/* Headline "Half Basal Exercise Target" */
-"Half Basal Exercise Target" = "Half Basal Exercise Target";
 
 /* "Half Basal Exercise Target" */
 "Set to a number, e.g. 160, which means when temp target is 160 mg/dL and exercise_mode=true, run 50% basal at this level (120 = 75%; 140 = 60%). This can be adjusted, to give you more control over your exercise modes." = "Stel in op nummer, b.v. 160, wat betekent dat wanneer een tijdelijk streefdoel 160 mg/dL (9 mmol/l) en bewegingen_mode=true is, 50% basaal op dit niveau (120 (6,7) = 75%; 140 (7,8) = 60%). Dit kan worden aangepast, om u meer controle te geven over uw oefeningsmodi.";
@@ -1359,17 +1411,11 @@ Enact a temp Basal or a temp target */
 /* Headline "Min 5m Carbimpact" */
 "Min 5m Carbimpact" = "Min 5m koolhydraat effect";
 
-/* Headline "Min 5m Carbimpact" */
-"Min 5m Carbimpact" = "Min 5m Carbimpact";
-
 /* "Min 5m Carbimpact" */
 "This is a setting for default carb absorption impact per 5 minutes. The default is an expected 8 mg/dL/5min. This affects how fast COB is decayed in situations when carb absorption is not visible in BG deviations. The default of 8 mg/dL/5min corresponds to a minimum carb absorption rate of 24g/hr at a CSF of 4 mg/dL/g." = "Dit is een instelling voor de standaard koolhydraten absorptie per 5 minuten. De standaard waarde is een verwachte 0,4 mmol/l/5min. Dit beïnvloedt hoe snel COB afneemt in situaties waarin koolhydraat absorptie niet zichtbaar is in BG afwijkingen. De standaard van 0,4 mmol/l/5min komt overeen met een minimale koolhydraten absorptie van 24gr/uur op een CSF (koolhydraat gevoeligheid factor) van 0,2 mmol/l/g.";
 
 /* Headline "Autotune ISF Adjustment Fraction" */
 "Autotune ISF Adjustment Fraction" = "Autotune ISF-aanpassingsfractie";
-
-/* Headline "Autotune ISF Adjustment Fraction" */
-"Autotune ISF Adjustment Fraction" = "Autotune ISF Adjustment Fraction";
 
 /* "Autotune ISF Adjustment Fraction" */
 "The default of 0.5 for this value keeps autotune ISF closer to pump ISF via a weighted average of fullNewISF and pumpISF. 1.0 allows full adjustment, 0 is no adjustment from pump ISF." = "The default of 0.5 for this value keeps autotune ISF closer to pump ISF via a weighted average of fullNewISF and pumpISF. 1.0 allows full adjustment, 0 is no adjustment from pump ISF.";
@@ -1420,7 +1466,7 @@ Enact a temp Basal or a temp target */
 "Carbs Req Threshold" = "Koolhydraten vereist drempel";
 
 /* "Carbs Req Threshold" */
-"Grams of carbsReq to trigger a pushover. Defaults to 1 (for 1 gram of carbohydrate). Can be increased if you only want to get Pushover for carbsReq at X threshold." = "Aantal gram koolhydraten benodigd om een push bericht te versturen. Standaard ingesteld op 1 (voor 1 gram aan koolhydraten). Kan worden verhoogd als alleen voor push berichten wil krijgen boven de ingestelde drempelwaarde.";
+"Grams of carbsReq to trigger a pushover. Defaults to 1 (for 1 gram of carbohydrate). Can be increased if you only want to get Pushover for carbsReq at X threshold." = "Aantal gram koolhydraten benodigd om een push bericht te versturen. Standaard ingesteld op 1 (voor 1 gram aan koolhydraten). Kan worden verhoogd als u alleen push berichten wilt krijgen boven de ingestelde drempelwaarde.";
 
 /* Headline "Noisy CGM Target Multiplier" */
 "Noisy CGM Target Multiplier" = "CGM doelvermenigvuldiger met ruis";
@@ -1452,7 +1498,7 @@ Enact a temp Basal or a temp target */
 "Calculate a new ISF with every loop cycle. New ISF will be based on current BG, TDD of insulin (past 24 hours or a weighted average) and an Adjustment Factor (default is 1).\n\nDynamic ISF and CR ratios will be limited by your autosens.min/max limits.\n\nDynamic ratio replaces the autosens.ratio: New ISF = Static ISF / Dynamic ratio,\nDynamic ratio = profile.sens * adjustmentFactor * tdd * Math.log(BG/insulinFactor+1) / 1800,\ninsulinFactor = 120 - InsulinPeakTimeInMinutes" = "Bereken een nieuwe ISF bij elke loopcyclus. Nieuwe ISF wordt gebaseerd op de huidige BG, TDD van insuline (afgelopen 24 uur of een gewogen gemiddelde) en een aanpassingsfactor (standaard 1).\n\nDynamische ISF en CR ratio's worden beperkt door uw autosens.min/max grenzen.\n\nDynamische ratio vervangt de autosens.ratio: Nieuwe ISF = Static ISF / Dynamic ratio,\nDynamic ratio = profile.sens * adjustmentFactor * tdd * Math.log(BG/insulinFactor+1) / 1800,\ninsulinFactor = 120 - InsulinPeakTimeInMinutes";
 
 /* Headline "Enable Dynamic CR" */
-"Enable Dynamic CR" = "Dynamische ISF inschakelen";
+"Enable Dynamic CR" = "Dynamische CR inschakelen";
 
 /* Enable Dynamic CR */
 "Use Dynamic CR. The dynamic ratio will be used for CR as follows:\n\n When ratio > 1:  dynCR = (newRatio - 1) / 2 + 1.\nWhen ratio < 1: dynCR = CR/dynCR.\n\nDon't use toghether with a high Insulin Fraction (> 2)" = "Dynamische CR gebruiken. De dynamische verhouding wordt gebruikt voor CR op de volgende manier:\n\n Wanneer verhouding > 1: dynCR = (newRatio - 1) / 2 + 1.\nWanneer verhouding < 1: dynCR = CR/dynCR.\n\nGebruik niet samen met een hoge insuline fractie (> 2)";
@@ -1468,7 +1514,7 @@ Enact a temp Basal or a temp target */
 "Use Sigmoid Function" = "Gebruik Sigmoid functie";
 
 /* Use Sigmoid Function */
-"Use a sigmoid function for ISF (and for CR, when enabled), instead of the Logarithmic formula. Is only used when the Dynamic ISF setting is enabled in settings\n\nThe autosens.min/max settings determines the power with which dynamic ratio is adjusted, the height of the graph (Y-interval, Y: Dynamic ratio) and where the sigmoid curve flattens out, thus also limiting how high and how low the the ISF can be adjusted.\n\nThe Adjustment settings adjusts the slope of the curve. A lower value ==> less steep == less aggressive.\n\nYour scheduled/autotuned ISF setting and your min BG target determines when Dynamic ratio = 1 (ISF unchanged), meaning when current BG = minimum target BG => new ISF will always be set to your current scheduled/autotuned ISF, unlike the default logarithmic formula.\n\nDynamic CR is used when the setting 'Enable Dynamic CR' is enabled in settings." = "Gebruik een sigmoïde functie voor ISF (en voor CR, wanneer ingeschakeld) in plaats van de Logaritmische formule. Wordt alleen gebruikt wanneer de dynamische ISF-instelling is ingeschakeld in de instellingen\n\nde autosens.min/max instellingen bepalen de kracht waarmee de dynamische verhouding wordt aangepast, de hoogte van de grafiek (Y-interval, Y: Dynamische ratio) en waar de gesigneerde curve flattens, waardoor ook de hoogte en hoe laag het ISF kan worden aangepast.\n\nDe aanpassingsinstellingen passen de richtingscoëfficiënt van de curve aan. Een lagere waarde ==> minder steep == minder agressief.\n\nJe ingestelde ISF en je minimum BG doel bepalen wanneer dynamische verhouding = 1 (ISF ongewijzigd), betekent dat wanneer huidige BG = minimum streefdoel BG => nieuwe ISF altijd zal worden ingesteld op je huidige geplande/autotuned ISF, in tegenstelling tot de standaard logarthmische formule.\n\nDynamische CR wordt gebruikt wanneer de instelling 'Dynamic CR inschakelen' is ingeschakeld in de instellingen.";
+"Use a sigmoid function for ISF (and for CR, when enabled), instead of the Logarithmic formula. Is only used when the Dynamic ISF setting is enabled in settings\n\nThe autosens.min/max settings determines the power with which dynamic ratio is adjusted, the height of the graph (Y-interval, Y: Dynamic ratio) and where the sigmoid curve flattens out, thus also limiting how high and how low the the ISF can be adjusted.\n\nThe Adjustment settings adjusts the slope of the curve. A lower value ==> less steep == less aggressive.\n\nYour scheduled/autotuned ISF setting and your min BG target determines when Dynamic ratio = 1 (ISF unchanged), meaning when current BG = minimum target BG => new ISF will always be set to your current scheduled/autotuned ISF, unlike the default logarithmic formula.\n\nDynamic CR is used when the setting 'Enable Dynamic CR' is enabled in settings." = "Gebruik Sigmoid functie voor ISF (en voor CR, wanneer ingeschakeld) in plaats van de Logaritmische formule. Wordt alleen gebruikt wanneer de dynamische ISF-instelling is ingeschakeld in de instellingen\n\nde autosens.min/max instellingen bepalen de kracht waarmee de dynamische verhouding wordt aangepast, de hoogte van de grafiek (Y-interval, Y: Dynamische ratio) en waar de gesigneerde curve flattens, waardoor ook de hoogte en hoe laag het ISF kan worden aangepast.\n\nDe aanpassingsinstellingen passen de richtingscoëfficiënt van de curve aan. Een lagere waarde ==> minder steep == minder agressief.\n\nJe ingestelde ISF en je minimum BG doel bepalen wanneer dynamische verhouding = 1 (ISF ongewijzigd), betekent dat wanneer huidige BG = minimum streefdoel BG => nieuwe ISF altijd zal worden ingesteld op je huidige geplande/autotuned ISF, in tegenstelling tot de standaard logarthmische formule.\n\nDynamische CR wordt gebruikt wanneer de instelling 'Dynamic CR inschakelen' is ingeschakeld in de instellingen.";
 
 
 /* Headline "Threshold Setting" */
@@ -1496,7 +1542,7 @@ Enact a temp Basal or a temp target */
 "Defaults to 0.2 (20%). Maximum positive percentual change of BG level to use SMB, above that will disable SMB. Hardcoded cap of 40%. For UAM fully-closed-loop 30% is advisable. Observe in log and popup (maxDelta 27 > 20% of BG 100 - disabling SMB!)." = "Staat standaard op 0,2 (20%). Maximale positieve procentuele verandering van BG-niveau om SMB te gebruiken, daarboven wordt SMB uitgeschakeld. Hardcoded maximum van 40%. Voor volledig gesloten UAM-loop is 30% raadzaam. Zie in log en popup (maxDelta 27 > 20% van BG 100 - uitschakelen SMB!).";
 
 /* Headline "... When Blood Glucose Is Over (mg/dl):" */
-"... When Blood Glucose Is Over (mg/dl):" = "... Wanneer de bloedglucose hoger is dan (mg/dl):";
+"... When Blood Glucose Is Over (mg/dl):" = "... Als de bloedsuiker hoger is dan (mg/dl):";
 
 /* ... When Blood Glucose Is Over (mg/dl): */
 "Set the value enableSMB_high_bg will compare against to enable SMB. If BG > than this value, SMBs should enable." = "Stel de waarde in waarmee 'enableSMB_high_bg' wordt vergeleken om SMB in te schakelen. Als BG hoger is dan deze waarde, moet SMB worden ingeschakeld.";

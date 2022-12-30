@@ -966,8 +966,8 @@
 /* Header for devices section of RileyLinkSetupView */
 "Devices" = "Dispositivos";
 
-/* Navigation title for RileyLinkSetupView" */
+/* Navigation title for RileyLinkSetupView */
 "RileyLink Setup" = "RileyLink Setup";
 
-/* bodyText for RileyLinkSetupView" */
+/* bodyText for RileyLinkSetupView */
 "RileyLink allows for communication with the pump over Bluetooth" = "RileyLink allows for communication with the pump over Bluetooth";

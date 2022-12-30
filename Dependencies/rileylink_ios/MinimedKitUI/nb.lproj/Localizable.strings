@@ -20,7 +20,7 @@
 "Awake Until" = "Aktiv til";
 
 /* The title text for the basal rate schedule */
-"Basal Rates" = "Basaldoser";
+"Basal Rates" = "Basal-satser";
 
 /* The format string describing pump battery voltage: (1: battery voltage) */
 "Battery: %1$@ volts\n" = "Batteri: %1$@ volt\n";
@@ -41,13 +41,13 @@
 "Change Time Zone" = "Endre tidssone";
 
 /* Progress message for changing pump time. */
-"Changing time…" = "Endrer tid…";
+"Changing time…" = "Endrer tid...";
 
 /* The title of the section describing commands */
 "Commands" = "Kommandoer";
 
 /* The title of the configuration section in settings */
-"Configuration" = "Konfigurasjon";
+"Configuration" = "Oppsett";
 
 /* Button title to connect to pump during setup */
 "Connect" = "Koble til";
@@ -60,7 +60,7 @@
 "Delete Pump" = "Slette pumpe";
 
 /* Title text for delivery limits */
-"Delivery Limits" = "Dosegrense";
+"Delivery Limits" = "Leveransegrenser";
 
 /* The title of the section describing the device */
 "Device" = "Enhet";
@@ -78,10 +78,10 @@
 "Enabled Diagnostic LEDs" = "Tilgjengeligjort diagnostiske LEDs";
 
 /* The alert title for a resume error */
-"Error Resuming" = "Gjenoppta feilet";
+"Error Resuming" = "Kunne ikke fortsette";
 
 /* The alert title for a suspend error */
-"Error Suspending" = "Pause feilet";
+"Error Suspending" = "Kunne ikke stoppe";
 
 /* The title of the command to fetch recent glucose */
 "Fetch Enlite Glucose" = "Hent enlite blodsukker";
@@ -188,7 +188,7 @@
 "Signal Strength" = "Signalstyrke";
 
 /* A message indicating a command succeeded */
-"Succeeded" = "Vellykket";
+"Succeeded" = "Suksess";
 
 /* The format string describing pump suspended state: (1: suspended) */
 "Suspended: %1$@\n" = "Pauset: %1$@\n";
