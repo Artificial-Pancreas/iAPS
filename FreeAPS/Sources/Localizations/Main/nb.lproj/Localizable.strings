@@ -922,10 +922,10 @@ Enact a temp Basal or a temp target */
 "Bluetooth State restored (APS restarted?). Found %d peripherals, and connected to %@ with identifier %@" = "Bluetooth-status gjenopprettet (APS restartet?). Funnet %d ennheter, og koblet til %@ med identifikator %@";
 
 /* Shared app group xDrip4iOS */
-"Using shared app group with external CGM app xDrip4iOS" = "Using shared app group with external CGM app xDrip4iOS";
+"Using shared app group with external CGM app xDrip4iOS" = "Bruk delt appgruppe med ekstern CGM-app xDrip4iOS";
 
 /* Shared app group GlucoseDirect */
-"Using shared app group with external CGM app GlucoseDirect" = "Using shared app group with external CGM app GlucoseDirect";
+"Using shared app group with external CGM app GlucoseDirect" = "Bruk delt appgruppe med ekstern CGM app GlucoseDirect";
 
 /* Dexcom G6 app */
 "Dexcom G6 app" = "Opprinnelig G6-app";
@@ -1126,57 +1126,69 @@ Enact a temp Basal or a temp target */
 /* Option in preferences */
 
 
-"Display Statistics" = "Display Statistics";
+"Display Statistics" = "Vis statistikk";
 
 /* infoText: Description for Display Statistics */
-"Displays Statistics under the chart view" = "Displays Statistics under the chart view";
+"Displays Statistics under the chart view" = "Viser statistikk under diagramvisningen";
 
 /* Low Glucose Limit option in preferences */
-"Low Glucose Limit" = "Low Glucose Limit";
+"Low Glucose Limit" = "Grense for lavt blodsukker";
 
 /* High Glucose Limit option in preferences */
-"High Glucose Limit" = "High Glucose Limit";
+"High Glucose Limit" = "Grense for høyt blodsukker";
 
 /* infoText: Description for Low Glucose Limit */
-"BG Under This Value Will Be Displayed As Low Glucose Percentage" = "BG Under This Value Will Be Displayed As Low Glucose Percentage";
+"BG Under This Value Will Be Displayed As Low Glucose Percentage" = "BS under denne verdien vil vises som lav glukoseprosent";
 /* infoText: Description for High Glucose Limit */
-"BG Under This Value Will Be Displayed As High Glucose Percentage" = "BG Under This Value Will Be Displayed As High Glucose Percentage";
+"BG Under This Value Will Be Displayed As High Glucose Percentage" = "BS under denne verdien vil vises som høy glukoseprosent";
 
 /* When statistics.json was last updated */
-"Updated" = "Updated";
+"Updated" = "Oppdatert";
 
 /* Average BG = */
-"Average" = "Average";
+"Average" = "Gjennomsnitt";
 
 /* Median BG */
 "Median" = "Median";
 
 /* Normal BG (within TIR) */
-"Normal (24h)" = "Normal (24h)";
+"Normal (24h)" = "Normal (24 timer)";
 
 /* Title High BG in statPanel */
-"High (>" = "High (>";
+"High (>" = "Høy (>";
 
 /* Title Low BG in statPanel */
-"Low (<" = "Low (<";
+"Low (<" = "Lavt (<";
 
 /* HbA1c estimation for one day of data */
-"HbA1c (24h)" = "HbA1c (24h)";
+"HbA1c (24h)" = "HbA1c (24t)";
 
 /* Total number of days of data for HbA1c estimation, part 1/2*/
-"All " = "All ";
+"All " = "Alle ";
 
 /* Total number of days of data for HbA1c estimation, part 2/2*/
-" days" = " days";
+" days" = " dager";
 
 /* Nr of loops last 24 hours */
 "Loops" = "Loops";
 
 /* Average loop interval */
-"Average Interval" = "Avgerage Interval";
+"Average Interval" = "Gj.snitt intervall";
 
 /* Median loop interval */
-"Median Duration" = "Median Duration";
+"Median Duration" = "Median varighet";
+
+/* "Display SD */
+"Display SD instead of CV" = "Vis SD i stedet for CV";
+
+/* Description for display SD */
+"Display Standard Deviation (SD) instead of Coefficient of Variation (CV) in statPanel" = "Vis standardavvik (SD) i stedet for variasjonskoeffisient (CV) i statistikkpanel";
+
+/* How often to update the statistics */
+"Update every number of minutes:" = "Oppdateringsintervall (i minutter):";
+
+/* Description for update interval for statistics */
+"Default is 30 minutes. How often to update and save the statistics.json and to upload last array, when enabled, to Nightscout. A lower interval than for glucose updates (5 min) is pointless." = "Standard er 30 minutter. Hvor ofte skal statistics.json oppdateres og lagres og, hvis aktivert, data lates opp til Nightscout. Et lavere intervall enn for BS (5 minutter) er meningsløst.";
 
 /* --------------------------------------
 

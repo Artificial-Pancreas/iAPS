@@ -20,7 +20,7 @@
 "Awake Until" = "Réveillé jusqu’à";
 
 /* The title text for the basal rate schedule */
-"Basal Rates" = "Débits basal";
+"Basal Rates" = "Débits basaux";
 
 /* The format string describing pump battery voltage: (1: battery voltage) */
 "Battery: %1$@ volts\n" = "Pile: %1$@ volts\n";
@@ -38,10 +38,10 @@
 "Change Time" = "Changer l’heure";
 
 /* The title of the command to change pump time zone */
-"Change Time Zone" = "Changer le fuseau horaire";
+"Change Time Zone" = "Changement de fuseau horaire";
 
 /* Progress message for changing pump time. */
-"Changing time…" = "Changement d’heure…";
+"Changing time…" = "Changement de l’heure...";
 
 /* The title of the section describing commands */
 "Commands" = "Commandes";
@@ -50,7 +50,7 @@
 "Configuration" = "Configuration";
 
 /* Button title to connect to pump during setup */
-"Connect" = "Relier";
+"Connect" = "Se connecter";
 
 /* The title of the cell showing BLE connection state */
 "Connection State" = "Etat de connexion";
@@ -60,7 +60,7 @@
 "Delete Pump" = "Supprimer la pompe";
 
 /* Title text for delivery limits */
-"Delivery Limits" = "Limites d'administration";
+"Delivery Limits" = "Limites d’administration";
 
 /* The title of the section describing the device */
 "Device" = "Dispositif";
@@ -99,10 +99,10 @@
 "Fetching pump model…" = "Obtention du modèle de pompe…";
 
 /* The title of the cell showing firmware version */
-"Firmware" = "Firmware";
+"Firmware" = "Microprogramme";
 
 /* The title of the cell showing the pump firmware version */
-"Firmware Version" = "Firmware Version";
+"Firmware Version" = "Version du firmware";
 
 /* The title of the command to get pump model */
 "Get Pump Model" = "Obtenir le modèle de pompe";
@@ -169,7 +169,7 @@
 "Region" = "Region";
 
 /* Button title to retry sentry setup */
-"Retry" = "Nouvel essai";
+"Retry" = "Retry";
 
 /* The title of the command to fetch RileyLink statistics */
 "RileyLink Statistics" = "Statistiques RileyLink";
@@ -206,4 +206,4 @@
 "Unknown" = "Inconnu";
 
 /* The title of the cell showing uptime */
-"Uptime" = "Uptime";
+"Uptime" = "Temps de fonctionnement";

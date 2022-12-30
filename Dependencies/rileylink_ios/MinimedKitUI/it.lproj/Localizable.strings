@@ -20,7 +20,7 @@
 "Awake Until" = "Attivo sino";
 
 /* The title text for the basal rate schedule */
-"Basal Rates" = "Quantita' Basali";
+"Basal Rates" = "Tassi basali";
 
 /* The format string describing pump battery voltage: (1: battery voltage) */
 "Battery: %1$@ volts\n" = "Batteria: %1$@ volts\n";
@@ -38,29 +38,29 @@
 "Change Time" = "Cambia Orario";
 
 /* The title of the command to change pump time zone */
-"Change Time Zone" = "Cambia Fuso Orario";
+"Change Time Zone" = "Cambia fuso orario";
 
 /* Progress message for changing pump time. */
-"Changing time…" = "Modifica Orario…";
+"Changing time…" = "Modifica ora in corso";
 
 /* The title of the section describing commands */
 "Commands" = "Comandi";
 
 /* The title of the configuration section in settings */
-"Configuration" = "Configurazione";
+"Configuration" = "Impostazioni";
 
 /* Button title to connect to pump during setup */
-"Connect" = "Collegarsi";
+"Connect" = "Connetti";
 
 /* The title of the cell showing BLE connection state */
-"Connection State" = "Stato di Connessione";
+"Connection State" = "Stato Connessione";
 
 /* Button title to delete pump
    Title text for the button to remove a pump from Loop */
 "Delete Pump" = "Elimina Microinfusore";
 
 /* Title text for delivery limits */
-"Delivery Limits" = "Limiti di Consegna";
+"Delivery Limits" = "Limiti di somministrazione";
 
 /* The title of the section describing the device */
 "Device" = "Dispositivo";
@@ -81,7 +81,7 @@
 "Error Resuming" = "Errore durante la ripresa";
 
 /* The alert title for a suspend error */
-"Error Suspending" = "Errore durante la sospensione";
+"Error Suspending" = "Errore durante l’interruzione";
 
 /* The title of the command to fetch recent glucose */
 "Fetch Enlite Glucose" = "Sincronizzare Glicemie Enlite";
@@ -151,7 +151,7 @@
 "Pump Model" = "Modello Microinfusore";
 
 /* Title of the pump settings view controller */
-"Pump Settings" = "Impostazioni Microinfusore";
+"Pump Settings" = "Impostazioni del microinfusore";
 
 /* The title of the command to read basal schedule */
 "Read Basal Schedule" = "Leggi programma basale";
@@ -188,7 +188,7 @@
 "Signal Strength" = "Potenza Segnale";
 
 /* A message indicating a command succeeded */
-"Succeeded" = "Operazione eseguita con successo";
+"Succeeded" = "Effettuato con successo";
 
 /* The format string describing pump suspended state: (1: suspended) */
 "Suspended: %1$@\n" = "Sospeso: %1$@\n";
@@ -206,4 +206,4 @@
 "Unknown" = "Sconosciuto";
 
 /* The title of the cell showing uptime */
-"Uptime" = "Uptime";
+"Uptime" = "Tempo d'attività";

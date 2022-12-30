@@ -1180,6 +1180,18 @@ Połączono z Nightscout!";
 /* Median loop interval */
 "Median Duration" = "Median Duration";
 
+/* "Display SD */
+"Display SD instead of CV" = "Display SD instead of CV";
+
+/* Description for display SD */
+"Display Standard Deviation (SD) instead of Coefficient of Variation (CV) in statPanel" = "Display Standard Deviation (SD) instead of Coefficient of Variation (CV) in statPanel";
+
+/* How often to update the statistics */
+"Update every number of minutes:" = "Update every number of minutes:";
+
+/* Description for update interval for statistics */
+"Default is 30 minutes. How often to update and save the statistics.json and to upload last array, when enabled, to Nightscout. A lower interval than for glucose updates (5 min) is pointless." = "Default is 30 minutes. How often to update and save the statistics.json and to upload last array, when enabled, to Nightscout. A lower interval than for glucose updates (5 min) is pointless.";
+
 /* --------------------------------------
 
   Infotexts from openaps.docs and androidaps.docs

@@ -20,7 +20,7 @@
 "Awake Until" = "Aktiv bis";
 
 /* The title text for the basal rate schedule */
-"Basal Rates" = "Basalraten";
+"Basal Rates" = "Basalrate";
 
 /* The format string describing pump battery voltage: (1: battery voltage) */
 "Battery: %1$@ volts\n" = "Batterie: %1$@ Volt\n";
@@ -41,7 +41,7 @@
 "Change Time Zone" = "Zeitzone ändern";
 
 /* Progress message for changing pump time. */
-"Changing time…" = "Zeit ändern…";
+"Changing time…" = "Zeit ändern";
 
 /* The title of the section describing commands */
 "Commands" = "Befehle";
@@ -60,7 +60,7 @@
 "Delete Pump" = "Pumpe löschen";
 
 /* Title text for delivery limits */
-"Delivery Limits" = "Insulin Abgabelimits";
+"Delivery Limits" = "Abgabebeschränkungen";
 
 /* The title of the section describing the device */
 "Device" = "Gerät";
@@ -78,7 +78,7 @@
 "Enabled Diagnostic LEDs" = "Diagnostische LEDs aktiviert";
 
 /* The alert title for a resume error */
-"Error Resuming" = "Fehler beim Fortsetzen";
+"Error Resuming" = "Fehler beim Fortfahren";
 
 /* The alert title for a suspend error */
 "Error Suspending" = "Fehler beim Unterbrechen";
@@ -102,7 +102,7 @@
 "Firmware" = "Firmware";
 
 /* The title of the cell showing the pump firmware version */
-"Firmware Version" = "Firmware Version";
+"Firmware Version" = "Firmware-Version";
 
 /* The title of the command to get pump model */
 "Get Pump Model" = "Pumpmodell erhalten";
@@ -206,4 +206,4 @@
 "Unknown" = "Unbekannt";
 
 /* The title of the cell showing uptime */
-"Uptime" = "Uptime";
+"Uptime" = "Betriebszeit";

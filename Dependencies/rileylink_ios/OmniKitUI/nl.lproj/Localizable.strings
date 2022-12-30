@@ -348,7 +348,7 @@
 "hour" = "uur";
 
 /* Unit for plural hours in pod life remaining */
-"hours" = "uur";
+"hours" = "uren";
 
 /* Unit for singular minute in pod life remaining */
 "minute" = "minuut";

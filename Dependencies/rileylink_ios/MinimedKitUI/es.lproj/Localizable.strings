@@ -20,7 +20,7 @@
 "Awake Until" = "Despierto hasta";
 
 /* The title text for the basal rate schedule */
-"Basal Rates" = "Perfil Basal";
+"Basal Rates" = "Rangos de Basal";
 
 /* The format string describing pump battery voltage: (1: battery voltage) */
 "Battery: %1$@ volts\n" = "Batería: %1$@ voltios\n";
@@ -41,13 +41,13 @@
 "Change Time Zone" = "Cambiar Zona Horaria";
 
 /* Progress message for changing pump time. */
-"Changing time…" = "Cambiando hora…";
+"Changing time…" = "Cambiando hora...";
 
 /* The title of the section describing commands */
 "Commands" = "Comandos";
 
 /* The title of the configuration section in settings */
-"Configuration" = "Configuración";
+"Configuration" = "Configuracion";
 
 /* Button title to connect to pump during setup */
 "Connect" = "Conectar";
@@ -60,7 +60,7 @@
 "Delete Pump" = "Eliminar Microinfusora";
 
 /* Title text for delivery limits */
-"Delivery Limits" = "Límites de Dosificación";
+"Delivery Limits" = "Límites de Administración de Insulina";
 
 /* The title of the section describing the device */
 "Device" = "Dispositivo";
@@ -78,10 +78,10 @@
 "Enabled Diagnostic LEDs" = "Diagnóstico LEDs Habilitado";
 
 /* The alert title for a resume error */
-"Error Resuming" = "Error de reanudación";
+"Error Resuming" = "Error Reanudando";
 
 /* The alert title for a suspend error */
-"Error Suspending" = "Error de suspensión";
+"Error Suspending" = "Error Suspendiendo";
 
 /* The title of the command to fetch recent glucose */
 "Fetch Enlite Glucose" = "Obtener Enlite Glucose";
@@ -102,7 +102,7 @@
 "Firmware" = "Firmware";
 
 /* The title of the cell showing the pump firmware version */
-"Firmware Version" = "Firmware";
+"Firmware Version" = "Firmware Version";
 
 /* The title of the command to get pump model */
 "Get Pump Model" = "Obtener modelo de Microinfusora";
@@ -138,7 +138,7 @@
 "Preferred Data Source" = "Fuente de Datos Preferida";
 
 /* The title of the section describing the pump */
-"Pump" = "Microinfusadora";
+"Pump" = "Bomba";
 
 /* The title text for the battery type value */
 "Pump Battery Type" = "Tipo de batería de microinfusora";
@@ -151,7 +151,7 @@
 "Pump Model" = "Modelo de Microinfusadora";
 
 /* Title of the pump settings view controller */
-"Pump Settings" = "Configuración de Microinfusora";
+"Pump Settings" = "Configuración de la bomba";
 
 /* The title of the command to read basal schedule */
 "Read Basal Schedule" = "Obtener prefil basal";
@@ -169,7 +169,7 @@
 "Region" = "Región";
 
 /* Button title to retry sentry setup */
-"Retry" = "Reintentar";
+"Retry" = "Retry";
 
 /* The title of the command to fetch RileyLink statistics */
 "RileyLink Statistics" = "Estadísticas de RileyLink";
@@ -188,7 +188,7 @@
 "Signal Strength" = "Intensidad de señal";
 
 /* A message indicating a command succeeded */
-"Succeeded" = "Éxito";
+"Succeeded" = "Logrado";
 
 /* The format string describing pump suspended state: (1: suspended) */
 "Suspended: %1$@\n" = "Suspendido: %1$@\n";
