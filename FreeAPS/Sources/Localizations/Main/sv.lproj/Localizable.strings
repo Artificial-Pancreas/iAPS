@@ -963,7 +963,7 @@ Enact a temp Basal or a temp target */
 "Pump History" = "Pumphistorik";
 
 /* Debug option view Target Ranges */
-"Target Ranges" = "Målvärden";
+"Target ranges" = "Målvärden";
 
 /* Debug option view Temp targets */
 "Temp targets" = "Tillfälliga målvärden";
