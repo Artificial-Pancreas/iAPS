@@ -1232,16 +1232,16 @@ Enact a temp Basal or a temp target */
 "Median Duration" = "Median Duration";
 
 /* "Display SD */
-"Display SD instead of CV" = "Display SD instead of CV";
+"Display SD instead of CV" = "Отображать SD вместо CV";
 
 /* Description for display SD */
-"Display Standard Deviation (SD) instead of Coefficient of Variation (CV) in statPanel" = "Display Standard Deviation (SD) instead of Coefficient of Variation (CV) in statPanel";
+"Display Standard Deviation (SD) instead of Coefficient of Variation (CV) in statPanel" = "Отображать Стандартное Отклонение (SD), вместо Коэффициента Вариации (CV) на панели статистики";
 
 /* How often to update the statistics */
-"Update every number of minutes:" = "Update every number of minutes:";
+"Update every number of minutes:" = "Частота обновления в минутах:";
 
 /* Description for update interval for statistics */
-"Default is 30 minutes. How often to update and save the statistics.json and to upload last array, when enabled, to Nightscout. A lower interval than for glucose updates (5 min) is pointless." = "Default is 30 minutes. How often to update and save the statistics.json and to upload last array, when enabled, to Nightscout. A lower interval than for glucose updates (5 min) is pointless.";
+"Default is 30 minutes. How often to update and save the statistics.json and to upload last array, when enabled, to Nightscout. A lower interval than for glucose updates (5 min) is pointless." = "По-умолчанию - 30 минут. Параметр задает частоту обновления и сохранения статистики из файла statistics.json и частоту загрузки последнего массива данных, когда включено, в Nightscout. Нет смысла устанавливать данный интервал короче, чем интервал обновления значения глюкозы(5 минут).";
 
 /* --------------------------------------
 
