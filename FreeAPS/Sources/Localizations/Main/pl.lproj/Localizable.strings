@@ -1194,8 +1194,9 @@ Połączono z Nightscout!";
 
 /* infoText: Description for Low Glucose Limit */
 "BG Under This Value Will Be Displayed As Low Glucose Percentage" = "BG Under This Value Will Be Displayed As Low Glucose Percentage";
-/* infoText: Description for High Glucose Limit */
-"BG Under This Value Will Be Displayed As High Glucose Percentage" = "BG Under This Value Will Be Displayed As High Glucose Percentage";
+/* BG Over This Value Will Be Displayed As High Glucose Percentage
+infoText: Description for High Glucose Limit */
+"BG Over This Value Will Be Displayed As High Glucose Percentage" = "BG Over This Value Will Be Displayed As High Glucose Percentage";
 
 /* When statistics.json was last updated */
 "Updated" = "Updated";
