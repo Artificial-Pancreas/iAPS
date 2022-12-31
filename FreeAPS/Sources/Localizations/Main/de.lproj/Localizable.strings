@@ -44,10 +44,10 @@
 "Agree and continue" = "Zustimmen und fortfahren";
 
 /* Headline in enacted pop up (at: at what time) */
-"Enacted at" = "Enacted at";
+"Enacted at" = "Letze Berechnung um";
 
 /* Headline in suggested pop up (at: at what time) */
-"Suggested at" = "Suggested at";
+"Suggested at" = "Vorgeschlagen um";
 
 /* Home title */
 "Home" = "Hauptseite";
@@ -928,7 +928,7 @@ Enact a temp Basal or a temp target */
 "Using shared app group with external CGM app GlucoseDirect" = "Using shared app group with external CGM app GlucoseDirect";
 
 /* Dexcom G6 app */
-"Dexcom G6 app" = "Dexcom G6 app";
+"Dexcom G6 app" = "Dexcom G6 App";
 
 /* Native G5 app */
 "Native G5 app" = "Native G5 App";
@@ -948,7 +948,7 @@ Enact a temp Basal or a temp target */
 /* -------------- Developer settings ---------------------- */
 /* Debug options */
 
-"Developer" = "Developer";
+"Developer" = "Entwickler";
 
 /* Debug option view NS Upload Profile */
 "NS Upload Profile" = "NS Upload Profile";
@@ -960,16 +960,16 @@ Enact a temp Basal or a temp target */
 "Autosense" = "Autosense";
 
 /* Debug option view Pump History */
-"Pump History" = "Pump History";
+"Pump History" = "Insulinpumpen-Speicher";
 
 /* Debug option view Target Ranges */
-"Target ranges" = "Target ranges";
+"Target ranges" = "Zielbereiche";
 
 /* Debug option view Temp targets */
-"Temp targets" = "Temp targets";
+"Temp targets" = "Temporäre Ziele";
 
 /* Debug option view Meal */
-"Meal" = "Meal";
+"Meal" = "Essen";
 
 /* Debug option view Pump profile */
 "Pump profile" = "Pump profile";
@@ -1202,34 +1202,34 @@ Enact a temp Basal or a temp target */
 "Average" = "Mittelwert";
 
 /* Median BG */
-"Median" = "Median";
+"Median" = "Mittelwert-Median";
 
 /* Normal BG (within TIR) */
-"Normal (24h)" = "Normal (24h)";
+"Normal (24h)" = "im Zielbereich (24 Std.)";
 
 /* Title High BG in statPanel */
-"High (>" = "High (>";
+"High (>" = "Hoch (>";
 
 /* Title Low BG in statPanel */
-"Low (<" = "Low (<";
+"Low (<" = "Niedrig (<";
 
 /* HbA1c estimation for one day of data */
-"HbA1c (24h)" = "HbA1c (24h)";
+"HbA1c (24h)" = "HbA1c (24 Std.)";
 
 /* Total number of days of data for HbA1c estimation, part 1/2*/
-"All " = "All ";
+"All " = "Ø";
 
 /* Total number of days of data for HbA1c estimation, part 2/2*/
-" days" = " days";
+" days" = " Tage";
 
 /* Nr of loops last 24 hours */
-"Loops" = "Loops";
+"Loops" = "Schleifen (24 Std.)";
 
 /* Average loop interval */
-"Average Interval" = "Avgerage Interval";
+"Average Interval" = "Intervalllänge in Min";
 
 /* Median loop interval */
-"Median Duration" = "Median Duration";
+"Median Duration" = "Mittlere Berechnungsdauer";
 
 /* "Display SD */
 "Display SD instead of CV" = "Display SD instead of CV";
