@@ -238,18 +238,34 @@ extension Home {
                             Text(
                                 NSLocalizedString("Average", comment: "") + " " + state.settingsManager.settings.units.rawValue
                             ).font(.caption2).foregroundColor(.secondary)
-                            Text(
-                                numberFormatter
-                                    .string(from: (state.statistics?.Statistics.Glucose.Average.day ?? 0) as NSNumber) ??
-                                    ""
-                            ).font(.system(size: 12))
+                            if state.units == .mmolL {
+                                Text(
+                                    targetFormatter
+                                        .string(from: (state.statistics?.Statistics.Glucose.Average.day ?? 0) as NSNumber) ??
+                                        ""
+                                ).font(.system(size: 12))
+                            } else {
+                                Text(
+                                    tirFormatter
+                                        .string(from: (state.statistics?.Statistics.Glucose.Average.day ?? 0) as NSNumber) ??
+                                        ""
+                                ).font(.system(size: 12))
+                            }
                             Text("Median")
                                 .font(.caption2).foregroundColor(.secondary)
-                            Text(
-                                numberFormatter
-                                    .string(from: (state.statistics?.Statistics.Glucose.Median.day ?? 0) as NSNumber) ??
-                                    ""
-                            ).font(.system(size: 12))
+                            if state.units == .mmolL {
+                                Text(
+                                    targetFormatter
+                                        .string(from: (state.statistics?.Statistics.Glucose.Median.day ?? 0) as NSNumber) ??
+                                        ""
+                                ).font(.system(size: 12))
+                            } else {
+                                Text(
+                                    tirFormatter
+                                        .string(from: (state.statistics?.Statistics.Glucose.Median.day ?? 0) as NSNumber) ??
+                                        ""
+                                ).font(.system(size: 12))
+                            }
                         }
                     }
 
@@ -257,7 +273,7 @@ extension Home {
                         Group {
                             Text(
                                 NSLocalizedString("Low (<", comment: " ") +
-                                    (numberFormatter.string(from: state.settingsManager.preferences.low as NSNumber) ?? "") + ")"
+                                    (targetFormatter.string(from: state.settingsManager.preferences.low as NSNumber) ?? "") + ")"
                             ).font(.caption2).foregroundColor(.secondary)
                             Text(
                                 (
@@ -278,7 +294,7 @@ extension Home {
                             ).font(.system(size: 12)).foregroundColor(.loopGreen)
                             Text(
                                 NSLocalizedString("High (>", comment: " ") +
-                                    (numberFormatter.string(from: state.settingsManager.preferences.high as NSNumber) ?? "") + ")"
+                                    (targetFormatter.string(from: state.settingsManager.preferences.high as NSNumber) ?? "") + ")"
                             ).font(.caption2).foregroundColor(.secondary)
                             Text(
                                 (
@@ -296,7 +312,7 @@ extension Home {
                         Group {
                             Text("HbA1c (24h)").font(.caption2).foregroundColor(.secondary)
                             Text(
-                                numberFormatter
+                                targetFormatter
                                     .string(from: (state.statistics?.Statistics.HbA1c.day ?? 0) as NSNumber) ??
                                     ""
                             ).font(.system(size: 12))
@@ -304,14 +320,14 @@ extension Home {
                             Text(
                                 NSLocalizedString("All ", comment: "") +
                                     (
-                                        numberFormatter
+                                        targetFormatter
                                             .string(from: (state.statistics?.GlucoseStorage_Days ?? 0) as NSNumber) ?? ""
                                     ) +
                                     NSLocalizedString(" days", comment: "")
                             ).font(.caption2).foregroundColor(.secondary)
 
                             Text(
-                                numberFormatter
+                                targetFormatter
                                     .string(from: (state.statistics?.Statistics.HbA1c.total ?? 0) as NSNumber) ??
                                     ""
                             ).font(.system(size: 12))
@@ -322,7 +338,7 @@ extension Home {
                                 ).font(.caption2).foregroundColor(.secondary)
 
                                 Text(
-                                    numberFormatter
+                                    tirFormatter
                                         .string(from: (state.statistics?.Statistics.Variance.CV.total ?? 0) as NSNumber) ??
                                         ""
                                 ).font(.system(size: 12))
@@ -330,12 +346,19 @@ extension Home {
                                 Text(
                                     NSLocalizedString("SD (", comment: "SD") + state.settingsManager.settings.units.rawValue + ")"
                                 ).font(.caption2).foregroundColor(.secondary)
-
-                                Text(
-                                    numberFormatter
-                                        .string(from: (state.statistics?.Statistics.Variance.SD.total ?? 0) as NSNumber) ??
-                                        ""
-                                ).font(.system(size: 12))
+                                if state.units == .mmolL {
+                                    Text(
+                                        targetFormatter
+                                            .string(from: (state.statistics?.Statistics.Variance.SD.total ?? 0) as NSNumber) ??
+                                            ""
+                                    ).font(.system(size: 12))
+                                } else {
+                                    Text(
+                                        tirFormatter
+                                            .string(from: (state.statistics?.Statistics.Variance.SD.total ?? 0) as NSNumber) ??
+                                            ""
+                                    ).font(.system(size: 12))
+                                }
                             }
                         }
                     }
@@ -351,7 +374,7 @@ extension Home {
 
                             Text("Average Interval").font(.caption2).foregroundColor(.secondary)
                             Text(
-                                numberFormatter
+                                targetFormatter
                                     .string(from: (state.statistics?.Statistics.LoopCycles.avg_interval ?? 0) as NSNumber) ??
                                     "0"
                             ).font(.system(size: 12))
