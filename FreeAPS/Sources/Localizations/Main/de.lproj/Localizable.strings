@@ -1185,15 +1185,16 @@ Enact a temp Basal or a temp target */
 "Displays Statistics under the chart view" = "Displays Statistics under the chart view";
 
 /* Low Glucose Limit option in preferences */
-"Low Glucose Limit" = "Low Glucose Limit";
+"Low Glucose Limit" = "Niedrige Blutzuckergrenze";
 
 /* High Glucose Limit option in preferences */
-"High Glucose Limit" = "High Glucose Limit";
+"High Glucose Limit" = "Hohe Blutzuckergrenze";
 
 /* infoText: Description for Low Glucose Limit */
-"BG Under This Value Will Be Displayed As Low Glucose Percentage" = "BG Under This Value Will Be Displayed As Low Glucose Percentage";
-/* infoText: Description for High Glucose Limit */
-"BG Under This Value Will Be Displayed As High Glucose Percentage" = "BG Under This Value Will Be Displayed As High Glucose Percentage";
+"BG Under This Value Will Be Displayed As Low Glucose Percentage" = "Ein Blutzuckerwert unter diesem Wert wird als Unterzuckerung angezeigt";
+/* BG Over This Value Will Be Displayed As High Glucose Percentage
+infoText: Description for High Glucose Limit */
+"BG Over This Value Will Be Displayed As High Glucose Percentage" = "Ein Blutzuckerwert über diesem Wert wird als hoher Blutzuckers angezeigt";
 
 /* When statistics.json was last updated */
 "Updated" = "Aktualisiert um";
@@ -1238,7 +1239,7 @@ Enact a temp Basal or a temp target */
 "Display Standard Deviation (SD) instead of Coefficient of Variation (CV) in statPanel" = "Display Standard Deviation (SD) instead of Coefficient of Variation (CV) in statPanel";
 
 /* How often to update the statistics */
-"Update every number of minutes:" = "Update every number of minutes:";
+"Update every number of minutes:" = "Update der Statistik (in Minuten):";
 
 /* Description for update interval for statistics */
 "Default is 30 minutes. How often to update and save the statistics.json and to upload last array, when enabled, to Nightscout. A lower interval than for glucose updates (5 min) is pointless." = "Default is 30 minutes. How often to update and save the statistics.json and to upload last array, when enabled, to Nightscout. A lower interval than for glucose updates (5 min) is pointless.";
