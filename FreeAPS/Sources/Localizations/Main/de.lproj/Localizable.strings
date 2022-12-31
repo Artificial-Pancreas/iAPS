@@ -1196,10 +1196,10 @@ Enact a temp Basal or a temp target */
 "BG Under This Value Will Be Displayed As High Glucose Percentage" = "BG Under This Value Will Be Displayed As High Glucose Percentage";
 
 /* When statistics.json was last updated */
-"Updated" = "Updated";
+"Updated" = "Aktualisiert um";
 
 /* Average BG = */
-"Average" = "Average";
+"Average" = "Mittelwert";
 
 /* Median BG */
 "Median" = "Median";
