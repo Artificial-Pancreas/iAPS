@@ -1185,51 +1185,51 @@ Enact a temp Basal or a temp target */
 "Displays Statistics under the chart view" = "Displays Statistics under the chart view";
 
 /* Low Glucose Limit option in preferences */
-"Low Glucose Limit" = "Low Glucose Limit";
+"Low Glucose Limit" = "Предел низкого уровня глюкозы";
 
 /* High Glucose Limit option in preferences */
-"High Glucose Limit" = "High Glucose Limit";
+"High Glucose Limit" = "Предел высокого уровня глюкозы";
 
 /* infoText: Description for Low Glucose Limit */
-"BG Under This Value Will Be Displayed As Low Glucose Percentage" = "BG Under This Value Will Be Displayed As Low Glucose Percentage";
+"BG Under This Value Will Be Displayed As Low Glucose Percentage" = "Уровень глюкозы крови под этим значением будет отображаться как процент пребывания с низким уровнем глюкозы";
 /* infoText: Description for High Glucose Limit */
-"BG Under This Value Will Be Displayed As High Glucose Percentage" = "BG Under This Value Will Be Displayed As High Glucose Percentage";
+"BG Under This Value Will Be Displayed As High Glucose Percentage" = "Уровень глюкозы крови под этим значением будет отображаться как процент пребывания с высоким уровнем глюкозы";
 
 /* When statistics.json was last updated */
-"Updated" = "Updated";
+"Updated" = "Обновлено";
 
 /* Average BG = */
-"Average" = "Average";
+"Average" = "Средний";
 
 /* Median BG */
-"Median" = "Median";
+"Median" = "Медиана";
 
 /* Normal BG (within TIR) */
-"Normal (24h)" = "Normal (24h)";
+"Normal (24h)" = "Норма (24ч)";
 
 /* Title High BG in statPanel */
-"High (>" = "High (>";
+"High (>" = "Высокий (>";
 
 /* Title Low BG in statPanel */
-"Low (<" = "Low (<";
+"Low (<" = "Низкий (<";
 
 /* HbA1c estimation for one day of data */
-"HbA1c (24h)" = "HbA1c (24h)";
+"HbA1c (24h)" = "HbA1c (24ч)";
 
 /* Total number of days of data for HbA1c estimation, part 1/2*/
-"All " = "All ";
+"All " = "Все ";
 
 /* Total number of days of data for HbA1c estimation, part 2/2*/
-" days" = " days";
+" days" = " дн.";
 
 /* Nr of loops last 24 hours */
-"Loops" = "Loops";
+"Loops" = "Петли";
 
 /* Average loop interval */
-"Average Interval" = "Avgerage Interval";
+"Average Interval" = "Интервал";
 
 /* Median loop interval */
-"Median Duration" = "Median Duration";
+"Median Duration" = "Длительность";
 
 /* "Display SD */
 "Display SD instead of CV" = "Отображать SD вместо CV";
