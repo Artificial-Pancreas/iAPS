@@ -44,10 +44,10 @@
 "Agree and continue" = "Согласиться и Продолжить";
 
 /* Headline in enacted pop up (at: at what time) */
-"Enacted at" = "Enacted at";
+"Enacted at" = "Принято в";
 
 /* Headline in suggested pop up (at: at what time) */
-"Suggested at" = "Suggested at";
+"Suggested at" = "Предложено в";
 
 /* Home title */
 "Home" = "Главная";
@@ -922,10 +922,10 @@ Enact a temp Basal or a temp target */
 "Bluetooth State restored (APS restarted?). Found %d peripherals, and connected to %@ with identifier %@" = "Bluetooth состояние восстановлено (APS перезапущен?). Найдено %d периферийных устройств и подключено к %@ с идентификатором %@";
 
 /* Shared app group xDrip4iOS */
-"Using shared app group with external CGM app xDrip4iOS" = "Using shared app group with external CGM app xDrip4iOS";
+"Using shared app group with external CGM app xDrip4iOS" = "Используйте общую app group, при подписании приложений, для прямого подключения CGM приложения xDrip4iOS к FreeAPSx";
 
 /* Shared app group GlucoseDirect */
-"Using shared app group with external CGM app GlucoseDirect" = "Using shared app group with external CGM app GlucoseDirect";
+"Using shared app group with external CGM app GlucoseDirect" = "Используйте общую app group, при подписании приложений, для прямого подключения CGM приложения GlucoseDirect к FreeAPSx";
 
 /* Dexcom G6 app */
 "Dexcom G6 app" = "Родное приложение G6";
@@ -948,55 +948,55 @@ Enact a temp Basal or a temp target */
 /* -------------- Developer settings ---------------------- */
 /* Debug options */
 
-"Developer" = "Developer";
+"Developer" = "Разработчик";
 
 /* Debug option view NS Upload Profile */
-"NS Upload Profile" = "NS Upload Profile";
+"NS Upload Profile" = "Загрузка профиля в NS";
 
 /* Debug option view NS Uploaded Profile */
-"NS Uploaded Profile" = "NS Uploaded Profile";
+"NS Uploaded Profile" = "Загруженный в NS профиль";
 
 /* Debug option view Autosense */
-"Autosense" = "Autosense";
+"Autosense" = "Автосенс";
 
 /* Debug option view Pump History */
-"Pump History" = "Pump History";
+"Pump History" = "История помпы";
 
 /* Debug option view Target Ranges */
-"Target ranges" = "Target ranges";
+"Target ranges" = "Целевые диапазоны";
 
 /* Debug option view Temp targets */
-"Temp targets" = "Temp targets";
+"Temp targets" = "Временные цели";
 
 /* Debug option view Meal */
-"Meal" = "Meal";
+"Meal" = "Еда";
 
 /* Debug option view Pump profile */
-"Pump profile" = "Pump profile";
+"Pump profile" = "Профиль помпы";
 
 /* Debug option view Profile */
-"Profile" = "Profile";
+"Profile" = "Профиль";
 
 /* Debug option view Enacted */
-"Enacted" = "Enacted";
+"Enacted" = "Принято";
 
 /* Debug option view Announcements (from NS) */
-"Announcements" = "Announcements";
+"Announcements" = "Оповещения";
 
 /* Debug option view Enacted announcements announcements (from NS) */
-"Enacted announcements" = "Enacted announcements";
+"Enacted announcements" = "Принятые оповещения";
 
 /* Debug option view Autotune */
 "Autotune" = "Автотюн";
 
 /* Debug option view Target presets */
-"Target presets" = "Target presets";
+"Target presets" = "Предустановки временных целей";
 
 /* Debug option view */
-"Loop Cycles" = "Loop Cycles";
+"Loop Cycles" = "Циклы петли";
 
 /* Debug option view Glucose Data used for statistics */
-"Glucose Data used for statistics" = "Glucose Data used for statistics";
+"Glucose Data used for statistics" = "Данные о глюкозе, используемые в статистике";
 
 /* --------------- HealthKit intergration --------------------*/
 /* */
@@ -1179,16 +1179,16 @@ Enact a temp Basal or a temp target */
 /* Option in preferences */
 
 
-"Display Statistics" = "Display Statistics";
+"Display Statistics" = "Отображать статистику";
 
 /* infoText: Description for Display Statistics */
-"Displays Statistics under the chart view" = "Displays Statistics under the chart view";
+"Displays Statistics under the chart view" = "Включает отображение статистики на главном экране, под графиком";
 
 /* Low Glucose Limit option in preferences */
-"Low Glucose Limit" = "Предел низкого уровня глюкозы";
+"Low Glucose Limit" = "Низкий уровень глюкозы";
 
 /* High Glucose Limit option in preferences */
-"High Glucose Limit" = "Предел высокого уровня глюкозы";
+"High Glucose Limit" = "Высокий уровень глюкозы";
 
 /* infoText: Description for Low Glucose Limit */
 "BG Under This Value Will Be Displayed As Low Glucose Percentage" = "Уровень глюкозы крови под этим значением будет отображаться как процент пребывания с низким уровнем глюкозы";
