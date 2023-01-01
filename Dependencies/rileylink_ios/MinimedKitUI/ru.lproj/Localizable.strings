@@ -166,7 +166,7 @@
 "Reading pump status…" = "Чтение статуса помпы…";
 
 /* The title of the cell showing the pump region */
-"Region" = "Region";
+"Region" = "Регион";
 
 /* Button title to retry sentry setup */
 "Retry" = "Повторить";
