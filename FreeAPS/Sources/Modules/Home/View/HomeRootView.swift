@@ -9,6 +9,7 @@ extension Home {
 
         @StateObject var state = StateModel()
         @State var isStatusPopupPresented = false
+        @State var selectedState: durationState
 
         private var numberFormatter: NumberFormatter {
             let formatter = NumberFormatter()
@@ -225,218 +226,207 @@ extension Home {
         }
 
         @ViewBuilder private func statPanel() -> some View {
-            if state.displayStatistics {
-                VStack(alignment: .center, spacing: 6) {
-                    HStack {
-                        Group {
-                            Text("Updated").font(.caption2)
-                                .foregroundColor(.secondary)
-                            Text(
-                                dateFormatter.string(from: state.statistics?.created_at ?? Date())
-                            ).font(.system(size: 12))
+            if state.settingsManager.settings.displayStatistics {
+                VStack(alignment: .center, spacing: 8) {
+                    VStack(alignment: .center, spacing: 4) {
+                        // stateButton(states: durationState.allCases, selectedState: $selectedState)
+                        HStack {
+                            Group {
+                                
+                                durationButton(states: durationState.allCases, selectedState: $selectedState)
 
-                            Text(
-                                NSLocalizedString("Average", comment: "") + " " + state.settingsManager.settings.units.rawValue
-                            ).font(.caption2).foregroundColor(.secondary)
-                            if state.units == .mmolL {
+                                Text("Updated").font(.caption2)
+                                    .foregroundColor(.secondary)
                                 Text(
-                                    targetFormatter
-                                        .string(from: (state.statistics?.Statistics.Glucose.Average.day ?? 0) as NSNumber) ??
-                                        ""
-                                ).font(.system(size: 12))
-                            } else {
-                                Text(
-                                    tirFormatter
-                                        .string(from: (state.statistics?.Statistics.Glucose.Average.day ?? 0) as NSNumber) ??
-                                        ""
-                                ).font(.system(size: 12))
-                            }
-                            Text("Median")
-                                .font(.caption2).foregroundColor(.secondary)
-                            if state.units == .mmolL {
-                                Text(
-                                    targetFormatter
-                                        .string(from: (state.statistics?.Statistics.Glucose.Median.day ?? 0) as NSNumber) ??
-                                        ""
-                                ).font(.system(size: 12))
-                            } else {
-                                Text(
-                                    tirFormatter
-                                        .string(from: (state.statistics?.Statistics.Glucose.Median.day ?? 0) as NSNumber) ??
-                                        ""
+                                    dateFormatter.string(from: state.statistics?.created_at ?? Date())
                                 ).font(.system(size: 12))
                             }
                         }
-                    }
 
-                    HStack {
-                        Group {
-                            Text(
-                                NSLocalizedString("Low (<", comment: " ") +
-                                    (targetFormatter.string(from: state.settingsManager.preferences.low as NSNumber) ?? "") + ")"
-                            ).font(.caption2).foregroundColor(.secondary)
-                            Text(
-                                (
-                                    tirFormatter
-                                        .string(from: (
-                                            state.statistics?.Statistics.Distribution.Hypos.day ?? 0
-                                        ) as NSNumber) ??
-                                        "0"
-                                ) + " %"
-                            ).font(.system(size: 12)).foregroundColor(.loopRed)
-                            Text("Normal (24h)").font(.caption2).foregroundColor(.secondary)
-                            Text(
-                                (
-                                    tirFormatter
-                                        .string(from: (state.statistics?.Statistics.Distribution.TIR.day ?? 0) as NSNumber) ??
-                                        "0"
-                                ) + " %"
-                            ).font(.system(size: 12)).foregroundColor(.loopGreen)
-                            Text(
-                                NSLocalizedString("High (>", comment: " ") +
-                                    (targetFormatter.string(from: state.settingsManager.preferences.high as NSNumber) ?? "") + ")"
-                            ).font(.caption2).foregroundColor(.secondary)
-                            Text(
-                                (
-                                    tirFormatter
-                                        .string(from: (
-                                            state.statistics?.Statistics.Distribution.Hypers.day ?? 0
-                                        ) as NSNumber) ??
-                                        "0"
-                                ) + " %"
-                            ).font(.system(size: 12)).foregroundColor(.loopYellow)
+                        var hba1c_all = getString(state.statistics?.Statistics.HbA1c, .total)
+                        
+                        var average_ = getString(state.statistics?.Statistics.Glucose.Average.day, true)
+                        var median_ = getString(state.statistics?.Statistics.Glucose.Median.day, true)
+                        var tir_low = getString(state.statistics?.Statistics.Distribution.Hypos.day, false)
+                        var tir_high = getString(state.statistics?.Statistics.Distribution.Hypers.day, false)
+                        var tir_ = getString(state.statistics?.Statistics.Distribution.TIR.day, false)
+                        var hba1c_ = getString(state.statistics?.Statistics.HbA1c.day, false)
+                        var sd_ = getString(state.statistics?.Statistics.Variance.SD.day, true)
+                        var cv_ = getString(state.statistics?.Statistics.Variance.CV.day, false)
+                        
+                        switch selectedState {
+                        case .day:
+                            continue
+                        case .week:
+                            average_ = getString(state.statistics?.Statistics.Glucose.Average.week, true)
+                            median_ = getString(state.statistics?.Statistics.Glucose.Median.week, true)
+                            tir_low = getString(state.statistics?.Statistics.Distribution.Hypos.week, false)
+                            tir_high = getString(state.statistics?.Statistics.Distribution.Hypers.week, false)
+                            tir_ = getString(state.statistics?.Statistics.Distribution.TIR.week, false)
+                            hba1c_ = getString(state.statistics?.Statistics.HbA1c.week, false)
+                            sd_ = getString(state.statistics?.Statistics.Variance.SD.week, true)
+                            cv_ = getString(state.statistics?.Statistics.Variance.CV.week, false)
+                        case .month:
+                            average_ = getString(state.statistics?.Statistics.Glucose.Average.month, true)
+                            median_ = getString(state.statistics?.Statistics.Glucose.Median.month, true)
+                            tir_low = getString(state.statistics?.Statistics.Distribution.Hypos.month, false)
+                            tir_high = getString(state.statistics?.Statistics.Distribution.Hypers.month, false)
+                            tir_ = getString(state.statistics?.Statistics.Distribution.TIR.month, false)
+                            hba1c_ = getString(state.statistics?.Statistics.HbA1c.month, false)
+                            sd_ = getString(state.statistics?.Statistics.Variance.SD.month, true)
+                            cv_ = getString(state.statistics?.Statistics.Variance.CV.month, false)
+                        case .ninetyDays:
+                            average_ = getString(state.statistics?.Statistics.Glucose.Average.ninetyDays, true)
+                            median_ = getString(state.statistics?.Statistics.Glucose.Median.ninetyDays, true)
+                            tir_low = getString(state.statistics?.Statistics.Distribution.Hypos.ninetyDays, false)
+                            tir_high = getString(state.statistics?.Statistics.Distribution.Hypers.ninetyDays, false)
+                            tir_ = getString(state.statistics?.Statistics.Distribution.TIR.ninetyDays, false)
+                            hba1c_ = getString(state.statistics?.Statistics.HbA1c.ninetyDays, false)
+                            sd_ = getString(state.statistics?.Statistics.Variance.SD.ninetyDays, true)
+                            cv_ = getString(state.statistics?.Statistics.Variance.CV.ninetyDays, false)
+                        case .total:
+                            average_ = getString(state.statistics?.Statistics.Glucose.Average.total, true)
+                            median_ = getString(state.statistics?.Statistics.Glucose.Median.total, true)
+                            tir_low = getString(state.statistics?.Statistics.Distribution.Hypos.total, false)
+                            tir_high = getString(state.statistics?.Statistics.Distribution.Hypers.total, false)
+                            tir_ = getString(state.statistics?.Statistics.Distribution.TIR.total, false)
+                            hba1c_ = getString(state.statistics?.Statistics.HbA1c.total, false)
+                            sd_ = getString(state.statistics?.Statistics.Variance.SD.total, true)
+                            cv_ = getString(state.statistics?.Statistics.Variance.CV.total, false)
                         }
-                    }
-
-                    HStack {
-                        Group {
-                            Text("HbA1c (24h)").font(.caption2).foregroundColor(.secondary)
-                            Text(
-                                targetFormatter
-                                    .string(from: (state.statistics?.Statistics.HbA1c.day ?? 0) as NSNumber) ??
-                                    ""
-                            ).font(.system(size: 12))
-
-                            Text(
-                                NSLocalizedString("All ", comment: "") +
-                                    (
-                                        targetFormatter
-                                            .string(from: (state.statistics?.GlucoseStorage_Days ?? 0) as NSNumber) ?? ""
-                                    ) +
-                                    NSLocalizedString(" days", comment: "")
-                            ).font(.caption2).foregroundColor(.secondary)
-
-                            Text(
-                                targetFormatter
-                                    .string(from: (state.statistics?.Statistics.HbA1c.total ?? 0) as NSNumber) ??
-                                    ""
-                            ).font(.system(size: 12))
-
-                            if !state.settingsManager.preferences.displaySD {
+                        HStack {
+                            Group {
                                 Text(
-                                    NSLocalizedString("CV (%)", comment: "CV")
+                                    NSLocalizedString("Average", comment: "")
+                                ).font(.caption2).foregroundColor(.secondary)
+                                Text(average_).font(.system(size: 12))
+                                Text("Median")
+                                    .font(.caption2).foregroundColor(.secondary)
+                                Text(median_).font(.system(size: 12))
+                            }
+                        }
+
+                        HStack {
+                            Group {
+                                Text(
+                                    NSLocalizedString("Low (<", comment: " ") +
+                                        (
+                                            targetFormatter
+                                                .string(from: state.settingsManager.preferences.low as NSNumber) ?? ""
+                                        ) + ")"
                                 ).font(.caption2).foregroundColor(.secondary)
 
+                                Text(tir_low + " %").font(.system(size: 12)).foregroundColor(.loopRed)
+
+                                Text("Normal").font(.caption2).foregroundColor(.secondary)
+
+                                Text(tir_ + " %").font(.system(size: 12)).foregroundColor(.loopGreen)
+
                                 Text(
-                                    tirFormatter
-                                        .string(from: (state.statistics?.Statistics.Variance.CV.total ?? 0) as NSNumber) ??
-                                        ""
-                                ).font(.system(size: 12))
-                            } else {
-                                Text(
-                                    NSLocalizedString("SD (", comment: "SD") + state.settingsManager.settings.units.rawValue + ")"
+                                    NSLocalizedString("High (>", comment: " ") +
+                                        (targetFormatter.string(from: state.settingsManager.preferences.high as NSNumber) ?? "") +
+                                        ")"
                                 ).font(.caption2).foregroundColor(.secondary)
-                                if state.units == .mmolL {
+
+                                Text(tir_high + " %").font(.system(size: 12)).foregroundColor(.loopYellow)
+                            }
+                        }
+                        HStack {
+                            Group {
+                                Text("HbA1c").font(.caption2).foregroundColor(.secondary)
+                                Text(hba1c_).font(.system(size: 12))
+
+                                if !state.settingsManager.preferences.displaySD {
                                     Text(
-                                        targetFormatter
-                                            .string(from: (state.statistics?.Statistics.Variance.SD.total ?? 0) as NSNumber) ??
-                                            ""
-                                    ).font(.system(size: 12))
+                                        NSLocalizedString("CV", comment: "CV")
+                                    ).font(.caption2).foregroundColor(.secondary)
+
+                                    Text(cv_).font(.system(size: 12))
                                 } else {
                                     Text(
-                                        tirFormatter
-                                            .string(from: (state.statistics?.Statistics.Variance.SD.total ?? 0) as NSNumber) ??
-                                            ""
-                                    ).font(.system(size: 12))
+                                        NSLocalizedString("SD", comment: "SD")
+                                    ).font(.caption2).foregroundColor(.secondary)
+                                    Text(sd_).font(.system(size: 12))
                                 }
+
+                                Text(
+                                    NSLocalizedString("All ", comment: "") +
+                                        (
+                                            targetFormatter
+                                                .string(from: (state.statistics?.GlucoseStorage_Days ?? 0) as NSNumber) ?? ""
+                                        ) +
+                                        NSLocalizedString(" days", comment: "")
+                                ).font(.caption2).foregroundColor(.secondary)
+
+                                Text(hba1c_all).font(.system(size: 12))
                             }
                         }
                     }
-
-                    HStack {
-                        Group {
-                            Text("Loops").font(.caption2).foregroundColor(.secondary)
-                            Text(
-                                numberFormatter
-                                    .string(from: (state.statistics?.Statistics.LoopCycles.loops ?? 0) as NSNumber) ??
-                                    "0"
-                            ).font(.system(size: 12))
-
-                            Text("Average Interval").font(.caption2).foregroundColor(.secondary)
-                            Text(
-                                targetFormatter
-                                    .string(from: (state.statistics?.Statistics.LoopCycles.avg_interval ?? 0) as NSNumber) ??
-                                    "0"
-                            ).font(.system(size: 12))
-
-                            Text("Median Duration").font(.caption2).foregroundColor(.secondary)
-                            Text(
-                                numberFormatter
-                                    .string(from: (
-                                        state.statistics?.Statistics.LoopCycles
-                                            .median_duration ?? 0
-                                    ) as NSNumber) ??
-                                    "0"
-                            ).font(.system(size: 12))
+                        
+                    if state.settingsManager.preferences.displayLoops {
+                        HStack {
+                            Group {
+                                Text("Loops").font(.caption2)
+                                    .foregroundColor(.secondary)
+                                Text(tirFormatter.string(from: (state.statistics?.Statistics.LoopCycles.loops ?? 0) as NSNumber) ?? "")
+                                Text("Average Interval").font(.caption2)
+                                    .foregroundColor(.secondary)
+                                Text(targetFormatter.string(from: (state.statistics?.Statistics.LoopCycles.avg_interval ?? 0) as NSNumber) ?? "")
+                                Text("Median Duration").font(.caption2)
+                                    .foregroundColor(.secondary)
+                                Text(numberFormatter.string(from: (state.statistics?.Statistics.LoopCycles.median_duration ?? 0) as NSNumber) ?? "")
+                            }
                         }
                     }
                 }
-                .frame(maxWidth: .infinity, maxHeight: 100, alignment: .center)
+                .frame(maxWidth: .infinity, maxHeight: 120, alignment: .center)
             }
         }
 
         var legendPanel: some View {
-            HStack(alignment: .center) {
-                Group {
-                    Circle().fill(Color.loopGreen).frame(width: 8, height: 8)
-                    Text("BG")
-                        .font(.system(size: 12, weight: .bold)).foregroundColor(.loopGreen)
-                }
-                Group {
-                    Circle().fill(Color.insulin).frame(width: 8, height: 8)
-                        .padding(.leading, 8)
-                    Text("IOB")
-                        .font(.system(size: 12, weight: .bold)).foregroundColor(.insulin)
-                }
-                Group {
-                    Circle().fill(Color.zt).frame(width: 8, height: 8)
-                        .padding(.leading, 8)
-                    Text("ZT")
-                        .font(.system(size: 12, weight: .bold)).foregroundColor(.zt)
-                }
-                Group {
-                    Circle().fill(Color.loopYellow).frame(width: 8, height: 8)
-                        .padding(.leading, 8)
-                    Text("COB")
-                        .font(.system(size: 12, weight: .bold)).foregroundColor(.loopYellow)
-                }
-                Group {
-                    Circle().fill(Color.uam).frame(width: 8, height: 8)
-                        .padding(.leading, 8)
-                    Text("UAM")
-                        .font(.system(size: 12, weight: .bold)).foregroundColor(.uam)
-                }
+            ZStack {
+                HStack(alignment: .center) {
+                    Group {
+                        Circle().fill(Color.loopGreen).frame(width: 8, height: 8)
+                        Text("BG")
+                            .font(.system(size: 12, weight: .bold)).foregroundColor(.loopGreen)
+                    }
+                    Group {
+                        Circle().fill(Color.insulin).frame(width: 8, height: 8)
+                            .padding(.leading, 8)
+                        Text("IOB")
+                            .font(.system(size: 12, weight: .bold)).foregroundColor(.insulin)
+                    }
+                    Group {
+                        Circle().fill(Color.zt).frame(width: 8, height: 8)
+                            .padding(.leading, 8)
+                        Text("ZT")
+                            .font(.system(size: 12, weight: .bold)).foregroundColor(.zt)
+                    }
+                    Group {
+                        Circle().fill(Color.loopYellow).frame(width: 8, height: 8)
+                            .padding(.leading, 8)
+                        Text("COB")
+                            .font(.system(size: 12, weight: .bold)).foregroundColor(.loopYellow)
+                    }
+                    Group {
+                        Circle().fill(Color.uam).frame(width: 8, height: 8)
+                            .padding(.leading, 8)
+                        Text("UAM")
+                            .font(.system(size: 12, weight: .bold)).foregroundColor(.uam)
+                    }
 
-                if let eventualBG = state.eventualBG {
-                    Text(
-                        "⇢ " + numberFormatter.string(
-                            from: (state.units == .mmolL ? eventualBG.asMmolL : Decimal(eventualBG)) as NSNumber
-                        )!
-                    )
-                    .font(.system(size: 12, weight: .bold)).foregroundColor(.secondary)
+                    if let eventualBG = state.eventualBG {
+                        Text(
+                            "⇢ " + numberFormatter.string(
+                                from: (state.units == .mmolL ? eventualBG.asMmolL : Decimal(eventualBG)) as NSNumber
+                            )!
+                        )
+                        .font(.system(size: 12, weight: .bold)).foregroundColor(.secondary)
+                    }
                 }
+                .frame(maxWidth: .infinity)
             }
-            .frame(maxWidth: .infinity, maxHeight: 30)
         }
 
         var mainChart: some View {
@@ -464,7 +454,7 @@ extension Home {
                     units: $state.units
                 )
             }
-            .padding(.bottom)
+            // .padding(.bottom)
             .modal(for: .dataTable, from: self)
         }
 
@@ -563,11 +553,11 @@ extension Home {
                     }
                     .gesture(
                         DragGesture(minimumDistance: 10, coordinateSpace: .local)
-                            .onEnded { value in
-                                if value.translation.height < 0 {
-                                    isStatusPopupPresented = false
-                                }
+                        .onEnded { value in
+                            if value.translation.height < 0 {
+                                isStatusPopupPresented = false
                             }
+                        }
                     )
             }
         }
@@ -578,7 +568,22 @@ extension Home {
                     .padding(.bottom, 4)
                 if let suggestion = state.suggestion {
                     TagCloudView(tags: suggestion.reasonParts).animation(.none, value: false)
+                    /*
+                     Text(
+                         "Total insulin past 24 hours: " + numberFormatter
+                             .string(from: (state.statistics?.Statistics.Insulin.TDD ?? 0) as NSNumber) +
+                             " U ,bolus insulin: " + numberFormatter
+                             .string(from: (state.statistics?.Statistics.Insulin.bolus ?? 0) as NSNumber) +
+                             " U, temp. basal insulin: " + numberFormatter
+                             .string(from: (state.statistics?.Statistics.Insulin.temp_basal ?? 0) as NSNumber) +
+                             " U, non-looping scheduled basal insulin: " + numberFormatter
+                             .string(from: (state.statistics?.Statistics.Insulin.scheduled_basal ?? 0) as NSNumber) + " U."
+                     )
+                     .font(.caption).foregroundColor(.white)
+                      */
+
                     Text(suggestion.reasonConclusion.capitalizingFirstLetter()).font(.caption).foregroundColor(.white)
+
                 } else {
                     Text("No sugestion found").font(.body).foregroundColor(.white)
                 }
@@ -601,11 +606,19 @@ extension Home {
                  72 ... 144:
                 return .loopGreen
             case 0 ... 4,
-                 20 ... 71:
+                20 ... 71:
                 return .loopRed
             default:
                 return .loopYellow
             }
+        }
+          
+        private func getString(_ stat: Decimal?,_ test: Bool) -> String {
+            var string: String = targetFormatter.string(from: (stat ?? 0) as NSNumber) ?? ""
+            if state.units != .mmolL, test == true {
+                string = tirFormatter.string(from: (stat ?? 0) as NSNumber) ?? ""
+            }
+            return string
         }
     }
 }
