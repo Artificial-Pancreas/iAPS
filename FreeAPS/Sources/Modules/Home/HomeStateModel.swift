@@ -418,6 +418,7 @@ extension Home.StateModel:
     func enactedSuggestionDidUpdate(_ suggestion: Suggestion) {
         enactedSuggestion = suggestion
         setStatusTitle()
+        setupStatistics()
     }
 
     func pumpBatteryDidChange(_: Battery) {

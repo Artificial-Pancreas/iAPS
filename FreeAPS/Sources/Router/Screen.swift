@@ -36,7 +36,19 @@ extension Screen {
         case .loading:
             ProgressView()
         case .home:
-            Home.RootView(resolver: resolver, selectedState: .day)
+            Home.RootView(
+                resolver: resolver,
+                selectedState: .day,
+                hba1c_all: "",
+                average_: "",
+                median_: "",
+                tir_low: "",
+                tir_high: "",
+                tir_: "",
+                hba1c_: "",
+                sd_: "",
+                cv_: ""
+            )
         case .settings:
             Settings.RootView(resolver: resolver)
         case let .configEditor(file):
