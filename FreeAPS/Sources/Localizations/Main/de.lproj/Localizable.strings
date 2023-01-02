@@ -922,10 +922,10 @@ Enact a temp Basal or a temp target */
 "Bluetooth State restored (APS restarted?). Found %d peripherals, and connected to %@ with identifier %@" = "Bluetooth-Status wiederhergestellt (APS neu gestartet?). %d Peripheriegeräte gefunden und mit %@ mit der Kennung %@ verbunden";
 
 /* Shared app group xDrip4iOS */
-"Using shared app group with external CGM app xDrip4iOS" = "Using shared app group with external CGM app xDrip4iOS";
+"Using shared app group with external CGM app xDrip4iOS" = "Benutze gemeinsame App-Groups (Xcode) mit externer CGM App xDrip4iOS";
 
 /* Shared app group GlucoseDirect */
-"Using shared app group with external CGM app GlucoseDirect" = "Using shared app group with external CGM app GlucoseDirect";
+"Using shared app group with external CGM app GlucoseDirect" = "Benutze gemeinsame App-Groups (Xcode) mit externer CGM App GlucoseDirect";
 
 /* Dexcom G6 app */
 "Dexcom G6 app" = "Dexcom G6 App";
@@ -951,10 +951,10 @@ Enact a temp Basal or a temp target */
 "Developer" = "Entwickler";
 
 /* Debug option view NS Upload Profile */
-"NS Upload Profile" = "NS Upload Profile";
+"NS Upload Profile" = "NS Profil zum Hochladen";
 
 /* Debug option view NS Uploaded Profile */
-"NS Uploaded Profile" = "NS Uploaded Profile";
+"NS Uploaded Profile" = "NS Hochgeladenes Profil";
 
 /* Debug option view Autosense */
 "Autosense" = "Autosense";
@@ -972,7 +972,7 @@ Enact a temp Basal or a temp target */
 "Meal" = "Essen";
 
 /* Debug option view Pump profile */
-"Pump profile" = "Pump profile";
+"Pump profile" = "Pumpen Profil";
 
 /* Debug option view Profile */
 "Profile" = "Mein Profil";
@@ -996,7 +996,7 @@ Enact a temp Basal or a temp target */
 "Loop Cycles" = "Loop-Zyklen";
 
 /* Debug option view Glucose Data used for statistics */
-"Glucose Data used for statistics" = "Glucose Data used for statistics";
+"Glucose Data used for statistics" = "Benutzte CGM-Daten für die Statistik";
 
 /* --------------- HealthKit intergration --------------------*/
 /* */
@@ -1233,10 +1233,10 @@ infoText: Description for High Glucose Limit */
 "Median Duration" = "Mittlere Berechnungsdauer";
 
 /* "Display SD */
-"Display SD instead of CV" = "Display SD instead of CV";
+"Display SD instead of CV" = "Zeige die Standardabweichung (SD) statt des Variationskoeffizienten (CV)";
 
 /* Description for display SD */
-"Display Standard Deviation (SD) instead of Coefficient of Variation (CV) in statPanel" = "Display Standard Deviation (SD) instead of Coefficient of Variation (CV) in statPanel";
+"Display Standard Deviation (SD) instead of Coefficient of Variation (CV) in statPanel" = "Zeige die Standardabweichung (SD) statt des Variationskoeffizienten (CV) in den Statistiken";
 
 /* How often to update the statistics */
 "Update every number of minutes:" = "Update der Statistik (in Minuten):";
