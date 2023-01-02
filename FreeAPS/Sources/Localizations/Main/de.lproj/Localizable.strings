@@ -975,10 +975,10 @@ Enact a temp Basal or a temp target */
 "Pump profile" = "Pump profile";
 
 /* Debug option view Profile */
-"Profile" = "Profile";
+"Profile" = "Mein Profil";
 
 /* Debug option view Enacted */
-"Enacted" = "Enacted";
+"Enacted" = "letzte Berechnung";
 
 /* Debug option view Announcements (from NS) */
 "Announcements" = "Announcements";
@@ -990,10 +990,10 @@ Enact a temp Basal or a temp target */
 "Autotune" = "Autotune";
 
 /* Debug option view Target presets */
-"Target presets" = "Target presets";
+"Target presets" = "Temporäre Ziele";
 
 /* Debug option view */
-"Loop Cycles" = "Loop Cycles";
+"Loop Cycles" = "Loop-Zyklen";
 
 /* Debug option view Glucose Data used for statistics */
 "Glucose Data used for statistics" = "Glucose Data used for statistics";
@@ -1179,10 +1179,10 @@ Enact a temp Basal or a temp target */
 /* Option in preferences */
 
 
-"Display Statistics" = "Display Statistics";
+"Display Statistics" = "Statistiken anzeigen";
 
 /* infoText: Description for Display Statistics */
-"Displays Statistics under the chart view" = "Displays Statistics under the chart view";
+"Displays Statistics under the chart view" = "Zeigt Statistiken unter der Diagrammansicht an";
 
 /* Low Glucose Limit option in preferences */
 "Low Glucose Limit" = "Niedrige Blutzuckergrenze";
@@ -1242,7 +1242,7 @@ infoText: Description for High Glucose Limit */
 "Update every number of minutes:" = "Update der Statistik (in Minuten):";
 
 /* Description for update interval for statistics */
-"Default is 30 minutes. How often to update and save the statistics.json and to upload last array, when enabled, to Nightscout. A lower interval than for glucose updates (5 min) is pointless." = "Default is 30 minutes. How often to update and save the statistics.json and to upload last array, when enabled, to Nightscout. A lower interval than for glucose updates (5 min) is pointless.";
+"Default is 30 minutes. How often to update and save the statistics.json and to upload last array, when enabled, to Nightscout. A lower interval than for glucose updates (5 min) is pointless." = "Standardintervall ist 30 Minuten. Legt fest wie oft die statistics.json aktualisiert und gespeichert wird. Gleichzeitig werden die Daten zu Nightscout hochladen, wenn aktiviert. Ein geringerer Intervall, wie die Werte vom CGMS (5 Minuten) ist sinnlos.";
 
 /* --------------------------------------
 
