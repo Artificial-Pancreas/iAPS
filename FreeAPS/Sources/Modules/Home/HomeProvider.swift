@@ -19,7 +19,7 @@ extension Home {
             if stat?.count ?? 0 != 0 {
                 return stat![0]
             }
-            return storage.retrieve(OpenAPS.Monitor.statistics, as: Statistics.self)
+            return nil
         }
 
         var enactedSuggestion: Suggestion? {

@@ -1253,6 +1253,33 @@ Enact a temp Basal or a temp target */
 /* Description for update interval for statistics */
 "Default is 30 minutes. How often to update and save the statistics.json and to upload last array, when enabled, to Nightscout. A lower interval than for glucose updates (5 min) is pointless." = "Default is 30 minutes. How often to update and save the statistics.json and to upload last array, when enabled, to Nightscout. A lower interval than for glucose updates (5 min) is pointless.";
 
+/* Duration displayed in statPanel */
+"Past 24 Hours " = "Past 24 Hours ";
+
+/* Duration displayed in statPanel */
+"Past Week " = "Past Week ";
+
+/* Duration displayed in statPanel */
+"Past Month " = "Past Month ";
+
+/* Duration displayed in statPanel */
+"Past 90 Days " = "Past 90 Days ";
+
+/* Duration displayed in statPanel */
+"All Past Days of Data " = "All Past Days of Data ";
+
+/* "Display Loop statistics in statPanel */
+"Display Loop Cycle statistics" = "Display Loop Cycle statistics";
+
+/* Description for Display Loop statistics */
+"Displays Loop statistics in the statPanel in Home View" = "Displays Loop statistics in the statPanel in Home View";
+
+/* Display % */
+"Override HbA1c unit" = "Override HbA1c unit";
+
+/* Description for Override HbA1c unit */
+"Display '%' as HbA1c unit, even when using mmol/l for glucose. StatPanel will be updated with new unit with next statistics.json update" = "Display '%' as HbA1c unit, even when using mmol/l for glucose. StatPanel will be updated with new unit with next statistics.json update";
+
  /* --------------------------------------
 
   Infotexts from openaps.docs and androidaps.docs
