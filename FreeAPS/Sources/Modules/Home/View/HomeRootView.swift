@@ -9,6 +9,7 @@ extension Home {
 
         @StateObject var state = StateModel()
         @State var isStatusPopupPresented = false
+        @State var selectedState: durationState
 
         private var numberFormatter: NumberFormatter {
             let formatter = NumberFormatter()
@@ -226,217 +227,296 @@ extension Home {
 
         @ViewBuilder private func statPanel() -> some View {
             if state.displayStatistics {
-                VStack(alignment: .center, spacing: 6) {
+                VStack(alignment: .center, spacing: 5) {
                     HStack {
                         Group {
-                            Text("Updated").font(.caption2)
-                                .foregroundColor(.secondary)
-                            Text(
-                                dateFormatter.string(from: state.statistics?.created_at ?? Date())
-                            ).font(.system(size: 12))
+                            durationButton(states: durationState.allCases, selectedState: $selectedState)
 
-                            Text(
-                                NSLocalizedString("Average", comment: "") + " " + state.settingsManager.settings.units.rawValue
-                            ).font(.caption2).foregroundColor(.secondary)
-                            if state.units == .mmolL {
-                                Text(
-                                    targetFormatter
-                                        .string(from: (state.statistics?.Statistics.Glucose.Average.day ?? 0) as NSNumber) ??
-                                        ""
-                                ).font(.system(size: 12))
-                            } else {
-                                Text(
-                                    tirFormatter
-                                        .string(from: (state.statistics?.Statistics.Glucose.Average.day ?? 0) as NSNumber) ??
-                                        ""
-                                ).font(.system(size: 12))
-                            }
-                            Text("Median")
-                                .font(.caption2).foregroundColor(.secondary)
-                            if state.units == .mmolL {
-                                Text(
-                                    targetFormatter
-                                        .string(from: (state.statistics?.Statistics.Glucose.Median.day ?? 0) as NSNumber) ??
-                                        ""
-                                ).font(.system(size: 12))
-                            } else {
-                                Text(
-                                    tirFormatter
-                                        .string(from: (state.statistics?.Statistics.Glucose.Median.day ?? 0) as NSNumber) ??
-                                        ""
-                                ).font(.system(size: 12))
-                            }
+                            Text("Updated").font(.caption2).foregroundColor(.secondary)
+                            Text(dateFormatter.string(from: state.statistics?.created_at ?? Date())).font(.system(size: 12))
                         }
                     }
 
-                    HStack {
-                        Group {
-                            Text(
-                                NSLocalizedString("Low (<", comment: " ") +
-                                    (targetFormatter.string(from: state.settingsManager.preferences.low as NSNumber) ?? "") + ")"
-                            ).font(.caption2).foregroundColor(.secondary)
-                            Text(
-                                (
-                                    tirFormatter
-                                        .string(from: (
-                                            state.statistics?.Statistics.Distribution.Hypos.day ?? 0
-                                        ) as NSNumber) ??
-                                        "0"
-                                ) + " %"
-                            ).font(.system(size: 12)).foregroundColor(.loopRed)
-                            Text("Normal (24h)").font(.caption2).foregroundColor(.secondary)
-                            Text(
-                                (
-                                    tirFormatter
-                                        .string(from: (state.statistics?.Statistics.Distribution.TIR.day ?? 0) as NSNumber) ??
-                                        "0"
-                                ) + " %"
-                            ).font(.system(size: 12)).foregroundColor(.loopGreen)
-                            Text(
-                                NSLocalizedString("High (>", comment: " ") +
-                                    (targetFormatter.string(from: state.settingsManager.preferences.high as NSNumber) ?? "") + ")"
-                            ).font(.caption2).foregroundColor(.secondary)
-                            Text(
-                                (
-                                    tirFormatter
-                                        .string(from: (
-                                            state.statistics?.Statistics.Distribution.Hypers.day ?? 0
-                                        ) as NSNumber) ??
-                                        "0"
-                                ) + " %"
-                            ).font(.system(size: 12)).foregroundColor(.loopYellow)
-                        }
-                    }
+                    switch selectedState {
+                    case .day:
 
-                    HStack {
-                        Group {
-                            Text("HbA1c (24h)").font(.caption2).foregroundColor(.secondary)
-                            Text(
-                                targetFormatter
-                                    .string(from: (state.statistics?.Statistics.HbA1c.day ?? 0) as NSNumber) ??
-                                    ""
-                            ).font(.system(size: 12))
+                        let hba1c_all = numberFormatter
+                            .string(from: (state.statistics?.Statistics.HbA1c.total ?? 0) as NSNumber) ?? ""
+                        let average_ = numberFormatter
+                            .string(from: (state.statistics?.Statistics.Glucose.Average.day ?? 0) as NSNumber) ?? ""
+                        let median_ = numberFormatter
+                            .string(from: (state.statistics?.Statistics.Glucose.Median.day ?? 0) as NSNumber) ?? ""
+                        let tir_low = numberFormatter
+                            .string(from: (state.statistics?.Statistics.Distribution.Hypos.day ?? 0) as NSNumber) ?? ""
+                        let tir_high = numberFormatter
+                            .string(from: (state.statistics?.Statistics.Distribution.Hypers.day ?? 0) as NSNumber) ?? ""
+                        let tir_ = numberFormatter
+                            .string(from: (state.statistics?.Statistics.Distribution.TIR.day ?? 0) as NSNumber) ?? ""
+                        let hba1c_ = numberFormatter
+                            .string(from: (state.statistics?.Statistics.HbA1c.day ?? 0) as NSNumber) ?? ""
+                        let sd_ = numberFormatter
+                            .string(from: (state.statistics?.Statistics.Variance.SD.day ?? 0) as NSNumber) ?? ""
+                        let cv_ = numberFormatter
+                            .string(from: (state.statistics?.Statistics.Variance.CV.day ?? 0) as NSNumber) ?? ""
 
-                            Text(
-                                NSLocalizedString("All ", comment: "") +
-                                    (
-                                        targetFormatter
-                                            .string(from: (state.statistics?.GlucoseStorage_Days ?? 0) as NSNumber) ?? ""
-                                    ) +
-                                    NSLocalizedString(" days", comment: "")
-                            ).font(.caption2).foregroundColor(.secondary)
+                        averageTIRhca1c(hba1c_all, average_, median_, tir_low, tir_high, tir_, hba1c_, sd_, cv_)
 
-                            Text(
-                                targetFormatter
-                                    .string(from: (state.statistics?.Statistics.HbA1c.total ?? 0) as NSNumber) ??
-                                    ""
-                            ).font(.system(size: 12))
+                    case .week:
+                        let hba1c_all = numberFormatter
+                            .string(from: (state.statistics?.Statistics.HbA1c.total ?? 0) as NSNumber) ?? ""
+                        let average_ = numberFormatter
+                            .string(from: (state.statistics?.Statistics.Glucose.Average.week ?? 0) as NSNumber) ?? ""
+                        let median_ = numberFormatter
+                            .string(from: (state.statistics?.Statistics.Glucose.Median.week ?? 0) as NSNumber) ?? ""
+                        let tir_low = numberFormatter
+                            .string(from: (state.statistics?.Statistics.Distribution.Hypos.week ?? 0) as NSNumber) ?? ""
+                        let tir_high = numberFormatter
+                            .string(from: (state.statistics?.Statistics.Distribution.Hypers.week ?? 0) as NSNumber) ?? ""
+                        let tir_ = numberFormatter
+                            .string(from: (state.statistics?.Statistics.Distribution.TIR.week ?? 0) as NSNumber) ?? ""
+                        let hba1c_ = numberFormatter
+                            .string(from: (state.statistics?.Statistics.HbA1c.week ?? 0) as NSNumber) ?? ""
+                        let sd_ = numberFormatter
+                            .string(from: (state.statistics?.Statistics.Variance.SD.week ?? 0) as NSNumber) ?? ""
+                        let cv_ = numberFormatter
+                            .string(from: (state.statistics?.Statistics.Variance.CV.week ?? 0) as NSNumber) ?? ""
 
-                            if !state.settingsManager.preferences.displaySD {
-                                Text(
-                                    NSLocalizedString("CV (%)", comment: "CV")
-                                ).font(.caption2).foregroundColor(.secondary)
+                        averageTIRhca1c(hba1c_all, average_, median_, tir_low, tir_high, tir_, hba1c_, sd_, cv_)
 
-                                Text(
-                                    tirFormatter
-                                        .string(from: (state.statistics?.Statistics.Variance.CV.total ?? 0) as NSNumber) ??
-                                        ""
-                                ).font(.system(size: 12))
-                            } else {
-                                Text(
-                                    NSLocalizedString("SD (", comment: "SD") + state.settingsManager.settings.units.rawValue + ")"
-                                ).font(.caption2).foregroundColor(.secondary)
-                                if state.units == .mmolL {
-                                    Text(
-                                        targetFormatter
-                                            .string(from: (state.statistics?.Statistics.Variance.SD.total ?? 0) as NSNumber) ??
-                                            ""
-                                    ).font(.system(size: 12))
-                                } else {
-                                    Text(
-                                        tirFormatter
-                                            .string(from: (state.statistics?.Statistics.Variance.SD.total ?? 0) as NSNumber) ??
-                                            ""
-                                    ).font(.system(size: 12))
-                                }
-                            }
-                        }
-                    }
+                    case .month:
+                        let hba1c_all = numberFormatter
+                            .string(from: (state.statistics?.Statistics.HbA1c.total ?? 0) as NSNumber) ?? ""
+                        let average_ = numberFormatter
+                            .string(from: (state.statistics?.Statistics.Glucose.Average.month ?? 0) as NSNumber) ?? ""
+                        let median_ = numberFormatter
+                            .string(from: (state.statistics?.Statistics.Glucose.Median.month ?? 0) as NSNumber) ?? ""
+                        let tir_low = numberFormatter
+                            .string(from: (state.statistics?.Statistics.Distribution.Hypos.month ?? 0) as NSNumber) ?? ""
+                        let tir_high = numberFormatter
+                            .string(from: (state.statistics?.Statistics.Distribution.Hypers.month ?? 0) as NSNumber) ??
+                            ""
+                        let tir_ = numberFormatter
+                            .string(from: (state.statistics?.Statistics.Distribution.TIR.month ?? 0) as NSNumber) ?? ""
+                        let hba1c_ = numberFormatter
+                            .string(from: (state.statistics?.Statistics.HbA1c.month ?? 0) as NSNumber) ?? ""
+                        let sd_ = numberFormatter
+                            .string(from: (state.statistics?.Statistics.Variance.SD.month ?? 0) as NSNumber) ?? ""
+                        let cv_ = numberFormatter
+                            .string(from: (state.statistics?.Statistics.Variance.CV.month ?? 0) as NSNumber) ?? ""
 
-                    HStack {
-                        Group {
-                            Text("Loops").font(.caption2).foregroundColor(.secondary)
-                            Text(
-                                numberFormatter
-                                    .string(from: (state.statistics?.Statistics.LoopCycles.loops ?? 0) as NSNumber) ??
-                                    "0"
-                            ).font(.system(size: 12))
+                        averageTIRhca1c(hba1c_all, average_, median_, tir_low, tir_high, tir_, hba1c_, sd_, cv_)
 
-                            Text("Average Interval").font(.caption2).foregroundColor(.secondary)
-                            Text(
-                                targetFormatter
-                                    .string(from: (state.statistics?.Statistics.LoopCycles.avg_interval ?? 0) as NSNumber) ??
-                                    "0"
-                            ).font(.system(size: 12))
+                    case .ninetyDays:
+                        let hba1c_all = numberFormatter
+                            .string(from: (state.statistics?.Statistics.HbA1c.total ?? 0) as NSNumber) ?? ""
+                        let average_ = numberFormatter
+                            .string(from: (state.statistics?.Statistics.Glucose.Average.ninetyDays ?? 0) as NSNumber) ??
+                            ""
+                        let median_ = numberFormatter
+                            .string(from: (state.statistics?.Statistics.Glucose.Median.ninetyDays ?? 0) as NSNumber) ??
+                            ""
+                        let tir_low = numberFormatter
+                            .string(
+                                from: (state.statistics?.Statistics.Distribution.Hypos.ninetyDays ?? 0) as NSNumber
+                            ) ??
+                            ""
+                        let tir_high = numberFormatter
+                            .string(
+                                from: (state.statistics?.Statistics.Distribution.Hypers.ninetyDays ?? 0) as NSNumber
+                            ) ??
+                            ""
+                        let tir_ = numberFormatter
+                            .string(from: (state.statistics?.Statistics.Distribution.TIR.ninetyDays ?? 0) as NSNumber) ??
+                            ""
+                        let hba1c_ = numberFormatter
+                            .string(from: (state.statistics?.Statistics.HbA1c.ninetyDays ?? 0) as NSNumber) ?? ""
+                        let sd_ = numberFormatter
+                            .string(from: (state.statistics?.Statistics.Variance.SD.ninetyDays ?? 0) as NSNumber) ?? ""
+                        let cv_ = numberFormatter
+                            .string(from: (state.statistics?.Statistics.Variance.CV.ninetyDays ?? 0) as NSNumber) ?? ""
 
-                            Text("Median Duration").font(.caption2).foregroundColor(.secondary)
-                            Text(
-                                numberFormatter
-                                    .string(from: (
-                                        state.statistics?.Statistics.LoopCycles
-                                            .median_duration ?? 0
-                                    ) as NSNumber) ??
-                                    "0"
-                            ).font(.system(size: 12))
-                        }
+                        averageTIRhca1c(hba1c_all, average_, median_, tir_low, tir_high, tir_, hba1c_, sd_, cv_)
+
+                    case .total:
+                        let hba1c_all = numberFormatter
+                            .string(from: (state.statistics?.Statistics.HbA1c.total ?? 0) as NSNumber) ?? ""
+                        let average_ = numberFormatter
+                            .string(from: (state.statistics?.Statistics.Glucose.Average.total ?? 0) as NSNumber) ?? ""
+                        let median_ = numberFormatter
+                            .string(from: (state.statistics?.Statistics.Glucose.Median.total ?? 0) as NSNumber) ?? ""
+                        let tir_low = numberFormatter
+                            .string(from: (state.statistics?.Statistics.Distribution.Hypos.total ?? 0) as NSNumber) ?? ""
+                        let tir_high = numberFormatter
+                            .string(from: (state.statistics?.Statistics.Distribution.Hypers.total ?? 0) as NSNumber) ??
+                            ""
+                        let tir_ = numberFormatter
+                            .string(from: (state.statistics?.Statistics.Distribution.TIR.total ?? 0) as NSNumber) ?? ""
+                        let hba1c_ = numberFormatter
+                            .string(from: (state.statistics?.Statistics.HbA1c.total ?? 0) as NSNumber) ?? ""
+                        let sd_ = numberFormatter
+                            .string(from: (state.statistics?.Statistics.Variance.SD.total ?? 0) as NSNumber) ?? ""
+                        let cv_ = numberFormatter
+                            .string(from: (state.statistics?.Statistics.Variance.CV.total ?? 0) as NSNumber) ?? ""
+
+                        averageTIRhca1c(hba1c_all, average_, median_, tir_low, tir_high, tir_, hba1c_, sd_, cv_)
                     }
                 }
-                .frame(maxWidth: .infinity, maxHeight: 100, alignment: .center)
+                .frame(maxWidth: .infinity, maxHeight: 120, alignment: .center)
+            }
+        }
+
+        @ViewBuilder private func averageTIRhca1c(
+            _ hba1c_all: String,
+            _ average_: String,
+            _ median_: String,
+            _ tir_low: String,
+            _ tir_high: String,
+            _ tir_: String,
+            _ hba1c_: String,
+            _ sd_: String,
+            _ cv_: String
+        ) -> some View {
+            HStack {
+                Group {
+                    Text(NSLocalizedString("Average", comment: "")).font(.caption2).foregroundColor(.secondary)
+
+                    Text(average_).font(.system(size: 12))
+
+                    Text("Median")
+                        .font(.caption2).foregroundColor(.secondary)
+
+                    Text(median_).font(.system(size: 12))
+                }
+            }
+            HStack {
+                Group {
+                    Text(
+                        NSLocalizedString("Low (<", comment: " ") +
+                            (
+                                targetFormatter
+                                    .string(from: state.settingsManager.preferences.low as NSNumber) ?? ""
+                            ) + ")"
+                    ).font(.caption2)
+                        .foregroundColor(.secondary)
+
+                    Text(tir_low + " %").font(.system(size: 12)).foregroundColor(.loopRed)
+
+                    Text("Normal").font(.caption2).foregroundColor(.secondary)
+
+                    Text(tir_ + " %").font(.system(size: 12)).foregroundColor(.loopGreen)
+
+                    Text(
+                        NSLocalizedString("High (>", comment: " ") +
+                            (
+                                targetFormatter
+                                    .string(from: state.settingsManager.preferences.high as NSNumber) ?? ""
+                            ) + ")"
+                    )
+                    .font(.caption2).foregroundColor(.secondary)
+
+                    Text(tir_high + " %").font(.system(size: 12)).foregroundColor(.loopYellow)
+                }
+            }
+            HStack {
+                Group {
+                    Text("HbA1c").font(.caption2).foregroundColor(.secondary)
+                    Text(hba1c_).font(.system(size: 12))
+
+                    if !state.settingsManager.preferences.displaySD {
+                        Text(
+                            NSLocalizedString("CV", comment: "CV")
+                        ).font(.caption2).foregroundColor(.secondary)
+
+                        Text(cv_).font(.system(size: 12))
+                    } else {
+                        Text(
+                            NSLocalizedString("SD", comment: "SD")
+                        ).font(.caption2).foregroundColor(.secondary)
+                        Text(sd_).font(.system(size: 12))
+                    }
+
+                    Text(
+                        NSLocalizedString("All ", comment: "") +
+                            // getString(state.statistics?.GlucoseStorage_Days, false) +
+                            NSLocalizedString(" days", comment: "")
+                    ).font(.caption2).foregroundColor(.secondary)
+
+                    Text(hba1c_all).font(.system(size: 12))
+                }
+            }
+
+            if state.settingsManager.preferences.displayLoops {
+                HStack {
+                    Group {
+                        Text("Loops").font(.caption2).foregroundColor(.secondary)
+                        Text(
+                            tirFormatter
+                                .string(from: (state.statistics?.Statistics.LoopCycles.loops ?? 0) as NSNumber) ?? ""
+                        ).font(.system(size: 12))
+                        Text("Average Interval").font(.caption2)
+                            .foregroundColor(.secondary)
+                        Text(
+                            targetFormatter
+                                .string(from: (state.statistics?.Statistics.LoopCycles.avg_interval ?? 0) as NSNumber) ??
+                                ""
+                        ).font(.system(size: 12))
+                        Text("Median Duration").font(.caption2)
+                            .foregroundColor(.secondary)
+                        Text(
+                            numberFormatter
+                                .string(
+                                    from: (state.statistics?.Statistics.LoopCycles.median_duration ?? 0) as NSNumber
+                                ) ?? ""
+                        ).font(.system(size: 12))
+                    }
+                }
             }
         }
 
         var legendPanel: some View {
-            HStack(alignment: .center) {
-                Group {
-                    Circle().fill(Color.loopGreen).frame(width: 8, height: 8)
-                    Text("BG")
-                        .font(.system(size: 12, weight: .bold)).foregroundColor(.loopGreen)
-                }
-                Group {
-                    Circle().fill(Color.insulin).frame(width: 8, height: 8)
-                        .padding(.leading, 8)
-                    Text("IOB")
-                        .font(.system(size: 12, weight: .bold)).foregroundColor(.insulin)
-                }
-                Group {
-                    Circle().fill(Color.zt).frame(width: 8, height: 8)
-                        .padding(.leading, 8)
-                    Text("ZT")
-                        .font(.system(size: 12, weight: .bold)).foregroundColor(.zt)
-                }
-                Group {
-                    Circle().fill(Color.loopYellow).frame(width: 8, height: 8)
-                        .padding(.leading, 8)
-                    Text("COB")
-                        .font(.system(size: 12, weight: .bold)).foregroundColor(.loopYellow)
-                }
-                Group {
-                    Circle().fill(Color.uam).frame(width: 8, height: 8)
-                        .padding(.leading, 8)
-                    Text("UAM")
-                        .font(.system(size: 12, weight: .bold)).foregroundColor(.uam)
-                }
+            ZStack {
+                HStack(alignment: .center) {
+                    Group {
+                        Circle().fill(Color.loopGreen).frame(width: 8, height: 8)
+                        Text("BG")
+                            .font(.system(size: 12, weight: .bold)).foregroundColor(.loopGreen)
+                    }
+                    Group {
+                        Circle().fill(Color.insulin).frame(width: 8, height: 8)
+                            .padding(.leading, 8)
+                        Text("IOB")
+                            .font(.system(size: 12, weight: .bold)).foregroundColor(.insulin)
+                    }
+                    Group {
+                        Circle().fill(Color.zt).frame(width: 8, height: 8)
+                            .padding(.leading, 8)
+                        Text("ZT")
+                            .font(.system(size: 12, weight: .bold)).foregroundColor(.zt)
+                    }
+                    Group {
+                        Circle().fill(Color.loopYellow).frame(width: 8, height: 8)
+                            .padding(.leading, 8)
+                        Text("COB")
+                            .font(.system(size: 12, weight: .bold)).foregroundColor(.loopYellow)
+                    }
+                    Group {
+                        Circle().fill(Color.uam).frame(width: 8, height: 8)
+                            .padding(.leading, 8)
+                        Text("UAM")
+                            .font(.system(size: 12, weight: .bold)).foregroundColor(.uam)
+                    }
 
-                if let eventualBG = state.eventualBG {
-                    Text(
-                        "⇢ " + numberFormatter.string(
-                            from: (state.units == .mmolL ? eventualBG.asMmolL : Decimal(eventualBG)) as NSNumber
-                        )!
-                    )
-                    .font(.system(size: 12, weight: .bold)).foregroundColor(.secondary)
+                    if let eventualBG = state.eventualBG {
+                        Text(
+                            "⇢ " + numberFormatter.string(
+                                from: (state.units == .mmolL ? eventualBG.asMmolL : Decimal(eventualBG)) as NSNumber
+                            )!
+                        )
+                        .font(.system(size: 12, weight: .bold)).foregroundColor(.secondary)
+                    }
                 }
+                .frame(maxWidth: .infinity)
             }
-            .frame(maxWidth: .infinity, maxHeight: 30)
         }
 
         var mainChart: some View {
@@ -464,7 +544,7 @@ extension Home {
                     units: $state.units
                 )
             }
-            .padding(.bottom)
+            // .padding(.bottom)
             .modal(for: .dataTable, from: self)
         }
 
@@ -578,7 +658,9 @@ extension Home {
                     .padding(.bottom, 4)
                 if let suggestion = state.suggestion {
                     TagCloudView(tags: suggestion.reasonParts).animation(.none, value: false)
+
                     Text(suggestion.reasonConclusion.capitalizingFirstLetter()).font(.caption).foregroundColor(.white)
+
                 } else {
                     Text("No sugestion found").font(.body).foregroundColor(.white)
                 }

@@ -76,6 +76,30 @@ extension PreferencesEditor {
                         comment: "Description for display SD"
                     ),
                     settable: self
+                ),
+                Field(
+                    displayName: NSLocalizedString(
+                        "Display Loop Cycle statistics",
+                        comment: "Display Display Loop Cycle statistics in statPanel"
+                    ),
+                    type: .boolean(keypath: \.displayLoops),
+                    infoText: NSLocalizedString(
+                        "Displays Loop statistics in the statPanel in Home View",
+                        comment: "Description for Display Loop statistics"
+                    ),
+                    settable: self
+                ),
+                Field(
+                    displayName: NSLocalizedString(
+                        "Override HbA1c unit",
+                        comment: "Display %"
+                    ),
+                    type: .boolean(keypath: \.overrideHbA1cUnit),
+                    infoText: NSLocalizedString(
+                        "Display '%' as HbA1c unit, even when using mmol/l for glucose. The unit in statPanel will be updateded with next statistics.json update",
+                        comment: "Description for Override HbA1c unit"
+                    ),
+                    settable: self
                 )
             ]
 

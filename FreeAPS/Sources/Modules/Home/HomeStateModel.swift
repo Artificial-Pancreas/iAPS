@@ -49,6 +49,7 @@ extension Home {
         @Published var low: Decimal = 4
         @Published var high: Decimal = 10
         @Published var displaySD = false
+        @Published var displayLoops = false
         @Published var pumpDisplayState: PumpDisplayState?
         @Published var alarm: GlucoseAlarm?
         @Published var animatedBackground = false
@@ -73,6 +74,7 @@ extension Home {
             low = settingsManager.preferences.low
             high = settingsManager.preferences.high
             displaySD = settingsManager.preferences.displaySD
+            displayLoops = settingsManager.preferences.displayLoops
             enactedSuggestion = provider.enactedSuggestion
             units = settingsManager.settings.units
             allowManualTemp = !settingsManager.settings.closedLoop
@@ -383,6 +385,7 @@ extension Home.StateModel:
         low = settingsManager.preferences.low
         high = settingsManager.preferences.high
         displaySD = settingsManager.preferences.displaySD
+        displayLoops = settingsManager.preferences.displayLoops
         units = settingsManager.settings.units
         animatedBackground = settingsManager.settings.animatedBackground
         manualTempBasal = apsManager.isManualTempBasal
@@ -415,6 +418,7 @@ extension Home.StateModel:
     func enactedSuggestionDidUpdate(_ suggestion: Suggestion) {
         enactedSuggestion = suggestion
         setStatusTitle()
+        setupStatistics()
     }
 
     func pumpBatteryDidChange(_: Battery) {

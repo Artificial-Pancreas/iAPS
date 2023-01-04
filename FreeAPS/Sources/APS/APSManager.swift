@@ -1116,13 +1116,18 @@ final class BaseAPSManager: APSManager, Injectable {
                 total: roundDecimal(Decimal(medianBG).asMmolL, 1)
             )
 
-            hbs = Durations(
-                day: roundDecimal(IFCCa1CStatisticValue, 1),
-                week: roundDecimal(IFCCa1CStatisticValue_7, 1),
-                month: roundDecimal(IFCCa1CStatisticValue_30, 1),
-                ninetyDays: roundDecimal(IFCCa1CStatisticValue_90, 1),
-                total: roundDecimal(IFCCa1CStatisticValue_total, 1)
-            )
+            let overrideHbA1cUnit = settingsManager.preferences.overrideHbA1cUnit
+
+            // Override if users sets overrideHbA1cUnit: true
+            if !overrideHbA1cUnit, units == .mmolL || overrideHbA1cUnit, units != .mmolL {
+                hbs = Durations(
+                    day: roundDecimal(IFCCa1CStatisticValue, 1),
+                    week: roundDecimal(IFCCa1CStatisticValue_7, 1),
+                    month: roundDecimal(IFCCa1CStatisticValue_30, 1),
+                    ninetyDays: roundDecimal(IFCCa1CStatisticValue_90, 1),
+                    total: roundDecimal(IFCCa1CStatisticValue_total, 1)
+                )
+            }
         }
 
         // round output values
