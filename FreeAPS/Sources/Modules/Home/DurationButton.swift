@@ -30,7 +30,10 @@ struct durationButton<T: DurationButton>: View {
         } label: {
             Text(NSLocalizedString(states[currentIndex].title, comment: "Duration displayed in statPanel")).font(.caption2)
                 .foregroundColor(.secondary)
-                .fontWeight(.bold)
         }
+
+        .buttonBorderShape(.automatic)
+        .controlSize(.mini)
+        .buttonStyle(.bordered)
     }
 }
