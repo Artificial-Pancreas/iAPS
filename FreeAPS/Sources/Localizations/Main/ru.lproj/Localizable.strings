@@ -1176,9 +1176,12 @@ Enact a temp Basal or a temp target */
 
 //* -----------------------------------------------------------------------*/
 /* ----------------------Statistics strings -------------------------------*/
+/* Headline Statistics */
+
+
+"Statistics" = "Статистика";
+
 /* Option in preferences */
-
-
 "Display Statistics" = "Отображать статистику";
 
 /* infoText: Description for Display Statistics */
@@ -1192,9 +1195,8 @@ Enact a temp Basal or a temp target */
 
 /* infoText: Description for Low Glucose Limit */
 "BG Under This Value Will Be Displayed As Low Glucose Percentage" = "Уровень глюкозы крови под этим значением будет отображаться как процент пребывания с низким уровнем глюкозы";
-/* BG Over This Value Will Be Displayed As High Glucose Percentage
-infoText: Description for High Glucose Limit */
-"BG Over This Value Will Be Displayed As High Glucose Percentage" = "Уровень глюкозы крови под этим значением будет отображаться как процент пребывания с высоким уровнем глюкозы";
+/* infoText: Description for High Glucose Limit */
+"BG Under This Value Will Be Displayed As High Glucose Percentage" = "Уровень глюкозы крови под этим значением будет отображаться как процент пребывания с высоким уровнем глюкозы";
 
 /* When statistics.json was last updated */
 "Updated" = "Обновлено";
@@ -1243,6 +1245,33 @@ infoText: Description for High Glucose Limit */
 
 /* Description for update interval for statistics */
 "Default is 30 minutes. How often to update and save the statistics.json and to upload last array, when enabled, to Nightscout. A lower interval than for glucose updates (5 min) is pointless." = "По-умолчанию - 30 минут. Параметр задает частоту обновления и сохранения статистики из файла statistics.json и частоту загрузки последнего массива данных, когда включено, в Nightscout. Нет смысла устанавливать данный интервал короче, чем интервал обновления значения глюкозы(5 минут).";
+
+/* Duration displayed in statPanel */
+"Past 24 Hours " = "24 часа ";
+
+/* Duration displayed in statPanel */
+"Past Week " = "Неделя ";
+
+/* Duration displayed in statPanel */
+"Past Month " = "Месяц ";
+
+/* Duration displayed in statPanel */
+"Past 90 Days " = "90 дней ";
+
+/* Duration displayed in statPanel */
+"All Past Days of Data " = "Данные за все дни ";
+
+/* "Display Loop statistics in statPanel */
+"Display Loop Cycle statistics" = "Отображать статистику циклов";
+
+/* Description for Display Loop statistics */
+"Displays Loop statistics in the statPanel in Home View" = "Отображает статистику циклов петли на панели статистики, которая отображается на главном экране";
+
+/* Display % */
+"Override HbA1c unit" = "HbA1c в процентах";
+
+/* Description for Override HbA1c unit */
+"Change deafult HbA1c unit in statPanlel. The unit in statPanel will be updateded with next statistics.json update" = "Изменить единицы измерения HbA1c на панели статистики. Единицы измерения обновятся при следующем обновлении файла statistics.json";
 
 /* --------------------------------------
 

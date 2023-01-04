@@ -1176,9 +1176,12 @@ Enact a temp Basal or a temp target */
 
 //* -----------------------------------------------------------------------*/
 /* ----------------------Statistics strings -------------------------------*/
+/* Headline Statistics */
+
+
+"Statistics" = "Statistieken";
+
 /* Option in preferences */
-
-
 "Display Statistics" = "Statistieken weergeven";
 
 /* infoText: Description for Display Statistics */
@@ -1192,9 +1195,8 @@ Enact a temp Basal or a temp target */
 
 /* infoText: Description for Low Glucose Limit */
 "BG Under This Value Will Be Displayed As Low Glucose Percentage" = "BG onder deze waarde wordt weergegeven als laag percentage";
-/* BG Over This Value Will Be Displayed As High Glucose Percentage
-infoText: Description for High Glucose Limit */
-"BG Over This Value Will Be Displayed As High Glucose Percentage" = "BG onder deze waarde wordt weergegeven als hoog percentage";
+/* infoText: Description for High Glucose Limit */
+"BG Under This Value Will Be Displayed As High Glucose Percentage" = "BG onder deze waarde wordt weergegeven als hoog percentage";
 
 /* When statistics.json was last updated */
 "Updated" = "Bijgewerkt";
@@ -1243,6 +1245,33 @@ infoText: Description for High Glucose Limit */
 
 /* Description for update interval for statistics */
 "Default is 30 minutes. How often to update and save the statistics.json and to upload last array, when enabled, to Nightscout. A lower interval than for glucose updates (5 min) is pointless." = "Standaard is 30 minuten. Hoe vaak de statistics.json moet worden bijgewerkt en opgeslagen en hoe vaak de laatste reeks, indien ingeschakeld, moet worden geüpload naar Nightscout. Een lager interval dan voor glucose-updates (5 min) is zinloos.";
+
+/* Duration displayed in statPanel */
+"Past 24 Hours " = "Afgelopen 24 uur ";
+
+/* Duration displayed in statPanel */
+"Past Week " = "Laatste week ";
+
+/* Duration displayed in statPanel */
+"Past Month " = "Afgelopen maand ";
+
+/* Duration displayed in statPanel */
+"Past 90 Days " = "Laatste 90 dagen ";
+
+/* Duration displayed in statPanel */
+"All Past Days of Data " = "Alle dagen in het verleden met gegevens ";
+
+/* "Display Loop statistics in statPanel */
+"Display Loop Cycle statistics" = "Loop cyclusstatistieken tonen";
+
+/* Description for Display Loop statistics */
+"Displays Loop statistics in the statPanel in Home View" = "Laat Loop statistieken zien in het statPanel in de Home weergave";
+
+/* Display % */
+"Override HbA1c unit" = "HbA1c eenheid overschrijven";
+
+/* Description for Override HbA1c unit */
+"Change deafult HbA1c unit in statPanlel. The unit in statPanel will be updateded with next statistics.json update" = "Change deafult HbA1c unit in statPanlel. The unit in statPanel will be updateded with next statistics.json update";
 
 /* --------------------------------------
 
