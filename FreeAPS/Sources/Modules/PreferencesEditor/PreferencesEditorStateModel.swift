@@ -96,7 +96,7 @@ extension PreferencesEditor {
                     ),
                     type: .boolean(keypath: \.overrideHbA1cUnit),
                     infoText: NSLocalizedString(
-                        "Display '%' as HbA1c unit, even when using mmol/l for glucose. StatPanel will be updated with new unit with next statistics.json update",
+                        "Display '%' as HbA1c unit, even when using mmol/l for glucose. The unit in statPanel will be updateded with next statistics.json update",
                         comment: "Description for Override HbA1c unit"
                     ),
                     settable: self

@@ -11,16 +11,6 @@ extension Home {
         @State var isStatusPopupPresented = false
         @State var selectedState: durationState
 
-        @State var hba1c_all: String
-        @State var average_: String
-        @State var median_: String
-        @State var tir_low: String
-        @State var tir_high: String
-        @State var tir_: String
-        @State var hba1c_: String
-        @State var sd_: String
-        @State var cv_: String
-
         private var numberFormatter: NumberFormatter {
             let formatter = NumberFormatter()
             formatter.numberStyle = .decimal
@@ -697,66 +687,6 @@ extension Home {
                 return .loopRed
             default:
                 return .loopYellow
-            }
-        }
-
-        private func getString(_ stat: Decimal?, _ test: Bool) -> String {
-            var string: String = targetFormatter.string(from: (stat ?? 0) as NSNumber) ?? ""
-
-            if state.units != .mmolL, test == true {
-                string = tirFormatter.string(from: (stat ?? 0) as NSNumber) ?? ""
-            }
-            return string
-        }
-
-        private func updateStats() {
-            hba1c_all = getString(state.statistics?.Statistics.HbA1c.total, false)
-            switch selectedState {
-            case .day:
-                average_ = getString(state.statistics?.Statistics.Glucose.Average.day, true)
-                median_ = getString(state.statistics?.Statistics.Glucose.Median.day, true)
-                tir_low = getString(state.statistics?.Statistics.Distribution.Hypos.day, false)
-                tir_high = getString(state.statistics?.Statistics.Distribution.Hypers.day, false)
-                tir_ = getString(state.statistics?.Statistics.Distribution.TIR.day, false)
-                hba1c_ = getString(state.statistics?.Statistics.HbA1c.day, false)
-                sd_ = getString(state.statistics?.Statistics.Variance.SD.day, true)
-                cv_ = getString(state.statistics?.Statistics.Variance.CV.day, false)
-            case .week:
-                average_ = getString(state.statistics?.Statistics.Glucose.Average.week, true)
-                median_ = getString(state.statistics?.Statistics.Glucose.Median.week, true)
-                tir_low = getString(state.statistics?.Statistics.Distribution.Hypos.week, false)
-                tir_high = getString(state.statistics?.Statistics.Distribution.Hypers.week, false)
-                tir_ = getString(state.statistics?.Statistics.Distribution.TIR.week, false)
-                hba1c_ = getString(state.statistics?.Statistics.HbA1c.week, false)
-                sd_ = getString(state.statistics?.Statistics.Variance.SD.week, true)
-                cv_ = getString(state.statistics?.Statistics.Variance.CV.week, false)
-            case .month:
-                average_ = getString(state.statistics?.Statistics.Glucose.Average.month, true)
-                median_ = getString(state.statistics?.Statistics.Glucose.Median.month, true)
-                tir_low = getString(state.statistics?.Statistics.Distribution.Hypos.month, false)
-                tir_high = getString(state.statistics?.Statistics.Distribution.Hypers.month, false)
-                tir_ = getString(state.statistics?.Statistics.Distribution.TIR.month, false)
-                hba1c_ = getString(state.statistics?.Statistics.HbA1c.month, false)
-                sd_ = getString(state.statistics?.Statistics.Variance.SD.month, true)
-                cv_ = getString(state.statistics?.Statistics.Variance.CV.month, false)
-            case .ninetyDays:
-                average_ = getString(state.statistics?.Statistics.Glucose.Average.ninetyDays, true)
-                median_ = getString(state.statistics?.Statistics.Glucose.Median.ninetyDays, true)
-                tir_low = getString(state.statistics?.Statistics.Distribution.Hypos.ninetyDays, false)
-                tir_high = getString(state.statistics?.Statistics.Distribution.Hypers.ninetyDays, false)
-                tir_ = getString(state.statistics?.Statistics.Distribution.TIR.ninetyDays, false)
-                hba1c_ = getString(state.statistics?.Statistics.HbA1c.ninetyDays, false)
-                sd_ = getString(state.statistics?.Statistics.Variance.SD.ninetyDays, true)
-                cv_ = getString(state.statistics?.Statistics.Variance.CV.ninetyDays, false)
-            case .total:
-                average_ = getString(state.statistics?.Statistics.Glucose.Average.total, true)
-                median_ = getString(state.statistics?.Statistics.Glucose.Median.total, true)
-                tir_low = getString(state.statistics?.Statistics.Distribution.Hypos.total, false)
-                tir_high = getString(state.statistics?.Statistics.Distribution.Hypers.total, false)
-                tir_ = getString(state.statistics?.Statistics.Distribution.TIR.total, false)
-                hba1c_ = getString(state.statistics?.Statistics.HbA1c.total, false)
-                sd_ = getString(state.statistics?.Statistics.Variance.SD.total, true)
-                cv_ = getString(state.statistics?.Statistics.Variance.CV.total, false)
             }
         }
     }

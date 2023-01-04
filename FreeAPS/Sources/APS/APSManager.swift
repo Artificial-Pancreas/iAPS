@@ -1119,7 +1119,7 @@ final class BaseAPSManager: APSManager, Injectable {
             let overrideHbA1cUnit = settingsManager.preferences.overrideHbA1cUnit
 
             // Override if users sets overrideHbA1cUnit: true
-            if !overrideHbA1cUnit {
+            if !overrideHbA1cUnit, units == .mmolL || overrideHbA1cUnit, units != .mmolL {
                 hbs = Durations(
                     day: roundDecimal(IFCCa1CStatisticValue, 1),
                     week: roundDecimal(IFCCa1CStatisticValue_7, 1),
