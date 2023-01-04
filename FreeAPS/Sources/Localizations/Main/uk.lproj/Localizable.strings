@@ -1192,8 +1192,9 @@ Enact a temp Basal or a temp target */
 
 /* infoText: Description for Low Glucose Limit */
 "BG Under This Value Will Be Displayed As Low Glucose Percentage" = "BG під цим значенням відображатиметься як низький відсоток глюкози";
-/* infoText: Description for High Glucose Limit */
-"BG Under This Value Will Be Displayed As High Glucose Percentage" = "BG під цим значенням відображатиметься як високий відсоток глюкози";
+/* BG Over This Value Will Be Displayed As High Glucose Percentage
+infoText: Description for High Glucose Limit */
+"BG Over This Value Will Be Displayed As High Glucose Percentage" = "BG під цим значенням відображатиметься як високий відсоток глюкози";
 
 /* When statistics.json was last updated */
 "Updated" = "Оновлено";

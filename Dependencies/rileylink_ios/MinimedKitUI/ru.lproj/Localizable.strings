@@ -132,7 +132,7 @@
 "On Idle" = "Бездействие";
 
 /* Pump find device instruction */
-"On your pump, go to the Find Device screen and select \"Find Device\".\n\nMain Menu >\nUtilities >\nConnect Devices >\nOther Devices >\nOn >\nFind Device" = "On your pump, go to the Find Device screen and select \"Find Device\".\n\nMain Menu >\nUtilities >\nConnect Devices >\nOther Devices >\nOn >\nFind Device";
+"On your pump, go to the Find Device screen and select \"Find Device\".\n\nMain Menu >\nUtilities >\nConnect Devices >\nOther Devices >\nOn >\nFind Device" = "На вашей помпе перейдите на экран \"Найти устройство\" и выберите \"Найти Устройство\".\n\nГлавное меню >\nУтилиты >\nПодключение устройств >\nДругие устройства >\nВ>\nНайти устройство";
 
 /* The title text for the preferred insulin data source config */
 "Preferred Data Source" = "Предпочтительный источник данных";
@@ -166,7 +166,7 @@
 "Reading pump status…" = "Чтение статуса помпы…";
 
 /* The title of the cell showing the pump region */
-"Region" = "Region";
+"Region" = "Регион";
 
 /* Button title to retry sentry setup */
 "Retry" = "Повторить";
