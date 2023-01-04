@@ -9,8 +9,10 @@ FreeAPS X uses original JavaScript files of oref0 and provides a user interface 
 
 To use this branch : 
 
+git clone --branch=Crowdin https://github.com/Jon-b-m/freeaps.git
 git clone --branch=bdb https://github.com/Jon-b-m/freeaps.git
 
+The Crowdin branch includes latest localizations by translators and me. Based on Ivan's dev branch, but with added DASH support and some later fixes.
 The bdb branch includes my implementation of dynamic ISF, dynamic CR and some other extra features. Dyn ISF and dyn CR are off by default. 
 
 Please understand that this version is :
@@ -20,6 +22,7 @@ Please understand that this version is :
 
 # Documentation
 
+[Discord FreeAPS X - Crowdin branch channel]https://discord.com/channels/1020905149037813862/1021041644251906048)
 [Discord FreeAPS X - bdb branch channel](https://discord.com/channels/1020905149037813862/1021041588627062854)
 
 [My Crowdin Project for translation of FreeAPS X](https://crowdin.com/project/freeaps-x)

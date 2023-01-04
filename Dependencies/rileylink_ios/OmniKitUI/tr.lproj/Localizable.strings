@@ -919,7 +919,7 @@
 "Skip Omnipod Onboarding?" = "Omnipod Tanıtımı Atlansın mı?";
 
 /* Description text on ExpirationReminderSetupView */
-"The App notifies you in advance of Pod expiration.\n\nScroll to set the number of hours advance notice you would like to have." = "Uygulama, Pd süresinin sona ermesinden önce sizi bilgilendirir.\n\nSaatler önceden bildirim almak istediğiniz saati ayarlamak için kaydırın.";
+"The App notifies you in advance of Pod expiration.\n\nScroll to set the number of hours advance notice you would like to have." = "Uygulama, Pod sona ermeden önce sizi bilgilendirir.\n\nKaç saat önce bildirim almak istediğinizi ayarlamak için kaydırın.";
 
 /* Text of continue button on ExpirationReminderSetupView" */
 "Next" = "İleri";
@@ -928,7 +928,7 @@
 "Expiration Reminder" = "Süre Sonu Hatırlatıcısı";
 
 /* Description text on LowReservoirReminderSetupView */
-"The App notifies you when the amount of insulin in the Pod reaches this level (50-10 U).\n\nScroll to set the number of units at which you would like to be reminded." = "Uygulama, Kapsüldeki insülin miktarı bu seviyeye (50-10 Ü) ulaştığında sizi bilgilendirir.\n\nHatırlatmak istediğiniz ünite sayısını ayarlamak için kaydırın.";
+"The App notifies you when the amount of insulin in the Pod reaches this level (50-10 U).\n\nScroll to set the number of units at which you would like to be reminded." = "Uygulama, Pod içerisinde insülin miktarı (50-10 Ü) kaldığında sizi bilgilendirir.\n\nBildirim almak istediğiniz ünite miktarını ayarlamak için kaydırın.";
 
 /* Label text for low reservoir value row */
 "Low Reservoir" = "Düşük Rezervuar";

@@ -44,10 +44,10 @@
 "Agree and continue" = "Zustimmen und fortfahren";
 
 /* Headline in enacted pop up (at: at what time) */
-"Enacted at" = "Enacted at";
+"Enacted at" = "Letze Berechnung um";
 
 /* Headline in suggested pop up (at: at what time) */
-"Suggested at" = "Suggested at";
+"Suggested at" = "Vorgeschlagen um";
 
 /* Home title */
 "Home" = "Hauptseite";
@@ -922,13 +922,13 @@ Enact a temp Basal or a temp target */
 "Bluetooth State restored (APS restarted?). Found %d peripherals, and connected to %@ with identifier %@" = "Bluetooth-Status wiederhergestellt (APS neu gestartet?). %d Peripheriegeräte gefunden und mit %@ mit der Kennung %@ verbunden";
 
 /* Shared app group xDrip4iOS */
-"Using shared app group with external CGM app xDrip4iOS" = "Using shared app group with external CGM app xDrip4iOS";
+"Using shared app group with external CGM app xDrip4iOS" = "Benutze gemeinsame App-Groups (Xcode) mit externer CGM App xDrip4iOS";
 
 /* Shared app group GlucoseDirect */
-"Using shared app group with external CGM app GlucoseDirect" = "Using shared app group with external CGM app GlucoseDirect";
+"Using shared app group with external CGM app GlucoseDirect" = "Benutze gemeinsame App-Groups (Xcode) mit externer CGM App GlucoseDirect";
 
 /* Dexcom G6 app */
-"Dexcom G6 app" = "Dexcom G6 app";
+"Dexcom G6 app" = "Dexcom G6 App";
 
 /* Native G5 app */
 "Native G5 app" = "Native G5 App";
@@ -948,37 +948,37 @@ Enact a temp Basal or a temp target */
 /* -------------- Developer settings ---------------------- */
 /* Debug options */
 
-"Developer" = "Developer";
+"Developer" = "Entwickler";
 
 /* Debug option view NS Upload Profile */
-"NS Upload Profile" = "NS Upload Profile";
+"NS Upload Profile" = "NS Profil zum Hochladen";
 
 /* Debug option view NS Uploaded Profile */
-"NS Uploaded Profile" = "NS Uploaded Profile";
+"NS Uploaded Profile" = "NS Hochgeladenes Profil";
 
 /* Debug option view Autosense */
 "Autosense" = "Autosense";
 
 /* Debug option view Pump History */
-"Pump History" = "Pump History";
+"Pump History" = "Insulinpumpen-Speicher";
 
 /* Debug option view Target Ranges */
-"Target ranges" = "Target ranges";
+"Target ranges" = "Zielbereiche";
 
 /* Debug option view Temp targets */
-"Temp targets" = "Temp targets";
+"Temp targets" = "Temporäre Ziele";
 
 /* Debug option view Meal */
-"Meal" = "Meal";
+"Meal" = "Essen";
 
 /* Debug option view Pump profile */
-"Pump profile" = "Pump profile";
+"Pump profile" = "Pumpen Profil";
 
 /* Debug option view Profile */
-"Profile" = "Profile";
+"Profile" = "Mein Profil";
 
 /* Debug option view Enacted */
-"Enacted" = "Enacted";
+"Enacted" = "letzte Berechnung";
 
 /* Debug option view Announcements (from NS) */
 "Announcements" = "Announcements";
@@ -990,13 +990,13 @@ Enact a temp Basal or a temp target */
 "Autotune" = "Autotune";
 
 /* Debug option view Target presets */
-"Target presets" = "Target presets";
+"Target presets" = "Temporäre Ziele";
 
 /* Debug option view */
-"Loop Cycles" = "Loop Cycles";
+"Loop Cycles" = "Loop-Zyklen";
 
 /* Debug option view Glucose Data used for statistics */
-"Glucose Data used for statistics" = "Glucose Data used for statistics";
+"Glucose Data used for statistics" = "Benutzte CGM-Daten für die Statistik";
 
 /* --------------- HealthKit intergration --------------------*/
 /* */
@@ -1176,72 +1176,102 @@ Enact a temp Basal or a temp target */
 
 //* -----------------------------------------------------------------------*/
 /* ----------------------Statistics strings -------------------------------*/
+/* Headline Statistics */
+
+
+"Statistics" = "Statistics";
+
 /* Option in preferences */
-
-
-"Display Statistics" = "Display Statistics";
+"Display Statistics" = "Statistiken anzeigen";
 
 /* infoText: Description for Display Statistics */
-"Displays Statistics under the chart view" = "Displays Statistics under the chart view";
+"Displays Statistics under the chart view" = "Zeigt Statistiken unter der Diagrammansicht an";
 
 /* Low Glucose Limit option in preferences */
-"Low Glucose Limit" = "Low Glucose Limit";
+"Low Glucose Limit" = "Niedrige Blutzuckergrenze";
 
 /* High Glucose Limit option in preferences */
-"High Glucose Limit" = "High Glucose Limit";
+"High Glucose Limit" = "Hohe Blutzuckergrenze";
 
 /* infoText: Description for Low Glucose Limit */
-"BG Under This Value Will Be Displayed As Low Glucose Percentage" = "BG Under This Value Will Be Displayed As Low Glucose Percentage";
+"BG Under This Value Will Be Displayed As Low Glucose Percentage" = "Ein Blutzuckerwert unter diesem Wert wird als Unterzuckerung angezeigt";
 /* infoText: Description for High Glucose Limit */
 "BG Under This Value Will Be Displayed As High Glucose Percentage" = "BG Under This Value Will Be Displayed As High Glucose Percentage";
 
 /* When statistics.json was last updated */
-"Updated" = "Updated";
+"Updated" = "Aktualisiert um";
 
 /* Average BG = */
-"Average" = "Average";
+"Average" = "Mittelwert";
 
 /* Median BG */
-"Median" = "Median";
+"Median" = "Mittelwert-Median";
 
 /* Normal BG (within TIR) */
-"Normal (24h)" = "Normal (24h)";
+"Normal (24h)" = "im Zielbereich (24 Std.)";
 
 /* Title High BG in statPanel */
-"High (>" = "High (>";
+"High (>" = "Hoch (>";
 
 /* Title Low BG in statPanel */
-"Low (<" = "Low (<";
+"Low (<" = "Niedrig (<";
 
 /* HbA1c estimation for one day of data */
-"HbA1c (24h)" = "HbA1c (24h)";
+"HbA1c (24h)" = "HbA1c (24 Std.)";
 
 /* Total number of days of data for HbA1c estimation, part 1/2*/
-"All " = "All ";
+"All " = "Ø";
 
 /* Total number of days of data for HbA1c estimation, part 2/2*/
-" days" = " days";
+" days" = " Tage";
 
 /* Nr of loops last 24 hours */
-"Loops" = "Loops";
+"Loops" = "Schleifen (24 Std.)";
 
 /* Average loop interval */
-"Average Interval" = "Avgerage Interval";
+"Average Interval" = "Intervalllänge in Min";
 
 /* Median loop interval */
-"Median Duration" = "Median Duration";
+"Median Duration" = "Mittlere Berechnungsdauer";
 
 /* "Display SD */
-"Display SD instead of CV" = "Display SD instead of CV";
+"Display SD instead of CV" = "Zeige die Standardabweichung (SD) statt des Variationskoeffizienten (CV)";
 
 /* Description for display SD */
-"Display Standard Deviation (SD) instead of Coefficient of Variation (CV) in statPanel" = "Display Standard Deviation (SD) instead of Coefficient of Variation (CV) in statPanel";
+"Display Standard Deviation (SD) instead of Coefficient of Variation (CV) in statPanel" = "Zeige die Standardabweichung (SD) statt des Variationskoeffizienten (CV) in den Statistiken";
 
 /* How often to update the statistics */
-"Update every number of minutes:" = "Update every number of minutes:";
+"Update every number of minutes:" = "Update der Statistik (in Minuten):";
 
 /* Description for update interval for statistics */
-"Default is 30 minutes. How often to update and save the statistics.json and to upload last array, when enabled, to Nightscout. A lower interval than for glucose updates (5 min) is pointless." = "Default is 30 minutes. How often to update and save the statistics.json and to upload last array, when enabled, to Nightscout. A lower interval than for glucose updates (5 min) is pointless.";
+"Default is 30 minutes. How often to update and save the statistics.json and to upload last array, when enabled, to Nightscout. A lower interval than for glucose updates (5 min) is pointless." = "Standardintervall ist 30 Minuten. Legt fest wie oft die statistics.json aktualisiert und gespeichert wird. Gleichzeitig werden die Daten zu Nightscout hochladen, wenn aktiviert. Ein geringerer Intervall, wie die Werte vom CGMS (5 Minuten) ist sinnlos.";
+
+/* Duration displayed in statPanel */
+"Past 24 Hours " = "Past 24 Hours ";
+
+/* Duration displayed in statPanel */
+"Past Week " = "Past Week ";
+
+/* Duration displayed in statPanel */
+"Past Month " = "Past Month ";
+
+/* Duration displayed in statPanel */
+"Past 90 Days " = "Past 90 Days ";
+
+/* Duration displayed in statPanel */
+"All Past Days of Data " = "All Past Days of Data ";
+
+/* "Display Loop statistics in statPanel */
+"Display Loop Cycle statistics" = "Display Loop Cycle statistics";
+
+/* Description for Display Loop statistics */
+"Displays Loop statistics in the statPanel in Home View" = "Displays Loop statistics in the statPanel in Home View";
+
+/* Display % */
+"Override HbA1c unit" = "Override HbA1c unit";
+
+/* Description for Override HbA1c unit */
+"Change deafult HbA1c unit in statPanlel. The unit in statPanel will be updateded with next statistics.json update" = "Change deafult HbA1c unit in statPanlel. The unit in statPanel will be updateded with next statistics.json update";
 
 /* --------------------------------------
 

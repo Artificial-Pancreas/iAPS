@@ -946,11 +946,11 @@ Enact a temp Basal or a temp target */
 "Online or internal server" = "Online eller intern server";
 
 /* -------------- Developer settings ---------------------- */
-
 /* Debug options */
+
 "Developer" = "Utvecklare";
 
-/* Debug option view Upload Profile */
+/* Debug option view NS Upload Profile */
 "NS Upload Profile" = "Ladda upp profil till NS";
 
 /* Debug option view NS Uploaded Profile */
@@ -995,11 +995,10 @@ Enact a temp Basal or a temp target */
 /* Debug option view */
 "Loop Cycles" = "Loopar";
 
-/* Debug option view Saved Glucose Data used for statistics */
+/* Debug option view Glucose Data used for statistics */
 "Glucose Data used for statistics" = "Sparade blodglukosvärden för statistik";
 
 /* --------------- HealthKit intergration --------------------*/
-
 /* */
 "Apple Health" = "Apple Hälsa";
 
@@ -1177,11 +1176,12 @@ Enact a temp Basal or a temp target */
 
 //* -----------------------------------------------------------------------*/
 /* ----------------------Statistics strings -------------------------------*/
-/* Option in preferences */
-
 /* Headline Statistics */
+
+
 "Statistics" = "Statistik";
 
+/* Option in preferences */
 "Display Statistics" = "Visa statistik";
 
 /* infoText: Description for Display Statistics */
@@ -1196,7 +1196,7 @@ Enact a temp Basal or a temp target */
 /* infoText: Description for Low Glucose Limit */
 "BG Under This Value Will Be Displayed As Low Glucose Percentage" = "Blodsocker under detta värde kommer att visas som lågt blodsocker i statistiken.";
 /* infoText: Description for High Glucose Limit */
-"BG Under This Value Will Be Displayed As High Glucose Percentage" = "Blodsocker under detta värde kommer att visas som högt blodsocker i statistiken";
+"BG Under This Value Will Be Displayed As High Glucose Percentage" = "Ett blodsocker under detta värde kommer att visas som ett högt blodsocker i statistiken";
 
 /* When statistics.json was last updated */
 "Updated" = "Uppdaterades";

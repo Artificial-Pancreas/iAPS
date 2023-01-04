@@ -29,7 +29,7 @@
 "Best Frequency" = "Beste Frequenz";
 
 /* The format string describing pump bolusing state: (1: bolusing) */
-"Bolusing: %1$@\n" = "Bolusing: %1$@\n";
+"Bolusing: %1$@\n" = "Bolusabgabe: %1$@\n";
 
 /* The title of the cancel action in an action sheet */
 "Cancel" = "Abbrechen";
@@ -132,7 +132,7 @@
 "On Idle" = "im Leerlauf";
 
 /* Pump find device instruction */
-"On your pump, go to the Find Device screen and select \"Find Device\".\n\nMain Menu >\nUtilities >\nConnect Devices >\nOther Devices >\nOn >\nFind Device" = "On your pump, go to the Find Device screen and select \"Find Device\".\n\nMain Menu >\nUtilities >\nConnect Devices >\nOther Devices >\nOn >\nFind Device";
+"On your pump, go to the Find Device screen and select \"Find Device\".\n\nMain Menu >\nUtilities >\nConnect Devices >\nOther Devices >\nOn >\nFind Device" = "Gehen Sie auf Ihrer Pumpe zum Menü \"Geräte anschließen\" und wählen Sie „Geräte finden\".\n\nHauptmenü Insulinpumpe >\nZusatzfunktionen >\nGeräte anschließen >\nAndere Geräte >\nEin >\nGerät finden";
 
 /* The title text for the preferred insulin data source config */
 "Preferred Data Source" = "Bevorzugte Datenquelle";
