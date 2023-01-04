@@ -386,6 +386,19 @@ extension Home {
                         .font(.caption2).foregroundColor(.secondary)
 
                     Text(median_).font(.system(size: 12))
+
+                    if !state.settingsManager.preferences.displaySD {
+                        Text(
+                            NSLocalizedString("CV", comment: "CV")
+                        ).font(.caption2).foregroundColor(.secondary)
+
+                        Text(cv_).font(.system(size: 12))
+                    } else {
+                        Text(
+                            NSLocalizedString("SD", comment: "SD")
+                        ).font(.caption2).foregroundColor(.secondary)
+                        Text(sd_).font(.system(size: 12))
+                    }
                 }
             }
             HStack {
@@ -420,19 +433,9 @@ extension Home {
             HStack {
                 Group {
                     Text("HbA1c").font(.caption2).foregroundColor(.secondary)
-                    Text(hba1c_).font(.system(size: 12))
 
-                    if !state.settingsManager.preferences.displaySD {
-                        Text(
-                            NSLocalizedString("CV", comment: "CV")
-                        ).font(.caption2).foregroundColor(.secondary)
-
-                        Text(cv_).font(.system(size: 12))
-                    } else {
-                        Text(
-                            NSLocalizedString("SD", comment: "SD")
-                        ).font(.caption2).foregroundColor(.secondary)
-                        Text(sd_).font(.system(size: 12))
+                    if selectedState != .total {
+                        Text(hba1c_).font(.system(size: 12))
                     }
 
                     Text(
