@@ -64,6 +64,9 @@
 /* Replace pod text in Header */
 "Replace pod" = "Byt podd";
 
+/* Suggested at a date */
+"Suggested at %@" = "Suggested at %@";
+
 /* Add carbs screen */
 "Add Carbs" = "Lägg till kolhydrater";
 
@@ -1176,9 +1179,12 @@ Enact a temp Basal or a temp target */
 
 //* -----------------------------------------------------------------------*/
 /* ----------------------Statistics strings -------------------------------*/
+/* Headline Statistics */
+
+
+"Statistics" = "Statistics";
+
 /* Option in preferences */
-
-
 "Display Statistics" = "Visa statistik";
 
 /* infoText: Description for Display Statistics */
@@ -1192,9 +1198,8 @@ Enact a temp Basal or a temp target */
 
 /* infoText: Description for Low Glucose Limit */
 "BG Under This Value Will Be Displayed As Low Glucose Percentage" = "Blodsocker under detta värde kommer att visas som lågt blodsocker i statistiken.";
-/* BG Over This Value Will Be Displayed As High Glucose Percentage
-infoText: Description for High Glucose Limit */
-"BG Over This Value Will Be Displayed As High Glucose Percentage" = "Blodsocker över detta värde kommer att visas som högt blodsocker i statistiken";
+/* infoText: Description for High Glucose Limit */
+"BG Under This Value Will Be Displayed As High Glucose Percentage" = "BG Under This Value Will Be Displayed As High Glucose Percentage";
 
 /* When statistics.json was last updated */
 "Updated" = "Uppdaterades";
@@ -1227,7 +1232,7 @@ infoText: Description for High Glucose Limit */
 "Loops" = "Loopar";
 
 /* Average loop interval */
-"Average Interval" = "Medelintervall";
+"Average Interval" = "Average Interval";
 
 /* Median loop interval */
 "Median Duration" = "Medianduration";
@@ -1243,6 +1248,33 @@ infoText: Description for High Glucose Limit */
 
 /* Description for update interval for statistics */
 "Default is 30 minutes. How often to update and save the statistics.json and to upload last array, when enabled, to Nightscout. A lower interval than for glucose updates (5 min) is pointless." = "Standardinställning är 30 minuter. Med denna inställning ställer du in hur ofta statistiken uppdateras och hur ofta filen statistics.json sparas och laddas upp till till Nightscout, om aktiverad. Att ha ett lägre intervall än för nytt blodoscker (5 min) är meningslöst.";
+
+/* Duration displayed in statPanel */
+"Past 24 Hours " = "Past 24 Hours ";
+
+/* Duration displayed in statPanel */
+"Past Week " = "Past Week ";
+
+/* Duration displayed in statPanel */
+"Past Month " = "Past Month ";
+
+/* Duration displayed in statPanel */
+"Past 90 Days " = "Past 90 Days ";
+
+/* Duration displayed in statPanel */
+"All Past Days of Data " = "All Past Days of Data ";
+
+/* "Display Loop statistics in statPanel */
+"Display Loop Cycle statistics" = "Display Loop Cycle statistics";
+
+/* Description for Display Loop statistics */
+"Displays Loop statistics in the statPanel in Home View" = "Displays Loop statistics in the statPanel in Home View";
+
+/* Display % */
+"Override HbA1c unit" = "Override HbA1c unit";
+
+/* Description for Override HbA1c unit */
+"Display '%' as HbA1c unit, even when using mmol/l for glucose. The unit in statPanel will be updateded with next statistics.json update" = "Display '%' as HbA1c unit, even when using mmol/l for glucose. StatPanel will be updated with new unit with next statistics.json update";
 
 /* --------------------------------------
 
