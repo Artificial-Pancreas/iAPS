@@ -1101,6 +1101,8 @@ final class BaseAPSManager: APSManager, Injectable {
         )
 
         // Convert to user-preferred unit
+        let overrideHbA1cUnit = settingsManager.preferences.overrideHbA1cUnit
+
         if units == .mmolL {
             bg_1 = bg_1.asMmolL
             bg_7 = bg_7.asMmolL
@@ -1116,10 +1118,8 @@ final class BaseAPSManager: APSManager, Injectable {
                 total: roundDecimal(Decimal(medianBG).asMmolL, 1)
             )
 
-            let overrideHbA1cUnit = settingsManager.preferences.overrideHbA1cUnit
-
             // Override if users sets overrideHbA1cUnit: true
-            if !overrideHbA1cUnit, units == .mmolL || overrideHbA1cUnit, units != .mmolL {
+            if !overrideHbA1cUnit {
                 hbs = Durations(
                     day: roundDecimal(IFCCa1CStatisticValue, 1),
                     week: roundDecimal(IFCCa1CStatisticValue_7, 1),
@@ -1128,6 +1128,14 @@ final class BaseAPSManager: APSManager, Injectable {
                     total: roundDecimal(IFCCa1CStatisticValue_total, 1)
                 )
             }
+        } else if units != .mmolL, overrideHbA1cUnit {
+            hbs = Durations(
+                day: roundDecimal(IFCCa1CStatisticValue, 1),
+                week: roundDecimal(IFCCa1CStatisticValue_7, 1),
+                month: roundDecimal(IFCCa1CStatisticValue_30, 1),
+                ninetyDays: roundDecimal(IFCCa1CStatisticValue_90, 1),
+                total: roundDecimal(IFCCa1CStatisticValue_total, 1)
+            )
         }
 
         // round output values
