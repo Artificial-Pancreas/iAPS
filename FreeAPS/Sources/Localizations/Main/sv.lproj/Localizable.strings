@@ -64,9 +64,6 @@
 /* Replace pod text in Header */
 "Replace pod" = "Byt podd";
 
-/* Suggested at a date */
-"Suggested at %@" = "Suggested at %@";
-
 /* Add carbs screen */
 "Add Carbs" = "Lägg till kolhydrater";
 
@@ -1182,7 +1179,7 @@ Enact a temp Basal or a temp target */
 /* Headline Statistics */
 
 
-"Statistics" = "Statistics";
+"Statistics" = "Statistik";
 
 /* Option in preferences */
 "Display Statistics" = "Visa statistik";
@@ -1199,7 +1196,7 @@ Enact a temp Basal or a temp target */
 /* infoText: Description for Low Glucose Limit */
 "BG Under This Value Will Be Displayed As Low Glucose Percentage" = "Blodsocker under detta värde kommer att visas som lågt blodsocker i statistiken.";
 /* infoText: Description for High Glucose Limit */
-"BG Under This Value Will Be Displayed As High Glucose Percentage" = "BG Under This Value Will Be Displayed As High Glucose Percentage";
+"BG Under This Value Will Be Displayed As High Glucose Percentage" = "Ett blodsocker under detta värde kommer att visas som ett högt blodsocker i statistiken";
 
 /* When statistics.json was last updated */
 "Updated" = "Uppdaterades";
