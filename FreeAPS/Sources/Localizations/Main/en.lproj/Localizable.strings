@@ -1278,7 +1278,7 @@ Enact a temp Basal or a temp target */
 "Override HbA1c unit" = "Override HbA1c unit";
 
 /* Description for Override HbA1c unit */
-"Display '%' as HbA1c unit, even when using mmol/l for glucose. The unit in statPanel will be updateded with next statistics.json update" = "Display '%' as HbA1c unit, even when using mmol/l for glucose. StatPanel will be updated with new unit with next statistics.json update";
+"Change deafult HbA1c unit in statPanlel. The unit in statPanel will be updateded with next statistics.json update" = "Change deafult HbA1c unit in statPanlel. The unit in statPanel will be updateded with next statistics.json update";
 
  /* --------------------------------------
 
