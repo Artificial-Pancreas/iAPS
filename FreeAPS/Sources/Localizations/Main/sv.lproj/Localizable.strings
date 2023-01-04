@@ -1244,6 +1244,33 @@ infoText: Description for High Glucose Limit */
 /* Description for update interval for statistics */
 "Default is 30 minutes. How often to update and save the statistics.json and to upload last array, when enabled, to Nightscout. A lower interval than for glucose updates (5 min) is pointless." = "Standardinställning är 30 minuter. Med denna inställning ställer du in hur ofta statistiken uppdateras och hur ofta filen statistics.json sparas och laddas upp till till Nightscout, om aktiverad. Att ha ett lägre intervall än för nytt blodoscker (5 min) är meningslöst.";
 
+/* Duration displayed in statPanel */
+"Past 24 Hours " = "Senaste 24 timmarna ";
+
+/* Duration displayed in statPanel */
+"Past Week " = "Senaste veckan ";
+
+/* Duration displayed in statPanel */
+"Past Month " = "Senaste månaden ";
+
+/* Duration displayed in statPanel */
+"Past 90 Days " = "Senaste 90 dagarna ";
+
+/* Duration displayed in statPanel */
+"All Past Days of Data " = "Alla dagar med data ";
+
+/* "Display Loop statistics in statPanel */
+"Display Loop Cycle statistics" = "Visa Loop-statistik";
+
+/* Description for Display Loop statistics */
+"Displays Loop statistics in the statPanel in Home View" = "Visar Loop-statistik i statistiken på hemskärmen";
+
+/* Display % */
+"Override HbA1c unit" = "Ändra HbA1c-enhet";
+
+/* Description for Override HbA1c unit */
+"Change deafult HbA1c unit in statPanlel. The unit in statPanel will be updateded with next statistics.json update" = "Ändra HbA1c-enhet. Enheten kommer att uppdateras nästa gång filen statistics.json uppdateras";
+
 /* --------------------------------------
 
   Infotexts from openaps.docs and androidaps.docs
