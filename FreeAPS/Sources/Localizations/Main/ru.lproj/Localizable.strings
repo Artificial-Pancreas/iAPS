@@ -65,7 +65,7 @@
 "Replace pod" = "Замените под";
 
 /* Suggested at a date */
-"Suggested at %@" = "Suggested at %@";
+"Suggested at %@" = "Предложено в %@";
 
 /* Add carbs screen */
 "Add Carbs" = "Ввод углеводов";
@@ -1274,7 +1274,7 @@ Enact a temp Basal or a temp target */
 "Override HbA1c unit" = "HbA1c в процентах";
 
 /* Description for Override HbA1c unit */
-"Change default HbA1c unit in statPanlel. The unit in statPanel will be updateded with next statistics.json update" = "Change default HbA1c unit in statPanlel. The unit in statPanel will be updateded with next statistics.json update";
+"Change default HbA1c unit in statPanlel. The unit in statPanel will be updateded with next statistics.json update" = "Изменить единицы измерения HbA1c на панели статистики. Единицы измерения обновятся при следующем обновлении файла statistics.json";
 
 /* --------------------------------------
 
