@@ -65,7 +65,7 @@
 "Replace pod" = "Byt podd";
 
 /* Suggested at a date */
-"Suggested at %@" = "Suggested at %@";
+"Suggested at %@" = "Föreslaget kl. %@";
 
 /* Add carbs screen */
 "Add Carbs" = "Lägg till kolhydrater";
@@ -1274,7 +1274,7 @@ Enact a temp Basal or a temp target */
 "Override HbA1c unit" = "Ändra HbA1c-enhet";
 
 /* Description for Override HbA1c unit */
-"Change default HbA1c unit in statPanlel. The unit in statPanel will be updateded with next statistics.json update" = "Change default HbA1c unit in statPanlel. The unit in statPanel will be updateded with next statistics.json update";
+"Change default HbA1c unit in statPanlel. The unit in statPanel will be updateded with next statistics.json update" = "Ändra HbA1c-enhet. Enheten kommer att uppdateras nästa gång filen statistics.json uppdateras";
 
 /* --------------------------------------
 
