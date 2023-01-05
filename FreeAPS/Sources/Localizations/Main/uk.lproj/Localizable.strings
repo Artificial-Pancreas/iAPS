@@ -1179,7 +1179,7 @@ Enact a temp Basal or a temp target */
 /* Headline Statistics */
 
 
-"Statistics" = "Statistics";
+"Statistics" = "Статистика";
 
 /* Option in preferences */
 "Display Statistics" = "Показати статистику";
@@ -1196,7 +1196,7 @@ Enact a temp Basal or a temp target */
 /* infoText: Description for Low Glucose Limit */
 "BG Under This Value Will Be Displayed As Low Glucose Percentage" = "BG під цим значенням відображатиметься як низький відсоток глюкози";
 /* infoText: Description for High Glucose Limit */
-"BG Under This Value Will Be Displayed As High Glucose Percentage" = "BG Under This Value Will Be Displayed As High Glucose Percentage";
+"BG Under This Value Will Be Displayed As High Glucose Percentage" = "BG під цим значенням буде відображатися як відсоток перебування з високим рівнем глюкози";
 
 /* When statistics.json was last updated */
 "Updated" = "Оновлено";
@@ -1247,31 +1247,31 @@ Enact a temp Basal or a temp target */
 "Default is 30 minutes. How often to update and save the statistics.json and to upload last array, when enabled, to Nightscout. A lower interval than for glucose updates (5 min) is pointless." = "За замовчуванням 30 хвилин. Як часто оновлювати та зберігати statistics.json і завантажувати останній масив, якщо ввімкнено, у Nightscout. Менший інтервал, ніж для оновлення рівня глюкози (5 хв), не має сенсу.";
 
 /* Duration displayed in statPanel */
-"Past 24 Hours " = "Past 24 Hours ";
+"Past 24 Hours " = "За останні 24 години";
 
 /* Duration displayed in statPanel */
-"Past Week " = "Past Week ";
+"Past Week " = "Минулий тиждень";
 
 /* Duration displayed in statPanel */
-"Past Month " = "Past Month ";
+"Past Month " = "Минулий місяць ";
 
 /* Duration displayed in statPanel */
-"Past 90 Days " = "Past 90 Days ";
+"Past 90 Days " = "За останні 90 днів";
 
 /* Duration displayed in statPanel */
-"All Past Days of Data " = "All Past Days of Data ";
+"All Past Days of Data " = "Усі дані за минулі дні";
 
 /* "Display Loop statistics in statPanel */
-"Display Loop Cycle statistics" = "Display Loop Cycle statistics";
+"Display Loop Cycle statistics" = "Показати статистику циклів";
 
 /* Description for Display Loop statistics */
-"Displays Loop statistics in the statPanel in Home View" = "Displays Loop statistics in the statPanel in Home View";
+"Displays Loop statistics in the statPanel in Home View" = "Відображає статистику циклів петлі на панелі статистики, яка відображається на головному екрані";
 
 /* Display % */
-"Override HbA1c unit" = "Override HbA1c unit";
+"Override HbA1c unit" = "Замінити одиницю HbA1c";
 
 /* Description for Override HbA1c unit */
-"Change deafult HbA1c unit in statPanlel. The unit in statPanel will be updateded with next statistics.json update" = "Change deafult HbA1c unit in statPanlel. The unit in statPanel will be updateded with next statistics.json update";
+"Change deafult HbA1c unit in statPanlel. The unit in statPanel will be updateded with next statistics.json update" = "Змініть стандартну одиницю HbA1c на панелі статистики. Одиниця на панелі статистики буде оновлено з наступним оновленням statistics.json";
 
 /* --------------------------------------
 
