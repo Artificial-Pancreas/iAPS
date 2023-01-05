@@ -1220,10 +1220,10 @@ Enact a temp Basal or a temp target */
 "HbA1c (24h)" = "HbA1c (24h)";
 
 /* Total number of days of data for HbA1c estimation, part 1/2*/
-"All " = "All ";
+"All" = "All";
 
 /* Total number of days of data for HbA1c estimation, part 2/2*/
-" days" = " days";
+"days" = "days";
 
 /* Nr of loops last 24 hours */
 "Loops" = "Loops";
