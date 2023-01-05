@@ -64,6 +64,9 @@
 /* Replace pod text in Header */
 "Replace pod" = "Vervang Pod";
 
+/* Suggested at a date */
+"Suggested at %@" = "Suggested at %@";
+
 /* Add carbs screen */
 "Add Carbs" = "Koolhydraten toevoegen";
 
@@ -1271,7 +1274,7 @@ Enact a temp Basal or a temp target */
 "Override HbA1c unit" = "HbA1c eenheid overschrijven";
 
 /* Description for Override HbA1c unit */
-"Change default HbA1c unit in statPanlel. The unit in statPanel will be updateded with next statistics.json update" = "Standaard HbA1c-eenheid in statPanel wijzigen. De eenheid in statPanel zal worden bijgewerkt met de volgende statistics.json update";
+"Change default HbA1c unit in statPanlel. The unit in statPanel will be updateded with next statistics.json update" = "Change default HbA1c unit in statPanlel. The unit in statPanel will be updateded with next statistics.json update";
 
 /* --------------------------------------
 
@@ -1376,7 +1379,7 @@ Enact a temp Basal or a temp target */
 "Allow SMB With High Temptarget" = "Sta SMB met hoog doel toe";
 
 /* "Allow SMB With High Temptarget" */
-"Defaults to false. When true, allows supermicrobolus (if otherwise enabled) even with high temp targets (> 100 mg/dl)." = "Standaard uit. Als het aangezet wordt zullen altijd supermicrobolussen (SMBs) altijd gebruikt worden (mits elders aangezet).";
+"Defaults to false. When true, allows supermicrobolus (if otherwise enabled) even with high temp targets (> 100 mg/dl)." = "Standaard uit. Als het aangezet wordt zullen altijd supermicrobolussen (SMBs) gebruikt worden (mits elders aangezet), zelfs bij hoog tijdelijk doel (> 5,5 mmol/L).";
 
 /* Headline "Use Custom Peak Time” */
 "Use Custom Peak Time" = "Aangepaste piektijd gebruiken";
