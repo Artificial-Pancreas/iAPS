@@ -64,9 +64,6 @@
 /* Replace pod text in Header */
 "Replace pod" = "Замените под";
 
-/* Suggested at a date */
-"Suggested at %@" = "Предложено в %@";
-
 /* Add carbs screen */
 "Add Carbs" = "Ввод углеводов";
 

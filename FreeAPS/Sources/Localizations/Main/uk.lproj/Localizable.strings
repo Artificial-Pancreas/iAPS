@@ -64,9 +64,6 @@
 /* Replace pod text in Header */
 "Replace pod" = "Замініть под";
 
-/* Suggested at a date */
-"Suggested at %@" = "Suggested at %@";
-
 /* Add carbs screen */
 "Add Carbs" = "Додати Вуглеводи";
 
