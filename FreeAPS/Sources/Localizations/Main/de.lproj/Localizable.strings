@@ -64,6 +64,9 @@
 /* Replace pod text in Header */
 "Replace pod" = "Pod ersetzen";
 
+/* Suggested at a date */
+"Suggested at %@" = "Suggested at %@";
+
 /* Add carbs screen */
 "Add Carbs" = "Kohlenhydrate hinzufügen";
 
@@ -1271,7 +1274,7 @@ Enact a temp Basal or a temp target */
 "Override HbA1c unit" = "HbA1c-Einheit überschreiben";
 
 /* Description for Override HbA1c unit */
-"Change default HbA1c unit in statPanlel. The unit in statPanel will be updateded with next statistics.json update" = "Ändern Sie den HbA1c in der Statistik (% <—> mmol/mol). Die Anzeige in der Statistik wird mit dem nächsten statistics.json Update aktualisiert.";
+"Change default HbA1c unit in statPanlel. The unit in statPanel will be updateded with next statistics.json update" = "Change default HbA1c unit in statPanlel. The unit in statPanel will be updateded with next statistics.json update";
 
 /* --------------------------------------
 
