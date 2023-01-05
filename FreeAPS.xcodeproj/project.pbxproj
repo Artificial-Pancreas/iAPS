@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 52;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -1951,6 +1951,7 @@
 				388E595625AD948C0019842D /* Resources */,
 				3821ECD025DC703C00BC42AD /* Embed Frameworks */,
 				38E8753D27554D5900975559 /* Embed Watch Content */,
+				B99D8B8E295F34DB00420AB8 /* Run Script */,
 			);
 			buildRules = (
 			);
@@ -2159,6 +2160,25 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "source \"${SRCROOT}\"/scripts/swiftformat.sh\n\n";
+		};
+		B99D8B8E295F34DB00420AB8 /* Run Script */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Run Script";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "#!/bin/sh\n\ngit_version=$(git log -1 --format=\"%h\")\ngit_branch=$(git symbolic-ref --short -q HEAD)\ngit_tag=$(git describe --tags --exact-match 2>/dev/null)\n\ngit_branch_or_tag=\"${git_branch:-${git_tag}}\"\ngit_branch_or_tag_version=\"${git_branch:-${git_tag}}-${git_version}\"\n\ninfo_plist=\"${BUILT_PRODUCTS_DIR}/${INFOPLIST_PATH}\"\n\n/usr/libexec/PlistBuddy -c \"Set :BuildBranch '${git_branch_or_tag_version}'\" \"${info_plist}\"\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -2573,7 +2593,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = $CURRENT_PROJECT_VERSION;
+				CURRENT_PROJECT_VERSION = "$(APP_BUILD_NUMBER)";
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -2592,6 +2612,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.1;
+				MARKETING_VERSION = "$(APP_VERSION)";
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -2637,7 +2658,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = $CURRENT_PROJECT_VERSION;
+				CURRENT_PROJECT_VERSION = "$(APP_BUILD_NUMBER)";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -2650,6 +2671,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.1;
+				MARKETING_VERSION = "$(APP_VERSION)";
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -2669,7 +2691,7 @@
 				BUNDLE_IDENTIFIER = "$(BUNDLE_IDENTIFIER)";
 				CODE_SIGN_ENTITLEMENTS = FreeAPS/Resources/FreeAPS.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = $APP_BUILD_NUMBER;
 				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = "$(DEVELOPER_TEAM)";
 				ENABLE_PREVIEWS = YES;
@@ -2705,7 +2727,7 @@
 				BUNDLE_IDENTIFIER = "$(BUNDLE_IDENTIFIER)";
 				CODE_SIGN_ENTITLEMENTS = FreeAPS/Resources/FreeAPS.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = $APP_BUILD_NUMBER;
 				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = "$(DEVELOPER_TEAM)";
 				ENABLE_PREVIEWS = YES;
@@ -2742,7 +2764,7 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
 				CODE_SIGN_ENTITLEMENTS = FreeAPSWatch/FreeAPSWatch.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = $APP_BUILD_NUMBER;
 				DEVELOPMENT_TEAM = "$(DEVELOPER_TEAM)";
 				GENERATE_INFOPLIST_FILE = YES;
 				IBSC_MODULE = FreeAPSWatch_WatchKit_Extension;
@@ -2772,7 +2794,7 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
 				CODE_SIGN_ENTITLEMENTS = FreeAPSWatch/FreeAPSWatch.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = $APP_BUILD_NUMBER;
 				DEVELOPMENT_TEAM = "$(DEVELOPER_TEAM)";
 				GENERATE_INFOPLIST_FILE = YES;
 				IBSC_MODULE = FreeAPSWatch_WatchKit_Extension;
@@ -2800,7 +2822,7 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
 				CODE_SIGN_ENTITLEMENTS = "FreeAPSWatch WatchKit Extension/FreeAPSWatch WatchKit Extension.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = $APP_BUILD_NUMBER;
 				DEVELOPMENT_ASSET_PATHS = "\"FreeAPSWatch WatchKit Extension/Preview Content\"";
 				DEVELOPMENT_TEAM = "${DEVELOPER_TEAM}";
 				ENABLE_PREVIEWS = YES;
@@ -2839,7 +2861,7 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
 				CODE_SIGN_ENTITLEMENTS = "FreeAPSWatch WatchKit Extension/FreeAPSWatch WatchKit Extension.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = $APP_BUILD_NUMBER;
 				DEVELOPMENT_ASSET_PATHS = "\"FreeAPSWatch WatchKit Extension/Preview Content\"";
 				DEVELOPMENT_TEAM = "${DEVELOPER_TEAM}";
 				ENABLE_PREVIEWS = YES;

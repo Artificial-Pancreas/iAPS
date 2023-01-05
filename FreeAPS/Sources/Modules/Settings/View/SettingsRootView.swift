@@ -10,7 +10,11 @@ extension Settings {
 
         var body: some View {
             Form {
-                Section(header: Text("FreeAPS X v\(state.buildNumber)")) {
+                Section(
+                    header: Text(
+                        "FreeAPS X v\(state.versionNumber) - \(state.buildNumber) \nBranch: \(state.branch) \(state.copyrightNotice) "
+                    )
+                ) {
                     Toggle("Closed loop", isOn: $state.closedLoop)
                 }
 

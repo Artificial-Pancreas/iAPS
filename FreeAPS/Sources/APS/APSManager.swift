@@ -805,7 +805,7 @@ final class BaseAPSManager: APSManager, Injectable {
         let buildDate = Bundle.main.buildDate
         let version = Bundle.main.releaseVersionNumber
         let build = Bundle.main.buildVersionNumber
-        let branch = Bundle.main.infoDictionary?["NSHumanReadableCopyright"] as? String
+        let branch = Bundle.main.infoDictionary?["BuildBranch"] as? String
         let pump_ = pumpManager?.localizedTitle ?? ""
         let cgm = settingsManager.settings.cgm
         let file = OpenAPS.Monitor.statistics
