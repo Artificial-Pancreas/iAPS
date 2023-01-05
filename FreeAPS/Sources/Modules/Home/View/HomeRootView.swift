@@ -256,7 +256,7 @@ extension Home {
                             .string(from: (state.statistics?.Statistics.HbA1c.day ?? 0) as NSNumber) ?? ""
                         let sd_ = numberFormatter
                             .string(from: (state.statistics?.Statistics.Variance.SD.day ?? 0) as NSNumber) ?? ""
-                        let cv_ = numberFormatter
+                        let cv_ = tirFormatter
                             .string(from: (state.statistics?.Statistics.Variance.CV.day ?? 0) as NSNumber) ?? ""
 
                         averageTIRhca1c(hba1c_all, average_, median_, tir_low, tir_high, tir_, hba1c_, sd_, cv_)
@@ -278,7 +278,7 @@ extension Home {
                             .string(from: (state.statistics?.Statistics.HbA1c.week ?? 0) as NSNumber) ?? ""
                         let sd_ = numberFormatter
                             .string(from: (state.statistics?.Statistics.Variance.SD.week ?? 0) as NSNumber) ?? ""
-                        let cv_ = numberFormatter
+                        let cv_ = tirFormatter
                             .string(from: (state.statistics?.Statistics.Variance.CV.week ?? 0) as NSNumber) ?? ""
 
                         averageTIRhca1c(hba1c_all, average_, median_, tir_low, tir_high, tir_, hba1c_, sd_, cv_)
@@ -293,15 +293,14 @@ extension Home {
                         let tir_low = tirFormatter
                             .string(from: (state.statistics?.Statistics.Distribution.Hypos.month ?? 0) as NSNumber) ?? ""
                         let tir_high = tirFormatter
-                            .string(from: (state.statistics?.Statistics.Distribution.Hypers.month ?? 0) as NSNumber) ??
-                            ""
+                            .string(from: (state.statistics?.Statistics.Distribution.Hypers.month ?? 0) as NSNumber) ?? ""
                         let tir_ = tirFormatter
                             .string(from: (state.statistics?.Statistics.Distribution.TIR.month ?? 0) as NSNumber) ?? ""
                         let hba1c_ = numberFormatter
                             .string(from: (state.statistics?.Statistics.HbA1c.month ?? 0) as NSNumber) ?? ""
                         let sd_ = numberFormatter
                             .string(from: (state.statistics?.Statistics.Variance.SD.month ?? 0) as NSNumber) ?? ""
-                        let cv_ = numberFormatter
+                        let cv_ = tirFormatter
                             .string(from: (state.statistics?.Statistics.Variance.CV.month ?? 0) as NSNumber) ?? ""
 
                         averageTIRhca1c(hba1c_all, average_, median_, tir_low, tir_high, tir_, hba1c_, sd_, cv_)
@@ -332,7 +331,7 @@ extension Home {
                             .string(from: (state.statistics?.Statistics.HbA1c.ninetyDays ?? 0) as NSNumber) ?? ""
                         let sd_ = numberFormatter
                             .string(from: (state.statistics?.Statistics.Variance.SD.ninetyDays ?? 0) as NSNumber) ?? ""
-                        let cv_ = numberFormatter
+                        let cv_ = tirFormatter
                             .string(from: (state.statistics?.Statistics.Variance.CV.ninetyDays ?? 0) as NSNumber) ?? ""
 
                         averageTIRhca1c(hba1c_all, average_, median_, tir_low, tir_high, tir_, hba1c_, sd_, cv_)
@@ -355,7 +354,7 @@ extension Home {
                             .string(from: (state.statistics?.Statistics.HbA1c.total ?? 0) as NSNumber) ?? ""
                         let sd_ = numberFormatter
                             .string(from: (state.statistics?.Statistics.Variance.SD.total ?? 0) as NSNumber) ?? ""
-                        let cv_ = numberFormatter
+                        let cv_ = tirFormatter
                             .string(from: (state.statistics?.Statistics.Variance.CV.total ?? 0) as NSNumber) ?? ""
 
                         averageTIRhca1c(hba1c_all, average_, median_, tir_low, tir_high, tir_, hba1c_, sd_, cv_)
