@@ -1205,7 +1205,7 @@ Enact a temp Basal or a temp target */
 "Average" = "Mittelwert";
 
 /* Median BG */
-"Median" = "Mittelwert-Median";
+"Median" = "Median";
 
 /* Normal BG (within TIR) */
 "Normal (24h)" = "im Zielbereich (24 Std.)";
@@ -1226,10 +1226,10 @@ Enact a temp Basal or a temp target */
 " days" = " Tage";
 
 /* Nr of loops last 24 hours */
-"Loops" = "Schleifen (24 Std.)";
+"Loops" = "Schleifen";
 
 /* Average loop interval */
-"Average Interval" = "Intervalllänge in Min";
+"Average Interval" = "Intervall in Min";
 
 /* Median loop interval */
 "Median Duration" = "Mittlere Berechnungsdauer";
@@ -1250,13 +1250,13 @@ Enact a temp Basal or a temp target */
 "Past 24 Hours " = "Past 24 Hours ";
 
 /* Duration displayed in statPanel */
-"Past Week " = "Past Week ";
+"Past Week " = "Letzte Woche";
 
 /* Duration displayed in statPanel */
-"Past Month " = "Past Month ";
+"Past Month " = "Letzter Monat";
 
 /* Duration displayed in statPanel */
-"Past 90 Days " = "Past 90 Days ";
+"Past 90 Days " = "Letzten 90 Tage";
 
 /* Duration displayed in statPanel */
 "All Past Days of Data " = "All Past Days of Data ";
