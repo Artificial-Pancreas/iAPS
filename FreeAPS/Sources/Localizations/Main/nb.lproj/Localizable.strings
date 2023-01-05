@@ -1179,7 +1179,7 @@ Enact a temp Basal or a temp target */
 /* Headline Statistics */
 
 
-"Statistics" = "Statistics";
+"Statistics" = "Statistikk";
 
 /* Option in preferences */
 "Display Statistics" = "Vis statistikk";
@@ -1196,7 +1196,7 @@ Enact a temp Basal or a temp target */
 /* infoText: Description for Low Glucose Limit */
 "BG Under This Value Will Be Displayed As Low Glucose Percentage" = "BS under denne verdien vil vises som lav glukoseprosent";
 /* infoText: Description for High Glucose Limit */
-"BG Under This Value Will Be Displayed As High Glucose Percentage" = "BG Under This Value Will Be Displayed As High Glucose Percentage";
+"BG Under This Value Will Be Displayed As High Glucose Percentage" = "BS under denne verdien vil vises som høy glukoseprosent";
 
 /* When statistics.json was last updated */
 "Updated" = "Oppdatert";
@@ -1247,31 +1247,31 @@ Enact a temp Basal or a temp target */
 "Default is 30 minutes. How often to update and save the statistics.json and to upload last array, when enabled, to Nightscout. A lower interval than for glucose updates (5 min) is pointless." = "Standard er 30 minutter. Hvor ofte skal statistics.json oppdateres og lagres og, hvis aktivert, data lates opp til Nightscout. Et lavere intervall enn for BS (5 minutter) er meningsløst.";
 
 /* Duration displayed in statPanel */
-"Past 24 Hours " = "Past 24 Hours ";
+"Past 24 Hours " = "Siste 24 timer ";
 
 /* Duration displayed in statPanel */
-"Past Week " = "Past Week ";
+"Past Week " = "Siste uke ";
 
 /* Duration displayed in statPanel */
-"Past Month " = "Past Month ";
+"Past Month " = "Siste måned ";
 
 /* Duration displayed in statPanel */
-"Past 90 Days " = "Past 90 Days ";
+"Past 90 Days " = "Siste 90 dager ";
 
 /* Duration displayed in statPanel */
-"All Past Days of Data " = "All Past Days of Data ";
+"All Past Days of Data " = "Alle tidligere dager med data ";
 
 /* "Display Loop statistics in statPanel */
-"Display Loop Cycle statistics" = "Display Loop Cycle statistics";
+"Display Loop Cycle statistics" = "Vis statistikk for loop-sykluser";
 
 /* Description for Display Loop statistics */
-"Displays Loop statistics in the statPanel in Home View" = "Displays Loop statistics in the statPanel in Home View";
+"Displays Loop statistics in the statPanel in Home View" = "Viser Loop-statistikk i statPanel på hjemmeskjermen";
 
 /* Display % */
-"Override HbA1c unit" = "Override HbA1c unit";
+"Override HbA1c unit" = "Overstyre HbA1c-enhet";
 
 /* Description for Override HbA1c unit */
-"Change deafult HbA1c unit in statPanlel. The unit in statPanel will be updateded with next statistics.json update" = "Change deafult HbA1c unit in statPanlel. The unit in statPanel will be updateded with next statistics.json update";
+"Change deafult HbA1c unit in statPanlel. The unit in statPanel will be updateded with next statistics.json update" = "Endre enhet for HbA1c i statPanel. Enheten i statPanel vil bli oppdatert neste gang statistikken oppdateres";
 
 /* --------------------------------------
 
