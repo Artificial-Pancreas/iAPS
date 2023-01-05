@@ -1210,7 +1210,7 @@ Połączono z Nightscout!";
 "Median" = "Median";
 
 /* Normal BG (within TIR) */
-"Normal (24h)" = "Normal (24h)";
+"Normal" = "Normal";
 
 /* Title High BG in statPanel */
 "High (>" = "High (>";
@@ -1219,7 +1219,7 @@ Połączono z Nightscout!";
 "Low (<" = "Low (<";
 
 /* HbA1c estimation for one day of data */
-"HbA1c (24h)" = "HbA1c (24h)";
+"HbA1c" = "HbA1c";
 
 /* Total number of days of data for HbA1c estimation, part 1/2*/
 "All" = "All";

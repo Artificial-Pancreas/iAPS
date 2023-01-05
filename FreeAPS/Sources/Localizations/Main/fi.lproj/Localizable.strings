@@ -1208,7 +1208,7 @@ Enact a temp Basal or a temp target */
 "Median" = "Median";
 
 /* Normal BG (within TIR) */
-"Normal (24h)" = "Normal (24h)";
+"Normal" = "Normal";
 
 /* Title High BG in statPanel */
 "High (>" = "High (>";
@@ -1217,7 +1217,7 @@ Enact a temp Basal or a temp target */
 "Low (<" = "Low (<";
 
 /* HbA1c estimation for one day of data */
-"HbA1c (24h)" = "HbA1c (24h)";
+"HbA1c" = "HbA1c";
 
 /* Total number of days of data for HbA1c estimation, part 1/2*/
 "All" = "All";
