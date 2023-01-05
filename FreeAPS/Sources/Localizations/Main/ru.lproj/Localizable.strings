@@ -64,6 +64,9 @@
 /* Replace pod text in Header */
 "Replace pod" = "Замените под";
 
+/* Suggested at a date */
+"Suggested at %@" = "Предложено в %@";
+
 /* Add carbs screen */
 "Add Carbs" = "Ввод углеводов";
 
@@ -1223,7 +1226,7 @@ Enact a temp Basal or a temp target */
 "All " = "Все ";
 
 /* Total number of days of data for HbA1c estimation, part 2/2*/
-" days" = " дн.";
+" days" = " дни";
 
 /* Nr of loops last 24 hours */
 "Loops" = "Петли";
