@@ -1273,7 +1273,7 @@ Połączono z Nightscout!";
 "Override HbA1c unit" = "Override HbA1c unit";
 
 /* Description for Override HbA1c unit */
-"Change deafult HbA1c unit in statPanlel. The unit in statPanel will be updateded with next statistics.json update" = "Change deafult HbA1c unit in statPanlel. The unit in statPanel will be updateded with next statistics.json update";
+"Change default HbA1c unit in statPanlel. The unit in statPanel will be updateded with next statistics.json update" = "Change default HbA1c unit in statPanlel. The unit in statPanel will be updateded with next statistics.json update";
 
 /* --------------------------------------
 
