@@ -438,11 +438,16 @@ extension Home {
                     }
 
                     Text(
-                        NSLocalizedString("All ", comment: "") +
-                            // getString(state.statistics?.GlucoseStorage_Days, false) +
-                            NSLocalizedString(" days", comment: "")
+                        NSLocalizedString("All", comment: "")
                     ).font(.caption2).foregroundColor(.secondary)
 
+                    Text(
+                        targetFormatter
+                            .string(from: (state.statistics?.GlucoseStorage_Days ?? 0) as NSNumber) ?? ""
+                    ).font(.caption2).foregroundColor(.secondary)
+                    Text(
+                        NSLocalizedString("days", comment: "")
+                    ).font(.caption2).foregroundColor(.secondary)
                     Text(hba1c_all).font(.system(size: 12))
                 }
             }
