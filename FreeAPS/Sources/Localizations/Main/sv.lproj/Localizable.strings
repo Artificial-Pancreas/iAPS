@@ -49,6 +49,9 @@
 /* Headline in suggested pop up (at: at what time) */
 "Suggested at" = "Föreslaget klockan";
 
+/* Headline in enacted pop up (at: at what time) */
+"Error at" = "Fel klockan";
+
 /* Home title */
 "Home" = "Hem";
 

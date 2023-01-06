@@ -438,16 +438,10 @@ extension Home {
                     }
 
                     Text(
-                        NSLocalizedString("All", comment: "")
-                    ).font(.caption2).foregroundColor(.secondary)
+                        "\(NSLocalizedString("All", comment: "")) \(targetFormatter.string(from: (state.statistics?.GlucoseStorage_Days ?? 0) as NSNumber) ?? "") \(NSLocalizedString("days", comment: ""))"
+                    )
+                    .font(.caption2).foregroundColor(.secondary)
 
-                    Text(
-                        targetFormatter
-                            .string(from: (state.statistics?.GlucoseStorage_Days ?? 0) as NSNumber) ?? ""
-                    ).font(.caption2).foregroundColor(.secondary)
-                    Text(
-                        NSLocalizedString("days", comment: "")
-                    ).font(.caption2).foregroundColor(.secondary)
                     Text(hba1c_all).font(.system(size: 12))
                 }
             }
@@ -673,7 +667,7 @@ extension Home {
                 }
 
                 if let errorMessage = state.errorMessage, let date = state.errorDate {
-                    Text("Error at \(dateFormatter.string(from: date))")
+                    Text(NSLocalizedString("Error at", comment: "") + dateFormatter.string(from: date))
                         .foregroundColor(.white)
                         .font(.headline)
                         .padding(.bottom, 4)
