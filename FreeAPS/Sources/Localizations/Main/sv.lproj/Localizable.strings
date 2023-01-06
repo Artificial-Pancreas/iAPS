@@ -50,7 +50,7 @@
 "Suggested at" = "Föreslaget klockan";
 
 /* Headline in enacted pop up (at: at what time) */
- "Error at" = "Fel klockan";
+"Error at" = "Fel klockan";
 
 /* Home title */
 "Home" = "Hem";
@@ -1219,14 +1219,20 @@ Enact a temp Basal or a temp target */
 /* Title Low BG in statPanel */
 "Low (<" = "Lågt (<";
 
+/* SD */
+"SD" = "SD";
+
+/* CV */
+"CV" = "CV";
+
 /* HbA1c estimation for one day of data */
 "HbA1c" = "HbA1c";
 
 /* Total number of days of data for HbA1c estimation, part 1/2*/
-"All" = "Alla ";
+"All" = "Alla";
 
 /* Total number of days of data for HbA1c estimation, part 2/2*/
-"days" = " dagar";
+"days" = "dagar";
 
 /* Nr of loops last 24 hours */
 "Loops" = "Loopar";
