@@ -379,24 +379,24 @@ extension Home {
                 Group {
                     Text(NSLocalizedString("Average", comment: "")).font(.caption2).foregroundColor(.secondary)
 
-                    Text(average_).font(.system(size: 12))
+                    Text(average_).font(.footnote)
 
                     Text("Median")
                         .font(.caption2).foregroundColor(.secondary)
 
-                    Text(median_).font(.system(size: 12))
+                    Text(median_).font(.footnote)
 
                     if !state.settingsManager.preferences.displaySD {
                         Text(
                             NSLocalizedString("CV", comment: "CV")
                         ).font(.caption2).foregroundColor(.secondary)
 
-                        Text(cv_).font(.system(size: 12))
+                        Text(cv_).font(.footnote)
                     } else {
                         Text(
                             NSLocalizedString("SD", comment: "SD")
                         ).font(.caption2).foregroundColor(.secondary)
-                        Text(sd_).font(.system(size: 12))
+                        Text(sd_).font(.footnote)
                     }
                 }
             }
@@ -411,11 +411,11 @@ extension Home {
                     ).font(.caption2)
                         .foregroundColor(.secondary)
 
-                    Text(tir_low + " %").font(.system(size: 12)).foregroundColor(.loopRed)
+                    Text(tir_low + " %").font(.footnote).foregroundColor(.loopRed)
 
                     Text("Normal").font(.caption2).foregroundColor(.secondary)
 
-                    Text(tir_ + " %").font(.system(size: 12)).foregroundColor(.loopGreen)
+                    Text(tir_ + " %").font(.footnote).foregroundColor(.loopGreen)
 
                     Text(
                         NSLocalizedString("High (>", comment: " ") +
@@ -426,7 +426,7 @@ extension Home {
                     )
                     .font(.caption2).foregroundColor(.secondary)
 
-                    Text(tir_high + " %").font(.system(size: 12)).foregroundColor(.loopYellow)
+                    Text(tir_high + " %").font(.footnote).foregroundColor(.loopYellow)
                 }
             }
             HStack {
@@ -434,7 +434,7 @@ extension Home {
                     Text("HbA1c").font(.caption2).foregroundColor(.secondary)
 
                     if selectedState != .total {
-                        Text(hba1c_).font(.system(size: 12))
+                        Text(hba1c_).font(.footnote)
                     }
 
                     Text(
@@ -442,7 +442,7 @@ extension Home {
                     )
                     .font(.caption2).foregroundColor(.secondary)
 
-                    Text(hba1c_all).font(.system(size: 12))
+                    Text(hba1c_all).font(.footnote)
                 }
             }
 
@@ -453,14 +453,14 @@ extension Home {
                         Text(
                             tirFormatter
                                 .string(from: (state.statistics?.Statistics.LoopCycles.loops ?? 0) as NSNumber) ?? ""
-                        ).font(.system(size: 12))
+                        ).font(.footnote)
                         Text("Average Interval").font(.caption2)
                             .foregroundColor(.secondary)
                         Text(
                             targetFormatter
                                 .string(from: (state.statistics?.Statistics.LoopCycles.avg_interval ?? 0) as NSNumber) ??
                                 ""
-                        ).font(.system(size: 12))
+                        ).font(.footnote)
                         Text("Median Duration").font(.caption2)
                             .foregroundColor(.secondary)
                         Text(
@@ -468,7 +468,7 @@ extension Home {
                                 .string(
                                     from: (state.statistics?.Statistics.LoopCycles.median_duration ?? 0) as NSNumber
                                 ) ?? ""
-                        ).font(.system(size: 12))
+                        ).font(.footnote)
                     }
                 }
             }
