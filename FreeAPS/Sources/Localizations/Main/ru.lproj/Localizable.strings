@@ -49,6 +49,9 @@
 /* Headline in suggested pop up (at: at what time) */
 "Suggested at" = "Предложено в";
 
+/* Headline in enacted pop up (at: at what time) */
+"Error at" = "Error at";
+
 /* Home title */
 "Home" = "Главная";
 
@@ -1216,6 +1219,12 @@ Enact a temp Basal or a temp target */
 /* Title Low BG in statPanel */
 "Low (<" = "Низкий (<";
 
+/* SD */
+"SD" = "SD";
+
+/* CV */
+"CV" = "CV";
+
 /* HbA1c estimation for one day of data */
 "HbA1c" = "HbA1c (24ч)";
 
@@ -1223,7 +1232,7 @@ Enact a temp Basal or a temp target */
 "All" = "Все ";
 
 /* Total number of days of data for HbA1c estimation, part 2/2*/
-"days" = " дн.";
+"days" = "дней";
 
 /* Nr of loops last 24 hours */
 "Loops" = "Петли";

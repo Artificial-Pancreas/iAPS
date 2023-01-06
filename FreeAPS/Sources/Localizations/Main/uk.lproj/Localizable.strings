@@ -44,10 +44,13 @@
 "Agree and continue" = "Прийняти і Продовжити";
 
 /* Headline in enacted pop up (at: at what time) */
-"Enacted at" = "Прийнято в";
+"Enacted at" = "Виконано в";
 
 /* Headline in suggested pop up (at: at what time) */
 "Suggested at" = "Запропоновано на";
+
+/* Headline in enacted pop up (at: at what time) */
+"Error at" = "Error at";
 
 /* Home title */
 "Home" = "Головна";
@@ -1216,6 +1219,12 @@ Enact a temp Basal or a temp target */
 /* Title Low BG in statPanel */
 "Low (<" = "Низький (<";
 
+/* SD */
+"SD" = "SD";
+
+/* CV */
+"CV" = "CV";
+
 /* HbA1c estimation for one day of data */
 "HbA1c" = "HbA1c (24 години)";
 
@@ -1223,7 +1232,7 @@ Enact a temp Basal or a temp target */
 "All" = "Все";
 
 /* Total number of days of data for HbA1c estimation, part 2/2*/
-"days" = " дні";
+"days" = "дні";
 
 /* Nr of loops last 24 hours */
 "Loops" = "Петлі";
@@ -1271,7 +1280,7 @@ Enact a temp Basal or a temp target */
 "Override HbA1c unit" = "Замінити одиницю HbA1c";
 
 /* Description for Override HbA1c unit */
-"Change default HbA1c unit in statPanlel. The unit in statPanel will be updateded with next statistics.json update" = "Змініть стандартну одиницю HbA1c на панелі статистики. Одиниця на панелі статистики буде оновлено з наступним оновленням statistics.json";
+"Change default HbA1c unit in statPanlel. The unit in statPanel will be updateded with next statistics.json update" = "Змінити одиниці виміру HbA1c на панелі статистики. Одиниці виміру оновляться під час наступного оновлення файлу statistics.json";
 
 /* --------------------------------------
 

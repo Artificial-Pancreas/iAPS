@@ -49,6 +49,9 @@
 /* Headline in suggested pop up (at: at what time) */
 "Suggested at" = "Vorgeschlagen um";
 
+/* Headline in enacted pop up (at: at what time) */
+"Error at" = "Fehler um";
+
 /* Home title */
 "Home" = "Hauptseite";
 
@@ -1216,6 +1219,12 @@ Enact a temp Basal or a temp target */
 /* Title Low BG in statPanel */
 "Low (<" = "Niedrig (<";
 
+/* SD */
+"SD" = "SD";
+
+/* CV */
+"CV" = "CV";
+
 /* HbA1c estimation for one day of data */
 "HbA1c" = "HbA1c (24 Std.)";
 
@@ -1241,7 +1250,7 @@ Enact a temp Basal or a temp target */
 "Display Standard Deviation (SD) instead of Coefficient of Variation (CV) in statPanel" = "Zeige die Standardabweichung (SD) statt des Variationskoeffizienten (CV) in den Statistiken";
 
 /* How often to update the statistics */
-"Update every number of minutes:" = "Update der Statistik (in Minuten):";
+"Update every number of minutes:" = "Update der Statistik (in Minuten)";
 
 /* Description for update interval for statistics */
 "Default is 30 minutes. How often to update and save the statistics.json and to upload last array, when enabled, to Nightscout. A lower interval than for glucose updates (5 min) is pointless." = "Standardintervall ist 30 Minuten. Legt fest wie oft die statistics.json aktualisiert und gespeichert wird. Gleichzeitig werden die Daten zu Nightscout hochladen, wenn aktiviert. Ein geringerer Intervall, wie die Werte vom CGMS (5 Minuten) ist sinnlos.";
