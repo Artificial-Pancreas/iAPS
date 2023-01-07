@@ -1211,7 +1211,7 @@ Enact a temp Basal or a temp target */
 "Median" = "Median";
 
 /* Normal BG (within TIR) */
-"Normal" = "im Zielbereich (24 Std.)";
+"Normal" = "im Zielbereich";
 
 /* Title High BG in statPanel */
 "High (>" = "Hoch (>";
@@ -1232,7 +1232,7 @@ Enact a temp Basal or a temp target */
 "All" = "Ø";
 
 /* Total number of days of data for HbA1c estimation, part 2/2*/
-"days" = " Tage";
+"days" = "Tage";
 
 /* Nr of loops last 24 hours */
 "Loops" = "Loops";
@@ -1241,7 +1241,7 @@ Enact a temp Basal or a temp target */
 "Average Interval" = "Intervall in Min";
 
 /* Median loop interval */
-"Median Duration" = "Mittlere Berechnungsdauer";
+"Median Duration" = "Berechnungszeit";
 
 /* "Display SD */
 "Display SD instead of CV" = "Zeige die Standardabweichung (SD) statt des Variationskoeffizienten (CV)";
