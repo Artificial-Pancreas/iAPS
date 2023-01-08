@@ -1211,7 +1211,7 @@ Enact a temp Basal or a temp target */
 "Median" = "Mediaan";
 
 /* Normal BG (within TIR) */
-"Normal" = "TIR (24h)";
+"Normal" = "TIR ";
 
 /* Title High BG in statPanel */
 "High (>" = "Hoog (>";
