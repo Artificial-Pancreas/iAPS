@@ -667,7 +667,7 @@ extension Home {
                 }
 
                 if let errorMessage = state.errorMessage, let date = state.errorDate {
-                    Text(NSLocalizedString("Error at", comment: "") + dateFormatter.string(from: date))
+                    Text(NSLocalizedString("Error at", comment: "") + " " + dateFormatter.string(from: date))
                         .foregroundColor(.white)
                         .font(.headline)
                         .padding(.bottom, 4)

@@ -1487,7 +1487,7 @@ Enact a temp Basal or a temp target */
 "SMB Interval" = "SMB interval";
 
 /* "SMB Interval" */
-"Minimum duration in minutes between two enacted SMBs" = "Minimale duur in minuten tussen twee uitgevoerde SMBs";
+"Minimum duration in minutes for new SMB since last SMB or manual bolus" = "Minimale duur in minuten tussen twee uitgevoerde SMBs";
 
 /* Headline "Bolus Increment" */
 "Bolus Increment" = "Bolusverhoging";

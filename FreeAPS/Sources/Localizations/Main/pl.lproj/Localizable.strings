@@ -1489,7 +1489,7 @@ Połączono z Nightscout!";
 "SMB Interval" = "SMB Interval";
 
 /* "SMB Interval" */
-"Minimum duration in minutes between two enacted SMBs" = "Minimum duration in minutes between two enacted SMBs";
+"Minimum duration in minutes for new SMB since last SMB or manual bolus" = "Minimum duration in minutes for new SMB since last SMB or manual bolus";
 
 /* Headline "Bolus Increment" */
 "Bolus Increment" = "Bolus Increment";

@@ -1493,7 +1493,7 @@ Un 1.0 de valor permite un ajuste completo con el nuevo factor de sensibilidad d
 "SMB Interval" = "SMB Interval";
 
 /* "SMB Interval" */
-"Minimum duration in minutes between two enacted SMBs" = "Duración mínima en minutos entre dos SMBs aprobados";
+"Minimum duration in minutes for new SMB since last SMB or manual bolus" = "Duración mínima en minutos entre dos SMBs aprobados";
 
 /* Headline "Bolus Increment" */
 "Bolus Increment" = "Bolus Increment";
