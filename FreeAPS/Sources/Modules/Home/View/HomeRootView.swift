@@ -545,7 +545,7 @@ extension Home {
                     units: $state.units
                 )
             }
-            // .padding(.bottom)
+            .padding(.bottom)
             .modal(for: .dataTable, from: self)
         }
 
