@@ -1286,6 +1286,9 @@ Enact a temp Basal or a temp target */
 /* Description for Override HbA1c unit */
 "Change default HbA1c unit in statPanlel. The unit in statPanel will be updateded with next statistics.json update" = "Change default HbA1c unit in statPanlel. The unit in statPanel will be updateded with next statistics.json update";
 
+/* HbA1c for all glucose storage days */
+"all" = "all";
+
  /* --------------------------------------
 
   Infotexts from openaps.docs and androidaps.docs

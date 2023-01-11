@@ -11,6 +11,8 @@ extension Home {
         @State var isStatusPopupPresented = false
         @State var selectedState: durationState
 
+        public let paddingSpace: CGFloat = 15
+
         private var numberFormatter: NumberFormatter {
             let formatter = NumberFormatter()
             formatter.numberStyle = .decimal
@@ -227,15 +229,8 @@ extension Home {
 
         @ViewBuilder private func statPanel() -> some View {
             if state.displayStatistics {
-                VStack(alignment: .center, spacing: 5) {
-                    HStack {
-                        Group {
-                            durationButton(states: durationState.allCases, selectedState: $selectedState)
-
-                            Text("Updated").font(.caption2).foregroundColor(.secondary)
-                            Text(dateFormatter.string(from: state.statistics?.created_at ?? Date())).font(.system(size: 12))
-                        }
-                    }
+                VStack(spacing: 8) {
+                    durationButton(states: durationState.allCases, selectedState: $selectedState)
 
                     switch selectedState {
                     case .day:
@@ -360,14 +355,15 @@ extension Home {
                         averageTIRhca1c(hba1c_all, average_, median_, tir_low, tir_high, tir_, hba1c_, sd_, cv_)
                     }
                 }
-                .frame(maxWidth: .infinity, maxHeight: 130, alignment: .center)
+                .frame(maxWidth: .infinity)
+                .padding([.bottom], 20)
             }
         }
 
         @ViewBuilder private func averageTIRhca1c(
-            _ hba1c_all: String,
+            _: String,
             _ average_: String,
-            _ median_: String,
+            _: String,
             _ tir_low: String,
             _ tir_high: String,
             _ tir_: String,
@@ -377,98 +373,103 @@ extension Home {
         ) -> some View {
             HStack {
                 Group {
-                    Text(NSLocalizedString("Average", comment: "")).font(.caption2).foregroundColor(.secondary)
+                    if selectedState != .total {
+                        HStack {
+                            Text("HbA1c").font(.footnote).foregroundColor(.secondary)
+                            Text(hba1c_).font(.footnote)
+                        }
+                    } else {
+                        HStack {
+                            Text(
+                                "\(NSLocalizedString("HbA1c", comment: "")) (\(targetFormatter.string(from: (state.statistics?.GlucoseStorage_Days ?? 0) as NSNumber) ?? "") \(NSLocalizedString("days", comment: "")))"
+                            )
+                            .font(.footnote).foregroundColor(.secondary)
+                            Text(hba1c_).font(.footnote)
+                        }
+                    }
 
-                    Text(average_).font(.footnote)
-
-                    Text("Median")
-                        .font(.caption2).foregroundColor(.secondary)
-
-                    Text(median_).font(.footnote)
+                    HStack {
+                        Text(NSLocalizedString("Average", comment: "")).font(.footnote).foregroundColor(.secondary)
+                        Text(average_).font(.footnote)
+                    }.frame(minWidth: 110)
 
                     if !state.settingsManager.preferences.displaySD {
-                        Text(
-                            NSLocalizedString("CV", comment: "CV")
-                        ).font(.caption2).foregroundColor(.secondary)
+                        HStack {
+                            Text(
+                                NSLocalizedString("CV", comment: "CV")
+                            ).font(.footnote).foregroundColor(.secondary)
 
-                        Text(cv_).font(.footnote)
+                            Text(cv_).font(.footnote)
+                        }
                     } else {
-                        Text(
-                            NSLocalizedString("SD", comment: "SD")
-                        ).font(.caption2).foregroundColor(.secondary)
-                        Text(sd_).font(.footnote)
+                        HStack {
+                            Text(
+                                NSLocalizedString("SD", comment: "SD")
+                            ).font(.footnote).foregroundColor(.secondary)
+                            Text(sd_).font(.footnote)
+                        }
                     }
                 }
             }
             HStack {
                 Group {
-                    Text(
-                        NSLocalizedString("Low (<", comment: " ") +
-                            (
-                                targetFormatter
-                                    .string(from: state.settingsManager.preferences.low as NSNumber) ?? ""
-                            ) + ")"
-                    ).font(.caption2)
+                    HStack {
+                        Text(
+                            NSLocalizedString("Low", comment: " ")
+                        )
+                        .font(.footnote)
                         .foregroundColor(.secondary)
 
-                    Text(tir_low + " %").font(.footnote).foregroundColor(.loopRed)
-
-                    Text("Normal").font(.caption2).foregroundColor(.secondary)
-
-                    Text(tir_ + " %").font(.footnote).foregroundColor(.loopGreen)
-
-                    Text(
-                        NSLocalizedString("High (>", comment: " ") +
-                            (
-                                targetFormatter
-                                    .string(from: state.settingsManager.preferences.high as NSNumber) ?? ""
-                            ) + ")"
-                    )
-                    .font(.caption2).foregroundColor(.secondary)
-
-                    Text(tir_high + " %").font(.footnote).foregroundColor(.loopYellow)
-                }
-            }
-            HStack {
-                Group {
-                    Text("HbA1c").font(.caption2).foregroundColor(.secondary)
-
-                    if selectedState != .total {
-                        Text(hba1c_).font(.footnote)
+                        Text(tir_low + " %").font(.footnote).foregroundColor(.loopRed)
                     }
 
-                    Text(
-                        "\(NSLocalizedString("All", comment: "")) \(targetFormatter.string(from: (state.statistics?.GlucoseStorage_Days ?? 0) as NSNumber) ?? "") \(NSLocalizedString("days", comment: ""))"
-                    )
-                    .font(.caption2).foregroundColor(.secondary)
+                    HStack {
+                        Text("Normal").font(.footnote).foregroundColor(.secondary)
+                        Text(tir_ + " %").font(.footnote).foregroundColor(.loopGreen)
+                    }
 
-                    Text(hba1c_all).font(.footnote)
+                    HStack {
+                        Text(
+                            NSLocalizedString("High", comment: " ")
+                        )
+                        .font(.footnote).foregroundColor(.secondary)
+
+                        Text(tir_high + " %").font(.footnote).foregroundColor(.loopYellow)
+                    }
                 }
             }
 
             if state.settingsManager.preferences.displayLoops {
                 HStack {
                     Group {
-                        Text("Loops").font(.caption2).foregroundColor(.secondary)
-                        Text(
-                            tirFormatter
-                                .string(from: (state.statistics?.Statistics.LoopCycles.loops ?? 0) as NSNumber) ?? ""
-                        ).font(.footnote)
-                        Text("Average Interval").font(.caption2)
-                            .foregroundColor(.secondary)
-                        Text(
-                            targetFormatter
-                                .string(from: (state.statistics?.Statistics.LoopCycles.avg_interval ?? 0) as NSNumber) ??
-                                ""
-                        ).font(.footnote)
-                        Text("Median Duration").font(.caption2)
-                            .foregroundColor(.secondary)
-                        Text(
-                            numberFormatter
-                                .string(
-                                    from: (state.statistics?.Statistics.LoopCycles.median_duration ?? 0) as NSNumber
-                                ) ?? ""
-                        ).font(.footnote)
+                        HStack {
+                            Text("Loops").font(.footnote).foregroundColor(.secondary)
+                            Text(
+                                tirFormatter
+                                    .string(from: (state.statistics?.Statistics.LoopCycles.loops ?? 0) as NSNumber) ?? ""
+                            ).font(.footnote)
+                        }
+
+                        HStack {
+                            Text("Interval").font(.footnote)
+                                .foregroundColor(.secondary)
+                            Text(
+                                targetFormatter
+                                    .string(from: (state.statistics?.Statistics.LoopCycles.avg_interval ?? 0) as NSNumber) ??
+                                    ""
+                            ).font(.footnote)
+                        }
+
+                        HStack {
+                            Text("Duration").font(.footnote)
+                                .foregroundColor(.secondary)
+                            Text(
+                                numberFormatter
+                                    .string(
+                                        from: (state.statistics?.Statistics.LoopCycles.median_duration ?? 0) as NSNumber
+                                    ) ?? ""
+                            ).font(.footnote)
+                        }
                     }
                 }
             }
@@ -517,6 +518,7 @@ extension Home {
                     }
                 }
                 .frame(maxWidth: .infinity)
+                .padding([.bottom], 20)
             }
         }
 
