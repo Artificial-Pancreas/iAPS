@@ -28,7 +28,8 @@ struct durationButton<T: DurationButton>: View {
             currentIndex = currentIndex < states.count - 1 ? currentIndex + 1 : 0
             selectedState = states[currentIndex]
         } label: {
-            Text(NSLocalizedString(states[currentIndex].title, comment: "Duration displayed in statPanel")).font(.caption2)
+            Text(NSLocalizedString(states[currentIndex].title, comment: "Duration displayed in statPanel"))
+                .font(.caption2)
                 .foregroundColor(.secondary)
         }
 

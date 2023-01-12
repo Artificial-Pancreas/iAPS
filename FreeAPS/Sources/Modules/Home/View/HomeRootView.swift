@@ -361,7 +361,7 @@ extension Home {
         }
 
         @ViewBuilder private func averageTIRhca1c(
-            _: String,
+            _ hba1c_all: String,
             _ average_: String,
             _: String,
             _ tir_low: String,
@@ -384,7 +384,7 @@ extension Home {
                                 "\(NSLocalizedString("HbA1c", comment: "")) (\(targetFormatter.string(from: (state.statistics?.GlucoseStorage_Days ?? 0) as NSNumber) ?? "") \(NSLocalizedString("days", comment: "")))"
                             )
                             .font(.footnote).foregroundColor(.secondary)
-                            Text(hba1c_).font(.footnote)
+                            Text(hba1c_all).font(.footnote)
                         }
                     }
 
