@@ -118,7 +118,7 @@ struct MainView: View {
                             HStack {
                                 Text("❤️" + " \(pulse)")
                                     .fontWeight(.regular)
-                                    .font(.custom("activated", size: 22))
+                                    .font(.custom("activated", size: 20))
                                     .scaledToFill()
                                     .foregroundColor(.white)
                                     .minimumScaleFactor(0.5)
