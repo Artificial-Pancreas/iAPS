@@ -14,6 +14,9 @@ struct MainView: View {
     @State var isBolusActive = false
     @State private var pulse = 0
 
+    @GestureState var isDetectingLongPress = false
+    @State var completedLongPress = false
+
     private var healthStore = HKHealthStore()
     let heartRateQuantity = HKUnit(from: "count/min")
 
@@ -73,7 +76,7 @@ struct MainView: View {
 
                 VStack(spacing: 0) {
                     HStack {
-                        Circle().stroke(color, lineWidth: 6).frame(width: 30, height: 30).padding(10)
+                        Circle().stroke(color, lineWidth: 5).frame(width: 26, height: 26).padding(10)
                     }
 
                     if state.lastLoopDate != nil {
@@ -108,12 +111,33 @@ struct MainView: View {
                     .foregroundColor(.loopGreen)
                     .minimumScaleFactor(0.5)
 
-                if !state.displayHR {
+                if state.displayHR {
                     Spacer()
                     HStack {
-                        Text("❤️" + " \(pulse)")
-                            .fontWeight(.regular)
-                            .font(.system(size: 18)).foregroundColor(Color.white)
+                        if completedLongPress {
+                            HStack {
+                                Text("❤️" + " \(pulse)")
+                                    .fontWeight(.regular)
+                                    .font(.custom("activated", size: 22))
+                                    .scaledToFill()
+                                    .foregroundColor(.white)
+                                    .minimumScaleFactor(0.5)
+                            }
+                            .scaleEffect(isDetectingLongPress ? 3 : 1)
+                            .gesture(longPress)
+
+                        } else {
+                            HStack {
+                                Text("❤️" + " \(pulse)")
+                                    .fontWeight(.regular)
+                                    .font(.caption2)
+                                    .scaledToFill()
+                                    .foregroundColor(.white)
+                                    .minimumScaleFactor(0.5)
+                            }
+                            .scaleEffect(isDetectingLongPress ? 3 : 1)
+                            .gesture(longPress)
+                        }
                     }
 
                 } else if let eventualBG = state.eventualBG.nonEmpty {
@@ -130,6 +154,19 @@ struct MainView: View {
             Spacer()
                 .onAppear(perform: start)
         }.padding()
+    }
+
+    var longPress: some Gesture {
+        LongPressGesture(minimumDuration: 1)
+            .updating($isDetectingLongPress) { currentState, gestureState,
+                _ in
+                gestureState = currentState
+            }
+            .onEnded { _ in
+                if completedLongPress {
+                    completedLongPress = false
+                } else { completedLongPress = true }
+            }
     }
 
     var buttons: some View {
