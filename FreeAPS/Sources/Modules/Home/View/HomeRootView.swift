@@ -20,6 +20,9 @@ extension Home {
         @State var cv_ = ""
         @State var sd_ = ""
         @State var CVorSD = ""
+        // Switch between Loops and Errors when tapping in ststPanel
+        @State var loopStatTitle = NSLocalizedString("Loops", comment: "Nr of Loops in statPanel")
+        @State var loopsOrerrors = ""
 
         public let paddingSpace: CGFloat = 15
 
@@ -471,12 +474,26 @@ extension Home {
             if state.settingsManager.preferences.displayLoops {
                 HStack {
                     Group {
+                        let loopTitle = NSLocalizedString("Loops", comment: "Nr of Loops in statPanel")
+                        let errorTitle = NSLocalizedString("Errors", comment: "Loop Errors in statPanel")
+
                         HStack {
-                            Text("Loops").font(.footnote).foregroundColor(.secondary)
+                            Text(loopStatTitle).font(.footnote).foregroundColor(.secondary)
                             Text(
-                                tirFormatter
-                                    .string(from: (state.statistics?.Statistics.LoopCycles.loops ?? 0) as NSNumber) ?? ""
+                                loopsOrerrors == "" ? tirFormatter
+                                    .string(from: (state.statistics?.Statistics.LoopCycles.loops ?? 0) as NSNumber) ?? "" :
+                                    loopsOrerrors
                             ).font(.footnote)
+                        }.onTapGesture {
+                            if loopStatTitle == loopTitle {
+                                loopStatTitle = errorTitle
+                                loopsOrerrors = tirFormatter
+                                    .string(from: (state.statistics?.Statistics.LoopCycles.errors ?? 0) as NSNumber) ?? ""
+                            } else if loopStatTitle == errorTitle {
+                                loopStatTitle = loopTitle
+                                loopsOrerrors = tirFormatter
+                                    .string(from: (state.statistics?.Statistics.LoopCycles.loops ?? 0) as NSNumber) ?? ""
+                            }
                         }
 
                         HStack {
