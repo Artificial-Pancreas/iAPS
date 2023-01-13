@@ -397,14 +397,17 @@ extension Home {
                             Text(hba1c_all).font(.footnote)
                         }
                     }
-
                     // Average as default. Changes to Median when clicking.
                     let textAverageTitle = NSLocalizedString("Average", comment: "")
                     let textMedianTitle = NSLocalizedString("Median", comment: "")
 
                     HStack {
                         Text(averageOrMedianTitle).font(.footnote).foregroundColor(.secondary)
-                        Text(averageOrmedian == "" ? average_ : averageOrmedian).font(.footnote)
+                        if averageOrMedianTitle == textAverageTitle {
+                            Text(averageOrmedian == "" ? average_ : average_).font(.footnote)
+                        } else {
+                            Text(averageOrmedian == "" ? median_ : median_).font(.footnote)
+                        }
                     }.onTapGesture {
                         if averageOrMedianTitle == textAverageTitle {
                             averageOrMedianTitle = textMedianTitle
@@ -415,14 +418,17 @@ extension Home {
                         }
                     }
                     .frame(minWidth: 110)
-
                     // CV as default. Changes to SD when clicking
                     let text_CV_Title = NSLocalizedString("CV", comment: "")
                     let text_SD_Title = NSLocalizedString("SD", comment: "")
 
                     HStack {
                         Text(CV_or_SD_Title).font(.footnote).foregroundColor(.secondary)
-                        Text(CVorSD == "" ? cv_ : CVorSD).font(.footnote)
+                        if CV_or_SD_Title == text_CV_Title {
+                            Text(CVorSD == "" ? cv_ : cv_).font(.footnote)
+                        } else {
+                            Text(CVorSD == "" ? sd_ : sd_).font(.footnote)
+                        }
                     }.onTapGesture {
                         if CV_or_SD_Title == text_CV_Title {
                             CV_or_SD_Title = text_SD_Title
