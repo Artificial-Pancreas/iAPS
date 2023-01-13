@@ -1229,7 +1229,7 @@ Enact a temp Basal or a temp target */
 /* CV */
 "CV" = "CV";
 
-/* HbA1c estimation for one day of data */
+/* Estimated HbA1c */
 "HbA1c" = "HbA1c";
 
 /* Total number of days of data for HbA1c estimation, part 1/2*/
@@ -1238,14 +1238,17 @@ Enact a temp Basal or a temp target */
 /* Total number of days of data for HbA1c estimation, part 2/2*/
 "days" = "days";
 
-/* Nr of loops last 24 hours */
+/* Nr of Loops in statPanel */
 "Loops" = "Loops";
 
+/* Loop Errors in statPanel */
+"Errors" = "Errors";
+
 /* Average loop interval */
-"Average Interval" = "Average Interval";
+"Interval" = "Interval";
 
 /* Median loop interval */
-"Median Duration" = "Median Duration";
+"Duration" = "Duration";
 
 /* "Display SD */
 "Display SD instead of CV" = "Display SD instead of CV";
