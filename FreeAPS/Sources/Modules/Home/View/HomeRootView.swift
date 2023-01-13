@@ -11,6 +11,16 @@ extension Home {
         @State var isStatusPopupPresented = false
         @State var selectedState: durationState
 
+        // Average/Median and CV/SD titles and values switches when you click them
+        @State var averageOrMedianTitle = NSLocalizedString("Average", comment: "")
+        @State var median_ = ""
+        @State var average_ = ""
+        @State var averageOrmedian = ""
+        @State var CV_or_SD_Title = NSLocalizedString("CV", comment: "CV")
+        @State var cv_ = ""
+        @State var sd_ = ""
+        @State var CVorSD = ""
+
         public let paddingSpace: CGFloat = 15
 
         private var numberFormatter: NumberFormatter {
@@ -363,7 +373,7 @@ extension Home {
         @ViewBuilder private func averageTIRhca1c(
             _ hba1c_all: String,
             _ average_: String,
-            _: String,
+            _ median_: String,
             _ tir_low: String,
             _ tir_high: String,
             _ tir_: String,
@@ -388,25 +398,38 @@ extension Home {
                         }
                     }
 
+                    // Average as default. Changes to Median when clicking.
+                    let textAverageTitle = NSLocalizedString("Average", comment: "")
+                    let textMedianTitle = NSLocalizedString("Median", comment: "")
+
                     HStack {
-                        Text(NSLocalizedString("Average", comment: "")).font(.footnote).foregroundColor(.secondary)
-                        Text(average_).font(.footnote)
-                    }.frame(minWidth: 110)
-
-                    if !state.settingsManager.preferences.displaySD {
-                        HStack {
-                            Text(
-                                NSLocalizedString("CV", comment: "CV")
-                            ).font(.footnote).foregroundColor(.secondary)
-
-                            Text(cv_).font(.footnote)
+                        Text(averageOrMedianTitle).font(.footnote).foregroundColor(.secondary)
+                        Text(averageOrmedian == "" ? average_ : averageOrmedian).font(.footnote)
+                    }.onTapGesture {
+                        if averageOrMedianTitle == textAverageTitle {
+                            averageOrMedianTitle = textMedianTitle
+                            averageOrmedian = median_
+                        } else {
+                            averageOrMedianTitle = textAverageTitle
+                            averageOrmedian = average_
                         }
-                    } else {
-                        HStack {
-                            Text(
-                                NSLocalizedString("SD", comment: "SD")
-                            ).font(.footnote).foregroundColor(.secondary)
-                            Text(sd_).font(.footnote)
+                    }
+                    .frame(minWidth: 110)
+
+                    // CV as default. Changes to SD when clicking
+                    let text_CV_Title = NSLocalizedString("CV", comment: "")
+                    let text_SD_Title = NSLocalizedString("SD", comment: "")
+
+                    HStack {
+                        Text(CV_or_SD_Title).font(.footnote).foregroundColor(.secondary)
+                        Text(CVorSD == "" ? cv_ : CVorSD).font(.footnote)
+                    }.onTapGesture {
+                        if CV_or_SD_Title == text_CV_Title {
+                            CV_or_SD_Title = text_SD_Title
+                            CVorSD = sd_
+                        } else {
+                            CV_or_SD_Title = text_CV_Title
+                            CVorSD = cv_
                         }
                     }
                 }

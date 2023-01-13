@@ -56,7 +56,6 @@ struct Preferences: JSON {
     var high: Decimal = 10
     var low: Decimal = 4
     var updateInterval: Decimal = 30
-    var displaySD: Bool = false
     var overrideHbA1cUnit: Bool = false
     var displayLoops: Bool = false
 }
@@ -117,7 +116,6 @@ extension Preferences {
         case high
         case low
         case updateInterval
-        case displaySD
         case overrideHbA1cUnit
         case displayLoops
     }

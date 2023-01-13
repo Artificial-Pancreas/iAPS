@@ -67,18 +67,6 @@ extension PreferencesEditor {
                 ),
                 Field(
                     displayName: NSLocalizedString(
-                        "Display SD instead of CV",
-                        comment: "Display SD"
-                    ),
-                    type: .boolean(keypath: \.displaySD),
-                    infoText: NSLocalizedString(
-                        "Display Standard Deviation (SD) instead of Coefficient of Variation (CV) in statPanel",
-                        comment: "Description for display SD"
-                    ),
-                    settable: self
-                ),
-                Field(
-                    displayName: NSLocalizedString(
                         "Display Loop Cycle statistics",
                         comment: "Display Display Loop Cycle statistics in statPanel"
                     ),
