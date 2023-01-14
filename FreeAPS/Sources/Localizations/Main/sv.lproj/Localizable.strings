@@ -1225,7 +1225,7 @@ Enact a temp Basal or a temp target */
 /* CV */
 "CV" = "CV";
 
-/* HbA1c estimation */
+/* Estimated HbA1c */
 "HbA1c" = "HbA1c";
 
 /* Total number of days of data for HbA1c estimation, part 1/2*/
@@ -1490,7 +1490,7 @@ Enact a temp Basal or a temp target */
 "SMB Interval" = "SMB-intervall (minuter)";
 
 /* "SMB Interval" */
-"Minimum duration in minutes for new SMB since last SMB or manual bolus" = "Minsta tidsintervall mellan två supermikrobolusar.";
+"Minimum duration in minutes for new SMB since last SMB or manual bolus" = "Minsta tid i minuter för ny automatisk bolus sedan senaste bolus eller automatisk bolus";
 
 /* Headline "Bolus Increment" */
 "Bolus Increment" = "Minsta bolusmångd";

@@ -1,5 +1,5 @@
 /* Privacy - NFC Scan Usage Description */
-"NFCReaderUsageDescription" = "NFC används för att skanna Libre-sensorer.";
+"NFCReaderUsageDescription" = "NFC behövs för att skanna Libre-sensorn vid uppstart.";
 
 /* Privacy - Bluetooth Always Usage Description */
 "NSBluetoothAlwaysUsageDescription" = "Bluetooth används för att kommunicera med insulinpumpen och kontinuerlig glukosmätare";
