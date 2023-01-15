@@ -1225,7 +1225,7 @@ Enact a temp Basal or a temp target */
 /* CV */
 "CV" = "CV";
 
-/* HbA1c estimation for one day of data */
+/* Estimated HbA1c */
 "HbA1c" = "HbA1c";
 
 /* Total number of days of data for HbA1c estimation, part 1/2*/
@@ -1234,14 +1234,17 @@ Enact a temp Basal or a temp target */
 /* Total number of days of data for HbA1c estimation, part 2/2*/
 "days" = "dagar";
 
-/* Nr of loops last 24 hours */
+/* Nr of Loops in statPanel */
 "Loops" = "Loopar";
 
+/* Loop Errors in statPanel */
+"Errors" = "Fel";
+
 /* Average loop interval */
-"Average Interval" = "Medelintervall";
+"Interval" = "Intervall";
 
 /* Median loop interval */
-"Median Duration" = "Medianduration";
+"Duration" = "Duration";
 
 /* "Display SD */
 "Display SD instead of CV" = "Visa SD istället för CV";
@@ -1281,6 +1284,9 @@ Enact a temp Basal or a temp target */
 
 /* Description for Override HbA1c unit */
 "Change default HbA1c unit in statPanlel. The unit in statPanel will be updateded with next statistics.json update" = "Ändra HbA1c-enhet. Enheten kommer att uppdateras nästa gång filen statistics.json uppdateras";
+
+/* HbA1c for all glucose storage days */
+"all" = "alla";
 
 /* --------------------------------------
 
@@ -1487,7 +1493,7 @@ Enact a temp Basal or a temp target */
 "SMB Interval" = "SMB-intervall (minuter)";
 
 /* "SMB Interval" */
-"Minimum duration in minutes for new SMB since last SMB or manual bolus" = "Minsta tidsintervall mellan två supermikrobolusar.";
+"Minimum duration in minutes for new SMB since last SMB or manual bolus" = "Minsta tid i minuter för ny automatisk bolus sedan senaste bolus eller automatisk bolus";
 
 /* Headline "Bolus Increment" */
 "Bolus Increment" = "Minsta bolusmångd";

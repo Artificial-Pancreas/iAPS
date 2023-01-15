@@ -1225,7 +1225,7 @@ Enact a temp Basal or a temp target */
 /* CV */
 "CV" = "CV";
 
-/* HbA1c estimation for one day of data */
+/* Estimated HbA1c */
 "HbA1c" = "HbA1c";
 
 /* Total number of days of data for HbA1c estimation, part 1/2*/
@@ -1234,14 +1234,17 @@ Enact a temp Basal or a temp target */
 /* Total number of days of data for HbA1c estimation, part 2/2*/
 "days" = "days";
 
-/* Nr of loops last 24 hours */
+/* Nr of Loops in statPanel */
 "Loops" = "Loops";
 
+/* Loop Errors in statPanel */
+"Errors" = "Errors";
+
 /* Average loop interval */
-"Average Interval" = "Avgerage Interval";
+"Interval" = "Interval";
 
 /* Median loop interval */
-"Median Duration" = "Median Duration";
+"Duration" = "持续时间";
 
 /* "Display SD */
 "Display SD instead of CV" = "Display SD instead of CV";
@@ -1489,7 +1492,7 @@ Enact a temp Basal or a temp target */
 "SMB Interval" = "SMB Interval";
 
 /* "SMB Interval" */
-"Minimum duration in minutes for new SMB since last SMB or manual bolus" = "两次自动大剂量的最短时间";
+"Minimum duration in minutes for new SMB since last SMB or manual bolus" = "Minimum duration in minutes for new SMB since last SMB or manual bolus";
 
 /* Headline "Bolus Increment" */
 "Bolus Increment" = "Bolus Increment";

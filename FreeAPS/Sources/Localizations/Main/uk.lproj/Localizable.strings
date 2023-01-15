@@ -1225,7 +1225,7 @@ Enact a temp Basal or a temp target */
 /* CV */
 "CV" = "CV";
 
-/* HbA1c estimation for one day of data */
+/* Estimated HbA1c */
 "HbA1c" = "HbA1c";
 
 /* Total number of days of data for HbA1c estimation, part 1/2*/
@@ -1234,14 +1234,17 @@ Enact a temp Basal or a temp target */
 /* Total number of days of data for HbA1c estimation, part 2/2*/
 "days" = "дні";
 
-/* Nr of loops last 24 hours */
+/* Nr of Loops in statPanel */
 "Loops" = "Петлі";
 
+/* Loop Errors in statPanel */
+"Errors" = "Помилки";
+
 /* Average loop interval */
-"Average Interval" = "Середній інтервал";
+"Interval" = "Інтервал";
 
 /* Median loop interval */
-"Median Duration" = "Середня тривалість";
+"Duration" = "Тривалість";
 
 /* "Display SD */
 "Display SD instead of CV" = "Показати SD замість CV";
@@ -1487,7 +1490,7 @@ Enact a temp Basal or a temp target */
 "SMB Interval" = "Інтервал між SMB";
 
 /* "SMB Interval" */
-"Minimum duration in minutes for new SMB since last SMB or manual bolus" = "Мінімальна тривалість у хвилинах між двома подачами SMB";
+"Minimum duration in minutes for new SMB since last SMB or manual bolus" = "Мінімальна тривалість у хвилинах для нового SMB після останнього SMB або ручного болюсу";
 
 /* Headline "Bolus Increment" */
 "Bolus Increment" = "Приріст болюсу";
