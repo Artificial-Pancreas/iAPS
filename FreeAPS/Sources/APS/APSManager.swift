@@ -240,7 +240,9 @@ final class BaseAPSManager: APSManager, Injectable {
         loopStats(loopStatRecord: loopStatRecord)
 
         // Create a statistics.json
-        statistics()
+        if settings.displayStatistics {
+            statistics()
+        }
 
         if settings.closedLoop {
             reportEnacted(received: error == nil)
@@ -763,7 +765,7 @@ final class BaseAPSManager: APSManager, Injectable {
 
         let updateThisOften = Int(settingsManager.preferences.updateInterval)
 
-        // Only run every 30 minutes or when pressing statPanel
+        // Only run every 30 minutesl
         if testIfEmpty != 0 {
             guard testFile[0].created_at.addingTimeInterval(updateThisOften.minutes.timeInterval) < Date()
             else {
@@ -1324,6 +1326,8 @@ final class BaseAPSManager: APSManager, Injectable {
         )
 
         let variance = Variance(SD: standardDeviations, CV: cvs)
+
+        // let nrOfCGMReadings = glucose?.count ?? 0
 
         let dailystat = Statistics(
             created_at: Date(),
