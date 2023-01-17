@@ -1238,10 +1238,10 @@ Enact a temp Basal or a temp target */
 "Loops" = "Петли";
 
 /* Loop Errors in statPanel */
-"Errors" = "Errors";
+"Errors" = "Ошибки";
 
 /* Average loop interval */
-"Interval" = "Interval";
+"Interval" = "Интервал";
 
 /* Median loop interval */
 "Duration" = "Длительность";
@@ -1490,7 +1490,7 @@ Enact a temp Basal or a temp target */
 "SMB Interval" = "Интервал между SMB";
 
 /* "SMB Interval" */
-"Minimum duration in minutes for new SMB since last SMB or manual bolus" = "Minimum duration in minutes for new SMB since last SMB or manual bolus";
+"Minimum duration in minutes for new SMB since last SMB or manual bolus" = "Минимальный интервал в минутах для новых SMB с момента последнего SMB или введенного вручную болюса";
 
 /* Headline "Bolus Increment" */
 "Bolus Increment" = "Прирост болюса";
