@@ -607,7 +607,7 @@ extension Home {
                                 .renderingMode(.template)
                                 .resizable()
                                 .frame(width: 24, height: 24)
-                                .foregroundColor(.loopGreen)
+                                .foregroundColor(.loopYellow)
                                 .padding(8)
                             if let carbsReq = state.carbsRequired {
                                 Text(numberFormatter.string(from: carbsReq as NSNumber)!)
@@ -626,7 +626,7 @@ extension Home {
                             .resizable()
                             .frame(width: 24, height: 24)
                             .padding(8)
-                    }.foregroundColor(.loopYellow)
+                    }.foregroundColor(.loopGreen)
                     Spacer()
                     Button { state.showModal(for: .bolus(waitForSuggestion: false)) }
                     label: {
