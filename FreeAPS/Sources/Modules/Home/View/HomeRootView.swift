@@ -23,7 +23,7 @@ extension Home {
         // Switch between Loops and Errors when tapping in ststPanel
         @State var loopStatTitle = NSLocalizedString("Loops", comment: "Nr of Loops in statPanel")
         @State var loopsOrerrors = ""
-        
+
         private var numberFormatter: NumberFormatter {
             let formatter = NumberFormatter()
             formatter.numberStyle = .decimal

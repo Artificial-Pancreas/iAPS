@@ -25,6 +25,10 @@ extension DataTable {
             nightscoutManager.deleteCarbs(at: date)
         }
 
+        func deleteInsulin(at date: Date) {
+            nightscoutManager.deleteInsulin(at: date)
+        }
+
         func glucose() -> [BloodGlucose] {
             glucoseStorage.recent().sorted { $0.date > $1.date }
         }
