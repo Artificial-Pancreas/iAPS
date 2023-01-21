@@ -10,7 +10,7 @@ public enum MessageType: UInt8 {
     case alert                        = 0x01
     case alertCleared                 = 0x02
     case deviceTest                   = 0x03
-    case pumpStatus                   = 0x04
+    case mySentryPumpStatus           = 0x04
     case pumpAck                      = 0x06
     case pumpBackfill                 = 0x08
     case findDevice                   = 0x09
@@ -96,7 +96,7 @@ public enum MessageType: UInt8 {
             return MySentryAlertMessageBody.self
         case .alertCleared:
             return MySentryAlertClearedMessageBody.self
-        case .pumpStatus:
+        case .mySentryPumpStatus:
             return MySentryPumpStatusMessageBody.self
         case .pumpAck:
             return PumpAckMessageBody.self

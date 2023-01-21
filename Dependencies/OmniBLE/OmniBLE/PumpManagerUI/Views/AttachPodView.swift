@@ -55,7 +55,7 @@ struct AttachPodView: View {
         }
         .animation(.default)
         .alert(item: $activeModal, content: self.alert(for:))
-        .navigationBarTitle("Attach Pod", displayMode: .automatic)
+        .navigationBarTitle(LocalizedString("Attach Pod", comment: "navigation bar title attach pod"), displayMode: .automatic)
         .navigationBarItems(trailing: cancelButton)
         .navigationBarBackButtonHidden(true)
     }

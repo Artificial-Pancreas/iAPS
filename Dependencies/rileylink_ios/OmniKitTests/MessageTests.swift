@@ -32,7 +32,7 @@ class MessageTests: XCTestCase {
             
             let statusResponse = messageBlocks[0] as! StatusResponse
             
-            XCTAssertEqual(Pod.reservoirLevelAboveThresholdMagicNumber, statusResponse.reservoirLevel)
+            XCTAssertEqual(Pod.reservoirLevelAboveThresholdMagicNumber, statusResponse.reservoirLevel, accuracy: 0.01)
             XCTAssertEqual(TimeInterval(minutes: 4261), statusResponse.timeActive)
 
             XCTAssertEqual(.scheduledBasal, statusResponse.deliveryStatus)
@@ -235,21 +235,45 @@ class MessageTests: XCTestCase {
         }
     }
     
-    func testInsertCannula() {
-//        2018-04-03T19:23:14.3d ID1:1f00ee85 PTYPE:PDM SEQ:17 ID2:1f00ee85 B9:38 BLEN:31 BODY:1a0e7e30bf16020065010050000a000a170d000064000186a0 CRC:33
-//        2018-04-03T19:23:14.3d ID1:1f00ee85 PTYPE:ACK SEQ:18 ID2:1f00ee85 CRC:89
-//        2018-04-03T19:23:14.3d ID1:1f00ee85 PTYPE:CON SEQ:19 CON:000000000000808c CRC:6f
-//        2018-04-03T19:23:14.3d ID1:1f00ee85 PTYPE:POD SEQ:20 ID2:1f00ee85 B9:3c BLEN:10 BODY:1d570016f00a00000bff8099 CRC:86
-//        2018-04-03T19:23:14.3d ID1:1f00ee85 PTYPE:ACK SEQ:21 ID2:1f00ee85 CRC:a0
-
+    func testPrime() {
         do {
+            // 1a LL NNNNNNNN 02 CCCC HH SSSS PPPP 0ppp
+            // 1a 0e bed2e16b 02 010a 01 01a0 0034 0034
             // Decode
             let cmd = try SetInsulinScheduleCommand(encodedData: Data(hexadecimalString: "1a0ebed2e16b02010a0101a000340034")!)
             XCTAssertEqual(0xbed2e16b, cmd.nonce)
             
-            if case SetInsulinScheduleCommand.DeliverySchedule.bolus(let units, let timeBetweenPulses) = cmd.deliverySchedule {
-                XCTAssertEqual(2.6, units)
-                XCTAssertEqual(.seconds(1), timeBetweenPulses)
+            if case SetInsulinScheduleCommand.DeliverySchedule.bolus(let units, let timeBetweenPulses, let table) = cmd.deliverySchedule {
+                XCTAssertEqual(Pod.primeUnits, units)
+                XCTAssertEqual(Pod.secondsPerPrimePulse, timeBetweenPulses)
+                XCTAssertEqual(1, table.entries.count)
+                XCTAssertEqual(1, table.entries[0].segments)
+                XCTAssertEqual(Int(Pod.primeUnits / Pod.pulseSize), table.entries[0].pulses)
+                XCTAssertEqual(false, table.entries[0].alternateSegmentPulse)
+
+            } else {
+                XCTFail("Expected ScheduleEntry.bolus type")
+            }
+        } catch (let error) {
+            XCTFail("message decoding threw error: \(error)")
+        }
+    }
+
+    func testInsertCannula() {
+        do {
+            // 1a LL NNNNNNNN 02 CCCC HH SSSS PPPP 0ppp
+            // 1a 0e 7e30bf16 02 0065 01 0050 000a 000a
+            // Decode
+            let cmd = try SetInsulinScheduleCommand(encodedData: Data(hexadecimalString: "1a0e7e30bf16020065010050000a000a")!)
+            XCTAssertEqual(0x7e30bf16, cmd.nonce)
+
+            if case SetInsulinScheduleCommand.DeliverySchedule.bolus(let units, let timeBetweenPulses, let table) = cmd.deliverySchedule {
+                XCTAssertEqual(Pod.cannulaInsertionUnits, units)
+                XCTAssertEqual(Pod.secondsPerPrimePulse, timeBetweenPulses)
+                XCTAssertEqual(1, table.entries.count)
+                XCTAssertEqual(1, table.entries[0].segments)
+                XCTAssertEqual(Int(Pod.cannulaInsertionUnits / Pod.pulseSize), table.entries[0].pulses)
+                XCTAssertEqual(false, table.entries[0].alternateSegmentPulse)
             } else {
                 XCTFail("Expected ScheduleEntry.bolus type")
             }

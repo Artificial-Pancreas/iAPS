@@ -42,9 +42,8 @@ class PodCommsSessionTests: XCTestCase {
         let session = PodCommsSession(podState: podState, transport: mockTransport, delegate: self)
 
 
-        // 2018-05-26T09:11:07.984983 pdm Message(1f16b11e seq:05 [SetInsulinScheduleCommand(nonce:2232447658, bolus(units: 1.0, timeBetweenPulses: 2.0)), OmniKitPacketParser.BolusExtraCommand(blockType: OmniKitPacketParser.MessageBlockType.bolusExtra, completionBeep: false, programReminderInterval: 0.0, units: 1.0, timeBetweenPulses: 2.0, squareWaveUnits: 0.0, squareWaveDuration: 0.0)])
-        let bolusDelivery = SetInsulinScheduleCommand.DeliverySchedule.bolus(units: 1.0, timeBetweenPulses: 2.0)
-        let sentCommand = SetInsulinScheduleCommand(nonce: 2232447658, deliverySchedule: bolusDelivery)
+        // 2018-05-26T09:11:07.984983 pdm Message(1f16b11e seq:05 [SetInsulinScheduleCommand(nonce:2232447658, bolus(units: 1.0, timeBetweenPulses: 2.0)), OmniKitPacketParser.BolusExtraCommand(blockType: OmniKitPacketParser.MessageBlockType.bolusExtra, completionBeep: false, programReminderInterval: 0.0, units: 1.0, timeBetweenPulses: 2.0, extendedUnits: 0.0, extendedDuration: 0.0)])
+        let sentCommand = SetInsulinScheduleCommand(nonce: 2232447658, units: 1.0)
 
         do {
             let status: StatusResponse = try session.send([sentCommand])

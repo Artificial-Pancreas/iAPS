@@ -22,8 +22,8 @@ struct PairPodView: View {
 
                 HStack {
                     InstructionList(instructions: [
-                        LocalizedString("Fill a new pod with U-100 Insulin (leave Pod needle cap on). Keep the RileyLink about 6 inches from the pod during pairing.", comment: "Label text for step 1 of pair pod instructions"),
-                        LocalizedString("Listen for 2 beeps.", comment: "Label text for step 2 of pair pod instructions")
+                        LocalizedString("Fill a new pod with U-100 Insulin (leave Pod needle cap on). Listen for 2 beeps.", comment: "Label text for step 1 of pair pod instructions"),
+                        LocalizedString("Keep the RileyLink about 6 inches from the pod during pairing.", comment: "Label text for step 2 of pair pod instructions")
                     ])
                     .disabled(viewModel.state.instructionsDisabled)
                 }

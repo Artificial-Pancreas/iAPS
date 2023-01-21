@@ -40,21 +40,21 @@ struct OmnipodSettingsView: View  {
     @Environment(\.insulinTintColor) var insulinTintColor
     
     private var daysRemaining: Int? {
-        if case .timeRemaining(let remaining) = viewModel.lifeState, remaining > .days(1) {
+        if case .timeRemaining(let remaining, _) = viewModel.lifeState, remaining > .days(1) {
             return Int(remaining.days)
         }
         return nil
     }
     
     private var hoursRemaining: Int? {
-        if case .timeRemaining(let remaining) = viewModel.lifeState, remaining > .hours(1) {
+        if case .timeRemaining(let remaining, _) = viewModel.lifeState, remaining > .hours(1) {
             return Int(remaining.hours.truncatingRemainder(dividingBy: 24))
         }
         return nil
     }
     
     private var minutesRemaining: Int? {
-        if case .timeRemaining(let remaining) = viewModel.lifeState, remaining < .hours(2) {
+        if case .timeRemaining(let remaining, _) = viewModel.lifeState, remaining < .hours(2) {
             return Int(remaining.minutes.truncatingRemainder(dividingBy: 60))
         }
         return nil

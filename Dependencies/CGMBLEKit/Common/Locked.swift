@@ -31,7 +31,6 @@ internal class Locked<T> {
         }
     }
 
-    @discardableResult
     func mutate(_ changes: (_ value: inout T) -> Void) -> T {
         os_unfair_lock_lock(&lock)
         defer { os_unfair_lock_unlock(&lock) }

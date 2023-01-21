@@ -18,7 +18,8 @@ final class BaseFetchGlucoseManager: FetchGlucoseManager, Injectable {
     private var lifetime = Lifetime()
     private let timer = DispatchTimer(timeInterval: 1.minutes.timeInterval)
 
-    private lazy var dexcomSource = DexcomSource()
+    private lazy var dexcomSource = DexcomSource(glucoseStorage: glucoseStorage)
+    private lazy var dexcomSourceG7 = DexcomSourceG7(glucoseStorage: glucoseStorage)
     private lazy var simulatorSource = GlucoseSimulatorSource()
 
     init(resolver: Resolver) {
@@ -36,6 +37,8 @@ final class BaseFetchGlucoseManager: FetchGlucoseManager, Injectable {
         case .dexcomG5,
              .dexcomG6:
             glucoseSource = dexcomSource
+        case .dexcomG7:
+            glucoseSource = dexcomSourceG7
         case .nightscout:
             glucoseSource = nightscoutManager
         case .simulator:
@@ -98,7 +101,7 @@ final class BaseFetchGlucoseManager: FetchGlucoseManager, Injectable {
             .sink { id in
                 guard [.dexcomG5, .dexcomG6].contains(self.settingsManager.settings.cgm) else { return }
                 if id != self.dexcomSource.transmitterID {
-                    self.dexcomSource = DexcomSource()
+                    self.dexcomSource = DexcomSource(glucoseStorage: self.glucoseStorage)
                 }
             }
             .store(in: &lifetime)

@@ -8,7 +8,12 @@
 
 import Foundation
 
-public class ReadRemainingInsulinMessageBody: CarelinkLongMessageBody {
+public class ReadRemainingInsulinMessageBody: DecodableMessageBody {
+    public var txData: Data { return rxData }
+
+    public var rxData: Data
+
+    public static var length: Int = 65
 
     public func getUnitsRemaining(insulinBitPackingScale: Int) -> Double {
 
@@ -28,12 +33,19 @@ public class ReadRemainingInsulinMessageBody: CarelinkLongMessageBody {
         guard rxData.count == type(of: self).length else {
             return nil
         }
-
-        super.init(rxData: rxData)
-
+        self.rxData = rxData
     }
 
-    override public var description: String {
+    init(reservoirVolume: Double, insulinBitPackingScale: Int) {
+        rxData = Data().paddedTo(length: Self.length)
+        let scaledAmount = Int(reservoirVolume * Double(insulinBitPackingScale))
+        let strokesData = Data(bigEndian: scaledAmount)
+        let offset = insulinBitPackingScale > 10 ? 3 : 1
+        rxData[offset] = strokesData[6]
+        rxData[offset+1] = strokesData[7]
+    }
+
+    public var description: String {
         return "ReadRemainingInsulin(x23:\(getUnitsRemaining(insulinBitPackingScale: PumpModel.model523.insulinBitPackingScale)), x22:\(getUnitsRemaining(insulinBitPackingScale: PumpModel.model522.insulinBitPackingScale)))"
     }
 

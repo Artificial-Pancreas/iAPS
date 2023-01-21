@@ -1,0 +1,6 @@
+/* Privacy - Bluetooth Always Usage Description */
+"NSBluetoothAlwaysUsageDescription" = "Bluetoothia käytetään kommunikointiin glukoosinseurantalaitteiden kanssa.";
+
+/* Privacy - Bluetooth Peripheral Usage Description */
+"NSBluetoothPeripheralUsageDescription" = "Bluetoothia käytetään kommunikointiin glukoosinseurantalaitteiden kanssa.";
+

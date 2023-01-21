@@ -7,6 +7,7 @@ import MinimedKit
 import MockKit
 import OmniBLE
 import OmniKit
+import ShareClient
 import SwiftDate
 import Swinject
 import UserNotifications
@@ -163,7 +164,7 @@ final class BaseDeviceDataManager: DeviceDataManager, Injectable {
                 }
             }
         }
-        .timeout(20, scheduler: processQueue)
+        .timeout(30, scheduler: processQueue)
         .replaceError(with: false)
         .replaceEmpty(with: false)
         .sink(receiveValue: updateUpdateFinished)

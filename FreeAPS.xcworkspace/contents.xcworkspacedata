@@ -5,6 +5,12 @@
       location = "group:FreeAPS.xcodeproj">
    </FileRef>
    <FileRef
+      location = "group:Dependencies/G7SensorKit/G7SensorKit.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:Dependencies/CGMBLEKit/../dexcom-share-client-swift/ShareClient.xcodeproj">
+   </FileRef>
+   <FileRef
       location = "group:Dependencies/CGMBLEKit/CGMBLEKit.xcodeproj">
    </FileRef>
    <FileRef
