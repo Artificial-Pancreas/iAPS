@@ -14,7 +14,6 @@ enum durationState: String, DurationButton {
     case day = "Past 24 Hours "
     case week = "Past Week "
     case month = "Past Month "
-    case ninetyDays = "Past 90 Days "
     case total = "All Past Days of Data "
 }
 

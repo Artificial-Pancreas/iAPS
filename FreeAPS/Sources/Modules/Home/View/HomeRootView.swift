@@ -311,37 +311,6 @@ extension Home {
 
                         averageTIRhca1c(hba1c_all, average_, median_, tir_low, tir_high, tir_, hba1c_, sd_, cv_)
 
-                    case .ninetyDays:
-                        let hba1c_all = numberFormatter
-                            .string(from: (state.statistics?.Statistics.HbA1c.total ?? 0) as NSNumber) ?? ""
-                        let average_ = targetFormatter
-                            .string(from: (state.statistics?.Statistics.Glucose.Average.ninetyDays ?? 0) as NSNumber) ??
-                            ""
-                        let median_ = targetFormatter
-                            .string(from: (state.statistics?.Statistics.Glucose.Median.ninetyDays ?? 0) as NSNumber) ??
-                            ""
-                        let tir_low = tirFormatter
-                            .string(
-                                from: (state.statistics?.Statistics.Distribution.Hypos.ninetyDays ?? 0) as NSNumber
-                            ) ??
-                            ""
-                        let tir_high = tirFormatter
-                            .string(
-                                from: (state.statistics?.Statistics.Distribution.Hypers.ninetyDays ?? 0) as NSNumber
-                            ) ??
-                            ""
-                        let tir_ = tirFormatter
-                            .string(from: (state.statistics?.Statistics.Distribution.TIR.ninetyDays ?? 0) as NSNumber) ??
-                            ""
-                        let hba1c_ = numberFormatter
-                            .string(from: (state.statistics?.Statistics.HbA1c.ninetyDays ?? 0) as NSNumber) ?? ""
-                        let sd_ = numberFormatter
-                            .string(from: (state.statistics?.Statistics.Variance.SD.ninetyDays ?? 0) as NSNumber) ?? ""
-                        let cv_ = tirFormatter
-                            .string(from: (state.statistics?.Statistics.Variance.CV.ninetyDays ?? 0) as NSNumber) ?? ""
-
-                        averageTIRhca1c(hba1c_all, average_, median_, tir_low, tir_high, tir_, hba1c_, sd_, cv_)
-
                     case .total:
                         let hba1c_all = numberFormatter
                             .string(from: (state.statistics?.Statistics.HbA1c.total ?? 0) as NSNumber) ?? ""

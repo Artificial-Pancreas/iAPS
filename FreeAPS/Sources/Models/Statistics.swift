@@ -107,7 +107,6 @@ struct Durations: JSON, Equatable {
     var day: Decimal
     var week: Decimal
     var month: Decimal
-    var ninetyDays: Decimal
     var total: Decimal
 }
 
