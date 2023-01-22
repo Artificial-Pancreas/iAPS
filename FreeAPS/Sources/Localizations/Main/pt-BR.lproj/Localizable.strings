@@ -419,8 +419,11 @@ Enact a temp Basal or a temp target */
 /* Header for Temp targets in Watch app */
 "Temp Targets" = "Alvos Temporários";
 
-/* Delete carbs from Treatments list*/
+/* Delete carbs from data table and Nightscout */
 "Delete carbs?" = "Deletar carboidratos?";
+
+/* Delete insulin from pump history and Nightscout */
+"Delete insulin?" = "Delete insulin?";
 
 /* Treatments list */
 "Treatments" = "Tratamentos";
