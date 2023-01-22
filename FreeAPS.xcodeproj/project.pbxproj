@@ -287,9 +287,11 @@
 		C967DACD3B1E638F8B43BE06 /* ManualTempBasalStateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFCFE0781F9074C2917890E8 /* ManualTempBasalStateModel.swift */; };
 		CA370FC152BC98B3D1832968 /* BasalProfileEditorRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8BCB0C37DEB5EC377B9612 /* BasalProfileEditorRootView.swift */; };
 		CD78BB94E43B249D60CC1A1B /* NotificationsConfigRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22963BD06A9C83959D4914E4 /* NotificationsConfigRootView.swift */; };
+		CE2FAD38297D69E1001A872C /* ShareClient.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = CE398D1A297D69A900DF218F /* ShareClient.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		CE398D16297C9D1D00DF218F /* dexcomSourceG7.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE398D15297C9D1D00DF218F /* dexcomSourceG7.swift */; };
 		CE398D18297C9EE800DF218F /* G7SensorKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE398D17297C9EE800DF218F /* G7SensorKit.framework */; };
 		CE398D19297C9EFD00DF218F /* G7SensorKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = CE398D17297C9EE800DF218F /* G7SensorKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		CE398D1B297D69A900DF218F /* ShareClient.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE398D1A297D69A900DF218F /* ShareClient.framework */; };
 		CE48C86428CA69D5007C0598 /* OmniBLEPumpManagerExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE48C86328CA69D5007C0598 /* OmniBLEPumpManagerExtensions.swift */; };
 		CE48C86628CA6B48007C0598 /* OmniPodManagerExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE48C86528CA6B48007C0598 /* OmniPodManagerExtensions.swift */; };
 		CE6B025728F350FF000C5502 /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE6B025628F350FF000C5502 /* HealthKit.framework */; };
@@ -374,6 +376,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				CE2FAD38297D69E1001A872C /* ShareClient.framework in Embed Frameworks */,
 				CE398D19297C9EFD00DF218F /* G7SensorKit.framework in Embed Frameworks */,
 				3818AA6F274C26A500843DB3 /* RileyLinkKitUI.framework in Embed Frameworks */,
 				3818AA4B274C267100843DB3 /* CGMBLEKit.framework in Embed Frameworks */,
@@ -732,6 +735,7 @@
 		CE398D012977349800DF218F /* CryptoKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CryptoKit.framework; path = System/Library/Frameworks/CryptoKit.framework; sourceTree = SDKROOT; };
 		CE398D15297C9D1D00DF218F /* dexcomSourceG7.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = dexcomSourceG7.swift; sourceTree = "<group>"; };
 		CE398D17297C9EE800DF218F /* G7SensorKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = G7SensorKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		CE398D1A297D69A900DF218F /* ShareClient.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ShareClient.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE48C86328CA69D5007C0598 /* OmniBLEPumpManagerExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OmniBLEPumpManagerExtensions.swift; sourceTree = "<group>"; };
 		CE48C86528CA6B48007C0598 /* OmniPodManagerExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OmniPodManagerExtensions.swift; sourceTree = "<group>"; };
 		CE6B025628F350FF000C5502 /* HealthKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HealthKit.framework; path = Platforms/WatchOS.platform/Developer/SDKs/WatchOS9.1.sdk/System/Library/Frameworks/HealthKit.framework; sourceTree = DEVELOPER_DIR; };
@@ -782,7 +786,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CE398D18297C9EE800DF218F /* G7SensorKit.framework in Frameworks */,
 				CEB434DC28B8F5B900B70274 /* MKRingProgressView.framework in Frameworks */,
 				38E87403274F78C000975559 /* libswiftCoreNFC.tbd in Frameworks */,
 				38E87401274F77E400975559 /* CoreNFC.framework in Frameworks */,
@@ -798,15 +801,17 @@
 				3818AA6C274C26A500843DB3 /* RileyLinkKit.framework in Frameworks */,
 				3818AA68274C26A400843DB3 /* OmniKitUI.framework in Frameworks */,
 				3818AA5E274C26A300843DB3 /* MockKitUI.framework in Frameworks */,
-				3818AA6E274C26A500843DB3 /* RileyLinkKitUI.framework in Frameworks */,
+				CE398D18297C9EE800DF218F /* G7SensorKit.framework in Frameworks */,
 				3818AA5A274C26A300843DB3 /* LoopKitUI.framework in Frameworks */,
+				3818AA58274C26A300843DB3 /* LoopKit.framework in Frameworks */,
+				CE398D1B297D69A900DF218F /* ShareClient.framework in Frameworks */,
 				38B17B6625DD90E0005CAE3D /* SwiftDate in Frameworks */,
 				3833B46D26012030003021B3 /* Algorithms in Frameworks */,
 				CEB434FD28B90B7C00B70274 /* SwiftCharts in Frameworks */,
 				38DF1789276FC8C400B3528F /* SwiftMessages in Frameworks */,
 				E0CC2C5C275B9F0F00A7BC71 /* HealthKit.framework in Frameworks */,
 				3818AA62274C26A400843DB3 /* MinimedKit.framework in Frameworks */,
-				3818AA58274C26A300843DB3 /* LoopKit.framework in Frameworks */,
+				3818AA6E274C26A500843DB3 /* RileyLinkKitUI.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1185,6 +1190,7 @@
 		3818AA48274C267000843DB3 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				CE398D1A297D69A900DF218F /* ShareClient.framework */,
 				CE398D17297C9EE800DF218F /* G7SensorKit.framework */,
 				CE398D012977349800DF218F /* CryptoKit.framework */,
 				CE6B025628F350FF000C5502 /* HealthKit.framework */,
@@ -2711,7 +2717,7 @@
 					"$(inherited)",
 					"$(SDKROOT)/usr/lib/swift",
 				);
-				MARKETING_VERSION = "$(APP_VERSION)";
+				MARKETING_VERSION = 0.6.5;
 				OTHER_LDFLAGS = (
 					"-weak_framework",
 					CoreNFC,
@@ -2747,7 +2753,7 @@
 					"$(inherited)",
 					"$(SDKROOT)/usr/lib/swift",
 				);
-				MARKETING_VERSION = "$(APP_VERSION)";
+				MARKETING_VERSION = 0.6.5;
 				OTHER_LDFLAGS = (
 					"-weak_framework",
 					CoreNFC,
@@ -2776,8 +2782,8 @@
 				IBSC_MODULE = FreeAPSWatch_WatchKit_Extension;
 				INFOPLIST_KEY_CFBundleDisplayName = "FreeAPS X";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = "$(BUNDLE_IDENTIFIER)";
-				MARKETING_VERSION = "$(APP_VERSION)";
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = ru.artpancreas.HJS9L9WUYM.FreeAPS;
+				MARKETING_VERSION = 0.6.5;
 				PRODUCT_BUNDLE_IDENTIFIER = "$(BUNDLE_IDENTIFIER).watchkitapp";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;
@@ -2806,8 +2812,8 @@
 				IBSC_MODULE = FreeAPSWatch_WatchKit_Extension;
 				INFOPLIST_KEY_CFBundleDisplayName = "FreeAPS X";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = "$(BUNDLE_IDENTIFIER)";
-				MARKETING_VERSION = "$(APP_VERSION)";
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = ru.artpancreas.HJS9L9WUYM.FreeAPS;
+				MARKETING_VERSION = 0.6.5;
 				PRODUCT_BUNDLE_IDENTIFIER = "$(BUNDLE_IDENTIFIER).watchkitapp";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;
