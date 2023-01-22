@@ -722,19 +722,5 @@ extension Home {
                 }
             }
         }
-
-        private func colorOfGlucose(_ glucose: Decimal) -> Color {
-            switch glucose {
-            case 4 ... 8,
-                 30 ... 46,
-                 72 ... 144:
-                return .loopGreen
-            case 0 ... 4,
-                 20 ... 71:
-                return .loopRed
-            default:
-                return .loopYellow
-            }
-        }
     }
 }

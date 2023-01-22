@@ -45,7 +45,7 @@ struct CurrentGlucoseView: View {
                 )
                 .font(.system(size: 24, weight: .bold))
                 .fixedSize()
-                .foregroundColor(alarm == nil ? .primary : .loopRed)
+                .foregroundColor(alarm == nil ? colorOfGlucose : .loopRed)
                 image.padding(.bottom, 2)
 
             }.padding(.leading, 4)
@@ -89,6 +89,23 @@ struct CurrentGlucoseView: View {
              .notComputable,
              .rateOutOfRange:
             return Image(systemName: "arrow.left.and.right")
+        }
+    }
+
+    var colorOfGlucose: Color {
+        let whichGlucose = recentGlucose?.glucose ?? 0
+
+        switch whichGlucose {
+        case 72 ... 145:
+            return .loopGreen
+        case 1 ... 55,
+             217...:
+            return .loopRed
+        case 56 ... 71,
+             146 ... 216:
+            return .loopYellow
+        default:
+            return .primary
         }
     }
 }
