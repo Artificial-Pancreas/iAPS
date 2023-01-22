@@ -108,10 +108,7 @@ extension DexcomSourceG7: CGMManagerDelegate {
                 return BloodGlucose(
                     _id: newGlucoseSample.syncIdentifier,
                     sgv: value,
-                    direction: .init(trend: Int(Double(rawValue: (
-                        newGlucoseSample.trendRate?
-                            .doubleValue(for: .milligramsPerDeciliter)
-                    )!) ?? 0)),
+                    direction: .init(trendType: newGlucoseSample.trend),
                     date: Decimal(Int(newGlucoseSample.date.timeIntervalSince1970 * 1000)),
                     dateString: newGlucoseSample.date,
                     unfiltered: nil,
@@ -125,8 +122,10 @@ extension DexcomSourceG7: CGMManagerDelegate {
             completion()
         case .unreliableData:
             // loopManager.receivedUnreliableCGMReading()
+            promise?(.failure(GlucoseDataError.unreliableData))
             completion()
         case .noData:
+            promise?(.failure(GlucoseDataError.noData))
             completion()
         case let .error(error):
             promise?(.failure(error))
@@ -138,31 +137,5 @@ extension DexcomSourceG7: CGMManagerDelegate {
 // extension DexcomSourceG7 {
 //    func sourceInfo() -> [String: Any]? {
 //        [GlucoseSourceKey.description.rawValue: "Dexcom tramsmitter ID: \(transmitterID)"]
-//    }
-// }
-
-// extension BloodGlucose.Direction {
-//    init(trend: Int) {
-//        guard trend < Int(Int8.max) else {
-//            self = .none
-//            return
-//        }
-//
-//        switch trend {
-//        case let x where x <= -30:
-//            self = .doubleDown
-//        case let x where x <= -20:
-//            self = .singleDown
-//        case let x where x <= -10:
-//            self = .fortyFiveDown
-//        case let x where x < 10:
-//            self = .flat
-//        case let x where x < 20:
-//            self = .fortyFiveUp
-//        case let x where x < 30:
-//            self = .singleUp
-//        default:
-//            self = .doubleUp
-//        }
 //    }
 // }

@@ -288,6 +288,7 @@
 		CA370FC152BC98B3D1832968 /* BasalProfileEditorRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8BCB0C37DEB5EC377B9612 /* BasalProfileEditorRootView.swift */; };
 		CD78BB94E43B249D60CC1A1B /* NotificationsConfigRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22963BD06A9C83959D4914E4 /* NotificationsConfigRootView.swift */; };
 		CE2FAD38297D69E1001A872C /* ShareClient.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = CE398D1A297D69A900DF218F /* ShareClient.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		CE2FAD3A297D93F0001A872C /* BloodGlucoseExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2FAD39297D93F0001A872C /* BloodGlucoseExtensions.swift */; };
 		CE398D16297C9D1D00DF218F /* dexcomSourceG7.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE398D15297C9D1D00DF218F /* dexcomSourceG7.swift */; };
 		CE398D18297C9EE800DF218F /* G7SensorKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE398D17297C9EE800DF218F /* G7SensorKit.framework */; };
 		CE398D19297C9EFD00DF218F /* G7SensorKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = CE398D17297C9EE800DF218F /* G7SensorKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -732,6 +733,7 @@
 		C19984D62EFC0035A9E9644D /* BolusProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = BolusProvider.swift; sourceTree = "<group>"; };
 		C377490C77661D75E8C50649 /* ManualTempBasalRootView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ManualTempBasalRootView.swift; sourceTree = "<group>"; };
 		C8D1A7CA8C10C4403D4BBFA7 /* BolusDataFlow.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = BolusDataFlow.swift; sourceTree = "<group>"; };
+		CE2FAD39297D93F0001A872C /* BloodGlucoseExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BloodGlucoseExtensions.swift; sourceTree = "<group>"; };
 		CE398D012977349800DF218F /* CryptoKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CryptoKit.framework; path = System/Library/Frameworks/CryptoKit.framework; sourceTree = SDKROOT; };
 		CE398D15297C9D1D00DF218F /* dexcomSourceG7.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = dexcomSourceG7.swift; sourceTree = "<group>"; };
 		CE398D17297C9EE800DF218F /* G7SensorKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = G7SensorKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1419,6 +1421,7 @@
 				CEB434E628B9053300B70274 /* LoopUIColorPalette+Default.swift */,
 				CE48C86328CA69D5007C0598 /* OmniBLEPumpManagerExtensions.swift */,
 				CE48C86528CA6B48007C0598 /* OmniPodManagerExtensions.swift */,
+				CE2FAD39297D93F0001A872C /* BloodGlucoseExtensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -2327,6 +2330,7 @@
 				38DF179027733EAD00B3528F /* SnowScene.swift in Sources */,
 				38AAF8712600C1B0004AF583 /* MainChartView.swift in Sources */,
 				1935364028496F7D001E0B16 /* TDD_averages.swift in Sources */,
+				CE2FAD3A297D93F0001A872C /* BloodGlucoseExtensions.swift in Sources */,
 				38E4453A274E411700EC9A94 /* Disk+[UIImage].swift in Sources */,
 				72F1BD388F42FCA6C52E4500 /* ConfigEditorProvider.swift in Sources */,
 				E39E418C56A5A46B61D960EE /* ConfigEditorStateModel.swift in Sources */,
