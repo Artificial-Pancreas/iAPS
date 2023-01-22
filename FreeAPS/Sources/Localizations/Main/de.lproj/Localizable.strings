@@ -419,8 +419,11 @@ Enact a temp Basal or a temp target */
 /* Header for Temp targets in Watch app */
 "Temp Targets" = "Temporäre Ziele";
 
-/* Delete carbs from Treatments list*/
+/* Delete carbs from data table and Nightscout */
 "Delete carbs?" = "Kohlenhydrate löschen?";
+
+/* Delete insulin from pump history and Nightscout */
+"Delete insulin?" = "Insulin löschen?";
 
 /* Treatments list */
 "Treatments" = "Behandlungen";
@@ -1490,7 +1493,7 @@ Enact a temp Basal or a temp target */
 "SMB Interval" = "SMB-Intervall";
 
 /* "SMB Interval" */
-"Minimum duration in minutes for new SMB since last SMB or manual bolus" = "Minimum duration in minutes for new SMB since last SMB or manual bolus";
+"Minimum duration in minutes for new SMB since last SMB or manual bolus" = "Minimale Dauer in Minuten für neue SMBs seit dem letzten SMB oder manuellem Bolus";
 
 /* Headline "Bolus Increment" */
 "Bolus Increment" = "Bolus-Erhöhung";
