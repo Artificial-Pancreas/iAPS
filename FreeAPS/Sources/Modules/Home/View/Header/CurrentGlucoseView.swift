@@ -96,12 +96,12 @@ struct CurrentGlucoseView: View {
         let whichGlucose = recentGlucose?.glucose ?? 0
 
         switch whichGlucose {
-        case 72 ... 145:
+        case 71 ... 145:
             return .loopGreen
         case 1 ... 55,
              217...:
             return .loopRed
-        case 56 ... 71,
+        case 56 ... 70,
              146 ... 216:
             return .loopYellow
         default:
