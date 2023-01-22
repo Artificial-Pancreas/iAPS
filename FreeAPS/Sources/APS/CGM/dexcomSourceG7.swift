@@ -71,6 +71,7 @@ extension DexcomSourceG7: CGMManagerDelegate {
     func cgmManager(_ manager: CGMManager, hasNew readingResult: CGMReadingResult) {
         dispatchPrecondition(condition: .onQueue(.main))
         processCGMReadingResult(manager, readingResult: readingResult) {
+            warning(.deviceManager, "DEXCOMG7 - Force the fire of the dispatch timer")
             self.timer?.fire()
             // self.checkPumpDataAndLoop()
         }
@@ -98,6 +99,7 @@ extension DexcomSourceG7: CGMManagerDelegate {
     }
 
     private func processCGMReadingResult(_: CGMManager, readingResult: CGMReadingResult, completion: @escaping () -> Void) {
+        warning(.deviceManager, "DEXCOMG7 - Process CGM Reading Result launched")
         switch readingResult {
         case let .newData(values):
             let bloodGlucose = values.compactMap { newGlucoseSample -> BloodGlucose? in

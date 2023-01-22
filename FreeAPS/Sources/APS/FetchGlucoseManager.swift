@@ -72,7 +72,7 @@ final class BaseFetchGlucoseManager: FetchGlucoseManager, Injectable {
                 .eraseToAnyPublisher()
             }
             .sink { date, syncDate, glucose, glucoseFromHealth in
-                debug(.nightscout, "SyncDate is \(syncDate)")
+                debug(.nightscout, "FETCHGLUCOSE : SyncDate is \(syncDate)")
                 let allGlucose = glucose + glucoseFromHealth
                 guard allGlucose.isNotEmpty else { return }
 

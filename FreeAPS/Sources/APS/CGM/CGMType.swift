@@ -48,7 +48,7 @@ enum CGMType: String, JSON, CaseIterable, Identifiable {
         case .dexcomG6:
             return URL(string: "dexcomg6://")!
         case .dexcomG7:
-            return URL(string: "dexcomg6://")! // TODO: PL
+            return URL(string: "dexcomg7://")!
         case .dexcomG5:
             return URL(string: "dexcomgcgm://")!
         case .simulator:

@@ -39,6 +39,7 @@
 	<false/>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
+		<string>dexcomg7</string>
 		<string>xdripswift</string>
 		<string>dexcomg6</string>
 		<string>dexcomcgm</string>

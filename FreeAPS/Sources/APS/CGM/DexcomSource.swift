@@ -5,10 +5,15 @@ import LoopKit
 import LoopKitUI
 import ShareClient
 
+enum GlucoseDataError: Error {
+    case noData
+    case unreliableData
+}
+
 final class DexcomSource: GlucoseSource {
     private let processQueue = DispatchQueue(label: "DexcomSource.processQueue")
     private var timer: DispatchTimer?
-    private var glucoseStorage: GlucoseStorage!
+    private let glucoseStorage: GlucoseStorage!
 
     var cgmManager: G6CGMManager?
 
@@ -17,10 +22,10 @@ final class DexcomSource: GlucoseSource {
     private var promise: Future<[BloodGlucose], Error>.Promise?
 
     init(glucoseStorage: GlucoseStorage) {
+        self.glucoseStorage = glucoseStorage
         cgmManager = G6CGMManager
             .init(state: TransmitterManagerState(transmitterID: UserDefaults.standard.dexcomTransmitterID ?? "000000"))
         cgmManager?.cgmManagerDelegate = self
-        self.glucoseStorage = glucoseStorage
     }
 
     var transmitterID: String {
@@ -76,8 +81,8 @@ extension DexcomSource: CGMManagerDelegate {
     func cgmManager(_ manager: CGMManager, hasNew readingResult: CGMReadingResult) {
         dispatchPrecondition(condition: .onQueue(.main))
         processCGMReadingResult(manager, readingResult: readingResult) {
+            warning(.deviceManager, "DEXCOM - Force the fire of the dispatch timer")
             self.timer?.fire()
-            // self.checkPumpDataAndLoop()
         }
     }
 
@@ -103,6 +108,7 @@ extension DexcomSource: CGMManagerDelegate {
     }
 
     private func processCGMReadingResult(_: CGMManager, readingResult: CGMReadingResult, completion: @escaping () -> Void) {
+        warning(.deviceManager, "DEXCOM - Process CGM Reading Result launched")
         switch readingResult {
         case let .newData(values):
             let bloodGlucose = values.compactMap { newGlucoseSample -> BloodGlucose? in
@@ -129,8 +135,10 @@ extension DexcomSource: CGMManagerDelegate {
             completion()
         case .unreliableData:
             // loopManager.receivedUnreliableCGMReading()
+            promise?(.failure(GlucoseDataError.unreliableData))
             completion()
         case .noData:
+            promise?(.failure(GlucoseDataError.noData))
             completion()
         case let .error(error):
             promise?(.failure(error))
