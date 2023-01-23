@@ -11,10 +11,11 @@ extension Home {
         @State var isStatusPopupPresented = false
         @State var selectedState: durationState
 
-        // Average/Median and CV/SD titles and values switches when you click them
+        // Average/Median/Readings and CV/SD titles and values switches when you tap them
         @State var averageOrMedianTitle = NSLocalizedString("Average", comment: "")
         @State var median_ = ""
         @State var average_ = ""
+        @State var readings = ""
         @State var averageOrmedian = ""
         @State var CV_or_SD_Title = NSLocalizedString("CV", comment: "CV")
         @State var cv_ = ""
@@ -22,7 +23,6 @@ extension Home {
         @State var CVorSD = ""
         // Switch between Loops and Errors when tapping in ststPanel
         @State var loopStatTitle = NSLocalizedString("Loops", comment: "Nr of Loops in statPanel")
-        @State var loopsOrerrors = ""
 
         private var numberFormatter: NumberFormatter {
             let formatter = NumberFormatter()
@@ -370,19 +370,30 @@ extension Home {
                     // Average as default. Changes to Median when clicking.
                     let textAverageTitle = NSLocalizedString("Average", comment: "")
                     let textMedianTitle = NSLocalizedString("Median", comment: "")
+                    let cgmReadingsTitle = NSLocalizedString("Readings", comment: "CGM readings in statPanel")
 
                     HStack {
                         Text(averageOrMedianTitle).font(.footnote).foregroundColor(.secondary)
                         if averageOrMedianTitle == textAverageTitle {
                             Text(averageOrmedian == "" ? average_ : average_).font(.footnote)
-                        } else {
+                        } else if averageOrMedianTitle == textMedianTitle {
                             Text(averageOrmedian == "" ? median_ : median_).font(.footnote)
+                        } else if averageOrMedianTitle == cgmReadingsTitle {
+                            Text(
+                                averageOrmedian != "0" ? tirFormatter
+                                    .string(from: (state.statistics?.Statistics.LoopCycles.readings ?? 0) as NSNumber) ?? "" : ""
+                            )
+                            .font(.footnote)
                         }
                     }.onTapGesture {
                         if averageOrMedianTitle == textAverageTitle {
                             averageOrMedianTitle = textMedianTitle
                             averageOrmedian = median_
-                        } else {
+                        } else if averageOrMedianTitle == textMedianTitle {
+                            averageOrMedianTitle = cgmReadingsTitle
+                            averageOrmedian = tirFormatter
+                                .string(from: (state.statistics?.Statistics.LoopCycles.readings ?? 0) as NSNumber) ?? ""
+                        } else if averageOrMedianTitle == cgmReadingsTitle {
                             averageOrMedianTitle = textAverageTitle
                             averageOrmedian = average_
                         }
@@ -447,19 +458,16 @@ extension Home {
                         HStack {
                             Text(loopStatTitle).font(.footnote).foregroundColor(.secondary)
                             Text(
-                                loopsOrerrors == "" ? tirFormatter
+                                loopStatTitle == loopTitle ? tirFormatter
                                     .string(from: (state.statistics?.Statistics.LoopCycles.loops ?? 0) as NSNumber) ?? "" :
-                                    loopsOrerrors
+                                    tirFormatter
+                                    .string(from: (state.statistics?.Statistics.LoopCycles.errors ?? 0) as NSNumber) ?? ""
                             ).font(.footnote)
                         }.onTapGesture {
                             if loopStatTitle == loopTitle {
                                 loopStatTitle = errorTitle
-                                loopsOrerrors = tirFormatter
-                                    .string(from: (state.statistics?.Statistics.LoopCycles.errors ?? 0) as NSNumber) ?? ""
                             } else if loopStatTitle == errorTitle {
                                 loopStatTitle = loopTitle
-                                loopsOrerrors = tirFormatter
-                                    .string(from: (state.statistics?.Statistics.LoopCycles.loops ?? 0) as NSNumber) ?? ""
                             }
                         }
 
