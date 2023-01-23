@@ -24,7 +24,7 @@ final class DexcomSource: GlucoseSource {
         return Future<[BloodGlucose], Error> { [weak self] promise in
             self?.promise = promise
         }
-        .timeout(60, scheduler: processQueue, options: nil, customError: nil)
+        .timeout(90, scheduler: processQueue, options: nil, customError: nil)
         .replaceError(with: [])
         .replaceEmpty(with: [])
         .eraseToAnyPublisher()
