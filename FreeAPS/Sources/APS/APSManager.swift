@@ -1141,9 +1141,13 @@ final class BaseAPSManager: APSManager, Injectable {
         // round output values
         daysBG = roundDouble(daysBG, 1)
 
+        let glucose24Hours = storage.retrieve(OpenAPS.Monitor.glucose, as: [BloodGlucose].self)
+        let nrOfCGMReadings = glucose24Hours?.count ?? 0
+
         let loopstat = LoopCycles(
             loops: Int(successNR + errorNR),
             errors: Int(errorNR),
+            readings: nrOfCGMReadings,
             success_rate: Decimal(round(successRate ?? 0)),
             avg_interval: roundDecimal(Decimal(averageIntervalLoops), 1),
             median_interval: roundDecimal(Decimal(medianInterval), 1),

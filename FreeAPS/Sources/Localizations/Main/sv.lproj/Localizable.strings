@@ -1210,6 +1210,9 @@ Enact a temp Basal or a temp target */
 /* Median BG */
 "Median" = "Medianvärde";
 
+/* CGM readings in statPanel */
+"Readings" = "Avläsningar";
+
 /* Normal BG (within TIR) */
 "Normal" = "Normalvärde";
 
