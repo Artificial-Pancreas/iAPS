@@ -1215,6 +1215,9 @@ Połączono z Nightscout!";
 /* Median BG */
 "Median" = "Median";
 
+/* CGM readings in statPanel */
+"Readings" = "Readings";
+
 /* Normal BG (within TIR) */
 "Normal" = "Normal";
 
