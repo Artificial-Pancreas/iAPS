@@ -21,7 +21,7 @@ extension Home {
         @State var cv_ = ""
         @State var sd_ = ""
         @State var CVorSD = ""
-        // Switch between Loops and Errors when tapping in ststPanel
+        // Switch between Loops and Errors when tapping in statPanel
         @State var loopStatTitle = NSLocalizedString("Loops", comment: "Nr of Loops in statPanel")
 
         private var numberFormatter: NumberFormatter {
@@ -71,29 +71,29 @@ extension Home {
                 Spacer()
             }
             .frame(maxWidth: .infinity)
-            .frame(maxHeight: 70)
             .padding(.top, geo.safeAreaInsets.top)
+            .padding(.bottom)
             .background(Color.gray.opacity(0.2))
         }
 
         var cobIobView: some View {
             VStack(alignment: .leading, spacing: 12) {
                 HStack {
-                    Text("IOB").font(.caption2).foregroundColor(.secondary)
+                    Text("IOB").font(.footnote).foregroundColor(.secondary)
                     Text(
                         (numberFormatter.string(from: (state.suggestion?.iob ?? 0) as NSNumber) ?? "0") +
                             NSLocalizedString(" U", comment: "Insulin unit")
                     )
-                    .font(.system(size: 12, weight: .bold))
-                }
+                    .font(.footnote).fontWeight(.bold)
+                }.frame(alignment: .top)
                 HStack {
-                    Text("COB").font(.caption2).foregroundColor(.secondary)
+                    Text("COB").font(.footnote).foregroundColor(.secondary)
                     Text(
                         (numberFormatter.string(from: (state.suggestion?.cob ?? 0) as NSNumber) ?? "0") +
                             NSLocalizedString(" g", comment: "gram of carbs")
                     )
-                    .font(.system(size: 12, weight: .bold))
-                }
+                    .font(.footnote).fontWeight(.bold)
+                }.frame(alignment: .bottom)
             }
         }
 
