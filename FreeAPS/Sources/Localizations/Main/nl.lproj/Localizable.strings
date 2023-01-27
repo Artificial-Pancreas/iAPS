@@ -50,7 +50,7 @@
 "Suggested at" = "Voorgesteld op";
 
 /* Headline in enacted pop up (at: at what time) */
-"Error at" = "Error at";
+"Error at" = "Foutmelding op";
 
 /* Home title */
 "Home" = "Hoofdmenu";
@@ -423,7 +423,7 @@ Enact a temp Basal or a temp target */
 "Delete carbs?" = "Koolhydraten verwijderen?";
 
 /* Delete insulin from pump history and Nightscout */
-"Delete insulin?" = "Delete insulin?";
+"Delete insulin?" = "Insuline verwijderen?";
 
 /* Treatments list */
 "Treatments" = "Behandelingen";
@@ -1214,7 +1214,7 @@ Enact a temp Basal or a temp target */
 "Median" = "Mediaan";
 
 /* CGM readings in statPanel */
-"Readings" = "Readings";
+"Readings" = "Aantal gelezen";
 
 /* Normal BG (within TIR) */
 "Normal" = "TIR ";
@@ -1244,7 +1244,7 @@ Enact a temp Basal or a temp target */
 "Loops" = "Loops";
 
 /* Loop Errors in statPanel */
-"Errors" = "Errors";
+"Errors" = "Foutmeldingen";
 
 /* Average loop interval */
 "Interval" = "Interval";
@@ -1289,7 +1289,7 @@ Enact a temp Basal or a temp target */
 "Override HbA1c unit" = "HbA1c eenheid overschrijven";
 
 /* Description for Override HbA1c unit */
-"Change default HbA1c unit in statPanlel. The unit in statPanel will be updateded with next statistics.json update" = "Change default HbA1c unit in statPanlel. The unit in statPanel will be updateded with next statistics.json update";
+"Change default HbA1c unit in statPanlel. The unit in statPanel will be updateded with next statistics.json update" = "Standaard HbA1c-eenheid in statPanel wijzigen. De eenheid in statPanel zal worden bijgewerkt met de volgende statistics.json update";
 
 /* --------------------------------------
 
@@ -1496,7 +1496,7 @@ Enact a temp Basal or a temp target */
 "SMB Interval" = "SMB interval";
 
 /* "SMB Interval" */
-"Minimum duration in minutes for new SMB since last SMB or manual bolus" = "Minimum duration in minutes for new SMB since last SMB or manual bolus";
+"Minimum duration in minutes for new SMB since last SMB or manual bolus" = "Minimale duur in minuten voor nieuwe SMB sinds laatste SMB of handmatige bolus";
 
 /* Headline "Bolus Increment" */
 "Bolus Increment" = "Bolusverhoging";
