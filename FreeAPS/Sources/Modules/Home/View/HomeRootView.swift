@@ -16,6 +16,7 @@ extension Home {
         @State var median_ = ""
         @State var average_ = ""
         @State var readings = ""
+
         @State var averageOrmedian = ""
         @State var CV_or_SD_Title = NSLocalizedString("CV", comment: "CV")
         @State var cv_ = ""
