@@ -3,6 +3,8 @@ import SwiftUI
 extension DataTable {
     final class StateModel: BaseStateModel<Provider> {
         @Injected() var broadcaster: Broadcaster!
+        @Injected() var unlockmanager: UnlockManager!
+
         @Published var mode: Mode = .treatments
         @Published var treatments: [Treatment] = []
         @Published var glucose: [Glucose] = []
@@ -90,6 +92,15 @@ extension DataTable {
 
         func deleteCarbs(at date: Date) {
             provider.deleteCarbs(at: date)
+        }
+
+        func deleteInsulin(at date: Date) {
+            unlockmanager.unlock()
+                .sink { _ in } receiveValue: { [weak self] _ in
+                    guard let self = self else { return }
+                    self.provider.deleteInsulin(at: date)
+                }
+                .store(in: &lifetime)
         }
 
         func deleteGlucose(at index: Int) {

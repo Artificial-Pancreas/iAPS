@@ -27,28 +27,30 @@ struct PumpView: View {
                     Image(systemName: "drop.fill")
                         .resizable()
                         .aspectRatio(contentMode: .fit)
-                        .frame(height: 8)
+                        .frame(maxHeight: 10)
                         .foregroundColor(reservoirColor)
                     if reservoir == 0xDEAD_BEEF {
-                        Text("50+ " + NSLocalizedString("U", comment: "Insulin unit")).font(.system(size: 12, weight: .bold))
+                        Text("50+ " + NSLocalizedString("U", comment: "Insulin unit")).font(.footnote)
+                            .fontWeight(.bold)
                     } else {
                         Text(
                             reservoirFormatter
                                 .string(from: reservoir as NSNumber)! + NSLocalizedString(" U", comment: "Insulin unit")
                         )
-                        .font(.system(size: 12, weight: .bold))
+                        .font(.footnote).fontWeight(.bold)
                     }
-                }
+                }.frame(alignment: .top)
             }
             if let battery = battery, battery.display ?? false, expiresAtDate == nil {
                 HStack {
                     Image(systemName: "battery.100")
                         .resizable()
                         .aspectRatio(contentMode: .fit)
-                        .frame(height: 8)
+                        .frame(maxHeight: 10)
                         .foregroundColor(batteryColor)
-                    Text("\(Int(battery.percent ?? 100)) %").font(.system(size: 12, weight: .bold))
-                }
+                    Text("\(Int(battery.percent ?? 100)) %").font(.footnote)
+                        .fontWeight(.bold)
+                }.frame(alignment: .bottom)
             }
 
             if let date = expiresAtDate {
@@ -56,10 +58,11 @@ struct PumpView: View {
                     Image(systemName: "stopwatch.fill")
                         .resizable()
                         .aspectRatio(contentMode: .fit)
-                        .frame(height: 8)
+                        .frame(maxHeight: 10)
                         .foregroundColor(timerColor)
-                    Text(remainingTimeString(time: date.timeIntervalSince(timerDate))).font(.system(size: 12, weight: .bold))
-                }
+                    Text(remainingTimeString(time: date.timeIntervalSince(timerDate))).font(.footnote)
+                        .fontWeight(.bold)
+                }.frame(alignment: .bottom)
             }
         }
     }

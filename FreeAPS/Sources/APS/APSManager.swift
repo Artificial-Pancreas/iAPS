@@ -240,7 +240,9 @@ final class BaseAPSManager: APSManager, Injectable {
         loopStats(loopStatRecord: loopStatRecord)
 
         // Create a statistics.json
-        statistics()
+        if settings.displayStatistics {
+            statistics()
+        }
 
         if settings.closedLoop {
             reportEnacted(received: error == nil)
@@ -763,7 +765,7 @@ final class BaseAPSManager: APSManager, Injectable {
 
         let updateThisOften = Int(settingsManager.preferences.updateInterval)
 
-        // Only run every 30 minutes or when pressing statPanel
+        // Only run every 30 minutesl
         if testIfEmpty != 0 {
             guard testFile[0].created_at.addingTimeInterval(updateThisOften.minutes.timeInterval) < Date()
             else {
@@ -905,18 +907,15 @@ final class BaseAPSManager: APSManager, Injectable {
         var bgArray_1_: [Double] = []
         var bgArray_7_: [Double] = []
         var bgArray_30_: [Double] = []
-        var bgArray_90_: [Double] = []
         var bgArrayForTIR: [(bg_: Double, date_: Date)] = []
         var bgArray_1: [(bg_: Double, date_: Date)] = []
         var bgArray_7: [(bg_: Double, date_: Date)] = []
         var bgArray_30: [(bg_: Double, date_: Date)] = []
-        var bgArray_90: [(bg_: Double, date_: Date)] = []
         var medianBG = 0.0
         var nr_bgs: Decimal = 0
         var nr_bgs_1: Decimal = 0
         var nr_bgs_7: Decimal = 0
         var nr_bgs_30: Decimal = 0
-        var nr_bgs_90: Decimal = 0
 
         var startDate = Date("1978-02-22T11:43:54.659Z")
         if endIndex >= 0 {
@@ -925,11 +924,9 @@ final class BaseAPSManager: APSManager, Injectable {
         var end1 = false
         var end7 = false
         var end30 = false
-        var end90 = false
         var bg_1: Decimal = 0
         var bg_7: Decimal = 0
         var bg_30: Decimal = 0
-        var bg_90: Decimal = 0
         var bg_total: Decimal = 0
         var j = -1
 
@@ -966,14 +963,6 @@ final class BaseAPSManager: APSManager, Injectable {
                         bgArray_30_ = bgArray
                         nr_bgs_30 = nr_bgs
                         // time_30 = ((startDate ?? Date()) - entry.date).timeInterval
-                    }
-                    if (startDate! - entry.date).timeInterval >= 7.776E6, !end90 {
-                        end90 = true
-                        bg_90 = bg / nr_bgs
-                        bgArray_90 = bgArrayForTIR
-                        bgArray_90_ = bgArray
-                        nr_bgs_90 = nr_bgs
-                        // time_90 = ((startDate ?? Date()) - entry.date).timeInterval
                     }
                 }
             }
@@ -1067,14 +1056,6 @@ final class BaseAPSManager: APSManager, Injectable {
             IFCCa1CStatisticValue_30 = 10.929 *
                 (NGSPa1CStatisticValue_30 - 2.152) // IFCC (mmol/mol)  A1C(mmol/mol) = 10.929 * (A1C(%) - 2.15)
         }
-        // 90 Days
-        var NGSPa1CStatisticValue_90: Decimal = 0.0
-        var IFCCa1CStatisticValue_90: Decimal = 0.0
-        if end90 {
-            NGSPa1CStatisticValue_90 = (46.7 + bg_90) / 28.7 // NGSP (%)
-            IFCCa1CStatisticValue_90 = 10.929 *
-                (NGSPa1CStatisticValue_90 - 2.152) // IFCC (mmol/mol)  A1C(mmol/mol) = 10.929 * (A1C(%) - 2.15)
-        }
         // Total days
         var NGSPa1CStatisticValue_total: Decimal = 0.0
         var IFCCa1CStatisticValue_total: Decimal = 0.0
@@ -1088,7 +1069,6 @@ final class BaseAPSManager: APSManager, Injectable {
             day: roundDecimal(Decimal(medianCalculation(array: bgArray_1.map(\.bg_))), 1),
             week: roundDecimal(Decimal(medianCalculation(array: bgArray_7.map(\.bg_))), 1),
             month: roundDecimal(Decimal(medianCalculation(array: bgArray_30.map(\.bg_))), 1),
-            ninetyDays: roundDecimal(Decimal(medianCalculation(array: bgArray_90.map(\.bg_))), 1),
             total: roundDecimal(Decimal(medianBG), 1)
         )
 
@@ -1096,7 +1076,6 @@ final class BaseAPSManager: APSManager, Injectable {
             day: roundDecimal(NGSPa1CStatisticValue, 1),
             week: roundDecimal(NGSPa1CStatisticValue_7, 1),
             month: roundDecimal(NGSPa1CStatisticValue_30, 1),
-            ninetyDays: roundDecimal(NGSPa1CStatisticValue_90, 1),
             total: roundDecimal(NGSPa1CStatisticValue_total, 1)
         )
 
@@ -1107,14 +1086,12 @@ final class BaseAPSManager: APSManager, Injectable {
             bg_1 = bg_1.asMmolL
             bg_7 = bg_7.asMmolL
             bg_30 = bg_30.asMmolL
-            bg_90 = bg_90.asMmolL
             bg_total = bg_total.asMmolL
 
             median = Durations(
                 day: roundDecimal(Decimal(medianCalculation(array: bgArray_1.map(\.bg_))).asMmolL, 1),
                 week: roundDecimal(Decimal(medianCalculation(array: bgArray_7.map(\.bg_))).asMmolL, 1),
                 month: roundDecimal(Decimal(medianCalculation(array: bgArray_30.map(\.bg_))).asMmolL, 1),
-                ninetyDays: roundDecimal(Decimal(medianCalculation(array: bgArray_90.map(\.bg_))).asMmolL, 1),
                 total: roundDecimal(Decimal(medianBG).asMmolL, 1)
             )
 
@@ -1124,7 +1101,6 @@ final class BaseAPSManager: APSManager, Injectable {
                     day: roundDecimal(IFCCa1CStatisticValue, 1),
                     week: roundDecimal(IFCCa1CStatisticValue_7, 1),
                     month: roundDecimal(IFCCa1CStatisticValue_30, 1),
-                    ninetyDays: roundDecimal(IFCCa1CStatisticValue_90, 1),
                     total: roundDecimal(IFCCa1CStatisticValue_total, 1)
                 )
             }
@@ -1133,7 +1109,6 @@ final class BaseAPSManager: APSManager, Injectable {
                 day: roundDecimal(IFCCa1CStatisticValue, 1),
                 week: roundDecimal(IFCCa1CStatisticValue_7, 1),
                 month: roundDecimal(IFCCa1CStatisticValue_30, 1),
-                ninetyDays: roundDecimal(IFCCa1CStatisticValue_90, 1),
                 total: roundDecimal(IFCCa1CStatisticValue_total, 1)
             )
         }
@@ -1141,9 +1116,13 @@ final class BaseAPSManager: APSManager, Injectable {
         // round output values
         daysBG = roundDouble(daysBG, 1)
 
+        let glucose24Hours = storage.retrieve(OpenAPS.Monitor.glucose, as: [BloodGlucose].self)
+        let nrOfCGMReadings = glucose24Hours?.count ?? 0
+
         let loopstat = LoopCycles(
             loops: Int(successNR + errorNR),
             errors: Int(errorNR),
+            readings: nrOfCGMReadings,
             success_rate: Decimal(round(successRate ?? 0)),
             avg_interval: roundDecimal(Decimal(averageIntervalLoops), 1),
             median_interval: roundDecimal(Decimal(medianInterval), 1),
@@ -1159,7 +1138,6 @@ final class BaseAPSManager: APSManager, Injectable {
         var oneDay_: (TIR: Double, hypos: Double, hypers: Double) = (0.0, 0.0, 0.0)
         var sevenDays_: (TIR: Double, hypos: Double, hypers: Double) = (0.0, 0.0, 0.0)
         var thirtyDays_: (TIR: Double, hypos: Double, hypers: Double) = (0.0, 0.0, 0.0)
-        var ninetyDays_: (TIR: Double, hypos: Double, hypers: Double) = (0.0, 0.0, 0.0)
         var totalDays_: (TIR: Double, hypos: Double, hypers: Double) = (0.0, 0.0, 0.0)
 
         // Get all TIR calcs for every case
@@ -1172,10 +1150,6 @@ final class BaseAPSManager: APSManager, Injectable {
         if end30 {
             thirtyDays_ = tir(bgArray_30)
         }
-        if end90 {
-            ninetyDays_ = tir(bgArray_90)
-        }
-
         if nr_bgs > 0 {
             totalDays_ = tir(bgArrayForTIR)
         }
@@ -1184,7 +1158,6 @@ final class BaseAPSManager: APSManager, Injectable {
             day: roundDecimal(Decimal(oneDay_.TIR), 1),
             week: roundDecimal(Decimal(sevenDays_.TIR), 1),
             month: roundDecimal(Decimal(thirtyDays_.TIR), 1),
-            ninetyDays: roundDecimal(Decimal(ninetyDays_.TIR), 1),
             total: roundDecimal(Decimal(totalDays_.TIR), 1)
         )
 
@@ -1192,7 +1165,6 @@ final class BaseAPSManager: APSManager, Injectable {
             day: Decimal(oneDay_.hypos),
             week: Decimal(sevenDays_.hypos),
             month: Decimal(thirtyDays_.hypos),
-            ninetyDays: Decimal(ninetyDays_.hypos),
             total: Decimal(totalDays_.hypos)
         )
 
@@ -1200,7 +1172,6 @@ final class BaseAPSManager: APSManager, Injectable {
             day: Decimal(oneDay_.hypers),
             week: Decimal(sevenDays_.hypers),
             month: Decimal(thirtyDays_.hypers),
-            ninetyDays: Decimal(ninetyDays_.hypers),
             total: Decimal(totalDays_.hypers)
         )
 
@@ -1210,7 +1181,6 @@ final class BaseAPSManager: APSManager, Injectable {
             day: roundDecimal(bg_1, 1),
             week: roundDecimal(bg_7, 1),
             month: roundDecimal(bg_30, 1),
-            ninetyDays: roundDecimal(bg_90, 1),
             total: roundDecimal(bg_total, 1)
         )
 
@@ -1231,7 +1201,6 @@ final class BaseAPSManager: APSManager, Injectable {
         var sumOfSquares_1: Decimal = 0
         var sumOfSquares_7: Decimal = 0
         var sumOfSquares_30: Decimal = 0
-        var sumOfSquares_90: Decimal = 0
 
         // Total
         for array in bgArray {
@@ -1257,12 +1226,6 @@ final class BaseAPSManager: APSManager, Injectable {
                 sumOfSquares_30 += pow(Decimal(array_30).asMmolL - bg_30, 2)
             } else { sumOfSquares_30 += pow(Decimal(array_30) - bg_30, 2) }
         }
-        // 90 days
-        for array_90 in bgArray_90_ {
-            if units == .mmolL {
-                sumOfSquares_90 += pow(Decimal(array_90).asMmolL - bg_90, 2)
-            } else { sumOfSquares_90 += pow(Decimal(array_90) - bg_90, 2) }
-        }
 
         // Standard deviation and Coefficient of variation
         var sd_total = 0.0
@@ -1273,8 +1236,6 @@ final class BaseAPSManager: APSManager, Injectable {
         var cv_7 = 0.0
         var sd_30 = 0.0
         var cv_30 = 0.0
-        var sd_90 = 0.0
-        var cv_90 = 0.0
 
         // Avoid division by zero
         if avgs.total < 1 || nr_bgs < 1 { sd_total = 0
@@ -1300,17 +1261,12 @@ final class BaseAPSManager: APSManager, Injectable {
             cv_30 = 0 } else { sd_30 = sqrt(Double(sumOfSquares_30 / nr_bgs_30))
             cv_30 = sd_30 / Double(bg_30) * 100
         }
-        if avgs.ninetyDays < 1 || nr_bgs_90 < 1 { sd_90 = 0
-            cv_90 = 0 } else { sd_90 = sqrt(Double(sumOfSquares_90 / nr_bgs_90))
-            cv_90 = sd_90 / Double(bg_90) * 100
-        }
 
         // Standard Deviations
         let standardDeviations = Durations(
             day: roundDecimal(Decimal(sd_1), 1),
             week: roundDecimal(Decimal(sd_7), 1),
             month: roundDecimal(Decimal(sd_30), 1),
-            ninetyDays: roundDecimal(Decimal(sd_90), 1),
             total: roundDecimal(Decimal(sd_total), 1)
         )
 
@@ -1319,7 +1275,6 @@ final class BaseAPSManager: APSManager, Injectable {
             day: roundDecimal(Decimal(cv_1), 1),
             week: roundDecimal(Decimal(cv_7), 1),
             month: roundDecimal(Decimal(cv_30), 1),
-            ninetyDays: roundDecimal(Decimal(cv_90), 1),
             total: roundDecimal(Decimal(cv_total), 1)
         )
 

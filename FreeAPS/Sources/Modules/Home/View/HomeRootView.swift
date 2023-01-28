@@ -11,20 +11,19 @@ extension Home {
         @State var isStatusPopupPresented = false
         @State var selectedState: durationState
 
-        // Average/Median and CV/SD titles and values switches when you click them
+        // Average/Median/Readings and CV/SD titles and values switches when you tap them
         @State var averageOrMedianTitle = NSLocalizedString("Average", comment: "")
         @State var median_ = ""
         @State var average_ = ""
+        @State var readings = ""
+
         @State var averageOrmedian = ""
         @State var CV_or_SD_Title = NSLocalizedString("CV", comment: "CV")
         @State var cv_ = ""
         @State var sd_ = ""
         @State var CVorSD = ""
-        // Switch between Loops and Errors when tapping in ststPanel
+        // Switch between Loops and Errors when tapping in statPanel
         @State var loopStatTitle = NSLocalizedString("Loops", comment: "Nr of Loops in statPanel")
-        @State var loopsOrerrors = ""
-
-        public let paddingSpace: CGFloat = 15
 
         private var numberFormatter: NumberFormatter {
             let formatter = NumberFormatter()
@@ -73,29 +72,29 @@ extension Home {
                 Spacer()
             }
             .frame(maxWidth: .infinity)
-            .frame(maxHeight: 70)
             .padding(.top, geo.safeAreaInsets.top)
+            .padding(.bottom)
             .background(Color.gray.opacity(0.2))
         }
 
         var cobIobView: some View {
             VStack(alignment: .leading, spacing: 12) {
                 HStack {
-                    Text("IOB").font(.caption2).foregroundColor(.secondary)
+                    Text("IOB").font(.footnote).foregroundColor(.secondary)
                     Text(
                         (numberFormatter.string(from: (state.suggestion?.iob ?? 0) as NSNumber) ?? "0") +
                             NSLocalizedString(" U", comment: "Insulin unit")
                     )
-                    .font(.system(size: 12, weight: .bold))
-                }
+                    .font(.footnote).fontWeight(.bold)
+                }.frame(alignment: .top)
                 HStack {
-                    Text("COB").font(.caption2).foregroundColor(.secondary)
+                    Text("COB").font(.footnote).foregroundColor(.secondary)
                     Text(
                         (numberFormatter.string(from: (state.suggestion?.cob ?? 0) as NSNumber) ?? "0") +
                             NSLocalizedString(" g", comment: "gram of carbs")
                     )
-                    .font(.system(size: 12, weight: .bold))
-                }
+                    .font(.footnote).fontWeight(.bold)
+                }.frame(alignment: .bottom)
             }
         }
 
@@ -313,37 +312,6 @@ extension Home {
 
                         averageTIRhca1c(hba1c_all, average_, median_, tir_low, tir_high, tir_, hba1c_, sd_, cv_)
 
-                    case .ninetyDays:
-                        let hba1c_all = numberFormatter
-                            .string(from: (state.statistics?.Statistics.HbA1c.total ?? 0) as NSNumber) ?? ""
-                        let average_ = targetFormatter
-                            .string(from: (state.statistics?.Statistics.Glucose.Average.ninetyDays ?? 0) as NSNumber) ??
-                            ""
-                        let median_ = targetFormatter
-                            .string(from: (state.statistics?.Statistics.Glucose.Median.ninetyDays ?? 0) as NSNumber) ??
-                            ""
-                        let tir_low = tirFormatter
-                            .string(
-                                from: (state.statistics?.Statistics.Distribution.Hypos.ninetyDays ?? 0) as NSNumber
-                            ) ??
-                            ""
-                        let tir_high = tirFormatter
-                            .string(
-                                from: (state.statistics?.Statistics.Distribution.Hypers.ninetyDays ?? 0) as NSNumber
-                            ) ??
-                            ""
-                        let tir_ = tirFormatter
-                            .string(from: (state.statistics?.Statistics.Distribution.TIR.ninetyDays ?? 0) as NSNumber) ??
-                            ""
-                        let hba1c_ = numberFormatter
-                            .string(from: (state.statistics?.Statistics.HbA1c.ninetyDays ?? 0) as NSNumber) ?? ""
-                        let sd_ = numberFormatter
-                            .string(from: (state.statistics?.Statistics.Variance.SD.ninetyDays ?? 0) as NSNumber) ?? ""
-                        let cv_ = tirFormatter
-                            .string(from: (state.statistics?.Statistics.Variance.CV.ninetyDays ?? 0) as NSNumber) ?? ""
-
-                        averageTIRhca1c(hba1c_all, average_, median_, tir_low, tir_high, tir_, hba1c_, sd_, cv_)
-
                     case .total:
                         let hba1c_all = numberFormatter
                             .string(from: (state.statistics?.Statistics.HbA1c.total ?? 0) as NSNumber) ?? ""
@@ -403,19 +371,30 @@ extension Home {
                     // Average as default. Changes to Median when clicking.
                     let textAverageTitle = NSLocalizedString("Average", comment: "")
                     let textMedianTitle = NSLocalizedString("Median", comment: "")
+                    let cgmReadingsTitle = NSLocalizedString("Readings", comment: "CGM readings in statPanel")
 
                     HStack {
                         Text(averageOrMedianTitle).font(.footnote).foregroundColor(.secondary)
                         if averageOrMedianTitle == textAverageTitle {
                             Text(averageOrmedian == "" ? average_ : average_).font(.footnote)
-                        } else {
+                        } else if averageOrMedianTitle == textMedianTitle {
                             Text(averageOrmedian == "" ? median_ : median_).font(.footnote)
+                        } else if averageOrMedianTitle == cgmReadingsTitle {
+                            Text(
+                                averageOrmedian != "0" ? tirFormatter
+                                    .string(from: (state.statistics?.Statistics.LoopCycles.readings ?? 0) as NSNumber) ?? "" : ""
+                            )
+                            .font(.footnote)
                         }
                     }.onTapGesture {
                         if averageOrMedianTitle == textAverageTitle {
                             averageOrMedianTitle = textMedianTitle
                             averageOrmedian = median_
-                        } else {
+                        } else if averageOrMedianTitle == textMedianTitle {
+                            averageOrMedianTitle = cgmReadingsTitle
+                            averageOrmedian = tirFormatter
+                                .string(from: (state.statistics?.Statistics.LoopCycles.readings ?? 0) as NSNumber) ?? ""
+                        } else if averageOrMedianTitle == cgmReadingsTitle {
                             averageOrMedianTitle = textAverageTitle
                             averageOrmedian = average_
                         }
@@ -480,19 +459,16 @@ extension Home {
                         HStack {
                             Text(loopStatTitle).font(.footnote).foregroundColor(.secondary)
                             Text(
-                                loopsOrerrors == "" ? tirFormatter
+                                loopStatTitle == loopTitle ? tirFormatter
                                     .string(from: (state.statistics?.Statistics.LoopCycles.loops ?? 0) as NSNumber) ?? "" :
-                                    loopsOrerrors
+                                    tirFormatter
+                                    .string(from: (state.statistics?.Statistics.LoopCycles.errors ?? 0) as NSNumber) ?? ""
                             ).font(.footnote)
                         }.onTapGesture {
                             if loopStatTitle == loopTitle {
                                 loopStatTitle = errorTitle
-                                loopsOrerrors = tirFormatter
-                                    .string(from: (state.statistics?.Statistics.LoopCycles.errors ?? 0) as NSNumber) ?? ""
                             } else if loopStatTitle == errorTitle {
                                 loopStatTitle = loopTitle
-                                loopsOrerrors = tirFormatter
-                                    .string(from: (state.statistics?.Statistics.LoopCycles.loops ?? 0) as NSNumber) ?? ""
                             }
                         }
 
@@ -609,7 +585,7 @@ extension Home {
                                 .renderingMode(.template)
                                 .resizable()
                                 .frame(width: 24, height: 24)
-                                .foregroundColor(.loopGreen)
+                                .foregroundColor(.loopYellow)
                                 .padding(8)
                             if let carbsReq = state.carbsRequired {
                                 Text(numberFormatter.string(from: carbsReq as NSNumber)!)
@@ -628,7 +604,7 @@ extension Home {
                             .resizable()
                             .frame(width: 24, height: 24)
                             .padding(8)
-                    }.foregroundColor(.loopYellow)
+                    }.foregroundColor(.loopGreen)
                     Spacer()
                     Button { state.showModal(for: .bolus(waitForSuggestion: false)) }
                     label: {
@@ -722,20 +698,6 @@ extension Home {
                         .padding(.top, 8)
                     Text(errorMessage).font(.caption).foregroundColor(.loopRed)
                 }
-            }
-        }
-
-        private func colorOfGlucose(_ glucose: Decimal) -> Color {
-            switch glucose {
-            case 4 ... 8,
-                 30 ... 46,
-                 72 ... 144:
-                return .loopGreen
-            case 0 ... 4,
-                 20 ... 71:
-                return .loopRed
-            default:
-                return .loopYellow
             }
         }
     }

@@ -27,6 +27,14 @@ struct CurrentGlucoseView: View {
         return formatter
     }
 
+    private var timaAgoFormatter: NumberFormatter {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        formatter.maximumFractionDigits = 0
+        formatter.negativePrefix = ""
+        return formatter
+    }
+
     private var dateFormatter: DateFormatter {
         let formatter = DateFormatter()
         formatter.timeStyle = .short
@@ -34,8 +42,8 @@ struct CurrentGlucoseView: View {
     }
 
     var body: some View {
-        VStack(alignment: .center, spacing: 6) {
-            HStack(spacing: 8) {
+        VStack(alignment: .center) {
+            HStack {
                 Text(
                     recentGlucose?.glucose
                         .map {
@@ -43,24 +51,30 @@ struct CurrentGlucoseView: View {
                                 .string(from: Double(units == .mmolL ? $0.asMmolL : Decimal($0)) as NSNumber)! }
                         ?? "--"
                 )
-                .font(.system(size: 24, weight: .bold))
-                .fixedSize()
-                .foregroundColor(alarm == nil ? .primary : .loopRed)
-                image.padding(.bottom, 2)
+                .font(.title).fontWeight(.bold)
+                .foregroundColor(alarm == nil ? colorOfGlucose : .loopRed)
 
-            }.padding(.leading, 4)
-            HStack(alignment: .lastTextBaseline, spacing: 2) {
+                image
+            }
+            HStack {
+                let minutes = (recentGlucose?.dateString.timeIntervalSinceNow ?? 0) / 60
+                let text = timaAgoFormatter.string(for: Double(minutes)) ?? ""
                 Text(
-                    recentGlucose.map { dateFormatter.string(from: $0.dateString) } ?? "--"
-                ).font(.caption2).foregroundColor(.secondary)
+                    text == "0" ? "< 1 " + NSLocalizedString("min", comment: "Short form for minutes") : (
+                        text + " " +
+                            NSLocalizedString("min", comment: "Short form for minutes") + " "
+                    )
+                )
+                .font(.caption2).foregroundColor(.secondary)
+
                 Text(
                     delta
-                        .map { deltaFormatter.string(from: Double(units == .mmolL ? $0.asMmolL : Decimal($0)) as NSNumber)!
-                        } ??
-                        "--"
-
-                ).font(.system(size: 12, weight: .bold))
-            }
+                        .map {
+                            deltaFormatter.string(from: Double(units == .mmolL ? $0.asMmolL : Decimal($0)) as NSNumber)!
+                        } ?? "--"
+                )
+                .font(.caption2).foregroundColor(.secondary)
+            }.frame(alignment: .top)
         }
     }
 
@@ -89,6 +103,23 @@ struct CurrentGlucoseView: View {
              .notComputable,
              .rateOutOfRange:
             return Image(systemName: "arrow.left.and.right")
+        }
+    }
+
+    var colorOfGlucose: Color {
+        let whichGlucose = recentGlucose?.glucose ?? 0
+
+        switch whichGlucose {
+        case 71 ... 145:
+            return .loopGreen
+        case 1 ... 55,
+             217...:
+            return .loopRed
+        case 56 ... 70,
+             146 ... 216:
+            return .loopYellow
+        default:
+            return .primary
         }
     }
 }

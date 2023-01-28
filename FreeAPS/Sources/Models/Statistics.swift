@@ -87,6 +87,7 @@ extension Statistics {
 struct LoopCycles: JSON, Equatable {
     var loops: Int
     var errors: Int
+    var readings: Int
     var success_rate: Decimal
     var avg_interval: Decimal
     var median_interval: Decimal
@@ -107,7 +108,6 @@ struct Durations: JSON, Equatable {
     var day: Decimal
     var week: Decimal
     var month: Decimal
-    var ninetyDays: Decimal
     var total: Decimal
 }
 
@@ -142,6 +142,7 @@ extension LoopCycles {
     private enum CodingKeys: String, CodingKey {
         case loops
         case errors
+        case readings
         case success_rate
         case avg_interval
         case median_interval

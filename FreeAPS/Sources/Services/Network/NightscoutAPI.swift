@@ -166,6 +166,35 @@ extension NightscoutAPI {
             .eraseToAnyPublisher()
     }
 
+    func deleteInsulin(at date: Date) -> AnyPublisher<Void, Swift.Error> {
+        var components = URLComponents()
+        components.scheme = url.scheme
+        components.host = url.host
+        components.port = url.port
+        components.path = Config.treatmentsPath
+        components.queryItems = [
+            URLQueryItem(name: "find[bolus][$exists]", value: "true"),
+            URLQueryItem(
+                name: "find[created_at][$eq]",
+                value: Formatter.iso8601withFractionalSeconds.string(from: date)
+            )
+        ]
+
+        var request = URLRequest(url: components.url!)
+        request.allowsConstrainedNetworkAccess = false
+        request.timeoutInterval = Config.timeout
+        request.httpMethod = "DELETE"
+
+        if let secret = secret {
+            request.addValue(secret.sha1(), forHTTPHeaderField: "api-secret")
+        }
+
+        return service.run(request)
+            .retry(Config.retryCount)
+            .map { _ in () }
+            .eraseToAnyPublisher()
+    }
+
     func fetchTempTargets(sinceDate: Date? = nil) -> AnyPublisher<[TempTarget], Swift.Error> {
         var components = URLComponents()
         components.scheme = url.scheme
