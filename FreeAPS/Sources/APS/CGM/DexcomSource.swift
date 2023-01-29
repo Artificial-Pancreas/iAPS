@@ -76,8 +76,8 @@ extension DexcomSource: CGMManagerDelegate {
     func cgmManager(_ manager: CGMManager, hasNew readingResult: CGMReadingResult) {
         dispatchPrecondition(condition: .onQueue(.main))
         processCGMReadingResult(manager, readingResult: readingResult) {
-            warning(.deviceManager, "DEXCOM - Force the fire of the dispatch timer")
-            self.timer?.fire()
+//            warning(.deviceManager, "DEXCOM - Force the fire of the dispatch timer")
+//            self.timer?.fire()
         }
     }
 

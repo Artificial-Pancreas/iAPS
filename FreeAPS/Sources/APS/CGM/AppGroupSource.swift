@@ -21,7 +21,7 @@ struct AppGroupSource: GlucoseSource {
         }
 
         HeartBeatManager.shared.checkCGMBluetoothTransmitter(sharedUserDefaults: sharedDefaults, heartbeat: heartbeat)
-
+        debug(.deviceManager, "APPGROUP : START FETCH LAST BG ")
         let decoded = try? JSONSerialization.jsonObject(with: sharedData, options: [])
         guard let sgvs = decoded as? [AnyObject] else {
             return []

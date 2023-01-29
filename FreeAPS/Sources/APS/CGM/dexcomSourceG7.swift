@@ -71,8 +71,6 @@ extension DexcomSourceG7: CGMManagerDelegate {
     func cgmManager(_ manager: CGMManager, hasNew readingResult: CGMReadingResult) {
         dispatchPrecondition(condition: .onQueue(.main))
         processCGMReadingResult(manager, readingResult: readingResult) {
-            warning(.deviceManager, "DEXCOMG7 - Force the fire of the dispatch timer")
-            self.timer?.fire()
             // self.checkPumpDataAndLoop()
         }
     }
