@@ -419,8 +419,11 @@ Enact a temp Basal or a temp target */
 /* Header for Temp targets in Watch app */
 "Temp Targets" = "Временные цели";
 
-/* Delete carbs from Treatments list*/
+/* Delete carbs from data table and Nightscout */
 "Delete carbs?" = "Удалить углеводы?";
+
+/* Delete insulin from pump history and Nightscout */
+"Delete insulin?" = "Удалить инсулин?";
 
 /* Treatments list */
 "Treatments" = "События";
@@ -1210,6 +1213,9 @@ Enact a temp Basal or a temp target */
 /* Median BG */
 "Median" = "Медиана";
 
+/* CGM readings in statPanel */
+"Readings" = "Readings";
+
 /* Normal BG (within TIR) */
 "Normal" = "Норма";
 
@@ -1238,10 +1244,10 @@ Enact a temp Basal or a temp target */
 "Loops" = "Петли";
 
 /* Loop Errors in statPanel */
-"Errors" = "Errors";
+"Errors" = "Ошибки";
 
 /* Average loop interval */
-"Interval" = "Interval";
+"Interval" = "Интервал";
 
 /* Median loop interval */
 "Duration" = "Длительность";
@@ -1490,7 +1496,7 @@ Enact a temp Basal or a temp target */
 "SMB Interval" = "Интервал между SMB";
 
 /* "SMB Interval" */
-"Minimum duration in minutes for new SMB since last SMB or manual bolus" = "Minimum duration in minutes for new SMB since last SMB or manual bolus";
+"Minimum duration in minutes for new SMB since last SMB or manual bolus" = "Минимальный интервал в минутах для новых SMB с момента последнего SMB или введенного вручную болюса";
 
 /* Headline "Bolus Increment" */
 "Bolus Increment" = "Прирост болюса";
@@ -1556,7 +1562,7 @@ Enact a temp Basal or a temp target */
 "Use Sigmoid Function" = "Использовать Сигмоидную функцию";
 
 /* Use Sigmoid Function */
-"Use a sigmoid function for ISF (and for CR, when enabled), instead of the Logarithmic formula. Is only used when the Dynamic ISF setting is enabled in settings\n\nThe autosens.min/max settings determines the power with which dynamic ratio is adjusted, the height of the graph (Y-interval, Y: Dynamic ratio) and where the sigmoid curve flattens out, thus also limiting how high and how low the the ISF can be adjusted.\n\nThe Adjustment settings adjusts the slope of the curve. A lower value ==> less steep == less aggressive.\n\nYour scheduled/autotuned ISF setting and your min BG target determines when Dynamic ratio = 1 (ISF unchanged), meaning when current BG = minimum target BG => new ISF will always be set to your current scheduled/autotuned ISF, unlike the default logarithmic formula.\n\nDynamic CR is used when the setting 'Enable Dynamic CR' is enabled in settings." = "Использовать Сигмоидную функцию для ISF (и для CR, если включено), вместо Логарифмической функции. Используется только если включена функция Dynamic ISF\n\nПараметры autosens.min/max определяют мощность, с которой dynamic ratio регулируется, высоту графика (Y-интервал, Y: Dynamic ratio) и где кривая Сигмоидной функции сглаживается, что также ограничивает диапазон корректировки ISF.\n\nAdjustment settings регулирует наклон кривой. Более низкое значение ==> меньше крутизна == меньше аггрессивность.\n\nВаши профильные/автотюн ISF коэффициенты и Ваша минимальная цель BG определяют когда Dynamic ratio = 1 (ISF неизменен), это значит, что когда текущий BG = минимальному целевому BG => новый ISF всегда будет соответствовать значению в профиле/автотюне, в отличие от логарифмической функции, по-умолчанию.\n\nDynamic CR используется, когда опция 'Enable Dynamic CR' включена в настройках.";
+"Use a sigmoid function for ISF (and for CR, when enabled), instead of the default Logarithmic formula. Requires the Dynamic ISF setting to be enabled in settings\n\nThe Adjustment setting adjusts the slope of the curve (Y: Dynamic ratio, X: Blood Glucose). A lower value ==> less steep == less aggressive.\n\nThe autosens.min/max settings determines both the max/min limits for the dynamic ratio AND how much the dynamic ratio is adjusted. If AF is the slope of the curve, the autosens.min/max is the height of the graph, the Y-interval, where Y: dynamic ratio. The curve will always have a sigmoid shape, no matter which autosens.min/max settings are used, meaning these settings have big consequences for the outcome of the computed dynamic ISF. Please be careful setting a too high autosens.max value. With a proper profile ISF setting, you will probably never need it to be higher than 1.5\n\nAn Autosens.max limit > 1.5 is not advisable when using the sigmoid function." = "Использовать Сигмоидную функцию для ISF (и для CR, если включено), вместо Логарифмической функции. Используется только если включена функция Dynamic ISF\n\nПараметры autosens.min/max определяют мощность, с которой dynamic ratio регулируется, высоту графика (Y-интервал, Y: Dynamic ratio) и где кривая Сигмоидной функции сглаживается, что также ограничивает диапазон корректировки ISF.\n\nAdjustment settings регулирует наклон кривой. Более низкое значение ==> меньше крутизна == меньше аггрессивность.\n\nВаши профильные/автотюн ISF коэффициенты и Ваша минимальная цель BG определяют когда Dynamic ratio = 1 (ISF неизменен), это значит, что когда текущий BG = минимальному целевому BG => новый ISF всегда будет соответствовать значению в профиле/автотюне, в отличие от логарифмической функции, по-умолчанию.\n\nDynamic CR используется, когда опция 'Enable Dynamic CR' включена в настройках.";
 
 
 /* Headline "Threshold Setting" */

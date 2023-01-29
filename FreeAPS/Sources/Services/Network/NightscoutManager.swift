@@ -9,6 +9,7 @@ protocol NightscoutManager: GlucoseSource {
     func fetchTempTargets() -> AnyPublisher<[TempTarget], Never>
     func fetchAnnouncements() -> AnyPublisher<[Announcement], Never>
     func deleteCarbs(at date: Date)
+    func deleteInsulin(at date: Date)
     func uploadStatus()
     func uploadStatistics(dailystat: Statistics)
     func uploadPreferences()
@@ -172,6 +173,25 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
                 switch completion {
                 case .finished:
                     self.carbsStorage.deleteCarbs(at: date)
+                    debug(.nightscout, "Carbs deleted")
+                case let .failure(error):
+                    debug(.nightscout, error.localizedDescription)
+                }
+            } receiveValue: {}
+            .store(in: &lifetime)
+    }
+
+    func deleteInsulin(at date: Date) {
+        guard let nightscout = nightscoutAPI, isUploadEnabled else {
+            pumpHistoryStorage.deleteInsulin(at: date)
+            return
+        }
+
+        nightscout.deleteInsulin(at: date)
+            .sink { completion in
+                switch completion {
+                case .finished:
+                    self.pumpHistoryStorage.deleteInsulin(at: date)
                     debug(.nightscout, "Carbs deleted")
                 case let .failure(error):
                     debug(.nightscout, error.localizedDescription)

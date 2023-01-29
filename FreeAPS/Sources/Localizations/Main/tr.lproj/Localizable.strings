@@ -419,8 +419,11 @@ Enact a temp Basal or a temp target */
 /* Header for Temp targets in Watch app */
 "Temp Targets" = "Geçici Hedefler";
 
-/* Delete carbs from Treatments list*/
+/* Delete carbs from data table and Nightscout */
 "Delete carbs?" = "Karbonhidratları sil?";
+
+/* Delete insulin from pump history and Nightscout */
+"Delete insulin?" = "İnsülin silinsin mi?";
 
 /* Treatments list */
 "Treatments" = "Tedaviler";
@@ -925,10 +928,10 @@ Enact a temp Basal or a temp target */
 "Bluetooth State restored (APS restarted?). Found %d peripherals, and connected to %@ with identifier %@" = "Bluetooth Durumu geri yüklendi (APS yeniden başlatıldı mı?). %d çevre birimi bulundu ve %@ tanımlayıcısı ile %@'a bağlandı";
 
 /* Shared app group xDrip4iOS */
-"Using shared app group with external CGM app xDrip4iOS" = "Using shared app group with external CGM app xDrip4iOS";
+"Using shared app group with external CGM app xDrip4iOS" = "Harici CGM uygulaması xDrip4iOS ile paylaşılan uygulama grubunu kullan";
 
 /* Shared app group GlucoseDirect */
-"Using shared app group with external CGM app GlucoseDirect" = "Using shared app group with external CGM app GlucoseDirect";
+"Using shared app group with external CGM app GlucoseDirect" = "Harici CGM uygulaması GlucoseDirect ile paylaşılan uygulama grubunu kullan";
 
 /* Dexcom G6 app */
 "Dexcom G6 app" = "Yerel G6 uygulaması";
@@ -951,10 +954,10 @@ Enact a temp Basal or a temp target */
 /* -------------- Developer settings ---------------------- */
 /* Debug options */
 
-"Developer" = "Developer";
+"Developer" = "Geliştirici";
 
 /* Debug option view NS Upload Profile */
-"NS Upload Profile" = "NS Upload Profile";
+"NS Upload Profile" = "NS Yükleme Profili";
 
 /* Debug option view NS Uploaded Profile */
 "NS Uploaded Profile" = "NS Uploaded Profile";
@@ -963,28 +966,28 @@ Enact a temp Basal or a temp target */
 "Autosense" = "Autosense";
 
 /* Debug option view Pump History */
-"Pump History" = "Pump History";
+"Pump History" = "Pompa geçmişi";
 
 /* Debug option view Target Ranges */
-"Target ranges" = "Target ranges";
+"Target ranges" = "Hedef aralıkları";
 
 /* Debug option view Temp targets */
-"Temp targets" = "Temp targets";
+"Temp targets" = "Geçici hedefler";
 
 /* Debug option view Meal */
-"Meal" = "Meal";
+"Meal" = "Ögün";
 
 /* Debug option view Pump profile */
-"Pump profile" = "Pump profile";
+"Pump profile" = "Pompa profili";
 
 /* Debug option view Profile */
-"Profile" = "Profile";
+"Profile" = "Profil";
 
 /* Debug option view Enacted */
 "Enacted" = "Enacted";
 
 /* Debug option view Announcements (from NS) */
-"Announcements" = "Announcements";
+"Announcements" = "Duyurular";
 
 /* Debug option view Enacted announcements announcements (from NS) */
 "Enacted announcements" = "Enacted announcements";
@@ -1182,19 +1185,19 @@ Enact a temp Basal or a temp target */
 /* Headline Statistics */
 
 
-"Statistics" = "Statistics";
+"Statistics" = "İstatistikler";
 
 /* Option in preferences */
-"Display Statistics" = "Display Statistics";
+"Display Statistics" = "İstatistikleri Göster";
 
 /* infoText: Description for Display Statistics */
-"Displays Statistics under the chart view" = "Displays Statistics under the chart view";
+"Displays Statistics under the chart view" = "İstatistikleri Grafik görünümü altında görüntüler";
 
 /* Low Glucose Limit option in preferences */
-"Low Glucose Limit" = "Low Glucose Limit";
+"Low Glucose Limit" = "Düşük Glikoz Sınırı";
 
 /* High Glucose Limit option in preferences */
-"High Glucose Limit" = "High Glucose Limit";
+"High Glucose Limit" = "Yüksek Glikoz Sınırı";
 
 /* infoText: Description for Low Glucose Limit */
 "BG Under This Value Will Be Displayed As Low Glucose Percentage" = "BG Under This Value Will Be Displayed As Low Glucose Percentage";
@@ -1202,22 +1205,25 @@ Enact a temp Basal or a temp target */
 "BG Under This Value Will Be Displayed As High Glucose Percentage" = "BG Under This Value Will Be Displayed As High Glucose Percentage";
 
 /* When statistics.json was last updated */
-"Updated" = "Updated";
+"Updated" = "Güncellendi";
 
 /* Average BG = */
-"Average" = "Average";
+"Average" = "Ortalama";
 
 /* Median BG */
-"Median" = "Median";
+"Median" = "Orta Değer";
+
+/* CGM readings in statPanel */
+"Readings" = "Okumalar";
 
 /* Normal BG (within TIR) */
 "Normal" = "Normal";
 
 /* Title High BG in statPanel */
-"High (>" = "High (>";
+"High (>" = "Yüksek (>";
 
 /* Title Low BG in statPanel */
-"Low (<" = "Low (<";
+"Low (<" = "Düşük (<";
 
 /* SD */
 "SD" = "SD";
@@ -1229,19 +1235,19 @@ Enact a temp Basal or a temp target */
 "HbA1c" = "HbA1c";
 
 /* Total number of days of data for HbA1c estimation, part 1/2*/
-"All" = "All";
+"All" = "Tümü";
 
 /* Total number of days of data for HbA1c estimation, part 2/2*/
 "days" = "gün";
 
 /* Nr of Loops in statPanel */
-"Loops" = "Loops";
+"Loops" = "Döngüler";
 
 /* Loop Errors in statPanel */
-"Errors" = "Errors";
+"Errors" = "Hatalar";
 
 /* Average loop interval */
-"Interval" = "Interval";
+"Interval" = "Aralık";
 
 /* Median loop interval */
 "Duration" = "Süre";
@@ -1259,19 +1265,19 @@ Enact a temp Basal or a temp target */
 "Default is 30 minutes. How often to update and save the statistics.json and to upload last array, when enabled, to Nightscout. A lower interval than for glucose updates (5 min) is pointless." = "Default is 30 minutes. How often to update and save the statistics.json and to upload last array, when enabled, to Nightscout. A lower interval than for glucose updates (5 min) is pointless.";
 
 /* Duration displayed in statPanel */
-"Past 24 Hours " = "Past 24 Hours ";
+"Past 24 Hours " = "Son 24 Saat ";
 
 /* Duration displayed in statPanel */
-"Past Week " = "Past Week ";
+"Past Week " = "Geçen Hafta ";
 
 /* Duration displayed in statPanel */
-"Past Month " = "Past Month ";
+"Past Month " = "Geçen Ay ";
 
 /* Duration displayed in statPanel */
-"Past 90 Days " = "Past 90 Days ";
+"Past 90 Days " = "Son 90 Gün ";
 
 /* Duration displayed in statPanel */
-"All Past Days of Data " = "All Past Days of Data ";
+"All Past Days of Data " = "Tüm Geçmiş Gün Verileri ";
 
 /* "Display Loop statistics in statPanel */
 "Display Loop Cycle statistics" = "Display Loop Cycle statistics";
@@ -1556,7 +1562,7 @@ Enact a temp Basal or a temp target */
 "Use Sigmoid Function" = "Sigmoid Fonksiyonunu Kullan";
 
 /* Use Sigmoid Function */
-"Use a sigmoid function for ISF (and for CR, when enabled), instead of the Logarithmic formula. Is only used when the Dynamic ISF setting is enabled in settings\n\nThe autosens.min/max settings determines the power with which dynamic ratio is adjusted, the height of the graph (Y-interval, Y: Dynamic ratio) and where the sigmoid curve flattens out, thus also limiting how high and how low the the ISF can be adjusted.\n\nThe Adjustment settings adjusts the slope of the curve. A lower value ==> less steep == less aggressive.\n\nYour scheduled/autotuned ISF setting and your min BG target determines when Dynamic ratio = 1 (ISF unchanged), meaning when current BG = minimum target BG => new ISF will always be set to your current scheduled/autotuned ISF, unlike the default logarithmic formula.\n\nDynamic CR is used when the setting 'Enable Dynamic CR' is enabled in settings." = "Use a sigmoid function for ISF (and for CR, when enabled), instead of the Logarithmic formula. Is only used when the Dynamic ISF setting is enabled in settings\n\nThe autosens.min/max settings determines the power with which dynamic ratio is adjusted, the height of the graph (Y-interval, Y: Dynamic ratio) and where the sigmoid curve flattens out, thus also limiting how high and how low the the ISF can be adjusted.\n\nThe Adjustment settings adjusts the slope of the curve. A lower value ==> less steep == less aggressive.\n\nYour scheduled/autotuned ISF setting and your min BG target determines when Dynamic ratio = 1 (ISF unchanged), meaning when current BG = minimum target BG => new ISF will always be set to your current scheduled/autotuned ISF, unlike the default logarithmic formula.\n\nDynamic CR is used when the setting 'Enable Dynamic CR' is enabled in settings.";
+"Use a sigmoid function for ISF (and for CR, when enabled), instead of the default Logarithmic formula. Requires the Dynamic ISF setting to be enabled in settings\n\nThe Adjustment setting adjusts the slope of the curve (Y: Dynamic ratio, X: Blood Glucose). A lower value ==> less steep == less aggressive.\n\nThe autosens.min/max settings determines both the max/min limits for the dynamic ratio AND how much the dynamic ratio is adjusted. If AF is the slope of the curve, the autosens.min/max is the height of the graph, the Y-interval, where Y: dynamic ratio. The curve will always have a sigmoid shape, no matter which autosens.min/max settings are used, meaning these settings have big consequences for the outcome of the computed dynamic ISF. Please be careful setting a too high autosens.max value. With a proper profile ISF setting, you will probably never need it to be higher than 1.5\n\nAn Autosens.max limit > 1.5 is not advisable when using the sigmoid function." = "Use a sigmoid function for ISF (and for CR, when enabled), instead of the default Logarithmic formula. Requires the Dynamic ISF setting to be enabled in settings\n\nThe Adjustment setting adjusts the slope of the curve (Y: Dynamic ratio, X: Blood Glucose). A lower value ==> less steep == less aggressive.\n\nThe autosens.min/max settings determines both the max/min limits for the dynamic ratio AND how much the dynamic ratio is adjusted. If AF is the slope of the curve, the autosens.min/max is the height of the graph, the Y-interval, where Y: dynamic ratio. The curve will always have a sigmoid shape, no matter which autosens.min/max settings are used, meaning these settings have big consequences for the outcome of the computed dynamic ISF. Please be careful setting a too high autosens.max value. With a proper profile ISF setting, you will probably never need it to be higher than 1.5\n\nAn Autosens.max limit > 1.5 is not advisable when using the sigmoid function.";
 
 
 /* Headline "Threshold Setting" */
@@ -1602,4 +1608,4 @@ Enact a temp Basal or a temp target */
 "Insulin curve" = "İnsülin eğrisi";
 
 /* Headline "Adjustment Factor" */
-"Adjustment Factor" = "Adjustment Factor";
+"Adjustment Factor" = "Düzeltme Katsayısı";
