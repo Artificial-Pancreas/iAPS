@@ -49,11 +49,14 @@ extension OSLog {
     }
 
     func debug(_ message: StaticString, _ args: CVarArg...) {
-        let msg = message.debugDescription
+        let msg_format = message.withUTF8Buffer{
+            String(decoding: $0, as: UTF8.self)
+        }
+        let msg = String(format: msg_format, args)
         DispatchWorkItem(qos: .userInteractive, flags: .enforceQoS) {
             loggerLock.perform {
                 category.logger.debug(
-                    msg,
+                    {msg}(),
                     printToConsole: true,
                     file: #file,
                     function: #function,
@@ -64,11 +67,14 @@ extension OSLog {
     }
 
     func info(_ message: StaticString, _ args: CVarArg...) {
-        let msg = message.debugDescription
+        let msg_format = message.withUTF8Buffer{
+            String(decoding: $0, as: UTF8.self)
+        }
+        let msg = String(format: msg_format, args)
         DispatchWorkItem(qos: .userInteractive, flags: .enforceQoS) {
             loggerLock.perform {
                 category.logger.info(
-                    msg,
+                    {msg}(),
                     file: #file,
                     function: #function,
                     line: #line
@@ -78,11 +84,14 @@ extension OSLog {
     }
 
     func `default`(_ message: StaticString, _ args: CVarArg...) {
-        let msg = message.debugDescription
+        let msg_format = message.withUTF8Buffer{
+            String(decoding: $0, as: UTF8.self)
+        }
+        let msg = String(format: msg_format, args)
         DispatchWorkItem(qos: .userInteractive, flags: .enforceQoS) {
             loggerLock.perform {
                 category.logger.debug(
-                    msg,
+                    {msg}(),
                     printToConsole: true,
                     file: #file,
                     function: #function,
@@ -93,13 +102,16 @@ extension OSLog {
     }
 
     func error(_ message: StaticString, _ args: CVarArg...) {
-        let msg = message.debugDescription
+        let msg_format = message.withUTF8Buffer{
+            String(decoding: $0, as: UTF8.self)
+        }
+        let msg = String(format: msg_format, args)
         DispatchWorkItem(qos: .userInteractive, flags: .enforceQoS) {
            
             loggerLock.perform {
                 category.logger.warning(
-                    msg,
-                    description: message.debugDescription,
+                    {msg}(),
+                    description:  {msg}(),
                     error: nil,
                     file: #file,
                     function: #function,

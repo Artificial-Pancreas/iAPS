@@ -1,16 +1,16 @@
-
+import CGMBLEKit
 import Combine
 import Foundation
-import G7SensorKit
 import LoopKit
 import LoopKitUI
+import ShareClient
 
-final class DexcomSourceG7: GlucoseSource {
+final class DexcomSourceG5: GlucoseSource {
     private let processQueue = DispatchQueue(label: "DexcomSource.processQueue")
-    private var glucoseStorage: GlucoseStorage!
+    private let glucoseStorage: GlucoseStorage!
     var glucoseManager: FetchGlucoseManager?
 
-    var cgmManager: G7CGMManager?
+    var cgmManager: G5CGMManager?
 
     var cgmHasValidSensorSession: Bool = false
 
@@ -19,8 +19,13 @@ final class DexcomSourceG7: GlucoseSource {
     init(glucoseStorage: GlucoseStorage, glucoseManager: FetchGlucoseManager) {
         self.glucoseStorage = glucoseStorage
         self.glucoseManager = glucoseManager
-        cgmManager = G7CGMManager()
+        cgmManager = G5CGMManager
+            .init(state: TransmitterManagerState(transmitterID: UserDefaults.standard.dexcomTransmitterID ?? "000000"))
         cgmManager?.cgmManagerDelegate = self
+    }
+
+    var transmitterID: String {
+        cgmManager?.transmitter.ID ?? "000000"
     }
 
     func fetch(_: DispatchTimer?) -> AnyPublisher<[BloodGlucose], Never> {
@@ -50,7 +55,7 @@ final class DexcomSourceG7: GlucoseSource {
     }
 }
 
-extension DexcomSourceG7: CGMManagerDelegate {
+extension DexcomSourceG5: CGMManagerDelegate {
     func deviceManager(
         _: LoopKit.DeviceManager,
         logEventForDeviceIdentifier _: String?,
@@ -82,13 +87,14 @@ extension DexcomSourceG7: CGMManagerDelegate {
     func cgmManager(_ manager: CGMManager, hasNew readingResult: CGMReadingResult) {
         dispatchPrecondition(condition: .onQueue(.main))
         processCGMReadingResult(manager, readingResult: readingResult, tickBLE: true) {
-            // nothing to do
+            debug(.deviceManager, "DEXCOM - Direct return")
         }
     }
 
     func startDateToFilterNewData(for _: CGMManager) -> Date? {
         dispatchPrecondition(condition: .onQueue(.main))
         return glucoseStorage.lastGlucoseDate()
+        //  return glucoseStore.latestGlucose?.startDate
     }
 
     func cgmManagerDidUpdateState(_: CGMManager) {}
@@ -112,7 +118,7 @@ extension DexcomSourceG7: CGMManagerDelegate {
         tickBLE: Bool,
         completion: @escaping () -> Void
     ) {
-        warning(.deviceManager, "DEXCOMG7 - Process CGM Reading Result launched")
+        debug(.deviceManager, "DEXCOM - Process CGM Reading Result launched")
         switch readingResult {
         case let .newData(values):
             let bloodGlucose = values.compactMap { newGlucoseSample -> BloodGlucose? in
@@ -128,7 +134,8 @@ extension DexcomSourceG7: CGMManagerDelegate {
                     filtered: nil,
                     noise: nil,
                     glucose: value,
-                    type: "sgv"
+                    type: "sgv",
+                    transmitterID: self.transmitterID
                 )
             }
             if tickBLE {
@@ -151,8 +158,8 @@ extension DexcomSourceG7: CGMManagerDelegate {
     }
 }
 
-// extension DexcomSourceG7 {
-//    func sourceInfo() -> [String: Any]? {
-//        [GlucoseSourceKey.description.rawValue: "Dexcom tramsmitter ID: \(transmitterID)"]
-//    }
-// }
+extension DexcomSourceG5 {
+    func sourceInfo() -> [String: Any]? {
+        [GlucoseSourceKey.description.rawValue: "Dexcom tramsmitter ID: \(transmitterID)"]
+    }
+}

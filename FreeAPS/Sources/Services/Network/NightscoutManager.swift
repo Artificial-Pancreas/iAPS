@@ -125,8 +125,16 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
             .eraseToAnyPublisher()
     }
 
+    // MARK: - GlucoseSource
+
+    var glucoseManager: FetchGlucoseManager?
+
     func fetch(_: DispatchTimer?) -> AnyPublisher<[BloodGlucose], Never> {
         fetchGlucose(since: glucoseStorage.syncDate())
+    }
+
+    func fetchIfNeeded() -> AnyPublisher<[BloodGlucose], Never> {
+        fetch(nil)
     }
 
     func fetchCarbs() -> AnyPublisher<[CarbsEntry], Never> {

@@ -72,6 +72,7 @@ final class BaseAPSManager: APSManager, Injectable {
     @Injected() private var settingsManager: SettingsManager!
     @Injected() private var broadcaster: Broadcaster!
     @Persisted(key: "lastAutotuneDate") private var lastAutotuneDate = Date()
+    @Persisted(key: "lastStartLoopDate") private var lastStartLoopDate: Date = .distantPast
     @Persisted(key: "lastLoopDate") var lastLoopDate: Date = .distantPast {
         didSet {
             lastLoopDateSubject.send(lastLoopDate)
@@ -175,15 +176,22 @@ final class BaseAPSManager: APSManager, Injectable {
 
     // Loop entry point
     private func loop() {
+        // check the last start of looping is more the loopInterval
+        guard lastStartLoopDate.addingTimeInterval(Config.loopInterval) < Date() else {
+            debug(.apsManager, "too close to do a loop : \(lastStartLoopDate)")
+            return
+        }
+
         guard !isLooping.value else {
-            warning(.apsManager, "Already looping, skip")
+            warning(.apsManager, "Loop already in progress. Skip recommendation.")
             return
         }
 
         debug(.apsManager, "Starting loop")
 
+        lastStartLoopDate = Date()
         var loopStatRecord = LoopStats(
-            start: Date(),
+            start: lastStartLoopDate,
             loopStatus: "Starting"
         )
 
@@ -1320,17 +1328,16 @@ final class BaseAPSManager: APSManager, Injectable {
     }
 
     private func loopStats(loopStatRecord: LoopStats) {
-        let file = OpenAPS.Monitor.loopStats
-
-        var uniqEvents: [LoopStats] = []
-
-        storage.transaction { storage in
-            storage.append(loopStatRecord, to: file, uniqBy: \.start)
-            uniqEvents = storage.retrieve(file, as: [LoopStats].self)?
-                .filter { $0.start.addingTimeInterval(24.hours.timeInterval) > Date() }
-                .sorted { $0.start > $1.start } ?? []
-
-            storage.save(Array(uniqEvents), as: file)
+        processQueue.async {
+            let file = OpenAPS.Monitor.loopStats
+            var uniqEvents: [LoopStats] = []
+            self.storage.transaction { storage in
+                storage.append(loopStatRecord, to: file, uniqBy: \.start)
+                uniqEvents = storage.retrieve(file, as: [LoopStats].self)?
+                    .filter { $0.start.addingTimeInterval(24.hours.timeInterval) > Date() }
+                    .sorted { $0.start > $1.start } ?? []
+                storage.save(Array(uniqEvents), as: file)
+            }
         }
     }
 

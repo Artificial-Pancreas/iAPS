@@ -5,10 +5,10 @@ import LoopKit
 import LoopKitUI
 import ShareClient
 
-final class DexcomSource: GlucoseSource {
+final class DexcomSourceG6: GlucoseSource {
     private let processQueue = DispatchQueue(label: "DexcomSource.processQueue")
-    private var timer: DispatchTimer?
     private let glucoseStorage: GlucoseStorage!
+    var glucoseManager: FetchGlucoseManager?
 
     var cgmManager: G6CGMManager?
 
@@ -16,8 +16,9 @@ final class DexcomSource: GlucoseSource {
 
     private var promise: Future<[BloodGlucose], Error>.Promise?
 
-    init(glucoseStorage: GlucoseStorage) {
+    init(glucoseStorage: GlucoseStorage, glucoseManager: FetchGlucoseManager) {
         self.glucoseStorage = glucoseStorage
+        self.glucoseManager = glucoseManager
         cgmManager = G6CGMManager
             .init(state: TransmitterManagerState(transmitterID: UserDefaults.standard.dexcomTransmitterID ?? "000000"))
         cgmManager?.cgmManagerDelegate = self
@@ -27,13 +28,22 @@ final class DexcomSource: GlucoseSource {
         cgmManager?.transmitter.ID ?? "000000"
     }
 
-    func fetch(_ heartbeat: DispatchTimer?) -> AnyPublisher<[BloodGlucose], Never> {
-        // dexcomManager.transmitter.resumeScanning()
-        timer = heartbeat
-        return Future<[BloodGlucose], Error> { [weak self] promise in
-            self?.promise = promise
+    func fetch(_: DispatchTimer?) -> AnyPublisher<[BloodGlucose], Never> {
+        fetchIfNeeded()
+    }
+
+    func fetchIfNeeded() -> AnyPublisher<[BloodGlucose], Never> {
+        Future<[BloodGlucose], Error> { _ in
+            self.processQueue.async {
+                guard let cgmManager = self.cgmManager else { return }
+                cgmManager.fetchNewDataIfNeeded { result in
+                    self.processCGMReadingResult(cgmManager, readingResult: result, tickBLE: false) {
+                        // nothing to do
+                    }
+                }
+            }
         }
-        .timeout(90, scheduler: processQueue, options: nil, customError: nil)
+        .timeout(60, scheduler: processQueue, options: nil, customError: nil)
         .replaceError(with: [])
         .replaceEmpty(with: [])
         .eraseToAnyPublisher()
@@ -44,7 +54,7 @@ final class DexcomSource: GlucoseSource {
     }
 }
 
-extension DexcomSource: CGMManagerDelegate {
+extension DexcomSourceG6: CGMManagerDelegate {
     func deviceManager(
         _: LoopKit.DeviceManager,
         logEventForDeviceIdentifier _: String?,
@@ -75,9 +85,8 @@ extension DexcomSource: CGMManagerDelegate {
 
     func cgmManager(_ manager: CGMManager, hasNew readingResult: CGMReadingResult) {
         dispatchPrecondition(condition: .onQueue(.main))
-        processCGMReadingResult(manager, readingResult: readingResult) {
-//            warning(.deviceManager, "DEXCOM - Force the fire of the dispatch timer")
-//            self.timer?.fire()
+        processCGMReadingResult(manager, readingResult: readingResult, tickBLE: true) {
+            debug(.deviceManager, "DEXCOM - Direct return")
         }
     }
 
@@ -102,8 +111,13 @@ extension DexcomSource: CGMManagerDelegate {
         }
     }
 
-    private func processCGMReadingResult(_: CGMManager, readingResult: CGMReadingResult, completion: @escaping () -> Void) {
-        warning(.deviceManager, "DEXCOM - Process CGM Reading Result launched")
+    private func processCGMReadingResult(
+        _: CGMManager,
+        readingResult: CGMReadingResult,
+        tickBLE: Bool,
+        completion: @escaping () -> Void
+    ) {
+        debug(.deviceManager, "DEXCOM - Process CGM Reading Result launched")
         switch readingResult {
         case let .newData(values):
             let bloodGlucose = values.compactMap { newGlucoseSample -> BloodGlucose? in
@@ -123,7 +137,11 @@ extension DexcomSource: CGMManagerDelegate {
                     transmitterID: self.transmitterID
                 )
             }
-            promise?(.success(bloodGlucose))
+            if tickBLE {
+                glucoseManager?.updateGlucoseStore(newBloodGlucose: bloodGlucose)
+            } else {
+                promise?(.success(bloodGlucose))
+            }
             completion()
         case .unreliableData:
             // loopManager.receivedUnreliableCGMReading()
@@ -139,7 +157,7 @@ extension DexcomSource: CGMManagerDelegate {
     }
 }
 
-extension DexcomSource {
+extension DexcomSourceG6 {
     func sourceInfo() -> [String: Any]? {
         [GlucoseSourceKey.description.rawValue: "Dexcom tramsmitter ID: \(transmitterID)"]
     }

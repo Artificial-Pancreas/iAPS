@@ -15,6 +15,8 @@ final class BaseLibreTransmitterSource: LibreTransmitterSource, Injectable {
 
     private var promise: Future<[BloodGlucose], Error>.Promise?
 
+    var glucoseManager: FetchGlucoseManager?
+
     var manager: LibreTransmitterManager? {
         didSet {
             configured = manager != nil
@@ -34,13 +36,18 @@ final class BaseLibreTransmitterSource: LibreTransmitterSource, Injectable {
     }
 
     func fetch(_: DispatchTimer?) -> AnyPublisher<[BloodGlucose], Never> {
-        Future<[BloodGlucose], Error> { [weak self] promise in
-            self?.promise = promise
-        }
-        .timeout(60, scheduler: processQueue, options: nil, customError: nil)
-        .replaceError(with: [])
-        .replaceEmpty(with: [])
-        .eraseToAnyPublisher()
+        Just([]).eraseToAnyPublisher()
+//        Future<[BloodGlucose], Error> { [weak self] promise in
+//            self?.promise = promise
+//        }
+//        .timeout(60, scheduler: processQueue, options: nil, customError: nil)
+//        .replaceError(with: [])
+//        .replaceEmpty(with: [])
+//        .eraseToAnyPublisher()
+    }
+
+    func fetchIfNeeded() -> AnyPublisher<[BloodGlucose], Never> {
+        fetch(nil)
     }
 
     func sourceInfo() -> [String: Any]? {
@@ -80,6 +87,7 @@ extension BaseLibreTransmitterSource: LibreTransmitterManagerDelegate {
                 )
             }
             NSLog("Debug Libre \(glucose)")
+            glucoseManager?.updateGlucoseStore(newBloodGlucose: glucose)
             promise?(.success(glucose))
 
         case let .failure(error):

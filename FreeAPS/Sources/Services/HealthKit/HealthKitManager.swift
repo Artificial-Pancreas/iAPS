@@ -287,6 +287,10 @@ final class BaseHealthKitManager: HealthKitManager, Injectable {
         )
     }
 
+    // MARK: - GlucoseSource
+
+    var glucoseManager: FetchGlucoseManager?
+
     func fetch(_: DispatchTimer?) -> AnyPublisher<[BloodGlucose], Never> {
         Future { [weak self] promise in
             guard let self = self else {
@@ -320,6 +324,10 @@ final class BaseHealthKitManager: HealthKitManager, Injectable {
             }
         }
         .eraseToAnyPublisher()
+    }
+
+    func fetchIfNeeded() -> AnyPublisher<[BloodGlucose], Never> {
+        fetch(nil)
     }
 
     func deleteGlucise(syncID: String) {

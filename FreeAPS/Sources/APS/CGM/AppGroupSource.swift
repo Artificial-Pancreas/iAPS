@@ -3,6 +3,7 @@ import Foundation
 import LibreTransmitter
 
 struct AppGroupSource: GlucoseSource {
+    var glucoseManager: FetchGlucoseManager?
     let from: String
 
     func fetch(_ heartbeat: DispatchTimer?) -> AnyPublisher<[BloodGlucose], Never> {
@@ -13,6 +14,10 @@ struct AppGroupSource: GlucoseSource {
         }
 
         return Just(fetchLastBGs(60, sharedDefaults, heartbeat)).eraseToAnyPublisher()
+    }
+
+    func fetchIfNeeded() -> AnyPublisher<[BloodGlucose], Never> {
+        fetch(nil)
     }
 
     private func fetchLastBGs(_ count: Int, _ sharedDefaults: UserDefaults, _ heartbeat: DispatchTimer?) -> [BloodGlucose] {

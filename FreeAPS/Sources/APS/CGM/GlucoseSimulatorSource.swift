@@ -26,6 +26,8 @@ import Foundation
 // MARK: - Glucose simulator
 
 final class GlucoseSimulatorSource: GlucoseSource {
+    var glucoseManager: FetchGlucoseManager?
+
     private enum Config {
         // min time period to publish data
         static let workInterval: TimeInterval = 300
@@ -80,6 +82,10 @@ final class GlucoseSimulatorSource: GlucoseSource {
         }
 
         return Just(glucoses).eraseToAnyPublisher()
+    }
+
+    func fetchIfNeeded() -> AnyPublisher<[BloodGlucose], Never> {
+        fetch(nil)
     }
 }
 
@@ -164,7 +170,7 @@ class IntelligentGenerator: BloodGlucoseGenerator {
     }
 
     private func getDirection(fromGlucose from: Int, toGlucose to: Int) -> BloodGlucose.Direction {
-        BloodGlucose.Direction(trend: to - from)
+        BloodGlucose.Direction(trend: Int(to - from))
     }
 
     private func generateNewTrend() {

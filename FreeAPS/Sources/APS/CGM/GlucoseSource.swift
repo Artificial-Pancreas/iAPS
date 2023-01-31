@@ -6,6 +6,8 @@ protocol SourceInfoProvider {
 
 protocol GlucoseSource: SourceInfoProvider {
     func fetch(_ heartbeat: DispatchTimer?) -> AnyPublisher<[BloodGlucose], Never>
+    func fetchIfNeeded() -> AnyPublisher<[BloodGlucose], Never>
+    var glucoseManager: FetchGlucoseManager? { get set }
 }
 
 extension GlucoseSource {
