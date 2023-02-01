@@ -2,10 +2,10 @@
 "%1$@  %2$@/%3$@  %4$@" = "%1$@  %2$@/%3$@  %4$@";
 
 /* The format string describing number of basal schedule entries: (1: number of entries) */
-"%1$@ basal schedule entries\n" = "%1$@ basal schedule entries\n";
+"%1$@ basal schedule entries\n" = "%1$@ bazal program girişleri\n";
 
 /* The format string describing units of insulin remaining: (1: number of units) */
-"%1$@ Units of insulin remaining\n" = "%1$@ Units of insulin remaining\n";
+"%1$@ Units of insulin remaining\n" = "%1$@ Ünite insülin kaldı\n";
 
 /* The format string for displaying an offset from a time zone: (1: GMT)(2: -)(3: 4:00) */
 "%1$@%2$@%3$@" = "%1$@%2$@%3$@";
@@ -17,7 +17,7 @@
 "Are you sure you want to delete this pump?" = "Bu pompa'yı silmek istediğinden emin misin?";
 
 /* The title of the cell describing an awake radio */
-"Awake Until" = "Awake Until";
+"Awake Until" = "Kadar Etkin";
 
 /* The title text for the basal rate schedule */
 "Basal Rates" = "Bazal Oranları";
@@ -120,7 +120,7 @@
 "Listening Off" = "Dinleme kapalı";
 
 /* The title of the command to pair with mysentry */
-"MySentry Pair" = "MySentry Pair";
+"MySentry Pair" = "MySentry'e Bağlan";
 
 /* The title of the cell showing device name */
 "Name" = "İsim";
@@ -129,7 +129,7 @@
 "No response" = "Yanıt yok";
 
 /* The title of the cell showing the last idle */
-"On Idle" = "On Idle";
+"On Idle" = "Boşta";
 
 /* Pump find device instruction */
 "On your pump, go to the Find Device screen and select \"Find Device\".\n\nMain Menu >\nUtilities >\nConnect Devices >\nOther Devices >\nOn >\nFind Device" = "Pompanızda, Cihaz Bul ekranına gidin ve \"Cihaz Bul\"u seçin.\n\nAna Menü >\nAraçlar >\nCihazları Bağlayın >\nDiğer Cihazlar >\nAçık >\nCihaz Bul";
