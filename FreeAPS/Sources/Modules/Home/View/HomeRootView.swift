@@ -73,7 +73,7 @@ extension Home {
             }
             .frame(maxWidth: .infinity)
             .padding(.top, geo.safeAreaInsets.top)
-            .padding(.bottom)
+            .padding(.bottom, 6)
             .background(Color.gray.opacity(0.2))
         }
 
