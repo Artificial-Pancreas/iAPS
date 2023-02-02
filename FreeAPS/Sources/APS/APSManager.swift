@@ -808,8 +808,7 @@ final class BaseAPSManager: APSManager, Injectable {
         let version = Bundle.main.releaseVersionNumber
         let build = Bundle.main.buildVersionNumber
         let branch = Bundle.main.infoDictionary?["BuildBranch"] as? String ?? ""
-        var copyrightNotice_ = Bundle.main.infoDictionary?["NSHumanReadableCopyright"] as? String ?? ""
-        copyrightNotice_ = String(copyrightNotice_.prefix(32))
+        let copyrightNotice_ = Bundle.main.infoDictionary?["NSHumanReadableCopyright"] as? String ?? ""
         let pump_ = pumpManager?.localizedTitle ?? ""
         let cgm = settingsManager.settings.cgm
         let file = OpenAPS.Monitor.statistics
@@ -1289,7 +1288,7 @@ final class BaseAPSManager: APSManager, Injectable {
             Build_Version: version ?? "",
             Build_Number: build ?? "1",
             Branch: branch,
-            CopyRightNotice: copyrightNotice_,
+            CopyRightNotice: String(copyrightNotice_.prefix(32)),
             Build_Date: buildDate,
             Algorithm: algo_,
             AdjustmentFactor: af,
