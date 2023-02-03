@@ -967,6 +967,14 @@ final class BaseAPSManager: APSManager, Injectable {
                     }
                 }
             }
+
+            // If less then 24 hours of glucose data, use total instead
+            if bg_1 == 0 {
+                bg_1 = bg_total
+                bgArray_1 = bgArrayForTIR
+                end1 = true
+                nr_bgs_1 = nr_bgs
+            }
         }
 
         if nr_bgs > 0 {
