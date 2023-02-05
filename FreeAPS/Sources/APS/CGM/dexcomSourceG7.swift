@@ -25,7 +25,13 @@ final class DexcomSourceG7: GlucoseSource {
 
     func fetch(_: DispatchTimer?) -> AnyPublisher<[BloodGlucose], Never> {
         // dexcomManager.transmitter.resumeScanning()
-        Just([]).eraseToAnyPublisher()
+        return Future<[BloodGlucose], Error> { [weak self] promise in
+            self?.promise = promise
+        }
+        .timeout(60, scheduler: processQueue, options: nil, customError: nil)
+        .replaceError(with: [])
+        .replaceEmpty(with: [])
+        .eraseToAnyPublisher()
     }
 
     func fetchIfNeeded() -> AnyPublisher<[BloodGlucose], Never> {
@@ -112,7 +118,7 @@ extension DexcomSourceG7: CGMManagerDelegate {
         tickBLE: Bool,
         completion: @escaping () -> Void
     ) {
-        warning(.deviceManager, "DEXCOMG7 - Process CGM Reading Result launched")
+        debug(.deviceManager, "DEXCOMG7 - Process CGM Reading Result launched")
         switch readingResult {
         case let .newData(values):
             let bloodGlucose = values.compactMap { newGlucoseSample -> BloodGlucose? in
