@@ -239,8 +239,8 @@ final class BaseAPSManager: APSManager, Injectable {
 
         loopStats(loopStatRecord: loopStatRecord)
 
-        // Create a statistics.json
-        if settings.displayStatistics {
+        // Create a statistics.json. Don't run in backgound
+        if settings.displayStatistics, UIApplication.shared.applicationState != .background {
             statistics()
         }
 
