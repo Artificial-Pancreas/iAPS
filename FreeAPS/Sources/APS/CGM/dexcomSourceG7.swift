@@ -25,7 +25,7 @@ final class DexcomSourceG7: GlucoseSource {
 
     func fetch(_: DispatchTimer?) -> AnyPublisher<[BloodGlucose], Never> {
         // dexcomManager.transmitter.resumeScanning()
-        return Future<[BloodGlucose], Error> { [weak self] promise in
+        Future<[BloodGlucose], Error> { [weak self] promise in
             self?.promise = promise
         }
         .timeout(60, scheduler: processQueue, options: nil, customError: nil)
