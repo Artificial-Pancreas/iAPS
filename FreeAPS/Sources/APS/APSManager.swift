@@ -1080,7 +1080,7 @@ final class BaseAPSManager: APSManager, Injectable {
             avg_duration: Decimal(roundDouble(averageLoopTime, 2)),
             median_duration: Decimal(roundDouble(medianLoopTime, 2)),
             min_duration: roundDecimal(Decimal(minimumLoopTime), 2),
-            max_duration: Decimal(roundDouble(maximumLoopTime , 1))
+            max_duration: Decimal(roundDouble(maximumLoopTime, 1))
         )
 
         // TIR calcs for every case
@@ -1201,7 +1201,6 @@ final class BaseAPSManager: APSManager, Injectable {
             peakActivityTime: iPa,
             Carbs_24h: carbTotal,
             GlucoseStorage_Days: Decimal(daysBG),
-            TimeOfComputation: Decimal(-1 * roundDouble(statisticsStartedAt.timeIntervalSinceNow, 1)),
             Statistics: Stats(
                 Distribution: TimeInRange,
                 Glucose: avg,
