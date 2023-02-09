@@ -17,6 +17,7 @@ struct Statistics: JSON, Equatable {
     var peakActivityTime: Decimal
     var Carbs_24h: Decimal
     var GlucoseStorage_Days: Decimal
+    var TimeOfComputation: Decimal
     var Statistics: Stats
 
     init(
@@ -36,6 +37,7 @@ struct Statistics: JSON, Equatable {
         peakActivityTime: Decimal,
         Carbs_24h: Decimal,
         GlucoseStorage_Days: Decimal,
+        TimeOfComputation: Decimal,
         Statistics: Stats
     ) {
         self.created_at = created_at
@@ -54,6 +56,7 @@ struct Statistics: JSON, Equatable {
         self.peakActivityTime = peakActivityTime
         self.Carbs_24h = Carbs_24h
         self.GlucoseStorage_Days = GlucoseStorage_Days
+        self.TimeOfComputation = TimeOfComputation
         self.Statistics = Statistics
     }
 
@@ -84,6 +87,7 @@ extension Statistics {
         case peakActivityTime
         case Carbs_24h
         case GlucoseStorage_Days
+        case TimeOfComputation
         case Statistics
     }
 }
