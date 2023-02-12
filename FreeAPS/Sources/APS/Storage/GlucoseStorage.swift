@@ -33,12 +33,27 @@ final class BaseGlucoseStorage: GlucoseStorage, Injectable {
     }
 
     func storeGlucose(_ glucose: [BloodGlucose]) {
+        let storeGlucoseStarted = Date()
+
+        let stat_glucose = BloodGlucose(
+            _id: glucose[0].id,
+            sgv: nil,
+            date: glucose[0].date,
+            dateString: glucose[0].dateString,
+            unfiltered: nil,
+            filtered: nil,
+            noise: nil,
+            glucose: glucose[0].glucose ?? 0,
+            type: nil
+        )
+
         processQueue.sync {
             let file = OpenAPS.Monitor.glucose
             self.storage.transaction { storage in
                 storage.append(glucose, to: file, uniqBy: \.dateString)
-                // Save for statistics also
-                storage.append(glucose, to: OpenAPS.Monitor.glucose_data, uniqBy: \.dateString)
+
+                // Save for statistics also (only glucose, date, datestring and id)
+                storage.append(stat_glucose, to: OpenAPS.Monitor.glucose_data, uniqBy: \.id)
 
                 let uniqEvents = storage.retrieve(file, as: [BloodGlucose].self)?
                     .filter { $0.dateString.addingTimeInterval(24.hours.timeInterval) > Date() }
