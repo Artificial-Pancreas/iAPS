@@ -22,11 +22,14 @@
 
 import Combine
 import Foundation
+import LoopKitUI
 
 // MARK: - Glucose simulator
 
 final class GlucoseSimulatorSource: GlucoseSource {
+    var cgmManager: CGMManagerUI?
     var glucoseManager: FetchGlucoseManager?
+    var cgmType: CGMType = .simulator
 
     private enum Config {
         // min time period to publish data

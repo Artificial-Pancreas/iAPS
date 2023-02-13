@@ -1,5 +1,6 @@
 import Combine
 import Foundation
+import LoopKitUI
 import Swinject
 import UIKit
 
@@ -128,6 +129,8 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
     // MARK: - GlucoseSource
 
     var glucoseManager: FetchGlucoseManager?
+    var cgmManager: CGMManagerUI?
+    var cgmType: CGMType = .nightscout
 
     func fetch(_: DispatchTimer?) -> AnyPublisher<[BloodGlucose], Never> {
         fetchGlucose(since: glucoseStorage.syncDate())

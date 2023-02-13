@@ -1,10 +1,13 @@
 import Combine
 import Foundation
 import LibreTransmitter
+import LoopKitUI
 
 struct AppGroupSource: GlucoseSource {
+    var cgmManager: CGMManagerUI?
     var glucoseManager: FetchGlucoseManager?
     let from: String
+    var cgmType: CGMType
 
     func fetch(_ heartbeat: DispatchTimer?) -> AnyPublisher<[BloodGlucose], Never> {
         guard let suiteName = Bundle.main.appGroupSuiteName,

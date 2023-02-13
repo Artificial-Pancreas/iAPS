@@ -162,10 +162,11 @@ final class BaseDeviceDataManager: DeviceDataManager, Injectable {
         }
 
         debug(.deviceManager, "Start updating the pump data")
-
-        pumpManager.ensureCurrentPumpData { _ in
-            debug(.deviceManager, "Pump data updated.")
-            self.updateUpdateFinished(true)
+        processQueue.safeSync {
+            pumpManager.ensureCurrentPumpData { _ in
+                debug(.deviceManager, "Pump data updated.")
+                self.updateUpdateFinished(true)
+            }
         }
 
 //        pumpUpdateCancellable = Future<Bool, Never> { [unowned self] promise in
@@ -221,6 +222,8 @@ final class BaseDeviceDataManager: DeviceDataManager, Injectable {
     @Persisted(key: "BaseDeviceDataManager.lastFetchGlucoseDate") private var lastFetchGlucoseDate: Date = .distantPast
 
     var glucoseManager: FetchGlucoseManager?
+    var cgmManager: CGMManagerUI?
+    var cgmType: CGMType = .enlite
 
     func fetchIfNeeded() -> AnyPublisher<[BloodGlucose], Never> {
         fetch(nil)

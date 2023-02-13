@@ -10,7 +10,8 @@ final class DexcomSourceG6: GlucoseSource {
     private let glucoseStorage: GlucoseStorage!
     var glucoseManager: FetchGlucoseManager?
 
-    var cgmManager: G6CGMManager?
+    var cgmManager: CGMManagerUI?
+    var cgmType: CGMType = .dexcomG6
 
     var cgmHasValidSensorSession: Bool = false
 
@@ -20,16 +21,26 @@ final class DexcomSourceG6: GlucoseSource {
         self.glucoseStorage = glucoseStorage
         self.glucoseManager = glucoseManager
         cgmManager = G6CGMManager
-            .init(state: TransmitterManagerState(transmitterID: UserDefaults.standard.dexcomTransmitterID ?? "000000"))
+            .init(state: TransmitterManagerState(
+                transmitterID: UserDefaults.standard
+                    .dexcomTransmitterID ?? "000000"
+            ))
         cgmManager?.cgmManagerDelegate = self
     }
 
     var transmitterID: String {
-        cgmManager?.transmitter.ID ?? "000000"
+        guard let cgmG6Manager = cgmManager as? G6CGMManager else { return "000000" }
+        return cgmG6Manager.transmitter.ID
     }
 
     func fetch(_: DispatchTimer?) -> AnyPublisher<[BloodGlucose], Never> {
-        fetchIfNeeded()
+        Future<[BloodGlucose], Error> { [weak self] promise in
+            self?.promise = promise
+        }
+        .timeout(60 * 5, scheduler: processQueue, options: nil, customError: nil)
+        .replaceError(with: [])
+        .replaceEmpty(with: [])
+        .eraseToAnyPublisher()
     }
 
     func fetchIfNeeded() -> AnyPublisher<[BloodGlucose], Never> {
@@ -37,7 +48,7 @@ final class DexcomSourceG6: GlucoseSource {
             self.processQueue.async {
                 guard let cgmManager = self.cgmManager else { return }
                 cgmManager.fetchNewDataIfNeeded { result in
-                    self.processCGMReadingResult(cgmManager, readingResult: result, tickBLE: false) {
+                    self.processCGMReadingResult(cgmManager, readingResult: result) {
                         // nothing to do
                     }
                 }
@@ -57,11 +68,13 @@ final class DexcomSourceG6: GlucoseSource {
 extension DexcomSourceG6: CGMManagerDelegate {
     func deviceManager(
         _: LoopKit.DeviceManager,
-        logEventForDeviceIdentifier _: String?,
+        logEventForDeviceIdentifier deviceIdentifier: String?,
         type _: LoopKit.DeviceLogEntryType,
-        message _: String,
+        message: String,
         completion _: ((Error?) -> Void)?
-    ) {}
+    ) {
+        debug(.deviceManager, "device Manager for \(String(describing: deviceIdentifier)) : \(message)")
+    }
 
     func issueAlert(_: LoopKit.Alert) {}
 
@@ -81,12 +94,16 @@ extension DexcomSourceG6: CGMManagerDelegate {
 
     func recordRetractedAlert(_: LoopKit.Alert, at _: Date) {}
 
-    func cgmManagerWantsDeletion(_: CGMManager) {}
+    func cgmManagerWantsDeletion(_ manager: CGMManager) {
+        dispatchPrecondition(condition: .onQueue(.main))
+        debug(.deviceManager, " CGM Manager with identifier \(manager.managerIdentifier) wants deletion")
+        glucoseManager?.cgmGlucoseSourceType = nil
+    }
 
     func cgmManager(_ manager: CGMManager, hasNew readingResult: CGMReadingResult) {
         dispatchPrecondition(condition: .onQueue(.main))
-        processCGMReadingResult(manager, readingResult: readingResult, tickBLE: true) {
-            debug(.deviceManager, "DEXCOM - Direct return")
+        processCGMReadingResult(manager, readingResult: readingResult) {
+            debug(.deviceManager, "DEXCOM - Direct return done")
         }
     }
 
@@ -96,7 +113,13 @@ extension DexcomSourceG6: CGMManagerDelegate {
         //  return glucoseStore.latestGlucose?.startDate
     }
 
-    func cgmManagerDidUpdateState(_: CGMManager) {}
+    func cgmManagerDidUpdateState(_ manager: CGMManager) {
+        dispatchPrecondition(condition: .onQueue(.main))
+        guard let g6Manager = manager as? TransmitterManager else {
+            return
+        }
+        UserDefaults.standard.dexcomTransmitterID = g6Manager.rawState["transmitterID"] as? String
+    }
 
     func credentialStoragePrefix(for _: CGMManager) -> String {
         // return string unique to this instance of the CGMManager
@@ -114,7 +137,6 @@ extension DexcomSourceG6: CGMManagerDelegate {
     private func processCGMReadingResult(
         _: CGMManager,
         readingResult: CGMReadingResult,
-        tickBLE: Bool,
         completion: @escaping () -> Void
     ) {
         debug(.deviceManager, "DEXCOM - Process CGM Reading Result launched")
@@ -137,11 +159,7 @@ extension DexcomSourceG6: CGMManagerDelegate {
                     transmitterID: self.transmitterID
                 )
             }
-            if tickBLE {
-                glucoseManager?.updateGlucoseStore(newBloodGlucose: bloodGlucose)
-            } else {
-                promise?(.success(bloodGlucose))
-            }
+            promise?(.success(bloodGlucose))
             completion()
         case .unreliableData:
             // loopManager.receivedUnreliableCGMReading()

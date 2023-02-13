@@ -1,6 +1,7 @@
 import Combine
 import Foundation
 import HealthKit
+import LoopKitUI
 import Swinject
 
 protocol HealthKitManager: GlucoseSource {
@@ -290,6 +291,8 @@ final class BaseHealthKitManager: HealthKitManager, Injectable {
     // MARK: - GlucoseSource
 
     var glucoseManager: FetchGlucoseManager?
+    var cgmManager: CGMManagerUI?
+    var cgmType: CGMType = .nightscout
 
     func fetch(_: DispatchTimer?) -> AnyPublisher<[BloodGlucose], Never> {
         Future { [weak self] promise in

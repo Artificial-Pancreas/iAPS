@@ -6,6 +6,9 @@ import Swinject
 protocol FetchGlucoseManager: SourceInfoProvider {
     func updateGlucoseStore(newBloodGlucose: [BloodGlucose])
     func refreshCGM()
+    func updateGlucoseSource()
+    var glucoseSource: GlucoseSource! { get }
+    var cgmGlucoseSourceType: CGMType? { get set }
 }
 
 final class BaseFetchGlucoseManager: FetchGlucoseManager, Injectable {
@@ -20,6 +23,7 @@ final class BaseFetchGlucoseManager: FetchGlucoseManager, Injectable {
 
     private var lifetime = Lifetime()
     private let timer = DispatchTimer(timeInterval: 1.minutes.timeInterval)
+    var cgmGlucoseSourceType: CGMType?
 
     private lazy var dexcomSourceG5 = DexcomSourceG5(glucoseStorage: glucoseStorage, glucoseManager: self)
     private lazy var dexcomSourceG6 = DexcomSourceG6(glucoseStorage: glucoseStorage, glucoseManager: self)
@@ -42,10 +46,10 @@ final class BaseFetchGlucoseManager: FetchGlucoseManager, Injectable {
 
     var glucoseSource: GlucoseSource!
 
-    private func updateGlucoseSource() {
+    func updateGlucoseSource() {
         switch settingsManager.settings.cgm {
         case .xdrip:
-            glucoseSource = AppGroupSource(from: "xDrip")
+            glucoseSource = AppGroupSource(from: "xDrip", cgmType: .xdrip)
         case .dexcomG5:
             glucoseSource = dexcomSourceG5
         case .dexcomG6:
@@ -59,10 +63,12 @@ final class BaseFetchGlucoseManager: FetchGlucoseManager, Injectable {
         case .libreTransmitter:
             glucoseSource = libreTransmitter
         case .glucoseDirect:
-            glucoseSource = AppGroupSource(from: "GlucoseDirect")
+            glucoseSource = AppGroupSource(from: "GlucoseDirect", cgmType: .glucoseDirect)
         case .enlite:
             glucoseSource = deviceDataManager
         }
+        // update the config
+        cgmGlucoseSourceType = settingsManager.settings.cgm
 
         if settingsManager.settings.cgm != .libreTransmitter {
             libreTransmitter.manager = nil
@@ -71,7 +77,7 @@ final class BaseFetchGlucoseManager: FetchGlucoseManager, Injectable {
         }
     }
 
-    /// function called when a callback is fired by CGM BLE
+    /// function called when a callback is fired by CGM BLE - no more used
     public func updateGlucoseStore(newBloodGlucose: [BloodGlucose]) {
         let syncDate = glucoseStorage.syncDate()
         debug(.deviceManager, "CGM BLE FETCHGLUCOSE  : SyncDate is \(syncDate)")
@@ -101,54 +107,60 @@ final class BaseFetchGlucoseManager: FetchGlucoseManager, Injectable {
         var filteredByDate: [BloodGlucose] = []
         var filtered: [BloodGlucose] = []
 
-        if allGlucose.isNotEmpty {
-            filteredByDate = allGlucose.filter { $0.dateString > syncDate }
-            filtered = glucoseStorage.filterTooFrequentGlucose(filteredByDate, at: syncDate)
-            if filtered.isNotEmpty {
-                debug(.nightscout, "New glucose found")
-                glucoseStorage.storeGlucose(filtered)
-            }
-        }
+        guard allGlucose.isNotEmpty else { return }
 
-        if filtered.isEmpty {
-            let lastGlucoseDate = glucoseStorage.lastGlucoseDate()
-            guard lastGlucoseDate >= Date().addingTimeInterval(Config.eхpirationInterval) else {
-                debug(.nightscout, "Glucose is too old - \(lastGlucoseDate)")
-                return
-            }
-        }
+        filteredByDate = allGlucose.filter { $0.dateString > syncDate }
+        filtered = glucoseStorage.filterTooFrequentGlucose(filteredByDate, at: syncDate)
 
-        apsManager.heartbeat(date: Date())
+        guard filtered.isNotEmpty else { return }
+        debug(.deviceManager, "New glucose found")
 
-        // no need to go next step if no new data
-        guard filteredByDate.isNotEmpty else {
-            return
-        }
+        glucoseStorage.storeGlucose(filtered)
+
+        deviceDataManager.heartbeat(date: Date())
 
         nightscoutManager.uploadGlucose()
+
         let glucoseForHealth = filteredByDate.filter { !glucoseFromHealth.contains($0) }
+
         guard glucoseForHealth.isNotEmpty else { return }
         healthKitManager.saveIfNeeded(bloodGlucose: glucoseForHealth)
+
+//        if filtered.isEmpty {
+//            let lastGlucoseDate = glucoseStorage.lastGlucoseDate()
+//            guard lastGlucoseDate >= Date().addingTimeInterval(-Config.eхpirationInterval) else {
+//                debug(.nightscout, "Glucose is too old - \(lastGlucoseDate)")
+//                return
+//            }
+//        }
     }
 
     /// The function used to start the timer sync - Function of the variable defined in config
     private func subscribe() {
         timer.publisher
             .receive(on: processQueue)
-            .flatMap { date -> AnyPublisher<(Date, Date, [BloodGlucose], [BloodGlucose]), Never> in
-                debug(.nightscout, "FetchGlucoseManager heartbeat")
+            .flatMap { _ -> AnyPublisher<[BloodGlucose], Never> in
+                debug(.nightscout, "FetchGlucoseManager timer heartbeat")
                 self.updateGlucoseSource()
-                return Publishers.CombineLatest4(
-                    Just(date),
+                return self.glucoseSource.fetch(self.timer).eraseToAnyPublisher()
+            }
+            .sink { glucose in
+                debug(.nightscout, "FetchGlucoseManager callback sensor")
+                guard glucose.isNotEmpty else { return }
+                Publishers.CombineLatest3(
+                    Just(glucose),
                     Just(self.glucoseStorage.syncDate()),
-                    self.glucoseSource.fetch(self.timer),
                     self.healthKitManager.fetch(nil)
                 )
                 .eraseToAnyPublisher()
-            }
-            .sink { _, syncDate, glucose, glucoseFromHealth in
-                debug(.nightscout, "FETCHGLUCOSE : SyncDate is \(syncDate)")
-                self.glucoseStoreAndHeartDecision(syncDate: syncDate, glucose: glucose, glucoseFromHealth: glucoseFromHealth)
+                .sink { newGlucose, syncDate, glucoseFromHealth in
+                    self.glucoseStoreAndHeartDecision(
+                        syncDate: syncDate,
+                        glucose: newGlucose,
+                        glucoseFromHealth: glucoseFromHealth
+                    )
+                }
+                .store(in: &self.lifetime)
             }
             .store(in: &lifetime)
         timer.fire()

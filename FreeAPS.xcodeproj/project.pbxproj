@@ -296,6 +296,14 @@
 		CE48C86428CA69D5007C0598 /* OmniBLEPumpManagerExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE48C86328CA69D5007C0598 /* OmniBLEPumpManagerExtensions.swift */; };
 		CE48C86628CA6B48007C0598 /* OmniPodManagerExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE48C86528CA6B48007C0598 /* OmniPodManagerExtensions.swift */; };
 		CE6B025728F350FF000C5502 /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE6B025628F350FF000C5502 /* HealthKit.framework */; };
+		CE7950242997D81700FA576E /* CGMSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE7950232997D81700FA576E /* CGMSettingsView.swift */; };
+		CE7950262998056D00FA576E /* CGMSetupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE7950252998056D00FA576E /* CGMSetupView.swift */; };
+		CE79502829980C9600FA576E /* CGMBLEKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE79502729980C9600FA576E /* CGMBLEKitUI.framework */; };
+		CE79502A29980C9F00FA576E /* G7SensorKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE79502929980C9F00FA576E /* G7SensorKitUI.framework */; };
+		CE79502B29980CAF00FA576E /* CGMBLEKitUI.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = CE79502729980C9600FA576E /* CGMBLEKitUI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		CE79502C29980CB500FA576E /* G7SensorKitUI.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = CE79502929980C9F00FA576E /* G7SensorKitUI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		CE79502E29980E4D00FA576E /* ShareClientUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE79502D29980E4D00FA576E /* ShareClientUI.framework */; };
+		CE79502F29980E5800FA576E /* ShareClientUI.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = CE79502D29980E4D00FA576E /* ShareClientUI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		CE82E02528E867BA00473A9C /* AlertStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE82E02428E867BA00473A9C /* AlertStorage.swift */; };
 		CE82E02728E869DF00473A9C /* AlertEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE82E02628E869DF00473A9C /* AlertEntry.swift */; };
 		CEB434DC28B8F5B900B70274 /* MKRingProgressView.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEB434DB28B8F5B900B70274 /* MKRingProgressView.framework */; };
@@ -378,6 +386,9 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				CE79502F29980E5800FA576E /* ShareClientUI.framework in Embed Frameworks */,
+				CE79502C29980CB500FA576E /* G7SensorKitUI.framework in Embed Frameworks */,
+				CE79502B29980CAF00FA576E /* CGMBLEKitUI.framework in Embed Frameworks */,
 				CE2FAD38297D69E1001A872C /* ShareClient.framework in Embed Frameworks */,
 				CE398D19297C9EFD00DF218F /* G7SensorKit.framework in Embed Frameworks */,
 				3818AA6F274C26A500843DB3 /* RileyLinkKitUI.framework in Embed Frameworks */,
@@ -742,6 +753,11 @@
 		CE48C86328CA69D5007C0598 /* OmniBLEPumpManagerExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OmniBLEPumpManagerExtensions.swift; sourceTree = "<group>"; };
 		CE48C86528CA6B48007C0598 /* OmniPodManagerExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OmniPodManagerExtensions.swift; sourceTree = "<group>"; };
 		CE6B025628F350FF000C5502 /* HealthKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HealthKit.framework; path = Platforms/WatchOS.platform/Developer/SDKs/WatchOS9.1.sdk/System/Library/Frameworks/HealthKit.framework; sourceTree = DEVELOPER_DIR; };
+		CE7950232997D81700FA576E /* CGMSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGMSettingsView.swift; sourceTree = "<group>"; };
+		CE7950252998056D00FA576E /* CGMSetupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGMSetupView.swift; sourceTree = "<group>"; };
+		CE79502729980C9600FA576E /* CGMBLEKitUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = CGMBLEKitUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		CE79502929980C9F00FA576E /* G7SensorKitUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = G7SensorKitUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		CE79502D29980E4D00FA576E /* ShareClientUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ShareClientUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE82E02428E867BA00473A9C /* AlertStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertStorage.swift; sourceTree = "<group>"; };
 		CE82E02628E869DF00473A9C /* AlertEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertEntry.swift; sourceTree = "<group>"; };
 		CEB434DB28B8F5B900B70274 /* MKRingProgressView.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = MKRingProgressView.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -790,6 +806,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CE79502E29980E4D00FA576E /* ShareClientUI.framework in Frameworks */,
+				CE79502A29980C9F00FA576E /* G7SensorKitUI.framework in Frameworks */,
+				CE79502829980C9600FA576E /* CGMBLEKitUI.framework in Frameworks */,
 				CEB434DC28B8F5B900B70274 /* MKRingProgressView.framework in Frameworks */,
 				38E87403274F78C000975559 /* libswiftCoreNFC.tbd in Frameworks */,
 				38E87401274F77E400975559 /* CoreNFC.framework in Frameworks */,
@@ -862,6 +881,8 @@
 			isa = PBXGroup;
 			children = (
 				38569352270B5E350002C50D /* CGMRootView.swift */,
+				CE7950232997D81700FA576E /* CGMSettingsView.swift */,
+				CE7950252998056D00FA576E /* CGMSetupView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1194,6 +1215,9 @@
 		3818AA48274C267000843DB3 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				CE79502D29980E4D00FA576E /* ShareClientUI.framework */,
+				CE79502929980C9F00FA576E /* G7SensorKitUI.framework */,
+				CE79502729980C9600FA576E /* CGMBLEKitUI.framework */,
 				CE398D1A297D69A900DF218F /* ShareClient.framework */,
 				CE398D17297C9EE800DF218F /* G7SensorKit.framework */,
 				CE398D012977349800DF218F /* CryptoKit.framework */,
@@ -2271,6 +2295,7 @@
 				38A13D3225E28B4B00EAA382 /* PumpHistoryEvent.swift in Sources */,
 				E00EEC0627368630002FF094 /* UIAssembly.swift in Sources */,
 				3811DE1825C9D40400A708ED /* Router.swift in Sources */,
+				CE7950262998056D00FA576E /* CGMSetupView.swift in Sources */,
 				38A0363B25ECF07E00FCBB52 /* GlucoseStorage.swift in Sources */,
 				38E98A2725F52C9300C0CED0 /* CollectionIssueReporter.swift in Sources */,
 				E00EEC0427368630002FF094 /* SecurityAssembly.swift in Sources */,
@@ -2303,6 +2328,7 @@
 				3811DEAC25C9D88300A708ED /* NightscoutManager.swift in Sources */,
 				CEB434E528B8FF5D00B70274 /* UIColor.swift in Sources */,
 				3811DEA925C9D88300A708ED /* AppearanceManager.swift in Sources */,
+				CE7950242997D81700FA576E /* CGMSettingsView.swift in Sources */,
 				38D0B3D925EC07C400CB6E88 /* CarbsEntry.swift in Sources */,
 				38A9260525F012D8009E3739 /* CarbRatios.swift in Sources */,
 				38FCF3D625E8FDF40078B0D1 /* MD5.swift in Sources */,

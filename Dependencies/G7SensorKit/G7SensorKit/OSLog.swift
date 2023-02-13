@@ -1,4 +1,9 @@
-
+//
+//  OSLog.swift
+//  Loop
+//
+//  Copyright © 2017 LoopKit Authors. All rights reserved.
+//
 //
 //  OSLog.swift
 //  OmniBLE
@@ -10,6 +15,7 @@
 import os.log
 import Foundation
 
+let storeLoopLog: Bool = false
 
 let loggerLock = NSRecursiveLock()
 let baseReporter: IssueReporter = SimpleLogReporter()
@@ -40,80 +46,101 @@ extension NSLock {
 extension OSLog {
     
     convenience init(category: String) {
-        self.init(subsystem: "org.loopkit.G7SensorKit", category: category)
+        self.init(subsystem: "com.loopkit.G7SensorKit", category: category)
     }
 
     func debug(_ message: StaticString, _ args: CVarArg...) {
-        let msg_format = message.withUTF8Buffer{
-            String(decoding: $0, as: UTF8.self)
-        }
-        let msg = String(format: msg_format, args)
-        DispatchWorkItem(qos: .userInteractive, flags: .enforceQoS) {
-            loggerLock.perform {
-                category.logger.debug(
-                    {msg}(),
-                    printToConsole: true,
-                    file: #file,
-                    function: #function,
-                    line: #line
-                )
+        if (!storeLoopLog) {
+            log(message, type: .debug, args)
+        } else {
+            let msg_format = message.withUTF8Buffer{
+                String(decoding: $0, as: UTF8.self)
             }
-        }.perform()
+            
+            let msg = String(format: msg_format.replacingOccurrences(of: "{public}", with: ""), args)
+            DispatchWorkItem(qos: .background, flags: .enforceQoS) {
+                loggerLock.perform {
+                    category.logger.debug(
+                        {msg}(),
+                        printToConsole: true,
+                        file: #file,
+                        function: #function,
+                        line: #line
+                    )
+                }
+            }.perform()
+        }
     }
 
     func info(_ message: StaticString, _ args: CVarArg...) {
-        let msg_format = message.withUTF8Buffer{
-            String(decoding: $0, as: UTF8.self)
-        }
-        let msg = String(format: msg_format, args)
-        DispatchWorkItem(qos: .userInteractive, flags: .enforceQoS) {
-            loggerLock.perform {
-                category.logger.info(
-                    {msg}(),
-                    file: #file,
-                    function: #function,
-                    line: #line
-                )
+        if (!storeLoopLog) {
+            log(message, type: .info, args)
+        } else {
+            let msg_format = message.withUTF8Buffer{
+                String(decoding: $0, as: UTF8.self)
             }
-        }.perform()
+            let msg = String(format: msg_format.replacingOccurrences(of: "{public}", with: ""), args)
+            DispatchWorkItem(qos: .background, flags: .enforceQoS) {
+                loggerLock.perform {
+                    category.logger.info(
+                        {msg}(),
+                        file: #file,
+                        function: #function,
+                        line: #line
+                    )
+                }
+            }.perform()
+        }
+        
+        
     }
 
     func `default`(_ message: StaticString, _ args: CVarArg...) {
-        let msg_format = message.withUTF8Buffer{
-            String(decoding: $0, as: UTF8.self)
-        }
-        let msg = String(format: msg_format, args)
-        DispatchWorkItem(qos: .userInteractive, flags: .enforceQoS) {
-            loggerLock.perform {
-                category.logger.debug(
-                    {msg}(),
-                    printToConsole: true,
-                    file: #file,
-                    function: #function,
-                    line: #line
-                )
+        if (!storeLoopLog) {
+            log(message, type: .default, args)
+        } else {
+            let msg_format = message.withUTF8Buffer{
+                String(decoding: $0, as: UTF8.self)
             }
-        }.perform()
+            let msg = String(format: msg_format.replacingOccurrences(of: "{public}", with: ""), args)
+            DispatchWorkItem(qos: .background, flags: .enforceQoS) {
+                loggerLock.perform {
+                    category.logger.debug(
+                        {msg}(),
+                        printToConsole: true,
+                        file: #file,
+                        function: #function,
+                        line: #line
+                    )
+                }
+            }.perform()
+        }
+        
     }
 
     func error(_ message: StaticString, _ args: CVarArg...) {
-        let msg_format = message.withUTF8Buffer{
-            String(decoding: $0, as: UTF8.self)
-        }
-        let msg = String(format: msg_format, args)
-        DispatchWorkItem(qos: .userInteractive, flags: .enforceQoS) {
-           
-            loggerLock.perform {
-                category.logger.warning(
-                    {msg}(),
-                    description: message.description,
-                    error: nil,
-                    file: #file,
-                    function: #function,
-                    line: #line
-                )
+        if (!storeLoopLog) {
+            log(message, type: .error, args)
+        } else {
+            let msg_format = message.withUTF8Buffer{
+                String(decoding: $0, as: UTF8.self)
             }
-        }.perform()
+            let msg = String(format: msg_format.replacingOccurrences(of: "{public}", with: ""), args)
+            DispatchWorkItem(qos: .background, flags: .enforceQoS) {
+               
+                loggerLock.perform {
+                    category.logger.warning(
+                        {msg}(),
+                        description:  {msg}(),
+                        error: nil,
+                        file: #file,
+                        function: #function,
+                        line: #line
+                    )
+                }
+            }.perform()
+        }
+        
     }
 
     private func log(_ message: StaticString, type: OSLogType, _ args: [CVarArg]) {
