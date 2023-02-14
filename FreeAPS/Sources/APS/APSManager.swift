@@ -691,19 +691,15 @@ final class BaseAPSManager: APSManager, Injectable {
         var uniqEvents: [TDD] = []
         storage.transaction { storage in
             storage.append(tdd, to: file, uniqBy: \.id)
-            uniqEvents = storage.retrieve(file, as: [TDD].self)?
-                .filter { $0.timestamp.addingTimeInterval(14.days.timeInterval) > Date() && $0.TDD != 0 }
-                .sorted { $0.timestamp > $1.timestamp } ?? []
+            uniqEvents = storage.retrieve(file, as: [TDD].self) ?? []
+            let tddArray = uniqEvents.map({ tddArray in tddArray }).sorted { $0.timestamp > $1.timestamp }
+            let _10_Array = tddArray.filter { $0.timestamp.addingTimeInterval(10.days.timeInterval) > Date() && $0.TDD != 0 }
+            let _2_hours_Array = tddArray.filter { $0.timestamp.addingTimeInterval(2.hours.timeInterval) > Date() && $0.TDD != 0 }
 
-            var totalAmount: [Decimal] = [0]
-            allTDD = uniqEvents.map({ allTDD in allTDD.TDD }) // .reduce(0, +)
+            allTDD = _10_Array.map({ each in each.TDD })
             let average14 = allTDD.reduce(0, +) / Decimal(allTDD.count)
-
-            let entriesPast2hours = uniqEvents // storage.retrieve(file, as: [TDD].self)?
-                .filter { $0.timestamp.addingTimeInterval(2.hours.timeInterval) > Date() }
-            totalAmount = entriesPast2hours.map({ totalAmount in totalAmount.TDD }) // .reduce(0, +)
-            let average2hours = totalAmount.reduce(0, +) / Decimal(totalAmount.count)
-
+            let _2hoursTDD = _2_hours_Array.map({ each in each.TDD })
+            let average2hours = _2hoursTDD.reduce(0, +) / Decimal(_2hoursTDD.count)
             let weight = preferences.weightPercentage
             let weighted_average = weight * average2hours + (1 - weight) * average14
             let averages = TDD_averages(
@@ -713,9 +709,8 @@ final class BaseAPSManager: APSManager, Injectable {
                 date: Date()
             )
             storage.save(averages, as: OpenAPS.Monitor.tdd_averages)
-            storage.save(Array(uniqEvents), as: file)
+            storage.save(Array(_10_Array), as: file)
         }
-        print("Test time of tdd() computation: \(-1 * tddStartedAt.timeIntervalSinceNow) s")
     }
 
     private func roundDecimal(_ decimal: Decimal, _ digits: Double) -> Decimal {
@@ -1219,7 +1214,7 @@ final class BaseAPSManager: APSManager, Injectable {
             storage.save(Array(uniqeEvents), as: file)
         }
         nightscout.uploadStatistics(dailystat: dailystat)
-        // nightscout.uploadPreferences()
+        nightscout.uploadPreferences()
         print("Test time of statistics computation: \(-1 * statisticsStartedAt.timeIntervalSinceNow) s")
     }
 
