@@ -1133,6 +1133,28 @@ final class BaseAPSManager: APSManager, Injectable {
             scheduled_basal: suggestion?.insulin?.scheduled_basal ?? 0
         )
 
+        var sumOfSquares: Decimal = 0
+        var sumOfSquares_1: Decimal = 0
+        var sumOfSquares_7: Decimal = 0
+        var sumOfSquares_30: Decimal = 0
+
+        // Total
+        for array in bgArray {
+            sumOfSquares += pow(Decimal(array) - bg_total, 2)
+        }
+        // One day
+        for array_1 in bgArray_1_ {
+            sumOfSquares_1 += pow(Decimal(array_1) - bg_1, 2)
+        }
+        // week
+        for array_7 in bgArray_7_ {
+            sumOfSquares_7 += pow(Decimal(array_7) - bg_7, 2)
+        }
+        // month
+        for array_30 in bgArray_30_ {
+            sumOfSquares_30 += pow(Decimal(array_30) - bg_30, 2)
+        }
+
         // Standard deviation and Coefficient of variation
         var sd_total = 0.0
         var cv_total = 0.0
@@ -1145,19 +1167,19 @@ final class BaseAPSManager: APSManager, Injectable {
 
         // Avoid division by zero
         if bg_total > 0 {
-            sd_total = sqrt(vDSP.rootMeanSquare(bgArray))
+            sd_total = sqrt(Double(sumOfSquares / nr_bgs))
             cv_total = sd_total / Double(bg_total) * 100
         }
         if bg_1 > 0 {
-            sd_1 = sqrt(vDSP.rootMeanSquare(bgArray_1_))
+            sd_1 = sqrt(Double(sumOfSquares_1) / Double(bgArray_1_.count))
             cv_1 = sd_1 / Double(bg_1) * 100
         }
         if bg_7 > 0 {
-            sd_7 = sqrt(vDSP.rootMeanSquare(bgArray_7_))
+            sd_7 = sqrt(Double(sumOfSquares_7) / Double(bgArray_7_.count))
             cv_7 = sd_7 / Double(bg_7) * 100
         }
         if bg_30 > 0 {
-            sd_30 = sqrt(vDSP.rootMeanSquare(bgArray_30_))
+            sd_30 = sqrt(Double(sumOfSquares_30) / Double(bgArray_30_.count))
             cv_30 = sd_30 / Double(bg_30) * 100
         }
 
