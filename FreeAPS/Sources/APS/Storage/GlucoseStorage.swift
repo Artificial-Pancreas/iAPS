@@ -36,9 +36,9 @@ final class BaseGlucoseStorage: GlucoseStorage, Injectable {
         let storeGlucoseStarted = Date()
 
         let stat_glucose = BloodGlucose(
-            _id: glucose[0].id,
+            _id: "",
             sgv: nil,
-            date: glucose[0].date,
+            date: 0,
             dateString: glucose[0].dateString,
             unfiltered: nil,
             filtered: nil,
@@ -53,7 +53,7 @@ final class BaseGlucoseStorage: GlucoseStorage, Injectable {
                 storage.append(glucose, to: file, uniqBy: \.dateString)
 
                 // Save for statistics also (only glucose, date, datestring and id)
-                storage.append(stat_glucose, to: OpenAPS.Monitor.glucose_data, uniqBy: \.id)
+                storage.append(stat_glucose, to: OpenAPS.Monitor.glucose_data, uniqBy: \.dateString)
 
                 let uniqEvents = storage.retrieve(file, as: [BloodGlucose].self)?
                     .filter { $0.dateString.addingTimeInterval(24.hours.timeInterval) > Date() }
