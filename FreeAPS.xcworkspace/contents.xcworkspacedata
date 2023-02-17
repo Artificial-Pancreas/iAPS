@@ -2,6 +2,9 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:FreeAPS/Sources/Helpers/CoreDataStack.swift">
+   </FileRef>
+   <FileRef
       location = "group:FreeAPS.xcodeproj">
    </FileRef>
    <FileRef
