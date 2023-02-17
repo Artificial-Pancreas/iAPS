@@ -2,12 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>NSHealthClinicalHealthRecordsShareUsageDescription</key>
-	<string>Bla bla Record Health</string>
-	<key>NSHealthShareUsageDescription</key>
-	<string>Bla bla Share Health</string>
-	<key>NSHealthUpdateUsageDescription</key>
-	<string>Bla bla Update Health</string>
 	<key>NSExtension</key>
 	<dict>
 		<key>NSExtensionAttributes</key>
