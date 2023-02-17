@@ -689,9 +689,8 @@ final class BaseAPSManager: APSManager, Injectable {
         // MARK: Add new data to Core Data:TDD Entity
 
         let nTDD = TDD(context: coredataContext)
-        nTDD.id = UUID().uuidString
-        nTDD.timestamp = Date()
-        nTDD.tdd = NSDecimalNumber(decimal: currentTDD)
+            nTDD.timestamp = Date()
+            nTDD.tdd = NSDecimalNumber(decimal: currentTDD)
         try? coredataContext.save()
 
         let twoWeeksAgo = Date().addingTimeInterval(-14.days.timeInterval)

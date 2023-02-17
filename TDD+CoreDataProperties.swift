@@ -8,5 +8,4 @@ public extension TDD {
 
     @NSManaged var tdd: NSDecimalNumber?
     @NSManaged var timestamp: Date?
-    @NSManaged var id: String?
 }
