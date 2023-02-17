@@ -685,7 +685,7 @@ final class BaseAPSManager: APSManager, Injectable {
         let currentTDD = enacted_.tdd ?? 0
 
         // MARK: Add new data to Core Data:TDD Entity. TEST:
-        
+
         debug(.apsManager, "Writing TDD to CoreData")
 
         let nTDD = TDD(context: coredataContext)
@@ -911,9 +911,12 @@ final class BaseAPSManager: APSManager, Injectable {
         requestGFS.sortDescriptors = [sortGlucose]
 
         var glucose: [Readings] = []
-
         try? glucose = coredataContext.fetch(requestGFS)
 
+        let firstElementTime = glucose.first?.date ?? Date()
+        let lastElementTime = glucose.last?.date ?? Date()
+        let numberOfDays = (lastElementTime - firstElementTime).timeInterval / 8.64E4
+        
         // Time In Range (%) and Average Glucose (24 hours). This will be refactored later after some testing.
         let length_ = glucose.count
         let endIndex = length_ - 1
@@ -981,13 +984,6 @@ final class BaseAPSManager: APSManager, Injectable {
 
         // Total median
         medianBG = medianCalculation(array: bgArray)
-        var daysBG = 0.0
-        var fullTime = 0.0
-
-        if length_ > 0 {
-            fullTime = (startDate! - glucose[endIndex].date!).timeInterval
-            daysBG = fullTime / 8.64E4
-        }
 
         func tir(_ array: [(bg_: Double, date_: Date)]) -> (TIR: Double, hypos: Double, hypers: Double) {
             var timeInHypo = 0.0
@@ -1098,9 +1094,6 @@ final class BaseAPSManager: APSManager, Injectable {
                 total: roundDecimal(IFCCa1CStatisticValue_total, 1)
             )
         }
-
-        // round output values
-        daysBG = roundDouble(daysBG, 1)
 
         let glucose24Hours = storage.retrieve(OpenAPS.Monitor.glucose, as: [BloodGlucose].self)
         let nrOfCGMReadings = glucose24Hours?.count ?? 0
@@ -1259,7 +1252,7 @@ final class BaseAPSManager: APSManager, Injectable {
             insulinType: insulin_type.rawValue,
             peakActivityTime: iPa,
             Carbs_24h: carbTotal,
-            GlucoseStorage_Days: Decimal(daysBG),
+            GlucoseStorage_Days: Decimal(roundDouble(numberOfDays, 1)),
             Statistics: Stats(
                 Distribution: TimeInRange,
                 Glucose: avg,

@@ -56,6 +56,7 @@ final class BaseGlucoseStorage: GlucoseStorage, Injectable {
                 }
 
                 // MARK: Save to CoreData. TEST
+
                 var bg_ = 0
                 var bgDate = Date()
 
