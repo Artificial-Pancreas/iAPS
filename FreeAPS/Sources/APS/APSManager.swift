@@ -932,11 +932,6 @@ final class BaseAPSManager: APSManager, Injectable {
 
         var medianBG = 0.0
         var nr_bgs: Decimal = 0
-
-        var startDate = Date("1978-02-22T11:43:54.659Z")
-        if endIndex >= 0 {
-            startDate = glucose[0].date
-        }
         var bg_1: Decimal = 0
         var bg_7: Decimal = 0
         var bg_30: Decimal = 0
