@@ -2,6 +2,12 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:FreeAPS/Sources/Models/TDD+CoreDataClass.swift">
+   </FileRef>
+   <FileRef
+      location = "group:FreeAPS/Sources/Models/TDD+CoreDataProperties.swift">
+   </FileRef>
+   <FileRef
       location = "group:FreeAPS/Sources/Helpers/CoreDataStack.swift">
    </FileRef>
    <FileRef
