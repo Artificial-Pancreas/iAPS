@@ -685,16 +685,16 @@ final class BaseAPSManager: APSManager, Injectable {
         let currentTDD = enacted_.tdd ?? 0
 
         // MARK: Add new data to Core Data:TDD Entity. TEST:
-
         debug(.apsManager, "Writing TDD to CoreData")
 
         let nTDD = TDD(context: coredataContext)
         nTDD.timestamp = Date()
         nTDD.tdd = NSDecimalNumber(decimal: currentTDD)
+        
         try? coredataContext.save()
-
+        
         let twoWeeksAgo = Date().addingTimeInterval(-14.days.timeInterval)
-
+        let twoHoursAgo = Date().addingTimeInterval(-2.hours.timeInterval)
         let requestTDD = TDD.fetchRequest() as NSFetchRequest<TDD>
         requestTDD.predicate = NSPredicate(format: "timestamp > %@ AND tdd > 0", twoWeeksAgo as NSDate)
         var uniqEvents: [TDD] = []
@@ -708,8 +708,6 @@ final class BaseAPSManager: APSManager, Injectable {
             total += uniqEvent.tdd!.decimalValue
             indeces += 1
         }
-
-        let twoHoursAgo = Date().addingTimeInterval(-2.hours.timeInterval)
 
         requestTDD.predicate = NSPredicate(format: "timestamp > %@ AND tdd > 0", twoHoursAgo as NSDate)
         var entriesPast2hours: [TDD] = []
