@@ -1,4 +1,4 @@
-import Accelerate
+// import Accelerate
 import Combine
 import CoreData
 import Foundation
@@ -686,20 +686,21 @@ final class BaseAPSManager: APSManager, Injectable {
 
         debug(.apsManager, "Writing TDD to CoreData")
 
-        // Add new record to CoreData:TDD Entity
+        // MARK: Add new data to Core Data:TDD Entity
+
         let nTDD = TDD(context: coredataContext)
         nTDD.id = UUID().uuidString
         nTDD.timestamp = Date()
         nTDD.tdd = NSDecimalNumber(decimal: currentTDD)
-        try! coredataContext.save()
+        try? coredataContext.save()
 
-        let twoWeeksAgo = Calendar.current.date(byAdding: .day, value: -14, to: Date())!
+        let twoWeeksAgo = Date().addingTimeInterval(-14.days.timeInterval)
 
         let requestTDD = TDD.fetchRequest() as NSFetchRequest<TDD>
         requestTDD.predicate = NSPredicate(format: "timestamp > %@ AND tdd > 0", twoWeeksAgo as NSDate)
         var uniqEvents: [TDD] = []
 
-        try! uniqEvents = coredataContext.fetch(requestTDD)
+        try? uniqEvents = coredataContext.fetch(requestTDD)
 
         var total: Decimal = 0
         var indeces: Decimal = 0
@@ -709,19 +710,22 @@ final class BaseAPSManager: APSManager, Injectable {
             indeces += 1
         }
 
-        let twoHoursAgo = Calendar.current.date(byAdding: .hour, value: -2, to: Date())!
+        let twoHoursAgo = Date().addingTimeInterval(-2.hours.timeInterval)
 
         requestTDD.predicate = NSPredicate(format: "timestamp > %@ AND tdd > 0", twoHoursAgo as NSDate)
         var entriesPast2hours: [TDD] = []
 
-        try! entriesPast2hours = coredataContext.fetch(requestTDD)
+        try? entriesPast2hours = coredataContext.fetch(requestTDD)
 
         var totalAmount: Decimal = 0
         var nrOfIndeces: Decimal = 0
         for entry in entriesPast2hours {
-            totalAmount += entry.tdd!.decimalValue
-            nrOfIndeces += 1
+            if (entry.tdd?.decimalValue ?? 0) > 0 {
+                totalAmount += entry.tdd?.decimalValue ?? 0
+                nrOfIndeces += 1
+            }
         }
+
         if indeces == 0 {
             indeces = 1
         }
@@ -739,6 +743,7 @@ final class BaseAPSManager: APSManager, Injectable {
             date: Date()
         )
         storage.save(averages, as: OpenAPS.Monitor.tdd_averages)
+        print("Test time of TDD: \(-1 * tddStartedAt.timeIntervalSinceNow) s")
     }
 
     private func roundDecimal(_ decimal: Decimal, _ digits: Double) -> Decimal {
@@ -799,17 +804,6 @@ final class BaseAPSManager: APSManager, Injectable {
         if tdds.count == 1 {
             currentTDD = tdds[0].tdd!.decimalValue
         }
-
-        let carbs_length = carbs?.count ?? 0
-        var carbTotal: Decimal = 0
-        if carbs_length != 0 {
-            for each in carbs! {
-                if each.carbs != 0 {
-                    carbTotal += each.carbs
-                }
-            }
-        }
-        var algo_ = "Oref0"
 
         var algo_ = "Oref0"
         let carbTotal = carbs?.map({ carbs in carbs.carbs }).reduce(0, +) ?? 0
