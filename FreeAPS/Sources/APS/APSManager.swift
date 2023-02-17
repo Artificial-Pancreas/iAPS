@@ -906,12 +906,13 @@ final class BaseAPSManager: APSManager, Injectable {
             minimumLoopTime = 0.0
         }
 
-        // Filter glucose storage to 90 days
-        let uniqEvents_ = storage.retrieve(OpenAPS.Monitor.glucose_data, as: [BloodGlucose].self)?
-            .filter { $0.dateString.addingTimeInterval(90.days.timeInterval) > Date() }
-            .sorted { $0.dateString > $1.dateString } ?? []
-        let glucose = Array(uniqEvents_)
-        storage.save(glucose, as: OpenAPS.Monitor.glucose_data)
+        let requestGFS = GlucoseDataForStats.fetchRequest() as NSFetchRequest<GlucoseDataForStats>
+        let sortGlucose = NSSortDescriptor(key: "date", ascending: true)
+        requestGFS.sortDescriptors = [sortGlucose]
+
+        var glucose: [GlucoseDataForStats] = []
+
+        try? glucose = coredataContext.fetch(requestGFS)
 
         // Time In Range (%) and Average Glucose (24 hours). This will be refactored later after some testing.
         let length_ = glucose.count
@@ -933,7 +934,7 @@ final class BaseAPSManager: APSManager, Injectable {
 
         var startDate = Date("1978-02-22T11:43:54.659Z")
         if endIndex >= 0 {
-            startDate = glucose[0].dateString
+            startDate = glucose[0].date
         }
         var bg_1: Decimal = 0
         var bg_7: Decimal = 0
@@ -949,22 +950,22 @@ final class BaseAPSManager: APSManager, Injectable {
         if endIndex >= 0 {
             for entry in glucose {
                 j += 1
-                if entry.glucose ?? 0 > 0 {
-                    bg += Decimal(entry.glucose ?? 0) * conversionFactor
-                    bgArray.append(Double(entry.glucose ?? 0) * Double(conversionFactor))
-                    bgArrayForTIR.append((Double(entry.glucose ?? 0), entry.dateString))
+                if entry.glucose > 0 {
+                    bg += Decimal(entry.glucose) * conversionFactor
+                    bgArray.append(Double(entry.glucose) * Double(conversionFactor))
+                    bgArrayForTIR.append((Double(entry.glucose), entry.date!))
                     nr_bgs += 1
-                    if (startDate! - entry.dateString).timeInterval <= 24.hours.timeInterval {
+                    if (startDate! - entry.date!).timeInterval <= 24.hours.timeInterval {
                         bg_1 = bg / nr_bgs
                         bgArray_1 = bgArrayForTIR
                         bgArray_1_ = bgArray
                     }
-                    if (startDate! - entry.dateString).timeInterval <= 7.days.timeInterval {
+                    if (startDate! - entry.date!).timeInterval <= 7.days.timeInterval {
                         bg_7 = bg / nr_bgs
                         bgArray_7 = bgArrayForTIR
                         bgArray_7_ = bgArray
                     }
-                    if (startDate! - entry.dateString).timeInterval <= 30.days.timeInterval {
+                    if (startDate! - entry.date!).timeInterval <= 30.days.timeInterval {
                         bg_30 = bg / nr_bgs
                         bgArray_30 = bgArrayForTIR
                         bgArray_30_ = bgArray
@@ -984,7 +985,7 @@ final class BaseAPSManager: APSManager, Injectable {
         var fullTime = 0.0
 
         if length_ > 0 {
-            fullTime = (startDate! - glucose[endIndex].dateString).timeInterval
+            fullTime = (startDate! - glucose[endIndex].date!).timeInterval
             daysBG = fullTime / 8.64E4
         }
 
