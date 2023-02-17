@@ -1,4 +1,3 @@
-// import Accelerate
 import Combine
 import CoreData
 import Foundation
@@ -685,14 +684,15 @@ final class BaseAPSManager: APSManager, Injectable {
         let currentTDD = enacted_.tdd ?? 0
 
         // MARK: Add new data to Core Data:TDD Entity. TEST:
+
         debug(.apsManager, "Writing TDD to CoreData")
 
         let nTDD = TDD(context: coredataContext)
         nTDD.timestamp = Date()
         nTDD.tdd = NSDecimalNumber(decimal: currentTDD)
-        
+
         try? coredataContext.save()
-        
+
         let twoWeeksAgo = Date().addingTimeInterval(-14.days.timeInterval)
         let twoHoursAgo = Date().addingTimeInterval(-2.hours.timeInterval)
         let requestTDD = TDD.fetchRequest() as NSFetchRequest<TDD>
@@ -914,7 +914,7 @@ final class BaseAPSManager: APSManager, Injectable {
         let firstElementTime = glucose.first?.date ?? Date()
         let lastElementTime = glucose.last?.date ?? Date()
         let numberOfDays = (lastElementTime - firstElementTime).timeInterval / 8.64E4
-        
+
         // Time In Range (%) and Average Glucose (24 hours). This will be refactored later after some testing.
         let length_ = glucose.count
         let endIndex = length_ - 1
@@ -956,17 +956,17 @@ final class BaseAPSManager: APSManager, Injectable {
                     bgArray.append(Double(entry.glucose) * Double(conversionFactor))
                     bgArrayForTIR.append((Double(entry.glucose), entry.date!))
                     nr_bgs += 1
-                    if (startDate! - entry.date!).timeInterval <= 24.hours.timeInterval {
+                    if numberOfDays <= 1 {
                         bg_1 = bg / nr_bgs
                         bgArray_1 = bgArrayForTIR
                         bgArray_1_ = bgArray
                     }
-                    if (startDate! - entry.date!).timeInterval <= 7.days.timeInterval {
+                    if numberOfDays <= 7 {
                         bg_7 = bg / nr_bgs
                         bgArray_7 = bgArrayForTIR
                         bgArray_7_ = bgArray
                     }
-                    if (startDate! - entry.date!).timeInterval <= 30.days.timeInterval {
+                    if numberOfDays <= 30 {
                         bg_30 = bg / nr_bgs
                         bgArray_30 = bgArrayForTIR
                         bgArray_30_ = bgArray
