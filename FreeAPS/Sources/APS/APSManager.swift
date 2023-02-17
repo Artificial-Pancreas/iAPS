@@ -689,8 +689,8 @@ final class BaseAPSManager: APSManager, Injectable {
         // MARK: Add new data to Core Data:TDD Entity
 
         let nTDD = TDD(context: coredataContext)
-            nTDD.timestamp = Date()
-            nTDD.tdd = NSDecimalNumber(decimal: currentTDD)
+        nTDD.timestamp = Date()
+        nTDD.tdd = NSDecimalNumber(decimal: currentTDD)
         try? coredataContext.save()
 
         let twoWeeksAgo = Date().addingTimeInterval(-14.days.timeInterval)
@@ -797,11 +797,11 @@ final class BaseAPSManager: APSManager, Injectable {
         requestTDD.sortDescriptors = [sort]
 
         var tdds: [TDD] = []
-        try! tdds = coredataContext.fetch(requestTDD)
+        try? tdds = coredataContext.fetch(requestTDD)
 
         var currentTDD: Decimal = 0
         if tdds.count == 1 {
-            currentTDD = tdds[0].tdd!.decimalValue
+            currentTDD = tdds[0].tdd?.decimalValue ?? 0
         }
 
         var algo_ = "Oref0"
