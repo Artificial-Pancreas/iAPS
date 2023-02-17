@@ -1,21 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Workspace
    version = "1.0">
-   <FileRef
-      location = "group:Readings+CoreDataClass.swift">
-   </FileRef>
-   <FileRef
-      location = "group:Readings+CoreDataProperties.swift">
-   </FileRef>
-   <FileRef
-      location = "group:TDD+CoreDataClass.swift">
-   </FileRef>
-   <FileRef
-      location = "group:TDD+CoreDataProperties.swift">
-   </FileRef>
-   <FileRef
-      location = "group:FreeAPS/Sources/Helpers/CoreDataStack.swift">
-   </FileRef>
+   <Group
+      location = "container:"
+      name = "CoreDataClassesAndProperties">
+      <FileRef
+         location = "group:Readings+CoreDataClass.swift">
+      </FileRef>
+      <FileRef
+         location = "group:Readings+CoreDataProperties.swift">
+      </FileRef>
+      <FileRef
+         location = "group:TDD+CoreDataClass.swift">
+      </FileRef>
+      <FileRef
+         location = "group:TDD+CoreDataProperties.swift">
+      </FileRef>
+      <FileRef
+         location = "group:FreeAPS/Sources/Helpers/CoreDataStack.swift">
+      </FileRef>
+   </Group>
    <FileRef
       location = "group:FreeAPS.xcodeproj">
    </FileRef>
