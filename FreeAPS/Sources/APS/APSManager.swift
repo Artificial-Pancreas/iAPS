@@ -684,9 +684,9 @@ final class BaseAPSManager: APSManager, Injectable {
         let preferences = settingsManager.preferences
         let currentTDD = enacted_.tdd ?? 0
 
+        // MARK: Add new data to Core Data:TDD Entity. TEST:
+        
         debug(.apsManager, "Writing TDD to CoreData")
-
-        // MARK: Add new data to Core Data:TDD Entity
 
         let nTDD = TDD(context: coredataContext)
         nTDD.timestamp = Date()
@@ -906,11 +906,11 @@ final class BaseAPSManager: APSManager, Injectable {
             minimumLoopTime = 0.0
         }
 
-        let requestGFS = GlucoseDataForStats.fetchRequest() as NSFetchRequest<GlucoseDataForStats>
+        let requestGFS = Readings.fetchRequest() as NSFetchRequest<Readings>
         let sortGlucose = NSSortDescriptor(key: "date", ascending: true)
         requestGFS.sortDescriptors = [sortGlucose]
 
-        var glucose: [GlucoseDataForStats] = []
+        var glucose: [Readings] = []
 
         try? glucose = coredataContext.fetch(requestGFS)
 

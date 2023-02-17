@@ -1,4 +1,5 @@
 import AVFAudio
+import CoreData
 import Foundation
 import SwiftDate
 import SwiftUI
@@ -37,25 +38,10 @@ final class BaseGlucoseStorage: GlucoseStorage, Injectable {
     func storeGlucose(_ glucose: [BloodGlucose]) {
         let storeGlucoseStarted = Date()
 
-        let stat_glucose = BloodGlucose(
-            _id: "",
-            sgv: nil,
-            date: 0,
-            dateString: glucose[0].dateString,
-            unfiltered: nil,
-            filtered: nil,
-            noise: nil,
-            glucose: glucose[0].glucose ?? 0,
-            type: nil
-        )
-
         processQueue.sync {
             let file = OpenAPS.Monitor.glucose
             self.storage.transaction { storage in
                 storage.append(glucose, to: file, uniqBy: \.dateString)
-
-                // Save for statistics also (only glucose, date, datestring and id)
-                storage.append(stat_glucose, to: OpenAPS.Monitor.glucose_data, uniqBy: \.dateString)
 
                 let uniqEvents = storage.retrieve(file, as: [BloodGlucose].self)?
                     .filter { $0.dateString.addingTimeInterval(24.hours.timeInterval) > Date() }
@@ -69,7 +55,7 @@ final class BaseGlucoseStorage: GlucoseStorage, Injectable {
                     }
                 }
 
-                // Save to glucoseForStats also.
+                // MARK: Save to CoreData. TEST
                 var bg_ = 0
                 var bgDate = Date()
 
@@ -78,7 +64,7 @@ final class BaseGlucoseStorage: GlucoseStorage, Injectable {
                     bgDate = glucose[0].dateString
                 }
                 if bg_ != 0 {
-                    let dataForStats = GlucoseDataForStats(context: coredataContext)
+                    let dataForStats = Readings(context: coredataContext)
                     dataForStats.date = bgDate
                     dataForStats.glucose = Int16(bg_)
                     try! coredataContext.save()
@@ -139,6 +125,7 @@ final class BaseGlucoseStorage: GlucoseStorage, Injectable {
                 }
             }
         }
+        print("Test time of glucoseStorage: \(-1 * storeGlucoseStarted.timeIntervalSinceNow) s")
     }
 
     func removeGlucose(ids: [String]) {
