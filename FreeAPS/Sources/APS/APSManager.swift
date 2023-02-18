@@ -668,9 +668,9 @@ final class BaseAPSManager: APSManager, Injectable {
             }
             nightscout.uploadStatus()
 
-            // Update the tdd.json
+            // Update the TDD value
             tdd(enacted_: enacted)
-            // Update statistics.json. Only run if enabled in preferences
+            // Update statistics. Only run if enabled in preferences
             if settingsManager.settings.displayStatistics {
                 statistics()
             }
@@ -679,7 +679,6 @@ final class BaseAPSManager: APSManager, Injectable {
 
     private func tdd(enacted_: Suggestion) {
         let tddStartedAt = Date()
-        // Add to tdd.json:
         let preferences = settingsManager.preferences
         let currentTDD = enacted_.tdd ?? 0
 
