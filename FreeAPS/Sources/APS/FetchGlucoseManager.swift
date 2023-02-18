@@ -146,7 +146,6 @@ final class BaseFetchGlucoseManager: FetchGlucoseManager, Injectable {
             }
             .sink { glucose in
                 debug(.nightscout, "FetchGlucoseManager callback sensor")
-                guard glucose.isNotEmpty else { return }
                 Publishers.CombineLatest3(
                     Just(glucose),
                     Just(self.glucoseStorage.syncDate()),

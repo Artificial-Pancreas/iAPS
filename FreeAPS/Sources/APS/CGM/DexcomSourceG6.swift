@@ -25,6 +25,7 @@ final class DexcomSourceG6: GlucoseSource {
                 transmitterID: UserDefaults.standard
                     .dexcomTransmitterID ?? "000000"
             ))
+        cgmManager?.delegateQueue = processQueue
         cgmManager?.cgmManagerDelegate = self
     }
 
@@ -101,20 +102,20 @@ extension DexcomSourceG6: CGMManagerDelegate {
     }
 
     func cgmManager(_ manager: CGMManager, hasNew readingResult: CGMReadingResult) {
-        dispatchPrecondition(condition: .onQueue(.main))
+        dispatchPrecondition(condition: .onQueue(processQueue))
         processCGMReadingResult(manager, readingResult: readingResult) {
             debug(.deviceManager, "DEXCOM - Direct return done")
         }
     }
 
     func startDateToFilterNewData(for _: CGMManager) -> Date? {
-        dispatchPrecondition(condition: .onQueue(.main))
+        dispatchPrecondition(condition: .onQueue(processQueue))
         return glucoseStorage.lastGlucoseDate()
         //  return glucoseStore.latestGlucose?.startDate
     }
 
     func cgmManagerDidUpdateState(_ manager: CGMManager) {
-        dispatchPrecondition(condition: .onQueue(.main))
+        dispatchPrecondition(condition: .onQueue(processQueue))
         guard let g6Manager = manager as? TransmitterManager else {
             return
         }
@@ -127,7 +128,7 @@ extension DexcomSourceG6: CGMManagerDelegate {
     }
 
     func cgmManager(_: CGMManager, didUpdate status: CGMManagerStatus) {
-        DispatchQueue.main.async {
+        processQueue.async {
             if self.cgmHasValidSensorSession != status.hasValidSensorSession {
                 self.cgmHasValidSensorSession = status.hasValidSensorSession
             }
@@ -139,7 +140,7 @@ extension DexcomSourceG6: CGMManagerDelegate {
         readingResult: CGMReadingResult,
         completion: @escaping () -> Void
     ) {
-        debug(.deviceManager, "DEXCOM - Process CGM Reading Result launched")
+        debug(.deviceManager, "DEXCOM - Process CGM Reading Result launched with \(readingResult)")
         switch readingResult {
         case let .newData(values):
             let bloodGlucose = values.compactMap { newGlucoseSample -> BloodGlucose? in

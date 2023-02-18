@@ -21,6 +21,7 @@ final class DexcomSourceG7: GlucoseSource {
         self.glucoseManager = glucoseManager
         cgmManager = G7CGMManager()
         cgmManager?.cgmManagerDelegate = self
+        cgmManager?.delegateQueue = processQueue
     }
 
     func fetch(_: DispatchTimer?) -> AnyPublisher<[BloodGlucose], Never> {
@@ -85,20 +86,20 @@ extension DexcomSourceG7: CGMManagerDelegate {
     func recordRetractedAlert(_: LoopKit.Alert, at _: Date) {}
 
     func cgmManagerWantsDeletion(_ manager: CGMManager) {
-        dispatchPrecondition(condition: .onQueue(.main))
+        dispatchPrecondition(condition: .onQueue(processQueue))
         debug(.deviceManager, " CGM Manager with identifier \(manager.managerIdentifier) wants deletion")
         glucoseManager?.cgmGlucoseSourceType = nil
     }
 
     func cgmManager(_ manager: CGMManager, hasNew readingResult: CGMReadingResult) {
-        dispatchPrecondition(condition: .onQueue(.main))
+        dispatchPrecondition(condition: .onQueue(processQueue))
         processCGMReadingResult(manager, readingResult: readingResult) {
             debug(.deviceManager, "DEXCOM - Direct return done")
         }
     }
 
     func startDateToFilterNewData(for _: CGMManager) -> Date? {
-        dispatchPrecondition(condition: .onQueue(.main))
+        dispatchPrecondition(condition: .onQueue(processQueue))
         return glucoseStorage.lastGlucoseDate()
     }
 
@@ -110,7 +111,7 @@ extension DexcomSourceG7: CGMManagerDelegate {
     }
 
     func cgmManager(_: CGMManager, didUpdate status: CGMManagerStatus) {
-        DispatchQueue.main.async {
+        processQueue.async {
             if self.cgmHasValidSensorSession != status.hasValidSensorSession {
                 self.cgmHasValidSensorSession = status.hasValidSensorSession
             }

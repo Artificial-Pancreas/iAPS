@@ -83,6 +83,8 @@ final class BaseAPSManager: APSManager, Injectable {
 
     private var lifetime = Lifetime()
 
+    private var backGroundTaskID: UIBackgroundTaskIdentifier?
+
     var pumpManager: PumpManagerUI? {
         get { deviceDataManager.pumpManager }
         set { deviceDataManager.pumpManager = newValue }
@@ -189,7 +191,14 @@ final class BaseAPSManager: APSManager, Injectable {
             return
         }
 
-        debug(.apsManager, "Starting loop")
+        // start background time extension
+        backGroundTaskID = UIApplication.shared.beginBackgroundTask(withName: "Loop starting") {
+            guard let backgroundTask = self.backGroundTaskID else { return }
+            UIApplication.shared.endBackgroundTask(backgroundTask)
+            self.backGroundTaskID = .invalid
+        }
+
+        debug(.apsManager, "Starting loop with a delay of \(UIApplication.shared.backgroundTimeRemaining.rounded())")
 
         lastStartLoopDate = Date()
         var loopStatRecord = LoopStats(
@@ -240,6 +249,10 @@ final class BaseAPSManager: APSManager, Injectable {
 
         if let error = error {
             warning(.apsManager, "Loop failed with error: \(error.localizedDescription)")
+            if let backgroundTask = backGroundTaskID {
+                UIApplication.shared.endBackgroundTask(backgroundTask)
+                backGroundTaskID = .invalid
+            }
             processError(error)
         } else {
             debug(.apsManager, "Loop succeeded")
@@ -250,12 +263,20 @@ final class BaseAPSManager: APSManager, Injectable {
         loopStats(loopStatRecord: loopStatRecord)
 
         // Create a statistics.json. Don't run in backgound
-        if settings.displayStatistics, UIApplication.shared.applicationState != .background {
-            statistics()
+        DispatchQueue.main.async { [self] in
+            if settings.displayStatistics, UIApplication.shared.applicationState != .background {
+                statistics()
+            }
         }
 
         if settings.closedLoop {
             reportEnacted(received: error == nil)
+        }
+
+        // end of the BG tasks
+        if let backgroundTask = backGroundTaskID {
+            UIApplication.shared.endBackgroundTask(backgroundTask)
+            backGroundTaskID = .invalid
         }
     }
 

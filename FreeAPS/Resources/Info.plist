@@ -4,6 +4,10 @@
 <dict>
 	<key>AppGroupID</key>
 	<string>$(APP_GROUP_ID)</string>
+	<key>BGTaskSchedulerPermittedIdentifiers</key>
+	<array>
+		<string>com.freeapsx.background-task.critical-event-log</string>
+	</array>
 	<key>BuildBranch</key>
 	<string></string>
 	<key>CFBundleDevelopmentRegion</key>
@@ -83,6 +87,7 @@
 	<array>
 		<string>bluetooth-central</string>
 		<string>bluetooth-peripheral</string>
+		<string>processing</string>
 	</array>
 	<key>UIFileSharingEnabled</key>
 	<true/>
