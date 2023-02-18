@@ -959,17 +959,17 @@ final class BaseAPSManager: APSManager, Injectable {
                     bgArray.append(Double(entry.glucose) * Double(conversionFactor))
                     bgArrayForTIR.append((Double(entry.glucose), entry.date!))
                     nr_bgs += 1
-                    if numberOfDays <= 1 {
+                    if (firstElementTime - (entry.date ?? Date())).timeInterval / 60 <= 8.64E4 { // 1 day
                         bg_1 = bg / nr_bgs
                         bgArray_1 = bgArrayForTIR
                         bgArray_1_ = bgArray
                     }
-                    if numberOfDays <= 7 {
+                    if (firstElementTime - (entry.date ?? Date())).timeInterval / 60 <= 6.048E5 { // 7 days
                         bg_7 = bg / nr_bgs
                         bgArray_7 = bgArrayForTIR
                         bgArray_7_ = bgArray
                     }
-                    if numberOfDays <= 30 {
+                    if (firstElementTime - (entry.date ?? Date())).timeInterval / 60 <= 2.592E6 { // 30 days
                         bg_30 = bg / nr_bgs
                         bgArray_30 = bgArrayForTIR
                         bgArray_30_ = bgArray
