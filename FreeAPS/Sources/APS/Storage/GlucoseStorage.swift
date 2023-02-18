@@ -68,7 +68,7 @@ final class BaseGlucoseStorage: GlucoseStorage, Injectable {
                     let dataForStats = Readings(context: coredataContext)
                     dataForStats.date = bgDate
                     dataForStats.glucose = Int16(bg_)
-                    try! coredataContext.save()
+                    try? coredataContext.save()
                 }
             }
 
