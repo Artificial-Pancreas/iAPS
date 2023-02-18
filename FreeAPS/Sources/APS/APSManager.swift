@@ -789,8 +789,8 @@ final class BaseAPSManager: APSManager, Injectable {
         // MARK: Fetch Carbs from CoreData
 
         let requestCarbs = Carbohydrates.fetchRequest() as NSFetchRequest<Carbohydrates>
-        let hoursAgo = Date().addingTimeInterval(-24.hours.timeInterval)
-        requestCarbs.predicate = NSPredicate(format: "date > %@ AND carbs > 0", hoursAgo as NSDate)
+        var daysAgo = Date().addingTimeInterval(-1.days.timeInterval)
+        requestCarbs.predicate = NSPredicate(format: "carbs > 0 AND date > %@", daysAgo as NSDate)
         let sortCarbs = NSSortDescriptor(key: "date", ascending: true)
         requestCarbs.sortDescriptors = [sortCarbs]
         var carbs = [Carbohydrates]()
@@ -800,7 +800,8 @@ final class BaseAPSManager: APSManager, Injectable {
         // MARK: Fetch TDD from CoreData
 
         let requestTDD = TDD.fetchRequest() as NSFetchRequest<TDD>
-        requestTDD.predicate = NSPredicate(format: "tdd > 0")
+        daysAgo = Date().addingTimeInterval(-10.days.timeInterval)
+        requestTDD.predicate = NSPredicate(format: "tdd > 0 AND date > %@", daysAgo as NSDate)
         requestTDD.fetchLimit = 1
         let sort = NSSortDescriptor(key: "timestamp", ascending: false)
         requestTDD.sortDescriptors = [sort]
@@ -1290,18 +1291,6 @@ final class BaseAPSManager: APSManager, Injectable {
 
     private func loopStats(loopStatRecord: LoopStats) {
         let LoopStatsStartedAt = Date()
-
-        /*
-         let file = OpenAPS.Monitor.loopStats
-         var uniqEvents: [LoopStats] = []
-         storage.transaction { storage in
-             storage.append(loopStatRecord, to: file, uniqBy: \.start)
-             uniqEvents = storage.retrieve(file, as: [LoopStats].self)?
-                 .filter { $0.start.addingTimeInterval(24.hours.timeInterval) > Date() }
-                 .sorted { $0.start > $1.start } ?? []
-             storage.save(Array(uniqEvents), as: file)
-         }
-          */
 
         let nLS = LoopStatRecord(context: coredataContext)
         nLS.start = loopStatRecord.start
