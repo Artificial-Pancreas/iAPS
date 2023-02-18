@@ -684,62 +684,67 @@ final class BaseAPSManager: APSManager, Injectable {
 
         // MARK: Add new data to Core Data:TDD Entity. TEST:
 
-        debug(.apsManager, "Writing TDD to CoreData")
+        if currentTDD > 0 {
+            debug(.apsManager, "Writing TDD to CoreData")
+            let nTDD = TDD(context: coredataContext)
+            nTDD.timestamp = Date()
+            nTDD.tdd = currentTDD as NSDecimalNumber
+            try? coredataContext.save()
 
-        let nTDD = TDD(context: coredataContext)
-        nTDD.timestamp = Date()
-        nTDD.tdd = NSDecimalNumber(decimal: currentTDD)
+            let twoWeeksAgo = Date().addingTimeInterval(-10.days.timeInterval)
+            let twoHoursAgo = Date().addingTimeInterval(-2.hours.timeInterval)
 
-        try? coredataContext.save()
+            var requestTDD = TDD.fetchRequest() as NSFetchRequest<TDD>
+            requestTDD.predicate = NSPredicate(format: "timestamp > %@ AND tdd > 0", twoWeeksAgo as NSDate)
+            let sortTDD = NSSortDescriptor(key: "timestamp", ascending: false)
+            requestTDD.sortDescriptors = [sortTDD]
+            var uniqEvents = [TDD]()
 
-        let twoWeeksAgo = Date().addingTimeInterval(-14.days.timeInterval)
-        let twoHoursAgo = Date().addingTimeInterval(-2.hours.timeInterval)
-        let requestTDD = TDD.fetchRequest() as NSFetchRequest<TDD>
-        requestTDD.predicate = NSPredicate(format: "timestamp > %@ AND tdd > 0", twoWeeksAgo as NSDate)
-        var uniqEvents: [TDD] = []
+            try? uniqEvents = coredataContext.fetch(requestTDD)
 
-        try? uniqEvents = coredataContext.fetch(requestTDD)
-
-        var total: Decimal = 0
-        var indeces: Decimal = 0
-        for uniqEvent in uniqEvents {
-            debug(.apsManager, "Read TDD from CoreData: \(uniqEvent.tdd!.decimalValue)")
-            total += uniqEvent.tdd!.decimalValue
-            indeces += 1
-        }
-
-        requestTDD.predicate = NSPredicate(format: "timestamp > %@ AND tdd > 0", twoHoursAgo as NSDate)
-        var entriesPast2hours: [TDD] = []
-
-        try? entriesPast2hours = coredataContext.fetch(requestTDD)
-
-        var totalAmount: Decimal = 0
-        var nrOfIndeces: Decimal = 0
-        for entry in entriesPast2hours {
-            if (entry.tdd?.decimalValue ?? 0) > 0 {
-                totalAmount += entry.tdd?.decimalValue ?? 0
-                nrOfIndeces += 1
+            var total: Decimal = 0
+            var indeces: Decimal = 0
+            for uniqEvent in uniqEvents {
+                debug(.apsManager, "Read TDD from CoreData: \(uniqEvent.tdd?.decimalValue ?? 0)")
+                total += uniqEvent.tdd?.decimalValue ?? 0
+                indeces += 1
             }
-        }
 
-        if indeces == 0 {
-            indeces = 1
+            requestTDD.predicate = NSPredicate(format: "timestamp > %@", twoHoursAgo as NSDate)
+            let sortTDDs = NSSortDescriptor(key: "timestamp", ascending: false)
+            requestTDD.sortDescriptors = [sortTDDs]
+            var entriesPast2hours = [TDD]()
+
+            try? entriesPast2hours = coredataContext.fetch(requestTDD)
+
+            var totalAmount: Decimal = 0
+            var nrOfIndeces: Decimal = 0
+            for entry in entriesPast2hours {
+                if (entry.tdd?.decimalValue ?? 0) > 0 {
+                    totalAmount += entry.tdd?.decimalValue ?? 0
+                    nrOfIndeces += 1
+                }
+            }
+
+            if indeces == 0 {
+                indeces = 1
+            }
+            if nrOfIndeces == 0 {
+                nrOfIndeces = 1
+            }
+            let average14 = total / indeces
+            let average2hours = totalAmount / nrOfIndeces
+            let weight = preferences.weightPercentage
+            let weighted_average = weight * average2hours + (1 - weight) * average14
+            let averages = TDD_averages(
+                average_total_data: roundDecimal(average14, 1),
+                weightedAverage: roundDecimal(weighted_average, 1),
+                past2hoursAverage: roundDecimal(average2hours, 1),
+                date: Date()
+            )
+            storage.save(averages, as: OpenAPS.Monitor.tdd_averages)
+            print("Test time of TDD: \(-1 * tddStartedAt.timeIntervalSinceNow) s")
         }
-        if nrOfIndeces == 0 {
-            nrOfIndeces = 1
-        }
-        let average14 = total / indeces
-        let average2hours = totalAmount / nrOfIndeces
-        let weight = preferences.weightPercentage
-        let weighted_average = weight * average2hours + (1 - weight) * average14
-        let averages = TDD_averages(
-            average_total_data: roundDecimal(average14, 1),
-            weightedAverage: roundDecimal(weighted_average, 1),
-            past2hoursAverage: roundDecimal(average2hours, 1),
-            date: Date()
-        )
-        storage.save(averages, as: OpenAPS.Monitor.tdd_averages)
-        print("Test time of TDD: \(-1 * tddStartedAt.timeIntervalSinceNow) s")
     }
 
     private func roundDecimal(_ decimal: Decimal, _ digits: Double) -> Decimal {
@@ -800,17 +805,17 @@ final class BaseAPSManager: APSManager, Injectable {
         // MARK: Fetch TDD from CoreData
 
         let requestTDD = TDD.fetchRequest() as NSFetchRequest<TDD>
-        daysAgo = Date().addingTimeInterval(-10.days.timeInterval)
-        requestTDD.predicate = NSPredicate(format: "tdd > 0 AND date > %@", daysAgo as NSDate)
-        requestTDD.fetchLimit = 1
+        daysAgo = Date().addingTimeInterval(-12.hours.timeInterval)
+        requestTDD.predicate = NSPredicate(format: "timestamp > %@", daysAgo as NSDate)
         let sort = NSSortDescriptor(key: "timestamp", ascending: false)
         requestTDD.sortDescriptors = [sort]
+        requestTDD.fetchLimit = 1
 
-        var tdds: [TDD] = []
+        var tdds = [TDD]()
         try? tdds = coredataContext.fetch(requestTDD)
 
         var currentTDD: Decimal = 0
-        if tdds.count == 1 {
+        if !tdds.isEmpty {
             currentTDD = tdds[0].tdd?.decimalValue ?? 0
         }
 
