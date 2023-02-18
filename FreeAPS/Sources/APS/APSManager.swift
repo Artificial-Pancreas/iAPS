@@ -785,7 +785,19 @@ final class BaseAPSManager: APSManager, Injectable {
 
         let units = settingsManager.settings.units
         let preferences = settingsManager.preferences
-        let carbs = storage.retrieve(OpenAPS.Monitor.carbHistory, as: [CarbsEntry].self)
+
+        // MARK: Fetch Carbs from CoreData
+
+        let requestCarbs = Carbohydrates.fetchRequest() as NSFetchRequest<Carbohydrates>
+        let hoursAgo = Date().addingTimeInterval(-24.hours.timeInterval)
+        requestCarbs.predicate = NSPredicate(format: "date > %@ AND carbs > 0", hoursAgo as NSDate)
+        let sortCarbs = NSSortDescriptor(key: "date", ascending: true)
+        requestCarbs.sortDescriptors = [sortCarbs]
+        var carbs = [Carbohydrates]()
+        try? carbs = coredataContext.fetch(requestCarbs)
+        let carbTotal = carbs.map({ carbs in carbs.carbs as? Decimal ?? 0 }).reduce(0, +)
+
+        // MARK: Fetch TDD from CoreData
 
         let requestTDD = TDD.fetchRequest() as NSFetchRequest<TDD>
         requestTDD.predicate = NSPredicate(format: "tdd > 0")
@@ -802,7 +814,7 @@ final class BaseAPSManager: APSManager, Injectable {
         }
 
         var algo_ = "Oref0"
-        let carbTotal = carbs?.map({ carbs in carbs.carbs }).reduce(0, +) ?? 0
+
         if preferences.sigmoid, preferences.enableDynamicCR {
             algo_ = "Dynamic ISF + CR: Sigmoid"
         } else if preferences.sigmoid, !preferences.enableDynamicCR {
