@@ -5,6 +5,12 @@
       location = "container:"
       name = "CoreDataClassesAndProperties">
       <FileRef
+         location = "group:LoopStatRecord+CoreDataClass.swift">
+      </FileRef>
+      <FileRef
+         location = "group:LoopStatRecord+CoreDataProperties.swift">
+      </FileRef>
+      <FileRef
          location = "group:Readings+CoreDataClass.swift">
       </FileRef>
       <FileRef

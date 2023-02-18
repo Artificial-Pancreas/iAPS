@@ -832,9 +832,16 @@ final class BaseAPSManager: APSManager, Injectable {
         } else if preferences.curve.rawValue == "ultra-rapid" {
             iPa = 50
         }
-        // Retrieve the loopStats data
-        let lsData = storage.retrieve(OpenAPS.Monitor.loopStats, as: [LoopStats].self)?
-            .sorted { $0.start > $1.start } ?? []
+
+        // MARK: Fetch LoopStatRecords from CoreData
+
+        let requestLSR = LoopStatRecord.fetchRequest() as NSFetchRequest<LoopStatRecord>
+        requestLSR.predicate = NSPredicate(format: "start > %@", Date().addingTimeInterval(-24.hours.timeInterval) as NSDate)
+        let sortLSR = NSSortDescriptor(key: "start", ascending: false)
+        requestLSR.sortDescriptors = [sortLSR]
+        var lsr: [LoopStatRecord] = []
+        try? lsr = coredataContext.fetch(requestLSR)
+
         var successRate: Double?
         var successNR = 0.0
         var errorNR = 0.0
@@ -852,20 +859,22 @@ final class BaseAPSManager: APSManager, Injectable {
         var medianInterval = 0.0
         var averageIntervalLoops = 0.0
 
-        if !lsData.isEmpty {
+        if lsr.isNotEmpty {
             var i = 0.0
-            if let loopEnd = lsData[0].end {
+            if let loopEnd = lsr[0].end {
                 previousTimeLoop = loopEnd
             }
-            for each in lsData {
-                if let loopEnd = each.end, let loopDuration = each.duration {
-                    if each.loopStatus.contains("Success") {
+            for each in lsr {
+                if let loopEnd = each.end {
+                    let loopDuration = each.duration
+
+                    if (each.loopStatus?.contains("Success")) != nil {
                         successNR += 1
                     } else {
                         errorNR += 1
                     }
                     i += 1
-                    timeIntervalLoops = (previousTimeLoop - each.start).timeInterval / 60
+                    timeIntervalLoops = (previousTimeLoop - (each.start ?? previousTimeLoop)).timeInterval / 60
 
                     if timeIntervalLoops > 0.0, i != 1 {
                         timeIntervalLoopArray.append(timeIntervalLoops)
@@ -890,12 +899,12 @@ final class BaseAPSManager: APSManager, Injectable {
                 }
             }
             successRate = (successNR / Double(i)) * 100
-            averageIntervalLoops = ((lsData[0].end ?? lsData[lsData.count - 1].start) - lsData[lsData.count - 1].start)
-                .timeInterval / 60 / Double(i)
             averageLoopTime /= Double(i)
             // Median values
             medianLoopTime = medianCalculation(array: timeForOneLoopArray)
             medianInterval = medianCalculation(array: timeIntervalLoopArray)
+            // Average time interval between loops
+            averageIntervalLoops = timeIntervalLoopArray.reduce(0, +) / Double(timeIntervalLoopArray.count)
         }
         if minimumInt == 999.0 {
             minimumInt = 0.0
@@ -1270,15 +1279,26 @@ final class BaseAPSManager: APSManager, Injectable {
 
     private func loopStats(loopStatRecord: LoopStats) {
         let LoopStatsStartedAt = Date()
-        let file = OpenAPS.Monitor.loopStats
-        var uniqEvents: [LoopStats] = []
-        storage.transaction { storage in
-            storage.append(loopStatRecord, to: file, uniqBy: \.start)
-            uniqEvents = storage.retrieve(file, as: [LoopStats].self)?
-                .filter { $0.start.addingTimeInterval(24.hours.timeInterval) > Date() }
-                .sorted { $0.start > $1.start } ?? []
-            storage.save(Array(uniqEvents), as: file)
-        }
+
+        /*
+         let file = OpenAPS.Monitor.loopStats
+         var uniqEvents: [LoopStats] = []
+         storage.transaction { storage in
+             storage.append(loopStatRecord, to: file, uniqBy: \.start)
+             uniqEvents = storage.retrieve(file, as: [LoopStats].self)?
+                 .filter { $0.start.addingTimeInterval(24.hours.timeInterval) > Date() }
+                 .sorted { $0.start > $1.start } ?? []
+             storage.save(Array(uniqEvents), as: file)
+         }
+          */
+
+        let nLS = LoopStatRecord(context: coredataContext)
+        nLS.start = loopStatRecord.start
+        nLS.end = loopStatRecord.end ?? Date()
+        nLS.loopStatus = loopStatRecord.loopStatus
+        nLS.duration = loopStatRecord.duration ?? 0.0
+        try? coredataContext.save()
+
         print("Test time of LoopStats computation: \(-1 * LoopStatsStartedAt.timeIntervalSinceNow) s")
     }
 
