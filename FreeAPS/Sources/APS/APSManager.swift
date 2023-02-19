@@ -682,21 +682,15 @@ final class BaseAPSManager: APSManager, Injectable {
         let preferences = settingsManager.preferences
         let currentTDD = enacted_.tdd ?? 0
 
-        // MARK: Add new data to Core Data:TDD Entity. TEST:
+        // MARK: Fetch data from Core Data: TDD Entity. TEST:
 
         if currentTDD > 0 {
-            debug(.apsManager, "Writing TDD to CoreData")
-            let nTDD = TDD(context: coredataContext)
-            nTDD.timestamp = Date()
-            nTDD.tdd = currentTDD as NSDecimalNumber
-            try? coredataContext.save()
-
-            let twoWeeksAgo = Date().addingTimeInterval(-10.days.timeInterval)
+            let tenDaysAgo = Date().addingTimeInterval(-10.days.timeInterval)
             let twoHoursAgo = Date().addingTimeInterval(-2.hours.timeInterval)
 
             var requestTDD = TDD.fetchRequest() as NSFetchRequest<TDD>
-            requestTDD.predicate = NSPredicate(format: "timestamp > %@ AND tdd > 0", twoWeeksAgo as NSDate)
-            let sortTDD = NSSortDescriptor(key: "timestamp", ascending: false)
+            requestTDD.predicate = NSPredicate(format: "timestamp > %@ AND tdd > 0", tenDaysAgo as NSDate)
+            let sortTDD = NSSortDescriptor(key: "timestamp", ascending: true)
             requestTDD.sortDescriptors = [sortTDD]
             var uniqEvents = [TDD]()
 
@@ -705,13 +699,12 @@ final class BaseAPSManager: APSManager, Injectable {
             var total: Decimal = 0
             var indeces: Decimal = 0
             for uniqEvent in uniqEvents {
-                debug(.apsManager, "Read TDD from CoreData: \(uniqEvent.tdd?.decimalValue ?? 0)")
                 total += uniqEvent.tdd?.decimalValue ?? 0
                 indeces += 1
             }
 
             requestTDD.predicate = NSPredicate(format: "timestamp > %@", twoHoursAgo as NSDate)
-            let sortTDDs = NSSortDescriptor(key: "timestamp", ascending: false)
+            let sortTDDs = NSSortDescriptor(key: "timestamp", ascending: true)
             requestTDD.sortDescriptors = [sortTDDs]
             var entriesPast2hours = [TDD]()
 
@@ -856,12 +849,12 @@ final class BaseAPSManager: APSManager, Injectable {
         requestLSR.predicate = NSPredicate(format: "start > %@", Date().addingTimeInterval(-24.hours.timeInterval) as NSDate)
         let sortLSR = NSSortDescriptor(key: "start", ascending: false)
         requestLSR.sortDescriptors = [sortLSR]
-        var lsr: [LoopStatRecord] = []
+        var lsr = [LoopStatRecord]()
         try? lsr = coredataContext.fetch(requestLSR)
 
         var successRate: Double?
-        var successNR = 0.0
-        var errorNR = 0.0
+        var successNR = 0
+        var errorNR = 0
         var minimumInt = 999.0
         var maximumInt = 0.0
         var minimumLoopTime = 9999.0
@@ -885,11 +878,12 @@ final class BaseAPSManager: APSManager, Injectable {
                 if let loopEnd = each.end {
                     let loopDuration = each.duration
 
-                    if (each.loopStatus?.contains("Success")) != nil {
+                    if each.loopStatus!.contains("Success") {
                         successNR += 1
                     } else {
                         errorNR += 1
                     }
+
                     i += 1
                     timeIntervalLoops = (previousTimeLoop - (each.start ?? previousTimeLoop)).timeInterval / 60
 
@@ -904,8 +898,7 @@ final class BaseAPSManager: APSManager, Injectable {
                     }
                     timeForOneLoop = loopDuration
                     timeForOneLoopArray.append(timeForOneLoop)
-                    averageLoopTime += timeForOneLoop
-
+                   
                     if timeForOneLoop >= maximumLoopTime, timeForOneLoop != 0.0 {
                         maximumLoopTime = timeForOneLoop
                     }
@@ -915,8 +908,14 @@ final class BaseAPSManager: APSManager, Injectable {
                     previousTimeLoop = loopEnd
                 }
             }
-            successRate = (successNR / Double(i)) * 100
-            averageLoopTime /= Double(i)
+            successRate = (Double(successNR) / Double(i)) * 100
+
+            // Average Loop Interval in minutes
+            let timeOfFirstIndex = lsr[0].start ?? Date()
+            let lastIndexWithTimestamp = lsr.count - 1
+            let timeOfLastIndex = lsr[lastIndexWithTimestamp].end ?? Date()
+            averageLoopTime = (timeOfFirstIndex - timeOfLastIndex).timeInterval / 60 / Double(errorNR + successNR)
+
             // Median values
             medianLoopTime = medianCalculation(array: timeForOneLoopArray)
             medianInterval = medianCalculation(array: timeIntervalLoopArray)
@@ -931,7 +930,7 @@ final class BaseAPSManager: APSManager, Injectable {
         }
 
         let requestGFS = Readings.fetchRequest() as NSFetchRequest<Readings>
-        let sortGlucose = NSSortDescriptor(key: "date", ascending: true)
+        let sortGlucose = NSSortDescriptor(key: "date", ascending: false)
         requestGFS.sortDescriptors = [sortGlucose]
 
         var glucose: [Readings] = []
@@ -939,7 +938,8 @@ final class BaseAPSManager: APSManager, Injectable {
 
         let firstElementTime = glucose.first?.date ?? Date()
         let lastElementTime = glucose.last?.date ?? Date()
-        let numberOfDays = (lastElementTime - firstElementTime).timeInterval / 8.64E4
+        var currentIndexTime = firstElementTime
+        let numberOfDays = (firstElementTime - lastElementTime).timeInterval / 8.64E4
 
         // Time In Range (%) and Average Glucose (24 hours). This will be refactored later after some testing.
         let length_ = glucose.count
@@ -970,30 +970,31 @@ final class BaseAPSManager: APSManager, Injectable {
 
         // Make arrays for median calculations and calculate averages
         if endIndex >= 0 {
-            for entry in glucose {
+            repeat {
                 j += 1
-                if entry.glucose > 0 {
-                    bg += Decimal(entry.glucose) * conversionFactor
-                    bgArray.append(Double(entry.glucose) * Double(conversionFactor))
-                    bgArrayForTIR.append((Double(entry.glucose), entry.date!))
+                if glucose[j].glucose > 0 {
+                    currentIndexTime = glucose[j].date ?? firstElementTime
+                    bg += Decimal(glucose[j].glucose) * conversionFactor
+                    bgArray.append(Double(glucose[j].glucose) * Double(conversionFactor))
+                    bgArrayForTIR.append((Double(glucose[j].glucose), glucose[j].date!))
                     nr_bgs += 1
-                    if (firstElementTime - (entry.date ?? Date())).timeInterval / 60 <= 8.64E4 { // 1 day
+                    if (firstElementTime - currentIndexTime).timeInterval / 60 <= 8.64E4 { // 1 day
                         bg_1 = bg / nr_bgs
                         bgArray_1 = bgArrayForTIR
                         bgArray_1_ = bgArray
                     }
-                    if (firstElementTime - (entry.date ?? Date())).timeInterval / 60 <= 6.048E5 { // 7 days
+                    if (firstElementTime - currentIndexTime).timeInterval / 60 <= 6.048E5 { // 7 days
                         bg_7 = bg / nr_bgs
                         bgArray_7 = bgArrayForTIR
                         bgArray_7_ = bgArray
                     }
-                    if (firstElementTime - (entry.date ?? Date())).timeInterval / 60 <= 2.592E6 { // 30 days
+                    if (firstElementTime - currentIndexTime).timeInterval / 60 <= 2.592E6 { // 30 days
                         bg_30 = bg / nr_bgs
                         bgArray_30 = bgArrayForTIR
                         bgArray_30_ = bgArray
                     }
                 }
-            }
+            } while j != glucose.count - 1
         }
 
         if nr_bgs > 0 {
@@ -1118,8 +1119,8 @@ final class BaseAPSManager: APSManager, Injectable {
         let nrOfCGMReadings = glucose24Hours?.count ?? 0
 
         let loopstat = LoopCycles(
-            loops: Int(successNR + errorNR),
-            errors: Int(errorNR),
+            loops: successNR + errorNR,
+            errors: errorNR,
             readings: nrOfCGMReadings,
             success_rate: Decimal(round(successRate ?? 0)),
             avg_interval: roundDecimal(Decimal(averageIntervalLoops), 1),
@@ -1178,35 +1179,47 @@ final class BaseAPSManager: APSManager, Injectable {
 
         let avg = Averages(Average: avgs, Median: median)
 
-        let suggestion = storage.retrieve(OpenAPS.Enact.suggested, as: Suggestion.self)
+        // MARK: Fetch InsulinDuration from CoreData
+
+        // let suggestion = storage.retrieve(OpenAPS.Enact.suggested, as: Suggestion.self)
+
+        let requestInsulinDistribution = InsulinDistribution.fetchRequest() as NSFetchRequest<InsulinDistribution>
+        let hoursAgo_ = Date().addingTimeInterval(-1.hours.timeInterval)
+        requestInsulinDistribution.predicate = NSPredicate(format: "date > %@", hoursAgo_ as NSDate)
+        let sortInsulin = NSSortDescriptor(key: "date", ascending: true)
+        requestInsulinDistribution.sortDescriptors = [sortInsulin]
+        requestInsulinDistribution.fetchLimit = 1
+
+        var insulinDistribution = [InsulinDistribution]()
+        try? insulinDistribution = coredataContext.fetch(requestInsulinDistribution)
 
         let insulin = Ins(
             TDD: roundDecimal(currentTDD, 2),
-            bolus: suggestion?.insulin?.bolus ?? 0,
-            temp_basal: suggestion?.insulin?.temp_basal ?? 0,
-            scheduled_basal: suggestion?.insulin?.scheduled_basal ?? 0
+            bolus: (insulinDistribution[0].bolus ?? 0) as Decimal,
+            temp_basal: (insulinDistribution[0].tempBasal ?? 0) as Decimal,
+            scheduled_basal: (insulinDistribution[0].scheduledBasal ?? 0) as Decimal
         )
 
-        var sumOfSquares: Decimal = 0
-        var sumOfSquares_1: Decimal = 0
-        var sumOfSquares_7: Decimal = 0
-        var sumOfSquares_30: Decimal = 0
+        var sumOfSquares = 0.0
+        var sumOfSquares_1 = 0.0
+        var sumOfSquares_7 = 0.0
+        var sumOfSquares_30 = 0.0
 
         // Total
         for array in bgArray {
-            sumOfSquares += pow(Decimal(array) - bg_total, 2)
+            sumOfSquares += pow(array - Double(bg_total), 2)
         }
         // One day
         for array_1 in bgArray_1_ {
-            sumOfSquares_1 += pow(Decimal(array_1) - bg_1, 2)
+            sumOfSquares_1 += pow(array_1 - Double(bg_1), 2)
         }
         // week
         for array_7 in bgArray_7_ {
-            sumOfSquares_7 += pow(Decimal(array_7) - bg_7, 2)
+            sumOfSquares_7 += pow(array_7 - Double(bg_7), 2)
         }
         // month
         for array_30 in bgArray_30_ {
-            sumOfSquares_30 += pow(Decimal(array_30) - bg_30, 2)
+            sumOfSquares_30 += pow(array_30 - Double(bg_30), 2)
         }
 
         // Standard deviation and Coefficient of variation
@@ -1221,19 +1234,19 @@ final class BaseAPSManager: APSManager, Injectable {
 
         // Avoid division by zero
         if bg_total > 0 {
-            sd_total = sqrt(Double(sumOfSquares / nr_bgs))
+            sd_total = sqrt(sumOfSquares / Double(nr_bgs))
             cv_total = sd_total / Double(bg_total) * 100
         }
         if bg_1 > 0 {
-            sd_1 = sqrt(Double(sumOfSquares_1) / Double(bgArray_1_.count))
+            sd_1 = sqrt(sumOfSquares_1 / Double(bgArray_1_.count))
             cv_1 = sd_1 / Double(bg_1) * 100
         }
         if bg_7 > 0 {
-            sd_7 = sqrt(Double(sumOfSquares_7) / Double(bgArray_7_.count))
+            sd_7 = sqrt(sumOfSquares_7 / Double(bgArray_7_.count))
             cv_7 = sd_7 / Double(bg_7) * 100
         }
         if bg_30 > 0 {
-            sd_30 = sqrt(Double(sumOfSquares_30) / Double(bgArray_30_.count))
+            sd_30 = sqrt(sumOfSquares_30 / Double(bgArray_30_.count))
             cv_30 = sd_30 / Double(bg_30) * 100
         }
 

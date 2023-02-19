@@ -1,4 +1,5 @@
 import Combine
+import CoreData
 import Foundation
 import JavaScriptCore
 
@@ -7,6 +8,8 @@ final class OpenAPS {
     private let processQueue = DispatchQueue(label: "OpenAPS.processQueue", qos: .utility)
 
     private let storage: FileStorage
+
+    let coredataContext = CoreDataStack.shared.persistentContainer.viewContext
 
     init(storage: FileStorage) {
         self.storage = storage
@@ -78,6 +81,22 @@ final class OpenAPS {
                 if var suggestion = Suggestion(from: suggested) {
                     suggestion.timestamp = suggestion.deliverAt ?? clock
                     self.storage.save(suggestion, as: Enact.suggested)
+
+                    // MARK: Save to CoreData also. To do: Remove JSON saving
+
+                    if suggestion.tdd ?? 0 > 0 {
+                        let saveToTDD = TDD(context: self.coredataContext)
+                        saveToTDD.timestamp = suggestion.timestamp ?? Date()
+                        saveToTDD.tdd = (suggestion.tdd ?? 0) as NSDecimalNumber?
+                        try? self.coredataContext.save()
+
+                        let saveToInsulin = InsulinDistribution(context: self.coredataContext)
+                        saveToInsulin.bolus = (suggestion.insulin?.bolus ?? 0) as NSDecimalNumber?
+                        saveToInsulin.scheduledBasal = (suggestion.insulin?.scheduled_basal ?? 0) as NSDecimalNumber?
+                        saveToInsulin.tempBasal = (suggestion.insulin?.temp_basal ?? 0) as NSDecimalNumber?
+                        saveToInsulin.date = Date()
+                        try? self.coredataContext.save()
+                    }
 
                     promise(.success(suggestion))
                 } else {
