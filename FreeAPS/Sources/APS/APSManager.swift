@@ -785,7 +785,7 @@ final class BaseAPSManager: APSManager, Injectable {
         // MARK: Fetch Carbs from CoreData
 
         let requestCarbs = Carbohydrates.fetchRequest() as NSFetchRequest<Carbohydrates>
-        var daysAgo = Date().addingTimeInterval(-1.days.timeInterval)
+        let daysAgo = Date().addingTimeInterval(-1.days.timeInterval)
         requestCarbs.predicate = NSPredicate(format: "carbs > 0 AND date > %@", daysAgo as NSDate)
         let sortCarbs = NSSortDescriptor(key: "date", ascending: true)
         requestCarbs.sortDescriptors = [sortCarbs]
@@ -796,8 +796,6 @@ final class BaseAPSManager: APSManager, Injectable {
         // MARK: Fetch TDD from CoreData
 
         let requestTDD = TDD.fetchRequest() as NSFetchRequest<TDD>
-        daysAgo = Date().addingTimeInterval(-12.hours.timeInterval)
-        requestTDD.predicate = NSPredicate(format: "timestamp > %@", daysAgo as NSDate)
         let sort = NSSortDescriptor(key: "timestamp", ascending: false)
         requestTDD.sortDescriptors = [sort]
         requestTDD.fetchLimit = 1
