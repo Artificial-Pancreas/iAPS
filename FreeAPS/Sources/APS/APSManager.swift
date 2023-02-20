@@ -688,7 +688,7 @@ final class BaseAPSManager: APSManager, Injectable {
             let tenDaysAgo = Date().addingTimeInterval(-10.days.timeInterval)
             let twoHoursAgo = Date().addingTimeInterval(-2.hours.timeInterval)
 
-            var requestTDD = TDD.fetchRequest() as NSFetchRequest<TDD>
+            let requestTDD = TDD.fetchRequest() as NSFetchRequest<TDD>
             requestTDD.predicate = NSPredicate(format: "timestamp > %@ AND tdd > 0", tenDaysAgo as NSDate)
             let sortTDD = NSSortDescriptor(key: "timestamp", ascending: true)
             requestTDD.sortDescriptors = [sortTDD]
@@ -703,16 +703,14 @@ final class BaseAPSManager: APSManager, Injectable {
                 indeces += 1
             }
 
-            requestTDD.predicate = NSPredicate(format: "timestamp > %@", twoHoursAgo as NSDate)
-            let sortTDDs = NSSortDescriptor(key: "timestamp", ascending: true)
-            requestTDD.sortDescriptors = [sortTDDs]
-            var entriesPast2hours = [TDD]()
+            // Only fetch once. Use same (previous) fetch
+            let twoHoursArray = uniqEvents.filter({ ($0.timestamp ?? Date()) >= twoHoursAgo })
 
-            try? entriesPast2hours = coredataContext.fetch(requestTDD)
+            /* try? entriesPast2hours = coredataContext.fetch(requestTDD) */
 
             var totalAmount: Decimal = 0
             var nrOfIndeces: Decimal = 0
-            for entry in entriesPast2hours {
+            for entry in twoHoursArray {
                 if (entry.tdd?.decimalValue ?? 0) > 0 {
                     totalAmount += entry.tdd?.decimalValue ?? 0
                     nrOfIndeces += 1
@@ -898,7 +896,7 @@ final class BaseAPSManager: APSManager, Injectable {
                     }
                     timeForOneLoop = loopDuration
                     timeForOneLoopArray.append(timeForOneLoop)
-                   
+
                     if timeForOneLoop >= maximumLoopTime, timeForOneLoop != 0.0 {
                         maximumLoopTime = timeForOneLoop
                     }
@@ -1087,6 +1085,16 @@ final class BaseAPSManager: APSManager, Injectable {
             month: roundDecimal(Decimal(medianCalculation(array: bgArray_30_)), 1),
             total: roundDecimal(Decimal(medianBG), 1)
         )
+
+        // MARK: Save to Median to CoreData
+
+        let saveMedianToCoreData = BGmedian(context: coredataContext)
+        saveMedianToCoreData.date = Date()
+        saveMedianToCoreData.median = median.total as NSDecimalNumber
+        saveMedianToCoreData.median_1 = median.day as NSDecimalNumber
+        saveMedianToCoreData.median_7 = median.week as NSDecimalNumber
+        saveMedianToCoreData.median_30 = median.month as NSDecimalNumber
+
         var hbs = Durations(
             day: roundDecimal(NGSPa1CStatisticValue, 1),
             week: roundDecimal(NGSPa1CStatisticValue_7, 1),
