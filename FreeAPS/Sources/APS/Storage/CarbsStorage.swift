@@ -50,7 +50,9 @@ final class BaseCarbsStorage: CarbsStorage, Injectable {
                 let carbDataForStats = Carbohydrates(context: coredataContext)
                 carbDataForStats.date = carbDate
                 carbDataForStats.carbs = cbs as NSDecimalNumber
-                try? coredataContext.save()
+                self.coredataContext.perform {
+                    try? self.coredataContext.save()
+                }
             }
 
             broadcaster.notify(CarbsObserver.self, on: processQueue) {

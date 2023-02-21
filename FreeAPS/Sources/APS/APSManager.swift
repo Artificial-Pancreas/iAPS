@@ -671,9 +671,9 @@ final class BaseAPSManager: APSManager, Injectable {
             // Update the TDD value
             tdd(enacted_: enacted)
             // Update statistics. Only run if enabled in preferences
-            if settingsManager.settings.displayStatistics {
-                statistics()
-            }
+            // if settingsManager.settings.displayStatistics {
+            statistics()
+            // }
         }
     }
 
@@ -1336,7 +1336,9 @@ final class BaseAPSManager: APSManager, Injectable {
         nLS.end = loopStatRecord.end ?? Date()
         nLS.loopStatus = loopStatRecord.loopStatus
         nLS.duration = loopStatRecord.duration ?? 0.0
-        try? coredataContext.save()
+        coredataContext.perform {
+            try? self.coredataContext.save()
+        }
 
         print("Test time of LoopStats computation: \(-1 * LoopStatsStartedAt.timeIntervalSinceNow) s")
     }

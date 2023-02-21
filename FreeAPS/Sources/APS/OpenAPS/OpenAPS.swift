@@ -84,23 +84,26 @@ final class OpenAPS {
 
                     // MARK: Save to CoreData also. To do: Remove JSON saving
 
-                    self.coredataContext.performAndWait {
-                        var saveToTDD = TDD(context: self.coredataContext)
+                    var saveToTDD = TDD(context: self.coredataContext)
 
-                        if suggestion.tdd ?? 0 > 0 {
-                            // let saveToTDD = TDD(context: self.coredataContext)
-                            saveToTDD.timestamp = suggestion.timestamp ?? Date()
-                            saveToTDD.tdd = (suggestion.tdd ?? 0) as NSDecimalNumber?
+                    if suggestion.tdd ?? 0 > 0 {
+                        // let saveToTDD = TDD(context: self.coredataContext)
+                        saveToTDD.timestamp = suggestion.timestamp ?? Date()
+                        saveToTDD.tdd = (suggestion.tdd ?? 0) as NSDecimalNumber?
+                        self.coredataContext.perform {
                             try? self.coredataContext.save()
+                        }
 
-                            let saveToInsulin = InsulinDistribution(context: self.coredataContext)
-                            saveToInsulin.bolus = (suggestion.insulin?.bolus ?? 0) as NSDecimalNumber?
-                            saveToInsulin.scheduledBasal = (suggestion.insulin?.scheduled_basal ?? 0) as NSDecimalNumber?
-                            saveToInsulin.tempBasal = (suggestion.insulin?.temp_basal ?? 0) as NSDecimalNumber?
-                            saveToInsulin.date = Date()
+                        let saveToInsulin = InsulinDistribution(context: self.coredataContext)
+                        saveToInsulin.bolus = (suggestion.insulin?.bolus ?? 0) as NSDecimalNumber?
+                        saveToInsulin.scheduledBasal = (suggestion.insulin?.scheduled_basal ?? 0) as NSDecimalNumber?
+                        saveToInsulin.tempBasal = (suggestion.insulin?.temp_basal ?? 0) as NSDecimalNumber?
+                        saveToInsulin.date = Date()
+                        self.coredataContext.perform {
                             try? self.coredataContext.save()
                         }
                     }
+
                     promise(.success(suggestion))
                 } else {
                     promise(.success(nil))

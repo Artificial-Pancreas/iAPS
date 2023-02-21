@@ -1,3 +1,4 @@
+import Firebase
 import SwiftUI
 import Swinject
 
@@ -43,6 +44,9 @@ import Swinject
     }
 
     init() {
+        // Use the Firebase library to configure APIs.
+        FirebaseApp.configure()
+
         debug(
             .default,
             "FreeAPS X Started: v\(Bundle.main.releaseVersionNumber ?? "")(\(Bundle.main.buildVersionNumber ?? "")) [buildDate: \(Bundle.main.buildDate)]"
