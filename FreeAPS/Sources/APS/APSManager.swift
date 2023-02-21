@@ -689,12 +689,17 @@ final class BaseAPSManager: APSManager, Injectable {
             let twoHoursAgo = Date().addingTimeInterval(-2.hours.timeInterval)
 
             var uniqEvents = [TDD]()
-            let requestTDD = TDD.fetchRequest() as NSFetchRequest<TDD>
-            requestTDD.predicate = NSPredicate(format: "timestamp > %@ AND tdd > 0", tenDaysAgo as NSDate)
-            let sortTDD = NSSortDescriptor(key: "timestamp", ascending: true)
-            requestTDD.sortDescriptors = [sortTDD]
 
-            try? uniqEvents = coredataContext.fetch(requestTDD)
+            coredataContext.performAndWait {
+                let requestTDD = TDD.fetchRequest() as NSFetchRequest<TDD>
+
+                requestTDD.predicate = NSPredicate(format: "timestamp > %@ AND tdd > 0", tenDaysAgo as NSDate)
+
+                let sortTDD = NSSortDescriptor(key: "timestamp", ascending: true)
+                requestTDD.sortDescriptors = [sortTDD]
+
+                try? uniqEvents = coredataContext.fetch(requestTDD)
+            }
 
             var total: Decimal = 0
             total = uniqEvents.compactMap({ each in each.tdd as? Decimal ?? 0 }).reduce(0, +)
@@ -800,12 +805,18 @@ final class BaseAPSManager: APSManager, Injectable {
         // MARK: Fetch Carbs from CoreData
 
         var carbs = [Carbohydrates]()
-        let requestCarbs = Carbohydrates.fetchRequest() as NSFetchRequest<Carbohydrates>
-        let daysAgo = Date().addingTimeInterval(-1.days.timeInterval)
-        requestCarbs.predicate = NSPredicate(format: "carbs > 0 AND date > %@", daysAgo as NSDate)
-        let sortCarbs = NSSortDescriptor(key: "date", ascending: true)
-        requestCarbs.sortDescriptors = [sortCarbs]
-        try? carbs = coredataContext.fetch(requestCarbs)
+
+        coredataContext.performAndWait {
+            let requestCarbs = Carbohydrates.fetchRequest() as NSFetchRequest<Carbohydrates>
+
+            let daysAgo = Date().addingTimeInterval(-1.days.timeInterval)
+            requestCarbs.predicate = NSPredicate(format: "carbs > 0 AND date > %@", daysAgo as NSDate)
+
+            let sortCarbs = NSSortDescriptor(key: "date", ascending: true)
+            requestCarbs.sortDescriptors = [sortCarbs]
+
+            try? carbs = coredataContext.fetch(requestCarbs)
+        }
 
         let carbTotal = carbs.map({ carbs in carbs.carbs as? Decimal ?? 0 }).reduce(0, +)
 
