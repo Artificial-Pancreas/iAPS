@@ -1190,9 +1190,7 @@ final class BaseAPSManager: APSManager, Injectable {
         // let suggestion = storage.retrieve(OpenAPS.Enact.suggested, as: Suggestion.self)
 
         let requestInsulinDistribution = InsulinDistribution.fetchRequest() as NSFetchRequest<InsulinDistribution>
-        let hoursAgo_ = Date().addingTimeInterval(-1.hours.timeInterval)
-        requestInsulinDistribution.predicate = NSPredicate(format: "date > %@", hoursAgo_ as NSDate)
-        let sortInsulin = NSSortDescriptor(key: "date", ascending: true)
+        let sortInsulin = NSSortDescriptor(key: "date", ascending: false)
         requestInsulinDistribution.sortDescriptors = [sortInsulin]
         requestInsulinDistribution.fetchLimit = 1
 
@@ -1201,9 +1199,9 @@ final class BaseAPSManager: APSManager, Injectable {
 
         let insulin = Ins(
             TDD: roundDecimal(currentTDD, 2),
-            bolus: (insulinDistribution[0].bolus ?? 0) as Decimal,
-            temp_basal: (insulinDistribution[0].tempBasal ?? 0) as Decimal,
-            scheduled_basal: (insulinDistribution[0].scheduledBasal ?? 0) as Decimal
+            bolus: insulinDistribution.first != nil ? ((insulinDistribution[0].bolus ?? 0) as Decimal) : 0,
+            temp_basal: insulinDistribution.first != nil ? ((insulinDistribution[0].tempBasal ?? 0) as Decimal) : 0,
+            scheduled_basal: insulinDistribution.first != nil ? ((insulinDistribution[0].scheduledBasal ?? 0) as Decimal) : 0
         )
 
         var sumOfSquares = 0.0
