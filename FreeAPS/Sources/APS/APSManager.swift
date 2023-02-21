@@ -688,34 +688,46 @@ final class BaseAPSManager: APSManager, Injectable {
             let tenDaysAgo = Date().addingTimeInterval(-10.days.timeInterval)
             let twoHoursAgo = Date().addingTimeInterval(-2.hours.timeInterval)
 
+            var uniqEvents = [TDD]()
             let requestTDD = TDD.fetchRequest() as NSFetchRequest<TDD>
             requestTDD.predicate = NSPredicate(format: "timestamp > %@ AND tdd > 0", tenDaysAgo as NSDate)
             let sortTDD = NSSortDescriptor(key: "timestamp", ascending: true)
             requestTDD.sortDescriptors = [sortTDD]
-            var uniqEvents = [TDD]()
 
             try? uniqEvents = coredataContext.fetch(requestTDD)
 
             var total: Decimal = 0
-            var indeces: Decimal = 0
-            for uniqEvent in uniqEvents {
-                total += uniqEvent.tdd?.decimalValue ?? 0
-                indeces += 1
-            }
+            total = uniqEvents.compactMap({ each in each.tdd as? Decimal ?? 0 }).reduce(0, +)
+            var indeces = uniqEvents.count
+
+            /*
+             if uniqEvents.first != nil {
+             for uniqEvent in uniqEvents {
+             total += uniqEvent != Empty ? (uniqEvent.tdd ?? 0) as Decimal : 0
+             indeces += 1
+             }
+             }
+             */
 
             // Only fetch once. Use same (previous) fetch
             let twoHoursArray = uniqEvents.filter({ ($0.timestamp ?? Date()) >= twoHoursAgo })
 
-            /* try? entriesPast2hours = coredataContext.fetch(requestTDD) */
-
             var totalAmount: Decimal = 0
-            var nrOfIndeces: Decimal = 0
-            for entry in twoHoursArray {
-                if (entry.tdd?.decimalValue ?? 0) > 0 {
-                    totalAmount += entry.tdd?.decimalValue ?? 0
-                    nrOfIndeces += 1
-                }
-            }
+
+            totalAmount = twoHoursArray.compactMap({ each in each.tdd as? Decimal ?? 0 }).reduce(0, +)
+            var nrOfIndeces = twoHoursArray.count
+
+            /*
+             var nrOfIndeces: Decimal = 0
+             if twoHoursArray.first != nil {
+             for entry in twoHoursArray {
+             if (entry.tdd?.decimalValue ?? 0) > 0 {
+             totalAmount += entry.tdd?.decimalValue ?? 0
+             nrOfIndeces += 1
+             }
+             }
+             }
+             */
 
             if indeces == 0 {
                 indeces = 1
@@ -723,8 +735,10 @@ final class BaseAPSManager: APSManager, Injectable {
             if nrOfIndeces == 0 {
                 nrOfIndeces = 1
             }
-            let average14 = total / indeces
-            let average2hours = totalAmount / nrOfIndeces
+
+            let average2hours = totalAmount / Decimal(nrOfIndeces)
+            let average14 = total / Decimal(indeces)
+
             let weight = preferences.weightPercentage
             let weighted_average = weight * average2hours + (1 - weight) * average14
             let averages = TDD_averages(
@@ -734,6 +748,7 @@ final class BaseAPSManager: APSManager, Injectable {
                 date: Date()
             )
             storage.save(averages, as: OpenAPS.Monitor.tdd_averages)
+
             print("Test time of TDD: \(-1 * tddStartedAt.timeIntervalSinceNow) s")
         }
     }
@@ -784,23 +799,24 @@ final class BaseAPSManager: APSManager, Injectable {
 
         // MARK: Fetch Carbs from CoreData
 
+        var carbs = [Carbohydrates]()
         let requestCarbs = Carbohydrates.fetchRequest() as NSFetchRequest<Carbohydrates>
         let daysAgo = Date().addingTimeInterval(-1.days.timeInterval)
         requestCarbs.predicate = NSPredicate(format: "carbs > 0 AND date > %@", daysAgo as NSDate)
         let sortCarbs = NSSortDescriptor(key: "date", ascending: true)
         requestCarbs.sortDescriptors = [sortCarbs]
-        var carbs = [Carbohydrates]()
         try? carbs = coredataContext.fetch(requestCarbs)
+
         let carbTotal = carbs.map({ carbs in carbs.carbs as? Decimal ?? 0 }).reduce(0, +)
 
         // MARK: Fetch TDD from CoreData
 
+        var tdds = [TDD]()
         let requestTDD = TDD.fetchRequest() as NSFetchRequest<TDD>
         let sort = NSSortDescriptor(key: "timestamp", ascending: false)
         requestTDD.sortDescriptors = [sort]
         requestTDD.fetchLimit = 1
 
-        var tdds = [TDD]()
         try? tdds = coredataContext.fetch(requestTDD)
 
         var currentTDD: Decimal = 0
@@ -841,11 +857,12 @@ final class BaseAPSManager: APSManager, Injectable {
 
         // MARK: Fetch LoopStatRecords from CoreData
 
+        var lsr = [LoopStatRecord]()
         let requestLSR = LoopStatRecord.fetchRequest() as NSFetchRequest<LoopStatRecord>
         requestLSR.predicate = NSPredicate(format: "start > %@", Date().addingTimeInterval(-24.hours.timeInterval) as NSDate)
         let sortLSR = NSSortDescriptor(key: "start", ascending: false)
         requestLSR.sortDescriptors = [sortLSR]
-        var lsr = [LoopStatRecord]()
+
         try? lsr = coredataContext.fetch(requestLSR)
 
         var successRate: Double?
@@ -1189,12 +1206,12 @@ final class BaseAPSManager: APSManager, Injectable {
 
         // let suggestion = storage.retrieve(OpenAPS.Enact.suggested, as: Suggestion.self)
 
+        var insulinDistribution = [InsulinDistribution]()
         let requestInsulinDistribution = InsulinDistribution.fetchRequest() as NSFetchRequest<InsulinDistribution>
         let sortInsulin = NSSortDescriptor(key: "date", ascending: false)
         requestInsulinDistribution.sortDescriptors = [sortInsulin]
         requestInsulinDistribution.fetchLimit = 1
 
-        var insulinDistribution = [InsulinDistribution]()
         try? insulinDistribution = coredataContext.fetch(requestInsulinDistribution)
 
         let insulin = Ins(
