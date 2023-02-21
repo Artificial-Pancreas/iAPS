@@ -690,6 +690,9 @@ final class BaseAPSManager: APSManager, Injectable {
 
             var uniqEvents = [TDD]()
             var total: Decimal = 0
+            var totalAmount: Decimal = 0
+            var indeces: Int = 0
+            var nrOfIndeces: Int = 0
 
             coredataContext.performAndWait {
                 let requestTDD = TDD.fetchRequest() as NSFetchRequest<TDD>
@@ -702,38 +705,14 @@ final class BaseAPSManager: APSManager, Injectable {
                 try? uniqEvents = coredataContext.fetch(requestTDD)
 
                 total = uniqEvents.compactMap({ each in each.tdd as? Decimal ?? 0 }).reduce(0, +)
+                indeces = uniqEvents.count
+
+                // Only fetch once. Use same (previous) fetch
+                let twoHoursArray = uniqEvents.filter({ ($0.timestamp ?? Date()) >= twoHoursAgo })
+                nrOfIndeces = twoHoursArray.count
+
+                totalAmount = twoHoursArray.compactMap({ each in each.tdd as? Decimal ?? 0 }).reduce(0, +)
             }
-
-            var indeces = uniqEvents.count
-
-            /*
-             if uniqEvents.first != nil {
-             for uniqEvent in uniqEvents {
-             total += uniqEvent != Empty ? (uniqEvent.tdd ?? 0) as Decimal : 0
-             indeces += 1
-             }
-             }
-             */
-
-            // Only fetch once. Use same (previous) fetch
-            let twoHoursArray = uniqEvents.filter({ ($0.timestamp ?? Date()) >= twoHoursAgo })
-
-            var totalAmount: Decimal = 0
-
-            totalAmount = twoHoursArray.compactMap({ each in each.tdd as? Decimal ?? 0 }).reduce(0, +)
-            var nrOfIndeces = twoHoursArray.count
-
-            /*
-             var nrOfIndeces: Decimal = 0
-             if twoHoursArray.first != nil {
-             for entry in twoHoursArray {
-             if (entry.tdd?.decimalValue ?? 0) > 0 {
-             totalAmount += entry.tdd?.decimalValue ?? 0
-             nrOfIndeces += 1
-             }
-             }
-             }
-             */
 
             if indeces == 0 {
                 indeces = 1
@@ -806,6 +785,7 @@ final class BaseAPSManager: APSManager, Injectable {
         // MARK: Fetch Carbs from CoreData
 
         var carbs = [Carbohydrates]()
+        var carbTotal: Decimal = 0
 
         coredataContext.performAndWait {
             let requestCarbs = Carbohydrates.fetchRequest() as NSFetchRequest<Carbohydrates>
@@ -817,9 +797,9 @@ final class BaseAPSManager: APSManager, Injectable {
             requestCarbs.sortDescriptors = [sortCarbs]
 
             try? carbs = coredataContext.fetch(requestCarbs)
-        }
 
-        let carbTotal = carbs.map({ carbs in carbs.carbs as? Decimal ?? 0 }).reduce(0, +)
+            carbTotal = carbs.map({ carbs in carbs.carbs as? Decimal ?? 0 }).reduce(0, +)
+        }
 
         // MARK: Fetch TDD from CoreData
 
