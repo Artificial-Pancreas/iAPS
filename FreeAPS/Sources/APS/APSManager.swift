@@ -689,6 +689,7 @@ final class BaseAPSManager: APSManager, Injectable {
             let twoHoursAgo = Date().addingTimeInterval(-2.hours.timeInterval)
 
             var uniqEvents = [TDD]()
+            var total: Decimal = 0
 
             coredataContext.performAndWait {
                 let requestTDD = TDD.fetchRequest() as NSFetchRequest<TDD>
@@ -699,10 +700,10 @@ final class BaseAPSManager: APSManager, Injectable {
                 requestTDD.sortDescriptors = [sortTDD]
 
                 try? uniqEvents = coredataContext.fetch(requestTDD)
+
+                total = uniqEvents.compactMap({ each in each.tdd as? Decimal ?? 0 }).reduce(0, +)
             }
 
-            var total: Decimal = 0
-            total = uniqEvents.compactMap({ each in each.tdd as? Decimal ?? 0 }).reduce(0, +)
             var indeces = uniqEvents.count
 
             /*
