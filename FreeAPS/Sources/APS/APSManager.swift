@@ -79,7 +79,7 @@ final class BaseAPSManager: APSManager, Injectable {
         }
     }
 
-    let coredataContext = CoreDataStack.shared.persistentContainer.viewContext
+    let coredataContext = CoreDataStack.shared.persistentContainer.newBackgroundContext()
 
     private var openAPS: OpenAPS!
 
@@ -1103,12 +1103,17 @@ final class BaseAPSManager: APSManager, Injectable {
 
         // MARK: Save to Median to CoreData
 
-        let saveMedianToCoreData = BGmedian(context: coredataContext)
-        saveMedianToCoreData.date = Date()
-        saveMedianToCoreData.median = median.total as NSDecimalNumber
-        saveMedianToCoreData.median_1 = median.day as NSDecimalNumber
-        saveMedianToCoreData.median_7 = median.week as NSDecimalNumber
-        saveMedianToCoreData.median_30 = median.month as NSDecimalNumber
+        coredataContext.perform {
+            let saveMedianToCoreData = BGmedian(context: self.coredataContext)
+
+            saveMedianToCoreData.date = Date()
+            saveMedianToCoreData.median = median.total as NSDecimalNumber
+            saveMedianToCoreData.median_1 = median.day as NSDecimalNumber
+            saveMedianToCoreData.median_7 = median.week as NSDecimalNumber
+            saveMedianToCoreData.median_30 = median.month as NSDecimalNumber
+
+            try? self.coredataContext.save()
+        }
 
         var hbs = Durations(
             day: roundDecimal(NGSPa1CStatisticValue, 1),
@@ -1331,12 +1336,14 @@ final class BaseAPSManager: APSManager, Injectable {
     private func loopStats(loopStatRecord: LoopStats) {
         let LoopStatsStartedAt = Date()
 
-        let nLS = LoopStatRecord(context: coredataContext)
-        nLS.start = loopStatRecord.start
-        nLS.end = loopStatRecord.end ?? Date()
-        nLS.loopStatus = loopStatRecord.loopStatus
-        nLS.duration = loopStatRecord.duration ?? 0.0
         coredataContext.perform {
+            let nLS = LoopStatRecord(context: self.coredataContext)
+
+            nLS.start = loopStatRecord.start
+            nLS.end = loopStatRecord.end ?? Date()
+            nLS.loopStatus = loopStatRecord.loopStatus
+            nLS.duration = loopStatRecord.duration ?? 0.0
+
             try? self.coredataContext.save()
         }
 
