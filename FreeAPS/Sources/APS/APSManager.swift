@@ -1032,14 +1032,6 @@ final class BaseAPSManager: APSManager, Injectable {
         if nr_bgs > 0 {
             // Up to 91 days
             bg_total = bg / nr_bgs
-
-            // If less then 24 hours of glucose data, use total instead
-            if bg_1 == 0 {
-                bg_1 = bg_total
-                bgArray_1 = bgArrayForTIR
-                end1 = true
-                nr_bgs_1 = nr_bgs
-            }
         }
 
         // Total median
@@ -1193,9 +1185,6 @@ final class BaseAPSManager: APSManager, Injectable {
         }
 
         let nrOfCGMReadings = nr1
-
-        let glucose24Hours = storage.retrieve(OpenAPS.Monitor.glucose, as: [BloodGlucose].self)
-        let nrOfCGMReadings = glucose24Hours?.count ?? 0
 
         let loopstat = LoopCycles(
             loops: successNR + errorNR,
