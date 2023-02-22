@@ -60,7 +60,7 @@ extension PreferencesEditor {
 
                     type: .decimal(keypath: \.updateInterval),
                     infoText: NSLocalizedString(
-                        "Default is 30 minutes. How often to update and save the statistics.json and to upload last array, when enabled, to Nightscout. A lower interval than for glucose updates (5 min) is pointless.",
+                        "Default is 20 minutes. How often to update and save the statistics.json and to upload last array, when enabled, to Nightscout.",
                         comment: "Description for update interval for statistics"
                     ),
                     settable: self

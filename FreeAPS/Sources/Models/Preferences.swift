@@ -55,7 +55,7 @@ struct Preferences: JSON {
     var threshold_setting: Decimal = 65
     var high: Decimal = 10
     var low: Decimal = 4
-    var updateInterval: Decimal = 30
+    var updateInterval: Decimal = 20
     var overrideHbA1cUnit: Bool = false
     var displayLoops: Bool = false
 }
