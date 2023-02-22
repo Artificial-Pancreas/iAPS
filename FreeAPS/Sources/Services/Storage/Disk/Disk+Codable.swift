@@ -66,7 +66,7 @@ public extension Disk {
                     try newData.write(to: url, options: .atomic)
                 }
             } else {
-                try save([value], to: directory, as: path, encoder: encoder)
+                try? save([value], to: directory, as: path, encoder: encoder)
             }
         } catch {
             throw error

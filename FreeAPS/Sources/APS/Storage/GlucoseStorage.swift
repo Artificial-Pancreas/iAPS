@@ -1,4 +1,5 @@
 import AVFAudio
+import CoreData
 import Foundation
 import SwiftDate
 import SwiftUI
@@ -24,6 +25,8 @@ final class BaseGlucoseStorage: GlucoseStorage, Injectable {
     @Injected() private var broadcaster: Broadcaster!
     @Injected() private var settingsManager: SettingsManager!
 
+    let coredataContext = CoreDataStack.shared.persistentContainer.newBackgroundContext()
+
     private enum Config {
         static let filterTime: TimeInterval = 4.5 * 60
     }
@@ -33,10 +36,13 @@ final class BaseGlucoseStorage: GlucoseStorage, Injectable {
     }
 
     func storeGlucose(_ glucose: [BloodGlucose]) {
+        let storeGlucoseStarted = Date()
+
         processQueue.sync {
             let file = OpenAPS.Monitor.glucose
             self.storage.transaction { storage in
                 storage.append(glucose, to: file, uniqBy: \.dateString)
+
                 let uniqEvents = storage.retrieve(file, as: [BloodGlucose].self)?
                     .filter { $0.dateString.addingTimeInterval(24.hours.timeInterval) > Date() }
                     .sorted { $0.dateString > $1.dateString } ?? []
@@ -49,7 +55,8 @@ final class BaseGlucoseStorage: GlucoseStorage, Injectable {
                     }
                 }
 
-                // Save to glucoseForStats also.
+                // MARK: Save to CoreData. TEST
+
                 var bg_ = 0
                 var bgDate = Date()
 
@@ -57,14 +64,16 @@ final class BaseGlucoseStorage: GlucoseStorage, Injectable {
                     bg_ = glucose[0].glucose ?? 0
                     bgDate = glucose[0].dateString
                 }
+
                 if bg_ != 0 {
-                    let dataForStats = GlucoseDataForStats(date: bgDate, glucose: bg_)
-                    storage.append(dataForStats, to: OpenAPS.Monitor.glucose_data, uniqBy: \.date)
-                    let uniqEvents_1 = storage.retrieve(OpenAPS.Monitor.glucose_data, as: [GlucoseDataForStats].self)?
-                        .filter { $0.date.addingTimeInterval(90.days.timeInterval) > Date() }
-                        .sorted { $0.date > $1.date } ?? []
-                    let dataForStats_ = Array(uniqEvents_1)
-                    storage.save(dataForStats_, as: OpenAPS.Monitor.glucose_data)
+                    self.coredataContext.perform {
+                        let dataForForStats = Readings(context: self.coredataContext)
+
+                        dataForForStats.date = bgDate
+                        dataForForStats.glucose = Int16(bg_)
+
+                        try? self.coredataContext.save()
+                    }
                 }
             }
 
@@ -122,6 +131,7 @@ final class BaseGlucoseStorage: GlucoseStorage, Injectable {
                 }
             }
         }
+        print("Test time of glucoseStorage: \(-1 * storeGlucoseStarted.timeIntervalSinceNow) s")
     }
 
     func removeGlucose(ids: [String]) {

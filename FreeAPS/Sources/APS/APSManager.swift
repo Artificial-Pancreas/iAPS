@@ -1,4 +1,5 @@
 import Combine
+import CoreData
 import Foundation
 import LoopKit
 import LoopKitUI
@@ -77,6 +78,8 @@ final class BaseAPSManager: APSManager, Injectable {
             lastLoopDateSubject.send(lastLoopDate)
         }
     }
+
+    let coredataContext = CoreDataStack.shared.persistentContainer.newBackgroundContext()
 
     private var openAPS: OpenAPS!
 
@@ -238,11 +241,6 @@ final class BaseAPSManager: APSManager, Injectable {
         }
 
         loopStats(loopStatRecord: loopStatRecord)
-
-        // Create a statistics.json
-        if settings.displayStatistics {
-            statistics()
-        }
 
         if settings.closedLoop {
             reportEnacted(received: error == nil)
@@ -662,9 +660,6 @@ final class BaseAPSManager: APSManager, Injectable {
 
             storage.save(enacted, as: OpenAPS.Enact.enacted)
 
-            // Create a tdd.json
-            tdd(enacted_: enacted)
-
             debug(.apsManager, "Suggestion enacted. Received: \(received)")
             DispatchQueue.main.async {
                 self.broadcaster.notify(EnactedSuggestionObserver.self, on: .main) {
@@ -672,52 +667,63 @@ final class BaseAPSManager: APSManager, Injectable {
                 }
             }
             nightscout.uploadStatus()
+
+            // Update the TDD value
+            tdd(enacted_: enacted)
+            // Update statistics. Only run if enabled in preferences
+            // if settingsManager.settings.displayStatistics {
+            statistics()
+            // }
         }
     }
 
     private func tdd(enacted_: Suggestion) {
-        // Add to tdd.json:
+        let tddStartedAt = Date()
         let preferences = settingsManager.preferences
         let currentTDD = enacted_.tdd ?? 0
-        let file = OpenAPS.Monitor.tdd
-        let tdd = TDD(
-            TDD: currentTDD,
-            timestamp: Date(),
-            id: UUID().uuidString
-        )
-        var uniqEvents: [TDD] = []
-        storage.transaction { storage in
-            storage.append(tdd, to: file, uniqBy: \.id)
-            uniqEvents = storage.retrieve(file, as: [TDD].self)?
-                .filter { $0.timestamp.addingTimeInterval(14.days.timeInterval) > Date() }
-                .sorted { $0.timestamp > $1.timestamp } ?? []
+
+        // MARK: Fetch data from Core Data: TDD Entity. TEST:
+
+        if currentTDD > 0 {
+            let tenDaysAgo = Date().addingTimeInterval(-10.days.timeInterval)
+            let twoHoursAgo = Date().addingTimeInterval(-2.hours.timeInterval)
+
+            var uniqEvents = [TDD]()
             var total: Decimal = 0
-            var indeces: Decimal = 0
-            for uniqEvent in uniqEvents {
-                if uniqEvent.TDD > 0 {
-                    total += uniqEvent.TDD
-                    indeces += 1
-                }
-            }
-            let entriesPast2hours = storage.retrieve(file, as: [TDD].self)?
-                .filter { $0.timestamp.addingTimeInterval(2.hours.timeInterval) > Date() }
-                .sorted { $0.timestamp > $1.timestamp } ?? []
             var totalAmount: Decimal = 0
-            var nrOfIndeces: Decimal = 0
-            for entry in entriesPast2hours {
-                if entry.TDD > 0 {
-                    totalAmount += entry.TDD
-                    nrOfIndeces += 1
-                }
+            var indeces: Int = 0
+            var nrOfIndeces: Int = 0
+
+            coredataContext.performAndWait {
+                let requestTDD = TDD.fetchRequest() as NSFetchRequest<TDD>
+
+                requestTDD.predicate = NSPredicate(format: "timestamp > %@ AND tdd > 0", tenDaysAgo as NSDate)
+
+                let sortTDD = NSSortDescriptor(key: "timestamp", ascending: true)
+                requestTDD.sortDescriptors = [sortTDD]
+
+                try? uniqEvents = coredataContext.fetch(requestTDD)
+
+                total = uniqEvents.compactMap({ each in each.tdd as? Decimal ?? 0 }).reduce(0, +)
+                indeces = uniqEvents.count
+
+                // Only fetch once. Use same (previous) fetch
+                let twoHoursArray = uniqEvents.filter({ ($0.timestamp ?? Date()) >= twoHoursAgo })
+                nrOfIndeces = twoHoursArray.count
+
+                totalAmount = twoHoursArray.compactMap({ each in each.tdd as? Decimal ?? 0 }).reduce(0, +)
             }
+
             if indeces == 0 {
                 indeces = 1
             }
             if nrOfIndeces == 0 {
                 nrOfIndeces = 1
             }
-            let average14 = total / indeces
-            let average2hours = totalAmount / nrOfIndeces
+
+            let average2hours = totalAmount / Decimal(nrOfIndeces)
+            let average14 = total / Decimal(indeces)
+
             let weight = preferences.weightPercentage
             let weighted_average = weight * average2hours + (1 - weight) * average14
             let averages = TDD_averages(
@@ -727,7 +733,8 @@ final class BaseAPSManager: APSManager, Injectable {
                 date: Date()
             )
             storage.save(averages, as: OpenAPS.Monitor.tdd_averages)
-            storage.save(Array(uniqEvents), as: file)
+
+            print("Test time of TDD: \(-1 * tddStartedAt.timeIntervalSinceNow) s")
         }
     }
 
@@ -756,16 +763,15 @@ final class BaseAPSManager: APSManager, Injectable {
 
     // Add to statistics.JSON
     private func statistics() {
+        let statisticsStartedAt = Date()
         var testFile: [Statistics] = []
         var testIfEmpty = 0
         storage.transaction { storage in
             testFile = storage.retrieve(OpenAPS.Monitor.statistics, as: [Statistics].self) ?? []
             testIfEmpty = testFile.count
         }
-
         let updateThisOften = Int(settingsManager.preferences.updateInterval)
-
-        // Only run every 30 minutesl
+        // Only run every 30 minutes of according to setting.
         if testIfEmpty != 0 {
             guard testFile[0].created_at.addingTimeInterval(updateThisOften.minutes.timeInterval) < Date()
             else {
@@ -775,21 +781,44 @@ final class BaseAPSManager: APSManager, Injectable {
 
         let units = settingsManager.settings.units
         let preferences = settingsManager.preferences
-        let carbs = storage.retrieve(OpenAPS.Monitor.carbHistory, as: [CarbsEntry].self)
-        let tdds = storage.retrieve(OpenAPS.Monitor.tdd, as: [TDD].self)
-        var currentTDD: Decimal = 0
-        if tdds?.count ?? 0 > 0 {
-            currentTDD = tdds?[0].TDD ?? 0
-        }
-        let carbs_length = carbs?.count ?? 0
+
+        // MARK: Fetch Carbs from CoreData
+
+        var carbs = [Carbohydrates]()
         var carbTotal: Decimal = 0
-        if carbs_length != 0 {
-            for each in carbs! {
-                if each.carbs != 0 {
-                    carbTotal += each.carbs
-                }
+
+        coredataContext.performAndWait {
+            let requestCarbs = Carbohydrates.fetchRequest() as NSFetchRequest<Carbohydrates>
+
+            let daysAgo = Date().addingTimeInterval(-1.days.timeInterval)
+            requestCarbs.predicate = NSPredicate(format: "carbs > 0 AND date > %@", daysAgo as NSDate)
+
+            let sortCarbs = NSSortDescriptor(key: "date", ascending: true)
+            requestCarbs.sortDescriptors = [sortCarbs]
+
+            try? carbs = coredataContext.fetch(requestCarbs)
+
+            carbTotal = carbs.map({ carbs in carbs.carbs as? Decimal ?? 0 }).reduce(0, +)
+        }
+
+        // MARK: Fetch TDD from CoreData
+
+        var tdds = [TDD]()
+        var currentTDD: Decimal = 0
+
+        coredataContext.performAndWait {
+            let requestTDD = TDD.fetchRequest() as NSFetchRequest<TDD>
+            let sort = NSSortDescriptor(key: "timestamp", ascending: false)
+            requestTDD.sortDescriptors = [sort]
+            requestTDD.fetchLimit = 1
+
+            try? tdds = coredataContext.fetch(requestTDD)
+
+            if !tdds.isEmpty {
+                currentTDD = tdds[0].tdd?.decimalValue ?? 0
             }
         }
+
         var algo_ = "Oref0"
 
         if preferences.sigmoid, preferences.enableDynamicCR {
@@ -820,12 +849,13 @@ final class BaseAPSManager: APSManager, Injectable {
         } else if preferences.curve.rawValue == "ultra-rapid" {
             iPa = 50
         }
-        // Retrieve the loopStats data
-        let lsData = storage.retrieve(OpenAPS.Monitor.loopStats, as: [LoopStats].self)?
-            .sorted { $0.start > $1.start } ?? []
+
+        // MARK: Fetch LoopStatRecords from CoreData
+
+        var lsr = [LoopStatRecord]()
         var successRate: Double?
-        var successNR = 0.0
-        var errorNR = 0.0
+        var successNR = 0
+        var errorNR = 0
         var minimumInt = 999.0
         var maximumInt = 0.0
         var minimumLoopTime = 9999.0
@@ -840,132 +870,152 @@ final class BaseAPSManager: APSManager, Injectable {
         var medianInterval = 0.0
         var averageIntervalLoops = 0.0
 
-        if !lsData.isEmpty {
-            var i = 0.0
+        coredataContext.performAndWait {
+            let requestLSR = LoopStatRecord.fetchRequest() as NSFetchRequest<LoopStatRecord>
+            requestLSR.predicate = NSPredicate(format: "start > %@", Date().addingTimeInterval(-24.hours.timeInterval) as NSDate)
+            let sortLSR = NSSortDescriptor(key: "start", ascending: false)
+            requestLSR.sortDescriptors = [sortLSR]
 
-            if let loopEnd = lsData[0].end {
-                previousTimeLoop = loopEnd
-            }
+            try? lsr = coredataContext.fetch(requestLSR)
 
-            for each in lsData {
-                if let loopEnd = each.end, let loopDuration = each.duration {
-                    if each.loopStatus.contains("Success") {
-                        successNR += 1
-                    } else {
-                        errorNR += 1
-                    }
-                    i += 1
-
-                    timeIntervalLoops = (previousTimeLoop - each.start).timeInterval / 60
-                    if timeIntervalLoops > 0.0, i != 1 {
-                        timeIntervalLoopArray.append(timeIntervalLoops)
-                    }
-
-                    if timeIntervalLoops > maximumInt {
-                        maximumInt = timeIntervalLoops
-                    }
-                    if timeIntervalLoops < minimumInt, i != 1 {
-                        minimumInt = timeIntervalLoops
-                    }
-
-                    timeForOneLoop = loopDuration
-
-                    timeForOneLoopArray.append(timeForOneLoop)
-                    averageLoopTime += timeForOneLoop
-
-                    if timeForOneLoop >= maximumLoopTime, timeForOneLoop != 0.0 {
-                        maximumLoopTime = timeForOneLoop
-                    }
-
-                    if timeForOneLoop <= minimumLoopTime, timeForOneLoop != 0.0 {
-                        minimumLoopTime = timeForOneLoop
-                    }
-
+            if lsr.isNotEmpty {
+                var i = 0.0
+                if let loopEnd = lsr[0].end {
                     previousTimeLoop = loopEnd
                 }
-            }
+                for each in lsr {
+                    if let loopEnd = each.end {
+                        let loopDuration = each.duration
 
-            successRate = (successNR / Double(i)) * 100
-            averageIntervalLoops = ((lsData[0].end ?? lsData[lsData.count - 1].start) - lsData[lsData.count - 1].start)
-                .timeInterval / 60 / Double(i)
-            averageLoopTime /= Double(i)
-            // Median values
-            medianLoopTime = medianCalculation(array: timeForOneLoopArray)
-            medianInterval = medianCalculation(array: timeIntervalLoopArray)
+                        if each.loopStatus!.contains("Success") {
+                            successNR += 1
+                        } else {
+                            errorNR += 1
+                        }
+
+                        i += 1
+                        timeIntervalLoops = (previousTimeLoop - (each.start ?? previousTimeLoop)).timeInterval / 60
+
+                        if timeIntervalLoops > 0.0, i != 1 {
+                            timeIntervalLoopArray.append(timeIntervalLoops)
+                        }
+                        if timeIntervalLoops > maximumInt {
+                            maximumInt = timeIntervalLoops
+                        }
+                        if timeIntervalLoops < minimumInt, i != 1 {
+                            minimumInt = timeIntervalLoops
+                        }
+                        timeForOneLoop = loopDuration
+                        timeForOneLoopArray.append(timeForOneLoop)
+
+                        if timeForOneLoop >= maximumLoopTime, timeForOneLoop != 0.0 {
+                            maximumLoopTime = timeForOneLoop
+                        }
+                        if timeForOneLoop <= minimumLoopTime, timeForOneLoop != 0.0 {
+                            minimumLoopTime = timeForOneLoop
+                        }
+                        previousTimeLoop = loopEnd
+                    }
+                }
+                successRate = (Double(successNR) / Double(i)) * 100
+
+                // Average Loop Interval in minutes
+                let timeOfFirstIndex = lsr[0].start ?? Date()
+                let lastIndexWithTimestamp = lsr.count - 1
+                let timeOfLastIndex = lsr[lastIndexWithTimestamp].end ?? Date()
+                averageLoopTime = (timeOfFirstIndex - timeOfLastIndex).timeInterval / 60 / Double(errorNR + successNR)
+
+                // Median values
+                medianLoopTime = medianCalculation(array: timeForOneLoopArray)
+                medianInterval = medianCalculation(array: timeIntervalLoopArray)
+                // Average time interval between loops
+                averageIntervalLoops = timeIntervalLoopArray.reduce(0, +) / Double(timeIntervalLoopArray.count)
+            }
         }
+
         if minimumInt == 999.0 {
             minimumInt = 0.0
         }
         if minimumLoopTime == 9999.0 {
             minimumLoopTime = 0.0
         }
-        // Time In Range (%) and Average Glucose (24 hours). This will be refactored later after some testing.
-        let glucose = storage.retrieve(OpenAPS.Monitor.glucose_data, as: [GlucoseDataForStats].self)
-        let length_ = glucose?.count ?? 0
-        let endIndex = length_ - 1
+
+        var glucose: [Readings] = []
+
+        var firstElementTime = Date()
+        var lastElementTime = Date()
+        var currentIndexTime = Date()
+
         var bg: Decimal = 0
+
         var bgArray: [Double] = []
         var bgArray_1_: [Double] = []
         var bgArray_7_: [Double] = []
         var bgArray_30_: [Double] = []
+
         var bgArrayForTIR: [(bg_: Double, date_: Date)] = []
         var bgArray_1: [(bg_: Double, date_: Date)] = []
         var bgArray_7: [(bg_: Double, date_: Date)] = []
         var bgArray_30: [(bg_: Double, date_: Date)] = []
+
         var medianBG = 0.0
         var nr_bgs: Decimal = 0
-        var nr_bgs_1: Decimal = 0
-        var nr_bgs_7: Decimal = 0
-        var nr_bgs_30: Decimal = 0
-
-        var startDate = Date("1978-02-22T11:43:54.659Z")
-        if endIndex >= 0 {
-            startDate = glucose?[0].date
-        }
-        var end1 = false
-        var end7 = false
-        var end30 = false
         var bg_1: Decimal = 0
         var bg_7: Decimal = 0
         var bg_30: Decimal = 0
         var bg_total: Decimal = 0
         var j = -1
+        var conversionFactor: Decimal = 1
+        if units == .mmolL {
+            conversionFactor = 0.0555
+        }
 
-        // Make arrays for median calculations and calculate averages
-        if endIndex >= 0 {
-            for entry in glucose! {
-                j += 1
-                if entry.glucose > 0 {
-                    bg += Decimal(entry.glucose)
-                    bgArray.append(Double(entry.glucose))
-                    bgArrayForTIR.append((Double(entry.glucose), entry.date))
-                    nr_bgs += 1
+        var numberOfDays: Double = 0
 
-                    if (startDate! - entry.date).timeInterval >= 8.64E4, !end1 {
-                        end1 = true
-                        bg_1 = bg / nr_bgs
-                        bgArray_1 = bgArrayForTIR
-                        bgArray_1_ = bgArray
-                        nr_bgs_1 = nr_bgs
-                        // time_1 = ((startDate ?? Date()) - entry.date).timeInterval
+        coredataContext.performAndWait {
+            let requestGFS = Readings.fetchRequest() as NSFetchRequest<Readings>
+            let sortGlucose = NSSortDescriptor(key: "date", ascending: false)
+            requestGFS.sortDescriptors = [sortGlucose]
+
+            try? glucose = coredataContext.fetch(requestGFS)
+
+            firstElementTime = glucose.first?.date ?? Date()
+            lastElementTime = glucose.last?.date ?? Date()
+
+            currentIndexTime = firstElementTime
+
+            // Time In Range (%) and Average Glucose (24 hours). This will be refactored later after some testing.
+            let endIndex = glucose.count - 1
+
+            numberOfDays = (firstElementTime - lastElementTime).timeInterval / 8.64E4
+
+            // Make arrays for median calculations and calculate averages
+            if endIndex >= 0 {
+                repeat {
+                    j += 1
+                    if glucose[j].glucose > 0 {
+                        currentIndexTime = glucose[j].date ?? firstElementTime
+                        bg += Decimal(glucose[j].glucose) * conversionFactor
+                        bgArray.append(Double(glucose[j].glucose) * Double(conversionFactor))
+                        bgArrayForTIR.append((Double(glucose[j].glucose), glucose[j].date!))
+                        nr_bgs += 1
+                        if (firstElementTime - currentIndexTime).timeInterval / 60 <= 8.64E4 { // 1 day
+                            bg_1 = bg / nr_bgs
+                            bgArray_1 = bgArrayForTIR
+                            bgArray_1_ = bgArray
+                        }
+                        if (firstElementTime - currentIndexTime).timeInterval / 60 <= 6.048E5 { // 7 days
+                            bg_7 = bg / nr_bgs
+                            bgArray_7 = bgArrayForTIR
+                            bgArray_7_ = bgArray
+                        }
+                        if (firstElementTime - currentIndexTime).timeInterval / 60 <= 2.592E6 { // 30 days
+                            bg_30 = bg / nr_bgs
+                            bgArray_30 = bgArrayForTIR
+                            bgArray_30_ = bgArray
+                        }
                     }
-                    if (startDate! - entry.date).timeInterval >= 6.048E5, !end7 {
-                        end7 = true
-                        bg_7 = bg / nr_bgs
-                        bgArray_7 = bgArrayForTIR
-                        bgArray_7_ = bgArray
-                        nr_bgs_7 = nr_bgs
-                        // time_7 = ((startDate ?? Date()) - entry.date).timeInterval
-                    }
-                    if (startDate! - entry.date).timeInterval >= 2.592E6, !end30 {
-                        end30 = true
-                        bg_30 = bg / nr_bgs
-                        bgArray_30 = bgArrayForTIR
-                        bgArray_30_ = bgArray
-                        nr_bgs_30 = nr_bgs
-                        // time_30 = ((startDate ?? Date()) - entry.date).timeInterval
-                    }
-                }
+                } while j != glucose.count - 1
             }
         }
 
@@ -984,13 +1034,6 @@ final class BaseAPSManager: APSManager, Injectable {
 
         // Total median
         medianBG = medianCalculation(array: bgArray)
-        var daysBG = 0.0
-        var fullTime = 0.0
-
-        if length_ > 0 {
-            fullTime = (startDate! - glucose![endIndex].date).timeInterval
-            daysBG = fullTime / 8.64E4
-        }
 
         func tir(_ array: [(bg_: Double, date_: Date)]) -> (TIR: Double, hypos: Double, hypers: Double) {
             var timeInHypo = 0.0
@@ -1000,24 +1043,20 @@ final class BaseAPSManager: APSManager, Injectable {
             var i = -1
             var lastIndex = false
             let endIndex = array.count - 1
-
             var hypoLimit = settingsManager.preferences.low
             var hyperLimit = settingsManager.preferences.high
             if units == .mmolL {
                 hypoLimit = hypoLimit / 0.0555
                 hyperLimit = hyperLimit / 0.0555
             }
-
             var full_time = 0.0
             if endIndex > 0 {
                 full_time = (array[0].date_ - array[endIndex].date_).timeInterval
             }
-
             while i < endIndex {
                 i += 1
                 let currentTime = array[i].date_
                 var previousTime = currentTime
-
                 if i + 1 <= endIndex {
                     previousTime = array[i + 1].date_
                 } else {
@@ -1044,42 +1083,54 @@ final class BaseAPSManager: APSManager, Injectable {
         // HbA1c estimation (%, mmol/mol) 1 day
         var NGSPa1CStatisticValue: Decimal = 0.0
         var IFCCa1CStatisticValue: Decimal = 0.0
-        if end1, bg_1 > 0 {
-            NGSPa1CStatisticValue = (46.7 + bg_1) / 28.7 // NGSP (%)
+        if nr_bgs > 0 {
+            NGSPa1CStatisticValue = ((bg_1 / conversionFactor) + 46.7) / 28.7 // NGSP (%)
             IFCCa1CStatisticValue = 10.929 *
                 (NGSPa1CStatisticValue - 2.152) // IFCC (mmol/mol)  A1C(mmol/mol) = 10.929 * (A1C(%) - 2.15)
         }
         // 7 days
         var NGSPa1CStatisticValue_7: Decimal = 0.0
         var IFCCa1CStatisticValue_7: Decimal = 0.0
-        if end7 {
-            NGSPa1CStatisticValue_7 = (46.7 + bg_7) / 28.7 // NGSP (%)
-            IFCCa1CStatisticValue_7 = 10.929 *
-                (NGSPa1CStatisticValue_7 - 2.152) // IFCC (mmol/mol)  A1C(mmol/mol) = 10.929 * (A1C(%) - 2.15)
+        if nr_bgs > 0 {
+            NGSPa1CStatisticValue_7 = ((bg_7 / conversionFactor) + 46.7) / 28.7
+            IFCCa1CStatisticValue_7 = 10.929 * (NGSPa1CStatisticValue_7 - 2.152)
         }
         // 30 days
         var NGSPa1CStatisticValue_30: Decimal = 0.0
         var IFCCa1CStatisticValue_30: Decimal = 0.0
-        if end30 {
-            NGSPa1CStatisticValue_30 = (46.7 + bg_30) / 28.7 // NGSP (%)
-            IFCCa1CStatisticValue_30 = 10.929 *
-                (NGSPa1CStatisticValue_30 - 2.152) // IFCC (mmol/mol)  A1C(mmol/mol) = 10.929 * (A1C(%) - 2.15)
+        if nr_bgs > 0 {
+            NGSPa1CStatisticValue_30 = ((bg_30 / conversionFactor) + 46.7) / 28.7
+            IFCCa1CStatisticValue_30 = 10.929 * (NGSPa1CStatisticValue_30 - 2.152)
         }
         // Total days
         var NGSPa1CStatisticValue_total: Decimal = 0.0
         var IFCCa1CStatisticValue_total: Decimal = 0.0
         if nr_bgs > 0 {
-            NGSPa1CStatisticValue_total = (46.7 + bg_total) / 28.7 // NGSP (%)
+            NGSPa1CStatisticValue_total = ((bg_total / conversionFactor) + 46.7) / 28.7
             IFCCa1CStatisticValue_total = 10.929 *
-                (NGSPa1CStatisticValue_total - 2.152) // IFCC (mmol/mol)  A1C(mmol/mol) = 10.929 * (A1C(%) - 2.15)
+                (NGSPa1CStatisticValue_total - 2.152)
         }
 
-        var median = Durations(
-            day: roundDecimal(Decimal(medianCalculation(array: bgArray_1.map(\.bg_))), 1),
-            week: roundDecimal(Decimal(medianCalculation(array: bgArray_7.map(\.bg_))), 1),
-            month: roundDecimal(Decimal(medianCalculation(array: bgArray_30.map(\.bg_))), 1),
+        let median = Durations(
+            day: roundDecimal(Decimal(medianCalculation(array: bgArray_1_)), 1),
+            week: roundDecimal(Decimal(medianCalculation(array: bgArray_7_)), 1),
+            month: roundDecimal(Decimal(medianCalculation(array: bgArray_30_)), 1),
             total: roundDecimal(Decimal(medianBG), 1)
         )
+
+        // MARK: Save to Median to CoreData
+
+        coredataContext.perform {
+            let saveMedianToCoreData = BGmedian(context: self.coredataContext)
+
+            saveMedianToCoreData.date = Date()
+            saveMedianToCoreData.median = median.total as NSDecimalNumber
+            saveMedianToCoreData.median_1 = median.day as NSDecimalNumber
+            saveMedianToCoreData.median_7 = median.week as NSDecimalNumber
+            saveMedianToCoreData.median_30 = median.month as NSDecimalNumber
+
+            try? self.coredataContext.save()
+        }
 
         var hbs = Durations(
             day: roundDecimal(NGSPa1CStatisticValue, 1),
@@ -1090,20 +1141,7 @@ final class BaseAPSManager: APSManager, Injectable {
 
         // Convert to user-preferred unit
         let overrideHbA1cUnit = settingsManager.preferences.overrideHbA1cUnit
-
         if units == .mmolL {
-            bg_1 = bg_1.asMmolL
-            bg_7 = bg_7.asMmolL
-            bg_30 = bg_30.asMmolL
-            bg_total = bg_total.asMmolL
-
-            median = Durations(
-                day: roundDecimal(Decimal(medianCalculation(array: bgArray_1.map(\.bg_))).asMmolL, 1),
-                week: roundDecimal(Decimal(medianCalculation(array: bgArray_7.map(\.bg_))).asMmolL, 1),
-                month: roundDecimal(Decimal(medianCalculation(array: bgArray_30.map(\.bg_))).asMmolL, 1),
-                total: roundDecimal(Decimal(medianBG).asMmolL, 1)
-            )
-
             // Override if users sets overrideHbA1cUnit: true
             if !overrideHbA1cUnit {
                 hbs = Durations(
@@ -1122,15 +1160,15 @@ final class BaseAPSManager: APSManager, Injectable {
             )
         }
 
-        // round output values
-        daysBG = roundDouble(daysBG, 1)
+        let glucose24Hours = storage.retrieve(OpenAPS.Monitor.glucose, as: [BloodGlucose].self)
+        let nrOfCGMReadings = glucose24Hours?.count ?? 0
 
         let glucose24Hours = storage.retrieve(OpenAPS.Monitor.glucose, as: [BloodGlucose].self)
         let nrOfCGMReadings = glucose24Hours?.count ?? 0
 
         let loopstat = LoopCycles(
-            loops: Int(successNR + errorNR),
-            errors: Int(errorNR),
+            loops: successNR + errorNR,
+            errors: errorNR,
             readings: nrOfCGMReadings,
             success_rate: Decimal(round(successRate ?? 0)),
             avg_interval: roundDecimal(Decimal(averageIntervalLoops), 1),
@@ -1150,16 +1188,10 @@ final class BaseAPSManager: APSManager, Injectable {
         var totalDays_: (TIR: Double, hypos: Double, hypers: Double) = (0.0, 0.0, 0.0)
 
         // Get all TIR calcs for every case
-        if end1 {
-            oneDay_ = tir(bgArray_1)
-        }
-        if end7 {
-            sevenDays_ = tir(bgArray_7)
-        }
-        if end30 {
-            thirtyDays_ = tir(bgArray_30)
-        }
         if nr_bgs > 0 {
+            oneDay_ = tir(bgArray_1)
+            sevenDays_ = tir(bgArray_7)
+            thirtyDays_ = tir(bgArray_30)
             totalDays_ = tir(bgArrayForTIR)
         }
 
@@ -1195,45 +1227,54 @@ final class BaseAPSManager: APSManager, Injectable {
 
         let avg = Averages(Average: avgs, Median: median)
 
-        let suggestion = storage.retrieve(OpenAPS.Enact.suggested, as: Suggestion.self)
+        // MARK: Fetch InsulinDuration from CoreData
 
-        let insulin = Ins(
-            TDD: roundDecimal(currentTDD, 2),
-            bolus: suggestion?.insulin?.bolus ?? 0,
-            temp_basal: suggestion?.insulin?.temp_basal ?? 0,
-            scheduled_basal: suggestion?.insulin?.scheduled_basal ?? 0
+        // let suggestion = storage.retrieve(OpenAPS.Enact.suggested, as: Suggestion.self)
+
+        var insulinDistribution = [InsulinDistribution]()
+        var insulin = Ins(
+            TDD: 0,
+            bolus: 0,
+            temp_basal: 0,
+            scheduled_basal: 0
         )
 
-        // SD and CV calculations for all durations:
+        coredataContext.performAndWait {
+            let requestInsulinDistribution = InsulinDistribution.fetchRequest() as NSFetchRequest<InsulinDistribution>
+            let sortInsulin = NSSortDescriptor(key: "date", ascending: false)
+            requestInsulinDistribution.sortDescriptors = [sortInsulin]
+            requestInsulinDistribution.fetchLimit = 1
 
-        var sumOfSquares: Decimal = 0
-        var sumOfSquares_1: Decimal = 0
-        var sumOfSquares_7: Decimal = 0
-        var sumOfSquares_30: Decimal = 0
+            try? insulinDistribution = coredataContext.fetch(requestInsulinDistribution)
+
+            insulin = Ins(
+                TDD: roundDecimal(currentTDD, 2),
+                bolus: insulinDistribution.first != nil ? ((insulinDistribution[0].bolus ?? 0) as Decimal) : 0,
+                temp_basal: insulinDistribution.first != nil ? ((insulinDistribution[0].tempBasal ?? 0) as Decimal) : 0,
+                scheduled_basal: insulinDistribution.first != nil ? ((insulinDistribution[0].scheduledBasal ?? 0) as Decimal) : 0
+            )
+        }
+
+        var sumOfSquares = 0.0
+        var sumOfSquares_1 = 0.0
+        var sumOfSquares_7 = 0.0
+        var sumOfSquares_30 = 0.0
 
         // Total
         for array in bgArray {
-            if units == .mmolL {
-                sumOfSquares += pow(Decimal(array).asMmolL - bg_total, 2)
-            } else { sumOfSquares += pow(Decimal(array) - bg_total, 2) }
+            sumOfSquares += pow(array - Double(bg_total), 2)
         }
         // One day
         for array_1 in bgArray_1_ {
-            if units == .mmolL {
-                sumOfSquares_1 += pow(Decimal(array_1).asMmolL - bg_1, 2)
-            } else { sumOfSquares_1 += pow(Decimal(array_1) - bg_1, 2) }
+            sumOfSquares_1 += pow(array_1 - Double(bg_1), 2)
         }
         // week
         for array_7 in bgArray_7_ {
-            if units == .mmolL {
-                sumOfSquares_7 += pow(Decimal(array_7).asMmolL - bg_7, 2)
-            } else { sumOfSquares_7 += pow(Decimal(array_7) - bg_7, 2) }
+            sumOfSquares_7 += pow(array_7 - Double(bg_7), 2)
         }
         // month
         for array_30 in bgArray_30_ {
-            if units == .mmolL {
-                sumOfSquares_30 += pow(Decimal(array_30).asMmolL - bg_30, 2)
-            } else { sumOfSquares_30 += pow(Decimal(array_30) - bg_30, 2) }
+            sumOfSquares_30 += pow(array_30 - Double(bg_30), 2)
         }
 
         // Standard deviation and Coefficient of variation
@@ -1247,27 +1288,20 @@ final class BaseAPSManager: APSManager, Injectable {
         var cv_30 = 0.0
 
         // Avoid division by zero
-        if avgs.total < 1 || nr_bgs < 1 { sd_total = 0
-            cv_total = 0 } else {
-            sd_total = sqrt(Double(sumOfSquares / nr_bgs))
+        if bg_total > 0 {
+            sd_total = sqrt(sumOfSquares / Double(nr_bgs))
             cv_total = sd_total / Double(bg_total) * 100
         }
-        if avgs.day < 1 || nr_bgs_1 < 1 {
-            sd_1 = 0
-            cv_1 = 0
-        } else {
-            sd_1 = sqrt(Double(sumOfSquares_1 / nr_bgs_1))
+        if bg_1 > 0 {
+            sd_1 = sqrt(sumOfSquares_1 / Double(bgArray_1_.count))
             cv_1 = sd_1 / Double(bg_1) * 100
         }
-        if avgs.week < 1 || nr_bgs_7 < 1 {
-            sd_7 = 0
-            cv_7 = 0
-        } else {
-            sd_7 = sqrt(Double(sumOfSquares_7 / nr_bgs_7))
+        if bg_7 > 0 {
+            sd_7 = sqrt(sumOfSquares_7 / Double(bgArray_7_.count))
             cv_7 = sd_7 / Double(bg_7) * 100
         }
-        if avgs.month < 1 || nr_bgs_30 < 1 { sd_30 = 0
-            cv_30 = 0 } else { sd_30 = sqrt(Double(sumOfSquares_30 / nr_bgs_30))
+        if bg_30 > 0 {
+            sd_30 = sqrt(sumOfSquares_30 / Double(bgArray_30_.count))
             cv_30 = sd_30 / Double(bg_30) * 100
         }
 
@@ -1305,7 +1339,7 @@ final class BaseAPSManager: APSManager, Injectable {
             insulinType: insulin_type.rawValue,
             peakActivityTime: iPa,
             Carbs_24h: carbTotal,
-            GlucoseStorage_Days: Decimal(daysBG),
+            GlucoseStorage_Days: Decimal(roundDouble(numberOfDays, 1)),
             Statistics: Stats(
                 Distribution: TimeInRange,
                 Glucose: avg,
@@ -1318,30 +1352,31 @@ final class BaseAPSManager: APSManager, Injectable {
 
         storage.transaction { storage in
             storage.append(dailystat, to: file, uniqBy: \.created_at)
-            var uniqeEvents: [Statistics] = storage.retrieve(file, as: [Statistics].self)?
+            let uniqeEvents: [Statistics] = storage.retrieve(file, as: [Statistics].self)?
                 .filter { $0.created_at.addingTimeInterval(24.hours.timeInterval) > Date() }
                 .sorted { $0.created_at > $1.created_at } ?? []
-
             storage.save(Array(uniqeEvents), as: file)
         }
-
         nightscout.uploadStatistics(dailystat: dailystat)
         nightscout.uploadPreferences()
+        print("Test time of statistics computation: \(-1 * statisticsStartedAt.timeIntervalSinceNow) s")
     }
 
     private func loopStats(loopStatRecord: LoopStats) {
-        let file = OpenAPS.Monitor.loopStats
+        let LoopStatsStartedAt = Date()
 
-        var uniqEvents: [LoopStats] = []
+        coredataContext.perform {
+            let nLS = LoopStatRecord(context: self.coredataContext)
 
-        storage.transaction { storage in
-            storage.append(loopStatRecord, to: file, uniqBy: \.start)
-            uniqEvents = storage.retrieve(file, as: [LoopStats].self)?
-                .filter { $0.start.addingTimeInterval(24.hours.timeInterval) > Date() }
-                .sorted { $0.start > $1.start } ?? []
+            nLS.start = loopStatRecord.start
+            nLS.end = loopStatRecord.end ?? Date()
+            nLS.loopStatus = loopStatRecord.loopStatus
+            nLS.duration = loopStatRecord.duration ?? 0.0
 
-            storage.save(Array(uniqEvents), as: file)
+            try? self.coredataContext.save()
         }
+
+        print("Test time of LoopStats computation: \(-1 * LoopStatsStartedAt.timeIntervalSinceNow) s")
     }
 
     private func processError(_ error: Error) {

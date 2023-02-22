@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="21513" systemVersion="22C65" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="BGaverages" representedClassName="BGaverages" syncable="YES" codeGenerationType="class">
+        <attribute name="average" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
+        <attribute name="average_1" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
+        <attribute name="average_7" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
+        <attribute name="average_30" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
+        <attribute name="average_90" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
+        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+    </entity>
+    <entity name="BGmedian" representedClassName="BGmedian" syncable="YES" codeGenerationType="class">
+        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="median" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
+        <attribute name="median_1" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
+        <attribute name="median_7" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
+        <attribute name="median_30" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
+        <attribute name="median_90" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
+    </entity>
+    <entity name="Carbohydrates" representedClassName="Carbohydrates" syncable="YES" codeGenerationType="class">
+        <attribute name="carbs" optional="YES" attributeType="Decimal" defaultValueString="0"/>
+        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="enteredBy" optional="YES" attributeType="String"/>
+    </entity>
+    <entity name="HbA1c" representedClassName="HbA1c" syncable="YES" codeGenerationType="class">
+        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="hba1c" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
+        <attribute name="hba1c_1" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
+        <attribute name="hba1c_7" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
+        <attribute name="hba1c_30" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
+        <attribute name="hba1c_90" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
+    </entity>
+    <entity name="InsulinDistribution" representedClassName="InsulinDistribution" syncable="YES" codeGenerationType="class">
+        <attribute name="bolus" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
+        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="scheduledBasal" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
+        <attribute name="tempBasal" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
+        <relationship name="insulin" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Oref0Suggestion" inverseName="computedInsulinDistribution" inverseEntity="Oref0Suggestion"/>
+    </entity>
+    <entity name="LoopStatRecord" representedClassName="LoopStatRecord" syncable="YES" codeGenerationType="class">
+        <attribute name="duration" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="end" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="loopStatus" optional="YES" attributeType="String"/>
+        <attribute name="start" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+    </entity>
+    <entity name="Oref0Suggestion" representedClassName="Oref0Suggestion" syncable="YES" codeGenerationType="class">
+        <relationship name="computedInsulinDistribution" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="InsulinDistribution" inverseName="insulin" inverseEntity="InsulinDistribution"/>
+        <relationship name="computedTDD" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="TDD" inverseName="computed" inverseEntity="TDD"/>
+    </entity>
+    <entity name="Readings" representedClassName="Readings" syncable="YES" codeGenerationType="class">
+        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="glucose" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+    </entity>
+    <entity name="TDD" representedClassName="TDD" syncable="YES" codeGenerationType="class">
+        <attribute name="tdd" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
+        <attribute name="timestamp" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <relationship name="computed" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Oref0Suggestion" inverseName="computedTDD" inverseEntity="Oref0Suggestion"/>
+    </entity>
+</model>
