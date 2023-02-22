@@ -25,7 +25,7 @@ final class BaseGlucoseStorage: GlucoseStorage, Injectable {
     @Injected() private var broadcaster: Broadcaster!
     @Injected() private var settingsManager: SettingsManager!
 
-    let coredataContext = CoreDataStack.shared.persistentContainer.viewContext
+    let coredataContext = CoreDataStack.shared.persistentContainer.newBackgroundContext()
 
     private enum Config {
         static let filterTime: TimeInterval = 4.5 * 60
@@ -65,16 +65,16 @@ final class BaseGlucoseStorage: GlucoseStorage, Injectable {
                     bgDate = glucose[0].dateString
                 }
 
-                // coredataContext.performAndWait {
-                var dataForForStats = Readings(context: coredataContext)
-
                 if bg_ != 0 {
-                    // let dataForStats = Readings(context: coredataContext)
-                    dataForForStats.date = bgDate
-                    dataForForStats.glucose = Int16(bg_)
-                    try? coredataContext.save()
+                    self.coredataContext.perform {
+                        let dataForForStats = Readings(context: self.coredataContext)
+
+                        dataForForStats.date = bgDate
+                        dataForForStats.glucose = Int16(bg_)
+
+                        try? self.coredataContext.save()
+                    }
                 }
-                // }
             }
 
             self.storage.transaction { storage in

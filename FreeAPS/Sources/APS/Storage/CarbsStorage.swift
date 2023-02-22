@@ -20,7 +20,7 @@ final class BaseCarbsStorage: CarbsStorage, Injectable {
     @Injected() private var storage: FileStorage!
     @Injected() private var broadcaster: Broadcaster!
 
-    let coredataContext = CoreDataStack.shared.persistentContainer.viewContext
+    let coredataContext = CoreDataStack.shared.persistentContainer.newBackgroundContext()
 
     init(resolver: Resolver) {
         injectServices(resolver)
@@ -47,10 +47,14 @@ final class BaseCarbsStorage: CarbsStorage, Injectable {
                 carbDate = carbs[0].createdAt
             }
             if cbs != 0 {
-                let carbDataForStats = Carbohydrates(context: coredataContext)
-                carbDataForStats.date = carbDate
-                carbDataForStats.carbs = cbs as NSDecimalNumber
-                try? coredataContext.save()
+                self.coredataContext.perform {
+                    let carbDataForStats = Carbohydrates(context: self.coredataContext)
+
+                    carbDataForStats.date = carbDate
+                    carbDataForStats.carbs = cbs as NSDecimalNumber
+
+                    try? self.coredataContext.save()
+                }
             }
 
             broadcaster.notify(CarbsObserver.self, on: processQueue) {

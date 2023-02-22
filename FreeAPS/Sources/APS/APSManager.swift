@@ -79,7 +79,7 @@ final class BaseAPSManager: APSManager, Injectable {
         }
     }
 
-    let coredataContext = CoreDataStack.shared.persistentContainer.viewContext
+    let coredataContext = CoreDataStack.shared.persistentContainer.newBackgroundContext()
 
     private var openAPS: OpenAPS!
 
@@ -671,9 +671,9 @@ final class BaseAPSManager: APSManager, Injectable {
             // Update the TDD value
             tdd(enacted_: enacted)
             // Update statistics. Only run if enabled in preferences
-            if settingsManager.settings.displayStatistics {
-                statistics()
-            }
+            // if settingsManager.settings.displayStatistics {
+            statistics()
+            // }
         }
     }
 
@@ -689,45 +689,30 @@ final class BaseAPSManager: APSManager, Injectable {
             let twoHoursAgo = Date().addingTimeInterval(-2.hours.timeInterval)
 
             var uniqEvents = [TDD]()
-            let requestTDD = TDD.fetchRequest() as NSFetchRequest<TDD>
-            requestTDD.predicate = NSPredicate(format: "timestamp > %@ AND tdd > 0", tenDaysAgo as NSDate)
-            let sortTDD = NSSortDescriptor(key: "timestamp", ascending: true)
-            requestTDD.sortDescriptors = [sortTDD]
-
-            try? uniqEvents = coredataContext.fetch(requestTDD)
-
             var total: Decimal = 0
-            total = uniqEvents.compactMap({ each in each.tdd as? Decimal ?? 0 }).reduce(0, +)
-            var indeces = uniqEvents.count
-
-            /*
-             if uniqEvents.first != nil {
-             for uniqEvent in uniqEvents {
-             total += uniqEvent != Empty ? (uniqEvent.tdd ?? 0) as Decimal : 0
-             indeces += 1
-             }
-             }
-             */
-
-            // Only fetch once. Use same (previous) fetch
-            let twoHoursArray = uniqEvents.filter({ ($0.timestamp ?? Date()) >= twoHoursAgo })
-
             var totalAmount: Decimal = 0
+            var indeces: Int = 0
+            var nrOfIndeces: Int = 0
 
-            totalAmount = twoHoursArray.compactMap({ each in each.tdd as? Decimal ?? 0 }).reduce(0, +)
-            var nrOfIndeces = twoHoursArray.count
+            coredataContext.performAndWait {
+                let requestTDD = TDD.fetchRequest() as NSFetchRequest<TDD>
 
-            /*
-             var nrOfIndeces: Decimal = 0
-             if twoHoursArray.first != nil {
-             for entry in twoHoursArray {
-             if (entry.tdd?.decimalValue ?? 0) > 0 {
-             totalAmount += entry.tdd?.decimalValue ?? 0
-             nrOfIndeces += 1
-             }
-             }
-             }
-             */
+                requestTDD.predicate = NSPredicate(format: "timestamp > %@ AND tdd > 0", tenDaysAgo as NSDate)
+
+                let sortTDD = NSSortDescriptor(key: "timestamp", ascending: true)
+                requestTDD.sortDescriptors = [sortTDD]
+
+                try? uniqEvents = coredataContext.fetch(requestTDD)
+
+                total = uniqEvents.compactMap({ each in each.tdd as? Decimal ?? 0 }).reduce(0, +)
+                indeces = uniqEvents.count
+
+                // Only fetch once. Use same (previous) fetch
+                let twoHoursArray = uniqEvents.filter({ ($0.timestamp ?? Date()) >= twoHoursAgo })
+                nrOfIndeces = twoHoursArray.count
+
+                totalAmount = twoHoursArray.compactMap({ each in each.tdd as? Decimal ?? 0 }).reduce(0, +)
+            }
 
             if indeces == 0 {
                 indeces = 1
@@ -800,14 +785,21 @@ final class BaseAPSManager: APSManager, Injectable {
         // MARK: Fetch Carbs from CoreData
 
         var carbs = [Carbohydrates]()
-        let requestCarbs = Carbohydrates.fetchRequest() as NSFetchRequest<Carbohydrates>
-        let daysAgo = Date().addingTimeInterval(-1.days.timeInterval)
-        requestCarbs.predicate = NSPredicate(format: "carbs > 0 AND date > %@", daysAgo as NSDate)
-        let sortCarbs = NSSortDescriptor(key: "date", ascending: true)
-        requestCarbs.sortDescriptors = [sortCarbs]
-        try? carbs = coredataContext.fetch(requestCarbs)
+        var carbTotal: Decimal = 0
 
-        let carbTotal = carbs.map({ carbs in carbs.carbs as? Decimal ?? 0 }).reduce(0, +)
+        coredataContext.performAndWait {
+            let requestCarbs = Carbohydrates.fetchRequest() as NSFetchRequest<Carbohydrates>
+
+            let daysAgo = Date().addingTimeInterval(-1.days.timeInterval)
+            requestCarbs.predicate = NSPredicate(format: "carbs > 0 AND date > %@", daysAgo as NSDate)
+
+            let sortCarbs = NSSortDescriptor(key: "date", ascending: true)
+            requestCarbs.sortDescriptors = [sortCarbs]
+
+            try? carbs = coredataContext.fetch(requestCarbs)
+
+            carbTotal = carbs.map({ carbs in carbs.carbs as? Decimal ?? 0 }).reduce(0, +)
+        }
 
         // MARK: Fetch TDD from CoreData
 
@@ -1103,12 +1095,17 @@ final class BaseAPSManager: APSManager, Injectable {
 
         // MARK: Save to Median to CoreData
 
-        let saveMedianToCoreData = BGmedian(context: coredataContext)
-        saveMedianToCoreData.date = Date()
-        saveMedianToCoreData.median = median.total as NSDecimalNumber
-        saveMedianToCoreData.median_1 = median.day as NSDecimalNumber
-        saveMedianToCoreData.median_7 = median.week as NSDecimalNumber
-        saveMedianToCoreData.median_30 = median.month as NSDecimalNumber
+        coredataContext.perform {
+            let saveMedianToCoreData = BGmedian(context: self.coredataContext)
+
+            saveMedianToCoreData.date = Date()
+            saveMedianToCoreData.median = median.total as NSDecimalNumber
+            saveMedianToCoreData.median_1 = median.day as NSDecimalNumber
+            saveMedianToCoreData.median_7 = median.week as NSDecimalNumber
+            saveMedianToCoreData.median_30 = median.month as NSDecimalNumber
+
+            try? self.coredataContext.save()
+        }
 
         var hbs = Durations(
             day: roundDecimal(NGSPa1CStatisticValue, 1),
@@ -1331,12 +1328,16 @@ final class BaseAPSManager: APSManager, Injectable {
     private func loopStats(loopStatRecord: LoopStats) {
         let LoopStatsStartedAt = Date()
 
-        let nLS = LoopStatRecord(context: coredataContext)
-        nLS.start = loopStatRecord.start
-        nLS.end = loopStatRecord.end ?? Date()
-        nLS.loopStatus = loopStatRecord.loopStatus
-        nLS.duration = loopStatRecord.duration ?? 0.0
-        try? coredataContext.save()
+        coredataContext.perform {
+            let nLS = LoopStatRecord(context: self.coredataContext)
+
+            nLS.start = loopStatRecord.start
+            nLS.end = loopStatRecord.end ?? Date()
+            nLS.loopStatus = loopStatRecord.loopStatus
+            nLS.duration = loopStatRecord.duration ?? 0.0
+
+            try? self.coredataContext.save()
+        }
 
         print("Test time of LoopStats computation: \(-1 * LoopStatsStartedAt.timeIntervalSinceNow) s")
     }
