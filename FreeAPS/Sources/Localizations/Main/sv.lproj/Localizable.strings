@@ -1262,7 +1262,7 @@ Enact a temp Basal or a temp target */
 "Update every number of minutes:" = "Uppdatera varje antal minuter:";
 
 /* Description for update interval for statistics */
-"Default is 30 minutes. How often to update and save the statistics.json and to upload last array, when enabled, to Nightscout. A lower interval than for glucose updates (5 min) is pointless." = "Standardinställning är 30 minuter. Med denna inställning ställer du in hur ofta statistiken uppdateras och hur ofta filen statistics.json sparas och laddas upp till till Nightscout, om aktiverad. Att ha ett lägre intervall än för nytt blodoscker (5 min) är meningslöst.";
+"Default is 20 minutes. How often to update and save the statistics.json and to upload last array, when enabled, to Nightscout." = "Default is 20 minutes. How often to update and save the statistics.json and to upload last array, when enabled, to Nightscout.";
 
 /* Duration displayed in statPanel */
 "Past 24 Hours " = "Senaste 24 timmarna ";
@@ -1502,7 +1502,7 @@ Enact a temp Basal or a temp target */
 "Bolus Increment" = "Minsta bolusmångd";
 
 /* "Bolus Increment" */
-"Smallest SMB / SMB increment in oref0. Minimum amount for Medtronic pumps is 0.1 U, whereas for Omnipod it’s 0.05 U. The default value is 0.1." = "Minsta möjliga SMB (supermikrobolus) i oref0. För Medtronic är minsta möjliga dos 0,1 U, medan det för Omnipod är 0,05 U.";
+"Smallest enacted SMB amount. Minimum amount for Omnipod pumps is 0.05 U, whereas for Medtronic pumps it differs for various models, from 0.025 U to 0.10 U. Please check the minimum bolus amount which can be delivered by your pump. The default value is 0.1." = "Smallest enacted SMB amount. Minimum amount for Omnipod pumps is 0.05 U, whereas for Medtronic pumps it differs for various models, from 0.025 U to 0.10 U. Please check the minimum bolus amount which can be delivered by your pump. The default value is 0.1.";
 
 /* Headline "Insulin Peak Time" */
 "Insulin Peak Time" = "Tid för insulinets maximala blodsockersänkande effekt, i minuter";
