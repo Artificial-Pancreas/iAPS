@@ -5,15 +5,14 @@
 //  Copyright © 2017 LoopKit Authors. All rights reserved.
 //
 
-import os.log
 import HealthKit
+import LoopKit
+import ShareClient
+import os.log
 
-public protocol TransmitterManagerDelegate: AnyObject {
-    func transmitterManager(_ manager: TransmitterManager, didRead glucose: [Glucose])
-    func transmitterManager(_ manager: TransmitterManager, didFailWith error: Error)
-}
 
-public struct TransmitterManagerState: Equatable {
+public struct TransmitterManagerState: RawRepresentable, Equatable {
+    public typealias RawValue = CGMManager.RawStateValue
 
     public static let version = 1
 
@@ -27,6 +26,24 @@ public struct TransmitterManagerState: Equatable {
         self.transmitterID = transmitterID
         self.shouldSyncToRemoteService = shouldSyncToRemoteService
     }
+
+    public init?(rawValue: RawValue) {
+        guard let transmitterID = rawValue["transmitterID"] as? String
+        else {
+            return nil
+        }
+        
+        let shouldSyncToRemoteService = rawValue["shouldSyncToRemoteService"] as? Bool ?? false
+
+        self.init(transmitterID: transmitterID, shouldSyncToRemoteService: shouldSyncToRemoteService)
+    }
+
+    public var rawValue: RawValue {
+        return [
+            "transmitterID": transmitterID,
+            "shouldSyncToRemoteService": shouldSyncToRemoteService,
+        ]
+    }
 }
 
 
@@ -34,9 +51,8 @@ public protocol TransmitterManagerObserver: AnyObject {
     func transmitterManagerDidUpdateLatestReading(_ manager: TransmitterManager)
 }
 
-public class TransmitterManager: TransmitterDelegate {
-    public weak var delegate: TransmitterManagerDelegate?
 
+public class TransmitterManager: TransmitterDelegate {
     private var state: TransmitterManagerState
 
     private let observers = WeakSynchronizedSet<TransmitterManagerObserver>()
@@ -46,13 +62,89 @@ public class TransmitterManager: TransmitterDelegate {
         // TODO: we should decode and persist transmitter session state
         return !state.transmitterID.isEmpty
     }
-
+    
+    public var cgmManagerStatus: CGMManagerStatus {
+        return CGMManagerStatus(hasValidSensorSession: hasValidSensorSession, device: device)
+    }
 
     public required init(state: TransmitterManagerState) {
         self.state = state
         self.transmitter = Transmitter(id: state.transmitterID, passiveModeEnabled: state.passiveModeEnabled)
+        self.shareManager = ShareClientManager()
 
         self.transmitter.delegate = self
+        
+        #if targetEnvironment(simulator)
+        setupSimulatedSampleGenerator()
+        #endif
+
+    }
+    
+    #if targetEnvironment(simulator)
+    var simulatedSampleGeneratorTimer: DispatchSourceTimer?
+
+    private func setupSimulatedSampleGenerator() {
+
+        let timer = DispatchSource.makeTimerSource(queue: DispatchQueue(label: "com.loopkit.simulatedSampleGenerator"))
+        timer.schedule(deadline: .now() + .seconds(10), repeating: .minutes(5))
+        timer.setEventHandler(handler: { [weak self] in
+            self?.generateSimulatedSample()
+        })
+        self.simulatedSampleGeneratorTimer = timer
+        timer.resume()
+    }
+
+    private func generateSimulatedSample() {
+        let timestamp = Date()
+        let syncIdentifier =  "\(self.state.transmitterID) \(timestamp)"
+        let period = TimeInterval(hours: 3)
+        func glucoseValueFunc(timestamp: Date, period: Double) -> Double {
+            return 100 + 20 * cos(timestamp.timeIntervalSinceReferenceDate.remainder(dividingBy: period) / period * Double.pi * 2)
+        }
+        let glucoseValue = glucoseValueFunc(timestamp: timestamp, period: period)
+        let prevGlucoseValue = glucoseValueFunc(timestamp: timestamp - period, period: period)
+        let trendRateValue = glucoseValue - prevGlucoseValue
+        let trend: GlucoseTrend? = {
+            switch trendRateValue {
+            case -0.01...0.01:
+                return .flat
+            case -2 ..< -0.01:
+                return .down
+            case -5 ..< -2:
+                return .downDown
+            case -Double.greatestFiniteMagnitude ..< -5:
+                return .downDownDown
+            case 0.01...2:
+                return .up
+            case 2...5:
+                return .upUp
+            case 5...Double.greatestFiniteMagnitude:
+                return .upUpUp
+            default:
+                return nil
+            }
+        }()
+
+        let quantity = HKQuantity(unit: .milligramsPerDeciliter, doubleValue: glucoseValue)
+        let trendRate = HKQuantity(unit: .milligramsPerDeciliter, doubleValue: trendRateValue)
+        let sample = NewGlucoseSample(date: timestamp, quantity: quantity, condition: nil, trend: trend, trendRate: trendRate, isDisplayOnly: false, wasUserEntered: false, syncIdentifier: syncIdentifier)
+        self.updateDelegate(with: .newData([sample]))
+    }
+    #endif
+
+    required convenience public init?(rawState: CGMManager.RawStateValue) {
+        guard let state = TransmitterManagerState(rawValue: rawState) else {
+            return nil
+        }
+
+        self.init(state: state)
+    }
+
+    public var rawState: CGMManager.RawStateValue {
+        return state.rawValue
+    }
+    
+    func logDeviceCommunication(_ message: String, type: DeviceLogEntryType = .send) {
     }
 
     public var shouldSyncToRemoteService: Bool {
@@ -65,6 +157,23 @@ public class TransmitterManager: TransmitterDelegate {
         }
     }
 
+    public var cgmManagerDelegate: CGMManagerDelegate? {
+        get {
+            return shareManager.cgmManagerDelegate
+        }
+        set {
+            shareManager.cgmManagerDelegate = newValue
+        }
+    }
+
+    public var delegateQueue: DispatchQueue! {
+        get {
+            return shareManager.delegateQueue
+        }
+        set {
+            shareManager.delegateQueue = newValue
+        }
+    }
 
     private(set) public var latestConnection: Date? {
         get {
@@ -76,11 +185,32 @@ public class TransmitterManager: TransmitterDelegate {
     }
     private let lockedLatestConnection: Locked<Date?> = Locked(nil)
 
+    public let shareManager: ShareClientManager
+
     public let transmitter: Transmitter
     let log = OSLog(category: "TransmitterManager")
 
     public var providesBLEHeartbeat: Bool {
         return dataIsFresh
+    }
+
+    public var glucoseDisplay: GlucoseDisplayable? {
+        let transmitterDate = latestReading?.readDate ?? .distantPast
+        let shareDate = shareManager.latestBackfill?.startDate ?? .distantPast
+
+        if transmitterDate >= shareDate {
+            return latestReading
+        } else {
+            return shareManager.glucoseDisplay
+        }
+    }
+
+    public var managedDataInterval: TimeInterval? {
+        if transmitter.passiveModeEnabled {
+            return .hours(3)
+        }
+
+        return shareManager.managedDataInterval
     }
 
     private(set) public var latestReading: Glucose? {
@@ -102,18 +232,28 @@ public class TransmitterManager: TransmitterDelegate {
         return true
     }
 
-//    public func fetchNewDataIfNeeded(_ completion: @escaping (CGMReadingResult) -> Void) {
-//        // Ensure our transmitter connection is active
-//        transmitter.resumeScanning()
-//
-//        // If our last glucose was less than 4.5 minutes ago, don't fetch.
-//        guard !dataIsFresh else {
-//            completion(.noData)
-//            return
-//        }
-//
-//        log.default("Fetching new glucose from Share because last reading is %{public}.1f minutes old", latestReading?.readDate.timeIntervalSinceNow.minutes ?? 0)
-//    }
+    public func fetchNewDataIfNeeded(_ completion: @escaping (CGMReadingResult) -> Void) {
+        // Ensure our transmitter connection is active
+        transmitter.resumeScanning()
+
+        // If our last glucose was less than 4.5 minutes ago, don't fetch.
+        guard !dataIsFresh else {
+            completion(.noData)
+            return
+        }
+        
+        if let latestReading = latestReading {
+            log.default("Fetching new glucose from Share because last reading is %{public}.1f minutes old", latestReading.readDate.timeIntervalSinceNow.minutes)
+        } else {
+            log.default("Fetching new glucose from Share because we don't have a previous reading")
+        }
+
+        shareManager.fetchNewDataIfNeeded(completion)
+    }
+
+    public var device: HKDevice? {
+        return nil
+    }
 
     public var debugDescription: String {
         return [
@@ -122,27 +262,28 @@ public class TransmitterManager: TransmitterDelegate {
             "latestConnection: \(String(describing: latestConnection))",
             "dataIsFresh: \(dataIsFresh)",
             "providesBLEHeartbeat: \(providesBLEHeartbeat)",
+            shareManager.debugDescription,
             "observers.count: \(observers.cleanupDeallocatedElements().count)",
             String(reflecting: transmitter),
         ].joined(separator: "\n")
     }
 
-//    private func updateDelegate(with result: CGMReadingResult) {
-//        if let manager = self as? CGMManager {
-//            shareManager.delegate.notify { (delegate) in
-//                delegate?.cgmManager(manager, hasNew: result)
-//            }
-//        }
-//
-//        notifyObserversOfLatestReading()
-//    }
+    private func updateDelegate(with result: CGMReadingResult) {
+        if let manager = self as? CGMManager {
+            shareManager.delegate.notify { (delegate) in
+                delegate?.cgmManager(manager, hasNew: result)
+            }
+        }
+
+        notifyObserversOfLatestReading()
+    }
     
     private func notifyDelegateOfStateChange() {
-//        if let manager = self as? CGMManager {
-//            shareManager.delegate.notify { (delegate) in
-//                delegate?.cgmManagerDidUpdateState(manager)
-//            }
-//        }
+        if let manager = self as? CGMManager {
+            shareManager.delegate.notify { (delegate) in
+                delegate?.cgmManagerDidUpdateState(manager)
+            }
+        }
     }
 
 
@@ -151,79 +292,86 @@ public class TransmitterManager: TransmitterDelegate {
     public func transmitterDidConnect(_ transmitter: Transmitter) {
         log.default("%{public}@", #function)
         latestConnection = Date()
-//        logDeviceCommunication("Connected", type: .connection)
+        logDeviceCommunication("Connected", type: .connection)
     }
 
     public func transmitter(_ transmitter: Transmitter, didError error: Error) {
         log.error("%{public}@: %{public}@", #function, String(describing: error))
-//        updateDelegate(with: .error(error))
-//        logDeviceCommunication("Error: \(error)", type: .error)
+        updateDelegate(with: .error(error))
+        logDeviceCommunication("Error: \(error)", type: .error)
     }
 
     public func transmitter(_ transmitter: Transmitter, didRead glucose: Glucose) {
         guard glucose != latestReading else {
-            delegate?.transmitterManager(self, didRead: [])
-//            updateDelegate(with: .noData)
+            updateDelegate(with: .noData)
             return
         }
 
         latestReading = glucose
 
-//        logDeviceCommunication("New reading: \(glucose.readDate)", type: .receive)
+        logDeviceCommunication("New reading: \(glucose.readDate)", type: .receive)
 
         guard glucose.state.hasReliableGlucose else {
             log.default("%{public}@: Unreliable glucose: %{public}@", #function, String(describing: glucose.state))
-            delegate?.transmitterManager(self, didFailWith: CalibrationError.unreliableState(glucose.state))
-//            updateDelegate(with: .error(CalibrationError.unreliableState(glucose.state)))
+            updateDelegate(with: .error(CalibrationError.unreliableState(glucose.state)))
             return
         }
         
-        guard glucose.glucose != nil else {
-            delegate?.transmitterManager(self, didRead: [])
-//            updateDelegate(with: .noData)
+        guard let quantity = glucose.glucose else {
+            updateDelegate(with: .noData)
             return
         }
 
         log.default("%{public}@: New glucose", #function)
 
-        delegate?.transmitterManager(self, didRead: [glucose])
-
-//        updateDelegate(with: .newData([
-//            NewGlucoseSample(
-//                date: glucose.readDate,
-//                quantity: quantity,
-//                trend: glucose.trendType,
-//                isDisplayOnly: glucose.isDisplayOnly,
-//                wasUserEntered: glucose.isDisplayOnly,
-//                syncIdentifier: glucose.syncIdentifier,
-//                device: device
-//            )
-//        ]))
+        updateDelegate(with: .newData([
+            NewGlucoseSample(
+                date: glucose.readDate,
+                quantity: quantity,
+                condition: glucose.condition,
+                trend: glucose.trendType,
+                trendRate: glucose.trendRate,
+                isDisplayOnly: glucose.isDisplayOnly,
+                wasUserEntered: glucose.isDisplayOnly,
+                syncIdentifier: glucose.syncIdentifier,
+                device: device
+            )
+        ]))
     }
 
     public func transmitter(_ transmitter: Transmitter, didReadBackfill glucose: [Glucose]) {
-        let samples = glucose.filter { glucose -> Bool in
-            guard glucose != latestReading, glucose.state.hasReliableGlucose, glucose.glucose != nil else {
-                return false
+        let samples = glucose.compactMap { (glucose) -> NewGlucoseSample? in
+            guard glucose != latestReading, glucose.state.hasReliableGlucose, let quantity = glucose.glucose else {
+                return nil
             }
-            return true
+
+            return NewGlucoseSample(
+                date: glucose.readDate,
+                quantity: quantity,
+                condition: glucose.condition,
+                trend: glucose.trendType,
+                trendRate: glucose.trendRate,
+                isDisplayOnly: glucose.isDisplayOnly,
+                wasUserEntered: glucose.isDisplayOnly,
+                syncIdentifier: glucose.syncIdentifier,
+                device: device
+            )
         }
-        delegate?.transmitterManager(self, didRead: samples)
-//
-//        guard samples.count > 0 else {
-//            return
-//        }
 
-//        updateDelegate(with: .newData(samples))
+        guard samples.count > 0 else {
+            return
+        }
 
-//        logDeviceCommunication("New backfill: \(String(describing: samples.first?.date))", type: .receive)
+        updateDelegate(with: .newData(samples))
+
+        logDeviceCommunication("New backfill: \(String(describing: samples.first?.date))", type: .receive)
     }
 
     public func transmitter(_ transmitter: Transmitter, didReadUnknownData data: Data) {
         log.error("Unknown sensor data: %{public}@", data.hexadecimalString)
         // This can be used for protocol discovery, but isn't necessary for normal operation
 
-//        logDeviceCommunication("Unknown sensor data: \(data.hexadecimalString)", type: .error)
+        logDeviceCommunication("Unknown sensor data: \(data.hexadecimalString)", type: .error)
     }
 }
 
@@ -246,7 +394,7 @@ extension TransmitterManager {
 }
 
 
-public class G5CGMManager: TransmitterManager {
+public class G5CGMManager: TransmitterManager, CGMManager {
     public let managerIdentifier: String = "DexG5Transmitter"
 
     public let localizedTitle = LocalizedString("Dexcom G5", comment: "CGM display title")
@@ -257,7 +405,7 @@ public class G5CGMManager: TransmitterManager {
         return URL(string: "dexcomcgm://")
     }
 
-    public var device: HKDevice? {
+    public override var device: HKDevice? {
         return HKDevice(
             name: "CGMBLEKit",
             manufacturer: "Dexcom",
@@ -270,14 +418,14 @@ public class G5CGMManager: TransmitterManager {
         )
     }
     
-//    func logDeviceCommunication(_ message: String, type: DeviceLogEntryType = .send) {
-//        self.cgmManagerDelegate?.deviceManager(self, logEventForDeviceIdentifier: transmitter.ID, type: type, message: message, completion: nil)
-//    }
+    override func logDeviceCommunication(_ message: String, type: DeviceLogEntryType = .send) {
+        self.cgmManagerDelegate?.deviceManager(self, logEventForDeviceIdentifier: transmitter.ID, type: type, message: message, completion: nil)
+    }
     
 }
 
 
-public class G6CGMManager: TransmitterManager {
+public class G6CGMManager: TransmitterManager, CGMManager {
     public let managerIdentifier: String = "DexG6Transmitter"
 
     public let localizedTitle = LocalizedString("Dexcom G6", comment: "CGM display title")
@@ -288,7 +436,7 @@ public class G6CGMManager: TransmitterManager {
         return nil
     }
 
-    public var device: HKDevice? {
+    public override var device: HKDevice? {
         return HKDevice(
             name: "CGMBLEKit",
             manufacturer: "Dexcom",
@@ -301,9 +449,9 @@ public class G6CGMManager: TransmitterManager {
         )
     }
     
-//    func logDeviceCommunication(_ message: String, type: DeviceLogEntryType = .send) {
-//        self.cgmManagerDelegate?.deviceManager(self, logEventForDeviceIdentifier: transmitter.ID, type: type, message: message, completion: nil)
-//    }
+    override func logDeviceCommunication(_ message: String, type: DeviceLogEntryType = .send) {
+        self.cgmManagerDelegate?.deviceManager(self, logEventForDeviceIdentifier: transmitter.ID, type: type, message: message, completion: nil)
+    }
 }
 
 
@@ -345,5 +493,31 @@ extension CalibrationState {
             return String(format: LocalizedString("Sensor is in unknown state %1$d", comment: "The description of sensor calibration state when raw value is unknown. (1: missing data details)"), rawValue)
         }
     }
+}
+
+// MARK: - AlertResponder implementation
+extension G5CGMManager {
+    public func acknowledgeAlert(alertIdentifier: Alert.AlertIdentifier, completion: @escaping (Error?) -> Void) {
+        completion(nil)
+    }
+}
+
+// MARK: - AlertSoundVendor implementation
+extension G5CGMManager {
+    public func getSoundBaseURL() -> URL? { return nil }
+    public func getSounds() -> [Alert.Sound] { return [] }
+}
+
+// MARK: - AlertResponder implementation
+extension G6CGMManager {
+    public func acknowledgeAlert(alertIdentifier: Alert.AlertIdentifier, completion: @escaping (Error?) -> Void) {
+        completion(nil)
+    }
+}
+
+// MARK: - AlertSoundVendor implementation
+extension G6CGMManager {
+    public func getSoundBaseURL() -> URL? { return nil }
+    public func getSounds() -> [Alert.Sound] { return [] }
 }
 

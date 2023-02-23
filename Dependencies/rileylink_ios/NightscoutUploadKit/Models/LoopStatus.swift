@@ -16,9 +16,9 @@ public struct LoopStatus {
     let version: String
     let timestamp: Date
 
-    let iob: IOBStatus?
-    let cob: COBStatus?
-    let predicted: PredictedBG?
+    public let iob: IOBStatus?
+    public let cob: COBStatus?
+    public let predicted: PredictedBG?
     let automaticDoseRecommendation: AutomaticDoseRecommendation?
     let recommendedBolus: Double?
     let enacted: LoopEnacted?

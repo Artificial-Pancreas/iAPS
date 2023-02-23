@@ -4,6 +4,10 @@
 <dict>
 	<key>AppGroupID</key>
 	<string>$(APP_GROUP_ID)</string>
+	<key>BGTaskSchedulerPermittedIdentifiers</key>
+	<array>
+		<string>com.freeapsx.background-task.critical-event-log</string>
+	</array>
 	<key>BuildBranch</key>
 	<string></string>
 	<key>CFBundleDevelopmentRegion</key>
@@ -39,6 +43,7 @@
 	<false/>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
+		<string>dexcomg7</string>
 		<string>xdripswift</string>
 		<string>dexcomg6</string>
 		<string>dexcomcgm</string>
@@ -70,7 +75,7 @@
 	<key>NSHealthUpdateUsageDescription</key>
 	<string>Health App is used to store blood glucose data</string>
 	<key>NSHumanReadableCopyright</key>
-	<string>$(COPYRIGHT_NOTICE)</string>
+	<string>$(BRANCH)</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>
@@ -82,6 +87,7 @@
 	<array>
 		<string>bluetooth-central</string>
 		<string>bluetooth-peripheral</string>
+		<string>processing</string>
 	</array>
 	<key>UIFileSharingEnabled</key>
 	<true/>

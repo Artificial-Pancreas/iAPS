@@ -11,6 +11,8 @@ import LoopKit
 
 class MockPumpManagerDelegate: PumpManagerDelegate {
 
+    var historyFetchStartDate = Date()
+
     func pumpManagerBLEHeartbeatDidFire(_ pumpManager: PumpManager) {}
 
     func pumpManagerMustProvideBLEHeartbeat(_ pumpManager: PumpManager) -> Bool {
@@ -29,16 +31,28 @@ class MockPumpManagerDelegate: PumpManagerDelegate {
     
     func pumpManager(_ pumpManager: PumpManager, hasNewPumpEvents events: [NewPumpEvent], lastReconciliation: Date?, completion: @escaping (Error?) -> Void) {
         reportedPumpEvents.append((events: events, lastReconciliation: lastReconciliation))
+        completion(nil)
     }
 
-    func pumpManager(_ pumpManager: PumpManager, didReadReservoirValue units: Double, at date: Date, completion: @escaping (Result<(newValue: ReservoirValue, lastValue: ReservoirValue?, areStoredValuesContinuous: Bool), Error>) -> Void) {}
+    struct MockReservoirValue: ReservoirValue {
+        let startDate: Date
+        let unitVolume: Double
+    }
+
+    func pumpManager(_ pumpManager: PumpManager, didReadReservoirValue units: Double, at date: Date, completion: @escaping (Result<(newValue: ReservoirValue, lastValue: ReservoirValue?, areStoredValuesContinuous: Bool), Error>) -> Void)
+    {
+        let reservoirValue = MockReservoirValue(startDate: date, unitVolume: units)
+        DispatchQueue.main.async {
+            completion(.success((newValue: reservoirValue, lastValue: nil, areStoredValuesContinuous: true)))
+        }
+    }
 
     func pumpManager(_ pumpManager: PumpManager, didAdjustPumpClockBy adjustment: TimeInterval) {}
 
     func pumpManagerDidUpdateState(_ pumpManager: PumpManager) {}
 
     func startDateToFilterNewPumpEvents(for manager: PumpManager) -> Date {
-        return Date()
+        return historyFetchStartDate
     }
 
     var detectedSystemTimeOffset: TimeInterval = 0

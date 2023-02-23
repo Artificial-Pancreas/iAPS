@@ -7,6 +7,7 @@ import MinimedKit
 import MockKit
 import OmniBLE
 import OmniKit
+import ShareClient
 import SwiftDate
 import Swinject
 import UserNotifications
@@ -22,6 +23,7 @@ protocol DeviceDataManager: GlucoseSource {
     var errorSubject: PassthroughSubject<Error, Never> { get }
     var pumpName: CurrentValueSubject<String, Never> { get }
     var pumpExpiresAtDate: CurrentValueSubject<Date?, Never> { get }
+    var requireCGMRefresh: PassthroughSubject<Date, Never> { get }
     func heartbeat(date: Date)
     func createBolusProgressReporter() -> DoseProgressReporter?
     var alertHistoryStorage: AlertHistoryStorage! { get }
@@ -61,11 +63,15 @@ final class BaseDeviceDataManager: DeviceDataManager, Injectable {
     @SyncAccess(lock: accessLock) @Persisted(key: "BaseDeviceDataManager.lastHeartBeatTime") var lastHeartBeatTime: Date =
         .distantPast
 
+    // to do at true if you would like to use pump heartbeat
+    let heartbeatBypump: Bool = false
+
     let recommendsLoop = PassthroughSubject<Void, Never>()
     let bolusTrigger = PassthroughSubject<Bool, Never>()
     let errorSubject = PassthroughSubject<Error, Never>()
     let pumpNewStatus = PassthroughSubject<Void, Never>()
     let manualTempBasal = PassthroughSubject<Bool, Never>()
+    let requireCGMRefresh = PassthroughSubject<Date, Never>()
     private let router = FreeAPSApp.resolver.resolve(Router.self)!
     @SyncAccess private var pumpUpdateCancellable: AnyCancellable?
     private var pumpUpdatePromise: Future<Bool, Never>.Promise?
@@ -85,6 +91,7 @@ final class BaseDeviceDataManager: DeviceDataManager, Injectable {
                         pumpExpiresAtDate.send(nil)
                         return
                     }
+                    pumpManager.setMustProvideBLEHeartbeat(heartbeatBypump)
                     pumpExpiresAtDate.send(endTime)
                 }
                 if let omnipodBLE = pumpManager as? OmniBLEPumpManager {
@@ -92,6 +99,7 @@ final class BaseDeviceDataManager: DeviceDataManager, Injectable {
                         pumpExpiresAtDate.send(nil)
                         return
                     }
+                    pumpManager.setMustProvideBLEHeartbeat(heartbeatBypump)
                     pumpExpiresAtDate.send(endTime)
                 }
             } else {
@@ -154,19 +162,26 @@ final class BaseDeviceDataManager: DeviceDataManager, Injectable {
         }
 
         debug(.deviceManager, "Start updating the pump data")
-        pumpUpdateCancellable = Future<Bool, Never> { [unowned self] promise in
-            pumpUpdatePromise = promise
-            debug(.deviceManager, "Waiting for pump update and loop recommendation")
-            processQueue.safeSync {
-                pumpManager.ensureCurrentPumpData { _ in
-                    debug(.deviceManager, "Pump data updated.")
-                }
+        processQueue.safeSync {
+            pumpManager.ensureCurrentPumpData { _ in
+                debug(.deviceManager, "Pump data updated.")
+                self.updateUpdateFinished(true)
             }
         }
-        .timeout(30, scheduler: processQueue)
-        .replaceError(with: false)
-        .replaceEmpty(with: false)
-        .sink(receiveValue: updateUpdateFinished)
+
+//        pumpUpdateCancellable = Future<Bool, Never> { [unowned self] promise in
+//            pumpUpdatePromise = promise
+//            debug(.deviceManager, "Waiting for pump update and loop recommendation")
+//            processQueue.safeSync {
+//                pumpManager.ensureCurrentPumpData { _ in
+//                    debug(.deviceManager, "Pump data updated.")
+//                }
+//            }
+//        }
+//        .timeout(30, scheduler: processQueue)
+//        .replaceError(with: false)
+//        .replaceEmpty(with: false)
+//        .sink(receiveValue: updateUpdateFinished)
     }
 
     private func updateUpdateFinished(_ recommendsLoop: Bool) {
@@ -175,10 +190,12 @@ final class BaseDeviceDataManager: DeviceDataManager, Injectable {
         if !recommendsLoop {
             warning(.deviceManager, "Loop recommendation time out or got error. Trying to loop right now.")
         }
-        guard !loopInProgress else {
-            warning(.deviceManager, "Loop already in progress. Skip recommendation.")
-            return
-        }
+
+        // directly in loop() function
+//        guard !loopInProgress else {
+//            warning(.deviceManager, "Loop already in progress. Skip recommendation.")
+//            return
+//        }
         self.recommendsLoop.send()
     }
 
@@ -203,6 +220,14 @@ final class BaseDeviceDataManager: DeviceDataManager, Injectable {
     // MARK: - GlucoseSource
 
     @Persisted(key: "BaseDeviceDataManager.lastFetchGlucoseDate") private var lastFetchGlucoseDate: Date = .distantPast
+
+    var glucoseManager: FetchGlucoseManager?
+    var cgmManager: CGMManagerUI?
+    var cgmType: CGMType = .enlite
+
+    func fetchIfNeeded() -> AnyPublisher<[BloodGlucose], Never> {
+        fetch(nil)
+    }
 
     func fetch(_: DispatchTimer?) -> AnyPublisher<[BloodGlucose], Never> {
         guard let medtronic = pumpManager as? MinimedPumpManager else {
@@ -270,6 +295,8 @@ final class BaseDeviceDataManager: DeviceDataManager, Injectable {
     }
 }
 
+// MARK: - PumpManagerDelegate
+
 extension BaseDeviceDataManager: PumpManagerDelegate {
     func pumpManagerPumpWasReplaced(_: PumpManager) {
         debug(.deviceManager, "pumpManagerPumpWasReplaced")
@@ -294,6 +321,7 @@ extension BaseDeviceDataManager: PumpManagerDelegate {
 
     func pumpManagerBLEHeartbeatDidFire(_: PumpManager) {
         debug(.deviceManager, "Pump Heartbeat: do nothing. Pump connection is OK")
+        requireCGMRefresh.send(Date())
     }
 
     func pumpManagerMustProvideBLEHeartbeat(_: PumpManager) -> Bool {
@@ -540,6 +568,8 @@ extension BaseDeviceDataManager: DeviceManagerDelegate {
         debug(.deviceManager, "Device message: \(message)")
     }
 }
+
+// MARK: - CGMManagerDelegate
 
 extension BaseDeviceDataManager: CGMManagerDelegate {
     func startDateToFilterNewData(for _: CGMManager) -> Date? {

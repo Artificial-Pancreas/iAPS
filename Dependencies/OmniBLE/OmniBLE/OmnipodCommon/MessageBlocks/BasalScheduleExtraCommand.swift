@@ -75,29 +75,36 @@ public struct BasalScheduleExtraCommand : MessageBlock {
 
     public init(schedule: BasalSchedule, scheduleOffset: TimeInterval, acknowledgementBeep: Bool = false, completionBeep: Bool = false, programReminderInterval: TimeInterval = 0) {
         var rateEntries = [RateEntry]()
-        
+
         let mergedSchedule = BasalSchedule(entries: schedule.entries.adjacentEqualRatesMerged())
         for entry in mergedSchedule.durations() {
             rateEntries.append(contentsOf: RateEntry.makeEntries(rate: entry.rate, duration: entry.duration))
         }
-        
+
         self.rateEntries = rateEntries
         let scheduleOffsetNearestSecond = round(scheduleOffset)
-        let (entryIndex, entry, duration) = mergedSchedule.lookup(offset: scheduleOffsetNearestSecond)
-        self.currentEntryIndex = UInt8(entryIndex)
-        let timeRemainingInEntry = duration - (scheduleOffsetNearestSecond - entry.startTime)
-        let rate = mergedSchedule.rateAt(offset: scheduleOffsetNearestSecond)
-        var rrate = roundToSupportedBasalTimingRate(rate: rate)
-        if rrate == 0.0 {
-            // prevent app crash if a 0.0 scheduled basal ever gets here for Eros
-            rrate = nearZeroBasalRate
-        }
-        let pulsesPerHour = rrate / Pod.pulseSize
-        let timeBetweenPulses = TimeInterval(hours: 1) / pulsesPerHour
-        self.delayUntilNextTenthOfPulse = timeRemainingInEntry.truncatingRemainder(dividingBy: (timeBetweenPulses / 10))
-        self.remainingPulses = pulsesPerHour * (timeRemainingInEntry-self.delayUntilNextTenthOfPulse) / .hours(1) + 0.1
+
         self.acknowledgementBeep = acknowledgementBeep
         self.completionBeep = completionBeep
         self.programReminderInterval = programReminderInterval
+
+        var t: TimeInterval = 0
+        var entryIndex: UInt8 = 0
+        for rateEntry in rateEntries {
+            let rateEntryDuration = rateEntry.duration
+            if scheduleOffsetNearestSecond >= t && scheduleOffsetNearestSecond <= t + rateEntryDuration {
+                self.currentEntryIndex = entryIndex
+
+                let timeRemaining = (t + rateEntryDuration) - scheduleOffsetNearestSecond
+                self.delayUntilNextTenthOfPulse = timeRemaining.truncatingRemainder(dividingBy: (rateEntry.delayBetweenPulses / 10))
+
+                let pulsesRemaining = rateEntry.totalPulses * (timeRemaining / rateEntryDuration)
+                self.remainingPulses = pulsesRemaining == 0 ? 0.1 : ceil(pulsesRemaining * 10) / 10
+                return
+            }
+            t += rateEntryDuration
+            entryIndex += 1
+        }
+        fatalError("RateEntry schedule incomplete")
     }
 }

@@ -33,7 +33,7 @@ extension TimestampedHistoryEvent: DictionaryRepresentable {
     public var dictionaryRepresentation: [String : Any] {
         var dict = pumpEvent.dictionaryRepresentation
 
-        dict["timestamp"] = DateFormatter.ISO8601DateFormatter().string(from: date)
+        dict["timestamp"] = ISO8601DateFormatter.defaultFormatter().string(from: date)
 
         return dict
     }

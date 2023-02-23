@@ -11,8 +11,8 @@ import Foundation
 public struct COBStatus {
     typealias RawValue = [String: Any]
 
-    let cob: Double
-    let timestamp: Date
+    public let cob: Double
+    public let timestamp: Date
 
     public init(cob: Double, timestamp: Date) {
         self.cob = cob // grams

@@ -1,3 +1,5 @@
 extension CGM {
-    final class Provider: BaseProvider, CGMProvider {}
+    final class Provider: BaseProvider, CGMProvider {
+        @Injected() var apsManager: APSManager!
+    }
 }

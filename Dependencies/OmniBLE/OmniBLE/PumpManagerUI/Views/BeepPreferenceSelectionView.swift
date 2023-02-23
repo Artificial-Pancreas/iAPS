@@ -87,7 +87,7 @@ struct BeepPreferenceSelectionView: View {
 
         }
         .insetGroupedListStyle()
-        .navigationTitle("Confidence Reminders")
+        .navigationTitle(LocalizedString("Confidence Reminders", comment: "navigation title for confidence reminders"))
         .navigationBarTitleDisplayMode(.inline)
         .alert(isPresented: $alertIsPresented, content: { alert(error: error) })
     }

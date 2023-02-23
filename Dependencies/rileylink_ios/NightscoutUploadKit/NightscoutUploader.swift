@@ -6,15 +6,33 @@
 //  Copyright © 2016 Pete Schwamb. All rights reserved.
 //
 
-import Crypto
-
-public enum UploadError: Error {
+public enum UploadError: LocalizedError {
     case httpError(status: Int, body: String)
     case missingTimezone
     case invalidResponse(reason: String)
     case unauthorized
     case missingConfiguration
     case invalidParameters
+    case unexpectedResult(description: String)
+    
+    public var errorDescription: String? {
+        switch self {
+        case .httpError(let status, let body):
+            return String(["HTTP Error", "Status Code: \(status)" ,"body: body: \(body)"].joined( separator: "\n"))
+        case .missingTimezone:
+            return "Missing Timezone"
+        case .invalidResponse(let reason):
+            return "Invalid Response: \(reason)"
+        case .unauthorized:
+            return "Unauthorized"
+        case .missingConfiguration:
+            return "Missing Nightscout Credentials"
+        case .invalidParameters:
+            return "Invalid parameters"
+        case .unexpectedResult(let description):
+            return "Unexpected Result: \(description)"
+        }
+    }
 }
 
 private enum Endpoint: String {
@@ -22,8 +40,9 @@ private enum Endpoint: String {
     case treatments = "/api/v1/treatments"
     case deviceStatus = "/api/v1/devicestatus"
     case authTest = "/api/v1/experiments/test"
-    case profile =  "/api/v1/profile"
-    case currentProfile =  "/api/v1/profile/current"
+    case profile = "/api/v1/profile"
+    case currentProfile = "/api/v1/profile/current"
+    case notifications = "/api/v2/notifications/loop"
 }
 
 public class NightscoutUploader {
@@ -277,8 +296,69 @@ public class NightscoutUploader {
             completion(.failure(UploadError.invalidParameters))
         }
     }
+    
+    
+    // MARK: - Loop Notifications
 
+    public func startOverride(overrideName: String, reasonDisplay: String, durationTime: TimeInterval) async throws {
 
+        let jsonDict: [String: String] = [
+            "reason": overrideName,
+            "reasonDisplay": reasonDisplay,
+            "eventType": "Temporary Override",
+            "duration": "\(durationTime.minutes)",
+            "notes": ""
+        ]
+        
+        try await postNotification(payload: jsonDict)
+    }
+    
+    public func cancelOverride() async throws {
+
+        let jsonDict: [String: String] = [
+            "eventType": "Temporary Override Cancel",
+            "duration": "0"
+        ]
+        
+        try await postNotification(payload: jsonDict)
+    }
+    
+    public func deliverBolus(amountInUnits: Double, otp: String) async throws  {
+
+        let jsonDict: [String: String] = [
+            "eventType": "Remote Bolus Entry",
+            "remoteBolus": "\(amountInUnits)",
+            "otp": otp
+        ]
+        
+        try await postNotification(payload: jsonDict)
+    }
+    
+    public func deliverCarbs(amountInGrams: Double, absorptionTime: TimeInterval, consumedDate: Date? = nil, otp: String) async throws  {
+
+        var jsonDict: [String: String] = [
+            "eventType": "Remote Carbs Entry",
+            "remoteCarbs": "\(amountInGrams)",
+            "remoteAbsorption": "\(absorptionTime.hours)",
+            "otp": otp
+        ]
+        
+        if let consumedDate {
+            let formatter = ISO8601DateFormatter()
+            formatter.formatOptions =  [.withInternetDateTime, .withFractionalSeconds]
+            jsonDict["created_at"] = formatter.string(from: consumedDate)
+        }
+        
+        try await postNotification(payload: jsonDict)
+    }
+
+    public func postNotification(payload: [String: String]) async throws  {
+        guard let url = url(for: .notifications) else {
+            throw UploadError.missingConfiguration
+        }
+        
+        let _ = try await postToNS(payload, url: url)
+    }
     
     // MARK: - Uploading
 
@@ -483,6 +563,32 @@ public class NightscoutUploader {
         }
     }
     
+    func postToNS<T: Decodable>(_ json: Any, url: URL, jsonReturnType: T.Type?) async throws -> T {
+        let data = try await postToNS(json, url: url)
+        return try JSONDecoder().decode(T.self, from: data)
+    }
+    
+    func postToNS(_ json: Any, url:URL) async throws -> Data {
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.setValue("application/json", forHTTPHeaderField: "Accept")
+        request.setValue(apiSecret.sha1, forHTTPHeaderField: "api-secret")
+        
+        let sendData = try JSONSerialization.data(withJSONObject: json, options: [])
+        let (data, urlResponse) = try await URLSession.shared.upload(for: request, from: sendData)
+
+        guard let httpResponse = urlResponse as? HTTPURLResponse else {
+            throw UploadError.invalidResponse(reason: "Response is not HTTPURLResponse")
+        }
+
+        if httpResponse.statusCode != 200 {
+            throw UploadError.httpError(status: httpResponse.statusCode, body:String(data: data, encoding: String.Encoding.utf8)!)
+        }
+        
+        return data
+    }
+    
     func flushDeviceStatuses() {
         guard let url = url(for: .deviceStatus) else {
             return
@@ -581,3 +687,4 @@ public class NightscoutUploader {
         task.resume()
     }
 }
+

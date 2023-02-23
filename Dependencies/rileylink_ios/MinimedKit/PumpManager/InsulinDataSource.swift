@@ -9,7 +9,7 @@
 import Foundation
 
 
-public enum InsulinDataSource: Int, CustomStringConvertible {
+public enum InsulinDataSource: Int, CustomStringConvertible, CaseIterable {
     case pumpHistory = 0
     case reservoir
 

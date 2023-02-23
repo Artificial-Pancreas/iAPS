@@ -137,7 +137,7 @@ public class ProfileSet {
     }
     
     public var dictionaryRepresentation: [String: Any] {
-        let dateFormatter = DateFormatter.ISO8601DateFormatter()
+        let dateFormatter = ISO8601DateFormatter.defaultFormatter()
         let mills = String(format: "%.0f", startDate.timeIntervalSince1970.milliseconds)
         
         let dictProfiles = Dictionary(uniqueKeysWithValues:

@@ -27,6 +27,12 @@ public class ReadPumpStatusMessageBody: DecodableMessageBody {
         self.txData = rxData
     }
 
+    public init(bolusing: Bool, suspended: Bool) {
+        self.bolusing = bolusing
+        self.suspended = suspended
+        self.txData = Data(hexadecimalString: "0303\(bolusing ? "01" : "00")\(suspended ? "01" : "00")")!.paddedTo(length: 65)
+    }
+
     public var description: String {
         return "ReadPumpStatus(bolusing:\(bolusing), suspended:\(suspended))"
     }

@@ -37,7 +37,7 @@ extension UIImage {
         }())
 
         let name = nameComponents.joined(separator: " ")
-        return UIImage(named: name, in: Bundle(for: MinimedPumpSettingsViewController.self), compatibleWith: nil)!
+        return UIImage(named: name, in: Bundle(for: MinimedPumpSettingsViewModel.self), compatibleWith: nil)!
     }
 }
 
