@@ -608,8 +608,9 @@ extension OmnipodPumpManager {
     }
 
     private var shouldWarnPodEOL: Bool {
+        let eolDisplayActiveTime = Pod.timeRemainingWarningThreshold + (state.scheduledExpirationReminderOffset ?? 0.0)
         guard let podTimeRemaining = podTimeRemaining,
-              podTimeRemaining > 0 && podTimeRemaining <= Pod.timeRemainingWarningThreshold else
+              podTimeRemaining > 0 && podTimeRemaining <= eolDisplayActiveTime else
         {
             return false
         }
@@ -1228,6 +1229,10 @@ extension OmnipodPumpManager: PumpManager {
     public func roundToSupportedBasalRate(unitsPerHour: Double) -> Double {
         // We do support rounding a 0 U/hr rate to 0
         return supportedBasalRates.last(where: { $0 <= unitsPerHour }) ?? 0
+    }
+    
+    public func estimatedDuration(toBolus units: Double) -> TimeInterval {
+        TimeInterval(units / Pod.bolusDeliveryRate)
     }
 
     public var maximumBasalScheduleEntryCount: Int {

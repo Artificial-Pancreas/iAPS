@@ -53,7 +53,7 @@
 "mg/dL/U" = "毫克/分升/U";
 
 /* The short unit display string for millimoles per liter */
-"mmol/L" = "mmol/L";
+"mmol/L" = "毫摩尔/升";
 
 /* The short unit display string for millimoles per liter per U */
 "mmol/L/U" = "毫摩尔/升/U";
@@ -65,7 +65,7 @@
 "No values found" = "未发现数据";
 
 /* Sensor state description for the valid state */
-"OK" = "Ok";
+"OK" = "OK";
 
 /* The error recovery suggestion when Health sharing was denied */
 "Please re-enable sharing in Health" = "请先在Health Kit中允许Loop读写数据";
@@ -97,8 +97,3 @@
 /* The long unit display string for international units of insulin per hour */
 "Units/hour" = "单位/小时";
 
-/* The long unit display string for a singular hour */
-"Hour" = "Hour";
-
-/* The long unit display string for hours */
-"Hours" = "Hours";

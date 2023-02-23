@@ -154,7 +154,7 @@ class OmniBLESettingsViewModel: ObservableObject {
         if pumpManager.isClockOffset {
             return DashSettingsNotice(
                 title: LocalizedString("Time Change Detected", comment: "title for time change detected notice"),
-                description: LocalizedString("The time on your pump is different from the current time. Your pump’s time controls your scheduled basal rates. You can review the time difference and configure your pump.", comment: "description for time change detected notice"))
+                description: LocalizedString("The time on your pump is different from the current time. Your pump’s time controls your scheduled therapy settings. Scroll down to Pump Time row to review the time difference and configure your pump.", comment: "description for time change detected notice"))
         } else {
             return nil
         }
@@ -497,8 +497,9 @@ extension OmniBLEPumpManager {
                 return .expired
             default:
                 let remaining = Pod.nominalPodLife - (status.faultEventTimeSinceActivation ?? Pod.nominalPodLife)
+                let podTimeUntilReminder = remaining - (state.scheduledExpirationReminderOffset ?? 0)
                 if remaining > 0 {
-                    return .timeRemaining(remaining)
+                    return .timeRemaining(timeUntilExpiration: remaining, timeUntilExpirationReminder: podTimeUntilReminder)
                 } else {
                     return .expired
                 }
@@ -513,7 +514,8 @@ extension OmniBLEPumpManager {
         case .active:
             if let podTimeRemaining = podTimeRemaining {
                 if podTimeRemaining > 0 {
-                    return .timeRemaining(podTimeRemaining)
+                    let podTimeUntilReminder = podTimeRemaining - (state.scheduledExpirationReminderOffset ?? 0)
+                    return .timeRemaining(timeUntilExpiration: podTimeRemaining, timeUntilExpirationReminder: podTimeUntilReminder)
                 } else {
                     return .expired
                 }

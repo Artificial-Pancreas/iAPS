@@ -11,6 +11,7 @@ struct FreeAPSSettings: JSON, Equatable {
     var debugOptions: Bool = false
     var insulinReqFraction: Decimal = 0.7
     var skipBolusScreenAfterCarbs: Bool = false
+    var displayHR: Bool = false
     var cgm: CGMType = .nightscout
     var uploadGlucose: Bool = false
     var useCalendar: Bool = false
@@ -23,6 +24,7 @@ struct FreeAPSSettings: JSON, Equatable {
     var highGlucose: Decimal = 270
     var carbsRequiredThreshold: Decimal = 10
     var animatedBackground: Bool = false
+    var displayStatistics: Bool = false
 }
 
 extension FreeAPSSettings: Decodable {
@@ -69,6 +71,10 @@ extension FreeAPSSettings: Decodable {
 
         if let skipBolusScreenAfterCarbs = try? container.decode(Bool.self, forKey: .skipBolusScreenAfterCarbs) {
             settings.skipBolusScreenAfterCarbs = skipBolusScreenAfterCarbs
+        }
+
+        if let displayHR = try? container.decode(Bool.self, forKey: .displayHR) {
+            settings.displayHR = displayHR
         }
 
         if let cgm = try? container.decode(CGMType.self, forKey: .cgm) {
@@ -120,6 +126,10 @@ extension FreeAPSSettings: Decodable {
 
         if let animatedBackground = try? container.decode(Bool.self, forKey: .animatedBackground) {
             settings.animatedBackground = animatedBackground
+        }
+
+        if let displayStatistics = try? container.decode(Bool.self, forKey: .displayStatistics) {
+            settings.displayStatistics = displayStatistics
         }
 
         self = settings

@@ -28,9 +28,9 @@ extension MessageError: LocalizedError {
         case .invalidSequence:
             return LocalizedString("Unexpected message sequence number", comment: "Description for MessageError invalidSequence")
         case .invalidAddress(address: let address):
-            return String(format: LocalizedString("Invalid address: (%1$@)", comment: "Description for MessageError invalidSequence"), String(format: "%08x", address))
-        case .parsingError:
-            return LocalizedString("Parsing Error: ", comment: "Description for MessageError parsingError")
+            return String(format: LocalizedString("Invalid address: (%1$@)", comment: "Description for MessageError invalidAddress"), String(format: "%08x", address))
+        case .parsingError(let offset, let data, let error):
+            return String(format: LocalizedString("Parsing Error: %1$@ in (%2$@)", comment: "Description for MessageError parsingError. (1: decription of error), (2: hexadecimal data starting at offset)"), String(describing: error), data.suffix(from: offset).hexadecimalString)
         case .unknownValue(let value, let typeDescription):
             return String(format: LocalizedString("Unknown Value (%1$@) for type %2$@", comment: "Format string for description of MessageError unknownValue. (1: value) (2: Type)"), String(describing: value), typeDescription)
         case .validationFailed(let description):

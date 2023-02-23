@@ -21,13 +21,13 @@ struct LoopView: View {
         return formatter
     }
 
-    private let rect = CGRect(x: 0, y: 0, width: 32, height: 32)
+    private let rect = CGRect(x: 0, y: 0, width: 28, height: 28)
     var body: some View {
         VStack(alignment: .center) {
             ZStack {
                 Circle()
-                    .strokeBorder(color, lineWidth: 6)
-                    .frame(width: rect.width, height: rect.height)
+                    .strokeBorder(color, lineWidth: 5)
+                    .frame(width: rect.width, height: rect.height, alignment: .bottom)
                     .mask(mask(in: rect).fill(style: FillStyle(eoFill: true)))
                 if isLooping {
                     ProgressView()
@@ -51,7 +51,7 @@ struct LoopView: View {
         if minAgo > 1440 {
             return "--"
         }
-        return "\(minAgo) " + NSLocalizedString("min ago", comment: "Minutes ago since last loop")
+        return "\(minAgo) " + NSLocalizedString("min", comment: "Minutes ago since last loop")
     }
 
     private var color: Color {

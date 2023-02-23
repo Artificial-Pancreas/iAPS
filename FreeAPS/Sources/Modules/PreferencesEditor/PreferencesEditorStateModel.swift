@@ -5,16 +5,18 @@ extension PreferencesEditor {
     final class StateModel: BaseStateModel<Provider>, PreferencesSettable { private(set) var preferences = Preferences()
         @Published var unitsIndex = 1
         @Published var allowAnnouncements = false
-        @Published var insulinReqFraction: Decimal = 0.7
+        @Published var insulinReqFraction: Decimal = 2.0
         @Published var skipBolusScreenAfterCarbs = false
-
+        @Published var displayHR = false
+        @Published var displayStatistics = false
         @Published var sections: [FieldSection] = []
 
         override func subscribe() {
             preferences = provider.preferences
-
             subscribeSetting(\.allowAnnouncements, on: $allowAnnouncements) { allowAnnouncements = $0 }
             subscribeSetting(\.insulinReqFraction, on: $insulinReqFraction) { insulinReqFraction = $0 }
+            subscribeSetting(\.displayHR, on: $displayHR) { displayHR = $0 }
+            subscribeSetting(\.displayStatistics, on: $displayStatistics) { displayStatistics = $0 }
             subscribeSetting(\.skipBolusScreenAfterCarbs, on: $skipBolusScreenAfterCarbs) { skipBolusScreenAfterCarbs = $0 }
 
             subscribeSetting(\.units, on: $unitsIndex.map { $0 == 0 ? GlucoseUnits.mgdL : .mmolL }) {
@@ -23,7 +25,71 @@ extension PreferencesEditor {
                 self?.provider.migrateUnits()
             }
 
-            // MARK: - Main fields
+            let statFields = [
+                Field(
+                    displayName: NSLocalizedString(
+                        "Low Glucose Limit",
+                        comment: "Display As Low Glucose Percantage Under This Value"
+                    ) + " (\(settingsManager.settings.units.rawValue))",
+
+                    type: .decimal(keypath: \.low),
+                    infoText: NSLocalizedString(
+                        "Blood Glucoses Under This Value Will Added To And Displayed as Low Glucose Percantage",
+                        comment: "Description for Low Glucose Limit"
+                    ),
+                    settable: self
+                ),
+                Field(
+                    displayName: NSLocalizedString(
+                        "High Glucose Limit",
+                        comment: "Limit For High Glucose in Statistics View"
+                    ) + " (\(settingsManager.settings.units.rawValue))",
+
+                    type: .decimal(keypath: \.high),
+                    infoText: NSLocalizedString(
+                        "Blood Glucoses Over This Value Will Added To And Displaved as High Glucose Percantage",
+                        comment: "High Glucose Limit"
+                    ),
+                    settable: self
+                ),
+                Field(
+                    displayName: NSLocalizedString(
+                        "Update every number of minutes:",
+                        comment: "How often to update the statistics"
+                    ),
+
+                    type: .decimal(keypath: \.updateInterval),
+                    infoText: NSLocalizedString(
+                        "Default is 20 minutes. How often to update and save the statistics.json and to upload last array, when enabled, to Nightscout.",
+                        comment: "Description for update interval for statistics"
+                    ),
+                    settable: self
+                ),
+                Field(
+                    displayName: NSLocalizedString(
+                        "Display Loop Cycle statistics",
+                        comment: "Display Display Loop Cycle statistics in statPanel"
+                    ),
+                    type: .boolean(keypath: \.displayLoops),
+                    infoText: NSLocalizedString(
+                        "Displays Loop statistics in the statPanel in Home View",
+                        comment: "Description for Display Loop statistics"
+                    ),
+                    settable: self
+                ),
+                Field(
+                    displayName: NSLocalizedString(
+                        "Override HbA1c unit",
+                        comment: "Display %"
+                    ),
+                    type: .boolean(keypath: \.overrideHbA1cUnit),
+                    infoText: NSLocalizedString(
+                        "Change default HbA1c unit in statPanlel. The unit in statPanel will be updateded with next statistics.json update",
+                        comment: "Description for Override HbA1c unit"
+                    ),
+                    settable: self
+                )
+            ]
 
             let mainFields = [
                 Field(
@@ -89,7 +155,74 @@ extension PreferencesEditor {
                 )
             ]
 
-            // MARK: - SMB fields
+            let dynamicISF = [
+                Field(
+                    displayName: NSLocalizedString("Enable Dynamic ISF", comment: "Enable Dynamic ISF"),
+                    type: .boolean(keypath: \.useNewFormula),
+                    infoText: NSLocalizedString(
+                        "Calculate a new ISF with every loop cycle. New ISF will be based on current BG, TDD of insulin (past 24 hours or a weighted average) and an Adjustment Factor (default is 1).\n\nDynamic ISF and CR ratios will be limited by your autosens.min/max limits.\n\nDynamic ratio replaces the autosens.ratio:\n\nNew ISF = Static ISF / Dynamic ratio,\n\nDynamic ratio = profile.sens * adjustmentFactor * tdd * Math.log(BG/insulinFactor+1) / 1800,\n\ninsulinFactor = 120 - InsulinPeakTimeInMinutes",
+                        comment: "Enable Dynamic ISF"
+                    ),
+                    settable: self
+                ),
+                Field(
+                    displayName: NSLocalizedString("Enable Dynamic CR", comment: "Use Dynamic CR together with Dynamic ISF"),
+                    type: .boolean(keypath: \.enableDynamicCR),
+                    infoText: NSLocalizedString(
+                        "Use Dynamic CR. The dynamic ratio will be used for CR as follows:\n\n When ratio > 1:  dynCR = (newRatio - 1) / 2 + 1.\nWhen ratio < 1: dynCR = CR/dynCR.\n\nDon't use toghether with a high Insulin Fraction (> 2)",
+                        comment: "Use Dynamic CR together with Dynamic ISF"
+                    ),
+                    settable: self
+                ),
+                Field(
+                    displayName: NSLocalizedString("Adjustment Factor", comment: "Adjust Dynamic ISF constant"),
+                    type: .decimal(keypath: \.adjustmentFactor),
+                    infoText: NSLocalizedString(
+                        "Adjust Dynamic ratios by a constant. Default is 1. Higher than 1 => lower ISF",
+                        comment: "Adjust Dynamic ISF constant"
+                    ),
+                    settable: self
+                ),
+                Field(
+                    displayName: NSLocalizedString("Use Sigmoid Function", comment: "Use Sigmoid Function"),
+                    type: .boolean(keypath: \.sigmoid),
+                    infoText: NSLocalizedString(
+                        "Use a sigmoid function for ISF (and for CR, when enabled), instead of the default Logarithmic formula. Requires the Dynamic ISF setting to be enabled in settings\n\nThe Adjustment setting adjusts the slope of the curve (Y: Dynamic ratio, X: Blood Glucose). A lower value ==> less steep == less aggressive.\n\nThe autosens.min/max settings determines both the max/min limits for the dynamic ratio AND how much the dynamic ratio is adjusted. If AF is the slope of the curve, the autosens.min/max is the height of the graph, the Y-interval, where Y: dynamic ratio. The curve will always have a sigmoid shape, no matter which autosens.min/max settings are used, meaning these settings have big consequences for the outcome of the computed dynamic ISF. Please be careful setting a too high autosens.max value. With a proper profile ISF setting, you will probably never need it to be higher than 1.5\n\nAn Autosens.max limit > 1.5 is not advisable when using the sigmoid function.",
+                        comment: "Use Sigmoid Function"
+                    ),
+                    settable: self
+                ),
+                Field(
+                    displayName: NSLocalizedString(
+                        "Weighted Average of TDD. Weight of past 24 hours:",
+                        comment: "Weight of past 24 hours of insulin"
+                    ),
+                    type: .decimal(keypath: \.weightPercentage),
+                    infoText: NSLocalizedString(
+                        "Has to be > 0 and <= 1.\nDefault is 0.65 (65 %) * TDD. The rest will be from average of total data (up to 14 days) of all TDD calculations (35 %). To only use past 24 hours, set this to 1.\n\nTo avoid sudden fluctuations, for instance after a big meal, an average of the past 2 hours of TDD calculations is used instead of just the current TDD (past 24 hours at this moment).",
+                        comment: "Weight of past 24 hours of insulin"
+                    ),
+                    settable: self
+                ),
+                Field(
+                    displayName: NSLocalizedString("Adjust basal", comment: "Enable adjustment of basal profile"),
+                    type: .boolean(keypath: \.tddAdjBasal),
+                    infoText: NSLocalizedString(
+                        "Enable adjustment of basal based on the ratio of current TDD / 7 day average TDD",
+                        comment: "Enable adjustment of basal profile"
+                    ),
+                    settable: self
+                ),
+                Field(
+                    displayName: NSLocalizedString("Threshold Setting (mg/dl)", comment: "Threshold Setting"),
+                    type: .decimal(keypath: \.threshold_setting),
+                    infoText: NSLocalizedString(
+                        "The default threshold in FAX depends on your current minimum BG target, as follows:\n\nIf your minimum BG target = 90 mg/dl -> threshold = 65 mg/dl,\n\nif minimum BG target = 100 mg/dl -> threshold = 70 mg/dl,\n\nminimum BG target = 110 mg/dl -> threshold = 75 mg/dl,\n\nand if minimum BG target = 130 mg/dl  -> threshold = 85 mg/dl.\n\nThis setting allows you to change the default to a higher threshold for looping with dynISF. Valid values are 65 mg/dl<= Threshold Setting <= 120 mg/dl.",
+                        comment: "Threshold Setting"
+                    ),
+                    settable: self
+                )
+            ]
 
             let smbFields = [
                 Field(
@@ -98,6 +231,15 @@ extension PreferencesEditor {
                     infoText: NSLocalizedString(
                         "Defaults to false. When true, always enable supermicrobolus (unless disabled by high temptarget).",
                         comment: "Enable SMB Always"
+                    ),
+                    settable: self
+                ),
+                Field(
+                    displayName: NSLocalizedString("Max Delta-BG Threshold SMB", comment: "Max Delta-BG Threshold"),
+                    type: .decimal(keypath: \.maxDeltaBGthreshold),
+                    infoText: NSLocalizedString(
+                        "Defaults to 0.2 (20%). Maximum positive percentual change of BG level to use SMB, above that will disable SMB. Hardcoded cap of 40%. For UAM fully-closed-loop 30% is advisable. Observe in log and popup (maxDelta 27 > 20% of BG 100 - disabling SMB!).",
+                        comment: "Max Delta-BG Threshold"
                     ),
                     settable: self
                 ),
@@ -138,6 +280,27 @@ extension PreferencesEditor {
                     settable: self
                 ),
                 Field(
+                    displayName: NSLocalizedString("Enable SMB With High BG", comment: "Enable SMB With High BG"),
+                    type: .boolean(keypath: \.enableSMB_high_bg),
+                    infoText: NSLocalizedString(
+                        "Enable SMBs when a high BG is detected, based on the high BG target (adjusted or profile)",
+                        comment: "Enable SMB With High BG"
+                    ),
+                    settable: self
+                ),
+                Field(
+                    displayName: NSLocalizedString(
+                        "... When Blood Glucose Is Over (mg/dl):",
+                        comment: "... When Blood Glucose Is Over (mg/dl):"
+                    ),
+                    type: .decimal(keypath: \.enableSMB_high_bg_target),
+                    infoText: NSLocalizedString(
+                        "Set the value enableSMB_high_bg will compare against to enable SMB. If BG > than this value, SMBs should enable.",
+                        comment: "... When Blood Glucose Is Over (mg/dl):"
+                    ),
+                    settable: self
+                ),
+                Field(
                     displayName: NSLocalizedString("Enable UAM", comment: "Enable UAM"),
                     type: .boolean(keypath: \.enableUAM),
                     infoText: NSLocalizedString(
@@ -165,7 +328,16 @@ extension PreferencesEditor {
                     settable: self
                 ),
                 Field(
-                    displayName: NSLocalizedString("SMB Interval",comment: "SMB Interval"),
+                    displayName: NSLocalizedString("SMB DeliveryRatio", comment: "SMB DeliveryRatio"),
+                    type: .decimal(keypath: \.smbDeliveryRatio),
+                    infoText: NSLocalizedString(
+                        "Default value: 0.5 This is another key OpenAPS safety cap, and specifies what share of the total insulin required can be delivered as SMB. Increase this experimental value slowly and with caution.",
+                        comment: "SMB DeliveryRatio"
+                    ),
+                    settable: self
+                ),
+                Field(
+                    displayName: NSLocalizedString("SMB Interval", comment: "SMB Interval"),
                     type: .decimal(keypath: \.smbInterval),
                     infoText: NSLocalizedString(
                         "Minimum duration in minutes for new SMB since last SMB or manual bolus",
@@ -176,7 +348,10 @@ extension PreferencesEditor {
                 Field(
                     displayName: NSLocalizedString("Bolus Increment", comment: "Bolus Increment"),
                     type: .decimal(keypath: \.bolusIncrement),
-                    infoText: NSLocalizedString("Smallest SMB / SMB increment in oref0. Minimum amount for Medtronic pumps is 0.1 U, whereas for Omnipod it’s 0.05 U. The default value is 0.1.", comment: "Bolus Increment"),
+                    infoText: NSLocalizedString(
+                        "Smallest enacted SMB amount. Minimum amount for Omnipod pumps is 0.05 U, whereas for Medtronic pumps it differs for various models, from 0.025 U to 0.10 U. Please check the minimum bolus amount which can be delivered by your pump. The default value is 0.1.",
+                        comment: "Bolus Increment"
+                    ),
                     settable: self
                 )
             ]
@@ -381,7 +556,14 @@ extension PreferencesEditor {
 
             sections = [
                 FieldSection(
+                    displayName: NSLocalizedString("Statistics", comment: "Options for Statistics"), fields: statFields
+                ),
+                FieldSection(
                     displayName: NSLocalizedString("OpenAPS main settings", comment: "OpenAPS main settings"), fields: mainFields
+                ),
+                FieldSection(
+                    displayName: NSLocalizedString("Dynamic settings", comment: "Dynamic settings"),
+                    fields: dynamicISF
                 ),
                 FieldSection(
                     displayName: NSLocalizedString("OpenAPS SMB settings", comment: "OpenAPS SMB settings"), fields: smbFields

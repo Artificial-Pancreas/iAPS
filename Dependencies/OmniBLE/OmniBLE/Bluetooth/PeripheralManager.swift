@@ -451,6 +451,14 @@ extension PeripheralManager: CBPeripheralDelegate {
 
     }
 
+    func peripheral(_ peripheral: CBPeripheral, didReadRSSI RSSI: NSNumber, error: Error?) {
+        guard error == nil else {
+            self.log.error("Error reading rssi: %{public}@", String(describing: RSSI))
+            return
+        }
+        self.log.default("didReadRSSI: %{public}@", String(describing: RSSI))
+    }
+
 }
 
 

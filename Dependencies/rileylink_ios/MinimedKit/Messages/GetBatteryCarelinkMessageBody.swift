@@ -34,13 +34,22 @@ public class GetBatteryCarelinkMessageBody: DecodableMessageBody {
     public let volts: Double
     
     public required init?(rxData: Data) {
-        guard rxData.count == type(of: self).length else {
+        guard rxData.count == Self.length else {
             return nil
         }
         
         volts = Double(Int(rxData[2]) << 8 + Int(rxData[3])) / 100.0
         status = BatteryStatus(statusByte: rxData[1])
         txData = rxData
+    }
+
+    init(status: BatteryStatus, volts: Double) {
+        self.status = status
+        self.volts = volts
+        self.txData = Data().paddedTo(length: Self.length)
+        let voltsInt = Int(volts * 100)
+        txData[2] = UInt8(voltsInt >> 8 & 0xff)
+        txData[3] = UInt8(voltsInt & 0xff)
     }
 
     public var description: String {

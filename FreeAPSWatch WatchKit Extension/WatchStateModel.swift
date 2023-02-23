@@ -9,7 +9,6 @@ class WatchStateModel: NSObject, ObservableObject {
     @Published var glucose = "00"
     @Published var trend = "→"
     @Published var delta = "+00"
-    @Published var eventualBG = ""
     @Published var lastLoopDate: Date?
     @Published var glucoseDate: Date?
     @Published var bolusIncrement: Decimal?
@@ -21,10 +20,11 @@ class WatchStateModel: NSObject, ObservableObject {
     @Published var cob: Decimal?
     @Published var tempTargets: [TempTargetWatchPreset] = []
     @Published var bolusAfterCarbs = true
-
     @Published var isCarbsViewActive = false
     @Published var isTempTargetViewActive = false
     @Published var isBolusViewActive = false
+    @Published var displayHR = false
+    @Published var eventualBG = ""
     @Published var isConfirmationViewActive = false {
         didSet {
             confirmationTimeout = nil
@@ -158,8 +158,9 @@ class WatchStateModel: NSObject, ObservableObject {
         cob = state.cob
         tempTargets = state.tempTargets
         bolusAfterCarbs = state.bolusAfterCarbs ?? true
-        eventualBG = state.eventualBG ?? ""
         lastUpdate = Date()
+        eventualBG = state.eventualBG ?? ""
+        displayHR = state.displayHR ?? false
     }
 }
 

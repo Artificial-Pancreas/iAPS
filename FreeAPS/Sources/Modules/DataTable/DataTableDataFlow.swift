@@ -173,5 +173,6 @@ protocol DataTableProvider: Provider {
     func carbs() -> [CarbsEntry]
     func glucose() -> [BloodGlucose]
     func deleteCarbs(at date: Date)
+    func deleteInsulin(at date: Date)
     func deleteGlucose(id: String)
 }

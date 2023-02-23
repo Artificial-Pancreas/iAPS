@@ -26,6 +26,7 @@ struct TransmitterTimeRxMessage: TransmitterRxMessage {
         status = data[1]
         currentTime = data[2..<6].toInt()
         sessionStartTime = data[6..<10].toInt()
+
     }
 }
 

@@ -18,13 +18,18 @@ public protocol MinimedPumpManagerStateObserver: AnyObject {
 public class MinimedPumpManager: RileyLinkPumpManager {
     
     public static let managerIdentifier = "Minimed500"
+
+    // Primarily used for testing
+    public let dateGenerator: () -> Date
     
     public var managerIdentifier: String {
         return MinimedPumpManager.managerIdentifier
     }
     
-    public init(state: MinimedPumpManagerState, rileyLinkDeviceProvider: RileyLinkDeviceProvider, pumpOps: PumpOps? = nil) {
+    public init(state: MinimedPumpManagerState, rileyLinkDeviceProvider: RileyLinkDeviceProvider, pumpOps: PumpOps? = nil, dateGenerator: @escaping () -> Date = Date.init) {
         self.lockedState = Locked(state)
+
+        self.dateGenerator = dateGenerator
 
         self.hkDevice = HKDevice(
             name: MinimedPumpManager.managerIdentifier,
@@ -62,6 +67,9 @@ public class MinimedPumpManager: RileyLinkPumpManager {
     }
 
     public private(set) var pumpOps: PumpOps!
+
+    // We issue notifications at 30, 20, and 10. Indicators turn warning color at 30.
+    public let lowReservoirWarningLevel = 30.0
 
     // MARK: - PumpManager
 
@@ -149,10 +157,10 @@ public class MinimedPumpManager: RileyLinkPumpManager {
 
                     if let status = newValue.latestPumpStatus {
                         if case .resumed = state.suspendState, status.suspended {
-                            state.suspendState = .suspended(Date())
+                            state.suspendState = .suspended(dateGenerator())
                         }
                         if case .suspended = state.suspendState, !status.suspended {
-                            state.suspendState = .resumed(Date())
+                            state.suspendState = .resumed(dateGenerator())
                         }
                     }
                 })
@@ -251,10 +259,10 @@ public class MinimedPumpManager: RileyLinkPumpManager {
         
         if let alertLevel = state.rileyLinkBatteryAlertLevel,
            level <= alertLevel,
-           state.lastRileyLinkBatteryAlertDate.addingTimeInterval(repeatInterval) < Date()
+           state.lastRileyLinkBatteryAlertDate.addingTimeInterval(repeatInterval) < dateGenerator()
         {
             self.setState { state in
-                state.lastRileyLinkBatteryAlertDate = Date()
+                state.lastRileyLinkBatteryAlertDate = dateGenerator()
             }
             self.pumpDelegate.notify { delegate in
                 let identifier = Alert.Identifier(managerIdentifier: self.managerIdentifier, alertIdentifier: "lowRLBattery")
@@ -328,7 +336,7 @@ extension MinimedPumpManager {
         try session.setSuspendResumeState(suspendResumeState)
         
         setState { (state) in
-            let date = Date()
+            let date = dateGenerator()
             switch suspendResumeState {
             case .suspend:
                 state.suspendState = .suspended(date)
@@ -338,15 +346,15 @@ extension MinimedPumpManager {
             
             if suspendResumeState == .suspend {
                 let pumpModel = state.pumpModel
-                state.unfinalizedBolus?.cancel(at: Date(), pumpModel: pumpModel)
+                state.unfinalizedBolus?.cancel(at: dateGenerator(), pumpModel: pumpModel)
                 if let bolus = state.unfinalizedBolus {
                     state.pendingDoses.append(bolus)
                 }
                 state.unfinalizedBolus = nil
                 
-                state.pendingDoses.append(UnfinalizedDose(suspendStartTime: Date()))
+                state.pendingDoses.append(UnfinalizedDose(suspendStartTime: dateGenerator()))
             } else {
-                state.pendingDoses.append(UnfinalizedDose(resumeStartTime: Date(), insulinType: insulinType))
+                state.pendingDoses.append(UnfinalizedDose(resumeStartTime: dateGenerator(), insulinType: insulinType))
             }
         }
     }
@@ -457,7 +465,7 @@ extension MinimedPumpManager {
         }
     }
 
-    public func buildPumpStatusHighlight(for state: MinimedPumpManagerState, recents: MinimedPumpManagerRecents, andDate date: Date = Date()) -> PumpStatusHighlight? {
+    public func buildPumpStatusHighlight(for state: MinimedPumpManagerState, recents: MinimedPumpManagerRecents, andDate date: Date) -> PumpStatusHighlight? {
 
         if case .suspended = state.suspendState {
             return PumpStatusHighlight(
@@ -519,9 +527,9 @@ extension MinimedPumpManager {
 
      - parameter units:    The number of units remaining
      - parameter date:     The date the reservoir was read
-     - parameter timeLeft: The approximate time before the reservoir is empty
+     - parameter completion: completion handler
      */
-    private func updateReservoirVolume(_ units: Double, at date: Date, withTimeLeft timeLeft: TimeInterval?) {
+    private func updateReservoirVolume(_ units: Double, at date: Date, completion: @escaping (Result<Bool, Error>) -> Void) {
         // Must be called from the sessionQueue
 
         setState { (state) in
@@ -530,7 +538,18 @@ extension MinimedPumpManager {
 
         pumpDelegate.notify { (delegate) in
             delegate?.pumpManager(self, didReadReservoirValue: units, at: date) { (result) in
-                self.pumpManagerDelegateDidProcessReservoirValue(result, at: date)
+                switch result {
+                case .failure(let error):
+                    completion(.failure(error))
+                    break
+                case .success(let (newValue, lastValue, areStoredValuesContinuous)):
+                    self.evaluateReservoirAlerts(lastValue: lastValue, newValue: newValue, areStoredValuesContinuous: areStoredValuesContinuous)
+
+                    if areStoredValuesContinuous {
+                        self.recents.lastContinuousReservoir = date
+                    }
+                    completion(.success(areStoredValuesContinuous))
+                }
             }
         }
 
@@ -587,7 +606,7 @@ extension MinimedPumpManager {
                 return
             }
 
-            let warningThresholds: [Double] = [10, 20, 30]
+            let warningThresholds: [Double] = [10, 20, lowReservoirWarningLevel]
 
             for threshold in warningThresholds {
                 if newValue.unitVolume <= threshold && previousVolume > threshold {
@@ -606,30 +625,9 @@ extension MinimedPumpManager {
                 }
             }
         }
-
     }
 
-    /// Called on an unknown queue by the delegate
-    private func pumpManagerDelegateDidProcessReservoirValue(_ result: Result<(newValue: ReservoirValue, lastValue: ReservoirValue?, areStoredValuesContinuous: Bool), Error>, at validDate: Date) {
-        switch result {
-        case .failure:
-            break
-        case .success(let (newValue, lastValue, areStoredValuesContinuous)):
-            evaluateReservoirAlerts(lastValue: lastValue, newValue: newValue, areStoredValuesContinuous: areStoredValuesContinuous)
 
-            if areStoredValuesContinuous {
-                recents.lastContinuousReservoir = validDate
-            }
-            if state.preferredInsulinDataSource == .pumpHistory || !areStoredValuesContinuous {
-                fetchPumpHistory { (error) in
-                    if let error = error {
-                        self.log.error("Post-reservoir-store fetchPumpHistory failed: %{public}@", String(describing: error))
-                    }
-                }
-            }
-        }
-    }
-    
     static func reconcilePendingDosesWith(_ events: [NewPumpEvent], reconciliationMappings: [Data:ReconciledDoseMapping], pendingDoses: [UnfinalizedDose]) ->
         (remainingEvents: [NewPumpEvent], reconciliationMappings: [Data:ReconciledDoseMapping], pendingDoses: [UnfinalizedDose]) {
             
@@ -666,15 +664,15 @@ extension MinimedPumpManager {
         return (remainingEvents: remainingPumpEvents, reconciliationMappings: newReconciliationMapping, pendingDoses: allPending)
     }
 
-    private func reconcilePendingDosesWith(_ events: [NewPumpEvent]) -> [NewPumpEvent] {
+    private func reconcilePendingDosesWith(_ events: [NewPumpEvent], fetchedAt: Date) -> [NewPumpEvent] {
         // Must be called from the sessionQueue
         return setStateWithResult { (state) -> [NewPumpEvent] in
             let allPending = (state.pendingDoses + [state.unfinalizedTempBasal, state.unfinalizedBolus]).compactMap({ $0 })
             let result = MinimedPumpManager.reconcilePendingDosesWith(events, reconciliationMappings: state.reconciliationMappings, pendingDoses: allPending)
-            state.lastReconciliation = Date()
+            state.lastReconciliation = dateGenerator()
             
             // Pending doses and reconciliation mappings will not be kept past this threshold
-            let expirationCutoff = Date().addingTimeInterval(.hours(-12))
+            let expirationCutoff = dateGenerator().addingTimeInterval(.hours(-12))
             
             state.reconciliationMappings = result.reconciliationMappings.filter { (key, value) -> Bool in
                 return value.startTime >= expirationCutoff
@@ -695,6 +693,13 @@ extension MinimedPumpManager {
                         break
                     }
                 }
+
+                // If bolus should have ended more than a minute ago, and is not showing in pump history, remove it
+                if dose.doseType == .bolus, dose.finishTime < fetchedAt.addingTimeInterval(.minutes(-1)), !dose.isReconciledWithHistory {
+                    log.default("Removing bolus that did not reconcile with history: %{public}@", String(describing: dose))
+                    return false
+                }
+
                 return dose.startTime >= expirationCutoff
             }
             
@@ -753,7 +758,7 @@ extension MinimedPumpManager {
                     let newPumpEvents = historyEvents.pumpEvents(from: model)
                     
                     // During reconciliation, some pump events may be reconciled as pending doses and removed. Remaining events should be annotated with current insulinType
-                    let remainingHistoryEvents = self.reconcilePendingDosesWith(newPumpEvents).map { (event) -> NewPumpEvent in
+                    let remainingHistoryEvents = self.reconcilePendingDosesWith(newPumpEvents, fetchedAt: self.dateGenerator()).map { (event) -> NewPumpEvent in
                         return NewPumpEvent(
                             date: event.date,
                             dose: event.dose?.annotated(with: insulinType),
@@ -774,7 +779,7 @@ extension MinimedPumpManager {
                         delegate.pumpManager(self, hasNewPumpEvents: remainingHistoryEvents + pendingEvents, lastReconciliation: self.state.lastReconciliation, completion: { (error) in
                             // Called on an unknown queue by the delegate
                             if error == nil {
-                                self.recents.lastAddedPumpEvents = Date()
+                                self.recents.lastAddedPumpEvents = self.dateGenerator()
                                 self.setState({ (state) in
                                     // Remove any pending doses that have been reconciled and are finished
                                     if let bolus = state.unfinalizedBolus, bolus.isReconciledWithHistory, bolus.isFinished {
@@ -806,7 +811,7 @@ extension MinimedPumpManager {
     private func storePendingPumpEvents(forceFinalization: Bool = false, _ completion: @escaping (_ error: MinimedPumpManagerError?) -> Void) {
         // Must be called from the sessionQueue
         let events = (self.state.pendingDoses + [self.state.unfinalizedBolus, self.state.unfinalizedTempBasal]).compactMap({ $0?.newPumpEvent(forceFinalization: forceFinalization) })
-                
+
         log.debug("Storing pending pump events: %{public}@", String(describing: events))
 
         self.pumpDelegate.notify({ (delegate) in
@@ -1120,11 +1125,8 @@ extension MinimedPumpManager: PumpManager {
             return
         }
 
-        refreshPumpData(completion)
-
         log.default("Pump data is stale, fetching.")
-
-
+        refreshPumpData(completion)
     }
 
     private func refreshPumpData(_ completion: ((Date?) -> Void)?) {
@@ -1141,7 +1143,6 @@ extension MinimedPumpManager: PumpManager {
 
             self.pumpOps.runSession(withName: "Get Pump Status", using: device) { (session) in
                 do {
-                    defer { completion?(self.lastSync) }
 
                     let status = try session.getCurrentPumpStatus()
                     guard var date = status.clock.date else {
@@ -1149,8 +1150,15 @@ extension MinimedPumpManager: PumpManager {
                         throw PumpManagerError.configuration(MinimedPumpManagerError.noDate)
                     }
 
+                    // Initialize basal schedule, if unset
+                    if self.state.basalSchedule.entries.count == 0, let basalSchedule = try? session.getBasalSchedule() {
+                        self.setState { state in
+                            state.basalSchedule = basalSchedule
+                        }
+                    }
+
                     // Check if the clock should be reset
-                    if abs(date.timeIntervalSinceNow) > .seconds(20) {
+                    if abs(date.timeIntervalSince(self.dateGenerator())) > .seconds(20) {
                         self.log.error("Pump clock is more than 20 seconds off. Resetting.")
                         self.pumpDelegate.notify({ (delegate) in
                             delegate?.pumpManager(self, didAdjustPumpClockBy: date.timeIntervalSinceNow)
@@ -1165,16 +1173,35 @@ extension MinimedPumpManager: PumpManager {
                     }
                     self.recents.latestPumpStatus = status
 
-                    self.updateReservoirVolume(status.reservoir, at: date, withTimeLeft: nil)
+                    self.updateReservoirVolume(status.reservoir, at: date) { result in
+                        switch result {
+                        case .failure:
+                            completion?(self.lastSync)
+                        case .success(let areStoredValuesContinuous):
+                            if self.state.preferredInsulinDataSource == .pumpHistory || !areStoredValuesContinuous {
+                                self.fetchPumpHistory { (error) in
+                                    if let error = error {
+                                        self.log.error("fetchPumpHistory failed: %{public}@", String(describing: error))
+                                    }
+                                    completion?(self.lastSync)
+                                }
+                            }
+                        }
+                    }
                 } catch let error {
                     self.log.error("Failed to fetch pump status: %{public}@", String(describing: error))
                     self.pumpDelegate.notify({ (delegate) in
                         delegate?.pumpManager(self, didError: PumpManagerError.communication(error as? LocalizedError))
                     })
                     self.troubleshootPumpComms(using: device)
+                    completion?(self.lastSync)
                 }
             }
         }
+    }
+    
+    public func estimatedDuration(toBolus units: Double) -> TimeInterval {
+        self.state.pumpModel.bolusDeliveryTime(units: units)
     }
     
     public func enactBolus(units: Double, activationType: BolusActivationType, completion: @escaping (PumpManagerError?) -> Void) {
@@ -1212,25 +1239,6 @@ extension MinimedPumpManager: PumpManager {
 
             self.recents.bolusEngageState = .engaging
 
-            // If we don't have recent pump data, or the pump was recently rewound, read new pump data before bolusing.
-            if self.isReservoirDataOlderThan(timeIntervalSinceNow: .minutes(-6)) {
-                do {
-                    let reservoir = try session.getRemainingInsulin()
-
-                    self.pumpDelegate.notify({ (delegate) in
-                        delegate?.pumpManager(self, didReadReservoirValue: reservoir.units, at: reservoir.clock.date!) { _ in
-                            // Ignore result
-                        }
-                    })
-                } catch let error {
-                    self.recents.bolusEngageState = .stable
-                    self.log.error("Failed to fetch pump status: %{public}@", String(describing: error))
-                    completion(.communication(error as? LocalizedError))
-                    return
-                }
-            }
-            
-
             if case .suspended = self.state.suspendState {
                 guard activationType.isAutomatic == false else {
                     self.log.error("Not executing automatic bolus because pump is suspended")
@@ -1248,37 +1256,41 @@ extension MinimedPumpManager: PumpManager {
                 }
             }
 
-            let deliveryTime = self.state.pumpModel.bolusDeliveryTime(units: enactUnits)
+            let deliveryTime = self.estimatedDuration(toBolus: enactUnits)
 
-            do {
-                try session.setNormalBolus(units: enactUnits)
+            var uncertainBolusError: PumpManagerError? = nil
 
-                // Between bluetooth and the radio and firmware, about 2s on average passes before we start tracking
-                let commsOffset = TimeInterval(seconds: -2)
-                let doseStart = Date().addingTimeInterval(commsOffset)
-
-                let dose = UnfinalizedDose(bolusAmount: enactUnits, startTime: doseStart, duration: deliveryTime, insulinType: insulinType, automatic: activationType.isAutomatic)
-                self.setState({ (state) in
-                    state.unfinalizedBolus = dose
-                })
-                self.recents.bolusEngageState = .stable
-
-                self.storePendingPumpEvents({ (error) in
-                    completion(nil)
-                })
-            } catch let error {
-                if case PumpOpsError.bolusInProgress = error {
-                    // Manually initiate bolus... TODO: mark state as bolusing, until it shows up in history
-                }
-                if case PumpOpsError.pumpSuspended = error {
-                    self.setState { state in
-                        state.suspendState = .suspended(Date())
+            if let error = session.setNormalBolus(units: enactUnits) {
+                switch error {
+                case .certain(let certainError):
+                    self.log.error("Bolus failure: %{public}@", String(describing: certainError))
+                    if case PumpOpsError.pumpSuspended = certainError {
+                        self.setState { state in
+                            state.suspendState = .suspended(self.dateGenerator())
+                        }
                     }
+                    self.recents.bolusEngageState = .stable
+                    completion(.communication(certainError))
+                    return
+                case .uncertain(let uncertainError):
+                    uncertainBolusError = .communication(error)
+                    self.log.error("Bolus uncertain failure: %{public}@", String(describing: uncertainError))
                 }
-                self.log.error("Failed to bolus: %{public}@", String(describing: error))
-                self.recents.bolusEngageState = .stable
-                completion(.communication(error as? LocalizedError))
             }
+
+            // Between bluetooth and the radio and firmware, about 2s on average passes before we start tracking
+            let commsOffset = TimeInterval(seconds: -2)
+            let doseStart = self.dateGenerator().addingTimeInterval(commsOffset)
+
+            let dose = UnfinalizedDose(bolusAmount: enactUnits, startTime: doseStart, duration: deliveryTime, insulinType: insulinType, automatic: activationType.isAutomatic)
+            self.setState({ (state) in
+                state.unfinalizedBolus = dose
+            })
+            self.recents.bolusEngageState = .stable
+
+            self.storePendingPumpEvents({ (error) in
+                completion(uncertainBolusError)
+            })
         }
     }
 
@@ -1318,7 +1330,7 @@ extension MinimedPumpManager: PumpManager {
             
             switch result {
             case .success:
-                let now = Date()
+                let now = self.dateGenerator()
 
                 let dose = UnfinalizedDose(tempBasalRate: unitsPerHour, startTime: now, duration: duration, insulinType: insulinType, automatic: true)
                 
@@ -1364,7 +1376,7 @@ extension MinimedPumpManager: PumpManager {
                         let status = try session.getCurrentPumpStatus()
                         self.setState({ (state) in
                             if case .resumed = state.suspendState, status.suspended {
-                                state.suspendState = .suspended(Date())
+                                state.suspendState = .suspended(self.dateGenerator())
                             }
                         })
                         self.recents.latestPumpStatus = status
@@ -1374,30 +1386,6 @@ extension MinimedPumpManager: PumpManager {
                 }
                 self.recents.tempBasalEngageState = .stable
                 return
-            }
-
-            do {
-                // If we haven't fetched history in a while, our preferredInsulinDataSource is probably .reservoir, so
-                // let's take advantage of the pump radio being on.
-                if self.recents.lastAddedPumpEvents.timeIntervalSinceNow < .minutes(-4) {
-                    let clock = try session.getTime()
-                    // Check if the clock should be reset
-                    if let date = clock.date, abs(date.timeIntervalSinceNow) > .seconds(20) {
-                        self.log.error("Pump clock is more than 20 seconds off. Resetting.")
-                        self.pumpDelegate.notify({ (delegate) in
-                            delegate?.pumpManager(self, didAdjustPumpClockBy: date.timeIntervalSinceNow)
-                        })
-                        try session.setTimeToNow()
-                    }
-
-                    self.fetchPumpHistory { (error) in
-                        if let error = error {
-                            self.log.error("Post-basal history fetch failed: %{public}@", String(describing: error))
-                        }
-                    }
-                }
-            } catch {
-                self.log.error("Post-basal time sync failed: %{public}@", String(describing: error))
             }
         }
     }
@@ -1421,6 +1409,7 @@ extension MinimedPumpManager: PumpManager {
             do {
                 let newSchedule = BasalSchedule(repeatingScheduleValues: scheduleItems)
                 try session.setBasalSchedule(newSchedule, for: .standard)
+
 
                 completion(.success(BasalRateSchedule(dailyItems: scheduleItems, timeZone: session.pump.timeZone)!))
             } catch let error {
@@ -1457,9 +1446,28 @@ extension MinimedPumpManager: PumpManager {
         }
     }
 
+    public var isClockOffset: Bool {
+        let now = dateGenerator()
+        return TimeZone.current.secondsFromGMT(for: now) != state.timeZone.secondsFromGMT(for: now)
+    }
+
+    public func setTime(completion: @escaping (PumpManagerError?) -> Void) {
+        pumpOps.runSession(withName: "Set time", usingSelector: rileyLinkDeviceProvider.firstConnectedDevice) { (session) in
+            do {
+                guard let session = session else {
+                    throw PumpManagerError.connection(MinimedPumpManagerError.noRileyLink)
+                }
+                try session.setTimeToNow(in: .current)
+                completion(nil)
+            } catch let error {
+                completion(.communication(error as? LocalizedError))
+            }
+        }
+    }
+
     public func deletePump(completion: @escaping () -> Void) {
         storePendingPumpEvents(forceFinalization: true) { error in
-            self.notifyDelegateOfDeletion {
+            self.notifyDelegateOfDeactivation {
                 completion()
             }
         }

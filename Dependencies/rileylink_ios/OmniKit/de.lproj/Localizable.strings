@@ -1,5 +1,14 @@
+/* Description for an inactive alert modifier */
+" (inactive)" = " (inaktiv)";
+
+/* Description for auto-off */
+"Auto-off" = "Auto-Off";
+
 /* Description for auto-off alarm */
 "Auto-off alarm" = "Auto-Off Alarm";
+
+/* Pod state when basal initialized */
+"Basal initialized" = "Basal initialisiert";
 
 /* Pod state when running below fifty units */
 "Below 50 units" = "Weniger als 50 Einheiten";
@@ -17,7 +26,7 @@
 "Bolusing with temp basal" = "Abgabe mit temporärer Basalrate";
 
 /* Pod state when inserting cannula */
-"Cannula inserting" = "Einsetzen der Kanüle";
+"Cannula inserting" = "Einführen der Kanüle";
 
 /* String describing a dose that was certainly scheduled */
 "Certain" = "Sicher";
@@ -176,3 +185,4 @@
 
 /* Description waiting for pairing reminder */
 "Waiting for pairing reminder" = "Warte auf die Erinnerung zum Koppeln";
+

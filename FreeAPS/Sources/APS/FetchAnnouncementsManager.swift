@@ -13,7 +13,7 @@ final class BaseFetchAnnouncementsManager: FetchAnnouncementsManager, Injectable
     @Injected() var settingsManager: SettingsManager!
 
     private var lifetime = Lifetime()
-    private let timer = DispatchTimer(timeInterval: 1.minutes.timeInterval)
+    private let timer = DispatchTimer(timeInterval: 5.minutes.timeInterval)
 
     init(resolver: Resolver) {
         injectServices(resolver)

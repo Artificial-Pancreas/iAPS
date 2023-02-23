@@ -43,6 +43,10 @@ import Swinject
     }
 
     init() {
+        debug(
+            .default,
+            "FreeAPS X Started: v\(Bundle.main.releaseVersionNumber ?? "")(\(Bundle.main.buildVersionNumber ?? "")) [buildDate: \(Bundle.main.buildDate)]"
+        )
         loadServices()
     }
 

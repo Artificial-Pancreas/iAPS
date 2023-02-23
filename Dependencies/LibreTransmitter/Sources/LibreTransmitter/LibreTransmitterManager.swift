@@ -431,6 +431,8 @@ extension LibreTransmitterManager {
 
         }
 
+        let sensorStartDate = Date().addingTimeInterval(-1 * TimeInterval(minutes: Double(bleData.age)))
+        NSLog("Libre age \(bleData.age), Start Date calculated: \(sensorStartDate)")
 
 //        let device = self.proxy?.device
 
@@ -438,7 +440,7 @@ extension LibreTransmitterManager {
 
         let sortedTrends = bleData.trend.sorted{ $0.date > $1.date}
 
-        let glucose = LibreGlucose.fromTrendMeasurements(sortedTrends, nativeCalibrationData: calibrationData, returnAll: UserDefaults.standard.mmBackfillFromTrend)
+        let glucose = LibreGlucose.fromTrendMeasurements(sortedTrends, nativeCalibrationData: calibrationData, returnAll: UserDefaults.standard.mmBackfillFromTrend, sensorStartDate: sensorStartDate)
         //glucose += LibreGlucose.fromHistoryMeasurements(bleData.history, nativeCalibrationData: calibrationData)
         // while libre2 fram scans contains historymeasurements for the last 8 hours,
         // history from bledata contains just a couple of data points, so we don't bother

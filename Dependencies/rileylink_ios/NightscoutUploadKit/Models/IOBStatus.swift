@@ -11,8 +11,8 @@ import Foundation
 public struct IOBStatus {
     typealias RawValue = [String: Any]
 
-    let timestamp: Date
-    let iob: Double? // basal iob + bolus iob: can be negative
+    public let timestamp: Date
+    public let iob: Double? // basal iob + bolus iob: can be negative
     let basalIOB: Double? // does not include bolus iob
 
     public init(timestamp: Date, iob: Double? = nil, basalIOB: Double? = nil) {

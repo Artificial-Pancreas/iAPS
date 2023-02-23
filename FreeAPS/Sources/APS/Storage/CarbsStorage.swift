@@ -1,3 +1,4 @@
+import CoreData
 import Foundation
 import SwiftDate
 import Swinject
@@ -19,6 +20,8 @@ final class BaseCarbsStorage: CarbsStorage, Injectable {
     @Injected() private var storage: FileStorage!
     @Injected() private var broadcaster: Broadcaster!
 
+    let coredataContext = CoreDataStack.shared.persistentContainer.newBackgroundContext()
+
     init(resolver: Resolver) {
         injectServices(resolver)
     }
@@ -34,6 +37,26 @@ final class BaseCarbsStorage: CarbsStorage, Injectable {
                     .sorted { $0.createdAt > $1.createdAt } ?? []
                 storage.save(Array(uniqEvents), as: file)
             }
+
+            // MARK: Save to CoreData. TEST
+
+            var cbs: Decimal = 0
+            var carbDate = Date()
+            if carbs.isNotEmpty {
+                cbs = carbs[0].carbs
+                carbDate = carbs[0].createdAt
+            }
+            if cbs != 0 {
+                self.coredataContext.perform {
+                    let carbDataForStats = Carbohydrates(context: self.coredataContext)
+
+                    carbDataForStats.date = carbDate
+                    carbDataForStats.carbs = cbs as NSDecimalNumber
+
+                    try? self.coredataContext.save()
+                }
+            }
+
             broadcaster.notify(CarbsObserver.self, on: processQueue) {
                 $0.carbsDidUpdate(uniqEvents)
             }

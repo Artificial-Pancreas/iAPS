@@ -10,7 +10,7 @@ import Foundation
 
 public class CarbCorrectionNightscoutTreatment: NightscoutTreatment {
     
-    let carbs: Int
+    public let carbs: Int
     let absorptionTime: TimeInterval?
     let glucose: Int?
     let units: Units? // of glucose entry

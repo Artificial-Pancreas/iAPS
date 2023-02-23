@@ -22,10 +22,15 @@
 
 import Combine
 import Foundation
+import LoopKitUI
 
 // MARK: - Glucose simulator
 
 final class GlucoseSimulatorSource: GlucoseSource {
+    var cgmManager: CGMManagerUI?
+    var glucoseManager: FetchGlucoseManager?
+    var cgmType: CGMType = .simulator
+
     private enum Config {
         // min time period to publish data
         static let workInterval: TimeInterval = 300
@@ -63,7 +68,7 @@ final class GlucoseSimulatorSource: GlucoseSource {
         }
     }
 
-    func fetch() -> AnyPublisher<[BloodGlucose], Never> {
+    func fetch(_: DispatchTimer?) -> AnyPublisher<[BloodGlucose], Never> {
         guard canGenerateNewValues else {
             return Just([]).eraseToAnyPublisher()
         }
@@ -80,6 +85,10 @@ final class GlucoseSimulatorSource: GlucoseSource {
         }
 
         return Just(glucoses).eraseToAnyPublisher()
+    }
+
+    func fetchIfNeeded() -> AnyPublisher<[BloodGlucose], Never> {
+        fetch(nil)
     }
 }
 
@@ -103,7 +112,7 @@ class IntelligentGenerator: BloodGlucoseGenerator {
     // direction of last step
     @Persisted(key: "GlucoseSimulatorDirection") private var trandsStepDirection = BloodGlucose.Direction.flat.rawValue
     var currentGlucose: Int
-
+    let startup = Date()
     init(currentGlucose: Int) {
         self.currentGlucose = currentGlucose
     }
@@ -135,7 +144,10 @@ class IntelligentGenerator: BloodGlucoseGenerator {
             filtered: nil,
             noise: nil,
             glucose: currentGlucose,
-            type: nil
+            type: nil,
+            activationDate: startup,
+            sessionStartDate: startup,
+            transmitterID: "SIMULATOR"
         )
         return glucose
     }
@@ -161,7 +173,7 @@ class IntelligentGenerator: BloodGlucoseGenerator {
     }
 
     private func getDirection(fromGlucose from: Int, toGlucose to: Int) -> BloodGlucose.Direction {
-        BloodGlucose.Direction(trend: to - from)
+        BloodGlucose.Direction(trend: Int(to - from))
     }
 
     private func generateNewTrend() {

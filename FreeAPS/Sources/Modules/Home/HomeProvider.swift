@@ -14,6 +14,14 @@ extension Home {
             storage.retrieve(OpenAPS.Enact.suggested, as: Suggestion.self)
         }
 
+        var statistics: Statistics? {
+            let stat = storage.retrieve(OpenAPS.Monitor.statistics, as: [Statistics].self)
+            if stat?.count ?? 0 != 0 {
+                return stat![0]
+            }
+            return nil
+        }
+
         var enactedSuggestion: Suggestion? {
             storage.retrieve(OpenAPS.Enact.enacted, as: Suggestion.self)
         }
@@ -53,7 +61,7 @@ extension Home {
         func pumpSettings() -> PumpSettings {
             storage.retrieve(OpenAPS.Settings.settings, as: PumpSettings.self)
                 ?? PumpSettings(from: OpenAPS.defaults(for: OpenAPS.Settings.settings))
-                ?? PumpSettings(insulinActionCurve: 5, maxBolus: 10, maxBasal: 2)
+                ?? PumpSettings(insulinActionCurve: 6, maxBolus: 10, maxBasal: 2)
         }
 
         func pumpBattery() -> Battery? {

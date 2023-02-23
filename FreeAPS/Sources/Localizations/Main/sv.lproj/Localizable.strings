@@ -925,7 +925,7 @@ Enact a temp Basal or a temp target */
 "Glucose Simulator" = "Glukossimulator";
 
 /* Restored state message */
-"Bluetooth State restored (APS restarted?). Found %d peripherals, and connected to %@ with identifier %@" = "Bluetooth-status återställd (APS startades om?). Hittade %d perifera enheter anslutna till %@ med identifieraren %@";
+"Bluetooth State restored (APS restarted?). Found %d peripherals, and connected to %@ with identifier %@" = "Bluetooth-status återställd (FreeAPS X startades om?). Hittade %d perifera enheter anslutna till %@ med identifieraren %@";
 
 /* Shared app group xDrip4iOS */
 "Using shared app group with external CGM app xDrip4iOS" = "Använder delad appgrupp med CGM-app xDrip4iOS";
@@ -1291,8 +1291,20 @@ Enact a temp Basal or a temp target */
 /* Description for Override HbA1c unit */
 "Change default HbA1c unit in statPanlel. The unit in statPanel will be updateded with next statistics.json update" = "Ändra HbA1c-enhet. Enheten kommer att uppdateras nästa gång filen statistics.json uppdateras";
 
-/* --------------------------------------
+/* HbA1c for all glucose storage days */
+"all" = "alla";
 
+/* --------------------------------------------------------  Dexcom G7 --------------------------------------*/
+
+"Configuration CGM" = "Inställning av CGM";
+
+"Heartbeat" = "Hjärtslag";
+
+"CGM address :" = "CGM-adress :";
+
+"CGM is not used as heartbeat." = "CGM används inte som hjärtslag.";
+
+ /* ------------------------------------------------------------------------------------------------------------
   Infotexts from openaps.docs and androidaps.docs
   FreeAPS X
 */

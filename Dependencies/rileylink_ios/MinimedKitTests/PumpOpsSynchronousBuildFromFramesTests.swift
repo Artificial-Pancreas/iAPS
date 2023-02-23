@@ -54,7 +54,7 @@ class PumpOpsSynchronousBuildFromFramesTests: XCTestCase {
     func testUnexpectedResponseThrowsError() {
         var responseDictionary = buildResponsesDictionary()
         var pumpAckArray = responseDictionary[.getHistoryPage]!
-        let message = PumpMessage(settings: pumpSettings, type: .buttonPress)
+        let message = PumpMessage(pumpID: pumpSettings.pumpID, type: .buttonPress)
         pumpAckArray.insert(message, at: 0)
         responseDictionary[.getHistoryPage]! = pumpAckArray
         
@@ -67,7 +67,7 @@ class PumpOpsSynchronousBuildFromFramesTests: XCTestCase {
     func testUnexpectedPumpAckResponseThrowsError() {
         var responseDictionary = buildResponsesDictionary()
         var pumpAckArray = responseDictionary[.getHistoryPage]!
-        let message = PumpMessage(settings: pumpSettings, type: .buttonPress)
+        let message = PumpMessage(pumpID: pumpSettings.pumpID, type: .buttonPress)
         pumpAckArray.insert(message, at: 1)
         responseDictionary[.getHistoryPage]! = pumpAckArray
         
@@ -161,9 +161,9 @@ class PumpOpsSynchronousBuildFromFramesTests: XCTestCase {
         let frameThreeMessages = buildPumpMessagesFromFrameArray(fetchPageThreeFrames)
         let frameFourMessages = buildPumpMessagesFromFrameArray(fetchPageFourFrames)
         
-        let pumpAckMessage = PumpMessage(settings: pumpSettings, type: .pumpAck, body: PumpAckMessageBody(rxData: Data(count: 1))!)
+        let pumpAckMessage = PumpMessage(pumpID: pumpSettings.pumpID, type: .pumpAck, body: PumpAckMessageBody(rxData: Data(count: 1))!)
         
-        let errorResponseMessage = PumpMessage(settings: pumpSettings, type: .errorResponse, body: PumpErrorMessageBody(rxData: Data(count: 1))!)
+        let errorResponseMessage = PumpMessage(pumpID: pumpSettings.pumpID, type: .errorResponse, body: PumpErrorMessageBody(rxData: Data(count: 1))!)
         
         var getHistoryPageArray = [pumpAckMessage, frameZeroMessages[0]]
         getHistoryPageArray.append(contentsOf: [pumpAckMessage, frameOneMessages[0]])

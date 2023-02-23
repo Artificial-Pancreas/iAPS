@@ -10,17 +10,21 @@ extension Settings {
 
         var body: some View {
             Form {
-                Section(header: Text("FreeAPS X v\(state.buildNumber)")) {
+                Section(
+                    header: Text(
+                        "FreeAPS X v\(state.versionNumber) - \(state.buildNumber) \nBranch: \(state.branch) \(state.copyrightNotice) "
+                    )
+                ) {
                     Toggle("Closed loop", isOn: $state.closedLoop)
                 }
 
                 Section(header: Text("Devices")) {
                     Text("Pump").navigationLink(to: .pumpConfig, from: self)
+                    Text("CGM").navigationLink(to: .cgm, from: self)
                 }
 
                 Section(header: Text("Services")) {
                     Text("Nightscout").navigationLink(to: .nighscoutConfig, from: self)
-                    Text("CGM").navigationLink(to: .cgm, from: self)
                     if HKHealthStore.isHealthDataAvailable() {
                         Text("Apple Health").navigationLink(to: .healthkit, from: self)
                     }
@@ -60,10 +64,6 @@ extension Settings {
                                 .navigationLink(to: .configEditor(file: OpenAPS.Settings.basalProfile), from: self)
                             Text("Targets ranges")
                                 .navigationLink(to: .configEditor(file: OpenAPS.Settings.bgTargets), from: self)
-                            Text("Carb ratios")
-                                .navigationLink(to: .configEditor(file: OpenAPS.Settings.carbRatios), from: self)
-                            Text("Insulin sensitivities")
-                                .navigationLink(to: .configEditor(file: OpenAPS.Settings.insulinSensitivities), from: self)
                             Text("Temp targets")
                                 .navigationLink(to: .configEditor(file: OpenAPS.Settings.tempTargets), from: self)
                             Text("Meal")
@@ -71,18 +71,12 @@ extension Settings {
                         }
 
                         Group {
-                            Text("IOB")
-                                .navigationLink(to: .configEditor(file: OpenAPS.Monitor.iob), from: self)
                             Text("Pump profile")
                                 .navigationLink(to: .configEditor(file: OpenAPS.Settings.pumpProfile), from: self)
                             Text("Profile")
                                 .navigationLink(to: .configEditor(file: OpenAPS.Settings.profile), from: self)
-                            Text("Glucose")
-                                .navigationLink(to: .configEditor(file: OpenAPS.Monitor.glucose), from: self)
                             Text("Carbs")
                                 .navigationLink(to: .configEditor(file: OpenAPS.Monitor.carbHistory), from: self)
-                            Text("Suggested")
-                                .navigationLink(to: .configEditor(file: OpenAPS.Enact.suggested), from: self)
                             Text("Enacted")
                                 .navigationLink(to: .configEditor(file: OpenAPS.Enact.enacted), from: self)
                             Text("Announcements")
@@ -91,19 +85,19 @@ extension Settings {
                                 .navigationLink(to: .configEditor(file: OpenAPS.FreeAPS.announcementsEnacted), from: self)
                             Text("Autotune")
                                 .navigationLink(to: .configEditor(file: OpenAPS.Settings.autotune), from: self)
+                            Text("Glucose")
+                                .navigationLink(to: .configEditor(file: OpenAPS.Monitor.glucose), from: self)
                         }
 
                         Group {
-                            Text("Alerts")
-                                .navigationLink(to: .configEditor(file: OpenAPS.Monitor.alertHistory), from: self)
                             Text("Target presets")
                                 .navigationLink(to: .configEditor(file: OpenAPS.FreeAPS.tempTargetsPresets), from: self)
                             Text("Calibrations")
                                 .navigationLink(to: .configEditor(file: OpenAPS.FreeAPS.calibrations), from: self)
-                            Text("Current Temp")
-                                .navigationLink(to: .configEditor(file: OpenAPS.Monitor.tempBasal), from: self)
                             Text("Middleware")
                                 .navigationLink(to: .configEditor(file: OpenAPS.Middleware.determineBasal), from: self)
+                            Text("Statistics")
+                                .navigationLink(to: .configEditor(file: OpenAPS.Monitor.statistics), from: self)
                             Text("Edit settings json")
                                 .navigationLink(to: .configEditor(file: OpenAPS.FreeAPS.settings), from: self)
                         }
