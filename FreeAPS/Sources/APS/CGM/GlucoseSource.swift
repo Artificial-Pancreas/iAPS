@@ -1,4 +1,6 @@
 import Combine
+import LoopKit
+import LoopKitUI
 
 protocol SourceInfoProvider {
     func sourceInfo() -> [String: Any]?
@@ -6,6 +8,10 @@ protocol SourceInfoProvider {
 
 protocol GlucoseSource: SourceInfoProvider {
     func fetch(_ heartbeat: DispatchTimer?) -> AnyPublisher<[BloodGlucose], Never>
+    func fetchIfNeeded() -> AnyPublisher<[BloodGlucose], Never>
+    var glucoseManager: FetchGlucoseManager? { get set }
+    var cgmManager: CGMManagerUI? { get set }
+    var cgmType: CGMType { get }
 }
 
 extension GlucoseSource {

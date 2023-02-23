@@ -18,8 +18,8 @@ public struct BolusExtraCommand : MessageBlock {
     public let programReminderInterval: TimeInterval
     public let units: Double
     public let timeBetweenPulses: TimeInterval
-    public let squareWaveUnits: Double
-    public let squareWaveDuration: TimeInterval
+    public let extendedUnits: Double
+    public let extendedDuration: TimeInterval
 
     // 17 0d 7c 1770 00030d40 0000 00000000
     // 0  1  2  3    5        9    13
@@ -32,13 +32,13 @@ public struct BolusExtraCommand : MessageBlock {
             beepOptions
             ])
         
-        data.appendBigEndian(UInt16(round(units * 200)))
+        data.appendBigEndian(UInt16(round(units * Pod.pulsesPerUnit * 10)))
         data.appendBigEndian(UInt32(timeBetweenPulses.hundredthsOfMilliseconds))
         
-        let pulseCountX10 = UInt16(round(squareWaveUnits * 200))
+        let pulseCountX10 = UInt16(round(extendedUnits * Pod.pulsesPerUnit * 10))
         data.appendBigEndian(pulseCountX10)
         
-        let timeBetweenExtendedPulses = pulseCountX10 > 0 ? squareWaveDuration / Double(pulseCountX10) : 0
+        let timeBetweenExtendedPulses = pulseCountX10 > 0 ? extendedDuration / (Double(pulseCountX10) / 10) : 0
         data.appendBigEndian(UInt32(timeBetweenExtendedPulses.hundredthsOfMilliseconds))
         return data
     }
@@ -52,33 +52,33 @@ public struct BolusExtraCommand : MessageBlock {
         completionBeep = encodedData[2] & (1<<6) != 0
         programReminderInterval = TimeInterval(minutes: Double(encodedData[2] & 0x3f))
         
-        units = Double(encodedData[3...].toBigEndian(UInt16.self)) / 200
+        units = Double(encodedData[3...].toBigEndian(UInt16.self)) / (Pod.pulsesPerUnit * 10)
 
         let delayCounts = encodedData[5...].toBigEndian(UInt32.self)
         timeBetweenPulses = TimeInterval(hundredthsOfMilliseconds: Double(delayCounts))
 
         let pulseCountX10 = encodedData[9...].toBigEndian(UInt16.self)
-        squareWaveUnits = Double(pulseCountX10) / 200
+        extendedUnits = Double(pulseCountX10) / (Pod.pulsesPerUnit * 10)
         
-        let intervalCounts = encodedData[5...].toBigEndian(UInt32.self)
+        let intervalCounts = encodedData[11...].toBigEndian(UInt32.self)
         let timeBetweenExtendedPulses = TimeInterval(hundredthsOfMilliseconds: Double(intervalCounts))
-        squareWaveDuration = timeBetweenExtendedPulses * Double(pulseCountX10) / 10
+        extendedDuration = timeBetweenExtendedPulses * (Double(pulseCountX10) / 10)
     }
     
-    public init(units: Double, timeBetweenPulses: TimeInterval = Pod.secondsPerBolusPulse, squareWaveUnits: Double = 0.0, squareWaveDuration: TimeInterval = 0, acknowledgementBeep: Bool = false, completionBeep: Bool = false, programReminderInterval: TimeInterval = 0) {
+    public init(units: Double = 0, timeBetweenPulses: TimeInterval = Pod.secondsPerBolusPulse, extendedUnits: Double = 0.0, extendedDuration: TimeInterval = 0, acknowledgementBeep: Bool = false, completionBeep: Bool = false, programReminderInterval: TimeInterval = 0) {
         self.acknowledgementBeep = acknowledgementBeep
         self.completionBeep = completionBeep
         self.programReminderInterval = programReminderInterval
         self.units = units
-        self.timeBetweenPulses = timeBetweenPulses
-        self.squareWaveUnits = squareWaveUnits
-        self.squareWaveDuration = squareWaveDuration
+        self.timeBetweenPulses = timeBetweenPulses != 0 ? timeBetweenPulses : Pod.secondsPerBolusPulse
+        self.extendedUnits = extendedUnits
+        self.extendedDuration = extendedDuration
     }
 }
 
 
 extension BolusExtraCommand: CustomDebugStringConvertible {
     public var debugDescription: String {
-        return "BolusExtraCommand(units:\(units), timeBetweenPulses:\(timeBetweenPulses), squareWaveUnits:\(squareWaveUnits), squareWaveDuration:\(squareWaveDuration), acknowledgementBeep:\(acknowledgementBeep), completionBeep:\(completionBeep), programReminderInterval:\(programReminderInterval.minutes))"
+        return "BolusExtraCommand(units:\(units), timeBetweenPulses:\(timeBetweenPulses), extendedUnits:\(extendedUnits), extendedDuration:\(extendedDuration), acknowledgementBeep:\(acknowledgementBeep), completionBeep:\(completionBeep), programReminderInterval:\(programReminderInterval.minutes))"
     }
 }

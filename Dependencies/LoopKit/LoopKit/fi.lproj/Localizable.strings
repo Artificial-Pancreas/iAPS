@@ -83,7 +83,7 @@
 "U" = "U";
 
 /* The short unit display string for international units of insulin per hour */
-"U/hr" = "U/hr";
+"U/hr" = "U/h";
 
 /* The long unit display string for a singular international unit of insulin */
 "Unit" = "Yksikkö";
@@ -97,8 +97,3 @@
 /* The long unit display string for international units of insulin per hour */
 "Units/hour" = "Yksikköä/tunnissa";
 
-/* The long unit display string for a singular hour */
-"Hour" = "Hour";
-
-/* The long unit display string for hours */
-"Hours" = "Hours";

@@ -14,7 +14,7 @@ import LoopKitUI
 enum PodLifeState {
     case podActivating
     // Time remaining
-    case timeRemaining(TimeInterval)
+    case timeRemaining(timeUntilExpiration: TimeInterval, timeUntilExpirationReminder: TimeInterval)
     // Time since expiry
     case expired
     case podDeactivating
@@ -22,7 +22,7 @@ enum PodLifeState {
     
     var progress: Double {
         switch self {
-        case .timeRemaining(let timeRemaining):
+        case .timeRemaining(let timeRemaining, _):
             return max(0, min(1, (1 - (timeRemaining / Pod.nominalPodLife))))
         case .expired:
             return 1
@@ -37,8 +37,8 @@ enum PodLifeState {
         switch self {
         case .expired:
             return guidanceColors.critical
-        case .timeRemaining(let timeRemaining):
-            return timeRemaining <= Pod.timeRemainingWarningThreshold ? guidanceColors.warning : .accentColor
+        case .timeRemaining(_, let timeUntilExpirationReminder):
+            return timeUntilExpirationReminder <= Pod.timeRemainingWarningThreshold ? guidanceColors.warning : .accentColor
         default:
             return Color.secondary
         }

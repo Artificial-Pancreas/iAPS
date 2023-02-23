@@ -49,7 +49,7 @@ struct LowReservoirReminderSetupView: View {
             }
             .padding()
         }
-        .navigationBarTitle("Low Reservoir", displayMode: .automatic)
+        .navigationBarTitle(LocalizedString("Low Reservoir", comment: "navigation bar title for low reservoir"), displayMode: .automatic)
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button(LocalizedString("Cancel", comment: "Cancel button title"), action: {
