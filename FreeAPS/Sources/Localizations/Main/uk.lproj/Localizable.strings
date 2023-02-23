@@ -1262,7 +1262,7 @@ Enact a temp Basal or a temp target */
 "Update every number of minutes:" = "Оновлюйте кожну кількість хвилин:";
 
 /* Description for update interval for statistics */
-"Default is 20 minutes. How often to update and save the statistics.json and to upload last array, when enabled, to Nightscout." = "Default is 20 minutes. How often to update and save the statistics.json and to upload last array, when enabled, to Nightscout.";
+"Default is 20 minutes. How often to update and save the statistics.json and to upload last array, when enabled, to Nightscout." = "За замовчуванням 20 хвилин. Як часто оновлювати та зберігати statistics.json і завантажувати останній масив, якщо ввімкнено, у Nightscout.";
 
 /* Duration displayed in statPanel */
 "Past 24 Hours " = "За останні 24 години";
@@ -1502,7 +1502,7 @@ Enact a temp Basal or a temp target */
 "Bolus Increment" = "Приріст болюсу";
 
 /* "Bolus Increment" */
-"Smallest enacted SMB amount. Minimum amount for Omnipod pumps is 0.05 U, whereas for Medtronic pumps it differs for various models, from 0.025 U to 0.10 U. Please check the minimum bolus amount which can be delivered by your pump. The default value is 0.1." = "Smallest enacted SMB amount. Minimum amount for Omnipod pumps is 0.05 U, whereas for Medtronic pumps it differs for various models, from 0.025 U to 0.10 U. Please check the minimum bolus amount which can be delivered by your pump. The default value is 0.1.";
+"Smallest enacted SMB amount. Minimum amount for Omnipod pumps is 0.05 U, whereas for Medtronic pumps it differs for various models, from 0.025 U to 0.10 U. Please check the minimum bolus amount which can be delivered by your pump. The default value is 0.1." = "Найменша прийнята кількість SMB. Мінімальна кількість для насосів Omnipod становить 0,05 ОД, тоді як для насосів Medtronic вона відрізняється для різних моделей від 0,025 ОД до 0,10 ОД. Перевірте мінімальну кількість болюсу, яку може ввести ваша помпа. Значення за замовчуванням 0,1.";
 
 /* Headline "Insulin Peak Time" */
 "Insulin Peak Time" = "Пік дії інсуліну";
