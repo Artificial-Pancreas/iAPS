@@ -1262,7 +1262,7 @@ Enact a temp Basal or a temp target */
 "Update every number of minutes:" = "Uppdatera varje antal minuter:";
 
 /* Description for update interval for statistics */
-"Default is 20 minutes. How often to update and save the statistics.json and to upload last array, when enabled, to Nightscout." = "Default is 20 minutes. How often to update and save the statistics.json and to upload last array, when enabled, to Nightscout.";
+"Default is 20 minutes. How often to update and save the statistics.json and to upload last array, when enabled, to Nightscout." = "Standardvärde är 20 minuter. Hur ofta du vill uppdatera, spara och ladda upp statistiken till Nightscout.";
 
 /* Duration displayed in statPanel */
 "Past 24 Hours " = "Senaste 24 timmarna ";
