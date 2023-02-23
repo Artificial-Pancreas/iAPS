@@ -1294,8 +1294,17 @@ Enact a temp Basal or a temp target */
 /* HbA1c for all glucose storage days */
 "all" = "alla";
 
-/* --------------------------------------
+/* --------------------------------------------------------  Dexcom G7 --------------------------------------*/
 
+"Configuration CGM" = "Inställning av CGM";
+
+"Heartbeat" = "Hjärtslag";
+
+"CGM address :" = "CGM-adress :";
+
+"CGM is not used as heartbeat." = "CGM används inte som hjärtslag.";
+
+ /* ------------------------------------------------------------------------------------------------------------
   Infotexts from openaps.docs and androidaps.docs
   FreeAPS X
 */
