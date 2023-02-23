@@ -1262,7 +1262,7 @@ Enact a temp Basal or a temp target */
 "Update every number of minutes:" = "Оновлюйте кожну кількість хвилин:";
 
 /* Description for update interval for statistics */
-"Default is 30 minutes. How often to update and save the statistics.json and to upload last array, when enabled, to Nightscout. A lower interval than for glucose updates (5 min) is pointless." = "За замовчуванням 30 хвилин. Як часто оновлювати та зберігати statistics.json і завантажувати останній масив, якщо ввімкнено, у Nightscout. Менший інтервал, ніж для оновлення рівня глюкози (5 хв), не має сенсу.";
+"Default is 20 minutes. How often to update and save the statistics.json and to upload last array, when enabled, to Nightscout." = "Default is 20 minutes. How often to update and save the statistics.json and to upload last array, when enabled, to Nightscout.";
 
 /* Duration displayed in statPanel */
 "Past 24 Hours " = "За останні 24 години";
@@ -1502,7 +1502,7 @@ Enact a temp Basal or a temp target */
 "Bolus Increment" = "Приріст болюсу";
 
 /* "Bolus Increment" */
-"Smallest SMB / SMB increment in oref0. Minimum amount for Medtronic pumps is 0.1 U, whereas for Omnipod it’s 0.05 U. The default value is 0.1." = "Самий маленький SMB / приріст SMB в oref0. Мінімум для помп Медтронік дорівнює 0.1 Од., в той-же час  для Omnipod це 0.05 Од. За замовчуванням 0.1.";
+"Smallest enacted SMB amount. Minimum amount for Omnipod pumps is 0.05 U, whereas for Medtronic pumps it differs for various models, from 0.025 U to 0.10 U. Please check the minimum bolus amount which can be delivered by your pump. The default value is 0.1." = "Smallest enacted SMB amount. Minimum amount for Omnipod pumps is 0.05 U, whereas for Medtronic pumps it differs for various models, from 0.025 U to 0.10 U. Please check the minimum bolus amount which can be delivered by your pump. The default value is 0.1.";
 
 /* Headline "Insulin Peak Time" */
 "Insulin Peak Time" = "Пік дії інсуліну";
