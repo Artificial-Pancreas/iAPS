@@ -1292,17 +1292,17 @@ Enact a temp Basal or a temp target */
 "Change default HbA1c unit in statPanlel. The unit in statPanel will be updateded with next statistics.json update" = "Змінити одиниці виміру HbA1c на панелі статистики. Одиниці виміру оновляться під час наступного оновлення файлу statistics.json";
 
 /* HbA1c for all glucose storage days */
-"all" = "all";
+"all" = "все";
 
 /* --------------------------------------------------------  Dexcom G7 --------------------------------------*/
 
-"Configuration CGM" = "Configuration CGM";
+"Configuration CGM" = "Конфігурація CGM";
 
-"Heartbeat" = "Heartbeat";
+"Heartbeat" = "Серцебиття";
 
-"CGM address :" = "CGM address :";
+"CGM address :" = "CGM адреса :";
 
-"CGM is not used as heartbeat." = "CGM is not used as heartbeat.";
+"CGM is not used as heartbeat." = "CGM не використовується як серцебиття.";
 
 /* -----------------------------------------------------------------------------------------------------------
 
