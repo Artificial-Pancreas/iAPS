@@ -49,7 +49,7 @@
 
 "Trend" = "Trend";
 
-"Bluetooth" = "Bluetooth";
+"Bluetooth" = "Blåtand";
 
 /* title for g7 settings row showing BLE Name */
 "Name" = "Namn";
@@ -90,7 +90,7 @@
 "HIGH" = "HÖGT";
 
 /* Format string for glucose trend per minute. (1: glucose value and unit) */
-"%@/min" = "%@/min";
+"%@/min" = "%@ min";
 
 /* G7 Progress bar label when searching for sensor */
 "Searching for sensor" = "Söker efter sensor";
@@ -114,19 +114,19 @@
 "Grace period remaining" = "Tid kvar av sensors livslängd";
 
 /* G7 Status highlight text for searching for sensor */
-"Searching for\nSensor" = "Searching for\nSensor";
+"Searching for\nSensor" = "Söker efter\nSensor";
 
 /* G7 Status highlight text for sensor expired */
-"Sensor\nExpired" = "Sensor\nExpired";
+"Sensor\nExpired" = "Sensor\nUtgått";
 
 /* G7 Status highlight text for signal loss */
-"Sensor\nFailed" = "Sensor\nFailed";
+"Sensor\nFailed" = "Sensor\nmisslyckades";
 
 /* G7 Status highlight text for signal loss */
-"Signal\nLoss" = "Signal\nLoss";
+"Signal\nLoss" = "Signal-\nförlust";
 
 /*G7 Status highlight text for sensor error */
-"Sensor\nIssue" = "Sensor\nIssue";
+"Sensor\nIssue" = "Sensor\nProblem";
 
 /* G7 Status highlight text for sensor warmup */
-"Sensor\nWarmup" = "Sensor\nWarmup";
+"Sensor\nWarmup" = "Sensor\nUppvärmning";
