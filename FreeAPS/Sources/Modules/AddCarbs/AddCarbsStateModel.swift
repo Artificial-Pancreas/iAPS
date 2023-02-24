@@ -19,7 +19,7 @@ extension AddCarbs {
             }
 
             carbsStorage.storeCarbs([
-                CarbsEntry(createdAt: date, carbs: carbs, enteredBy: CarbsEntry.manual)
+                CarbsEntry(id: UUID(), createdAt: date, carbs: carbs, enteredBy: CarbsEntry.manual)
             ])
 
             if settingsManager.settings.skipBolusScreenAfterCarbs {
