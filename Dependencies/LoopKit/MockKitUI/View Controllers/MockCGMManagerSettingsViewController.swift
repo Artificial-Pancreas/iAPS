@@ -783,7 +783,7 @@ private extension UIAlertController {
     convenience init(cgmDeletionHandler confirmHandler: @escaping () -> Void, cancelHandler: (() -> Void)? = nil) {
         self.init(
             title: nil,
-            message: "Are you sure you want to delete this CGM?",
+            message: NSLocalizedString("Are you sure you want to delete this CGM?", comment: ""),
             preferredStyle: .actionSheet
         )
 

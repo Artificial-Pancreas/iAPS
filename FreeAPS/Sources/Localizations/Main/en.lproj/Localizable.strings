@@ -1308,6 +1308,8 @@ Enact a temp Basal or a temp target */
 
 "CGM is not used as heartbeat." = "CGM is not used as heartbeat.";
 
+"Are you sure you want to delete this CGM?" = "Are you sure you want to delete this CGM?";
+
  /* -----------------------------------------------------------------------------------------------------------
 
   Infotexts from openaps.docs and androidaps.docs
