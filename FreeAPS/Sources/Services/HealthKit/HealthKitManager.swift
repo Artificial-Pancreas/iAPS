@@ -186,7 +186,7 @@ final class BaseHealthKitManager: HealthKitManager, Injectable, CarbsObserver {
         func save(samples: [HKSample]) {
             let sampleIDs = samples.compactMap(\.syncIdentifier)
             let samplesToSave = carbs
-                .filter { !sampleIDs.contains($0.id!.uuidString) }
+                .filter { !sampleIDs.contains($0.id?.uuidString ?? "_id") }
                 .map {
                     HKQuantitySample(
                         type: sampleType,
@@ -194,8 +194,8 @@ final class BaseHealthKitManager: HealthKitManager, Injectable, CarbsObserver {
                         start: $0.createdAt,
                         end: $0.createdAt,
                         metadata: [
-                            HKMetadataKeyExternalUUID: $0.id!.uuidString,
-                            HKMetadataKeySyncIdentifier: $0.id!.uuidString,
+                            HKMetadataKeyExternalUUID: $0.id?.uuidString ?? "_id",
+                            HKMetadataKeySyncIdentifier: $0.id?.uuidString ?? "_id",
                             HKMetadataKeySyncVersion: 1,
                             Config.freeAPSMetaKey: true
                         ]
