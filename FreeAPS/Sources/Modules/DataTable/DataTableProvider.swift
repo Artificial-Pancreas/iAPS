@@ -28,7 +28,9 @@ extension DataTable {
 
         func deleteInsulin(_ treatement: Treatment) {
             nightscoutManager.deleteInsulin(at: treatement.date)
-            healthkitManager.deleteInsulin(syncID: treatement.id.uuidString)
+            if let id = treatement.idPumpEvent {
+                healthkitManager.deleteInsulin(syncID: id)
+            }
         }
 
         func glucose() -> [BloodGlucose] {
