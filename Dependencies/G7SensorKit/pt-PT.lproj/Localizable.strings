@@ -8,7 +8,7 @@
 "Continue" = "Continue";
 
 /* Button text to cancel G7 setup */
-"Cancel" = "Cancel";
+"Cancel" = "Cancelar";
 
 /* Error description for unreliable state */
 "Glucose data is unavailable" = "Glucose data is unavailable";
@@ -45,14 +45,14 @@
 
 "Last Reading" = "Last Reading";
 
-"Time" = "Time";
+"Time" = "Hora";
 
 "Trend" = "Trend";
 
 "Bluetooth" = "Bluetooth";
 
 /* title for g7 settings row showing BLE Name */
-"Name" = "Name";
+"Name" = "Nome";
 
 /* title for g7 settings connection status when scanning */
 "Scanning" = "Scanning";
@@ -67,7 +67,7 @@
 "Last Connect" = "Last Connect";
 
 /* Configuration */
-"Configuration" = "Configuration";
+"Configuration" = "Ajustes";
 
 /* title for g7 config settings to upload readings */
 "Upload Readings" = "Upload Readings";

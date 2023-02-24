@@ -1262,7 +1262,7 @@ Enact a temp Basal or a temp target */
 "Update every number of minutes:" = "Оновлюйте кожну кількість хвилин:";
 
 /* Description for update interval for statistics */
-"Default is 30 minutes. How often to update and save the statistics.json and to upload last array, when enabled, to Nightscout. A lower interval than for glucose updates (5 min) is pointless." = "За замовчуванням 30 хвилин. Як часто оновлювати та зберігати statistics.json і завантажувати останній масив, якщо ввімкнено, у Nightscout. Менший інтервал, ніж для оновлення рівня глюкози (5 хв), не має сенсу.";
+"Default is 20 minutes. How often to update and save the statistics.json and to upload last array, when enabled, to Nightscout." = "За замовчуванням 20 хвилин. Як часто оновлювати та зберігати statistics.json і завантажувати останній масив, якщо ввімкнено, у Nightscout.";
 
 /* Duration displayed in statPanel */
 "Past 24 Hours " = "За останні 24 години";
@@ -1291,7 +1291,20 @@ Enact a temp Basal or a temp target */
 /* Description for Override HbA1c unit */
 "Change default HbA1c unit in statPanlel. The unit in statPanel will be updateded with next statistics.json update" = "Змінити одиниці виміру HbA1c на панелі статистики. Одиниці виміру оновляться під час наступного оновлення файлу statistics.json";
 
-/* --------------------------------------
+/* HbA1c for all glucose storage days */
+"all" = "все";
+
+/* --------------------------------------------------------  Dexcom G7 --------------------------------------*/
+
+"Configuration CGM" = "Конфігурація CGM";
+
+"Heartbeat" = "Серцебиття";
+
+"CGM address :" = "CGM адреса :";
+
+"CGM is not used as heartbeat." = "CGM не використовується як серцебиття.";
+
+/* -----------------------------------------------------------------------------------------------------------
 
   Infotexts from openaps.docs and androidaps.docs
   FreeAPS X
@@ -1502,7 +1515,7 @@ Enact a temp Basal or a temp target */
 "Bolus Increment" = "Приріст болюсу";
 
 /* "Bolus Increment" */
-"Smallest SMB / SMB increment in oref0. Minimum amount for Medtronic pumps is 0.1 U, whereas for Omnipod it’s 0.05 U. The default value is 0.1." = "Самий маленький SMB / приріст SMB в oref0. Мінімум для помп Медтронік дорівнює 0.1 Од., в той-же час  для Omnipod це 0.05 Од. За замовчуванням 0.1.";
+"Smallest enacted SMB amount. Minimum amount for Omnipod pumps is 0.05 U, whereas for Medtronic pumps it differs for various models, from 0.025 U to 0.10 U. Please check the minimum bolus amount which can be delivered by your pump. The default value is 0.1." = "Найменша прийнята кількість SMB. Мінімальна кількість для насосів Omnipod становить 0,05 ОД, тоді як для насосів Medtronic вона відрізняється для різних моделей від 0,025 ОД до 0,10 ОД. Перевірте мінімальну кількість болюсу, яку може ввести ваша помпа. Значення за замовчуванням 0,1.";
 
 /* Headline "Insulin Peak Time" */
 "Insulin Peak Time" = "Пік дії інсуліну";
