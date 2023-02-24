@@ -50,7 +50,7 @@
 "Suggested at" = "Suggested at";
 
 /* Headline in enacted pop up (at: at what time) */
-"Error at" = "Error at";
+ "Error at" = "Error at";
 
 /* Home title */
 "Home" = "Home";
@@ -419,7 +419,7 @@ Enact a temp Basal or a temp target */
 /* Header for Temp targets in Watch app */
 "Temp Targets" = "Temp Targets";
 
-/* Delete carbs from data table and NS */
+/* Delete carbs from data table and Nightscout */
 "Delete carbs?" = "Delete carbs?";
 
 /* Delete insulin from pump history and Nightscout */
@@ -1266,7 +1266,7 @@ Enact a temp Basal or a temp target */
 "Update every number of minutes:" = "Update every number of minutes:";
 
 /* Description for update interval for statistics */
-"Default is 30 minutes. How often to update and save the statistics.json and to upload last array, when enabled, to Nightscout. A lower interval than for glucose updates (5 min) is pointless." = "Default is 20 minutes. How often to update and save the statistics.json and to upload last array, when enabled, to Nightscout.";
+"Default is 20 minutes. How often to update and save the statistics.json and to upload last array, when enabled, to Nightscout." = "Default is 20 minutes. How often to update and save the statistics.json and to upload last array, when enabled, to Nightscout.";
 
 /* Duration displayed in statPanel */
 "Past 24 Hours " = "Past 24 Hours ";

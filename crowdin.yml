@@ -38,3 +38,5 @@ files:
     translation: /Dependencies/OmniBLE/Localizations/%osx_locale%.lproj/Localizable.strings
   - source: /Dependencies/rileylink_ios/MinimedKitUI/Base.lproj/Localizable.strings
     translation: /Dependencies/rileylink_ios/MinimedKitUI/%osx_locale%.lproj/Localizable.strings
+  - source: /Dependencies/G7SensorKit/en.lproj/Localizable.strings
+    translation: /Dependencies/G7SensorKit/%osx_locale%.lproj/Localizable.strings

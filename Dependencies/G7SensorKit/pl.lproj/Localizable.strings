@@ -5,10 +5,10 @@
 "FreeAPS X can read G7 CGM data, but you must still use the Dexcom G7 App for pairing, calibration, and other sensor management." = "FreeAPS X can read G7 CGM data, but you must still use the Dexcom G7 App for pairing, calibration, and other sensor management.";
 
 /* Button title for starting setup */
-"Continue" = "Continue";
+"Continue" = "Kontynuuj";
 
 /* Button text to cancel G7 setup */
-"Cancel" = "Cancel";
+"Cancel" = "Anuluj";
 
 /* Error description for unreliable state */
 "Glucose data is unavailable" = "Glucose data is unavailable";
@@ -45,7 +45,7 @@
 
 "Last Reading" = "Last Reading";
 
-"Time" = "Time";
+"Time" = "Czas";
 
 "Trend" = "Trend";
 
@@ -58,10 +58,10 @@
 "Scanning" = "Scanning";
 
 /* title for g7 settings connection status when connected */
-"Connected" = "Connected";
+"Connected" = "Połączony";
 
 /* title for g7 settings connection status when connecting */
-"Connecting" = "Connecting";
+"Connecting" = "Łączenie";
 
 /* title for g7 settings row showing sensor last connect time */
 "Last Connect" = "Last Connect";

@@ -5,10 +5,10 @@
 "FreeAPS X can read G7 CGM data, but you must still use the Dexcom G7 App for pairing, calibration, and other sensor management." = "FreeAPS X can read G7 CGM data, but you must still use the Dexcom G7 App for pairing, calibration, and other sensor management.";
 
 /* Button title for starting setup */
-"Continue" = "Continue";
+"Continue" = "Devam et";
 
 /* Button text to cancel G7 setup */
-"Cancel" = "Cancel";
+"Cancel" = "Vazgeç";
 
 /* Error description for unreliable state */
 "Glucose data is unavailable" = "Glucose data is unavailable";
@@ -41,33 +41,33 @@
 "Grace Period End" = "Grace Period End";
 
 /* Field label */
-"Glucose" = "Glucose";
+"Glucose" = "Glikoz";
 
 "Last Reading" = "Last Reading";
 
-"Time" = "Time";
+"Time" = "Saat";
 
 "Trend" = "Trend";
 
 "Bluetooth" = "Bluetooth";
 
 /* title for g7 settings row showing BLE Name */
-"Name" = "Name";
+"Name" = "İsim";
 
 /* title for g7 settings connection status when scanning */
 "Scanning" = "Scanning";
 
 /* title for g7 settings connection status when connected */
-"Connected" = "Connected";
+"Connected" = "Bağlandı";
 
 /* title for g7 settings connection status when connecting */
-"Connecting" = "Connecting";
+"Connecting" = "Bağlanıyor";
 
 /* title for g7 settings row showing sensor last connect time */
 "Last Connect" = "Last Connect";
 
 /* Configuration */
-"Configuration" = "Configuration";
+"Configuration" = "Yapılandırma";
 
 /* title for g7 config settings to upload readings */
 "Upload Readings" = "Upload Readings";
@@ -76,7 +76,7 @@
 "Scan for new sensor" = "Scan for new sensor";
 
 /* Button label for removing CGM */
-"Delete CGM" = "Delete CGM";
+"Delete CGM" = "CGM'i Sil";
 
 /* Button text */
 "Are you sure you want to delete this CGM?" = "Are you sure you want to delete this CGM?";
