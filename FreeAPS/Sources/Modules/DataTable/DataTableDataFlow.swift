@@ -52,7 +52,8 @@ enum DataTable {
     }
 
     class Treatment: Identifiable, Hashable, Equatable {
-        var id: UUID
+        let id: UUID
+        let idPumpEvent: String?
         let units: GlucoseUnits
         let type: DataType
         let date: Date
@@ -74,7 +75,8 @@ enum DataTable {
             amount: Decimal? = nil,
             secondAmount: Decimal? = nil,
             duration: Decimal? = nil,
-            id: UUID? = nil
+            id: UUID? = nil,
+            idPumpEvent: String? = nil
         ) {
             self.units = units
             self.type = type
@@ -83,6 +85,7 @@ enum DataTable {
             self.secondAmount = secondAmount
             self.duration = duration
             self.id = id ?? UUID()
+            self.idPumpEvent = idPumpEvent
         }
 
         static func == (lhs: Treatment, rhs: Treatment) -> Bool {
