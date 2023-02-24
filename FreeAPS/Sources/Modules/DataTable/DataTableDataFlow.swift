@@ -52,7 +52,7 @@ enum DataTable {
     }
 
     class Treatment: Identifiable, Hashable, Equatable {
-        let id = UUID()
+        var id: UUID
         let units: GlucoseUnits
         let type: DataType
         let date: Date
@@ -73,7 +73,8 @@ enum DataTable {
             date: Date,
             amount: Decimal? = nil,
             secondAmount: Decimal? = nil,
-            duration: Decimal? = nil
+            duration: Decimal? = nil,
+            id: UUID? = nil
         ) {
             self.units = units
             self.type = type
@@ -81,6 +82,7 @@ enum DataTable {
             self.amount = amount
             self.secondAmount = secondAmount
             self.duration = duration
+            self.id = id ?? UUID()
         }
 
         static func == (lhs: Treatment, rhs: Treatment) -> Bool {
@@ -172,7 +174,7 @@ protocol DataTableProvider: Provider {
     func tempTargets() -> [TempTarget]
     func carbs() -> [CarbsEntry]
     func glucose() -> [BloodGlucose]
-    func deleteCarbs(at date: Date)
-    func deleteInsulin(at date: Date)
+    func deleteCarbs(_ treatement: DataTable.Treatment)
+    func deleteInsulin(_ treatement: DataTable.Treatment)
     func deleteGlucose(id: String)
 }

@@ -2991,7 +2991,7 @@
 				388E596625AD948E0019842D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 		388E596725AD948E0019842D /* Build configuration list for PBXNativeTarget "FreeAPS" */ = {
 			isa = XCConfigurationList;
@@ -3000,7 +3000,7 @@
 				388E596925AD948E0019842D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 		38E8754327554D5900975559 /* Build configuration list for PBXNativeTarget "FreeAPSWatch WatchKit Extension" */ = {
 			isa = XCConfigurationList;
@@ -3009,7 +3009,7 @@
 				38E8754227554D5900975559 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 		38E8754427554D5900975559 /* Build configuration list for PBXNativeTarget "FreeAPSWatch" */ = {
 			isa = XCConfigurationList;
@@ -3018,7 +3018,7 @@
 				38E8753F27554D5900975559 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 		38FCF3F425E9028E0078B0D1 /* Build configuration list for PBXNativeTarget "FreeAPSTests" */ = {
 			isa = XCConfigurationList;
@@ -3027,7 +3027,7 @@
 				38FCF3F625E9028E0078B0D1 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 /* End XCConfigurationList section */
 
