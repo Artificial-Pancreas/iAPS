@@ -70,6 +70,14 @@ _Please note that in default builds of FreeAPS X, the app group is actually iden
 1. Click "Confirm".
 1. Remember to do this for each of the identifiers above.
 
+## Add NFC Tag Reading to FreeeAPS App ID
+1. Go to [Certificates, Identifiers & Profiles](https://developer.apple.com/account/resources/identifiers/list) on the apple developer site.
+1. Click on the "FreeeAPS" identifier
+1. Scroll down to "NFC Tag Reading"
+1. Tap the check box to enable NFC Tag Reading.
+1. Click "Save".
+1. Click "Confirm".
+
 ## Create FreeAPS X App in App Store Connect
 
 If you have created a FreeAPS X app in App Store Connect before, you can skip this section as well.
