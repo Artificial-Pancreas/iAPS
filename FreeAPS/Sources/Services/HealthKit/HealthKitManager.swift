@@ -183,9 +183,14 @@ final class BaseHealthKitManager: HealthKitManager, Injectable, CarbsObserver {
               carbs.isNotEmpty
         else { return }
 
+        let carbsWithId = carbs.filter { c in
+            guard c.id != nil else { return false }
+            return true
+        }
+
         func save(samples: [HKSample]) {
             let sampleIDs = samples.compactMap(\.syncIdentifier)
-            let samplesToSave = carbs
+            let samplesToSave = carbsWithId
                 .filter { !sampleIDs.contains($0.id!.uuidString) }
                 .map {
                     HKQuantitySample(
@@ -205,7 +210,7 @@ final class BaseHealthKitManager: HealthKitManager, Injectable, CarbsObserver {
             healthKitStore.save(samplesToSave) { _, _ in }
         }
 
-        loadSamplesFromHealth(sampleType: sampleType, withIDs: carbs.compactMap(\.id?.uuidString))
+        loadSamplesFromHealth(sampleType: sampleType, withIDs: carbsWithId.compactMap(\.id?.uuidString))
             .receive(on: processQueue)
             .sink(receiveValue: save)
             .store(in: &lifetime)
