@@ -41,15 +41,16 @@ extension AddCarbs {
                 let newdate = 1.0 + trunc(Double(truncating: counter as NSNumber))
                 carbsStorage.storeCarbs([
                     CarbsEntry(
-                        id: UUID(), createdAt: date + (newdate * Double(timeInterval)), carbs: carbequiv,
-                        enteredBy: CarbsEntry.manual
+                        id: UUID().uuidString, createdAt: date + (newdate * Double(timeInterval)), carbs: carbequiv, enteredBy: CarbsEntry.manual
+
                     )
                 ])
                 counter -= 1
             }
             // Store the real carbs
             if carbs > 0 {
-                carbsStorage.storeCarbs([CarbsEntry(id: UUID(), createdAt: date, carbs: carbs, enteredBy: CarbsEntry.manual)])
+                carbsStorage
+                    .storeCarbs([CarbsEntry(id: UUID().uuidString, createdAt: date, carbs: carbs, enteredBy: CarbsEntry.manual)])
             }
 
             if settingsManager.settings.skipBolusScreenAfterCarbs {

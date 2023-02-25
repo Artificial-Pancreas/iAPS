@@ -190,8 +190,10 @@ final class BaseHealthKitManager: HealthKitManager, Injectable, CarbsObserver {
 
         func save(samples: [HKSample]) {
             let sampleIDs = samples.compactMap(\.syncIdentifier)
+            let sampleDates = samples.map(\.startDate)
             let samplesToSave = carbsWithId
-                .filter { !sampleIDs.contains($0.id!.uuidString) }
+                .filter { !sampleIDs.contains($0.id!) } // id existing in AH
+                .filter { !sampleDates.contains($0.createdAt) } // not id but exaclty the same datetime
                 .map {
                     HKQuantitySample(
                         type: sampleType,
@@ -199,8 +201,8 @@ final class BaseHealthKitManager: HealthKitManager, Injectable, CarbsObserver {
                         start: $0.createdAt,
                         end: $0.createdAt,
                         metadata: [
-                            HKMetadataKeyExternalUUID: $0.id?.uuidString ?? "_id",
-                            HKMetadataKeySyncIdentifier: $0.id?.uuidString ?? "_id",
+                            HKMetadataKeyExternalUUID: $0.id ?? "_id",
+                            HKMetadataKeySyncIdentifier: $0.id ?? "_id",
                             HKMetadataKeySyncVersion: 1,
                             Config.freeAPSMetaKey: true
                         ]
@@ -210,7 +212,7 @@ final class BaseHealthKitManager: HealthKitManager, Injectable, CarbsObserver {
             healthKitStore.save(samplesToSave) { _, _ in }
         }
 
-        loadSamplesFromHealth(sampleType: sampleType, withIDs: carbsWithId.compactMap(\.id?.uuidString))
+        loadSamplesFromHealth(sampleType: sampleType)
             .receive(on: processQueue)
             .sink(receiveValue: save)
             .store(in: &lifetime)
@@ -341,6 +343,23 @@ final class BaseHealthKitManager: HealthKitManager, Injectable, CarbsObserver {
                 return
             }
             debug(.service, "Background delivery status is \(status)")
+        }
+    }
+
+    /// Try to load samples from Health store
+    private func loadSamplesFromHealth(
+        sampleType: HKQuantityType
+    ) -> Future<[HKSample], Never> {
+        Future { promise in
+            let query = HKSampleQuery(
+                sampleType: sampleType,
+                predicate: nil,
+                limit: 1000,
+                sortDescriptors: nil
+            ) { _, results, _ in
+                promise(.success((results as? [HKQuantitySample]) ?? []))
+            }
+            self.healthKitStore.execute(query)
         }
     }
 
