@@ -85,13 +85,12 @@ final class BaseDeviceDataManager: DeviceDataManager, Injectable {
             if let pumpManager = pumpManager {
                 pumpDisplayState.value = PumpDisplayState(name: pumpManager.localizedTitle, image: pumpManager.smallImage)
                 pumpName.send(pumpManager.localizedTitle)
-
+                pumpManager.setMustProvideBLEHeartbeat(heartbeatBypump)
                 if let omnipod = pumpManager as? OmnipodPumpManager {
                     guard let endTime = omnipod.state.podState?.expiresAt else {
                         pumpExpiresAtDate.send(nil)
                         return
                     }
-                    pumpManager.setMustProvideBLEHeartbeat(heartbeatBypump)
                     pumpExpiresAtDate.send(endTime)
                 }
                 if let omnipodBLE = pumpManager as? OmniBLEPumpManager {
@@ -99,7 +98,6 @@ final class BaseDeviceDataManager: DeviceDataManager, Injectable {
                         pumpExpiresAtDate.send(nil)
                         return
                     }
-                    pumpManager.setMustProvideBLEHeartbeat(heartbeatBypump)
                     pumpExpiresAtDate.send(endTime)
                 }
             } else {
