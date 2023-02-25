@@ -11,11 +11,8 @@ extension Settings {
         @Published var animatedBackground = false
 
         private(set) var buildNumber = ""
-
         private(set) var versionNumber = ""
-
         private(set) var branch = ""
-
         private(set) var copyrightNotice = ""
 
         override func subscribe() {
