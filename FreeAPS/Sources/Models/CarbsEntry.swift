@@ -1,7 +1,7 @@
 import Foundation
 
 struct CarbsEntry: JSON, Equatable, Hashable {
-    let id: UUID?
+    let id: String?
     let createdAt: Date
     let carbs: Decimal
     let enteredBy: String?
