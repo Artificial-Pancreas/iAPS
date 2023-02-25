@@ -23,7 +23,7 @@
     "animatedBackground": false,
     "displayStatistics": false,
     "useFPUconversion": false
-    "individualAdjustmentFactor": 0.8,
+    "individualAdjustmentFactor": 0.5,
     "timeCap": 8,
     "minuteInterval": 60
 }

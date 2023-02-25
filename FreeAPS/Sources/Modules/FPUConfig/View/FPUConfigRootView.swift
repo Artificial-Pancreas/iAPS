@@ -43,6 +43,13 @@ extension FPUConfig {
                         DecimalTextField("0.8", value: $state.individualAdjustmentFactor, formatter: conversionFormatter)
                     }
                 }
+
+                Section(
+                    footer: Text(
+                        "Allows fat and protein to be converted to future carb equivalents.\n\nDefault settings:\nTime Cap: 8 hours\nInterval: 60 min\nFactor: 0.5"
+                    )
+                )
+                    {}
             }
             .onAppear(perform: configureView)
             .navigationBarTitle("Fat and Protein")
