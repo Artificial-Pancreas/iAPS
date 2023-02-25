@@ -46,7 +46,7 @@ extension FPUConfig {
 
                 Section(
                     footer: Text(
-                        "Allows fat and protein to be converted to future carb equivalents.\n\nDefault settings:\nTime Cap: 8 hours\nInterval: 60 min\nFactor: 0.5"
+                        "Allows fat and protein to be converted to future carb equivalents.\n\nDefault settings:\n\nTime Cap: 8 hours\nInterval: 60 min\nFactor: 0.5"
                     )
                 )
                     {}
