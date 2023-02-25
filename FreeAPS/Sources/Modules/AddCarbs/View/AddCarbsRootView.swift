@@ -32,32 +32,35 @@ extension AddCarbs {
                             DecimalTextField("0", value: $state.carbs, formatter: formatter, autofocus: true, cleanInput: true)
                             Text("grams").foregroundColor(.secondary)
                         }.padding(.vertical)
-                        // Adding Protein and Fat. Test
-                        HStack {
-                            Text("Protein").foregroundColor(.loopRed).fontWeight(.thin)
-                            Spacer()
-                            DecimalTextField(
-                                "0",
-                                value: $state.protein,
-                                formatter: formatter,
-                                autofocus: false,
-                                cleanInput: true
-                            ).foregroundColor(.loopRed)
-                            Text("grams").foregroundColor(.secondary)
-                        }
-                        HStack {
-                            Text("Fat").foregroundColor(.loopYellow).fontWeight(.thin)
-                            Spacer()
-                            DecimalTextField(
-                                "0",
-                                value: $state.fat,
-                                formatter: formatter,
-                                autofocus: false,
-                                cleanInput: true
-                            )
-                            Text("grams").foregroundColor(.secondary)
-                        }
 
+                        // MARK: Adding Protein and Fat. Test
+
+                        if state.useFPU {
+                            HStack {
+                                Text("Protein").foregroundColor(.loopRed).fontWeight(.thin)
+                                Spacer()
+                                DecimalTextField(
+                                    "0",
+                                    value: $state.protein,
+                                    formatter: formatter,
+                                    autofocus: false,
+                                    cleanInput: true
+                                ).foregroundColor(.loopRed)
+                                Text("grams").foregroundColor(.secondary)
+                            }
+                            HStack {
+                                Text("Fat").foregroundColor(.loopYellow).fontWeight(.thin)
+                                Spacer()
+                                DecimalTextField(
+                                    "0",
+                                    value: $state.fat,
+                                    formatter: formatter,
+                                    autofocus: false,
+                                    cleanInput: true
+                                )
+                                Text("grams").foregroundColor(.secondary)
+                            }
+                        }
                         DatePicker("Date", selection: $state.date)
                     }
                 }
