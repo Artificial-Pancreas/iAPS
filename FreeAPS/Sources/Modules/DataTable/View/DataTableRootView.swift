@@ -94,7 +94,7 @@ extension DataTable {
                                 message: Text(item.amountText),
                                 primaryButton: .destructive(
                                     Text("Delete"),
-                                    action: { state.deleteCarbs(at: item.date) }
+                                    action: { state.deleteCarbs(item) }
                                 ),
                                 secondaryButton: .cancel()
                             )
@@ -116,7 +116,7 @@ extension DataTable {
                                 message: Text(item.amountText),
                                 primaryButton: .destructive(
                                     Text("Delete"),
-                                    action: { state.deleteInsulin(at: item.date) }
+                                    action: { state.deleteInsulin(item) }
                                 ),
                                 secondaryButton: .cancel()
                             )

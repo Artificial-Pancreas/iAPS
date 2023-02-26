@@ -72,6 +72,7 @@ final class BaseAPSManager: APSManager, Injectable {
     @Injected() private var nightscout: NightscoutManager!
     @Injected() private var settingsManager: SettingsManager!
     @Injected() private var broadcaster: Broadcaster!
+    @Injected() private var healthKitManager: HealthKitManager!
     @Persisted(key: "lastAutotuneDate") private var lastAutotuneDate = Date()
     @Persisted(key: "lastStartLoopDate") private var lastStartLoopDate: Date = .distantPast
     @Persisted(key: "lastLoopDate") var lastLoopDate: Date = .distantPast {
@@ -249,6 +250,10 @@ final class BaseAPSManager: APSManager, Injectable {
     // Loop exit point
     private func loopCompleted(error: Error? = nil, loopStatRecord: LoopStats) {
         isLooping.send(false)
+
+        // save AH events
+        let events = pumpHistoryStorage.recent()
+        healthKitManager.saveIfNeeded(pumpEvents: events)
 
         if let error = error {
             warning(.apsManager, "Loop failed with error: \(error.localizedDescription)")
@@ -895,6 +900,7 @@ final class BaseAPSManager: APSManager, Injectable {
         var timeIntervalLoopArray: [Double] = []
         var medianInterval = 0.0
         var averageIntervalLoops = 0.0
+        var averageLoopDuration = 0.0
 
         coredataContext.performAndWait {
             let requestLSR = LoopStatRecord.fetchRequest() as NSFetchRequest<LoopStatRecord>
@@ -956,6 +962,8 @@ final class BaseAPSManager: APSManager, Injectable {
                 medianInterval = medianCalculation(array: timeIntervalLoopArray)
                 // Average time interval between loops
                 averageIntervalLoops = timeIntervalLoopArray.reduce(0, +) / Double(timeIntervalLoopArray.count)
+                // Average loop duration
+                averageLoopDuration = timeForOneLoopArray.reduce(0, +) / Double(timeForOneLoopArray.count)
             }
         }
 
@@ -1217,11 +1225,11 @@ final class BaseAPSManager: APSManager, Injectable {
             errors: errorNR,
             readings: Int(nrOfCGMReadings),
             success_rate: Decimal(round(successRate ?? 0)),
-            avg_interval: roundDecimal(Decimal(averageIntervalLoops), 1),
+            avg_interval: roundDecimal(Decimal(averageLoopTime), 1),
             median_interval: roundDecimal(Decimal(medianInterval), 1),
             min_interval: roundDecimal(Decimal(minimumInt), 1),
             max_interval: roundDecimal(Decimal(maximumInt), 1),
-            avg_duration: Decimal(roundDouble(averageLoopTime, 2)),
+            avg_duration: Decimal(roundDouble(averageLoopDuration, 2)),
             median_duration: Decimal(roundDouble(medianLoopTime, 2)),
             min_duration: roundDecimal(Decimal(minimumLoopTime), 2),
             max_duration: Decimal(roundDouble(maximumLoopTime, 1))

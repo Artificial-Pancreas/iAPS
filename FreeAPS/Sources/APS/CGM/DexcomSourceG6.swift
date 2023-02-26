@@ -96,7 +96,7 @@ extension DexcomSourceG6: CGMManagerDelegate {
     func recordRetractedAlert(_: LoopKit.Alert, at _: Date) {}
 
     func cgmManagerWantsDeletion(_ manager: CGMManager) {
-        dispatchPrecondition(condition: .onQueue(.main))
+        dispatchPrecondition(condition: .onQueue(processQueue))
         debug(.deviceManager, " CGM Manager with identifier \(manager.managerIdentifier) wants deletion")
         glucoseManager?.cgmGlucoseSourceType = nil
     }

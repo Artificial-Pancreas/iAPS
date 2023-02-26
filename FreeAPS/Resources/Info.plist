@@ -71,11 +71,11 @@
 	<key>NSFaceIDUsageDescription</key>
 	<string>For authorized acces to bolus</string>
 	<key>NSHealthShareUsageDescription</key>
-	<string>Health App is used to store blood glucose data</string>
+	<string>Health App is used to store blood glucose, carbs and insulin</string>
 	<key>NSHealthUpdateUsageDescription</key>
-	<string>Health App is used to store blood glucose data</string>
+	<string>Health App is used to store blood glucose, carbs and insulin</string>
 	<key>NSHumanReadableCopyright</key>
-	<string>$(BRANCH)</string>
+	<string>$(COPYRIGHT_NOTICE)</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>

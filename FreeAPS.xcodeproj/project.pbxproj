@@ -21,6 +21,10 @@
 		19854F492961C3E500941627 /* DurationButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19854F482961C3E500941627 /* DurationButton.swift */; };
 		199561C1275E61A50077B976 /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 199561C0275E61A50077B976 /* HealthKit.framework */; };
 		19B0EF2128F6D66200069496 /* Statistics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19B0EF2028F6D66200069496 /* Statistics.swift */; };
+		19D466A329AA2B80004D5F33 /* FPUConfigDataFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19D466A229AA2B80004D5F33 /* FPUConfigDataFlow.swift */; };
+		19D466A529AA2BD4004D5F33 /* FPUConfigProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19D466A429AA2BD4004D5F33 /* FPUConfigProvider.swift */; };
+		19D466A729AA2C22004D5F33 /* FPUConfigStateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19D466A629AA2C22004D5F33 /* FPUConfigStateModel.swift */; };
+		19D466AA29AA3099004D5F33 /* FPUConfigRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19D466A929AA3099004D5F33 /* FPUConfigRootView.swift */; };
 		1BBB001DAD60F3B8CEA4B1C7 /* ISFEditorStateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505E09DC17A0C3D0AF4B66FE /* ISFEditorStateModel.swift */; };
 		1D845DF2E3324130E1D95E67 /* DataTableProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60744C3E9BB3652895C908CC /* DataTableProvider.swift */; };
 		23888883D4EA091C88480FF2 /* BolusProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = C19984D62EFC0035A9E9644D /* BolusProvider.swift */; };
@@ -487,6 +491,10 @@
 		19B0EF2028F6D66200069496 /* Statistics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Statistics.swift; sourceTree = "<group>"; };
 		19C166682756EFBD00ED12E3 /* sk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sk; path = sk.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		19C166692756EFBD00ED12E3 /* sk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sk; path = sk.lproj/Localizable.strings; sourceTree = "<group>"; };
+		19D466A229AA2B80004D5F33 /* FPUConfigDataFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FPUConfigDataFlow.swift; sourceTree = "<group>"; };
+		19D466A429AA2BD4004D5F33 /* FPUConfigProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FPUConfigProvider.swift; sourceTree = "<group>"; };
+		19D466A629AA2C22004D5F33 /* FPUConfigStateModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FPUConfigStateModel.swift; sourceTree = "<group>"; };
+		19D466A929AA3099004D5F33 /* FPUConfigRootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FPUConfigRootView.swift; sourceTree = "<group>"; };
 		1CAE81192B118804DCD23034 /* SnoozeProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SnoozeProvider.swift; sourceTree = "<group>"; };
 		212E8BFE6D66EE65AA26A114 /* CalibrationsProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CalibrationsProvider.swift; sourceTree = "<group>"; };
 		223EC0494F55A91E3EA69EF4 /* BolusStateModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = BolusStateModel.swift; sourceTree = "<group>"; };
@@ -927,6 +935,25 @@
 			path = Main;
 			sourceTree = "<group>";
 		};
+		19D466A129AA2B0A004D5F33 /* FPUConfig */ = {
+			isa = PBXGroup;
+			children = (
+				19D466A229AA2B80004D5F33 /* FPUConfigDataFlow.swift */,
+				19D466A429AA2BD4004D5F33 /* FPUConfigProvider.swift */,
+				19D466A629AA2C22004D5F33 /* FPUConfigStateModel.swift */,
+				19D466A829AA306E004D5F33 /* View */,
+			);
+			path = FPUConfig;
+			sourceTree = "<group>";
+		};
+		19D466A829AA306E004D5F33 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				19D466A929AA3099004D5F33 /* FPUConfigRootView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		29B478DF61BF8D270F7D8954 /* Snooze */ = {
 			isa = PBXGroup;
 			children = (
@@ -949,6 +976,7 @@
 		3811DE0325C9D31700A708ED /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				19D466A129AA2B0A004D5F33 /* FPUConfig */,
 				F90692CD274B99850037068D /* HealthKit */,
 				6DC5D590658EF8B8DF94F9F5 /* AddCarbs */,
 				A9A4C88374496B3C89058A89 /* AddTempTarget */,
@@ -2233,6 +2261,7 @@
 				38E44537274E411700EC9A94 /* Disk+Helpers.swift in Sources */,
 				388E5A6025B6F2310019842D /* Autosens.swift in Sources */,
 				3811DE8F25C9D80400A708ED /* User.swift in Sources */,
+				19D466A329AA2B80004D5F33 /* FPUConfigDataFlow.swift in Sources */,
 				3811DEB225C9D88300A708ED /* KeychainItemAccessibility.swift in Sources */,
 				385CEAC425F2F154002D6D5B /* AnnouncementsStorage.swift in Sources */,
 				38AEE73D25F0200C0013F05B /* FreeAPSSettings.swift in Sources */,
@@ -2271,6 +2300,7 @@
 				38DAB280260CBB7F00F74C1A /* PumpView.swift in Sources */,
 				3811DEB125C9D88300A708ED /* Keychain.swift in Sources */,
 				382C133725F13A1E00715CE1 /* InsulinSensitivities.swift in Sources */,
+				19D466A529AA2BD4004D5F33 /* FPUConfigProvider.swift in Sources */,
 				383948D625CD4D8900E91849 /* FileStorage.swift in Sources */,
 				3811DE4125C9D4A100A708ED /* SettingsRootView.swift in Sources */,
 				38192E04261B82FA0094D973 /* ReachabilityManager.swift in Sources */,
@@ -2289,6 +2319,7 @@
 				3811DF0225CA9FEA00A708ED /* Credentials.swift in Sources */,
 				389A572026079BAA00BC102F /* Interpolation.swift in Sources */,
 				38B4F3C625E5017E00E76A18 /* NotificationCenter.swift in Sources */,
+				19D466A729AA2C22004D5F33 /* FPUConfigStateModel.swift in Sources */,
 				38E44528274E401C00EC9A94 /* Protected.swift in Sources */,
 				3811DEB625C9D88300A708ED /* UnlockManager.swift in Sources */,
 				E00EEC0827368630002FF094 /* NetworkAssembly.swift in Sources */,
@@ -2375,6 +2406,7 @@
 				AD3D2CD42CD01B9EB8F26522 /* PumpConfigDataFlow.swift in Sources */,
 				53F2382465BF74DB1A967C8B /* PumpConfigProvider.swift in Sources */,
 				5D16287A969E64D18CE40E44 /* PumpConfigStateModel.swift in Sources */,
+				19D466AA29AA3099004D5F33 /* FPUConfigRootView.swift in Sources */,
 				E974172296125A5AE99E634C /* PumpConfigRootView.swift in Sources */,
 				448B6FCB252BD4796E2960C0 /* PumpSettingsEditorDataFlow.swift in Sources */,
 				38E44536274E411700EC9A94 /* Disk.swift in Sources */,
@@ -2732,7 +2764,7 @@
 			buildSettings = {
 				APP_DISPLAY_NAME = "$(APP_DISPLAY_NAME)";
 				APP_GROUP_ID = "$(APP_GROUP_ID)";
-				ASSETCATALOG_COMPILER_APPICON_NAME = "$(APP_ICON)";
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon_BW;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				BUNDLE_IDENTIFIER = "$(BUNDLE_IDENTIFIER)";
 				CODE_SIGN_ENTITLEMENTS = FreeAPS/Resources/FreeAPS.entitlements;
@@ -2768,7 +2800,7 @@
 			buildSettings = {
 				APP_DISPLAY_NAME = "$(APP_DISPLAY_NAME)";
 				APP_GROUP_ID = "$(APP_GROUP_ID)";
-				ASSETCATALOG_COMPILER_APPICON_NAME = "$(APP_ICON)";
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon_BW;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				BUNDLE_IDENTIFIER = "$(BUNDLE_IDENTIFIER)";
 				CODE_SIGN_ENTITLEMENTS = FreeAPS/Resources/FreeAPS.entitlements;
@@ -2804,7 +2836,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				APP_DISPLAY_NAME = "$(APP_DISPLAY_NAME)";
-				ASSETCATALOG_COMPILER_APPICON_NAME = "$(APP_ICON)";
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon_BW;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				BUNDLE_IDENTIFIER = "$(BUNDLE_IDENTIFIER)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
@@ -2834,7 +2866,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				APP_DISPLAY_NAME = "$(APP_DISPLAY_NAME)";
-				ASSETCATALOG_COMPILER_APPICON_NAME = "$(APP_ICON)";
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon_BW;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				BUNDLE_IDENTIFIER = "$(BUNDLE_IDENTIFIER)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
@@ -2991,7 +3023,7 @@
 				388E596625AD948E0019842D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 		388E596725AD948E0019842D /* Build configuration list for PBXNativeTarget "FreeAPS" */ = {
 			isa = XCConfigurationList;
@@ -3000,7 +3032,7 @@
 				388E596925AD948E0019842D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 		38E8754327554D5900975559 /* Build configuration list for PBXNativeTarget "FreeAPSWatch WatchKit Extension" */ = {
 			isa = XCConfigurationList;
@@ -3009,7 +3041,7 @@
 				38E8754227554D5900975559 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 		38E8754427554D5900975559 /* Build configuration list for PBXNativeTarget "FreeAPSWatch" */ = {
 			isa = XCConfigurationList;
@@ -3018,7 +3050,7 @@
 				38E8753F27554D5900975559 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 		38FCF3F425E9028E0078B0D1 /* Build configuration list for PBXNativeTarget "FreeAPSTests" */ = {
 			isa = XCConfigurationList;
@@ -3027,7 +3059,7 @@
 				38FCF3F625E9028E0078B0D1 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 /* End XCConfigurationList section */
 

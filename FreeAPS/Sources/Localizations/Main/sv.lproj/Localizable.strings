@@ -951,6 +951,12 @@ Enact a temp Basal or a temp target */
 /* Online or internal server */
 "Online or internal server" = "Online eller intern server";
 
+/* Add Fat */
+"Fat" = "Fett";
+
+/* Add Protein */
+"Protein" = "Protein";
+
 /* -------------- Developer settings ---------------------- */
 /* Debug options */
 

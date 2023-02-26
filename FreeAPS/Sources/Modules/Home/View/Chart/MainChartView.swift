@@ -93,7 +93,7 @@ struct MainChartView: View {
     private var carbsFormatter: NumberFormatter {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
-        formatter.maximumFractionDigits = 0
+        formatter.maximumFractionDigits = 1
         return formatter
     }
 

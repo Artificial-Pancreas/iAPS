@@ -220,7 +220,7 @@ extension BaseWatchManager: WCSessionDelegate {
 
         if let carbs = message["carbs"] as? Double, carbs > 0 {
             carbsStorage.storeCarbs([
-                CarbsEntry(createdAt: Date(), carbs: Decimal(carbs), enteredBy: CarbsEntry.manual)
+                CarbsEntry(id: UUID().uuidString, createdAt: Date(), carbs: Decimal(carbs), enteredBy: CarbsEntry.manual)
             ])
 
             if settingsManager.settings.skipBolusScreenAfterCarbs {

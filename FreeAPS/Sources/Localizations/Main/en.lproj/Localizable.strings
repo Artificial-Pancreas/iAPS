@@ -1043,7 +1043,39 @@ Enact a temp Basal or a temp target */
 /* Total AT / Scheduled basal insulin */
 "Total" = "Total";
 
-/* ---------------------------------------
+/* -------------------------------------------- FPU Strings ------------------------------------------------------*/
+
+/* Header */
+"Convert Fat and Protein" = "Convert Fat and Protein";
+
+/* Header */
+"Conversion settings" = "Conversion settings";
+
+/* Delay */
+"Delay In Minutes" = "Delay In Minutes";
+
+/* Duration */
+"Maximum Duration In Hours" = "Maximum Duration In Hours";
+
+/* Interval */
+"Interval In Minutes" = "Interval In Minutes";
+
+/* Override */
+"Override With A Factor Of " = "Override With A Factor Of ";
+
+/* Description */
+"Allows fat and protein to be converted into future carb equivalents, using the Warsaw method (total kcal/10).\n\nDelay is time from now until first future carb entry. Maximum duration is the maximum time in hours, in total, which the carb equivalents will allocate. Interval means the number of minutes betewen these entries. Override setting is for safety and tuning. The higher, the larger the total amount of carb equivalents. Compensating for an increased total carb amount with an increased IC ratio is recommended.\n\nDefault settings: Delay: 60 min, Time Cap: 8 h, Interval: 60 min, Factor: 0.5." = "Allows fat and protein to be converted into future carb equivalents, using the Warsaw method (total kcal/10).\n\nDelay is time from now until first future carb entry. Maximum duration is the maximum time in hours, in total, which the carb equivalents will allocate. Interval means the number of minutes betewen these entries. Override setting is for safety and tuning. The higher, the larger the total amount of carb equivalents. Compensating for an increased total carb amount with an increased IC ratio is recommended.\n\nDefault settings: Delay: 60 min, Time Cap: 8 h, Interval: 60 min, Factor: 0.5.";
+
+/* Title */
+"Fat and Protein" = "Fat and Protein";
+
+/* Add Fat */
+"Fat" = "Fat";
+
+/* Add Protein */
+"Protein" = "Protein";
+
+/* -------------------------------------------------------------------------------------------
   DASH strings
 */
 "Attach Pod" = "Attach Pod";
