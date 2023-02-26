@@ -35,14 +35,6 @@ final class BaseFetchGlucoseManager: FetchGlucoseManager, Injectable {
         injectServices(resolver)
         updateGlucoseSource()
         subscribe()
-
-        /// listen if require CGM update
-        deviceDataManager.requireCGMRefresh
-            .receive(on: processQueue)
-            .sink { _ in
-                self.refreshCGM()
-            }
-            .store(in: &lifetime)
     }
 
     var glucoseSource: GlucoseSource!
@@ -160,14 +152,6 @@ final class BaseFetchGlucoseManager: FetchGlucoseManager, Injectable {
             UIApplication.shared.endBackgroundTask(backgroundTask)
             backGroundFetchBGTaskID = .invalid
         }
-
-//        if filtered.isEmpty {
-//            let lastGlucoseDate = glucoseStorage.lastGlucoseDate()
-//            guard lastGlucoseDate >= Date().addingTimeInterval(-Config.eхpirationInterval) else {
-//                debug(.nightscout, "Glucose is too old - \(lastGlucoseDate)")
-//                return
-//            }
-//        }
     }
 
     /// The function used to start the timer sync - Function of the variable defined in config

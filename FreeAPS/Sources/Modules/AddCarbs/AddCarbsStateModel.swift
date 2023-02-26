@@ -41,8 +41,8 @@ extension AddCarbs {
                 let newdate = 1.0 + trunc(Double(truncating: counter as NSNumber))
                 carbsStorage.storeCarbs([
                     CarbsEntry(
-                        id: UUID().uuidString, createdAt: date + (newdate * Double(timeInterval)), carbs: carbequiv, enteredBy: CarbsEntry.manual
-
+                        id: UUID().uuidString, createdAt: date + (newdate * Double(timeInterval)), carbs: carbequiv,
+                        enteredBy: CarbsEntry.manual
                     )
                 ])
                 counter -= 1

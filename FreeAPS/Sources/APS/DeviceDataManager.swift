@@ -23,7 +23,7 @@ protocol DeviceDataManager: GlucoseSource {
     var errorSubject: PassthroughSubject<Error, Never> { get }
     var pumpName: CurrentValueSubject<String, Never> { get }
     var pumpExpiresAtDate: CurrentValueSubject<Date?, Never> { get }
-    var requireCGMRefresh: PassthroughSubject<Date, Never> { get }
+
     func heartbeat(date: Date)
     func createBolusProgressReporter() -> DoseProgressReporter?
     var alertHistoryStorage: AlertHistoryStorage! { get }
@@ -63,15 +63,12 @@ final class BaseDeviceDataManager: DeviceDataManager, Injectable {
     @SyncAccess(lock: accessLock) @Persisted(key: "BaseDeviceDataManager.lastHeartBeatTime") var lastHeartBeatTime: Date =
         .distantPast
 
-    // to do at true if you would like to use pump heartbeat
-    let heartbeatBypump: Bool = false
-
     let recommendsLoop = PassthroughSubject<Void, Never>()
     let bolusTrigger = PassthroughSubject<Bool, Never>()
     let errorSubject = PassthroughSubject<Error, Never>()
     let pumpNewStatus = PassthroughSubject<Void, Never>()
     let manualTempBasal = PassthroughSubject<Bool, Never>()
-    let requireCGMRefresh = PassthroughSubject<Date, Never>()
+
     private let router = FreeAPSApp.resolver.resolve(Router.self)!
     @SyncAccess private var pumpUpdateCancellable: AnyCancellable?
     private var pumpUpdatePromise: Future<Bool, Never>.Promise?
@@ -85,7 +82,7 @@ final class BaseDeviceDataManager: DeviceDataManager, Injectable {
             if let pumpManager = pumpManager {
                 pumpDisplayState.value = PumpDisplayState(name: pumpManager.localizedTitle, image: pumpManager.smallImage)
                 pumpName.send(pumpManager.localizedTitle)
-                pumpManager.setMustProvideBLEHeartbeat(heartbeatBypump)
+
                 if let omnipod = pumpManager as? OmnipodPumpManager {
                     guard let endTime = omnipod.state.podState?.expiresAt else {
                         pumpExpiresAtDate.send(nil)
@@ -317,9 +314,9 @@ extension BaseDeviceDataManager: PumpManagerDelegate {
         pumpName.send(pumpManager.localizedTitle)
     }
 
+    /// heartbeat with pump occurs some issues in the backgroundtask - so never used
     func pumpManagerBLEHeartbeatDidFire(_: PumpManager) {
         debug(.deviceManager, "Pump Heartbeat: do nothing. Pump connection is OK")
-        requireCGMRefresh.send(Date())
     }
 
     func pumpManagerMustProvideBLEHeartbeat(_: PumpManager) -> Bool {
