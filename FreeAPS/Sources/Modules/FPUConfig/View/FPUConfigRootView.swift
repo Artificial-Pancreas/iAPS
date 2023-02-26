@@ -28,6 +28,11 @@ extension FPUConfig {
 
                 Section(header: Text("Optional conversion settings")) {
                     HStack {
+                        Text("Delay In Minutes")
+                        Spacer()
+                        DecimalTextField("8", value: $state.delay, formatter: intFormater)
+                    }
+                    HStack {
                         Text("Maximum Time Cap In Hours")
                         Spacer()
                         DecimalTextField("8", value: $state.timeCap, formatter: intFormater)
@@ -46,7 +51,7 @@ extension FPUConfig {
 
                 Section(
                     footer: Text(
-                        "Allows fat and protein to be converted to future carb equivalents.\n\nDefault settings:\n\nTime Cap: 8 hours\nInterval: 60 min\nFactor: 0.5"
+                        "Allows fat and protein to be converted to future carb equivalents.\n\nDefault settings:\n\nDelay: 60 minutes\nTime Cap: 8 hours\nInterval: 60 min\nFactor: 0.5"
                     )
                 )
                     {}

@@ -23,28 +23,35 @@ extension AddCarbs {
                 return
             }
 
+            let interval = settings.settings.minuteInterval
+            let timeCap = settings.settings.timeCap * (60 / Decimal(interval))
+            let adjustment = settings.settings.individualAdjustmentFactor
+            let delay = settings.settings.delay
+
             // Convert fat and protein to carb equivalents and store as future carbs
             let fpucarb = 0.4 * protein + 0.9 * fat
             let fpus = (fat * 9.0 + protein * 4.0) / 100.0
-            // Default is 1 hour (60 minutes)
-            let timeInterval = 60 * settings.settings.minuteInterval
-            // Deffault is 8 hours
-            let timeCap = settings.settings.timeCap
-            let adjustment = settings.settings.individualAdjustmentFactor
             var counter: Decimal = (fpus * 2) - 1.0
             counter = min(timeCap, counter)
             var roundedCounter: Decimal = 0
             NSDecimalRound(&roundedCounter, &counter, 0, .up)
             let carbequiv = (fpucarb / roundedCounter) * adjustment
+            let firstDate = date.addingTimeInterval(delay.minutes.timeInterval)
+            var previousDate = date
 
-            while counter > 0, counter <= timeCap {
-                let newdate = 1.0 + trunc(Double(truncating: counter as NSNumber))
-                carbsStorage.storeCarbs([
-                    CarbsEntry(
-                        id: UUID().uuidString, createdAt: date + (newdate * Double(timeInterval)), carbs: carbequiv, enteredBy: CarbsEntry.manual
-
-                    )
-                ])
+            while counter > 0 {
+                var useDate = date + 1 * Double(interval * 60)
+                // Fix Interval and Delay
+                useDate = max(previousDate.addingTimeInterval(interval.minutes.timeInterval), useDate, firstDate)
+                if useDate > previousDate {
+                    carbsStorage.storeCarbs([
+                        CarbsEntry(
+                            id: UUID().uuidString, createdAt: useDate, carbs: carbequiv,
+                            enteredBy: CarbsEntry.manual
+                        )
+                    ])
+                }
+                previousDate = useDate
                 counter -= 1
             }
             // Store the real carbs
