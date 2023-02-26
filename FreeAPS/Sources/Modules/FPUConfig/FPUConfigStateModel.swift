@@ -34,7 +34,7 @@ extension FPUConfig {
             })
 
             subscribeSetting(\.individualAdjustmentFactor, on: $individualAdjustmentFactor, initial: {
-                let value = max(min($0, 1.2), 0.3)
+                let value = max(min($0, 1.2), 0.1)
                 individualAdjustmentFactor = value
             }, map: {
                 $0
