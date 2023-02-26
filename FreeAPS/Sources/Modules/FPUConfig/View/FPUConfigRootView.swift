@@ -26,7 +26,7 @@ extension FPUConfig {
                     Toggle("Enable", isOn: $state.useFPUconversion)
                 }
 
-                Section(header: Text("Optional conversion settings")) {
+                Section(header: Text("Conversion settings")) {
                     HStack {
                         Text("Delay In Minutes")
                         Spacer()
