@@ -43,7 +43,7 @@ extension FPUConfig {
                         DecimalTextField("60", value: $state.minuteInterval, formatter: intFormater)
                     }
                     HStack {
-                        Text("Override with a factor of ")
+                        Text("Override With A Factor Of ")
                         Spacer()
                         DecimalTextField("0.8", value: $state.individualAdjustmentFactor, formatter: conversionFormatter)
                     }
@@ -51,7 +51,7 @@ extension FPUConfig {
 
                 Section(
                     footer: Text(
-                        "Allows fat and protein to be converted to future carb equivalents.\n\nDefault settings:\n\nDelay: 60 minutes\nTime Cap: 8 hours\nInterval: 60 min\nFactor: 0.5"
+                        "Allows fat and protein to be converted to future carb equivalents. Delay is when the first future carb equivalent is created. Maximum time is the maximum number of hours in total all of the carb equivalents will allocate. Interval means number of minutes betewwen the created future carb entries. Override setting is for safety and for tuning of the conversion to carbs, recommended 0.5-0.8. The higher, the larger the total amount of future carbs.\n\nDefault settings: Delay: 60 min, Time Cap: 8 h, Interval: 60 min, Factor: 0.5."
                     )
                 )
                     {}
