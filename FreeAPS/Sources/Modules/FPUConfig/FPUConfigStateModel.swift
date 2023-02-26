@@ -20,7 +20,7 @@ extension FPUConfig {
             })
 
             subscribeSetting(\.minuteInterval, on: $minuteInterval.map(Int.init), initial: {
-                let value = max(min($0, 90), 10)
+                let value = max(min($0, 60), 10)
                 minuteInterval = Decimal(value)
             }, map: {
                 $0
