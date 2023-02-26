@@ -13,7 +13,7 @@ extension FPUConfig {
             subscribeSetting(\.timeCap, on: $timeCap) { timeCap = $0 }
 
             subscribeSetting(\.timeCap, on: $timeCap, initial: {
-                let value = max(min($0, 12), 8)
+                let value = max(min($0, 12), 6)
                 timeCap = value
             }, map: {
                 $0

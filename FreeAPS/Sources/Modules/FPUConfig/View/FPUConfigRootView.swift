@@ -51,7 +51,7 @@ extension FPUConfig {
 
                 Section(
                     footer: Text(
-                        "Allows fat and protein to be converted into future carb equivalents, using the Warsaw method (total kcal/10).\n\nDelay is time from now until first future carb entry. Maximum duration is the maximum time in hours, in total, which the carb equivalents will allocate. Interval means the number of minutes betewen these entries. Override setting is for safety and tuning. The higher, the larger the total amount of carb equivalents. Compensating for an increased total carb amount with an increased IC ratio is recommended.\n\nDefault settings: Delay: 60 min, Time Cap: 8 h, Interval: 60 min, Factor: 0.5."
+                        "Allows fat and protein to be converted into future carb equivalents using the Warsaw formula of kilocalories divided by 10.\n\nThis spreads the carb equivilants over a maximum duration setting that can be configured from 8-12 hours.\n\nInterval in minutes is how many minutes are between entries. The shorter the interval, the smoother the results, but it becomes harder to manually delete entries if you later want to remove them. 10, 15, 20, 30, or 60 are reasonable choices.\n\nDelay is time from now until first future carb entry.\n\nAdjustment factor is how much effect the fat and protein has on the entries. 1.0 is full effect and 0.5 is half effect. Note that you may find that your normal carb ratio needs to increase to a larger number if you begin adding fat and protein entries. For this reason, it is best to start with a factor of about 0.5 to ease into it.\n\nDefault settings: Time Cap: 8 h, Interval: 30 min, Factor: 0.5, Delay 60 min"
                     )
                 )
                     {}

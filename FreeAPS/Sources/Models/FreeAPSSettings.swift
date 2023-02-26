@@ -28,7 +28,7 @@ struct FreeAPSSettings: JSON, Equatable {
     var useFPUconversion: Bool = false
     var individualAdjustmentFactor: Decimal = 0.5
     var timeCap: Decimal = 8
-    var minuteInterval: Int = 60
+    var minuteInterval: Int = 30
     var delay: Int = 60
 }
 
