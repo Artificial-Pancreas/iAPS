@@ -33,7 +33,7 @@ extension FPUConfig {
                         DecimalTextField("8", value: $state.delay, formatter: intFormater)
                     }
                     HStack {
-                        Text("Maximum Time Cap In Hours")
+                        Text("Maximum Duration In Hours")
                         Spacer()
                         DecimalTextField("8", value: $state.timeCap, formatter: intFormater)
                     }
@@ -51,7 +51,7 @@ extension FPUConfig {
 
                 Section(
                     footer: Text(
-                        "Allows fat and protein to be converted to future carb equivalents. Delay is when the first future carb equivalent is created. Maximum time is the maximum number of hours in total, which all of the carb equivalents will allocate. Interval means the number of minutes betewen the created future carb entries. Override setting is for safety and for tuning of the conversion to carbs. The higher, the larger the total amount of future carbs.\n\nDefault settings: Delay: 60 min, Time Cap: 8 h, Interval: 60 min, Factor: 0.5."
+                        "Allows fat and protein to be converted to future carb equivalents. Delay is when the first future carb equivalent is created. Maximum duration is the maximum number of hours in total, which all of the carb equivalents will allocate. Interval means the number of minutes betewen the created future carb entries. Override setting is for safety and for tuning of the conversion to carbs. The higher, the larger the total amount of future carbs.\n\nDefault settings: Delay: 60 min, Time Cap: 8 h, Interval: 60 min, Factor: 0.5."
                     )
                 )
                     {}
