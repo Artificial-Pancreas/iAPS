@@ -23,16 +23,16 @@
 "Connection Failure" = "Errore di connessione";
 
 /* Generic pump error description */
-"Device Refused" = "il dispositivo e stato rifiutato";
+"Device Refused" = "Il dispositivo è stato rifiutato";
 
 /* Recovery suggestion for a no data error */
-"Ensure carb data exists for the specified date" = "Assicurare che i dati carbo esistano per la data specificata";
+"Ensure carb data exists for the specified date" = "Assicurati che i dati dei carboidrati esistano per la data specificata";
 
 /* Glucose trend down */
-"Falling" = "Abbassamento";
+"Falling" = "Cadendo";
 
 /* Glucose trend down-down */
-"Falling fast" = "Abbassamento veloc";
+"Falling fast" = "In discesa veloce";
 
 /* Glucose trend down-down-down */
 "Falling very fast" = "Abbassamento molto veloce";
@@ -83,7 +83,7 @@
 "U" = "U";
 
 /* The short unit display string for international units of insulin per hour */
-"U/hr" = "U/ora";
+"U/hr" = "Unità/ora";
 
 /* The long unit display string for a singular international unit of insulin */
 "Unit" = "Unità";

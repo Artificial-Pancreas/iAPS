@@ -15,7 +15,7 @@
 "%@ U (Finished)" = "%@ U (Terminé)";
 
 /* Format string for bolus progress. (1: The delivered amount) (2: The programmed amount) (3: the percent progress) */
-"%@ U of %@ U (%@)" = "%1$@ U of %2$@ U (%3$@)";
+"%@ U of %@ U (%@)" = "%1$@ U sur %2$@ U (%3$@)";
 
 /* Format string for temp basal rate. (1: The localized amount) */
 "%@ U/hour" = "%@ U/heure";
@@ -166,7 +166,7 @@
 "PM Version" = "Version PM";
 
 /* Label describing pod age view */
-"Pod Age" = " âge pod";
+"Pod Age" = "Âge du pod";
 
 /* Title of the pod settings view controller */
 "Pod Settings" = "Réglages du pod";
@@ -198,7 +198,7 @@
 "Save" = "Sauvegarder";
 
 /* The detail text of the basal row when pod is running scheduled basal */
-"Schedule" = "Programmé";
+"Schedule" = "Programme";
 
 /* The title of the status section in settings */
 "Status" = "Statut";

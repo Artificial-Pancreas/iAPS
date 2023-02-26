@@ -1,5 +1,5 @@
 /* Accessibility format string for (1: localized volume)(2: time) */
-"%1$@ units remaining at %2$@" = "%1$@ eenheden aanwezig op %2$@";
+"%1$@ units remaining at %2$@" = "%1$@ eenheden aanwezig om %2$@";
 
 /* The format string for displaying an offset from a time zone: (1: GMT)(2: -)(3: 4:00) */
 "%1$@%2$@%3$@" = "%1$@%2$@%3$@";
@@ -66,7 +66,7 @@
 "Changing time…" = "Vervang tijd…";
 
 /* The title of the configuration section in settings */
-"Configuration" = "Configuratie";
+"Configuration" = "Instellingen";
 
 /* The title of the continue action in an action sheet */
 "Continue" = "Vervolg";
@@ -88,7 +88,7 @@
 "Device Information" = "Apparaat informatie";
 
 /* Title text for button to disable bolus beeps */
-"Disable Bolus Beeps" = "Stop gebruik Bolus Piepjes";
+"Disable Bolus Beeps" = "Bolus piepjes uitschakelen";
 
 /* Title text for button to enable bolus beeps */
 "Enable Bolus Beeps" = "Pas Bolus Piepjes gebruik toe";
@@ -139,7 +139,7 @@
 "Invalid entry" = "Ongeldige mogelijkheid";
 
 /* The title of the cell showing the pod lot id */
-"Lot" = "Partij";
+"Lot" = "Lot";
 
 /* The detail text for bolus delivery when no bolus is being delivered */
 "None" = "Geen";
@@ -151,7 +151,7 @@
 "Pair New Pod" = "Verbind nieuwe pod";
 
 /* The text of the loading label when pairing */
-"Pairing…" = "Verbinden…";
+"Pairing…" = "Aan het verbinden…";
 
 /* The title of the cell showing the pod pi version */
 "PI Version" = "PI versie";
@@ -175,7 +175,7 @@
 "Primed" = "Klaar gemaakt";
 
 /* The text of the loading label when priming */
-"Priming…" = "Klaar maken…";
+"Priming…" = "Aan het klaar maken…";
 
 /* Label describing time remaining view */
 "Remaining" = "Resterend";
@@ -195,16 +195,16 @@
 
 /* Title of button to save delivery limit settings
    Title of button to sync basal profile when no pod paired */
-"Save" = "Sla op";
+"Save" = "Opslaan";
 
 /* The detail text of the basal row when pod is running scheduled basal */
-"Schedule" = "Plan";
+"Schedule" = "Schema";
 
 /* The title of the status section in settings */
 "Status" = "Status";
 
 /* A message indicating a command succeeded */
-"Succeeded" = "Geslaagd";
+"Succeeded" = "Geslaagd 👍";
 
 /* The detail text of the basal row when pod is suspended */
 "Suspended" = "Onderbroken";

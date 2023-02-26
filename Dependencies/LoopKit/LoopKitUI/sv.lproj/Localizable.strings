@@ -3,19 +3,19 @@
 "%1$@ %2$@" = "%1$@ %2$@";
 
 /* Accessibility format string for (1: localized volume)(2: time) */
-"%1$@ units remaining at %2$@" = "%1$@ enheter återstår kl %2$@";
+"%1$@ units remaining at %2$@" = "%1$@ enheter återstår kl. %2$@";
 
 /* The format for a glucose target range. (1: min target)(2: max target)(3: glucose unit) */
 "%1$@ – %2$@ %3$@" = "%1$@ – %2$@ %3$@";
 
 /* The format for an insulin needs percentage. */
-"%@%% of normal insulin" = "%@%% of normal insulin";
+"%@%% of normal insulin" = "%@%% av normalt insulinbehov";
 
 /* Appends a full-stop to a statement */
 "%@." = "%@.";
 
 /* Format string for reservoir volume. (1: The localized volume) */
-"%@U" = "%@U";
+"%@U" = "%@E";
 
 /* Title of the carb entry absorption time cell */
 "Absorption Time" = "Absorptionstid";
@@ -96,7 +96,7 @@
 "Custom Override" = "Anpassad Override";
 
 /* Title of the carb entry date picker cell */
-"Date" = "Tid";
+"Date" = "Datum";
 
 /* Button title to delete all objects */
 "Delete All" = "Radera allt";
@@ -166,7 +166,7 @@
 "Override presets can be set up under the 'Configuration' section of the settings screen." = "Override förinställningar kan ställas in under ‘Konfiguration’ i menyn inställningar.";
 
 /* The section title of glucose overrides */
-"Overrides" = "Overrides";
+"Overrides" = "Undantag";
 
 /* Title for the pre-meal override range */
 "Pre-Meal" = "Före måltid";
@@ -203,7 +203,7 @@
 "Starting Temp Basal" = "Börjar temporär basal";
 
 /* Title text for button to suspend insulin delivery */
-"Suspend Delivery" = "Pausa insulintillförsel";
+"Suspend Delivery" = "Pausa pump";
 
 /* Title text for button when insulin delivery is in the process of being stopped */
 "Suspending" = "Pausar";
@@ -236,7 +236,7 @@
 "U/hour" = "E/timme";
 
 /* The unit string for units */
-"Units" = "Eheter";
+"Units" = "Enheter";
 
 /* Accessibility value for an unknown value
    The default title to use when an entry has none */

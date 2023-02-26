@@ -3,7 +3,7 @@
 "%1$@ %2$@" = "%1$@ %2$@";
 
 /* Accessibility format string for (1: localized volume)(2: time) */
-"%1$@ units remaining at %2$@" = "%1$@ nog actieve eenheden %2$@";
+"%1$@ units remaining at %2$@" = "%1$@ eenheden aanwezig om %2$@";
 
 /* The format for a glucose target range. (1: min target)(2: max target)(3: glucose unit) */
 "%1$@ – %2$@ %3$@" = "%1$@ – %2$@ %3$@";
@@ -15,7 +15,7 @@
 "%@." = "%@.";
 
 /* Format string for reservoir volume. (1: The localized volume) */
-"%@U" = "%@U";
+"%@U" = "%@E";
 
 /* Title of the carb entry absorption time cell */
 "Absorption Time" = "Absorptie tijd";
@@ -81,10 +81,10 @@
 "com.loudnate.LoopKit.errorAlertActionTitle" = "Ok";
 
 /* The title for the override emoji condition section */
-"Condition" = "Gesteldheid";
+"Condition" = "Conditie";
 
 /* Title of the setup button to continue */
-"Continue" = "Ga verder";
+"Continue" = "Vervolg";
 
 /* The section footer of correction range schedule */
 "Correction range is the blood glucose range that you would like Loop to correct to." = "Correctie bereik is het bereik dat je wilt dat Loop op aanstuurt.";
@@ -153,7 +153,7 @@
 "New Preset" = "Nieuw tijdelijk programma";
 
 /* Section title for no-carb food
-The title for override emoji miscellaneous section */
+   The title for override emoji miscellaneous section */
 "Other" = "Anders";
 
 /* The title text for the insulin sensitivity scaling setting */
@@ -181,14 +181,14 @@ The title for override emoji miscellaneous section */
 "Resume Delivery" = "Hervat toediening";
 
 /* Title text for button when insulin delivery is in the process of being resumed */
-"Resuming" = "Hervat";
+"Resuming" = "Hervatten";
 
 /* The text for the override preset name field placeholder */
 "Running" = "Hardlopen";
 
 /* Button text for saving glucose correction range schedule
    Button text for saving insulin sensitivity schedule */
-"Save" = "Sla op";
+"Save" = "Opslaan";
 
 /* The section header text for a scheduled override */
 "SCHEDULED OVERRIDE" = "GEPLAND TIJDELIJK PROGRAMMA";
@@ -206,7 +206,7 @@ The title for override emoji miscellaneous section */
 "Suspend Delivery" = "Onderbreek toediening";
 
 /* Title text for button when insulin delivery is in the process of being stopped */
-"Suspending" = "Onderbreek";
+"Suspending" = "Onderbreken";
 
 /* The text for the override preset symbol setting */
 "Symbol" = "Symbool";
@@ -230,7 +230,7 @@ The title for override emoji miscellaneous section */
 "The maximum allowed amount is %@ grams" = "De maximum toegestane waarde is %@ gram";
 
 /* The schedule table view header describing the configured time zone difference from the default time zone. The substitution parameters are: (1: time zone name)(2: +/-)(3: time interval) */
-"Times in %1$@%2$@%3$@" = "keer in %1$@%2$@%3$@";
+"Times in %1$@%2$@%3$@" = "Aantal keren in %1$@%2$@%3$@";
 
 /* The unit string for units per hour */
 "U/hour" = "E/uur";
@@ -239,7 +239,7 @@ The title for override emoji miscellaneous section */
 "Units" = "Eenheden";
 
 /* Accessibility value for an unknown value
-The default title to use when an entry has none */
+   The default title to use when an entry has none */
 "Unknown" = "Onbekend";
 
 /* Label indicating validation is occurring */
@@ -250,4 +250,3 @@ The default title to use when an entry has none */
 
 /* Title for the workout override range */
 "Workout" = "Training";
-

@@ -1,5 +1,5 @@
 /* Accessibility format string for (1: localized volume)(2: time) */
-"%1$@ units remaining at %2$@" = "%1$@ unidades restantes em %2$@";
+"%1$@ units remaining at %2$@" = "%1$@ unidades restantes as %2$@";
 
 /* The format string for displaying an offset from a time zone: (1: GMT)(2: -)(3: 4:00) */
 "%1$@%2$@%3$@" = "%1$@%2$@%3$@";
@@ -66,7 +66,7 @@
 "Changing time…" = "Alterando a hora...";
 
 /* The title of the configuration section in settings */
-"Configuration" = "Configuração";
+"Configuration" = "Ajustes";
 
 /* The title of the continue action in an action sheet */
 "Continue" = "Continuar";
@@ -139,7 +139,7 @@
 "Invalid entry" = "Entrada inválida";
 
 /* The title of the cell showing the pod lot id */
-"Lot" = "Lot";
+"Lot" = "Lote";
 
 /* The detail text for bolus delivery when no bolus is being delivered */
 "None" = "Nenhum";
@@ -198,7 +198,7 @@
 "Save" = "Salvar";
 
 /* The detail text of the basal row when pod is running scheduled basal */
-"Schedule" = "Agendada";
+"Schedule" = "Agenda";
 
 /* The title of the status section in settings */
 "Status" = "Estado";

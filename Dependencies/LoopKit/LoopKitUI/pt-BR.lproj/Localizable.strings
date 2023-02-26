@@ -3,7 +3,7 @@
 "%1$@ %2$@" = "%1$@ %2$@";
 
 /* Accessibility format string for (1: localized volume)(2: time) */
-"%1$@ units remaining at %2$@" = "%1$@ unidades restantes em %2$@";
+"%1$@ units remaining at %2$@" = "%1$@ unidades restantes as %2$@";
 
 /* The format for a glucose target range. (1: min target)(2: max target)(3: glucose unit) */
 "%1$@ – %2$@ %3$@" = "%1$@ – %2$@ %3$@";
@@ -90,7 +90,7 @@
 "Correction range is the blood glucose range that you would like Loop to correct to." = "A faixa de correção é o intervalo de glicose no sangue que você gostaria que o Loop corrigisse para.";
 
 /* The text for a custom override */
-"Custom" = "Personalizado";
+"Custom" = "Definir";
 
 /* The title for the custom override entry screen */
 "Custom Override" = "Sobreposição Personalizada";
@@ -154,7 +154,7 @@
 
 /* Section title for no-carb food
    The title for override emoji miscellaneous section */
-"Other" = "Outra";
+"Other" = "Outros";
 
 /* The title text for the insulin sensitivity scaling setting */
 "Overall Insulin Needs" = "Necessidades Gerais de Insulina";

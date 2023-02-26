@@ -20,7 +20,7 @@
 "Awake Until" = "Vågen indtil";
 
 /* The title text for the basal rate schedule */
-"Basal Rates" = "Basal rater";
+"Basal Rates" = "Basal Rater";
 
 /* The format string describing pump battery voltage: (1: battery voltage) */
 "Battery: %1$@ volts\n" = "Batteri: %1$@ volt\n";
@@ -32,35 +32,35 @@
 "Bolusing: %1$@\n" = "Giver bolus: %1$@\n";
 
 /* The title of the cancel action in an action sheet */
-"Cancel" = "Afbryd";
+"Cancel" = "Cancel";
 
 /* The title of the command to change pump time */
 "Change Time" = "Ændre klokkeslæt";
 
 /* The title of the command to change pump time zone */
-"Change Time Zone" = "Ændre tidszone";
+"Change Time Zone" = "Skift Tidszone";
 
 /* Progress message for changing pump time. */
-"Changing time…" = "Ændre tid...";
+"Changing time…" = "Skifter tiden…";
 
 /* The title of the section describing commands */
 "Commands" = "Kommandoer";
 
 /* The title of the configuration section in settings */
-"Configuration" = "Konfiguration";
+"Configuration" = "Configuration";
 
 /* Button title to connect to pump during setup */
-"Connect" = "Forbind";
+"Connect" = "Connect";
 
 /* The title of the cell showing BLE connection state */
-"Connection State" = "Status på forbindelse";
+"Connection State" = "Tilslutningstilstand";
 
 /* Button title to delete pump
    Title text for the button to remove a pump from Loop */
 "Delete Pump" = "Fjern pumpe";
 
 /* Title text for delivery limits */
-"Delivery Limits" = "Mængdebegrænsning";
+"Delivery Limits" = "Indgivelsesgrænser";
 
 /* The title of the section describing the device */
 "Device" = "Enhed";
@@ -78,10 +78,10 @@
 "Enabled Diagnostic LEDs" = "Diagnoserings LED’er aktiveret";
 
 /* The alert title for a resume error */
-"Error Resuming" = "Fejl i genoptagelse";
+"Error Resuming" = "Fejl under genoptagelse";
 
 /* The alert title for a suspend error */
-"Error Suspending" = "Fejl i suspendering";
+"Error Suspending" = "Fejl under udsættelse";
 
 /* The title of the command to fetch recent glucose */
 "Fetch Enlite Glucose" = "Hent seneste glukose";
@@ -102,7 +102,7 @@
 "Firmware" = "Firmware";
 
 /* The title of the cell showing the pump firmware version */
-"Firmware Version" = "Firmware version";
+"Firmware Version" = "Firmware Version";
 
 /* The title of the command to get pump model */
 "Get Pump Model" = "Hent pumpe model";
@@ -123,7 +123,7 @@
 "MySentry Pair" = "MySentry parring";
 
 /* The title of the cell showing device name */
-"Name" = "Navn";
+"Name" = "Name";
 
 /* Message display when no response from tuning pump */
 "No response" = "Intet svar";
@@ -132,13 +132,13 @@
 "On Idle" = "Slumre";
 
 /* Pump find device instruction */
-"On your pump, go to the Find Device screen and select \"Find Device\".\n\nMain Menu >\nUtilities >\nConnect Devices >\nOther Devices >\nOn >\nFind Device" ="On your pump, go to the Find Device screen and select \"Find Device\".\n\nMain Menu >\nUtilities >\nConnect Devices >\nOther Devices >\nOn >\nFind Device";
+"On your pump, go to the Find Device screen and select \"Find Device\".\n\nMain Menu >\nUtilities >\nConnect Devices >\nOther Devices >\nOn >\nFind Device" = "On your pump, go to the Find Device screen and select \"Find Device\".\n\nMain Menu >\nUtilities >\nConnect Devices >\nOther Devices >\nOn >\nFind Device";
 
 /* The title text for the preferred insulin data source config */
 "Preferred Data Source" = "Foretrukne data kilde";
 
 /* The title of the section describing the pump */
-"Pump" = "Pumpe";
+"Pump" = "Pump";
 
 /* The title text for the battery type value */
 "Pump Battery Type" = "Pumpe batteritype";
@@ -151,7 +151,7 @@
 "Pump Model" = "Pumpe model";
 
 /* Title of the pump settings view controller */
-"Pump Settings" = "Pumpe indstillinger";
+"Pump Settings" = "Pump Settings";
 
 /* The title of the command to read basal schedule */
 "Read Basal Schedule" = "Læs basal plan";
@@ -169,7 +169,7 @@
 "Region" = "Region";
 
 /* Button title to retry sentry setup */
-"Retry" = "Prøv igen";
+"Retry" = "Retry";
 
 /* The title of the command to fetch RileyLink statistics */
 "RileyLink Statistics" = "RileyLink Statistik";
@@ -185,10 +185,10 @@
 "Sending button press…" = "Sender knappe tryk ";
 
 /* The title of the cell showing BLE signal strength (RSSI) */
-"Signal Strength" = "Signal styrke";
+"Signal Strength" = "Signal Styrke";
 
 /* A message indicating a command succeeded */
-"Succeeded" = "Lykkedes";
+"Succeeded" = "Gennemført";
 
 /* The format string describing pump suspended state: (1: suspended) */
 "Suspended: %1$@\n" = "Suspenderet: %1$@\n";

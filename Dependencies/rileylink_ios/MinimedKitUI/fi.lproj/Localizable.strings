@@ -20,7 +20,7 @@
 "Awake Until" = "Hereillä asti";
 
 /* The title text for the basal rate schedule */
-"Basal Rates" = "Basaalimäärät";
+"Basal Rates" = "Basaalitasot";
 
 /* The format string describing pump battery voltage: (1: battery voltage) */
 "Battery: %1$@ volts\n" = "Paristo: %1$@ volttia\n";
@@ -32,7 +32,7 @@
 "Bolusing: %1$@\n" = "Annostellaan bolus: %1$@\n";
 
 /* The title of the cancel action in an action sheet */
-"Cancel" = "Kumoa";
+"Cancel" = "Cancel";
 
 /* The title of the command to change pump time */
 "Change Time" = "Muuta aika";
@@ -47,10 +47,10 @@
 "Commands" = "Komennot";
 
 /* The title of the configuration section in settings */
-"Configuration" = "Määritykset";
+"Configuration" = "Configuration";
 
 /* Button title to connect to pump during setup */
-"Connect" = "Yhdistä";
+"Connect" = "Connect";
 
 /* The title of the cell showing BLE connection state */
 "Connection State" = "Yhteyden tila";
@@ -102,7 +102,7 @@
 "Firmware" = "Laiteohjelmisto";
 
 /* The title of the cell showing the pump firmware version */
-"Firmware Version" = "Laiteohjelmiston versio";
+"Firmware Version" = "Firmware Version";
 
 /* The title of the command to get pump model */
 "Get Pump Model" = "Hae pumpun malli";
@@ -123,7 +123,7 @@
 "MySentry Pair" = "MySentry-paritus";
 
 /* The title of the cell showing device name */
-"Name" = "Nimi";
+"Name" = "Name";
 
 /* Message display when no response from tuning pump */
 "No response" = "Ei vastausta";
@@ -138,7 +138,7 @@
 "Preferred Data Source" = "Ensisijainen tietolähde";
 
 /* The title of the section describing the pump */
-"Pump" = "Pumppu";
+"Pump" = "Pump";
 
 /* The title text for the battery type value */
 "Pump Battery Type" = "Pumpun paristotyyppi";
@@ -151,7 +151,7 @@
 "Pump Model" = "Pumpun malli";
 
 /* Title of the pump settings view controller */
-"Pump Settings" = "Pumpun asetukset";
+"Pump Settings" = "Pump Settings";
 
 /* The title of the command to read basal schedule */
 "Read Basal Schedule" = "Lue basaaliohjelma";
@@ -169,7 +169,7 @@
 "Region" = "Alue";
 
 /* Button title to retry sentry setup */
-"Retry" = "Yritä uudelleen";
+"Retry" = "Retry";
 
 /* The title of the command to fetch RileyLink statistics */
 "RileyLink Statistics" = "RileyLinkin tiedot";
@@ -206,5 +206,4 @@
 "Unknown" = "Tuntematon";
 
 /* The title of the cell showing uptime */
-"Uptime" = "Toiminta-aika";
-
+"Uptime" = "Päällä";

@@ -20,7 +20,7 @@
 "Awake Until" = "Kadar Etkin";
 
 /* The title text for the basal rate schedule */
-"Basal Rates" = "Basal Rates";
+"Basal Rates" = "Bazal Oranları";
 
 /* The format string describing pump battery voltage: (1: battery voltage) */
 "Battery: %1$@ volts\n" = "Pil: %1$@ volt\n";
@@ -32,38 +32,38 @@
 "Bolusing: %1$@\n" = "Bolus: %1$@\n";
 
 /* The title of the cancel action in an action sheet */
-"Cancel" = "Cancel";
+"Cancel" = "Vazgeç";
 
 /* The title of the command to change pump time */
 "Change Time" = "Zamanı değiştir";
 
 /* The title of the command to change pump time zone */
-"Change Time Zone" = "Change Time Zone";
+"Change Time Zone" = "Zaman dilimini Değiştir";
 
 /* Progress message for changing pump time. */
-"Changing time…" = "Changing time…";
+"Changing time…" = "Zaman değiştiriliyor…";
 
 /* The title of the section describing commands */
-"Commands" = "Commands";
+"Commands" = "Komutlar";
 
 /* The title of the configuration section in settings */
-"Configuration" = "Configuration";
+"Configuration" = "Yapılandırma";
 
 /* Button title to connect to pump during setup */
-"Connect" = "Connect";
+"Connect" = "Bağlan";
 
 /* The title of the cell showing BLE connection state */
-"Connection State" = "Connection State";
+"Connection State" = "Bağlantı Durumu";
 
 /* Button title to delete pump
    Title text for the button to remove a pump from Loop */
 "Delete Pump" = "Pompayı Sil";
 
 /* Title text for delivery limits */
-"Delivery Limits" = "Delivery Limits";
+"Delivery Limits" = "İletim Kısıtlamaları";
 
 /* The title of the section describing the device */
-"Device" = "Device";
+"Device" = "Cihaz";
 
 /* The title of the command to discover commands */
 "Discover Commands" = "Komutları Keşfet";
@@ -78,10 +78,10 @@
 "Enabled Diagnostic LEDs" = "Tanılama LED'leri Etkin";
 
 /* The alert title for a resume error */
-"Error Resuming" = "Error Resuming";
+"Error Resuming" = "Devam ederken hata oluştu";
 
 /* The alert title for a suspend error */
-"Error Suspending" = "Error Suspending";
+"Error Suspending" = "Askıya alırken Hata";
 
 /* The title of the command to fetch recent glucose */
 "Fetch Enlite Glucose" = "Enlite Glikoz Değerlerini Al";
@@ -99,10 +99,10 @@
 "Fetching pump model…" = "Pompa modeli alınıyor…";
 
 /* The title of the cell showing firmware version */
-"Firmware" = "Firmware";
+"Firmware" = "Aygıt Yazılımı";
 
 /* The title of the cell showing the pump firmware version */
-"Firmware Version" = "Firmware Version";
+"Firmware Version" = "Aygıt Yazılımı Sürümü";
 
 /* The title of the command to get pump model */
 "Get Pump Model" = "Pompa Modelini Al";
@@ -123,7 +123,7 @@
 "MySentry Pair" = "MySentry'e Bağlan";
 
 /* The title of the cell showing device name */
-"Name" = "Name";
+"Name" = "İsim";
 
 /* Message display when no response from tuning pump */
 "No response" = "Yanıt yok";
@@ -138,7 +138,7 @@
 "Preferred Data Source" = "Tercih Edilen Veri Kaynağı";
 
 /* The title of the section describing the pump */
-"Pump" = "Pump";
+"Pump" = "Pompa";
 
 /* The title text for the battery type value */
 "Pump Battery Type" = "Pompa Pil Tipi";
@@ -151,7 +151,7 @@
 "Pump Model" = "Pompa Modeli";
 
 /* Title of the pump settings view controller */
-"Pump Settings" = "Pump Settings";
+"Pump Settings" = "Pompa Ayarları";
 
 /* The title of the command to read basal schedule */
 "Read Basal Schedule" = "Bazal Planı Oku";
@@ -169,7 +169,7 @@
 "Region" = "Bölge";
 
 /* Button title to retry sentry setup */
-"Retry" = "Retry";
+"Retry" = "Tekrar Dene";
 
 /* The title of the command to fetch RileyLink statistics */
 "RileyLink Statistics" = "RileyLink İstatistikleri";
@@ -185,10 +185,10 @@
 "Sending button press…" = "Gönderme düğmesine basın…";
 
 /* The title of the cell showing BLE signal strength (RSSI) */
-"Signal Strength" = "Signal Strength";
+"Signal Strength" = "Sinyal Gücü";
 
 /* A message indicating a command succeeded */
-"Succeeded" = "Succeeded";
+"Succeeded" = "Başarılı oldu";
 
 /* The format string describing pump suspended state: (1: suspended) */
 "Suspended: %1$@\n" = "Duraklatıldı: %1$@\n";
@@ -203,7 +203,7 @@
 "Tuning radio…" = "Frekans ayarlanıyor…";
 
 /* The detail text for an unknown pump model */
-"Unknown" = "Unknown";
+"Unknown" = "Bilinmiyor";
 
 /* The title of the cell showing uptime */
-"Uptime" = "Uptime";
+"Uptime" = "Çalışma süresi";

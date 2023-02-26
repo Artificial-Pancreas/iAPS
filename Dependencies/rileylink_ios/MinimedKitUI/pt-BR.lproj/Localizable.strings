@@ -20,7 +20,7 @@
 "Awake Until" = "Ligado até";
 
 /* The title text for the basal rate schedule */
-"Basal Rates" = "Taxas de Basal";
+"Basal Rates" = "Taxas Basais";
 
 /* The format string describing pump battery voltage: (1: battery voltage) */
 "Battery: %1$@ volts\n" = "Bateria: %1$@ volts\n";
@@ -38,29 +38,29 @@
 "Change Time" = "Mudar Horário";
 
 /* The title of the command to change pump time zone */
-"Change Time Zone" = "Mudar Fuso Horário";
+"Change Time Zone" = "Alterar Fuso Horário";
 
 /* Progress message for changing pump time. */
-"Changing time…" = "Mudando o Horário…";
+"Changing time…" = "Alterando a hora...";
 
 /* The title of the section describing commands */
 "Commands" = "Comandos";
 
 /* The title of the configuration section in settings */
-"Configuration" = "Configuração";
+"Configuration" = "Ajustes";
 
 /* Button title to connect to pump during setup */
 "Connect" = "Conectar";
 
 /* The title of the cell showing BLE connection state */
-"Connection State" = "Estado de Conexão";
+"Connection State" = "Estado da Conexão";
 
 /* Button title to delete pump
    Title text for the button to remove a pump from Loop */
 "Delete Pump" = "Deletar Bomba";
 
 /* Title text for delivery limits */
-"Delivery Limits" = "Limites de Liberação";
+"Delivery Limits" = "Limites de Entrega";
 
 /* The title of the section describing the device */
 "Device" = "Dispositivo";
@@ -102,7 +102,7 @@
 "Firmware" = "Firmware";
 
 /* The title of the cell showing the pump firmware version */
-"Firmware Version" = "Versão do Firmware";
+"Firmware Version" = "Firmware Version";
 
 /* The title of the command to get pump model */
 "Get Pump Model" = "Extrair Modelo da Bomba";
@@ -151,7 +151,7 @@
 "Pump Model" = "Modelo da Bomba";
 
 /* Title of the pump settings view controller */
-"Pump Settings" = "Configurações da Bomba";
+"Pump Settings" = "Ajustes Bomba";
 
 /* The title of the command to read basal schedule */
 "Read Basal Schedule" = "Ler Programação de Basal";
@@ -169,7 +169,7 @@
 "Region" = "Região";
 
 /* Button title to retry sentry setup */
-"Retry" = "Tentar de Novo";
+"Retry" = "Retry";
 
 /* The title of the command to fetch RileyLink statistics */
 "RileyLink Statistics" = "Estatísticas do RileyLink";
@@ -185,10 +185,10 @@
 "Sending button press…" = "Enviando aperto do botão";
 
 /* The title of the cell showing BLE signal strength (RSSI) */
-"Signal Strength" = "Força do Sinal";
+"Signal Strength" = "Potência do Sinal";
 
 /* A message indicating a command succeeded */
-"Succeeded" = "Sucesso";
+"Succeeded" = "Completo";
 
 /* The format string describing pump suspended state: (1: suspended) */
 "Suspended: %1$@\n" = "Suspenso: %1$@\n";
@@ -203,8 +203,7 @@
 "Tuning radio…" = "Sintonizando frequência…";
 
 /* The detail text for an unknown pump model */
-"Unknown" = "Modelo Desconhecido";
+"Unknown" = "Desconhecido";
 
 /* The title of the cell showing uptime */
-"Uptime" = "Tempo Ligado";
-
+"Uptime" = "Tempo de Atividade";
