@@ -39,7 +39,7 @@ extension AddCarbs {
             let firstDate = date.addingTimeInterval(delay.minutes.timeInterval)
             var previousDate = date
 
-            while counter > 0 {
+            while counter > 0, carbequiv > 0 {
                 var useDate = date + 1 * Double(interval * 60)
                 // Fix Interval and Delay
                 useDate = max(previousDate.addingTimeInterval(interval.minutes.timeInterval), useDate, firstDate)
