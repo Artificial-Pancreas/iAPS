@@ -32,7 +32,7 @@ extension AddCarbs {
             let fpucarb = 0.4 * protein + 0.9 * fat
             let fpus = (fat * 9.0 + protein * 4.0) / 100.0
             var counter: Decimal = (fpus * 2) - 1.0
-            counter = min(timeCap, counter)
+            counter = max(timeCap, counter)
             var roundedCounter: Decimal = 0
             NSDecimalRound(&roundedCounter, &counter, 0, .up)
             let carbequiv = (fpucarb / roundedCounter) * adjustment
