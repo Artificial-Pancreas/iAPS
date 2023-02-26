@@ -51,7 +51,7 @@ extension FPUConfig {
 
                 Section(
                     footer: Text(
-                        "Allows fat and protein to be converted to future carb equivalents. Delay is when the first future carb equivalent is created. Maximum time is the maximum number of hours in total all of the carb equivalents will allocate. Interval means number of minutes betewwen the created future carb entries. Override setting is for safety and for tuning of the conversion to carbs, recommended 0.5-0.8. The higher, the larger the total amount of future carbs.\n\nDefault settings: Delay: 60 min, Time Cap: 8 h, Interval: 60 min, Factor: 0.5."
+                        "Allows fat and protein to be converted to future carb equivalents. Delay is when the first future carb equivalent is created. Maximum time is the maximum number of hours in total all of the carb equivalents will allocate. Interval means number of minutes betewen the created future carb entries. Override setting is for safety and for tuning of the conversion to carbs, recommended 0.5-0.8. The higher, the larger the total amount of future carbs.\n\nDefault settings: Delay: 60 min, Time Cap: 8 h, Interval: 60 min, Factor: 0.5."
                     )
                 )
                     {}
