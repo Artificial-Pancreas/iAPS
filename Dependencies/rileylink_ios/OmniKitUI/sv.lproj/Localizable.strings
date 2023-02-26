@@ -9,7 +9,7 @@
 
 /* Format string for delivered insulin. (1: The localized amount)
    Format string for insulin remaining in reservoir. (1: The localized amount) */
-"%@ U" = "%@ E";
+"%@ U" = "%@ IE";
 
 /* Format string for bolus progress when finished. (1: The localized amount) */
 "%@ U (Finished)" = "%@ E (Klar)";
@@ -103,7 +103,7 @@
 "Error Resuming" = "Fel vid återupptagande";
 
 /* The alert title for a suspend error */
-"Error Suspending" = "Fel vid försök till paus";
+"Error Suspending" = "Kunde inte pausa pump";
 
 /* The title of the cell showing the pod expiration reminder date */
 "Expiration Reminder" = "Påminnelse om utgångsdatum";

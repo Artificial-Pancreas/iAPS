@@ -14,7 +14,7 @@
 "NSCalendarsUsageDescription" = "Agenda wordt gebruikt om nieuwe glucose gebeurtenissen aan te maken.";
 
 /* Privacy - Health Update Usage Description */
-"NSHealthUpdateUsageDescription" = "De gezondheid app wordt gebruikt om bloedglucose gegevens op te slaan";
+"NSHealthUpdateUsageDescription" = "Health App is used to store blood glucose, insulin and carbohydrates";
 
 /* Privacy - Health Share Usage Description */
-"NSHealthShareUsageDescription" = "De gezondheid app wordt gebruikt om bloedglucose gegevens op te slaan";
+"NSHealthShareUsageDescription" = "Health App is used to store blood glucose, insulin and carbohydrates";

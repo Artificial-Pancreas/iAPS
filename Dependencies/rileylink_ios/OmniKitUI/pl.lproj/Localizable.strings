@@ -9,7 +9,7 @@
 
 /* Format string for delivered insulin. (1: The localized amount)
    Format string for insulin remaining in reservoir. (1: The localized amount) */
-"%@ U" = "%@ J";
+"%@ U" = "%@ j.";
 
 /* Format string for bolus progress when finished. (1: The localized amount) */
 "%@ U (Finished)" = "%@ J (zakończone)";
@@ -66,7 +66,7 @@
 "Changing time…" = "Zmiana czasu…";
 
 /* The title of the configuration section in settings */
-"Configuration" = "Konfiguracja";
+"Configuration" = "Configuration";
 
 /* The title of the continue action in an action sheet */
 "Continue" = "Kontynuuj";
@@ -198,7 +198,7 @@
 "Save" = "Zapisz";
 
 /* The detail text of the basal row when pod is running scheduled basal */
-"Schedule" = "Harmonogram";
+"Schedule" = "Schedule";
 
 /* The title of the status section in settings */
 "Status" = "Status";

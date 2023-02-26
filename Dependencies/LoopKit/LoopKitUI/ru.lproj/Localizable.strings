@@ -3,7 +3,7 @@
 "%1$@ %2$@" = "%1$@ %2$@";
 
 /* Accessibility format string for (1: localized volume)(2: time) */
-"%1$@ units remaining at %2$@" = "%1$@ единиц остается в %2$@";
+"%1$@ units remaining at %2$@" = "%1$@ ед остается в %2$@";
 
 /* The format for a glucose target range. (1: min target)(2: max target)(3: glucose unit) */
 "%1$@ – %2$@ %3$@" = "%1$@ – %2$@ %3$@";
@@ -15,7 +15,7 @@
 "%@." = "%@.";
 
 /* Format string for reservoir volume. (1: The localized volume) */
-"%@U" = "%@U";
+"%@U" = "%@ед";
 
 /* Title of the carb entry absorption time cell */
 "Absorption Time" = "Длительность усвоения";
@@ -78,7 +78,7 @@
 "com.loudnate.InsulinKit.totalDateLabel" = "после %1$@";
 
 /* The title of the action used to dismiss an error alert */
-"com.loudnate.LoopKit.errorAlertActionTitle" = "OK";
+"com.loudnate.LoopKit.errorAlertActionTitle" = "ОК";
 
 /* The title for the override emoji condition section */
 "Condition" = "Условие";
@@ -90,7 +90,7 @@
 "Correction range is the blood glucose range that you would like Loop to correct to." = "Диапазон коррекции это желательный диапазон значений ГК для обработки алгоритмом петли.";
 
 /* The text for a custom override */
-"Custom" = "Настраиваемый";
+"Custom" = "Своя";
 
 /* The title for the custom override entry screen */
 "Custom Override" = "Настраиваемое ручное управление";
@@ -102,7 +102,7 @@
 "Delete All" = "Стереть все";
 
 /* The text for the override duration setting */
-"Duration" = "Продолжительность";
+"Duration" = "Длительность";
 
 /* The title for the override editing screen */
 "Edit Override" = "Редактировать ручной контроль";
@@ -147,14 +147,14 @@
 "More Info" = "Доп. инфо";
 
 /* The text for the override preset name setting */
-"Name" = "Имя";
+"Name" = "Название";
 
 /* The title for the new override preset entry screen */
 "New Preset" = "Новый параметр";
 
 /* Section title for no-carb food
-The title for override emoji miscellaneous section */
-"Other" = "Другая";
+   The title for override emoji miscellaneous section */
+"Other" = "Прочее";
 
 /* The title text for the insulin sensitivity scaling setting */
 "Overall Insulin Needs" = "Общая потребность в инсулине";
@@ -239,7 +239,7 @@ The title for override emoji miscellaneous section */
 "Units" = "Единицы";
 
 /* Accessibility value for an unknown value
-The default title to use when an entry has none */
+   The default title to use when an entry has none */
 "Unknown" = "Неизвестно";
 
 /* Label indicating validation is occurring */
@@ -250,4 +250,3 @@ The default title to use when an entry has none */
 
 /* Title for the workout override range */
 "Workout" = "Физическая нагрузка";
-

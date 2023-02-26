@@ -20,7 +20,7 @@
 "Awake Until" = "Actief tot";
 
 /* The title text for the basal rate schedule */
-"Basal Rates" = "Basaal waardes";
+"Basal Rates" = "Basaal ratios";
 
 /* The format string describing pump battery voltage: (1: battery voltage) */
 "Battery: %1$@ volts\n" = "Batterij: %1$@ Volt\n";
@@ -38,16 +38,16 @@
 "Change Time" = "Tijd aanpassen";
 
 /* The title of the command to change pump time zone */
-"Change Time Zone" = "Verander tijdzone";
+"Change Time Zone" = "Pas tijdzone aan";
 
 /* Progress message for changing pump time. */
-"Changing time…" = "Tijd aan het aanpassen…";
+"Changing time…" = "Vervang tijd…";
 
 /* The title of the section describing commands */
 "Commands" = "Commando's";
 
 /* The title of the configuration section in settings */
-"Configuration" = "Configuratie";
+"Configuration" = "Instellingen";
 
 /* Button title to connect to pump during setup */
 "Connect" = "Verbinden";
@@ -60,7 +60,7 @@
 "Delete Pump" = "Verwijder de pomp";
 
 /* Title text for delivery limits */
-"Delivery Limits" = "Insuline toediening limiet";
+"Delivery Limits" = "Leveringslimieten";
 
 /* The title of the section describing the device */
 "Device" = "Apparaat";
@@ -78,10 +78,10 @@
 "Enabled Diagnostic LEDs" = "Diagnostische LEDs aangezet";
 
 /* The alert title for a resume error */
-"Error Resuming" = "Fout bij hervatten";
+"Error Resuming" = "Fout met hervatten";
 
 /* The alert title for a suspend error */
-"Error Suspending" = "Fout bij onderbreken";
+"Error Suspending" = "Fout met onderbreken";
 
 /* The title of the command to fetch recent glucose */
 "Fetch Enlite Glucose" = "Ophalen enlite glucose";
@@ -102,7 +102,7 @@
 "Firmware" = "Firmware";
 
 /* The title of the cell showing the pump firmware version */
-"Firmware Version" = "Firmware Version";
+"Firmware Version" = "Firmware versie";
 
 /* The title of the command to get pump model */
 "Get Pump Model" = "Lees pompmodel";
@@ -132,7 +132,7 @@
 "On Idle" = "Inactief";
 
 /* Pump find device instruction */
-"On your pump, go to the Find Device screen and select \"Find Device\".\n\nMain Menu >\nUtilities >\nConnect Devices >\nOther Devices >\nOn >\nFind Device" = "On your pump, go to the Find Device screen and select \"Find Device\".\n\nMain Menu >\nUtilities >\nConnect Devices >\nOther Devices >\nOn >\nFind Device";
+"On your pump, go to the Find Device screen and select \"Find Device\".\n\nMain Menu >\nUtilities >\nConnect Devices >\nOther Devices >\nOn >\nFind Device" = "Ga op uw pomp naar het hoofdmenu om uw apparaat te zoeken. Selecteer in Hoofdmenu: Hulpprogramma's>\nApparaten koppelen>\nOverige apparaten >\nAan>\nApparaat zoeken";
 
 /* The title text for the preferred insulin data source config */
 "Preferred Data Source" = "Voorkeur databron";
@@ -166,7 +166,7 @@
 "Reading pump status…" = "Lees pomp gegevens…";
 
 /* The title of the cell showing the pump region */
-"Region" = "Region";
+"Region" = "Regio";
 
 /* Button title to retry sentry setup */
 "Retry" = "Opnieuw proberen";
@@ -188,7 +188,7 @@
 "Signal Strength" = "Signaalsterkte";
 
 /* A message indicating a command succeeded */
-"Succeeded" = "Geslaagd";
+"Succeeded" = "Geslaagd 👍";
 
 /* The format string describing pump suspended state: (1: suspended) */
 "Suspended: %1$@\n" = "Onderbroken: %1$@\n";
@@ -206,4 +206,4 @@
 "Unknown" = "Onbekend";
 
 /* The title of the cell showing uptime */
-"Uptime" = "Uptime";
+"Uptime" = "Tijd actief";

@@ -38,10 +38,10 @@
 "Change Time" = "Изменить время";
 
 /* The title of the command to change pump time zone */
-"Change Time Zone" = "Изменить временной пояс";
+"Change Time Zone" = "Изменить часовой пояс";
 
 /* Progress message for changing pump time. */
-"Changing time…" = "Изменяется время…";
+"Changing time…" = "Выполняется изменение времени";
 
 /* The title of the section describing commands */
 "Commands" = "Команды";
@@ -50,7 +50,7 @@
 "Configuration" = "Конфигурация";
 
 /* Button title to connect to pump during setup */
-"Connect" = "Соединение с помпой";
+"Connect" = "Подключить";
 
 /* The title of the cell showing BLE connection state */
 "Connection State" = "Состояние соединения";
@@ -78,10 +78,10 @@
 "Enabled Diagnostic LEDs" = "LED лампочки диагностики включены";
 
 /* The alert title for a resume error */
-"Error Resuming" = "Ошибка при возобновлении";
+"Error Resuming" = "Ошибка возобновления";
 
 /* The alert title for a suspend error */
-"Error Suspending" = "Ошибка при остановке";
+"Error Suspending" = "Ошибка остановки";
 
 /* The title of the command to fetch recent glucose */
 "Fetch Enlite Glucose" = "Получить данные гликемии с Enlite";
@@ -102,7 +102,7 @@
 "Firmware" = "Прошивка";
 
 /* The title of the cell showing the pump firmware version */
-"Firmware Version" = "Firmware Version";
+"Firmware Version" = "Версия прошивки";
 
 /* The title of the command to get pump model */
 "Get Pump Model" = "Получить модель помпы";
@@ -132,7 +132,7 @@
 "On Idle" = "Бездействие";
 
 /* Pump find device instruction */
-"On your pump, go to the Find Device screen and select \"Find Device\".\n\nMain Menu >\nUtilities >\nConnect Devices >\nOther Devices >\nOn >\nFind Device" = "On your pump, go to the Find Device screen and select \"Find Device\".\n\nMain Menu >\nUtilities >\nConnect Devices >\nOther Devices >\nOn >\nFind Device";
+"On your pump, go to the Find Device screen and select \"Find Device\".\n\nMain Menu >\nUtilities >\nConnect Devices >\nOther Devices >\nOn >\nFind Device" = "На вашей помпе перейдите на экран \"Найти устройство\" и выберите \"Найти Устройство\".\n\nГлавное меню >\nУтилиты >\nПодключение устройств >\nДругие устройства >\nВ>\nНайти устройство";
 
 /* The title text for the preferred insulin data source config */
 "Preferred Data Source" = "Предпочтительный источник данных";
@@ -166,10 +166,10 @@
 "Reading pump status…" = "Чтение статуса помпы…";
 
 /* The title of the cell showing the pump region */
-"Region" = "Region";
+"Region" = "Регион";
 
 /* Button title to retry sentry setup */
-"Retry" = "Повторить попытку";
+"Retry" = "Повторить";
 
 /* The title of the command to fetch RileyLink statistics */
 "RileyLink Statistics" = "Статистика RileyLink";
@@ -206,4 +206,4 @@
 "Unknown" = "Неизвестно";
 
 /* The title of the cell showing uptime */
-"Uptime" = "Uptime";
+"Uptime" = "Время непрерывной работы";

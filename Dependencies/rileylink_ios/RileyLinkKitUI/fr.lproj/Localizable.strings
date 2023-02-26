@@ -14,7 +14,7 @@
 "Device" = "Dispositif";
 
 /* The title of the devices table section in RileyLink settings */
-"Devices" = "Dispositifs";
+"Devices" = "Appareils";
 
 /* The disconnected state */
 "Disconnected" = "Débranché";
@@ -23,10 +23,10 @@
 "Disconnecting" = "Se déconnecter";
 
 /* The title of the cell showing firmware version */
-"Firmware" = "Firmware";
+"Firmware" = "Microprogramme";
 
 /* The title of the cell showing current rileylink frequency */
-"Frequency" = "Frequency";
+"Frequency" = "Fréquence";
 
 /* The title of the cell showing device name */
 "Name" = "Nom";
@@ -38,4 +38,4 @@
 "Signal Strength" = "Force du signal";
 
 /* The title of the cell showing uptime */
-"Uptime" = "Uptime";
+"Uptime" = "Temps de fonctionnement";

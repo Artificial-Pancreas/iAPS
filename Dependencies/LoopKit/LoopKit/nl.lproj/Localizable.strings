@@ -41,7 +41,7 @@
 "Flat" = "Gelijk";
 
 /* The short unit display string for grams per U */
-"g/U" = "g/U";
+"g/U" = "g/E";
 
 /* Generic pump error description */
 "Invalid Configuration" = "Ongeldige configuratie";
@@ -53,13 +53,13 @@
 "mg/dL/U" = "mg/dL/E";
 
 /* The short unit display string for millimoles per liter */
-"mmol/L" = "mmol/L";
+"mmol/L" = "mmol/l";
 
 /* The short unit display string for millimoles per liter per U */
 "mmol/L/U" = "mmol/L/E";
 
 /* Sensor state description for the non-valid state */
-"Needs Attention" = "aandacht nodig";
+"Needs Attention" = "Aandacht nodig";
 
 /* Describes an error for no data found in a CarbStore request */
 "No values found" = "Geen waardes gevonden";
@@ -83,7 +83,7 @@
 "U" = "E";
 
 /* The short unit display string for international units of insulin per hour */
-"U/hr" = "E/hr";
+"U/hr" = "E/uur";
 
 /* The long unit display string for a singular international unit of insulin */
 "Unit" = "Unit";

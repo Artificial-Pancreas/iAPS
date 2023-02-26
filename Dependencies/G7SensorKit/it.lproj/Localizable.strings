@@ -78,9 +78,6 @@
 /* Button label for removing CGM */
 "Delete CGM" = "Elimina CGM";
 
-/* Button text */
-"Are you sure you want to delete this CGM?" = "Are you sure you want to delete this CGM?";
-
 /* No glucose value representation (3 dashes for mg/dL) */
 "– – –" = "– – –";
 /* String displayed instead of a glucose value below the CGM range */

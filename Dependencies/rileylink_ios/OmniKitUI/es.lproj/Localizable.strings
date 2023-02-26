@@ -66,7 +66,7 @@
 "Changing time…" = "Cambiando hora...";
 
 /* The title of the configuration section in settings */
-"Configuration" = "Configuración";
+"Configuration" = "Configuracion";
 
 /* The title of the continue action in an action sheet */
 "Continue" = "Continuar";
@@ -160,7 +160,7 @@
 "Play Test Beeps" = "Tocar Pitidos de Prueba";
 
 /* Progress message for play test beeps. */
-"Playing Test Beeps…" = "Tocado Pitidos de Prueba...";
+"Play Test Beeps…" = "Play Test Beeps…";
 
 /* The title of the cell showing the pod pm version */
 "PM Version" = "Versión de PM";
@@ -198,7 +198,7 @@
 "Save" = "Guardar";
 
 /* The detail text of the basal row when pod is running scheduled basal */
-"Schedule" = "Programa";
+"Schedule" = "Programación";
 
 /* The title of the status section in settings */
 "Status" = "Estado";

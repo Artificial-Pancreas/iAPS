@@ -38,10 +38,10 @@
 "Change Time" = "修改时间";
 
 /* The title of the command to change pump time zone */
-"Change Time Zone" = "改变时区";
+"Change Time Zone" = "更改时区";
 
 /* Progress message for changing pump time. */
-"Changing time…" = "正在修改时间…";
+"Changing time…" = "更改时间";
 
 /* The title of the section describing commands */
 "Commands" = "命令";
@@ -78,10 +78,10 @@
 "Enabled Diagnostic LEDs" = "正在打开状态LED指示灯";
 
 /* The alert title for a resume error */
-"Error Resuming" = "无法恢复";
+"Error Resuming" = "恢复输注错误";
 
 /* The alert title for a suspend error */
-"Error Suspending" = "无法暂停";
+"Error Suspending" = "暂停输注错误";
 
 /* The title of the command to fetch recent glucose */
 "Fetch Enlite Glucose" = "获取Enlite葡萄糖";
@@ -169,7 +169,7 @@
 "Region" = "Region";
 
 /* Button title to retry sentry setup */
-"Retry" = "重试";
+"Retry" = "Retry";
 
 /* The title of the command to fetch RileyLink statistics */
 "RileyLink Statistics" = "RileyLink数据";

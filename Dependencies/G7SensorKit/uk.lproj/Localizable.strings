@@ -78,9 +78,6 @@
 /* Button label for removing CGM */
 "Delete CGM" = "Видалити CGM";
 
-/* Button text */
-"Are you sure you want to delete this CGM?" = "Ви впевнені, що хочете видалити цю CGM?";
-
 /* No glucose value representation (3 dashes for mg/dL) */
 "– – –" = "– – –";
 /* String displayed instead of a glucose value below the CGM range */

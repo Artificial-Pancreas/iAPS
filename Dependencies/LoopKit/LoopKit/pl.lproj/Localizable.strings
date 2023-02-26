@@ -41,7 +41,7 @@
 "Flat" = "Powolna zmiana";
 
 /* The short unit display string for grams per U */
-"g/U" = "g/J";
+"g/U" = "g/U";
 
 /* Generic pump error description */
 "Invalid Configuration" = "Nieprawidłowa konfiguracja";
@@ -80,10 +80,10 @@
 "Rising very fast" = "Bardzo szybki wzrost";
 
 /* The short unit display string for international units of insulin */
-"U" = "J";
+"U" = "U";
 
 /* The short unit display string for international units of insulin per hour */
-"U/hr" = "J/godz";
+"U/hr" = "U/hr";
 
 /* The long unit display string for a singular international unit of insulin */
 "Unit" = "Jednostka";
