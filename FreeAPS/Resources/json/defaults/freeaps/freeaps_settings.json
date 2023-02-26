@@ -25,6 +25,6 @@
     "useFPUconversion": false
     "individualAdjustmentFactor": 0.5,
     "timeCap": 8,
-    "minuteInterval": 60,
+    "minuteInterval": 30,
     "delay": 60
 }
