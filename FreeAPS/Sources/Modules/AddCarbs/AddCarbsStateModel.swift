@@ -39,9 +39,9 @@ extension AddCarbs {
                 switch fpus {
                 case ..<2:
                     computedDuration = 3
-                case 2 ... 3:
+                case 2 ..< 3:
                     computedDuration = 4
-                case 3 ... 4:
+                case 3 ..< 4:
                     computedDuration = 5
                 default:
                     computedDuration = timeCap
