@@ -27,7 +27,7 @@ struct FreeAPSSettings: JSON, Equatable {
     var displayStatistics: Bool = false
     var useFPUconversion: Bool = false
     var individualAdjustmentFactor: Decimal = 0.5
-    var timeCap: Decimal = 8
+    var timeCap: Int = 8
     var minuteInterval: Int = 30
     var delay: Int = 60
 }
@@ -110,7 +110,7 @@ extension FreeAPSSettings: Decodable {
             settings.individualAdjustmentFactor = individualAdjustmentFactor
         }
 
-        if let timeCap = try? container.decode(Decimal.self, forKey: .timeCap) {
+        if let timeCap = try? container.decode(Int.self, forKey: .timeCap) {
             settings.timeCap = timeCap
         }
 

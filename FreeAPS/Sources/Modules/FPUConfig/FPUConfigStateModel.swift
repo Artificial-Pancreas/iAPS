@@ -10,11 +10,10 @@ extension FPUConfig {
 
         override func subscribe() {
             subscribeSetting(\.useFPUconversion, on: $useFPUconversion) { useFPUconversion = $0 }
-            subscribeSetting(\.timeCap, on: $timeCap) { timeCap = $0 }
 
-            subscribeSetting(\.timeCap, on: $timeCap, initial: {
-                let value = max(min($0, 12), 6)
-                timeCap = value
+            subscribeSetting(\.timeCap, on: $timeCap.map(Int.init), initial: {
+                let value = max(min($0, 12), 5)
+                timeCap = Decimal(value)
             }, map: {
                 $0
             })

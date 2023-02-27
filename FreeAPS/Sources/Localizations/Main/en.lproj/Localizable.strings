@@ -1045,6 +1045,9 @@ Enact a temp Basal or a temp target */
 
 /* -------------------------------------------- FPU Strings ------------------------------------------------------*/
 
+/* Enable FPU */
+"Enable" = "Enable";
+
 /* Header */
 "Convert Fat and Protein" = "Convert Fat and Protein";
 

@@ -1043,8 +1043,11 @@ Enact a temp Basal or a temp target */
 "Total" = "Totalt";
 
 /* -------------------------------------------- FPU Strings ------------------------------------------------------*/
-/* Header */
 
+/* Enable FPU */
+"Enable" = "Aktivera";
+
+/* Header */
 "Convert Fat and Protein" = "Omvandla fett orch protein";
 
 /* Header */
