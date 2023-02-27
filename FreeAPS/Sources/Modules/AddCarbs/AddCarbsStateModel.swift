@@ -24,7 +24,7 @@ extension AddCarbs {
             }
 
             if useFPU {
-                // ----------- FPU ------------------------------------------------
+                // -------------------------- FPU--------------------------------------
                 let interval = settings.settings.minuteInterval // Interval betwwen carbs
                 let timeCap = settings.settings.timeCap // Max Duration
                 let adjustment = settings.settings.individualAdjustmentFactor
@@ -74,9 +74,8 @@ extension AddCarbs {
                     ])
                     numberOfEquivalents -= 1
                 }
-            }
-            // ------------------------- END OF TPU -----------------------------------------------
-
+            } // ------------------------- END OF TPU ----------------------------------------
+            
             // Store the real carbs
             if carbs > 0 {
                 carbsStorage
