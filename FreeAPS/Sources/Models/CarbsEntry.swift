@@ -5,6 +5,8 @@ struct CarbsEntry: JSON, Equatable, Hashable {
     let createdAt: Date
     let carbs: Decimal
     let enteredBy: String?
+    let isFPU: Bool?
+    let fpuID: String?
 
     static let manual = "freeaps-x"
     static let appleHealth = "applehealth"
@@ -24,5 +26,7 @@ extension CarbsEntry {
         case createdAt = "created_at"
         case carbs
         case enteredBy
+        case isFPU
+        case fpuID
     }
 }
