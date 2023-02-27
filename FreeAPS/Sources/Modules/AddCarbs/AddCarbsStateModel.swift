@@ -48,30 +48,29 @@ extension AddCarbs {
                 }
 
                 // Size of each created carb equivalent if 60 minutes interval
-                var carbPortions: Decimal = carbEquivalents / Decimal(computedDuration)
+                var equivalent: Decimal = carbEquivalents / Decimal(computedDuration)
                 // Adjust for interval setting other than 60 minutes
-                carbPortions /= Decimal(60 / interval)
+                equivalent /= Decimal(60 / interval)
                 // Number of equivalents
-                var numberOfPortions = carbEquivalents / carbPortions
+                var numberOfEquivalents = carbEquivalents / equivalent
                 // Only use delay in first loop
                 var firstIndex = true
                 // New date for each carb equivalent
-                var useDate = Date()
-                
+                var useDate = date
+
                 // Loop and save all carb entries
-                while carbEquivalents > 0, numberOfPortions > 0 {
+                while carbEquivalents > 0, numberOfEquivalents > 0 {
                     if firstIndex {
-                        useDate = date.addingTimeInterval(delay.minutes.timeInterval)
+                        useDate = useDate.addingTimeInterval(delay.minutes.timeInterval)
                         firstIndex = false
-                    } else { useDate = date.addingTimeInterval(interval.minutes.timeInterval) }
+                    } else { useDate = useDate.addingTimeInterval(interval.minutes.timeInterval) }
                     carbsStorage.storeCarbs([
                         CarbsEntry(
-                            id: UUID().uuidString, createdAt: useDate, carbs: carbPortions,
+                            id: UUID().uuidString, createdAt: useDate, carbs: equivalent,
                             enteredBy: CarbsEntry.manual
                         )
                     ])
-                    numberOfPortions -= 1
-                    date = useDate // Update date
+                    numberOfEquivalents -= 1
                 }
             }
             // ------------------------- END OF TPU -----------------------------------------------
