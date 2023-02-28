@@ -46,16 +46,11 @@ extension MinimedPumpManager: PumpManagerUI {
     }
 
     public func settingsViewController(bluetoothProvider: BluetoothProvider, colorPalette: LoopUIColorPalette, allowDebugFeatures: Bool, allowedInsulinTypes: [InsulinType]) -> PumpManagerViewController {
-        let settings = MinimedPumpSettingsViewController(pumpManager: self, supportedInsulinTypes: allowedInsulinTypes)
-        let nav = PumpManagerSettingsNavigationViewController(rootViewController: settings)
-        return nav
+        return MinimedUICoordinator(pumpManager: self, colorPalette: colorPalette, allowDebugFeatures: allowDebugFeatures, allowedInsulinTypes: allowedInsulinTypes)
     }
     
     public func deliveryUncertaintyRecoveryViewController(colorPalette: LoopUIColorPalette, allowDebugFeatures: Bool) -> (UIViewController & CompletionNotifying) {
-        // Return settings for now. No uncertainty handling atm.
-        let settings = MinimedPumpSettingsViewController(pumpManager: self, supportedInsulinTypes: [])
-        let nav = SettingsNavigationViewController(rootViewController: settings)
-        return nav
+        return MinimedUICoordinator(pumpManager: self, colorPalette: colorPalette, allowDebugFeatures: allowDebugFeatures, allowedInsulinTypes: [])
     }
     
     public var smallImage: UIImage? {
@@ -75,7 +70,7 @@ extension MinimedPumpManager: PumpManagerUI {
 extension MinimedPumpManager {
     
     public var pumpStatusHighlight: DeviceStatusHighlight? {
-        return buildPumpStatusHighlight(for: state, recents: recents)
+        return buildPumpStatusHighlight(for: state, recents: recents, andDate: dateGenerator())
     }
     
     public var pumpLifecycleProgress: DeviceLifecycleProgress? {

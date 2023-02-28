@@ -18,7 +18,7 @@ func debug(
     line: UInt = #line
 ) {
     let msg = message()
-    DispatchWorkItem(qos: .userInteractive, flags: .enforceQoS) {
+    DispatchWorkItem(qos: .background, flags: .enforceQoS) {
         loggerLock.perform {
             category.logger.debug(msg, printToConsole: printToConsole, file: file, function: function, line: line)
         }
@@ -32,7 +32,7 @@ func info(
     function: String = #function,
     line: UInt = #line
 ) {
-    DispatchWorkItem(qos: .userInteractive, flags: .enforceQoS) {
+    DispatchWorkItem(qos: .background, flags: .enforceQoS) {
         loggerLock.perform {
             category.logger.info(message, file: file, function: function, line: line)
         }
@@ -48,7 +48,7 @@ func warning(
     function: String = #function,
     line: UInt = #line
 ) {
-    DispatchWorkItem(qos: .userInteractive, flags: .enforceQoS) {
+    DispatchWorkItem(qos: .background, flags: .enforceQoS) {
         loggerLock.perform {
             category.logger.warning(
                 message,

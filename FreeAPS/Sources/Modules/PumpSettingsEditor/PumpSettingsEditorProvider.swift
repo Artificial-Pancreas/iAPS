@@ -15,7 +15,7 @@ extension PumpSettingsEditor {
         func settings() -> PumpSettings {
             storage.retrieve(OpenAPS.Settings.settings, as: PumpSettings.self)
                 ?? PumpSettings(from: OpenAPS.defaults(for: OpenAPS.Settings.settings))
-                ?? PumpSettings(insulinActionCurve: 5, maxBolus: 10, maxBasal: 2)
+                ?? PumpSettings(insulinActionCurve: 6, maxBolus: 10, maxBasal: 2)
         }
 
         func save(settings: PumpSettings) -> AnyPublisher<Void, Error> {

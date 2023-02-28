@@ -74,13 +74,25 @@ final class BaseCarbsStorage: CarbsStorage, Injectable {
     func deleteCarbs(at date: Date) {
         processQueue.sync {
             var allValues = storage.retrieve(OpenAPS.Monitor.carbHistory, as: [CarbsEntry].self) ?? []
+
             guard let entryIndex = allValues.firstIndex(where: { $0.createdAt == date }) else {
                 return
             }
-            allValues.remove(at: entryIndex)
-            storage.save(allValues, as: OpenAPS.Monitor.carbHistory)
-            broadcaster.notify(CarbsObserver.self, on: processQueue) {
-                $0.carbsDidUpdate(allValues)
+
+            // If deleteing a FPUs remove all of those with the same ID
+            if allValues[entryIndex].isFPU != nil, allValues[entryIndex].isFPU ?? false {
+                let fpuString = allValues[entryIndex].fpuID
+                allValues.removeAll(where: { $0.fpuID == fpuString })
+                storage.save(allValues, as: OpenAPS.Monitor.carbHistory)
+                broadcaster.notify(CarbsObserver.self, on: processQueue) {
+                    $0.carbsDidUpdate(allValues)
+                }
+            } else {
+                allValues.remove(at: entryIndex)
+                storage.save(allValues, as: OpenAPS.Monitor.carbHistory)
+                broadcaster.notify(CarbsObserver.self, on: processQueue) {
+                    $0.carbsDidUpdate(allValues)
+                }
             }
         }
     }

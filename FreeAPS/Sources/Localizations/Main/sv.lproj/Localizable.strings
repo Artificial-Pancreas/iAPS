@@ -925,7 +925,7 @@ Enact a temp Basal or a temp target */
 "Glucose Simulator" = "Glukossimulator";
 
 /* Restored state message */
-"Bluetooth State restored (APS restarted?). Found %d peripherals, and connected to %@ with identifier %@" = "Bluetooth-status återställd (FreeAPS X startades om?). Hittade %d perifera enheter anslutna till %@ med identifieraren %@";
+"Bluetooth State restored (APS restarted?). Found %d peripherals, and connected to %@ with identifier %@" = "Bluetooth-status återställd (APS startades om?). Hittade %d perifera enheter anslutna till %@ med identifieraren %@";
 
 /* Shared app group xDrip4iOS */
 "Using shared app group with external CGM app xDrip4iOS" = "Använder delad appgrupp med CGM-app xDrip4iOS";
@@ -1042,7 +1042,45 @@ Enact a temp Basal or a temp target */
 /* Total AT / Scheduled basal insulin */
 "Total" = "Totalt";
 
-/* ---------------------------------------
+/* -------------------------------------------- FPU Strings ------------------------------------------------------*/
+/* Enable FPU */
+
+"Enable" = "Aktivera";
+
+/* Header */
+"Convert Fat and Protein" = "Omvandla fett och protein";
+
+/* Header */
+"Conversion settings" = "Inställningar";
+
+/* Delay */
+"Delay In Minutes" = "Fördröjning";
+
+/* Duration */
+"Maximum Duration In Hours" = "Max tid i timmar";
+
+/* Interval */
+"Interval In Minutes" = "Tidsintervall i minuter";
+
+/* Override */
+"Override With A Factor Of " = "Justera med multiplikator ";
+
+/* Description */
+"Allows fat and protein to be converted into future carb equivalents using the Warsaw formula of kilocalories divided by 10.\n\nThis spreads the carb equivilants over a maximum duration setting that can be configured from 5-12 hours.\n\nDelay is time from now until the first future carb entry.\n\nInterval in minutes is how many minutes are between entries. The shorter the interval, the smoother the result. 10, 15, 20, 30, or 60 are reasonable choices.\n\nAdjustment factor is how much effect the fat and protein has on the entries. 1.0 is full effect (original Warsaw Method) and 0.5 is half effect. Note that you may find that your normal carb ratio needs to increase to a larger number if you begin adding fat and protein entries. For this reason, it is best to start with a factor of about 0.5 to ease into it.\n\nDefault settings: Time Cap: 8 h, Interval: 30 min, Factor: 0.5, Delay 60 min" = "Omvandlar fett och protein till kolhydratekvivalenter, enligt Warsawa-metoden: antal kilokalorier delat med 10.\n\nDetta sprider ut kolydraterna över ett framtida tidsintervall med maximal duration enligt inställningen för max tid, 5-12 timmar.\n\nIntervall i minuter bestämmer hur många minuter mellan kolhydratposterna. Ju kortare intervall, desto jämnare resultat, men också fler poster att behöva radera om du ångrar dig. 10, 15, 20, 30, or 60 är exempel på alternativ\n\nFördrjöjning är tiden från nu till första framtida kolhydratpost.\n\nAJustering tillåter indivudell justering av formulan. 1.0 betyder full effekt, 0.5 skapar halva mängden kolhydrater. Observera att om du alltid matar in fett och kolhydrater kan du behöva öka din insulinkvot. Av denna anledning kan det vara lämpligt att börja med 0.5.\n\nStandardinställningar: Max tid: 8 h, Intervall: 30 min, Faktor: 0.5, Fördröjning 60 min";
+
+/* Title */
+"Fat and Protein" = "Fett och protein";
+
+/* Add Fat */
+"Fat" = "Fett";
+
+/* Add Protein */
+"Protein" = "Protein";
+
+/* Setting */
+"Fat And Protein Conversion" = "Omvandling av fett och protein";
+
+/* -------------------------------------------------------------------------------------------
   DASH strings
 */
 "Attach Pod" = "Fäst podden";
@@ -1262,7 +1300,7 @@ Enact a temp Basal or a temp target */
 "Update every number of minutes:" = "Uppdatera varje antal minuter:";
 
 /* Description for update interval for statistics */
-"Default is 30 minutes. How often to update and save the statistics.json and to upload last array, when enabled, to Nightscout. A lower interval than for glucose updates (5 min) is pointless." = "Standardinställning är 30 minuter. Med denna inställning ställer du in hur ofta statistiken uppdateras och hur ofta filen statistics.json sparas och laddas upp till till Nightscout, om aktiverad. Att ha ett lägre intervall än för nytt blodoscker (5 min) är meningslöst.";
+"Default is 20 minutes. How often to update and save the statistics.json and to upload last array, when enabled, to Nightscout." = "Standardvärde är 20 minuter. Hur ofta du vill uppdatera, spara och ladda upp statistiken till Nightscout.";
 
 /* Duration displayed in statPanel */
 "Past 24 Hours " = "Senaste 24 timmarna ";
@@ -1294,7 +1332,19 @@ Enact a temp Basal or a temp target */
 /* HbA1c for all glucose storage days */
 "all" = "alla";
 
-/* --------------------------------------
+/* --------------------------------------------------------  Dexcom G7 --------------------------------------*/
+
+"Configuration CGM" = "Inställning av CGM";
+
+"Heartbeat" = "Hjärtslag";
+
+"CGM address :" = "CGM-adress :";
+
+"CGM is not used as heartbeat." = "CGM används inte som hjärtslag.";
+
+"Are you sure you want to delete this CGM?" = "År du säker på att du vill ta bort denna CGM?";
+
+/* -----------------------------------------------------------------------------------------------------------
 
   Infotexts from openaps.docs and androidaps.docs
   FreeAPS X
@@ -1364,7 +1414,7 @@ Enact a temp Basal or a temp target */
 "Enable UAM" = "Aktivera UAM";
 
 /* "Enable UAM" */
-"With this option enabled, the SMB algorithm can recognize unannounced meals. This is helpful, if you forget to tell FreeAPS X about your carbs or estimate your carbs wrong and the amount of entered carbs is wrong or if a meal with lots of fat and protein has a longer duration than expected. Without any carb entry, UAM can recognize fast glucose increasments caused by carbs, adrenaline, etc, and tries to adjust it with SMBs. This also works the opposite way: if there is a fast glucose decreasement, it can stop SMBs earlier." = "Med denna inställning på kan SMB-algoritmen upptäcka kolhydrater som inte matats in. Detta kan vara till hjälp om du glömmer att mata in eller uppskattar dina kolhydrater fel, eller vid måltider med mycket fett och protein, som har en längre verkan än förväntat. Utan inlagda kolhydrater kan UAM känna igen snabba glukosförändringar orsakade av kolhydrater, adrenalin, etc, och försöker justera dessa med SMBs. Detta fungerar också omvänt: vid snabb glukosminskning stoppas SMB:s tidigare.";
+"With this option enabled, the SMB algorithm can recognize unannounced meals. This is helpful, if you forget to tell FreeAPS X about your carbs or estimate your carbs wrong and the amount of entered carbs is wrong or if a meal with lots of fat and protein has a longer duration than expected. Without any carb entry, UAM can recognize fast glucose increasments caused by carbs, adrenaline, etc, and tries to adjust it with SMBs. This also works the opposite way: if there is a fast glucose decreasement, it can stop SMBs earlier." = "Med denna inställning på kan appen upptäcka kolhydrater som inte matats in. Detta kan vara till hjälp om du glömmer att mata in eller uppskattar dina kolhydrater fel, eller vid måltider med mycket fett och protein, som har en längre verkan än förväntat. Utan inlagda kolhydrater kan UAM känna igen snabba glukosförändringar orsakade av kolhydrater, adrenalin, etc, och försöker justera dessa med SMBs. Detta fungerar också omvänt: vid snabb glukosminskning stoppas SMB: s tidigare.";
 
 /* Headline "Enable SMB With COB" */
 "Enable SMB With COB" = "Använd SMB med kolhydrater (COB)";
@@ -1505,7 +1555,7 @@ Enact a temp Basal or a temp target */
 "Bolus Increment" = "Minsta bolusmångd";
 
 /* "Bolus Increment" */
-"Smallest SMB / SMB increment in oref0. Minimum amount for Medtronic pumps is 0.1 U, whereas for Omnipod it’s 0.05 U. The default value is 0.1." = "Minsta möjliga SMB (supermikrobolus) i oref0. För Medtronic är minsta möjliga dos 0,1 U, medan det för Omnipod är 0,05 U.";
+"Smallest enacted SMB amount. Minimum amount for Omnipod pumps is 0.05 U, whereas for Medtronic pumps it differs for various models, from 0.025 U to 0.10 U. Please check the minimum bolus amount which can be delivered by your pump. The default value is 0.1." = "Minsta mängd för Omnipod-poddar är 0,05 enheter, medan det för Medtronic-pumpar skiljer sig åt för olika modeller, från 0.25 IE till 0,10 IE. Kontrollera den minsta bolusmängd som kan ges av din pump för denna inställning. Standardvärdet är 0,1 enheter.";
 
 /* Headline "Insulin Peak Time" */
 "Insulin Peak Time" = "Tid för insulinets maximala blodsockersänkande effekt, i minuter";

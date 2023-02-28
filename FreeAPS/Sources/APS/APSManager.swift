@@ -72,7 +72,9 @@ final class BaseAPSManager: APSManager, Injectable {
     @Injected() private var nightscout: NightscoutManager!
     @Injected() private var settingsManager: SettingsManager!
     @Injected() private var broadcaster: Broadcaster!
+    @Injected() private var healthKitManager: HealthKitManager!
     @Persisted(key: "lastAutotuneDate") private var lastAutotuneDate = Date()
+    @Persisted(key: "lastStartLoopDate") private var lastStartLoopDate: Date = .distantPast
     @Persisted(key: "lastLoopDate") var lastLoopDate: Date = .distantPast {
         didSet {
             lastLoopDateSubject.send(lastLoopDate)
@@ -84,6 +86,8 @@ final class BaseAPSManager: APSManager, Injectable {
     private var openAPS: OpenAPS!
 
     private var lifetime = Lifetime()
+
+    private var backGroundTaskID: UIBackgroundTaskIdentifier?
 
     var pumpManager: PumpManagerUI? {
         get { deviceDataManager.pumpManager }
@@ -178,15 +182,31 @@ final class BaseAPSManager: APSManager, Injectable {
 
     // Loop entry point
     private func loop() {
+        // check the last start of looping is more the loopInterval but the previous loop was completed
+        if lastLoopDate > lastStartLoopDate {
+            guard lastStartLoopDate.addingTimeInterval(Config.loopInterval) < Date() else {
+                debug(.apsManager, "too close to do a loop : \(lastStartLoopDate)")
+                return
+            }
+        }
+
         guard !isLooping.value else {
-            warning(.apsManager, "Already looping, skip")
+            warning(.apsManager, "Loop already in progress. Skip recommendation.")
             return
         }
 
-        debug(.apsManager, "Starting loop")
+        // start background time extension
+        backGroundTaskID = UIApplication.shared.beginBackgroundTask(withName: "Loop starting") {
+            guard let backgroundTask = self.backGroundTaskID else { return }
+            UIApplication.shared.endBackgroundTask(backgroundTask)
+            self.backGroundTaskID = .invalid
+        }
 
+        debug(.apsManager, "Starting loop with a delay of \(UIApplication.shared.backgroundTimeRemaining.rounded())")
+
+        lastStartLoopDate = Date()
         var loopStatRecord = LoopStats(
-            start: Date(),
+            start: lastStartLoopDate,
             loopStatus: "Starting"
         )
 
@@ -231,8 +251,16 @@ final class BaseAPSManager: APSManager, Injectable {
     private func loopCompleted(error: Error? = nil, loopStatRecord: LoopStats) {
         isLooping.send(false)
 
+        // save AH events
+        let events = pumpHistoryStorage.recent()
+        healthKitManager.saveIfNeeded(pumpEvents: events)
+
         if let error = error {
             warning(.apsManager, "Loop failed with error: \(error.localizedDescription)")
+            if let backgroundTask = backGroundTaskID {
+                UIApplication.shared.endBackgroundTask(backgroundTask)
+                backGroundTaskID = .invalid
+            }
             processError(error)
         } else {
             debug(.apsManager, "Loop succeeded")
@@ -244,6 +272,12 @@ final class BaseAPSManager: APSManager, Injectable {
 
         if settings.closedLoop {
             reportEnacted(received: error == nil)
+        }
+
+        // end of the BG tasks
+        if let backgroundTask = backGroundTaskID {
+            UIApplication.shared.endBackgroundTask(backgroundTask)
+            backGroundTaskID = .invalid
         }
     }
 

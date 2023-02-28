@@ -39,6 +39,7 @@ final class BaseGlucoseStorage: GlucoseStorage, Injectable {
         let storeGlucoseStarted = Date()
 
         processQueue.sync {
+            debug(.deviceManager, "start storage glucose")
             let file = OpenAPS.Monitor.glucose
             self.storage.transaction { storage in
                 storage.append(glucose, to: file, uniqBy: \.dateString)
@@ -77,12 +78,13 @@ final class BaseGlucoseStorage: GlucoseStorage, Injectable {
                 }
             }
 
+            debug(.deviceManager, "start storage cgmState")
             self.storage.transaction { storage in
                 let file = OpenAPS.Monitor.cgmState
                 var treatments = storage.retrieve(file, as: [NigtscoutTreatment].self) ?? []
                 var updated = false
                 for x in glucose {
-                    NSLog("storeGlucose \(x)")
+                    debug(.deviceManager, "storeGlucose \(x)")
                     guard let sessionStartDate = x.sessionStartDate else {
                         continue
                     }
@@ -117,7 +119,7 @@ final class BaseGlucoseStorage: GlucoseStorage, Injectable {
                         targetTop: nil,
                         targetBottom: nil
                     )
-                    NSLog("CGM sensor change \(treatment)")
+                    debug(.deviceManager, "CGM sensor change \(treatment)")
                     treatments.append(treatment)
                     updated = true
                 }

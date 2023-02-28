@@ -1,11 +1,15 @@
 import Foundation
 
 struct CarbsEntry: JSON, Equatable, Hashable {
+    let id: String?
     let createdAt: Date
     let carbs: Decimal
     let enteredBy: String?
+    let isFPU: Bool?
+    let fpuID: String?
 
     static let manual = "freeaps-x"
+    static let appleHealth = "applehealth"
 
     static func == (lhs: CarbsEntry, rhs: CarbsEntry) -> Bool {
         lhs.createdAt == rhs.createdAt
@@ -18,8 +22,11 @@ struct CarbsEntry: JSON, Equatable, Hashable {
 
 extension CarbsEntry {
     private enum CodingKeys: String, CodingKey {
+        case id = "_id"
         case createdAt = "created_at"
         case carbs
         case enteredBy
+        case isFPU
+        case fpuID
     }
 }

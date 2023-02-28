@@ -1,6 +1,7 @@
 import Combine
 import Foundation
 import LibreTransmitter
+import LoopKitUI
 import Swinject
 
 protocol LibreTransmitterSource: GlucoseSource {
@@ -8,12 +9,17 @@ protocol LibreTransmitterSource: GlucoseSource {
 }
 
 final class BaseLibreTransmitterSource: LibreTransmitterSource, Injectable {
+    var cgmManager: CGMManagerUI?
+    var cgmType: CGMType = .libreTransmitter
+
     private let processQueue = DispatchQueue(label: "BaseLibreTransmitterSource.processQueue")
 
     @Injected() var glucoseStorage: GlucoseStorage!
     @Injected() var calibrationService: CalibrationService!
 
     private var promise: Future<[BloodGlucose], Error>.Promise?
+
+    var glucoseManager: FetchGlucoseManager?
 
     var manager: LibreTransmitterManager? {
         didSet {
@@ -29,7 +35,6 @@ final class BaseLibreTransmitterSource: LibreTransmitterSource, Injectable {
             manager = LibreTransmitterManager()
             manager?.cgmManagerDelegate = self
         }
-
         injectServices(resolver)
     }
 
@@ -41,6 +46,10 @@ final class BaseLibreTransmitterSource: LibreTransmitterSource, Injectable {
         .replaceError(with: [])
         .replaceEmpty(with: [])
         .eraseToAnyPublisher()
+    }
+
+    func fetchIfNeeded() -> AnyPublisher<[BloodGlucose], Never> {
+        fetch(nil)
     }
 
     func sourceInfo() -> [String: Any]? {
@@ -90,26 +99,5 @@ extension BaseLibreTransmitterSource: LibreTransmitterManagerDelegate {
 
     func overcalibration(for _: LibreTransmitterManager) -> ((Double) -> (Double))? {
         calibrationService.calibrate
-    }
-}
-
-extension BloodGlucose.Direction {
-    init(trendType: GlucoseTrend) {
-        switch trendType {
-        case .upUpUp:
-            self = .doubleUp
-        case .upUp:
-            self = .singleUp
-        case .up:
-            self = .fortyFiveUp
-        case .flat:
-            self = .flat
-        case .down:
-            self = .fortyFiveDown
-        case .downDown:
-            self = .singleDown
-        case .downDownDown:
-            self = .doubleDown
-        }
     }
 }

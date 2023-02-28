@@ -35,7 +35,7 @@ extension AppleHealthKit {
 
                     debug(.service, "Permission  granted HealthKitManager")
 
-                    self.healthKitManager.createObserver()
+                    self.healthKitManager.createBGObserver()
                     self.healthKitManager.enableBackgroundDelivery()
                 }
             }

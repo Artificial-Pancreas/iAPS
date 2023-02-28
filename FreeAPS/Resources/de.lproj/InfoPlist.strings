@@ -14,7 +14,7 @@
 "NSCalendarsUsageDescription" = "BZ-Werte werden im Kalender als temporärer Termin erstellt.";
 
 /* Privacy - Health Update Usage Description */
-"NSHealthUpdateUsageDescription" = "Die Health App wird zur Speicherung von Blutzuckerdaten verwendet";
+"NSHealthUpdateUsageDescription" = "Health App is used to store blood glucose, insulin and carbohydrates";
 
 /* Privacy - Health Share Usage Description */
-"NSHealthShareUsageDescription" = "Die Health App wird zur Speicherung von Blutzuckerdaten verwendet";
+"NSHealthShareUsageDescription" = "Health App is used to store blood glucose, insulin and carbohydrates";

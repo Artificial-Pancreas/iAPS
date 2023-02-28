@@ -26,13 +26,23 @@ extension DataTable {
                 let units = self.settingsManager.settings.units
 
                 let carbs = self.provider.carbs().map {
-                    Treatment(units: units, type: .carbs, date: $0.createdAt, amount: $0.carbs)
+                    if let id = $0.id {
+                        return Treatment(
+                            units: units,
+                            type: .carbs,
+                            date: $0.createdAt,
+                            amount: $0.carbs,
+                            id: id
+                        )
+                    } else {
+                        return Treatment(units: units, type: .carbs, date: $0.createdAt, amount: $0.carbs)
+                    }
                 }
 
                 let boluses = self.provider.pumpHistory()
                     .filter { $0.type == .bolus }
                     .map {
-                        Treatment(units: units, type: .bolus, date: $0.timestamp, amount: $0.amount)
+                        Treatment(units: units, type: .bolus, date: $0.timestamp, amount: $0.amount, idPumpEvent: $0.id)
                     }
 
                 let tempBasals = self.provider.pumpHistory()
@@ -90,15 +100,15 @@ extension DataTable {
             }
         }
 
-        func deleteCarbs(at date: Date) {
-            provider.deleteCarbs(at: date)
+        func deleteCarbs(_ treatment: Treatment) {
+            provider.deleteCarbs(treatment)
         }
 
-        func deleteInsulin(at date: Date) {
+        func deleteInsulin(_ treatment: Treatment) {
             unlockmanager.unlock()
                 .sink { _ in } receiveValue: { [weak self] _ in
                     guard let self = self else { return }
-                    self.provider.deleteInsulin(at: date)
+                    self.provider.deleteInsulin(treatment)
                 }
                 .store(in: &lifetime)
         }

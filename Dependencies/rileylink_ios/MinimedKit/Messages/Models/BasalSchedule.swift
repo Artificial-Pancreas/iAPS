@@ -8,7 +8,7 @@
 
 import Foundation
 
-public struct BasalScheduleEntry {
+public struct BasalScheduleEntry: Equatable {
     public let index: Int
     public let timeOffset: TimeInterval
     public let rate: Double  // U/hour
@@ -21,11 +21,38 @@ public struct BasalScheduleEntry {
 }
 
 
-public struct BasalSchedule {
+public struct BasalSchedule: Equatable {
     public let entries: [BasalScheduleEntry]
 
     public init(entries: [BasalScheduleEntry]) {
         self.entries = entries
+    }
+
+    public func rateAt(offset: TimeInterval) -> Double {
+        let (_, entry, _) = lookup(offset: offset)
+        return entry.rate
+    }
+
+    // Only valid for fixed offset timezones
+    public func currentRate(using calendar: Calendar, at date: Date = Date()) -> Double {
+        let midnight = calendar.startOfDay(for: date)
+        return rateAt(offset: date.timeIntervalSince(midnight))
+    }
+
+    // Returns index, entry, and time remaining
+    func lookup(offset: TimeInterval) -> (Int, BasalScheduleEntry, TimeInterval) {
+        guard offset >= 0 && offset < .hours(24) else {
+            fatalError("Schedule offset out of bounds")
+        }
+
+        var last: TimeInterval = .hours(24)
+        for (index, entry) in entries.reversed().enumerated() {
+            if entry.timeOffset <= offset {
+                return (entries.count - (index + 1), entry, last - entry.timeOffset)
+            }
+            last = entry.timeOffset
+        }
+        fatalError("Schedule incomplete")
     }
 }
 

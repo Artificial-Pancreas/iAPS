@@ -360,6 +360,9 @@ extension BluetoothManager: CBCentralManagerDelegate {
         for device in devices where device.manager.peripheral.identifier == peripheral.identifier {
             device.manager.centralManager(central, didConnect: peripheral)
             connectionDelegate?.omnipodPeripheralDidConnect(manager: device.manager)
+
+            // Get an RSSI reading for logging
+            peripheral.readRSSI()
         }
     }
 

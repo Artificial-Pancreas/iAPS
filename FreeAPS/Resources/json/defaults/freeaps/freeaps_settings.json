@@ -21,5 +21,10 @@
     "carbsRequiredThreshold": 10,
     "useAppleHealth": false,
     "animatedBackground": false,
-    "displayStatistics": false
+    "displayStatistics": false,
+    "useFPUconversion": false
+    "individualAdjustmentFactor": 0.5,
+    "timeCap": 8,
+    "minuteInterval": 30,
+    "delay": 60
 }
