@@ -1043,8 +1043,11 @@ Enact a temp Basal or a temp target */
 "Total" = "Всього";
 
 /* -------------------------------------------- FPU Strings ------------------------------------------------------*/
-/* Header */
+/* Enable FPU */
 
+"Enable" = "Увімкнути";
+
+/* Header */
 "Convert Fat and Protein" = "Перетворення жиру та білка";
 
 /* Header */
@@ -1073,6 +1076,9 @@ Enact a temp Basal or a temp target */
 
 /* Add Protein */
 "Protein" = "Білки";
+
+/* Setting */
+"Fat And Protein Conversion" = "Fat And Protein Conversion";
 
 /* -------------------------------------------------------------------------------------------
   DASH strings

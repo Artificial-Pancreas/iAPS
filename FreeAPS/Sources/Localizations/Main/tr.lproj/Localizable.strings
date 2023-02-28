@@ -1043,8 +1043,11 @@ Enact a temp Basal or a temp target */
 "Total" = "Toplam";
 
 /* -------------------------------------------- FPU Strings ------------------------------------------------------*/
-/* Header */
+/* Enable FPU */
 
+"Enable" = "Enable";
+
+/* Header */
 "Convert Fat and Protein" = "Convert Fat and Protein";
 
 /* Header */
@@ -1073,6 +1076,9 @@ Enact a temp Basal or a temp target */
 
 /* Add Protein */
 "Protein" = "Protein";
+
+/* Setting */
+"Fat And Protein Conversion" = "Fat And Protein Conversion";
 
 /* -------------------------------------------------------------------------------------------
   DASH strings
