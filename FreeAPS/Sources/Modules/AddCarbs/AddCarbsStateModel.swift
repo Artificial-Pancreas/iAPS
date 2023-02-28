@@ -60,22 +60,28 @@ extension AddCarbs {
                 // Group and Identify all FPUs together
                 let fpuID = UUID().uuidString
 
-                // Loop and save all carb entries
+                // Create an array of all future carb equivalents.
+                var futureCarbArray = [CarbsEntry]()
                 while carbEquivalents > 0, numberOfEquivalents > 0 {
+                    
                     if firstIndex {
                         useDate = useDate.addingTimeInterval(delay.minutes.timeInterval)
                         firstIndex = false
                     } else { useDate = useDate.addingTimeInterval(interval.minutes.timeInterval) }
-                    carbsStorage.storeCarbs([
-                        CarbsEntry(
-                            id: UUID().uuidString, createdAt: useDate, carbs: equivalent,
-                            enteredBy: CarbsEntry.manual, isFPU: true, fpuID: fpuID
-                        )
-                    ])
+
+                    let eachCarbEntry = CarbsEntry(
+                        id: UUID().uuidString, createdAt: useDate, carbs: equivalent, enteredBy: CarbsEntry.manual, isFPU: true,
+                        fpuID: fpuID
+                    )
+                    futureCarbArray.append(eachCarbEntry)
                     numberOfEquivalents -= 1
                 }
+                // Save the array
+                if carbEquivalents > 0 {
+                    carbsStorage.storeCarbs(futureCarbArray)
+                }
             } // ------------------------- END OF TPU ----------------------------------------
-            
+
             // Store the real carbs
             if carbs > 0 {
                 carbsStorage
