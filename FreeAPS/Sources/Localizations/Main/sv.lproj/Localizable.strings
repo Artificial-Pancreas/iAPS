@@ -1077,6 +1077,9 @@ Enact a temp Basal or a temp target */
 /* Add Protein */
 "Protein" = "Protein";
 
+/* Setting */
+"Fat And Protein Conversion" = "Omvandling av fett och protein";
+
 /* -------------------------------------------------------------------------------------------
   DASH strings
 */
