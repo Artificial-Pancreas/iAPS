@@ -7,6 +7,7 @@ jobs:
   secrets:
     uses: ./.github/workflows/validate_secrets.yml
     secrets: inherit
+
   identifiers:
     needs: secrets
     runs-on: macos-12
