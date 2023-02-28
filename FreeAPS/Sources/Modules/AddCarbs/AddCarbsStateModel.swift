@@ -63,7 +63,6 @@ extension AddCarbs {
                 // Create an array of all future carb equivalents.
                 var futureCarbArray = [CarbsEntry]()
                 while carbEquivalents > 0, numberOfEquivalents > 0 {
-                    
                     if firstIndex {
                         useDate = useDate.addingTimeInterval(delay.minutes.timeInterval)
                         firstIndex = false
