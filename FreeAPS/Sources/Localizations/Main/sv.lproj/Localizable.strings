@@ -1043,12 +1043,12 @@ Enact a temp Basal or a temp target */
 "Total" = "Totalt";
 
 /* -------------------------------------------- FPU Strings ------------------------------------------------------*/
-
 /* Enable FPU */
+
 "Enable" = "Aktivera";
 
 /* Header */
-"Convert Fat and Protein" = "Omvandla fett orch protein";
+"Convert Fat and Protein" = "Omvandla fett och protein";
 
 /* Header */
 "Conversion settings" = "Inställningar";
@@ -1069,7 +1069,7 @@ Enact a temp Basal or a temp target */
 "Allows fat and protein to be converted into future carb equivalents using the Warsaw formula of kilocalories divided by 10.\n\nThis spreads the carb equivilants over a maximum duration setting that can be configured from 5-12 hours.\n\nDelay is time from now until the first future carb entry.\n\nInterval in minutes is how many minutes are between entries. The shorter the interval, the smoother the result. 10, 15, 20, 30, or 60 are reasonable choices.\n\nAdjustment factor is how much effect the fat and protein has on the entries. 1.0 is full effect (original Warsaw Method) and 0.5 is half effect. Note that you may find that your normal carb ratio needs to increase to a larger number if you begin adding fat and protein entries. For this reason, it is best to start with a factor of about 0.5 to ease into it.\n\nDefault settings: Time Cap: 8 h, Interval: 30 min, Factor: 0.5, Delay 60 min" = "Omvandlar fett och protein till kolhydratekvivalenter, enligt Warsawa-metoden: antal kilokalorier delat med 10.\n\nDetta sprider ut kolydraterna över ett framtida tidsintervall med maximal duration enligt inställningen för max tid, 5-12 timmar.\n\nIntervall i minuter bestämmer hur många minuter mellan kolhydratposterna. Ju kortare intervall, desto jämnare resultat, men också fler poster att behöva radera om du ångrar dig. 10, 15, 20, 30, or 60 är exempel på alternativ\n\nFördrjöjning är tiden från nu till första framtida kolhydratpost.\n\nAJustering tillåter indivudell justering av formulan. 1.0 betyder full effekt, 0.5 skapar halva mängden kolhydrater. Observera att om du alltid matar in fett och kolhydrater kan du behöva öka din insulinkvot. Av denna anledning kan det vara lämpligt att börja med 0.5.\n\nStandardinställningar: Max tid: 8 h, Intervall: 30 min, Faktor: 0.5, Fördröjning 60 min";
 
 /* Title */
-"Fat and Protein" = "Fett of protein";
+"Fat and Protein" = "Fett och protein";
 
 /* Add Fat */
 "Fat" = "Fett";
@@ -1414,7 +1414,7 @@ Enact a temp Basal or a temp target */
 "Enable UAM" = "Aktivera UAM";
 
 /* "Enable UAM" */
-"With this option enabled, the SMB algorithm can recognize unannounced meals. This is helpful, if you forget to tell FreeAPS X about your carbs or estimate your carbs wrong and the amount of entered carbs is wrong or if a meal with lots of fat and protein has a longer duration than expected. Without any carb entry, UAM can recognize fast glucose increasments caused by carbs, adrenaline, etc, and tries to adjust it with SMBs. This also works the opposite way: if there is a fast glucose decreasement, it can stop SMBs earlier." = "Med denna inställning på kan SMB-algoritmen upptäcka kolhydrater som inte matats in. Detta kan vara till hjälp om du glömmer att mata in eller uppskattar dina kolhydrater fel, eller vid måltider med mycket fett och protein, som har en längre verkan än förväntat. Utan inlagda kolhydrater kan UAM känna igen snabba glukosförändringar orsakade av kolhydrater, adrenalin, etc, och försöker justera dessa med SMBs. Detta fungerar också omvänt: vid snabb glukosminskning stoppas SMB:s tidigare.";
+"With this option enabled, the SMB algorithm can recognize unannounced meals. This is helpful, if you forget to tell FreeAPS X about your carbs or estimate your carbs wrong and the amount of entered carbs is wrong or if a meal with lots of fat and protein has a longer duration than expected. Without any carb entry, UAM can recognize fast glucose increasments caused by carbs, adrenaline, etc, and tries to adjust it with SMBs. This also works the opposite way: if there is a fast glucose decreasement, it can stop SMBs earlier." = "Med denna inställning på kan appen upptäcka kolhydrater som inte matats in. Detta kan vara till hjälp om du glömmer att mata in eller uppskattar dina kolhydrater fel, eller vid måltider med mycket fett och protein, som har en längre verkan än förväntat. Utan inlagda kolhydrater kan UAM känna igen snabba glukosförändringar orsakade av kolhydrater, adrenalin, etc, och försöker justera dessa med SMBs. Detta fungerar också omvänt: vid snabb glukosminskning stoppas SMB: s tidigare.";
 
 /* Headline "Enable SMB With COB" */
 "Enable SMB With COB" = "Använd SMB med kolhydrater (COB)";
