@@ -24,6 +24,7 @@ enum DataTable {
 
     enum DataType: String, Equatable {
         case carbs
+        case fpus
         case bolus
         case tempBasal
         case tempTarget
@@ -35,6 +36,8 @@ enum DataTable {
             switch self {
             case .carbs:
                 name = "Carbs"
+            case .fpus:
+                name = "Protein / Fat"
             case .bolus:
                 name = "Bolus"
             case .tempBasal:
@@ -108,6 +111,9 @@ enum DataTable {
             switch type {
             case .carbs:
                 return numberFormater.string(from: amount as NSNumber)! + NSLocalizedString(" g", comment: "gram of carbs")
+            case .fpus:
+                return numberFormater
+                    .string(from: amount as NSNumber)! + NSLocalizedString(" g", comment: "gram of carb equilvalents")
             case .bolus:
                 return numberFormater.string(from: amount as NSNumber)! + NSLocalizedString(" U", comment: "Insulin unit")
             case .tempBasal:
@@ -138,6 +144,8 @@ enum DataTable {
             switch type {
             case .carbs:
                 return .loopYellow
+            case .fpus:
+                return .red
             case .bolus:
                 return .insulin
             case .tempBasal:

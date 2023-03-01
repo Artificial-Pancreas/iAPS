@@ -25,19 +25,33 @@ extension DataTable {
             DispatchQueue.global().async {
                 let units = self.settingsManager.settings.units
 
-                let carbs = self.provider.carbs().map {
-                    if let id = $0.id {
-                        return Treatment(
+                let carbs = self.provider.carbs()
+                    .filter { !($0.isFPU ?? false) }
+                    .map {
+                        if let id = $0.id {
+                            return Treatment(
+                                units: units,
+                                type: .carbs,
+                                date: $0.createdAt,
+                                amount: $0.carbs,
+                                id: id
+                            )
+                        } else {
+                            return Treatment(units: units, type: .carbs, date: $0.createdAt, amount: $0.carbs)
+                        }
+                    }
+
+                let fpus = self.provider.fpus()
+                    .filter { $0.isFPU ?? false }
+                    .map {
+                        Treatment(
                             units: units,
-                            type: .carbs,
+                            type: .fpus,
                             date: $0.createdAt,
                             amount: $0.carbs,
-                            id: id
+                            id: $0.id
                         )
-                    } else {
-                        return Treatment(units: units, type: .carbs, date: $0.createdAt, amount: $0.carbs)
                     }
-                }
 
                 let boluses = self.provider.pumpHistory()
                     .filter { $0.type == .bolus }
@@ -87,7 +101,7 @@ extension DataTable {
                     }
 
                 DispatchQueue.main.async {
-                    self.treatments = [carbs, boluses, tempBasals, tempTargets, suspend, resume]
+                    self.treatments = [carbs, boluses, tempBasals, tempTargets, suspend, resume, fpus]
                         .flatMap { $0 }
                         .sorted { $0.date > $1.date }
                 }
