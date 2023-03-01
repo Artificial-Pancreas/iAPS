@@ -37,7 +37,7 @@ enum DataTable {
             case .carbs:
                 name = "Carbs"
             case .fpus:
-                name = "Protein/Fat"
+                name = "Protein / Fat"
             case .bolus:
                 name = "Bolus"
             case .tempBasal:

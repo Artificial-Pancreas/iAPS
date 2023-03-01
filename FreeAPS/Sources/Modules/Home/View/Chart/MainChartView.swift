@@ -62,10 +62,8 @@ struct MainChartView: View {
     @State private var suspensionsPath = Path()
     @State private var carbsDots: [DotInfo] = []
     @State private var carbsPath = Path()
-
     @State private var fpuDots: [DotInfo] = []
     @State private var fpuPath = Path()
-
     @State private var glucoseYGange: GlucoseYRange = (0, 0, 0, 0)
     @State private var offset: CGFloat = 0
     @State private var cachedMaxBasalRate: Decimal?
