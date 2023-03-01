@@ -113,7 +113,7 @@ extension DataTable {
                         .onTapGesture {
                             removeCarbsAlert = Alert(
                                 title: Text("Delete carb equivalents?"),
-                                message: Text(item.amountText),
+                                message: Text(""), // Temporary fix. New to fix real amount of carb equivalents later
                                 primaryButton: .destructive(
                                     Text("Delete"),
                                     action: { state.deleteCarbs(item) }

@@ -1081,6 +1081,9 @@ Enact a temp Basal or a temp target */
 /* Setting */
 "Fat And Protein Conversion" = "Fat And Protein Conversion";
 
+/* Alert text */
+"Delete carb equivalents?" = "Delete carb equivalents?";
+
 /* -------------------------------------------------------------------------------------------
   DASH strings
 */
