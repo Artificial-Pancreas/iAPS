@@ -1081,10 +1081,10 @@ Enact a temp Basal or a temp target */
 "Fat And Protein Conversion" = "Fat And Protein Conversion";
 
 /* Alert text */
-"Delete carb equivalents?" = "Delete carb equivalents?";
+"Delete carb equivalents?" = "Slette karboekvivalenter?";
 
 /* Section in settings */
-"Protein / Fat" = "Protein / Fat";
+"Protein / Fat" = "Proteiner/fett";
 
 /* -------------------------------------------------------------------------------------------
   DASH strings

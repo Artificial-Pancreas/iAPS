@@ -1081,7 +1081,7 @@ Enact a temp Basal or a temp target */
 "Fat And Protein Conversion" = "Перетворення жиру та білка";
 
 /* Alert text */
-"Delete carb equivalents?" = "Delete carb equivalents?";
+"Delete carb equivalents?" = "Видалити вуглеводні еквіваленти?";
 
 /* Section in settings */
 "Protein / Fat" = "Protein / Fat";
