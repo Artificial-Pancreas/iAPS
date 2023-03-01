@@ -1,17 +1,26 @@
-# Using Github Actions + FastLane to deploy to TestFlight
+# Using Github Actions + FastLane to deploy to TestFlight: the "Browser Build" method
 
 These instructions allow you to build FreeAPS X without having access to a Mac. They also allow you to easily install FreeAPS X on phones that are not connected to your computer. So you can send builds and updates to those you care for easily, or have an easy to access backup if you run FreeAPS X for yourself. You do not need to worry about correct Xcode/Mac versions either. An app built using this method can easily be deployed to newer versions of iOS, as soon as they are available.
 
-The setup steps are somewhat involved, but nearly all are one time steps. Subsequent builds are trivial.  Note that TestFlight requires apple id accounts 13 years or older. Your app must be updated once every 90 days, but it's a simple click to make a new build and can be done from anywhere.
+The setup steps are somewhat involved, but nearly all are one time steps. Subsequent builds are trivial. Your app must be updated once every 90 days, but it's a simple click to make a new build and can be done from anywhere.
+
+Note that TestFlight requires apple id accounts 13 years or older. This can be circumvented by logging into Media & Purchase on the child's phone with an adult's account. More details on this can be found in [LoopDocs](https://loopkit.github.io/loopdocs/gh-actions/gh-deploy/#install-testflight-loop-for-child).
+
+This method for building without a Mac was ported from Loop. If you have used this method for Loop or one of the other DIY apps (Loop, Loop Caregiver, Loop Follow, Xdrip4iOS), some of the steps can be re-used and the full set of instructions does not need to be repeated. This will be mentioned in relevant sections below.
+
+There are more detailed instructions in LoopDocs for doing Browser Builds of Loop and other apps, including troubleshooting and build errors. Please refer to [LoopDocs](https://loopkit.github.io/loopdocs/gh-actions/gh-other-apps/) for more details.
 
 ## Prerequisites
 
 * A [github account](https://github.com/signup). The free level comes with plenty of storage and free compute time to build FreeAPS X, multiple times a day, if you wanted to.
 * A paid [Apple Developer account](https://developer.apple.com). You may be able to use the free version, but that has not been tested.
-* Some time. Set aside a couple of hours to perform the setup.
+* Some time. Set aside a couple of hours to perform the setup. 
+* Use the same GitHub account for all "Browser Builds" of the various DIY apps.
 
 
 ## Generate App Store Connect API Key
+
+This step is common for all "Browser Builds", and should be done ony once. Please save the API key somewhere safe, so it can be re-used for other builds, or if needing to start from scratch.
 
 1. Sign in to the [Apple developer portal page](https://developer.apple.com/account/resources/certificates/list).
 1. Copy the team id from the upper right of the screen. Record this as your `TEAMID`.
@@ -20,9 +29,15 @@ The setup steps are somewhat involved, but nearly all are one time steps. Subseq
 1. Record the issuer id; this will be used for `FASTLANE_ISSUER_ID`.
 1. Download the API key itself, and open it in a text editor. The contents of this file will be used for `FASTLANE_KEY`. Copy the full text, including the "-----BEGIN PRIVATE KEY-----" and "-----END PRIVATE KEY-----" lines.
 
-## Setup Github
+## Setup Github Match-Secrets repository
+
+This is also a common step for all "browser builds", do this step only once
 1. Create a [new empty repository](https://github.com/new) titled `Match-Secrets`. It should be private.
+
+## Setup Github FreeAPS X repository
 1. Fork https://github.com/Jon-b-m/freeaps into your account. If you already have a fork of FreeAPS X in GitHub, you can't make another one. You can continue to work with your existing fork, or delete that from GitHub and then and fork https://github.com/Jon-b-m/freeaps.
+
+If you have previously built Loop or another app using the "browser build" method, you can can re-use your previous personal access token (`GH_PAT`) and skip ahead to `step 2`.
 1. Create a [new personal access token](https://github.com/settings/tokens/new):
     * Enter a name for your token. Something like "FastLane Access Token".
     * 30 days is fine, or you can select longer if you'd like.
@@ -38,10 +53,18 @@ The setup steps are somewhat involved, but nearly all are one time steps. Subseq
     * `GH_PAT`
     * `MATCH_PASSWORD` - just make up a password for this
 
+## Validate repository secrets
+
+1. Click on the "Actions" tab of your FreeAPS X repository.
+1. Select "1. Validate Secrets".
+1. Click "Run Workflow", and tap the green button.
+1. Wait, and within a minute or two you should see a green checkmark indicating the workflow succeeded.
+1. The workflow will check if the required secrets are added and that they are correctly formatted. If errors are detected, please check the run log for details. 
+
 ## Add Identifiers for FreeAPS X App
 
 1. Click on the "Actions" tab of your FreeAPS X repository.
-1. Select "Add Identifiers".
+1. Select "2. Add Identifiers".
 1. Click "Run Workflow", and tap the green button.
 1. Wait, and within a minute or two you should see a green checkmark indicating the workflow succeeded.
 
@@ -96,14 +119,14 @@ You do not need to fill out the next form. That is for submitting to the app sto
 ## Create Building Certficates
 
 1. Go back to the "Actions" tab of your FreeAPS X repository in github.
-1. Select "Create Certificates".
+1. Select "3. Create Certificates".
 1. Click "Run Workflow", and tap the green button.
 1. Wait, and within a minute or two you should see a green checkmark indicating the workflow succeeded.
 
 ## Build FreeAPS X!
 
 1. Click on the "Actions" tab of your FreeAPS X repository.
-1. Select "Build FAX". _Are you working on a previuos fork of FreeAPS X and not seeing any GitHub workflows in the Actions tab? You may have to change the default branch so that it contains the .github/workflows files, or merge these changes into your default branch (typically `master`)._
+1. Select "4. Build FAX". _Are you working on a previuos fork of FreeAPS X and not seeing any GitHub workflows in the Actions tab? You may have to change the default branch so that it contains the .github/workflows files, or merge these changes into your default branch (typically `master`)._
 1. Click "Run Workflow", select your branch, and tap the green button.
 1. You have some time now. Go enjoy a coffee. The build should take about 15 minutes.
 1. Your app should eventually appear on [App Store Connect](https://appstoreconnect.apple.com/apps).

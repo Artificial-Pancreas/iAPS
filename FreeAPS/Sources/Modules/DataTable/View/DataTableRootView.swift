@@ -105,6 +105,28 @@ extension DataTable {
                         }
                 }
 
+                if item.type == .fpus {
+                    Spacer()
+                    Image(systemName: "xmark.circle").foregroundColor(.secondary)
+                        .contentShape(Rectangle())
+                        .padding(.vertical)
+                        .onTapGesture {
+                            removeCarbsAlert = Alert(
+                                title: Text("Delete carb equivalents?"),
+                                message: Text(""), // Temporary fix. New to fix real amount of carb equivalents later
+                                primaryButton: .destructive(
+                                    Text("Delete"),
+                                    action: { state.deleteCarbs(item) }
+                                ),
+                                secondaryButton: .cancel()
+                            )
+                            isRemoveCarbsAlertPresented = true
+                        }
+                        .alert(isPresented: $isRemoveCarbsAlertPresented) {
+                            removeCarbsAlert!
+                        }
+                }
+
                 if item.type == .bolus {
                     Spacer()
                     Image(systemName: "xmark.circle").foregroundColor(.secondary)
