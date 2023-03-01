@@ -7,7 +7,7 @@ jobs:
   secrets:
     uses: ./.github/workflows/validate_secrets.yml
     secrets: inherit
-build_FAX.yml
+
   identifiers:
     needs: secrets
     runs-on: macos-12
