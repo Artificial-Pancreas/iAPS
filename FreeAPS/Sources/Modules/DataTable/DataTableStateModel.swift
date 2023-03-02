@@ -49,7 +49,9 @@ extension DataTable {
                             type: .fpus,
                             date: $0.createdAt,
                             amount: $0.carbs,
-                            id: $0.id
+                            id: $0.id,
+                            isFPU: $0.isFPU,
+                            fpuID: $0.fpuID
                         )
                     }
 
