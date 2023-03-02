@@ -26,7 +26,7 @@ protocol HealthKitManager: GlucoseSource {
     /// Delete glucose with syncID
     func deleteGlucose(syncID: String)
     /// delete carbs with syncID
-    func deleteCarbs(syncID: String)
+    func deleteCarbs(syncID: String, isFPU: Bool?, fpuID: String?)
     /// delete insulin with syncID
     func deleteInsulin(syncID: String)
 }
@@ -53,6 +53,7 @@ final class BaseHealthKitManager: HealthKitManager, Injectable, CarbsObserver {
     @Injected() private var healthKitStore: HKHealthStore!
     @Injected() private var settingsManager: SettingsManager!
     @Injected() private var broadcaster: Broadcaster!
+    @Injected() var carbsStorage: CarbsStorage!
 
     private let processQueue = DispatchQueue(label: "BaseHealthKitManager.processQueue")
     private var lifetime = Lifetime()
@@ -517,22 +518,40 @@ final class BaseHealthKitManager: HealthKitManager, Injectable, CarbsObserver {
 
     // - MARK Carbs function
 
-    func deleteCarbs(syncID: String) {
+    func deleteCarbs(syncID: String, isFPU: Bool?, fpuID: String?) {
         guard settingsManager.settings.useAppleHealth,
               let sampleType = Config.healthCarbObject,
               checkAvailabilitySave(objectTypeToHealthStore: sampleType)
         else { return }
 
-        processQueue.async {
-            let predicate = HKQuery.predicateForObjects(
-                withMetadataKey: HKMetadataKeySyncIdentifier,
-                operatorType: .equalTo,
-                value: syncID
-            )
+        if let isFPU = isFPU, !isFPU {
+            processQueue.async {
+                let predicate = HKQuery.predicateForObjects(
+                    withMetadataKey: HKMetadataKeySyncIdentifier,
+                    operatorType: .equalTo,
+                    value: syncID
+                )
+                self.healthKitStore.deleteObjects(of: sampleType, predicate: predicate) { _, _, error in
+                    guard let error = error else { return }
+                    warning(.service, "Cannot delete sample with syncID: \(syncID)", error: error)
+                }
+            }
+        } else {
+            // need to find all syncID
+            guard let fpuID = fpuID else { return }
 
-            self.healthKitStore.deleteObjects(of: sampleType, predicate: predicate) { _, _, error in
-                guard let error = error else { return }
-                warning(.service, "Cannot delete sample with syncID: \(syncID)", error: error)
+            processQueue.async {
+                let recentCarbs: [CarbsEntry] = self.carbsStorage.recent()
+                let ids = recentCarbs.filter { $0.fpuID == fpuID }.compactMap(\.id)
+                let predicate = HKQuery.predicateForObjects(
+                    withMetadataKey: HKMetadataKeySyncIdentifier,
+                    allowedValues: ids
+                )
+
+                self.healthKitStore.deleteObjects(of: sampleType, predicate: predicate) { _, _, error in
+                    guard let error = error else { return }
+                    warning(.service, "Cannot delete sample with fpuID: \(fpuID)", error: error)
+                }
             }
         }
     }
