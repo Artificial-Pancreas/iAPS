@@ -26,8 +26,12 @@ extension DataTable {
         }
 
         func deleteCarbs(_ treatement: Treatment) {
-            nightscoutManager.deleteCarbs(at: treatement.date)
-            healthkitManager.deleteCarbs(syncID: treatement.id)
+            nightscoutManager.deleteCarbs(
+                at: treatement.date,
+                isFPU: treatement.isFPU,
+                fpuID: treatement.fpuID,
+                syncID: treatement.id
+            )
         }
 
         func deleteInsulin(_ treatement: Treatment) {

@@ -1083,6 +1083,9 @@ Enact a temp Basal or a temp target */
 /* Alert text */
 "Delete carb equivalents?" = "Radera dessa poster?";
 
+/* Section in settings */
+"Protein / Fat" = "Protein / Fett";
+
 /* -------------------------------------------------------------------------------------------
   DASH strings
 */

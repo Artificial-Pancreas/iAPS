@@ -63,6 +63,8 @@ enum DataTable {
         let amount: Decimal?
         let secondAmount: Decimal?
         let duration: Decimal?
+        let isFPU: Bool?
+        let fpuID: String?
 
         private var numberFormater: NumberFormatter {
             let formatter = NumberFormatter()
@@ -79,7 +81,9 @@ enum DataTable {
             secondAmount: Decimal? = nil,
             duration: Decimal? = nil,
             id: String? = nil,
-            idPumpEvent: String? = nil
+            idPumpEvent: String? = nil,
+            isFPU: Bool? = false,
+            fpuID: String? = nil
         ) {
             self.units = units
             self.type = type
@@ -89,6 +93,8 @@ enum DataTable {
             self.duration = duration
             self.id = id ?? UUID().uuidString
             self.idPumpEvent = idPumpEvent
+            self.isFPU = isFPU
+            self.fpuID = fpuID
         }
 
         static func == (lhs: Treatment, rhs: Treatment) -> Bool {
