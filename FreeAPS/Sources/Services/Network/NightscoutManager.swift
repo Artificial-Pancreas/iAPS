@@ -201,10 +201,14 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
                     self.carbsStorage.deleteCarbs(at: date)
                     switch completion {
                     case .finished:
-                        self.carbsStorage.deleteCarbs(at: date)
                         debug(.nightscout, "Carbs deleted")
+
                     case let .failure(error):
-                        debug(.nightscout, error.localizedDescription)
+                        info(
+                            .nightscout,
+                            "Deletion of carbs in NightScout not done \n \(error.localizedDescription)",
+                            type: MessageType.warning
+                        )
                     }
                 } receiveValue: { _ in }
                 .store(in: &lifetime)
@@ -217,7 +221,11 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
                     case .finished:
                         debug(.nightscout, "Carbs deleted")
                     case let .failure(error):
-                        debug(.nightscout, error.localizedDescription)
+                        info(
+                            .nightscout,
+                            "Deletion of carbs in NightScout not done \n \(error.localizedDescription)",
+                            type: MessageType.warning
+                        )
                     }
                 } receiveValue: {}
                 .store(in: &lifetime)
