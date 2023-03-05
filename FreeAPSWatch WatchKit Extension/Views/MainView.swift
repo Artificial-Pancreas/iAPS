@@ -1,3 +1,4 @@
+import HealthKit
 import SwiftDate
 import SwiftUI
 
@@ -11,6 +12,13 @@ struct MainView: View {
     @State var isCarbsActive = false
     @State var isTargetsActive = false
     @State var isBolusActive = false
+    @State private var pulse = 0
+
+    @GestureState var isDetectingLongPress = false
+    @State var completedLongPress = false
+
+    private var healthStore = HKHealthStore()
+    let heartRateQuantity = HKUnit(from: "count/min")
 
     var body: some View {
         ZStack(alignment: .topLeading) {
@@ -57,56 +65,82 @@ struct MainView: View {
             HStack(alignment: .top) {
                 VStack(alignment: .leading) {
                     HStack {
-                        Text(state.glucose).font(.largeTitle)
-                            .scaledToFill()
-                            .minimumScaleFactor(0.5)
-                            .padding(.top, 4)
+                        Text(state.glucose).font(.title)
                         Text(state.trend)
                             .scaledToFill()
                             .minimumScaleFactor(0.5)
                     }
-                    Text(state.delta).font(.caption2)
-                        .scaledToFill()
-                        .minimumScaleFactor(0.5)
-                        .foregroundColor(.secondary)
+                    Text(state.delta).font(.caption2).foregroundColor(.gray)
                 }
                 Spacer()
 
                 VStack(spacing: 0) {
                     HStack {
-                        Circle().stroke(color, lineWidth: 6).frame(width: 30, height: 30).padding(10)
+                        Circle().stroke(color, lineWidth: 5).frame(width: 26, height: 26).padding(10)
                     }
 
                     if state.lastLoopDate != nil {
-                        Text(timeString).font(.caption2)
-                            .scaledToFill()
-                            .minimumScaleFactor(0.5)
-                            .foregroundColor(.secondary)
+                        Text(timeString).font(.caption2).foregroundColor(.gray)
                     } else {
-                        Text("--").font(.caption2)
+                        Text("--").font(.caption2).foregroundColor(.gray)
                     }
                 }
             }
             Spacer()
             HStack(alignment: .firstTextBaseline) {
-                HStack {
-                    Text(iobFormatter.string(from: (state.iob ?? 0) as NSNumber)! + " U")
-                        .font(.caption2)
-                        .scaledToFill()
-                        .foregroundColor(.insulin)
-                        .minimumScaleFactor(0.5)
-
-                }.minimumScaleFactor(0.5)
+                Text(iobFormatter.string(from: (state.cob ?? 0) as NSNumber)!)
+                    .font(.caption2)
+                    .scaledToFill()
+                    .foregroundColor(Color.white)
+                    .minimumScaleFactor(0.5)
+                Text("g").foregroundColor(.loopGreen)
+                    .font(.caption2)
+                    .scaledToFill()
+                    .foregroundColor(.loopGreen)
+                    .minimumScaleFactor(0.5)
                 Spacer()
-                HStack {
-                    Text(iobFormatter.string(from: (state.cob ?? 0) as NSNumber)! + " g")
-                        .font(.caption2)
-                        .scaledToFill()
-                        .foregroundColor(.loopGreen)
-                        .minimumScaleFactor(0.5)
-                }
+                Text(iobFormatter.string(from: (state.iob ?? 0) as NSNumber)!)
+                    .font(.caption2)
+                    .scaledToFill()
+                    .foregroundColor(Color.white)
+                    .minimumScaleFactor(0.5)
 
-                if let eventualBG = state.eventualBG.nonEmpty {
+                Text("U").foregroundColor(.insulin)
+                    .font(.caption2)
+                    .scaledToFill()
+                    .foregroundColor(.loopGreen)
+                    .minimumScaleFactor(0.5)
+
+                if state.displayHR {
+                    Spacer()
+                    HStack {
+                        if completedLongPress {
+                            HStack {
+                                Text("❤️" + " \(pulse)")
+                                    .fontWeight(.regular)
+                                    .font(.custom("activated", size: 20))
+                                    .scaledToFill()
+                                    .foregroundColor(.white)
+                                    .minimumScaleFactor(0.5)
+                            }
+                            .scaleEffect(isDetectingLongPress ? 3 : 1)
+                            .gesture(longPress)
+
+                        } else {
+                            HStack {
+                                Text("❤️" + " \(pulse)")
+                                    .fontWeight(.regular)
+                                    .font(.caption2)
+                                    .scaledToFill()
+                                    .foregroundColor(.white)
+                                    .minimumScaleFactor(0.5)
+                            }
+                            .scaleEffect(isDetectingLongPress ? 3 : 1)
+                            .gesture(longPress)
+                        }
+                    }
+
+                } else if let eventualBG = state.eventualBG.nonEmpty {
                     Spacer()
                     HStack {
                         Text(eventualBG)
@@ -118,7 +152,21 @@ struct MainView: View {
                 }
             }
             Spacer()
+                .onAppear(perform: start)
         }.padding()
+    }
+
+    var longPress: some Gesture {
+        LongPressGesture(minimumDuration: 1)
+            .updating($isDetectingLongPress) { currentState, gestureState,
+                _ in
+                gestureState = currentState
+            }
+            .onEnded { _ in
+                if completedLongPress {
+                    completedLongPress = false
+                } else { completedLongPress = true }
+            }
     }
 
     var buttons: some View {
@@ -165,6 +213,48 @@ struct MainView: View {
         }
     }
 
+    func start() {
+        autorizeHealthKit()
+        startHeartRateQuery(quantityTypeIdentifier: .heartRate)
+    }
+
+    func autorizeHealthKit() {
+        let healthKitTypes: Set = [
+            HKObjectType.quantityType(forIdentifier: HKQuantityTypeIdentifier.heartRate)!
+        ]
+        healthStore.requestAuthorization(toShare: healthKitTypes, read: healthKitTypes) { _, _ in }
+    }
+
+    private func startHeartRateQuery(quantityTypeIdentifier: HKQuantityTypeIdentifier) {
+        let devicePredicate = HKQuery.predicateForObjects(from: [HKDevice.local()])
+        let updateHandler: (HKAnchoredObjectQuery, [HKSample]?, [HKDeletedObject]?, HKQueryAnchor?, Error?) -> Void = {
+            _, samples, _, _, _ in
+            guard let samples = samples as? [HKQuantitySample] else {
+                return
+            }
+            self.process(samples, type: quantityTypeIdentifier)
+        }
+        let query = HKAnchoredObjectQuery(
+            type: HKObjectType.quantityType(forIdentifier: quantityTypeIdentifier)!,
+            predicate: devicePredicate,
+            anchor: nil,
+            limit: HKObjectQueryNoLimit,
+            resultsHandler: updateHandler
+        )
+        query.updateHandler = updateHandler
+        healthStore.execute(query)
+    }
+
+    private func process(_ samples: [HKQuantitySample], type: HKQuantityTypeIdentifier) {
+        var lastHeartRate = 0.0
+        for sample in samples {
+            if type == .heartRate {
+                lastHeartRate = sample.quantity.doubleValue(for: heartRateQuantity)
+            }
+            pulse = Int(lastHeartRate)
+        }
+    }
+
     private var iobFormatter: NumberFormatter {
         let formatter = NumberFormatter()
         formatter.maximumFractionDigits = 2
@@ -204,7 +294,6 @@ struct ContentView_Previews: PreviewProvider {
         state.delta = "+888"
         state.iob = 100.38
         state.cob = 112.123
-        state.eventualBG = "⇢ 8,888"
         state.lastLoopDate = Date().addingTimeInterval(-200)
         state
             .tempTargets =

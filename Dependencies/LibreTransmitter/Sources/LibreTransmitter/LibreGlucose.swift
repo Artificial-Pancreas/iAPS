@@ -23,6 +23,8 @@ public struct LibreGlucose {
     public var timestamp: Date
     //public let collector: String?
 
+    public var sensorStartDate: Date? = nil
+
     public static func timeDifference(oldGlucose: LibreGlucose, newGlucose: LibreGlucose) -> TimeInterval {
         newGlucose.startDate.timeIntervalSince(oldGlucose.startDate)
     }
@@ -180,7 +182,8 @@ extension LibreGlucose {
         return arr
     }
 
-    static func fromTrendMeasurements(_ measurements: [Measurement], nativeCalibrationData: SensorData.CalibrationInfo, returnAll: Bool) -> [LibreGlucose] {
+    static func fromTrendMeasurements(_ measurements: [Measurement], nativeCalibrationData: SensorData.CalibrationInfo, returnAll: Bool,
+                                      sensorStartDate: Date? = nil) -> [LibreGlucose] {
         var arr = [LibreGlucose]()
 
         var shouldSmoothGlucose = true
@@ -193,7 +196,8 @@ extension LibreGlucose {
                 unsmoothedGlucose: trend.roundedGlucoseValueFromRaw2(calibrationInfo: nativeCalibrationData),
                 glucoseDouble: 0.0,
                 error: trend.error,
-                timestamp: trend.date)
+                timestamp: trend.date,
+                sensorStartDate: sensorStartDate)
             // if sensor is ripped off body while transmitter is attached, values below 1 might be created
 
             if glucose.unsmoothedGlucose > 0 && glucose.unsmoothedGlucose <= 500 {

@@ -5,8 +5,12 @@ extension DataTable {
     struct RootView: BaseView {
         let resolver: Resolver
         @StateObject var state = StateModel()
+
         @State private var isRemoveCarbsAlertPresented = false
         @State private var removeCarbsAlert: Alert?
+
+        @State private var isRemoveInsulinAlertPresented = false
+        @State private var removeInsulinAlert: Alert?
 
         private var glucoseFormatter: NumberFormatter {
             let formatter = NumberFormatter()
@@ -90,7 +94,7 @@ extension DataTable {
                                 message: Text(item.amountText),
                                 primaryButton: .destructive(
                                     Text("Delete"),
-                                    action: { state.deleteCarbs(at: item.date) }
+                                    action: { state.deleteCarbs(item) }
                                 ),
                                 secondaryButton: .cancel()
                             )
@@ -98,6 +102,28 @@ extension DataTable {
                         }
                         .alert(isPresented: $isRemoveCarbsAlertPresented) {
                             removeCarbsAlert!
+                        }
+                }
+
+                if item.type == .bolus {
+                    Spacer()
+                    Image(systemName: "xmark.circle").foregroundColor(.secondary)
+                        .contentShape(Rectangle())
+                        .padding(.vertical)
+                        .onTapGesture {
+                            removeInsulinAlert = Alert(
+                                title: Text("Delete insulin?"),
+                                message: Text(item.amountText),
+                                primaryButton: .destructive(
+                                    Text("Delete"),
+                                    action: { state.deleteInsulin(item) }
+                                ),
+                                secondaryButton: .cancel()
+                            )
+                            isRemoveInsulinAlertPresented = true
+                        }
+                        .alert(isPresented: $isRemoveInsulinAlertPresented) {
+                            removeInsulinAlert!
                         }
                 }
             }

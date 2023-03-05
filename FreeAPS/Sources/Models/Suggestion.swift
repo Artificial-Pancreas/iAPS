@@ -16,8 +16,11 @@ struct Suggestion: JSON, Equatable {
     let temp: TempType?
     let bg: Decimal?
     let reservoir: Decimal?
+    let isf: Decimal?
     var timestamp: Date?
     var recieved: Bool?
+    let tdd: Decimal?
+    let insulin: Insulin?
 }
 
 struct Predictions: JSON, Equatable {
@@ -25,6 +28,13 @@ struct Predictions: JSON, Equatable {
     let zt: [Int]?
     let cob: [Int]?
     let uam: [Int]?
+}
+
+struct Insulin: JSON, Equatable {
+    let TDD: Decimal?
+    let bolus: Decimal?
+    let temp_basal: Decimal?
+    let scheduled_basal: Decimal?
 }
 
 extension Suggestion {
@@ -46,6 +56,9 @@ extension Suggestion {
         case reservoir
         case timestamp
         case recieved
+        case isf = "ISF"
+        case tdd = "TDD"
+        case insulin
     }
 }
 
@@ -55,6 +68,15 @@ extension Predictions {
         case zt = "ZT"
         case cob = "COB"
         case uam = "UAM"
+    }
+}
+
+extension Insulin {
+    private enum CodingKeys: String, CodingKey {
+        case TDD
+        case bolus
+        case temp_basal
+        case scheduled_basal
     }
 }
 

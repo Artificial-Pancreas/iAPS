@@ -36,6 +36,10 @@ extension PreferencesEditor {
                     }
 
                     Toggle("Skip Bolus screen after carbs", isOn: $state.skipBolusScreenAfterCarbs)
+
+                    Toggle("Display HR on Watch", isOn: $state.displayHR)
+
+                    Toggle("Display Statistics", isOn: $state.displayStatistics)
                 }
 
                 ForEach(state.sections.indexed(), id: \.1.id) { sectionIndex, section in

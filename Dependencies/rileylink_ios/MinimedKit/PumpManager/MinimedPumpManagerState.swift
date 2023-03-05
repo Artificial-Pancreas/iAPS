@@ -119,8 +119,10 @@ public struct MinimedPumpManagerState: RawRepresentable, Equatable {
     public var rileyLinkBatteryAlertLevel: Int?
     
     public var lastRileyLinkBatteryAlertDate: Date = .distantPast
+
+    public var basalSchedule: BasalSchedule
     
-    public init(isOnboarded: Bool, useMySentry: Bool, pumpColor: PumpColor, pumpID: String, pumpModel: PumpModel, pumpFirmwareVersion: String, pumpRegion: PumpRegion, rileyLinkConnectionState: RileyLinkConnectionState?, timeZone: TimeZone, suspendState: SuspendState, insulinType: InsulinType, lastTuned: Date?, lastValidFrequency: Measurement<UnitFrequency>?)
+    public init(isOnboarded: Bool, useMySentry: Bool, pumpColor: PumpColor, pumpID: String, pumpModel: PumpModel, pumpFirmwareVersion: String, pumpRegion: PumpRegion, rileyLinkConnectionState: RileyLinkConnectionState?, timeZone: TimeZone, suspendState: SuspendState, insulinType: InsulinType, lastTuned: Date?, lastValidFrequency: Measurement<UnitFrequency>?, basalSchedule: BasalSchedule)
     {
         self.isOnboarded = isOnboarded
         self.useMySentry = useMySentry
@@ -135,6 +137,7 @@ public struct MinimedPumpManagerState: RawRepresentable, Equatable {
         self.insulinType = insulinType
         self.lastTuned = lastTuned
         self.lastValidFrequency = lastValidFrequency
+        self.basalSchedule = basalSchedule
     }
 
     public init?(rawValue: RawValue) {
@@ -248,6 +251,11 @@ public struct MinimedPumpManagerState: RawRepresentable, Equatable {
         rileyLinkBatteryAlertLevel = rawValue["rileyLinkBatteryAlertLevel"] as? Int
         lastRileyLinkBatteryAlertDate = rawValue["lastRileyLinkBatteryAlertDate"] as? Date ?? Date.distantPast
 
+        if let rawBasalSchedule = rawValue["basalSchedule"] as? BasalSchedule.RawValue, let basalSchedule = BasalSchedule(rawValue: rawBasalSchedule) {
+            self.basalSchedule = basalSchedule
+        } else {
+            self.basalSchedule = BasalSchedule(entries: [])
+        }
     }
 
     public var rawValue: RawValue {
@@ -278,6 +286,7 @@ public struct MinimedPumpManagerState: RawRepresentable, Equatable {
         value["insulinType"] = insulinType?.rawValue
         value["rileyLinkBatteryAlertLevel"] = rileyLinkBatteryAlertLevel
         value["lastRileyLinkBatteryAlertDate"] = lastRileyLinkBatteryAlertDate
+        value["basalSchedule"] = basalSchedule.rawValue
 
         return value
     }

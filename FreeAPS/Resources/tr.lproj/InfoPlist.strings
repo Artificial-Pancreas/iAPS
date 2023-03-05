@@ -14,7 +14,7 @@
 "NSCalendarsUsageDescription" = "Takvim, yeni bir glikoz olayı oluşturmak için kullanılır.";
 
 /* Privacy - Health Update Usage Description */
-"NSHealthUpdateUsageDescription" = "Health Uygulaması, KŞ verilerini depolamak için kullanılır";
+"NSHealthUpdateUsageDescription" = "Health App is used to store blood glucose, insulin and carbohydrates";
 
 /* Privacy - Health Share Usage Description */
-"NSHealthShareUsageDescription" = "Health Uygulaması, KŞ verilerini depolamak için kullanılır";
+"NSHealthShareUsageDescription" = "Health App is used to store blood glucose, insulin and carbohydrates";

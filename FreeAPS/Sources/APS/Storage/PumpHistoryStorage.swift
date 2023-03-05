@@ -14,6 +14,7 @@ protocol PumpHistoryStorage {
     func recent() -> [PumpHistoryEvent]
     func nightscoutTretmentsNotUploaded() -> [NigtscoutTreatment]
     func saveCancelTempEvents()
+    func deleteInsulin(at date: Date)
 }
 
 final class BasePumpHistoryStorage: PumpHistoryStorage, Injectable {
@@ -192,6 +193,20 @@ final class BasePumpHistoryStorage: PumpHistoryStorage, Injectable {
 
     func recent() -> [PumpHistoryEvent] {
         storage.retrieve(OpenAPS.Monitor.pumpHistory, as: [PumpHistoryEvent].self)?.reversed() ?? []
+    }
+
+    func deleteInsulin(at date: Date) {
+        processQueue.sync {
+            var allValues = storage.retrieve(OpenAPS.Monitor.pumpHistory, as: [PumpHistoryEvent].self) ?? []
+            guard let entryIndex = allValues.firstIndex(where: { $0.timestamp == date }) else {
+                return
+            }
+            allValues.remove(at: entryIndex)
+            storage.save(allValues, as: OpenAPS.Monitor.pumpHistory)
+            broadcaster.notify(PumpHistoryObserver.self, on: processQueue) {
+                $0.pumpHistoryDidUpdate(allValues)
+            }
+        }
     }
 
     func nightscoutTretmentsNotUploaded() -> [NigtscoutTreatment] {

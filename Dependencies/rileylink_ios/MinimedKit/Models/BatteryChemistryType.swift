@@ -8,7 +8,12 @@
 
 import Foundation
 
-public enum BatteryChemistryType: Int, CustomStringConvertible {
+public enum BatteryChemistryType: Int, CustomStringConvertible, Identifiable, CaseIterable {
+
+    public var id: Int {
+        return rawValue
+    }
+    
     case alkaline = 0
     case lithium
 

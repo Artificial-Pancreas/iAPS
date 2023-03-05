@@ -1,4 +1,7 @@
+import Combine
+import Foundation
 import SwiftUI
+import Swinject
 
 struct TagCloudView: View {
     var tags: [String]
@@ -6,7 +9,6 @@ struct TagCloudView: View {
     @State private var totalHeight
 //          = CGFloat.zero       // << variant for ScrollView/List
         = CGFloat.infinity // << variant for VStack
-
     var body: some View {
         VStack {
             GeometryReader { geometry in
@@ -24,7 +26,7 @@ struct TagCloudView: View {
         return ZStack(alignment: .topLeading) {
             ForEach(self.tags, id: \.self) { tag in
                 self.item(for: tag)
-                    .padding([.horizontal, .vertical], 4)
+                    .padding([.horizontal, .vertical], 2)
                     .alignmentGuide(.leading, computeValue: { d in
                         if abs(width - d.width) > g.size.width
                         {
@@ -50,13 +52,34 @@ struct TagCloudView: View {
         }.background(viewHeightReader($totalHeight))
     }
 
-    private func item(for text: String) -> some View {
-        Text(text)
-            .padding(.all, 5)
-            .font(.body)
-            .background(Color.insulin)
+    private func item(for textTag: String) -> some View {
+        var colorOfTag: Color {
+            switch textTag {
+            case textTag where textTag.contains("SMB Delivery Ratio:"):
+                return .uam
+            case textTag where textTag.contains("Bolus"):
+                return .green
+            case textTag where textTag.contains("Total insulin:"),
+                 textTag where textTag.contains("tdd_factor"),
+                 textTag where textTag.contains("Sigmoid function"),
+                 textTag where textTag.contains("Logarithmic formula"),
+                 textTag where textTag.contains("AF:"),
+                 textTag where textTag.contains("Autosens/Dynamic Limit:"),
+                 textTag where textTag.contains("Dynamic ISF/CR"),
+                 textTag where textTag.contains("Basal ratio"):
+                return .zt
+            default:
+                return .insulin
+            }
+        }
+
+        return ZStack { Text(textTag)
+            .padding(.vertical, 2)
+            .padding(.horizontal, 4)
+            .font(.subheadline)
+            .background(colorOfTag.opacity(0.8))
             .foregroundColor(Color.white)
-            .cornerRadius(5)
+            .cornerRadius(2) }
     }
 
     private func viewHeightReader(_ binding: Binding<CGFloat>) -> some View {

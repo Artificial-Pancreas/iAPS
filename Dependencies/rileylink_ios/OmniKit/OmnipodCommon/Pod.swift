@@ -109,13 +109,19 @@ public enum DeliveryStatus: UInt8, CustomStringConvertible {
     case priming = 4
     case bolusInProgress = 5
     case bolusAndTempBasal = 6
+    case extendedBolusRunning = 9
+    case extendedBolusAndTempBasal = 10
     
     public var bolusing: Bool {
-        return self == .bolusInProgress || self == .bolusAndTempBasal
+        return self == .bolusInProgress || self == .bolusAndTempBasal || self == .extendedBolusRunning || self == .extendedBolusAndTempBasal
     }
     
     public var tempBasalRunning: Bool {
-        return self == .tempBasalRunning || self == .bolusAndTempBasal
+        return self == .tempBasalRunning || self == .bolusAndTempBasal || self == .extendedBolusAndTempBasal
+    }
+
+    public var extendedBolusRunninng: Bool {
+        return self == .extendedBolusRunning || self == .extendedBolusAndTempBasal
     }
 
     public var description: String {
@@ -132,6 +138,10 @@ public enum DeliveryStatus: UInt8, CustomStringConvertible {
             return LocalizedString("Bolusing", comment: "Delivery status when bolusing")
         case .bolusAndTempBasal:
             return LocalizedString("Bolusing with temp basal", comment: "Delivery status when bolusing and temp basal is running")
+        case .extendedBolusRunning:
+            return LocalizedString("Extended bolus running", comment: "Delivery status when extended bolus is running")
+        case .extendedBolusAndTempBasal:
+            return LocalizedString("Extended bolus running with temp basal", comment: "Delivery status when extended bolus and temp basal is running")
         }
     }
 }

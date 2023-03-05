@@ -9,6 +9,10 @@
 import Foundation
 import HealthKit
 
+enum GlucoseLimits {
+    static var minimum: UInt16 = 40
+    static var maximum: UInt16 = 400
+}
 
 public struct Glucose {
     let glucoseMessage: GlucoseSubMessage
@@ -46,6 +50,7 @@ public struct Glucose {
         self.activationDate = activationDate
 
         sessionStartDate = activationDate.addingTimeInterval(TimeInterval(timeMessage.sessionStartTime))
+        sessionExpDate = activationDate.addingTimeInterval(TimeInterval(timeMessage.sessionStartTime) + (10*24*60*60))
         readDate = activationDate.addingTimeInterval(TimeInterval(glucoseMessage.timestamp))
         lastCalibration = calibrationMessage != nil ? Calibration(calibrationMessage: calibrationMessage!, activationDate: activationDate) : nil
     }
@@ -55,6 +60,7 @@ public struct Glucose {
     public let status: TransmitterStatus
     public let activationDate: Date
     public let sessionStartDate: Date
+    public let sessionExpDate: Date
 
     // MARK: - Glucose Info
     public let lastCalibration: Calibration?
@@ -71,7 +77,7 @@ public struct Glucose {
 
         let unit = HKUnit.milligramsPerDeciliter
 
-        return HKQuantity(unit: unit, doubleValue: Double(glucoseMessage.glucose))
+        return HKQuantity(unit: unit, doubleValue: Double(min(max(glucoseMessage.glucose, GlucoseLimits.minimum), GlucoseLimits.maximum)))
     }
 
     public var state: CalibrationState {

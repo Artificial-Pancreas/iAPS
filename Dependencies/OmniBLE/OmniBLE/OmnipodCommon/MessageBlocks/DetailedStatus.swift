@@ -36,7 +36,7 @@ public struct DetailedStatus : PodInfo, Equatable {
     public let data: Data
     
     public init(encodedData: Data) throws {
-        guard encodedData.count >= 21 else {
+        guard encodedData.count >= 22 else {
             throw MessageBlockError.notEnoughData
         }
         

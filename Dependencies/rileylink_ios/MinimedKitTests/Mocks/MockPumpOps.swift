@@ -12,9 +12,13 @@ import RileyLinkBLEKit
 
 class MockPumpOps: PumpOps, PumpOpsSessionDelegate {
 
+    let queue = DispatchQueue(label: "MockPumpOps")
+
     var pumpState: PumpState
 
     var pumpSettings: PumpSettings
+
+    var messageSender: MockPumpMessageSender
 
     func pumpOpsSession(_ session: MinimedKit.PumpOpsSession, didChange state: MinimedKit.PumpState) {
         pumpState = state
@@ -23,13 +27,15 @@ class MockPumpOps: PumpOps, PumpOpsSessionDelegate {
     func pumpOpsSessionDidChangeRadioConfig(_ session: MinimedKit.PumpOpsSession) { }
 
     public func runSession(withName name: String, using device: RileyLinkDevice, _ block: @escaping (_ session: PumpOpsSession) -> Void) {
-        let minimedPumpMessageSender = MockPumpMessageSender()
-        let session = PumpOpsSession(settings: self.pumpSettings, pumpState: self.pumpState, messageSender: minimedPumpMessageSender, delegate: self)
-        block(session)
+        let session = PumpOpsSession(settings: self.pumpSettings, pumpState: self.pumpState, messageSender: messageSender, delegate: self)
+        queue.async {
+            block(session)
+        }
     }
 
-    init(pumpState: PumpState, pumpSettings: PumpSettings) {
+    init(pumpState: PumpState, pumpSettings: PumpSettings, messageSender: MockPumpMessageSender = MockPumpMessageSender()) {
         self.pumpState = pumpState
         self.pumpSettings = pumpSettings
+        self.messageSender = messageSender
     }
 }

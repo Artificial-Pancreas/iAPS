@@ -101,7 +101,8 @@ class MinimedPumpIDSetupViewController: SetupTableViewController {
                 suspendState: .resumed(Date()),
                 insulinType: insulinType,
                 lastTuned: pumpState?.lastTuned,
-                lastValidFrequency: pumpState?.lastValidFrequency
+                lastValidFrequency: pumpState?.lastValidFrequency,
+                basalSchedule: BasalSchedule(repeatingScheduleValues: basalSchedule.items)
             )
         }
     }

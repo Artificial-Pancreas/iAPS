@@ -11,6 +11,7 @@ struct FreeAPSSettings: JSON, Equatable {
     var debugOptions: Bool = false
     var insulinReqFraction: Decimal = 0.7
     var skipBolusScreenAfterCarbs: Bool = false
+    var displayHR: Bool = false
     var cgm: CGMType = .nightscout
     var uploadGlucose: Bool = false
     var useCalendar: Bool = false
@@ -23,6 +24,12 @@ struct FreeAPSSettings: JSON, Equatable {
     var highGlucose: Decimal = 270
     var carbsRequiredThreshold: Decimal = 10
     var animatedBackground: Bool = false
+    var displayStatistics: Bool = false
+    var useFPUconversion: Bool = false
+    var individualAdjustmentFactor: Decimal = 0.5
+    var timeCap: Decimal = 8
+    var minuteInterval: Int = 30
+    var delay: Int = 60
 }
 
 extension FreeAPSSettings: Decodable {
@@ -71,6 +78,10 @@ extension FreeAPSSettings: Decodable {
             settings.skipBolusScreenAfterCarbs = skipBolusScreenAfterCarbs
         }
 
+        if let displayHR = try? container.decode(Bool.self, forKey: .displayHR) {
+            settings.displayHR = displayHR
+        }
+
         if let cgm = try? container.decode(CGMType.self, forKey: .cgm) {
             settings.cgm = cgm
         }
@@ -89,6 +100,26 @@ extension FreeAPSSettings: Decodable {
 
         if let glucoseBadge = try? container.decode(Bool.self, forKey: .glucoseBadge) {
             settings.glucoseBadge = glucoseBadge
+        }
+
+        if let useFPUconversion = try? container.decode(Bool.self, forKey: .useFPUconversion) {
+            settings.useFPUconversion = useFPUconversion
+        }
+
+        if let individualAdjustmentFactor = try? container.decode(Decimal.self, forKey: .individualAdjustmentFactor) {
+            settings.individualAdjustmentFactor = individualAdjustmentFactor
+        }
+
+        if let timeCap = try? container.decode(Decimal.self, forKey: .timeCap) {
+            settings.timeCap = timeCap
+        }
+
+        if let minuteInterval = try? container.decode(Int.self, forKey: .minuteInterval) {
+            settings.minuteInterval = minuteInterval
+        }
+
+        if let delay = try? container.decode(Int.self, forKey: .delay) {
+            settings.delay = delay
         }
 
         if let glucoseNotificationsAlways = try? container.decode(Bool.self, forKey: .glucoseNotificationsAlways) {
@@ -120,6 +151,10 @@ extension FreeAPSSettings: Decodable {
 
         if let animatedBackground = try? container.decode(Bool.self, forKey: .animatedBackground) {
             settings.animatedBackground = animatedBackground
+        }
+
+        if let displayStatistics = try? container.decode(Bool.self, forKey: .displayStatistics) {
+            settings.displayStatistics = displayStatistics
         }
 
         self = settings

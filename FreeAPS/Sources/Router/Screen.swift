@@ -25,6 +25,7 @@ enum Screen: Identifiable, Hashable {
     case libreConfig
     case calibrations
     case notificationsConfig
+    case fpuConfig
     case snooze
 
     var id: Int { String(reflecting: self).hashValue }
@@ -36,7 +37,10 @@ extension Screen {
         case .loading:
             ProgressView()
         case .home:
-            Home.RootView(resolver: resolver)
+            Home.RootView(
+                resolver: resolver,
+                selectedState: .day
+            )
         case .settings:
             Settings.RootView(resolver: resolver)
         case let .configEditor(file):
@@ -79,6 +83,8 @@ extension Screen {
             Calibrations.RootView(resolver: resolver)
         case .notificationsConfig:
             NotificationsConfig.RootView(resolver: resolver)
+        case .fpuConfig:
+            FPUConfig.RootView(resolver: resolver)
         case .snooze:
             Snooze.RootView(resolver: resolver)
         }

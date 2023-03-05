@@ -63,7 +63,7 @@ public class NightscoutTreatment: DictionaryRepresentable {
         case MGDL = "mg/dL"
     }
     
-    let timestamp: Date
+    public let timestamp: Date
     let enteredBy: String
     let notes: String?
     let id: String?

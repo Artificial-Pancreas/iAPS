@@ -79,6 +79,9 @@ final class BaseWatchManager: NSObject, WatchManager, Injectable {
                     )
                 }
             self.state.bolusAfterCarbs = !self.settingsManager.settings.skipBolusScreenAfterCarbs
+
+            self.state.displayHR = self.settingsManager.settings.displayHR
+
             self.state.eventualBG = self.evetualBGStraing()
 
             self.sendState()
@@ -172,7 +175,7 @@ final class BaseWatchManager: NSObject, WatchManager, Injectable {
     private var deltaFormatter: NumberFormatter {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
-        formatter.maximumFractionDigits = 2
+        formatter.maximumFractionDigits = 1
         formatter.positivePrefix = "+"
         return formatter
     }
@@ -217,7 +220,7 @@ extension BaseWatchManager: WCSessionDelegate {
 
         if let carbs = message["carbs"] as? Double, carbs > 0 {
             carbsStorage.storeCarbs([
-                CarbsEntry(createdAt: Date(), carbs: Decimal(carbs), enteredBy: CarbsEntry.manual)
+                CarbsEntry(id: UUID().uuidString, createdAt: Date(), carbs: Decimal(carbs), enteredBy: CarbsEntry.manual)
             ])
 
             if settingsManager.settings.skipBolusScreenAfterCarbs {

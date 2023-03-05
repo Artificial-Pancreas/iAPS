@@ -9,13 +9,19 @@
 import Foundation
 
 class TimeFormat: NSObject {
-    private static var formatterISO8601 = DateFormatter.ISO8601DateFormatter()
+    private static var formatterISO8601 = ISO8601DateFormatter.defaultFormatter()
+    private static var fractionalSecondsFormatter = ISO8601DateFormatter.fractionalSecondsFormatter()
     
     static func timestampStrFromDate(_ date: Date) -> String {
         return formatterISO8601.string(from: date)
     }
 
     static func dateFromTimestamp(_ string: String) -> Date? {
-        return formatterISO8601.date(from: string)
+        if let result = formatterISO8601.date(from: string) {
+            return result
+        }
+            
+        //Nightscout is returning this format in some cases...  needs more research
+        return fractionalSecondsFormatter.date(from: string)
     }
 }

@@ -1,6 +1,6 @@
-function generate(pumphistory_data,profile_data,glucose_data,pumpprofile_data,carb_data={ },categorize_uam_as_basal=false,tune_insulin_curve=false){
-    if ( typeof(profile_data.carb_ratio) === 'undefined' || profile_data.carb_ratio < 2 ) {
-        if ( typeof(pumpprofile_data.carb_ratio) === 'undefined' || pumpprofile_data.carb_ratio < 2 ) {
+function generate(pumphistory_data, profile_data, glucose_data, pumpprofile_data, carb_data = {} , categorize_uam_as_basal = false, tune_insulin_curve = false) {
+    if (typeof(profile_data.carb_ratio) === 'undefined' || profile_data.carb_ratio < 2) {
+        if (typeof(pumpprofile_data.carb_ratio) === 'undefined' || pumpprofile_data.carb_ratio < 2) {
             console.log('{ "carbs": 0, "mealCOB": 0, "reason": "carb_ratios ' + profile_data.carb_ratio + ' and ' + pumpprofile_data.carb_ratio + ' out of bounds" }');
             return console.error("Error: carb_ratios " + profile_data.carb_ratio + ' and ' + pumpprofile_data.carb_ratio + " out of bounds");
         } else {
@@ -23,12 +23,12 @@ function generate(pumphistory_data,profile_data,glucose_data,pumpprofile_data,ca
     profile_data.curve = pumpprofile_data.curve;
 
     // Have to sort history - NS sort doesn't account for different zulu and local timestamps
-    pumphistory_data.sort( function( firstValue, secondValue ){
-        try{
+    pumphistory_data.sort( function( firstValue, secondValue ) {
+        try {
             var a = new Date(firstValue.timestamp);
             var b = new Date(secondValue.timestamp);
             return b.getTime() - a.getTime();
-        }catch(e){
+        } catch(e) {
             return 0;
         }
     } );

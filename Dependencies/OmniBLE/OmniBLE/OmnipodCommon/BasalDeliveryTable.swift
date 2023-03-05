@@ -19,51 +19,12 @@ let nearZeroBasalRate = 0.01
 let nearZeroBasalRateFlag: UInt32 = 0x80000000
 
 
-public struct BasalTableEntry {
-    let segments: Int
-    let pulses: Int
-    let alternateSegmentPulse: Bool
-    
-    public init(encodedData: Data) {
-        segments = Int(encodedData[0] >> 4) + 1
-        pulses = (Int(encodedData[0] & 0b11) << 8) + Int(encodedData[1])
-        alternateSegmentPulse = (encodedData[0] >> 3) & 0x1 == 1
-    }
-    
-    public init(segments: Int, pulses: Int, alternateSegmentPulse: Bool) {
-        self.segments = segments
-        self.pulses = pulses
-        self.alternateSegmentPulse = alternateSegmentPulse
-    }
-    
-    public var data: Data {
-        let pulsesHighBits = UInt8((pulses >> 8) & 0b11)
-        let pulsesLowBits = UInt8(pulses & 0xff)
-        return Data([
-            UInt8((segments - 1) << 4) + UInt8((alternateSegmentPulse ? 1 : 0) << 3) + pulsesHighBits,
-            UInt8(pulsesLowBits)
-            ])
-    }
-    
-    public func checksum() -> UInt16 {
-        let checksumPerSegment = (pulses & 0xff) + (pulses >> 8)
-        return UInt16(checksumPerSegment * segments + (alternateSegmentPulse ? segments / 2 : 0))
-    }
-}
-
-extension BasalTableEntry: CustomDebugStringConvertible {
-    public var debugDescription: String {
-        return "BasalTableEntry(segments:\(segments), pulses:\(pulses), alternateSegmentPulse:\(alternateSegmentPulse))"
-    }
-}
-
-
 public struct BasalDeliveryTable {
     static let segmentDuration: TimeInterval = .minutes(30)
     
-    let entries: [BasalTableEntry]
+    let entries: [InsulinTableEntry]
     
-    public init(entries: [BasalTableEntry]) {
+    public init(entries: [InsulinTableEntry]) {
         self.entries = entries
     }
     
@@ -91,10 +52,10 @@ public struct BasalDeliveryTable {
             return segment
         }
         
-        var tableEntries = [BasalTableEntry]()
+        var tableEntries = [InsulinTableEntry]()
 
         let addEntry = { (segments: [TempSegment], alternateSegmentPulse: Bool) in
-            tableEntries.append(BasalTableEntry(
+            tableEntries.append(InsulinTableEntry(
                 segments: segments.count,
                 pulses: segments.first!.pulses,
                 alternateSegmentPulse: alternateSegmentPulse
@@ -140,8 +101,8 @@ public struct BasalDeliveryTable {
         self.entries = BasalDeliveryTable.rateToTableEntries(rate: tempBasalRate, duration: duration)
     }
     
-    private static func rateToTableEntries(rate: Double, duration: TimeInterval) -> [BasalTableEntry] {
-        var tableEntries = [BasalTableEntry]()
+    private static func rateToTableEntries(rate: Double, duration: TimeInterval) -> [InsulinTableEntry] {
+        var tableEntries = [InsulinTableEntry]()
         
         let pulsesPerHour = Int(round(rate / Pod.pulseSize))
         let pulsesPerSegment = pulsesPerHour >> 1
@@ -151,7 +112,7 @@ public struct BasalDeliveryTable {
         
         while remaining > 0 {
             let segments = min(remaining, 16)
-            let tableEntry = BasalTableEntry(segments: segments, pulses: Int(pulsesPerSegment), alternateSegmentPulse: segments > 1 ? alternateSegmentPulse : false)
+            let tableEntry = InsulinTableEntry(segments: segments, pulses: Int(pulsesPerSegment), alternateSegmentPulse: segments > 1 ? alternateSegmentPulse : false)
             tableEntries.append(tableEntry)
             remaining -= segments
         }
@@ -233,7 +194,7 @@ public struct RateEntry {
     }
     
     public static func makeEntries(rate: Double, duration: TimeInterval) -> [RateEntry] {
-        let maxPulsesPerEntry: Double = 6400 // PDM's cutoff on # of 1/10th pulses encoded in 2-byte value
+        let maxPulsesPerEntry: Double = 0xffff / 10 // max # of 1/10th pulses encoded in a 2-byte value
         var entries = [RateEntry]()
         let rrate = roundToSupportedBasalTimingRate(rate: rate)
         

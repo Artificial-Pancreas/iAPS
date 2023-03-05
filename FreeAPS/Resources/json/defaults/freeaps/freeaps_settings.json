@@ -7,8 +7,9 @@
     "useLocalGlucoseSource": false,
     "localGlucosePort": 8080,
     "debugOptions": false,
-    "insulinReqFraction": 0.7,
+    "insulinReqFraction": 1.5,
     "skipBolusScreenAfterCarbs": false,
+    "displayHR": false,
     "cgm": "nightscout",
     "uploadGlucose": false,
     "glucoseBadge": false,
@@ -19,5 +20,11 @@
     "highGlucose": 270,
     "carbsRequiredThreshold": 10,
     "useAppleHealth": false,
-    "animatedBackground": false
+    "animatedBackground": false,
+    "displayStatistics": false,
+    "useFPUconversion": false
+    "individualAdjustmentFactor": 0.5,
+    "timeCap": 8,
+    "minuteInterval": 30,
+    "delay": 60
 }

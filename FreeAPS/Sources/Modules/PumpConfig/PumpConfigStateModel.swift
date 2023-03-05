@@ -68,6 +68,10 @@ extension PumpConfig.StateModel: PumpManagerOnboardingDelegate {
         // nothing to do
     }
 
+    func pumpManagerOnboarding(didPauseOnboarding _: PumpManagerUI) {
+        // TODO:
+    }
+
 //    func pumpManagerSetupViewController(_: PumpManagerSetupViewController, didSetUpPumpManager pumpManager: PumpManagerUI) {
 //        provider.setPumpManager(pumpManager)
 //        setupPump = false

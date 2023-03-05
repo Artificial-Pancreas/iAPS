@@ -1,27 +1,35 @@
 import Combine
 import Foundation
 import LibreTransmitter
+import LoopKitUI
 
 struct AppGroupSource: GlucoseSource {
+    var cgmManager: CGMManagerUI?
+    var glucoseManager: FetchGlucoseManager?
     let from: String
+    var cgmType: CGMType
 
-    func fetch() -> AnyPublisher<[BloodGlucose], Never> {
+    func fetch(_ heartbeat: DispatchTimer?) -> AnyPublisher<[BloodGlucose], Never> {
         guard let suiteName = Bundle.main.appGroupSuiteName,
               let sharedDefaults = UserDefaults(suiteName: suiteName)
         else {
             return Just([]).eraseToAnyPublisher()
         }
 
-        return Just(fetchLastBGs(60, sharedDefaults)).eraseToAnyPublisher()
+        return Just(fetchLastBGs(60, sharedDefaults, heartbeat)).eraseToAnyPublisher()
     }
 
-    private func fetchLastBGs(_ count: Int, _ sharedDefaults: UserDefaults) -> [BloodGlucose] {
+    func fetchIfNeeded() -> AnyPublisher<[BloodGlucose], Never> {
+        fetch(nil)
+    }
+
+    private func fetchLastBGs(_ count: Int, _ sharedDefaults: UserDefaults, _ heartbeat: DispatchTimer?) -> [BloodGlucose] {
         guard let sharedData = sharedDefaults.data(forKey: "latestReadings") else {
             return []
         }
 
-        HeartBeatManager.shared.checkCGMBluetoothTransmitter(sharedUserDefaults: sharedDefaults)
-
+        HeartBeatManager.shared.checkCGMBluetoothTransmitter(sharedUserDefaults: sharedDefaults, heartbeat: heartbeat)
+        debug(.deviceManager, "APPGROUP : START FETCH LAST BG ")
         let decoded = try? JSONSerialization.jsonObject(with: sharedData, options: [])
         guard let sgvs = decoded as? [AnyObject] else {
             return []
