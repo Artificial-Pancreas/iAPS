@@ -8,5 +8,6 @@ final class NetworkAssembly: Assembly {
         }
 
         container.register(NightscoutManager.self) { r in BaseNightscoutManager(resolver: r) }
+        container.register(LibreLinkManager.self) { r in BaseLibreLinkManager(resolver: r) }
     }
 }
