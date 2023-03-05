@@ -95,6 +95,7 @@ final class BaseFetchGlucoseManager: FetchGlucoseManager, Injectable {
             self.glucoseStoreAndHeartDecision(syncDate: syncDate, glucose: glucose, glucoseFromHealth: glucoseFromHealth)
         }
         .store(in: &lifetime)
+        self.libreLinkManager.uploadIfNeeded()
     }
 
     private func glucoseStoreAndHeartDecision(syncDate: Date, glucose: [BloodGlucose], glucoseFromHealth: [BloodGlucose] = []) {
