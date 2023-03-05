@@ -29,6 +29,7 @@ struct FreeAPSSettings: JSON, Equatable {
     var timeCap: Int = 8
     var minuteInterval: Int = 30
     var delay: Int = 60
+    var useAppleHealth: Bool = false
     var libreViewServer = 0
     var libreViewCustomServer = ""
     var libreViewLastUploadTimestamp = 0.0

@@ -55,13 +55,17 @@ extension LibreViewConfig {
                     .textContentType(.URL)
                     .keyboardType(.URL)
                 Toggle("Allow uploads", isOn: $state.allowUploadGlucose)
-                Picker("Frequency of uploads", selection: $state.uploadsFrequency) {
-                    ForEach(LibreViewConfig.UploadsFrequency.allCases, id: \.self) { frequencyItem in
-                        Text(frequencyItem.description).tag(frequencyItem.rawValue)
+                if #available(iOS 16.0, *) {
+                    Picker("Frequency of uploads", selection: $state.uploadsFrequency) {
+                        ForEach(LibreViewConfig.UploadsFrequency.allCases, id: \.self) { frequencyItem in
+                            Text(frequencyItem.description).tag(frequencyItem.rawValue)
+                        }
                     }
+                    .pickerStyle(.navigationLink)
+                    .onChange(of: state.uploadsFrequency) { _ in state.updateUploadTimestampDelta() }
+                } else {
+                    // Fallback on earlier versions
                 }
-                .pickerStyle(.navigationLink)
-                .onChange(of: state.uploadsFrequency) { _ in state.updateUploadTimestampDelta() }
             } header: {
                 Text("Connection settings")
             } footer: {
