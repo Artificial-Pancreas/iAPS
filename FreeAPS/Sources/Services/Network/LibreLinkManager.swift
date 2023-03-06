@@ -96,6 +96,7 @@ extension BaseLibreLinkManager: LibreLinkManager {
             guard currentTimestamp >= nextUploadTimeStamp else {
                 throw LibreLinkManagerError.tooEarlyToUpload
             }
+
             uploadGlucose(
                 url: url,
                 token: token,

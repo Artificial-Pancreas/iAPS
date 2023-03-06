@@ -95,7 +95,6 @@ final class BaseFetchGlucoseManager: FetchGlucoseManager, Injectable {
             self.glucoseStoreAndHeartDecision(syncDate: syncDate, glucose: glucose, glucoseFromHealth: glucoseFromHealth)
         }
         .store(in: &lifetime)
-        libreLinkManager.uploadIfNeeded()
     }
 
     private func glucoseStoreAndHeartDecision(syncDate: Date, glucose: [BloodGlucose], glucoseFromHealth: [BloodGlucose] = []) {
@@ -137,6 +136,7 @@ final class BaseFetchGlucoseManager: FetchGlucoseManager, Injectable {
         deviceDataManager.heartbeat(date: Date())
 
         nightscoutManager.uploadGlucose()
+        libreLinkManager.uploadIfNeeded()
 
         let glucoseForHealth = filteredByDate.filter { !glucoseFromHealth.contains($0) }
 
