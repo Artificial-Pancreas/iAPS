@@ -23,7 +23,8 @@ final class DexcomSourceG6: GlucoseSource {
         cgmManager = G6CGMManager
             .init(state: TransmitterManagerState(
                 transmitterID: UserDefaults.standard
-                    .dexcomTransmitterID ?? "000000"
+                    .dexcomTransmitterID ?? "000000",
+                shouldSyncToRemoteService: glucoseManager.settingsManager.settings.uploadGlucose
             ))
         cgmManager?.delegateQueue = processQueue
         cgmManager?.cgmManagerDelegate = self
@@ -119,6 +120,7 @@ extension DexcomSourceG6: CGMManagerDelegate {
         guard let g6Manager = manager as? TransmitterManager else {
             return
         }
+        glucoseManager?.settingsManager.settings.uploadGlucose = g6Manager.shouldSyncToRemoteService
         UserDefaults.standard.dexcomTransmitterID = g6Manager.rawState["transmitterID"] as? String
     }
 

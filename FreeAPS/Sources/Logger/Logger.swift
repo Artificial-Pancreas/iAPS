@@ -28,13 +28,14 @@ func debug(
 func info(
     _ category: Logger.Category,
     _ message: String,
+    type: MessageType = .info,
     file: String = #file,
     function: String = #function,
     line: UInt = #line
 ) {
     DispatchWorkItem(qos: .background, flags: .enforceQoS) {
         loggerLock.perform {
-            category.logger.info(message, file: file, function: function, line: line)
+            category.logger.info(message, type: type, file: file, function: function, line: line)
         }
     }.perform()
 }
@@ -220,6 +221,7 @@ final class Logger {
 
     func info(
         _ message: String,
+        type: MessageType = .info,
         file: String = #file,
         function: String = #function,
         line: UInt = #line
@@ -228,7 +230,7 @@ final class Logger {
         os_log("%@ - %@ - %d %{public}@", log: log, type: .info, file.file, function, line, printedMessage)
         reporter.log(category.name, printedMessage, file: file, function: function, line: line)
 
-        showAlert(message, type: .info)
+        showAlert(message, type: type)
     }
 
     func warning(

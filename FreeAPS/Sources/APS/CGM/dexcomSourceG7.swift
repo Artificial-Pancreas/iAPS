@@ -22,6 +22,11 @@ final class DexcomSourceG7: GlucoseSource {
         cgmManager = G7CGMManager()
         cgmManager?.cgmManagerDelegate = self
         cgmManager?.delegateQueue = processQueue
+
+        // initial value of upload Readings
+        if let cgmManagerG7 = cgmManager as? G7CGMManager {
+            cgmManagerG7.uploadReadings = glucoseManager.settingsManager.settings.uploadGlucose
+        }
     }
 
     func fetch(_: DispatchTimer?) -> AnyPublisher<[BloodGlucose], Never> {
@@ -103,7 +108,11 @@ extension DexcomSourceG7: CGMManagerDelegate {
         return glucoseStorage.lastGlucoseDate()
     }
 
-    func cgmManagerDidUpdateState(_: CGMManager) {}
+    func cgmManagerDidUpdateState(_ cgmManager: CGMManager) {
+        if let cgmManagerG7 = cgmManager as? G7CGMManager {
+            glucoseManager?.settingsManager.settings.uploadGlucose = cgmManagerG7.uploadReadings
+        }
+    }
 
     func credentialStoragePrefix(for _: CGMManager) -> String {
         // return string unique to this instance of the CGMManager

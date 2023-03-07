@@ -23,8 +23,9 @@ final class DexcomSourceG5: GlucoseSource {
         cgmManager = G5CGMManager
             .init(state: TransmitterManagerState(
                 transmitterID: UserDefaults.standard
-                    .dexcomTransmitterID ?? "000000"
-            )) as? CGMManagerUI
+                    .dexcomTransmitterID ?? "000000",
+                shouldSyncToRemoteService: glucoseManager.settingsManager.settings.uploadGlucose
+            ))
         cgmManager?.cgmManagerDelegate = self
     }
 
@@ -113,7 +114,14 @@ extension DexcomSourceG5: CGMManagerDelegate {
         //  return glucoseStore.latestGlucose?.startDate
     }
 
-    func cgmManagerDidUpdateState(_: CGMManager) {}
+    func cgmManagerDidUpdateState(_ manager: CGMManager) {
+        dispatchPrecondition(condition: .onQueue(processQueue))
+        guard let g5Manager = manager as? TransmitterManager else {
+            return
+        }
+        glucoseManager?.settingsManager.settings.uploadGlucose = g5Manager.shouldSyncToRemoteService
+        UserDefaults.standard.dexcomTransmitterID = g5Manager.rawState["transmitterID"] as? String
+    }
 
     func credentialStoragePrefix(for _: CGMManager) -> String {
         // return string unique to this instance of the CGMManager

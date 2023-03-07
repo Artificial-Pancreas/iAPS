@@ -1082,6 +1082,12 @@ Połączono z Nightscout!";
 /* Setting */
 "Fat And Protein Conversion" = "Fat And Protein Conversion";
 
+/* Alert text */
+"Delete carb equivalents?" = "Delete carb equivalents?";
+
+/* Section in settings */
+"Protein / Fat" = "Protein / Fat";
+
 /* -------------------------------------------------------------------------------------------
   DASH strings
 */

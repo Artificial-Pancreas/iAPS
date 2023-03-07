@@ -963,7 +963,7 @@ Enact a temp Basal or a temp target */
 "NS Uploaded Profile" = "NS Uploaded Profile";
 
 /* Debug option view Autosense */
-"Autosense" = "Autosense";
+"Autosense" = "OtoDuyarlılık";
 
 /* Debug option view Pump History */
 "Pump History" = "Pompa geçmişi";
@@ -1080,6 +1080,12 @@ Enact a temp Basal or a temp target */
 /* Setting */
 "Fat And Protein Conversion" = "Fat And Protein Conversion";
 
+/* Alert text */
+"Delete carb equivalents?" = "Delete carb equivalents?";
+
+/* Section in settings */
+"Protein / Fat" = "Protein / Fat";
+
 /* -------------------------------------------------------------------------------------------
   DASH strings
 */
@@ -1122,7 +1128,7 @@ Enact a temp Basal or a temp target */
 "Enabled" = "Etkin";
 
 /* Title string for BeepPreference.extended */
-"Extended" = "Genişletilmiş";
+"Extended" = "Yayma";
 
 /* Description for BeepPreference.silent */
 "No confidence reminders are used." = "Onay sesi kullanılmaz.";
