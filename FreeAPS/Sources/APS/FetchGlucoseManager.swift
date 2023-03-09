@@ -10,6 +10,7 @@ protocol FetchGlucoseManager: SourceInfoProvider {
     func updateGlucoseSource()
     var glucoseSource: GlucoseSource! { get }
     var cgmGlucoseSourceType: CGMType? { get set }
+    var settingsManager: SettingsManager! { get }
 }
 
 final class BaseFetchGlucoseManager: FetchGlucoseManager, Injectable {
