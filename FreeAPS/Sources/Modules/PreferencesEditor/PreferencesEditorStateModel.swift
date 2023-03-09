@@ -178,7 +178,7 @@ extension PreferencesEditor {
                     displayName: NSLocalizedString("Adjustment Factor", comment: "Adjust Dynamic ISF constant"),
                     type: .decimal(keypath: \.adjustmentFactor),
                     infoText: NSLocalizedString(
-                        "Adjust Dynamic ratios by a constant. Default is 1. Higher than 1 => lower ISF",
+                        "Adjust Dynamic ratios by a constant. Default is 0.5. The higher the value, the larger the correction of your ISF will be for a high or a low BG. Maximum correction is determined by the Autosens min/max settings. For Sigmoid function an adjustment factor of 0.4 - 0.5 is recommended to begin with. For the logaritmic formula threre is less consensus, but starting with 0.5 - 0.8 is more appropiate for most users",
                         comment: "Adjust Dynamic ISF constant"
                     ),
                     settable: self

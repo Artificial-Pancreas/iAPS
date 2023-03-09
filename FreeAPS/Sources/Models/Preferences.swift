@@ -43,7 +43,7 @@ struct Preferences: JSON {
     var suspendZerosIOB: Bool = true
     var timestamp: Date?
     var maxDeltaBGthreshold: Decimal = 0.2
-    var adjustmentFactor: Decimal = 1.0
+    var adjustmentFactor: Decimal = 0.5
     var sigmoid: Bool = false
     var enableDynamicCR: Bool = false
     var useNewFormula: Bool = false
