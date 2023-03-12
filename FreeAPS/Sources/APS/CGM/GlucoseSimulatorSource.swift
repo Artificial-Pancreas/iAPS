@@ -136,7 +136,7 @@ class IntelligentGenerator: BloodGlucoseGenerator {
         trandsStepDirection = getDirection(fromGlucose: previousGlucose, toGlucose: currentGlucose).rawValue
         let glucose = BloodGlucose(
             _id: UUID().uuidString,
-            sgv: nil,
+            sgv: currentGlucose,
             direction: BloodGlucose.Direction(rawValue: trandsStepDirection),
             date: Decimal(Int(date.timeIntervalSince1970) * 1000),
             dateString: date,
@@ -183,7 +183,7 @@ class IntelligentGenerator: BloodGlucoseGenerator {
 
     private func makeStepInTrend() {
         currentGlucose +=
-            Int(Double((trendTargetValue - currentGlucose) / trendStepsLeft) * [0.3, 0.6, 1, 1.3, 1.6].randomElement()!)
+        Int(Double((trendTargetValue - currentGlucose) / trendStepsLeft) * [0.3, 0.6, 1, 1.3, 1.6, 2.0].randomElement()!)
         trendStepsLeft -= 1
         if trendStepsLeft == 0 {
             generateNewTrend()

@@ -283,7 +283,7 @@ final class BaseHealthKitManager: HealthKitManager, Injectable, CarbsObserver {
 
                         var minimalDose = self.settingsManager.preferences.bolusIncrement
                         if (minimalDose != 0.05) || (minimalDose != 0.025) {
-                            minimalDose = Decimal(0.1)
+                            minimalDose = Decimal(0.05)
                         }
 
                         let nextBasalEvent = basalEvents[nextElementEventIndex]

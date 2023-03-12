@@ -67,6 +67,10 @@ extension CGM {
                     Section(header: Text("Other")) {
                         Toggle("Upload glucose to Nightscout", isOn: $state.uploadGlucose)
                     }
+
+                    Section(header: Text("Experimental")) {
+                        Toggle("Smooth Glucose Value", isOn: $state.smoothGlucose)
+                    }
                 }
 
                 .onAppear(perform: configureView)
