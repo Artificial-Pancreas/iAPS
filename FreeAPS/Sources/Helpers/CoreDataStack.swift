@@ -1,8 +1,8 @@
 import CoreData
 import Foundation
 
-class CoreDataStack {
-    private init() {}
+class CoreDataStack: ObservableObject {
+    init() {}
 
     static let shared = CoreDataStack()
 
@@ -32,5 +32,9 @@ class CoreDataStack {
                 }
             }
         }
+    }
+
+    func delete(obj: NSManagedObject) {
+        persistentContainer.viewContext.delete(obj)
     }
 }

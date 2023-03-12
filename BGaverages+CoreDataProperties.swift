@@ -6,10 +6,10 @@ public extension BGaverages {
         NSFetchRequest<BGaverages>(entityName: "BGaverages")
     }
 
-    @NSManaged var date: Date?
     @NSManaged var average: NSDecimalNumber?
     @NSManaged var average_1: NSDecimalNumber?
     @NSManaged var average_7: NSDecimalNumber?
     @NSManaged var average_30: NSDecimalNumber?
     @NSManaged var average_90: NSDecimalNumber?
+    @NSManaged var date: Date?
 }

@@ -5,6 +5,12 @@
       location = "container:"
       name = "CoreDataClassesAndProperties">
       <FileRef
+         location = "group:Presets+CoreDataClass.swift">
+      </FileRef>
+      <FileRef
+         location = "group:Presets+CoreDataProperties.swift">
+      </FileRef>
+      <FileRef
          location = "group:InsulinDistribution+CoreDataClass.swift">
       </FileRef>
       <FileRef
