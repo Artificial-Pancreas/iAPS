@@ -8,6 +8,6 @@ public extension LoopStatRecord {
 
     @NSManaged var duration: Double
     @NSManaged var end: Date?
-    @NSManaged var start: Date?
     @NSManaged var loopStatus: String?
+    @NSManaged var start: Date?
 }
