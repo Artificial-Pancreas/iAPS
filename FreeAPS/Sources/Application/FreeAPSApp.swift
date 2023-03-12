@@ -1,9 +1,13 @@
+import CoreData
 import SwiftUI
 import Swinject
 
 @main struct FreeAPSApp: App {
     @Environment(\.scenePhase) var scenePhase
+
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
+
+    @StateObject var dataController = CoreDataStack.shared
 
     // Dependencies Assembler
     // contain all dependencies Assemblies
@@ -53,6 +57,8 @@ import Swinject
     var body: some Scene {
         WindowGroup {
             Main.RootView(resolver: resolver)
+
+                .environment(\.managedObjectContext, dataController.persistentContainer.viewContext)
         }
         .onChange(of: scenePhase) { newScenePhase in
             debug(.default, "APPLICATION PHASE: \(newScenePhase)")

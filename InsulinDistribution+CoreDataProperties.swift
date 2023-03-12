@@ -7,8 +7,8 @@ public extension InsulinDistribution {
     }
 
     @NSManaged var bolus: NSDecimalNumber?
-    @NSManaged var tempBasal: NSDecimalNumber?
-    @NSManaged var scheduledBasal: NSDecimalNumber?
     @NSManaged var date: Date?
+    @NSManaged var scheduledBasal: NSDecimalNumber?
+    @NSManaged var tempBasal: NSDecimalNumber?
     @NSManaged var insulin: Oref0Suggestion?
 }

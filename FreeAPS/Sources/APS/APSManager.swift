@@ -974,7 +974,7 @@ final class BaseAPSManager: APSManager, Injectable {
             minimumLoopTime = 0.0
         }
 
-        var glucose: [Readings] = []
+        var glucose = [Readings]()
 
         var firstElementTime = Date()
         var lastElementTime = Date()
