@@ -1280,24 +1280,19 @@ final class BaseAPSManager: APSManager, Injectable {
             total: roundDecimal(bg_total, 1)
         )
 
-        let saveAverages = BGaverages(context: coredataContext)
-        saveAverages.date = Date()
-        saveAverages.average = bg_total as NSDecimalNumber
-        saveAverages.average_1 = bg_1 as NSDecimalNumber
-        saveAverages.average_7 = bg_7 as NSDecimalNumber
-        saveAverages.average_30 = bg_30 as NSDecimalNumber
-        saveAverages.average_90 = bg_90 as NSDecimalNumber
-
-        // MARK: Save to HbA1c to CoreData
-
         coredataContext.perform {
+            let saveAverages = BGaverages(context: self.coredataContext)
+            saveAverages.date = Date()
+            saveAverages.average = bg_total as NSDecimalNumber
+            saveAverages.average_1 = bg_1 as NSDecimalNumber
+            saveAverages.average_7 = bg_7 as NSDecimalNumber
+            saveAverages.average_30 = bg_30 as NSDecimalNumber
+            saveAverages.average_90 = bg_90 as NSDecimalNumber
+
             try? self.coredataContext.save()
         }
 
         let avg = Averages(Average: avgs, Median: median)
-
-        // MARK: Fetch InsulinDuration from CoreData
-
         var insulinDistribution = [InsulinDistribution]()
 
         var insulin = Ins(
