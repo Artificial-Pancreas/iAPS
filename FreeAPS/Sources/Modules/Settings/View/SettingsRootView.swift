@@ -25,6 +25,7 @@ extension Settings {
 
                 Section(header: Text("Services")) {
                     Text("Nightscout").navigationLink(to: .nighscoutConfig, from: self)
+                    Text("LibreView").navigationLink(to: .libreViewConfig, from: self)
                     if HKHealthStore.isHealthDataAvailable() {
                         Text("Apple Health").navigationLink(to: .healthkit, from: self)
                     }

@@ -15,7 +15,6 @@ struct FreeAPSSettings: JSON, Equatable {
     var cgm: CGMType = .nightscout
     var uploadGlucose: Bool = false
     var useCalendar: Bool = false
-    var useAppleHealth: Bool = false
     var glucoseBadge: Bool = false
     var glucoseNotificationsAlways: Bool = false
     var useAlarmSound: Bool = false
@@ -30,6 +29,13 @@ struct FreeAPSSettings: JSON, Equatable {
     var timeCap: Int = 8
     var minuteInterval: Int = 30
     var delay: Int = 60
+    var useAppleHealth: Bool = false
+    var libreViewServer = 0
+    var libreViewCustomServer = ""
+    var libreViewLastUploadTimestamp = 0.0
+    var libreViewLastAllowUploadGlucose = false
+    var libreViewFrequenceUploads = 0
+    var libreViewNextUploadDelta = 0.0
 }
 
 extension FreeAPSSettings: Decodable {
@@ -155,6 +161,30 @@ extension FreeAPSSettings: Decodable {
 
         if let displayStatistics = try? container.decode(Bool.self, forKey: .displayStatistics) {
             settings.displayStatistics = displayStatistics
+        }
+
+        if let libreViewServer = try? container.decode(Int.self, forKey: .libreViewServer) {
+            settings.libreViewServer = libreViewServer
+        }
+
+        if let libreViewCustomServer = try? container.decode(String.self, forKey: .libreViewCustomServer) {
+            settings.libreViewCustomServer = libreViewCustomServer
+        }
+
+        if let libreViewLastUploadTimestamp = try? container.decode(Double.self, forKey: .libreViewLastUploadTimestamp) {
+            settings.libreViewLastUploadTimestamp = libreViewLastUploadTimestamp
+        }
+
+        if let libreViewLastAllowUploadGlucose = try? container.decode(Bool.self, forKey: .libreViewLastAllowUploadGlucose) {
+            settings.libreViewLastAllowUploadGlucose = libreViewLastAllowUploadGlucose
+        }
+
+        if let libreViewFrequenceUploads = try? container.decode(Int.self, forKey: .libreViewFrequenceUploads) {
+            settings.libreViewFrequenceUploads = libreViewFrequenceUploads
+        }
+
+        if let libreViewNextUploadDelta = try? container.decode(Double.self, forKey: .libreViewNextUploadDelta) {
+            settings.libreViewNextUploadDelta = libreViewNextUploadDelta
         }
 
         self = settings
