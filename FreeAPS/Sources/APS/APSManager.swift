@@ -1163,16 +1163,19 @@ final class BaseAPSManager: APSManager, Injectable {
 
         // MARK: Save to Median to CoreData
 
-        let saveMedianToCoreData = BGmedian(context: coredataContext)
-
-        saveMedianToCoreData.date = Date()
-        saveMedianToCoreData.median = median.total as NSDecimalNumber
-        saveMedianToCoreData.median_1 = median.day as NSDecimalNumber
-        saveMedianToCoreData.median_7 = median.week as NSDecimalNumber
-        saveMedianToCoreData.median_30 = median.month as NSDecimalNumber
-        saveMedianToCoreData.median_90 = roundDecimal(Decimal(medianCalculation(array: bgArray_90_)), 1) as NSDecimalNumber
-
         coredataContext.perform {
+            let saveMedianToCoreData = BGmedian(context: self.coredataContext)
+
+            saveMedianToCoreData.date = Date()
+            saveMedianToCoreData.median = median.total as NSDecimalNumber
+            saveMedianToCoreData.median_1 = median.day as NSDecimalNumber
+            saveMedianToCoreData.median_7 = median.week as NSDecimalNumber
+            saveMedianToCoreData.median_30 = median.month as NSDecimalNumber
+            saveMedianToCoreData.median_90 = self.roundDecimal(
+                Decimal(self.medianCalculation(array: bgArray_90_)),
+                1
+            ) as NSDecimalNumber
+
             try? self.coredataContext.save()
         }
 
@@ -1183,17 +1186,15 @@ final class BaseAPSManager: APSManager, Injectable {
             total: roundDecimal(NGSPa1CStatisticValue_total, 1)
         )
 
-        let saveHbA1c = HbA1c(context: coredataContext)
-        saveHbA1c.date = Date()
-        saveHbA1c.hba1c = NGSPa1CStatisticValue_total as NSDecimalNumber
-        saveHbA1c.hba1c_1 = NGSPa1CStatisticValue as NSDecimalNumber
-        saveHbA1c.hba1c_7 = NGSPa1CStatisticValue_7 as NSDecimalNumber
-        saveHbA1c.hba1c_30 = NGSPa1CStatisticValue_30 as NSDecimalNumber
-        saveHbA1c.hba1c_90 = NGSPa1CStatisticValue_90 as NSDecimalNumber
-
-        // MARK: Save to HbA1c to CoreData
-
         coredataContext.perform {
+            let saveHbA1c = HbA1c(context: self.coredataContext)
+            saveHbA1c.date = Date()
+            saveHbA1c.hba1c = NGSPa1CStatisticValue_total as NSDecimalNumber
+            saveHbA1c.hba1c_1 = NGSPa1CStatisticValue as NSDecimalNumber
+            saveHbA1c.hba1c_7 = NGSPa1CStatisticValue_7 as NSDecimalNumber
+            saveHbA1c.hba1c_30 = NGSPa1CStatisticValue_30 as NSDecimalNumber
+            saveHbA1c.hba1c_90 = NGSPa1CStatisticValue_90 as NSDecimalNumber
+
             try? self.coredataContext.save()
         }
 
