@@ -132,6 +132,21 @@ final class BaseFetchGlucoseManager: FetchGlucoseManager, Injectable {
         }
         debug(.deviceManager, "New glucose found")
 
+        // filter the data if it is the case
+        if settingsManager.settings.smoothGlucose {
+            // limit to 30 minutes of previous BG Data
+            let oldGlucoses = glucoseStorage.recent().filter {
+                $0.dateString.addingTimeInterval(31 * 60) > Date()
+            }
+            var smoothedValues = oldGlucoses + filtered
+            // smooth with 3 repeats
+            for _ in 1 ... 3 {
+                smoothedValues.smoothSavitzkyGolayQuaDratic(withFilterWidth: 3)
+            }
+            // find the new values only
+            filtered = smoothedValues.filter { $0.dateString > syncDate }
+        }
+
         glucoseStorage.storeGlucose(filtered)
 
         deviceDataManager.heartbeat(date: Date())

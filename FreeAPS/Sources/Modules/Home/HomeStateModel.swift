@@ -53,6 +53,7 @@ extension Home {
         @Published var alarm: GlucoseAlarm?
         @Published var animatedBackground = false
         @Published var manualTempBasal = false
+        @Published var smooth = false
 
         override func subscribe() {
             setupGlucose()
@@ -83,6 +84,7 @@ extension Home {
             manualTempBasal = apsManager.isManualTempBasal
             setStatusTitle()
             setupCurrentTempTarget()
+            smooth = settingsManager.settings.smoothGlucose
 
             broadcaster.register(GlucoseObserver.self, observer: self)
             broadcaster.register(SuggestionObserver.self, observer: self)
@@ -386,6 +388,7 @@ extension Home.StateModel:
         units = settingsManager.settings.units
         animatedBackground = settingsManager.settings.animatedBackground
         manualTempBasal = apsManager.isManualTempBasal
+        smooth = settingsManager.settings.smoothGlucose
         setupGlucose()
         setupStatistics()
     }

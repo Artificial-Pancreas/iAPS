@@ -36,6 +36,7 @@ struct FreeAPSSettings: JSON, Equatable {
     var libreViewLastAllowUploadGlucose = false
     var libreViewFrequenceUploads = 0
     var libreViewNextUploadDelta = 0.0
+    var smoothGlucose: Bool = false
 }
 
 extension FreeAPSSettings: Decodable {
@@ -185,6 +186,10 @@ extension FreeAPSSettings: Decodable {
 
         if let libreViewNextUploadDelta = try? container.decode(Double.self, forKey: .libreViewNextUploadDelta) {
             settings.libreViewNextUploadDelta = libreViewNextUploadDelta
+        }
+
+        if let smoothGlucose = try? container.decode(Bool.self, forKey: .smoothGlucose) {
+            settings.smoothGlucose = smoothGlucose
         }
 
         self = settings

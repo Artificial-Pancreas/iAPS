@@ -313,6 +313,7 @@
 		CE79502F29980E5800FA576E /* ShareClientUI.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = CE79502D29980E4D00FA576E /* ShareClientUI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		CE82E02528E867BA00473A9C /* AlertStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE82E02428E867BA00473A9C /* AlertStorage.swift */; };
 		CE82E02728E869DF00473A9C /* AlertEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE82E02628E869DF00473A9C /* AlertEntry.swift */; };
+		CEA4F62329BE10F70011ADF7 /* SavitzkyGolayFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA4F62229BE10F70011ADF7 /* SavitzkyGolayFilter.swift */; };
 		CEB434DC28B8F5B900B70274 /* MKRingProgressView.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEB434DB28B8F5B900B70274 /* MKRingProgressView.framework */; };
 		CEB434DD28B8F5B900B70274 /* MKRingProgressView.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = CEB434DB28B8F5B900B70274 /* MKRingProgressView.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		CEB434DF28B8F5C400B70274 /* OmniBLE.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEB434DE28B8F5C400B70274 /* OmniBLE.framework */; };
@@ -776,6 +777,7 @@
 		CE79502D29980E4D00FA576E /* ShareClientUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ShareClientUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE82E02428E867BA00473A9C /* AlertStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertStorage.swift; sourceTree = "<group>"; };
 		CE82E02628E869DF00473A9C /* AlertEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertEntry.swift; sourceTree = "<group>"; };
+		CEA4F62229BE10F70011ADF7 /* SavitzkyGolayFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavitzkyGolayFilter.swift; sourceTree = "<group>"; };
 		CEB434DB28B8F5B900B70274 /* MKRingProgressView.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = MKRingProgressView.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEB434DE28B8F5C400B70274 /* OmniBLE.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = OmniBLE.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEB434E228B8F9DB00B70274 /* BluetoothStateManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BluetoothStateManager.swift; sourceTree = "<group>"; };
@@ -1463,6 +1465,7 @@
 				CEB434E428B8FF5D00B70274 /* UIColor.swift */,
 				FE66D16A291F74F8005D6F77 /* Bundle+Extensions.swift */,
 				FEFFA7A12929FE49007B8193 /* UIDevice+Extensions.swift */,
+				CEA4F62229BE10F70011ADF7 /* SavitzkyGolayFilter.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -2302,6 +2305,7 @@
 				38C4D33725E9A1A300D30B77 /* DispatchQueue+Extensions.swift in Sources */,
 				F90692CF274B999A0037068D /* HealthKitDataFlow.swift in Sources */,
 				3862CC2E2743F9F700BF832C /* CalendarManager.swift in Sources */,
+				CEA4F62329BE10F70011ADF7 /* SavitzkyGolayFilter.swift in Sources */,
 				38B4F3C325E2A20B00E76A18 /* PumpSetupView.swift in Sources */,
 				38E4453C274E411700EC9A94 /* Disk+Codable.swift in Sources */,
 				382C134B25F14E3700715CE1 /* BGTargets.swift in Sources */,
