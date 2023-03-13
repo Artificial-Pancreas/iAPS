@@ -58,7 +58,9 @@ extension AddCarbs {
                 // Adjust for interval setting other than 60 minutes
                 equivalent /= Decimal(60 / interval)
                 // Round to 1 fraction digit
-                equivalent = Decimal(round(Double(equivalent * 10) / 10))
+                // equivalent = Decimal(round(Double(equivalent * 10) / 10))
+                let roundedEquivalent: Double = round(Double(equivalent * 10)) / 10
+                equivalent = Decimal(roundedEquivalent)
                 // Number of equivalents
                 var numberOfEquivalents = carbEquivalents / equivalent
                 // Only use delay in first loop
