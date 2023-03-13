@@ -9,7 +9,7 @@ public extension BGmedian {
     @NSManaged var date: Date?
     @NSManaged var median: NSDecimalNumber?
     @NSManaged var median_1: NSDecimalNumber?
+    @NSManaged var median_7: NSDecimalNumber?
     @NSManaged var median_30: NSDecimalNumber?
     @NSManaged var median_90: NSDecimalNumber?
-    @NSManaged var median_7: NSDecimalNumber?
 }

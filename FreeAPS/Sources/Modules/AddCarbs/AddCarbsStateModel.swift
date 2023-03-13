@@ -1,3 +1,4 @@
+import CoreData
 import SwiftUI
 
 extension AddCarbs {
@@ -11,6 +12,11 @@ extension AddCarbs {
         @Published var fat: Decimal = 0
         @Published var carbsRequired: Decimal?
         @Published var useFPU: Bool = false
+        @Published var dish: String = ""
+        @Published var selection: Presets?
+
+        let coredataContext = CoreDataStack.shared.persistentContainer.viewContext // .newBackgroundContext()
+        @Environment(\.managedObjectContext) var moc
 
         override func subscribe() {
             carbsRequired = provider.suggestion?.carbsReq
@@ -51,6 +57,8 @@ extension AddCarbs {
                 var equivalent: Decimal = carbEquivalents / Decimal(computedDuration)
                 // Adjust for interval setting other than 60 minutes
                 equivalent /= Decimal(60 / interval)
+                // Round to 1 fraction digit
+                equivalent = Decimal(round(Double(equivalent * 10) / 10))
                 // Number of equivalents
                 var numberOfEquivalents = carbEquivalents / equivalent
                 // Only use delay in first loop
@@ -99,6 +107,17 @@ extension AddCarbs {
             } else {
                 showModal(for: .bolus(waitForSuggestion: true))
             }
+        }
+
+        func deletePreset() {
+            if selection != nil {
+                try? coredataContext.delete(selection!)
+                try? coredataContext.save()
+                carbs = 0
+                fat = 0
+                protein = 0
+            }
+            selection = nil
         }
     }
 }

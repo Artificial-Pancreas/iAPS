@@ -566,7 +566,8 @@ extension Home {
                     tempTargets: $state.tempTargets,
                     carbs: $state.carbs,
                     timerDate: $state.timerDate,
-                    units: $state.units
+                    units: $state.units,
+                    smooth: $state.smooth
                 )
             }
             .padding(.bottom)

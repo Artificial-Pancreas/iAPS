@@ -30,6 +30,7 @@ struct FreeAPSSettings: JSON, Equatable {
     var timeCap: Int = 8
     var minuteInterval: Int = 30
     var delay: Int = 60
+    var smoothGlucose: Bool = false
 }
 
 extension FreeAPSSettings: Decodable {
@@ -155,6 +156,10 @@ extension FreeAPSSettings: Decodable {
 
         if let displayStatistics = try? container.decode(Bool.self, forKey: .displayStatistics) {
             settings.displayStatistics = displayStatistics
+        }
+
+        if let smoothGlucose = try? container.decode(Bool.self, forKey: .smoothGlucose) {
+            settings.smoothGlucose = smoothGlucose
         }
 
         self = settings

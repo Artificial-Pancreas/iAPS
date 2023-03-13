@@ -50,9 +50,11 @@ struct MainChartView: View {
     @Binding var carbs: [CarbsEntry]
     @Binding var timerDate: Date
     @Binding var units: GlucoseUnits
+    @Binding var smooth: Bool
 
     @State var didAppearTrigger = false
     @State private var glucoseDots: [CGRect] = []
+    @State private var unSmoothedGlucoseDots: [CGRect] = []
     @State private var predictionDots: [PredictionType: [CGRect]] = [:]
     @State private var bolusDots: [DotInfo] = []
     @State private var bolusPath = Path()
@@ -249,6 +251,7 @@ struct MainChartView: View {
                     carbsView(fullSize: fullSize)
                     fpuView(fullSize: fullSize)
                     bolusView(fullSize: fullSize)
+                    if smooth { unSmoothedGlucoseView(fullSize: fullSize) }
                     glucoseView(fullSize: fullSize)
                     predictionsView(fullSize: fullSize)
                 }
@@ -309,6 +312,27 @@ struct MainChartView: View {
             }
         }
         .fill(Color.loopGreen)
+        .onChange(of: glucose) { _ in
+            update(fullSize: fullSize)
+        }
+        .onChange(of: didAppearTrigger) { _ in
+            update(fullSize: fullSize)
+        }
+        .onReceive(Foundation.NotificationCenter.default.publisher(for: UIApplication.willEnterForegroundNotification)) { _ in
+            update(fullSize: fullSize)
+        }
+    }
+
+    private func unSmoothedGlucoseView(fullSize: CGSize) -> some View {
+        Path { path in
+            var lines: [CGPoint] = []
+            for rect in unSmoothedGlucoseDots {
+                lines.append(CGPoint(x: rect.midX, y: rect.midY))
+                path.addEllipse(in: rect)
+            }
+            path.addLines(lines)
+        }
+        .stroke(Color.loopGray, lineWidth: 0.5)
         .onChange(of: glucose) { _ in
             update(fullSize: fullSize)
         }
@@ -445,6 +469,7 @@ extension MainChartView {
         calculatePredictionDots(fullSize: fullSize, type: .zt)
         calculatePredictionDots(fullSize: fullSize, type: .uam)
         calculateGlucoseDots(fullSize: fullSize)
+        calculateUnSmoothedGlucoseDots(fullSize: fullSize)
         calculateBolusDots(fullSize: fullSize)
         calculateCarbsDots(fullSize: fullSize)
         calculateFPUsDots(fullSize: fullSize)
@@ -465,6 +490,22 @@ extension MainChartView {
             DispatchQueue.main.async {
                 glucoseYGange = range
                 glucoseDots = dots
+            }
+        }
+    }
+
+    private func calculateUnSmoothedGlucoseDots(fullSize: CGSize) {
+        calculationQueue.async {
+            let dots = glucose.concurrentMap { value -> CGRect in
+                let position = UnSmoothedGlucoseToCoordinate(value, fullSize: fullSize)
+                return CGRect(x: position.x - 2, y: position.y - 2, width: 4, height: 4)
+            }
+
+            let range = self.getGlucoseYRange(fullSize: fullSize)
+
+            DispatchQueue.main.async {
+                glucoseYGange = range
+                unSmoothedGlucoseDots = dots
             }
         }
     }
@@ -875,6 +916,13 @@ extension MainChartView {
     private func glucoseToCoordinate(_ glucoseEntry: BloodGlucose, fullSize: CGSize) -> CGPoint {
         let x = timeToXCoordinate(glucoseEntry.dateString.timeIntervalSince1970, fullSize: fullSize)
         let y = glucoseToYCoordinate(glucoseEntry.glucose ?? 0, fullSize: fullSize)
+
+        return CGPoint(x: x, y: y)
+    }
+
+    private func UnSmoothedGlucoseToCoordinate(_ glucoseEntry: BloodGlucose, fullSize: CGSize) -> CGPoint {
+        let x = timeToXCoordinate(glucoseEntry.dateString.timeIntervalSince1970, fullSize: fullSize)
+        let y = glucoseToYCoordinate(glucoseEntry.sgv ?? glucoseEntry.glucose ?? 0, fullSize: fullSize)
 
         return CGPoint(x: x, y: y)
     }

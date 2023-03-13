@@ -79,3 +79,14 @@ extension Double {
         Decimal(self) / GlucoseUnits.exchangeRate
     }
 }
+
+extension BloodGlucose: SavitzkyGolaySmoothable {
+    var value: Double {
+        get {
+            Double(glucose ?? 0)
+        }
+        set {
+            glucose = Int(newValue)
+        }
+    }
+}
