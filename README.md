@@ -9,9 +9,9 @@ FreeAPS X uses original JavaScript files of oref0 and provides a user interface 
 
 To use this branch : 
 
-git clone --branch=bdb https://github.com/Jon-b-m/freeaps.git
+git clone --branch=main https://github.com/Jon-b-m/freeaps.git
 
-The bdb branch includes my implementation of dynamic ISF, dynamic CR and some other extra features. Dyn ISF and dyn CR are off by default. 
+The main branch includes my implementation of dynamic ISF, dynamic CR and some other extra features. Dyn ISF and dyn CR are off by default. 
 
 Please understand that this version is :
 - highly experimental
