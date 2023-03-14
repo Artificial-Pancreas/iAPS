@@ -1375,6 +1375,12 @@ Enact a temp Basal or a temp target */
 
 "Are you sure you want to delete this CGM?" = "Are you sure you want to delete this CGM?";
 
+/* New Experimental feature */
+"Experimental" = "Experimental";
+    
+/* Smoothing of CGM readings */
+"Smooth Glucose Value" = "Smooth Glucose Value";
+
  /* -----------------------------------------------------------------------------------------------------------
 
   Infotexts from openaps.docs and androidaps.docs
