@@ -90,7 +90,7 @@
 "%@/min" = "%@/min";
 
 /* G7 Progress bar label when searching for sensor */
-"Searching for sensor" = "Senor aan het zoeken";
+"Searching for sensor" = "Sensor aan het zoeken";
 
 /* G7 Progress bar label when sensor expired */
 "Sensor expired" = "Sensor verlopen";

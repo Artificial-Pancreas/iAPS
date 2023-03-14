@@ -1086,6 +1086,27 @@ Enact a temp Basal or a temp target */
 /* Section in settings */
 "Protein / Fat" = "Eiwit / Vet";
 
+/* */
+"Meal Presets" = "Meal Presets";
+
+/* */
+"Empty" = "Empty";
+
+/* */
+"Delete Selected Preset" = "Delete Selected Preset";
+
+/* */
+"Enter Meal Preset Name" = "Enter Meal Preset Name";
+
+/* */
+"Name Of Dish" = "Name Of Dish";
+
+/* Save Carbs and continue to bolus recommendation */
+"Save and continue" = "Save and continue";
+
+/* */
+"Save as Preset" = "Save as Preset";
+
 /* -------------------------------------------------------------------------------------------
   DASH strings
 */
@@ -1349,6 +1370,11 @@ Enact a temp Basal or a temp target */
 "CGM is not used as heartbeat." = "CGM wordt niet gebruikt voor hartritme.";
 
 "Are you sure you want to delete this CGM?" = "Weet je zeker dat je deze CGM wilt vewijderen?";
+
+/* New Experimental feature */
+"Experimental" = "Experimental";
+/* Smoothing of CGM readings */
+"Smooth Glucose Value" = "Smooth Glucose Value";
 
 /* -----------------------------------------------------------------------------------------------------------
 
@@ -1614,7 +1640,7 @@ Enact a temp Basal or a temp target */
 "Adjust Dynamic ISF constant" = "Dynamische ISF-constante aanpassen";
 
 /* Adjust Dynamic ISF constant */
-"Adjust Dynamic ratios by a constant. Default is 1. Higher than 1 => lower ISF" = "Pas de dynamische verhoudingen aan door een constante. Standaard is 1. Hoger dan 1 => lagere ISF";
+"Adjust Dynamic ratios by a constant. Default is 0.5. The higher the value, the larger the correction of your ISF will be for a high or a low BG. Maximum correction is determined by the Autosens min/max settings. For Sigmoid function an adjustment factor of 0.4 - 0.5 is recommended to begin with. For the logaritmic formula there is less consensus, but starting with 0.5 - 0.8 is more appropiate for most users" = "Pas de dynamische verhoudingen aan met een constante. De standaardwaarde is 0,5. Hoe hoger de waarde, hoe groter de correctie van uw ISF zal zijn voor een hoge of een lage BG. De maximale correctie wordt bepaald door de Autosens min/max instellingen. Voor de Sigmoid functie wordt om te beginnen een correctiefactor van 0,4 - 0,5 aanbevolen. Voor de logaritmische formule is er minder consensus, maar voor de meeste gebruikers is 0,5 - 0,8 meer aangewezen";
 
 
 /* Headline "Use Sigmoid Function" */
