@@ -117,7 +117,7 @@ extension AddCarbs {
 
         @ViewBuilder private func proteinAndFat() -> some View {
             HStack {
-                Text("Protein").foregroundColor(.red).fontWeight(.thin)
+                Text("Protein").foregroundColor(.red) // .fontWeight(.thin)
                 Spacer()
                 DecimalTextField(
                     "0",
@@ -130,7 +130,7 @@ extension AddCarbs {
                 Text("grams").foregroundColor(.secondary)
             }
             HStack {
-                Text("Fat").foregroundColor(.orange).fontWeight(.thin)
+                Text("Fat").foregroundColor(.orange) // .fontWeight(.thin)
                 Spacer()
                 DecimalTextField(
                     "0",
