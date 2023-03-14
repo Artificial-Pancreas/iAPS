@@ -1045,7 +1045,7 @@ Enact a temp Basal or a temp target */
 /* -------------------------------------------- FPU Strings ------------------------------------------------------*/
 /* Enable FPU */
 
-"Enable" = "Enable";
+"Enable" = "Aktiver";
 
 /* Header */
 "Convert Fat and Protein" = "Regne om fett og proteiner";
@@ -1085,6 +1085,27 @@ Enact a temp Basal or a temp target */
 
 /* Section in settings */
 "Protein / Fat" = "Proteiner/fett";
+
+/* */
+"Meal Presets" = "Forvalg av måltid";
+
+/* */
+"Empty" = "Tom";
+
+/* */
+"Delete Selected Preset" = "Slett valgt forvalg";
+
+/* */
+"Enter Meal Preset Name" = "Gi et navn til forvalget";
+
+/* */
+"Name Of Dish" = "Navn på måltid";
+
+/* Save Carbs and continue to bolus recommendation */
+"Save and continue" = "Lagre og fortsett";
+
+/* */
+"Save as Preset" = "Lagre som forvalg";
 
 /* -------------------------------------------------------------------------------------------
   DASH strings
@@ -1350,6 +1371,11 @@ Enact a temp Basal or a temp target */
 
 "Are you sure you want to delete this CGM?" = "Are you sure you want to delete this CGM?";
 
+/* New Experimental feature */
+"Experimental" = "Eksperimentell";
+/* Smoothing of CGM readings */
+"Smooth Glucose Value" = "Utjevning av blodsukkerverdi";
+
 /* -----------------------------------------------------------------------------------------------------------
 
   Infotexts from openaps.docs and androidaps.docs
@@ -1614,7 +1640,7 @@ Enact a temp Basal or a temp target */
 "Adjust Dynamic ISF constant" = "Juster konstant for dynamisk ISF";
 
 /* Adjust Dynamic ISF constant */
-"Adjust Dynamic ratios by a constant. Default is 1. Higher than 1 => lower ISF" = "Juster dynamisk ratio med en konstant. Standard er 1. Høyere enn 1 => lavere ISF";
+"Adjust Dynamic ratios by a constant. Default is 0.5. The higher the value, the larger the correction of your ISF will be for a high or a low BG. Maximum correction is determined by the Autosens min/max settings. For Sigmoid function an adjustment factor of 0.4 - 0.5 is recommended to begin with. For the logaritmic formula there is less consensus, but starting with 0.5 - 0.8 is more appropiate for most users" = "Juster dynamisk forholdstall med en konstant. Standard er 0,5. Jo høyere verdien er, jo større blir korreksjonen av ISF ved høyt eller lavt BS. Maksimal korrigering bestemmes av min/maks innstillingene for Autosens. For Sigmoidfunksjon anbefales det å starte en justeringsfaktor på 0,4-0,5. For den logaritmiske formelens er det mindre konsensus, men å starte med 0.5 – 0,8 er anbefalt for de fleste brukere";
 
 
 /* Headline "Use Sigmoid Function" */
