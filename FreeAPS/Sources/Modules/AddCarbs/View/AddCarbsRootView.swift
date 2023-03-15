@@ -9,6 +9,7 @@ extension AddCarbs {
         @State var dish: String = ""
         @State var isPromtPresented = false
         @State var saved = false
+        @State private var showAlert = false
 
         @FetchRequest(
             entity: Presets.entity(),
@@ -106,12 +107,32 @@ extension AddCarbs {
                         state.protein = ((state.selection?.protein ?? 0) as NSDecimalNumber) as Decimal
                     }
                 }
-                Button {
-                    state.deletePreset()
-                }
-                label: { Text("Delete Selected Preset") }
+                HStack {
+                    Button("Delete Preset") {
+                        showAlert.toggle()
+                    }
                     .disabled(state.selection == nil)
                     .accentColor(.orange)
+                    .buttonStyle(BorderlessButtonStyle())
+                    .alert(
+                        "Delete preset '\(state.selection?.dish ?? "")'?",
+                        isPresented: $showAlert,
+                        actions: {
+                            Button("No", role: .cancel) {}
+                            Button("Yes", role: .destructive) {
+                                state.deletePreset()
+                            }
+                        }
+                    )
+                    Button {
+                        state.carbs += ((state.selection?.carbs ?? 0) as NSDecimalNumber) as Decimal
+                        state.fat += ((state.selection?.fat ?? 0) as NSDecimalNumber) as Decimal
+                        state.protein += ((state.selection?.protein ?? 0) as NSDecimalNumber) as Decimal }
+                    label: { Text("+ 1") }
+                        .disabled(state.selection == nil)
+                        .buttonStyle(BorderlessButtonStyle())
+                        .frame(maxWidth: .infinity, alignment: .trailing)
+                }
             }
         }
 
