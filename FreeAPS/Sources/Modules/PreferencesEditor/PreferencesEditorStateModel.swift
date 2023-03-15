@@ -496,15 +496,6 @@ extension PreferencesEditor {
                     settable: self
                 ),
                 Field(
-                    displayName: NSLocalizedString("Bolus Snooze DIA Divisor", comment: "Bolus Snooze DIA Divisor"),
-                    type: .decimal(keypath: \.bolusSnoozeDIADivisor),
-                    infoText: NSLocalizedString(
-                        "Bolus snooze is enacted after you do a meal bolus, so the loop won’t counteract with low temps when you’ve just eaten. The example here and default is 2; so a 3 hour DIA means that bolus snooze will be gradually phased out over 1.5 hours (3DIA/2).",
-                        comment: "Bolus Snooze DIA Divisor"
-                    ),
-                    settable: self
-                ),
-                Field(
                     displayName: NSLocalizedString("Min 5m Carbimpact", comment: "Min 5m Carbimpact"),
                     type: .decimal(keypath: \.min5mCarbimpact),
                     infoText: NSLocalizedString(
