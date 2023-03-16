@@ -130,6 +130,24 @@
 /*  */
 "Save as preset" = "Spara som förval";
 
+/* Delete Meal Preset */
+"Delete Preset" = "Radera Förval";
+
+/* Confirm Deletion */
+"Delete preset '%@'?" = "Radera förval '%@'?";
+
+/* Button */
+"No" = "Nej";
+
+/* Button */
+"Yes" = "Ja";
+
+/* + Button */
+"[ +1 ]" = "[ +1 ]";
+
+/* - Button */
+"[ -1 ]" = "[ -1 ]";
+
 /* Upper temp target limit */
 "Top target" = "Övre målvärde";
 
