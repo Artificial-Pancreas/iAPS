@@ -138,7 +138,7 @@ extension AddCarbs {
                         ))
                         .buttonStyle(BorderlessButtonStyle())
                         .frame(maxWidth: .infinity, alignment: .trailing)
-                        .accentColor(.tempBasal)
+                        .accentColor(.minus)
                     Button {
                         state.carbs += ((state.selection?.carbs ?? 0) as NSDecimalNumber) as Decimal
                         state.fat += ((state.selection?.fat ?? 0) as NSDecimalNumber) as Decimal
@@ -146,7 +146,7 @@ extension AddCarbs {
                     label: { Text("[ +1 ]") }
                         .disabled(state.selection == nil)
                         .buttonStyle(BorderlessButtonStyle())
-                        .accentColor(.darkerBlue)
+                        .accentColor(.blue)
                 }
             }
         }
