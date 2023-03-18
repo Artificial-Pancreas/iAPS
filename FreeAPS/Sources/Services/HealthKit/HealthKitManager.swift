@@ -280,16 +280,33 @@ final class BaseHealthKitManager: HealthKitManager, Injectable, CarbsObserver {
                     .compactMap { item -> InsulinBasal? in
                         let nextElementEventIndex = item.offset + 1
                         guard basalEvents.count > nextElementEventIndex else { return nil }
+
+                        var minimalDose = self.settingsManager.preferences.bolusIncrement
+                        if (minimalDose != 0.05) || (minimalDose != 0.025) {
+                            minimalDose = Decimal(0.05)
+                        }
+
                         let nextBasalEvent = basalEvents[nextElementEventIndex]
                         let secondsOfCurrentBasal = nextBasalEvent.timestamp.timeIntervalSince(item.element.timestamp)
                         let amount = Decimal(secondsOfCurrentBasal / 3600) * (item.element.rate ?? 0)
+                        let incrementsRaw = amount / minimalDose
+
+                        var amountRounded: Decimal
+                        if incrementsRaw >= 1 {
+                            let incrementsRounded = floor(Double(incrementsRaw))
+                            amountRounded = Decimal(round(incrementsRounded * Double(minimalDose) * 100_000.0) / 100_000.0)
+                        } else {
+                            amountRounded = 0
+                        }
+
                         let id = String(item.element.id.dropFirst())
-                        guard amount > 0,
+                        guard amountRounded >= 0,
                               id != ""
                         else { return nil }
+
                         return InsulinBasal(
                             id: id,
-                            amount: amount,
+                            amount: amountRounded,
                             startDelivery: item.element.timestamp,
                             endDelivery: nextBasalEvent.timestamp
                         )

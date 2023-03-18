@@ -14,6 +14,7 @@ extension CGM {
         @Published var cgm: CGMType = .nightscout
         // @Published var transmitterID = ""
         @Published var uploadGlucose = false
+        @Published var smoothGlucose = false
         @Published var createCalendarEvents = false
         @Published var calendarIDs: [String] = []
         @Published var currentCalendarID: String = ""
@@ -38,6 +39,8 @@ extension CGM {
                     cgmManagerG7.uploadReadings = val
                 }
             })
+
+            subscribeSetting(\.smoothGlucose, on: $smoothGlucose, initial: { smoothGlucose = $0 })
 
             $cgm
                 .removeDuplicates()

@@ -1086,6 +1086,27 @@ Enact a temp Basal or a temp target */
 /* Section in settings */
 "Protein / Fat" = "Eiweiß / Fett";
 
+/* */
+"Meal Presets" = "Meal Presets";
+
+/* */
+"Empty" = "Empty";
+
+/* */
+"Delete Selected Preset" = "Delete Selected Preset";
+
+/* */
+"Enter Meal Preset Name" = "Enter Meal Preset Name";
+
+/* */
+"Name Of Dish" = "Name Of Dish";
+
+/* Save Carbs and continue to bolus recommendation */
+"Save and continue" = "Save and continue";
+
+/* */
+"Save as Preset" = "Save as Preset";
+
 /* -------------------------------------------------------------------------------------------
   DASH strings
 */
@@ -1349,6 +1370,12 @@ Enact a temp Basal or a temp target */
 "CGM is not used as heartbeat." = "CGM is not used as heartbeat.";
 
 "Are you sure you want to delete this CGM?" = "Möchten Sie das CGM wirklich löschen?";
+
+/* New Experimental feature */
+"Experimental" = "Experimental";
+
+/* Smoothing of CGM readings */
+"Smooth Glucose Value" = "Smooth Glucose Value";
 
 /* -----------------------------------------------------------------------------------------------------------
 
@@ -1614,7 +1641,7 @@ Enact a temp Basal or a temp target */
 "Adjust Dynamic ISF constant" = "Dynamic ISF-Konstante anpassen";
 
 /* Adjust Dynamic ISF constant */
-"Adjust Dynamic ratios by a constant. Default is 1. Higher than 1 => lower ISF" = "Dynamische Verhältnisse durch eine Konstante anpassen. Standard ist 1. Höher als 1 => niedrigere ISF";
+"Adjust Dynamic ratios by a constant. Default is 0.5. The higher the value, the larger the correction of your ISF will be for a high or a low BG. Maximum correction is determined by the Autosens min/max settings. For Sigmoid function an adjustment factor of 0.4 - 0.5 is recommended to begin with. For the logaritmic formula there is less consensus, but starting with 0.5 - 0.8 is more appropiate for most users" = "Adjust Dynamic ratios by a constant. Default is 0.5. The higher the value, the larger the correction of your ISF will be for a high or a low BG. Maximum correction is determined by the Autosens min/max settings. For Sigmoid function an adjustment factor of 0.4 - 0.5 is recommended to begin with. For the logaritmic formula threre is less consensus, but starting with 0.5 - 0.8 is more appropiate for most users";
 
 
 /* Headline "Use Sigmoid Function" */

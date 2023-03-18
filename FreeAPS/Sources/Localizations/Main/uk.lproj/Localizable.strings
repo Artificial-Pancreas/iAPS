@@ -1086,6 +1086,27 @@ Enact a temp Basal or a temp target */
 /* Section in settings */
 "Protein / Fat" = "Білок / Жир";
 
+/* */
+"Meal Presets" = "Попередні налаштування їжі";
+
+/* */
+"Empty" = "Порожній";
+
+/* */
+"Delete Selected Preset" = "Вилучити позначений шаблон";
+
+/* */
+"Enter Meal Preset Name" = "Введіть назву попереднього налаштування їжі";
+
+/* */
+"Name Of Dish" = "Назва страви";
+
+/* Save Carbs and continue to bolus recommendation */
+"Save and continue" = "Зберегти та продовжити";
+
+/* */
+"Save as Preset" = "Зберегти як шаблон";
+
 /* -------------------------------------------------------------------------------------------
   DASH strings
 */
@@ -1349,6 +1370,11 @@ Enact a temp Basal or a temp target */
 "CGM is not used as heartbeat." = "CGM не використовується як серцебиття.";
 
 "Are you sure you want to delete this CGM?" = "Ви впевнені, що хочете видалити цей CGM?";
+
+/* New Experimental feature */
+"Experimental" = "Експериментальний";
+/* Smoothing of CGM readings */
+"Smooth Glucose Value" = "Гладке значення глюкози";
 
 /* -----------------------------------------------------------------------------------------------------------
 
@@ -1614,7 +1640,7 @@ Enact a temp Basal or a temp target */
 "Adjust Dynamic ISF constant" = "Налаштувати константу динамічного ISF";
 
 /* Adjust Dynamic ISF constant */
-"Adjust Dynamic ratios by a constant. Default is 1. Higher than 1 => lower ISF" = "Регулювання Dynamic ratios за допомогою константи. За замовчуванням - 1. Чим вище 1 => тим нижче ISF";
+"Adjust Dynamic ratios by a constant. Default is 0.5. The higher the value, the larger the correction of your ISF will be for a high or a low BG. Maximum correction is determined by the Autosens min/max settings. For Sigmoid function an adjustment factor of 0.4 - 0.5 is recommended to begin with. For the logaritmic formula there is less consensus, but starting with 0.5 - 0.8 is more appropiate for most users" = "Налаштуйте динамічні коефіцієнти за константою. За замовчуванням 0,5. Чим вище значення, тим більшою буде корекція вашого ISF для високого або низького рівня ГК. Максимальна корекція визначається параметрами min/max Autosens. Для сигмоподібної функції спочатку рекомендується коригуючий коефіцієнт 0,4 - 0,5. Для логарифмічної формули threre є менш узгодженим, але починати з 0,5 - 0,8 є більш прийнятним для більшості користувачів";
 
 
 /* Headline "Use Sigmoid Function" */
