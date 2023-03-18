@@ -24,11 +24,11 @@ Please understand that this version is:
 
 # Documentation
 
-[Discord FreeAPS X - main branch channel](https://discord.com/channels/1020905149037813862/1021041588627062854)
+[Discord iAPS - main branch channel](https://discord.com/channels/1020905149037813862/1021041588627062854)
 
-[My Crowdin Project for translation of FreeAPS X](https://crowdin.com/project/freeaps-x)
+[My Crowdin Project for translation of iAPS](https://crowdin.com/project/freeaps-x)
 
-[Middleware code for FreeAPS X](https://github.com/Jon-b-m/middleware)
+[Middleware code for iAPS](https://github.com/Jon-b-m/middleware)
 
 [freeAPS X original github](https://github.com/ivalkou/freeaps)
 
