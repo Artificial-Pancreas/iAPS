@@ -10,7 +10,9 @@ To download this repo:
 
 In Terminal:
 git clone --branch=main https://github.com/artificial-pancreas/iaps.git
+
 cd iaps
+
 xed .
 
 Or use the GitHub interface: 
