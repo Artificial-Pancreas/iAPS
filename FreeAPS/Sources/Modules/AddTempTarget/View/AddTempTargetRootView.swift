@@ -30,7 +30,8 @@ extension AddTempTarget {
                 Section(
                     header: Text("Basal Insulin and Sensitivity ratio"),
                     footer: Text(
-                        "A lower 'Half Basal Target' setting will lower the basal and raise the ISF earlier (at a lower target glucose)"
+                        "A lower 'Half Basal Target' setting will reduce the basal and raise the ISF earlier, at a lower target glucose." +
+                            " Your setting: \(state.halfBasal) mg/dl. Autosens.max limits the max endpoint (\(state.maxValue * 100) %)"
                     )
                 ) {
                     VStack {
@@ -51,9 +52,8 @@ extension AddTempTarget {
                             "Target" +
                                 (
                                     state
-                                        .units == .mmolL ?
-                                        ": \((Decimal(Double(state.halfBasal - 100) + 40 * (state.percentage / 100)) / (Decimal(state.percentage) / 100)).asMmolL.formatted(.number)) mmol/L" :
-                                        ": \((Decimal(Double(state.halfBasal - 100) + 40 * (state.percentage / 100)) / (Decimal(state.percentage) / 100)).formatted(.number)) mg/dl"
+                                        .units == .mmolL ? ": \(computeTarget().asMmolL.formatted(.number)) mmol/L" :
+                                        ": \(computeTarget().formatted(.number)) mg/dl"
                                 )
                         ).foregroundColor(.secondary).italic()
                     }
@@ -96,6 +96,18 @@ extension AddTempTarget {
             .navigationTitle("Enact Temp Target")
             .navigationBarTitleDisplayMode(.automatic)
             .navigationBarItems(leading: Button("Close", action: state.hideModal))
+        }
+
+        func computeTarget() -> Decimal {
+            let ratio = min(Decimal(state.percentage / 100), state.maxValue)
+            let diff = Double(state.halfBasal - 100)
+            let multiplier = state.percentage - (diff * (state.percentage / 100))
+            var target = Decimal(diff + multiplier) / ratio
+
+            if (state.halfBasal + (state.halfBasal + target - 100)) <= 0 {
+                target = (state.halfBasal - 100 + (state.halfBasal - 100) * state.maxValue) / state.maxValue
+            }
+            return target
         }
 
         private func presetView(for preset: TempTarget) -> some View {
