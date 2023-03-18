@@ -11,30 +11,24 @@ extension AddTempTarget {
         @Published var date = Date()
         @Published var newPresetName = ""
         @Published var presets: [TempTarget] = []
-        @Published var percentage = 100.0
-        @Published var maxValue: Decimal = 1.2
-        @Published var halfBasal: Decimal = 160
 
         private(set) var units: GlucoseUnits = .mmolL
 
         override func subscribe() {
             units = settingsManager.settings.units
             presets = storage.presets()
-            maxValue = settingsManager.preferences.autosensMax
-            halfBasal = settingsManager.preferences.halfBasalExerciseTarget
         }
 
         func enact() {
-            let diff = Double(halfBasal - 100)
-            let multiplier = percentage - (diff * (percentage / 100))
-            let ratio = min(Decimal(percentage / 100), maxValue)
-            var target = Decimal(diff + multiplier) / ratio
+            var lowTarget = low
+            var highTarget = high
 
-            if (halfBasal + (halfBasal + target - 100)) <= 0 {
-                target = (halfBasal - 100 + (halfBasal - 100) * maxValue) / maxValue
+            highTarget = max(highTarget, lowTarget)
+
+            if units == .mmolL {
+                lowTarget = lowTarget.asMgdL
+                highTarget = highTarget.asMgdL
             }
-            let lowTarget = target
-            let highTarget = lowTarget
 
             let entry = TempTarget(
                 name: TempTarget.custom,
@@ -56,16 +50,15 @@ extension AddTempTarget {
         }
 
         func save() {
-            let diff = Double(halfBasal - 100)
-            let multiplier = percentage - (diff * (percentage / 100))
-            let ratio = min(Decimal(percentage / 100), maxValue)
-            var target = Decimal(diff + multiplier) / ratio
+            var lowTarget = low
+            var highTarget = high
 
-            if (halfBasal + (halfBasal + target - 100)) <= 0 {
-                target = (halfBasal - 100 + (halfBasal - 100) * maxValue) / maxValue
+            highTarget = max(highTarget, lowTarget)
+
+            if units == .mmolL {
+                lowTarget = lowTarget.asMgdL
+                highTarget = highTarget.asMgdL
             }
-            let lowTarget = target
-            let highTarget = lowTarget
 
             let entry = TempTarget(
                 name: newPresetName.isEmpty ? TempTarget.custom : newPresetName,

@@ -8,7 +8,6 @@ extension AddTempTarget {
         @State private var isPromtPresented = false
         @State private var isRemoveAlertPresented = false
         @State private var removeAlert: Alert?
-        @State private var isEditing = false
 
         private var formatter: NumberFormatter {
             let formatter = NumberFormatter()
@@ -27,45 +26,19 @@ extension AddTempTarget {
                     }
                 }
 
-                Section(
-                    header: Text("Basal Insulin and Sensitivity ratio"),
-                    footer: Text(
-                        NSLocalizedString(
-                            "A lower 'Half Basal Target' setting will reduce the basal and raise the ISF earlier, at a lower target glucose.",
-                            comment: ""
-                        ) +
-                            NSLocalizedString(" Your setting: ", comment: "") + "\(state.halfBasal) " +
-                            NSLocalizedString("mg/dl. Autosens.max limits the max endpoint", comment: "") +
-                            " (\(state.maxValue * 100) %)"
-                    )
-                ) {
-                    VStack {
-                        Slider(
-                            value: $state.percentage,
-                            in: 15 ...
-                                Double(state.maxValue * 100),
-                            step: 1,
-                            onEditingChanged: { editing in
-                                isEditing = editing
-                            }
-                        )
-                        Text("\(state.percentage.formatted(.number)) %")
-                            .foregroundColor(isEditing ? .orange : .blue)
-                            .font(.largeTitle)
-                        Divider()
-                        Text(
-                            NSLocalizedString("Target", comment: "") +
-                                (
-                                    state
-                                        .units == .mmolL ?
-                                        ": \(computeTarget().asMmolL.formatted(.number.grouping(.never).rounded(rule: .towardZero).precision(.fractionLength(1)))) mmol/L" :
-                                        ": \(computeTarget().formatted(.number.grouping(.never).rounded(rule: .towardZero).precision(.fractionLength(0)))) mg/dl"
-                                )
-                        ).foregroundColor(.secondary).italic()
+                Section(header: Text("Custom")) {
+                    HStack {
+                        Text("Bottom target")
+                        Spacer()
+                        DecimalTextField("0", value: $state.low, formatter: formatter, cleanInput: true)
+                        Text(state.units.rawValue).foregroundColor(.secondary)
                     }
-                }
-
-                Section {
+                    HStack {
+                        Text("Top target")
+                        Spacer()
+                        DecimalTextField("0", value: $state.high, formatter: formatter, cleanInput: true)
+                        Text(state.units.rawValue).foregroundColor(.secondary)
+                    }
                     HStack {
                         Text("Duration")
                         Spacer()
@@ -102,18 +75,6 @@ extension AddTempTarget {
             .navigationTitle("Enact Temp Target")
             .navigationBarTitleDisplayMode(.automatic)
             .navigationBarItems(leading: Button("Close", action: state.hideModal))
-        }
-
-        func computeTarget() -> Decimal {
-            let ratio = min(Decimal(state.percentage / 100), state.maxValue)
-            let diff = Double(state.halfBasal - 100)
-            let multiplier = state.percentage - (diff * (state.percentage / 100))
-            var target = Decimal(diff + multiplier) / ratio
-
-            if (state.halfBasal + (state.halfBasal + target - 100)) <= 0 {
-                target = (state.halfBasal - 100 + (state.halfBasal - 100) * state.maxValue) / state.maxValue
-            }
-            return target
         }
 
         private func presetView(for preset: TempTarget) -> some View {
