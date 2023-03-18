@@ -26,7 +26,8 @@ extension AddTempTarget {
 
         func enact() {
             let diff = Double(halfBasal - 100)
-            let lowTarget = Decimal(diff + 40 * (percentage / 100)) / (Decimal(percentage) / 100)
+            let multiplier = percentage - (diff * (percentage / 100))
+            let lowTarget = Decimal(diff + multiplier) / (Decimal(percentage) / 100)
             let highTarget = lowTarget
 
             let entry = TempTarget(
