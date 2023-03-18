@@ -8,8 +8,8 @@ struct Preferences: JSON {
     var autosensMin: Decimal = 0.7
     var smbDeliveryRatio: Decimal = 0.5
     var rewindResetsAutosens: Bool = true
-    var highTemptargetRaisesSensitivity: Bool = false
-    var lowTemptargetLowersSensitivity: Bool = false
+    var highTemptargetRaisesSensitivity: Bool = true
+    var lowTemptargetLowersSensitivity: Bool = true
     var sensitivityRaisesTarget: Bool = true
     var resistanceLowersTarget: Bool = false
     var advTargetAdjustments: Bool = false
