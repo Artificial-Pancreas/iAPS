@@ -1,26 +1,30 @@
-# FreeAPS X
+# iAPS
 
 ## Introduction 
 
-FreeAPS X - an artificial pancreas system for iOS developed by Ivan Valkou based on [OpenAPS Reference](https://github.com/openaps/oref0) algorithms.
+iAPS - an artificial pancreas system for iOS based on [OpenAPS Reference](https://github.com/openaps/oref0) algorithms (Master 0.7.1) and Ivan Valkous stale Swift repo, freeaps.git.
 
-FreeAPS X uses original JavaScript files of oref0 and provides a user interface (UI) to control and set up the system. 
+Thousands of commits later, with many new and unique features added, the iOS app has been renamed to iAPS under a new organisation, Artificial Pancreas. 
 
+To download this repo: 
 
-To use this branch : 
+In Terminal:
+git clone --branch=main https://github.com/artificial-pancreas/iaps.git
+cd iaps
+xed .
 
-git clone --branch=main https://github.com/Jon-b-m/freeaps.git
+Or use the GitHub interface: 
+Download and open in Xcode directly using the Code button: "Open with Xcode".
+ 
 
-The main branch includes my implementation of dynamic ISF, dynamic CR and some other extra features. Dyn ISF and dyn CR are off by default. 
-
-Please understand that this version is :
-- highly experimental
-- not approved for therapy
+Please understand that this version is:
+- highly experimental and evolving rapidly.
+- not CE approved for therapy yet
 
 
 # Documentation
 
-[Discord FreeAPS X - bdb branch channel](https://discord.com/channels/1020905149037813862/1021041588627062854)
+[Discord FreeAPS X - main branch channel](https://discord.com/channels/1020905149037813862/1021041588627062854)
 
 [My Crowdin Project for translation of FreeAPS X](https://crowdin.com/project/freeaps-x)
 
@@ -36,9 +40,8 @@ Please understand that this version is :
 
 # Contribute
 
-Code contributions as PRs are welcome! There is a need for more developers reviewing and optimizing current code and for adding new features. 
+Code contributions as PRs are welcome!
 
 Translators can click the Crowdin link above. 
 
-Code is open (and free) for everyone. For those of you who have asked about buying me a coffe for me to stay awake at night, 
-my PayPal account is jon.m@live.se (Sweden, Europe). 
+Code is open for everyone. For questions or contributions: jon.m@live.se
