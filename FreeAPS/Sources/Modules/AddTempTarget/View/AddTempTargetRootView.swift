@@ -30,8 +30,13 @@ extension AddTempTarget {
                 Section(
                     header: Text("Basal Insulin and Sensitivity ratio"),
                     footer: Text(
-                        "A lower 'Half Basal Target' setting will reduce the basal and raise the ISF earlier, at a lower target glucose." +
-                            " Your setting: \(state.halfBasal) mg/dl. Autosens.max limits the max endpoint (\(state.maxValue * 100) %)"
+                        NSLocalizedString(
+                            "A lower 'Half Basal Target' setting will reduce the basal and raise the ISF earlier, at a lower target glucose.",
+                            comment: ""
+                        ) +
+                            NSLocalizedString(" Your setting: ", comment: "") + "\(state.halfBasal) " +
+                            NSLocalizedString("mg/dl. Autosens.max limits the max endpoint", comment: "") +
+                            " (\(state.maxValue * 100) %)"
                     )
                 ) {
                     VStack {
@@ -49,7 +54,7 @@ extension AddTempTarget {
                             .font(.largeTitle)
                         Divider()
                         Text(
-                            "Target" +
+                            NSLocalizedString("Target", comment: "") +
                                 (
                                     state
                                         .units == .mmolL ? ": \(computeTarget().asMmolL.formatted(.number)) mmol/L" :
