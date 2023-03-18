@@ -112,6 +112,24 @@
 /*  */
 "Enact Temp Target" = "Tillfälliga målvärden";
 
+/* */
+"Target" = "Målvärde";
+
+/* */
+"Basal Insulin and Sensitivity ratio" = "Basalinsulin och insulinkänslighetskvot";
+
+/* */
+"A lower 'Half Basal Target' setting will reduce the basal and raise the ISF earlier, at a lower target glucose." = "En lägre inställning för 'Halva basaldosen vid Motionsläge' kommer leda till en sänkning av basalinsulin och ett ökad insulinkänslighet tidigare, vid ett lägre målvärde.";
+
+/* */
+" Your setting: " = " Nuvarande inställning: ";
+
+/* */
+"mg/dl. Autosens.max limits the max endpoint" = "mg/dl. Autosens.max begränsar maxvärdet";
+
+/* */
+"Target" = "Målvärde";
+
 /*  */
 "Enter preset name" = "Ange namn för förval";
 
