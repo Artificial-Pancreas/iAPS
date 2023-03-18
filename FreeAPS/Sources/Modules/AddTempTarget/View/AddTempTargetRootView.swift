@@ -8,6 +8,7 @@ extension AddTempTarget {
         @State private var isPromtPresented = false
         @State private var isRemoveAlertPresented = false
         @State private var removeAlert: Alert?
+        @State private var isEditing = false
 
         private var formatter: NumberFormatter {
             let formatter = NumberFormatter()
@@ -26,19 +27,39 @@ extension AddTempTarget {
                     }
                 }
 
-                Section(header: Text("Custom")) {
-                    HStack {
-                        Text("Bottom target")
-                        Spacer()
-                        DecimalTextField("0", value: $state.low, formatter: formatter, cleanInput: true)
-                        Text(state.units.rawValue).foregroundColor(.secondary)
+                Section(
+                    header: Text("Basal Insulin and Sensitivity ratio"),
+                    footer: Text(
+                        "A lower 'Half Basal Target' setting will lower the basal and raise the ISF earlier (at a lower target glucose)"
+                    )
+                ) {
+                    VStack {
+                        Slider(
+                            value: $state.percentage,
+                            in: 15 ...
+                                Double(state.maxValue * 100),
+                            step: 1,
+                            onEditingChanged: { editing in
+                                isEditing = editing
+                            }
+                        )
+                        Text("\(state.percentage.formatted(.number)) %")
+                            .foregroundColor(isEditing ? .orange : .blue)
+                            .font(.largeTitle)
+                        Divider()
+                        Text(
+                            "Target" +
+                                (
+                                    state
+                                        .units == .mmolL ?
+                                        ": \((Decimal(Double(state.halfBasal - 100) + 40 * (state.percentage / 100)) / (Decimal(state.percentage) / 100)).asMmolL.formatted(.number)) mmol/L" :
+                                        ": \((Decimal(Double(state.halfBasal - 100) + 40 * (state.percentage / 100)) / (Decimal(state.percentage) / 100)).formatted(.number)) mg/dl"
+                                )
+                        ).foregroundColor(.secondary).italic()
                     }
-                    HStack {
-                        Text("Top target")
-                        Spacer()
-                        DecimalTextField("0", value: $state.high, formatter: formatter, cleanInput: true)
-                        Text(state.units.rawValue).foregroundColor(.secondary)
-                    }
+                }
+
+                Section {
                     HStack {
                         Text("Duration")
                         Spacer()
