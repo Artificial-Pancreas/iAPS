@@ -62,6 +62,8 @@ iAPS app runs on iPhone or iPod. An iPhone 7 or newer is recommended.
 
 [OpenAPS documentation](https://openaps.readthedocs.io/en/latest/)
 
+[iAPS documentation (under development)] (https://iaps-documentation.readthedocs.io/en/main/)
+
 # Contribute
 
 Code contributions as PRs are welcome!
