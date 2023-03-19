@@ -21,7 +21,7 @@ Download and open in Xcode directly using the Code button: "Open with Xcode".
 
 Please understand that this version is:
 - highly experimental and evolving rapidly.
-- not CE approved for therapy yet
+- not CE approved for therapy.
 
 # Pumps
 
