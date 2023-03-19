@@ -6,6 +6,8 @@ iAPS - an artificial pancreas system for iOS based on [OpenAPS Reference](https:
 
 Thousands of commits later, with many new and unique features added, the iOS app has been renamed to iAPS under a new organisation, Artificial Pancreas. 
 
+iAPS uses lot of frameworks published by the Loop community. 
+
 To download this repo: 
 
 In Terminal:
