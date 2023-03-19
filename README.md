@@ -35,7 +35,7 @@ Please understand that this version is:
 - Medtronic Worldwide Veo 554 or 754 (firmware 2.6A or lower)  
 - Medtronic Canadian/Australian Veo 554 or 754 (firmware 2.7A or lower)   
 
-# Sensors
+# CGM Sensors
 
 - Dexcom G5  
 - Dexcom G6   
@@ -43,6 +43,7 @@ Please understand that this version is:
 - Libre 1   
 - Libre 2 (European)   
 - Medtronic Enlite
+- Nightscout as CGM
 
 # iPhone and iPod
 
