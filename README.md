@@ -67,4 +67,4 @@ iAPS app runs on iPhone or iPod. An iPhone 7 or newer is recommended.
 Code contributions as PRs are welcome!
 
 Translators can click the Crowdin link above       
-For questions or contributions: jon.m@live.se
+  For questions or contributions: jon.m@live.se
