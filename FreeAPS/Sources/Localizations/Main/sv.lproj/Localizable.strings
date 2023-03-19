@@ -112,6 +112,24 @@
 /*  */
 "Enact Temp Target" = "Tillfälliga målvärden";
 
+/* */
+"Target" = "Målvärde";
+
+/* */
+"Basal Insulin and Sensitivity ratio" = "Basalinsulin och insulinkänslighetskvot";
+
+/* */
+"A lower 'Half Basal Target' setting will reduce the basal and raise the ISF earlier, at a lower target glucose." = "En lägre inställning för 'Halva basaldosen vid Motionsläge' kommer leda till en sänkning av basalinsulin och ett ökad insulinkänslighet tidigare, vid ett lägre målvärde.";
+
+/* */
+" Your setting: " = " Nuvarande inställning: ";
+
+/* */
+"mg/dl. Autosens.max limits the max endpoint" = "mg/dl. Autosens.max begränsar maxvärdet";
+
+/* */
+"Target" = "Målvärde";
+
 /*  */
 "Enter preset name" = "Ange namn för förval";
 
@@ -129,6 +147,24 @@
 
 /*  */
 "Save as preset" = "Spara som förval";
+
+/* Delete Meal Preset */
+"Delete Preset" = "Radera Förval";
+
+/* Confirm Deletion */
+"Delete preset '%@'?" = "Radera förval '%@'?";
+
+/* Button */
+"No" = "Nej";
+
+/* Button */
+"Yes" = "Ja";
+
+/* + Button */
+"[ +1 ]" = "[ +1 ]";
+
+/* - Button */
+"[ -1 ]" = "[ -1 ]";
 
 /* Upper temp target limit */
 "Top target" = "Övre målvärde";
@@ -1086,6 +1122,27 @@ Enact a temp Basal or a temp target */
 /* Section in settings */
 "Protein / Fat" = "Protein / Fett";
 
+/* */
+"Meal Presets" = "Måltider";
+
+/* */
+"Empty" = "Tom";
+
+/* */
+"Delete Selected Preset" = "Radera detta förval";
+
+/* */
+"Enter Meal Preset Name" = "Ange namn på måltid";
+
+/* */
+"Name Of Dish" = "Namn på rätt";
+
+/* Save Carbs and continue to bolus recommendation */
+"Save and continue" = "Spara och fortsätt";
+
+/* */
+"Save as Preset" = "Spara som förval";
+
 /* -------------------------------------------------------------------------------------------
   DASH strings
 */
@@ -1349,6 +1406,11 @@ Enact a temp Basal or a temp target */
 "CGM is not used as heartbeat." = "CGM används inte som hjärtslag.";
 
 "Are you sure you want to delete this CGM?" = "År du säker på att du vill ta bort denna CGM?";
+
+/* New Experimental feature */
+"Experimental" = "Experimentell";
+/* Smoothing of CGM readings */
+"Smooth Glucose Value" = "Utjämna blodsocker från sensor";
 
 /* -----------------------------------------------------------------------------------------------------------
 
@@ -1614,7 +1676,7 @@ Enact a temp Basal or a temp target */
 "Adjust Dynamic ISF constant" = "Ändra AF-konstant";
 
 /* Adjust Dynamic ISF constant */
-"Adjust Dynamic ratios by a constant. Default is 1. Higher than 1 => lower ISF" = "Justera dynamiska kvoterna med en konstant (AF). Standardvärde är 1. Högre än 1 => lägre insulinkänslighet";
+"Adjust Dynamic ratios by a constant. Default is 0.5. The higher the value, the larger the correction of your ISF will be for a high or a low BG. Maximum correction is determined by the Autosens min/max settings. For Sigmoid function an adjustment factor of 0.4 - 0.5 is recommended to begin with. For the logaritmic formula there is less consensus, but starting with 0.5 - 0.8 is more appropiate for most users" = "Individuell justering (en multipel) av hur din insulinkänslighet räknas ut. Stnadarvärde är 0.5. Ett högre värde betyder mer aggressiv justering. Maximal insulinkänslighet och minimal insulinkänslighet bestäms av Autosens min/max inställningar och av din schemalagda inställning för insulinkänslighet.\n\nFör S-formad dynamisk inställning rekommendaras att börja med 0.3-0-4. För logaritmisk inställning rekommenderas att börja med 0.5-0.8";
 
 
 /* Headline "Use Sigmoid Function" */

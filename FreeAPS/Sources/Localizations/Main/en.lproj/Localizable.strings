@@ -112,6 +112,21 @@
 /*  */
 "Enact Temp Target" = "Enact Temp Target";
 
+/* */
+"Target" = "Target";
+
+/* */
+"Basal Insulin and Sensitivity ratio" = "Basal Insulin and Sensitivity ratio";
+
+/* */
+"A lower 'Half Basal Target' setting will reduce the basal and raise the ISF earlier, at a lower target glucose." = "A lower 'Half Basal Target' setting will reduce the basal and raise the ISF earlier, at a lower target glucose.";
+
+/* */
+" Your setting: " = " Your setting: ";
+
+/* */
+"mg/dl. Autosens.max limits the max endpoint" = "mg/dl. Autosens.max limits the max endpoint";
+
 /*  */
 "Enter preset name" = "Enter preset name";
 
@@ -129,6 +144,24 @@
 
 /*  */
 "Save as preset" = "Save as preset";
+
+/* Delete Meal Preset */
+"Delete Preset" = "Delete Preset";
+
+/* Confirm Deletion */
+"Delete preset '%@'?" = "Delete preset '%@'?";
+
+/* Button */
+"No" = "No";
+
+/* Button */
+"Yes" = "Yes";
+
+/* + Button */
+"[ +1 ]" = "[ +1 ]";
+
+/* - Button */
+"[ -1 ]" = "[ -1 ]";
 
 /* Upper temp target limit */
 "Top target" = "Top target";
@@ -1374,6 +1407,12 @@ Enact a temp Basal or a temp target */
 "CGM is not used as heartbeat." = "CGM is not used as heartbeat.";
 
 "Are you sure you want to delete this CGM?" = "Are you sure you want to delete this CGM?";
+
+/* New Experimental feature */
+"Experimental" = "Experimental";
+    
+/* Smoothing of CGM readings */
+"Smooth Glucose Value" = "Smooth Glucose Value";
 
  /* -----------------------------------------------------------------------------------------------------------
 

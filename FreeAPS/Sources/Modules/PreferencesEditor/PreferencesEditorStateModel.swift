@@ -360,30 +360,6 @@ extension PreferencesEditor {
 
             let targetSettings = [
                 Field(
-                    displayName: NSLocalizedString(
-                        "High Temptarget Raises Sensitivity",
-                        comment: "High Temptarget Raises Sensitivity"
-                    ),
-                    type: .boolean(keypath: \.highTemptargetRaisesSensitivity),
-                    infoText: NSLocalizedString(
-                        "Defaults to false. When set to true, raises sensitivity (lower sensitivity ratio) for temp targets set to >= 111. Synonym for exercise_mode. The higher your temp target above 110 will result in more sensitive (lower) ratios, e.g., temp target of 120 results in sensitivity ratio of 0.75, while 140 results in 0.6 (with default halfBasalTarget of 160).",
-                        comment: "High Temptarget Raises Sensitivity"
-                    ),
-                    settable: self
-                ),
-                Field(
-                    displayName: NSLocalizedString(
-                        "Low Temptarget Lowers Sensitivity",
-                        comment: "Low Temptarget Lowers Sensitivity"
-                    ),
-                    type: .boolean(keypath: \.lowTemptargetLowersSensitivity),
-                    infoText: NSLocalizedString(
-                        "Defaults to false. When set to true, can lower sensitivity (higher sensitivity ratio) for temptargets <= 99. The lower your temp target below 100 will result in less sensitive (higher) ratios, e.g., temp target of 95 results in sensitivity ratio of 1.09, while 85 results in 1.33 (with default halfBasalTarget of 160).",
-                        comment: "Low Temptarget Lowers Sensitivity"
-                    ),
-                    settable: self
-                ),
-                Field(
                     displayName: NSLocalizedString("Sensitivity Raises Target", comment: "Sensitivity Raises Target"),
                     type: .boolean(keypath: \.sensitivityRaisesTarget),
                     infoText: NSLocalizedString(
@@ -402,38 +378,11 @@ extension PreferencesEditor {
                     settable: self
                 ),
                 Field(
-                    displayName: NSLocalizedString("Advanced Target Adjustments", comment: "Advanced Target Adjustments"),
-                    type: .boolean(keypath: \.advTargetAdjustments),
-                    infoText: NSLocalizedString(
-                        "This feature was previously enabled by default but will now default to false (will NOT be enabled automatically) in oref0 0.6.0 and beyond. (There is no need for this with 0.6.0). This feature lowers oref0’s target BG automatically when current BG and eventualBG are high. This helps prevent and mitigate high BG, but automatically switches to low-temping to ensure that BG comes down smoothly toward your actual target. If you find this behavior too aggressive, you can disable this feature. If you do so, please let us know so we can better understand what settings work best for everyone.",
-                        comment: "Advanced Target Adjustments"
-                    ),
-                    settable: self
-                ),
-                Field(
-                    displayName: NSLocalizedString("Exercise Mode", comment: "Exercise Mode"),
-                    type: .boolean(keypath: \.exerciseMode),
-                    infoText: NSLocalizedString(
-                        "Defaults to false. When true, > 105 mg/dL high temp target adjusts sensitivityRatio for exercise_mode. Synonym for high_temptarget_raises_sensitivity",
-                        comment: "Exercise Mode"
-                    ),
-                    settable: self
-                ),
-                Field(
                     displayName: NSLocalizedString("Half Basal Exercise Target", comment: "Half Basal Exercise Target"),
                     type: .decimal(keypath: \.halfBasalExerciseTarget),
                     infoText: NSLocalizedString(
-                        "Set to a number, e.g. 160, which means when temp target is 160 mg/dL and exercise_mode=true, run 50% basal at this level (120 = 75%; 140 = 60%). This can be adjusted, to give you more control over your exercise modes.",
+                        "Set to a number, e.g. 160, which means when temp target is 160 mg/dL, run 50% basal at this level (120 = 75%; 140 = 60%). This can be adjusted, to give you more control over your exercise modes.",
                         comment: "Half Basal Exercise Target"
-                    ),
-                    settable: self
-                ),
-                Field(
-                    displayName: NSLocalizedString("Wide BG Target Range", comment: "Wide BG Target Range"),
-                    type: .boolean(keypath: \.wideBGTargetRange),
-                    infoText: NSLocalizedString(
-                        "Defaults to false, which means by default only the low end of the pump’s BG target range is used as OpenAPS target. This is a safety feature to prevent too-wide targets and less-optimal outcomes. Therefore the higher end of the target range is used only for avoiding bolus wizard overcorrections. Use wide_bg_target_range: true to force neutral temps over a wider range of eventualBGs.",
-                        comment: "Wide BG Target Range"
                     ),
                     settable: self
                 )
@@ -492,15 +441,6 @@ extension PreferencesEditor {
                     infoText: NSLocalizedString(
                         "Default is false. Any existing temp basals during times the pump was suspended will be deleted and 0 temp basals to negate the profile basal rates during times pump is suspended will be added.",
                         comment: "Suspend Zeros IOB"
-                    ),
-                    settable: self
-                ),
-                Field(
-                    displayName: NSLocalizedString("Bolus Snooze DIA Divisor", comment: "Bolus Snooze DIA Divisor"),
-                    type: .decimal(keypath: \.bolusSnoozeDIADivisor),
-                    infoText: NSLocalizedString(
-                        "Bolus snooze is enacted after you do a meal bolus, so the loop won’t counteract with low temps when you’ve just eaten. The example here and default is 2; so a 3 hour DIA means that bolus snooze will be gradually phased out over 1.5 hours (3DIA/2).",
-                        comment: "Bolus Snooze DIA Divisor"
                     ),
                     settable: self
                 ),
