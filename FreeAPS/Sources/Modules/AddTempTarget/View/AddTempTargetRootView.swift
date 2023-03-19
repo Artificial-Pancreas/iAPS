@@ -57,8 +57,9 @@ extension AddTempTarget {
                             NSLocalizedString("Target", comment: "") +
                                 (
                                     state
-                                        .units == .mmolL ? ": \(computeTarget().asMmolL.formatted(.number)) mmol/L" :
-                                        ": \(computeTarget().formatted(.number)) mg/dl"
+                                        .units == .mmolL ?
+                                        ": \(computeTarget().asMmolL.formatted(.number.grouping(.never).rounded(rule: .towardZero).precision(.fractionLength(1)))) mmol/L" :
+                                        ": \(computeTarget().formatted(.number.grouping(.never).rounded(rule: .towardZero).precision(.fractionLength(0)))) mg/dl"
                                 )
                         ).foregroundColor(.secondary).italic()
                     }
