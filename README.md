@@ -8,14 +8,12 @@ Thousands of commits later, with many new and unique features added, the iOS app
 
 iAPS uses lot of frameworks published by the Loop community. 
 
-To download this repo: 
+## To download this repo: 
 
-In Terminal:
-git clone --branch=main https://github.com/artificial-pancreas/iaps.git
-
-cd iaps
-
-xed .
+In Terminal:  
+git clone --branch=main https://github.com/artificial-pancreas/iaps.git  
+cd iaps  
+xed .  
 
 Or use the GitHub interface: 
 Download and open in Xcode directly using the Code button: "Open with Xcode".
