@@ -40,7 +40,11 @@ Dexcom G6
 Dexcom G7   
 Libre 1   
 Libre 2 (European)   
-Medtronic Enlite   
+Medtronic Enlite
+
+# iPhone and iPod
+
+iAPS app runs on iPhone or iPod. An iPhone 7 or newer is recommended.
 
 # Documentation
 
@@ -62,5 +66,5 @@ Medtronic Enlite
 
 Code contributions as PRs are welcome!
 
-Translators can click the Crowdin link above. 
+Translators can click the Crowdin link above.   
 For questions or contributions: jon.m@live.se
