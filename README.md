@@ -6,6 +6,8 @@ iAPS - an artificial pancreas system for iOS based on [OpenAPS Reference](https:
 
 Thousands of commits later, with many new and unique features added, the iOS app has been renamed to iAPS under a new organisation, Artificial Pancreas. 
 
+iAPS uses lot of frameworks published by the Loop community. 
+
 To download this repo: 
 
 In Terminal:
@@ -23,6 +25,29 @@ Please understand that this version is:
 - highly experimental and evolving rapidly.
 - not CE approved for therapy yet
 
+# Pumps
+
+- Omnipod EROS  
+- Omnipod DASH  
+- Medtronic 515 or 715 (any firmware)  
+- Medtronic 522 or 722 (any firmware)  
+- Medtronic 523 or 723 (firmware 2.4 or lower)  
+- Medtronic Worldwide Veo 554 or 754 (firmware 2.6A or lower)  
+- Medtronic Canadian/Australian Veo 554 or 754 (firmware 2.7A or lower)   
+
+# Sensors CGM
+
+- Dexcom G5  
+- Dexcom G6   
+- Dexcom G7   
+- Libre 1   
+- Libre 2 (European)   
+- Medtronic Enlite
+- direct connexion with nightscout 
+
+# iPhone and iPod
+
+iAPS app runs on iPhone or iPod. An iPhone 7 or newer is recommended.
 
 # Documentation
 
@@ -44,6 +69,6 @@ Please understand that this version is:
 
 Code contributions as PRs are welcome!
 
-Translators can click the Crowdin link above. 
+Translators can click the Crowdin link above  
 
-Code is open for everyone. For questions or contributions: jon.m@live.se
+For questions or contributions: jon.m@live.se
