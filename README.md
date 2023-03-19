@@ -35,7 +35,7 @@ Please understand that this version is:
 - Medtronic Worldwide Veo 554 or 754 (firmware 2.6A or lower)  
 - Medtronic Canadian/Australian Veo 554 or 754 (firmware 2.7A or lower)   
 
-# Sensors CGM
+# CGM Sensors
 
 - Dexcom G5  
 - Dexcom G6   
@@ -43,7 +43,7 @@ Please understand that this version is:
 - Libre 1   
 - Libre 2 (European)   
 - Medtronic Enlite
-- direct connexion with nightscout 
+- Nightscout as CGM
 
 # iPhone and iPod
 
@@ -64,6 +64,8 @@ iAPS app runs on iPhone or iPod. An iPhone 7 or newer is recommended.
 [Overview & Onboarding Tips on Loop&Learn](https://www.loopandlearn.org/freeaps-x/)
 
 [OpenAPS documentation](https://openaps.readthedocs.io/en/latest/)
+
+[iAPS documentation (under development)](https://iaps-documentation.readthedocs.io/en/main/)
 
 # Contribute
 
