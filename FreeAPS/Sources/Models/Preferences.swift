@@ -8,8 +8,8 @@ struct Preferences: JSON {
     var autosensMin: Decimal = 0.7
     var smbDeliveryRatio: Decimal = 0.5
     var rewindResetsAutosens: Bool = true
-    var highTemptargetRaisesSensitivity: Bool = false
-    var lowTemptargetLowersSensitivity: Bool = false
+    var highTemptargetRaisesSensitivity: Bool = true
+    var lowTemptargetLowersSensitivity: Bool = true
     var sensitivityRaisesTarget: Bool = true
     var resistanceLowersTarget: Bool = false
     var advTargetAdjustments: Bool = false
@@ -19,7 +19,6 @@ struct Preferences: JSON {
     var wideBGTargetRange: Bool = false
     var skipNeutralTemps: Bool = false
     var unsuspendIfNoTemp: Bool = false
-    var bolusSnoozeDIADivisor: Decimal = 2
     var min5mCarbimpact: Decimal = 8
     var autotuneISFAdjustmentFraction: Decimal = 1.0
     var remainingCarbsFraction: Decimal = 1.0
@@ -80,7 +79,6 @@ extension Preferences {
         case wideBGTargetRange = "wide_bg_target_range"
         case skipNeutralTemps = "skip_neutral_temps"
         case unsuspendIfNoTemp = "unsuspend_if_no_temp"
-        case bolusSnoozeDIADivisor = "bolussnooze_dia_divisor"
         case min5mCarbimpact = "min_5m_carbimpact"
         case autotuneISFAdjustmentFraction = "autotune_isf_adjustmentFraction"
         case remainingCarbsFraction

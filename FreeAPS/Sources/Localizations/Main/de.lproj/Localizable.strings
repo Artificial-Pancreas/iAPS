@@ -1373,6 +1373,7 @@ Enact a temp Basal or a temp target */
 
 /* New Experimental feature */
 "Experimental" = "Experimental";
+
 /* Smoothing of CGM readings */
 "Smooth Glucose Value" = "Smooth Glucose Value";
 

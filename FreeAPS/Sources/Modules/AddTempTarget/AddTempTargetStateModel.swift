@@ -11,24 +11,24 @@ extension AddTempTarget {
         @Published var date = Date()
         @Published var newPresetName = ""
         @Published var presets: [TempTarget] = []
+        @Published var percentage = 100.0
+        @Published var maxValue: Decimal = 1.2
+        @Published var halfBasal: Decimal = 160
 
         private(set) var units: GlucoseUnits = .mmolL
 
         override func subscribe() {
             units = settingsManager.settings.units
             presets = storage.presets()
+            maxValue = settingsManager.preferences.autosensMax
+            halfBasal = settingsManager.preferences.halfBasalExerciseTarget
         }
 
         func enact() {
-            var lowTarget = low
-            var highTarget = high
-
-            highTarget = max(highTarget, lowTarget)
-
-            if units == .mmolL {
-                lowTarget = lowTarget.asMgdL
-                highTarget = highTarget.asMgdL
-            }
+            let diff = Double(halfBasal - 100)
+            let multiplier = percentage - (diff * (percentage / 100))
+            let lowTarget = Decimal(diff + multiplier) / (Decimal(percentage) / 100)
+            let highTarget = lowTarget
 
             let entry = TempTarget(
                 name: TempTarget.custom,
@@ -50,15 +50,8 @@ extension AddTempTarget {
         }
 
         func save() {
-            var lowTarget = low
-            var highTarget = high
-
-            highTarget = max(highTarget, lowTarget)
-
-            if units == .mmolL {
-                lowTarget = lowTarget.asMgdL
-                highTarget = highTarget.asMgdL
-            }
+            let lowTarget = Decimal(60 + 40 * (percentage / 100)) / (Decimal(percentage) / 100)
+            let highTarget = lowTarget
 
             let entry = TempTarget(
                 name: newPresetName.isEmpty ? TempTarget.custom : newPresetName,
