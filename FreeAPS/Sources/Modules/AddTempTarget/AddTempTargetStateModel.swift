@@ -11,12 +11,16 @@ extension AddTempTarget {
         @Published var date = Date()
         @Published var newPresetName = ""
         @Published var presets: [TempTarget] = []
+        @Published var maxValue: Decimal = 1.2
+        @Published var halfBasal: Decimal = 160
 
         private(set) var units: GlucoseUnits = .mmolL
 
         override func subscribe() {
             units = settingsManager.settings.units
             presets = storage.presets()
+            maxValue = settingsManager.preferences.autosensMax
+            halfBasal = settingsManager.preferences.halfBasalExerciseTarget
         }
 
         func enact() {

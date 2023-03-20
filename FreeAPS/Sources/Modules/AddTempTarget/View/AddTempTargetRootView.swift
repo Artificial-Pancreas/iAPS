@@ -8,6 +8,7 @@ extension AddTempTarget {
         @State private var isPromtPresented = false
         @State private var isRemoveAlertPresented = false
         @State private var removeAlert: Alert?
+        @State private var isEditing = false
 
         private var formatter: NumberFormatter {
             let formatter = NumberFormatter()
@@ -38,6 +39,11 @@ extension AddTempTarget {
                         Spacer()
                         DecimalTextField("0", value: $state.high, formatter: formatter, cleanInput: true)
                         Text(state.units.rawValue).foregroundColor(.secondary)
+                    }
+                    HStack {
+                        Text("Resulting Sensitivity")
+                        Spacer()
+                        Text("This will result in a Sensitivity of: ", computeSensRatio(), "!")
                     }
                     HStack {
                         Text("Duration")
@@ -134,6 +140,25 @@ extension AddTempTarget {
                         removeAlert!
                     }
             }
+        }
+
+        private func computeSensRatio() -> Decimal {
+            var SensRatio: Decimal = 1.0
+            let normalTarget: Decimal = 100
+            let target = (state.high + state.low) / 2
+            if state.settingsManager.preferences.highTemptargetRaisesSensitivity && target > normalTarget ||
+                state.settingsManager.preferences.lowTemptargetLowersSensitivity && target < normalTarget
+            {
+                let c = (state.halfBasal - normalTarget)
+                if c * (c + target - normalTarget) <= 0.0 {
+                    SensRatio = state.maxValue
+                } else {
+                    SensRatio = c / (c + target - normalTarget)
+                }
+                // limit sensitivityRatio to profile.autosens_max (1.2x by default)
+                SensRatio = min(SensRatio, state.maxValue)
+            }
+            return SensRatio
         }
     }
 }
