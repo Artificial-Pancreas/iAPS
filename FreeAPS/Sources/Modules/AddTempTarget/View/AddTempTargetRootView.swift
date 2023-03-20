@@ -43,7 +43,7 @@ extension AddTempTarget {
                     HStack {
                         Text("Resulting Sensitivity")
                         Spacer()
-                        Text("This will result in a Sensitivity of: ", computeSensRatio(), "!")
+                        Text("This will result in a Sensitivity of: ", computeSensRatio(), "! Due to HighTTraisesSensitivity=", state.settingsManager.preferences.highTemptargetRaisesSensitivity, " and LowTTlowersSenstivity=", state.settingsManager.preferences.lowTemptargetLowersSensitivity," and AutonsensMax=", state.maxValue)
                     }
                     HStack {
                         Text("Duration")
