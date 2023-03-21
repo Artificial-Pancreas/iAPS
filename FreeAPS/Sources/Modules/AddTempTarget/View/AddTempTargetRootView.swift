@@ -64,7 +64,7 @@ extension AddTempTarget {
                                 )
                                 Text(state.units.rawValue).foregroundColor(.secondary)
                             }
-                            Text(NSLocalizedString("Desired Sensitivity", comment: ""))
+                            Text(NSLocalizedString("Desired Insulin Ratio / Override", comment: ""))
                             Slider(
                                 value: $state.percentage,
                                 in: 15 ...
