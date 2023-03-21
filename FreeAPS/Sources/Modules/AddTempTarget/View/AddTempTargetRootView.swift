@@ -41,7 +41,7 @@ extension AddTempTarget {
 
                 if state.viewPercantage {
                     Section(
-                        header: Text("TT Effect on Basal and Sensitivity"),
+                        header: Text("Effect of TT on Basal and Sensitivity"),
                         footer: Text(
                             NSLocalizedString(
                                 "'Half Basal Target' (HBT) setting adjusts how a temp target affects basal and ISF.\n     A lower HBT will allow Basal to be reduced earlier (at a less high TT).\n",
