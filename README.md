@@ -51,7 +51,7 @@ iAPS app runs on iPhone or iPod. An iPhone 7 or newer is recommended.
 
 [Discord iAPS - main branch channel](https://discord.com/channels/1020905149037813862/1021041588627062854)
 
-[My Crowdin Project for translation of iAPS](https://crowdin.com/project/freeaps-x)
+[Crowdin Project for translation of iAPS](https://crowdin.com/project/freeaps-x)
 
 [Middleware code for iAPS](https://github.com/Jon-b-m/middleware)
 
