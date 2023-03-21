@@ -40,10 +40,11 @@ extension AddTempTarget {
                     target = (c / ratio) - c + 100
                 }
                 lowTarget = target
+                lowTarget = Decimal(round(Double(target * 10)) / 10)
             }
             var highTarget = lowTarget
 
-            if units == .mmolL {
+            if units == .mmolL, !viewPercantage {
                 lowTarget = lowTarget.asMgdL
                 highTarget = highTarget.asMgdL
             }
@@ -80,6 +81,7 @@ extension AddTempTarget {
                     target = (c / ratio) - c + 100
                 }
                 lowTarget = target
+                lowTarget = Decimal(round(Double(target * 10)) / 10)
             }
             var highTarget = lowTarget
 

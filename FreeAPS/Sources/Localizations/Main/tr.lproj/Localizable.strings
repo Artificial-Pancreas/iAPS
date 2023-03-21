@@ -1,6 +1,6 @@
 /*
   Localizable.strings
-  FreeAPS X
+  iAPS
 */
 /* -------------------------------- */
 /* Bolus screen when adding insulin */
@@ -867,7 +867,7 @@ Enact a temp Basal or a temp target */
 "To prevent LOW required %d g of carbs" = "DÜŞÜK KŞ'ini önlemek için gerekli Karbonhidrat %d g";
 
 /* */
-"FreeAPS X not active" = "FreeAPS X etkin değil";
+"iAPS not active" = "iAPS etkin değil";
 
 /* */
 "Last loop was more then %d min ago" = "Son döngü %d dak kadar önceydi";
@@ -1015,7 +1015,7 @@ Enact a temp Basal or a temp target */
 "For write data to Apple Health you must give permissions in Settings > Health > Data Access" = "Apple Sağlık Uygulamasına veri yazmak için Ayarlar > Sağlık > Veri Erişimi'nde izinler vermelisiniz";
 
 /* */
-"After you create glucose records in the Health app, please open FreeAPS X to help us guaranteed transfer changed data" = "Sağlık uygulamasında glikoz kayıtları oluşturduktan sonra, değiştirilen verileri aktarmayı garanti etmemize yardımcı olmak için lütfen FreeAPS X'i açın";
+"After you create glucose records in the Health app, please open iAPS to help us guaranteed transfer changed data" = "Sağlık uygulamasında glikoz kayıtları oluşturduktan sonra, değiştirilen verileri aktarmayı garanti etmemize yardımcı olmak için lütfen FreeAPS X'i açın";
 
 /* New ALerts ------------------------- */
 /* Info title */
@@ -1379,7 +1379,7 @@ Enact a temp Basal or a temp target */
 /* -----------------------------------------------------------------------------------------------------------
 
   Infotexts from openaps.docs and androidaps.docs
-  FreeAPS X
+  iAPS
 */
 /* Headline Rewind Resets Autosens */
 
@@ -1434,7 +1434,7 @@ Enact a temp Basal or a temp target */
 "Skip Neutral Temps" = "Doğal Geçici Hedefleri Atla";
 
 /* "Skip Neutral Temps" */
-"Defaults to false, so that FreeAPS X will set temps whenever it can, so it will be easier to see if the system is working, even when you are offline. This means FreeAPS X will set a “neutral” temp (same as your default basal) if no adjustments are needed. This is an old setting for OpenAPS to have the options to minimise sounds and notifications from the 'rig', that may wake you up during the night." = "Varsayılan olarak kapalı olarak ayarlıdır, böylece FreeAPS X mümkün olduğu kadar geçici süreler ayarlayacaktır, böylece çevrimdışı olduğunuzda bile sistemin çalışıp çalışmadığını görmek daha kolay olacaktır. Bu herhangi bir ayar gerekmiyorsa OpenAPS'nin \"nötr\" bir geçeci bazal ayarlayacağı (varsayılan bazalınızla aynı) anlamına gelir. Bu OpenAPS'in sizi gece uyandırabilecek \"rig\"tan gelen sesleri ve bildirimleri en aza indirme seçeneklerine sahip olduğu eski bir ayardır. ";
+"Defaults to false, so that iAPS will set temps whenever it can, so it will be easier to see if the system is working, even when you are offline. This means iAPS will set a “neutral” temp (same as your default basal) if no adjustments are needed. This is an old setting for OpenAPS to have the options to minimise sounds and notifications from the 'rig', that may wake you up during the night." = "Varsayılan olarak kapalı olarak ayarlıdır, böylece iAPS mümkün olduğu kadar geçici süreler ayarlayacaktır, böylece çevrimdışı olduğunuzda bile sistemin çalışıp çalışmadığını görmek daha kolay olacaktır. Bu herhangi bir ayar gerekmiyorsa OpenAPS'nin \"nötr\" bir geçeci bazal ayarlayacağı (varsayılan bazalınızla aynı) anlamına gelir. Bu OpenAPS'in sizi gece uyandırabilecek \"rig\"tan gelen sesleri ve bildirimleri en aza indirme seçeneklerine sahip olduğu eski bir ayardır. ";
 
 /* Headline "Unsuspend If No Temp” */
 "Unsuspend If No Temp" = "Aktif Geçici Hedef Yoksa Devam Et";
@@ -1446,7 +1446,7 @@ Enact a temp Basal or a temp target */
 "Enable UAM" = "UAM (Bildirilmemiş Öğünleri) etkinleştir";
 
 /* "Enable UAM" */
-"With this option enabled, the SMB algorithm can recognize unannounced meals. This is helpful, if you forget to tell FreeAPS X about your carbs or estimate your carbs wrong and the amount of entered carbs is wrong or if a meal with lots of fat and protein has a longer duration than expected. Without any carb entry, UAM can recognize fast glucose increasments caused by carbs, adrenaline, etc, and tries to adjust it with SMBs. This also works the opposite way: if there is a fast glucose decreasement, it can stop SMBs earlier." = "Bu seçenek etkinleştirildiğinde, SMB algoritması bildirilmeyen öğünleri tanıyabilir. FreeAPS X'e karbonhidratlarınızı girmeyi unutursanız veya karbonhidratlarınızı yanlış tahmin ederseniz ve girilen karbonhidrat miktarı yanlışsa veya çok miktarda yağ ve protein içeren bir öğün beklenenden daha uzun sürerse bu yararlıdır. Herhangi bir karbonhidrat girişi olmadan, UAM karbonhidrat, adrenalin vb. kaynaklı hızlı glikoz artışlarını algılayabilir ve SMB'ler ile ayarlamaya çalışır. Bu aynı zamanda tam tersi şekilde çalışır: hızlı bir glikoz düşüşü varsa, SMB'leri daha erken durdurabilir.";
+"With this option enabled, the SMB algorithm can recognize unannounced meals. This is helpful, if you forget to tell iAPS about your carbs or estimate your carbs wrong and the amount of entered carbs is wrong or if a meal with lots of fat and protein has a longer duration than expected. Without any carb entry, UAM can recognize fast glucose increasments caused by carbs, adrenaline, etc, and tries to adjust it with SMBs. This also works the opposite way: if there is a fast glucose decreasement, it can stop SMBs earlier." = "Bu seçenek etkinleştirildiğinde, SMB algoritması bildirilmeyen öğünleri tanıyabilir. FreeAPS X'e karbonhidratlarınızı girmeyi unutursanız veya karbonhidratlarınızı yanlış tahmin ederseniz ve girilen karbonhidrat miktarı yanlışsa veya çok miktarda yağ ve protein içeren bir öğün beklenenden daha uzun sürerse bu yararlıdır. Herhangi bir karbonhidrat girişi olmadan, UAM karbonhidrat, adrenalin vb. kaynaklı hızlı glikoz artışlarını algılayabilir ve SMB'ler ile ayarlamaya çalışır. Bu aynı zamanda tam tersi şekilde çalışır: hızlı bir glikoz düşüşü varsa, SMB'leri daha erken durdurabilir.";
 
 /* Headline "Enable SMB With COB" */
 "Enable SMB With COB" = "SMB'yi AKRB ile etkinleştir";

@@ -2,7 +2,7 @@
 "Dexcom G7" = "Dexcom G7";
 
 /* Descriptive text on G7StartupView */
-"FreeAPS X can read G7 CGM data, but you must still use the Dexcom G7 App for pairing, calibration, and other sensor management." = "FreeAPS X может считывать G7 CGM данные, но Вы все равно должны использовать Dexcom G7 App для сопряжения, калибровки и управления датчиком.";
+"iAPS can read G7 CGM data, but you must still use the Dexcom G7 App for pairing, calibration, and other sensor management." = "iAPS может считывать G7 CGM данные, но Вы все равно должны использовать Dexcom G7 App для сопряжения, калибровки и управления датчиком.";
 
 /* Button title for starting setup */
 "Continue" = "Продолжить";

@@ -1,6 +1,6 @@
 /*
   Localizable.strings
-  FreeAPS X
+  iAPS
 */
 /* -------------------------------- */
 /* Bolus screen when adding insulin */
@@ -867,7 +867,7 @@ Enact a temp Basal or a temp target */
 "To prevent LOW required %d g of carbs" = "Per evitare glicemia BASSA servono %d g di carboidrati";
 
 /* */
-"FreeAPS X not active" = "FreeAPS X non attivo";
+"iAPS not active" = "iAPS non attivo";
 
 /* */
 "Last loop was more then %d min ago" = "L'ultimo ciclo è stato più di %d min fa";
@@ -1015,7 +1015,7 @@ Enact a temp Basal or a temp target */
 "For write data to Apple Health you must give permissions in Settings > Health > Data Access" = "Per scrivere dati su Apple Health devi dare il permesso in Impostazioni > Salute > Accesso dati";
 
 /* */
-"After you create glucose records in the Health app, please open FreeAPS X to help us guaranteed transfer changed data" = "Dopo aver creato record glicemici nell'app Salute, apri FreeAPS X per aiutarci a trasferire i dati modificati";
+"After you create glucose records in the Health app, please open iAPS to help us guaranteed transfer changed data" = "Dopo aver creato record glicemici nell'app Salute, apri iAPS per aiutarci a trasferire i dati modificati";
 
 /* New ALerts ------------------------- */
 /* Info title */
@@ -1379,7 +1379,7 @@ Enact a temp Basal or a temp target */
 /* -----------------------------------------------------------------------------------------------------------
 
   Infotexts from openaps.docs and androidaps.docs
-  FreeAPS X
+  iAPS
 */
 /* Headline Rewind Resets Autosens */
 
@@ -1434,7 +1434,7 @@ Enact a temp Basal or a temp target */
 "Skip Neutral Temps" = "Skip Neutral Temps";
 
 /* "Skip Neutral Temps" */
-"Defaults to false, so that FreeAPS X will set temps whenever it can, so it will be easier to see if the system is working, even when you are offline. This means FreeAPS X will set a “neutral” temp (same as your default basal) if no adjustments are needed. This is an old setting for OpenAPS to have the options to minimise sounds and notifications from the 'rig', that may wake you up during the night." = "I valori predefiniti sono falsi, in modo che FreeAPS X imposterà basali temporanee ogni volta che è possibile, così sarà più facile vedere se il sistema funziona, anche quando sei offline. Ciò significa che OpenAPS imposterà una basale temporanea “neutrale” (uguale alla basale predefinita) se non sono necessarie modifiche. Questa è una vecchia impostazione per OpenAPS per avere le opzioni per minimizzare i suoni e le notifiche del dispositivo, che può svegliarti durante la notte. ";
+"Defaults to false, so that iAPS will set temps whenever it can, so it will be easier to see if the system is working, even when you are offline. This means iAPS will set a “neutral” temp (same as your default basal) if no adjustments are needed. This is an old setting for OpenAPS to have the options to minimise sounds and notifications from the 'rig', that may wake you up during the night." = "I valori predefiniti sono falsi, in modo che iAPS imposterà basali temporanee ogni volta che è possibile, così sarà più facile vedere se il sistema funziona, anche quando sei offline. Ciò significa che OpenAPS imposterà una basale temporanea “neutrale” (uguale alla basale predefinita) se non sono necessarie modifiche. Questa è una vecchia impostazione per OpenAPS per avere le opzioni per minimizzare i suoni e le notifiche del dispositivo, che può svegliarti durante la notte. ";
 
 /* Headline "Unsuspend If No Temp” */
 "Unsuspend If No Temp" = "Unsuspend If No Temp";
@@ -1446,7 +1446,7 @@ Enact a temp Basal or a temp target */
 "Enable UAM" = "Enable UAM";
 
 /* "Enable UAM" */
-"With this option enabled, the SMB algorithm can recognize unannounced meals. This is helpful, if you forget to tell FreeAPS X about your carbs or estimate your carbs wrong and the amount of entered carbs is wrong or if a meal with lots of fat and protein has a longer duration than expected. Without any carb entry, UAM can recognize fast glucose increasments caused by carbs, adrenaline, etc, and tries to adjust it with SMBs. This also works the opposite way: if there is a fast glucose decreasement, it can stop SMBs earlier." = "Con questa opzione abilitata, l'algoritmo SMB può riconoscere i pasti senza preavviso. Questo è utile, se dimenticate di dire ad FreeAPS X i vostri carboidrati o stimate i vostri carboidrati in modo sbagliato o la quantità di carboidrati inseriti è sbagliata o se un pasto è particolarmente ricco di grassi e proteine ed ha una durata più lunga di quanto previsto. Senza alcuna voce di carboidrati, UAM può riconoscere aumenti rapidi di glucosio causati da carboidrati, adrenalina, ecc, e cerca di regolarlo con le SMB. Questo funziona anche in modo opposto: se c'è una rapida diminuzione del glucosio, può fermare SMB prima.";
+"With this option enabled, the SMB algorithm can recognize unannounced meals. This is helpful, if you forget to tell iAPS about your carbs or estimate your carbs wrong and the amount of entered carbs is wrong or if a meal with lots of fat and protein has a longer duration than expected. Without any carb entry, UAM can recognize fast glucose increasments caused by carbs, adrenaline, etc, and tries to adjust it with SMBs. This also works the opposite way: if there is a fast glucose decreasement, it can stop SMBs earlier." = "Con questa opzione abilitata, l'algoritmo SMB può riconoscere i pasti senza preavviso. Questo è utile, se dimenticate di dire ad iAPS i vostri carboidrati o stimate i vostri carboidrati in modo sbagliato o la quantità di carboidrati inseriti è sbagliata o se un pasto è particolarmente ricco di grassi e proteine ed ha una durata più lunga di quanto previsto. Senza alcuna voce di carboidrati, UAM può riconoscere aumenti rapidi di glucosio causati da carboidrati, adrenalina, ecc, e cerca di regolarlo con le SMB. Questo funziona anche in modo opposto: se c'è una rapida diminuzione del glucosio, può fermare SMB prima.";
 
 /* Headline "Enable SMB With COB" */
 "Enable SMB With COB" = "Enable SMB With COB";

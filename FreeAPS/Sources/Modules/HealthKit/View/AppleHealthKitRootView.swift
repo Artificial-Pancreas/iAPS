@@ -13,7 +13,7 @@ extension AppleHealthKit {
                     HStack {
                         Image(systemName: "pencil.circle.fill")
                         Text(
-                            "After you create glucose records in the Health app, please open FreeAPS X to help us guaranteed transfer changed data"
+                            "After you create glucose records in the Health app, please open iAPS to help us guaranteed transfer changed data"
                         )
                         .font(.caption)
                     }
