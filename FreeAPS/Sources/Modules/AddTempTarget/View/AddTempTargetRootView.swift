@@ -46,10 +46,10 @@ extension AddTempTarget {
                             NSLocalizedString(
                                 "'Half Basal Target' (HBT) setting adjusts how a temp target affects basal and ISF.\n     A lower HBT will allow Basal to be reduced earlier (at a less high TT).\n",
                                 comment: ""
-                            ) // +
-//                                NSLocalizedString("     HBT setting: ", comment: "") + "\(state.halfBasal) " +
-//                                NSLocalizedString("mg/dl. Autosens.max setting determines the max endpoint", comment: "") +
-//                                " (\(state.maxValue): \(state.maxValue * 100) %)"
+                            ) +
+                                NSLocalizedString("     HBT setting: ", comment: "") + "\(state.halfBasal) " +
+                                NSLocalizedString("mg/dl. Autosens.max setting determines the max endpoint", comment: "") +
+                                " (\(state.maxValue): \(state.maxValue * 100) %)"
                         )
                     ) {
                         VStack {
@@ -69,11 +69,14 @@ extension AddTempTarget {
                                 value: $state.percentage,
                                 in: 15 ...
                                     Double(state.maxValue * 100),
-                                step: 5,
-                                onEditingChanged: { editing in
-                                    isEditing = editing
-                                }
-                            )
+                                step: 5
+                            ) {}
+                            minimumValueLabel: { Text("15") }
+                            maximumValueLabel: { Text("\(Double(state.maxValue * 100), specifier: "%.0f")") }
+                            onEditingChanged: { editing in
+                                isEditing = editing
+                            }
+
                             Text("\(state.percentage.formatted(.number)) %")
                                 .foregroundColor(isEditing ? .orange : .blue)
                                 .font(.largeTitle)
@@ -182,6 +185,7 @@ extension AddTempTarget {
                 hbt = ((2 * ratio * normalTarget) - normalTarget - (ratio * target)) / (ratio - 1)
             }
             hbt = Decimal(round(Double(hbt)))
+            // state.halfBasal = hbt
             return hbt
         }
 
