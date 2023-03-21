@@ -15,7 +15,7 @@ extension AddTempTarget {
         @Published var percentage = 100.0
         @Published var maxValue: Decimal = 1.2
         @Published var halfBasal: Decimal = 160
-        @Published var viewPercantage = false
+        @Published var viewPercentage = false
 
         private(set) var units: GlucoseUnits = .mmolL
 
@@ -29,7 +29,7 @@ extension AddTempTarget {
         func enact() {
             var lowTarget = low
 
-            if viewPercantage {
+            if viewPercentage {
                 var ratio = Decimal(percentage / 100)
                 let hB = halfBasal
                 let c = hB - 100
@@ -44,7 +44,7 @@ extension AddTempTarget {
             }
             var highTarget = lowTarget
 
-            if units == .mmolL, !viewPercantage {
+            if units == .mmolL, !viewPercentage {
                 lowTarget = lowTarget.asMgdL
                 highTarget = highTarget.asMgdL
             }
@@ -70,7 +70,7 @@ extension AddTempTarget {
         func save() {
             var lowTarget = low
 
-            if viewPercantage {
+            if viewPercentage {
                 var ratio = Decimal(percentage / 100)
                 let hB = halfBasal
                 let c = hB - 100
@@ -85,7 +85,7 @@ extension AddTempTarget {
             }
             var highTarget = lowTarget
 
-            if units == .mmolL, !viewPercantage {
+            if units == .mmolL, !viewPercentage {
                 lowTarget = lowTarget.asMgdL
                 highTarget = highTarget.asMgdL
             }

@@ -35,24 +35,31 @@ extension AddTempTarget {
                     }
                 }
 
-                Toggle(isOn: $state.viewPercantage) {
+                Toggle(isOn: $state.viewPercentage) {
                     Text("Exercise / Pre Meal Slider")
                 }
 
-                if state.viewPercantage {
+                if state.viewPercentage {
                     Section(
                         header: Text("TT Effect on Basal and Sensitivity"),
                         footer: Text(
                             NSLocalizedString(
                                 "'Half Basal Target' (HBT) setting adjusts how a temp target affects basal and ISF.\n     A lower HBT will allow Basal to be reduced earlier (at a less high TT).\n",
                                 comment: ""
-                            ) +
-                                NSLocalizedString("     HBT setting: ", comment: "") + "\(state.halfBasal) " +
-                                NSLocalizedString("mg/dl. Autosens.max setting determines the max endpoint", comment: "") +
-                                " (\(state.maxValue): \(state.maxValue * 100) %)"
+                            ) // +
+//                                NSLocalizedString("     HBT setting: ", comment: "") + "\(state.halfBasal) " +
+//                                NSLocalizedString("mg/dl. Autosens.max setting determines the max endpoint", comment: "") +
+//                                " (\(state.maxValue): \(state.maxValue * 100) %)"
                         )
                     ) {
                         VStack {
+                            HStack {
+                                Text(NSLocalizedString("Target", comment: ""))
+                                Spacer()
+                                DecimalTextField("160", value: $state.low, formatter: formatter, cleanInput: true)
+                                Text(state.units.rawValue).foregroundColor(.secondary)
+                            }
+                            Text(NSLocalizedString("Desired Sensitivity", comment: ""))
                             Slider(
                                 value: $state.percentage,
                                 in: 15 ...
@@ -66,15 +73,13 @@ extension AddTempTarget {
                                 .foregroundColor(isEditing ? .orange : .blue)
                                 .font(.largeTitle)
                             Divider()
-                            Text(
-                                NSLocalizedString("Temp Target to Save", comment: "") +
-                                    (
-                                        state
-                                            .units == .mmolL ?
-                                            ": \(computeTarget().asMmolL.formatted(.number.grouping(.never).rounded().precision(.fractionLength(1)))) mmol/L" :
-                                            ": \(computeTarget().formatted(.number.grouping(.never).rounded().precision(.fractionLength(0)))) mg/dl"
-                                    )
-                            ).foregroundColor(.primary).italic()
+                            HStack {
+                                Text(
+                                    NSLocalizedString("Adjusting HalfBasalTarget to: ", comment: "")
+                                )
+                                .foregroundColor(.primary).italic()
+                                Text("\(computeHBT().formatted(.number)) !")
+                            }
                         }
                     }
                 } else {
@@ -96,7 +101,7 @@ extension AddTempTarget {
                         label: { Text("Save as preset") }
                     }
                 }
-                if state.viewPercantage {
+                if state.viewPercentage {
                     Section {
                         HStack {
                             Text("Duration")
@@ -136,7 +141,7 @@ extension AddTempTarget {
             .navigationBarTitleDisplayMode(.automatic)
             .navigationBarItems(leading: Button("Close", action: state.hideModal))
             .onDisappear {
-                if state.viewPercantage {
+                if state.viewPercentage {
                     let isEnabledMoc = ViewPercentage(context: moc)
                     isEnabledMoc.enabled = true
                     isEnabledMoc.date = Date()
@@ -150,17 +155,26 @@ extension AddTempTarget {
             }
         }
 
-        func computeTarget() -> Decimal {
-            var ratio = Decimal(state.percentage / 100)
-            let hB = state.halfBasal
-            let c = hB - 100
-            var target = (c / ratio) - c + 100
+//        func computeTarget() -> Decimal {
+//            var ratio = Decimal(state.percentage / 100)
+//            let hB = state.halfBasal
+//            let c = hB - 100
+//            var target = (c / ratio) - c + 100
+//
+//            if c * (c + target - 100) <= 0 {
+//                ratio = state.maxValue
+//                target = (c / ratio) - c + 100
+//            }
+//            return target
+//        }
 
-            if c * (c + target - 100) <= 0 {
-                ratio = state.maxValue
-                target = (c / ratio) - c + 100
-            }
-            return target
+        func computeHBT() -> Decimal {
+            var ratio = Decimal(state.percentage / 100)
+            let normalTarget: Decimal = 100
+            let target: Decimal = state.low
+            var hbt: Decimal = ((2 * ratio * normalTarget) - normalTarget - (ratio * target)) / (ratio - 1)
+            hbt = Decimal(round(Double(hbt)))
+            return hbt
         }
 
         private func presetView(for preset: TempTarget) -> some View {
