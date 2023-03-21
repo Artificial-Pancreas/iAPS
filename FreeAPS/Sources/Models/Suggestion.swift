@@ -21,6 +21,7 @@ struct Suggestion: JSON, Equatable {
     var recieved: Bool?
     let tdd: Decimal?
     let insulin: Insulin?
+    let current_target: Decimal?
 }
 
 struct Predictions: JSON, Equatable {
@@ -59,6 +60,7 @@ extension Suggestion {
         case isf = "ISF"
         case tdd = "TDD"
         case insulin
+        case current_target
     }
 }
 

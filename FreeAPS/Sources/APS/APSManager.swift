@@ -725,23 +725,27 @@ final class BaseAPSManager: APSManager, Injectable {
             var indeces: Int = 0
             var nrOfIndeces: Int = 0
 
+            var booleanArray = [ViewPercentage]()
+            var isPercentageEnabled = false
+
             coredataContext.performAndWait {
                 let requestTDD = TDD.fetchRequest() as NSFetchRequest<TDD>
-
                 requestTDD.predicate = NSPredicate(format: "timestamp > %@ AND tdd > 0", tenDaysAgo as NSDate)
-
                 let sortTDD = NSSortDescriptor(key: "timestamp", ascending: true)
                 requestTDD.sortDescriptors = [sortTDD]
-
                 try? uniqEvents = coredataContext.fetch(requestTDD)
+
+                let requestIsEnbled = ViewPercentage.fetchRequest() as NSFetchRequest<ViewPercentage>
+                let sortIsEnabled = NSSortDescriptor(key: "date", ascending: false)
+                requestIsEnbled.sortDescriptors = [sortIsEnabled]
+                requestIsEnbled.fetchLimit = 1
+                try? booleanArray = coredataContext.fetch(requestIsEnbled)
 
                 total = uniqEvents.compactMap({ each in each.tdd as? Decimal ?? 0 }).reduce(0, +)
                 indeces = uniqEvents.count
-
                 // Only fetch once. Use same (previous) fetch
                 let twoHoursArray = uniqEvents.filter({ ($0.timestamp ?? Date()) >= twoHoursAgo })
                 nrOfIndeces = twoHoursArray.count
-
                 totalAmount = twoHoursArray.compactMap({ each in each.tdd as? Decimal ?? 0 }).reduce(0, +)
             }
 
@@ -754,14 +758,19 @@ final class BaseAPSManager: APSManager, Injectable {
 
             let average2hours = totalAmount / Decimal(nrOfIndeces)
             let average14 = total / Decimal(indeces)
-
             let weight = preferences.weightPercentage
             let weighted_average = weight * average2hours + (1 - weight) * average14
+
+            if !booleanArray.isEmpty {
+                isPercentageEnabled = booleanArray[0].enabled
+            }
+
             let averages = TDD_averages(
                 average_total_data: roundDecimal(average14, 1),
                 weightedAverage: roundDecimal(weighted_average, 1),
                 past2hoursAverage: roundDecimal(average2hours, 1),
-                date: Date()
+                date: Date(),
+                isEnabled: isPercentageEnabled
             )
             storage.save(averages, as: OpenAPS.Monitor.tdd_averages)
 

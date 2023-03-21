@@ -1,3 +1,4 @@
+import CoreData
 import SwiftUI
 
 extension AddTempTarget {
@@ -14,6 +15,7 @@ extension AddTempTarget {
         @Published var percentage = 100.0
         @Published var maxValue: Decimal = 1.2
         @Published var halfBasal: Decimal = 160
+        @Published var viewPercantage = false
 
         private(set) var units: GlucoseUnits = .mmolL
 
@@ -25,10 +27,26 @@ extension AddTempTarget {
         }
 
         func enact() {
-            let diff = Double(halfBasal - 100)
-            let multiplier = percentage - (diff * (percentage / 100))
-            let lowTarget = Decimal(diff + multiplier) / (Decimal(percentage) / 100)
-            let highTarget = lowTarget
+            var lowTarget = low
+
+            if viewPercantage {
+                var ratio = Decimal(percentage / 100)
+                let hB = halfBasal
+                let c = hB - 100
+                var target = (c / ratio) - c + 100
+
+                if c * (c + target - 100) <= 0 {
+                    ratio = maxValue
+                    target = (c / ratio) - c + 100
+                }
+                lowTarget = target
+            }
+            var highTarget = lowTarget
+
+            if units == .mmolL {
+                lowTarget = lowTarget.asMgdL
+                highTarget = highTarget.asMgdL
+            }
 
             let entry = TempTarget(
                 name: TempTarget.custom,
@@ -40,7 +58,6 @@ extension AddTempTarget {
                 reason: TempTarget.custom
             )
             storage.storeTempTargets([entry])
-
             showModal(for: nil)
         }
 
@@ -50,8 +67,26 @@ extension AddTempTarget {
         }
 
         func save() {
-            let lowTarget = Decimal(60 + 40 * (percentage / 100)) / (Decimal(percentage) / 100)
-            let highTarget = lowTarget
+            var lowTarget = low
+
+            if viewPercantage {
+                var ratio = Decimal(percentage / 100)
+                let hB = halfBasal
+                let c = hB - 100
+                var target = (c / ratio) - c + 100
+
+                if c * (c + target - 100) <= 0 {
+                    ratio = maxValue
+                    target = (c / ratio) - c + 100
+                }
+                lowTarget = target
+            }
+            var highTarget = lowTarget
+
+            if units == .mmolL, !viewPercantage {
+                lowTarget = lowTarget.asMgdL
+                highTarget = highTarget.asMgdL
+            }
 
             let entry = TempTarget(
                 name: newPresetName.isEmpty ? TempTarget.custom : newPresetName,
@@ -62,7 +97,6 @@ extension AddTempTarget {
                 enteredBy: TempTarget.manual,
                 reason: newPresetName.isEmpty ? TempTarget.custom : newPresetName
             )
-
             presets.append(entry)
             storage.storePresets(presets)
         }
