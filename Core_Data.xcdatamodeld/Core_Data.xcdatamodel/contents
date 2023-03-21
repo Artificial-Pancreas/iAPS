@@ -21,6 +21,7 @@
         <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="enteredBy" optional="YES" attributeType="String"/>
     </entity>
+    <entity name="Entity" representedClassName="Entity" syncable="YES" codeGenerationType="class"/>
     <entity name="HbA1c" representedClassName="HbA1c" syncable="YES" codeGenerationType="class">
         <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="hba1c" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
@@ -56,9 +57,16 @@
         <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="glucose" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
     </entity>
+    <entity name="Target" representedClassName="Target" syncable="YES" codeGenerationType="class">
+        <attribute name="current" optional="YES" attributeType="Decimal" defaultValueString="100"/>
+    </entity>
     <entity name="TDD" representedClassName="TDD" syncable="YES" codeGenerationType="class">
         <attribute name="tdd" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
         <attribute name="timestamp" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <relationship name="computed" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Oref0Suggestion" inverseName="computedTDD" inverseEntity="Oref0Suggestion"/>
+    </entity>
+    <entity name="ViewPercentage" representedClassName="ViewPercentage" syncable="YES" codeGenerationType="class">
+        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="enabled" optional="YES" attributeType="Boolean" defaultValueString="100" usesScalarValueType="YES"/>
     </entity>
 </model>

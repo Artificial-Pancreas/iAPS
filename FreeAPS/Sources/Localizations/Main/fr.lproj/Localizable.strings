@@ -1,6 +1,6 @@
 /*
   Localizable.strings
-  FreeAPS X
+  iAPS
 */
 /* -------------------------------- */
 /* Bolus screen when adding insulin */
@@ -867,7 +867,7 @@ Enact a temp Basal or a temp target */
 "To prevent LOW required %d g of carbs" = "Pour éviter BAS %d g de glucides requis";
 
 /* */
-"FreeAPS X not active" = "FreeAPS X pas actif";
+"iAPS not active" = "iAPS pas actif";
 
 /* */
 "Last loop was more then %d min ago" = "Dernier bouclage depuis plus de %d min";
@@ -1015,7 +1015,7 @@ Enact a temp Basal or a temp target */
 "For write data to Apple Health you must give permissions in Settings > Health > Data Access" = "Pour écrire des données sur Apple Santé, vous devez donner les autorisations dans Paramètres > Santé > Accès aux données";
 
 /* */
-"After you create glucose records in the Health app, please open FreeAPS X to help us guaranteed transfer changed data" = "Une fois que vous avez créé des enregistrements de glucose dans l'application Santé, veuillez ouvrir FreeAPS X pour nous aider à garantir le transfert des données";
+"After you create glucose records in the Health app, please open iAPS to help us guaranteed transfer changed data" = "Une fois que vous avez créé des enregistrements de glucose dans l'application Santé, veuillez ouvrir iAPS pour nous aider à garantir le transfert des données";
 
 /* New ALerts ------------------------- */
 /* Info title */
@@ -1379,7 +1379,7 @@ Enact a temp Basal or a temp target */
 /* -----------------------------------------------------------------------------------------------------------
 
   Infotexts from openaps.docs and androidaps.docs
-  FreeAPS X
+  iAPS
 */
 /* Headline Rewind Resets Autosens */
 
@@ -1434,7 +1434,7 @@ Enact a temp Basal or a temp target */
 "Skip Neutral Temps" = "Skip Neutral Temps";
 
 /* "Skip Neutral Temps" */
-"Defaults to false, so that FreeAPS X will set temps whenever it can, so it will be easier to see if the system is working, even when you are offline. This means FreeAPS X will set a “neutral” temp (same as your default basal) if no adjustments are needed. This is an old setting for OpenAPS to have the options to minimise sounds and notifications from the 'rig', that may wake you up during the night." = "La valeur par défaut est faux, de sorte que FreeAPS X définisse une valeur basal dès qu'il le peut, donc il sera plus facile de voir si le système fonctionne, même lorsque vous êtes hors ligne. Cela signifie qu'OpenAPS définira une valeur basale « neutre » (identique à votre basal par défaut) si aucun ajustement n'est nécessaire. Ceci est un ancien paramètre d'OpenAPS afin de minimiser les sons et les notifications de la 'rig', qui pouvaient vous réveiller pendant la nuit. ";
+"Defaults to false, so that iAPS will set temps whenever it can, so it will be easier to see if the system is working, even when you are offline. This means iAPS will set a “neutral” temp (same as your default basal) if no adjustments are needed. This is an old setting for OpenAPS to have the options to minimise sounds and notifications from the 'rig', that may wake you up during the night." = "La valeur par défaut est faux, de sorte que iAPS définisse une valeur basal dès qu'il le peut, donc il sera plus facile de voir si le système fonctionne, même lorsque vous êtes hors ligne. Cela signifie qu'OpenAPS définira une valeur basale « neutre » (identique à votre basal par défaut) si aucun ajustement n'est nécessaire. Ceci est un ancien paramètre d'OpenAPS afin de minimiser les sons et les notifications de la 'rig', qui pouvaient vous réveiller pendant la nuit. ";
 
 /* Headline "Unsuspend If No Temp” */
 "Unsuspend If No Temp" = "Unsuspend If No Temp";
@@ -1446,7 +1446,7 @@ Enact a temp Basal or a temp target */
 "Enable UAM" = "Enable UAM";
 
 /* "Enable UAM" */
-"With this option enabled, the SMB algorithm can recognize unannounced meals. This is helpful, if you forget to tell FreeAPS X about your carbs or estimate your carbs wrong and the amount of entered carbs is wrong or if a meal with lots of fat and protein has a longer duration than expected. Without any carb entry, UAM can recognize fast glucose increasments caused by carbs, adrenaline, etc, and tries to adjust it with SMBs. This also works the opposite way: if there is a fast glucose decreasement, it can stop SMBs earlier." = "Avec cette option activée, l'algorithme SMB peut reconnaître les repas non annoncés. Ceci est utile, si vous oubliez d'indiquer à FreeAPS X un apport glucidique ou une mauvaise estimation de l'apport de glucides ou si un repas contenant beaucoup de gras et de protéines a un impact sur une duree d'absorption plus longue que prévu. Sans aucune entrée de glucides, UAM peut reconnaître des augmentations rapides de glucemie causées par des glucides, l'adrénaline, etc, et tente de l'ajuster avec les SMB. Cela fonctionne également dand le sens inverse : s'il y a une réduction rapide de glycémie, il peut arrêter les SMB plus tôt.";
+"With this option enabled, the SMB algorithm can recognize unannounced meals. This is helpful, if you forget to tell iAPS about your carbs or estimate your carbs wrong and the amount of entered carbs is wrong or if a meal with lots of fat and protein has a longer duration than expected. Without any carb entry, UAM can recognize fast glucose increasments caused by carbs, adrenaline, etc, and tries to adjust it with SMBs. This also works the opposite way: if there is a fast glucose decreasement, it can stop SMBs earlier." = "Avec cette option activée, l'algorithme SMB peut reconnaître les repas non annoncés. Ceci est utile, si vous oubliez d'indiquer à iAPS un apport glucidique ou une mauvaise estimation de l'apport de glucides ou si un repas contenant beaucoup de gras et de protéines a un impact sur une duree d'absorption plus longue que prévu. Sans aucune entrée de glucides, UAM peut reconnaître des augmentations rapides de glucemie causées par des glucides, l'adrénaline, etc, et tente de l'ajuster avec les SMB. Cela fonctionne également dand le sens inverse : s'il y a une réduction rapide de glycémie, il peut arrêter les SMB plus tôt.";
 
 /* Headline "Enable SMB With COB" */
 "Enable SMB With COB" = "Enable SMB With COB";

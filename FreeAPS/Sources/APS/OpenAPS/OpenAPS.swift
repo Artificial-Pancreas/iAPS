@@ -90,7 +90,10 @@ final class OpenAPS {
 
                             saveToTDD.timestamp = suggestion.timestamp ?? Date()
                             saveToTDD.tdd = (suggestion.tdd ?? 0) as NSDecimalNumber?
+                            try? self.coredataContext.save()
 
+                            let saveTarget = Target(context: self.coredataContext)
+                            saveTarget.current = (suggestion.current_target ?? 100) as NSDecimalNumber?
                             try? self.coredataContext.save()
                         }
 
