@@ -64,7 +64,7 @@ extension AddTempTarget {
                                 value: $state.percentage,
                                 in: 15 ...
                                     Double(state.maxValue * 100),
-                                step: 1,
+                                step: 5,
                                 onEditingChanged: { editing in
                                     isEditing = editing
                                 }
