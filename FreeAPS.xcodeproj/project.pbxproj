@@ -2886,7 +2886,7 @@
 				DEVELOPMENT_TEAM = "$(DEVELOPER_TEAM)";
 				GENERATE_INFOPLIST_FILE = YES;
 				IBSC_MODULE = FreeAPSWatch_WatchKit_Extension;
-				INFOPLIST_KEY_CFBundleDisplayName = "FreeAPS X";
+				INFOPLIST_KEY_CFBundleDisplayName = iAPS;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = "$(BUNDLE_IDENTIFIER)";
 				MARKETING_VERSION = "$(APP_VERSION)";
@@ -2916,7 +2916,7 @@
 				DEVELOPMENT_TEAM = "$(DEVELOPER_TEAM)";
 				GENERATE_INFOPLIST_FILE = YES;
 				IBSC_MODULE = FreeAPSWatch_WatchKit_Extension;
-				INFOPLIST_KEY_CFBundleDisplayName = "FreeAPS X";
+				INFOPLIST_KEY_CFBundleDisplayName = iAPS;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = "$(BUNDLE_IDENTIFIER)";
 				MARKETING_VERSION = "$(APP_VERSION)";
@@ -2946,7 +2946,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "FreeAPSWatch WatchKit Extension/Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = "FreeAPS X WatchKit Extension";
+				INFOPLIST_KEY_CFBundleDisplayName = "iAPS WatchKit Extension";
 				INFOPLIST_KEY_CLKComplicationPrincipalClass = FreeAPSWatch_WatchKit_Extension.ComplicationController;
 				INFOPLIST_KEY_NSHealthClinicalHealthRecordsShareUsageDescription = "Bla bla Record Health";
 				INFOPLIST_KEY_NSHealthShareUsageDescription = "Bla bla Share Health";
@@ -2986,7 +2986,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "FreeAPSWatch WatchKit Extension/Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = "FreeAPS X WatchKit Extension";
+				INFOPLIST_KEY_CFBundleDisplayName = "iAPS WatchKit Extension";
 				INFOPLIST_KEY_CLKComplicationPrincipalClass = FreeAPSWatch_WatchKit_Extension.ComplicationController;
 				INFOPLIST_KEY_NSHealthClinicalHealthRecordsShareUsageDescription = "Bla bla Record Health";
 				INFOPLIST_KEY_NSHealthShareUsageDescription = "Bla bla Share Health";

@@ -1,6 +1,6 @@
 /*
   Localizable.strings
-  FreeAPS X
+  iAPS
 */
 /* -------------------------------- */
 /* Bolus screen when adding insulin */
@@ -867,7 +867,7 @@ Enact a temp Basal or a temp target */
 "To prevent LOW required %d g of carbs" = "Om LAAG te voorkomen zijn %d g koolhydraten nodig";
 
 /* */
-"FreeAPS X not active" = "FreeAPS X is niet actief!";
+"iAPS not active" = "iAPS is niet actief!";
 
 /* */
 "Last loop was more then %d min ago" = "Laatste loop was meer dan %d min geleden";
@@ -925,7 +925,7 @@ Enact a temp Basal or a temp target */
 "Glucose Simulator" = "Glucose simulator";
 
 /* Restored state message */
-"Bluetooth State restored (APS restarted?). Found %d peripherals, and connected to %@ with identifier %@" = "Herstelde Bluetooth-status (FreeAPS X opnieuw opgestart?). %d randapparatuur gevonden en verbonden met %@ met de identificatie %@";
+"Bluetooth State restored (APS restarted?). Found %d peripherals, and connected to %@ with identifier %@" = "Herstelde Bluetooth-status (iAPS opnieuw opgestart?). %d randapparatuur gevonden en verbonden met %@ met de identificatie %@";
 
 /* Shared app group xDrip4iOS */
 "Using shared app group with external CGM app xDrip4iOS" = "Gedeelde app-groep wordt gebruikt met externe CGM app xDrip4iOS";
@@ -1015,7 +1015,7 @@ Enact a temp Basal or a temp target */
 "For write data to Apple Health you must give permissions in Settings > Health > Data Access" = "Als u gegevens wilt opslaan met Apple Gezondheid, moet u de juiste machtigingen verlenen in Instellingen > Gezondheid > Gegevenstoegang en apparaten";
 
 /* */
-"After you create glucose records in the Health app, please open FreeAPS X to help us guaranteed transfer changed data" = "Na het maken van glucoserecords in de Gezondheid-app, opent u FreeAPS X om ervoor te zorgen dat de gewijzigde gegevens veilig worden overgedragen";
+"After you create glucose records in the Health app, please open iAPS to help us guaranteed transfer changed data" = "Na het maken van glucoserecords in de Gezondheid-app, opent u iAPS om ervoor te zorgen dat de gewijzigde gegevens veilig worden overgedragen";
 
 /* New ALerts ------------------------- */
 /* Info title */
@@ -1379,7 +1379,7 @@ Enact a temp Basal or a temp target */
 /* -----------------------------------------------------------------------------------------------------------
 
   Infotexts from openaps.docs and androidaps.docs
-  FreeAPS X
+  iAPS
 */
 /* Headline Rewind Resets Autosens */
 
@@ -1434,19 +1434,19 @@ Enact a temp Basal or a temp target */
 "Skip Neutral Temps" = "Sla neutrale temps over";
 
 /* "Skip Neutral Temps" */
-"Defaults to false, so that FreeAPS X will set temps whenever it can, so it will be easier to see if the system is working, even when you are offline. This means FreeAPS X will set a “neutral” temp (same as your default basal) if no adjustments are needed. This is an old setting for OpenAPS to have the options to minimise sounds and notifications from the 'rig', that may wake you up during the night." = "Standaard ingesteld op uit, zodat FreeAPS X tijdelijke basaal waardes zal instellen wanneer dat maar kan. het zal dus makkelijker zijn om te zien of het systeem werkt, zelfs als je offline bent. Dit betekent dat OpenAPS een \"neutraal\" basaal (hetzelfde als jouw standaard basaal) zal instellen als er geen aanpassingen nodig zijn. Dit is een oude instelling van OpenAPS om de optie te hebben om geluiden en meldingen te beperken waarvan je 's nachts misschien wakker kan worden. ";
+"Defaults to false, so that iAPS will set temps whenever it can, so it will be easier to see if the system is working, even when you are offline. This means iAPS will set a “neutral” temp (same as your default basal) if no adjustments are needed. This is an old setting for OpenAPS to have the options to minimise sounds and notifications from the 'rig', that may wake you up during the night." = "Standaard ingesteld op uit, zodat iAPS tijdelijke basaal waardes zal instellen wanneer dat maar kan. het zal dus makkelijker zijn om te zien of het systeem werkt, zelfs als je offline bent. Dit betekent dat OpenAPS een \"neutraal\" basaal (hetzelfde als jouw standaard basaal) zal instellen als er geen aanpassingen nodig zijn. Dit is een oude instelling van OpenAPS om de optie te hebben om geluiden en meldingen te beperken waarvan je 's nachts misschien wakker kan worden. ";
 
 /* Headline "Unsuspend If No Temp” */
 "Unsuspend If No Temp" = "Schorsing opheffen als geen tijdelijk doel is ingesteld";
 
 /* "Unsuspend If No Temp” */
-"Many people occasionally forget to resume / unsuspend their pump after reconnecting it. If you’re one of them, and you are willing to reliably set a zero temp basal whenever suspending and disconnecting your pump, this feature has your back. If enabled, it will automatically resume / unsuspend the pump if you forget to do so before your zero temp expires. As long as the zero temp is still running, it will leave the pump suspended." = "Veel mensen vergeten af en toe hun pomp te hervatten nadat ze opnieuw zijn aangesloten. Herken je jezelf hierin en ben je bereid voordat je je afkoppelt een tijdelijk basaal van 0 in te stellen kan deze instelling helpen. Indien ingeschakeld zal de pomp automatisch hervatten, als je dit zelf vergeet te doen voordat het tijdelijk 0 basaal verloopt. Zolang het tijdelijk 0 basaal nog actief is, laat FreeAPS X de pomp opgeschort.";
+"Many people occasionally forget to resume / unsuspend their pump after reconnecting it. If you’re one of them, and you are willing to reliably set a zero temp basal whenever suspending and disconnecting your pump, this feature has your back. If enabled, it will automatically resume / unsuspend the pump if you forget to do so before your zero temp expires. As long as the zero temp is still running, it will leave the pump suspended." = "Veel mensen vergeten af en toe hun pomp te hervatten nadat ze opnieuw zijn aangesloten. Herken je jezelf hierin en ben je bereid voordat je je afkoppelt een tijdelijk basaal van 0 in te stellen kan deze instelling helpen. Indien ingeschakeld zal de pomp automatisch hervatten, als je dit zelf vergeet te doen voordat het tijdelijk 0 basaal verloopt. Zolang het tijdelijk 0 basaal nog actief is, laat iAPS de pomp opgeschort.";
 
 /* Headline "Enable UAM" */
 "Enable UAM" = "UAM inschakelen";
 
 /* "Enable UAM" */
-"With this option enabled, the SMB algorithm can recognize unannounced meals. This is helpful, if you forget to tell FreeAPS X about your carbs or estimate your carbs wrong and the amount of entered carbs is wrong or if a meal with lots of fat and protein has a longer duration than expected. Without any carb entry, UAM can recognize fast glucose increasments caused by carbs, adrenaline, etc, and tries to adjust it with SMBs. This also works the opposite way: if there is a fast glucose decreasement, it can stop SMBs earlier." = "Als deze optie is ingeschakeld, herkent het SMB-algoritme onaangekondigde maaltijden. Dit is nuttig, als je vergeet om koolhydraten in te voeren, je koolhydraten verkeerd inschat, de hoeveelheid ingevoerde koolhydraten verkeerd is of als een maaltijd met veel vet en eiwit een langere duur heeft dan verwacht. Zonder koolhydraten in te voeren, kan UAM snelle glucoseverhogingen veroorzaakt door koolhydraten, adrenaline, etc. herkennen en dit proberen op te lossen met SMB's. Dit werkt ook andersom: als er een snelle glucose daling is, kan het eerder stoppen met SMBs.";
+"With this option enabled, the SMB algorithm can recognize unannounced meals. This is helpful, if you forget to tell iAPS about your carbs or estimate your carbs wrong and the amount of entered carbs is wrong or if a meal with lots of fat and protein has a longer duration than expected. Without any carb entry, UAM can recognize fast glucose increasments caused by carbs, adrenaline, etc, and tries to adjust it with SMBs. This also works the opposite way: if there is a fast glucose decreasement, it can stop SMBs earlier." = "Als deze optie is ingeschakeld, herkent het SMB-algoritme onaangekondigde maaltijden. Dit is nuttig, als je vergeet om koolhydraten in te voeren, je koolhydraten verkeerd inschat, de hoeveelheid ingevoerde koolhydraten verkeerd is of als een maaltijd met veel vet en eiwit een langere duur heeft dan verwacht. Zonder koolhydraten in te voeren, kan UAM snelle glucoseverhogingen veroorzaakt door koolhydraten, adrenaline, etc. herkennen en dit proberen op te lossen met SMB's. Dit werkt ook andersom: als er een snelle glucose daling is, kan het eerder stoppen met SMBs.";
 
 /* Headline "Enable SMB With COB" */
 "Enable SMB With COB" = "Activeer SMB met COB";
@@ -1497,7 +1497,7 @@ Enact a temp Basal or a temp target */
 "Max IOB" = "Max IOB";
 
 /* "Max IOB" */
-"Max IOB is the maximum amount of insulin on board from all sources – both basal (or SMB correction) and bolus insulin – that your loop is allowed to accumulate to treat higher-than-target BG. Unlike the other two OpenAPS safety settings (max_daily_safety_multiplier and current_basal_safety_multiplier), max_iob is set as a fixed number of units of insulin. As of now manual boluses are NOT limited by this setting. \n\n To test your basal rates during nighttime, you can modify the Max IOB setting to zero while in Closed Loop. This will enable low glucose suspend mode while testing your basal rates settings\n\n(Tip from https://www.loopandlearn.org/freeaps-x/#open-loop)." = "De Max IOB is de maximale hoeveelheid insuline aan boord van alle bronnen - zowel basaal (of SMB correcties) en bolus insuline die door FreeAPS X gegeven mag worden om alles hoger dan de streefwaarde te behandelen. Anders dan de andere twee veiligheid instelingen (max_daily_safety_multiplier and current_basal_safety_multiplier) wordt bij deze instelling een vaste aantal eenheden insuline opgegeven. Voorlopig worden handmatige bolussen NIET beperkt door deze instelling. \n\n Om je basaal waarden te testen gedurende de nacht kun je deze instelling op 0 zetten tijdens een gesloten Loop. Dit zorgt er voor dat stop voor laag geactiveerd worden wanneer je je instelling aan het testen bent. \n\n(Tip van https://www.loopandlearn.org/freeaps-x/#open-loop).";
+"Max IOB is the maximum amount of insulin on board from all sources – both basal (or SMB correction) and bolus insulin – that your loop is allowed to accumulate to treat higher-than-target BG. Unlike the other two OpenAPS safety settings (max_daily_safety_multiplier and current_basal_safety_multiplier), max_iob is set as a fixed number of units of insulin. As of now manual boluses are NOT limited by this setting. \n\n To test your basal rates during nighttime, you can modify the Max IOB setting to zero while in Closed Loop. This will enable low glucose suspend mode while testing your basal rates settings\n\n(Tip from https://www.loopandlearn.org/freeaps-x/#open-loop)." = "De Max IOB is de maximale hoeveelheid insuline aan boord van alle bronnen - zowel basaal (of SMB correcties) en bolus insuline die door iAPS gegeven mag worden om alles hoger dan de streefwaarde te behandelen. Anders dan de andere twee veiligheid instelingen (max_daily_safety_multiplier and current_basal_safety_multiplier) wordt bij deze instelling een vaste aantal eenheden insuline opgegeven. Voorlopig worden handmatige bolussen NIET beperkt door deze instelling. \n\n Om je basaal waarden te testen gedurende de nacht kun je deze instelling op 0 zetten tijdens een gesloten Loop. Dit zorgt er voor dat stop voor laag geactiveerd worden wanneer je je instelling aan het testen bent. \n\n(Tip van https://www.loopandlearn.org/freeaps-x/#open-loop).";
 
 /* Headline "Max Daily Safety Multiplier" */
 "Max Daily Safety Multiplier" = "Maximale dagelijkse veiligheidsvermenigvuldiger";
