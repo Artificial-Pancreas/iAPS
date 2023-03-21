@@ -86,7 +86,7 @@ extension AddTempTarget {
                                     NSLocalizedString("Adjusting HalfBasalTarget to: ", comment: "")
                                 )
                                 .foregroundColor(.primary).italic()
-                                Text("\(computeHBT().formatted(.number)) !")
+                                Text("\(computeHBT().formatted(.number)) mg/dL!")
                             }
                         }
                     }
