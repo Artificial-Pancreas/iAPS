@@ -1,3 +1,4 @@
+import CoreData
 import SwiftUI
 import Swinject
 
@@ -9,6 +10,13 @@ extension AddTempTarget {
         @State private var isRemoveAlertPresented = false
         @State private var removeAlert: Alert?
         @State private var isEditing = false
+
+        @FetchRequest(
+            entity: ViewPercentage.entity(),
+            sortDescriptors: [NSSortDescriptor(key: "enabled", ascending: false)]
+        ) var isEnabledArray: FetchedResults<ViewPercentage>
+
+        @Environment(\.managedObjectContext) var moc
 
         private var formatter: NumberFormatter {
             let formatter = NumberFormatter()
@@ -27,54 +35,79 @@ extension AddTempTarget {
                     }
                 }
 
-                Section(
-                    header: Text("Basal Insulin and Sensitivity ratio"),
-                    footer: Text(
-                        NSLocalizedString(
-                            "A lower 'Half Basal Target' setting will reduce the basal and raise the ISF earlier, at a lower target glucose.",
-                            comment: ""
-                        ) +
-                            NSLocalizedString(" Your setting: ", comment: "") + "\(state.halfBasal) " +
-                            NSLocalizedString("mg/dl. Autosens.max limits the max endpoint", comment: "") +
-                            " (\(state.maxValue * 100) %)"
-                    )
-                ) {
-                    VStack {
-                        Slider(
-                            value: $state.percentage,
-                            in: 15 ...
-                                Double(state.maxValue * 100),
-                            step: 1,
-                            onEditingChanged: { editing in
-                                isEditing = editing
-                            }
-                        )
-                        Text("\(state.percentage.formatted(.number)) %")
-                            .foregroundColor(isEditing ? .orange : .blue)
-                            .font(.largeTitle)
-                        Divider()
-                        Text(
-                            NSLocalizedString("Target", comment: "") +
-                                (
-                                    state
-                                        .units == .mmolL ?
-                                        ": \(computeTarget().asMmolL.formatted(.number.grouping(.never).rounded(rule: .towardZero).precision(.fractionLength(1)))) mmol/L" :
-                                        ": \(computeTarget().formatted(.number.grouping(.never).rounded(rule: .towardZero).precision(.fractionLength(0)))) mg/dl"
-                                )
-                        ).foregroundColor(.secondary).italic()
-                    }
+                Toggle(isOn: $state.viewPercantage) {
+                    Text("Exercise / Pre Meal Slider")
                 }
 
-                Section {
-                    HStack {
-                        Text("Duration")
-                        Spacer()
-                        DecimalTextField("0", value: $state.duration, formatter: formatter, cleanInput: true)
-                        Text("minutes").foregroundColor(.secondary)
+                if state.viewPercantage {
+                    Section(
+                        header: Text("TT Effect on Basal and Sensitivity"),
+                        footer: Text(
+                            NSLocalizedString(
+                                "'Half Basal Target' (HBT) setting adjusts how a temp target affects basal and ISF.\n     A lower HBT will allow Basal to be reduced earlier (at a less high TT).\n",
+                                comment: ""
+                            ) +
+                                NSLocalizedString("     HBT setting: ", comment: "") + "\(state.halfBasal) " +
+                                NSLocalizedString("mg/dl. Autosens.max setting determines the max endpoint", comment: "") +
+                                " (\(state.maxValue): \(state.maxValue * 100) %)"
+                        )
+                    ) {
+                        VStack {
+                            Slider(
+                                value: $state.percentage,
+                                in: 15 ...
+                                    Double(state.maxValue * 100),
+                                step: 1,
+                                onEditingChanged: { editing in
+                                    isEditing = editing
+                                }
+                            )
+                            Text("\(state.percentage.formatted(.number)) %")
+                                .foregroundColor(isEditing ? .orange : .blue)
+                                .font(.largeTitle)
+                            Divider()
+                            Text(
+                                NSLocalizedString("Temp Target to Save", comment: "") +
+                                    (
+                                        state
+                                            .units == .mmolL ?
+                                            ": \(computeTarget().asMmolL.formatted(.number.grouping(.never).rounded().precision(.fractionLength(1)))) mmol/L" :
+                                            ": \(computeTarget().formatted(.number.grouping(.never).rounded().precision(.fractionLength(0)))) mg/dl"
+                                    )
+                            ).foregroundColor(.primary).italic()
+                        }
                     }
-                    DatePicker("Date", selection: $state.date)
-                    Button { isPromtPresented = true }
-                    label: { Text("Save as preset") }
+                } else {
+                    Section(header: Text("Custom")) {
+                        HStack {
+                            Text("Target")
+                            Spacer()
+                            DecimalTextField("0", value: $state.low, formatter: formatter, cleanInput: true)
+                            Text(state.units.rawValue).foregroundColor(.secondary)
+                        }
+                        HStack {
+                            Text("Duration")
+                            Spacer()
+                            DecimalTextField("0", value: $state.duration, formatter: formatter, cleanInput: true)
+                            Text("minutes").foregroundColor(.secondary)
+                        }
+                        DatePicker("Date", selection: $state.date)
+                        Button { isPromtPresented = true }
+                        label: { Text("Save as preset") }
+                    }
+                }
+                if state.viewPercantage {
+                    Section {
+                        HStack {
+                            Text("Duration")
+                            Spacer()
+                            DecimalTextField("0", value: $state.duration, formatter: formatter, cleanInput: true)
+                            Text("minutes").foregroundColor(.secondary)
+                        }
+                        DatePicker("Date", selection: $state.date)
+                        Button { isPromtPresented = true }
+                        label: { Text("Save as preset") }
+                    }
                 }
 
                 Section {
@@ -102,16 +135,30 @@ extension AddTempTarget {
             .navigationTitle("Enact Temp Target")
             .navigationBarTitleDisplayMode(.automatic)
             .navigationBarItems(leading: Button("Close", action: state.hideModal))
+            .onDisappear {
+                if state.viewPercantage {
+                    let isEnabledMoc = ViewPercentage(context: moc)
+                    isEnabledMoc.enabled = true
+                    isEnabledMoc.date = Date()
+                    try? moc.save()
+                } else {
+                    let isEnabledMoc = ViewPercentage(context: moc)
+                    isEnabledMoc.enabled = false
+                    isEnabledMoc.date = Date()
+                    try? moc.save()
+                }
+            }
         }
 
         func computeTarget() -> Decimal {
-            let ratio = min(Decimal(state.percentage / 100), state.maxValue)
-            let diff = Double(state.halfBasal - 100)
-            let multiplier = state.percentage - (diff * (state.percentage / 100))
-            var target = Decimal(diff + multiplier) / ratio
+            var ratio = Decimal(state.percentage / 100)
+            let hB = state.halfBasal
+            let c = hB - 100
+            var target = (c / ratio) - c + 100
 
-            if (state.halfBasal + (state.halfBasal + target - 100)) <= 0 {
-                target = (state.halfBasal - 100 + (state.halfBasal - 100) * state.maxValue) / state.maxValue
+            if c * (c + target - 100) <= 0 {
+                ratio = state.maxValue
+                target = (c / ratio) - c + 100
             }
             return target
         }
