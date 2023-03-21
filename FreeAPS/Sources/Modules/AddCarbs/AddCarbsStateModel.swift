@@ -15,7 +15,7 @@ extension AddCarbs {
         @Published var dish: String = ""
         @Published var selection: Presets?
 
-        let coredataContext = CoreDataStack.shared.persistentContainer.viewContext // .newBackgroundContext()
+        let coredataContext = CoreDataStack.shared.persistentContainer.viewContext
         @Environment(\.managedObjectContext) var moc
 
         override func subscribe() {
