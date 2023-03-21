@@ -40,7 +40,7 @@ extension AddTempTarget {
                     target = (c / ratio) - c + 100
                 }
                 lowTarget = target
-                lowTarget = Decimal(round(Double(target * 10)) / 10)
+                lowTarget = Decimal(round(Double(target)))
             }
             var highTarget = lowTarget
 
@@ -81,7 +81,7 @@ extension AddTempTarget {
                     target = (c / ratio) - c + 100
                 }
                 lowTarget = target
-                lowTarget = Decimal(round(Double(target * 10)) / 10)
+                lowTarget = Decimal(round(Double(target)))
             }
             var highTarget = lowTarget
 
