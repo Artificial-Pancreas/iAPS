@@ -271,7 +271,10 @@ extension PreferencesEditor {
                     settable: self
                 ),
                 Field(
-                    displayName: NSLocalizedString("Allow SMB With High Temptarget", comment: "Allow SMB With High Temptarget"),
+                    displayName: NSLocalizedString(
+                        "Allow SMB With High Temptarget",
+                        comment: "Allow SMB With High Temptarget"
+                    ),
                     type: .boolean(keypath: \.allowSMBWithHighTemptarget),
                     infoText: NSLocalizedString(
                         "Defaults to false. When true, allows supermicrobolus (if otherwise enabled) even with high temp targets (> 100 mg/dl).",
@@ -359,6 +362,30 @@ extension PreferencesEditor {
             // MARK: - Targets fields
 
             let targetSettings = [
+                Field(
+                    displayName: NSLocalizedString(
+                        "High Temptarget Raises Sensitivity",
+                        comment: "High Temptarget Raises Sensitivity"
+                    ),
+                    type: .boolean(keypath: \.highTemptargetRaisesSensitivity),
+                    infoText: NSLocalizedString(
+                        "Defaults to false. When set to true, raises sensitivity (lower sensitivity ratio) for temp targets set to >= 111. Synonym for exercise_mode. The higher your temp target above 110 will result in more sensitive (lower) ratios, e.g., temp target of 120 results in sensitivity ratio of 0.75, while 140 results in 0.6 (with default halfBasalTarget of 160).",
+                        comment: "High Temptarget Raises Sensitivity"
+                    ),
+                    settable: self
+                ),
+                Field(
+                    displayName: NSLocalizedString(
+                        "Low Temptarget Lowers Sensitivity",
+                        comment: "Low Temptarget Lowers Sensitivity"
+                    ),
+                    type: .boolean(keypath: \.lowTemptargetLowersSensitivity),
+                    infoText: NSLocalizedString(
+                        "Defaults to false. When set to true, can lower sensitivity (higher sensitivity ratio) for temptargets <= 99. The lower your temp target below 100 will result in less sensitive (higher) ratios, e.g., temp target of 95 results in sensitivity ratio of 1.09, while 85 results in 1.33 (with default halfBasalTarget of 160).",
+                        comment: "Low Temptarget Lowers Sensitivity"
+                    ),
+                    settable: self
+                ),
                 Field(
                     displayName: NSLocalizedString("Sensitivity Raises Target", comment: "Sensitivity Raises Target"),
                     type: .boolean(keypath: \.sensitivityRaisesTarget),
@@ -506,7 +533,8 @@ extension PreferencesEditor {
                     fields: dynamicISF
                 ),
                 FieldSection(
-                    displayName: NSLocalizedString("OpenAPS SMB settings", comment: "OpenAPS SMB settings"), fields: smbFields
+                    displayName: NSLocalizedString("OpenAPS SMB settings", comment: "OpenAPS SMB settings"),
+                    fields: smbFields
                 ),
                 FieldSection(
                     displayName: NSLocalizedString("OpenAPS targets settings", comment: "OpenAPS targets settings"),
