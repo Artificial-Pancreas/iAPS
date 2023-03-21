@@ -21,7 +21,7 @@ Download and open in Xcode directly using the Code button: "Open with Xcode".
 
 Please understand that this version is:
 - highly experimental and evolving rapidly.
-- not CE approved for therapy yet
+- not CE approved for therapy.
 
 # Pumps
 
@@ -51,11 +51,9 @@ iAPS app runs on iPhone or iPod. An iPhone 7 or newer is recommended.
 
 [Discord iAPS - main branch channel](https://discord.com/channels/1020905149037813862/1021041588627062854)
 
-[My Crowdin Project for translation of iAPS](https://crowdin.com/project/freeaps-x)
+[Crowdin Project for translation of iAPS](https://crowdin.com/project/freeaps-x)
 
 [Middleware code for iAPS](https://github.com/Jon-b-m/middleware)
-
-[freeAPS X original github](https://github.com/ivalkou/freeaps)
 
 [ADD DASH PUMP and SETTINGS](https://loopkit.github.io/loopdocs/loop-3/omnipod/)
 
@@ -63,7 +61,7 @@ iAPS app runs on iPhone or iPod. An iPhone 7 or newer is recommended.
 
 [OpenAPS documentation](https://openaps.readthedocs.io/en/latest/)
 
-[iAPS documentation (under development)](https://iaps-documentation.readthedocs.io/en/main/)
+[iAPS documentation (under development)](https://iaps.readthedocs.io/en/latest/)
 
 # Contribute
 
