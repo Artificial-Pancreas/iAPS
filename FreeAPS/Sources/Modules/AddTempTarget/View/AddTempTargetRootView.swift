@@ -56,7 +56,12 @@ extension AddTempTarget {
                             HStack {
                                 Text(NSLocalizedString("Target", comment: ""))
                                 Spacer()
-                                DecimalTextField("160", value: $state.low, formatter: formatter, cleanInput: true)
+                                DecimalTextField(
+                                    "100",
+                                    value: $state.low,
+                                    formatter: formatter,
+                                    cleanInput: true
+                                )
                                 Text(state.units.rawValue).foregroundColor(.secondary)
                             }
                             Text(NSLocalizedString("Desired Sensitivity", comment: ""))
@@ -155,24 +160,27 @@ extension AddTempTarget {
             }
         }
 
-//        func computeTarget() -> Decimal {
-//            var ratio = Decimal(state.percentage / 100)
-//            let hB = state.halfBasal
-//            let c = hB - 100
-//            var target = (c / ratio) - c + 100
-//
-//            if c * (c + target - 100) <= 0 {
-//                ratio = state.maxValue
-//                target = (c / ratio) - c + 100
-//            }
-//            return target
-//        }
+        func computeTarget() -> Decimal {
+            var ratio = Decimal(state.percentage / 100)
+            let hB = state.halfBasal
+            let c = hB - 100
+            var target = (c / ratio) - c + 100
+
+            if c * (c + target - 100) <= 0 {
+                ratio = state.maxValue
+                target = (c / ratio) - c + 100
+            }
+            return target
+        }
 
         func computeHBT() -> Decimal {
             var ratio = Decimal(state.percentage / 100)
             let normalTarget: Decimal = 100
             let target: Decimal = state.low
-            var hbt: Decimal = ((2 * ratio * normalTarget) - normalTarget - (ratio * target)) / (ratio - 1)
+            var hbt: Decimal = state.halfBasal
+            if ratio != 1 {
+                hbt = ((2 * ratio * normalTarget) - normalTarget - (ratio * target)) / (ratio - 1)
+            }
             hbt = Decimal(round(Double(hbt)))
             return hbt
         }
