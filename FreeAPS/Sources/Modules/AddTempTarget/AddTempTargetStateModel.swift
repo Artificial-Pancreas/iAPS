@@ -45,7 +45,8 @@ extension AddTempTarget {
 
                 let ratio = Decimal(percentage / 100)
                 let normalTarget: Decimal = 100
-                let target: Decimal = low
+                var target: Decimal = low
+                if units == .mmolL { target = target / 0.0555 }
                 var hbt: Decimal = halfBasal
                 if ratio != 1 {
                     hbt = ((2 * ratio * normalTarget) - normalTarget - (ratio * target)) / (ratio - 1)
@@ -98,7 +99,8 @@ extension AddTempTarget {
 
                 let ratio = Decimal(percentage / 100)
                 let normalTarget: Decimal = 100
-                let target: Decimal = low
+                var target: Decimal = low
+                if units == .mmolL { target = target / 0.0555 }
                 var hbt: Decimal = halfBasal
                 if ratio != 1 {
                     hbt = ((2 * ratio * normalTarget) - normalTarget - (ratio * target)) / (ratio - 1)
