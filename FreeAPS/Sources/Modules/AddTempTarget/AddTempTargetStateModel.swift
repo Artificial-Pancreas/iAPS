@@ -51,11 +51,12 @@ extension AddTempTarget {
                     hbt = ((2 * ratio * normalTarget) - normalTarget - (ratio * target)) / (ratio - 1)
                 }
                 hbt = Decimal(round(Double(hbt)))
+
                 // settingsManager.settings.halfBasalExerciseTarget = hbt  // havent figured how to assign the new hbt value to the preference setting
             }
 
             var highTarget = lowTarget
-            if units == .mmolL, !viewPercentage {
+            if units == .mmolL {
                 lowTarget = lowTarget.asMgdL
                 highTarget = highTarget.asMgdL
             }
@@ -82,21 +83,32 @@ extension AddTempTarget {
             var lowTarget = low
 
             if viewPercentage {
-                var ratio = Decimal(percentage / 100)
-                let hB = halfBasal
-                let c = hB - 100
-                var target = (c / ratio) - c + 100
+                //                var ratio = Decimal(percentage / 100)
+                //                let hB = halfBasal
+                //                let c = hB - 100
+                //                var target = (c / ratio) - c + 100
+                //
+                //                if c * (c + target - 100) <= 0 {
+                //                    ratio = maxValue
+                //                    target = (c / ratio) - c + 100
+                //                }
+                //                lowTarget = target
+                //                lowTarget = Decimal(round(Double(target * 10)) / 10)
+                //            }
 
-                if c * (c + target - 100) <= 0 {
-                    ratio = maxValue
-                    target = (c / ratio) - c + 100
+                let ratio = Decimal(percentage / 100)
+                let normalTarget: Decimal = 100
+                let target: Decimal = low
+                var hbt: Decimal = halfBasal
+                if ratio != 1 {
+                    hbt = ((2 * ratio * normalTarget) - normalTarget - (ratio * target)) / (ratio - 1)
                 }
-                lowTarget = target
-                lowTarget = Decimal(round(Double(target * 10)) / 10)
+                hbt = Decimal(round(Double(hbt)))
+                // I think all above is not necessary here, as it is only relevant if enacted
             }
             var highTarget = lowTarget
 
-            if units == .mmolL, !viewPercentage {
+            if units == .mmolL {
                 lowTarget = lowTarget.asMgdL
                 highTarget = highTarget.asMgdL
             }
