@@ -133,12 +133,13 @@ extension AddTempTarget {
                                 Text("Low TT lowers Sensitivity")
                                 Spacer()
                                 Text(" " + "\(state.lowTTlowers)")
-                                    .foregroundColor(state.lowTTlowers ? .blue : .secondary)
+                                    .foregroundColor(state.lowTTlowers && state.maxValue > 1 ? .blue : .secondary)
                             }
                             HStack {
                                 Text("Autosens.max")
                                 Spacer()
                                 Text(" " + "\(state.maxValue)")
+                                    .foregroundColor(state.lowTTlowers && state.maxValue > 1 ? .blue : .secondary)
                             }
                         }
                     }
