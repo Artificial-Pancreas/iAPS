@@ -26,8 +26,6 @@ extension AddTempTarget {
         }
 
         var body: some View {
-            var minSlider: Decimal = 15
-            var maxSlider: Decimal = (state.maxValue * 100)
             Form {
                 if !state.presets.isEmpty {
                     Section(header: Text("Presets")) {
@@ -43,19 +41,7 @@ extension AddTempTarget {
 
                 if state.viewPercentage {
                     Section(
-                        header: Text("TT Effect on Basal and Sensitivity"),
-                        footer: Text(
-                            NSLocalizedString(
-                                "Setting of Half Basal Target (HBT) adjusts how a TempTargets affect Basal and ISF.\nA lower HBT will allow Basal to be reduced earlier (at a less high TT).\n",
-                                comment: ""
-                            ) +
-                                NSLocalizedString("Current HBT setting in Prefs: ", comment: "") + "\(state.halfBasal) " +
-                                NSLocalizedString(
-                                    "mg/dl.\nAutosens.max setting determines the max endpoint for Sensitivity Ratio, how far the LowTTlowersSensitivity can raise your Insulin Ratio.",
-                                    comment: ""
-                                ) +
-                                " (\(state.maxValue): \(state.maxValue * 100) %)"
-                        )
+                        header: Text("TT Effect on Basal and Sensitivity")
                     ) {
                         VStack {
                             HStack {
@@ -69,42 +55,91 @@ extension AddTempTarget {
                                 )
                                 Text(state.units.rawValue).foregroundColor(.secondary)
                             }
-                            Text(NSLocalizedString("Desired Insulin Ratio / Override", comment: ""))
+//                            Text(NSLocalizedString("Desired Insulin Ratio / Override", comment: ""))
+//                            if !state.lowTTlowers {
+//                                Text("Low TT lowers Sensitivity is disabled!").font(.caption)
+//                            }
+                            if computeSliderLow() != computeSliderHigh() {
+                                Slider(
+                                    value: $state.percentage,
+                                    in: computeSliderLow() ... computeSliderHigh(),
+                                    step: 5
+                                ) {}
+                                minimumValueLabel: { Text("\(computeSliderLow(), specifier: "%.0f")%") }
+                                maximumValueLabel: { Text("\(computeSliderHigh(), specifier: "%.0f")%") }
+                                onEditingChanged: { editing in
+                                    isEditing = editing }
 
-                            // if state.low < 100 { minSlider = 100 } // throws an error on the Form
-                            // if state.low > 100 { maxSlider = 100 }
-                            Slider(
-                                value: $state.percentage,
-                                in: Double(minSlider) ... Double(maxSlider),
-                                step: 5
-                            ) {}
-                            minimumValueLabel: { Text("\(Double(minSlider), specifier: "%.0f")%") }
-                            maximumValueLabel: { Text("\(Double(maxSlider), specifier: "%.0f")%") }
-                            onEditingChanged: { editing in
-                                isEditing = editing
-                            }
-
-                            Text("\(state.percentage.formatted(.number)) %")
-                                .foregroundColor(isEditing ? .orange : .blue)
-                                .font(.largeTitle)
-                            Divider()
-                            HStack {
+                                Text("\(state.percentage.formatted(.number)) %")
+                                    .foregroundColor(isEditing ? .orange : .blue)
+                                    .font(.largeTitle)
+                                Divider()
+                                HStack {
+                                    Text(
+                                        NSLocalizedString("Half Basal Target should be: ", comment: "")
+                                    )
+                                    .foregroundColor(.primary).italic()
+                                    Text("\(computeHBT().formatted(.number)) mg/dL!").fixedSize(horizontal: true, vertical: false)
+                                }
+                                Divider()
                                 Text(
-                                    NSLocalizedString("Half Basal Target should be: ", comment: "")
+                                    "Enter HBT in Preferences to achieve Insulin Ratio." + "\n" +
+                                        "If you don't, the set Target will put you at Insulin Ratio of " +
+                                        "\(computeRatio().formatted(.number)) % as HBT is currently \(state.halfBasal) mg/dL."
                                 )
-                                .foregroundColor(.primary).italic()
-                                Text("\(computeHBT().formatted(.number)) mg/dL!").fixedSize(horizontal: true, vertical: false)
+                                .fixedSize(horizontal: false, vertical: true)
+                                .multilineTextAlignment(.leading).font(.caption)
+                            } else {
+                                Text(
+                                    "You have not enabled the proper Preferences to change sensitivity with chosen TempTarget. Verify below!"
+                                )
+                                .fixedSize(
+                                    horizontal: false,
+                                    vertical: true
+                                )
+                                .multilineTextAlignment(.leading)
                             }
-                            Divider()
-                            Text(
-                                NSLocalizedString(
-                                    "Please enter the above HBT in Preferences to initiate the desired Insulin Ratio.\nIf you don't the set Target will put you at Insulin Ratio of ",
-                                    comment: ""
-                                ) + "\(computeRatio().formatted(.number)) % as HBT is currently \(state.halfBasal) mg/dL."
-                            )
-                            .foregroundColor(.secondary)
-                            .fixedSize(horizontal: false, vertical: true)
-                            .multilineTextAlignment(.center)
+                        }
+                    }
+                    Section(
+                        header: Text("Current settings in Preferences:"),
+                        footer: Text(
+                            "Half Basal Target (HBT) setting adjusts how a TempTarget affects Sensitivity (Basal, CR and ISF). A lower HBT using a high TT will allow Basal to be reduced earlier, in other words with a smaller high TT. However for this feature to be activated either High TempTarget raises Sensitivity or Exercise Mode must be activated for high TT to increase Sensitivity. Accordingly Low TempTarget lowers Sensitivity must be activated and Autosens.max needs to be higher than 1, to give reduced Sensitivity for low TT."
+                        )
+                    ) {
+                        VStack(alignment: .leading) {
+                            HStack {
+                                Text("Half Basal Target")
+                                Spacer()
+                                Text("" + "\(state.halfBasal)")
+                                    .foregroundColor(
+                                        (state.highTTraises || state.exerMode || state.lowTTlowers) ? .blue :
+                                            .secondary
+                                    )
+                            }
+                            HStack {
+                                Text("Exercise Mode")
+                                Spacer()
+                                Text(" " + "\(state.exerMode)")
+                                    .foregroundColor(state.exerMode ? .blue : .secondary)
+                            }
+                            HStack {
+                                Text("High TT raises Sensitivity")
+                                Spacer()
+                                Text(" " + "\(state.highTTraises)")
+                                    .foregroundColor(state.highTTraises ? .blue : .secondary)
+                            }
+                            HStack {
+                                Text("Low TT lowers Sensitivity")
+                                Spacer()
+                                Text(" " + "\(state.lowTTlowers)")
+                                    .foregroundColor(state.lowTTlowers ? .blue : .secondary)
+                            }
+                            HStack {
+                                Text("Autosens.max")
+                                Spacer()
+                                Text(" " + "\(state.maxValue)")
+                            }
                         }
                     }
                 } else {
@@ -185,7 +220,6 @@ extension AddTempTarget {
             let hB = state.halfBasal
             let c = hB - 100
             var target = (c / ratio) - c + 100
-
             if c * (c + target - 100) <= 0 {
                 ratio = state.maxValue
                 target = (c / ratio) - c + 100
@@ -198,7 +232,7 @@ extension AddTempTarget {
             let normalTarget: Decimal = 100
             var target: Decimal = state.low
             if state.units == .mmolL { target = target / 0.0555 }
-            var ratio = state.maxValue
+            var ratio: Decimal = 1
             if (target + hbt - (2 * normalTarget)) !=
                 0.0 { ratio = (hbt - normalTarget) / (target + hbt - (2 * normalTarget)) } // prevent division by 0
             if ratio < 0 { ratio = state.maxValue } // if negative Value take max Ratio
@@ -207,7 +241,7 @@ extension AddTempTarget {
         }
 
         func computeHBT() -> Decimal {
-            var ratio = Decimal(state.percentage / 100)
+            let ratio = Decimal(state.percentage / 100)
             let normalTarget: Decimal = 100
             var target: Decimal = state.low
             if state.units == .mmolL { target = target / 0.0555 }
@@ -218,6 +252,28 @@ extension AddTempTarget {
             hbt = Decimal(round(Double(hbt)))
             // state.halfBasal = hbt
             return hbt
+        }
+
+        func computeSliderLow() -> Double {
+            var minSens: Double = 15
+            var target = state.low
+            if state.units == .mmolL {
+                target = state.low / 0.0555 }
+            if target == 0 { return minSens }
+            if target < 100 || (!state.highTTraises && !state.exerMode) { minSens = 100 }
+            // minSens = min(minSens, 95)
+            return minSens
+        }
+
+        func computeSliderHigh() -> Double {
+            var maxSens = Double(state.maxValue * 100)
+            var target = state.low
+            if target == 0 { return maxSens }
+            if state.units == .mmolL {
+                target = state.low / 0.0555 }
+            if target > 100 || !state.lowTTlowers { maxSens = 100 }
+            // maxSens = max(105, maxSens)
+            return maxSens
         }
 
         private func presetView(for preset: TempTarget) -> some View {

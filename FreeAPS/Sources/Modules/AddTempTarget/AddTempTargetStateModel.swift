@@ -15,7 +15,10 @@ extension AddTempTarget {
         @Published var percentage = 100.0
         @Published var maxValue: Decimal = 1.2
         @Published var halfBasal: Decimal = 160
-        @Published var viewPercentage = false
+        @Published var viewPercentage = true
+        @Published var lowTTlowers = false
+        @Published var highTTraises = false
+        @Published var exerMode = false
 
         private(set) var units: GlucoseUnits = .mmolL
 
@@ -24,6 +27,9 @@ extension AddTempTarget {
             presets = storage.presets()
             maxValue = settingsManager.preferences.autosensMax
             halfBasal = settingsManager.preferences.halfBasalExerciseTarget
+            lowTTlowers = settingsManager.preferences.lowTemptargetLowersSensitivity
+            highTTraises = settingsManager.preferences.highTemptargetRaisesSensitivity
+            exerMode = settingsManager.preferences.exerciseMode
         }
 
         func enact() {
