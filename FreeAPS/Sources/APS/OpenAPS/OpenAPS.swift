@@ -44,7 +44,7 @@ final class OpenAPS {
 
                 self.storage.save(meal, as: Monitor.meal)
 
-                let tdd_averages = self.loadFileFromStorage(name: OpenAPS.Monitor.tdd_averages)
+                let oref2_variables = self.loadFileFromStorage(name: OpenAPS.Monitor.oref2_variables)
 
                 // iob
                 let autosens = self.loadFileFromStorage(name: Settings.autosense)
@@ -74,7 +74,7 @@ final class OpenAPS {
                     pumpHistory: pumpHistory,
                     preferences: preferences,
                     basalProfile: basalProfile,
-                    tdd_averages: tdd_averages
+                    oref2_variables: oref2_variables
                 )
                 debug(.openAPS, "SUGGESTED: \(suggested)")
 
@@ -333,7 +333,7 @@ final class OpenAPS {
         pumpHistory: JSON,
         preferences: JSON,
         basalProfile: JSON,
-        tdd_averages: JSON
+        oref2_variables: JSON
     ) -> RawJSON {
         dispatchPrecondition(condition: .onQueue(processQueue))
         return jsWorker.inCommonContext { worker in
@@ -362,7 +362,7 @@ final class OpenAPS {
                     pumpHistory,
                     preferences,
                     basalProfile,
-                    tdd_averages
+                    oref2_variables
                 ]
             )
         }

@@ -1,3 +1,4 @@
+import CoreData
 import SpriteKit
 import SwiftDate
 import SwiftUI
@@ -24,6 +25,11 @@ extension Home {
         @State var CVorSD = ""
         // Switch between Loops and Errors when tapping in statPanel
         @State var loopStatTitle = NSLocalizedString("Loops", comment: "Nr of Loops in statPanel")
+
+        @FetchRequest(
+            entity: Override.entity(),
+            sortDescriptors: [NSSortDescriptor(key: "date", ascending: false)]
+        ) var fetchedPercent: FetchedResults<Override>
 
         private var numberFormatter: NumberFormatter {
             let formatter = NumberFormatter()
@@ -224,6 +230,17 @@ extension Home {
                         }
                     }
                 }
+
+                if (fetchedPercent.first?.enabled) != nil {
+                    let overrideText = "\((fetchedPercent.first?.percentage ?? 100).formatted(.number)) %"
+                    Text(
+                        overrideText == "100 %" ? "" : overrideText
+                    )
+                    .font(.system(size: 12, weight: .bold))
+                    .foregroundColor(.orange)
+                    .padding(.leading, 8)
+                }
+
                 Spacer()
                 if let progress = state.bolusProgress {
                     Text("Bolusing")

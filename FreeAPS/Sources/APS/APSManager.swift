@@ -713,8 +713,6 @@ final class BaseAPSManager: APSManager, Injectable {
         let preferences = settingsManager.preferences
         let currentTDD = enacted_.tdd ?? 0
 
-        // MARK: Fetch data from Core Data: TDD Entity. TEST:
-
         if currentTDD > 0 {
             let tenDaysAgo = Date().addingTimeInterval(-10.days.timeInterval)
             let twoHoursAgo = Date().addingTimeInterval(-2.hours.timeInterval)
@@ -726,7 +724,10 @@ final class BaseAPSManager: APSManager, Injectable {
             var nrOfIndeces: Int = 0
 
             var booleanArray = [ViewPercentage]()
+            var overrideArray = [Override]()
             var isPercentageEnabled = false
+            var useOverride = false
+            var overridePercentage: Decimal = 100
 
             coredataContext.performAndWait {
                 let requestTDD = TDD.fetchRequest() as NSFetchRequest<TDD>
@@ -740,6 +741,12 @@ final class BaseAPSManager: APSManager, Injectable {
                 requestIsEnbled.sortDescriptors = [sortIsEnabled]
                 requestIsEnbled.fetchLimit = 1
                 try? booleanArray = coredataContext.fetch(requestIsEnbled)
+
+                let requestOverrides = Override.fetchRequest() as NSFetchRequest<Override>
+                let sortOverride = NSSortDescriptor(key: "date", ascending: false)
+                requestOverrides.sortDescriptors = [sortOverride]
+                requestOverrides.fetchLimit = 1
+                try? overrideArray = coredataContext.fetch(requestOverrides)
 
                 total = uniqEvents.compactMap({ each in each.tdd as? Decimal ?? 0 }).reduce(0, +)
                 indeces = uniqEvents.count
@@ -760,21 +767,82 @@ final class BaseAPSManager: APSManager, Injectable {
             let average14 = total / Decimal(indeces)
             let weight = preferences.weightPercentage
             let weighted_average = weight * average2hours + (1 - weight) * average14
+            isPercentageEnabled = booleanArray.first?.enabled ?? false
+            useOverride = overrideArray.first?.enabled ?? false
 
-            if !booleanArray.isEmpty {
-                isPercentageEnabled = booleanArray[0].enabled
+            if useOverride {
+                let duration = Int(truncating: overrideArray.first?.duration ?? 0) * 60
+                let date = overrideArray.first?.date ?? Date()
+                if date.addingTimeInterval(duration.minutes.timeInterval) < Date() {
+                    useOverride = false
+                }
             }
 
-            let averages = TDD_averages(
+            overridePercentage = Decimal(overrideArray.first?.percentage ?? 100) // Decimal(overrideArray[0].percentage)
+
+            coredataContext.performAndWait {}
+
+            let averages = Oref2_variables(
                 average_total_data: roundDecimal(average14, 1),
                 weightedAverage: roundDecimal(weighted_average, 1),
                 past2hoursAverage: roundDecimal(average2hours, 1),
                 date: Date(),
-                isEnabled: isPercentageEnabled
+                isEnabled: isPercentageEnabled,
+                overridePercentage: overridePercentage,
+                useOverride: useOverride
             )
-            storage.save(averages, as: OpenAPS.Monitor.tdd_averages)
+            storage.save(averages, as: OpenAPS.Monitor.oref2_variables)
 
             print("Test time of TDD: \(-1 * tddStartedAt.timeIntervalSinceNow) s")
+        } else {
+            var booleanArray = [ViewPercentage]()
+            var overrideArray = [Override]()
+            var isPercentageEnabled = false
+            var useOverride = false
+            var overridePercentage: Decimal = 100
+
+            coredataContext.performAndWait {
+                let requestIsEnbled = ViewPercentage.fetchRequest() as NSFetchRequest<ViewPercentage>
+                let sortIsEnabled = NSSortDescriptor(key: "date", ascending: false)
+                requestIsEnbled.sortDescriptors = [sortIsEnabled]
+                requestIsEnbled.fetchLimit = 1
+                try? booleanArray = coredataContext.fetch(requestIsEnbled)
+
+                let requestOverrides = Override.fetchRequest() as NSFetchRequest<Override>
+                let sortOverride = NSSortDescriptor(key: "date", ascending: false)
+                requestOverrides.sortDescriptors = [sortOverride]
+                requestOverrides.fetchLimit = 1
+                try? overrideArray = coredataContext.fetch(requestOverrides)
+
+                if !booleanArray.isEmpty {
+                    isPercentageEnabled = booleanArray[0].enabled
+                }
+
+                if !overrideArray.isEmpty {
+                    useOverride = overrideArray[0].enabled
+                    overridePercentage = Decimal(overrideArray[0].percentage)
+                }
+            }
+
+            if !useOverride {
+                coredataContext.perform {
+                    let saveOverrideDurationEtc = Override(context: self.coredataContext)
+                    saveOverrideDurationEtc.enabled = useOverride
+                    saveOverrideDurationEtc.date = Date()
+                    try? self.coredataContext.save()
+                }
+            }
+
+            let averages = Oref2_variables(
+                average_total_data: 0,
+                weightedAverage: 0,
+                past2hoursAverage: 0,
+                date: Date(),
+                isEnabled: isPercentageEnabled,
+                overridePercentage: overridePercentage,
+                useOverride: useOverride
+            )
+            storage.save(averages, as: OpenAPS.Monitor.oref2_variables)
         }
     }
 

@@ -1,33 +1,41 @@
 import Foundation
 
-struct TDD_averages: JSON, Equatable {
+struct Oref2_variables: JSON, Equatable {
     var average_total_data: Decimal
     var weightedAverage: Decimal
     var past2hoursAverage: Decimal
     var date: Date
     var isEnabled: Bool
+    var overridePercentage: Decimal
+    var useOverride: Bool
 
     init(
         average_total_data: Decimal,
         weightedAverage: Decimal,
         past2hoursAverage: Decimal,
         date: Date,
-        isEnabled: Bool
+        isEnabled: Bool,
+        overridePercentage: Decimal,
+        useOverride: Bool
     ) {
         self.average_total_data = average_total_data
         self.weightedAverage = weightedAverage
         self.past2hoursAverage = past2hoursAverage
         self.date = date
         self.isEnabled = isEnabled
+        self.overridePercentage = overridePercentage
+        self.useOverride = useOverride
     }
 }
 
-extension TDD_averages {
+extension Oref2_variables {
     private enum CodingKeys: String, CodingKey {
         case average_total_data
         case weightedAverage
         case past2hoursAverage
         case date
         case isEnabled
+        case overridePercentage
+        case useOverride
     }
 }
