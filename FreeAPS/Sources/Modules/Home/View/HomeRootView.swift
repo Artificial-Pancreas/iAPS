@@ -59,6 +59,29 @@ extension Home {
             return scene
         }
 
+        func computeRatio() -> Decimal {
+            var ratio: Decimal = 1
+            let hbt = state.settingsManager.preferences.halfBasalExerciseTarget
+            let normalTarget: Decimal = 100
+            if let tempTarget = state.tempTarget {
+                let bottom = tempTarget.targetBottom ?? 100
+                let top = tempTarget.targetTop ?? 100
+                let target: Decimal = (bottom + top) / 2
+                if (target + hbt - (2 * normalTarget)) !=
+                    0 { ratio = (hbt - normalTarget) / (target + hbt - (2 * normalTarget)) } // prevent division by 0
+                if ratio < 0 { ratio = state.settingsManager.preferences.autosensMax } // if negative Value take max Ratio
+                if ratio < 1,
+                   !state.settingsManager.preferences.exerciseMode,
+                   !state.settingsManager.preferences.highTemptargetRaisesSensitivity
+                { ratio = 1 }
+                if ratio > 1, !state.settingsManager.preferences.lowTemptargetLowersSensitivity { ratio = 1 }
+                if ratio > 1 {
+                    ratio = Decimal(round(Double(min(ratio, state.settingsManager.preferences.autosensMax))))
+                }
+            }
+            return ratio
+        }
+
         @ViewBuilder func header(_ geo: GeometryProxy) -> some View {
             HStack(alignment: .bottom) {
                 Spacer()
@@ -222,6 +245,14 @@ extension Home {
                             Text(state.units.rawValue).font(.caption)
                                 .foregroundColor(.secondary)
                         }
+                    }
+                    if computeRatio() != 1 {
+                        Text("Insulin Ratio")
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+                        Text(numberFormatter.string(from: computeRatio() as NSNumber) ?? "")
+                            .font(.caption)
+                            .foregroundColor(.secondary)
                     }
                 }
                 Spacer()
