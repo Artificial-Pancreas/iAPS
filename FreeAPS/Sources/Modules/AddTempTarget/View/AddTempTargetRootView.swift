@@ -55,11 +55,9 @@ extension AddTempTarget {
                                 )
                                 Text(state.units.rawValue).foregroundColor(.secondary)
                             }
-//                            Text(NSLocalizedString("Desired Insulin Ratio / Override", comment: ""))
-//                            if !state.lowTTlowers {
-//                                Text("Low TT lowers Sensitivity is disabled!").font(.caption)
-//                            }
+
                             if computeSliderLow() != computeSliderHigh() {
+                                Text(NSLocalizedString("Desired Insulin Ratio / Override", comment: ""))
                                 Slider(
                                     value: $state.percentage,
                                     in: computeSliderLow() ... computeSliderHigh(),
