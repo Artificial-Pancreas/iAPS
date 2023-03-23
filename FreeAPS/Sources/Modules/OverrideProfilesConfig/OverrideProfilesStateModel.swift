@@ -25,12 +25,13 @@ extension OverrideProfilesConfig {
 
                 var newDuration = Double(duration)
                 if isEnabled {
-                    let duration = Int(truncating: overrideArray.first?.duration ?? 0) * 60
+                    let duration = overrideArray.first?.duration ?? 0
+                    let addedMinutes = Int((duration as Decimal) * 60)
                     let date = overrideArray.first?.date ?? Date()
-                    if date.addingTimeInterval(duration.hours.timeInterval) < Date(), !_indefinite {
+                    if date.addingTimeInterval(addedMinutes.minutes.timeInterval) < Date(), !_indefinite {
                         isEnabled = false
                     }
-                    newDuration = Date().distance(to: date.addingTimeInterval(duration.minutes.timeInterval)).minutes
+                    newDuration = Date().distance(to: date.addingTimeInterval(addedMinutes.minutes.timeInterval)).minutes
                 }
 
                 if newDuration < 0 {

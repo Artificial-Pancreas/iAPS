@@ -60,7 +60,7 @@ extension OverrideProfilesConfig {
                                 .font(.largeTitle)
                             Spacer()
                             Toggle(isOn: $state._indefinite) {
-                                Text("Indefinite Duration")
+                                Text("Enable indefinitely")
                             }
                         }
                         if !state._indefinite {
@@ -95,13 +95,12 @@ extension OverrideProfilesConfig {
                                         isEnabledMoc.enabled = false
                                     } else { isEnabledMoc.enabled = true }
                                     isEnabledMoc.date = Date()
+                                    isEnabledMoc.duration = state.duration as NSDecimalNumber
                                     if state._indefinite {
                                         isEnabledMoc.duration = 0
                                     } else if state.duration == 0 {
                                         isEnabledMoc.enabled = false
-                                    } else {
-                                        isEnabledMoc.duration = state.duration as NSDecimalNumber
-                                    }
+                                    } else { isEnabledMoc.timeLeft = Double(state.duration) }
                                     try? moc.save()
                                 }
                             }

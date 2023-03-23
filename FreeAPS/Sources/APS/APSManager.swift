@@ -713,6 +713,13 @@ final class BaseAPSManager: APSManager, Injectable {
         let preferences = settingsManager.preferences
         let currentTDD = enacted_.tdd ?? 0
 
+        var booleanArray = [ViewPercentage]()
+        var overrideArray = [Override]()
+        var isPercentageEnabled = false
+        var useOverride = false
+        var overridePercentage: Decimal = 100
+        var duration: Decimal = 0
+
         if currentTDD > 0 {
             let tenDaysAgo = Date().addingTimeInterval(-10.days.timeInterval)
             let twoHoursAgo = Date().addingTimeInterval(-2.hours.timeInterval)
@@ -722,12 +729,6 @@ final class BaseAPSManager: APSManager, Injectable {
             var totalAmount: Decimal = 0
             var indeces: Int = 0
             var nrOfIndeces: Int = 0
-
-            var booleanArray = [ViewPercentage]()
-            var overrideArray = [Override]()
-            var isPercentageEnabled = false
-            var useOverride = false
-            var overridePercentage: Decimal = 100
 
             coredataContext.performAndWait {
                 let requestTDD = TDD.fetchRequest() as NSFetchRequest<TDD>
@@ -769,18 +770,18 @@ final class BaseAPSManager: APSManager, Injectable {
             let weighted_average = weight * average2hours + (1 - weight) * average14
             isPercentageEnabled = booleanArray.first?.enabled ?? false
             useOverride = overrideArray.first?.enabled ?? false
+            overridePercentage = Decimal(overrideArray.first?.percentage ?? 100)
 
             if useOverride {
-                let duration = Int(truncating: overrideArray.first?.duration ?? 0) * 60
+                duration = (overrideArray.first?.duration ?? 0) as Decimal
+                let addedMinutes = Int(duration * 60)
                 let date = overrideArray.first?.date ?? Date()
-                if date.addingTimeInterval(duration.minutes.timeInterval) < Date() {
-                    useOverride = false
+                if duration != 0 {
+                    if date.addingTimeInterval(addedMinutes.minutes.timeInterval) < Date() {
+                        useOverride = false
+                    }
                 }
             }
-
-            overridePercentage = Decimal(overrideArray.first?.percentage ?? 100) // Decimal(overrideArray[0].percentage)
-
-            coredataContext.performAndWait {}
 
             let averages = Oref2_variables(
                 average_total_data: roundDecimal(average14, 1),
@@ -795,12 +796,6 @@ final class BaseAPSManager: APSManager, Injectable {
 
             print("Test time of TDD: \(-1 * tddStartedAt.timeIntervalSinceNow) s")
         } else {
-            var booleanArray = [ViewPercentage]()
-            var overrideArray = [Override]()
-            var isPercentageEnabled = false
-            var useOverride = false
-            var overridePercentage: Decimal = 100
-
             coredataContext.performAndWait {
                 let requestIsEnbled = ViewPercentage.fetchRequest() as NSFetchRequest<ViewPercentage>
                 let sortIsEnabled = NSSortDescriptor(key: "date", ascending: false)
@@ -813,23 +808,20 @@ final class BaseAPSManager: APSManager, Injectable {
                 requestOverrides.sortDescriptors = [sortOverride]
                 requestOverrides.fetchLimit = 1
                 try? overrideArray = coredataContext.fetch(requestOverrides)
-
-                if !booleanArray.isEmpty {
-                    isPercentageEnabled = booleanArray[0].enabled
-                }
-
-                if !overrideArray.isEmpty {
-                    useOverride = overrideArray[0].enabled
-                    overridePercentage = Decimal(overrideArray[0].percentage)
-                }
             }
 
-            if !useOverride {
-                coredataContext.perform {
-                    let saveOverrideDurationEtc = Override(context: self.coredataContext)
-                    saveOverrideDurationEtc.enabled = useOverride
-                    saveOverrideDurationEtc.date = Date()
-                    try? self.coredataContext.save()
+            isPercentageEnabled = booleanArray.first?.enabled ?? false
+            useOverride = overrideArray.first?.enabled ?? false
+            overridePercentage = Decimal(overrideArray.first?.percentage ?? 100)
+
+            if useOverride {
+                duration = (overrideArray.first?.duration ?? 0) as Decimal
+                let addedMinutes = Int(duration * 60)
+                let date = overrideArray.first?.date ?? Date()
+                if duration != 0 {
+                    if date.addingTimeInterval(addedMinutes.minutes.timeInterval) < Date() {
+                        useOverride = false
+                    }
                 }
             }
 
@@ -843,6 +835,15 @@ final class BaseAPSManager: APSManager, Injectable {
                 useOverride: useOverride
             )
             storage.save(averages, as: OpenAPS.Monitor.oref2_variables)
+        }
+
+        coredataContext.perform {
+            let saveNewUseOverride = Override(context: self.coredataContext)
+            saveNewUseOverride.date = Date()
+            saveNewUseOverride.enabled = useOverride
+            saveNewUseOverride.percentage = Double(overridePercentage)
+            saveNewUseOverride.timeLeft = Double(duration)
+            try? self.coredataContext.save()
         }
     }
 

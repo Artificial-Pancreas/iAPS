@@ -231,15 +231,13 @@ extension Home {
                     }
                 }
 
-                if (fetchedPercent.first?.enabled) != nil {
-                    let overrideText = "\((fetchedPercent.first?.percentage ?? 100).formatted(.number)) %"
-                    Text(
-                        overrideText == "100 %" ? "" : overrideText
-                    )
-                    .font(.system(size: 12, weight: .bold))
-                    .foregroundColor(.orange)
-                    .padding(.leading, 8)
-                }
+                let overrideText = "\((fetchedPercent.first?.percentage ?? 100).formatted(.number)) %"
+                Text(
+                    (fetchedPercent.first?.enabled ?? false) ? overrideText : ""
+                )
+                .font(.system(size: 12, weight: .bold))
+                .foregroundColor(.orange)
+                .padding(.leading, 8)
 
                 Spacer()
                 if let progress = state.bolusProgress {
