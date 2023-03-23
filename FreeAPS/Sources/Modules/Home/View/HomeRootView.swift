@@ -231,15 +231,25 @@ extension Home {
                     }
                 }
 
-                let overrideText = "\((fetchedPercent.first?.percentage ?? 100).formatted(.number)) %"
+                /*
+                 Text(
+                     (fetchedPercent.first?.enabled ?? false) ?
+                         "\((fetchedPercent.first?.percentage ?? 100).formatted(.number)) %" : ""
+                 )
+                 .font(.system(size: 12, weight: .bold))
+                 .foregroundColor(.orange)
+                 .padding(.leading, 8)
+                  */
+                Spacer()
+
                 Text(
-                    (fetchedPercent.first?.enabled ?? false) ? overrideText : ""
+                    (fetchedPercent.first?.enabled ?? false) ?
+                        "\((fetchedPercent.first?.percentage ?? 100).formatted(.number)) %" : ""
                 )
                 .font(.system(size: 12, weight: .bold))
                 .foregroundColor(.orange)
-                .padding(.leading, 8)
+                .padding(.trailing, 12)
 
-                Spacer()
                 if let progress = state.bolusProgress {
                     Text("Bolusing")
                         .font(.system(size: 12, weight: .bold)).foregroundColor(.insulin)

@@ -719,6 +719,8 @@ final class BaseAPSManager: APSManager, Injectable {
         var useOverride = false
         var overridePercentage: Decimal = 100
         var duration: Decimal = 0
+        var originalDuration: Decimal = 0
+        var unlimited: Bool = false
 
         if currentTDD > 0 {
             let tenDaysAgo = Date().addingTimeInterval(-10.days.timeInterval)
@@ -771,15 +773,17 @@ final class BaseAPSManager: APSManager, Injectable {
             isPercentageEnabled = booleanArray.first?.enabled ?? false
             useOverride = overrideArray.first?.enabled ?? false
             overridePercentage = Decimal(overrideArray.first?.percentage ?? 100)
+            originalDuration = (overrideArray.first?.duration ?? 0) as Decimal
+            unlimited = overrideArray.first?.indefinite ?? true
 
             if useOverride {
                 duration = (overrideArray.first?.duration ?? 0) as Decimal
-                let addedMinutes = Int(duration * 60)
+                let addedMinutes = Int(duration)
                 let date = overrideArray.first?.date ?? Date()
-                if duration != 0 {
-                    if date.addingTimeInterval(addedMinutes.minutes.timeInterval) < Date() {
-                        useOverride = false
-                    }
+                if date.addingTimeInterval(addedMinutes.minutes.timeInterval) < Date(),
+                   !unlimited
+                {
+                    useOverride = false
                 }
             }
 
@@ -813,15 +817,17 @@ final class BaseAPSManager: APSManager, Injectable {
             isPercentageEnabled = booleanArray.first?.enabled ?? false
             useOverride = overrideArray.first?.enabled ?? false
             overridePercentage = Decimal(overrideArray.first?.percentage ?? 100)
+            originalDuration = (overrideArray.first?.duration ?? 0) as Decimal
+            unlimited = overrideArray.first?.indefinite ?? true
 
             if useOverride {
                 duration = (overrideArray.first?.duration ?? 0) as Decimal
-                let addedMinutes = Int(duration * 60)
+                let addedMinutes = Int(duration)
                 let date = overrideArray.first?.date ?? Date()
-                if duration != 0 {
-                    if date.addingTimeInterval(addedMinutes.minutes.timeInterval) < Date() {
-                        useOverride = false
-                    }
+                if date.addingTimeInterval(addedMinutes.minutes.timeInterval) < Date(),
+                   !unlimited
+                {
+                    useOverride = false
                 }
             }
 
@@ -843,6 +849,8 @@ final class BaseAPSManager: APSManager, Injectable {
             saveNewUseOverride.enabled = useOverride
             saveNewUseOverride.percentage = Double(overridePercentage)
             saveNewUseOverride.timeLeft = Double(duration)
+            saveNewUseOverride.duration = originalDuration as NSDecimalNumber
+            saveNewUseOverride.indefinite = unlimited
             try? self.coredataContext.save()
         }
     }

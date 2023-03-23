@@ -26,7 +26,7 @@ extension OverrideProfilesConfig {
                 var newDuration = Double(duration)
                 if isEnabled {
                     let duration = overrideArray.first?.duration ?? 0
-                    let addedMinutes = Int((duration as Decimal) * 60)
+                    let addedMinutes = Int(duration as Decimal)
                     let date = overrideArray.first?.date ?? Date()
                     if date.addingTimeInterval(addedMinutes.minutes.timeInterval) < Date(), !_indefinite {
                         isEnabled = false
@@ -36,7 +36,7 @@ extension OverrideProfilesConfig {
 
                 if newDuration < 0 {
                     newDuration = 0
-                } else { duration = Decimal(newDuration / 60) }
+                } else { duration = Decimal(newDuration) }
 
                 if !isEnabled {
                     _indefinite = true

@@ -26,7 +26,10 @@ extension OverrideProfilesConfig {
 
         var body: some View {
             Form {
-                Section(header: Text("Override your Basal, ISF and CR profiles")) {
+                Section(
+                    header: Text("Override your Basal, ISF and CR profiles"),
+                    footer: Text("" + (!state.isEnabled ? "Currently no Override active" : ""))
+                ) {
                     Toggle(isOn: $state.isEnabled) {
                         Text("Override Profiles")
                     }._onBindingChange($state.isEnabled, perform: { _ in
@@ -66,8 +69,8 @@ extension OverrideProfilesConfig {
                         if !state._indefinite {
                             HStack {
                                 Text("Duration")
-                                DecimalTextField("0", value: $state.duration, formatter: formatter, cleanInput: true)
-                                Text("hours").foregroundColor(.secondary)
+                                DecimalTextField("0", value: $state.duration, formatter: formatter, cleanInput: false)
+                                Text("minutes").foregroundColor(.secondary)
                             }
                         }
                         Button("Save") {
