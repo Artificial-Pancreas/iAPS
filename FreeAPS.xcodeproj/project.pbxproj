@@ -981,6 +981,7 @@
 				19DC677E29CA675700FD9EC4 /* OverrideProfilesDataFlow.swift */,
 				19DC678029CA676A00FD9EC4 /* OverrideProfilesProvider.swift */,
 				19DC678229CA677D00FD9EC4 /* OverrideProfilesStateModel.swift */,
+				19DC678429CA67A400FD9EC4 /* OverrideProfilesRootView.swift */,
 				19DC677D29CA672500FD9EC4 /* View */,
 			);
 			path = OverrideProfilesConfig;
@@ -989,7 +990,6 @@
 		19DC677D29CA672500FD9EC4 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				19DC678429CA67A400FD9EC4 /* OverrideProfilesRootView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1016,7 +1016,6 @@
 		3811DE0325C9D31700A708ED /* Modules */ = {
 			isa = PBXGroup;
 			children = (
-				19DC677C29CA66F200FD9EC4 /* OverrideProfilesConfig */,
 				19D466A129AA2B0A004D5F33 /* FPUConfig */,
 				F90692CD274B99850037068D /* HealthKit */,
 				6DC5D590658EF8B8DF94F9F5 /* AddCarbs */,
@@ -1038,6 +1037,7 @@
 				6559084B2933A58E00960C87 /* LibreViewConfig */,
 				D533BF261CDC1C3F871E7BFD /* NightscoutConfig */,
 				F66B236E00924A05D6A9F9DF /* NotificationsConfig */,
+				19DC677C29CA66F200FD9EC4 /* OverrideProfilesConfig */,
 				3E1C41D9301B7058AA7BF5EA /* PreferencesEditor */,
 				99C01B871ACAB3F32CE755C7 /* PumpConfig */,
 				E493126EA71765130F64CCE5 /* PumpSettingsEditor */,

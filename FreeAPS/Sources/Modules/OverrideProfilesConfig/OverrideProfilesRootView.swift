@@ -9,18 +9,14 @@ extension OverrideProfilesConfig {
         @StateObject var state = StateModel()
         @State private var isEditing = false
         @State private var showAlert = false
-
-        @FetchRequest(
-            entity: Override.entity(),
-            sortDescriptors: [NSSortDescriptor(key: "date", ascending: false)]
-        ) var fetchedPercent: FetchedResults<Override>
-
-        @Environment(\.managedObjectContext) var moc
+        @State private var showingDetail = false
+        @State private var isPresented = true
+        @Environment(\.dismiss) var dismiss
 
         private var formatter: NumberFormatter {
             let formatter = NumberFormatter()
             formatter.numberStyle = .decimal
-            formatter.maximumFractionDigits = 1
+            formatter.maximumFractionDigits = 0
             return formatter
         }
 
@@ -34,11 +30,10 @@ extension OverrideProfilesConfig {
                         Text("Override Profiles")
                     }._onBindingChange($state.isEnabled, perform: { _ in
                         if !state.isEnabled {
-                            let isEnabledMoc = Override(context: moc)
-                            isEnabledMoc.enabled = false
-                            isEnabledMoc.percentage = 100
-                            isEnabledMoc.date = Date()
-                            try? moc.save()
+                            state.duration = 0
+                            state.percentage = 100
+                            state._indefinite = false
+                            state.saveSettings()
                         }
                     })
                 }
@@ -46,7 +41,7 @@ extension OverrideProfilesConfig {
                     Section(
                         header: Text("Total Insulin Adjustment"),
                         footer: Text(
-                            "Your profile basal insulin will be adjusted with the override percentage and your profile ISF and CR will be inversly adjusted with the percentage.\n\nWhen you toggle of the override or return the slider to 100% every profile setting will return to normal."
+                            "Your profile basal insulin will be adjusted with the override percentage and your profile ISF and CR will be inversly adjusted with the percentage.\n\nIf you toggle off the override every profile setting will return to normal."
                         )
                     ) {
                         VStack {
@@ -91,20 +86,16 @@ extension OverrideProfilesConfig {
                             actions: {
                                 Button("Cancel", role: .cancel) {}
                                 Button("Start Override", role: .destructive) {
-                                    let isEnabledMoc = Override(context: moc)
-                                    isEnabledMoc.indefinite = state._indefinite
-                                    isEnabledMoc.percentage = state.percentage
                                     if state.percentage == 100 {
-                                        isEnabledMoc.enabled = false
-                                    } else { isEnabledMoc.enabled = true }
-                                    isEnabledMoc.date = Date()
-                                    isEnabledMoc.duration = state.duration as NSDecimalNumber
+                                        state.isEnabled = false
+                                    } else { state.isEnabled = true }
                                     if state._indefinite {
-                                        isEnabledMoc.duration = 0
+                                        state.duration = 0
                                     } else if state.duration == 0 {
-                                        isEnabledMoc.enabled = false
-                                    } else { isEnabledMoc.timeLeft = Double(state.duration) }
-                                    try? moc.save()
+                                        state.isEnabled = false
+                                    }
+                                    state.saveSettings()
+                                    dismiss()
                                 }
                             }
                         )

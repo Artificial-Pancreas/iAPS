@@ -8,6 +8,8 @@ struct Oref2_variables: JSON, Equatable {
     var isEnabled: Bool
     var overridePercentage: Decimal
     var useOverride: Bool
+    var duration: Decimal
+    var unlimited: Bool
 
     init(
         average_total_data: Decimal,
@@ -16,7 +18,9 @@ struct Oref2_variables: JSON, Equatable {
         date: Date,
         isEnabled: Bool,
         overridePercentage: Decimal,
-        useOverride: Bool
+        useOverride: Bool,
+        duration: Decimal,
+        unlimited: Bool
     ) {
         self.average_total_data = average_total_data
         self.weightedAverage = weightedAverage
@@ -25,6 +29,8 @@ struct Oref2_variables: JSON, Equatable {
         self.isEnabled = isEnabled
         self.overridePercentage = overridePercentage
         self.useOverride = useOverride
+        self.duration = duration
+        self.unlimited = unlimited
     }
 }
 
@@ -37,5 +43,7 @@ extension Oref2_variables {
         case isEnabled
         case overridePercentage
         case useOverride
+        case duration
+        case unlimited
     }
 }

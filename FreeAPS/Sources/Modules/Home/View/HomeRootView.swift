@@ -231,22 +231,20 @@ extension Home {
                     }
                 }
 
-                /*
-                 Text(
-                     (fetchedPercent.first?.enabled ?? false) ?
-                         "\((fetchedPercent.first?.percentage ?? 100).formatted(.number)) %" : ""
-                 )
-                 .font(.system(size: 12, weight: .bold))
-                 .foregroundColor(.orange)
-                 .padding(.leading, 8)
-                  */
                 Spacer()
 
                 Text(
                     (fetchedPercent.first?.enabled ?? false) ?
-                        "\((fetchedPercent.first?.percentage ?? 100).formatted(.number)) %" : ""
+                        "\((fetchedPercent.first?.percentage ?? 100).formatted(.number)) % " : ""
                 )
                 .font(.system(size: 12, weight: .bold))
+                .foregroundColor(.orange)
+                .padding(.trailing, 8)
+                Text(
+                    (tirFormatter.string(from: (fetchedPercent.first?.duration ?? 0) as NSNumber) ?? "") == "0" ? "Perpetual" :
+                        (tirFormatter.string(from: (fetchedPercent.first?.duration ?? 0) as NSNumber) ?? "") + " min"
+                )
+                .font(.system(size: 12))
                 .foregroundColor(.orange)
                 .padding(.trailing, 12)
 

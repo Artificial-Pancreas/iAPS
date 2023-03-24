@@ -10,6 +10,18 @@ extension OverrideProfilesConfig {
 
         let coredataContext = CoreDataStack.shared.persistentContainer.viewContext
 
+        func saveSettings() {
+            coredataContext.perform {
+                let saveOverride = Override(context: self.coredataContext)
+                saveOverride.duration = self.duration as NSDecimalNumber
+                saveOverride.indefinite = self._indefinite
+                saveOverride.percentage = self.percentage
+                saveOverride.enabled = self.isEnabled
+                saveOverride.date = Date()
+                try? self.coredataContext.save()
+            }
+        }
+
         func savedSettings() {
             coredataContext.performAndWait {
                 var overrideArray = [Override]()
@@ -34,9 +46,7 @@ extension OverrideProfilesConfig {
                     newDuration = Date().distance(to: date.addingTimeInterval(addedMinutes.minutes.timeInterval)).minutes
                 }
 
-                if newDuration < 0 {
-                    newDuration = 0
-                } else { duration = Decimal(newDuration) }
+                if newDuration < 0 { newDuration = 0 } else { duration = Decimal(newDuration) }
 
                 if !isEnabled {
                     _indefinite = true
