@@ -4,8 +4,7 @@ enum CGMType: String, JSON, CaseIterable, Identifiable {
     var id: String { rawValue }
 
     case nightscout
-    case xdripLeft
-    case xdripRight
+    case xdrip
     case dexcomG6
     case dexcomG5
     case dexcomG7
@@ -18,10 +17,8 @@ enum CGMType: String, JSON, CaseIterable, Identifiable {
         switch self {
         case .nightscout:
             return "Nightscout"
-        case .xdripLeft:
-            return "xDrip venstre"
-        case .xdripRight:
-            return "xDrip høyre"
+        case .xdrip:
+            return "xDrip"
         case .glucoseDirect:
             return "Glucose Direct"
         case .dexcomG6:
@@ -44,10 +41,8 @@ enum CGMType: String, JSON, CaseIterable, Identifiable {
         case .enlite,
              .nightscout:
             return nil
-        case .xdripLeft:
-            return URL(string: "xdripswiftLeft://")!
-        case .xdripRight:
-            return URL(string: "xdripswiftRight://")!
+        case .xdrip:
+            return URL(string: "xdripswift://")!
         case .glucoseDirect:
             return URL(string: "libredirect://")!
         case .dexcomG6:
@@ -65,9 +60,7 @@ enum CGMType: String, JSON, CaseIterable, Identifiable {
 
     var externalLink: URL? {
         switch self {
-        case .xdripLeft:
-            return URL(string: "https://github.com/JohanDegraeve/xdripswift")!
-        case .xdripRight:
+        case .xdrip:
             return URL(string: "https://github.com/JohanDegraeve/xdripswift")!
         case .glucoseDirect:
             return URL(string: "https://github.com/creepymonster/GlucoseDirectApp")!
@@ -79,12 +72,7 @@ enum CGMType: String, JSON, CaseIterable, Identifiable {
         switch self {
         case .nightscout:
             return NSLocalizedString("Online or internal server", comment: "Online or internal server")
-        case .xdripLeft:
-            return NSLocalizedString(
-                "Using shared app group with external CGM app xDrip4iOS",
-                comment: "Shared app group xDrip4iOS"
-            )
-        case .xdripRight:
+        case .xdrip:
             return NSLocalizedString(
                 "Using shared app group with external CGM app xDrip4iOS",
                 comment: "Shared app group xDrip4iOS"
