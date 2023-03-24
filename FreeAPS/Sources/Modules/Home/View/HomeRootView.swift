@@ -242,7 +242,8 @@ extension Home {
                 .padding(.trailing, 8)
                 if fetchedPercent.first?.enabled ?? false {
                     Text(
-                        (tirFormatter.string(from: (fetchedPercent.first?.duration ?? 0) as NSNumber) ?? "") == "0" ? "Perpetual" :
+                        (tirFormatter.string(from: (fetchedPercent.first?.duration ?? 0) as NSNumber) ?? "") == "0" ?
+                            "Perpetual" :
                             (tirFormatter.string(from: (fetchedPercent.first?.duration ?? 0) as NSNumber) ?? "") + " min"
                     )
                     .font(.system(size: 12))
