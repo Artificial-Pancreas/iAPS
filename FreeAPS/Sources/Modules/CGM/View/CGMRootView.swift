@@ -35,7 +35,7 @@ extension CGM {
                             }
                         }
                     }
-                    if state.cgm == .xdrip {
+                    if state.cgm == .xdripLeft || state.cgm == .xdripRight {
                         Section(header: Text("Heartbeat")) {
                             VStack(alignment: .leading) {
                                 if let cgmTransmitterDeviceAddress = state.cgmTransmitterDeviceAddress {
