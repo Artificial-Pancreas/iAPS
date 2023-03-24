@@ -971,7 +971,6 @@
 				19DC677E29CA675700FD9EC4 /* OverrideProfilesDataFlow.swift */,
 				19DC678029CA676A00FD9EC4 /* OverrideProfilesProvider.swift */,
 				19DC678229CA677D00FD9EC4 /* OverrideProfilesStateModel.swift */,
-				19DC678429CA67A400FD9EC4 /* OverrideProfilesRootView.swift */,
 				19DC677D29CA672500FD9EC4 /* View */,
 			);
 			path = OverrideProfilesConfig;
@@ -980,6 +979,7 @@
 		19DC677D29CA672500FD9EC4 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				19DC678429CA67A400FD9EC4 /* OverrideProfilesRootView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
