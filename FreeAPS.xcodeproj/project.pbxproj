@@ -25,6 +25,9 @@
 		19D466A529AA2BD4004D5F33 /* FPUConfigProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19D466A429AA2BD4004D5F33 /* FPUConfigProvider.swift */; };
 		19D466A729AA2C22004D5F33 /* FPUConfigStateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19D466A629AA2C22004D5F33 /* FPUConfigStateModel.swift */; };
 		19D466AA29AA3099004D5F33 /* FPUConfigRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19D466A929AA3099004D5F33 /* FPUConfigRootView.swift */; };
+		19DA48E829CD339B00EEA1E7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 19DA487F29CD2B8400EEA1E7 /* Assets.xcassets */; };
+		19DA48E929CD339C00EEA1E7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 19DA487F29CD2B8400EEA1E7 /* Assets.xcassets */; };
+		19DA48EA29CD339C00EEA1E7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 19DA487F29CD2B8400EEA1E7 /* Assets.xcassets */; };
 		19DC677F29CA675700FD9EC4 /* OverrideProfilesDataFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19DC677E29CA675700FD9EC4 /* OverrideProfilesDataFlow.swift */; };
 		19DC678129CA676A00FD9EC4 /* OverrideProfilesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19DC678029CA676A00FD9EC4 /* OverrideProfilesProvider.swift */; };
 		19DC678329CA677D00FD9EC4 /* OverrideProfilesStateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19DC678229CA677D00FD9EC4 /* OverrideProfilesStateModel.swift */; };
@@ -134,7 +137,6 @@
 		388358C825EEF6D200E024B2 /* BasalProfileEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 388358C725EEF6D200E024B2 /* BasalProfileEntry.swift */; };
 		38887CCE25F5725200944304 /* IOBEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38887CCD25F5725200944304 /* IOBEntry.swift */; };
 		388E595C25AD948C0019842D /* FreeAPSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 388E595B25AD948C0019842D /* FreeAPSApp.swift */; };
-		388E596025AD948E0019842D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 388E595F25AD948E0019842D /* Assets.xcassets */; };
 		388E596C25AD95110019842D /* OpenAPS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 388E596B25AD95110019842D /* OpenAPS.swift */; };
 		388E596F25AD96040019842D /* javascript in Resources */ = {isa = PBXBuildFile; fileRef = 388E596E25AD96040019842D /* javascript */; };
 		388E597225AD9CF10019842D /* json in Resources */ = {isa = PBXBuildFile; fileRef = 388E597125AD9CF10019842D /* json */; };
@@ -207,8 +209,6 @@
 		38E8753427554D5800975559 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 38E8753327554D5800975559 /* Assets.xcassets */; };
 		38E8753727554D5900975559 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 38E8753627554D5800975559 /* Preview Assets.xcassets */; };
 		38E8753C27554D5900975559 /* FreeAPSWatch.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 38E8751C27554D5500975559 /* FreeAPSWatch.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		38E8754527554D8800975559 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 388E595F25AD948E0019842D /* Assets.xcassets */; };
-		38E8754627554D8A00975559 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 388E595F25AD948E0019842D /* Assets.xcassets */; };
 		38E8754727554DF100975559 /* Color+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38F37827261260DC009DB701 /* Color+Extensions.swift */; };
 		38E8754A275550BB00975559 /* CarbsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38E87549275550BB00975559 /* CarbsView.swift */; };
 		38E8754C2755548F00975559 /* WatchStateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38E8754B2755548F00975559 /* WatchStateModel.swift */; };
@@ -506,6 +506,7 @@
 		19D466A429AA2BD4004D5F33 /* FPUConfigProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FPUConfigProvider.swift; sourceTree = "<group>"; };
 		19D466A629AA2C22004D5F33 /* FPUConfigStateModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FPUConfigStateModel.swift; sourceTree = "<group>"; };
 		19D466A929AA3099004D5F33 /* FPUConfigRootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FPUConfigRootView.swift; sourceTree = "<group>"; };
+		19DA487F29CD2B8400EEA1E7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		19DC677E29CA675700FD9EC4 /* OverrideProfilesDataFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverrideProfilesDataFlow.swift; sourceTree = "<group>"; };
 		19DC678029CA676A00FD9EC4 /* OverrideProfilesProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverrideProfilesProvider.swift; sourceTree = "<group>"; };
 		19DC678229CA677D00FD9EC4 /* OverrideProfilesStateModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverrideProfilesStateModel.swift; sourceTree = "<group>"; };
@@ -603,7 +604,6 @@
 		38887CCD25F5725200944304 /* IOBEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IOBEntry.swift; sourceTree = "<group>"; };
 		388E595825AD948C0019842D /* FreeAPS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FreeAPS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		388E595B25AD948C0019842D /* FreeAPSApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FreeAPSApp.swift; sourceTree = "<group>"; };
-		388E595F25AD948E0019842D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		388E596425AD948E0019842D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		388E596B25AD95110019842D /* OpenAPS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenAPS.swift; sourceTree = "<group>"; };
 		388E596E25AD96040019842D /* javascript */ = {isa = PBXFileReference; lastKnownFileType = folder; path = javascript; sourceTree = "<group>"; };
@@ -1234,7 +1234,7 @@
 				3811DEC725C9DA7300A708ED /* FreeAPS.entitlements */,
 				388E596425AD948E0019842D /* Info.plist */,
 				1927C8E82744606D00347C69 /* InfoPlist.strings */,
-				388E595F25AD948E0019842D /* Assets.xcassets */,
+				19DA487F29CD2B8400EEA1E7 /* Assets.xcassets */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -2236,11 +2236,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				388E596025AD948E0019842D /* Assets.xcassets in Resources */,
 				198377D2266BFFF6004DE65E /* Localizable.strings in Resources */,
 				38DF178D27733E6800B3528F /* snow.sks in Resources */,
 				388E597225AD9CF10019842D /* json in Resources */,
 				38DF178E27733E6800B3528F /* Assets.xcassets in Resources */,
+				19DA48E829CD339B00EEA1E7 /* Assets.xcassets in Resources */,
 				388E596F25AD96040019842D /* javascript in Resources */,
 				1927C8E62744606D00347C69 /* InfoPlist.strings in Resources */,
 			);
@@ -2250,7 +2250,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				38E8754527554D8800975559 /* Assets.xcassets in Resources */,
+				19DA48E929CD339C00EEA1E7 /* Assets.xcassets in Resources */,
 				38E8751F27554D5700975559 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2261,7 +2261,7 @@
 			files = (
 				38E8753727554D5900975559 /* Preview Assets.xcassets in Resources */,
 				19795118275953E50044850D /* Localizable.strings in Resources */,
-				38E8754627554D8A00975559 /* Assets.xcassets in Resources */,
+				19DA48EA29CD339C00EEA1E7 /* Assets.xcassets in Resources */,
 				38E8753427554D5800975559 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
