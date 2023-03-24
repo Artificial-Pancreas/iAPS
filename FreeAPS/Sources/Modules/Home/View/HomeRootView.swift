@@ -205,54 +205,59 @@ extension Home {
                 }
 
                 if let tempTarget = state.tempTarget {
-                    Text(tempTarget.displayName).font(.caption).foregroundColor(.secondary)
-                    if state.units == .mmolL {
-                        Text(
-                            targetFormatter
-                                .string(from: (tempTarget.targetBottom?.asMmolL ?? 0) as NSNumber)!
-                        )
-                        .font(.caption)
-                        .foregroundColor(.secondary)
-                        if tempTarget.targetBottom != tempTarget.targetTop {
-                            Text("-").font(.caption)
-                                .foregroundColor(.secondary)
+                    HStack(alignment: .firstTextBaseline, spacing: 2) {
+                        Text(tempTarget.displayName).font(.caption).foregroundColor(.secondary)
+                        if state.units == .mmolL {
                             Text(
                                 targetFormatter
-                                    .string(from: (tempTarget.targetTop?.asMmolL ?? 0) as NSNumber)! +
-                                    " \(state.units.rawValue)"
+                                    .string(from: (tempTarget.targetBottom?.asMmolL ?? 0) as NSNumber)!
                             )
                             .font(.caption)
                             .foregroundColor(.secondary)
-                        } else {
-                            Text(state.units.rawValue).font(.caption)
+                            if tempTarget.targetBottom != tempTarget.targetTop {
+                                Text("-").font(.caption)
+                                    .foregroundColor(.secondary)
+                                Text(
+                                    targetFormatter
+                                        .string(from: (tempTarget.targetTop?.asMmolL ?? 0) as NSNumber)! +
+                                        " \(state.units.rawValue)"
+                                )
+                                .font(.caption)
                                 .foregroundColor(.secondary)
-                        }
+                            } else {
+                                Text(state.units.rawValue).font(.caption)
+                                    .foregroundColor(.secondary)
+                            }
 
-                    } else {
-                        Text(targetFormatter.string(from: (tempTarget.targetBottom ?? 0) as NSNumber)!)
-                            .font(.caption)
-                            .foregroundColor(.secondary)
-                        if tempTarget.targetBottom != tempTarget.targetTop {
-                            Text("-").font(.caption)
-                                .foregroundColor(.secondary)
-                            Text(
-                                targetFormatter
-                                    .string(from: (tempTarget.targetTop ?? 0) as NSNumber)! + " \(state.units.rawValue)"
-                            )
-                            .font(.caption)
-                            .foregroundColor(.secondary)
                         } else {
-                            Text(state.units.rawValue).font(.caption)
+                            Text(targetFormatter.string(from: (tempTarget.targetBottom ?? 0) as NSNumber)!)
+                                .font(.caption)
+                                .foregroundColor(.secondary)
+                            if tempTarget.targetBottom != tempTarget.targetTop {
+                                Text("-").font(.caption)
+                                    .foregroundColor(.secondary)
+                                Text(
+                                    targetFormatter
+                                        .string(from: (tempTarget.targetTop ?? 0) as NSNumber)! + " \(state.units.rawValue)"
+                                )
+                                .font(.caption)
+                                .foregroundColor(.secondary)
+                            } else {
+                                Text(state.units.rawValue).font(.caption)
+                                    .foregroundColor(.secondary)
+                            }
+                        }
+                        if computeRatio() != 1 {
+                            Text("Insulin Ratio")
+                                .font(.caption)
+                                .foregroundColor(.secondary)
+                            Text(tirFormatter.string(from: computeRatio() * 100 as NSNumber) ?? "")
+                                .font(.caption)
+                                .foregroundColor(.secondary)
+                            Text("%")
+                                .font(.caption)
                                 .foregroundColor(.secondary)
                         }
-                    }
-                    if computeRatio() != 1 {
-                        Text("Insulin Ratio")
-                            .font(.caption)
-                            .foregroundColor(.secondary)
-                        Text(numberFormatter.string(from: computeRatio() as NSNumber) ?? "")
-                            .font(.caption)
-                            .foregroundColor(.secondary)
                     }
                 }
                 Spacer()
