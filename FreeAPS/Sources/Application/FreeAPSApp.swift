@@ -57,7 +57,6 @@ import Swinject
     var body: some Scene {
         WindowGroup {
             Main.RootView(resolver: resolver)
-
                 .environment(\.managedObjectContext, dataController.persistentContainer.viewContext)
         }
         .onChange(of: scenePhase) { newScenePhase in
