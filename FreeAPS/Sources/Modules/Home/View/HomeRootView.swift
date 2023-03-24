@@ -240,13 +240,15 @@ extension Home {
                 .font(.system(size: 12, weight: .bold))
                 .foregroundColor(.orange)
                 .padding(.trailing, 8)
-                Text(
-                    (tirFormatter.string(from: (fetchedPercent.first?.duration ?? 0) as NSNumber) ?? "") == "0" ? "Perpetual" :
-                        (tirFormatter.string(from: (fetchedPercent.first?.duration ?? 0) as NSNumber) ?? "") + " min"
-                )
-                .font(.system(size: 12))
-                .foregroundColor(.orange)
-                .padding(.trailing, 12)
+                if fetchedPercent.first?.enabled ?? false {
+                    Text(
+                        (tirFormatter.string(from: (fetchedPercent.first?.duration ?? 0) as NSNumber) ?? "") == "0" ? "Perpetual" :
+                            (tirFormatter.string(from: (fetchedPercent.first?.duration ?? 0) as NSNumber) ?? "") + " min"
+                    )
+                    .font(.system(size: 12))
+                    .foregroundColor(.orange)
+                    .padding(.trailing, 12)
+                }
 
                 if let progress = state.bolusProgress {
                     Text("Bolusing")

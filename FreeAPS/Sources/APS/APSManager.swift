@@ -81,7 +81,8 @@ final class BaseAPSManager: APSManager, Injectable {
         }
     }
 
-    let coredataContext = CoreDataStack.shared.persistentContainer.newBackgroundContext()
+    // let coredataContext = CoreDataStack.shared.persistentContainer.newBackgroundContext()
+    let coredataContext = CoreDataStack.shared.persistentContainer.viewContext
 
     private var openAPS: OpenAPS!
 
@@ -719,8 +720,8 @@ final class BaseAPSManager: APSManager, Injectable {
         var useOverride = false
         var overridePercentage: Decimal = 100
         var duration: Decimal = 0
-        var originalDuration: Decimal = 0
         var unlimited: Bool = false
+        var newDuration: Decimal = 0
 
         if currentTDD > 0 {
             let tenDaysAgo = Date().addingTimeInterval(-10.days.timeInterval)
@@ -770,10 +771,11 @@ final class BaseAPSManager: APSManager, Injectable {
             let average14 = total / Decimal(indeces)
             let weight = preferences.weightPercentage
             let weighted_average = weight * average2hours + (1 - weight) * average14
+
             isPercentageEnabled = booleanArray.first?.enabled ?? false
             useOverride = overrideArray.first?.enabled ?? false
+
             overridePercentage = Decimal(overrideArray.first?.percentage ?? 100)
-            originalDuration = (overrideArray.first?.duration ?? 0) as Decimal
             unlimited = overrideArray.first?.indefinite ?? true
 
             if useOverride {
@@ -782,9 +784,19 @@ final class BaseAPSManager: APSManager, Injectable {
                 let date = overrideArray.first?.date ?? Date()
                 if date.addingTimeInterval(addedMinutes.minutes.timeInterval) < Date(),
                    !unlimited
-                {
-                    useOverride = false
-                }
+                { useOverride = false }
+
+                newDuration = Decimal(Date().distance(to: date.addingTimeInterval(addedMinutes.minutes.timeInterval)).minutes)
+            }
+
+            if newDuration < 0 {
+                newDuration = 0
+            } else { duration = newDuration }
+
+            if !useOverride {
+                unlimited = true
+                overridePercentage = 100
+                duration = 0
             }
 
             let averages = Oref2_variables(
@@ -794,7 +806,9 @@ final class BaseAPSManager: APSManager, Injectable {
                 date: Date(),
                 isEnabled: isPercentageEnabled,
                 overridePercentage: overridePercentage,
-                useOverride: useOverride
+                useOverride: useOverride,
+                duration: duration,
+                unlimited: unlimited
             )
             storage.save(averages, as: OpenAPS.Monitor.oref2_variables)
 
@@ -817,7 +831,6 @@ final class BaseAPSManager: APSManager, Injectable {
             isPercentageEnabled = booleanArray.first?.enabled ?? false
             useOverride = overrideArray.first?.enabled ?? false
             overridePercentage = Decimal(overrideArray.first?.percentage ?? 100)
-            originalDuration = (overrideArray.first?.duration ?? 0) as Decimal
             unlimited = overrideArray.first?.indefinite ?? true
 
             if useOverride {
@@ -826,30 +839,41 @@ final class BaseAPSManager: APSManager, Injectable {
                 let date = overrideArray.first?.date ?? Date()
                 if date.addingTimeInterval(addedMinutes.minutes.timeInterval) < Date(),
                    !unlimited
-                {
-                    useOverride = false
-                }
+                { useOverride = false }
+
+                newDuration = Decimal(Date().distance(to: date.addingTimeInterval(addedMinutes.minutes.timeInterval)).minutes)
+            }
+
+            if newDuration < 0 {
+                newDuration = 0
+            } else { duration = newDuration }
+
+            if !useOverride {
+                unlimited = true
+                overridePercentage = 100
+                duration = 0
             }
 
             let averages = Oref2_variables(
                 average_total_data: 0,
-                weightedAverage: 0,
+                weightedAverage: 1,
                 past2hoursAverage: 0,
                 date: Date(),
                 isEnabled: isPercentageEnabled,
                 overridePercentage: overridePercentage,
-                useOverride: useOverride
+                useOverride: useOverride,
+                duration: duration,
+                unlimited: unlimited
             )
             storage.save(averages, as: OpenAPS.Monitor.oref2_variables)
         }
 
-        coredataContext.perform {
+        coredataContext.performAndWait {
             let saveNewUseOverride = Override(context: self.coredataContext)
             saveNewUseOverride.date = Date()
             saveNewUseOverride.enabled = useOverride
             saveNewUseOverride.percentage = Double(overridePercentage)
-            saveNewUseOverride.timeLeft = Double(duration)
-            saveNewUseOverride.duration = originalDuration as NSDecimalNumber
+            saveNewUseOverride.duration = newDuration as NSDecimalNumber
             saveNewUseOverride.indefinite = unlimited
             try? self.coredataContext.save()
         }
