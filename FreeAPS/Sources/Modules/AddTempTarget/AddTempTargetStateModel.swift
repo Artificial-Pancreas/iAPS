@@ -45,8 +45,8 @@ extension AddTempTarget {
             var highTarget = lowTarget
 
             if units == .mmolL, !viewPercantage {
-                lowTarget = lowTarget.asMgdL
-                highTarget = highTarget.asMgdL
+                lowTarget = Decimal(round(Double(lowTarget.asMgdL)))
+                highTarget = Decimal(round(Double(highTarget.asMgdL)))
             }
 
             let entry = TempTarget(
@@ -86,8 +86,8 @@ extension AddTempTarget {
             var highTarget = lowTarget
 
             if units == .mmolL, !viewPercantage {
-                lowTarget = lowTarget.asMgdL
-                highTarget = highTarget.asMgdL
+                lowTarget = Decimal(round(Double(lowTarget.asMgdL)))
+                highTarget = Decimal(round(Double(highTarget.asMgdL)))
             }
 
             let entry = TempTarget(

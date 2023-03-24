@@ -128,14 +128,14 @@ enum DataTable {
             case .tempTarget:
                 var converted = amount
                 if units == .mmolL {
-                    converted = converted.asMmolL
+                    converted = Decimal(round(Double(converted.asMmolL) * 10) / 10)
                 }
 
                 guard var secondAmount = secondAmount else {
                     return numberFormater.string(from: converted as NSNumber)! + " \(units.rawValue)"
                 }
                 if units == .mmolL {
-                    secondAmount = secondAmount.asMmolL
+                    secondAmount = Decimal(round(Double(secondAmount.asMmolL) * 10) / 10)
                 }
 
                 return numberFormater.string(from: converted as NSNumber)! + " - " + numberFormater
