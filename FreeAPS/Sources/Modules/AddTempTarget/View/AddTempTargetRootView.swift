@@ -230,7 +230,7 @@ extension AddTempTarget {
             let hbt = state.halfBasal
             let normalTarget: Decimal = 100
             var target: Decimal = state.low
-            if state.units == .mmolL { target = target / 0.0555 }
+            if state.units == .mmolL { target = Decimal(round(Double(target.asMgdL))) }
             var ratio: Decimal = 1
             if (target + hbt - (2 * normalTarget)) !=
                 0.0 { ratio = (hbt - normalTarget) / (target + hbt - (2 * normalTarget)) } // prevent division by 0
@@ -243,7 +243,7 @@ extension AddTempTarget {
             let ratio = Decimal(state.percentage / 100)
             let normalTarget: Decimal = 100
             var target: Decimal = state.low
-            if state.units == .mmolL { target = target / 0.0555 }
+            if state.units == .mmolL { target = Decimal(round(Double(target.asMgdL))) }
             var hbt: Decimal = state.halfBasal
             if ratio != 1 {
                 hbt = ((2 * ratio * normalTarget) - normalTarget - (ratio * target)) / (ratio - 1)
@@ -257,7 +257,7 @@ extension AddTempTarget {
             var minSens: Double = 15
             var target = state.low
             if state.units == .mmolL {
-                target = state.low / 0.0555 }
+                target = Decimal(round(Double(state.low.asMgdL))) }
             if target == 0 { return minSens }
             if target < 100 || (!state.highTTraises && !state.exerMode) { minSens = 100 }
             // minSens = min(minSens, 95)

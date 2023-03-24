@@ -52,7 +52,7 @@ extension AddTempTarget {
                 let ratio = Decimal(percentage / 100)
                 let normalTarget: Decimal = 100
                 var target: Decimal = low
-                if units == .mmolL { target = target / 0.0555 }
+                if units == .mmolL { target = Decimal(round(Double(target.asMgdL))) }
                 var hbt: Decimal = halfBasal
                 if ratio != 1 {
                     hbt = ((2 * ratio * normalTarget) - normalTarget - (ratio * target)) / (ratio - 1)
@@ -64,8 +64,8 @@ extension AddTempTarget {
 
             var highTarget = lowTarget
             if units == .mmolL {
-                lowTarget = lowTarget.asMgdL
-                highTarget = highTarget.asMgdL
+                lowTarget = Decimal(round(Double(lowTarget.asMgdL)))
+                highTarget = Decimal(round(Double(highTarget.asMgdL)))
             }
 
             let entry = TempTarget(
@@ -106,7 +106,7 @@ extension AddTempTarget {
                 let ratio = Decimal(percentage / 100)
                 let normalTarget: Decimal = 100
                 var target: Decimal = low
-                if units == .mmolL { target = target / 0.0555 }
+                if units == .mmolL { target = Decimal(round(Double(target.asMgdL))) }
                 var hbt: Decimal = halfBasal
                 if ratio != 1 {
                     hbt = ((2 * ratio * normalTarget) - normalTarget - (ratio * target)) / (ratio - 1)
@@ -117,8 +117,8 @@ extension AddTempTarget {
             var highTarget = lowTarget
 
             if units == .mmolL {
-                lowTarget = lowTarget.asMgdL
-                highTarget = highTarget.asMgdL
+                lowTarget = Decimal(round(Double(lowTarget.asMgdL)))
+                highTarget = Decimal(round(Double(highTarget.asMgdL)))
             }
 
             let entry = TempTarget(
