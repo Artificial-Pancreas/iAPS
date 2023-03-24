@@ -22,6 +22,12 @@ extension PreferencesEditor {
             migrateISF()
         }
 
+        // need more migrations
+        // halfbasaltarget
+        // enable SMB over this BG
+        // high and low glucose limit for TIR and graph lines
+        // autoISF BG range for SMB-ratio
+
         private func migrateTargets() {
             let profile = storage.retrieve(OpenAPS.Settings.bgTargets, as: BGTargets.self)
                 ?? BGTargets(from: OpenAPS.defaults(for: OpenAPS.Settings.bgTargets))
