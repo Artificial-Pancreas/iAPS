@@ -41,16 +41,7 @@ extension AddTempTarget {
 
                 if state.viewPercantage {
                     Section(
-                        header: Text("Effect of TT on Basal and Sensitivity"),
-                        footer: Text(
-                            NSLocalizedString(
-                                "'Half Basal Target' (HBT) setting adjusts how a temp target affects basal and ISF.\n     A lower HBT will allow Basal to be reduced earlier (at a less high TT).\n",
-                                comment: ""
-                            ) +
-                                NSLocalizedString("     HBT setting: ", comment: "") + "\(state.halfBasal) " +
-                                NSLocalizedString("mg/dl. Autosens.max setting determines the max endpoint", comment: "") +
-                                " (\(state.maxValue): \(state.maxValue * 100) %)"
-                        )
+                        header: Text("Effect of new TT on Basal and inversely on Sensitivity")
                     ) {
                         VStack {
                             Slider(
@@ -75,6 +66,15 @@ extension AddTempTarget {
                                             ": \(computeTarget().formatted(.number.grouping(.never).rounded().precision(.fractionLength(0)))) mg/dl"
                                     )
                             ).foregroundColor(.primary).italic()
+
+                            Slider(
+                                value: $state.hbt,
+                                in: 120 ... 180,
+                                step: 1
+                            )
+                            Text("Half Basal target setting: \(state.hbt.formatted(.number)) mg/dl")
+                                .foregroundColor(.green)
+                                .font(.caption)
                         }
                     }
                 } else {
@@ -131,7 +131,10 @@ extension AddTempTarget {
                     }
                 }
             }
-            .onAppear(perform: configureView)
+            .onAppear {
+                configureView()
+                state.hbt = Double(state.halfBasal)
+            }
             .navigationTitle("Enact Temp Target")
             .navigationBarTitleDisplayMode(.automatic)
             .navigationBarItems(leading: Button("Close", action: state.hideModal))
@@ -140,11 +143,13 @@ extension AddTempTarget {
                     let isEnabledMoc = ViewPercentage(context: moc)
                     isEnabledMoc.enabled = true
                     isEnabledMoc.date = Date()
+                    isEnabledMoc.hbt = state.hbt
                     try? moc.save()
                 } else {
                     let isEnabledMoc = ViewPercentage(context: moc)
                     isEnabledMoc.enabled = false
                     isEnabledMoc.date = Date()
+                    isEnabledMoc.hbt = isEnabledArray.first?.hbt ?? 160
                     try? moc.save()
                 }
             }
@@ -152,8 +157,9 @@ extension AddTempTarget {
 
         func computeTarget() -> Decimal {
             var ratio = Decimal(state.percentage / 100)
+
             let hB = state.halfBasal
-            let c = hB - 100
+            let c = Decimal(state.hbt - 100)
             var target = (c / ratio) - c + 100
 
             if c * (c + target - 100) <= 0 {
