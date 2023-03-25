@@ -722,6 +722,7 @@ final class BaseAPSManager: APSManager, Injectable {
         var duration: Decimal = 0
         var unlimited: Bool = false
         var newDuration: Decimal = 0
+        var hbtSetting: Decimal = 160
 
         if currentTDD > 0 {
             let tenDaysAgo = Date().addingTimeInterval(-10.days.timeInterval)
@@ -774,9 +775,9 @@ final class BaseAPSManager: APSManager, Injectable {
 
             isPercentageEnabled = booleanArray.first?.enabled ?? false
             useOverride = overrideArray.first?.enabled ?? false
-
             overridePercentage = Decimal(overrideArray.first?.percentage ?? 100)
             unlimited = overrideArray.first?.indefinite ?? true
+            hbtSetting = Decimal(booleanArray.first?.hbt ?? 160)
 
             if useOverride {
                 duration = (overrideArray.first?.duration ?? 0) as Decimal
@@ -808,7 +809,8 @@ final class BaseAPSManager: APSManager, Injectable {
                 overridePercentage: overridePercentage,
                 useOverride: useOverride,
                 duration: duration,
-                unlimited: unlimited
+                unlimited: unlimited,
+                hbt: hbtSetting
             )
             storage.save(averages, as: OpenAPS.Monitor.oref2_variables)
 
@@ -832,6 +834,7 @@ final class BaseAPSManager: APSManager, Injectable {
             useOverride = overrideArray.first?.enabled ?? false
             overridePercentage = Decimal(overrideArray.first?.percentage ?? 100)
             unlimited = overrideArray.first?.indefinite ?? true
+            hbtSetting = Decimal(booleanArray.first?.hbt ?? 160)
 
             if useOverride {
                 duration = (overrideArray.first?.duration ?? 0) as Decimal
@@ -863,7 +866,8 @@ final class BaseAPSManager: APSManager, Injectable {
                 overridePercentage: overridePercentage,
                 useOverride: useOverride,
                 duration: duration,
-                unlimited: unlimited
+                unlimited: unlimited,
+                hbt: hbtSetting
             )
             storage.save(averages, as: OpenAPS.Monitor.oref2_variables)
         }
