@@ -13,7 +13,7 @@ extension AddTempTarget {
 
         @FetchRequest(
             entity: ViewPercentage.entity(),
-            sortDescriptors: [NSSortDescriptor(key: "enabled", ascending: false)]
+            sortDescriptors: [NSSortDescriptor(key: "date", ascending: false)]
         ) var isEnabledArray: FetchedResults<ViewPercentage>
 
         @Environment(\.managedObjectContext) var moc
@@ -36,12 +36,17 @@ extension AddTempTarget {
                 }
 
                 Toggle(isOn: $state.viewPercantage) {
-                    Text("Exercise / Pre Meal Slider")
+                    HStack {
+                        Text("Use Slider for")
+                        Image(systemName: "figure.highintensity.intervaltraining")
+                        Text("or")
+                        Image(systemName: "fork.knife")
+                    }
                 }
 
                 if state.viewPercantage {
                     Section(
-                        header: Text("Effect of new TT on Basal and inversely on Sensitivity")
+                        header: Text("Total Effect of TT on insulin (not CR)")
                     ) {
                         VStack {
                             Slider(
@@ -65,16 +70,20 @@ extension AddTempTarget {
                                             ": \(computeTarget().asMmolL.formatted(.number.grouping(.never).rounded().precision(.fractionLength(1)))) mmol/L" :
                                             ": \(computeTarget().formatted(.number.grouping(.never).rounded().precision(.fractionLength(0)))) mg/dl"
                                     )
-                            ).foregroundColor(.primary).italic()
+                            ) // .foregroundColor(.primary).italic()
 
                             Slider(
                                 value: $state.hbt,
                                 in: 120 ... 180,
                                 step: 1
                             )
-                            Text("Half Basal target setting: \(state.hbt.formatted(.number)) mg/dl")
-                                .foregroundColor(.green)
-                                .font(.caption)
+                            Text(
+                                state
+                                    .units == .mgdL ? "Half normal Basal at: \(state.hbt.formatted(.number)) mg/dl" :
+                                    "Half normal Basal at: \(state.hbt.asMmolL.formatted(.number.grouping(.never).rounded().precision(.fractionLength(1)))) mmol/L"
+                            )
+                            .foregroundColor(.green)
+                            .font(.caption).italic()
                         }
                     }
                 } else {
@@ -133,13 +142,13 @@ extension AddTempTarget {
             }
             .onAppear {
                 configureView()
-                state.hbt = Double(state.halfBasal)
+                state.hbt = isEnabledArray.first?.hbt ?? 160
             }
             .navigationTitle("Enact Temp Target")
             .navigationBarTitleDisplayMode(.automatic)
             .navigationBarItems(leading: Button("Close", action: state.hideModal))
             .onDisappear {
-                if state.viewPercantage {
+                if state.viewPercantage, state.saveSettings {
                     let isEnabledMoc = ViewPercentage(context: moc)
                     isEnabledMoc.enabled = true
                     isEnabledMoc.date = Date()
@@ -157,8 +166,6 @@ extension AddTempTarget {
 
         func computeTarget() -> Decimal {
             var ratio = Decimal(state.percentage / 100)
-
-            let hB = state.halfBasal
             let c = Decimal(state.hbt - 100)
             var target = (c / ratio) - c + 100
 
