@@ -46,7 +46,7 @@ extension AddTempTarget {
 
                 if state.viewPercantage {
                     Section(
-                        header: Text("Total Effect of TT on insulin (not CR)")
+                        header: Text("Percent Insulin")
                     ) {
                         VStack {
                             Slider(
@@ -63,7 +63,7 @@ extension AddTempTarget {
                                 .font(.largeTitle)
                             Divider()
                             Text(
-                                NSLocalizedString("Temp Target to Save", comment: "") +
+                                NSLocalizedString("Target glucose:", comment: "") +
                                     (
                                         state
                                             .units == .mmolL ?
