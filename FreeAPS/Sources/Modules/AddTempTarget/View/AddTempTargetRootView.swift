@@ -74,7 +74,7 @@ extension AddTempTarget {
 
                             Slider(
                                 value: $state.hbt,
-                                in: 120 ... 180,
+                                in: 104 ... 180,
                                 step: 1
                             )
                             Text(
