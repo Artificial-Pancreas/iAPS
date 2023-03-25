@@ -16,6 +16,7 @@ extension AddTempTarget {
         @Published var maxValue: Decimal = 1.2
         @Published var halfBasal: Decimal = 160
         @Published var viewPercantage = false
+        @Published var hbt: Double = 160
 
         private(set) var units: GlucoseUnits = .mmolL
 
@@ -31,7 +32,8 @@ extension AddTempTarget {
 
             if viewPercantage {
                 var ratio = Decimal(percentage / 100)
-                let hB = halfBasal
+                // let hB = halfBasal
+                let hB = Decimal(hbt)
                 let c = hB - 100
                 var target = (c / ratio) - c + 100
 
@@ -72,7 +74,8 @@ extension AddTempTarget {
 
             if viewPercantage {
                 var ratio = Decimal(percentage / 100)
-                let hB = halfBasal
+                // let hB = halfBasal
+                let hB = Decimal(hbt)
                 let c = hB - 100
                 var target = (c / ratio) - c + 100
 
@@ -110,6 +113,8 @@ extension AddTempTarget {
                 showModal(for: nil)
             }
         }
+
+        func savedHBT() {}
 
         func removePreset(id: String) {
             presets = presets.filter { $0.id != id }
