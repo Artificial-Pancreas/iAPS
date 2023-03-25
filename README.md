@@ -69,4 +69,4 @@ Code contributions as PRs are welcome!
 
 Translators can click the Crowdin link above  
 
-For questions or contributions: jon.m@live.se
+For questions or other contributions: jon.m@live.se

@@ -14,8 +14,9 @@ extension AddTempTarget {
         @Published var presets: [TempTarget] = []
         @Published var percentage = 100.0
         @Published var maxValue: Decimal = 1.2
-        @Published var halfBasal: Decimal = 160
         @Published var viewPercantage = false
+        @Published var hbt: Double = 160
+        @Published var saveSettings: Bool = false
 
         private(set) var units: GlucoseUnits = .mmolL
 
@@ -23,7 +24,6 @@ extension AddTempTarget {
             units = settingsManager.settings.units
             presets = storage.presets()
             maxValue = settingsManager.preferences.autosensMax
-            halfBasal = settingsManager.preferences.halfBasalExerciseTarget
         }
 
         func enact() {
@@ -31,7 +31,7 @@ extension AddTempTarget {
 
             if viewPercantage {
                 var ratio = Decimal(percentage / 100)
-                let hB = halfBasal
+                let hB = Decimal(hbt)
                 let c = hB - 100
                 var target = (c / ratio) - c + 100
 
@@ -41,6 +41,7 @@ extension AddTempTarget {
                 }
                 lowTarget = target
                 lowTarget = Decimal(round(Double(target)))
+                saveSettings = true
             }
             var highTarget = lowTarget
 
@@ -72,7 +73,7 @@ extension AddTempTarget {
 
             if viewPercantage {
                 var ratio = Decimal(percentage / 100)
-                let hB = halfBasal
+                let hB = Decimal(hbt)
                 let c = hB - 100
                 var target = (c / ratio) - c + 100
 
@@ -82,6 +83,7 @@ extension AddTempTarget {
                 }
                 lowTarget = target
                 lowTarget = Decimal(round(Double(target)))
+                saveSettings = true
             }
             var highTarget = lowTarget
 
@@ -110,6 +112,8 @@ extension AddTempTarget {
                 showModal(for: nil)
             }
         }
+
+        func savedHBT() {}
 
         func removePreset(id: String) {
             presets = presets.filter { $0.id != id }
