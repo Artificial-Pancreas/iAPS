@@ -63,7 +63,7 @@ extension AddTempTarget {
                                 .font(.largeTitle)
                             Divider()
                             Text(
-                                NSLocalizedString("Target glucose:", comment: "") +
+                                NSLocalizedString("Target glucose", comment: "") +
                                     (
                                         state
                                             .units == .mmolL ?
