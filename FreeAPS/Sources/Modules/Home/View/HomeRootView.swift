@@ -239,7 +239,7 @@ extension Home {
                 )
                 .font(.system(size: 12, weight: .bold))
                 .foregroundColor(.orange)
-                .padding(.trailing, 8)
+                .padding(.trailing, 2)
                 if fetchedPercent.first?.enabled ?? false {
                     Text(
                         (tirFormatter.string(from: (fetchedPercent.first?.duration ?? 0) as NSNumber) ?? "") == "0" ?
@@ -248,7 +248,7 @@ extension Home {
                     )
                     .font(.system(size: 12))
                     .foregroundColor(.orange)
-                    .padding(.trailing, 12)
+                    .padding(.trailing, 8)
                 }
 
                 if let progress = state.bolusProgress {
