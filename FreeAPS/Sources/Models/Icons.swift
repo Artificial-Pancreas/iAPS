@@ -15,13 +15,11 @@ enum Icon_: String, CaseIterable, Identifiable {
     case glow = "iAPS_Glow_BG"
     case gray = "iAPS_Gray"
     case whiteAndGray = "iAPS_WhiteAndGray"
-    case grayAndLoop = "iAPS_NoButtons_Gray_White_BG"
+    case grayAndLoopNoButtons = "iAPS_NoButtons_Gray_White_BG"
     case purpleBG = "iAPS_Purple_BG"
     case whiteBG = "iAPS_White_BG"
-    // case pink       = "AppIcon-Pink"
-    // case teal       = "AppIcon-Teal"
-    // case yellow     = "AppIcon-Yellow"
-
+    case loop = "iAPS_Loop"
+    case loopWhiteText = "iAPS_Loop_White_Text"
     var id: String { rawValue }
 }
 
