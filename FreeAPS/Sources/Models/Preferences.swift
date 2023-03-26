@@ -1,7 +1,7 @@
 import Foundation
 
 struct Preferences: JSON {
-    var maxIOB: Decimal = 0
+    var maxIOB: Decimal = 5
     var maxDailySafetyMultiplier: Decimal = 3
     var currentBasalSafetyMultiplier: Decimal = 4
     var autosensMax: Decimal = 1.2
@@ -10,10 +10,10 @@ struct Preferences: JSON {
     var rewindResetsAutosens: Bool = true
     var highTemptargetRaisesSensitivity: Bool = true
     var lowTemptargetLowersSensitivity: Bool = true
-    var sensitivityRaisesTarget: Bool = true
+    var sensitivityRaisesTarget: Bool = false
     var resistanceLowersTarget: Bool = false
     var advTargetAdjustments: Bool = false
-    var exerciseMode: Bool = false
+    var exerciseMode: Bool = true
     var halfBasalExerciseTarget: Decimal = 160
     var maxCOB: Decimal = 120
     var wideBGTargetRange: Bool = false
@@ -23,25 +23,25 @@ struct Preferences: JSON {
     var autotuneISFAdjustmentFraction: Decimal = 1.0
     var remainingCarbsFraction: Decimal = 1.0
     var remainingCarbsCap: Decimal = 90
-    var enableUAM: Bool = false
+    var enableUAM: Bool = true
     var a52RiskEnable: Bool = false
     var enableSMBWithCOB: Bool = false
     var enableSMBWithTemptarget: Bool = false
-    var enableSMBAlways: Bool = false
+    var enableSMBAlways: Bool = true
     var enableSMBAfterCarbs: Bool = false
     var allowSMBWithHighTemptarget: Bool = false
-    var maxSMBBasalMinutes: Decimal = 30
-    var maxUAMSMBBasalMinutes: Decimal = 30
-    var smbInterval: Decimal = 3
-    var bolusIncrement: Decimal = 0.1
+    var maxSMBBasalMinutes: Decimal = 50
+    var maxUAMSMBBasalMinutes: Decimal = 40
+    var smbInterval: Decimal = 2
+    var bolusIncrement: Decimal = 0.05
     var curve: InsulinCurve = .rapidActing
-    var useCustomPeakTime: Bool = false
-    var insulinPeakTime: Decimal = 75
+    var useCustomPeakTime: Bool = true
+    var insulinPeakTime: Decimal = 60
     var carbsReqThreshold: Decimal = 1.0
     var noisyCGMTargetMultiplier: Decimal = 1.3
     var suspendZerosIOB: Bool = true
     var timestamp: Date?
-    var maxDeltaBGthreshold: Decimal = 0.2
+    var maxDeltaBGthreshold: Decimal = 0.3
     var adjustmentFactor: Decimal = 0.5
     var sigmoid: Bool = false
     var enableDynamicCR: Bool = false

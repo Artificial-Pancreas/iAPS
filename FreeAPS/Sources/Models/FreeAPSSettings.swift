@@ -9,7 +9,7 @@ struct FreeAPSSettings: JSON, Equatable {
     var useLocalGlucoseSource: Bool = false
     var localGlucosePort: Int = 8080
     var debugOptions: Bool = false
-    var insulinReqFraction: Decimal = 0.7
+    var insulinReqFraction: Decimal = 1.5
     var skipBolusScreenAfterCarbs: Bool = false
     var displayHR: Bool = false
     var cgm: CGMType = .nightscout
