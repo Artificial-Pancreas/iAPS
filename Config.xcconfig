@@ -8,4 +8,4 @@ APP_GROUP_ID = group.com.$(DEVELOPMENT_TEAM).loopkit.LoopGroup
 APP_ICON = iAPS_Loop_Text
 
 #include? "ConfigOverride.xcconfig"
-#include? "../../ConfigOverride.xcconfig"
+//#include? "../../ConfigOverride.xcconfig"
