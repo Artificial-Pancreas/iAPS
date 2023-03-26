@@ -1,7 +1,7 @@
 
 import SwiftUI
 
-struct IconChooser: View {
+struct IconSelection: View {
     @EnvironmentObject var model: Icons
 
     var body: some View {
@@ -9,11 +9,14 @@ struct IconChooser: View {
 
         VStack {
             HStack {
-                Text("Select an icon:")
-                    .font(.largeTitle)
+                Text("iAPS Icon")
+                    .font(.title)
                 IconImage(icon: model.appIcon)
                     .frame(maxHeight: 114)
             }
+
+            Divider()
+
             ScrollView {
                 LazyVGrid(columns: columns) {
                     ForEach(Icon_.allCases) { icon in
@@ -29,9 +32,9 @@ struct IconChooser: View {
     }
 }
 
-struct IconChooser_Previews: PreviewProvider {
+struct IconSelectionRootView_Previews: PreviewProvider {
     static var previews: some View {
-        IconChooser()
+        IconSelection()
             .environmentObject(Icons())
     }
 }

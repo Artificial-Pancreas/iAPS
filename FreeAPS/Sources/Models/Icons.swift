@@ -2,12 +2,10 @@
 import Foundation
 import UIKit
 
-/// The alternate app icons available for this app to use.
-///
-/// These raw values match the names in the app's project settings under
-/// `ASSETCATALOG_COMPILER_APPICON_NAME` and `ASSETCATALOG_COMPILER_ALTERNATE_APPICON_NAMES`.
 enum Icon_: String, CaseIterable, Identifiable {
-    case primary = "iAPS"
+    case primary = "iAPS_Loop_Cyan_Text"
+    case text = "iAPS"
+    case loopWhiteText = "iAPS_Loop_White_Text"
     case loopText = "iAPS_Loop_Text"
     case black = "iAPS_Black_Black"
     case clean = "iAPS_Clean"
@@ -19,7 +17,6 @@ enum Icon_: String, CaseIterable, Identifiable {
     case purpleBG = "iAPS_Purple_BG"
     case whiteBG = "iAPS_White_BG"
     case loop = "iAPS_Loop"
-    case loopWhiteText = "iAPS_Loop_White_Text"
     var id: String { rawValue }
 }
 
@@ -30,13 +27,9 @@ class Icons: ObservableObject, Equatable {
         lhs.appIcon == rhs.appIcon
     }
 
-    /// Change the app icon.
-    /// - Tag: setAlternateAppIcon
     func setAlternateAppIcon(icon: Icon_) {
-        // Set the icon name to nil to use the primary icon.
         let iconName: String? = (icon != .primary) ? icon.rawValue : nil
 
-        // Avoid setting the name if the app already uses that icon.
         guard UIApplication.shared.alternateIconName != iconName else { return }
 
         UIApplication.shared.setAlternateIconName(iconName) { error in
@@ -48,7 +41,6 @@ class Icons: ObservableObject, Equatable {
         appIcon = icon
     }
 
-    /// Initializes the model with the current state of the app's icon.
     init() {
         let iconName = UIApplication.shared.alternateIconName
 
