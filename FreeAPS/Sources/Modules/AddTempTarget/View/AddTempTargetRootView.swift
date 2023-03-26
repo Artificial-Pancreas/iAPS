@@ -35,13 +35,11 @@ extension AddTempTarget {
                     }
                 }
 
-                Toggle(isOn: $state.viewPercantage) {
-                    HStack {
-                        Text("Use Slider for")
-                        Image(systemName: "figure.highintensity.intervaltraining")
-                        Text("or")
-                        Image(systemName: "fork.knife")
-                    }
+                HStack {
+                    Text("Use Slider")
+                    Toggle(isOn: $state.viewPercantage) {}.controlSize(.mini)
+                    Image(systemName: "figure.highintensity.intervaltraining")
+                    Image(systemName: "fork.knife")
                 }
 
                 if state.viewPercantage {
