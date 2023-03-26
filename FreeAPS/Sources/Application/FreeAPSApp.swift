@@ -58,6 +58,7 @@ import Swinject
         WindowGroup {
             Main.RootView(resolver: resolver)
                 .environment(\.managedObjectContext, dataController.persistentContainer.viewContext)
+                .environmentObject(Icons())
         }
         .onChange(of: scenePhase) { newScenePhase in
             debug(.default, "APPLICATION PHASE: \(newScenePhase)")
