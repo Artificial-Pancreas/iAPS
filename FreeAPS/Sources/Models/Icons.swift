@@ -8,8 +8,8 @@ enum Icon_: String, CaseIterable, Identifiable {
     case podBlack = "podTemplateBlack"
     case popWhite = "podTemplateWhite"
     case cyan = "iAPS_Loop_Cyan_Text"
-    case podPurple = "podPurple"
-    case catWithPod = "catWithPod"
+    case podPurple
+    case catWithPod
     case catWithPodWhite = "catWithPodWhiteBG"
     case loopWhiteText = "iAPS_Loop_White_Text"
     case loopText = "iAPS_Loop_Text"
