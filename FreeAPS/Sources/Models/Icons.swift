@@ -3,8 +3,14 @@ import Foundation
 import UIKit
 
 enum Icon_: String, CaseIterable, Identifiable {
-    case primary = "iAPS_Loop_Cyan_Text"
+    case primary = "pod_colorful"
     case text = "iAPS"
+    case podBlack = "podTemplateBlack"
+    case popWhite = "podTemplateWhite"
+    case cyan = "iAPS_Loop_Cyan_Text"
+    case podPurple = "podPurple"
+    case catWithPod = "catWithPod"
+    case catWithPodWhite = "catWithPodWhiteBG"
     case loopWhiteText = "iAPS_Loop_White_Text"
     case loopText = "iAPS_Loop_Text"
     case black = "iAPS_Black_Black"
