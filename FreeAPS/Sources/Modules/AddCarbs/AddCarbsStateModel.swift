@@ -16,7 +16,7 @@ extension AddCarbs {
         @Published var selection: Presets?
 
         let coredataContext = CoreDataStack.shared.persistentContainer.viewContext
-        @Environment(\.managedObjectContext) var moc
+        // @Environment(\.managedObjectContext) var moc
 
         override func subscribe() {
             carbsRequired = provider.suggestion?.carbsReq

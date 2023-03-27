@@ -714,7 +714,7 @@ final class BaseAPSManager: APSManager, Injectable {
         let preferences = settingsManager.preferences
         let currentTDD = enacted_.tdd ?? 0
 
-        var booleanArray = [ViewPercentage]()
+        var booleanArray = [TempTargetsSlider]()
         var overrideArray = [Override]()
         var isPercentageEnabled = false
         var useOverride = false
@@ -741,7 +741,7 @@ final class BaseAPSManager: APSManager, Injectable {
                 requestTDD.sortDescriptors = [sortTDD]
                 try? uniqEvents = coredataContext.fetch(requestTDD)
 
-                let requestIsEnbled = ViewPercentage.fetchRequest() as NSFetchRequest<ViewPercentage>
+                let requestIsEnbled = TempTargetsSlider.fetchRequest() as NSFetchRequest<TempTargetsSlider>
                 let sortIsEnabled = NSSortDescriptor(key: "date", ascending: false)
                 requestIsEnbled.sortDescriptors = [sortIsEnabled]
                 requestIsEnbled.fetchLimit = 1
@@ -817,7 +817,7 @@ final class BaseAPSManager: APSManager, Injectable {
             print("Test time of TDD: \(-1 * tddStartedAt.timeIntervalSinceNow) s")
         } else {
             coredataContext.performAndWait {
-                let requestIsEnbled = ViewPercentage.fetchRequest() as NSFetchRequest<ViewPercentage>
+                let requestIsEnbled = TempTargetsSlider.fetchRequest() as NSFetchRequest<TempTargetsSlider>
                 let sortIsEnabled = NSSortDescriptor(key: "date", ascending: false)
                 requestIsEnbled.sortDescriptors = [sortIsEnabled]
                 requestIsEnbled.fetchLimit = 1
