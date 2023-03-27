@@ -31,6 +31,7 @@ extension Settings {
                     Text("Notifications").navigationLink(to: .notificationsConfig, from: self)
                     Text("Fat And Protein Conversion").navigationLink(to: .fpuConfig, from: self)
                     Text("Profile Override").navigationLink(to: .overrideProfilesConfig, from: self)
+                    Text("App Icons").navigationLink(to: .iconConfig, from: self)
                 }
 
                 Section(header: Text("Configuration")) {
