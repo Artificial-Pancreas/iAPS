@@ -6,6 +6,9 @@ extension AddTempTarget {
         @Injected() private var storage: TempTargetsStorage!
         @Injected() var apsManager: APSManager!
 
+        let coredataContext = CoreDataStack.shared.persistentContainer.viewContext
+        @Environment(\.managedObjectContext) var moc
+
         @Published var low: Decimal = 0
         @Published var high: Decimal = 0
         @Published var duration: Decimal = 0
@@ -103,6 +106,18 @@ extension AddTempTarget {
             )
             presets.append(entry)
             storage.storePresets(presets)
+
+            if viewPercantage {
+                let id = entry.id
+                let saveToCoreData = TempTargetsSlider(context: moc)
+                saveToCoreData.id = id
+                saveToCoreData.isPreset = true
+                saveToCoreData.enabled = true
+                saveToCoreData.hbt = hbt
+                saveToCoreData.enabled = true
+                saveToCoreData.date = Date()
+                try? moc.save()
+            }
         }
 
         func enactPreset(id: String) {
@@ -110,14 +125,18 @@ extension AddTempTarget {
                 preset.createdAt = Date()
                 storage.storeTempTargets([preset])
                 showModal(for: nil)
+                let saveToCoreData = TempTargets(context: moc)
+                saveToCoreData.active = true
+                saveToCoreData.date = Date()
+                saveToCoreData.id = id
+                try? moc.save()
             }
         }
-
-        func savedHBT() {}
 
         func removePreset(id: String) {
             presets = presets.filter { $0.id != id }
             storage.storePresets(presets)
+            
         }
     }
 }

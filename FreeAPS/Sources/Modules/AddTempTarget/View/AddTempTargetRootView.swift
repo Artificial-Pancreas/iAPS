@@ -12,9 +12,9 @@ extension AddTempTarget {
         @State private var isEditing = false
 
         @FetchRequest(
-            entity: ViewPercentage.entity(),
+            entity: TempTargetsSlider.entity(),
             sortDescriptors: [NSSortDescriptor(key: "date", ascending: false)]
-        ) var isEnabledArray: FetchedResults<ViewPercentage>
+        ) var isEnabledArray: FetchedResults<TempTargetsSlider>
 
         @Environment(\.managedObjectContext) var moc
 
@@ -147,13 +147,13 @@ extension AddTempTarget {
             .navigationBarItems(leading: Button("Close", action: state.hideModal))
             .onDisappear {
                 if state.viewPercantage, state.saveSettings {
-                    let isEnabledMoc = ViewPercentage(context: moc)
+                    let isEnabledMoc = TempTargetsSlider(context: moc)
                     isEnabledMoc.enabled = true
                     isEnabledMoc.date = Date()
                     isEnabledMoc.hbt = state.hbt
                     try? moc.save()
                 } else {
-                    let isEnabledMoc = ViewPercentage(context: moc)
+                    let isEnabledMoc = TempTargetsSlider(context: moc)
                     isEnabledMoc.enabled = false
                     isEnabledMoc.date = Date()
                     isEnabledMoc.hbt = isEnabledArray.first?.hbt ?? 160
