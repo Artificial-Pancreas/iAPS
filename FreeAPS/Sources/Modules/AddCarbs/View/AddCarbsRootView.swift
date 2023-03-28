@@ -102,9 +102,9 @@ extension AddCarbs {
                     }
                     .pickerStyle(.automatic)
                     ._onBindingChange($state.selection) { _ in
-                        state.carbs = ((state.selection?.carbs ?? 0) as NSDecimalNumber) as Decimal
-                        state.fat = ((state.selection?.fat ?? 0) as NSDecimalNumber) as Decimal
-                        state.protein = ((state.selection?.protein ?? 0) as NSDecimalNumber) as Decimal
+                        state.carbs += ((state.selection?.carbs ?? 0) as NSDecimalNumber) as Decimal
+                        state.fat += ((state.selection?.fat ?? 0) as NSDecimalNumber) as Decimal
+                        state.protein += ((state.selection?.protein ?? 0) as NSDecimalNumber) as Decimal
                     }
                 }
                 HStack {
