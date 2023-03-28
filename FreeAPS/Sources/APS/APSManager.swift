@@ -808,18 +808,15 @@ final class BaseAPSManager: APSManager, Injectable {
             }
 
             if tempTargetsArray.first?.active ?? false || booleanArray.first?.enabled ?? false {
-                var duration_ = Int(tempTargetsArray.first?.duration ?? 0)
+                var duration_ = Int(truncating: tempTargetsArray.first?.duration ?? 0)
                 var hbt = tempTargetsArray.first?.hbt ?? 160
-
                 if booleanArray.first?.enabled ?? false, !(booleanArray.first?.isPreset ?? false) {
-                    duration_ = Int(booleanArray.first?.duration ?? 0)
+                    duration_ = Int(truncating: booleanArray.first?.duration ?? 0)
                     hbt = booleanArray.first?.hbt ?? 160
                 }
-
                 let startDate = tempTargetsArray.first?.startDate ?? Date()
                 let durationPlusStart = startDate.addingTimeInterval(duration_.minutes.timeInterval)
                 let dd = durationPlusStart.timeIntervalSinceNow.minutes
-
                 if dd > 0 {
                     hbtSetting = Decimal(hbt)
                     isPercentageEnabled = true
@@ -889,14 +886,12 @@ final class BaseAPSManager: APSManager, Injectable {
             }
 
             if tempTargetsArray.first?.active ?? false || booleanArray.first?.enabled ?? false {
-                var duration_ = Int(tempTargetsArray.first?.duration ?? 0)
+                var duration_ = Int(truncating: tempTargetsArray.first?.duration ?? 0)
                 var hbt = tempTargetsArray.first?.hbt ?? 160
-
                 if booleanArray.first?.enabled ?? false, !(booleanArray.first?.isPreset ?? false) {
-                    duration_ = Int(booleanArray.first?.duration ?? 0)
+                    duration_ = Int(truncating: booleanArray.first?.duration ?? 0)
                     hbt = booleanArray.first?.hbt ?? 160
                 }
-
                 let startDate = tempTargetsArray.first?.startDate ?? Date()
                 let durationPlusStart = startDate.addingTimeInterval(duration_.minutes.timeInterval)
                 let dd = durationPlusStart.timeIntervalSinceNow.minutes
