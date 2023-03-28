@@ -714,8 +714,9 @@ final class BaseAPSManager: APSManager, Injectable {
         let preferences = settingsManager.preferences
         let currentTDD = enacted_.tdd ?? 0
 
-        var booleanArray = [ViewPercentage]()
+        var booleanArray = [TempTargetsSlider]()
         var overrideArray = [Override]()
+        var tempTargetsArray = [TempTargets]()
         var isPercentageEnabled = false
         var useOverride = false
         var overridePercentage: Decimal = 100
@@ -741,10 +742,10 @@ final class BaseAPSManager: APSManager, Injectable {
                 requestTDD.sortDescriptors = [sortTDD]
                 try? uniqEvents = coredataContext.fetch(requestTDD)
 
-                let requestIsEnbled = ViewPercentage.fetchRequest() as NSFetchRequest<ViewPercentage>
+                let requestIsEnbled = TempTargetsSlider.fetchRequest() as NSFetchRequest<TempTargetsSlider>
                 let sortIsEnabled = NSSortDescriptor(key: "date", ascending: false)
                 requestIsEnbled.sortDescriptors = [sortIsEnabled]
-                requestIsEnbled.fetchLimit = 1
+                // requestIsEnbled.fetchLimit = 1
                 try? booleanArray = coredataContext.fetch(requestIsEnbled)
 
                 let requestOverrides = Override.fetchRequest() as NSFetchRequest<Override>
@@ -752,6 +753,12 @@ final class BaseAPSManager: APSManager, Injectable {
                 requestOverrides.sortDescriptors = [sortOverride]
                 requestOverrides.fetchLimit = 1
                 try? overrideArray = coredataContext.fetch(requestOverrides)
+
+                let requestTempTargets = TempTargets.fetchRequest() as NSFetchRequest<TempTargets>
+                let sortTT = NSSortDescriptor(key: "date", ascending: false)
+                requestTempTargets.sortDescriptors = [sortTT]
+                requestTempTargets.fetchLimit = 1
+                try? tempTargetsArray = coredataContext.fetch(requestTempTargets)
 
                 total = uniqEvents.compactMap({ each in each.tdd as? Decimal ?? 0 }).reduce(0, +)
                 indeces = uniqEvents.count
@@ -800,6 +807,22 @@ final class BaseAPSManager: APSManager, Injectable {
                 duration = 0
             }
 
+            if tempTargetsArray.first?.active ?? false || booleanArray.first?.enabled ?? false {
+                var duration_ = Int(truncating: tempTargetsArray.first?.duration ?? 0)
+                var hbt = tempTargetsArray.first?.hbt ?? 160
+                if booleanArray.first?.enabled ?? false, !(booleanArray.first?.isPreset ?? false) {
+                    duration_ = Int(truncating: booleanArray.first?.duration ?? 0)
+                    hbt = booleanArray.first?.hbt ?? 160
+                }
+                let startDate = tempTargetsArray.first?.startDate ?? Date()
+                let durationPlusStart = startDate.addingTimeInterval(duration_.minutes.timeInterval)
+                let dd = durationPlusStart.timeIntervalSinceNow.minutes
+                if dd > 0 {
+                    hbtSetting = Decimal(hbt)
+                    isPercentageEnabled = true
+                } else { isPercentageEnabled = false }
+            }
+
             let averages = Oref2_variables(
                 average_total_data: roundDecimal(average14, 1),
                 weightedAverage: roundDecimal(weighted_average, 1),
@@ -817,10 +840,9 @@ final class BaseAPSManager: APSManager, Injectable {
             print("Test time of TDD: \(-1 * tddStartedAt.timeIntervalSinceNow) s")
         } else {
             coredataContext.performAndWait {
-                let requestIsEnbled = ViewPercentage.fetchRequest() as NSFetchRequest<ViewPercentage>
+                let requestIsEnbled = TempTargetsSlider.fetchRequest() as NSFetchRequest<TempTargetsSlider>
                 let sortIsEnabled = NSSortDescriptor(key: "date", ascending: false)
                 requestIsEnbled.sortDescriptors = [sortIsEnabled]
-                requestIsEnbled.fetchLimit = 1
                 try? booleanArray = coredataContext.fetch(requestIsEnbled)
 
                 let requestOverrides = Override.fetchRequest() as NSFetchRequest<Override>
@@ -828,6 +850,12 @@ final class BaseAPSManager: APSManager, Injectable {
                 requestOverrides.sortDescriptors = [sortOverride]
                 requestOverrides.fetchLimit = 1
                 try? overrideArray = coredataContext.fetch(requestOverrides)
+
+                let requestTempTargets = TempTargets.fetchRequest() as NSFetchRequest<TempTargets>
+                let sortTT = NSSortDescriptor(key: "date", ascending: false)
+                requestTempTargets.sortDescriptors = [sortTT]
+                requestTempTargets.fetchLimit = 1
+                try? tempTargetsArray = coredataContext.fetch(requestTempTargets)
             }
 
             isPercentageEnabled = booleanArray.first?.enabled ?? false
@@ -855,6 +883,23 @@ final class BaseAPSManager: APSManager, Injectable {
                 unlimited = true
                 overridePercentage = 100
                 duration = 0
+            }
+
+            if tempTargetsArray.first?.active ?? false || booleanArray.first?.enabled ?? false {
+                var duration_ = Int(truncating: tempTargetsArray.first?.duration ?? 0)
+                var hbt = tempTargetsArray.first?.hbt ?? 160
+                if booleanArray.first?.enabled ?? false, !(booleanArray.first?.isPreset ?? false) {
+                    duration_ = Int(truncating: booleanArray.first?.duration ?? 0)
+                    hbt = booleanArray.first?.hbt ?? 160
+                }
+                let startDate = tempTargetsArray.first?.startDate ?? Date()
+                let durationPlusStart = startDate.addingTimeInterval(duration_.minutes.timeInterval)
+                let dd = durationPlusStart.timeIntervalSinceNow.minutes
+
+                if dd > 0 {
+                    hbtSetting = Decimal(hbt)
+                    isPercentageEnabled = true
+                } else { isPercentageEnabled = false }
             }
 
             let averages = Oref2_variables(

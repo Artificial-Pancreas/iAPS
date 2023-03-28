@@ -6,7 +6,11 @@ extension AddTempTarget {
         @Injected() private var storage: TempTargetsStorage!
         @Injected() var apsManager: APSManager!
 
+        let coredataContext = CoreDataStack.shared.persistentContainer.viewContext
+        @Environment(\.managedObjectContext) var moc
+
         @Published var low: Decimal = 0
+        // @Published var target: Decimal = 0
         @Published var high: Decimal = 0
         @Published var duration: Decimal = 0
         @Published var date = Date()
@@ -17,7 +21,7 @@ extension AddTempTarget {
         @Published var viewPercantage = false
         @Published var hbt: Double = 160
         @Published var saveSettings: Bool = false
-
+        
         private(set) var units: GlucoseUnits = .mmolL
 
         override func subscribe() {
@@ -30,17 +34,7 @@ extension AddTempTarget {
             var lowTarget = low
 
             if viewPercantage {
-                var ratio = Decimal(percentage / 100)
-                let hB = Decimal(hbt)
-                let c = hB - 100
-                var target = (c / ratio) - c + 100
-
-                if c * (c + target - 100) <= 0 {
-                    ratio = maxValue
-                    target = (c / ratio) - c + 100
-                }
-                lowTarget = target
-                lowTarget = Decimal(round(Double(target)))
+                lowTarget = computeTarget()
                 saveSettings = true
             }
             var highTarget = lowTarget
@@ -49,7 +43,7 @@ extension AddTempTarget {
                 lowTarget = lowTarget.asMgdL
                 highTarget = highTarget.asMgdL
             }
-
+            
             let entry = TempTarget(
                 name: TempTarget.custom,
                 createdAt: date,
@@ -66,25 +60,27 @@ extension AddTempTarget {
         func cancel() {
             storage.storeTempTargets([TempTarget.cancel(at: Date())])
             showModal(for: nil)
+
+            coredataContext.performAndWait {
+                let saveToCoreData = TempTargets(context: self.coredataContext)
+                saveToCoreData.active = false
+                saveToCoreData.date = Date()
+                try? self.coredataContext.save()
+
+                let setHBT = TempTargetsSlider(context: self.coredataContext)
+                setHBT.enabled = false
+                try? self.coredataContext.save()
+            }
         }
 
         func save() {
             var lowTarget = low
 
             if viewPercantage {
-                var ratio = Decimal(percentage / 100)
-                let hB = Decimal(hbt)
-                let c = hB - 100
-                var target = (c / ratio) - c + 100
-
-                if c * (c + target - 100) <= 0 {
-                    ratio = maxValue
-                    target = (c / ratio) - c + 100
-                }
-                lowTarget = target
-                lowTarget = Decimal(round(Double(target)))
+                lowTarget = computeTarget()
                 saveSettings = true
             }
+
             var highTarget = lowTarget
 
             if units == .mmolL, !viewPercantage {
@@ -103,6 +99,22 @@ extension AddTempTarget {
             )
             presets.append(entry)
             storage.storePresets(presets)
+
+            if viewPercantage {
+                let id = entry.id
+
+                coredataContext.performAndWait {
+                    let saveToCoreData = TempTargetsSlider(context: self.coredataContext)
+                    saveToCoreData.id = id
+                    saveToCoreData.isPreset = true
+                    saveToCoreData.enabled = true
+                    saveToCoreData.hbt = hbt
+                    saveToCoreData.enabled = true
+                    saveToCoreData.date = Date()
+                    saveToCoreData.duration = duration as NSDecimalNumber
+                    try? self.coredataContext.save()
+                }
+            }
         }
 
         func enactPreset(id: String) {
@@ -110,14 +122,51 @@ extension AddTempTarget {
                 preset.createdAt = Date()
                 storage.storeTempTargets([preset])
                 showModal(for: nil)
+
+                coredataContext.performAndWait {
+                    var tempTargetsArray = [TempTargetsSlider]()
+                    let requestTempTargets = TempTargetsSlider.fetchRequest() as NSFetchRequest<TempTargetsSlider>
+                    let sortTT = NSSortDescriptor(key: "date", ascending: false)
+                    requestTempTargets.sortDescriptors = [sortTT]
+                    try? tempTargetsArray = coredataContext.fetch(requestTempTargets)
+
+                    let whichID = tempTargetsArray.first(where: { $0.id == id })
+
+                    if whichID != nil {
+                        let saveToCoreData = TempTargets(context: self.coredataContext)
+                        saveToCoreData.active = true
+                        saveToCoreData.date = Date()
+                        saveToCoreData.hbt = whichID?.hbt ?? 160
+                        // saveToCoreData.id = id
+                        saveToCoreData.startDate = Date()
+                        saveToCoreData.duration = whichID?.duration ?? 0
+
+                        try? self.coredataContext.save()
+                    } else {
+                        let saveToCoreData = TempTargets(context: self.coredataContext)
+                        saveToCoreData.active = false
+                        saveToCoreData.date = Date()
+                        try? self.coredataContext.save()
+                    }
+                }
             }
         }
-
-        func savedHBT() {}
 
         func removePreset(id: String) {
             presets = presets.filter { $0.id != id }
             storage.storePresets(presets)
+        }
+
+        func computeTarget() -> Decimal {
+            var ratio = Decimal(percentage / 100)
+            let c = Decimal(hbt - 100)
+            var target = (c / ratio) - c + 100
+
+            if c * (c + target - 100) <= 0 {
+                ratio = maxValue
+                target = (c / ratio) - c + 100
+            }
+            return target
         }
     }
 }

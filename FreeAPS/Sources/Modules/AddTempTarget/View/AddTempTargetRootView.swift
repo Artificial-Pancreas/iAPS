@@ -12,9 +12,9 @@ extension AddTempTarget {
         @State private var isEditing = false
 
         @FetchRequest(
-            entity: ViewPercentage.entity(),
+            entity: TempTargetsSlider.entity(),
             sortDescriptors: [NSSortDescriptor(key: "date", ascending: false)]
-        ) var isEnabledArray: FetchedResults<ViewPercentage>
+        ) var isEnabledArray: FetchedResults<TempTargetsSlider>
 
         @Environment(\.managedObjectContext) var moc
 
@@ -35,13 +35,11 @@ extension AddTempTarget {
                     }
                 }
 
-                Toggle(isOn: $state.viewPercantage) {
-                    HStack {
-                        Text("Use Slider for")
-                        Image(systemName: "figure.highintensity.intervaltraining")
-                        Text("or")
-                        Image(systemName: "fork.knife")
-                    }
+                HStack {
+                    Text("Advanced")
+                    Toggle(isOn: $state.viewPercantage) {}.controlSize(.mini)
+                    Image(systemName: "figure.highintensity.intervaltraining")
+                    Image(systemName: "fork.knife")
                 }
 
                 if state.viewPercantage {
@@ -52,7 +50,7 @@ extension AddTempTarget {
                             Slider(
                                 value: $state.percentage,
                                 in: 15 ...
-                                    Double(state.maxValue * 100),
+                                    min(Double(state.maxValue * 100), 200),
                                 step: 1,
                                 onEditingChanged: { editing in
                                     isEditing = editing
@@ -67,14 +65,14 @@ extension AddTempTarget {
                                     (
                                         state
                                             .units == .mmolL ?
-                                            ": \(computeTarget().asMmolL.formatted(.number.grouping(.never).rounded().precision(.fractionLength(1)))) mmol/L" :
-                                            ": \(computeTarget().formatted(.number.grouping(.never).rounded().precision(.fractionLength(0)))) mg/dl"
+                                            ": \(state.computeTarget().asMmolL.formatted(.number.grouping(.never).rounded().precision(.fractionLength(1)))) mmol/L" :
+                                            ": \(state.computeTarget().formatted(.number.grouping(.never).rounded().precision(.fractionLength(0)))) mg/dl"
                                     )
-                            ) // .foregroundColor(.primary).italic()
+                            )
 
                             Slider(
                                 value: $state.hbt,
-                                in: 104 ... 180,
+                                in: 101 ... 295,
                                 step: 1
                             )
                             Text(
@@ -82,7 +80,7 @@ extension AddTempTarget {
                                     .units == .mgdL ? "Half normal Basal at: \(state.hbt.formatted(.number)) mg/dl" :
                                     "Half normal Basal at: \(state.hbt.asMmolL.formatted(.number.grouping(.never).rounded().precision(.fractionLength(1)))) mmol/L"
                             )
-                            .foregroundColor(.green)
+                            .foregroundColor(.secondary)
                             .font(.caption).italic()
                         }
                     }
@@ -149,31 +147,21 @@ extension AddTempTarget {
             .navigationBarItems(leading: Button("Close", action: state.hideModal))
             .onDisappear {
                 if state.viewPercantage, state.saveSettings {
-                    let isEnabledMoc = ViewPercentage(context: moc)
+                    let isEnabledMoc = TempTargetsSlider(context: moc)
                     isEnabledMoc.enabled = true
                     isEnabledMoc.date = Date()
                     isEnabledMoc.hbt = state.hbt
+                    isEnabledMoc.duration = state.duration as NSDecimalNumber
+                    isEnabledMoc.isPreset = false
                     try? moc.save()
                 } else {
-                    let isEnabledMoc = ViewPercentage(context: moc)
+                    let isEnabledMoc = TempTargetsSlider(context: moc)
                     isEnabledMoc.enabled = false
                     isEnabledMoc.date = Date()
-                    isEnabledMoc.hbt = isEnabledArray.first?.hbt ?? 160
+                    // isEnabledMoc.hbt = isEnabledArray.first?.hbt ?? 160
                     try? moc.save()
                 }
             }
-        }
-
-        func computeTarget() -> Decimal {
-            var ratio = Decimal(state.percentage / 100)
-            let c = Decimal(state.hbt - 100)
-            var target = (c / ratio) - c + 100
-
-            if c * (c + target - 100) <= 0 {
-                ratio = state.maxValue
-                target = (c / ratio) - c + 100
-            }
-            return target
         }
 
         private func presetView(for preset: TempTarget) -> some View {
