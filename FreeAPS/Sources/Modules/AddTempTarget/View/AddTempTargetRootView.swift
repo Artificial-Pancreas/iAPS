@@ -36,7 +36,7 @@ extension AddTempTarget {
                 }
 
                 HStack {
-                    Text("Use Slider")
+                    Text("Advanced settings")
                     Toggle(isOn: $state.viewPercantage) {}.controlSize(.mini)
                     Image(systemName: "figure.highintensity.intervaltraining")
                     Image(systemName: "fork.knife")
@@ -80,7 +80,7 @@ extension AddTempTarget {
                                     .units == .mgdL ? "Half normal Basal at: \(state.hbt.formatted(.number)) mg/dl" :
                                     "Half normal Basal at: \(state.hbt.asMmolL.formatted(.number.grouping(.never).rounded().precision(.fractionLength(1)))) mmol/L"
                             )
-                            .foregroundColor(.green)
+                            .foregroundColor(.secondary)
                             .font(.caption).italic()
                         }
                     }
@@ -151,12 +151,14 @@ extension AddTempTarget {
                     isEnabledMoc.enabled = true
                     isEnabledMoc.date = Date()
                     isEnabledMoc.hbt = state.hbt
+                    isEnabledMoc.duration = state.duration as NSDecimalNumber
+                    isEnabledMoc.isPreset = false
                     try? moc.save()
                 } else {
                     let isEnabledMoc = TempTargetsSlider(context: moc)
                     isEnabledMoc.enabled = false
                     isEnabledMoc.date = Date()
-                    isEnabledMoc.hbt = isEnabledArray.first?.hbt ?? 160
+                    // isEnabledMoc.hbt = isEnabledArray.first?.hbt ?? 160
                     try? moc.save()
                 }
             }
