@@ -50,7 +50,7 @@ extension AddTempTarget {
                             Slider(
                                 value: $state.percentage,
                                 in: 15 ...
-                                    Double(state.maxValue * 100),
+                                    min(Double(state.maxValue * 100), 200),
                                 step: 1,
                                 onEditingChanged: { editing in
                                     isEditing = editing
@@ -72,7 +72,7 @@ extension AddTempTarget {
 
                             Slider(
                                 value: $state.hbt,
-                                in: 104 ... 180,
+                                in: 101 ... 295,
                                 step: 1
                             )
                             Text(

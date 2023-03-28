@@ -716,6 +716,7 @@ final class BaseAPSManager: APSManager, Injectable {
 
         var booleanArray = [TempTargetsSlider]()
         var overrideArray = [Override]()
+        var tempTargetsArray = [TempTargets]()
         var isPercentageEnabled = false
         var useOverride = false
         var overridePercentage: Decimal = 100
@@ -723,6 +724,7 @@ final class BaseAPSManager: APSManager, Injectable {
         var unlimited: Bool = false
         var newDuration: Decimal = 0
         var hbtSetting: Decimal = 160
+        var activeSliderTT = false
 
         if currentTDD > 0 {
             let tenDaysAgo = Date().addingTimeInterval(-10.days.timeInterval)
@@ -752,6 +754,12 @@ final class BaseAPSManager: APSManager, Injectable {
                 requestOverrides.sortDescriptors = [sortOverride]
                 requestOverrides.fetchLimit = 1
                 try? overrideArray = coredataContext.fetch(requestOverrides)
+                
+                let requestTempTargets = TempTargets.fetchRequest() as NSFetchRequest<TempTargets>
+                let sortTT = NSSortDescriptor(key: "date", ascending: false)
+                requestTempTargets.sortDescriptors = [sortTT]
+                requestTempTargets.fetchLimit = 1
+                try? tempTargetsArray = coredataContext.fetch(requestTempTargets)
 
                 total = uniqEvents.compactMap({ each in each.tdd as? Decimal ?? 0 }).reduce(0, +)
                 indeces = uniqEvents.count
@@ -800,6 +808,16 @@ final class BaseAPSManager: APSManager, Injectable {
                 duration = 0
             }
 
+            if tempTargetsArray.first?.active ?? false {
+                let id_ = tempTargetsArray.first?.id ?? ""
+                let whichHBTsettings = booleanArray.filter( { $0.id == id_ } )
+                if whichHBTsettings.isNotEmpty {
+                    let duration_ = tempTargetsArray[0].duration
+                    
+                }
+            }
+            
+            
             let averages = Oref2_variables(
                 average_total_data: roundDecimal(average14, 1),
                 weightedAverage: roundDecimal(weighted_average, 1),
@@ -828,6 +846,12 @@ final class BaseAPSManager: APSManager, Injectable {
                 requestOverrides.sortDescriptors = [sortOverride]
                 requestOverrides.fetchLimit = 1
                 try? overrideArray = coredataContext.fetch(requestOverrides)
+                
+                let requestTempTargets = TempTargets.fetchRequest() as NSFetchRequest<TempTargets>
+                let sortTT = NSSortDescriptor(key: "date", ascending: false)
+                requestTempTargets.sortDescriptors = [sortTT]
+                requestTempTargets.fetchLimit = 1
+                try? tempTargetsArray = coredataContext.fetch(requestTempTargets)
             }
 
             isPercentageEnabled = booleanArray.first?.enabled ?? false

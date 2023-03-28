@@ -136,7 +136,6 @@ extension AddTempTarget {
         func removePreset(id: String) {
             presets = presets.filter { $0.id != id }
             storage.storePresets(presets)
-            
         }
     }
 }
