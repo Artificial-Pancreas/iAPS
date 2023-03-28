@@ -21,7 +21,7 @@ extension AddTempTarget {
         @Published var viewPercantage = false
         @Published var hbt: Double = 160
         @Published var saveSettings: Bool = false
-        
+
         private(set) var units: GlucoseUnits = .mmolL
 
         override func subscribe() {
@@ -151,6 +151,8 @@ extension AddTempTarget {
                 }
             }
         }
+
+        func savedHBT() {}
 
         func removePreset(id: String) {
             presets = presets.filter { $0.id != id }

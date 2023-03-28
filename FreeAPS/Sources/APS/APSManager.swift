@@ -843,6 +843,10 @@ final class BaseAPSManager: APSManager, Injectable {
                 let requestIsEnbled = TempTargetsSlider.fetchRequest() as NSFetchRequest<TempTargetsSlider>
                 let sortIsEnabled = NSSortDescriptor(key: "date", ascending: false)
                 requestIsEnbled.sortDescriptors = [sortIsEnabled]
+                let requestIsEnbled = ViewPercentage.fetchRequest() as NSFetchRequest<ViewPercentage>
+                let sortIsEnabled = NSSortDescriptor(key: "date", ascending: false)
+                requestIsEnbled.sortDescriptors = [sortIsEnabled]
+                requestIsEnbled.fetchLimit = 1
                 try? booleanArray = coredataContext.fetch(requestIsEnbled)
 
                 let requestOverrides = Override.fetchRequest() as NSFetchRequest<Override>

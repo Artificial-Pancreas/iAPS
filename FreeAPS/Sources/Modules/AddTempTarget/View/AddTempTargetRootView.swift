@@ -164,6 +164,18 @@ extension AddTempTarget {
             }
         }
 
+        func computeTarget() -> Decimal {
+            var ratio = Decimal(state.percentage / 100)
+            let c = Decimal(state.hbt - 100)
+            var target = (c / ratio) - c + 100
+
+            if c * (c + target - 100) <= 0 {
+                ratio = state.maxValue
+                target = (c / ratio) - c + 100
+            }
+            return target
+        }
+
         private func presetView(for preset: TempTarget) -> some View {
             var low = preset.targetBottom
             var high = preset.targetTop
