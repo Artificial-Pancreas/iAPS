@@ -36,19 +36,6 @@ extension AddTempTarget {
             var lowTarget = low
 
             if viewPercantage {
-                /*
-                 var ratio = Decimal(percentage / 100)
-                 let hB = Decimal(hbt)
-                 let c = hB - 100
-                 var target = (c / ratio) - c + 100
-
-                 if c * (c + target - 100) <= 0 {
-                     ratio = maxValue
-                     target = (c / ratio) - c + 100
-                 }
-                 lowTarget = target
-                 lowTarget = Decimal(round(Double(target)))
-                  */
                 lowTarget = computeTarget()
                 saveSettings = true
             }
@@ -94,20 +81,6 @@ extension AddTempTarget {
             var lowTarget = low
 
             if viewPercantage {
-                /*
-                 var ratio = Decimal(percentage / 100)
-                 let hB = Decimal(hbt)
-                 let c = hB - 100
-                 var target = (c / ratio) - c + 100
-
-                 if c * (c + target - 100) <= 0 {
-                     ratio = maxValue
-                     target = (c / ratio) - c + 100
-                 }
-                 lowTarget = target
-                 lowTarget = Decimal(round(Double(target)))
-                 */
-
                 lowTarget = computeTarget()
                 saveSettings = true
             }

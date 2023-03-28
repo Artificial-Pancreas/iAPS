@@ -36,7 +36,7 @@ extension AddTempTarget {
                 }
 
                 HStack {
-                    Text("Advanced settings")
+                    Text("Advanced")
                     Toggle(isOn: $state.viewPercantage) {}.controlSize(.mini)
                     Image(systemName: "figure.highintensity.intervaltraining")
                     Image(systemName: "fork.knife")
@@ -68,7 +68,7 @@ extension AddTempTarget {
                                             ": \(state.computeTarget().asMmolL.formatted(.number.grouping(.never).rounded().precision(.fractionLength(1)))) mmol/L" :
                                             ": \(state.computeTarget().formatted(.number.grouping(.never).rounded().precision(.fractionLength(0)))) mg/dl"
                                     )
-                            ) // .foregroundColor(.primary).italic()
+                            )
 
                             Slider(
                                 value: $state.hbt,
@@ -163,20 +163,6 @@ extension AddTempTarget {
                 }
             }
         }
-
-        /*
-         func computeTarget() -> Decimal {
-             var ratio = Decimal(state.percentage / 100)
-             let c = Decimal(state.hbt - 100)
-             var target = (c / ratio) - c + 100
-
-             if c * (c + target - 100) <= 0 {
-                 ratio = state.maxValue
-                 target = (c / ratio) - c + 100
-             }
-             return target
-         }
-          */
 
         private func presetView(for preset: TempTarget) -> some View {
             var low = preset.targetBottom
