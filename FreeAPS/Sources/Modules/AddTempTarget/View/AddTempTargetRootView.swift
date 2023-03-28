@@ -65,8 +65,8 @@ extension AddTempTarget {
                                     (
                                         state
                                             .units == .mmolL ?
-                                            ": \(computeTarget().asMmolL.formatted(.number.grouping(.never).rounded().precision(.fractionLength(1)))) mmol/L" :
-                                            ": \(computeTarget().formatted(.number.grouping(.never).rounded().precision(.fractionLength(0)))) mg/dl"
+                                            ": \(state.computeTarget().asMmolL.formatted(.number.grouping(.never).rounded().precision(.fractionLength(1)))) mmol/L" :
+                                            ": \(state.computeTarget().formatted(.number.grouping(.never).rounded().precision(.fractionLength(0)))) mg/dl"
                                     )
                             ) // .foregroundColor(.primary).italic()
 
@@ -164,17 +164,19 @@ extension AddTempTarget {
             }
         }
 
-        func computeTarget() -> Decimal {
-            var ratio = Decimal(state.percentage / 100)
-            let c = Decimal(state.hbt - 100)
-            var target = (c / ratio) - c + 100
+        /*
+         func computeTarget() -> Decimal {
+             var ratio = Decimal(state.percentage / 100)
+             let c = Decimal(state.hbt - 100)
+             var target = (c / ratio) - c + 100
 
-            if c * (c + target - 100) <= 0 {
-                ratio = state.maxValue
-                target = (c / ratio) - c + 100
-            }
-            return target
-        }
+             if c * (c + target - 100) <= 0 {
+                 ratio = state.maxValue
+                 target = (c / ratio) - c + 100
+             }
+             return target
+         }
+          */
 
         private func presetView(for preset: TempTarget) -> some View {
             var low = preset.targetBottom

@@ -824,9 +824,7 @@ final class BaseAPSManager: APSManager, Injectable {
                     hbtSetting = Decimal(hbt)
                     isPercentageEnabled = true
                 } else { isPercentageEnabled = false }
-
             }
-
 
             let averages = Oref2_variables(
                 average_total_data: roundDecimal(average14, 1),
@@ -907,7 +905,6 @@ final class BaseAPSManager: APSManager, Injectable {
                     hbtSetting = Decimal(hbt)
                     isPercentageEnabled = true
                 } else { isPercentageEnabled = false }
-
             }
 
             let averages = Oref2_variables(
