@@ -10,6 +10,7 @@ extension AddTempTarget {
         @Environment(\.managedObjectContext) var moc
 
         @Published var low: Decimal = 0
+        // @Published var target: Decimal = 0
         @Published var high: Decimal = 0
         @Published var duration: Decimal = 0
         @Published var date = Date()
@@ -35,17 +36,20 @@ extension AddTempTarget {
             var lowTarget = low
 
             if viewPercantage {
-                var ratio = Decimal(percentage / 100)
-                let hB = Decimal(hbt)
-                let c = hB - 100
-                var target = (c / ratio) - c + 100
+                /*
+                 var ratio = Decimal(percentage / 100)
+                 let hB = Decimal(hbt)
+                 let c = hB - 100
+                 var target = (c / ratio) - c + 100
 
-                if c * (c + target - 100) <= 0 {
-                    ratio = maxValue
-                    target = (c / ratio) - c + 100
-                }
-                lowTarget = target
-                lowTarget = Decimal(round(Double(target)))
+                 if c * (c + target - 100) <= 0 {
+                     ratio = maxValue
+                     target = (c / ratio) - c + 100
+                 }
+                 lowTarget = target
+                 lowTarget = Decimal(round(Double(target)))
+                  */
+                lowTarget = computeTarget()
                 saveSettings = true
             }
             var highTarget = lowTarget
@@ -56,7 +60,7 @@ extension AddTempTarget {
             }
 
             print("Target: \(lowTarget)")
-            
+
             let entry = TempTarget(
                 name: TempTarget.custom,
                 createdAt: date,
@@ -90,19 +94,24 @@ extension AddTempTarget {
             var lowTarget = low
 
             if viewPercantage {
-                var ratio = Decimal(percentage / 100)
-                let hB = Decimal(hbt)
-                let c = hB - 100
-                var target = (c / ratio) - c + 100
+                /*
+                 var ratio = Decimal(percentage / 100)
+                 let hB = Decimal(hbt)
+                 let c = hB - 100
+                 var target = (c / ratio) - c + 100
 
-                if c * (c + target - 100) <= 0 {
-                    ratio = maxValue
-                    target = (c / ratio) - c + 100
-                }
-                lowTarget = target
-                lowTarget = Decimal(round(Double(target)))
+                 if c * (c + target - 100) <= 0 {
+                     ratio = maxValue
+                     target = (c / ratio) - c + 100
+                 }
+                 lowTarget = target
+                 lowTarget = Decimal(round(Double(target)))
+                 */
+
+                lowTarget = computeTarget()
                 saveSettings = true
             }
+
             var highTarget = lowTarget
 
             if units == .mmolL, !viewPercantage {
@@ -177,6 +186,18 @@ extension AddTempTarget {
         func removePreset(id: String) {
             presets = presets.filter { $0.id != id }
             storage.storePresets(presets)
+        }
+
+        func computeTarget() -> Decimal {
+            var ratio = Decimal(percentage / 100)
+            let c = Decimal(hbt - 100)
+            var target = (c / ratio) - c + 100
+
+            if c * (c + target - 100) <= 0 {
+                ratio = maxValue
+                target = (c / ratio) - c + 100
+            }
+            return target
         }
     }
 }
