@@ -21,15 +21,13 @@ extension AddTempTarget {
         @Published var viewPercantage = false
         @Published var hbt: Double = 160
         @Published var saveSettings: Bool = false
-        @Published var halfBasal: Decimal = 160
-
+        
         private(set) var units: GlucoseUnits = .mmolL
 
         override func subscribe() {
             units = settingsManager.settings.units
             presets = storage.presets()
             maxValue = settingsManager.preferences.autosensMax
-            halfBasal = settingsManager.preferences.halfBasalExerciseTarget
         }
 
         func enact() {
@@ -45,9 +43,7 @@ extension AddTempTarget {
                 lowTarget = lowTarget.asMgdL
                 highTarget = highTarget.asMgdL
             }
-
-            print("Target: \(lowTarget)")
-
+            
             let entry = TempTarget(
                 name: TempTarget.custom,
                 createdAt: date,
