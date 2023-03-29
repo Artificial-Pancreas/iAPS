@@ -175,16 +175,18 @@ struct MainView: View {
                     .minimumScaleFactor(0.5)
             }.padding(.bottom, 35)
             // Text(state.delta).font(.caption2).foregroundColor(.gray)
-            Spacer()
+            // Spacer()
 
             HStack {
                 Circle().stroke(color, lineWidth: 5).frame(width: 20, height: 20).padding(10)
 
-                if state.lastLoopDate != nil {
-                    Text(timeString).font(.caption2).foregroundColor(.gray)
-                } else {
-                    Text("--").font(.caption2).foregroundColor(.gray)
-                }
+                /*
+                 if state.lastLoopDate != nil {
+                     Text(timeString).font(.caption2).foregroundColor(.gray)
+                 } else {
+                     Text("--").font(.caption2).foregroundColor(.gray)
+                 }
+                  */
             }
         }
         .gesture(longPresBGs)
