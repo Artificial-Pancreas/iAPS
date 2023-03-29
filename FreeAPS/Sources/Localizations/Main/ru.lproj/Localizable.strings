@@ -227,7 +227,7 @@ Enact a temp Basal or a temp target */
 /* */
 "Manual Temp Basal" = "Ручная ВБС";
 
-/* Allow uploads tp NS */
+/* Allow uploads data to different services */
 "Allow uploads" = "Разрешить выгрузку";
 
 /* API secret in NS */
@@ -1694,3 +1694,68 @@ Enact a temp Basal or a temp target */
 
 /* Headline "Adjustment Factor" */
 "Adjustment Factor" = "Коэффициент регулировки";
+
+/* Libre View --------------------*/
+/* */
+"LibreView config" = "Настройки LibreView";
+
+/* Secription on LibreView settings screen */
+"To use LibreView, you need to enter credentials and create a connection" = "Для использования LibreView вам необходимо ввести данные авторизации и создать подключение";
+
+/* Button on LibreView settings screen */
+"Update a connection" = "Обновить подключение";
+
+/* Button on LibreView settings screen */
+"Create a connection" = "Создать подключение";
+
+/* Setting on LibreView settings screen */
+"Custom server" = "Собственный сервер";
+
+/* Section on LibreView settings screen */
+"Connection settings" = "Настройки подключения";
+
+/* Button on LibreView settings screen */
+"Remove a connection" = "Удалить подключение";
+
+/* Alert message on LibreView settings screen */
+"Please, set correct LibreView server" = "Пожалуйста, установите корректный адрес сервера";
+
+/* Setting on LibreView settings screen */
+"LibreView Server" = "Сервер LibreView";
+
+/* Button on LibreView settings screen */
+"Force upload glocose" = "Принудительная выгрузка глюкозы";
+
+/* Message after success uploading of glusoce to LibreView server */
+"Glucose was upload success" = "Глюкоза была успешно выгружена";
+
+"Last upload date to LibreLink is more, that current date. Try later or check preferences" = "Дата последней выгрузки больше текущей даты. Попробуйте позже или проверьте настройки";
+
+"Have not new glucose to upload" = "Новая глюкоза для выгрузки отсутсвует";
+
+"Wrong connection's token" = "Неверный токен безопасности";
+
+"Actions" = "Действия";
+
+"Frequency of uploads" = "Частота выгрузки";
+"Each Loop" = "Каждый цикл петли";
+"Every 15 minutes" = "Каждые 15 минут";
+"Every 30 minutes" = "Каждые 30 минут";
+"Every hour" = "Каждый час";
+"Every 4 hours" = "Каждые 4 часа";
+"Random upload, but less than 4 hours after the last one" = "Случайные выгрузки, но не менее 1 раза в 4 часа";
+"It is recommended to use random uploads, they are more natural" = "Рекомендовано использовать случайную частоту выгрузки, так как она более естественна";
+"Last upload on %@. Next upload no earlier than %@" = "Последняя выгрузка %@. Следующая не ранее, чем %@";
+
+/* Credentials and autentification --------------------*/
+/* */
+"Credentials" = "Данные для входа";
+
+/* */
+"Login" = "Логин";
+
+/* */
+"Password" = "Пароль";
+
+/* */
+"Wrong password or login" = "Неверный логин или пароль";

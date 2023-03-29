@@ -260,7 +260,7 @@ Enact a temp Basal or a temp target */
 /* */
 "Manual Temp Basal" = "Manual Temp Basal";
 
-/* Allow uploads tp NS */
+/* Allow uploads to different services */
 "Allow uploads" = "Allow uploads";
 
 /* API secret in NS */
@@ -1732,3 +1732,68 @@ Enact a temp Basal or a temp target */
 
 /* Headline "Adjustment Factor" */
 "Adjustment Factor" = "Adjustment Factor";
+
+/* Libre View --------------------*/
+/* */
+"LibreView config" = "LibreView config";
+
+/* Secription on LibreView settings screen */
+"To use LibreView, you need to enter credentials and create a connection" = "To use LibreView, you need to enter credentials and create a connection";
+
+/* Button on LibreView settings screen */
+"Update a connection" = "Update a connection";
+
+/* Button on LibreView settings screen */
+"Create a connection" = "Create a connection";
+
+/* Setting on LibreView settings screen */
+"Custom server" = "Custom server";
+
+/* Section on LibreView settings screen */
+"Connection settings" = "Connection settings";
+
+/* Button on LibreView settings screen */
+"Remove a connection" = "Remove a connection";
+
+/* Alert message on LibreView settings screen */
+"Please, set correct LibreView server" = "Please, set correct LibreView server";
+
+/* Setting on LibreView settings screen */
+"LibreView Server" = "LibreView Server";
+
+/* Button on LibreView settings screen */
+"Force upload glocose" = "Force upload glocose";
+
+/* Message after success uploading of glusoce to LibreView server */
+"Glucose was upload success" = "Glucose was upload success";
+
+"Last upload date to LibreLink is more, that current date. Try later or check preferences" = "Last upload date to LibreLink is more, that current date. Try later or check preferences";
+
+"Have not new glucose to upload" = "Have not new glucose to upload";
+
+"Wrong connection's token" = "Wrong connection's token";
+
+"Actions" = "Actions";
+
+"Frequency of uploads" = "Frequency of uploads";
+"Each Loop" = "Each Loop";
+"Every 15 minutes" = "Every 15 minutes";
+"Every 30 minutes" = "Every 30 minutes";
+"Every hour" = "Every hour";
+"Every 4 hours" = "Every 4 hours";
+"Random upload, but less than 4 hours after the last one" = "Random upload, but less than 4 hours after the last one";
+"It is recommended to use random uploads, they are more natural" = "It is recommended to use random uploads, they are more natural";
+"Last upload on %@. Next upload no earlier than %@" = "Last upload on %@. Next upload no earlier than %@";
+
+/* Credentials and autentification --------------------*/
+/* */
+"Credentials" = "Credentials";
+
+/* */
+"Login" = "Login";
+
+/* */
+"Password" = "Password";
+
+/* */
+"Wrong password or login" = "Wrong password or login";
