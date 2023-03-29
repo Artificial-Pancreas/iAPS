@@ -173,22 +173,20 @@ struct MainView: View {
                 Text(state.trend)
                     .scaledToFill()
                     .minimumScaleFactor(0.5)
-            }
-            Text(state.delta).font(.caption2).foregroundColor(.gray)
-
-            Spacer()
+            }.padding(.bottom, 35)
+            // Text(state.delta).font(.caption2).foregroundColor(.gray)
             Spacer()
 
             HStack {
-                Circle().stroke(color, lineWidth: 5).frame(width: 26, height: 26).padding(10)
-            }
+                Circle().stroke(color, lineWidth: 5).frame(width: 20, height: 20).padding(10)
 
-            if state.lastLoopDate != nil {
-                Text(timeString).font(.caption2).foregroundColor(.gray)
-            } else {
-                Text("--").font(.caption2).foregroundColor(.gray)
+                if state.lastLoopDate != nil {
+                    Text(timeString).font(.caption2).foregroundColor(.gray)
+                } else {
+                    Text("--").font(.caption2).foregroundColor(.gray)
+                }
             }
-        } // .scaleEffect(isDetectingLongPressOfBG ? 3 : 1)
+        }
         .gesture(longPresBGs)
     }
 
