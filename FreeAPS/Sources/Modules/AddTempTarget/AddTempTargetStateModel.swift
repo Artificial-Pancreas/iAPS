@@ -31,6 +31,9 @@ extension AddTempTarget {
         }
 
         func enact() {
+            guard duration > 0 else {
+                return
+            }
             var lowTarget = low
 
             if viewPercantage {
@@ -74,6 +77,9 @@ extension AddTempTarget {
         }
 
         func save() {
+            guard duration > 0 else {
+                return
+            }
             var lowTarget = low
 
             if viewPercantage {
