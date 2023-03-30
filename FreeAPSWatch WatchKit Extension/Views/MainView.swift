@@ -25,14 +25,16 @@ struct MainView: View {
 
     var body: some View {
         ZStack(alignment: .topLeading) {
-            if state.timerDate.timeIntervalSince(state.lastUpdate) > 10 {
-                HStack {
-                    withAnimation {
-                        BlinkingView(count: 5, size: 3)
-                            .frame(width: 14, height: 14)
-                            .padding(2)
+            if !completedLongPressOfBG {
+                if state.timerDate.timeIntervalSince(state.lastUpdate) > 10 {
+                    HStack {
+                        withAnimation {
+                            BlinkingView(count: 5, size: 3)
+                                .frame(width: 14, height: 14)
+                                .padding(2)
+                        }
+                        Text("Updating...").font(.caption2).foregroundColor(.secondary)
                     }
-                    Text("Updating...").font(.caption2).foregroundColor(.secondary)
                 }
             }
             VStack {
@@ -170,23 +172,13 @@ struct MainView: View {
         VStack(alignment: .center) {
             HStack {
                 Text(state.glucose).font(.custom("Big BG", size: 55))
-                Text(state.trend)
+                Text(state.trend != "→" ? state.trend : "")
                     .scaledToFill()
                     .minimumScaleFactor(0.5)
             }.padding(.bottom, 35)
-            // Text(state.delta).font(.caption2).foregroundColor(.gray)
-            // Spacer()
 
             HStack {
                 Circle().stroke(color, lineWidth: 5).frame(width: 20, height: 20).padding(10)
-
-                /*
-                 if state.lastLoopDate != nil {
-                     Text(timeString).font(.caption2).foregroundColor(.gray)
-                 } else {
-                     Text("--").font(.caption2).foregroundColor(.gray)
-                 }
-                  */
             }
         }
         .gesture(longPresBGs)
