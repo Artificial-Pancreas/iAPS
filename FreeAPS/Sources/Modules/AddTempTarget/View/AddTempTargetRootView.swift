@@ -34,14 +34,16 @@ extension AddTempTarget {
                         }
                     }
                 }
-
-                Toggle(isOn: $state.viewPercentage) {
-                    Text("Exercise / Pre Meal Slider")
+                HStack {
+                    Text("Advanced")
+                    Toggle(isOn: $state.viewPercentage) {}.controlSize(.mini)
+                    Image(systemName: "figure.highintensity.intervaltraining")
+                    Image(systemName: "fork.knife")
                 }
 
                 if state.viewPercentage {
                     Section(
-                        header: Text("TT Effect on Basal and Sensitivity")
+                        header: Text("TT Effect on Insulin")
                     ) {
                         VStack {
                             HStack {
@@ -57,7 +59,7 @@ extension AddTempTarget {
                             }
 
                             if computeSliderLow() != computeSliderHigh() {
-                                Text(NSLocalizedString("Desired Insulin Ratio / Override", comment: ""))
+                                Text(NSLocalizedString("Percent Insulin", comment: ""))
                                 Slider(
                                     value: $state.percentage,
                                     in: computeSliderLow() ... computeSliderHigh(),
@@ -72,72 +74,32 @@ extension AddTempTarget {
                                     .foregroundColor(isEditing ? .orange : .blue)
                                     .font(.largeTitle)
                                 Divider()
-                                HStack {
-                                    Text(
-                                        NSLocalizedString("Half Basal Target should be: ", comment: "")
-                                    )
-                                    .foregroundColor(.primary).italic()
-                                    Text("\(computeHBT().formatted(.number)) mg/dL!").fixedSize(horizontal: true, vertical: false)
-                                }
-                                Divider()
                                 Text(
-                                    "Enter HBT in Preferences to achieve Insulin Ratio." + "\n" +
-                                        "If you don't, the set Target will put you at Insulin Ratio of " +
-                                        "\(computeRatio().formatted(.number)) % as HBT is currently \(state.halfBasal) mg/dL."
+                                    state
+                                        .units == .mgdL ? "Half normal Basal at: \(computeHBT().formatted(.number)) mg/dl" :
+                                        "Half normal Basal at: \(computeHBT().asMmolL.formatted(.number.grouping(.never).rounded().precision(.fractionLength(1)))) mmol/L"
                                 )
-                                .fixedSize(horizontal: false, vertical: true)
-                                .multilineTextAlignment(.leading).font(.caption)
+                                .foregroundColor(.secondary)
+                                .font(.caption).italic()
+//                                Divider()
+//                                if state.percentage != 100 && state.percentage != round(Double(computeRatio())) {
+//                                    Text(
+//                                        "Enter HBT in Preferences to achieve Insulin Ratio." + "\n" +
+//                                            "If you don't, the set Target will put you at Insulin Ratio of " +
+//                                            "\(computeRatio().formatted(.number)) % as HBT is currently \(state.halfBasal) mg/dL."
+//                                    )
+//                                    .foregroundColor(.loopRed)
+//                                    .fixedSize(horizontal: false, vertical: true)
+//                                    .multilineTextAlignment(.leading).font(.caption)
+//                                }
                             } else {
                                 Text(
-                                    "You have not enabled the proper Preferences to change sensitivity with chosen TempTarget. Verify below!"
+                                    "You have not enabled the proper Preferences to change sensitivity with chosen TempTarget. Verify Autosens Max, lowTT lowers Sens and highTT raises Sens (or Exercise Mode)!"
                                 )
-                                .fixedSize(
-                                    horizontal: false,
-                                    vertical: true
-                                )
+                                // .foregroundColor(.loopRed)
+                                .font(.caption).italic()
+                                .fixedSize(horizontal: false, vertical: true)
                                 .multilineTextAlignment(.leading)
-                            }
-                        }
-                    }
-                    Section(
-                        header: Text("Current settings in Preferences:"),
-                        footer: Text(
-                            "Half Basal Target (HBT) setting adjusts how a TempTarget affects Sensitivity (Basal, CR and ISF). A lower HBT using a high TT will allow Basal to be reduced earlier, in other words with a smaller high TT. However for this feature to be activated either High TempTarget raises Sensitivity or Exercise Mode must be activated for high TT to increase Sensitivity. Accordingly Low TempTarget lowers Sensitivity must be activated and Autosens.max needs to be higher than 1, to give reduced Sensitivity for low TT."
-                        )
-                    ) {
-                        VStack(alignment: .leading) {
-                            HStack {
-                                Text("Half Basal Target")
-                                Spacer()
-                                Text("" + "\(state.halfBasal)")
-                                    .foregroundColor(
-                                        (state.highTTraises || state.exerMode || state.lowTTlowers) ? .blue :
-                                            .secondary
-                                    )
-                            }
-                            HStack {
-                                Text("Exercise Mode")
-                                Spacer()
-                                Text(" " + "\(state.exerMode)")
-                                    .foregroundColor(state.exerMode ? .blue : .secondary)
-                            }
-                            HStack {
-                                Text("High TT raises Sensitivity")
-                                Spacer()
-                                Text(" " + "\(state.highTTraises)")
-                                    .foregroundColor(state.highTTraises ? .blue : .secondary)
-                            }
-                            HStack {
-                                Text("Low TT lowers Sensitivity")
-                                Spacer()
-                                Text(" " + "\(state.lowTTlowers)")
-                                    .foregroundColor(state.lowTTlowers && state.maxValue > 1 ? .blue : .secondary)
-                            }
-                            HStack {
-                                Text("Autosens.max")
-                                Spacer()
-                                Text(" " + "\(state.maxValue)")
-                                    .foregroundColor(state.lowTTlowers && state.maxValue > 1 ? .blue : .secondary)
                             }
                         }
                     }
