@@ -88,10 +88,10 @@ extension LibreViewConfig {
             } header: {
                 Text("Credentials")
             } footer: {
-                if state.lastUpload > 0,
-                   let lastUploadDate = Date(timeIntervalSince1970: state.lastUpload),
-                   let nextuploadDate = Date(timeIntervalSince1970: state.lastUpload + state.nextUploadDelta)
-                {
+                if state.lastUpload > 0 {
+                    let lastUploadDate = Date(timeIntervalSince1970: state.lastUpload)
+                    let nextuploadDate = Date(timeIntervalSince1970: state.lastUpload + state.nextUploadDelta)
+
                     Text(
                         "Last upload on \(state.dateFormatter.string(from: lastUploadDate)). Next upload no earlier than \(state.dateFormatter.string(from: nextuploadDate))"
                     )
