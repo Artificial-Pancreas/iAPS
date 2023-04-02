@@ -22,7 +22,7 @@
     "useAppleHealth": false,
     "animatedBackground": false,
     "displayStatistics": false,
-    "useFPUconversion": false
+    "useFPUconversion": true
     "individualAdjustmentFactor": 0.5,
     "timeCap": 8,
     "minuteInterval": 30,

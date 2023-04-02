@@ -25,7 +25,7 @@ struct FreeAPSSettings: JSON, Equatable {
     var carbsRequiredThreshold: Decimal = 10
     var animatedBackground: Bool = false
     var displayStatistics: Bool = false
-    var useFPUconversion: Bool = false
+    var useFPUconversion: Bool = true
     var individualAdjustmentFactor: Decimal = 0.5
     var timeCap: Int = 8
     var minuteInterval: Int = 30
