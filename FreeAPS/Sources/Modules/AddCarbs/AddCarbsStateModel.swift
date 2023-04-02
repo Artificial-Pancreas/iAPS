@@ -125,11 +125,9 @@ extension AddCarbs {
 
         func removePresetFromNewMeal() {
             let a = summation.firstIndex(where: { $0 == selection?.dish! })
-
             if a != nil, summation[a ?? 0] != "" {
                 summation.remove(at: a!)
             }
-
             if (selection?.carbs ?? 0) as Decimal == carbs, (selection?.fat ?? 0) as Decimal == fat,
                (selection?.protein ?? 0) as Decimal == protein
             {
