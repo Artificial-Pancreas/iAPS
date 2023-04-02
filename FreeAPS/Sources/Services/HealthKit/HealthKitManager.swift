@@ -451,7 +451,7 @@ final class BaseHealthKitManager: HealthKitManager, Injectable, CarbsObserver {
                     direction: nil,
                     date: Decimal(Int(sample.date.timeIntervalSince1970) * 1000),
                     dateString: sample.date,
-                    unfiltered: nil,
+                    unfiltered: Decimal(sample.glucose),
                     filtered: nil,
                     noise: nil,
                     glucose: sample.glucose,
