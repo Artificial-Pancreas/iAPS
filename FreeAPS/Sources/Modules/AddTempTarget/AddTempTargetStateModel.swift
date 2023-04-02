@@ -41,7 +41,7 @@ extension AddTempTarget {
                 saveSettings = true
             }
             var highTarget = lowTarget
-            
+
             if units == .mmolL, !viewPercantage {
                 lowTarget = Decimal(round(Double(lowTarget.asMgdL)))
                 highTarget = Decimal(round(Double(highTarget.asMgdL)))

@@ -65,6 +65,43 @@ extension Home {
             return scene
         }
 
+        func computeRatio() -> Decimal {
+            let coredataContext = CoreDataStack.shared.persistentContainer.viewContext
+            var booleanArray = [TempTargetsSlider]()
+            coredataContext.performAndWait {
+                let requestIsEnbled = TempTargetsSlider.fetchRequest() as NSFetchRequest<TempTargetsSlider>
+                let sortIsEnabled = NSSortDescriptor(key: "date", ascending: false)
+                requestIsEnbled.sortDescriptors = [sortIsEnabled]
+                // requestIsEnbled.fetchLimit = 1
+                try? booleanArray = coredataContext.fetch(requestIsEnbled)
+            }
+            let isPercentageEnabled = booleanArray.first?.enabled ?? false
+            var hbt: Decimal = 160
+            if isPercentageEnabled { hbt = Decimal(booleanArray.first?.hbt ?? 160) }
+            else { hbt = state.settingsManager.preferences.halfBasalExerciseTarget }
+            var ratio: Decimal = 1
+            let normalTarget: Decimal = 100
+            if let tempTarget = state.tempTarget {
+                let bottom = tempTarget.targetBottom ?? 100
+                let top = tempTarget.targetTop ?? 100
+                let target: Decimal = (bottom + top) / 2
+                if (target + hbt - (2 * normalTarget)) !=
+                    0 { ratio = (hbt - normalTarget) / (target + hbt - (2 * normalTarget)) } // prevent division by 0
+                if ratio < 0 { ratio = state.settingsManager.preferences.autosensMax } // if negative Value take max Ratio
+                if !isPercentageEnabled {
+                    if ratio < 1,
+                       !state.settingsManager.preferences.exerciseMode,
+                       !state.settingsManager.preferences.highTemptargetRaisesSensitivity
+                    { ratio = 1 }
+                    if ratio > 1, !state.settingsManager.preferences.lowTemptargetLowersSensitivity { ratio = 1 }
+                }
+                if ratio > 1 {
+                    ratio = min(ratio, state.settingsManager.preferences.autosensMax)
+                }
+            }
+            return ratio
+        }
+
         @ViewBuilder func header(_ geo: GeometryProxy) -> some View {
             HStack(alignment: .bottom) {
                 Spacer()
@@ -188,44 +225,57 @@ extension Home {
                 }
 
                 if let tempTarget = state.tempTarget {
-                    Text(tempTarget.displayName).font(.caption).foregroundColor(.secondary)
-                    if state.units == .mmolL {
-                        Text(
-                            targetFormatter
-                                .string(from: (tempTarget.targetBottom?.asMmolL ?? 0) as NSNumber)!
-                        )
-                        .font(.caption)
-                        .foregroundColor(.secondary)
-                        if tempTarget.targetBottom != tempTarget.targetTop {
-                            Text("-").font(.caption)
-                                .foregroundColor(.secondary)
+                    HStack(alignment: .firstTextBaseline, spacing: 2) {
+                        Text(tempTarget.displayName).font(.caption).foregroundColor(.secondary)
+                        if state.units == .mmolL {
                             Text(
                                 targetFormatter
-                                    .string(from: (tempTarget.targetTop?.asMmolL ?? 0) as NSNumber)! +
-                                    " \(state.units.rawValue)"
+                                    .string(from: (tempTarget.targetBottom?.asMmolL ?? 0) as NSNumber)!
                             )
                             .font(.caption)
                             .foregroundColor(.secondary)
-                        } else {
-                            Text(state.units.rawValue).font(.caption)
+                            if tempTarget.targetBottom != tempTarget.targetTop {
+                                Text("-").font(.caption)
+                                    .foregroundColor(.secondary)
+                                Text(
+                                    targetFormatter
+                                        .string(from: (tempTarget.targetTop?.asMmolL ?? 0) as NSNumber)! +
+                                        " \(state.units.rawValue)"
+                                )
+                                .font(.caption)
                                 .foregroundColor(.secondary)
-                        }
+                            } else {
+                                Text(state.units.rawValue).font(.caption)
+                                    .foregroundColor(.secondary)
+                            }
 
-                    } else {
-                        Text(targetFormatter.string(from: (tempTarget.targetBottom ?? 0) as NSNumber)!)
-                            .font(.caption)
-                            .foregroundColor(.secondary)
-                        if tempTarget.targetBottom != tempTarget.targetTop {
-                            Text("-").font(.caption)
-                                .foregroundColor(.secondary)
-                            Text(
-                                targetFormatter
-                                    .string(from: (tempTarget.targetTop ?? 0) as NSNumber)! + " \(state.units.rawValue)"
-                            )
-                            .font(.caption)
-                            .foregroundColor(.secondary)
                         } else {
-                            Text(state.units.rawValue).font(.caption)
+                            Text(targetFormatter.string(from: (tempTarget.targetBottom ?? 0) as NSNumber)!)
+                                .font(.caption)
+                                .foregroundColor(.secondary)
+                            if tempTarget.targetBottom != tempTarget.targetTop {
+                                Text("-").font(.caption)
+                                    .foregroundColor(.secondary)
+                                Text(
+                                    targetFormatter
+                                        .string(from: (tempTarget.targetTop ?? 0) as NSNumber)! + " \(state.units.rawValue)"
+                                )
+                                .font(.caption)
+                                .foregroundColor(.secondary)
+                            } else {
+                                Text(state.units.rawValue).font(.caption)
+                                    .foregroundColor(.secondary)
+                            }
+                        }
+                        if computeRatio() != 1 {
+                            Text("Ratio")
+                                .font(.caption)
+                                .foregroundColor(.secondary)
+                            Text(tirFormatter.string(from: computeRatio() * 100 as NSNumber) ?? "")
+                                .font(.caption)
+                                .foregroundColor(.secondary)
+                            Text("%")
+                                .font(.caption)
                                 .foregroundColor(.secondary)
                         }
                     }
