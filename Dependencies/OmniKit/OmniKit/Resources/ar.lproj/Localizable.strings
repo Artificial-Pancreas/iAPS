@@ -1,0 +1,7 @@
+/* Pump Event title for UnfinalizedDose with doseType of .bolus */
+"Bolus" = "Bolus";
+
+/* Acknowledge button label for RileyLink low battery alert
+   Alert acknowledgment OK button */
+"OK" = "موافق";
+

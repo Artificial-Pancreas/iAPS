@@ -49,7 +49,7 @@ struct ScheduledExpirationReminderEditView: View {
                     // Keep picker outside of card in compact view, because it forces full device width.
                     VStack(spacing: 0) {
                         RoundedCard {
-                            Text("Scheduled Reminder", comment: "Card title for scheduled reminder")
+                            Text(LocalizedString("Scheduled Reminder", comment: "Card title for scheduled reminder"))
                             Divider()
                             valueRow
                         }
@@ -59,7 +59,7 @@ struct ScheduledExpirationReminderEditView: View {
 
                 } else {
                     RoundedCard {
-                        Text("Scheduled Reminder", comment: "Card title for scheduled reminder")
+                        Text(LocalizedString("Scheduled Reminder", comment: "Card title for scheduled reminder"))
                         Divider()
                         valueRow
                         picker

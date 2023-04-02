@@ -7,6 +7,9 @@
 /* Class = "UILabel"; text = "Waiting for first reading"; ObjectID = "9p7-LX-EMK"; */
 "9p7-LX-EMK.text" = "Esperando a primeira leitura";
 
+/* Class = "UITextField"; text = "500000"; ObjectID = "e0T-ru-tWD"; */
+"e0T-ru-tWD.text" = "500000";
+
 /* Class = "UIButton"; normalTitle = "Start"; ObjectID = "HEQ-Bp-kx7"; */
 "HEQ-Bp-kx7.normalTitle" = "Iniciar";
 
@@ -19,8 +22,6 @@
 /* Class = "UILabel"; text = "Stay connected"; ObjectID = "NSs-9e-3Sl"; */
 "NSs-9e-3Sl.text" = "Permanecer conectado";
 
-/* Class = "UITextField"; text = "500000"; ObjectID = "e0T-ru-tWD"; */
-"e0T-ru-tWD.text" = "500000";
-
 /* Class = "UILabel"; text = "––"; ObjectID = "zAF-A7-1Oc"; */
 "zAF-A7-1Oc.text" = "––";
+

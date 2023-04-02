@@ -227,14 +227,14 @@ class BasalScheduleTests: XCTestCase {
             // Decode 1f 05 6fede14a 01
             let cmd = try CancelDeliveryCommand(encodedData: Data(hexadecimalString: "1f056fede14a01")!)
             XCTAssertEqual(0x6fede14a, cmd.nonce)
-            XCTAssertEqual(.noBeep, cmd.beepType)
+            XCTAssertEqual(.noBeepCancel, cmd.beepType)
             XCTAssertEqual(.basal, cmd.deliveryType)
         } catch (let error) {
             XCTFail("message decoding threw error: \(error)")
         }
         
         // Encode
-        let cmd = CancelDeliveryCommand(nonce: 0x6fede14a, deliveryType: .basal, beepType: .noBeep)
+        let cmd = CancelDeliveryCommand(nonce: 0x6fede14a, deliveryType: .basal, beepType: .noBeepCancel)
         XCTAssertEqual("1f056fede14a01", cmd.data.hexadecimalString)
     }
     

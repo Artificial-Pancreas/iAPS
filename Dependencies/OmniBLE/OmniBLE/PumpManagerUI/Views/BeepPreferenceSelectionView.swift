@@ -38,7 +38,7 @@ struct BeepPreferenceSelectionView: View {
         VStack {
             List {
                 Section {
-                    Text("Confidence reminders are beeps from the pod which can be used to acknowledge selected commands.").fixedSize(horizontal: false, vertical: true)
+                    Text(LocalizedString("Confidence reminders are beeps from the pod which can be used to acknowledge selected commands.", comment: "Help text for BeepPreferenceSelectionView")).fixedSize(horizontal: false, vertical: true)
                         .padding(.vertical, 10)
                 }
 

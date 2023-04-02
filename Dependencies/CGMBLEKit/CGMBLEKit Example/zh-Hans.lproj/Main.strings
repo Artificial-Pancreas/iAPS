@@ -1,4 +1,3 @@
-
 /* Class = "UILabel"; text = "Run alongside G5 app"; ObjectID = "3i8-2m-QFG"; */
 "3i8-2m-QFG.text" = "与G5 App同时使用";
 
@@ -7,6 +6,9 @@
 
 /* Class = "UILabel"; text = "Waiting for first reading"; ObjectID = "9p7-LX-EMK"; */
 "9p7-LX-EMK.text" = "输入第一个校准值";
+
+/* Class = "UITextField"; text = "500000"; ObjectID = "e0T-ru-tWD"; */
+"e0T-ru-tWD.text" = "500000";
 
 /* Class = "UIButton"; normalTitle = "Start"; ObjectID = "HEQ-Bp-kx7"; */
 "HEQ-Bp-kx7.normalTitle" = "启动";
@@ -20,8 +22,6 @@
 /* Class = "UILabel"; text = "Stay connected"; ObjectID = "NSs-9e-3Sl"; */
 "NSs-9e-3Sl.text" = "保持连接";
 
-/* Class = "UITextField"; text = "500000"; ObjectID = "e0T-ru-tWD"; */
-"e0T-ru-tWD.text" = "500000";
-
 /* Class = "UILabel"; text = "––"; ObjectID = "zAF-A7-1Oc"; */
 "zAF-A7-1Oc.text" = "––";
+
