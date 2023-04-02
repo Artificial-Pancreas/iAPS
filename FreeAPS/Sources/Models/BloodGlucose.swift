@@ -87,6 +87,7 @@ extension BloodGlucose: SavitzkyGolaySmoothable {
         }
         set {
             glucose = Int(newValue)
+            sgv = Int(newValue)
         }
     }
 }
