@@ -922,7 +922,8 @@ extension MainChartView {
 
     private func UnSmoothedGlucoseToCoordinate(_ glucoseEntry: BloodGlucose, fullSize: CGSize) -> CGPoint {
         let x = timeToXCoordinate(glucoseEntry.dateString.timeIntervalSince1970, fullSize: fullSize)
-        let y = glucoseToYCoordinate(glucoseEntry.sgv ?? glucoseEntry.glucose ?? 0, fullSize: fullSize)
+        let glucoseValue: Decimal = glucoseEntry.unfiltered ?? Decimal(glucoseEntry.glucose ?? 0)
+        let y = glucoseToYCoordinate(Int(glucoseValue), fullSize: fullSize)
 
         return CGPoint(x: x, y: y)
     }
