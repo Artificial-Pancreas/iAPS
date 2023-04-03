@@ -154,7 +154,7 @@ extension DexcomSourceG6: CGMManagerDelegate {
                     direction: .init(trendType: newGlucoseSample.trend),
                     date: Decimal(Int(newGlucoseSample.date.timeIntervalSince1970 * 1000)),
                     dateString: newGlucoseSample.date,
-                    unfiltered: nil,
+                    unfiltered: Decimal(value),
                     filtered: nil,
                     noise: nil,
                     glucose: value,

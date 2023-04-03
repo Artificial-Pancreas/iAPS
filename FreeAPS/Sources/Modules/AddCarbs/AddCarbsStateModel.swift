@@ -11,12 +11,13 @@ extension AddCarbs {
         @Published var protein: Decimal = 0
         @Published var fat: Decimal = 0
         @Published var carbsRequired: Decimal?
-        @Published var useFPU: Bool = false
+        @Published var useFPU: Bool = true
         @Published var dish: String = ""
         @Published var selection: Presets?
+        @Published var summation: [String] = []
 
         let coredataContext = CoreDataStack.shared.persistentContainer.viewContext
-        @Environment(\.managedObjectContext) var moc
+        // @Environment(\.managedObjectContext) var moc
 
         override func subscribe() {
             carbsRequired = provider.suggestion?.carbsReq
@@ -120,6 +121,32 @@ extension AddCarbs {
                 protein = 0
             }
             selection = nil
+        }
+
+        func removePresetFromNewMeal() {
+            let a = summation.firstIndex(where: { $0 == selection?.dish! })
+            if a != nil, summation[a ?? 0] != "" {
+                summation.remove(at: a!)
+            }
+            if (selection?.carbs ?? 0) as Decimal == carbs, (selection?.fat ?? 0) as Decimal == fat,
+               (selection?.protein ?? 0) as Decimal == protein
+            {
+                carbs = 0
+                fat = 0
+                protein = 0
+            }
+        }
+
+        func addPresetToNewMeal() {
+            let test: String = selection?.dish ?? "dontAdd"
+            if test != "dontAdd" {
+                summation.append(test)
+            }
+        }
+
+        func fullMeal() -> [String] {
+            let filteredArray = summation.filter { !$0.isEmpty }
+            return filteredArray
         }
     }
 }

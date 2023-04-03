@@ -2,7 +2,7 @@ import SwiftUI
 
 extension FPUConfig {
     final class StateModel: BaseStateModel<Provider> {
-        @Published var useFPUconversion = false
+        @Published var useFPUconversion = true
         @Published var individualAdjustmentFactor: Decimal = 0
         @Published var timeCap: Decimal = 0
         @Published var minuteInterval: Decimal = 0

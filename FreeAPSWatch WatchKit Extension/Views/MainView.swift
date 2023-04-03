@@ -17,25 +17,34 @@ struct MainView: View {
     @GestureState var isDetectingLongPress = false
     @State var completedLongPress = false
 
+    @State var completedLongPressOfBG = false
+    @GestureState var isDetectingLongPressOfBG = false
+
     private var healthStore = HKHealthStore()
     let heartRateQuantity = HKUnit(from: "count/min")
 
     var body: some View {
         ZStack(alignment: .topLeading) {
-            if state.timerDate.timeIntervalSince(state.lastUpdate) > 10 {
-                HStack {
-                    withAnimation {
-                        BlinkingView(count: 5, size: 3)
-                            .frame(width: 14, height: 14)
-                            .padding(2)
+            if !completedLongPressOfBG {
+                if state.timerDate.timeIntervalSince(state.lastUpdate) > 10 {
+                    HStack {
+                        withAnimation {
+                            BlinkingView(count: 5, size: 3)
+                                .frame(width: 14, height: 14)
+                                .padding(2)
+                        }
+                        Text("Updating...").font(.caption2).foregroundColor(.secondary)
                     }
-                    Text("Updating...").font(.caption2).foregroundColor(.secondary)
                 }
             }
             VStack {
-                header
-                Spacer()
-                buttons
+                if !completedLongPressOfBG {
+                    header
+                    Spacer()
+                    buttons
+                } else {
+                    bigHeader
+                }
             }
 
             if state.isConfirmationViewActive {
@@ -153,7 +162,26 @@ struct MainView: View {
             }
             Spacer()
                 .onAppear(perform: start)
-        }.padding()
+        }
+        .padding()
+        // .scaleEffect(isDetectingLongPressOfBG ? 3 : 1)
+        .gesture(longPresBGs)
+    }
+
+    var bigHeader: some View {
+        VStack(alignment: .center) {
+            HStack {
+                Text(state.glucose).font(.custom("Big BG", size: 55))
+                Text(state.trend != "→" ? state.trend : "")
+                    .scaledToFill()
+                    .minimumScaleFactor(0.5)
+            }.padding(.bottom, 35)
+
+            HStack {
+                Circle().stroke(color, lineWidth: 5).frame(width: 20, height: 20).padding(10)
+            }
+        }
+        .gesture(longPresBGs)
     }
 
     var longPress: some Gesture {
@@ -166,6 +194,19 @@ struct MainView: View {
                 if completedLongPress {
                     completedLongPress = false
                 } else { completedLongPress = true }
+            }
+    }
+
+    var longPresBGs: some Gesture {
+        LongPressGesture(minimumDuration: 1)
+            .updating($isDetectingLongPressOfBG) { currentState, gestureState,
+                _ in
+                gestureState = currentState
+            }
+            .onEnded { _ in
+                if completedLongPressOfBG {
+                    completedLongPressOfBG = false
+                } else { completedLongPressOfBG = true }
             }
     }
 

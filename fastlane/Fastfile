@@ -24,8 +24,8 @@ DEVICE_ID = ENV["DEVICE_ID"]
 ENV["FASTLANE_XCODEBUILD_SETTINGS_TIMEOUT"] = "120"
 
 platform :ios do
-  desc "Build FreeAPS X"
-  lane :build_fax do
+  desc "Build iAPS"
+  lane :build_iAPS do
     setup_ci if ENV['CI']
     
     update_project_team(
@@ -101,7 +101,7 @@ platform :ios do
     gym(
       export_method: "app-store",
       scheme: "FreeAPS X",
-      output_name: "FAX.ipa",
+      output_name: "iAPS.ipa",
       configuration: "Release",
       destination: 'generic/platform=iOS',
       buildlog_path: 'buildlog'
@@ -124,7 +124,7 @@ platform :ios do
     upload_to_testflight(
       api_key: api_key,
       skip_submission: false,
-      ipa: "FAX.ipa",
+      ipa: "iAPS.ipa",
       skip_waiting_for_build_processing: true,
     )
   end
