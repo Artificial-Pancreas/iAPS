@@ -57,7 +57,7 @@ extension AddTempTarget {
                                 }
                             )
                             HStack {
-                                Text("Insulin \(state.percentage.formatted(.number)) %")
+                                Text("\(state.percentage.formatted(.number)) % Insulin")
                                     .foregroundColor(isEditing ? .orange : .blue)
                                     .font(.largeTitle)
                             }
@@ -71,13 +71,13 @@ extension AddTempTarget {
 
                             HStack {
                                 Text(
-                                    NSLocalizedString("Target glucose", comment: "") +
-                                        (
-                                            state
-                                                .units == .mmolL ?
-                                                ": \(state.computeTarget().asMmolL.formatted(.number.grouping(.never).rounded().precision(.fractionLength(1)))) mmol/L" :
-                                                ": \(state.computeTarget().formatted(.number.grouping(.never).rounded().precision(.fractionLength(0)))) mg/dl"
-                                        )
+                                    (
+                                        state
+                                            .units == .mmolL ?
+                                            "\(state.computeTarget().asMmolL.formatted(.number.grouping(.never).rounded().precision(.fractionLength(1)))) mmol/L" :
+                                            "\(state.computeTarget().formatted(.number.grouping(.never).rounded().precision(.fractionLength(0)))) mg/dl"
+                                    )
+                                        + NSLocalizedString("  Target Glucose", comment: "")
                                 )
                                 .foregroundColor(.green)
                             }
