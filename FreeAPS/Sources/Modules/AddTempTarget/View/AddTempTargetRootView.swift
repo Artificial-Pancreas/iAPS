@@ -61,25 +61,28 @@ extension AddTempTarget {
                                     .foregroundColor(isEditing ? .orange : .blue)
                                     .font(.largeTitle)
                             }
-                            Divider()
+                            // Only display target slider when not 100 %
+                            if state.percentage != 100 {
+                                Divider()
 
-                            Slider(
-                                value: $state.hbt,
-                                in: 101 ... 295,
-                                step: 1
-                            ).accentColor(.green)
+                                Slider(
+                                    value: $state.hbt,
+                                    in: 101 ... 295,
+                                    step: 1
+                                ).accentColor(.green)
 
-                            HStack {
-                                Text(
-                                    (
-                                        state
-                                            .units == .mmolL ?
-                                            "\(state.computeTarget().asMmolL.formatted(.number.grouping(.never).rounded().precision(.fractionLength(1)))) mmol/L" :
-                                            "\(state.computeTarget().formatted(.number.grouping(.never).rounded().precision(.fractionLength(0)))) mg/dl"
+                                HStack {
+                                    Text(
+                                        (
+                                            state
+                                                .units == .mmolL ?
+                                                "\(state.computeTarget().asMmolL.formatted(.number.grouping(.never).rounded().precision(.fractionLength(1)))) mmol/L" :
+                                                "\(state.computeTarget().formatted(.number.grouping(.never).rounded().precision(.fractionLength(0)))) mg/dl"
+                                        )
+                                            + NSLocalizedString("  Target Glucose", comment: "")
                                     )
-                                        + NSLocalizedString("  Target Glucose", comment: "")
-                                )
-                                .foregroundColor(.green)
+                                    .foregroundColor(.green)
+                                }
                             }
                         }
                     }
