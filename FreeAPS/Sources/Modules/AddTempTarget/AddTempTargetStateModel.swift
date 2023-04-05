@@ -18,7 +18,7 @@ extension AddTempTarget {
         @Published var presets: [TempTarget] = []
         @Published var percentage = 100.0
         @Published var maxValue: Decimal = 1.2
-        @Published var viewPercantage = false
+        @Published var viewPercentage = false
         @Published var hbt: Double = 160
         @Published var saveSettings: Bool = false
 
@@ -35,18 +35,17 @@ extension AddTempTarget {
                 return
             }
             var lowTarget = low
-
-            if viewPercantage {
-                lowTarget = computeTarget()
-                saveSettings = true
-            }
             var highTarget = lowTarget
 
-            if units == .mmolL, !viewPercantage {
+            if units == .mmolL {
                 lowTarget = lowTarget.asMgdL
                 highTarget = highTarget.asMgdL
             }
 
+            if viewPercentage {
+                hbt = computeHBT()
+                saveSettings = true
+            }
             let entry = TempTarget(
                 name: TempTarget.custom,
                 createdAt: date,
@@ -82,14 +81,14 @@ extension AddTempTarget {
             }
             var lowTarget = low
 
-            if viewPercantage {
-                lowTarget = computeTarget()
+            if viewPercentage {
+                hbt = computeHBT()
                 saveSettings = true
             }
 
             var highTarget = lowTarget
 
-            if units == .mmolL, !viewPercantage {
+            if units == .mmolL {
                 lowTarget = lowTarget.asMgdL
                 highTarget = highTarget.asMgdL
             }
@@ -106,7 +105,7 @@ extension AddTempTarget {
             presets.append(entry)
             storage.storePresets(presets)
 
-            if viewPercantage {
+            if viewPercentage {
                 let id = entry.id
 
                 coredataContext.performAndWait {
@@ -163,16 +162,17 @@ extension AddTempTarget {
             storage.storePresets(presets)
         }
 
-        func computeTarget() -> Decimal {
-            var ratio = Decimal(percentage / 100)
-            let c = Decimal(hbt - 100)
-            var target = (c / ratio) - c + 100
-
-            if c * (c + target - 100) <= 0 {
-                ratio = maxValue
-                target = (c / ratio) - c + 100
+        func computeHBT() -> Double {
+            let ratio = Decimal(percentage / 100)
+            let normalTarget: Decimal = 100
+            var target: Decimal = low
+            if units == .mmolL {
+                target = target.asMgdL }
+            var hbtcalc = Decimal(hbt)
+            if ratio != 1 {
+                hbtcalc = ((2 * ratio * normalTarget) - normalTarget - (ratio * target)) / (ratio - 1)
             }
-            return target
+            return round(Double(hbtcalc))
         }
     }
 }
