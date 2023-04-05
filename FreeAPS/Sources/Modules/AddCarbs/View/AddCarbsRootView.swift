@@ -78,8 +78,10 @@ extension AddCarbs {
                         }
                     }
                 }
-                Section {
-                    mealPresets
+                if state.useFPU {
+                    Section {
+                        mealPresets
+                    }
                 }
 
                 Section {
