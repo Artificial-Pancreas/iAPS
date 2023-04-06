@@ -102,10 +102,9 @@ struct MainView: View {
                     .scaledToFill()
                     .foregroundColor(Color.white)
                     .minimumScaleFactor(0.5)
-                Text("g").foregroundColor(.loopGreen)
+                Text("g").foregroundColor(.loopYellow)
                     .font(.caption2)
                     .scaledToFill()
-                    .foregroundColor(.loopGreen)
                     .minimumScaleFactor(0.5)
                 Spacer()
                 Text(iobFormatter.string(from: (state.iob ?? 0) as NSNumber)!)
@@ -117,7 +116,6 @@ struct MainView: View {
                 Text("U").foregroundColor(.insulin)
                     .font(.caption2)
                     .scaledToFill()
-                    .foregroundColor(.loopGreen)
                     .minimumScaleFactor(0.5)
 
                 if state.displayHR {
@@ -220,7 +218,7 @@ struct MainView: View {
                     .renderingMode(.template)
                     .resizable()
                     .frame(width: 24, height: 24)
-                    .foregroundColor(.loopGreen)
+                    .foregroundColor(.loopYellow)
             }
 
             NavigationLink(isActive: $state.isTempTargetViewActive) {
@@ -232,7 +230,7 @@ struct MainView: View {
                         .renderingMode(.template)
                         .resizable()
                         .frame(width: 24, height: 24)
-                        .foregroundColor(.loopYellow)
+                        .foregroundColor(.loopGreen)
                     if let until = state.tempTargets.compactMap(\.until).first, until > Date() {
                         Text(until, style: .timer)
                             .scaledToFill()
