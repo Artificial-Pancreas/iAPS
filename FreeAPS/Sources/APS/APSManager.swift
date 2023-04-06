@@ -1258,9 +1258,10 @@ final class BaseAPSManager: APSManager, Injectable {
                     lastIndex = true
                 }
                 if array[i].bg_ < Double(hypoLimit), !lastIndex {
-                    timeInHypo += (currentTime - previousTime).timeInterval
+                    // Exclude duration between CGM readings which are more than 30 minutes
+                    timeInHypo += min((currentTime - previousTime).timeInterval, 30.minutes.timeInterval)
                 } else if array[i].bg_ >= Double(hyperLimit), !lastIndex {
-                    timeInHyper += (currentTime - previousTime).timeInterval
+                    timeInHyper += min((currentTime - previousTime).timeInterval, 30.minutes.timeInterval)
                 }
             }
             if timeInHypo == 0.0 {
