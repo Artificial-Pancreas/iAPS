@@ -144,8 +144,49 @@ extension AddCarbs {
             }
         }
 
+        func addNewPresetToWaitersNotepad(_ dish: String) {
+            summation.append(dish)
+        }
+
         func fullMeal() -> [String] {
-            let filteredArray = summation.filter { !$0.isEmpty }
+            var filteredArray = summation.filter { !$0.isEmpty }
+
+            var carbs_: Decimal = 0.0
+            var fat_: Decimal = 0.0
+            var protein_: Decimal = 0.0
+
+            for each in filteredArray {
+                for sel in [selection] {
+                    if each == sel?.dish ?? "", sel?.dish ?? "" != "" {
+                        carbs_ += (sel?.carbs ?? 0) as Decimal
+                        fat_ += (sel?.fat ?? 0) as Decimal
+                        protein_ += (sel?.protein ?? 0) as Decimal
+                        break
+                    }
+                }
+            }
+
+            let extracarbs = carbs - carbs_
+            let extraFat = fat - fat_
+            let extraProtein = protein - protein_
+            var addedString = ""
+
+            if extracarbs > 0 {
+                addedString += "Additional carbs: \(extracarbs) "
+            } else if extracarbs < 0 { addedString += "Removed carbs: \(extracarbs) " }
+
+            if extraFat > 0 {
+                addedString += "Additional fat: \(extraFat) "
+            } else if extraFat < 0 { addedString += "Removed fat: \(extraFat) " }
+
+            if extraProtein > 0 {
+                addedString += "Additional protein: \(extraProtein) "
+            } else if extraProtein < 0 { addedString += "Removed protein: \(extraProtein) " }
+
+            if addedString != "" {
+                filteredArray.append(addedString)
+            }
+
             return filteredArray
         }
     }
