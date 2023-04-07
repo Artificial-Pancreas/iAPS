@@ -86,7 +86,7 @@ extension AddCarbs {
                     DatePicker("Date", selection: $state.date)
                 }
 
-                Section(footer: Text(state.fullMeal().description != "[]" ? state.fullMeal().description : "")) {
+                Section(footer: Text(state.waitersNotepad().description)) {
                     Button { state.add() }
                     label: { Text("Save and continue") }
                         .disabled(state.carbs <= 0 && state.fat <= 0 && state.protein <= 0)
