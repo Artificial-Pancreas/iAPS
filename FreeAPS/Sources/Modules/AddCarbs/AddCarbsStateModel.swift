@@ -129,13 +129,6 @@ extension AddCarbs {
             if a != nil, summation[a ?? 0] != "" {
                 summation.remove(at: a!)
             }
-            if (selection?.carbs ?? 0) as Decimal == carbs, (selection?.fat ?? 0) as Decimal == fat,
-               (selection?.protein ?? 0) as Decimal == protein
-            {
-                carbs = 0
-                fat = 0
-                protein = 0
-            }
         }
 
         func addPresetToNewMeal() {
@@ -149,8 +142,21 @@ extension AddCarbs {
             summation.append(dish)
         }
 
+        func addToSummation() {
+            summation.append(selection?.dish ?? "")
+        }
+
         func waitersNotepad() -> String {
             var filteredArray = summation.filter { !$0.isEmpty }
+
+            if carbs == 0, protein == 0, fat == 0 {
+                filteredArray = []
+            }
+
+            guard filteredArray != [] else {
+                return ""
+            }
+
             var carbs_: Decimal = 0.0
             var fat_: Decimal = 0.0
             var protein_: Decimal = 0.0
@@ -214,6 +220,7 @@ extension AddCarbs {
                     } else { waitersNotepadString += " " + each }
                 }
             }
+
             return waitersNotepadString
         }
     }
