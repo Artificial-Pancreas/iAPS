@@ -42,7 +42,7 @@ enum CGMType: String, JSON, CaseIterable, Identifiable {
              .nightscout:
             return nil
         case .xdrip:
-            return URL(string: "xdripswift://")!
+            return getXdripURL()
         case .glucoseDirect:
             return URL(string: "libredirect://")!
         case .dexcomG6:
@@ -56,6 +56,37 @@ enum CGMType: String, JSON, CaseIterable, Identifiable {
         case .libreTransmitter:
             return URL(string: "freeaps-x://libre-transmitter")!
         }
+    }
+
+    func getXdripURL() -> URL {
+        guard let suiteName = Bundle.main.appGroupSuiteName else {
+            print("Could not find app group suite name for CGM type: \(rawValue)")
+            return URL(string: "xdripswift://")!
+        }
+
+        guard let sharedDefaults = UserDefaults(suiteName: suiteName) else {
+            print("Could not initialize shared user defaults for CGM type: \(rawValue)")
+            return URL(string: "xdripswift://")!
+        }
+
+        let defaultUrl = URL(string: "xdripswift://")!
+
+        if let urlScheme = sharedDefaults.string(forKey: "urlScheme") {
+            switch urlScheme {
+            case "xdripswiftLeft":
+                print("Setting URL scheme: \(urlScheme) for CGM type: \(rawValue)")
+                return URL(string: "xdripswiftLeft://") ?? defaultUrl
+            case "xdripswiftRight":
+                print("Setting URL scheme: \(urlScheme) for CGM type: \(rawValue)")
+                return URL(string: "xdripswiftRight://") ?? defaultUrl
+            default:
+                print("Invalid URL scheme: \(urlScheme) for CGM type: \(rawValue)")
+            }
+        } else {
+            print("URL scheme not found in shared user defaults for CGM type: \(rawValue)")
+        }
+
+        return defaultUrl
     }
 
     var externalLink: URL? {
