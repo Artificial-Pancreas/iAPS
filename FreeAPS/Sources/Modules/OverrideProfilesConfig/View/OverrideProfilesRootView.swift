@@ -57,7 +57,7 @@ extension OverrideProfilesConfig {
                                 .foregroundColor(
                                     state
                                         .percentage >= 130 ? .red :
-                                        (isEditing ? .orange : (state.percentage >= 150 ? .red : .blue))
+                                        (isEditing ? .orange : .blue)
                                 )
                                 .font(.largeTitle)
                             Spacer()
