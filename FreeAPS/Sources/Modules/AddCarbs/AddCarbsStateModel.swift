@@ -156,7 +156,6 @@ extension AddCarbs {
             guard filteredArray != [] else {
                 return ""
             }
-
             var carbs_: Decimal = 0.0
             var fat_: Decimal = 0.0
             var protein_: Decimal = 0.0
@@ -166,7 +165,6 @@ extension AddCarbs {
                 let requestPresets = Presets.fetchRequest() as NSFetchRequest<Presets>
                 try? presetArray = coredataContext.fetch(requestPresets)
             }
-
             var waitersNotepad = [String]()
             var stringValue = ""
 
@@ -187,7 +185,6 @@ extension AddCarbs {
                     }
                 }
             }
-
             let extracarbs = carbs - carbs_
             let extraFat = fat - fat_
             let extraProtein = protein - protein_
@@ -208,7 +205,6 @@ extension AddCarbs {
             if addedString != "" {
                 waitersNotepad.append(addedString)
             }
-
             var waitersNotepadString = ""
 
             if waitersNotepad.count == 1 {
@@ -220,7 +216,6 @@ extension AddCarbs {
                     } else { waitersNotepadString += " " + each }
                 }
             }
-
             return waitersNotepadString
         }
     }
