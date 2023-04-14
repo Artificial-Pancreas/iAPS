@@ -64,4 +64,14 @@ import Swinject
             debug(.default, "APPLICATION PHASE: \(newScenePhase)")
         }
     }
+
+    private func handleURL(_ url: URL) {
+        let components = URLComponents(url: url, resolvingAgainstBaseURL: false)
+
+        switch components?.host {
+        case "device-select-resp":
+            resolver.resolve(NotificationCenter.self)!.post(name: .openFromGarminConnect, object: url)
+        default: break
+        }
+    }
 }
