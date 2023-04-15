@@ -6,6 +6,7 @@ struct Oref2_variables: JSON, Equatable {
     var past2hoursAverage: Decimal
     var date: Date
     var isEnabled: Bool
+    var presetActive: Bool
     var overridePercentage: Decimal
     var useOverride: Bool
     var duration: Decimal
@@ -18,6 +19,7 @@ struct Oref2_variables: JSON, Equatable {
         past2hoursAverage: Decimal,
         date: Date,
         isEnabled: Bool,
+        presetActive: Bool,
         overridePercentage: Decimal,
         useOverride: Bool,
         duration: Decimal,
@@ -29,6 +31,7 @@ struct Oref2_variables: JSON, Equatable {
         self.past2hoursAverage = past2hoursAverage
         self.date = date
         self.isEnabled = isEnabled
+        self.presetActive = presetActive
         self.overridePercentage = overridePercentage
         self.useOverride = useOverride
         self.duration = duration
@@ -44,6 +47,7 @@ extension Oref2_variables {
         case past2hoursAverage
         case date
         case isEnabled
+        case presetActive
         case overridePercentage
         case useOverride
         case duration
