@@ -38,6 +38,16 @@ extension AddTempTarget {
 
             if viewPercantage {
                 lowTarget = computeTarget()
+                coredataContext.performAndWait {
+                    let saveToCoreData = TempTargets(context: self.coredataContext)
+                    saveToCoreData.id = UUID().uuidString
+                    saveToCoreData.active = true
+                    saveToCoreData.hbt = hbt
+                    saveToCoreData.date = Date()
+                    saveToCoreData.duration = duration as NSDecimalNumber
+                    saveToCoreData.startDate = Date()
+                    try? self.coredataContext.save()
+                }
                 saveSettings = true
             }
             var highTarget = lowTarget
@@ -72,6 +82,7 @@ extension AddTempTarget {
 
                 let setHBT = TempTargetsSlider(context: self.coredataContext)
                 setHBT.enabled = false
+                setHBT.date = Date()
                 try? self.coredataContext.save()
             }
         }
@@ -86,7 +97,6 @@ extension AddTempTarget {
                 lowTarget = computeTarget()
                 saveSettings = true
             }
-
             var highTarget = lowTarget
 
             if units == .mmolL, !viewPercantage {
@@ -115,7 +125,6 @@ extension AddTempTarget {
                     saveToCoreData.isPreset = true
                     saveToCoreData.enabled = true
                     saveToCoreData.hbt = hbt
-                    saveToCoreData.enabled = true
                     saveToCoreData.date = Date()
                     saveToCoreData.duration = duration as NSDecimalNumber
                     try? self.coredataContext.save()
