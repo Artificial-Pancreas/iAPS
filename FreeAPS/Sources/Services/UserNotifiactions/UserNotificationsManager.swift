@@ -193,8 +193,10 @@ final class BaseUserNotificationsManager: NSObject, UserNotificationsManager, In
 
         if settingsManager.settings.tooOldGlucose {
             DispatchQueue.main.asyncAfter(deadline: .now() + 1200) {
-                print("CGM too old for glucose badge")
-                self.addAppBadge(glucose: nil)
+                // Make check double to remove the nil in case not needed anymore...
+                if lastGlucose.dateString.addingTimeInterval(19.minutes.timeInterval) < Date() {
+                    self.addAppBadge(glucose: nil)
+                } else { self.addAppBadge(glucose: lastGlucose.glucose) }
             }
         }
 
