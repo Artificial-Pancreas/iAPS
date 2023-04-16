@@ -223,10 +223,10 @@ final class OpenAPS {
 
                     if dd > 0.1 {
                         hbt_ = Decimal(hbt)
-                        isPercentageEnabled = true
-                        temptargetActive = false
-                    } else {
                         isPercentageEnabled = false
+                        temptargetActive = true
+                    } else {
+                        temptargetActive = false
                     }
                 } else if isPercentageEnabled {
                     duration_ = Int(truncating: sliderArray.first?.duration ?? 0)
@@ -237,10 +237,10 @@ final class OpenAPS {
 
                     if dd > 0.1 {
                         hbt_ = Decimal(hbt)
-                        isPercentageEnabled = false
-                        temptargetActive = true
-                    } else {
+                        isPercentageEnabled = true
                         temptargetActive = false
+                    } else {
+                        isPercentageEnabled = false
                     }
                 }
             }
