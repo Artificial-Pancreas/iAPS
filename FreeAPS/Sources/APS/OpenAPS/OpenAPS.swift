@@ -118,7 +118,7 @@ final class OpenAPS {
     }
 
     func oref2() -> Oref2_variables {
-        coredataContext.perform {
+        coredataContext.performAndWait {
             let now = Date()
             let preferences = storage.retrieve(OpenAPS.Settings.preferences, as: Preferences.self)
             var hbt_ = preferences?.halfBasalExerciseTarget ?? 160
