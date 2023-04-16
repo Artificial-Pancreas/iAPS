@@ -44,8 +44,6 @@ final class OpenAPS {
 
                 self.storage.save(meal, as: Monitor.meal)
 
-                let oref2_variables = self.oref2()
-
                 // iob
                 let autosens = self.loadFileFromStorage(name: Settings.autosense)
                 let iob = self.iob(
@@ -61,6 +59,9 @@ final class OpenAPS {
                 let reservoir = self.loadFileFromStorage(name: Monitor.reservoir)
 
                 let preferences = self.loadFileFromStorage(name: Settings.preferences)
+
+                // oref2
+                let oref2_variables = self.oref2()
 
                 let suggested = self.determineBasal(
                     glucose: glucose,
@@ -117,7 +118,7 @@ final class OpenAPS {
         }
     }
 
-    func oref2() -> Oref2_variables {
+    func oref2() -> RawJSON {
         coredataContext.performAndWait {
             let now = Date()
             let preferences = storage.retrieve(OpenAPS.Settings.preferences, as: Preferences.self)
@@ -260,7 +261,7 @@ final class OpenAPS {
                 )
                 storage.save(averages, as: OpenAPS.Monitor.oref2_variables)
                 print("Test time for oref2_variables: \(-now.timeIntervalSinceNow) seconds")
-                return averages
+                return self.loadFileFromStorage(name: Monitor.oref2_variables)
 
             } else {
                 let averages = Oref2_variables(
@@ -277,7 +278,7 @@ final class OpenAPS {
                     hbt: hbt_
                 )
                 storage.save(averages, as: OpenAPS.Monitor.oref2_variables)
-                return averages
+                return self.loadFileFromStorage(name: Monitor.oref2_variables)
             }
         }
     }
