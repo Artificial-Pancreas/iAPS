@@ -190,23 +190,6 @@ final class BaseUserNotificationsManager: NSObject, UserNotificationsManager, In
 
         addAppBadge(glucose: lastGlucose.glucose)
 
-        // Hide the App glucose badge if 20 minutes or older. Current implementation isn't pretty. To do: find a more effiecient and stringent method.
-        if settingsManager.settings.tooOldGlucose {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1200) {
-                // Make check double to remove the nil in case of not needed anymore...
-                let glucose_ = self.glucoseStorage.recent()
-                guard let lastGlucose = glucose_.last else { return }
-                if lastGlucose.dateString.addingTimeInterval(19.minutes.timeInterval) < Date(),
-                   self.settingsManager.settings.tooOldGlucose
-                {
-                    self.addAppBadge(glucose: nil)
-                    print(
-                        "Time difference: \(lastGlucose.dateString.timeIntervalSinceNow.minutes)"
-                    )
-                }
-            }
-        }
-
         guard glucoseStorage.alarm != nil || settingsManager.settings.glucoseNotificationsAlways else {
             return
         }
