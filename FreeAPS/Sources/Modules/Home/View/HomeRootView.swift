@@ -34,12 +34,12 @@ extension Home {
         @FetchRequest(
             entity: TempTargets.entity(),
             sortDescriptors: [NSSortDescriptor(key: "date", ascending: false)]
-        ) var currentTempTarget: FetchedResults<TempTargets>
+        ) var sliderTTpresets: FetchedResults<TempTargets>
 
         @FetchRequest(
             entity: TempTargetsSlider.entity(),
             sortDescriptors: [NSSortDescriptor(key: "date", ascending: false)]
-        ) var currentEnactedTempTarget: FetchedResults<TempTargetsSlider>
+        ) var enactedSliderTT: FetchedResults<TempTargetsSlider>
 
         private var numberFormatter: NumberFormatter {
             let formatter = NumberFormatter()
@@ -200,8 +200,9 @@ extension Home {
                 if let tempTarget = state.tempTarget {
                     let target_ = tempTarget.targetBottom ?? 0
                     let unitString = targetFormatter.string(from: (tempTarget.targetBottom?.asMmolL ?? 0) as NSNumber)!
-                    if currentTempTarget.first?.active ?? false {
-                        let hbt = currentTempTarget.first?.hbt ?? 0
+
+                    if sliderTTpresets.first?.active ?? false {
+                        let hbt = sliderTTpresets.first?.hbt ?? 0
                         let string = (tirFormatter.string(from: state.infoPanelTTPercentage(hbt, target_) as NSNumber) ?? "") +
                             " %"
                         let rawString = state.units.rawValue + (string == "0" ? "" : string + " %")
@@ -212,8 +213,8 @@ extension Home {
                             )
                         )
                         .font(.caption).foregroundColor(.secondary)
-                    } else if currentEnactedTempTarget.first?.enabled ?? false {
-                        let hbt = currentEnactedTempTarget.first?.hbt ?? 0
+                    } else if enactedSliderTT.first?.enabled ?? false {
+                        let hbt = enactedSliderTT.first?.hbt ?? 0
                         let string = (tirFormatter.string(from: state.infoPanelTTPercentage(hbt, target_) as NSNumber) ?? "") +
                             " %"
                         let rawString = state.units.rawValue + (string == "0" ? "" : string + " %")
@@ -236,11 +237,13 @@ extension Home {
 
                 if fetchedPercent.first?.enabled ?? false {
                     Text(
-                        "\((fetchedPercent.first?.percentage ?? 100).formatted(.number)) % " +
+                        "\((fetchedPercent.first?.percentage ?? 100).formatted(.number)) %" +
                             (
                                 (tirFormatter.string(from: (fetchedPercent.first?.duration ?? 0) as NSNumber) ?? "") == "0" ?
                                     "" :
-                                    (tirFormatter.string(from: (fetchedPercent.first?.duration ?? 0) as NSNumber) ?? "") + " min"
+                                    ", " +
+                                    (tirFormatter.string(from: (fetchedPercent.first?.duration ?? 0) as NSNumber) ?? "") +
+                                    " min"
                             )
                     )
                     .font(.system(size: 12))
