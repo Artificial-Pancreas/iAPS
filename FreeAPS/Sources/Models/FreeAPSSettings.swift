@@ -17,7 +17,6 @@ struct FreeAPSSettings: JSON, Equatable {
     var useCalendar: Bool = false
     var useAppleHealth: Bool = false
     var glucoseBadge: Bool = false
-    var tooOldGlucose: Bool = false
     var glucoseNotificationsAlways: Bool = false
     var useAlarmSound: Bool = false
     var addSourceInfoToGlucoseNotifications: Bool = false
@@ -102,10 +101,6 @@ extension FreeAPSSettings: Decodable {
 
         if let glucoseBadge = try? container.decode(Bool.self, forKey: .glucoseBadge) {
             settings.glucoseBadge = glucoseBadge
-        }
-
-        if let tooOldGlucose = try? container.decode(Bool.self, forKey: .tooOldGlucose) {
-            settings.tooOldGlucose = tooOldGlucose
         }
 
         if let useFPUconversion = try? container.decode(Bool.self, forKey: .useFPUconversion) {

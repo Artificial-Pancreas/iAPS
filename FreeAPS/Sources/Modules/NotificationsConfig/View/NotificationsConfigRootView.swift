@@ -28,7 +28,6 @@ extension NotificationsConfig {
             Form {
                 Section(header: Text("Glucose")) {
                     Toggle("Show glucose on the app badge", isOn: $state.glucoseBadge)
-                    Toggle("Hide glucose badge when older than 20 minutes", isOn: $state.tooOldGlucose)
                     Toggle("Always Notify Glucose", isOn: $state.glucoseNotificationsAlways)
                     Toggle("Also play alert sound", isOn: $state.useAlarmSound)
                     Toggle("Also add source info", isOn: $state.addSourceInfoToGlucoseNotifications)

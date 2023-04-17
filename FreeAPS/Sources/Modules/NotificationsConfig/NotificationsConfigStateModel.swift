@@ -3,7 +3,6 @@ import SwiftUI
 extension NotificationsConfig {
     final class StateModel: BaseStateModel<Provider> {
         @Published var glucoseBadge = false
-        @Published var tooOldGlucose = false
         @Published var glucoseNotificationsAlways = false
         @Published var useAlarmSound = false
         @Published var addSourceInfoToGlucoseNotifications = false
@@ -17,7 +16,6 @@ extension NotificationsConfig {
             self.units = units
 
             subscribeSetting(\.glucoseBadge, on: $glucoseBadge) { glucoseBadge = $0 }
-            subscribeSetting(\.tooOldGlucose, on: $tooOldGlucose) { tooOldGlucose = $0 }
             subscribeSetting(\.glucoseNotificationsAlways, on: $glucoseNotificationsAlways) { glucoseNotificationsAlways = $0 }
             subscribeSetting(\.useAlarmSound, on: $useAlarmSound) { useAlarmSound = $0 }
             subscribeSetting(\.addSourceInfoToGlucoseNotifications, on: $addSourceInfoToGlucoseNotifications) {

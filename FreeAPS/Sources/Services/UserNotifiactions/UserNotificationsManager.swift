@@ -191,15 +191,6 @@ final class BaseUserNotificationsManager: NSObject, UserNotificationsManager, In
 
         addAppBadge(glucose: lastGlucose.glucose)
 
-        if settingsManager.settings.tooOldGlucose {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1200) {
-                // Make check double to remove the nil in case not needed anymore...
-                if lastGlucose.dateString.addingTimeInterval(19.minutes.timeInterval) < Date() {
-                    self.addAppBadge(glucose: nil)
-                }
-            }
-        }
-
         guard glucoseStorage.alarm != nil || settingsManager.settings.glucoseNotificationsAlways else {
             return
         }
