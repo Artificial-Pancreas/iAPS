@@ -9,7 +9,7 @@ final class OpenAPS {
 
     private let storage: FileStorage
 
-    let coredataContext = CoreDataStack.shared.persistentContainer.newBackgroundContext()
+    let coredataContext = CoreDataStack.shared.persistentContainer.viewContext // newBackgroundContext()
 
     init(storage: FileStorage) {
         self.storage = storage
@@ -194,14 +194,32 @@ final class OpenAPS {
                 let date = overrideArray.first?.date ?? Date()
                 if date.addingTimeInterval(addedMinutes.minutes.timeInterval) < Date(),
                    !unlimited
-                { useOverride = false }
-
-                newDuration = Decimal(Date().distance(to: date.addingTimeInterval(addedMinutes.minutes.timeInterval)).minutes)
+                {
+                    useOverride = false
+                    let saveToCoreData = Override(context: self.coredataContext)
+                    saveToCoreData.enabled = false
+                    saveToCoreData.date = Date()
+                    saveToCoreData.duration = 0
+                    saveToCoreData.indefinite = false
+                    saveToCoreData.percentage = Double(overridePercentage)
+                    try? self.coredataContext.save()
+                } else {
+                    newDuration = Decimal(Date().distance(to: date.addingTimeInterval(addedMinutes.minutes.timeInterval)).minutes)
+                    let saveToCoreData = Override(context: self.coredataContext)
+                    saveToCoreData.enabled = true
+                    saveToCoreData.date = Date()
+                    saveToCoreData.duration = newDuration as NSDecimalNumber
+                    saveToCoreData.indefinite = false
+                    saveToCoreData.percentage = Double(overridePercentage)
+                    try? self.coredataContext.save()
+                }
             }
 
             if newDuration < 0 {
                 newDuration = 0
-            } else { duration = newDuration }
+            } else {
+                duration = newDuration
+            }
 
             if !useOverride {
                 unlimited = true
