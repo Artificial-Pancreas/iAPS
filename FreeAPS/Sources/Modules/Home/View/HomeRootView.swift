@@ -216,7 +216,7 @@ extension Home {
                 return nil
             }
             let percentString = "\((fetchedPercent.first?.percentage ?? 100).formatted(.number)) %"
-            let durationString = (tirFormatter.string(from: (fetchedPercent.first?.duration ?? 0) as NSNumber) ?? "") == "0" ?
+            let durationString = (fetchedPercent.first?.indefinite ?? false) ?
                 "" : ", " + (tirFormatter.string(from: (fetchedPercent.first?.duration ?? 0) as NSNumber) ?? "") + " min"
 
             return percentString + durationString

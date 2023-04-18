@@ -203,6 +203,14 @@ final class OpenAPS {
                     saveToCoreData.indefinite = false
                     saveToCoreData.percentage = Double(overridePercentage)
                     try? self.coredataContext.save()
+                } else if overrideArray.first?.indefinite ?? false {
+                    let saveToCoreData = Override(context: self.coredataContext)
+                    saveToCoreData.enabled = true
+                    saveToCoreData.date = Date()
+                    saveToCoreData.duration = 0
+                    saveToCoreData.indefinite = true
+                    saveToCoreData.percentage = Double(overridePercentage)
+                    try? self.coredataContext.save()
                 } else {
                     newDuration = Decimal(Date().distance(to: date.addingTimeInterval(addedMinutes.minutes.timeInterval)).minutes)
                     let saveToCoreData = Override(context: self.coredataContext)
