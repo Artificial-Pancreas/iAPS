@@ -201,10 +201,10 @@ extension Home {
             if sliderTTpresets.first?.active ?? false {
                 let hbt = sliderTTpresets.first?.hbt ?? 0
                 string = ", " + (tirFormatter.string(from: state.infoPanelTTPercentage(hbt, target) as NSNumber) ?? "") + " %"
-            } else if enactedSliderTT.first?.enabled ?? false {
-                let hbt = enactedSliderTT.first?.hbt ?? 0
-                string = ", " + (tirFormatter.string(from: state.infoPanelTTPercentage(hbt, target) as NSNumber) ?? "") + " %"
-            }
+            } /* else if enactedSliderTT.first?.enabled ?? false {
+                 let hbt = enactedSliderTT.first?.hbt ?? 0
+                 string = ", " + (tirFormatter.string(from: state.infoPanelTTPercentage(hbt, target) as NSNumber) ?? "") + " %"
+             } */
 
             let percentString = state
                 .units == .mmolL ? (unitString + " mmol/L" + string) : (rawString + (string == "0" ? "" : string))

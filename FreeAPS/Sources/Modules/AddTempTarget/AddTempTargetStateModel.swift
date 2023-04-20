@@ -49,12 +49,19 @@ extension AddTempTarget {
                     try? self.coredataContext.save()
                 }
                 saveSettings = true
+            } else {
+                coredataContext.performAndWait {
+                    let saveToCoreData = TempTargets(context: coredataContext)
+                    saveToCoreData.active = false
+                    saveToCoreData.date = Date()
+                    try? coredataContext.save()
+                }
             }
             var highTarget = lowTarget
 
             if units == .mmolL, !viewPercantage {
-                lowTarget = lowTarget.asMgdL
-                highTarget = highTarget.asMgdL
+                lowTarget = Decimal(round(Double(lowTarget.asMgdL)))
+                highTarget = lowTarget
             }
 
             let entry = TempTarget(
@@ -100,8 +107,8 @@ extension AddTempTarget {
             var highTarget = lowTarget
 
             if units == .mmolL, !viewPercantage {
-                lowTarget = lowTarget.asMgdL
-                highTarget = highTarget.asMgdL
+                lowTarget = Decimal(round(Double(lowTarget.asMgdL)))
+                highTarget = lowTarget
             }
 
             let entry = TempTarget(
