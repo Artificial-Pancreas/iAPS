@@ -218,7 +218,6 @@ extension Home {
             let percentString = "\((fetchedPercent.first?.percentage ?? 100).formatted(.number)) %"
             let durationString = (fetchedPercent.first?.indefinite ?? false) ?
                 "" : ", " + (tirFormatter.string(from: (fetchedPercent.first?.duration ?? 0) as NSNumber) ?? "") + " min"
-
             return percentString + durationString
         }
 
@@ -652,6 +651,15 @@ extension Home {
                         }.foregroundColor(.insulin)
                         Spacer()
                     }
+                    Button { state.showModal(for: .statistics) }
+                    label: {
+                        Image(systemName: "chart.xyaxis.line")
+                            .renderingMode(.template)
+                            .resizable()
+                            .frame(width: 24, height: 24)
+                            .padding(8)
+                    }.foregroundColor(.purple)
+                    Spacer()
                     Button { state.showModal(for: .settings) }
                     label: {
                         Image("settings1")
