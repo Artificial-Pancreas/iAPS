@@ -59,6 +59,7 @@ import Swinject
             Main.RootView(resolver: resolver)
                 .environment(\.managedObjectContext, dataController.persistentContainer.viewContext)
                 .environmentObject(Icons())
+                .onOpenURL(perform: handleURL)
         }
         .onChange(of: scenePhase) { newScenePhase in
             debug(.default, "APPLICATION PHASE: \(newScenePhase)")

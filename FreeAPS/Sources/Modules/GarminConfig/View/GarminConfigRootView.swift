@@ -16,8 +16,11 @@ extension GarminConfig {
 
                 if state.devices.isNotEmpty {
                     Section(header: Text("Connected devices")) {
-                        ForEach(state.devices, id: \.uuid) { device in
-                            Text(device.friendlyName)
+                        List {
+                            ForEach(state.devices, id: \.uuid) { device in
+                                Text(device.friendlyName)
+                            }
+                            .onDelete(perform: onDelete)
                         }
                     }
                 }
@@ -25,6 +28,11 @@ extension GarminConfig {
             .onAppear(perform: configureView)
             .navigationTitle("Garmin Watch")
             .navigationBarTitleDisplayMode(.automatic)
+        }
+
+        private func onDelete(offsets: IndexSet) {
+            state.devices.remove(atOffsets: offsets)
+            state.deleteDevice()
         }
     }
 }

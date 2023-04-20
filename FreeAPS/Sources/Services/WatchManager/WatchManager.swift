@@ -64,7 +64,7 @@ final class BaseWatchManager: NSObject, WatchManager, Injectable {
             self.state.lastLoopDate = self.enactedSuggestion?.recieved == true ? self.enactedSuggestion?.deliverAt : self
                 .apsManager.lastLoopDate
             self.state.lastLoopDateInterval = self.state.lastLoopDate.map {
-                guard $0.timeIntervalSince1970 > 0 else { return 0}
+                guard $0.timeIntervalSince1970 > 0 else { return 0 }
                 return UInt64($0.timeIntervalSince1970)
             }
             self.state.bolusIncrement = self.settingsManager.preferences.bolusIncrement

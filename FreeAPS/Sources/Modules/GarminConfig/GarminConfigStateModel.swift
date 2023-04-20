@@ -16,5 +16,9 @@ extension GarminConfig {
                 .weakAssign(to: \.devices, on: self)
                 .store(in: &lifetime)
         }
+
+        func deleteDevice() {
+            garmin.updateListDevices(devices: devices)
+        }
     }
 }

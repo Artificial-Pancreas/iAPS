@@ -5,6 +5,7 @@ import Swinject
 
 protocol GarminManager {
     func selectDevices() -> AnyPublisher<[IQDevice], Never>
+    func updateListDevices(devices: [IQDevice])
     var devices: [IQDevice] { get }
     func sendState(_ data: Data)
     var stateRequet: (() -> (Data))? { get set }
@@ -21,6 +22,8 @@ final class BaseGarminManager: NSObject, GarminManager, Injectable {
     }
 
     private let connectIQ = ConnectIQ.sharedInstance()
+
+    private let router = FreeAPSApp.resolver.resolve(Router.self)!
 
     @Injected() private var notificationCenter: NotificationCenter!
 
@@ -125,6 +128,10 @@ final class BaseGarminManager: NSObject, GarminManager, Injectable {
         .eraseToAnyPublisher()
     }
 
+    func updateListDevices(devices: [IQDevice]) {
+        self.devices = devices
+    }
+
     func sendState(_ data: Data) {
         guard let object = try? JSONSerialization.jsonObject(with: data, options: []) as? NSDictionary else {
             return
@@ -133,8 +140,8 @@ final class BaseGarminManager: NSObject, GarminManager, Injectable {
     }
 
     private func sendMessage(_ msg: NSDictionary, to app: IQApp) {
-        connectIQ?.sendMessage(msg, to: app, progress: { sent, all in
-            debug(.service, "Garmin: sending progress: \(Int(Double(sent) / Double(all) * 100)) %")
+        connectIQ?.sendMessage(msg, to: app, progress: { _, _ in
+            // debug(.service, "Garmin: sending progress: \(Int(Double(sent) / Double(all) * 100)) %")
         }, completion: { result in
             if result == .success {
                 debug(.service, "Garmin: message sent")
@@ -146,7 +153,14 @@ final class BaseGarminManager: NSObject, GarminManager, Injectable {
 }
 
 extension BaseGarminManager: IQUIOverrideDelegate {
-    func needsToInstallConnectMobile() {}
+    func needsToInstallConnectMobile() {
+        debug(.apsManager, "Garmin is not available")
+        let messageCont = MessageContent(
+            content: "The app Garmin Connect must be installed to use for iAPS.\n Go to App Store to download it",
+            type: .warning
+        )
+        router.alertMessage.send(messageCont)
+    }
 }
 
 extension BaseGarminManager: IQDeviceEventDelegate {
