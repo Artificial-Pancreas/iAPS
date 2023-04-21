@@ -1,5 +1,5 @@
 /* Title of the reset confirmation sheet */
-"Are you sure you want to reset this transmitter?" = "Er di sikker på at du vil nullstille denne senderen?";
+"Are you sure you want to reset this transmitter?" = "Er du sikker på at du vil nullstille denne senderen?";
 
 /* Title of button to cancel reset */
 "Cancel" = "Avbryt";
@@ -9,7 +9,7 @@
 
 /* Reset button title
    Title of button to begin reset */
-"Reset" = "Nullstill";
+"Reset" = "Nullstille";
 
 /* Notification title for background completion notification */
 "Transmitter Reset Complete" = "Nullstilling av sender er ferdig";

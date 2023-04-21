@@ -9,7 +9,7 @@ final class OpenAPS {
 
     private let storage: FileStorage
 
-    let coredataContext = CoreDataStack.shared.persistentContainer.newBackgroundContext()
+    let coredataContext = CoreDataStack.shared.persistentContainer.viewContext // newBackgroundContext()
 
     init(storage: FileStorage) {
         self.storage = storage
@@ -44,8 +44,6 @@ final class OpenAPS {
 
                 self.storage.save(meal, as: Monitor.meal)
 
-                let oref2_variables = self.loadFileFromStorage(name: OpenAPS.Monitor.oref2_variables)
-
                 // iob
                 let autosens = self.loadFileFromStorage(name: Settings.autosense)
                 let iob = self.iob(
@@ -61,6 +59,9 @@ final class OpenAPS {
                 let reservoir = self.loadFileFromStorage(name: Monitor.reservoir)
 
                 let preferences = self.loadFileFromStorage(name: Settings.preferences)
+
+                // oref2
+                let oref2_variables = self.oref2()
 
                 let suggested = self.determineBasal(
                     glucose: glucose,
@@ -113,6 +114,183 @@ final class OpenAPS {
                 } else {
                     promise(.success(nil))
                 }
+            }
+        }
+    }
+
+    func oref2() -> RawJSON {
+        coredataContext.performAndWait {
+            let now = Date()
+            let preferences = storage.retrieve(OpenAPS.Settings.preferences, as: Preferences.self)
+            var hbt_ = preferences?.halfBasalExerciseTarget ?? 160
+            let wp = preferences?.weightPercentage ?? 1
+
+            let tenDaysAgo = Date().addingTimeInterval(-10.days.timeInterval)
+            let twoHoursAgo = Date().addingTimeInterval(-2.hours.timeInterval)
+
+            var uniqueEvents = [TDD]()
+            let requestTDD = TDD.fetchRequest() as NSFetchRequest<TDD>
+            requestTDD.predicate = NSPredicate(format: "timestamp > %@ AND tdd > 0", tenDaysAgo as NSDate)
+            let sortTDD = NSSortDescriptor(key: "timestamp", ascending: true)
+            requestTDD.sortDescriptors = [sortTDD]
+            try? uniqueEvents = coredataContext.fetch(requestTDD)
+
+            var sliderArray = [TempTargetsSlider]()
+            let requestIsEnbled = TempTargetsSlider.fetchRequest() as NSFetchRequest<TempTargetsSlider>
+            let sortIsEnabled = NSSortDescriptor(key: "date", ascending: false)
+            requestIsEnbled.sortDescriptors = [sortIsEnabled]
+            // requestIsEnbled.fetchLimit = 1
+            try? sliderArray = coredataContext.fetch(requestIsEnbled)
+
+            var overrideArray = [Override]()
+            let requestOverrides = Override.fetchRequest() as NSFetchRequest<Override>
+            let sortOverride = NSSortDescriptor(key: "date", ascending: false)
+            requestOverrides.sortDescriptors = [sortOverride]
+            requestOverrides.fetchLimit = 1
+            try? overrideArray = coredataContext.fetch(requestOverrides)
+
+            var tempTargetsArray = [TempTargets]()
+            let requestTempTargets = TempTargets.fetchRequest() as NSFetchRequest<TempTargets>
+            let sortTT = NSSortDescriptor(key: "date", ascending: false)
+            requestTempTargets.sortDescriptors = [sortTT]
+            requestTempTargets.fetchLimit = 1
+            try? tempTargetsArray = coredataContext.fetch(requestTempTargets)
+
+            let total = uniqueEvents.compactMap({ each in each.tdd as? Decimal ?? 0 }).reduce(0, +)
+            var indeces = uniqueEvents.count
+            // Only fetch once. Use same (previous) fetch
+            let twoHoursArray = uniqueEvents.filter({ ($0.timestamp ?? Date()) >= twoHoursAgo })
+            var nrOfIndeces = twoHoursArray.count
+            let totalAmount = twoHoursArray.compactMap({ each in each.tdd as? Decimal ?? 0 }).reduce(0, +)
+
+            var temptargetActive = tempTargetsArray.first?.active ?? false
+            var isPercentageEnabled = sliderArray.first?.enabled ?? false
+
+            var useOverride = overrideArray.first?.enabled ?? false
+            var overridePercentage = Decimal(overrideArray.first?.percentage ?? 100)
+            var unlimited = overrideArray.first?.indefinite ?? true
+
+            let currentTDD = (uniqueEvents.last?.tdd ?? 0) as Decimal
+
+            if indeces == 0 {
+                indeces = 1
+            }
+            if nrOfIndeces == 0 {
+                nrOfIndeces = 1
+            }
+
+            let average2hours = totalAmount / Decimal(nrOfIndeces)
+            let average14 = total / Decimal(indeces)
+
+            let weight = wp
+            let weighted_average = weight * average2hours + (1 - weight) * average14
+
+            var duration: Decimal = 0
+            var newDuration: Decimal = 0
+
+            if useOverride {
+                duration = (overrideArray.first?.duration ?? 0) as Decimal
+                let addedMinutes = Int(duration)
+                let date = overrideArray.first?.date ?? Date()
+                if date.addingTimeInterval(addedMinutes.minutes.timeInterval) < Date(),
+                   !unlimited
+                {
+                    useOverride = false
+                    let saveToCoreData = Override(context: self.coredataContext)
+                    saveToCoreData.enabled = false
+                    saveToCoreData.date = Date()
+                    saveToCoreData.duration = 0
+                    saveToCoreData.indefinite = false
+                    saveToCoreData.percentage = Double(overridePercentage)
+                    try? self.coredataContext.save()
+                } else if overrideArray.first?.indefinite ?? false {
+                    let saveToCoreData = Override(context: self.coredataContext)
+                    saveToCoreData.enabled = true
+                    saveToCoreData.date = Date()
+                    saveToCoreData.duration = 0
+                    saveToCoreData.indefinite = true
+                    saveToCoreData.percentage = Double(overridePercentage)
+                    try? self.coredataContext.save()
+                } else {
+                    newDuration = Decimal(Date().distance(to: date.addingTimeInterval(addedMinutes.minutes.timeInterval)).minutes)
+                    let saveToCoreData = Override(context: self.coredataContext)
+                    saveToCoreData.enabled = true
+                    saveToCoreData.date = Date()
+                    saveToCoreData.duration = newDuration as NSDecimalNumber
+                    saveToCoreData.indefinite = false
+                    saveToCoreData.percentage = Double(overridePercentage)
+                    try? self.coredataContext.save()
+                }
+            }
+
+            if newDuration < 0 {
+                newDuration = 0
+            } else {
+                duration = newDuration
+            }
+
+            if !useOverride {
+                unlimited = true
+                overridePercentage = 100
+                duration = 0
+            }
+
+            if temptargetActive /* || isPercentageEnabled */ {
+                var duration_ = 0
+                var hbt = Double(hbt_)
+                var dd = 0.0
+
+                if temptargetActive {
+                    duration_ = Int(truncating: tempTargetsArray.first?.duration ?? 0)
+                    hbt = tempTargetsArray.first?.hbt ?? Double(hbt_)
+                    let startDate = tempTargetsArray.first?.startDate ?? Date()
+                    let durationPlusStart = startDate.addingTimeInterval(duration_.minutes.timeInterval)
+                    dd = durationPlusStart.timeIntervalSinceNow.minutes
+
+                    if dd > 0.1 {
+                        hbt_ = Decimal(hbt)
+                        // isPercentageEnabled = false
+                        temptargetActive = true
+                    } else {
+                        temptargetActive = false
+                    }
+                }
+            }
+
+            if currentTDD > 0 {
+                let averages = Oref2_variables(
+                    average_total_data: average14,
+                    weightedAverage: weighted_average,
+                    past2hoursAverage: average2hours,
+                    date: Date(),
+                    isEnabled: temptargetActive,
+                    presetActive: isPercentageEnabled,
+                    overridePercentage: overridePercentage,
+                    useOverride: useOverride,
+                    duration: duration,
+                    unlimited: unlimited,
+                    hbt: hbt_
+                )
+                storage.save(averages, as: OpenAPS.Monitor.oref2_variables)
+                print("Test time for oref2_variables: \(-now.timeIntervalSinceNow) seconds")
+                return self.loadFileFromStorage(name: Monitor.oref2_variables)
+
+            } else {
+                let averages = Oref2_variables(
+                    average_total_data: 0,
+                    weightedAverage: 1,
+                    past2hoursAverage: 0,
+                    date: Date(),
+                    isEnabled: temptargetActive,
+                    presetActive: isPercentageEnabled,
+                    overridePercentage: overridePercentage,
+                    useOverride: useOverride,
+                    duration: duration,
+                    unlimited: unlimited,
+                    hbt: hbt_
+                )
+                storage.save(averages, as: OpenAPS.Monitor.oref2_variables)
+                return self.loadFileFromStorage(name: Monitor.oref2_variables)
             }
         }
     }

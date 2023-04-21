@@ -29,7 +29,7 @@ final class MockCGMManagerSettingsViewController: UITableViewController {
         self.displayGlucoseUnitObservable = displayGlucoseUnitObservable
 
         super.init(style: .grouped)
-        title = NSLocalizedString("CGM Settings", comment: "Title for CGM simulator settings")
+        title = LocalizedString("CGM Settings", comment: "Title for CGM simulator settings")
 
         displayGlucoseUnitObservable.$displayGlucoseUnit
             .sink { [weak self] _ in self?.tableView.reloadData() }
@@ -783,7 +783,7 @@ private extension UIAlertController {
     convenience init(cgmDeletionHandler confirmHandler: @escaping () -> Void, cancelHandler: (() -> Void)? = nil) {
         self.init(
             title: nil,
-            message: NSLocalizedString("Are you sure you want to delete this CGM?", comment: ""),
+            message: "Are you sure you want to delete this CGM?",
             preferredStyle: .actionSheet
         )
 

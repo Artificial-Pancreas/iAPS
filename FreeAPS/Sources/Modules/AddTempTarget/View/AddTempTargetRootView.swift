@@ -147,23 +147,6 @@ extension AddTempTarget {
             .navigationTitle("Enact Temp Target")
             .navigationBarTitleDisplayMode(.automatic)
             .navigationBarItems(leading: Button("Close", action: state.hideModal))
-            .onDisappear {
-                if state.viewPercantage, state.saveSettings {
-                    let isEnabledMoc = TempTargetsSlider(context: moc)
-                    isEnabledMoc.enabled = true
-                    isEnabledMoc.date = Date()
-                    isEnabledMoc.hbt = state.hbt
-                    isEnabledMoc.duration = state.duration as NSDecimalNumber
-                    isEnabledMoc.isPreset = false
-                    try? moc.save()
-                } else {
-                    let isEnabledMoc = TempTargetsSlider(context: moc)
-                    isEnabledMoc.enabled = false
-                    isEnabledMoc.date = Date()
-                    // isEnabledMoc.hbt = isEnabledArray.first?.hbt ?? 160
-                    try? moc.save()
-                }
-            }
         }
 
         private func presetView(for preset: TempTarget) -> some View {

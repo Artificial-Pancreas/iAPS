@@ -1,0 +1,162 @@
+/* Unit format string for an RSSI value in decibles */
+"%@ dB" = "%@ dB";
+
+/* Format string for reservoir volume. (1: The localized volume) */
+"%@U" = "%@U";
+
+/* The format string for displaying a frequency tune trial. Extra spaces added for emphesis: (1: frequency in MHz)(2: success count)(3: total count)(4: average RSSI) */
+"%1$@  %2$@/%3$@  %4$@" = "%1$@  %2$@/%3$@  %4$@";
+
+/* The format string describing number of basal schedule entries: (1: number of entries) */
+"%1$@ basal schedule entries\n" = "%1$@ basal schedule entries\n";
+
+/* The format string describing units of insulin remaining: (1: number of units) */
+"%1$@ Units of insulin remaining\n" = "%1$@ Units of insulin remaining\n";
+
+/* Accessibility format string for (1: localized volume)(2: time) */
+"%1$@ units remaining at %2$@" = "%1$@ units remaining at %2$@";
+
+/* String format for value with units (1: value, 2: separator, 3: units) */
+"%1$@%2$@%3$@" = "%1$@%2$@%3$@";
+
+/* Instructions on selecting battery chemistry type */
+"Alkaline and Lithium batteries decay at differing rates. Alkaline tend to have a linear voltage drop over time whereas lithium cell batteries tend to maintain voltage until halfway through their lifespan. Under normal usage in a Non-MySentry compatible Minimed (x22/x15) insulin pump running Loop, Alkaline batteries last approximately 4 to 5 days. Lithium batteries last between 1-2 weeks. This selection will use different battery voltage decay rates for each of the battery chemistry types and alert the user when a battery is approximately 8 to 10 hours from failure." = "Alkaline and Lithium batteries decay at differing rates. Alkaline tend to have a linear voltage drop over time whereas lithium cell batteries tend to maintain voltage until halfway through their lifespan. Under normal usage in a Non-MySentry compatible Minimed (x22/x15) insulin pump running Loop, Alkaline batteries last approximately 4 to 5 days. Lithium batteries last between 1-2 weeks. This selection will use different battery voltage decay rates for each of the battery chemistry types and alert the user when a battery is approximately 8 to 10 hours from failure.";
+
+/* The format string describing pump battery voltage: (1: battery voltage) */
+"Battery: %1$@ volts\n" = "Battery: %1$@ volts\n";
+
+/* The label indicating the best radio frequency */
+"Best Frequency" = "Best Frequency";
+
+/* The format string describing pump bolusing state: (1: bolusing) */
+"Bolusing: %1$@\n" = "Bolusing: %1$@\n";
+
+/* Cancel button title */
+"Cancel" = "Cancel";
+
+/* Title text for suspend resume button when temp basal canceling */
+"Canceling Temp Basal" = "Canceling Temp Basal";
+
+/* Progress message for changing pump time. */
+"Changing time…" = "Changing time…";
+
+/* The title of the configuration section in MinimedPumpManager settings */
+"Configuration" = "Configuration";
+
+/* Button title to connect to pump during setup */
+"Connect" = "Connect";
+
+/* Text for continue button */
+"Continue" = "Continue";
+
+/* Button label for removing Pump
+   Text to delete pump */
+"Delete Pump" = "Delete Pump";
+
+/* Header for devices section of RileyLinkSetupView */
+"Devices" = "Devices";
+
+/* The alert title for a resume error */
+"Error Resuming" = "Error Resuming";
+
+/* The alert title for a suspend error */
+"Error Suspending" = "Error Suspending";
+
+/* Progress message for fetching pump glucose. */
+"Fetching glucose…" = "Fetching glucose…";
+
+/* Progress message for fetching pump history. */
+"Fetching history…" = "Fetching history…";
+
+/* Progress message for fetching pump model. */
+"Fetching pump model…" = "Fetching pump model…";
+
+/* The title of the cell showing the pump firmware version */
+"Firmware Version" = "Firmware Version";
+
+/* Title of insulin delivery section */
+"Insulin Delivery" = "Insulin Delivery";
+
+/* Instructions on selecting an insulin data source */
+"Insulin delivery can be determined from the pump by either interpreting the event history or comparing the reservoir volume over time. Reading event history allows for a more accurate status graph and uploading up-to-date treatment data to Nightscout, at the cost of faster pump battery drain and the possibility of a higher radio error rate compared to reading only reservoir volume. If the selected source cannot be used for any reason, the system will attempt to fall back to the other option." = "Insulin delivery can be determined from the pump by either interpreting the event history or comparing the reservoir volume over time. Reading event history allows for a more accurate status graph and uploading up-to-date treatment data to Nightscout, at the cost of faster pump battery drain and the possibility of a higher radio error rate compared to reading only reservoir volume. If the selected source cannot be used for any reason, the system will attempt to fall back to the other option.";
+
+/* Message display when no response from tuning pump */
+"No response" = "No response";
+
+/* Pump find device instruction */
+"On your pump, go to the Find Device screen and select \"Find Device\".\n\nMain Menu >\nUtilities >\nConnect Devices >\nOther Devices >\nOn >\nFind Device" = "On your pump, go to the Find Device screen and select \"Find Device\".\n\nMain Menu >\nUtilities >\nConnect Devices >\nOther Devices >\nOn >\nFind Device";
+
+/* navigation title for pump battery type selection
+   Text for medtronic pump preferred data source */
+"Preferred Data Source" = "Preferred Data Source";
+
+/* navigation title for pump battery type selection
+   Text for medtronic pump battery type */
+"Pump Battery Type" = "Pump Battery Type";
+
+/* The title text for the pump ID config value */
+"Pump ID" = "מספר זיהוי המשאבה";
+
+/* Progress message for reading basal schedule */
+"Reading basal schedule…" = "Reading basal schedule…";
+
+/* Progress message for reading pump status */
+"Reading pump status…" = "Reading pump status…";
+
+/* The title of the cell showing the pump region */
+"Region" = "Region";
+
+/* Title text for button to resume insulin delivery */
+"Resume Delivery" = "Resume Delivery";
+
+/* Title text for button when insulin delivery is in the process of being resumed */
+"Resuming" = "Resuming";
+
+/* Button title to retry sentry setup */
+"Retry" = "Retry";
+
+/* Title of insulin delivery section */
+"Scheduled Basal" = "Scheduled Basal";
+
+/* Progress message for sending button press to pump. */
+"Sending button press…" = "Sending button press…";
+
+/* Title text for suspend resume button when temp basal starting */
+"Starting Temp Basal" = "Starting Temp Basal";
+
+/* A message indicating a command succeeded */
+"Succeeded" = "בוצע בהצלחה";
+
+/* Title text for button to suspend insulin delivery */
+"Suspend Delivery" = "Suspend Delivery";
+
+/* The format string describing pump suspended state: (1: suspended) */
+"Suspended: %1$@\n" = "Suspended: %1$@\n";
+
+/* Title text for button when insulin delivery is in the process of being stopped */
+"Suspending" = "Suspending";
+
+/* The title of the command to change pump time zone */
+"Sync to Current Time" = "בצע עדכון לשעה הנוכחית";
+
+/* Message for pod sync time action sheet */
+"The time on your pump is different from the current time. Do you want to update the time on your pump to the current time?" = "השעה במשאבה שלך שונה מהשעה הנוכחית. האם ברצונך לעדכן את השעה במשאבה לשעה הנוכחית?";
+
+/* Title for pod sync time action sheet. */
+"Time Change Detected" = "זוהה שינוי באיזור הזמן";
+
+/* The label indicating the results of each frequency trial */
+"Trials" = "Trials";
+
+/* Progress message for tuning radio */
+"Tuning radio…" = "Tuning radio…";
+
+/* Units for showing temp basal rate */
+"U/hr" = "יח׳/שעה";
+
+/* Text shown in basal rate space when delivery status is unknown */
+"Unknown" = "Unknown";
+
+/* Value string for MySentry config when MySentry is being used */
+"Yes" = "כן";
+

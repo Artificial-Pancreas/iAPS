@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import NightscoutUploadKit
+import NightscoutKit
 
 
 // Encapsulates a Nightscout site and its authentication
@@ -38,7 +38,7 @@ struct NightscoutService: ServiceAuthentication {
     }
 
     // The uploader instance, if credentials are present
-    private(set) var uploader: NightscoutUploader? {
+    private(set) var uploader: NightscoutClient? {
         didSet {
             uploader?.errorHandler = { (error: Error, context: String) -> Void in
                 print("Error \(error), while \(context)")
@@ -66,7 +66,7 @@ struct NightscoutService: ServiceAuthentication {
             completion(false, nil)
             return
         }
-        self.uploader = NightscoutUploader(siteURL: siteURL, APISecret: APISecret)
+        self.uploader = NightscoutClient(siteURL: siteURL, apiSecret: APISecret)
         
         self.uploader?.checkAuth({ (error) in
             if let error = error {

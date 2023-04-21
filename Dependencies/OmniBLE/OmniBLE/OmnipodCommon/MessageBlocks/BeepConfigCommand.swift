@@ -14,7 +14,7 @@ public struct BeepConfigCommand : MessageBlock {
     // 1e 04 AABBCCDD
 
     public let blockType: MessageBlockType = .beepConfig
-    public let beepConfigType: BeepConfigType
+    public let beepType: BeepType
     public let basalCompletionBeep: Bool
     public let basalIntervalBeep: TimeInterval
     public let tempBasalCompletionBeep: Bool
@@ -22,8 +22,8 @@ public struct BeepConfigCommand : MessageBlock {
     public let bolusCompletionBeep: Bool
     public let bolusIntervalBeep: TimeInterval
 
-    public init(beepConfigType: BeepConfigType, basalCompletionBeep: Bool = false, basalIntervalBeep: TimeInterval = 0, tempBasalCompletionBeep: Bool = false, tempBasalIntervalBeep: TimeInterval = 0, bolusCompletionBeep: Bool = false, bolusIntervalBeep: TimeInterval = 0) {
-        self.beepConfigType = beepConfigType
+    public init(beepType: BeepType, basalCompletionBeep: Bool = false, basalIntervalBeep: TimeInterval = 0, tempBasalCompletionBeep: Bool = false, tempBasalIntervalBeep: TimeInterval = 0, bolusCompletionBeep: Bool = false, bolusIntervalBeep: TimeInterval = 0) {
+        self.beepType = beepType
         self.basalCompletionBeep = basalCompletionBeep
         self.basalIntervalBeep = basalIntervalBeep
         self.tempBasalCompletionBeep = tempBasalCompletionBeep
@@ -36,8 +36,8 @@ public struct BeepConfigCommand : MessageBlock {
         if encodedData.count < 6 {
             throw MessageBlockError.notEnoughData
         }
-        if let beepConfigType = BeepConfigType.init(rawValue: encodedData[2]) {
-            self.beepConfigType = beepConfigType
+        if let beepType = BeepType.init(rawValue: encodedData[2]) {
+            self.beepType = beepType
         } else {
             throw MessageBlockError.parseError
         }
@@ -54,7 +54,7 @@ public struct BeepConfigCommand : MessageBlock {
             blockType.rawValue,
             4,
             ])
-        data.append(beepConfigType.rawValue)
+        data.append(beepType.rawValue)
         data.append((basalCompletionBeep ? (1<<6) : 0) + (UInt8(basalIntervalBeep.minutes) & 0x3f))
         data.append((tempBasalCompletionBeep ? (1<<6) : 0) + (UInt8(tempBasalIntervalBeep.minutes) & 0x3f))
         data.append((bolusCompletionBeep ? (1<<6) : 0) + (UInt8(bolusIntervalBeep.minutes) & 0x3f))
@@ -64,6 +64,6 @@ public struct BeepConfigCommand : MessageBlock {
 
 extension BeepConfigCommand: CustomDebugStringConvertible {
     public var debugDescription: String {
-        return "BeepConfigCommand(beepConfigType:\(beepConfigType), basalIntervalBeep:\(basalIntervalBeep), tempBasalCompletionBeep:\(tempBasalCompletionBeep), tempBasalIntervalBeep:\(tempBasalIntervalBeep), bolusCompletionBeep:\(bolusCompletionBeep), , bolusIntervalBeep:\(bolusIntervalBeep))"
+        return "BeepConfigCommand(beepType:\(beepType), basalIntervalBeep:\(basalIntervalBeep), tempBasalCompletionBeep:\(tempBasalCompletionBeep), tempBasalIntervalBeep:\(tempBasalIntervalBeep), bolusCompletionBeep:\(bolusCompletionBeep), bolusIntervalBeep:\(bolusIntervalBeep))"
     }
 }
