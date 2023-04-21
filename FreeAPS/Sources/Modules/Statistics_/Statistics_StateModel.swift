@@ -1,9 +1,9 @@
+import Foundation
 import SwiftUI
 import Swinject
 
 extension Statistics_ {
     final class StateModel: BaseStateModel<Provider> {
-        @Injected() var settings: SettingsManager!
 
         @Published var overrideHbA1cUnit: Bool = false
 
