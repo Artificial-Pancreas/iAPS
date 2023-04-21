@@ -37,7 +37,7 @@ extension AddTempTarget {
             var lowTarget = low
 
             if viewPercantage {
-                lowTarget = computeTarget()
+                lowTarget = Decimal(round(Double(computeTarget())))
                 coredataContext.performAndWait {
                     let saveToCoreData = TempTargets(context: self.coredataContext)
                     saveToCoreData.id = UUID().uuidString
@@ -101,7 +101,7 @@ extension AddTempTarget {
             var lowTarget = low
 
             if viewPercantage {
-                lowTarget = computeTarget()
+                lowTarget = Decimal(round(Double(computeTarget())))
                 saveSettings = true
             }
             var highTarget = lowTarget
