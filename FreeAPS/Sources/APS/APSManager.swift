@@ -81,8 +81,8 @@ final class BaseAPSManager: APSManager, Injectable {
         }
     }
 
-    // let coredataContext = CoreDataStack.shared.persistentContainer.newBackgroundContext()
-    let coredataContext = CoreDataStack.shared.persistentContainer.viewContext
+    let coredataContext = CoreDataStack.shared.persistentContainer.newBackgroundContext()
+    // let coredataContext = CoreDataStack.shared.persistentContainer.viewContext
 
     private var openAPS: OpenAPS!
 
