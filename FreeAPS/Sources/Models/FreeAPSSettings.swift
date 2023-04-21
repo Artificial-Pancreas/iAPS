@@ -37,6 +37,7 @@ struct FreeAPSSettings: JSON, Equatable {
     var libreViewFrequenceUploads = 0
     var libreViewNextUploadDelta = 0.0
     var smoothGlucose: Bool = false
+    var overrideHbA1cUnit: Bool = false
 }
 
 extension FreeAPSSettings: Decodable {

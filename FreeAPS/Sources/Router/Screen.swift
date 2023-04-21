@@ -31,6 +31,7 @@ enum Screen: Identifiable, Hashable {
     case overrideProfilesConfig
     case snooze
     case statistics
+    case statisticsConfig
 
     var id: Int { String(reflecting: self).hashValue }
 }
@@ -98,6 +99,8 @@ extension Screen {
         case .snooze:
             Snooze.RootView(resolver: resolver)
         case .statistics:
+            Statistics_View()
+        case .statisticsConfig:
             Statistics_.RootView(resolver: resolver)
         }
     }
