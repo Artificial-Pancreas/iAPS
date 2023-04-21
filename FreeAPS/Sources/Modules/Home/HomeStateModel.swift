@@ -54,6 +54,7 @@ extension Home {
         @Published var animatedBackground = false
         @Published var manualTempBasal = false
         @Published var smooth = false
+        @Published var maxValue: Decimal = 1.2
 
         override func subscribe() {
             setupGlucose()
@@ -85,6 +86,7 @@ extension Home {
             setStatusTitle()
             setupCurrentTempTarget()
             smooth = settingsManager.settings.smoothGlucose
+            maxValue = settingsManager.preferences.autosensMax
 
             broadcaster.register(GlucoseObserver.self, observer: self)
             broadcaster.register(SuggestionObserver.self, observer: self)
@@ -350,6 +352,15 @@ extension Home {
             default: break
             }
             UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        }
+
+        func infoPanelTTPercentage(_ hbt_: Double, _ target: Decimal) -> Decimal {
+            guard hbt_ != 0 || target != 0 else {
+                return 0
+            }
+            let c = Decimal(hbt_ - 100)
+            let ratio = min(c / (target + c - 100), maxValue)
+            return (ratio * 100)
         }
     }
 }

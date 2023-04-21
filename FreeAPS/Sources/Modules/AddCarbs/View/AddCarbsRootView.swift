@@ -86,7 +86,7 @@ extension AddCarbs {
                     DatePicker("Date", selection: $state.date)
                 }
 
-                Section(footer: Text(state.fullMeal().description != "[]" ? state.fullMeal().description : "")) {
+                Section(footer: Text(state.waitersNotepad().description)) {
                     Button { state.add() }
                     label: { Text("Save and continue") }
                         .disabled(state.carbs <= 0 && state.fat <= 0 && state.protein <= 0)
@@ -138,7 +138,7 @@ extension AddCarbs {
                         state.carbs += ((state.selection?.carbs ?? 0) as NSDecimalNumber) as Decimal
                         state.fat += ((state.selection?.fat ?? 0) as NSDecimalNumber) as Decimal
                         state.protein += ((state.selection?.protein ?? 0) as NSDecimalNumber) as Decimal
-                        state.summation.append(state.selection?.dish ?? "")
+                        state.addToSummation()
                     }
                 }
                 HStack {
@@ -155,6 +155,12 @@ extension AddCarbs {
                             Button("No", role: .cancel) {}
                             Button("Yes", role: .destructive) {
                                 state.deletePreset()
+
+                                state.carbs += ((state.selection?.carbs ?? 0) as NSDecimalNumber) as Decimal
+                                state.fat += ((state.selection?.fat ?? 0) as NSDecimalNumber) as Decimal
+                                state.protein += ((state.selection?.protein ?? 0) as NSDecimalNumber) as Decimal
+
+                                state.addPresetToNewMeal()
                             }
                         }
                     )
@@ -178,14 +184,17 @@ extension AddCarbs {
                         } else { state.protein = 0 }
 
                         state.removePresetFromNewMeal()
+                        if state.carbs == 0, state.fat == 0, state.protein == 0 { state.summation = [] }
+
                     }
                     label: { Text("[ -1 ]") }
-                        .disabled(state.selection == nil || (
-                            (((state.selection?.carbs ?? 0) as NSDecimalNumber) as Decimal) == state
-                                .carbs && (((state.selection?.fat ?? 0) as NSDecimalNumber) as Decimal) == state
-                                .fat && (((state.selection?.protein ?? 0) as NSDecimalNumber) as Decimal) == state
-                                .protein
-                        ))
+                        .disabled(
+                            state
+                                .selection == nil ||
+                                (
+                                    !state.summation.contains(state.selection?.dish ?? "") && (state.selection?.dish ?? "") != ""
+                                )
+                        )
                         .buttonStyle(BorderlessButtonStyle())
                         .frame(maxWidth: .infinity, alignment: .trailing)
                         .accentColor(.minus)
