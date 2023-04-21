@@ -90,6 +90,7 @@ extension AddTempTarget {
                 let setHBT = TempTargetsSlider(context: self.coredataContext)
                 setHBT.enabled = false
                 setHBT.date = Date()
+
                 try? self.coredataContext.save()
             }
         }
@@ -104,6 +105,7 @@ extension AddTempTarget {
                 lowTarget = computeTarget()
                 saveSettings = true
             }
+
             var highTarget = lowTarget
 
             if units == .mmolL, !viewPercantage {
