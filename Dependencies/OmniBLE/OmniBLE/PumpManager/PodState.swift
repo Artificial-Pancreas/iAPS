@@ -200,9 +200,9 @@ public struct PodState: RawRepresentable, Equatable, CustomDebugStringConvertibl
         return now
     }
 
-    public mutating func updateFromStatusResponse(_ response: StatusResponse) {
+    public mutating func updateFromStatusResponse(_ response: StatusResponse, at date: Date = Date()) {
         let now = updatePodTimes(timeActive: response.timeActive)
-        updateDeliveryStatus(deliveryStatus: response.deliveryStatus, podProgressStatus: response.podProgressStatus, bolusNotDelivered: response.bolusNotDelivered)
+        updateDeliveryStatus(deliveryStatus: response.deliveryStatus, podProgressStatus: response.podProgressStatus, bolusNotDelivered: response.bolusNotDelivered, at: date)
 
         let setupUnits = setupUnitsDelivered ?? Pod.primeUnits + Pod.cannulaInsertionUnits + Pod.cannulaInsertionUnitsExtra
 
@@ -283,22 +283,29 @@ public struct PodState: RawRepresentable, Equatable, CustomDebugStringConvertibl
     }
 
     
-    private mutating func updateDeliveryStatus(deliveryStatus: DeliveryStatus, podProgressStatus: PodProgressStatus, bolusNotDelivered: Double) {
+    private mutating func updateDeliveryStatus(deliveryStatus: DeliveryStatus, podProgressStatus: PodProgressStatus, bolusNotDelivered: Double, at date: Date) {
 
         // See if the pod deliveryStatus indicates an active bolus or temp basal that the PodState isn't tracking (possible Loop restart)
         if deliveryStatus.bolusing && unfinalizedBolus == nil { // active bolus that Loop doesn't know about?
             if podProgressStatus.readyForDelivery {
                 // Create an unfinalizedBolus with the remaining bolus amount to capture what we can.
-                unfinalizedBolus = UnfinalizedDose(bolusAmount: bolusNotDelivered, startTime: Date(), scheduledCertainty: .certain, insulinType: insulinType, automatic: false)
+                unfinalizedBolus = UnfinalizedDose(bolusAmount: bolusNotDelivered, startTime: date, scheduledCertainty: .certain, insulinType: insulinType, automatic: false)
             }
         }
 
-        if let bolus = unfinalizedBolus, !deliveryStatus.bolusing {
+        if var bolus = unfinalizedBolus, !deliveryStatus.bolusing {
+            // Due to clock drift or comms delays, boluses can finish earlier than we expect
+            if !bolus.isFinished() {
+                bolus.finishTime = date
+            }
             finalizedDoses.append(bolus)
             unfinalizedBolus = nil
         }
 
-        if let tempBasal = unfinalizedTempBasal, !deliveryStatus.tempBasalRunning {
+        if var tempBasal = unfinalizedTempBasal, !deliveryStatus.tempBasalRunning {
+            if !tempBasal.isFinished() {
+                tempBasal.finishTime = date
+            }
             finalizedDoses.append(tempBasal)
             unfinalizedTempBasal = nil
         }

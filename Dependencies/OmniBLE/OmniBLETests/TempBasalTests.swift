@@ -135,14 +135,14 @@ class TempBasalTests: XCTestCase {
         do {
             let cmd = try CancelDeliveryCommand(encodedData: Data(hexadecimalString: "1f05f76d34c402")!)
             XCTAssertEqual(0xf76d34c4, cmd.nonce)
-            XCTAssertEqual(.noBeep, cmd.beepType)
+            XCTAssertEqual(.noBeepCancel, cmd.beepType)
             XCTAssertEqual(.tempBasal, cmd.deliveryType)
         } catch (let error) {
             XCTFail("message decoding threw error: \(error)")
         }
         
         // Encode
-        let cmd = CancelDeliveryCommand(nonce: 0xf76d34c4, deliveryType: .tempBasal, beepType: .noBeep)
+        let cmd = CancelDeliveryCommand(nonce: 0xf76d34c4, deliveryType: .tempBasal, beepType: .noBeepCancel)
         XCTAssertEqual("1f05f76d34c402", cmd.data.hexadecimalString)
     }
 

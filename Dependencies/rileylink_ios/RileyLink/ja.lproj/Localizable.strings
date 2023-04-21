@@ -1,3 +1,6 @@
+/* Unit format string for an value in percent */
+"%@%%" = "%@%%";
+
 /* The title of the about section */
 "About" = "情報";
 

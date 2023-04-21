@@ -14,7 +14,7 @@
 "Delete Account" = "删除账户";
 
 /* The placeholder text instructing users how to enter a pump ID */
-"Enter the 6-digit pump ID" = "请输入6位数字胰岛素泵序列号";
+"Enter the 6-digit pump ID" = "输入六位数字的泵ID";
 
 /* The title text for the pull cgm Data cell */
 "Fetch CGM" = "获取动态血糖数据";
@@ -48,3 +48,4 @@
 
 /* The title text for the nightscout upload enabled switch cell */
 "Upload To Nightscout" = "上传到Nightscout";
+

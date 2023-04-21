@@ -1,8 +1,9 @@
 /* Title displayed during backfill response */
-"Backfill" = "Backfill";
+"Backfill" = "Riempimento";
 
 /* Title displayed during error response */
-"Error" = "Error";
+"Error" = "Errore";
 
 /* Title displayed during unknown data response */
 "Unknown Data" = "Unknown Data";
+

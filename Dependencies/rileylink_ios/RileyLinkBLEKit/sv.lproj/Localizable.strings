@@ -19,11 +19,18 @@
 /* Invalid response error description (1: response) */
 "Response %@ is invalid" = "Respons %@ ogiltig";
 
+/* PeripheralManagerError.timeout error description */
+"RileyLink did not respond in time" = "Din RileyLink svarade inte i tid";
+
 /* Unsupported command error description */
 "RileyLink firmware does not support the %@ command" = "RileyLink-enhetens firmware stöder inte kommandot %@";
+
+/* PeripheralManagerError.notReady error description */
+"RileyLink is not connected" = "RileyLink är inte ansluten";
 
 /* Failure reason: unknown peripheral characteristic */
 "The RileyLink was temporarily disconnected" = "RileyLink-enheten har blivit frånkopplad temporärt";
 
 /* Error description */
 "Unknown characteristic" = "Okänd data";
+

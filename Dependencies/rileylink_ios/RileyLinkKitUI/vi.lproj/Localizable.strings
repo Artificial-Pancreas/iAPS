@@ -1,3 +1,6 @@
+/* Unit format string for an value in percent */
+"%@%%" = "%@%%";
+
 /* The title of the section describing commands */
 "Commands" = "Commands";
 
@@ -22,14 +25,23 @@
 /* The in-progress disconnecting state */
 "Disconnecting" = "Đang ngắt kết nối";
 
+/* The title of the cell for sounding device finding piezo */
+"Find Device" = "Tìm kiếm thiết bị";
+
 /* The title of the cell showing firmware version */
 "Firmware" = "Firmware";
 
 /* The title of the cell showing current rileylink frequency */
 "Frequency" = "Tần số";
 
+/* Progress message for getting statistics. */
+"Get Statistics…" = "Lấy các thống kê…";
+
 /* The title of the cell showing device name */
 "Name" = "Tên";
+
+/* Text indicating LED Mode is on */
+"On" = "On";
 
 /* RileyLink setup description */
 "RileyLink allows for communication with the pump over Bluetooth Low Energy." = "RileyLink cho phép giao tiếp với bơm thông qua chuẩn kết nối bluetooth năng lượng thấp.";
@@ -39,3 +51,4 @@
 
 /* The title of the cell showing uptime */
 "Uptime" = "Thời gian hoạt động";
+

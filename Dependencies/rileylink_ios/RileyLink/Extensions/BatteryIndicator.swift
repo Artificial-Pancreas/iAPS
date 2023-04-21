@@ -6,7 +6,7 @@
 //  Copyright © 2016 Pete Schwamb. All rights reserved.
 //
 
-import NightscoutUploadKit
+import NightscoutKit
 import MinimedKit
 
 public extension BatteryIndicator {

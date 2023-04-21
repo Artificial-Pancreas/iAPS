@@ -1,3 +1,9 @@
+/* Unit format string for an RSSI value in decibles */
+"%@ dB" = "%@ dB";
+
+/* Unit format string for an value in percent */
+"%@%%" = "%@%%";
+
 /* The title of the about section */
 "About" = "Despre";
 
@@ -8,10 +14,10 @@
 "Add Minimed Pump" = "Adaugă pompă Minimed";
 
 /* The title of the nightscout API secret credential */
-"API Secret" = "Secret API";
+"API Secret" = "Secretul API";
 
 /* The title of the configuration section in settings */
-"Configuration" = "Configurație";
+"Configuration" = "Configurare";
 
 /* The title of the button to remove the credentials for a service */
 "Delete Account" = "Șterge cont";
@@ -23,7 +29,7 @@
 "Fetch CGM" = "Transferă din CGM";
 
 /* The placeholder text for the nightscout site URL credential */
-"http://mysite.herokuapp.com" = "http://mysite.herokuapp.com";
+"http://mysite.herokuapp.com" = "http://siteulmeu.herokuapp.com";
 
 /* The title of the Nightscout service */
 "Nightscout" = "Nightscout";
@@ -51,5 +57,4 @@
 
 /* The title text for the nightscout upload enabled switch cell */
 "Upload To Nightscout" = "Încărcare în Nightscout";
-
 
