@@ -235,7 +235,7 @@ final class OpenAPS {
                 duration = 0
             }
 
-            if temptargetActive || isPercentageEnabled {
+            if temptargetActive /* || isPercentageEnabled */ {
                 var duration_ = 0
                 var hbt = Double(hbt_)
                 var dd = 0.0
@@ -249,24 +249,10 @@ final class OpenAPS {
 
                     if dd > 0.1 {
                         hbt_ = Decimal(hbt)
-                        isPercentageEnabled = false
+                        // isPercentageEnabled = false
                         temptargetActive = true
                     } else {
                         temptargetActive = false
-                    }
-                } else if isPercentageEnabled {
-                    duration_ = Int(truncating: sliderArray.first?.duration ?? 0)
-                    hbt = sliderArray.first?.hbt ?? Double(hbt_)
-                    let startDate = sliderArray.first?.date ?? Date()
-                    let durationPlusStart = startDate.addingTimeInterval(duration_.minutes.timeInterval)
-                    dd = durationPlusStart.timeIntervalSinceNow.minutes
-
-                    if dd > 0.1 {
-                        hbt_ = Decimal(hbt)
-                        isPercentageEnabled = true
-                        temptargetActive = false
-                    } else {
-                        isPercentageEnabled = false
                     }
                 }
             }

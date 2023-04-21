@@ -37,7 +37,7 @@ extension AddTempTarget {
             var lowTarget = low
 
             if viewPercantage {
-                lowTarget = computeTarget()
+                lowTarget = Decimal(round(Double(computeTarget())))
                 coredataContext.performAndWait {
                     let saveToCoreData = TempTargets(context: self.coredataContext)
                     saveToCoreData.id = UUID().uuidString
@@ -49,12 +49,19 @@ extension AddTempTarget {
                     try? self.coredataContext.save()
                 }
                 saveSettings = true
+            } else {
+                coredataContext.performAndWait {
+                    let saveToCoreData = TempTargets(context: coredataContext)
+                    saveToCoreData.active = false
+                    saveToCoreData.date = Date()
+                    try? coredataContext.save()
+                }
             }
             var highTarget = lowTarget
 
             if units == .mmolL, !viewPercantage {
-                lowTarget = lowTarget.asMgdL
-                highTarget = highTarget.asMgdL
+                lowTarget = Decimal(round(Double(lowTarget.asMgdL)))
+                highTarget = lowTarget
             }
 
             let entry = TempTarget(
@@ -94,14 +101,14 @@ extension AddTempTarget {
             var lowTarget = low
 
             if viewPercantage {
-                lowTarget = computeTarget()
+                lowTarget = Decimal(round(Double(computeTarget())))
                 saveSettings = true
             }
             var highTarget = lowTarget
 
             if units == .mmolL, !viewPercantage {
-                lowTarget = lowTarget.asMgdL
-                highTarget = highTarget.asMgdL
+                lowTarget = Decimal(round(Double(lowTarget.asMgdL)))
+                highTarget = lowTarget
             }
 
             let entry = TempTarget(
@@ -181,7 +188,7 @@ extension AddTempTarget {
                 ratio = maxValue
                 target = (c / ratio) - c + 100
             }
-            return target
+            return Decimal(Double(target))
         }
     }
 }
