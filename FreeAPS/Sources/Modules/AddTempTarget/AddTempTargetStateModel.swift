@@ -190,7 +190,7 @@ extension AddTempTarget {
                 ratio = maxValue
                 target = (c / ratio) - c + 100
             }
-            return target
+            return Decimal(Double(target))
         }
     }
 }
