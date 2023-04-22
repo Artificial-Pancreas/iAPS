@@ -40,9 +40,9 @@ struct Statistics_View: View {
         Spacer()
         loops
         Spacer()
-        timeInRange
-        Spacer()
         bloodGlucose
+        Spacer()
+        timeInRange
         Spacer()
         hba1c
     }
@@ -53,7 +53,7 @@ struct Statistics_View: View {
             HStack {
                 Text("Loop Cycles").font(.subheadline).foregroundColor(.teal)
                 Text("(24 h)").font(.subheadline).foregroundColor(.secondary)
-            }.padding([.bottom], paddingAmount)
+            }.padding([.vertical], paddingAmount)
             HStack {
                 ForEach(0 ..< loops_.count, id: \.self) { index in
                     VStack {
@@ -77,10 +77,8 @@ struct Statistics_View: View {
         VStack {
             let hba1cs = glucoseStats(fetchedGlucose)
             HStack {
-                Text("HbA1C").font(.subheadline).foregroundColor(.blue)
-                Text("(mmol/mol)").font(.subheadline).foregroundColor(.secondary)
-
-            }.padding([.bottom], paddingAmount)
+                Text("HbA1C (mmol/mol)").font(.subheadline).foregroundColor(.blue)
+            }.padding([.vertical], paddingAmount)
             HStack {
                 VStack {
                     Text(hba1cs.ifcc.formatted(.number.grouping(.never).rounded().precision(.fractionLength(1))))
@@ -92,9 +90,8 @@ struct Statistics_View: View {
     var bloodGlucose: some View {
         VStack {
             HStack {
-                Text("Blood Glucose").font(.subheadline).foregroundColor(.teal)
-                Text("(mmol/L)").font(.subheadline).foregroundColor(.secondary)
-            }.padding([.bottom], paddingAmount)
+                Text("Blood Glucose (mmol/L)").font(.subheadline).foregroundColor(.blue)
+            }.padding([.vertical], paddingAmount)
             HStack {
                 VStack {
                     let hba1cs = glucoseStats(fetchedGlucose)
@@ -103,7 +100,10 @@ struct Statistics_View: View {
                     }
                     HStack {
                         VStack {
-                            Text(hba1cs.average.formatted(.number.grouping(.never).rounded().precision(.fractionLength(1))))
+                            Text(
+                                hba1cs.average
+                                    .formatted(.number.grouping(.never).rounded().precision(.fractionLength(1)))
+                            )
                         }
                     }
                 }
@@ -114,7 +114,10 @@ struct Statistics_View: View {
                     }
                     HStack {
                         VStack {
-                            Text(hba1cs.median.formatted(.number.grouping(.never).rounded().precision(.fractionLength(1))))
+                            Text(
+                                hba1cs.median
+                                    .formatted(.number.grouping(.never).rounded().precision(.fractionLength(1)))
+                            )
                         }
                     }
                 }
@@ -126,16 +129,19 @@ struct Statistics_View: View {
         VStack {
             let TIRs = tir(fetchedGlucose)
             HStack {
-                Text("Time in range").font(.subheadline).foregroundColor(.blue)
-                Text("(%)").font(.subheadline).foregroundColor(.secondary)
+                Text("Time in range").font(.subheadline).foregroundColor(.teal)
 
-            }.padding([.bottom], paddingAmount)
+            }.padding([.vertical], paddingAmount)
 
             HStack {
                 ForEach(0 ..< TIRs.count, id: \.self) { index in
                     VStack {
                         Text(TIRs[index].string).foregroundColor(.secondary)
-                        Text(TIRs[index].decimal.formatted(.number.grouping(.never).rounded().precision(.fractionLength(1))))
+                        Text(
+                            TIRs[index].decimal
+                                .formatted(.number.grouping(.never).rounded().precision(.fractionLength(0))) + " %"
+                        )
+                        .foregroundColor(colorOfGlucose(index))
                     }
                 }
             }
@@ -149,7 +155,7 @@ struct Statistics_View: View {
             stats()
         }
         .frame(maxWidth: .infinity)
-        .padding([.vertical], 20)
+        .padding([.vertical], 40)
         .navigationTitle("Statistics")
         .navigationBarHidden(true)
         .ignoresSafeArea(.keyboard)
@@ -367,6 +373,21 @@ struct Statistics_View: View {
         array.append((decimal: Decimal(hyperPercentage), string: "High"))
 
         return array
+    }
+
+    private func colorOfGlucose(_ index: Int) -> Color {
+        let whichIndex = index
+
+        switch whichIndex {
+        case 0:
+            return .red
+        case 1:
+            return .green
+        case 2:
+            return .orange
+        default:
+            return .primary
+        }
     }
 
     struct StatisticsView_Previews: PreviewProvider {
