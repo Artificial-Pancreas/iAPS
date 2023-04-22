@@ -32,21 +32,36 @@ struct Statistics_View: View {
         sortDescriptors: [NSSortDescriptor(key: "date", ascending: false)]
     ) var fetchedInsulin: FetchedResults<InsulinDistribution>
 
-    @State var tirString = ""
     @State var paddingAmount: CGFloat? = 2
     @State var headline: Color = .teal
     @State var selectedState: durationState
+    @State var days: Double = 0
 
     @ViewBuilder func stats() -> some View {
         Spacer()
+        header
+        Divider()
         loops
-        Spacer()
+        Divider()
+        // Spacer()
         bloodGlucose
-        Spacer()
+        Divider()
+        // Spacer()
         timeInRange
-        Spacer()
+        Divider()
+        // Spacer()
         hba1c
-        Spacer()
+    }
+
+    var header: some View {
+        Text(
+            selectedState == .total ?
+                (
+                    numberOfDays
+                        .formatted(.number.grouping(.never).rounded().precision(.fractionLength(1))) + " days of stored glucose"
+                ) :
+                ""
+        ).foregroundColor(.secondary).padding([.vertical], paddingAmount)
     }
 
     var loops: some View {
@@ -87,7 +102,7 @@ struct Statistics_View: View {
                 }
             }
             VStack {
-                Text("HbA1C (mmol/mol)").font(.subheadline).foregroundColor(headline).padding([.vertical], paddingAmount)
+                Text("HbA1C").font(.subheadline).foregroundColor(headline).padding([.vertical], paddingAmount)
                 HStack {
                     VStack {
                         Text(hba1cs.ifcc.formatted(.number.grouping(.never).rounded().precision(.fractionLength(1))))
@@ -175,9 +190,22 @@ struct Statistics_View: View {
         }
     }
 
+    var numberOfDays: Double {
+        let endIndex = fetchedGlucose.count - 1
+        var days = 0.0
+
+        if endIndex > 0 {
+            let firstElementTime = fetchedGlucose.first?.date ?? Date()
+            let lastElementTime = fetchedGlucose[endIndex].date ?? Date()
+            days = (firstElementTime - lastElementTime).timeInterval / 8.64E4
+        }
+        return days
+    }
+
     var body: some View {
         VStack(spacing: 8) {
             stats()
+            Spacer()
             durationButton(states: durationState.allCases, selectedState: $selectedState)
         }
         .frame(maxWidth: .infinity)
@@ -205,7 +233,6 @@ struct Statistics_View: View {
         var timeForOneLoopArray: [Double] = []
         var medianLoopTime = 0.0
         var timeIntervalLoopArray: [Double] = []
-        var medianInterval = 0.0
         var averageIntervalLoops = 0.0
         var averageLoopDuration = 0.0
 
@@ -254,7 +281,6 @@ struct Statistics_View: View {
 
         // Median values
         medianLoopTime = medianCalculationDouble(array: timeForOneLoopArray)
-        medianInterval = medianCalculationDouble(array: timeIntervalLoopArray)
         // Average time interval between loops
         averageIntervalLoops = timeIntervalLoopArray.reduce(0, +) / Double(timeIntervalLoopArray.count)
         // Average loop duration
@@ -272,7 +298,7 @@ struct Statistics_View: View {
         array.append((double: Double(successNR + errorNR), string: "Loops"))
         array.append((double: averageLoopTime, string: "Interval"))
         array.append((double: medianLoopTime, string: "Duration"))
-        array.append((double: successRate ?? 100, string: "Success %"))
+        array.append((double: successRate ?? 100, string: "%"))
 
         return array
     }
@@ -304,7 +330,7 @@ struct Statistics_View: View {
     }
 
     private func glucoseStats(_ glucose_90: FetchedResults<Readings>)
-        -> (ifcc: Decimal, ngsp: Decimal, average: Double, median: Double, sd: Double, cv: Double, readings: Int)
+        -> (ifcc: Double, ngsp: Double, average: Double, median: Double, sd: Double, cv: Double, readings: Double)
     {
         var conversionFactor: Double = 1
         conversionFactor = 0.0555
@@ -317,16 +343,20 @@ struct Statistics_View: View {
             numberOfDays = (firstElementTime - lastElementTime).timeInterval / 8.64E4
         }
         var duration = 1
+        var denominator: Double = 1
 
         switch selectedState {
         case .day:
             duration = 1
         case .week:
             duration = 7
+            if numberOfDays > 7 { denominator = 7 } else { denominator = numberOfDays }
         case .month:
             duration = 30
+            if numberOfDays > 30 { denominator = 30 } else { denominator = numberOfDays }
         case .total:
             duration = 90
+            if numberOfDays >= 90 { denominator = 90 } else { denominator = numberOfDays }
         }
 
         let timeAgo = Date().addingTimeInterval(-duration.days.timeInterval)
@@ -334,21 +364,19 @@ struct Statistics_View: View {
 
         let justGlucoseArray = glucose.compactMap({ each in Int(each.glucose as Int16) })
         let sumReadings = justGlucoseArray.reduce(0, +)
-
-        var countReadings = justGlucoseArray.count
+        let countReadings = justGlucoseArray.count
 
         let glucoseAverage = Double(sumReadings) / Double(countReadings)
         let medianGlucose = medianCalculation(array: justGlucoseArray)
 
-        var NGSPa1CStatisticValue: Decimal = 0.0
-        var IFCCa1CStatisticValue: Decimal = 0.0
+        var NGSPa1CStatisticValue = 0.0
+        var IFCCa1CStatisticValue = 0.0
 
         if numberOfDays > 0 {
-            NGSPa1CStatisticValue = (Decimal(glucoseAverage) + 46.7) / 28.7 // NGSP (%)
+            NGSPa1CStatisticValue = (glucoseAverage + 46.7) / 28.7 // NGSP (%)
             IFCCa1CStatisticValue = 10.929 *
                 (NGSPa1CStatisticValue - 2.152) // IFCC (mmol/mol)  A1C(mmol/mol) = 10.929 * (A1C(%) - 2.15)
         }
-
         var sumOfSquares = 0.0
 
         for array in justGlucoseArray {
@@ -363,12 +391,13 @@ struct Statistics_View: View {
             cv = sd / Double(glucoseAverage) * 100
         }
 
-        var output: (ifcc: Decimal, ngsp: Decimal, average: Double, median: Double, sd: Double, cv: Double, readings: Int)
+        var output: (ifcc: Double, ngsp: Double, average: Double, median: Double, sd: Double, cv: Double, readings: Double)
         output = (
             ifcc: IFCCa1CStatisticValue,
             ngsp: NGSPa1CStatisticValue,
             average: glucoseAverage * conversionFactor,
-            median: medianGlucose * conversionFactor, sd: sd * conversionFactor, cv: cv, readings: countReadings
+            median: medianGlucose * conversionFactor, sd: sd * conversionFactor, cv: cv,
+            readings: Double(countReadings) / denominator
         )
         return output
     }
@@ -386,15 +415,14 @@ struct Statistics_View: View {
             duration = 90
         }
 
-        let timeAgo = Date().addingTimeInterval(-duration.days.timeInterval)
-        var glucose = glucose_90.filter({ ($0.date ?? Date()) >= timeAgo })
-
-        let justGlucoseArray = glucose.compactMap({ each in Int(each.glucose as Int16) })
-        let sumReadings = justGlucoseArray.reduce(0, +)
-        let totalReadings = justGlucoseArray.count
-
         let hypoLimit = Int16(round(3.9 / 0.0555))
         let hyperLimit = Int16(round(10.0 / 0.0555))
+
+        let timeAgo = Date().addingTimeInterval(-duration.days.timeInterval)
+        let glucose = glucose_90.filter({ ($0.date ?? Date()) >= timeAgo })
+
+        let justGlucoseArray = glucose.compactMap({ each in Int(each.glucose as Int16) })
+        let totalReadings = justGlucoseArray.count
 
         let hyperArray = glucose.filter({ $0.glucose >= hyperLimit })
         let hyperReadings = hyperArray.compactMap({ each in each.glucose as Int16 }).count

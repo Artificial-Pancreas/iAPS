@@ -739,7 +739,7 @@ final class BaseAPSManager: APSManager, Injectable {
             testIfEmpty = testFile.count
         }
 
-        let updateThisOften = 12.hours.timeInterval
+        let updateThisOften = 20.hours.timeInterval
 
         if testIfEmpty != 0 {
             guard testFile[0].created_at.addingTimeInterval(updateThisOften) < Date()
