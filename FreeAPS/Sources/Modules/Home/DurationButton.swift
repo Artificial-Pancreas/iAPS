@@ -28,12 +28,12 @@ struct durationButton<T: DurationButton>: View {
             selectedState = states[currentIndex]
         } label: {
             Text(NSLocalizedString(states[currentIndex].title, comment: "Duration displayed in statPanel"))
-                .font(.caption2)
+                .font(.subheadline)
                 .foregroundColor(.secondary)
         }
 
         .buttonBorderShape(.automatic)
-        .controlSize(.mini)
+        .controlSize(.small)
         .buttonStyle(.bordered)
         // .padding([.trailing], 15)
         // .frame(maxWidth: .infinity, alignment: .trailing)

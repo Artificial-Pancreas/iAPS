@@ -34,6 +34,7 @@ struct Statistics_View: View {
 
     @State var tirString = ""
     @State var paddingAmount: CGFloat? = 2
+    @State var headline: Color = .teal
     @State var selectedState: durationState
 
     @ViewBuilder func stats() -> some View {
@@ -45,19 +46,18 @@ struct Statistics_View: View {
         timeInRange
         Spacer()
         hba1c
+        Spacer()
     }
 
     var loops: some View {
         VStack {
             let loops_ = loopStats(fetchedLoopStats)
             HStack {
-                Text("Loop Cycles").font(.subheadline).foregroundColor(.teal)
-                Text("(24 h)").font(.subheadline).foregroundColor(.secondary)
-            }.padding([.vertical], paddingAmount)
-            HStack {
                 ForEach(0 ..< loops_.count, id: \.self) { index in
                     VStack {
-                        Text(loops_[index].string).foregroundColor(.secondary)
+                        if index == 0 {
+                            Text(loops_[index].string).foregroundColor(headline).padding([.vertical], paddingAmount)
+                        } else { Text(loops_[index].string).foregroundColor(.secondary).padding([.vertical], paddingAmount) }
                         Text(
                             index == 0 ? loops_[index].double.formatted() : (
                                 index == 2 ? loops_[index].double
@@ -74,14 +74,34 @@ struct Statistics_View: View {
     }
 
     var hba1c: some View {
-        VStack {
+        HStack {
             let hba1cs = glucoseStats(fetchedGlucose)
-            HStack {
-                Text("HbA1C (mmol/mol)").font(.subheadline).foregroundColor(.blue)
-            }.padding([.vertical], paddingAmount)
-            HStack {
-                VStack {
-                    Text(hba1cs.ifcc.formatted(.number.grouping(.never).rounded().precision(.fractionLength(1))))
+            VStack {
+                Text("SD").font(.subheadline).foregroundColor(.secondary).padding([.vertical], paddingAmount)
+                HStack {
+                    VStack {
+                        Text(
+                            hba1cs.sd.formatted(.number.grouping(.never).rounded().precision(.fractionLength(1)))
+                        )
+                    }
+                }
+            }
+            VStack {
+                Text("HbA1C (mmol/mol)").font(.subheadline).foregroundColor(headline).padding([.vertical], paddingAmount)
+                HStack {
+                    VStack {
+                        Text(hba1cs.ifcc.formatted(.number.grouping(.never).rounded().precision(.fractionLength(1))))
+                    }
+                }
+            }
+            VStack {
+                Text("CV").font(.subheadline).foregroundColor(.secondary).padding([.vertical], paddingAmount)
+                HStack {
+                    VStack {
+                        Text(
+                            hba1cs.cv.formatted(.number.grouping(.never).rounded().precision(.fractionLength(1)))
+                        )
+                    }
                 }
             }
         }
@@ -90,33 +110,41 @@ struct Statistics_View: View {
     var bloodGlucose: some View {
         VStack {
             HStack {
-                Text("Blood Glucose (mmol/L)").font(.subheadline).foregroundColor(.blue)
-            }.padding([.vertical], paddingAmount)
-            HStack {
+                let bgs = glucoseStats(fetchedGlucose)
                 VStack {
-                    let hba1cs = glucoseStats(fetchedGlucose)
                     HStack {
-                        Text("Average").font(.subheadline).foregroundColor(.secondary)
+                        Text("Median").font(.subheadline).foregroundColor(.secondary).padding([.vertical], paddingAmount)
                     }
                     HStack {
                         VStack {
                             Text(
-                                hba1cs.average
+                                bgs.median
                                     .formatted(.number.grouping(.never).rounded().precision(.fractionLength(1)))
                             )
                         }
                     }
                 }
                 VStack {
-                    let hba1cs = glucoseStats(fetchedGlucose)
                     HStack {
-                        Text("Median").font(.subheadline).foregroundColor(.secondary)
+                        Text("Average").font(.subheadline).foregroundColor(headline).padding([.vertical], paddingAmount)
                     }
                     HStack {
                         VStack {
                             Text(
-                                hba1cs.median
+                                bgs.average
                                     .formatted(.number.grouping(.never).rounded().precision(.fractionLength(1)))
+                            )
+                        }
+                    }
+                }
+                VStack {
+                    HStack {
+                        Text("Readings").font(.subheadline).foregroundColor(.secondary).padding([.vertical], paddingAmount)
+                    }
+                    HStack {
+                        VStack {
+                            Text(
+                                bgs.readings.formatted(.number.grouping(.never).rounded().precision(.fractionLength(0)))
                             )
                         }
                     }
@@ -129,14 +157,13 @@ struct Statistics_View: View {
         VStack {
             let TIRs = tir(fetchedGlucose)
             HStack {
-                Text("Time in range").font(.subheadline).foregroundColor(.teal)
-
-            }.padding([.vertical], paddingAmount)
-
-            HStack {
                 ForEach(0 ..< TIRs.count, id: \.self) { index in
                     VStack {
-                        Text(TIRs[index].string).foregroundColor(.secondary)
+                        if index == 1 {
+                            Text(TIRs[index].string).foregroundColor(headline)
+                                .padding([.vertical], paddingAmount)
+                        } else { Text(TIRs[index].string).foregroundColor(.secondary).font(.subheadline)
+                            .padding([.vertical], paddingAmount) }
                         Text(
                             TIRs[index].decimal
                                 .formatted(.number.grouping(.never).rounded().precision(.fractionLength(0))) + " %"
@@ -150,9 +177,8 @@ struct Statistics_View: View {
 
     var body: some View {
         VStack(spacing: 8) {
-            durationButton(states: durationState.allCases, selectedState: $selectedState)
-
             stats()
+            durationButton(states: durationState.allCases, selectedState: $selectedState)
         }
         .frame(maxWidth: .infinity)
         .padding([.vertical], 40)
@@ -237,15 +263,16 @@ struct Statistics_View: View {
         if minimumInt == 999.0 {
             minimumInt = 0.0
         }
+
         if minimumLoopTime == 9999.0 {
             minimumLoopTime = 0.0
         }
-
         var array: [(double: Double, string: String)] = []
 
         array.append((double: Double(successNR + errorNR), string: "Loops"))
         array.append((double: averageLoopTime, string: "Interval"))
         array.append((double: medianLoopTime, string: "Duration"))
+        array.append((double: successRate ?? 100, string: "Success %"))
 
         return array
     }
@@ -277,19 +304,16 @@ struct Statistics_View: View {
     }
 
     private func glucoseStats(_ glucose_90: FetchedResults<Readings>)
-        -> (ifcc: Decimal, ngsp: Decimal, average: Double, median: Double)
+        -> (ifcc: Decimal, ngsp: Decimal, average: Double, median: Double, sd: Double, cv: Double, readings: Int)
     {
-        var firstElementTime = Date()
-        var lastElementTime = Date()
         var conversionFactor: Double = 1
         conversionFactor = 0.0555
         var numberOfDays: Double = 0
-
         let endIndex = glucose_90.count - 1
 
         if endIndex > 0 {
-            firstElementTime = glucose_90[0].date ?? Date()
-            lastElementTime = glucose_90[endIndex].date ?? Date()
+            let firstElementTime = glucose_90[0].date ?? Date()
+            let lastElementTime = glucose_90[endIndex].date ?? Date()
             numberOfDays = (firstElementTime - lastElementTime).timeInterval / 8.64E4
         }
         var duration = 1
@@ -307,10 +331,13 @@ struct Statistics_View: View {
 
         let timeAgo = Date().addingTimeInterval(-duration.days.timeInterval)
         let glucose = glucose_90.filter({ ($0.date ?? Date()) >= timeAgo })
+
         let justGlucoseArray = glucose.compactMap({ each in Int(each.glucose as Int16) })
         let sumReadings = justGlucoseArray.reduce(0, +)
 
-        let glucoseAverage = Double(sumReadings) / Double(justGlucoseArray.count)
+        var countReadings = justGlucoseArray.count
+
+        let glucoseAverage = Double(sumReadings) / Double(countReadings)
         let medianGlucose = medianCalculation(array: justGlucoseArray)
 
         var NGSPa1CStatisticValue: Decimal = 0.0
@@ -321,14 +348,28 @@ struct Statistics_View: View {
             IFCCa1CStatisticValue = 10.929 *
                 (NGSPa1CStatisticValue - 2.152) // IFCC (mmol/mol)  A1C(mmol/mol) = 10.929 * (A1C(%) - 2.15)
         }
-        var output: (ifcc: Decimal, ngsp: Decimal, average: Double, median: Double)
+
+        var sumOfSquares = 0.0
+
+        for array in justGlucoseArray {
+            sumOfSquares += pow(Double(array) - Double(glucoseAverage), 2)
+        }
+        var sd = 0.0
+        var cv = 0.0
+
+        // Avoid division by zero
+        if glucoseAverage > 0 {
+            sd = sqrt(sumOfSquares / Double(countReadings))
+            cv = sd / Double(glucoseAverage) * 100
+        }
+
+        var output: (ifcc: Decimal, ngsp: Decimal, average: Double, median: Double, sd: Double, cv: Double, readings: Int)
         output = (
             ifcc: IFCCa1CStatisticValue,
             ngsp: NGSPa1CStatisticValue,
             average: glucoseAverage * conversionFactor,
-            median: medianGlucose * conversionFactor
+            median: medianGlucose * conversionFactor, sd: sd * conversionFactor, cv: cv, readings: countReadings
         )
-
         return output
     }
 
@@ -346,12 +387,11 @@ struct Statistics_View: View {
         }
 
         let timeAgo = Date().addingTimeInterval(-duration.days.timeInterval)
-        let glucose = glucose_90.filter({ ($0.date ?? Date()) >= timeAgo })
+        var glucose = glucose_90.filter({ ($0.date ?? Date()) >= timeAgo })
+
         let justGlucoseArray = glucose.compactMap({ each in Int(each.glucose as Int16) })
         let sumReadings = justGlucoseArray.reduce(0, +)
         let totalReadings = justGlucoseArray.count
-
-        let glucoseAverage = Double(sumReadings) / Double(totalReadings)
 
         let hypoLimit = Int16(round(3.9 / 0.0555))
         let hyperLimit = Int16(round(10.0 / 0.0555))
@@ -367,7 +407,6 @@ struct Statistics_View: View {
         let tir = 100 - (hypoPercentage + hyperPercentage)
 
         var array: [(decimal: Decimal, string: String)] = []
-
         array.append((decimal: Decimal(hypoPercentage), string: "Low"))
         array.append((decimal: Decimal(tir), string: "NormaL"))
         array.append((decimal: Decimal(hyperPercentage), string: "High"))
