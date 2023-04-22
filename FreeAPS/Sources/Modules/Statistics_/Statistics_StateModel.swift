@@ -4,7 +4,6 @@ import Swinject
 
 extension Statistics_ {
     final class StateModel: BaseStateModel<Provider> {
-
         @Published var overrideHbA1cUnit: Bool = false
 
         override func subscribe() {

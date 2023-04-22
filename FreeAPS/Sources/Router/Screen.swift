@@ -99,7 +99,7 @@ extension Screen {
         case .snooze:
             Snooze.RootView(resolver: resolver)
         case .statistics:
-            Statistics_View()
+            Statistics_View(selectedState: .day)
         case .statisticsConfig:
             Statistics_.RootView(resolver: resolver)
         }

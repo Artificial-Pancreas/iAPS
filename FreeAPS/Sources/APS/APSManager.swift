@@ -731,23 +731,24 @@ final class BaseAPSManager: APSManager, Injectable {
 
     // Add to statistics.JSON
     private func statistics() {
-        coredataContext.perform { [self] in
-            let statisticsStartedAt = Date()
-            var testFile: [Statistics] = []
-            var testIfEmpty = 0
-            self.storage.transaction { storage in
-                testFile = storage.retrieve(OpenAPS.Monitor.statistics, as: [Statistics].self) ?? []
-                testIfEmpty = testFile.count
-            }
-            let updateThisOften = Int(self.settingsManager.preferences.updateInterval)
-            // Only run every 30 minutes or according to setting.
-            if testIfEmpty != 0 {
-                guard testFile[0].created_at.addingTimeInterval(updateThisOften.minutes.timeInterval) < Date()
-                else {
-                    return
-                }
-            }
+        let statisticsStartedAt = Date()
+        var testFile: [Statistics] = []
+        var testIfEmpty = 0
+        storage.transaction { storage in
+            testFile = storage.retrieve(OpenAPS.Monitor.statistics, as: [Statistics].self) ?? []
+            testIfEmpty = testFile.count
+        }
 
+        let updateThisOften = 12.hours.timeInterval
+
+        if testIfEmpty != 0 {
+            guard testFile[0].created_at.addingTimeInterval(updateThisOften) < Date()
+            else {
+                return
+            }
+        }
+
+        coredataContext.performAndWait { [self] in
             let units = self.settingsManager.settings.units
             let preferences = settingsManager.preferences
 
