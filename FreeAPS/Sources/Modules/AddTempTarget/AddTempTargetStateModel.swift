@@ -38,13 +38,30 @@ extension AddTempTarget {
 
             if viewPercantage {
                 lowTarget = computeTarget()
+                coredataContext.performAndWait {
+                    let saveToCoreData = TempTargets(context: self.coredataContext)
+                    saveToCoreData.id = UUID().uuidString
+                    saveToCoreData.active = true
+                    saveToCoreData.hbt = hbt
+                    saveToCoreData.date = Date()
+                    saveToCoreData.duration = duration as NSDecimalNumber
+                    saveToCoreData.startDate = Date()
+                    try? self.coredataContext.save()
+                }
                 saveSettings = true
+            } else {
+                coredataContext.performAndWait {
+                    let saveToCoreData = TempTargets(context: coredataContext)
+                    saveToCoreData.active = false
+                    saveToCoreData.date = Date()
+                    try? coredataContext.save()
+                }
             }
             var highTarget = lowTarget
 
             if units == .mmolL, !viewPercantage {
-                lowTarget = lowTarget.asMgdL
-                highTarget = highTarget.asMgdL
+                lowTarget = Decimal(round(Double(lowTarget.asMgdL)))
+                highTarget = lowTarget
             }
 
             let entry = TempTarget(
@@ -72,6 +89,8 @@ extension AddTempTarget {
 
                 let setHBT = TempTargetsSlider(context: self.coredataContext)
                 setHBT.enabled = false
+                setHBT.date = Date()
+
                 try? self.coredataContext.save()
             }
         }
@@ -90,8 +109,8 @@ extension AddTempTarget {
             var highTarget = lowTarget
 
             if units == .mmolL, !viewPercantage {
-                lowTarget = lowTarget.asMgdL
-                highTarget = highTarget.asMgdL
+                lowTarget = Decimal(round(Double(lowTarget.asMgdL)))
+                highTarget = lowTarget
             }
 
             let entry = TempTarget(
@@ -115,7 +134,6 @@ extension AddTempTarget {
                     saveToCoreData.isPreset = true
                     saveToCoreData.enabled = true
                     saveToCoreData.hbt = hbt
-                    saveToCoreData.enabled = true
                     saveToCoreData.date = Date()
                     saveToCoreData.duration = duration as NSDecimalNumber
                     try? self.coredataContext.save()

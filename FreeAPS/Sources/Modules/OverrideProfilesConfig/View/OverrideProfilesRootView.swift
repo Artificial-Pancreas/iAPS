@@ -52,9 +52,13 @@ extension OverrideProfilesConfig {
                                 onEditingChanged: { editing in
                                     isEditing = editing
                                 }
-                            )
+                            ).accentColor(state.percentage >= 130 ? .red : .blue)
                             Text("\(state.percentage.formatted(.number)) %")
-                                .foregroundColor(isEditing ? .orange : .blue)
+                                .foregroundColor(
+                                    state
+                                        .percentage >= 130 ? .red :
+                                        (isEditing ? .orange : .blue)
+                                )
                                 .font(.largeTitle)
                             Spacer()
                             Toggle(isOn: $state._indefinite) {
@@ -81,7 +85,9 @@ extension OverrideProfilesConfig {
                         .frame(maxWidth: .infinity, alignment: .center)
                         .controlSize(.mini)
                         .alert(
-                            "Saving this override will change your basal insulin, ISF and CR during the entire selected duration. Tapping save will start your new overide or edit your current active override.",
+                            "Selected Override:\n\n\(state.percentage.formatted(.number)) %, " +
+                                (state.duration > 0 ? "\(state.duration) min" : " infinite duration.") + "\n\n" +
+                                "Saving this override will change your basal insulin, ISF and CR during the entire selected duration. Tapping save will start your new overide or edit your current active override.",
                             isPresented: $showAlert,
                             actions: {
                                 Button("Cancel", role: .cancel) {}

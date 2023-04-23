@@ -81,8 +81,8 @@ final class BaseAPSManager: APSManager, Injectable {
         }
     }
 
-    // let coredataContext = CoreDataStack.shared.persistentContainer.newBackgroundContext()
-    let coredataContext = CoreDataStack.shared.persistentContainer.viewContext
+    let coredataContext = CoreDataStack.shared.persistentContainer.newBackgroundContext()
+    // let coredataContext = CoreDataStack.shared.persistentContainer.viewContext
 
     private var openAPS: OpenAPS!
 
@@ -702,229 +702,7 @@ final class BaseAPSManager: APSManager, Injectable {
                 }
             }
             nightscout.uploadStatus()
-            // Update the TDD value
-            tdd(enacted_: enacted)
-            // Update statistics
             statistics()
-        }
-    }
-
-    private func tdd(enacted_: Suggestion) {
-        let tddStartedAt = Date()
-        let preferences = settingsManager.preferences
-        let currentTDD = enacted_.tdd ?? 0
-
-        var booleanArray = [TempTargetsSlider]()
-        var overrideArray = [Override]()
-        var tempTargetsArray = [TempTargets]()
-        var isPercentageEnabled = false
-        var useOverride = false
-        var overridePercentage: Decimal = 100
-        var duration: Decimal = 0
-        var unlimited: Bool = false
-        var newDuration: Decimal = 0
-        var hbtSetting: Decimal = 160
-
-        if currentTDD > 0 {
-            let tenDaysAgo = Date().addingTimeInterval(-10.days.timeInterval)
-            let twoHoursAgo = Date().addingTimeInterval(-2.hours.timeInterval)
-
-            var uniqEvents = [TDD]()
-            var total: Decimal = 0
-            var totalAmount: Decimal = 0
-            var indeces: Int = 0
-            var nrOfIndeces: Int = 0
-
-            coredataContext.performAndWait {
-                let requestTDD = TDD.fetchRequest() as NSFetchRequest<TDD>
-                requestTDD.predicate = NSPredicate(format: "timestamp > %@ AND tdd > 0", tenDaysAgo as NSDate)
-                let sortTDD = NSSortDescriptor(key: "timestamp", ascending: true)
-                requestTDD.sortDescriptors = [sortTDD]
-                try? uniqEvents = coredataContext.fetch(requestTDD)
-
-                let requestIsEnbled = TempTargetsSlider.fetchRequest() as NSFetchRequest<TempTargetsSlider>
-                let sortIsEnabled = NSSortDescriptor(key: "date", ascending: false)
-                requestIsEnbled.sortDescriptors = [sortIsEnabled]
-                // requestIsEnbled.fetchLimit = 1
-                try? booleanArray = coredataContext.fetch(requestIsEnbled)
-
-                let requestOverrides = Override.fetchRequest() as NSFetchRequest<Override>
-                let sortOverride = NSSortDescriptor(key: "date", ascending: false)
-                requestOverrides.sortDescriptors = [sortOverride]
-                requestOverrides.fetchLimit = 1
-                try? overrideArray = coredataContext.fetch(requestOverrides)
-
-                let requestTempTargets = TempTargets.fetchRequest() as NSFetchRequest<TempTargets>
-                let sortTT = NSSortDescriptor(key: "date", ascending: false)
-                requestTempTargets.sortDescriptors = [sortTT]
-                requestTempTargets.fetchLimit = 1
-                try? tempTargetsArray = coredataContext.fetch(requestTempTargets)
-
-                total = uniqEvents.compactMap({ each in each.tdd as? Decimal ?? 0 }).reduce(0, +)
-                indeces = uniqEvents.count
-                // Only fetch once. Use same (previous) fetch
-                let twoHoursArray = uniqEvents.filter({ ($0.timestamp ?? Date()) >= twoHoursAgo })
-                nrOfIndeces = twoHoursArray.count
-                totalAmount = twoHoursArray.compactMap({ each in each.tdd as? Decimal ?? 0 }).reduce(0, +)
-            }
-
-            if indeces == 0 {
-                indeces = 1
-            }
-            if nrOfIndeces == 0 {
-                nrOfIndeces = 1
-            }
-
-            let average2hours = totalAmount / Decimal(nrOfIndeces)
-            let average14 = total / Decimal(indeces)
-            let weight = preferences.weightPercentage
-            let weighted_average = weight * average2hours + (1 - weight) * average14
-
-            isPercentageEnabled = booleanArray.first?.enabled ?? false
-            useOverride = overrideArray.first?.enabled ?? false
-            overridePercentage = Decimal(overrideArray.first?.percentage ?? 100)
-            unlimited = overrideArray.first?.indefinite ?? true
-            hbtSetting = Decimal(booleanArray.first?.hbt ?? 160)
-
-            if useOverride {
-                duration = (overrideArray.first?.duration ?? 0) as Decimal
-                let addedMinutes = Int(duration)
-                let date = overrideArray.first?.date ?? Date()
-                if date.addingTimeInterval(addedMinutes.minutes.timeInterval) < Date(),
-                   !unlimited
-                { useOverride = false }
-
-                newDuration = Decimal(Date().distance(to: date.addingTimeInterval(addedMinutes.minutes.timeInterval)).minutes)
-            }
-
-            if newDuration < 0 {
-                newDuration = 0
-            } else { duration = newDuration }
-
-            if !useOverride {
-                unlimited = true
-                overridePercentage = 100
-                duration = 0
-            }
-
-            if tempTargetsArray.first?.active ?? false || booleanArray.first?.enabled ?? false {
-                var duration_ = Int(truncating: tempTargetsArray.first?.duration ?? 0)
-                var hbt = tempTargetsArray.first?.hbt ?? 160
-                if booleanArray.first?.enabled ?? false, !(booleanArray.first?.isPreset ?? false) {
-                    duration_ = Int(truncating: booleanArray.first?.duration ?? 0)
-                    hbt = booleanArray.first?.hbt ?? 160
-                }
-                let startDate = tempTargetsArray.first?.startDate ?? Date()
-                let durationPlusStart = startDate.addingTimeInterval(duration_.minutes.timeInterval)
-                let dd = durationPlusStart.timeIntervalSinceNow.minutes
-                if dd > 0 {
-                    hbtSetting = Decimal(hbt)
-                    isPercentageEnabled = true
-                } else { isPercentageEnabled = false }
-            }
-
-            let averages = Oref2_variables(
-                average_total_data: roundDecimal(average14, 1),
-                weightedAverage: roundDecimal(weighted_average, 1),
-                past2hoursAverage: roundDecimal(average2hours, 1),
-                date: Date(),
-                isEnabled: isPercentageEnabled,
-                overridePercentage: overridePercentage,
-                useOverride: useOverride,
-                duration: duration,
-                unlimited: unlimited,
-                hbt: hbtSetting
-            )
-            storage.save(averages, as: OpenAPS.Monitor.oref2_variables)
-
-            print("Test time of TDD: \(-1 * tddStartedAt.timeIntervalSinceNow) s")
-        } else {
-            coredataContext.performAndWait {
-                let requestIsEnbled = TempTargetsSlider.fetchRequest() as NSFetchRequest<TempTargetsSlider>
-                let sortIsEnabled = NSSortDescriptor(key: "date", ascending: false)
-                requestIsEnbled.sortDescriptors = [sortIsEnabled]
-                try? booleanArray = coredataContext.fetch(requestIsEnbled)
-
-                let requestOverrides = Override.fetchRequest() as NSFetchRequest<Override>
-                let sortOverride = NSSortDescriptor(key: "date", ascending: false)
-                requestOverrides.sortDescriptors = [sortOverride]
-                requestOverrides.fetchLimit = 1
-                try? overrideArray = coredataContext.fetch(requestOverrides)
-
-                let requestTempTargets = TempTargets.fetchRequest() as NSFetchRequest<TempTargets>
-                let sortTT = NSSortDescriptor(key: "date", ascending: false)
-                requestTempTargets.sortDescriptors = [sortTT]
-                requestTempTargets.fetchLimit = 1
-                try? tempTargetsArray = coredataContext.fetch(requestTempTargets)
-            }
-
-            isPercentageEnabled = booleanArray.first?.enabled ?? false
-            useOverride = overrideArray.first?.enabled ?? false
-            overridePercentage = Decimal(overrideArray.first?.percentage ?? 100)
-            unlimited = overrideArray.first?.indefinite ?? true
-            hbtSetting = Decimal(booleanArray.first?.hbt ?? 160)
-
-            if useOverride {
-                duration = (overrideArray.first?.duration ?? 0) as Decimal
-                let addedMinutes = Int(duration)
-                let date = overrideArray.first?.date ?? Date()
-                if date.addingTimeInterval(addedMinutes.minutes.timeInterval) < Date(),
-                   !unlimited
-                { useOverride = false }
-
-                newDuration = Decimal(Date().distance(to: date.addingTimeInterval(addedMinutes.minutes.timeInterval)).minutes)
-            }
-
-            if newDuration < 0 {
-                newDuration = 0
-            } else { duration = newDuration }
-
-            if !useOverride {
-                unlimited = true
-                overridePercentage = 100
-                duration = 0
-            }
-
-            if tempTargetsArray.first?.active ?? false || booleanArray.first?.enabled ?? false {
-                var duration_ = Int(truncating: tempTargetsArray.first?.duration ?? 0)
-                var hbt = tempTargetsArray.first?.hbt ?? 160
-                if booleanArray.first?.enabled ?? false, !(booleanArray.first?.isPreset ?? false) {
-                    duration_ = Int(truncating: booleanArray.first?.duration ?? 0)
-                    hbt = booleanArray.first?.hbt ?? 160
-                }
-                let startDate = tempTargetsArray.first?.startDate ?? Date()
-                let durationPlusStart = startDate.addingTimeInterval(duration_.minutes.timeInterval)
-                let dd = durationPlusStart.timeIntervalSinceNow.minutes
-
-                if dd > 0 {
-                    hbtSetting = Decimal(hbt)
-                    isPercentageEnabled = true
-                } else { isPercentageEnabled = false }
-            }
-
-            let averages = Oref2_variables(
-                average_total_data: 0,
-                weightedAverage: 1,
-                past2hoursAverage: 0,
-                date: Date(),
-                isEnabled: isPercentageEnabled,
-                overridePercentage: overridePercentage,
-                useOverride: useOverride,
-                duration: duration,
-                unlimited: unlimited,
-                hbt: hbtSetting
-            )
-            storage.save(averages, as: OpenAPS.Monitor.oref2_variables)
-        }
-
-        coredataContext.performAndWait {
-            let saveNewUseOverride = Override(context: self.coredataContext)
-            saveNewUseOverride.date = Date()
-            saveNewUseOverride.enabled = useOverride
-            saveNewUseOverride.percentage = Double(overridePercentage)
-            saveNewUseOverride.duration = newDuration as NSDecimalNumber
-            saveNewUseOverride.indefinite = unlimited
-            try? self.coredataContext.save()
         }
     }
 
@@ -1258,9 +1036,10 @@ final class BaseAPSManager: APSManager, Injectable {
                     lastIndex = true
                 }
                 if array[i].bg_ < Double(hypoLimit), !lastIndex {
-                    timeInHypo += (currentTime - previousTime).timeInterval
+                    // Exclude duration between CGM readings which are more than 30 minutes
+                    timeInHypo += min((currentTime - previousTime).timeInterval, 30.minutes.timeInterval)
                 } else if array[i].bg_ >= Double(hyperLimit), !lastIndex {
-                    timeInHyper += (currentTime - previousTime).timeInterval
+                    timeInHyper += min((currentTime - previousTime).timeInterval, 30.minutes.timeInterval)
                 }
             }
             if timeInHypo == 0.0 {

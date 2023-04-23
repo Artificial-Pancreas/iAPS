@@ -105,7 +105,6 @@ struct MainView: View {
                 Text("g").foregroundColor(.loopYellow)
                     .font(.caption2)
                     .scaledToFill()
-                    .foregroundColor(.loopYellow)
                     .minimumScaleFactor(0.5)
                 Spacer()
                 Text(iobFormatter.string(from: (state.iob ?? 0) as NSNumber)!)
@@ -117,7 +116,6 @@ struct MainView: View {
                 Text("U").foregroundColor(.insulin)
                     .font(.caption2)
                     .scaledToFill()
-                    .foregroundColor(.insulin)
                     .minimumScaleFactor(0.5)
 
                 if state.displayHR {
