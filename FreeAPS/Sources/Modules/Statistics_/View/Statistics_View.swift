@@ -1,3 +1,4 @@
+import Charts
 import CoreData
 import SwiftDate
 import SwiftUI
@@ -51,6 +52,75 @@ struct Statistics_View: View {
         Divider()
         // Spacer()
         hba1c
+    }
+
+    @ViewBuilder func chart() -> some View {
+        pieChart
+    }
+
+    var pieChart: some View {
+        /*
+         Chart {
+             ForEach(fetchedGlucose) { readings in
+                 PointMark(
+                     x: .value("Date", readings.date ?? Date()),
+                     y: .value("Glucose", Double(readings.glucose) * 0.0555)
+                 ).foregroundStyle(by: .value("In Range", readings.glucose))
+             }
+         }
+         */
+
+        // let arrayLow = fetchedGlucose.filter({ $0.glucose < 4 })
+        // let arrayHigh = fetchedGlucose.filter({ $0.glucose > 8 })
+        // let arrayTIR = fetchedGlucose.filter({ ($0.glucose > 70 && $0.glucose < 144) })
+
+        // let departmentAProfit: [Readings] = arrayLow
+        // let departmentBProfit: [Readings] = arrayTIR
+        // let departmentCProfit: [Readings] = arrayHigh
+
+        /*
+         Chart(fetchedGlucose) {
+             PointMark(
+                 x: .value("Date", $0.date ?? Date()),
+                 y: .value("Glucose", $0.glucose)
+             )
+             .foregroundStyle(by: .value("Group", $0.glucose))
+         }
+          */
+
+        Chart {
+            ForEach(fetchedGlucose.filter({ $0.glucose > 145 }), id: \.date) { item in
+                PointMark(
+                    x: .value("Date", item.date ?? Date()),
+                    y: .value("Profit B", item.glucose)
+                    // series: .value("Company", "B")
+                )
+                .foregroundStyle(.orange)
+            }
+
+            ForEach(fetchedGlucose.filter({ $0.glucose > 70 && $0.glucose < 145 }), id: \.date) { item in
+                PointMark(
+                    x: .value("Date", item.date ?? Date()),
+                    y: .value("Profit A", item.glucose)
+                    // series: .value("Company", "A")
+                )
+                .foregroundStyle(.green)
+            }
+
+            ForEach(fetchedGlucose.filter({ $0.glucose < 70 }), id: \.date) { item in
+                PointMark(
+                    x: .value("Date", item.date ?? Date()),
+                    y: .value("Profit A", item.glucose)
+                    // series: .value("Company", "A")
+                )
+                .foregroundStyle(.red)
+            }
+
+            RuleMark(
+                y: .value("Threshold", 90)
+            )
+            .foregroundStyle(.green)
+        }
     }
 
     var header: some View {
@@ -205,6 +275,8 @@ struct Statistics_View: View {
     var body: some View {
         ZStack {
             VStack(spacing: 8) {
+                chart()
+                Spacer()
                 stats()
                 Spacer()
                 durationButton(states: durationState.allCases, selectedState: $selectedState)
