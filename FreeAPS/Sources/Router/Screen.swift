@@ -29,7 +29,7 @@ enum Screen: Identifiable, Hashable {
     case iconConfig
     case overrideProfilesConfig
     case snooze
-    case garmin
+    case watch
 
     var id: Int { String(reflecting: self).hashValue }
 }
@@ -94,8 +94,8 @@ extension Screen {
             OverrideProfilesConfig.RootView(resolver: resolver)
         case .snooze:
             Snooze.RootView(resolver: resolver)
-        case .garmin:
-            GarminConfig.RootView(resolver: resolver)
+        case .watch:
+            WatchConfig.RootView(resolver: resolver)
         }
     }
 
