@@ -73,6 +73,13 @@ enum DataTable {
             return formatter
         }
 
+        private var tempTargetFormater: NumberFormatter {
+            let formatter = NumberFormatter()
+            formatter.numberStyle = .decimal
+            formatter.maximumFractionDigits = 1
+            return formatter
+        }
+
         init(
             units: GlucoseUnits,
             type: DataType,
@@ -138,7 +145,7 @@ enum DataTable {
                     secondAmount = secondAmount.asMmolL
                 }
 
-                return numberFormater.string(from: converted as NSNumber)! + " - " + numberFormater
+                return tempTargetFormater.string(from: converted as NSNumber)! + " - " + tempTargetFormater
                     .string(from: secondAmount as NSNumber)! + " \(units.rawValue)"
             case .resume,
                  .suspend:
