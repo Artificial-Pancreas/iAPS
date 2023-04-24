@@ -60,7 +60,7 @@ final class BaseWatchManager: NSObject, WatchManager, Injectable {
 
             let insulinRequired = self.suggestion?.insulinReq ?? 0
             self.state.bolusRecommended = self.apsManager
-                .roundBolus(amount: max(insulinRequired * self.settingsManager.settings.insulinReqFraction, 0))
+                .roundBolus(amount: max(insulinRequired * (self.settingsManager.settings.insulinReqPercentage / 100) * 2, 0))
 
             self.state.iob = self.suggestion?.iob
             self.state.cob = self.suggestion?.cob
