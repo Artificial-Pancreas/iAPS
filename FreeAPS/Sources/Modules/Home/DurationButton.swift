@@ -11,10 +11,11 @@ extension DurationButton where Self: RawRepresentable, RawValue == String {
 }
 
 enum durationState: String, DurationButton {
-    case day = "Past 24 Hours "
-    case week = "Past Week "
-    case month = "Past Month "
-    case total = "All Past Days of Data "
+    case twentyFour = "Today"
+    case day = "24 Hours "
+    case week = "Week "
+    case month = "Month "
+    case total = "All Past Days"
 }
 
 struct durationButton<T: DurationButton>: View {

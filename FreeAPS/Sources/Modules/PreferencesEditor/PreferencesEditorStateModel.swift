@@ -54,31 +54,6 @@ extension PreferencesEditor {
                 ),
                 Field(
                     displayName: NSLocalizedString(
-                        "Update every number of minutes:",
-                        comment: "How often to update the statistics"
-                    ),
-
-                    type: .decimal(keypath: \.updateInterval),
-                    infoText: NSLocalizedString(
-                        "Default is 20 minutes. How often to update and save the statistics.json and to upload last array, when enabled, to Nightscout.",
-                        comment: "Description for update interval for statistics"
-                    ),
-                    settable: self
-                ),
-                Field(
-                    displayName: NSLocalizedString(
-                        "Display Loop Cycle statistics",
-                        comment: "Display Display Loop Cycle statistics in statPanel"
-                    ),
-                    type: .boolean(keypath: \.displayLoops),
-                    infoText: NSLocalizedString(
-                        "Displays Loop statistics in the statPanel in Home View",
-                        comment: "Description for Display Loop statistics"
-                    ),
-                    settable: self
-                ),
-                Field(
-                    displayName: NSLocalizedString(
                         "Override HbA1c unit",
                         comment: "Display %"
                     ),

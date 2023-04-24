@@ -39,7 +39,7 @@ extension PreferencesEditor {
 
                     Toggle("Display HR on Watch", isOn: $state.displayHR)
 
-                    Toggle("Display Statistics", isOn: $state.displayStatistics)
+                    Toggle("Allow Upload of Statistics to NS", isOn: $state.displayStatistics)
                 }
 
                 ForEach(state.sections.indexed(), id: \.1.id) { sectionIndex, section in

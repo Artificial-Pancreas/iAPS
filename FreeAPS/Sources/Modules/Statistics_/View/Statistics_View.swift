@@ -203,16 +203,18 @@ struct Statistics_View: View {
     }
 
     var body: some View {
-        VStack(spacing: 8) {
-            stats()
-            Spacer()
-            durationButton(states: durationState.allCases, selectedState: $selectedState)
+        ZStack {
+            VStack(spacing: 8) {
+                stats()
+                Spacer()
+                durationButton(states: durationState.allCases, selectedState: $selectedState)
+            }
+            .frame(maxWidth: .infinity)
+            .padding([.vertical], 40)
+            .navigationTitle("Statistics")
+            .navigationBarHidden(true)
+            .ignoresSafeArea(.keyboard)
         }
-        .frame(maxWidth: .infinity)
-        .padding([.vertical], 40)
-        .navigationTitle("Statistics")
-        .navigationBarHidden(true)
-        .ignoresSafeArea(.keyboard)
     }
 
     private func loopStats(_ loops: FetchedResults<LoopStatRecord>) -> [(double: Double, string: String)] {
@@ -346,6 +348,10 @@ struct Statistics_View: View {
         var denominator: Double = 1
 
         switch selectedState {
+        case .twentyFour:
+            let minutesSinceMidnight = Calendar.current.component(.hour, from: Date()) * 60 + Calendar.current
+                .component(.minute, from: Date())
+            duration = minutesSinceMidnight / 1440
         case .day:
             duration = 1
         case .week:
@@ -405,6 +411,10 @@ struct Statistics_View: View {
     private func tir(_ glucose_90: FetchedResults<Readings>) -> [(decimal: Decimal, string: String)] {
         var duration = 1
         switch selectedState {
+        case .twentyFour:
+            let minutesSinceMidnight = Calendar.current.component(.hour, from: Date()) * 60 + Calendar.current
+                .component(.minute, from: Date())
+            duration = minutesSinceMidnight / 1440
         case .day:
             duration = 1
         case .week:
