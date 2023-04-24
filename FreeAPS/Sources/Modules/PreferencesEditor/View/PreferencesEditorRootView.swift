@@ -31,8 +31,8 @@ extension PreferencesEditor {
                     Toggle("Remote control", isOn: $state.allowAnnouncements)
 
                     HStack {
-                        Text("Recommended Insulin Fraction")
-                        DecimalTextField("", value: $state.insulinReqFraction, formatter: formatter)
+                        Text("Recommended Bolus Percentage")
+                        DecimalTextField("", value: $state.insulinReqPercentage, formatter: formatter)
                     }
 
                     Toggle("Skip Bolus screen after carbs", isOn: $state.skipBolusScreenAfterCarbs)

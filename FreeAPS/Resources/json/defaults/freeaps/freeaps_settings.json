@@ -7,7 +7,7 @@
     "useLocalGlucoseSource": false,
     "localGlucosePort": 8080,
     "debugOptions": false,
-    "insulinReqFraction": 1.5,
+    "insulinReqPercentage": 70,
     "skipBolusScreenAfterCarbs": false,
     "displayHR": false,
     "cgm": "nightscout",
