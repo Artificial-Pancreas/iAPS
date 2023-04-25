@@ -7,6 +7,17 @@ import Swinject
 struct Statistics_View: View {
     // let resolver: Resolver
 
+    @Environment(\.managedObjectContext) var moc
+
+    @State private var dateFilter = Calendar.current.startOfDay(for: Date()) as NSDate
+
+    /*
+     var glucoseToday: NSPredicate? { NSPredicate(format: "date >= %@", Calendar.current.startOfDay(for: Date()) as NSDate) }
+     var glucoseWeek: NSPredicate? { NSPredicate(format: "date > %@", Date().addingTimeInterval(-7.days.timeInterval) as NSDate) }
+     var glucoseMonth: NSPredicate? { NSPredicate(format: "date > %@", Date().addingTimeInterval(-30.days.timeInterval) as NSDate)}
+     var glucose90: NSPredicate? { NSPredicate(format: "date > %@", Date().addingTimeInterval(-90.days.timeInterval) as NSDate) }
+      */
+
     @FetchRequest(
         entity: Readings.entity(),
         sortDescriptors: [NSSortDescriptor(key: "date", ascending: false)], predicate: NSPredicate(
@@ -44,11 +55,10 @@ struct Statistics_View: View {
     @State var headline: Color = .secondary
     @State var selectedState: durationState
     @State var days: Double = 0
-    @State var pointSize: CGFloat = 2
+    @State var pointSize: CGFloat = 3
     @State var conversionFactor = 0.0555
 
     @ViewBuilder func stats() -> some View {
-        // Spacer()
         timeInRange
         Divider()
         // header
@@ -73,16 +83,14 @@ struct Statistics_View: View {
                 PointMark(
                     x: .value("Date", item.date ?? Date()),
                     y: .value("Low", Double(item.glucose) * conversionFactor)
-                    // series: .value("Company", "B")
                 )
                 .foregroundStyle(.orange)
                 .symbolSize(pointSize)
             }
-            ForEach(fetchedGlucoseDay.filter({ $0.glucose > 70 && $0.glucose < 145 }), id: \.date) { item in
+            ForEach(fetchedGlucoseDay.filter({ $0.glucose >= 70 && $0.glucose <= 145 }), id: \.date) { item in
                 PointMark(
                     x: .value("Date", item.date ?? Date()),
                     y: .value("In Range", Double(item.glucose) * conversionFactor)
-                    // series: .value("Company", "A")
                 )
                 .foregroundStyle(.green)
                 .symbolSize(pointSize)
@@ -91,7 +99,6 @@ struct Statistics_View: View {
                 PointMark(
                     x: .value("Date", item.date ?? Date()),
                     y: .value("High", Double(item.glucose) * conversionFactor)
-                    // series: .value("Company", "A")
                 )
                 .foregroundStyle(.red)
                 .symbolSize(pointSize)
@@ -99,8 +106,7 @@ struct Statistics_View: View {
             RuleMark(
                 y: .value("Target", 100 * conversionFactor)
             )
-            .foregroundStyle(.green)
-            .lineStyle(StrokeStyle(lineWidth: 0.5, dash: [5]))
+            .lineStyle(StrokeStyle(lineWidth: 0.5, dash: [10]))
         }
     }
 
@@ -400,24 +406,22 @@ struct Statistics_View: View {
         var denominator: Double = 1
 
         switch selectedState {
-        case .twentyFour:
+        case .day:
             let minutesSinceMidnight = Calendar.current.component(.hour, from: Date()) * 60 + Calendar.current
                 .component(.minute, from: Date())
-            duration = minutesSinceMidnight / 1440
-        case .day:
-            duration = 1
+            duration = minutesSinceMidnight
         case .week:
-            duration = 7
+            duration = 7 * 1440
             if numberOfDays > 7 { denominator = 7 } else { denominator = numberOfDays }
         case .month:
-            duration = 30
+            duration = 30 * 1440
             if numberOfDays > 30 { denominator = 30 } else { denominator = numberOfDays }
         case .total:
-            duration = 90
+            duration = 90 * 1440
             if numberOfDays >= 90 { denominator = 90 } else { denominator = numberOfDays }
         }
 
-        let timeAgo = Date().addingTimeInterval(-duration.days.timeInterval)
+        let timeAgo = Date().addingTimeInterval(-duration.minutes.timeInterval)
         let glucose = glucose_90.filter({ ($0.date ?? Date()) >= timeAgo })
 
         let justGlucoseArray = glucose.compactMap({ each in Int(each.glucose as Int16) })
@@ -462,25 +466,24 @@ struct Statistics_View: View {
 
     private func tir(_ glucose_90: FetchedResults<Readings>) -> [(decimal: Decimal, string: String)] {
         var duration = 1
+
         switch selectedState {
-        case .twentyFour:
+        case .day:
             let minutesSinceMidnight = Calendar.current.component(.hour, from: Date()) * 60 + Calendar.current
                 .component(.minute, from: Date())
-            duration = minutesSinceMidnight / 1440
-        case .day:
-            duration = 1
+            duration = minutesSinceMidnight
         case .week:
-            duration = 7
+            duration = 7 * 1440
         case .month:
-            duration = 30
+            duration = 30 * 1440
         case .total:
-            duration = 90
+            duration = 90 * 1440
         }
 
         let hypoLimit = Int16(round(3.9 / 0.0555))
         let hyperLimit = Int16(round(10.0 / 0.0555))
 
-        let timeAgo = Date().addingTimeInterval(-duration.days.timeInterval)
+        let timeAgo = Date().addingTimeInterval(-duration.minutes.timeInterval)
         let glucose = glucose_90.filter({ ($0.date ?? Date()) >= timeAgo })
 
         let justGlucoseArray = glucose.compactMap({ each in Int(each.glucose as Int16) })
