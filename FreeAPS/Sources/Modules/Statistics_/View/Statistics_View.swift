@@ -7,16 +7,28 @@ import Swinject
 struct Statistics_View: View {
     // let resolver: Resolver
 
-    @Environment(\.managedObjectContext) var moc
+    // @Environment(\.managedObjectContext) var moc
 
-    @State private var dateFilter = Calendar.current.startOfDay(for: Date()) as NSDate
+    @FetchRequest(
+        entity: Readings.entity(),
+        sortDescriptors: [NSSortDescriptor(key: "date", ascending: false)], predicate: NSPredicate(
+            format: "date >= %@", Calendar.current.startOfDay(for: Date()) as NSDate
+        )
+    ) var fetchedGlucoseDay: FetchedResults<Readings>
 
-    /*
-     var glucoseToday: NSPredicate? { NSPredicate(format: "date >= %@", Calendar.current.startOfDay(for: Date()) as NSDate) }
-     var glucoseWeek: NSPredicate? { NSPredicate(format: "date > %@", Date().addingTimeInterval(-7.days.timeInterval) as NSDate) }
-     var glucoseMonth: NSPredicate? { NSPredicate(format: "date > %@", Date().addingTimeInterval(-30.days.timeInterval) as NSDate)}
-     var glucose90: NSPredicate? { NSPredicate(format: "date > %@", Date().addingTimeInterval(-90.days.timeInterval) as NSDate) }
-      */
+    @FetchRequest(
+        entity: Readings.entity(),
+        sortDescriptors: [NSSortDescriptor(key: "date", ascending: false)],
+        predicate: NSPredicate(format: "date > %@", Date().addingTimeInterval(-7.days.timeInterval) as NSDate)
+    ) var fetchedGlucoseWeek: FetchedResults<Readings>
+
+    @FetchRequest(
+        entity: Readings.entity(),
+        sortDescriptors: [NSSortDescriptor(key: "date", ascending: false)], predicate: NSPredicate(
+            format: "date > %@",
+            Date().addingTimeInterval(-30.days.timeInterval) as NSDate
+        )
+    ) var fetchedGlucoseMonth: FetchedResults<Readings>
 
     @FetchRequest(
         entity: Readings.entity(),
@@ -25,13 +37,6 @@ struct Statistics_View: View {
             Date().addingTimeInterval(-90.days.timeInterval) as NSDate
         )
     ) var fetchedGlucose: FetchedResults<Readings>
-
-    @FetchRequest(
-        entity: Readings.entity(),
-        sortDescriptors: [NSSortDescriptor(key: "date", ascending: false)], predicate: NSPredicate(
-            format: "date >= %@", Calendar.current.startOfDay(for: Date()) as NSDate
-        )
-    ) var fetchedGlucoseDay: FetchedResults<Readings>
 
     @FetchRequest(
         entity: TDD.entity(),
@@ -74,39 +79,32 @@ struct Statistics_View: View {
     }
 
     @ViewBuilder func chart() -> some View {
-        glucoseChart
+        switch selectedState {
+        case .day:
+            glucoseChart
+        case .week:
+            glucoseChartWeek
+        case .month:
+            glucoseChartMonth
+        case .total:
+            glucoseChart90
+        }
     }
 
-    var glucoseChart: some View {
-        Chart {
-            ForEach(fetchedGlucoseDay.filter({ $0.glucose > 145 }), id: \.date) { item in
-                PointMark(
-                    x: .value("Date", item.date ?? Date()),
-                    y: .value("Low", Double(item.glucose) * conversionFactor)
-                )
-                .foregroundStyle(.orange)
-                .symbolSize(pointSize)
+    var body: some View {
+        ZStack {
+            VStack(spacing: 8) {
+                chart().padding(.horizontal, 10)
+                Spacer()
+                stats()
+                Spacer()
+                durationButton(states: durationState.allCases, selectedState: $selectedState)
             }
-            ForEach(fetchedGlucoseDay.filter({ $0.glucose >= 70 && $0.glucose <= 145 }), id: \.date) { item in
-                PointMark(
-                    x: .value("Date", item.date ?? Date()),
-                    y: .value("In Range", Double(item.glucose) * conversionFactor)
-                )
-                .foregroundStyle(.green)
-                .symbolSize(pointSize)
-            }
-            ForEach(fetchedGlucoseDay.filter({ $0.glucose < 70 }), id: \.date) { item in
-                PointMark(
-                    x: .value("Date", item.date ?? Date()),
-                    y: .value("High", Double(item.glucose) * conversionFactor)
-                )
-                .foregroundStyle(.red)
-                .symbolSize(pointSize)
-            }
-            RuleMark(
-                y: .value("Target", 100 * conversionFactor)
-            )
-            .lineStyle(StrokeStyle(lineWidth: 0.5, dash: [10]))
+            .frame(maxWidth: .infinity)
+            .padding([.vertical], 40)
+            .navigationTitle("Statistics")
+            .navigationBarHidden(true)
+            .ignoresSafeArea(.keyboard)
         }
     }
 
@@ -258,20 +256,135 @@ struct Statistics_View: View {
         return days
     }
 
-    var body: some View {
-        ZStack {
-            VStack(spacing: 8) {
-                chart().padding(.horizontal, 10)
-                Spacer()
-                stats()
-                Spacer()
-                durationButton(states: durationState.allCases, selectedState: $selectedState)
+    var glucoseChart: some View {
+        Chart {
+            ForEach(fetchedGlucoseDay.filter({ $0.glucose > 145 }), id: \.date) { item in
+                PointMark(
+                    x: .value("Date", item.date ?? Date()),
+                    y: .value("Low", Double(item.glucose) * conversionFactor)
+                )
+                .foregroundStyle(.orange)
+                .symbolSize(pointSize)
             }
-            .frame(maxWidth: .infinity)
-            .padding([.vertical], 40)
-            .navigationTitle("Statistics")
-            .navigationBarHidden(true)
-            .ignoresSafeArea(.keyboard)
+            ForEach(fetchedGlucoseDay.filter({ $0.glucose >= 70 && $0.glucose <= 145 }), id: \.date) { item in
+                PointMark(
+                    x: .value("Date", item.date ?? Date()),
+                    y: .value("In Range", Double(item.glucose) * conversionFactor)
+                )
+                .foregroundStyle(.green)
+                .symbolSize(pointSize)
+            }
+            ForEach(fetchedGlucoseDay.filter({ $0.glucose < 70 }), id: \.date) { item in
+                PointMark(
+                    x: .value("Date", item.date ?? Date()),
+                    y: .value("High", Double(item.glucose) * conversionFactor)
+                )
+                .foregroundStyle(.red)
+                .symbolSize(pointSize)
+            }
+            RuleMark(
+                y: .value("Target", 100 * conversionFactor)
+            )
+            .lineStyle(StrokeStyle(lineWidth: 0.5, dash: [10]))
+        }
+    }
+
+    var glucoseChartWeek: some View {
+        Chart {
+            ForEach(fetchedGlucoseWeek.filter({ $0.glucose > 145 }), id: \.date) { item in
+                PointMark(
+                    x: .value("Date", item.date ?? Date()),
+                    y: .value("Low", Double(item.glucose) * conversionFactor)
+                )
+                .foregroundStyle(.orange)
+                .symbolSize(pointSize)
+            }
+            ForEach(fetchedGlucoseWeek.filter({ $0.glucose >= 70 && $0.glucose <= 145 }), id: \.date) { item in
+                PointMark(
+                    x: .value("Date", item.date ?? Date()),
+                    y: .value("In Range", Double(item.glucose) * conversionFactor)
+                )
+                .foregroundStyle(.green)
+                .symbolSize(pointSize)
+            }
+            ForEach(fetchedGlucoseWeek.filter({ $0.glucose < 70 }), id: \.date) { item in
+                PointMark(
+                    x: .value("Date", item.date ?? Date()),
+                    y: .value("High", Double(item.glucose) * conversionFactor)
+                )
+                .foregroundStyle(.red)
+                .symbolSize(pointSize)
+            }
+            RuleMark(
+                y: .value("Target", 100 * conversionFactor)
+            )
+            .lineStyle(StrokeStyle(lineWidth: 0.5, dash: [10]))
+        }
+    }
+
+    var glucoseChartMonth: some View {
+        Chart {
+            ForEach(fetchedGlucoseMonth.filter({ $0.glucose > 145 }), id: \.date) { item in
+                PointMark(
+                    x: .value("Date", item.date ?? Date()),
+                    y: .value("Low", Double(item.glucose) * conversionFactor)
+                )
+                .foregroundStyle(.orange)
+                .symbolSize(pointSize)
+            }
+            ForEach(fetchedGlucoseMonth.filter({ $0.glucose >= 70 && $0.glucose <= 145 }), id: \.date) { item in
+                PointMark(
+                    x: .value("Date", item.date ?? Date()),
+                    y: .value("In Range", Double(item.glucose) * conversionFactor)
+                )
+                .foregroundStyle(.green)
+                .symbolSize(pointSize)
+            }
+            ForEach(fetchedGlucoseMonth.filter({ $0.glucose < 70 }), id: \.date) { item in
+                PointMark(
+                    x: .value("Date", item.date ?? Date()),
+                    y: .value("High", Double(item.glucose) * conversionFactor)
+                )
+                .foregroundStyle(.red)
+                .symbolSize(pointSize)
+            }
+            RuleMark(
+                y: .value("Target", 100 * conversionFactor)
+            )
+            .lineStyle(StrokeStyle(lineWidth: 0.5, dash: [10]))
+        }
+    }
+
+    var glucoseChart90: some View {
+        Chart {
+            ForEach(fetchedGlucose.filter({ $0.glucose > 145 }), id: \.date) { item in
+                PointMark(
+                    x: .value("Date", item.date ?? Date()),
+                    y: .value("Low", Double(item.glucose) * conversionFactor)
+                )
+                .foregroundStyle(.orange)
+                .symbolSize(pointSize)
+            }
+            ForEach(fetchedGlucose.filter({ $0.glucose >= 70 && $0.glucose <= 145 }), id: \.date) { item in
+                PointMark(
+                    x: .value("Date", item.date ?? Date()),
+                    y: .value("In Range", Double(item.glucose) * conversionFactor)
+                )
+                .foregroundStyle(.green)
+                .symbolSize(pointSize)
+            }
+            ForEach(fetchedGlucose.filter({ $0.glucose < 70 }), id: \.date) { item in
+                PointMark(
+                    x: .value("Date", item.date ?? Date()),
+                    y: .value("High", Double(item.glucose) * conversionFactor)
+                )
+                .foregroundStyle(.red)
+                .symbolSize(pointSize)
+            }
+            RuleMark(
+                y: .value("Target", 100 * conversionFactor)
+            )
+            .lineStyle(StrokeStyle(lineWidth: 0.5, dash: [10]))
         }
     }
 
