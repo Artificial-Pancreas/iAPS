@@ -16,6 +16,13 @@ struct Statistics_View: View {
     ) var fetchedGlucose: FetchedResults<Readings>
 
     @FetchRequest(
+        entity: Readings.entity(),
+        sortDescriptors: [NSSortDescriptor(key: "date", ascending: false)], predicate: NSPredicate(
+            format: "date >= %@", Calendar.current.startOfDay(for: Date()) as NSDate
+        )
+    ) var fetchedGlucoseDay: FetchedResults<Readings>
+
+    @FetchRequest(
         entity: TDD.entity(),
         sortDescriptors: [NSSortDescriptor(key: "timestamp", ascending: false)]
     ) var fetchedTDD: FetchedResults<TDD>
@@ -34,92 +41,66 @@ struct Statistics_View: View {
     ) var fetchedInsulin: FetchedResults<InsulinDistribution>
 
     @State var paddingAmount: CGFloat? = 2
-    @State var headline: Color = .teal
+    @State var headline: Color = .secondary
     @State var selectedState: durationState
     @State var days: Double = 0
+    @State var pointSize: CGFloat = 2
+    @State var conversionFactor = 0.0555
 
     @ViewBuilder func stats() -> some View {
-        Spacer()
-        header
+        // Spacer()
+        timeInRange
         Divider()
+        // header
+        // Divider()
         loops
         Divider()
         // Spacer()
         bloodGlucose
         Divider()
         // Spacer()
-        timeInRange
-        Divider()
         // Spacer()
         hba1c
     }
 
     @ViewBuilder func chart() -> some View {
-        pieChart
+        glucoseChart
     }
 
-    var pieChart: some View {
-        /*
-         Chart {
-             ForEach(fetchedGlucose) { readings in
-                 PointMark(
-                     x: .value("Date", readings.date ?? Date()),
-                     y: .value("Glucose", Double(readings.glucose) * 0.0555)
-                 ).foregroundStyle(by: .value("In Range", readings.glucose))
-             }
-         }
-         */
-
-        // let arrayLow = fetchedGlucose.filter({ $0.glucose < 4 })
-        // let arrayHigh = fetchedGlucose.filter({ $0.glucose > 8 })
-        // let arrayTIR = fetchedGlucose.filter({ ($0.glucose > 70 && $0.glucose < 144) })
-
-        // let departmentAProfit: [Readings] = arrayLow
-        // let departmentBProfit: [Readings] = arrayTIR
-        // let departmentCProfit: [Readings] = arrayHigh
-
-        /*
-         Chart(fetchedGlucose) {
-             PointMark(
-                 x: .value("Date", $0.date ?? Date()),
-                 y: .value("Glucose", $0.glucose)
-             )
-             .foregroundStyle(by: .value("Group", $0.glucose))
-         }
-          */
-
+    var glucoseChart: some View {
         Chart {
-            ForEach(fetchedGlucose.filter({ $0.glucose > 145 }), id: \.date) { item in
+            ForEach(fetchedGlucoseDay.filter({ $0.glucose > 145 }), id: \.date) { item in
                 PointMark(
                     x: .value("Date", item.date ?? Date()),
-                    y: .value("Profit B", item.glucose)
+                    y: .value("Low", Double(item.glucose) * conversionFactor)
                     // series: .value("Company", "B")
                 )
                 .foregroundStyle(.orange)
+                .symbolSize(pointSize)
             }
-
-            ForEach(fetchedGlucose.filter({ $0.glucose > 70 && $0.glucose < 145 }), id: \.date) { item in
+            ForEach(fetchedGlucoseDay.filter({ $0.glucose > 70 && $0.glucose < 145 }), id: \.date) { item in
                 PointMark(
                     x: .value("Date", item.date ?? Date()),
-                    y: .value("Profit A", item.glucose)
+                    y: .value("In Range", Double(item.glucose) * conversionFactor)
                     // series: .value("Company", "A")
                 )
                 .foregroundStyle(.green)
+                .symbolSize(pointSize)
             }
-
-            ForEach(fetchedGlucose.filter({ $0.glucose < 70 }), id: \.date) { item in
+            ForEach(fetchedGlucoseDay.filter({ $0.glucose < 70 }), id: \.date) { item in
                 PointMark(
                     x: .value("Date", item.date ?? Date()),
-                    y: .value("Profit A", item.glucose)
+                    y: .value("High", Double(item.glucose) * conversionFactor)
                     // series: .value("Company", "A")
                 )
                 .foregroundStyle(.red)
+                .symbolSize(pointSize)
             }
-
             RuleMark(
-                y: .value("Threshold", 90)
+                y: .value("Target", 100 * conversionFactor)
             )
             .foregroundStyle(.green)
+            .lineStyle(StrokeStyle(lineWidth: 0.5, dash: [5]))
         }
     }
 
@@ -141,7 +122,7 @@ struct Statistics_View: View {
                 ForEach(0 ..< loops_.count, id: \.self) { index in
                     VStack {
                         if index == 0 {
-                            Text(loops_[index].string).foregroundColor(headline).padding([.vertical], paddingAmount)
+                            Text(loops_[index].string).foregroundColor(.secondary).padding([.vertical], paddingAmount)
                         } else { Text(loops_[index].string).foregroundColor(.secondary).padding([.vertical], paddingAmount) }
                         Text(
                             index == 0 ? loops_[index].double.formatted() : (
@@ -245,10 +226,9 @@ struct Statistics_View: View {
                 ForEach(0 ..< TIRs.count, id: \.self) { index in
                     VStack {
                         if index == 1 {
-                            Text(TIRs[index].string).foregroundColor(headline)
+                            Text(TIRs[index].string).foregroundColor(.secondary)
                                 .padding([.vertical], paddingAmount)
-                        } else { Text(TIRs[index].string).foregroundColor(.secondary).font(.subheadline)
-                            .padding([.vertical], paddingAmount) }
+                        } else { Text(TIRs[index].string).foregroundColor(.secondary).padding([.vertical], paddingAmount) }
                         Text(
                             TIRs[index].decimal
                                 .formatted(.number.grouping(.never).rounded().precision(.fractionLength(0))) + " %"
@@ -275,7 +255,7 @@ struct Statistics_View: View {
     var body: some View {
         ZStack {
             VStack(spacing: 8) {
-                chart()
+                chart().padding(.horizontal, 10)
                 Spacer()
                 stats()
                 Spacer()
