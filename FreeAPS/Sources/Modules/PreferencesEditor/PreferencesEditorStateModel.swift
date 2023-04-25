@@ -14,7 +14,6 @@ extension PreferencesEditor {
             preferences = provider.preferences
             subscribeSetting(\.allowAnnouncements, on: $allowAnnouncements) { allowAnnouncements = $0 }
             subscribeSetting(\.insulinReqPercentage, on: $insulinReqPercentage) { insulinReqPercentage = $0 }
-            subscribeSetting(\.insulinReqFraction, on: $insulinReqFraction) { insulinReqFraction = $0 }
             subscribeSetting(\.displayStatistics, on: $displayStatistics) { displayStatistics = $0 }
             subscribeSetting(\.skipBolusScreenAfterCarbs, on: $skipBolusScreenAfterCarbs) { skipBolusScreenAfterCarbs = $0 }
 
