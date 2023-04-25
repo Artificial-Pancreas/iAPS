@@ -1,10 +1,22 @@
 import ConnectIQ
 import SwiftUI
 
-enum AwConfig: String, CaseIterable, Identifiable {
-    var id: Self { self }
-    case HR = "Heart Rate"
-    case BGTarget = "Glucose Target"
+enum AwConfig: String, JSON, CaseIterable, Identifiable, Codable {
+    var id: String { rawValue }
+    case HR
+    case BGTarget
+    case steps
+
+    var displayName: String {
+        switch self {
+        case .BGTarget:
+            return "Glucose Target"
+        case .HR:
+            return "Heart Rate"
+        case .steps:
+            return "Steps"
+        }
+    }
 }
 
 extension WatchConfig {
@@ -12,32 +24,22 @@ extension WatchConfig {
         @Injected() private var garmin: GarminManager!
         @Published var devices: [IQDevice] = []
         @Published var selectedAwConfig: AwConfig = .HR
-        @Published var displayHR = false
 
         private(set) var preferences = Preferences()
 
         override func subscribe() {
             preferences = provider.preferences
-            switch settingsManager.settings.displayHR {
-            case true:
-                selectedAwConfig = .HR
-            case false:
-                selectedAwConfig = .BGTarget
-            }
 
-            $selectedAwConfig.removeDuplicates()
-                .map {
-                    switch $0 {
-                    case .HR:
-                        return true
-                    case .BGTarget:
-                        return false
-                    }
+            subscribeSetting(\.displayOnWatch, on: $selectedAwConfig) { selectedAwConfig = $0 }
+            didSet: { [weak self] value in
+                // for compatibility with old displayHR
+                switch value {
+                case .HR:
+                    self?.settingsManager.settings.displayHR = true
+                default:
+                    self?.settingsManager.settings.displayHR = false
                 }
-                .sink { [weak self] value in
-                    self?.settingsManager.settings.displayHR = value
-                }
-                .store(in: &lifetime)
+            }
 
             devices = garmin.devices
         }

@@ -14,7 +14,7 @@ extension WatchConfig {
                         label: Text("Display on Watch")
                     ) {
                         ForEach(AwConfig.allCases) { v in
-                            Text(v.rawValue).tag(v)
+                            Text(v.displayName).tag(v)
                         }
                     }
                 }

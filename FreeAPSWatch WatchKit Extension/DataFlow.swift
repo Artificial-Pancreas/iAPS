@@ -20,7 +20,7 @@ struct WatchState: Codable {
     var bolusAfterCarbs: Bool?
     var eventualBG: String?
     var eventualBGRaw: String?
-    var displayHR: Bool?
+    var displayOnWatch: AwConfig?
 }
 
 struct TempTargetWatchPreset: Codable, Identifiable {
