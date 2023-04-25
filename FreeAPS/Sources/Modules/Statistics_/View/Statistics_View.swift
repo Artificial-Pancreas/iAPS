@@ -5,7 +5,7 @@ import SwiftUI
 import Swinject
 
 struct Statistics_View: View {
-    // let resolver: Resolver
+    let resolver: Resolver
 
     // @Environment(\.managedObjectContext) var moc
 
@@ -15,6 +15,12 @@ struct Statistics_View: View {
             format: "date >= %@", Calendar.current.startOfDay(for: Date()) as NSDate
         )
     ) var fetchedGlucoseDay: FetchedResults<Readings>
+
+    @FetchRequest(
+        entity: Readings.entity(),
+        sortDescriptors: [NSSortDescriptor(key: "date", ascending: false)],
+        predicate: NSPredicate(format: "date > %@", Date().addingTimeInterval(-24.hours.timeInterval) as NSDate)
+    ) var fetchedGlucoseTwentyFourHours: FetchedResults<Readings>
 
     @FetchRequest(
         entity: Readings.entity(),
@@ -56,7 +62,7 @@ struct Statistics_View: View {
         sortDescriptors: [NSSortDescriptor(key: "date", ascending: false)]
     ) var fetchedInsulin: FetchedResults<InsulinDistribution>
 
-    @State var paddingAmount: CGFloat? = 2
+    @State var paddingAmount: CGFloat? = 10
     @State var headline: Color = .secondary
     @State var selectedState: durationState
     @State var days: Double = 0
@@ -66,15 +72,10 @@ struct Statistics_View: View {
     @ViewBuilder func stats() -> some View {
         timeInRange
         Divider()
-        // header
-        // Divider()
         loops
         Divider()
-        // Spacer()
         bloodGlucose
         Divider()
-        // Spacer()
-        // Spacer()
         hba1c
     }
 
@@ -82,6 +83,8 @@ struct Statistics_View: View {
         switch selectedState {
         case .day:
             glucoseChart
+        case .twentyFour:
+            glucoseChartTwentyFourHours
         case .week:
             glucoseChartWeek
         case .month:
@@ -108,26 +111,13 @@ struct Statistics_View: View {
         }
     }
 
-    var header: some View {
-        Text(
-            selectedState == .total ?
-                (
-                    numberOfDays
-                        .formatted(.number.grouping(.never).rounded().precision(.fractionLength(1))) + " days of stored glucose"
-                ) :
-                ""
-        ).foregroundColor(.secondary).padding([.vertical], paddingAmount)
-    }
-
     var loops: some View {
         VStack {
             let loops_ = loopStats(fetchedLoopStats)
             HStack {
                 ForEach(0 ..< loops_.count, id: \.self) { index in
                     VStack {
-                        if index == 0 {
-                            Text(loops_[index].string).foregroundColor(.secondary).padding([.vertical], paddingAmount)
-                        } else { Text(loops_[index].string).foregroundColor(.secondary).padding([.vertical], paddingAmount) }
+                        Text(loops_[index].string).font(.subheadline).foregroundColor(.secondary)
                         Text(
                             index == 0 ? loops_[index].double.formatted() : (
                                 index == 2 ? loops_[index].double
@@ -147,7 +137,15 @@ struct Statistics_View: View {
         HStack {
             let hba1cs = glucoseStats(fetchedGlucose)
             VStack {
-                Text("SD").font(.subheadline).foregroundColor(.secondary).padding([.vertical], paddingAmount)
+                Text("HbA1C").font(.subheadline).foregroundColor(headline)
+                HStack {
+                    VStack {
+                        Text(hba1cs.ifcc.formatted(.number.grouping(.never).rounded().precision(.fractionLength(1))))
+                    }
+                }
+            }.padding([.horizontal], paddingAmount)
+            VStack {
+                Text("SD").font(.subheadline).foregroundColor(.secondary)
                 HStack {
                     VStack {
                         Text(
@@ -155,24 +153,26 @@ struct Statistics_View: View {
                         )
                     }
                 }
-            }
+            }.padding([.horizontal], paddingAmount)
             VStack {
-                Text("HbA1C").font(.subheadline).foregroundColor(headline).padding([.vertical], paddingAmount)
-                HStack {
-                    VStack {
-                        Text(hba1cs.ifcc.formatted(.number.grouping(.never).rounded().precision(.fractionLength(1))))
-                    }
-                }
-            }
-            VStack {
-                Text("CV").font(.subheadline).foregroundColor(.secondary).padding([.vertical], paddingAmount)
+                Text("CV").font(.subheadline).foregroundColor(.secondary)
                 HStack {
                     VStack {
                         Text(
-                            hba1cs.cv.formatted(.number.grouping(.never).rounded().precision(.fractionLength(1)))
+                            hba1cs.cv.formatted(.number.grouping(.never).rounded().precision(.fractionLength(0)))
                         )
                     }
                 }
+            }.padding([.horizontal], paddingAmount)
+            if selectedState == .total {
+                VStack {
+                    Text("Days").font(.subheadline).foregroundColor(.secondary)
+                    HStack {
+                        VStack {
+                            Text(numberOfDays.formatted(.number.grouping(.never).rounded().precision(.fractionLength(1))))
+                        }
+                    }
+                }.padding([.horizontal], paddingAmount)
             }
         }
     }
@@ -183,7 +183,7 @@ struct Statistics_View: View {
                 let bgs = glucoseStats(fetchedGlucose)
                 VStack {
                     HStack {
-                        Text("Median").font(.subheadline).foregroundColor(.secondary).padding([.vertical], paddingAmount)
+                        Text("Median").font(.subheadline).foregroundColor(.secondary)
                     }
                     HStack {
                         VStack {
@@ -196,7 +196,7 @@ struct Statistics_View: View {
                 }
                 VStack {
                     HStack {
-                        Text("Average").font(.subheadline).foregroundColor(headline).padding([.vertical], paddingAmount)
+                        Text("Average").font(.subheadline).foregroundColor(headline)
                     }
                     HStack {
                         VStack {
@@ -209,7 +209,7 @@ struct Statistics_View: View {
                 }
                 VStack {
                     HStack {
-                        Text("Readings").font(.subheadline).foregroundColor(.secondary).padding([.vertical], paddingAmount)
+                        Text("Readings").font(.subheadline).foregroundColor(.secondary)
                     }
                     HStack {
                         VStack {
@@ -228,17 +228,15 @@ struct Statistics_View: View {
             let TIRs = tir(fetchedGlucose)
             HStack {
                 ForEach(0 ..< TIRs.count, id: \.self) { index in
-                    VStack {
-                        if index == 1 {
-                            Text(TIRs[index].string).foregroundColor(.secondary)
-                                .padding([.vertical], paddingAmount)
-                        } else { Text(TIRs[index].string).foregroundColor(.secondary).padding([.vertical], paddingAmount) }
-                        Text(
-                            TIRs[index].decimal
-                                .formatted(.number.grouping(.never).rounded().precision(.fractionLength(0))) + " %"
-                        )
-                        .foregroundColor(colorOfGlucose(index))
-                    }
+                    if index == 1 {
+                        Text(TIRs[index].string).font(.subheadline).foregroundColor(.secondary)
+                            .padding([.vertical], paddingAmount)
+                    } else { Text(TIRs[index].string).font(.subheadline).foregroundColor(.secondary) }
+                    Text(
+                        TIRs[index].decimal
+                            .formatted(.number.grouping(.never).rounded().precision(.fractionLength(0))) + " %"
+                    )
+                    .foregroundColor(colorOfGlucose(index))
                 }
             }
         }
@@ -264,7 +262,7 @@ struct Statistics_View: View {
                     y: .value("Low", Double(item.glucose) * conversionFactor)
                 )
                 .foregroundStyle(.orange)
-                .symbolSize(pointSize)
+                .symbolSize(7)
             }
             ForEach(fetchedGlucoseDay.filter({ $0.glucose >= 70 && $0.glucose <= 145 }), id: \.date) { item in
                 PointMark(
@@ -272,7 +270,7 @@ struct Statistics_View: View {
                     y: .value("In Range", Double(item.glucose) * conversionFactor)
                 )
                 .foregroundStyle(.green)
-                .symbolSize(pointSize)
+                .symbolSize(7)
             }
             ForEach(fetchedGlucoseDay.filter({ $0.glucose < 70 }), id: \.date) { item in
                 PointMark(
@@ -280,7 +278,40 @@ struct Statistics_View: View {
                     y: .value("High", Double(item.glucose) * conversionFactor)
                 )
                 .foregroundStyle(.red)
-                .symbolSize(pointSize)
+                .symbolSize(7)
+            }
+            RuleMark(
+                y: .value("Target", 100 * conversionFactor)
+            )
+            .lineStyle(StrokeStyle(lineWidth: 0.5, dash: [10]))
+        }
+    }
+
+    var glucoseChartTwentyFourHours: some View {
+        Chart {
+            ForEach(fetchedGlucoseTwentyFourHours.filter({ $0.glucose > 145 }), id: \.date) { item in
+                PointMark(
+                    x: .value("Date", item.date ?? Date()),
+                    y: .value("Low", Double(item.glucose) * conversionFactor)
+                )
+                .foregroundStyle(.orange)
+                .symbolSize(7)
+            }
+            ForEach(fetchedGlucoseTwentyFourHours.filter({ $0.glucose >= 70 && $0.glucose <= 145 }), id: \.date) { item in
+                PointMark(
+                    x: .value("Date", item.date ?? Date()),
+                    y: .value("In Range", Double(item.glucose) * conversionFactor)
+                )
+                .foregroundStyle(.green)
+                .symbolSize(7)
+            }
+            ForEach(fetchedGlucoseTwentyFourHours.filter({ $0.glucose < 70 }), id: \.date) { item in
+                PointMark(
+                    x: .value("Date", item.date ?? Date()),
+                    y: .value("High", Double(item.glucose) * conversionFactor)
+                )
+                .foregroundStyle(.red)
+                .symbolSize(7)
             }
             RuleMark(
                 y: .value("Target", 100 * conversionFactor)
@@ -297,7 +328,7 @@ struct Statistics_View: View {
                     y: .value("Low", Double(item.glucose) * conversionFactor)
                 )
                 .foregroundStyle(.orange)
-                .symbolSize(pointSize)
+                .symbolSize(4)
             }
             ForEach(fetchedGlucoseWeek.filter({ $0.glucose >= 70 && $0.glucose <= 145 }), id: \.date) { item in
                 PointMark(
@@ -305,7 +336,7 @@ struct Statistics_View: View {
                     y: .value("In Range", Double(item.glucose) * conversionFactor)
                 )
                 .foregroundStyle(.green)
-                .symbolSize(pointSize)
+                .symbolSize(4)
             }
             ForEach(fetchedGlucoseWeek.filter({ $0.glucose < 70 }), id: \.date) { item in
                 PointMark(
@@ -313,7 +344,7 @@ struct Statistics_View: View {
                     y: .value("High", Double(item.glucose) * conversionFactor)
                 )
                 .foregroundStyle(.red)
-                .symbolSize(pointSize)
+                .symbolSize(4)
             }
             RuleMark(
                 y: .value("Target", 100 * conversionFactor)
@@ -330,7 +361,7 @@ struct Statistics_View: View {
                     y: .value("Low", Double(item.glucose) * conversionFactor)
                 )
                 .foregroundStyle(.orange)
-                .symbolSize(pointSize)
+                .symbolSize(2)
             }
             ForEach(fetchedGlucoseMonth.filter({ $0.glucose >= 70 && $0.glucose <= 145 }), id: \.date) { item in
                 PointMark(
@@ -338,7 +369,7 @@ struct Statistics_View: View {
                     y: .value("In Range", Double(item.glucose) * conversionFactor)
                 )
                 .foregroundStyle(.green)
-                .symbolSize(pointSize)
+                .symbolSize(2)
             }
             ForEach(fetchedGlucoseMonth.filter({ $0.glucose < 70 }), id: \.date) { item in
                 PointMark(
@@ -346,7 +377,7 @@ struct Statistics_View: View {
                     y: .value("High", Double(item.glucose) * conversionFactor)
                 )
                 .foregroundStyle(.red)
-                .symbolSize(pointSize)
+                .symbolSize(2)
             }
             RuleMark(
                 y: .value("Target", 100 * conversionFactor)
@@ -363,7 +394,7 @@ struct Statistics_View: View {
                     y: .value("Low", Double(item.glucose) * conversionFactor)
                 )
                 .foregroundStyle(.orange)
-                .symbolSize(pointSize)
+                .symbolSize(0.5)
             }
             ForEach(fetchedGlucose.filter({ $0.glucose >= 70 && $0.glucose <= 145 }), id: \.date) { item in
                 PointMark(
@@ -371,7 +402,7 @@ struct Statistics_View: View {
                     y: .value("In Range", Double(item.glucose) * conversionFactor)
                 )
                 .foregroundStyle(.green)
-                .symbolSize(pointSize)
+                .symbolSize(0.5)
             }
             ForEach(fetchedGlucose.filter({ $0.glucose < 70 }), id: \.date) { item in
                 PointMark(
@@ -379,7 +410,7 @@ struct Statistics_View: View {
                     y: .value("High", Double(item.glucose) * conversionFactor)
                 )
                 .foregroundStyle(.red)
-                .symbolSize(pointSize)
+                .symbolSize(0.5)
             }
             RuleMark(
                 y: .value("Target", 100 * conversionFactor)
@@ -523,6 +554,9 @@ struct Statistics_View: View {
             let minutesSinceMidnight = Calendar.current.component(.hour, from: Date()) * 60 + Calendar.current
                 .component(.minute, from: Date())
             duration = minutesSinceMidnight
+        case .twentyFour:
+            duration = 1 * 1440
+            if numberOfDays > 1 { denominator = 1 } else { denominator = numberOfDays }
         case .week:
             duration = 7 * 1440
             if numberOfDays > 7 { denominator = 7 } else { denominator = numberOfDays }
@@ -585,6 +619,8 @@ struct Statistics_View: View {
             let minutesSinceMidnight = Calendar.current.component(.hour, from: Date()) * 60 + Calendar.current
                 .component(.minute, from: Date())
             duration = minutesSinceMidnight
+        case .twentyFour:
+            duration = 1 * 1440
         case .week:
             duration = 7 * 1440
         case .month:
@@ -632,12 +668,6 @@ struct Statistics_View: View {
             return .orange
         default:
             return .primary
-        }
-    }
-
-    struct StatisticsView_Previews: PreviewProvider {
-        static var previews: some View {
-            Statistics_View(selectedState: .day)
         }
     }
 }

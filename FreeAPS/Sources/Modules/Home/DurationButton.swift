@@ -12,6 +12,7 @@ extension DurationButton where Self: RawRepresentable, RawValue == String {
 
 enum durationState: String, DurationButton {
     case day = "Today"
+    case twentyFour = "24 h"
     case week = "Week "
     case month = "Month "
     case total = "All Days"
