@@ -26,5 +26,6 @@
     "individualAdjustmentFactor": 0.5,
     "timeCap": 8,
     "minuteInterval": 30,
-    "delay": 60
+    "delay": 60,
+    "displayOnWatch": "BGTarget"
 }

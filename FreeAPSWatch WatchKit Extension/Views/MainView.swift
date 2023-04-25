@@ -13,6 +13,7 @@ struct MainView: View {
     @State var isTargetsActive = false
     @State var isBolusActive = false
     @State private var pulse = 0
+    @State private var steps = 0
 
     @GestureState var isDetectingLongPress = false
     @State var completedLongPress = false
@@ -118,7 +119,8 @@ struct MainView: View {
                     .scaledToFill()
                     .minimumScaleFactor(0.5)
 
-                if state.displayHR {
+                switch state.displayOnWatch {
+                case .HR:
                     Spacer()
                     HStack {
                         if completedLongPress {
@@ -146,14 +148,25 @@ struct MainView: View {
                             .gesture(longPress)
                         }
                     }
-
-                } else if let eventualBG = state.eventualBG.nonEmpty {
+                case .BGTarget:
+                    if let eventualBG = state.eventualBG.nonEmpty {
+                        Spacer()
+                        HStack {
+                            Text(eventualBG)
+                                .font(.caption2)
+                                .scaledToFill()
+                                .foregroundColor(.secondary)
+                                .minimumScaleFactor(0.5)
+                        }
+                    }
+                case .steps:
                     Spacer()
                     HStack {
-                        Text(eventualBG)
+                        Text("🦶" + " \(steps)")
+                            .fontWeight(.regular)
                             .font(.caption2)
                             .scaledToFill()
-                            .foregroundColor(.secondary)
+                            .foregroundColor(.white)
                             .minimumScaleFactor(0.5)
                     }
                 }
@@ -255,13 +268,59 @@ struct MainView: View {
     func start() {
         autorizeHealthKit()
         startHeartRateQuery(quantityTypeIdentifier: .heartRate)
+        startStepsQuery(quantityTypeIdentifier: .stepCount)
     }
 
     func autorizeHealthKit() {
         let healthKitTypes: Set = [
+            HKObjectType.quantityType(forIdentifier: HKQuantityTypeIdentifier.stepCount)!,
             HKObjectType.quantityType(forIdentifier: HKQuantityTypeIdentifier.heartRate)!
         ]
         healthStore.requestAuthorization(toShare: healthKitTypes, read: healthKitTypes) { _, _ in }
+    }
+
+    private func startStepsQuery(quantityTypeIdentifier _: HKQuantityTypeIdentifier) {
+        let type = HKQuantityType.quantityType(forIdentifier: .stepCount)!
+        let now = Date()
+        let startOfDay = Calendar.current.startOfDay(for: now)
+        var interval = DateComponents()
+        interval.day = 1
+        let query = HKStatisticsCollectionQuery(
+            quantityType: type,
+            quantitySamplePredicate: nil,
+            options: [.cumulativeSum],
+            anchorDate: startOfDay,
+            intervalComponents: interval
+        )
+
+        query.initialResultsHandler = { _, result, _ in
+            var resultCount = 0.0
+            guard let result = result else {
+                self.steps = 0
+                return
+            }
+            result.enumerateStatistics(from: startOfDay, to: now) { statistics, _ in
+
+                if let sum = statistics.sumQuantity() {
+                    // Get steps (they are of double type)
+                    resultCount = sum.doubleValue(for: HKUnit.count())
+                } // end if
+                // Return
+                self.steps = Int(resultCount)
+            }
+        }
+
+        query.statisticsUpdateHandler = {
+            _, statistics, _, _ in
+
+            // If new statistics are available
+            if let sum = statistics?.sumQuantity() {
+                let resultCount = sum.doubleValue(for: HKUnit.count())
+                // Return
+                self.steps = Int(resultCount)
+            } // end if
+        }
+        healthStore.execute(query)
     }
 
     private func startHeartRateQuery(quantityTypeIdentifier: HKQuantityTypeIdentifier) {

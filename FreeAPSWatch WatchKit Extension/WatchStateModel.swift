@@ -3,6 +3,13 @@ import Foundation
 import SwiftUI
 import WatchConnectivity
 
+enum AwConfig: String, CaseIterable, Identifiable, Codable {
+    var id: String { rawValue }
+    case HR
+    case BGTarget
+    case steps
+}
+
 class WatchStateModel: NSObject, ObservableObject {
     var session: WCSession
 
@@ -23,7 +30,7 @@ class WatchStateModel: NSObject, ObservableObject {
     @Published var isCarbsViewActive = false
     @Published var isTempTargetViewActive = false
     @Published var isBolusViewActive = false
-    @Published var displayHR = false
+    @Published var displayOnWatch: AwConfig = .BGTarget
     @Published var eventualBG = ""
     @Published var isConfirmationViewActive = false {
         didSet {
@@ -160,7 +167,7 @@ class WatchStateModel: NSObject, ObservableObject {
         bolusAfterCarbs = state.bolusAfterCarbs ?? true
         lastUpdate = Date()
         eventualBG = state.eventualBG ?? ""
-        displayHR = state.displayHR ?? false
+        displayOnWatch = state.displayOnWatch ?? .BGTarget
     }
 }
 

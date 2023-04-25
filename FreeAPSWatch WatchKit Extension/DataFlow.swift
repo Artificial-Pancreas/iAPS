@@ -3,9 +3,12 @@ import Foundation
 struct WatchState: Codable {
     var glucose: String?
     var trend: String?
+    var trendRaw: String?
     var delta: String?
     var glucoseDate: Date?
+    var glucoseDateInterval: UInt64?
     var lastLoopDate: Date?
+    var lastLoopDateInterval: UInt64?
     var bolusIncrement: Decimal?
     var maxCOB: Decimal?
     var maxBolus: Decimal?
@@ -16,7 +19,8 @@ struct WatchState: Codable {
     var tempTargets: [TempTargetWatchPreset] = []
     var bolusAfterCarbs: Bool?
     var eventualBG: String?
-    var displayHR: Bool?
+    var eventualBGRaw: String?
+    var displayOnWatch: AwConfig?
 }
 
 struct TempTargetWatchPreset: Codable, Identifiable {

@@ -12,6 +12,7 @@ struct FreeAPSSettings: JSON, Equatable {
     var insulinReqPercentage: Decimal = 70
     var skipBolusScreenAfterCarbs: Bool = false
     var displayHR: Bool = false
+    var displayOnWatch: AwConfig = .BGTarget
     var cgm: CGMType = .nightscout
     var uploadGlucose: Bool = false
     var useCalendar: Bool = false
@@ -81,6 +82,12 @@ extension FreeAPSSettings: Decodable {
 
         if let displayHR = try? container.decode(Bool.self, forKey: .displayHR) {
             settings.displayHR = displayHR
+            // compatibility if displayOnWatch is not available in json files
+            settings.displayOnWatch = (displayHR == true) ? AwConfig.HR : AwConfig.BGTarget
+        }
+
+        if let displayOnWatch = try? container.decode(AwConfig.self, forKey: .displayOnWatch) {
+            settings.displayOnWatch = displayOnWatch
         }
 
         if let cgm = try? container.decode(CGMType.self, forKey: .cgm) {

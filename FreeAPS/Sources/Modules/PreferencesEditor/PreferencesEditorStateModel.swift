@@ -7,7 +7,6 @@ extension PreferencesEditor {
         @Published var allowAnnouncements = false
         @Published var insulinReqPercentage: Decimal = 70
         @Published var skipBolusScreenAfterCarbs = false
-        @Published var displayHR = false
         @Published var displayStatistics = false
         @Published var sections: [FieldSection] = []
 
@@ -15,7 +14,7 @@ extension PreferencesEditor {
             preferences = provider.preferences
             subscribeSetting(\.allowAnnouncements, on: $allowAnnouncements) { allowAnnouncements = $0 }
             subscribeSetting(\.insulinReqPercentage, on: $insulinReqPercentage) { insulinReqPercentage = $0 }
-            subscribeSetting(\.displayHR, on: $displayHR) { displayHR = $0 }
+            subscribeSetting(\.insulinReqFraction, on: $insulinReqFraction) { insulinReqFraction = $0 }
             subscribeSetting(\.displayStatistics, on: $displayStatistics) { displayStatistics = $0 }
             subscribeSetting(\.skipBolusScreenAfterCarbs, on: $skipBolusScreenAfterCarbs) { skipBolusScreenAfterCarbs = $0 }
 

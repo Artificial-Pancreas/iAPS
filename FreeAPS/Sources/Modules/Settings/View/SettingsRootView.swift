@@ -21,6 +21,7 @@ extension Settings {
                 Section(header: Text("Devices")) {
                     Text("Pump").navigationLink(to: .pumpConfig, from: self)
                     Text("CGM").navigationLink(to: .cgm, from: self)
+                    Text("Watch Devices").navigationLink(to: .watch, from: self)
                 }
 
                 Section(header: Text("Services")) {
