@@ -36,50 +36,52 @@ extension AddCarbs {
                         }
                     }
                 }
+
                 Section {
-                    Section {
-                        HStack {
-                            Text("Carbs").fontWeight(.semibold)
-                            Spacer()
-                            DecimalTextField(
-                                "0",
-                                value: $state.carbs,
-                                formatter: formatter,
-                                autofocus: true,
-                                cleanInput: true
-                            )
-                            Text("grams").foregroundColor(.secondary)
-                        }.padding(.vertical)
-
-                        if state.useFPU {
-                            proteinAndFat()
-                        }
-                        HStack {
-                            Button {
-                                isPromtPresented = true
-                            }
-                            label: { Text("Save as Preset") }
-                        }
-                        .frame(maxWidth: .infinity, alignment: .trailing)
-                        .controlSize(.mini)
-                        .buttonStyle(BorderlessButtonStyle())
-
-                        .disabled(
-                            (state.carbs <= 0 && state.fat <= 0 && state.protein <= 0) ||
-                                (
-                                    (((state.selection?.carbs ?? 0) as NSDecimalNumber) as Decimal) == state
-                                        .carbs && (((state.selection?.fat ?? 0) as NSDecimalNumber) as Decimal) == state
-                                        .fat && (((state.selection?.protein ?? 0) as NSDecimalNumber) as Decimal) == state
-                                        .protein
-                                )
+                    HStack {
+                        Text("Carbs").fontWeight(.semibold)
+                        Spacer()
+                        DecimalTextField(
+                            "0",
+                            value: $state.carbs,
+                            formatter: formatter,
+                            autofocus: true,
+                            cleanInput: true
                         )
-                        .popover(isPresented: $isPromtPresented) {
-                            presetPopover
+                        Text("grams").foregroundColor(.secondary)
+                    }.padding(.vertical)
+
+                    if state.useFPU {
+                        proteinAndFat()
+                    }
+                    HStack {
+                        Button {
+                            isPromtPresented = true
                         }
+                        label: { Text("Save as Preset") }
+                    }
+                    .frame(maxWidth: .infinity, alignment: .trailing)
+                    .controlSize(.mini)
+                    .buttonStyle(BorderlessButtonStyle())
+
+                    .disabled(
+                        (state.carbs <= 0 && state.fat <= 0 && state.protein <= 0) ||
+                            (
+                                (((state.selection?.carbs ?? 0) as NSDecimalNumber) as Decimal) == state
+                                    .carbs && (((state.selection?.fat ?? 0) as NSDecimalNumber) as Decimal) == state
+                                    .fat && (((state.selection?.protein ?? 0) as NSDecimalNumber) as Decimal) == state
+                                    .protein
+                            )
+                    )
+                    .popover(isPresented: $isPromtPresented) {
+                        presetPopover
                     }
                 }
-                Section {
-                    mealPresets
+
+                if state.useFPU {
+                    Section {
+                        mealPresets
+                    }
                 }
 
                 Section {
@@ -88,8 +90,15 @@ extension AddCarbs {
 
                 Section(footer: Text(state.waitersNotepad().description)) {
                     Button { state.add() }
-                    label: { Text("Save and continue") }
+                    label: { Text("Save and continue").font(.title3) }
                         .disabled(state.carbs <= 0 && state.fat <= 0 && state.protein <= 0)
+                        .frame(maxWidth: .infinity, alignment: .center)
+                }
+
+                if !state.useFPU {
+                    Section {
+                        mealPresets
+                    }
                 }
             }
             .onAppear(perform: configureView)
