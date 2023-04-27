@@ -4,11 +4,10 @@ import SwiftDate
 import SwiftUI
 import Swinject
 
-struct Statistics_View: View {
+struct StatView: View {
     let resolver: Resolver
 
     // @Environment(\.managedObjectContext) var moc
-
     @FetchRequest(
         entity: Readings.entity(),
         sortDescriptors: [NSSortDescriptor(key: "date", ascending: false)], predicate: NSPredicate(
@@ -423,33 +422,23 @@ struct Statistics_View: View {
         guard (loops.first?.start) != nil else { return [] }
 
         var i = 0.0
-        var successRate: Double?
-        var successNR = 0
-        var errorNR = 0
         var minimumInt = 999.0
         var maximumInt = 0.0
-        var minimumLoopTime = 9999.0
-        var maximumLoopTime = 0.0
         var timeIntervalLoops = 0.0
         var previousTimeLoop = loops.first?.end ?? Date()
-        var timeForOneLoop = 0.0
-        var averageLoopTime = 0.0
-        var timeForOneLoopArray: [Double] = []
-        var medianLoopTime = 0.0
         var timeIntervalLoopArray: [Double] = []
-        var averageIntervalLoops = 0.0
-        var averageLoopDuration = 0.0
+
+        let durationArray = loops.compactMap({ each in each.duration })
+        let durationArrayCount = durationArray.count
+        var durationAverage = durationArray.reduce(0, +) / Double(durationArrayCount)
+
+        let medianDuration = medianCalculationDouble(array: durationArray)
+        let successsNR = loops.compactMap({ each in each.loopStatus }).filter({ each in each!.contains("Success") }).count
+        let errorNR = durationArrayCount - successsNR
+        let successRate: Double? = (Double(successsNR) / Double(successsNR + errorNR)) * 100
 
         for each in loops {
             if let loopEnd = each.end {
-                let loopDuration = each.duration
-
-                if each.loopStatus!.contains("Success") {
-                    successNR += 1
-                } else {
-                    errorNR += 1
-                }
-
                 i += 1
                 timeIntervalLoops = (previousTimeLoop - (each.start ?? previousTimeLoop)).timeInterval / 60
 
@@ -462,46 +451,25 @@ struct Statistics_View: View {
                 if timeIntervalLoops < minimumInt, i != 1 {
                     minimumInt = timeIntervalLoops
                 }
-                timeForOneLoop = loopDuration
-                timeForOneLoopArray.append(timeForOneLoop)
-
-                if timeForOneLoop >= maximumLoopTime, timeForOneLoop != 0.0 {
-                    maximumLoopTime = timeForOneLoop
-                }
-                if timeForOneLoop <= minimumLoopTime, timeForOneLoop != 0.0 {
-                    minimumLoopTime = timeForOneLoop
-                }
                 previousTimeLoop = loopEnd
             }
         }
-
-        successRate = (Double(successNR) / Double(i)) * 100
 
         // Average Loop Interval in minutes
         let timeOfFirstIndex = loops.first?.start ?? Date()
         let lastIndexWithTimestamp = loops.count - 1
         let timeOfLastIndex = loops[lastIndexWithTimestamp].end ?? Date()
-        averageLoopTime = (timeOfFirstIndex - timeOfLastIndex).timeInterval / 60 / Double(errorNR + successNR)
-
-        // Median values
-        medianLoopTime = medianCalculationDouble(array: timeForOneLoopArray)
-        // Average time interval between loops
-        averageIntervalLoops = timeIntervalLoopArray.reduce(0, +) / Double(timeIntervalLoopArray.count)
-        // Average loop duration
-        averageLoopDuration = timeForOneLoopArray.reduce(0, +) / Double(timeForOneLoopArray.count)
+        let averageInterval = (timeOfFirstIndex - timeOfLastIndex).timeInterval / 60 / Double(errorNR + successsNR)
 
         if minimumInt == 999.0 {
             minimumInt = 0.0
         }
 
-        if minimumLoopTime == 9999.0 {
-            minimumLoopTime = 0.0
-        }
         var array: [(double: Double, string: String)] = []
 
-        array.append((double: Double(successNR + errorNR), string: "Loops"))
-        array.append((double: averageLoopTime, string: "Interval"))
-        array.append((double: medianLoopTime, string: "Duration"))
+        array.append((double: Double(successsNR + errorNR), string: "Loops"))
+        array.append((double: averageInterval, string: "Interval"))
+        array.append((double: medianDuration, string: "Duration"))
         array.append((double: successRate ?? 100, string: "%"))
 
         return array
