@@ -28,32 +28,6 @@ extension PreferencesEditor {
             let statFields = [
                 Field(
                     displayName: NSLocalizedString(
-                        "Low Glucose Limit",
-                        comment: "Display As Low Glucose Percantage Under This Value"
-                    ) + " (\(settingsManager.settings.units.rawValue))",
-
-                    type: .decimal(keypath: \.low),
-                    infoText: NSLocalizedString(
-                        "Blood Glucoses Under This Value Will Added To And Displayed as Low Glucose Percantage",
-                        comment: "Description for Low Glucose Limit"
-                    ),
-                    settable: self
-                ),
-                Field(
-                    displayName: NSLocalizedString(
-                        "High Glucose Limit",
-                        comment: "Limit For High Glucose in Statistics View"
-                    ) + " (\(settingsManager.settings.units.rawValue))",
-
-                    type: .decimal(keypath: \.high),
-                    infoText: NSLocalizedString(
-                        "Blood Glucoses Over This Value Will Added To And Displaved as High Glucose Percantage",
-                        comment: "High Glucose Limit"
-                    ),
-                    settable: self
-                ),
-                Field(
-                    displayName: NSLocalizedString(
                         "Override HbA1c unit",
                         comment: "Display %"
                     ),

@@ -1013,8 +1013,8 @@ final class BaseAPSManager: APSManager, Injectable {
                     var i = -1
                     var lastIndex = false
                     let endIndex = array.count - 1
-                    var hypoLimit = settingsManager.preferences.low
-                    var hyperLimit = settingsManager.preferences.high
+                    var hypoLimit = settingsManager.settings.lowGlucose
+                    var hyperLimit = settingsManager.settings.highGlucose
                     if units == .mmolL {
                         hypoLimit = hypoLimit / 0.0555
                         hyperLimit = hyperLimit / 0.0555

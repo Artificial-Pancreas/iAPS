@@ -46,8 +46,6 @@ extension Home {
         @Published var carbsRequired: Decimal?
         @Published var allowManualTemp = false
         @Published var units: GlucoseUnits = .mmolL
-        @Published var low: Decimal = 4
-        @Published var high: Decimal = 10
         @Published var displayLoops = false
         @Published var pumpDisplayState: PumpDisplayState?
         @Published var alarm: GlucoseAlarm?
@@ -55,6 +53,8 @@ extension Home {
         @Published var manualTempBasal = false
         @Published var smooth = false
         @Published var maxValue: Decimal = 1.2
+        @Published var lowGlucoseLine: Decimal = 70
+        @Published var highGlucoseLine: Decimal = 145
 
         override func subscribe() {
             setupGlucose()
@@ -72,8 +72,6 @@ extension Home {
             suggestion = provider.suggestion
             statistics = provider.statistics
             displayStatistics = settingsManager.settings.displayStatistics
-            low = settingsManager.preferences.low
-            high = settingsManager.preferences.high
             displayLoops = settingsManager.preferences.displayLoops
             enactedSuggestion = provider.enactedSuggestion
             units = settingsManager.settings.units
@@ -87,6 +85,8 @@ extension Home {
             setupCurrentTempTarget()
             smooth = settingsManager.settings.smoothGlucose
             maxValue = settingsManager.preferences.autosensMax
+            lowGlucoseLine = settingsManager.settings.lowGlucose
+            highGlucoseLine = settingsManager.settings.highGlucose
 
             broadcaster.register(GlucoseObserver.self, observer: self)
             broadcaster.register(SuggestionObserver.self, observer: self)
@@ -393,13 +393,13 @@ extension Home.StateModel:
         allowManualTemp = !settings.closedLoop
         displayStatistics = settingsManager.settings.displayStatistics
         closedLoop = settingsManager.settings.closedLoop
-        low = settingsManager.preferences.low
-        high = settingsManager.preferences.high
         displayLoops = settingsManager.preferences.displayLoops
         units = settingsManager.settings.units
         animatedBackground = settingsManager.settings.animatedBackground
         manualTempBasal = apsManager.isManualTempBasal
         smooth = settingsManager.settings.smoothGlucose
+        lowGlucoseLine = settingsManager.settings.lowGlucose
+        highGlucoseLine = settingsManager.settings.highGlucose
         setupGlucose()
         setupStatistics()
     }

@@ -612,7 +612,9 @@ extension Home {
                     carbs: $state.carbs,
                     timerDate: $state.timerDate,
                     units: $state.units,
-                    smooth: $state.smooth
+                    smooth: $state.smooth,
+                    highGlucoseLine: $state.highGlucoseLine,
+                    lowGlucoseLine: $state.lowGlucoseLine
                 )
             }
             .padding(.bottom)

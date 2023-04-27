@@ -150,7 +150,11 @@ extension Stat {
                     HStack {
                         VStack {
                             Text(
-                                hba1cs.sd.formatted(.number.grouping(.never).rounded().precision(.fractionLength(1)))
+                                hba1cs.sd
+                                    .formatted(
+                                        .number.grouping(.never).rounded()
+                                            .precision(.fractionLength(state.units == .mmolL ? 1 : 0))
+                                    )
                             )
                         }
                     }
@@ -190,7 +194,10 @@ extension Stat {
                             VStack {
                                 Text(
                                     bgs.median
-                                        .formatted(.number.grouping(.never).rounded().precision(.fractionLength(1)))
+                                        .formatted(
+                                            .number.grouping(.never).rounded()
+                                                .precision(.fractionLength(state.units == .mmolL ? 1 : 0))
+                                        )
                                 )
                             }
                         }
@@ -203,7 +210,10 @@ extension Stat {
                             VStack {
                                 Text(
                                     bgs.average
-                                        .formatted(.number.grouping(.never).rounded().precision(.fractionLength(1)))
+                                        .formatted(
+                                            .number.grouping(.never).rounded()
+                                                .precision(.fractionLength(state.units == .mmolL ? 1 : 0))
+                                        )
                                 )
                             }
                         }
@@ -260,7 +270,7 @@ extension Stat {
                 ForEach(fetchedGlucoseDay.filter({ $0.glucose > Int(state.highLimit ?? 145) }), id: \.date) { item in
                     PointMark(
                         x: .value("Date", item.date ?? Date()),
-                        y: .value("Low", Double(item.glucose) * conversionFactor)
+                        y: .value("Low", Double(item.glucose) * (state.units == .mmolL ? conversionFactor : 1))
                     )
                     .foregroundStyle(.orange)
                     .symbolSize(7)
@@ -272,7 +282,7 @@ extension Stat {
                 ) { item in
                     PointMark(
                         x: .value("Date", item.date ?? Date()),
-                        y: .value("In Range", Double(item.glucose) * conversionFactor)
+                        y: .value("In Range", Double(item.glucose) * (state.units == .mmolL ? conversionFactor : 1))
                     )
                     .foregroundStyle(.green)
                     .symbolSize(7)
@@ -280,13 +290,13 @@ extension Stat {
                 ForEach(fetchedGlucoseDay.filter({ $0.glucose < Int(state.lowLimit ?? 70) }), id: \.date) { item in
                     PointMark(
                         x: .value("Date", item.date ?? Date()),
-                        y: .value("High", Double(item.glucose) * conversionFactor)
+                        y: .value("High", Double(item.glucose) * (state.units == .mmolL ? conversionFactor : 1))
                     )
                     .foregroundStyle(.red)
                     .symbolSize(7)
                 }
                 RuleMark(
-                    y: .value("Target", 100 * conversionFactor)
+                    y: .value("Target", 100 * (state.units == .mmolL ? conversionFactor : 1))
                 )
                 .lineStyle(StrokeStyle(lineWidth: 0.5, dash: [10]))
             }
@@ -297,7 +307,7 @@ extension Stat {
                 ForEach(fetchedGlucoseTwentyFourHours.filter({ $0.glucose > Int(state.highLimit ?? 145) }), id: \.date) { item in
                     PointMark(
                         x: .value("Date", item.date ?? Date()),
-                        y: .value("Low", Double(item.glucose) * conversionFactor)
+                        y: .value("Low", Double(item.glucose) * (state.units == .mmolL ? conversionFactor : 1))
                     )
                     .foregroundStyle(.orange)
                     .symbolSize(7)
@@ -309,7 +319,7 @@ extension Stat {
                 ) { item in
                     PointMark(
                         x: .value("Date", item.date ?? Date()),
-                        y: .value("In Range", Double(item.glucose) * conversionFactor)
+                        y: .value("In Range", Double(item.glucose) * (state.units == .mmolL ? conversionFactor : 1))
                     )
                     .foregroundStyle(.green)
                     .symbolSize(7)
@@ -317,13 +327,13 @@ extension Stat {
                 ForEach(fetchedGlucoseTwentyFourHours.filter({ $0.glucose < Int(state.lowLimit ?? 70) }), id: \.date) { item in
                     PointMark(
                         x: .value("Date", item.date ?? Date()),
-                        y: .value("High", Double(item.glucose) * conversionFactor)
+                        y: .value("High", Double(item.glucose) * (state.units == .mmolL ? conversionFactor : 1))
                     )
                     .foregroundStyle(.red)
                     .symbolSize(7)
                 }
                 RuleMark(
-                    y: .value("Target", 100 * conversionFactor)
+                    y: .value("Target", 100 * (state.units == .mmolL ? conversionFactor : 1))
                 )
                 .lineStyle(StrokeStyle(lineWidth: 0.5, dash: [10]))
             }
@@ -334,7 +344,7 @@ extension Stat {
                 ForEach(fetchedGlucoseWeek.filter({ $0.glucose > Int(state.highLimit ?? 145) }), id: \.date) { item in
                     PointMark(
                         x: .value("Date", item.date ?? Date()),
-                        y: .value("Low", Double(item.glucose) * conversionFactor)
+                        y: .value("Low", Double(item.glucose) * (state.units == .mmolL ? conversionFactor : 1))
                     )
                     .foregroundStyle(.orange)
                     .symbolSize(4)
@@ -346,7 +356,7 @@ extension Stat {
                 ) { item in
                     PointMark(
                         x: .value("Date", item.date ?? Date()),
-                        y: .value("In Range", Double(item.glucose) * conversionFactor)
+                        y: .value("In Range", Double(item.glucose) * (state.units == .mmolL ? conversionFactor : 1))
                     )
                     .foregroundStyle(.green)
                     .symbolSize(4)
@@ -354,13 +364,13 @@ extension Stat {
                 ForEach(fetchedGlucoseWeek.filter({ $0.glucose < Int(state.lowLimit ?? 70) }), id: \.date) { item in
                     PointMark(
                         x: .value("Date", item.date ?? Date()),
-                        y: .value("High", Double(item.glucose) * conversionFactor)
+                        y: .value("High", Double(item.glucose) * (state.units == .mmolL ? conversionFactor : 1))
                     )
                     .foregroundStyle(.red)
                     .symbolSize(4)
                 }
                 RuleMark(
-                    y: .value("Target", 100 * conversionFactor)
+                    y: .value("Target", 100 * (state.units == .mmolL ? conversionFactor : 1))
                 )
                 .lineStyle(StrokeStyle(lineWidth: 0.5, dash: [10]))
             }
@@ -371,7 +381,7 @@ extension Stat {
                 ForEach(fetchedGlucoseMonth.filter({ $0.glucose > Int(state.highLimit ?? 145) }), id: \.date) { item in
                     PointMark(
                         x: .value("Date", item.date ?? Date()),
-                        y: .value("Low", Double(item.glucose) * conversionFactor)
+                        y: .value("Low", Double(item.glucose) * (state.units == .mmolL ? conversionFactor : 1))
                     )
                     .foregroundStyle(.orange)
                     .symbolSize(2)
@@ -383,7 +393,7 @@ extension Stat {
                 ) { item in
                     PointMark(
                         x: .value("Date", item.date ?? Date()),
-                        y: .value("In Range", Double(item.glucose) * conversionFactor)
+                        y: .value("In Range", Double(item.glucose) * (state.units == .mmolL ? conversionFactor : 1))
                     )
                     .foregroundStyle(.green)
                     .symbolSize(2)
@@ -391,13 +401,13 @@ extension Stat {
                 ForEach(fetchedGlucoseMonth.filter({ $0.glucose < Int(state.lowLimit ?? 70) }), id: \.date) { item in
                     PointMark(
                         x: .value("Date", item.date ?? Date()),
-                        y: .value("High", Double(item.glucose) * conversionFactor)
+                        y: .value("High", Double(item.glucose) * (state.units == .mmolL ? conversionFactor : 1))
                     )
                     .foregroundStyle(.red)
                     .symbolSize(2)
                 }
                 RuleMark(
-                    y: .value("Target", 100 * conversionFactor)
+                    y: .value("Target", 100 * (state.units == .mmolL ? conversionFactor : 1))
                 )
                 .lineStyle(StrokeStyle(lineWidth: 0.5, dash: [10]))
             }
@@ -408,7 +418,7 @@ extension Stat {
                 ForEach(fetchedGlucose.filter({ $0.glucose > Int(state.highLimit ?? 145) }), id: \.date) { item in
                     PointMark(
                         x: .value("Date", item.date ?? Date()),
-                        y: .value("Low", Double(item.glucose) * conversionFactor)
+                        y: .value("Low", Double(item.glucose) * (state.units == .mmolL ? conversionFactor : 1))
                     )
                     .foregroundStyle(.orange)
                     .symbolSize(0.5)
@@ -420,7 +430,7 @@ extension Stat {
                 ) { item in
                     PointMark(
                         x: .value("Date", item.date ?? Date()),
-                        y: .value("In Range", Double(item.glucose) * conversionFactor)
+                        y: .value("In Range", Double(item.glucose) * (state.units == .mmolL ? conversionFactor : 1))
                     )
                     .foregroundStyle(.green)
                     .symbolSize(0.5)
@@ -428,13 +438,13 @@ extension Stat {
                 ForEach(fetchedGlucose.filter({ $0.glucose < Int(state.lowLimit ?? 70) }), id: \.date) { item in
                     PointMark(
                         x: .value("Date", item.date ?? Date()),
-                        y: .value("High", Double(item.glucose) * conversionFactor)
+                        y: .value("High", Double(item.glucose) * (state.units == .mmolL ? conversionFactor : 1))
                     )
                     .foregroundStyle(.red)
                     .symbolSize(0.5)
                 }
                 RuleMark(
-                    y: .value("Target", 100 * conversionFactor)
+                    y: .value("Target", 100 * (state.units == .mmolL ? conversionFactor : 1))
                 )
                 .lineStyle(StrokeStyle(lineWidth: 0.5, dash: [10]))
             }
@@ -526,8 +536,6 @@ extension Stat {
         private func glucoseStats(_ glucose_90: FetchedResults<Readings>)
             -> (ifcc: Double, ngsp: Double, average: Double, median: Double, sd: Double, cv: Double, readings: Double)
         {
-            var conversionFactor: Double = 1
-            conversionFactor = 0.0555
             var numberOfDays: Double = 0
             let endIndex = glucose_90.count - 1
 
@@ -594,8 +602,9 @@ extension Stat {
             output = (
                 ifcc: IFCCa1CStatisticValue,
                 ngsp: NGSPa1CStatisticValue,
-                average: glucoseAverage * conversionFactor,
-                median: medianGlucose * conversionFactor, sd: sd * conversionFactor, cv: cv,
+                average: glucoseAverage * (state.units == .mmolL ? conversionFactor : 1),
+                median: medianGlucose * (state.units == .mmolL ? conversionFactor : 1),
+                sd: sd * (state.units == .mmolL ? conversionFactor : 1), cv: cv,
                 readings: Double(countReadings) / denominator
             )
             return output
