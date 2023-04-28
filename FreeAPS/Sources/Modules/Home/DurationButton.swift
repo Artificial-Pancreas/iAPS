@@ -20,23 +20,22 @@ enum durationState: String, DurationButton {
 
 struct durationButton<T: DurationButton>: View {
     let states: [T]
-    @State var currentIndex = 0
     @Binding var selectedState: T
 
     var body: some View {
-        Button {
-            currentIndex = currentIndex < states.count - 1 ? currentIndex + 1 : 0
-            selectedState = states[currentIndex]
-        } label: {
-            Text(NSLocalizedString(states[currentIndex].title, comment: "Duration displayed in statPanel"))
-                .font(.headline)
-                .foregroundColor(.orange)
-        }
-
-        .buttonBorderShape(.automatic)
-        .controlSize(.regular)
-        .buttonStyle(.borderless)
-        // .padding([.trailing], 15)
-        // .frame(maxWidth: .infinity, alignment: .trailing)
+        HStack {
+            ForEach(0 ..< durationState.allCases.count) { index in
+                Button {
+                    selectedState = states[index]
+                } label: {
+                    Text(NSLocalizedString(durationState.allCases[index].title, comment: "Duration displayed in statPanel"))
+                        .font(.headline)
+                        .foregroundColor(.orange)
+                }
+                .buttonBorderShape(.automatic)
+                .controlSize(.regular)
+                .buttonStyle(.borderless)
+            }
+        }.padding(.horizontal, 10)
     }
 }

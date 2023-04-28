@@ -221,7 +221,8 @@ extension Stat {
                     }
                     VStack {
                         HStack {
-                            Text("Readings / 24h").font(.subheadline).foregroundColor(.secondary)
+                            Text(selectedState == .day ? "Readings today" : "Readings / 24h").font(.subheadline)
+                                .foregroundColor(.secondary)
                         }
                         HStack {
                             VStack {
@@ -297,14 +298,15 @@ extension Stat {
         }
 
         var glucoseChart: some View {
-            Chart {
+            let count = fetchedGlucoseDay.count
+            return Chart {
                 ForEach(fetchedGlucoseDay.filter({ $0.glucose > Int(state.highLimit ?? 145) }), id: \.date) { item in
                     PointMark(
                         x: .value("Date", item.date ?? Date()),
                         y: .value("High", Double(item.glucose) * (state.units == .mmolL ? conversionFactor : 1))
                     )
                     .foregroundStyle(.orange)
-                    .symbolSize(12)
+                    .symbolSize(count < 10 ? 30 : 12)
                 }
                 ForEach(
                     fetchedGlucoseDay
@@ -316,7 +318,7 @@ extension Stat {
                         y: .value("In Range", Double(item.glucose) * (state.units == .mmolL ? conversionFactor : 1))
                     )
                     .foregroundStyle(.green)
-                    .symbolSize(12)
+                    .symbolSize(count < 10 ? 30 : 12)
                 }
                 ForEach(fetchedGlucoseDay.filter({ $0.glucose < Int(state.lowLimit ?? 70) }), id: \.date) { item in
                     PointMark(
@@ -324,7 +326,7 @@ extension Stat {
                         y: .value("Low", Double(item.glucose) * (state.units == .mmolL ? conversionFactor : 1))
                     )
                     .foregroundStyle(.red)
-                    .symbolSize(12)
+                    .symbolSize(count < 10 ? 30 : 12)
                 }
                 RuleMark(
                     y: .value("Target", 100 * (state.units == .mmolL ? conversionFactor : 1))
@@ -335,14 +337,15 @@ extension Stat {
         }
 
         var glucoseChartTwentyFourHours: some View {
-            Chart {
+            let count = fetchedGlucoseTwentyFourHours.count
+            return Chart {
                 ForEach(fetchedGlucoseTwentyFourHours.filter({ $0.glucose > Int(state.highLimit ?? 145) }), id: \.date) { item in
                     PointMark(
                         x: .value("Date", item.date ?? Date()),
                         y: .value("High", Double(item.glucose) * (state.units == .mmolL ? conversionFactor : 1))
                     )
                     .foregroundStyle(.orange)
-                    .symbolSize(10)
+                    .symbolSize(count < 10 ? 20 : 10)
                 }
                 ForEach(
                     fetchedGlucoseTwentyFourHours
@@ -354,7 +357,7 @@ extension Stat {
                         y: .value("In Range", Double(item.glucose) * (state.units == .mmolL ? conversionFactor : 1))
                     )
                     .foregroundStyle(.green)
-                    .symbolSize(10)
+                    .symbolSize(count < 10 ? 20 : 10)
                 }
                 ForEach(fetchedGlucoseTwentyFourHours.filter({ $0.glucose < Int(state.lowLimit ?? 70) }), id: \.date) { item in
                     PointMark(
@@ -362,7 +365,7 @@ extension Stat {
                         y: .value("Low", Double(item.glucose) * (state.units == .mmolL ? conversionFactor : 1))
                     )
                     .foregroundStyle(.red)
-                    .symbolSize(10)
+                    .symbolSize(count < 10 ? 20 : 10)
                 }
                 RuleMark(
                     y: .value("Target", 100 * (state.units == .mmolL ? conversionFactor : 1))
@@ -379,7 +382,7 @@ extension Stat {
                         y: .value("Low", Double(item.glucose) * (state.units == .mmolL ? conversionFactor : 1))
                     )
                     .foregroundStyle(.orange)
-                    .symbolSize(4)
+                    .symbolSize(5)
                 }
                 ForEach(
                     fetchedGlucoseWeek
@@ -391,7 +394,7 @@ extension Stat {
                         y: .value("In Range", Double(item.glucose) * (state.units == .mmolL ? conversionFactor : 1))
                     )
                     .foregroundStyle(.green)
-                    .symbolSize(4)
+                    .symbolSize(5)
                 }
                 ForEach(fetchedGlucoseWeek.filter({ $0.glucose < Int(state.lowLimit ?? 70) }), id: \.date) { item in
                     PointMark(
@@ -399,7 +402,7 @@ extension Stat {
                         y: .value("High", Double(item.glucose) * (state.units == .mmolL ? conversionFactor : 1))
                     )
                     .foregroundStyle(.red)
-                    .symbolSize(4)
+                    .symbolSize(5)
                 }
                 RuleMark(
                     y: .value("Target", 100 * (state.units == .mmolL ? conversionFactor : 1))
