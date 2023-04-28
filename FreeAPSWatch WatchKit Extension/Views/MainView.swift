@@ -171,8 +171,14 @@ struct MainView: View {
                     }
                 case .isf:
                     Spacer()
+                    let isf: String = state.isf != nil ? "\(state.isf ?? 0)" : "-"
                     HStack {
-                        Text("💉" + " \(state.isf ?? 0)")
+                        Image(systemName: "arrow.up.arrow.down")
+                            .renderingMode(.template)
+                            .resizable()
+                            .frame(width: 16, height: 16)
+                            .foregroundColor(.blue)
+                        Text("\(isf)")
                             .fontWeight(.regular)
                             .font(.caption2)
                             .scaledToFill()
