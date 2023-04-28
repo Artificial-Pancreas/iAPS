@@ -176,7 +176,7 @@ struct MainChartView: View {
                     path.move(to: CGPoint(x: 0, y: range.minY + CGFloat(line) * step))
                     path.addLine(to: CGPoint(x: fullSize.width, y: range.minY + CGFloat(line) * step))
                 }
-            }.stroke(Color.secondary, lineWidth: 0.2)
+            }.stroke(Color.secondary, lineWidth: 0.1)
             // horizontal limits
             let range = glucoseYRange
             let topstep = (range.maxY - range.minY) / CGFloat(range.maxValue - range.minValue) *
@@ -185,11 +185,7 @@ struct MainChartView: View {
                 Path { path in
                     path.move(to: CGPoint(x: 0, y: range.minY + topstep))
                     path.addLine(to: CGPoint(x: fullSize.width, y: range.minY + topstep))
-                }.stroke(Color.loopYellow, lineWidth: 0.5)
-            } else {
-                Text(
-                    "high limit: \(highGlucoseLine.formatted()) Conditional: \((CGFloat(range.maxValue) - (CGFloat(highGlucoseLine) / (units == .mmolL ? 0.0555 : 1))).formatted()) range.maxValue: \(CGFloat(range.maxValue).formatted())"
-                )
+                }.stroke(Color.loopYellow, lineWidth: 0.7) // .StrokeStyle(lineWidth: 0.5, dash: [5])
             }
             let yrange = glucoseYRange
             let bottomstep = (yrange.maxY - yrange.minY) / CGFloat(yrange.maxValue - yrange.minValue) *
@@ -198,7 +194,7 @@ struct MainChartView: View {
                 Path { path in
                     path.move(to: CGPoint(x: 0, y: yrange.minY + bottomstep))
                     path.addLine(to: CGPoint(x: fullSize.width, y: yrange.minY + bottomstep))
-                }.stroke(Color.loopRed, lineWidth: 0.5)
+                }.stroke(Color.loopRed, lineWidth: 0.7)
             }
         }
     }
@@ -278,7 +274,7 @@ struct MainChartView: View {
                     path.addLine(to: CGPoint(x: x, y: fullSize.height - 20))
                 }
             }
-            .stroke(Color.secondary, lineWidth: 0.2)
+            .stroke(Color.clear, lineWidth: 0.2)
 
             Path { path in // vertical timeline
                 let x = timeToXCoordinate(timerDate.timeIntervalSince1970, fullSize: fullSize)

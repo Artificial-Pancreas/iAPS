@@ -71,7 +71,8 @@ extension Stat {
         @State var conversionFactor = 0.0555
 
         @ViewBuilder func stats() -> some View {
-            timeInRange
+            tirChart
+            // timeInRange
             Divider()
             loops
             Divider()
@@ -220,7 +221,7 @@ extension Stat {
                     }
                     VStack {
                         HStack {
-                            Text("Readings").font(.subheadline).foregroundColor(.secondary)
+                            Text("Readings / 24h").font(.subheadline).foregroundColor(.secondary)
                         }
                         HStack {
                             VStack {
@@ -265,15 +266,45 @@ extension Stat {
             return days
         }
 
+        var tirChart: some View {
+            let array = selectedState == .day ? fetchedGlucoseDay : selectedState == .twentyFour ? fetchedGlucoseTwentyFourHours :
+                selectedState == .week ? fetchedGlucoseWeek : selectedState == .month ? fetchedGlucoseMonth : selectedState ==
+                .total ? fetchedGlucose : fetchedGlucoseDay
+            let fetched = tir(array)
+            let data: [ShapeModel] = [
+                .init(type: "Low", percent: fetched[0].decimal),
+                .init(type: "In Range", percent: fetched[1].decimal),
+                .init(type: "High", percent: fetched[2].decimal)
+            ]
+
+            return VStack(alignment: .center) {
+                // Text("TIR").foregroundColor(.secondary)
+                Chart(data) { shape in
+                    BarMark(
+                        x: .value("Shape", shape.type),
+                        y: .value("Percentage", shape.percent)
+                    )
+                    .foregroundStyle(by: .value("Group", shape.type))
+                    .annotation(position: .overlay, alignment: .center) {
+                        Text("\(shape.percent, format: .number.precision(.fractionLength(0))) %")
+                            .foregroundColor(.white)
+                    }
+                }
+                .chartYAxis(.hidden)
+                .chartLegend(.hidden)
+                .chartForegroundStyleScale(["Low": .red, "In Range": .green, "High": .orange])
+            }
+        }
+
         var glucoseChart: some View {
             Chart {
                 ForEach(fetchedGlucoseDay.filter({ $0.glucose > Int(state.highLimit ?? 145) }), id: \.date) { item in
                     PointMark(
                         x: .value("Date", item.date ?? Date()),
-                        y: .value("Low", Double(item.glucose) * (state.units == .mmolL ? conversionFactor : 1))
+                        y: .value("High", Double(item.glucose) * (state.units == .mmolL ? conversionFactor : 1))
                     )
                     .foregroundStyle(.orange)
-                    .symbolSize(7)
+                    .symbolSize(12)
                 }
                 ForEach(
                     fetchedGlucoseDay
@@ -285,21 +316,22 @@ extension Stat {
                         y: .value("In Range", Double(item.glucose) * (state.units == .mmolL ? conversionFactor : 1))
                     )
                     .foregroundStyle(.green)
-                    .symbolSize(7)
+                    .symbolSize(12)
                 }
                 ForEach(fetchedGlucoseDay.filter({ $0.glucose < Int(state.lowLimit ?? 70) }), id: \.date) { item in
                     PointMark(
                         x: .value("Date", item.date ?? Date()),
-                        y: .value("High", Double(item.glucose) * (state.units == .mmolL ? conversionFactor : 1))
+                        y: .value("Low", Double(item.glucose) * (state.units == .mmolL ? conversionFactor : 1))
                     )
                     .foregroundStyle(.red)
-                    .symbolSize(7)
+                    .symbolSize(12)
                 }
                 RuleMark(
                     y: .value("Target", 100 * (state.units == .mmolL ? conversionFactor : 1))
                 )
                 .lineStyle(StrokeStyle(lineWidth: 0.5, dash: [10]))
             }
+            .chartYScale(domain: [0, 17])
         }
 
         var glucoseChartTwentyFourHours: some View {
@@ -307,10 +339,10 @@ extension Stat {
                 ForEach(fetchedGlucoseTwentyFourHours.filter({ $0.glucose > Int(state.highLimit ?? 145) }), id: \.date) { item in
                     PointMark(
                         x: .value("Date", item.date ?? Date()),
-                        y: .value("Low", Double(item.glucose) * (state.units == .mmolL ? conversionFactor : 1))
+                        y: .value("High", Double(item.glucose) * (state.units == .mmolL ? conversionFactor : 1))
                     )
                     .foregroundStyle(.orange)
-                    .symbolSize(7)
+                    .symbolSize(10)
                 }
                 ForEach(
                     fetchedGlucoseTwentyFourHours
@@ -322,21 +354,21 @@ extension Stat {
                         y: .value("In Range", Double(item.glucose) * (state.units == .mmolL ? conversionFactor : 1))
                     )
                     .foregroundStyle(.green)
-                    .symbolSize(7)
+                    .symbolSize(10)
                 }
                 ForEach(fetchedGlucoseTwentyFourHours.filter({ $0.glucose < Int(state.lowLimit ?? 70) }), id: \.date) { item in
                     PointMark(
                         x: .value("Date", item.date ?? Date()),
-                        y: .value("High", Double(item.glucose) * (state.units == .mmolL ? conversionFactor : 1))
+                        y: .value("Low", Double(item.glucose) * (state.units == .mmolL ? conversionFactor : 1))
                     )
                     .foregroundStyle(.red)
-                    .symbolSize(7)
+                    .symbolSize(10)
                 }
                 RuleMark(
                     y: .value("Target", 100 * (state.units == .mmolL ? conversionFactor : 1))
                 )
                 .lineStyle(StrokeStyle(lineWidth: 0.5, dash: [10]))
-            }
+            }.chartYScale(domain: [0, 17])
         }
 
         var glucoseChartWeek: some View {
@@ -373,7 +405,7 @@ extension Stat {
                     y: .value("Target", 100 * (state.units == .mmolL ? conversionFactor : 1))
                 )
                 .lineStyle(StrokeStyle(lineWidth: 0.5, dash: [10]))
-            }
+            }.chartYScale(domain: [0, 17])
         }
 
         var glucoseChartMonth: some View {
@@ -410,7 +442,7 @@ extension Stat {
                     y: .value("Target", 100 * (state.units == .mmolL ? conversionFactor : 1))
                 )
                 .lineStyle(StrokeStyle(lineWidth: 0.5, dash: [10]))
-            }
+            }.chartYScale(domain: [0, 17])
         }
 
         var glucoseChart90: some View {
@@ -421,7 +453,7 @@ extension Stat {
                         y: .value("Low", Double(item.glucose) * (state.units == .mmolL ? conversionFactor : 1))
                     )
                     .foregroundStyle(.orange)
-                    .symbolSize(0.5)
+                    .symbolSize(2)
                 }
                 ForEach(
                     fetchedGlucose
@@ -433,7 +465,7 @@ extension Stat {
                         y: .value("In Range", Double(item.glucose) * (state.units == .mmolL ? conversionFactor : 1))
                     )
                     .foregroundStyle(.green)
-                    .symbolSize(0.5)
+                    .symbolSize(2)
                 }
                 ForEach(fetchedGlucose.filter({ $0.glucose < Int(state.lowLimit ?? 70) }), id: \.date) { item in
                     PointMark(
@@ -441,13 +473,13 @@ extension Stat {
                         y: .value("High", Double(item.glucose) * (state.units == .mmolL ? conversionFactor : 1))
                     )
                     .foregroundStyle(.red)
-                    .symbolSize(0.5)
+                    .symbolSize(2)
                 }
                 RuleMark(
                     y: .value("Target", 100 * (state.units == .mmolL ? conversionFactor : 1))
                 )
                 .lineStyle(StrokeStyle(lineWidth: 0.5, dash: [10]))
-            }
+            }.chartYScale(domain: [0, 17])
         }
 
         private func loopStats(_ loops: FetchedResults<LoopStatRecord>) -> [(double: Double, string: String)] {
@@ -545,6 +577,7 @@ extension Stat {
                 numberOfDays = (firstElementTime - lastElementTime).timeInterval / 8.64E4
             }
             var duration = 1
+            var duration24 = 1440
             var denominator: Double = 1
 
             switch selectedState {
@@ -552,9 +585,11 @@ extension Stat {
                 let minutesSinceMidnight = Calendar.current.component(.hour, from: Date()) * 60 + Calendar.current
                     .component(.minute, from: Date())
                 duration = minutesSinceMidnight
+
+                denominator = 1
             case .twentyFour:
                 duration = 1 * 1440
-                if numberOfDays > 1 { denominator = 1 } else { denominator = numberOfDays }
+                denominator = 1
             case .week:
                 duration = 7 * 1440
                 if numberOfDays > 7 { denominator = 7 } else { denominator = numberOfDays }
