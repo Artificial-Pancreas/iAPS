@@ -169,6 +169,16 @@ struct MainView: View {
                             .foregroundColor(.white)
                             .minimumScaleFactor(0.5)
                     }
+                case .isf:
+                    Spacer()
+                    HStack {
+                        Text("💉" + " \(state.isf ?? 0)")
+                            .fontWeight(.regular)
+                            .font(.caption2)
+                            .scaledToFill()
+                            .foregroundColor(.white)
+                            .minimumScaleFactor(0.5)
+                    }
                 }
             }
             Spacer()

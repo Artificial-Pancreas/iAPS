@@ -100,6 +100,8 @@ final class BaseWatchManager: NSObject, WatchManager, Injectable {
             self.state.eventualBG = eBG.map { "⇢ " + $0 }
             self.state.eventualBGRaw = eBG
 
+            self.state.isf = self.suggestion?.isf
+
             self.sendState()
         }
     }

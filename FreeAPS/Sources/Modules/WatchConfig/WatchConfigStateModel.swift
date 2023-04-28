@@ -6,6 +6,7 @@ enum AwConfig: String, JSON, CaseIterable, Identifiable, Codable {
     case HR
     case BGTarget
     case steps
+    case isf
 
     var displayName: String {
         switch self {
@@ -15,6 +16,8 @@ enum AwConfig: String, JSON, CaseIterable, Identifiable, Codable {
             return "Heart Rate"
         case .steps:
             return "Steps"
+        case .isf:
+            return "ISF"
         }
     }
 }

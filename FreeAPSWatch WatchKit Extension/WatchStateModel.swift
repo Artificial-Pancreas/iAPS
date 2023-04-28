@@ -8,6 +8,7 @@ enum AwConfig: String, CaseIterable, Identifiable, Codable {
     case HR
     case BGTarget
     case steps
+    case isf
 }
 
 class WatchStateModel: NSObject, ObservableObject {
@@ -51,6 +52,8 @@ class WatchStateModel: NSObject, ObservableObject {
     @Published var lastUpdate: Date = .distantPast
     @Published var timerDate = Date()
     @Published var pendingBolus: Double?
+
+    @Published var isf: Decimal?
 
     private var lifetime = Set<AnyCancellable>()
     private var confirmationTimeout: AnyCancellable?
@@ -168,6 +171,7 @@ class WatchStateModel: NSObject, ObservableObject {
         lastUpdate = Date()
         eventualBG = state.eventualBG ?? ""
         displayOnWatch = state.displayOnWatch ?? .BGTarget
+        isf = state.isf
     }
 }
 
