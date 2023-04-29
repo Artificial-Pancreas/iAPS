@@ -13,7 +13,6 @@ extension Home {
 
         @Published var glucose: [BloodGlucose] = []
         @Published var suggestion: Suggestion?
-        @Published var statistics: Statistics?
         @Published var displayStatistics = false
         @Published var enactedSuggestion: Suggestion?
         @Published var recentGlucose: BloodGlucose?
@@ -67,10 +66,8 @@ extension Home {
             setupCarbs()
             setupBattery()
             setupReservoir()
-            setupStatistics()
 
             suggestion = provider.suggestion
-            statistics = provider.statistics
             displayStatistics = settingsManager.settings.displayStatistics
             displayLoops = settingsManager.preferences.displayLoops
             enactedSuggestion = provider.enactedSuggestion
@@ -321,13 +318,6 @@ extension Home {
             }
         }
 
-        private func setupStatistics() {
-            DispatchQueue.main.async { [weak self] in
-                guard let self = self else { return }
-                self.statistics = self.provider.statistics
-            }
-        }
-
         private func setupBattery() {
             DispatchQueue.main.async { [weak self] in
                 guard let self = self else { return }
@@ -380,7 +370,6 @@ extension Home.StateModel:
 {
     func glucoseDidUpdate(_: [BloodGlucose]) {
         setupGlucose()
-        setupStatistics()
     }
 
     func suggestionDidUpdate(_ suggestion: Suggestion) {
@@ -401,7 +390,6 @@ extension Home.StateModel:
         lowGlucoseLine = settingsManager.settings.lowGlucose
         highGlucoseLine = settingsManager.settings.highGlucose
         setupGlucose()
-        setupStatistics()
     }
 
     func pumpHistoryDidUpdate(_: [PumpHistoryEvent]) {
@@ -429,7 +417,6 @@ extension Home.StateModel:
     func enactedSuggestionDidUpdate(_ suggestion: Suggestion) {
         enactedSuggestion = suggestion
         setStatusTitle()
-        setupStatistics()
     }
 
     func pumpBatteryDidChange(_: Battery) {
