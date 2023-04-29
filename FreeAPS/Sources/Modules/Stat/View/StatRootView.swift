@@ -342,12 +342,18 @@ extension Stat {
                     .foregroundStyle(.red)
                     .symbolSize(count < 20 ? 30 : 12)
                 }
-                RuleMark(
-                    y: .value("Target", 100 * (state.units == .mmolL ? conversionFactor : 1))
-                )
-                .lineStyle(StrokeStyle(lineWidth: 0.5, dash: [10]))
             }
             .chartYScale(domain: [0, 17])
+            .chartYAxis {
+                AxisMarks(
+                    values: [
+                        0,
+                        (state.lowLimit ?? 70) * (state.units == .mmolL ? conversionFactor : 1),
+                        (state.highLimit ?? 145) * (state.units == .mmolL ? conversionFactor : 1),
+                        15
+                    ]
+                )
+            }
         }
 
         var glucoseChartTwentyFourHours: some View {
@@ -385,7 +391,18 @@ extension Stat {
                     y: .value("Target", 100 * (state.units == .mmolL ? conversionFactor : 1))
                 )
                 .lineStyle(StrokeStyle(lineWidth: 0.5, dash: [10]))
-            }.chartYScale(domain: [0, 17])
+            }
+            .chartYScale(domain: [0, 17])
+            .chartYAxis {
+                AxisMarks(
+                    values: [
+                        0,
+                        (state.lowLimit ?? 70) * (state.units == .mmolL ? conversionFactor : 1),
+                        (state.highLimit ?? 145) * (state.units == .mmolL ? conversionFactor : 1),
+                        15
+                    ]
+                )
+            }
         }
 
         var glucoseChartWeek: some View {
@@ -422,7 +439,18 @@ extension Stat {
                     y: .value("Target", 100 * (state.units == .mmolL ? conversionFactor : 1))
                 )
                 .lineStyle(StrokeStyle(lineWidth: 0.5, dash: [10]))
-            }.chartYScale(domain: [0, 17])
+            }
+            .chartYScale(domain: [0, 17])
+            .chartYAxis {
+                AxisMarks(
+                    values: [
+                        0,
+                        (state.lowLimit ?? 70) * (state.units == .mmolL ? conversionFactor : 1),
+                        (state.highLimit ?? 145) * (state.units == .mmolL ? conversionFactor : 1),
+                        15
+                    ]
+                )
+            }
         }
 
         var glucoseChartMonth: some View {
@@ -459,7 +487,18 @@ extension Stat {
                     y: .value("Target", 100 * (state.units == .mmolL ? conversionFactor : 1))
                 )
                 .lineStyle(StrokeStyle(lineWidth: 0.5, dash: [10]))
-            }.chartYScale(domain: [0, 17])
+            }
+            .chartYScale(domain: [0, 17])
+            .chartYAxis {
+                AxisMarks(
+                    values: [
+                        0,
+                        (state.lowLimit ?? 70) * (state.units == .mmolL ? conversionFactor : 1),
+                        (state.highLimit ?? 145) * (state.units == .mmolL ? conversionFactor : 1),
+                        15
+                    ]
+                )
+            }
         }
 
         var glucoseChart90: some View {
@@ -496,7 +535,18 @@ extension Stat {
                     y: .value("Target", 100 * (state.units == .mmolL ? conversionFactor : 1))
                 )
                 .lineStyle(StrokeStyle(lineWidth: 0.5, dash: [10]))
-            }.chartYScale(domain: [0, 17])
+            }
+            .chartYScale(domain: [0, 17])
+            .chartYAxis {
+                AxisMarks(
+                    values: [
+                        0,
+                        (state.lowLimit ?? 70) * (state.units == .mmolL ? conversionFactor : 1),
+                        (state.highLimit ?? 145) * (state.units == .mmolL ? conversionFactor : 1),
+                        15
+                    ]
+                )
+            }
         }
 
         private func loopStats(_ loops: FetchedResults<LoopStatRecord>) -> [(double: Double, string: String)] {
