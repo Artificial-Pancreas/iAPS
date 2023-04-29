@@ -121,7 +121,7 @@ final class Logger {
         case deviceManager
         case apsManager
         case nightscout
-    
+
         var name: String {
             rawValue.capitalizingFirstLetter()
         }

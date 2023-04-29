@@ -48,8 +48,6 @@ extension Screen {
             ConfigEditor.RootView(resolver: resolver, file: file)
         case .nighscoutConfig:
             NightscoutConfig.RootView(resolver: resolver)
-        case .libreViewConfig:
-            LibreViewConfig.RootView(resolver: resolver)
         case .pumpConfig:
             PumpConfig.RootView(resolver: resolver)
         case .pumpSettingsEditor:

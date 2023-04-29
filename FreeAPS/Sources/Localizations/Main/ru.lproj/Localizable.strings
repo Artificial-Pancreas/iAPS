@@ -236,9 +236,6 @@ Enact a temp Basal or a temp target */
 /* Connect to NS */
 "Connect" = "Подключить";
 
- Allow uploads tp NS */
- "Allow uploads" = "Разрешить выгрузку";
-
 /* Connecting to NS */
 "Connecting..." = "Подключение...";
 
