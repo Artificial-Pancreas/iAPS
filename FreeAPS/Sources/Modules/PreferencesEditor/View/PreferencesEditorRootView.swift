@@ -37,7 +37,7 @@ extension PreferencesEditor {
 
                     Toggle("Skip Bolus screen after carbs", isOn: $state.skipBolusScreenAfterCarbs)
 
-                    Toggle("Display Statistics", isOn: $state.displayStatistics)
+                    Toggle("Allow Upload of Statistics to NS", isOn: $state.displayStatistics)
                 }
 
                 ForEach(state.sections.indexed(), id: \.1.id) { sectionIndex, section in

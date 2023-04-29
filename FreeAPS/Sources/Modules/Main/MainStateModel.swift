@@ -107,6 +107,7 @@ extension Main {
     }
 }
 
+@available(iOS 16.0, *)
 extension Main.StateModel: CompletionDelegate {
     func completionNotifyingDidComplete(_: CompletionNotifying) {
         // close the window
