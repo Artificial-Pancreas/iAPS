@@ -80,12 +80,11 @@ extension Stat {
         @State var conversionFactor = 0.0555
 
         @ViewBuilder func stats() -> some View {
+            bloodGlucose
+            Divider()
             tirChart
-            // timeInRange
             Divider()
             loops
-            Divider()
-            bloodGlucose
             Divider()
             hba1c
         }
@@ -109,7 +108,7 @@ extension Stat {
             ZStack {
                 VStack(spacing: 8) {
                     chart().padding(.horizontal, 10)
-                    Spacer()
+                    Divider()
                     stats()
                     Spacer()
                     Picker("Duration", selection: $selectedDuration) {
@@ -202,12 +201,12 @@ extension Stat {
                     let bgs = glucoseStats(fetchedGlucose)
                     VStack {
                         HStack {
-                            Text("Median").font(.subheadline).foregroundColor(.secondary)
+                            Text("Average").font(.subheadline).foregroundColor(headline)
                         }
                         HStack {
                             VStack {
                                 Text(
-                                    bgs.median
+                                    bgs.average
                                         .formatted(
                                             .number.grouping(.never).rounded()
                                                 .precision(.fractionLength(state.units == .mmolL ? 1 : 0))
@@ -218,12 +217,12 @@ extension Stat {
                     }
                     VStack {
                         HStack {
-                            Text("Average").font(.subheadline).foregroundColor(headline)
+                            Text("Median").font(.subheadline).foregroundColor(.secondary)
                         }
                         HStack {
                             VStack {
                                 Text(
-                                    bgs.average
+                                    bgs.median
                                         .formatted(
                                             .number.grouping(.never).rounded()
                                                 .precision(.fractionLength(state.units == .mmolL ? 1 : 0))
@@ -301,9 +300,9 @@ extension Stat {
                         y: .value("Percentage", shape.percent)
                     )
                     .foregroundStyle(by: .value("Group", shape.type))
-                    .annotation(position: .overlay, alignment: .center) {
-                        Text("\(shape.percent, format: .number.precision(.fractionLength(0))) %")
-                            .foregroundColor(.white)
+                    .annotation(position: shape.percent < 5 ? .top : .overlay, alignment: .center) {
+                        Text(shape.percent == 0 ? "" : "\(shape.percent, format: .number.precision(.fractionLength(0))) %")
+                        // .foregroundColor(.white)
                     }
                 }
                 .chartYAxis(.hidden)
@@ -321,7 +320,7 @@ extension Stat {
                         y: .value("High", Double(item.glucose) * (state.units == .mmolL ? conversionFactor : 1))
                     )
                     .foregroundStyle(.orange)
-                    .symbolSize(count < 10 ? 30 : 12)
+                    .symbolSize(count < 20 ? 30 : 12)
                 }
                 ForEach(
                     fetchedGlucoseDay
@@ -333,7 +332,7 @@ extension Stat {
                         y: .value("In Range", Double(item.glucose) * (state.units == .mmolL ? conversionFactor : 1))
                     )
                     .foregroundStyle(.green)
-                    .symbolSize(count < 10 ? 30 : 12)
+                    .symbolSize(count < 20 ? 30 : 12)
                 }
                 ForEach(fetchedGlucoseDay.filter({ $0.glucose < Int(state.lowLimit ?? 70) }), id: \.date) { item in
                     PointMark(
@@ -341,7 +340,7 @@ extension Stat {
                         y: .value("Low", Double(item.glucose) * (state.units == .mmolL ? conversionFactor : 1))
                     )
                     .foregroundStyle(.red)
-                    .symbolSize(count < 10 ? 30 : 12)
+                    .symbolSize(count < 20 ? 30 : 12)
                 }
                 RuleMark(
                     y: .value("Target", 100 * (state.units == .mmolL ? conversionFactor : 1))
@@ -360,7 +359,7 @@ extension Stat {
                         y: .value("High", Double(item.glucose) * (state.units == .mmolL ? conversionFactor : 1))
                     )
                     .foregroundStyle(.orange)
-                    .symbolSize(count < 10 ? 20 : 10)
+                    .symbolSize(count < 20 ? 20 : 10)
                 }
                 ForEach(
                     fetchedGlucoseTwentyFourHours
@@ -372,7 +371,7 @@ extension Stat {
                         y: .value("In Range", Double(item.glucose) * (state.units == .mmolL ? conversionFactor : 1))
                     )
                     .foregroundStyle(.green)
-                    .symbolSize(count < 10 ? 20 : 10)
+                    .symbolSize(count < 20 ? 20 : 10)
                 }
                 ForEach(fetchedGlucoseTwentyFourHours.filter({ $0.glucose < Int(state.lowLimit ?? 70) }), id: \.date) { item in
                     PointMark(
@@ -380,7 +379,7 @@ extension Stat {
                         y: .value("Low", Double(item.glucose) * (state.units == .mmolL ? conversionFactor : 1))
                     )
                     .foregroundStyle(.red)
-                    .symbolSize(count < 10 ? 20 : 10)
+                    .symbolSize(count < 20 ? 20 : 10)
                 }
                 RuleMark(
                     y: .value("Target", 100 * (state.units == .mmolL ? conversionFactor : 1))
