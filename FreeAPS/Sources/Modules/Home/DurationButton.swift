@@ -18,24 +18,19 @@ enum durationState: String, DurationButton {
     case total = "All Days"
 }
 
-struct durationButton<T: DurationButton>: View {
-    let states: [T]
-    @Binding var selectedState: T
+struct durationButton: View {
+    @State private var favoriteColor: durationState = .day
 
     var body: some View {
-        HStack {
-            ForEach(0 ..< durationState.allCases.count) { index in
-                Button {
-                    selectedState = states[index]
-                } label: {
-                    Text(NSLocalizedString(durationState.allCases[index].title, comment: "Duration displayed in statPanel"))
-                        .font(.headline)
-                        .foregroundColor(.orange)
-                }
-                .buttonBorderShape(.automatic)
-                .controlSize(.regular)
-                .buttonStyle(.borderless)
+        VStack {
+            Picker("Choose duration for stored glucose", selection: $favoriteColor) {
+                Text("Today").tag(durationState.day)
+                Text("24 h").tag(durationState.twentyFour)
+                Text("Week ").tag(durationState.week)
+                Text("Month ").tag(durationState.month)
+                Text("All Days").tag(durationState.total)
             }
-        }.padding(.horizontal, 10)
+            .pickerStyle(.segmented)
+        }
     }
 }

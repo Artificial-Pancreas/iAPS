@@ -63,9 +63,18 @@ extension Stat {
             sortDescriptors: [NSSortDescriptor(key: "date", ascending: false)]
         ) var fetchedInsulin: FetchedResults<InsulinDistribution>
 
+        enum Duration: String, CaseIterable, Identifiable {
+            case Today
+            case Day
+            case Week
+            case Month
+            case Total
+            var id: Self { self }
+        }
+
+        @State private var selectedDuration: Duration = .Today
         @State var paddingAmount: CGFloat? = 10
         @State var headline: Color = .secondary
-        @State var selectedState: durationState
         @State var days: Double = 0
         @State var pointSize: CGFloat = 3
         @State var conversionFactor = 0.0555
@@ -82,16 +91,16 @@ extension Stat {
         }
 
         @ViewBuilder func chart() -> some View {
-            switch selectedState {
-            case .day:
+            switch selectedDuration {
+            case .Today:
                 glucoseChart
-            case .twentyFour:
+            case .Day:
                 glucoseChartTwentyFourHours
-            case .week:
+            case .Week:
                 glucoseChartWeek
-            case .month:
+            case .Month:
                 glucoseChartMonth
-            case .total:
+            case .Total:
                 glucoseChart90
             }
         }
@@ -103,7 +112,11 @@ extension Stat {
                     Spacer()
                     stats()
                     Spacer()
-                    durationButton(states: durationState.allCases, selectedState: $selectedState)
+                    Picker("Duration", selection: $selectedDuration) {
+                        ForEach(Duration.allCases) { duration in
+                            Text(duration.rawValue).tag(Optional(duration))
+                        }
+                    }.pickerStyle(.segmented)
                 }
                 .frame(maxWidth: .infinity)
                 .padding([.vertical], 40)
@@ -170,7 +183,7 @@ extension Stat {
                         }
                     }
                 }.padding([.horizontal], paddingAmount)
-                if selectedState == .total {
+                if selectedDuration == .Total {
                     VStack {
                         Text("Days").font(.subheadline).foregroundColor(.secondary)
                         HStack {
@@ -221,7 +234,7 @@ extension Stat {
                     }
                     VStack {
                         HStack {
-                            Text(selectedState == .day ? "Readings today" : "Readings / 24h").font(.subheadline)
+                            Text(selectedDuration == .Today ? "Readings today" : "Readings / 24h").font(.subheadline)
                                 .foregroundColor(.secondary)
                         }
                         HStack {
@@ -268,9 +281,11 @@ extension Stat {
         }
 
         var tirChart: some View {
-            let array = selectedState == .day ? fetchedGlucoseDay : selectedState == .twentyFour ? fetchedGlucoseTwentyFourHours :
-                selectedState == .week ? fetchedGlucoseWeek : selectedState == .month ? fetchedGlucoseMonth : selectedState ==
-                .total ? fetchedGlucose : fetchedGlucoseDay
+            let array = selectedDuration == .Today ? fetchedGlucoseDay : selectedDuration == .Day ?
+                fetchedGlucoseTwentyFourHours :
+                selectedDuration == .Week ? fetchedGlucoseWeek : selectedDuration == .Month ? fetchedGlucoseMonth :
+                selectedDuration ==
+                .Total ? fetchedGlucose : fetchedGlucoseDay
             let fetched = tir(array)
             let data: [ShapeModel] = [
                 .init(type: "Low", percent: fetched[0].decimal),
@@ -583,23 +598,23 @@ extension Stat {
             var duration24 = 1440
             var denominator: Double = 1
 
-            switch selectedState {
-            case .day:
+            switch selectedDuration {
+            case .Today:
                 let minutesSinceMidnight = Calendar.current.component(.hour, from: Date()) * 60 + Calendar.current
                     .component(.minute, from: Date())
                 duration = minutesSinceMidnight
 
                 denominator = 1
-            case .twentyFour:
+            case .Day:
                 duration = 1 * 1440
                 denominator = 1
-            case .week:
+            case .Week:
                 duration = 7 * 1440
                 if numberOfDays > 7 { denominator = 7 } else { denominator = numberOfDays }
-            case .month:
+            case .Month:
                 duration = 30 * 1440
                 if numberOfDays > 30 { denominator = 30 } else { denominator = numberOfDays }
-            case .total:
+            case .Total:
                 duration = 90 * 1440
                 if numberOfDays >= 90 { denominator = 90 } else { denominator = numberOfDays }
             }
@@ -651,18 +666,18 @@ extension Stat {
         private func tir(_ glucose_90: FetchedResults<Readings>) -> [(decimal: Decimal, string: String)] {
             var duration = 1
 
-            switch selectedState {
-            case .day:
+            switch selectedDuration {
+            case .Today:
                 let minutesSinceMidnight = Calendar.current.component(.hour, from: Date()) * 60 + Calendar.current
                     .component(.minute, from: Date())
                 duration = minutesSinceMidnight
-            case .twentyFour:
+            case .Day:
                 duration = 1 * 1440
-            case .week:
+            case .Week:
                 duration = 7 * 1440
-            case .month:
+            case .Month:
                 duration = 30 * 1440
-            case .total:
+            case .Total:
                 duration = 90 * 1440
             }
 

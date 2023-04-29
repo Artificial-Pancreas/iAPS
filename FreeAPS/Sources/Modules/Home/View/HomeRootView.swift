@@ -266,7 +266,7 @@ extension Home {
         @ViewBuilder private func statPanel() -> some View {
             if state.displayStatistics {
                 VStack(spacing: 8) {
-                    durationButton(states: durationState.allCases, selectedState: $selectedState)
+                    durationButton()
 
                     switch selectedState {
                     case .day:
