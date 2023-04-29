@@ -10,7 +10,6 @@ extension Home {
 
         @StateObject var state = StateModel()
         @State var isStatusPopupPresented = false
-        @State var selectedState: durationState
 
         // Average/Median/Readings and CV/SD titles and values switches when you tap them
         @State var averageOrMedianTitle = NSLocalizedString("Average", comment: "")

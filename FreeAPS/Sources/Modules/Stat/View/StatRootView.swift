@@ -84,12 +84,13 @@ extension Stat {
             Divider()
             tirChart
             Divider()
-            loops
-            Divider()
             hba1c
+            Divider()
+            loops
         }
 
         @ViewBuilder func chart() -> some View {
+            Text("Statistics").font(.largeTitle).bold().padding(.top, 25)
             switch selectedDuration {
             case .Today:
                 glucoseChart
@@ -106,7 +107,7 @@ extension Stat {
 
         var body: some View {
             ZStack {
-                VStack(spacing: 8) {
+                VStack(alignment: .center, spacing: 8) {
                     chart().padding(.horizontal, 10)
                     Divider()
                     stats()
@@ -117,11 +118,6 @@ extension Stat {
                         }
                     }.pickerStyle(.segmented)
                 }
-                .frame(maxWidth: .infinity)
-                .padding([.vertical], 40)
-                .navigationTitle("Statistics")
-                .navigationBarHidden(true)
-                .ignoresSafeArea(.keyboard)
             }.onAppear(perform: configureView)
         }
 
@@ -141,7 +137,7 @@ extension Stat {
                                         .formatted(.number.grouping(.never).rounded().precision(.fractionLength(1)))
                                 )
                             )
-                        }
+                        }.padding(.horizontal, 6)
                     }
                 }
             }
@@ -157,7 +153,7 @@ extension Stat {
                             Text(hba1cs.ifcc.formatted(.number.grouping(.never).rounded().precision(.fractionLength(1))))
                         }
                     }
-                }.padding([.horizontal], paddingAmount)
+                }.padding([.horizontal], 15)
                 VStack {
                     Text("SD").font(.subheadline).foregroundColor(.secondary)
                     HStack {
@@ -171,7 +167,7 @@ extension Stat {
                             )
                         }
                     }
-                }.padding([.horizontal], paddingAmount)
+                }.padding([.horizontal], 15)
                 VStack {
                     Text("CV").font(.subheadline).foregroundColor(.secondary)
                     HStack {
@@ -181,7 +177,7 @@ extension Stat {
                             )
                         }
                     }
-                }.padding([.horizontal], paddingAmount)
+                }.padding([.horizontal], 15)
                 if selectedDuration == .Total {
                     VStack {
                         Text("Days").font(.subheadline).foregroundColor(.secondary)
@@ -190,7 +186,7 @@ extension Stat {
                                 Text(numberOfDays.formatted(.number.grouping(.never).rounded().precision(.fractionLength(1))))
                             }
                         }
-                    }.padding([.horizontal], paddingAmount)
+                    }.padding([.horizontal], 15)
                 }
             }
         }
@@ -248,25 +244,6 @@ extension Stat {
             }
         }
 
-        var timeInRange: some View {
-            VStack {
-                let TIRs = tir(fetchedGlucose)
-                HStack {
-                    ForEach(0 ..< TIRs.count, id: \.self) { index in
-                        if index == 1 {
-                            Text(TIRs[index].string).font(.subheadline).foregroundColor(.secondary)
-                                .padding([.vertical], paddingAmount)
-                        } else { Text(TIRs[index].string).font(.subheadline).foregroundColor(.secondary) }
-                        Text(
-                            TIRs[index].decimal
-                                .formatted(.number.grouping(.never).rounded().precision(.fractionLength(0))) + " %"
-                        )
-                        .foregroundColor(colorOfGlucose(index))
-                    }
-                }
-            }
-        }
-
         var numberOfDays: Double {
             let endIndex = fetchedGlucose.count - 1
             var days = 0.0
@@ -293,7 +270,6 @@ extension Stat {
             ]
 
             return VStack(alignment: .center) {
-                // Text("TIR").foregroundColor(.secondary)
                 Chart(data) { shape in
                     BarMark(
                         x: .value("Shape", shape.type),
@@ -313,6 +289,8 @@ extension Stat {
 
         var glucoseChart: some View {
             let count = fetchedGlucoseDay.count
+            let lowLimit = (state.lowLimit ?? 70) * (state.units == .mmolL ? Decimal(conversionFactor) : 1)
+            let highLimit = (state.highLimit ?? 145) * (state.units == .mmolL ? Decimal(conversionFactor) : 1)
             return Chart {
                 ForEach(fetchedGlucoseDay.filter({ $0.glucose > Int(state.highLimit ?? 145) }), id: \.date) { item in
                     PointMark(
@@ -348,8 +326,8 @@ extension Stat {
                 AxisMarks(
                     values: [
                         0,
-                        (state.lowLimit ?? 70) * (state.units == .mmolL ? conversionFactor : 1),
-                        (state.highLimit ?? 145) * (state.units == .mmolL ? conversionFactor : 1),
+                        lowLimit,
+                        highLimit,
                         15
                     ]
                 )
@@ -358,6 +336,8 @@ extension Stat {
 
         var glucoseChartTwentyFourHours: some View {
             let count = fetchedGlucoseTwentyFourHours.count
+            let lowLimit = (state.lowLimit ?? 70) * (state.units == .mmolL ? Decimal(conversionFactor) : 1)
+            let highLimit = (state.highLimit ?? 145) * (state.units == .mmolL ? Decimal(conversionFactor) : 1)
             return Chart {
                 ForEach(fetchedGlucoseTwentyFourHours.filter({ $0.glucose > Int(state.highLimit ?? 145) }), id: \.date) { item in
                     PointMark(
@@ -397,8 +377,8 @@ extension Stat {
                 AxisMarks(
                     values: [
                         0,
-                        (state.lowLimit ?? 70) * (state.units == .mmolL ? conversionFactor : 1),
-                        (state.highLimit ?? 145) * (state.units == .mmolL ? conversionFactor : 1),
+                        lowLimit,
+                        highLimit,
                         15
                     ]
                 )
@@ -406,7 +386,9 @@ extension Stat {
         }
 
         var glucoseChartWeek: some View {
-            Chart {
+            let lowLimit = (state.lowLimit ?? 70) * (state.units == .mmolL ? Decimal(conversionFactor) : 1)
+            let highLimit = (state.highLimit ?? 145) * (state.units == .mmolL ? Decimal(conversionFactor) : 1)
+            return Chart {
                 ForEach(fetchedGlucoseWeek.filter({ $0.glucose > Int(state.highLimit ?? 145) }), id: \.date) { item in
                     PointMark(
                         x: .value("Date", item.date ?? Date()),
@@ -445,8 +427,8 @@ extension Stat {
                 AxisMarks(
                     values: [
                         0,
-                        (state.lowLimit ?? 70) * (state.units == .mmolL ? conversionFactor : 1),
-                        (state.highLimit ?? 145) * (state.units == .mmolL ? conversionFactor : 1),
+                        lowLimit,
+                        highLimit,
                         15
                     ]
                 )
@@ -454,7 +436,9 @@ extension Stat {
         }
 
         var glucoseChartMonth: some View {
-            Chart {
+            let lowLimit = (state.lowLimit ?? 70) * (state.units == .mmolL ? Decimal(conversionFactor) : 1)
+            let highLimit = (state.highLimit ?? 145) * (state.units == .mmolL ? Decimal(conversionFactor) : 1)
+            return Chart {
                 ForEach(fetchedGlucoseMonth.filter({ $0.glucose > Int(state.highLimit ?? 145) }), id: \.date) { item in
                     PointMark(
                         x: .value("Date", item.date ?? Date()),
@@ -493,8 +477,8 @@ extension Stat {
                 AxisMarks(
                     values: [
                         0,
-                        (state.lowLimit ?? 70) * (state.units == .mmolL ? conversionFactor : 1),
-                        (state.highLimit ?? 145) * (state.units == .mmolL ? conversionFactor : 1),
+                        lowLimit,
+                        highLimit,
                         15
                     ]
                 )
@@ -502,7 +486,9 @@ extension Stat {
         }
 
         var glucoseChart90: some View {
-            Chart {
+            let lowLimit = (state.lowLimit ?? 70) * (state.units == .mmolL ? Decimal(conversionFactor) : 1)
+            let highLimit = (state.highLimit ?? 145) * (state.units == .mmolL ? Decimal(conversionFactor) : 1)
+            return Chart {
                 ForEach(fetchedGlucose.filter({ $0.glucose > Int(state.highLimit ?? 145) }), id: \.date) { item in
                     PointMark(
                         x: .value("Date", item.date ?? Date()),
@@ -541,8 +527,8 @@ extension Stat {
                 AxisMarks(
                     values: [
                         0,
-                        (state.lowLimit ?? 70) * (state.units == .mmolL ? conversionFactor : 1),
-                        (state.highLimit ?? 145) * (state.units == .mmolL ? conversionFactor : 1),
+                        lowLimit,
+                        highLimit,
                         15
                     ]
                 )
@@ -644,7 +630,6 @@ extension Stat {
                 numberOfDays = (firstElementTime - lastElementTime).timeInterval / 8.64E4
             }
             var duration = 1
-            var duration24 = 1440
             var denominator: Double = 1
 
             switch selectedDuration {
@@ -652,7 +637,6 @@ extension Stat {
                 let minutesSinceMidnight = Calendar.current.component(.hour, from: Date()) * 60 + Calendar.current
                     .component(.minute, from: Date())
                 duration = minutesSinceMidnight
-
                 denominator = 1
             case .Day:
                 duration = 1 * 1440
