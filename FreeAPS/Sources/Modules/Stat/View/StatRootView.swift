@@ -297,8 +297,8 @@ extension Stat {
 
         var glucoseChart: some View {
             let count = fetchedGlucoseDay.count
-            let lowLimit = (state.lowLimit ?? 70) * (state.units == .mmolL ? Decimal(conversionFactor) : 1)
-            let highLimit = (state.highLimit ?? 145) * (state.units == .mmolL ? Decimal(conversionFactor) : 1)
+            let lowLimit = (state.lowLimit ?? (4 * 0.0555)) * (state.units == .mmolL ? Decimal(conversionFactor) : 1)
+            let highLimit = (state.highLimit ?? (10 * 0.0555)) * (state.units == .mmolL ? Decimal(conversionFactor) : 1)
             return Chart {
                 ForEach(fetchedGlucoseDay.filter({ $0.glucose > Int(state.highLimit ?? 145) }), id: \.date) { item in
                     PointMark(
@@ -344,8 +344,8 @@ extension Stat {
 
         var glucoseChartTwentyFourHours: some View {
             let count = fetchedGlucoseTwentyFourHours.count
-            let lowLimit = (state.lowLimit ?? 70) * (state.units == .mmolL ? Decimal(conversionFactor) : 1)
-            let highLimit = (state.highLimit ?? 145) * (state.units == .mmolL ? Decimal(conversionFactor) : 1)
+            let lowLimit = (state.lowLimit ?? (4 * 0.0555)) * (state.units == .mmolL ? Decimal(conversionFactor) : 1)
+            let highLimit = (state.highLimit ?? (10 * 0.0555)) * (state.units == .mmolL ? Decimal(conversionFactor) : 1)
             return Chart {
                 ForEach(fetchedGlucoseTwentyFourHours.filter({ $0.glucose > Int(state.highLimit ?? 145) }), id: \.date) { item in
                     PointMark(
@@ -390,8 +390,8 @@ extension Stat {
         }
 
         var glucoseChartWeek: some View {
-            let lowLimit = (state.lowLimit ?? 70) * (state.units == .mmolL ? Decimal(conversionFactor) : 1)
-            let highLimit = (state.highLimit ?? 145) * (state.units == .mmolL ? Decimal(conversionFactor) : 1)
+            let lowLimit = (state.lowLimit ?? (4 * 0.0555)) * (state.units == .mmolL ? Decimal(conversionFactor) : 1)
+            let highLimit = (state.highLimit ?? (10 * 0.0555)) * (state.units == .mmolL ? Decimal(conversionFactor) : 1)
             return Chart {
                 ForEach(fetchedGlucoseWeek.filter({ $0.glucose > Int(state.highLimit ?? 145) }), id: \.date) { item in
                     PointMark(
@@ -436,8 +436,8 @@ extension Stat {
         }
 
         var glucoseChartMonth: some View {
-            let lowLimit = (state.lowLimit ?? 70) * (state.units == .mmolL ? Decimal(conversionFactor) : 1)
-            let highLimit = (state.highLimit ?? 145) * (state.units == .mmolL ? Decimal(conversionFactor) : 1)
+            let lowLimit = (state.lowLimit ?? (4 * 0.0555)) * (state.units == .mmolL ? Decimal(conversionFactor) : 1)
+            let highLimit = (state.highLimit ?? (10 * 0.0555)) * (state.units == .mmolL ? Decimal(conversionFactor) : 1)
             return Chart {
                 ForEach(fetchedGlucoseMonth.filter({ $0.glucose > Int(state.highLimit ?? 145) }), id: \.date) { item in
                     PointMark(
@@ -482,8 +482,8 @@ extension Stat {
         }
 
         var glucoseChart90: some View {
-            let lowLimit = (state.lowLimit ?? 70) * (state.units == .mmolL ? Decimal(conversionFactor) : 1)
-            let highLimit = (state.highLimit ?? 145) * (state.units == .mmolL ? Decimal(conversionFactor) : 1)
+            let lowLimit = (state.lowLimit ?? (4 * 0.0555)) * (state.units == .mmolL ? Decimal(conversionFactor) : 1)
+            let highLimit = (state.highLimit ?? (10 * 0.0555)) * (state.units == .mmolL ? Decimal(conversionFactor) : 1)
             return Chart {
                 ForEach(fetchedGlucose.filter({ $0.glucose > Int(state.highLimit ?? 145) }), id: \.date) { item in
                     PointMark(
@@ -539,7 +539,7 @@ extension Stat {
 
             let durationArray = loops.compactMap({ each in each.duration })
             let durationArrayCount = durationArray.count
-            var durationAverage = durationArray.reduce(0, +) / Double(durationArrayCount)
+            // var durationAverage = durationArray.reduce(0, +) / Double(durationArrayCount)
 
             let medianDuration = medianCalculationDouble(array: durationArray)
             let successsNR = loops.compactMap({ each in each.loopStatus }).filter({ each in each!.contains("Success") }).count

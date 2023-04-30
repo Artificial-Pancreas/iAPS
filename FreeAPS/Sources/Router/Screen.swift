@@ -31,6 +31,7 @@ enum Screen: Identifiable, Hashable {
     case snooze
     case statistics
     case watch
+    case statisticsConfig
 
     var id: Int { String(reflecting: self).hashValue }
 }
@@ -96,6 +97,8 @@ extension Screen {
             WatchConfig.RootView(resolver: resolver)
         case .statistics:
             Stat.RootView(resolver: resolver)
+        case .statisticsConfig:
+            StatConfig.RootView(resolver: resolver)
         }
     }
 

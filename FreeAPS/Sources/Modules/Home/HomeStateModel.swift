@@ -13,7 +13,7 @@ extension Home {
 
         @Published var glucose: [BloodGlucose] = []
         @Published var suggestion: Suggestion?
-        @Published var displayStatistics = false
+        @Published var uploadStats = false
         @Published var enactedSuggestion: Suggestion?
         @Published var recentGlucose: BloodGlucose?
         @Published var glucoseDelta: Int?
@@ -51,8 +51,8 @@ extension Home {
         @Published var manualTempBasal = false
         @Published var smooth = false
         @Published var maxValue: Decimal = 1.2
-        @Published var lowGlucoseLine: Decimal = 70
-        @Published var highGlucoseLine: Decimal = 145
+        @Published var lowGlucose: Decimal = 4 / 0.0555
+        @Published var highGlucose: Decimal = 10 / 0.0555
         @Published var overrideUnit = false
 
         override func subscribe() {
@@ -68,7 +68,7 @@ extension Home {
             setupReservoir()
 
             suggestion = provider.suggestion
-            displayStatistics = settingsManager.settings.displayStatistics
+            uploadStats = settingsManager.settings.uploadStats
             enactedSuggestion = provider.enactedSuggestion
             units = settingsManager.settings.units
             allowManualTemp = !settingsManager.settings.closedLoop
@@ -81,9 +81,9 @@ extension Home {
             setupCurrentTempTarget()
             smooth = settingsManager.settings.smoothGlucose
             maxValue = settingsManager.preferences.autosensMax
-            lowGlucoseLine = settingsManager.settings.lowGlucose
-            highGlucoseLine = settingsManager.settings.highGlucose
-            overrideUnit = settingsManager.preferences.overrideHbA1cUnit
+            lowGlucose = settingsManager.settings.low
+            highGlucose = settingsManager.settings.high
+            overrideUnit = settingsManager.settings.overrideHbA1cUnit
 
             broadcaster.register(GlucoseObserver.self, observer: self)
             broadcaster.register(SuggestionObserver.self, observer: self)
@@ -380,15 +380,15 @@ extension Home.StateModel:
 
     func settingsDidChange(_ settings: FreeAPSSettings) {
         allowManualTemp = !settings.closedLoop
-        displayStatistics = settingsManager.settings.displayStatistics
+        uploadStats = settingsManager.settings.uploadStats
         closedLoop = settingsManager.settings.closedLoop
         units = settingsManager.settings.units
         animatedBackground = settingsManager.settings.animatedBackground
         manualTempBasal = apsManager.isManualTempBasal
         smooth = settingsManager.settings.smoothGlucose
-        lowGlucoseLine = settingsManager.settings.lowGlucose
-        highGlucoseLine = settingsManager.settings.highGlucose
-        overrideUnit = settingsManager.preferences.overrideHbA1cUnit
+        lowGlucose = settingsManager.settings.low
+        highGlucose = settingsManager.settings.high
+        overrideUnit = settingsManager.settings.overrideHbA1cUnit
         setupGlucose()
     }
 

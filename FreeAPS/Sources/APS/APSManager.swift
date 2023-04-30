@@ -731,9 +731,10 @@ final class BaseAPSManager: APSManager, Injectable {
 
     // Add to statistics.JSON
     private func statistics() {
-        if settingsManager.settings.displayStatistics {
+        if settingsManager.settings.uploadStats {
             let now = Date()
-            guard Date().hour > 22 else {
+            let hour = Calendar.current.component(.hour, from: Date())
+            guard hour > 20 else {
                 return
             }
             coredataContext.performAndWait { [self] in
@@ -1009,8 +1010,8 @@ final class BaseAPSManager: APSManager, Injectable {
                     var i = -1
                     var lastIndex = false
                     let endIndex = array.count - 1
-                    var hypoLimit = settingsManager.settings.lowGlucose
-                    var hyperLimit = settingsManager.settings.highGlucose
+                    var hypoLimit = settingsManager.settings.low
+                    var hyperLimit = settingsManager.settings.high
                     if units == .mmolL {
                         hypoLimit = hypoLimit / 0.0555
                         hyperLimit = hyperLimit / 0.0555
@@ -1125,7 +1126,7 @@ final class BaseAPSManager: APSManager, Injectable {
                 try? self.coredataContext.save()
 
                 // Convert to user-preferred unit
-                let overrideHbA1cUnit = settingsManager.preferences.overrideHbA1cUnit
+                let overrideHbA1cUnit = settingsManager.settings.overrideHbA1cUnit
                 if units == .mmolL {
                     // Override if users sets overrideHbA1cUnit: true
                     if !overrideHbA1cUnit {

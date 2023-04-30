@@ -119,8 +119,8 @@ extension Home {
                 delta: $state.glucoseDelta,
                 units: $state.units,
                 alarm: $state.alarm,
-                lowGlucoseLine: $state.lowGlucoseLine,
-                highGlucoseLine: $state.highGlucoseLine
+                lowGlucose: $state.lowGlucose,
+                highGlucose: $state.highGlucose
             )
             .onTapGesture {
                 if state.alarm == nil {
@@ -334,8 +334,8 @@ extension Home {
                     timerDate: $state.timerDate,
                     units: $state.units,
                     smooth: $state.smooth,
-                    highGlucoseLine: $state.highGlucoseLine,
-                    lowGlucoseLine: $state.lowGlucoseLine
+                    highGlucose: $state.highGlucose,
+                    lowGlucose: $state.lowGlucose
                 )
             }
             .padding(.bottom)

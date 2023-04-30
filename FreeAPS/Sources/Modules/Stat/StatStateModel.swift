@@ -12,10 +12,10 @@ extension Stat {
         private(set) var units: GlucoseUnits = .mmolL
 
         override func subscribe() {
-            highLimit = settingsManager.settings.highGlucose
-            lowLimit = settingsManager.settings.lowGlucose
+            highLimit = settingsManager.settings.high
+            lowLimit = settingsManager.settings.low
             units = settingsManager.settings.units
-            overrideUnit = settingsManager.preferences.overrideHbA1cUnit
+            overrideUnit = settingsManager.settings.overrideHbA1cUnit
         }
     }
 }

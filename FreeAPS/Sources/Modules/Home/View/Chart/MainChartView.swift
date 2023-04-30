@@ -19,7 +19,7 @@ typealias GlucoseYRange = (minValue: Int, minY: CGFloat, maxValue: Int, maxY: CG
 struct MainChartView: View {
     private enum Config {
         static let endID = "End"
-        static let screenHours = 8
+        static let screenHours = 6
         static let basalHeight: CGFloat = 80
         static let topYPadding: CGFloat = 20
         static let bottomYPadding: CGFloat = 80
@@ -48,8 +48,8 @@ struct MainChartView: View {
     @Binding var timerDate: Date
     @Binding var units: GlucoseUnits
     @Binding var smooth: Bool
-    @Binding var highGlucoseLine: Decimal
-    @Binding var lowGlucoseLine: Decimal
+    @Binding var highGlucose: Decimal
+    @Binding var lowGlucose: Decimal
 
     @State var didAppearTrigger = false
     @State private var glucoseDots: [CGRect] = []
@@ -179,8 +179,8 @@ struct MainChartView: View {
             // horizontal limits
             let range = glucoseYRange
             let topstep = (range.maxY - range.minY) / CGFloat(range.maxValue - range.minValue) *
-                (CGFloat(range.maxValue) - CGFloat(highGlucoseLine))
-            if CGFloat(range.maxValue) > CGFloat(highGlucoseLine) {
+                (CGFloat(range.maxValue) - CGFloat(highGlucose))
+            if CGFloat(range.maxValue) > CGFloat(highGlucose) {
                 Path { path in
                     path.move(to: CGPoint(x: 0, y: range.minY + topstep))
                     path.addLine(to: CGPoint(x: fullSize.width, y: range.minY + topstep))
@@ -188,8 +188,8 @@ struct MainChartView: View {
             }
             let yrange = glucoseYRange
             let bottomstep = (yrange.maxY - yrange.minY) / CGFloat(yrange.maxValue - yrange.minValue) *
-                (CGFloat(yrange.maxValue) - CGFloat(lowGlucoseLine))
-            if CGFloat(yrange.minValue) < CGFloat(lowGlucoseLine) {
+                (CGFloat(yrange.maxValue) - CGFloat(lowGlucose))
+            if CGFloat(yrange.minValue) < CGFloat(lowGlucose) {
                 Path { path in
                     path.move(to: CGPoint(x: 0, y: yrange.minY + bottomstep))
                     path.addLine(to: CGPoint(x: fullSize.width, y: yrange.minY + bottomstep))

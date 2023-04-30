@@ -7,14 +7,12 @@ extension PreferencesEditor {
         @Published var allowAnnouncements = false
         @Published var insulinReqPercentage: Decimal = 70
         @Published var skipBolusScreenAfterCarbs = false
-        @Published var displayStatistics = false
         @Published var sections: [FieldSection] = []
 
         override func subscribe() {
             preferences = provider.preferences
             subscribeSetting(\.allowAnnouncements, on: $allowAnnouncements) { allowAnnouncements = $0 }
             subscribeSetting(\.insulinReqPercentage, on: $insulinReqPercentage) { insulinReqPercentage = $0 }
-            subscribeSetting(\.displayStatistics, on: $displayStatistics) { displayStatistics = $0 }
             subscribeSetting(\.skipBolusScreenAfterCarbs, on: $skipBolusScreenAfterCarbs) { skipBolusScreenAfterCarbs = $0 }
 
             subscribeSetting(\.units, on: $unitsIndex.map { $0 == 0 ? GlucoseUnits.mgdL : .mmolL }) {
@@ -22,21 +20,6 @@ extension PreferencesEditor {
             } didSet: { [weak self] _ in
                 self?.provider.migrateUnits()
             }
-
-            let statFields = [
-                Field(
-                    displayName: NSLocalizedString(
-                        "Override HbA1c unit",
-                        comment: "Display %"
-                    ),
-                    type: .boolean(keypath: \.overrideHbA1cUnit),
-                    infoText: NSLocalizedString(
-                        "Change default HbA1c unit in statPanlel. The unit in statPanel will be updateded with next statistics.json update",
-                        comment: "Description for Override HbA1c unit"
-                    ),
-                    settable: self
-                )
-            ]
 
             let mainFields = [
                 Field(
@@ -469,9 +452,6 @@ extension PreferencesEditor {
             ]
 
             sections = [
-                FieldSection(
-                    displayName: NSLocalizedString("Statistics", comment: "Options for Statistics"), fields: statFields
-                ),
                 FieldSection(
                     displayName: NSLocalizedString("OpenAPS main settings", comment: "OpenAPS main settings"), fields: mainFields
                 ),

@@ -33,6 +33,7 @@ extension Settings {
                     Text("Fat And Protein Conversion").navigationLink(to: .fpuConfig, from: self)
                     Text("Profile Override").navigationLink(to: .overrideProfilesConfig, from: self)
                     Text("App Icons").navigationLink(to: .iconConfig, from: self)
+                    Text("Statistics and Glucose").navigationLink(to: .statisticsConfig, from: self)
                 }
 
                 Section(header: Text("Configuration")) {

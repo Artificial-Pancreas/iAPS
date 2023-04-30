@@ -20,11 +20,10 @@ struct FreeAPSSettings: JSON, Equatable {
     var glucoseNotificationsAlways: Bool = false
     var useAlarmSound: Bool = false
     var addSourceInfoToGlucoseNotifications: Bool = false
-    var lowGlucose: Decimal = 70
+    var lowGlucose: Decimal = 72
     var highGlucose: Decimal = 270
     var carbsRequiredThreshold: Decimal = 10
     var animatedBackground: Bool = false
-    var displayStatistics: Bool = false
     var useFPUconversion: Bool = true
     var individualAdjustmentFactor: Decimal = 0.5
     var timeCap: Int = 8
@@ -33,6 +32,9 @@ struct FreeAPSSettings: JSON, Equatable {
     var useAppleHealth: Bool = false
     var smoothGlucose: Bool = false
     var overrideHbA1cUnit: Bool = false
+    var high: Decimal = 145
+    var low: Decimal = 70
+    var uploadStats: Bool = false
 }
 
 extension FreeAPSSettings: Decodable {
@@ -162,12 +164,20 @@ extension FreeAPSSettings: Decodable {
             settings.animatedBackground = animatedBackground
         }
 
-        if let displayStatistics = try? container.decode(Bool.self, forKey: .displayStatistics) {
-            settings.displayStatistics = displayStatistics
-        }
-
         if let smoothGlucose = try? container.decode(Bool.self, forKey: .smoothGlucose) {
             settings.smoothGlucose = smoothGlucose
+        }
+
+        if let low = try? container.decode(Decimal.self, forKey: .low) {
+            settings.low = low
+        }
+
+        if let high = try? container.decode(Decimal.self, forKey: .high) {
+            settings.high = high
+        }
+
+        if let uploadStats = try? container.decode(Bool.self, forKey: .uploadStats) {
+            settings.uploadStats = uploadStats
         }
 
         self = settings
