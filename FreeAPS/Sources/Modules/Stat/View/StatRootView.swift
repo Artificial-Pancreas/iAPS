@@ -329,7 +329,7 @@ extension Stat {
                     .symbolSize(count < 20 ? 30 : 12)
                 }
             }
-            .chartYScale(domain: [0, state.units == .mmolL ? 17 : 305])
+            .chartYScale(domain: [0, state.units == .mmolL ? 17 : 306])
             .chartYAxis {
                 AxisMarks(
                     values: [
@@ -375,12 +375,8 @@ extension Stat {
                     .foregroundStyle(.red)
                     .symbolSize(count < 20 ? 20 : 10)
                 }
-                RuleMark(
-                    y: .value("Target", 100 * (state.units == .mmolL ? conversionFactor : 1))
-                )
-                .lineStyle(StrokeStyle(lineWidth: 0.5, dash: [10]))
             }
-            .chartYScale(domain: [0, state.units == .mmolL ? 17 : 305])
+            .chartYScale(domain: [0, state.units == .mmolL ? 17 : 306])
             .chartYAxis {
                 AxisMarks(
                     values: [
@@ -425,12 +421,8 @@ extension Stat {
                     .foregroundStyle(.red)
                     .symbolSize(5)
                 }
-                RuleMark(
-                    y: .value("Target", 100 * (state.units == .mmolL ? conversionFactor : 1))
-                )
-                .lineStyle(StrokeStyle(lineWidth: 0.5, dash: [10]))
             }
-            .chartYScale(domain: [0, state.units == .mmolL ? 17 : 305])
+            .chartYScale(domain: [0, state.units == .mmolL ? 17 : 306])
             .chartYAxis {
                 AxisMarks(
                     values: [
@@ -475,12 +467,8 @@ extension Stat {
                     .foregroundStyle(.red)
                     .symbolSize(2)
                 }
-                RuleMark(
-                    y: .value("Target", 100 * (state.units == .mmolL ? conversionFactor : 1))
-                )
-                .lineStyle(StrokeStyle(lineWidth: 0.5, dash: [10]))
             }
-            .chartYScale(domain: [0, state.units == .mmolL ? 17 : 305])
+            .chartYScale(domain: [0, state.units == .mmolL ? 17 : 306])
             .chartYAxis {
                 AxisMarks(
                     values: [
@@ -525,12 +513,8 @@ extension Stat {
                     .foregroundStyle(.red)
                     .symbolSize(2)
                 }
-                RuleMark(
-                    y: .value("Target", 100 * (state.units == .mmolL ? conversionFactor : 1))
-                )
-                .lineStyle(StrokeStyle(lineWidth: 0.5, dash: [10]))
             }
-            .chartYScale(domain: [0, state.units == .mmolL ? 17 : 305])
+            .chartYScale(domain: [0, state.units == .mmolL ? 17 : 306])
             .chartYAxis {
                 AxisMarks(
                     values: [
