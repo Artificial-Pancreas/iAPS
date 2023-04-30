@@ -45,7 +45,6 @@ extension Home {
         @Published var carbsRequired: Decimal?
         @Published var allowManualTemp = false
         @Published var units: GlucoseUnits = .mmolL
-        @Published var displayLoops = false
         @Published var pumpDisplayState: PumpDisplayState?
         @Published var alarm: GlucoseAlarm?
         @Published var animatedBackground = false
@@ -54,6 +53,7 @@ extension Home {
         @Published var maxValue: Decimal = 1.2
         @Published var lowGlucoseLine: Decimal = 70
         @Published var highGlucoseLine: Decimal = 145
+        @Published var overrideUnit = false
 
         override func subscribe() {
             setupGlucose()
@@ -69,7 +69,6 @@ extension Home {
 
             suggestion = provider.suggestion
             displayStatistics = settingsManager.settings.displayStatistics
-            displayLoops = settingsManager.preferences.displayLoops
             enactedSuggestion = provider.enactedSuggestion
             units = settingsManager.settings.units
             allowManualTemp = !settingsManager.settings.closedLoop
@@ -84,6 +83,7 @@ extension Home {
             maxValue = settingsManager.preferences.autosensMax
             lowGlucoseLine = settingsManager.settings.lowGlucose
             highGlucoseLine = settingsManager.settings.highGlucose
+            overrideUnit = settingsManager.preferences.overrideHbA1cUnit
 
             broadcaster.register(GlucoseObserver.self, observer: self)
             broadcaster.register(SuggestionObserver.self, observer: self)
@@ -382,13 +382,13 @@ extension Home.StateModel:
         allowManualTemp = !settings.closedLoop
         displayStatistics = settingsManager.settings.displayStatistics
         closedLoop = settingsManager.settings.closedLoop
-        displayLoops = settingsManager.preferences.displayLoops
         units = settingsManager.settings.units
         animatedBackground = settingsManager.settings.animatedBackground
         manualTempBasal = apsManager.isManualTempBasal
         smooth = settingsManager.settings.smoothGlucose
         lowGlucoseLine = settingsManager.settings.lowGlucose
         highGlucoseLine = settingsManager.settings.highGlucose
+        overrideUnit = settingsManager.preferences.overrideHbA1cUnit
         setupGlucose()
     }
 

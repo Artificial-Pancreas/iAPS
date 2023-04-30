@@ -54,7 +54,6 @@ struct Preferences: JSON {
     var threshold_setting: Decimal = 65
     var updateInterval: Decimal = 20
     var overrideHbA1cUnit: Bool = false
-    var displayLoops: Bool = false
 }
 
 extension Preferences {
@@ -111,7 +110,6 @@ extension Preferences {
         case threshold_setting
         case updateInterval
         case overrideHbA1cUnit
-        case displayLoops
     }
 }
 

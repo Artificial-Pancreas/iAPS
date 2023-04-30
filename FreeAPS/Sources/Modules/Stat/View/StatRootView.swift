@@ -144,13 +144,21 @@ extension Stat {
         }
 
         var hba1c: some View {
-            HStack {
+            let useUnit: GlucoseUnits = (state.units == .mmolL && (state.overrideUnit ?? false)) ? .mgdL :
+                (state.units == .mgdL && (state.overrideUnit ?? false) || state.units == .mmolL) ? .mmolL : .mgdL
+            return HStack {
                 let hba1cs = glucoseStats(fetchedGlucose)
+                let hba1cString = (
+                    useUnit == .mmolL ? hba1cs.ifcc
+                        .formatted(.number.grouping(.never).rounded().precision(.fractionLength(1))) : hba1cs.ngsp
+                        .formatted(.number.grouping(.never).rounded().precision(.fractionLength(1)))
+                ) + " %"
+
                 VStack {
                     Text("HbA1C").font(.subheadline).foregroundColor(headline)
                     HStack {
                         VStack {
-                            Text(hba1cs.ifcc.formatted(.number.grouping(.never).rounded().precision(.fractionLength(1))))
+                            Text(hba1cString)
                         }
                     }
                 }.padding([.horizontal], 15)

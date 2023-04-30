@@ -732,23 +732,19 @@ final class BaseAPSManager: APSManager, Injectable {
     // Add to statistics.JSON
     private func statistics() {
         if settingsManager.settings.displayStatistics {
-            let statisticsStartedAt = Date()
-            var testFile: [Statistics] = []
-            var testIfEmpty = 0
-            storage.transaction { storage in
-                testFile = storage.retrieve(OpenAPS.Monitor.statistics, as: [Statistics].self) ?? []
-                testIfEmpty = testFile.count
+            let now = Date()
+            guard Date().hour > 22 else {
+                return
             }
-            let updateThisOften = 20.hours.timeInterval
-
-            if testIfEmpty != 0 {
-                guard testFile[0].created_at.addingTimeInterval(updateThisOften) < Date()
-                else {
-                    return
-                }
-            }
-
             coredataContext.performAndWait { [self] in
+                var stats = [StatsData]()
+                let requestStats = StatsData.fetchRequest() as NSFetchRequest<StatsData>
+                let sortStats = NSSortDescriptor(key: "date", ascending: false)
+                requestStats.sortDescriptors = [sortStats]
+                requestStats.fetchLimit = 1
+                try? stats = coredataContext.fetch(requestStats)
+                guard (stats.first?.lastrun ?? now).addingTimeInterval(22.hours.timeInterval) < now else { return }
+
                 let units = self.settingsManager.settings.units
                 let preferences = settingsManager.preferences
 
@@ -1348,7 +1344,11 @@ final class BaseAPSManager: APSManager, Injectable {
                 }
                 nightscout.uploadStatistics(dailystat: dailystat)
                 nightscout.uploadPreferences()
-                print("Test time of statistics computation: \(-1 * statisticsStartedAt.timeIntervalSinceNow) s")
+
+                let saveStatsCoreData = StatsData(context: self.coredataContext)
+                saveStatsCoreData.lastrun = Date()
+                try? self.coredataContext.save()
+                print("Test time of statistics computation: \(-1 * now.timeIntervalSinceNow) s")
             }
         }
     }

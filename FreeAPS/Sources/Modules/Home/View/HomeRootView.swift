@@ -118,7 +118,9 @@ extension Home {
                 recentGlucose: $state.recentGlucose,
                 delta: $state.glucoseDelta,
                 units: $state.units,
-                alarm: $state.alarm
+                alarm: $state.alarm,
+                lowGlucoseLine: $state.lowGlucoseLine,
+                highGlucoseLine: $state.highGlucoseLine
             )
             .onTapGesture {
                 if state.alarm == nil {
