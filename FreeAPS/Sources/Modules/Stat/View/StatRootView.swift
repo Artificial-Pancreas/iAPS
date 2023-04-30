@@ -152,7 +152,8 @@ extension Stat {
                     useUnit == .mmolL ? hba1cs.ifcc
                         .formatted(.number.grouping(.never).rounded().precision(.fractionLength(1))) : hba1cs.ngsp
                         .formatted(.number.grouping(.never).rounded().precision(.fractionLength(1)))
-                ) + " %"
+                        + " %"
+                )
 
                 VStack {
                     Text("HbA1C").font(.subheadline).foregroundColor(headline)
@@ -286,7 +287,6 @@ extension Stat {
                     .foregroundStyle(by: .value("Group", shape.type))
                     .annotation(position: shape.percent < 5 ? .top : .overlay, alignment: .center) {
                         Text(shape.percent == 0 ? "" : "\(shape.percent, format: .number.precision(.fractionLength(0))) %")
-                        // .foregroundColor(.white)
                     }
                 }
                 .chartYAxis(.hidden)
