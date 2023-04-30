@@ -329,14 +329,14 @@ extension Stat {
                     .symbolSize(count < 20 ? 30 : 12)
                 }
             }
-            .chartYScale(domain: [0, 17])
+            .chartYScale(domain: [0, state.units == .mmolL ? 17 : 305])
             .chartYAxis {
                 AxisMarks(
                     values: [
                         0,
                         lowLimit,
                         highLimit,
-                        15
+                        state.units == .mmolL ? 15 : 270
                     ]
                 )
             }
@@ -380,14 +380,14 @@ extension Stat {
                 )
                 .lineStyle(StrokeStyle(lineWidth: 0.5, dash: [10]))
             }
-            .chartYScale(domain: [0, 17])
+            .chartYScale(domain: [0, state.units == .mmolL ? 17 : 305])
             .chartYAxis {
                 AxisMarks(
                     values: [
                         0,
                         lowLimit,
                         highLimit,
-                        15
+                        state.units == .mmolL ? 15 : 270
                     ]
                 )
             }
@@ -430,14 +430,14 @@ extension Stat {
                 )
                 .lineStyle(StrokeStyle(lineWidth: 0.5, dash: [10]))
             }
-            .chartYScale(domain: [0, 17])
+            .chartYScale(domain: [0, state.units == .mmolL ? 17 : 305])
             .chartYAxis {
                 AxisMarks(
                     values: [
                         0,
                         lowLimit,
                         highLimit,
-                        15
+                        state.units == .mmolL ? 15 : 270
                     ]
                 )
             }
@@ -480,14 +480,14 @@ extension Stat {
                 )
                 .lineStyle(StrokeStyle(lineWidth: 0.5, dash: [10]))
             }
-            .chartYScale(domain: [0, 17])
+            .chartYScale(domain: [0, state.units == .mmolL ? 17 : 305])
             .chartYAxis {
                 AxisMarks(
                     values: [
                         0,
                         lowLimit,
                         highLimit,
-                        15
+                        state.units == .mmolL ? 15 : 270
                     ]
                 )
             }
@@ -530,14 +530,14 @@ extension Stat {
                 )
                 .lineStyle(StrokeStyle(lineWidth: 0.5, dash: [10]))
             }
-            .chartYScale(domain: [0, 17])
+            .chartYScale(domain: [0, state.units == .mmolL ? 17 : 305])
             .chartYAxis {
                 AxisMarks(
                     values: [
                         0,
                         lowLimit,
                         highLimit,
-                        15
+                        state.units == .mmolL ? 15 : 270
                     ]
                 )
             }
