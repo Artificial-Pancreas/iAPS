@@ -52,11 +52,8 @@ struct Preferences: JSON {
     var enableSMB_high_bg: Bool = false
     var enableSMB_high_bg_target: Decimal = 110
     var threshold_setting: Decimal = 65
-    var high: Decimal = 10
-    var low: Decimal = 4
     var updateInterval: Decimal = 20
     var overrideHbA1cUnit: Bool = false
-    var displayLoops: Bool = false
 }
 
 extension Preferences {
@@ -111,11 +108,8 @@ extension Preferences {
         case enableSMB_high_bg
         case enableSMB_high_bg_target
         case threshold_setting
-        case high
-        case low
         case updateInterval
         case overrideHbA1cUnit
-        case displayLoops
     }
 }
 

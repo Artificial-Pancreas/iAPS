@@ -16,12 +16,11 @@ struct FreeAPSSettings: JSON, Equatable {
     var cgm: CGMType = .nightscout
     var uploadGlucose: Bool = false
     var useCalendar: Bool = false
-    var useAppleHealth: Bool = false
     var glucoseBadge: Bool = false
     var glucoseNotificationsAlways: Bool = false
     var useAlarmSound: Bool = false
     var addSourceInfoToGlucoseNotifications: Bool = false
-    var lowGlucose: Decimal = 72
+    var lowGlucose: Decimal = 70
     var highGlucose: Decimal = 270
     var carbsRequiredThreshold: Decimal = 10
     var animatedBackground: Bool = false
@@ -31,7 +30,9 @@ struct FreeAPSSettings: JSON, Equatable {
     var timeCap: Int = 8
     var minuteInterval: Int = 30
     var delay: Int = 60
+    var useAppleHealth: Bool = false
     var smoothGlucose: Bool = false
+    var overrideHbA1cUnit: Bool = false
 }
 
 extension FreeAPSSettings: Decodable {

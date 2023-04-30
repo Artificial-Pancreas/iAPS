@@ -118,7 +118,7 @@ extension AddCarbs {
                             preset.protein = state.protein as NSDecimalNumber
                             preset.carbs = state.carbs as NSDecimalNumber
                             try? moc.save()
-                            state.selection = preset
+                            state.addNewPresetToWaitersNotepad(dish)
                             saved = false
                             isPromtPresented = false
                         }
@@ -175,19 +175,19 @@ extension AddCarbs {
                     )
                     Button {
                         if state.carbs != 0,
-                           (state.carbs - (((state.selection?.carbs ?? 0) as NSDecimalNumber) as Decimal) as Decimal) > 0
+                           (state.carbs - (((state.selection?.carbs ?? 0) as NSDecimalNumber) as Decimal) as Decimal) >= 0
                         {
                             state.carbs -= (((state.selection?.carbs ?? 0) as NSDecimalNumber) as Decimal)
                         } else { state.carbs = 0 }
 
                         if state.fat != 0,
-                           (state.fat - (((state.selection?.fat ?? 0) as NSDecimalNumber) as Decimal) as Decimal) > 0
+                           (state.fat - (((state.selection?.fat ?? 0) as NSDecimalNumber) as Decimal) as Decimal) >= 0
                         {
                             state.fat -= (((state.selection?.fat ?? 0) as NSDecimalNumber) as Decimal)
                         } else { state.fat = 0 }
 
                         if state.protein != 0,
-                           (state.protein - (((state.selection?.protein ?? 0) as NSDecimalNumber) as Decimal) as Decimal) > 0
+                           (state.protein - (((state.selection?.protein ?? 0) as NSDecimalNumber) as Decimal) as Decimal) >= 0
                         {
                             state.protein -= (((state.selection?.protein ?? 0) as NSDecimalNumber) as Decimal)
                         } else { state.protein = 0 }

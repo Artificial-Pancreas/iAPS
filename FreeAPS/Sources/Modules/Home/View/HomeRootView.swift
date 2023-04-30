@@ -10,7 +10,6 @@ extension Home {
 
         @StateObject var state = StateModel()
         @State var isStatusPopupPresented = false
-        @State var selectedState: durationState
 
         // Average/Median/Readings and CV/SD titles and values switches when you tap them
         @State var averageOrMedianTitle = NSLocalizedString("Average", comment: "")
@@ -119,7 +118,9 @@ extension Home {
                 recentGlucose: $state.recentGlucose,
                 delta: $state.glucoseDelta,
                 units: $state.units,
-                alarm: $state.alarm
+                alarm: $state.alarm,
+                lowGlucoseLine: $state.lowGlucoseLine,
+                highGlucoseLine: $state.highGlucoseLine
             )
             .onTapGesture {
                 if state.alarm == nil {
@@ -218,7 +219,6 @@ extension Home {
             let percentString = "\((fetchedPercent.first?.percentage ?? 100).formatted(.number)) %"
             let durationString = (fetchedPercent.first?.indefinite ?? false) ?
                 "" : ", " + (tirFormatter.string(from: (fetchedPercent.first?.duration ?? 0) as NSNumber) ?? "") + " min"
-
             return percentString + durationString
         }
 
@@ -262,264 +262,6 @@ extension Home {
                 }
             }
             .frame(maxWidth: .infinity, maxHeight: 30)
-        }
-
-        @ViewBuilder private func statPanel() -> some View {
-            if state.displayStatistics {
-                VStack(spacing: 8) {
-                    durationButton(states: durationState.allCases, selectedState: $selectedState)
-
-                    switch selectedState {
-                    case .day:
-
-                        let hba1c_all = numberFormatter
-                            .string(from: (state.statistics?.Statistics.HbA1c.total ?? 0) as NSNumber) ?? ""
-                        let average_ = targetFormatter
-                            .string(from: (state.statistics?.Statistics.Glucose.Average.day ?? 0) as NSNumber) ?? ""
-                        let median_ = targetFormatter
-                            .string(from: (state.statistics?.Statistics.Glucose.Median.day ?? 0) as NSNumber) ?? ""
-                        let tir_low = tirFormatter
-                            .string(from: (state.statistics?.Statistics.Distribution.Hypos.day ?? 0) as NSNumber) ?? ""
-                        let tir_high = tirFormatter
-                            .string(from: (state.statistics?.Statistics.Distribution.Hypers.day ?? 0) as NSNumber) ?? ""
-                        let tir_ = tirFormatter
-                            .string(from: (state.statistics?.Statistics.Distribution.TIR.day ?? 0) as NSNumber) ?? ""
-                        let hba1c_ = numberFormatter
-                            .string(from: (state.statistics?.Statistics.HbA1c.day ?? 0) as NSNumber) ?? ""
-                        let sd_ = numberFormatter
-                            .string(from: (state.statistics?.Statistics.Variance.SD.day ?? 0) as NSNumber) ?? ""
-                        let cv_ = tirFormatter
-                            .string(from: (state.statistics?.Statistics.Variance.CV.day ?? 0) as NSNumber) ?? ""
-
-                        averageTIRhca1c(hba1c_all, average_, median_, tir_low, tir_high, tir_, hba1c_, sd_, cv_)
-
-                    case .week:
-                        let hba1c_all = numberFormatter
-                            .string(from: (state.statistics?.Statistics.HbA1c.total ?? 0) as NSNumber) ?? ""
-                        let average_ = targetFormatter
-                            .string(from: (state.statistics?.Statistics.Glucose.Average.week ?? 0) as NSNumber) ?? ""
-                        let median_ = targetFormatter
-                            .string(from: (state.statistics?.Statistics.Glucose.Median.week ?? 0) as NSNumber) ?? ""
-                        let tir_low = tirFormatter
-                            .string(from: (state.statistics?.Statistics.Distribution.Hypos.week ?? 0) as NSNumber) ?? ""
-                        let tir_high = tirFormatter
-                            .string(from: (state.statistics?.Statistics.Distribution.Hypers.week ?? 0) as NSNumber) ?? ""
-                        let tir_ = tirFormatter
-                            .string(from: (state.statistics?.Statistics.Distribution.TIR.week ?? 0) as NSNumber) ?? ""
-                        let hba1c_ = numberFormatter
-                            .string(from: (state.statistics?.Statistics.HbA1c.week ?? 0) as NSNumber) ?? ""
-                        let sd_ = numberFormatter
-                            .string(from: (state.statistics?.Statistics.Variance.SD.week ?? 0) as NSNumber) ?? ""
-                        let cv_ = tirFormatter
-                            .string(from: (state.statistics?.Statistics.Variance.CV.week ?? 0) as NSNumber) ?? ""
-
-                        averageTIRhca1c(hba1c_all, average_, median_, tir_low, tir_high, tir_, hba1c_, sd_, cv_)
-
-                    case .month:
-                        let hba1c_all = numberFormatter
-                            .string(from: (state.statistics?.Statistics.HbA1c.total ?? 0) as NSNumber) ?? ""
-                        let average_ = targetFormatter
-                            .string(from: (state.statistics?.Statistics.Glucose.Average.month ?? 0) as NSNumber) ?? ""
-                        let median_ = targetFormatter
-                            .string(from: (state.statistics?.Statistics.Glucose.Median.month ?? 0) as NSNumber) ?? ""
-                        let tir_low = tirFormatter
-                            .string(from: (state.statistics?.Statistics.Distribution.Hypos.month ?? 0) as NSNumber) ?? ""
-                        let tir_high = tirFormatter
-                            .string(from: (state.statistics?.Statistics.Distribution.Hypers.month ?? 0) as NSNumber) ?? ""
-                        let tir_ = tirFormatter
-                            .string(from: (state.statistics?.Statistics.Distribution.TIR.month ?? 0) as NSNumber) ?? ""
-                        let hba1c_ = numberFormatter
-                            .string(from: (state.statistics?.Statistics.HbA1c.month ?? 0) as NSNumber) ?? ""
-                        let sd_ = numberFormatter
-                            .string(from: (state.statistics?.Statistics.Variance.SD.month ?? 0) as NSNumber) ?? ""
-                        let cv_ = tirFormatter
-                            .string(from: (state.statistics?.Statistics.Variance.CV.month ?? 0) as NSNumber) ?? ""
-
-                        averageTIRhca1c(hba1c_all, average_, median_, tir_low, tir_high, tir_, hba1c_, sd_, cv_)
-
-                    case .total:
-                        let hba1c_all = numberFormatter
-                            .string(from: (state.statistics?.Statistics.HbA1c.total ?? 0) as NSNumber) ?? ""
-                        let average_ = targetFormatter
-                            .string(from: (state.statistics?.Statistics.Glucose.Average.total ?? 0) as NSNumber) ?? ""
-                        let median_ = targetFormatter
-                            .string(from: (state.statistics?.Statistics.Glucose.Median.total ?? 0) as NSNumber) ?? ""
-                        let tir_low = tirFormatter
-                            .string(from: (state.statistics?.Statistics.Distribution.Hypos.total ?? 0) as NSNumber) ?? ""
-                        let tir_high = tirFormatter
-                            .string(from: (state.statistics?.Statistics.Distribution.Hypers.total ?? 0) as NSNumber) ??
-                            ""
-                        let tir_ = tirFormatter
-                            .string(from: (state.statistics?.Statistics.Distribution.TIR.total ?? 0) as NSNumber) ?? ""
-                        let hba1c_ = numberFormatter
-                            .string(from: (state.statistics?.Statistics.HbA1c.total ?? 0) as NSNumber) ?? ""
-                        let sd_ = numberFormatter
-                            .string(from: (state.statistics?.Statistics.Variance.SD.total ?? 0) as NSNumber) ?? ""
-                        let cv_ = tirFormatter
-                            .string(from: (state.statistics?.Statistics.Variance.CV.total ?? 0) as NSNumber) ?? ""
-
-                        averageTIRhca1c(hba1c_all, average_, median_, tir_low, tir_high, tir_, hba1c_, sd_, cv_)
-                    }
-                }
-                .frame(maxWidth: .infinity)
-                .padding([.bottom], 20)
-            }
-        }
-
-        @ViewBuilder private func averageTIRhca1c(
-            _ hba1c_all: String,
-            _ average_: String,
-            _ median_: String,
-            _ tir_low: String,
-            _ tir_high: String,
-            _ tir_: String,
-            _ hba1c_: String,
-            _ sd_: String,
-            _ cv_: String
-        ) -> some View {
-            HStack {
-                Group {
-                    if selectedState != .total {
-                        HStack {
-                            Text("HbA1c").font(.footnote).foregroundColor(.secondary)
-                            Text(hba1c_).font(.footnote)
-                        }
-                    } else {
-                        HStack {
-                            Text(
-                                "\(NSLocalizedString("HbA1c", comment: "")) (\(targetFormatter.string(from: (state.statistics?.GlucoseStorage_Days ?? 0) as NSNumber) ?? "") \(NSLocalizedString("days", comment: "")))"
-                            )
-                            .font(.footnote).foregroundColor(.secondary)
-                            Text(hba1c_all).font(.footnote)
-                        }
-                    }
-                    // Average as default. Changes to Median when clicking.
-                    let textAverageTitle = NSLocalizedString("Average", comment: "")
-                    let textMedianTitle = NSLocalizedString("Median", comment: "")
-                    let cgmReadingsTitle = NSLocalizedString("Readings", comment: "CGM readings in statPanel")
-
-                    HStack {
-                        Text(averageOrMedianTitle).font(.footnote).foregroundColor(.secondary)
-                        if averageOrMedianTitle == textAverageTitle {
-                            Text(averageOrmedian == "" ? average_ : average_).font(.footnote)
-                        } else if averageOrMedianTitle == textMedianTitle {
-                            Text(averageOrmedian == "" ? median_ : median_).font(.footnote)
-                        } else if averageOrMedianTitle == cgmReadingsTitle {
-                            Text(
-                                averageOrmedian != "0" ? tirFormatter
-                                    .string(from: (state.statistics?.Statistics.LoopCycles.readings ?? 0) as NSNumber) ?? "" : ""
-                            )
-                            .font(.footnote)
-                        }
-                    }.onTapGesture {
-                        if averageOrMedianTitle == textAverageTitle {
-                            averageOrMedianTitle = textMedianTitle
-                            averageOrmedian = median_
-                        } else if averageOrMedianTitle == textMedianTitle {
-                            averageOrMedianTitle = cgmReadingsTitle
-                            averageOrmedian = tirFormatter
-                                .string(from: (state.statistics?.Statistics.LoopCycles.readings ?? 0) as NSNumber) ?? ""
-                        } else if averageOrMedianTitle == cgmReadingsTitle {
-                            averageOrMedianTitle = textAverageTitle
-                            averageOrmedian = average_
-                        }
-                    }
-                    .frame(minWidth: 110)
-                    // CV as default. Changes to SD when clicking
-                    let text_CV_Title = NSLocalizedString("CV", comment: "")
-                    let text_SD_Title = NSLocalizedString("SD", comment: "")
-
-                    HStack {
-                        Text(CV_or_SD_Title).font(.footnote).foregroundColor(.secondary)
-                        if CV_or_SD_Title == text_CV_Title {
-                            Text(CVorSD == "" ? cv_ : cv_).font(.footnote)
-                        } else {
-                            Text(CVorSD == "" ? sd_ : sd_).font(.footnote)
-                        }
-                    }.onTapGesture {
-                        if CV_or_SD_Title == text_CV_Title {
-                            CV_or_SD_Title = text_SD_Title
-                            CVorSD = sd_
-                        } else {
-                            CV_or_SD_Title = text_CV_Title
-                            CVorSD = cv_
-                        }
-                    }
-                }
-            }
-            HStack {
-                Group {
-                    HStack {
-                        Text(
-                            NSLocalizedString("Low", comment: " ")
-                        )
-                        .font(.footnote)
-                        .foregroundColor(.secondary)
-
-                        Text(tir_low + " %").font(.footnote).foregroundColor(.loopRed)
-                    }
-
-                    HStack {
-                        Text("Normal").font(.footnote).foregroundColor(.secondary)
-                        Text(tir_ + " %").font(.footnote).foregroundColor(.loopGreen)
-                    }
-
-                    HStack {
-                        Text(
-                            NSLocalizedString("High", comment: " ")
-                        )
-                        .font(.footnote).foregroundColor(.secondary)
-
-                        Text(tir_high + " %").font(.footnote).foregroundColor(.loopYellow)
-                    }
-                }
-            }
-
-            if state.settingsManager.preferences.displayLoops {
-                HStack {
-                    Group {
-                        let loopTitle = NSLocalizedString("Loops", comment: "Nr of Loops in statPanel")
-                        let errorTitle = NSLocalizedString("Errors", comment: "Loop Errors in statPanel")
-
-                        HStack {
-                            Text(loopStatTitle).font(.footnote).foregroundColor(.secondary)
-                            Text(
-                                loopStatTitle == loopTitle ? tirFormatter
-                                    .string(from: (state.statistics?.Statistics.LoopCycles.loops ?? 0) as NSNumber) ?? "" :
-                                    tirFormatter
-                                    .string(from: (state.statistics?.Statistics.LoopCycles.errors ?? 0) as NSNumber) ?? ""
-                            ).font(.footnote)
-                        }.onTapGesture {
-                            if loopStatTitle == loopTitle {
-                                loopStatTitle = errorTitle
-                            } else if loopStatTitle == errorTitle {
-                                loopStatTitle = loopTitle
-                            }
-                        }
-
-                        HStack {
-                            Text("Interval").font(.footnote)
-                                .foregroundColor(.secondary)
-                            Text(
-                                targetFormatter
-                                    .string(from: (state.statistics?.Statistics.LoopCycles.avg_interval ?? 0) as NSNumber) ??
-                                    ""
-                            ).font(.footnote)
-                        }
-
-                        HStack {
-                            Text("Duration").font(.footnote)
-                                .foregroundColor(.secondary)
-                            Text(
-                                numberFormatter
-                                    .string(
-                                        from: (state.statistics?.Statistics.LoopCycles.median_duration ?? 0) as NSNumber
-                                    ) ?? ""
-                            ).font(.footnote)
-                        }
-                    }
-                }
-            }
         }
 
         var legendPanel: some View {
@@ -580,7 +322,6 @@ extension Home {
                 MainChartView(
                     glucose: $state.glucose,
                     suggestion: $state.suggestion,
-                    statistcs: $state.statistics,
                     tempBasals: $state.tempBasals,
                     boluses: $state.boluses,
                     suspensions: $state.suspensions,
@@ -592,7 +333,9 @@ extension Home {
                     carbs: $state.carbs,
                     timerDate: $state.timerDate,
                     units: $state.units,
-                    smooth: $state.smooth
+                    smooth: $state.smooth,
+                    highGlucoseLine: $state.highGlucoseLine,
+                    lowGlucoseLine: $state.lowGlucoseLine
                 )
             }
             .padding(.bottom)
@@ -652,6 +395,16 @@ extension Home {
                         }.foregroundColor(.insulin)
                         Spacer()
                     }
+                    Button { state.showModal(for: .statistics)
+                    }
+                    label: {
+                        Image(systemName: "chart.xyaxis.line")
+                            .renderingMode(.template)
+                            .resizable()
+                            .frame(width: 24, height: 24)
+                            .padding(8)
+                    }.foregroundColor(.purple)
+                    Spacer()
                     Button { state.showModal(for: .settings) }
                     label: {
                         Image("settings1")
@@ -673,7 +426,6 @@ extension Home {
                     infoPanel
                     mainChart
                     legendPanel
-                    statPanel()
                     bottomPanel(geo)
                 }
                 .edgesIgnoringSafeArea(.vertical)

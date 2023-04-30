@@ -26,57 +26,6 @@ extension PreferencesEditor {
             let statFields = [
                 Field(
                     displayName: NSLocalizedString(
-                        "Low Glucose Limit",
-                        comment: "Display As Low Glucose Percantage Under This Value"
-                    ) + " (\(settingsManager.settings.units.rawValue))",
-
-                    type: .decimal(keypath: \.low),
-                    infoText: NSLocalizedString(
-                        "Blood Glucoses Under This Value Will Added To And Displayed as Low Glucose Percantage",
-                        comment: "Description for Low Glucose Limit"
-                    ),
-                    settable: self
-                ),
-                Field(
-                    displayName: NSLocalizedString(
-                        "High Glucose Limit",
-                        comment: "Limit For High Glucose in Statistics View"
-                    ) + " (\(settingsManager.settings.units.rawValue))",
-
-                    type: .decimal(keypath: \.high),
-                    infoText: NSLocalizedString(
-                        "Blood Glucoses Over This Value Will Added To And Displaved as High Glucose Percantage",
-                        comment: "High Glucose Limit"
-                    ),
-                    settable: self
-                ),
-                Field(
-                    displayName: NSLocalizedString(
-                        "Update every number of minutes:",
-                        comment: "How often to update the statistics"
-                    ),
-
-                    type: .decimal(keypath: \.updateInterval),
-                    infoText: NSLocalizedString(
-                        "Default is 20 minutes. How often to update and save the statistics.json and to upload last array, when enabled, to Nightscout.",
-                        comment: "Description for update interval for statistics"
-                    ),
-                    settable: self
-                ),
-                Field(
-                    displayName: NSLocalizedString(
-                        "Display Loop Cycle statistics",
-                        comment: "Display Display Loop Cycle statistics in statPanel"
-                    ),
-                    type: .boolean(keypath: \.displayLoops),
-                    infoText: NSLocalizedString(
-                        "Displays Loop statistics in the statPanel in Home View",
-                        comment: "Description for Display Loop statistics"
-                    ),
-                    settable: self
-                ),
-                Field(
-                    displayName: NSLocalizedString(
                         "Override HbA1c unit",
                         comment: "Display %"
                     ),

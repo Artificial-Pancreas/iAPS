@@ -13,7 +13,6 @@ extension Home {
 
         @Published var glucose: [BloodGlucose] = []
         @Published var suggestion: Suggestion?
-        @Published var statistics: Statistics?
         @Published var displayStatistics = false
         @Published var enactedSuggestion: Suggestion?
         @Published var recentGlucose: BloodGlucose?
@@ -46,15 +45,15 @@ extension Home {
         @Published var carbsRequired: Decimal?
         @Published var allowManualTemp = false
         @Published var units: GlucoseUnits = .mmolL
-        @Published var low: Decimal = 4
-        @Published var high: Decimal = 10
-        @Published var displayLoops = false
         @Published var pumpDisplayState: PumpDisplayState?
         @Published var alarm: GlucoseAlarm?
         @Published var animatedBackground = false
         @Published var manualTempBasal = false
         @Published var smooth = false
         @Published var maxValue: Decimal = 1.2
+        @Published var lowGlucoseLine: Decimal = 70
+        @Published var highGlucoseLine: Decimal = 145
+        @Published var overrideUnit = false
 
         override func subscribe() {
             setupGlucose()
@@ -67,14 +66,9 @@ extension Home {
             setupCarbs()
             setupBattery()
             setupReservoir()
-            setupStatistics()
 
             suggestion = provider.suggestion
-            statistics = provider.statistics
             displayStatistics = settingsManager.settings.displayStatistics
-            low = settingsManager.preferences.low
-            high = settingsManager.preferences.high
-            displayLoops = settingsManager.preferences.displayLoops
             enactedSuggestion = provider.enactedSuggestion
             units = settingsManager.settings.units
             allowManualTemp = !settingsManager.settings.closedLoop
@@ -87,6 +81,9 @@ extension Home {
             setupCurrentTempTarget()
             smooth = settingsManager.settings.smoothGlucose
             maxValue = settingsManager.preferences.autosensMax
+            lowGlucoseLine = settingsManager.settings.lowGlucose
+            highGlucoseLine = settingsManager.settings.highGlucose
+            overrideUnit = settingsManager.preferences.overrideHbA1cUnit
 
             broadcaster.register(GlucoseObserver.self, observer: self)
             broadcaster.register(SuggestionObserver.self, observer: self)
@@ -321,13 +318,6 @@ extension Home {
             }
         }
 
-        private func setupStatistics() {
-            DispatchQueue.main.async { [weak self] in
-                guard let self = self else { return }
-                self.statistics = self.provider.statistics
-            }
-        }
-
         private func setupBattery() {
             DispatchQueue.main.async { [weak self] in
                 guard let self = self else { return }
@@ -380,7 +370,6 @@ extension Home.StateModel:
 {
     func glucoseDidUpdate(_: [BloodGlucose]) {
         setupGlucose()
-        setupStatistics()
     }
 
     func suggestionDidUpdate(_ suggestion: Suggestion) {
@@ -393,15 +382,14 @@ extension Home.StateModel:
         allowManualTemp = !settings.closedLoop
         displayStatistics = settingsManager.settings.displayStatistics
         closedLoop = settingsManager.settings.closedLoop
-        low = settingsManager.preferences.low
-        high = settingsManager.preferences.high
-        displayLoops = settingsManager.preferences.displayLoops
         units = settingsManager.settings.units
         animatedBackground = settingsManager.settings.animatedBackground
         manualTempBasal = apsManager.isManualTempBasal
         smooth = settingsManager.settings.smoothGlucose
+        lowGlucoseLine = settingsManager.settings.lowGlucose
+        highGlucoseLine = settingsManager.settings.highGlucose
+        overrideUnit = settingsManager.preferences.overrideHbA1cUnit
         setupGlucose()
-        setupStatistics()
     }
 
     func pumpHistoryDidUpdate(_: [PumpHistoryEvent]) {
@@ -429,7 +417,6 @@ extension Home.StateModel:
     func enactedSuggestionDidUpdate(_ suggestion: Suggestion) {
         enactedSuggestion = suggestion
         setStatusTitle()
-        setupStatistics()
     }
 
     func pumpBatteryDidChange(_: Battery) {

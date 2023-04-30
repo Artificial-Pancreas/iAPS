@@ -5,6 +5,8 @@ struct CurrentGlucoseView: View {
     @Binding var delta: Int?
     @Binding var units: GlucoseUnits
     @Binding var alarm: GlucoseAlarm?
+    @Binding var lowGlucoseLine: Decimal
+    @Binding var highGlucoseLine: Decimal
 
     private var glucoseFormatter: NumberFormatter {
         let formatter = NumberFormatter()
@@ -110,13 +112,12 @@ struct CurrentGlucoseView: View {
         let whichGlucose = recentGlucose?.glucose ?? 0
 
         switch whichGlucose {
-        case 71 ... 145:
+        case Int(lowGlucoseLine ?? 70) + 1 ... Int(highGlucoseLine ?? 145) - 1:
             return .loopGreen
-        case 1 ... 55,
-             217...:
+        case 0 ... Int(lowGlucoseLine ?? 70),
+             201...:
             return .loopRed
-        case 56 ... 70,
-             146 ... 216:
+        case Int(highGlucoseLine ?? 145) ... 200:
             return .loopYellow
         default:
             return .primary
