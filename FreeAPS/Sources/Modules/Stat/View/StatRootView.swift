@@ -82,11 +82,9 @@ extension Stat {
         @ViewBuilder func stats() -> some View {
             bloodGlucose
             Divider()
-            tirChart
+            loops
             Divider()
             hba1c
-            Divider()
-            loops
         }
 
         @ViewBuilder func chart() -> some View {
@@ -102,6 +100,7 @@ extension Stat {
             case .Total:
                 glucoseChart90
             }
+            tirChart
         }
 
         var body: some View {
@@ -210,6 +209,19 @@ extension Stat {
                     let bgs = glucoseStats(fetchedGlucose)
                     VStack {
                         HStack {
+                            Text(selectedDuration == .Today ? "Readings today" : "Readings / 24h").font(.subheadline)
+                                .foregroundColor(.secondary)
+                        }
+                        HStack {
+                            VStack {
+                                Text(
+                                    bgs.readings.formatted(.number.grouping(.never).rounded().precision(.fractionLength(0)))
+                                )
+                            }
+                        }
+                    }
+                    VStack {
+                        HStack {
                             Text("Average").font(.subheadline).foregroundColor(headline)
                         }
                         HStack {
@@ -236,19 +248,6 @@ extension Stat {
                                             .number.grouping(.never).rounded()
                                                 .precision(.fractionLength(state.units == .mmolL ? 1 : 0))
                                         )
-                                )
-                            }
-                        }
-                    }
-                    VStack {
-                        HStack {
-                            Text(selectedDuration == .Today ? "Readings today" : "Readings / 24h").font(.subheadline)
-                                .foregroundColor(.secondary)
-                        }
-                        HStack {
-                            VStack {
-                                Text(
-                                    bgs.readings.formatted(.number.grouping(.never).rounded().precision(.fractionLength(0)))
                                 )
                             }
                         }
@@ -282,21 +281,21 @@ extension Stat {
                 .init(type: "High", percent: fetched[2].decimal)
             ]
 
-            return VStack(alignment: .center) {
-                Chart(data) { shape in
-                    BarMark(
-                        x: .value("Shape", shape.type),
-                        y: .value("Percentage", shape.percent)
+            return Chart(data) { shape in
+                BarMark(
+                    x: .value("TIR", shape.percent)
+                )
+                .foregroundStyle(by: .value("Group", shape.type))
+                .annotation(position: .overlay, alignment: .center) {
+                    Text(
+                        shape.percent == 0 ? "" : shape
+                            .percent < 12 ? "\(shape.percent, format: .number.precision(.fractionLength(0)))" :
+                            "\(shape.percent, format: .number.precision(.fractionLength(0))) %"
                     )
-                    .foregroundStyle(by: .value("Group", shape.type))
-                    .annotation(position: shape.percent < 11 ? .top : .overlay, alignment: .center) {
-                        Text(shape.percent == 0 ? "" : "\(shape.percent, format: .number.precision(.fractionLength(0))) %")
-                    }
                 }
-                .chartYAxis(.hidden)
-                .chartLegend(.hidden)
-                .chartForegroundStyleScale(["Low": .red, "In Range": .green, "High": .orange]).frame(maxHeight: 150)
             }
+            .chartXAxis(.hidden)
+            .chartForegroundStyleScale(["Low": .red, "In Range": .green, "High": .orange]).frame(maxHeight: 45)
         }
 
         var glucoseChart: some View {
