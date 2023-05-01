@@ -84,6 +84,7 @@ extension Stat {
                 Divider()
             } else {
                 bloodGlucose
+                Divider()
                 standingTIRchart
                 Divider()
             }
