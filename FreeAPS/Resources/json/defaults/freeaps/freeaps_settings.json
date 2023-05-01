@@ -27,5 +27,9 @@
     "timeCap": 8,
     "minuteInterval": 30,
     "delay": 60,
-    "displayOnWatch": "BGTarget"
+    "displayOnWatch": "BGTarget",
+    "hours": 6,
+    "xGridLines": false,
+    "yGridLines": true,
+    "oneDimensionalGraph": false
 }

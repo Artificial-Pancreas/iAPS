@@ -35,6 +35,10 @@ struct FreeAPSSettings: JSON, Equatable {
     var high: Decimal = 145
     var low: Decimal = 70
     var uploadStats: Bool = false
+    var hours: Int = 6
+    var xGridLines: Bool = false
+    var yGridLines: Bool = true
+    var oneDimensionalGraph: Bool = false
 }
 
 extension FreeAPSSettings: Decodable {
@@ -178,6 +182,22 @@ extension FreeAPSSettings: Decodable {
 
         if let uploadStats = try? container.decode(Bool.self, forKey: .uploadStats) {
             settings.uploadStats = uploadStats
+        }
+
+        if let hours = try? container.decode(Int.self, forKey: .hours) {
+            settings.hours = hours
+        }
+
+        if let xGridLines = try? container.decode(Bool.self, forKey: .xGridLines) {
+            settings.xGridLines = xGridLines
+        }
+
+        if let yGridLines = try? container.decode(Bool.self, forKey: .yGridLines) {
+            settings.yGridLines = yGridLines
+        }
+
+        if let oneDimensionalGraph = try? container.decode(Bool.self, forKey: .oneDimensionalGraph) {
+            settings.oneDimensionalGraph = oneDimensionalGraph
         }
 
         self = settings

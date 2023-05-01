@@ -8,6 +8,7 @@ extension Stat {
         @Published var highLimit: Decimal?
         @Published var lowLimit: Decimal?
         @Published var overrideUnit: Bool?
+        @Published var layingChart: Bool?
 
         private(set) var units: GlucoseUnits = .mmolL
 
@@ -16,6 +17,7 @@ extension Stat {
             lowLimit = settingsManager.settings.low
             units = settingsManager.settings.units
             overrideUnit = settingsManager.settings.overrideHbA1cUnit
+            layingChart = settingsManager.settings.oneDimensionalGraph
         }
     }
 }

@@ -26,9 +26,19 @@ extension StatConfig {
 
         var body: some View {
             Form {
-                Section(header: Text("Glucose")) {
+                Section(header: Text("Settings")) {
                     Toggle("Change HbA1c Unit", isOn: $state.overrideHbA1cUnit)
                     Toggle("Allow Upload of Statistics to NS", isOn: $state.uploadStats)
+                    Toggle("Display X - Grid lines", isOn: $state.xGridLines)
+                    Toggle("Display Y - Grid lines", isOn: $state.yGridLines)
+                    Toggle("Standing / Laying TIR Chart", isOn: $state.oneDimensionalGraph)
+
+                    HStack {
+                        Text("Hours (X-Axis)")
+                        Spacer()
+                        DecimalTextField("6", value: $state.hours, formatter: carbsFormatter)
+                        Text("hours").foregroundColor(.secondary)
+                    }
 
                     HStack {
                         Text("Low")

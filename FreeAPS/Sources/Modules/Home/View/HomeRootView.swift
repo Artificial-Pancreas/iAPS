@@ -335,7 +335,10 @@ extension Home {
                     units: $state.units,
                     smooth: $state.smooth,
                     highGlucose: $state.highGlucose,
-                    lowGlucose: $state.lowGlucose
+                    lowGlucose: $state.lowGlucose,
+                    screenHours: $state.screenHours,
+                    displayXgridLines: $state.displayXgridLines,
+                    displayYgridLines: $state.displayYgridLines
                 )
             }
             .padding(.bottom)

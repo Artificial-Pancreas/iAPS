@@ -9,7 +9,6 @@ extension Stat {
         let resolver: Resolver
         @StateObject var state = StateModel()
 
-        // @Environment(\.managedObjectContext) var moc
         @FetchRequest(
             entity: Readings.entity(),
             sortDescriptors: [NSSortDescriptor(key: "date", ascending: false)], predicate: NSPredicate(
@@ -80,8 +79,14 @@ extension Stat {
         @State var conversionFactor = 0.0555
 
         @ViewBuilder func stats() -> some View {
-            bloodGlucose
-            Divider()
+            if state.layingChart ?? true {
+                bloodGlucose
+                Divider()
+            } else {
+                bloodGlucose
+                standingTIRchart
+                Divider()
+            }
             loops
             Divider()
             hba1c
@@ -100,7 +105,9 @@ extension Stat {
             case .Total:
                 glucoseChart90
             }
-            tirChart
+            if state.layingChart ?? true {
+                tirChart
+            }
         }
 
         var body: some View {
@@ -302,6 +309,35 @@ extension Stat {
             }
             .chartXAxis(.hidden)
             .chartForegroundStyleScale(["Low": .red, "In Range": .green, "High": .orange]).frame(maxHeight: 55)
+        }
+
+        var standingTIRchart: some View {
+            let array = selectedDuration == .Today ? fetchedGlucoseDay : selectedDuration == .Day ?
+                fetchedGlucoseTwentyFourHours :
+                selectedDuration == .Week ? fetchedGlucoseWeek : selectedDuration == .Month ? fetchedGlucoseMonth :
+                selectedDuration == .Total ? fetchedGlucose : fetchedGlucoseDay
+            let fetched = tir(array)
+            let data: [ShapeModel] = [
+                .init(type: "Low", percent: fetched[0].decimal),
+                .init(type: "In Range", percent: fetched[1].decimal),
+                .init(type: "High", percent: fetched[2].decimal)
+            ]
+
+            return VStack(alignment: .center) {
+                Chart(data) { shape in
+                    BarMark(
+                        x: .value("Shape", shape.type),
+                        y: .value("Percentage", shape.percent)
+                    )
+                    .foregroundStyle(by: .value("Group", shape.type))
+                    .annotation(position: shape.percent < 5 ? .top : .overlay, alignment: .center) {
+                        Text(shape.percent == 0 ? "" : "\(shape.percent, format: .number.precision(.fractionLength(0))) %")
+                    }
+                }
+                .chartYAxis(.hidden)
+                .chartLegend(.hidden)
+                .chartForegroundStyleScale(["Low": .red, "In Range": .green, "High": .orange])
+            }
         }
 
         var glucoseChart: some View {

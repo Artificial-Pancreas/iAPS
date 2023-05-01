@@ -19,7 +19,6 @@ typealias GlucoseYRange = (minValue: Int, minY: CGFloat, maxValue: Int, maxY: CG
 struct MainChartView: View {
     private enum Config {
         static let endID = "End"
-        static let screenHours = 6
         static let basalHeight: CGFloat = 80
         static let topYPadding: CGFloat = 20
         static let bottomYPadding: CGFloat = 80
@@ -50,6 +49,9 @@ struct MainChartView: View {
     @Binding var smooth: Bool
     @Binding var highGlucose: Decimal
     @Binding var lowGlucose: Decimal
+    @Binding var screenHours: Int
+    @Binding var displayXgridLines: Bool
+    @Binding var displayYgridLines: Bool
 
     @State var didAppearTrigger = false
     @State private var glucoseDots: [CGRect] = []
@@ -167,7 +169,8 @@ struct MainChartView: View {
     }
 
     private func yGridView(fullSize: CGSize) -> some View {
-        ZStack {
+        let useColour = displayYgridLines ? Color.secondary : Color.clear
+        return ZStack {
             Path { path in
                 let range = glucoseYRange
                 let step = (range.maxY - range.minY) / CGFloat(Config.yLinesCount)
@@ -175,7 +178,8 @@ struct MainChartView: View {
                     path.move(to: CGPoint(x: 0, y: range.minY + CGFloat(line) * step))
                     path.addLine(to: CGPoint(x: fullSize.width, y: range.minY + CGFloat(line) * step))
                 }
-            }.stroke(Color.secondary, lineWidth: 0.15)
+            }.stroke(useColour, lineWidth: 0.15)
+
             // horizontal limits
             let range = glucoseYRange
             let topstep = (range.maxY - range.minY) / CGFloat(range.maxValue - range.minValue) *
@@ -263,7 +267,8 @@ struct MainChartView: View {
     @Environment(\.colorScheme) var colorScheme
 
     private func xGridView(fullSize: CGSize) -> some View {
-        ZStack {
+        let useColour = displayXgridLines ? Color.secondary : Color.clear
+        return ZStack {
             Path { path in
                 for hour in 0 ..< hours + hours {
                     let x = firstHourPosition(viewWidth: fullSize.width) +
@@ -273,7 +278,9 @@ struct MainChartView: View {
                     path.addLine(to: CGPoint(x: x, y: fullSize.height - 20))
                 }
             }
-            .stroke(Color.clear, lineWidth: 0.2)
+            .stroke(useColour, lineWidth: 0.15)
+
+            // .stroke(Color.secondary, lineWidth: 0.2)
 
             Path { path in // vertical timeline
                 let x = timeToXCoordinate(timerDate.timeIntervalSince1970, fullSize: fullSize)
@@ -854,7 +861,7 @@ extension MainChartView {
     }
 
     private func fullGlucoseWidth(viewWidth: CGFloat) -> CGFloat {
-        viewWidth * CGFloat(hours) / CGFloat(Config.screenHours)
+        viewWidth * CGFloat(hours) / CGFloat(max(screenHours, 6))
     }
 
     private func additionalWidth(viewWidth: CGFloat) -> CGFloat {
@@ -879,7 +886,7 @@ extension MainChartView {
     }
 
     private func oneSecondStep(viewWidth: CGFloat) -> CGFloat {
-        viewWidth / (CGFloat(Config.screenHours) * CGFloat(1.hours.timeInterval))
+        viewWidth / (CGFloat(max(screenHours, 6)) * CGFloat(1.hours.timeInterval))
     }
 
     private func maxPredValue() -> Int? {

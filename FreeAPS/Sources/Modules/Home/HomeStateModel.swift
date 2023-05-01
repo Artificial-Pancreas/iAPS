@@ -54,6 +54,9 @@ extension Home {
         @Published var lowGlucose: Decimal = 4 / 0.0555
         @Published var highGlucose: Decimal = 10 / 0.0555
         @Published var overrideUnit = false
+        @Published var screenHours: Int = 6
+        @Published var displayXgridLines: Bool = false
+        @Published var displayYgridLines: Bool = false
 
         override func subscribe() {
             setupGlucose()
@@ -84,6 +87,9 @@ extension Home {
             lowGlucose = settingsManager.settings.low
             highGlucose = settingsManager.settings.high
             overrideUnit = settingsManager.settings.overrideHbA1cUnit
+            screenHours = settingsManager.settings.hours
+            displayXgridLines = settingsManager.settings.xGridLines
+            displayYgridLines = settingsManager.settings.yGridLines
 
             broadcaster.register(GlucoseObserver.self, observer: self)
             broadcaster.register(SuggestionObserver.self, observer: self)
@@ -389,6 +395,10 @@ extension Home.StateModel:
         lowGlucose = settingsManager.settings.low
         highGlucose = settingsManager.settings.high
         overrideUnit = settingsManager.settings.overrideHbA1cUnit
+        screenHours = settingsManager.settings.hours
+        displayXgridLines = settingsManager.settings.xGridLines
+        displayYgridLines = settingsManager.settings.yGridLines
+
         setupGlucose()
     }
 

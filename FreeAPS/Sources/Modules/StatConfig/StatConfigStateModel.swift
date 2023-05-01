@@ -6,6 +6,11 @@ extension StatConfig {
         @Published var low: Decimal = 4 / 0.0555
         @Published var high: Decimal = 10 / 0.0555
         @Published var uploadStats = false
+        @Published var hours: Decimal = 6
+        @Published var xGridLines = false
+        @Published var yGridLines: Bool = false
+        @Published var oneDimensionalGraph = false
+
         var units: GlucoseUnits = .mmolL
 
         override func subscribe() {
@@ -14,6 +19,9 @@ extension StatConfig {
 
             subscribeSetting(\.overrideHbA1cUnit, on: $overrideHbA1cUnit) { overrideHbA1cUnit = $0 }
             subscribeSetting(\.uploadStats, on: $uploadStats) { uploadStats = $0 }
+            subscribeSetting(\.xGridLines, on: $xGridLines) { xGridLines = $0 }
+            subscribeSetting(\.yGridLines, on: $yGridLines) { yGridLines = $0 }
+            subscribeSetting(\.oneDimensionalGraph, on: $oneDimensionalGraph) { oneDimensionalGraph = $0 }
 
             subscribeSetting(\.low, on: $low, initial: {
                 let value = max(min($0, 120), 40)
@@ -29,6 +37,13 @@ extension StatConfig {
             }, map: {
                 guard units == .mmolL else { return $0 }
                 return $0.asMgdL
+            })
+
+            subscribeSetting(\.hours, on: $hours.map(Int.init), initial: {
+                let value = max(min($0, 24), 6)
+                hours = Decimal(value)
+            }, map: {
+                $0
             })
         }
     }
