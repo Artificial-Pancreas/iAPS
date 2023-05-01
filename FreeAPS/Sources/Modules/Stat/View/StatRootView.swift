@@ -90,7 +90,6 @@ extension Stat {
         }
 
         @ViewBuilder func chart() -> some View {
-            Text("Statistics").font(.largeTitle).bold().padding(.top, 25)
             switch selectedDuration {
             case .Today:
                 glucoseChart
@@ -107,18 +106,23 @@ extension Stat {
 
         var body: some View {
             ZStack {
-                VStack(alignment: .center, spacing: 8) {
-                    chart().padding(.horizontal, 10)
+                VStack(alignment: .center) {
+                    chart().padding(.top, 20)
                     Divider()
                     stats()
-                    Spacer()
+                    // Spacer()
                     Picker("Duration", selection: $selectedDuration) {
                         ForEach(Duration.allCases) { duration in
                             Text(duration.rawValue).tag(Optional(duration))
                         }
-                    }.pickerStyle(.segmented)
+                    }
+                    .pickerStyle(.segmented)
                 }
-            }.onAppear(perform: configureView)
+            }
+            .onAppear(perform: configureView)
+            .navigationBarTitle("Statistics")
+            .navigationBarTitleDisplayMode(.automatic)
+            .navigationBarItems(leading: Button("Close", action: state.hideModal))
         }
 
         var loops: some View {
@@ -285,13 +289,13 @@ extension Stat {
                         y: .value("Percentage", shape.percent)
                     )
                     .foregroundStyle(by: .value("Group", shape.type))
-                    .annotation(position: shape.percent < 5 ? .top : .overlay, alignment: .center) {
+                    .annotation(position: shape.percent < 11 ? .top : .overlay, alignment: .center) {
                         Text(shape.percent == 0 ? "" : "\(shape.percent, format: .number.precision(.fractionLength(0))) %")
                     }
                 }
                 .chartYAxis(.hidden)
                 .chartLegend(.hidden)
-                .chartForegroundStyleScale(["Low": .red, "In Range": .green, "High": .orange])
+                .chartForegroundStyleScale(["Low": .red, "In Range": .green, "High": .orange]).frame(maxHeight: 150)
             }
         }
 
@@ -329,7 +333,6 @@ extension Stat {
                     .symbolSize(count < 20 ? 30 : 12)
                 }
             }
-            .chartYScale(domain: [0, state.units == .mmolL ? 17 : 306])
             .chartYAxis {
                 AxisMarks(
                     values: [
@@ -376,7 +379,6 @@ extension Stat {
                     .symbolSize(count < 20 ? 20 : 10)
                 }
             }
-            .chartYScale(domain: [0, state.units == .mmolL ? 17 : 306])
             .chartYAxis {
                 AxisMarks(
                     values: [
@@ -386,8 +388,7 @@ extension Stat {
                         state.units == .mmolL ? 15 : 270
                     ]
                 )
-            }
-        }
+            } }
 
         var glucoseChartWeek: some View {
             let lowLimit = (state.lowLimit ?? (4 * 0.0555)) * (state.units == .mmolL ? Decimal(conversionFactor) : 1)
@@ -422,7 +423,6 @@ extension Stat {
                     .symbolSize(5)
                 }
             }
-            .chartYScale(domain: [0, state.units == .mmolL ? 17 : 306])
             .chartYAxis {
                 AxisMarks(
                     values: [
@@ -468,7 +468,6 @@ extension Stat {
                     .symbolSize(2)
                 }
             }
-            .chartYScale(domain: [0, state.units == .mmolL ? 17 : 306])
             .chartYAxis {
                 AxisMarks(
                     values: [
@@ -514,7 +513,6 @@ extension Stat {
                     .symbolSize(2)
                 }
             }
-            .chartYScale(domain: [0, state.units == .mmolL ? 17 : 306])
             .chartYAxis {
                 AxisMarks(
                     values: [
