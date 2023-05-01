@@ -109,7 +109,7 @@ extension Stat {
                     chart().padding(.top, 20)
                     Divider()
                     stats()
-                    // Spacer()
+                    Divider()
                     Picker("Duration", selection: $selectedDuration) {
                         ForEach(Duration.allCases) { duration in
                             Text(duration.rawValue).tag(Optional(duration))
@@ -190,16 +190,16 @@ extension Stat {
                         }
                     }
                 }.padding([.horizontal], 15)
-                if selectedDuration == .Total {
-                    VStack {
-                        Text("Days").font(.subheadline).foregroundColor(.secondary)
-                        HStack {
-                            VStack {
-                                Text(numberOfDays.formatted(.number.grouping(.never).rounded().precision(.fractionLength(1))))
-                            }
+                // if selectedDuration == .Total || selectedDuration == .Today {
+                VStack {
+                    Text("Days").font(.subheadline).foregroundColor(.secondary)
+                    HStack {
+                        VStack {
+                            Text(numberOfDays.formatted(.number.grouping(.never).rounded().precision(.fractionLength(1))))
                         }
-                    }.padding([.horizontal], 15)
-                }
+                    }
+                }.padding([.horizontal], 15)
+                // }
             }
         }
 
@@ -257,7 +257,13 @@ extension Stat {
         }
 
         var numberOfDays: Double {
-            let endIndex = fetchedGlucose.count - 1
+            let array = selectedDuration == .Today ? fetchedGlucoseDay : selectedDuration == .Day ?
+                fetchedGlucoseTwentyFourHours :
+                selectedDuration == .Week ? fetchedGlucoseWeek : selectedDuration == .Month ? fetchedGlucoseMonth :
+                selectedDuration ==
+                .Total ? fetchedGlucose : fetchedGlucoseDay
+
+            let endIndex = array.count - 1
             var days = 0.0
 
             if endIndex > 0 {
@@ -295,7 +301,7 @@ extension Stat {
                 }
             }
             .chartXAxis(.hidden)
-            .chartForegroundStyleScale(["Low": .red, "In Range": .green, "High": .orange]).frame(maxHeight: 45)
+            .chartForegroundStyleScale(["Low": .red, "In Range": .green, "High": .orange]).frame(maxHeight: 55)
         }
 
         var glucoseChart: some View {
