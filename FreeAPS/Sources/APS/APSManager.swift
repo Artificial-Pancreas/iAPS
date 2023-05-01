@@ -731,20 +731,21 @@ final class BaseAPSManager: APSManager, Injectable {
 
     // Add to statistics.JSON
     private func statistics() {
+        let now = Date()
         if settingsManager.settings.uploadStats {
-            let now = Date()
-            let hour = Calendar.current.component(.hour, from: Date())
+            let hour = Calendar.current.component(.hour, from: now)
             guard hour > 20 else {
                 return
             }
             coredataContext.performAndWait { [self] in
                 var stats = [StatsData]()
                 let requestStats = StatsData.fetchRequest() as NSFetchRequest<StatsData>
-                let sortStats = NSSortDescriptor(key: "date", ascending: false)
+                let sortStats = NSSortDescriptor(key: "lastrun", ascending: false)
                 requestStats.sortDescriptors = [sortStats]
                 requestStats.fetchLimit = 1
                 try? stats = coredataContext.fetch(requestStats)
-                guard (stats.first?.lastrun ?? now).addingTimeInterval(22.hours.timeInterval) < now else { return }
+                // Only save and upload once per day
+                guard (-1 * (stats.first?.lastrun ?? now).timeIntervalSinceNow.hours) > 22 else { return }
 
                 let units = self.settingsManager.settings.units
                 let preferences = settingsManager.preferences

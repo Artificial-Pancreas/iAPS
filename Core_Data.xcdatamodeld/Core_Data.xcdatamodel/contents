@@ -64,7 +64,7 @@
         <attribute name="glucose" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
     </entity>
     <entity name="StatsData" representedClassName="StatsData" syncable="YES" codeGenerationType="class">
-        <attribute name="lastrun" optional="YES" attributeType="Date" defaultDateTimeInterval="704497620" usesScalarValueType="NO"/>
+        <attribute name="lastrun" attributeType="Date" defaultDateTimeInterval="704497620" usesScalarValueType="NO"/>
     </entity>
     <entity name="Target" representedClassName="Target" syncable="YES" codeGenerationType="class">
         <attribute name="current" optional="YES" attributeType="Decimal" defaultValueString="100"/>

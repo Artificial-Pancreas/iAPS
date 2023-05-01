@@ -861,7 +861,7 @@ extension MainChartView {
     }
 
     private func fullGlucoseWidth(viewWidth: CGFloat) -> CGFloat {
-        viewWidth * CGFloat(hours) / CGFloat(max(screenHours, 6))
+        viewWidth * CGFloat(hours) / CGFloat(min(max(screenHours, 6), 24))
     }
 
     private func additionalWidth(viewWidth: CGFloat) -> CGFloat {
