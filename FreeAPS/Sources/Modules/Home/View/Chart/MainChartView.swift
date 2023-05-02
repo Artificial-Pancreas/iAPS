@@ -52,6 +52,7 @@ struct MainChartView: View {
     @Binding var screenHours: Int
     @Binding var displayXgridLines: Bool
     @Binding var displayYgridLines: Bool
+    @Binding var thresholdLines: Bool
 
     @State var didAppearTrigger = false
     @State private var glucoseDots: [CGRect] = []
@@ -136,6 +137,10 @@ struct MainChartView: View {
             .onChange(of: vSizeClass) { _ in
                 update(fullSize: geo.size)
             }
+            .onChange(of: screenHours) { _ in
+                update(fullSize: geo.size)
+                // scroll.scrollTo(Config.endID, anchor: .trailing)
+            }
             .onReceive(
                 Foundation.NotificationCenter.default
                     .publisher(for: UIDevice.orientationDidChangeNotification)
@@ -188,23 +193,25 @@ struct MainChartView: View {
             }.stroke(useColour, lineWidth: 0.15)
 
             // horizontal limits
-            let range = glucoseYRange
-            let topstep = (range.maxY - range.minY) / CGFloat(range.maxValue - range.minValue) *
-                (CGFloat(range.maxValue) - CGFloat(highGlucose))
-            if CGFloat(range.maxValue) > CGFloat(highGlucose) {
-                Path { path in
-                    path.move(to: CGPoint(x: 0, y: range.minY + topstep))
-                    path.addLine(to: CGPoint(x: fullSize.width, y: range.minY + topstep))
-                }.stroke(Color.loopYellow, lineWidth: 0.5) // .StrokeStyle(lineWidth: 0.5, dash: [5])
-            }
-            let yrange = glucoseYRange
-            let bottomstep = (yrange.maxY - yrange.minY) / CGFloat(yrange.maxValue - yrange.minValue) *
-                (CGFloat(yrange.maxValue) - CGFloat(lowGlucose))
-            if CGFloat(yrange.minValue) < CGFloat(lowGlucose) {
-                Path { path in
-                    path.move(to: CGPoint(x: 0, y: yrange.minY + bottomstep))
-                    path.addLine(to: CGPoint(x: fullSize.width, y: yrange.minY + bottomstep))
-                }.stroke(Color.loopRed, lineWidth: 0.5)
+            if thresholdLines {
+                let range = glucoseYRange
+                let topstep = (range.maxY - range.minY) / CGFloat(range.maxValue - range.minValue) *
+                    (CGFloat(range.maxValue) - CGFloat(highGlucose))
+                if CGFloat(range.maxValue) > CGFloat(highGlucose) {
+                    Path { path in
+                        path.move(to: CGPoint(x: 0, y: range.minY + topstep))
+                        path.addLine(to: CGPoint(x: fullSize.width, y: range.minY + topstep))
+                    }.stroke(Color.loopYellow, lineWidth: 0.5) // .StrokeStyle(lineWidth: 0.5, dash: [5])
+                }
+                let yrange = glucoseYRange
+                let bottomstep = (yrange.maxY - yrange.minY) / CGFloat(yrange.maxValue - yrange.minValue) *
+                    (CGFloat(yrange.maxValue) - CGFloat(lowGlucose))
+                if CGFloat(yrange.minValue) < CGFloat(lowGlucose) {
+                    Path { path in
+                        path.move(to: CGPoint(x: 0, y: yrange.minY + bottomstep))
+                        path.addLine(to: CGPoint(x: fullSize.width, y: yrange.minY + bottomstep))
+                    }.stroke(Color.loopRed, lineWidth: 0.5)
+                }
             }
         }
     }
@@ -286,8 +293,6 @@ struct MainChartView: View {
                 }
             }
             .stroke(useColour, lineWidth: 0.15)
-
-            // .stroke(Color.secondary, lineWidth: 0.2)
 
             Path { path in // vertical timeline
                 let x = timeToXCoordinate(timerDate.timeIntervalSince1970, fullSize: fullSize)
@@ -663,7 +668,8 @@ extension MainChartView {
                 path.addLine(to: CGPoint(x: 0, y: Config.basalHeight))
             }
 
-            let endDateTime = dayAgoTime + 1.days.timeInterval + 6.hours.timeInterval
+            let endDateTime = dayAgoTime + min(max(screenHours, 2), 24).hours.timeInterval + min(max(screenHours, 2), 24).hours
+                .timeInterval
             let autotunedBasalPoints = findRegularBasalPoints(
                 timeBegin: dayAgoTime,
                 timeEnd: endDateTime,
@@ -869,7 +875,7 @@ extension MainChartView {
     }
 
     private func fullGlucoseWidth(viewWidth: CGFloat) -> CGFloat {
-        viewWidth * CGFloat(hours) / CGFloat(min(max(screenHours, 6), 24))
+        viewWidth * CGFloat(hours) / CGFloat(min(max(screenHours, 2), 24))
     }
 
     private func additionalWidth(viewWidth: CGFloat) -> CGFloat {
@@ -890,11 +896,11 @@ extension MainChartView {
         let additionalTime = CGFloat(TimeInterval(max) * 5.minutes.timeInterval - lastDeltaTime)
         let oneSecondWidth = oneSecondStep(viewWidth: viewWidth)
 
-        return Swift.max(additionalTime * oneSecondWidth, Config.minAdditionalWidth)
+        return Swift.min(Swift.max(additionalTime * oneSecondWidth, Config.minAdditionalWidth), 275)
     }
 
     private func oneSecondStep(viewWidth: CGFloat) -> CGFloat {
-        viewWidth / (CGFloat(max(screenHours, 6)) * CGFloat(1.hours.timeInterval))
+        viewWidth / (CGFloat(min(max(screenHours, 2), 24)) * CGFloat(1.hours.timeInterval))
     }
 
     private func maxPredValue() -> Int? {

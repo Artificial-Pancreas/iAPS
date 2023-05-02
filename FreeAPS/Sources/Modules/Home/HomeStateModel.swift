@@ -57,6 +57,7 @@ extension Home {
         @Published var screenHours: Int = 6
         @Published var displayXgridLines: Bool = false
         @Published var displayYgridLines: Bool = false
+        @Published var thresholdLines: Bool = false
 
         override func subscribe() {
             setupGlucose()
@@ -90,6 +91,7 @@ extension Home {
             screenHours = settingsManager.settings.hours
             displayXgridLines = settingsManager.settings.xGridLines
             displayYgridLines = settingsManager.settings.yGridLines
+            thresholdLines = settingsManager.settings.rulerMarks
 
             broadcaster.register(GlucoseObserver.self, observer: self)
             broadcaster.register(SuggestionObserver.self, observer: self)
@@ -398,6 +400,7 @@ extension Home.StateModel:
         screenHours = settingsManager.settings.hours
         displayXgridLines = settingsManager.settings.xGridLines
         displayYgridLines = settingsManager.settings.yGridLines
+        thresholdLines = settingsManager.settings.rulerMarks
 
         setupGlucose()
     }

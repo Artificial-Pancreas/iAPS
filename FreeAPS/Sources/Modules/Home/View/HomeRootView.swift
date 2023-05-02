@@ -338,7 +338,8 @@ extension Home {
                     lowGlucose: $state.lowGlucose,
                     screenHours: $state.screenHours,
                     displayXgridLines: $state.displayXgridLines,
-                    displayYgridLines: $state.displayYgridLines
+                    displayYgridLines: $state.displayYgridLines,
+                    thresholdLines: $state.thresholdLines
                 )
             }
             .padding(.bottom)

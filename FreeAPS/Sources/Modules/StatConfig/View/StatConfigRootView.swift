@@ -29,12 +29,13 @@ extension StatConfig {
                 Section(header: Text("Settings")) {
                     Toggle("Change HbA1c Unit", isOn: $state.overrideHbA1cUnit)
                     Toggle("Allow Upload of Statistics to NS", isOn: $state.uploadStats)
-                    Toggle("Display X - Grid lines", isOn: $state.xGridLines)
-                    Toggle("Display Y - Grid lines", isOn: $state.yGridLines)
+                    Toggle("Display Chart X - Grid lines", isOn: $state.xGridLines)
+                    Toggle("Display Chart Y - Grid lines", isOn: $state.yGridLines)
+                    Toggle("Display Chart Threshold lines for Low and High)", isOn: $state.rulerMarks)
                     Toggle("Standing / Laying TIR Chart", isOn: $state.oneDimensionalGraph)
 
                     HStack {
-                        Text("Hours (X-Axis)")
+                        Text("Hours X-Axis (6 default)")
                         Spacer()
                         DecimalTextField("6", value: $state.hours, formatter: carbsFormatter)
                         Text("hours").foregroundColor(.secondary)

@@ -10,6 +10,7 @@ extension StatConfig {
         @Published var xGridLines = false
         @Published var yGridLines: Bool = false
         @Published var oneDimensionalGraph = false
+        @Published var rulerMarks: Bool = false
 
         var units: GlucoseUnits = .mmolL
 
@@ -21,6 +22,7 @@ extension StatConfig {
             subscribeSetting(\.uploadStats, on: $uploadStats) { uploadStats = $0 }
             subscribeSetting(\.xGridLines, on: $xGridLines) { xGridLines = $0 }
             subscribeSetting(\.yGridLines, on: $yGridLines) { yGridLines = $0 }
+            subscribeSetting(\.rulerMarks, on: $rulerMarks) { rulerMarks = $0 }
             subscribeSetting(\.oneDimensionalGraph, on: $oneDimensionalGraph) { oneDimensionalGraph = $0 }
 
             subscribeSetting(\.low, on: $low, initial: {
@@ -40,7 +42,7 @@ extension StatConfig {
             })
 
             subscribeSetting(\.hours, on: $hours.map(Int.init), initial: {
-                let value = max(min($0, 24), 6)
+                let value = max(min($0, 24), 2)
                 hours = Decimal(value)
             }, map: {
                 $0

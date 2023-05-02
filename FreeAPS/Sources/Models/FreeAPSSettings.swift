@@ -39,6 +39,7 @@ struct FreeAPSSettings: JSON, Equatable {
     var xGridLines: Bool = true
     var yGridLines: Bool = true
     var oneDimensionalGraph: Bool = false
+    var rulerMarks: Bool = false
 }
 
 extension FreeAPSSettings: Decodable {
@@ -198,6 +199,10 @@ extension FreeAPSSettings: Decodable {
 
         if let oneDimensionalGraph = try? container.decode(Bool.self, forKey: .oneDimensionalGraph) {
             settings.oneDimensionalGraph = oneDimensionalGraph
+        }
+
+        if let rulerMarks = try? container.decode(Bool.self, forKey: .rulerMarks) {
+            settings.rulerMarks = rulerMarks
         }
 
         self = settings
