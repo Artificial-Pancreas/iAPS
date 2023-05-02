@@ -12,7 +12,6 @@ struct FreeAPSSettings: JSON, Equatable {
     var insulinReqPercentage: Decimal = 70
     var skipBolusScreenAfterCarbs: Bool = false
     var displayHR: Bool = false
-    var displayOnWatch: AwConfig = .BGTarget
     var cgm: CGMType = .nightscout
     var uploadGlucose: Bool = false
     var useCalendar: Bool = false
@@ -31,12 +30,13 @@ struct FreeAPSSettings: JSON, Equatable {
     var delay: Int = 60
     var useAppleHealth: Bool = false
     var smoothGlucose: Bool = false
+    var displayOnWatch: AwConfig = .BGTarget
     var overrideHbA1cUnit: Bool = false
     var high: Decimal = 145
     var low: Decimal = 70
-    var uploadStats: Bool = false
+    var uploadStats: Bool = true
     var hours: Int = 6
-    var xGridLines: Bool = false
+    var xGridLines: Bool = true
     var yGridLines: Bool = true
     var oneDimensionalGraph: Bool = false
 }
