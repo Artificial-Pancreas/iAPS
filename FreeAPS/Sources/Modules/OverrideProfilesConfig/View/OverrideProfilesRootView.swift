@@ -11,6 +11,7 @@ extension OverrideProfilesConfig {
         @State private var showAlert = false
         @State private var showingDetail = false
         @State private var isPresented = true
+        @State private var alertSring = ""
         @Environment(\.dismiss) var dismiss
 
         private var formatter: NumberFormatter {
@@ -20,10 +21,21 @@ extension OverrideProfilesConfig {
             return formatter
         }
 
+        private var glucoseFormatter: NumberFormatter {
+            let formatter = NumberFormatter()
+            formatter.numberStyle = .decimal
+            formatter.maximumFractionDigits = 0
+            if state.units == .mmolL {
+                formatter.maximumFractionDigits = 1
+            }
+            formatter.roundingMode = .halfUp
+            return formatter
+        }
+
         var body: some View {
             Form {
                 Section(
-                    header: Text("Override your Basal, ISF and CR profiles"),
+                    header: Text("Override your Basal, ISF, CR and Target profiles"),
                     footer: Text("" + (!state.isEnabled ? "Currently no Override active" : ""))
                 ) {
                     Toggle(isOn: $state.isEnabled) {
@@ -72,8 +84,30 @@ extension OverrideProfilesConfig {
                                 Text("minutes").foregroundColor(.secondary)
                             }
                         }
+
+                        HStack {
+                            Toggle(isOn: $state.override_target) {
+                                Text("Override Profile Target")
+                            }
+                        }
+                        if state.override_target {
+                            HStack {
+                                Text("Target Glucose")
+                                DecimalTextField("0", value: $state.target, formatter: glucoseFormatter, cleanInput: false)
+                                Text(state.units.rawValue).foregroundColor(.secondary)
+                            }
+                        }
+
                         Button("Save") {
                             showAlert.toggle()
+
+                            alertSring = "Selected Override:\n\n\(state.percentage.formatted(.number)) %, " +
+                                (state.duration > 0 ? "\(state.duration) min" : " infinite duration.") +
+                                (state.target == 0 ? "" : (" Target: \(state.target) " + state.units.rawValue + "."))
+                                +
+                                "\n\n"
+                                +
+                                "Saving this override will change your basal insulin, ISF, CR and eventual Target Glucose during the entire selected duration. Tapping save will start your new overide or edit your current active override."
                         }
                         .disabled(
                             state.isEnabled == false || state
@@ -85,9 +119,7 @@ extension OverrideProfilesConfig {
                         .frame(maxWidth: .infinity, alignment: .center)
                         .controlSize(.mini)
                         .alert(
-                            "Selected Override:\n\n\(state.percentage.formatted(.number)) %, " +
-                                (state.duration > 0 ? "\(state.duration) min" : " infinite duration.") + "\n\n" +
-                                "Saving this override will change your basal insulin, ISF and CR during the entire selected duration. Tapping save will start your new overide or edit your current active override.",
+                            alertSring,
                             isPresented: $showAlert,
                             actions: {
                                 Button("Cancel", role: .cancel) {}
