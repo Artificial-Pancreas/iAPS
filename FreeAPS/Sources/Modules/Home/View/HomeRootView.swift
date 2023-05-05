@@ -235,7 +235,7 @@ extension Home {
             var targetString = (fetchedTargetFormatter.string(from: target as NSNumber) ?? "") + " " + unit
             if tempTargetString != nil || target == 0 { targetString = "" }
             percentString = percentString == "100 %" ? "" : percentString
-            let durationString = indefinite ?
+            var durationString = indefinite ?
                 "" : ((tirFormatter.string(from: (fetchedPercent.first?.duration ?? 0) as NSNumber) ?? "") + " min")
 
             var comma1 = ", "
@@ -243,6 +243,11 @@ extension Home {
             if targetString == "" { comma1 = "" }
             if percentString == "" { comma1 = "" }
             if indefinite { comma2 = "" }
+            if percentString == "", targetString == "" {
+                comma1 = ""
+                comma2 = ""
+                durationString = ""
+            }
 
             return percentString + comma1 + targetString + comma2 + durationString
         }
