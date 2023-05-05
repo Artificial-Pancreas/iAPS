@@ -13,7 +13,7 @@ struct FreeAPSSettings: JSON, Equatable {
     var skipBolusScreenAfterCarbs: Bool = false
     var displayHR: Bool = false
     var cgm: CGMType = .nightscout
-    var uploadGlucose: Bool = false
+    var uploadGlucose: Bool = true
     var useCalendar: Bool = false
     var glucoseBadge: Bool = false
     var glucoseNotificationsAlways: Bool = false

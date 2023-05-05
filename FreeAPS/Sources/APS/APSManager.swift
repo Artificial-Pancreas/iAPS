@@ -734,7 +734,7 @@ final class BaseAPSManager: APSManager, Injectable {
         let now = Date()
         if settingsManager.settings.uploadStats {
             let hour = Calendar.current.component(.hour, from: now)
-            guard hour > 20 else {
+            guard hour > 0 else {
                 return
             }
             coredataContext.performAndWait { [self] in
@@ -745,7 +745,7 @@ final class BaseAPSManager: APSManager, Injectable {
                 requestStats.fetchLimit = 1
                 try? stats = coredataContext.fetch(requestStats)
                 // Only save and upload once per day
-                guard (-1 * (stats.first?.lastrun ?? now).timeIntervalSinceNow.hours) > 22 else { return }
+                // guard (-1 * (stats.first?.lastrun ?? now).timeIntervalSinceNow.hours) > 22 else { return }
 
                 let units = self.settingsManager.settings.units
                 let preferences = settingsManager.preferences
@@ -986,7 +986,7 @@ final class BaseAPSManager: APSManager, Injectable {
                                 bgArray_30 = bgArrayForTIR
                                 bgArray_30_ = bgArray
                             }
-                            if (firstElementTime - currentIndexTime).timeInterval <= 7.776E7 { // 30 days
+                            if (firstElementTime - currentIndexTime).timeInterval <= 7.776E7 { // 90 days
                                 bg_90 = bg / nr_bgs
                                 bgArray_90 = bgArrayForTIR
                                 bgArray_90_ = bgArray
@@ -1011,12 +1011,10 @@ final class BaseAPSManager: APSManager, Injectable {
                     var i = -1
                     var lastIndex = false
                     let endIndex = array.count - 1
+
                     var hypoLimit = settingsManager.settings.low
                     var hyperLimit = settingsManager.settings.high
-                    if units == .mmolL {
-                        hypoLimit = hypoLimit / 0.0555
-                        hyperLimit = hyperLimit / 0.0555
-                    }
+
                     var full_time = 0.0
                     if endIndex > 0 {
                         full_time = (array[0].date_ - array[endIndex].date_).timeInterval
