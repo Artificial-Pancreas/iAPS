@@ -734,7 +734,7 @@ final class BaseAPSManager: APSManager, Injectable {
         let now = Date()
         if settingsManager.settings.uploadStats {
             let hour = Calendar.current.component(.hour, from: now)
-            guard hour > 0 else {
+            guard hour > 20 else {
                 return
             }
             coredataContext.performAndWait { [self] in
@@ -745,7 +745,7 @@ final class BaseAPSManager: APSManager, Injectable {
                 requestStats.fetchLimit = 1
                 try? stats = coredataContext.fetch(requestStats)
                 // Only save and upload once per day
-                // guard (-1 * (stats.first?.lastrun ?? now).timeIntervalSinceNow.hours) > 22 else { return }
+                guard (-1 * (stats.first?.lastrun ?? now).timeIntervalSinceNow.hours) > 22 else { return }
 
                 let units = self.settingsManager.settings.units
                 let preferences = settingsManager.preferences
