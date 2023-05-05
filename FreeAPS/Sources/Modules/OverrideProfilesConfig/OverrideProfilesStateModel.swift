@@ -13,8 +13,7 @@ extension OverrideProfilesConfig {
         var units: GlucoseUnits = .mmolL
 
         override func subscribe() {
-            let units = settingsManager.settings.units
-            self.units = units
+            units = settingsManager.settings.units
         }
 
         let coredataContext = CoreDataStack.shared.persistentContainer.viewContext
@@ -27,7 +26,12 @@ extension OverrideProfilesConfig {
                 saveOverride.percentage = self.percentage
                 saveOverride.enabled = self.isEnabled
                 saveOverride.date = Date()
-                saveOverride.target = units == .mmolL ? target.asMgdL as NSDecimalNumber : target as NSDecimalNumber
+                if override_target {
+                    if units == .mmolL {
+                        target = target.asMgdL
+                    }
+                    saveOverride.target = target as NSDecimalNumber
+                } else { saveOverride.target = 0 }
                 try? self.coredataContext.save()
             }
         }
@@ -55,9 +59,9 @@ extension OverrideProfilesConfig {
                         isEnabled = false
                     }
                     newDuration = Date().distance(to: date.addingTimeInterval(addedMinutes.minutes.timeInterval)).minutes
-                    if (overrideArray.first?.target ?? 0) != 0 {
+                    if overrideTarget != 0 {
                         override_target = true
-                        target = units == .mgdL ? overrideTarget : overrideTarget.asMmolL
+                        target = units == .mmolL ? overrideTarget.asMmolL : overrideTarget
                     }
                 }
 

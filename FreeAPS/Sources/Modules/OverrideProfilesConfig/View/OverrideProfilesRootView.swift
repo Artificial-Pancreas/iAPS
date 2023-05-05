@@ -44,7 +44,8 @@ extension OverrideProfilesConfig {
                         if !state.isEnabled {
                             state.duration = 0
                             state.percentage = 100
-                            state._indefinite = false
+                            state._indefinite = true
+                            state.override_target = false
                             state.saveSettings()
                         }
                     })
@@ -102,16 +103,30 @@ extension OverrideProfilesConfig {
                             showAlert.toggle()
 
                             alertSring = "Selected Override:\n\n\(state.percentage.formatted(.number)) %, " +
-                                (state.duration > 0 ? "\(state.duration) min" : " infinite duration.") +
-                                (state.target == 0 ? "" : (" Target: \(state.target) " + state.units.rawValue + "."))
+                                (
+                                    state.duration > 0 || !state
+                                        ._indefinite ?
+                                        (
+                                            state
+                                                .duration
+                                                .formatted(.number.grouping(.never).rounded().precision(.fractionLength(0))) +
+                                                " min."
+                                        ) :
+                                        " infinite duration."
+                                ) +
+                                (
+                                    (state.target == 0 || !state.override_target) ? "" :
+                                        (" Target: " + state.target.formatted() + " " + state.units.rawValue + ".")
+                                )
                                 +
                                 "\n\n"
                                 +
-                                "Saving this override will change your basal insulin, ISF, CR and eventual Target Glucose during the entire selected duration. Tapping save will start your new overide or edit your current active override."
+                                "Saving this override will change your Profiles and/or your Target Glucose used for looping during the entire selected duration. Tapping save will start your new overide or edit your current active override."
                         }
                         .disabled(
-                            state.isEnabled == false || state
-                                .percentage == 100 || (!state._indefinite && state.duration == 0)
+                            !state
+                                .isEnabled || (state.percentage == 100 && !state.override_target) ||
+                                (!state._indefinite && state.duration == 0 || (state.override_target && state.target == 0))
                         )
                         .accentColor(.orange)
                         .buttonStyle(BorderlessButtonStyle())
@@ -124,9 +139,6 @@ extension OverrideProfilesConfig {
                             actions: {
                                 Button("Cancel", role: .cancel) {}
                                 Button("Start Override", role: .destructive) {
-                                    if state.percentage == 100 {
-                                        state.isEnabled = false
-                                    } else { state.isEnabled = true }
                                     if state._indefinite {
                                         state.duration = 0
                                     } else if state.duration == 0 {
@@ -139,7 +151,9 @@ extension OverrideProfilesConfig {
                         )
                     }
                 }
-            }.onAppear { state.savedSettings() }
+            }
+            .onAppear(perform: configureView)
+            .onAppear { state.savedSettings() }
         }
     }
 }

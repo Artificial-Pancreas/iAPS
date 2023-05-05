@@ -47,6 +47,15 @@ extension Home {
             return formatter
         }
 
+        private var fetchedTargetFormatter: NumberFormatter {
+            let formatter = NumberFormatter()
+            formatter.numberStyle = .decimal
+            if state.units == .mmolL {
+                formatter.maximumFractionDigits = 1
+            } else { formatter.maximumFractionDigits = 0 }
+            return formatter
+        }
+
         private var targetFormatter: NumberFormatter {
             let formatter = NumberFormatter()
             formatter.numberStyle = .decimal
@@ -216,10 +225,26 @@ extension Home {
             guard fetchedPercent.first?.enabled ?? false else {
                 return nil
             }
-            let percentString = "\((fetchedPercent.first?.percentage ?? 100).formatted(.number)) %"
-            let durationString = (fetchedPercent.first?.indefinite ?? false) ?
-                "" : ", " + (tirFormatter.string(from: (fetchedPercent.first?.duration ?? 0) as NSNumber) ?? "") + " min"
-            return percentString + durationString
+            var percentString = "\((fetchedPercent.first?.percentage ?? 100).formatted(.number)) %"
+            var target = (fetchedPercent.first?.target ?? 100) as Decimal
+            let indefinite = (fetchedPercent.first?.indefinite ?? false)
+            let unit = state.units.rawValue
+            if state.units == .mmolL {
+                target = target.asMmolL
+            }
+            var targetString = (fetchedTargetFormatter.string(from: target as NSNumber) ?? "") + " " + unit
+            if tempTargetString != nil || target == 0 { targetString = "" }
+            percentString = percentString == "100 %" ? "" : percentString
+            let durationString = indefinite ?
+                "" : ((tirFormatter.string(from: (fetchedPercent.first?.duration ?? 0) as NSNumber) ?? "") + " min")
+
+            var comma1 = ", "
+            var comma2 = comma1
+            if targetString == "" { comma1 = "" }
+            if percentString == "" { comma1 = "" }
+            if indefinite { comma2 = "" }
+
+            return percentString + comma1 + targetString + comma2 + durationString
         }
 
         var infoPanel: some View {
