@@ -272,7 +272,7 @@ extension Home {
                 }
 
                 Spacer()
-
+                
                 if let overrideString = overrideString {
                     Text(overrideString)
                         .font(.system(size: 12))
