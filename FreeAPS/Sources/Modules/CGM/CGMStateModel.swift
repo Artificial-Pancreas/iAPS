@@ -13,7 +13,7 @@ extension CGM {
         @Published var setupCGM: Bool = false
         @Published var cgm: CGMType = .nightscout
         // @Published var transmitterID = ""
-        @Published var uploadGlucose = false
+        @Published var uploadGlucose = true
         @Published var smoothGlucose = false
         @Published var createCalendarEvents = false
         @Published var calendarIDs: [String] = []

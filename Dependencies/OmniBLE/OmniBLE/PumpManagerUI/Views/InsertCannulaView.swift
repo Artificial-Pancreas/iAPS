@@ -59,7 +59,7 @@ struct InsertCannulaView: View {
                     }) {
                         Text(LocalizedString("Deactivate Pod", comment: "Button text for deactivate pod button"))
                             .accessibility(identifier: "button_deactivate_pod")
-                            .actionButtonStyle(.destructive)
+                            .actionButtonStyle(.secondary)
                     }
                     .disabled(self.viewModel.state.isProcessing)
                 }

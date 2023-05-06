@@ -10,6 +10,8 @@
 	</array>
 	<key>BuildBranch</key>
 	<string></string>
+	<key>CBBundleDisplayName</key>
+	<string>$(APP_DISPLAY_NAME)</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
@@ -30,7 +32,9 @@
 	<array>
 		<dict>
 			<key>CFBundleTypeRole</key>
-			<string>Editor</string>
+			<string>None</string>
+			<key>CFBundleURLName</key>
+			<string>com.artificial-pancreas-iaps</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
 				<string>freeaps-x</string>
@@ -43,6 +47,7 @@
 	<false/>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
+		<string>gcm-ciq</string>
 		<string>dexcomg7</string>
 		<string>xdripswift</string>
 		<string>dexcomg6</string>
@@ -104,8 +109,6 @@
 		<string>UIInterfaceOrientationPortrait</string>
 		<string>UIInterfaceOrientationPortraitUpsideDown</string>
 	</array>
-	<key>CBBundleDisplayName</key>
-	<string>$(APP_DISPLAY_NAME)</string>
 	<key>UISupportedInterfaceOrientations~ipad</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>

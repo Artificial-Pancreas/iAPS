@@ -17,10 +17,10 @@
 "Peripheral command was invalid" = "Oheislaitekomento oli virheellinen";
 
 /* Timeout error description */
-"Peripheral did not respond in time" = "Oheislaite ei vastannut ajoissa";
+"Peripheral did not respond in time" = "Ulkoinen laite ei vastannut ajoissa";
 
 /* Not ready error description */
-"Peripheral isnʼt connected" = "Oheislaitetta ei ole kytketty";
+"Peripheral isnʼt connected" = "Ulkoinen laite ei ole yhdistetty";
 
 /* The description of sensor calibration state when sensor calibration is ok. */
 "Sensor calibration is OK" = "Anturin kalibrointi onnistui";

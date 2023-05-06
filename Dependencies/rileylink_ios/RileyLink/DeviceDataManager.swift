@@ -12,7 +12,7 @@ import RileyLinkKitUI
 import RileyLinkBLEKit
 import MinimedKit
 import MinimedKitUI
-import NightscoutUploadKit
+import NightscoutKit
 import LoopKit
 import LoopKitUI
 import UserNotifications

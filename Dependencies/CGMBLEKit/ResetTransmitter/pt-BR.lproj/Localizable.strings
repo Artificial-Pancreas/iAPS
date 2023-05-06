@@ -9,7 +9,8 @@
 
 /* Reset button title
    Title of button to begin reset */
-"Reset" = "Reiniciar";
+"Reset" = "Restabelecer";
 
 /* Notification title for background completion notification */
 "Transmitter Reset Complete" = "Redefinição do Transmissor Concluída";
+

@@ -18,10 +18,12 @@ public struct FaultEventCode: CustomStringConvertible, Equatable {
         case failedFlashErase                     = 0x01
         case failedFlashStore                     = 0x02
         case tableCorruptionBasalSubcommand       = 0x03
+        case basalPulseTableCorruption            = 0x04
         case corruptionByte720                    = 0x05
         case dataCorruptionInTestRTCInterrupt     = 0x06
         case rtcInterruptHandlerInconsistentState = 0x07
         case valueGreaterThan8                    = 0x08
+        case invalidBeepRepeatPattern             = 0x09
         case bf0notEqualToBF1                     = 0x0A
         case tableCorruptionTempBasalSubcommand   = 0x0B
         case resetDueToCOP                        = 0x0D
@@ -89,6 +91,7 @@ public struct FaultEventCode: CustomStringConvertible, Equatable {
         case problemFindingBestTrimValue          = 0x4C
         case badSetTPM1MultiCasesValue            = 0x4D
         case unexpectedRFErrorFlagDuringReset     = 0x4F
+        case timerPulseWidthModulatorOverflow     = 0x50
         case tickcntError                         = 0x51
         case badRfmXtalStart                      = 0x52
         case badRxSensitivity                     = 0x53
@@ -152,7 +155,7 @@ public struct FaultEventCode: CustomStringConvertible, Equatable {
         case bleEr48DualNack                      = 0xC0
         case bleQnExceedMaxRetry                  = 0xC1
         case bleQnCritVarFail                     = 0xC2
-        case valuesDoNotMatchOrAreGreaterThan0xC3 = 0xC3
+        case valuesDoNotMatchOrAreGreaterThan0xC2 = 0xC3
     }
 
     public var faultType: FaultEventType? {
@@ -177,6 +180,8 @@ public struct FaultEventCode: CustomStringConvertible, Equatable {
                     return "Flash store failed"
                 case .tableCorruptionBasalSubcommand:
                     return "Basal subcommand table corruption"
+                case .basalPulseTableCorruption:
+                    return "Basal pulse table corruption"
                 case .corruptionByte720:
                     return "Corruption in byte_720"
                 case .dataCorruptionInTestRTCInterrupt:
@@ -185,6 +190,8 @@ public struct FaultEventCode: CustomStringConvertible, Equatable {
                     return "RTC interrupt handler called with inconstent state"
                 case .valueGreaterThan8:
                     return "Value > 8"
+                case .invalidBeepRepeatPattern:
+                    return "Invalid beep repeat pattern"
                 case .bf0notEqualToBF1:
                     return "Corruption in byte_BF0"
                 case .tableCorruptionTempBasalSubcommand:
@@ -319,6 +326,8 @@ public struct FaultEventCode: CustomStringConvertible, Equatable {
                     return "Bad set_TPM1_multi_cases value"
                 case .unexpectedRFErrorFlagDuringReset:
                     return "Unexpected TXSCR2 RF Tranmission Error Flag set during reset"
+                case .timerPulseWidthModulatorOverflow:
+                    return "Timer pulse-width modulator overflow"
                 case .tickcntError:
                     return "Bad tick count state before starting pump"
                 case .badRfmXtalStart:
@@ -445,7 +454,7 @@ public struct FaultEventCode: CustomStringConvertible, Equatable {
                     return "BLE QN exceed max retry"
                 case .bleQnCritVarFail:
                     return "BLE QN critical variable fail"
-                case .valuesDoNotMatchOrAreGreaterThan0xC3:
+                case .valuesDoNotMatchOrAreGreaterThan0xC2:
                     return "Unknown fault code"
                 }
             }()

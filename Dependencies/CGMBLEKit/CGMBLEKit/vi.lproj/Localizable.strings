@@ -14,10 +14,10 @@
 "OK" = "OK";
 
 /* Timeout error description */
-"Peripheral did not respond in time" = "Ngoại vi không đáp ứng kịp thời";
+"Peripheral did not respond in time" = "Ngoại vi không đáp ứng kịp thời";
 
 /* Not ready error description */
-"Peripheral isnʼt connected" = "Ngoại vi không được kết nối";
+"Peripheral isnʼt connected" = "Ngoại vi không được kết nối";
 
 /* The description of sensor calibration state when sensor calibration is ok. */
 "Sensor calibration is OK" = "Hiệu chuẩn cảm biến là OK";
@@ -35,5 +35,5 @@
 "Sensor needs calibration" = "Cảm biến cần hiệu chuẩn";
 
 /* Error description */
-"Unknown characteristic" = "Đặc điểm không xác định";
+"Unknown characteristic" = "Đặc điểm không xác định";
 

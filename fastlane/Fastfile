@@ -149,7 +149,8 @@ platform :ios do
 
     configure_bundle_id("FreeAPS", "ru.artpancreas.#{TEAMID}.FreeAPS", [
       Spaceship::ConnectAPI::BundleIdCapability::Type::APP_GROUPS,
-      Spaceship::ConnectAPI::BundleIdCapability::Type::HEALTHKIT
+      Spaceship::ConnectAPI::BundleIdCapability::Type::HEALTHKIT,
+      Spaceship::ConnectAPI::BundleIdCapability::Type::NFC_TAG_READING
     ])
 
     configure_bundle_id("FreeAPSWatch WatchKit Extension", "ru.artpancreas.#{TEAMID}.FreeAPS.watchkitapp.watchkitextension", [
@@ -201,7 +202,7 @@ platform :ios do
       bundle_id = Spaceship::ConnectAPI::BundleId.find(identifier)
     end
 
-    find_bundle_id("com.#{TEAMID}.loopkit.Loop")
+    find_bundle_id("ru.artpancreas.#{TEAMID}.FreeAPS")
   end
 
   desc "Nuke Certs"

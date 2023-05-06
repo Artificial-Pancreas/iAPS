@@ -13,9 +13,8 @@ struct FreeAPSSettings: JSON, Equatable {
     var skipBolusScreenAfterCarbs: Bool = false
     var displayHR: Bool = false
     var cgm: CGMType = .nightscout
-    var uploadGlucose: Bool = false
+    var uploadGlucose: Bool = true
     var useCalendar: Bool = false
-    var useAppleHealth: Bool = false
     var glucoseBadge: Bool = false
     var glucoseNotificationsAlways: Bool = false
     var useAlarmSound: Bool = false
@@ -24,13 +23,23 @@ struct FreeAPSSettings: JSON, Equatable {
     var highGlucose: Decimal = 270
     var carbsRequiredThreshold: Decimal = 10
     var animatedBackground: Bool = false
-    var displayStatistics: Bool = false
     var useFPUconversion: Bool = true
     var individualAdjustmentFactor: Decimal = 0.5
     var timeCap: Int = 8
     var minuteInterval: Int = 30
     var delay: Int = 60
+    var useAppleHealth: Bool = false
     var smoothGlucose: Bool = false
+    var displayOnWatch: AwConfig = .BGTarget
+    var overrideHbA1cUnit: Bool = false
+    var high: Decimal = 145
+    var low: Decimal = 70
+    var uploadStats: Bool = true
+    var hours: Int = 6
+    var xGridLines: Bool = true
+    var yGridLines: Bool = true
+    var oneDimensionalGraph: Bool = false
+    var rulerMarks: Bool = false
 }
 
 extension FreeAPSSettings: Decodable {
@@ -81,6 +90,12 @@ extension FreeAPSSettings: Decodable {
 
         if let displayHR = try? container.decode(Bool.self, forKey: .displayHR) {
             settings.displayHR = displayHR
+            // compatibility if displayOnWatch is not available in json files
+            settings.displayOnWatch = (displayHR == true) ? AwConfig.HR : AwConfig.BGTarget
+        }
+
+        if let displayOnWatch = try? container.decode(AwConfig.self, forKey: .displayOnWatch) {
+            settings.displayOnWatch = displayOnWatch
         }
 
         if let cgm = try? container.decode(CGMType.self, forKey: .cgm) {
@@ -154,12 +169,40 @@ extension FreeAPSSettings: Decodable {
             settings.animatedBackground = animatedBackground
         }
 
-        if let displayStatistics = try? container.decode(Bool.self, forKey: .displayStatistics) {
-            settings.displayStatistics = displayStatistics
-        }
-
         if let smoothGlucose = try? container.decode(Bool.self, forKey: .smoothGlucose) {
             settings.smoothGlucose = smoothGlucose
+        }
+
+        if let low = try? container.decode(Decimal.self, forKey: .low) {
+            settings.low = low
+        }
+
+        if let high = try? container.decode(Decimal.self, forKey: .high) {
+            settings.high = high
+        }
+
+        if let uploadStats = try? container.decode(Bool.self, forKey: .uploadStats) {
+            settings.uploadStats = uploadStats
+        }
+
+        if let hours = try? container.decode(Int.self, forKey: .hours) {
+            settings.hours = hours
+        }
+
+        if let xGridLines = try? container.decode(Bool.self, forKey: .xGridLines) {
+            settings.xGridLines = xGridLines
+        }
+
+        if let yGridLines = try? container.decode(Bool.self, forKey: .yGridLines) {
+            settings.yGridLines = yGridLines
+        }
+
+        if let oneDimensionalGraph = try? container.decode(Bool.self, forKey: .oneDimensionalGraph) {
+            settings.oneDimensionalGraph = oneDimensionalGraph
+        }
+
+        if let rulerMarks = try? container.decode(Bool.self, forKey: .rulerMarks) {
+            settings.rulerMarks = rulerMarks
         }
 
         self = settings

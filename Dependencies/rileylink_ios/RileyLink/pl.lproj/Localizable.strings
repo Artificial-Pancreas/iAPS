@@ -1,8 +1,17 @@
+/* Unit format string for an RSSI value in decibles */
+"%@ dB" = "%@ dB";
+
+/* Unit format string for an value in percent */
+"%@%%" = "%@%%";
+
 /* The title of the about section */
 "About" = "O aplikacji";
 
 /* The title of the button to add the credentials for a service */
 "Add Account" = "Dodaj konto";
+
+/* Title text for button to set up a new minimed pump */
+"Add Minimed Pump" = "Dodaj pompę Minimed";
 
 /* The title of the nightscout API secret credential */
 "API Secret" = "API Secret";
@@ -14,7 +23,7 @@
 "Delete Account" = "Usuń konto";
 
 /* The placeholder text instructing users how to enter a pump ID */
-"Enter the 6-digit pump ID" = "Wprowadź 6-cyfrowe ID pompy";
+"Enter the 6-digit pump ID" = "Wprowadź 6-cyfrowy numer pompy";
 
 /* The title text for the pull cgm Data cell */
 "Fetch CGM" = "Pobierz dane z CGM";
@@ -32,7 +41,7 @@
 "Pumps" = "Pumps";
 
 /* The default placeholder string for a credential */
-"Required" = "Wymagany";
+"Required" = "Wymagane";
 
 /* Title for RileyLink Testing main view controller */
 "RileyLink Testing" = "RileyLink Testing";
@@ -41,10 +50,11 @@
 "Setup Omnipod" = "Setup Omnipod";
 
 /* The title of the nightscout site URL credential */
-"Site URL" = "URL strony";
+"Site URL" = "Strona URL";
 
 /* The empty-state text for a configuration value */
-"Tap to set" = "Dotknij, aby ustawić";
+"Tap to set" = "Kliknij, aby ustawić";
 
 /* The title text for the nightscout upload enabled switch cell */
 "Upload To Nightscout" = "Wysyłaj do Nightscout";
+
