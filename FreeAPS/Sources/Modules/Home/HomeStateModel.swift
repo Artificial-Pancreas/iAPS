@@ -53,7 +53,7 @@ extension Home {
         @Published var maxValue: Decimal = 1.2
         @Published var lowGlucose: Decimal = 4 / 0.0555
         @Published var highGlucose: Decimal = 10 / 0.0555
-        @Published var overrideUnit = false
+        @Published var overrideUnit: Bool = false
         @Published var screenHours: Int = 6
         @Published var displayXgridLines: Bool = false
         @Published var displayYgridLines: Bool = false
