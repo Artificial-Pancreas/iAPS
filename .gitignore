@@ -79,4 +79,4 @@ fastlane/screenshots
 fastlane/test_output
 fastlane/FastlaneRunner
 
-ConfigOverride.xcconfig
+# ConfigOverride.xcconfig
