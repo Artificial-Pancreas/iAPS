@@ -204,7 +204,7 @@ extension FreeAPSSettings: Decodable {
         if let rulerMarks = try? container.decode(Bool.self, forKey: .rulerMarks) {
             settings.rulerMarks = rulerMarks
         }
-        
+
         if let overrideHbA1cUnit = try? container.decode(Bool.self, forKey: .overrideHbA1cUnit) {
             settings.overrideHbA1cUnit = overrideHbA1cUnit
         }
