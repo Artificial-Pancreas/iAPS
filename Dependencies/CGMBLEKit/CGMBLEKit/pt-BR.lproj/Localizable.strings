@@ -14,10 +14,10 @@
 "OK" = "OK";
 
 /* Timeout error description */
-"Peripheral did not respond in time" = "Periférico não respondeu a tempo";
+"Peripheral did not respond in time" = "Acessório não respondeu a tempo";
 
 /* Not ready error description */
-"Peripheral isnʼt connected" = "O periférico não está conectado";
+"Peripheral isnʼt connected" = "Acessório não está conectado";
 
 /* The description of sensor calibration state when sensor calibration is ok. */
 "Sensor calibration is OK" = "A calibração do sensor está OK";
@@ -35,5 +35,5 @@
 "Sensor needs calibration" = "O sensor precisa de calibração";
 
 /* Error description */
-"Unknown characteristic" = "Característica desconhecida";
+"Unknown characteristic" = "Característica Desconhecida";
 

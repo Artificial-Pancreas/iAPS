@@ -9,9 +9,8 @@
 
 /* Reset button title
    Title of button to begin reset */
-"Reset" = "Resetează";
+"Reset" = "Resetare";
 
 /* Notification title for background completion notification */
 "Transmitter Reset Complete" = "Resetare transmițător finalizată";
-
 

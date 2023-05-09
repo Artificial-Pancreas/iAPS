@@ -12,6 +12,7 @@ struct Oref2_variables: JSON, Equatable {
     var duration: Decimal
     var unlimited: Bool
     var hbt: Decimal
+    var overrideTarget: Decimal
 
     init(
         average_total_data: Decimal,
@@ -24,7 +25,8 @@ struct Oref2_variables: JSON, Equatable {
         useOverride: Bool,
         duration: Decimal,
         unlimited: Bool,
-        hbt: Decimal
+        hbt: Decimal,
+        overrideTarget: Decimal
     ) {
         self.average_total_data = average_total_data
         self.weightedAverage = weightedAverage
@@ -37,6 +39,7 @@ struct Oref2_variables: JSON, Equatable {
         self.duration = duration
         self.unlimited = unlimited
         self.hbt = hbt
+        self.overrideTarget = overrideTarget
     }
 }
 
@@ -53,5 +56,6 @@ extension Oref2_variables {
         case duration
         case unlimited
         case hbt
+        case overrideTarget
     }
 }

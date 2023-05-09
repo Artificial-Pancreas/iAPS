@@ -76,7 +76,10 @@ extension Bolus {
             DispatchQueue.main.async {
                 self.insulinRequired = self.provider.suggestion?.insulinReq ?? 0
                 self.insulinRecommended = self.apsManager
-                    .roundBolus(amount: max(self.insulinRequired * self.settingsManager.settings.insulinReqFraction, 0))
+                    .roundBolus(amount: max(
+                        self.insulinRequired * (self.settingsManager.settings.insulinReqPercentage / 100) * 2,
+                        0
+                    ))
             }
         }
     }

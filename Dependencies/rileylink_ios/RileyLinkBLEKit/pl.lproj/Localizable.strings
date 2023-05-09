@@ -1,3 +1,6 @@
+/* PeripheralManagerError.emptyValue error description */
+"Characteristic value was empty" = "Wartość charakterystyczna była pusta";
+
 /* Write size limit exceeded error description (1: size limit) */
 "Data exceeded maximum size of %@ bytes" = "Dane przekraczają maksymalną pojemność %@ bajtów";
 
@@ -19,12 +22,33 @@
 /* Invalid response error description (1: response) */
 "Response %@ is invalid" = "Odpowiedź %@ jest nieprawidłowa";
 
+/* commandsBlocked error description */
+"RileyLink command did not respond" = "Komenda RileyLink nie odpowiedziała";
+
+/* PeripheralManagerError.timeout error description */
+"RileyLink did not respond in time" = "RileyLink nie odpowiedział na czas";
+
 /* Unsupported command error description */
 "RileyLink firmware does not support the %@ command" = "Oprogramowanie RileyLink nie obsługuje polecenia %@";
+
+/* PeripheralManagerError.busy error description */
+"RileyLink is busy" = "RileyLink jest zajęty";
+
+/* PeripheralManagerError.notReady error description */
+"RileyLink is not connected" = "RileyLink nie jest podłączony";
+
+/* commandsBlocked recovery suggestion */
+"RileyLink may need to be turned off and back on" = "RileyLink może wymagać wyłączenia i ponownego włączenia";
 
 /* Failure reason: unknown peripheral characteristic */
 "The RileyLink was temporarily disconnected" = "RileyLink został tymczasowo rozłączony";
 
 /* Error description */
 "Unknown characteristic" = "Nieznany błąd";
+
+/* PeripheralManagerError.unknownCharacteristic error description */
+"Unknown characteristic: %@" = "Nieznane powiadomienie: %@";
+
+/* PeripheralManagerError.unknownCharacteristic error description */
+"Unknown service: %@" = "Nieznana usługa: %@";
 

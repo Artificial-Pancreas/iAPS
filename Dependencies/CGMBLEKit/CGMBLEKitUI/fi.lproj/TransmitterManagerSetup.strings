@@ -5,7 +5,7 @@
 "Dds-49-o7G.title" = "Lähettimen asennus";
 
 /* Class = "UILabel"; text = "Detail"; ObjectID = "GOT-KQ-cEh"; */
-"GOT-KQ-cEh.text" = "Yksityiskohta";
+"GOT-KQ-cEh.text" = "Detail";
 
 /* Class = "UITableViewSection"; footerTitle = "Data can be downloaded over the Internet from Share when the transmitter connection fails."; ObjectID = "k1N-Rg-XDy"; */
 "k1N-Rg-XDy.footerTitle" = "Tiedot voidaan ladata Internetistä Share-palvelimelta, kun yhteys lähettimeen epäonnistuu.";

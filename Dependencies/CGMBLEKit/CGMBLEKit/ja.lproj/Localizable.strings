@@ -14,10 +14,10 @@
 "OK" = "OK";
 
 /* Timeout error description */
-"Peripheral did not respond in time" = "周辺機器が時間内に反応しませんでした";
+"Peripheral did not respond in time" = "危機が時間内に反応しませんでした";
 
 /* Not ready error description */
-"Peripheral isnʼt connected" = "周辺機器が接続されていません";
+"Peripheral isnʼt connected" = "危機が接続されていません";
 
 /* The description of sensor calibration state when sensor calibration is ok. */
 "Sensor calibration is OK" = "センサーの較正はできています";
@@ -35,5 +35,5 @@
 "Sensor needs calibration" = "センサーの較正が必要です";
 
 /* Error description */
-"Unknown characteristic" = "不明な特徴";
+"Unknown characteristic" = "エラー不明";
 

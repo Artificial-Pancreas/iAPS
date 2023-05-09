@@ -7,12 +7,12 @@
 //
 
 import Foundation
-import NightscoutUploadKit
+import NightscoutKit
 
 
 class RemoteDataManager {
 
-    var nightscoutUploader: NightscoutUploader? {
+    var NightscoutClient: NightscoutClient? {
         return nightscoutService.uploader
     }
 

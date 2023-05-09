@@ -67,7 +67,7 @@ extension DataTable {
         private var glucoseList: some View {
             List {
                 ForEach(state.glucose) { item in
-                    gluciseView(item)
+                    glucoseView(item)
                 }.onDelete(perform: deleteGlucose)
             }
         }
@@ -151,7 +151,7 @@ extension DataTable {
             }
         }
 
-        @ViewBuilder private func gluciseView(_ item: Glucose) -> some View {
+        @ViewBuilder private func glucoseView(_ item: Glucose) -> some View {
             VStack(alignment: .leading, spacing: 4) {
                 HStack {
                     Text(dateFormatter.string(from: item.glucose.dateString))

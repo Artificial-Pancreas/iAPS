@@ -227,7 +227,7 @@ Enact a temp Basal or a temp target */
 /* */
 "Manual Temp Basal" = "Ручная ВБС";
 
-/* Allow uploads tp NS */
+/* Allow uploads data to NS */
 "Allow uploads" = "Разрешить выгрузку";
 
 /* API secret in NS */
@@ -235,9 +235,6 @@ Enact a temp Basal or a temp target */
 
 /* Connect to NS */
 "Connect" = "Подключить";
-
-/* Connected to NS */
-"Connected!" = "Подключено!";
 
 /* Connecting to NS */
 "Connecting..." = "Подключение...";

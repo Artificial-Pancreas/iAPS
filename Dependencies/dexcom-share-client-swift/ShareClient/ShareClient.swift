@@ -37,7 +37,8 @@ public enum KnownShareServers: String {
 // https://github.com/bewest/share2nightscout-bridge
 private let dexcomUserAgent = "Dexcom Share/3.0.2.11 CFNetwork/711.2.23 Darwin/14.0.0"
 private let dexcomApplicationId = "d89443d2-327c-4a6f-89e5-496bbb0317db"
-private let dexcomLoginPath = "/ShareWebServices/Services/General/LoginPublisherAccountByName"
+private let dexcomAuthenticatePath = "/ShareWebServices/Services/General/AuthenticatePublisherAccount"
+private let dexcomLoginByIdPath = "/ShareWebServices/Services/General/LoginPublisherAccountById"
 private let dexcomLatestGlucosePath = "/ShareWebServices/Services/Publisher/ReadPublisherLatestGlucoseValues"
 private let maxReauthAttempts = 2
 
@@ -97,25 +98,66 @@ public class ShareClient {
         if token != nil {
             callback(nil)
         } else {
-            fetchToken() { (error, token) in
-                if error != nil {
+            fetchAccountID { result in
+                switch result {
+                case .failure(let error):
                     callback(error)
-                } else {
-                    self.token = token
-                    callback(nil)
+                case .success(let accountId):
+                    self.fetchTokenByAccountId(accountId) { (error, token) in
+                        if error != nil {
+                            callback(error)
+                        } else {
+                            self.token = token
+                            callback(nil)
+                        }
+                    }
                 }
             }
         }
     }
 
-    private func fetchToken(_ callback: @escaping (ShareError?, String?) -> Void) {
+    private func fetchAccountID(_ callback: @escaping (Result<String, ShareError>) -> Void) {
         let data = [
             "accountName": username,
             "password": password,
             "applicationId": dexcomApplicationId
         ]
 
-        guard let url = URL(string: shareServer + dexcomLoginPath) else {
+        guard let url = URL(string: shareServer + dexcomAuthenticatePath) else {
+            return callback(.failure(.fetchError))
+        }
+
+        dexcomPOST(url, JSONData: data as [String : AnyObject]?) { (error, response) in
+            if let error = error {
+                return callback(.failure(.httpError(error)))
+            }
+
+            guard let   response = response,
+                let data = response.data(using: .utf8),
+                let decoded = try? JSONSerialization.jsonObject(with: data, options: .allowFragments)
+                else {
+                return callback(.failure(.loginError(errorCode: "unknown")))
+            }
+
+            if let token = decoded as? String {
+                // success is a JSON-encoded string containing the token
+                callback(.success(token))
+            } else {
+                // failure is a JSON object containing the error reason
+                let errorCode = (decoded as? [String: String])?["Code"] ?? "unknown"
+                callback(.failure(.loginError(errorCode: errorCode)))
+            }
+        }
+    }
+
+    private func fetchTokenByAccountId(_ accountId: String, callback: @escaping (ShareError?, String?) -> Void) {
+        let data = [
+            "accountId": accountId,
+            "password": password,
+            "applicationId": dexcomApplicationId
+        ]
+
+        guard let url = URL(string: shareServer + dexcomLoginByIdPath) else {
             return callback(ShareError.fetchError, nil)
         }
 

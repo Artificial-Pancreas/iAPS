@@ -1,3 +1,6 @@
+/* Unit format string for an value in percent */
+"%@%%" = "%@%%";
+
 /* The title of the about section */
 "About" = "Sobre";
 
@@ -44,7 +47,7 @@
 "Site URL" = "Site URL";
 
 /* The empty-state text for a configuration value */
-"Tap to set" = "Toque para definir";
+"Tap to set" = "Toque para Definir";
 
 /* The title text for the nightscout upload enabled switch cell */
 "Upload To Nightscout" = "Enviar para Nightscout";
