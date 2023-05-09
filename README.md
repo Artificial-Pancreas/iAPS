@@ -15,7 +15,7 @@ git clone --branch=main https://github.com/artificial-pancreas/iaps.git
 cd iaps  
 xed .  
 
-Or useing the GitHub interface: 
+Or using the GitHub interface: 
 Download and open in Xcode directly using the Code button: "Open with Xcode".  
 
 ## To build directly in GitHub, without using Xcode: 
