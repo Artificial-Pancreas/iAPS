@@ -745,18 +745,14 @@ final class BaseAPSManager: APSManager, Injectable {
                 requestStats.fetchLimit = 1
                 try? stats = coredataContext.fetch(requestStats)
                 // Only save and upload once per day
-                guard (-1 * (stats.first?.lastrun ?? now).timeIntervalSinceNow.hours) > 22 else { return }
+                guard (-1 * (stats.first?.lastrun ?? .distantPast).timeIntervalSinceNow.hours) > 22 else { return }
 
                 let units = self.settingsManager.settings.units
                 let preferences = settingsManager.preferences
-
-                // MARK: Fetch Carbs from CoreData
-
+                
                 var carbs = [Carbohydrates]()
                 var carbTotal: Decimal = 0
-
                 let requestCarbs = Carbohydrates.fetchRequest() as NSFetchRequest<Carbohydrates>
-
                 let daysAgo = Date().addingTimeInterval(-1.days.timeInterval)
                 requestCarbs.predicate = NSPredicate(format: "carbs > 0 AND date > %@", daysAgo as NSDate)
 
@@ -1335,13 +1331,7 @@ final class BaseAPSManager: APSManager, Injectable {
                     )
                 )
 
-                storage.transaction { storage in
-                    storage.append(dailystat, to: file, uniqBy: \.created_at)
-                    let uniqeEvents: [Statistics] = storage.retrieve(file, as: [Statistics].self)?
-                        .filter { $0.created_at.addingTimeInterval(24.hours.timeInterval) > Date() }
-                        .sorted { $0.created_at > $1.created_at } ?? []
-                    storage.save(Array(uniqeEvents), as: file)
-                }
+                storage.save(dailystat, as: file)
                 nightscout.uploadStatistics(dailystat: dailystat)
                 nightscout.uploadPreferences()
 
