@@ -57,17 +57,16 @@ iAPS app runs on iPhone or iPod. An iPhone 7 or newer is recommended.
 
 [Discord iAPS - main branch channel](https://discord.com/channels/1020905149037813862/1021041588627062854)
 
+[iAPS documentation (under development)](https://iaps.readthedocs.io/en/latest/)
+
+[OpenAPS documentation](https://openaps.readthedocs.io/en/latest/)
+
 [Crowdin Project for translation of iAPS](https://crowdin.com/project/freeaps-x)
 
 [Middleware code for iAPS](https://github.com/Jon-b-m/middleware)
 
 [ADD DASH PUMP and SETTINGS](https://loopkit.github.io/loopdocs/loop-3/omnipod/)
 
-[Overview & Onboarding Tips on Loop&Learn](https://www.loopandlearn.org/freeaps-x/)
-
-[OpenAPS documentation](https://openaps.readthedocs.io/en/latest/)
-
-[iAPS documentation (under development)](https://iaps.readthedocs.io/en/latest/)
 
 # Contribute
 
