@@ -15,11 +15,17 @@ git clone --branch=main https://github.com/artificial-pancreas/iaps.git
 cd iaps  
 xed .  
 
-Or use the GitHub interface: 
-Download and open in Xcode directly using the Code button: "Open with Xcode".
- 
+Or useing the GitHub interface: 
+Download and open in Xcode directly using the Code button: "Open with Xcode".  
 
-Please understand that this version is:
+## To build directly in GitHub, without using Xcode: 
+
+Intructions:  
+https://github.com/Artificial-Pancreas/iAPS/blob/main/fastlane/testflight.md   
+Instructions in greater detail, but not iAPS-specific:  
+https://loopkit.github.io/loopdocs/gh-actions/gh-overview/
+ 
+## Please understand that iAPS is:  
 - highly experimental and evolving rapidly.
 - not CE approved for therapy.
 
