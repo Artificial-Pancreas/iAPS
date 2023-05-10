@@ -242,13 +242,18 @@ extension Home {
             var comma1 = ", "
             var comma2 = comma1
             var comma3 = comma1
-            if targetString == "" { comma1 = "" }
+            if targetString == "" { comma2 = "" }
             if percentString == "" { comma1 = "" }
-            if indefinite { comma2 = "" }
+            if indefinite, smbToggleString == "" { comma2 = "" }
             if percentString == "", targetString == "" {
                 comma1 = ""
                 comma2 = ""
+            }
+            if percentString == "", targetString == "", smbToggleString == "" {
                 durationString = ""
+                comma3 = ""
+            }
+            if durationString == "" {
                 comma3 = ""
             }
             if smbToggleString == "" {
