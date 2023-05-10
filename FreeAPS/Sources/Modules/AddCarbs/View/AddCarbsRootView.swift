@@ -102,7 +102,10 @@ extension AddCarbs {
                 }
             }
             .onAppear(perform: configureView)
-            .navigationBarItems(leading: Button("Close", action: state.hideModal))
+            .navigationBarItems(
+                leading: Button("Close", action: state.hideModal),
+                trailing: Toggle("FPU", isOn: $state.useFPU) // .foregroundColor(.red)
+            )
         }
 
         var presetPopover: some View {
@@ -194,7 +197,6 @@ extension AddCarbs {
 
                         state.removePresetFromNewMeal()
                         if state.carbs == 0, state.fat == 0, state.protein == 0 { state.summation = [] }
-
                     }
                     label: { Text("[ -1 ]") }
                         .disabled(
