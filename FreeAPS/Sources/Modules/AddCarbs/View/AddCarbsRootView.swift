@@ -194,7 +194,6 @@ extension AddCarbs {
 
                         state.removePresetFromNewMeal()
                         if state.carbs == 0, state.fat == 0, state.protein == 0 { state.summation = [] }
-
                     }
                     label: { Text("[ -1 ]") }
                         .disabled(

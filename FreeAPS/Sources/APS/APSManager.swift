@@ -749,7 +749,7 @@ final class BaseAPSManager: APSManager, Injectable {
 
                 let units = self.settingsManager.settings.units
                 let preferences = settingsManager.preferences
-                
+
                 var carbs = [Carbohydrates]()
                 var carbTotal: Decimal = 0
                 let requestCarbs = Carbohydrates.fetchRequest() as NSFetchRequest<Carbohydrates>

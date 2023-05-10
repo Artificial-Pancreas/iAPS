@@ -98,6 +98,11 @@ extension OverrideProfilesConfig {
                                 Text(state.units.rawValue).foregroundColor(.secondary)
                             }
                         }
+                        HStack {
+                            Toggle(isOn: $state.smbIsOff) {
+                                Text("Disable SMBs")
+                            }
+                        }
 
                         Button("Save") {
                             showAlert.toggle()
@@ -118,6 +123,7 @@ extension OverrideProfilesConfig {
                                     (state.target == 0 || !state.override_target) ? "" :
                                         (" Target: " + state.target.formatted() + " " + state.units.rawValue + ".")
                                 )
+                                + (state.smbIsOff ? " SMBs are disabled." : "")
                                 +
                                 "\n\n"
                                 +
@@ -125,7 +131,7 @@ extension OverrideProfilesConfig {
                         }
                         .disabled(
                             !state
-                                .isEnabled || (state.percentage == 100 && !state.override_target) ||
+                                .isEnabled || (state.percentage == 100 && !state.override_target && !state.smbIsOff) ||
                                 (!state._indefinite && state.duration == 0 || (state.override_target && state.target == 0))
                         )
                         .accentColor(.orange)
