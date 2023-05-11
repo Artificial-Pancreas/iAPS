@@ -246,7 +246,6 @@ extension AddCarbs {
                     formatter: formatter,
                     autofocus: false,
                     cleanInput: true
-                ).foregroundColor(.loopRed)
 
                 Text("grams").foregroundColor(.secondary)
             }
