@@ -115,10 +115,16 @@ struct Durations: JSON, Equatable {
     var total: Decimal
 }
 
+struct Threshold: JSON, Equatable {
+    var low: Decimal
+    var high: Decimal
+}
+
 struct TIRs: JSON, Equatable {
     var TIR: Durations
     var Hypos: Durations
     var Hypers: Durations
+    var Threshold: Threshold
 }
 
 struct Ins: JSON, Equatable {
@@ -171,6 +177,7 @@ extension TIRs {
         case TIR
         case Hypos
         case Hypers
+        case Threshold
     }
 }
 

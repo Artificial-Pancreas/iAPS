@@ -1193,7 +1193,19 @@ final class BaseAPSManager: APSManager, Injectable {
                     total: Decimal(totalDays_.hypers)
                 )
 
-                let TimeInRange = TIRs(TIR: tir, Hypos: hypo, Hypers: hyper)
+                let range = Threshold(
+                    low: units == .mmolL ? roundDecimal(settingsManager.settings.low.asMmolL, 1) :
+                        roundDecimal(settingsManager.settings.low, 0),
+                    high: units == .mmolL ? roundDecimal(settingsManager.settings.high.asMmolL, 1) :
+                        roundDecimal(settingsManager.settings.high, 0)
+                )
+
+                let TimeInRange = TIRs(
+                    TIR: tir,
+                    Hypos: hypo,
+                    Hypers: hyper,
+                    Threshold: range
+                )
 
                 let avgs = Durations(
                     day: roundDecimal(bg_1, 1),
