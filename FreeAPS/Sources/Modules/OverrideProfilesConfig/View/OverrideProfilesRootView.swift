@@ -106,8 +106,7 @@ extension OverrideProfilesConfig {
 
                         Button("Save") {
                             showAlert.toggle()
-
-                            alertSring = "Selected Override:\n\n\(state.percentage.formatted(.number)) %, " +
+                            alertSring = "\(state.percentage.formatted(.number)) %, " +
                                 (
                                     state.duration > 0 || !state
                                         ._indefinite ?
@@ -140,7 +139,7 @@ extension OverrideProfilesConfig {
                         .frame(maxWidth: .infinity, alignment: .center)
                         .controlSize(.mini)
                         .alert(
-                            alertSring,
+                            "Save Override",
                             isPresented: $showAlert,
                             actions: {
                                 Button("Cancel", role: .cancel) {}
@@ -153,6 +152,9 @@ extension OverrideProfilesConfig {
                                     state.saveSettings()
                                     dismiss()
                                 }
+                            },
+                            message: {
+                                Text(alertSring)
                             }
                         )
                     }

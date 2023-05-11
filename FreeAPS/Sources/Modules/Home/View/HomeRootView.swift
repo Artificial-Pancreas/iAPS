@@ -237,7 +237,7 @@ extension Home {
             percentString = percentString == "100 %" ? "" : percentString
             var durationString = indefinite ?
                 "" : ((tirFormatter.string(from: (fetchedPercent.first?.duration ?? 0) as NSNumber) ?? "") + " min")
-            var smbToggleString = (fetchedPercent.first?.smbIsOff ?? false) ? " \u{20e0}" : ""
+            let smbToggleString = (fetchedPercent.first?.smbIsOff ?? false) ? " \u{20e0}" : ""
 
             var comma1 = ", "
             var comma2 = comma1
