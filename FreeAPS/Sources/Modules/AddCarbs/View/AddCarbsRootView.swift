@@ -104,7 +104,7 @@ extension AddCarbs {
             .onAppear(perform: configureView)
             .navigationBarItems(
                 leading: Button("Close", action: state.hideModal),
-                trailing: Toggle("Use FPU", isOn: $state.useFPU)
+                trailing: Toggle("Fat and Protein", isOn: $state.useFPU)
             )
         }
 
