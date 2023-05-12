@@ -10,6 +10,9 @@ on:
   schedule:
     - cron: '30 04 1 * *' # Runs at 04:30 UTC on the 1st every month
 
+env:
+  TARGET_BRANCH: main # branch on fork to build from
+
 jobs:
   build:
     runs-on: macos-13
