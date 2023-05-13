@@ -57,7 +57,12 @@ extension AddCarbs {
                         Button {
                             state.useFPUconversion.toggle()
                         }
-                        label: { Text(state.useFPUconversion ? "Hide Fat & Protein" : "Fat and Protein") }
+                        label: {
+                            Text(
+                                state
+                                    .useFPUconversion ? NSLocalizedString("Hide Fat & Protein", comment: "") :
+                                    NSLocalizedString("Fat & Protein", comment: "")
+                            ) }
                             .controlSize(.mini)
                             .buttonStyle(BorderlessButtonStyle())
                         Button {

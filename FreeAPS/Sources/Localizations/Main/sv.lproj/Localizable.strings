@@ -1105,7 +1105,10 @@ Enact a temp Basal or a temp target */
 "Allows fat and protein to be converted into future carb equivalents using the Warsaw formula of kilocalories divided by 10.\n\nThis spreads the carb equivilants over a maximum duration setting that can be configured from 5-12 hours.\n\nDelay is time from now until the first future carb entry.\n\nInterval in minutes is how many minutes are between entries. The shorter the interval, the smoother the result. 10, 15, 20, 30, or 60 are reasonable choices.\n\nAdjustment factor is how much effect the fat and protein has on the entries. 1.0 is full effect (original Warsaw Method) and 0.5 is half effect. Note that you may find that your normal carb ratio needs to increase to a larger number if you begin adding fat and protein entries. For this reason, it is best to start with a factor of about 0.5 to ease into it.\n\nDefault settings: Time Cap: 8 h, Interval: 30 min, Factor: 0.5, Delay 60 min" = "Omvandlar fett och protein till kolhydratekvivalenter, enligt Warsawa-metoden: antal kilokalorier delat med 10.\n\nDetta sprider ut kolydraterna över ett framtida tidsintervall med maximal duration enligt inställningen för max tid, 5-12 timmar.\n\nIntervall i minuter bestämmer hur många minuter mellan kolhydratposterna. Ju kortare intervall, desto jämnare resultat, men också fler poster att behöva radera om du ångrar dig. 10, 15, 20, 30, or 60 är exempel på alternativ\n\nFördrjöjning är tiden från nu till första framtida kolhydratpost.\n\nAJustering tillåter indivudell justering av formulan. 1.0 betyder full effekt, 0.5 skapar halva mängden kolhydrater. Observera att om du alltid matar in fett och kolhydrater kan du behöva öka din insulinkvot. Av denna anledning kan det vara lämpligt att börja med 0.5.\n\nStandardinställningar: Max tid: 8 h, Intervall: 30 min, Faktor: 0.5, Fördröjning 60 min";
 
 /* Title */
-"Fat and Protein" = "Fett och protein";
+"Fat & Protein" = "Fett & protein";
+
+/* */
+"Hide Fat & Protein" = "Dölj fett & protein";
 
 /* Add Fat */
 "Fat" = "Fett";
@@ -1113,14 +1116,47 @@ Enact a temp Basal or a temp target */
 /* Add Protein */
 "Protein" = "Protein";
 
-/* Setting */
-"Fat And Protein Conversion" = "Omvandling av fett och protein";
-
 /* Alert text */
 "Delete carb equivalents?" = "Radera dessa poster?";
 
-/* Section in settings */
-"Protein / Fat" = "Protein / Fett";
+/* Service Section */
+"Fat And Protein Conversion" = "Fett och protein";
+
+/* Service Section */
+"Profile Override" = "Undantag från dina sparade profiler";
+
+/* */
+"Currently no Override active" = "Inget undantag aktivt";
+
+/* */
+"Total Insulin Adjustment" = "Total justering av ditt insulinbehov";
+
+/* */
+"Override your Basal, ISF, CR and Target profiles" = "Ändra sparad basal, korrektionsfaktor, insulinkvot and målvärde med ett tillfäligt undantag";
+
+/* */
+"Enable indefinitely" = "Aktivera tillsvidare";
+
+/* */
+"Override Profiles" = "Aktivera tillfälligt undantag";
+
+/* */
+"Override Profile Target" = "Ändra målvärde";
+
+/* */
+"Disable SMBs" = "Stäng av autobolusar (SMBs)";
+
+/* */
+"Your profile basal insulin will be adjusted with the override percentage and your profile ISF and CR will be inversly adjusted with the percentage.\n\nIf you toggle off the override every profile setting will return to normal." = "Your profile basal insulin will be adjusted with the override percentage and your profile ISF and CR will be inversly adjusted with the percentage.\n\nIf you toggle off the override every profile setting will return to normal.";
+
+/* Service Section */
+"App Icons" = "Ikoner";
+
+/* */
+"iAPS Icon" = "iAPS - ikon";
+
+/* Service Section */
+"Statistics and Home View" = "Statistik och Diagram";
 
 /* */
 "Meal Presets" = "Måltider";
@@ -1285,28 +1321,53 @@ Enact a temp Basal or a temp target */
 /* ----------------------Statistics strings -------------------------------*/
 /* Headline Statistics */
 
+/* */
+"Today" = "Idag";
 
+/* */
+"Day" = "Dygn";
+
+/* */
+"Week" = "Vecka";
+
+/* */
+"Month" = "Månad";
+
+/* */
+"Total" = "Totalt";
+
+/* Title */
 "Statistics" = "Statistik";
 
 /* Option in preferences */
-"Display Statistics" = "Visa statistik";
+"Allow Upload of Statistics to NS" = "Ladda upp till Nightscout";
 
-/* infoText: Description for Display Statistics */
-"Displays Statistics under the chart view" = "Visa statistik under diagram";
+/* Low Glucose Threshold in Statistics settings */
+"Low" = "Lågt";
 
-/* Low Glucose Limit option in preferences */
-"Low Glucose Limit" = "Lågt blodsocker";
+/* High Glucose Threshold in Statistics settings */
+"High" = "Högt";
 
-/* High Glucose Limit option in preferences */
-"High Glucose Limit" = "Högt blodsocker";
+/* In Range */
+"In Range" = "Normalvärde";
 
-/* infoText: Description for Low Glucose Limit */
-"BG Under This Value Will Be Displayed As Low Glucose Percentage" = "Blodsocker under detta värde kommer att visas som lågt blodsocker i statistiken.";
-/* infoText: Description for High Glucose Limit */
-"BG Under This Value Will Be Displayed As High Glucose Percentage" = "Ett blodsocker under detta värde kommer att visas som ett högt blodsocker i statistiken";
+/* Display % */
+"Change HbA1c Unit" = "Byt HbA1c-enhet";
 
-/* When statistics.json was last updated */
-"Updated" = "Uppdaterades";
+/* */
+"Display Chart X - Grid lines" = "Visa linjer för X i diagram";
+
+/* */
+"Display Chart Y - Grid lines" = "Visa linjer för Y i diagram";
+
+/* */
+"Display Chart Threshold lines for Low and High" = "Visa linjer för lågt och högt i diagram";
+
+/* */
+"Standing / Laying TIR Chart" = "Stående / Liggande TIR-diagram";
+
+/* */
+"Hours X-Axis (6 default)" = "Antal timmar att visa för X-axel (6 standard)";
 
 /* Average BG = */
 "Average" = "Medelvärde";
@@ -1314,8 +1375,14 @@ Enact a temp Basal or a temp target */
 /* Median BG */
 "Median" = "Medianvärde";
 
-/* CGM readings in statPanel */
-"Readings" = "Avläsningar";
+/* CGM readings in statView */
+"Readings today" = "Avläsningar idag";
+
+/* CGM readings in statView */
+"Readings / 24h" = "Avläsningar / 24h";
+
+/* Days of saved readings*/
+"Days" = "Dagar";
 
 /* Normal BG (within TIR) */
 "Normal" = "Normalvärde";

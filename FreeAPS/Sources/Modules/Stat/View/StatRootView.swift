@@ -120,7 +120,7 @@ extension Stat {
                     Divider()
                     Picker("Duration", selection: $selectedDuration) {
                         ForEach(Duration.allCases) { duration in
-                            Text(duration.rawValue).tag(Optional(duration))
+                            Text(NSLocalizedString(duration.rawValue, comment: "")).tag(Optional(duration))
                         }
                     }
                     .pickerStyle(.segmented)

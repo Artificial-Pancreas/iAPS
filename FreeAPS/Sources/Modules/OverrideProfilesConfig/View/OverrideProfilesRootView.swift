@@ -36,7 +36,7 @@ extension OverrideProfilesConfig {
             Form {
                 Section(
                     header: Text("Override your Basal, ISF, CR and Target profiles"),
-                    footer: Text("" + (!state.isEnabled ? "Currently no Override active" : ""))
+                    footer: Text("" + (!state.isEnabled ? NSLocalizedString("Currently no Override active", comment: "") : ""))
                 ) {
                     Toggle(isOn: $state.isEnabled) {
                         Text("Override Profiles")
