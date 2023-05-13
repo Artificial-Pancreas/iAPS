@@ -164,7 +164,7 @@ final class OpenAPS {
             let totalAmount = twoHoursArray.compactMap({ each in each.tdd as? Decimal ?? 0 }).reduce(0, +)
 
             var temptargetActive = tempTargetsArray.first?.active ?? false
-            var isPercentageEnabled = sliderArray.first?.enabled ?? false
+            let isPercentageEnabled = sliderArray.first?.enabled ?? false
 
             var useOverride = overrideArray.first?.enabled ?? false
             var overridePercentage = Decimal(overrideArray.first?.percentage ?? 100)

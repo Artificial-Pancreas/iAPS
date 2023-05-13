@@ -82,7 +82,6 @@ final class BaseAPSManager: APSManager, Injectable {
     }
 
     let coredataContext = CoreDataStack.shared.persistentContainer.newBackgroundContext()
-    // let coredataContext = CoreDataStack.shared.persistentContainer.viewContext
 
     private var openAPS: OpenAPS!
 
@@ -745,7 +744,7 @@ final class BaseAPSManager: APSManager, Injectable {
                 requestStats.fetchLimit = 1
                 try? stats = coredataContext.fetch(requestStats)
                 // Only save and upload once per day
-                guard (-1 * (stats.first?.lastrun ?? .distantPast).timeIntervalSinceNow.hours) > 22 else { return }
+                guard (-1 * (stats.first?.lastrun ?? .distantPast).timeIntervalSinceNow.minutes) > 20 else { return }
 
                 let units = self.settingsManager.settings.units
                 let preferences = settingsManager.preferences
@@ -767,16 +766,19 @@ final class BaseAPSManager: APSManager, Injectable {
 
                 var tdds = [TDD]()
                 var currentTDD: Decimal = 0
+                var tddTotalAverage: Decimal = 0
 
                 let requestTDD = TDD.fetchRequest() as NSFetchRequest<TDD>
                 let sort = NSSortDescriptor(key: "timestamp", ascending: false)
+                let daysOf14Ago = Date().addingTimeInterval(-14.days.timeInterval)
+                requestTDD.predicate = NSPredicate(format: "timestamp > %@", daysOf14Ago as NSDate)
                 requestTDD.sortDescriptors = [sort]
-                requestTDD.fetchLimit = 1
-
                 try? tdds = coredataContext.fetch(requestTDD)
 
                 if !tdds.isEmpty {
                     currentTDD = tdds[0].tdd?.decimalValue ?? 0
+                    let tddArray = tdds.compactMap({ insulin in insulin.tdd as? Decimal ?? 0 })
+                    tddTotalAverage = tddArray.reduce(0, +) / Decimal(tddArray.count)
                 }
 
                 var algo_ = "Oref0"
@@ -809,8 +811,6 @@ final class BaseAPSManager: APSManager, Injectable {
                 } else if preferences.curve.rawValue == "ultra-rapid" {
                     iPa = 50
                 }
-
-                // MARK: Fetch LoopStatRecords from CoreData
 
                 var lsr = [LoopStatRecord]()
                 var successRate: Double?
@@ -1008,8 +1008,8 @@ final class BaseAPSManager: APSManager, Injectable {
                     var lastIndex = false
                     let endIndex = array.count - 1
 
-                    var hypoLimit = settingsManager.settings.low
-                    var hyperLimit = settingsManager.settings.high
+                    let hypoLimit = settingsManager.settings.low
+                    let hyperLimit = settingsManager.settings.high
 
                     var full_time = 0.0
                     if endIndex > 0 {
@@ -1230,22 +1230,23 @@ final class BaseAPSManager: APSManager, Injectable {
                     TDD: 0,
                     bolus: 0,
                     temp_basal: 0,
-                    scheduled_basal: 0
+                    scheduled_basal: 0,
+                    total_average: 0
                 )
 
                 let requestInsulinDistribution = InsulinDistribution.fetchRequest() as NSFetchRequest<InsulinDistribution>
                 let sortInsulin = NSSortDescriptor(key: "date", ascending: false)
                 requestInsulinDistribution.sortDescriptors = [sortInsulin]
-                requestInsulinDistribution.fetchLimit = 1
 
                 try? insulinDistribution = coredataContext.fetch(requestInsulinDistribution)
 
                 insulin = Ins(
                     TDD: roundDecimal(currentTDD, 2),
-                    bolus: insulinDistribution.first != nil ? ((insulinDistribution[0].bolus ?? 0) as Decimal) : 0,
-                    temp_basal: insulinDistribution.first != nil ? ((insulinDistribution[0].tempBasal ?? 0) as Decimal) : 0,
+                    bolus: insulinDistribution.first != nil ? ((insulinDistribution.first?.bolus ?? 0) as Decimal) : 0,
+                    temp_basal: insulinDistribution.first != nil ? ((insulinDistribution.first?.tempBasal ?? 0) as Decimal) : 0,
                     scheduled_basal: insulinDistribution
-                        .first != nil ? ((insulinDistribution[0].scheduledBasal ?? 0) as Decimal) : 0
+                        .first != nil ? ((insulinDistribution.first?.scheduledBasal ?? 0) as Decimal) : 0,
+                    total_average: roundDecimal(tddTotalAverage, 1)
                 )
 
                 var sumOfSquares = 0.0
