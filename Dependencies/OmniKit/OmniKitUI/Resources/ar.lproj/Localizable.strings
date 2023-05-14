@@ -51,13 +51,13 @@
 "Basal Delivery" = "Basal Delivery";
 
 /* The title text for the basal rate schedule */
-"Basal Rates" = "Basal Rates";
+"Basal Rates" = "الضخ المستمر";
 
 /* The title of the cell showing pod bolus status */
 "Bolus Delivery" = "Bolus Delivery";
 
 /* The title of the cancel action in an action sheet */
-"Cancel" = "Cancel";
+"Cancel" = "إلغاء";
 
 /* The title of the command to change pump time zone */
 "Change Time Zone" = "Change Time Zone";
@@ -66,7 +66,7 @@
 "Changing time…" = "Changing time…";
 
 /* The title of the configuration section in settings */
-"Configuration" = "Configuration";
+"Configuration" = "المعطيات";
 
 /* The title of the continue action in an action sheet */
 "Continue" = "Continue";
@@ -82,7 +82,7 @@
 "Delete Omnipod" = "Delete Omnipod";
 
 /* Title text for delivery limits */
-"Delivery Limits" = "Delivery Limits";
+"Delivery Limits" = "حدود الضخ";
 
 /* The title of the device information section in settings */
 "Device Information" = "Device Information";
@@ -100,7 +100,7 @@
 "Error enabling bolus beeps" = "Error enabling bolus beeps";
 
 /* The alert title for a resume error */
-"Error Resuming" = "Error Resuming";
+"Error Resuming" = "خطأ في الاستئناف";
 
 /* The alert title for a suspend error */
 "Error Suspending" = "Error Suspending";
@@ -188,7 +188,7 @@
 "Replace Pod Now" = "Replace Pod Now";
 
 /* The title of the cell showing reservoir status */
-"Reservoir" = "Reservoir";
+"Reservoir" = "الخزان";
 
 /* Button title for retrying pod deactivation */
 "Retry Pod Deactivation" = "Retry Pod Deactivation";
@@ -201,7 +201,7 @@
 "Schedule" = "Schedule";
 
 /* The title of the status section in settings */
-"Status" = "Status";
+"Status" = "الحالة";
 
 /* A message indicating a command succeeded */
 "Succeeded" = "Succeeded";
