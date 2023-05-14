@@ -30,7 +30,7 @@
 "Time Change Detected" = "Zaman Değişikliği Tespit Edildi";
 
 /* Alert content body for multiCommand pod alert */
-"Multiple Command Alert" = "Çoklu Komut Uyarısı";
+"Multiple Command Alert" = "Multiple Command Alert";
 
 /* Format string for alert content body for userPodExpiration pod alert. (1: time until expiration) */
 "Pod expires in %1$@." = "Pod %1$@ içinde sona eriyor.";
@@ -45,7 +45,7 @@
 "%1$@ insulin or less remaining in Pod. Change Pod soon." = "Pod'ta %1$@ veya daha az insülin kaldı. Pod'u en kısa sürede değiştirin.";
 
 /* Alert content body for suspendInProgress pod alert */
-"Suspend In Progress Reminder" = "Devam Ediyor Hatırlatıcısını, Askıya Al";
+"Suspend In Progress Reminder" = "Suspend In Progress Reminder";
 
 /* Alert content body for suspendEnded pod alert */
 "The insulin suspension period has ended.\n\nYou can resume delivery from the banner on the home screen or from your pump settings screen. You will be reminded again in 15 minutes." = "İnsülin askıya alma süresi sona erdi.\n\nİletime ana ekrandaki başlıktan veya pompa ayarları ekranınızdan devam edebilirsiniz. 15 dakika sonra tekrar hatırlatılacaktır.";
@@ -150,28 +150,28 @@
 "Configuration" = "Yapılandırma";
 
 /* Settings page link description when next lifecycle action is to finish deactivation */
-"Finish deactivation" = "Devre dışı bırakma işlemini tamamla";
+"Finish deactivation" = "Finish deactivation";
 
 /* Settings page link description when next lifecycle action is to replace pod */
-"Replace Pod" = "Pod'u değiştir";
+"Replace Pod" = "Replace Pod";
 
 /* Settings page link description when next lifecycle action is to replace pod */
-"Replace Pod" = "Pod'u değiştir";
+"Replace Pod" = "Replace Pod";
 
 /* Label for pod life state when pod not fully activated */
-"Unfinished Activation" = "Bitmemiş Etkinleştirme";
+"Unfinished Activation" = "Unfinished Activation";
 
 /* Label for pod life state when time remaining */
-"Pod expires in" = "Pod şu sürede doluyor";
+"Pod expires in" = "Pod expires in";
 
 /* Label for pod life state when within pod expiration window */
-"Pod expired" = "Pod süreci doldu";
+"Pod expired" = "Pod expired";
 
 /* Label for pod life state when pod not fully deactivated */
-"Unfinished deactivation" = "Tamamlanmamış, devre dışı bırakma";
+"Unfinished deactivation" = "Unfinished deactivation";
 
 /* Label for pod life state when no pod paired */
-"No Pod" = "Pod Yok";
+"No Pod" = "No Pod";
 
 /* Pod life HUD view label */
 "Fault" = "Hata";
@@ -183,7 +183,7 @@
 "Remaining" = "Geri Kalan";
 
 /* Label indicating pod replacement necessary */
-"Replace Pod" = "Pod'u değiştir";
+"Replace Pod" = "Replace Pod";
 
 /* Error message shown when no pod is paired */
 "No pod paired" = "Eşleşmiş pod bulunmuyor";
@@ -216,13 +216,13 @@
 "Finish Deactivation" = "Devre dışı bırakma işlemini tamamla";
 
 /* Status highlight that when no pod is paired. */
-"No Pod" = "Pod Yok";
+"No Pod" = "No Pod";
 
 /* Status highlight message for emptyReservoir alarm. */
 "No Insulin" = "İnsülin Yok";
 
 /* Status highlight message for podExpired alarm. */
-"Pod Expired" = "Pod Süreci Doldu";
+"Pod Expired" = "Pod Expired";
 
 /* Status highlight message for occlusion alarm. */
 "Pod Occlusion" = "Pod Tıkanıklığı";
@@ -231,7 +231,7 @@
 "Pod Error" = "Pod hatası";
 
 /* Status highlight that a pump is out of insulin. */
-"No Insulin" = "İnsülin Yok";
+"No Insulin" = "No Insulin";
 
 /* Status highlight that insulin delivery was suspended. */
 "Insulin Suspended" = "İnsülin Durduldu";
@@ -315,16 +315,16 @@
 "Insulin delivery stopped. Change Pod now." = "İnsülin iletimi durduruldu. Pod'u şimdi değiştirin.";
 
 /* Header for insulin remaining on pod settings screen */
-"Insulin Remaining" = "Kalan İnsülin";
+"Insulin Remaining" = "Insulin Remaining";
 
 /* Button title to set temporary basal rate */
 "Set Temporary Basal Rate" = "Geçici Bazal Oranı Ayarla";
 
 /* Section header for activity section */
-"Activity" = "Aktivite";
+"Activity" = "Activity";
 
 /* Section header for configuration section */
-"Configuration" = "Yapılandırma";
+"Configuration" = "Configuration";
 
 /* Title for previous pod page */
 "Previous Pod" = "Önceki Pod";
@@ -363,7 +363,7 @@
 "Insulin Type" = "İnsülin Tipi";
 
 /* The title of the command to change pump time zone */
-"Sync to Current Time" = "Geçerli Saate Eşitle";
+"Sync to Current Time" = "Sync to Current Time";
 
 /* Title for suspend duration selection action sheet */
 "Suspend Delivery" = "İletimi Askıya Al";
@@ -409,7 +409,7 @@
 "Pod deactivated successfully. Continue." = "Pod başarıyla devre dışı bırakıldı. Devam edin.";
 
 /* Action button description for deactivate after failed attempt */
-"Retry" = "Tekrar Dene";
+"Retry" = "Retry";
 
 /* Action button description when deactivated */
 "Continue" = "Devam et";
@@ -466,7 +466,7 @@
 "Check Pod, apply to site, then confirm pod attachment." = "Pod'u kontrol edin, infüzyon bölgesine uygulayın, ardından pod ekini onaylayın.";
 
 /* Action button title for attach pod view */
-"Continue" = "Devam et";
+"Continue" = "Continue";
 
 /* */
 "Attach Pod" = "Pod'u Ekleyin";
@@ -562,7 +562,7 @@
 "This is a reminder that you scheduled when you paired your current Pod." = "Bu mevcut Pod'unuzu eşleştirdiğinizde planladığınız bir hatırlatıcıdır.";
 
 /* */
-"Scheduled Reminder" = "Programlanan Anımsatma";
+"Scheduled Reminder" = "Scheduled Reminder";
 
 /* Footer text for low reservoir value row */
 "The App notifies you when the amount of insulin in the Pod reaches this level." = "Uygulama, Pod'daki insülin miktarı bu seviyeye ulaştığında sizi bilgilendirir.";
@@ -573,13 +573,13 @@
 /* Description text for critical alerts */
 "The reminders above will not sound if your device is in Silent or Do Not Disturb mode.\n\nThere are other critical Pod alerts and alarms that will sound even if you device is set to Silent or Do Not Disturb mode." = "Cihazınız Sessiz veya Rahatsız Etmeyin modundaysa yukarıdaki hatırlatıcılar çalmaz.\n\nCihazınız Sessiz veya Rahatsız Etmeyin moduna ayarlanmış olsa bile çalacak başka kritik Pod uyarıları ve alarmları vardır.";
 /* navigation title for notification settings */
-"Notification Settings" = "Bildirim ayarları";
+"Notification Settings" = "Notification Settings";
 
 /* Label for scheduled reminder value row */
-"Time" = "Saat";
+"Time" = "Time";
 
 /* Value text for no expiration reminder */
-"No Reminder" = "Hatırlatıcı Yok";
+"No Reminder" = "No Reminder";
 
 /* Label for low reservoir reminder row */
 "Low Reservoir Reminder" = "Düşük Rezervuar Hatırlatıcısı";
@@ -670,10 +670,10 @@
 "BLE Firmware Version" = "BLE Donanım Yazılımı Sürümü";
 
 /* description label for activated at timne pod details row */
-"Pod Activated" = "Pod Etkinleştirildi";
+"Pod Activated" = "Pod Activated";
 
 /* description label for active time pod details row */
-"Active Time" = "Aktif Süre";
+"Active Time" = "Active Time";
 
 /* description label for last status date pod details row */
 "Last Status" = "Son Durum";
@@ -688,10 +688,10 @@
 "You will now begin the process of configuring your reminders, filling your Pod with insulin, pairing to your device and placing it on your body." = "Artık hatırlatıcılarınızı yapılandırma, Pod'unuzu insülin ile doldurma, cihazınızla eşleştirme ve vücudunuza yerleştirme işlemine başlayacaksınız.";
 
 /* Cancel button title */
-"Cancel" = "Vazgeç";
+"Cancel" = "Cancel";
 
 /* Text for continue button on PodSetupView */
-"Continue" = "Devam et";
+"Continue" = "Continue";
 
 /* Are you sure you want to skip Omnipod Onboarding? */
 "Skip Omnipod Onboarding?" = "Omnipod Tanıtımı Atlansın mı?";
@@ -709,7 +709,7 @@
 "The App notifies you when the amount of insulin in the Pod reaches this level (50-10 U).\n\nScroll to set the number of units at which you would like to be reminded." = "Uygulama, Pod içerisinde insülin miktarı (50-10 Ü) kaldığında sizi bilgilendirir.\n\nBildirim almak istediğiniz ünite miktarını ayarlamak için kaydırın.";
 
 /* Label text for low reservoir value row */
-"Low Reservoir" = "Düşük Rezervuar";
+"Low Reservoir" = "Low Reservoir";
 
 /* */
 "Save" = "Kaydet";
@@ -772,13 +772,13 @@
 "Crosstalk possible. Please move to a new location" = "Çakışma olasılığı mümkün. Lütfen yeni bir konuma geçin";
 
 /* Recovery suggestion when no pod is available */
-"Make sure your pod is nearby and try again." = "Pod'unuzun yakında olduğundan emin olun ve tekrar deneyin.";
+"Make sure your pod is nearby and try again." = "Make sure your pod is nearby and try again.";
 
 /* Recovery suggestion when operation could not be completed due to existing bolus in progress */
 "Wait for existing bolus to finish, or cancel bolus" = "Mevcut bolusun bitmesini bekleyin veya bolusu iptal edin";
 
 /* Recovery suggestion when operation could not be completed due to existing bolus in progress */
-"Wait for existing bolus to finish, or cancel bolus" = "Mevcut bolusun bitmesini bekleyin veya bolusu iptal edin";
+"Wait for existing bolus to finish, or cancel bolus" = "Wait for existing bolus to finish, or cancel bolus";
 
 /* Recovery suggestion when operation could not be completed due to existing temp basal in progress */
 "Wait for existing temp basal to finish, or suspend to cancel" = "Mevcut geçici bazalın bitmesini bekleyin veya askıya almak için iptal edin";
