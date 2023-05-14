@@ -1593,7 +1593,7 @@ Enact a temp Basal or a temp target */
 "Insulin Peak Time" = "Insulin Peak Time";
 
 /* "Insulin Peak Time" */
-"Time of maximum blood glucose lowering effect of insulin, in minutes. Beware: Oref assumes for ultra-rapid (Lyumjev) & rapid-acting (Fiasp) curves minimal (35 & 50 min) and maximal (100 & 120 min) applicable insulinPeakTimes. Using a custom insulinPeakTime outside these bounds will result in issues with FreeAPS-X, longer loop calculations and possible red loops." = "Temps de réduction maximale de l'effet de glycémie de l'insuline, en minutes. Attention : Oref suppose pour les courbes ultra-rapides (Lyumjev) et à action rapide (Fiasp) un minimum (35 & 50 min) et un maximum (100 & 120 min) applicable. Utiliser une valeur personnalisée en dehors de ces limites entraînera des problèmes avec FreeAPS-X, des calculs de boucle plus longs et d'éventuelles boucles rouges.";
+"Time of maximum blood glucose lowering effect of insulin, in minutes. Beware: Oref assumes for ultra-rapid (Lyumjev) & rapid-acting (Fiasp) curves minimal (35 & 50 min) and maximal (100 & 120 min) applicable insulinPeakTimes. Using a custom insulinPeakTime outside these bounds will result in issues with iAPS, longer loop calculations and possible red loops." = "Temps de réduction maximale de l'effet de glycémie de l'insuline, en minutes. Attention : Oref suppose pour les courbes ultra-rapides (Lyumjev) et à action rapide (Fiasp) un minimum (35 & 50 min) et un maximum (100 & 120 min) applicable. Utiliser une valeur personnalisée en dehors de ces limites entraînera des problèmes avec iAPS, des calculs de boucle plus longs et d'éventuelles boucles rouges.";
 
 /* Headline "Carbs Req Threshold" */
 "Carbs Req Threshold" = "Carbs Req Threshold";

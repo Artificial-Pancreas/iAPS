@@ -1593,7 +1593,7 @@ Enact a temp Basal or a temp target */
 "Insulin Peak Time" = "Topptid for insulineffekt";
 
 /* "Insulin Peak Time" */
-"Time of maximum blood glucose lowering effect of insulin, in minutes. Beware: Oref assumes for ultra-rapid (Lyumjev) & rapid-acting (Fiasp) curves minimal (35 & 50 min) and maximal (100 & 120 min) applicable insulinPeakTimes. Using a custom insulinPeakTime outside these bounds will result in issues with FreeAPS-X, longer loop calculations and possible red loops." = "Tid for maksimal blodsukker-reduserende effekt av insulin, i minutter. OBS: For ultra-rapid (Lyumjev) og rapid-acting (Fiasp) minimum (35 & 50 min) og maksimalt (100 & 120 min) insulinPeakTimes. Hvis du bruker en tilpasset insulinPeakTime utenfor disse områdene vil du få problemer med iAPS, lengre beregningstid for loop og mulig røde loops.";
+"Time of maximum blood glucose lowering effect of insulin, in minutes. Beware: Oref assumes for ultra-rapid (Lyumjev) & rapid-acting (Fiasp) curves minimal (35 & 50 min) and maximal (100 & 120 min) applicable insulinPeakTimes. Using a custom insulinPeakTime outside these bounds will result in issues with iAPS, longer loop calculations and possible red loops." = "Tid for maksimal blodsukker-reduserende effekt av insulin, i minutter. OBS: For ultra-rapid (Lyumjev) og rapid-acting (Fiasp) minimum (35 & 50 min) og maksimalt (100 & 120 min) insulinPeakTimes. Hvis du bruker en tilpasset insulinPeakTime utenfor disse områdene vil du få problemer med iAPS, lengre beregningstid for loop og mulig røde loops.";
 
 /* Headline "Carbs Req Threshold" */
 "Carbs Req Threshold" = "Grense for varsling om nødvendige karbo";

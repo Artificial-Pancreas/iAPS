@@ -369,7 +369,7 @@ extension PreferencesEditor {
                     displayName: NSLocalizedString("Insulin Peak Time", comment: "Insulin Peak Time"),
                     type: .decimal(keypath: \.insulinPeakTime),
                     infoText: NSLocalizedString(
-                        "Time of maximum blood glucose lowering effect of insulin, in minutes. Beware: Oref assumes for ultra-rapid (Lyumjev) & rapid-acting (Fiasp) curves minimal (35 & 50 min) and maximal (100 & 120 min) applicable insulinPeakTimes. Using a custom insulinPeakTime outside these bounds will result in issues with FreeAPS-X, longer loop calculations and possible red loops.",
+                        "Time of maximum blood glucose lowering effect of insulin, in minutes. Beware: Oref assumes for ultra-rapid (Lyumjev) & rapid-acting (Fiasp) curves minimal (35 & 50 min) and maximal (100 & 120 min) applicable insulinPeakTimes. Using a custom insulinPeakTime outside these bounds will result in issues with iAPS, longer loop calculations and possible red loops.",
                         comment: "Insulin Peak Time"
                     ),
                     settable: self
