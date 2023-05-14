@@ -93,16 +93,16 @@
 "Searching for sensor" = "Sensör aranıyor";
 
 /* G7 Progress bar label when sensor expired */
-"Sensor expired" = "Sensör süresi doldu";
+"Sensor expired" = "Sensor expired";
 
 /* G7 Progress bar label when sensor in warmup */
 "Warmup completes" = "Isınma tamamlandı";
 
 /* G7 Progress bar label when sensor in warmup */
-"Warmup completes" = "Isınma tamamlandı";
+"Warmup completes" = "Warmup completes";
 
 /* G7 Progress bar label when sensor failed */
-"Sensor failed" = "Sensör arızalı";
+"Sensor failed" = "Sensor failed";
 
 /* G7 Progress bar label when sensor lifetime progress showing */
 "Sensor expires" = "Sensör süresi doluyor";
