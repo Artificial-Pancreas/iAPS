@@ -93,16 +93,16 @@
 "Searching for sensor" = "Searching for sensor";
 
 /* G7 Progress bar label when sensor expired */
-"Sensor expired" = "Sensor abgelaufen";
+"Sensor expired" = "Sensor expired";
 
 /* G7 Progress bar label when sensor in warmup */
 "Warmup completes" = "Aufwärmphase abgeschlossen";
 
 /* G7 Progress bar label when sensor in warmup */
-"Warmup completes" = "Aufwärmphase abgeschlossen";
+"Warmup completes" = "Warmup completes";
 
 /* G7 Progress bar label when sensor failed */
-"Sensor failed" = "Sensorfehler";
+"Sensor failed" = "Sensor failed";
 
 /* G7 Progress bar label when sensor lifetime progress showing */
 "Sensor expires" = "Sensor abgelaufen";
