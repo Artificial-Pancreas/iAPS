@@ -30,7 +30,7 @@
 "Time Change Detected" = "Tidsändring upptäckt";
 
 /* Alert content body for multiCommand pod alert */
-"Multiple Command Alert" = "Multipla kommandoaviseringar";
+"Multiple Command Alert" = "Multiple Command Alert";
 
 /* Format string for alert content body for userPodExpiration pod alert. (1: time until expiration) */
 "Pod expires in %1$@." = "Podd går ut om %1$@.";
@@ -45,7 +45,7 @@
 "%1$@ insulin or less remaining in Pod. Change Pod soon." = "%1$@ insulin eller mindre kvar i podd. Byt podd snart.";
 
 /* Alert content body for suspendInProgress pod alert */
-"Suspend In Progress Reminder" = "Påminnelse om pausad pump";
+"Suspend In Progress Reminder" = "Suspend In Progress Reminder";
 
 /* Alert content body for suspendEnded pod alert */
 "The insulin suspension period has ended.\n\nYou can resume delivery from the banner on the home screen or from your pump settings screen. You will be reminded again in 15 minutes." = "Planerad period av paus av pump är slut.\n\nDu kan återuppta insulintillförsel i pumpinställningar. Du kommer bli påmind igen om 15 minuter.";
@@ -150,28 +150,28 @@
 "Configuration" = "Konfiguration";
 
 /* Settings page link description when next lifecycle action is to finish deactivation */
-"Finish deactivation" = "Avsluta inaktivering";
+"Finish deactivation" = "Finish deactivation";
 
 /* Settings page link description when next lifecycle action is to replace pod */
-"Replace Pod" = "Byt podd";
+"Replace Pod" = "Replace Pod";
 
 /* Settings page link description when next lifecycle action is to replace pod */
-"Replace Pod" = "Byt podd";
+"Replace Pod" = "Replace Pod";
 
 /* Label for pod life state when pod not fully activated */
-"Unfinished Activation" = "Aktivering inte färdig";
+"Unfinished Activation" = "Unfinished Activation";
 
 /* Label for pod life state when time remaining */
-"Pod expires in" = "Podd går ut om";
+"Pod expires in" = "Pod expires in";
 
 /* Label for pod life state when within pod expiration window */
-"Pod expired" = "Podd har utgått";
+"Pod expired" = "Pod expired";
 
 /* Label for pod life state when pod not fully deactivated */
-"Unfinished deactivation" = "Inaktivering inte färdig";
+"Unfinished deactivation" = "Unfinished deactivation";
 
 /* Label for pod life state when no pod paired */
-"No Pod" = "Ingen podd";
+"No Pod" = "No Pod";
 
 /* Pod life HUD view label */
 "Fault" = "Fel";
@@ -183,7 +183,7 @@
 "Remaining" = "Återstår";
 
 /* Label indicating pod replacement necessary */
-"Replace Pod" = "Byt podd";
+"Replace Pod" = "Replace Pod";
 
 /* Error message shown when no pod is paired */
 "No pod paired" = "Ingen podd har parkopplats";
@@ -216,13 +216,13 @@
 "Finish Deactivation" = "Avsluta inaktivering";
 
 /* Status highlight that when no pod is paired. */
-"No Pod" = "Ingen podd";
+"No Pod" = "No Pod";
 
 /* Status highlight message for emptyReservoir alarm. */
 "No Insulin" = "Inget insulin";
 
 /* Status highlight message for podExpired alarm. */
-"Pod Expired" = "Pod har utgått";
+"Pod Expired" = "Pod Expired";
 
 /* Status highlight message for occlusion alarm. */
 "Pod Occlusion" = "Ocklusion i podd";
@@ -231,7 +231,7 @@
 "Pod Error" = "Poddfel";
 
 /* Status highlight that a pump is out of insulin. */
-"No Insulin" = "Inget insulin";
+"No Insulin" = "No Insulin";
 
 /* Status highlight that insulin delivery was suspended. */
 "Insulin Suspended" = "Pump pausad";
@@ -315,16 +315,16 @@
 "Insulin delivery stopped. Change Pod now." = "Insulintilförsel stoppad. Byt podd nu.";
 
 /* Header for insulin remaining on pod settings screen */
-"Insulin Remaining" = "Insulin kvar";
+"Insulin Remaining" = "Insulin Remaining";
 
 /* Button title to set temporary basal rate */
 "Set Temporary Basal Rate" = "Ange temporär basaldos";
 
 /* Section header for activity section */
-"Activity" = "Aktivitet";
+"Activity" = "Activity";
 
 /* Section header for configuration section */
-"Configuration" = "Konfiguration";
+"Configuration" = "Configuration";
 
 /* Title for previous pod page */
 "Previous Pod" = "Tidigare podd";
@@ -363,7 +363,7 @@
 "Insulin Type" = "Typ av insulin";
 
 /* The title of the command to change pump time zone */
-"Sync to Current Time" = "Synkronisera med aktuell tid";
+"Sync to Current Time" = "Sync to Current Time";
 
 /* Title for suspend duration selection action sheet */
 "Suspend Delivery" = "Pausa pump";
@@ -409,7 +409,7 @@
 "Pod deactivated successfully. Continue." = "Podd avaktiverades. Fortsätt.";
 
 /* Action button description for deactivate after failed attempt */
-"Retry" = "Försök igen";
+"Retry" = "Retry";
 
 /* Action button description when deactivated */
 "Continue" = "Fortsätt";
@@ -466,7 +466,7 @@
 "Check Pod, apply to site, then confirm pod attachment." = "Kontrollera din podd, sätt fast den och bekräfta sedan att den sitter bra.";
 
 /* Action button title for attach pod view */
-"Continue" = "Fortsätt";
+"Continue" = "Continue";
 
 /* */
 "Attach Pod" = "Fäst podden";
@@ -562,7 +562,7 @@
 "This is a reminder that you scheduled when you paired your current Pod." = "Detta är en schemalagd påminnelse som du ställde in när du parkopplade nuvarande podd.";
 
 /* */
-"Scheduled Reminder" = "Schemalagd påminnelse";
+"Scheduled Reminder" = "Scheduled Reminder";
 
 /* Footer text for low reservoir value row */
 "The App notifies you when the amount of insulin in the Pod reaches this level." = "Appen kommer att visa notis när mängden insulin går ner till denna nivå";
@@ -573,13 +573,13 @@
 /* Description text for critical alerts */
 "The reminders above will not sound if your device is in Silent or Do Not Disturb mode.\n\nThere are other critical Pod alerts and alarms that will sound even if you device is set to Silent or Do Not Disturb mode." = "Påminnelser kommer vara tysta ifall att du har tyst läge eller stör ej - läge på. \n\nDet finns andra varningar som kommer att ljuda även vid tyst läge leer stör ej - läge.";
 /* navigation title for notification settings */
-"Notification Settings" = "Notisinställningar";
+"Notification Settings" = "Notification Settings";
 
 /* Label for scheduled reminder value row */
-"Time" = "Tid";
+"Time" = "Time";
 
 /* Value text for no expiration reminder */
-"No Reminder" = "Ingen påminnelse";
+"No Reminder" = "No Reminder";
 
 /* Label for low reservoir reminder row */
 "Low Reservoir Reminder" = "Påminnelse om låg insulinnivå";
@@ -670,10 +670,10 @@
 "BLE Firmware Version" = "BLE Firmware - version";
 
 /* description label for activated at timne pod details row */
-"Pod Activated" = "Podd aktiverades";
+"Pod Activated" = "Pod Activated";
 
 /* description label for active time pod details row */
-"Active Time" = "Aktiv tid";
+"Active Time" = "Active Time";
 
 /* description label for last status date pod details row */
 "Last Status" = "Senaste status";
@@ -688,10 +688,10 @@
 "You will now begin the process of configuring your reminders, filling your Pod with insulin, pairing to your device and placing it on your body." = "Du kommer nu att börja att konfigurera dina påminnelser, fylla din podd med insulin, parkoppla podden och fästa den på kroppen.";
 
 /* Cancel button title */
-"Cancel" = "Avbryt";
+"Cancel" = "Cancel";
 
 /* Text for continue button on PodSetupView */
-"Continue" = "Fortsätt";
+"Continue" = "Continue";
 
 /* Are you sure you want to skip Omnipod Onboarding? */
 "Skip Omnipod Onboarding?" = "Hoppa över Omnipod-introduktionen?";
@@ -709,7 +709,7 @@
 "The App notifies you when the amount of insulin in the Pod reaches this level (50-10 U).\n\nScroll to set the number of units at which you would like to be reminded." = "Appen meddelar dig när mängden insulin i podden når denna nivå (50-10 U).\n\nSkrolla för att ange vid vilket antal enheter som du vill bli påmind.";
 
 /* Label text for low reservoir value row */
-"Low Reservoir" = "Låg reservoarvolym";
+"Low Reservoir" = "Low Reservoir";
 
 /* */
 "Save" = "Spara";
@@ -772,13 +772,13 @@
 "Crosstalk possible. Please move to a new location" = "Möjlig överhörning. Pröva att flytta dig till ett annat rum/annan plats";
 
 /* Recovery suggestion when no pod is available */
-"Make sure your pod is nearby and try again." = "Kontrollera att din podd är nära och försök igen";
+"Make sure your pod is nearby and try again." = "Make sure your pod is nearby and try again.";
 
 /* Recovery suggestion when operation could not be completed due to existing bolus in progress */
 "Wait for existing bolus to finish, or cancel bolus" = "Vänta på att pågående bolus blir färdig eller avbryt bolus";
 
 /* Recovery suggestion when operation could not be completed due to existing bolus in progress */
-"Wait for existing bolus to finish, or cancel bolus" = "Vänta på att pågående bolus blir färdig eller avbryt bolus";
+"Wait for existing bolus to finish, or cancel bolus" = "Wait for existing bolus to finish, or cancel bolus";
 
 /* Recovery suggestion when operation could not be completed due to existing temp basal in progress */
 "Wait for existing temp basal to finish, or suspend to cancel" = "Vänta på pågående temp. basal är färdig, alternativt pausa eller avbryt";
