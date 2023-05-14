@@ -4,9 +4,6 @@
 /* Pod state when running below fifty units */
 "Below 50 units" = "Abaixo de 50 unidades";
 
-/* Pump Event title for UnfinalizedDose with doseType of .bolus */
-"Bolus" = "Bolus";
-
 /* Error message shown when operation could not be completed due to existing bolus in progress */
 "Bolus in progress" = "Bolus em andamento";
 
@@ -33,9 +30,6 @@
 
 /* Error message shown when empty response from pod was received */
 "Empty response from pod" = "Resposta vazia do pod";
-
-/* Title string for BeepPreference.manualCommands */
-"Enabled" = "Ativado";
 
 /* Pod state error event logged shutting down */
 "Error event logged, shutting down" = "Evento de erro registrado, desligando";
@@ -79,10 +73,6 @@
 
 /* Description for Occlusion detected pod fault */
 "Occlusion detected" = "Oclusão detectada";
-
-/* Acknowledge button label for RileyLink low battery alert
-   Alert acknowledgment OK button */
-"OK" = "OK";
 
 /* Generic title of the omnipod pump manager */
 "Omnipod" = "Omnipod";
@@ -186,4 +176,3 @@
 
 /* Description waiting for pairing reminder */
 "Waiting for pairing reminder" = "Aguardando lembrete de emparelhamento";
-
