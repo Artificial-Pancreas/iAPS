@@ -702,7 +702,7 @@ Enact a temp Basal or a temp target */
 "Firmware" = "Firmware";
 
 /* */
-"Connection State" = "Connection State";
+"Connection State" = "Stav pripojenia";
 
 /* */
 "Transmitter Type" = "Transmitter Type";
@@ -735,7 +735,7 @@ Enact a temp Basal or a temp target */
 "Advanced" = "Advanced";
 
 /* */
-"Alarms" = "Alarms";
+"Alarms" = "Alarmy";
 
 /* */
 "Glucose Settings" = "Glucose Settings";
@@ -1178,7 +1178,7 @@ Enact a temp Basal or a temp target */
 */
 "Attach Pod" = "Attach Pod";
 
-"Deactivate Pod" = "Deactivate Pod";
+"Deactivate Pod" = "Deaktivovať Pod";
 
 /* */
 "Deactivating..." = "Deactivating...";
@@ -1206,13 +1206,13 @@ Enact a temp Basal or a temp target */
 "No Error" = "No Error";
 
 /* description label for active time pod details row */
-"Active Time" = "Active Time";
+"Active Time" = "Aktívny Čas";
 
 /* Title string for BeepPreference.silent */
 "Disabled" = "Disabled";
 
 /* Title string for BeepPreference.manualCommands */
-"Enabled" = "Enabled";
+"Enabled" = "Zapnuté";
 
 /* Title string for BeepPreference.extended */
 "Extended" = "Extended";
@@ -1230,7 +1230,7 @@ Enact a temp Basal or a temp target */
 "Expiration Reminder Default" = "Expiration Reminder Default";
 
 /* */
-"Expiration Reminder" = "Expiration Reminder";
+"Expiration Reminder" = "Pripomienka Expirácie";
 
 /* */
 "Low Reservoir" = "Low Reservoir";
@@ -1288,7 +1288,7 @@ Enact a temp Basal or a temp target */
 "Add Omnipod Dash" = "Add Omnipod Dash";
 
 /* */
-"Insert Cannula" = "Insert Cannula";
+"Insert Cannula" = "Zaviesť Kanylu";
 
 /* */
 "Check Cannula" = "Check Cannula";
