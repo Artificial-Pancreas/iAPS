@@ -112,6 +112,21 @@
 /*  */
 "Enact Temp Target" = "Start midlertidig mål";
 
+/* */
+"Target" = "Target";
+
+/* */
+"Basal Insulin and Sensitivity ratio" = "Basal Insulin and Sensitivity ratio";
+
+/* */
+"A lower 'Half Basal Target' setting will reduce the basal and raise the ISF earlier, at a lower target glucose." = "A lower 'Half Basal Target' setting will reduce the basal and raise the ISF earlier, at a lower target glucose.";
+
+/* */
+" Your setting: " = " Your setting: ";
+
+/* */
+"mg/dl. Autosens.max limits the max endpoint" = "mg/dl. Autosens.max limits the max endpoint";
+
 /*  */
 "Enter preset name" = "Angi navn på forhåndsinnstilling";
 
@@ -129,6 +144,24 @@
 
 /*  */
 "Save as preset" = "Lagre som forhåndsinnstilling";
+
+/* Delete Meal Preset */
+"Delete Preset" = "Delete Preset";
+
+/* Confirm Deletion */
+"Delete preset '%@'?" = "Delete preset '%@'?";
+
+/* Button */
+"No" = "No";
+
+/* Button */
+"Yes" = "Yes";
+
+/* + Button */
+"[ +1 ]" = "[ +1 ]";
+
+/* - Button */
+"[ -1 ]" = "[ -1 ]";
 
 /* Upper temp target limit */
 "Top target" = "Øvre mål";
@@ -450,7 +483,7 @@ Enact a temp Basal or a temp target */
 "Calendar" = "Kalender";
 
 /* */
-"Other" = "Annet";
+"Other" = "Other";
 
 /* */
 "Libre Transmitter" = "Libre-sender";
@@ -1025,7 +1058,7 @@ Enact a temp Basal or a temp target */
 "Warning" = "Advarsel";
 
 /* Error title */
-"Error" = "Feil";
+"Error" = "Error";
 
 /* Manual temp basal mode */
 "Manual" = "Manuell";
@@ -1048,9 +1081,6 @@ Enact a temp Basal or a temp target */
 "Enable" = "Aktiver";
 
 /* Header */
-"Convert Fat and Protein" = "Regne om fett og proteiner";
-
-/* Header */
 "Conversion settings" = "Innstillinger for omregning";
 
 /* Delay */
@@ -1068,8 +1098,14 @@ Enact a temp Basal or a temp target */
 /* Description */
 "Allows fat and protein to be converted into future carb equivalents using the Warsaw formula of kilocalories divided by 10.\n\nThis spreads the carb equivilants over a maximum duration setting that can be configured from 5-12 hours.\n\nDelay is time from now until the first future carb entry.\n\nInterval in minutes is how many minutes are between entries. The shorter the interval, the smoother the result. 10, 15, 20, 30, or 60 are reasonable choices.\n\nAdjustment factor is how much effect the fat and protein has on the entries. 1.0 is full effect (original Warsaw Method) and 0.5 is half effect. Note that you may find that your normal carb ratio needs to increase to a larger number if you begin adding fat and protein entries. For this reason, it is best to start with a factor of about 0.5 to ease into it.\n\nDefault settings: Time Cap: 8 h, Interval: 30 min, Factor: 0.5, Delay 60 min" = "Allows fat and protein to be converted into future carb equivalents using the Warsaw formula of kilocalories divided by 10.\n\nThis spreads the carb equivilants over a maximum duration setting that can be configured from 5-12 hours.\n\nDelay is time from now until the first future carb entry.\n\nInterval in minutes is how many minutes are between entries. The shorter the interval, the smoother the result. 10, 15, 20, 30, or 60 are reasonable choices.\n\nAdjustment factor is how much effect the fat and protein has on the entries. 1.0 is full effect (original Warsaw Method) and 0.5 is half effect. Note that you may find that your normal carb ratio needs to increase to a larger number if you begin adding fat and protein entries. For this reason, it is best to start with a factor of about 0.5 to ease into it.\n\nDefault settings: Time Cap: 8 h, Interval: 30 min, Factor: 0.5, Delay 60 min";
 
-/* Title */
+/* FPU Settings Title */
 "Fat and Protein" = "Fett og Proteiner";
+
+/* Display fat and protein entities */
+"Fat & Protein" = "Fat & Protein";
+
+/* */
+"Hide Fat & Protein" = "Hide Fat & Protein";
 
 /* Add Fat */
 "Fat" = "Fett";
@@ -1077,14 +1113,44 @@ Enact a temp Basal or a temp target */
 /* Add Protein */
 "Protein" = "Proteiner";
 
-/* Setting */
+/* Service Section */
 "Fat And Protein Conversion" = "Fat And Protein Conversion";
+
+/* Service Section */
+"Profile Override" = "Profile Override";
+
+/* */
+"Override Profiles" = "Override Profiles";
+
+/* */
+"Currently no Override active" = "Currently no Override active";
+
+/* */
+"Total Insulin Adjustment" = "Total Insulin Adjustment";
+
+/* */
+"Override your Basal, ISF, CR and Target profiles" = "Override your Basal, ISF, CR and Target profiles";
+
+/* */
+"Enable indefinitely" = "Enable indefinitely";
+
+/* */
+"Override Profile target" = "Override Profile target";
+
+/* */
+"Disable SMBs" = "Disable SMBs";
+
+/* */
+"Your profile basal insulin will be adjusted with the override percentage and your profile ISF and CR will be inversly adjusted with the percentage.\n\nIf you toggle off the override every profile setting will return to normal." = "Your profile basal insulin will be adjusted with the override percentage and your profile ISF and CR will be inversly adjusted with the percentage.\n\nIf you toggle off the override every profile setting will return to normal.";
+
+/* Service Section */
+"App Icons" = "App Icons";
+
+/* Service Section */
+"Statistics and Home View" = "Statistics and Home View";
 
 /* Alert text */
 "Delete carb equivalents?" = "Slette karboekvivalenter?";
-
-/* Section in settings */
-"Protein / Fat" = "Proteiner/fett";
 
 /* */
 "Meal Presets" = "Forvalg av måltid";
@@ -1128,10 +1194,10 @@ Enact a temp Basal or a temp target */
 "Confidence reminders are beeps from the pod which can be used to acknowledge selected commands." = "Bekreftelseslyder er pipelyder fra pod som kan brukes som kvittering for utførte kommandoer.";
 
 /* button title for saving low reservoir reminder while saving */
-"Saving..." = "Lagrer...";
+"Saving..." = "Saving...";
 
 /* button title for saving low reservoir reminder */
-"Save" = "Lagre";
+"Save" = "Save";
 
 /* Alert title for error when updating confidence reminder preference */
 "Failed to update confidence reminder preference." = "Kunne ikke oppdatere innstillinger for bekreftelseslyder.";
@@ -1213,7 +1279,7 @@ Enact a temp Basal or a temp target */
 "This PumpManager has not been configured with a maximum basal rate because it was added before manual temp basal was a feature. Please go to therapy settings -> delivery limits and set a new maximum basal rate." = "Denne pumpedriveren har ikke blitt konfigurert med en maksimal basalrate fordi den ble lagt til før manuell midlertidig basal var en tilgjengelig funksjon. Gå til Pumpeinnstillinger -> leveringsgrenser og sett en ny maksimal basal rate.";
 
 /* description label for active time pod details row */
-"Active Time" = "Aktiveringstidspunkt";
+"Active Time" = "Active Time";
 
 /* description label for total delivery pod details row */
 "Total Delivery" = "Total leveranse";
@@ -1247,30 +1313,55 @@ Enact a temp Basal or a temp target */
 
 //* -----------------------------------------------------------------------*/
 /* ----------------------Statistics strings -------------------------------*/
+/* */
+
+
+"Today" = "Today";
+
+/* */
+"Day" = "Day";
+
+/* */
+"Week" = "Week";
+
+/* */
+"Month" = "Month";
+
+/* */
+"Total" = "Total";
+
 /* Headline Statistics */
-
-
 "Statistics" = "Statistikk";
 
 /* Option in preferences */
-"Display Statistics" = "Vis statistikk";
+"Allow Upload of Statistics to NS" = "Allow Upload of Statistics to NS";
 
-/* infoText: Description for Display Statistics */
-"Displays Statistics under the chart view" = "Viser statistikk under diagramvisningen";
+/* Low Glucose Threshold in Statistics settings */
+"Low" = "Low";
 
-/* Low Glucose Limit option in preferences */
-"Low Glucose Limit" = "Grense for lavt BS";
+/* High Glucose Threshold in Statistics settings */
+"High" = "High";
 
-/* High Glucose Limit option in preferences */
-"High Glucose Limit" = "Grense for høyt BS";
+/* In Range */
+"In Range" = "In Range";
 
-/* infoText: Description for Low Glucose Limit */
-"BG Under This Value Will Be Displayed As Low Glucose Percentage" = "Blodsukker under denne verdien vil vises som lav glukoseprosent";
-/* infoText: Description for High Glucose Limit */
-"BG Under This Value Will Be Displayed As High Glucose Percentage" = "Blodsukker under denne verdien vil vises som høy glukoseprosent";
+/* Display % */
+"Change HbA1c Unit" = "Change HbA1c Unit";
 
-/* When statistics.json was last updated */
-"Updated" = "Oppdatert";
+/* */
+"Display Chart X - Grid lines" = "Display Chart X - Grid lines";
+
+/* */
+"Display Chart Y - Grid lines" = "Display Chart Y - Grid lines";
+
+/* */
+"Display Chart Threshold lines for Low and High" = "Display Chart Threshold lines for Low and High";
+
+/* */
+/* */
+
+"Standing / Laying TIR Chart
+Hours X-Axis (6 default)" = "Hours X-Axis (6 default)";
 
 /* Average BG = */
 "Average" = "Gj.snitt";
@@ -1278,8 +1369,14 @@ Enact a temp Basal or a temp target */
 /* Median BG */
 "Median" = "Median";
 
-/* CGM readings in statPanel */
-"Readings" = "Avlesninger";
+/* CGM readings in statView */
+"Readings today" = "Readings today";
+
+/* CGM readings in statView */
+"Readings / 24h" = "Readings / 24h";
+
+/* Days of saved readings*/
+"Days" = "Days";
 
 /* Normal BG (within TIR) */
 "Normal" = "Normalt";
@@ -1315,7 +1412,7 @@ Enact a temp Basal or a temp target */
 "Interval" = "Intervall";
 
 /* Median loop interval */
-"Duration" = "Varighet";
+"Duration" = "Duration";
 
 /* "Display SD */
 "Display SD instead of CV" = "Vis SD i stedet for CV";
@@ -1349,9 +1446,6 @@ Enact a temp Basal or a temp target */
 
 /* Description for Display Loop statistics */
 "Displays Loop statistics in the statPanel in Home View" = "Viser Loop-statistikk i statPanel på hjemmeskjermen";
-
-/* Display % */
-"Override HbA1c unit" = "Overstyre HbA1c-enhet";
 
 /* Description for Override HbA1c unit */
 "Change default HbA1c unit in statPanlel. The unit in statPanel will be updateded with next statistics.json update" = "Endre enhet for HbA1c i statPanel. Enheten i statPanel vil bli oppdatert neste gang statistikken oppdateres";
@@ -1476,7 +1570,7 @@ Enact a temp Basal or a temp target */
 "Allow SMB With High Temptarget" = "Aktiver SMB ved høyt midlertidig mål";
 
 /* Headline "Allow SMB With High Temptarget" */
-"Allow SMB With High Temptarget" = "Aktiver SMB ved høyt midlertidig mål";
+"Allow SMB With High Temptarget" = "Allow SMB With High Temptarget";
 
 /* "Allow SMB With High Temptarget" */
 "Defaults to false. When true, allows supermicrobolus (if otherwise enabled) even with high temp targets (> 100 mg/dl)." = "Standard slått av. Når slått på, tillates supermikrobolus også med høye midlertidige mål, såfremt SMB er slått på i utgangspunktet.";
@@ -1619,13 +1713,13 @@ Enact a temp Basal or a temp target */
 "Adjust Dynamic ISF constant" = "Juster konstant for dynamisk ISF";
 
 /* Adjust Dynamic ISF constant */
-"Adjust Dynamic ISF constant" = "Juster konstant for dynamisk ISF";
+"Adjust Dynamic ISF constant" = "Adjust Dynamic ISF constant";
 
 /* Enable Dynamic ISF, Headline */
 "Enable Dynamic ISF" = "Aktiver dynamisk ISF";
 
 /* Headline "Enable Dynamic ISF" */
-"Enable Dynamic ISF" = "Aktiver dynamisk ISF";
+"Enable Dynamic ISF" = "Enable Dynamic ISF";
 
 /* Enable Dynamic ISF */
 "Calculate a new ISF with every loop cycle. New ISF will be based on current BG, TDD of insulin (past 24 hours or a weighted average) and an Adjustment Factor (default is 1).\n\nDynamic ISF and CR ratios will be limited by your autosens.min/max limits.\n\nDynamic ratio replaces the autosens.ratio: New ISF = Static ISF / Dynamic ratio,\nDynamic ratio = profile.sens * adjustmentFactor * tdd * Math.log(BG/insulinFactor+1) / 1800,\ninsulinFactor = 120 - InsulinPeakTimeInMinutes" = "Beregn ny ISF ved hver loop-syklus. Ny ISF vil baseres på nåværende BS, TDD med insulin (siste 24 timer eller vektet gjennomsnitt) og en justeringsfaktor (standardverdi er 1).\n\nDynamisk ISF og CR-ratier vil bli begrenset av dine autosens-innstillinger.\n\nDynamisk ratio erstatter autosens-ratio: Ny ISF = Statisk ISF / Dyamisk ratio,\nDynamisk ratio = profile.sens * adjustmentFactor * tdd * Math.log(BS/insulinFactor+1) / 1800,\ninsulinFactor = 120 - InsulinPeakTimeInMinutes";
@@ -1637,7 +1731,7 @@ Enact a temp Basal or a temp target */
 "Use Dynamic CR. The dynamic ratio will be used for CR as follows:\n\n When ratio > 1:  dynCR = (newRatio - 1) / 2 + 1.\nWhen ratio < 1: dynCR = CR/dynCR.\n\nDon't use toghether with a high Insulin Fraction (> 2)" = "Bruk dynamisk CR. Dynamisk ratio brukes for CR som følger:\n\n Når ratio > 1: dynCR = (newRatio - 1) / 2 + 1.\nNår ratio < 1: dynCR = CR/dynCR.\n\nIkke bruk denne innstillingen sammen med en høy insulinbrøk (Insulin Fraction > 2)";
 
 /* Headline "Adjust Dynamic ISF constant" */
-"Adjust Dynamic ISF constant" = "Juster konstant for dynamisk ISF";
+"Adjust Dynamic ISF constant" = "Adjust Dynamic ISF constant";
 
 /* Adjust Dynamic ISF constant */
 "Adjust Dynamic ratios by a constant. Default is 0.5. The higher the value, the larger the correction of your ISF will be for a high or a low BG. Maximum correction is determined by the Autosens min/max settings. For Sigmoid function an adjustment factor of 0.4 - 0.5 is recommended to begin with. For the logaritmic formula there is less consensus, but starting with 0.5 - 0.8 is more appropiate for most users" = "Juster dynamisk forholdstall med en konstant. Standard er 0,5. Jo høyere verdien er, jo større blir korreksjonen av ISF ved høyt eller lavt BS. Maksimal korrigering bestemmes av min/maks innstillingene for Autosens. For Sigmoidfunksjon anbefales det å starte en justeringsfaktor på 0,4-0,5. For den logaritmiske formelens er det mindre konsensus, men å starte med 0.5 – 0,8 er anbefalt for de fleste brukere";
