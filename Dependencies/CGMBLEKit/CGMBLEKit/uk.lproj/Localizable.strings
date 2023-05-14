@@ -1,0 +1,12 @@
+
+/* Error description for unreliable state */
+"Glucose data is unavailable" = "Дані глюкози недоступні";
+
+/* The description of sensor calibration state when raw value is unknown. (1: missing data details) */
+"Sensor is in unknown state %1$d" = "Сенсор знаходиться в невідомому стані%1$d";
+
+/* The description of sensor calibration state when sensor sensor is stopped. */
+"Sensor is stopped" = "Сенсор зупинений";
+
+/* The description of sensor calibration state when sensor sensor is warming up. */
+"Sensor is warming up" = "Сенсор прогрівається";
