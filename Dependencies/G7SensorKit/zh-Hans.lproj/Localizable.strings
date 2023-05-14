@@ -5,10 +5,10 @@
 "iAPS can read G7 CGM data, but you must still use the Dexcom G7 App for pairing, calibration, and other sensor management." = "iAPS can read G7 CGM data, but you must still use the Dexcom G7 App for pairing, calibration, and other sensor management.";
 
 /* Button title for starting setup */
-"Continue" = "继续";
+"Continue" = "Continue";
 
 /* Button text to cancel G7 setup */
-"Cancel" = "取消";
+"Cancel" = "Cancel";
 
 /* Error description for unreliable state */
 "Glucose data is unavailable" = "Glucose data is unavailable";
@@ -41,33 +41,33 @@
 "Grace Period End" = "Grace Period End";
 
 /* Field label */
-"Glucose" = "葡萄糖";
+"Glucose" = "Glucose";
 
 "Last Reading" = "Last Reading";
 
-"Time" = "时间";
+"Time" = "Time";
 
 "Trend" = "Trend";
 
 "Bluetooth" = "Bluetooth";
 
 /* title for g7 settings row showing BLE Name */
-"Name" = "设备名称";
+"Name" = "Name";
 
 /* title for g7 settings connection status when scanning */
 "Scanning" = "Scanning";
 
 /* title for g7 settings connection status when connected */
-"Connected" = "已连接";
+"Connected" = "Connected";
 
 /* title for g7 settings connection status when connecting */
-"Connecting" = "正在连接";
+"Connecting" = "Connecting";
 
 /* title for g7 settings row showing sensor last connect time */
 "Last Connect" = "Last Connect";
 
 /* Configuration */
-"Configuration" = "配置";
+"Configuration" = "Configuration";
 
 /* title for g7 config settings to upload readings */
 "Upload Readings" = "Upload Readings";
@@ -76,7 +76,7 @@
 "Scan for new sensor" = "Scan for new sensor";
 
 /* Button label for removing CGM */
-"Delete CGM" = "删除CGM数据源";
+"Delete CGM" = "Delete CGM";
 
 /* No glucose value representation (3 dashes for mg/dL) */
 "– – –" = "– – –";
