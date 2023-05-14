@@ -1,20 +1,9 @@
-/* CGM display title */
-"Dexcom G5" = "Dexcom G5";
-
-/* CGM display title */
-"Dexcom G6" = "Dexcom G6";
 
 /* Error description for unreliable state */
 "Glucose data is unavailable" = "Glukoositietoja ei ole saatavilla";
 
 /* Describes a low battery */
 "Low Battery" = "Akku lähes tyhjä";
-
-/* Describes a functioning transmitter */
-"OK" = "OK";
-
-/* invlid config error description */
-"Peripheral command was invalid" = "Oheislaitekomento oli virheellinen";
 
 /* Timeout error description */
 "Peripheral did not respond in time" = "Ulkoinen laite ei vastannut ajoissa";
@@ -39,4 +28,3 @@
 
 /* Error description */
 "Unknown characteristic" = "Tuntematon ominaisuus";
-
