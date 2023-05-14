@@ -61,7 +61,8 @@ iAPS app runs on iPhone or iPod. An iPhone 8 or newer is required.
 
 [OpenAPS documentation](https://openaps.readthedocs.io/en/latest/)
 
-[Crowdin Project for translation of iAPS](https://crowdin.com/project/iaps)
+[Crowdin Project for translation of iAPS](https://crowdin.com/project/iaps)  
+[![Crowdin](https://badges.crowdin.net/iaps/localized.svg)](https://crowdin.com/project/iaps)
 
 [Middleware code for iAPS](https://github.com/Jon-b-m/middleware)
 
