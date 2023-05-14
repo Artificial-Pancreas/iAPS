@@ -38,3 +38,7 @@ files:
     translation: /Dependencies/MinimedKit/MinimedKit/Resources/%osx_locale%.lproj/Localizable.strings
   - source: /Dependencies/MinimedKit/MinimedKitUI/Resources/en.lproj/Localizable.strings
     translation: /Dependencies/MinimedKit/MinimedKitUI/Resources/%osx_locale%.lproj/Localizable.strings
+  - source: /Dependencies/CGMBLEKit/CGMBLEKitUI/Base.lproj/Localizable.strings
+    translation: /Dependencies/CGMBLEKit/CGMBLEKitUI/%osx_locale%.lproj/Localizable.strings
+  - source: /Dependencies/CGMBLEKit/CGMBLEKit/Base.lproj/Localizable.strings
+    translation: /Dependencies/CGMBLEKit/CGMBLEKit/%osx_locale%.lproj/Localizable.strings
