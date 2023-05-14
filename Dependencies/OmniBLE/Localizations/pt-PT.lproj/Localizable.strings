@@ -324,7 +324,7 @@
 "Activity" = "Activity";
 
 /* Section header for configuration section */
-"Configuration" = "Ajustes";
+"Configuration" = "Configuration";
 
 /* Title for previous pod page */
 "Previous Pod" = "Previous Pod";
@@ -576,7 +576,7 @@
 "Notification Settings" = "Notification Settings";
 
 /* Label for scheduled reminder value row */
-"Time" = "Hora";
+"Time" = "Time";
 
 /* Value text for no expiration reminder */
 "No Reminder" = "No Reminder";
@@ -688,7 +688,7 @@
 "You will now begin the process of configuring your reminders, filling your Pod with insulin, pairing to your device and placing it on your body." = "You will now begin the process of configuring your reminders, filling your Pod with insulin, pairing to your device and placing it on your body.";
 
 /* Cancel button title */
-"Cancel" = "Cancelar";
+"Cancel" = "Cancel";
 
 /* Text for continue button on PodSetupView */
 "Continue" = "Continue";
