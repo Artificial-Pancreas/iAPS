@@ -34,3 +34,7 @@ files:
     translation: /Dependencies/OmniKit/OmniKit/Resources/%osx_locale%.lproj/Localizable.strings
   - source: /Dependencies/OmniKit/OmniKitUI/Resources/en.lproj/Localizable.strings
     translation: /Dependencies/OmniKit/OmniKitUI/Resources/%osx_locale%.lproj/Localizable.strings
+  - source: /Dependencies/MinimedKit/MinimedKit/Resources/Base.lproj/Localizable.strings
+    translation: /Dependencies/MinimedKit/MinimedKit/Resources/%osx_locale%.lproj/Localizable.strings
+  - source: /Dependencies/MinimedKit/MinimedKitUI/Resources/en.lproj/Localizable.strings
+    translation: /Dependencies/MinimedKit/MinimedKitUI/Resources/%osx_locale%.lproj/Localizable.strings
