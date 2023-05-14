@@ -4,44 +4,44 @@
 */
 /* -------------------------------- */
 /* Bolus screen when adding insulin */
-"Add insulin without actually bolusing" = "Add insulin without actually bolusing";
+"Add insulin without actually bolusing" = "Bolus yapmadan insülin ekleyin";
 
 /* Add insulin from source outside of pump */
-"Add %@ without bolusing" = "Add %@ without bolusing";
+"Add %@ without bolusing" = "Bolus yapmadan %@ ekleyin";
 
 "Bolus" = "Bolus";
 
-"Close" = "Close";
+"Close" = "Kapat";
 
 /* Continue after added carbs without bolus */
-"Continue without bolus" = "Continue without bolus";
+"Continue without bolus" = "Bolus yapmadan devam edin";
 
 /* Header */
-"Enact Bolus" = "Enact Bolus";
+"Enact Bolus" = "Bolus Gönder";
 
 /* Button */
-"Enact bolus" = "Enact bolus";
+"Enact bolus" = "Bolus gönder";
 
 /*  */
-"Insulin recommended" = "Insulin recommended";
+"Insulin recommended" = "Önerilen insülin";
 
 /*  */
-"Insulin required" = "Insulin required";
+"Insulin required" = "Gerekli insülin";
 
 /* Bolus screen */
-"Recommendation" = "Recommendation";
+"Recommendation" = "Önerilen";
 
 /* Button */
-"Clear" = "Clear";
+"Clear" = "Temizle";
 
 /* Button */
-"Done" = "Done";
+"Done" = "Tamam";
 
 /*  */
-"Wait please" = "Wait please";
+"Wait please" = "Lütfen Bekleyin";
 
 /*  */
-"Agree and continue" = "Agree and Continue";
+"Agree and continue" = "Kabul et ve Devam et";
 
 /* Headline in enacted pop up (at: at what time) */
 "Enacted at" = "Enacted at";
@@ -53,64 +53,64 @@
 "Error at" = "Error at";
 
 /* Home title */
-"Home" = "Home";
+"Home" = "Ana sayfa";
 
 /* Looping in progress */
-"looping" = "looping";
+"looping" = "döngüde";
 
 /* min ago since last loop */
-"min ago" = "min ago";
+"min ago" = "dk. önce";
 
 /* Status Title */
-"No suggestion" = "No suggestion";
+"No suggestion" = "Öneri bulunmuyor";
 
 /* Replace pod text in Header */
-"Replace pod" = "Replace pod";
+"Replace pod" = "Pod'u değiştir";
 
 /* Add carbs screen */
-"Add Carbs" = "Add Carbs";
+"Add Carbs" = "Karbonhidrat Ekle";
 
 /* Add carbs header and button in Watch app. You can skip the last " " space. It's just for differentiation */
-"Add Carbs " = "Add Carbs ";
+"Add Carbs " = "Karbonhidrat Ekle ";
 
 /*  */
-"Amount Carbs" = "Amount Carbs";
+"Amount Carbs" = "Karbonhidrat miktarı";
 
 /* Grams unit */
-"grams" = "grams";
+"grams" = "gram";
 
 /*  */
-"Carbs required" = "Carbs required";
+"Carbs required" = "Gerekli karbonhidrat";
 
 /* */
-"Are you sure?" = "Are you sure?";
+"Are you sure?" = "Emin misiniz?";
 
 /* Bottom target temp */
-"Bottom target" = "Bottom target";
+"Bottom target" = "Alt hedef";
 
 /* Cancel preset name */
-"Cancel" = "Cancel";
+"Cancel" = "Vazgeç";
 
 /*  */
-"Cancel Temp Target" = "Cancel Temp Target";
+"Cancel Temp Target" = "Geçici Hedefi İptal Et";
 
 /* Custom temp target */
-"Custom" = "Custom";
+"Custom" = "Özel";
 
 /*  */
-"Date" = "Date";
+"Date" = "Tarih";
 
 /*  */
-"Delete" = "Delete";
+"Delete" = "Sil";
 
 /* Delete preset temp target */
-"Delete preset \"%@\"" = "Delete preset \"%@\"";
+"Delete preset \"%@\"" = "Ön ayarı sil \"%@\"";
 
 /* Duration of target temp or temp basal */
-"Duration" = "Duration";
+"Duration" = "Süre";
 
 /*  */
-"Enact Temp Target" = "Enact Temp Target";
+"Enact Temp Target" = "Geçici Hedefe Başla";
 
 /* */
 "Target" = "Target";
@@ -128,22 +128,22 @@
 "mg/dl. Autosens.max limits the max endpoint" = "mg/dl. Autosens.max limits the max endpoint";
 
 /*  */
-"Enter preset name" = "Enter preset name";
+"Enter preset name" = "Ön ayar adını girin";
 
 /* Preset name */
-"Name" = "Name";
+"Name" = "İsim";
 
 /* minutes of target temp */
-"minutes" = "minutes";
+"minutes" = "dakika";
 
 /*  */
-"Presets" = "Presets";
+"Presets" = "Ön ayarlar";
 
 /* Save preset name */
-"Save" = "Save";
+"Save" = "Kaydet";
 
 /*  */
-"Save as preset" = "Save as preset";
+"Save as preset" = "Ön ayar olarak kaydet";
 
 /* Delete Meal Preset */
 "Delete Preset" = "Delete Preset";
@@ -164,125 +164,125 @@
 "[ -1 ]" = "[ -1 ]";
 
 /* Upper temp target limit */
-"Top target" = "Top target";
+"Top target" = "Üst hedef";
 
 /*  Temp target set for ... minutes */
-"for" = "for";
+"for" = "için";
 
 /*  Temp target set for ... minutes */
 "min" = "min";
 
 /*  */
-"Autotune" = "Autotune";
+"Autotune" = "Otoayar";
 
 /*  */
-"Basal profile" = "Basal profile";
+"Basal profile" = "Bazal profil";
 
 /*  */
-"Carb ratio" = "Carb ratio";
+"Carb ratio" = "Karbonhidrat oranı";
 
 /*  */
-"Delete autotune data" = "Delete autotune data";
+"Delete autotune data" = "Otoayar verilerini sil";
 
 /*  */
-"Run now" = "Run now";
+"Run now" = "Şimdi çalıştır";
 
 /*  */
-"Last run" = "Last run";
+"Last run" = "Son Çalıştırma";
 
 /*  */
-"Sensitivity" = "Sensitivity";
+"Sensitivity" = "Duyarlılık";
 
 /*  */
-"Use Autotune" = "Use Autotune";
+"Use Autotune" = "Otoayar kullan";
 
 /* Add profile basal */
-"Add" = "Add";
+"Add" = "Ekle";
 
 /*  */
-"Basal Profile" = "Basal Profile";
+"Basal Profile" = "Bazal Profil";
 
 /* Rate basal profile */
-"Rate" = "Rate";
+"Rate" = "Oran";
 
 /*  */
-"Save on Pump" = "Save on Pump";
+"Save on Pump" = "Pompa'ya Kaydet";
 
 /*  */
-"Saving..." = "Saving...";
+"Saving..." = "Kaydediliyor...";
 
 /*  */
-"Schedule" = "Schedule";
+"Schedule" = "Zamanlama";
 
 /*  */
-"starts at" = "starts at";
+"starts at" = "de başlar";
 
 /* Time basal profile */
-"Time" = "Time";
+"Time" = "Saat";
 
 /* */
-"Calculated Ratio" = "Calculated Ratio";
+"Calculated Ratio" = "Hesaplanan Oran";
 
 /* Carb Ratios header */
-"Carb Ratios" = "Carb Ratios";
+"Carb Ratios" = "Karbonhidrat Oranları";
 
 /*  */
-"Ratio" = "Ratio";
+"Ratio" = "Oran";
 
 /*  */
-"Autosens" = "Autosens";
+"Autosens" = "Otoduyarlılık";
 
 /*  */
-"Calculated Sensitivity" = "Calculated Sensitivity";
+"Calculated Sensitivity" = "Hesaplanan Duyarlılık";
 
 /*  */
-"Insulin Sensitivities" = "Insulin Sensitivities";
+"Insulin Sensitivities" = "İnsülin Duyarlılığı";
 
 /* */
-"Sensitivity Ratio" = "Sensitivity Ratio";
+"Sensitivity Ratio" = "Duyarlılık Faktörü (ISF)";
 
 /*  */
-"Dismiss" = "Dismiss";
+"Dismiss" = "Reddet";
 
 /*  */
-"Important message" = "Important message";
+"Important message" = "Önemli mesaj";
 
 /*  */
-"Amount" = "Amount";
+"Amount" = "Miktar";
 
 /* */
-"Cancel Temp Basal" = "Cancel Temp Basal";
+"Cancel Temp Basal" = "Geçici Bazali İptal Et";
 
 /* Enact
 Enact a temp Basal or a temp target */
-"Enact" = "Enact";
+"Enact" = "Başlat";
 
 /* */
-"Manual Temp Basal" = "Manual Temp Basal";
+"Manual Temp Basal" = "Manuel Geçici Bazal";
 
 /* Allow uploads tp NS */
-"Allow uploads" = "Allow uploads";
+"Allow uploads" = "Veri yüklemeye izin ver";
 
 /* API secret in NS */
-"API secret" = "API secret";
+"API secret" = "API parolası";
 
 /* Connect to NS */
-"Connect" = "Connect";
+"Connect" = "Bağlan";
 
 /* Connected to NS */
-"Connected!" = "Connected!";
+"Connected!" = "Bağlı!";
 
 /* Connecting to NS */
-"Connecting..." = "Connecting...";
+"Connecting..." = "Bağlanıyor...";
 
 /*  */
-"Invalid URL" = "Invalid URL";
+"Invalid URL" = "Geçersiz URL";
 
 /*  */
-"Local glucose source" = "Local glucose source";
+"Local glucose source" = "Yerel KŞ kaynağı";
 
 /* Header */
-"Nightscout Config" = "Nightscout Config";
+"Nightscout Config" = "Nightscout Yapılandırması";
 
 /*  */
 "Port" = "Port";
@@ -291,220 +291,220 @@ Enact a temp Basal or a temp target */
 "URL" = "URL";
 
 /**/
-"Use local glucose server" = "Use local glucose server";
+"Use local glucose server" = "Yerel glikoz sunucusu kullan";
 
 /*  */
-"Edit settings json" = "Edit settings json";
+"Edit settings json" = "Json ayarlarını düzenle";
 
 /* */
-"Glucose units" = "Glucose units";
+"Glucose units" = "Glikoz birimi";
 
 /*  */
-"Preferences" = "Preferences";
+"Preferences" = "Tercihler";
 
 /* Recommended Insulin Fraction in preferences */
-"Recommended Insulin Fraction" = "Recommended Insulin Fraction";
+"Recommended Insulin Fraction" = "Önerilen insülin oranı";
 
 /* Do you want to show bolus screen after added carbs? */
-"Skip Bolus screen after carbs" = "Skip Bolus screen after carbs";
+"Skip Bolus screen after carbs" = "Karbonhidrattan sonra Bolus ekranını atla";
 
 /* Allow remote control from NS */
-"Remote control" = "Remote control";
+"Remote control" = "Uzaktan kontrol";
 
 /* Add Medtronic pump */
-"Add Medtronic" = "Add Medtronic";
+"Add Medtronic" = "Medtronic Pompa ekle";
 
 /* Add Omnipod pump */
-"Add Omnipod" = "Add Omnipod";
+"Add Omnipod" = "Omnipod ekle";
 
 /* Add Simulator pump */
-"Add Simulator" = "Add Simulator";
+"Add Simulator" = "Simülatör ekle";
 
 /* Insulin model */
 "Model" = "Model";
 
 /*  */
-"Pump config" = "Pump config";
+"Pump config" = "Pompa Yapılandırması";
 
 /*  */
-"Delivery limits" = "Delivery limits";
+"Delivery limits" = "İletim Limitleri";
 
 /*  */
-"Duration of Insulin Action" = "Duration of Insulin Action";
+"Duration of Insulin Action" = "İnsülin Etki Süresi (İES)";
 
 /* hours of duration of insulin activity */
-"hours" = "hours";
+"hours" = "saat";
 
 /* Max setting */
-"Max Basal" = "Max Basal";
+"Max Basal" = "Maks Bazal";
 
 /* Max setting */
-"Max Bolus" = "Max Bolus";
+"Max Bolus" = "Maks Bolus";
 
 /* */
-"Pump Settings" = "Pump Settings";
+"Pump Settings" = "Pompa Ayarları";
 
 /* Insulin unit per hour */
-"U/hr" = "U/hr";
+"U/hr" = "Ü/Sa";
 
 /* Unit in number of units delivered (keep the space character!) */
-" U" = " U";
+" U" = " Ü";
 
 /* /Insulin unit */
-"/U" = "/U";
+"/U" = "/Ü";
 
 /* Insulin unit */
-"U" = "U";
+"U" = "Ü";
 
 /* Unit per hour with space */
-" U/hr" = " U/hr";
+" U/hr" = " Ü/Sa";
 
 /* Number of units per hour*/
-"%@ U/hr" = "%@ U/hr";
+"%@ U/hr" = "%@ Ü/Sa";
 
 /* Number of units insulin delivered */
-"%@ U" = "%@ U";
+"%@ U" = "%@ Ü";
 
 /*Carb ratio unit */
-"g/U" = "g/U";
+"g/U" = "g/Ü";
 
 /* grams */
 " g" = " g";
 
 /* The short unit display string for grams */
-"g" = "g";
+"g" = "gr";
 
 /* when 0 U/hr */
-"0 U/hr" = "0 U/hr";
+"0 U/hr" = "0 Ü/Sa";
 
 /* abbreviation for days */
-"d" = "d";
+"d" = "g";
 
 /* abbreviation for hours */
-"h" = "h";
+"h" = "s";
 
 /* abbreviation for minutes */
-"m" = "m";
+"m" = "d";
 
 /*  */
-"Closed loop" = "Closed loop";
+"Closed loop" = "Kapalı döngü";
 
 /* */
-"Configuration" = "Configuration";
+"Configuration" = "Yapılandırma";
 
 /* */
-"Devices" = "Devices";
+"Devices" = "Aygıtlar";
 
 /*  */
-"Pump" = "Pump";
+"Pump" = "Pompa";
 
 /*  */
-"Services" = "Services";
+"Services" = "Hizmetler";
 
 /*  */
-"Settings" = "Settings";
+"Settings" = "Ayarlar";
 
 /* 2 log files to share */
-"Share logs" = "Share logs";
+"Share logs" = "Günlükleri paylaş";
 
 /* Upper target */
-"High target" = "High target";
+"High target" = "Yüksek hedef";
 
 /* Lower target */
-"Low target" = "Low target";
+"Low target" = "Düşük hedef";
 
 /*  */
-"Target Ranges" = "Target Ranges";
+"Target Ranges" = "Hedef Aralığı";
 
 /* When bolusing */
-"Bolusing" = "Bolusing";
+"Bolusing" = "Bolus veriliyor";
 
 /* */
-"Pump suspended" = "Pump suspended";
+"Pump suspended" = "Pompa durduldu";
 
 /* */
 "Middleware" = "Middleware";
 
 /* Header */
-"History" = "History";
+"History" = "Geçmiş";
 
 /* CGM option */
-"Upload glucose to Nightscout" = "Upload glucose to Nightscout";
+"Upload glucose to Nightscout" = "Nightscout'a KŞ değerlerini yükle";
 
 /* Type of CGM or glucose source */
-"Type" = "Type";
+"Type" = "Tip";
 
 /* CGM */
 "CGM" = "CGM";
 
 /* CGM Transmitter ID */
-"Transmitter ID" = "Transmitter ID";
+"Transmitter ID" = "Verici ID";
 
 /* Other CGM setting */
-"Other" = "Other";
+"Other" = "Diğer";
 
 /* Whatch app alert */
-"Set temp targets presets on iPhone first" = "Set temp targets presets on iPhone first";
+"Set temp targets presets on iPhone first" = "Önce iPhone'da geçici hedef ön ayarlarını belirleyin";
 
 /* Updating Watch app */
-"Updating..." = "Updating...";
+"Updating..." = "Güncelleniyor...";
 
 /* Header for Temp targets in Watch app */
-"Temp Targets" = "Temp Targets";
+"Temp Targets" = "Geçici Hedefler";
 
 /* Delete carbs from data table and Nightscout */
-"Delete carbs?" = "Delete carbs?";
+"Delete carbs?" = "Karbonhidratları sil?";
 
 /* Delete insulin from pump history and Nightscout */
-"Delete insulin?" = "Delete insulin?";
+"Delete insulin?" = "İnsülin silinsin mi?";
 
 /* Treatments list */
-"Treatments" = "Treatments";
+"Treatments" = "Tedaviler";
 
 /* " min" in Treatments list */
-" min" = " min";
+" min" = " dk";
 
 /* */
-"Unable to change anything" = "Unable to change anything";
+"Unable to change anything" = "Hiçbir şey değiştirilemiyor";
 
 
 /* Calendar and Libre transmitter settings ---------------
  */
 /* */
-"Configure Libre Transmitter" = "Configure Libre Transmitter";
+"Configure Libre Transmitter" = "Libre Vericiyi Yapılandır";
 
 /* */
-"Calibrations" = "Calibrations";
+"Calibrations" = "Kalibrasyonlar";
 
 /* */
-"Create events in calendar" = "Create events in calendar";
+"Create events in calendar" = "Takvimde etkinlikler oluşturun";
 
 /* */
-"Calendar" = "Calendar";
+"Calendar" = "Takvim";
 
 /* */
 "Other" = "Other";
 
 /* */
-"Libre Transmitter" = "Libre Transmitter";
+"Libre Transmitter" = "Libre Vericisi";
 
 /* */
-"Libre Transmitters" = "Libre Transmitters";
+"Libre Transmitters" = "Libre Vericileri";
 
 /* */
-"Bluetooth Transmitters" = "Bluetooth Transmitters";
+"Bluetooth Transmitters" = "Bluetooth Vericileri";
 
 /* */
-"Modes" = "Modes";
+"Modes" = "Modlar";
 
 /* Libre 2 Direct */
-"Libre 2 Direct" = "Libre 2 Direct";
+"Libre 2 Direct" = "Libre 2 Direk";
 
 /* */
-"Select the third party transmitter you want to connect to" = "Select the third party transmitter you want to connect to";
+"Select the third party transmitter you want to connect to" = "Bağlanmak istediğiniz harici vericiyi seçin";
 
 /* State was restored */
-"State was restored" = "State was restored";
+"State was restored" = "Durum yenilendi";
 
 /* The short unit display string for millimoles of glucose per liter */
 "mmol/L" = "mmol/L";
@@ -513,514 +513,514 @@ Enact a temp Basal or a temp target */
 "mg/dL" = "mg/dL";
 
 /* */
-"Add calibration" = "Add calibration";
+"Add calibration" = "Kalibrasyon ekle";
 
 /* When adding capillary glucose meater reading */
-"Meter glucose" = "Meter glucose";
+"Meter glucose" = "GlikoMetre değeri";
 
 /* */
-"Info" = "Info";
+"Info" = "Bilgi";
 
 /*v*/
-"Slope" = "Slope";
+"Slope" = "Eğim";
 
 /* */
-"Intercept" = "Intercept";
+"Intercept" = "Kesişim";
 
 /* */
-"Chart" = "Chart";
+"Chart" = "Çizelge";
 
 /* */
-"Remove" = "Remove";
+"Remove" = "Kaldır";
 
 /* */
-"Remove Last" = "Remove Last";
+"Remove Last" = "Sonuncuyu Kaldır";
 
 /* */
-"Remove All" = "Remove All";
+"Remove All" = "Tümünü kaldır";
 
 /* */
-"About the Process" = "About the Process";
+"About the Process" = "Süreç Hakkında";
 
 /* */
-"Please make sure that your Libre 2 sensor is already activated and finished warming up. If you have other apps connecting to the sensor via bluetooth, these need to be shut down or uninstalled. \n\n You can only have one app communicating with the sensor via bluetooth. Then press the \"pariring and connection\" button below to start the process. Please note that the bluetooth connection might take up to a couple of minutes before it starts working." = "Please make sure that your Libre 2 sensor is already activated and finished warming up. If you have other apps connecting to the sensor via bluetooth, these need to be shut down or uninstalled. \n\n You can only have one app communicating with the sensor via bluetooth. Then press the \"pariring and connection\" button below to start the process. Please note that the bluetooth connection might take up to a couple of minutes before it starts working.";
+"Please make sure that your Libre 2 sensor is already activated and finished warming up. If you have other apps connecting to the sensor via bluetooth, these need to be shut down or uninstalled. \n\n You can only have one app communicating with the sensor via bluetooth. Then press the \"pariring and connection\" button below to start the process. Please note that the bluetooth connection might take up to a couple of minutes before it starts working." = "Lütfen Libre 2 sensörünüzün etkinleştirildiğinden ve ısınmayı sonuçlandırdığından emin olun. Sensöre bluetooth üzerinden bağlanan başka uygulamalarınız varsa, bunların kapatılması veya kaldırılması gerekir. \n\n Sensörle bluetooth üzerinden iletişim kuran sadece bir uygulamanız olmalıdır. Ardından işlemi başlatmak için aşağıdaki \"eşleştirme ve bağlantı\" düğmesine basın. Bluetooth bağlantısının çalışmaya başlamasının birkaç dakika sürebileceğini lütfen unutmayın.";
 
 /* */
-"Pairinginfo" = "Pairinginfo";
+"Pairinginfo" = "Eşleştirme bilgisi";
 
 /* */
 "PatchInfo" = "PatchInfo";
 
 /* */
-"Calibrationinfo" = "Calibrationinfo";
+"Calibrationinfo" = "Kalibrasyonbilgisi";
 
 /* */
-"Unknown" = "Unknown";
+"Unknown" = "Bilinmiyor";
 
 /* */
-"Not paired yet" = "Not paired yet";
+"Not paired yet" = "Henüz eşleştirilmedi";
 
 /* */
-"Pair Sensor & connect" = "Pair Sensor & connect";
+"Pair Sensor & connect" = "Sensör eşleştir ve bağlan";
 
 /* */
-"Phone NFC required!" = "Phone NFC required!";
+"Phone NFC required!" = "NFC özellikli telefon gerekli!";
 
 /* */
-"Your phone or app is not enabled for NFC communications, which is needed to pair to libre2 sensors" = "Your phone or app is not enabled for NFC communications, which is needed to pair to libre2 sensors";
+"Your phone or app is not enabled for NFC communications, which is needed to pair to libre2 sensors" = "Telefonunuz veya uygulamanız, libre2 sensörleriyle eşleştirmek için gerekli olan NFC iletişimleri için etkin değil";
 
 /* Bluetooth Power Off */
-"Bluetooth Power Off" = "Bluetooth Power Off";
+"Bluetooth Power Off" = "Bluetooth Kapalı";
 
 /* Please turn on Bluetooth */
-"Please turn on Bluetooth" = "Please turn on Bluetooth";
+"Please turn on Bluetooth" = "Lütfen BlueTooth'u açın";
 
 /* No Libre Transmitter Selected */
-"No Libre Transmitter Selected" = "No Libre Transmitter Selected";
+"No Libre Transmitter Selected" = "Libre Vericisi Seçili değil";
 
 /* Delete Transmitter and start anew. */
-"Delete CGMManager and start anew. Your libreoopweb credentials will be preserved" = "Delete CGMManager and start anew. Your libreoopweb credentials will be preserved";
+"Delete CGMManager and start anew. Your libreoopweb credentials will be preserved" = "CGMManager'ı silin ve yeniden başlayın. libreoopweb kimlik bilgileriniz korunacaktır";
 
 /* Invalid libre checksum */
-"Invalid libre checksum" = "Invalid libre checksum";
+"Invalid libre checksum" = "Libre sağlaması geçersiz";
 
 /* Libre sensor was incorrectly read, CRCs were not valid */
-"Libre sensor was incorrectly read, CRCs were not valid" = "Libre sensor was incorrectly read, CRCs were not valid";
+"Libre sensor was incorrectly read, CRCs were not valid" = "Libre sensörü hatalı okundu, CRC'ler geçersizdi";
 
 /* Glucose */
-"Glucose" = "Glucose";
+"Glucose" = "Glikoz";
 
 /* LOWALERT! */
-"LOWALERT!" = "LOWALERT!";
+"LOWALERT!" = "DÜŞÜK İKAZI!";
 
 /* HIGHALERT! */
-"HIGHALERT!" = "HIGHALERT!";
+"HIGHALERT!" = "YÜKSEK İKAZI!";
 
 /* (Snoozed)*/
-"(Snoozed)" = "(Snoozed)";
+"(Snoozed)" = "(Ertelendi)";
 
 /* Glucose: %@ */
-"Glucose: %@" = "Glucose: %@";
+"Glucose: %@" = "Glikoz: %@";
 
 /* Transmitter: %@%% */
-"Transmitter: %@%%" = "Transmitter: %@%%";
+"Transmitter: %@%%" = "Verici: %@%%";
 
 /* No Sensor Detected */
-"No Sensor Detected" = "No Sensor Detected";
+"No Sensor Detected" = "Sensör Tespit Edilemedi";
 
 /* This might be an intermittent problem, but please check that your transmitter is tightly secured over your sensor */
-"This might be an intermittent problem, but please check that your transmitter is tightly secured over your sensor" = "This might be an intermittent problem, but please check that your transmitter is tightly secured over your sensor";
+"This might be an intermittent problem, but please check that your transmitter is tightly secured over your sensor" = "Bu aralıklı bir sorun olabilir ancak lütfen vericinizin sensörünüze sıkıca sabitlendiğini kontrol edin";
 
 /* New Sensor Detected */
-"New Sensor Detected" = "New Sensor Detected";
+"New Sensor Detected" = "Yeni Sensör Algılandı";
 
 /* Please wait up to 30 minutes before glucose readings are available! */
-"Please wait up to 30 minutes before glucose readings are available!" = "Please wait up to 30 minutes before glucose readings are available!";
+"Please wait up to 30 minutes before glucose readings are available!" = "Lütfen glikoz ölçümleri mevcut olana kadar 30 dakika bekleyin!";
 
 /* Invalid Glucose sample detected, try again later */
-"Invalid Glucose sample detected, try again later" = "Invalid Glucose sample detected, try again later";
+"Invalid Glucose sample detected, try again later" = "Geçersiz Glikoz örneği tespit edildi, daha sonra tekrar deneyin";
 
 /* ensor might have temporarily stopped, fallen off or is too cold or too warm */
-"Sensor might have temporarily stopped, fallen off or is too cold or too warm" = "Sensor might have temporarily stopped, fallen off or is too cold or too warm";
+"Sensor might have temporarily stopped, fallen off or is too cold or too warm" = "Sensör geçici olarak durmuş, düşmüş, çok soğuk veya çok sıcak olabilir";
 
 /* Invalid Sensor Detected */
-"Invalid Sensor Detected" = "Invalid Sensor Detected";
+"Invalid Sensor Detected" = "Geçersiz Sensör Algılandı";
 
 /* Detected sensor seems not to be a libre 1 sensor! */
-"Detected sensor seems not to be a libre 1 sensor!" = "Detected sensor seems not to be a libre 1 sensor!";
+"Detected sensor seems not to be a libre 1 sensor!" = "Tespit edilen sensör, libre 1 sensörü gibi görünmüyor!";
 
 /* Detected sensor is invalid: %@ */
-"Detected sensor is invalid: %@" = "Detected sensor is invalid: %@";
+"Detected sensor is invalid: %@" = "Algılanan sensör geçersiz: %@";
 
 /* Low Battery */
-"Low battery" = "Low battery";
+"Low battery" = "Düşük pil";
 
 /* */
-"Invalid sensor" = "Invalid sensor";
+"Invalid sensor" = "Geçersiz sensör";
 
 /* */
-"Sensor change" = "Sensor change";
+"Sensor change" = "Sensör değişimi";
 
 /* */
-"Sensor expires soon" = "Sensor expires soon";
+"Sensor expires soon" = "Sensör süresi yakında doluyor";
 
 /* Battery is running low %@, consider charging your %@ device as soon as possible */
-"Battery is running low %@, consider charging your %@ device as soon as possible" = "Battery is running low %@, consider charging your %@ device as soon as possible";
+"Battery is running low %@, consider charging your %@ device as soon as possible" = "Pil azalıyor %@, %@ cihazınızı mümkün olan en kısa zamanda şarj etmeyi sağlayın";
 
 /* Extracting calibrationdata from sensor */
-"Extracting calibrationdata from sensor" = "Extracting calibrationdata from sensor";
+"Extracting calibrationdata from sensor" = "Sensörden kalibrasyon verilerinin çıkarılması";
 
 /* Sensor Ending Soon */
-"Sensor Ending Soon" = "Sensor Ending Soon";
+"Sensor Ending Soon" = "Sensör Yakında Sona Eriyor";
 
 /* Current Sensor is Ending soon! Sensor Life left in %@ */
-"Current Sensor is Ending soon! Sensor Life left in %@" = "Current Sensor is Ending soon! Sensor Life left in %@";
+"Current Sensor is Ending soon! Sensor Life left in %@" = "Mevcut Sensör yakında Sona Eriyor! Sensör Ömrü %@ kaldı";
 
 /* */
 "Libre Bluetooth" = "Libre Bluetooth";
 
 /* */
-"Snooze Alerts" = "Snooze Alerts";
+"Snooze Alerts" = "Uyarıları Ertele";
 
 /* */
-"Last measurement" = "Last measurement";
+"Last measurement" = "Son ölçüm";
 
 /* */
-"Sensor Footer checksum" = "Sensor Footer checksum";
+"Sensor Footer checksum" = "Sensör Altbilgi sağlaması";
 
 /* */
-"Last Blood Sugar prediction" = "Last Blood Sugar prediction";
+"Last Blood Sugar prediction" = "Son KŞ'i tahmini";
 
 /* */
-"CurrentBG" = "CurrentBG";
+"CurrentBG" = "GeçerliKŞ";
 
 /* */
-"Sensor Info" = "Sensor Info";
+"Sensor Info" = "Sensör Bilgisi";
 
 /* */
-"Sensor Age" = "Sensor Age";
+"Sensor Age" = "Sensör Yaşı";
 
 /* */
-"Sensor Age Left" = "Sensor Age Left";
+"Sensor Age Left" = "Kalan Sensör Yaşı";
 
 /* */
-"Sensor Endtime" = "Sensor Endtime";
+"Sensor Endtime" = "Sensör Bitiş zamanı";
 
 /* */
-"Sensor State" = "Sensor State";
+"Sensor State" = "Sensör Durumu";
 
 /* */
-"Sensor Serial" = "Sensor Serial";
+"Sensor Serial" = "Sensör Serial Nosu";
 
 /* */
-"Transmitter Info" = "Transmitter Info";
+"Transmitter Info" = "Verici Bilgileri";
 
 /* */
-"Hardware" = "Hardware";
+"Hardware" = "Donanım";
 
 /* */
-"Firmware" = "Firmware";
+"Firmware" = "Aygıt Yazılımı";
 
 /* */
-"Connection State" = "Connection State";
+"Connection State" = "Bağlantı Durumu";
 
 /* */
-"Transmitter Type" = "Transmitter Type";
+"Transmitter Type" = "Verici Tipi";
 
 /* */
-"Sensor Type" = "Sensor Type";
+"Sensor Type" = "Sensör Tipi";
 
 /* */
-"Factory Calibration Parameters" = "Factory Calibration Parameters";
+"Factory Calibration Parameters" = "Fabrika Kalibrasyon Parametreleri";
 
 /* */
-"Valid for footer" = "Valid for footer";
+"Valid for footer" = "Geçerli olan";
 
 /* */
-"Edit calibrations" = "Edit calibrations";
+"Edit calibrations" = "Kalibrasyonları Düzenle";
 
 /* */
-"edit calibration clicked" = "edit calibration clicked";
+"edit calibration clicked" = "kalibrasyonu düzenle tıklandı";
 
 /* */
-"Delete CGM" = "Delete CGM";
+"Delete CGM" = "CGM'i Sil";
 
 /* */
-"Are you sure you want to remove this cgm from loop?" = "Are you sure you want to remove this cgm from loop?";
+"Are you sure you want to remove this cgm from loop?" = "Bu CGM'i FreeAPS X'den kaldırmak istediğinizden emin misiniz?";
 
 /* */
-"There is no undo" = "There is no undo";
+"There is no undo" = "Geri çekme yok";
 
 /* */
-"Advanced" = "Advanced";
+"Advanced" = "Gelişmiş";
 
 /* */
-"Alarms" = "Alarms";
+"Alarms" = "Alarmlar";
 
 /* */
-"Glucose Settings" = "Glucose Settings";
+"Glucose Settings" = "Glikoz Ayarları";
 
 /* */
-"Notifications" = "Notifications";
+"Notifications" = "Bildirimler";
 
 /* */
-"Export logs" = "Export logs";
+"Export logs" = "Günlüğü Dışa Aktarın";
 
 /* */
-"Export not available" = "Export not available";
+"Export not available" = "Dışa aktarma kullanılamıyor";
 
 /* */
-"Log export requires ios 15" = "Log export requires ios 15";
+"Log export requires ios 15" = "Günlük dışa aktarma işlemi için ios 15 gerekir";
 
 /* */
-"Got it!" = "Got it!";
+"Got it!" = "Anlaşıldı!";
 
 /* */
-"Saved to %@" = "Saved to %@";
+"Saved to %@" = "%@'a kaydedildi";
 
 /* */
-"No logs available" = "No logs available";
+"No logs available" = "Günlük bulunmuyor";
 
 /* */
-"Glucose Notification visibility" = "Glucose Notification visibility";
+"Glucose Notification visibility" = "Glikoz Bildirim görünürlüğü";
 
 /* */
-"Always Notify Glucose" = "Always Notify Glucose";
+"Always Notify Glucose" = "Daima Glikozu Bildir";
 
 /* */
-"Notify per reading" = "Notify per reading";
+"Notify per reading" = "Her okuma için bildir";
 
 /* */
-"Value" = "Value";
+"Value" = "Değer";
 
 /* */
-"Adds Phone Battery" = "Adds Phone Battery";
+"Adds Phone Battery" = "Telefon Pilini Ekler";
 
 /* */
-"Adds Transmitter Battery" = "Adds Transmitter Battery";
+"Adds Transmitter Battery" = "Verici Pili Ekler";
 
 /* */
-"Also vibrate" = "Also vibrate";
+"Also vibrate" = "Ayrıca titret";
 
 /* */
-"Additional notification types" = "Additional notification types";
+"Additional notification types" = "Ek bildirim çeşitleri";
 
 /* */
-"Misc" = "Misc";
+"Misc" = "Diğer";
 
 /* */
-"Unit override" = "Unit override";
+"Unit override" = "Birim üzerine yaz";
 
 /* */
-"Low" = "Low";
+"Low" = "Düşük";
 
 /* */
-"High" = "High";
+"High" = "Yüksek";
 
 /* */
-"glucose" = "glucose";
+"glucose" = "glikoz";
 
 /* */
-"Schedule " = "Schedule ";
+"Schedule " = "Planlama ";
 
 /* */
-"tapped save schedules" = "tapped save schedules";
+"tapped save schedules" = "dokunulan kaydetme planları";
 
 /* */
-"Error" = "Error";
+"Error" = "Hata";
 
 /* */
-"Some ui element was incorrectly specified" = "Some ui element was incorrectly specified";
+"Some ui element was incorrectly specified" = "Bazı kullanıcı arabirimi öğeleri yanlış belirtildi";
 
 /* */
-"Success" = "Success";
+"Success" = "Başarılı";
 
 /* */
-"Schedules were saved successfully!" = "Schedules were saved successfully!";
+"Schedules were saved successfully!" = "Programlar başarıyla kaydedildi!";
 
 /* */
-"High Glucose Alarm active" = "High Glucose Alarm active";
+"High Glucose Alarm active" = "Yüksek Glikoz Alarmı aktif";
 
 /* */
-"Low Glucose Alarm active" = "Low Glucose Alarm active";
+"Low Glucose Alarm active" = "Düşük Glikoz Alarmı aktif";
 
 /* */
-"No Glucose Alarm active" = "No Glucose Alarm active";
+"No Glucose Alarm active" = "Glikoz Alarmı aktif değil";
 
 /* */
-"snoozing until %@" = "snoozing until %@";
+"snoozing until %@" = "%@'e kadar erteleniyor";
 
 /* */
-"not snoozing" = "not snoozing";
+"not snoozing" = "ertelenmiyor";
 
 /* */
-"nothing to see here" = "nothing to see here";
+"nothing to see here" = "burada görülecek bir şey yok";
 
 /* */
-"snooze from testview clicked" = "snooze from testview clicked";
+"snooze from testview clicked" = "tıklanan test görünümü ertele";
 
 /* */
-"will snooze for %@ until %@" = "will snooze for %@ until %@";
+"will snooze for %@ until %@" = "%@ için %@ tarihine kadar ertelenecek";
 
 /* */
-"Click to Snooze Alerts" = "Click to Snooze Alerts";
+"Click to Snooze Alerts" = "Uyarıları Ertelemek için Tıklayın";
 
 /* */
-"Strength" = "Strength";
+"Strength" = "Güç";
 
 /* */
-"Hold the top of your iPhone near the sensor to pair" = "Hold the top of your iPhone near the sensor to pair";
+"Hold the top of your iPhone near the sensor to pair" = "Eşleştirmek için iPhone'unuzun üst kısmını sensörün yakınında tutun";
 
 /* */
-"Sensor not found" = "Sensor not found";
+"Sensor not found" = "Sensör bulunamadı";
 
 /* */
-"Also play alert sound" = "Also play alert sound";
+"Also play alert sound" = "Ayrıca uyarı sesi çal";
 
 /* */
-"Notification Settings" = "Notification Settings";
+"Notification Settings" = "Bildirim ayarları";
 
 /* */
-"Found devices: %d" = "Found devices: %d";
+"Found devices: %d" = "Bulunan cihazlar: %d";
 
 /* */
-"Backfill options" = "Backfill options";
+"Backfill options" = "Geri doldurma seçenekleri";
 
 /* */
-"Backfilling from trend is currently not well supported by Loop" = "Backfilling from trend is currently not well supported by Loop";
+"Backfilling from trend is currently not well supported by Loop" = "Trendden yapılan dolgu şu anda Loop tarafından iyi desteklenmiyor";
 
 /* */
-"Backfill from history" = "Backfill from history";
+"Backfill from history" = "Geçmiş geri doldurma";
 
 /* */
-"Backfill from trend" = "Backfill from trend";
+"Backfill from trend" = "Trend geri doldurma";
 
 /* */
-"Debug options" = "Debug options";
+"Debug options" = "Hata ayıklama seçenekleri";
 
 /* */
-"Adds a lot of data to the Issue Report " = "Adds a lot of data to the Issue Report ";
+"Adds a lot of data to the Issue Report " = "Sorun Raporuna çok fazla veri ekler ";
 
 /* */
-"Persist sensordata" = "Persist sensordata";
+"Persist sensordata" = "Kalıcı sensör verileri";
 
 /* */
-"Battery" = "Battery";
+"Battery" = "Pil";
 
 /* */
-"Also add source info" = "Also add source info";
+"Also add source info" = "Ayrıca kaynak bilgisi ekleyin";
 
 /* */
-"Carbs Required Threshold" = "Carbs Required Threshold";
+"Carbs Required Threshold" = "Gerekli Karbonhidrat Önerisi";
 
 /* */
-"Carbs required: %d g" = "Carbs required: %d g";
+"Carbs required: %d g" = "Gerekli karbonhidrat: %d g";
 
 /* */
-"To prevent LOW required %d g of carbs" = "To prevent LOW required %d g of carbs";
+"To prevent LOW required %d g of carbs" = "DÜŞÜK KŞ'ini önlemek için gerekli Karbonhidrat %d g";
 
 /* */
-"iAPS not active" = "iAPS not active";
+"iAPS not active" = "iAPS etkin değil";
 
 /* */
-"Last loop was more then %d min ago" = "Last loop was more then %d min ago";
+"Last loop was more then %d min ago" = "Son döngü %d dak kadar önceydi";
 
 /* Glucose badge */
-"Show glucose on the app badge" = "Show glucose on the app badge";
+"Show glucose on the app badge" = "Uygulama rozetinde glikozu göster";
 
 /* */
-"Backfill glucose" = "Backfill glucose";
+"Backfill glucose" = "Glikoz geri doldurma";
 
 /* About this source */
-"About this source" = "About this source";
+"About this source" = "Bu kaynak hakkında";
 
 /* */
-"Bolus failed" = "Bolus failed";
+"Bolus failed" = "Bolus başarısız";
 
 /* */
-"Bolus failed or inaccurate. Check pump history before repeating." = "Bolus failed or inaccurate. Check pump history before repeating.";
+"Bolus failed or inaccurate. Check pump history before repeating." = "Bolus başarısız veya hatalı. Tekrarlamadan önce pompa geçmişini kontrol edin.";
 
 /* */
-"Carbs" = "Carbs";
+"Carbs" = "Karbonhidrat";
 
 /* */
-"Temp Basal" = "Temp Basal";
+"Temp Basal" = "Geçici Bazal Oranı";
 
 /* */
-"Temp Target" = "Temp Target";
+"Temp Target" = "Geçici Hedef";
 
 /* */
-"Resume" = "Resume";
+"Resume" = "Devam et";
 
 /* */
-"Suspend" = "Suspend";
+"Suspend" = "Askıya al";
 
 /* */
-"Animated Background" = "Animated Background";
+"Animated Background" = "Animasyonlu Arka Plan";
 
 /* Sensor day(s) */
-" day(s)" = " day(s)";
+" day(s)" = " gün(ler)";
 
 /* Option to show HR in Watch app*/
-"Display HR on Watch" = "Display HR on Watch";
+"Display HR on Watch" = "Kalp Atış Hızını Saatte görüntüleyin";
 
 
 /* Headers for settings ----------------------- */
-"OpenAPS main settings" = "OpenAPS main settings";
+"OpenAPS main settings" = "OpenAPS ana ayarları";
 
-"OpenAPS SMB settings" = "OpenAPS SMB settings";
+"OpenAPS SMB settings" = "OpenAPS SMB ayarları";
 
-"OpenAPS targets settings" = "OpenAPS targets settings";
+"OpenAPS targets settings" = "OpenAPS hedef Ayarları";
 
-"OpenAPS other settings" = "OpenAPS other settings";
+"OpenAPS other settings" = "OpenAPS diğer ayarları";
 
 /* Glucose Simulator CGM */
-"Glucose Simulator" = "Glucose Simulator";
+"Glucose Simulator" = "Glikoz Simülatörü";
 
 /* Restored state message */
-"Bluetooth State restored (APS restarted?). Found %d peripherals, and connected to %@ with identifier %@" = "Bluetooth State restored (APS restarted?). Found %d peripherals, and connected to %@ with identifier %@";
+"Bluetooth State restored (APS restarted?). Found %d peripherals, and connected to %@ with identifier %@" = "Bluetooth Durumu geri yüklendi (APS yeniden başlatıldı mı?). %d çevre birimi bulundu ve %@ tanımlayıcısı ile %@'a bağlandı";
 
 /* Shared app group xDrip4iOS */
-"Using shared app group with external CGM app xDrip4iOS" = "Using shared app group with external CGM app xDrip4iOS";
+"Using shared app group with external CGM app xDrip4iOS" = "Harici CGM uygulaması xDrip4iOS ile paylaşılan uygulama grubunu kullan";
 
 /* Shared app group GlucoseDirect */
-"Using shared app group with external CGM app GlucoseDirect" = "Using shared app group with external CGM app GlucoseDirect";
+"Using shared app group with external CGM app GlucoseDirect" = "Harici CGM uygulaması GlucoseDirect ile paylaşılan uygulama grubunu kullan";
 
 /* Dexcom G6 app */
-"Dexcom G6 app" = "Dexcom G6 app";
+"Dexcom G6 app" = "Yerel G6 uygulaması";
 
 /* Native G5 app */
-"Native G5 app" = "Native G5 app";
+"Native G5 app" = "Yerel G5 uygulaması";
 
 /* Minilink transmitter */
-"Minilink transmitter" = "Minilink transmitter";
+"Minilink transmitter" = "Minilink vericisi";
 
 /* Simple simulator */
-"Simple simulator" = "Simple simulator";
+"Simple simulator" = "Basit simülatör";
 
 /* Direct connection with Libre 1 transmitters or Libre 2 */
-"Direct connection with Libre 1 transmitters or European Libre 2 sensors" = "Direct connection with Libre 1 transmitters or European Libre 2 sensors";
+"Direct connection with Libre 1 transmitters or European Libre 2 sensors" = "Libre 1 vericileri veya Avrupa Libre 2 sensörleri ile doğrudan bağlantı";
 
 /* Online or internal server */
-"Online or internal server" = "Online or internal server";
+"Online or internal server" = "Çevrimiçi veya dahili sunucu";
 
 /* -------------- Developer settings ---------------------- */
 /* Debug options */
 
-"Developer" = "Developer";
+"Developer" = "Geliştirici";
 
 /* Debug option view NS Upload Profile */
-"NS Upload Profile" = "NS Upload Profile";
+"NS Upload Profile" = "NS Yükleme Profili";
 
 /* Debug option view NS Uploaded Profile */
 "NS Uploaded Profile" = "NS Uploaded Profile";
 
 /* Debug option view Autosense */
-"Autosense" = "Autosense";
+"Autosense" = "OtoDuyarlılık";
 
 /* Debug option view Pump History */
-"Pump History" = "Pump History";
+"Pump History" = "Pompa geçmişi";
 
 /* Debug option view Target Ranges */
-"Target ranges" = "Target ranges";
+"Target ranges" = "Hedef aralıkları";
 
 /* Debug option view Temp targets */
-"Temp targets" = "Temp targets";
+"Temp targets" = "Geçici hedefler";
 
 /* Debug option view Meal */
-"Meal" = "Meal";
+"Meal" = "Ögün";
 
 /* Debug option view Pump profile */
-"Pump profile" = "Pump profile";
+"Pump profile" = "Pompa profili";
 
 /* Debug option view Profile */
-"Profile" = "Profile";
+"Profile" = "Profil";
 
 /* Debug option view Enacted */
 "Enacted" = "Enacted";
 
 /* Debug option view Announcements (from NS) */
-"Announcements" = "Announcements";
+"Announcements" = "Duyurular";
 
 /* Debug option view Enacted announcements announcements (from NS) */
 "Enacted announcements" = "Enacted announcements";
@@ -1039,41 +1039,41 @@ Enact a temp Basal or a temp target */
 
 /* --------------- HealthKit intergration --------------------*/
 /* */
-"Apple Health" = "Apple Health";
+"Apple Health" = "Apple Sağlık Uygulaması";
 
 /* */
-"Connect to Apple Health" = "Connect to Apple Health";
+"Connect to Apple Health" = "Apple Sağlık Uygulamasına bağlan";
 
 /* Show when have not permissions for writing to Health */
-"For write data to Apple Health you must give permissions in Settings > Health > Data Access" = "For write data to Apple Health you must give permissions in Settings > Health > Data Access";
+"For write data to Apple Health you must give permissions in Settings > Health > Data Access" = "Apple Sağlık Uygulamasına veri yazmak için Ayarlar > Sağlık > Veri Erişimi'nde izinler vermelisiniz";
 
 /* */
-"After you create glucose records in the Health app, please open iAPS to help us guaranteed transfer changed data" = "After you create glucose records in the Health app, please open iAPS to help us guaranteed transfer changed data";
+"After you create glucose records in the Health app, please open iAPS to help us guaranteed transfer changed data" = "Sağlık uygulamasında glikoz kayıtları oluşturduktan sonra, değiştirilen verileri aktarmayı garanti etmemize yardımcı olmak için lütfen FreeAPS X'i açın";
 
 /* New ALerts ------------------------- */
 /* Info title */
 "Info" = "Info";
 
 /* Warning title */
-"Warning" = "Warning";
+"Warning" = "Uyarı";
 
 /* Error title */
 "Error" = "Error";
 
 /* Manual temp basal mode */
-"Manual" = "Manual";
+"Manual" = "Manuel";
 
 /* Status highlight when manual temp basal is running. */
-"Manual Basal" = "Manual Basal";
+"Manual Basal" = "Manuel Bazal";
 
 /* Current Manual Temp basal */
-" -  Manual Basal ⚠️" = " -  Manual Basal ⚠️";
+" -  Manual Basal ⚠️" = " -  Manuel Bazal ⚠️";
 
 /* Total AT / Scheduled basal insulin */
-" U/day" = " U/day";
+" U/day" = " Ü/gün";
 
 /* Total AT / Scheduled basal insulin */
-"Total" = "Total";
+"Total" = "Toplam";
 
 /* -------------------------------------------- FPU Strings ------------------------------------------------------*/
 /* Enable FPU */
@@ -1176,22 +1176,22 @@ Enact a temp Basal or a temp target */
 /* -------------------------------------------------------------------------------------------
   DASH strings
 */
-"Attach Pod" = "Attach Pod";
+"Attach Pod" = "Pod'u Ekleyin";
 
-"Deactivate Pod" = "Deactivate Pod";
+"Deactivate Pod" = "Pod'u devredışı bırak";
 
 /* */
-"Deactivating..." = "Deactivating...";
+"Deactivating..." = "Devre dışı bırakılıyor...";
 
-"Pair Pod" = "Pair Pod";
+"Pair Pod" = "Pod Eşleştir";
 
 /* Text for previous pod information row */
-"Previous Pod Information" = "Previous Pod Information";
+"Previous Pod Information" = "Önceki Pod Bilgileri";
 
 /* Text for confidence reminders navigation link */
-"Confidence Reminders" = "Confidence Reminders";
+"Confidence Reminders" = "Onay sesi";
 
-"Confidence reminders are beeps from the pod which can be used to acknowledge selected commands." = "Confidence reminders are beeps from the pod which can be used to acknowledge selected commands.";
+"Confidence reminders are beeps from the pod which can be used to acknowledge selected commands." = "Onay sesleri, seçili komutları onaylamak için kullanılabilen pod'tan gelen bip sesleridir.";
 
 /* button title for saving low reservoir reminder while saving */
 "Saving..." = "Saving...";
@@ -1200,116 +1200,116 @@ Enact a temp Basal or a temp target */
 "Save" = "Save";
 
 /* Alert title for error when updating confidence reminder preference */
-"Failed to update confidence reminder preference." = "Failed to update confidence reminder preference.";
+"Failed to update confidence reminder preference." = "Onay sesi tercihi güncellenemedi.";
 
 /* */
-"No Error" = "No Error";
+"No Error" = "Hata yok";
 
 /* description label for active time pod details row */
-"Active Time" = "Active Time";
+"Active Time" = "Aktif Süre";
 
 /* Title string for BeepPreference.silent */
-"Disabled" = "Disabled";
+"Disabled" = "Devre dışı";
 
 /* Title string for BeepPreference.manualCommands */
-"Enabled" = "Enabled";
+"Enabled" = "Etkin";
 
 /* Title string for BeepPreference.extended */
-"Extended" = "Extended";
+"Extended" = "Yayma";
 
 /* Description for BeepPreference.silent */
-"No confidence reminders are used." = "No confidence reminders are used.";
+"No confidence reminders are used." = "Onay sesi kullanılmaz.";
 
 /* Description for BeepPreference.manualCommands */
-"Confidence reminders will sound for commands you initiate, like bolus, cancel bolus, suspend, resume, save notification reminders, etc. When Loop automatically adjusts delivery, no confidence reminders are used." = "Confidence reminders will sound for commands you initiate, like bolus, cancel bolus, suspend, resume, save notification reminders, etc. When Loop automatically adjusts delivery, no confidence reminders are used.";
+"Confidence reminders will sound for commands you initiate, like bolus, cancel bolus, suspend, resume, save notification reminders, etc. When Loop automatically adjusts delivery, no confidence reminders are used." = "Bolus, bolusu iptal et, askıya al, devam ettir, bildirim hatırlatıcılarını kaydet vb. gibi başlattığınız komutlar için Onay sesleri çalacaktır. Döngü, iletimi otomatik olarak ayarladığında, hiçbir onay sesi kullanılmaz.";
 
 /* Description for BeepPreference.extended */
-"Confidence reminders will sound when Loop automatically adjusts delivery as well as for commands you initiate." = "Confidence reminders will sound when Loop automatically adjusts delivery as well as for commands you initiate.";
+"Confidence reminders will sound when Loop automatically adjusts delivery as well as for commands you initiate." = "Loop, başlattığınız komutların yanı sıra teslimatı otomatik olarak ayarladığında, onay sesi çalacaktır.";
 
 /* Label text for expiration reminder default row */
-"Expiration Reminder Default" = "Expiration Reminder Default";
+"Expiration Reminder Default" = "Varsayılan Süre Sonu Hatırlatıcı";
 
 /* */
-"Expiration Reminder" = "Expiration Reminder";
+"Expiration Reminder" = "Süre Sonu Hatırlatıcısı";
 
 /* */
-"Low Reservoir" = "Low Reservoir";
+"Low Reservoir" = "Düşük Rezervuar";
 
 /* Value text for no expiration reminder */
-"No Reminder" = "No Reminder";
+"No Reminder" = "Hatırlatıcı Yok";
 
 /* */
-"Scheduled Reminder" = "Scheduled Reminder";
+"Scheduled Reminder" = "Programlanan Anımsatma";
 
 /* */
-"Low Reservoir Reminder" = "Low Reservoir Reminder";
+"Low Reservoir Reminder" = "Düşük Rezervuar Hatırlatıcısı";
 
 /* The action string on pod status page when pod data is stale */
-"Make sure your phone and pod are close to each other. If communication issues persist, move to a new area." = "Make sure your phone and pod are close to each other. If communication issues persist, move to a new area.";
+"Make sure your phone and pod are close to each other. If communication issues persist, move to a new area." = "Telefonunuzun ve pod'unuzun birbirine yakın olduğundan emin olun. İletişim sorunları devam ederse, yeni bir alana geçin.";
 /* Format string for the action string on pod status page when pod expired. (1: service time remaining) */
-"Change Pod now. Insulin delivery will stop in %1$@ or when no more insulin remains." = "Change Pod now. Insulin delivery will stop in %1$@ or when no more insulin remains.";
+"Change Pod now. Insulin delivery will stop in %1$@ or when no more insulin remains." = "Pod'u şimdi değiştirin. İnsülin iletimi %1$@ içinde veya daha fazla insülin kalmadığında duracaktır.";
 
 /* Label text for temporary basal rate summary */
 "Rate" = "Rate";
 
 /* Summary string for temporary basal rate configuration page */
-"%1$@ for %2$@" = "%1$@ for %2$@";
+"%1$@ for %2$@" = "%2$@ için %1$@";
 
 /* Description text on manual temp basal action sheet */
-"Loop will not automatically adjust your insulin delivery until the temporary basal rate finishes or is canceled." = "Loop will not automatically adjust your insulin delivery until the temporary basal rate finishes or is canceled.";
+"Loop will not automatically adjust your insulin delivery until the temporary basal rate finishes or is canceled." = "Döngü, geçici bazal oran bitene veya iptal edilene kadar insülin iletiminizi otomatik olarak ayarlamaz.";
 /* Button text for setting manual temporary basal rate*/
-"Set Temporary Basal" = "Set Temporary Basal";
+"Set Temporary Basal" = "Geçici Bazalı Ayarla";
 
 /* Navigation Title for ManualTempBasalEntryView */
-"Temporary Basal" = "Temporary Basal";
+"Temporary Basal" = "Geçici Bazal";
 
 /* Alert title for a failure to set temporary basal */
-"Temporary Basal Failed" = "Temporary Basal Failed";
+"Temporary Basal Failed" = "Geçici Bazal Başarısız";
 
 /* Alert format string for a failure to set temporary basal with recovery suggestion. (1: error description) (2: recovery text) */
-"Unable to set a temporary basal rate: %1$@\n\n%2$@" = "Unable to set a temporary basal rate: %1$@\n\n%2$@";
+"Unable to set a temporary basal rate: %1$@\n\n%2$@" = "Geçici bir bazal oran ayarlanamıyor: %1$@\n\n%2$@";
 
 /* Alert format string for a failure to set temporary basal. (1: error description) */
-"Unable to set a temporary basal rate: %1$@" = "Unable to set a temporary basal rate: %1$@";
+"Unable to set a temporary basal rate: %1$@" = "Geçici bir bazal oran ayarlanamıyor: %1$@";
 
 /* Alert title for missing temp basal configuration */
-"Missing Config" = "Missing Config";
+"Missing Config" = "Konfigurasyon Bulunamadı";
 
 /* Alert format string for missing temp basal configuration. */
-"This PumpManager has not been configured with a maximum basal rate because it was added before manual temp basal was a feature. Please go to therapy settings -> delivery limits and set a new maximum basal rate." = "This PumpManager has not been configured with a maximum basal rate because it was added before manual temp basal was a feature. Please go to therapy settings -> delivery limits and set a new maximum basal rate.";
+"This PumpManager has not been configured with a maximum basal rate because it was added before manual temp basal was a feature. Please go to therapy settings -> delivery limits and set a new maximum basal rate." = "Pompa Yönetimi, daha önce manuel geçici bazal eklendiğinden, maksimum bazal oranı ile yapılandırılmadı. Lütfen terapi ayarları -> iletim limitlerine gidin ve yeni bir maksimum bazal oran ayarlayın.";
 
 /* description label for active time pod details row */
 "Active Time" = "Active Time";
 
 /* description label for total delivery pod details row */
-"Total Delivery" = "Total Delivery";
+"Total Delivery" = "Toplam İletim";
 
 /* */
-"Add Omnipod Dash" = "Add Omnipod Dash";
+"Add Omnipod Dash" = "Omnipod Dash'ı ekle";
 
 /* */
-"Insert Cannula" = "Insert Cannula";
+"Insert Cannula" = "Kanül Yerleştir";
 
 /* */
-"Check Cannula" = "Check Cannula";
+"Check Cannula" = "Kanülü Kontrol Edin";
 
 /* */
-"Setup Complete" = "Setup Complete";
+"Setup Complete" = "Kurulum tamamlandı";
 
 /* */
-"Insulin Suspended" = "Insulin Suspended";
+"Insulin Suspended" = "İnsülin Durduldu";
 
 /* Text for suspend resume button when insulin delivery is suspending */
-"Suspending insulin delivery..." = "Suspending insulin delivery...";
+"Suspending insulin delivery..." = "İnsülin iletimi askıya alınıyor...";
 
 /* Text for suspend resume button when insulin delivery is suspended */
-"Resume Insulin Delivery" = "Resume Insulin Delivery";
+"Resume Insulin Delivery" = "İnsülin İletimine Devam et";
 
 /* Text for suspend resume button when insulin delivery is resuming */
-"Resuming insulin delivery..." = "Resuming insulin delivery...";
+"Resuming insulin delivery..." = "İnsülin iletimi devam ediyor...";
 
 /* Alert title for suspend error */
-"Failed to Suspend Insulin Delivery" = "Failed to Suspend Insulin Delivery";
+"Failed to Suspend Insulin Delivery" = "İnsülin İletimi Askıya Alınamadı";
 
 //* -----------------------------------------------------------------------*/
 /* ----------------------Statistics strings -------------------------------*/
@@ -1331,7 +1331,7 @@ Enact a temp Basal or a temp target */
 "Total" = "Total";
 
 /* Headline Statistics */
-"Statistics" = "Statistics";
+"Statistics" = "İstatistikler";
 
 /* Option in preferences */
 "Allow Upload of Statistics to NS" = "Allow Upload of Statistics to NS";
@@ -1364,10 +1364,10 @@ Enact a temp Basal or a temp target */
 Hours X-Axis (6 default)" = "Hours X-Axis (6 default)";
 
 /* Average BG = */
-"Average" = "Average";
+"Average" = "Ortalama";
 
 /* Median BG */
-"Median" = "Median";
+"Median" = "Orta Değer";
 
 /* CGM readings in statView */
 "Readings today" = "Readings today";
@@ -1382,10 +1382,10 @@ Hours X-Axis (6 default)" = "Hours X-Axis (6 default)";
 "Normal" = "Normal";
 
 /* Title High BG in statPanel */
-"High (>" = "High (>";
+"High (>" = "Yüksek (>";
 
 /* Title Low BG in statPanel */
-"Low (<" = "Low (<";
+"Low (<" = "Düşük (<";
 
 /* SD */
 "SD" = "SD";
@@ -1397,19 +1397,19 @@ Hours X-Axis (6 default)" = "Hours X-Axis (6 default)";
 "HbA1c" = "HbA1c";
 
 /* Total number of days of data for HbA1c estimation, part 1/2*/
-"All" = "All";
+"All" = "Tümü";
 
 /* Total number of days of data for HbA1c estimation, part 2/2*/
-"days" = "days";
+"days" = "gün";
 
 /* Nr of Loops in statPanel */
-"Loops" = "Loops";
+"Loops" = "Döngüler";
 
 /* Loop Errors in statPanel */
-"Errors" = "Errors";
+"Errors" = "Hatalar";
 
 /* Average loop interval */
-"Interval" = "Interval";
+"Interval" = "Aralık";
 
 /* Median loop interval */
 "Duration" = "Duration";
@@ -1427,19 +1427,19 @@ Hours X-Axis (6 default)" = "Hours X-Axis (6 default)";
 "Default is 20 minutes. How often to update and save the statistics.json and to upload last array, when enabled, to Nightscout." = "Default is 20 minutes. How often to update and save the statistics.json and to upload last array, when enabled, to Nightscout.";
 
 /* Duration displayed in statPanel */
-"Past 24 Hours " = "Past 24 Hours ";
+"Past 24 Hours " = "Son 24 Saat ";
 
 /* Duration displayed in statPanel */
-"Past Week " = "Past Week ";
+"Past Week " = "Geçen Hafta ";
 
 /* Duration displayed in statPanel */
-"Past Month " = "Past Month ";
+"Past Month " = "Geçen Ay ";
 
 /* Duration displayed in statPanel */
-"Past 90 Days " = "Past 90 Days ";
+"Past 90 Days " = "Son 90 Gün ";
 
 /* Duration displayed in statPanel */
-"All Past Days of Data " = "All Past Days of Data ";
+"All Past Days of Data " = "Tüm Geçmiş Gün Verileri ";
 
 /* "Display Loop statistics in statPanel */
 "Display Loop Cycle statistics" = "Display Loop Cycle statistics";
@@ -1480,91 +1480,91 @@ Hours X-Axis (6 default)" = "Hours X-Axis (6 default)";
 "Rewind Resets Autosens" = "Rewind Resets Autosens";
 
 /* ”Rewind Resets Autosens” */
-"This feature, enabled by default, resets the autosens ratio to neutral when you rewind your pump, on the assumption that this corresponds to a probable site change. Autosens will begin learning sensitivity anew from the time of the rewind, which may take up to 6 hours. If you usually rewind your pump independently of site changes, you may want to consider disabling this feature." = "This feature, enabled by default, resets the autosens ratio to neutral when you rewind your pump, on the assumption that this corresponds to a probable site change. Autosens will begin learning sensitivity anew from the time of the rewind, which may take up to 6 hours. If you usually rewind your pump independently of site changes, you may want to consider disabling this feature.";
+"This feature, enabled by default, resets the autosens ratio to neutral when you rewind your pump, on the assumption that this corresponds to a probable site change. Autosens will begin learning sensitivity anew from the time of the rewind, which may take up to 6 hours. If you usually rewind your pump independently of site changes, you may want to consider disabling this feature." = "Varsayılan olarak etkinleştirilen bu özellik, pompanızı geri sardığınızda, bunun olası bir set değişikliğine karşılık geldiği varsayımıyla otoduyarlılık oranını nötr olarak sıfırlar. Otoduyarlılık, 6 saate kadar sürebilen geri sarma zamanından itibaren hassasiyeti yeniden öğrenmeye başlayacaktır. Pompanızı genellikle set değişikliklerinden bağımsız olarak geri sarıyorsanız, bu özelliği devre dışı bırakmayı düşünebilirsiniz.";
 
 /* Headline "High Temptarget Raises Sensitivity" */
 "High Temptarget Raises Sensitivity" = "High Temptarget Raises Sensitivity";
 
 /* ”High Temptarget Raises Sensitivity" */
-"Defaults to false. When set to true, raises sensitivity (lower sensitivity ratio) for temp targets set to >= 111. Synonym for exercise_mode. The higher your temp target above 110 will result in more sensitive (lower) ratios, e.g., temp target of 120 results in sensitivity ratio of 0.75, while 140 results in 0.6 (with default halfBasalTarget of 160)." = "Defaults to false. When set to true, raises sensitivity (lower sensitivity ratio) for temp targets set to >= 111. Synonym for exercise_mode. The higher your temp target above 110 will result in more sensitive (lower) ratios, e.g., temp target of 120 results in sensitivity ratio of 0.75, while 140 results in 0.6 (with default halfBasalTarget of 160).";
+"Defaults to false. When set to true, raises sensitivity (lower sensitivity ratio) for temp targets set to >= 111. Synonym for exercise_mode. The higher your temp target above 110 will result in more sensitive (lower) ratios, e.g., temp target of 120 results in sensitivity ratio of 0.75, while 140 results in 0.6 (with default halfBasalTarget of 160)." = "Varsayılan olarak kapalı olup. Açık olarak ayarlandığında, >= 111 olarak ayarlanan geçici hedefler için duyarlılığı artırır (düşük duyarlılık oranı). Egzersiz_modu ile eşanlamlı. Geçici hedefiniz 110'un üzerinde ne kadar yüksek olursa, daha hassas (düşük) oranlar elde edilir, örneğin 120'lik geçici hedef 0,75 hassasiyet oranı ile sonuçlanırken 140 sonuç 0,6 ile sonuçlanır (varsayılan ile HalfBasalTarget 160).";
 
 /* Headline ”Low Temptarget Lowers Sensitivity" */
 "Low Temptarget Lowers Sensitivity" = "Low Temptarget Lowers Sensitivity";
 
 /* ”Low Temptarget Lowers Sensitivity" */
-"Defaults to false. When set to true, can lower sensitivity (higher sensitivity ratio) for temptargets <= 99. The lower your temp target below 100 will result in less sensitive (higher) ratios, e.g., temp target of 95 results in sensitivity ratio of 1.09, while 85 results in 1.33 (with default halfBasalTarget of 160)." = "Defaults to false. When set to true, can lower sensitivity (higher sensitivity ratio) for temptargets <= 99. The lower your temp target below 100 will result in less sensitive (higher) ratios, e.g., temp target of 95 results in sensitivity ratio of 1.09, while 85 results in 1.33 (with default halfBasalTarget of 160).";
+"Defaults to false. When set to true, can lower sensitivity (higher sensitivity ratio) for temptargets <= 99. The lower your temp target below 100 will result in less sensitive (higher) ratios, e.g., temp target of 95 results in sensitivity ratio of 1.09, while 85 results in 1.33 (with default halfBasalTarget of 160)." = "Varsayılan olarak kapalı olup. Açık olarak ayarlandığında, <= 99 temptarget'lar için hassasiyeti (daha yüksek hassasiyet oranı) düşürebilir. Geçici hedefiniz 100'ün altına ne kadar düşükse, daha az hassas (daha yüksek) oranlar elde edilir, örneğin, 95'lik geçici hedef 1,09 hassasiyet oranıyla sonuçlanırken 85, 1,33 ile sonuçlanır (varsayılan HalfBasalTarget ile 160).";
 
 /* Headline ”Sensitivity Raises Target" */
 "Sensitivity Raises Target" = "Sensitivity Raises Target";
 
 /* ”Sensitivity Raises Target" */
-"When true, raises BG target when autosens detects sensitivity" = "When true, raises BG target when autosens detects sensitivity";
+"When true, raises BG target when autosens detects sensitivity" = "Etkinleştirildiğinde, otoduyarlılık duyarlılık algıladığında KŞ hedefini yükseltir";
 
 /* Headline ”Resistance Lowers Target" */
-"Resistance Lowers Target" = "Resistance Lowers Target";
+"Resistance Lowers Target" = "Direnç Hedef Değeri Düşürür";
 
 /* ”Resistance Lowers Target" */
-"Defaults to false. When true, will lower BG target when autosens detects resistance" = "Defaults to false. When true, will lower BG target when autosens detects resistance";
+"Defaults to false. When true, will lower BG target when autosens detects resistance" = "Varsayılan olarak geçersizdir. Geçerli yapıldığında, otoduyarlılık direnci tespit ettiğinde KŞ hedefini düşürür";
 
 /* Headline ”Advanced Target Adjustments" */
-"Advanced Target Adjustments" = "Advanced Target Adjustments";
+"Advanced Target Adjustments" = "Gelişmiş Hedef Ayarlamaları";
 
 /* ”Advanced Target Adjustments" */
-"This feature was previously enabled by default but will now default to false (will NOT be enabled automatically) in oref0 0.6.0 and beyond. (There is no need for this with 0.6.0). This feature lowers oref0’s target BG automatically when current BG and eventualBG are high. This helps prevent and mitigate high BG, but automatically switches to low-temping to ensure that BG comes down smoothly toward your actual target. If you find this behavior too aggressive, you can disable this feature. If you do so, please let us know so we can better understand what settings work best for everyone." = "This feature was previously enabled by default but will now default to false (will NOT be enabled automatically) in oref0 0.6.0 and beyond. (There is no need for this with 0.6.0). This feature lowers oref0’s target BG automatically when current BG and eventualBG are high. This helps prevent and mitigate high BG, but automatically switches to low-temping to ensure that BG comes down smoothly toward your actual target. If you find this behavior too aggressive, you can disable this feature. If you do so, please let us know so we can better understand what settings work best for everyone.";
+"This feature was previously enabled by default but will now default to false (will NOT be enabled automatically) in oref0 0.6.0 and beyond. (There is no need for this with 0.6.0). This feature lowers oref0’s target BG automatically when current BG and eventualBG are high. This helps prevent and mitigate high BG, but automatically switches to low-temping to ensure that BG comes down smoothly toward your actual target. If you find this behavior too aggressive, you can disable this feature. If you do so, please let us know so we can better understand what settings work best for everyone." = "Bu özellik daha önce varsayılan olarak etkinleştirilmiştir, ancak şimdi oref0 0.6.0 ve sonrasında varsayılan olarak kapalı (otomatik olarak ETKİNLEŞTİRİLMEYECEK) olacaktır. (0.6.0 ile buna gerek yoktur). Bu özellik, mevcut KŞ ve nihai KŞ yüksek olduğunda oref0'ın hedef KŞ'sini otomatik olarak düşürür. Bu yüksek KŞ'yi önlemeye ve azaltmaya yardımcı olur, ancak KŞ'nin gerçek hedefinize düzgün bir şekilde inmesini sağlamak için otomatik olarak düşük geçici bazal geçer. Bu davranışı çok agresif bulursanız, bu özelliği devre dışı bırakabilirsiniz. Bunu yaparsanız, hangi ayarların herkes için en iyi sonucu verdiğini daha iyi anlayabilmemiz için lütfen bize bildirin.";
 
 /* Headline "Exercise Mode" */
-"Exercise Mode" = "Exercise Mode";
+"Exercise Mode" = "Egzersiz Modu";
 
 /* "Exercise Mode" */
-"Defaults to false. When true, > 105 mg/dL high temp target adjusts sensitivityRatio for exercise_mode. Synonym for high_temptarget_raises_sensitivity" = "Defaults to false. When true, > 105 mg/dL high temp target adjusts sensitivityRatio for exercise_mode. Synonym for high_temptarget_raises_sensitivity";
+"Defaults to false. When true, > 105 mg/dL high temp target adjusts sensitivityRatio for exercise_mode. Synonym for high_temptarget_raises_sensitivity" = "Varsayılan olarak geçersizdir. Etkinleştirildiğinde > 105 mg/dL yüksek geçici hedefi, egzersiz_modu için duyarlılık Oranını ayarlar. high_temptarget_raises_sensitivity ile eşanlamlı";
 
 /* Headline "Wide BG Target Range" */
-"Wide BG Target Range" = "Wide BG Target Range";
+"Wide BG Target Range" = "Geniş KŞ Hedef Aralığı";
 
 /* "Wide BG Target Range" */
-"Defaults to false, which means by default only the low end of the pump’s BG target range is used as OpenAPS target. This is a safety feature to prevent too-wide targets and less-optimal outcomes. Therefore the higher end of the target range is used only for avoiding bolus wizard overcorrections. Use wide_bg_target_range: true to force neutral temps over a wider range of eventualBGs." = "Defaults to false, which means by default only the low end of the pump’s BG target range is used as OpenAPS target. This is a safety feature to prevent too-wide targets and less-optimal outcomes. Therefore the higher end of the target range is used only for avoiding bolus wizard overcorrections. Use wide_bg_target_range: true to force neutral temps over a wider range of eventualBGs.";
+"Defaults to false, which means by default only the low end of the pump’s BG target range is used as OpenAPS target. This is a safety feature to prevent too-wide targets and less-optimal outcomes. Therefore the higher end of the target range is used only for avoiding bolus wizard overcorrections. Use wide_bg_target_range: true to force neutral temps over a wider range of eventualBGs." = "Varsayılan olarak kapalıdır. Bu varsayılan olarak yalnızca pompanın KŞ hedef aralığının alt uc değerini OpenAPS hedefi olarak kullanıldığı anlamına gelir. Bu çok geniş hedefleri ve daha az optimal sonuçları önlemek için bir güvenlik özelliğidir. Bu nedenle, hedef aralığın üst uc değeri yalnızca bolus sihirbazı aşırı düzeltmelerinden kaçınmak için kullanılır. Daha geniş bir nihai KŞ aralığında doğal geçicileri (hedef-bazal) zorlamak için wide_bg_target_range: true kullanın.";
 
 /* Headline "Skip Neutral Temps" */
-"Skip Neutral Temps" = "Skip Neutral Temps";
+"Skip Neutral Temps" = "Doğal Geçici Hedefleri Atla";
 
 /* "Skip Neutral Temps" */
-"Defaults to false, so that iAPS will set temps whenever it can, so it will be easier to see if the system is working, even when you are offline. This means iAPS will set a “neutral” temp (same as your default basal) if no adjustments are needed. This is an old setting for OpenAPS to have the options to minimise sounds and notifications from the 'rig', that may wake you up during the night." = "Defaults to false, so that iAPS will set temps whenever it can, so it will be easier to see if the system is working, even when you are offline. This means OpenAPS will set a “neutral” temp (same as your default basal) if no adjustments are needed. This is an old setting for OpenAPS to have the options to minimise sounds and notifications form the 'rig', that may wake you up during the night. ";
+"Defaults to false, so that iAPS will set temps whenever it can, so it will be easier to see if the system is working, even when you are offline. This means iAPS will set a “neutral” temp (same as your default basal) if no adjustments are needed. This is an old setting for OpenAPS to have the options to minimise sounds and notifications from the 'rig', that may wake you up during the night." = "Varsayılan olarak kapalı olarak ayarlıdır, böylece iAPS mümkün olduğu kadar geçici süreler ayarlayacaktır, böylece çevrimdışı olduğunuzda bile sistemin çalışıp çalışmadığını görmek daha kolay olacaktır. Bu herhangi bir ayar gerekmiyorsa OpenAPS'nin \"nötr\" bir geçeci bazal ayarlayacağı (varsayılan bazalınızla aynı) anlamına gelir. Bu OpenAPS'in sizi gece uyandırabilecek \"rig\"tan gelen sesleri ve bildirimleri en aza indirme seçeneklerine sahip olduğu eski bir ayardır. ";
 
 /* Headline "Unsuspend If No Temp” */
-"Unsuspend If No Temp" = "Unsuspend If No Temp";
+"Unsuspend If No Temp" = "Aktif Geçici Hedef Yoksa Devam Et";
 
 /* "Unsuspend If No Temp” */
-"Many people occasionally forget to resume / unsuspend their pump after reconnecting it. If you’re one of them, and you are willing to reliably set a zero temp basal whenever suspending and disconnecting your pump, this feature has your back. If enabled, it will automatically resume / unsuspend the pump if you forget to do so before your zero temp expires. As long as the zero temp is still running, it will leave the pump suspended." = "Many people occasionally forget to resume / unsuspend their pump after reconnecting it. If you’re one of them, and you are willing to reliably set a zero temp basal whenever suspending and disconnecting your pump, this feature has your back. If enabled, it will automatically resume / unsuspend the pump if you forget to do so before your zero temp expires. As long as the zero temp is still running, it will leave the pump suspended.";
+"Many people occasionally forget to resume / unsuspend their pump after reconnecting it. If you’re one of them, and you are willing to reliably set a zero temp basal whenever suspending and disconnecting your pump, this feature has your back. If enabled, it will automatically resume / unsuspend the pump if you forget to do so before your zero temp expires. As long as the zero temp is still running, it will leave the pump suspended." = "Birçok kişi, pompayı yeniden bağladıktan sonra ara sıra pompasını çalıştırmayı / askıya alınmız pompayı tekrar çalıştırmayı unutur. Onlardan biriyseniz ve pompanızı askıya alırken ve bağlantısını keserken güvenilir bir şekilde sıfır geçici bazal ayarlamak istiyorsanız, bu özellik arkanızda. Etkinleştirildiği taktirde sıfır geçici oranı sona ermeden önce, pompayı otomatik olarak sürdürür / askıya alır. Sıfır geçici hala çalıştığı sürece, pompayı askıda bırakacaktır.";
 
 /* Headline "Enable UAM" */
-"Enable UAM" = "Enable UAM";
+"Enable UAM" = "UAM (Bildirilmemiş Öğünleri) etkinleştir";
 
 /* "Enable UAM" */
-"With this option enabled, the SMB algorithm can recognize unannounced meals. This is helpful, if you forget to tell iAPS about your carbs or estimate your carbs wrong and the amount of entered carbs is wrong or if a meal with lots of fat and protein has a longer duration than expected. Without any carb entry, UAM can recognize fast glucose increasments caused by carbs, adrenaline, etc, and tries to adjust it with SMBs. This also works the opposite way: if there is a fast glucose decreasement, it can stop SMBs earlier." = "With this option enabled, the SMB algorithm can recognize unannounced meals. This is helpful, if you forget to tell iAPS about your carbs or estimate your carbs wrong and the amount of entered carbs is wrong or if a meal with lots of fat and protein has a longer duration than expected. Without any carb entry, UAM can recognize fast glucose increasments caused by carbs, adrenaline, etc, and tries to adjust it with SMBs. This also works the opposite way: if there is a fast glucose decreasement, it can stop SMBs earlier.";
+"With this option enabled, the SMB algorithm can recognize unannounced meals. This is helpful, if you forget to tell iAPS about your carbs or estimate your carbs wrong and the amount of entered carbs is wrong or if a meal with lots of fat and protein has a longer duration than expected. Without any carb entry, UAM can recognize fast glucose increasments caused by carbs, adrenaline, etc, and tries to adjust it with SMBs. This also works the opposite way: if there is a fast glucose decreasement, it can stop SMBs earlier." = "Bu seçenek etkinleştirildiğinde, SMB algoritması bildirilmeyen öğünleri tanıyabilir. FreeAPS X'e karbonhidratlarınızı girmeyi unutursanız veya karbonhidratlarınızı yanlış tahmin ederseniz ve girilen karbonhidrat miktarı yanlışsa veya çok miktarda yağ ve protein içeren bir öğün beklenenden daha uzun sürerse bu yararlıdır. Herhangi bir karbonhidrat girişi olmadan, UAM karbonhidrat, adrenalin vb. kaynaklı hızlı glikoz artışlarını algılayabilir ve SMB'ler ile ayarlamaya çalışır. Bu aynı zamanda tam tersi şekilde çalışır: hızlı bir glikoz düşüşü varsa, SMB'leri daha erken durdurabilir.";
 
 /* Headline "Enable SMB With COB" */
-"Enable SMB With COB" = "Enable SMB With COB";
+"Enable SMB With COB" = "SMB'yi AKRB ile etkinleştir";
 
 /* Enable SMB With COB" */
-"This enables supermicrobolus (SMB) while carbs on board (COB) are positive." = "This enables supermicrobolus (SMB) while carbs on board (COB) are positive.";
+"This enables supermicrobolus (SMB) while carbs on board (COB) are positive." = "Bu aktif karbonhidrat (AKRB) pozitifken, süpermikrobolusu (SMB) sağlar.";
 
 /* Headline "Enable SMB With Temptarget” */
 "Enable SMB With Temptarget" = "Enable SMB With Temptarget";
 
 /* "Enable SMB With Temptarget” */
-"This enables supermicrobolus (SMB) with eating soon / low temp targets. With this feature enabled, any temporary target below 100mg/dL, such as a temp target of 99 (or 80, the typical eating soon target) will enable SMB." = "This enables supermicrobolus (SMB) with eating soon / low temp targets. With this feature enabled, any temporary target below 100mg/dL, such as a temp target of 99 (or 80, the typical eating soon target) will enable SMB.";
+"This enables supermicrobolus (SMB) with eating soon / low temp targets. With this feature enabled, any temporary target below 100mg/dL, such as a temp target of 99 (or 80, the typical eating soon target) will enable SMB." = "Bu yakında yemek / düşük geçici hedefler ile süpermikrobolus (SMB) sağlar. Bu özellik etkinleştirildiğinde geçici hedef 99 (veya 80, tipik yakında yeme hedefi) gibi herhangi bir geçici hedef 100mg/dL'nin altında SMB'yi etkinleştirecektir.";
 
 /* Headline "Enable SMB Always" */
-"Enable SMB Always" = "Enable SMB Always";
+"Enable SMB Always" = "SMB'yi Her Zaman Etkinleştir";
 
 /* "Enable SMB Always" */
-"Defaults to false. When true, always enable supermicrobolus (unless disabled by high temptarget)." = "Defaults to false. When true, always enable supermicrobolus (unless disabled by high temptarget).";
+"Defaults to false. When true, always enable supermicrobolus (unless disabled by high temptarget)." = "Varsayılan olarak geçersizdir. Geçerli olduğunda, her zaman supermicrobolus'u etkinleştirir (yüksek geçicihedef tarafından devre dışı bırakılmadığı sürece).";
 
 /* Headline "Enable SMB After Carbs" */
-"Enable SMB After Carbs" = "Enable SMB After Carbs";
+"Enable SMB After Carbs" = "Yemeklerden Sonra SMB'yi Etkinleştir";
 
 /* "Enable SMB After Carbs" */
-"Defaults to false. When true, enables supermicrobolus (SMB) for 6h after carbs, even with 0 carbs on board (COB)." = "Defaults to false. When true, enables supermicrobolus (SMB) for 6h after carbs, even with 0 carbs on board (COB).";
+"Defaults to false. When true, enables supermicrobolus (SMB) for 6h after carbs, even with 0 carbs on board (COB)." = "Varsayılan olarak geçersizdir. Geçerli olduğunda aktif karbonhidrat (AKRB) 0 olsa bile karbonhidratlardan sonra 6 saat boyunca süpermikrobolosu (SMB) etkinleştirir.";
 
 /* Enable "Allow SMB With High Temptarget" */
 "Allow SMB With High Temptarget" = "Allow SMB With High Temptarget";
@@ -1573,136 +1573,136 @@ Hours X-Axis (6 default)" = "Hours X-Axis (6 default)";
 "Allow SMB With High Temptarget" = "Allow SMB With High Temptarget";
 
 /* "Allow SMB With High Temptarget" */
-"Defaults to false. When true, allows supermicrobolus (if otherwise enabled) even with high temp targets (> 100 mg/dl)." = "Defaults to false. When true, allows supermicrobolus (if otherwise enabled) even with high temp targets (> 100 mg/dl).";
+"Defaults to false. When true, allows supermicrobolus (if otherwise enabled) even with high temp targets (> 100 mg/dl)." = "Varsayılan olarak geçersizdir. Geçerli olduğunda, yüksek geçici hedeflerinde bile süpermikrobolusa (aksi takdirde etkinleştirildiyse) izin verir.";
 
 /* Headline "Use Custom Peak Time” */
-"Use Custom Peak Time" = "Use Custom Peak Time";
+"Use Custom Peak Time" = "Özel Tepe Zamanı Kullan";
 
 /* "Use Custom Peak Time” */
-"Defaults to false. Setting to true allows changing insulinPeakTime" = "Defaults to false. Setting to true allows changing insulinPeakTime";
+"Defaults to false. Setting to true allows changing insulinPeakTime" = "Varsayılan olarak kapalıdır. Açılırsa, 'insulinPeakTime' değerinin değişmesine izin verir";
 
 /* Headline "Suspend Zeros IOB” */
-"Suspend Zeros IOB" = "Suspend Zeros IOB";
+"Suspend Zeros IOB" = "AİNS sıfırla Askıya Al";
 
 /* "Suspend Zeros IOB” */
-"Default is false. Any existing temp basals during times the pump was suspended will be deleted and 0 temp basals to negate the profile basal rates during times pump is suspended will be added." = "Default is false. Any existing temp basals during times the pump was suspended will be deleted and 0 temp basals to negate the profile basal rates during times pump is suspended will be added.";
+"Default is false. Any existing temp basals during times the pump was suspended will be deleted and 0 temp basals to negate the profile basal rates during times pump is suspended will be added." = "Varsayılan geçersizdir. Pompanın askıya alındığı zamanlarda mevcut tüm geçici bazallar silinecek ve pompanın askıya alındığı zamanlarda profil bazal oranlarını geçersizleştirmek için 0 geçici bazal eklenecektir.";
 
 /* Headline "Max IOB" */
-"Max IOB" = "Max IOB";
+"Max IOB" = "Maks AİNS";
 
 /* "Max IOB" */
-"Max IOB is the maximum amount of insulin on board from all sources – both basal (or SMB correction) and bolus insulin – that your loop is allowed to accumulate to treat higher-than-target BG. Unlike the other two OpenAPS safety settings (max_daily_safety_multiplier and current_basal_safety_multiplier), max_iob is set as a fixed number of units of insulin. As of now manual boluses are NOT limited by this setting. \n\n To test your basal rates during nighttime, you can modify the Max IOB setting to zero while in Closed Loop. This will enable low glucose suspend mode while testing your basal rates settings\n\n(Tip from https://www.loopandlearn.org/freeaps-x/#open-loop)." = "Max IOB is the maximum amount of insulin on board from all sources – both basal (or SMB correction) and bolus insulin – that your loop is allowed to accumulate to treat higher-than-target BG. Unlike the other two OpenAPS safety settings (max_daily_safety_multiplier and current_basal_safety_multiplier), max_iob is set as a fixed number of units of insulin. As of now manual boluses are NOT limited by this setting. \n\n To test your basal rates during nighttime, you can modify the Max IOB setting to zero while in Closed Loop. This will enable low glucose suspend mode while testing your basal rates settings\n\n(Tip from https://www.loopandlearn.org/freeaps-x/#open-loop).";
+"Max IOB is the maximum amount of insulin on board from all sources – both basal (or SMB correction) and bolus insulin – that your loop is allowed to accumulate to treat higher-than-target BG. Unlike the other two OpenAPS safety settings (max_daily_safety_multiplier and current_basal_safety_multiplier), max_iob is set as a fixed number of units of insulin. As of now manual boluses are NOT limited by this setting. \n\n To test your basal rates during nighttime, you can modify the Max IOB setting to zero while in Closed Loop. This will enable low glucose suspend mode while testing your basal rates settings\n\n(Tip from https://www.loopandlearn.org/freeaps-x/#open-loop)." = "Maks AİNS, hedeften daha yüksek KŞ'yi tedavi etmek için döngünüzün biriktirmesine izin verilen, hem bazal (veya SMB düzeltmesi) hem de bolus insülin olmak üzere tüm kaynaklardan alınan maksimum insülin miktarıdır. Diğer iki OpenAPS güvenlik ayarının (max_daily_safety_multiplier ve current_basal_safety_multiplier) aksine, max_ains, sabit sayıda insülin birimi olarak ayarlanır. Şu anda manuel boluslar bu ayarla SINIRLI DEĞİLDİR.\n\n Bazal oranlarınızı gece boyunca test etmek için Kapalı Döngüdeyken Maks AİNS ayarını sıfır olarak değiştirebilirsiniz. Bu, bazal oran ayarlarınızı test ederken düşük glikoz askıya alma modunu etkinleştirir\n\n(Ayrıntı için bağlantı https://www.loopandlearn.org/freeaps-x/#open-loop).";
 
 /* Headline "Max Daily Safety Multiplier" */
-"Max Daily Safety Multiplier" = "Max Daily Safety Multiplier";
+"Max Daily Safety Multiplier" = "Maksimum Günlük Güvenlik Çarpanı";
 
 /* "Max Daily Safety Multiplier" */
-"This is an important OpenAPS safety limit. The default setting (which is unlikely to need adjusting) is 3. This means that OpenAPS will never be allowed to set a temporary basal rate that is more than 3x the highest hourly basal rate programmed in a user’s pump, or, if enabled, determined by autotune." = "This is an important OpenAPS safety limit. The default setting (which is unlikely to need adjusting) is 3. This means that OpenAPS will never be allowed to set a temporary basal rate that is more than 3x the highest hourly basal rate programmed in a user’s pump, or, if enabled, determined by autotune.";
+"This is an important OpenAPS safety limit. The default setting (which is unlikely to need adjusting) is 3. This means that OpenAPS will never be allowed to set a temporary basal rate that is more than 3x the highest hourly basal rate programmed in a user’s pump, or, if enabled, determined by autotune." = "Bu önemli bir OpenAPS güvenlik sınırıdır. Varsayılan ayar (değiştirilmesine pek gerek duyulmaz) 3'tür. Bu, OpenAPS'nin bir kullanıcının pompasında programlanan en yüksek saatlik bazal hızın 3 katından daha fazla olan veya etkinleştirilirse belirlenen geçici bir bazal hızı ayarlamasına asla izin verilmeyeceği anlamına gelir. Belirlenen otoayar ile.";
 
 /* Headline "Current Basal Safety Multiplier" */
-"Current Basal Safety Multiplier" = "Current Basal Safety Multiplier";
+"Current Basal Safety Multiplier" = "Güncel Bazal Güvenlik Çarpanı";
 
 /* "Current Basal Safety Multiplier" */
-"This is another important OpenAPS safety limit. The default setting (which is also unlikely to need adjusting) is 4. This means that OpenAPS will never be allowed to set a temporary basal rate that is more than 4x the current hourly basal rate programmed in a user’s pump, or, if enabled, determined by autotune." = "This is another important OpenAPS safety limit. The default setting (which is also unlikely to need adjusting) is 4. This means that OpenAPS will never be allowed to set a temporary basal rate that is more than 4x the current hourly basal rate programmed in a user’s pump, or, if enabled, determined by autotune.";
+"This is another important OpenAPS safety limit. The default setting (which is also unlikely to need adjusting) is 4. This means that OpenAPS will never be allowed to set a temporary basal rate that is more than 4x the current hourly basal rate programmed in a user’s pump, or, if enabled, determined by autotune." = "Bu bir başka önemli OpenAPS güvenlik önlemidir. Varsayılan ayar (değiştirilmesine pek gerek duyulmaz) 4'tür. Bu OpenAPS'nin bir kullanıcının pompasında programlanan mevcut saatlik geçici bazal hızın 4 katından daha fazla geçici bir bazal hızı ayarlamasına asla izin verilmeyecektir ve etkinleştirildiyse, otoayar tarafından belirlenir.";
 
 /* Headline "Autosens Max" */
-"Autosens Max" = "Autosens Max";
+"Autosens Max" = "Otoduyarlılık Maks";
 
 /* "Autosens Max" */
-"This is a multiplier cap for autosens (and autotune) to set a 20% max limit on how high the autosens ratio can be, which in turn determines how high autosens can adjust basals, how low it can adjust ISF, and how low it can set the BG target." = "This is a multiplier cap for autosens (and autotune) to set a 20% max limit on how high the autosens ratio can be, which in turn determines how high autosens can adjust basals, how low it can adjust ISF, and how low it can set the BG target.";
+"This is a multiplier cap for autosens (and autotune) to set a 20% max limit on how high the autosens ratio can be, which in turn determines how high autosens can adjust basals, how low it can adjust ISF, and how low it can set the BG target." = "Bu otoduyarlılık oranının ne kadar yüksek olabileceğine dair %20'lik bir maksimum sınır belirlemek üzere otoduyarlılık (ve otoayar) için bir çarpan üst sınırıdır; bu otoduyarlılık bazallerı ne kadar yüksek ayarlayabileceğini, IDF'yi ne kadar düşük ayarlayabileceğini, KŞ hedefini kadar düşük ayarlayabileceğini belirler.";
 
 /* Headline "Autosens Min" */
-"Autosens Min" = "Autosens Min";
+"Autosens Min" = "Otoduyarlılık Min";
 
 /* "Autosens Min" */
-"The other side of the autosens safety limits, putting a cap on how low autosens can adjust basals, and how high it can adjust ISF and BG targets." = "The other side of the autosens safety limits, putting a cap on how low autosens can adjust basals, and how high it can adjust ISF and BG targets.";
+"The other side of the autosens safety limits, putting a cap on how low autosens can adjust basals, and how high it can adjust ISF and BG targets." = "Otoduyarlılık güvenlik sınırlarının diğer yönü, otoduyarlılığın bazallerı ne kadar düşük ayarlayabileceğine ve İDF ve KŞ hedeflerini ne kadar yüksek ayarlayabileceğine bir sınır koymasıdır.";
 
 /* Headline "Half Basal Exercise Target" */
-"Half Basal Exercise Target" = "Half Basal Exercise Target";
+"Half Basal Exercise Target" = "Yarım Bazal Egzersiz Hedefi";
 
 /* "Half Basal Exercise Target" */
-"Set to a number, e.g. 160, which means when temp target is 160 mg/dL and exercise_mode=true, run 50% basal at this level (120 = 75%; 140 = 60%). This can be adjusted, to give you more control over your exercise modes." = "Set to a number, e.g. 160, which means when temp target is 160 mg/dL and exercise_mode=true, run 50% basal at this level (120 = 75%; 140 = 60%). This can be adjusted, to give you more control over your exercise modes.";
+"Set to a number, e.g. 160, which means when temp target is 160 mg/dL and exercise_mode=true, run 50% basal at this level (120 = 75%; 140 = 60%). This can be adjusted, to give you more control over your exercise modes." = "Bir sayıya ayarlayın, örn. 160, yani geçici hedef 160 mg/dL ve egzersiz_modu=açık olduğunda, bu seviyede %50 bazal çalıştırın (120 = %75; 140 = %60). Bu egzersiz modlarınız üzerinde daha fazla kontrol sahibi olmanız için ayarlanabilir.";
 
 /* Headline "Max COB" */
-"Max COB" = "Max COB";
+"Max COB" = "Maks AKRB";
 
 /* "Max COB" */
-"This defaults maxCOB to 120 because that’s the most a typical body can absorb over 4 hours. (If someone enters more carbs or stacks more; OpenAPS will just truncate dosing based on 120. Essentially, this just limits AMA as a safety cap against weird COB calculations due to fluky data.)" = "This defaults maxCOB to 120 because that’s the most a typical body can absorb over 4 hours. (If someone enters more carbs or stacks more; OpenAPS will just truncate dosing based on 120. Essentially, this just limits AMA as a safety cap against weird COB calculations due to fluky data.)";
+"This defaults maxCOB to 120 because that’s the most a typical body can absorb over 4 hours. (If someone enters more carbs or stacks more; OpenAPS will just truncate dosing based on 120. Essentially, this just limits AMA as a safety cap against weird COB calculations due to fluky data.)" = "Bu varsayılan olarak maxAKRB'u 120'ye ayarlar çünkü bu, tipik bir vücudun 4 saatten fazla emebileceği en fazla değerdir. (Birisi daha fazla karbonhidrat yerse; OpenAPS, 120'ye dayalı dozlamayı keser. Esasen, bu, AMA'yı (Gelişmiş Yemek Asistanı), rastgele verilerden kaynaklanan tuhaf AKRB hesaplamalarına karşı bir güvenlik sınırı olarak sınırlar.)";
 
 /* Headline "Bolus Snooze DIA Divisor" */
-"Bolus Snooze DIA Divisor" = "Bolus Snooze DIA Divisor";
+"Bolus Snooze DIA Divisor" = "Erteleme Bolus İES Böleni";
 
 /* "Bolus Snooze DIA Divisor" */
-"Bolus snooze is enacted after you do a meal bolus, so the loop won’t counteract with low temps when you’ve just eaten. The example here and default is 2; so a 3 hour DIA means that bolus snooze will be gradually phased out over 1.5 hours (3DIA/2)." = "Bolus snooze is enacted after you do a meal bolus, so the loop won’t counteract with low temps when you’ve just eaten. The example here and default is 2; so a 3 hour DIA means that bolus snooze will be gradually phased out over 1.5 hours (3DIA/2).";
+"Bolus snooze is enacted after you do a meal bolus, so the loop won’t counteract with low temps when you’ve just eaten. The example here and default is 2; so a 3 hour DIA means that bolus snooze will be gradually phased out over 1.5 hours (3DIA/2)." = "Bolus erteleme, bir yemek bolusu yaptıktan sonra yürürlüğe girer, bu nedenle döngü, az önce yemek yediğinizde geçici düşük bazala etki etmez. Burada varsayılan örnek 2'dir; Dolayısıyla 3 saatlik bir İES, bolus ertelemenin kademeli olarak 1,5 saat (3İES/ 2) üzerinden aşamalı olarak sonlandırılacağı anlamına gelir.";
 
 /* Headline "Min 5m Carbimpact" */
-"Min 5m Carbimpact" = "Min 5m Carbimpact";
+"Min 5m Carbimpact" = "Min 5dk Karbetkisi";
 
 /* "Min 5m Carbimpact" */
-"This is a setting for default carb absorption impact per 5 minutes. The default is an expected 8 mg/dL/5min. This affects how fast COB is decayed in situations when carb absorption is not visible in BG deviations. The default of 8 mg/dL/5min corresponds to a minimum carb absorption rate of 24g/hr at a CSF of 4 mg/dL/g." = "This is a setting for default carb absorption impact per 5 minutes. The default is an expected 8 mg/dL/5min. This affects how fast COB is decayed in situations when carb absorption is not visible in BG deviations. The default of 8 mg/dL/5min corresponds to a minimum carb absorption rate of 24g/hr at a CSF of 4 mg/dL/g.";
+"This is a setting for default carb absorption impact per 5 minutes. The default is an expected 8 mg/dL/5min. This affects how fast COB is decayed in situations when carb absorption is not visible in BG deviations. The default of 8 mg/dL/5min corresponds to a minimum carb absorption rate of 24g/hr at a CSF of 4 mg/dL/g." = "Bu, 5 dakikada bir varsayılan karbonhidrat emilim etkisi için bir ayardır. Beklenen varsayılan değer 8 mg/dL/5dk'dır. Bu, KŞ sapmalarında karbonhidrat emiliminin görünmediği durumlarda AKRB'ın ne kadar hızlı bozulduğunu etkiler. Varsayılan 8 mg/dL/5dk, 4 mg/dL/g'lik bir BOS'ta 24g/saatlik minimum karbonhidrat emilim oranına karşılık gelir.";
 
 /* Headline "Autotune ISF Adjustment Fraction" */
-"Autotune ISF Adjustment Fraction" = "Autotune ISF Adjustment Fraction";
+"Autotune ISF Adjustment Fraction" = "OtoAyar İDF Ayarlama Oranı";
 
 /* "Autotune ISF Adjustment Fraction" */
 "The default of 0.5 for this value keeps autotune ISF closer to pump ISF via a weighted average of fullNewISF and pumpISF. 1.0 allows full adjustment, 0 is no adjustment from pump ISF." = "The default of 0.5 for this value keeps autotune ISF closer to pump ISF via a weighted average of fullNewISF and pumpISF. 1.0 allows full adjustment, 0 is no adjustment from pump ISF.";
 
 /* Headline "Remaining Carbs Fraction" */
-"Remaining Carbs Fraction" = "Remaining Carbs Fraction";
+"Remaining Carbs Fraction" = "Kalan Karbonhidrat Oranı";
 
 /* "Remaining Carbs Fraction" */
-"This is the fraction of carbs we’ll assume will absorb over 4h if we don’t yet see carb absorption." = "This is the fraction of carbs we’ll assume will absorb over 4h if we don’t yet see carb absorption.";
+"This is the fraction of carbs we’ll assume will absorb over 4h if we don’t yet see carb absorption." = "Bu değer henüz karbonhidrat emilimini görmediğimiz, 4 saatten fazla sürede emileceğini varsaydığımız karbonhidrat oranıdır.";
 
 /* Headline "Remaining Carbs Cap" */
-"Remaining Carbs Cap" = "Remaining Carbs Cap";
+"Remaining Carbs Cap" = "Kalan Karbonhidrat Sınırı";
 
 /* "Remaining Carbs Cap" */
-"This is the amount of the maximum number of carbs we’ll assume will absorb over 4h if we don’t yet see carb absorption." = "This is the amount of the maximum number of carbs we’ll assume will absorb over 4h if we don’t yet see carb absorption.";
+"This is the amount of the maximum number of carbs we’ll assume will absorb over 4h if we don’t yet see carb absorption." = "Bu henüz karbonhidrat emilimini görmezsek, 4 saatten fazla emeceğini varsaydığımız maksimum karbonhidrat miktarıdır.";
 
 /* Headline ”Max SMB Basal Minutes" */
-"Max SMB Basal Minutes" = "Max SMB Basal Minutes";
+"Max SMB Basal Minutes" = "Maks SMB Bazal Dakika";
 
 /* ”Max SMB Basal Minutes" */
-"Defaults to start at 30. This is the maximum minutes of basal that can be delivered as a single SMB with uncovered COB. This gives the ability to make SMB more aggressive if you choose. It is recommended that the value is set to start at 30, in line with the default, and if you choose to increase this value, do so in no more than 15 minute increments, keeping a close eye on the effects of the changes. It is not recommended to set this value higher than 90 mins, as this may affect the ability for the algorithm to safely zero temp. It is also recommended that pushover is used when setting the value to be greater than default, so that alerts are generated for any predicted lows or highs." = "Defaults to start at 30. This is the maximum minutes of basal that can be delivered as a single SMB with uncovered COB. This gives the ability to make SMB more aggressive if you choose. It is recommended that the value is set to start at 30, in line with the default, and if you choose to increase this value, do so in no more than 15 minute increments, keeping a close eye on the effects of the changes. It is not recommended to set this value higher than 90 mins, as this may affect the ability for the algorithm to safely zero temp. It is also recommended that pushover is used when setting the value to be greater than default, so that alerts are generated for any predicted lows or highs.";
+"Defaults to start at 30. This is the maximum minutes of basal that can be delivered as a single SMB with uncovered COB. This gives the ability to make SMB more aggressive if you choose. It is recommended that the value is set to start at 30, in line with the default, and if you choose to increase this value, do so in no more than 15 minute increments, keeping a close eye on the effects of the changes. It is not recommended to set this value higher than 90 mins, as this may affect the ability for the algorithm to safely zero temp. It is also recommended that pushover is used when setting the value to be greater than default, so that alerts are generated for any predicted lows or highs." = "Varsayılan değer 30'dan başlar. Bu, AKRB'ı tek bir SMB olarak teslim edilebilecek maksimum bazal dakikadır. Bu isterseniz SMB'leri daha agresif hale getirme yeteneği verir. Değerin varsayılana uygun olarak 30'da başlayacak şekilde ayarlanması ve bu değeri artırmayı seçerseniz, değişikliklerin etkilerini yakından takip ederek bunu 15 dakikalık artışlarla yapmanız önerilir. Algoritmanın güvenli bir şekilde geçici bazal'ı sıfırlayabilme yeteneğini etkileyebileceğinden, bu değeri 90 dakikadan daha yükseğe ayarlamanız önerilmez. Ayrıca, değeri varsayılandan daha büyük olarak ayarlarken bildirim özelliğinin kullanılması önerilir, böylece tahmin edilen herhangi bir düşük veya yüksek seviye için uyarılar oluşturulur.";
 
 /* Headline "Max UAM SMB Basal Minutes" */
 "Max UAM SMB Basal Minutes" = "Max UAM SMB Basal Minutes";
 
 /* "Max UAM SMB Basal Minutes" */
-"Defaults to start at 30. This is the maximum minutes of basal that can be delivered by UAM as a single SMB when IOB exceeds COB. This gives the ability to make UAM more or less aggressive if you choose. It is recommended that the value is set to start at 30, in line with the default, and if you choose to increase this value, do so in no more than 15 minute increments, keeping a close eye on the effects of the changes. Reducing the value will cause UAM to dose less insulin for each SMB. It is not recommended to set this value higher than 60 mins, as this may affect the ability for the algorithm to safely zero temp. It is also recommended that pushover is used when setting the value to be greater than default, so that alerts are generated for any predicted lows or highs." = "Defaults to start at 30. This is the maximum minutes of basal that can be delivered by UAM as a single SMB when IOB exceeds COB. This gives the ability to make UAM more or less aggressive if you choose. It is recommended that the value is set to start at 30, in line with the default, and if you choose to increase this value, do so in no more than 15 minute increments, keeping a close eye on the effects of the changes. Reducing the value will cause UAM to dose less insulin for each SMB. It is not recommended to set this value higher than 60 mins, as this may affect the ability for the algorithm to safely zero temp. It is also recommended that pushover is used when setting the value to be greater than default, so that alerts are generated for any predicted lows or highs.";
+"Defaults to start at 30. This is the maximum minutes of basal that can be delivered by UAM as a single SMB when IOB exceeds COB. This gives the ability to make UAM more or less aggressive if you choose. It is recommended that the value is set to start at 30, in line with the default, and if you choose to increase this value, do so in no more than 15 minute increments, keeping a close eye on the effects of the changes. Reducing the value will cause UAM to dose less insulin for each SMB. It is not recommended to set this value higher than 60 mins, as this may affect the ability for the algorithm to safely zero temp. It is also recommended that pushover is used when setting the value to be greater than default, so that alerts are generated for any predicted lows or highs." = "Varsayılan değer 30'dan başlar. Bu AİNS AKRB'yi aştığında UAM tarafından tek bir SMB olarak teslim edilebilecek maksimum bazal dakikadır. Bu isterseniz UAM'yi daha fazla veya daha az agresif hale getirme yeteneği verir. Değerin varsayılana uygun olarak 30'da başlayacak şekilde ayarlanması ve bu değeri artırmayı seçerseniz, değişikliklerin etkilerini yakından takip ederek bunu 15 dakikalık artışlarla yapmanız önerilir. Değerin düşürülmesi, UAM'nin her SMB için daha az insülin dozlamasına neden olacaktır. Algoritmanın güvenli bir şekilde geçici sıfırlayabilme yeteneğini etkileyebileceğinden, bu değeri 60 dakikadan daha yükseğe ayarlamanız önerilmez. Ayrıca değeri varsayılandan daha büyük olarak ayarlarken pushover'ın kullanılması önerilir, böylece tahmin edilen herhangi bir düşük veya yüksek seviye için uyarılar oluşturulur.";
 
 /* Headline "SMB Interval" */
-"SMB Interval" = "SMB Interval";
+"SMB Interval" = "SMB Aralığı";
 
 /* "SMB Interval" */
 "Minimum duration in minutes for new SMB since last SMB or manual bolus" = "Minimum duration in minutes for new SMB since last SMB or manual bolus";
 
 /* Headline "Bolus Increment" */
-"Bolus Increment" = "Bolus Increment";
+"Bolus Increment" = "Bolus Artırımı";
 
 /* "Bolus Increment" */
 "Smallest enacted SMB amount. Minimum amount for Omnipod pumps is 0.05 U, whereas for Medtronic pumps it differs for various models, from 0.025 U to 0.10 U. Please check the minimum bolus amount which can be delivered by your pump. The default value is 0.1." = "Smallest enacted SMB amount. Minimum amount for Omnipod pumps is 0.05 U, whereas for Medtronic pumps it differs for various models, from 0.025 U to 0.10 U. Please check the minimum bolus amount which can be delivered by your pump. The default value is 0.1.";
 
 /* Headline "Insulin Peak Time" */
-"Insulin Peak Time" = "Insulin Peak Time";
+"Insulin Peak Time" = "İnsülin Zirve Süresi";
 
 /* "Insulin Peak Time" */
-"Time of maximum blood glucose lowering effect of insulin, in minutes. Beware: Oref assumes for ultra-rapid (Lyumjev) & rapid-acting (Fiasp) curves minimal (35 & 50 min) and maximal (100 & 120 min) applicable insulinPeakTimes. Using a custom insulinPeakTime outside these bounds will result in issues with FreeAPS-X, longer loop calculations and possible red loops." = "Time of maximum blood glucose lowering effect of insulin, in minutes. Beware: Oref assumes for ultra-rapid (Lyumjev) & rapid-acting (Fiasp) curves minimal (35 & 50 min) and maximal (100 & 120 min) applicable insulinPeakTimes. Using a custom insulinPeakTime outside these bounds will result in issues with FreeAPS-X, longer loop calculations and possible red loops.";
+"Time of maximum blood glucose lowering effect of insulin, in minutes. Beware: Oref assumes for ultra-rapid (Lyumjev) & rapid-acting (Fiasp) curves minimal (35 & 50 min) and maximal (100 & 120 min) applicable insulinPeakTimes. Using a custom insulinPeakTime outside these bounds will result in issues with FreeAPS-X, longer loop calculations and possible red loops." = "İnsülinin maksimum kan şekerini düşürücü etkisinin dakika cinsinden süresi. Dikkat: Oref, ultra-rapid (Lyumjev) ve hızlı etkili (Fiasp) eğrilerin minimum (35 ve 50 dakika) ve maksimum (100 ve 120 dakika) uygulanabilir insülinPeakTimes olduğunu varsayar. Bu sınırların dışında özel bir insülinPeakTime kullanılması, FreeAPS-X, daha uzun döngü hesaplamaları ve olası kırmızı döngülerle ilgili sorunlara neden olacaktır.";
 
 /* Headline "Carbs Req Threshold" */
-"Carbs Req Threshold" = "Carbs Req Threshold";
+"Carbs Req Threshold" = "Karbonhidrat İhtiyac Eşiği";
 
 /* "Carbs Req Threshold" */
-"Grams of carbsReq to trigger a pushover. Defaults to 1 (for 1 gram of carbohydrate). Can be increased if you only want to get Pushover for carbsReq at X threshold." = "Grams of carbsReq to trigger a pushover. Defaults to 1 (for 1 gram of carbohydrate). Can be increased if you only want to get Pushover for carbsReq at X threshold.";
+"Grams of carbsReq to trigger a pushover. Defaults to 1 (for 1 gram of carbohydrate). Can be increased if you only want to get Pushover for carbsReq at X threshold." = "Bir itmeyi tetiklemek için gram karbonhidrat. Varsayılan 1'dir (1 gram karbonhidrat için). Yalnızca X eşiğinde carbsReq için itme almak istiyorsanız artırılabilir.";
 
 /* Headline "Noisy CGM Target Multiplier" */
-"Noisy CGM Target Multiplier" = "Noisy CGM Target Multiplier";
+"Noisy CGM Target Multiplier" = "Gürültülü CGM Hedef Çarpanı";
 
 /* "Noisy CGM Target Multiplier" */
-"Defaults to 1.3. Increase target by this amount when looping off raw/noisy CGM data" = "Defaults to 1.3. Increase target by this amount when looping off raw/noisy CGM data";
+"Defaults to 1.3. Increase target by this amount when looping off raw/noisy CGM data" = "Varsayılan olarak 1.3'tür. Ham/Gürültülü CGM verilerini devre dışı bırakırken hedefi bu miktarda artır";
 
 /* Headline "SMB DeliveryRatio" */
-"SMB DeliveryRatio" = "SMB DeliveryRatio";
+"SMB DeliveryRatio" = "SMB TeslimatOranı";
 
 /* SMB DeliveryRatio */
 "Default value: 0.5 This is another key OpenAPS safety cap, and specifies what share of the total insulin required can be delivered as SMB. Increase this experimental value slowly and with caution." = "Default value: 0.5 This is another key OpenAPS safety cap, and specifies what share of the total insulin required can be delivered as SMB. Increase this experimental value slowly and with caution.";
@@ -1710,25 +1710,25 @@ Hours X-Axis (6 default)" = "Hours X-Axis (6 default)";
 // Dynamic ISF + CR Settings:
 /* Headline "Adjust Dynamic ISF constant" */
 
-"Adjust Dynamic ISF constant" = "Adjust Dynamic ISF constant";
+"Adjust Dynamic ISF constant" = "Dinamik İDF sabitini ayarla";
 
 /* Adjust Dynamic ISF constant */
 "Adjust Dynamic ISF constant" = "Adjust Dynamic ISF constant";
 
 /* Enable Dynamic ISF, Headline */
-"Enable Dynamic ISF" = "Enable Dynamic ISF";
+"Enable Dynamic ISF" = "Dinamik İDF Etkinleştir";
 
 /* Headline "Enable Dynamic ISF" */
 "Enable Dynamic ISF" = "Enable Dynamic ISF";
 
 /* Enable Dynamic ISF */
-"Calculate a new ISF with every loop cycle. New ISF will be based on current BG, TDD of insulin (past 24 hours or a weighted average) and an Adjustment Factor (default is 1).\n\nDynamic ISF and CR ratios will be limited by your autosens.min/max limits.\n\nDynamic ratio replaces the autosens.ratio: New ISF = Static ISF / Dynamic ratio,\nDynamic ratio = profile.sens * adjustmentFactor * tdd * Math.log(BG/insulinFactor+1) / 1800,\ninsulinFactor = 120 - InsulinPeakTimeInMinutes" = "Calculate a new ISF with every loop cycle. New ISF will be based on current BG, TDD of insulin (past 24 hours or a weighted average) and an Adjustment Factor (default is 1).\n\nDynamic ISF and CR ratios will be limited by your autosens.min/max limits.\n\nDynamic ratio replaces the autosens.ratio: New ISF = Static ISF / Dynamic ratio,\nDynamic ratio = profile.sens * adjustmentFactor * tdd * Math.log(BG/insulinFactor+1) / 1800,\ninsulinFactor = 120 - InsulinPeakTimeInMinutes";
+"Calculate a new ISF with every loop cycle. New ISF will be based on current BG, TDD of insulin (past 24 hours or a weighted average) and an Adjustment Factor (default is 1).\n\nDynamic ISF and CR ratios will be limited by your autosens.min/max limits.\n\nDynamic ratio replaces the autosens.ratio: New ISF = Static ISF / Dynamic ratio,\nDynamic ratio = profile.sens * adjustmentFactor * tdd * Math.log(BG/insulinFactor+1) / 1800,\ninsulinFactor = 120 - InsulinPeakTimeInMinutes" = "Her döngü döngüsünde yeni bir İDF hesaplayın. Yeni İDF, mevcut BG'ye dayalı olacaktır, GTD'unuz (son 24 saat veya ağırlıklı bir ortalama) ve bir Ayarlama Faktörüne (varsayılan 1'dir) dayalı olacaktır.\n\nDinamik İDF ve KHO oranları, autosens.min/maks limitlerinizle sınırlanacaktır. .\n\nDinamik oran, autosens.ratio'nun yerini alır: Yeni İDF = Statik İDF / Dinamik oran,\nDynamic oran = profile.sens * AdjustFactor * tdd * Math.log(BG/insulinFactor+1) / 1800,\ninsulinFactor = 120 - İnsülinPeakTimeInMinutes";
 
 /* Headline "Enable Dynamic CR" */
-"Enable Dynamic CR" = "Enable Dynamic CR";
+"Enable Dynamic CR" = "Dinamik KHO Etkinleştir";
 
 /* Enable Dynamic CR */
-"Use Dynamic CR. The dynamic ratio will be used for CR as follows:\n\n When ratio > 1:  dynCR = (newRatio - 1) / 2 + 1.\nWhen ratio < 1: dynCR = CR/dynCR.\n\nDon't use toghether with a high Insulin Fraction (> 2)" = "Use Dynamic CR. The dynamic ratio will be used for CR as follows:\n\n When ratio > 1:  dynCR = (newRatio - 1) / 2 + 1.\nWhen ratio < 1: dynCR = CR/dynCR.\n\nDon't use toghether with a high Insulin Fraction (> 2)";
+"Use Dynamic CR. The dynamic ratio will be used for CR as follows:\n\n When ratio > 1:  dynCR = (newRatio - 1) / 2 + 1.\nWhen ratio < 1: dynCR = CR/dynCR.\n\nDon't use toghether with a high Insulin Fraction (> 2)" = "Dinamik KHO kullanın. Dinamik oran, KHO için şu şekilde kullanılacaktır:\n\n Oran > 1 olduğunda: dynCR = (newRatio - 1) / 2 + 1.\nOran < 1 olduğunda: dynCR = CR/dynCR.\n\nYüksek İnsülin Fraksiyonu (> 2) ile birlikte kullanmayın.";
 
 /* Headline "Adjust Dynamic ISF constant" */
 "Adjust Dynamic ISF constant" = "Adjust Dynamic ISF constant";
@@ -1738,14 +1738,14 @@ Hours X-Axis (6 default)" = "Hours X-Axis (6 default)";
 
 
 /* Headline "Use Sigmoid Function" */
-"Use Sigmoid Function" = "Use Sigmoid Function";
+"Use Sigmoid Function" = "Sigmoid Fonksiyonunu Kullan";
 
 /* Use Sigmoid Function */
 "Use a sigmoid function for ISF (and for CR, when enabled), instead of the default Logarithmic formula. Requires the Dynamic ISF setting to be enabled in settings\n\nThe Adjustment setting adjusts the slope of the curve (Y: Dynamic ratio, X: Blood Glucose). A lower value ==> less steep == less aggressive.\n\nThe autosens.min/max settings determines both the max/min limits for the dynamic ratio AND how much the dynamic ratio is adjusted. If AF is the slope of the curve, the autosens.min/max is the height of the graph, the Y-interval, where Y: dynamic ratio. The curve will always have a sigmoid shape, no matter which autosens.min/max settings are used, meaning these settings have big consequences for the outcome of the computed dynamic ISF. Please be careful setting a too high autosens.max value. With a proper profile ISF setting, you will probably never need it to be higher than 1.5\n\nAn Autosens.max limit > 1.5 is not advisable when using the sigmoid function." = "Use a sigmoid function for ISF (and for CR, when enabled), instead of the default Logarithmic formula. Requires the Dynamic ISF setting to be enabled in settings\n\nThe Adjustment setting adjusts the slope of the curve (Y: Dynamic ratio, X: Blood Glucose). A lower value ==> less steep == less aggressive.\n\nThe autosens.min/max settings determines both the max/min limits for the dynamic ratio AND how much the dynamic ratio is adjusted. If AF is the slope of the curve, the autosens.min/max is the height of the graph, the Y-interval, where Y: dynamic ratio. The curve will always have a sigmoid shape, no matter which autosens.min/max settings are used, meaning these settings have big consequences for the outcome of the computed dynamic ISF. Please be careful setting a too high autosens.max value. With a proper profile ISF setting, you will probably never need it to be higher than 1.5\n\nAn Autosens.max limit > 1.5 is not advisable when using the sigmoid function.";
 
 
 /* Headline "Threshold Setting" */
-"Threshold Setting (mg/dl)" = "Threshold Setting (mg/dl)";
+"Threshold Setting (mg/dl)" = "Eşik Ayarı (mg/dl)";
 
 /* Threshold Setting */
 "The default threshold in FAX depends on your current minimum BG target, as follows:\n\nIf your minimum BG target = 90 mg/dl -> threshold = 65 mg/dl,\n\nif minimum BG target = 100 mg/dl -> threshold = 70 mg/dl,\n\nminimum BG target = 110 mg/dl -> threshold = 75 mg/dl,\n\nand if minimum BG target = 130 mg/dl  -> threshold = 85 mg/dl.\n\nThis setting allows you to change the default to a higher threshold for looping with dynISF. Valid values are 65 mg/dl<= Threshold Setting <= 120 mg/dl." = "The default threshold in FAX depends on your current minimum BG target, as follows:\n\nIf your minimum BG target = 90 mg/dl -> threshold = 65 mg/dl,\n\nif minimum BG target = 100 mg/dl -> threshold = 70 mg/dl,\n\nminimum BG target = 110 mg/dl -> threshold = 75 mg/dl,\n\nand if minimum BG target = 130 mg/dl  -> threshold = 85 mg/dl.\n\nThis setting allows you to change the default to a higher threshold for looping with dynISF. Valid values are 65 mg/dl<= Threshold Setting <= 120 mg/dl.";
@@ -1757,34 +1757,34 @@ Hours X-Axis (6 default)" = "Hours X-Axis (6 default)";
 "Has to be > 0 and <= 1.\nDefault is 0.65 (65 %) * TDD. The rest will be from average of total data (up to 14 days) of all TDD calculations (35 %). To only use past 24 hours, set this to 1.\n\nTo avoid sudden fluctuations, for instance after a big meal, an average of the past 2 hours of TDD calculations is used instead of just the current TDD (past 24 hours at this moment)." = "Has to be > 0 and <= 1.\nDefault is 0.65 (65 %) * TDD. The rest will be from average of total data (up to 14 days) of all TDD calculations (35 %). To only use past 24 hours, set this to 1.\n\nTo avoid sudden fluctuations, for instance after a big meal, an average of the past 2 hours of TDD calculations is used instead of just the current TDD (past 24 hours at this moment).";
 
 /* Headline "Adjust basal" */
-"Adjust basal" = "Adjust basal";
+"Adjust basal" = "Bazalı ayarla";
 
 /* Enable adjustment of basal profile */
-"Enable adjustment of basal based on the ratio of current TDD / 7 day average TDD" = "Enable adjustment of basal based on the ratio of current TDD / 7 day average TDD";
+"Enable adjustment of basal based on the ratio of current TDD / 7 day average TDD" = "Geçerli GTD oranına göre bazal ayarı etkinleştirin / 7 günlük ortalama GTD";
 
 /* Headline "Max Delta-BG Threshold SMB" */
-"Max Delta-BG Threshold SMB" = "Max Delta-BG Threshold SMB";
+"Max Delta-BG Threshold SMB" = "Maks Delta-KŞ Eşik SMB";
 
 /* Max Delta-BG Threshold SMB */
 "Defaults to 0.2 (20%). Maximum positive percentual change of BG level to use SMB, above that will disable SMB. Hardcoded cap of 40%. For UAM fully-closed-loop 30% is advisable. Observe in log and popup (maxDelta 27 > 20% of BG 100 - disabling SMB!)." = "Defaults to 0.2 (20%). Maximum positive percentual change of BG level to use SMB, above that will disable SMB. Hardcoded cap of 40%. For UAM fully-closed-loop 30% is advisable. Observe in log and popup (maxDelta 27 > 20% of BG 100 - disabling SMB!).";
 
 /* Headline "... When Blood Glucose Is Over (mg/dl):" */
-"... When Blood Glucose Is Over (mg/dl):" = "... When Blood Glucose Is Over (mg/dl):";
+"... When Blood Glucose Is Over (mg/dl):" = "... Kan Şekeri Üzeri Olduğunda (mg/dl):";
 
 /* ... When Blood Glucose Is Over (mg/dl): */
-"Set the value enableSMB_high_bg will compare against to enable SMB. If BG > than this value, SMBs should enable." = "Set the value enableSMB_high_bg will compare against to enable SMB. If BG > than this value, SMBs should enable.";
+"Set the value enableSMB_high_bg will compare against to enable SMB. If BG > than this value, SMBs should enable." = "enableSMB_high_bg'nin SMB'yi etkinleştirmek için karşılaştıracağı değeri ayarlayın. KŞ > bu değerden büyükse SMB'ler etkin olmalıdır.";
 
 /* Headline "Enable SMB With High BG" */
-"Enable SMB With High BG" = "Enable SMB With High BG";
+"Enable SMB With High BG" = "Yüksek KŞ ile SMB'yi Etkinleştirin";
 
 /* "Enable SMB With High BG" */
-"Enable SMBs when a high BG is detected, based on the high BG target (adjusted or profile)" = "Enable SMBs when a high BG is detected, based on the high BG target (adjusted or profile)";
+"Enable SMBs when a high BG is detected, based on the high BG target (adjusted or profile)" = "Yüksek KŞ hedefine (ayarlanmış veya profil) bağlı olarak yüksek bir KŞ algılandığında SMB'leri etkinleştirin";
 
 /* Headline "Dynamic settings" */
-"Dynamic settings" = "Dynamic settings";
+"Dynamic settings" = "Dinamik Ayarlar";
 
 /* Insulin curve */
-"Insulin curve" = "Insulin curve";
+"Insulin curve" = "İnsülin eğrisi";
 
 /* Headline "Adjustment Factor" */
-"Adjustment Factor" = "Adjustment Factor";
+"Adjustment Factor" = "Düzeltme Katsayısı";
