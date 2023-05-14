@@ -153,10 +153,10 @@
 "Finish deactivation" = "Finish deactivation";
 
 /* Settings page link description when next lifecycle action is to replace pod */
-"Replace Pod" = "Substituir Pod";
+"Replace Pod" = "Replace Pod";
 
 /* Settings page link description when next lifecycle action is to replace pod */
-"Replace Pod" = "Substituir Pod";
+"Replace Pod" = "Replace Pod";
 
 /* Label for pod life state when pod not fully activated */
 "Unfinished Activation" = "Unfinished Activation";
@@ -183,7 +183,7 @@
 "Remaining" = "Restante";
 
 /* Label indicating pod replacement necessary */
-"Replace Pod" = "Substituir Pod";
+"Replace Pod" = "Replace Pod";
 
 /* Error message shown when no pod is paired */
 "No pod paired" = "No pod paired";
@@ -321,10 +321,10 @@
 "Set Temporary Basal Rate" = "Set Temporary Basal Rate";
 
 /* Section header for activity section */
-"Activity" = "Atividade";
+"Activity" = "Activity";
 
 /* Section header for configuration section */
-"Configuration" = "Ajustes";
+"Configuration" = "Configuration";
 
 /* Title for previous pod page */
 "Previous Pod" = "Previous Pod";
@@ -466,7 +466,7 @@
 "Check Pod, apply to site, then confirm pod attachment." = "Check Pod, apply to site, then confirm pod attachment.";
 
 /* Action button title for attach pod view */
-"Continue" = "Continuar";
+"Continue" = "Continue";
 
 /* */
 "Attach Pod" = "Attach Pod";
@@ -576,7 +576,7 @@
 "Notification Settings" = "Notification Settings";
 
 /* Label for scheduled reminder value row */
-"Time" = "Hora";
+"Time" = "Time";
 
 /* Value text for no expiration reminder */
 "No Reminder" = "No Reminder";
@@ -673,7 +673,7 @@
 "Pod Activated" = "Pod Activated";
 
 /* description label for active time pod details row */
-"Active Time" = "Tempo Ativo";
+"Active Time" = "Active Time";
 
 /* description label for last status date pod details row */
 "Last Status" = "Last Status";
@@ -688,10 +688,10 @@
 "You will now begin the process of configuring your reminders, filling your Pod with insulin, pairing to your device and placing it on your body." = "You will now begin the process of configuring your reminders, filling your Pod with insulin, pairing to your device and placing it on your body.";
 
 /* Cancel button title */
-"Cancel" = "Cancelar";
+"Cancel" = "Cancel";
 
 /* Text for continue button on PodSetupView */
-"Continue" = "Continuar";
+"Continue" = "Continue";
 
 /* Are you sure you want to skip Omnipod Onboarding? */
 "Skip Omnipod Onboarding?" = "Skip Omnipod Onboarding?";
