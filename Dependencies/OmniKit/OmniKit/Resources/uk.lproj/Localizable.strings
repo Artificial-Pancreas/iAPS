@@ -1,0 +1,37 @@
+
+/* Delivery status when bolusing */
+"Bolusing" = "Подаю болюс";
+
+/* Pod state when pod has been deactivated */
+"Deactivated" = "Деактивовано";
+
+/* Error message shown when no pod is paired */
+"No pod paired" = "Немає підключеного Pod";
+
+/* Delivery status when basal is running
+   Pod state when running above fifty units */
+"Normal" = "Нормальний";
+
+/* Pod status after pairing */
+"Paired" = "Пов'язані";
+
+/* Recover suggestion shown when no pod is paired */
+"Please pair a new pod" = "Будь ласка, підключіть новий Pod";
+
+/* Error message shown when user cannot pair because pod is already paired */
+"Pod already paired" = "Pod вже з'єднано";
+
+/* Description for Pod expired pod fault */
+"Pod expired" = "Термін дії Pod минув";
+
+/* Error message when cannula insertion fails because the pod is in an unexpected state */
+"Pod is not in a state ready for cannula insertion." = "Pod не готовий для введення канюли.";
+
+/* Delivery status when basal is running */
+"Scheduled Basal" = "Запланований базал";
+
+/* Recovery suggestion when operation could not be completed due to existing bolus in progress */
+"Wait for existing bolus to finish, or cancel bolus" = "Зачекайте, поки поточний болюс закінчиться, або скасуйте болюс";
+
+/* Recovery suggestion when operation could not be completed due to existing temp basal in progress */
+"Wait for existing temp basal to finish, or suspend to cancel" = "Зачекайте, доки завершиться наявний тимчасовий базал, або призупиніть, щоб скасувати";
