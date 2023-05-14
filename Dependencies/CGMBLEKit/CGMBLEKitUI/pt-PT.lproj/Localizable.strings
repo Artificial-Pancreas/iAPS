@@ -1,0 +1,9 @@
+
+/* The title of the cancel action in an action sheet */
+"Cancel" = "Cancelar";
+
+/* Title describing glucose date */
+"Date" = "Data";
+
+/* The title text for the Dexcom G5/G6 transmitter ID config value */
+"Transmitter ID" = "ID do transmissor";
