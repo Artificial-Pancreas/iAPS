@@ -1,0 +1,13 @@
+
+/* The title of the cancel action in an action sheet */
+"Cancel" = "Cancelar";
+
+/* The title of the configuration section in settings */
+"Configuration" = "Ajustes";
+
+/* Title of button to save delivery limit settings
+   Title of button to sync basal profile when no pod paired */
+"Save" = "Salvar";
+
+/* The detail text of the basal row when pod is running scheduled basal */
+"Schedule" = "Agenda";
