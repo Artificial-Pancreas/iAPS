@@ -197,9 +197,6 @@
 "Ratio" = "Коефіцієнт";
 
 /*  */
-"Autosens" = "Autosens";
-
-/*  */
 "Calculated Sensitivity" = "Розрахована Чутливість";
 
 /*  */
@@ -317,20 +314,11 @@ Enact a temp Basal or a temp target */
 /* Unit in number of units delivered (keep the space character!) */
 " U" = "U";
 
-/* /Insulin unit */
-"/U" = "/U";
-
-/* Insulin unit */
-"U" = "U";
-
 /* Unit per hour with space */
 " U/hr" = " U/год";
 
 /* Number of units per hour*/
 "%@ U/hr" = " %@U/год";
-
-/* Number of units insulin delivered */
-"%@ U" = "%@ U";
 
 /*Carb ratio unit */
 "g/U" = "гр/U";
@@ -401,9 +389,6 @@ Enact a temp Basal or a temp target */
 /* Type of CGM or glucose source */
 "Type" = "Тип";
 
-/* CGM */
-"CGM" = "CGM";
-
 /* CGM Transmitter ID */
 "Transmitter ID" = "ID передавача";
 
@@ -451,9 +436,6 @@ Enact a temp Basal or a temp target */
 
 /* */
 "Other" = "Інше";
-
-/* */
-"Libre Transmitter" = "Libre Transmitter";
 
 /* */
 "Libre Transmitters" = "Libre трансміттери";
@@ -962,9 +944,6 @@ Enact a temp Basal or a temp target */
 /* Debug option view NS Uploaded Profile */
 "NS Uploaded Profile" = "NS Завантажений профіль";
 
-/* Debug option view Autosense */
-"Autosense" = "Autosense";
-
 /* Debug option view Pump History */
 "Pump History" = "Історія помпи";
 
@@ -1003,10 +982,6 @@ Enact a temp Basal or a temp target */
 
 /* Debug option view Glucose Data used for statistics */
 "Glucose Data used for statistics" = "Дані про рівень глюкози використовуються для статистики";
-
-/* --------------- HealthKit intergration --------------------*/
-/* */
-"Apple Health" = "Apple Health";
 
 /* */
 "Connect to Apple Health" = "З'єднатися з Apple Health";
@@ -1048,9 +1023,6 @@ Enact a temp Basal or a temp target */
 "Enable" = "Увімкнути";
 
 /* Header */
-"Convert Fat and Protein" = "Перетворення жиру та білка";
-
-/* Header */
 "Conversion settings" = "Налаштування конвертації";
 
 /* Delay */
@@ -1068,7 +1040,7 @@ Enact a temp Basal or a temp target */
 /* Description */
 "Allows fat and protein to be converted into future carb equivalents using the Warsaw formula of kilocalories divided by 10.\n\nThis spreads the carb equivilants over a maximum duration setting that can be configured from 5-12 hours.\n\nDelay is time from now until the first future carb entry.\n\nInterval in minutes is how many minutes are between entries. The shorter the interval, the smoother the result. 10, 15, 20, 30, or 60 are reasonable choices.\n\nAdjustment factor is how much effect the fat and protein has on the entries. 1.0 is full effect (original Warsaw Method) and 0.5 is half effect. Note that you may find that your normal carb ratio needs to increase to a larger number if you begin adding fat and protein entries. For this reason, it is best to start with a factor of about 0.5 to ease into it.\n\nDefault settings: Time Cap: 8 h, Interval: 30 min, Factor: 0.5, Delay 60 min" = "Дозволяє конвертувати жир і білок у майбутні вуглеводні еквіваленти за допомогою варшавської формули кілокалорій, поділених на 10.\n\nЦе розподіляє вуглеводні еквіваленти на максимальну тривалість, яку можна налаштувати від 8 до 12 годин.\n\nІнтервал у хвилинах скільки хвилин між записами. Чим коротший інтервал, тим плавніші результати, але стає важче вручну видалити записи, якщо пізніше ви захочете їх видалити. 10, 15, 20, 30 або 60 — це розумний вибір.\n\nЗатримка — це час від теперішнього моменту до першого майбутнього введення вуглеводів.\n\nКоефіцієнт коригування — це те, наскільки жир і білок впливають на введення. 1,0 – повний ефект, а 0,5 – половинний. Зауважте, що ви можете виявити, що ваше нормальне співвідношення вуглеводів має збільшитися до більшої кількості, якщо ви почнете додавати жири та білки. З цієї причини найкраще починати з коефіцієнта приблизно 0,5, щоб легше його зрозуміти.\n\nНалаштування за замовчуванням: обмеження часу: 8 годин, інтервал: 30 хвилин, коефіцієнт: 0,5, затримка 60 хвилин";
 
-/* Title */
+/* FPU Settings Title */
 "Fat and Protein" = "Жир і білок";
 
 /* Add Fat */
@@ -1077,14 +1049,11 @@ Enact a temp Basal or a temp target */
 /* Add Protein */
 "Protein" = "Білки";
 
-/* Setting */
+/* Service Section */
 "Fat And Protein Conversion" = "Перетворення жиру та білка";
 
 /* Alert text */
 "Delete carb equivalents?" = "Видалити вуглеводні еквіваленти?";
-
-/* Section in settings */
-"Protein / Fat" = "Білок / Жир";
 
 /* */
 "Meal Presets" = "Попередні налаштування їжі";
@@ -1245,41 +1214,23 @@ Enact a temp Basal or a temp target */
 /* Alert title for suspend error */
 "Failed to Suspend Insulin Delivery" = "Не вдалося призупинити доставку інсуліну";
 
-//* -----------------------------------------------------------------------*/
-/* ----------------------Statistics strings -------------------------------*/
+/* */
+"Total" = "Всього";
+
 /* Headline Statistics */
-
-
 "Statistics" = "Статистика";
 
-/* Option in preferences */
-"Display Statistics" = "Показати статистику";
+/* Low Glucose Threshold in Statistics settings */
+"Low" = "Низький";
 
-/* infoText: Description for Display Statistics */
-"Displays Statistics under the chart view" = "Відображає статистику під вікном діаграми";
-
-/* Low Glucose Limit option in preferences */
-"Low Glucose Limit" = "Низька межа глюкози";
-
-/* High Glucose Limit option in preferences */
-"High Glucose Limit" = "Висока межа глюкози";
-
-/* infoText: Description for Low Glucose Limit */
-"BG Under This Value Will Be Displayed As Low Glucose Percentage" = "BG під цим значенням відображатиметься як низький відсоток глюкози";
-/* infoText: Description for High Glucose Limit */
-"BG Under This Value Will Be Displayed As High Glucose Percentage" = "BG під цим значенням буде відображатися як відсоток перебування з високим рівнем глюкози";
-
-/* When statistics.json was last updated */
-"Updated" = "Оновлено";
+/* High Glucose Threshold in Statistics settings */
+"High" = "Високий";
 
 /* Average BG = */
 "Average" = "Середній";
 
 /* Median BG */
 "Median" = "Медіана";
-
-/* CGM readings in statPanel */
-"Readings" = "Читання";
 
 /* Normal BG (within TIR) */
 "Normal" = "Нормальний";
@@ -1289,15 +1240,6 @@ Enact a temp Basal or a temp target */
 
 /* Title Low BG in statPanel */
 "Low (<" = "Низький (<";
-
-/* SD */
-"SD" = "SD";
-
-/* CV */
-"CV" = "CV";
-
-/* Estimated HbA1c */
-"HbA1c" = "HbA1c";
 
 /* Total number of days of data for HbA1c estimation, part 1/2*/
 "All" = "Все";
@@ -1349,9 +1291,6 @@ Enact a temp Basal or a temp target */
 
 /* Description for Display Loop statistics */
 "Displays Loop statistics in the statPanel in Home View" = "Відображає статистику циклів петлі на панелі статистики, яка відображається на головному екрані";
-
-/* Display % */
-"Override HbA1c unit" = "Замінити одиницю HbA1c";
 
 /* Description for Override HbA1c unit */
 "Change default HbA1c unit in statPanlel. The unit in statPanel will be updateded with next statistics.json update" = "Змінити одиниці виміру HbA1c на панелі статистики. Одиниці виміру оновляться під час наступного оновлення файлу statistics.json";
@@ -1549,9 +1488,6 @@ Enact a temp Basal or a temp target */
 
 /* Headline "Autotune ISF Adjustment Fraction" */
 "Autotune ISF Adjustment Fraction" = "Частка регулювання ISF Автотюном";
-
-/* "Autotune ISF Adjustment Fraction" */
-"The default of 0.5 for this value keeps autotune ISF closer to pump ISF via a weighted average of fullNewISF and pumpISF. 1.0 allows full adjustment, 0 is no adjustment from pump ISF." = "The default of 0.5 for this value keeps autotune ISF closer to pump ISF via a weighted average of fullNewISF and pumpISF. 1.0 allows full adjustment, 0 is no adjustment from pump ISF.";
 
 /* Headline "Remaining Carbs Fraction" */
 "Remaining Carbs Fraction" = "Частка вуглеводів, що залишилися.";
