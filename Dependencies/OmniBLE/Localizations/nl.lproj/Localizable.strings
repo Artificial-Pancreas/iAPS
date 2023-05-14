@@ -30,7 +30,7 @@
 "Time Change Detected" = "Wijziging in tijd gedetecteerd";
 
 /* Alert content body for multiCommand pod alert */
-"Multiple Command Alert" = "Waarschuwing voor meerdere commando's";
+"Multiple Command Alert" = "Multiple Command Alert";
 
 /* Format string for alert content body for userPodExpiration pod alert. (1: time until expiration) */
 "Pod expires in %1$@." = "Pod verloopt in %1$@.";
@@ -45,7 +45,7 @@
 "%1$@ insulin or less remaining in Pod. Change Pod soon." = "%1$@ insuline of minder resterend in Pod. Vervang binnenkort Pod.";
 
 /* Alert content body for suspendInProgress pod alert */
-"Suspend In Progress Reminder" = "Onderbreek in voortgang herinnering";
+"Suspend In Progress Reminder" = "Suspend In Progress Reminder";
 
 /* Alert content body for suspendEnded pod alert */
 "The insulin suspension period has ended.\n\nYou can resume delivery from the banner on the home screen or from your pump settings screen. You will be reminded again in 15 minutes." = "De insuline opschortingsperiode is afgelopen.\n\nU kunt de toediening hervatten via de banner op het beginscherm of via de pompinstellingen. U wordt na 15 minuten opnieuw herinnerd.";
@@ -150,28 +150,28 @@
 "Configuration" = "Instellingen";
 
 /* Settings page link description when next lifecycle action is to finish deactivation */
-"Finish deactivation" = "Voltooi de deactivering";
+"Finish deactivation" = "Finish deactivation";
 
 /* Settings page link description when next lifecycle action is to replace pod */
-"Replace Pod" = "Vervang pod";
+"Replace Pod" = "Replace Pod";
 
 /* Settings page link description when next lifecycle action is to replace pod */
-"Replace Pod" = "Vervang pod";
+"Replace Pod" = "Replace Pod";
 
 /* Label for pod life state when pod not fully activated */
-"Unfinished Activation" = "Onvoltooide activering";
+"Unfinished Activation" = "Unfinished Activation";
 
 /* Label for pod life state when time remaining */
-"Pod expires in" = "Pod verloopt in";
+"Pod expires in" = "Pod expires in";
 
 /* Label for pod life state when within pod expiration window */
-"Pod expired" = "Pod verlopen";
+"Pod expired" = "Pod expired";
 
 /* Label for pod life state when pod not fully deactivated */
-"Unfinished deactivation" = "Onvoltooide activering";
+"Unfinished deactivation" = "Unfinished deactivation";
 
 /* Label for pod life state when no pod paired */
-"No Pod" = "Geen Pod";
+"No Pod" = "No Pod";
 
 /* Pod life HUD view label */
 "Fault" = "Fout";
@@ -183,7 +183,7 @@
 "Remaining" = "Resterend";
 
 /* Label indicating pod replacement necessary */
-"Replace Pod" = "Vervang pod";
+"Replace Pod" = "Replace Pod";
 
 /* Error message shown when no pod is paired */
 "No pod paired" = "Geen pod verbonden";
@@ -216,13 +216,13 @@
 "Finish Deactivation" = "Voltooi de deactivering";
 
 /* Status highlight that when no pod is paired. */
-"No Pod" = "Geen Pod";
+"No Pod" = "No Pod";
 
 /* Status highlight message for emptyReservoir alarm. */
 "No Insulin" = "Geen insuline";
 
 /* Status highlight message for podExpired alarm. */
-"Pod Expired" = "Pod verlopen";
+"Pod Expired" = "Pod Expired";
 
 /* Status highlight message for occlusion alarm. */
 "Pod Occlusion" = "Pod bezetting";
@@ -231,7 +231,7 @@
 "Pod Error" = "Pod error";
 
 /* Status highlight that a pump is out of insulin. */
-"No Insulin" = "Geen insuline";
+"No Insulin" = "No Insulin";
 
 /* Status highlight that insulin delivery was suspended. */
 "Insulin Suspended" = "Insuline tijdelijk uitgeschakeld";
@@ -315,16 +315,16 @@
 "Insulin delivery stopped. Change Pod now." = "Insuline toediening gestopt. Vervang Pod nu.";
 
 /* Header for insulin remaining on pod settings screen */
-"Insulin Remaining" = "Resterende insuline";
+"Insulin Remaining" = "Insulin Remaining";
 
 /* Button title to set temporary basal rate */
 "Set Temporary Basal Rate" = "Stel tijdelijke basaal in";
 
 /* Section header for activity section */
-"Activity" = "Activiteit";
+"Activity" = "Activity";
 
 /* Section header for configuration section */
-"Configuration" = "Instellingen";
+"Configuration" = "Configuration";
 
 /* Title for previous pod page */
 "Previous Pod" = "Vorige Pod";
@@ -363,7 +363,7 @@
 "Insulin Type" = "Insuline soort";
 
 /* The title of the command to change pump time zone */
-"Sync to Current Time" = "Zet naar huidige tijd";
+"Sync to Current Time" = "Sync to Current Time";
 
 /* Title for suspend duration selection action sheet */
 "Suspend Delivery" = "Onderbreek toediening";
@@ -409,7 +409,7 @@
 "Pod deactivated successfully. Continue." = "Pod met succes gedeactiveerd. Doorgaan.";
 
 /* Action button description for deactivate after failed attempt */
-"Retry" = "Opnieuw proberen";
+"Retry" = "Retry";
 
 /* Action button description when deactivated */
 "Continue" = "Vervolg";
@@ -466,7 +466,7 @@
 "Check Pod, apply to site, then confirm pod attachment." = "Pod controleren, breng aan op de plek op je lichaam, dan pod bevestigen.";
 
 /* Action button title for attach pod view */
-"Continue" = "Vervolg";
+"Continue" = "Continue";
 
 /* */
 "Attach Pod" = "Bevestig Pod";
@@ -562,7 +562,7 @@
 "This is a reminder that you scheduled when you paired your current Pod." = "Dit is een herinnering die u hebt gepland toen u uw huidige Pod koppelde.";
 
 /* */
-"Scheduled Reminder" = "Geplande herinnering";
+"Scheduled Reminder" = "Scheduled Reminder";
 
 /* Footer text for low reservoir value row */
 "The App notifies you when the amount of insulin in the Pod reaches this level." = "De App meldt u wanneer de hoeveelheid insuline in de Pod dit niveau bereikt.";
@@ -573,13 +573,13 @@
 /* Description text for critical alerts */
 "The reminders above will not sound if your device is in Silent or Do Not Disturb mode.\n\nThere are other critical Pod alerts and alarms that will sound even if you device is set to Silent or Do Not Disturb mode." = "De bovenstaande herinneringen waarschuwen zonder geluid als uw apparaat in de modus Stil of Niet storen staat.\n\nEr zijn nog andere belangrijke Pod waarschuwingen en -alarmen die klinken, zelfs als uw apparaat in de modus Stil of Niet storen staat.";
 /* navigation title for notification settings */
-"Notification Settings" = "Instellingen voor meldingen";
+"Notification Settings" = "Notification Settings";
 
 /* Label for scheduled reminder value row */
-"Time" = "Tijd";
+"Time" = "Time";
 
 /* Value text for no expiration reminder */
-"No Reminder" = "Geen herinnering";
+"No Reminder" = "No Reminder";
 
 /* Label for low reservoir reminder row */
 "Low Reservoir Reminder" = "Laag reservoir herinnering";
@@ -670,10 +670,10 @@
 "BLE Firmware Version" = "BLE Firmware versie";
 
 /* description label for activated at timne pod details row */
-"Pod Activated" = "Pod geactiveerd";
+"Pod Activated" = "Pod Activated";
 
 /* description label for active time pod details row */
-"Active Time" = "Activatie tijd";
+"Active Time" = "Active Time";
 
 /* description label for last status date pod details row */
 "Last Status" = "Laatste status";
@@ -688,10 +688,10 @@
 "You will now begin the process of configuring your reminders, filling your Pod with insulin, pairing to your device and placing it on your body." = "Je zal nu beginnen met het configureren van je herinneringen, het vullen van je Pod met insuline, het koppelen van je apparaat en het plaatsen in je lichaam.";
 
 /* Cancel button title */
-"Cancel" = "Annuleer";
+"Cancel" = "Cancel";
 
 /* Text for continue button on PodSetupView */
-"Continue" = "Vervolg";
+"Continue" = "Continue";
 
 /* Are you sure you want to skip Omnipod Onboarding? */
 "Skip Omnipod Onboarding?" = "Omnipod onboarding overslaan?";
@@ -709,7 +709,7 @@
 "The App notifies you when the amount of insulin in the Pod reaches this level (50-10 U).\n\nScroll to set the number of units at which you would like to be reminded." = "De app laat je weten wanneer de hoeveelheid insuline in de Pod dit niveau bereikt (50-10 E).\n\nScroll om het aantal eenheden in te stellen waarop u wilt worden herinnerd.";
 
 /* Label text for low reservoir value row */
-"Low Reservoir" = "Laag reservoir niveau";
+"Low Reservoir" = "Low Reservoir";
 
 /* */
 "Save" = "Opslaan";
@@ -772,13 +772,13 @@
 "Crosstalk possible. Please move to a new location" = "Verstoring mogelijk. Ga naar een nieuwe locatie en probeer het opnieuw";
 
 /* Recovery suggestion when no pod is available */
-"Make sure your pod is nearby and try again." = "Zorg dat je iPhone in de buurt is en probeer opnieuw.";
+"Make sure your pod is nearby and try again." = "Make sure your pod is nearby and try again.";
 
 /* Recovery suggestion when operation could not be completed due to existing bolus in progress */
 "Wait for existing bolus to finish, or cancel bolus" = "Wacht op huidige bolus of maak bolus ongedaan";
 
 /* Recovery suggestion when operation could not be completed due to existing bolus in progress */
-"Wait for existing bolus to finish, or cancel bolus" = "Wacht op huidige bolus of maak bolus ongedaan";
+"Wait for existing bolus to finish, or cancel bolus" = "Wait for existing bolus to finish, or cancel bolus";
 
 /* Recovery suggestion when operation could not be completed due to existing temp basal in progress */
 "Wait for existing temp basal to finish, or suspend to cancel" = "Wacht op huidig tijdelijk basaal of onderbreek om te annuleren";
