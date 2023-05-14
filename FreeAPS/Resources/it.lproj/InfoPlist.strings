@@ -1,17 +1,17 @@
 /* Privacy - NFC Scan Usage Description */
-"NFCReaderUsageDescription" = "NFC è usato per scansionare i sensori di Libre.";
+"NFCReaderUsageDescription" = "NFC is used to scan Libre sensors.";
 
 /* Privacy - Bluetooth Always Usage Description */
-"NSBluetoothAlwaysUsageDescription" = "Il bluetooth viene utilizzato per comunicare con il microinfusore e i dispositivi CGM";
+"NSBluetoothAlwaysUsageDescription" = "Bluetooth is used to communicate with insulin pump and continuous glucose monitor devices";
 
 /* Privacy - Bluetooth Peripheral Usage Description */
-"NSBluetoothPeripheralUsageDescription" = "Il Bluetooth viene utilizzato per comunicare con il microinfusore e i dispositivi CGM";
+"NSBluetoothPeripheralUsageDescription" = "Bluetooth is used to communicate with insulin pump and continuous glucose monitor devices";
 
 /* Privacy - Face ID Usage Description */
-"NSFaceIDUsageDescription" = "Per accesso autorizzato al bolo";
+"NSFaceIDUsageDescription" = "For authorized acces to bolus";
 
 /* Privacy - Calendars Usage Description */
-"NSCalendarsUsageDescription" = "Il calendario è usato per creare nuovi eventi di glicemia.";
+"NSCalendarsUsageDescription" = "Calendar is used to create a new glucose events.";
 
 /* Privacy - Health Update Usage Description */
 "NSHealthUpdateUsageDescription" = "Health App is used to store blood glucose, insulin and carbohydrates";
