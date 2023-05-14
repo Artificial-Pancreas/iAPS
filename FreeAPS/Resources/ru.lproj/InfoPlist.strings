@@ -1,20 +1,20 @@
 /* Privacy - NFC Scan Usage Description */
-"NFCReaderUsageDescription" = "NFC используется для сканирования сенсоров Libre.";
+"NFCReaderUsageDescription" = "NFC is used to scan Libre sensors.";
 
 /* Privacy - Bluetooth Always Usage Description */
-"NSBluetoothAlwaysUsageDescription" = "Bluetooth используется для связи с инсулиновой помпой и устройствами непрерывного мониторинга глюкозы";
+"NSBluetoothAlwaysUsageDescription" = "Bluetooth is used to communicate with insulin pump and continuous glucose monitor devices";
 
 /* Privacy - Bluetooth Peripheral Usage Description */
-"NSBluetoothPeripheralUsageDescription" = "Bluetooth используется для связи с инсулиновой помпой и устройствами непрерывного мониторинга глюкозы";
+"NSBluetoothPeripheralUsageDescription" = "Bluetooth is used to communicate with insulin pump and continuous glucose monitor devices";
 
 /* Privacy - Face ID Usage Description */
-"NSFaceIDUsageDescription" = "Для авторизованного болюса";
+"NSFaceIDUsageDescription" = "For authorized acces to bolus";
 
 /* Privacy - Calendars Usage Description */
-"NSCalendarsUsageDescription" = "Календарь используется для создания новых событий о глюкозе.";
+"NSCalendarsUsageDescription" = "Calendar is used to create a new glucose events.";
 
 /* Privacy - Health Update Usage Description */
-"NSHealthUpdateUsageDescription" = "Приложение здоровья используется для хранения глюкозы, инсулина и углеводов в крови";
+"NSHealthUpdateUsageDescription" = "Health App is used to store blood glucose, insulin and carbohydrates";
 
 /* Privacy - Health Share Usage Description */
-"NSHealthShareUsageDescription" = "Приложение здоровья используется для хранения глюкозы, инсулина и углеводов в крови";
+"NSHealthShareUsageDescription" = "Health App is used to store blood glucose, insulin and carbohydrates";
