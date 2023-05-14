@@ -75,7 +75,7 @@
 "Pod Activated" = "Pod Activated";
 
 /* */
-"Notification Settings" = "Notification Settings";
+"Notification Settings" = "通知设置";
 
 /* */
 "Confidence Reminders" = "Confidence Reminders";
@@ -111,7 +111,7 @@
 "Finish deactivation" = "Finish deactivation";
 
 /* Settings page link description when next lifecycle action is to replace pod */
-"Replace Pod" = "Replace Pod";
+"Replace Pod" = "更换Pod";
 
 /* Unit for singular day in pod life remaining */
 "day" = "day";
@@ -123,13 +123,13 @@
 "hour" = "hour";
 
 /* Unit for plural hours in pod life remaining */
-"hours" = "hours";
+"hours" = "小时";
 
 /* Unit for singular minute in pod life remaining */
 "minute" = "minute";
 
 /* Unit for plural minutes in pod life remaining */
-"minutes" = "minutes";
+"minutes" = "分钟";
 
 /* Title of insulin delivery section */
 "Insulin Delivery" = "Insulin Delivery";
@@ -141,13 +141,13 @@
 "Insulin Remaining" = "Insulin Remaining";
 
 /* Section header for activity section */
-"Activity" = "Activity";
+"Activity" = "活动";
 
 /* title for device details page */
 "Device Details" = "Device Details";
 
 /* Section header for configuration section */
-"Configuration" = "Configuration";
+"Configuration" = "配置";
 
 /* Settings page link description when next lifecycle action is to finish deactivation */
 "Finish deactivation" = "Finish deactivation";
@@ -174,13 +174,13 @@
 "No Pod" = "No Pod";
 
 /* Pod life HUD view label */
-"Fault" = "Fault";
+"Fault" = "错误";
 
 /* Label describing pod age view */
-"Pod Age" = "Pod Age";
+"Pod Age" = "Pod使用天数";
 
 /* Label describing time remaining view */
-"Remaining" = "Remaining";
+"Remaining" = "剩余";
 
 /* Label indicating pod replacement necessary */
 "Replace Pod" = "Replace Pod";
@@ -243,7 +243,7 @@
 "Manual Basal" = "Manual Basal";
 
 /* */
-"Insert Cannula" = "Insert Cannula";
+"Insert Cannula" = "植入Pod";
 
 /* Cannula insertion button text while inserting */
 "Inserting..." = "Inserting...";
@@ -270,13 +270,13 @@
 "Skipping Play Test Beeps due to bolus still in progress." = "Skipping Play Test Beeps due to bolus still in progress.";
 
 /* */
-"Play Test Beeps" = "Play Test Beeps";
+"Play Test Beeps" = "测试提示音";
 
 /* */
 "Skipping Read Pulse Log due to bolus still in progress." = "Skipping Read Pulse Log due to bolus still in progress.";
 
 /* */
-"Read Pulse Log" = "Read Pulse Log";
+"Read Pulse Log" = "读取Pulse日志";
 
 /* */
 "Set Confirmation Beeps to %s" = "Set Confirmation Beeps to %s";
@@ -285,22 +285,22 @@
 "Set Confirmation Beeps Preference" = "Set Confirmation Beeps Preference";
 
 /* */
-"Suspend" = "Suspend";
+"Suspend" = "暂停";
 
 /* */
 "Failed to suspend: %{public}@" = "Failed to suspend: %{public}@";
 
 /* */
-"Resume" = "Resume";
+"Resume" = "恢复";
 
 /* */
-"Bolus" = "Bolus";
+"Bolus" = "大剂量";
 
 /* */
 "Cancel Bolus" = "Cancel Bolus";
 
 /* Alert acknowledgment OK button */
-"OK" = "OK";
+"OK" = "Ok";
 
 /* The title for Empty Reservoir alarm notification */
 "Empty Reservoir" = "Empty Reservoir";
@@ -360,13 +360,13 @@
 "Delete Omnipod DASH" = "Delete Omnipod DASH";
 
 /* Text for confidence reminders navigation link" */
-"Insulin Type" = "Insulin Type";
+"Insulin Type" = "胰岛素类型";
 
 /* The title of the command to change pump time zone */
 "Sync to Current Time" = "Sync to Current Time";
 
 /* Title for suspend duration selection action sheet */
-"Suspend Delivery" = "Suspend Delivery";
+"Suspend Delivery" = "暂停输注";
 
 /* Message for suspend duration selection action sheet */
 "Insulin delivery will be stopped until you resume manually. When would you like Loop to remind you to resume delivery?" = "Insulin delivery will be stopped until you resume manually. When would you like Loop to remind you to resume delivery?";
@@ -400,7 +400,7 @@
 "Please deactivate the pod. When deactivation is complete, you may pair a new pod." = "Please deactivate the pod. When deactivation is complete, you may pair a new pod.";
 
 /* Deactivate pod action button */
-"Deactivate Pod" = "Deactivate Pod";
+"Deactivate Pod" = "解除Pod";
 
 /* Deactivate pod action button accessibility label while deactivating */
 "Deactivating." = "Deactivating.";
@@ -412,7 +412,7 @@
 "Retry" = "Retry";
 
 /* Action button description when deactivated */
-"Continue" = "Continue";
+"Continue" = "继续";
 
 /* Format string for recovery suggestion during deactivate pod. */
 "There was a problem communicating with the pod. If this problem persists, tap Discard Pod. You can then activate a new Pod." = "There was a problem communicating with the pod. If this problem persists, tap Discard Pod. You can then activate a new Pod.";
@@ -442,7 +442,7 @@
 "Paired" = "Paired";
 
 /* Cancel button text in navigation bar on pair pod UI */
-"Cancel" = "Cancel";
+"Cancel" = "取消";
 
 /* Alert title for cancel pairing modal */
 "Are you sure you want to cancel Pod setup?" = "Are you sure you want to cancel Pod setup?";
@@ -523,7 +523,7 @@
 "Scheduled Reminder" = "Scheduled Reminder";
 
 /* Label for expiration reminder row */
-"Time" = "Time";
+"Time" = "时间";
 
 /* Action button title to continue at Setup Complete */
 "Finish Setup" = "Finish Setup";
@@ -593,7 +593,7 @@
 "Disabled" = "Disabled";
 
 /* Title string for BeepPreference.manualCommands */
-"Enabled" = "Enabled";
+"Enabled" = "已启用";
 
 /* Title string for BeepPreference.extended */
 "Extended" = "Extended";
@@ -608,10 +608,10 @@
 "Confidence reminders will sound when Loop automatically adjusts delivery as well as for commands you initiate." = "Confidence reminders will sound when Loop automatically adjusts delivery as well as for commands you initiate.";
 
 /* Label text for temporary basal rate summary */
-"Rate" = "Rate";
+"Rate" = "输注率";
 
 /* Insulin unit per hour */
-"U/hr" = "U/hr";
+"U/hr" = "U/小时";
 
 /* Summary string for temporary basal rate configuration page */
 "%1$@ for %2$@" = "%1$@ for %2$@";
@@ -649,7 +649,7 @@
 "No\nDelivery" = "No\nDelivery";
 
 /* description label for active time pod details row */
-"Active Time" = "Active Time";
+"Active Time" = "Pod启动时间";
 
 /* description label for total delivery pod details row */
 "Total Delivery" = "Total Delivery";
@@ -703,7 +703,7 @@
 "Next" = "Next";
 
 /* */
-"Expiration Reminder" = "Expiration Reminder";
+"Expiration Reminder" = "Pod到期提醒";
 
 /* Description text on LowReservoirReminderSetupView */
 "The App notifies you when the amount of insulin in the Pod reaches this level (50-10 U).\n\nScroll to set the number of units at which you would like to be reminded." = "The App notifies you when the amount of insulin in the Pod reaches this level (50-10 U).\n\nScroll to set the number of units at which you would like to be reminded.";
@@ -712,7 +712,7 @@
 "Low Reservoir" = "Low Reservoir";
 
 /* */
-"Save" = "Save";
+"Save" = "保存​​";
 
 /* hr (short for hour) */
 "hr" = "hr";
