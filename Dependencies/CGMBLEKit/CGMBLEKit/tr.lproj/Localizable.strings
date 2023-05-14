@@ -1,8 +1,3 @@
-/* CGM display title */
-"Dexcom G5" = "Dexcom G5";
-
-/* CGM display title */
-"Dexcom G6" = "Dexcom G6";
 
 /* Error description for unreliable state */
 "Glucose data is unavailable" = "KŞ verileri mevcut değil";
@@ -12,9 +7,6 @@
 
 /* Describes a functioning transmitter */
 "OK" = "Tamam";
-
-/* invlid config error description */
-"Peripheral command was invalid" = "Çevre birimi komutu geçersiz";
 
 /* Timeout error description */
 "Peripheral did not respond in time" = "Çevre birimi zamanında yanıt vermedi";
@@ -39,4 +31,3 @@
 
 /* Error description */
 "Unknown characteristic" = "Bilinmeyen karakteristik";
-
