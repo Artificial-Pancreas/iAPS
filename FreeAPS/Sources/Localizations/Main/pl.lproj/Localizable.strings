@@ -7,14 +7,14 @@
 "Add insulin without actually bolusing" = "Add insulin without actually bolusing";
 
 /* Add insulin from source outside of pump */
-"Add %@ without bolusing" = "Add %@ without bolusing";
+"Add %@ without bolusing" = "Dodaj %@ bez bolusa";
 
 "Bolus" = "Bolus";
 
-"Close" = "Close";
+"Close" = "Zamknij";
 
 /* Continue after added carbs without bolus */
-"Continue without bolus" = "Continue without bolus";
+"Continue without bolus" = "Kontynuuj bez bolusa";
 
 /* Header */
 "Enact Bolus" = "Enact Bolus";
@@ -23,25 +23,25 @@
 "Enact bolus" = "Enact bolus";
 
 /*  */
-"Insulin recommended" = "Insulin recommended";
+"Insulin recommended" = "Zalecana ilość insuliny";
 
 /*  */
-"Insulin required" = "Insulin required";
+"Insulin required" = "Potrzebna ilość insuliny";
 
 /* Bolus screen */
 "Recommendation" = "Recommendation";
 
 /* Button */
-"Clear" = "Clear";
+"Clear" = "Usuń";
 
 /* Button */
 "Done" = "Done";
 
 /*  */
-"Wait please" = "Wait please";
+"Wait please" = "Proszę czekać";
 
 /*  */
-"Agree and continue" = "Agree and Continue";
+"Agree and continue" = "Zaakceptuj i kontynuuj";
 
 /* Headline in enacted pop up (at: at what time) */
 "Enacted at" = "Enacted at";
@@ -59,16 +59,16 @@
 "looping" = "looping";
 
 /* min ago since last loop */
-"min ago" = "min ago";
+"min ago" = "minut temu";
 
 /* Status Title */
-"No suggestion" = "No suggestion";
+"No suggestion" = "Brak sugestii";
 
 /* Replace pod text in Header */
-"Replace pod" = "Replace pod";
+"Replace pod" = "Wymień Pod";
 
 /* Add carbs screen */
-"Add Carbs" = "Add Carbs";
+"Add Carbs" = "Dodaj węglowodany";
 
 /* Add carbs header and button in Watch app. You can skip the last " " space. It's just for differentiation */
 "Add Carbs " = "Add Carbs ";
@@ -77,37 +77,37 @@
 "Amount Carbs" = "Amount Carbs";
 
 /* Grams unit */
-"grams" = "grams";
+"grams" = "gramy";
 
 /*  */
 "Carbs required" = "Carbs required";
 
 /* */
-"Are you sure?" = "Are you sure?";
+"Are you sure?" = "Czy jesteś pewien?";
 
 /* Bottom target temp */
 "Bottom target" = "Bottom target";
 
 /* Cancel preset name */
-"Cancel" = "Cancel";
+"Cancel" = "Anuluj";
 
 /*  */
-"Cancel Temp Target" = "Cancel Temp Target";
+"Cancel Temp Target" = "Anuluj tymczasowy cel";
 
 /* Custom temp target */
-"Custom" = "Custom";
+"Custom" = "Dostosuj";
 
 /*  */
-"Date" = "Date";
+"Date" = "Data";
 
 /*  */
-"Delete" = "Delete";
+"Delete" = "Usuń";
 
 /* Delete preset temp target */
-"Delete preset \"%@\"" = "Delete preset \"%@\"";
+"Delete preset \"%@\"" = "Usuń profil %@";
 
 /* Duration of target temp or temp basal */
-"Duration" = "Duration";
+"Duration" = "Czas trwania";
 
 /*  */
 "Enact Temp Target" = "Enact Temp Target";
@@ -128,22 +128,22 @@
 "mg/dl. Autosens.max limits the max endpoint" = "mg/dl. Autosens.max limits the max endpoint";
 
 /*  */
-"Enter preset name" = "Enter preset name";
+"Enter preset name" = "Wpisz nazwę profilu";
 
 /* Preset name */
 "Name" = "Name";
 
 /* minutes of target temp */
-"minutes" = "minutes";
+"minutes" = "minut";
 
 /*  */
-"Presets" = "Presets";
+"Presets" = "Profile";
 
 /* Save preset name */
-"Save" = "Save";
+"Save" = "Zapisz";
 
 /*  */
-"Save as preset" = "Save as preset";
+"Save as preset" = "Zapisz jako profil";
 
 /* Delete Meal Preset */
 "Delete Preset" = "Delete Preset";
@@ -164,52 +164,52 @@
 "[ -1 ]" = "[ -1 ]";
 
 /* Upper temp target limit */
-"Top target" = "Top target";
+"Top target" = "Górna wartość docelowa";
 
 /*  Temp target set for ... minutes */
 "for" = "for";
 
 /*  Temp target set for ... minutes */
-"min" = "min";
+"min" = "min.";
 
 /*  */
 "Autotune" = "Autotune";
 
 /*  */
-"Basal profile" = "Basal profile";
+"Basal profile" = "Profil bazy";
 
 /*  */
 "Carb ratio" = "Carb ratio";
 
 /*  */
-"Delete autotune data" = "Delete autotune data";
+"Delete autotune data" = "Usuń dane autotune";
 
 /*  */
-"Run now" = "Run now";
+"Run now" = "Uruchom teraz";
 
 /*  */
 "Last run" = "Last run";
 
 /*  */
-"Sensitivity" = "Sensitivity";
+"Sensitivity" = "Wrażliwość";
 
 /*  */
-"Use Autotune" = "Use Autotune";
+"Use Autotune" = "użyj autotune";
 
 /* Add profile basal */
-"Add" = "Add";
+"Add" = "Dodaj";
 
 /*  */
-"Basal Profile" = "Basal Profile";
+"Basal Profile" = "Profil bazy";
 
 /* Rate basal profile */
 "Rate" = "Rate";
 
 /*  */
-"Save on Pump" = "Save on Pump";
+"Save on Pump" = "Zapisz na pompie";
 
 /*  */
-"Saving..." = "Saving...";
+"Saving..." = "Zapisywanie...";
 
 /*  */
 "Schedule" = "Schedule";
@@ -218,7 +218,7 @@
 "starts at" = "starts at";
 
 /* Time basal profile */
-"Time" = "Time";
+"Time" = "Czas";
 
 /* */
 "Calculated Ratio" = "Calculated Ratio";
@@ -233,16 +233,16 @@
 "Autosens" = "Autosens";
 
 /*  */
-"Calculated Sensitivity" = "Calculated Sensitivity";
+"Calculated Sensitivity" = "Obliczona wrażliwość";
 
 /*  */
-"Insulin Sensitivities" = "Insulin Sensitivities";
+"Insulin Sensitivities" = "Wrażliwość na insulinę";
 
 /* */
-"Sensitivity Ratio" = "Sensitivity Ratio";
+"Sensitivity Ratio" = "Współczynnik wrażliwości";
 
 /*  */
-"Dismiss" = "Dismiss";
+"Dismiss" = "Zignoruj";
 
 /*  */
 "Important message" = "Important message";
@@ -251,7 +251,7 @@
 "Amount" = "Amount";
 
 /* */
-"Cancel Temp Basal" = "Cancel Temp Basal";
+"Cancel Temp Basal" = "Anuluj bazę tymczasową";
 
 /* Enact
 Enact a temp Basal or a temp target */
@@ -267,22 +267,24 @@ Enact a temp Basal or a temp target */
 "API secret" = "API secret";
 
 /* Connect to NS */
-"Connect" = "Connect";
+"Connect" = "Połącz";
 
 /* Connected to NS */
-"Connected!" = "Connected!";
+"Connected!" = "Połączono
+Połączono z Nightscout!";
 
 /* Connecting to NS */
-"Connecting..." = "Connecting...";
+"Connecting..." = "Łączenie...
+Łączenie z Nightscout...";
 
 /*  */
-"Invalid URL" = "Invalid URL";
+"Invalid URL" = "Nieprawidłowy adres URL";
 
 /*  */
 "Local glucose source" = "Local glucose source";
 
 /* Header */
-"Nightscout Config" = "Nightscout Config";
+"Nightscout Config" = "Konfiguracja Nightscout";
 
 /*  */
 "Port" = "Port";
@@ -360,10 +362,10 @@ Enact a temp Basal or a temp target */
 " U/hr" = " U/hr";
 
 /* Number of units per hour*/
-"%@ U/hr" = "%@ U/hr";
+"%@ U/hr" = "%@ j./godz";
 
 /* Number of units insulin delivered */
-"%@ U" = "%@ U";
+"%@ U" = "%@ j.";
 
 /*Carb ratio unit */
 "g/U" = "g/U";
@@ -381,10 +383,10 @@ Enact a temp Basal or a temp target */
 "d" = "d";
 
 /* abbreviation for hours */
-"h" = "h";
+"h" = "godz";
 
 /* abbreviation for minutes */
-"m" = "m";
+"m" = "min.";
 
 /*  */
 "Closed loop" = "Closed loop";
@@ -555,7 +557,7 @@ Enact a temp Basal or a temp target */
 "Calibrationinfo" = "Calibrationinfo";
 
 /* */
-"Unknown" = "Unknown";
+"Unknown" = "Nieznana";
 
 /* */
 "Not paired yet" = "Not paired yet";
@@ -699,10 +701,10 @@ Enact a temp Basal or a temp target */
 "Hardware" = "Hardware";
 
 /* */
-"Firmware" = "Firmware";
+"Firmware" = "Oprogramowanie";
 
 /* */
-"Connection State" = "Connection State";
+"Connection State" = "Status połączenia";
 
 /* */
 "Transmitter Type" = "Transmitter Type";
@@ -735,7 +737,7 @@ Enact a temp Basal or a temp target */
 "Advanced" = "Advanced";
 
 /* */
-"Alarms" = "Alarms";
+"Alarms" = "Alarmy";
 
 /* */
 "Glucose Settings" = "Glucose Settings";
@@ -1055,7 +1057,7 @@ Enact a temp Basal or a temp target */
 "Info" = "Info";
 
 /* Warning title */
-"Warning" = "Warning";
+"Warning" = "Ostrzeżenie";
 
 /* Error title */
 "Error" = "Error";
@@ -1178,7 +1180,7 @@ Enact a temp Basal or a temp target */
 */
 "Attach Pod" = "Attach Pod";
 
-"Deactivate Pod" = "Deactivate Pod";
+"Deactivate Pod" = "Dezaktywuj PODa";
 
 /* */
 "Deactivating..." = "Deactivating...";
@@ -1206,13 +1208,13 @@ Enact a temp Basal or a temp target */
 "No Error" = "No Error";
 
 /* description label for active time pod details row */
-"Active Time" = "Active Time";
+"Active Time" = "Czas aktywny";
 
 /* Title string for BeepPreference.silent */
 "Disabled" = "Disabled";
 
 /* Title string for BeepPreference.manualCommands */
-"Enabled" = "Enabled";
+"Enabled" = "Włączony";
 
 /* Title string for BeepPreference.extended */
 "Extended" = "Extended";
@@ -1230,7 +1232,7 @@ Enact a temp Basal or a temp target */
 "Expiration Reminder Default" = "Expiration Reminder Default";
 
 /* */
-"Expiration Reminder" = "Expiration Reminder";
+"Expiration Reminder" = "Przypomnienie o terminie ważności";
 
 /* */
 "Low Reservoir" = "Low Reservoir";
@@ -1288,7 +1290,7 @@ Enact a temp Basal or a temp target */
 "Add Omnipod Dash" = "Add Omnipod Dash";
 
 /* */
-"Insert Cannula" = "Insert Cannula";
+"Insert Cannula" = "Wprowadź kaniulę";
 
 /* */
 "Check Cannula" = "Check Cannula";
