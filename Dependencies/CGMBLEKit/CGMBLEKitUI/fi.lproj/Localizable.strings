@@ -1,5 +1,3 @@
-/* Format string for glucose trend per minute. (1: glucose value and unit) */
-"%@/min" = "%@/min";
 
 /* Confirmation message for deleting a CGM */
 "Are you sure you want to delete this CGM?" = "Haluatko varmasti poistaa CGM:n?";
@@ -23,17 +21,11 @@ Title text for the button to remove a CGM from Loop */
 /* Section title for latest glucose calibration */
 "Latest Calibration" = "Viimeisin kalibrointi";
 
-/* Section title for latest connection date */
-"Latest Connection" = "Viimeisin yhteys";
-
 /* Section title for latest glucose reading */
 "Latest Reading" = "Viimeisin lukema";
 
 /* Button title to open CGM app */
 "Open App" = "Avaa sovellus";
-
-/* Section title for remote data synchronization */
-"Remote Data Synchronization" = "Etätietojen synkronointi";
 
 /* Title describing sensor session age */
 "Session Age" = "Session ikä";
@@ -49,7 +41,3 @@ Title text for the button to remove a CGM from Loop */
 
 /* Title describing glucose trend */
 "Trend" = "Suunta";
-
-/* The title text for the upload glucose switch cell */
-"Upload Readings" = "Lataa lukemat";
-
