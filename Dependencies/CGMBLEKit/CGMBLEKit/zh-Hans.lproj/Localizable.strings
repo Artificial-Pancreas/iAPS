@@ -1,3 +1,4 @@
+
 /* Error description for unreliable state */
 "Glucose data is unavailable" = "葡萄糖数据不可用";
 
@@ -27,4 +28,3 @@
 
 /* Error description */
 "Unknown characteristic" = "未知特性";
-
