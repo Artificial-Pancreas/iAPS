@@ -19,9 +19,6 @@
 /* Pod state when inserting cannula */
 "Cannula inserting" = "植入管路";
 
-/* String describing a dose that was certainly scheduled */
-"Certain" = "Certain";
-
 /* Pod state when pod has been deactivated */
 "Deactivated" = "已解除";
 
@@ -73,9 +70,6 @@
 
 /* Description for Occlusion detected pod fault */
 "Occlusion detected" = "堵管";
-
-/* Generic title of the omnipod pump manager */
-"Omnipod" = "Omnipod";
 
 /* Pod status after pairing */
 "Paired" = "已配对";
@@ -176,4 +170,3 @@
 
 /* Description waiting for pairing reminder */
 "Waiting for pairing reminder" = "等待配对提醒";
-
