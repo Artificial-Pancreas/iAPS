@@ -111,7 +111,7 @@
 "Finish deactivation" = "Finish deactivation";
 
 /* Settings page link description when next lifecycle action is to replace pod */
-"Replace Pod" = "Replace Pod";
+"Replace Pod" = "Udskift Pod";
 
 /* Unit for singular day in pod life remaining */
 "day" = "day";
@@ -141,7 +141,7 @@
 "Insulin Remaining" = "Insulin Remaining";
 
 /* Section header for activity section */
-"Activity" = "Activity";
+"Activity" = "Aktivitet";
 
 /* title for device details page */
 "Device Details" = "Device Details";
@@ -174,13 +174,13 @@
 "No Pod" = "No Pod";
 
 /* Pod life HUD view label */
-"Fault" = "Fault";
+"Fault" = "Fejl";
 
 /* Label describing pod age view */
-"Pod Age" = "Pod Age";
+"Pod Age" = "Pod Alder";
 
 /* Label describing time remaining view */
-"Remaining" = "Remaining";
+"Remaining" = "Tilbage";
 
 /* Label indicating pod replacement necessary */
 "Replace Pod" = "Replace Pod";
@@ -243,7 +243,7 @@
 "Manual Basal" = "Manual Basal";
 
 /* */
-"Insert Cannula" = "Insert Cannula";
+"Insert Cannula" = "Indfør kanyle";
 
 /* Cannula insertion button text while inserting */
 "Inserting..." = "Inserting...";
@@ -270,7 +270,7 @@
 "Skipping Play Test Beeps due to bolus still in progress." = "Skipping Play Test Beeps due to bolus still in progress.";
 
 /* */
-"Play Test Beeps" = "Play Test Beeps";
+"Play Test Beeps" = "Afspil Test Bip";
 
 /* */
 "Skipping Read Pulse Log due to bolus still in progress." = "Skipping Read Pulse Log due to bolus still in progress.";
@@ -366,7 +366,7 @@
 "Sync to Current Time" = "Sync to Current Time";
 
 /* Title for suspend duration selection action sheet */
-"Suspend Delivery" = "Suspend Delivery";
+"Suspend Delivery" = "Pause Indgivelse";
 
 /* Message for suspend duration selection action sheet */
 "Insulin delivery will be stopped until you resume manually. When would you like Loop to remind you to resume delivery?" = "Insulin delivery will be stopped until you resume manually. When would you like Loop to remind you to resume delivery?";
@@ -400,7 +400,7 @@
 "Please deactivate the pod. When deactivation is complete, you may pair a new pod." = "Please deactivate the pod. When deactivation is complete, you may pair a new pod.";
 
 /* Deactivate pod action button */
-"Deactivate Pod" = "Deactivate Pod";
+"Deactivate Pod" = "Deaktiver Pod";
 
 /* Deactivate pod action button accessibility label while deactivating */
 "Deactivating." = "Deactivating.";
@@ -412,7 +412,7 @@
 "Retry" = "Retry";
 
 /* Action button description when deactivated */
-"Continue" = "Continue";
+"Continue" = "Fortsæt";
 
 /* Format string for recovery suggestion during deactivate pod. */
 "There was a problem communicating with the pod. If this problem persists, tap Discard Pod. You can then activate a new Pod." = "There was a problem communicating with the pod. If this problem persists, tap Discard Pod. You can then activate a new Pod.";
@@ -593,7 +593,7 @@
 "Disabled" = "Disabled";
 
 /* Title string for BeepPreference.manualCommands */
-"Enabled" = "Enabled";
+"Enabled" = "Aktiveret";
 
 /* Title string for BeepPreference.extended */
 "Extended" = "Extended";
@@ -608,10 +608,10 @@
 "Confidence reminders will sound when Loop automatically adjusts delivery as well as for commands you initiate." = "Confidence reminders will sound when Loop automatically adjusts delivery as well as for commands you initiate.";
 
 /* Label text for temporary basal rate summary */
-"Rate" = "Rate";
+"Rate" = "Værdi";
 
 /* Insulin unit per hour */
-"U/hr" = "U/hr";
+"U/hr" = "E/t";
 
 /* Summary string for temporary basal rate configuration page */
 "%1$@ for %2$@" = "%1$@ for %2$@";
@@ -649,7 +649,7 @@
 "No\nDelivery" = "No\nDelivery";
 
 /* description label for active time pod details row */
-"Active Time" = "Active Time";
+"Active Time" = "Aktiv Tid";
 
 /* description label for total delivery pod details row */
 "Total Delivery" = "Total Delivery";
@@ -703,7 +703,7 @@
 "Next" = "Next";
 
 /* */
-"Expiration Reminder" = "Expiration Reminder";
+"Expiration Reminder" = "Udløbs Påmindelse";
 
 /* Description text on LowReservoirReminderSetupView */
 "The App notifies you when the amount of insulin in the Pod reaches this level (50-10 U).\n\nScroll to set the number of units at which you would like to be reminded." = "The App notifies you when the amount of insulin in the Pod reaches this level (50-10 U).\n\nScroll to set the number of units at which you would like to be reminded.";
