@@ -5,10 +5,10 @@
 "iAPS can read G7 CGM data, but you must still use the Dexcom G7 App for pairing, calibration, and other sensor management." = "iAPS can read G7 CGM data, but you must still use the Dexcom G7 App for pairing, calibration, and other sensor management.";
 
 /* Button title for starting setup */
-"Continue" = "Continuer";
+"Continue" = "Continue";
 
 /* Button text to cancel G7 setup */
-"Cancel" = "Annuler";
+"Cancel" = "Cancel";
 
 /* Error description for unreliable state */
 "Glucose data is unavailable" = "Glucose data is unavailable";
@@ -41,27 +41,27 @@
 "Grace Period End" = "Grace Period End";
 
 /* Field label */
-"Glucose" = "Glycémie";
+"Glucose" = "Glucose";
 
 "Last Reading" = "Last Reading";
 
-"Time" = "Heure";
+"Time" = "Time";
 
 "Trend" = "Trend";
 
 "Bluetooth" = "Bluetooth";
 
 /* title for g7 settings row showing BLE Name */
-"Name" = "Nom";
+"Name" = "Name";
 
 /* title for g7 settings connection status when scanning */
 "Scanning" = "Scanning";
 
 /* title for g7 settings connection status when connected */
-"Connected" = "Connecté";
+"Connected" = "Connected";
 
 /* title for g7 settings connection status when connecting */
-"Connecting" = "De liaison";
+"Connecting" = "Connecting";
 
 /* title for g7 settings row showing sensor last connect time */
 "Last Connect" = "Last Connect";
@@ -76,7 +76,7 @@
 "Scan for new sensor" = "Scan for new sensor";
 
 /* Button label for removing CGM */
-"Delete CGM" = "Supprimer CGM";
+"Delete CGM" = "Delete CGM";
 
 /* No glucose value representation (3 dashes for mg/dL) */
 "– – –" = "– – –";
