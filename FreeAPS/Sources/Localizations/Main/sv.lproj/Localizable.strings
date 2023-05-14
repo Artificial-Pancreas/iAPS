@@ -1107,6 +1107,9 @@ Enact a temp Basal or a temp target */
 /* Title */
 "Fat & Protein" = "Fett & protein";
 
+/* FPU Setttings Title */
+"Fat and Protein" = "Omvandling";
+
 /* */
 "Hide Fat & Protein" = "Dölj fett & protein";
 
