@@ -1,8 +1,3 @@
-/* CGM display title */
-"Dexcom G5" = "Dexcom G5";
-
-/* CGM display title */
-"Dexcom G6" = "Dexcom G6";
 
 /* Error description for unreliable state */
 "Glucose data is unavailable" = "Данные глюкозы недоступны";
@@ -11,10 +6,7 @@
 "Low Battery" = "Батарейка садится";
 
 /* Describes a functioning transmitter */
-"OK" = "OK";
-
-/* invlid config error description */
-"Peripheral command was invalid" = "Неправильно сформирован запрос.";
+"OK" = "ОК";
 
 /* Timeout error description */
 "Peripheral did not respond in time" = "Периферийное устройство не отозвалось вовремя";
@@ -39,4 +31,3 @@
 
 /* Error description */
 "Unknown characteristic" = "Неизвестная характеристика";
-
