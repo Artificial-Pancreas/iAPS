@@ -1,48 +1,41 @@
 /* The title of the section describing commands */
-"Commands" = "命令";
+"Commands" = "Commands";
 
 /* The connected state */
-"Connected" = "已连接";
+"Connected" = "Connected";
 
 /* The in-progress connecting state */
-"Connecting" = "正在连接";
+"Connecting" = "Connecting";
 
 /* The title of the cell showing BLE connection state */
-"Connection State" = "连接状态";
+"Connection State" = "Connection State";
 
 /* The title of the section describing the device */
-"Device" = "设备";
+"Device" = "Device";
 
 /* The title of the devices table section in RileyLink settings */
-"Devices" = "设备";
+"Devices" = "Devices";
 
 /* The disconnected state */
-"Disconnected" = "已断开连接";
+"Disconnected" = "Disconnected";
 
 /* The in-progress disconnecting state */
-"Disconnecting" = "断开";
-
-/* The title of the cell for sounding device finding piezo */
-"Find Device" = "发现设备";
+"Disconnecting" = "Disconnecting";
 
 /* The title of the cell showing firmware version */
-"Firmware" = "固件";
+"Firmware" = "Firmware";
 
 /* The title of the cell showing current rileylink frequency */
 "Frequency" = "Frequency";
 
 /* The title of the cell showing device name */
-"Name" = "设备名称";
-
-/* Text indicating LED Mode is on */
-"On" = "开";
+"Name" = "Name";
 
 /* RileyLink setup description */
-"RileyLink allows for communication with the pump over Bluetooth Low Energy." = "允许RileyLink通过低功耗蓝牙与泵连接通信";
+"RileyLink allows for communication with the pump over Bluetooth Low Energy." = "RileyLink allows for communication with the pump over Bluetooth Low Energy.";
 
 /* The title of the cell showing BLE signal strength (RSSI) */
-"Signal Strength" = "信号强度";
+"Signal Strength" = "Signal Strength";
 
 /* The title of the cell showing uptime */
 "Uptime" = "Uptime";
-
