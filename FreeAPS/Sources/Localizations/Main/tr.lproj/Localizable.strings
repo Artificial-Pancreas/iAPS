@@ -693,7 +693,7 @@ Enact a temp Basal or a temp target */
 "Delete CGM" = "CGM'i Sil";
 
 /* */
-"Are you sure you want to remove this cgm from loop?" = "Bu CGM'i FreeAPS X'den kaldırmak istediğinizden emin misiniz?";
+"Are you sure you want to remove this cgm from loop?" = "Bu CGM'i iAPS'den kaldırmak istediğinizden emin misiniz?";
 
 /* */
 "There is no undo" = "Geri çekme yok";
@@ -1015,7 +1015,7 @@ Enact a temp Basal or a temp target */
 "For write data to Apple Health you must give permissions in Settings > Health > Data Access" = "Apple Sağlık Uygulamasına veri yazmak için Ayarlar > Sağlık > Veri Erişimi'nde izinler vermelisiniz";
 
 /* */
-"After you create glucose records in the Health app, please open iAPS to help us guaranteed transfer changed data" = "Sağlık uygulamasında glikoz kayıtları oluşturduktan sonra, değiştirilen verileri aktarmayı garanti etmemize yardımcı olmak için lütfen FreeAPS X'i açın";
+"After you create glucose records in the Health app, please open iAPS to help us guaranteed transfer changed data" = "Sağlık uygulamasında glikoz kayıtları oluşturduktan sonra, değiştirilen verileri aktarmayı garanti etmemize yardımcı olmak için lütfen iAPS'i açın";
 
 /* New ALerts ------------------------- */
 /* Info title */
@@ -1446,7 +1446,7 @@ Enact a temp Basal or a temp target */
 "Enable UAM" = "UAM (Bildirilmemiş Öğünleri) etkinleştir";
 
 /* "Enable UAM" */
-"With this option enabled, the SMB algorithm can recognize unannounced meals. This is helpful, if you forget to tell iAPS about your carbs or estimate your carbs wrong and the amount of entered carbs is wrong or if a meal with lots of fat and protein has a longer duration than expected. Without any carb entry, UAM can recognize fast glucose increasments caused by carbs, adrenaline, etc, and tries to adjust it with SMBs. This also works the opposite way: if there is a fast glucose decreasement, it can stop SMBs earlier." = "Bu seçenek etkinleştirildiğinde, SMB algoritması bildirilmeyen öğünleri tanıyabilir. FreeAPS X'e karbonhidratlarınızı girmeyi unutursanız veya karbonhidratlarınızı yanlış tahmin ederseniz ve girilen karbonhidrat miktarı yanlışsa veya çok miktarda yağ ve protein içeren bir öğün beklenenden daha uzun sürerse bu yararlıdır. Herhangi bir karbonhidrat girişi olmadan, UAM karbonhidrat, adrenalin vb. kaynaklı hızlı glikoz artışlarını algılayabilir ve SMB'ler ile ayarlamaya çalışır. Bu aynı zamanda tam tersi şekilde çalışır: hızlı bir glikoz düşüşü varsa, SMB'leri daha erken durdurabilir.";
+"With this option enabled, the SMB algorithm can recognize unannounced meals. This is helpful, if you forget to tell iAPS about your carbs or estimate your carbs wrong and the amount of entered carbs is wrong or if a meal with lots of fat and protein has a longer duration than expected. Without any carb entry, UAM can recognize fast glucose increasments caused by carbs, adrenaline, etc, and tries to adjust it with SMBs. This also works the opposite way: if there is a fast glucose decreasement, it can stop SMBs earlier." = "Bu seçenek etkinleştirildiğinde, SMB algoritması bildirilmeyen öğünleri tanıyabilir. iAPS'e karbonhidratlarınızı girmeyi unutursanız veya karbonhidratlarınızı yanlış tahmin ederseniz ve girilen karbonhidrat miktarı yanlışsa veya çok miktarda yağ ve protein içeren bir öğün beklenenden daha uzun sürerse bu yararlıdır. Herhangi bir karbonhidrat girişi olmadan, UAM karbonhidrat, adrenalin vb. kaynaklı hızlı glikoz artışlarını algılayabilir ve SMB'ler ile ayarlamaya çalışır. Bu aynı zamanda tam tersi şekilde çalışır: hızlı bir glikoz düşüşü varsa, SMB'leri daha erken durdurabilir.";
 
 /* Headline "Enable SMB With COB" */
 "Enable SMB With COB" = "SMB'yi AKRB ile etkinleştir";
