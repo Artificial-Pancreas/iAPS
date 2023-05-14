@@ -1,0 +1,51 @@
+
+/* The title of the cell showing the pod activated at time */
+"Active Time" = "Активний час";
+
+/* The title of the cell showing alarm status */
+"Alarms" = "Тривога";
+
+/* The title of the cancel action in an action sheet */
+"Cancel" = "Відмінити";
+
+/* The title of the configuration section in settings */
+"Configuration" = "Налаштування";
+
+/* The title of the continue action in an action sheet */
+"Continue" = "Продовжити";
+
+/* Button title for pod deactivation
+   Button title to deactivate pod */
+"Deactivate Pod" = "Деактивувати POD";
+
+/* The title of the cell showing the pod expiration reminder date */
+"Expiration Reminder" = "Нагадування про термін дії";
+
+/* Pod life HUD view label */
+"Fault" = "Збій";
+
+/* Button title to insert cannula during setup */
+"Insert Cannula" = "Вставте канюлю";
+
+/* The title of the command to play test beeps */
+"Play Test Beeps" = "Програти тестовий звук";
+
+/* Label describing pod age view */
+"Pod Age" = "Вік PODу";
+
+/* Label describing time remaining view */
+"Remaining" = "Залишок";
+
+/* Label indicating pod replacement necessary
+   The title of the command to replace pod */
+"Replace Pod" = "Замініть POD";
+
+/* Title of button to save delivery limit settings
+   Title of button to sync basal profile when no pod paired */
+"Save" = "Зберегти";
+
+/* The detail text of the basal row when pod is running scheduled basal */
+"Schedule" = "Розклад";
+
+/* The detail text for delivered insulin when no measurement is available */
+"Unknown" = "Невідомий";
