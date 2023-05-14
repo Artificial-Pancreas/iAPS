@@ -1,14 +1,8 @@
-/* Unit format string for an RSSI value in decibles */
-"%@ dB" = "%@ dB";
-
 /* Description for auto-off alarm */
 "Auto-off alarm" = "Auto-off alarm";
 
 /* Pod state when running below fifty units */
 "Below 50 units" = "Below 50 units";
-
-/* Pump Event title for UnfinalizedDose with doseType of .bolus */
-"Bolus" = "Bolus";
 
 /* Error message shown when operation could not be completed due to existing bolus in progress */
 "Bolus in progress" = "Bolus in progress";
@@ -36,9 +30,6 @@
 
 /* Error message shown when empty response from pod was received */
 "Empty response from pod" = "Empty response from pod";
-
-/* Title string for BeepPreference.manualCommands */
-"Enabled" = "Enabled";
 
 /* Pod state error event logged shutting down */
 "Error event logged, shutting down" = "Error event logged, shutting down";
@@ -83,10 +74,6 @@
 /* Description for Occlusion detected pod fault */
 "Occlusion detected" = "Occlusion detected";
 
-/* Acknowledge button label for RileyLink low battery alert
-   Alert acknowledgment OK button */
-"OK" = "OK";
-
 /* Generic title of the omnipod pump manager */
 "Omnipod" = "Omnipod";
 
@@ -126,9 +113,6 @@
 /* Error message action could not be performed because pod is suspended */
 "Pod is suspended" = "Pod is suspended";
 
-/* Status highlight message for occlusion alarm. */
-"Pod Occlusion" = "חסימה בפוד";
-
 /* Pod state when prime or cannula insertion has not completed in the time allotted */
 "Pod setup window expired" = "Pod setup window expired";
 
@@ -150,9 +134,6 @@
 
 /* Description for shutdown imminent alarm */
 "Shutdown imminent alarm" = "Shutdown imminent alarm";
-
-/* Status highlight when communications with the pod haven't happened recently. */
-"Signal Loss" = "אובדן אות";
 
 /* The format string describing a suspend. (1: Time)(2: Scheduled certainty */
 "Suspend: %1$@ %2$@" = "Suspend: %1$@ %2$@";
@@ -195,4 +176,3 @@
 
 /* Description waiting for pairing reminder */
 "Waiting for pairing reminder" = "Waiting for pairing reminder";
-
