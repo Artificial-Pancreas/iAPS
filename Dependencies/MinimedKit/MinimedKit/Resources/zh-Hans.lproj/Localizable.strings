@@ -1,12 +1,6 @@
 /* Communications error for a bolus currently running */
 "A bolus is already in progress" = "正在输注大剂量";
 
-/* The description of AlarmClockReminderPumpEvent */
-"AlarmClockReminder" = "AlarmClockReminder";
-
-/* The description of AlarmSensorPumpEvent */
-"AlarmSensor" = "AlarmSensor";
-
 /* Describing the battery chemistry as Alkaline */
 "Alkaline" = "碱性电池";
 
@@ -45,9 +39,6 @@
 
 /* Pump error code describing max setting exceeded */
 "Max setting exceeded" = "超过最大限制";
-
-/* Pump title (1: model number) */
-"Minimed %@" = "Minimed %@";
 
 /* Generic title of the minimed pump manager */
 "Minimed 500/700 Series" = "Minimed 500/700系列";
@@ -96,4 +87,3 @@
 
 /* Describing the worldwide pump region */
 "World-Wide" = "全球";
-
