@@ -141,7 +141,7 @@
 "Insulin Remaining" = "Insulin Remaining";
 
 /* Section header for activity section */
-"Activity" = "Activity";
+"Activity" = "Aktivita";
 
 /* title for device details page */
 "Device Details" = "Device Details";
@@ -243,7 +243,7 @@
 "Manual Basal" = "Manual Basal";
 
 /* */
-"Insert Cannula" = "Insert Cannula";
+"Insert Cannula" = "Zaviesť Kanylu";
 
 /* Cannula insertion button text while inserting */
 "Inserting..." = "Inserting...";
@@ -360,7 +360,7 @@
 "Delete Omnipod DASH" = "Delete Omnipod DASH";
 
 /* Text for confidence reminders navigation link" */
-"Insulin Type" = "Insulin Type";
+"Insulin Type" = "Typ Inzulínu";
 
 /* The title of the command to change pump time zone */
 "Sync to Current Time" = "Sync to Current Time";
@@ -400,7 +400,7 @@
 "Please deactivate the pod. When deactivation is complete, you may pair a new pod." = "Please deactivate the pod. When deactivation is complete, you may pair a new pod.";
 
 /* Deactivate pod action button */
-"Deactivate Pod" = "Deactivate Pod";
+"Deactivate Pod" = "Deaktivovať Pod";
 
 /* Deactivate pod action button accessibility label while deactivating */
 "Deactivating." = "Deactivating.";
@@ -412,7 +412,7 @@
 "Retry" = "Retry";
 
 /* Action button description when deactivated */
-"Continue" = "Continue";
+"Continue" = "Pokračovať";
 
 /* Format string for recovery suggestion during deactivate pod. */
 "There was a problem communicating with the pod. If this problem persists, tap Discard Pod. You can then activate a new Pod." = "There was a problem communicating with the pod. If this problem persists, tap Discard Pod. You can then activate a new Pod.";
@@ -593,7 +593,7 @@
 "Disabled" = "Disabled";
 
 /* Title string for BeepPreference.manualCommands */
-"Enabled" = "Enabled";
+"Enabled" = "Zapnuté";
 
 /* Title string for BeepPreference.extended */
 "Extended" = "Extended";
@@ -649,7 +649,7 @@
 "No\nDelivery" = "No\nDelivery";
 
 /* description label for active time pod details row */
-"Active Time" = "Active Time";
+"Active Time" = "Aktívny Čas";
 
 /* description label for total delivery pod details row */
 "Total Delivery" = "Total Delivery";
@@ -703,7 +703,7 @@
 "Next" = "Next";
 
 /* */
-"Expiration Reminder" = "Expiration Reminder";
+"Expiration Reminder" = "Pripomienka Expirácie";
 
 /* Description text on LowReservoirReminderSetupView */
 "The App notifies you when the amount of insulin in the Pod reaches this level (50-10 U).\n\nScroll to set the number of units at which you would like to be reminded." = "The App notifies you when the amount of insulin in the Pod reaches this level (50-10 U).\n\nScroll to set the number of units at which you would like to be reminded.";
