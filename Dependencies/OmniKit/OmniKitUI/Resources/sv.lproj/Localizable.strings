@@ -1,8 +1,11 @@
-/* Format string for last status date on pod details screen */
-"%@ ago" = "%@ sedan";
+/* Accessibility format string for (1: localized volume)(2: time) */
+"%1$@ units remaining at %2$@" = "%1$@ enheter återstår kl. %2$@";
 
-/* Unit format string for an RSSI value in decibles */
-"%@ dB" = "%@ dB";
+/* The format string for displaying an offset from a time zone: (1: GMT)(2: -)(3: 4:00) */
+"%1$@%2$@%3$@" = "%1$@%2$@%3$@";
+
+/* Format string providing instructions for replacing pod due to a fault. (1: The fault description) */
+"%1$@. Insulin delivery has stopped. Please deactivate and remove pod." = "%1$@. Insulintillförseln har avbrutits. Inaktivera podden och byt till en ny podd.";
 
 /* Format string for delivered insulin. (1: The localized amount)
    Format string for insulin remaining in reservoir. (1: The localized amount) */
@@ -17,32 +20,20 @@
 /* Format string for temp basal rate. (1: The localized amount) */
 "%@ U/hour" = "%@ E/h";
 
-/* Appends a full-stop to a statement */
-"%@." = "%@.";
-
 /* Format string for bolus percent progress. (1: Percent progress) */
 "%@%%" = "%@%%";
 
 /* Format string for reservoir reading when above or equal to maximum reading. (1: The localized amount) */
 "%@+ U" = "%@+ E";
 
+/* Appends a full-stop to a statement */
+"%@." = "%@.";
+
 /* Format string for reservoir volume. (1: The localized volume) */
 "%@U" = "%@E";
 
-/* Accessibility format string for (1: localized volume)(2: time) */
-"%1$@ units remaining at %2$@" = "%1$@ enheter återstår kl. %2$@";
-
-/* Format string providing instructions for replacing pod due to a fault. (1: The fault description) */
-"%1$@. Insulin delivery has stopped. Please deactivate and remove pod." = "%1$@. Insulintillförseln har avbrutits. Inaktivera podden och byt till en ny podd.";
-
-/* The format string for displaying an offset from a time zone: (1: GMT)(2: -)(3: 4:00) */
-"%1$@%2$@%3$@" = "%1$@%2$@%3$@";
-
 /* The title of the cell showing the pod activated at time */
 "Active Time" = "Aktiv tid";
-
-/* Section header for activity section */
-"Activity" = "Aktivitet";
 
 /* The title of the cell showing alarm status */
 "Alarms" = "Larm";
@@ -55,9 +46,6 @@
 
 /* The title text for the address assigned to the pod */
 "Assigned Address" = "Tilldelad adress";
-
-/* Back button text on DeliveryUncertaintyRecoveryView */
-"Back" = "Tillbaka";
 
 /* The title of the cell showing pod basal status */
 "Basal Delivery" = "Basaldos";
@@ -77,9 +65,6 @@
 /* Progress message for changing pod time. */
 "Changing time…" = "Ändra tid…";
 
-/* Cannula insertion button text while checking insertion */
-"Checking..." = "Kontrollerar...";
-
 /* The title of the configuration section in settings */
 "Configuration" = "Konfiguration";
 
@@ -93,9 +78,6 @@
    Button title to deactivate pod */
 "Deactivate Pod" = "Inaktivera podd";
 
-/* Label text showing pod is deactivated */
-"Deactivated" = "Inaktiverad";
-
 /* Button title to delete Omnipod PumpManager */
 "Delete Omnipod" = "Radera Omnipod";
 
@@ -105,20 +87,11 @@
 /* The title of the device information section in settings */
 "Device Information" = "Enhetsinformation";
 
-/* Header for devices section of RileyLinkSetupView */
-"Devices" = "Enheter";
-
 /* Title text for button to disable bolus beeps */
 "Disable Bolus Beeps" = "Stäng av bolusljud";
 
-/* No comment provided by engineer. */
-"Done" = "Färdig";
-
 /* Title text for button to enable bolus beeps */
 "Enable Bolus Beeps" = "Slå på bolusljud";
-
-/* Accessibility label indicating an error occurred */
-"Error" = "Fel";
 
 /* The alert title for disable bolus beeps error */
 "Error disabling bolus beeps" = "Fel vid avstängning av bolusljud";
@@ -141,9 +114,6 @@
 /* The title of the cell showing the pod expiration */
 "Expires" = "Utgår";
 
-/* Alert title for resume error */
-"Failed to Resume Insulin Delivery" = "Misslyckades att återuppta insulintillförsel";
-
 /* Pod life HUD view label */
 "Fault" = "Fel";
 
@@ -165,25 +135,11 @@
 /* The title of the cell showing delivered insulin */
 "Insulin Delivered" = "Insulin doserat";
 
-/* Title of insulin delivery section */
-"Insulin Delivery" = "Insulin Delivery";
-
-/* Text for confidence reminders navigation link
-   Title for insulin type selection screen */
-"Insulin Type" = "Insulintyp";
-
 /* The error message shown when Loop's basal schedule has an unsupported rate */
 "Invalid entry" = "Ogiltig inmatning";
 
 /* The title of the cell showing the pod lot id */
 "Lot" = "Lot";
-
-/* Error message for reservoir view when reservoir empty */
-"No Insulin" = "Inget insulin";
-
-/* Label for pod life state when no pod paired
-   Text shown in insulin remaining space when no pod is paired */
-"No Pod" = "Ingen Podd";
 
 /* The detail text for bolus delivery when no bolus is being delivered */
 "None" = "Ingen";
@@ -193,9 +149,6 @@
 
 /* The title of the command to pair new pod */
 "Pair New Pod" = "Parkoppla ny podd";
-
-/* Label text indicating pairing finished. */
-"Paired" = "Parkopplad";
 
 /* The text of the loading label when pairing */
 "Pairing…" = "Parkopplar…";
@@ -214,13 +167,6 @@
 
 /* Label describing pod age view */
 "Pod Age" = "Poddålder";
-
-/* Label for pod life state when within pod expiration window */
-"Pod expired" = "Pod har utgått";
-
-/* Error message for reservoir view when pod expired
-   Label for pod expiration row, past tense */
-"Pod Expired" = "Poddens utgångsdatum passerat";
 
 /* Title of the pod settings view controller */
 "Pod Settings" = "Poddinställningar";
@@ -244,16 +190,8 @@
 /* The title of the cell showing reservoir status */
 "Reservoir" = "Reservoar";
 
-/* Action button description for deactivate after failed attempt
-   Cannula insertion button text while showing error
-   Pod pairing action button text while showing error */
-"Retry" = "Försök igen";
-
 /* Button title for retrying pod deactivation */
 "Retry Pod Deactivation" = "Försök inaktivera podden igen";
-
-/* Navigation title for RileyLinkSetupView */
-"RileyLink Setup" = "RileyLink inställning";
 
 /* Title of button to save delivery limit settings
    Title of button to sync basal profile when no pod paired */
@@ -262,23 +200,11 @@
 /* The detail text of the basal row when pod is running scheduled basal */
 "Schedule" = "Schema";
 
-/* Title of insulin delivery section */
-"Scheduled Basal" = "Schemalagd basal";
-
-/* Title text for insulin type confirmation page */
-"Select the type of insulin that you will be using in this pod." = "Välj vilken typ av insulin du kommer att använda.";
-
-/* Title for setup complete screen */
-"Setup Complete" = "Inställning klar";
-
 /* The title of the status section in settings */
 "Status" = "Status";
 
 /* A message indicating a command succeeded */
 "Succeeded" = "Lyckades";
-
-/* Title for suspend duration selection action sheet */
-"Suspend Delivery" = "Pausa insulintillförsel";
 
 /* The detail text of the basal row when pod is suspended */
 "Suspended" = "Pausad";
@@ -295,20 +221,11 @@
 /* Progress message for testing commands. */
 "Testing Commands…" = "Testar att skicka kommandon…";
 
-/* Label for expiration reminder row
-   Label for scheduled expiration reminder row
-   Label for scheduled reminder value row */
-"Time" = "Tid";
-
 /* The error message shown when Loop's basal schedule has more entries than the pod can support */
 "Too many entries" = "För många inmatningar";
-
-/* Units for showing temp basal rate */
-"U/hr" = "E/timme";
 
 /* Instructions when pod cannot be deactivated */
 "Unable to deactivate pod. Please continue and pair a new one." = "Kunde inte deaktivera podden. Var god fortsätt genom att parkoppla en ny podd.";
 
 /* The detail text for delivered insulin when no measurement is available */
 "Unknown" = "Okänd";
-
