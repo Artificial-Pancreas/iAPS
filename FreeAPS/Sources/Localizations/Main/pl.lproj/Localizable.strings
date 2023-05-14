@@ -7,14 +7,14 @@
 "Add insulin without actually bolusing" = "Add insulin without actually bolusing";
 
 /* Add insulin from source outside of pump */
-"Add %@ without bolusing" = "Dodaj %@ bez bolusa";
+"Add %@ without bolusing" = "Add %@ without bolusing";
 
 "Bolus" = "Bolus";
 
-"Close" = "Zamknij";
+"Close" = "Close";
 
 /* Continue after added carbs without bolus */
-"Continue without bolus" = "Kontynuuj bez bolusa";
+"Continue without bolus" = "Continue without bolus";
 
 /* Header */
 "Enact Bolus" = "Enact Bolus";
@@ -23,25 +23,25 @@
 "Enact bolus" = "Enact bolus";
 
 /*  */
-"Insulin recommended" = "Zalecana ilość insuliny";
+"Insulin recommended" = "Insulin recommended";
 
 /*  */
-"Insulin required" = "Potrzebna ilość insuliny";
+"Insulin required" = "Insulin required";
 
 /* Bolus screen */
 "Recommendation" = "Recommendation";
 
 /* Button */
-"Clear" = "Usuń";
+"Clear" = "Clear";
 
 /* Button */
 "Done" = "Done";
 
 /*  */
-"Wait please" = "Proszę czekać";
+"Wait please" = "Wait please";
 
 /*  */
-"Agree and continue" = "Zaakceptuj i kontynuuj";
+"Agree and continue" = "Agree and Continue";
 
 /* Headline in enacted pop up (at: at what time) */
 "Enacted at" = "Enacted at";
@@ -59,16 +59,16 @@
 "looping" = "looping";
 
 /* min ago since last loop */
-"min ago" = "minut temu";
+"min ago" = "min ago";
 
 /* Status Title */
-"No suggestion" = "Brak sugestii";
+"No suggestion" = "No suggestion";
 
 /* Replace pod text in Header */
-"Replace pod" = "Wymień Pod";
+"Replace pod" = "Replace pod";
 
 /* Add carbs screen */
-"Add Carbs" = "Dodaj węglowodany";
+"Add Carbs" = "Add Carbs";
 
 /* Add carbs header and button in Watch app. You can skip the last " " space. It's just for differentiation */
 "Add Carbs " = "Add Carbs ";
@@ -77,106 +77,139 @@
 "Amount Carbs" = "Amount Carbs";
 
 /* Grams unit */
-"grams" = "gramy";
+"grams" = "grams";
 
 /*  */
 "Carbs required" = "Carbs required";
 
 /* */
-"Are you sure?" = "Czy jesteś pewien?";
+"Are you sure?" = "Are you sure?";
 
 /* Bottom target temp */
 "Bottom target" = "Bottom target";
 
 /* Cancel preset name */
-"Cancel" = "Anuluj";
+"Cancel" = "Cancel";
 
 /*  */
-"Cancel Temp Target" = "Anuluj tymczasowy cel";
+"Cancel Temp Target" = "Cancel Temp Target";
 
 /* Custom temp target */
-"Custom" = "Dostosuj";
+"Custom" = "Custom";
 
 /*  */
-"Date" = "Data";
+"Date" = "Date";
 
 /*  */
-"Delete" = "Usuń";
+"Delete" = "Delete";
 
 /* Delete preset temp target */
-"Delete preset \"%@\"" = "Usuń profil %@";
+"Delete preset \"%@\"" = "Delete preset \"%@\"";
 
 /* Duration of target temp or temp basal */
-"Duration" = "Czas trwania";
+"Duration" = "Duration";
 
 /*  */
 "Enact Temp Target" = "Enact Temp Target";
 
+/* */
+"Target" = "Target";
+
+/* */
+"Basal Insulin and Sensitivity ratio" = "Basal Insulin and Sensitivity ratio";
+
+/* */
+"A lower 'Half Basal Target' setting will reduce the basal and raise the ISF earlier, at a lower target glucose." = "A lower 'Half Basal Target' setting will reduce the basal and raise the ISF earlier, at a lower target glucose.";
+
+/* */
+" Your setting: " = " Your setting: ";
+
+/* */
+"mg/dl. Autosens.max limits the max endpoint" = "mg/dl. Autosens.max limits the max endpoint";
+
 /*  */
-"Enter preset name" = "Wpisz nazwę profilu";
+"Enter preset name" = "Enter preset name";
 
 /* Preset name */
 "Name" = "Name";
 
 /* minutes of target temp */
-"minutes" = "minut";
+"minutes" = "minutes";
 
 /*  */
-"Presets" = "Profile";
+"Presets" = "Presets";
 
 /* Save preset name */
-"Save" = "Zapisz";
+"Save" = "Save";
 
 /*  */
-"Save as preset" = "Zapisz jako profil";
+"Save as preset" = "Save as preset";
+
+/* Delete Meal Preset */
+"Delete Preset" = "Delete Preset";
+
+/* Confirm Deletion */
+"Delete preset '%@'?" = "Delete preset '%@'?";
+
+/* Button */
+"No" = "No";
+
+/* Button */
+"Yes" = "Yes";
+
+/* + Button */
+"[ +1 ]" = "[ +1 ]";
+
+/* - Button */
+"[ -1 ]" = "[ -1 ]";
 
 /* Upper temp target limit */
-"Top target" = "Górna wartość docelowa";
+"Top target" = "Top target";
 
 /*  Temp target set for ... minutes */
 "for" = "for";
 
 /*  Temp target set for ... minutes */
-"min" = "min.";
+"min" = "min";
 
 /*  */
 "Autotune" = "Autotune";
 
 /*  */
-"Basal profile" = "Profil bazy";
+"Basal profile" = "Basal profile";
 
 /*  */
 "Carb ratio" = "Carb ratio";
 
 /*  */
-"Delete autotune data" = "Usuń dane autotune";
+"Delete autotune data" = "Delete autotune data";
 
 /*  */
-"Run now" = "Uruchom teraz";
+"Run now" = "Run now";
 
 /*  */
 "Last run" = "Last run";
 
 /*  */
-"Sensitivity" = "Wrażliwość";
+"Sensitivity" = "Sensitivity";
 
 /*  */
-"Use Autotune" = "użyj autotune";
+"Use Autotune" = "Use Autotune";
 
 /* Add profile basal */
-"Add" = "Dodaj";
+"Add" = "Add";
 
 /*  */
-"Basal Profile" = "Profil bazy";
+"Basal Profile" = "Basal Profile";
 
 /* Rate basal profile */
 "Rate" = "Rate";
 
 /*  */
-"Save on Pump" = "Zapisz na pompie";
+"Save on Pump" = "Save on Pump";
 
 /*  */
-"Saving..." = "Zapisywanie...";
+"Saving..." = "Saving...";
 
 /*  */
 "Schedule" = "Schedule";
@@ -185,7 +218,7 @@
 "starts at" = "starts at";
 
 /* Time basal profile */
-"Time" = "Czas";
+"Time" = "Time";
 
 /* */
 "Calculated Ratio" = "Calculated Ratio";
@@ -200,16 +233,16 @@
 "Autosens" = "Autosens";
 
 /*  */
-"Calculated Sensitivity" = "Obliczona wrażliwość";
+"Calculated Sensitivity" = "Calculated Sensitivity";
 
 /*  */
-"Insulin Sensitivities" = "Wrażliwość na insulinę";
+"Insulin Sensitivities" = "Insulin Sensitivities";
 
 /* */
-"Sensitivity Ratio" = "Współczynnik wrażliwości";
+"Sensitivity Ratio" = "Sensitivity Ratio";
 
 /*  */
-"Dismiss" = "Zignoruj";
+"Dismiss" = "Dismiss";
 
 /*  */
 "Important message" = "Important message";
@@ -218,7 +251,7 @@
 "Amount" = "Amount";
 
 /* */
-"Cancel Temp Basal" = "Anuluj bazę tymczasową";
+"Cancel Temp Basal" = "Cancel Temp Basal";
 
 /* Enact
 Enact a temp Basal or a temp target */
@@ -234,24 +267,22 @@ Enact a temp Basal or a temp target */
 "API secret" = "API secret";
 
 /* Connect to NS */
-"Connect" = "Połącz";
+"Connect" = "Connect";
 
 /* Connected to NS */
-"Connected!" = "Połączono
-Połączono z Nightscout!";
+"Connected!" = "Connected!";
 
 /* Connecting to NS */
-"Connecting..." = "Łączenie...
-Łączenie z Nightscout...";
+"Connecting..." = "Connecting...";
 
 /*  */
-"Invalid URL" = "Nieprawidłowy adres URL";
+"Invalid URL" = "Invalid URL";
 
 /*  */
 "Local glucose source" = "Local glucose source";
 
 /* Header */
-"Nightscout Config" = "Konfiguracja Nightscout";
+"Nightscout Config" = "Nightscout Config";
 
 /*  */
 "Port" = "Port";
@@ -329,10 +360,10 @@ Połączono z Nightscout!";
 " U/hr" = " U/hr";
 
 /* Number of units per hour*/
-"%@ U/hr" = "%@ j./godz";
+"%@ U/hr" = "%@ U/hr";
 
 /* Number of units insulin delivered */
-"%@ U" = "%@ j.";
+"%@ U" = "%@ U";
 
 /*Carb ratio unit */
 "g/U" = "g/U";
@@ -350,10 +381,10 @@ Połączono z Nightscout!";
 "d" = "d";
 
 /* abbreviation for hours */
-"h" = "godz";
+"h" = "h";
 
 /* abbreviation for minutes */
-"m" = "min.";
+"m" = "m";
 
 /*  */
 "Closed loop" = "Closed loop";
@@ -524,7 +555,7 @@ Połączono z Nightscout!";
 "Calibrationinfo" = "Calibrationinfo";
 
 /* */
-"Unknown" = "Nieznana";
+"Unknown" = "Unknown";
 
 /* */
 "Not paired yet" = "Not paired yet";
@@ -668,10 +699,10 @@ Połączono z Nightscout!";
 "Hardware" = "Hardware";
 
 /* */
-"Firmware" = "Oprogramowanie";
+"Firmware" = "Firmware";
 
 /* */
-"Connection State" = "Status połączenia";
+"Connection State" = "Connection State";
 
 /* */
 "Transmitter Type" = "Transmitter Type";
@@ -704,7 +735,7 @@ Połączono z Nightscout!";
 "Advanced" = "Advanced";
 
 /* */
-"Alarms" = "Alarmy";
+"Alarms" = "Alarms";
 
 /* */
 "Glucose Settings" = "Glucose Settings";
@@ -1024,7 +1055,7 @@ Połączono z Nightscout!";
 "Info" = "Info";
 
 /* Warning title */
-"Warning" = "Ostrzeżenie";
+"Warning" = "Warning";
 
 /* Error title */
 "Error" = "Error";
@@ -1050,9 +1081,6 @@ Połączono z Nightscout!";
 "Enable" = "Enable";
 
 /* Header */
-"Convert Fat and Protein" = "Convert Fat and Protein";
-
-/* Header */
 "Conversion settings" = "Conversion settings";
 
 /* Delay */
@@ -1070,8 +1098,14 @@ Połączono z Nightscout!";
 /* Description */
 "Allows fat and protein to be converted into future carb equivalents using the Warsaw formula of kilocalories divided by 10.\n\nThis spreads the carb equivilants over a maximum duration setting that can be configured from 5-12 hours.\n\nDelay is time from now until the first future carb entry.\n\nInterval in minutes is how many minutes are between entries. The shorter the interval, the smoother the result. 10, 15, 20, 30, or 60 are reasonable choices.\n\nAdjustment factor is how much effect the fat and protein has on the entries. 1.0 is full effect (original Warsaw Method) and 0.5 is half effect. Note that you may find that your normal carb ratio needs to increase to a larger number if you begin adding fat and protein entries. For this reason, it is best to start with a factor of about 0.5 to ease into it.\n\nDefault settings: Time Cap: 8 h, Interval: 30 min, Factor: 0.5, Delay 60 min" = "Allows fat and protein to be converted into future carb equivalents using the Warsaw formula of kilocalories divided by 10.\n\nThis spreads the carb equivilants over a maximum duration setting that can be configured from 5-12 hours.\n\nDelay is time from now until the first future carb entry.\n\nInterval in minutes is how many minutes are between entries. The shorter the interval, the smoother the result. 10, 15, 20, 30, or 60 are reasonable choices.\n\nAdjustment factor is how much effect the fat and protein has on the entries. 1.0 is full effect (original Warsaw Method) and 0.5 is half effect. Note that you may find that your normal carb ratio needs to increase to a larger number if you begin adding fat and protein entries. For this reason, it is best to start with a factor of about 0.5 to ease into it.\n\nDefault settings: Time Cap: 8 h, Interval: 30 min, Factor: 0.5, Delay 60 min";
 
-/* Title */
+/* FPU Settings Title */
 "Fat and Protein" = "Fat and Protein";
+
+/* Display fat and protein entities */
+"Fat & Protein" = "Fat & Protein";
+
+/* */
+"Hide Fat & Protein" = "Hide Fat & Protein";
 
 /* Add Fat */
 "Fat" = "Fat";
@@ -1079,14 +1113,44 @@ Połączono z Nightscout!";
 /* Add Protein */
 "Protein" = "Protein";
 
-/* Setting */
+/* Service Section */
 "Fat And Protein Conversion" = "Fat And Protein Conversion";
+
+/* Service Section */
+"Profile Override" = "Profile Override";
+
+/* */
+"Override Profiles" = "Override Profiles";
+
+/* */
+"Currently no Override active" = "Currently no Override active";
+
+/* */
+"Total Insulin Adjustment" = "Total Insulin Adjustment";
+
+/* */
+"Override your Basal, ISF, CR and Target profiles" = "Override your Basal, ISF, CR and Target profiles";
+
+/* */
+"Enable indefinitely" = "Enable indefinitely";
+
+/* */
+"Override Profile target" = "Override Profile target";
+
+/* */
+"Disable SMBs" = "Disable SMBs";
+
+/* */
+"Your profile basal insulin will be adjusted with the override percentage and your profile ISF and CR will be inversly adjusted with the percentage.\n\nIf you toggle off the override every profile setting will return to normal." = "Your profile basal insulin will be adjusted with the override percentage and your profile ISF and CR will be inversly adjusted with the percentage.\n\nIf you toggle off the override every profile setting will return to normal.";
+
+/* Service Section */
+"App Icons" = "App Icons";
+
+/* Service Section */
+"Statistics and Home View" = "Statistics and Home View";
 
 /* Alert text */
 "Delete carb equivalents?" = "Delete carb equivalents?";
-
-/* Section in settings */
-"Protein / Fat" = "Protein / Fat";
 
 /* */
 "Meal Presets" = "Meal Presets";
@@ -1114,7 +1178,7 @@ Połączono z Nightscout!";
 */
 "Attach Pod" = "Attach Pod";
 
-"Deactivate Pod" = "Dezaktywuj PODa";
+"Deactivate Pod" = "Deactivate Pod";
 
 /* */
 "Deactivating..." = "Deactivating...";
@@ -1130,10 +1194,10 @@ Połączono z Nightscout!";
 "Confidence reminders are beeps from the pod which can be used to acknowledge selected commands." = "Confidence reminders are beeps from the pod which can be used to acknowledge selected commands.";
 
 /* button title for saving low reservoir reminder while saving */
-"Saving..." = "Zapisywanie...";
+"Saving..." = "Saving...";
 
 /* button title for saving low reservoir reminder */
-"Save" = "Zapisz";
+"Save" = "Save";
 
 /* Alert title for error when updating confidence reminder preference */
 "Failed to update confidence reminder preference." = "Failed to update confidence reminder preference.";
@@ -1142,13 +1206,13 @@ Połączono z Nightscout!";
 "No Error" = "No Error";
 
 /* description label for active time pod details row */
-"Active Time" = "Czas aktywny";
+"Active Time" = "Active Time";
 
 /* Title string for BeepPreference.silent */
 "Disabled" = "Disabled";
 
 /* Title string for BeepPreference.manualCommands */
-"Enabled" = "Włączony";
+"Enabled" = "Enabled";
 
 /* Title string for BeepPreference.extended */
 "Extended" = "Extended";
@@ -1166,7 +1230,7 @@ Połączono z Nightscout!";
 "Expiration Reminder Default" = "Expiration Reminder Default";
 
 /* */
-"Expiration Reminder" = "Przypomnienie o terminie ważności";
+"Expiration Reminder" = "Expiration Reminder";
 
 /* */
 "Low Reservoir" = "Low Reservoir";
@@ -1215,7 +1279,7 @@ Połączono z Nightscout!";
 "This PumpManager has not been configured with a maximum basal rate because it was added before manual temp basal was a feature. Please go to therapy settings -> delivery limits and set a new maximum basal rate." = "This PumpManager has not been configured with a maximum basal rate because it was added before manual temp basal was a feature. Please go to therapy settings -> delivery limits and set a new maximum basal rate.";
 
 /* description label for active time pod details row */
-"Active Time" = "Czas aktywny";
+"Active Time" = "Active Time";
 
 /* description label for total delivery pod details row */
 "Total Delivery" = "Total Delivery";
@@ -1224,7 +1288,7 @@ Połączono z Nightscout!";
 "Add Omnipod Dash" = "Add Omnipod Dash";
 
 /* */
-"Insert Cannula" = "Wprowadź kaniulę";
+"Insert Cannula" = "Insert Cannula";
 
 /* */
 "Check Cannula" = "Check Cannula";
@@ -1249,30 +1313,55 @@ Połączono z Nightscout!";
 
 //* -----------------------------------------------------------------------*/
 /* ----------------------Statistics strings -------------------------------*/
+/* */
+
+
+"Today" = "Today";
+
+/* */
+"Day" = "Day";
+
+/* */
+"Week" = "Week";
+
+/* */
+"Month" = "Month";
+
+/* */
+"Total" = "Total";
+
 /* Headline Statistics */
-
-
 "Statistics" = "Statistics";
 
 /* Option in preferences */
-"Display Statistics" = "Display Statistics";
+"Allow Upload of Statistics to NS" = "Allow Upload of Statistics to NS";
 
-/* infoText: Description for Display Statistics */
-"Displays Statistics under the chart view" = "Displays Statistics under the chart view";
+/* Low Glucose Threshold in Statistics settings */
+"Low" = "Low";
 
-/* Low Glucose Limit option in preferences */
-"Low Glucose Limit" = "Low Glucose Limit";
+/* High Glucose Threshold in Statistics settings */
+"High" = "High";
 
-/* High Glucose Limit option in preferences */
-"High Glucose Limit" = "High Glucose Limit";
+/* In Range */
+"In Range" = "In Range";
 
-/* infoText: Description for Low Glucose Limit */
-"BG Under This Value Will Be Displayed As Low Glucose Percentage" = "BG Under This Value Will Be Displayed As Low Glucose Percentage";
-/* infoText: Description for High Glucose Limit */
-"BG Under This Value Will Be Displayed As High Glucose Percentage" = "BG Under This Value Will Be Displayed As High Glucose Percentage";
+/* Display % */
+"Change HbA1c Unit" = "Change HbA1c Unit";
 
-/* When statistics.json was last updated */
-"Updated" = "Updated";
+/* */
+"Display Chart X - Grid lines" = "Display Chart X - Grid lines";
+
+/* */
+"Display Chart Y - Grid lines" = "Display Chart Y - Grid lines";
+
+/* */
+"Display Chart Threshold lines for Low and High" = "Display Chart Threshold lines for Low and High";
+
+/* */
+/* */
+
+"Standing / Laying TIR Chart
+Hours X-Axis (6 default)" = "Hours X-Axis (6 default)";
 
 /* Average BG = */
 "Average" = "Average";
@@ -1280,8 +1369,14 @@ Połączono z Nightscout!";
 /* Median BG */
 "Median" = "Median";
 
-/* CGM readings in statPanel */
-"Readings" = "Readings";
+/* CGM readings in statView */
+"Readings today" = "Readings today";
+
+/* CGM readings in statView */
+"Readings / 24h" = "Readings / 24h";
+
+/* Days of saved readings*/
+"Days" = "Days";
 
 /* Normal BG (within TIR) */
 "Normal" = "Normal";
@@ -1317,7 +1412,7 @@ Połączono z Nightscout!";
 "Interval" = "Interval";
 
 /* Median loop interval */
-"Duration" = "Czas trwania";
+"Duration" = "Duration";
 
 /* "Display SD */
 "Display SD instead of CV" = "Display SD instead of CV";
@@ -1351,9 +1446,6 @@ Połączono z Nightscout!";
 
 /* Description for Display Loop statistics */
 "Displays Loop statistics in the statPanel in Home View" = "Displays Loop statistics in the statPanel in Home View";
-
-/* Display % */
-"Override HbA1c unit" = "Override HbA1c unit";
 
 /* Description for Override HbA1c unit */
 "Change default HbA1c unit in statPanlel. The unit in statPanel will be updateded with next statistics.json update" = "Change default HbA1c unit in statPanlel. The unit in statPanel will be updateded with next statistics.json update";
