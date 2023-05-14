@@ -13,9 +13,6 @@
 /* Describes a functioning transmitter */
 "OK" = "OK";
 
-/* invlid config error description */
-"Peripheral command was invalid" = "Kommando for ekstern enhed var ugyldig";
-
 /* Timeout error description */
 "Peripheral did not respond in time" = "Ekstern enhed svarede ikke i tide";
 
@@ -39,4 +36,3 @@
 
 /* Error description */
 "Unknown characteristic" = "Ukendt karakteristik";
-
