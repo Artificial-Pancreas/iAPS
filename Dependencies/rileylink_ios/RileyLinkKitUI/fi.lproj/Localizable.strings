@@ -1,61 +1,41 @@
-/* Unit format string for an RSSI value in decibles */
-"%@ dB" = "%@ dB";
-
-/* Unit format string for an value in percent */
-"%@%%" = "%@%%";
-
 /* The title of the section describing commands */
-"Commands" = "Komennot";
+"Commands" = "Commands";
 
 /* The connected state */
-"Connected" = "Yhdistetty";
+"Connected" = "Connected";
 
 /* The in-progress connecting state */
-"Connecting" = "Yhdistetään";
+"Connecting" = "Connecting";
 
 /* The title of the cell showing BLE connection state */
-"Connection State" = "Yhteyden tila";
+"Connection State" = "Connection State";
 
 /* The title of the section describing the device */
-"Device" = "Laite";
+"Device" = "Device";
 
 /* The title of the devices table section in RileyLink settings */
-"Devices" = "Laitteet";
+"Devices" = "Devices";
 
 /* The disconnected state */
-"Disconnected" = "Ei yhteydessä";
+"Disconnected" = "Disconnected";
 
 /* The in-progress disconnecting state */
-"Disconnecting" = "Katkaistaan";
-
-/* The title of the cell for sounding device finding piezo */
-"Find Device" = "Etsi laite";
+"Disconnecting" = "Disconnecting";
 
 /* The title of the cell showing firmware version */
-"Firmware" = "Laiteohjelmisto";
+"Firmware" = "Firmware";
 
 /* The title of the cell showing current rileylink frequency */
-"Frequency" = "Taajuus";
-
-/* Progress message for getting statistics. */
-"Get Statistics…" = "Hae tilastotiedot…";
+"Frequency" = "Frequency";
 
 /* The title of the cell showing device name */
-"Name" = "Nimi";
-
-/* Detail text when battery alert disabled.
-   Text indicating LED Mode is off */
-"Off" = "Pois päältä";
-
-/* Text indicating LED Mode is on */
-"On" = "Päällä";
+"Name" = "Name";
 
 /* RileyLink setup description */
-"RileyLink allows for communication with the pump over Bluetooth Low Energy." = "RileyLink mahdollistaa tiedonsiirron pumpun kanssa Bluetooth Low Energy -yhteyden kautta.";
+"RileyLink allows for communication with the pump over Bluetooth Low Energy." = "RileyLink allows for communication with the pump over Bluetooth Low Energy.";
 
 /* The title of the cell showing BLE signal strength (RSSI) */
-"Signal Strength" = "Signaalin vahvuus";
+"Signal Strength" = "Signal Strength";
 
 /* The title of the cell showing uptime */
-"Uptime" = "Päällä";
-
+"Uptime" = "Uptime";
