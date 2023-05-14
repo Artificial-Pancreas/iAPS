@@ -404,6 +404,9 @@ Enact a temp Basal or a temp target */
 /*  */
 "Settings" = "Settings";
 
+/* Recommendation for a Manual Bolus */
+"Recommended Bolus Percentage" = "Recommended Bolus Percentage";
+
 /* 2 log files to share */
 "Share logs" = "Share logs";
 
