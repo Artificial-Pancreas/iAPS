@@ -170,7 +170,7 @@
 "for" = "for";
 
 /*  Temp target set for ... minutes */
-"min" = "min";
+"min" = "min.";
 
 /*  */
 "Autotune" = "Autotune";
@@ -194,7 +194,7 @@
 "Sensitivity" = "Sensitivity";
 
 /*  */
-"Use Autotune" = "Use Autotune";
+"Use Autotune" = "use Autotune";
 
 /* Add profile basal */
 "Add" = "Add";
@@ -555,7 +555,7 @@ Enact a temp Basal or a temp target */
 "Calibrationinfo" = "Calibrationinfo";
 
 /* */
-"Unknown" = "Unknown";
+"Unknown" = "Tuntematon";
 
 /* */
 "Not paired yet" = "Not paired yet";
@@ -699,10 +699,10 @@ Enact a temp Basal or a temp target */
 "Hardware" = "Hardware";
 
 /* */
-"Firmware" = "Firmware";
+"Firmware" = "Laiteohjelmisto";
 
 /* */
-"Connection State" = "Connection State";
+"Connection State" = "Yhteyden tila";
 
 /* */
 "Transmitter Type" = "Transmitter Type";
@@ -735,7 +735,7 @@ Enact a temp Basal or a temp target */
 "Advanced" = "Advanced";
 
 /* */
-"Alarms" = "Alarms";
+"Alarms" = "Hälytykset";
 
 /* */
 "Glucose Settings" = "Glucose Settings";
@@ -1055,7 +1055,7 @@ Enact a temp Basal or a temp target */
 "Info" = "Info";
 
 /* Warning title */
-"Warning" = "Warning";
+"Warning" = "Varoitus";
 
 /* Error title */
 "Error" = "Error";
@@ -1178,7 +1178,7 @@ Enact a temp Basal or a temp target */
 */
 "Attach Pod" = "Attach Pod";
 
-"Deactivate Pod" = "Deactivate Pod";
+"Deactivate Pod" = "Deaktivoi pumppu";
 
 /* */
 "Deactivating..." = "Deactivating...";
@@ -1206,13 +1206,13 @@ Enact a temp Basal or a temp target */
 "No Error" = "No Error";
 
 /* description label for active time pod details row */
-"Active Time" = "Active Time";
+"Active Time" = "Aktiivinen aika";
 
 /* Title string for BeepPreference.silent */
 "Disabled" = "Disabled";
 
 /* Title string for BeepPreference.manualCommands */
-"Enabled" = "Enabled";
+"Enabled" = "Käytössä";
 
 /* Title string for BeepPreference.extended */
 "Extended" = "Extended";
@@ -1230,7 +1230,7 @@ Enact a temp Basal or a temp target */
 "Expiration Reminder Default" = "Expiration Reminder Default";
 
 /* */
-"Expiration Reminder" = "Expiration Reminder";
+"Expiration Reminder" = "Vanhenemismuistutus";
 
 /* */
 "Low Reservoir" = "Low Reservoir";
@@ -1288,7 +1288,7 @@ Enact a temp Basal or a temp target */
 "Add Omnipod Dash" = "Add Omnipod Dash";
 
 /* */
-"Insert Cannula" = "Insert Cannula";
+"Insert Cannula" = "Aseta kanyyli";
 
 /* */
 "Check Cannula" = "Check Cannula";
