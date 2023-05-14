@@ -112,6 +112,21 @@
 /*  */
 "Enact Temp Target" = "Temporäres Ziel starten";
 
+/* */
+"Target" = "Target";
+
+/* */
+"Basal Insulin and Sensitivity ratio" = "Basal Insulin and Sensitivity ratio";
+
+/* */
+"A lower 'Half Basal Target' setting will reduce the basal and raise the ISF earlier, at a lower target glucose." = "A lower 'Half Basal Target' setting will reduce the basal and raise the ISF earlier, at a lower target glucose.";
+
+/* */
+" Your setting: " = " Your setting: ";
+
+/* */
+"mg/dl. Autosens.max limits the max endpoint" = "mg/dl. Autosens.max limits the max endpoint";
+
 /*  */
 "Enter preset name" = "Geben Sie einen Namen für die Vorlage ein";
 
@@ -129,6 +144,24 @@
 
 /*  */
 "Save as preset" = "Als Vorlage speichern";
+
+/* Delete Meal Preset */
+"Delete Preset" = "Delete Preset";
+
+/* Confirm Deletion */
+"Delete preset '%@'?" = "Delete preset '%@'?";
+
+/* Button */
+"No" = "No";
+
+/* Button */
+"Yes" = "Yes";
+
+/* + Button */
+"[ +1 ]" = "[ +1 ]";
+
+/* - Button */
+"[ -1 ]" = "[ -1 ]";
 
 /* Upper temp target limit */
 "Top target" = "Obergrenze";
@@ -371,6 +404,9 @@ Enact a temp Basal or a temp target */
 /*  */
 "Settings" = "Einstellungen";
 
+/* Recommendation for a Manual Bolus */
+"Recommended Bolus Percentage" = "Recommended Bolus Percentage";
+
 /* 2 log files to share */
 "Share logs" = "Ereignisprotokolldatei teilen";
 
@@ -450,7 +486,7 @@ Enact a temp Basal or a temp target */
 "Calendar" = "Kalender";
 
 /* */
-"Other" = "Sonstiges";
+"Other" = "Other";
 
 /* */
 "Libre Transmitter" = "Libre Sender";
@@ -1025,7 +1061,7 @@ Enact a temp Basal or a temp target */
 "Warning" = "Warnung";
 
 /* Error title */
-"Error" = "Fehler";
+"Error" = "Error";
 
 /* Manual temp basal mode */
 "Manual" = "manuell";
@@ -1048,9 +1084,6 @@ Enact a temp Basal or a temp target */
 "Enable" = "Einschalten";
 
 /* Header */
-"Convert Fat and Protein" = "Fett und Eiweißberechnung";
-
-/* Header */
 "Conversion settings" = "Einstellungen für die Umrechnung";
 
 /* Delay */
@@ -1068,8 +1101,14 @@ Enact a temp Basal or a temp target */
 /* Description */
 "Allows fat and protein to be converted into future carb equivalents using the Warsaw formula of kilocalories divided by 10.\n\nThis spreads the carb equivilants over a maximum duration setting that can be configured from 5-12 hours.\n\nDelay is time from now until the first future carb entry.\n\nInterval in minutes is how many minutes are between entries. The shorter the interval, the smoother the result. 10, 15, 20, 30, or 60 are reasonable choices.\n\nAdjustment factor is how much effect the fat and protein has on the entries. 1.0 is full effect (original Warsaw Method) and 0.5 is half effect. Note that you may find that your normal carb ratio needs to increase to a larger number if you begin adding fat and protein entries. For this reason, it is best to start with a factor of about 0.5 to ease into it.\n\nDefault settings: Time Cap: 8 h, Interval: 30 min, Factor: 0.5, Delay 60 min" = "Allows fat and protein to be converted into future carb equivalents using the Warsaw formula of kilocalories divided by 10.\n\nThis spreads the carb equivilants over a maximum duration setting that can be configured from 5-12 hours.\n\nDelay is time from now until the first future carb entry.\n\nInterval in minutes is how many minutes are between entries. The shorter the interval, the smoother the result. 10, 15, 20, 30, or 60 are reasonable choices.\n\nAdjustment factor is how much effect the fat and protein has on the entries. 1.0 is full effect (original Warsaw Method) and 0.5 is half effect. Note that you may find that your normal carb ratio needs to increase to a larger number if you begin adding fat and protein entries. For this reason, it is best to start with a factor of about 0.5 to ease into it.\n\nDefault settings: Time Cap: 8 h, Interval: 30 min, Factor: 0.5, Delay 60 min";
 
-/* Title */
+/* FPU Settings Title */
 "Fat and Protein" = "Fett und Eiweiß";
+
+/* Display fat and protein entities */
+"Fat & Protein" = "Fat & Protein";
+
+/* */
+"Hide Fat & Protein" = "Hide Fat & Protein";
 
 /* Add Fat */
 "Fat" = "Fett";
@@ -1077,14 +1116,44 @@ Enact a temp Basal or a temp target */
 /* Add Protein */
 "Protein" = "Eiweiß";
 
-/* Setting */
+/* Service Section */
 "Fat And Protein Conversion" = "Fett und Eiweiß Berechnung";
+
+/* Service Section */
+"Profile Override" = "Profile Override";
+
+/* */
+"Override Profiles" = "Override Profiles";
+
+/* */
+"Currently no Override active" = "Currently no Override active";
+
+/* */
+"Total Insulin Adjustment" = "Total Insulin Adjustment";
+
+/* */
+"Override your Basal, ISF, CR and Target profiles" = "Override your Basal, ISF, CR and Target profiles";
+
+/* */
+"Enable indefinitely" = "Enable indefinitely";
+
+/* */
+"Override Profile target" = "Override Profile target";
+
+/* */
+"Disable SMBs" = "Disable SMBs";
+
+/* */
+"Your profile basal insulin will be adjusted with the override percentage and your profile ISF and CR will be inversly adjusted with the percentage.\n\nIf you toggle off the override every profile setting will return to normal." = "Your profile basal insulin will be adjusted with the override percentage and your profile ISF and CR will be inversly adjusted with the percentage.\n\nIf you toggle off the override every profile setting will return to normal.";
+
+/* Service Section */
+"App Icons" = "App Icons";
+
+/* Service Section */
+"Statistics and Home View" = "Statistics and Home View";
 
 /* Alert text */
 "Delete carb equivalents?" = "Delete carb equivalents?";
-
-/* Section in settings */
-"Protein / Fat" = "Eiweiß / Fett";
 
 /* */
 "Meal Presets" = "Meal Presets";
@@ -1213,7 +1282,7 @@ Enact a temp Basal or a temp target */
 "This PumpManager has not been configured with a maximum basal rate because it was added before manual temp basal was a feature. Please go to therapy settings -> delivery limits and set a new maximum basal rate." = "Dieser PumpManager wurde nicht mit einer maximalen Basalrate konfiguriert, da er hinzugefügt wurde, bevor es die Funktion \"manuelle temporäre Basalrate\" gab. Bitte gehe zum Menü Therapieeinstellungen -> Verabreichungsgrenzen und lege eine neue maximale Basalrate fest.";
 
 /* description label for active time pod details row */
-"Active Time" = "Laufzeit";
+"Active Time" = "Active Time";
 
 /* description label for total delivery pod details row */
 "Total Delivery" = "gesamte Abgabe";
@@ -1247,30 +1316,55 @@ Enact a temp Basal or a temp target */
 
 //* -----------------------------------------------------------------------*/
 /* ----------------------Statistics strings -------------------------------*/
+/* */
+
+
+"Today" = "Today";
+
+/* */
+"Day" = "Day";
+
+/* */
+"Week" = "Week";
+
+/* */
+"Month" = "Month";
+
+/* */
+"Total" = "Total";
+
 /* Headline Statistics */
-
-
 "Statistics" = "Statistiken";
 
 /* Option in preferences */
-"Display Statistics" = "Statistiken anzeigen";
+"Allow Upload of Statistics to NS" = "Allow Upload of Statistics to NS";
 
-/* infoText: Description for Display Statistics */
-"Displays Statistics under the chart view" = "Zeigt Statistiken unter der Diagrammansicht an";
+/* Low Glucose Threshold in Statistics settings */
+"Low" = "Low";
 
-/* Low Glucose Limit option in preferences */
-"Low Glucose Limit" = "Niedrige Blutzuckergrenze";
+/* High Glucose Threshold in Statistics settings */
+"High" = "High";
 
-/* High Glucose Limit option in preferences */
-"High Glucose Limit" = "Hohe Blutzuckergrenze";
+/* In Range */
+"In Range" = "In Range";
 
-/* infoText: Description for Low Glucose Limit */
-"BG Under This Value Will Be Displayed As Low Glucose Percentage" = "Ein Blutzuckerwert unter diesem Wert wird als Unterzuckerung angezeigt";
-/* infoText: Description for High Glucose Limit */
-"BG Under This Value Will Be Displayed As High Glucose Percentage" = "Ein Blutzuckerwert unter diesem Wert wird als hoher Prozentsatz des Blutzuckers angezeigt";
+/* Display % */
+"Change HbA1c Unit" = "Change HbA1c Unit";
 
-/* When statistics.json was last updated */
-"Updated" = "Aktualisiert um";
+/* */
+"Display Chart X - Grid lines" = "Display Chart X - Grid lines";
+
+/* */
+"Display Chart Y - Grid lines" = "Display Chart Y - Grid lines";
+
+/* */
+"Display Chart Threshold lines for Low and High" = "Display Chart Threshold lines for Low and High";
+
+/* */
+/* */
+
+"Standing / Laying TIR Chart
+Hours X-Axis (6 default)" = "Hours X-Axis (6 default)";
 
 /* Average BG = */
 "Average" = "Mittelwert";
@@ -1278,8 +1372,14 @@ Enact a temp Basal or a temp target */
 /* Median BG */
 "Median" = "Median";
 
-/* CGM readings in statPanel */
-"Readings" = "Readings";
+/* CGM readings in statView */
+"Readings today" = "Readings today";
+
+/* CGM readings in statView */
+"Readings / 24h" = "Readings / 24h";
+
+/* Days of saved readings*/
+"Days" = "Days";
 
 /* Normal BG (within TIR) */
 "Normal" = "im Zielbereich";
@@ -1350,9 +1450,6 @@ Enact a temp Basal or a temp target */
 /* Description for Display Loop statistics */
 "Displays Loop statistics in the statPanel in Home View" = "Zeigt Loop Statistiken im Statistikbereich auf der Startseite an";
 
-/* Display % */
-"Override HbA1c unit" = "HbA1c-Einheit überschreiben";
-
 /* Description for Override HbA1c unit */
 "Change default HbA1c unit in statPanlel. The unit in statPanel will be updateded with next statistics.json update" = "Ändern Sie den HbA1c in der Statistik (% <—> mmol/mol). Die Anzeige in der Statistik wird mit dem nächsten statistics.json Update aktualisiert.";
 
@@ -1373,7 +1470,6 @@ Enact a temp Basal or a temp target */
 
 /* New Experimental feature */
 "Experimental" = "Experimental";
-
 /* Smoothing of CGM readings */
 "Smooth Glucose Value" = "Smooth Glucose Value";
 
@@ -1477,7 +1573,7 @@ Enact a temp Basal or a temp target */
 "Allow SMB With High Temptarget" = "Erlaube SMB mit hohem Temptarget";
 
 /* Headline "Allow SMB With High Temptarget" */
-"Allow SMB With High Temptarget" = "Erlaube SMB mit hohem Temptarget";
+"Allow SMB With High Temptarget" = "Allow SMB With High Temptarget";
 
 /* "Allow SMB With High Temptarget" */
 "Defaults to false. When true, allows supermicrobolus (if otherwise enabled) even with high temp targets (> 100 mg/dl)." = "Standard Wert ist \"Aus\". Wenn aktiviert, werden auch bei erhöhten temporären Blutzucker Zielen SMBs verwendet.";
@@ -1620,13 +1716,13 @@ Enact a temp Basal or a temp target */
 "Adjust Dynamic ISF constant" = "Dynamic ISF-Konstante anpassen";
 
 /* Adjust Dynamic ISF constant */
-"Adjust Dynamic ISF constant" = "Dynamic ISF-Konstante anpassen";
+"Adjust Dynamic ISF constant" = "Adjust Dynamic ISF constant";
 
 /* Enable Dynamic ISF, Headline */
 "Enable Dynamic ISF" = "Aktiviere Dynamic ISF";
 
 /* Headline "Enable Dynamic ISF" */
-"Enable Dynamic ISF" = "Aktiviere Dynamic ISF";
+"Enable Dynamic ISF" = "Enable Dynamic ISF";
 
 /* Enable Dynamic ISF */
 "Calculate a new ISF with every loop cycle. New ISF will be based on current BG, TDD of insulin (past 24 hours or a weighted average) and an Adjustment Factor (default is 1).\n\nDynamic ISF and CR ratios will be limited by your autosens.min/max limits.\n\nDynamic ratio replaces the autosens.ratio: New ISF = Static ISF / Dynamic ratio,\nDynamic ratio = profile.sens * adjustmentFactor * tdd * Math.log(BG/insulinFactor+1) / 1800,\ninsulinFactor = 120 - InsulinPeakTimeInMinutes" = "Berechnet einen neuen ISF mit jedem Loop-Zyklus. Die neue ISF basiert auf dem aktuellen BG, TDD des Insulins (nach 24 Stunden oder einem gewichteten Durchschnitt) und einem Anpassungsfaktor (Standardeinstellung ist 1).\n\nDynamic ISF und CR Verhältnisse werden durch Ihre autosens.min/max Limits begrenzt.\n\nDas dynamische Verhältnis ersetzt das autosens.ratio: New ISF = Static ISF / Dynamic ratio,\nDynamic Ratio = profile.sens * adjustmentFactor * tdd * Math.log(BG/insulinFactor+1) / 1800,\ninsulinFactor = 120 - InsulinPeakTimeInMinutes";
@@ -1638,7 +1734,7 @@ Enact a temp Basal or a temp target */
 "Use Dynamic CR. The dynamic ratio will be used for CR as follows:\n\n When ratio > 1:  dynCR = (newRatio - 1) / 2 + 1.\nWhen ratio < 1: dynCR = CR/dynCR.\n\nDon't use toghether with a high Insulin Fraction (> 2)" = "Nutze Dynamic CR. Das dynamische Verhältnis wird für CR wie folgt verwendet:\n\n Bei Verhältnis > 1: dynCR = (newRatio - 1) / 2 + 1.\nWenn Verhältnis < 1: dynCR = CR/dynCR.\n\nNicht verwenden mit hohem Insulinanteil (> 2)";
 
 /* Headline "Adjust Dynamic ISF constant" */
-"Adjust Dynamic ISF constant" = "Dynamic ISF-Konstante anpassen";
+"Adjust Dynamic ISF constant" = "Adjust Dynamic ISF constant";
 
 /* Adjust Dynamic ISF constant */
 "Adjust Dynamic ratios by a constant. Default is 0.5. The higher the value, the larger the correction of your ISF will be for a high or a low BG. Maximum correction is determined by the Autosens min/max settings. For Sigmoid function an adjustment factor of 0.4 - 0.5 is recommended to begin with. For the logaritmic formula there is less consensus, but starting with 0.5 - 0.8 is more appropiate for most users" = "Adjust Dynamic ratios by a constant. Default is 0.5. The higher the value, the larger the correction of your ISF will be for a high or a low BG. Maximum correction is determined by the Autosens min/max settings. For Sigmoid function an adjustment factor of 0.4 - 0.5 is recommended to begin with. For the logaritmic formula threre is less consensus, but starting with 0.5 - 0.8 is more appropiate for most users";
