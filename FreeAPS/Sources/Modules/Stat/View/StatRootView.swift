@@ -291,9 +291,9 @@ extension Stat {
                 .Total ? fetchedGlucose : fetchedGlucoseDay
             let fetched = tir(array)
             let data: [ShapeModel] = [
-                .init(type: "Low", percent: fetched[0].decimal),
-                .init(type: "In Range", percent: fetched[1].decimal),
-                .init(type: "High", percent: fetched[2].decimal)
+                .init(type: NSLocalizedString("Low", comment: ""), percent: fetched[0].decimal),
+                .init(type: NSLocalizedString("In Range", comment: ""), percent: fetched[1].decimal),
+                .init(type: NSLocalizedString("High", comment: ""), percent: fetched[2].decimal)
             ]
 
             return Chart(data) { shape in
@@ -310,7 +310,11 @@ extension Stat {
                 }
             }
             .chartXAxis(.hidden)
-            .chartForegroundStyleScale(["Low": .red, "In Range": .green, "High": .orange]).frame(maxHeight: 55)
+            .chartForegroundStyleScale([
+                NSLocalizedString("Low", comment: ""): .red,
+                NSLocalizedString("In Range", comment: ""): .green,
+                NSLocalizedString("High", comment: ""): .orange
+            ]).frame(maxHeight: 55)
         }
 
         var standingTIRchart: some View {
@@ -320,9 +324,9 @@ extension Stat {
                 selectedDuration == .Total ? fetchedGlucose : fetchedGlucoseDay
             let fetched = tir(array)
             let data: [ShapeModel] = [
-                .init(type: "Low", percent: fetched[0].decimal),
-                .init(type: "In Range", percent: fetched[1].decimal),
-                .init(type: "High", percent: fetched[2].decimal)
+                .init(type: NSLocalizedString("Low", comment: ""), percent: fetched[0].decimal),
+                .init(type: NSLocalizedString("In Range", comment: ""), percent: fetched[1].decimal),
+                .init(type: NSLocalizedString("High", comment: ""), percent: fetched[2].decimal)
             ]
 
             return VStack(alignment: .center) {
@@ -332,13 +336,17 @@ extension Stat {
                         y: .value("Percentage", shape.percent)
                     )
                     .foregroundStyle(by: .value("Group", shape.type))
-                    .annotation(position: shape.percent < 5 ? .top : .overlay, alignment: .center) {
+                    .annotation(position: shape.percent <= 9 ? .top : .overlay, alignment: .center) {
                         Text(shape.percent == 0 ? "" : "\(shape.percent, format: .number.precision(.fractionLength(0))) %")
                     }
                 }
                 .chartYAxis(.hidden)
                 .chartLegend(.hidden)
-                .chartForegroundStyleScale(["Low": .red, "In Range": .green, "High": .orange])
+                .chartForegroundStyleScale([
+                    NSLocalizedString("Low", comment: ""): .red,
+                    NSLocalizedString("In Range", comment: ""): .green,
+                    NSLocalizedString("High", comment: ""): .orange
+                ])
             }
         }
 
