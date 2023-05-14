@@ -1,20 +1,9 @@
-/* CGM display title */
-"Dexcom G5" = "Dexcom G5";
-
-/* CGM display title */
-"Dexcom G6" = "Dexcom G6";
 
 /* Error description for unreliable state */
 "Glucose data is unavailable" = "Údaje o glykémii nie sú k dispozícii";
 
 /* Describes a low battery */
 "Low Battery" = "Slabá batéria";
-
-/* Describes a functioning transmitter */
-"OK" = "OK";
-
-/* invlid config error description */
-"Peripheral command was invalid" = "Periférny príkaz bol neplatný";
 
 /* Timeout error description */
 "Peripheral did not respond in time" = "Periférne zariadenie nereagovalo načas";
@@ -39,4 +28,3 @@
 
 /* Error description */
 "Unknown characteristic" = "Neznáma charakteristika";
-
