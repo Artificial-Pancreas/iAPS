@@ -59,7 +59,7 @@
 "looping" = "looping";
 
 /* min ago since last loop */
-"min ago" = "min ago";
+"min ago" = "min";
 
 /* Status Title */
 "No suggestion" = "No suggestion";
@@ -194,22 +194,22 @@
 "Sensitivity" = "Sensitivity";
 
 /*  */
-"Use Autotune" = "Use Autotune";
+"Use Autotune" = "use Autotune";
 
 /* Add profile basal */
 "Add" = "Add";
 
 /*  */
-"Basal Profile" = "Basal Profile";
+"Basal Profile" = "Basal profil";
 
 /* Rate basal profile */
-"Rate" = "Rate";
+"Rate" = "Værdi";
 
 /*  */
-"Save on Pump" = "Save on Pump";
+"Save on Pump" = "Gem på Pump";
 
 /*  */
-"Saving..." = "Saving...";
+"Saving..." = "Gemmer...";
 
 /*  */
 "Schedule" = "Schedule";
@@ -345,19 +345,19 @@ Enact a temp Basal or a temp target */
 "Pump Settings" = "Pump Settings";
 
 /* Insulin unit per hour */
-"U/hr" = "U/hr";
+"U/hr" = "E/t";
 
 /* Unit in number of units delivered (keep the space character!) */
-" U" = " U";
+" U" = " E";
 
 /* /Insulin unit */
-"/U" = "/U";
+"/U" = "/E";
 
 /* Insulin unit */
 "U" = "U";
 
 /* Unit per hour with space */
-" U/hr" = " U/hr";
+" U/hr" = " E/t";
 
 /* Number of units per hour*/
 "%@ U/hr" = "%@ U/hr";
@@ -366,7 +366,7 @@ Enact a temp Basal or a temp target */
 "%@ U" = "%@ U";
 
 /*Carb ratio unit */
-"g/U" = "g/U";
+"g/U" = "g/E";
 
 /* grams */
 " g" = " g";
@@ -555,7 +555,7 @@ Enact a temp Basal or a temp target */
 "Calibrationinfo" = "Calibrationinfo";
 
 /* */
-"Unknown" = "Unknown";
+"Unknown" = "Ukendt";
 
 /* */
 "Not paired yet" = "Not paired yet";
@@ -702,7 +702,7 @@ Enact a temp Basal or a temp target */
 "Firmware" = "Firmware";
 
 /* */
-"Connection State" = "Connection State";
+"Connection State" = "Tilslutningstilstand";
 
 /* */
 "Transmitter Type" = "Transmitter Type";
@@ -735,7 +735,7 @@ Enact a temp Basal or a temp target */
 "Advanced" = "Advanced";
 
 /* */
-"Alarms" = "Alarms";
+"Alarms" = "Alarmer";
 
 /* */
 "Glucose Settings" = "Glucose Settings";
@@ -1055,7 +1055,7 @@ Enact a temp Basal or a temp target */
 "Info" = "Info";
 
 /* Warning title */
-"Warning" = "Warning";
+"Warning" = "Advarsel";
 
 /* Error title */
 "Error" = "Error";
@@ -1178,7 +1178,7 @@ Enact a temp Basal or a temp target */
 */
 "Attach Pod" = "Attach Pod";
 
-"Deactivate Pod" = "Deactivate Pod";
+"Deactivate Pod" = "Deaktiver Pod";
 
 /* */
 "Deactivating..." = "Deactivating...";
@@ -1206,13 +1206,13 @@ Enact a temp Basal or a temp target */
 "No Error" = "No Error";
 
 /* description label for active time pod details row */
-"Active Time" = "Active Time";
+"Active Time" = "Aktiv Tid";
 
 /* Title string for BeepPreference.silent */
 "Disabled" = "Disabled";
 
 /* Title string for BeepPreference.manualCommands */
-"Enabled" = "Enabled";
+"Enabled" = "Aktiveret";
 
 /* Title string for BeepPreference.extended */
 "Extended" = "Extended";
@@ -1230,7 +1230,7 @@ Enact a temp Basal or a temp target */
 "Expiration Reminder Default" = "Expiration Reminder Default";
 
 /* */
-"Expiration Reminder" = "Expiration Reminder";
+"Expiration Reminder" = "Udløbs Påmindelse";
 
 /* */
 "Low Reservoir" = "Low Reservoir";
@@ -1288,7 +1288,7 @@ Enact a temp Basal or a temp target */
 "Add Omnipod Dash" = "Add Omnipod Dash";
 
 /* */
-"Insert Cannula" = "Insert Cannula";
+"Insert Cannula" = "Indfør kanyle";
 
 /* */
 "Check Cannula" = "Check Cannula";
