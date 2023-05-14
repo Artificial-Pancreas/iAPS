@@ -69,7 +69,7 @@ struct AppGroupSource: GlucoseSource {
                     direction: BloodGlucose.Direction(rawValue: direction),
                     date: Decimal(Int(date.timeIntervalSince1970 * 1000)),
                     dateString: date,
-                    unfiltered: nil,
+                    unfiltered: Decimal(glucose),
                     filtered: nil,
                     noise: nil,
                     glucose: glucose,

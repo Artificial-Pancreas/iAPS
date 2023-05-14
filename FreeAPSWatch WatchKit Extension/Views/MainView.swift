@@ -13,29 +13,39 @@ struct MainView: View {
     @State var isTargetsActive = false
     @State var isBolusActive = false
     @State private var pulse = 0
+    @State private var steps = 0
 
     @GestureState var isDetectingLongPress = false
     @State var completedLongPress = false
+
+    @State var completedLongPressOfBG = false
+    @GestureState var isDetectingLongPressOfBG = false
 
     private var healthStore = HKHealthStore()
     let heartRateQuantity = HKUnit(from: "count/min")
 
     var body: some View {
         ZStack(alignment: .topLeading) {
-            if state.timerDate.timeIntervalSince(state.lastUpdate) > 10 {
-                HStack {
-                    withAnimation {
-                        BlinkingView(count: 5, size: 3)
-                            .frame(width: 14, height: 14)
-                            .padding(2)
+            if !completedLongPressOfBG {
+                if state.timerDate.timeIntervalSince(state.lastUpdate) > 10 {
+                    HStack {
+                        withAnimation {
+                            BlinkingView(count: 5, size: 3)
+                                .frame(width: 14, height: 14)
+                                .padding(2)
+                        }
+                        Text("Updating...").font(.caption2).foregroundColor(.secondary)
                     }
-                    Text("Updating...").font(.caption2).foregroundColor(.secondary)
                 }
             }
             VStack {
-                header
-                Spacer()
-                buttons
+                if !completedLongPressOfBG {
+                    header
+                    Spacer()
+                    buttons
+                } else {
+                    bigHeader
+                }
             }
 
             if state.isConfirmationViewActive {
@@ -93,10 +103,9 @@ struct MainView: View {
                     .scaledToFill()
                     .foregroundColor(Color.white)
                     .minimumScaleFactor(0.5)
-                Text("g").foregroundColor(.loopGreen)
+                Text("g").foregroundColor(.loopYellow)
                     .font(.caption2)
                     .scaledToFill()
-                    .foregroundColor(.loopGreen)
                     .minimumScaleFactor(0.5)
                 Spacer()
                 Text(iobFormatter.string(from: (state.iob ?? 0) as NSNumber)!)
@@ -108,10 +117,10 @@ struct MainView: View {
                 Text("U").foregroundColor(.insulin)
                     .font(.caption2)
                     .scaledToFill()
-                    .foregroundColor(.loopGreen)
                     .minimumScaleFactor(0.5)
 
-                if state.displayHR {
+                switch state.displayOnWatch {
+                case .HR:
                     Spacer()
                     HStack {
                         if completedLongPress {
@@ -139,21 +148,67 @@ struct MainView: View {
                             .gesture(longPress)
                         }
                     }
-
-                } else if let eventualBG = state.eventualBG.nonEmpty {
+                case .BGTarget:
+                    if let eventualBG = state.eventualBG.nonEmpty {
+                        Spacer()
+                        HStack {
+                            Text(eventualBG)
+                                .font(.caption2)
+                                .scaledToFill()
+                                .foregroundColor(.secondary)
+                                .minimumScaleFactor(0.5)
+                        }
+                    }
+                case .steps:
                     Spacer()
                     HStack {
-                        Text(eventualBG)
+                        Text("🦶" + " \(steps)")
+                            .fontWeight(.regular)
                             .font(.caption2)
                             .scaledToFill()
-                            .foregroundColor(.secondary)
+                            .foregroundColor(.white)
+                            .minimumScaleFactor(0.5)
+                    }
+                case .isf:
+                    Spacer()
+                    let isf: String = state.isf != nil ? "\(state.isf ?? 0)" : "-"
+                    HStack {
+                        Image(systemName: "arrow.up.arrow.down")
+                            .renderingMode(.template)
+                            .resizable()
+                            .frame(width: 16, height: 16)
+                            .foregroundColor(.blue)
+                        Text("\(isf)")
+                            .fontWeight(.regular)
+                            .font(.caption2)
+                            .scaledToFill()
+                            .foregroundColor(.white)
                             .minimumScaleFactor(0.5)
                     }
                 }
             }
             Spacer()
                 .onAppear(perform: start)
-        }.padding()
+        }
+        .padding()
+        // .scaleEffect(isDetectingLongPressOfBG ? 3 : 1)
+        .gesture(longPresBGs)
+    }
+
+    var bigHeader: some View {
+        VStack(alignment: .center) {
+            HStack {
+                Text(state.glucose).font(.custom("Big BG", size: 55))
+                Text(state.trend != "→" ? state.trend : "")
+                    .scaledToFill()
+                    .minimumScaleFactor(0.5)
+            }.padding(.bottom, 35)
+
+            HStack {
+                Circle().stroke(color, lineWidth: 5).frame(width: 20, height: 20).padding(10)
+            }
+        }
+        .gesture(longPresBGs)
     }
 
     var longPress: some Gesture {
@@ -169,6 +224,19 @@ struct MainView: View {
             }
     }
 
+    var longPresBGs: some Gesture {
+        LongPressGesture(minimumDuration: 1)
+            .updating($isDetectingLongPressOfBG) { currentState, gestureState,
+                _ in
+                gestureState = currentState
+            }
+            .onEnded { _ in
+                if completedLongPressOfBG {
+                    completedLongPressOfBG = false
+                } else { completedLongPressOfBG = true }
+            }
+    }
+
     var buttons: some View {
         HStack(alignment: .center) {
             NavigationLink(isActive: $state.isCarbsViewActive) {
@@ -179,7 +247,7 @@ struct MainView: View {
                     .renderingMode(.template)
                     .resizable()
                     .frame(width: 24, height: 24)
-                    .foregroundColor(.loopGreen)
+                    .foregroundColor(.loopYellow)
             }
 
             NavigationLink(isActive: $state.isTempTargetViewActive) {
@@ -191,7 +259,7 @@ struct MainView: View {
                         .renderingMode(.template)
                         .resizable()
                         .frame(width: 24, height: 24)
-                        .foregroundColor(.loopYellow)
+                        .foregroundColor(.loopGreen)
                     if let until = state.tempTargets.compactMap(\.until).first, until > Date() {
                         Text(until, style: .timer)
                             .scaledToFill()
@@ -216,13 +284,59 @@ struct MainView: View {
     func start() {
         autorizeHealthKit()
         startHeartRateQuery(quantityTypeIdentifier: .heartRate)
+        startStepsQuery(quantityTypeIdentifier: .stepCount)
     }
 
     func autorizeHealthKit() {
         let healthKitTypes: Set = [
+            HKObjectType.quantityType(forIdentifier: HKQuantityTypeIdentifier.stepCount)!,
             HKObjectType.quantityType(forIdentifier: HKQuantityTypeIdentifier.heartRate)!
         ]
         healthStore.requestAuthorization(toShare: healthKitTypes, read: healthKitTypes) { _, _ in }
+    }
+
+    private func startStepsQuery(quantityTypeIdentifier _: HKQuantityTypeIdentifier) {
+        let type = HKQuantityType.quantityType(forIdentifier: .stepCount)!
+        let now = Date()
+        let startOfDay = Calendar.current.startOfDay(for: now)
+        var interval = DateComponents()
+        interval.day = 1
+        let query = HKStatisticsCollectionQuery(
+            quantityType: type,
+            quantitySamplePredicate: nil,
+            options: [.cumulativeSum],
+            anchorDate: startOfDay,
+            intervalComponents: interval
+        )
+
+        query.initialResultsHandler = { _, result, _ in
+            var resultCount = 0.0
+            guard let result = result else {
+                self.steps = 0
+                return
+            }
+            result.enumerateStatistics(from: startOfDay, to: now) { statistics, _ in
+
+                if let sum = statistics.sumQuantity() {
+                    // Get steps (they are of double type)
+                    resultCount = sum.doubleValue(for: HKUnit.count())
+                } // end if
+                // Return
+                self.steps = Int(resultCount)
+            }
+        }
+
+        query.statisticsUpdateHandler = {
+            _, statistics, _, _ in
+
+            // If new statistics are available
+            if let sum = statistics?.sumQuantity() {
+                let resultCount = sum.doubleValue(for: HKUnit.count())
+                // Return
+                self.steps = Int(resultCount)
+            } // end if
+        }
+        healthStore.execute(query)
     }
 
     private func startHeartRateQuery(quantityTypeIdentifier: HKQuantityTypeIdentifier) {

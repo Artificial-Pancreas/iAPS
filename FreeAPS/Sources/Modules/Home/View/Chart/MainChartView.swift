@@ -19,26 +19,22 @@ typealias GlucoseYRange = (minValue: Int, minY: CGFloat, maxValue: Int, maxY: CG
 struct MainChartView: View {
     private enum Config {
         static let endID = "End"
-        static let screenHours = 6
         static let basalHeight: CGFloat = 80
         static let topYPadding: CGFloat = 20
-        static let bottomYPadding: CGFloat = 50
+        static let bottomYPadding: CGFloat = 80
         static let minAdditionalWidth: CGFloat = 150
-        static let maxGlucose = 250
-        static let minGlucose = 50
+        static let maxGlucose = 270
+        static let minGlucose = 45
         static let yLinesCount = 5
         static let glucoseScale: CGFloat = 2 // default 2
         static let bolusSize: CGFloat = 8
         static let bolusScale: CGFloat = 2.5
         static let carbsSize: CGFloat = 10
         static let carbsScale: CGFloat = 0.3
-        static let upperTarget: CGFloat = 180
-        static let lowerTarget: CGFloat = 70
     }
 
     @Binding var glucose: [BloodGlucose]
     @Binding var suggestion: Suggestion?
-    @Binding var statistcs: Statistics?
     @Binding var tempBasals: [PumpHistoryEvent]
     @Binding var boluses: [PumpHistoryEvent]
     @Binding var suspensions: [PumpHistoryEvent]
@@ -51,6 +47,12 @@ struct MainChartView: View {
     @Binding var timerDate: Date
     @Binding var units: GlucoseUnits
     @Binding var smooth: Bool
+    @Binding var highGlucose: Decimal
+    @Binding var lowGlucose: Decimal
+    @Binding var screenHours: Int
+    @Binding var displayXgridLines: Bool
+    @Binding var displayYgridLines: Bool
+    @Binding var thresholdLines: Bool
 
     @State var didAppearTrigger = false
     @State private var glucoseDots: [CGRect] = []
@@ -66,7 +68,7 @@ struct MainChartView: View {
     @State private var carbsPath = Path()
     @State private var fpuDots: [DotInfo] = []
     @State private var fpuPath = Path()
-    @State private var glucoseYGange: GlucoseYRange = (0, 0, 0, 0)
+    @State private var glucoseYRange: GlucoseYRange = (0, 0, 0, 0)
     @State private var offset: CGFloat = 0
     @State private var cachedMaxBasalRate: Decimal?
 
@@ -75,6 +77,13 @@ struct MainChartView: View {
     private var dateFormatter: DateFormatter {
         let formatter = DateFormatter()
         formatter.timeStyle = .short
+        return formatter
+    }
+
+    private var date24Formatter: DateFormatter {
+        let formatter = DateFormatter()
+        formatter.locale = Locale(identifier: "en_US_POSIX")
+        formatter.setLocalizedDateFormatFromTemplate("HH")
         return formatter
     }
 
@@ -128,6 +137,10 @@ struct MainChartView: View {
             .onChange(of: vSizeClass) { _ in
                 update(fullSize: geo.size)
             }
+            .onChange(of: screenHours) { _ in
+                update(fullSize: geo.size)
+                // scroll.scrollTo(Config.endID, anchor: .trailing)
+            }
             .onReceive(
                 Foundation.NotificationCenter.default
                     .publisher(for: UIDevice.orientationDidChangeNotification)
@@ -168,40 +181,44 @@ struct MainChartView: View {
     }
 
     private func yGridView(fullSize: CGSize) -> some View {
-        ZStack {
+        let useColour = displayYgridLines ? Color.secondary : Color.clear
+        return ZStack {
             Path { path in
-                let range = glucoseYGange
+                let range = glucoseYRange
                 let step = (range.maxY - range.minY) / CGFloat(Config.yLinesCount)
                 for line in 0 ... Config.yLinesCount {
                     path.move(to: CGPoint(x: 0, y: range.minY + CGFloat(line) * step))
                     path.addLine(to: CGPoint(x: fullSize.width, y: range.minY + CGFloat(line) * step))
                 }
-            }.stroke(Color.secondary, lineWidth: 0.2)
+            }.stroke(useColour, lineWidth: 0.15)
+
             // horizontal limits
-            let range = glucoseYGange
-            let topstep = (range.maxY - range.minY) / CGFloat(range.maxValue - range.minValue) *
-                (CGFloat(range.maxValue) - Config.upperTarget)
-            if CGFloat(range.maxValue) > Config.upperTarget {
-                Path { path in
-                    path.move(to: CGPoint(x: 0, y: range.minY + topstep))
-                    path.addLine(to: CGPoint(x: fullSize.width, y: range.minY + topstep))
-                }.stroke(Color.loopYellow, lineWidth: 0.5)
-            }
-            let yrange = glucoseYGange
-            let bottomstep = (yrange.maxY - yrange.minY) / CGFloat(yrange.maxValue - yrange.minValue) *
-                (CGFloat(yrange.maxValue) - Config.lowerTarget)
-            if CGFloat(yrange.minValue) < Config.lowerTarget {
-                Path { path in
-                    path.move(to: CGPoint(x: 0, y: yrange.minY + bottomstep))
-                    path.addLine(to: CGPoint(x: fullSize.width, y: yrange.minY + bottomstep))
-                }.stroke(Color.loopRed, lineWidth: 0.5)
+            if thresholdLines {
+                let range = glucoseYRange
+                let topstep = (range.maxY - range.minY) / CGFloat(range.maxValue - range.minValue) *
+                    (CGFloat(range.maxValue) - CGFloat(highGlucose))
+                if CGFloat(range.maxValue) > CGFloat(highGlucose) {
+                    Path { path in
+                        path.move(to: CGPoint(x: 0, y: range.minY + topstep))
+                        path.addLine(to: CGPoint(x: fullSize.width, y: range.minY + topstep))
+                    }.stroke(Color.loopYellow, lineWidth: 0.5) // .StrokeStyle(lineWidth: 0.5, dash: [5])
+                }
+                let yrange = glucoseYRange
+                let bottomstep = (yrange.maxY - yrange.minY) / CGFloat(yrange.maxValue - yrange.minValue) *
+                    (CGFloat(yrange.maxValue) - CGFloat(lowGlucose))
+                if CGFloat(yrange.minValue) < CGFloat(lowGlucose) {
+                    Path { path in
+                        path.move(to: CGPoint(x: 0, y: yrange.minY + bottomstep))
+                        path.addLine(to: CGPoint(x: fullSize.width, y: yrange.minY + bottomstep))
+                    }.stroke(Color.loopRed, lineWidth: 0.5)
+                }
             }
         }
     }
 
     private func glucoseLabelsView(fullSize: CGSize) -> some View {
         ForEach(0 ..< Config.yLinesCount + 1, id: \.self) { line -> AnyView in
-            let range = glucoseYGange
+            let range = glucoseYRange
             let yStep = (range.maxY - range.minY) / CGFloat(Config.yLinesCount)
             let valueStep = Double(range.maxValue - range.minValue) / Double(Config.yLinesCount)
             let value = round(Double(range.maxValue) - Double(line) * valueStep) *
@@ -264,7 +281,8 @@ struct MainChartView: View {
     @Environment(\.colorScheme) var colorScheme
 
     private func xGridView(fullSize: CGSize) -> some View {
-        ZStack {
+        let useColour = displayXgridLines ? Color.secondary : Color.clear
+        return ZStack {
             Path { path in
                 for hour in 0 ..< hours + hours {
                     let x = firstHourPosition(viewWidth: fullSize.width) +
@@ -274,7 +292,7 @@ struct MainChartView: View {
                     path.addLine(to: CGPoint(x: x, y: fullSize.height - 20))
                 }
             }
-            .stroke(Color.secondary, lineWidth: 0.2)
+            .stroke(useColour, lineWidth: 0.15)
 
             Path { path in // vertical timeline
                 let x = timeToXCoordinate(timerDate.timeIntervalSince1970, fullSize: fullSize)
@@ -289,10 +307,11 @@ struct MainChartView: View {
     }
 
     private func timeLabelsView(fullSize: CGSize) -> some View {
-        ZStack {
+        let format = screenHours > 6 ? date24Formatter : dateFormatter
+        return ZStack {
             // X time labels
             ForEach(0 ..< hours + hours) { hour in
-                Text(dateFormatter.string(from: firstHourDate().addingTimeInterval(hour.hours.timeInterval)))
+                Text(format.string(from: firstHourDate().addingTimeInterval(hour.hours.timeInterval)))
                     .font(.caption)
                     .position(
                         x: firstHourPosition(viewWidth: fullSize.width) +
@@ -488,7 +507,7 @@ extension MainChartView {
             let range = self.getGlucoseYRange(fullSize: fullSize)
 
             DispatchQueue.main.async {
-                glucoseYGange = range
+                glucoseYRange = range
                 glucoseDots = dots
             }
         }
@@ -504,7 +523,7 @@ extension MainChartView {
             let range = self.getGlucoseYRange(fullSize: fullSize)
 
             DispatchQueue.main.async {
-                glucoseYGange = range
+                glucoseYRange = range
                 unSmoothedGlucoseDots = dots
             }
         }
@@ -649,7 +668,8 @@ extension MainChartView {
                 path.addLine(to: CGPoint(x: 0, y: Config.basalHeight))
             }
 
-            let endDateTime = dayAgoTime + 1.days.timeInterval + 6.hours.timeInterval
+            let endDateTime = dayAgoTime + min(max(screenHours, 2), 24).hours.timeInterval + min(max(screenHours, 2), 24).hours
+                .timeInterval
             let autotunedBasalPoints = findRegularBasalPoints(
                 timeBegin: dayAgoTime,
                 timeEnd: endDateTime,
@@ -855,7 +875,7 @@ extension MainChartView {
     }
 
     private func fullGlucoseWidth(viewWidth: CGFloat) -> CGFloat {
-        viewWidth * CGFloat(hours) / CGFloat(Config.screenHours)
+        viewWidth * CGFloat(hours) / CGFloat(min(max(screenHours, 2), 24))
     }
 
     private func additionalWidth(viewWidth: CGFloat) -> CGFloat {
@@ -876,11 +896,11 @@ extension MainChartView {
         let additionalTime = CGFloat(TimeInterval(max) * 5.minutes.timeInterval - lastDeltaTime)
         let oneSecondWidth = oneSecondStep(viewWidth: viewWidth)
 
-        return Swift.max(additionalTime * oneSecondWidth, Config.minAdditionalWidth)
+        return Swift.min(Swift.max(additionalTime * oneSecondWidth, Config.minAdditionalWidth), 275)
     }
 
     private func oneSecondStep(viewWidth: CGFloat) -> CGFloat {
-        viewWidth / (CGFloat(Config.screenHours) * CGFloat(1.hours.timeInterval))
+        viewWidth / (CGFloat(min(max(screenHours, 2), 24)) * CGFloat(1.hours.timeInterval))
     }
 
     private func maxPredValue() -> Int? {
@@ -922,7 +942,8 @@ extension MainChartView {
 
     private func UnSmoothedGlucoseToCoordinate(_ glucoseEntry: BloodGlucose, fullSize: CGSize) -> CGPoint {
         let x = timeToXCoordinate(glucoseEntry.dateString.timeIntervalSince1970, fullSize: fullSize)
-        let y = glucoseToYCoordinate(glucoseEntry.sgv ?? glucoseEntry.glucose ?? 0, fullSize: fullSize)
+        let glucoseValue: Decimal = glucoseEntry.unfiltered ?? Decimal(glucoseEntry.glucose ?? 0)
+        let y = glucoseToYCoordinate(Int(glucoseValue), fullSize: fullSize)
 
         return CGPoint(x: x, y: y)
     }

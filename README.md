@@ -15,13 +15,19 @@ git clone --branch=main https://github.com/artificial-pancreas/iaps.git
 cd iaps  
 xed .  
 
-Or use the GitHub interface: 
-Download and open in Xcode directly using the Code button: "Open with Xcode".
- 
+Or using the GitHub interface: 
+Download and open in Xcode directly using the Code button: "Open with Xcode".  
 
-Please understand that this version is:
+## To build directly in GitHub, without using Xcode: 
+
+Intructions:  
+https://github.com/Artificial-Pancreas/iAPS/blob/main/fastlane/testflight.md   
+Instructions in greater detail, but not iAPS-specific:  
+https://loopkit.github.io/loopdocs/gh-actions/gh-overview/
+ 
+## Please understand that iAPS is:  
 - highly experimental and evolving rapidly.
-- not CE approved for therapy yet
+- not CE approved for therapy.
 
 # Pumps
 
@@ -51,19 +57,16 @@ iAPS app runs on iPhone or iPod. An iPhone 7 or newer is recommended.
 
 [Discord iAPS - main branch channel](https://discord.com/channels/1020905149037813862/1021041588627062854)
 
-[My Crowdin Project for translation of iAPS](https://crowdin.com/project/freeaps-x)
-
-[Middleware code for iAPS](https://github.com/Jon-b-m/middleware)
-
-[freeAPS X original github](https://github.com/ivalkou/freeaps)
-
-[ADD DASH PUMP and SETTINGS](https://loopkit.github.io/loopdocs/loop-3/omnipod/)
-
-[Overview & Onboarding Tips on Loop&Learn](https://www.loopandlearn.org/freeaps-x/)
+[iAPS documentation (under development)](https://iaps.readthedocs.io/en/latest/)
 
 [OpenAPS documentation](https://openaps.readthedocs.io/en/latest/)
 
-[iAPS documentation (under development)](https://iaps-documentation.readthedocs.io/en/main/)
+[Crowdin Project for translation of iAPS](https://crowdin.com/project/freeaps-x)
+
+[Middleware code for iAPS](https://github.com/Jon-b-m/middleware)
+
+[ADD DASH PUMP and SETTINGS](https://loopkit.github.io/loopdocs/loop-3/omnipod/)
+
 
 # Contribute
 
@@ -71,4 +74,4 @@ Code contributions as PRs are welcome!
 
 Translators can click the Crowdin link above  
 
-For questions or contributions: jon.m@live.se
+For questions or other contributions: jon.m@live.se

@@ -26,7 +26,12 @@ enum Screen: Identifiable, Hashable {
     case calibrations
     case notificationsConfig
     case fpuConfig
+    case iconConfig
+    case overrideProfilesConfig
     case snooze
+    case statistics
+    case watch
+    case statisticsConfig
 
     var id: Int { String(reflecting: self).hashValue }
 }
@@ -37,10 +42,7 @@ extension Screen {
         case .loading:
             ProgressView()
         case .home:
-            Home.RootView(
-                resolver: resolver,
-                selectedState: .day
-            )
+            Home.RootView(resolver: resolver)
         case .settings:
             Settings.RootView(resolver: resolver)
         case let .configEditor(file):
@@ -85,8 +87,18 @@ extension Screen {
             NotificationsConfig.RootView(resolver: resolver)
         case .fpuConfig:
             FPUConfig.RootView(resolver: resolver)
+        case .iconConfig:
+            IconConfig.RootView(resolver: resolver)
+        case .overrideProfilesConfig:
+            OverrideProfilesConfig.RootView(resolver: resolver)
         case .snooze:
             Snooze.RootView(resolver: resolver)
+        case .watch:
+            WatchConfig.RootView(resolver: resolver)
+        case .statistics:
+            Stat.RootView(resolver: resolver)
+        case .statisticsConfig:
+            StatConfig.RootView(resolver: resolver)
         }
     }
 

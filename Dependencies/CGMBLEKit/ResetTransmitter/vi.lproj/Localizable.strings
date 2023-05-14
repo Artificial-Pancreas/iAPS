@@ -9,7 +9,8 @@
 
 /* Reset button title
    Title of button to begin reset */
-"Reset" = "Cài lại";
+"Reset" = "Khôi phục lại";
 
 /* Notification title for background completion notification */
 "Transmitter Reset Complete" = "Cài lại Transmitter hoàn tất";
+

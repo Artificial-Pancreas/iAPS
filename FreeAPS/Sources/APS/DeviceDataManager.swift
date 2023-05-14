@@ -264,7 +264,7 @@ final class BaseDeviceDataManager: DeviceDataManager, Injectable {
                                 direction: directions[index],
                                 date: Decimal(Int(sample.date.timeIntervalSince1970 * 1000)),
                                 dateString: sample.date,
-                                unfiltered: nil,
+                                unfiltered: Decimal(value),
                                 filtered: nil,
                                 noise: nil,
                                 glucose: value,

@@ -31,15 +31,11 @@ extension PreferencesEditor {
                     Toggle("Remote control", isOn: $state.allowAnnouncements)
 
                     HStack {
-                        Text("Recommended Insulin Fraction")
-                        DecimalTextField("", value: $state.insulinReqFraction, formatter: formatter)
+                        Text("Recommended Bolus Percentage")
+                        DecimalTextField("", value: $state.insulinReqPercentage, formatter: formatter)
                     }
 
                     Toggle("Skip Bolus screen after carbs", isOn: $state.skipBolusScreenAfterCarbs)
-
-                    Toggle("Display HR on Watch", isOn: $state.displayHR)
-
-                    Toggle("Display Statistics", isOn: $state.displayStatistics)
                 }
 
                 ForEach(state.sections.indexed(), id: \.1.id) { sectionIndex, section in

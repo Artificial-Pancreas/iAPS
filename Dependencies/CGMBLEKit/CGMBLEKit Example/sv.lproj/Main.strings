@@ -2,7 +2,7 @@
 "3i8-2m-QFG.text" = "Kör samtidigt som G5-appen";
 
 /* Class = "UILabel"; text = "Transmitter ID"; ObjectID = "5y6-vU-qC3"; */
-"5y6-vU-qC3.text" = "Sändar-ID";
+"5y6-vU-qC3.text" = "Sändari-ID";
 
 /* Class = "UILabel"; text = "Waiting for first reading"; ObjectID = "9p7-LX-EMK"; */
 "9p7-LX-EMK.text" = "Väntar på första värdet";

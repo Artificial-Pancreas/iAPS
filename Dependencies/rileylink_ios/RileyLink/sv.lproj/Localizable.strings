@@ -1,8 +1,17 @@
+/* Unit format string for an RSSI value in decibles */
+"%@ dB" = "%@ dB";
+
+/* Unit format string for an value in percent */
+"%@%%" = "%@%%";
+
 /* The title of the about section */
 "About" = "Om";
 
 /* The title of the button to add the credentials for a service */
 "Add Account" = "Lägg till konto";
+
+/* Title text for button to set up a new minimed pump */
+"Add Minimed Pump" = "Lägg till Minimed-pump";
 
 /* The title of the nightscout API secret credential */
 "API Secret" = "API Secret";
@@ -44,7 +53,7 @@
 "Site URL" = "Nightscout-URL";
 
 /* The empty-state text for a configuration value */
-"Tap to set" = "Tryck för att ange";
+"Tap to set" = "Klicka för att ange";
 
 /* The title text for the nightscout upload enabled switch cell */
 "Upload To Nightscout" = "Nightscout-uppladdning";

@@ -126,7 +126,7 @@ public class TransmitterManager: TransmitterDelegate {
         }()
 
         let quantity = HKQuantity(unit: .milligramsPerDeciliter, doubleValue: glucoseValue)
-        let trendRate = HKQuantity(unit: .milligramsPerDeciliter, doubleValue: trendRateValue)
+        let trendRate = HKQuantity(unit: .milligramsPerDeciliterPerMinute, doubleValue: trendRateValue)
         let sample = NewGlucoseSample(date: timestamp, quantity: quantity, condition: nil, trend: trend, trendRate: trendRate, isDisplayOnly: false, wasUserEntered: false, syncIdentifier: syncIdentifier)
         self.updateDelegate(with: .newData([sample]))
     }

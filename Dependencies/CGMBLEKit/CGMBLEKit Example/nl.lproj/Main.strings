@@ -2,10 +2,13 @@
 "3i8-2m-QFG.text" = "Gebruik tegelijk met G5 app";
 
 /* Class = "UILabel"; text = "Transmitter ID"; ObjectID = "5y6-vU-qC3"; */
-"5y6-vU-qC3.text" = "Zender ID";
+"5y6-vU-qC3.text" = "Zenderserienummer";
 
 /* Class = "UILabel"; text = "Waiting for first reading"; ObjectID = "9p7-LX-EMK"; */
 "9p7-LX-EMK.text" = "Wachten op eerste meting";
+
+/* Class = "UITextField"; text = "500000"; ObjectID = "e0T-ru-tWD"; */
+"e0T-ru-tWD.text" = "500000";
 
 /* Class = "UIButton"; normalTitle = "Start"; ObjectID = "HEQ-Bp-kx7"; */
 "HEQ-Bp-kx7.normalTitle" = "Start";
@@ -18,4 +21,7 @@
 
 /* Class = "UILabel"; text = "Stay connected"; ObjectID = "NSs-9e-3Sl"; */
 "NSs-9e-3Sl.text" = "Blijf verbonden";
+
+/* Class = "UILabel"; text = "––"; ObjectID = "zAF-A7-1Oc"; */
+"zAF-A7-1Oc.text" = "––";
 

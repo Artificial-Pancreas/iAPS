@@ -1,4 +1,5 @@
 import CoreData
+import Foundation
 import SwiftUI
 
 extension AddCarbs {
@@ -11,16 +12,17 @@ extension AddCarbs {
         @Published var protein: Decimal = 0
         @Published var fat: Decimal = 0
         @Published var carbsRequired: Decimal?
-        @Published var useFPU: Bool = false
+        @Published var useFPUconversion: Bool = true
         @Published var dish: String = ""
         @Published var selection: Presets?
+        @Published var summation: [String] = []
 
         let coredataContext = CoreDataStack.shared.persistentContainer.viewContext
-        @Environment(\.managedObjectContext) var moc
+        // @Environment(\.managedObjectContext) var moc
 
         override func subscribe() {
+            subscribeSetting(\.useFPUconversion, on: $useFPUconversion) { useFPUconversion = $0 }
             carbsRequired = provider.suggestion?.carbsReq
-            useFPU = settingsManager.settings.useFPUconversion
         }
 
         func add() {
@@ -29,7 +31,7 @@ extension AddCarbs {
                 return
             }
 
-            if useFPU {
+            if useFPUconversion {
                 // -------------------------- FPU--------------------------------------
                 let interval = settings.settings.minuteInterval // Interval betwwen carbs
                 let timeCap = settings.settings.timeCap // Max Duration
@@ -120,6 +122,101 @@ extension AddCarbs {
                 protein = 0
             }
             selection = nil
+        }
+
+        func removePresetFromNewMeal() {
+            let a = summation.firstIndex(where: { $0 == selection?.dish! })
+            if a != nil, summation[a ?? 0] != "" {
+                summation.remove(at: a!)
+            }
+        }
+
+        func addPresetToNewMeal() {
+            let test: String = selection?.dish ?? "dontAdd"
+            if test != "dontAdd" {
+                summation.append(test)
+            }
+        }
+
+        func addNewPresetToWaitersNotepad(_ dish: String) {
+            summation.append(dish)
+        }
+
+        func addToSummation() {
+            summation.append(selection?.dish ?? "")
+        }
+
+        func waitersNotepad() -> String {
+            var filteredArray = summation.filter { !$0.isEmpty }
+
+            if carbs == 0, protein == 0, fat == 0 {
+                filteredArray = []
+            }
+
+            guard filteredArray != [] else {
+                return ""
+            }
+            var carbs_: Decimal = 0.0
+            var fat_: Decimal = 0.0
+            var protein_: Decimal = 0.0
+            var presetArray = [Presets]()
+
+            coredataContext.performAndWait {
+                let requestPresets = Presets.fetchRequest() as NSFetchRequest<Presets>
+                try? presetArray = coredataContext.fetch(requestPresets)
+            }
+            var waitersNotepad = [String]()
+            var stringValue = ""
+
+            for each in filteredArray {
+                let countedSet = NSCountedSet(array: filteredArray)
+                let count = countedSet.count(for: each)
+                if each != stringValue {
+                    waitersNotepad.append("\(count) \(each)")
+                }
+                stringValue = each
+
+                for sel in presetArray {
+                    if sel.dish == each {
+                        carbs_ += (sel.carbs)! as Decimal
+                        fat_ += (sel.fat)! as Decimal
+                        protein_ += (sel.protein)! as Decimal
+                        break
+                    }
+                }
+            }
+            let extracarbs = carbs - carbs_
+            let extraFat = fat - fat_
+            let extraProtein = protein - protein_
+            var addedString = ""
+
+            if extracarbs > 0, filteredArray.isNotEmpty {
+                addedString += "Additional carbs: \(extracarbs) "
+            } else if extracarbs < 0 { addedString += "Removed carbs: \(extracarbs) " }
+
+            if extraFat > 0, filteredArray.isNotEmpty {
+                addedString += "Additional fat: \(extraFat) "
+            } else if extraFat < 0 { addedString += "Removed fat: \(extraFat) " }
+
+            if extraProtein > 0, filteredArray.isNotEmpty {
+                addedString += "Additional protein: \(extraProtein) "
+            } else if extraProtein < 0 { addedString += "Removed protein: \(extraProtein) " }
+
+            if addedString != "" {
+                waitersNotepad.append(addedString)
+            }
+            var waitersNotepadString = ""
+
+            if waitersNotepad.count == 1 {
+                waitersNotepadString = waitersNotepad[0]
+            } else if waitersNotepad.count > 1 {
+                for each in waitersNotepad {
+                    if each != waitersNotepad.last {
+                        waitersNotepadString += " " + each + ","
+                    } else { waitersNotepadString += " " + each }
+                }
+            }
+            return waitersNotepadString
         }
     }
 }

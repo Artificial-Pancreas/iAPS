@@ -21,6 +21,7 @@ extension Settings {
                 Section(header: Text("Devices")) {
                     Text("Pump").navigationLink(to: .pumpConfig, from: self)
                     Text("CGM").navigationLink(to: .cgm, from: self)
+                    Text("Watch Devices").navigationLink(to: .watch, from: self)
                 }
 
                 Section(header: Text("Services")) {
@@ -30,6 +31,9 @@ extension Settings {
                     }
                     Text("Notifications").navigationLink(to: .notificationsConfig, from: self)
                     Text("Fat And Protein Conversion").navigationLink(to: .fpuConfig, from: self)
+                    Text("Profile Override").navigationLink(to: .overrideProfilesConfig, from: self)
+                    Text("App Icons").navigationLink(to: .iconConfig, from: self)
+                    Text("Statistics and Home View").navigationLink(to: .statisticsConfig, from: self)
                 }
 
                 Section(header: Text("Configuration")) {

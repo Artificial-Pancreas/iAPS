@@ -13,8 +13,7 @@ extension Home {
 
         @Published var glucose: [BloodGlucose] = []
         @Published var suggestion: Suggestion?
-        @Published var statistics: Statistics?
-        @Published var displayStatistics = false
+        @Published var uploadStats = false
         @Published var enactedSuggestion: Suggestion?
         @Published var recentGlucose: BloodGlucose?
         @Published var glucoseDelta: Int?
@@ -46,14 +45,19 @@ extension Home {
         @Published var carbsRequired: Decimal?
         @Published var allowManualTemp = false
         @Published var units: GlucoseUnits = .mmolL
-        @Published var low: Decimal = 4
-        @Published var high: Decimal = 10
-        @Published var displayLoops = false
         @Published var pumpDisplayState: PumpDisplayState?
         @Published var alarm: GlucoseAlarm?
         @Published var animatedBackground = false
         @Published var manualTempBasal = false
         @Published var smooth = false
+        @Published var maxValue: Decimal = 1.2
+        @Published var lowGlucose: Decimal = 4 / 0.0555
+        @Published var highGlucose: Decimal = 10 / 0.0555
+        @Published var overrideUnit: Bool = false
+        @Published var screenHours: Int = 6
+        @Published var displayXgridLines: Bool = false
+        @Published var displayYgridLines: Bool = false
+        @Published var thresholdLines: Bool = false
 
         override func subscribe() {
             setupGlucose()
@@ -66,14 +70,9 @@ extension Home {
             setupCarbs()
             setupBattery()
             setupReservoir()
-            setupStatistics()
 
             suggestion = provider.suggestion
-            statistics = provider.statistics
-            displayStatistics = settingsManager.settings.displayStatistics
-            low = settingsManager.preferences.low
-            high = settingsManager.preferences.high
-            displayLoops = settingsManager.preferences.displayLoops
+            uploadStats = settingsManager.settings.uploadStats
             enactedSuggestion = provider.enactedSuggestion
             units = settingsManager.settings.units
             allowManualTemp = !settingsManager.settings.closedLoop
@@ -85,6 +84,14 @@ extension Home {
             setStatusTitle()
             setupCurrentTempTarget()
             smooth = settingsManager.settings.smoothGlucose
+            maxValue = settingsManager.preferences.autosensMax
+            lowGlucose = settingsManager.settings.low
+            highGlucose = settingsManager.settings.high
+            overrideUnit = settingsManager.settings.overrideHbA1cUnit
+            screenHours = settingsManager.settings.hours
+            displayXgridLines = settingsManager.settings.xGridLines
+            displayYgridLines = settingsManager.settings.yGridLines
+            thresholdLines = settingsManager.settings.rulerMarks
 
             broadcaster.register(GlucoseObserver.self, observer: self)
             broadcaster.register(SuggestionObserver.self, observer: self)
@@ -319,13 +326,6 @@ extension Home {
             }
         }
 
-        private func setupStatistics() {
-            DispatchQueue.main.async { [weak self] in
-                guard let self = self else { return }
-                self.statistics = self.provider.statistics
-            }
-        }
-
         private func setupBattery() {
             DispatchQueue.main.async { [weak self] in
                 guard let self = self else { return }
@@ -351,6 +351,15 @@ extension Home {
             }
             UIApplication.shared.open(url, options: [:], completionHandler: nil)
         }
+
+        func infoPanelTTPercentage(_ hbt_: Double, _ target: Decimal) -> Decimal {
+            guard hbt_ != 0 || target != 0 else {
+                return 0
+            }
+            let c = Decimal(hbt_ - 100)
+            let ratio = min(c / (target + c - 100), maxValue)
+            return (ratio * 100)
+        }
     }
 }
 
@@ -369,7 +378,6 @@ extension Home.StateModel:
 {
     func glucoseDidUpdate(_: [BloodGlucose]) {
         setupGlucose()
-        setupStatistics()
     }
 
     func suggestionDidUpdate(_ suggestion: Suggestion) {
@@ -380,17 +388,21 @@ extension Home.StateModel:
 
     func settingsDidChange(_ settings: FreeAPSSettings) {
         allowManualTemp = !settings.closedLoop
-        displayStatistics = settingsManager.settings.displayStatistics
+        uploadStats = settingsManager.settings.uploadStats
         closedLoop = settingsManager.settings.closedLoop
-        low = settingsManager.preferences.low
-        high = settingsManager.preferences.high
-        displayLoops = settingsManager.preferences.displayLoops
         units = settingsManager.settings.units
         animatedBackground = settingsManager.settings.animatedBackground
         manualTempBasal = apsManager.isManualTempBasal
         smooth = settingsManager.settings.smoothGlucose
+        lowGlucose = settingsManager.settings.low
+        highGlucose = settingsManager.settings.high
+        overrideUnit = settingsManager.settings.overrideHbA1cUnit
+        screenHours = settingsManager.settings.hours
+        displayXgridLines = settingsManager.settings.xGridLines
+        displayYgridLines = settingsManager.settings.yGridLines
+        thresholdLines = settingsManager.settings.rulerMarks
+
         setupGlucose()
-        setupStatistics()
     }
 
     func pumpHistoryDidUpdate(_: [PumpHistoryEvent]) {
@@ -418,7 +430,6 @@ extension Home.StateModel:
     func enactedSuggestionDidUpdate(_ suggestion: Suggestion) {
         enactedSuggestion = suggestion
         setStatusTitle()
-        setupStatistics()
     }
 
     func pumpBatteryDidChange(_: Battery) {

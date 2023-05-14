@@ -5,18 +5,14 @@ extension PreferencesEditor {
     final class StateModel: BaseStateModel<Provider>, PreferencesSettable { private(set) var preferences = Preferences()
         @Published var unitsIndex = 1
         @Published var allowAnnouncements = false
-        @Published var insulinReqFraction: Decimal = 2.0
+        @Published var insulinReqPercentage: Decimal = 70
         @Published var skipBolusScreenAfterCarbs = false
-        @Published var displayHR = false
-        @Published var displayStatistics = false
         @Published var sections: [FieldSection] = []
 
         override func subscribe() {
             preferences = provider.preferences
             subscribeSetting(\.allowAnnouncements, on: $allowAnnouncements) { allowAnnouncements = $0 }
-            subscribeSetting(\.insulinReqFraction, on: $insulinReqFraction) { insulinReqFraction = $0 }
-            subscribeSetting(\.displayHR, on: $displayHR) { displayHR = $0 }
-            subscribeSetting(\.displayStatistics, on: $displayStatistics) { displayStatistics = $0 }
+            subscribeSetting(\.insulinReqPercentage, on: $insulinReqPercentage) { insulinReqPercentage = $0 }
             subscribeSetting(\.skipBolusScreenAfterCarbs, on: $skipBolusScreenAfterCarbs) { skipBolusScreenAfterCarbs = $0 }
 
             subscribeSetting(\.units, on: $unitsIndex.map { $0 == 0 ? GlucoseUnits.mgdL : .mmolL }) {
@@ -24,72 +20,6 @@ extension PreferencesEditor {
             } didSet: { [weak self] _ in
                 self?.provider.migrateUnits()
             }
-
-            let statFields = [
-                Field(
-                    displayName: NSLocalizedString(
-                        "Low Glucose Limit",
-                        comment: "Display As Low Glucose Percantage Under This Value"
-                    ) + " (\(settingsManager.settings.units.rawValue))",
-
-                    type: .decimal(keypath: \.low),
-                    infoText: NSLocalizedString(
-                        "Blood Glucoses Under This Value Will Added To And Displayed as Low Glucose Percantage",
-                        comment: "Description for Low Glucose Limit"
-                    ),
-                    settable: self
-                ),
-                Field(
-                    displayName: NSLocalizedString(
-                        "High Glucose Limit",
-                        comment: "Limit For High Glucose in Statistics View"
-                    ) + " (\(settingsManager.settings.units.rawValue))",
-
-                    type: .decimal(keypath: \.high),
-                    infoText: NSLocalizedString(
-                        "Blood Glucoses Over This Value Will Added To And Displaved as High Glucose Percantage",
-                        comment: "High Glucose Limit"
-                    ),
-                    settable: self
-                ),
-                Field(
-                    displayName: NSLocalizedString(
-                        "Update every number of minutes:",
-                        comment: "How often to update the statistics"
-                    ),
-
-                    type: .decimal(keypath: \.updateInterval),
-                    infoText: NSLocalizedString(
-                        "Default is 20 minutes. How often to update and save the statistics.json and to upload last array, when enabled, to Nightscout.",
-                        comment: "Description for update interval for statistics"
-                    ),
-                    settable: self
-                ),
-                Field(
-                    displayName: NSLocalizedString(
-                        "Display Loop Cycle statistics",
-                        comment: "Display Display Loop Cycle statistics in statPanel"
-                    ),
-                    type: .boolean(keypath: \.displayLoops),
-                    infoText: NSLocalizedString(
-                        "Displays Loop statistics in the statPanel in Home View",
-                        comment: "Description for Display Loop statistics"
-                    ),
-                    settable: self
-                ),
-                Field(
-                    displayName: NSLocalizedString(
-                        "Override HbA1c unit",
-                        comment: "Display %"
-                    ),
-                    type: .boolean(keypath: \.overrideHbA1cUnit),
-                    infoText: NSLocalizedString(
-                        "Change default HbA1c unit in statPanlel. The unit in statPanel will be updateded with next statistics.json update",
-                        comment: "Description for Override HbA1c unit"
-                    ),
-                    settable: self
-                )
-            ]
 
             let mainFields = [
                 Field(
@@ -522,9 +452,6 @@ extension PreferencesEditor {
             ]
 
             sections = [
-                FieldSection(
-                    displayName: NSLocalizedString("Statistics", comment: "Options for Statistics"), fields: statFields
-                ),
                 FieldSection(
                     displayName: NSLocalizedString("OpenAPS main settings", comment: "OpenAPS main settings"), fields: mainFields
                 ),

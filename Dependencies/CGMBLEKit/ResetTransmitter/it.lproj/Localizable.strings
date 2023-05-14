@@ -1,5 +1,5 @@
 /* Title of the reset confirmation sheet */
-"Are you sure you want to reset this transmitter?" = "Sei sicuro di voler ripristinare questo trasmettitore?";
+"Are you sure you want to reset this transmitter?" = "Sei sicuro di voler resettare questo trasmettitore?";
 
 /* Title of button to cancel reset */
 "Cancel" = "Annulla";
