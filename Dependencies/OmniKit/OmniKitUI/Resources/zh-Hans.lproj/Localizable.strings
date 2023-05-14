@@ -1,3 +1,12 @@
+/* Accessibility format string for (1: localized volume)(2: time) */
+"%1$@ units remaining at %2$@" = "%1$@ units remaining at %2$@";
+
+/* The format string for displaying an offset from a time zone: (1: GMT)(2: -)(3: 4:00) */
+"%1$@%2$@%3$@" = "%1$@%2$@%3$@";
+
+/* Format string providing instructions for replacing pod due to a fault. (1: The fault description) */
+"%1$@. Insulin delivery has stopped. Please deactivate and remove pod." = "%1$@. 胰岛素输注已停止,请移除Pod";
+
 /* Format string for delivered insulin. (1: The localized amount)
    Format string for insulin remaining in reservoir. (1: The localized amount) */
 "%@ U" = "%@ U";
@@ -11,26 +20,17 @@
 /* Format string for temp basal rate. (1: The localized amount) */
 "%@ U/hour" = "%@ U/小时";
 
-/* Appends a full-stop to a statement */
-"%@." = "%@.";
-
 /* Format string for bolus percent progress. (1: Percent progress) */
 "%@%%" = "%@%%";
 
 /* Format string for reservoir reading when above or equal to maximum reading. (1: The localized amount) */
 "%@+ U" = "%@+ U";
 
+/* Appends a full-stop to a statement */
+"%@." = "%@.";
+
 /* Format string for reservoir volume. (1: The localized volume) */
 "%@U" = "%@U";
-
-/* Accessibility format string for (1: localized volume)(2: time) */
-"%1$@ units remaining at %2$@" = "%1$@ units remaining at %2$@";
-
-/* Format string providing instructions for replacing pod due to a fault. (1: The fault description) */
-"%1$@. Insulin delivery has stopped. Please deactivate and remove pod." = "%1$@. 胰岛素输注已停止,请移除Pod";
-
-/* The format string for displaying an offset from a time zone: (1: GMT)(2: -)(3: 4:00) */
-"%1$@%2$@%3$@" = "%1$@%2$@%3$@";
 
 /* The title of the cell showing the pod activated at time */
 "Active Time" = "Pod启动时间";
@@ -78,9 +78,6 @@
    Button title to deactivate pod */
 "Deactivate Pod" = "解除Pod";
 
-/* Label text showing pod is deactivated */
-"Deactivated" = "已解除";
-
 /* Button title to delete Omnipod PumpManager */
 "Delete Omnipod" = "删除Omnipod";
 
@@ -123,6 +120,9 @@
 /* The title of the command to finish pod setup */
 "Finish pod setup" = "完成设置";
 
+/* Accessibility format string for (1: localized volume)(2: time) */
+"Greater than %1$@ units remaining at %2$@" = "Greater than %1$@ units remaining at %2$@";
+
 /* Instructions when deactivating pod that has been paired, but not attached. */
 "Incompletely set up pod must be deactivated before pairing with a new one. Please deactivate and discard pod." = "Pod设置失败，请解除该从身体移除Pod,然后配对新Pod";
 
@@ -150,9 +150,6 @@
 /* The title of the command to pair new pod */
 "Pair New Pod" = "配对新Pod";
 
-/* Label text indicating pairing finished. */
-"Paired" = "已配对";
-
 /* The text of the loading label when pairing */
 "Pairing…" = "配对中";
 
@@ -170,9 +167,6 @@
 
 /* Label describing pod age view */
 "Pod Age" = "Pod使用天数";
-
-/* Label for pod life state when within pod expiration window */
-"Pod expired" = "Pod已到期";
 
 /* Title of the pod settings view controller */
 "Pod Settings" = "Pod设置";
@@ -196,16 +190,8 @@
 /* The title of the cell showing reservoir status */
 "Reservoir" = "胰岛素容量";
 
-/* Action button description for deactivate after failed attempt
-   Cannula insertion button text while showing error
-   Pod pairing action button text while showing error */
-"Retry" = "重试";
-
 /* Button title for retrying pod deactivation */
 "Retry Pod Deactivation" = "重新尝试解绑";
-
-/* Navigation title for RileyLinkSetupView */
-"RileyLink Setup" = "RileyLink设置";
 
 /* Title of button to save delivery limit settings
    Title of button to sync basal profile when no pod paired */
@@ -213,12 +199,6 @@
 
 /* The detail text of the basal row when pod is running scheduled basal */
 "Schedule" = "预设";
-
-/* Title of insulin delivery section */
-"Scheduled Basal" = "预设基础率";
-
-/* Title for setup complete screen */
-"Setup Complete" = "设置完成";
 
 /* The title of the status section in settings */
 "Status" = "状态";
@@ -249,4 +229,3 @@
 
 /* The detail text for delivered insulin when no measurement is available */
 "Unknown" = "未知";
-
