@@ -111,7 +111,7 @@
 "Finish deactivation" = "Finish deactivation";
 
 /* Settings page link description when next lifecycle action is to replace pod */
-"Replace Pod" = "Udskift Pod";
+"Replace Pod" = "Replace Pod";
 
 /* Unit for singular day in pod life remaining */
 "day" = "day";
@@ -141,7 +141,7 @@
 "Insulin Remaining" = "Insulin Remaining";
 
 /* Section header for activity section */
-"Activity" = "Aktivitet";
+"Activity" = "Activity";
 
 /* title for device details page */
 "Device Details" = "Device Details";
@@ -153,10 +153,10 @@
 "Finish deactivation" = "Finish deactivation";
 
 /* Settings page link description when next lifecycle action is to replace pod */
-"Replace Pod" = "Udskift Pod";
+"Replace Pod" = "Replace Pod";
 
 /* Settings page link description when next lifecycle action is to replace pod */
-"Replace Pod" = "Udskift Pod";
+"Replace Pod" = "Replace Pod";
 
 /* Label for pod life state when pod not fully activated */
 "Unfinished Activation" = "Unfinished Activation";
@@ -174,16 +174,16 @@
 "No Pod" = "No Pod";
 
 /* Pod life HUD view label */
-"Fault" = "Fejl";
+"Fault" = "Fault";
 
 /* Label describing pod age view */
-"Pod Age" = "Pod Alder";
+"Pod Age" = "Pod Age";
 
 /* Label describing time remaining view */
-"Remaining" = "Tilbage";
+"Remaining" = "Remaining";
 
 /* Label indicating pod replacement necessary */
-"Replace Pod" = "Udskift Pod";
+"Replace Pod" = "Replace Pod";
 
 /* Error message shown when no pod is paired */
 "No pod paired" = "No pod paired";
@@ -243,7 +243,7 @@
 "Manual Basal" = "Manual Basal";
 
 /* */
-"Insert Cannula" = "Indfør kanyle";
+"Insert Cannula" = "Insert Cannula";
 
 /* Cannula insertion button text while inserting */
 "Inserting..." = "Inserting...";
@@ -270,7 +270,7 @@
 "Skipping Play Test Beeps due to bolus still in progress." = "Skipping Play Test Beeps due to bolus still in progress.";
 
 /* */
-"Play Test Beeps" = "Afspil Test Bip";
+"Play Test Beeps" = "Play Test Beeps";
 
 /* */
 "Skipping Read Pulse Log due to bolus still in progress." = "Skipping Read Pulse Log due to bolus still in progress.";
@@ -321,7 +321,7 @@
 "Set Temporary Basal Rate" = "Set Temporary Basal Rate";
 
 /* Section header for activity section */
-"Activity" = "Aktivitet";
+"Activity" = "Activity";
 
 /* Section header for configuration section */
 "Configuration" = "Configuration";
@@ -366,7 +366,7 @@
 "Sync to Current Time" = "Sync to Current Time";
 
 /* Title for suspend duration selection action sheet */
-"Suspend Delivery" = "Pause Indgivelse";
+"Suspend Delivery" = "Suspend Delivery";
 
 /* Message for suspend duration selection action sheet */
 "Insulin delivery will be stopped until you resume manually. When would you like Loop to remind you to resume delivery?" = "Insulin delivery will be stopped until you resume manually. When would you like Loop to remind you to resume delivery?";
@@ -400,7 +400,7 @@
 "Please deactivate the pod. When deactivation is complete, you may pair a new pod." = "Please deactivate the pod. When deactivation is complete, you may pair a new pod.";
 
 /* Deactivate pod action button */
-"Deactivate Pod" = "Deaktiver Pod";
+"Deactivate Pod" = "Deactivate Pod";
 
 /* Deactivate pod action button accessibility label while deactivating */
 "Deactivating." = "Deactivating.";
@@ -412,7 +412,7 @@
 "Retry" = "Retry";
 
 /* Action button description when deactivated */
-"Continue" = "Fortsæt";
+"Continue" = "Continue";
 
 /* Format string for recovery suggestion during deactivate pod. */
 "There was a problem communicating with the pod. If this problem persists, tap Discard Pod. You can then activate a new Pod." = "There was a problem communicating with the pod. If this problem persists, tap Discard Pod. You can then activate a new Pod.";
@@ -466,7 +466,7 @@
 "Check Pod, apply to site, then confirm pod attachment." = "Check Pod, apply to site, then confirm pod attachment.";
 
 /* Action button title for attach pod view */
-"Continue" = "Fortsæt";
+"Continue" = "Continue";
 
 /* */
 "Attach Pod" = "Attach Pod";
@@ -593,7 +593,7 @@
 "Disabled" = "Disabled";
 
 /* Title string for BeepPreference.manualCommands */
-"Enabled" = "Aktiveret";
+"Enabled" = "Enabled";
 
 /* Title string for BeepPreference.extended */
 "Extended" = "Extended";
@@ -608,10 +608,10 @@
 "Confidence reminders will sound when Loop automatically adjusts delivery as well as for commands you initiate." = "Confidence reminders will sound when Loop automatically adjusts delivery as well as for commands you initiate.";
 
 /* Label text for temporary basal rate summary */
-"Rate" = "Værdi";
+"Rate" = "Rate";
 
 /* Insulin unit per hour */
-"U/hr" = "E/t";
+"U/hr" = "U/hr";
 
 /* Summary string for temporary basal rate configuration page */
 "%1$@ for %2$@" = "%1$@ for %2$@";
@@ -649,7 +649,7 @@
 "No\nDelivery" = "No\nDelivery";
 
 /* description label for active time pod details row */
-"Active Time" = "Aktiv Tid";
+"Active Time" = "Active Time";
 
 /* description label for total delivery pod details row */
 "Total Delivery" = "Total Delivery";
@@ -673,7 +673,7 @@
 "Pod Activated" = "Pod Activated";
 
 /* description label for active time pod details row */
-"Active Time" = "Aktiv Tid";
+"Active Time" = "Active Time";
 
 /* description label for last status date pod details row */
 "Last Status" = "Last Status";
@@ -691,7 +691,7 @@
 "Cancel" = "Cancel";
 
 /* Text for continue button on PodSetupView */
-"Continue" = "Fortsæt";
+"Continue" = "Continue";
 
 /* Are you sure you want to skip Omnipod Onboarding? */
 "Skip Omnipod Onboarding?" = "Skip Omnipod Onboarding?";
@@ -703,7 +703,7 @@
 "Next" = "Next";
 
 /* */
-"Expiration Reminder" = "Udløbs Påmindelse";
+"Expiration Reminder" = "Expiration Reminder";
 
 /* Description text on LowReservoirReminderSetupView */
 "The App notifies you when the amount of insulin in the Pod reaches this level (50-10 U).\n\nScroll to set the number of units at which you would like to be reminded." = "The App notifies you when the amount of insulin in the Pod reaches this level (50-10 U).\n\nScroll to set the number of units at which you would like to be reminded.";
