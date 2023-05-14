@@ -153,10 +153,10 @@
 "Finish deactivation" = "Finish deactivation";
 
 /* Settings page link description when next lifecycle action is to replace pod */
-"Replace Pod" = "更换Pod";
+"Replace Pod" = "Replace Pod";
 
 /* Settings page link description when next lifecycle action is to replace pod */
-"Replace Pod" = "更换Pod";
+"Replace Pod" = "Replace Pod";
 
 /* Label for pod life state when pod not fully activated */
 "Unfinished Activation" = "Unfinished Activation";
@@ -183,7 +183,7 @@
 "Remaining" = "剩余";
 
 /* Label indicating pod replacement necessary */
-"Replace Pod" = "更换Pod";
+"Replace Pod" = "Replace Pod";
 
 /* Error message shown when no pod is paired */
 "No pod paired" = "No pod paired";
@@ -321,10 +321,10 @@
 "Set Temporary Basal Rate" = "Set Temporary Basal Rate";
 
 /* Section header for activity section */
-"Activity" = "活动";
+"Activity" = "Activity";
 
 /* Section header for configuration section */
-"Configuration" = "配置";
+"Configuration" = "Configuration";
 
 /* Title for previous pod page */
 "Previous Pod" = "Previous Pod";
@@ -466,7 +466,7 @@
 "Check Pod, apply to site, then confirm pod attachment." = "Check Pod, apply to site, then confirm pod attachment.";
 
 /* Action button title for attach pod view */
-"Continue" = "继续";
+"Continue" = "Continue";
 
 /* */
 "Attach Pod" = "Attach Pod";
@@ -573,10 +573,10 @@
 /* Description text for critical alerts */
 "The reminders above will not sound if your device is in Silent or Do Not Disturb mode.\n\nThere are other critical Pod alerts and alarms that will sound even if you device is set to Silent or Do Not Disturb mode." = "The reminders above will not sound if your device is in Silent or Do Not Disturb mode.\n\nThere are other critical Pod alerts and alarms that will sound even if you device is set to Silent or Do Not Disturb mode.";
 /* navigation title for notification settings */
-"Notification Settings" = "通知设置";
+"Notification Settings" = "Notification Settings";
 
 /* Label for scheduled reminder value row */
-"Time" = "时间";
+"Time" = "Time";
 
 /* Value text for no expiration reminder */
 "No Reminder" = "No Reminder";
@@ -673,7 +673,7 @@
 "Pod Activated" = "Pod Activated";
 
 /* description label for active time pod details row */
-"Active Time" = "Pod启动时间";
+"Active Time" = "Active Time";
 
 /* description label for last status date pod details row */
 "Last Status" = "Last Status";
@@ -688,10 +688,10 @@
 "You will now begin the process of configuring your reminders, filling your Pod with insulin, pairing to your device and placing it on your body." = "You will now begin the process of configuring your reminders, filling your Pod with insulin, pairing to your device and placing it on your body.";
 
 /* Cancel button title */
-"Cancel" = "取消";
+"Cancel" = "Cancel";
 
 /* Text for continue button on PodSetupView */
-"Continue" = "继续";
+"Continue" = "Continue";
 
 /* Are you sure you want to skip Omnipod Onboarding? */
 "Skip Omnipod Onboarding?" = "Skip Omnipod Onboarding?";
