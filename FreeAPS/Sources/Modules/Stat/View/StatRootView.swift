@@ -138,7 +138,8 @@ extension Stat {
                 HStack {
                     ForEach(0 ..< loops_.count, id: \.self) { index in
                         VStack {
-                            Text(loops_[index].string).font(.subheadline).foregroundColor(.secondary)
+                            Text(NSLocalizedString(loops_[index].string, comment: "")).font(.subheadline)
+                                .foregroundColor(.secondary)
                             Text(
                                 index == 0 ? loops_[index].double.formatted() : (
                                     index == 2 ? loops_[index].double
