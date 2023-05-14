@@ -2,128 +2,128 @@
 "Dexcom G7" = "Dexcom G7";
 
 /* Descriptive text on G7StartupView */
-"iAPS can read G7 CGM data, but you must still use the Dexcom G7 App for pairing, calibration, and other sensor management." = "iAPS може читати дані G7 CGM, але ви все одно повинні використовувати додаток Dexcom G7 для парування, калібрування та іншого управління датчиком.";
+"iAPS can read G7 CGM data, but you must still use the Dexcom G7 App for pairing, calibration, and other sensor management." = "iAPS can read G7 CGM data, but you must still use the Dexcom G7 App for pairing, calibration, and other sensor management.";
 
 /* Button title for starting setup */
-"Continue" = "Продовжити";
+"Continue" = "Continue";
 
 /* Button text to cancel G7 setup */
-"Cancel" = "Відмінити";
+"Cancel" = "Cancel";
 
 /* Error description for unreliable state */
-"Glucose data is unavailable" = "Дані глюкози недоступні";
+"Glucose data is unavailable" = "Glucose data is unavailable";
 
 /* The description of sensor algorithm state when sensor is ok. */
-"Sensor is OK" = "Сенсор підключено";
+"Sensor is OK" = "Sensor is OK";
 
 /* The description of sensor algorithm state when sensor is stopped." */
-"Sensor is stopped" = "Сенсор зупинений";
+"Sensor is stopped" = "Sensor is stopped";
 
 /* The description of sensor algorithm state when sensor is warming up. */
-"Sensor is warming up" = "Сенсор прогрівається";
+"Sensor is warming up" = "Sensor is warming up";
 
 /* The description of sensor algorithm state when sensor is expired. */
-"Sensor expired" = "Термін Сенсору закінчився";
+"Sensor expired" = "Sensor expired";
 
 /* The description of sensor algorithm state when sensor failed. */
-"Sensor failed" = "Не вдалося встановити Сенсор";
+"Sensor failed" = "Sensor failed";
 
 /* The description of sensor algorithm state when raw value is unknown. (1: missing data details) */
-"Sensor is in unknown state %1$d" = "Сенсор знаходиться в невідомому стані%1$d";
+"Sensor is in unknown state %1$d" = "Sensor is in unknown state %1$d";
 
 /* title for g7 settings row showing sensor start time */
-"Sensor Start" = "Старт Сенсора моніторингу";
+"Sensor Start" = "Sensor Start";
 
 /* title for g7 settings row showing sensor expiration time */
-"Sensor Expiration" = "Термін дії Сенсору";
+"Sensor Expiration" = "Sensor Expiration";
 
 /* title for g7 settings row showing sensor grace period end time */
-"Grace Period End" = "Час до блокування";
+"Grace Period End" = "Grace Period End";
 
 /* Field label */
-"Glucose" = "Глюкоза";
+"Glucose" = "Glucose";
 
-"Last Reading" = "Останнє читання";
+"Last Reading" = "Last Reading";
 
-"Time" = "Час";
+"Time" = "Time";
 
-"Trend" = "Тренди";
+"Trend" = "Trend";
 
 "Bluetooth" = "Bluetooth";
 
 /* title for g7 settings row showing BLE Name */
-"Name" = "Ім’я";
+"Name" = "Name";
 
 /* title for g7 settings connection status when scanning */
-"Scanning" = "Сканування";
+"Scanning" = "Scanning";
 
 /* title for g7 settings connection status when connected */
-"Connected" = "Під'єднаний";
+"Connected" = "Connected";
 
 /* title for g7 settings connection status when connecting */
-"Connecting" = "Під'єднання";
+"Connecting" = "Connecting";
 
 /* title for g7 settings row showing sensor last connect time */
-"Last Connect" = "Останнє підключення";
+"Last Connect" = "Last Connect";
 
 /* Configuration */
-"Configuration" = "Налаштування";
+"Configuration" = "Configuration";
 
 /* title for g7 config settings to upload readings */
-"Upload Readings" = "Вивантажити читання";
+"Upload Readings" = "Upload Readings";
 
 /* Button */
-"Scan for new sensor" = "Сканувати новий Сенсор";
+"Scan for new sensor" = "Scan for new sensor";
 
 /* Button label for removing CGM */
-"Delete CGM" = "Видалити CGM";
+"Delete CGM" = "Delete CGM";
 
 /* No glucose value representation (3 dashes for mg/dL) */
 "– – –" = "– – –";
 /* String displayed instead of a glucose value below the CGM range */
-"LOW" = "НИЗЬКИЙ";
+"LOW" = "LOW";
 
 /* String displayed instead of a glucose value above the CGM range */
-"HIGH" = "ВИСОКИЙ";
+"HIGH" = "HIGH";
 
 /* Format string for glucose trend per minute. (1: glucose value and unit) */
-"%@/min" = "%@/хв";
+"%@/min" = "%@/min";
 
 /* G7 Progress bar label when searching for sensor */
-"Searching for sensor" = "Пошук Сенсору";
+"Searching for sensor" = "Searching for sensor";
 
 /* G7 Progress bar label when sensor expired */
-"Sensor expired" = "Термін Сенсору закінчився";
+"Sensor expired" = "Sensor expired";
 
 /* G7 Progress bar label when sensor in warmup */
-"Warmup completes" = "Прогрів виконано";
+"Warmup completes" = "Warmup completes";
 
 /* G7 Progress bar label when sensor in warmup */
-"Warmup completes" = "Прогрів виконано";
+"Warmup completes" = "Warmup completes";
 
 /* G7 Progress bar label when sensor failed */
-"Sensor failed" = "Не вдалося встановити Сенсор";
+"Sensor failed" = "Sensor failed";
 
 /* G7 Progress bar label when sensor lifetime progress showing */
-"Sensor expires" = "Сенсор закінчується";
+"Sensor expires" = "Sensor expires";
 
 /* G7 Progress bar label when sensor grace period progress showing */
-"Grace period remaining" = "Період витонченості, що залишився";
+"Grace period remaining" = "Grace period remaining";
 
 /* G7 Status highlight text for searching for sensor */
-"Searching for\nSensor" = "Пошук\nСенсору";
+"Searching for\nSensor" = "Searching for\nSensor";
 
 /* G7 Status highlight text for sensor expired */
-"Sensor\nExpired" = "Сенсор\nЗакінчився";
+"Sensor\nExpired" = "Sensor\nExpired";
 
 /* G7 Status highlight text for signal loss */
-"Sensor\nFailed" = "Сенсори\nНе вдалося";
+"Sensor\nFailed" = "Sensor\nFailed";
 
 /* G7 Status highlight text for signal loss */
-"Signal\nLoss" = "Сигнал\nВтрата";
+"Signal\nLoss" = "Signal\nLoss";
 
 /*G7 Status highlight text for sensor error */
-"Sensor\nIssue" = "Сенсор\nПроблема";
+"Sensor\nIssue" = "Sensor\nIssue";
 
 /* G7 Status highlight text for sensor warmup */
-"Sensor\nWarmup" = "Сенсор\nПрогрів";
+"Sensor\nWarmup" = "Sensor\nWarmup";
