@@ -59,6 +59,9 @@
 /* Alert notification body for suspendEnded pod alert user notification */
 "Suspension time is up. Open the app and resume." = "Angitt tid for pause av insulintilførsel er utløpt. Åpne appen for å gjenoppta leveransen.";
 
+/* Action button default text for PodAlerts */
+"Ok" = "Ok";
+
 /* Label for pod life state when pod not fully activated */
 "Unfinished Activation" = "Ufullstendig aktivering";
 
@@ -199,6 +202,9 @@
 
 /* Recovery suggestion shown when no pod is paired */
 "Please pair a new pod" = "Vennligst koble til ny pod";
+
+/* Generic title of the OmniBLE pump manager */
+"Omnipod DASH" = "Omnipod DASH";
 
 /* Status highlight that delivery is uncertain. */
 "Comms Issue" = "Kommunikasjons-problem";
@@ -543,6 +549,9 @@
 /* Error message description for PeripheralManagerError.unknownCharacteristic */
 "Unknown Characteristic" = "Ukjent karakteristikk";
 
+/* Error message description for PeripheralManagerError.nack */
+"Nack" = "Nack";
+
 /* Title for omnipod reminders section */
 "Omnipod Reminders" = "Omnipod-påminnelser";
 
@@ -597,6 +606,9 @@
 
 /* Description for BeepPreference.extended */
 "Confidence reminders will sound when Loop automatically adjusts delivery as well as for commands you initiate." = "Bekreftelseslyder vil høres ved endret insulintiførsel, både fra automatiske justeringer og manuelle kommandoer.";
+
+/* Label text for temporary basal rate summary */
+"Rate" = "Rate";
 
 /* Insulin unit per hour */
 "U/hr" = "E/t";
