@@ -11,31 +11,31 @@
 "Cancel" = "Avbryt";
 
 /* Error description for unreliable state */
-"Glucose data is unavailable" = "Glucose data is unavailable";
+"Glucose data is unavailable" = "Blodsukker er utilgjengelig";
 
 /* The description of sensor algorithm state when sensor is ok. */
-"Sensor is OK" = "Sensor is OK";
+"Sensor is OK" = "Sensoren er OK";
 
 /* The description of sensor algorithm state when sensor is stopped." */
-"Sensor is stopped" = "Sensor is stopped";
+"Sensor is stopped" = "Sensoren er stoppet";
 
 /* The description of sensor algorithm state when sensor is warming up. */
-"Sensor is warming up" = "Sensor is warming up";
+"Sensor is warming up" = "Sensoren varmer opp";
 
 /* The description of sensor algorithm state when sensor is expired. */
-"Sensor expired" = "Sensor expired";
+"Sensor expired" = "Sensoren er utløpt";
 
 /* The description of sensor algorithm state when sensor failed. */
-"Sensor failed" = "Sensor failed";
+"Sensor failed" = "Sensoren feilet";
 
 /* The description of sensor algorithm state when raw value is unknown. (1: missing data details) */
-"Sensor is in unknown state %1$d" = "Sensor is in unknown state %1$d";
+"Sensor is in unknown state %1$d" = "Sensoren har ukjent tilstand %1$d";
 
 /* title for g7 settings row showing sensor start time */
-"Sensor Start" = "Sensor Start";
+"Sensor Start" = "Sensorstart";
 
 /* title for g7 settings row showing sensor expiration time */
-"Sensor Expiration" = "Sensor Expiration";
+"Sensor Expiration" = "Sensor utløper";
 
 /* title for g7 settings row showing sensor grace period end time */
 "Grace Period End" = "Grace Period End";
@@ -43,7 +43,7 @@
 /* Field label */
 "Glucose" = "Blodsukker";
 
-"Last Reading" = "Last Reading";
+"Last Reading" = "Siste måling";
 
 "Time" = "Tidspunkt";
 
@@ -81,10 +81,10 @@
 /* No glucose value representation (3 dashes for mg/dL) */
 "– – –" = "– – –";
 /* String displayed instead of a glucose value below the CGM range */
-"LOW" = "LOW";
+"LOW" = "LAVT";
 
 /* String displayed instead of a glucose value above the CGM range */
-"HIGH" = "HIGH";
+"HIGH" = "HØYT";
 
 /* Format string for glucose trend per minute. (1: glucose value and unit) */
 "%@/min" = "%@/min";
@@ -93,7 +93,7 @@
 "Searching for sensor" = "Searching for sensor";
 
 /* G7 Progress bar label when sensor expired */
-"Sensor expired" = "Sensor expired";
+"Sensor expired" = "Sensoren er utløpt";
 
 /* G7 Progress bar label when sensor in warmup */
 "Warmup completes" = "Warmup completes";
@@ -102,7 +102,7 @@
 "Warmup completes" = "Warmup completes";
 
 /* G7 Progress bar label when sensor failed */
-"Sensor failed" = "Sensor failed";
+"Sensor failed" = "Sensoren feilet";
 
 /* G7 Progress bar label when sensor lifetime progress showing */
 "Sensor expires" = "Sensor expires";
