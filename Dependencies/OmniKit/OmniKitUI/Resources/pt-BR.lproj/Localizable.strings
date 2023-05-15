@@ -1,5 +1,11 @@
-/* Format string for last status date on pod details screen */
-"%@ ago" = "%@ atrás";
+/* Accessibility format string for (1: localized volume)(2: time) */
+"%1$@ units remaining at %2$@" = "%1$@ unidades restantes em %2$@";
+
+/* The format string for displaying an offset from a time zone: (1: GMT)(2: -)(3: 4:00) */
+"%1$@%2$@%3$@" = "%1$@%2$@%3$@";
+
+/* Format string providing instructions for replacing pod due to a fault. (1: The fault description) */
+"%1$@. Insulin delivery has stopped. Please deactivate and remove pod." = "%1$@. A administração de insulina parou. Desative e remova o pod.";
 
 /* Format string for delivered insulin. (1: The localized amount)
    Format string for insulin remaining in reservoir. (1: The localized amount) */
@@ -14,32 +20,20 @@
 /* Format string for temp basal rate. (1: The localized amount) */
 "%@ U/hour" = "%@ U/hora";
 
-/* Appends a full-stop to a statement */
-"%@." = "%@.";
-
 /* Format string for bolus percent progress. (1: Percent progress) */
 "%@%%" = "%@%%";
 
 /* Format string for reservoir reading when above or equal to maximum reading. (1: The localized amount) */
 "%@+ U" = "%@+ U";
 
+/* Appends a full-stop to a statement */
+"%@." = "%@.";
+
 /* Format string for reservoir volume. (1: The localized volume) */
 "%@U" = "%@U";
 
-/* Accessibility format string for (1: localized volume)(2: time) */
-"%1$@ units remaining at %2$@" = "%1$@ unidades restantes em %2$@";
-
-/* Format string providing instructions for replacing pod due to a fault. (1: The fault description) */
-"%1$@. Insulin delivery has stopped. Please deactivate and remove pod." = "%1$@. A administração de insulina parou. Desative e remova o pod.";
-
-/* The format string for displaying an offset from a time zone: (1: GMT)(2: -)(3: 4:00) */
-"%1$@%2$@%3$@" = "%1$@%2$@%3$@";
-
 /* The title of the cell showing the pod activated at time */
 "Active Time" = "Tempo Ativo";
-
-/* Section header for activity section */
-"Activity" = "Atividade";
 
 /* The title of the cell showing alarm status */
 "Alarms" = "Alarmes";
@@ -84,9 +78,6 @@
    Button title to deactivate pod */
 "Deactivate Pod" = "Desativar Pod";
 
-/* Label text showing pod is deactivated */
-"Deactivated" = "Desativado";
-
 /* Button title to delete Omnipod PumpManager */
 "Delete Omnipod" = "Remover Omnipod";
 
@@ -96,17 +87,11 @@
 /* The title of the device information section in settings */
 "Device Information" = "Informação do Dispositivo";
 
-/* Header for devices section of RileyLinkSetupView */
-"Devices" = "Dispositivos";
-
 /* Title text for button to disable bolus beeps */
 "Disable Bolus Beeps" = "Desativar Bipes de Bolus";
 
 /* Title text for button to enable bolus beeps */
 "Enable Bolus Beeps" = "Ativar bipes de bolus";
-
-/* Accessibility label indicating an error occurred */
-"Error" = "Erro";
 
 /* The alert title for disable bolus beeps error */
 "Error disabling bolus beeps" = "Erro ao desativar bipes de bolus";
@@ -150,9 +135,6 @@
 /* The title of the cell showing delivered insulin */
 "Insulin Delivered" = "Insulina Entregue";
 
-/* Title of insulin delivery section */
-"Insulin Delivery" = "Insulin Delivery";
-
 /* The error message shown when Loop's basal schedule has an unsupported rate */
 "Invalid entry" = "Entrada inválida";
 
@@ -167,9 +149,6 @@
 
 /* The title of the command to pair new pod */
 "Pair New Pod" = "Emparelhe um Novo Pod";
-
-/* Label text indicating pairing finished. */
-"Paired" = "Emparelhado";
 
 /* The text of the loading label when pairing */
 "Pairing…" = "Emparelhando...";
@@ -188,9 +167,6 @@
 
 /* Label describing pod age view */
 "Pod Age" = "Idade do Pod";
-
-/* Label for pod life state when within pod expiration window */
-"Pod expired" = "Pod expirado";
 
 /* Title of the pod settings view controller */
 "Pod Settings" = "Configurações do Pod";
@@ -214,16 +190,8 @@
 /* The title of the cell showing reservoir status */
 "Reservoir" = "Reservoir";
 
-/* Action button description for deactivate after failed attempt
-   Cannula insertion button text while showing error
-   Pod pairing action button text while showing error */
-"Retry" = "Tentar de Novo";
-
 /* Button title for retrying pod deactivation */
 "Retry Pod Deactivation" = "Retentar Desativação do Pod";
-
-/* Navigation title for RileyLinkSetupView */
-"RileyLink Setup" = "Configuração RileyLink";
 
 /* Title of button to save delivery limit settings
    Title of button to sync basal profile when no pod paired */
@@ -232,20 +200,11 @@
 /* The detail text of the basal row when pod is running scheduled basal */
 "Schedule" = "Agendada";
 
-/* Title of insulin delivery section */
-"Scheduled Basal" = "Basal Agendado";
-
-/* Title for setup complete screen */
-"Setup Complete" = "Instalação Concluída";
-
 /* The title of the status section in settings */
 "Status" = "Estado";
 
 /* A message indicating a command succeeded */
 "Succeeded" = "Completo";
-
-/* Title for suspend duration selection action sheet */
-"Suspend Delivery" = "Suspender Entrega";
 
 /* The detail text of the basal row when pod is suspended */
 "Suspended" = "Suspenso";
@@ -265,12 +224,8 @@
 /* The error message shown when Loop's basal schedule has more entries than the pod can support */
 "Too many entries" = "Muitas entradas";
 
-/* Units for showing temp basal rate */
-"U/hr" = "U/hr";
-
 /* Instructions when pod cannot be deactivated */
 "Unable to deactivate pod. Please continue and pair a new one." = "Não foi possível desativar o pod. Continue e emparelhe um novo.";
 
 /* The detail text for delivered insulin when no measurement is available */
 "Unknown" = "Desconhecido";
-
