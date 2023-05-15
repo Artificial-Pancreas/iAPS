@@ -1,3 +1,5 @@
+/* Title on WelcomeView */
+"Dexcom G7" = "Dexcom G7";
 
 /* Descriptive text on G7StartupView */
 "iAPS can read G7 CGM data, but you must still use the Dexcom G7 App for pairing, calibration, and other sensor management." = "iAPS kan G7 CGM-gegevens lezen, maar u moet nog steeds de Dexcom G7 App gebruiken voor koppeling, kalibratie en ander sensorbeheer.";
@@ -10,6 +12,9 @@
 
 /* Error description for unreliable state */
 "Glucose data is unavailable" = "Glucose gegevens niet beschikbaar";
+
+/* The description of sensor algorithm state when sensor is ok. */
+"Sensor is OK" = "Sensor is OK";
 
 /* The description of sensor algorithm state when sensor is stopped." */
 "Sensor is stopped" = "Sensor is gestopt";
@@ -42,6 +47,10 @@
 
 "Time" = "Tijd";
 
+"Trend" = "Trend";
+
+"Bluetooth" = "Bluetooth";
+
 /* title for g7 settings row showing BLE Name */
 "Name" = "Naam";
 
@@ -68,11 +77,17 @@
 
 /* Button label for removing CGM */
 "Delete CGM" = "Verwijder CGM";
+
+/* No glucose value representation (3 dashes for mg/dL) */
+"– – –" = "– – –";
 /* String displayed instead of a glucose value below the CGM range */
 "LOW" = "LAAG";
 
 /* String displayed instead of a glucose value above the CGM range */
 "HIGH" = "HOOG";
+
+/* Format string for glucose trend per minute. (1: glucose value and unit) */
+"%@/min" = "%@/min";
 
 /* G7 Progress bar label when searching for sensor */
 "Searching for sensor" = "Sensor aan het zoeken";
