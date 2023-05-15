@@ -1,3 +1,5 @@
+/* Title on WelcomeView */
+"Dexcom G7" = "Dexcom G7";
 
 /* Descriptive text on G7StartupView */
 "iAPS can read G7 CGM data, but you must still use the Dexcom G7 App for pairing, calibration, and other sensor management." = "iAPS, G7 CGM verilerini okuyabilir ancak yine de eşleştirme, kalibrasyon ve diğer sensör yönetimi için Dexcom G7 Uygulamasını kullanmanız gerekir.";
@@ -47,6 +49,8 @@
 
 "Trend" = "Eğilim";
 
+"Bluetooth" = "Bluetooth";
+
 /* title for g7 settings row showing BLE Name */
 "Name" = "İsim";
 
@@ -73,6 +77,9 @@
 
 /* Button label for removing CGM */
 "Delete CGM" = "CGM'i Sil";
+
+/* No glucose value representation (3 dashes for mg/dL) */
+"– – –" = "– – –";
 /* String displayed instead of a glucose value below the CGM range */
 "LOW" = "DÜŞÜK";
 
