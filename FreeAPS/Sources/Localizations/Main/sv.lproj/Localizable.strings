@@ -405,7 +405,7 @@ Enact a temp Basal or a temp target */
 "Settings" = "Inställningar";
 
 /* Recommendation for a Manual Bolus */
-"Recommended Bolus Percentage" = "Föreslagen Bolus (procent)";
+"Recommended Bolus Percentage" = "Manuell Bolusprocent";
 
 /* 2 log files to share */
 "Share logs" = "Dela loggar";
@@ -1132,7 +1132,7 @@ Enact a temp Basal or a temp target */
 "Total Insulin Adjustment" = "Total justering av ditt insulinbehov";
 
 /* */
-"Override your Basal, ISF, CR and Target profiles" = "Ändra sparad basal, korrektionsfaktor, insulinkvot and målvärde med ett tillfäligt undantag";
+"Override your Basal, ISF, CR and Target profiles" = "Ändra sparad basal, korrektionsfaktor, insulinkvot och målvärde med ett tillfälligt undantag";
 
 /* */
 "Enable indefinitely" = "Aktivera tillsvidare";
@@ -1144,7 +1144,7 @@ Enact a temp Basal or a temp target */
 "Disable SMBs" = "Stäng av autobolusar (SMBs)";
 
 /* */
-"Your profile basal insulin will be adjusted with the override percentage and your profile ISF and CR will be inversly adjusted with the percentage.\n\nIf you toggle off the override every profile setting will return to normal." = "Din vanliga basal insulin kommer att justeras procentuellt enligt ovan, medan din normala korrektionsfaktor ich insulinkvot CR kommer att justeras omvänt.\n\nOm du stänger av undtantaget kommer varje inställning att återgå till det normala.";
+"Your profile basal insulin will be adjusted with the override percentage and your profile ISF and CR will be inversly adjusted with the percentage.\n\nIf you toggle off the override every profile setting will return to normal." = "Din vanliga basal insulin kommer att justeras procentuellt enligt ovan, medan din normala korrektionsfaktor och insulinkvot CR kommer att justeras omvänt.\n\nOm du stänger av undantaget kommer varje inställning att återgå till det normala.";
 
 /* Service Section */
 "App Icons" = "Ikoner";
