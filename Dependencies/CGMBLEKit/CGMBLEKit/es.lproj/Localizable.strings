@@ -13,6 +13,9 @@
 /* Describes a functioning transmitter */
 "OK" = "OK";
 
+/* invlid config error description */
+"Peripheral command was invalid" = "El comando del dispositivo periférico no es válido";
+
 /* Timeout error description */
 "Peripheral did not respond in time" = "El dispositivo periférico no respondió a tiempo";
 
