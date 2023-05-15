@@ -13,6 +13,9 @@
 /* Describes a functioning transmitter */
 "OK" = "Tamam";
 
+/* invlid config error description */
+"Peripheral command was invalid" = "Çevre birimi komutu geçersiz";
+
 /* Timeout error description */
 "Peripheral did not respond in time" = "Çevre birimi zamanında yanıt vermedi";
 
