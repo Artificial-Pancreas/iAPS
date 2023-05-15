@@ -46,6 +46,9 @@
 /* Pump error code describing max setting exceeded */
 "Max setting exceeded" = "Максимальное значение превышено";
 
+/* Pump title (1: model number) */
+"Minimed %@" = "Minimed %@";
+
 /* Generic title of the minimed pump manager */
 "Minimed 500/700 Series" = "Minimed 500/700 серий";
 
@@ -66,6 +69,9 @@
 
 /* The format string describing a pump message. (1: The packet type)(2: The message type)(3: The message address)(4: The message data */
 "PumpMessage(%1$@, %2$@, %3$@, %4$@)" = "Сообщение помпы(%1$@, %2$@, %3$@, %4$@)";
+
+/* Describing the reservoir insulin data source */
+"Reservoir" = "Reservoir";
 
 /* Error description */
 "RileyLink radio tune failed" = "Настройка радиосвязи с RileyLink не удалась";
