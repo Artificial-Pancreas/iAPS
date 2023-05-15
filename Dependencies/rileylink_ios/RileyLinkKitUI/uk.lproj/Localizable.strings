@@ -2,40 +2,40 @@
 "Commands" = "Команди";
 
 /* The connected state */
-"Connected" = "Connected";
+"Connected" = "Під'єднаний";
 
 /* The in-progress connecting state */
-"Connecting" = "Connecting";
+"Connecting" = "Під'єднання";
 
 /* The title of the cell showing BLE connection state */
 "Connection State" = "Стан з'єднання";
 
 /* The title of the section describing the device */
-"Device" = "Device";
+"Device" = "Пристрій";
 
 /* The title of the devices table section in RileyLink settings */
 "Devices" = "Пристрої";
 
 /* The disconnected state */
-"Disconnected" = "Disconnected";
+"Disconnected" = "Від’єднано";
 
 /* The in-progress disconnecting state */
-"Disconnecting" = "Disconnecting";
+"Disconnecting" = "Від'єднання";
 
 /* The title of the cell showing firmware version */
 "Firmware" = "Прошивка";
 
 /* The title of the cell showing current rileylink frequency */
-"Frequency" = "Frequency";
+"Frequency" = "Частота";
 
 /* The title of the cell showing device name */
 "Name" = "Ім’я";
 
 /* RileyLink setup description */
-"RileyLink allows for communication with the pump over Bluetooth Low Energy." = "RileyLink allows for communication with the pump over Bluetooth Low Energy.";
+"RileyLink allows for communication with the pump over Bluetooth Low Energy." = "RileyLink дозволяє зв'язуватися з насосом через Bluetooth Low Energy.";
 
 /* The title of the cell showing BLE signal strength (RSSI) */
-"Signal Strength" = "Signal Strength";
+"Signal Strength" = "Рівень сигналу";
 
 /* The title of the cell showing uptime */
-"Uptime" = "Uptime";
+"Uptime" = "Час роботи";
