@@ -1,9 +1,17 @@
+/* CGM display title */
+"Dexcom G5" = "Dexcom G5";
+
+/* CGM display title */
+"Dexcom G6" = "Dexcom G6";
 
 /* Error description for unreliable state */
 "Glucose data is unavailable" = "Les données de glycémie ne sont pas disponibles";
 
 /* Describes a low battery */
 "Low Battery" = "Batterie faible";
+
+/* Describes a functioning transmitter */
+"OK" = "OK";
 
 /* Timeout error description */
 "Peripheral did not respond in time" = "Le périphérique n’a pas répondu à temps";
