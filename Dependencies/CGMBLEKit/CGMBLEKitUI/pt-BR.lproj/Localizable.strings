@@ -1,3 +1,5 @@
+/* Format string for glucose trend per minute. (1: glucose value and unit) */
+"%@/min" = "%@/min";
 
 /* Confirmation message for deleting a CGM */
 "Are you sure you want to delete this CGM?" = "Você está certo que quer remover este CGM?";
@@ -29,6 +31,12 @@ Title text for the button to remove a CGM from Loop */
 
 /* Title describing sensor session age */
 "Session Age" = "Idade da Sessão";
+
+/* Title describing sensor expiration */
+"Sensor Expires" = "Sensor Expires";
+
+/* Title describing past sensor expiration */
+"Sensor Expired" = "Sensor Expired";
 
 /* Title describing CGM calibration and battery state */
 "Status" = "Estado";
