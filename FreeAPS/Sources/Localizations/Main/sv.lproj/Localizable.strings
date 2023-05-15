@@ -9,6 +9,8 @@
 /* Add insulin from source outside of pump */
 "Add %@ without bolusing" = "Lägg till %@ utan att ge bolus";
 
+"Bolus" = "Bolus";
+
 "Close" = "Stäng";
 
 /* Continue after added carbs without bolus */
@@ -104,6 +106,9 @@
 /* Delete preset temp target */
 "Delete preset \"%@\"" = "Ta bort förval \"%@\"";
 
+/* Duration of target temp or temp basal */
+"Duration" = "Duration";
+
 /*  */
 "Enact Temp Target" = "Tillfälliga målvärden";
 
@@ -152,11 +157,23 @@
 /* Button */
 "Yes" = "Ja";
 
+/* + Button */
+"[ +1 ]" = "[ +1 ]";
+
+/* - Button */
+"[ -1 ]" = "[ -1 ]";
+
 /* Upper temp target limit */
 "Top target" = "Övre målvärde";
 
 /*  Temp target set for ... minutes */
 "for" = "i";
+
+/*  Temp target set for ... minutes */
+"min" = "min";
+
+/*  */
+"Autotune" = "Autotune";
 
 /*  */
 "Basal profile" = "Basalinställningar";
@@ -267,6 +284,12 @@ Enact a temp Basal or a temp target */
 /* Header */
 "Nightscout Config" = "Ställ in Nightscout";
 
+/*  */
+"Port" = "Port";
+
+/*  */
+"URL" = "URL";
+
 /**/
 "Use local glucose server" = "Använd lokal server som glukoskälla";
 
@@ -345,8 +368,23 @@ Enact a temp Basal or a temp target */
 /*Carb ratio unit */
 "g/U" = "g/IE";
 
+/* grams */
+" g" = " g";
+
+/* The short unit display string for grams */
+"g" = "g";
+
 /* when 0 U/hr */
 "0 U/hr" = "0 IE/h";
+
+/* abbreviation for days */
+"d" = "d";
+
+/* abbreviation for hours */
+"h" = "h";
+
+/* abbreviation for minutes */
+"m" = "m";
 
 /*  */
 "Closed loop" = "Sluten loop";
@@ -356,6 +394,9 @@ Enact a temp Basal or a temp target */
 
 /* */
 "Devices" = "Enheter";
+
+/*  */
+"Pump" = "Pump";
 
 /*  */
 "Services" = "Tjänster";
@@ -384,6 +425,9 @@ Enact a temp Basal or a temp target */
 /* */
 "Pump suspended" = "Pump pausad";
 
+/* */
+"Middleware" = "Middleware";
+
 /* Header */
 "History" = "Historik";
 
@@ -392,6 +436,9 @@ Enact a temp Basal or a temp target */
 
 /* Type of CGM or glucose source */
 "Type" = "Typ";
+
+/* CGM */
+"CGM" = "CGM";
 
 /* CGM Transmitter ID */
 "Transmitter ID" = "Sändar-ID";
@@ -416,6 +463,9 @@ Enact a temp Basal or a temp target */
 
 /* Treatments list */
 "Treatments" = "Behandlingar";
+
+/* " min" in Treatments list */
+" min" = " min";
 
 /* */
 "Unable to change anything" = "Det går inte att ändra något";
@@ -470,6 +520,9 @@ Enact a temp Basal or a temp target */
 
 /* When adding capillary glucose meater reading */
 "Meter glucose" = "Glukosmätarvärde";
+
+/* */
+"Info" = "Info";
 
 /*v*/
 "Slope" = "Lutning";
@@ -647,6 +700,9 @@ Enact a temp Basal or a temp target */
 
 /* */
 "Hardware" = "Hårdvara";
+
+/* */
+"Firmware" = "Firmware";
 
 /* */
 "Connection State" = "Anslutningsstatus";
@@ -942,6 +998,9 @@ Enact a temp Basal or a temp target */
 /* Debug option view NS Uploaded Profile */
 "NS Uploaded Profile" = "Uppladdad profil";
 
+/* Debug option view Autosense */
+"Autosense" = "Autosense";
+
 /* Debug option view Pump History */
 "Pump History" = "Pumphistorik";
 
@@ -969,6 +1028,9 @@ Enact a temp Basal or a temp target */
 /* Debug option view Enacted announcements announcements (from NS) */
 "Enacted announcements" = "Överförda meddelanden";
 
+/* Debug option view Autotune */
+"Autotune" = "Autotune";
+
 /* Debug option view Target presets */
 "Target presets" = "Målvärden, förinställningar";
 
@@ -990,6 +1052,10 @@ Enact a temp Basal or a temp target */
 
 /* */
 "After you create glucose records in the Health app, please open iAPS to help us guaranteed transfer changed data" = "Efter att du lagt till glukos i appen 'Hälsa', öppna iAPS för att bekräfta att överföring skett på rätt sätt";
+
+/* New ALerts ------------------------- */
+/* Info title */
+"Info" = "Info";
 
 /* Warning title */
 "Warning" = "Varning";
@@ -1047,6 +1113,9 @@ Enact a temp Basal or a temp target */
 /* Add Fat */
 "Fat" = "Fett";
 
+/* Add Protein */
+"Protein" = "Protein";
+
 /* Service Section */
 "Fat And Protein Conversion" = "Fett och protein";
 
@@ -1069,7 +1138,13 @@ Enact a temp Basal or a temp target */
 "Enable indefinitely" = "Aktivera tillsvidare";
 
 /* */
+"Override Profile target" = "Override Profile target";
+
+/* */
 "Disable SMBs" = "Stäng av autobolusar (SMBs)";
+
+/* */
+"Your profile basal insulin will be adjusted with the override percentage and your profile ISF and CR will be inversly adjusted with the percentage.\n\nIf you toggle off the override every profile setting will return to normal." = "Your profile basal insulin will be adjusted with the override percentage and your profile ISF and CR will be inversly adjusted with the percentage.\n\nIf you toggle off the override every profile setting will return to normal.";
 
 /* Service Section */
 "App Icons" = "Ikoner";
@@ -1285,6 +1360,12 @@ Enact a temp Basal or a temp target */
 /* */
 "Display Chart Threshold lines for Low and High" = "Visa linjer för lågt och högt i diagram";
 
+/* */
+/* */
+
+"Standing / Laying TIR Chart
+Hours X-Axis (6 default)" = "Hours X-Axis (6 default)";
+
 /* Average BG = */
 "Average" = "Medelvärde";
 
@@ -1309,6 +1390,15 @@ Enact a temp Basal or a temp target */
 /* Title Low BG in statPanel */
 "Low (<" = "Lågt (<";
 
+/* SD */
+"SD" = "SD";
+
+/* CV */
+"CV" = "CV";
+
+/* Estimated HbA1c */
+"HbA1c" = "HbA1c";
+
 /* Total number of days of data for HbA1c estimation, part 1/2*/
 "All" = "Alla";
 
@@ -1323,6 +1413,9 @@ Enact a temp Basal or a temp target */
 
 /* Average loop interval */
 "Interval" = "Intervall";
+
+/* Median loop interval */
+"Duration" = "Duration";
 
 /* "Display SD */
 "Display SD instead of CV" = "Visa SD istället för CV";
