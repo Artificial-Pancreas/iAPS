@@ -112,6 +112,21 @@
 /*  */
 "Enact Temp Target" = "Временная цель";
 
+/* */
+"Target" = "Target";
+
+/* */
+"Basal Insulin and Sensitivity ratio" = "Basal Insulin and Sensitivity ratio";
+
+/* */
+"A lower 'Half Basal Target' setting will reduce the basal and raise the ISF earlier, at a lower target glucose." = "A lower 'Half Basal Target' setting will reduce the basal and raise the ISF earlier, at a lower target glucose.";
+
+/* */
+" Your setting: " = " Your setting: ";
+
+/* */
+"mg/dl. Autosens.max limits the max endpoint" = "mg/dl. Autosens.max limits the max endpoint";
+
 /*  */
 "Enter preset name" = "Название шаблона";
 
@@ -129,6 +144,24 @@
 
 /*  */
 "Save as preset" = "Сохранить как шаблон";
+
+/* Delete Meal Preset */
+"Delete Preset" = "Delete Preset";
+
+/* Confirm Deletion */
+"Delete preset '%@'?" = "Delete preset '%@'?";
+
+/* Button */
+"No" = "No";
+
+/* Button */
+"Yes" = "Yes";
+
+/* + Button */
+"[ +1 ]" = "[ +1 ]";
+
+/* - Button */
+"[ -1 ]" = "[ -1 ]";
 
 /* Upper temp target limit */
 "Top target" = "Верхняя граница";
@@ -236,6 +269,9 @@ Enact a temp Basal or a temp target */
 /* Connect to NS */
 "Connect" = "Подключить";
 
+/* Connected to NS */
+"Connected!" = "Connected!";
+
 /* Connecting to NS */
 "Connecting..." = "Подключение...";
 
@@ -250,6 +286,9 @@ Enact a temp Basal or a temp target */
 
 /*  */
 "Port" = "Порт";
+
+/*  */
+"URL" = "URL";
 
 /**/
 "Use local glucose server" = "Использовать локальный сервер глюкозы";
@@ -365,6 +404,9 @@ Enact a temp Basal or a temp target */
 /*  */
 "Settings" = "Настройки";
 
+/* Recommendation for a Manual Bolus */
+"Recommended Bolus Percentage" = "Recommended Bolus Percentage";
+
 /* 2 log files to share */
 "Share logs" = "Отправить журнал";
 
@@ -394,6 +436,9 @@ Enact a temp Basal or a temp target */
 
 /* Type of CGM or glucose source */
 "Type" = "Тип";
+
+/* CGM */
+"CGM" = "CGM";
 
 /* CGM Transmitter ID */
 "Transmitter ID" = "ID трансмиттера";
@@ -442,6 +487,9 @@ Enact a temp Basal or a temp target */
 
 /* */
 "Other" = "Прочее";
+
+/* */
+"Libre Transmitter" = "Libre Transmitter";
 
 /* */
 "Libre Transmitters" = "Передатчики Libre";
@@ -610,6 +658,9 @@ Enact a temp Basal or a temp target */
 
 /* Current Sensor is Ending soon! Sensor Life left in %@ */
 "Current Sensor is Ending soon! Sensor Life left in %@" = "Сенсор скоро закончится! Осталась %@";
+
+/* */
+"Libre Bluetooth" = "Libre Bluetooth";
 
 /* */
 "Snooze Alerts" = "Отложить тревоги";
@@ -787,6 +838,9 @@ Enact a temp Basal or a temp target */
 
 /* */
 "nothing to see here" = "здесь ничего нет";
+
+/* */
+"snooze from testview clicked" = "snooze from testview clicked";
 
 /* */
 "will snooze for %@ until %@" = "будет отложена для %@ до %@";
@@ -986,6 +1040,10 @@ Enact a temp Basal or a temp target */
 /* Debug option view Glucose Data used for statistics */
 "Glucose Data used for statistics" = "Данные о глюкозе, используемые в статистике";
 
+/* --------------- HealthKit intergration --------------------*/
+/* */
+"Apple Health" = "Apple Health";
+
 /* */
 "Connect to Apple Health" = "Подключить к Apple Health";
 
@@ -1046,6 +1104,12 @@ Enact a temp Basal or a temp target */
 /* FPU Settings Title */
 "Fat and Protein" = "Жиры и белки";
 
+/* Display fat and protein entities */
+"Fat & Protein" = "Fat & Protein";
+
+/* */
+"Hide Fat & Protein" = "Hide Fat & Protein";
+
 /* Add Fat */
 "Fat" = "Жиры";
 
@@ -1055,8 +1119,62 @@ Enact a temp Basal or a temp target */
 /* Service Section */
 "Fat And Protein Conversion" = "Преобразование жиров и белков";
 
+/* Service Section */
+"Profile Override" = "Profile Override";
+
+/* */
+"Override Profiles" = "Override Profiles";
+
+/* */
+"Currently no Override active" = "Currently no Override active";
+
+/* */
+"Total Insulin Adjustment" = "Total Insulin Adjustment";
+
+/* */
+"Override your Basal, ISF, CR and Target profiles" = "Override your Basal, ISF, CR and Target profiles";
+
+/* */
+"Enable indefinitely" = "Enable indefinitely";
+
+/* */
+"Override Profile target" = "Override Profile target";
+
+/* */
+"Disable SMBs" = "Disable SMBs";
+
+/* */
+"Your profile basal insulin will be adjusted with the override percentage and your profile ISF and CR will be inversly adjusted with the percentage.\n\nIf you toggle off the override every profile setting will return to normal." = "Your profile basal insulin will be adjusted with the override percentage and your profile ISF and CR will be inversly adjusted with the percentage.\n\nIf you toggle off the override every profile setting will return to normal.";
+
+/* Service Section */
+"App Icons" = "App Icons";
+
+/* Service Section */
+"Statistics and Home View" = "Statistics and Home View";
+
 /* Alert text */
 "Delete carb equivalents?" = "Удалить эквиваленты углеводов?";
+
+/* */
+"Meal Presets" = "Meal Presets";
+
+/* */
+"Empty" = "Empty";
+
+/* */
+"Delete Selected Preset" = "Delete Selected Preset";
+
+/* */
+"Enter Meal Preset Name" = "Enter Meal Preset Name";
+
+/* */
+"Name Of Dish" = "Name Of Dish";
+
+/* Save Carbs and continue to bolus recommendation */
+"Save and continue" = "Save and continue";
+
+/* */
+"Save as Preset" = "Save as Preset";
 
 /* -------------------------------------------------------------------------------------------
   DASH strings
@@ -1196,11 +1314,30 @@ Enact a temp Basal or a temp target */
 /* Alert title for suspend error */
 "Failed to Suspend Insulin Delivery" = "Не удалось приостановить подачу инсулина";
 
+//* -----------------------------------------------------------------------*/
+/* ----------------------Statistics strings -------------------------------*/
+/* */
+
+
+"Today" = "Today";
+
+/* */
+"Day" = "Day";
+
+/* */
+"Week" = "Week";
+
+/* */
+"Month" = "Month";
+
 /* */
 "Total" = "Всего";
 
 /* Headline Statistics */
 "Statistics" = "Статистика";
+
+/* Option in preferences */
+"Allow Upload of Statistics to NS" = "Allow Upload of Statistics to NS";
 
 /* Low Glucose Threshold in Statistics settings */
 "Low" = "Низкий";
@@ -1208,11 +1345,41 @@ Enact a temp Basal or a temp target */
 /* High Glucose Threshold in Statistics settings */
 "High" = "Высокий";
 
+/* In Range */
+"In Range" = "In Range";
+
+/* Display % */
+"Change HbA1c Unit" = "Change HbA1c Unit";
+
+/* */
+"Display Chart X - Grid lines" = "Display Chart X - Grid lines";
+
+/* */
+"Display Chart Y - Grid lines" = "Display Chart Y - Grid lines";
+
+/* */
+"Display Chart Threshold lines for Low and High" = "Display Chart Threshold lines for Low and High";
+
+/* */
+/* */
+
+"Standing / Laying TIR Chart
+Hours X-Axis (6 default)" = "Hours X-Axis (6 default)";
+
 /* Average BG = */
 "Average" = "Средний";
 
 /* Median BG */
 "Median" = "Медиана";
+
+/* CGM readings in statView */
+"Readings today" = "Readings today";
+
+/* CGM readings in statView */
+"Readings / 24h" = "Readings / 24h";
+
+/* Days of saved readings*/
+"Days" = "Days";
 
 /* Normal BG (within TIR) */
 "Normal" = "Норма";
@@ -1222,6 +1389,15 @@ Enact a temp Basal or a temp target */
 
 /* Title Low BG in statPanel */
 "Low (<" = "Низкий (<";
+
+/* SD */
+"SD" = "SD";
+
+/* CV */
+"CV" = "CV";
+
+/* Estimated HbA1c */
+"HbA1c" = "HbA1c";
 
 /* Total number of days of data for HbA1c estimation, part 1/2*/
 "All" = "Все ";
@@ -1284,11 +1460,18 @@ Enact a temp Basal or a temp target */
 
 "Configuration CGM" = "Конфигурация CGM";
 
+"Heartbeat" = "Heartbeat";
+
 "CGM address :" = "CGM адрес:";
 
 "CGM is not used as heartbeat." = "CGM не используется в качестве heartbeat.";
 
 "Are you sure you want to delete this CGM?" = "Вы уверены, что хотите удалить текущий CGM?";
+
+/* New Experimental feature */
+"Experimental" = "Experimental";
+/* Smoothing of CGM readings */
+"Smooth Glucose Value" = "Smooth Glucose Value";
 
 /* -----------------------------------------------------------------------------------------------------------
 
@@ -1552,6 +1735,9 @@ Enact a temp Basal or a temp target */
 
 /* Headline "Adjust Dynamic ISF constant" */
 "Adjust Dynamic ISF constant" = "Настроить константу динамического ISF";
+
+/* Adjust Dynamic ISF constant */
+"Adjust Dynamic ratios by a constant. Default is 0.5. The higher the value, the larger the correction of your ISF will be for a high or a low BG. Maximum correction is determined by the Autosens min/max settings. For Sigmoid function an adjustment factor of 0.4 - 0.5 is recommended to begin with. For the logaritmic formula there is less consensus, but starting with 0.5 - 0.8 is more appropiate for most users" = "Adjust Dynamic ratios by a constant. Default is 0.5. The higher the value, the larger the correction of your ISF will be for a high or a low BG. Maximum correction is determined by the Autosens min/max settings. For Sigmoid function an adjustment factor of 0.4 - 0.5 is recommended to begin with. For the logaritmic formula threre is less consensus, but starting with 0.5 - 0.8 is more appropiate for most users";
 
 
 /* Headline "Use Sigmoid Function" */
