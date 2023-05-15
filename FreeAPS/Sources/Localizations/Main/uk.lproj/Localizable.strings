@@ -113,19 +113,19 @@
 "Enact Temp Target" = "Запустити тимчасову ціль";
 
 /* */
-"Target" = "Target";
+"Target" = "Ціль";
 
 /* */
-"Basal Insulin and Sensitivity ratio" = "Basal Insulin and Sensitivity ratio";
+"Basal Insulin and Sensitivity ratio" = "Співвідношення базального інсуліну та чутливості";
 
 /* */
-"A lower 'Half Basal Target' setting will reduce the basal and raise the ISF earlier, at a lower target glucose." = "A lower 'Half Basal Target' setting will reduce the basal and raise the ISF earlier, at a lower target glucose.";
+"A lower 'Half Basal Target' setting will reduce the basal and raise the ISF earlier, at a lower target glucose." = "Нижчий параметр «Half Basal Target» зменшить базальний рівень і підвищить ISF раніше, при нижчому цільовому рівні глюкози.";
 
 /* */
-" Your setting: " = " Your setting: ";
+" Your setting: " = "Ваші налаштування";
 
 /* */
-"mg/dl. Autosens.max limits the max endpoint" = "mg/dl. Autosens.max limits the max endpoint";
+"mg/dl. Autosens.max limits the max endpoint" = "mg/dl. Автоматизація обмежує максимальну кінцеву точку";
 
 /*  */
 "Enter preset name" = "Введіть ім'я шаблону";
@@ -146,16 +146,16 @@
 "Save as preset" = "Зберегти як шаблон";
 
 /* Delete Meal Preset */
-"Delete Preset" = "Delete Preset";
+"Delete Preset" = "Видалити шаблон";
 
 /* Confirm Deletion */
-"Delete preset '%@'?" = "Delete preset '%@'?";
+"Delete preset '%@'?" = "Видалити шаблон \"%@'?";
 
 /* Button */
-"No" = "No";
+"No" = "Ні";
 
 /* Button */
-"Yes" = "Yes";
+"Yes" = "Так";
 
 /* + Button */
 "[ +1 ]" = "[ +1 ]";
@@ -230,7 +230,7 @@
 "Ratio" = "Коефіцієнт";
 
 /*  */
-"Autosens" = "Autosens";
+"Autosens" = "Автосенс";
 
 /*  */
 "Calculated Sensitivity" = "Розрахована Чутливість";
@@ -405,7 +405,7 @@ Enact a temp Basal or a temp target */
 "Settings" = "Налаштування";
 
 /* Recommendation for a Manual Bolus */
-"Recommended Bolus Percentage" = "Recommended Bolus Percentage";
+"Recommended Bolus Percentage" = "Рекомендований відсоток болюсу";
 
 /* 2 log files to share */
 "Share logs" = "Поділитися логом";
@@ -999,7 +999,7 @@ Enact a temp Basal or a temp target */
 "NS Uploaded Profile" = "NS Завантажений профіль";
 
 /* Debug option view Autosense */
-"Autosense" = "Autosense";
+"Autosense" = "Автосенс";
 
 /* Debug option view Pump History */
 "Pump History" = "Історія помпи";
@@ -1105,10 +1105,10 @@ Enact a temp Basal or a temp target */
 "Fat and Protein" = "Жир і білок";
 
 /* Display fat and protein entities */
-"Fat & Protein" = "Fat & Protein";
+"Fat & Protein" = "Жир і білок";
 
 /* */
-"Hide Fat & Protein" = "Hide Fat & Protein";
+"Hide Fat & Protein" = "Приховати жири та білки";
 
 /* Add Fat */
 "Fat" = "Жир";
@@ -1120,10 +1120,10 @@ Enact a temp Basal or a temp target */
 "Fat And Protein Conversion" = "Перетворення жиру та білка";
 
 /* Service Section */
-"Profile Override" = "Profile Override";
+"Profile Override" = "Перевизначення профілю";
 
 /* */
-"Override Profiles" = "Override Profiles";
+"Override Profiles" = "Змінити параметри";
 
 /* */
 "Currently no Override active" = "Currently no Override active";
