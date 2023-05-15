@@ -203,6 +203,9 @@
 /* Recovery suggestion shown when no pod is paired */
 "Please pair a new pod" = "Bitte einen neuen POD koppeln";
 
+/* Generic title of the OmniBLE pump manager */
+"Omnipod DASH" = "Omnipod DASH";
+
 /* Status highlight that delivery is uncertain. */
 "Comms Issue" = "Kommunikationsfehler";
 
@@ -291,7 +294,13 @@
 "Resume" = "Fortsetzen";
 
 /* */
+"Bolus" = "Bolus";
+
+/* */
 "Cancel Bolus" = "Bolus abbrechen";
+
+/* Alert acknowledgment OK button */
+"OK" = "OK";
 
 /* The title for Empty Reservoir alarm notification */
 "Empty Reservoir" = "Reservoir leer";
@@ -657,6 +666,9 @@
 /* description label for firmware version pod details row */
 "Firmware Version" = "Firmware-Version";
 
+/* description label for ble firmware version pod details row */
+"BLE Firmware Version" = "BLE Firmware Version";
+
 /* description label for activated at timne pod details row */
 "Pod Activated" = "Pod aktiviert";
 
@@ -668,6 +680,9 @@
 
 /* description label for pod fault details */
 "Pod Fault Details" = "Pod Fehlerdetails";
+
+/* Title for PodSetupView */
+"Pod Setup" = "Pod Setup";
 
 /* bodyText for PodSetupView */
 "You will now begin the process of configuring your reminders, filling your Pod with insulin, pairing to your device and placing it on your body." = "Im nächsten Schritt wirst du deine Erinnerungen konfigurieren, deinen Pod mit Insulin füllen, ihn mit deinem Gerät koppeln und an deinem Körper anbringen.";
