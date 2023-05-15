@@ -12,3 +12,9 @@
 
 /* Privacy - Calendars Usage Description */
 "NSCalendarsUsageDescription" = "日历用于创建一个新的葡萄糖事件。";
+
+/* Privacy - Health Update Usage Description */
+"NSHealthUpdateUsageDescription" = "Health App is used to store blood glucose, insulin and carbohydrates";
+
+/* Privacy - Health Share Usage Description */
+"NSHealthShareUsageDescription" = "Health App is used to store blood glucose, insulin and carbohydrates";
