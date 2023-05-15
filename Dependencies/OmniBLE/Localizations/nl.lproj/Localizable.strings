@@ -203,6 +203,9 @@
 /* Recovery suggestion shown when no pod is paired */
 "Please pair a new pod" = "Verbind een nieuwe pod";
 
+/* Generic title of the OmniBLE pump manager */
+"Omnipod DASH" = "Omnipod DASH";
+
 /* Status highlight that delivery is uncertain. */
 "Comms Issue" = "Opdrachten probleem";
 
@@ -289,6 +292,9 @@
 
 /* */
 "Resume" = "Hervat";
+
+/* */
+"Bolus" = "Bolus";
 
 /* */
 "Cancel Bolus" = "Annuleer bolus";
@@ -534,11 +540,17 @@
 /* Error message description for PeripheralManagerError.incorrectResponse */
 "Incorrect Response" = "Onjuist antwoord";
 
+/* Error message description for PeripheralManagerError.timeout */
+"Timeout" = "Timeout";
+
 /* Error message description for PeripheralManagerError.emptyValue */
 "Empty Value" = "Lege waarde";
 
 /* Error message description for PeripheralManagerError.unknownCharacteristic */
 "Unknown Characteristic" = "Onbekend kenmerk";
+
+/* Error message description for PeripheralManagerError.nack */
+"Nack" = "Nack";
 
 /* Title for omnipod reminders section */
 "Omnipod Reminders" = "Omnipod herinneringen";
