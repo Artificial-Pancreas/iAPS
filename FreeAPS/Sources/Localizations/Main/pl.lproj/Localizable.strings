@@ -1363,10 +1363,10 @@ Połączono z Nightscout!";
 "Display Chart Threshold lines for Low and High" = "Display Chart Threshold lines for Low and High";
 
 /* */
-/* */
+"Standing / Laying TIR Chart" = "Standing / Laying TIR Chart";
 
-"Standing / Laying TIR Chart
-Hours X-Axis (6 default)" = "Hours X-Axis (6 default)";
+/* */
+"Hours X-Axis (6 default)" = "Hours X-Axis (6 default)";
 
 /* Average BG = */
 "Average" = "Average";
