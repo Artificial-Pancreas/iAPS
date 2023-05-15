@@ -321,7 +321,7 @@
 "Insulin Delivered" = "Инсулин подан";
 
 /* Title of insulin delivery section */
-"Insulin Delivery" = "Insulin Delivery";
+"Insulin Delivery" = "Подача инсулина";
 
 /* The action string on pod status page when pod faulted */
 "Insulin delivery stopped. Change Pod now." = "Введение инсулина остановлено. Замените Под.";
@@ -445,9 +445,6 @@
 /* Pod pairing action button text while pairing */
 "Pairing..." = "Сопряжение...";
 
-/* The text of the loading label when pairing */
-"Pairing…" = "Производится Сопряжение";
-
 /* No comment provided by engineer. */
 "Percent = %lf" = "Процент = %lf";
 
@@ -538,7 +535,7 @@
 "Pump Time" = "Время в помпе";
 
 /* Label text for basal rate summary */
-"Rate" = "Rate";
+"Rate" = "Скорость";
 
 /* Label describing time remaining view */
 "Remaining" = "Остается";
@@ -723,7 +720,7 @@
 "Total Delivery" = "Подано всего";
 
 /* Units for showing temp basal rate */
-"U/hr" = "U/hr";
+"U/hr" = "Ед/ч";
 
 /* Instructions when pod cannot be deactivated */
 "Unable to deactivate pod. Please continue and pair a new one." = "Не удалось деактивировать Pod. Пропустить и начать соединение с новым.";
@@ -731,8 +728,6 @@
 /* Title of delivery uncertainty recovery page */
 "Unable to Reach Pod" = "Невозможно связаться с подом";
 
-/* Title for pending command recovery screen */
-"Unable To Reach Pod" = "Невозможно связаться с подом";
 
 /* Alert format string for a failure to set temporary basal. (1: error description) */
 "Unable to set a temporary basal rate: %1$@" = "Невозможно установить ВБС: %1$@";
@@ -769,4 +764,3 @@
 
 /* Alert message body for confirm pod attachment */
 "Your Pod may still be delivering Insulin.\nRemove it from your body, then tap “Continue.“" = "Ваш под может по-прежнему доставлять инсулин.\n Удалите его с тела, затем нажмите «Продолжить».";
-
