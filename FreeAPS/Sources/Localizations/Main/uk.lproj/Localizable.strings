@@ -1361,10 +1361,10 @@ Enact a temp Basal or a temp target */
 "Display Chart Threshold lines for Low and High" = "Відображення порогових ліній діаграми для низьких і високих значень";
 
 /* */
-"Standing / Laying TIR Chart" = "Standing / Laying TIR Chart";
+"Standing / Laying TIR Chart" = "Стандартна частота і стиль TIR";
 
 /* */
-"Hours X-Axis (6 default)" = "Hours X-Axis (6 default)";
+"Hours X-Axis (6 default)" = "Вісь Х годин (6 за замовчуванням)";
 
 /* Average BG = */
 "Average" = "Середній";
