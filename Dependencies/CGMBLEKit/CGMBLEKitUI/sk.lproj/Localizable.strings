@@ -46,3 +46,6 @@ Title text for the button to remove a CGM from Loop */
 
 /* The title text for the Dexcom G5/G6 transmitter ID config value */
 "Transmitter ID" = "ID vysielača";
+
+/* Title describing glucose trend */
+"Trend" = "Trend";
