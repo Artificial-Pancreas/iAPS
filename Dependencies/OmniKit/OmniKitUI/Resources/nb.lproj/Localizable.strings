@@ -36,7 +36,7 @@
 "%@U" = "%@E";
 
 /* Summary string for temporary basal rate configuration page */
-"%1$@ for %2$@" = "%1$@ for %2$@";
+"%1$@ for %2$@" = "%1$@ i %2$@";
 
 /* Format string for main text of delivery uncertainty recovery page. (1: app name)(2: date of command)(3: app name) */
 "%1$@ has been unable to communicate with the pod on your body since %2$@.\n\nWithout communication with the pod, the app cannot continue to send commands for insulin delivery or display accurate, recent information about your active insulin or the insulin being delivered by the Pod.\n\nMonitor your glucose closely for the next 6 or more hours, as there may or may not be insulin actively working in your body that %3$@ cannot display." = "%1$@ har ikke vært i stand til å kommunisere med pod på kroppen din siden %2$@ . \n\n Uten kommunikasjon med pod kan ikke appen fortsette å sende kommandoer for insulintilførsel eller vise nøyaktig, fersk informasjon om ditt aktive insulin eller insulinet som leveres av pod. \n\n Overvåk blodsukkerverdi nøye de neste 6 timene eller mer, siden det kan være insulin som virker aktivt i kroppen din som %3$@ ikke kan vise.";
@@ -321,7 +321,7 @@
 "Insulin Delivered" = "Levert insulin";
 
 /* Title of insulin delivery section */
-"Insulin Delivery" = "Insulin Delivery";
+"Insulin Delivery" = "Insulintilførsel";
 
 /* The action string on pod status page when pod faulted */
 "Insulin delivery stopped. Change Pod now." = "Insulintilførselen stoppet. Bytt Pod nå.";
@@ -445,9 +445,6 @@
 /* Pod pairing action button text while pairing */
 "Pairing..." = "Kobler sammen...";
 
-/* The text of the loading label when pairing */
-"Pairing…" = "Kobler sammen...";
-
 /* No comment provided by engineer. */
 "Percent = %lf" = "Prosent = %lf";
 
@@ -538,7 +535,7 @@
 "Pump Time" = "Pumpetid";
 
 /* Label text for basal rate summary */
-"Rate" = "Rate";
+"Rate" = "Ratio";
 
 /* Label describing time remaining view */
 "Remaining" = "Gjenstående";
@@ -731,8 +728,6 @@
 /* Title of delivery uncertainty recovery page */
 "Unable to Reach Pod" = "Kan ikke nå pod";
 
-/* Title for pending command recovery screen */
-"Unable To Reach Pod" = "Kan ikke nå pod";
 
 /* Alert format string for a failure to set temporary basal. (1: error description) */
 "Unable to set a temporary basal rate: %1$@" = "Klarte ikke å angi en midlertidig basal: %1$@";
@@ -769,4 +764,3 @@
 
 /* Alert message body for confirm pod attachment */
 "Your Pod may still be delivering Insulin.\nRemove it from your body, then tap “Continue.“" = "Pod kan fortsatt levere insulin.\nFjern den fra kroppen din, og trykk deretter på \"Fortsett\".";
-
