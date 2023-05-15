@@ -7,6 +7,9 @@
 /* Error message shown when operation could not be completed due to existing bolus in progress */
 "Bolus in progress" = "Bolus em andamento";
 
+/* The format string describing a bolus. (1: The amount delivered)(2: Start time of the dose)(3: duration)(4: scheduled certainty) */
+"Bolus: %1$@U %2$@ %3$@ %4$@" = "Bolus: %1$@U %2$@ %3$@ %4$@";
+
 /* Delivery status when bolusing */
 "Bolusing" = "Entregando Bolus";
 
@@ -64,8 +67,15 @@
 /* Error message shown when no response from pod was received */
 "No RileyLink available" = "Nenhum RileyLink disponível";
 
+/* Delivery status when basal is running
+   Pod state when running above fifty units */
+"Normal" = "Normal";
+
 /* Description for Occlusion detected pod fault */
 "Occlusion detected" = "Oclusão detectada";
+
+/* Generic title of the omnipod pump manager */
+"Omnipod" = "Omnipod";
 
 /* Pod status after pairing */
 "Paired" = "Emparelhado";
