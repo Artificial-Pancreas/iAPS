@@ -42,5 +42,5 @@ files:
     translation: /Dependencies/CGMBLEKit/CGMBLEKitUI/%osx_locale%.lproj/Localizable.strings
   - source: /Dependencies/CGMBLEKit/CGMBLEKit/Base.lproj/Localizable.strings
     translation: /Dependencies/CGMBLEKit/CGMBLEKit/%osx_locale%.lproj/Localizable.strings
-  - source: /Dependencies/CGMBLEKit/CGMBLEKitUI/Base.lproj/TransmitterManagerSetup.storyboard
+  - source: //Dependencies/CGMBLEKit/CGMBLEKitUI/en.lproj/TransmitterManagerSetup.strings
     translation: /Dependencies/CGMBLEKit/CGMBLEKitUI/%osx_locale%.lproj/TransmitterManagerSetup.strings
