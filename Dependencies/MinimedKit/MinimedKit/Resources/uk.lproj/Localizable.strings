@@ -71,7 +71,7 @@
 "PumpMessage(%1$@, %2$@, %3$@, %4$@)" = "PumpMessage(%1$@, %2$@, %3$@, %4$@)";
 
 /* Describing the reservoir insulin data source */
-"Reservoir" = "Reservoir";
+"Reservoir" = "Резервуар";
 
 /* Error description */
 "RileyLink radio tune failed" = "RileyLink radio tune failed";
