@@ -203,6 +203,9 @@
 /* Recovery suggestion shown when no pod is paired */
 "Please pair a new pod" = "Lütfen yeni bir pod eşleştirin";
 
+/* Generic title of the OmniBLE pump manager */
+"Omnipod DASH" = "Omnipod DASH";
+
 /* Status highlight that delivery is uncertain. */
 "Comms Issue" = "İletişim Sorunu";
 
@@ -289,6 +292,9 @@
 
 /* */
 "Resume" = "Devam et";
+
+/* */
+"Bolus" = "Bolus";
 
 /* */
 "Cancel Bolus" = "Bolusu İptal Et";
@@ -542,6 +548,9 @@
 
 /* Error message description for PeripheralManagerError.unknownCharacteristic */
 "Unknown Characteristic" = "Bilinmeyen Özellik";
+
+/* Error message description for PeripheralManagerError.nack */
+"Nack" = "Nack";
 
 /* Title for omnipod reminders section */
 "Omnipod Reminders" = "Omnipod Hatırlatıcıları";
