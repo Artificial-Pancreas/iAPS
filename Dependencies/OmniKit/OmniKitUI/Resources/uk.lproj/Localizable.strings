@@ -666,7 +666,7 @@
 "Test Command" = "Провести тест";
 
 /* Progress message for testing commands. */
-"Testing Commands…" = "Testing Commands…";
+"Testing Commands…" = "Команди Тесту";
 
 /* Footer text for omnipod reminders section */
 "The app configures a reminder on the pod to notify you in advance of Pod expiration. Set the number of hours advance notice you would like to configure when pairing a new Pod." = "Програма налаштовує нагадування на Pod, щоб завчасно повідомити вас про закінчення терміну дії Pod. Встановіть кількість годин попереднього сповіщення, яке ви хочете налаштувати під час підключення нового Pod.";
@@ -681,13 +681,13 @@
 "The App notifies you when the amount of insulin in the Pod reaches this level." = "Програма сповіщає вас, коли кількість інсуліну в Pod досягає цього рівня.";
 
 /* Description text for critical alerts */
-"The reminders above will not sound if your device is in Silent or Do Not Disturb mode.\n\nThere are other critical Pod alerts and alarms that will sound even if your device is set to Silent or Do Not Disturb mode." = "The reminders above will not sound if your device is in Silent or Do Not Disturb mode.\n\nThere are other critical Pod alerts and alarms that will sound even if your device is set to Silent or Do Not Disturb mode.";
+"The reminders above will not sound if your device is in Silent or Do Not Disturb mode.\n\nThere are other critical Pod alerts and alarms that will sound even if your device is set to Silent or Do Not Disturb mode." = "Нагадування вище не звучатимуть, якщо ваш пристрій перебуває в беззвучному режимі або режимі «Не турбувати».\n\nІснують інші важливі сповіщення та будильники Pod, які лунатимуть, навіть якщо на вашому пристрої встановлено режим «Без звуку» або «Не турбувати».";
 
 /* Message for pod sync time action sheet */
 "The time on your pump is different from the current time. Do you want to update the time on your pump to the current time?" = "Час на вашому насосі відрізняється від поточного часу. Хочете оновити час на насосі до поточного?";
 
 /* description for time change detected notice */
-"The time on your pump is different from the current time. Your pump’s time controls your scheduled therapy settings. Scroll down to Pump Time row to review the time difference and configure your pump." = "The time on your pump is different from the current time. Your pump’s time controls your scheduled therapy settings. Scroll down to Pump Time row to review the time difference and configure your pump.";
+"The time on your pump is different from the current time. Your pump’s time controls your scheduled therapy settings. Scroll down to Pump Time row to review the time difference and configure your pump." = "Час на вашій помпі відрізняється від поточного часу. Час вашої помпи контролює налаштування запланованої терапії. Прокрутіть униз до рядка Час помпи, щоб переглянути різницю в часі та налаштувати помпу.";
 
 /* Description of proper cannula insertion */
 "The window on the top of the Pod should be colored pink when the cannula is properly inserted into the skin." = "Віконце у верхній частині Pod повинно бути рожевим, коли канюля правильно вставлена в шкіру.";
@@ -699,7 +699,7 @@
 "This is a reminder that you scheduled when you paired your current Pod." = "Це нагадування, яке ви запланували, коли сполучали свій поточний Pod.";
 
 /* Alert format string for missing temp basal configuration. */
-"This Pump has not been configured with a maximum basal rate because it was added before manual temp basal was a feature. Please go to Therapy Settings -> Delivery Limits and set a new Maximum Basal Rate." = "This Pump has not been configured with a maximum basal rate because it was added before manual temp basal was a feature. Please go to Therapy Settings -> Delivery Limits and set a new Maximum Basal Rate.";
+"This Pump has not been configured with a maximum basal rate because it was added before manual temp basal was a feature. Please go to Therapy Settings -> Delivery Limits and set a new Maximum Basal Rate." = "Цю помпу не було налаштовано на максимальну базальну швидкість, оскільки її було додано до появи функції ручного тимчасового базального введення. Будь ласка, перейдіть до Налаштування терапії -> Обмеження доставки та встановіть нову максимальну базальну дозу.";
 
 /* Label for expiration reminder row
    Label for scheduled expiration reminder row
@@ -711,10 +711,10 @@
 "Time Change Detected" = "Виявлено зміну часу";
 
 /* No comment provided by engineer. */
-"Toggle sign" = "Toggle sign";
+"Toggle sign" = "Знак перемикання";
 
 /* The error message shown when Loop's basal schedule has more entries than the pod can support */
-"Too many entries" = "Too many entries";
+"Too many entries" = "Забагато записів";
 
 /* description label for total delivery pod details row */
 "Total Delivery" = "Повна доставка";
@@ -723,10 +723,10 @@
 "U/hr" = "U/год";
 
 /* Instructions when pod cannot be deactivated */
-"Unable to deactivate pod. Please continue and pair a new one." = "Unable to deactivate pod. Please continue and pair a new one.";
+"Unable to deactivate pod. Please continue and pair a new one." = "Не вдалося деактивувати Pod. Пропустити та розпочати з'єднання з новим.";
 
 /* Title of delivery uncertainty recovery page */
-"Unable to Reach Pod" = "Unable to Reach Pod";
+"Unable to Reach Pod" = "Неможливо зв'язатися з Pod";
 
 
 /* Alert format string for a failure to set temporary basal. (1: error description) */
