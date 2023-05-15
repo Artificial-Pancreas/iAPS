@@ -445,9 +445,6 @@
 /* Pod pairing action button text while pairing */
 "Pairing..." = "Koppelen…";
 
-/* The text of the loading label when pairing */
-"Pairing…" = "Koppelen…";
-
 /* No comment provided by engineer. */
 "Percent = %lf" = "Procent = %lf";
 
@@ -731,8 +728,6 @@
 /* Title of delivery uncertainty recovery page */
 "Unable to Reach Pod" = "Kan Pod Niet Bereiken";
 
-/* Title for pending command recovery screen */
-"Unable To Reach Pod" = "Kan Pod niet Bereiken";
 
 /* Alert format string for a failure to set temporary basal. (1: error description) */
 "Unable to set a temporary basal rate: %1$@" = "Kan geen tijdelijke basaalsnelheid instellen: %1$@";
@@ -769,4 +764,3 @@
 
 /* Alert message body for confirm pod attachment */
 "Your Pod may still be delivering Insulin.\nRemove it from your body, then tap “Continue.“" = "Je Pod kan nog steeds insuline toedienen.\nVerwijder de Pod van je lichaam en tik vervolgens op \"Ga Verder\".";
-

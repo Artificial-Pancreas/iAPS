@@ -445,9 +445,6 @@
 /* Pod pairing action button text while pairing */
 "Pairing..." = "Abbinamento in corso...";
 
-/* The text of the loading label when pairing */
-"Pairing…" = "Abbinamento in corso...";
-
 /* No comment provided by engineer. */
 "Percent = %lf" = "Percentuale = %lf";
 
@@ -683,6 +680,9 @@
 /* Footer text for low reservoir value row */
 "The App notifies you when the amount of insulin in the Pod reaches this level." = "L'App puo' avvisare quando la quantità di insulina nel Pod raggiunge un predisposto determinato livello.";
 
+/* Description text for critical alerts */
+"The reminders above will not sound if your device is in Silent or Do Not Disturb mode.\n\nThere are other critical Pod alerts and alarms that will sound even if your device is set to Silent or Do Not Disturb mode." = "The reminders above will not sound if your device is in Silent or Do Not Disturb mode.\n\nThere are other critical Pod alerts and alarms that will sound even if your device is set to Silent or Do Not Disturb mode.";
+
 /* Message for pod sync time action sheet */
 "The time on your pump is different from the current time. Do you want to update the time on your pump to the current time?" = "l'orario del microinfusore e' diverso da quello del tempo attuale. Vuoi fare un controllo e cambiare l'orario del microinfusore con il tempo attuale?";
 
@@ -728,8 +728,6 @@
 /* Title of delivery uncertainty recovery page */
 "Unable to Reach Pod" = "Impossibile raggiungere Pod";
 
-/* Title for pending command recovery screen */
-"Unable To Reach Pod" = "Impossibile raggiungere Pod";
 
 /* Alert format string for a failure to set temporary basal. (1: error description) */
 "Unable to set a temporary basal rate: %1$@" = "Impossibile impostare una velocità basale temporanea: %1$@";
@@ -766,4 +764,3 @@
 
 /* Alert message body for confirm pod attachment */
 "Your Pod may still be delivering Insulin.\nRemove it from your body, then tap “Continue.“" = "Il tuo Pod potrebbe ancora erogare insulina.\n Rimuovilo dal tuo corpo, e poi tocca \"Continua\".";
-

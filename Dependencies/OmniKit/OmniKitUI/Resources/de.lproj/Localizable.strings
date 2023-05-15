@@ -321,7 +321,7 @@
 "Insulin Delivered" = "Abgegebenes Insulin";
 
 /* Title of insulin delivery section */
-"Insulin Delivery" = "Insulin Delivery";
+"Insulin Delivery" = "Insulinabgabe";
 
 /* The action string on pod status page when pod faulted */
 "Insulin delivery stopped. Change Pod now." = "Insulinabgabe wurde gestoppt. Pod jetzt wechseln.";
@@ -445,9 +445,6 @@
 /* Pod pairing action button text while pairing */
 "Pairing..." = "Koppeln…";
 
-/* The text of the loading label when pairing */
-"Pairing…" = "Koppeln…";
-
 /* No comment provided by engineer. */
 "Percent = %lf" = "Percent = %lf";
 
@@ -538,7 +535,7 @@
 "Pump Time" = "Uhrzeit der Pumpe";
 
 /* Label text for basal rate summary */
-"Rate" = "Rate";
+"Rate" = "BR";
 
 /* Label describing time remaining view */
 "Remaining" = "Verbleibend";
@@ -731,8 +728,6 @@
 /* Title of delivery uncertainty recovery page */
 "Unable to Reach Pod" = "Pod kann nicht erreicht werden";
 
-/* Title for pending command recovery screen */
-"Unable To Reach Pod" = "Pod kann nicht erreicht werden";
 
 /* Alert format string for a failure to set temporary basal. (1: error description) */
 "Unable to set a temporary basal rate: %1$@" = "Eine temporäre Basalrate kann nicht gesetzt werden: %1$@";
@@ -769,4 +764,3 @@
 
 /* Alert message body for confirm pod attachment */
 "Your Pod may still be delivering Insulin.\nRemove it from your body, then tap “Continue.“" = "Ihr Pod gibt möglicherweise immer noch Insulin ab.\nEntfernen Sie ihn vom Körper und tippen dann auf „Weiter“.";
-

@@ -1,51 +1,98 @@
-/* Low reservoir alert format string. (1: Number of units remaining) */
-"%1$@ U left" = "Zostáva %1$@ j";
+/* Communications error for a bolus currently running */
+"A bolus is already in progress" = "A bolus is already in progress";
 
-/* Low reservoir alert with time remaining format string. (1: Number of units remaining)(2: approximate time remaining) */
-"%1$@ U left: %2$@" = "Zostáva %1$@ j: %2$@";
+/* The description of AlarmClockReminderPumpEvent */
+"AlarmClockReminder" = "AlarmClockReminder";
 
-/* Event title for bolus
-   Pump Event title for UnfinalizedDose with doseType of .bolus */
-"Bolus" = "Bolus";
+/* The description of AlarmSensorPumpEvent */
+"AlarmSensor" = "AlarmSensor";
+
+/* Describing the battery chemistry as Alkaline */
+"Alkaline" = "Alkaline";
+
+/* The format string description of a BasalProfileStartPumpEvent. (1: The index of the profile)(2: The basal rate) */
+"Basal Profile %1$@: %2$@ U/hour" = "Basal Profile %1$@: %2$@ U/hour";
 
 /* Pump error code when bolus is in progress */
 "Bolus in progress" = "Prebieha bolus";
 
-/* The notification alert describing a low pump battery */
-"Change the pump battery immediately" = "Ihneď vymeňte batériu pumpy";
+/* Suggestions for diagnosing a command refused pump error */
+"Check that the pump is not suspended or priming, or has a percent temp basal type" = "Check that the pump is not suspended or priming, or has a percent temp basal type";
 
-/* The notification alert describing an empty pump reservoir */
-"Change the pump reservoir now" = "Ihneď vymeňte zásobník pumpy";
+/* Pump error code returned when command refused */
+"Command refused" = "Command refused";
 
-/* Event title for JournalEntryPumpLowBatteryPumpEvent */
-"Low Battery" = "Slabá batéria";
+/* No comment provided by engineer. */
+"Comms with another pump detected" = "Comms with another pump detected.";
 
-/* Event title for JournalEntryPumpLowReservoirPumpEvent */
-"Low Reservoir" = "Nízka hladina v rezervoári";
+/* Error description */
+"Decoding Error" = "Decoding Error";
 
-/* Title for RileyLink low battery alert */
-"Low RileyLink Battery" = "Nízky stav batérie RileyLinku";
+/* Error description */
+"Device Error" = "Device Error";
+
+/* Describing the pump history insulin data source */
+"Event History" = "Event History";
+
+/* Format string for failure reason. (1: The operation being performed) (2: The response data) */
+"Invalid response during %1$@: %2$@" = "Invalid response during %1$@: %2$@";
+
+/* Describing the battery chemistry as Lithium */
+"Lithium" = "Lithium";
 
 /* Recovery suggestion */
 "Make sure your RileyLink is nearby and powered on" = "Uistite sa, že je váš RileyLink v blízkosti a je zapnutý";
 
-/* Acknowledge button label for RileyLink low battery alert */
-"OK" = "OK";
+/* Pump error code describing max setting exceeded */
+"Max setting exceeded" = "Max setting exceeded";
+
+/* Pump title (1: model number) */
+"Minimed %@" = "Minimed %@";
+
+/* Generic title of the minimed pump manager */
+"Minimed 500/700 Series" = "Minimed 500/700 Series";
+
+/* Describing the North America pump region */
+"North America" = "North America";
+
+/* No comment provided by engineer. */
+"Pump did not respond" = "Pump did not respond";
+
+/* Error description */
+"Pump Error" = "Pump Error";
+
+/* No comment provided by engineer. */
+"Pump is suspended" = "Pump is suspended";
+
+/* No comment provided by engineer. */
+"Pump responded unexpectedly" = "Pump responded unexpectedly";
+
+/* The format string describing a pump message. (1: The packet type)(2: The message type)(3: The message address)(4: The message data */
+"PumpMessage(%1$@, %2$@, %3$@, %4$@)" = "PumpMessage(%1$@, %2$@, %3$@, %4$@)";
 
 /* Describing the reservoir insulin data source */
 "Reservoir" = "Rezervoár";
 
-/* Event title for starting scheduled basal */
-"Scheduled Basal" = "Naplánovaný bazál";
+/* Error description */
+"RileyLink radio tune failed" = "RileyLink radio tune failed";
 
-/* Status highlight when communications with the pod haven't happened recently. */
-"Signal Loss" = "Strata signálu";
+/* The format string description of a TempBasalPumpEvent. (1: The rate of the temp basal in minutes) */
+"Temporary Basal: %1$.3f U/hour" = "Temporary Basal: %1$.3f U/hour";
 
-/* Event title for suspend
-   Pump Event title for UnfinalizedDose with doseType of .suspend */
-"Suspend" = "Pozastavenie";
+/* The format string description of a TempBasalDurationPumpEvent. (1: The duration of the temp basal in minutes) */
+"Temporary Basal: %1$d min" = "Temporary Basal: %1$d min";
 
-/* Event title for temporary basal rate start
-   Pump Event title for UnfinalizedDose with doseType of .tempBasal */
-"Temp Basal" = "Dočasný bazál";
+/* The format string description of a TempBasalPumpEvent. (1: The rate of the temp basal in percent) */
+"Temporary Basal: %1$d%%" = "Temporary Basal: %1$d%%";
 
+/* The format string description of an unknown pump error code. (1: The specific error code raw value) */
+"Unknown pump error code: %1$@" = "Unknown pump error code: %1$@";
+
+/* No comment provided by engineer. */
+"Unknown pump model: %@" = "Unknown pump model: %@";
+
+/* Format string for an unknown response. (1: The operation being performed) (2: The response data) */
+"Unknown response during %1$@: %2$@" = "Unknown response during %1$@: %2$@";
+
+/* Describing the worldwide pump region */
+"World-Wide" = "World-Wide";
