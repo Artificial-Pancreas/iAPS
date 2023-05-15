@@ -1,3 +1,8 @@
+/* CGM display title */
+"Dexcom G5" = "Dexcom G5";
+
+/* CGM display title */
+"Dexcom G6" = "Dexcom G6";
 
 /* Error description for unreliable state */
 "Glucose data is unavailable" = "Glucosegegevens zijn niet beschikbaar";
