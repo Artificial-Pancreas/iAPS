@@ -13,6 +13,9 @@
 /* Describes a functioning transmitter */
 "OK" = "ОК";
 
+/* invlid config error description */
+"Peripheral command was invalid" = "Неправильно сформирован запрос.";
+
 /* Timeout error description */
 "Peripheral did not respond in time" = "Периферийное устройство не отозвалось вовремя";
 
