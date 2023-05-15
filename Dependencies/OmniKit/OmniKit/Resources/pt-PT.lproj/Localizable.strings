@@ -153,7 +153,7 @@
 "Low Reservoir" = "Low Reservoir";
 
 /* Format string for description for low reservoir advisory (1: reminder units) */
-"Low reservoir advisory (%1$gU)" = "Hinweis auf niedriges Reservior (%1$gU)";
+"Low reservoir advisory (%1$gU)" = "Low reservoir advisory (%1$gU)";
 
 /* Description for low reservoir alarm */
 "Low reservoir advisory alarm" = "Low reservoir advisory alarm";
