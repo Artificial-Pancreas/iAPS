@@ -300,7 +300,7 @@
 "Cancel Bolus" = "Скасувати Болюс";
 
 /* Alert acknowledgment OK button */
-"OK" = "OK";
+"OK" = "ОК";
 
 /* The title for Empty Reservoir alarm notification */
 "Empty Reservoir" = "Порожній резервуар";
