@@ -20,6 +20,9 @@
 /* Format string for temp basal rate. (1: The localized amount) */
 "%@ U/hour" = "%@ E/time";
 
+/* Format string for bolus percent progress. (1: Percent progress) */
+"%@%%" = "%@%%";
+
 /* Format string for reservoir reading when above or equal to maximum reading. (1: The localized amount) */
 "%@+ U" = "%@+ E";
 
@@ -196,6 +199,9 @@
 
 /* The detail text of the basal row when pod is running scheduled basal */
 "Schedule" = "Tidsplan";
+
+/* The title of the status section in settings */
+"Status" = "Status";
 
 /* A message indicating a command succeeded */
 "Succeeded" = "Suksess";
