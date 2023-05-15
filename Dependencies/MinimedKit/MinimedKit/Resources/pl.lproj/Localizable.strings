@@ -1,6 +1,12 @@
 /* Communications error for a bolus currently running */
 "A bolus is already in progress" = "Podawanie bolusa jest już w toku";
 
+/* The description of AlarmClockReminderPumpEvent */
+"AlarmClockReminder" = "AlarmClockReminder";
+
+/* The description of AlarmSensorPumpEvent */
+"AlarmSensor" = "AlarmSensor";
+
 /* Describing the battery chemistry as Alkaline */
 "Alkaline" = "Alkaliczna";
 
@@ -39,6 +45,9 @@
 
 /* Pump error code describing max setting exceeded */
 "Max setting exceeded" = "Maksymalne ustawienie przekroczone";
+
+/* Pump title (1: model number) */
+"Minimed %@" = "Minimed %@";
 
 /* Generic title of the minimed pump manager */
 "Minimed 500/700 Series" = "Minimed serii 500/700";
