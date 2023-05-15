@@ -1,3 +1,5 @@
+/* Description for auto-off alarm */
+"Auto-off alarm" = "Auto-off alarm";
 
 /* Pod state when running below fifty units */
 "Below 50 units" = "Menej ako 50 jednotiek";
@@ -72,6 +74,9 @@
 /* Description for Occlusion detected pod fault */
 "Occlusion detected" = "Zistená oklúzia";
 
+/* Generic title of the omnipod pump manager */
+"Omnipod" = "Omnipod";
+
 /* Pod status after pairing */
 "Paired" = "Spárované";
 
@@ -120,6 +125,9 @@
 
 /* Pod state when ready for cannula insertion */
 "Ready to insert cannula" = "Pripravené na zavedenie kanyly";
+
+/* The format string describing a resume. (1: Time)(2: Scheduled certainty */
+"Resume: %1$@ %2$@" = "Resume: %1$@ %2$@";
 
 /* Delivery status when basal is running */
 "Scheduled Basal" = "Naplánovaný bazál";
