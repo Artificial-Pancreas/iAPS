@@ -36,3 +36,6 @@
 
 /* The title of the cell showing BLE signal strength (RSSI) */
 "Signal Strength" = "Уровень сигнала";
+
+/* The title of the cell showing uptime */
+"Uptime" = "Uptime";
