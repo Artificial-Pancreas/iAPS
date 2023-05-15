@@ -10,6 +10,12 @@
 /* The title of the cell showing BLE connection state */
 "Connection State" = "מצב החיבור";
 
+/* The title of the section describing the device */
+"Device" = "Device";
+
+/* The title of the devices table section in RileyLink settings */
+"Devices" = "Devices";
+
 /* The disconnected state */
 "Disconnected" = "מנותק";
 
@@ -19,8 +25,17 @@
 /* The title of the cell showing firmware version */
 "Firmware" = "קושחה";
 
+/* The title of the cell showing current rileylink frequency */
+"Frequency" = "Frequency";
+
+/* The title of the cell showing device name */
+"Name" = "Name";
+
 /* RileyLink setup description */
 "RileyLink allows for communication with the pump over Bluetooth Low Energy." = "ריילי לינק מאפשר תקשורת עם המשאבה באמצעות בלוטוס' באנרגיה נמוכה (BLE).";
 
 /* The title of the cell showing BLE signal strength (RSSI) */
 "Signal Strength" = "עוצמת אות";
+
+/* The title of the cell showing uptime */
+"Uptime" = "Uptime";
