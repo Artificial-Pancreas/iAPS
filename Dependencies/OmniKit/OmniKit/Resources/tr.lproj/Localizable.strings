@@ -67,8 +67,15 @@
 /* Error message shown when no response from pod was received */
 "No RileyLink available" = "RileyLink yok";
 
+/* Delivery status when basal is running
+   Pod state when running above fifty units */
+"Normal" = "Normal";
+
 /* Description for Occlusion detected pod fault */
 "Occlusion detected" = "Tıkanma tespit edildi";
+
+/* Generic title of the omnipod pump manager */
+"Omnipod" = "Omnipod";
 
 /* Pod status after pairing */
 "Paired" = "Eşleştirilmiş";
