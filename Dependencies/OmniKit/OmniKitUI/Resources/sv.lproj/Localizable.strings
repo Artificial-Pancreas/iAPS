@@ -8,7 +8,7 @@
 "%@ dB" = "%@ dB";
 
 /* No comment provided by engineer. */
-"%@ has recovered communication with the pod on your body.\n\nInsulin delivery records have been updated and should match what has actually been delivered.\n\nYou may continue to use %@ normally now." = "%@ has recovered communication with the pod on your body.\n\nInsulin delivery records have been updated and should match what has actually been delivered.\n\nYou may continue to use %@ normally now.";
+"%@ has recovered communication with the pod on your body.\n\nInsulin delivery records have been updated and should match what has actually been delivered.\n\nYou may continue to use %@ normally now." = "%@ har återställt kommunikationen med podden på din kropp.\n\nInsulinposterna har uppdaterats och ska matcha det som faktiskt har levererats.\n\nDu kan fortsätta att använda %@ normalt nu.";
 
 /* Format string for delivered insulin. (1: The localized amount)
    Format string for insulin remaining in reservoir. (1: The localized amount) */
@@ -39,7 +39,7 @@
 "%1$@ for %2$@" = "%1$@ i %2$@";
 
 /* Format string for main text of delivery uncertainty recovery page. (1: app name)(2: date of command)(3: app name) */
-"%1$@ has been unable to communicate with the pod on your body since %2$@.\n\nWithout communication with the pod, the app cannot continue to send commands for insulin delivery or display accurate, recent information about your active insulin or the insulin being delivered by the Pod.\n\nMonitor your glucose closely for the next 6 or more hours, as there may or may not be insulin actively working in your body that %3$@ cannot display." = "%1$@ has been unable to communicate with the pod on your body since %2$@.\n\nWithout communication with the pod, the app cannot continue to send commands for insulin delivery or display accurate, recent information about your active insulin or the insulin being delivered by the Pod.\n\nMonitor your glucose closely for the next 6 or more hours, as there may or may not be insulin actively working in your body that %3$@ cannot display.";
+"%1$@ has been unable to communicate with the pod on your body since %2$@.\n\nWithout communication with the pod, the app cannot continue to send commands for insulin delivery or display accurate, recent information about your active insulin or the insulin being delivered by the Pod.\n\nMonitor your glucose closely for the next 6 or more hours, as there may or may not be insulin actively working in your body that %3$@ cannot display." = "%1$@ har inte kunnat kommunicera med podden på din kropp sedan %2$@.\n\nUtan kommunikation med podden, kan appen inte fortsätta att skicka kommandon för insulin eller visa korrekt och aktuell information om ditt aktiva insulin eller insulin som ges av podd.\n\nÖvervaka dina blodsockervärden noga under de kommande 6 timmarna, eftersom det kan finnas aktivt insulin som %3$@ inte kan visa.";
 
 /* Accessibility format string for (1: localized volume)(2: time) */
 "%1$@ units remaining at %2$@" = "%1$@ enheter återstår kl. %2$@";
@@ -51,10 +51,10 @@
 "%1$@%2$@%3$@" = "%1$@%2$@%3$@";
 
 /* Format string for reservoir level above max measurable threshold. (1: measurable reservoir threshold) (2: units) */
-"%1$@+ %2$@" = "%1$@+ %2$@";
+"%1$@+ %2$@" = "%1$@: %2$@";
 
 /* Format string for total delivery on pod details screen */
-"%g U" = "%g U";
+"%g U" = "%g E";
 
 /* Button text for 1 hour suspend duration */
 "1 hour" = "1 timme";
@@ -87,7 +87,7 @@
 "Are you sure you want to shutdown this pod?" = "Är du säker att du vill stänga av denna podd?";
 
 /* No comment provided by engineer. */
-"Are you sure you want to skip Omnipod Onboarding?" = "Are you sure you want to skip Omnipod Onboarding?";
+"Are you sure you want to skip Omnipod Onboarding?" = "Är du säker på att du vill hoppa över rundturen?";
 
 /* Confirmation message for removing Omnipod PumpManager */
 "Are you sure you want to stop using Omnipod?" = "Är du säker att du vill sluta använda Omnipod?";
@@ -99,7 +99,7 @@
 "Attach Pod" = "Fäst podden";
 
 /* Description string above progress indicator while attempting to re-establish communication from an unacknowledged command */
-"Attemping to re-establish communication" = "Attemping to re-establish communication";
+"Attemping to re-establish communication" = "Försöker att återupprätta kommunikationen";
 
 /* Back button text on DeliveryUncertaintyRecoveryView */
 "Back" = "Tillbaka";
@@ -120,7 +120,7 @@
 "Cancel Manual Basal" = "Avbryt manuell basal";
 
 /* Insert cannula action button accessibility label when cannula insertion succeeded */
-"Cannula inserted successfully. Continue." = "Cannula inserted successfully. Continue.";
+"Cannula inserted successfully. Continue." = "Nålen infördes framgångsrikt. Fortsätt.";
 
 /* The action string on pod status page when pod expired */
 "Change Pod now. Insulin delivery will stop 8 hours after the Pod has expired or when no more insulin remains." = "Byt podd nu. Insulintillförsel kommer att upphöra 8 timmar efter att podd går ut eller tills att inget insulin återstår.";
@@ -141,13 +141,13 @@
 "Check Pod, apply to site, then confirm pod attachment." = "Kontrollera din podd, sätt fast den och bekräfta sedan att den sitter bra.";
 
 /* Insert cannula action button accessibility label checking insertion */
-"Checking Insertion" = "Checking Insertion";
+"Checking Insertion" = "Kontrollerar nålinförsel";
 
 /* Cannula insertion button text while checking insertion */
 "Checking..." = "Kontrollerar...";
 
 /* Title for uncertainty recovered screen */
-"Comms Recovered" = "Comms Recovered";
+"Comms Recovered" = "Återställning av kommandon";
 
 /* Text for confidence reminders navigation link */
 "Confidence Reminders" = "Bekräftelseljud";
@@ -264,16 +264,16 @@
 "Failed to update confidence reminder preference." = "Misslyckades att uppdatera inställning för bekräftelseljud";
 
 /* Alert title for error when updating expiration reminder */
-"Failed to Update Expiration Reminder" = "Failed to Update Expiration Reminder";
+"Failed to Update Expiration Reminder" = "Det gick inte att uppdatera förfallopåminnelse";
 
 /* Alert title for error when updating low reservoir reminder */
-"Failed to Update Low Reservoir Reminder" = "Failed to Update Low Reservoir Reminder";
+"Failed to Update Low Reservoir Reminder" = "Misslyckades att uppdatera påminnelse om låg insulinvolym";
 
 /* Pod life HUD view label */
 "Fault" = "Fel";
 
 /* Label text for step 1 of pair pod instructions */
-"Fill a new pod with U-100 Insulin (leave Pod needle cap on). Listen for 2 beeps." = "Fill a new pod with U-100 Insulin (leave Pod needle cap on). Listen for 2 beeps.";
+"Fill a new pod with U-100 Insulin (leave Pod needle cap on). Listen for 2 beeps." = "Fyll en ny podd med U-100 Insulin (låt nålskyddet sitta kvar). Lyssna efter 2 pip.";
 
 /* Settings page link description when next lifecycle action is to finish deactivation */
 "Finish deactivation" = "Avsluta inaktivering";
@@ -309,7 +309,7 @@
 "Inserted" = "Kanyl har förts in";
 
 /* Insert cannula action button accessibility label while pairing */
-"Inserting. Please wait." = "Inserting. Please wait.";
+"Inserting. Please wait." = "Nål förs in. Vänligen vänta.";
 
 /* Cannula insertion button text while inserting */
 "Inserting..." = "Kanylen förs in...";
@@ -343,7 +343,7 @@
 "Is the cannula inserted properly?" = "Är kanylen införd korrekt?";
 
 /* Label text for step 2 of pair pod instructions */
-"Keep the RileyLink about 6 inches from the pod during pairing." = "Keep the RileyLink about 6 inches from the pod during pairing.";
+"Keep the RileyLink about 6 inches from the pod during pairing." = "Placera din RileyLink ca 15 cm från podden under parkoppling.";
 
 /* description label for last status date pod details row */
 "Last Status" = "Senaste status";
@@ -355,7 +355,7 @@
 "Lot" = "Lot";
 
 /* description label for lot number pod details row */
-"Lot Number" = "LOT Nummer";
+"Lot Number" = "Lot-nummer";
 
 /* Label text for low reservoir value row
    Navigation bar title for LowReservoirReminderSetupView
@@ -416,7 +416,7 @@
 "Notification Settings" = "Notisinställningar";
 
 /* No comment provided by engineer. */
-"Numbers" = "Numbers";
+"Numbers" = "Nummer";
 
 /* Title for omnipod reminders section */
 "Omnipod Reminders" = "Omnipod-påminnelser";
@@ -446,7 +446,7 @@
 "Pairing..." = "Parkopplar...";
 
 /* No comment provided by engineer. */
-"Percent = %lf" = "Percent = %lf";
+"Percent = %lf" = "Procent = %lf";
 
 /* The title of the cell showing the pod pi version */
 "PI Version" = "PI-version";
@@ -547,7 +547,7 @@
 "Remove Pump" = "Ta bort podd";
 
 /* Label text for step two of attach pod instructions */
-"Remove the pod's needle cap and check cannula. Then remove paper backing." = "Remove the pod's needle cap and check cannula. Then remove paper backing.";
+"Remove the pod's needle cap and check cannula. Then remove paper backing." = "Ta bort kanylskyddet och kontrollera att kanylen inte redan sticker ut. Ta sedan bort skyddspappret.";
 
 /* Label indicating pod replacement necessary
    The title of the command to replace pod */
@@ -574,7 +574,7 @@
 "Retry Pod Deactivation" = "Försök inaktivera podden igen";
 
 /* bodyText for RileyLinkSetupView */
-"RileyLink allows for communication with the pump over Bluetooth" = "RileyLink allows for communication with the pump over Bluetooth";
+"RileyLink allows for communication with the pump over Bluetooth" = "RileyLink kommunicerar med pumpen via Bluetooth";
 
 /* Navigation title for RileyLinkSetupView */
 "RileyLink Setup" = "RileyLink inställning";
@@ -681,13 +681,13 @@
 "The App notifies you when the amount of insulin in the Pod reaches this level." = "Appen kommer att visa notis när mängden insulin går ner till denna nivå";
 
 /* Description text for critical alerts */
-"The reminders above will not sound if your device is in Silent or Do Not Disturb mode.\n\nThere are other critical Pod alerts and alarms that will sound even if your device is set to Silent or Do Not Disturb mode." = "The reminders above will not sound if your device is in Silent or Do Not Disturb mode.\n\nThere are other critical Pod alerts and alarms that will sound even if your device is set to Silent or Do Not Disturb mode.";
+"The reminders above will not sound if your device is in Silent or Do Not Disturb mode.\n\nThere are other critical Pod alerts and alarms that will sound even if your device is set to Silent or Do Not Disturb mode." = "Påminnelser kommer vara tysta ifall att du har tyst läge eller stör ej - läge på. \n\nDet finns andra varningar som kommer att ljuda även vid tyst läge eller stör ej - läge.";
 
 /* Message for pod sync time action sheet */
 "The time on your pump is different from the current time. Do you want to update the time on your pump to the current time?" = "Tiden på din pump skiljer sig från aktuell tid. Vill du uppdatera tiden på din pump till aktuell tid?";
 
 /* description for time change detected notice */
-"The time on your pump is different from the current time. Your pump’s time controls your scheduled therapy settings. Scroll down to Pump Time row to review the time difference and configure your pump." = "The time on your pump is different from the current time. Your pump’s time controls your scheduled therapy settings. Scroll down to Pump Time row to review the time difference and configure your pump.";
+"The time on your pump is different from the current time. Your pump’s time controls your scheduled therapy settings. Scroll down to Pump Time row to review the time difference and configure your pump." = "Tiden på din pump skiljer sig från verklig tid. Pumpens tid styr dina schemalagda terapiinställningar. Bläddra ner till raden Pump Tid för att ändra.";
 
 /* Description of proper cannula insertion */
 "The window on the top of the Pod should be colored pink when the cannula is properly inserted into the skin." = "Det lilla fönstret på podden färgas rosa när kanylen är ordentligt insatt i huden.";
@@ -699,7 +699,7 @@
 "This is a reminder that you scheduled when you paired your current Pod." = "Detta är en schemalagd påminnelse som du ställde in när du parkopplade nuvarande podd.";
 
 /* Alert format string for missing temp basal configuration. */
-"This Pump has not been configured with a maximum basal rate because it was added before manual temp basal was a feature. Please go to Therapy Settings -> Delivery Limits and set a new Maximum Basal Rate." = "This Pump has not been configured with a maximum basal rate because it was added before manual temp basal was a feature. Please go to Therapy Settings -> Delivery Limits and set a new Maximum Basal Rate.";
+"This Pump has not been configured with a maximum basal rate because it was added before manual temp basal was a feature. Please go to Therapy Settings -> Delivery Limits and set a new Maximum Basal Rate." = "En maximal basaldos har inte ställts in. Gå till inställningen 'Maxdoser' för att ställa in den maximala basaldosen.";
 
 /* Label for expiration reminder row
    Label for scheduled expiration reminder row
@@ -711,7 +711,7 @@
 "Time Change Detected" = "Tidsändring upptäckt";
 
 /* No comment provided by engineer. */
-"Toggle sign" = "Toggle sign";
+"Toggle sign" = "Symbol för knapp";
 
 /* The error message shown when Loop's basal schedule has more entries than the pod can support */
 "Too many entries" = "För många inmatningar";
@@ -726,7 +726,7 @@
 "Unable to deactivate pod. Please continue and pair a new one." = "Kunde inte deaktivera podden. Var god fortsätt genom att parkoppla en ny podd.";
 
 /* Title of delivery uncertainty recovery page */
-"Unable to Reach Pod" = "Unable to Reach Pod";
+"Unable to Reach Pod" = "Det går inte att nå podd";
 
 
 /* Alert format string for a failure to set temporary basal. (1: error description) */
