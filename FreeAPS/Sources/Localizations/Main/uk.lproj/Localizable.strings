@@ -112,6 +112,21 @@
 /*  */
 "Enact Temp Target" = "Запустити тимчасову ціль";
 
+/* */
+"Target" = "Target";
+
+/* */
+"Basal Insulin and Sensitivity ratio" = "Basal Insulin and Sensitivity ratio";
+
+/* */
+"A lower 'Half Basal Target' setting will reduce the basal and raise the ISF earlier, at a lower target glucose." = "A lower 'Half Basal Target' setting will reduce the basal and raise the ISF earlier, at a lower target glucose.";
+
+/* */
+" Your setting: " = " Your setting: ";
+
+/* */
+"mg/dl. Autosens.max limits the max endpoint" = "mg/dl. Autosens.max limits the max endpoint";
+
 /*  */
 "Enter preset name" = "Введіть ім'я шаблону";
 
@@ -129,6 +144,24 @@
 
 /*  */
 "Save as preset" = "Зберегти як шаблон";
+
+/* Delete Meal Preset */
+"Delete Preset" = "Delete Preset";
+
+/* Confirm Deletion */
+"Delete preset '%@'?" = "Delete preset '%@'?";
+
+/* Button */
+"No" = "No";
+
+/* Button */
+"Yes" = "Yes";
+
+/* + Button */
+"[ +1 ]" = "[ +1 ]";
+
+/* - Button */
+"[ -1 ]" = "[ -1 ]";
 
 /* Upper temp target limit */
 "Top target" = "Верхня ціль";
@@ -195,6 +228,9 @@
 
 /*  */
 "Ratio" = "Коефіцієнт";
+
+/*  */
+"Autosens" = "Autosens";
 
 /*  */
 "Calculated Sensitivity" = "Розрахована Чутливість";
@@ -314,11 +350,20 @@ Enact a temp Basal or a temp target */
 /* Unit in number of units delivered (keep the space character!) */
 " U" = "U";
 
+/* /Insulin unit */
+"/U" = "/U";
+
+/* Insulin unit */
+"U" = "U";
+
 /* Unit per hour with space */
 " U/hr" = " U/год";
 
 /* Number of units per hour*/
 "%@ U/hr" = " %@U/год";
+
+/* Number of units insulin delivered */
+"%@ U" = "%@ U";
 
 /*Carb ratio unit */
 "g/U" = "гр/U";
@@ -359,6 +404,9 @@ Enact a temp Basal or a temp target */
 /*  */
 "Settings" = "Налаштування";
 
+/* Recommendation for a Manual Bolus */
+"Recommended Bolus Percentage" = "Recommended Bolus Percentage";
+
 /* 2 log files to share */
 "Share logs" = "Поділитися логом";
 
@@ -388,6 +436,9 @@ Enact a temp Basal or a temp target */
 
 /* Type of CGM or glucose source */
 "Type" = "Тип";
+
+/* CGM */
+"CGM" = "CGM";
 
 /* CGM Transmitter ID */
 "Transmitter ID" = "ID передавача";
@@ -436,6 +487,9 @@ Enact a temp Basal or a temp target */
 
 /* */
 "Other" = "Інше";
+
+/* */
+"Libre Transmitter" = "Libre Transmitter";
 
 /* */
 "Libre Transmitters" = "Libre трансміттери";
@@ -944,6 +998,9 @@ Enact a temp Basal or a temp target */
 /* Debug option view NS Uploaded Profile */
 "NS Uploaded Profile" = "NS Завантажений профіль";
 
+/* Debug option view Autosense */
+"Autosense" = "Autosense";
+
 /* Debug option view Pump History */
 "Pump History" = "Історія помпи";
 
@@ -982,6 +1039,10 @@ Enact a temp Basal or a temp target */
 
 /* Debug option view Glucose Data used for statistics */
 "Glucose Data used for statistics" = "Дані про рівень глюкози використовуються для статистики";
+
+/* --------------- HealthKit intergration --------------------*/
+/* */
+"Apple Health" = "Apple Health";
 
 /* */
 "Connect to Apple Health" = "З'єднатися з Apple Health";
@@ -1043,6 +1104,12 @@ Enact a temp Basal or a temp target */
 /* FPU Settings Title */
 "Fat and Protein" = "Жир і білок";
 
+/* Display fat and protein entities */
+"Fat & Protein" = "Fat & Protein";
+
+/* */
+"Hide Fat & Protein" = "Hide Fat & Protein";
+
 /* Add Fat */
 "Fat" = "Жир";
 
@@ -1051,6 +1118,39 @@ Enact a temp Basal or a temp target */
 
 /* Service Section */
 "Fat And Protein Conversion" = "Перетворення жиру та білка";
+
+/* Service Section */
+"Profile Override" = "Profile Override";
+
+/* */
+"Override Profiles" = "Override Profiles";
+
+/* */
+"Currently no Override active" = "Currently no Override active";
+
+/* */
+"Total Insulin Adjustment" = "Total Insulin Adjustment";
+
+/* */
+"Override your Basal, ISF, CR and Target profiles" = "Override your Basal, ISF, CR and Target profiles";
+
+/* */
+"Enable indefinitely" = "Enable indefinitely";
+
+/* */
+"Override Profile target" = "Override Profile target";
+
+/* */
+"Disable SMBs" = "Disable SMBs";
+
+/* */
+"Your profile basal insulin will be adjusted with the override percentage and your profile ISF and CR will be inversly adjusted with the percentage.\n\nIf you toggle off the override every profile setting will return to normal." = "Your profile basal insulin will be adjusted with the override percentage and your profile ISF and CR will be inversly adjusted with the percentage.\n\nIf you toggle off the override every profile setting will return to normal.";
+
+/* Service Section */
+"App Icons" = "App Icons";
+
+/* Service Section */
+"Statistics and Home View" = "Statistics and Home View";
 
 /* Alert text */
 "Delete carb equivalents?" = "Видалити вуглеводні еквіваленти?";
@@ -1214,11 +1314,30 @@ Enact a temp Basal or a temp target */
 /* Alert title for suspend error */
 "Failed to Suspend Insulin Delivery" = "Не вдалося призупинити доставку інсуліну";
 
+//* -----------------------------------------------------------------------*/
+/* ----------------------Statistics strings -------------------------------*/
+/* */
+
+
+"Today" = "Today";
+
+/* */
+"Day" = "Day";
+
+/* */
+"Week" = "Week";
+
+/* */
+"Month" = "Month";
+
 /* */
 "Total" = "Всього";
 
 /* Headline Statistics */
 "Statistics" = "Статистика";
+
+/* Option in preferences */
+"Allow Upload of Statistics to NS" = "Allow Upload of Statistics to NS";
 
 /* Low Glucose Threshold in Statistics settings */
 "Low" = "Низький";
@@ -1226,11 +1345,41 @@ Enact a temp Basal or a temp target */
 /* High Glucose Threshold in Statistics settings */
 "High" = "Високий";
 
+/* In Range */
+"In Range" = "In Range";
+
+/* Display % */
+"Change HbA1c Unit" = "Change HbA1c Unit";
+
+/* */
+"Display Chart X - Grid lines" = "Display Chart X - Grid lines";
+
+/* */
+"Display Chart Y - Grid lines" = "Display Chart Y - Grid lines";
+
+/* */
+"Display Chart Threshold lines for Low and High" = "Display Chart Threshold lines for Low and High";
+
+/* */
+/* */
+
+"Standing / Laying TIR Chart
+Hours X-Axis (6 default)" = "Hours X-Axis (6 default)";
+
 /* Average BG = */
 "Average" = "Середній";
 
 /* Median BG */
 "Median" = "Медіана";
+
+/* CGM readings in statView */
+"Readings today" = "Readings today";
+
+/* CGM readings in statView */
+"Readings / 24h" = "Readings / 24h";
+
+/* Days of saved readings*/
+"Days" = "Days";
 
 /* Normal BG (within TIR) */
 "Normal" = "Нормальний";
@@ -1240,6 +1389,15 @@ Enact a temp Basal or a temp target */
 
 /* Title Low BG in statPanel */
 "Low (<" = "Низький (<";
+
+/* SD */
+"SD" = "SD";
+
+/* CV */
+"CV" = "CV";
+
+/* Estimated HbA1c */
+"HbA1c" = "HbA1c";
 
 /* Total number of days of data for HbA1c estimation, part 1/2*/
 "All" = "Все";
@@ -1488,6 +1646,9 @@ Enact a temp Basal or a temp target */
 
 /* Headline "Autotune ISF Adjustment Fraction" */
 "Autotune ISF Adjustment Fraction" = "Частка регулювання ISF Автотюном";
+
+/* "Autotune ISF Adjustment Fraction" */
+"The default of 0.5 for this value keeps autotune ISF closer to pump ISF via a weighted average of fullNewISF and pumpISF. 1.0 allows full adjustment, 0 is no adjustment from pump ISF." = "The default of 0.5 for this value keeps autotune ISF closer to pump ISF via a weighted average of fullNewISF and pumpISF. 1.0 allows full adjustment, 0 is no adjustment from pump ISF.";
 
 /* Headline "Remaining Carbs Fraction" */
 "Remaining Carbs Fraction" = "Частка вуглеводів, що залишилися.";
