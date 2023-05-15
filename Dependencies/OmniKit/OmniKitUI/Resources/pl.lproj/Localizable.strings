@@ -1,6 +1,9 @@
 /* Accessibility format string for (1: localized volume)(2: time) */
 "%1$@ units remaining at %2$@" = "%1$@ jednostek pozostaje w %2$@";
 
+/* The format string for displaying an offset from a time zone: (1: GMT)(2: -)(3: 4:00) */
+"%1$@%2$@%3$@" = "%1$@%2$@%3$@";
+
 /* Format string providing instructions for replacing pod due to a fault. (1: The fault description) */
 "%1$@. Insulin delivery has stopped. Please deactivate and remove pod." = "%1$@. Podawanie insuliny zostało zatrzymane. Deaktywuj i zdejmij PODa";
 
@@ -17,8 +20,14 @@
 /* Format string for temp basal rate. (1: The localized amount) */
 "%@ U/hour" = "%@ J/godzina";
 
+/* Format string for bolus percent progress. (1: Percent progress) */
+"%@%%" = "%@%%";
+
 /* Format string for reservoir reading when above or equal to maximum reading. (1: The localized amount) */
 "%@+ U" = "%@+ J";
+
+/* Appends a full-stop to a statement */
+"%@." = "%@.";
 
 /* Format string for reservoir volume. (1: The localized volume) */
 "%@U" = "%@J";
@@ -190,6 +199,9 @@
 
 /* The detail text of the basal row when pod is running scheduled basal */
 "Schedule" = "Harmonogram";
+
+/* The title of the status section in settings */
+"Status" = "Status";
 
 /* A message indicating a command succeeded */
 "Succeeded" = "Zakończone powodzeniem";
