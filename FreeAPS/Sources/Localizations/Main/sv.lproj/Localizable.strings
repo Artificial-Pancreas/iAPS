@@ -1361,10 +1361,10 @@ Enact a temp Basal or a temp target */
 "Display Chart Threshold lines for Low and High" = "Visa linjer för lågt och högt i diagram";
 
 /* */
-/* */
+"Standing / Laying TIR Chart" = "Stående / Liggande TIR-diagram";
 
-"Standing / Laying TIR Chart
-Hours X-Axis (6 default)" = "Hours X-Axis (6 default)";
+/* */
+"Hours X-Axis (6 default)" = "Antal timmar att visa för X-axel (6 standard)";
 
 /* Average BG = */
 "Average" = "Medelvärde";
