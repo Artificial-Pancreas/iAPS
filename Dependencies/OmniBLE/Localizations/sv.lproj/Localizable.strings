@@ -203,6 +203,9 @@
 /* Recovery suggestion shown when no pod is paired */
 "Please pair a new pod" = "Var god parkoppla ny podd";
 
+/* Generic title of the OmniBLE pump manager */
+"Omnipod DASH" = "Omnipod DASH";
+
 /* Status highlight that delivery is uncertain. */
 "Comms Issue" = "Kommunikationsproblem";
 
@@ -291,7 +294,13 @@
 "Resume" = "Återuppta";
 
 /* */
+"Bolus" = "Bolus";
+
+/* */
 "Cancel Bolus" = "Avbryt bolus";
+
+/* Alert acknowledgment OK button */
+"OK" = "OK";
 
 /* The title for Empty Reservoir alarm notification */
 "Empty Reservoir" = "Tom insulinreservoar";
@@ -530,6 +539,9 @@
 
 /* Error message description for PeripheralManagerError.incorrectResponse */
 "Incorrect Response" = "Felaktigt svar";
+
+/* Error message description for PeripheralManagerError.timeout */
+"Timeout" = "Timeout";
 
 /* Error message description for PeripheralManagerError.emptyValue */
 "Empty Value" = "Tomt värde";
