@@ -2,7 +2,7 @@
 " (inactive)" = " (inaktiv)";
 
 /* Format string for low battery alert body for RileyLink. (1: device name) */
-"\"%1$@\" has a low battery" = "\"%1$@\" has a low battery";
+"\"%1$@\" has a low battery" = "\"%1$@\" har ett lågt batteri";
 
 /* Unit format string for an RSSI value in decibles */
 "%@ dB" = "%@ dB";
@@ -15,7 +15,7 @@
 "Activation time exceeded" = "Tid för aktivering överskriden";
 
 /* Description for auto-off */
-"Auto-off" = "Auto-Off";
+"Auto-off" = "Auto-Av";
 
 /* Description for auto-off alarm */
 "Auto-off alarm" = "Auto-av larm";
@@ -60,7 +60,7 @@
 "Comms Issue" = "Kommandoproblem";
 
 /* Error message when command is rejected because an unacknowledged command is pending. */
-"Communication issue: Unacknowledged command pending." = "Communication issue: Unacknowledged command pending.";
+"Communication issue: Unacknowledged command pending." = "Kommunikationsproblem: Obekräftat kommando väntar.";
 
 /* Description for BeepPreference.manualCommands */
 "Confidence reminders will sound for commands you initiate, like bolus, cancel bolus, suspend, resume, save notification reminders, etc. When Loop automatically adjusts delivery, no confidence reminders are used." = "Bekräftelseljud kommer att pipa för för ala pumpkommandon du ger, som bolus, avbryt bolus, pausa pump, återuppta insulintillförsel, spara påminnelser etc. När iAPS automatiskt justerar insulintillförsel kommer inga pip att ljuda.";
@@ -96,10 +96,10 @@
 "Extended" = "Utökad";
 
 /* Delivery status when extended bolus is running */
-"Extended bolus running" = "Extended bolus running";
+"Extended bolus running" = "Utökad bolus pågår";
 
 /* Delivery status when extended bolus and temp basal is running */
-"Extended bolus running with temp basal" = "Extended bolus running with temp basal";
+"Extended bolus running with temp basal" = "Utökad bolus pågår med temp. basal";
 
 /* Pod state when fault event has occurred */
 "Fault event occurred" = "Felhändelse inträffade";
@@ -114,7 +114,7 @@
 "Finish setup " = "Inställning färdig";
 
 /* Description for finish setup reminder */
-"Finish setup reminder" = "Finish setup reminder";
+"Finish setup reminder" = "Påminnelse om att slutföra inställning";
 
 /* Pod inititialized */
 "Initialized" = "Pod initialiserad";
@@ -159,7 +159,7 @@
 "Low reservoir advisory alarm" = "Larm vid låg reservoarvolym";
 
 /* Title for RileyLink low battery alert */
-"Low RileyLink Battery" = "Low RileyLink Battery";
+"Low RileyLink Battery" = "Lågt batteri i RileyLink";
 
 /* Recovery suggestion when no RileyLink is available */
 "Make sure your RileyLink is nearby and powered on" = "Säkerställ att din RileyLink är nära och påslagen";
@@ -222,10 +222,10 @@
 "Paired" = "Parkopplad";
 
 /* Pod status when pairing completed */
-"Pairing completed" = "Pairing completed";
+"Pairing completed" = "Parkoppling lyckades";
 
 /* Description for MessageError parsingError. (1: decription of error), (2: hexadecimal data starting at offset) */
-"Parsing Error: %1$@ in (%2$@)" = "Parsing Error: %1$@ in (%2$@)";
+"Parsing Error: %1$@ in (%2$@)" = "Fel vid tolkning: %1$@ i (%2$@)";
 
 /* Recovery suggestion on unexpected pod change */
 "Please bring only original pod in range or deactivate original pod" = "Ha endast din ursprungliga podd inom räckvidd eller inaktivera ursprunglig podd";
@@ -291,7 +291,7 @@
 "Pod setup window expired" = "Tid för podinställning är överskriden";
 
 /* Description for pod suspended reminder */
-"Pod suspended reminder" = "Pod suspended reminder";
+"Pod suspended reminder" = "Påminnelse om pausad pump";
 
 /* Format string for poor pod signal strength */
 "Poor signal strength" = "Dålig signalstyrka";
@@ -316,7 +316,7 @@
 "Resume" = "Återuppta";
 
 /* Recovery suggestion when pod is suspended */
-"Resume delivery" = "Resume delivery";
+"Resume delivery" = "Återuppta insulintillförsel";
 
 /* Alert content title for suspendEnded pod alert */
 "Resume Insulin" = "Återuppta insulintillförsel";
@@ -328,7 +328,7 @@
 "Scheduled Basal" = "Schemalagd basal";
 
 /* Description for shutdown imminent */
-"Shutdown imminent" = "Shutdown imminent";
+"Shutdown imminent" = "Podd kommer snart att stängas av";
 
 /* Description for shutdown imminent alarm */
 "Shutdown imminent alarm" = "Larm för omedelbar avstängning";
@@ -347,7 +347,7 @@
 "Suspend In Progress Reminder" = "Påminnelse om pausad pump";
 
 /* Description for suspend time expired */
-"Suspend time expired" = "Suspend time expired";
+"Suspend time expired" = "Tid för pausad pump har löpt ut";
 
 /* Delivery status when insulin delivery is suspended */
 "Suspended" = "Pausad";
