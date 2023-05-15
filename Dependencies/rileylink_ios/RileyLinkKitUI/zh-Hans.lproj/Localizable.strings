@@ -25,6 +25,9 @@
 /* The title of the cell showing firmware version */
 "Firmware" = "固件";
 
+/* The title of the cell showing current rileylink frequency */
+"Frequency" = "Frequency";
+
 /* The title of the cell showing device name */
 "Name" = "设备名称";
 
@@ -33,3 +36,6 @@
 
 /* The title of the cell showing BLE signal strength (RSSI) */
 "Signal Strength" = "信号强度";
+
+/* The title of the cell showing uptime */
+"Uptime" = "Uptime";
