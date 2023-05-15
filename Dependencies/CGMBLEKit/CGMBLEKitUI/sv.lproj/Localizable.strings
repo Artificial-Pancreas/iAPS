@@ -39,10 +39,10 @@ Title text for the button to remove a CGM from Loop */
 "Remote Data Synchronization" = "Synkronisering av fjärrlagrad data";
 
 /* Title describing sensor expiration */
-"Sensor Expires" = "Sensor Expires";
+"Sensor Expires" = "Sensor går ut";
 
 /* Title describing past sensor expiration */
-"Sensor Expired" = "Sensor Expired";
+"Sensor Expired" = "Sensor har gått ut";
 
 /* Title describing CGM calibration and battery state */
 "Status" = "Status";
