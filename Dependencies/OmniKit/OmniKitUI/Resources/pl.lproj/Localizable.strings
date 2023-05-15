@@ -445,9 +445,6 @@
 /* Pod pairing action button text while pairing */
 "Pairing..." = "Parowanie…";
 
-/* The text of the loading label when pairing */
-"Pairing…" = "Parowanie…";
-
 /* No comment provided by engineer. */
 "Percent = %lf" = "Procent = %lf";
 
@@ -731,8 +728,6 @@
 /* Title of delivery uncertainty recovery page */
 "Unable to Reach Pod" = "Nie można połączyć się z Podem";
 
-/* Title for pending command recovery screen */
-"Unable To Reach Pod" = "Nie można połączyć się z Podem";
 
 /* Alert format string for a failure to set temporary basal. (1: error description) */
 "Unable to set a temporary basal rate: %1$@" = "Nie można ustawić tymczasowej dawki podstawowej: %1$@";
@@ -769,4 +764,3 @@
 
 /* Alert message body for confirm pod attachment */
 "Your Pod may still be delivering Insulin.\nRemove it from your body, then tap “Continue.“" = "Twój POD może nadal dostarczać insulinę.\nUsuń go z ciała, a następnie wybierz \"Kontynuuj\".";
-
