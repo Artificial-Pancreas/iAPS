@@ -74,6 +74,9 @@
 /* Description for Occlusion detected pod fault */
 "Occlusion detected" = "Tilstoppelse oppdaget";
 
+/* Generic title of the omnipod pump manager */
+"Omnipod" = "Omnipod";
+
 /* Pod status after pairing */
 "Paired" = "Sammenkoblbet";
 
