@@ -1144,13 +1144,13 @@ Enact a temp Basal or a temp target */
 "Disable SMBs" = "Deaktiver SMB";
 
 /* */
-"Your profile basal insulin will be adjusted with the override percentage and your profile ISF and CR will be inversly adjusted with the percentage.\n\nIf you toggle off the override every profile setting will return to normal." = "Your profile basal insulin will be adjusted with the override percentage and your profile ISF and CR will be inversly adjusted with the percentage.\n\nIf you toggle off the override every profile setting will return to normal.";
+"Your profile basal insulin will be adjusted with the override percentage and your profile ISF and CR will be inversly adjusted with the percentage.\n\nIf you toggle off the override every profile setting will return to normal." = "Profilens basaldose vil bli justert med prosentsatsen og profilens ISF og CR vil bli omvendt justert med prosentsatsen. \n\nHvis du slår av overstyringen vil alle profilinnstillinger gå tilbake til normalen.";
 
 /* Service Section */
 "App Icons" = "App-ikon";
 
 /* Service Section */
-"Statistics and Home View" = "Statistics and Home View";
+"Statistics and Home View" = "Statistikk og startskjerm";
 
 /* Alert text */
 "Delete carb equivalents?" = "Slette karboekvivalenter?";
@@ -1319,16 +1319,16 @@ Enact a temp Basal or a temp target */
 /* */
 
 
-"Today" = "Today";
+"Today" = "I dag";
 
 /* */
-"Day" = "Day";
+"Day" = "Dag";
 
 /* */
-"Week" = "Week";
+"Week" = "Uke";
 
 /* */
-"Month" = "Month";
+"Month" = "Måned";
 
 /* */
 "Total" = "Sum";
@@ -1337,7 +1337,7 @@ Enact a temp Basal or a temp target */
 "Statistics" = "Statistikk";
 
 /* Option in preferences */
-"Allow Upload of Statistics to NS" = "Allow Upload of Statistics to NS";
+"Allow Upload of Statistics to NS" = "Tillat opplasting av statistikk til NS";
 
 /* Low Glucose Threshold in Statistics settings */
 "Low" = "Lav";
@@ -1346,25 +1346,25 @@ Enact a temp Basal or a temp target */
 "High" = "Høy";
 
 /* In Range */
-"In Range" = "In Range";
+"In Range" = "I målområde";
 
 /* Display % */
-"Change HbA1c Unit" = "Change HbA1c Unit";
+"Change HbA1c Unit" = "Endre HbA1c-enhet";
 
 /* */
-"Display Chart X - Grid lines" = "Display Chart X - Grid lines";
+"Display Chart X - Grid lines" = "Vise rutenett (X)";
 
 /* */
-"Display Chart Y - Grid lines" = "Display Chart Y - Grid lines";
+"Display Chart Y - Grid lines" = "Vise rutenett (Y)";
 
 /* */
-"Display Chart Threshold lines for Low and High" = "Display Chart Threshold lines for Low and High";
+"Display Chart Threshold lines for Low and High" = "Vise grenselinjer for høye og lave verdier";
 
 /* */
 /* */
 
 "Standing / Laying TIR Chart
-Hours X-Axis (6 default)" = "Hours X-Axis (6 default)";
+Hours X-Axis (6 default)" = "Timer å vise (6 er standard)";
 
 /* Average BG = */
 "Average" = "Gj.snitt";
@@ -1373,13 +1373,13 @@ Hours X-Axis (6 default)" = "Hours X-Axis (6 default)";
 "Median" = "Median";
 
 /* CGM readings in statView */
-"Readings today" = "Readings today";
+"Readings today" = "Avlesninger i dag";
 
 /* CGM readings in statView */
-"Readings / 24h" = "Readings / 24h";
+"Readings / 24h" = "Avlesninger / 24t";
 
 /* Days of saved readings*/
-"Days" = "Days";
+"Days" = "Dager";
 
 /* Normal BG (within TIR) */
 "Normal" = "Normalt";
@@ -1391,7 +1391,7 @@ Hours X-Axis (6 default)" = "Hours X-Axis (6 default)";
 "Low (<" = "Lavt (<";
 
 /* SD */
-"SD" = "SD";
+"SD" = "SA";
 
 /* CV */
 "CV" = "CV";
@@ -1406,7 +1406,7 @@ Hours X-Axis (6 default)" = "Hours X-Axis (6 default)";
 "days" = "dager";
 
 /* Nr of Loops in statPanel */
-"Loops" = "Loops";
+"Loops" = "Looper";
 
 /* Loop Errors in statPanel */
 "Errors" = "Feil";
@@ -1454,19 +1454,19 @@ Hours X-Axis (6 default)" = "Hours X-Axis (6 default)";
 "Change default HbA1c unit in statPanlel. The unit in statPanel will be updateded with next statistics.json update" = "Endre enhet for HbA1c i statPanel. Enheten i statPanel vil bli oppdatert neste gang statistikken oppdateres";
 
 /* HbA1c for all glucose storage days */
-"all" = "all";
+"all" = "alle";
 
 /* --------------------------------------------------------  Dexcom G7 --------------------------------------*/
 
-"Configuration CGM" = "Configuration CGM";
+"Configuration CGM" = "CGM-innstillinger";
 
-"Heartbeat" = "Heartbeat";
+"Heartbeat" = "Puls";
 
-"CGM address :" = "CGM address :";
+"CGM address :" = "CGM-adresse:";
 
-"CGM is not used as heartbeat." = "CGM is not used as heartbeat.";
+"CGM is not used as heartbeat." = "CGM brukes ikke som heartbeat.";
 
-"Are you sure you want to delete this CGM?" = "Are you sure you want to delete this CGM?";
+"Are you sure you want to delete this CGM?" = "Sikker på at du vil slette denne CGM?";
 
 /* New Experimental feature */
 "Experimental" = "Eksperimentell";
@@ -1648,7 +1648,7 @@ Hours X-Axis (6 default)" = "Hours X-Axis (6 default)";
 "Autotune ISF Adjustment Fraction" = "Justeringsbrøk for ISF for Autotune";
 
 /* "Autotune ISF Adjustment Fraction" */
-"The default of 0.5 for this value keeps autotune ISF closer to pump ISF via a weighted average of fullNewISF and pumpISF. 1.0 allows full adjustment, 0 is no adjustment from pump ISF." = "The default of 0.5 for this value keeps autotune ISF closer to pump ISF via a weighted average of fullNewISF and pumpISF. 1.0 allows full adjustment, 0 is no adjustment from pump ISF.";
+"The default of 0.5 for this value keeps autotune ISF closer to pump ISF via a weighted average of fullNewISF and pumpISF. 1.0 allows full adjustment, 0 is no adjustment from pump ISF." = "Standardverdien på 0,5 holder Autotune ISF nærmere pumpens ISF ved hjelp av et vektet gjennomsnitt av fullNewISF og pumpISF. Verdien 1,0 tillater full justering, mens 0,0 gir ingen justering fra pumpens ISF.";
 
 /* Headline "Remaining Carbs Fraction" */
 "Remaining Carbs Fraction" = "Brøk for gjensværende karbo";
