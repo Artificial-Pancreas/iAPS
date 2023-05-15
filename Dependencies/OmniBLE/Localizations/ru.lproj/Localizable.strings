@@ -203,6 +203,9 @@
 /* Recovery suggestion shown when no pod is paired */
 "Please pair a new pod" = "Пожалуйста, подключите новый под";
 
+/* Generic title of the OmniBLE pump manager */
+"Omnipod DASH" = "Omnipod DASH";
+
 /* Status highlight that delivery is uncertain. */
 "Comms Issue" = "Проблемы с сообщением";
 
@@ -545,6 +548,9 @@
 
 /* Error message description for PeripheralManagerError.unknownCharacteristic */
 "Unknown Characteristic" = "Неизвестная характеристика";
+
+/* Error message description for PeripheralManagerError.nack */
+"Nack" = "Nack";
 
 /* Title for omnipod reminders section */
 "Omnipod Reminders" = "Напоминания Omnipod";
