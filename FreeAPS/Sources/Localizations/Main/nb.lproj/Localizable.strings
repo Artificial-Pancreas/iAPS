@@ -119,13 +119,13 @@
 "Basal Insulin and Sensitivity ratio" = "Basalinsulin og følsomhetsforhold";
 
 /* */
-"A lower 'Half Basal Target' setting will reduce the basal and raise the ISF earlier, at a lower target glucose." = "A lower 'Half Basal Target' setting will reduce the basal and raise the ISF earlier, at a lower target glucose.";
+"A lower 'Half Basal Target' setting will reduce the basal and raise the ISF earlier, at a lower target glucose." = "Et lavere mål for \"Half Bassl Target\" vil redusere basal og øke ISF tidligere, ved et lavere blodsukkermål.";
 
 /* */
 " Your setting: " = " Dine innstillinger: ";
 
 /* */
-"mg/dl. Autosens.max limits the max endpoint" = "mg/dl. Autosens.max limits the max endpoint";
+"mg/dl. Autosens.max limits the max endpoint" = "mg/dl. Autosens.max begrenser den maksimale verdien";
 
 /*  */
 "Enter preset name" = "Angi navn på forhåndsinnstilling";
@@ -203,7 +203,7 @@
 "Basal Profile" = "Basalprofil";
 
 /* Rate basal profile */
-"Rate" = "Rate";
+"Rate" = "Ratio";
 
 /*  */
 "Save on Pump" = "Lagre på pumpen";
@@ -405,7 +405,7 @@ Enact a temp Basal or a temp target */
 "Settings" = "Innstillinger";
 
 /* Recommendation for a Manual Bolus */
-"Recommended Bolus Percentage" = "Recommended Bolus Percentage";
+"Recommended Bolus Percentage" = "Anbefalt bolusprosent";
 
 /* 2 log files to share */
 "Share logs" = "Del logger";
@@ -1120,25 +1120,25 @@ Enact a temp Basal or a temp target */
 "Fat And Protein Conversion" = "Omregning av fett og protein";
 
 /* Service Section */
-"Profile Override" = "Profile Override";
+"Profile Override" = "Overstyring av profil";
 
 /* */
-"Override Profiles" = "Override Profiles";
+"Override Profiles" = "Overstyre Profil";
 
 /* */
-"Currently no Override active" = "Currently no Override active";
+"Currently no Override active" = "Ingen aktiv overstyring";
 
 /* */
-"Total Insulin Adjustment" = "Total Insulin Adjustment";
+"Total Insulin Adjustment" = "Total justering av insulin";
 
 /* */
-"Override your Basal, ISF, CR and Target profiles" = "Override your Basal, ISF, CR and Target profiles";
+"Override your Basal, ISF, CR and Target profiles" = "Overstyre basal, ISF, CR og blodsukkermål";
 
 /* */
-"Enable indefinitely" = "Enable indefinitely";
+"Enable indefinitely" = "Uten sluttid";
 
 /* */
-"Override Profile target" = "Override Profile target";
+"Override Profile target" = "Overstyre blodsukkermål";
 
 /* */
 "Disable SMBs" = "Deaktiver SMB";
@@ -1253,7 +1253,7 @@ Enact a temp Basal or a temp target */
 "Change Pod now. Insulin delivery will stop in %1$@ or when no more insulin remains." = "Bytt pod nå. Insulintilførselen stopper om %1$@, eller når det er tomt for insulin.";
 
 /* Label text for temporary basal rate summary */
-"Rate" = "Rate";
+"Rate" = "Ratio";
 
 /* Summary string for temporary basal rate configuration page */
 "%1$@ for %2$@" = "%1$@ i %2$@";
