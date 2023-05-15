@@ -203,6 +203,9 @@
 /* Recovery suggestion shown when no pod is paired */
 "Please pair a new pod" = "Будь ласка, підключіть новий Pod";
 
+/* Generic title of the OmniBLE pump manager */
+"Omnipod DASH" = "Omnipod DASH";
+
 /* Status highlight that delivery is uncertain. */
 "Comms Issue" = "Комунікаційне питання";
 
@@ -295,6 +298,9 @@
 
 /* */
 "Cancel Bolus" = "Скасувати Болюс";
+
+/* Alert acknowledgment OK button */
+"OK" = "OK";
 
 /* The title for Empty Reservoir alarm notification */
 "Empty Reservoir" = "Порожній резервуар";
@@ -420,6 +426,9 @@
 /* Alert message body for confirm pod attachment */
 "Your Pod may still be delivering Insulin.\nRemove it from your body, then tap “Continue.“" = "Ваш Pod може все ще доставляти інсулін.\nВийміть його зі свого тіла, а потім натисніть «Продовжити».";
 
+/* Insulin Unit */
+"U" = "U";
+
 /* The action string on pod status page when pod expired */
 "Change Pod now. Insulin delivery will stop 8 hours after the Pod has expired or when no more insulin remains." = "Змінити Pod зараз. Інсулінова доставка зупиниться на 8 годин після того, як Pod закінчиться або більше не залишиться інсуліну.";
 
@@ -539,6 +548,9 @@
 
 /* Error message description for PeripheralManagerError.unknownCharacteristic */
 "Unknown Characteristic" = "Невідома характеристика";
+
+/* Error message description for PeripheralManagerError.nack */
+"Nack" = "Nack";
 
 /* Title for omnipod reminders section */
 "Omnipod Reminders" = "Нагадування Omnipod";
