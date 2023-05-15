@@ -7,6 +7,10 @@
 /* Format string providing instructions for replacing pod due to a fault. (1: The fault description) */
 "%1$@. Insulin delivery has stopped. Please deactivate and remove pod." = "%1$@. L’iniezione d'insulina è stata interrotta. Disattiva e rimuovi Pod.";
 
+/* Format string for delivered insulin. (1: The localized amount)
+   Format string for insulin remaining in reservoir. (1: The localized amount) */
+"%@ U" = "%@ U";
+
 /* Format string for bolus progress when finished. (1: The localized amount) */
 "%@ U (Finished)" = "%@ U (Terminato)";
 
@@ -18,6 +22,15 @@
 
 /* Format string for bolus percent progress. (1: Percent progress) */
 "%@%%" = "%@ %%";
+
+/* Format string for reservoir reading when above or equal to maximum reading. (1: The localized amount) */
+"%@+ U" = "%@+ U";
+
+/* Appends a full-stop to a statement */
+"%@." = "%@.";
+
+/* Format string for reservoir volume. (1: The localized volume) */
+"%@U" = "%@U";
 
 /* The title of the cell showing the pod activated at time */
 "Active Time" = "Tempo Attivo";
