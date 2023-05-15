@@ -32,6 +32,12 @@ Title text for the button to remove a CGM from Loop */
 /* Title describing sensor session age */
 "Session Age" = "传感器启动天数";
 
+/* Title describing sensor expiration */
+"Sensor Expires" = "Sensor Expires";
+
+/* Title describing past sensor expiration */
+"Sensor Expired" = "Sensor Expired";
+
 /* Title describing CGM calibration and battery state */
 "Status" = "状态";
 
