@@ -7,6 +7,9 @@
 /* Error message shown when operation could not be completed due to existing bolus in progress */
 "Bolus in progress" = "Bolus w toku";
 
+/* The format string describing a bolus. (1: The amount delivered)(2: Start time of the dose)(3: duration)(4: scheduled certainty) */
+"Bolus: %1$@U %2$@ %3$@ %4$@" = "Bolus: %1$@U %2$@ %3$@ %4$@";
+
 /* Delivery status when bolusing */
 "Bolusing" = "Podawanie bolusa";
 
@@ -70,6 +73,9 @@
 
 /* Description for Occlusion detected pod fault */
 "Occlusion detected" = "Wykryto niedrożność";
+
+/* Generic title of the omnipod pump manager */
+"Omnipod" = "Omnipod";
 
 /* Pod status after pairing */
 "Paired" = "Sparowany";
