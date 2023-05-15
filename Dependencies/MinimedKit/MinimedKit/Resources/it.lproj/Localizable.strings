@@ -46,6 +46,9 @@
 /* Pump error code describing max setting exceeded */
 "Max setting exceeded" = "Impostazione massima superata";
 
+/* Pump title (1: model number) */
+"Minimed %@" = "Minimed %@";
+
 /* Generic title of the minimed pump manager */
 "Minimed 500/700 Series" = "Minimed serie 500/700";
 
@@ -63,6 +66,9 @@
 
 /* No comment provided by engineer. */
 "Pump responded unexpectedly" = "Il microinfusore ha risposto inaspettatamente";
+
+/* The format string describing a pump message. (1: The packet type)(2: The message type)(3: The message address)(4: The message data */
+"PumpMessage(%1$@, %2$@, %3$@, %4$@)" = "PumpMessage(%1$@, %2$@, %3$@, %4$@)";
 
 /* Describing the reservoir insulin data source */
 "Reservoir" = "Serbatoio";
