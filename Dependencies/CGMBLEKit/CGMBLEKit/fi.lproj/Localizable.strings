@@ -13,6 +13,9 @@
 /* Describes a functioning transmitter */
 "OK" = "OK";
 
+/* invlid config error description */
+"Peripheral command was invalid" = "Oheislaitekomento oli virheellinen";
+
 /* Timeout error description */
 "Peripheral did not respond in time" = "Ulkoinen laite ei vastannut ajoissa";
 
