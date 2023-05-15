@@ -1138,13 +1138,13 @@ Enact a temp Basal or a temp target */
 "Enable indefinitely" = "Aktivera tillsvidare";
 
 /* */
-"Override Profile target" = "Override Profile target";
+"Override Profile target" = "Ändra målvärde";
 
 /* */
 "Disable SMBs" = "Stäng av autobolusar (SMBs)";
 
 /* */
-"Your profile basal insulin will be adjusted with the override percentage and your profile ISF and CR will be inversly adjusted with the percentage.\n\nIf you toggle off the override every profile setting will return to normal." = "Your profile basal insulin will be adjusted with the override percentage and your profile ISF and CR will be inversly adjusted with the percentage.\n\nIf you toggle off the override every profile setting will return to normal.";
+"Your profile basal insulin will be adjusted with the override percentage and your profile ISF and CR will be inversly adjusted with the percentage.\n\nIf you toggle off the override every profile setting will return to normal." = "Din vanliga basal insulin kommer att justeras procentuellt enligt ovan, medan din normala korrektionsfaktor ich insulinkvot CR kommer att justeras omvänt.\n\nOm du stänger av undtantaget kommer varje inställning att återgå till det normala.";
 
 /* Service Section */
 "App Icons" = "Ikoner";
