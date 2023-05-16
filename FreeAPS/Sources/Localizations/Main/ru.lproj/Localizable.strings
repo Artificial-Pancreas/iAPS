@@ -113,19 +113,19 @@
 "Enact Temp Target" = "Временная цель";
 
 /* */
-"Target" = "Target";
+"Target" = "Цель";
 
 /* */
-"Basal Insulin and Sensitivity ratio" = "Basal Insulin and Sensitivity ratio";
+"Basal Insulin and Sensitivity ratio" = "Соотношение базального инсулина и чувствительности";
 
 /* */
-"A lower 'Half Basal Target' setting will reduce the basal and raise the ISF earlier, at a lower target glucose." = "A lower 'Half Basal Target' setting will reduce the basal and raise the ISF earlier, at a lower target glucose.";
+"A lower 'Half Basal Target' setting will reduce the basal and raise the ISF earlier, at a lower target glucose." = "Более низкое значение \"Половина базального целевого показателя\" приведет к снижению базального и повышению ISF раньше, при более низком целевом уровне глюкозы.";
 
 /* */
-" Your setting: " = " Your setting: ";
+" Your setting: " = " Ваши настройки: ";
 
 /* */
-"mg/dl. Autosens.max limits the max endpoint" = "mg/dl. Autosens.max limits the max endpoint";
+"mg/dl. Autosens.max limits the max endpoint" = "мг/дл. Autosense.max ограничивает максимальную конечную точку";
 
 /*  */
 "Enter preset name" = "Название шаблона";
@@ -146,16 +146,16 @@
 "Save as preset" = "Сохранить как шаблон";
 
 /* Delete Meal Preset */
-"Delete Preset" = "Delete Preset";
+"Delete Preset" = "Удалить шаблон";
 
 /* Confirm Deletion */
-"Delete preset '%@'?" = "Delete preset '%@'?";
+"Delete preset '%@'?" = "Удалить шаблон '%@'?";
 
 /* Button */
-"No" = "No";
+"No" = "Нет";
 
 /* Button */
-"Yes" = "Yes";
+"Yes" = "Да";
 
 /* + Button */
 "[ +1 ]" = "[ +1 ]";
@@ -270,7 +270,7 @@ Enact a temp Basal or a temp target */
 "Connect" = "Подключить";
 
 /* Connected to NS */
-"Connected!" = "Connected!";
+"Connected!" = "Подключено!";
 
 /* Connecting to NS */
 "Connecting..." = "Подключение...";
@@ -399,40 +399,40 @@ Enact a temp Basal or a temp target */
 "Pump" = "Помпа";
 
 /* */
-"Watch" = "Watch";
+"Watch" = "Часы";
 
 /* */
-"Watch Configuration" = "Watch Configuration";
+"Watch Configuration" = "Конфигурация часов";
 
 /* */
 "Apple Watch" = "Apple Watch";
 
 /* */
-"Display on Watch" = "Display on Watch";
+"Display on Watch" = "Отображать на часах";
 
 /* */
 "Garmin Watch" = "Garmin Watch";
 
 /* */
-"Add devices" = "Add devices";
+"Add devices" = "Добавить устройства";
 
 /* */
-"Glucose Target" = "Glucose Target";
+"Glucose Target" = "Цель глюкозы";
 
 /* */
-"Heart Rate" = "Heart Rate";
+"Heart Rate" = "Пульс";
 
 /* */
-"Steps" = "Steps";
+"Steps" = "Шаги";
 
 /* */
-"ISF" = "ISF";
+"ISF" = "ФЧИ (ISF)";
 
 /* */
-"The app Garmin Connect must be installed to use for iAPS.\n Go to App Store to download it" = "The app Garmin Connect must be installed to use for iAPS.\n Go to App Store to download it";
+"The app Garmin Connect must be installed to use for iAPS.\n Go to App Store to download it" = "Необходимо установить приложение Garmin Connect, для использования с iAPS.\n Перейдите в App Store для его загрузки";
 
 /* */
-"Garmin is not available" = "Garmin is not available";
+"Garmin is not available" = "Garmin недоступен";
 
 /*  */
 "Services" = "Службы";
@@ -441,7 +441,7 @@ Enact a temp Basal or a temp target */
 "Settings" = "Настройки";
 
 /* Recommendation for a Manual Bolus */
-"Recommended Bolus Percentage" = "Recommended Bolus Percentage";
+"Recommended Bolus Percentage" = "Рекомендуемый процент болюса";
 
 /* 2 log files to share */
 "Share logs" = "Отправить журнал";
@@ -474,7 +474,7 @@ Enact a temp Basal or a temp target */
 "Type" = "Тип";
 
 /* CGM */
-"CGM" = "CGM";
+"CGM" = "Мониторинг";
 
 /* CGM Transmitter ID */
 "Transmitter ID" = "ID трансмиттера";
@@ -525,7 +525,7 @@ Enact a temp Basal or a temp target */
 "Other" = "Прочее";
 
 /* */
-"Libre Transmitter" = "Libre Transmitter";
+"Libre Transmitter" = "Libre трансмиттер";
 
 /* */
 "Libre Transmitters" = "Передатчики Libre";
@@ -876,7 +876,7 @@ Enact a temp Basal or a temp target */
 "nothing to see here" = "здесь ничего нет";
 
 /* */
-"snooze from testview clicked" = "snooze from testview clicked";
+"snooze from testview clicked" = "отложить из тестового просмотра нажато";
 
 /* */
 "will snooze for %@ until %@" = "будет отложена для %@ до %@";
@@ -1078,7 +1078,7 @@ Enact a temp Basal or a temp target */
 
 /* --------------- HealthKit intergration --------------------*/
 /* */
-"Apple Health" = "Apple Health";
+"Apple Health" = "Apple Здоровье";
 
 /* */
 "Connect to Apple Health" = "Подключить к Apple Health";
@@ -1141,10 +1141,10 @@ Enact a temp Basal or a temp target */
 "Fat and Protein" = "Жиры и белки";
 
 /* Display fat and protein entities */
-"Fat & Protein" = "Fat & Protein";
+"Fat & Protein" = "Жиры и белки";
 
 /* */
-"Hide Fat & Protein" = "Hide Fat & Protein";
+"Hide Fat & Protein" = "Скрыть жиры и белки";
 
 /* Add Fat */
 "Fat" = "Жиры";
@@ -1156,49 +1156,49 @@ Enact a temp Basal or a temp target */
 "Fat And Protein Conversion" = "Преобразование жиров и белков";
 
 /* Service Section */
-"Profile Override" = "Profile Override";
+"Profile Override" = "Переопределение профиля";
 
 /* */
-"Override Profiles" = "Override Profiles";
+"Override Profiles" = "Переопределить профили";
 
 /* */
-"Currently no Override active" = "Currently no Override active";
+"Currently no Override active" = "В данный момент профиль не переопределен";
 
 /* */
-"Total Insulin Adjustment" = "Total Insulin Adjustment";
+"Total Insulin Adjustment" = "Регулировка потребности в инсулине";
 
 /* */
-"Override your Basal, ISF, CR and Target profiles" = "Override your Basal, ISF, CR and Target profiles";
+"Override your Basal, ISF, CR and Target profiles" = "Переопределить базал, ISF, CR и целевые профили";
 
 /* */
-"Enable indefinitely" = "Enable indefinitely";
+"Enable indefinitely" = "Включить бессрочно";
 
 /* */
-"Override Profile target" = "Override Profile target";
+"Override Profile target" = "Переопределить целевое значение";
 
 /* */
-"Disable SMBs" = "Disable SMBs";
+"Disable SMBs" = "Отключить микроболюсы SMB";
 
 /* */
-"Your profile basal insulin will be adjusted with the override percentage and your profile ISF and CR will be inversly adjusted with the percentage.\n\nIf you toggle off the override every profile setting will return to normal." = "Your profile basal insulin will be adjusted with the override percentage and your profile ISF and CR will be inversly adjusted with the percentage.\n\nIf you toggle off the override every profile setting will return to normal.";
+"Your profile basal insulin will be adjusted with the override percentage and your profile ISF and CR will be inversly adjusted with the percentage.\n\nIf you toggle off the override every profile setting will return to normal." = "Ваш профиль базального инсулина будет скорректирован с учетом процента переопределения, а ваши профили ISF и CR будут скорректированы обратно пропорционально этому проценту.\n\nЕсли вы отключите переопределение, все настройки профиля вернутся в нормальное состояние.";
 
 /* Service Section */
-"App Icons" = "App Icons";
+"App Icons" = "Иконки приложения";
 
 /* Service Section */
-"Statistics and Home View" = "Statistics and Home View";
+"Statistics and Home View" = "Статистика и экран";
 
 /* Alert text */
 "Delete carb equivalents?" = "Удалить эквиваленты углеводов?";
 
 /* */
-"Meal Presets" = "Meal Presets";
+"Meal Presets" = "Шаблоны";
 
 /* */
-"Empty" = "Empty";
+"Empty" = "Пустой";
 
 /* */
-"Delete Selected Preset" = "Delete Selected Preset";
+"Delete Selected Preset" = "Удалить выделенный шаблон";
 
 /* */
 "Enter Meal Preset Name" = "Enter Meal Preset Name";
