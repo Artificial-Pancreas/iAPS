@@ -113,19 +113,19 @@
 "Enact Temp Target" = "Temporäres Ziel starten";
 
 /* */
-"Target" = "Target";
+"Target" = "Ziel";
 
 /* */
-"Basal Insulin and Sensitivity ratio" = "Basal Insulin and Sensitivity ratio";
+"Basal Insulin and Sensitivity ratio" = "Basalrate und Empfindlichkeitsgrad";
 
 /* */
-"A lower 'Half Basal Target' setting will reduce the basal and raise the ISF earlier, at a lower target glucose." = "A lower 'Half Basal Target' setting will reduce the basal and raise the ISF earlier, at a lower target glucose.";
+"A lower 'Half Basal Target' setting will reduce the basal and raise the ISF earlier, at a lower target glucose." = "Ein niedrigeres eingestelltes 'Halb Basal Ziel' wird die Basalrate früher reduzieren und den ISF schneller erhöhen, wenn ein niedriger Ziel-Blutzuckerwert eingegeben wird.";
 
 /* */
-" Your setting: " = " Your setting: ";
+" Your setting: " = " Deine Einstellungen: ";
 
 /* */
-"mg/dl. Autosens.max limits the max endpoint" = "mg/dl. Autosens.max limits the max endpoint";
+"mg/dl. Autosens.max limits the max endpoint" = "mg/dl. Autosens.max schränkt den max. Endpunkt ein";
 
 /*  */
 "Enter preset name" = "Geben Sie einen Namen für die Vorlage ein";
@@ -146,16 +146,16 @@
 "Save as preset" = "Als Vorlage speichern";
 
 /* Delete Meal Preset */
-"Delete Preset" = "Delete Preset";
+"Delete Preset" = "Voreinstellung löschen";
 
 /* Confirm Deletion */
-"Delete preset '%@'?" = "Delete preset '%@'?";
+"Delete preset '%@'?" = "Voreinstellung löschen '%@'?";
 
 /* Button */
-"No" = "No";
+"No" = "Nein";
 
 /* Button */
-"Yes" = "Yes";
+"Yes" = "Ja";
 
 /* + Button */
 "[ +1 ]" = "[ +1 ]";
@@ -378,7 +378,7 @@ Enact a temp Basal or a temp target */
 "0 U/hr" = "0 IE/h";
 
 /* abbreviation for days */
-"d" = "d";
+"d" = "Tag";
 
 /* abbreviation for hours */
 "h" = "h";
@@ -397,6 +397,42 @@ Enact a temp Basal or a temp target */
 
 /*  */
 "Pump" = "Pumpe";
+
+/* */
+"Watch" = "Watch";
+
+/* */
+"Watch Configuration" = "Watch Configuration";
+
+/* */
+"Apple Watch" = "Apple Watch";
+
+/* */
+"Display on Watch" = "Display on Watch";
+
+/* */
+"Garmin Watch" = "Garmin Watch";
+
+/* */
+"Add devices" = "Add devices";
+
+/* */
+"Glucose Target" = "Glucose Target";
+
+/* */
+"Heart Rate" = "Heart Rate";
+
+/* */
+"Steps" = "Steps";
+
+/* */
+"ISF" = "ISF";
+
+/* */
+"The app Garmin Connect must be installed to use for iAPS.\n Go to App Store to download it" = "The app Garmin Connect must be installed to use for iAPS.\n Go to App Store to download it";
+
+/* */
+"Garmin is not available" = "Garmin is not available";
 
 /*  */
 "Services" = "Dienste";
