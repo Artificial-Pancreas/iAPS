@@ -1,5 +1,5 @@
 /* Format string for glucose trend per minute. (1: glucose value and unit) */
-"%@/min" = "%@/min";
+"%@/min" = "%@ min";
 
 /* Confirmation message for deleting a CGM */
 "Are you sure you want to delete this CGM?" = "Är du säker på att du vill radera denna CGM?";
@@ -29,6 +29,9 @@ Title text for the button to remove a CGM from Loop */
 /* Section title for latest glucose reading */
 "Latest Reading" = "Senaste avläsning";
 
+/* Section title for latest connection date */
+"Latest Connection" = "Senaste anslutning";
+
 /* Button title to open CGM app */
 "Open App" = "Öppna appen";
 
@@ -37,6 +40,15 @@ Title text for the button to remove a CGM from Loop */
 
 /* Title describing sensor session age */
 "Session Age" = "Sessionsålder";
+
+/* Section title for remote data synchronization */
+"Remote Data Synchronization" = "Synkronisering av fjärrlagrad data";
+
+/* Title describing sensor expiration */
+"Sensor Expires" = "Sensor går ut";
+
+/* Title describing past sensor expiration */
+"Sensor Expired" = "Sensor har gått ut";
 
 /* Title describing CGM calibration and battery state */
 "Status" = "Status";

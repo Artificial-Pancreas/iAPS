@@ -22,10 +22,6 @@ extension FPUConfig {
 
         var body: some View {
             Form {
-                Section(header: Text("Convert Fat and Protein")) {
-                    Toggle("Enable", isOn: $state.useFPUconversion)
-                }
-
                 Section(header: Text("Conversion settings")) {
                     HStack {
                         Text("Delay In Minutes")

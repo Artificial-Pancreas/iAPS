@@ -29,6 +29,9 @@ Title text for the button to remove a CGM from Loop */
 /* Section title for latest glucose reading */
 "Latest Reading" = "Siste måling";
 
+/* Section title for latest connection date */
+"Latest Connection" = "Siste forbindelse";
+
 /* Button title to open CGM app */
 "Open App" = "Åpne app";
 
@@ -44,6 +47,15 @@ Title text for the button to remove a CGM from Loop */
 /* Title describing sensor session age */
 "Session Age" = "Alder på økt";
 
+/* Section title for remote data synchronization */
+"Remote Data Synchronization" = "Synkronisering av eksterne data";
+
+/* Title describing sensor expiration */
+"Sensor Expires" = "Sensor utløper";
+
+/* Title describing past sensor expiration */
+"Sensor Expired" = "Sensor utløpt";
+
 /* Title describing CGM calibration and battery state */
 "Status" = "Status";
 
@@ -58,4 +70,3 @@ Title text for the button to remove a CGM from Loop */
 
 /* The title text for the upload glucose switch cell */
 "Upload Readings" = "Last opp avlesninger";
-

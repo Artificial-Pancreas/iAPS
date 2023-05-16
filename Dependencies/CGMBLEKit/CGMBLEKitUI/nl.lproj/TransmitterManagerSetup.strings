@@ -7,6 +7,12 @@
 /* Class = "UILabel"; text = "Detail"; ObjectID = "GOT-KQ-cEh"; */
 "GOT-KQ-cEh.text" = "Detail";
 
+/* Class = "UITableViewSection"; footerTitle = "The transmitter ID can be found printed on the back of the device, on the side of the box it came in, and from within the settings menus of the receiver and mobile app."; ObjectID = "Qub-6B-0aB"; */
+"Qub-6B-0aB.footerTitle" = "De zenderserienummer staat achter op het apparaat, op de zijkant van de verpakking en in het instellingenmenu van de ontvanger en de app.";
+
+/* Class = "UITableViewSection"; headerTitle = "Transmitter ID"; ObjectID = "Qub-6B-0aB"; */
+"Qub-6B-0aB.headerTitle" = "Zenderserienummer";
+
 /* Class = "UITableViewSection"; footerTitle = "Data can be downloaded over the Internet from Share when the transmitter connection fails."; ObjectID = "k1N-Rg-XDy"; */
 "k1N-Rg-XDy.footerTitle" = "Gegevens kunnen via het internet van Share gedownload worden wanneer de verbinding met de zender uitvalt.";
 

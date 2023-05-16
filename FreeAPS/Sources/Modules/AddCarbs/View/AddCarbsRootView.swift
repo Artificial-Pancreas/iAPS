@@ -36,7 +36,6 @@ extension AddCarbs {
                         }
                     }
                 }
-
                 Section {
                     HStack {
                         Text("Carbs").fontWeight(.semibold)
@@ -51,34 +50,54 @@ extension AddCarbs {
                         Text("grams").foregroundColor(.secondary)
                     }.padding(.vertical)
 
-                    if state.useFPU {
+                    if state.useFPUconversion {
                         proteinAndFat()
                     }
                     HStack {
                         Button {
+                            state.useFPUconversion.toggle()
+                        }
+                        label: {
+                            Text(
+                                state
+                                    .useFPUconversion ? NSLocalizedString("Hide Fat & Protein", comment: "") :
+                                    NSLocalizedString("Fat & Protein", comment: "")
+                            ) }
+                            .controlSize(.mini)
+                            .buttonStyle(BorderlessButtonStyle())
+                        Button {
                             isPromtPresented = true
                         }
                         label: { Text("Save as Preset") }
-                    }
-                    .frame(maxWidth: .infinity, alignment: .trailing)
-                    .controlSize(.mini)
-                    .buttonStyle(BorderlessButtonStyle())
-
-                    .disabled(
-                        (state.carbs <= 0 && state.fat <= 0 && state.protein <= 0) ||
-                            (
-                                (((state.selection?.carbs ?? 0) as NSDecimalNumber) as Decimal) == state
-                                    .carbs && (((state.selection?.fat ?? 0) as NSDecimalNumber) as Decimal) == state
-                                    .fat && (((state.selection?.protein ?? 0) as NSDecimalNumber) as Decimal) == state
-                                    .protein
+                            .frame(maxWidth: .infinity, alignment: .trailing)
+                            .controlSize(.mini)
+                            .buttonStyle(BorderlessButtonStyle())
+                            .foregroundColor(
+                                (state.carbs <= 0 && state.fat <= 0 && state.protein <= 0) ||
+                                    (
+                                        (((state.selection?.carbs ?? 0) as NSDecimalNumber) as Decimal) == state
+                                            .carbs && (((state.selection?.fat ?? 0) as NSDecimalNumber) as Decimal) == state
+                                            .fat && (((state.selection?.protein ?? 0) as NSDecimalNumber) as Decimal) ==
+                                            state
+                                            .protein
+                                    ) ? .secondary : .orange
                             )
-                    )
+                            .disabled(
+                                (state.carbs <= 0 && state.fat <= 0 && state.protein <= 0) ||
+                                    (
+                                        (((state.selection?.carbs ?? 0) as NSDecimalNumber) as Decimal) == state
+                                            .carbs && (((state.selection?.fat ?? 0) as NSDecimalNumber) as Decimal) == state
+                                            .fat && (((state.selection?.protein ?? 0) as NSDecimalNumber) as Decimal) == state
+                                            .protein
+                                    )
+                            )
+                    }
                     .popover(isPresented: $isPromtPresented) {
                         presetPopover
                     }
                 }
 
-                if state.useFPU {
+                if state.useFPUconversion {
                     Section {
                         mealPresets
                     }
@@ -95,7 +114,7 @@ extension AddCarbs {
                         .frame(maxWidth: .infinity, alignment: .center)
                 }
 
-                if !state.useFPU {
+                if !state.useFPUconversion {
                     Section {
                         mealPresets
                     }
@@ -194,7 +213,6 @@ extension AddCarbs {
 
                         state.removePresetFromNewMeal()
                         if state.carbs == 0, state.fat == 0, state.protein == 0 { state.summation = [] }
-
                     }
                     label: { Text("[ -1 ]") }
                         .disabled(
@@ -224,6 +242,18 @@ extension AddCarbs {
 
         @ViewBuilder private func proteinAndFat() -> some View {
             HStack {
+                Text("Fat").foregroundColor(.orange) // .fontWeight(.thin)
+                Spacer()
+                DecimalTextField(
+                    "0",
+                    value: $state.fat,
+                    formatter: formatter,
+                    autofocus: false,
+                    cleanInput: true
+                )
+                Text("grams").foregroundColor(.secondary)
+            }
+            HStack {
                 Text("Protein").foregroundColor(.red) // .fontWeight(.thin)
                 Spacer()
                 DecimalTextField(
@@ -234,18 +264,6 @@ extension AddCarbs {
                     cleanInput: true
                 ).foregroundColor(.loopRed)
 
-                Text("grams").foregroundColor(.secondary)
-            }
-            HStack {
-                Text("Fat").foregroundColor(.orange) // .fontWeight(.thin)
-                Spacer()
-                DecimalTextField(
-                    "0",
-                    value: $state.fat,
-                    formatter: formatter,
-                    autofocus: false,
-                    cleanInput: true
-                )
                 Text("grams").foregroundColor(.secondary)
             }
         }

@@ -58,10 +58,10 @@
 "Scanning" = "Scanning";
 
 /* title for g7 settings connection status when connected */
-"Connected" = "Connected";
+"Connected" = "מחובר";
 
 /* title for g7 settings connection status when connecting */
-"Connecting" = "Connecting";
+"Connecting" = "מתחבר";
 
 /* title for g7 settings row showing sensor last connect time */
 "Last Connect" = "Last Connect";

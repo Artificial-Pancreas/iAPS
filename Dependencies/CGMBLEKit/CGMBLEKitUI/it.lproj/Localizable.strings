@@ -29,6 +29,9 @@ Title text for the button to remove a CGM from Loop */
 /* Section title for latest glucose reading */
 "Latest Reading" = "Ultima lettura";
 
+/* Section title for latest connection date */
+"Latest Connection" = "Ultima connessione";
+
 /* Button title to open CGM app */
 "Open App" = "Apri app";
 
@@ -44,6 +47,15 @@ Title text for the button to remove a CGM from Loop */
 /* Title describing sensor session age */
 "Session Age" = "Età sessione";
 
+/* Section title for remote data synchronization */
+"Remote Data Synchronization" = "Sincronizzazione di dati remoti";
+
+/* Title describing sensor expiration */
+"Sensor Expires" = "Scadenza Sensore";
+
+/* Title describing past sensor expiration */
+"Sensor Expired" = "Sensore Scaduto";
+
 /* Title describing CGM calibration and battery state */
 "Status" = "Stato";
 
@@ -58,4 +70,3 @@ Title text for the button to remove a CGM from Loop */
 
 /* The title text for the upload glucose switch cell */
 "Upload Readings" = "Carica Letture";
-

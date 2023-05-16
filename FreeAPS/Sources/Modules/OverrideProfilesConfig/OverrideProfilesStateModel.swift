@@ -9,6 +9,7 @@ extension OverrideProfilesConfig {
         @Published var duration: Decimal = 0
         @Published var target: Decimal = 0
         @Published var override_target: Bool = false
+        @Published var smbIsOff: Bool = false
 
         var units: GlucoseUnits = .mmolL
 
@@ -25,6 +26,7 @@ extension OverrideProfilesConfig {
                 saveOverride.indefinite = self._indefinite
                 saveOverride.percentage = self.percentage
                 saveOverride.enabled = self.isEnabled
+                saveOverride.smbIsOff = self.smbIsOff
                 saveOverride.date = Date()
                 if override_target {
                     if units == .mmolL {
@@ -48,6 +50,7 @@ extension OverrideProfilesConfig {
                 percentage = overrideArray.first?.percentage ?? 100
                 _indefinite = overrideArray.first?.indefinite ?? true
                 duration = (overrideArray.first?.duration ?? 0) as Decimal
+                smbIsOff = overrideArray.first?.smbIsOff ?? false
                 let overrideTarget = (overrideArray.first?.target ?? 0) as Decimal
 
                 var newDuration = Double(duration)
@@ -73,6 +76,7 @@ extension OverrideProfilesConfig {
                     duration = 0
                     target = 0
                     override_target = false
+                    smbIsOff = false
                 }
             }
         }
