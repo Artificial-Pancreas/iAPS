@@ -15,7 +15,7 @@ Title text for the button to remove a CGM from Loop */
 "Delete CGM" = "Verwijder CGM";
 
 /* Title describing glucose value */
-"Glucose" = "Glucose";
+"Glucose" = "Glucosewaarde";
 
 /* Describes a glucose value adjusted to reflect a recent calibration */
 "Glucose (Adjusted)" = "Glucose (Aangepast)";
@@ -28,6 +28,9 @@ Title text for the button to remove a CGM from Loop */
 
 /* Section title for latest glucose reading */
 "Latest Reading" = "Laatste Meting";
+
+/* Section title for latest connection date */
+"Latest Connection" = "Laatste Verbinding";
 
 /* Button title to open CGM app */
 "Open App" = "Open App";
@@ -44,6 +47,15 @@ Title text for the button to remove a CGM from Loop */
 /* Title describing sensor session age */
 "Session Age" = "Sessieduur";
 
+/* Section title for remote data synchronization */
+"Remote Data Synchronization" = "Remote Gegevenssynchronisatie";
+
+/* Title describing sensor expiration */
+"Sensor Expires" = "Sensor Verloopt";
+
+/* Title describing past sensor expiration */
+"Sensor Expired" = "Sensor Verlopen";
+
 /* Title describing CGM calibration and battery state */
 "Status" = "Status";
 
@@ -58,4 +70,3 @@ Title text for the button to remove a CGM from Loop */
 
 /* The title text for the upload glucose switch cell */
 "Upload Readings" = "Upload Metingen";
-
