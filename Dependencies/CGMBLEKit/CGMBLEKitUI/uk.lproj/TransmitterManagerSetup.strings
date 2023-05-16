@@ -1,14 +1,14 @@
 /* Class = "UILabel"; text = "Credentials"; ObjectID = "5oU-vK-JHQ"; */
-"5oU-vK-JHQ.text" = "Credentials";
+"5oU-vK-JHQ.text" = "Облікові дані";
 
 /* Class = "UITableViewController"; title = "Transmitter Setup"; ObjectID = "Dds-49-o7G"; */
-"Dds-49-o7G.title" = "Transmitter Setup";
+"Dds-49-o7G.title" = "Налаштування Трасмітера";
 
 /* Class = "UILabel"; text = "Detail"; ObjectID = "GOT-KQ-cEh"; */
 "GOT-KQ-cEh.text" = "Detail";
 
 /* Class = "UITableViewSection"; footerTitle = "The transmitter ID can be found printed on the back of the device, on the side of the box it came in, and from within the settings menus of the receiver and mobile app."; ObjectID = "Qub-6B-0aB"; */
-"Qub-6B-0aB.footerTitle" = "The transmitter ID can be found printed on the back of the device, on the side of the box it came in, and from within the settings menus of the receiver and mobile app.";
+"Qub-6B-0aB.footerTitle" = "ID Трансмітера вказано на зворотній стороні девайса, на бічній стороні упаковки, а також в меню налаштувань ресивера та мобільного додатку.";
 
 /* Class = "UITableViewSection"; headerTitle = "Transmitter ID"; ObjectID = "Qub-6B-0aB"; */
 "Qub-6B-0aB.headerTitle" = "ID передавача";
