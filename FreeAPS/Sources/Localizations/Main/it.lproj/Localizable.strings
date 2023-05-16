@@ -398,6 +398,42 @@ Enact a temp Basal or a temp target */
 /*  */
 "Pump" = "Microinfusore";
 
+/* */
+"Watch" = "Watch";
+
+/* */
+"Watch Configuration" = "Watch Configuration";
+
+/* */
+"Apple Watch" = "Apple Watch";
+
+/* */
+"Display on Watch" = "Display on Watch";
+
+/* */
+"Garmin Watch" = "Garmin Watch";
+
+/* */
+"Add devices" = "Add devices";
+
+/* */
+"Glucose Target" = "Glucose Target";
+
+/* */
+"Heart Rate" = "Heart Rate";
+
+/* */
+"Steps" = "Steps";
+
+/* */
+"ISF" = "ISF";
+
+/* */
+"The app Garmin Connect must be installed to use for iAPS.\n Go to App Store to download it" = "The app Garmin Connect must be installed to use for iAPS.\n Go to App Store to download it";
+
+/* */
+"Garmin is not available" = "Garmin is not available";
+
 /*  */
 "Services" = "Servizi";
 
