@@ -242,19 +242,22 @@ extension Home {
             var comma1 = ", "
             var comma2 = comma1
             var comma3 = comma1
-            if targetString == "" { comma2 = "" }
-            if percentString == "" { comma1 = "" }
-            if indefinite, smbToggleString == "" { comma2 = "" }
+            if targetString == "" || percentString == "" { comma1 = "" }
+            if durationString == "" { comma2 = "" }
+            if smbToggleString == "" { comma3 = "" }
+
             if percentString == "", targetString == "" {
                 comma1 = ""
                 comma2 = ""
             }
             if percentString == "", targetString == "", smbToggleString == "" {
                 durationString = ""
+                comma1 = ""
+                comma2 = ""
                 comma3 = ""
             }
             if durationString == "" {
-                comma3 = ""
+                comma2 = ""
             }
             if smbToggleString == "" {
                 comma3 = ""
