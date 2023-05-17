@@ -378,7 +378,7 @@ Enact a temp Basal or a temp target */
 "0 U/hr" = "0 E/t";
 
 /* abbreviation for days */
-"d" = "dager";
+"d" = "d";
 
 /* abbreviation for hours */
 "h" = "t";
