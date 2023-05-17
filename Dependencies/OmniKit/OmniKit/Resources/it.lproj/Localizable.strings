@@ -191,7 +191,7 @@
 "No Insulin" = "Insulina Terminata";
 
 /* Status highlight that when no pod is paired. */
-"No Pod" = "No Pod";
+"No Pod" = "Nessun Pod";
 
 /* Error message shown when no pod is paired */
 "No pod paired" = "Nessun Pod abbinato";
