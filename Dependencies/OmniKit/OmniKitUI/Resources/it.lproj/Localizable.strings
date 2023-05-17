@@ -397,7 +397,7 @@
 
 /* Label for pod life state when no pod paired
    Text shown in insulin remaining space when no pod is paired */
-"No Pod" = "No Pod";
+"No Pod" = "Nessun Pod";
 
 /* Value text for no expiration reminder */
 "No Reminder" = "Nessun promemoria";
