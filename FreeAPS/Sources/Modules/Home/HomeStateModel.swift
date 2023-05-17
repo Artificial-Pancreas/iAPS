@@ -58,6 +58,7 @@ extension Home {
         @Published var displayXgridLines: Bool = false
         @Published var displayYgridLines: Bool = false
         @Published var thresholdLines: Bool = false
+        @Published var overrides: Override?
 
         override func subscribe() {
             setupGlucose()

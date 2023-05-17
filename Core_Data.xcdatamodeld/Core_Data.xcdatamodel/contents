@@ -5,7 +5,6 @@
         <attribute name="average_1" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
         <attribute name="average_7" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
         <attribute name="average_30" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
-        <attribute name="average_90" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
         <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
     </entity>
     <entity name="BGmedian" representedClassName="BGmedian" syncable="YES" codeGenerationType="class">
@@ -14,7 +13,6 @@
         <attribute name="median_1" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
         <attribute name="median_7" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
         <attribute name="median_30" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
-        <attribute name="median_90" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
     </entity>
     <entity name="Carbohydrates" representedClassName="Carbohydrates" syncable="YES" codeGenerationType="class">
         <attribute name="carbs" optional="YES" attributeType="Decimal" defaultValueString="0"/>
@@ -27,7 +25,6 @@
         <attribute name="hba1c_1" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
         <attribute name="hba1c_7" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
         <attribute name="hba1c_30" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
-        <attribute name="hba1c_90" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
     </entity>
     <entity name="InsulinDistribution" representedClassName="InsulinDistribution" syncable="YES" codeGenerationType="class">
         <attribute name="bolus" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
@@ -50,7 +47,9 @@
         <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="duration" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
         <attribute name="enabled" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
+        <attribute name="id" optional="YES" attributeType="String"/>
         <attribute name="indefinite" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
         <attribute name="percentage" optional="YES" attributeType="Double" defaultValueString="100" usesScalarValueType="YES"/>
         <attribute name="smbIsOff" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
         <attribute name="target" optional="YES" attributeType="Decimal" defaultValueString="100"/>

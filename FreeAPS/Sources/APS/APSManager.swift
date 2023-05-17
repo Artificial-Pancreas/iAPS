@@ -757,12 +757,9 @@ final class BaseAPSManager: APSManager, Injectable {
 
                 let sortCarbs = NSSortDescriptor(key: "date", ascending: true)
                 requestCarbs.sortDescriptors = [sortCarbs]
-
                 try? carbs = coredataContext.fetch(requestCarbs)
 
                 carbTotal = carbs.map({ carbs in carbs.carbs as? Decimal ?? 0 }).reduce(0, +)
-
-                // MARK: Fetch TDD from CoreData
 
                 var tdds = [TDD]()
                 var currentTDD: Decimal = 0
@@ -1072,8 +1069,6 @@ final class BaseAPSManager: APSManager, Injectable {
                     month: roundDecimal(Decimal(medianCalculation(array: bgArray_30_)), 1),
                     total: roundDecimal(Decimal(medianBG), 1)
                 )
-
-                // MARK: Save to Median to CoreData
 
                 let saveMedianToCoreData = BGmedian(context: self.coredataContext)
                 saveMedianToCoreData.date = Date()

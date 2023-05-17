@@ -24,6 +24,7 @@ extension Home {
         @State var CVorSD = ""
         // Switch between Loops and Errors when tapping in statPanel
         @State var loopStatTitle = NSLocalizedString("Loops", comment: "Nr of Loops in statPanel")
+        @State var selectedProfile: Override?
 
         @FetchRequest(
             entity: Override.entity(),
@@ -354,6 +355,22 @@ extension Home {
             }
         }
 
+        var profiles: some View {
+            VStack {
+                HStack {
+                    Text("Profile").font(.callout)
+                    Picker("Profile", selection: $selectedProfile) {
+                        Text("Normal ").tag(nil as Override?)
+                        ForEach(fetchedPercent, id: \.self) { (preset: Override) in
+                            Text(preset.name ?? "").tag(preset as Override?)
+                        }
+                    }
+                    Button { state.showModal(for: .overrideProfilesConfig) }
+                    label: { Text("Add / Delete") }
+                }
+            }.padding(.vertical, 10)
+        }
+
         var mainChart: some View {
             ZStack {
                 if state.animatedBackground {
@@ -473,6 +490,8 @@ extension Home {
                     infoPanel
                     mainChart
                     legendPanel
+                    Divider()
+                    profiles
                     bottomPanel(geo)
                 }
                 .edgesIgnoringSafeArea(.vertical)
