@@ -1192,6 +1192,39 @@ Enact a temp Basal or a temp target */
 "Delete carb equivalents?" = "Radera dessa poster?";
 
 /* */
+"Currently no Override active" = "Inget undantag aktivt";
+
+/* */
+"Total Insulin Adjustment" = "Total justering av ditt insulinbehov";
+
+/* */
+"Override your Basal, ISF, CR and Target profiles" = "Ändra sparad basal, korrektionsfaktor, insulinkvot and målvärde med ett tillfäligt undantag";
+
+/* */
+"Enable indefinitely" = "Aktivera tillsvidare";
+
+/* */
+"Override Profiles" = "Aktivera tillfälligt undantag";
+
+/* */
+"Override Profile Target" = "Ändra målvärde";
+
+/* */
+"Disable SMBs" = "Stäng av autobolusar (SMBs)";
+
+/* */
+"Your profile basal insulin will be adjusted with the override percentage and your profile ISF and CR will be inversly adjusted with the percentage.\n\nIf you toggle off the override every profile setting will return to normal." = "Your profile basal insulin will be adjusted with the override percentage and your profile ISF and CR will be inversly adjusted with the percentage.\n\nIf you toggle off the override every profile setting will return to normal.";
+
+/* Service Section */
+"App Icons" = "Ikoner";
+
+/* */
+"iAPS Icon" = "iAPS - ikon";
+
+/* Service Section */
+"Statistics and Home View" = "Statistik och Diagram";
+
+/* */
 "Meal Presets" = "Måltider";
 
 /* */
@@ -1354,6 +1387,8 @@ Enact a temp Basal or a temp target */
 /* ----------------------Statistics strings -------------------------------*/
 /* */
 
+/* */
+"Today" = "Idag";
 
 "Today" = "Idag";
 
