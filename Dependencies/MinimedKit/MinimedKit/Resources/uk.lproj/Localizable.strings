@@ -41,7 +41,7 @@
 "Lithium" = "Lithium";
 
 /* Recovery suggestion */
-"Make sure your RileyLink is nearby and powered on" = "Make sure your RileyLink is nearby and powered on";
+"Make sure your RileyLink is nearby and powered on" = "Впевніться, що RileyLink увімкнений та знаходиться поруч";
 
 /* Pump error code describing max setting exceeded */
 "Max setting exceeded" = "Max setting exceeded";
