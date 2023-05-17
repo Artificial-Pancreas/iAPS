@@ -12,6 +12,7 @@ extension OverrideProfilesConfig {
         @Published var smbIsOff: Bool = false
         @Published var name: String = ""
         @Published var id: String = ""
+        @Published var profileName = ""
 
         var units: GlucoseUnits = .mmolL
 

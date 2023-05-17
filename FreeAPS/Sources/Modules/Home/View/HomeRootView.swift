@@ -24,7 +24,9 @@ extension Home {
         @State var CVorSD = ""
         // Switch between Loops and Errors when tapping in statPanel
         @State var loopStatTitle = NSLocalizedString("Loops", comment: "Nr of Loops in statPanel")
-        @State var selectedProfile: Override?
+        @State var showAlert = false
+
+        @Environment(\.managedObjectContext) var moc
 
         @FetchRequest(
             entity: Override.entity(),
@@ -356,19 +358,37 @@ extension Home {
         }
 
         var profiles: some View {
-            VStack {
+            let overrideArray = fetchedPercent.filter({ $0.name != "" && !$0.name.isNilOrEmpty })
+            return VStack {
                 HStack {
                     Text("Profile").font(.callout)
-                    Picker("Profile", selection: $selectedProfile) {
+                    Picker("Profile", selection: $state.selectedProfile) {
                         Text("Normal ").tag(nil as Override?)
-                        ForEach(fetchedPercent, id: \.self) { (preset: Override) in
+                        ForEach(overrideArray, id: \.self) { (preset: Override) in
                             Text(preset.name ?? "").tag(preset as Override?)
                         }
                     }
                     Button { state.showModal(for: .overrideProfilesConfig) }
-                    label: { Text("Add / Delete") }
+                    label: { Image(systemName: "pencil") }
                 }
-            }.padding(.vertical, 10)
+            }
+            ._onBindingChange($state.selectedProfile, perform: { _ in showAlert = true })
+            .padding(.vertical, 10)
+            .alert(
+                "Change Profile",
+                isPresented: $showAlert,
+                actions: {
+                    Button("Cancel", role: .cancel) {}
+                    Button("Start new Profile", role: .destructive) {
+                        state.saveProfiles()
+                    }
+                },
+                message: {
+                    Text(
+                        "Are you sure you want to change your profile to ”\(state.selectedProfile?.name?.description ?? "")” ? This will change your insulin and or target glucose and or SMB settings."
+                    )
+                }
+            )
         }
 
         var mainChart: some View {
