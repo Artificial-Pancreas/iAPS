@@ -58,7 +58,9 @@ extension Home {
         @Published var displayXgridLines: Bool = false
         @Published var displayYgridLines: Bool = false
         @Published var thresholdLines: Bool = false
-        @Published var overrides: Override?
+        @Published var selectedProfile: Override?
+
+        let coredataContext = CoreDataStack.shared.persistentContainer.viewContext
 
         override func subscribe() {
             setupGlucose()
@@ -200,6 +202,26 @@ extension Home {
 
         func cancelBolus() {
             apsManager.cancelBolus()
+        }
+
+        func saveProfiles() {
+            coredataContext.perform { [self] in
+                let profiles = Override(context: self.coredataContext)
+                profiles.name = selectedProfile?.name ?? ""
+                profiles.duration = selectedProfile?.duration ?? 0
+                profiles.enabled = selectedProfile?.enabled ?? false
+                profiles.indefinite = selectedProfile?.indefinite ?? false
+                profiles.percentage = selectedProfile?.percentage ?? 100
+                profiles.smbIsOff = selectedProfile?.smbIsOff ?? false
+                if selcetedProfile?.override_target {
+                    if units == .mmolL {
+                        target = target.asMgdL
+                    }
+                    profiles.target = target as NSDecimalNumber
+                } else { profiles.target = 0 }
+                profiles.date = selectedProfile?.date ?? Date()
+                try? self.coredataContext.save()
+            }
         }
 
         private func setupGlucose() {

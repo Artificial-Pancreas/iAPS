@@ -12,7 +12,11 @@ extension OverrideProfilesConfig {
         @State private var showingDetail = false
         @State private var isPresented = true
         @State private var alertSring = ""
+        @State private var isPromtPresented = false
+        @State private var saved = false
+
         @Environment(\.dismiss) var dismiss
+        @Environment(\.managedObjectContext) var moc
 
         private var formatter: NumberFormatter {
             let formatter = NumberFormatter()
@@ -30,6 +34,38 @@ extension OverrideProfilesConfig {
             }
             formatter.roundingMode = .halfUp
             return formatter
+        }
+
+        var presetPopover: some View {
+            Form {
+                Section(header: Text("Enter Profile Name")) {
+                    TextField("Name Of Profile", text: $state.profileName)
+                    Button {
+                        saved = true
+                        if state.profileName != "", saved {
+                            let profiles = Override(context: moc)
+                            profiles.name = state.profileName
+                            profiles.id = UUID().uuidString
+                            profiles.duration = state.duration as NSDecimalNumber
+                            profiles.enabled = state.isEnabled
+                            profiles.indefinite = state._indefinite
+                            profiles.percentage = state.percentage
+                            profiles.smbIsOff = state.smbIsOff
+                            profiles.target = state.target as NSDecimalNumber
+                            profiles.date = Date()
+                            try? moc.save()
+                            saved = false
+                            isPromtPresented = false
+                        }
+                    }
+                    label: { Text("Save") }
+                    Button {
+                        state.profileName = ""
+                        saved = false
+                        isPromtPresented = false }
+                    label: { Text("Cancel") }
+                }
+            }
         }
 
         var body: some View {
@@ -104,59 +140,76 @@ extension OverrideProfilesConfig {
                             }
                         }
 
-                        Button("Save") {
-                            showAlert.toggle()
-                            alertSring = "\(state.percentage.formatted(.number)) %, " +
-                                (
-                                    state.duration > 0 || !state
-                                        ._indefinite ?
-                                        (
-                                            state
-                                                .duration
-                                                .formatted(.number.grouping(.never).rounded().precision(.fractionLength(0))) +
-                                                " min."
-                                        ) :
-                                        " infinite duration."
-                                ) +
-                                (
-                                    (state.target == 0 || !state.override_target) ? "" :
-                                        (" Target: " + state.target.formatted() + " " + state.units.rawValue + ".")
-                                )
-                                + (state.smbIsOff ? " SMBs are disabled." : "")
-                                +
-                                "\n\n"
-                                +
-                                "Saving this override will change your Profiles and/or your Target Glucose used for looping during the entire selected duration. Tapping save will start your new overide or edit your current active override."
-                        }
-                        .disabled(
-                            !state
-                                .isEnabled || (state.percentage == 100 && !state.override_target && !state.smbIsOff) ||
-                                (!state._indefinite && state.duration == 0 || (state.override_target && state.target == 0))
-                        )
-                        .accentColor(.orange)
-                        .buttonStyle(BorderlessButtonStyle())
-                        .font(.callout)
-                        .frame(maxWidth: .infinity, alignment: .center)
-                        .controlSize(.mini)
-                        .alert(
-                            "Save Override",
-                            isPresented: $showAlert,
-                            actions: {
-                                Button("Cancel", role: .cancel) {}
-                                Button("Start Override", role: .destructive) {
-                                    if state._indefinite {
-                                        state.duration = 0
-                                    } else if state.duration == 0 {
-                                        state.isEnabled = false
-                                    }
-                                    state.saveSettings()
-                                    dismiss()
-                                }
-                            },
-                            message: {
-                                Text(alertSring)
+                        HStack {
+                            Button("Start") {
+                                showAlert.toggle()
+                                alertSring = "\(state.percentage.formatted(.number)) %, " +
+                                    (
+                                        state.duration > 0 || !state
+                                            ._indefinite ?
+                                            (
+                                                state
+                                                    .duration
+                                                    .formatted(.number.grouping(.never).rounded().precision(.fractionLength(0))) +
+                                                    " min."
+                                            ) :
+                                            " infinite duration."
+                                    ) +
+                                    (
+                                        (state.target == 0 || !state.override_target) ? "" :
+                                            (" Target: " + state.target.formatted() + " " + state.units.rawValue + ".")
+                                    )
+                                    + (state.smbIsOff ? " SMBs are disabled." : "")
+                                    +
+                                    "\n\n"
+                                    +
+                                    "Starting this override will change your Profiles and/or your Target Glucose used for looping during the entire selected duration. Tapping ”Start” will start your new overide or edit your current active override."
                             }
-                        )
+                            .disabled(
+                                !state
+                                    .isEnabled || (state.percentage == 100 && !state.override_target && !state.smbIsOff) ||
+                                    (!state._indefinite && state.duration == 0 || (state.override_target && state.target == 0))
+                            )
+                            .accentColor(.orange)
+                            .buttonStyle(BorderlessButtonStyle())
+                            .font(.callout)
+                            .frame(maxWidth: .infinity, alignment: .center)
+                            .controlSize(.mini)
+                            .alert(
+                                "Start Override",
+                                isPresented: $showAlert,
+                                actions: {
+                                    Button("Cancel", role: .cancel) {}
+                                    Button("Start Override", role: .destructive) {
+                                        if state._indefinite {
+                                            state.duration = 0
+                                        } else if state.duration == 0 {
+                                            state.isEnabled = false
+                                        }
+                                        state.saveSettings()
+                                        dismiss()
+                                    }
+                                },
+                                message: {
+                                    Text(alertSring)
+                                }
+                            )
+                            Button {
+                                isPromtPresented = true
+                            }
+                            label: { Text("Save as Profile") }
+                                .disabled(
+                                    !state
+                                        .isEnabled || (state.percentage == 100 && !state.override_target && !state.smbIsOff) ||
+                                        (
+                                            !state._indefinite && state
+                                                .duration == 0 || (state.override_target && state.target == 0)
+                                        )
+                                )
+                        }
+                        .popover(isPresented: $isPromtPresented) {
+                            presetPopover
+                        }
                     }
                 }
             }
