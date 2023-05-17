@@ -4,6 +4,15 @@
 /* Unit format string for an value in percent */
 "%@%%" = "%@%%";
 
+/* The title of the section for alerts */
+"Alert" = "Alert";
+
+/* Text indicating LED Mode is auto */
+"Auto" = "Auto";
+
+/* The title of the cell showing battery level */
+"Battery level" = "Battery level";
+
 /* The title of the section describing commands */
 "Commands" = "Kommandon";
 
@@ -13,8 +22,17 @@
 /* The in-progress connecting state */
 "Connecting" = "Ansluter";
 
+/* The title of the cell for connection LED */
+"Connection LED" = "Connection LED";
+
+/* The title of the section for connection monitoring */
+"Connection Monitoring" = "Connection Monitoring";
+
 /* The title of the cell showing BLE connection state */
 "Connection State" = "Anslutningsstatus";
+
+/* The title of the cell for connection vibration */
+"Connection Vibration" = "Connection Vibration";
 
 /* The title of the section describing the device */
 "Device" = "Enhet";
@@ -37,8 +55,20 @@
 /* The title of the cell showing current rileylink frequency */
 "Frequency" = "Frekvens";
 
+/* The title of the command to fetch RileyLink statistics */
+"Get RileyLink Statistics" = "Get RileyLink Statistics";
+
 /* Progress message for getting statistics. */
 "Get Statistics…" = "Hämtar statistik…";
+
+/* The title of the cell showing Lighten Red LED */
+"Lighten Red LED" = "Lighten Red LED";
+
+/* The title of the cell showing Lighten Yellow LED */
+"Lighten Yellow LED" = "Lighten Yellow LED";
+
+/* The title of the cell showing battery level */
+"Low Battery Alert" = "Low Battery Alert";
 
 /* The title of the cell showing device name */
 "Name" = "Namn";
@@ -56,6 +86,21 @@
 /* The title of the cell showing BLE signal strength (RSSI) */
 "Signal Strength" = "Signalstyrka";
 
+/* The title of the section for orangelink commands
+   The title of the section for rileylink commands */
+"Test Commands" = "Test Commands";
+
+/* The title of the cell showing Test Vibration */
+"Test Vibration" = "Test Vibration";
+
+/* The title of the command to update diagnostic LEDs */
+"Toggle Diagnostic LEDs" = "Toggle Diagnostic LEDs";
+
+/* Progress message for changing diagnostic LED mode */
+"Updating diagnostic LEDs mode" = "Updating diagnostic LEDs mode";
+
 /* The title of the cell showing uptime */
 "Uptime" = "Körs sedan";
 
+/* The title of the cell showing ORL */
+"Voltage" = "Voltage";
