@@ -71,7 +71,7 @@
 "PumpMessage(%1$@, %2$@, %3$@, %4$@)" = "Сообщение помпы(%1$@, %2$@, %3$@, %4$@)";
 
 /* Describing the reservoir insulin data source */
-"Reservoir" = "Reservoir";
+"Reservoir" = "Резервуар";
 
 /* Error description */
 "RileyLink radio tune failed" = "Настройка радиосвязи с RileyLink не удалась";

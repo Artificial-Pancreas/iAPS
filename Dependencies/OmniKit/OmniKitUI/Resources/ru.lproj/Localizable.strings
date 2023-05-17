@@ -557,7 +557,7 @@
 "Replace Pod Now" = "Немедленно замените Pod";
 
 /* The title of the cell showing reservoir status */
-"Reservoir" = "Reservoir";
+"Reservoir" = "Резервуар";
 
 /* Text for suspend resume button when insulin delivery is suspended */
 "Resume Insulin Delivery" = "Возобновить подачу инсулина";

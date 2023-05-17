@@ -8,7 +8,7 @@
 "%@ dB" = "%@ dB";
 
 /* Format string for alert content body for lowReservoir pod alert. (1: reminder value) */
-"%1$@ insulin or less remaining in Pod. Change Pod soon." = "%1$@ інсулін або менше залишилися у Pod. Незабаром змініть Pod.";
+"%1$@ insulin or less remaining in Pod. Change Pod soon." = "%1$@ або менше інсуліна в Podʼі. Замініть Pod найближчим часом.";
 
 /* Format string for activation time exceeded
    Pod state when activation not completed in the time allowed */
@@ -36,7 +36,7 @@
 "Bolus: %1$@U %2$@ %3$@ %4$@" = "Bolus: %1$@U %2$@ %3$@ %4$@";
 
 /* Delivery status when bolusing */
-"Bolusing" = "Подаю болюс";
+"Bolusing" = "Подача болюса";
 
 /* Delivery status when bolusing and temp basal is running */
 "Bolusing with temp basal" = "Bolusing with temp basal";
@@ -48,7 +48,7 @@
 "Certain" = "Certain";
 
 /* Alert content body for podExpireImminent pod alert */
-"Change Pod now. Insulin delivery will stop in 1 hour." = "Змінити Pod зараз. Ізольована доставка зупиниться протягом 1 години.";
+"Change Pod now. Insulin delivery will stop in 1 hour." = "Змінити Pod зараз. Подачу інсуліну буде зупинено через 1 годину.";
 
 /* Alert content body for podExpiring pod alert */
 "Change Pod now. Pod has been active for 72 hours." = "Змінити Pod зараз. Pod був активним протягом 72 годин.";
@@ -57,22 +57,22 @@
 "Command error %1$u" = "Command error %1$u";
 
 /* Status highlight that delivery is uncertain. */
-"Comms Issue" = "Комунікаційне питання";
+"Comms Issue" = "Помилка звʼязку";
 
 /* Error message when command is rejected because an unacknowledged command is pending. */
 "Communication issue: Unacknowledged command pending." = "Communication issue: Unacknowledged command pending.";
 
 /* Description for BeepPreference.manualCommands */
-"Confidence reminders will sound for commands you initiate, like bolus, cancel bolus, suspend, resume, save notification reminders, etc. When Loop automatically adjusts delivery, no confidence reminders are used." = "Нагадування про достовірність лунатимуть для команд, які ви ініціюєте, як-от болюс, скасування болюсу, призупинення, відновлення, збереження сповіщень тощо. Коли Loop автоматично регулює доставку, нагадування про довіру не використовуються.";
+"Confidence reminders will sound for commands you initiate, like bolus, cancel bolus, suspend, resume, save notification reminders, etc. When Loop automatically adjusts delivery, no confidence reminders are used." = "Сигнали підтвердження лунатимуть для команд, які ви ініціюєте, таких як болюс, скасування болюсу, призупинення, відновлення, збереження сповіщень тощо. Коли Loop автоматично регулює подачу, сигнали підтвердження не використовуються.";
 
 /* Description for BeepPreference.extended */
-"Confidence reminders will sound when Loop automatically adjusts delivery as well as for commands you initiate." = "Нагадування про довіру лунатимуть, коли Loop автоматично регулює доставку, а також для команд, які ви ініціюєте.";
+"Confidence reminders will sound when Loop automatically adjusts delivery as well as for commands you initiate." = "Сигнали підтвердження лунатимуть, коли Loop автоматично регулює подачу, а також для команд, які ви ініціюєте.";
 
 /* The title for AlarmCode.other notification */
 "Critical Pod Error" = "Критична Помилка";
 
 /* Recovery suggestion when unexpected address received */
-"Crosstalk possible. Please move to a new location" = "Перехресні перешкоди можливі. Будь ласка, перейдіть на нове місце";
+"Crosstalk possible. Please move to a new location" = "Можливі перехресні перешкоди. Будь ласка, перейдіть на нове місце";
 
 /* Pod state when pod has been deactivated */
 "Deactivated" = "Деактивовано";
@@ -93,7 +93,7 @@
 "Expiration alert" = "Expiration alert";
 
 /* Title string for BeepPreference.extended */
-"Extended" = "Розширений";
+"Extended" = "Подовжено";
 
 /* Delivery status when extended bolus is running */
 "Extended bolus running" = "Extended bolus running";
@@ -102,19 +102,19 @@
 "Extended bolus running with temp basal" = "Extended bolus running with temp basal";
 
 /* Pod state when fault event has occurred */
-"Fault event occurred" = "Fault event occurred";
+"Fault event occurred" = "Виникла помилка";
 
 /* Status highlight that when pod is deactivating. */
-"Finish Deactivation" = "Завершення деактивації";
+"Finish Deactivation" = "Завершити деактивацію";
 
 /* Status highlight that when pod is activating. */
 "Finish Pairing" = "Завершити створення пари";
 
 /* Description for finish setup */
-"Finish setup " = "Finish setup ";
+"Finish setup " = "Завершити налаштування ";
 
 /* Description for finish setup reminder */
-"Finish setup reminder" = "Finish setup reminder";
+"Finish setup reminder" = "Нагадування про завершення налаштування";
 
 /* Pod inititialized */
 "Initialized" = "Initialized";
@@ -123,7 +123,7 @@
 "Inserting cannula" = "Inserting cannula";
 
 /* The default notification body for AlarmCodes */
-"Insulin delivery stopped. Change Pod now." = "Введення інсуліну припинено. Змініть Pod зараз.";
+"Insulin delivery stopped. Change Pod now." = "Подачу інсуліну припинено. Замініть Pod зараз.";
 
 /* Status highlight that insulin delivery was suspended. */
 "Insulin Suspended" = "Інсулін призупинено";
@@ -159,10 +159,10 @@
 "Low reservoir advisory alarm" = "Low reservoir advisory alarm";
 
 /* Title for RileyLink low battery alert */
-"Low RileyLink Battery" = "Low RileyLink Battery";
+"Low RileyLink Battery" = "Низький заряд RileyLink";
 
 /* Recovery suggestion when no RileyLink is available */
-"Make sure your RileyLink is nearby and powered on" = "Make sure your RileyLink is nearby and powered on";
+"Make sure your RileyLink is nearby and powered on" = "Впевніться, що RileyLink увімкнений та знаходиться поруч";
 
 /* Status highlight when manual temp basal is running. */
 "Manual Basal" = "Ручна тимчасова базальна швидкість (ТБШ)";
@@ -425,4 +425,4 @@
 "Wait for existing temp basal to finish, or suspend to cancel" = "Зачекайте, доки завершиться наявний тимчасовий базал, або призупиніть, щоб скасувати";
 
 /* Description waiting for pairing reminder */
-"Waiting for pairing reminder" = "Waiting for pairing reminder";
+"Waiting for pairing reminder" = "Очікую нагадування про створення пари";
