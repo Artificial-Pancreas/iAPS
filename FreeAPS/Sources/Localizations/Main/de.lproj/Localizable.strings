@@ -414,16 +414,16 @@ Enact a temp Basal or a temp target */
 "Garmin Watch" = "Garmin Watch";
 
 /* */
-"Add devices" = "Add devices";
+"Add devices" = "Geräte hinzufügen";
 
 /* */
 "Glucose Target" = "Glucose Target";
 
 /* */
-"Heart Rate" = "Heart Rate";
+"Heart Rate" = "Herzfrequenz";
 
 /* */
-"Steps" = "Steps";
+"Steps" = "Schritte";
 
 /* */
 "ISF" = "ISF";
@@ -432,7 +432,7 @@ Enact a temp Basal or a temp target */
 "The app Garmin Connect must be installed to use for iAPS.\n Go to App Store to download it" = "The app Garmin Connect must be installed to use for iAPS.\n Go to App Store to download it";
 
 /* */
-"Garmin is not available" = "Garmin is not available";
+"Garmin is not available" = "Garmin ist nicht verfügbar";
 
 /*  */
 "Services" = "Dienste";
@@ -501,7 +501,7 @@ Enact a temp Basal or a temp target */
 "Treatments" = "Behandlungen";
 
 /* " min" in Treatments list */
-" min" = " min";
+" min" = " Min";
 
 /* */
 "Unable to change anything" = "Keine Änderungen möglich";
@@ -1144,7 +1144,7 @@ Enact a temp Basal or a temp target */
 "Fat & Protein" = "Fat & Protein";
 
 /* */
-"Hide Fat & Protein" = "Hide Fat & Protein";
+"Hide Fat & Protein" = "Fett & Eiweiß ausblenden";
 
 /* Add Fat */
 "Fat" = "Fett";
@@ -1186,7 +1186,7 @@ Enact a temp Basal or a temp target */
 "App Icons" = "App Icons";
 
 /* Service Section */
-"Statistics and Home View" = "Statistics and Home View";
+"Statistics and Home View" = "Statistiken und Home-Ansicht";
 
 /* Alert text */
 "Delete carb equivalents?" = "Delete carb equivalents?";
@@ -1355,16 +1355,16 @@ Enact a temp Basal or a temp target */
 /* */
 
 
-"Today" = "Today";
+"Today" = "Heute";
 
 /* */
-"Day" = "Day";
+"Day" = "Tag";
 
 /* */
-"Week" = "Week";
+"Week" = "Woche";
 
 /* */
-"Month" = "Month";
+"Month" = "Monat";
 
 /* */
 "Total" = "Gesamt";
@@ -1382,10 +1382,10 @@ Enact a temp Basal or a temp target */
 "High" = "Hoch";
 
 /* In Range */
-"In Range" = "In Range";
+"In Range" = "Im Zielbereich";
 
 /* Display % */
-"Change HbA1c Unit" = "Change HbA1c Unit";
+"Change HbA1c Unit" = "HbA1c Einheit wechseln";
 
 /* */
 "Display Chart X - Grid lines" = "Display Chart X - Grid lines";
