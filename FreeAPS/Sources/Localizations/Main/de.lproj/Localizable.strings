@@ -1415,7 +1415,7 @@ Enact a temp Basal or a temp target */
 "Readings / 24h" = "Readings / 24h";
 
 /* Days of saved readings*/
-"Days" = "Days";
+"Days" = "Tage";
 
 /* Normal BG (within TIR) */
 "Normal" = "im Zielbereich";
@@ -1505,9 +1505,9 @@ Enact a temp Basal or a temp target */
 "Are you sure you want to delete this CGM?" = "Möchten Sie das CGM wirklich löschen?";
 
 /* New Experimental feature */
-"Experimental" = "Experimental";
+"Experimental" = "Experimentell";
 /* Smoothing of CGM readings */
-"Smooth Glucose Value" = "Smooth Glucose Value";
+"Smooth Glucose Value" = "Glätten der Glukosewerte";
 
 /* -----------------------------------------------------------------------------------------------------------
 
