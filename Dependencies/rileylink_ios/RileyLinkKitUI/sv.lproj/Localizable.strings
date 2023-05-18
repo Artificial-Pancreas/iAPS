@@ -5,13 +5,13 @@
 "%@%%" = "%@%%";
 
 /* The title of the section for alerts */
-"Alert" = "Alert";
+"Alert" = "Varning";
 
 /* Text indicating LED Mode is auto */
 "Auto" = "Auto";
 
 /* The title of the cell showing battery level */
-"Battery level" = "Battery level";
+"Battery level" = "Batterinivå";
 
 /* The title of the section describing commands */
 "Commands" = "Kommandon";
@@ -23,16 +23,16 @@
 "Connecting" = "Ansluter";
 
 /* The title of the cell for connection LED */
-"Connection LED" = "Connection LED";
+"Connection LED" = "Anslutnings-LED";
 
 /* The title of the section for connection monitoring */
-"Connection Monitoring" = "Connection Monitoring";
+"Connection Monitoring" = "Anslutningsstatus";
 
 /* The title of the cell showing BLE connection state */
 "Connection State" = "Anslutningsstatus";
 
 /* The title of the cell for connection vibration */
-"Connection Vibration" = "Connection Vibration";
+"Connection Vibration" = "Anslutningsvibration";
 
 /* The title of the section describing the device */
 "Device" = "Enhet";
@@ -56,19 +56,19 @@
 "Frequency" = "Frekvens";
 
 /* The title of the command to fetch RileyLink statistics */
-"Get RileyLink Statistics" = "Get RileyLink Statistics";
+"Get RileyLink Statistics" = "Hämta RileyLink-statistik";
 
 /* Progress message for getting statistics. */
 "Get Statistics…" = "Hämtar statistik…";
 
 /* The title of the cell showing Lighten Red LED */
-"Lighten Red LED" = "Lighten Red LED";
+"Lighten Red LED" = "Ljusare röd LED";
 
 /* The title of the cell showing Lighten Yellow LED */
-"Lighten Yellow LED" = "Lighten Yellow LED";
+"Lighten Yellow LED" = "Ljusare gul LED";
 
 /* The title of the cell showing battery level */
-"Low Battery Alert" = "Low Battery Alert";
+"Low Battery Alert" = "Låg batterinivå";
 
 /* The title of the cell showing device name */
 "Name" = "Namn";
@@ -88,19 +88,19 @@
 
 /* The title of the section for orangelink commands
    The title of the section for rileylink commands */
-"Test Commands" = "Test Commands";
+"Test Commands" = "Testkommandon";
 
 /* The title of the cell showing Test Vibration */
-"Test Vibration" = "Test Vibration";
+"Test Vibration" = "Testa vibration";
 
 /* The title of the command to update diagnostic LEDs */
-"Toggle Diagnostic LEDs" = "Toggle Diagnostic LEDs";
+"Toggle Diagnostic LEDs" = "Slå på diagnostiska LED";
 
 /* Progress message for changing diagnostic LED mode */
-"Updating diagnostic LEDs mode" = "Updating diagnostic LEDs mode";
+"Updating diagnostic LEDs mode" = "Uppdaterar diagnostiska LED";
 
 /* The title of the cell showing uptime */
 "Uptime" = "Körs sedan";
 
 /* The title of the cell showing ORL */
-"Voltage" = "Voltage";
+"Voltage" = "Spänning (V)";
