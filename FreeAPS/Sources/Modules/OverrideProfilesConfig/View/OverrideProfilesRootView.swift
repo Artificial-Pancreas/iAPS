@@ -14,13 +14,17 @@ extension OverrideProfilesConfig {
         @State private var alertSring = ""
         @State private var isPromtPresented = false
         @State private var saved = false
+        @State private var isRemoveAlertPresented = false
+        @State private var removeAlert: Alert?
 
         @Environment(\.dismiss) var dismiss
         @Environment(\.managedObjectContext) var moc
 
         @FetchRequest(
             entity: OverridePresets.entity(),
-            sortDescriptors: [NSSortDescriptor(key: "name", ascending: true)]
+            sortDescriptors: [NSSortDescriptor(key: "name", ascending: true)], predicate: NSPredicate(
+                format: "name != %@", "" as String
+            )
         ) var fetchedProfiles: FetchedResults<OverridePresets>
 
         private var formatter: NumberFormatter {
@@ -66,6 +70,13 @@ extension OverrideProfilesConfig {
 
         var body: some View {
             Form {
+                if !state.presets.isEmpty {
+                    Section(header: Text("Profiles")) {
+                        ForEach(fetchedProfiles) { preset in
+                            presetView(for: preset)
+                        }
+                    }
+                }
                 Section(
                     header: Text("Override your profiles"),
                     footer: Text("" + (!state.isEnabled ? NSLocalizedString("Currently no Override active", comment: "") : ""))
@@ -211,6 +222,75 @@ extension OverrideProfilesConfig {
             }
             .onAppear(perform: configureView)
             .onAppear { state.savedSettings() }
+        }
+
+        private func presetView(for preset: OverridePresets) -> some View {
+            var target = (preset.target ?? 0) as Decimal
+            if state.units == .mmolL {
+                target = target.asMmolL
+            }
+            let duration = (preset.duration ?? 0) as Decimal
+            let name = preset.name ?? ""
+            let percent = preset.percentage
+            let perpetual = preset.indefinite
+            let durationString = perpetual ? "Perpetual" : "\(formatter.string(from: duration as NSNumber)!)"
+            let smbString = preset.smbIsOff ? "SMBs off" : ""
+            let targetString = target != 0 ? "\(formatter.string(from: target as NSNumber)!)" : ""
+
+            return HStack {
+                VStack {
+                    HStack {
+                        Text(name)
+                        Spacer()
+                    }
+                    HStack(spacing: 2) {
+                        Text(
+                            "\(formatter.string(from: percent as NSNumber)!)"
+                        )
+                        .foregroundColor(.secondary)
+                        .font(.caption)
+                        Text(targetString)
+                            .foregroundColor(.secondary)
+                            .font(.caption)
+                        Text(state.units.rawValue)
+                            .foregroundColor(.secondary)
+                            .font(.caption)
+                        Text(perpetual ? "for" : "")
+                            .foregroundColor(.secondary)
+                            .font(.caption)
+                        Text(durationString)
+                            .foregroundColor(.secondary)
+                            .font(.caption)
+                        Text("min")
+                            .foregroundColor(.secondary)
+                            .font(.caption)
+                        Text(smbString)
+                            .foregroundColor(.secondary)
+                            .font(.caption)
+                        Spacer()
+                    }.padding(.top, 2)
+                }
+                .contentShape(Rectangle())
+                .onTapGesture {
+                    state.selectProfile(id: preset.id ?? "")
+                }
+
+                Image(systemName: "xmark.circle").foregroundColor(.secondary)
+                    .contentShape(Rectangle())
+                    .padding(.vertical)
+                    .onTapGesture {
+                        removeAlert = Alert(
+                            title: Text("Are you sure?"),
+                            message: Text("Delete Profile \"\(name)\""),
+                            primaryButton: .destructive(Text("Delete"), action: { state.removeProfile(id: preset.id ?? "") }),
+                            secondaryButton: .cancel()
+                        )
+                        isRemoveAlertPresented = true
+                    }
+                    .alert(isPresented: $isRemoveAlertPresented) {
+                        removeAlert!
+                    }
+            }
         }
     }
 }

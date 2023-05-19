@@ -13,11 +13,13 @@ extension OverrideProfilesConfig {
         @Published var id: String = ""
         @Published var profileName: String = ""
         @Published var isPreset: Bool = false
+        @Published var presets = [OverridePresets]()
 
         var units: GlucoseUnits = .mmolL
 
         override func subscribe() {
             units = settingsManager.settings.units
+            presets = [OverridePresets(context: coredataContext)]
         }
 
         let coredataContext = CoreDataStack.shared.persistentContainer.viewContext
@@ -62,6 +64,29 @@ extension OverrideProfilesConfig {
                 } else { saveOverride.target = 0 }
                 try? self.coredataContext.save()
                 print("Name: \(self.profileName)")
+            }
+        }
+
+        func removeProfile(id: String) {
+            guard let profileToDelete = presets.filter({ $0.id == id }).first else { return }
+            try? coredataContext.delete(profileToDelete)
+        }
+
+        func selectProfile(id: String) {
+            guard id != "" else { return }
+            guard let profile = presets.filter({ $0.id == id }).first else { return }
+            coredataContext.perform { [self] in
+                let saveOverride = Override(context: self.coredataContext)
+
+                saveOverride.duration = (profile.duration ?? 0) as NSDecimalNumber
+                saveOverride.indefinite = profile.indefinite
+                saveOverride.percentage = profile.percentage
+                saveOverride.enabled = true
+                saveOverride.smbIsOff = profile.smbIsOff
+                saveOverride.isPreset = true
+                saveOverride.date = Date()
+                saveOverride.target = profile.target
+                try? self.coredataContext.save()
             }
         }
 

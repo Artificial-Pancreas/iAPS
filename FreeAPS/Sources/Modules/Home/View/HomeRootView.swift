@@ -352,13 +352,17 @@ extension Home {
         var profiles: some View {
             VStack {
                 HStack {
-                    Text("Profile").font(.callout)
+                    Image(systemName: "person.3.sequence.fill")
+                        .symbolRenderingMode(.palette)
+                        .foregroundStyle(.cyan, .green, .purple)
                     Picker("Profile", selection: $state.selectedProfile) {
                         Text("Normal ").tag(nil as OverridePresets?)
                         ForEach(fetchedProfiles, id: \.self) { (preset: OverridePresets) in
                             Text(preset.name ?? "").tag(preset as OverridePresets?)
                         }
                     }
+                    .tint((state.selectedProfile?.name ?? "") == "" ? .secondary : .orange)
+
                     Button { state.showModal(for: .overrideProfilesConfig) }
                     label: { Image(systemName: "pencil.line")
                         .symbolRenderingMode(.palette)
