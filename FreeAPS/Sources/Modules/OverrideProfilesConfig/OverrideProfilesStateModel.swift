@@ -10,9 +10,9 @@ extension OverrideProfilesConfig {
         @Published var target: Decimal = 0
         @Published var override_target: Bool = false
         @Published var smbIsOff: Bool = false
-        @Published var name: String = ""
         @Published var id: String = ""
-        @Published var profileName = ""
+        @Published var profileName: String = ""
+        @Published var isPreset: Bool = false
 
         var units: GlucoseUnits = .mmolL
 
@@ -30,8 +30,9 @@ extension OverrideProfilesConfig {
                 saveOverride.percentage = self.percentage
                 saveOverride.enabled = self.isEnabled
                 saveOverride.smbIsOff = self.smbIsOff
-                // saveOverride.name = self.name
-                // saveOverride.id = self.id
+                if self.isPreset {
+                    saveOverride.isPreset = true
+                } else { saveOverride.isPreset = false }
                 saveOverride.date = Date()
                 if override_target {
                     if units == .mmolL {
@@ -40,6 +41,27 @@ extension OverrideProfilesConfig {
                     saveOverride.target = target as NSDecimalNumber
                 } else { saveOverride.target = 0 }
                 try? self.coredataContext.save()
+            }
+        }
+
+        func savePreset() {
+            coredataContext.perform { [self] in
+                let saveOverride = OverridePresets(context: self.coredataContext)
+                saveOverride.duration = self.duration as NSDecimalNumber
+                saveOverride.indefinite = self._indefinite
+                saveOverride.percentage = self.percentage
+                saveOverride.smbIsOff = self.smbIsOff
+                saveOverride.name = self.profileName
+                saveOverride.id = UUID().uuidString
+                saveOverride.date = Date()
+                if override_target {
+                    if units == .mmolL {
+                        target = target.asMgdL
+                    }
+                    saveOverride.target = target as NSDecimalNumber
+                } else { saveOverride.target = 0 }
+                try? self.coredataContext.save()
+                print("Name: \(self.profileName)")
             }
         }
 

@@ -10,28 +10,20 @@ extension Home {
 
         @StateObject var state = StateModel()
         @State var isStatusPopupPresented = false
-
-        // Average/Median/Readings and CV/SD titles and values switches when you tap them
-        @State var averageOrMedianTitle = NSLocalizedString("Average", comment: "")
-        @State var median_ = ""
-        @State var average_ = ""
-        @State var readings = ""
-
-        @State var averageOrmedian = ""
-        @State var CV_or_SD_Title = NSLocalizedString("CV", comment: "CV")
-        @State var cv_ = ""
-        @State var sd_ = ""
-        @State var CVorSD = ""
-        // Switch between Loops and Errors when tapping in statPanel
-        @State var loopStatTitle = NSLocalizedString("Loops", comment: "Nr of Loops in statPanel")
         @State var showAlert = false
 
         @Environment(\.managedObjectContext) var moc
+        @Environment(\.colorScheme) var colorScheme
 
         @FetchRequest(
             entity: Override.entity(),
             sortDescriptors: [NSSortDescriptor(key: "date", ascending: false)]
         ) var fetchedPercent: FetchedResults<Override>
+
+        @FetchRequest(
+            entity: OverridePresets.entity(),
+            sortDescriptors: [NSSortDescriptor(key: "name", ascending: true)]
+        ) var fetchedProfiles: FetchedResults<OverridePresets>
 
         @FetchRequest(
             entity: TempTargets.entity(),
@@ -358,18 +350,20 @@ extension Home {
         }
 
         var profiles: some View {
-            let overrideArray = fetchedPercent.filter({ $0.name != "" && !$0.name.isNilOrEmpty })
-            return VStack {
+            VStack {
                 HStack {
                     Text("Profile").font(.callout)
                     Picker("Profile", selection: $state.selectedProfile) {
-                        Text("Normal ").tag(nil as Override?)
-                        ForEach(overrideArray, id: \.self) { (preset: Override) in
-                            Text(preset.name ?? "").tag(preset as Override?)
+                        Text("Normal ").tag(nil as OverridePresets?)
+                        ForEach(fetchedProfiles, id: \.self) { (preset: OverridePresets) in
+                            Text(preset.name ?? "").tag(preset as OverridePresets?)
                         }
                     }
                     Button { state.showModal(for: .overrideProfilesConfig) }
-                    label: { Image(systemName: "pencil") }
+                    label: { Image(systemName: "pencil.line")
+                        .symbolRenderingMode(.palette)
+                        .foregroundStyle(colorScheme == .light ? .black : .white, .blue)
+                    }
                 }
             }
             ._onBindingChange($state.selectedProfile, perform: { _ in showAlert = true })
@@ -379,13 +373,14 @@ extension Home {
                 isPresented: $showAlert,
                 actions: {
                     Button("Cancel", role: .cancel) {}
-                    Button("Start new Profile", role: .destructive) {
-                        state.saveProfiles()
+                    Button(state.selectedProfile == nil ? "Back to Normal" : "Start new Profile", role: .destructive) {
+                        state.selectProfile()
                     }
                 },
                 message: {
                     Text(
-                        "Are you sure you want to change your profile to ”\(state.selectedProfile?.name?.description ?? "")” ? This will change your insulin and or target glucose and or SMB settings."
+                        state.selectedProfile == nil ? "Change back to your normal profile?" :
+                            "Are you sure you want to change your profile to ”\(state.selectedProfile?.name?.description ?? "")” ? This will change your insulin and or target glucose and or SMB settings."
                     )
                 }
             )
