@@ -18,6 +18,11 @@ extension OverrideProfilesConfig {
         @Environment(\.dismiss) var dismiss
         @Environment(\.managedObjectContext) var moc
 
+        @FetchRequest(
+            entity: OverridePresets.entity(),
+            sortDescriptors: [NSSortDescriptor(key: "name", ascending: true)]
+        ) var fetchedProfiles: FetchedResults<OverridePresets>
+
         private var formatter: NumberFormatter {
             let formatter = NumberFormatter()
             formatter.numberStyle = .decimal
@@ -41,27 +46,18 @@ extension OverrideProfilesConfig {
                 Section(header: Text("Enter Profile Name")) {
                     TextField("Name Of Profile", text: $state.profileName)
                     Button {
-                        saved = true
-                        if state.profileName != "", saved {
-                            let profiles = Override(context: moc)
-                            profiles.name = state.profileName
-                            profiles.id = UUID().uuidString
-                            profiles.duration = state.duration as NSDecimalNumber
-                            profiles.enabled = state.isEnabled
-                            profiles.indefinite = state._indefinite
-                            profiles.percentage = state.percentage
-                            profiles.smbIsOff = state.smbIsOff
-                            profiles.target = state.target as NSDecimalNumber
-                            profiles.date = Date()
-                            try? moc.save()
-                            saved = false
+                        if state.profileName != "", fetchedProfiles.filter({ $0.name == state.profileName }).isEmpty {
+                            state.savePreset()
                             isPromtPresented = false
                         }
                     }
                     label: { Text("Save") }
+                        .disabled(
+                            state.profileName == "" ||
+                                !fetchedProfiles.filter({ $0.name == state.profileName }).isEmpty
+                        )
                     Button {
                         state.profileName = ""
-                        saved = false
                         isPromtPresented = false }
                     label: { Text("Cancel") }
                 }
@@ -71,7 +67,7 @@ extension OverrideProfilesConfig {
         var body: some View {
             Form {
                 Section(
-                    header: Text("Override your Basal, ISF, CR and Target profiles"),
+                    header: Text("Override your profiles"),
                     footer: Text("" + (!state.isEnabled ? NSLocalizedString("Currently no Override active", comment: "") : ""))
                 ) {
                     Toggle(isOn: $state.isEnabled) {
