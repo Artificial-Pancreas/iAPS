@@ -241,7 +241,6 @@ extension Home {
                     } else { profiles.target = 0 }
                     profiles.date = Date()
                     try? self.coredataContext.save()
-                    print("Started profile: \(selectedProfile)")
                 }
             }
         }
