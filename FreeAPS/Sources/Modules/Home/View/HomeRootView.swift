@@ -20,9 +20,18 @@ extension Home {
             sortDescriptors: [NSSortDescriptor(key: "date", ascending: false)]
         ) var fetchedPercent: FetchedResults<Override>
 
+        /*
+         @FetchRequest(
+             entity: OverridePresets.entity(),
+             sortDescriptors: [NSSortDescriptor(key: "name", ascending: true)]
+         ) var fetchedProfiles: FetchedResults<OverridePresets>
+         */
+
         @FetchRequest(
             entity: OverridePresets.entity(),
-            sortDescriptors: [NSSortDescriptor(key: "name", ascending: true)]
+            sortDescriptors: [NSSortDescriptor(key: "name", ascending: true)], predicate: NSPredicate(
+                format: "name != %@", "" as String
+            )
         ) var fetchedProfiles: FetchedResults<OverridePresets>
 
         @FetchRequest(
@@ -349,47 +358,6 @@ extension Home {
             }
         }
 
-        var profiles: some View {
-            VStack {
-                HStack {
-                    Image(systemName: "person.3.sequence.fill")
-                        .symbolRenderingMode(.palette)
-                        .foregroundStyle(.cyan, .green, .purple)
-                    Picker("Profile", selection: $state.selectedProfile) {
-                        Text("Normal ").tag(nil as OverridePresets?)
-                        ForEach(fetchedProfiles, id: \.self) { (preset: OverridePresets) in
-                            Text(preset.name ?? "").tag(preset as OverridePresets?)
-                        }
-                    }
-                    .tint((state.selectedProfile?.name ?? "") == "" ? .secondary : .orange)
-
-                    Button { state.showModal(for: .overrideProfilesConfig) }
-                    label: { Image(systemName: "pencil.line")
-                        .symbolRenderingMode(.palette)
-                        .foregroundStyle(colorScheme == .light ? .black : .white, .blue)
-                    }
-                }
-            }
-            ._onBindingChange($state.selectedProfile, perform: { _ in showAlert = true })
-            .padding(.vertical, 10)
-            .alert(
-                "Change Profile",
-                isPresented: $showAlert,
-                actions: {
-                    Button("Cancel", role: .cancel) {}
-                    Button(state.selectedProfile == nil ? "Back to Normal" : "Start new Profile", role: .destructive) {
-                        state.selectProfile()
-                    }
-                },
-                message: {
-                    Text(
-                        state.selectedProfile == nil ? "Change back to your normal profile?" :
-                            "Are you sure you want to change your profile to ”\(state.selectedProfile?.name?.description ?? "")” ? This will change your insulin and or target glucose and or SMB settings."
-                    )
-                }
-            )
-        }
-
         var mainChart: some View {
             ZStack {
                 if state.animatedBackground {
@@ -423,6 +391,54 @@ extension Home {
             }
             .padding(.bottom)
             .modal(for: .dataTable, from: self)
+        }
+
+        @ViewBuilder private func profiles(_: GeometryProxy) -> some View {
+            ZStack {
+                Rectangle().fill(Color.gray.opacity(0.2)).frame(maxHeight: 45)
+                HStack {
+                    Image(systemName: "person.3.sequence.fill")
+                        .symbolRenderingMode(.palette)
+                        .foregroundStyle(
+                            state.selectedProfile == nil ? .green : .cyan,
+                            state.selectedProfile == nil ? .cyan : .green,
+                            .purple
+                        )
+                    Picker("Profile", selection: $state.selectedProfile) {
+                        Text("Normal Profile").tag(nil as OverridePresets?)
+                        ForEach(fetchedProfiles, id: \.self) { (preset: OverridePresets) in
+                            let name = (preset.name ?? "") == "" || (preset.name?.isEmpty ?? true) ? "" : preset.name!
+                            if name != "" { // Ugly. To do: fix
+                                Text(preset.name ?? "").tag(preset as OverridePresets?)
+                            }
+                        }
+                    }
+                    .tint((state.selectedProfile?.name ?? "") == "" ? .secondary : .orange)
+                    Button { state.showModal(for: .overrideProfilesConfig) }
+                    label: {
+                        Image(systemName: "pencil.line")
+                            .symbolRenderingMode(.palette)
+                            .foregroundStyle(colorScheme == .light ? .black : .white, .blue)
+                    }
+                }
+            }
+            ._onBindingChange($state.selectedProfile, perform: { _ in showAlert = true })
+            .alert(
+                "Change Profile",
+                isPresented: $showAlert,
+                actions: {
+                    Button("Cancel", role: .cancel) {}
+                    Button(state.selectedProfile == nil ? "Back to Normal" : "Start new Profile", role: .destructive) {
+                        state.selectProfile()
+                    }
+                },
+                message: {
+                    Text(
+                        state.selectedProfile == nil ? "Change back to your normal profile?" :
+                            "Are you sure you want to change your profile to ”\(state.selectedProfile?.name?.description ?? "")” ? This will change your insulin and or target glucose and or SMB settings."
+                    )
+                }
+            )
         }
 
         @ViewBuilder private func bottomPanel(_ geo: GeometryProxy) -> some View {
@@ -509,8 +525,8 @@ extension Home {
                     infoPanel
                     mainChart
                     legendPanel
+                    profiles(geo)
                     Divider()
-                    profiles
                     bottomPanel(geo)
                 }
                 .edgesIgnoringSafeArea(.vertical)

@@ -13,7 +13,7 @@ extension OverrideProfilesConfig {
         @Published var id: String = ""
         @Published var profileName: String = ""
         @Published var isPreset: Bool = false
-        @Published var presets = [OverridePresets]()
+        @Published var presets: [OverridePresets] = []
         @Published var selection: OverridePresets?
 
         var units: GlucoseUnits = .mmolL

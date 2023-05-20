@@ -70,8 +70,17 @@ extension OverrideProfilesConfig {
             Form {
                 if state.presets.isNotEmpty {
                     Section {
-                        ForEach(fetchedProfiles) { preset in
-                            profilesView(for: preset)
+                        /*
+                         ForEach(fetchedProfiles) { preset in
+                             profilesView(for: preset)
+                         }.onDelete(perform: removeProfile)
+                         */
+
+                        ForEach(fetchedProfiles, id: \.self) { (preset: OverridePresets) in
+                            let name = (preset.name ?? "") == "" || (preset.name?.isEmpty ?? true) ? "" : preset.name!
+                            if name != "" { // Ugly. To do: fix
+                                profilesView(for: preset)
+                            }
                         }.onDelete(perform: removeProfile)
                     }
                     header: { Text("Profiles") }
@@ -201,25 +210,23 @@ extension OverrideProfilesConfig {
                     }
                 }
             }
-            .onAppear(perform: configureView)
             .onAppear { state.savedSettings() }
+            .onAppear(perform: configureView)
         }
 
-        private func profilesView(for preset: OverridePresets) -> some View {
-            var target = (preset.target ?? 0) as Decimal
-            if state.units == .mmolL {
-                target = target.asMmolL
-            }
+        @ViewBuilder private func profilesView(for preset: OverridePresets) -> some View {
+            let target = state.units == .mmolL ? (((preset.target ?? 0) as NSDecimalNumber) as Decimal)
+                .asMmolL : (preset.target ?? 0) as Decimal
             let duration = (preset.duration ?? 0) as Decimal
-            let name = preset.name ?? ""
-            let percent = preset.percentage / 100 // Ugly formatting fix. To do: make prettier...
+            let name = ((preset.name ?? "") == "") || (preset.name?.isEmpty ?? true) ? "" : preset.name!
+            let percent = preset.percentage / 100
             let perpetual = preset.indefinite
             let durationString = perpetual ? "from now on" : "\(formatter.string(from: duration as NSNumber)!)"
             let smbString = preset.smbIsOff ? "SMBs are off" : ""
             let targetString = target != 0 ? "\(formatter.string(from: target as NSNumber)!)" : ""
 
-            return HStack {
-                if name != "" {
+            if name != "" {
+                HStack {
                     VStack {
                         HStack {
                             Text(name)
