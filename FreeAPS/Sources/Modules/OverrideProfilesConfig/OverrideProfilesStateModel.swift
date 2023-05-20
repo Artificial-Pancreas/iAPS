@@ -14,6 +14,7 @@ extension OverrideProfilesConfig {
         @Published var profileName: String = ""
         @Published var isPreset: Bool = false
         @Published var presets = [OverridePresets]()
+        @Published var selection: OverridePresets?
 
         var units: GlucoseUnits = .mmolL
 
@@ -23,6 +24,7 @@ extension OverrideProfilesConfig {
         }
 
         let coredataContext = CoreDataStack.shared.persistentContainer.viewContext
+        @Environment(\.managedObjectContext) var moc
 
         func saveSettings() {
             coredataContext.perform { [self] in
@@ -65,11 +67,6 @@ extension OverrideProfilesConfig {
                 try? self.coredataContext.save()
                 print("Name: \(self.profileName)")
             }
-        }
-
-        func removeProfile(id: String) {
-            guard let profileToDelete = presets.filter({ $0.id == id }).first else { return }
-            try? coredataContext.delete(profileToDelete)
         }
 
         func selectProfile(id: String) {
