@@ -231,10 +231,10 @@ extension OverrideProfilesConfig {
             }
             let duration = (preset.duration ?? 0) as Decimal
             let name = preset.name ?? ""
-            let percent = preset.percentage
+            let percent = preset.percentage / 100 // Ugly formatting fix. To do: make prettier...
             let perpetual = preset.indefinite
-            let durationString = perpetual ? "Perpetual" : "\(formatter.string(from: duration as NSNumber)!)"
-            let smbString = preset.smbIsOff ? "SMBs off" : ""
+            let durationString = perpetual ? "from now on" : "\(formatter.string(from: duration as NSNumber)!)"
+            let smbString = preset.smbIsOff ? "SMBs are off" : ""
             let targetString = target != 0 ? "\(formatter.string(from: target as NSNumber)!)" : ""
 
             return HStack {
@@ -244,24 +244,22 @@ extension OverrideProfilesConfig {
                         Spacer()
                     }
                     HStack(spacing: 2) {
-                        Text(
-                            "\(formatter.string(from: percent as NSNumber)!)"
-                        )
-                        .foregroundColor(.secondary)
-                        .font(.caption)
+                        Text(percent.formatted(.percent.grouping(.never).rounded().precision(.fractionLength(0))))
+                            .foregroundColor(.secondary)
+                            .font(.caption)
                         Text(targetString)
                             .foregroundColor(.secondary)
                             .font(.caption)
                         Text(state.units.rawValue)
                             .foregroundColor(.secondary)
                             .font(.caption)
-                        Text(perpetual ? "for" : "")
+                        Text(perpetual ? "" : "for")
                             .foregroundColor(.secondary)
                             .font(.caption)
                         Text(durationString)
                             .foregroundColor(.secondary)
                             .font(.caption)
-                        Text("min")
+                        Text(perpetual ? "" : "min")
                             .foregroundColor(.secondary)
                             .font(.caption)
                         Text(smbString)
