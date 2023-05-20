@@ -74,7 +74,7 @@ extension OverrideProfilesConfig {
                     Section(header: Text("Profiles")) {
                         ForEach(fetchedProfiles) { preset in
                             presetView(for: preset)
-                        }
+                        }.onDelete(perform: removeProfile)
                     }
                 }
                 Section(
@@ -274,22 +274,18 @@ extension OverrideProfilesConfig {
                 .onTapGesture {
                     state.selectProfile(id: preset.id ?? "")
                 }
+            }
+        }
 
-                Image(systemName: "xmark.circle").foregroundColor(.secondary)
-                    .contentShape(Rectangle())
-                    .padding(.vertical)
-                    .onTapGesture {
-                        removeAlert = Alert(
-                            title: Text("Are you sure?"),
-                            message: Text("Delete Profile \"\(name)\""),
-                            primaryButton: .destructive(Text("Delete"), action: { state.removeProfile(id: preset.id ?? "") }),
-                            secondaryButton: .cancel()
-                        )
-                        isRemoveAlertPresented = true
-                    }
-                    .alert(isPresented: $isRemoveAlertPresented) {
-                        removeAlert!
-                    }
+        private func removeProfile(at offsets: IndexSet) {
+            for index in offsets {
+                let language = fetchedProfiles[index]
+                moc.delete(language)
+            }
+            do {
+                try moc.save()
+            } catch {
+                // To do: add error
             }
         }
     }
