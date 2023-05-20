@@ -71,10 +71,14 @@ extension OverrideProfilesConfig {
 
         func selectProfile(id: String) {
             guard id != "" else { return }
-            guard let profile = presets.filter({ $0.id == id }).first else { return }
-            coredataContext.perform { [self] in
-                let saveOverride = Override(context: self.coredataContext)
+            coredataContext.performAndWait {
+                var profileArray = [OverridePresets]()
+                let requestProfiles = OverridePresets.fetchRequest() as NSFetchRequest<OverridePresets>
+                try? profileArray = coredataContext.fetch(requestProfiles)
 
+                guard let profile = profileArray.filter({ $0.id == id }).first else { return }
+
+                let saveOverride = Override(context: self.coredataContext)
                 saveOverride.duration = (profile.duration ?? 0) as NSDecimalNumber
                 saveOverride.indefinite = profile.indefinite
                 saveOverride.percentage = profile.percentage
@@ -100,7 +104,6 @@ extension OverrideProfilesConfig {
                 _indefinite = overrideArray.first?.indefinite ?? true
                 duration = (overrideArray.first?.duration ?? 0) as Decimal
                 smbIsOff = overrideArray.first?.smbIsOff ?? false
-                // name = overrideArray.first?.name
                 let overrideTarget = (overrideArray.first?.target ?? 0) as Decimal
 
                 var newDuration = Double(duration)
@@ -127,7 +130,6 @@ extension OverrideProfilesConfig {
                     target = 0
                     override_target = false
                     smbIsOff = false
-                    // name = nil
                 }
             }
         }
