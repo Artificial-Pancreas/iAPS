@@ -87,6 +87,7 @@ extension OverrideProfilesConfig {
                 saveOverride.isPreset = true
                 saveOverride.date = Date()
                 saveOverride.target = profile.target
+                saveOverride.id = id
                 try? self.coredataContext.save()
             }
         }

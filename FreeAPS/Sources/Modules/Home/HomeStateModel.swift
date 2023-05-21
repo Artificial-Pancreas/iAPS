@@ -59,7 +59,7 @@ extension Home {
         @Published var displayXgridLines: Bool = false
         @Published var displayYgridLines: Bool = false
         @Published var thresholdLines: Bool = false
-        @Published var selectedProfile: OverridePresets?
+        @Published var selectedProfile: OverridePresets? = nil
 
         let coredataContext = CoreDataStack.shared.persistentContainer.viewContext
 
