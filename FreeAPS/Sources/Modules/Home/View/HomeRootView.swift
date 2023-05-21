@@ -20,13 +20,6 @@ extension Home {
             sortDescriptors: [NSSortDescriptor(key: "date", ascending: false)]
         ) var fetchedPercent: FetchedResults<Override>
 
-        /*
-         @FetchRequest(
-             entity: OverridePresets.entity(),
-             sortDescriptors: [NSSortDescriptor(key: "name", ascending: true)]
-         ) var fetchedProfiles: FetchedResults<OverridePresets>
-         */
-
         @FetchRequest(
             entity: OverridePresets.entity(),
             sortDescriptors: [NSSortDescriptor(key: "name", ascending: true)], predicate: NSPredicate(
@@ -411,9 +404,18 @@ extension Home {
                             if name != "" { // Ugly. To do: fix
                                 Text(preset.name ?? "").tag(preset as OverridePresets?)
                             }
+                        }.onAppear {
+                            if fetchedPercent.first?.enabled ?? false, fetchedPercent.first?.isPreset ?? false {
+                                let id = fetchedPercent.first?.id ?? ""
+                                let isPreset = fetchedProfiles.filter({ $0.id == id })
+                                if isPreset.isNotEmpty {
+                                    state.selectedProfile = isPreset.first
+                                }
+                            }
+                            print("Selected profile: \(state.selectedProfile)")
                         }
                     }
-                    .tint((state.selectedProfile?.name ?? "") == "" ? .secondary : .orange)
+                    .tint(state.selectedProfile == nil ? .secondary : .orange)
                     Button { state.showModal(for: .overrideProfilesConfig) }
                     label: {
                         Image(systemName: "pencil.line")
@@ -422,7 +424,9 @@ extension Home {
                     }
                 }
             }
-            ._onBindingChange($state.selectedProfile, perform: { _ in showAlert = true })
+            ._onBindingChange($state.selectedProfile, perform: {
+                _ in showAlert = true
+            })
             .alert(
                 "Change Profile",
                 isPresented: $showAlert,
