@@ -12,7 +12,7 @@ extension OverrideProfilesConfig {
         @State private var showingDetail = false
         @State private var isPresented = true
         @State private var alertSring = ""
-        @State private var isPromtPresented = false
+        // @State private var isPromtPresented = false
         @State private var saved = false
         @State private var isRemoveAlertPresented = false
         @State private var removeAlert: Alert?
@@ -51,7 +51,6 @@ extension OverrideProfilesConfig {
                     TextField("Name Of Profile", text: $state.profileName)
                     Button {
                         state.savePreset()
-                        isPromtPresented = false
                     }
 
                     label: { Text("Save") }
@@ -60,7 +59,7 @@ extension OverrideProfilesConfig {
                                 fetchedProfiles.filter({ $0.name == state.profileName }).isNotEmpty
                         )
                     Button {
-                        isPromtPresented = false }
+                        state.isPromtPresented = false }
                     label: { Text("Cancel") }
                 }
             }
@@ -140,7 +139,7 @@ extension OverrideProfilesConfig {
                     }
 
                     HStack {
-                        Button("Start") {
+                        Button("Start new Profile") {
                             showAlert.toggle()
                             alertSring = "\(state.percentage.formatted(.number)) %, " +
                                 (
@@ -174,7 +173,7 @@ extension OverrideProfilesConfig {
                         .frame(maxWidth: .infinity, alignment: .center)
                         .controlSize(.mini)
                         .alert(
-                            "Start Override",
+                            "Start Profile",
                             isPresented: $showAlert,
                             actions: {
                                 Button("Cancel", role: .cancel) { state.isEnabled = false }
@@ -194,7 +193,7 @@ extension OverrideProfilesConfig {
                             }
                         )
                         Button {
-                            isPromtPresented = true
+                            state.isPromtPresented = true
                         }
                         label: { Text("Save as Profile") }
                             .disabled(
@@ -205,9 +204,17 @@ extension OverrideProfilesConfig {
                                     )
                             )
                     }
-                    .popover(isPresented: $isPromtPresented) {
+                    .popover(isPresented: $state.isPromtPresented) {
                         presetPopover
                     }
+                }
+
+                Section {
+                    Button("Return to Normal") {
+                        state.cancelProfile()
+                    }
+                    .disabled(!state.isEnabled)
+                    .tint(.red)
                 }
             }
             .onAppear { state.savedSettings() }
@@ -259,7 +266,7 @@ extension OverrideProfilesConfig {
                     }
                     .contentShape(Rectangle())
                     .onTapGesture {
-                        state.selectProfile(id: preset.id ?? "")
+                        state.selectProfile(id_: preset.id ?? "")
                         dismiss()
                     }
                 }
