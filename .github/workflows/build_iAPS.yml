@@ -11,7 +11,7 @@ on:
     - cron: '30 04 1 * *' # Runs at 04:30 UTC on the 1st every month
 
 env:
-  TARGET_BRANCH: main # branch on fork to build from
+  TARGET_BRANCH: ${{ github.ref_name }} # branch on fork to build from (relpace with specific branch name if needed)
 
 jobs:
   build:
