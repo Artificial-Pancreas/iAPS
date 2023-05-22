@@ -59,7 +59,7 @@ extension Home {
         @Published var displayXgridLines: Bool = false
         @Published var displayYgridLines: Bool = false
         @Published var thresholdLines: Bool = false
-        @Published var selectedProfile: OverridePresets? = nil
+        @Published var selectedProfile: OverridePresets? = .none
 
         let coredataContext = CoreDataStack.shared.persistentContainer.viewContext
 
@@ -242,6 +242,15 @@ extension Home {
                     profiles.date = Date()
                     try? self.coredataContext.save()
                 }
+            }
+        }
+
+        func cancelProfile() {
+            coredataContext.perform { [self] in
+                let profiles = Override(context: self.coredataContext)
+                profiles.enabled = false
+                profiles.date = Date()
+                try? self.coredataContext.save()
             }
         }
 

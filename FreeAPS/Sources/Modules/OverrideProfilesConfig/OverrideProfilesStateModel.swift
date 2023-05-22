@@ -15,6 +15,7 @@ extension OverrideProfilesConfig {
         @Published var isPreset: Bool = false
         @Published var presets: [OverridePresets] = []
         @Published var selection: OverridePresets?
+        @Published var isPromtPresented: Bool = false
 
         var units: GlucoseUnits = .mmolL
 
@@ -44,6 +45,9 @@ extension OverrideProfilesConfig {
                     }
                     saveOverride.target = target as NSDecimalNumber
                 } else { saveOverride.target = 0 }
+                if id != "" {
+                    saveOverride.id = id
+                }
                 try? self.coredataContext.save()
             }
         }
@@ -56,7 +60,8 @@ extension OverrideProfilesConfig {
                 saveOverride.percentage = self.percentage
                 saveOverride.smbIsOff = self.smbIsOff
                 saveOverride.name = self.profileName
-                saveOverride.id = UUID().uuidString
+                id = UUID().uuidString
+                saveOverride.id = id
                 saveOverride.date = Date()
                 if override_target {
                     if units == .mmolL {
@@ -65,12 +70,13 @@ extension OverrideProfilesConfig {
                     saveOverride.target = target as NSDecimalNumber
                 } else { saveOverride.target = 0 }
                 try? self.coredataContext.save()
+                isPromtPresented = false
                 print("Name: \(self.profileName)")
             }
         }
 
-        func selectProfile(id: String) {
-            guard id != "" else { return }
+        func selectProfile(id_: String) {
+            guard id_ != "" else { return }
             coredataContext.performAndWait {
                 var profileArray = [OverridePresets]()
                 let requestProfiles = OverridePresets.fetchRequest() as NSFetchRequest<OverridePresets>
@@ -87,7 +93,7 @@ extension OverrideProfilesConfig {
                 saveOverride.isPreset = true
                 saveOverride.date = Date()
                 saveOverride.target = profile.target
-                saveOverride.id = id
+                saveOverride.id = id_
                 try? self.coredataContext.save()
             }
         }
@@ -132,6 +138,22 @@ extension OverrideProfilesConfig {
                     override_target = false
                     smbIsOff = false
                 }
+            }
+        }
+
+        func cancelProfile() {
+            _indefinite = true
+            isEnabled = false
+            percentage = 100
+            duration = 0
+            target = 0
+            override_target = false
+            smbIsOff = false
+            coredataContext.perform { [self] in
+                let profiles = Override(context: self.coredataContext)
+                profiles.enabled = false
+                profiles.date = Date()
+                try? self.coredataContext.save()
             }
         }
     }

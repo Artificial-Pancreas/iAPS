@@ -11,6 +11,8 @@ extension Home {
         @StateObject var state = StateModel()
         @State var isStatusPopupPresented = false
         @State var showAlert = false
+        @State var showCancelAlert = false
+        @State var nameOfProfile: String = ""
 
         @Environment(\.managedObjectContext) var moc
         @Environment(\.colorScheme) var colorScheme
@@ -398,21 +400,16 @@ extension Home {
                             .purple
                         )
                     Picker("Profile", selection: $state.selectedProfile) {
-                        Text("Normal Profile").tag(nil as OverridePresets?)
+                        if fetchedPercent.first?.enabled ?? false, state.selectedProfile == .none {
+                            Text("Custom").tag(.none as OverridePresets?)
+                        } else {
+                            Text("Normal Profile").tag(nil as OverridePresets?)
+                        }
                         ForEach(fetchedProfiles, id: \.self) { (preset: OverridePresets) in
                             let name = (preset.name ?? "") == "" || (preset.name?.isEmpty ?? true) ? "" : preset.name!
                             if name != "" { // Ugly. To do: fix
                                 Text(preset.name ?? "").tag(preset as OverridePresets?)
                             }
-                        }.onAppear {
-                            if fetchedPercent.first?.enabled ?? false, fetchedPercent.first?.isPreset ?? false {
-                                let id = fetchedPercent.first?.id ?? ""
-                                let isPreset = fetchedProfiles.filter({ $0.id == id })
-                                if isPreset.isNotEmpty {
-                                    state.selectedProfile = isPreset.first
-                                }
-                            }
-                            print("Selected profile: \(state.selectedProfile)")
                         }
                     }
                     .tint(state.selectedProfile == nil ? .secondary : .orange)
@@ -421,6 +418,13 @@ extension Home {
                         Image(systemName: "pencil.line")
                             .symbolRenderingMode(.palette)
                             .foregroundStyle(colorScheme == .light ? .black : .white, .blue)
+                    }
+                    if fetchedPercent.first?.enabled ?? false, state.selectedProfile == .none {
+                        Button { /* state.cancelProfile() */ showCancelAlert.toggle() }
+                        label: {
+                            Image(systemName: "xmark")
+                                .foregroundStyle(.red)
+                        }.padding(.horizontal, 20)
                     }
                 }
             }
@@ -442,6 +446,15 @@ extension Home {
                             "Are you sure you want to change your profile to ”\(state.selectedProfile?.name?.description ?? "")” ? This will change your insulin and or target glucose and or SMB settings."
                     )
                 }
+            )
+            .alert(
+                "Return to Normal?", isPresented: $showCancelAlert,
+                actions: {
+                    Button("No", role: .cancel) {}
+                    Button("Yes", role: .destructive) {
+                        state.cancelProfile()
+                    }
+                }, message: { Text("This will change settings back to your normal profile.") }
             )
         }
 
@@ -557,6 +570,18 @@ extension Home {
                                 }
                             }
                     )
+            }
+            .onAppear {
+                if fetchedPercent.first?.enabled ?? false {
+                    print("Selected profile Overide enabled: \(fetchedPercent.first?.enabled ?? false)")
+                    let id = fetchedPercent.first?.id ?? ""
+                    print("Selected profile ID: \(id)")
+                    let isPreset = fetchedProfiles.filter({ $0.id == id })
+                    if isPreset.isNotEmpty {
+                        state.selectedProfile = isPreset.first
+                    } else { nameOfProfile = "Custom" }
+                }
+                print("Selected profile: \(state.selectedProfile)")
             }
         }
 
