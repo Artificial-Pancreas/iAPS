@@ -61,7 +61,6 @@ jobs:
         
     # Keep repository "alive": add empty commits to TARGET_BRANCH after "time_elapsed" days of inactivity to avoid inactivation of scheduled workflows
     - name: Keep alive
-      if: github.repository_owner == 'Artificial-Pancreas' # only run the keepalive action on the upstream repository
       uses: gautamkrishnar/keepalive-workflow@v1
       with:
         time_elapsed: 50 # Time elapsed from the previous commit to trigger a new automated commit (in days)
