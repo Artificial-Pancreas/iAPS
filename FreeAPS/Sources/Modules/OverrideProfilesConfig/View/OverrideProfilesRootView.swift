@@ -167,7 +167,7 @@ extension OverrideProfilesConfig {
                             (state.percentage == 100 && !state.override_target && !state.smbIsOff) ||
                                 (!state._indefinite && state.duration == 0 || (state.override_target && state.target == 0))
                         )
-                        .accentColor(.orange)
+                        .tint(.blue)
                         .buttonStyle(BorderlessButtonStyle())
                         .font(.callout)
                         .frame(maxWidth: .infinity, alignment: .center)
@@ -196,6 +196,7 @@ extension OverrideProfilesConfig {
                             state.isPromtPresented = true
                         }
                         label: { Text("Save as Profile") }
+                            .tint(.orange)
                             .disabled(
                                 (state.percentage == 100 && !state.override_target && !state.smbIsOff) ||
                                     (
@@ -212,6 +213,7 @@ extension OverrideProfilesConfig {
                 Section {
                     Button("Return to Normal") {
                         state.cancelProfile()
+                        dismiss()
                     }
                     .disabled(!state.isEnabled)
                     .tint(.red)

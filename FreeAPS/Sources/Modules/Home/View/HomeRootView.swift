@@ -12,7 +12,6 @@ extension Home {
         @State var isStatusPopupPresented = false
         @State var showAlert = false
         @State var showCancelAlert = false
-        @State var nameOfProfile: String = ""
 
         @Environment(\.managedObjectContext) var moc
         @Environment(\.colorScheme) var colorScheme
@@ -390,7 +389,7 @@ extension Home {
 
         @ViewBuilder private func profiles(_: GeometryProxy) -> some View {
             ZStack {
-                Rectangle().fill(Color.gray.opacity(0.2)).frame(maxHeight: 45)
+                Rectangle().fill(Color.gray.opacity(0.2)).frame(maxHeight: 50)
                 HStack {
                     Image(systemName: "person.3.sequence.fill")
                         .symbolRenderingMode(.palette)
@@ -412,19 +411,21 @@ extension Home {
                             }
                         }
                     }
-                    .tint(state.selectedProfile == nil ? .secondary : .orange)
+                    .tint(.secondary)
+
+                    if fetchedPercent.first?.enabled ?? false, state.selectedProfile == .none {
+                        Button { showCancelAlert.toggle() }
+                        label: {
+                            Image(systemName: "xmark")
+                                .foregroundStyle(.secondary)
+                        }.padding(.trailing, 20)
+                    }
+
                     Button { state.showModal(for: .overrideProfilesConfig) }
                     label: {
                         Image(systemName: "pencil.line")
                             .symbolRenderingMode(.palette)
                             .foregroundStyle(colorScheme == .light ? .black : .white, .blue)
-                    }
-                    if fetchedPercent.first?.enabled ?? false, state.selectedProfile == .none {
-                        Button { /* state.cancelProfile() */ showCancelAlert.toggle() }
-                        label: {
-                            Image(systemName: "xmark")
-                                .foregroundStyle(.red)
-                        }.padding(.horizontal, 20)
                     }
                 }
             }
@@ -579,9 +580,8 @@ extension Home {
                     let isPreset = fetchedProfiles.filter({ $0.id == id })
                     if isPreset.isNotEmpty {
                         state.selectedProfile = isPreset.first
-                    } else { nameOfProfile = "Custom" }
+                    }
                 }
-                print("Selected profile: \(state.selectedProfile)")
             }
         }
 
