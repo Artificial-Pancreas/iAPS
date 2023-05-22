@@ -94,7 +94,7 @@ extension Home {
                 Spacer()
             }
             .frame(maxWidth: .infinity)
-            .padding(.top, geo.safeAreaInsets.top)
+            .padding(.top, 10 + geo.safeAreaInsets.top)
             .padding(.bottom, 6)
             .background(Color.gray.opacity(0.2))
         }
@@ -394,8 +394,8 @@ extension Home {
                     Image(systemName: "person.3.sequence.fill")
                         .symbolRenderingMode(.palette)
                         .foregroundStyle(
-                            state.selectedProfile == nil ? .green : .cyan,
-                            state.selectedProfile == nil ? .cyan : .green,
+                            !(fetchedPercent.first?.enabled ?? false) ? .green : .cyan,
+                            !(fetchedPercent.first?.enabled ?? false) ? .cyan : .green,
                             .purple
                         )
                     Picker("Profile", selection: $state.selectedProfile) {
@@ -540,11 +540,10 @@ extension Home {
             GeometryReader { geo in
                 VStack(spacing: 0) {
                     header(geo)
+                    profiles(geo)
                     infoPanel
                     mainChart
                     legendPanel
-                    profiles(geo)
-                    Divider()
                     bottomPanel(geo)
                 }
                 .edgesIgnoringSafeArea(.vertical)
