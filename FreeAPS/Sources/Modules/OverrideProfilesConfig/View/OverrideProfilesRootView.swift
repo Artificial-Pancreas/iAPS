@@ -10,12 +10,8 @@ extension OverrideProfilesConfig {
         @State private var isEditing = false
         @State private var showAlert = false
         @State private var showingDetail = false
-        @State private var isPresented = true
+        // @State private var isPresented = true
         @State private var alertSring = ""
-        // @State private var isPromtPresented = false
-        @State private var saved = false
-        @State private var isRemoveAlertPresented = false
-        @State private var removeAlert: Alert?
 
         @Environment(\.dismiss) var dismiss
         @Environment(\.managedObjectContext) var moc
@@ -82,15 +78,8 @@ extension OverrideProfilesConfig {
                             }
                         }.onDelete(perform: removeProfile)
                     }
-                    header: { Text("Profiles") }
-                    // footer: { Text("swipe to delete").italic().frame(maxWidth: .infinity, alignment: .trailing) }
                 }
-                Section(
-                    header: Text("Insulin"),
-                    footer: Text(
-                        "Your profile basal insulin will be adjusted with the override percentage and your profile ISF and CR will be inversly adjusted with the percentage.\n\nIf you toggle off the override every profile setting will return to normal."
-                    )
-                ) {
+                Section {
                     VStack {
                         Slider(
                             value: $state.percentage,
@@ -165,12 +154,11 @@ extension OverrideProfilesConfig {
                         }
                         .disabled(
                             (state.percentage == 100 && !state.override_target && !state.smbIsOff) ||
-                                (!state._indefinite && state.duration == 0 || (state.override_target && state.target == 0))
+                                (!state._indefinite && state.duration == 0) || (state.override_target && state.target == 0)
                         )
-                        .tint(.blue)
+                        // .tint(.blue)
                         .buttonStyle(BorderlessButtonStyle())
                         .font(.callout)
-                        .frame(maxWidth: .infinity, alignment: .center)
                         .controlSize(.mini)
                         .alert(
                             "Start Profile",
@@ -178,12 +166,8 @@ extension OverrideProfilesConfig {
                             actions: {
                                 Button("Cancel", role: .cancel) { state.isEnabled = false }
                                 Button("Start Override", role: .destructive) {
-                                    if state._indefinite {
-                                        state.duration = 0
-                                    } else if state.duration == 0 {
-                                        state.isEnabled = true
-                                    }
-                                    state.isEnabled = true
+                                    if state._indefinite { state.duration = 0 }
+                                    state.isEnabled.toggle()
                                     state.saveSettings()
                                     dismiss()
                                 }
@@ -193,10 +177,13 @@ extension OverrideProfilesConfig {
                             }
                         )
                         Button {
-                            state.isPromtPresented = true
+                            state.isPromtPresented.toggle()
                         }
                         label: { Text("Save as Profile") }
                             .tint(.orange)
+                            .frame(maxWidth: .infinity, alignment: .trailing)
+                            .buttonStyle(BorderlessButtonStyle())
+                            .controlSize(.mini)
                             .disabled(
                                 (state.percentage == 100 && !state.override_target && !state.smbIsOff) ||
                                     (
@@ -210,17 +197,31 @@ extension OverrideProfilesConfig {
                     }
                 }
 
-                Section {
-                    Button("Return to Normal") {
-                        state.cancelProfile()
-                        dismiss()
-                    }
-                    .disabled(!state.isEnabled)
-                    .tint(.red)
+                header: { Text("Insulin") }
+                footer: {
+                    Text(
+                        "Your profile basal insulin will be adjusted with the override percentage and your profile ISF and CR will be inversly adjusted with the percentage."
+                    )
                 }
+
+                // Section {
+
+                Button("Return to Normal") {
+                    state.cancelProfile()
+                    dismiss()
+                }
+                .frame(maxWidth: .infinity, alignment: .center)
+                .buttonStyle(BorderlessButtonStyle())
+                .disabled(!state.isEnabled)
+                .tint(.red)
+
+                // }
             }
             .onAppear { state.savedSettings() }
             .onAppear(perform: configureView)
+            .navigationBarTitle("Profiles")
+            .navigationBarTitleDisplayMode(.automatic)
+            .navigationBarItems(leading: Button("Close", action: state.hideModal))
         }
 
         @ViewBuilder private func profilesView(for preset: OverridePresets) -> some View {
@@ -269,7 +270,7 @@ extension OverrideProfilesConfig {
                     .contentShape(Rectangle())
                     .onTapGesture {
                         state.selectProfile(id_: preset.id ?? "")
-                        dismiss()
+                        state.hideModal()
                     }
                 }
             }

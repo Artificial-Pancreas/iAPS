@@ -33,10 +33,11 @@ extension OverrideProfilesConfig {
                 saveOverride.duration = self.duration as NSDecimalNumber
                 saveOverride.indefinite = self._indefinite
                 saveOverride.percentage = self.percentage
-                saveOverride.enabled = self.isEnabled
+                saveOverride.enabled = true
                 saveOverride.smbIsOff = self.smbIsOff
                 if self.isPreset {
                     saveOverride.isPreset = true
+                    saveOverride.id = id
                 } else { saveOverride.isPreset = false }
                 saveOverride.date = Date()
                 if override_target {
@@ -45,9 +46,6 @@ extension OverrideProfilesConfig {
                     }
                     saveOverride.target = target as NSDecimalNumber
                 } else { saveOverride.target = 0 }
-                if id != "" {
-                    saveOverride.id = id
-                }
                 try? self.coredataContext.save()
             }
         }
@@ -61,6 +59,7 @@ extension OverrideProfilesConfig {
                 saveOverride.smbIsOff = self.smbIsOff
                 saveOverride.name = self.profileName
                 id = UUID().uuidString
+                self.isPreset.toggle()
                 saveOverride.id = id
                 saveOverride.date = Date()
                 if override_target {
@@ -82,7 +81,7 @@ extension OverrideProfilesConfig {
                 let requestProfiles = OverridePresets.fetchRequest() as NSFetchRequest<OverridePresets>
                 try? profileArray = coredataContext.fetch(requestProfiles)
 
-                guard let profile = profileArray.filter({ $0.id == id }).first else { return }
+                guard let profile = profileArray.filter({ $0.id == id_ }).first else { return }
 
                 let saveOverride = Override(context: self.coredataContext)
                 saveOverride.duration = (profile.duration ?? 0) as NSDecimalNumber
