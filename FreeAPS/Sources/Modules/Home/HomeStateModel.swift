@@ -11,7 +11,6 @@ extension Home {
         @Injected() var nightscoutManager: NightscoutManager!
         private let timer = DispatchTimer(timeInterval: 5)
         private(set) var filteredHours = 24
-
         @Published var glucose: [BloodGlucose] = []
         @Published var suggestion: Suggestion?
         @Published var uploadStats = false
@@ -59,7 +58,6 @@ extension Home {
         @Published var displayXgridLines: Bool = false
         @Published var displayYgridLines: Bool = false
         @Published var thresholdLines: Bool = false
-        @Published var selectedProfile: OverridePresets? = .none
 
         let coredataContext = CoreDataStack.shared.persistentContainer.viewContext
 
@@ -203,46 +201,6 @@ extension Home {
 
         func cancelBolus() {
             apsManager.cancelBolus()
-        }
-
-        func selectProfile() {
-            guard selectedProfile != nil else {
-                coredataContext.perform { [self] in
-                    let profiles = Override(context: self.coredataContext)
-                    profiles.enabled = false
-                    profiles.date = Date()
-                    try? self.coredataContext.save()
-                }
-                return
-            }
-            coredataContext.performAndWait { [self] in
-                var presetArray = [OverridePresets]()
-                let requestPresets = OverridePresets.fetchRequest() as NSFetchRequest<OverridePresets>
-                let sortPresets = NSSortDescriptor(key: "name", ascending: false)
-                requestPresets.sortDescriptors = [sortPresets]
-                requestPresets.predicate = NSPredicate(format: "name == %@", (selectedProfile?.name ?? "") as String)
-                requestPresets.fetchLimit = 1
-                try? presetArray = coredataContext.fetch(requestPresets)
-
-                if presetArray.isNotEmpty {
-                    let profiles = Override(context: self.coredataContext)
-                    profiles.duration = presetArray.first?.duration ?? 0
-                    profiles.enabled = true
-                    profiles.indefinite = presetArray.first?.indefinite ?? false
-                    profiles.percentage = presetArray.first?.percentage ?? 100
-                    profiles.smbIsOff = presetArray.first?.smbIsOff ?? false
-                    profiles.isPreset = true
-                    if (presetArray.first?.target ?? 0) != 0 {
-                        var target = (presetArray.first?.target ?? 100) as Decimal
-                        if units == .mmolL {
-                            target = target.asMgdL
-                        }
-                        profiles.target = target as NSDecimalNumber
-                    } else { profiles.target = 0 }
-                    profiles.date = Date()
-                    try? self.coredataContext.save()
-                }
-            }
         }
 
         func cancelProfile() {

@@ -10,7 +10,6 @@ extension Home {
 
         @StateObject var state = StateModel()
         @State var isStatusPopupPresented = false
-        @State var showAlert = false
         @State var showCancelAlert = false
 
         @Environment(\.managedObjectContext) var moc
@@ -95,7 +94,7 @@ extension Home {
             }
             .frame(maxWidth: .infinity)
             .padding(.top, 10 + geo.safeAreaInsets.top)
-            .padding(.bottom, 6)
+            .padding(.bottom, 10)
             .background(Color.gray.opacity(0.2))
         }
 
@@ -210,8 +209,8 @@ extension Home {
                 let hbt = sliderTTpresets.first?.hbt ?? 0
                 string = ", " + (tirFormatter.string(from: state.infoPanelTTPercentage(hbt, target) as NSNumber) ?? "") + " %"
             } /* else if enactedSliderTT.first?.enabled ?? false {
-                 let hbt = enactedSliderTT.first?.hbt ?? 0
-                 string = ", " + (tirFormatter.string(from: state.infoPanelTTPercentage(hbt, target) as NSNumber) ?? "") + " %"
+             let hbt = enactedSliderTT.first?.hbt ?? 0
+             string = ", " + (tirFormatter.string(from: state.infoPanelTTPercentage(hbt, target) as NSNumber) ?? "") + " %"
              } */
 
             let percentString = state
@@ -389,7 +388,7 @@ extension Home {
 
         @ViewBuilder private func profiles(_: GeometryProxy) -> some View {
             ZStack {
-                Rectangle().fill(Color.gray.opacity(0.2)).frame(maxHeight: 50)
+                Rectangle().fill(Color.gray.opacity(0.2)).frame(maxHeight: 45)
                 HStack {
                     Image(systemName: "person.3.sequence.fill")
                         .symbolRenderingMode(.palette)
@@ -398,22 +397,10 @@ extension Home {
                             !(fetchedPercent.first?.enabled ?? false) ? .cyan : .green,
                             .purple
                         )
-                    Picker("Profile", selection: $state.selectedProfile) {
-                        if fetchedPercent.first?.enabled ?? false, state.selectedProfile == .none {
-                            Text("Custom").tag(.none as OverridePresets?)
-                        } else {
-                            Text("Normal Profile").tag(nil as OverridePresets?)
-                        }
-                        ForEach(fetchedProfiles, id: \.self) { (preset: OverridePresets) in
-                            let name = (preset.name ?? "") == "" || (preset.name?.isEmpty ?? true) ? "" : preset.name!
-                            if name != "" { // Ugly. To do: fix
-                                Text(preset.name ?? "").tag(preset as OverridePresets?)
-                            }
-                        }
-                    }
-                    .tint(.secondary)
 
-                    if fetchedPercent.first?.enabled ?? false, state.selectedProfile == .none {
+                    Text(selectedProfile()).foregroundColor(.secondary)
+
+                    if fetchedPercent.first?.enabled ?? false {
                         Button { showCancelAlert.toggle() }
                         label: {
                             Image(systemName: "xmark")
@@ -429,25 +416,6 @@ extension Home {
                     }
                 }
             }
-            ._onBindingChange($state.selectedProfile, perform: {
-                _ in showAlert = true
-            })
-            .alert(
-                "Change Profile",
-                isPresented: $showAlert,
-                actions: {
-                    Button("Cancel", role: .cancel) {}
-                    Button(state.selectedProfile == nil ? "Back to Normal" : "Start new Profile", role: .destructive) {
-                        state.selectProfile()
-                    }
-                },
-                message: {
-                    Text(
-                        state.selectedProfile == nil ? "Change back to your normal profile?" :
-                            "Are you sure you want to change your profile to ”\(state.selectedProfile?.name?.description ?? "")” ? This will change your insulin and or target glucose and or SMB settings."
-                    )
-                }
-            )
             .alert(
                 "Return to Normal?", isPresented: $showCancelAlert,
                 actions: {
@@ -457,6 +425,22 @@ extension Home {
                     }
                 }, message: { Text("This will change settings back to your normal profile.") }
             )
+        }
+
+        private func selectedProfile() -> String {
+            var profileString = ""
+            if fetchedPercent.first?.enabled ?? false, !(fetchedPercent.first?.isPreset ?? false) {
+                profileString = NSLocalizedString("Custom", comment: "Custom unsaved Profile")
+            } else if !(fetchedPercent.first?.enabled ?? false) {
+                profileString = NSLocalizedString("Normal Profile", comment: "Your normal Profile used. Use short string")
+            } else {
+                let id_ = fetchedPercent.first?.id ?? ""
+                let profile = fetchedProfiles.filter({ $0.id == id_ }).first
+                if profile != nil {
+                    profileString = profile?.name?.description ?? ""
+                }
+            }
+            return profileString
         }
 
         @ViewBuilder private func bottomPanel(_ geo: GeometryProxy) -> some View {
@@ -570,17 +554,6 @@ extension Home {
                                 }
                             }
                     )
-            }
-            .onAppear {
-                if fetchedPercent.first?.enabled ?? false {
-                    print("Selected profile Overide enabled: \(fetchedPercent.first?.enabled ?? false)")
-                    let id = fetchedPercent.first?.id ?? ""
-                    print("Selected profile ID: \(id)")
-                    let isPreset = fetchedProfiles.filter({ $0.id == id })
-                    if isPreset.isNotEmpty {
-                        state.selectedProfile = isPreset.first
-                    }
-                }
             }
         }
 
