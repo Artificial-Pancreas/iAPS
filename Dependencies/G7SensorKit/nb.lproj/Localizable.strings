@@ -111,19 +111,19 @@
 "Grace period remaining" = "Utsettelsesperiode som gjenstår";
 
 /* G7 Status highlight text for searching for sensor */
-"Searching for\nSensor" = "Searching for\nSensor";
+"Searching for\nSensor" = "Søker etter\nSensor";
 
 /* G7 Status highlight text for sensor expired */
-"Sensor\nExpired" = "Sensor\nExpired";
+"Sensor\nExpired" = "Sensor\nUtløpt";
 
 /* G7 Status highlight text for signal loss */
-"Sensor\nFailed" = "Sensor\nFailed";
+"Sensor\nFailed" = "Sensor\nFeilet";
 
 /* G7 Status highlight text for signal loss */
-"Signal\nLoss" = "Signal\nLoss";
+"Signal\nLoss" = "Signal\nTapt";
 
 /*G7 Status highlight text for sensor error */
-"Sensor\nIssue" = "Sensor\nIssue";
+"Sensor\nIssue" = "Sensor\nFeil";
 
 /* G7 Status highlight text for sensor warmup */
-"Sensor\nWarmup" = "Sensor\nWarmup";
+"Sensor\nWarmup" = "Sensor\nOppvarming";
