@@ -183,18 +183,18 @@ extension OverrideProfilesConfig {
                 duration = (overrideArray.first?.duration ?? 0) as Decimal
                 smbIsOff = overrideArray.first?.smbIsOff ?? false
                 advancedSettings = overrideArray.first?.advancedSettings ?? false
+                isfAndCr = overrideArray.first?.isfAndCr ?? true
+                smbIsAlwaysOff = overrideArray.first?.smbIsAlwaysOff ?? false
 
                 if advancedSettings {
-                    if !(overrideArray.first?.isfAndCr ?? true) {
-                        isfAndCr = false
+                    if !isfAndCr {
                         isf = overrideArray.first?.isf ?? false
                         cr = overrideArray.first?.cr ?? false
-                    } else { isfAndCr = true }
-                    if overrideArray.first?.smbIsAlwaysOff ?? false {
-                        smbIsAlwaysOff = true
+                    }
+                    if smbIsAlwaysOff {
                         start = (overrideArray.first?.start ?? 0) as Decimal
                         end = (overrideArray.first?.end ?? 0) as Decimal
-                    } else { smbIsAlwaysOff = false }
+                    }
 
                     let smb = (overrideArray.first?.smbMinutes ?? 30) as Decimal
                     if smb != self.settingsManager.preferences.maxSMBBasalMinutes {

@@ -232,10 +232,21 @@ extension Home {
             var targetString = (fetchedTargetFormatter.string(from: target as NSNumber) ?? "") + " " + unit
             if tempTargetString != nil || target == 0 { targetString = "" }
             percentString = percentString == "100 %" ? "" : percentString
-            var durationString = indefinite ?
-                "" : ((tirFormatter.string(from: (fetchedPercent.first?.duration ?? 0) as NSNumber) ?? "") + " min")
-            let smbToggleString = (fetchedPercent.first?.smbIsOff ?? false) ? " \u{20e0}" : ""
 
+            let duration = (fetchedPercent.first?.duration ?? 0) as Decimal
+            let addedMinutes = Int(duration)
+            let date = fetchedPercent.first?.date ?? Date()
+            var newDuration: Decimal = 0
+
+            if date.addingTimeInterval(addedMinutes.minutes.timeInterval) > Date() {
+                newDuration = Decimal(Date().distance(to: date.addingTimeInterval(addedMinutes.minutes.timeInterval)).minutes)
+            }
+
+            var durationString = indefinite ?
+                "" : newDuration > 0 ?
+                (newDuration.formatted(.number.grouping(.never).rounded().precision(.fractionLength(0))) + " min") : ""
+
+            let smbToggleString = (fetchedPercent.first?.smbIsOff ?? false) ? " \u{20e0}" : ""
             var comma1 = ", "
             var comma2 = comma1
             var comma3 = comma1
@@ -258,6 +269,10 @@ extension Home {
             }
             if smbToggleString == "" {
                 comma3 = ""
+            }
+
+            if durationString == "", !indefinite {
+                return nil
             }
             return percentString + comma1 + targetString + comma2 + durationString + comma3 + smbToggleString
         }

@@ -207,79 +207,9 @@ final class OpenAPS {
                     saveToCoreData.date = Date()
                     saveToCoreData.duration = 0
                     saveToCoreData.indefinite = false
-                    saveToCoreData.percentage = Double(overridePercentage)
-                    try? self.coredataContext.save()
-                } else if overrideArray.first?.indefinite ?? false {
-                    let saveToCoreData = Override(context: self.coredataContext)
-                    saveToCoreData.enabled = true
-                    saveToCoreData.date = Date()
-                    saveToCoreData.duration = 0
-                    saveToCoreData.indefinite = true
-                    saveToCoreData.percentage = Double(overridePercentage)
-                    saveToCoreData.target = overrideTarget as NSDecimalNumber
-                    saveToCoreData.smbIsOff = disableSMBs
-                    if overrideArray.first?.advancedSettings ?? false {
-                        saveToCoreData.advancedSettings = true
-                        if !(overrideArray.first?.isfAndCr ?? true) {
-                            saveToCoreData.isfAndCr = false
-                            saveToCoreData.isf = overrideArray.first?.isf ?? true
-                            saveToCoreData.cr = overrideArray.first?.cr ?? true
-                        } else { saveToCoreData.isfAndCr = true }
-                        if overrideArray.first?.smbIsAlwaysOff ?? false {
-                            saveToCoreData.smbIsAlwaysOff = true
-                            saveToCoreData.start = overrideArray.first?.start ?? 0
-                            saveToCoreData.end = overrideArray.first?.end ?? 23
-                        } else { saveToCoreData.smbIsAlwaysOff = false }
-                        let smb = overrideArray.first?.smbMinutes ?? 30
-                        if smb != smbMinutes {
-                            saveToCoreData.smbMinutes = smb
-                        }
-                        let uam = overrideArray.first?.uamMinutes ?? 30
-                        if uam != uamMinutes {
-                            saveToCoreData.uamMinutes = uam
-                        }
-                    } else { saveToCoreData.advancedSettings = false }
-                    try? self.coredataContext.save()
-                } else {
-                    newDuration = Decimal(Date().distance(to: date.addingTimeInterval(addedMinutes.minutes.timeInterval)).minutes)
-                    let saveToCoreData = Override(context: self.coredataContext)
-                    saveToCoreData.enabled = true
-                    saveToCoreData.date = Date()
-                    saveToCoreData.duration = newDuration as NSDecimalNumber
-                    saveToCoreData.indefinite = false
-                    saveToCoreData.percentage = Double(overridePercentage)
-                    saveToCoreData.target = overrideTarget as NSDecimalNumber
-                    saveToCoreData.smbIsOff = disableSMBs
-                    if overrideArray.first?.advancedSettings ?? false {
-                        saveToCoreData.advancedSettings = true
-                        if !(overrideArray.first?.isfAndCr ?? true) {
-                            saveToCoreData.isfAndCr = false
-                            saveToCoreData.isf = overrideArray.first?.isf ?? true
-                            saveToCoreData.cr = overrideArray.first?.cr ?? true
-                        } else { saveToCoreData.isfAndCr = true }
-                        if overrideArray.first?.smbIsAlwaysOff ?? false {
-                            saveToCoreData.smbIsAlwaysOff = true
-                            saveToCoreData.start = overrideArray.first?.start ?? 0
-                            saveToCoreData.end = overrideArray.first?.end ?? 23
-                        } else { saveToCoreData.smbIsAlwaysOff = false }
-
-                        let smb = overrideArray.first?.smbMinutes ?? 30
-                        if smb != smbMinutes {
-                            saveToCoreData.smbMinutes = smb
-                        }
-                        let uam = overrideArray.first?.uamMinutes ?? 30
-                        if uam != uamMinutes {
-                            saveToCoreData.uamMinutes = uam
-                        }
-                    } else { saveToCoreData.advancedSettings = false }
+                    saveToCoreData.percentage = 100
                     try? self.coredataContext.save()
                 }
-            }
-
-            if newDuration < 0 {
-                newDuration = 0
-            } else {
-                duration = newDuration
             }
 
             if !useOverride {
@@ -290,7 +220,7 @@ final class OpenAPS {
                 disableSMBs = false
             }
 
-            if temptargetActive /* || isPercentageEnabled */ {
+            if temptargetActive {
                 var duration_ = 0
                 var hbt = Double(hbt_)
                 var dd = 0.0
@@ -304,7 +234,6 @@ final class OpenAPS {
 
                     if dd > 0.1 {
                         hbt_ = Decimal(hbt)
-                        // isPercentageEnabled = false
                         temptargetActive = true
                     } else {
                         temptargetActive = false

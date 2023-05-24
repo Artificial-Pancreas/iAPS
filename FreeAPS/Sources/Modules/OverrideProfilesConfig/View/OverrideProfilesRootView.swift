@@ -112,31 +112,14 @@ extension OverrideProfilesConfig {
                         }
                     }
                     HStack {
-                        Toggle(isOn: $state.smbIsOff) {
-                            Text("Disable SMBs")
-                        }
-                    }
-                    HStack {
                         Toggle(isOn: $state.advancedSettings) {
-                            Text("Use Extended settings")
+                            Text("More options")
                         }
                     }
                     if state.advancedSettings {
                         HStack {
-                            Toggle(isOn: $state.isfAndCr) {
-                                Text("Change ISF and CR")
-                            }
-                        }
-                        if !state.isfAndCr {
-                            HStack {
-                                Toggle(isOn: $state.isf) {
-                                    Text("Change ISF")
-                                }
-                            }
-                            HStack {
-                                Toggle(isOn: $state.cr) {
-                                    Text("Change CR")
-                                }
+                            Toggle(isOn: $state.smbIsOff) {
+                                Text("Disable SMBs")
                             }
                         }
                         HStack {
@@ -154,6 +137,23 @@ extension OverrideProfilesConfig {
                                 Text("Last Hour SMBs are Off (24 hours)")
                                 DecimalTextField("0", value: $state.end, formatter: formatter, cleanInput: false)
                                 Text("hour").foregroundColor(.secondary)
+                            }
+                        }
+                        HStack {
+                            Toggle(isOn: $state.isfAndCr) {
+                                Text("Change ISF and CR")
+                            }
+                        }
+                        if !state.isfAndCr {
+                            HStack {
+                                Toggle(isOn: $state.isf) {
+                                    Text("Change ISF")
+                                }
+                            }
+                            HStack {
+                                Toggle(isOn: $state.cr) {
+                                    Text("Change CR")
+                                }
                             }
                         }
                         HStack {
@@ -239,10 +239,7 @@ extension OverrideProfilesConfig {
                             .controlSize(.mini)
                             .disabled(
                                 (state.percentage == 100 && !state.override_target && !state.smbIsOff) ||
-                                    (
-                                        !state._indefinite && state
-                                            .duration == 0 || (state.override_target && state.target == 0)
-                                    )
+                                    (!state._indefinite && state.duration == 0) || (state.override_target && state.target == 0)
                             )
                     }
                     .popover(isPresented: $state.isPromtPresented) {
