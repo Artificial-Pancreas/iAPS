@@ -388,8 +388,9 @@ extension Home {
 
         @ViewBuilder private func profiles(_: GeometryProxy) -> some View {
             ZStack {
-                Rectangle().fill(Color.gray.opacity(0.2)).frame(maxHeight: 45)
-                HStack {
+                Rectangle().fill(Color.gray.opacity(0.2)).frame(maxHeight: 40)
+                let cancel = fetchedPercent.first?.enabled ?? false
+                HStack(spacing: cancel ? 25 : 35) {
                     Image(systemName: "person.3.sequence.fill")
                         .symbolRenderingMode(.palette)
                         .foregroundStyle(
@@ -397,15 +398,13 @@ extension Home {
                             !(fetchedPercent.first?.enabled ?? false) ? .cyan : .green,
                             .purple
                         )
-
                     Text(selectedProfile()).foregroundColor(.secondary)
-
-                    if fetchedPercent.first?.enabled ?? false {
+                    if cancel {
                         Button { showCancelAlert.toggle() }
                         label: {
                             Image(systemName: "xmark")
                                 .foregroundStyle(.secondary)
-                        }.padding(.trailing, 20)
+                        } // .padding(.trailing, 20)
                     }
 
                     Button { state.showModal(for: .overrideProfilesConfig) }
@@ -430,7 +429,7 @@ extension Home {
         private func selectedProfile() -> String {
             var profileString = ""
             if fetchedPercent.first?.enabled ?? false, !(fetchedPercent.first?.isPreset ?? false) {
-                profileString = NSLocalizedString("Custom", comment: "Custom unsaved Profile")
+                profileString = NSLocalizedString("Custom Profile", comment: "Custom unsaved Profile")
             } else if !(fetchedPercent.first?.enabled ?? false) {
                 profileString = NSLocalizedString("Normal Profile", comment: "Your normal Profile used. Use short string")
             } else {
@@ -524,6 +523,7 @@ extension Home {
             GeometryReader { geo in
                 VStack(spacing: 0) {
                     header(geo)
+                    Divider().tint(.white)
                     profiles(geo)
                     infoPanel
                     mainChart
