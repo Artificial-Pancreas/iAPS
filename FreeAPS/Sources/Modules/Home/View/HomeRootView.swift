@@ -390,28 +390,24 @@ extension Home {
             ZStack {
                 Rectangle().fill(Color.gray.opacity(0.2)).frame(maxHeight: 40)
                 let cancel = fetchedPercent.first?.enabled ?? false
-                HStack(spacing: cancel ? 25 : 35) {
-                    Image(systemName: "person.3.sequence.fill")
-                        .symbolRenderingMode(.palette)
-                        .foregroundStyle(
-                            !(fetchedPercent.first?.enabled ?? false) ? .green : .cyan,
-                            !(fetchedPercent.first?.enabled ?? false) ? .cyan : .green,
-                            .purple
-                        )
+                HStack(spacing: cancel ? 25 : 15) {
+                    Button { state.showModal(for: .overrideProfilesConfig) }
+                    label: {
+                        Image(systemName: "person.3.sequence.fill")
+                            .symbolRenderingMode(.palette)
+                            .foregroundStyle(
+                                !(fetchedPercent.first?.enabled ?? false) ? .green : .cyan,
+                                !(fetchedPercent.first?.enabled ?? false) ? .cyan : .green,
+                                .purple
+                            )
+                    }
                     Text(selectedProfile()).foregroundColor(.secondary)
                     if cancel {
                         Button { showCancelAlert.toggle() }
                         label: {
                             Image(systemName: "xmark")
                                 .foregroundStyle(.secondary)
-                        } // .padding(.trailing, 20)
-                    }
-
-                    Button { state.showModal(for: .overrideProfilesConfig) }
-                    label: {
-                        Image(systemName: "pencil.line")
-                            .symbolRenderingMode(.palette)
-                            .foregroundStyle(colorScheme == .light ? .black : .white, .blue)
+                        }
                     }
                 }
             }
