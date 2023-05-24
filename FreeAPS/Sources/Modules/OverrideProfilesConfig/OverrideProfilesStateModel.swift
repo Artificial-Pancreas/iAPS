@@ -16,6 +16,15 @@ extension OverrideProfilesConfig {
         @Published var presets: [OverridePresets] = []
         @Published var selection: OverridePresets?
         @Published var isPromtPresented: Bool = false
+        @Published var advancedSettings: Bool = false
+        @Published var isfAndCr: Bool = true
+        @Published var isf: Bool = true
+        @Published var cr: Bool = true
+        @Published var smbIsAlwaysOff: Bool = false
+        @Published var start: Decimal = 0
+        @Published var end: Decimal = 23
+        @Published var smbMinutes: Decimal = 0
+        @Published var uamMinutes: Decimal = 0
 
         var units: GlucoseUnits = .mmolL
 
@@ -46,6 +55,27 @@ extension OverrideProfilesConfig {
                     }
                     saveOverride.target = target as NSDecimalNumber
                 } else { saveOverride.target = 0 }
+
+                if advancedSettings {
+                    saveOverride.advancedSettings = true
+
+                    if !isfAndCr {
+                        saveOverride.isfAndCr = false
+                        saveOverride.isf = isf
+                        saveOverride.cr = cr
+                    } else { saveOverride.isfAndCr = true }
+                    if smbIsAlwaysOff {
+                        saveOverride.smbIsAlwaysOff = true
+                        saveOverride.start = start as NSDecimalNumber
+                        saveOverride.end = end as NSDecimalNumber
+                    } else { saveOverride.smbIsAlwaysOff = false }
+                    if smbMinutes != self.settingsManager.preferences.maxSMBBasalMinutes {
+                        saveOverride.smbMinutes = smbMinutes as NSDecimalNumber
+                    }
+                    if uamMinutes != self.settingsManager.preferences.maxUAMSMBBasalMinutes {
+                        saveOverride.uamMinutes = uamMinutes as NSDecimalNumber
+                    }
+                }
                 try? self.coredataContext.save()
             }
         }
@@ -68,9 +98,29 @@ extension OverrideProfilesConfig {
                     }
                     saveOverride.target = target as NSDecimalNumber
                 } else { saveOverride.target = 0 }
+
+                if advancedSettings {
+                    saveOverride.advancedSettings = true
+
+                    if !isfAndCr {
+                        saveOverride.isfAndCr = false
+                        saveOverride.isf = isf
+                        saveOverride.cr = cr
+                    } else { saveOverride.isfAndCr = true }
+                    if smbIsAlwaysOff {
+                        saveOverride.smbIsAlwaysOff = true
+                        saveOverride.start = start as NSDecimalNumber
+                        saveOverride.end = end as NSDecimalNumber
+                    } else { smbIsAlwaysOff = false }
+                    if smbMinutes != self.settingsManager.preferences.maxSMBBasalMinutes {
+                        saveOverride.smbMinutes = smbMinutes as NSDecimalNumber
+                    }
+                    if uamMinutes != self.settingsManager.preferences.maxUAMSMBBasalMinutes {
+                        saveOverride.uamMinutes = uamMinutes as NSDecimalNumber
+                    }
+                }
                 try? self.coredataContext.save()
                 isPromtPresented = false
-                print("Name: \(self.profileName)")
             }
         }
 
@@ -93,6 +143,28 @@ extension OverrideProfilesConfig {
                 saveOverride.date = Date()
                 saveOverride.target = profile.target
                 saveOverride.id = id_
+
+                if profile.advancedSettings {
+                    if !isfAndCr {
+                        saveOverride.isfAndCr = false
+                        saveOverride.isf = profile.isf
+                        saveOverride.cr = profile.cr
+                    } else { saveOverride.isfAndCr = true }
+                    if profile.smbIsAlwaysOff {
+                        saveOverride.smbIsAlwaysOff = true
+                        saveOverride.start = profile.start
+                        saveOverride.end = profile.end
+                    } else { saveOverride.smbIsAlwaysOff = false }
+
+                    let smb = (profile.smbMinutes ?? 30) as Decimal
+                    if smb != self.settingsManager.preferences.maxSMBBasalMinutes {
+                        saveOverride.smbMinutes = profile.smbMinutes
+                    }
+                    let uam = (profile.uamMinutes ?? 30) as Decimal
+                    if uam != self.settingsManager.preferences.maxUAMSMBBasalMinutes {
+                        saveOverride.uamMinutes = profile.uamMinutes
+                    }
+                }
                 try? self.coredataContext.save()
             }
         }
@@ -103,13 +175,37 @@ extension OverrideProfilesConfig {
                 let requestEnabled = Override.fetchRequest() as NSFetchRequest<Override>
                 let sortIsEnabled = NSSortDescriptor(key: "date", ascending: false)
                 requestEnabled.sortDescriptors = [sortIsEnabled]
-                requestEnabled.fetchLimit = 1
+                // requestEnabled.fetchLimit = 1
                 try? overrideArray = coredataContext.fetch(requestEnabled)
                 isEnabled = overrideArray.first?.enabled ?? false
                 percentage = overrideArray.first?.percentage ?? 100
                 _indefinite = overrideArray.first?.indefinite ?? true
                 duration = (overrideArray.first?.duration ?? 0) as Decimal
                 smbIsOff = overrideArray.first?.smbIsOff ?? false
+                advancedSettings = overrideArray.first?.advancedSettings ?? false
+
+                if advancedSettings {
+                    if !(overrideArray.first?.isfAndCr ?? true) {
+                        isfAndCr = false
+                        isf = overrideArray.first?.isf ?? false
+                        cr = overrideArray.first?.cr ?? false
+                    } else { isfAndCr = true }
+                    if overrideArray.first?.smbIsAlwaysOff ?? false {
+                        smbIsAlwaysOff = true
+                        start = (overrideArray.first?.start ?? 0) as Decimal
+                        end = (overrideArray.first?.end ?? 0) as Decimal
+                    } else { smbIsAlwaysOff = false }
+
+                    let smb = (overrideArray.first?.smbMinutes ?? 30) as Decimal
+                    if smb != self.settingsManager.preferences.maxSMBBasalMinutes {
+                        smbMinutes = (overrideArray.first?.smbMinutes ?? 30) as Decimal
+                    }
+                    let uam = (overrideArray.first?.uamMinutes ?? 30) as Decimal
+                    if uam != self.settingsManager.preferences.maxUAMSMBBasalMinutes {
+                        uamMinutes = (overrideArray.first?.uamMinutes ?? 30) as Decimal
+                    }
+                }
+
                 let overrideTarget = (overrideArray.first?.target ?? 0) as Decimal
 
                 var newDuration = Double(duration)
@@ -136,6 +232,7 @@ extension OverrideProfilesConfig {
                     target = 0
                     override_target = false
                     smbIsOff = false
+                    advancedSettings = false
                 }
             }
         }
@@ -148,6 +245,7 @@ extension OverrideProfilesConfig {
             target = 0
             override_target = false
             smbIsOff = false
+            advancedSettings = false
             coredataContext.perform { [self] in
                 let profiles = Override(context: self.coredataContext)
                 profiles.enabled = false

@@ -124,6 +124,8 @@ final class OpenAPS {
             let preferences = storage.retrieve(OpenAPS.Settings.preferences, as: Preferences.self)
             var hbt_ = preferences?.halfBasalExerciseTarget ?? 160
             let wp = preferences?.weightPercentage ?? 1
+            let smbMinutes = (preferences?.maxSMBBasalMinutes ?? 30) as NSDecimalNumber
+            let uamMinutes = (preferences?.maxUAMSMBBasalMinutes ?? 30) as NSDecimalNumber
 
             let tenDaysAgo = Date().addingTimeInterval(-10.days.timeInterval)
             let twoHoursAgo = Date().addingTimeInterval(-2.hours.timeInterval)
@@ -146,7 +148,7 @@ final class OpenAPS {
             let requestOverrides = Override.fetchRequest() as NSFetchRequest<Override>
             let sortOverride = NSSortDescriptor(key: "date", ascending: false)
             requestOverrides.sortDescriptors = [sortOverride]
-            requestOverrides.fetchLimit = 1
+            // requestOverrides.fetchLimit = 1
             try? overrideArray = coredataContext.fetch(requestOverrides)
 
             var tempTargetsArray = [TempTargets]()
@@ -193,6 +195,7 @@ final class OpenAPS {
             if useOverride {
                 duration = (overrideArray.first?.duration ?? 0) as Decimal
                 overrideTarget = (overrideArray.first?.target ?? 0) as Decimal
+                let advancedSettings = overrideArray.first?.advancedSettings ?? false
                 let addedMinutes = Int(duration)
                 let date = overrideArray.first?.date ?? Date()
                 if date.addingTimeInterval(addedMinutes.minutes.timeInterval) < Date(),
@@ -215,6 +218,27 @@ final class OpenAPS {
                     saveToCoreData.percentage = Double(overridePercentage)
                     saveToCoreData.target = overrideTarget as NSDecimalNumber
                     saveToCoreData.smbIsOff = disableSMBs
+                    if overrideArray.first?.advancedSettings ?? false {
+                        saveToCoreData.advancedSettings = true
+                        if !(overrideArray.first?.isfAndCr ?? true) {
+                            saveToCoreData.isfAndCr = false
+                            saveToCoreData.isf = overrideArray.first?.isf ?? true
+                            saveToCoreData.cr = overrideArray.first?.cr ?? true
+                        } else { saveToCoreData.isfAndCr = true }
+                        if overrideArray.first?.smbIsAlwaysOff ?? false {
+                            saveToCoreData.smbIsAlwaysOff = true
+                            saveToCoreData.start = overrideArray.first?.start ?? 0
+                            saveToCoreData.end = overrideArray.first?.end ?? 23
+                        } else { saveToCoreData.smbIsAlwaysOff = false }
+                        let smb = overrideArray.first?.smbMinutes ?? 30
+                        if smb != smbMinutes {
+                            saveToCoreData.smbMinutes = smb
+                        }
+                        let uam = overrideArray.first?.uamMinutes ?? 30
+                        if uam != uamMinutes {
+                            saveToCoreData.uamMinutes = uam
+                        }
+                    } else { saveToCoreData.advancedSettings = false }
                     try? self.coredataContext.save()
                 } else {
                     newDuration = Decimal(Date().distance(to: date.addingTimeInterval(addedMinutes.minutes.timeInterval)).minutes)
@@ -226,6 +250,28 @@ final class OpenAPS {
                     saveToCoreData.percentage = Double(overridePercentage)
                     saveToCoreData.target = overrideTarget as NSDecimalNumber
                     saveToCoreData.smbIsOff = disableSMBs
+                    if overrideArray.first?.advancedSettings ?? false {
+                        saveToCoreData.advancedSettings = true
+                        if !(overrideArray.first?.isfAndCr ?? true) {
+                            saveToCoreData.isfAndCr = false
+                            saveToCoreData.isf = overrideArray.first?.isf ?? true
+                            saveToCoreData.cr = overrideArray.first?.cr ?? true
+                        } else { saveToCoreData.isfAndCr = true }
+                        if overrideArray.first?.smbIsAlwaysOff ?? false {
+                            saveToCoreData.smbIsAlwaysOff = true
+                            saveToCoreData.start = overrideArray.first?.start ?? 0
+                            saveToCoreData.end = overrideArray.first?.end ?? 23
+                        } else { saveToCoreData.smbIsAlwaysOff = false }
+
+                        let smb = overrideArray.first?.smbMinutes ?? 30
+                        if smb != smbMinutes {
+                            saveToCoreData.smbMinutes = smb
+                        }
+                        let uam = overrideArray.first?.uamMinutes ?? 30
+                        if uam != uamMinutes {
+                            saveToCoreData.uamMinutes = uam
+                        }
+                    } else { saveToCoreData.advancedSettings = false }
                     try? self.coredataContext.save()
                 }
             }
@@ -280,7 +326,16 @@ final class OpenAPS {
                     unlimited: unlimited,
                     hbt: hbt_,
                     overrideTarget: overrideTarget,
-                    smbIsOff: disableSMBs
+                    smbIsOff: disableSMBs,
+                    advancedSettings: overrideArray.first?.advancedSettings ?? false,
+                    isfAndCr: overrideArray.first?.isfAndCr ?? false,
+                    isf: overrideArray.first?.isf ?? false,
+                    cr: overrideArray.first?.cr ?? false,
+                    smbIsAlwaysOff: overrideArray.first?.smbIsAlwaysOff ?? false,
+                    start: (overrideArray.first?.start ?? 0) as Decimal,
+                    end: (overrideArray.first?.end ?? 0) as Decimal,
+                    smbMinutes: (overrideArray.first?.smbMinutes ?? smbMinutes) as Decimal,
+                    uamMinutes: (overrideArray.first?.uamMinutes ?? uamMinutes) as Decimal
                 )
                 storage.save(averages, as: OpenAPS.Monitor.oref2_variables)
                 print("Test time for oref2_variables: \(-now.timeIntervalSinceNow) seconds")
@@ -300,7 +355,16 @@ final class OpenAPS {
                     unlimited: unlimited,
                     hbt: hbt_,
                     overrideTarget: overrideTarget,
-                    smbIsOff: disableSMBs
+                    smbIsOff: disableSMBs,
+                    advancedSettings: overrideArray.first?.advancedSettings ?? false,
+                    isfAndCr: overrideArray.first?.isfAndCr ?? false,
+                    isf: overrideArray.first?.isf ?? false,
+                    cr: overrideArray.first?.cr ?? false,
+                    smbIsAlwaysOff: overrideArray.first?.smbIsAlwaysOff ?? false,
+                    start: (overrideArray.first?.start ?? 0) as Decimal,
+                    end: (overrideArray.first?.end ?? 0) as Decimal,
+                    smbMinutes: (overrideArray.first?.smbMinutes ?? smbMinutes) as Decimal,
+                    uamMinutes: (overrideArray.first?.uamMinutes ?? uamMinutes) as Decimal
                 )
                 storage.save(averages, as: OpenAPS.Monitor.oref2_variables)
                 return self.loadFileFromStorage(name: Monitor.oref2_variables)
