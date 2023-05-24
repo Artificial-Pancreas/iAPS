@@ -391,6 +391,8 @@ extension Home {
                 Rectangle().fill(Color.gray.opacity(0.2)).frame(maxHeight: 40)
                 let cancel = fetchedPercent.first?.enabled ?? false
                 HStack(spacing: cancel ? 25 : 15) {
+                    Text(selectedProfile()).foregroundColor(.secondary)
+
                     Button { state.showModal(for: .overrideProfilesConfig) }
                     label: {
                         Image(systemName: "person.3.sequence.fill")
@@ -401,7 +403,7 @@ extension Home {
                                 .purple
                             )
                     }
-                    Text(selectedProfile()).foregroundColor(.secondary)
+
                     if cancel {
                         Button { showCancelAlert.toggle() }
                         label: {
