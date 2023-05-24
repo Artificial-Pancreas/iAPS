@@ -10,7 +10,6 @@ extension OverrideProfilesConfig {
         @State private var isEditing = false
         @State private var showAlert = false
         @State private var showingDetail = false
-        // @State private var isPresented = true
         @State private var alertSring = ""
 
         @Environment(\.dismiss) var dismiss
@@ -65,17 +64,8 @@ extension OverrideProfilesConfig {
             Form {
                 if state.presets.isNotEmpty {
                     Section {
-                        /*
-                         ForEach(fetchedProfiles) { preset in
-                             profilesView(for: preset)
-                         }.onDelete(perform: removeProfile)
-                         */
-
-                        ForEach(fetchedProfiles, id: \.self) { (preset: OverridePresets) in
-                            let name = (preset.name ?? "") == "" || (preset.name?.isEmpty ?? true) ? "" : preset.name!
-                            if name != "" { // Ugly. To do: fix
-                                profilesView(for: preset)
-                            }
+                        ForEach(fetchedProfiles) { preset in
+                            profilesView(for: preset)
                         }.onDelete(perform: removeProfile)
                     }
                 }
@@ -124,6 +114,69 @@ extension OverrideProfilesConfig {
                     HStack {
                         Toggle(isOn: $state.smbIsOff) {
                             Text("Disable SMBs")
+                        }
+                    }
+                    HStack {
+                        Toggle(isOn: $state.advancedSettings) {
+                            Text("Use Extended settings")
+                        }
+                    }
+                    if state.advancedSettings {
+                        HStack {
+                            Toggle(isOn: $state.isfAndCr) {
+                                Text("Change ISF and CR")
+                            }
+                        }
+                        if !state.isfAndCr {
+                            HStack {
+                                Toggle(isOn: $state.isf) {
+                                    Text("Change ISF")
+                                }
+                            }
+                            HStack {
+                                Toggle(isOn: $state.cr) {
+                                    Text("Change CR")
+                                }
+                            }
+                        }
+                        HStack {
+                            Toggle(isOn: $state.smbIsAlwaysOff) {
+                                Text("Schedule when SMBs are Off")
+                            }.disabled(!state.smbIsOff)
+                        }
+                        if state.smbIsAlwaysOff {
+                            HStack {
+                                Text("First Hour SMBs are Off (24 hours)")
+                                DecimalTextField("0", value: $state.start, formatter: formatter, cleanInput: false)
+                                Text("hour").foregroundColor(.secondary)
+                            }
+                            HStack {
+                                Text("Last Hour SMBs are Off (24 hours)")
+                                DecimalTextField("0", value: $state.end, formatter: formatter, cleanInput: false)
+                                Text("hour").foregroundColor(.secondary)
+                            }
+                        }
+                        HStack {
+                            Text("SMB Minutes")
+                            let minutes = state.settingsManager.preferences.maxSMBBasalMinutes
+                            DecimalTextField(
+                                minutes.formatted(),
+                                value: $state.smbMinutes,
+                                formatter: formatter,
+                                cleanInput: false
+                            )
+                            Text("minutes").foregroundColor(.secondary)
+                        }
+                        HStack {
+                            Text("UAM SMB Minutes")
+                            let uam_minutes = state.settingsManager.preferences.maxUAMSMBBasalMinutes
+                            DecimalTextField(
+                                uam_minutes.formatted(),
+                                value: $state.uamMinutes,
+                                formatter: formatter,
+                                cleanInput: false
+                            )
+                            Text("minutes").foregroundColor(.secondary)
                         }
                     }
 
@@ -204,8 +257,6 @@ extension OverrideProfilesConfig {
                     )
                 }
 
-                // Section {
-
                 Button("Return to Normal") {
                     state.cancelProfile()
                     dismiss()
@@ -214,11 +265,9 @@ extension OverrideProfilesConfig {
                 .buttonStyle(BorderlessButtonStyle())
                 .disabled(!state.isEnabled)
                 .tint(.red)
-
-                // }
             }
-            .onAppear { state.savedSettings() }
             .onAppear(perform: configureView)
+            .onAppear { state.savedSettings() }
             .navigationBarTitle("Profiles")
             .navigationBarTitleDisplayMode(.automatic)
             .navigationBarItems(leading: Button("Close", action: state.hideModal))
@@ -231,8 +280,9 @@ extension OverrideProfilesConfig {
             let name = ((preset.name ?? "") == "") || (preset.name?.isEmpty ?? true) ? "" : preset.name!
             let percent = preset.percentage / 100
             let perpetual = preset.indefinite
-            let durationString = perpetual ? "from now on" : "\(formatter.string(from: duration as NSNumber)!)"
-            let smbString = preset.smbIsOff ? "SMBs are off" : ""
+            let durationString = perpetual ? "" : "\(formatter.string(from: duration as NSNumber)!)"
+            let scheduledSMBstring = (preset.smbIsOff && preset.smbIsAlwaysOff) ? "Scheduled SMBs" : ""
+            let smbString = (preset.smbIsOff && scheduledSMBstring == "") ? "SMBs are off" : ""
             let targetString = target != 0 ? "\(formatter.string(from: target as NSNumber)!)" : ""
 
             if name != "" {
@@ -242,26 +292,23 @@ extension OverrideProfilesConfig {
                             Text(name)
                             Spacer()
                         }
-                        HStack(spacing: 2) {
+                        HStack(spacing: 5) {
                             Text(percent.formatted(.percent.grouping(.never).rounded().precision(.fractionLength(0))))
                                 .foregroundColor(.secondary)
                                 .font(.caption)
-                            Text(targetString)
-                                .foregroundColor(.secondary)
-                                .font(.caption)
-                            Text(state.units.rawValue)
-                                .foregroundColor(.secondary)
-                                .font(.caption)
-                            Text(perpetual ? "" : "for")
-                                .foregroundColor(.secondary)
-                                .font(.caption)
-                            Text(durationString)
-                                .foregroundColor(.secondary)
-                                .font(.caption)
-                            Text(perpetual ? "" : "min")
-                                .foregroundColor(.secondary)
-                                .font(.caption)
-                            Text(smbString)
+                            if targetString != "" {
+                                Text(targetString)
+                                    .foregroundColor(.secondary)
+                                    .font(.caption)
+                                Text(targetString != "" ? state.units.rawValue : "")
+                                    .foregroundColor(.secondary)
+                                    .font(.caption) }
+                            if durationString != "" {
+                                Text(durationString + (perpetual ? "" : "min"))
+                                    .foregroundColor(.secondary)
+                                    .font(.caption) }
+                            if smbString != "" { Text(smbString).foregroundColor(.secondary).font(.caption) }
+                            Text(scheduledSMBstring)
                                 .foregroundColor(.secondary)
                                 .font(.caption)
                             Spacer()
