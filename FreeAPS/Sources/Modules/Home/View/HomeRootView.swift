@@ -427,7 +427,7 @@ extension Home {
             if fetchedPercent.first?.enabled ?? false, !(fetchedPercent.first?.isPreset ?? false) {
                 profileString = NSLocalizedString("Custom Profile", comment: "Custom but unsaved Profile")
             } else if !(fetchedPercent.first?.enabled ?? false) {
-                profileString = NSLocalizedString("Normal Profile", comment: "Your normal Profile used. Use short string")
+                profileString = NSLocalizedString("Normal Profile", comment: "Your normal Profile. Use a short string")
             } else {
                 let id_ = fetchedPercent.first?.id ?? ""
                 let profile = fetchedProfiles.filter({ $0.id == id_ }).first
