@@ -208,10 +208,7 @@ extension Home {
             if sliderTTpresets.first?.active ?? false {
                 let hbt = sliderTTpresets.first?.hbt ?? 0
                 string = ", " + (tirFormatter.string(from: state.infoPanelTTPercentage(hbt, target) as NSNumber) ?? "") + " %"
-            } /* else if enactedSliderTT.first?.enabled ?? false {
-             let hbt = enactedSliderTT.first?.hbt ?? 0
-             string = ", " + (tirFormatter.string(from: state.infoPanelTTPercentage(hbt, target) as NSNumber) ?? "") + " %"
-             } */
+            }
 
             let percentString = state
                 .units == .mmolL ? (unitString + " mmol/L" + string) : (rawString + (string == "0" ? "" : string))
@@ -243,7 +240,7 @@ extension Home {
             }
 
             var durationString = indefinite ?
-                "" : newDuration > 0 ?
+                "" : newDuration >= 1 ?
                 (newDuration.formatted(.number.grouping(.never).rounded().precision(.fractionLength(0))) + " min") : ""
 
             let smbToggleString = (fetchedPercent.first?.smbIsOff ?? false) ? " \u{20e0}" : ""
@@ -402,6 +399,8 @@ extension Home {
         }
 
         @ViewBuilder private func profiles(_: GeometryProxy) -> some View {
+            let colour: Color = colorScheme == .dark ? .black : .white
+            Rectangle().fill(colour).frame(maxHeight: 1)
             ZStack {
                 Rectangle().fill(Color.gray.opacity(0.2)).frame(maxHeight: 40)
                 let cancel = fetchedPercent.first?.enabled ?? false
@@ -534,7 +533,6 @@ extension Home {
             GeometryReader { geo in
                 VStack(spacing: 0) {
                     header(geo)
-                    Divider().tint(.white)
                     profiles(geo)
                     infoPanel
                     mainChart
