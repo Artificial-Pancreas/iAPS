@@ -392,7 +392,13 @@ extension Home {
                 let cancel = fetchedPercent.first?.enabled ?? false
                 HStack(spacing: cancel ? 25 : 15) {
                     Text(selectedProfile()).foregroundColor(.secondary)
-
+                    if cancel {
+                        Button { showCancelAlert.toggle() }
+                        label: {
+                            Image(systemName: "xmark")
+                                .foregroundStyle(.secondary)
+                        }
+                    }
                     Button { state.showModal(for: .overrideProfilesConfig) }
                     label: {
                         Image(systemName: "person.3.sequence.fill")
@@ -402,14 +408,6 @@ extension Home {
                                 !(fetchedPercent.first?.enabled ?? false) ? .cyan : .green,
                                 .purple
                             )
-                    }
-
-                    if cancel {
-                        Button { showCancelAlert.toggle() }
-                        label: {
-                            Image(systemName: "xmark")
-                                .foregroundStyle(.secondary)
-                        }
                     }
                 }
             }
