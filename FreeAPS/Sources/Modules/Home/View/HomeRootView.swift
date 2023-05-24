@@ -425,7 +425,7 @@ extension Home {
         private func selectedProfile() -> String {
             var profileString = ""
             if fetchedPercent.first?.enabled ?? false, !(fetchedPercent.first?.isPreset ?? false) {
-                profileString = NSLocalizedString("Custom Profile", comment: "Custom unsaved Profile")
+                profileString = NSLocalizedString("Custom Profile", comment: "Custom but unsaved Profile")
             } else if !(fetchedPercent.first?.enabled ?? false) {
                 profileString = NSLocalizedString("Normal Profile", comment: "Your normal Profile used. Use short string")
             } else {
