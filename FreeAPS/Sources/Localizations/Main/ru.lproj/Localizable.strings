@@ -260,7 +260,7 @@ Enact a temp Basal or a temp target */
 /* */
 "Manual Temp Basal" = "Ручная ВБС";
 
-/* Allow uploads data to NS */
+/* Allow uploads tp NS */
 "Allow uploads" = "Разрешить выгрузку";
 
 /* API secret in NS */
@@ -403,7 +403,6 @@ Enact a temp Basal or a temp target */
 
 /* */
 "Watch Configuration" = "Конфигурация часов";
-"Watch" = "Watch";
 
 /* */
 "Apple Watch" = "Apple Watch";
