@@ -38,7 +38,7 @@
 "Invalid response during %1$@: %2$@" = "Ugyldig respons ved %1$@: %2$@";
 
 /* Describing the battery chemistry as Lithium */
-"Lithium" = "Lithium";
+"Lithium" = "Litium";
 
 /* Recovery suggestion */
 "Make sure your RileyLink is nearby and powered on" = "Pass på at din RileyLink er slått på og er i nærheten";
@@ -95,4 +95,4 @@
 "Unknown response during %1$@: %2$@" = "Ukjent respons ved %1$@: %2$@";
 
 /* Describing the worldwide pump region */
-"World-Wide" = "World-Wide";
+"World-Wide" = "Verdensomspennende";

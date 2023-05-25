@@ -1,5 +1,5 @@
 /* Format string for glucose trend per minute. (1: glucose value and unit) */
-"%@/min" = "%@/min";
+"%@/min" = "%@/minuto";
 
 /* Confirmation message for deleting a CGM */
 "Are you sure you want to delete this CGM?" = "Sei sicuro di voler eliminare questo CGM?";
@@ -23,9 +23,6 @@ Title text for the button to remove a CGM from Loop */
 /* Section title for latest glucose calibration */
 "Latest Calibration" = "Ultima calibrazione";
 
-/* Section title for latest connection date */
-"Latest Connection" = "Ultima connessione";
-
 /* Section title for latest glucose reading */
 "Latest Reading" = "Ultima lettura";
 
@@ -35,26 +32,17 @@ Title text for the button to remove a CGM from Loop */
 /* Button title to open CGM app */
 "Open App" = "Apri app";
 
-/* Section title for remote data synchronization */
-"Remote Data Synchronization" = "Sincronizzazione di dati remoti";
-
-/* Title describing past sensor expiration */
-"Sensor Expired" = "Sensore Scaduto";
-
-/* Title describing sensor expiration */
-"Sensor Expires" = "Scadenza Sensore";
-
 /* Title describing sensor session age */
 "Session Age" = "Età sessione";
 
 /* Section title for remote data synchronization */
-"Remote Data Synchronization" = "Sincronizzazione di dati remoti";
+"Remote Data Synchronization" = "Sincronizzazione dei dati remoti";
 
 /* Title describing sensor expiration */
-"Sensor Expires" = "Scadenza Sensore";
+"Sensor Expires" = "Scadenza sensore";
 
 /* Title describing past sensor expiration */
-"Sensor Expired" = "Sensore Scaduto";
+"Sensor Expired" = "Sensore scaduto";
 
 /* Title describing CGM calibration and battery state */
 "Status" = "Stato";
@@ -69,4 +57,4 @@ Title text for the button to remove a CGM from Loop */
 "Trend" = "Tendenza";
 
 /* The title text for the upload glucose switch cell */
-"Upload Readings" = "Carica Letture";
+"Upload Readings" = "Carica letture";

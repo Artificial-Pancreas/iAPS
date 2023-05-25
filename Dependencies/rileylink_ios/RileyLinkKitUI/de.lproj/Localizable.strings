@@ -8,7 +8,7 @@
 "Alert" = "Alarm";
 
 /* Text indicating LED Mode is auto */
-"Auto" = "Auto";
+"Auto" = "Automatisch";
 
 /* The title of the cell showing battery level */
 "Battery level" = "Batteriefüllung";
@@ -104,4 +104,3 @@
 
 /* The title of the cell showing ORL */
 "Voltage" = "Spannung";
-

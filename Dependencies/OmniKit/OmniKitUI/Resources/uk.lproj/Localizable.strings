@@ -2,26 +2,26 @@
 "—" = "—";
 
 /* Format string for last status date on pod details screen */
-"%@ ago" = "%@ ago";
+"%@ ago" = "%@ тому";
 
 /* Unit format string for an RSSI value in decibles */
 "%@ dB" = "%@ dB";
 
 /* No comment provided by engineer. */
-"%@ has recovered communication with the pod on your body.\n\nInsulin delivery records have been updated and should match what has actually been delivered.\n\nYou may continue to use %@ normally now." = "%@ has recovered communication with the pod on your body.\n\nInsulin delivery records have been updated and should match what has actually been delivered.\n\nYou may continue to use %@ normally now.";
+"%@ has recovered communication with the pod on your body.\n\nInsulin delivery records have been updated and should match what has actually been delivered.\n\nYou may continue to use %@ normally now." = "%@ відновив зв’язок із Pod на вашому тілі.\n\nЗаписи про доставку інсуліну оновлено та мають збігатися з фактично доставленою.\n\nВи можете продовжувати використовувати %@ у звичайному режимі.";
 
 /* Format string for delivered insulin. (1: The localized amount)
    Format string for insulin remaining in reservoir. (1: The localized amount) */
 "%@ U" = "%@ U";
 
 /* Format string for bolus progress when finished. (1: The localized amount) */
-"%@ U (Finished)" = "%@ U (Finished)";
+"%@ U (Finished)" = "%@ U (Завершено)";
 
 /* Format string for bolus progress. (1: The delivered amount) (2: The programmed amount) (3: the percent progress) */
-"%@ U of %@ U (%@)" = "%@ U of %@ U (%@)";
+"%@ U of %@ U (%@)" = "%@ U з %@ U (%@)";
 
 /* Format string for temp basal rate. (1: The localized amount) */
-"%@ U/hour" = "%@ U/hour";
+"%@ U/hour" = " %@U/год";
 
 /* Appends a full-stop to a statement */
 "%@." = "%@.";
@@ -30,7 +30,7 @@
 "%@%%" = "%@%%";
 
 /* Format string for reservoir reading when above or equal to maximum reading. (1: The localized amount) */
-"%@+ U" = "%@+ U";
+"%@+ U" = "%@ U";
 
 /* Format string for reservoir volume. (1: The localized volume) */
 "%@U" = "%@U";
@@ -39,13 +39,13 @@
 "%1$@ for %2$@" = "%1$@ для %2$@";
 
 /* Format string for main text of delivery uncertainty recovery page. (1: app name)(2: date of command)(3: app name) */
-"%1$@ has been unable to communicate with the pod on your body since %2$@.\n\nWithout communication with the pod, the app cannot continue to send commands for insulin delivery or display accurate, recent information about your active insulin or the insulin being delivered by the Pod.\n\nMonitor your glucose closely for the next 6 or more hours, as there may or may not be insulin actively working in your body that %3$@ cannot display." = "%1$@ has been unable to communicate with the pod on your body since %2$@.\n\nWithout communication with the pod, the app cannot continue to send commands for insulin delivery or display accurate, recent information about your active insulin or the insulin being delivered by the Pod.\n\nMonitor your glucose closely for the next 6 or more hours, as there may or may not be insulin actively working in your body that %3$@ cannot display.";
+"%1$@ has been unable to communicate with the pod on your body since %2$@.\n\nWithout communication with the pod, the app cannot continue to send commands for insulin delivery or display accurate, recent information about your active insulin or the insulin being delivered by the Pod.\n\nMonitor your glucose closely for the next 6 or more hours, as there may or may not be insulin actively working in your body that %3$@ cannot display." = "%1$@ не може зв’язатися з pod на вашому тілі з %2$@.\n\nБез зв’язку з pod програма не може продовжувати надсилати команди для доставки інсуліну або відображати точну, останню інформацію про ваш активний інсулін або інсуліну, який постачає Pod.\n\nУважно стежте за своїм рівнем глюкози протягом наступних 6 або більше годин, оскільки у вашому організмі може активно працювати або не працювати інсулін, який %3$@ не може відобразити.";
 
 /* Accessibility format string for (1: localized volume)(2: time) */
-"%1$@ units remaining at %2$@" = "%1$@ units remaining at %2$@";
+"%1$@ units remaining at %2$@" = "%1$@ одиниць залишилося на %2$@";
 
 /* Format string providing instructions for replacing pod due to a fault. (1: The fault description) */
-"%1$@. Insulin delivery has stopped. Please deactivate and remove pod." = "%1$@. Insulin delivery has stopped. Please deactivate and remove pod.";
+"%1$@. Insulin delivery has stopped. Please deactivate and remove pod." = "%1$@. Подача інсуліну спинилася. Будь ласка, вимкніть і видаліть POD.";
 
 /* The format string for displaying an offset from a time zone: (1: GMT)(2: -)(3: 4:00) */
 "%1$@%2$@%3$@" = "%1$@%2$@%3$@";
@@ -84,34 +84,34 @@
 "Are you sure you want to cancel Pod setup?" = "Ви впевнені, що бажаєте скасувати налаштування Pod? ";
 
 /* Confirmation message for shutting down a pod */
-"Are you sure you want to shutdown this pod?" = "Are you sure you want to shutdown this pod?";
+"Are you sure you want to shutdown this pod?" = "Ви впевнені, що хочете завершити цей Pod?";
 
 /* No comment provided by engineer. */
-"Are you sure you want to skip Omnipod Onboarding?" = "Are you sure you want to skip Omnipod Onboarding?";
+"Are you sure you want to skip Omnipod Onboarding?" = "Ви впевнені, що хочете пропустити Omnipod Onboarding?";
 
 /* Confirmation message for removing Omnipod PumpManager */
-"Are you sure you want to stop using Omnipod?" = "Are you sure you want to stop using Omnipod?";
+"Are you sure you want to stop using Omnipod?" = "Ви впевнені, що хочете припинити використовувати Omnipod?";
 
 /* The title text for the address assigned to the pod */
-"Assigned Address" = "Assigned Address";
+"Assigned Address" = "Призначена адреса";
 
 /* Title for Attach Pod screen */
 "Attach Pod" = "Прикріпіть Pod";
 
 /* Description string above progress indicator while attempting to re-establish communication from an unacknowledged command */
-"Attemping to re-establish communication" = "Attemping to re-establish communication";
+"Attemping to re-establish communication" = "Спроба відновити зв'язок";
 
 /* Back button text on DeliveryUncertaintyRecoveryView */
-"Back" = "Back";
+"Back" = "Назад";
 
 /* The title of the cell showing pod basal status */
-"Basal Delivery" = "Basal Delivery";
+"Basal Delivery" = "Подача Базалу";
 
 /* The title text for the basal rate schedule */
-"Basal Rates" = "Basal Rates";
+"Basal Rates" = "Швидкості Базалу";
 
 /* The title of the cell showing pod bolus status */
-"Bolus Delivery" = "Bolus Delivery";
+"Bolus Delivery" = "Подача Болюса";
 
 /* The title of the cancel action in an action sheet */
 "Cancel" = "Відмінити";
@@ -120,7 +120,7 @@
 "Cancel Manual Basal" = "Скасувати базу вручну";
 
 /* Insert cannula action button accessibility label when cannula insertion succeeded */
-"Cannula inserted successfully. Continue." = "Cannula inserted successfully. Continue.";
+"Cannula inserted successfully. Continue." = "Канюлю введено успішно. Продовжити.";
 
 /* The action string on pod status page when pod expired */
 "Change Pod now. Insulin delivery will stop 8 hours after the Pod has expired or when no more insulin remains." = "Змінити Pod зараз. Інсулінова доставка зупиниться на 8 годин після того, як Pod закінчиться або більше не залишиться інсуліну.";
@@ -129,10 +129,10 @@
 "Change Pod now. Insulin delivery will stop in %1$@ or when no more insulin remains." = "Змініть Pod зараз. Введення інсуліну припиниться через %1$@ або коли інсулін закінчиться.";
 
 /* The title of the command to change pump time zone */
-"Change Time Zone" = "Change Time Zone";
+"Change Time Zone" = "Змінити часовий пояс";
 
 /* Progress message for changing pod time. */
-"Changing time…" = "Changing time…";
+"Changing time…" = "Зміна часу…";
 
 /* Title for check cannula screen */
 "Check Cannula" = "Перевірте канюлю";
@@ -141,13 +141,13 @@
 "Check Pod, apply to site, then confirm pod attachment." = "Перевірити Pod, застосувати до сайту, а потім підтвердіть прикріплення pod.";
 
 /* Insert cannula action button accessibility label checking insertion */
-"Checking Insertion" = "Checking Insertion";
+"Checking Insertion" = "Перевірка введення канюлі";
 
 /* Cannula insertion button text while checking insertion */
 "Checking..." = "Перевірка...";
 
 /* Title for uncertainty recovered screen */
-"Comms Recovered" = "Comms Recovered";
+"Comms Recovered" = "Зв'язок відновлено";
 
 /* Text for confidence reminders navigation link */
 "Confidence Reminders" = "Нагадування про Впевненість";
@@ -177,7 +177,7 @@
 "days" = "дні";
 
 /* Button title to deactivate pod because of fault during setup */
-"Deactivate" = "Deactivate";
+"Deactivate" = "Деактивувати";
 
 /* Button title for pod deactivation
    Button title to deactivate pod */
@@ -193,23 +193,23 @@
 "Deactivating..." = "Деактивувати...";
 
 /* Button title to delete Omnipod PumpManager */
-"Delete Omnipod" = "Delete Omnipod";
+"Delete Omnipod" = "Видалити Omnipod ";
 
 /* Title text for delivery limits */
-"Delivery Limits" = "Delivery Limits";
+"Delivery Limits" = "Ліміт доставки";
 
 /* Text for device details disclosure row
    title for device details page */
 "Device Details" = "Деталі пристрою";
 
 /* The title of the device information section in settings */
-"Device Information" = "Device Information";
+"Device Information" = "Відомості про пристрій";
 
 /* Header for devices section of RileyLinkSetupView */
 "Devices" = "Пристрої";
 
 /* Title text for button to disable bolus beeps */
-"Disable Bolus Beeps" = "Disable Bolus Beeps";
+"Disable Bolus Beeps" = "Вимкнути звук Болюс";
 
 /* Pairing interface navigation bar button text for discard pod action
    Text for discard pod button */
@@ -219,22 +219,22 @@
 "Done" = "Готово";
 
 /* Title text for button to enable bolus beeps */
-"Enable Bolus Beeps" = "Enable Bolus Beeps";
+"Enable Bolus Beeps" = "Увімкнути звук Болюс";
 
 /* Accessibility label indicating an error occurred */
 "Error" = "Помилка";
 
 /* The alert title for disable bolus beeps error */
-"Error disabling bolus beeps" = "Error disabling bolus beeps";
+"Error disabling bolus beeps" = "Помилка вимкнення звуку Болюс ";
 
 /* The alert title for enable bolus beeps error */
-"Error enabling bolus beeps" = "Error enabling bolus beeps";
+"Error enabling bolus beeps" = "Помилка увімкнення звуку Болюс";
 
 /* The alert title for a resume error */
-"Error Resuming" = "Error Resuming";
+"Error Resuming" = "Помилка при відновленні";
 
 /* The alert title for a suspend error */
-"Error Suspending" = "Error Suspending";
+"Error Suspending" = "Помилка призупинення";
 
 /* The title of the cell showing the pod expiration reminder date */
 "Expiration Reminder" = "Нагадування про термін дії";
@@ -243,10 +243,10 @@
 "Expiration Reminder Default" = "Нагадування про закінчення терміну дії за умовчанням";
 
 /* The title of the cell showing the pod expiration after expiry */
-"Expired" = "Expired";
+"Expired" = "Минув термін дії";
 
 /* The title of the cell showing the pod expiration */
-"Expires" = "Expires";
+"Expires" = "Термін закінчується";
 
 /* Alert title for failing to cancel manual basal error */
 "Failed to Cancel Manual Basal" = "Не вдалося скасувати ручний базал";
@@ -264,28 +264,28 @@
 "Failed to update confidence reminder preference." = "Не вдалося оновити налаштування нагадування про конфіденційність.";
 
 /* Alert title for error when updating expiration reminder */
-"Failed to Update Expiration Reminder" = "Failed to Update Expiration Reminder";
+"Failed to Update Expiration Reminder" = "Не вдалося оновити нагадування про закінчення терміну дії";
 
 /* Alert title for error when updating low reservoir reminder */
-"Failed to Update Low Reservoir Reminder" = "Failed to Update Low Reservoir Reminder";
+"Failed to Update Low Reservoir Reminder" = "Не вдалося оновити нагадування про низький рівень резервуару";
 
 /* Pod life HUD view label */
 "Fault" = "Збій";
 
 /* Label text for step 1 of pair pod instructions */
-"Fill a new pod with U-100 Insulin (leave Pod needle cap on). Listen for 2 beeps." = "Fill a new pod with U-100 Insulin (leave Pod needle cap on). Listen for 2 beeps.";
+"Fill a new pod with U-100 Insulin (leave Pod needle cap on). Listen for 2 beeps." = "Заправити новий pod інсуліном (не менше U-100, кришка канюлі повинна бути на місці). Зачекайте 2 звукових сигналів.";
 
 /* Settings page link description when next lifecycle action is to finish deactivation */
 "Finish deactivation" = "Завершення деактивації";
 
 /* The title of the command to finish pod setup */
-"Finish pod setup" = "Finish pod setup";
+"Finish pod setup" = "Завершити налаштування Pod";
 
 /* Action button title to continue at Setup Complete */
 "Finish Setup" = "Завершити налаштування";
 
 /* Accessibility format string for (1: localized volume)(2: time) */
-"Greater than %1$@ units remaining at %2$@" = "Greater than %1$@ units remaining at %2$@";
+"Greater than %1$@ units remaining at %2$@" = "Залишилось більше %1$@ одиниць на %2$@";
 
 /* Unit for singular hour in pod life remaining */
 "hour" = "годин";
@@ -297,10 +297,10 @@
 "If you cancel Pod setup, the current Pod will be deactivated and will be unusable." = "Якщо ви скасуєте налаштування Pod, поточний Pod буде дезактивовано та стане непридатним для використання.";
 
 /* Instructions when deactivating pod that has been paired, but not attached. */
-"Incompletely set up pod must be deactivated before pairing with a new one. Please deactivate and discard pod." = "Incompletely set up pod must be deactivated before pairing with a new one. Please deactivate and discard pod.";
+"Incompletely set up pod must be deactivated before pairing with a new one. Please deactivate and discard pod." = "Старий Pod має бути деактивований, для створення пари з новим. Будь ласка, деактивуйте та зніміть старий Pod.";
 
 /* Instructions when deactivating pod that has been paired and possibly attached. */
-"Incompletely set up pod must be deactivated before pairing with a new one. Please deactivate and remove pod." = "Incompletely set up pod must be deactivated before pairing with a new one. Please deactivate and remove pod.";
+"Incompletely set up pod must be deactivated before pairing with a new one. Please deactivate and remove pod." = "Старий Pod має бути деактивований, для створення пари з новим. Будь ласка, деактивуйте та зніміть старий Pod.";
 
 /* Button title to insert cannula during setup */
 "Insert Cannula" = "Вставте канюлю";
@@ -309,7 +309,7 @@
 "Inserted" = "Введено";
 
 /* Insert cannula action button accessibility label while pairing */
-"Inserting. Please wait." = "Inserting. Please wait.";
+"Inserting. Please wait." = "Введення канюлі. Будь ласка зачекайте.";
 
 /* Cannula insertion button text while inserting */
 "Inserting..." = "Вставка ...";
@@ -318,7 +318,7 @@
 "Insulin\nSuspended" = "Інсулін\nПризупинено";
 
 /* The title of the cell showing delivered insulin */
-"Insulin Delivered" = "Insulin Delivered";
+"Insulin Delivered" = "Інсулін подано";
 
 /* Title of insulin delivery section */
 "Insulin Delivery" = "Доставка інсуліну";
