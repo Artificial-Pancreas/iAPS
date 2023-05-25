@@ -2,7 +2,7 @@
 "Dexcom G7" = "Dexcom G7";
 
 /* Descriptive text on G7StartupView */
-"iAPS can read G7 CGM data, but you must still use the Dexcom G7 App for pairing, calibration, and other sensor management." = "iAPS can read G7 CGM data, but you must still use the Dexcom G7 App for pairing, calibration, and other sensor management.";
+"iAPS can read G7 CGM data, but you must still use the Dexcom G7 App for pairing, calibration, and other sensor management." = "iAPS kan lese data fra Dexcom G7, men du må fremdeles bruke Dexcom G7-appen for å koble til sender, kalibrere og andre innstillinger for sensoren.";
 
 /* Button title for starting setup */
 "Continue" = "Fortsett";
@@ -38,7 +38,7 @@
 "Sensor Expiration" = "Sensor utløper";
 
 /* title for g7 settings row showing sensor grace period end time */
-"Grace Period End" = "Grace Period End";
+"Grace Period End" = "Slutt på utsettelsesperiode";
 
 /* Field label */
 "Glucose" = "Blodsukker";
@@ -55,7 +55,7 @@
 "Name" = "Navn";
 
 /* title for g7 settings connection status when scanning */
-"Scanning" = "Scanning";
+"Scanning" = "Skanner";
 
 /* title for g7 settings connection status when connected */
 "Connected" = "Tilkoblet";
@@ -64,16 +64,16 @@
 "Connecting" = "Kobler til";
 
 /* title for g7 settings row showing sensor last connect time */
-"Last Connect" = "Last Connect";
+"Last Connect" = "Siste tilkobling";
 
 /* Configuration */
 "Configuration" = "Oppsett";
 
 /* title for g7 config settings to upload readings */
-"Upload Readings" = "Upload Readings";
+"Upload Readings" = "Last opp avlesninger";
 
 /* Button */
-"Scan for new sensor" = "Scan for new sensor";
+"Scan for new sensor" = "Søk etter ny sensor";
 
 /* Button label for removing CGM */
 "Delete CGM" = "Slett CGM";
@@ -90,40 +90,40 @@
 "%@/min" = "%@/min";
 
 /* G7 Progress bar label when searching for sensor */
-"Searching for sensor" = "Searching for sensor";
+"Searching for sensor" = "Søker etter sensor";
 
 /* G7 Progress bar label when sensor expired */
 "Sensor expired" = "Sensoren er utløpt";
 
 /* G7 Progress bar label when sensor in warmup */
-"Warmup completes" = "Warmup completes";
+"Warmup completes" = "Oppvarming fullført";
 
 /* G7 Progress bar label when sensor in warmup */
-"Warmup completes" = "Warmup completes";
+"Warmup completes" = "Oppvarming fullført";
 
 /* G7 Progress bar label when sensor failed */
 "Sensor failed" = "Sensoren feilet";
 
 /* G7 Progress bar label when sensor lifetime progress showing */
-"Sensor expires" = "Sensor expires";
+"Sensor expires" = "Sensor utløper";
 
 /* G7 Progress bar label when sensor grace period progress showing */
-"Grace period remaining" = "Grace period remaining";
+"Grace period remaining" = "Utsettelsesperiode som gjenstår";
 
 /* G7 Status highlight text for searching for sensor */
-"Searching for\nSensor" = "Searching for\nSensor";
+"Searching for\nSensor" = "Søker etter\nSensor";
 
 /* G7 Status highlight text for sensor expired */
-"Sensor\nExpired" = "Sensor\nExpired";
+"Sensor\nExpired" = "Sensor\nUtløpt";
 
 /* G7 Status highlight text for signal loss */
-"Sensor\nFailed" = "Sensor\nFailed";
+"Sensor\nFailed" = "Sensor\nFeilet";
 
 /* G7 Status highlight text for signal loss */
-"Signal\nLoss" = "Signal\nLoss";
+"Signal\nLoss" = "Signal\nTapt";
 
 /*G7 Status highlight text for sensor error */
-"Sensor\nIssue" = "Sensor\nIssue";
+"Sensor\nIssue" = "Sensor\nFeil";
 
 /* G7 Status highlight text for sensor warmup */
-"Sensor\nWarmup" = "Sensor\nWarmup";
+"Sensor\nWarmup" = "Sensor\nOppvarming";
