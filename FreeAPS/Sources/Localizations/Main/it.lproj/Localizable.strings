@@ -44,13 +44,13 @@
 "Agree and continue" = "Acconsenti e Continua";
 
 /* Headline in enacted pop up (at: at what time) */
-"Enacted at" = "Enacted at";
+"Enacted at" = "Eseguito alle";
 
 /* Headline in suggested pop up (at: at what time) */
-"Suggested at" = "Suggested at";
+"Suggested at" = "Suggerito alle";
 
 /* Headline in enacted pop up (at: at what time) */
-"Error at" = "Error at";
+"Error at" = "Errore a";
 
 /* Home title */
 "Home" = "Home";
@@ -113,16 +113,16 @@
 "Enact Temp Target" = "Attiva target temporaneo";
 
 /* */
-"Target" = "Target";
+"Target" = "Obiettivo";
 
 /* */
-"Basal Insulin and Sensitivity ratio" = "Basal Insulin and Sensitivity ratio";
+"Basal Insulin and Sensitivity ratio" = "Rapporto basale insulina e sensibilità";
 
 /* */
 "A lower 'Half Basal Target' setting will reduce the basal and raise the ISF earlier, at a lower target glucose." = "A lower 'Half Basal Target' setting will reduce the basal and raise the ISF earlier, at a lower target glucose.";
 
 /* */
-" Your setting: " = " Your setting: ";
+" Your setting: " = " Le tue impostazioni: ";
 
 /* */
 "mg/dl. Autosens.max limits the max endpoint" = "mg/dl. Autosens.max limits the max endpoint";
@@ -155,7 +155,7 @@
 "No" = "No";
 
 /* Button */
-"Yes" = "Yes";
+"Yes" = "Sì";
 
 /* + Button */
 "[ +1 ]" = "[ +1 ]";
@@ -402,28 +402,28 @@ Enact a temp Basal or a temp target */
 "Watch" = "Watch";
 
 /* */
-"Watch Configuration" = "Watch Configuration";
+"Watch Configuration" = "Configurazione Watch";
 
 /* */
 "Apple Watch" = "Apple Watch";
 
 /* */
-"Display on Watch" = "Display on Watch";
+"Display on Watch" = "Mostra sul Watch";
 
 /* */
 "Garmin Watch" = "Garmin Watch";
 
 /* */
-"Add devices" = "Add devices";
+"Add devices" = "Aggiungi dispositivi";
 
 /* */
-"Glucose Target" = "Glucose Target";
+"Glucose Target" = "Obiettivo glicemico";
 
 /* */
-"Heart Rate" = "Heart Rate";
+"Heart Rate" = "Frequenza cardiaca";
 
 /* */
-"Steps" = "Steps";
+"Steps" = "Passi";
 
 /* */
 "ISF" = "ISF";
@@ -495,7 +495,7 @@ Enact a temp Basal or a temp target */
 "Delete carbs?" = "Elimina carboidrati?";
 
 /* Delete insulin from pump history and Nightscout */
-"Delete insulin?" = "Delete insulin?";
+"Delete insulin?" = "Eliminare l'insulina?";
 
 /* Treatments list */
 "Treatments" = "Trattamenti";
@@ -504,7 +504,7 @@ Enact a temp Basal or a temp target */
 " min" = " minuti";
 
 /* */
-"Unable to change anything" = "Unable to change anything";
+"Unable to change anything" = "Impossibile modificare lo stato";
 
 
 /* Calendar and Libre transmitter settings ---------------
@@ -525,7 +525,7 @@ Enact a temp Basal or a temp target */
 "Other" = "Altro";
 
 /* */
-"Libre Transmitter" = "Libre Transmitter";
+"Libre Transmitter" = "Trasmettitore Libre";
 
 /* */
 "Libre Transmitters" = "Libre Transmitter";
@@ -558,7 +558,7 @@ Enact a temp Basal or a temp target */
 "Meter glucose" = "Misuratore di glucosio";
 
 /* */
-"Info" = "Info";
+"Info" = "Informazioni";
 
 /*v*/
 "Slope" = "Pendenza";
@@ -1091,7 +1091,7 @@ Enact a temp Basal or a temp target */
 
 /* New ALerts ------------------------- */
 /* Info title */
-"Info" = "Info";
+"Info" = "Informazioni";
 
 /* Warning title */
 "Warning" = "Avvertimento";
@@ -1123,13 +1123,13 @@ Enact a temp Basal or a temp target */
 "Conversion settings" = "Conversion settings";
 
 /* Delay */
-"Delay In Minutes" = "Delay In Minutes";
+"Delay In Minutes" = "Ritardo in minuti";
 
 /* Duration */
-"Maximum Duration In Hours" = "Maximum Duration In Hours";
+"Maximum Duration In Hours" = "Durata massima in ore";
 
 /* Interval */
-"Interval In Minutes" = "Interval In Minutes";
+"Interval In Minutes" = "Intervallo in minuti";
 
 /* Override */
 "Override With A Factor Of " = "Override With A Factor Of ";
@@ -1138,22 +1138,22 @@ Enact a temp Basal or a temp target */
 "Allows fat and protein to be converted into future carb equivalents using the Warsaw formula of kilocalories divided by 10.\n\nThis spreads the carb equivilants over a maximum duration setting that can be configured from 5-12 hours.\n\nDelay is time from now until the first future carb entry.\n\nInterval in minutes is how many minutes are between entries. The shorter the interval, the smoother the result. 10, 15, 20, 30, or 60 are reasonable choices.\n\nAdjustment factor is how much effect the fat and protein has on the entries. 1.0 is full effect (original Warsaw Method) and 0.5 is half effect. Note that you may find that your normal carb ratio needs to increase to a larger number if you begin adding fat and protein entries. For this reason, it is best to start with a factor of about 0.5 to ease into it.\n\nDefault settings: Time Cap: 8 h, Interval: 30 min, Factor: 0.5, Delay 60 min" = "Allows fat and protein to be converted into future carb equivalents using the Warsaw formula of kilocalories divided by 10.\n\nThis spreads the carb equivilants over a maximum duration setting that can be configured from 5-12 hours.\n\nDelay is time from now until the first future carb entry.\n\nInterval in minutes is how many minutes are between entries. The shorter the interval, the smoother the result. 10, 15, 20, 30, or 60 are reasonable choices.\n\nAdjustment factor is how much effect the fat and protein has on the entries. 1.0 is full effect (original Warsaw Method) and 0.5 is half effect. Note that you may find that your normal carb ratio needs to increase to a larger number if you begin adding fat and protein entries. For this reason, it is best to start with a factor of about 0.5 to ease into it.\n\nDefault settings: Time Cap: 8 h, Interval: 30 min, Factor: 0.5, Delay 60 min";
 
 /* FPU Settings Title */
-"Fat and Protein" = "Fat and Protein";
+"Fat and Protein" = "Grassi e proteine";
 
 /* Display fat and protein entities */
-"Fat & Protein" = "Fat & Protein";
+"Fat & Protein" = "Grassi e proteine";
 
 /* */
-"Hide Fat & Protein" = "Hide Fat & Protein";
+"Hide Fat & Protein" = "Nascondi grassi e proteine";
 
 /* Add Fat */
-"Fat" = "Fat";
+"Fat" = "Grassi";
 
 /* Add Protein */
-"Protein" = "Protein";
+"Protein" = "Proteine";
 
 /* Service Section */
-"Fat And Protein Conversion" = "Fat And Protein Conversion";
+"Fat And Protein Conversion" = "Conversione di grassi e proteine";
 
 /* Service Section */
 "Profile Override" = "Profile Override";
