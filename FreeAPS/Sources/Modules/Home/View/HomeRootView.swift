@@ -241,7 +241,13 @@ extension Home {
 
             var durationString = indefinite ?
                 "" : newDuration >= 1 ?
-                (newDuration.formatted(.number.grouping(.never).rounded().precision(.fractionLength(0))) + " min") : ""
+                (newDuration.formatted(.number.grouping(.never).rounded().precision(.fractionLength(0))) + " min") :
+                (
+                    newDuration > 0 ? (
+                        newDuration.formatted(.number.grouping(.never).rounded().precision(.fractionLength(1))) + "min"
+                    ) :
+                        ""
+                )
 
             let smbToggleString = (fetchedPercent.first?.smbIsOff ?? false) ? " \u{20e0}" : ""
             var comma1 = ", "
@@ -296,9 +302,9 @@ extension Home {
                 Spacer()
 
                 if let overrideString = overrideString {
-                    Text(overrideString)
+                    Text("👤 " + overrideString)
                         .font(.system(size: 12))
-                        .foregroundColor(.orange)
+                        .foregroundColor(.secondary)
                         .padding(.trailing, 8)
                 }
 
@@ -405,8 +411,8 @@ extension Home {
                 Rectangle().fill(Color.gray.opacity(0.2)).frame(maxHeight: 40)
                 let cancel = fetchedPercent.first?.enabled ?? false
                 HStack(spacing: cancel ? 25 : 15) {
-                    Text(selectedProfile()).foregroundColor(.secondary)
-                    if cancel {
+                    Text(selectedProfile().name).foregroundColor(.secondary)
+                    if cancel, selectedProfile().isOn {
                         Button { showCancelAlert.toggle() }
                         label: {
                             Image(systemName: "xmark")
@@ -436,11 +442,21 @@ extension Home {
             )
         }
 
-        private func selectedProfile() -> String {
+        private func selectedProfile() -> (name: String, isOn: Bool) {
             var profileString = ""
+            var display: Bool = false
+
+            let duration = (fetchedPercent.first?.duration ?? 0) as Decimal
+            let indefinite = fetchedPercent.first?.indefinite ?? false
+            let addedMinutes = Int(duration)
+            let date = fetchedPercent.first?.date ?? Date()
+            if date.addingTimeInterval(addedMinutes.minutes.timeInterval) > Date() || indefinite {
+                display.toggle()
+            }
+
             if fetchedPercent.first?.enabled ?? false, !(fetchedPercent.first?.isPreset ?? false) {
                 profileString = NSLocalizedString("Custom Profile", comment: "Custom but unsaved Profile")
-            } else if !(fetchedPercent.first?.enabled ?? false) {
+            } else if !(fetchedPercent.first?.enabled ?? false) || !display {
                 profileString = NSLocalizedString("Normal Profile", comment: "Your normal Profile. Use a short string")
             } else {
                 let id_ = fetchedPercent.first?.id ?? ""
@@ -449,7 +465,7 @@ extension Home {
                     profileString = profile?.name?.description ?? ""
                 }
             }
-            return profileString
+            return (name: profileString, isOn: display)
         }
 
         @ViewBuilder private func bottomPanel(_ geo: GeometryProxy) -> some View {

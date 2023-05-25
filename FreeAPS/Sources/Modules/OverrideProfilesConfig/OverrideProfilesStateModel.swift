@@ -30,11 +30,12 @@ extension OverrideProfilesConfig {
 
         override func subscribe() {
             units = settingsManager.settings.units
+            smbMinutes = settingsManager.preferences.maxSMBBasalMinutes
+            uamMinutes = settingsManager.preferences.maxUAMSMBBasalMinutes
             presets = [OverridePresets(context: coredataContext)]
         }
 
         let coredataContext = CoreDataStack.shared.persistentContainer.viewContext
-        @Environment(\.managedObjectContext) var moc
 
         func saveSettings() {
             coredataContext.perform { [self] in
