@@ -397,7 +397,7 @@
 
 /* Label for pod life state when no pod paired
    Text shown in insulin remaining space when no pod is paired */
-"No Pod" = "No Pod";
+"No Pod" = "Nessun Pod";
 
 /* Value text for no expiration reminder */
 "No Reminder" = "Nessun promemoria";
@@ -681,7 +681,7 @@
 "The App notifies you when the amount of insulin in the Pod reaches this level." = "L'App puo' avvisare quando la quantità di insulina nel Pod raggiunge un predisposto determinato livello.";
 
 /* Description text for critical alerts */
-"The reminders above will not sound if your device is in Silent or Do Not Disturb mode.\n\nThere are other critical Pod alerts and alarms that will sound even if your device is set to Silent or Do Not Disturb mode." = "The reminders above will not sound if your device is in Silent or Do Not Disturb mode.\n\nThere are other critical Pod alerts and alarms that will sound even if your device is set to Silent or Do Not Disturb mode.";
+"The reminders above will not sound if your device is in Silent or Do Not Disturb mode.\n\nThere are other critical Pod alerts and alarms that will sound even if your device is set to Silent or Do Not Disturb mode." = "I promemoria qui sopra non suoneranno se il dispositivo è in modalità Silenzioso o Non Disturbare.\n\nCi sono altri avvisi e avvisi di Pod critici che suoneranno anche se il dispositivo è impostato in modalità Silenzioso o Non Disturbare.";
 
 /* Message for pod sync time action sheet */
 "The time on your pump is different from the current time. Do you want to update the time on your pump to the current time?" = "l'orario del microinfusore e' diverso da quello del tempo attuale. Vuoi fare un controllo e cambiare l'orario del microinfusore con il tempo attuale?";

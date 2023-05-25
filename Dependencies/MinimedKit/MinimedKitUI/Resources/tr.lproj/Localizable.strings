@@ -129,6 +129,9 @@
    Text for medtronic pump preferred data source */
 "Preferred Data Source" = "Tercih Edilen Veri Kaynağı";
 
+/* Text for medtronic pump battery percent remaining */
+"Pump Battery Remaining" = "Pump Battery Remaining";
+
 /* navigation title for pump battery type selection
    Text for medtronic pump battery type */
 "Pump Battery Type" = "Pompa Pil Tipi";
@@ -199,6 +202,9 @@
 /* Units for showing temp basal rate */
 "U/hr" = "Ü/sa";
 
+/* Text to indicate battery percentage is unknown */
+"unknown" = "unknown";
+
 /* Text shown in basal rate space when delivery status is unknown */
 "Unknown" = "Bilinmeyen";
 
@@ -212,4 +218,3 @@
 
 /* Button text to confirm pump time sync */
 "Yes, Sync to Current Time" = "Evet, Geçerli Saatle Senkronize Et";
-

@@ -378,7 +378,7 @@ Enact a temp Basal or a temp target */
 "0 U/hr" = "0 E/t";
 
 /* abbreviation for days */
-"d" = "dager";
+"d" = "d";
 
 /* abbreviation for hours */
 "h" = "t";
@@ -399,40 +399,40 @@ Enact a temp Basal or a temp target */
 "Pump" = "Pumpe";
 
 /* */
-"Watch" = "Watch";
+"Watch" = "Klokke";
 
 /* */
-"Watch Configuration" = "Watch Configuration";
+"Watch Configuration" = "Klokkeinnstillinger";
 
 /* */
 "Apple Watch" = "Apple Watch";
 
 /* */
-"Display on Watch" = "Display on Watch";
+"Display on Watch" = "Vis på klokke";
 
 /* */
 "Garmin Watch" = "Garmin Watch";
 
 /* */
-"Add devices" = "Add devices";
+"Add devices" = "Legg til enheter";
 
 /* */
-"Glucose Target" = "Glucose Target";
+"Glucose Target" = "Blodsukkermål";
 
 /* */
-"Heart Rate" = "Heart Rate";
+"Heart Rate" = "Puls";
 
 /* */
-"Steps" = "Steps";
+"Steps" = "Skritt";
 
 /* */
 "ISF" = "ISF";
 
 /* */
-"The app Garmin Connect must be installed to use for iAPS.\n Go to App Store to download it" = "The app Garmin Connect must be installed to use for iAPS.\n Go to App Store to download it";
+"The app Garmin Connect must be installed to use for iAPS.\n Go to App Store to download it" = "Garmin Connect-appen må være installert.\n Gå til App Store for å laste den ned";
 
 /* */
-"Garmin is not available" = "Garmin is not available";
+"Garmin is not available" = "Garmin er ikke tilgjengelig";
 
 /*  */
 "Services" = "Tjenester";
@@ -1397,7 +1397,7 @@ Enact a temp Basal or a temp target */
 "Display Chart Threshold lines for Low and High" = "Vise grenselinjer for høye og lave verdier";
 
 /* */
-"Standing / Laying TIR Chart" = "Standing / Laying TIR Chart";
+"Standing / Laying TIR Chart" = "Stående / liggende TIR-diagram";
 
 /* */
 "Hours X-Axis (6 default)" = "Timer å vise (6 er standard)";
