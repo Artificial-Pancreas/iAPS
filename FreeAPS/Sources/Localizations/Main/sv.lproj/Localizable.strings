@@ -1185,8 +1185,68 @@ Enact a temp Basal or a temp target */
 /* */
 "Disable SMBs" = "Stäng av autobolusar (SMBs)";
 
+/* Your normal Profile. Use a short string */
+"Normal Profile" = "Normal Profil";
+
+/* Custom but unsaved Profile */
+"Custom Profile" = "Anpassad Profil";
+
 /* */
-"Your profile basal insulin will be adjusted with the override percentage and your profile ISF and CR will be inversly adjusted with the percentage.\n\nIf you toggle off the override every profile setting will return to normal." = "Din vanliga basal kommer att justeras procentuellt enligt ovan, medan din normala korrektionsfaktor och insulinkvot CR kommer att justeras omvänt.\n\nOm du stänger av undantaget kommer varje inställning att återgå till det normala.";
+"Profiles" = "Profiler";
+
+/* */
+"More options" = "Fler alternativ";
+
+/* */
+"Schedule when SMBs are Off" = "Schemalägg när autobolusar ska vara av ";
+
+/* */
+"Change ISF and CR" = "Ändra ISF and CR";
+
+/* */
+"Change ISF" = "Ändra ISF";
+
+/* */
+"Change CR" = "Ändra CR";
+
+/* */
+"SMB Minutes" = "SMB-minuter";
+
+/* */
+"UAM SMB Minutes" = "UAM-SMB-minuter";
+
+/* */
+"Start new Profile" = "Starta ny profil";
+
+/* */
+"Save as Profile" = "Spara som profil";
+
+/* */
+"Return to Normal" = "Tillbaka till normal profil";
+
+/* Alert */
+"Return to Normal?" = "Tillbaka till normal profil?";
+
+/* */
+"This will change settings back to your normal profile" = "Detta kommer att ändra tillbaka till dina normala inställningar ";
+
+/* Start Profile Alert */
+"Start Profile" = "Starta profil";
+
+/* */
+"Your profile basal insulin will be adjusted with the override percentage and your profile ISF and CR will be inversly adjusted with the percentage.\n\nIf you toggle off the override every profile setting will return to normal." = "Your profile basal insulin will be adjusted with the override percentage and your profile ISF and CR will be inversly adjusted with the percentage.";
+
+/* */
+"Starting this override will change your Profiles and/or your Target Glucose used for looping during the entire selected duration. Tapping ”Start Profile” will start your new profile or edit your current active profile." = "Om du klickar 'Starta profil' kommer detta att tillfälligt att ändra dina normala inställningar för under hela perioden som du valt";
+
+/* Change Target glucose in profile settings */
+"Override Profile Target" = "Ändra målvärde";
+
+/* Alert string. Keep spaces. */
+" SMBs are disabled either by schedule or during the entire duration." = " Autobolusar är helt eller delvis av.";
+
+/* Alert strings. Keep spaces */
+" infinite duration." = " aktiv tillsvidare.";
 
 /* Service Section */
 "App Icons" = "Ikoner";
