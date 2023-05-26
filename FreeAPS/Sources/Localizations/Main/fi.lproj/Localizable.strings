@@ -1162,6 +1162,9 @@ Enact a temp Basal or a temp target */
 "Override Profiles" = "Override Profiles";
 
 /* */
+"Normal " = "Normal ";
+
+/* */
 "Currently no Override active" = "Currently no Override active";
 
 /* */
@@ -1179,8 +1182,68 @@ Enact a temp Basal or a temp target */
 /* */
 "Disable SMBs" = "Disable SMBs";
 
+/* Your normal Profile. Use a short string */
+"Normal Profile" = "Normal Profile";
+
+/* Custom but unsaved Profile */
+"Custom Profile" = "Custom Profile";
+
+/* */
+"Profiles" = "Profiles";
+
+/* */
+"More options" = "More options";
+
+/* */
+"Schedule when SMBs are Off" = "Schedule when SMBs are Off";
+
+/* */
+"Change ISF and CR" = "Change ISF and CR";
+
+/* */
+"Change ISF" = "Change ISF";
+
+/* */
+"Change CR" = "Change CR";
+
+/* */
+"SMB Minutes" = "SMB Minutes";
+
+/* */
+"UAM SMB Minutes" = "UAM SMB Minutes";
+
+/* */
+"Start new Profile" = "Start new Profile";
+
+/* */
+"Save as Profile" = "Save as Profile";
+
+/* */
+"Return to Normal" = "Return to Normal";
+
+/* Alert */
+"Return to Normal?" = "Return to Normal?";
+
+/* */
+"This will change settings back to your normal profile." = "This will change settings back to your normal profile.";
+
+/* Start Profile Alert */
+"Start Profile" = "Start Profile";
+
 /* */
 "Your profile basal insulin will be adjusted with the override percentage and your profile ISF and CR will be inversly adjusted with the percentage.\n\nIf you toggle off the override every profile setting will return to normal." = "Your profile basal insulin will be adjusted with the override percentage and your profile ISF and CR will be inversly adjusted with the percentage.\n\nIf you toggle off the override every profile setting will return to normal.";
+
+/* */
+"Starting this override will change your Profiles and/or your Target Glucose used for looping during the entire selected duration. Tapping ”Start Profile” will start your new profile or edit your current active profile." = "Starting this override will change your Profiles and/or your Target Glucose used for looping during the entire selected duration. Tapping ”Start Profile” will start your new profile or edit your current active profile.";
+
+/* Change Target glucose in profile settings */
+"Override Profile Target" = "Override Profile Target";
+
+/* Alert string. Keep spaces. */
+" SMBs are disabled either by schedule or during the entire duration." = " SMBs are disabled either by schedule or during the entire duration.";
+
+/* Alert strings. Keep spaces */
+" infinite duration." = " infinite duration.";
 
 /* Service Section */
 "App Icons" = "App Icons";
