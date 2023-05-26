@@ -1162,6 +1162,12 @@ Enact a temp Basal or a temp target */
 "Override Profiles" = "Переопределить профили";
 
 /* */
+"Normal " = "Normal ";
+
+/* */
+"Add / Delete" = "Add / Delete";
+
+/* */
 "Currently no Override active" = "В данный момент профиль не переопределен";
 
 /* */
