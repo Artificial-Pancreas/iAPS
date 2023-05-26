@@ -1162,7 +1162,7 @@ Enact a temp Basal or a temp target */
 "Override Profiles" = "Змінити параметри";
 
 /* */
-"Normal " = "Normal ";
+"Normal " = "Нормальний ";
 
 /* */
 "Currently no Override active" = "Наразі жодне перевизначення не активне";
@@ -1183,67 +1183,67 @@ Enact a temp Basal or a temp target */
 "Disable SMBs" = "Вимкнути SMBs";
 
 /* Your normal Profile. Use a short string */
-"Normal Profile" = "Normal Profile";
+"Normal Profile" = "Звичайний профіль";
 
 /* Custom but unsaved Profile */
-"Custom Profile" = "Custom Profile";
+"Custom Profile" = "Спеціальний профіль";
 
 /* */
-"Profiles" = "Profiles";
+"Profiles" = "Профілі";
 
 /* */
-"More options" = "More options";
+"More options" = "Додаткові параметри";
 
 /* */
-"Schedule when SMBs are Off" = "Schedule when SMBs are Off";
+"Schedule when SMBs are Off" = "Розклад, коли SMBs вимкнено";
 
 /* */
-"Change ISF and CR" = "Change ISF and CR";
+"Change ISF and CR" = "Змінити ISF і CR";
 
 /* */
-"Change ISF" = "Change ISF";
+"Change ISF" = "Змінити ISF";
 
 /* */
-"Change CR" = "Change CR";
+"Change CR" = "Змінити CR";
 
 /* */
-"SMB Minutes" = "SMB Minutes";
+"SMB Minutes" = "Хвилини SMB";
 
 /* */
-"UAM SMB Minutes" = "UAM SMB Minutes";
+"UAM SMB Minutes" = "Хвилини UAM SMB";
 
 /* */
-"Start new Profile" = "Start new Profile";
+"Start new Profile" = "Створіть новий профіль";
 
 /* */
-"Save as Profile" = "Save as Profile";
+"Save as Profile" = "Зберегти як профіль";
 
 /* */
-"Return to Normal" = "Return to Normal";
+"Return to Normal" = "Повернутися до нормального стану";
 
 /* Alert */
-"Return to Normal?" = "Return to Normal?";
+"Return to Normal?" = "Повернутися до нормального стану?";
 
 /* */
-"This will change settings back to your normal profile." = "This will change settings back to your normal profile.";
+"This will change settings back to your normal profile." = "Це поверне налаштування вашого звичайного профілю.";
 
 /* Start Profile Alert */
-"Start Profile" = "Start Profile";
+"Start Profile" = "Почати профіль";
 
 /* */
 "Your profile basal insulin will be adjusted with the override percentage and your profile ISF and CR will be inversly adjusted with the percentage.\n\nIf you toggle off the override every profile setting will return to normal." = "Базальний інсулін у вашому профілі буде скориговано з відсотком перевизначення, а ISF і CR у вашому профілі будуть скориговані обернено до відсотка.\n\nЯкщо ви вимкнете перевизначення, усі налаштування профілю повернеться до нормального.";
 
 /* */
-"Starting this override will change your Profiles and/or your Target Glucose used for looping during the entire selected duration. Tapping ”Start Profile” will start your new profile or edit your current active profile." = "Starting this override will change your Profiles and/or your Target Glucose used for looping during the entire selected duration. Tapping ”Start Profile” will start your new profile or edit your current active profile.";
+"Starting this override will change your Profiles and/or your Target Glucose used for looping during the entire selected duration. Tapping ”Start Profile” will start your new profile or edit your current active profile." = "Початок цього перевизначення змінить ваші профілі та/або цільовий рівень глюкози, який використовується для циклу протягом усього вибраного періоду. Торкнувшись «Почати профіль», ви запустите новий профіль або відредагуєте поточний активний профіль.";
 
 /* Change Target glucose in profile settings */
-"Override Profile Target" = "Override Profile Target";
+"Override Profile Target" = "Заміна цільового профілю";
 
 /* Alert string. Keep spaces. */
-" SMBs are disabled either by schedule or during the entire duration." = " SMBs are disabled either by schedule or during the entire duration.";
+" SMBs are disabled either by schedule or during the entire duration." = "SMBs відключаються за розкладом або протягом усього періоду.";
 
 /* Alert strings. Keep spaces */
-" infinite duration." = " infinite duration.";
+" infinite duration." = "нескінченна тривалість.";
 
 /* Service Section */
 "App Icons" = "Іконки додатку";
