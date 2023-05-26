@@ -1255,10 +1255,10 @@ Enact a temp Basal or a temp target */
 "Delete carb equivalents?" = "Radera dessa poster?";
 
 /* */
-"Meal Presets" = "Måltider";
+"Meal Presets" = "Förval";
 
 /* */
-"Empty" = "Tom";
+"Empty" = "Inget";
 
 /* */
 "Delete Selected Preset" = "Radera detta förval";
