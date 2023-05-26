@@ -1183,40 +1183,40 @@ Enact a temp Basal or a temp target */
 "Disable SMBs" = "Disable SMBs";
 
 /* Your normal Profile. Use a short string */
-"Normal Profile" = "Normal Profile";
+"Normal Profile" = "Normales Profil";
 
 /* Custom but unsaved Profile */
-"Custom Profile" = "Custom Profile";
+"Custom Profile" = "Benutzerdefiniertes Profil";
 
 /* */
-"Profiles" = "Profiles";
+"Profiles" = "Profile";
 
 /* */
-"More options" = "More options";
+"More options" = "Mehr Optionen";
 
 /* */
-"Schedule when SMBs are Off" = "Schedule when SMBs are Off";
+"Schedule when SMBs are Off" = "Plan bei ausgeschalteten SMBs";
 
 /* */
-"Change ISF and CR" = "Change ISF and CR";
+"Change ISF and CR" = "ISF und CR ändern";
 
 /* */
-"Change ISF" = "Change ISF";
+"Change ISF" = "Ändere ISF";
 
 /* */
-"Change CR" = "Change CR";
+"Change CR" = "Ändere CR";
 
 /* */
-"SMB Minutes" = "SMB Minutes";
+"SMB Minutes" = "SMB Minuten";
 
 /* */
-"UAM SMB Minutes" = "UAM SMB Minutes";
+"UAM SMB Minutes" = "UAM SMB Minuten";
 
 /* */
-"Start new Profile" = "Start new Profile";
+"Start new Profile" = "Neues Profil starten";
 
 /* */
-"Save as Profile" = "Save as Profile";
+"Save as Profile" = "Als Profil speichern";
 
 /* */
 "Return to Normal" = "Return to Normal";
