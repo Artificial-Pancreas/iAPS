@@ -348,7 +348,7 @@
 "Yes, Sync to Current Time" = "Ja, zet naar huidige tijd";
 
 /* Button text to cancel pump time sync */
-"No, Keep Pump As Is" = "Nee, Pomp laten zoals hij is";
+"No, Keep Pump As Is" = "Nee, pomp laten zoals hij is";
 
 /* Title for Omnipod DASH PumpManager deletion action sheet. */
 "Remove Pump" = "Verwijder Pod";

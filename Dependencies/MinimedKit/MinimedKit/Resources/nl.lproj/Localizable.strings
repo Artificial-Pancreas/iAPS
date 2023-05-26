@@ -2,10 +2,10 @@
 "A bolus is already in progress" = "Er is al een bolus actief";
 
 /* The description of AlarmClockReminderPumpEvent */
-"AlarmClockReminder" = "AlarmClockReminder";
+"AlarmClockReminder" = "Wekker herinnering";
 
 /* The description of AlarmSensorPumpEvent */
-"AlarmSensor" = "AlarmSensor";
+"AlarmSensor" = "Alarm sensor";
 
 /* Describing the battery chemistry as Alkaline */
 "Alkaline" = "Alkaline";
@@ -17,7 +17,7 @@
 "Bolus in progress" = "Bolus in uitvoering";
 
 /* Suggestions for diagnosing a command refused pump error */
-"Check that the pump is not suspended or priming, or has a percent temp basal type" = "Controleer dat de pomp niet is onderbroken of aan het voorbereiden is, of dat er een percentage tijdelijke basaal staat ingesteld";
+"Check that the pump is not suspended or priming, or has a percent temp basal type" = "Controleer of de pomp niet is onderbroken of aan het voorbereiden is, of dat er een percentage tijdelijke basaal staat ingesteld";
 
 /* Pump error code returned when command refused */
 "Command refused" = "Commando geweigerd";
@@ -41,7 +41,7 @@
 "Lithium" = "Lithium";
 
 /* Recovery suggestion */
-"Make sure your RileyLink is nearby and powered on" = "Zorg ervoor dat je RileyLink dichtbij is en aan staat";
+"Make sure your RileyLink is nearby and powered on" = "Zorg ervoor dat je RileyLink dicht bij is en aan staat";
 
 /* Pump error code describing max setting exceeded */
 "Max setting exceeded" = "Max instelling overschreden";
@@ -59,7 +59,7 @@
 "Pump did not respond" = "Pomp reageert niet";
 
 /* Error description */
-"Pump Error" = "Pomp Foutmelding";
+"Pump Error" = "Pomp foutmelding";
 
 /* No comment provided by engineer. */
 "Pump is suspended" = "Pomp is onderbroken";
@@ -68,13 +68,13 @@
 "Pump responded unexpectedly" = "Pomp reageerde onverwacht";
 
 /* The format string describing a pump message. (1: The packet type)(2: The message type)(3: The message address)(4: The message data */
-"PumpMessage(%1$@, %2$@, %3$@, %4$@)" = "Bericht Pomp (%1$@, %2$@, %3$@, %4$@)";
+"PumpMessage(%1$@, %2$@, %3$@, %4$@)" = "Bericht pomp (%1$@, %2$@, %3$@, %4$@)";
 
 /* Describing the reservoir insulin data source */
 "Reservoir" = "Reservoir";
 
 /* Error description */
-"RileyLink radio tune failed" = "Afstemmen van de RileyLink Radio mislukt";
+"RileyLink radio tune failed" = "Afstemmen van de RileyLink frequentie mislukt";
 
 /* The format string description of a TempBasalPumpEvent. (1: The rate of the temp basal in minutes) */
 "Temporary Basal: %1$.3f U/hour" = "Tijdelijk basaal: %1$.3f E/uur";

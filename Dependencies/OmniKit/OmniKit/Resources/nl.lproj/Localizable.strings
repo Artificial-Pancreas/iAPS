@@ -72,7 +72,7 @@
 "Critical Pod Error" = "Kritieke Podfout";
 
 /* Recovery suggestion when unexpected address received */
-"Crosstalk possible. Please move to a new location" = "Overspraak mogelijk. Probeer een andere locatie";
+"Crosstalk possible. Please move to a new location" = "Ruis mogelijk. Verplaats alsjeblieft naar een andere locatie";
 
 /* Pod state when pod has been deactivated */
 "Deactivated" = "Gedeactiveerd";
@@ -105,10 +105,10 @@
 "Fault event occurred" = "Fout is opgetreden";
 
 /* Status highlight that when pod is deactivating. */
-"Finish Deactivation" = "Voltooi Deactivering";
+"Finish Deactivation" = "Voltooi deactivering";
 
 /* Status highlight that when pod is activating. */
-"Finish Pairing" = "Voltooi Koppelen";
+"Finish Pairing" = "Voltooi koppelen";
 
 /* Description for finish setup */
 "Finish setup " = "Voltooi installatie";
@@ -123,10 +123,10 @@
 "Inserting cannula" = "Canule inbrengen";
 
 /* The default notification body for AlarmCodes */
-"Insulin delivery stopped. Change Pod now." = "Insulinetoediening gestopt. Vervang Pod nu.";
+"Insulin delivery stopped. Change Pod now." = "Insulinetoediening gestopt. Vervang pod nu.";
 
 /* Status highlight that insulin delivery was suspended. */
-"Insulin Suspended" = "Insuline Onderbroken";
+"Insulin Suspended" = "Insuline onderbroken";
 
 /* Error description for OmniBLEPumpManagerError.insulinTypeNotConfigured */
 "Insulin type not configured" = "Insulinetype niet ingesteld";
@@ -153,19 +153,19 @@
 "Low Reservoir" = "Reservoir Bijna Leeg";
 
 /* Format string for description for low reservoir advisory (1: reminder units) */
-"Low reservoir advisory (%1$gU)" = "Reservoir Bijna Leeg Advies (%1$gE)";
+"Low reservoir advisory (%1$gU)" = "Reservoir bijna leeg advies (%1$gE)";
 
 /* Description for low reservoir alarm */
 "Low reservoir advisory alarm" = "Reservoir bijna leeg alarm";
 
 /* Title for RileyLink low battery alert */
-"Low RileyLink Battery" = "Batterij RileyLink Bijna Leeg";
+"Low RileyLink Battery" = "Batterij RileyLink bijna leeg";
 
 /* Recovery suggestion when no RileyLink is available */
-"Make sure your RileyLink is nearby and powered on" = "Zorg ervoor dat je RileyLink dichtbij is en aan staat";
+"Make sure your RileyLink is nearby and powered on" = "Zorg ervoor dat je RileyLink dicht bij is en aan staat";
 
 /* Status highlight when manual temp basal is running. */
-"Manual Basal" = "Handmatig Basaal";
+"Manual Basal" = "Handmatig basaal";
 
 /* Pod memory initialized */
 "Memory initialized" = "Geheugen geïnitialiseerd";
@@ -175,10 +175,10 @@
 
 /* Alert content body for multiCommand pod alert
    Alert content title for multiCommand pod alert */
-"Multiple Command Alert" = "Meerdere Commando's Melding";
+"Multiple Command Alert" = "Meerdere commando's melding";
 
 /* Pod alert state when no alerts are active */
-"No alerts" = "Geen Waarschuwingen";
+"No alerts" = "Geen waarschuwingen";
 
 /* Description for BeepPreference.silent */
 "No confidence reminders are used." = "Er worden geen bevestigingsherinneringen gebruikt.";
@@ -188,10 +188,10 @@
 
 /* Status highlight message for emptyReservoir alarm.
    Status highlight that a pump is out of insulin. */
-"No Insulin" = "Geen Insuline";
+"No Insulin" = "Geen insuline";
 
 /* Status highlight that when no pod is paired. */
-"No Pod" = "Geen Pod";
+"No Pod" = "Geen pod";
 
 /* Error message shown when no pod is paired */
 "No pod paired" = "Geen pod gekoppeld";
@@ -210,7 +210,7 @@
 "Normal" = "Normaal";
 
 /* Description for MessageError notEnoughData */
-"Not enough data" = "Onvoldoende Gegevens";
+"Not enough data" = "Onvoldoende gegevens";
 
 /* Description for Occlusion detected pod fault */
 "Occlusion detected" = "Verstopping gedetecteerd";
@@ -282,16 +282,16 @@
 "Pod Occlusion" = "Podverstopping";
 
 /* Alert content title for finishSetupReminder pod alert */
-"Pod Pairing Incomplete" = "Koppeling Pod Onvolledig";
+"Pod Pairing Incomplete" = "Koppeling pod onvolledig";
 
 /* Error message shown when pod sends ack instead of response */
 "Pod sent ack instead of response" = "Pod heeft een bevestiging gestuurd in plaats van een antwoord";
 
 /* Pod state when prime or cannula insertion has not completed in the time allotted */
-"Pod setup window expired" = "Insteltijd van de Pod is verlopen";
+"Pod setup window expired" = "Insteltijd van de pod is verlopen";
 
 /* Description for pod suspended reminder */
-"Pod suspended reminder" = "Herinnering onderbroken Pod";
+"Pod suspended reminder" = "Herinnering onderbroken pod";
 
 /* Format string for poor pod signal strength */
 "Poor signal strength" = "Zwak signaalsterkte";
@@ -319,13 +319,13 @@
 "Resume delivery" = "Hervat toediening";
 
 /* Alert content title for suspendEnded pod alert */
-"Resume Insulin" = "Hervat Insuline";
+"Resume Insulin" = "Hervat insuline";
 
 /* The format string describing a resume. (1: Time)(2: Scheduled certainty */
 "Resume: %1$@ %2$@" = "Hervat: %1$@ %2$@";
 
 /* Delivery status when basal is running */
-"Scheduled Basal" = "Ingesteld Basaal";
+"Scheduled Basal" = "Ingesteld basaal";
 
 /* Description for shutdown imminent */
 "Shutdown imminent" = "Afsluiting nadert";
@@ -344,7 +344,7 @@
 
 /* Alert content body for suspendInProgress pod alert
    Alert content title for suspendInProgress pod alert */
-"Suspend In Progress Reminder" = "Onderbreking in Uitvoering Herinnering";
+"Suspend In Progress Reminder" = "Herinnering 'Onderbreking in uitvoering'";
 
 /* Description for suspend time expired */
 "Suspend time expired" = "Onderbrekingstijd verstreken";
@@ -368,7 +368,7 @@
 "Tank power activated" = "Opslag power geactiveerd";
 
 /* Pump Event title for UnfinalizedDose with doseType of .tempBasal */
-"Temp Basal" = "Tijdelijk Basaal";
+"Temp Basal" = "Tijdelijk basaal";
 
 /* Error message shown when temp basal could not be set due to existing temp basal in progress */
 "Temp basal in progress" = "Tijdelijk basaal wordt uitgevoerd";
@@ -386,7 +386,7 @@
 "The time on your pump is different from the current time. You can review the pump time and and sync to current time in settings." = "De tijd op je pomp is anders dan de huidige tijd. Je kunt de tijd op de pomp bekijken en synchroniseren met de huidige tijd in instellingen.";
 
 /* Alert content title for timeOffsetChangeDetected pod alert */
-"Time Change Detected" = "Tijdsverschil Ontdekt";
+"Time Change Detected" = "Tijdsverschil ontdekt";
 
 /* The format string for pod expiration notification body (1: time until expiration) */
 "Time to replace your pod! Your pod will expire in %1$@" = "Tijd om je pod te vervangen! Vervang je pod in %1$@";

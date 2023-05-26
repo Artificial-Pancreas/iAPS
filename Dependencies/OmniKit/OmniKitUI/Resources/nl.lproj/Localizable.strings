@@ -69,13 +69,13 @@
 "30 minutes" = "30 minuten";
 
 /* The title of the cell showing the pod activated at time */
-"Active Time" = "Werkzame Tijd";
+"Active Time" = "Werkzame tijd";
 
 /* Section header for activity section */
 "Activity" = "Activiteit";
 
 /* Text indicating ongoing pump time synchronization */
-"Adjusting Pump Time..." = "Pomptijd Aanpassen...";
+"Adjusting Pump Time..." = "Pomptijd aanpassen...";
 
 /* The title of the cell showing alarm status */
 "Alarms" = "Alarmen";
@@ -96,7 +96,7 @@
 "Assigned Address" = "Toegewezen adres";
 
 /* Title for Attach Pod screen */
-"Attach Pod" = "Pod Aanbrengen";
+"Attach Pod" = "Pod aanbrengen";
 
 /* Description string above progress indicator while attempting to re-establish communication from an unacknowledged command */
 "Attemping to re-establish communication" = "Poging om de communicatie te herstellen";
@@ -117,7 +117,7 @@
 "Cancel" = "Annuleer";
 
 /* Button title to cancel manual basal */
-"Cancel Manual Basal" = "Annuleer Handmatige Basaal";
+"Cancel Manual Basal" = "Annuleer handmatige basaal";
 
 /* Insert cannula action button accessibility label when cannula insertion succeeded */
 "Cannula inserted successfully. Continue." = "Canule succesvol ingebracht. Ga verder.";
@@ -129,25 +129,25 @@
 "Change Pod now. Insulin delivery will stop in %1$@ or when no more insulin remains." = "Vervang Pod nu. De insulinetoediening stop over %1$@ of wanneer er geen insuline meer over is.";
 
 /* The title of the command to change pump time zone */
-"Change Time Zone" = "Verander Tijdzone";
+"Change Time Zone" = "Verander tijdzone";
 
 /* Progress message for changing pod time. */
-"Changing time…" = "Tijd Aanpassen...";
+"Changing time…" = "Tijd aanpassen...";
 
 /* Title for check cannula screen */
-"Check Cannula" = "Controleer Canule";
+"Check Cannula" = "Controleer canule";
 
 /* Label text for step three of attach pod instructions */
 "Check Pod, apply to site, then confirm pod attachment." = "Controleer de Pod, breng aan op de infusieplaats en bevestig dat de pod goed zit vastgeplakt.";
 
 /* Insert cannula action button accessibility label checking insertion */
-"Checking Insertion" = "Controleer Inbrengen Canule";
+"Checking Insertion" = "Controleer inbrengen canule";
 
 /* Cannula insertion button text while checking insertion */
 "Checking..." = "Controleren...";
 
 /* Title for uncertainty recovered screen */
-"Comms Recovered" = "Comms Hersteld";
+"Comms Recovered" = "Comms hersteld";
 
 /* Text for confidence reminders navigation link */
 "Confidence Reminders" = "Bevestigingsherinneringen";
@@ -162,13 +162,13 @@
 "Confirm" = "Bevestigen";
 
 /* Alert title for confirm pod attachment */
-"Confirm Pod Attachment" = "Bevestig Vastgeplakte Pod";
+"Confirm Pod Attachment" = "Bevestig vastgeplakte pod";
 
 /* The title of the continue action in an action sheet */
-"Continue" = "Ga Verder";
+"Continue" = "Ga verder";
 
 /* Title for critical alerts description */
-"Critical Alerts" = "Kritieke Meldingen";
+"Critical Alerts" = "Kritieke meldingen";
 
 /* Unit for singular day in pod life remaining */
 "day" = "dag";
@@ -209,17 +209,17 @@
 "Devices" = "Apparaten";
 
 /* Title text for button to disable bolus beeps */
-"Disable Bolus Beeps" = "Stop Gebruik Boluspiepjes";
+"Disable Bolus Beeps" = "Stop gebruik boluspiepjes";
 
 /* Pairing interface navigation bar button text for discard pod action
    Text for discard pod button */
-"Discard Pod" = "Gooi Pod Weg";
+"Discard Pod" = "Gooi pod weg";
 
 /* No comment provided by engineer. */
 "Done" = "Gereed";
 
 /* Title text for button to enable bolus beeps */
-"Enable Bolus Beeps" = "Boluspiepjes Inschakelen";
+"Enable Bolus Beeps" = "Boluspiepjes inschakelen";
 
 /* Accessibility label indicating an error occurred */
 "Error" = "Fout";
@@ -231,16 +231,16 @@
 "Error enabling bolus beeps" = "Fout in toepassen gebruik boluspiepjes";
 
 /* The alert title for a resume error */
-"Error Resuming" = "Fout Bij Hervatten";
+"Error Resuming" = "Fout bij hervatten";
 
 /* The alert title for a suspend error */
-"Error Suspending" = "Fout Bij Onderbreken";
+"Error Suspending" = "Fout bij onderbreken";
 
 /* The title of the cell showing the pod expiration reminder date */
 "Expiration Reminder" = "Vervaldatumherinnering";
 
 /* Label text for expiration reminder default row */
-"Expiration Reminder Default" = "Standaard Herinnering";
+"Expiration Reminder Default" = "Standaard herinnering";
 
 /* The title of the cell showing the pod expiration after expiry */
 "Expired" = "Verlopen";
@@ -249,25 +249,25 @@
 "Expires" = "Vervalt";
 
 /* Alert title for failing to cancel manual basal error */
-"Failed to Cancel Manual Basal" = "Handmatig Basaal Annuleren Mislukt";
+"Failed to Cancel Manual Basal" = "Handmatig basaal annuleren mislukt";
 
 /* Alert title for resume error */
-"Failed to Resume Insulin Delivery" = "Insulinetoediening Hervatten Mislukt";
+"Failed to Resume Insulin Delivery" = "Insulinetoediening hervatten mislukt";
 
 /* Alert title for time sync error */
-"Failed to Set Pump Time" = "Pomptijd Instellen Mislukt";
+"Failed to Set Pump Time" = "Pomptijd instellen mislukt";
 
 /* Alert title for suspend error */
-"Failed to Suspend Insulin Delivery" = "Insulinetoediening Onderbreken Mislukt";
+"Failed to Suspend Insulin Delivery" = "Insulinetoediening onderbreken mislukt";
 
 /* Alert title for error when updating confidence reminder preference */
 "Failed to update confidence reminder preference." = "Bevestigingsherinneringvoorkeuren bijwerken mislukt.";
 
 /* Alert title for error when updating expiration reminder */
-"Failed to Update Expiration Reminder" = "Vervaldatumherinnering Bijwerken Mislukt";
+"Failed to Update Expiration Reminder" = "Vervaldatumherinnering bijwerken mislukt";
 
 /* Alert title for error when updating low reservoir reminder */
-"Failed to Update Low Reservoir Reminder" = "Bijwerken Reservoir Bijna Leeg Herinnering Mislukt";
+"Failed to Update Low Reservoir Reminder" = "Bijwerken reservoir bijna leeg herinnering mislukt";
 
 /* Pod life HUD view label */
 "Fault" = "Fout";
@@ -282,7 +282,7 @@
 "Finish pod setup" = "Rond podinstallatie af";
 
 /* Action button title to continue at Setup Complete */
-"Finish Setup" = "Voltooi Installatie";
+"Finish Setup" = "Voltooi setup";
 
 /* Accessibility format string for (1: localized volume)(2: time) */
 "Greater than %1$@ units remaining at %2$@" = "Meer dan %1$@ eenheden resterend om %2$@";
@@ -303,7 +303,7 @@
 "Incompletely set up pod must be deactivated before pairing with a new one. Please deactivate and remove pod." = "Een gedeeltelijk ingestelde pod moet eerst worden gedeactiveerd voordat er geprobeerd wordt een nieuwe pod te koppelen. Deactiveer pod en gooi weg.";
 
 /* Button title to insert cannula during setup */
-"Insert Cannula" = "Canule Inbrengen";
+"Insert Cannula" = "Canule inbrengen";
 
 /* Label text indicating insertion finished. */
 "Inserted" = "Ingebracht";
@@ -330,7 +330,7 @@
 "Insulin delivery will be stopped until you resume manually. When would you like Loop to remind you to resume delivery?" = "De insulinetoediening wordt gestopt totdat je de toediening handmatig hervat. Wanneer wil je dat Loop je eraan herinnert de toediening te hervatten?";
 
 /* Header for insulin remaining on pod settings screen */
-"Insulin Remaining" = "Resterende Insuline";
+"Insulin Remaining" = "Resterende insuline";
 
 /* Text for confidence reminders navigation link
    Title for insulin type selection screen */
@@ -364,7 +364,7 @@
 
 /* Label for low reservoir reminder row
    Title for low reservoir reminder edit page */
-"Low Reservoir Reminder" = "Herinnering Reservoir Bijna Leeg";
+"Low Reservoir Reminder" = "Herinnering 'Reservoir bijna leeg'";
 
 /* The action string on pod status page when pod data is stale */
 "Make sure your phone and pod are close to each other. If communication issues persist, move to a new area." = "Zorg ervoor dat je telefoon en pod zich dicht bij elkaar bevinden. Als de communicatieproblemen aanhouden, ga dan naar een andere plek.";
@@ -376,7 +376,7 @@
 "minutes" = "minuten";
 
 /* Alert title for missing temp basal configuration */
-"Missing Config" = "Configuratie Niet Compleet";
+"Missing Config" = "Configuratie niet compleet";
 
 /* String shown on pod details for active time when conversion fails.
    String shown on pod details for last status date when not available.
@@ -393,17 +393,17 @@
 "No\nDelivery" = "Geen\nToediening";
 
 /* Error message for reservoir view when reservoir empty */
-"No Insulin" = "Geen Insuline";
+"No Insulin" = "Geen insuline";
 
 /* Label for pod life state when no pod paired
    Text shown in insulin remaining space when no pod is paired */
 "No Pod" = "Geen Pod";
 
 /* Value text for no expiration reminder */
-"No Reminder" = "Geen Herinnering";
+"No Reminder" = "Geen herinnering";
 
 /* Continue pairing button title of in pairing cancel modal */
-"No, Continue With Pod" = "Nee, Ga Verder Met Pod";
+"No, Continue With Pod" = "Nee, ga verder met Pod";
 
 /* Button text to cancel pump time sync */
 "No, Keep Pump As Is" = "Nee, laat de pomp ongewijzigd";
@@ -419,13 +419,13 @@
 "Numbers" = "Nummers";
 
 /* Title for omnipod reminders section */
-"Omnipod Reminders" = "Omnipod Herinneringen";
+"Omnipod Reminders" = "Omnipod herinneringen";
 
 /* Button title to pair with pod during setup */
 "Pair" = "Koppel";
 
 /* The title of the command to pair new pod */
-"Pair New Pod" = "Koppel Nieuwe Pod";
+"Pair New Pod" = "Koppel nieuwe Pod";
 
 /* Navigation bar title for PairPodView
    Pod pairing action button text while ready to pair
@@ -434,7 +434,7 @@
 "Pair Pod" = "Koppel Pod";
 
 /* Pairing action button accessibility label while ready to pair */
-"Pair pod." = "Koppel pod.";
+"Pair pod." = "Koppel Pod.";
 
 /* Label text indicating pairing finished. */
 "Paired" = "Gekoppeld";
@@ -452,7 +452,7 @@
 "PI Version" = "PI versie";
 
 /* The title of the command to play test beeps */
-"Play Test Beeps" = "Testpiepjes Afspelen";
+"Play Test Beeps" = "Testpiepjes afspelen";
 
 /* Progress message for play test beeps. */
 "Play Test Beeps…" = "Speelt testpiepjes…";
@@ -471,7 +471,7 @@
 
 /* description label for activated at time pod details row
    Label for pod insertion row */
-"Pod Activated" = "Pod Geactiveerd";
+"Pod Activated" = "Pod geactiveerd";
 
 /* Label describing pod age view */
 "Pod Age" = "Podleeftijd";
@@ -487,16 +487,16 @@
 
 /* Error message for reservoir view when pod expired
    Label for pod expiration row, past tense */
-"Pod Expired" = "Pod Verlopen";
+"Pod Expired" = "Pod verlopen";
 
 /* Label for pod expiration row */
-"Pod Expires" = "Pod Verloopt";
+"Pod Expires" = "Pod verloopt";
 
 /* Label for pod life state when time remaining */
 "Pod expires in" = "Pod verloopt over";
 
 /* description label for pod fault details */
-"Pod Fault Details" = "Pod Foutgegevens";
+"Pod Fault Details" = "Pod foutgegevens";
 
 /* Error message for reservoir view when pod occlusion checks failed */
 "Pod Occlusion" = "Podverstopping";
@@ -505,7 +505,7 @@
 "Pod paired successfully. Continue." = "Pod succesvol gekoppeld. Ga verder.";
 
 /* Title of the pod settings view controller */
-"Pod Settings" = "Pod Instellingen";
+"Pod Settings" = "Pod instellingen";
 
 /* Title for PodSetupView */
 "Pod Setup" = "Podinstallatie";
@@ -517,7 +517,7 @@
 "Previous Pod" = "Vorige Pod";
 
 /* Text for previous pod information row */
-"Previous Pod Information" = "Informatie Vorige Pod";
+"Previous Pod Information" = "Informatie vorige Pod";
 
 /* The text of the loading label when pod is primed */
 "Primed" = "Voorbereid";
@@ -541,7 +541,7 @@
 "Remaining" = "Resterend";
 
 /* Title for remove pod modal */
-"Remove Pod from Body" = "Verwijder Pod van Lichaam";
+"Remove Pod from Body" = "Verwijder Pod van lichaam";
 
 /* Title for Omnipod PumpManager deletion action sheet. */
 "Remove Pump" = "Verwijder Pomp";
@@ -554,13 +554,13 @@
 "Replace Pod" = "Vervang Pod";
 
 /* The title of the command to replace pod when there is a pod fault */
-"Replace Pod Now" = "Vervang Pod Nu";
+"Replace Pod Now" = "Vervang Pod nu";
 
 /* The title of the cell showing reservoir status */
 "Reservoir" = "Reservoir";
 
 /* Text for suspend resume button when insulin delivery is suspended */
-"Resume Insulin Delivery" = "Hervat Insulinetoediening";
+"Resume Insulin Delivery" = "Hervat insulinetoediening";
 
 /* Text for suspend resume button when insulin delivery is resuming */
 "Resuming insulin delivery..." = "Insulinetoediening hervatten...";
@@ -568,16 +568,16 @@
 /* Action button description for deactivate after failed attempt
    Cannula insertion button text while showing error
    Pod pairing action button text while showing error */
-"Retry" = "Opnieuw Proberen";
+"Retry" = "Opnieuw proberen";
 
 /* Button title for retrying pod deactivation */
-"Retry Pod Deactivation" = "Probeer Deactivering Pod Opnieuw";
+"Retry Pod Deactivation" = "Probeer deactivering Pod opnieuw";
 
 /* bodyText for RileyLinkSetupView */
 "RileyLink allows for communication with the pump over Bluetooth" = "RileyLink staat communicatie met de pomp toe via Bluetooth";
 
 /* Navigation title for RileyLinkSetupView */
-"RileyLink Setup" = "RileyLink Installatie";
+"RileyLink Setup" = "RileyLink setup";
 
 /* Title of button to save delivery limit settings
    Title of button to sync basal profile when no pod paired */
@@ -588,16 +588,16 @@
 "Saving..." = "Opslaan...";
 
 /* The detail text of the basal row when pod is running scheduled basal */
-"Schedule" = "Plan";
+"Schedule" = "Schema";
 
 /* Title of insulin delivery section */
-"Scheduled Basal" = "Ingesteld Basaal";
+"Scheduled Basal" = "Ingesteld basaal";
 
 /* Card title for scheduled reminder
    Scheduled reminder card title on NotificationSettingsView
    Title for scheduled expiration reminder edit page
    Title of SetupCompleteView */
-"Scheduled Reminder" = "Geplande Herinnering";
+"Scheduled Reminder" = "Geplande herinnering";
 
 /* Title text for insulin type confirmation page */
 "Select the type of insulin that you will be using in this pod." = "Selecteer het type insuline dat je in deze pod gaat gebruiken.";
@@ -606,19 +606,19 @@
 "Sequence Number" = "Volgnummer";
 
 /* Button text for setting manual temporary basal rate */
-"Set Temporary Basal" = "Tijdelijk Basaal Instellen";
+"Set Temporary Basal" = "Tijdelijk basaal instellen";
 
 /* Button title to set temporary basal rate */
 "Set Temporary Basal Rate" = "Tijdelijke Basaalsnelheid Instellen";
 
 /* Title for setup complete screen */
-"Setup Complete" = "Configuratie Voltooid";
+"Setup Complete" = "Setup voltooid";
 
 /* Error message for reservoir view during general pod fault */
 "Signal Loss" = "Signaalverlies";
 
 /* No comment provided by engineer. */
-"Skip Omnipod Onboarding?" = "Omnipod Onboarding Overslaan?";
+"Skip Omnipod Onboarding?" = "Omnipod Onboarding overslaan?";
 
 /* The title of the status section in settings */
 "Status" = "Status";
@@ -627,10 +627,10 @@
 "Succeeded" = "Geslaagd";
 
 /* Title for suspend duration selection action sheet */
-"Suspend Delivery" = "Onderbreek Toediening";
+"Suspend Delivery" = "Onderbreek toediening";
 
 /* Text for suspend resume button when insulin delivery active */
-"Suspend Insulin Delivery" = "Onderbreek Insulinetoediening";
+"Suspend Insulin Delivery" = "Onderbreek insulinetoediening";
 
 /* The detail text of the basal row when pod is suspended */
 "Suspended" = "Onderbroken";
@@ -639,10 +639,10 @@
 "Suspended At" = "Onderbroken om";
 
 /* Text for suspend resume button when insulin delivery is suspending */
-"Suspending insulin delivery..." = "Insulinetoediening Onderbreken...";
+"Suspending insulin delivery..." = "Insulinetoediening onderbreken...";
 
 /* Title text for the button to delete Omnipod PumpManager */
-"Switch from Omnipod Pumps" = "Verwissel Omnipod Pompen";
+"Switch from Omnipod Pumps" = "Verwissel Omnipod pompen";
 
 /* Label for PumpManager deletion button */
 "Switch to other insulin delivery device" = "Schakel over op een ander insulinetoedieningsapparaat";
@@ -657,16 +657,16 @@
 "Tap below to start cannula insertion." = "Tik hieronder om het inbrengen van de canule te starten.";
 
 /* Navigation Title for ManualTempBasalEntryView */
-"Temporary Basal" = "Tijdelijke Basaal";
+"Temporary Basal" = "Tijdelijke basaal";
 
 /* Alert title for a failure to set temporary basal */
-"Temporary Basal Failed" = "Tijdelijk Basaal Mislukt";
+"Temporary Basal Failed" = "Tijdelijk basaal mislukt";
 
 /* The title of the command to run the test command */
 "Test Command" = "Testcommando";
 
 /* Progress message for testing commands. */
-"Testing Commands…" = "Test Commando’s…";
+"Testing Commands…" = "Commando’s aan het testen...";
 
 /* Footer text for omnipod reminders section */
 "The app configures a reminder on the pod to notify you in advance of Pod expiration. Set the number of hours advance notice you would like to configure when pairing a new Pod." = "De app stelt een herinnering in op de pod om je van tevoren op de hoogte te stellen van het verlopen van de Pod. Stel het aantal uur in van de vooraankondiging die je wenst in te stellen bij het koppelen van een nieuwe Pod.";
@@ -708,7 +708,7 @@
 
 /* Title for pod sync time action sheet.
    title for time change detected notice */
-"Time Change Detected" = "Tijdsverschil Ontdekt";
+"Time Change Detected" = "Tijdsverschil ontdekt";
 
 /* No comment provided by engineer. */
 "Toggle sign" = "Schakel symbool";
@@ -717,7 +717,7 @@
 "Too many entries" = "Te veel invoer";
 
 /* description label for total delivery pod details row */
-"Total Delivery" = "Totaal Toegediend";
+"Total Delivery" = "Totaal toegediend";
 
 /* Units for showing temp basal rate */
 "U/hr" = "E/uur";
@@ -726,7 +726,7 @@
 "Unable to deactivate pod. Please continue and pair a new one." = "Onmogelijk om pod te deactiveren. Ga verder en koppel een nieuwe pod.";
 
 /* Title of delivery uncertainty recovery page */
-"Unable to Reach Pod" = "Kan Pod Niet Bereiken";
+"Unable to Reach Pod" = "Kan Pod niet bereiken";
 
 
 /* Alert format string for a failure to set temporary basal. (1: error description) */
@@ -736,7 +736,7 @@
 "Unable to set a temporary basal rate: %1$@\n\n%2$@" = "Kan geen tijdelijke basaalsnelheid instellen: %1$@ \n\n%2$@";
 
 /* Label for pod life state when pod not fully activated */
-"Unfinished Activation" = "Onvoltooide Activering";
+"Unfinished Activation" = "Onvoltooide activering";
 
 /* Label for pod life state when pod not fully deactivated */
 "Unfinished deactivation" = "Onvoltooide deactivering";
@@ -751,10 +751,10 @@
 "Yes" = "Ja";
 
 /* Button title for confirm deactivation option */
-"Yes, Deactivate Pod" = "Ja, Deactiveer Pod";
+"Yes, Deactivate Pod" = "Ja, deactiveer Pod";
 
 /* Button text to confirm pump time sync */
-"Yes, Sync to Current Time" = "Ja, Synchroniseer met Huidige Tijd";
+"Yes, Sync to Current Time" = "Ja, synchroniseer met huidige tijd";
 
 /* bodyText for PodSetupView */
 "You will now begin the process of configuring your reminders, filling your Pod with insulin, pairing to your device and placing it on your body." = "Je begint nu met het configureren van je herinneringen, het vullen van je Pod met insuline, het koppelen van je apparaat en het op je lichaam plaatsen.";
