@@ -129,6 +129,9 @@
    Text for medtronic pump preferred data source */
 "Preferred Data Source" = "Foretruken data kilde";
 
+/* Text for medtronic pump battery percent remaining */
+"Pump Battery Remaining" = "Pump Battery Remaining";
+
 /* navigation title for pump battery type selection
    Text for medtronic pump battery type */
 "Pump Battery Type" = "Pumpe batteritype";
@@ -199,6 +202,9 @@
 /* Units for showing temp basal rate */
 "U/hr" = "E/t";
 
+/* Text to indicate battery percentage is unknown */
+"unknown" = "unknown";
+
 /* Text shown in basal rate space when delivery status is unknown */
 "Unknown" = "Ukendt";
 
@@ -212,4 +218,3 @@
 
 /* Button text to confirm pump time sync */
 "Yes, Sync to Current Time" = "Ja, synkroniser til det aktuelle klokkeslæt";
-

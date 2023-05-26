@@ -44,7 +44,7 @@
 "Make sure your RileyLink is nearby and powered on" = "Впевніться, що RileyLink увімкнений та знаходиться поруч";
 
 /* Pump error code describing max setting exceeded */
-"Max setting exceeded" = "Max setting exceeded";
+"Max setting exceeded" = "Максимальне значення перевищено";
 
 /* Pump title (1: model number) */
 "Minimed %@" = "Minimed %@";
@@ -53,46 +53,46 @@
 "Minimed 500/700 Series" = "Minimed 500/700 Series";
 
 /* Describing the North America pump region */
-"North America" = "North America";
+"North America" = "Північна Америка";
 
 /* No comment provided by engineer. */
-"Pump did not respond" = "Pump did not respond";
+"Pump did not respond" = "Помпа не відповідає";
 
 /* Error description */
-"Pump Error" = "Pump Error";
+"Pump Error" = "Помилка помпи";
 
 /* No comment provided by engineer. */
-"Pump is suspended" = "Pump is suspended";
+"Pump is suspended" = "Помпу призупинено";
 
 /* No comment provided by engineer. */
-"Pump responded unexpectedly" = "Pump responded unexpectedly";
+"Pump responded unexpectedly" = "Несподіваний відгук помпи";
 
 /* The format string describing a pump message. (1: The packet type)(2: The message type)(3: The message address)(4: The message data */
-"PumpMessage(%1$@, %2$@, %3$@, %4$@)" = "PumpMessage(%1$@, %2$@, %3$@, %4$@)";
+"PumpMessage(%1$@, %2$@, %3$@, %4$@)" = "Повідомлення помпи(%1$@, %2$@, %3$@, %4$@)";
 
 /* Describing the reservoir insulin data source */
 "Reservoir" = "Резервуар";
 
 /* Error description */
-"RileyLink radio tune failed" = "RileyLink radio tune failed";
+"RileyLink radio tune failed" = "Налаштування радіозв'язку з RileyLink не вдалося";
 
 /* The format string description of a TempBasalPumpEvent. (1: The rate of the temp basal in minutes) */
-"Temporary Basal: %1$.3f U/hour" = "Temporary Basal: %1$.3f U/hour";
+"Temporary Basal: %1$.3f U/hour" = "Тимчасовий базал: %1$.3f U/год";
 
 /* The format string description of a TempBasalDurationPumpEvent. (1: The duration of the temp basal in minutes) */
-"Temporary Basal: %1$d min" = "Temporary Basal: %1$d min";
+"Temporary Basal: %1$d min" = "Тимчасовий базал: %1$d хв";
 
 /* The format string description of a TempBasalPumpEvent. (1: The rate of the temp basal in percent) */
-"Temporary Basal: %1$d%%" = "Temporary Basal: %1$d%%";
+"Temporary Basal: %1$d%%" = "Тимчасовий базал: %1$d хв%%";
 
 /* The format string description of an unknown pump error code. (1: The specific error code raw value) */
-"Unknown pump error code: %1$@" = "Unknown pump error code: %1$@";
+"Unknown pump error code: %1$@" = "Невідомий код помилки помпи: %1$@";
 
 /* No comment provided by engineer. */
-"Unknown pump model: %@" = "Unknown pump model: %@";
+"Unknown pump model: %@" = "Невідома модель помпи: %@";
 
 /* Format string for an unknown response. (1: The operation being performed) (2: The response data) */
-"Unknown response during %1$@: %2$@" = "Unknown response during %1$@: %2$@";
+"Unknown response during %1$@: %2$@" = "Невідомий відгук %1$@: %2$@";
 
 /* Describing the worldwide pump region */
 "World-Wide" = "World-Wide";
