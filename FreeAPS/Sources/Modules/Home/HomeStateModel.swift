@@ -1,4 +1,5 @@
 import Combine
+import CoreData
 import LoopKitUI
 import SwiftDate
 import SwiftUI
@@ -10,7 +11,6 @@ extension Home {
         @Injected() var nightscoutManager: NightscoutManager!
         private let timer = DispatchTimer(timeInterval: 5)
         private(set) var filteredHours = 24
-
         @Published var glucose: [BloodGlucose] = []
         @Published var suggestion: Suggestion?
         @Published var uploadStats = false
@@ -58,6 +58,8 @@ extension Home {
         @Published var displayXgridLines: Bool = false
         @Published var displayYgridLines: Bool = false
         @Published var thresholdLines: Bool = false
+
+        let coredataContext = CoreDataStack.shared.persistentContainer.viewContext
 
         override func subscribe() {
             setupGlucose()
@@ -199,6 +201,15 @@ extension Home {
 
         func cancelBolus() {
             apsManager.cancelBolus()
+        }
+
+        func cancelProfile() {
+            coredataContext.perform { [self] in
+                let profiles = Override(context: self.coredataContext)
+                profiles.enabled = false
+                profiles.date = Date()
+                try? self.coredataContext.save()
+            }
         }
 
         private func setupGlucose() {

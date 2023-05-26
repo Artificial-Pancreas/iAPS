@@ -10,25 +10,22 @@ extension Home {
 
         @StateObject var state = StateModel()
         @State var isStatusPopupPresented = false
+        @State var showCancelAlert = false
 
-        // Average/Median/Readings and CV/SD titles and values switches when you tap them
-        @State var averageOrMedianTitle = NSLocalizedString("Average", comment: "")
-        @State var median_ = ""
-        @State var average_ = ""
-        @State var readings = ""
-
-        @State var averageOrmedian = ""
-        @State var CV_or_SD_Title = NSLocalizedString("CV", comment: "CV")
-        @State var cv_ = ""
-        @State var sd_ = ""
-        @State var CVorSD = ""
-        // Switch between Loops and Errors when tapping in statPanel
-        @State var loopStatTitle = NSLocalizedString("Loops", comment: "Nr of Loops in statPanel")
+        @Environment(\.managedObjectContext) var moc
+        @Environment(\.colorScheme) var colorScheme
 
         @FetchRequest(
             entity: Override.entity(),
             sortDescriptors: [NSSortDescriptor(key: "date", ascending: false)]
         ) var fetchedPercent: FetchedResults<Override>
+
+        @FetchRequest(
+            entity: OverridePresets.entity(),
+            sortDescriptors: [NSSortDescriptor(key: "name", ascending: true)], predicate: NSPredicate(
+                format: "name != %@", "" as String
+            )
+        ) var fetchedProfiles: FetchedResults<OverridePresets>
 
         @FetchRequest(
             entity: TempTargets.entity(),
@@ -96,8 +93,8 @@ extension Home {
                 Spacer()
             }
             .frame(maxWidth: .infinity)
-            .padding(.top, geo.safeAreaInsets.top)
-            .padding(.bottom, 6)
+            .padding(.top, 10 + geo.safeAreaInsets.top)
+            .padding(.bottom, 10)
             .background(Color.gray.opacity(0.2))
         }
 
@@ -211,10 +208,7 @@ extension Home {
             if sliderTTpresets.first?.active ?? false {
                 let hbt = sliderTTpresets.first?.hbt ?? 0
                 string = ", " + (tirFormatter.string(from: state.infoPanelTTPercentage(hbt, target) as NSNumber) ?? "") + " %"
-            } /* else if enactedSliderTT.first?.enabled ?? false {
-                 let hbt = enactedSliderTT.first?.hbt ?? 0
-                 string = ", " + (tirFormatter.string(from: state.infoPanelTTPercentage(hbt, target) as NSNumber) ?? "") + " %"
-             } */
+            }
 
             let percentString = state
                 .units == .mmolL ? (unitString + " mmol/L" + string) : (rawString + (string == "0" ? "" : string))
@@ -235,10 +229,27 @@ extension Home {
             var targetString = (fetchedTargetFormatter.string(from: target as NSNumber) ?? "") + " " + unit
             if tempTargetString != nil || target == 0 { targetString = "" }
             percentString = percentString == "100 %" ? "" : percentString
-            var durationString = indefinite ?
-                "" : ((tirFormatter.string(from: (fetchedPercent.first?.duration ?? 0) as NSNumber) ?? "") + " min")
-            let smbToggleString = (fetchedPercent.first?.smbIsOff ?? false) ? " \u{20e0}" : ""
 
+            let duration = (fetchedPercent.first?.duration ?? 0) as Decimal
+            let addedMinutes = Int(duration)
+            let date = fetchedPercent.first?.date ?? Date()
+            var newDuration: Decimal = 0
+
+            if date.addingTimeInterval(addedMinutes.minutes.timeInterval) > Date() {
+                newDuration = Decimal(Date().distance(to: date.addingTimeInterval(addedMinutes.minutes.timeInterval)).minutes)
+            }
+
+            var durationString = indefinite ?
+                "" : newDuration >= 1 ?
+                (newDuration.formatted(.number.grouping(.never).rounded().precision(.fractionLength(0))) + " min") :
+                (
+                    newDuration > 0 ? (
+                        (newDuration * 60).formatted(.number.grouping(.never).rounded().precision(.fractionLength(0))) + " s"
+                    ) :
+                        ""
+                )
+
+            let smbToggleString = (fetchedPercent.first?.smbIsOff ?? false) ? " \u{20e0}" : ""
             var comma1 = ", "
             var comma2 = comma1
             var comma3 = comma1
@@ -261,6 +272,10 @@ extension Home {
             }
             if smbToggleString == "" {
                 comma3 = ""
+            }
+
+            if durationString == "", !indefinite {
+                return nil
             }
             return percentString + comma1 + targetString + comma2 + durationString + comma3 + smbToggleString
         }
@@ -287,9 +302,9 @@ extension Home {
                 Spacer()
 
                 if let overrideString = overrideString {
-                    Text(overrideString)
+                    Text("👤 " + overrideString)
                         .font(.system(size: 12))
-                        .foregroundColor(.orange)
+                        .foregroundColor(.secondary)
                         .padding(.trailing, 8)
                 }
 
@@ -389,6 +404,71 @@ extension Home {
             .modal(for: .dataTable, from: self)
         }
 
+        @ViewBuilder private func profiles(_: GeometryProxy) -> some View {
+            let colour: Color = colorScheme == .dark ? .black : .white
+            // Rectangle().fill(colour).frame(maxHeight: 1)
+            ZStack {
+                Rectangle().fill(Color.gray.opacity(0.2)).frame(maxHeight: 40)
+                let cancel = fetchedPercent.first?.enabled ?? false
+                HStack(spacing: cancel ? 25 : 15) {
+                    Text(selectedProfile().name).foregroundColor(.secondary)
+                    if cancel, selectedProfile().isOn {
+                        Button { showCancelAlert.toggle() }
+                        label: {
+                            Image(systemName: "xmark")
+                                .foregroundStyle(.secondary)
+                        }
+                    }
+                    Button { state.showModal(for: .overrideProfilesConfig) }
+                    label: {
+                        Image(systemName: "person.3.sequence.fill")
+                            .symbolRenderingMode(.palette)
+                            .foregroundStyle(
+                                !(fetchedPercent.first?.enabled ?? false) ? .green : .cyan,
+                                !(fetchedPercent.first?.enabled ?? false) ? .cyan : .green,
+                                .purple
+                            )
+                    }
+                }
+            }
+            .alert(
+                "Return to Normal?", isPresented: $showCancelAlert,
+                actions: {
+                    Button("No", role: .cancel) {}
+                    Button("Yes", role: .destructive) {
+                        state.cancelProfile()
+                    }
+                }, message: { Text("This will change settings back to your normal profile.") }
+            )
+            Rectangle().fill(colour).frame(maxHeight: 1)
+        }
+
+        private func selectedProfile() -> (name: String, isOn: Bool) {
+            var profileString = ""
+            var display: Bool = false
+
+            let duration = (fetchedPercent.first?.duration ?? 0) as Decimal
+            let indefinite = fetchedPercent.first?.indefinite ?? false
+            let addedMinutes = Int(duration)
+            let date = fetchedPercent.first?.date ?? Date()
+            if date.addingTimeInterval(addedMinutes.minutes.timeInterval) > Date() || indefinite {
+                display.toggle()
+            }
+
+            if fetchedPercent.first?.enabled ?? false, !(fetchedPercent.first?.isPreset ?? false), display {
+                profileString = NSLocalizedString("Custom Profile", comment: "Custom but unsaved Profile")
+            } else if !(fetchedPercent.first?.enabled ?? false) || !display {
+                profileString = NSLocalizedString("Normal Profile", comment: "Your normal Profile. Use a short string")
+            } else {
+                let id_ = fetchedPercent.first?.id ?? ""
+                let profile = fetchedProfiles.filter({ $0.id == id_ }).first
+                if profile != nil {
+                    profileString = profile?.name?.description ?? ""
+                }
+            }
+            return (name: profileString, isOn: display)
+        }
+
         @ViewBuilder private func bottomPanel(_ geo: GeometryProxy) -> some View {
             ZStack {
                 Rectangle().fill(Color.gray.opacity(0.2)).frame(height: 50 + geo.safeAreaInsets.bottom)
@@ -473,6 +553,7 @@ extension Home {
                     infoPanel
                     mainChart
                     legendPanel
+                    profiles(geo)
                     bottomPanel(geo)
                 }
                 .edgesIgnoringSafeArea(.vertical)

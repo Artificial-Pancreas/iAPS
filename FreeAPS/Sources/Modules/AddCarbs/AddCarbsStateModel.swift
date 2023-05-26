@@ -18,7 +18,6 @@ extension AddCarbs {
         @Published var summation: [String] = []
 
         let coredataContext = CoreDataStack.shared.persistentContainer.viewContext
-        // @Environment(\.managedObjectContext) var moc
 
         override func subscribe() {
             subscribeSetting(\.useFPUconversion, on: $useFPUconversion) { useFPUconversion = $0 }

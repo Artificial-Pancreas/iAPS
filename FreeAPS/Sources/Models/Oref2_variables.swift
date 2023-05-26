@@ -14,6 +14,15 @@ struct Oref2_variables: JSON, Equatable {
     var hbt: Decimal
     var overrideTarget: Decimal
     var smbIsOff: Bool
+    var advancedSettings: Bool
+    var isfAndCr: Bool
+    var isf: Bool
+    var cr: Bool
+    var smbIsAlwaysOff: Bool
+    var start: Decimal
+    var end: Decimal
+    var smbMinutes: Decimal
+    var uamMinutes: Decimal
 
     init(
         average_total_data: Decimal,
@@ -28,7 +37,16 @@ struct Oref2_variables: JSON, Equatable {
         unlimited: Bool,
         hbt: Decimal,
         overrideTarget: Decimal,
-        smbIsOff: Bool
+        smbIsOff: Bool,
+        advancedSettings: Bool,
+        isfAndCr: Bool,
+        isf: Bool,
+        cr: Bool,
+        smbIsAlwaysOff: Bool,
+        start: Decimal,
+        end: Decimal,
+        smbMinutes: Decimal,
+        uamMinutes: Decimal
     ) {
         self.average_total_data = average_total_data
         self.weightedAverage = weightedAverage
@@ -43,6 +61,15 @@ struct Oref2_variables: JSON, Equatable {
         self.hbt = hbt
         self.overrideTarget = overrideTarget
         self.smbIsOff = smbIsOff
+        self.advancedSettings = advancedSettings
+        self.isfAndCr = isfAndCr
+        self.isf = isf
+        self.cr = cr
+        self.smbIsAlwaysOff = smbIsAlwaysOff
+        self.start = start
+        self.end = end
+        self.smbMinutes = smbMinutes
+        self.uamMinutes = uamMinutes
     }
 }
 
@@ -61,5 +88,14 @@ extension Oref2_variables {
         case hbt
         case overrideTarget
         case smbIsOff
+        case advancedSettings
+        case isfAndCr
+        case isf
+        case cr
+        case smbIsAlwaysOff
+        case start
+        case end
+        case smbMinutes
+        case uamMinutes
     }
 }
