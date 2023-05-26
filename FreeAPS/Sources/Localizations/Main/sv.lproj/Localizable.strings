@@ -1162,6 +1162,12 @@ Enact a temp Basal or a temp target */
 "Override Profiles" = "Aktivera tillfälligt undantag";
 
 /* */
+"Normal " = "Normal ";
+
+/* */
+"Add / Delete" = "Add / Delete";
+
+/* */
 "Currently no Override active" = "Inget undantag aktivt";
 
 /* */
