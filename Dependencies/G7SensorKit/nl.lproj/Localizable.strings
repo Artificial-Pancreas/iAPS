@@ -14,7 +14,7 @@
 "Glucose data is unavailable" = "Glucose gegevens niet beschikbaar";
 
 /* The description of sensor algorithm state when sensor is ok. */
-"Sensor is OK" = "Sensor is OK";
+"Sensor is OK" = "Sensor is ok";
 
 /* The description of sensor algorithm state when sensor is stopped." */
 "Sensor is stopped" = "Sensor is gestopt";
@@ -49,7 +49,7 @@
 
 "Trend" = "Trend";
 
-"Bluetooth" = "Bluetooth";
+"Bluetooth" = "Bluethooth";
 
 /* title for g7 settings row showing BLE Name */
 "Name" = "Naam";
