@@ -406,7 +406,7 @@ extension Home {
 
         @ViewBuilder private func profiles(_: GeometryProxy) -> some View {
             let colour: Color = colorScheme == .dark ? .black : .white
-            Rectangle().fill(colour).frame(maxHeight: 1)
+            // Rectangle().fill(colour).frame(maxHeight: 1)
             ZStack {
                 Rectangle().fill(Color.gray.opacity(0.2)).frame(maxHeight: 40)
                 let cancel = fetchedPercent.first?.enabled ?? false
@@ -440,6 +440,7 @@ extension Home {
                     }
                 }, message: { Text("This will change settings back to your normal profile.") }
             )
+            Rectangle().fill(colour).frame(maxHeight: 1)
         }
 
         private func selectedProfile() -> (name: String, isOn: Bool) {
@@ -549,10 +550,10 @@ extension Home {
             GeometryReader { geo in
                 VStack(spacing: 0) {
                     header(geo)
-                    profiles(geo)
                     infoPanel
                     mainChart
                     legendPanel
+                    profiles(geo)
                     bottomPanel(geo)
                 }
                 .edgesIgnoringSafeArea(.vertical)
