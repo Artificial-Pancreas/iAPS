@@ -11,6 +11,7 @@ extension OverrideProfilesConfig {
         @State private var showAlert = false
         @State private var showingDetail = false
         @State private var alertSring = ""
+        @State var isSheetPresented: Bool = false
 
         @Environment(\.dismiss) var dismiss
         @Environment(\.managedObjectContext) var moc
@@ -42,20 +43,20 @@ extension OverrideProfilesConfig {
 
         var presetPopover: some View {
             Form {
-                Section(header: Text("Enter Profile Name")) {
+                Section {
                     TextField("Name Of Profile", text: $state.profileName)
-                    Button {
-                        state.savePreset()
-                    }
+                } header: { Text("Enter Name of Profile") }
 
-                    label: { Text("Save") }
-                        .disabled(
-                            state.profileName == "" ||
-                                fetchedProfiles.filter({ $0.name == state.profileName }).isNotEmpty
-                        )
-                    Button {
-                        state.isPromtPresented = false }
-                    label: { Text("Cancel") }
+                Section {
+                    Button("Save") {
+                        state.savePreset()
+                        isSheetPresented = false
+                    }
+                    .disabled(state.profileName.isEmpty || fetchedProfiles.filter({ $0.name == state.profileName }).isNotEmpty)
+
+                    Button("Cancel") {
+                        isSheetPresented = false
+                    }
                 }
             }
         }
@@ -220,7 +221,6 @@ extension OverrideProfilesConfig {
                             (state.percentage == 100 && !state.override_target && !state.smbIsOff) ||
                                 (!state._indefinite && state.duration == 0) || (state.override_target && state.target == 0)
                         )
-                        // .tint(.blue)
                         .buttonStyle(BorderlessButtonStyle())
                         .font(.callout)
                         .controlSize(.mini)
@@ -241,7 +241,7 @@ extension OverrideProfilesConfig {
                             }
                         )
                         Button {
-                            state.isPromtPresented.toggle()
+                            isSheetPresented = true
                         }
                         label: { Text("Save as Profile") }
                             .tint(.orange)
@@ -253,7 +253,8 @@ extension OverrideProfilesConfig {
                                     (!state._indefinite && state.duration == 0) || (state.override_target && state.target == 0)
                             )
                     }
-                    .popover(isPresented: $state.isPromtPresented) {
+
+                    .sheet(isPresented: $isSheetPresented) {
                         presetPopover
                     }
                 }

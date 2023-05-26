@@ -15,7 +15,6 @@ extension OverrideProfilesConfig {
         @Published var isPreset: Bool = false
         @Published var presets: [OverridePresets] = []
         @Published var selection: OverridePresets?
-        @Published var isPromtPresented: Bool = false
         @Published var advancedSettings: Bool = false
         @Published var isfAndCr: Bool = true
         @Published var isf: Bool = true
@@ -121,7 +120,6 @@ extension OverrideProfilesConfig {
                     }
                 }
                 try? self.coredataContext.save()
-                isPromtPresented = false
             }
         }
 
