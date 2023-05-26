@@ -193,17 +193,28 @@ extension OverrideProfilesConfig {
                                                 .formatted(.number.grouping(.never).rounded().precision(.fractionLength(0))) +
                                                 " min."
                                         ) :
-                                        " infinite duration."
+                                        NSLocalizedString(" infinite duration.", comment: "")
                                 ) +
                                 (
                                     (state.target == 0 || !state.override_target) ? "" :
                                         (" Target: " + state.target.formatted() + " " + state.units.rawValue + ".")
                                 )
-                                + (state.smbIsOff ? " SMBs are disabled." : "")
+                                +
+                                (
+                                    state
+                                        .smbIsOff ?
+                                        NSLocalizedString(
+                                            " SMBs are disabled either by schedule or during the entire duration.",
+                                            comment: ""
+                                        ) : ""
+                                )
                                 +
                                 "\n\n"
                                 +
-                                "Starting this override will change your Profiles and/or your Target Glucose used for looping during the entire selected duration. Tapping ”Start” will start your new overide or edit your current active override."
+                                NSLocalizedString(
+                                    "Starting this override will change your Profiles and/or your Target Glucose used for looping during the entire selected duration. Tapping ”Start Profile” will start your new profile or edit your current active profile.",
+                                    comment: ""
+                                )
                         }
                         .disabled(
                             (state.percentage == 100 && !state.override_target && !state.smbIsOff) ||
@@ -218,7 +229,7 @@ extension OverrideProfilesConfig {
                             isPresented: $showAlert,
                             actions: {
                                 Button("Cancel", role: .cancel) { state.isEnabled = false }
-                                Button("Start Override", role: .destructive) {
+                                Button("Start Profile", role: .destructive) {
                                     if state._indefinite { state.duration = 0 }
                                     state.isEnabled.toggle()
                                     state.saveSettings()
