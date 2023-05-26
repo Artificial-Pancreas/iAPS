@@ -1222,7 +1222,7 @@ Enact a temp Basal or a temp target */
 "Return to Normal?" = "Tillbaka till normal profil?";
 
 /* */
-"This will change settings back to your normal profile" = "Detta kommer att ändra tillbaka till dina normala inställningar ";
+"This will change settings back to your normal profile." = "Detta kommer att ändra tillbaka till dina normala inställningar ";
 
 /* Start Profile Alert */
 "Start Profile" = "Starta profil";
