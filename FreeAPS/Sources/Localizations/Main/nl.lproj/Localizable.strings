@@ -1183,67 +1183,67 @@ Enact a temp Basal or a temp target */
 "Disable SMBs" = "SMBs uitschakelen";
 
 /* Your normal Profile. Use a short string */
-"Normal Profile" = "Normal Profile";
+"Normal Profile" = "Normaal profiel";
 
 /* Custom but unsaved Profile */
-"Custom Profile" = "Custom Profile";
+"Custom Profile" = "Aangepast profiel";
 
 /* */
-"Profiles" = "Profiles";
+"Profiles" = "Profielen";
 
 /* */
-"More options" = "More options";
+"More options" = "Meer opties";
 
 /* */
-"Schedule when SMBs are Off" = "Schedule when SMBs are Off";
+"Schedule when SMBs are Off" = "Schema wanneer SMB's uit staan";
 
 /* */
-"Change ISF and CR" = "Change ISF and CR";
+"Change ISF and CR" = "Wijzig ISF en CR";
 
 /* */
-"Change ISF" = "Change ISF";
+"Change ISF" = "Wijzig ISF";
 
 /* */
-"Change CR" = "Change CR";
+"Change CR" = "Wijzig CR";
 
 /* */
-"SMB Minutes" = "SMB Minutes";
+"SMB Minutes" = "SMB Minuten";
 
 /* */
-"UAM SMB Minutes" = "UAM SMB Minutes";
+"UAM SMB Minutes" = "UAM SMB Minuten";
 
 /* */
-"Start new Profile" = "Start new Profile";
+"Start new Profile" = "Start nieuw profiel";
 
 /* */
-"Save as Profile" = "Save as Profile";
+"Save as Profile" = "Bewaar als profiel";
 
 /* */
-"Return to Normal" = "Return to Normal";
+"Return to Normal" = "Terug naar normaal";
 
 /* Alert */
-"Return to Normal?" = "Return to Normal?";
+"Return to Normal?" = "Terug naar normaal?";
 
 /* */
-"This will change settings back to your normal profile." = "This will change settings back to your normal profile.";
+"This will change settings back to your normal profile." = "Dit verandert de instellingen terug naar uw normale profiel.";
 
 /* Start Profile Alert */
-"Start Profile" = "Start Profile";
+"Start Profile" = "Start profiel";
 
 /* */
 "Your profile basal insulin will be adjusted with the override percentage and your profile ISF and CR will be inversly adjusted with the percentage.\n\nIf you toggle off the override every profile setting will return to normal." = "Your profile basal insulin will be adjusted with the override percentage and your profile ISF and CR will be inversly adjusted with the percentage.\n\nIf you toggle off the override every profile setting will return to normal.";
 
 /* */
-"Starting this override will change your Profiles and/or your Target Glucose used for looping during the entire selected duration. Tapping ”Start Profile” will start your new profile or edit your current active profile." = "Starting this override will change your Profiles and/or your Target Glucose used for looping during the entire selected duration. Tapping ”Start Profile” will start your new profile or edit your current active profile.";
+"Starting this override will change your Profiles and/or your Target Glucose used for looping during the entire selected duration. Tapping ”Start Profile” will start your new profile or edit your current active profile." = "Door deze overschrijving te starten, verandert u uw profielen en/of uw streefwaarde voor glucose die voor de looping gedurende de hele geselecteerde duur wordt gebruikt. Door op \"Start profiel\" te tikken, start u uw nieuwe profiel of wijzigt u uw huidige actieve profiel.";
 
 /* Change Target glucose in profile settings */
-"Override Profile Target" = "Override Profile Target";
+"Override Profile Target" = "Overschrijven doelprofiel";
 
 /* Alert string. Keep spaces. */
-" SMBs are disabled either by schedule or during the entire duration." = " SMBs are disabled either by schedule or during the entire duration.";
+" SMBs are disabled either by schedule or during the entire duration." = " SMB's worden per schema of gedurende de gehele looptijd uitgeschakeld.";
 
 /* Alert strings. Keep spaces */
-" infinite duration." = " infinite duration.";
+" infinite duration." = " Oneindige duur.";
 
 /* Service Section */
 "App Icons" = "App iconen";
@@ -1478,7 +1478,7 @@ Enact a temp Basal or a temp target */
 "Readings / 24h" = "Lezingen van afgelopen 24/h";
 
 /* Days of saved readings*/
-"Days" = "Days";
+"Days" = "Dagen";
 
 /* Normal BG (within TIR) */
 "Normal" = "TIR ";
@@ -1568,9 +1568,9 @@ Enact a temp Basal or a temp target */
 "Are you sure you want to delete this CGM?" = "Weet je zeker dat je deze CGM wilt vewijderen?";
 
 /* New Experimental feature */
-"Experimental" = "Experimental";
+"Experimental" = "Experimenteel";
 /* Smoothing of CGM readings */
-"Smooth Glucose Value" = "Smooth Glucose Value";
+"Smooth Glucose Value" = "Soepele glucosewaarde";
 
 /* -----------------------------------------------------------------------------------------------------------
 
@@ -1708,13 +1708,13 @@ Enact a temp Basal or a temp target */
 "This is another important OpenAPS safety limit. The default setting (which is also unlikely to need adjusting) is 4. This means that OpenAPS will never be allowed to set a temporary basal rate that is more than 4x the current hourly basal rate programmed in a user’s pump, or, if enabled, determined by autotune." = "Dit is ook een belangrijke OpenAPS veiligheidslimiet. De standaard instelling (die waarschijnlijk niet aangepast hoeft te worden) is 4. Dit betekend dat OpenAPS niet een hoger tijdelijk basaal waarde mag instellen dan 4 keer het huidige basaal van dit uur ingesteld in de pomp, of als dit is ingesteld bepaald door autotune.";
 
 /* Headline "Autosens Max" */
-"Autosens Max" = "Autosens Max";
+"Autosens Max" = "Autosens max";
 
 /* "Autosens Max" */
 "This is a multiplier cap for autosens (and autotune) to set a 20% max limit on how high the autosens ratio can be, which in turn determines how high autosens can adjust basals, how low it can adjust ISF, and how low it can set the BG target." = "Dit is een vermenigvuldigingsfactor voor Autosens (en Autotune) om een maximum te zetten van 20% op hoe hoog de Autosens ratio kan zijn. Dit bepaald hoe hoog Autosens het basaal kan aanpassen, hoe laag het de ISF kan instellen en hoe laag het de streefwaarde kan maken.";
 
 /* Headline "Autosens Min" */
-"Autosens Min" = "Autosens Min";
+"Autosens Min" = "Autosens min";
 
 /* "Autosens Min" */
 "The other side of the autosens safety limits, putting a cap on how low autosens can adjust basals, and how high it can adjust ISF and BG targets." = "De andere kant van de Autosens veiligheidslimiet, dit zet een limiet op hoe laag Autosens de basaal kan zetten, hoe hoog Autosens de ISF kan zetten en hoe hoog de streefwaarde ingesteld kan worden.";
@@ -1747,7 +1747,7 @@ Enact a temp Basal or a temp target */
 "Autotune ISF Adjustment Fraction" = "Autotune ISF-aanpassingsfractie";
 
 /* "Autotune ISF Adjustment Fraction" */
-"The default of 0.5 for this value keeps autotune ISF closer to pump ISF via a weighted average of fullNewISF and pumpISF. 1.0 allows full adjustment, 0 is no adjustment from pump ISF." = "The default of 0.5 for this value keeps autotune ISF closer to pump ISF via a weighted average of fullNewISF and pumpISF. 1.0 allows full adjustment, 0 is no adjustment from pump ISF.";
+"The default of 0.5 for this value keeps autotune ISF closer to pump ISF via a weighted average of fullNewISF and pumpISF. 1.0 allows full adjustment, 0 is no adjustment from pump ISF." = "De standaardwaarde van 0,5 voor deze waarde houdt autotune ISF dichter bij pomp-ISF via een gewogen gemiddelde van fullNewISF en pumpISF. 1,0 staat volledige aanpassing toe, 0 is geen aanpassing van pomp-ISF.";
 
 /* Headline "Remaining Carbs Fraction" */
 "Remaining Carbs Fraction" = "Resterende koolhydraten fractie";
