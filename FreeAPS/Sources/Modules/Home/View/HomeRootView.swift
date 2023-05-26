@@ -244,7 +244,7 @@ extension Home {
                 (newDuration.formatted(.number.grouping(.never).rounded().precision(.fractionLength(0))) + " min") :
                 (
                     newDuration > 0 ? (
-                        newDuration.formatted(.number.grouping(.never).rounded().precision(.fractionLength(1))) + "min"
+                        (newDuration * 60).formatted(.number.grouping(.never).rounded().precision(.fractionLength(0))) + " s"
                     ) :
                         ""
                 )
@@ -455,7 +455,7 @@ extension Home {
                 display.toggle()
             }
 
-            if fetchedPercent.first?.enabled ?? false, !(fetchedPercent.first?.isPreset ?? false) {
+            if fetchedPercent.first?.enabled ?? false, !(fetchedPercent.first?.isPreset ?? false), display {
                 profileString = NSLocalizedString("Custom Profile", comment: "Custom but unsaved Profile")
             } else if !(fetchedPercent.first?.enabled ?? false) || !display {
                 profileString = NSLocalizedString("Normal Profile", comment: "Your normal Profile. Use a short string")
