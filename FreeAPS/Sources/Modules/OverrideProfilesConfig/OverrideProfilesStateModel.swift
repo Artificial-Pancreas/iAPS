@@ -138,6 +138,7 @@ extension OverrideProfilesConfig {
                 saveOverride.id = id_
 
                 if profile.advancedSettings {
+                    saveOverride.advancedSettings = true
                     if !isfAndCr {
                         saveOverride.isfAndCr = false
                         saveOverride.isf = profile.isf
