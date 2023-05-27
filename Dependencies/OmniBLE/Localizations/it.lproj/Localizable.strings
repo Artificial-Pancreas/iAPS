@@ -451,13 +451,13 @@
 "If you cancel Pod setup, the current Pod will be deactivated and will be unusable." = "Se si annulla la configurazione del Pod, il Pod corrente verrà disattivato e sarà inutilizzabile.";
 
 /* Button title for confirm deactivation option */
-"Yes, Deactivate Pod" = "Sí, Disartiva Pod";
+"Yes, Deactivate Pod" = "Sì, disattiva Pod";
 
 /* Continue pairing button title of in pairing cancel modal */
 "No, Continue With Pod" = "No, continua con il Pod";
 
 /* Label text for step one of attach pod instructions */
-"Prepare site." = "Presaprà il sito.";
+"Prepare site." = "Prepara il sito.";
 
 /* Label text for step two of attach pod instructions */
 "Remove blue Pod needle cap and check cannula. Then remove paper backing." = "Rimuovere il cappuccio blu dell’ago e controlla la cannula. Quindi rimuovi il supporto cartaceo.";
@@ -611,7 +611,7 @@
 "Rate" = "Valore";
 
 /* Insulin unit per hour */
-"U/hr" = "Unità/ora";
+"U/hr" = "U/ora";
 
 /* Summary string for temporary basal rate configuration page */
 "%1$@ for %2$@" = "%1$@ per %2$@";
