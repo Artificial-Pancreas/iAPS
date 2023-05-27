@@ -125,7 +125,7 @@
 " Your setting: " = " Le tue impostazioni: ";
 
 /* */
-"mg/dl. Autosens.max limits the max endpoint" = "mg/dl. Autosens.max limits the max endpoint";
+"mg/dl. Autosens.max limits the max endpoint" = "mg/dl. Autosens.max limita l'endpoint massimo";
 
 /*  */
 "Enter preset name" = "Inserisci nome del preset";
@@ -146,10 +146,10 @@
 "Save as preset" = "Salva come predefinito";
 
 /* Delete Meal Preset */
-"Delete Preset" = "Delete Preset";
+"Delete Preset" = "Cancella predefinito";
 
 /* Confirm Deletion */
-"Delete preset '%@'?" = "Delete preset '%@'?";
+"Delete preset '%@'?" = "Cancella predefinito \"%@'?";
 
 /* Button */
 "No" = "No";
@@ -588,7 +588,7 @@ Enact a temp Basal or a temp target */
 "Pairinginfo" = "Pairinginfo";
 
 /* */
-"PatchInfo" = "PatchInfo";
+"PatchInfo" = "Info sulla Patch";
 
 /* */
 "Calibrationinfo" = "Calibrationinfo";
@@ -837,7 +837,7 @@ Enact a temp Basal or a temp target */
 "High" = "Alto";
 
 /* */
-"glucose" = "glucose";
+"glucose" = "glicemia";
 
 /* */
 "Schedule " = "Programmazione ";
@@ -994,7 +994,7 @@ Enact a temp Basal or a temp target */
 "OpenAPS other settings" = "Altre impostazioni di OpenAPS";
 
 /* Glucose Simulator CGM */
-"Glucose Simulator" = "Glucose Simulator";
+"Glucose Simulator" = "Simulatore Glicemia";
 
 /* Restored state message */
 "Bluetooth State restored (APS restarted?). Found %d peripherals, and connected to %@ with identifier %@" = "Stato Bluetooth ripristinato (APS riavviato?). Trovato %d periferiche e collegato a %@ con identificatore %@";
@@ -1541,7 +1541,7 @@ Enact a temp Basal or a temp target */
 "Past 90 Days " = "Ultimi 90 giorni";
 
 /* Duration displayed in statPanel */
-"All Past Days of Data " = "All Past Days of Data ";
+"All Past Days of Data " = "Tutti gli ultimi giorni di dati ";
 
 /* "Display Loop statistics in statPanel */
 "Display Loop Cycle statistics" = "Visualizza le statistiche di Loop";
@@ -1550,7 +1550,7 @@ Enact a temp Basal or a temp target */
 "Displays Loop statistics in the statPanel in Home View" = "Visualizza le statistiche Loop nel pannello di stato nella vista Home";
 
 /* Description for Override HbA1c unit */
-"Change default HbA1c unit in statPanlel. The unit in statPanel will be updateded with next statistics.json update" = "Change default HbA1c unit in statPanlel. The unit in statPanel will be updateded with next statistics.json update";
+"Change default HbA1c unit in statPanlel. The unit in statPanel will be updateded with next statistics.json update" = "Cambia unità HbA1c predefinita nel pannello. L' unità del pannello verrà aggiornata con il prossimo aggiornamento statistics.json";
 
 /* HbA1c for all glucose storage days */
 "all" = "tutti";
@@ -1663,7 +1663,7 @@ Enact a temp Basal or a temp target */
 "Defaults to false. When true, always enable supermicrobolus (unless disabled by high temptarget)." = "I valori predefiniti sono falsi. Quando Vero, abilita sempre il supermicrobolo(Smb) (a meno che non sia disabilitato da un elevato target temporaneo).";
 
 /* Headline "Enable SMB After Carbs" */
-"Enable SMB After Carbs" = "Enable SMB After Carbs";
+"Enable SMB After Carbs" = "Abilita SMB dopo i CHO";
 
 /* "Enable SMB After Carbs" */
 "Defaults to false. When true, enables supermicrobolus (SMB) for 6h after carbs, even with 0 carbs on board (COB)." = "I valori predefiniti sono falsi. Quando è vero, abilita il supermicrobolo (SMB) per 6 ore dopo inserimenro di carboidrati, anche con 0 carboidrati da assorbire (COB).";
@@ -1786,7 +1786,7 @@ Enact a temp Basal or a temp target */
 "Smallest enacted SMB amount. Minimum amount for Omnipod pumps is 0.05 U, whereas for Medtronic pumps it differs for various models, from 0.025 U to 0.10 U. Please check the minimum bolus amount which can be delivered by your pump. The default value is 0.1." = "Smallest enacted SMB amount. Minimum amount for Omnipod pumps is 0.05 U, whereas for Medtronic pumps it differs for various models, from 0.025 U to 0.10 U. Please check the minimum bolus amount which can be delivered by your pump. The default value is 0.1.";
 
 /* Headline "Insulin Peak Time" */
-"Insulin Peak Time" = "Insulin Peak Time";
+"Insulin Peak Time" = "Tempo Picco Insulina";
 
 /* "Insulin Peak Time" */
 "Time of maximum blood glucose lowering effect of insulin, in minutes. Beware: Oref assumes for ultra-rapid (Lyumjev) & rapid-acting (Fiasp) curves minimal (35 & 50 min) and maximal (100 & 120 min) applicable insulinPeakTimes. Using a custom insulinPeakTime outside these bounds will result in issues with iAPS, longer loop calculations and possible red loops." = "Tempo del massimo effetto dell'insulina di riduzione del glucosio nel sangue, in minuti. Attenzione: Oref presume le curve ultra rapide (Lyumjev) e ad azione rapida (Fiasp) minime (35 e 50 min) e massime (100 e 120 min) degli insulinPeakTimes applicabili. Usare un insulinPeakTime personalizzato al di fuori di questi limiti risulterà in problemi con iAPS, calcoli ciclici più lunghi e possibili cicli rossi.";
