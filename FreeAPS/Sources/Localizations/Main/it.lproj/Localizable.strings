@@ -558,7 +558,7 @@ Enact a temp Basal or a temp target */
 "Meter glucose" = "Inserisci glicemia";
 
 /* */
-"Info" = "Informazioni";
+"Info" = "Info";
 
 /*v*/
 "Slope" = "Pendenza";
@@ -585,7 +585,7 @@ Enact a temp Basal or a temp target */
 "Please make sure that your Libre 2 sensor is already activated and finished warming up. If you have other apps connecting to the sensor via bluetooth, these need to be shut down or uninstalled. \n\n You can only have one app communicating with the sensor via bluetooth. Then press the \"pariring and connection\" button below to start the process. Please note that the bluetooth connection might take up to a couple of minutes before it starts working." = "Sei pregato di assicurarti che il tuo sensore di Libre 2 sia giù attivato e abbia terminato il riscaldamento. Se hai altre app connesse al sensore via bluetooth, devono esser arrestate o disinstallate. \n\n Puoi avere solo un'app in comunicazione con il sensore via bluetooth. Poi premi il pulsante \"abbinamento e connessione\" di seguito per avviare il processo. Sei pregato di notare che la connessione bluetooth potrebbe impiegare fino a un paio di minuti prima di iniziare a funzionare.";
 
 /* */
-"Pairinginfo" = "Accoppiamentinfo";
+"Pairinginfo" = "Connettinfo";
 
 /* */
 "PatchInfo" = "InfoPatch";
@@ -603,7 +603,7 @@ Enact a temp Basal or a temp target */
 "Pair Sensor & connect" = "Associa Sensore e connetti";
 
 /* */
-"Phone NFC required!" = "NFC Telefono necessario!";
+"Phone NFC required!" = "Telefono NFC richiesto!";
 
 /* */
 "Your phone or app is not enabled for NFC communications, which is needed to pair to libre2 sensors" = "Il tuo telefono o l'app non sono abilitati per le comunicazioni NFC, necessarie per associarsi ai sensori libre2";
@@ -627,19 +627,19 @@ Enact a temp Basal or a temp target */
 "Libre sensor was incorrectly read, CRCs were not valid" = "Il sensore di Libre è stato letto erroneamente, I CRC non erano validi";
 
 /* Glucose */
-"Glucose" = "Glucosio";
+"Glucose" = "Glicemie";
 
 /* LOWALERT! */
-"LOWALERT!" = "AVVISO BASSO!";
+"LOWALERT!" = "AVVISOBASSO!";
 
 /* HIGHALERT! */
-"HIGHALERT!" = "AVVISO ALTO!";
+"HIGHALERT!" = "AVVISOALTO!";
 
 /* (Snoozed)*/
 "(Snoozed)" = "(Posticipato)";
 
 /* Glucose: %@ */
-"Glucose: %@" = "Glucosio: %@";
+"Glucose: %@" = "Glicemie: %@";
 
 /* Transmitter: %@%% */
 "Transmitter: %@%%" = "Trasmettitore: %@%%";
@@ -657,13 +657,13 @@ Enact a temp Basal or a temp target */
 "Please wait up to 30 minutes before glucose readings are available!" = "Sei pregato di attendere fino a 30 minuti prima che le letture del glucosio siano disponibili!";
 
 /* Invalid Glucose sample detected, try again later */
-"Invalid Glucose sample detected, try again later" = "Campione di Glucose non valido rilevato, riprova più tardi";
+"Invalid Glucose sample detected, try again later" = "Campione di Glicemia non valido rilevato, riprova più tardi";
 
 /* ensor might have temporarily stopped, fallen off or is too cold or too warm */
 "Sensor might have temporarily stopped, fallen off or is too cold or too warm" = "Il sensore potrebbe essersi interrotto temporaneamente, caduto o troppo freddo o troppo caldo";
 
 /* Invalid Sensor Detected */
-"Invalid Sensor Detected" = "Sensore Non Valido Rilevato";
+"Invalid Sensor Detected" = "Sensore Rilevato Non Valido";
 
 /* Detected sensor seems not to be a libre 1 sensor! */
 "Detected sensor seems not to be a libre 1 sensor!" = "Il sensore rilevato non sembra essere un sensore Libre 1!";
@@ -681,7 +681,7 @@ Enact a temp Basal or a temp target */
 "Sensor change" = "Cambio sensore";
 
 /* */
-"Sensor expires soon" = "Il sensore scade presto";
+"Sensor expires soon" = "Il sensore scade a breve";
 
 /* Battery is running low %@, consider charging your %@ device as soon as possible */
 "Battery is running low %@, consider charging your %@ device as soon as possible" = "Batteria scarsa %@, considera di caricare il tuo dispositivo %@ il prima possibile";
@@ -690,7 +690,7 @@ Enact a temp Basal or a temp target */
 "Extracting calibrationdata from sensor" = "Estraendo i dati di calibrazione dal sensore";
 
 /* Sensor Ending Soon */
-"Sensor Ending Soon" = "Il Sensore Terminerà Presto";
+"Sensor Ending Soon" = "Il Sensore Terminerà a breve";
 
 /* Current Sensor is Ending soon! Sensor Life left in %@ */
 "Current Sensor is Ending soon! Sensor Life left in %@" = "Il Sensore Corrente terminerà presto! Vita del Sensore rimanente in %@";
@@ -714,13 +714,13 @@ Enact a temp Basal or a temp target */
 "CurrentBG" = "Bg Corrente";
 
 /* */
-"Sensor Info" = "Info sul Sensore";
+"Sensor Info" = "Info Sensore";
 
 /* */
-"Sensor Age" = "Età del Sensore";
+"Sensor Age" = "Durata Sensore";
 
 /* */
-"Sensor Age Left" = "Età Rimanente del Sensore";
+"Sensor Age Left" = "Tempo Rimanente Sensore";
 
 /* */
 "Sensor Endtime" = "Termine del Sensore";
@@ -777,7 +777,7 @@ Enact a temp Basal or a temp target */
 "Alarms" = "Allarmi";
 
 /* */
-"Glucose Settings" = "Impostazioni di Glucose";
+"Glucose Settings" = "Impostazioni Glicemia";
 
 /* */
 "Notifications" = "Notifiche";
@@ -801,10 +801,10 @@ Enact a temp Basal or a temp target */
 "No logs available" = "Nessun registro disponibile";
 
 /* */
-"Glucose Notification visibility" = "Visibilità delle Notifiche di Glucose";
+"Glucose Notification visibility" = "Visibilità delle notifiche Glicemie";
 
 /* */
-"Always Notify Glucose" = "Notifica Sempre Glucose";
+"Always Notify Glucose" = "Notifica Sempre Glicemie";
 
 /* */
 "Notify per reading" = "Notifica per lettura";
@@ -837,13 +837,13 @@ Enact a temp Basal or a temp target */
 "High" = "Alto";
 
 /* */
-"glucose" = "glicemia";
+"glucose" = "glicemie";
 
 /* */
 "Schedule " = "Programmazione ";
 
 /* */
-"tapped save schedules" = "ha toccato salva pianificazioni";
+"tapped save schedules" = "salva pianificazioni toccate";
 
 /* */
 "Error" = "Errore";
@@ -858,13 +858,13 @@ Enact a temp Basal or a temp target */
 "Schedules were saved successfully!" = "Pianificazioni salvate correttamente!";
 
 /* */
-"High Glucose Alarm active" = "Sveglia Glucosio Alto attiva";
+"High Glucose Alarm active" = "Allarme Glicemia Alto attiva";
 
 /* */
-"Low Glucose Alarm active" = "Sveglia Glucosio Basso attiva";
+"Low Glucose Alarm active" = "Allarme Glicemia Basso attiva";
 
 /* */
-"No Glucose Alarm active" = "Nessuna Sveglia Glucosio attiva";
+"No Glucose Alarm active" = "Nessuna Allarme Glicemia attiva";
 
 /* */
 "snoozing until %@" = "posticipando fino %@";
@@ -921,7 +921,7 @@ Enact a temp Basal or a temp target */
 "Adds a lot of data to the Issue Report " = "Aggiunge molti dati al Rapporto Problemi ";
 
 /* */
-"Persist sensordata" = "Persistere i dati del sensore";
+"Persist sensordata" = "Mantieni i dati del sensore";
 
 /* */
 "Battery" = "Batteria";
@@ -945,7 +945,7 @@ Enact a temp Basal or a temp target */
 "Last loop was more then %d min ago" = "L'ultimo ciclo è stato più di %d min fa";
 
 /* Glucose badge */
-"Show glucose on the app badge" = "Mostra il glucosio sul badge dell'app";
+"Show glucose on the app badge" = "Mostra il glicemie sul badge dell'app";
 
 /* */
 "Backfill glucose" = "Riempi glicemia";
@@ -1091,7 +1091,7 @@ Enact a temp Basal or a temp target */
 
 /* New ALerts ------------------------- */
 /* Info title */
-"Info" = "Informazioni";
+"Info" = "Info";
 
 /* Warning title */
 "Warning" = "Avvertimento";
@@ -1141,10 +1141,10 @@ Enact a temp Basal or a temp target */
 "Fat and Protein" = "Grassi e proteine";
 
 /* Display fat and protein entities */
-"Fat & Protein" = "Grassi e proteine";
+"Fat & Protein" = "Grassi & Proteine";
 
 /* */
-"Hide Fat & Protein" = "Nascondi grassi e proteine";
+"Hide Fat & Protein" = "Nascondi Grassi & Proteine";
 
 /* Add Fat */
 "Fat" = "Grassi";
@@ -1243,7 +1243,7 @@ Enact a temp Basal or a temp target */
 " SMBs are disabled either by schedule or during the entire duration." = " Le SMS sono disabilitate sia per il programma che per tutta la durata.";
 
 /* Alert strings. Keep spaces */
-" infinite duration." = " durata infinita.";
+" infinite duration." = "durata infinita.";
 
 /* Service Section */
 "App Icons" = "Icone App";
@@ -1396,7 +1396,7 @@ Enact a temp Basal or a temp target */
 "Check Cannula" = "Controlla cannula";
 
 /* */
-"Setup Complete" = "Configurazione terminata";
+"Setup Complete" = "Installazione Completata";
 
 /* */
 "Insulin Suspended" = "Insulina Sospesa";
@@ -1600,13 +1600,13 @@ Enact a temp Basal or a temp target */
 "Sensitivity Raises Target" = "La Sensibilità Aumenta Target";
 
 /* ”Sensitivity Raises Target" */
-"When true, raises BG target when autosens detects sensitivity" = "Quando VERO, aumenta il target glicemia quando l'autosens rileva la maggiore sensibilità insulinica";
+"When true, raises BG target when autosens detects sensitivity" = "Quando VERO, aumenta il target glicemia quando l'autosensibilità rileva la maggiore sensibilità insulinica";
 
 /* Headline ”Resistance Lowers Target" */
 "Resistance Lowers Target" = "La Resistenza Abbassa Target";
 
 /* ”Resistance Lowers Target" */
-"Defaults to false. When true, will lower BG target when autosens detects resistance" = "I valori predefiniti sono falsi. Quando VERO, abbasserà il target glicemia quando autosens rilevano resistenza insulinica incrementata";
+"Defaults to false. When true, will lower BG target when autosens detects resistance" = "I valori predefiniti sono falsi. Quando VERO, abbasserà il target glicemico quando autosensibilità rileva resistenza insulinica";
 
 /* Headline ”Advanced Target Adjustments" */
 "Advanced Target Adjustments" = "Aggiustamenti Avanzati Di Target";
@@ -1627,7 +1627,7 @@ Enact a temp Basal or a temp target */
 "Defaults to false, which means by default only the low end of the pump’s BG target range is used as OpenAPS target. This is a safety feature to prevent too-wide targets and less-optimal outcomes. Therefore the higher end of the target range is used only for avoiding bolus wizard overcorrections. Use wide_bg_target_range: true to force neutral temps over a wider range of eventualBGs." = "Predefiniti a false, il che significa per impostazione predefinita solo l'estremità bassa del campo di destinazione BG della pompa viene utilizzato come obiettivo OpenAPS. Si tratta di una caratteristica di sicurezza per evitare obiettivi troppo ampi e risultati meno ottimali. Pertanto l'estremità superiore dell'intervallo di riferimento viene utilizzata solo per evitare correzioni guidate in bolo. Usare wide_bg_target_range: true per forzare basali temporanee neutre su un più ampio intervallo di eventualBG.";
 
 /* Headline "Skip Neutral Temps" */
-"Skip Neutral Temps" = "Salta Tempi basali 0";
+"Skip Neutral Temps" = "Salta Tempi Neutrali";
 
 /* "Skip Neutral Temps" */
 "Defaults to false, so that iAPS will set temps whenever it can, so it will be easier to see if the system is working, even when you are offline. This means iAPS will set a “neutral” temp (same as your default basal) if no adjustments are needed. This is an old setting for OpenAPS to have the options to minimise sounds and notifications from the 'rig', that may wake you up during the night." = "I valori predefiniti sono falsi, in modo che iAPS imposterà basali temporanee ogni volta che è possibile, così sarà più facile vedere se il sistema funziona, anche quando sei offline. Ciò significa che OpenAPS imposterà una basale temporanea “neutrale” (uguale alla basale predefinita) se non sono necessarie modifiche. Questa è una vecchia impostazione per OpenAPS per avere le opzioni per minimizzare i suoni e le notifiche del dispositivo, che può svegliarti durante la notte. ";
