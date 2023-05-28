@@ -492,10 +492,10 @@ Enact a temp Basal or a temp target */
 "Temp Targets" = "Obiettivi Temporanei";
 
 /* Delete carbs from data table and Nightscout */
-"Delete carbs?" = "Elimina carboidrati?";
+"Delete carbs?" = "Cancella carboidrati?";
 
 /* Delete insulin from pump history and Nightscout */
-"Delete insulin?" = "Eliminare l'insulina?";
+"Delete insulin?" = "Cancella l'insulina?";
 
 /* Treatments list */
 "Treatments" = "Trattamenti";
@@ -585,13 +585,13 @@ Enact a temp Basal or a temp target */
 "Please make sure that your Libre 2 sensor is already activated and finished warming up. If you have other apps connecting to the sensor via bluetooth, these need to be shut down or uninstalled. \n\n You can only have one app communicating with the sensor via bluetooth. Then press the \"pariring and connection\" button below to start the process. Please note that the bluetooth connection might take up to a couple of minutes before it starts working." = "Sei pregato di assicurarti che il tuo sensore di Libre 2 sia giù attivato e abbia terminato il riscaldamento. Se hai altre app connesse al sensore via bluetooth, devono esser arrestate o disinstallate. \n\n Puoi avere solo un'app in comunicazione con il sensore via bluetooth. Poi premi il pulsante \"abbinamento e connessione\" di seguito per avviare il processo. Sei pregato di notare che la connessione bluetooth potrebbe impiegare fino a un paio di minuti prima di iniziare a funzionare.";
 
 /* */
-"Pairinginfo" = "Pairinginfo";
+"Pairinginfo" = "Accoppiamentinfo";
 
 /* */
 "PatchInfo" = "Info sulla Patch";
 
 /* */
-"Calibrationinfo" = "Calibrationinfo";
+"Calibrationinfo" = "Calibrazioninfo";
 
 /* */
 "Unknown" = "Sconosciuto";
@@ -618,7 +618,7 @@ Enact a temp Basal or a temp target */
 "No Libre Transmitter Selected" = "Nessun Trasmettitore di Libre Selezionato";
 
 /* Delete Transmitter and start anew. */
-"Delete CGMManager and start anew. Your libreoopweb credentials will be preserved" = "Elimina CGMManager e ricomincia. Le tue credenziali di libreoopweb saranno conservate";
+"Delete CGMManager and start anew. Your libreoopweb credentials will be preserved" = "Cancella CGMManager e ricomincia. Le tue credenziali di libreoopweb saranno conservate";
 
 /* Invalid libre checksum */
 "Invalid libre checksum" = "Checksum di Libre non valido";
@@ -762,7 +762,7 @@ Enact a temp Basal or a temp target */
 "edit calibration clicked" = "modifica calibrazione cliccata";
 
 /* */
-"Delete CGM" = "Elimina CGM";
+"Delete CGM" = "Cancella CGM";
 
 /* */
 "Are you sure you want to remove this cgm from loop?" = "Sei sicuro di voler rimuovere questo cgm dal ciclo?";
@@ -1035,7 +1035,7 @@ Enact a temp Basal or a temp target */
 "NS Uploaded Profile" = "NS Profilo caricato";
 
 /* Debug option view Autosense */
-"Autosense" = "Autosense";
+"Autosense" = "Autosensibilità";
 
 /* Debug option view Pump History */
 "Pump History" = "Cronologia Micro";
@@ -1225,7 +1225,7 @@ Enact a temp Basal or a temp target */
 "Return to Normal?" = "Ritorno al Normale?";
 
 /* */
-"This will change settings back to your normal profile." = "This will change settings back to your normal profile.";
+"This will change settings back to your normal profile." = "Questo cambierà le impostazioni al tuo profilo normale.";
 
 /* Start Profile Alert */
 "Start Profile" = "Avvia Profilo";
@@ -1240,7 +1240,7 @@ Enact a temp Basal or a temp target */
 "Override Profile Target" = "Regolazione Profilo Target";
 
 /* Alert string. Keep spaces. */
-" SMBs are disabled either by schedule or during the entire duration." = " SMBs are disabled either by schedule or during the entire duration.";
+" SMBs are disabled either by schedule or during the entire duration." = " Le SMS sono disabilitate sia per il programma che per tutta la durata.";
 
 /* Alert strings. Keep spaces */
 " infinite duration." = " durata infinita.";
@@ -1249,10 +1249,10 @@ Enact a temp Basal or a temp target */
 "App Icons" = "Icone App";
 
 /* Service Section */
-"Statistics and Home View" = "Statistics and Home View";
+"Statistics and Home View" = "Statistiche e Vista Iniziale";
 
 /* Alert text */
-"Delete carb equivalents?" = "Eliminare i carb equivalenti?";
+"Delete carb equivalents?" = "Cancella i carb equivalenti?";
 
 /* */
 "Meal Presets" = "Pasto Predefinito";
@@ -1261,7 +1261,7 @@ Enact a temp Basal or a temp target */
 "Empty" = "Vuoto";
 
 /* */
-"Delete Selected Preset" = "Delete Selected Preset";
+"Delete Selected Preset" = "Cancella preimpostazione selezionata";
 
 /* */
 "Enter Meal Preset Name" = "Inserisci Nome Predefinito Pasto";
@@ -1436,7 +1436,7 @@ Enact a temp Basal or a temp target */
 "Statistics" = "Statistiche";
 
 /* Option in preferences */
-"Allow Upload of Statistics to NS" = "Allow Upload of Statistics to NS";
+"Allow Upload of Statistics to NS" = "Consenti di caricare statistiche su NS";
 
 /* Low Glucose Threshold in Statistics settings */
 "Low" = "Basso";
@@ -1460,10 +1460,10 @@ Enact a temp Basal or a temp target */
 "Display Chart Threshold lines for Low and High" = "Display Chart Threshold lines for Low and High";
 
 /* */
-"Standing / Laying TIR Chart" = "Standing / Laying TIR Chart";
+"Standing / Laying TIR Chart" = "Grafico TIR in piedi / sdraiato";
 
 /* */
-"Hours X-Axis (6 default)" = "Hours X-Axis (6 default)";
+"Hours X-Axis (6 default)" = "Ore X-Axis (6 valore predefinito)";
 
 /* Average BG = */
 "Average" = "Media";
@@ -1517,16 +1517,16 @@ Enact a temp Basal or a temp target */
 "Duration" = "Durata";
 
 /* "Display SD */
-"Display SD instead of CV" = "Display SD instead of CV";
+"Display SD instead of CV" = "Mostra SD invece di CV";
 
 /* Description for display SD */
-"Display Standard Deviation (SD) instead of Coefficient of Variation (CV) in statPanel" = "Display Standard Deviation (SD) instead of Coefficient of Variation (CV) in statPanel";
+"Display Standard Deviation (SD) instead of Coefficient of Variation (CV) in statPanel" = "Mostra deviazione standard (SD) invece di Coefficiente di variazione (CV) nello statPanel";
 
 /* How often to update the statistics */
-"Update every number of minutes:" = "Update every number of minutes:";
+"Update every number of minutes:" = "Aggiorna ogni numero di minuti:";
 
 /* Description for update interval for statistics */
-"Default is 20 minutes. How often to update and save the statistics.json and to upload last array, when enabled, to Nightscout." = "Default is 20 minutes. How often to update and save the statistics.json and to upload last array, when enabled, to Nightscout.";
+"Default is 20 minutes. How often to update and save the statistics.json and to upload last array, when enabled, to Nightscout." = "Il valore predefinito è di 20 minuti. Quante volte aggiornare e salvare le statistiche.json e caricare l'ultimo array, quando abilitato, su Nightscout.";
 
 /* Duration displayed in statPanel */
 "Past 24 Hours " = "Ultime 24 ore";
@@ -1565,7 +1565,7 @@ Enact a temp Basal or a temp target */
 
 "CGM is not used as heartbeat." = "CGM non è usato come battito cardiaco.";
 
-"Are you sure you want to delete this CGM?" = "Sei sicuro di voler eliminare questo CGM?";
+"Are you sure you want to delete this CGM?" = "Sei sicuro di voler cancellare questo CGM?";
 
 /* New Experimental feature */
 "Experimental" = "Sperimentale";
@@ -1579,31 +1579,31 @@ Enact a temp Basal or a temp target */
 */
 /* Headline Rewind Resets Autosens */
 
-"Rewind Resets Autosens" = "Riavvolgi Resetta Autosens";
+"Rewind Resets Autosens" = "Riavvolgi Resetta Autosensibilità";
 
 /* ”Rewind Resets Autosens” */
 "This feature, enabled by default, resets the autosens ratio to neutral when you rewind your pump, on the assumption that this corresponds to a probable site change. Autosens will begin learning sensitivity anew from the time of the rewind, which may take up to 6 hours. If you usually rewind your pump independently of site changes, you may want to consider disabling this feature." = "Questa funzione, abilitata di default, resetta il rapporto di autosens alla neutralità quando si riavvolge il microinfusore, assumendo che questo corrisponda ad un cambio di set. Autosens ricomincia ad imparare la sensibilità da capo dal momento del riavvolgimento, cosa che impiega circa 6 ore. Se riavvolgi il microinfusore senza cambiare sito è meglio disattivare questa opzione.";
 
 /* Headline "High Temptarget Raises Sensitivity" */
-"High Temptarget Raises Sensitivity" = "High Temptarget Raises Sensitivity";
+"High Temptarget Raises Sensitivity" = "Alto Temptarget Aumenta Sensibilità";
 
 /* ”High Temptarget Raises Sensitivity" */
 "Defaults to false. When set to true, raises sensitivity (lower sensitivity ratio) for temp targets set to >= 111. Synonym for exercise_mode. The higher your temp target above 110 will result in more sensitive (lower) ratios, e.g., temp target of 120 results in sensitivity ratio of 0.75, while 140 results in 0.6 (with default halfBasalTarget of 160)." = "Valore predefinito è falso. Quando impostato su Vero, aumenta la sensibilità (minor rapporto di sensibilità) per i target temporanei impostati a >= 111. Sinonimo di modalità_esercizio. Più alto sarà il target temporaneo rispetto a 110 più il rapporto della sensibililità sarà basso; ad es. target temporaneo di 120 risulta in rapporto di sensibilità di 0,75, mentre con 140 risultata in 0,6 (con halfBasalTarget predefinito di 160).";
 
 /* Headline ”Low Temptarget Lowers Sensitivity" */
-"Low Temptarget Lowers Sensitivity" = "Low Temptarget Lowers Sensitivity";
+"Low Temptarget Lowers Sensitivity" = "Basso Temptarget Abbassa Sensibilità";
 
 /* ”Low Temptarget Lowers Sensitivity" */
 "Defaults to false. When set to true, can lower sensitivity (higher sensitivity ratio) for temptargets <= 99. The lower your temp target below 100 will result in less sensitive (higher) ratios, e.g., temp target of 95 results in sensitivity ratio of 1.09, while 85 results in 1.33 (with default halfBasalTarget of 160)." = "Valore predefinito è falso. Quando impostato su Vero, diminuisce la sensibilità (maggior rapporto di sensibilità) per i target temporanei impostati a <= 99. Più basso sarà il target temporaneo rispetto a 100 più il rapporto della sensibililità sarà incrementato; ad es. target temporaneo di 95 risulta in rapporto di sensibilità di 1.09, mentre con 85 risultata di 1.33 (con halfBasalTarget predefinito di 160).";
 
 /* Headline ”Sensitivity Raises Target" */
-"Sensitivity Raises Target" = "Sensitivity Raises Target";
+"Sensitivity Raises Target" = "La Sensibilità Aumenta Target";
 
 /* ”Sensitivity Raises Target" */
 "When true, raises BG target when autosens detects sensitivity" = "Quando VERO, aumenta il target glicemia quando l'autosens rileva la maggiore sensibilità insulinica";
 
 /* Headline ”Resistance Lowers Target" */
-"Resistance Lowers Target" = "Resistance Lowers Target";
+"Resistance Lowers Target" = "La Resistenza Abbassa Target";
 
 /* ”Resistance Lowers Target" */
 "Defaults to false. When true, will lower BG target when autosens detects resistance" = "I valori predefiniti sono falsi. Quando VERO, abbasserà il target glicemia quando autosens rilevano resistenza insulinica incrementata";
@@ -1633,7 +1633,7 @@ Enact a temp Basal or a temp target */
 "Defaults to false, so that iAPS will set temps whenever it can, so it will be easier to see if the system is working, even when you are offline. This means iAPS will set a “neutral” temp (same as your default basal) if no adjustments are needed. This is an old setting for OpenAPS to have the options to minimise sounds and notifications from the 'rig', that may wake you up during the night." = "I valori predefiniti sono falsi, in modo che iAPS imposterà basali temporanee ogni volta che è possibile, così sarà più facile vedere se il sistema funziona, anche quando sei offline. Ciò significa che OpenAPS imposterà una basale temporanea “neutrale” (uguale alla basale predefinita) se non sono necessarie modifiche. Questa è una vecchia impostazione per OpenAPS per avere le opzioni per minimizzare i suoni e le notifiche del dispositivo, che può svegliarti durante la notte. ";
 
 /* Headline "Unsuspend If No Temp” */
-"Unsuspend If No Temp" = "Unsuspend If No Temp";
+"Unsuspend If No Temp" = "Sospendi Se Nessuna Temp";
 
 /* "Unsuspend If No Temp” */
 "Many people occasionally forget to resume / unsuspend their pump after reconnecting it. If you’re one of them, and you are willing to reliably set a zero temp basal whenever suspending and disconnecting your pump, this feature has your back. If enabled, it will automatically resume / unsuspend the pump if you forget to do so before your zero temp expires. As long as the zero temp is still running, it will leave the pump suspended." = "Molte persone di tanto in tanto dimenticano di riprendere / rimuovere la sospensione del microinfusore dopo averlo riconnesso. Se sei uno di loro, e si è disposti a impostare in modo affidabile una basale temporanea zero ogni volta che sospende e scollega la pompa, questa funzione ha un senso. Se abilitata, ripristinerà automaticamente / annullerà la sospensione del microinfusore se lo dimentichi prima che scada la basale temporanea zero. Finché la basale temporanea zero è ancora in funzione, lascerà la pompa sospesa.";
@@ -1669,22 +1669,22 @@ Enact a temp Basal or a temp target */
 "Defaults to false. When true, enables supermicrobolus (SMB) for 6h after carbs, even with 0 carbs on board (COB)." = "I valori predefiniti sono falsi. Quando è vero, abilita il supermicrobolo (SMB) per 6 ore dopo inserimenro di carboidrati, anche con 0 carboidrati da assorbire (COB).";
 
 /* Enable "Allow SMB With High Temptarget" */
-"Allow SMB With High Temptarget" = "Allow SMB With High Temptarget";
+"Allow SMB With High Temptarget" = "Consenti SMB con Alto Temptarget";
 
 /* Headline "Allow SMB With High Temptarget" */
-"Allow SMB With High Temptarget" = "Allow SMB With High Temptarget";
+"Allow SMB With High Temptarget" = "Consenti SMB con Alto Temptarget";
 
 /* "Allow SMB With High Temptarget" */
 "Defaults to false. When true, allows supermicrobolus (if otherwise enabled) even with high temp targets (> 100 mg/dl)." = "I valori predefiniti sono falsi. Quando Vero, permette il supermicrobolo (se altrimenti abilitato) anche con target temporanei alti.";
 
 /* Headline "Use Custom Peak Time” */
-"Use Custom Peak Time" = "Use Custom Peak Time";
+"Use Custom Peak Time" = "Usa Picco Tempo Personalizzato";
 
 /* "Use Custom Peak Time” */
 "Defaults to false. Setting to true allows changing insulinPeakTime" = "I valori predefiniti sono falsi. Impostare a Vero permette di cambiare il tempo di picco dell’insulina";
 
 /* Headline "Suspend Zeros IOB” */
-"Suspend Zeros IOB" = "Suspend Zeros IOB";
+"Suspend Zeros IOB" = "Sospendi Zero IOB";
 
 /* "Suspend Zeros IOB” */
 "Default is false. Any existing temp basals during times the pump was suspended will be deleted and 0 temp basals to negate the profile basal rates during times pump is suspended will be added." = "Il valore predefinito è falso. Eventuali basali temporanee esistenti durante il periodo di sospensione della pompa verranno eliminate e verrà inserita una basale temporanea a zero basali per eliminare le velocità basali del profilo durante il periodo di sospensione della pompa.";
@@ -1696,28 +1696,28 @@ Enact a temp Basal or a temp target */
 "Max IOB is the maximum amount of insulin on board from all sources – both basal (or SMB correction) and bolus insulin – that your loop is allowed to accumulate to treat higher-than-target BG. Unlike the other two OpenAPS safety settings (max_daily_safety_multiplier and current_basal_safety_multiplier), max_iob is set as a fixed number of units of insulin. As of now manual boluses are NOT limited by this setting. \n\n To test your basal rates during nighttime, you can modify the Max IOB setting to zero while in Closed Loop. This will enable low glucose suspend mode while testing your basal rates settings\n\n(Tip from https://www.loopandlearn.org/freeaps-x/#open-loop)." = "La quantità massima di IOB è la quantità massima di insulina in circolo da tutte le fonti – sia la correzione basale (o SMB) che l’insulina proveniente da boli – che in ogni ciclo può accumularsi per trattare la glicemia superiore al target. A differenza delle altre due impostazioni di sicurezza OpenAPS (max_daily_safety_multiplier e current_basal_safety_multiplier), max_iob è impostato come un numero fisso di unità di insulina. Da ora in poi i boli manuali NON sono limitati da questa impostazione. \n\n Per testare le tue basali durante la notte, puoi modificare l'impostazione di Max IOB a zero mentre sei in Closed Loop. Questo abiliterà la modalità di sospensione dell’infusione per glicemia bassa durante il test delle impostazioni delle basali\n\n(Tip da https://www.loopandlearn.org/freeaps-x/#open-loop).";
 
 /* Headline "Max Daily Safety Multiplier" */
-"Max Daily Safety Multiplier" = "Max Daily Safety Multiplier";
+"Max Daily Safety Multiplier" = "Moltiplicatore sicurezza Max Giornaliero";
 
 /* "Max Daily Safety Multiplier" */
 "This is an important OpenAPS safety limit. The default setting (which is unlikely to need adjusting) is 3. This means that OpenAPS will never be allowed to set a temporary basal rate that is more than 3x the highest hourly basal rate programmed in a user’s pump, or, if enabled, determined by autotune." = "Questo è un importante limite di sicurezza di OpenAPS. L'impostazione predefinita (che è improbabile che debba essere modificata) è 3. Ciò significa che a OpenAPS non sarà mai permesso di impostare una velocità basale temporanea superiore a 3x la più alta velocità basale oraria programmata nella pompa di un utente, o, se abilitato, determinato da autotune.";
 
 /* Headline "Current Basal Safety Multiplier" */
-"Current Basal Safety Multiplier" = "Current Basal Safety Multiplier";
+"Current Basal Safety Multiplier" = "Corrente Moltiplicatore Basale Sicurezza";
 
 /* "Current Basal Safety Multiplier" */
 "This is another important OpenAPS safety limit. The default setting (which is also unlikely to need adjusting) is 4. This means that OpenAPS will never be allowed to set a temporary basal rate that is more than 4x the current hourly basal rate programmed in a user’s pump, or, if enabled, determined by autotune." = "Questo è un altro importante limite di sicurezza di OpenAPS. L'impostazione predefinita (che è improbabile che debba essere modificata) è 4. Ciò significa che a OpenAPS non sarà mai permesso di impostare una velocità basale temporanea superiore a 4x l’attuale velocità basale oraria programmata nella pompa di un utente, o, se abilitato, determinato da autotune.";
 
 /* Headline "Autosens Max" */
-"Autosens Max" = "Autosens Max";
+"Autosens Max" = "Autosensibilità Max";
 
 /* "Autosens Max" */
 "This is a multiplier cap for autosens (and autotune) to set a 20% max limit on how high the autosens ratio can be, which in turn determines how high autosens can adjust basals, how low it can adjust ISF, and how low it can set the BG target." = "Questo è un valore di moltiplicatore per autosens (e presto autotune) per impostare un limite massimo del 20% su quanto in alto può essere il rapporto di autosens, che a sua volta determina quanto in alto autosens possibile regolare basalsi, quanto in basso può regolare ISF e quanto in basso è possibile impostare il target glicemico.";
 
 /* Headline "Autosens Min" */
-"Autosens Min" = "Autosens Min";
+"Autosens Min" = "Autosensibilità Min";
 
 /* "Autosens Min" */
-"The other side of the autosens safety limits, putting a cap on how low autosens can adjust basals, and how high it can adjust ISF and BG targets." = "Un altro limite di sicurezza di autosens, imposta un blocco a quanto in basso autosens può regolare le basali e a quanto in alto può regolare ISF e target glicemici.";
+"The other side of the autosens safety limits, putting a cap on how low autosens can adjust basals, and how high it can adjust ISF and BG targets." = "Un altro limite di sicurezza dell'autosensibilità, imposta un blocco a quanto in basso può regolare le basali l'autosensibilità e a quanto in alto può regolare ISF e target glicemici.";
 
 /* Headline "Half Basal Exercise Target" */
 "Half Basal Exercise Target" = "Obiettivo Di Esercizio Basale Metà";
