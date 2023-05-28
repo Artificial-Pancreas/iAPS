@@ -11,7 +11,7 @@
 
 "Bolus" = "Bolo";
 
-"Close" = "Chiuso";
+"Close" = "Fine";
 
 /* Continue after added carbs without bolus */
 "Continue without bolus" = "Continua senza eseguire un bolo";
@@ -1824,7 +1824,7 @@ Enact a temp Basal or a temp target */
 "Enable Dynamic ISF" = "Abilita Dynamic ISF";
 
 /* Enable Dynamic ISF */
-"Calculate a new ISF with every loop cycle. New ISF will be based on current BG, TDD of insulin (past 24 hours or a weighted average) and an Adjustment Factor (default is 1).\n\nDynamic ISF and CR ratios will be limited by your autosens.min/max limits.\n\nDynamic ratio replaces the autosens.ratio: New ISF = Static ISF / Dynamic ratio,\nDynamic ratio = profile.sens * adjustmentFactor * tdd * Math.log(BG/insulinFactor+1) / 1800,\ninsulinFactor = 120 - InsulinPeakTimeInMinutes" = "Calculate a new ISF with every loop cycle. New ISF will be based on current BG, TDD of insulin (past 24 hours or a weighted average) and an Adjustment Factor (default is 1).\n\nDynamic ISF and CR ratios will be limited by your autosens.min/max limits.\n\nDynamic ratio replaces the autosens.ratio: New ISF = Static ISF / Dynamic ratio,\nDynamic ratio = profile.sens * adjustmentFactor * tdd * Math.log(BG/insulinFactor+1) / 1800,\ninsulinFactor = 120 - InsulinPeakTimeInMinutes";
+"Calculate a new ISF with every loop cycle. New ISF will be based on current BG, TDD of insulin (past 24 hours or a weighted average) and an Adjustment Factor (default is 1).\n\nDynamic ISF and CR ratios will be limited by your autosens.min/max limits.\n\nDynamic ratio replaces the autosens.ratio: New ISF = Static ISF / Dynamic ratio,\nDynamic ratio = profile.sens * adjustmentFactor * tdd * Math.log(BG/insulinFactor+1) / 1800,\ninsulinFactor = 120 - InsulinPeakTimeInMinutes" = "Calcola un nuovo ISF per ogni ciclo di loop. Il nuovo ISF sarà basato sulla glicemia attuale, sulla TDD dell’insulina (oltre 24 ore o media ponderata) e su un fattore di aggiustamento (valore predefinito è 1).\n\nI rapporti ISF e CR dinamici saranno limitati dai tuoi limiti autosens.min/max.\n\nIl rapporto dinamico sostituisce il rapporto autosens.ratio: New ISF = rapporto statico ISF / dinamico,\nRapporto dinamico = profilo. ens * adjustmentFactor * tdd * Math.log(BG/insulinFactor+1) / 1800,\ninsulinFactor = 120 - InsulinPeakTimeInMinuti";
 
 /* Headline "Enable Dynamic CR" */
 "Enable Dynamic CR" = "Abilita Dynamic CR";
@@ -1836,7 +1836,8 @@ Enact a temp Basal or a temp target */
 "Adjust Dynamic ISF constant" = "Regola la costante ISF dinamica";
 
 /* Adjust Dynamic ISF constant */
-"Adjust Dynamic ratios by a constant. Default is 0.5. The higher the value, the larger the correction of your ISF will be for a high or a low BG. Maximum correction is determined by the Autosens min/max settings. For Sigmoid function an adjustment factor of 0.4 - 0.5 is recommended to begin with. For the logaritmic formula there is less consensus, but starting with 0.5 - 0.8 is more appropiate for most users" = "Adjust Dynamic ratios by a constant. Default is 0.5. The higher the value, the larger the correction of your ISF will be for a high or a low BG. Maximum correction is determined by the Autosens min/max settings. For Sigmoid function an adjustment factor of 0.4 - 0.5 is recommended to begin with. For the logaritmic formula threre is less consensus, but starting with 0.5 - 0.8 is more appropiate for most users";
+"Adjust Dynamic ratios by a constant. Default is 0.5. The higher the value, the larger the correction of your ISF will be for a high or a low BG. Maximum correction is determined by the Autosens min/max settings. For Sigmoid function an adjustment factor of 0.4 - 0.5 is recommended to begin with. For the logaritmic formula there is less consensus, but starting with 0.5 - 0.8 is more appropiate for most users" = "Regola i rapporti dinamici di una costante. Il valore predefinito è 0,5. Più alto è il valore, maggiore sarà la correzione del tuo ISF per una glicemia alta o bassa. La correzione massima è determinata dalle impostazioni Autosens min/max. Per la funzione sigmoidea si consiglia di iniziare con un fattore di correzione di 0,4 - 0,5. Per la formula logaritmica c'è meno consenso, ma iniziare con 0,5 - 0,8 è più appropriato per la maggior parte degli utenti
+Regola la costante ISF dinamica";
 
 
 /* Headline "Use Sigmoid Function" */
@@ -1856,19 +1857,19 @@ Enact a temp Basal or a temp target */
 "Weighted Average of TDD. Weight of past 24 hours:" = "Media ponderata di TDD. Peso delle ultime 24 ore:";
 
 /* Weight of past 24 hours of insulin */
-"Has to be > 0 and <= 1.\nDefault is 0.65 (65 %) * TDD. The rest will be from average of total data (up to 14 days) of all TDD calculations (35 %). To only use past 24 hours, set this to 1.\n\nTo avoid sudden fluctuations, for instance after a big meal, an average of the past 2 hours of TDD calculations is used instead of just the current TDD (past 24 hours at this moment)." = "Has to be > 0 and <= 1.\nDefault is 0.65 (65 %) * TDD. The rest will be from average of total data (up to 14 days) of all TDD calculations (35 %). To only use past 24 hours, set this to 1.\n\nTo avoid sudden fluctuations, for instance after a big meal, an average of the past 2 hours of TDD calculations is used instead of just the current TDD (past 24 hours at this moment).";
+"Has to be > 0 and <= 1.\nDefault is 0.65 (65 %) * TDD. The rest will be from average of total data (up to 14 days) of all TDD calculations (35 %). To only use past 24 hours, set this to 1.\n\nTo avoid sudden fluctuations, for instance after a big meal, an average of the past 2 hours of TDD calculations is used instead of just the current TDD (past 24 hours at this moment)." = "Deve essere > 0 e <= 1.\nIl valore predefinito è 0,65 (65 %) * TDD. Il resto sarà dalla media dei dati totali (fino a 14 giorni) di tutti i calcoli TDD (35 %). Per utilizzare solo le ultime 24 ore, impostare questo a 1.\n\nPer evitare fluttuazioni improvvise, per esempio dopo un pasto grande, viene utilizzata una media delle ultime 2 ore di calcolo della TDD invece che solo la corrente TDD (le ultime 24 ore in questo momento).";
 
 /* Headline "Adjust basal" */
 "Adjust basal" = "Regola basale";
 
 /* Enable adjustment of basal profile */
-"Enable adjustment of basal based on the ratio of current TDD / 7 day average TDD" = "Enable adjustment of basal based on the ratio of current TDD / 7 day average TDD";
+"Enable adjustment of basal based on the ratio of current TDD / 7 day average TDD" = "Abilita la regolazione della basale in base al rapporto tra TDD / TDD media di 7 giorni";
 
 /* Headline "Max Delta-BG Threshold SMB" */
-"Max Delta-BG Threshold SMB" = "Max Delta-BG Threshold SMB";
+"Max Delta-BG Threshold SMB" = "Max Delta-BG Soglia SMB";
 
 /* Max Delta-BG Threshold SMB */
-"Defaults to 0.2 (20%). Maximum positive percentual change of BG level to use SMB, above that will disable SMB. Hardcoded cap of 40%. For UAM fully-closed-loop 30% is advisable. Observe in log and popup (maxDelta 27 > 20% of BG 100 - disabling SMB!)." = "Defaults to 0.2 (20%). Maximum positive percentual change of BG level to use SMB, above that will disable SMB. Hardcoded cap of 40%. For UAM fully-closed-loop 30% is advisable. Observe in log and popup (maxDelta 27 > 20% of BG 100 - disabling SMB!).";
+"Defaults to 0.2 (20%). Maximum positive percentual change of BG level to use SMB, above that will disable SMB. Hardcoded cap of 40%. For UAM fully-closed-loop 30% is advisable. Observe in log and popup (maxDelta 27 > 20% of BG 100 - disabling SMB!)." = "Predefiniti a 0,2 (20%). Massima variazione percentuale positiva del livello di glicemia per utilizzare SMB, sopra che disabiliterà SMB. Limite rigido del 40%. Per UAM è consigliabile un loop completamente chiuso. Osservare in log e popup (maxDelta 27 > 20% di BG 100 - disabilitare SMB!).";
 
 /* Headline "... When Blood Glucose Is Over (mg/dl):" */
 "... When Blood Glucose Is Over (mg/dl):" = "... Quando le glicemie sono Sopra (mg/dl):";
