@@ -1570,7 +1570,7 @@ Enact a temp Basal or a temp target */
 /* New Experimental feature */
 "Experimental" = "Sperimentale";
 /* Smoothing of CGM readings */
-"Smooth Glucose Value" = "Smooth Glucose Value";
+"Smooth Glucose Value" = "Valori Glicemici Levigati";
 
 /* -----------------------------------------------------------------------------------------------------------
 
@@ -1579,7 +1579,7 @@ Enact a temp Basal or a temp target */
 */
 /* Headline Rewind Resets Autosens */
 
-"Rewind Resets Autosens" = "Rewind Resets Autosens";
+"Rewind Resets Autosens" = "Riavvolgi Resetta Autosens";
 
 /* ”Rewind Resets Autosens” */
 "This feature, enabled by default, resets the autosens ratio to neutral when you rewind your pump, on the assumption that this corresponds to a probable site change. Autosens will begin learning sensitivity anew from the time of the rewind, which may take up to 6 hours. If you usually rewind your pump independently of site changes, you may want to consider disabling this feature." = "Questa funzione, abilitata di default, resetta il rapporto di autosens alla neutralità quando si riavvolge il microinfusore, assumendo che questo corrisponda ad un cambio di set. Autosens ricomincia ad imparare la sensibilità da capo dal momento del riavvolgimento, cosa che impiega circa 6 ore. Se riavvolgi il microinfusore senza cambiare sito è meglio disattivare questa opzione.";
