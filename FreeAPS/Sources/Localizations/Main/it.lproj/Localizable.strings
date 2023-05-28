@@ -110,7 +110,7 @@
 "Duration" = "Durata";
 
 /*  */
-"Enact Temp Target" = "Attiva target temporaneo";
+"Enact Temp Target" = "Target Temporaneo";
 
 /* */
 "Target" = "Target";
@@ -282,7 +282,7 @@ Enact a temp Basal or a temp target */
 "Local glucose source" = "Sorgente locale della glicemia";
 
 /* Header */
-"Nightscout Config" = "Impostazioni Nightscout";
+"Nightscout Config" = "Nightscout";
 
 /*  */
 "Port" = "Porta";
@@ -324,7 +324,7 @@ Enact a temp Basal or a temp target */
 "Model" = "Modello";
 
 /*  */
-"Pump config" = "Configurazione microinfusore";
+"Pump config" = "Microinfusore";
 
 /*  */
 "Delivery limits" = "Limite di erogazione";
@@ -402,7 +402,7 @@ Enact a temp Basal or a temp target */
 "Watch" = "Watch";
 
 /* */
-"Watch Configuration" = "Configurazione Watch";
+"Watch Configuration" = "Watch";
 
 /* */
 "Apple Watch" = "Apple Watch";
@@ -1436,7 +1436,7 @@ Enact a temp Basal or a temp target */
 "Statistics" = "Statistiche";
 
 /* Option in preferences */
-"Allow Upload of Statistics to NS" = "Consenti di caricare statistiche su NS";
+"Allow Upload of Statistics to NS" = "Consenti caricare statistiche su NS";
 
 /* Low Glucose Threshold in Statistics settings */
 "Low" = "Basso";
@@ -1463,7 +1463,7 @@ Enact a temp Basal or a temp target */
 "Standing / Laying TIR Chart" = "Grafico TIR in piedi / sdraiato";
 
 /* */
-"Hours X-Axis (6 default)" = "Ore X-Axis (6 valore predefinito)";
+"Hours X-Axis (6 default)" = "Ore X-Axis (6 predefinito)";
 
 /* Average BG = */
 "Average" = "Media";
@@ -1597,13 +1597,13 @@ Enact a temp Basal or a temp target */
 "Defaults to false. When set to true, can lower sensitivity (higher sensitivity ratio) for temptargets <= 99. The lower your temp target below 100 will result in less sensitive (higher) ratios, e.g., temp target of 95 results in sensitivity ratio of 1.09, while 85 results in 1.33 (with default halfBasalTarget of 160)." = "Valore predefinito è falso. Quando impostato su Vero, diminuisce la sensibilità (maggior rapporto di sensibilità) per i target temporanei impostati a <= 99. Più basso sarà il target temporaneo rispetto a 100 più il rapporto della sensibililità sarà incrementato; ad es. target temporaneo di 95 risulta in rapporto di sensibilità di 1.09, mentre con 85 risultata di 1.33 (con halfBasalTarget predefinito di 160).";
 
 /* Headline ”Sensitivity Raises Target" */
-"Sensitivity Raises Target" = "La Sensibilità Aumenta Target";
+"Sensitivity Raises Target" = "Sensibilità Aumenta Target";
 
 /* ”Sensitivity Raises Target" */
 "When true, raises BG target when autosens detects sensitivity" = "Quando VERO, aumenta il target glicemia quando l'autosensibilità rileva la maggiore sensibilità insulinica";
 
 /* Headline ”Resistance Lowers Target" */
-"Resistance Lowers Target" = "La Resistenza Abbassa Target";
+"Resistance Lowers Target" = "Resistenza Abbassa Target";
 
 /* ”Resistance Lowers Target" */
 "Defaults to false. When true, will lower BG target when autosens detects resistance" = "I valori predefiniti sono falsi. Quando VERO, abbasserà il target glicemico quando autosensibilità rileva resistenza insulinica";
@@ -1720,7 +1720,7 @@ Enact a temp Basal or a temp target */
 "The other side of the autosens safety limits, putting a cap on how low autosens can adjust basals, and how high it can adjust ISF and BG targets." = "Un altro limite di sicurezza dell'autosensibilità, imposta un blocco a quanto in basso può regolare le basali l'autosensibilità e a quanto in alto può regolare ISF e target glicemici.";
 
 /* Headline "Half Basal Exercise Target" */
-"Half Basal Exercise Target" = "Obiettivo Di Esercizio Basale Metà";
+"Half Basal Exercise Target" = "Obiettivo Di Esercizio Metà Basale";
 
 /* "Half Basal Exercise Target" */
 "Set to a number, e.g. 160, which means when temp target is 160 mg/dL and exercise_mode=true, run 50% basal at this level (120 = 75%; 140 = 60%). This can be adjusted, to give you more control over your exercise modes." = "Impostare ad un numero finito, ad es. 160, il che significa che quando il target glicemico temporaneo è 160 mg/dL e modalità_esercizio=true, esegue il 50% basale a questo livello (120 = 75%; 140 = 60%). Questo può essere regolato, per darti più controllo sulle modalità di esercizio.";
@@ -1798,7 +1798,7 @@ Enact a temp Basal or a temp target */
 "Grams of carbsReq to trigger a pushover. Defaults to 1 (for 1 gram of carbohydrate). Can be increased if you only want to get Pushover for carbsReq at X threshold." = "Grammi di CarboidratiRichiesti per attivare un pushover. Predefiniti a 1 (per 1 grammo di carboidrati). Può essere aumentato se si desidera solo ottenere Pushover per CarboidratiRichiesti alla soglia X.";
 
 /* Headline "Noisy CGM Target Multiplier" */
-"Noisy CGM Target Multiplier" = "CGM Rumoroso Target Moltiplicatore";
+"Noisy CGM Target Multiplier" = "CGM Rumoroso Moltiplicatore Target";
 
 /* "Noisy CGM Target Multiplier" */
 "Defaults to 1.3. Increase target by this amount when looping off raw/noisy CGM data" = "Predefinito a 1.3. Aumenta l'obiettivo glicemico di questa quantità quando si hanno dati CGM grezzi/rumorosi";
