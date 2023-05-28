@@ -813,7 +813,7 @@ Enact a temp Basal or a temp target */
 "Value" = "Waarde";
 
 /* */
-"Adds Phone Battery" = "Telefoonbatterij toevoegen";
+"Adds Phone Battery" = "Batterij iPhone toevoegen";
 
 /* */
 "Adds Transmitter Battery" = "Zender batterij toevoegen";
@@ -1457,7 +1457,7 @@ Enact a temp Basal or a temp target */
 "Display Chart Y - Grid lines" = "Grafiek Y weergeven - Rasterlijnen";
 
 /* */
-"Display Chart Threshold lines for Low and High" = "Grafiekdrempellijnen voor LAAG en HOOG weergeven";
+"Display Chart Threshold lines for Low and High" = "Lijnen voor LAAG en HOOG weergeven in grafiek";
 
 /* */
 "Standing / Laying TIR Chart" = "Staande/liggende TIR grafiek";
@@ -1570,7 +1570,7 @@ Enact a temp Basal or a temp target */
 /* New Experimental feature */
 "Experimental" = "Experimenteel";
 /* Smoothing of CGM readings */
-"Smooth Glucose Value" = "Soepele glucosewaarde";
+"Smooth Glucose Value" = "Vloeiende glucosewaarde";
 
 /* -----------------------------------------------------------------------------------------------------------
 
@@ -1850,7 +1850,7 @@ Enact a temp Basal or a temp target */
 "Threshold Setting (mg/dl)" = "Drempelinstelling (mg/dl)";
 
 /* Threshold Setting */
-"The default threshold in FAX depends on your current minimum BG target, as follows:\n\nIf your minimum BG target = 90 mg/dl -> threshold = 65 mg/dl,\n\nif minimum BG target = 100 mg/dl -> threshold = 70 mg/dl,\n\nminimum BG target = 110 mg/dl -> threshold = 75 mg/dl,\n\nand if minimum BG target = 130 mg/dl  -> threshold = 85 mg/dl.\n\nThis setting allows you to change the default to a higher threshold for looping with dynISF. Valid values are 65 mg/dl<= Threshold Setting <= 120 mg/dl." = "De standaarddrempelwaarde in FAX is afhankelijk van je huidige minimale BG streefdoel: als volgt:\n\nAls uw minimum BG = 5,0 mmol/l -> drempel = 3,6 mmol/dl,\n\nals minimum BG doel = 5,5 mmol/l -> drempel = 3,8 mmol/l,\n\nminimum BG doel = 6,1 mmol/l -> drempel= 3,8 mmol/l,\n\nen als minimum BG doel = 7,2 mmol/l -> drempel= 4,7 mmol/l.\n\nMet deze instelling kunt u de standaard instelling wijzigen naar een hogere drempel voor het herhalen met dynISF. Geldige waarden zijn 3,6 mmol/l<= Drempel instelling <= 6,6 mmol/l.";
+"The default threshold in FAX depends on your current minimum BG target, as follows:\n\nIf your minimum BG target = 90 mg/dl -> threshold = 65 mg/dl,\n\nif minimum BG target = 100 mg/dl -> threshold = 70 mg/dl,\n\nminimum BG target = 110 mg/dl -> threshold = 75 mg/dl,\n\nand if minimum BG target = 130 mg/dl  -> threshold = 85 mg/dl.\n\nThis setting allows you to change the default to a higher threshold for looping with dynISF. Valid values are 65 mg/dl<= Threshold Setting <= 120 mg/dl." = "De standaarddrempelwaarde in iAPS is afhankelijk van je huidige minimale BG streefdoel: als volgt:\n\nAls uw minimum BG = 5,0 mmol/l -> drempel = 3,6 mmol/dl,\n\nals minimum BG doel = 5,5 mmol/l -> drempel = 3,8 mmol/l,\n\nminimum BG doel = 6,1 mmol/l -> drempel= 3,8 mmol/l,\n\nen als minimum BG doel = 7,2 mmol/l -> drempel= 4,7 mmol/l.\n\nMet deze instelling kunt u de standaard instelling wijzigen naar een hogere drempel voor het herhalen met dynISF. Geldige waarden zijn 3,6 mmol/l<= Drempel instelling <= 6,6 mmol/l.";
 
 /* Headline "Weighted Average of TDD. Weight of past 24 hours:" */
 "Weighted Average of TDD. Weight of past 24 hours:" = "Gewogen gemiddelde van TDD van afgelopen 24 uur:";
