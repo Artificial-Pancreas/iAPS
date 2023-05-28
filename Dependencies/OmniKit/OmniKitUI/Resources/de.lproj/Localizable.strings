@@ -446,7 +446,7 @@
 "Pairing..." = "Koppeln…";
 
 /* No comment provided by engineer. */
-"Percent = %lf" = "Percent = %lf";
+"Percent = %lf" = "Prozent = %lf";
 
 /* The title of the cell showing the pod pi version */
 "PI Version" = "PI-Version";
