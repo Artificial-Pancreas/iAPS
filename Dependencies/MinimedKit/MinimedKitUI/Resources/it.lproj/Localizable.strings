@@ -123,14 +123,14 @@
 "No, Keep Pump As Is" = "No, mantienere la pompa così com'è";
 
 /* Pump find device instruction */
-"On your pump, go to the Find Device screen and select \"Find Device\".\n\nMain Menu >\nUtilities >\nConnect Devices >\nOther Devices >\nOn >\nFind Device" = "On your pump, go to the Find Device screen and select \"Find Device\".\n\nMain Menu >\nUtilities >\nConnect Devices >\nOther Devices >\nOn >\nFind Device";
+"On your pump, go to the Find Device screen and select \"Find Device\".\n\nMain Menu >\nUtilities >\nConnect Devices >\nOther Devices >\nOn >\nFind Device" = "Sulla pompa, vai alla schermata Trova dispositivo e seleziona \"Trova dispositivo\".\n\nMenu principale >\nUtilities >\nConnetti Dispositivi >\nAltri Dispositivi >\nSu >\nTrova Dispositivi";
 
 /* navigation title for pump battery type selection
    Text for medtronic pump preferred data source */
 "Preferred Data Source" = "Fonte Dati";
 
 /* Text for medtronic pump battery percent remaining */
-"Pump Battery Remaining" = "Pump Battery Remaining";
+"Pump Battery Remaining" = "Batteria Pompa Rimanente";
 
 /* navigation title for pump battery type selection
    Text for medtronic pump battery type */
@@ -149,7 +149,7 @@
 "Reading pump status…" = "Lettura stato microinfusore…";
 
 /* The title of the cell showing the pump region */
-"Region" = "Region";
+"Region" = "Paese";
 
 /* Title text for button to resume insulin delivery */
 "Resume Delivery" = "Riprendi erogazione";
@@ -203,7 +203,7 @@
 "U/hr" = "U/ora";
 
 /* Text to indicate battery percentage is unknown */
-"unknown" = "unknown";
+"unknown" = "sconosciuto";
 
 /* Text shown in basal rate space when delivery status is unknown */
 "Unknown" = "Sconosciuto";

@@ -35,7 +35,7 @@
 "Best Frequency" = "Beste Frequenz";
 
 /* The format string describing pump bolusing state: (1: bolusing) */
-"Bolusing: %1$@\n" = "Bolusing: %1$@\n";
+"Bolusing: %1$@\n" = "Bolusabgabe: %1$@\n";
 
 /* Cancel button title */
 "Cancel" = "Abbrechen";
@@ -123,7 +123,7 @@
 "No, Keep Pump As Is" = "Nein, Pumpe so lassen wie sie ist";
 
 /* Pump find device instruction */
-"On your pump, go to the Find Device screen and select \"Find Device\".\n\nMain Menu >\nUtilities >\nConnect Devices >\nOther Devices >\nOn >\nFind Device" = "On your pump, go to the Find Device screen and select \"Find Device\".\n\nMain Menu >\nUtilities >\nConnect Devices >\nOther Devices >\nOn >\nFind Device";
+"On your pump, go to the Find Device screen and select \"Find Device\".\n\nMain Menu >\nUtilities >\nConnect Devices >\nOther Devices >\nOn >\nFind Device" = "Gehen Sie auf Ihrer Pumpe zum Menü \"Geräte anschließen\" und wählen Sie „Geräte finden\".\n\nHauptmenü Insulinpumpe >\nZusatzfunktionen >\nGeräte anschließen >\nAndere Geräte >\nEin >\nGerät finden";
 
 /* navigation title for pump battery type selection
    Text for medtronic pump preferred data source */

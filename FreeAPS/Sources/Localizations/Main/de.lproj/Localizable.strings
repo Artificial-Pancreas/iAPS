@@ -408,7 +408,7 @@ Enact a temp Basal or a temp target */
 "Apple Watch" = "Apple Watch";
 
 /* */
-"Display on Watch" = "Display on Watch";
+"Display on Watch" = "Anzeige auf der Uhr";
 
 /* */
 "Garmin Watch" = "Garmin Watch";
@@ -417,7 +417,7 @@ Enact a temp Basal or a temp target */
 "Add devices" = "Geräte hinzufügen";
 
 /* */
-"Glucose Target" = "Glucose Target";
+"Glucose Target" = "Glukosewerte Ziel";
 
 /* */
 "Heart Rate" = "Herzfrequenz";
@@ -429,7 +429,7 @@ Enact a temp Basal or a temp target */
 "ISF" = "ISF";
 
 /* */
-"The app Garmin Connect must be installed to use for iAPS.\n Go to App Store to download it" = "The app Garmin Connect must be installed to use for iAPS.\n Go to App Store to download it";
+"The app Garmin Connect must be installed to use for iAPS.\n Go to App Store to download it" = "Die App Garmin Connect muss installiert sein, um iAPS nutzen zu können.\n Laden Sie sie im App Store herunter";
 
 /* */
 "Garmin is not available" = "Garmin ist nicht verfügbar";
@@ -441,7 +441,7 @@ Enact a temp Basal or a temp target */
 "Settings" = "Einstellungen";
 
 /* Recommendation for a Manual Bolus */
-"Recommended Bolus Percentage" = "Recommended Bolus Percentage";
+"Recommended Bolus Percentage" = "Empfohlener Bolus %";
 
 /* 2 log files to share */
 "Share logs" = "Ereignisprotokolldatei teilen";
@@ -477,7 +477,7 @@ Enact a temp Basal or a temp target */
 "CGM" = "CGM";
 
 /* CGM Transmitter ID */
-"Transmitter ID" = "Transmitter ID";
+"Transmitter ID" = "Sender-ID";
 
 /* Other CGM setting */
 "Other" = "Sonstiges";
@@ -642,7 +642,7 @@ Enact a temp Basal or a temp target */
 "Glucose: %@" = "Blutzucker: %@";
 
 /* Transmitter: %@%% */
-"Transmitter: %@%%" = "Transmitter: %@%%";
+"Transmitter: %@%%" = "Sender: %@%%";
 
 /* No Sensor Detected */
 "No Sensor Detected" = "Kein Sensor gefunden";
@@ -1135,13 +1135,13 @@ Enact a temp Basal or a temp target */
 "Override With A Factor Of " = "Übersteuern mit einem Faktor von ";
 
 /* Description */
-"Allows fat and protein to be converted into future carb equivalents using the Warsaw formula of kilocalories divided by 10.\n\nThis spreads the carb equivilants over a maximum duration setting that can be configured from 5-12 hours.\n\nDelay is time from now until the first future carb entry.\n\nInterval in minutes is how many minutes are between entries. The shorter the interval, the smoother the result. 10, 15, 20, 30, or 60 are reasonable choices.\n\nAdjustment factor is how much effect the fat and protein has on the entries. 1.0 is full effect (original Warsaw Method) and 0.5 is half effect. Note that you may find that your normal carb ratio needs to increase to a larger number if you begin adding fat and protein entries. For this reason, it is best to start with a factor of about 0.5 to ease into it.\n\nDefault settings: Time Cap: 8 h, Interval: 30 min, Factor: 0.5, Delay 60 min" = "Allows fat and protein to be converted into future carb equivalents using the Warsaw formula of kilocalories divided by 10.\n\nThis spreads the carb equivilants over a maximum duration setting that can be configured from 5-12 hours.\n\nDelay is time from now until the first future carb entry.\n\nInterval in minutes is how many minutes are between entries. The shorter the interval, the smoother the result. 10, 15, 20, 30, or 60 are reasonable choices.\n\nAdjustment factor is how much effect the fat and protein has on the entries. 1.0 is full effect (original Warsaw Method) and 0.5 is half effect. Note that you may find that your normal carb ratio needs to increase to a larger number if you begin adding fat and protein entries. For this reason, it is best to start with a factor of about 0.5 to ease into it.\n\nDefault settings: Time Cap: 8 h, Interval: 30 min, Factor: 0.5, Delay 60 min";
+"Allows fat and protein to be converted into future carb equivalents using the Warsaw formula of kilocalories divided by 10.\n\nThis spreads the carb equivilants over a maximum duration setting that can be configured from 5-12 hours.\n\nDelay is time from now until the first future carb entry.\n\nInterval in minutes is how many minutes are between entries. The shorter the interval, the smoother the result. 10, 15, 20, 30, or 60 are reasonable choices.\n\nAdjustment factor is how much effect the fat and protein has on the entries. 1.0 is full effect (original Warsaw Method) and 0.5 is half effect. Note that you may find that your normal carb ratio needs to increase to a larger number if you begin adding fat and protein entries. For this reason, it is best to start with a factor of about 0.5 to ease into it.\n\nDefault settings: Time Cap: 8 h, Interval: 30 min, Factor: 0.5, Delay 60 min" = "Ermöglicht die Umwandlung von Fett und Eiweiß in zukünftige Kohlenhydratäquivalente unter Verwendung der Warschauer Formel (Kilokalorien geteilt durch 10). Dadurch werden die Kohlenhydratäquivalente über eine maximale Dauer verteilt, die zwischen 5 und 12 Stunden eingestellt werden kann. Je kürzer das Intervall, desto gleichmäßiger das Ergebnis. 10, 15, 20, 30 oder 60 sind eine vernünftige Wahl.\n\nAnpassungsfaktor gibt an, wie stark sich Fett und Eiweiß auf die Einträge auswirken. 1,0 entspricht der vollen Wirkung (ursprüngliche Warschauer Methode) und 0,5 der halben Wirkung. Beachten Sie, dass Ihr normales Kohlenhydratverhältnis möglicherweise auf eine größere Zahl ansteigen muss, wenn Sie beginnen, Fett- und Eiweißeinträge hinzuzufügen. Aus diesem Grund ist es am besten, mit einem Faktor von etwa 0,5 zu beginnen, um den Einstieg zu erleichtern.\n\nStandardeinstellungen: Zeit Cap: 8 h, Interval: 30 min, Faktor: 0,5, Verzögerung: 60 min";
 
 /* FPU Settings Title */
 "Fat and Protein" = "Fett und Eiweiß";
 
 /* Display fat and protein entities */
-"Fat & Protein" = "Fat & Protein";
+"Fat & Protein" = "Fett und Eiweiß";
 
 /* */
 "Hide Fat & Protein" = "Fett & Eiweiß ausblenden";
@@ -1156,31 +1156,31 @@ Enact a temp Basal or a temp target */
 "Fat And Protein Conversion" = "Fett und Eiweiß Berechnung";
 
 /* Service Section */
-"Profile Override" = "Profile Override";
+"Profile Override" = "Profil überschreibung";
 
 /* */
-"Override Profiles" = "Override Profiles";
+"Override Profiles" = "Überschreibungsprofile";
 
 /* */
 "Normal " = "im Zielbereich ";
 
 /* */
-"Currently no Override active" = "Currently no Override active";
+"Currently no Override active" = "Derzeit keine Überschreibung aktiv";
 
 /* */
-"Total Insulin Adjustment" = "Total Insulin Adjustment";
+"Total Insulin Adjustment" = "Gesamte Insulinanpassung";
 
 /* */
-"Override your Basal, ISF, CR and Target profiles" = "Override your Basal, ISF, CR and Target profiles";
+"Override your Basal, ISF, CR and Target profiles" = "Überschreiben Sie Ihre Basal-, ISF-, CR- und Zielprofile";
 
 /* */
-"Enable indefinitely" = "Enable indefinitely";
+"Enable indefinitely" = "Unbefristet aktivieren";
 
 /* */
-"Override Profile target" = "Override Profile target";
+"Override Profile target" = "Profilziel überschreiben";
 
 /* */
-"Disable SMBs" = "Disable SMBs";
+"Disable SMBs" = "SMBs deaktivieren";
 
 /* Your normal Profile. Use a short string */
 "Normal Profile" = "Normales Profil";
@@ -1219,61 +1219,61 @@ Enact a temp Basal or a temp target */
 "Save as Profile" = "Als Profil speichern";
 
 /* */
-"Return to Normal" = "Return to Normal";
+"Return to Normal" = "Rückkehr zum Normalzustand";
 
 /* Alert */
-"Return to Normal?" = "Return to Normal?";
+"Return to Normal?" = "Rückkehr zum Normalzustand?";
 
 /* */
-"This will change settings back to your normal profile." = "This will change settings back to your normal profile.";
+"This will change settings back to your normal profile." = "Dadurch werden die Einstellungen auf Ihr normales Profil zurückgesetzt.";
 
 /* Start Profile Alert */
-"Start Profile" = "Start Profile";
+"Start Profile" = "Profil starten";
 
 /* */
 "Your profile basal insulin will be adjusted with the override percentage and your profile ISF and CR will be inversly adjusted with the percentage.\n\nIf you toggle off the override every profile setting will return to normal." = "Your profile basal insulin will be adjusted with the override percentage and your profile ISF and CR will be inversly adjusted with the percentage.\n\nIf you toggle off the override every profile setting will return to normal.";
 
 /* */
-"Starting this override will change your Profiles and/or your Target Glucose used for looping during the entire selected duration. Tapping ”Start Profile” will start your new profile or edit your current active profile." = "Starting this override will change your Profiles and/or your Target Glucose used for looping during the entire selected duration. Tapping ”Start Profile” will start your new profile or edit your current active profile.";
+"Starting this override will change your Profiles and/or your Target Glucose used for looping during the entire selected duration. Tapping ”Start Profile” will start your new profile or edit your current active profile." = "Das Starten dieser Überschreibung ändert Ihre Profile und/oder Ihren Zielglukosegehalt, der für die Schleifenbildung während der gesamten ausgewählten Dauer verwendet wird. Tippen Sie auf \"Profil starten\", um Ihr neues Profil zu starten oder Ihr aktuell aktives Profil zu bearbeiten.";
 
 /* Change Target glucose in profile settings */
-"Override Profile Target" = "Override Profile Target";
+"Override Profile Target" = "Profilziel überschreiben";
 
 /* Alert string. Keep spaces. */
-" SMBs are disabled either by schedule or during the entire duration." = " SMBs are disabled either by schedule or during the entire duration.";
+" SMBs are disabled either by schedule or during the entire duration." = " SMBs werden entweder nach Zeitplan oder während der gesamten Dauer deaktiviert.";
 
 /* Alert strings. Keep spaces */
-" infinite duration." = " infinite duration.";
+" infinite duration." = " unendliche Dauer.";
 
 /* Service Section */
-"App Icons" = "App Icons";
+"App Icons" = "App-Symbole";
 
 /* Service Section */
 "Statistics and Home View" = "Statistiken und Home-Ansicht";
 
 /* Alert text */
-"Delete carb equivalents?" = "Delete carb equivalents?";
+"Delete carb equivalents?" = "Kohlenhydratäquivalente löschen?";
 
 /* */
-"Meal Presets" = "Meal Presets";
+"Meal Presets" = "Mahlzeit Voreinstellungen";
 
 /* */
-"Empty" = "Empty";
+"Empty" = "Leer";
 
 /* */
-"Delete Selected Preset" = "Delete Selected Preset";
+"Delete Selected Preset" = "Gewählte Voreinstellung löschen";
 
 /* */
-"Enter Meal Preset Name" = "Enter Meal Preset Name";
+"Enter Meal Preset Name" = "Name der Mahlzeitenvorwahl eingeben";
 
 /* */
-"Name Of Dish" = "Name Of Dish";
+"Name Of Dish" = "Name der Speise";
 
 /* Save Carbs and continue to bolus recommendation */
-"Save and continue" = "Save and continue";
+"Save and continue" = "Speichern und weiter";
 
 /* */
-"Save as Preset" = "Save as Preset";
+"Save as Preset" = "Speichern als Voreinstellung";
 
 /* -------------------------------------------------------------------------------------------
   DASH strings
@@ -1436,7 +1436,7 @@ Enact a temp Basal or a temp target */
 "Statistics" = "Statistiken";
 
 /* Option in preferences */
-"Allow Upload of Statistics to NS" = "Allow Upload of Statistics to NS";
+"Allow Upload of Statistics to NS" = "Hochladen von Statistiken in NS zulassen";
 
 /* Low Glucose Threshold in Statistics settings */
 "Low" = "Tief";
@@ -1451,31 +1451,31 @@ Enact a temp Basal or a temp target */
 "Change HbA1c Unit" = "HbA1c Einheit wechseln";
 
 /* */
-"Display Chart X - Grid lines" = "Display Chart X - Grid lines";
+"Display Chart X - Grid lines" = "Diagramm X anzeigen - Gitterlinien";
 
 /* */
-"Display Chart Y - Grid lines" = "Display Chart Y - Grid lines";
+"Display Chart Y - Grid lines" = "Diagramm Y anzeigen - Gitterlinien";
 
 /* */
-"Display Chart Threshold lines for Low and High" = "Display Chart Threshold lines for Low and High";
+"Display Chart Threshold lines for Low and High" = "Diagramm-Schwellenwertlinien für Niedrig und Hoch zeigen";
 
 /* */
-"Standing / Laying TIR Chart" = "Standing / Laying TIR Chart";
+"Standing / Laying TIR Chart" = "TIR-Tabelle stehend/liegend";
 
 /* */
-"Hours X-Axis (6 default)" = "Hours X-Axis (6 default)";
+"Hours X-Axis (6 default)" = "Stunden X-Achse (6 Standard)";
 
 /* Average BG = */
 "Average" = "Mittelwert";
 
 /* Median BG */
-"Median" = "Median";
+"Median" = "Mittelwert";
 
 /* CGM readings in statView */
-"Readings today" = "Readings today";
+"Readings today" = "Lesungen heute";
 
 /* CGM readings in statView */
-"Readings / 24h" = "Readings / 24h";
+"Readings / 24h" = "Lesungen letzte 24h";
 
 /* Days of saved readings*/
 "Days" = "Tage";
@@ -1526,7 +1526,7 @@ Enact a temp Basal or a temp target */
 "Update every number of minutes:" = "Update der Statistik (in Minuten)";
 
 /* Description for update interval for statistics */
-"Default is 20 minutes. How often to update and save the statistics.json and to upload last array, when enabled, to Nightscout." = "Default is 20 minutes. How often to update and save the statistics.json and to upload last array, when enabled, to Nightscout.";
+"Default is 20 minutes. How often to update and save the statistics.json and to upload last array, when enabled, to Nightscout." = "Standard ist 20 Minuten. Wie oft die statistics.json aktualisiert und gespeichert werden soll und wie oft das letzte Datenfeld zu Nightscout hochgeladen werden soll, wenn aktiviert.";
 
 /* Duration displayed in statPanel */
 "Past 24 Hours " = "Letzten 24 Stunden";
@@ -1553,7 +1553,7 @@ Enact a temp Basal or a temp target */
 "Change default HbA1c unit in statPanlel. The unit in statPanel will be updateded with next statistics.json update" = "Ändern Sie den HbA1c in der Statistik (% <—> mmol/mol). Die Anzeige in der Statistik wird mit dem nächsten statistics.json Update aktualisiert.";
 
 /* HbA1c for all glucose storage days */
-"all" = "all";
+"all" = "alle";
 
 /* --------------------------------------------------------  Dexcom G7 --------------------------------------*/
 
@@ -1561,9 +1561,9 @@ Enact a temp Basal or a temp target */
 
 "Heartbeat" = "Herzschlag";
 
-"CGM address :" = "CGM address :";
+"CGM address :" = "CGM-Adresse :";
 
-"CGM is not used as heartbeat." = "CGM is not used as heartbeat.";
+"CGM is not used as heartbeat." = "CGM wird nicht als Herzschlag benutzt.";
 
 "Are you sure you want to delete this CGM?" = "Möchten Sie das CGM wirklich löschen?";
 
@@ -1747,7 +1747,7 @@ Enact a temp Basal or a temp target */
 "Autotune ISF Adjustment Fraction" = "Autotune ISF Anpassungsprozentsatz";
 
 /* "Autotune ISF Adjustment Fraction" */
-"The default of 0.5 for this value keeps autotune ISF closer to pump ISF via a weighted average of fullNewISF and pumpISF. 1.0 allows full adjustment, 0 is no adjustment from pump ISF." = "The default of 0.5 for this value keeps autotune ISF closer to pump ISF via a weighted average of fullNewISF and pumpISF. 1.0 allows full adjustment, 0 is no adjustment from pump ISF.";
+"The default of 0.5 for this value keeps autotune ISF closer to pump ISF via a weighted average of fullNewISF and pumpISF. 1.0 allows full adjustment, 0 is no adjustment from pump ISF." = "Der Standardwert von 0,5 für diesen Wert hält den Autotune-ISF näher am Pumpen-ISF über einen gewichteten Durchschnitt von fullNewISF und pumpISF. 1,0 ermöglicht eine vollständige Anpassung, 0 bedeutet keine Anpassung von Pump-ISF.";
 
 /* Headline "Remaining Carbs Fraction" */
 "Remaining Carbs Fraction" = "Verbleibender Kohlenhydrat-Bruchteil";
@@ -1783,7 +1783,7 @@ Enact a temp Basal or a temp target */
 "Bolus Increment" = "Bolus-Erhöhung";
 
 /* "Bolus Increment" */
-"Smallest enacted SMB amount. Minimum amount for Omnipod pumps is 0.05 U, whereas for Medtronic pumps it differs for various models, from 0.025 U to 0.10 U. Please check the minimum bolus amount which can be delivered by your pump. The default value is 0.1." = "Smallest enacted SMB amount. Minimum amount for Omnipod pumps is 0.05 U, whereas for Medtronic pumps it differs for various models, from 0.025 U to 0.10 U. Please check the minimum bolus amount which can be delivered by your pump. The default value is 0.1.";
+"Smallest enacted SMB amount. Minimum amount for Omnipod pumps is 0.05 U, whereas for Medtronic pumps it differs for various models, from 0.025 U to 0.10 U. Please check the minimum bolus amount which can be delivered by your pump. The default value is 0.1." = "Kleinste verordnete SMB-Menge. Die Mindestmenge für Omnipod-Pumpen beträgt 0,05 U, während sie bei Medtronic-Pumpen je nach Modell von 0,025 U bis 0,10 U variiert. Bitte prüfen Sie die minimale Bolusmenge, die von Ihrer Pumpe abgegeben werden kann. Der Standardwert ist 0,1.";
 
 /* Headline "Insulin Peak Time" */
 "Insulin Peak Time" = "Insulin Wirkhöhepunkt";
@@ -1836,14 +1836,14 @@ Enact a temp Basal or a temp target */
 "Adjust Dynamic ISF constant" = "Dynamic ISF-Konstante anpassen";
 
 /* Adjust Dynamic ISF constant */
-"Adjust Dynamic ratios by a constant. Default is 0.5. The higher the value, the larger the correction of your ISF will be for a high or a low BG. Maximum correction is determined by the Autosens min/max settings. For Sigmoid function an adjustment factor of 0.4 - 0.5 is recommended to begin with. For the logaritmic formula there is less consensus, but starting with 0.5 - 0.8 is more appropiate for most users" = "Adjust Dynamic ratios by a constant. Default is 0.5. The higher the value, the larger the correction of your ISF will be for a high or a low BG. Maximum correction is determined by the Autosens min/max settings. For Sigmoid function an adjustment factor of 0.4 - 0.5 is recommended to begin with. For the logaritmic formula threre is less consensus, but starting with 0.5 - 0.8 is more appropiate for most users";
+"Adjust Dynamic ratios by a constant. Default is 0.5. The higher the value, the larger the correction of your ISF will be for a high or a low BG. Maximum correction is determined by the Autosens min/max settings. For Sigmoid function an adjustment factor of 0.4 - 0.5 is recommended to begin with. For the logaritmic formula there is less consensus, but starting with 0.5 - 0.8 is more appropiate for most users" = "Dynamische Verhältnisse um eine Konstante anpassen. Die Voreinstellung ist 0,5. Je höher der Wert, desto größer ist die Korrektur Ihres ISF für einen hohen oder niedrigen BG. Die maximale Korrektur wird durch die Autosens min/max-Einstellungen bestimmt. Für die Sigmoid-Funktion wird für den Anfang ein Anpassungsfaktor von 0,4 - 0,5 empfohlen. Für die logarithmische Formel gibt es weniger Konsens, aber ein Anfangswert von 0,5 - 0,8 ist für die meisten Benutzer angemessener.";
 
 
 /* Headline "Use Sigmoid Function" */
 "Use Sigmoid Function" = "Sigmoid-Funktion verwenden";
 
 /* Use Sigmoid Function */
-"Use a sigmoid function for ISF (and for CR, when enabled), instead of the default Logarithmic formula. Requires the Dynamic ISF setting to be enabled in settings\n\nThe Adjustment setting adjusts the slope of the curve (Y: Dynamic ratio, X: Blood Glucose). A lower value ==> less steep == less aggressive.\n\nThe autosens.min/max settings determines both the max/min limits for the dynamic ratio AND how much the dynamic ratio is adjusted. If AF is the slope of the curve, the autosens.min/max is the height of the graph, the Y-interval, where Y: dynamic ratio. The curve will always have a sigmoid shape, no matter which autosens.min/max settings are used, meaning these settings have big consequences for the outcome of the computed dynamic ISF. Please be careful setting a too high autosens.max value. With a proper profile ISF setting, you will probably never need it to be higher than 1.5\n\nAn Autosens.max limit > 1.5 is not advisable when using the sigmoid function." = "Use a sigmoid function for ISF (and for CR, when enabled), instead of the default Logarithmic formula. Requires the Dynamic ISF setting to be enabled in settings\n\nThe Adjustment setting adjusts the slope of the curve (Y: Dynamic ratio, X: Blood Glucose). A lower value ==> less steep == less aggressive.\n\nThe autosens.min/max settings determines both the max/min limits for the dynamic ratio AND how much the dynamic ratio is adjusted. If AF is the slope of the curve, the autosens.min/max is the height of the graph, the Y-interval, where Y: dynamic ratio. The curve will always have a sigmoid shape, no matter which autosens.min/max settings are used, meaning these settings have big consequences for the outcome of the computed dynamic ISF. Please be careful setting a too high autosens.max value. With a proper profile ISF setting, you will probably never need it to be higher than 1.5\n\nAn Autosens.max limit > 1.5 is not advisable when using the sigmoid function.";
+"Use a sigmoid function for ISF (and for CR, when enabled), instead of the default Logarithmic formula. Requires the Dynamic ISF setting to be enabled in settings\n\nThe Adjustment setting adjusts the slope of the curve (Y: Dynamic ratio, X: Blood Glucose). A lower value ==> less steep == less aggressive.\n\nThe autosens.min/max settings determines both the max/min limits for the dynamic ratio AND how much the dynamic ratio is adjusted. If AF is the slope of the curve, the autosens.min/max is the height of the graph, the Y-interval, where Y: dynamic ratio. The curve will always have a sigmoid shape, no matter which autosens.min/max settings are used, meaning these settings have big consequences for the outcome of the computed dynamic ISF. Please be careful setting a too high autosens.max value. With a proper profile ISF setting, you will probably never need it to be higher than 1.5\n\nAn Autosens.max limit > 1.5 is not advisable when using the sigmoid function." = "Verwenden Sie eine sigmoid Funktion für ISF (und für CR, wenn aktiviert), anstelle der Standard-logarithmischen Formel. Erfordert die Aktivierung der dynamischen ISF-Einstellung in den Einstellungen\n\nDie Veränderungsanpassung passt die Neigung der Kurve an (Y: Dynamisches Verhältnis, X: Blutzucker). Ein niedrigerer Wert ==> weniger steil == weniger aggressiv.\n\nDie autosens.min/max Einstellungen bestimmen sowohl die max/min Grenzen für das dynamische Verhältnis UND wie sehr das dynamische Verhältnis angepasst wird. Wenn AF ist der Hang der Kurve, die Autosen. in/max ist die Höhe des Diagramms, das Y-Intervall, wo Y: dynamisches Verhältnis. Die Kurve hat immer eine S-Form, egal welche autosense.min/max Einstellungen verwendet werden, was bedeutet, dass diese Einstellungen große Folgen für das Ergebnis des berechneten dynamischen ISF haben. Bitte sei vorsichtig, einen zu hohen autosens.max Wert zu setzen. Mit einer korrekten Profil-ISF-Einstellung werden Sie wahrscheinlich nie mehr als 1 benötigen.\n\nEin Autosens.max Limit > 1.5 ist nicht ratsam, wenn Sie die sigmoid Funktion benutzen.";
 
 
 /* Headline "Threshold Setting" */

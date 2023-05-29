@@ -367,7 +367,7 @@
 "Low Reservoir Reminder" = "Herinnering 'Reservoir bijna leeg'";
 
 /* The action string on pod status page when pod data is stale */
-"Make sure your phone and pod are close to each other. If communication issues persist, move to a new area." = "Zorg ervoor dat je telefoon en pod zich dicht bij elkaar bevinden. Als de communicatieproblemen aanhouden, ga dan naar een andere plek.";
+"Make sure your phone and pod are close to each other. If communication issues persist, move to a new area." = "Zorg ervoor dat je iPhone en Pod zich dicht bij elkaar bevinden. Als de communicatieproblemen aanhouden, ga dan naar een andere plek.";
 
 /* Unit for singular minute in pod life remaining */
 "minute" = "minuut";

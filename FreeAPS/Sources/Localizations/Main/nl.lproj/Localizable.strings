@@ -59,7 +59,7 @@
 "looping" = "Loopen";
 
 /* min ago since last loop */
-"min ago" = "min. terug";
+"min ago" = "Min. terug";
 
 /* Status Title */
 "No suggestion" = "Geen suggestie";
@@ -603,10 +603,10 @@ Enact a temp Basal or a temp target */
 "Pair Sensor & connect" = "Sensor koppelen en verbinden";
 
 /* */
-"Phone NFC required!" = "Telefoon NFC vereist!";
+"Phone NFC required!" = "iPhone NFC vereist!";
 
 /* */
-"Your phone or app is not enabled for NFC communications, which is needed to pair to libre2 sensors" = "Je telefoon of app is niet ingeschakeld voor NFC communicatie, wat nodig is om te koppelen met libre2 sensoren";
+"Your phone or app is not enabled for NFC communications, which is needed to pair to libre2 sensors" = "Je iPhone of app is niet ingeschakeld voor NFC communicatie, wat nodig is om te koppelen met Libre2 sensoren";
 
 /* Bluetooth Power Off */
 "Bluetooth Power Off" = "Bluetooth uitschakelen";
@@ -813,7 +813,7 @@ Enact a temp Basal or a temp target */
 "Value" = "Waarde";
 
 /* */
-"Adds Phone Battery" = "Telefoonbatterij toevoegen";
+"Adds Phone Battery" = "Batterij iPhone toevoegen";
 
 /* */
 "Adds Transmitter Battery" = "Zender batterij toevoegen";
@@ -1285,7 +1285,7 @@ Enact a temp Basal or a temp target */
 /* */
 "Deactivating..." = "Uitschakelen...";
 
-"Pair Pod" = "Koppel pod";
+"Pair Pod" = "Koppel Pod";
 
 /* Text for previous pod information row */
 "Previous Pod Information" = "Vorige Pod informatie";
@@ -1347,7 +1347,7 @@ Enact a temp Basal or a temp target */
 "Low Reservoir Reminder" = "Laag reservoir herinnering";
 
 /* The action string on pod status page when pod data is stale */
-"Make sure your phone and pod are close to each other. If communication issues persist, move to a new area." = "Zorg ervoor dat je telefoon en pod dicht bij elkaar liggen. Als communicatieproblemen aanhouden, ga dan naar een nieuw gebied.";
+"Make sure your phone and pod are close to each other. If communication issues persist, move to a new area." = "Zorg ervoor dat je iPhone en Pod dicht bij elkaar liggen. Als communicatieproblemen aanhouden, ga dan naar een nieuw gebied.";
 /* Format string for the action string on pod status page when pod expired. (1: service time remaining) */
 "Change Pod now. Insulin delivery will stop in %1$@ or when no more insulin remains." = "Verander Pod nu. Insuline levering stopt over %1$@ of wanneer er geen insuline meer over is.";
 
@@ -1457,7 +1457,7 @@ Enact a temp Basal or a temp target */
 "Display Chart Y - Grid lines" = "Grafiek Y weergeven - Rasterlijnen";
 
 /* */
-"Display Chart Threshold lines for Low and High" = "Grafiekdrempellijnen voor LAAG en HOOG weergeven";
+"Display Chart Threshold lines for Low and High" = "Lijnen voor LAAG en HOOG weergeven in grafiek";
 
 /* */
 "Standing / Laying TIR Chart" = "Staande/liggende TIR grafiek";
@@ -1472,10 +1472,10 @@ Enact a temp Basal or a temp target */
 "Median" = "Mediaan";
 
 /* CGM readings in statView */
-"Readings today" = "Lezingen van vandaag";
+"Readings today" = "Vandaag gemeten";
 
 /* CGM readings in statView */
-"Readings / 24h" = "Lezingen van afgelopen 24/h";
+"Readings / 24h" = "Afgelopen 24/h";
 
 /* Days of saved readings*/
 "Days" = "Dagen";
@@ -1570,7 +1570,7 @@ Enact a temp Basal or a temp target */
 /* New Experimental feature */
 "Experimental" = "Experimenteel";
 /* Smoothing of CGM readings */
-"Smooth Glucose Value" = "Soepele glucosewaarde";
+"Smooth Glucose Value" = "Vloeiende glucosewaarde";
 
 /* -----------------------------------------------------------------------------------------------------------
 
@@ -1850,7 +1850,7 @@ Enact a temp Basal or a temp target */
 "Threshold Setting (mg/dl)" = "Drempelinstelling (mg/dl)";
 
 /* Threshold Setting */
-"The default threshold in FAX depends on your current minimum BG target, as follows:\n\nIf your minimum BG target = 90 mg/dl -> threshold = 65 mg/dl,\n\nif minimum BG target = 100 mg/dl -> threshold = 70 mg/dl,\n\nminimum BG target = 110 mg/dl -> threshold = 75 mg/dl,\n\nand if minimum BG target = 130 mg/dl  -> threshold = 85 mg/dl.\n\nThis setting allows you to change the default to a higher threshold for looping with dynISF. Valid values are 65 mg/dl<= Threshold Setting <= 120 mg/dl." = "De standaarddrempelwaarde in FAX is afhankelijk van je huidige minimale BG streefdoel: als volgt:\n\nAls uw minimum BG = 5,0 mmol/l -> drempel = 3,6 mmol/dl,\n\nals minimum BG doel = 5,5 mmol/l -> drempel = 3,8 mmol/l,\n\nminimum BG doel = 6,1 mmol/l -> drempel= 3,8 mmol/l,\n\nen als minimum BG doel = 7,2 mmol/l -> drempel= 4,7 mmol/l.\n\nMet deze instelling kunt u de standaard instelling wijzigen naar een hogere drempel voor het herhalen met dynISF. Geldige waarden zijn 3,6 mmol/l<= Drempel instelling <= 6,6 mmol/l.";
+"The default threshold in FAX depends on your current minimum BG target, as follows:\n\nIf your minimum BG target = 90 mg/dl -> threshold = 65 mg/dl,\n\nif minimum BG target = 100 mg/dl -> threshold = 70 mg/dl,\n\nminimum BG target = 110 mg/dl -> threshold = 75 mg/dl,\n\nand if minimum BG target = 130 mg/dl  -> threshold = 85 mg/dl.\n\nThis setting allows you to change the default to a higher threshold for looping with dynISF. Valid values are 65 mg/dl<= Threshold Setting <= 120 mg/dl." = "De standaarddrempelwaarde in iAPS is afhankelijk van je huidige minimale BG streefdoel: als volgt:\n\nAls uw minimum BG = 5,0 mmol/l -> drempel = 3,6 mmol/dl,\n\nals minimum BG doel = 5,5 mmol/l -> drempel = 3,8 mmol/l,\n\nminimum BG doel = 6,1 mmol/l -> drempel= 3,8 mmol/l,\n\nen als minimum BG doel = 7,2 mmol/l -> drempel= 4,7 mmol/l.\n\nMet deze instelling kunt u de standaard instelling wijzigen naar een hogere drempel voor het herhalen met dynISF. Geldige waarden zijn 3,6 mmol/l<= Drempel instelling <= 6,6 mmol/l.";
 
 /* Headline "Weighted Average of TDD. Weight of past 24 hours:" */
 "Weighted Average of TDD. Weight of past 24 hours:" = "Gewogen gemiddelde van TDD van afgelopen 24 uur:";
