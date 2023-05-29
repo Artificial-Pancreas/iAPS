@@ -69,12 +69,9 @@ extension OverrideProfilesConfig {
                         saveOverride.start = start as NSDecimalNumber
                         saveOverride.end = end as NSDecimalNumber
                     } else { saveOverride.smbIsAlwaysOff = false }
-                    if smbMinutes != self.settingsManager.preferences.maxSMBBasalMinutes {
-                        saveOverride.smbMinutes = smbMinutes as NSDecimalNumber
-                    }
-                    if uamMinutes != self.settingsManager.preferences.maxUAMSMBBasalMinutes {
-                        saveOverride.uamMinutes = uamMinutes as NSDecimalNumber
-                    }
+
+                    saveOverride.smbMinutes = smbMinutes as NSDecimalNumber
+                    saveOverride.uamMinutes = uamMinutes as NSDecimalNumber
                 }
                 try? self.coredataContext.save()
             }
@@ -112,12 +109,9 @@ extension OverrideProfilesConfig {
                         saveOverride.start = start as NSDecimalNumber
                         saveOverride.end = end as NSDecimalNumber
                     } else { smbIsAlwaysOff = false }
-                    if smbMinutes != self.settingsManager.preferences.maxSMBBasalMinutes {
-                        saveOverride.smbMinutes = smbMinutes as NSDecimalNumber
-                    }
-                    if uamMinutes != self.settingsManager.preferences.maxUAMSMBBasalMinutes {
-                        saveOverride.uamMinutes = uamMinutes as NSDecimalNumber
-                    }
+
+                    saveOverride.smbMinutes = smbMinutes as NSDecimalNumber
+                    saveOverride.uamMinutes = uamMinutes as NSDecimalNumber
                 }
                 try? self.coredataContext.save()
             }
@@ -144,6 +138,7 @@ extension OverrideProfilesConfig {
                 saveOverride.id = id_
 
                 if profile.advancedSettings {
+                    saveOverride.advancedSettings = true
                     if !isfAndCr {
                         saveOverride.isfAndCr = false
                         saveOverride.isf = profile.isf
@@ -155,14 +150,8 @@ extension OverrideProfilesConfig {
                         saveOverride.end = profile.end
                     } else { saveOverride.smbIsAlwaysOff = false }
 
-                    let smb = (profile.smbMinutes ?? 30) as Decimal
-                    if smb != self.settingsManager.preferences.maxSMBBasalMinutes {
-                        saveOverride.smbMinutes = profile.smbMinutes
-                    }
-                    let uam = (profile.uamMinutes ?? 30) as Decimal
-                    if uam != self.settingsManager.preferences.maxUAMSMBBasalMinutes {
-                        saveOverride.uamMinutes = profile.uamMinutes
-                    }
+                    saveOverride.smbMinutes = smbMinutes as NSDecimalNumber
+                    saveOverride.uamMinutes = uamMinutes as NSDecimalNumber
                 }
                 try? self.coredataContext.save()
             }
@@ -195,12 +184,11 @@ extension OverrideProfilesConfig {
                         end = (overrideArray.first?.end ?? 0) as Decimal
                     }
 
-                    let smb = (overrideArray.first?.smbMinutes ?? 30) as Decimal
-                    if smb != self.settingsManager.preferences.maxSMBBasalMinutes {
+                    if (overrideArray[0].smbMinutes as Decimal?) != nil {
                         smbMinutes = (overrideArray.first?.smbMinutes ?? 30) as Decimal
                     }
-                    let uam = (overrideArray.first?.uamMinutes ?? 30) as Decimal
-                    if uam != self.settingsManager.preferences.maxUAMSMBBasalMinutes {
+
+                    if (overrideArray[0].uamMinutes as Decimal?) != nil {
                         uamMinutes = (overrideArray.first?.uamMinutes ?? 30) as Decimal
                     }
                 }
