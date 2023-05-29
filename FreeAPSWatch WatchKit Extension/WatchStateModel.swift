@@ -9,6 +9,7 @@ enum AwConfig: String, CaseIterable, Identifiable, Codable {
     case BGTarget
     case steps
     case isf
+    case override
 }
 
 class WatchStateModel: NSObject, ObservableObject {
@@ -54,6 +55,7 @@ class WatchStateModel: NSObject, ObservableObject {
     @Published var pendingBolus: Double?
 
     @Published var isf: Decimal?
+    @Published var override: String?
 
     private var lifetime = Set<AnyCancellable>()
     private var confirmationTimeout: AnyCancellable?
@@ -172,6 +174,7 @@ class WatchStateModel: NSObject, ObservableObject {
         eventualBG = state.eventualBG ?? ""
         displayOnWatch = state.displayOnWatch ?? .BGTarget
         isf = state.isf
+        override = state.override
     }
 }
 

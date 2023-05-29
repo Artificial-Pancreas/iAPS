@@ -185,6 +185,22 @@ struct MainView: View {
                             .foregroundColor(.white)
                             .minimumScaleFactor(0.5)
                     }
+                case .override:
+                    Spacer()
+                    let override: String = state.override != nil ? state.override! : "-"
+                    HStack {
+                        Image(systemName: "person.3.sequence.fill")
+                            .renderingMode(.template)
+                            .resizable()
+                            .frame(width: 24, height: 12)
+                            .foregroundColor(.blue)
+                        Text("\(override)")
+                            .fontWeight(.regular)
+                            .font(.caption2)
+                            .scaledToFill()
+                            .foregroundColor(.white)
+                            .minimumScaleFactor(0.5)
+                    }
                 }
             }
             Spacer()
