@@ -38,7 +38,7 @@
 "Sensor Expiration" = "Sensor Ablaufdatum";
 
 /* title for g7 settings row showing sensor grace period end time */
-"Grace Period End" = "Grace Period End";
+"Grace Period End" = "Ende der Karenzfrist";
 
 /* Field label */
 "Glucose" = "Blutzucker";
@@ -108,7 +108,7 @@
 "Sensor expires" = "Sensor abgelaufen";
 
 /* G7 Progress bar label when sensor grace period progress showing */
-"Grace period remaining" = "Grace period remaining";
+"Grace period remaining" = "Verbleibende Karenzfrist";
 
 /* G7 Status highlight text for searching for sensor */
 "Searching for\nSensor" = "Suche nach\nSensor";
