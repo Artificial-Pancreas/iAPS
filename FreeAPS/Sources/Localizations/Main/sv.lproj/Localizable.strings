@@ -1231,7 +1231,7 @@ Enact a temp Basal or a temp target */
 "Start Profile" = "Starta profil";
 
 /* */
-"Your profile basal insulin will be adjusted with the override percentage and your profile ISF and CR will be inversly adjusted with the percentage.\n\nIf you toggle off the override every profile setting will return to normal." = "Din vanliga basal kommer att justeras procentuellt enligt ovan, medan din normala korrektionsfaktor och insulinkvot CR kommer att bli omvänt justerade.";
+"Your profile basal insulin will be adjusted with the override percentage and your profile ISF and CR will be inversly adjusted with the percentage." = "Din vanliga basal kommer att justeras procentuellt enligt ovan, medan din normala korrektionsfaktor och insulinkvot CR kommer att bli omvänt justerade.";
 
 /* */
 "Starting this override will change your Profiles and/or your Target Glucose used for looping during the entire selected duration. Tapping ”Start Profile” will start your new profile or edit your current active profile." = "Om du klickar 'Starta profil' kommer detta att tillfälligt att ändra dina normala inställningar för under hela perioden som du valt";

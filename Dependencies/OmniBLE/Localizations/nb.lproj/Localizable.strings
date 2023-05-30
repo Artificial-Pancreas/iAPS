@@ -571,7 +571,7 @@
 "Critical Alerts" = "Kritiske varslinger";
 
 /* Description text for critical alerts */
-"The reminders above will not sound if your device is in Silent or Do Not Disturb mode.\n\nThere are other critical Pod alerts and alarms that will sound even if you device is set to Silent or Do Not Disturb mode." = "Påminnelsene over vil ikke lyde hvis enheten er i stillemodus eller Ikke forstyrr-modus.\n\nDet finnes andre kritiske pod-varsler og -alarmer som vil lyde selv om enheten er satt til stillemodus eller Ikke forstyrr.";
+"The reminders above will not sound if your device is in Silent or Do Not Disturb mode.\n\nThere are other critical Pod alerts and alarms that will sound even if your device is set to Silent or Do Not Disturb mode." = "Påminnelsene over vil ikke lyde hvis enheten er i stillemodus eller Ikke forstyrr-modus.\n\nDet finnes andre kritiske pod-varsler og -alarmer som vil lyde selv om enheten er satt til stillemodus eller Ikke forstyrr.";
 /* navigation title for notification settings */
 "Notification Settings" = "Varslingsinnstillinger";
 

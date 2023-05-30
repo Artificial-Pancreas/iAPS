@@ -205,9 +205,26 @@ final class BaseAPSManager: APSManager, Injectable {
         debug(.apsManager, "Starting loop with a delay of \(UIApplication.shared.backgroundTimeRemaining.rounded())")
 
         lastStartLoopDate = Date()
+
+        var previousLoop = [LoopStatRecord]()
+        var interval: Double?
+
+        coredataContext.performAndWait {
+            let requestStats = LoopStatRecord.fetchRequest() as NSFetchRequest<LoopStatRecord>
+            let sortStats = NSSortDescriptor(key: "end", ascending: false)
+            requestStats.sortDescriptors = [sortStats]
+            requestStats.fetchLimit = 1
+            try? previousLoop = coredataContext.fetch(requestStats)
+
+            if (previousLoop.first?.end ?? .distantFuture) < lastStartLoopDate {
+                interval = roundDouble((lastStartLoopDate - (previousLoop.first?.end ?? Date())).timeInterval / 60, 1)
+            }
+        }
+
         var loopStatRecord = LoopStats(
             start: lastStartLoopDate,
-            loopStatus: "Starting"
+            loopStatus: "Starting",
+            interval: interval
         )
 
         isLooping.send(true)
@@ -810,96 +827,36 @@ final class BaseAPSManager: APSManager, Injectable {
                 }
 
                 var lsr = [LoopStatRecord]()
-                var successRate: Double?
-                var successNR = 0
-                var errorNR = 0
-                var minimumInt = 999.0
-                var maximumInt = 0.0
-                var minimumLoopTime = 9999.0
-                var maximumLoopTime = 0.0
-                var timeIntervalLoops = 0.0
-                var previousTimeLoop = Date()
-                var timeForOneLoop = 0.0
-                var averageLoopTime = 0.0
-                var timeForOneLoopArray: [Double] = []
-                var medianLoopTime = 0.0
-                var timeIntervalLoopArray: [Double] = []
-                var medianInterval = 0.0
-                var averageIntervalLoops = 0.0
-                var averageLoopDuration = 0.0
 
                 let requestLSR = LoopStatRecord.fetchRequest() as NSFetchRequest<LoopStatRecord>
                 requestLSR.predicate = NSPredicate(
-                    format: "start > %@",
+                    format: "interval > 0 AND start > %@",
                     Date().addingTimeInterval(-24.hours.timeInterval) as NSDate
                 )
                 let sortLSR = NSSortDescriptor(key: "start", ascending: false)
                 requestLSR.sortDescriptors = [sortLSR]
 
                 try? lsr = coredataContext.fetch(requestLSR)
+                let loops = lsr
 
-                if lsr.isNotEmpty {
-                    var i = 0.0
-                    if let loopEnd = lsr[0].end {
-                        previousTimeLoop = loopEnd
-                    }
-                    for each in lsr {
-                        if let loopEnd = each.end {
-                            let loopDuration = each.duration
+                let durationArray = loops.compactMap({ each in each.duration })
+                let durationArrayCount = durationArray.count
+                let successsNR = loops.compactMap({ each in each.loopStatus }).filter({ each in each!.contains("Success") }).count
 
-                            if each.loopStatus!.contains("Success") {
-                                successNR += 1
-                            } else {
-                                errorNR += 1
-                            }
+                let durationAverage = durationArray.reduce(0, +) / Double(durationArrayCount)
+                let medianDuration = medianCalculation(array: durationArray)
+                let minimumDuration = durationArray.min() ?? 0
+                let maximumDuration = durationArray.max() ?? 0
+                let errorNR = durationArrayCount - successsNR
+                let successRate: Double? = (Double(successsNR) / Double(successsNR + errorNR)) * 100
+                let loopNr = successsNR + errorNR
 
-                            i += 1
-                            timeIntervalLoops = (previousTimeLoop - (each.start ?? previousTimeLoop)).timeInterval / 60
-
-                            if timeIntervalLoops > 0.0, i != 1 {
-                                timeIntervalLoopArray.append(timeIntervalLoops)
-                            }
-                            if timeIntervalLoops > maximumInt {
-                                maximumInt = timeIntervalLoops
-                            }
-                            if timeIntervalLoops < minimumInt, i != 1 {
-                                minimumInt = timeIntervalLoops
-                            }
-                            timeForOneLoop = loopDuration
-                            timeForOneLoopArray.append(timeForOneLoop)
-
-                            if timeForOneLoop >= maximumLoopTime, timeForOneLoop != 0.0 {
-                                maximumLoopTime = timeForOneLoop
-                            }
-                            if timeForOneLoop <= minimumLoopTime, timeForOneLoop != 0.0 {
-                                minimumLoopTime = timeForOneLoop
-                            }
-                            previousTimeLoop = loopEnd
-                        }
-                    }
-                    successRate = (Double(successNR) / Double(i)) * 100
-
-                    // Average Loop Interval in minutes
-                    let timeOfFirstIndex = lsr[0].start ?? Date()
-                    let lastIndexWithTimestamp = lsr.count - 1
-                    let timeOfLastIndex = lsr[lastIndexWithTimestamp].end ?? Date()
-                    averageLoopTime = (timeOfFirstIndex - timeOfLastIndex).timeInterval / 60 / Double(errorNR + successNR)
-
-                    // Median values
-                    medianLoopTime = medianCalculation(array: timeForOneLoopArray)
-                    medianInterval = medianCalculation(array: timeIntervalLoopArray)
-                    // Average time interval between loops
-                    averageIntervalLoops = timeIntervalLoopArray.reduce(0, +) / Double(timeIntervalLoopArray.count)
-                    // Average loop duration
-                    averageLoopDuration = timeForOneLoopArray.reduce(0, +) / Double(timeForOneLoopArray.count)
-                }
-
-                if minimumInt == 999.0 {
-                    minimumInt = 0.0
-                }
-                if minimumLoopTime == 9999.0 {
-                    minimumLoopTime = 0.0
-                }
+                let intervalArray = loops.compactMap({ each in each.interval })
+                let intervalArrayCount = intervalArray.count
+                let intervalAverage = intervalArray.reduce(0, +) / Double(intervalArrayCount)
+                let intervalMedian = medianCalculation(array: intervalArray)
+                let maximumInterval = intervalArray.max() ?? 0
+                let minimumInterval = intervalArray.min() ?? 0
 
                 var glucose = [Readings]()
 
@@ -1119,18 +1076,18 @@ final class BaseAPSManager: APSManager, Injectable {
                 let nrOfCGMReadings = nr1
 
                 let loopstat = LoopCycles(
-                    loops: successNR + errorNR,
+                    loops: loopNr,
                     errors: errorNR,
                     readings: Int(nrOfCGMReadings),
                     success_rate: Decimal(round(successRate ?? 0)),
-                    avg_interval: roundDecimal(Decimal(averageLoopTime), 1),
-                    median_interval: roundDecimal(Decimal(medianInterval), 1),
-                    min_interval: roundDecimal(Decimal(minimumInt), 1),
-                    max_interval: roundDecimal(Decimal(maximumInt), 1),
-                    avg_duration: Decimal(roundDouble(averageLoopDuration, 2)),
-                    median_duration: Decimal(roundDouble(medianLoopTime, 2)),
-                    min_duration: roundDecimal(Decimal(minimumLoopTime), 2),
-                    max_duration: Decimal(roundDouble(maximumLoopTime, 1))
+                    avg_interval: roundDecimal(Decimal(intervalAverage), 1),
+                    median_interval: roundDecimal(Decimal(intervalMedian), 1),
+                    min_interval: roundDecimal(Decimal(minimumInterval), 1),
+                    max_interval: roundDecimal(Decimal(maximumInterval), 1),
+                    avg_duration: Decimal(roundDouble(durationAverage, 2)),
+                    median_duration: Decimal(roundDouble(medianDuration, 2)),
+                    min_duration: roundDecimal(Decimal(minimumDuration), 2),
+                    max_duration: Decimal(roundDouble(maximumDuration, 1))
                 )
 
                 // TIR calcs for every case
@@ -1340,9 +1297,11 @@ final class BaseAPSManager: APSManager, Injectable {
             nLS.end = loopStatRecord.end ?? Date()
             nLS.loopStatus = loopStatRecord.loopStatus
             nLS.duration = loopStatRecord.duration ?? 0.0
+            nLS.interval = loopStatRecord.interval ?? 0.0
 
             try? self.coredataContext.save()
         }
+        print("LoopStatRecords: \(loopStatRecord)")
         print("Test time of LoopStats computation: \(-1 * LoopStatsStartedAt.timeIntervalSinceNow) s")
     }
 
