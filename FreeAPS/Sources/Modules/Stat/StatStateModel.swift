@@ -5,12 +5,11 @@ import Swinject
 extension Stat {
     final class StateModel: BaseStateModel<Provider> {
         @Injected() var settings: SettingsManager!
-        @Published var highLimit: Decimal?
-        @Published var lowLimit: Decimal?
-        @Published var overrideUnit: Bool?
-        @Published var layingChart: Bool?
-
-        private(set) var units: GlucoseUnits = .mmolL
+        @Published var highLimit: Decimal = 10 / 0.0555
+        @Published var lowLimit: Decimal = 4 / 0.0555
+        @Published var overrideUnit: Bool = false
+        @Published var layingChart: Bool = false
+        @Published var units: GlucoseUnits = .mmolL
 
         override func subscribe() {
             highLimit = settingsManager.settings.high
