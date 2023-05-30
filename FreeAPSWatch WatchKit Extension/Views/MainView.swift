@@ -176,8 +176,8 @@ struct MainView: View {
                         Image(systemName: "arrow.up.arrow.down")
                             .renderingMode(.template)
                             .resizable()
-                            .frame(width: 16, height: 16)
-                            .foregroundColor(.blue)
+                            .frame(width: 12, height: 12)
+                            .foregroundColor(.loopGreen)
                         Text("\(isf)")
                             .fontWeight(.regular)
                             .font(.caption2)
@@ -190,9 +190,9 @@ struct MainView: View {
                     let override: String = state.override != nil ? state.override! : "-"
                     HStack {
                         Image(systemName: "person.3.sequence.fill")
-                            .renderingMode(.template)
                             .resizable()
-                            .frame(width: 24, height: 12)
+                            .symbolRenderingMode(.palette).foregroundStyle(.green, .cyan, .purple)
+                            .frame(height: 12)
                             .foregroundColor(.blue)
                         Text("\(override)")
                             .fontWeight(.regular)
