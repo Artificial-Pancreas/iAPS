@@ -189,12 +189,7 @@ struct MainView: View {
                     Spacer()
                     let override: String = state.override != nil ? state.override! : "-"
                     HStack {
-                        Image(systemName: "person.3.sequence.fill")
-                            .resizable()
-                            .symbolRenderingMode(.palette).foregroundStyle(.green, .cyan, .purple)
-                            .frame(height: 12)
-                            .foregroundColor(.blue)
-                        Text("\(override)")
+                        Text("👤 \(override)")
                             .fontWeight(.regular)
                             .font(.caption2)
                             .scaledToFill()
