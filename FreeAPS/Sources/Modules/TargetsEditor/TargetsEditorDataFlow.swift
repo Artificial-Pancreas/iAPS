@@ -9,9 +9,9 @@ enum TargetsEditor {
         var highIndex = 0
         var timeIndex = 0
 
-        init(lowIndex: Int, highIndex: Int, timeIndex: Int) {
+        init(lowIndex: Int, highIndex _: Int, timeIndex: Int) {
             self.lowIndex = lowIndex
-            self.highIndex = highIndex
+            highIndex = lowIndex
             self.timeIndex = timeIndex
         }
 
