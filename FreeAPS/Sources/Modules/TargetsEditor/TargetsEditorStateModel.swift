@@ -28,7 +28,7 @@ extension TargetsEditor {
             items = profile.targets.map { value in
                 let timeIndex = timeValues.firstIndex(of: Double(value.offset * 60)) ?? 0
                 let lowIndex = rateValues.firstIndex(of: Double(value.low)) ?? 0
-                let highIndex = rateValues.firstIndex(of: Double(value.high)) ?? 0
+                let highIndex = lowIndex
                 return Item(lowIndex: lowIndex, highIndex: highIndex, timeIndex: timeIndex)
             }
         }
@@ -40,7 +40,7 @@ extension TargetsEditor {
             if let last = items.last {
                 time = last.timeIndex + 1
                 low = last.lowIndex
-                high = last.highIndex
+                high = low
             }
 
             let newItem = Item(lowIndex: low, highIndex: high, timeIndex: time)
@@ -56,7 +56,7 @@ extension TargetsEditor {
                 let date = Date(timeIntervalSince1970: self.timeValues[item.timeIndex])
                 let minutes = Int(date.timeIntervalSince1970 / 60)
                 let low = Decimal(self.rateValues[item.lowIndex])
-                let high = Decimal(self.rateValues[item.highIndex])
+                let high = low
                 return BGTargetEntry(low: low, high: high, start: fotmatter.string(from: date), offset: minutes)
             }
             let profile = BGTargets(units: units, userPrefferedUnits: settingsManager.settings.units, targets: targets)
