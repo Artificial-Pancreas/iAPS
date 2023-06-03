@@ -25,7 +25,18 @@ struct ChartsView: View {
     var body: some View {
         glucoseChart
         Rectangle().fill(.cyan.opacity(0.2)).frame(maxHeight: 3)
-        if standing { tirChart } else { standingTIRchart }
+        if standing {
+            VStack {
+                tirChart
+                Rectangle().fill(.cyan.opacity(0.2)).frame(maxHeight: 3)
+                groupedGlucoseStatsLaying
+            }
+        } else {
+            HStack(spacing: 20) {
+                standingTIRchart
+                groupedGlucose
+            }
+        }
     }
 
     init(
@@ -96,12 +107,11 @@ struct ChartsView: View {
                     units == .mmolL ? 15 : 270
                 ]
             )
-        } // .background(.gray.opacity(0.05))
+        }
     }
 
     var tirChart: some View {
         let fetched = tir()
-
         let low = lowLimit * (units == .mmolL ? Decimal(conversionFactor) : 1)
         let high = highLimit * (units == .mmolL ? Decimal(conversionFactor) : 1)
 
@@ -110,7 +120,7 @@ struct ChartsView: View {
                 type: NSLocalizedString(
                     "Low",
                     comment: ""
-                ) + " (\(low.formatted(.number.grouping(.never).rounded().precision(.fractionLength(1)))))",
+                ) + " (≤\(low.formatted(.number.grouping(.never).rounded().precision(.fractionLength(1)))))",
                 percent: fetched[0].decimal
             ),
             .init(type: NSLocalizedString("In Range", comment: ""), percent: fetched[1].decimal),
@@ -118,7 +128,7 @@ struct ChartsView: View {
                 type: NSLocalizedString(
                     "High",
                     comment: ""
-                ) + " (\(high.formatted(.number.grouping(.never).rounded().precision(.fractionLength(1)))))",
+                ) + " (≥\(high.formatted(.number.grouping(.never).rounded().precision(.fractionLength(1)))))",
                 percent: fetched[2].decimal
             )
         ]
@@ -138,12 +148,12 @@ struct ChartsView: View {
             NSLocalizedString(
                 "Low",
                 comment: ""
-            ) + " (\(low.formatted(.number.grouping(.never).rounded().precision(.fractionLength(1)))))": .red,
+            ) + " (≤\(low.formatted(.number.grouping(.never).rounded().precision(.fractionLength(1)))))": .red,
             NSLocalizedString("In Range", comment: ""): .green,
             NSLocalizedString(
                 "High",
                 comment: ""
-            ) + " (\(high.formatted(.number.grouping(.never).rounded().precision(.fractionLength(1)))))": .orange
+            ) + " (≥\(high.formatted(.number.grouping(.never).rounded().precision(.fractionLength(1)))))": .orange
         ]).frame(maxHeight: 25)
     }
 
@@ -156,7 +166,7 @@ struct ChartsView: View {
                 type: NSLocalizedString(
                     "Low",
                     comment: ""
-                ) + " (\(low.formatted(.number.grouping(.never).rounded().precision(.fractionLength(1)))))",
+                ) + " (≤ \(low.formatted(.number.grouping(.never).rounded().precision(.fractionLength(1)))))",
                 percent: fetched[0].decimal
             ),
             .init(type: NSLocalizedString("In Range", comment: ""), percent: fetched[1].decimal),
@@ -164,35 +174,104 @@ struct ChartsView: View {
                 type: NSLocalizedString(
                     "High",
                     comment: ""
-                ) + " (\(high.formatted(.number.grouping(.never).rounded().precision(.fractionLength(1)))))",
+                ) + " (≥ \(high.formatted(.number.grouping(.never).rounded().precision(.fractionLength(1)))))",
                 percent: fetched[2].decimal
             )
         ]
+        return Chart(data) { shape in
+            BarMark(
+                x: .value("Shape", shape.type),
+                y: .value("Percentage", shape.percent)
+            )
+            .foregroundStyle(by: .value("Group", shape.type))
+            .annotation(position: .automatic, alignment: .center) {
+                Text(shape.percent == 0 ? "" : "\(shape.percent, format: .number.precision(.fractionLength(0)))")
+            }
+        }
+        .chartXAxis(.hidden)
+        .chartForegroundStyleScale([
+            NSLocalizedString(
+                "Low",
+                comment: ""
+            ) + " (≤ \(low.formatted(.number.grouping(.never).rounded().precision(.fractionLength(1)))))": .red,
+            NSLocalizedString("In Range", comment: ""): .green,
+            NSLocalizedString(
+                "High",
+                comment: ""
+            ) + " (≥ \(high.formatted(.number.grouping(.never).rounded().precision(.fractionLength(1)))))": .orange
+        ])
+    }
 
-        return VStack(alignment: .center) {
-            Chart(data) { shape in
-                BarMark(
-                    x: .value("Shape", shape.type),
-                    y: .value("Percentage", shape.percent)
-                )
-                .foregroundStyle(by: .value("Group", shape.type))
-                .annotation(position: shape.percent <= 9 ? .top : .overlay, alignment: .center) {
-                    Text(shape.percent == 0 ? "" : "\(shape.percent, format: .number.precision(.fractionLength(0))) %")
+    var groupedGlucose: some View {
+        VStack(alignment: .leading, spacing: 20) {
+            let glucose = fetchRequest
+            let mapGlucose = glucose.compactMap({ each in each.glucose })
+            let mapGlucoseAcuteLow = mapGlucose.filter({ $0 < Int16(3.3 / 0.0555) })
+            let mapGlucoseHigh = mapGlucose.filter({ $0 > Int16(11 / 0.0555) })
+
+            HStack {
+                let value = Double(mapGlucoseHigh.count * 100 / mapGlucose.count)
+                if value != 0 {
+                    Text(units == .mmolL ? "> 11" : "> 200").foregroundColor(.secondary)
+                    Text(value.formatted()).foregroundColor(.orange)
+                    Text("%").foregroundColor(.secondary)
+                }
+            }.font(.caption)
+            HStack {
+                let value = Double(mapGlucoseAcuteLow.count * 100 / mapGlucose.count)
+                if value != 0 {
+                    Text(units == .mmolL ? "< 3.3" : "< 59").foregroundColor(.secondary)
+                    Text(value.formatted()).foregroundColor(.red)
+                    Text("%").foregroundColor(.secondary)
+                }
+            }.font(.caption)
+        }
+    }
+
+    var groupedGlucoseStatsLaying: some View {
+        HStack {
+            let glucose = fetchRequest
+
+            let mapGlucose = glucose.compactMap({ each in each.glucose })
+            let mapGlucoseLow = mapGlucose.filter({ $0 < Int16(3.3 / 0.0555) })
+            let mapGlucoseAcuteLow = mapGlucose.filter({ $0 < Int16(2.6 / 0.0555) })
+
+            let mapGlucoseHigh = mapGlucose.filter({ $0 > Int(8.5 / 0.0555) })
+            let mapGlucoseAcuteHigh = mapGlucose.filter({ $0 > Int16(11 / 0.0555) })
+
+            HStack {
+                let value = Double(mapGlucoseAcuteLow.count * 100 / mapGlucose.count)
+                if value != 0 {
+                    Text(units == .mmolL ? "< 2.6" : "< 47").font(.caption2).foregroundColor(.secondary)
+                    Text(value.formatted()).font(.caption).foregroundColor(value == 0 ? .green : .red)
+                    Text("%").font(.caption)
+                }
+            }.padding(.horizontal, 10)
+            HStack {
+                let value = Double(mapGlucoseLow.count * 100 / mapGlucose.count)
+                if value != 0 {
+                    Text(units == .mmolL ? "< 3.3" : "< 59").font(.caption2).foregroundColor(.secondary)
+                    Text(value.formatted()).font(.caption).foregroundColor(value == 0 ? .green : .orange)
+                    Text("%").font(.caption)
                 }
             }
-            .chartYAxis(.hidden)
-            .chartLegend(.hidden)
-            .chartForegroundStyleScale([
-                NSLocalizedString(
-                    "Low",
-                    comment: ""
-                ) + " (\(low.formatted(.number.grouping(.never).rounded().precision(.fractionLength(1)))))": .red,
-                NSLocalizedString("In Range", comment: ""): .green,
-                NSLocalizedString(
-                    "High",
-                    comment: ""
-                ) + " (\(high.formatted(.number.grouping(.never).rounded().precision(.fractionLength(1)))))": .orange
-            ])
+            Spacer()
+            HStack {
+                let value = Double(mapGlucoseHigh.count * 100 / mapGlucose.count)
+                if value != 0 {
+                    Text(units == .mmolL ? "> 8.5" : "> 144").font(.caption).foregroundColor(.secondary)
+                    Text(value.formatted()).font(.caption).foregroundColor(value == 0 ? .green : .orange)
+                    Text("%").font(.caption)
+                }
+            }.padding(.horizontal, 10)
+            HStack {
+                let value = Double(mapGlucoseAcuteHigh.count * 100 / mapGlucose.count)
+                if value != 0 {
+                    Text(units == .mmolL ? "> 11.0" : "> 216").font(.caption).foregroundColor(.secondary)
+                    Text(value.formatted()).font(.caption).foregroundColor(value == 0 ? .green : .red)
+                    Text("%").font(.caption)
+                }
+            }
         }
     }
 
