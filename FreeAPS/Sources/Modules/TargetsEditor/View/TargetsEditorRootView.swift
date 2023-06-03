@@ -55,7 +55,6 @@ extension TargetsEditor {
                 VStack {
                     HStack {
                         Text("Target").frame(width: geometry.size.width / 3)
-                        // Text("High target").frame(width: geometry.size.width / 3)
                         Text("Time").frame(width: geometry.size.width / 3)
                     }
                     HStack(spacing: 0) {
