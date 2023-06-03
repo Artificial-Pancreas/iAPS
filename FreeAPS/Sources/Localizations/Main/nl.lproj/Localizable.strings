@@ -1231,7 +1231,7 @@ Enact a temp Basal or a temp target */
 "Start Profile" = "Start profiel";
 
 /* */
-"Your profile basal insulin will be adjusted with the override percentage and your profile ISF and CR will be inversly adjusted with the percentage.\n\nIf you toggle off the override every profile setting will return to normal." = "Your profile basal insulin will be adjusted with the override percentage and your profile ISF and CR will be inversly adjusted with the percentage.\n\nIf you toggle off the override every profile setting will return to normal.";
+"Your profile basal insulin will be adjusted with the override percentage and your profile ISF and CR will be inversly adjusted with the percentage." = "Uw basale insuline zal worden aangepast met het overschrijvingspercentage en uw ISF en CR profiel zullen direct worden aangepast aan het percentage.";
 
 /* */
 "Starting this override will change your Profiles and/or your Target Glucose used for looping during the entire selected duration. Tapping ”Start Profile” will start your new profile or edit your current active profile." = "Door deze overschrijving te starten, verandert u uw profielen en/of uw streefwaarde voor glucose die voor de looping gedurende de hele geselecteerde duur wordt gebruikt. Door op \"Start profiel\" te tikken, start u uw nieuwe profiel of wijzigt u uw huidige actieve profiel.";
@@ -1247,6 +1247,9 @@ Enact a temp Basal or a temp target */
 
 /* Service Section */
 "App Icons" = "App iconen";
+
+/* */
+"iAPS Icon" = "iAPS icoon";
 
 /* Service Section */
 "Statistics and Home View" = "Statistieken en Home View";

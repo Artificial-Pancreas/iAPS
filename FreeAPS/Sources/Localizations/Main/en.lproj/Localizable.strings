@@ -1249,6 +1249,9 @@ Enact a temp Basal or a temp target */
 /* Service Section */
 "App Icons" = "App Icons";
 
+/* */
+"iAPS Icon" = "iAPS Icon";
+
 /* Service Section */
 "Statistics and Home View" = "Statistics and Home View";
 

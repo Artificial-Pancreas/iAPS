@@ -1248,6 +1248,9 @@ Enact a temp Basal or a temp target */
 /* Service Section */
 "App Icons" = "Ikoner";
 
+/* */
+"iAPS Icon" = "iAPS - ikon";
+
 /* Service Section */
 "Statistics and Home View" = "Statistik och Diagram";
 

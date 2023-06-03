@@ -176,3 +176,6 @@
 
 /* Description waiting for pairing reminder */
 "Waiting for pairing reminder" = "Waiting for pairing reminder";
+
+/* DASH Pod time ago since last status */
+"%@ ago" = "%@ ago";

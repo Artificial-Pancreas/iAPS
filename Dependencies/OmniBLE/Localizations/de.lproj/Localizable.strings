@@ -782,3 +782,6 @@
 
 /* Recovery suggestion when operation could not be completed due to existing temp basal in progress */
 "Wait for existing temp basal to finish, or suspend to cancel" = "Warte, bis die aktuelle temporäre Basalrate beendet wurde, oder brich sie ab.";
+
+/* DASH Pod time ago since last status */
+"%@ ago" = "%@ vor";
