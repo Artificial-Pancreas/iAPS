@@ -161,20 +161,24 @@ struct ChartsView: View {
         let fetched = tir()
         let low = lowLimit * (units == .mmolL ? Decimal(conversionFactor) : 1)
         let high = highLimit * (units == .mmolL ? Decimal(conversionFactor) : 1)
+        let fraction = units == .mmolL ? 1 : 0
         let data: [ShapeModel] = [
             .init(
                 type: NSLocalizedString(
                     "Low",
                     comment: ""
-                ) + " (≤ \(low.formatted(.number.grouping(.never).rounded().precision(.fractionLength(1)))))",
+                ) + " (≤ \(low.formatted(.number.grouping(.never).rounded().precision(.fractionLength(1))))",
                 percent: fetched[0].decimal
             ),
-            .init(type: NSLocalizedString("In Range", comment: ""), percent: fetched[1].decimal),
+            .init(
+                type: "> \(low.formatted(.number.precision(.fractionLength(fraction)))) - < \(high.formatted(.number.precision(.fractionLength(fraction))))",
+                percent: fetched[1].decimal
+            ),
             .init(
                 type: NSLocalizedString(
                     "High",
                     comment: ""
-                ) + " (≥ \(high.formatted(.number.grouping(.never).rounded().precision(.fractionLength(1)))))",
+                ) + " (≥ \(high.formatted(.number.grouping(.never).rounded().precision(.fractionLength(1))))",
                 percent: fetched[2].decimal
             )
         ]
@@ -184,21 +188,26 @@ struct ChartsView: View {
                 y: .value("Percentage", shape.percent)
             )
             .foregroundStyle(by: .value("Group", shape.type))
-            .annotation(position: .automatic, alignment: .center) {
+            .annotation(position: shape.percent > 19 ? .overlay : .automatic, alignment: .center) {
                 Text(shape.percent == 0 ? "" : "\(shape.percent, format: .number.precision(.fractionLength(0)))")
             }
         }
         .chartXAxis(.hidden)
+        .chartYAxis {
+            AxisMarks(
+                format: Decimal.FormatStyle.Percent.percent.scale(1)
+            )
+        }
         .chartForegroundStyleScale([
             NSLocalizedString(
                 "Low",
                 comment: ""
-            ) + " (≤ \(low.formatted(.number.grouping(.never).rounded().precision(.fractionLength(1)))))": .red,
-            NSLocalizedString("In Range", comment: ""): .green,
+            ) + " (≤ \(low.formatted(.number.grouping(.never).rounded().precision(.fractionLength(1))))": .red,
+            "> \(low.formatted(.number.precision(.fractionLength(fraction)))) - < \(high.formatted(.number.precision(.fractionLength(fraction))))": .green,
             NSLocalizedString(
                 "High",
                 comment: ""
-            ) + " (≥ \(high.formatted(.number.grouping(.never).rounded().precision(.fractionLength(1)))))": .orange
+            ) + " (≥ \(high.formatted(.number.grouping(.never).rounded().precision(.fractionLength(1))))": .orange
         ])
     }
 
