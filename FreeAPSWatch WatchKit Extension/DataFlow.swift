@@ -23,6 +23,7 @@ struct WatchState: Codable {
     var displayOnWatch: AwConfig?
     var isf: Decimal?
     var override: String?
+    var manual: Bool?
 }
 
 struct TempTargetWatchPreset: Codable, Identifiable {

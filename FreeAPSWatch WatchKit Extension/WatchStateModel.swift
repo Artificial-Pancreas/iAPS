@@ -56,6 +56,7 @@ class WatchStateModel: NSObject, ObservableObject {
 
     @Published var isf: Decimal?
     @Published var override: String?
+    @Published var manual: Bool?
 
     private var lifetime = Set<AnyCancellable>()
     private var confirmationTimeout: AnyCancellable?
@@ -77,6 +78,7 @@ class WatchStateModel: NSObject, ObservableObject {
             self.completionHandler(reply)
             if let ok = reply["confirmation"] as? Bool, ok, self.bolusAfterCarbs {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                    self.manual = true
                     self.isBolusViewActive = true
                 }
             }

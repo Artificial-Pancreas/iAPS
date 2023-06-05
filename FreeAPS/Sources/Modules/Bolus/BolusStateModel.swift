@@ -11,6 +11,9 @@ extension Bolus {
         @Published var insulinRecommended: Decimal = 0
         @Published var insulinRequired: Decimal = 0
         @Published var waitForSuggestion: Bool = false
+        @Published var manual: Bool = false
+        @Published var double: Decimal = 1
+
         var waitForSuggestionInitial: Bool = false
 
         override func subscribe() {
@@ -74,10 +77,17 @@ extension Bolus {
 
         func setupInsulinRequired() {
             DispatchQueue.main.async {
-                self.insulinRequired = self.provider.suggestion?.insulinReq ?? 0
+                // self.insulinRequired = self.provider.suggestion?.insulinReq ?? 0
+                if self.manual {
+                    self.insulinRequired = self.provider.suggestion?.insulinForManualBolus ?? 0
+                } else {
+                    self.insulinRequired = self.provider.suggestion?.insulinReq ?? 0
+                    self.double = 2
+                }
+
                 self.insulinRecommended = self.apsManager
                     .roundBolus(amount: max(
-                        self.insulinRequired * (self.settingsManager.settings.insulinReqPercentage / 100) * 2,
+                        self.insulinRequired * (self.settingsManager.settings.insulinReqPercentage / 100) * self.double,
                         0
                     ))
             }

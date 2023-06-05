@@ -7,6 +7,7 @@ enum Screen: Identifiable, Hashable {
     case settings
     case configEditor(file: String)
     case nighscoutConfig
+    case libreViewConfig
     case pumpConfig
     case pumpSettingsEditor
     case basalProfileEditor
@@ -16,7 +17,7 @@ enum Screen: Identifiable, Hashable {
     case preferencesEditor
     case addCarbs
     case addTempTarget
-    case bolus(waitForSuggestion: Bool)
+    case bolus(waitForSuggestion: Bool, manualBolus: Bool)
     case manualTempBasal
     case autotuneConfig
     case dataTable
@@ -49,6 +50,8 @@ extension Screen {
             ConfigEditor.RootView(resolver: resolver, file: file)
         case .nighscoutConfig:
             NightscoutConfig.RootView(resolver: resolver)
+        case .libreViewConfig:
+            LibreViewConfig.RootView(resolver: resolver)
         case .pumpConfig:
             PumpConfig.RootView(resolver: resolver)
         case .pumpSettingsEditor:
@@ -67,8 +70,8 @@ extension Screen {
             AddCarbs.RootView(resolver: resolver)
         case .addTempTarget:
             AddTempTarget.RootView(resolver: resolver)
-        case let .bolus(waitForSuggestion):
-            Bolus.RootView(resolver: resolver, waitForSuggestion: waitForSuggestion)
+        case let .bolus(waitForSuggestion, manualBolus):
+            Bolus.RootView(resolver: resolver, waitForSuggestion: waitForSuggestion, manualBolus: manualBolus)
         case .manualTempBasal:
             ManualTempBasal.RootView(resolver: resolver)
         case .autotuneConfig:

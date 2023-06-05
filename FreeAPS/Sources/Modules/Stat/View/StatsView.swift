@@ -1,9 +1,3 @@
-//
-//  FilteredLoopsView.swift
-//  FreeAPS
-//
-//  Created by Jon Mårtensson on 2023-05-29.
-//
 import CoreData
 import SwiftDate
 import SwiftUI

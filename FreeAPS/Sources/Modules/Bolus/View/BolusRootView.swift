@@ -5,6 +5,7 @@ extension Bolus {
     struct RootView: BaseView {
         let resolver: Resolver
         let waitForSuggestion: Bool
+        let manualBolus: Bool
         @StateObject var state = StateModel()
         @State private var isAddInsulinAlertPresented = false
 
@@ -103,6 +104,7 @@ extension Bolus {
                 configureView {
                     state.waitForSuggestionInitial = waitForSuggestion
                     state.waitForSuggestion = waitForSuggestion
+                    state.manual = manualBolus
                 }
             }
             .navigationTitle("Enact Bolus")
