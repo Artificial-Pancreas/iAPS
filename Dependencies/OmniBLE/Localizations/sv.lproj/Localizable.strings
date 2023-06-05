@@ -571,7 +571,7 @@
 "Critical Alerts" = "Varningar";
 
 /* Description text for critical alerts */
-"The reminders above will not sound if your device is in Silent or Do Not Disturb mode.\n\nThere are other critical Pod alerts and alarms that will sound even if you device is set to Silent or Do Not Disturb mode." = "Påminnelser kommer vara tysta ifall att du har tyst läge eller stör ej - läge på. \n\nDet finns andra varningar som kommer att ljuda även vid tyst läge leer stör ej - läge.";
+"The reminders above will not sound if your device is in Silent or Do Not Disturb mode.\n\nThere are other critical Pod alerts and alarms that will sound even if your device is set to Silent or Do Not Disturb mode." = "Påminnelser kommer vara tysta ifall att du har tyst läge eller stör ej - läge på. \n\nDet finns andra varningar som kommer att ljuda även vid tyst läge leer stör ej - läge.";
 /* navigation title for notification settings */
 "Notification Settings" = "Notisinställningar";
 
@@ -782,3 +782,6 @@
 
 /* Recovery suggestion when operation could not be completed due to existing temp basal in progress */
 "Wait for existing temp basal to finish, or suspend to cancel" = "Vänta på pågående temp. basal är färdig, alternativt pausa eller avbryt";
+
+/* DASH Pod time ago since last status */
+"%@ ago" = "%@ sedan";

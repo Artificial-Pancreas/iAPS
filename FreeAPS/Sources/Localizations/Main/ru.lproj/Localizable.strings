@@ -1162,6 +1162,9 @@ Enact a temp Basal or a temp target */
 "Override Profiles" = "Переопределить профили";
 
 /* */
+"Normal " = "Нормальный ";
+
+/* */
 "Currently no Override active" = "В данный момент профиль не переопределен";
 
 /* */
@@ -1179,11 +1182,74 @@ Enact a temp Basal or a temp target */
 /* */
 "Disable SMBs" = "Отключить микроболюсы SMB";
 
+/* Your normal Profile. Use a short string */
+"Normal Profile" = "Нормальный профиль";
+
+/* Custom but unsaved Profile */
+"Custom Profile" = "Настраиваемый профиль";
+
 /* */
-"Your profile basal insulin will be adjusted with the override percentage and your profile ISF and CR will be inversly adjusted with the percentage.\n\nIf you toggle off the override every profile setting will return to normal." = "Ваш профиль базального инсулина будет скорректирован с учетом процента переопределения, а ваши профили ISF и CR будут скорректированы обратно пропорционально этому проценту.\n\nЕсли вы отключите переопределение, все настройки профиля вернутся в нормальное состояние.";
+"Profiles" = "Профили";
+
+/* */
+"More options" = "Больше опций";
+
+/* */
+"Schedule when SMBs are Off" = "Расписание, когда SMB отключены";
+
+/* */
+"Change ISF and CR" = "Изменить ISF и CR";
+
+/* */
+"Change ISF" = "Изменить ISF";
+
+/* */
+"Change CR" = "Изменить CR";
+
+/* */
+"SMB Minutes" = "SMB минуты";
+
+/* */
+"UAM SMB Minutes" = "UAM SMB минуты";
+
+/* */
+"Start new Profile" = "Запустить новый профиль";
+
+/* */
+"Save as Profile" = "Сохранить как профиль";
+
+/* */
+"Return to Normal" = "Вернуться к нормальному";
+
+/* Alert */
+"Return to Normal?" = "Вернуться к нормальному?";
+
+/* */
+"This will change settings back to your normal profile." = "Это вернёт настройки к нормальному профилю.";
+
+/* Start Profile Alert */
+"Start Profile" = "Запустить профиль";
+
+/* */
+"Your profile basal insulin will be adjusted with the override percentage and your profile ISF and CR will be inversly adjusted with the percentage." = "Ваш профиль базального инсулина будет скорректирован с учетом процента переопределения, а ваши профили ISF и CR будут скорректированы обратно пропорционально этому проценту.";
+
+/* */
+"Starting this override will change your Profiles and/or your Target Glucose used for looping during the entire selected duration. Tapping ”Start Profile” will start your new profile or edit your current active profile." = "Запуск этого переопределения приведет к изменению ваших профилей и / или целевого уровня глюкозы, используемого для зацикливания в течение всей выбранной продолжительности. Нажав \"Запустить профиль\", вы запустите свой новый профиль или отредактируете свой текущий активный профиль.";
+
+/* Change Target glucose in profile settings */
+"Override Profile Target" = "Переопределить целевое значение";
+
+/* Alert string. Keep spaces. */
+" SMBs are disabled either by schedule or during the entire duration." = " SMB отключаются либо по расписанию, либо в течение всего срока действия.";
+
+/* Alert strings. Keep spaces */
+" infinite duration." = " бесконечная длительность.";
 
 /* Service Section */
 "App Icons" = "Иконки приложения";
+
+/* */
+"iAPS Icon" = "iAPS иконка";
 
 /* Service Section */
 "Statistics and Home View" = "Статистика и экран";
