@@ -76,13 +76,14 @@ final class BaseWatchManager: NSObject, WatchManager, Injectable {
             self.state.carbsRequired = self.suggestion?.carbsReq
 
             var insulinRequired = self.suggestion?.insulinReq ?? 0
-            if self.state.manual ?? false {
+            var double: Decimal = 2
+            if (self.suggestion?.cob ?? 0) > 0 {
                 insulinRequired = self.suggestion?.insulinForManualBolus ?? 0
+                double = 1
             }
-            print("manualBolus: \(self.state.manual?.description ?? "nil")")
 
             self.state.bolusRecommended = self.apsManager
-                .roundBolus(amount: max(insulinRequired * (self.settingsManager.settings.insulinReqPercentage / 100) * 2, 0))
+                .roundBolus(amount: max(insulinRequired * (self.settingsManager.settings.insulinReqPercentage / 100) * double, 0))
 
             self.state.iob = self.suggestion?.iob
             self.state.cob = self.suggestion?.cob
