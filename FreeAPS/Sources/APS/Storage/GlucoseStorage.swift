@@ -56,14 +56,16 @@ final class BaseGlucoseStorage: GlucoseStorage, Injectable {
                     }
                 }
 
-                // MARK: Save to CoreData. TEST
+                // MARK: Save to CoreData.
 
                 var bg_ = 0
                 var bgDate = Date()
+                var id = ""
 
                 if glucose.isNotEmpty {
                     bg_ = glucose[0].glucose ?? 0
                     bgDate = glucose[0].dateString
+                    id = glucose[0].id
                 }
 
                 if bg_ != 0 {
@@ -72,6 +74,7 @@ final class BaseGlucoseStorage: GlucoseStorage, Injectable {
 
                         dataForForStats.date = bgDate
                         dataForForStats.glucose = Int16(bg_)
+                        dataForForStats.id = id
 
                         try? self.coredataContext.save()
                     }
