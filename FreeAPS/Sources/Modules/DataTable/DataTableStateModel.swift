@@ -142,7 +142,6 @@ extension DataTable {
             let fetchRequest: NSFetchRequest<NSFetchRequestResult>
             fetchRequest = NSFetchRequest(entityName: "Readings")
             fetchRequest.predicate = NSPredicate(format: "id == %@", id)
-
             let deleteRequest = NSBatchDeleteRequest(
                 fetchRequest: fetchRequest
             )
@@ -158,7 +157,7 @@ extension DataTable {
             } catch {
                 // To do: handle any thrown errors.
             }
-            try? coredataContext.save()
+            // try? coredataContext.save()
         }
 
         func addManualGlucose() {
@@ -179,15 +178,6 @@ extension DataTable {
             )
             provider.glucoseStorage.storeGlucose([saveToJSON])
             debug(.default, "Manual Glucose saved to glucose.json")
-
-            coredataContext.perform {
-                let saveToCoreData = Readings(context: self.coredataContext)
-                saveToCoreData.date = now
-                saveToCoreData.glucose = Int16(Int(glucose))
-                saveToCoreData.id = id
-                try? self.coredataContext.save()
-                debug(.default, "Manual Glucose saved to CoreData")
-            }
         }
     }
 }
