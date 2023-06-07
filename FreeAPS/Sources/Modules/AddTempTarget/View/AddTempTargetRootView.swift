@@ -16,8 +16,6 @@ extension AddTempTarget {
             sortDescriptors: [NSSortDescriptor(key: "date", ascending: false)]
         ) var isEnabledArray: FetchedResults<TempTargetsSlider>
 
-        @Environment(\.managedObjectContext) var moc
-
         private var formatter: NumberFormatter {
             let formatter = NumberFormatter()
             formatter.numberStyle = .decimal
@@ -116,6 +114,7 @@ extension AddTempTarget {
                         DatePicker("Date", selection: $state.date)
                         Button { isPromtPresented = true }
                         label: { Text("Save as preset") }
+                            .disabled(state.duration == 0)
                     }
                 }
 
