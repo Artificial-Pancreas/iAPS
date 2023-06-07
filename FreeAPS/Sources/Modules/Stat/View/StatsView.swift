@@ -55,51 +55,51 @@ struct StatsView: View {
     }
 
     var loops: some View {
-        VStack(spacing: 10) {
-            let loops = fetchRequest
-            if !loops.isEmpty {
-                // First date
-                let previous = loops.last?.end ?? Date()
-                // Last date (recent)
-                let current = loops.first?.start ?? Date()
-                // Total time in days
-                let totalTime = (current - previous).timeInterval / 8.64E4
-                let durationArray = loops.compactMap({ each in each.duration })
-                let durationArrayCount = durationArray.count
-                // var durationAverage = durationArray.reduce(0, +) / Double(durationArrayCount)
-                let medianDuration = medianCalculationDouble(array: durationArray)
-                let successsNR = loops.compactMap({ each in each.loopStatus }).filter({ each in each!.contains("Success") })
-                    .count
-                let errorNR = durationArrayCount - successsNR
-                let successRate: Double? = (Double(successsNR) / Double(successsNR + errorNR)) * 100
-                let loopNr = totalTime <= 1 ? Double(successsNR + errorNR) : round(Double(successsNR + errorNR) / totalTime)
-                let intervalArray = loops.compactMap({ each in each.interval as Double })
-                let intervalAverage = intervalArray.reduce(0, +) / Double(intervalArray.count)
-                // let maximumInterval = intervalArray.max()
-                // let minimumInterval = intervalArray.min()
-                HStack(spacing: 35) {
-                    VStack(spacing: 5) {
-                        Text("Loops").font(.subheadline).foregroundColor(headline)
-                        Text(loopNr.formatted())
-                    }
-                    VStack(spacing: 5) {
-                        Text("Interval").font(.subheadline).foregroundColor(headline)
-                        Text(intervalAverage.formatted(.number.grouping(.never).rounded().precision(.fractionLength(1))) + " min")
-                    }
-                    VStack(spacing: 5) {
-                        Text("Duration").font(.subheadline).foregroundColor(headline)
-                        Text(
-                            (medianDuration * 60)
-                                .formatted(.number.grouping(.never).rounded().precision(.fractionLength(1))) + " s"
-                        )
-                    }
-                    VStack(spacing: 5) {
-                        Text("Sucess").font(.subheadline).foregroundColor(headline)
-                        Text(
-                            ((successRate ?? 100) / 100)
-                                .formatted(.percent.grouping(.never).rounded().precision(.fractionLength(1)))
-                        )
-                    }
+        let loops = fetchRequest
+        // First date
+        let previous = loops.last?.end ?? Date()
+        // Last date (recent)
+        let current = loops.first?.start ?? Date()
+        // Total time in days
+        let totalTime = (current - previous).timeInterval / 8.64E4
+        let durationArray = loops.compactMap({ each in each.duration })
+        let durationArrayCount = durationArray.count
+        // var durationAverage = durationArray.reduce(0, +) / Double(durationArrayCount)
+        let medianDuration = medianCalculationDouble(array: durationArray)
+        let successsNR = loops.compactMap({ each in each.loopStatus }).filter({ each in each!.contains("Success") }).count
+        let errorNR = durationArrayCount - successsNR
+        let total = Double(successsNR + errorNR) == 0 ? 1 : Double(successsNR + errorNR)
+        let successRate: Double? = (Double(successsNR) / total) * 100
+        let loopNr = totalTime <= 1 ? Double(successsNR + errorNR) :
+            round(Double(successsNR + errorNR) / totalTime != 0 ? totalTime : 1)
+        let intervalArray = loops.compactMap({ each in each.interval as Double })
+        let count = intervalArray.count != 0 ? intervalArray.count : 1
+        let intervalAverage = intervalArray.reduce(0, +) / Double(count)
+        // let maximumInterval = intervalArray.max()
+        // let minimumInterval = intervalArray.min()
+        return VStack(spacing: 10) {
+            HStack(spacing: 35) {
+                VStack(spacing: 5) {
+                    Text("Loops").font(.subheadline).foregroundColor(headline)
+                    Text(loopNr.formatted())
+                }
+                VStack(spacing: 5) {
+                    Text("Interval").font(.subheadline).foregroundColor(headline)
+                    Text(intervalAverage.formatted(.number.grouping(.never).rounded().precision(.fractionLength(1))) + " min")
+                }
+                VStack(spacing: 5) {
+                    Text("Duration").font(.subheadline).foregroundColor(headline)
+                    Text(
+                        (medianDuration * 60)
+                            .formatted(.number.grouping(.never).rounded().precision(.fractionLength(1))) + " s"
+                    )
+                }
+                VStack(spacing: 5) {
+                    Text("Sucess").font(.subheadline).foregroundColor(headline)
+                    Text(
+                        ((successRate ?? 100) / 100)
+                            .formatted(.percent.grouping(.never).rounded().precision(.fractionLength(1)))
+                    )
                 }
             }
         }
