@@ -5,6 +5,7 @@ extension Bolus {
     struct RootView: BaseView {
         let resolver: Resolver
         let waitForSuggestion: Bool
+        let manualBolus: Bool
         @StateObject var state = StateModel()
         @State private var isAddInsulinAlertPresented = false
 
@@ -17,7 +18,7 @@ extension Bolus {
 
         var body: some View {
             Form {
-                Section(header: Text("Recommendation")) {
+                Section {
                     if state.waitForSuggestion {
                         HStack {
                             Text("Wait please").foregroundColor(.secondary)
@@ -25,35 +26,52 @@ extension Bolus {
                             ActivityIndicator(isAnimating: .constant(true), style: .medium) // fix iOS 15 bug
                         }
                     } else {
-                        HStack {
-                            Text("Insulin required").foregroundColor(.secondary)
-                            Spacer()
-                            Text(
-                                formatter
-                                    .string(from: state.insulinRequired as NSNumber)! +
-                                    NSLocalizedString(" U", comment: "Insulin unit")
-                            ).foregroundColor(.secondary)
-                        }.contentShape(Rectangle())
-                            .onTapGesture {
-                                state.amount = state.insulinRequired
-                            }
-                        HStack {
-                            Text("Insulin recommended")
-                            Spacer()
-                            Text(
-                                formatter
-                                    .string(from: state.insulinRecommended as NSNumber)! +
-                                    NSLocalizedString(" U", comment: "Insulin unit")
-                            ).foregroundColor(.secondary)
-                        }.contentShape(Rectangle())
-                            .onTapGesture {
-                                state.amount = state.insulinRecommended
-                            }
+                        if state.manual {
+                            HStack {
+                                Text("Insulin recommended")
+                                Spacer()
+                                Text(
+                                    formatter
+                                        .string(from: state.insulinRecommended as NSNumber)! +
+                                        NSLocalizedString(" U", comment: "Insulin unit")
+                                ).foregroundColor(.secondary)
+                            }.contentShape(Rectangle())
+                                .onTapGesture {
+                                    state.amount = state.insulinRecommended
+                                }
+                        } else {
+                            HStack {
+                                Text("Insulin required").foregroundColor(.secondary)
+                                Spacer()
+                                Text(
+                                    formatter
+                                        .string(from: state.insulinRequired as NSNumber)! +
+                                        NSLocalizedString(" U", comment: "Insulin unit")
+                                ).foregroundColor(.secondary)
+                            }.contentShape(Rectangle())
+                                .onTapGesture {
+                                    state.amount = state.insulinRequired
+                                }
+
+                            HStack {
+                                Text("Insulin recommended")
+                                Spacer()
+                                Text(
+                                    formatter
+                                        .string(from: state.insulinRecommended as NSNumber)! +
+                                        NSLocalizedString(" U", comment: "Insulin unit")
+                                ).foregroundColor(.secondary)
+                            }.contentShape(Rectangle())
+                                .onTapGesture {
+                                    state.amount = state.insulinRecommended
+                                }
+                        }
                     }
                 }
-
+                header: { Text("Recommendation") }
+                
                 if !state.waitForSuggestion {
-                    Section(header: Text("Bolus")) {
+                    Section {
                         HStack {
                             Text("Amount")
                             Spacer()
@@ -67,6 +85,7 @@ extension Bolus {
                             Text("U").foregroundColor(.secondary)
                         }
                     }
+                    header: { Text("Bolus") }
 
                     Section {
                         Button { state.add() }
@@ -103,6 +122,7 @@ extension Bolus {
                 configureView {
                     state.waitForSuggestionInitial = waitForSuggestion
                     state.waitForSuggestion = waitForSuggestion
+                    state.manual = manualBolus
                 }
             }
             .navigationTitle("Enact Bolus")

@@ -11,6 +11,8 @@ extension Bolus {
         @Published var insulinRecommended: Decimal = 0
         @Published var insulinRequired: Decimal = 0
         @Published var waitForSuggestion: Bool = false
+        @Published var manual: Bool = false
+
         var waitForSuggestionInitial: Bool = false
 
         override func subscribe() {
@@ -74,12 +76,24 @@ extension Bolus {
 
         func setupInsulinRequired() {
             DispatchQueue.main.async {
-                self.insulinRequired = self.provider.suggestion?.insulinReq ?? 0
+                // Manual Bolus recommendation screen after a carb entry (normally) yields a higher amount than the insulin reqiured amount computed for SMBs (auto boluses). Carbs combined with a manual bolus threfore now (test) uses the Eventual BG for glucose prediction, whereas the insulinReg for SMBs (and for manual boluses not combined with a carb entry) uses the minPredBG for glucose prediction (typically lower than Eventual BG).
+
+                if self.manual {
+                    self.insulinRequired = self.provider.suggestion?.insulinForManualBolus ?? 0
+
+                    if self.settingsManager.settings.insulinReqPercentage != 100 {
+                        self.insulinRecommended = self
+                            .insulinRequired * (self.settingsManager.settings.insulinReqPercentage / 100)
+                    } else { self.insulinRecommended = self.insulinRequired }
+
+                } else {
+                    self.insulinRequired = self.provider.suggestion?.insulinReq ?? 0
+                    self.insulinRecommended = self
+                        .insulinRequired * (self.settingsManager.settings.insulinReqPercentage / 100) * 2
+                }
+
                 self.insulinRecommended = self.apsManager
-                    .roundBolus(amount: max(
-                        self.insulinRequired * (self.settingsManager.settings.insulinReqPercentage / 100) * 2,
-                        0
-                    ))
+                    .roundBolus(amount: max(self.insulinRecommended, 0))
             }
         }
     }
