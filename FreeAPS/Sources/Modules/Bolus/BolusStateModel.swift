@@ -76,11 +76,11 @@ extension Bolus {
 
         func setupInsulinRequired() {
             DispatchQueue.main.async {
-                //Manual Bolus recommondentations screen after a carb entry (normally) yields a higher amount than the insulinReq amount computed for SMBs (auto boluses). Carbs combined with a manual bolus uses the Eventual BG for glucose prediction, whereas the insulinReg for SMBs and for manual boluses not combined with a carb entry uses the minPredBG for glucose prediction (typically lower than Eventual BG).
-                
+                // Manual Bolus recommendation screen after a carb entry (normally) yields a higher amount than the insulin reqiured amount computed for SMBs (auto boluses). Carbs combined with a manual bolus threfore now (test) uses the Eventual BG for glucose prediction, whereas the insulinReg for SMBs (and for manual boluses not combined with a carb entry) uses the minPredBG for glucose prediction (typically lower than Eventual BG).
+
                 if self.manual {
                     self.insulinRequired = self.provider.suggestion?.insulinForManualBolus ?? 0
-                    
+
                     if self.settingsManager.settings.insulinReqPercentage != 100 {
                         self.insulinRecommended = self
                             .insulinRequired * (self.settingsManager.settings.insulinReqPercentage / 100)
