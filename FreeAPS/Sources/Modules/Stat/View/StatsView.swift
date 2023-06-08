@@ -62,6 +62,7 @@ struct StatsView: View {
         let current = loops.first?.start ?? Date()
         // Total time in days
         let totalTime = (current - previous).timeInterval / 8.64E4
+
         let durationArray = loops.compactMap({ each in each.duration })
         let durationArrayCount = durationArray.count
         // var durationAverage = durationArray.reduce(0, +) / Double(durationArrayCount)
@@ -70,8 +71,7 @@ struct StatsView: View {
         let errorNR = durationArrayCount - successsNR
         let total = Double(successsNR + errorNR) == 0 ? 1 : Double(successsNR + errorNR)
         let successRate: Double? = (Double(successsNR) / total) * 100
-        let loopNr = totalTime <= 1 ? Double(successsNR + errorNR) :
-            round(Double(successsNR + errorNR) / totalTime != 0 ? totalTime : 1)
+        let loopNr = totalTime <= 1 ? total : round(total / (totalTime != 0 ? totalTime : 1))
         let intervalArray = loops.compactMap({ each in each.interval as Double })
         let count = intervalArray.count != 0 ? intervalArray.count : 1
         let intervalAverage = intervalArray.reduce(0, +) / Double(count)
