@@ -65,6 +65,8 @@ extension DataTable {
                         Text(state.units.rawValue)
                     }.padding(.horizontal, 20)
                     HStack {
+                        let limitLow: Decimal = state.units == .mmolL ? 2.2 : 40
+                        let limitHigh: Decimal = state.units == .mmolL ? 21 : 380
                         Button { newGlucose = false }
                         label: { Text("Cancel") }.frame(maxWidth: .infinity, alignment: .leading)
 
@@ -74,7 +76,7 @@ extension DataTable {
                         }
                         label: { Text("Save") }
                             .frame(maxWidth: .infinity, alignment: .trailing)
-                            .disabled(state.manualGlcuose < 2.2 || state.manualGlcuose > 22)
+                            .disabled(state.manualGlcuose < limitLow || state.manualGlcuose > limitHigh)
 
                     }.padding(20)
                 }
