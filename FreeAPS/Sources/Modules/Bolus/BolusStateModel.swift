@@ -90,24 +90,20 @@ extension Bolus {
             DispatchQueue.main.async {
                 self.insulinRequired = self.provider.suggestion?.insulinReq ?? 0
 
-                // Manual Bolus recommendation screen after a carb entry (normally) yields a higher amount than the insulin reqiured amount computed for SMBs (auto boluses). Carbs combined with a manual bolus threfore now (test) uses the Eventual BG for glucose prediction, whereas the insulinReg for SMBs (and for manual boluses not combined with a carb entry) uses the minPredBG for glucose prediction (typically lower than Eventual BG).
-                if self.manual {
-                    self.evBG = self.provider.suggestion?.eventualBG ?? 0
-                    self.insulin = self.provider.suggestion?.insulinForManualBolus ?? 0
-                    self.target = self.provider.suggestion?.current_target ?? 0
-                    self.isf = self.provider.suggestion?.isf ?? 0
+                // Manual Bolus recommendation screen after a carb entry (normally) yields a higher amount than the insulin reqiured amount computed for SMBs (auto boluses). Carbs combined with a manual bolus threfore now (test) uses the Eventual BG for glucose prediction, whereas the insulinReg for SMBs uses the minPredBG for glucose prediction (typically lower than Eventual BG).
 
-                    if self.settingsManager.settings.insulinReqPercentage != 100 {
-                        self.insulinRecommended = self.insulin * (self.settingsManager.settings.insulinReqPercentage / 100)
-                    } else { self.insulinRecommended = self.insulin }
+                self.evBG = self.provider.suggestion?.eventualBG ?? 0
+                self.insulin = self.provider.suggestion?.insulinForManualBolus ?? 0
+                self.target = self.provider.suggestion?.current_target ?? 0
+                self.isf = self.provider.suggestion?.isf ?? 0
 
-                    self.errorString = self.provider.suggestion?.manualBolusErrorString ?? ""
-                    if self.errorString.count > 8 { self.error = true }
+                if self.settingsManager.settings.insulinReqPercentage != 100 {
+                    self.insulinRecommended = self.insulin * (self.settingsManager.settings.insulinReqPercentage / 100)
+                } else { self.insulinRecommended = self.insulin }
 
-                } else {
-                    self.insulinRecommended = self
-                        .insulinRequired * (self.settingsManager.settings.insulinReqPercentage / 100) * 2
-                }
+                self.errorString = self.provider.suggestion?.manualBolusErrorString ?? ""
+                if self.errorString.count > 8 { self.error = true }
+
                 self.insulinRecommended = self.apsManager
                     .roundBolus(amount: max(self.insulinRecommended, 0))
             }

@@ -30,50 +30,26 @@ extension Bolus {
                             ActivityIndicator(isAnimating: .constant(true), style: .medium) // fix iOS 15 bug
                         }
                     } else {
-                        if state.manual {
-                            HStack {
-                                Text("Insulin recommended")
-                                Spacer()
-                                Text(
-                                    formatter
-                                        .string(from: state.insulinRecommended as NSNumber)! +
-                                        NSLocalizedString(" U", comment: "Insulin unit")
-                                ).foregroundColor((state.error && state.insulinRecommended > 0) ? .red : .secondary)
-                            }.contentShape(Rectangle())
-                                .onTapGesture {
-                                    if state.error, state.insulinRecommended > 0 { displayError = true }
-                                    else { state.amount = state.insulinRecommended }
-                                }
-                            Image(systemName: "info.bubble")
-                                .onTapGesture {
-                                    presentInfo = true
-                                }
-                        } else {
-                            HStack {
-                                Text("Insulin required").foregroundColor(.secondary)
-                                Spacer()
-                                Text(
-                                    formatter
-                                        .string(from: state.insulinRequired as NSNumber)! +
-                                        NSLocalizedString(" U", comment: "Insulin unit")
-                                ).foregroundColor(.secondary)
-                            }.contentShape(Rectangle())
-                                .onTapGesture {
-                                    state.amount = state.insulinRequired
-                                }
+                        HStack {
+                            Text("Insulin recommended")
+                            Spacer()
+                            Text(
+                                formatter
+                                    .string(from: state.insulinRecommended as NSNumber)! +
+                                    NSLocalizedString(" U", comment: "Insulin unit")
+                            ).foregroundColor((state.error && state.insulinRecommended > 0) ? .red : .secondary)
+                        }.contentShape(Rectangle())
+                            .onTapGesture {
+                                if state.error, state.insulinRecommended > 0 { displayError = true }
+                                else { state.amount = state.insulinRecommended }
+                            }
 
-                            HStack {
-                                Text("Insulin recommended")
-                                Spacer()
-                                Text(
-                                    formatter
-                                        .string(from: state.insulinRecommended as NSNumber)! +
-                                        NSLocalizedString(" U", comment: "Insulin unit")
-                                ).foregroundColor(.secondary)
-                            }.contentShape(Rectangle())
-                                .onTapGesture {
-                                    state.amount = state.insulinRecommended
-                                }
+                        HStack {
+                            Image(systemName: "info.bubble").symbolRenderingMode(.palette).foregroundStyle(
+                                .primary, .blue
+                            )
+                        }.onTapGesture {
+                            presentInfo = true
                         }
                     }
                 }
@@ -152,73 +128,92 @@ extension Bolus {
             .navigationBarTitleDisplayMode(.automatic)
             .navigationBarItems(leading: Button("Close", action: state.hideModal))
             .popup(isPresented: presentInfo, alignment: .center, direction: .bottom) {
-                VStack {
-                    VStack(spacing: 3) {
+                bolusInfo
+            }
+        }
+
+        var bolusInfo: some View {
+            VStack {
+                // Variables
+                VStack(spacing: 3) {
+                    HStack {
+                        Text("Eventual Glucose").foregroundColor(.secondary)
+                        let evg = state.units == .mmolL ? Decimal(state.evBG).asMmolL : Decimal(state.evBG)
+                        let fractionDigit = state.units == .mmolL ? 1 : 0
+                        Text(evg.formatted(.number.grouping(.never).rounded().precision(.fractionLength(fractionDigit))))
+                        Text(state.units.rawValue).foregroundColor(.secondary)
+                    }
+                    HStack {
+                        Text("Target Glucose").foregroundColor(.secondary)
+                        let target = state.units == .mmolL ? state.target.asMmolL : state.target
+                        let fractionDigit = state.units == .mmolL ? 1 : 0
+                        Text(target.formatted(.number.grouping(.never).rounded().precision(.fractionLength(fractionDigit))))
+                        Text(state.units.rawValue).foregroundColor(.secondary)
+                    }
+                    HStack {
+                        Text("ISF").foregroundColor(.secondary)
+                        let isf = state.isf
+                        Text(isf.formatted())
+                        Text(state.units.rawValue + NSLocalizedString("/U", comment: "/Insulin unit"))
+                            .foregroundColor(.secondary)
+                    }
+                    if state.percentage != 100 {
                         HStack {
-                            Text("Eventual Glucose").foregroundColor(.secondary)
-                            let evg = state.units == .mmolL ? Decimal(state.evBG).asMmolL : Decimal(state.evBG)
-                            let fractionDigit = state.units == .mmolL ? 1 : 0
-                            Text(evg.formatted(.number.grouping(.never).rounded().precision(.fractionLength(fractionDigit))))
-                            Text(state.units.rawValue).foregroundColor(.secondary)
+                            Text("Percentage setting").foregroundColor(.secondary)
+                            let percentage = state.percentage
+                            Text(percentage.formatted())
+                            Text("%").foregroundColor(.secondary)
                         }
-                        HStack {
-                            Text("Target Glucose").foregroundColor(.secondary)
-                            let target = state.units == .mmolL ? state.target.asMmolL : state.target
-                            let fractionDigit = state.units == .mmolL ? 1 : 0
-                            Text(target.formatted(.number.grouping(.never).rounded().precision(.fractionLength(fractionDigit))))
-                            Text(state.units.rawValue).foregroundColor(.secondary)
-                        }
-                        HStack {
-                            Text("ISF").foregroundColor(.secondary)
-                            let isf = state.isf
-                            Text(isf.formatted())
-                            Text(state.units.rawValue + NSLocalizedString("/U", comment: "/Insulin unit"))
-                                .foregroundColor(.secondary)
-                        }
-                        if state.percentage != 100 {
-                            HStack {
-                                Text("Percentage setting").foregroundColor(.secondary)
-                                let percentage = state.percentage
-                                Text(percentage.formatted())
-                                Text("%").foregroundColor(.secondary)
-                            }
-                        }
-                    }.font(.footnote)
-                    Divider()
-                    VStack(spacing: 5) {
-                        let unit = NSLocalizedString(
-                            " U",
-                            comment: "Unit in number of units delivered (keep the space character!)"
-                        )
-                        Text("(Eventual Glucose - Target) / ISF =").font(.callout)
-                        Text(" = " + state.insulin.formatted() + unit).font(.callout).foregroundColor(.blue).bold()
-                        if state.percentage != 100, state.insulin > 0 {
-                            Text(state.percentage.formatted() + "% of " + state.insulin.formatted() + unit + " =").font(.callout)
+                    }
+                }.font(.footnote)
+                    .padding(.top, 20)
+                Divider()
+                // Formula
+                VStack(spacing: 5) {
+                    let unit = NSLocalizedString(
+                        " U",
+                        comment: "Unit in number of units delivered (keep the space character!)"
+                    )
+                    Text("(Eventual Glucose - Target) / ISF =").font(.callout).italic()
+                    let color: Color = (state.percentage != 100 && state.insulin > 0) ? .secondary : .blue
+                    let fontWeight: Font.Weight = (state.percentage != 100 && state.insulin > 0) ? .regular : .bold
+                    Text(" = " + state.insulin.formatted() + unit).font(.callout).foregroundColor(color).fontWeight(fontWeight)
+                    if state.percentage != 100, state.insulin > 0 {
+                        Divider()
+                        HStack { Text(state.percentage.formatted() + " % => ").font(.callout).foregroundColor(.secondary)
                             Text(
-                                "= " + state.insulinRecommended.formatted() + unit
+                                state.insulinRecommended.formatted() + unit
                             ).font(.callout).foregroundColor(.blue).bold()
                         }
-                        Divider()
-                        if state.error, state.insulinRecommended > 0 {
-                            Text("Warning! " + state.errorString).font(.caption).foregroundColor(.red)
-                            Divider()
-                        }
-                        Text(
-                            "Carbs and previous insulin are included in the glucose prediction, but if the Eventual Glucose is lower than the Target Glucose, a bolus will not be recommended."
-                        ).font(.caption2).foregroundColor(.secondary)
-
-                        Button { presentInfo = false }
-                        label: { Text("Hide") }.frame(maxWidth: .infinity, alignment: .center).font(.callout)
-                            .foregroundColor(.blue)
-                            .bold()
-                    }.padding(.horizontal, 20)
+                    }
                 }
-                .frame(maxHeight: 480)
-                .background(
-                    RoundedRectangle(cornerRadius: 8, style: .continuous)
-                        .fill(Color(colorScheme == .dark ? UIColor.systemGray3 : UIColor.systemGray4))
-                )
+                // Warnning
+                VStack {
+                    Divider()
+                    if state.error, state.insulinRecommended > 0 {
+                        Text("Warning!").font(.callout).foregroundColor(.orange)
+                        Text(state.errorString).font(.caption)
+                        Divider()
+                    }
+                }.padding(.horizontal, 10)
+                // Footer
+                VStack {
+                    Text(
+                        "Carbs and previous insulin are included in the glucose prediction, but if the Eventual Glucose is lower than the Target Glucose, a bolus will not be recommended."
+                    ).font(.caption2).foregroundColor(.secondary)
+                }.padding(20)
+                // Hide button
+                VStack {
+                    Button { presentInfo = false }
+                    label: { Text("Hide") }.frame(maxWidth: .infinity, alignment: .center).font(.callout)
+                        .foregroundColor(.blue)
+                        .bold()
+                }
             }
+            .background(
+                RoundedRectangle(cornerRadius: 8, style: .continuous)
+                    .fill(Color(colorScheme == .dark ? UIColor.systemGray4 : UIColor.systemGray4))
+            )
         }
     }
 }
