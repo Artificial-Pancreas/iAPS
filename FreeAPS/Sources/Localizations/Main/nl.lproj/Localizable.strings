@@ -1469,7 +1469,7 @@ Enact a temp Basal or a temp target */
 "Hours X-Axis (6 default)" = "Uren X-as (standaard 6)";
 
 /* Average BG = */
-"Average" = "Gem.";
+"Average" = "Gemiddeld";
 
 /* Median BG */
 "Median" = "Mediaan";
