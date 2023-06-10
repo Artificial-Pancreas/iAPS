@@ -8,6 +8,10 @@ extension Bolus {
         let manualBolus: Bool
         @StateObject var state = StateModel()
         @State private var isAddInsulinAlertPresented = false
+        @State private var presentInfo = false
+        @State private var displayError = false
+
+        @Environment(\.colorScheme) var colorScheme
 
         private var formatter: NumberFormatter {
             let formatter = NumberFormatter()
@@ -34,10 +38,15 @@ extension Bolus {
                                     formatter
                                         .string(from: state.insulinRecommended as NSNumber)! +
                                         NSLocalizedString(" U", comment: "Insulin unit")
-                                ).foregroundColor(.secondary)
+                                ).foregroundColor((state.error && state.insulinRecommended > 0) ? .red : .secondary)
                             }.contentShape(Rectangle())
                                 .onTapGesture {
-                                    state.amount = state.insulinRecommended
+                                    if state.error, state.insulinRecommended > 0 { displayError = true }
+                                    else { state.amount = state.insulinRecommended }
+                                }
+                            Image(systemName: "info.bubble")
+                                .onTapGesture {
+                                    presentInfo = true
                                 }
                         } else {
                             HStack {
@@ -118,6 +127,20 @@ extension Bolus {
                     secondaryButton: .cancel()
                 )
             }
+            .alert(isPresented: $displayError) {
+                Alert(
+                    title: Text("Warning!"),
+                    message: Text("\n" + state.errorString + "\n\nTap 'Add' to continue with selected amount."),
+                    primaryButton: .destructive(
+                        Text("Add"),
+                        action: {
+                            state.amount = state.insulinRecommended
+                            displayError = false
+                        }
+                    ),
+                    secondaryButton: .cancel()
+                )
+            }
             .onAppear {
                 configureView {
                     state.waitForSuggestionInitial = waitForSuggestion
@@ -128,6 +151,74 @@ extension Bolus {
             .navigationTitle("Enact Bolus")
             .navigationBarTitleDisplayMode(.automatic)
             .navigationBarItems(leading: Button("Close", action: state.hideModal))
+            .popup(isPresented: presentInfo, alignment: .center, direction: .bottom) {
+                VStack {
+                    VStack(spacing: 3) {
+                        HStack {
+                            Text("Eventual Glucose").foregroundColor(.secondary)
+                            let evg = state.units == .mmolL ? Decimal(state.evBG).asMmolL : Decimal(state.evBG)
+                            let fractionDigit = state.units == .mmolL ? 1 : 0
+                            Text(evg.formatted(.number.grouping(.never).rounded().precision(.fractionLength(fractionDigit))))
+                            Text(state.units.rawValue).foregroundColor(.secondary)
+                        }
+                        HStack {
+                            Text("Target Glucose").foregroundColor(.secondary)
+                            let target = state.units == .mmolL ? state.target.asMmolL : state.target
+                            let fractionDigit = state.units == .mmolL ? 1 : 0
+                            Text(target.formatted(.number.grouping(.never).rounded().precision(.fractionLength(fractionDigit))))
+                            Text(state.units.rawValue).foregroundColor(.secondary)
+                        }
+                        HStack {
+                            Text("ISF").foregroundColor(.secondary)
+                            let isf = state.isf
+                            Text(isf.formatted())
+                            Text(state.units.rawValue + NSLocalizedString("/U", comment: "/Insulin unit"))
+                                .foregroundColor(.secondary)
+                        }
+                        if state.percentage != 100 {
+                            HStack {
+                                Text("Percentage setting").foregroundColor(.secondary)
+                                let percentage = state.percentage
+                                Text(percentage.formatted())
+                                Text("%").foregroundColor(.secondary)
+                            }
+                        }
+                    }.font(.footnote)
+                    Divider()
+                    VStack(spacing: 5) {
+                        let unit = NSLocalizedString(
+                            " U",
+                            comment: "Unit in number of units delivered (keep the space character!)"
+                        )
+                        Text("(Eventual Glucose - Target) / ISF =").font(.callout)
+                        Text(" = " + state.insulin.formatted() + unit).font(.callout).foregroundColor(.blue).bold()
+                        if state.percentage != 100, state.insulin > 0 {
+                            Text(state.percentage.formatted() + "% of " + state.insulin.formatted() + unit + " =").font(.callout)
+                            Text(
+                                "= " + state.insulinRecommended.formatted() + unit
+                            ).font(.callout).foregroundColor(.blue).bold()
+                        }
+                        Divider()
+                        if state.error, state.insulinRecommended > 0 {
+                            Text("Warning! " + state.errorString).font(.caption).foregroundColor(.red)
+                            Divider()
+                        }
+                        Text(
+                            "Carbs and previous insulin are included in the glucose prediction, but if the Eventual Glucose is lower than the Target Glucose, a bolus will not be recommended."
+                        ).font(.caption2).foregroundColor(.secondary)
+
+                        Button { presentInfo = false }
+                        label: { Text("Hide") }.frame(maxWidth: .infinity, alignment: .center).font(.callout)
+                            .foregroundColor(.blue)
+                            .bold()
+                    }.padding(.horizontal, 20)
+                }
+                .frame(maxHeight: 480)
+                .background(
+                    RoundedRectangle(cornerRadius: 8, style: .continuous)
+                        .fill(Color(colorScheme == .dark ? UIColor.systemGray3 : UIColor.systemGray4))
+                )
+            }
         }
     }
 }
