@@ -105,7 +105,10 @@ extension Bolus {
             .alert(isPresented: $displayError) {
                 Alert(
                     title: Text("Warning!"),
-                    message: Text("\n" + state.errorString + "\n\nTap 'Add' to continue with selected amount."),
+                    message: Text("\n" + state.errorString + NSLocalizedString(
+                        "\n\nTap 'Add' to continue with selected amount.",
+                        comment: "Alert text to confirm bolus amount to add"
+                    )),
                     primaryButton: .destructive(
                         Text("Add"),
                         action: {
