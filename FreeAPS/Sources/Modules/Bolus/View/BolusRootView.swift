@@ -171,8 +171,9 @@ extension Bolus {
                             Text("%").foregroundColor(.secondary)
                         }
                     }
-                }.font(.footnote)
-                    .padding(.top, 20)
+                }
+                .font(.footnote)
+                .padding(.top, 10)
                 Divider()
                 // Formula
                 VStack(spacing: 5) {
@@ -202,12 +203,14 @@ extension Bolus {
                         Divider()
                     }
                 }.padding(.horizontal, 10)
-                // Footer
-                VStack {
-                    Text(
-                        "Carbs and previous insulin are included in the glucose prediction, but if the Eventual Glucose is lower than the Target Glucose, a bolus will not be recommended."
-                    ).font(.caption2).foregroundColor(.secondary)
-                }.padding(20)
+                // Footer. Warning string .
+                if !(state.error && state.insulinRecommended > 0) {
+                    VStack {
+                        Text(
+                            "Carbs and previous insulin are included in the glucose prediction, but if the Eventual Glucose is lower than the Target Glucose, a bolus will not be recommended."
+                        ).font(.caption2).foregroundColor(.secondary)
+                    }.padding(20)
+                }
                 // Hide button
                 VStack {
                     Button { presentInfo = false }
