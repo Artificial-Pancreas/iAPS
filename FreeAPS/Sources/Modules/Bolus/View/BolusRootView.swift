@@ -184,10 +184,13 @@ extension Bolus {
                     Text("(Eventual Glucose - Target) / ISF =").font(.callout).italic()
                     let color: Color = (state.percentage != 100 && state.insulin > 0) ? .secondary : .blue
                     let fontWeight: Font.Weight = (state.percentage != 100 && state.insulin > 0) ? .regular : .bold
-                    Text(" = " + state.insulin.formatted() + unit).font(.callout).foregroundColor(color).fontWeight(fontWeight)
+                    HStack {
+                        Text(" = ").font(.callout)
+                        Text(state.insulin.formatted() + unit).font(.callout).foregroundColor(color).fontWeight(fontWeight)
+                    }
                     if state.percentage != 100, state.insulin > 0 {
                         Divider()
-                        HStack { Text(state.percentage.formatted() + " % => ").font(.callout).foregroundColor(.secondary)
+                        HStack { Text(state.percentage.formatted() + " % ->").font(.callout).foregroundColor(.secondary)
                             Text(
                                 state.insulinRecommended.formatted() + unit
                             ).font(.callout).foregroundColor(.blue).bold()
