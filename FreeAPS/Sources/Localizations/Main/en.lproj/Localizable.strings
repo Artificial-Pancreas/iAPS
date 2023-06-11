@@ -1295,6 +1295,9 @@ Enact a temp Basal or a temp target */
 /* */
 "Percentage setting" = "Percentage setting";
 
+/* */
+"Insulin Sensitivity" = "Insulin Sensitivity";
+
 /* Formuala displayed in Bolus info pop-up*/
 "(Eventual Glucose - Target) / ISF =" = "(Eventual Glucose - Target) / ISF =";
 

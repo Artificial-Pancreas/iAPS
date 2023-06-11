@@ -159,6 +159,10 @@ extension Bolus {
                         Text(state.units.rawValue + NSLocalizedString("/U", comment: "/Insulin unit"))
                             .foregroundColor(.secondary)
                     }
+                    HStack {
+                        Text("ISF:")
+                        Text("Insulin Sensitivity")
+                    }.foregroundColor(.secondary).italic()
                     if state.percentage != 100 {
                         HStack {
                             Text("Percentage setting").foregroundColor(.secondary)
