@@ -1278,6 +1278,35 @@ Enact a temp Basal or a temp target */
 /* */
 "Save as Preset" = "Spara som förval";
 
+/* ----------------------- New Bolus Calculator ---------------------------*/
+
+/* Warning about bolus recommendation. Title */
+"Warning!" = "Varning!";
+
+/* Alert to confirm bolus amount to add */
+"\n\nTap 'Add' to continue with selected amount." = "\n\nTryck 'Lägg till' för att fylla i bolusmängd.";
+
+/* */
+"Eventual Glucose" = "Blodsockerprognos";
+
+/* */
+"Target Glucose" = "Målvärde";
+
+/* */
+"Percentage setting" = "Bolusprocentinställning";
+
+/* */
+"Insulin Sensitivity" = "Insulinkänslighet";
+
+/* Formuala displayed in Bolus info pop-up. Make translation short! */
+"(Eventual Glucose - Target) / ISF =" = "(Blodsockerprognos - Målvärde) / ISF =";
+
+/* Bolus pop-up footer */
+"Carbs and previous insulin are included in the glucose prediction, but if the Eventual Glucose is lower than the Target Glucose, a bolus will not be recommended." = "Kolhydrater och tidigare insulin ingår i prognos, men om prognos är lägre än målvärde kommer ingen bolus att föreslås.";
+
+/* Hide pop-up */
+"Hide" = "Göm";
+
 /* -------------------------------------------------------------------------------------------
   DASH strings
 */

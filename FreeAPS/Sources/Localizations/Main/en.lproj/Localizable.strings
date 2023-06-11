@@ -1278,6 +1278,35 @@ Enact a temp Basal or a temp target */
 /* */
 "Save as Preset" = "Save as Preset";
 
+/* ----------------------- New Bolus Calculator ---------------------------*/
+
+/* Warning about bolus recommendation. Title */
+"Warning!" = "Warning!";
+
+/* Alert to confirm bolus amount to add */
+"\n\nTap 'Add' to continue with selected amount." = "\n\nTap 'Add' to continue with selected amount.";
+
+/* */
+"Eventual Glucose" = "Eventual Glucose";
+
+/* */
+"Target Glucose" = "Target Glucose";
+
+/* */
+"Percentage setting" = "Percentage setting";
+
+/* */
+"Insulin Sensitivity" = "Insulin Sensitivity";
+
+/* Formuala displayed in Bolus info pop-up*/
+"(Eventual Glucose - Target) / ISF =" = "(Eventual Glucose - Target) / ISF =";
+
+/* Bolus pop-up footer */
+"Carbs and previous insulin are included in the glucose prediction, but if the Eventual Glucose is lower than the Target Glucose, a bolus will not be recommended." = "Carbs and previous insulin are included in the glucose prediction, but if the Eventual Glucose is lower than the Target Glucose, a bolus will not be recommended.";
+
+/* Hide pop-up */
+"Hide" = "Hide";
+
 /* -------------------------------------------------------------------------------------------
   DASH strings
 */
