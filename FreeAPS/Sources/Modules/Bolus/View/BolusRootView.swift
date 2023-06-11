@@ -43,13 +43,12 @@ extension Bolus {
                                 if state.error, state.insulinRecommended > 0 { displayError = true }
                                 else { state.amount = state.insulinRecommended }
                             }
-
                         HStack {
                             Image(systemName: "info.bubble").symbolRenderingMode(.palette).foregroundStyle(
                                 .primary, .blue
                             )
                         }.onTapGesture {
-                            presentInfo = true
+                            presentInfo.toggle()
                         }
                     }
                 }
@@ -187,11 +186,11 @@ extension Bolus {
                         }
                     }
                 }
-                // Warnning
+                // Warning
                 VStack {
                     Divider()
                     if state.error, state.insulinRecommended > 0 {
-                        Text("Warning!").font(.callout).foregroundColor(.orange)
+                        Text("Warning!").font(.callout).foregroundColor(.orange).bold()
                         Text(state.errorString).font(.caption)
                         Divider()
                     }
@@ -207,8 +206,7 @@ extension Bolus {
                     Button { presentInfo = false }
                     label: { Text("Hide") }.frame(maxWidth: .infinity, alignment: .center).font(.callout)
                         .foregroundColor(.blue)
-                        .bold()
-                }
+                }.padding(.bottom, 10)
             }
             .background(
                 RoundedRectangle(cornerRadius: 8, style: .continuous)
