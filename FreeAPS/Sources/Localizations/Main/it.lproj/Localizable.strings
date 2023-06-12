@@ -113,7 +113,7 @@
 "Enact Temp Target" = "Target Temporaneo";
 
 /* */
-"Target" = "Obiettivo";
+"Target" = "Target";
 
 /* */
 "Basal Insulin and Sensitivity ratio" = "Rapporto basale insulina e sensibilità";
@@ -558,7 +558,7 @@ Enact a temp Basal or a temp target */
 "Meter glucose" = "Inserisci glicemia";
 
 /* */
-"Info" = "Informazioni";
+"Info" = "Info";
 
 /*v*/
 "Slope" = "Pendenza";
@@ -1091,7 +1091,7 @@ Enact a temp Basal or a temp target */
 
 /* New ALerts ------------------------- */
 /* Info title */
-"Info" = "Informazioni";
+"Info" = "Info";
 
 /* Warning title */
 "Warning" = "Avvertimento";
@@ -1164,7 +1164,6 @@ Enact a temp Basal or a temp target */
 /* */
 "Normal " = "Normale ";
 
-/* */
 "Currently no Override active" = "Attualmente nessuna regolazione attiva";
 
 /* */
@@ -1277,6 +1276,47 @@ Enact a temp Basal or a temp target */
 
 /* */
 "Save as Preset" = "Salva come Predefinito";
+
+/* ----------------------- New Bolus Calculator ---------------------------*/
+/* Warning about bolus recommendation. Title */
+
+"Warning!" = "Warning!";
+
+/* Alert to confirm bolus amount to add */
+"\n\nTap 'Add' to continue with selected amount." = "\n\nTap 'Add' to continue with selected amount.";
+
+/* */
+"Eventual Glucose" = "Eventual Glucose";
+
+/* */
+"Target Glucose" = "Target Glucose";
+
+/* */
+"Percentage setting" = "Percentage setting";
+
+/* */
+"Insulin Sensitivity" = "Insulin Sensitivity";
+
+/* Formuala displayed in Bolus info pop-up*/
+"(Eventual Glucose - Target) / ISF =" = "(Eventual Glucose - Target) / ISF =";
+
+/* Bolus pop-up footer */
+"Carbs and previous insulin are included in the glucose prediction, but if the Eventual Glucose is lower than the Target Glucose, a bolus will not be recommended." = "Carbs and previous insulin are included in the glucose prediction, but if the Eventual Glucose is lower than the Target Glucose, a bolus will not be recommended.";
+
+/* Hide pop-up */
+"Hide" = "Hide";
+
+/* Error string 1. Make translation very short! */
+"Predicted Glucose, %@ %@, is below threshold (%@!)" = "Predicted Glucose, %@ %@, is below threshold (%@!)";
+
+/* Error string 2. Make translation very short! */
+"Eventual Glucose > Target Glucose, but glucose is falling faster than expected. Expected: %@. Falling: %@" = "Eventual Glucose > Target Glucose, but glucose is falling faster than expected. Expected: %@. Falling: %@";
+
+/* Error string 3. Make translation very short! */
+"Minimum predicted Glucose is %@ %@" = "Minimum predicted Glucose is %@ %@";
+
+/* Error string 4. Make translation very short! */
+"Predicted Glucose %@ %@, is below Threshold of %@" = "Predicted Glucose %@ %@, is below Threshold of %@";
 
 /* -------------------------------------------------------------------------------------------
   DASH strings
