@@ -7,7 +7,6 @@ extension AddTempTarget {
         @Injected() var apsManager: APSManager!
 
         let coredataContext = CoreDataStack.shared.persistentContainer.viewContext
-        @Environment(\.managedObjectContext) var moc
 
         @Published var low: Decimal = 0
         // @Published var target: Decimal = 0

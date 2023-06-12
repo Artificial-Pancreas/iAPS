@@ -54,8 +54,7 @@ extension TargetsEditor {
             GeometryReader { geometry in
                 VStack {
                     HStack {
-                        Text("Low target").frame(width: geometry.size.width / 3)
-                        Text("High target").frame(width: geometry.size.width / 3)
+                        Text("Target").frame(width: geometry.size.width / 3)
                         Text("Time").frame(width: geometry.size.width / 3)
                     }
                     HStack(spacing: 0) {
@@ -69,17 +68,6 @@ extension TargetsEditor {
                         }
                         .frame(maxWidth: geometry.size.width / 3)
                         .clipped()
-                        Picker(selection: $state.items[index].highIndex, label: EmptyView()) {
-                            ForEach(0 ..< state.rateValues.count, id: \.self) { i in
-                                Text(
-                                    self.rateFormatter
-                                        .string(from: state.rateValues[i] as NSNumber) ?? ""
-                                ).tag(i)
-                            }
-                        }
-                        .frame(maxWidth: geometry.size.width / 3)
-                        .clipped()
-
                         Picker(selection: $state.items[index].timeIndex, label: EmptyView()) {
                             ForEach(0 ..< state.timeValues.count, id: \.self) { i in
                                 Text(
@@ -105,10 +93,6 @@ extension TargetsEditor {
                         HStack {
                             Text(
                                 "\(rateFormatter.string(from: state.rateValues[item.lowIndex] as NSNumber) ?? "0")"
-                            )
-                            Text("–").foregroundColor(.secondary)
-                            Text(
-                                "\(rateFormatter.string(from: state.rateValues[item.highIndex] as NSNumber) ?? "0")"
                             )
                             Text("\(state.units.rawValue)").foregroundColor(.secondary)
                             Spacer()

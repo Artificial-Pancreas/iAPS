@@ -113,7 +113,7 @@
 "Enact Temp Target" = "Target Temporaneo";
 
 /* */
-"Target" = "Target";
+"Target" = "Obiettivo";
 
 /* */
 "Basal Insulin and Sensitivity ratio" = "Rapporto basale insulina e sensibilità";
@@ -558,7 +558,7 @@ Enact a temp Basal or a temp target */
 "Meter glucose" = "Inserisci glicemia";
 
 /* */
-"Info" = "Info";
+"Info" = "Informazioni";
 
 /*v*/
 "Slope" = "Pendenza";
@@ -1091,7 +1091,7 @@ Enact a temp Basal or a temp target */
 
 /* New ALerts ------------------------- */
 /* Info title */
-"Info" = "Info";
+"Info" = "Informazioni";
 
 /* Warning title */
 "Warning" = "Avvertimento";

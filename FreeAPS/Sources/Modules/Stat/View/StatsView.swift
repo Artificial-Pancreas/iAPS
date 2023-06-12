@@ -1,9 +1,3 @@
-//
-//  FilteredLoopsView.swift
-//  FreeAPS
-//
-//  Created by Jon Mårtensson on 2023-05-29.
-//
 import CoreData
 import SwiftDate
 import SwiftUI
@@ -55,33 +49,29 @@ struct StatsView: View {
     }
 
     var loops: some View {
-        VStack(spacing: 10) {
-            let loops = fetchRequest
+        let loops = fetchRequest
+        // First date
+        let previous = loops.last?.end ?? Date()
+        // Last date (recent)
+        let current = loops.first?.start ?? Date()
+        // Total time in days
+        let totalTime = (current - previous).timeInterval / 8.64E4
 
-            // First date
-            let previous = loops.last?.end ?? Date()
-            // Last date (recent)
-            let current = loops.first?.start ?? Date()
-
-            // Total time in days
-            let totalTime = (current - previous).timeInterval / 8.64E4
-
-            let durationArray = loops.compactMap({ each in each.duration })
-            let durationArrayCount = durationArray.count
-            // var durationAverage = durationArray.reduce(0, +) / Double(durationArrayCount)
-            let medianDuration = medianCalculationDouble(array: durationArray)
-            let successsNR = loops.compactMap({ each in each.loopStatus }).filter({ each in each!.contains("Success") })
-                .count
-            let errorNR = durationArrayCount - successsNR
-            let successRate: Double? = (Double(successsNR) / Double(successsNR + errorNR)) * 100
-
-            let loopNr = totalTime <= 1 ? Double(successsNR + errorNR) : round(Double(successsNR + errorNR) / totalTime)
-
-            let intervalArray = loops.compactMap({ each in each.interval as Double })
-            let intervalAverage = intervalArray.reduce(0, +) / Double(intervalArray.count)
-            // let maximumInterval = intervalArray.max()
-            // let minimumInterval = intervalArray.min()
-
+        let durationArray = loops.compactMap({ each in each.duration })
+        let durationArrayCount = durationArray.count
+        // var durationAverage = durationArray.reduce(0, +) / Double(durationArrayCount)
+        let medianDuration = medianCalculationDouble(array: durationArray)
+        let successsNR = loops.compactMap({ each in each.loopStatus }).filter({ each in each!.contains("Success") }).count
+        let errorNR = durationArrayCount - successsNR
+        let total = Double(successsNR + errorNR) == 0 ? 1 : Double(successsNR + errorNR)
+        let successRate: Double? = (Double(successsNR) / total) * 100
+        let loopNr = totalTime <= 1 ? total : round(total / (totalTime != 0 ? totalTime : 1))
+        let intervalArray = loops.compactMap({ each in each.interval as Double })
+        let count = intervalArray.count != 0 ? intervalArray.count : 1
+        let intervalAverage = intervalArray.reduce(0, +) / Double(count)
+        // let maximumInterval = intervalArray.max()
+        // let minimumInterval = intervalArray.min()
+        return VStack(spacing: 10) {
             HStack(spacing: 35) {
                 VStack(spacing: 5) {
                     Text("Loops").font(.subheadline).foregroundColor(headline)
