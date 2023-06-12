@@ -1301,22 +1301,22 @@ Enact a temp Basal or a temp target */
 "(Eventual Glucose - Target) / ISF =" = "(Bolusprognos - målvärde) / ISF =";
 
 /* Bolus pop-up footer */
-"Carbs and previous insulin are included in the glucose prediction, but if the Eventual Glucose is lower than the Target Glucose, a bolus will not be recommended." = "Carbs and previous insulin are included in the glucose prediction, but if the Eventual Glucose is lower than the Target Glucose, a bolus will not be recommended.";
+"Carbs and previous insulin are included in the glucose prediction, but if the Eventual Glucose is lower than the Target Glucose, a bolus will not be recommended." = "Kolhydrater och tidigare insulin ingår i prognos, men om din blodsockerprognos är lägre än målvärde kommer ingen bolus att föreslås.";
 
 /* Hide pop-up */
-"Hide" = "Hide";
+"Hide" = "Dölj";
 
 /* Error string 1. Make translation very short! */
-"Predicted Glucose, %@ %@, is below threshold (%@!)" = "Predicted Glucose, %@ %@, is below threshold (%@!)";
+"Predicted Glucose, %@ %@, is below threshold (%@!)" = "Boldsockerprognos, %@ %@, är lägre än tröskelvärde (%@!)";
 
 /* Error string 2. Make translation very short! */
-"Eventual Glucose > Target Glucose, but glucose is falling faster than expected. Expected: %@. Falling: %@" = "Eventual Glucose > Target Glucose, but glucose is falling faster than expected. Expected: %@. Falling: %@";
+"Eventual Glucose > Target Glucose, but glucose is falling faster than expected. Expected: %@. Falling: %@" = "Blodsockerprognos > målvärde, men blodsocker sjunker snabbare än väntat. Förväntat: %@. Sjunker: %@";
 
 /* Error string 3. Make translation very short! */
-"Minimum predicted Glucose is %@ %@" = "Minimum predicted Glucose is %@ %@";
+"Minimum predicted Glucose is %@ %@" = "Lägsta beräknade blodsocker är %@ %@";
 
 /* Error string 4. Make translation very short! */
-"Predicted Glucose %@ %@, is below Threshold of %@" = "Predicted Glucose %@ %@, is below Threshold of %@";
+"Predicted Glucose %@ %@, is below Threshold of %@" = "Boldsockerprognos, %@ %@, är lägre än tröskelvärde %@";
 
 /* -------------------------------------------------------------------------------------------
   DASH strings
