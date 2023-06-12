@@ -1307,6 +1307,18 @@ Enact a temp Basal or a temp target */
 /* Hide pop-up */
 "Hide" = "Hide";
 
+/* Error string 1. Make translation very short! */
+"Predicted Glucose, %@ %@, is below threshold (%@!)" = "Predicted Glucose, %@ %@, is below threshold (%@!)";
+
+/* Error string 2. Make translation very short! */
+"Eventual Glucose > Target Glucose, but glucose is falling faster than expected. Expected: %@. Falling: %@" = "Eventual Glucose > Target Glucose, but glucose is falling faster than expected. Expected: %@. Falling: %@";
+
+/* Error string 3. Make translation very short! */
+"Minimum predicted Glucose is %@ %@" = "Minimum predicted Glucose is %@ %@";
+
+/* Error string 4. Make translation very short! */
+"Predicted Glucose %@ %@, is below Threshold of %@" = "Predicted Glucose %@ %@, is below Threshold of %@";
+
 /* -------------------------------------------------------------------------------------------
   DASH strings
 */

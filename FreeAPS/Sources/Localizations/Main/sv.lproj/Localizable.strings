@@ -1307,6 +1307,18 @@ Enact a temp Basal or a temp target */
 /* Hide pop-up */
 "Hide" = "Göm";
 
+/* Error string 1. Make translation very short! */
+"Predicted Glucose, %@ %@, is below threshold (%@!)" = "Blodsockerprognos, %@ %@, är lägre än (%@!)";
+
+/* Error string 2. Make translation very short! */
+"Eventual Glucose > Target Glucose, but glucose is falling faster than expected. Expected: %@. Falling: %@" = "Blodsockerprognos > målvärde, med blodsockret sjunker snabbare än väntat. Förväntat: %@. Sjunker: %@";
+
+/* Error string 3. Make translation very short! */
+"Minimum predicted Glucose is %@ %@" = "Lägsta blodsockerprognos är %@ %@!";
+
+/* Error string 4. Make translation very short! */
+"Predicted Glucose %@ %@, is below Threshold of %@" = "Blodsockerprognos %@ %@, är under tröskelvärde %@";
+
 /* -------------------------------------------------------------------------------------------
   DASH strings
 */

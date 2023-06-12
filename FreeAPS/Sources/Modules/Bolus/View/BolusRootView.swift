@@ -105,7 +105,7 @@ extension Bolus {
             .alert(isPresented: $displayError) {
                 Alert(
                     title: Text("Warning!"),
-                    message: Text("\n" + state.errorString + NSLocalizedString(
+                    message: Text("\n" + NSLocalizedString(state.errorString, comment: "") + NSLocalizedString(
                         "\n\nTap 'Add' to continue with selected amount.",
                         comment: "Alert text to confirm bolus amount to add"
                     )),
@@ -202,7 +202,7 @@ extension Bolus {
                     Divider()
                     if state.error, state.insulinRecommended > 0 {
                         Text("Warning!").font(.callout).foregroundColor(.orange).bold()
-                        Text(state.errorString).font(.caption)
+                        Text(NSLocalizedString(state.errorString, comment: "")).font(.caption)
                         Divider()
                     }
                 }.padding(.horizontal, 10)
