@@ -348,25 +348,25 @@ Enact a temp Basal or a temp target */
 "U/hr" = "IE/h";
 
 /* Unit in number of units delivered (keep the space character!) */
-" U" = " IE";
+" U" = " E";
 
 /* /Insulin unit */
-"/U" = "/IE";
+"/U" = "/E";
 
 /* Insulin unit */
-"U" = "IE";
+"U" = "E";
 
 /* Unit per hour with space */
-" U/hr" = " IE/h";
+" U/hr" = " E/h";
 
 /* Number of units per hour*/
-"%@ U/hr" = "%@ IE/h";
+"%@ U/hr" = "%@ E/h";
 
 /* Number of units insulin delivered */
-"%@ U" = "%@ IE";
+"%@ U" = "%@ E";
 
 /*Carb ratio unit */
-"g/U" = "g/IE";
+"g/U" = "g/E";
 
 /* grams */
 " g" = " g";
@@ -375,7 +375,7 @@ Enact a temp Basal or a temp target */
 "g" = "g";
 
 /* when 0 U/hr */
-"0 U/hr" = "0 IE/h";
+"0 U/hr" = "0 E/h";
 
 /* abbreviation for days */
 "d" = "d";
