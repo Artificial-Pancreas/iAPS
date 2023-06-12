@@ -1280,43 +1280,43 @@ Enact a temp Basal or a temp target */
 /* ----------------------- New Bolus Calculator ---------------------------*/
 /* Warning about bolus recommendation. Title */
 
-"Warning!" = "Warning!";
+"Warning!" = "Advarsel!";
 
 /* Alert to confirm bolus amount to add */
-"\n\nTap 'Add' to continue with selected amount." = "\n\nTap 'Add' to continue with selected amount.";
+"\n\nTap 'Add' to continue with selected amount." = "\n\nTrykk 'Legg til' for å fortsette med den anbefalte mengden.";
 
 /* */
-"Eventual Glucose" = "Eventual Glucose";
+"Eventual Glucose" = "Beregnet blodsukker";
 
 /* */
-"Target Glucose" = "Target Glucose";
+"Target Glucose" = "Blodsukkermål";
 
 /* */
-"Percentage setting" = "Percentage setting";
+"Percentage setting" = "Prosent-innstilling";
 
 /* */
-"Insulin Sensitivity" = "Insulin Sensitivity";
+"Insulin Sensitivity" = "Insulinfølsomhet";
 
 /* Formuala displayed in Bolus info pop-up*/
-"(Eventual Glucose - Target) / ISF =" = "(Eventual Glucose - Target) / ISF =";
+"(Eventual Glucose - Target) / ISF =" = "(Beregnet blodsukker - Blodsukkermål) / ISF =";
 
 /* Bolus pop-up footer */
-"Carbs and previous insulin are included in the glucose prediction, but if the Eventual Glucose is lower than the Target Glucose, a bolus will not be recommended." = "Carbs and previous insulin are included in the glucose prediction, but if the Eventual Glucose is lower than the Target Glucose, a bolus will not be recommended.";
+"Carbs and previous insulin are included in the glucose prediction, but if the Eventual Glucose is lower than the Target Glucose, a bolus will not be recommended." = "Karbohydrater og tidligere insulin er inkludert i blodsukkerprognosen, men hvis Beregnet Blodsukker er lavere enn Blodsukkermål, anbefales det ikke en bolusdose.";
 
 /* Hide pop-up */
-"Hide" = "Hide";
+"Hide" = "Skjul";
 
 /* Error string 1. Make translation very short! */
-"Predicted Glucose, %@ %@, is below threshold (%@!)" = "Predicted Glucose, %@ %@, is below threshold (%@!)";
+"Predicted Glucose, %@ %@, is below threshold (%@!)" = "Beregnet blodsukker, %@ %@, er lavere enn terskelverdien (%@!)";
 
 /* Error string 2. Make translation very short! */
-"Eventual Glucose > Target Glucose, but glucose is falling faster than expected. Expected: %@. Falling: %@" = "Eventual Glucose > Target Glucose, but glucose is falling faster than expected. Expected: %@. Falling: %@";
+"Eventual Glucose > Target Glucose, but glucose is falling faster than expected. Expected: %@. Falling: %@" = "Beregnet blodsukker > Blodsukkermål, men blodsukkeret synker raskere enn forventet. Forventet: %@. Synker: %@";
 
 /* Error string 3. Make translation very short! */
-"Minimum predicted Glucose is %@ %@" = "Minimum predicted Glucose is %@ %@";
+"Minimum predicted Glucose is %@ %@" = "Laveste beregnet blodsukker er %@ %@";
 
 /* Error string 4. Make translation very short! */
-"Predicted Glucose %@ %@, is below Threshold of %@" = "Predicted Glucose %@ %@, is below Threshold of %@";
+"Predicted Glucose %@ %@, is below Threshold of %@" = "Beregnet blodsukker %@ %@, er lavere enn terskelverdien på %@";
 
 /* -------------------------------------------------------------------------------------------
   DASH strings
