@@ -2,7 +2,7 @@
 "NFCReaderUsageDescription" = "NFC används för att skanna Libre-sensorn vid uppstart.";
 
 /* Privacy - Bluetooth Always Usage Description */
-"NSBluetoothAlwaysUsageDescription" = "Bluetooth används för att kommunicera med insulinpumpen och din kontinuerlig glukosmätare";
+"NSBluetoothAlwaysUsageDescription" = "Bluetooth används för att kommunicera med pump och kontinuerlig glukosmätare";
 
 /* Privacy - Bluetooth Peripheral Usage Description */
 "NSBluetoothPeripheralUsageDescription" = "Bluetooth används för att kommunicera med insulinpumpen och kontinuerliga glukosmätare";
