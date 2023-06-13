@@ -5,7 +5,7 @@
 "%@%%" = "%@%%";
 
 /* The title of the section for alerts */
-"Alert" = "Varning";
+"Alert" = "Larm";
 
 /* Text indicating LED Mode is auto */
 "Auto" = "Auto";
