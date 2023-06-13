@@ -120,7 +120,7 @@
 "Cancel Manual Basal" = "Avbryt manuell basal";
 
 /* Insert cannula action button accessibility label when cannula insertion succeeded */
-"Cannula inserted successfully. Continue." = "Kanylen infördes framgångsrikt. Fortsätt.";
+"Cannula inserted successfully. Continue." = "Kanyl nu införd. Fortsätt.";
 
 /* The action string on pod status page when pod expired */
 "Change Pod now. Insulin delivery will stop 8 hours after the Pod has expired or when no more insulin remains." = "Byt podd nu. Insulintillförsel kommer att upphöra 8 timmar efter att podd går ut eller så snart insulinet är slut.";
