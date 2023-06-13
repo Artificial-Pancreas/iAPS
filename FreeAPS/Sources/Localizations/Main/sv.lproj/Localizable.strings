@@ -47,10 +47,10 @@
 "Enacted at" = "Utfört klockan";
 
 /* Headline in suggested pop up (at: at what time) */
-"Suggested at" = "Föreslaget klockan";
+"Suggested at" = "Föreslaget vid";
 
 /* Headline in enacted pop up (at: at what time) */
-"Error at" = "Fel klockan";
+"Error at" = "Fel vid";
 
 /* Home title */
 "Home" = "Hem";
@@ -146,7 +146,7 @@
 "Save as preset" = "Spara som förval";
 
 /* Delete Meal Preset */
-"Delete Preset" = "Radera Förval";
+"Delete Preset" = "Radera förval";
 
 /* Confirm Deletion */
 "Delete preset '%@'?" = "Radera förval '%@'?";
