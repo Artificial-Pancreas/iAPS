@@ -222,8 +222,7 @@ extension Bolus {
                 }.padding(.bottom, 10)
             }
             .background(
-                RoundedRectangle(cornerRadius: 8, style: .continuous)
-                    .fill(Color(colorScheme == .dark ? UIColor.systemGray4 : UIColor.systemGray4))
+                RoundedRectangle(cornerRadius: 8, style: .continuous).fill(Color(.systemGray).gradient)
             )
         }
     }
