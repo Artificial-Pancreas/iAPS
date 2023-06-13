@@ -1280,22 +1280,22 @@ Enact a temp Basal or a temp target */
 /* ----------------------- New Bolus Calculator ---------------------------*/
 /* Warning about bolus recommendation. Title */
 
-"Warning!" = "Warning!";
+"Warning!" = "Waarschuwing!";
 
 /* Alert to confirm bolus amount to add */
-"\n\nTap 'Add' to continue with selected amount." = "\n\nTap 'Add' to continue with selected amount.";
+"\n\nTap 'Add' to continue with selected amount." = "\n\nTik op 'Toevoegen' om door te gaan met het geselecteerde aantal.";
 
 /* */
-"Eventual Glucose" = "Eventual Glucose";
+"Eventual Glucose" = "Uiteindelijke glucose";
 
 /* */
-"Target Glucose" = "Target Glucose";
+"Target Glucose" = "Doel glucose";
 
 /* */
-"Percentage setting" = "Percentage setting";
+"Percentage setting" = "Percentage instelling";
 
 /* */
-"Insulin Sensitivity" = "Insulin Sensitivity";
+"Insulin Sensitivity" = "Insuline gevoeligheid";
 
 /* Formuala displayed in Bolus info pop-up*/
 "(Eventual Glucose - Target) / ISF =" = "(Eventual Glucose - Target) / ISF =";
