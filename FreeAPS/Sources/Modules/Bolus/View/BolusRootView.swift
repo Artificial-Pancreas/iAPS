@@ -222,7 +222,9 @@ extension Bolus {
                 }.padding(.bottom, 10)
             }
             .background(
-                RoundedRectangle(cornerRadius: 8, style: .continuous).fill(Color(.systemGray).gradient)
+                RoundedRectangle(cornerRadius: 8, style: .continuous)
+                    .fill(Color(colorScheme == .dark ? UIColor.systemGray4 : UIColor.systemGray4))
+                // .fill(Color(.systemGray).gradient)  // A more prominent pop-up, but harder to read
             )
         }
     }
