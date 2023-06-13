@@ -2,13 +2,13 @@
 " (inactive)" = " (inaktiv)";
 
 /* Format string for low battery alert body for RileyLink. (1: device name) */
-"\"%1$@\" has a low battery" = "\"%1$@\" har ett lågt batteri";
+"\"%1$@\" has a low battery" = "\"%1$@\" har låg batterinivå";
 
 /* Unit format string for an RSSI value in decibles */
 "%@ dB" = "%@ dB";
 
 /* Format string for alert content body for lowReservoir pod alert. (1: reminder value) */
-"%1$@ insulin or less remaining in Pod. Change Pod soon." = "%1$@ insulin eller mindre kvar i podd. Byt podd snart.";
+"%1$@ insulin or less remaining in Pod. Change Pod soon." = "%1$@ insulin eller mindre kvar i podden. Byt podd snart.";
 
 /* Format string for activation time exceeded
    Pod state when activation not completed in the time allowed */
