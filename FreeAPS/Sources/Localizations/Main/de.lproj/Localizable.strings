@@ -1280,43 +1280,43 @@ Enact a temp Basal or a temp target */
 /* ----------------------- New Bolus Calculator ---------------------------*/
 /* Warning about bolus recommendation. Title */
 
-"Warning!" = "Warning!";
+"Warning!" = "Warnung!";
 
 /* Alert to confirm bolus amount to add */
-"\n\nTap 'Add' to continue with selected amount." = "\n\nTap 'Add' to continue with selected amount.";
+"\n\nTap 'Add' to continue with selected amount." = "\n\nTippen Sie auf 'Hinzufügen', um mit dem ausgewählten Betrag fortzufahren.";
 
 /* */
-"Eventual Glucose" = "Eventual Glucose";
+"Eventual Glucose" = "Prognostizierte Glukose";
 
 /* */
-"Target Glucose" = "Target Glucose";
+"Target Glucose" = "Ziel Glukose";
 
 /* */
-"Percentage setting" = "Percentage setting";
+"Percentage setting" = "Prozentuale Einstellung";
 
 /* */
-"Insulin Sensitivity" = "Insulin Sensitivity";
+"Insulin Sensitivity" = "Insulin Empfindlichkeit";
 
 /* Formuala displayed in Bolus info pop-up*/
-"(Eventual Glucose - Target) / ISF =" = "(Eventual Glucose - Target) / ISF =";
+"(Eventual Glucose - Target) / ISF =" = "(Prognostizierte Glukose - Ziel) / ISF =";
 
 /* Bolus pop-up footer */
-"Carbs and previous insulin are included in the glucose prediction, but if the Eventual Glucose is lower than the Target Glucose, a bolus will not be recommended." = "Carbs and previous insulin are included in the glucose prediction, but if the Eventual Glucose is lower than the Target Glucose, a bolus will not be recommended.";
+"Carbs and previous insulin are included in the glucose prediction, but if the Eventual Glucose is lower than the Target Glucose, a bolus will not be recommended." = "Kohlenhydrate und vorheriges Insulin sind in der Glukose-Vorhersage enthalten aber wenn das Endergebnis niedriger als das Target-Glukose ist, wird ein Bolus nicht empfohlen.";
 
 /* Hide pop-up */
-"Hide" = "Hide";
+"Hide" = "Ausblenden";
 
 /* Error string 1. Make translation very short! */
-"Predicted Glucose, %@ %@, is below threshold (%@!)" = "Predicted Glucose, %@ %@, is below threshold (%@!)";
+"Predicted Glucose, %@ %@, is below threshold (%@!)" = "Prognostizierte Glukose, %@ %@, liegt unter dem Schwellenwert (%@!)";
 
 /* Error string 2. Make translation very short! */
-"Eventual Glucose > Target Glucose, but glucose is falling faster than expected. Expected: %@. Falling: %@" = "Eventual Glucose > Target Glucose, but glucose is falling faster than expected. Expected: %@. Falling: %@";
+"Eventual Glucose > Target Glucose, but glucose is falling faster than expected. Expected: %@. Falling: %@" = "Prognostizierte Glukose > Glukose des Ziels Glukose, aber die Glukose fällt schneller als erwartet. Erwartet: %@. Fallen: %@";
 
 /* Error string 3. Make translation very short! */
-"Minimum predicted Glucose is %@ %@" = "Minimum predicted Glucose is %@ %@";
+"Minimum predicted Glucose is %@ %@" = "Mindestens prognostizierte Glukose ist %@ %@";
 
 /* Error string 4. Make translation very short! */
-"Predicted Glucose %@ %@, is below Threshold of %@" = "Predicted Glucose %@ %@, is below Threshold of %@";
+"Predicted Glucose %@ %@, is below Threshold of %@" = "Prognostizierte Glukose, %@ %@, liegt unter dem Schwellenwert %@";
 
 /* -------------------------------------------------------------------------------------------
   DASH strings
