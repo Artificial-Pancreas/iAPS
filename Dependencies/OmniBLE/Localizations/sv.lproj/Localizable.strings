@@ -51,7 +51,7 @@
 "The insulin suspension period has ended.\n\nYou can resume delivery from the banner on the home screen or from your pump settings screen. You will be reminded again in 15 minutes." = "Planerad period av paus av pump är slut.\n\nDu kan återuppta insulintillförsel i pumpinställningar. Du kommer bli påmind igen om 15 minuter.";
 
 /* Alert content body for finishSetupReminder pod alert */
-"Please finish pairing your pod." = "Vänligen färdigställ parkopplingen av din podd.";
+"Please finish pairing your pod." = "Du behöver göra färdigt parkopplingen av din podd.";
 
 /* Alert content body for timeOffsetChangeDetected pod alert */
 "The time on your pump is different from the current time. You can review the pump time and and sync to current time in settings." = "Tiden på din pump skiljer sig från den aktuella tiden. Du kan granska pumpens tid och synkronisera till aktuell tid i pumpinställningar.";
@@ -63,7 +63,7 @@
 "Ok" = "OK";
 
 /* Label for pod life state when pod not fully activated */
-"Unfinished Activation" = "Aktivering inte genomförd";
+"Unfinished Activation" = "Har inte blivit färdigaktiverad";
 
 /* Label for pod life state when time remaining */
 "Pod expires in" = "Podd går ut om";
@@ -159,7 +159,7 @@
 "Replace Pod" = "Byt podd";
 
 /* Label for pod life state when pod not fully activated */
-"Unfinished Activation" = "Aktivering inte genomförd";
+"Unfinished Activation" = "Har inte blivit färdigaktiverad";
 
 /* Label for pod life state when time remaining */
 "Pod expires in" = "Podd går ut om";
