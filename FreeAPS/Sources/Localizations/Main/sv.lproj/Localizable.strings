@@ -143,7 +143,7 @@
 "Save" = "Spara";
 
 /*  */
-"Save as preset" = "Spara som förval";
+"Save as Preset" = "Spara som förval";
 
 /* Delete Meal Preset */
 "Delete Preset" = "Radera Förval";
@@ -1143,6 +1143,9 @@ Enact a temp Basal or a temp target */
 /* Display fat and protein entities */
 "Fat & Protein" = "Fett & protein";
 
+/* FPU Setttings Title */
+"Fat and Protein" = "Omvandling";
+
 /* */
 "Hide Fat & Protein" = "Dölj fett & protein";
 
@@ -1271,6 +1274,37 @@ Enact a temp Basal or a temp target */
 
 /* */
 "Name Of Dish" = "Namn på rätt";
+"Currently no Override active" = "Inget undantag aktivt";
+
+/* */
+"Total Insulin Adjustment" = "Total justering av ditt insulinbehov";
+
+/* */
+"Override your Basal, ISF, CR and Target profiles" = "Ändra sparad basal, korrektionsfaktor, insulinkvot and målvärde med ett tillfäligt undantag";
+
+/* */
+"Enable indefinitely" = "Aktivera tillsvidare";
+
+/* */
+"Override Profiles" = "Aktivera tillfälligt undantag";
+
+/* */
+"Override Profile Target" = "Ändra målvärde";
+
+/* */
+"Disable SMBs" = "Stäng av autobolusar (SMBs)";
+
+/* */
+"Your profile basal insulin will be adjusted with the override percentage and your profile ISF and CR will be inversly adjusted with the percentage.\n\nIf you toggle off the override every profile setting will return to normal." = "Your profile basal insulin will be adjusted with the override percentage and your profile ISF and CR will be inversly adjusted with the percentage.\n\nIf you toggle off the override every profile setting will return to normal.";
+
+/* Service Section */
+"App Icons" = "Ikoner";
+
+/* */
+"iAPS Icon" = "iAPS - ikon";
+
+/* Service Section */
+"Statistics and Home View" = "Statistik och Diagram";
 
 /* Save Carbs and continue to bolus recommendation */
 "Save and continue" = "Spara och fortsätt";
@@ -1307,17 +1341,38 @@ Enact a temp Basal or a temp target */
 /* Hide pop-up */
 "Hide" = "Göm";
 
-/* Error string 1. Make translation very short! */
-"Predicted Glucose, %@ %@, is below threshold (%@!)" = "Blodsockerprognos, %@ %@, är lägre än (%@!)";
+/* Bolus pop-up / Alert string. Make translations concise! */
+"Predicted Glucose, " = "Prognos, ";
 
-/* Error string 2. Make translation very short! */
-"Eventual Glucose > Target Glucose, but glucose is falling faster than expected. Expected: %@. Falling: %@" = "Blodsockerprognos > målvärde, med blodsockret sjunker snabbare än väntat. Förväntat: %@. Sjunker: %@";
+/* Bolus pop-up / Alert string. Make translations concise! */
+"is predicted below threshold " = "är under tröskelvärde ";
 
-/* Error string 3. Make translation very short! */
-"Minimum predicted Glucose is %@ %@" = "Lägsta blodsockerprognos är %@ %@!";
+/* Bolus pop-up / Alert string. Make translations concise! */
+"is below Threshold of " = "är under tröskelvärde ";
 
-/* Error string 4. Make translation very short! */
-"Predicted Glucose %@ %@, is below Threshold of %@" = "Blodsockerprognos %@ %@, är under tröskelvärde %@";
+/* Bolus pop-up / Alert string. Make translations concise! */
+"Eventual Glucose > Target Glucose, but glucose is climbing slower than expected. Expected: " = "Prognos > Målvärde, men blodsocker stiger snabbare än väntat. Förväntat: ";
+
+//* Bolus pop-up / Alert string. Make translations concise! */
+". Climbing: " = ". Stiger: ";
+
+/* Bolus pop-up / Alert string. Make translations concise! */
+"Eventual Glucose > Target Glucose, but glucose is falling slower than expected. Expected: " = "Prognos > Målvärde, men blodsocker sjunker snabbare än väntat. Förväntat: ";
+
+/* Bolus pop-up / Alert string. Make translations concise! */
+". Falling: " = ". Sjunker: ";
+
+/* Bolus pop-up / Alert string. Make translations concise! */
+"Eventual Glucose > Target Glucose, but glucose is changing faster than expected. Expected: " =  "Prognos > Målvärde, men blodsocker ändras snabbare än väntat. Förväntat: ";
+
+/* Bolus pop-up / Alert string. Make translations concise! */
+". Changing: " = ". Ändras: ";
+
+/* Bolus pop-up / Alert string. Make translations concise! */
+"Minimum predicted Glucose is " = "Lägsta prognos är ";
+
+/* Add insulin without bolusing alert */
+" without bolusing" = " utan att ge insulin";
 
 /* -------------------------------------------------------------------------------------------
   DASH strings
@@ -1461,6 +1516,8 @@ Enact a temp Basal or a temp target */
 /* ----------------------Statistics strings -------------------------------*/
 /* */
 
+/* */
+"Today" = "Idag";
 
 "Today" = "Idag";
 
