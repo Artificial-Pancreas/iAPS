@@ -143,9 +143,9 @@ extension Stat {
                         Text(NSLocalizedString(duration.rawValue, comment: "")).tag(Optional(duration))
                     }
                 }
-                .pickerStyle(.segmented).background(.cyan.opacity(0.1))
+                .pickerStyle(.segmented).background(.cyan.opacity(0.2))
                 stats()
-            } // .background(Color(red: 0.235, green: 0.18, blue: 0.396).gradient) // .brightness(0.2)
+            }
             .onAppear(perform: configureView)
             .navigationBarTitle("Statistics")
             .navigationBarTitleDisplayMode(.automatic)
