@@ -12,7 +12,6 @@ extension Bolus {
         @Published var insulinRecommended: Decimal = 0
         @Published var insulinRequired: Decimal = 0
         @Published var waitForSuggestion: Bool = false
-        @Published var manual: Bool = false
         @Published var error: Bool = false
         @Published var errorString: Decimal = 0
         @Published var evBG: Int = 0
