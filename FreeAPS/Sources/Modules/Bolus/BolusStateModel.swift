@@ -13,13 +13,18 @@ extension Bolus {
         @Published var waitForSuggestion: Bool = false
         @Published var manual: Bool = false
         @Published var error: Bool = false
-        @Published var errorString: String = ""
+        @Published var errorString: Decimal = 0
 
         @Published var evBG: Int = 0
         @Published var insulin: Decimal = 0
         @Published var target: Decimal = 0
         @Published var isf: Decimal = 0
         @Published var percentage: Decimal = 0
+        @Published var threshold: Decimal = 0
+        @Published var minGuardBG: Decimal = 0
+        @Published var minDelta: Decimal = 0
+        @Published var expectedDelta: Decimal = 0
+        @Published var minPredBG: Decimal = 0
 
         @Published var units: GlucoseUnits = .mmolL
 
@@ -30,6 +35,8 @@ extension Bolus {
             broadcaster.register(SuggestionObserver.self, observer: self)
             units = settingsManager.settings.units
             percentage = settingsManager.settings.insulinReqPercentage
+            threshold = units == .mmolL ? settingsManager.preferences.threshold_setting.asMmolL : settingsManager.preferences
+                .threshold_setting
 
             if waitForSuggestionInitial {
                 apsManager.determineBasal()
@@ -92,6 +99,11 @@ extension Bolus {
 
                 // Manual Bolus recommendation screen after a carb entry (normally) yields a higher amount than the insulin reqiured amount computed for SMBs (auto boluses). Carbs combined with a manual bolus threfore now (test) uses the Eventual BG for glucose prediction, whereas the insulinReg for SMBs uses the minPredBG for glucose prediction (typically lower than Eventual BG).
 
+                var conversion: Decimal = 1.0
+                if self.units == .mmolL {
+                    conversion = 0.0555
+                }
+
                 self.evBG = self.provider.suggestion?.eventualBG ?? 0
                 self.insulin = self.provider.suggestion?.insulinForManualBolus ?? 0
                 self.target = self.provider.suggestion?.current_target ?? 0
@@ -101,8 +113,14 @@ extension Bolus {
                     self.insulinRecommended = self.insulin * (self.settingsManager.settings.insulinReqPercentage / 100)
                 } else { self.insulinRecommended = self.insulin }
 
-                self.errorString = self.provider.suggestion?.manualBolusErrorString ?? ""
-                if self.errorString.count > 8 { self.error = true }
+                self.errorString = self.provider.suggestion?.manualBolusErrorString ?? 0
+                if self.errorString != 0 {
+                    self.error = true
+                    self.minGuardBG = (self.provider.suggestion?.minGuardBG ?? 0) * conversion
+                    self.minDelta = (self.provider.suggestion?.minDelta ?? 0) * conversion
+                    self.expectedDelta = (self.provider.suggestion?.expectedDelta ?? 0) * conversion
+                    self.minPredBG = (self.provider.suggestion?.minPredBG ?? 0) * conversion
+                } else { self.error = false }
 
                 self.insulinRecommended = self.apsManager
                     .roundBolus(amount: max(self.insulinRecommended, 0))
