@@ -8,7 +8,7 @@
 "%@ dB" = "%@ dB";
 
 /* No comment provided by engineer. */
-"%@ has recovered communication with the pod on your body.\n\nInsulin delivery records have been updated and should match what has actually been delivered.\n\nYou may continue to use %@ normally now." = "%@ відновив зв’язок із Pod на вашому тілі.\n\nЗаписи про доставку інсуліну оновлено та мають збігатися з фактично доставленою.\n\nВи можете продовжувати використовувати %@ у звичайному режимі.";
+"%@ has recovered communication with the pod on your body.\n\nInsulin delivery records have been updated and should match what has actually been delivered.\n\nYou may continue to use %@ normally now." = "%@ відновив зв’язок з Podʼом на вашому тілі.\n\nЗаписи про подачу інсуліну оновлені та мають збігатися з фактично поданими.\n\nВи можете продовжувати використовувати %@ у звичайному режимі.";
 
 /* Format string for delivered insulin. (1: The localized amount)
    Format string for insulin remaining in reservoir. (1: The localized amount) */
@@ -39,7 +39,7 @@
 "%1$@ for %2$@" = "%1$@ для %2$@";
 
 /* Format string for main text of delivery uncertainty recovery page. (1: app name)(2: date of command)(3: app name) */
-"%1$@ has been unable to communicate with the pod on your body since %2$@.\n\nWithout communication with the pod, the app cannot continue to send commands for insulin delivery or display accurate, recent information about your active insulin or the insulin being delivered by the Pod.\n\nMonitor your glucose closely for the next 6 or more hours, as there may or may not be insulin actively working in your body that %3$@ cannot display." = "%1$@ не може зв’язатися з pod на вашому тілі з %2$@.\n\nБез зв’язку з pod програма не може продовжувати надсилати команди для доставки інсуліну або відображати точну, останню інформацію про ваш активний інсулін або інсуліну, який постачає Pod.\n\nУважно стежте за своїм рівнем глюкози протягом наступних 6 або більше годин, оскільки у вашому організмі може активно працювати або не працювати інсулін, який %3$@ не може відобразити.";
+"%1$@ has been unable to communicate with the pod on your body since %2$@.\n\nWithout communication with the pod, the app cannot continue to send commands for insulin delivery or display accurate, recent information about your active insulin or the insulin being delivered by the Pod.\n\nMonitor your glucose closely for the next 6 or more hours, as there may or may not be insulin actively working in your body that %3$@ cannot display." = "%1$@ не зміг зв’язатись з Podʼом на вашому тілі з %2$@.\n\nБез зв’язку з Podʼом програма не може продовжувати надсилати команди для подачі інсуліну або відображати точну, останню інформацію про ваш активний інсулін або інсулін, який подає Pod.\n\nУважно стежте за своїм рівнем глюкози протягом наступних 6 або більше годин, оскільки у вашому організмі може активно працювати або не працювати інсулін, який %3$@ не може відобразити.";
 
 /* Accessibility format string for (1: localized volume)(2: time) */
 "%1$@ units remaining at %2$@" = "%1$@ одиниць залишилося на %2$@";
