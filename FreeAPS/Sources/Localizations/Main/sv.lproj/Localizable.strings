@@ -1370,6 +1370,10 @@ Enact a temp Basal or a temp target */
 
 /* Bolus pop-up / Alert string. Make translations concise! */
 "Minimum predicted Glucose is " = "Lägsta prognos är ";
+
+/* Add insulin without bolusing alert */
+" without bolusing" = " utan att ge insulin";
+
 /* -------------------------------------------------------------------------------------------
   DASH strings
 */

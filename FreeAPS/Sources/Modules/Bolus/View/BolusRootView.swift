@@ -96,9 +96,9 @@ extension Bolus {
                         Alert(
                             title: Text("Are you sure?"),
                             message: Text(
-                                "Add" + formatter
+                                "Add " + formatter
                                     .string(from: state.amount as NSNumber)! + NSLocalizedString(" U", comment: "Insulin unit") +
-                                    NSLocalizedString(" without bolusing", comment: "")
+                                    NSLocalizedString(" without bolusing", comment: "Add insulin without bolusing alert")
                             ),
                             primaryButton: .destructive(
                                 Text("Add"),
