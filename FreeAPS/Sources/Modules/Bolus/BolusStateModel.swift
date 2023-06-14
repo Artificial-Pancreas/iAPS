@@ -7,6 +7,7 @@ extension Bolus {
         @Injected() var apsManager: APSManager!
         @Injected() var broadcaster: Broadcaster!
         @Injected() var pumpHistoryStorage: PumpHistoryStorage!
+      
         @Published var amount: Decimal = 0
         @Published var insulinRecommended: Decimal = 0
         @Published var insulinRequired: Decimal = 0
@@ -14,7 +15,6 @@ extension Bolus {
         @Published var manual: Bool = false
         @Published var error: Bool = false
         @Published var errorString: Decimal = 0
-
         @Published var evBG: Int = 0
         @Published var insulin: Decimal = 0
         @Published var target: Decimal = 0
@@ -25,7 +25,6 @@ extension Bolus {
         @Published var minDelta: Decimal = 0
         @Published var expectedDelta: Decimal = 0
         @Published var minPredBG: Decimal = 0
-
         @Published var units: GlucoseUnits = .mmolL
 
         var waitForSuggestionInitial: Bool = false
