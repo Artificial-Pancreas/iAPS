@@ -143,7 +143,7 @@
 "Save" = "Lagre";
 
 /*  */
-"Save as preset" = "Lagre som forhåndsinnstilling";
+"Save as Preset" = "Lagre som forvalg";
 
 /* Delete Meal Preset */
 "Delete Preset" = "Slette forvalg";
@@ -260,7 +260,7 @@ Enact a temp Basal or a temp target */
 /* */
 "Manual Temp Basal" = "Manuell basal";
 
-/* Allow uploads tp NS */
+/* Allow uploads to different services */
 "Allow uploads" = "Tillat opplastinger";
 
 /* API secret in NS */
@@ -1306,17 +1306,38 @@ Enact a temp Basal or a temp target */
 /* Hide pop-up */
 "Hide" = "Skjul";
 
-/* Error string 1. Make translation very short! */
-"Predicted Glucose, %@ %@, is below threshold (%@!)" = "Beregnet blodsukker, %@ %@, er lavere enn terskelverdien (%@!)";
+/* Bolus pop-up / Alert string. Make translations concise! */
+"Predicted Glucose, " = "Predicted Glucose, ";
 
-/* Error string 2. Make translation very short! */
-"Eventual Glucose > Target Glucose, but glucose is falling faster than expected. Expected: %@. Falling: %@" = "Beregnet blodsukker > Blodsukkermål, men blodsukkeret synker raskere enn forventet. Forventet: %@. Synker: %@";
+/* Bolus pop-up / Alert string. Make translations concise! */
+"is predicted below threshold " = "is predicted below threshold ";
 
-/* Error string 3. Make translation very short! */
-"Minimum predicted Glucose is %@ %@" = "Laveste beregnet blodsukker er %@ %@";
+/* Bolus pop-up / Alert string. Make translations concise! */
+"is below Threshold of " = "is below Threshold of ";
 
-/* Error string 4. Make translation very short! */
-"Predicted Glucose %@ %@, is below Threshold of %@" = "Beregnet blodsukker %@ %@, er lavere enn terskelverdien på %@";
+/* Bolus pop-up / Alert string. Make translations concise! */
+"Eventual Glucose > Target Glucose, but glucose is climbing slower than expected. Expected: " = "Eventual Glucose > Target Glucose, but glucose is climbing slower than expected. Expected: ";
+
+//* Bolus pop-up / Alert string. Make translations concise! */
+". Climbing: " = ". Climbing: ";
+
+/* Bolus pop-up / Alert string. Make translations concise! */
+"Eventual Glucose > Target Glucose, but glucose is falling slower than expected. Expected: " = "Eventual Glucose > Target Glucose, but glucose is falling slower than expected. Expected: ";
+
+/* Bolus pop-up / Alert string. Make translations concise! */
+". Falling: " = ". Falling: ";
+
+/* Bolus pop-up / Alert string. Make translations concise! */
+"Eventual Glucose > Target Glucose, but glucose is changing faster than expected. Expected: " = "Eventual Glucose > Target Glucose, but glucose is changing faster than expected. Expected: ";
+
+/* Bolus pop-up / Alert string. Make translations concise! */
+". Changing: " = ". Changing: ";
+
+/* Bolus pop-up / Alert string. Make translations concise! */
+"Minimum predicted Glucose is " = "Minimum predicted Glucose is ";
+
+/* Add insulin without bolusing alert */
+" without bolusing" = " without bolusing";
 
 /* -------------------------------------------------------------------------------------------
   DASH strings
