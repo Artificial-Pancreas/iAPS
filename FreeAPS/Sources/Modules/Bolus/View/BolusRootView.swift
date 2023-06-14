@@ -231,6 +231,7 @@ extension Bolus {
                         Divider()
                     }.padding(.horizontal, 10)
                 }
+                // Footer
                 if !(state.error && state.insulinRecommended > 0) {
                     VStack {
                         Text(
