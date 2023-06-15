@@ -16,7 +16,6 @@ extension AddCarbs {
         @Published var dish: String = ""
         @Published var selection: Presets?
         @Published var summation: [String] = []
-        @Published var manualBolus: Bool = false
 
         let coredataContext = CoreDataStack.shared.persistentContainer.viewContext
 
@@ -109,8 +108,7 @@ extension AddCarbs {
                 apsManager.determineBasalSync()
                 showModal(for: nil)
             } else {
-                manualBolus.toggle()
-                showModal(for: .bolus(waitForSuggestion: true, manualBolus: manualBolus))
+                showModal(for: .bolus(waitForSuggestion: true))
             }
         }
 

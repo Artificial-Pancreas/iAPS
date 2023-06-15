@@ -5,7 +5,6 @@ extension Bolus {
     struct RootView: BaseView {
         let resolver: Resolver
         let waitForSuggestion: Bool
-        let manualBolus: Bool
         @StateObject var state = StateModel()
 
         @State private var isAddInsulinAlertPresented = false
@@ -96,7 +95,7 @@ extension Bolus {
                         Alert(
                             title: Text("Are you sure?"),
                             message: Text(
-                                "Add " + formatter
+                                NSLocalizedString("Add", comment: "Add insulin without bolusing alert") + " " + formatter
                                     .string(from: state.amount as NSNumber)! + NSLocalizedString(" U", comment: "Insulin unit") +
                                     NSLocalizedString(" without bolusing", comment: "Add insulin without bolusing alert")
                             ),
@@ -132,7 +131,7 @@ extension Bolus {
             .alert(isPresented: $displayError) {
                 Alert(
                     title: Text("Warning!"),
-                    message: Text("\n" + NSLocalizedString(state.errorString, comment: "") + NSLocalizedString(
+                    message: Text("\n" + alertString() + NSLocalizedString(
                         "\n\nTap 'Add' to continue with selected amount.",
                         comment: "Alert text to confirm bolus amount to add"
                     )),
@@ -150,7 +149,6 @@ extension Bolus {
                 configureView {
                     state.waitForSuggestionInitial = waitForSuggestion
                     state.waitForSuggestion = waitForSuggestion
-                    state.manual = manualBolus
                 }
             }
             .navigationTitle("Enact Bolus")
@@ -196,6 +194,10 @@ extension Bolus {
                             Text("%").foregroundColor(.secondary)
                         }
                     }
+                    HStack {
+                        Text("Formula =")
+                        Text("(Eventual Glucose - Target) / ISF")
+                    }.foregroundColor(.secondary).italic().padding(.top, 5)
                 }
                 .font(.footnote)
                 .padding(.top, 10)
@@ -206,11 +208,10 @@ extension Bolus {
                         " U",
                         comment: "Unit in number of units delivered (keep the space character!)"
                     )
-                    Text("(Eventual Glucose - Target) / ISF =").font(.callout).italic()
                     let color: Color = (state.percentage != 100 && state.insulin > 0) ? .secondary : .blue
                     let fontWeight: Font.Weight = (state.percentage != 100 && state.insulin > 0) ? .regular : .bold
                     HStack {
-                        Text(" = ").font(.callout)
+                        Text(NSLocalizedString("Insulin recommended", comment: "") + ":").font(.callout)
                         Text(state.insulin.formatted() + unit).font(.callout).foregroundColor(color).fontWeight(fontWeight)
                     }
                     if state.percentage != 100, state.insulin > 0 {
@@ -231,6 +232,7 @@ extension Bolus {
                         Divider()
                     }.padding(.horizontal, 10)
                 }
+                // Footer
                 if !(state.error && state.insulinRecommended > 0) {
                     VStack {
                         Text(
@@ -257,25 +259,25 @@ extension Bolus {
             switch state.errorString {
             case 1:
                 return NSLocalizedString(
-                    "Predicted Glucose, ",
+                    "Eventual Glucose > Target Glucose, but glucose, ",
                     comment: "Bolus pop-up / Alert string. Make translations concise!"
                 ) + state.minGuardBG
                     .formatted(.number.grouping(.never).rounded().precision(.fractionLength(fractionDigits))) + " " + state.units
                     .rawValue + ", " +
                     NSLocalizedString(
-                        "is predicted below threshold ",
+                        "is predicted below Threshold of ",
                         comment: "Bolus pop-up / Alert string. Make translations concise!"
                     ) + state
                     .threshold.formatted(.number.grouping(.never).rounded().precision(.fractionLength(fractionDigits))) + "!"
             case 2:
                 return NSLocalizedString(
-                    "Predicted Glucose, ",
+                    "Eventual Glucose > Target Glucose, but glucose, ",
                     comment: "Bolus pop-up / Alert string. Make translations concise!"
                 ) + state.minGuardBG
                     .formatted(.number.grouping(.never).rounded().precision(.fractionLength(fractionDigits))) + " " + state.units
                     .rawValue + ", " +
                     NSLocalizedString(
-                        "is below Threshold of ",
+                        "is predicted below Threshold of ",
                         comment: "Bolus pop-up / Alert string. Make translations concise!"
                     ) + state
                     .threshold.formatted(.number.grouping(.never).rounded().precision(.fractionLength(fractionDigits)))
@@ -290,7 +292,7 @@ extension Bolus {
                     .minDelta.formatted(.number.grouping(.never).rounded().precision(.fractionLength(fractionDigits)))
             case 4:
                 return NSLocalizedString(
-                    "Eventual Glucose > Target Glucose, but glucose is falling slower than expected. Expected: ",
+                    "Eventual Glucose > Target Glucose, but glucose is falling faster than expected. Expected: ",
                     comment: "Bolus pop-up / Alert string. Make translations concise!"
                 ) +
                     state.expectedDelta
@@ -308,7 +310,7 @@ extension Bolus {
                     .minDelta.formatted(.number.grouping(.never).rounded().precision(.fractionLength(fractionDigits)))
             case 6:
                 return NSLocalizedString(
-                    "Minimum predicted Glucose is ",
+                    "Eventual Glucose > Target Glucose, but glucose is predicted to drop down to ",
                     comment: "Bolus pop-up / Alert string. Make translations concise!"
                 ) + state
                     .minPredBG
