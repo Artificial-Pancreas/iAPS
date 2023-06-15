@@ -39,7 +39,7 @@
 "%1$@ for %2$@" = "%1$@ i %2$@";
 
 /* Format string for main text of delivery uncertainty recovery page. (1: app name)(2: date of command)(3: app name) */
-"%1$@ has been unable to communicate with the pod on your body since %2$@.\n\nWithout communication with the pod, the app cannot continue to send commands for insulin delivery or display accurate, recent information about your active insulin or the insulin being delivered by the Pod.\n\nMonitor your glucose closely for the next 6 or more hours, as there may or may not be insulin actively working in your body that %3$@ cannot display." = "%1$@ har inte kunnat kommunicera med podden på din kropp sedan %2$@.\n\nUtan kommunikation med podden, kan appen inte fortsätta att skicka kommandon för insulin eller visa korrekt och aktuell information om ditt aktiva insulin eller insulin som ges av podd.\n\nÖvervaka dina blodsockervärden noga under de kommande 6 timmarna, eftersom det kan finnas aktivt insulin som %3$@ inte kan visa.";
+"%1$@ has been unable to communicate with the pod on your body since %2$@.\n\nWithout communication with the pod, the app cannot continue to send commands for insulin delivery or display accurate, recent information about your active insulin or the insulin being delivered by the Pod.\n\nMonitor your glucose closely for the next 6 or more hours, as there may or may not be insulin actively working in your body that %3$@ cannot display." = "%1$@ har inte kunnat kommunicera med podden på din kropp sedan %2$@.\n\nUtan kommunikation med podden kan appen inte fortsätta att skicka kommandon för insulin eller visa korrekt och aktuell information om ditt aktiva insulin eller insulin som ges av podd.\n\nÖvervaka dina blodsockervärden noga under de kommande 6 timmarna, eftersom det kan finnas aktivt insulin som %3$@ inte kan visa.";
 
 /* Accessibility format string for (1: localized volume)(2: time) */
 "%1$@ units remaining at %2$@" = "%1$@ enheter återstår kl. %2$@";
@@ -120,10 +120,10 @@
 "Cancel Manual Basal" = "Avbryt manuell basal";
 
 /* Insert cannula action button accessibility label when cannula insertion succeeded */
-"Cannula inserted successfully. Continue." = "Nålen infördes framgångsrikt. Fortsätt.";
+"Cannula inserted successfully. Continue." = "Kanyl nu införd. Fortsätt.";
 
 /* The action string on pod status page when pod expired */
-"Change Pod now. Insulin delivery will stop 8 hours after the Pod has expired or when no more insulin remains." = "Byt podd nu. Insulintillförsel kommer att upphöra 8 timmar efter att podd går ut eller tills att inget insulin återstår.";
+"Change Pod now. Insulin delivery will stop 8 hours after the Pod has expired or when no more insulin remains." = "Byt podd nu. Insulintillförsel kommer att upphöra 8 timmar efter att podd går ut eller så snart insulinet är slut.";
 
 /* Format string for the action string on pod status page when pod expired. (1: service time remaining) */
 "Change Pod now. Insulin delivery will stop in %1$@ or when no more insulin remains." = "Byt podd nu. Insulintillförsel kommer att stoppas om %1$@ eller när insulinet är slut.";
@@ -141,13 +141,13 @@
 "Check Pod, apply to site, then confirm pod attachment." = "Kontrollera din podd, sätt fast den och bekräfta sedan att den sitter bra.";
 
 /* Insert cannula action button accessibility label checking insertion */
-"Checking Insertion" = "Kontrollerar nålinförsel";
+"Checking Insertion" = "Kontrollerar kanylinförsel";
 
 /* Cannula insertion button text while checking insertion */
 "Checking..." = "Kontrollerar...";
 
 /* Title for uncertainty recovered screen */
-"Comms Recovered" = "Återställning av kommandon";
+"Comms Recovered" = "Återställning av kommunikationen";
 
 /* Text for confidence reminders navigation link */
 "Confidence Reminders" = "Bekräftelseljud";
