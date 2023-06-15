@@ -1311,10 +1311,10 @@ Enact a temp Basal or a temp target */
 "Hide" = "Hide";
 
 /* Bolus pop-up / Alert string. Make translations concise! */
-"Eventual Glucose > Target Glucose, but glucose, " = "Eventual Glucose > Target Glucose, but glucose, ";
+"Eventual Glucose > Target Glucose, but glucose is predicted to drop down to " = "Eventual Glucose > Target Glucose, but glucose is predicted to drop down to ";
 
 /* Bolus pop-up / Alert string. Make translations concise! */
-"is predicted below Threshold of " = "is predicted below Threshold of ";
+"which is below your Threshold (" = "which is below your Threshold (";
 
 /* Bolus pop-up / Alert string. Make translations concise! */
 "Eventual Glucose > Target Glucose, but glucose is climbing slower than expected. Expected: " = "Eventual Glucose > Target Glucose, but glucose is climbing slower than expected. Expected: ";
