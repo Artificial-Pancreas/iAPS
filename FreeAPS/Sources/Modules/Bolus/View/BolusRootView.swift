@@ -95,7 +95,7 @@ extension Bolus {
                         Alert(
                             title: Text("Are you sure?"),
                             message: Text(
-                                "Add " + formatter
+                                NSLocalizedString("Add", comment: "Add insulin without bolusing alert") + " " + formatter
                                     .string(from: state.amount as NSNumber)! + NSLocalizedString(" U", comment: "Insulin unit") +
                                     NSLocalizedString(" without bolusing", comment: "Add insulin without bolusing alert")
                             ),
@@ -256,25 +256,25 @@ extension Bolus {
             switch state.errorString {
             case 1:
                 return NSLocalizedString(
-                    "Predicted Glucose, ",
+                    "Eventual Glucose > Target Glucose, but glucose, ",
                     comment: "Bolus pop-up / Alert string. Make translations concise!"
                 ) + state.minGuardBG
                     .formatted(.number.grouping(.never).rounded().precision(.fractionLength(fractionDigits))) + " " + state.units
                     .rawValue + ", " +
                     NSLocalizedString(
-                        "is predicted below threshold ",
+                        "is predicted below threshold of ",
                         comment: "Bolus pop-up / Alert string. Make translations concise!"
                     ) + state
                     .threshold.formatted(.number.grouping(.never).rounded().precision(.fractionLength(fractionDigits))) + "!"
             case 2:
                 return NSLocalizedString(
-                    "Predicted Glucose, ",
+                    "Eventual Glucose > Target Glucose, but glucose, ",
                     comment: "Bolus pop-up / Alert string. Make translations concise!"
                 ) + state.minGuardBG
                     .formatted(.number.grouping(.never).rounded().precision(.fractionLength(fractionDigits))) + " " + state.units
                     .rawValue + ", " +
                     NSLocalizedString(
-                        "is below Threshold of ",
+                        "is predicted below Threshold of ",
                         comment: "Bolus pop-up / Alert string. Make translations concise!"
                     ) + state
                     .threshold.formatted(.number.grouping(.never).rounded().precision(.fractionLength(fractionDigits)))
@@ -289,7 +289,7 @@ extension Bolus {
                     .minDelta.formatted(.number.grouping(.never).rounded().precision(.fractionLength(fractionDigits)))
             case 4:
                 return NSLocalizedString(
-                    "Eventual Glucose > Target Glucose, but glucose is falling slower than expected. Expected: ",
+                    "Eventual Glucose > Target Glucose, but glucose is falling faster than expected. Expected: ",
                     comment: "Bolus pop-up / Alert string. Make translations concise!"
                 ) +
                     state.expectedDelta
@@ -307,7 +307,7 @@ extension Bolus {
                     .minDelta.formatted(.number.grouping(.never).rounded().precision(.fractionLength(fractionDigits)))
             case 6:
                 return NSLocalizedString(
-                    "Minimum predicted Glucose is ",
+                    "Eventual Glucose > Target Glucose, but glucose is predicted to drop down to ",
                     comment: "Bolus pop-up / Alert string. Make translations concise!"
                 ) + state
                     .minPredBG
