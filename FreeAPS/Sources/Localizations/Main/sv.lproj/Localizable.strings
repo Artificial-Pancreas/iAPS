@@ -47,10 +47,10 @@
 "Enacted at" = "Utfört klockan";
 
 /* Headline in suggested pop up (at: at what time) */
-"Suggested at" = "Föreslaget klockan";
+"Suggested at" = "Föreslaget vid";
 
 /* Headline in enacted pop up (at: at what time) */
-"Error at" = "Fel klockan";
+"Error at" = "Fel vid";
 
 /* Home title */
 "Home" = "Hem";
@@ -146,7 +146,7 @@
 "Save as Preset" = "Spara som förval";
 
 /* Delete Meal Preset */
-"Delete Preset" = "Radera Förval";
+"Delete Preset" = "Radera förval";
 
 /* Confirm Deletion */
 "Delete preset '%@'?" = "Radera förval '%@'?";
@@ -260,7 +260,7 @@ Enact a temp Basal or a temp target */
 /* */
 "Manual Temp Basal" = "Manuell temporär basal";
 
-/* Allow uploads tp NS */
+/* Allow uploads to different services */
 "Allow uploads" = "Tillåt uppladdning";
 
 /* API secret in NS */
@@ -1143,9 +1143,6 @@ Enact a temp Basal or a temp target */
 /* Display fat and protein entities */
 "Fat & Protein" = "Fett & protein";
 
-/* FPU Setttings Title */
-"Fat and Protein" = "Omvandling";
-
 /* */
 "Hide Fat & Protein" = "Dölj fett & protein";
 
@@ -1167,7 +1164,6 @@ Enact a temp Basal or a temp target */
 /* */
 "Normal " = "Normal ";
 
-/* */
 "Currently no Override active" = "Inget undantag aktivt";
 
 /* */
@@ -1274,37 +1270,6 @@ Enact a temp Basal or a temp target */
 
 /* */
 "Name Of Dish" = "Namn på rätt";
-"Currently no Override active" = "Inget undantag aktivt";
-
-/* */
-"Total Insulin Adjustment" = "Total justering av ditt insulinbehov";
-
-/* */
-"Override your Basal, ISF, CR and Target profiles" = "Ändra sparad basal, korrektionsfaktor, insulinkvot and målvärde med ett tillfäligt undantag";
-
-/* */
-"Enable indefinitely" = "Aktivera tillsvidare";
-
-/* */
-"Override Profiles" = "Aktivera tillfälligt undantag";
-
-/* */
-"Override Profile Target" = "Ändra målvärde";
-
-/* */
-"Disable SMBs" = "Stäng av autobolusar (SMBs)";
-
-/* */
-"Your profile basal insulin will be adjusted with the override percentage and your profile ISF and CR will be inversly adjusted with the percentage.\n\nIf you toggle off the override every profile setting will return to normal." = "Your profile basal insulin will be adjusted with the override percentage and your profile ISF and CR will be inversly adjusted with the percentage.\n\nIf you toggle off the override every profile setting will return to normal.";
-
-/* Service Section */
-"App Icons" = "Ikoner";
-
-/* */
-"iAPS Icon" = "iAPS - ikon";
-
-/* Service Section */
-"Statistics and Home View" = "Statistik och Diagram";
 
 /* Save Carbs and continue to bolus recommendation */
 "Save and continue" = "Spara och fortsätt";
@@ -1313,8 +1278,8 @@ Enact a temp Basal or a temp target */
 "Save as Preset" = "Spara som förval";
 
 /* ----------------------- New Bolus Calculator ---------------------------*/
-
 /* Warning about bolus recommendation. Title */
+
 "Warning!" = "Varning!";
 
 /* Alert to confirm bolus amount to add */
@@ -1345,7 +1310,7 @@ Enact a temp Basal or a temp target */
 "Hide" = "Göm";
 
 /* Bolus pop-up / Alert string. Make translations concise! */
-"Eventual Glucose > Target Glucose, but glucose is predicted to first drop down to " = "Prognos 'r över målvärde, men ditt blodoscker väntas först sjunka till ";
+"Eventual Glucose > Target Glucose, but glucose is predicted to drop down to " = "Eventual Glucose > Target Glucose, but glucose is predicted to first drop down to ";
 
 /* Bolus pop-up / Alert string. Make translations concise! */
 "which is below your Threshold (" = "vilket är lägre än ditt tröskelvärde (";
@@ -1363,7 +1328,7 @@ Enact a temp Basal or a temp target */
 ". Falling: " = ". Sjunker: ";
 
 /* Bolus pop-up / Alert string. Make translations concise! */
-"Eventual Glucose > Target Glucose, but glucose is changing faster than expected. Expected: " =  "Prognos > målvärde, men blodsocker ändras snabbare än väntat. Förväntat: ";
+"Eventual Glucose > Target Glucose, but glucose is changing faster than expected. Expected: " = "Prognos > målvärde, men blodsocker ändras snabbare än väntat. Förväntat: ";
 
 /* Bolus pop-up / Alert string. Make translations concise! */
 ". Changing: " = ". Ändras: ";
@@ -1513,8 +1478,6 @@ Enact a temp Basal or a temp target */
 /* ----------------------Statistics strings -------------------------------*/
 /* */
 
-/* */
-"Today" = "Idag";
 
 "Today" = "Idag";
 
