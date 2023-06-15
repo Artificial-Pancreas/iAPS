@@ -254,13 +254,13 @@ extension Bolus {
             )
         }
 
-        // Localize the Oref0 error/warning strings
+        // Localize the Oref0 error/warning strings. The default should never be returned
         private func alertString() -> String {
             switch state.errorString {
             case 1,
                  2:
                 return NSLocalizedString(
-                    "Eventual Glucose > Target Glucose, but glucose is predicted to drop down to ",
+                    "Eventual Glucose > Target Glucose, but glucose is predicted to first drop down to ",
                     comment: "Bolus pop-up / Alert string. Make translations concise!"
                 ) + state.minGuardBG
                     .formatted(.number.grouping(.never).rounded().precision(.fractionLength(fractionDigits))) + " " + state.units
@@ -299,7 +299,7 @@ extension Bolus {
                     .minDelta.formatted(.number.grouping(.never).rounded().precision(.fractionLength(fractionDigits)))
             case 6:
                 return NSLocalizedString(
-                    "Eventual Glucose > Target Glucose, but glucose is predicted to drop down to ",
+                    "Eventual Glucose > Target Glucose, but glucose is predicted to first drop down to ",
                     comment: "Bolus pop-up / Alert string. Make translations concise!"
                 ) + state
                     .minPredBG
