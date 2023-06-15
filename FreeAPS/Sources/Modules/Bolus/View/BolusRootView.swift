@@ -257,30 +257,19 @@ extension Bolus {
         // Localize the Oref0 error/warning strings
         private func alertString() -> String {
             switch state.errorString {
-            case 1:
+            case 1,
+                 2:
                 return NSLocalizedString(
-                    "Eventual Glucose > Target Glucose, but glucose, ",
+                    "Eventual Glucose > Target Glucose, but glucose is predicted to drop down to ",
                     comment: "Bolus pop-up / Alert string. Make translations concise!"
                 ) + state.minGuardBG
                     .formatted(.number.grouping(.never).rounded().precision(.fractionLength(fractionDigits))) + " " + state.units
                     .rawValue + ", " +
                     NSLocalizedString(
-                        "is predicted below Threshold of ",
+                        "which is below your Threshold (",
                         comment: "Bolus pop-up / Alert string. Make translations concise!"
                     ) + state
-                    .threshold.formatted(.number.grouping(.never).rounded().precision(.fractionLength(fractionDigits))) + "!"
-            case 2:
-                return NSLocalizedString(
-                    "Eventual Glucose > Target Glucose, but glucose, ",
-                    comment: "Bolus pop-up / Alert string. Make translations concise!"
-                ) + state.minGuardBG
-                    .formatted(.number.grouping(.never).rounded().precision(.fractionLength(fractionDigits))) + " " + state.units
-                    .rawValue + ", " +
-                    NSLocalizedString(
-                        "is predicted below Threshold of ",
-                        comment: "Bolus pop-up / Alert string. Make translations concise!"
-                    ) + state
-                    .threshold.formatted(.number.grouping(.never).rounded().precision(.fractionLength(fractionDigits)))
+                    .threshold.formatted(.number.grouping(.never).rounded().precision(.fractionLength(fractionDigits))) + ")"
             case 3:
                 return NSLocalizedString(
                     "Eventual Glucose > Target Glucose, but glucose is climbing slower than expected. Expected: ",
