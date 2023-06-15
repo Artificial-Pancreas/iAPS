@@ -1620,7 +1620,7 @@ Połączono z Nightscout!";
 
 /* --------------------------------------------------------  Dexcom G7 --------------------------------------*/
 
-"Configuration CGM" = "Configuration CGM";
+"CGM Configuration" = "CGM Configuration";
 
 "Heartbeat" = "Heartbeat";
 
