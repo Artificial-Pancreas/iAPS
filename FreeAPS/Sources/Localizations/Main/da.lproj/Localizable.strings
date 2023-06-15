@@ -1297,8 +1297,11 @@ Enact a temp Basal or a temp target */
 /* */
 "Insulin Sensitivity" = "Insulin Sensitivity";
 
-/* Formuala displayed in Bolus info pop-up*/
-"(Eventual Glucose - Target) / ISF =" = "(Eventual Glucose - Target) / ISF =";
+/* Formula displayed in Bolus info pop-up. Make translation short! */
+"(Eventual Glucose - Target) / ISF" = "(Eventual Glucose - Target) / ISF";
+
+/* */
+"Formula =" = "Formula =";
 
 /* Bolus pop-up footer */
 "Carbs and previous insulin are included in the glucose prediction, but if the Eventual Glucose is lower than the Target Glucose, a bolus will not be recommended." = "Carbs and previous insulin are included in the glucose prediction, but if the Eventual Glucose is lower than the Target Glucose, a bolus will not be recommended.";
@@ -1307,13 +1310,10 @@ Enact a temp Basal or a temp target */
 "Hide" = "Hide";
 
 /* Bolus pop-up / Alert string. Make translations concise! */
-"Predicted Glucose, " = "Predicted Glucose, ";
+"Eventual Glucose > Target Glucose, but glucose, " = "Eventual Glucose > Target Glucose, but glucose, ";
 
 /* Bolus pop-up / Alert string. Make translations concise! */
-"is predicted below threshold " = "is predicted below threshold ";
-
-/* Bolus pop-up / Alert string. Make translations concise! */
-"is below Threshold of " = "is below Threshold of ";
+"is predicted below Threshold of " = "is predicted below Threshold of ";
 
 /* Bolus pop-up / Alert string. Make translations concise! */
 "Eventual Glucose > Target Glucose, but glucose is climbing slower than expected. Expected: " = "Eventual Glucose > Target Glucose, but glucose is climbing slower than expected. Expected: ";
@@ -1322,7 +1322,7 @@ Enact a temp Basal or a temp target */
 ". Climbing: " = ". Climbing: ";
 
 /* Bolus pop-up / Alert string. Make translations concise! */
-"Eventual Glucose > Target Glucose, but glucose is falling slower than expected. Expected: " = "Eventual Glucose > Target Glucose, but glucose is falling slower than expected. Expected: ";
+"Eventual Glucose > Target Glucose, but glucose is falling faster than expected. Expected: " = "Eventual Glucose > Target Glucose, but glucose is falling faster than expected. Expected: ";
 
 /* Bolus pop-up / Alert string. Make translations concise! */
 ". Falling: " = ". Falling: ";
@@ -1334,7 +1334,7 @@ Enact a temp Basal or a temp target */
 ". Changing: " = ". Changing: ";
 
 /* Bolus pop-up / Alert string. Make translations concise! */
-"Minimum predicted Glucose is " = "Minimum predicted Glucose is ";
+"Eventual Glucose > Target Glucose, but glucose is predicted to drop down to " = "Glucose is predicted to drop to";
 
 /* Add insulin without bolusing alert */
 " without bolusing" = " without bolusing";
