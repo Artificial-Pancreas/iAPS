@@ -102,11 +102,6 @@ extension Bolus {
                     conversion = 0.0555
                 }
 
-                var conversion: Decimal = 1.0
-                if self.units == .mmolL {
-                    conversion = 0.0555
-                }
-
                 self.evBG = self.provider.suggestion?.eventualBG ?? 0
                 self.insulin = self.provider.suggestion?.insulinForManualBolus ?? 0
                 self.target = self.provider.suggestion?.current_target ?? 0
