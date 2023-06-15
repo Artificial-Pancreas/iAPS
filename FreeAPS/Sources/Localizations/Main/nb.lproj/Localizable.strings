@@ -1307,37 +1307,37 @@ Enact a temp Basal or a temp target */
 "Hide" = "Skjul";
 
 /* Bolus pop-up / Alert string. Make translations concise! */
-"Predicted Glucose, " = "Predicted Glucose, ";
+"Predicted Glucose, " = "Forventet blodsukker, ";
 
 /* Bolus pop-up / Alert string. Make translations concise! */
-"is predicted below threshold " = "is predicted below threshold ";
+"is predicted below threshold " = "er beregnet til under terskel ";
 
 /* Bolus pop-up / Alert string. Make translations concise! */
-"is below Threshold of " = "is below Threshold of ";
+"is below Threshold of " = "er under terskelen på ";
 
 /* Bolus pop-up / Alert string. Make translations concise! */
-"Eventual Glucose > Target Glucose, but glucose is climbing slower than expected. Expected: " = "Eventual Glucose > Target Glucose, but glucose is climbing slower than expected. Expected: ";
+"Eventual Glucose > Target Glucose, but glucose is climbing slower than expected. Expected: " = "Beregnet blodsukker > Blodsukkermål, men blodsukkeret stiger saktere enn forventet. Forventet: ";
 
 //* Bolus pop-up / Alert string. Make translations concise! */
-". Climbing: " = ". Climbing: ";
+". Climbing: " = ". Stiger: ";
 
 /* Bolus pop-up / Alert string. Make translations concise! */
-"Eventual Glucose > Target Glucose, but glucose is falling slower than expected. Expected: " = "Eventual Glucose > Target Glucose, but glucose is falling slower than expected. Expected: ";
+"Eventual Glucose > Target Glucose, but glucose is falling slower than expected. Expected: " = "Beregnet blodsukker > Blodsukkermål, men blodsukkeret synker saktere enn forventet. Forventet: ";
 
 /* Bolus pop-up / Alert string. Make translations concise! */
-". Falling: " = ". Falling: ";
+". Falling: " = ". Synker: ";
 
 /* Bolus pop-up / Alert string. Make translations concise! */
-"Eventual Glucose > Target Glucose, but glucose is changing faster than expected. Expected: " = "Eventual Glucose > Target Glucose, but glucose is changing faster than expected. Expected: ";
+"Eventual Glucose > Target Glucose, but glucose is changing faster than expected. Expected: " = "Beregnet blodsukker > Blodsukkermål, men blodsukkeret endres raskere enn forventet. Forventet: ";
 
 /* Bolus pop-up / Alert string. Make translations concise! */
-". Changing: " = ". Changing: ";
+". Changing: " = ". Endring: ";
 
 /* Bolus pop-up / Alert string. Make translations concise! */
-"Minimum predicted Glucose is " = "Minimum predicted Glucose is ";
+"Minimum predicted Glucose is " = "Laveste beregnet blodsukker er ";
 
 /* Add insulin without bolusing alert */
-" without bolusing" = " without bolusing";
+" without bolusing" = " uten bolus";
 
 /* -------------------------------------------------------------------------------------------
   DASH strings
