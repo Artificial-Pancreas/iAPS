@@ -1310,7 +1310,7 @@ Enact a temp Basal or a temp target */
 "Hide" = "Göm";
 
 /* Bolus pop-up / Alert string. Make translations concise! */
-"Eventual Glucose > Target Glucose, but glucose is predicted to drop down to " = "Eventual Glucose > Target Glucose, but glucose is predicted to drop down to ";
+"Eventual Glucose > Target Glucose, but glucose is predicted to drop down to " = "Blodsockerprognos är över ditt målvärde, men ditt blodsocker väntas först sjunka ner till ";
 
 /* Bolus pop-up / Alert string. Make translations concise! */
 "which is below your Threshold (" = "vilket är lägre än ditt tröskelvärde (";
