@@ -89,7 +89,7 @@ struct StatsView: View {
                     )
                 }
                 VStack(spacing: 5) {
-                    Text("Sucess").font(.subheadline).foregroundColor(headline)
+                    Text("Success").font(.subheadline).foregroundColor(headline)
                     Text(
                         ((successRate ?? 100) / 100)
                             .formatted(.percent.grouping(.never).rounded().precision(.fractionLength(1)))
