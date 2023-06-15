@@ -24,25 +24,25 @@
 "Resume Insulin" = "Återuppta insulintillförsel";
 
 /* Alert content title for finishSetupReminder pod alert */
-"Pod Pairing Incomplete" = "Parkoppling inte färdig";
+"Pod Pairing Incomplete" = "Parkoppling inte klar";
 
 /* Alert content title for timeOffsetChangeDetected pod alert */
-"Time Change Detected" = "Tidsändring upptäckt";
+"Time Change Detected" = "Tidsjustering upptäckt";
 
 /* Alert content body for multiCommand pod alert */
 "Multiple Command Alert" = "Multipla kommandoaviseringar";
 
 /* Format string for alert content body for userPodExpiration pod alert. (1: time until expiration) */
-"Pod expires in %1$@." = "Podd går ut om %1$@.";
+"Pod expires in %1$@." = "Podden går ut om %1$@.";
 
 /* Alert content body for podExpiring pod alert */
-"Change Pod now. Pod has been active for 72 hours." = "Byt podd nu. Podd har använts i 72 timmar.";
+"Change Pod now. Pod has been active for 72 hours." = "Byt podd nu. Podden har använts i 72 timmar.";
 
 /* Alert content body for podExpireImminent pod alert */
-"Change Pod now. Insulin delivery will stop in 1 hour." = "Byt podd nu. Insulintillförsel stoppas om 1 timme.";
+"Change Pod now. Insulin delivery will stop in 1 hour." = "Byt podd nu. Insulintillförseln stoppas om 1 timme.";
 
 /* Format string for alert content body for lowReservoir pod alert. (1: reminder value) */
-"%1$@ insulin or less remaining in Pod. Change Pod soon." = "%1$@ insulin eller mindre kvar i podd. Byt podd snart.";
+"%1$@ insulin or less remaining in Pod. Change Pod soon." = "%1$@ insulin eller mindre kvar i podd. Överväg att byta podd snart.";
 
 /* Alert content body for suspendInProgress pod alert */
 "Suspend In Progress Reminder" = "Påminnelse om pausad pump";
@@ -51,7 +51,7 @@
 "The insulin suspension period has ended.\n\nYou can resume delivery from the banner on the home screen or from your pump settings screen. You will be reminded again in 15 minutes." = "Planerad period av paus av pump är slut.\n\nDu kan återuppta insulintillförsel i pumpinställningar. Du kommer bli påmind igen om 15 minuter.";
 
 /* Alert content body for finishSetupReminder pod alert */
-"Please finish pairing your pod." = "Vänligen avsluta parkopplingen av din podd.";
+"Please finish pairing your pod." = "Du behöver göra färdigt parkopplingen av din podd.";
 
 /* Alert content body for timeOffsetChangeDetected pod alert */
 "The time on your pump is different from the current time. You can review the pump time and and sync to current time in settings." = "Tiden på din pump skiljer sig från den aktuella tiden. Du kan granska pumpens tid och synkronisera till aktuell tid i pumpinställningar.";
@@ -63,7 +63,7 @@
 "Ok" = "OK";
 
 /* Label for pod life state when pod not fully activated */
-"Unfinished Activation" = "Aktivering inte färdig";
+"Unfinished Activation" = "Har inte blivit färdigaktiverad";
 
 /* Label for pod life state when time remaining */
 "Pod expires in" = "Podd går ut om";
@@ -84,10 +84,10 @@
 "Suspend Insulin Delivery" = "Pausa insulintillförsel";
 
 /* Label for pod life state when within pod expiration window */
-"Pod expired" = "Podd har utgått";
+"Pod expired" = "Podden har gått ut";
 
 /* Label for pod life state when pod not fully deactivated */
-"Unfinished deactivation" = "Inaktivering inte färdig";
+"Unfinished deactivation" = "Inaktivering inte färdigställd";
 
 /* Label for pod life state when no pod paired */
 "No Pod" = "Ingen podd";
@@ -102,10 +102,10 @@
 "Pairing." = "Parkopplar.";
 
 /* Pairing action button accessibility label while priming */
-"Priming. Please wait." = "Fyller podd. Vänligen vänta.";
+"Priming. Please wait." = "Fyller podden. Vänligen vänta.";
 
 /* Pairing action button accessibility label when pairing succeeded */
-"Pod paired successfully. Continue." = "Podd har parkopplats. Fortsätt.";
+"Pod paired successfully. Continue." = "Podden har parkopplats. Fortsätt.";
 
 /* Settings page link description when next lifecycle action is to finish deactivation */
 "Finish deactivation" = "Avsluta inaktivering";
@@ -159,16 +159,16 @@
 "Replace Pod" = "Byt podd";
 
 /* Label for pod life state when pod not fully activated */
-"Unfinished Activation" = "Aktivering inte färdig";
+"Unfinished Activation" = "Har inte blivit färdigaktiverad";
 
 /* Label for pod life state when time remaining */
 "Pod expires in" = "Podd går ut om";
 
 /* Label for pod life state when within pod expiration window */
-"Pod expired" = "Podd har utgått";
+"Pod expired" = "Podden har gått ut";
 
 /* Label for pod life state when pod not fully deactivated */
-"Unfinished deactivation" = "Inaktivering inte färdig";
+"Unfinished deactivation" = "Inaktivering inte färdigställd";
 
 /* Label for pod life state when no pod paired */
 "No Pod" = "Ingen podd";
