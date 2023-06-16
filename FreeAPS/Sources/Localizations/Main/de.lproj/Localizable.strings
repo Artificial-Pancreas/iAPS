@@ -1299,7 +1299,7 @@ Enact a temp Basal or a temp target */
 "(Eventual Glucose - Target) / ISF" = "(Eventual Glucose - Target) / ISF";
 
 /* */
-"Formula =" = "Formula =";
+"Formula:" = "Formula:";
 
 /* Bolus pop-up footer */
 "Carbs and previous insulin are included in the glucose prediction, but if the Eventual Glucose is lower than the Target Glucose, a bolus will not be recommended." = "Kohlenhydrate und vorheriges Insulin sind in der Glukose-Vorhersage enthalten aber wenn das Endergebnis niedriger als das Target-Glukose ist, wird ein Bolus nicht empfohlen.";
