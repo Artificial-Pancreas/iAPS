@@ -1301,7 +1301,7 @@ Enact a temp Basal or a temp target */
 "(Eventual Glucose - Target) / ISF" = "(Blodsockerprognos - Målvärde) / ISF";
 
 /* */
-"Formula =" = "Formel =";
+"Formula:" = "Formel =";
 
 /* Bolus pop-up footer */
 "Carbs and previous insulin are included in the glucose prediction, but if the Eventual Glucose is lower than the Target Glucose, a bolus will not be recommended." = "Kolhydrater och tidigare insulin ingår i prognos, men om prognos är lägre än målvärde kommer ingen bolus att föreslås.";
