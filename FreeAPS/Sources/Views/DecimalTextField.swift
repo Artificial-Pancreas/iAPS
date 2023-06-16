@@ -67,7 +67,9 @@ struct DecimalTextField: UIViewRepresentable {
         let coordinator = context.coordinator
         if coordinator.isEditing {
             coordinator.resetEditing()
-        } else if value != 0 {
+        } else if value == 0 {
+            textField.text = ""
+        } else {
             textField.text = formatter.string(for: value)
         }
     }

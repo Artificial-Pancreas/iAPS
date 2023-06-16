@@ -93,10 +93,10 @@
 "No Pod" = "Geen Pod";
 
 /* Settings page link description when next lifecycle action is to pair new pod */
-"Pair Pod" = "Koppel pod";
+"Pair Pod" = "Koppel Pod";
 
 /* Pairing action button accessibility label while ready to pair */
-"Pair pod." = "Koppel pod.";
+"Pair pod." = "Koppel Pod.";
 
 /* Pairing action button accessibility label while pairing */
 "Pairing." = "Verbinden….";
@@ -111,7 +111,7 @@
 "Finish deactivation" = "Voltooi de deactivering";
 
 /* Settings page link description when next lifecycle action is to replace pod */
-"Replace Pod" = "Vervang pod";
+"Replace Pod" = "Vervang Pod";
 
 /* Unit for singular day in pod life remaining */
 "day" = "dag";
@@ -153,10 +153,10 @@
 "Finish deactivation" = "Voltooi de deactivering";
 
 /* Settings page link description when next lifecycle action is to replace pod */
-"Replace Pod" = "Vervang pod";
+"Replace Pod" = "Vervang Pod";
 
 /* Settings page link description when next lifecycle action is to replace pod */
-"Replace Pod" = "Vervang pod";
+"Replace Pod" = "Vervang Pod";
 
 /* Label for pod life state when pod not fully activated */
 "Unfinished Activation" = "Onvoltooide activering";
@@ -183,10 +183,10 @@
 "Remaining" = "Resterend";
 
 /* Label indicating pod replacement necessary */
-"Replace Pod" = "Vervang pod";
+"Replace Pod" = "Vervang Pod";
 
 /* Error message shown when no pod is paired */
-"No pod paired" = "Geen pod verbonden";
+"No pod paired" = "Geen Pod verbonden";
 
 /* Error message shown when user cannot pair because pod is already paired */
 "Pod already paired" = "Pod reeds verbonden";
@@ -201,7 +201,7 @@
 "Invalid Setting" = "Ongeldige instelling";
 
 /* Recovery suggestion shown when no pod is paired */
-"Please pair a new pod" = "Verbind een nieuwe pod";
+"Please pair a new pod" = "Verbind een nieuwe Pod";
 
 /* Generic title of the OmniBLE pump manager */
 "Omnipod DASH" = "Omnipod DASH";
@@ -348,7 +348,7 @@
 "Yes, Sync to Current Time" = "Ja, zet naar huidige tijd";
 
 /* Button text to cancel pump time sync */
-"No, Keep Pump As Is" = "Nee, Pomp laten zoals hij is";
+"No, Keep Pump As Is" = "Nee, pomp laten zoals hij is";
 
 /* Title for Omnipod DASH PumpManager deletion action sheet. */
 "Remove Pump" = "Verwijder Pod";
@@ -400,7 +400,7 @@
 "Please deactivate the pod. When deactivation is complete, you may pair a new pod." = "Deactiveer de pod. Wanneer de deactivering voltooid is, kunt u hem verwijderen en een nieuwe pod koppelen.";
 
 /* Deactivate pod action button */
-"Deactivate Pod" = "Deactiveer pod";
+"Deactivate Pod" = "Deactiveer Pod";
 
 /* Deactivate pod action button accessibility label while deactivating */
 "Deactivating." = "Deactiveren";
@@ -571,7 +571,7 @@
 "Critical Alerts" = "Kritieke waarschuwingen";
 
 /* Description text for critical alerts */
-"The reminders above will not sound if your device is in Silent or Do Not Disturb mode.\n\nThere are other critical Pod alerts and alarms that will sound even if you device is set to Silent or Do Not Disturb mode." = "De bovenstaande herinneringen waarschuwen zonder geluid als uw apparaat in de modus Stil of Niet storen staat.\n\nEr zijn nog andere belangrijke Pod waarschuwingen en -alarmen die klinken, zelfs als uw apparaat in de modus Stil of Niet storen staat.";
+"The reminders above will not sound if your device is in Silent or Do Not Disturb mode.\n\nThere are other critical Pod alerts and alarms that will sound even if your device is set to Silent or Do Not Disturb mode." = "De bovenstaande meldingen waarschuwen zonder geluid als uw apparaat in de modus Stil of Niet storen staat.\n\nEr zijn andere belangrijke Pod waarschuwingen en -alarmen die wel klinken, zelfs als uw apparaat in de modus Stil of Niet storen staat.";
 /* navigation title for notification settings */
 "Notification Settings" = "Instellingen voor meldingen";
 
@@ -585,7 +585,7 @@
 "Low Reservoir Reminder" = "Laag reservoir herinnering";
 
 /* The action string on pod status page when pod data is stale */
-"Make sure your phone and pod are close to each other. If communication issues persist, move to a new area." = "Zorg ervoor dat je telefoon en pod dicht bij elkaar liggen. Als communicatieproblemen aanhouden, ga dan naar een nieuw gebied.";
+"Make sure your phone and pod are close to each other. If communication issues persist, move to a new area." = "Zorg ervoor dat je iPhone en Pod dicht bij elkaar liggen. Als communicatieproblemen aanhouden, ga dan naar een nieuw gebied.";
 /* Format string for the action string on pod status page when pod expired. (1: service time remaining) */
 "Change Pod now. Insulin delivery will stop in %1$@ or when no more insulin remains." = "Verander Pod nu. Insuline levering stopt over %1$@ of wanneer er geen insuline meer over is.";
 
@@ -782,3 +782,6 @@
 
 /* Recovery suggestion when operation could not be completed due to existing temp basal in progress */
 "Wait for existing temp basal to finish, or suspend to cancel" = "Wacht op huidig tijdelijk basaal of onderbreek om te annuleren";
+
+/* DASH Pod time ago since last status */
+"%@ ago" = "%@ geleden";

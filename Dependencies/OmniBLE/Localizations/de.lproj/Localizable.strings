@@ -571,7 +571,7 @@
 "Critical Alerts" = "Kritische Warnungen";
 
 /* Description text for critical alerts */
-"The reminders above will not sound if your device is in Silent or Do Not Disturb mode.\n\nThere are other critical Pod alerts and alarms that will sound even if you device is set to Silent or Do Not Disturb mode." = "Die obigen Hinweise ertönen nicht, wenn sich dein Gerät im Modus Lautlos oder Nicht stören befindet.\n\n Es gibt weitere kritische Pod-Warnungen und Alarme, die auch dann ertönen, wenn dein Gerät auf \"Lautlos\" oder \"Nicht stören\" eingestellt ist.";
+"The reminders above will not sound if your device is in Silent or Do Not Disturb mode.\n\nThere are other critical Pod alerts and alarms that will sound even if your device is set to Silent or Do Not Disturb mode." = "Die obigen Hinweise ertönen nicht, wenn sich dein Gerät im Modus Lautlos oder Nicht stören befindet.\n\n Es gibt weitere kritische Pod-Warnungen und Alarme, die auch dann ertönen, wenn dein Gerät auf \"Lautlos\" oder \"Nicht stören\" eingestellt ist.";
 /* navigation title for notification settings */
 "Notification Settings" = "Benachrichtigungseinstellungen";
 
@@ -782,3 +782,6 @@
 
 /* Recovery suggestion when operation could not be completed due to existing temp basal in progress */
 "Wait for existing temp basal to finish, or suspend to cancel" = "Warte, bis die aktuelle temporäre Basalrate beendet wurde, oder brich sie ab.";
+
+/* DASH Pod time ago since last status */
+"%@ ago" = "%@ vor";

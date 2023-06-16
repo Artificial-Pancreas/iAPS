@@ -7,17 +7,20 @@ enum AwConfig: String, JSON, CaseIterable, Identifiable, Codable {
     case BGTarget
     case steps
     case isf
+    case override
 
     var displayName: String {
         switch self {
         case .BGTarget:
-            return "Glucose Target"
+            return NSLocalizedString("Glucose Target", comment: "")
         case .HR:
-            return "Heart Rate"
+            return NSLocalizedString("Heart Rate", comment: "")
         case .steps:
-            return "Steps"
+            return NSLocalizedString("Steps", comment: "")
         case .isf:
-            return "ISF"
+            return NSLocalizedString("ISF", comment: "")
+        case .override:
+            return NSLocalizedString("% Override", comment: "")
         }
     }
 }

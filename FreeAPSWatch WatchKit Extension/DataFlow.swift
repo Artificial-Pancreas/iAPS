@@ -22,6 +22,7 @@ struct WatchState: Codable {
     var eventualBGRaw: String?
     var displayOnWatch: AwConfig?
     var isf: Decimal?
+    var override: String?
 }
 
 struct TempTargetWatchPreset: Codable, Identifiable {

@@ -31,7 +31,7 @@ extension StatConfig {
                     Toggle("Allow Upload of Statistics to NS", isOn: $state.uploadStats)
                     Toggle("Display Chart X - Grid lines", isOn: $state.xGridLines)
                     Toggle("Display Chart Y - Grid lines", isOn: $state.yGridLines)
-                    Toggle("Display Chart Threshold lines for Low and High)", isOn: $state.rulerMarks)
+                    Toggle("Display Chart Threshold lines for Low and High", isOn: $state.rulerMarks)
                     Toggle("Standing / Laying TIR Chart", isOn: $state.oneDimensionalGraph)
 
                     HStack {

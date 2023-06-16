@@ -15,11 +15,17 @@ git clone --branch=main https://github.com/artificial-pancreas/iaps.git
 cd iaps  
 xed .  
 
-Or use the GitHub interface: 
-Download and open in Xcode directly using the Code button: "Open with Xcode".
- 
+Or using the GitHub interface: 
+Download and open in Xcode directly using the Code button: "Open with Xcode".  
 
-Please understand that this version is:
+## To build directly in GitHub, without using Xcode: 
+
+Intructions:  
+https://github.com/Artificial-Pancreas/iAPS/blob/main/fastlane/testflight.md   
+Instructions in greater detail, but not iAPS-specific:  
+https://loopkit.github.io/loopdocs/gh-actions/gh-overview/
+ 
+## Please understand that iAPS is:  
 - highly experimental and evolving rapidly.
 - not CE approved for therapy.
 
@@ -45,23 +51,23 @@ Please understand that this version is:
 
 # iPhone and iPod
 
-iAPS app runs on iPhone or iPod. An iPhone 7 or newer is recommended.
+iAPS app runs on iPhone or iPod. An iPhone 8 or newer is required.
 
 # Documentation
 
 [Discord iAPS - main branch channel](https://discord.com/channels/1020905149037813862/1021041588627062854)
 
-[Crowdin Project for translation of iAPS](https://crowdin.com/project/freeaps-x)
+[iAPS documentation (under development)](https://iaps.readthedocs.io/en/latest/)
+
+[OpenAPS documentation](https://openaps.readthedocs.io/en/latest/)
+
+[Crowdin Project for translation of iAPS](https://crowdin.com/project/iaps)  
+[![Crowdin](https://badges.crowdin.net/iaps/localized.svg)](https://crowdin.com/project/iaps)
 
 [Middleware code for iAPS](https://github.com/Jon-b-m/middleware)
 
 [ADD DASH PUMP and SETTINGS](https://loopkit.github.io/loopdocs/loop-3/omnipod/)
 
-[Overview & Onboarding Tips on Loop&Learn](https://www.loopandlearn.org/freeaps-x/)
-
-[OpenAPS documentation](https://openaps.readthedocs.io/en/latest/)
-
-[iAPS documentation (under development)](https://iaps.readthedocs.io/en/latest/)
 
 # Contribute
 

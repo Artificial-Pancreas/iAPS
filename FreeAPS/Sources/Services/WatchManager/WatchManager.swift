@@ -1,3 +1,4 @@
+import CoreData
 import Foundation
 import Swinject
 import WatchConnectivity
@@ -17,6 +18,8 @@ final class BaseWatchManager: NSObject, WatchManager, Injectable {
     @Injected() private var carbsStorage: CarbsStorage!
     @Injected() private var tempTargetsStorage: TempTargetsStorage!
     @Injected() private var garmin: GarminManager!
+
+    let coredataContext = CoreDataStack.shared.persistentContainer.viewContext // newBackgroundContext()
 
     private var lifetime = Lifetime()
 
@@ -72,9 +75,15 @@ final class BaseWatchManager: NSObject, WatchManager, Injectable {
             self.state.maxBolus = self.settingsManager.pumpSettings.maxBolus
             self.state.carbsRequired = self.suggestion?.carbsReq
 
-            let insulinRequired = self.suggestion?.insulinReq ?? 0
+            var insulinRequired = self.suggestion?.insulinReq ?? 0
+            var double: Decimal = 2
+            if (self.suggestion?.cob ?? 0) > 0 {
+                insulinRequired = self.suggestion?.insulinForManualBolus ?? 0
+                double = 1
+            }
+
             self.state.bolusRecommended = self.apsManager
-                .roundBolus(amount: max(insulinRequired * (self.settingsManager.settings.insulinReqPercentage / 100) * 2, 0))
+                .roundBolus(amount: max(insulinRequired * (self.settingsManager.settings.insulinReqPercentage / 100) * double, 0))
 
             self.state.iob = self.suggestion?.iob
             self.state.cob = self.suggestion?.cob
@@ -101,6 +110,21 @@ final class BaseWatchManager: NSObject, WatchManager, Injectable {
             self.state.eventualBGRaw = eBG
 
             self.state.isf = self.suggestion?.isf
+
+            var overrideArray = [Override]()
+            let requestOverrides = Override.fetchRequest() as NSFetchRequest<Override>
+            let sortOverride = NSSortDescriptor(key: "date", ascending: false)
+            requestOverrides.sortDescriptors = [sortOverride]
+            requestOverrides.fetchLimit = 1
+            try? overrideArray = self.coredataContext.fetch(requestOverrides)
+
+            if overrideArray.first?.enabled ?? false {
+                let percentString = "\((overrideArray.first?.percentage ?? 100).formatted(.number)) %"
+                self.state.override = percentString
+
+            } else {
+                self.state.override = "100 %"
+            }
 
             self.sendState()
         }

@@ -13,6 +13,9 @@
 /* Describes a functioning transmitter */
 "OK" = "OK";
 
+/* invlid config error description */
+"Peripheral command was invalid" = "Peripheral command was invalid";
+
 /* Timeout error description */
 "Peripheral did not respond in time" = "Acessório não respondeu a tempo";
 
@@ -36,4 +39,3 @@
 
 /* Error description */
 "Unknown characteristic" = "Característica Desconhecida";
-

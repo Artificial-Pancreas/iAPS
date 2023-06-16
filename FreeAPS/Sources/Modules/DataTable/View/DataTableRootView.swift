@@ -1,3 +1,4 @@
+import CoreData
 import SwiftUI
 import Swinject
 
@@ -8,9 +9,11 @@ extension DataTable {
 
         @State private var isRemoveCarbsAlertPresented = false
         @State private var removeCarbsAlert: Alert?
-
         @State private var isRemoveInsulinAlertPresented = false
         @State private var removeInsulinAlert: Alert?
+        @State private var newGlucose = false
+
+        @Environment(\.colorScheme) var colorScheme
 
         private var glucoseFormatter: NumberFormatter {
             let formatter = NumberFormatter()
@@ -54,6 +57,35 @@ extension DataTable {
                 leading: Button("Close", action: state.hideModal),
                 trailing: state.mode == .glucose ? EditButton().asAny() : EmptyView().asAny()
             )
+            .popup(isPresented: newGlucose, alignment: .top, direction: .bottom) {
+                VStack(spacing: 20) {
+                    HStack {
+                        Text("New Glucose")
+                        DecimalTextField(" ... ", value: $state.manualGlcuose, formatter: glucoseFormatter)
+                        Text(state.units.rawValue)
+                    }.padding(.horizontal, 20)
+                    HStack {
+                        let limitLow: Decimal = state.units == .mmolL ? 2.2 : 40
+                        let limitHigh: Decimal = state.units == .mmolL ? 21 : 380
+                        Button { newGlucose = false }
+                        label: { Text("Cancel") }.frame(maxWidth: .infinity, alignment: .leading)
+
+                        Button {
+                            state.addManualGlucose()
+                            newGlucose = false
+                        }
+                        label: { Text("Save") }
+                            .frame(maxWidth: .infinity, alignment: .trailing)
+                            .disabled(state.manualGlcuose < limitLow || state.manualGlcuose > limitHigh)
+
+                    }.padding(20)
+                }
+                .frame(maxHeight: 140)
+                .background(
+                    RoundedRectangle(cornerRadius: 8, style: .continuous)
+                        .fill(Color(colorScheme == .dark ? UIColor.systemGray2 : UIColor.systemGray6))
+                )
+            }
         }
 
         private var treatmentsList: some View {
@@ -66,6 +98,10 @@ extension DataTable {
 
         private var glucoseList: some View {
             List {
+                Button { newGlucose = true }
+                label: { Text("Add") }.frame(maxWidth: .infinity, alignment: .trailing)
+                    .padding(.trailing, 20)
+
                 ForEach(state.glucose) { item in
                     glucoseView(item)
                 }.onDelete(perform: deleteGlucose)

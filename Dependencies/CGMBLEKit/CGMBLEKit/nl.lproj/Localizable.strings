@@ -8,7 +8,7 @@
 "Glucose data is unavailable" = "Glucosegegevens zijn niet beschikbaar";
 
 /* Describes a low battery */
-"Low Battery" = "Batterij Bijna Leeg";
+"Low Battery" = "Batterij bijna leeg";
 
 /* Describes a functioning transmitter */
 "OK" = "Ok";
@@ -39,4 +39,3 @@
 
 /* Error description */
 "Unknown characteristic" = "Onbekende eigenschap";
-

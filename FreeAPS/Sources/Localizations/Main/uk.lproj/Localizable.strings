@@ -112,6 +112,21 @@
 /*  */
 "Enact Temp Target" = "Запустити тимчасову ціль";
 
+/* */
+"Target" = "Ціль";
+
+/* */
+"Basal Insulin and Sensitivity ratio" = "Співвідношення базального інсуліну та чутливості";
+
+/* */
+"A lower 'Half Basal Target' setting will reduce the basal and raise the ISF earlier, at a lower target glucose." = "Нижчий параметр «Half Basal Target» зменшить базальний рівень і підвищить ISF раніше, при нижчому цільовому рівні глюкози.";
+
+/* */
+" Your setting: " = "Ваші налаштування";
+
+/* */
+"mg/dl. Autosens.max limits the max endpoint" = "mg/dl. Автоматизація обмежує максимальну кінцеву точку";
+
 /*  */
 "Enter preset name" = "Введіть ім'я шаблону";
 
@@ -128,7 +143,25 @@
 "Save" = "Зберегти";
 
 /*  */
-"Save as preset" = "Зберегти як шаблон";
+"Save as Preset" = "Зберегти як шаблон";
+
+/* Delete Meal Preset */
+"Delete Preset" = "Видалити шаблон";
+
+/* Confirm Deletion */
+"Delete preset '%@'?" = "Видалити шаблон \"%@'?";
+
+/* Button */
+"No" = "Ні";
+
+/* Button */
+"Yes" = "Так";
+
+/* + Button */
+"[ +1 ]" = "[ +1 ]";
+
+/* - Button */
+"[ -1 ]" = "[ -1 ]";
 
 /* Upper temp target limit */
 "Top target" = "Верхня ціль";
@@ -197,7 +230,7 @@
 "Ratio" = "Коефіцієнт";
 
 /*  */
-"Autosens" = "Autosens";
+"Autosens" = "Автосенс";
 
 /*  */
 "Calculated Sensitivity" = "Розрахована Чутливість";
@@ -227,7 +260,7 @@ Enact a temp Basal or a temp target */
 /* */
 "Manual Temp Basal" = "Ручна тимчасова базальна швидкість (ТБШ)";
 
-/* Allow uploads tp NS */
+/* Allow uploads to different services */
 "Allow uploads" = "Дозволити вивантаження";
 
 /* API secret in NS */
@@ -365,11 +398,50 @@ Enact a temp Basal or a temp target */
 /*  */
 "Pump" = "Помпа";
 
+/* */
+"Watch" = "Годинник";
+
+/* */
+"Watch Configuration" = "Конфігурація годинника";
+
+/* */
+"Apple Watch" = "Apple Watch";
+
+/* */
+"Display on Watch" = "Відображати на годиннику";
+
+/* */
+"Garmin Watch" = "Garmin Watch";
+
+/* */
+"Add devices" = "Додати пристрій";
+
+/* */
+"Glucose Target" = "Мета глюкози";
+
+/* */
+"Heart Rate" = "Пульс";
+
+/* */
+"Steps" = "Кроки";
+
+/* */
+"ISF" = "ISF";
+
+/* */
+"The app Garmin Connect must be installed to use for iAPS.\n Go to App Store to download it" = "Щоб використовувати iAPS, необхідно встановити програму Garmin Connect.\n Перейдіть до App Store, щоб завантажити її";
+
+/* */
+"Garmin is not available" = "Garmin недоступний";
+
 /*  */
 "Services" = "Сервіси";
 
 /*  */
 "Settings" = "Налаштування";
+
+/* Recommendation for a Manual Bolus */
+"Recommended Bolus Percentage" = "Рекомендований відсоток болюсу";
 
 /* 2 log files to share */
 "Share logs" = "Поділитися логом";
@@ -963,7 +1035,7 @@ Enact a temp Basal or a temp target */
 "NS Uploaded Profile" = "NS Завантажений профіль";
 
 /* Debug option view Autosense */
-"Autosense" = "Autosense";
+"Autosense" = "Автосенс";
 
 /* Debug option view Pump History */
 "Pump History" = "Історія помпи";
@@ -1048,9 +1120,6 @@ Enact a temp Basal or a temp target */
 "Enable" = "Увімкнути";
 
 /* Header */
-"Convert Fat and Protein" = "Перетворення жиру та білка";
-
-/* Header */
 "Conversion settings" = "Налаштування конвертації";
 
 /* Delay */
@@ -1068,8 +1137,14 @@ Enact a temp Basal or a temp target */
 /* Description */
 "Allows fat and protein to be converted into future carb equivalents using the Warsaw formula of kilocalories divided by 10.\n\nThis spreads the carb equivilants over a maximum duration setting that can be configured from 5-12 hours.\n\nDelay is time from now until the first future carb entry.\n\nInterval in minutes is how many minutes are between entries. The shorter the interval, the smoother the result. 10, 15, 20, 30, or 60 are reasonable choices.\n\nAdjustment factor is how much effect the fat and protein has on the entries. 1.0 is full effect (original Warsaw Method) and 0.5 is half effect. Note that you may find that your normal carb ratio needs to increase to a larger number if you begin adding fat and protein entries. For this reason, it is best to start with a factor of about 0.5 to ease into it.\n\nDefault settings: Time Cap: 8 h, Interval: 30 min, Factor: 0.5, Delay 60 min" = "Дозволяє конвертувати жир і білок у майбутні вуглеводні еквіваленти за допомогою варшавської формули кілокалорій, поділених на 10.\n\nЦе розподіляє вуглеводні еквіваленти на максимальну тривалість, яку можна налаштувати від 8 до 12 годин.\n\nІнтервал у хвилинах скільки хвилин між записами. Чим коротший інтервал, тим плавніші результати, але стає важче вручну видалити записи, якщо пізніше ви захочете їх видалити. 10, 15, 20, 30 або 60 — це розумний вибір.\n\nЗатримка — це час від теперішнього моменту до першого майбутнього введення вуглеводів.\n\nКоефіцієнт коригування — це те, наскільки жир і білок впливають на введення. 1,0 – повний ефект, а 0,5 – половинний. Зауважте, що ви можете виявити, що ваше нормальне співвідношення вуглеводів має збільшитися до більшої кількості, якщо ви почнете додавати жири та білки. З цієї причини найкраще починати з коефіцієнта приблизно 0,5, щоб легше його зрозуміти.\n\nНалаштування за замовчуванням: обмеження часу: 8 годин, інтервал: 30 хвилин, коефіцієнт: 0,5, затримка 60 хвилин";
 
-/* Title */
+/* FPU Settings Title */
 "Fat and Protein" = "Жир і білок";
+
+/* Display fat and protein entities */
+"Fat & Protein" = "Жир і білок";
+
+/* */
+"Hide Fat & Protein" = "Приховати жири та білки";
 
 /* Add Fat */
 "Fat" = "Жир";
@@ -1077,14 +1152,107 @@ Enact a temp Basal or a temp target */
 /* Add Protein */
 "Protein" = "Білки";
 
-/* Setting */
+/* Service Section */
 "Fat And Protein Conversion" = "Перетворення жиру та білка";
+
+/* Service Section */
+"Profile Override" = "Перевизначення профілю";
+
+/* */
+"Override Profiles" = "Змінити параметри";
+
+/* */
+"Normal " = "Нормальний ";
+
+/* */
+"Total Insulin Adjustment" = "Повне коригування інсуліну";
+
+/* */
+"Override your Basal, ISF, CR and Target profiles" = "Замініть свої профілі Basal, ISF, CR і Target";
+
+/* */
+"Enable indefinitely" = "Увімкнути на невизначений термін";
+
+/* */
+"Override Profile target" = "Заміна цільового профілю";
+
+/* */
+"Disable SMBs" = "Вимкнути SMBs";
+
+/* Your normal Profile. Use a short string */
+"Normal Profile" = "Звичайний профіль";
+
+/* Custom but unsaved Profile */
+"Custom Profile" = "Спеціальний профіль";
+
+/* */
+"Profiles" = "Профілі";
+
+/* */
+"More options" = "Додаткові параметри";
+
+/* */
+"Schedule when SMBs are Off" = "Розклад, коли SMBs вимкнено";
+
+/* */
+"Change ISF and CR" = "Змінити ISF і CR";
+
+/* */
+"Change ISF" = "Змінити ISF";
+
+/* */
+"Change CR" = "Змінити CR";
+
+/* */
+"SMB Minutes" = "Хвилини SMB";
+
+/* */
+"UAM SMB Minutes" = "Хвилини UAM SMB";
+
+/* */
+"Start new Profile" = "Створіть новий профіль";
+
+/* */
+"Save as Profile" = "Зберегти як профіль";
+
+/* */
+"Return to Normal" = "Повернутися до нормального стану";
+
+/* Alert */
+"Return to Normal?" = "Повернутися до нормального стану?";
+
+/* */
+"This will change settings back to your normal profile." = "Це поверне налаштування вашого звичайного профілю.";
+
+/* Start Profile Alert */
+"Start Profile" = "Почати профіль";
+
+/* */
+"Your profile basal insulin will be adjusted with the override percentage and your profile ISF and CR will be inversly adjusted with the percentage." = "Ваш профіль базального інсуліну буде скориговано з відсотком перевизначення, а ваш профіль ISF і CR буде обернено скориговано з відсотком.";
+
+/* */
+"Starting this override will change your Profiles and/or your Target Glucose used for looping during the entire selected duration. Tapping ”Start Profile” will start your new profile or edit your current active profile." = "Початок цього перевизначення змінить ваші профілі та/або цільовий рівень глюкози, який використовується для циклу протягом усього вибраного періоду. Торкнувшись «Почати профіль», ви запустите новий профіль або відредагуєте поточний активний профіль.";
+
+/* Change Target glucose in profile settings */
+"Override Profile Target" = "Заміна цільового профілю";
+
+/* Alert string. Keep spaces. */
+" SMBs are disabled either by schedule or during the entire duration." = "SMBs відключаються за розкладом або протягом усього періоду.";
+
+/* Alert strings. Keep spaces */
+" infinite duration." = "нескінченна тривалість.";
+
+/* Service Section */
+"App Icons" = "Іконки додатку";
+
+/* */
+"iAPS Icon" = "iAPS значок";
+
+/* Service Section */
+"Statistics and Home View" = "Статистика та Домашня сторінка";
 
 /* Alert text */
 "Delete carb equivalents?" = "Видалити вуглеводні еквіваленти?";
-
-/* Section in settings */
-"Protein / Fat" = "Білок / Жир";
 
 /* */
 "Meal Presets" = "Попередні налаштування їжі";
@@ -1106,6 +1274,65 @@ Enact a temp Basal or a temp target */
 
 /* */
 "Save as Preset" = "Зберегти як шаблон";
+
+/* ----------------------- New Bolus Calculator ---------------------------*/
+/* Warning about bolus recommendation. Title */
+
+"Warning!" = "Увага!";
+
+/* Alert to confirm bolus amount to add */
+"\n\nTap 'Add' to continue with selected amount." = "\n\nНатисніть «Додати», щоб продовжити з вибраним значенням.";
+
+/* */
+"Eventual Glucose" = "Можлива глюкоза";
+
+/* */
+"Target Glucose" = "Цільова глюкоза";
+
+/* */
+"Percentage setting" = "Відсоткове налаштування";
+
+/* */
+"Insulin Sensitivity" = "Чутливість до інсуліну";
+
+/* Formula displayed in Bolus info pop-up. Make translation short! */
+"(Eventual Glucose - Target) / ISF" = "(Eventual Glucose - Target) / ISF";
+
+/* */
+"Formula:" = "Formula:";
+
+/* Bolus pop-up footer */
+"Carbs and previous insulin are included in the glucose prediction, but if the Eventual Glucose is lower than the Target Glucose, a bolus will not be recommended." = "Вуглеводи та попередній інсулін включені в прогноз рівня глюкози, але якщо кінцевий рівень глюкози нижчий за цільовий рівень глюкози, болюс не буде рекомендовано.";
+
+/* Hide pop-up */
+"Hide" = "Приховати";
+
+/* Bolus pop-up / Alert string. Make translations concise! */
+"Eventual Glucose > Target Glucose, but glucose is predicted to drop down to " = "Eventual Glucose > Target Glucose, but glucose is predicted to first drop down to ";
+
+/* Bolus pop-up / Alert string. Make translations concise! */
+"which is below your Threshold (" = "which is below your Threshold (";
+
+/* Bolus pop-up / Alert string. Make translations concise! */
+"Eventual Glucose > Target Glucose, but glucose is climbing slower than expected. Expected: " = "Eventual Glucose > Target Glucose, but glucose is climbing slower than expected. Expected: ";
+
+//* Bolus pop-up / Alert string. Make translations concise! */
+". Climbing: " = ". Climbing: ";
+
+/* Bolus pop-up / Alert string. Make translations concise! */
+"Eventual Glucose > Target Glucose, but glucose is falling faster than expected. Expected: " = "Eventual Glucose > Target Glucose, but glucose is falling faster than expected. Expected: ";
+
+/* Bolus pop-up / Alert string. Make translations concise! */
+". Falling: " = ". Falling: ";
+
+/* Bolus pop-up / Alert string. Make translations concise! */
+"Eventual Glucose > Target Glucose, but glucose is changing faster than expected. Expected: " = "Eventual Glucose > Target Glucose, but glucose is changing faster than expected. Expected: ";
+
+/* Bolus pop-up / Alert string. Make translations concise! */
+". Changing: " = ". Changing: ";
+
+/* Add insulin without bolusing alert */
+" without bolusing" = " without bolusing";
 
 /* -------------------------------------------------------------------------------------------
   DASH strings
@@ -1247,30 +1474,55 @@ Enact a temp Basal or a temp target */
 
 //* -----------------------------------------------------------------------*/
 /* ----------------------Statistics strings -------------------------------*/
+/* */
+
+
+"Today" = "Сьогодні";
+
+/* */
+"Day" = "День";
+
+/* */
+"Week" = "Тиждень";
+
+/* */
+"Month" = "Місяць";
+
+/* */
+"Total" = "Всього";
+
 /* Headline Statistics */
-
-
 "Statistics" = "Статистика";
 
 /* Option in preferences */
-"Display Statistics" = "Показати статистику";
+"Allow Upload of Statistics to NS" = "Дозволити завантаження статистики в NS";
 
-/* infoText: Description for Display Statistics */
-"Displays Statistics under the chart view" = "Відображає статистику під вікном діаграми";
+/* Low Glucose Threshold in Statistics settings */
+"Low" = "Низький";
 
-/* Low Glucose Limit option in preferences */
-"Low Glucose Limit" = "Низька межа глюкози";
+/* High Glucose Threshold in Statistics settings */
+"High" = "Високий";
 
-/* High Glucose Limit option in preferences */
-"High Glucose Limit" = "Висока межа глюкози";
+/* In Range */
+"In Range" = "В діапазоні";
 
-/* infoText: Description for Low Glucose Limit */
-"BG Under This Value Will Be Displayed As Low Glucose Percentage" = "BG під цим значенням відображатиметься як низький відсоток глюкози";
-/* infoText: Description for High Glucose Limit */
-"BG Under This Value Will Be Displayed As High Glucose Percentage" = "BG під цим значенням буде відображатися як відсоток перебування з високим рівнем глюкози";
+/* Display % */
+"Change HbA1c Unit" = "Змінити одиницю HbA1c";
 
-/* When statistics.json was last updated */
-"Updated" = "Оновлено";
+/* */
+"Display Chart X - Grid lines" = "Відображення діаграми X – лінії сітки";
+
+/* */
+"Display Chart Y - Grid lines" = "Відображення діаграми Y – лінії сітки";
+
+/* */
+"Display Chart Threshold lines for Low and High" = "Відображення порогових ліній діаграми для низьких і високих значень";
+
+/* */
+"Standing / Laying TIR Chart" = "Стандартна частота і стиль TIR";
+
+/* */
+"Hours X-Axis (6 default)" = "Вісь Х годин (6 за замовчуванням)";
 
 /* Average BG = */
 "Average" = "Середній";
@@ -1278,8 +1530,14 @@ Enact a temp Basal or a temp target */
 /* Median BG */
 "Median" = "Медіана";
 
-/* CGM readings in statPanel */
-"Readings" = "Читання";
+/* CGM readings in statView */
+"Readings today" = "Читання сьогодні";
+
+/* CGM readings in statView */
+"Readings / 24h" = "Читання / 24 год";
+
+/* Days of saved readings*/
+"Days" = "Днів";
 
 /* Normal BG (within TIR) */
 "Normal" = "Нормальний";
@@ -1350,9 +1608,6 @@ Enact a temp Basal or a temp target */
 /* Description for Display Loop statistics */
 "Displays Loop statistics in the statPanel in Home View" = "Відображає статистику циклів петлі на панелі статистики, яка відображається на головному екрані";
 
-/* Display % */
-"Override HbA1c unit" = "Замінити одиницю HbA1c";
-
 /* Description for Override HbA1c unit */
 "Change default HbA1c unit in statPanlel. The unit in statPanel will be updateded with next statistics.json update" = "Змінити одиниці виміру HbA1c на панелі статистики. Одиниці виміру оновляться під час наступного оновлення файлу statistics.json";
 
@@ -1361,7 +1616,7 @@ Enact a temp Basal or a temp target */
 
 /* --------------------------------------------------------  Dexcom G7 --------------------------------------*/
 
-"Configuration CGM" = "Конфігурація CGM";
+"CGM Configuration" = "Конфігурація CGM";
 
 "Heartbeat" = "Серцебиття";
 
@@ -1551,7 +1806,7 @@ Enact a temp Basal or a temp target */
 "Autotune ISF Adjustment Fraction" = "Частка регулювання ISF Автотюном";
 
 /* "Autotune ISF Adjustment Fraction" */
-"The default of 0.5 for this value keeps autotune ISF closer to pump ISF via a weighted average of fullNewISF and pumpISF. 1.0 allows full adjustment, 0 is no adjustment from pump ISF." = "The default of 0.5 for this value keeps autotune ISF closer to pump ISF via a weighted average of fullNewISF and pumpISF. 1.0 allows full adjustment, 0 is no adjustment from pump ISF.";
+"The default of 0.5 for this value keeps autotune ISF closer to pump ISF via a weighted average of fullNewISF and pumpISF. 1.0 allows full adjustment, 0 is no adjustment from pump ISF." = "Значення за замовчуванням 0,5 для цього значення зберігає автоматичне налаштування ISF ближче до ISF накачування через середньозважене значення fullNewISF і pumpISF. 1.0 дозволяє повне налаштування, 0 не означає жодного регулювання насоса ISF.";
 
 /* Headline "Remaining Carbs Fraction" */
 "Remaining Carbs Fraction" = "Частка вуглеводів, що залишилися.";
@@ -1593,7 +1848,7 @@ Enact a temp Basal or a temp target */
 "Insulin Peak Time" = "Пік дії інсуліну";
 
 /* "Insulin Peak Time" */
-"Time of maximum blood glucose lowering effect of insulin, in minutes. Beware: Oref assumes for ultra-rapid (Lyumjev) & rapid-acting (Fiasp) curves minimal (35 & 50 min) and maximal (100 & 120 min) applicable insulinPeakTimes. Using a custom insulinPeakTime outside these bounds will result in issues with FreeAPS-X, longer loop calculations and possible red loops." = "Піковий час інсуліна в хвилинах. Час необхідний інсуліну для досягнення максимального впливу. Будьте обережні: Oref припускає за ультрашвидкі (Lyumjev) та швидке виконання (Fiasp) криві є мінімальними (35 та 50 хвилин) і максимальними (100 та 120 хвилин) придатними для інсулініпінг-таймерів. Використання користувацького інсулінутого PeakTime поза цими межами призведе до проблем з FreeAPS-X, більш довшими обчисленнями циклів та можливими червоними циклами.";
+"Time of maximum blood glucose lowering effect of insulin, in minutes. Beware: Oref assumes for ultra-rapid (Lyumjev) & rapid-acting (Fiasp) curves minimal (35 & 50 min) and maximal (100 & 120 min) applicable insulinPeakTimes. Using a custom insulinPeakTime outside these bounds will result in issues with iAPS, longer loop calculations and possible red loops." = "Піковий час інсуліна в хвилинах. Час необхідний інсуліну для досягнення максимального впливу. Будьте обережні: Oref припускає за ультрашвидкі (Lyumjev) та швидке виконання (Fiasp) криві є мінімальними (35 та 50 хвилин) і максимальними (100 та 120 хвилин) придатними для інсулініпінг-таймерів. Використання користувацького інсулінутого PeakTime поза цими межами призведе до проблем з iAPS, більш довшими обчисленнями циклів та можливими червоними циклами.";
 
 /* Headline "Carbs Req Threshold" */
 "Carbs Req Threshold" = "Поріг необхідних вуглеводів";

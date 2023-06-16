@@ -1,13 +1,19 @@
+import CoreData
 import SwiftUI
 
 extension DataTable {
     final class StateModel: BaseStateModel<Provider> {
         @Injected() var broadcaster: Broadcaster!
         @Injected() var unlockmanager: UnlockManager!
+        @Injected() private var storage: FileStorage!
+
+        let coredataContext = CoreDataStack.shared.persistentContainer.viewContext
 
         @Published var mode: Mode = .treatments
         @Published var treatments: [Treatment] = []
         @Published var glucose: [Glucose] = []
+        @Published var manualGlcuose: Decimal = 0
+
         var units: GlucoseUnits = .mmolL
 
         override func subscribe() {
@@ -132,6 +138,46 @@ extension DataTable {
         func deleteGlucose(at index: Int) {
             let id = glucose[index].id
             provider.deleteGlucose(id: id)
+
+            let fetchRequest: NSFetchRequest<NSFetchRequestResult>
+            fetchRequest = NSFetchRequest(entityName: "Readings")
+            fetchRequest.predicate = NSPredicate(format: "id == %@", id)
+            let deleteRequest = NSBatchDeleteRequest(
+                fetchRequest: fetchRequest
+            )
+            deleteRequest.resultType = .resultTypeObjectIDs
+            do {
+                let deleteResult = try coredataContext.execute(deleteRequest) as? NSBatchDeleteResult
+                if let objectIDs = deleteResult?.result as? [NSManagedObjectID] {
+                    NSManagedObjectContext.mergeChanges(
+                        fromRemoteContextSave: [NSDeletedObjectsKey: objectIDs],
+                        into: [coredataContext]
+                    )
+                }
+            } catch {
+                // To do: handle any thrown errors.
+            }
+            // try? coredataContext.save()
+        }
+
+        func addManualGlucose() {
+            let glucose = units == .mmolL ? manualGlcuose.asMgdL : manualGlcuose
+            let now = Date()
+            let id = UUID().uuidString
+
+            let saveToJSON = BloodGlucose(
+                _id: id,
+                direction: nil,
+                date: Decimal(now.timeIntervalSince1970) * 1000,
+                dateString: now,
+                unfiltered: nil,
+                filtered: nil,
+                noise: nil,
+                glucose: Int(glucose),
+                type: "Manual"
+            )
+            provider.glucoseStorage.storeGlucose([saveToJSON])
+            debug(.default, "Manual Glucose saved to glucose.json")
         }
     }
 }

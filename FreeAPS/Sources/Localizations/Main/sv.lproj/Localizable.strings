@@ -47,10 +47,10 @@
 "Enacted at" = "Utfört klockan";
 
 /* Headline in suggested pop up (at: at what time) */
-"Suggested at" = "Föreslaget klockan";
+"Suggested at" = "Föreslaget vid";
 
 /* Headline in enacted pop up (at: at what time) */
-"Error at" = "Fel klockan";
+"Error at" = "Fel vid";
 
 /* Home title */
 "Home" = "Hem";
@@ -127,9 +127,6 @@
 /* */
 "mg/dl. Autosens.max limits the max endpoint" = "mg/dl. Autosens.max begränsar maxvärdet";
 
-/* */
-"Target" = "Målvärde";
-
 /*  */
 "Enter preset name" = "Ange namn för förval";
 
@@ -146,10 +143,10 @@
 "Save" = "Spara";
 
 /*  */
-"Save as preset" = "Spara som förval";
+"Save as Preset" = "Spara som förval";
 
 /* Delete Meal Preset */
-"Delete Preset" = "Radera Förval";
+"Delete Preset" = "Radera förval";
 
 /* Confirm Deletion */
 "Delete preset '%@'?" = "Radera förval '%@'?";
@@ -263,7 +260,7 @@ Enact a temp Basal or a temp target */
 /* */
 "Manual Temp Basal" = "Manuell temporär basal";
 
-/* Allow uploads tp NS */
+/* Allow uploads to different services */
 "Allow uploads" = "Tillåt uppladdning";
 
 /* API secret in NS */
@@ -351,25 +348,25 @@ Enact a temp Basal or a temp target */
 "U/hr" = "IE/h";
 
 /* Unit in number of units delivered (keep the space character!) */
-" U" = " IE";
+" U" = " E";
 
 /* /Insulin unit */
-"/U" = "/IE";
+"/U" = "/E";
 
 /* Insulin unit */
-"U" = "IE";
+"U" = "E";
 
 /* Unit per hour with space */
-" U/hr" = " IE/h";
+" U/hr" = " E/h";
 
 /* Number of units per hour*/
-"%@ U/hr" = "%@ IE/h";
+"%@ U/hr" = "%@ E/h";
 
 /* Number of units insulin delivered */
-"%@ U" = "%@ IE";
+"%@ U" = "%@ E";
 
 /*Carb ratio unit */
-"g/U" = "g/IE";
+"g/U" = "g/E";
 
 /* grams */
 " g" = " g";
@@ -378,7 +375,7 @@ Enact a temp Basal or a temp target */
 "g" = "g";
 
 /* when 0 U/hr */
-"0 U/hr" = "0 IE/h";
+"0 U/hr" = "0 E/h";
 
 /* abbreviation for days */
 "d" = "d";
@@ -401,11 +398,50 @@ Enact a temp Basal or a temp target */
 /*  */
 "Pump" = "Pump";
 
+/* */
+"Watch" = "Klocka";
+
+/* */
+"Watch Configuration" = "Inställningar för klocka";
+
+/* */
+"Apple Watch" = "Apple Watch";
+
+/* */
+"Display on Watch" = "Visa på klocka";
+
+/* */
+"Garmin Watch" = "Garmin - klocka";
+
+/* */
+"Add devices" = "Lägg till enhet";
+
+/* */
+"Glucose Target" = "Målvärde för glukos";
+
+/* */
+"Heart Rate" = "Puls";
+
+/* */
+"Steps" = "Steg";
+
+/* */
+"ISF" = "ISF";
+
+/* */
+"The app Garmin Connect must be installed to use for iAPS.\n Go to App Store to download it" = "Appen 'Garmin Connect' måste  vara installerad för att kunna användas med iAPS.\n Gå till App Store för att ladda ner";
+
+/* */
+"Garmin is not available" = "Garmin är inte tillgänglig";
+
 /*  */
 "Services" = "Tjänster";
 
 /*  */
 "Settings" = "Inställningar";
+
+/* Recommendation for a Manual Bolus */
+"Recommended Bolus Percentage" = "Manuell Bolusprocent";
 
 /* 2 log files to share */
 "Share logs" = "Dela loggar";
@@ -1084,9 +1120,6 @@ Enact a temp Basal or a temp target */
 "Enable" = "Aktivera";
 
 /* Header */
-"Convert Fat and Protein" = "Omvandla fett och protein";
-
-/* Header */
 "Conversion settings" = "Inställningar";
 
 /* Delay */
@@ -1104,8 +1137,14 @@ Enact a temp Basal or a temp target */
 /* Description */
 "Allows fat and protein to be converted into future carb equivalents using the Warsaw formula of kilocalories divided by 10.\n\nThis spreads the carb equivilants over a maximum duration setting that can be configured from 5-12 hours.\n\nDelay is time from now until the first future carb entry.\n\nInterval in minutes is how many minutes are between entries. The shorter the interval, the smoother the result. 10, 15, 20, 30, or 60 are reasonable choices.\n\nAdjustment factor is how much effect the fat and protein has on the entries. 1.0 is full effect (original Warsaw Method) and 0.5 is half effect. Note that you may find that your normal carb ratio needs to increase to a larger number if you begin adding fat and protein entries. For this reason, it is best to start with a factor of about 0.5 to ease into it.\n\nDefault settings: Time Cap: 8 h, Interval: 30 min, Factor: 0.5, Delay 60 min" = "Omvandlar fett och protein till kolhydratekvivalenter, enligt Warsawa-metoden: antal kilokalorier delat med 10.\n\nDetta sprider ut kolydraterna över ett framtida tidsintervall med maximal duration enligt inställningen för max tid, 5-12 timmar.\n\nIntervall i minuter bestämmer hur många minuter mellan kolhydratposterna. Ju kortare intervall, desto jämnare resultat, men också fler poster att behöva radera om du ångrar dig. 10, 15, 20, 30, or 60 är exempel på alternativ\n\nFördrjöjning är tiden från nu till första framtida kolhydratpost.\n\nAJustering tillåter indivudell justering av formulan. 1.0 betyder full effekt, 0.5 skapar halva mängden kolhydrater. Observera att om du alltid matar in fett och kolhydrater kan du behöva öka din insulinkvot. Av denna anledning kan det vara lämpligt att börja med 0.5.\n\nStandardinställningar: Max tid: 8 h, Intervall: 30 min, Faktor: 0.5, Fördröjning 60 min";
 
-/* Title */
-"Fat and Protein" = "Fett och protein";
+/* FPU Settings Title */
+"Fat and Protein" = "Omvandling";
+
+/* Display fat and protein entities */
+"Fat & Protein" = "Fett & protein";
+
+/* */
+"Hide Fat & Protein" = "Dölj fett & protein";
 
 /* Add Fat */
 "Fat" = "Fett";
@@ -1113,20 +1152,113 @@ Enact a temp Basal or a temp target */
 /* Add Protein */
 "Protein" = "Protein";
 
-/* Setting */
-"Fat And Protein Conversion" = "Omvandling av fett och protein";
+/* Service Section */
+"Fat And Protein Conversion" = "Fett och protein";
+
+/* Service Section */
+"Profile Override" = "Undantag från dina sparade profiler";
+
+/* */
+"Override Profiles" = "Aktivera tillfälligt undantag";
+
+/* */
+"Normal " = "Normal ";
+
+/* */
+"Total Insulin Adjustment" = "Total justering av ditt insulinbehov";
+
+/* */
+"Override your Basal, ISF, CR and Target profiles" = "Ändra sparad basal, korrektionsfaktor, insulinkvot och målvärde med ett tillfälligt undantag";
+
+/* */
+"Enable indefinitely" = "Aktivera tillsvidare";
+
+/* */
+"Override Profile target" = "Ändra målvärde";
+
+/* */
+"Disable SMBs" = "Stäng av autobolusar (SMBs)";
+
+/* Your normal Profile. Use a short string */
+"Normal Profile" = "Normal Profil";
+
+/* Custom but unsaved Profile */
+"Custom Profile" = "Anpassad Profil";
+
+/* */
+"Profiles" = "Profiler";
+
+/* */
+"More options" = "Fler alternativ";
+
+/* */
+"Schedule when SMBs are Off" = "Schemalägg när autobolusar ska vara av ";
+
+/* */
+"Change ISF and CR" = "Ändra ISF and CR";
+
+/* */
+"Change ISF" = "Ändra ISF";
+
+/* */
+"Change CR" = "Ändra CR";
+
+/* */
+"SMB Minutes" = "SMB-minuter";
+
+/* */
+"UAM SMB Minutes" = "UAM-SMB-minuter";
+
+/* */
+"Start new Profile" = "Starta ny profil";
+
+/* */
+"Save as Profile" = "Spara som profil";
+
+/* */
+"Return to Normal" = "Tillbaka till normal profil";
+
+/* Alert */
+"Return to Normal?" = "Tillbaka till normal profil?";
+
+/* */
+"This will change settings back to your normal profile." = "Detta kommer att ändra tillbaka till dina normala inställningar ";
+
+/* Start Profile Alert */
+"Start Profile" = "Starta profil";
+
+/* */
+"Your profile basal insulin will be adjusted with the override percentage and your profile ISF and CR will be inversly adjusted with the percentage." = "Din vanliga basal kommer att justeras procentuellt enligt ovan, medan din normala korrektionsfaktor och insulinkvot CR kommer att bli omvänt justerade.";
+
+/* */
+"Starting this override will change your Profiles and/or your Target Glucose used for looping during the entire selected duration. Tapping ”Start Profile” will start your new profile or edit your current active profile." = "Om du klickar 'Starta profil' kommer detta att tillfälligt att ändra dina normala inställningar för under hela perioden som du valt";
+
+/* Change Target glucose in profile settings */
+"Override Profile Target" = "Ändra målvärde";
+
+/* Alert string. Keep spaces. */
+" SMBs are disabled either by schedule or during the entire duration." = " Autobolusar är helt eller delvis av.";
+
+/* Alert strings. Keep spaces */
+" infinite duration." = " aktiv tillsvidare.";
+
+/* Service Section */
+"App Icons" = "Ikoner";
+
+/* */
+"iAPS Icon" = "iAPS - ikon";
+
+/* Service Section */
+"Statistics and Home View" = "Statistik och Diagram";
 
 /* Alert text */
 "Delete carb equivalents?" = "Radera dessa poster?";
 
-/* Section in settings */
-"Protein / Fat" = "Protein / Fett";
+/* */
+"Meal Presets" = "Förval";
 
 /* */
-"Meal Presets" = "Måltider";
-
-/* */
-"Empty" = "Tom";
+"Empty" = "Inget";
 
 /* */
 "Delete Selected Preset" = "Radera detta förval";
@@ -1142,6 +1274,65 @@ Enact a temp Basal or a temp target */
 
 /* */
 "Save as Preset" = "Spara som förval";
+
+/* ----------------------- New Bolus Calculator ---------------------------*/
+/* Warning about bolus recommendation. Title */
+
+"Warning!" = "Varning!";
+
+/* Alert to confirm bolus amount to add */
+"\n\nTap 'Add' to continue with selected amount." = "\n\nTryck 'Lägg till' för att fylla i bolusmängd.";
+
+/* */
+"Eventual Glucose" = "Blodsockerprognos";
+
+/* */
+"Target Glucose" = "Målvärde";
+
+/* */
+"Percentage setting" = "Bolusprocentinställning";
+
+/* */
+"Insulin Sensitivity" = "Insulinkänslighet";
+
+/* Formula displayed in Bolus info pop-up. Make translation short! */
+"(Eventual Glucose - Target) / ISF" = "(Blodsockerprognos - Målvärde) / ISF";
+
+/* */
+"Formula:" = "Formel:";
+
+/* Bolus pop-up footer */
+"Carbs and previous insulin are included in the glucose prediction, but if the Eventual Glucose is lower than the Target Glucose, a bolus will not be recommended." = "Kolhydrater och tidigare insulin ingår i prognos, men om prognos är lägre än målvärde kommer ingen bolus att föreslås.";
+
+/* Hide pop-up */
+"Hide" = "Göm";
+
+/* Bolus pop-up / Alert string. Make translations concise! */
+"Eventual Glucose > Target Glucose, but glucose is predicted to drop down to " = "Blodsockerprognos är över målvärde, men ditt blodsocker väntas först sjunka ner till ";
+
+/* Bolus pop-up / Alert string. Make translations concise! */
+"which is below your Threshold (" = "vilket är lägre än ditt tröskelvärde (";
+
+/* Bolus pop-up / Alert string. Make translations concise! */
+"Eventual Glucose > Target Glucose, but glucose is climbing slower than expected. Expected: " = "Prognos > Målvärde, men ditt blodsocker stiger långsammare än väntat. Förväntat: ";
+
+//* Bolus pop-up / Alert string. Make translations concise! */
+". Climbing: " = ". Stiger: ";
+
+/* Bolus pop-up / Alert string. Make translations concise! */
+"Eventual Glucose > Target Glucose, but glucose is falling faster than expected. Expected: " = "Prognos > målvärde, men blodsocker sjunker snabbare än väntat. Förväntat: ";
+
+/* Bolus pop-up / Alert string. Make translations concise! */
+". Falling: " = ". Sjunker: ";
+
+/* Bolus pop-up / Alert string. Make translations concise! */
+"Eventual Glucose > Target Glucose, but glucose is changing faster than expected. Expected: " = "Prognos > målvärde, men blodsocker ändras snabbare än väntat. Förväntat: ";
+
+/* Bolus pop-up / Alert string. Make translations concise! */
+". Changing: " = ". Ändras: ";
+
+/* Add insulin without bolusing alert */
+" without bolusing" = " utan att ge insulin";
 
 /* -------------------------------------------------------------------------------------------
   DASH strings
@@ -1283,30 +1474,55 @@ Enact a temp Basal or a temp target */
 
 //* -----------------------------------------------------------------------*/
 /* ----------------------Statistics strings -------------------------------*/
+/* */
+
+
+"Today" = "Idag";
+
+/* */
+"Day" = "Dygn";
+
+/* */
+"Week" = "Vecka";
+
+/* */
+"Month" = "Månad";
+
+/* */
+"Total" = "Totalt";
+
 /* Headline Statistics */
-
-
 "Statistics" = "Statistik";
 
 /* Option in preferences */
-"Display Statistics" = "Visa statistik";
+"Allow Upload of Statistics to NS" = "Ladda upp till Nightscout";
 
-/* infoText: Description for Display Statistics */
-"Displays Statistics under the chart view" = "Visa statistik under diagram";
+/* Low Glucose Threshold in Statistics settings */
+"Low" = "Lågt";
 
-/* Low Glucose Limit option in preferences */
-"Low Glucose Limit" = "Lågt blodsocker";
+/* High Glucose Threshold in Statistics settings */
+"High" = "Högt";
 
-/* High Glucose Limit option in preferences */
-"High Glucose Limit" = "Högt blodsocker";
+/* In Range */
+"In Range" = "Normalvärde";
 
-/* infoText: Description for Low Glucose Limit */
-"BG Under This Value Will Be Displayed As Low Glucose Percentage" = "Blodsocker under detta värde kommer att visas som lågt blodsocker i statistiken.";
-/* infoText: Description for High Glucose Limit */
-"BG Under This Value Will Be Displayed As High Glucose Percentage" = "Ett blodsocker under detta värde kommer att visas som ett högt blodsocker i statistiken";
+/* Display % */
+"Change HbA1c Unit" = "Byt HbA1c-enhet";
 
-/* When statistics.json was last updated */
-"Updated" = "Uppdaterades";
+/* */
+"Display Chart X - Grid lines" = "Visa linjer för X i diagram";
+
+/* */
+"Display Chart Y - Grid lines" = "Visa linjer för Y i diagram";
+
+/* */
+"Display Chart Threshold lines for Low and High" = "Visa linjer för lågt och högt i diagram";
+
+/* */
+"Standing / Laying TIR Chart" = "Stående / Liggande TIR-diagram";
+
+/* */
+"Hours X-Axis (6 default)" = "Antal timmar att visa för X-axel (6 standard)";
 
 /* Average BG = */
 "Average" = "Medelvärde";
@@ -1314,8 +1530,14 @@ Enact a temp Basal or a temp target */
 /* Median BG */
 "Median" = "Medianvärde";
 
-/* CGM readings in statPanel */
-"Readings" = "Avläsningar";
+/* CGM readings in statView */
+"Readings today" = "Avläsningar idag";
+
+/* CGM readings in statView */
+"Readings / 24h" = "Avläsningar / 24h";
+
+/* Days of saved readings*/
+"Days" = "Dagar";
 
 /* Normal BG (within TIR) */
 "Normal" = "Normalvärde";
@@ -1386,9 +1608,6 @@ Enact a temp Basal or a temp target */
 /* Description for Display Loop statistics */
 "Displays Loop statistics in the statPanel in Home View" = "Visar Loop-statistik i statistiken på hemskärmen";
 
-/* Display % */
-"Override HbA1c unit" = "Ändra HbA1c-enhet";
-
 /* Description for Override HbA1c unit */
 "Change default HbA1c unit in statPanlel. The unit in statPanel will be updateded with next statistics.json update" = "Ändra HbA1c-enhet. Enheten kommer att uppdateras nästa gång filen statistics.json uppdateras";
 
@@ -1397,7 +1616,7 @@ Enact a temp Basal or a temp target */
 
 /* --------------------------------------------------------  Dexcom G7 --------------------------------------*/
 
-"Configuration CGM" = "Inställning av CGM";
+"CGM Configuration" = "Inställning av CGM";
 
 "Heartbeat" = "Hjärtslag";
 
@@ -1629,7 +1848,7 @@ Enact a temp Basal or a temp target */
 "Insulin Peak Time" = "Tid för insulinets maximala blodsockersänkande effekt, i minuter";
 
 /* "Insulin Peak Time" */
-"Time of maximum blood glucose lowering effect of insulin, in minutes. Beware: Oref assumes for ultra-rapid (Lyumjev) & rapid-acting (Fiasp) curves minimal (35 & 50 min) and maximal (100 & 120 min) applicable insulinPeakTimes. Using a custom insulinPeakTime outside these bounds will result in issues with FreeAPS-X, longer loop calculations and possible red loops." = "Tid i minuter för när insulinet har som störst blodsockersänkande effekt. Observera att inte ange ett lägre värde än 35 min för Lyumjev eller 50 min för Fiasp, eller högre än 100, respektive 120 min. Om du gör så kommer det att leda till problem med iAPS, som röda loopar, långa Loop-beräkningar och överdrivet stora loggfiler.";
+"Time of maximum blood glucose lowering effect of insulin, in minutes. Beware: Oref assumes for ultra-rapid (Lyumjev) & rapid-acting (Fiasp) curves minimal (35 & 50 min) and maximal (100 & 120 min) applicable insulinPeakTimes. Using a custom insulinPeakTime outside these bounds will result in issues with iAPS, longer loop calculations and possible red loops." = "Tid i minuter för när insulinet har som störst blodsockersänkande effekt. Observera att inte ange ett lägre värde än 35 min för Lyumjev eller 50 min för Fiasp, eller högre än 100, respektive 120 min. Om du gör så kommer det att leda till problem med iAPS, som röda loopar, långa Loop-beräkningar och överdrivet stora loggfiler.";
 
 /* Headline "Carbs Req Threshold" */
 "Carbs Req Threshold" = "Tröskelvärde för notis om kolhydrater som krävs";

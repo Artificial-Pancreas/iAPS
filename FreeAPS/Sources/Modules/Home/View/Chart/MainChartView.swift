@@ -667,8 +667,9 @@ extension MainChartView {
                 path.addLine(to: CGPoint(x: lastPoint.x, y: Config.basalHeight))
                 path.addLine(to: CGPoint(x: 0, y: Config.basalHeight))
             }
-
-            let endDateTime = dayAgoTime + min(max(screenHours, 2), 24).hours.timeInterval + min(max(screenHours, 2), 24).hours
+            let adjustForOptionalExtraHours = screenHours > 12 ? screenHours - 12 : 0
+            let endDateTime = dayAgoTime + min(max(screenHours - adjustForOptionalExtraHours, 12), 24).hours
+                .timeInterval + min(max(screenHours - adjustForOptionalExtraHours, 12), 24).hours
                 .timeInterval
             let autotunedBasalPoints = findRegularBasalPoints(
                 timeBegin: dayAgoTime,

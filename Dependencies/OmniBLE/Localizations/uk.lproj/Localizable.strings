@@ -300,7 +300,7 @@
 "Cancel Bolus" = "Скасувати Болюс";
 
 /* Alert acknowledgment OK button */
-"OK" = "OK";
+"OK" = "ОК";
 
 /* The title for Empty Reservoir alarm notification */
 "Empty Reservoir" = "Порожній резервуар";
@@ -571,7 +571,7 @@
 "Critical Alerts" = "Критичні сповіщення";
 
 /* Description text for critical alerts */
-"The reminders above will not sound if your device is in Silent or Do Not Disturb mode.\n\nThere are other critical Pod alerts and alarms that will sound even if you device is set to Silent or Do Not Disturb mode." = "Нагадування вище не звучатимуть, якщо ваш пристрій перебуває в беззвучному режимі або режимі «Не турбувати».\n\nІснують інші важливі сповіщення та будильники Pod, які лунатимуть, навіть якщо на пристрої встановлено режим «Без звуку» або «Не турбувати».";
+"The reminders above will not sound if your device is in Silent or Do Not Disturb mode.\n\nThere are other critical Pod alerts and alarms that will sound even if your device is set to Silent or Do Not Disturb mode." = "Нагадування вище не звучатимуть, якщо ваш пристрій перебуває в беззвучному режимі або режимі «Не турбувати».\n\nІснують інші важливі сповіщення та будильники Pod, які лунатимуть, навіть якщо на пристрої встановлено режим «Без звуку» або «Не турбувати».";
 /* navigation title for notification settings */
 "Notification Settings" = "Параметри сповіщень";
 
@@ -782,3 +782,6 @@
 
 /* Recovery suggestion when operation could not be completed due to existing temp basal in progress */
 "Wait for existing temp basal to finish, or suspend to cancel" = "Зачекайте, доки завершиться наявний тимчасовий базал, або призупиніть, щоб скасувати";
+
+/* DASH Pod time ago since last status */
+"%@ ago" = "%@ тому";
