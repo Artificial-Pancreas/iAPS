@@ -143,7 +143,7 @@
 "Save" = "Salvar";
 
 /*  */
-"Save as preset" = "Salvar como predefinido";
+"Save as Preset" = "Save as Preset";
 
 /* Delete Meal Preset */
 "Delete Preset" = "Delete Preset";
@@ -260,7 +260,7 @@ Enact a temp Basal or a temp target */
 /* */
 "Manual Temp Basal" = "Basal Temporária Manual";
 
-/* Allow uploads tp NS */
+/* Allow uploads to different services */
 "Allow uploads" = "Permitir uploads";
 
 /* API secret in NS */
@@ -1164,7 +1164,6 @@ Enact a temp Basal or a temp target */
 /* */
 "Normal " = "Normal ";
 
-/* */
 "Currently no Override active" = "Currently no Override active";
 
 /* */
@@ -1277,6 +1276,65 @@ Enact a temp Basal or a temp target */
 
 /* */
 "Save as Preset" = "Save as Preset";
+
+/* ----------------------- New Bolus Calculator ---------------------------*/
+/* Warning about bolus recommendation. Title */
+
+"Warning!" = "Warning!";
+
+/* Alert to confirm bolus amount to add */
+"\n\nTap 'Add' to continue with selected amount." = "\n\nTap 'Add' to continue with selected amount.";
+
+/* */
+"Eventual Glucose" = "Eventual Glucose";
+
+/* */
+"Target Glucose" = "Target Glucose";
+
+/* */
+"Percentage setting" = "Percentage setting";
+
+/* */
+"Insulin Sensitivity" = "Insulin Sensitivity";
+
+/* Formula displayed in Bolus info pop-up. Make translation short! */
+"(Eventual Glucose - Target) / ISF" = "(Eventual Glucose - Target) / ISF";
+
+/* */
+"Formula =" = "Formula =";
+
+/* Bolus pop-up footer */
+"Carbs and previous insulin are included in the glucose prediction, but if the Eventual Glucose is lower than the Target Glucose, a bolus will not be recommended." = "Carbs and previous insulin are included in the glucose prediction, but if the Eventual Glucose is lower than the Target Glucose, a bolus will not be recommended.";
+
+/* Hide pop-up */
+"Hide" = "Hide";
+
+/* Bolus pop-up / Alert string. Make translations concise! */
+"Eventual Glucose > Target Glucose, but glucose is predicted to drop down to " = "Eventual Glucose > Target Glucose, but glucose is predicted to first drop down to ";
+
+/* Bolus pop-up / Alert string. Make translations concise! */
+"which is below your Threshold (" = "which is below your Threshold (";
+
+/* Bolus pop-up / Alert string. Make translations concise! */
+"Eventual Glucose > Target Glucose, but glucose is climbing slower than expected. Expected: " = "Eventual Glucose > Target Glucose, but glucose is climbing slower than expected. Expected: ";
+
+//* Bolus pop-up / Alert string. Make translations concise! */
+". Climbing: " = ". Climbing: ";
+
+/* Bolus pop-up / Alert string. Make translations concise! */
+"Eventual Glucose > Target Glucose, but glucose is falling faster than expected. Expected: " = "Eventual Glucose > Target Glucose, but glucose is falling faster than expected. Expected: ";
+
+/* Bolus pop-up / Alert string. Make translations concise! */
+". Falling: " = ". Falling: ";
+
+/* Bolus pop-up / Alert string. Make translations concise! */
+"Eventual Glucose > Target Glucose, but glucose is changing faster than expected. Expected: " = "Eventual Glucose > Target Glucose, but glucose is changing faster than expected. Expected: ";
+
+/* Bolus pop-up / Alert string. Make translations concise! */
+". Changing: " = ". Changing: ";
+
+/* Add insulin without bolusing alert */
+" without bolusing" = " without bolusing";
 
 /* -------------------------------------------------------------------------------------------
   DASH strings
@@ -1560,7 +1618,7 @@ Enact a temp Basal or a temp target */
 
 /* --------------------------------------------------------  Dexcom G7 --------------------------------------*/
 
-"Configuration CGM" = "Configuration CGM";
+"CGM Configuration" = "CGM Configuration";
 
 "Heartbeat" = "Heartbeat";
 

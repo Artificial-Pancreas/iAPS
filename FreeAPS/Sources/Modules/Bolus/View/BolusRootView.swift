@@ -5,8 +5,8 @@ extension Bolus {
     struct RootView: BaseView {
         let resolver: Resolver
         let waitForSuggestion: Bool
-        let manualBolus: Bool
         @StateObject var state = StateModel()
+
         @State private var isAddInsulinAlertPresented = false
         @State private var presentInfo = false
         @State private var displayError = false
@@ -18,6 +18,12 @@ extension Bolus {
             formatter.numberStyle = .decimal
             formatter.maximumFractionDigits = 2
             return formatter
+        }
+
+        private var fractionDigits: Int {
+            if state.units == .mmolL {
+                return 1
+            } else { return 0 }
         }
 
         var body: some View {
@@ -70,13 +76,11 @@ extension Bolus {
                         }
                     }
                     header: { Text("Bolus") }
-
                     Section {
                         Button { state.add() }
                         label: { Text("Enact bolus") }
                             .disabled(state.amount <= 0)
                     }
-
                     Section {
                         if waitForSuggestion {
                             Button { state.showModal(for: nil) }
@@ -87,17 +91,39 @@ extension Bolus {
                                 .disabled(state.amount <= 0)
                         }
                     }
+                    .alert(isPresented: $isAddInsulinAlertPresented) {
+                        Alert(
+                            title: Text("Are you sure?"),
+                            message: Text(
+                                NSLocalizedString("Add", comment: "Add insulin without bolusing alert") + " " + formatter
+                                    .string(from: state.amount as NSNumber)! + NSLocalizedString(" U", comment: "Insulin unit") +
+                                    NSLocalizedString(" without bolusing", comment: "Add insulin without bolusing alert")
+                            ),
+                            primaryButton: .destructive(
+                                Text("Add"),
+                                action: {
+                                    state.addWithoutBolus()
+                                    isAddInsulinAlertPresented = false
+                                }
+                            ),
+                            secondaryButton: .cancel()
+                        )
+                    }
                 }
             }
-            .alert(isPresented: $isAddInsulinAlertPresented) {
-                let amount = formatter
-                    .string(from: state.amount as NSNumber)! + NSLocalizedString(" U", comment: "Insulin unit")
-                return Alert(
-                    title: Text("Are you sure?"),
-                    message: Text("Add \(amount) without bolusing"),
+            .alert(isPresented: $displayError) {
+                Alert(
+                    title: Text("Warning!"),
+                    message: Text("\n" + alertString() + NSLocalizedString(
+                        "\n\nTap 'Add' to continue with selected amount.",
+                        comment: "Alert text to confirm bolus amount to add"
+                    )),
                     primaryButton: .destructive(
                         Text("Add"),
-                        action: { state.addWithoutBolus() }
+                        action: {
+                            state.amount = state.insulinRecommended
+                            displayError = false
+                        }
                     ),
                     secondaryButton: .cancel()
                 )
@@ -105,7 +131,7 @@ extension Bolus {
             .alert(isPresented: $displayError) {
                 Alert(
                     title: Text("Warning!"),
-                    message: Text("\n" + NSLocalizedString(state.errorString, comment: "") + NSLocalizedString(
+                    message: Text("\n" + alertString() + NSLocalizedString(
                         "\n\nTap 'Add' to continue with selected amount.",
                         comment: "Alert text to confirm bolus amount to add"
                     )),
@@ -123,7 +149,6 @@ extension Bolus {
                 configureView {
                     state.waitForSuggestionInitial = waitForSuggestion
                     state.waitForSuggestion = waitForSuggestion
-                    state.manual = manualBolus
                 }
             }
             .navigationTitle("Enact Bolus")
@@ -141,15 +166,13 @@ extension Bolus {
                     HStack {
                         Text("Eventual Glucose").foregroundColor(.secondary)
                         let evg = state.units == .mmolL ? Decimal(state.evBG).asMmolL : Decimal(state.evBG)
-                        let fractionDigit = state.units == .mmolL ? 1 : 0
-                        Text(evg.formatted(.number.grouping(.never).rounded().precision(.fractionLength(fractionDigit))))
+                        Text(evg.formatted(.number.grouping(.never).rounded().precision(.fractionLength(fractionDigits))))
                         Text(state.units.rawValue).foregroundColor(.secondary)
                     }
                     HStack {
                         Text("Target Glucose").foregroundColor(.secondary)
                         let target = state.units == .mmolL ? state.target.asMmolL : state.target
-                        let fractionDigit = state.units == .mmolL ? 1 : 0
-                        Text(target.formatted(.number.grouping(.never).rounded().precision(.fractionLength(fractionDigit))))
+                        Text(target.formatted(.number.grouping(.never).rounded().precision(.fractionLength(fractionDigits))))
                         Text(state.units.rawValue).foregroundColor(.secondary)
                     }
                     HStack {
@@ -171,6 +194,10 @@ extension Bolus {
                             Text("%").foregroundColor(.secondary)
                         }
                     }
+                    HStack {
+                        Text("Formula =")
+                        Text("(Eventual Glucose - Target) / ISF")
+                    }.foregroundColor(.secondary).italic().padding(.top, 5)
                 }
                 .font(.footnote)
                 .padding(.top, 10)
@@ -181,11 +208,10 @@ extension Bolus {
                         " U",
                         comment: "Unit in number of units delivered (keep the space character!)"
                     )
-                    Text("(Eventual Glucose - Target) / ISF =").font(.callout).italic()
                     let color: Color = (state.percentage != 100 && state.insulin > 0) ? .secondary : .blue
                     let fontWeight: Font.Weight = (state.percentage != 100 && state.insulin > 0) ? .regular : .bold
                     HStack {
-                        Text(" = ").font(.callout)
+                        Text(NSLocalizedString("Insulin recommended", comment: "") + ":").font(.callout)
                         Text(state.insulin.formatted() + unit).font(.callout).foregroundColor(color).fontWeight(fontWeight)
                     }
                     if state.percentage != 100, state.insulin > 0 {
@@ -198,15 +224,15 @@ extension Bolus {
                     }
                 }
                 // Warning
-                VStack {
-                    Divider()
-                    if state.error, state.insulinRecommended > 0 {
-                        Text("Warning!").font(.callout).foregroundColor(.orange).bold()
-                        Text(NSLocalizedString(state.errorString, comment: "")).font(.caption)
+                if state.error, state.insulinRecommended > 0 {
+                    VStack(spacing: 5) {
                         Divider()
-                    }
-                }.padding(.horizontal, 10)
-                // Footer. Warning string .
+                        Text("Warning!").font(.callout).bold().foregroundColor(.orange)
+                        Text(alertString()).font(.footnote)
+                        Divider()
+                    }.padding(.horizontal, 10)
+                }
+                // Footer
                 if !(state.error && state.insulinRecommended > 0) {
                     VStack {
                         Text(
@@ -224,12 +250,69 @@ extension Bolus {
             .background(
                 RoundedRectangle(cornerRadius: 8, style: .continuous)
                     .fill(Color(colorScheme == .dark ? UIColor.systemGray4 : UIColor.systemGray4))
+                // .fill(Color(.systemGray).gradient)  // A more prominent pop-up, but harder to read
             )
+        }
+
+        // Localize the Oref0 error/warning strings. The default should never be returned
+        private func alertString() -> String {
+            switch state.errorString {
+            case 1,
+                 2:
+                return NSLocalizedString(
+                    "Eventual Glucose > Target Glucose, but glucose is predicted to first drop down to ",
+                    comment: "Bolus pop-up / Alert string. Make translations concise!"
+                ) + state.minGuardBG
+                    .formatted(.number.grouping(.never).rounded().precision(.fractionLength(fractionDigits))) + " " + state.units
+                    .rawValue + ", " +
+                    NSLocalizedString(
+                        "which is below your Threshold (",
+                        comment: "Bolus pop-up / Alert string. Make translations concise!"
+                    ) + state
+                    .threshold.formatted(.number.grouping(.never).rounded().precision(.fractionLength(fractionDigits))) + ")"
+            case 3:
+                return NSLocalizedString(
+                    "Eventual Glucose > Target Glucose, but glucose is climbing slower than expected. Expected: ",
+                    comment: "Bolus pop-up / Alert string. Make translations concise!"
+                ) +
+                    state.expectedDelta
+                    .formatted(.number.grouping(.never).rounded().precision(.fractionLength(fractionDigits))) +
+                    NSLocalizedString(". Climbing: ", comment: "Bolus pop-up / Alert string. Make translatons concise!") + state
+                    .minDelta.formatted(.number.grouping(.never).rounded().precision(.fractionLength(fractionDigits)))
+            case 4:
+                return NSLocalizedString(
+                    "Eventual Glucose > Target Glucose, but glucose is falling faster than expected. Expected: ",
+                    comment: "Bolus pop-up / Alert string. Make translations concise!"
+                ) +
+                    state.expectedDelta
+                    .formatted(.number.grouping(.never).rounded().precision(.fractionLength(fractionDigits))) +
+                    NSLocalizedString(". Falling: ", comment: "Bolus pop-up / Alert string. Make translations concise!") + state
+                    .minDelta.formatted(.number.grouping(.never).rounded().precision(.fractionLength(fractionDigits)))
+            case 5:
+                return NSLocalizedString(
+                    "Eventual Glucose > Target Glucose, but glucose is changing faster than expected. Expected: ",
+                    comment: "Bolus pop-up / Alert string. Make translations concise!"
+                ) +
+                    state.expectedDelta
+                    .formatted(.number.grouping(.never).rounded().precision(.fractionLength(fractionDigits))) +
+                    NSLocalizedString(". Changing: ", comment: "Bolus pop-up / Alert string. Make translations concise!") + state
+                    .minDelta.formatted(.number.grouping(.never).rounded().precision(.fractionLength(fractionDigits)))
+            case 6:
+                return NSLocalizedString(
+                    "Eventual Glucose > Target Glucose, but glucose is predicted to first drop down to ",
+                    comment: "Bolus pop-up / Alert string. Make translations concise!"
+                ) + state
+                    .minPredBG
+                    .formatted(.number.grouping(.never).rounded().precision(.fractionLength(fractionDigits))) + " " + state
+                    .units
+                    .rawValue
+            default:
+                return "Ignore Warning..."
+            }
         }
     }
 }
 
-// fix iOS 15 bug
 struct ActivityIndicator: UIViewRepresentable {
     @Binding var isAnimating: Bool
     let style: UIActivityIndicatorView.Style

@@ -35,7 +35,7 @@
 "Clear" = "Wissen";
 
 /* Button */
-"Done" = "Bevestig";
+"Done" = "Gereed";
 
 /*  */
 "Wait please" = "Wachten";
@@ -143,7 +143,7 @@
 "Save" = "Opslaan";
 
 /*  */
-"Save as preset" = "Opslaan als tijdelijk programma";
+"Save as Preset" = "Bewaar als voorinstelling";
 
 /* Delete Meal Preset */
 "Delete Preset" = "Verwijder voorinstelling";
@@ -260,7 +260,7 @@ Enact a temp Basal or a temp target */
 /* */
 "Manual Temp Basal" = "Handmatige tijdelijke basaal";
 
-/* Allow uploads tp NS */
+/* Allow uploads to different services */
 "Allow uploads" = "Uploaden toestaan";
 
 /* API secret in NS */
@@ -1164,7 +1164,6 @@ Enact a temp Basal or a temp target */
 /* */
 "Normal " = "Normaal ";
 
-/* */
 "Currently no Override active" = "Op dit moment geen 'Overschrijving' actief";
 
 /* */
@@ -1277,6 +1276,65 @@ Enact a temp Basal or a temp target */
 
 /* */
 "Save as Preset" = "Bewaar als voorinstelling";
+
+/* ----------------------- New Bolus Calculator ---------------------------*/
+/* Warning about bolus recommendation. Title */
+
+"Warning!" = "Waarschuwing!";
+
+/* Alert to confirm bolus amount to add */
+"\n\nTap 'Add' to continue with selected amount." = "\n\nTik op 'Toevoegen' om door te gaan met het geselecteerde aantal.";
+
+/* */
+"Eventual Glucose" = "Voorspelde glucose";
+
+/* */
+"Target Glucose" = "Doel glucose";
+
+/* */
+"Percentage setting" = "Percentage instelling";
+
+/* */
+"Insulin Sensitivity" = "Insuline gevoeligheid";
+
+/* Formula displayed in Bolus info pop-up. Make translation short! */
+"(Eventual Glucose - Target) / ISF" = "(Eventual Glucose - Target) / ISF";
+
+/* */
+"Formula =" = "Formula =";
+
+/* Bolus pop-up footer */
+"Carbs and previous insulin are included in the glucose prediction, but if the Eventual Glucose is lower than the Target Glucose, a bolus will not be recommended." = "Koolhydraten en vorige insuline zijn opgenomen in de glucosevoorspelling, maar als de uiteindelijke glucose lager is dan het doelglucose, wordt een bolus niet aangeraden.";
+
+/* Hide pop-up */
+"Hide" = "Verbergen";
+
+/* Bolus pop-up / Alert string. Make translations concise! */
+"Eventual Glucose > Target Glucose, but glucose is predicted to drop down to " = "Eventual Glucose > Target Glucose, but glucose is predicted to first drop down to ";
+
+/* Bolus pop-up / Alert string. Make translations concise! */
+"which is below your Threshold (" = "which is below your Threshold (";
+
+/* Bolus pop-up / Alert string. Make translations concise! */
+"Eventual Glucose > Target Glucose, but glucose is climbing slower than expected. Expected: " = "Eventual Glucose > Target Glucose, but glucose is climbing slower than expected. Expected: ";
+
+//* Bolus pop-up / Alert string. Make translations concise! */
+". Climbing: " = ". Climbing: ";
+
+/* Bolus pop-up / Alert string. Make translations concise! */
+"Eventual Glucose > Target Glucose, but glucose is falling faster than expected. Expected: " = "Eventual Glucose > Target Glucose, but glucose is falling faster than expected. Expected: ";
+
+/* Bolus pop-up / Alert string. Make translations concise! */
+". Falling: " = ". Falling: ";
+
+/* Bolus pop-up / Alert string. Make translations concise! */
+"Eventual Glucose > Target Glucose, but glucose is changing faster than expected. Expected: " = "Eventual Glucose > Target Glucose, but glucose is changing faster than expected. Expected: ";
+
+/* Bolus pop-up / Alert string. Make translations concise! */
+". Changing: " = ". Changing: ";
+
+/* Add insulin without bolusing alert */
+" without bolusing" = " without bolusing";
 
 /* -------------------------------------------------------------------------------------------
   DASH strings
@@ -1469,7 +1527,7 @@ Enact a temp Basal or a temp target */
 "Hours X-Axis (6 default)" = "Uren X-as (standaard 6)";
 
 /* Average BG = */
-"Average" = "Gem.";
+"Average" = "Gemiddeld";
 
 /* Median BG */
 "Median" = "Mediaan";
@@ -1560,7 +1618,7 @@ Enact a temp Basal or a temp target */
 
 /* --------------------------------------------------------  Dexcom G7 --------------------------------------*/
 
-"Configuration CGM" = "CGM configuratie";
+"CGM Configuration" = "CGM configuratie";
 
 "Heartbeat" = "Hartslag";
 

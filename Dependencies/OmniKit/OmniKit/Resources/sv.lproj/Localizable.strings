@@ -2,13 +2,13 @@
 " (inactive)" = " (inaktiv)";
 
 /* Format string for low battery alert body for RileyLink. (1: device name) */
-"\"%1$@\" has a low battery" = "\"%1$@\" har ett lågt batteri";
+"\"%1$@\" has a low battery" = "\"%1$@\" har låg batterinivå";
 
 /* Unit format string for an RSSI value in decibles */
 "%@ dB" = "%@ dB";
 
 /* Format string for alert content body for lowReservoir pod alert. (1: reminder value) */
-"%1$@ insulin or less remaining in Pod. Change Pod soon." = "%1$@ insulin eller mindre kvar i podd. Byt podd snart.";
+"%1$@ insulin or less remaining in Pod. Change Pod soon." = "%1$@ insulin eller mindre kvar i podden. Byt podd snart.";
 
 /* Format string for activation time exceeded
    Pod state when activation not completed in the time allowed */
@@ -51,13 +51,13 @@
 "Change Pod now. Insulin delivery will stop in 1 hour." = "Byt podd nu. Insulintillförsel stoppas om 1 timme.";
 
 /* Alert content body for podExpiring pod alert */
-"Change Pod now. Pod has been active for 72 hours." = "Byt podd nu. Podd har använts i 72 timmar.";
+"Change Pod now. Pod has been active for 72 hours." = "Byt podd nu. Podden har använts i 72 timmar.";
 
 /* Format string for invalid message error code (1: error code number) */
 "Command error %1$u" = "Kommandofel %1$u";
 
 /* Status highlight that delivery is uncertain. */
-"Comms Issue" = "Kommandoproblem";
+"Comms Issue" = "Kommunikationsproblem";
 
 /* Error message when command is rejected because an unacknowledged command is pending. */
 "Communication issue: Unacknowledged command pending." = "Kommunikationsproblem: Obekräftat kommando väntar.";
@@ -72,7 +72,7 @@
 "Critical Pod Error" = "Kritiskt poddfel";
 
 /* Recovery suggestion when unexpected address received */
-"Crosstalk possible. Please move to a new location" = "Möjlig överhörning. Pröva att flytta dig till ett annat rum/annan plats";
+"Crosstalk possible. Please move to a new location" = "Potentiell radiostörning. Pröva att flytta dig till ett annat rum/annan plats";
 
 /* Pod state when pod has been deactivated */
 "Deactivated" = "Inaktiverad";
@@ -81,10 +81,10 @@
 "Disabled" = "Av";
 
 /* Description for Empty reservoir pod fault */
-"Empty reservoir" = "Podfel, tom reservoarl";
+"Empty reservoir" = "Poddfel; tom reservoar";
 
 /* Error message shown when empty response from pod was received */
-"Empty response from pod" = "Inget svar från pod";
+"Empty response from pod" = "Inget svar från podden";
 
 /* Pod state error event logged shutting down */
 "Error event logged, shutting down" = "Felhändelse loggad, stänger ned";
@@ -117,13 +117,13 @@
 "Finish setup reminder" = "Påminnelse om att slutföra inställning";
 
 /* Pod inititialized */
-"Initialized" = "Pod initialiserad";
+"Initialized" = "Podd initialiserad";
 
 /* Pod state when inserting cannula */
 "Inserting cannula" = "Kanyl förs in";
 
 /* The default notification body for AlarmCodes */
-"Insulin delivery stopped. Change Pod now." = "Insulintilförsel stoppad. Byt podd nu.";
+"Insulin delivery stopped. Change Pod now." = "Insulintillförsel stoppad. Byt podd nu.";
 
 /* Status highlight that insulin delivery was suspended. */
 "Insulin Suspended" = "Insulintillförsel pausad";
@@ -132,7 +132,7 @@
 "Insulin type not configured" = "Du måste välja typ av insulin";
 
 /* The format string for Internal pod fault (1: The fault code value) */
-"Internal pod fault %1$03d" = "Internt podfel %1$03d";
+"Internal pod fault %1$03d" = "Internt poddfel %1$03d";
 
 /* The format string describing a bolus that was interrupted. (1: The amount delivered)(2: The amount scheduled)(3: Start time of the dose)(4: duration)(5: scheduled certainty) */
 "InterruptedBolus: %1$@ U (%2$@ U scheduled) %3$@ %4$@ %5$@" = "AvbrutenBolus:  %1$@ E (%2$@ E schemalagd) %3$@ %4$@ %5$@";

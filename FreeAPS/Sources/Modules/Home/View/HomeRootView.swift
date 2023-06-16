@@ -502,7 +502,7 @@ extension Home {
                             .padding(8)
                     }.foregroundColor(.loopGreen)
                     Spacer()
-                    Button { state.showModal(for: .bolus(waitForSuggestion: false, manualBolus: false)) }
+                    Button { state.showModal(for: .bolus(waitForSuggestion: false)) }
                     label: {
                         Image("bolus")
                             .renderingMode(.template)

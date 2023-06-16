@@ -30,7 +30,7 @@ extension CGM {
                     }
                     if [.dexcomG5, .dexcomG6, .dexcomG7].contains(state.cgm) {
                         Section {
-                            Button("Configuration CGM") {
+                            Button("CGM Configuration") {
                                 setupCGM.toggle()
                             }
                         }

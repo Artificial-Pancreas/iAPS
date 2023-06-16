@@ -143,7 +143,7 @@
 "Save" = "Lagre";
 
 /*  */
-"Save as preset" = "Lagre som forhåndsinnstilling";
+"Save as Preset" = "Lagre som forvalg";
 
 /* Delete Meal Preset */
 "Delete Preset" = "Slette forvalg";
@@ -260,7 +260,7 @@ Enact a temp Basal or a temp target */
 /* */
 "Manual Temp Basal" = "Manuell basal";
 
-/* Allow uploads tp NS */
+/* Allow uploads to different services */
 "Allow uploads" = "Tillat opplastinger";
 
 /* API secret in NS */
@@ -1164,7 +1164,6 @@ Enact a temp Basal or a temp target */
 /* */
 "Normal " = "Normal ";
 
-/* */
 "Currently no Override active" = "Ingen aktiv overstyring";
 
 /* */
@@ -1277,6 +1276,65 @@ Enact a temp Basal or a temp target */
 
 /* */
 "Save as Preset" = "Lagre som forvalg";
+
+/* ----------------------- New Bolus Calculator ---------------------------*/
+/* Warning about bolus recommendation. Title */
+
+"Warning!" = "Advarsel!";
+
+/* Alert to confirm bolus amount to add */
+"\n\nTap 'Add' to continue with selected amount." = "\n\nTrykk 'Legg til' for å fortsette med den anbefalte mengden.";
+
+/* */
+"Eventual Glucose" = "Beregnet blodsukker";
+
+/* */
+"Target Glucose" = "Blodsukkermål";
+
+/* */
+"Percentage setting" = "Prosent-innstilling";
+
+/* */
+"Insulin Sensitivity" = "Insulinfølsomhet";
+
+/* Formula displayed in Bolus info pop-up. Make translation short! */
+"(Eventual Glucose - Target) / ISF" = "(Beregnet blodsukker - Blodsukkermål) / ISF";
+
+/* */
+"Formula =" = "Formel =";
+
+/* Bolus pop-up footer */
+"Carbs and previous insulin are included in the glucose prediction, but if the Eventual Glucose is lower than the Target Glucose, a bolus will not be recommended." = "Karbohydrater og tidligere insulin er inkludert i blodsukkerprognosen, men hvis Beregnet Blodsukker er lavere enn Blodsukkermål, anbefales det ikke en bolusdose.";
+
+/* Hide pop-up */
+"Hide" = "Skjul";
+
+/* Bolus pop-up / Alert string. Make translations concise! */
+"Eventual Glucose > Target Glucose, but glucose is predicted to drop down to " = "Beregnet blodsukker > blodsukkermål, men blodsukkeret er først beregnet å falle til ";
+
+/* Bolus pop-up / Alert string. Make translations concise! */
+"which is below your Threshold (" = "som er under terskelen din (";
+
+/* Bolus pop-up / Alert string. Make translations concise! */
+"Eventual Glucose > Target Glucose, but glucose is climbing slower than expected. Expected: " = "Beregnet blodsukker > Blodsukkermål, men blodsukkeret stiger saktere enn forventet. Forventet: ";
+
+//* Bolus pop-up / Alert string. Make translations concise! */
+". Climbing: " = ". Stiger: ";
+
+/* Bolus pop-up / Alert string. Make translations concise! */
+"Eventual Glucose > Target Glucose, but glucose is falling faster than expected. Expected: " = "Beregnet blodsukker > Blodsukkermål, men blodsukkeret synker raskere enn forventet. Forventet: ";
+
+/* Bolus pop-up / Alert string. Make translations concise! */
+". Falling: " = ". Synker: ";
+
+/* Bolus pop-up / Alert string. Make translations concise! */
+"Eventual Glucose > Target Glucose, but glucose is changing faster than expected. Expected: " = "Beregnet blodsukker > Blodsukkermål, men blodsukkeret endres raskere enn forventet. Forventet: ";
+
+/* Bolus pop-up / Alert string. Make translations concise! */
+". Changing: " = ". Endring: ";
+
+/* Add insulin without bolusing alert */
+" without bolusing" = " uten bolus";
 
 /* -------------------------------------------------------------------------------------------
   DASH strings
@@ -1560,7 +1618,7 @@ Enact a temp Basal or a temp target */
 
 /* --------------------------------------------------------  Dexcom G7 --------------------------------------*/
 
-"Configuration CGM" = "CGM-innstillinger";
+"CGM Configuration" = "CGM-innstillinger";
 
 "Heartbeat" = "Puls";
 
