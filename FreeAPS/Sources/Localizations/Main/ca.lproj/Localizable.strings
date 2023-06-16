@@ -1557,7 +1557,7 @@ Enact a temp Basal or a temp target */
 
 /* --------------------------------------------------------  Dexcom G7 --------------------------------------*/
 
-"Configuration CGM" = "Configuration CGM";
+"CGM Configuration" = "CGM Configuration";
 
 "Heartbeat" = "Heartbeat";
 

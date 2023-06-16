@@ -48,10 +48,10 @@
 "Certain" = "Безперечно";
 
 /* Alert content body for podExpireImminent pod alert */
-"Change Pod now. Insulin delivery will stop in 1 hour." = "Змінити Pod зараз. Подачу інсуліну буде зупинено через 1 годину.";
+"Change Pod now. Insulin delivery will stop in 1 hour." = "Замінити Pod зараз. Подачу інсуліну буде зупинено через 1 годину.";
 
 /* Alert content body for podExpiring pod alert */
-"Change Pod now. Pod has been active for 72 hours." = "Змінити Pod зараз. Pod був активним протягом 72 годин.";
+"Change Pod now. Pod has been active for 72 hours." = "Замінити Pod зараз. Pod був активним протягом 72 годин.";
 
 /* Format string for invalid message error code (1: error code number) */
 "Command error %1$u" = "Помилка команди %1$u";

@@ -1,9 +1,3 @@
-//
-//  FilteredLoopsView.swift
-//  FreeAPS
-//
-//  Created by Jon Mårtensson on 2023-05-29.
-//
 import Charts
 import CoreData
 import SwiftDate
@@ -256,41 +250,32 @@ struct ChartsView: View {
             let mapGlucose = glucose.compactMap({ each in each.glucose })
             if !mapGlucose.isEmpty {
                 let mapGlucoseLow = mapGlucose.filter({ $0 < Int16(3.3 / 0.0555) })
-                let mapGlucoseAcuteLow = mapGlucose.filter({ $0 < Int16(2.6 / 0.0555) })
-
-                let mapGlucoseHigh = mapGlucose.filter({ $0 > Int(7.8 / 0.0555) })
+                let mapGlucoseNormal = mapGlucose.filter({ $0 > Int16(3.8 / 0.0555) && $0 < Int16(7.9 / 0.0555) })
                 let mapGlucoseAcuteHigh = mapGlucose.filter({ $0 > Int16(11 / 0.0555) })
 
-                HStack {
-                    let value = Double(mapGlucoseAcuteLow.count * 100 / mapGlucose.count)
-                    if value != 0 {
-                        Text(units == .mmolL ? "< 2.6" : "< 47").font(.caption2).foregroundColor(.secondary)
-                        Text(value.formatted()).font(.caption).foregroundColor(value == 0 ? .green : .red)
-                        Text("%").font(.caption)
-                    }
-                }.padding(.horizontal, 10)
                 HStack {
                     let value = Double(mapGlucoseLow.count * 100 / mapGlucose.count)
                     if value != 0 {
                         Text(units == .mmolL ? "< 3.3" : "< 59").font(.caption2).foregroundColor(.secondary)
-                        Text(value.formatted()).font(.caption).foregroundColor(value == 0 ? .green : .orange)
+                        Text(value.formatted()).font(.caption).foregroundColor(value == 0 ? .green : .red)
                         Text("%").font(.caption)
                     }
                 }
                 Spacer()
                 HStack {
-                    let value = Double(mapGlucoseHigh.count * 100 / mapGlucose.count)
+                    let value = Double(mapGlucoseNormal.count * 100 / mapGlucose.count)
                     if value != 0 {
-                        Text(units == .mmolL ? "> 7.8" : "> 140").font(.caption).foregroundColor(.secondary)
-                        Text(value.formatted()).font(.caption).foregroundColor(value == 0 ? .green : .orange)
-                        Text("%").font(.caption)
+                        Text(units == .mmolL ? "3.9-7.8" : "70-140").foregroundColor(.secondary)
+                        Text(value.formatted()).foregroundColor(.green)
+                        Text("%").foregroundColor(.secondary)
                     }
-                }.padding(.horizontal, 10)
+                }.font(.caption)
+                Spacer()
                 HStack {
                     let value = Double(mapGlucoseAcuteHigh.count * 100 / mapGlucose.count)
                     if value != 0 {
                         Text(units == .mmolL ? "> 11.0" : "> 216").font(.caption).foregroundColor(.secondary)
-                        Text(value.formatted()).font(.caption).foregroundColor(value == 0 ? .green : .red)
+                        Text(value.formatted()).font(.caption).foregroundColor(value == 0 ? .green : .orange)
                         Text("%").font(.caption)
                     }
                 }

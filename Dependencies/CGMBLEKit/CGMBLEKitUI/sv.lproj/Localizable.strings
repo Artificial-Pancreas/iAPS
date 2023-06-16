@@ -51,7 +51,7 @@ Title text for the button to remove a CGM from Loop */
 "Transmitter Age" = "Ålder på sändare";
 
 /* The title text for the Dexcom G5/G6 transmitter ID config value */
-"Transmitter ID" = "Sändari-ID";
+"Transmitter ID" = "Sändar-ID";
 
 /* Title describing glucose trend */
 "Trend" = "Trend";

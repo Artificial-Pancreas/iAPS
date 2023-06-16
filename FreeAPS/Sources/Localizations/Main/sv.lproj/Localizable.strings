@@ -47,10 +47,10 @@
 "Enacted at" = "Utfört klockan";
 
 /* Headline in suggested pop up (at: at what time) */
-"Suggested at" = "Föreslaget klockan";
+"Suggested at" = "Föreslaget vid";
 
 /* Headline in enacted pop up (at: at what time) */
-"Error at" = "Fel klockan";
+"Error at" = "Fel vid";
 
 /* Home title */
 "Home" = "Hem";
@@ -143,10 +143,10 @@
 "Save" = "Spara";
 
 /*  */
-"Save as preset" = "Spara som förval";
+"Save as Preset" = "Spara som förval";
 
 /* Delete Meal Preset */
-"Delete Preset" = "Radera Förval";
+"Delete Preset" = "Radera förval";
 
 /* Confirm Deletion */
 "Delete preset '%@'?" = "Radera förval '%@'?";
@@ -260,7 +260,7 @@ Enact a temp Basal or a temp target */
 /* */
 "Manual Temp Basal" = "Manuell temporär basal";
 
-/* Allow uploads tp NS */
+/* Allow uploads to different services */
 "Allow uploads" = "Tillåt uppladdning";
 
 /* API secret in NS */
@@ -348,25 +348,25 @@ Enact a temp Basal or a temp target */
 "U/hr" = "IE/h";
 
 /* Unit in number of units delivered (keep the space character!) */
-" U" = " IE";
+" U" = " E";
 
 /* /Insulin unit */
-"/U" = "/IE";
+"/U" = "/E";
 
 /* Insulin unit */
-"U" = "IE";
+"U" = "E";
 
 /* Unit per hour with space */
-" U/hr" = " IE/h";
+" U/hr" = " E/h";
 
 /* Number of units per hour*/
-"%@ U/hr" = "%@ IE/h";
+"%@ U/hr" = "%@ E/h";
 
 /* Number of units insulin delivered */
-"%@ U" = "%@ IE";
+"%@ U" = "%@ E";
 
 /*Carb ratio unit */
-"g/U" = "g/IE";
+"g/U" = "g/E";
 
 /* grams */
 " g" = " g";
@@ -375,7 +375,7 @@ Enact a temp Basal or a temp target */
 "g" = "g";
 
 /* when 0 U/hr */
-"0 U/hr" = "0 IE/h";
+"0 U/hr" = "0 E/h";
 
 /* abbreviation for days */
 "d" = "d";
@@ -1165,9 +1165,6 @@ Enact a temp Basal or a temp target */
 "Normal " = "Normal ";
 
 /* */
-"Currently no Override active" = "Inget undantag aktivt";
-
-/* */
 "Total Insulin Adjustment" = "Total justering av ditt insulinbehov";
 
 /* */
@@ -1277,6 +1274,65 @@ Enact a temp Basal or a temp target */
 
 /* */
 "Save as Preset" = "Spara som förval";
+
+/* ----------------------- New Bolus Calculator ---------------------------*/
+/* Warning about bolus recommendation. Title */
+
+"Warning!" = "Varning!";
+
+/* Alert to confirm bolus amount to add */
+"\n\nTap 'Add' to continue with selected amount." = "\n\nTryck 'Lägg till' för att fylla i bolusmängd.";
+
+/* */
+"Eventual Glucose" = "Blodsockerprognos";
+
+/* */
+"Target Glucose" = "Målvärde";
+
+/* */
+"Percentage setting" = "Bolusprocentinställning";
+
+/* */
+"Insulin Sensitivity" = "Insulinkänslighet";
+
+/* Formula displayed in Bolus info pop-up. Make translation short! */
+"(Eventual Glucose - Target) / ISF" = "(Blodsockerprognos - Målvärde) / ISF";
+
+/* */
+"Formula =" = "Formel =";
+
+/* Bolus pop-up footer */
+"Carbs and previous insulin are included in the glucose prediction, but if the Eventual Glucose is lower than the Target Glucose, a bolus will not be recommended." = "Kolhydrater och tidigare insulin ingår i prognos, men om prognos är lägre än målvärde kommer ingen bolus att föreslås.";
+
+/* Hide pop-up */
+"Hide" = "Göm";
+
+/* Bolus pop-up / Alert string. Make translations concise! */
+"Eventual Glucose > Target Glucose, but glucose is predicted to drop down to " = "Blodsockerprognos är över målvärde, men ditt blodsocker väntas först sjunka ner till ";
+
+/* Bolus pop-up / Alert string. Make translations concise! */
+"which is below your Threshold (" = "vilket är lägre än ditt tröskelvärde (";
+
+/* Bolus pop-up / Alert string. Make translations concise! */
+"Eventual Glucose > Target Glucose, but glucose is climbing slower than expected. Expected: " = "Prognos > Målvärde, men ditt blodsocker stiger långsammare än väntat. Förväntat: ";
+
+//* Bolus pop-up / Alert string. Make translations concise! */
+". Climbing: " = ". Stiger: ";
+
+/* Bolus pop-up / Alert string. Make translations concise! */
+"Eventual Glucose > Target Glucose, but glucose is falling faster than expected. Expected: " = "Prognos > målvärde, men blodsocker sjunker snabbare än väntat. Förväntat: ";
+
+/* Bolus pop-up / Alert string. Make translations concise! */
+". Falling: " = ". Sjunker: ";
+
+/* Bolus pop-up / Alert string. Make translations concise! */
+"Eventual Glucose > Target Glucose, but glucose is changing faster than expected. Expected: " = "Prognos > målvärde, men blodsocker ändras snabbare än väntat. Förväntat: ";
+
+/* Bolus pop-up / Alert string. Make translations concise! */
+". Changing: " = ". Ändras: ";
+
+/* Add insulin without bolusing alert */
+" without bolusing" = " utan att ge insulin";
 
 /* -------------------------------------------------------------------------------------------
   DASH strings
@@ -1560,7 +1616,7 @@ Enact a temp Basal or a temp target */
 
 /* --------------------------------------------------------  Dexcom G7 --------------------------------------*/
 
-"Configuration CGM" = "Inställning av CGM";
+"CGM Configuration" = "Inställning av CGM";
 
 "Heartbeat" = "Hjärtslag";
 

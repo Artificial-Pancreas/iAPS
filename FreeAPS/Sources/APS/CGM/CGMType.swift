@@ -5,8 +5,8 @@ enum CGMType: String, JSON, CaseIterable, Identifiable {
 
     case nightscout
     case xdrip
-    case dexcomG6
     case dexcomG5
+    case dexcomG6
     case dexcomG7
     case simulator
     case libreTransmitter
@@ -18,13 +18,13 @@ enum CGMType: String, JSON, CaseIterable, Identifiable {
         case .nightscout:
             return "Nightscout"
         case .xdrip:
-            return "xDrip"
+            return "xDrip4iOS"
         case .glucoseDirect:
             return "Glucose Direct"
-        case .dexcomG6:
-            return "Dexcom G6"
         case .dexcomG5:
             return "Dexcom G5"
+        case .dexcomG6:
+            return "Dexcom G6"
         case .dexcomG7:
             return "Dexcom G7"
         case .simulator:
@@ -45,12 +45,12 @@ enum CGMType: String, JSON, CaseIterable, Identifiable {
             return URL(string: "xdripswift://")!
         case .glucoseDirect:
             return URL(string: "libredirect://")!
+        case .dexcomG5:
+            return URL(string: "dexcomgcgm://")!
         case .dexcomG6:
             return URL(string: "dexcomg6://")!
         case .dexcomG7:
             return URL(string: "dexcomg7://")!
-        case .dexcomG5:
-            return URL(string: "dexcomgcgm://")!
         case .simulator:
             return nil
         case .libreTransmitter:
@@ -77,10 +77,10 @@ enum CGMType: String, JSON, CaseIterable, Identifiable {
                 "Using shared app group with external CGM app xDrip4iOS",
                 comment: "Shared app group xDrip4iOS"
             )
-        case .dexcomG6:
-            return NSLocalizedString("Dexcom G6 app", comment: "Dexcom G6 app")
         case .dexcomG5:
             return NSLocalizedString("Native G5 app", comment: "Native G5 app")
+        case .dexcomG6:
+            return NSLocalizedString("Dexcom G6 app", comment: "Dexcom G6 app")
         case .dexcomG7:
             return NSLocalizedString("Dexcom G7 app", comment: "Dexcom G76 app")
         case .simulator:

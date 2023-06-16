@@ -1,5 +1,5 @@
 /* Communications error for a bolus currently running */
-"A bolus is already in progress" = "En bolusdos ges redan";
+"A bolus is already in progress" = "En bolusdos pågår redan";
 
 /* The description of AlarmClockReminderPumpEvent */
 "AlarmClockReminder" = "AlarmClockReminder";
@@ -74,7 +74,7 @@
 "Reservoir" = "Reservoar";
 
 /* Error description */
-"RileyLink radio tune failed" = "RileyLink radiosignal misslyckad";
+"RileyLink radio tune failed" = "RileyLinks radiojustering misslyckades";
 
 /* The format string description of a TempBasalPumpEvent. (1: The rate of the temp basal in minutes) */
 "Temporary Basal: %1$.3f U/hour" = "Temporär basal: %1$.3f E/timme";

@@ -26,7 +26,7 @@ extension StatConfig {
             subscribeSetting(\.oneDimensionalGraph, on: $oneDimensionalGraph) { oneDimensionalGraph = $0 }
 
             subscribeSetting(\.low, on: $low, initial: {
-                let value = max(min($0, 120), 40)
+                let value = max(min($0, 90), 40)
                 low = units == .mmolL ? value.asMmolL : value
             }, map: {
                 guard units == .mmolL else { return $0 }
@@ -34,7 +34,7 @@ extension StatConfig {
             })
 
             subscribeSetting(\.high, on: $high, initial: {
-                let value = max(min($0, 270), 130)
+                let value = max(min($0, 270), 110)
                 high = units == .mmolL ? value.asMmolL : value
             }, map: {
                 guard units == .mmolL else { return $0 }
