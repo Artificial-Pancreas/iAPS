@@ -1164,8 +1164,6 @@ Enact a temp Basal or a temp target */
 /* */
 "Normal " = "Нормальный ";
 
-"Currently no Override active" = "В данный момент профиль не переопределен";
-
 /* */
 "Total Insulin Adjustment" = "Регулировка потребности в инсулине";
 

@@ -1164,8 +1164,6 @@ Enact a temp Basal or a temp target */
 /* */
 "Normal " = "Normal ";
 
-"Currently no Override active" = "Inget undantag aktivt";
-
 /* */
 "Total Insulin Adjustment" = "Total justering av ditt insulinbehov";
 

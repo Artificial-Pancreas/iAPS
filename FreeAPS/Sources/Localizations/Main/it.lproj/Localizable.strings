@@ -260,7 +260,7 @@ Enact a temp Basal or a temp target */
 /* */
 "Manual Temp Basal" = "Basale temporanea manuale";
 
-/* Allow uploads to different services */
+/* Allow uploads tp NS */
 "Allow uploads" = "Consenti caricamenti";
 
 /* API secret in NS */
@@ -1163,8 +1163,6 @@ Enact a temp Basal or a temp target */
 
 /* */
 "Normal " = "Normale ";
-
-"Currently no Override active" = "Attualmente nessuna regolazione attiva";
 
 /* */
 "Total Insulin Adjustment" = "Regolazione Insulina Totale";

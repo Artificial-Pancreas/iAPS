@@ -1164,8 +1164,6 @@ Enact a temp Basal or a temp target */
 /* */
 "Normal " = "im Zielbereich ";
 
-"Currently no Override active" = "Derzeit keine Überschreibung aktiv";
-
 /* */
 "Total Insulin Adjustment" = "Gesamte Insulinanpassung";
 
