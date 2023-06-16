@@ -1298,10 +1298,10 @@ Enact a temp Basal or a temp target */
 "Insulin Sensitivity" = "Insuline gevoeligheid";
 
 /* Formula displayed in Bolus info pop-up. Make translation short! */
-"(Eventual Glucose - Target) / ISF" = "(Eventual Glucose - Target) / ISF";
+"(Eventual Glucose - Target) / ISF" = "(Voorspelde glucose - doel) / ISF";
 
 /* */
-"Formula =" = "Formula =";
+"Formula =" = "Formule";
 
 /* Bolus pop-up footer */
 "Carbs and previous insulin are included in the glucose prediction, but if the Eventual Glucose is lower than the Target Glucose, a bolus will not be recommended." = "Koolhydraten en vorige insuline zijn opgenomen in de glucosevoorspelling, maar als de uiteindelijke glucose lager is dan het doelglucose, wordt een bolus niet aangeraden.";
@@ -1310,10 +1310,10 @@ Enact a temp Basal or a temp target */
 "Hide" = "Verbergen";
 
 /* Bolus pop-up / Alert string. Make translations concise! */
-"Eventual Glucose > Target Glucose, but glucose is predicted to drop down to " = "Eventual Glucose > Target Glucose, but glucose is predicted to first drop down to ";
+"Eventual Glucose > Target Glucose, but glucose is predicted to drop down to " = "Eventuele glucose > doelglucose, maar de glucose wordt voorspeld dat de glucose eerst omlaag zal gaan tot ";
 
 /* Bolus pop-up / Alert string. Make translations concise! */
-"which is below your Threshold (" = "which is below your Threshold (";
+"which is below your Threshold (" = "die onder uw drempelwaarde ligt (";
 
 /* Bolus pop-up / Alert string. Make translations concise! */
 "Eventual Glucose > Target Glucose, but glucose is climbing slower than expected. Expected: " = "Eventual Glucose > Target Glucose, but glucose is climbing slower than expected. Expected: ";
