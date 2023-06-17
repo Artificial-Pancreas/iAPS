@@ -308,6 +308,10 @@ extension Home {
                         .padding(.trailing, 8)
                 }
 
+                if state.closedLoop, state.settingsManager.preferences.maxIOB == 0 {
+                    Text("Max IOB: 0").font(.callout).foregroundColor(.orange).padding(.trailing, 20)
+                }
+
                 if let progress = state.bolusProgress {
                     Text("Bolusing")
                         .font(.system(size: 12, weight: .bold)).foregroundColor(.insulin)
