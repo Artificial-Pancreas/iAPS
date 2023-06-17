@@ -114,10 +114,7 @@ extension Bolus {
             .alert(isPresented: $displayError) {
                 Alert(
                     title: Text("Warning!"),
-                    message: Text("\n" + alertString() + NSLocalizedString(
-                        "\n\nTap 'Add' to continue with selected amount.",
-                        comment: "Alert text to confirm bolus amount to add"
-                    )),
+                    message: Text("\n" + alertString() + "\n"),
                     primaryButton: .destructive(
                         Text("Add"),
                         action: {
@@ -127,25 +124,7 @@ extension Bolus {
                     ),
                     secondaryButton: .cancel()
                 )
-            }
-            .alert(isPresented: $displayError) {
-                Alert(
-                    title: Text("Warning!"),
-                    message: Text("\n" + alertString() + NSLocalizedString(
-                        "\n\nTap 'Add' to continue with selected amount.",
-                        comment: "Alert text to confirm bolus amount to add"
-                    )),
-                    primaryButton: .destructive(
-                        Text("Add"),
-                        action: {
-                            state.amount = state.insulinRecommended
-                            displayError = false
-                        }
-                    ),
-                    secondaryButton: .cancel()
-                )
-            }
-            .onAppear {
+            }.onAppear {
                 configureView {
                     state.waitForSuggestionInitial = waitForSuggestion
                     state.waitForSuggestion = waitForSuggestion
