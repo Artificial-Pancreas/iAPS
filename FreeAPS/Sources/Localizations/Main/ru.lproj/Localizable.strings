@@ -1280,28 +1280,28 @@ Enact a temp Basal or a temp target */
 /* ----------------------- New Bolus Calculator ---------------------------*/
 /* Warning about bolus recommendation. Title */
 
-"Warning!" = "Warning!";
+"Warning!" = "Внимание!";
 
 /* Alert to confirm bolus amount to add */
-"\n\nTap 'Add' to continue with selected amount." = "\n\nTap 'Add' to continue with selected amount.";
+"\n\nTap 'Add' to continue with selected amount." = "\n\nНажмите \"Добавить\", чтобы продолжить с выбранным значением.";
 
 /* */
-"Eventual Glucose" = "Eventual Glucose";
+"Eventual Glucose" = "Возможная глюкоза";
 
 /* */
-"Target Glucose" = "Target Glucose";
+"Target Glucose" = "Целевая глюкоза";
 
 /* */
-"Percentage setting" = "Percentage setting";
+"Percentage setting" = "Установка процента";
 
 /* */
-"Insulin Sensitivity" = "Insulin Sensitivity";
+"Insulin Sensitivity" = "Чувствительность к инсулину";
 
 /* Formula displayed in Bolus info pop-up. Make translation short! */
-"(Eventual Glucose - Target) / ISF" = "(Eventual Glucose - Target) / ISF";
+"(Eventual Glucose - Target) / ISF" = "(Возможная - Цель) / ФЧИ";
 
 /* */
-"Formula:" = "Formula:";
+"Formula:" = "Формула:";
 
 /* Bolus pop-up footer */
 "Carbs and previous insulin are included in the glucose prediction, but if the Eventual Glucose is lower than the Target Glucose, a bolus will not be recommended." = "Carbs and previous insulin are included in the glucose prediction, but if the Eventual Glucose is lower than the Target Glucose, a bolus will not be recommended.";
