@@ -1328,7 +1328,7 @@ Enact a temp Basal or a temp target */
 ". Falling: " = ". Sjunker: ";
 
 /* Bolus pop-up / Alert string. Make translations concise! */
-"Eventual Glucose > Target Glucose, but glucose is changing faster than expected. Expected: " = "Prognos > målvärde, men blodsocker ändras snabbare än väntat. Förväntat: ";
+"Eventual Glucose > Target Glucose, but glucose is changing faster than expected. Expected: " = "Prognos > målvärde, men blodglukos ändras snabbare än väntat. Förväntat: ";
 
 /* Bolus pop-up / Alert string. Make translations concise! */
 ". Changing: " = ". Ändras: ";
