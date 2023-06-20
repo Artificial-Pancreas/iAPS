@@ -468,7 +468,7 @@ Enact a temp Basal or a temp target */
 "History" = "Historik";
 
 /* CGM option */
-"Upload glucose to Nightscout" = "Ladda upp blodsocker till Nightscout";
+"Upload glucose to Nightscout" = "Ladda upp blodglukos till Nightscout";
 
 /* Type of CGM or glucose source */
 "Type" = "Typ";
@@ -708,7 +708,7 @@ Enact a temp Basal or a temp target */
 "Sensor Footer checksum" = "Kontrollsumma för sensor";
 
 /* */
-"Last Blood Sugar prediction" = "Senaste blodsockerförutsägelse";
+"Last Blood Sugar prediction" = "Senaste blodglukosförutsägelse";
 
 /* */
 "CurrentBG" = "NuvarandeBG";
@@ -801,7 +801,7 @@ Enact a temp Basal or a temp target */
 "No logs available" = "Inga loggar tillgängliga";
 
 /* */
-"Glucose Notification visibility" = "Blodsockernotiser";
+"Glucose Notification visibility" = "Blodglukosnotiser";
 
 /* */
 "Always Notify Glucose" = "Meddela alltid glukos";
@@ -858,13 +858,13 @@ Enact a temp Basal or a temp target */
 "Schedules were saved successfully!" = "Scheman har sparats!";
 
 /* */
-"High Glucose Alarm active" = "Högt blodsockerlarm aktivt";
+"High Glucose Alarm active" = "Högt blodglukoslarm aktivt";
 
 /* */
-"Low Glucose Alarm active" = "Lågt blodsockerlarm aktivt";
+"Low Glucose Alarm active" = "Lågt blodglukoslarm aktivt";
 
 /* */
-"No Glucose Alarm active" = "Inget blodsockerlarm aktivt";
+"No Glucose Alarm active" = "Inget blodglukoslarm aktivt";
 
 /* */
 "snoozing until %@" = "snoozar till %@";
@@ -936,7 +936,7 @@ Enact a temp Basal or a temp target */
 "Carbs required: %d g" = "Kolhydrater som krävs: %d g";
 
 /* */
-"To prevent LOW required %d g of carbs" = "För att förhindra ett lågt blodsocker krävs uppskattningsvis %d g kolhydrater";
+"To prevent LOW required %d g of carbs" = "För att förhindra ett lågt blodglukos krävs uppskattningsvis %d g kolhydrater";
 
 /* */
 "iAPS not active" = "iAPS är inte aktiv";
@@ -1286,7 +1286,7 @@ Enact a temp Basal or a temp target */
 "\n\nTap 'Add' to continue with selected amount." = "\n\nTryck 'Lägg till' för att fylla i bolusmängd.";
 
 /* */
-"Eventual Glucose" = "Blodsockerprognos";
+"Eventual Glucose" = "Blodglukosprognos";
 
 /* */
 "Target Glucose" = "Målvärde";
@@ -1298,31 +1298,31 @@ Enact a temp Basal or a temp target */
 "Insulin Sensitivity" = "Insulinkänslighet";
 
 /* Formula displayed in Bolus info pop-up. Make translation short! */
-"(Eventual Glucose - Target) / ISF" = "(Blodsockerprognos - Målvärde) / ISF";
+"(Eventual Glucose - Target) / ISF" = "(Blodglukosprognos - Målvärde) / ISF";
 
 /* */
 "Formula:" = "Formel:";
 
 /* Bolus pop-up footer */
-"Carbs and previous insulin are included in the glucose prediction, but if the Eventual Glucose is lower than the Target Glucose, a bolus will not be recommended." = "Kolhydrater och tidigare insulin ingår i prognos, men om prognos är lägre än målvärde kommer ingen bolus att föreslås.";
+"Carbs and previous insulin are included in the glucose prediction, but if the Eventual Glucose is lower than the Target Glucose, a bolus will not be recommended." = "Kolhydrater och tidigare insulin ingår i prognosen, men om prognosen är lägre än målvärde kommer ingen bolus att föreslås.";
 
 /* Hide pop-up */
 "Hide" = "Göm";
 
 /* Bolus pop-up / Alert string. Make translations concise! */
-"Eventual Glucose > Target Glucose, but glucose is predicted to drop down to " = "Blodsockerprognos är över målvärde, men ditt blodsocker väntas först sjunka ner till ";
+"Eventual Glucose > Target Glucose, but glucose is predicted to drop down to " = "Blodglukosprognos är över målvärde, men ditt blodglukosvärde väntas först sjunka ner till ";
 
 /* Bolus pop-up / Alert string. Make translations concise! */
 "which is below your Threshold (" = "vilket är lägre än ditt tröskelvärde (";
 
 /* Bolus pop-up / Alert string. Make translations concise! */
-"Eventual Glucose > Target Glucose, but glucose is climbing slower than expected. Expected: " = "Prognos > Målvärde, men ditt blodsocker stiger långsammare än väntat. Förväntat: ";
+"Eventual Glucose > Target Glucose, but glucose is climbing slower than expected. Expected: " = "Prognos > Målvärde, men ditt blodglukosvärde stiger långsammare än väntat. Förväntat: ";
 
 //* Bolus pop-up / Alert string. Make translations concise! */
 ". Climbing: " = ". Stiger: ";
 
 /* Bolus pop-up / Alert string. Make translations concise! */
-"Eventual Glucose > Target Glucose, but glucose is falling faster than expected. Expected: " = "Prognos > målvärde, men blodsocker sjunker snabbare än väntat. Förväntat: ";
+"Eventual Glucose > Target Glucose, but glucose is falling faster than expected. Expected: " = "Prognos > målvärde, men blodglukos sjunker snabbare än väntat. Förväntat: ";
 
 /* Bolus pop-up / Alert string. Make translations concise! */
 ". Falling: " = ". Sjunker: ";
@@ -1631,7 +1631,7 @@ Enact a temp Basal or a temp target */
 /* New Experimental feature */
 "Experimental" = "Experimentell";
 /* Smoothing of CGM readings */
-"Smooth Glucose Value" = "Utjämna blodsocker från sensor";
+"Smooth Glucose Value" = "Utjämna blodglukosvärden från sensor";
 
 /* -----------------------------------------------------------------------------------------------------------
 
@@ -1661,19 +1661,19 @@ Enact a temp Basal or a temp target */
 "Sensitivity Raises Target" = "Insulinkänslighet höjer målvärde";
 
 /* ”Sensitivity Raises Target" */
-"When true, raises BG target when autosens detects sensitivity" = "Höjer målvärde för blodsocker när 'Autosens' upptäcker ökad insulinkänslighet";
+"When true, raises BG target when autosens detects sensitivity" = "Höjer målvärde för blodglukos när 'Autosens' upptäcker ökad insulinkänslighet";
 
 /* Headline ”Resistance Lowers Target" */
 "Resistance Lowers Target" = "Insulinresistens sänker målvärde";
 
 /* ”Resistance Lowers Target" */
-"Defaults to false. When true, will lower BG target when autosens detects resistance" = "Av som standard. Sänker målvärde för blodsocker när 'Autosens' upptäcker minskad insulinkänslighet";
+"Defaults to false. When true, will lower BG target when autosens detects resistance" = "Avstängd som standard. Sänker målvärde för blodglukos när 'Autosens' upptäcker minskad insulinkänslighet";
 
 /* Headline ”Advanced Target Adjustments" */
 "Advanced Target Adjustments" = "Avancerade målinställningar";
 
 /* ”Advanced Target Adjustments" */
-"This feature was previously enabled by default but will now default to false (will NOT be enabled automatically) in oref0 0.6.0 and beyond. (There is no need for this with 0.6.0). This feature lowers oref0’s target BG automatically when current BG and eventualBG are high. This helps prevent and mitigate high BG, but automatically switches to low-temping to ensure that BG comes down smoothly toward your actual target. If you find this behavior too aggressive, you can disable this feature. If you do so, please let us know so we can better understand what settings work best for everyone." = "Denna funktion var tidigare aktiverad som standard, men kommer nu att vara av (kommer INTE att aktiveras automatiskt) i oref0 0.6.0 och senare. (Det finns inget behov av detta med 0.6.0). Denna funktion sänker oref0:s blodsockermålvärde automatiskt när nuvarande och förväntat blodsocker är högt. Detta hjälper till att förebygga och mildra ett högt blodsocker, men växlar också automatiskt till en låg temporär basaldos för att säkerställa att ditt blodsocker landar mjukt på ditt faktiska målvärde.";
+"This feature was previously enabled by default but will now default to false (will NOT be enabled automatically) in oref0 0.6.0 and beyond. (There is no need for this with 0.6.0). This feature lowers oref0’s target BG automatically when current BG and eventualBG are high. This helps prevent and mitigate high BG, but automatically switches to low-temping to ensure that BG comes down smoothly toward your actual target. If you find this behavior too aggressive, you can disable this feature. If you do so, please let us know so we can better understand what settings work best for everyone." = "Denna funktion var tidigare aktiverad som standard, men kommer nu att vara avstängd (kommer INTE att aktiveras automatiskt) i oref0 0.6.0 och senare. (Det finns inget behov av detta med 0.6.0). Denna funktion sänker oref0: s blodglukosmålvärde automatiskt när nuvarande och förväntad blodglukos är högt. Detta hjälper till att förebygga och mildra ett högt blodglukos, men växlar också automatiskt till en låg temporär basaldos för att säkerställa att ditt blodglukosvärde landar mjukt på ditt faktiska målvärde.";
 
 /* Headline "Exercise Mode" */
 "Exercise Mode" = "Motionsläge";
@@ -1682,10 +1682,10 @@ Enact a temp Basal or a temp target */
 "Defaults to false. When true, > 105 mg/dL high temp target adjusts sensitivityRatio for exercise_mode. Synonym for high_temptarget_raises_sensitivity" = "Av som standard. Synonymt med 'High Temptarget Raises Sensitivity'. Vid ett temporärt målvärde > 5,8 mmol/l justeras 'sensitivityRatio' när 'Exercise Mode' är på.";
 
 /* Headline "Wide BG Target Range" */
-"Wide BG Target Range" = "Brett blodsockermålintervall";
+"Wide BG Target Range" = "Brett blodglukosmålintervall";
 
 /* "Wide BG Target Range" */
-"Defaults to false, which means by default only the low end of the pump’s BG target range is used as OpenAPS target. This is a safety feature to prevent too-wide targets and less-optimal outcomes. Therefore the higher end of the target range is used only for avoiding bolus wizard overcorrections. Use wide_bg_target_range: true to force neutral temps over a wider range of eventualBGs." = "Av som standard, vilket innebär att endast det nedre intervallet av dina inställda målvärden kommer att användas som målvärde i iAPS. Detta är en säkerhetsfunktion för att förhindra alltför omfattande målintervall med mindre optimala resultat som följd. Den övre delen av målvärdet används endast för att undvika överkorrigeringar av bolusguiden. Använd 'Wide BG Target Range' för att forcera neutrala temporära basaldoser att användas över ett bredare intervall av förväntade blodsocker.";
+"Defaults to false, which means by default only the low end of the pump’s BG target range is used as OpenAPS target. This is a safety feature to prevent too-wide targets and less-optimal outcomes. Therefore the higher end of the target range is used only for avoiding bolus wizard overcorrections. Use wide_bg_target_range: true to force neutral temps over a wider range of eventualBGs." = "Avstängd som standard, vilket innebär att endast det nedre intervallet av dina inställda målvärden kommer att användas som målvärde i iAPS. Detta är en säkerhetsfunktion för att förhindra alltför omfattande målintervall med mindre optimala resultat som följd. Den övre delen av målvärdet används endast för att undvika överkorrigeringar av bolusguiden. Använd 'Wide BG Target Range' för att forcera neutrala temporära basaldoser att användas över ett bredare intervall av förväntade blodglukosvärden.";
 
 /* Headline "Skip Neutral Temps" */
 "Skip Neutral Temps" = "Hoppa över neutrala temporära basaler";
@@ -1739,10 +1739,10 @@ Enact a temp Basal or a temp target */
 "Defaults to false. When true, allows supermicrobolus (if otherwise enabled) even with high temp targets (> 100 mg/dl)." = "Av som standard. När läge på, tillåts SMB:ar även vid höga temporära målvärden.";
 
 /* Headline "Use Custom Peak Time” */
-"Use Custom Peak Time" = "Använd anpassad tid, i minuter, för insulinets maximala blodsockersänkande effekt";
+"Use Custom Peak Time" = "Använd anpassad tid, i minuter, för insulinets maximala blodglukossänkande effekt";
 
 /* "Use Custom Peak Time” */
-"Defaults to false. Setting to true allows changing insulinPeakTime" = "Av som standard. Läge på tillåter ändring av 'insulinPeakTime', dvs tiden i minuter när insulinet har som störst blodsockersänkande effekt.";
+"Defaults to false. Setting to true allows changing insulinPeakTime" = "Avstängd som standard. Påslagen så tillåts ändring av 'insulinPeakTime', dvs. tiden i minuter när insulinet har som störst blodglukossänkande effekt";
 
 /* Headline "Suspend Zeros IOB” */
 "Suspend Zeros IOB" = "Ersätt med 0 U/h - basaler";
@@ -1754,7 +1754,7 @@ Enact a temp Basal or a temp target */
 "Max IOB" = "Max aktivt insulin (IOB)";
 
 /* "Max IOB" */
-"Max IOB is the maximum amount of insulin on board from all sources – both basal (or SMB correction) and bolus insulin – that your loop is allowed to accumulate to treat higher-than-target BG. Unlike the other two OpenAPS safety settings (max_daily_safety_multiplier and current_basal_safety_multiplier), max_iob is set as a fixed number of units of insulin. As of now manual boluses are NOT limited by this setting. \n\n To test your basal rates during nighttime, you can modify the Max IOB setting to zero while in Closed Loop. This will enable low glucose suspend mode while testing your basal rates settings\n\n(Tip from https://www.loopandlearn.org/freeaps-x/#open-loop)." = "Max IOB är den maximalt tillåtna mängden aktivt insulin från alla källor – basal, SMB och bolusinsulin – som din loop tillåts att ackumulera för att behandla BS högre än målvärdet. Till skillnad från de andra två säkerhetsinställningarna i iAPS ('Max Daily Safety Multiplier' och 'Current Basal Safety Multiplier'), är 'Max IOB' inställd som ett fast antal insulinenheter. Obs! I nuläget är manuella bolusar inte begränsade av denna inställning.\n\n Om du vill testa dina basaldoser säkert nattetid kan du ställa in Max IOB till 0 samtidigt som du kör Closed Loop. Detta gör att iAPS kan sänka eller stänga av basalinsulin om det skulle behövas, för att undika lågt blodsocker.\n\n(Tips från https://www.loopandlearn.org/freeaps-x/#open-loop).";
+"Max IOB is the maximum amount of insulin on board from all sources – both basal (or SMB correction) and bolus insulin – that your loop is allowed to accumulate to treat higher-than-target BG. Unlike the other two OpenAPS safety settings (max_daily_safety_multiplier and current_basal_safety_multiplier), max_iob is set as a fixed number of units of insulin. As of now manual boluses are NOT limited by this setting. \n\n To test your basal rates during nighttime, you can modify the Max IOB setting to zero while in Closed Loop. This will enable low glucose suspend mode while testing your basal rates settings\n\n(Tip from https://www.loopandlearn.org/freeaps-x/#open-loop)." = "Max IOB är den maximalt tillåtna mängden aktivt insulin från alla källor – basal, SMB och bolusinsulin – som din loop tillåts att ackumulera för att behandla blodglukos högre än målvärdet. Till skillnad från de andra två säkerhetsinställningarna i iAPS ('Max Daily Safety Multiplier' samt 'Current Basal Safety Multiplier'), är 'Max IOB' inställd som ett fast antal insulinenheter. OBS! I nuläget är manuella bolusar inte begränsade av denna inställning.\n\n Om du vill testa dina basaldoser säkert nattetid kan du ställa in Max IOB till 0 samtidigt som du kör Closed Loop. Detta gör att iAPS kan sänka eller stänga av basalinsulin om det skulle behövas, för att undika låga blodglukosvärden.\n\n(Tips från https://www.loopandlearn.org/freeaps-x/#open-loop).";
 
 /* Headline "Max Daily Safety Multiplier" */
 "Max Daily Safety Multiplier" = "Multiplikator för dygnets högsta basaldos";
@@ -1784,7 +1784,7 @@ Enact a temp Basal or a temp target */
 "Half Basal Exercise Target" = "Halva basaldosen vid Motionsläge";
 
 /* "Half Basal Exercise Target" */
-"Set to a number, e.g. 160, which means when temp target is 160 mg/dL and exercise_mode=true, run 50% basal at this level (120 = 75%; 140 = 60%). This can be adjusted, to give you more control over your exercise modes." = "Inställd till ett blodsockervärde, t.ex. 160 (mg/dl = 8.9 mmol/l), vilket innebär att när det temporära målvärdet är 8.9 mmol/l och 'Exercise Mode' är på, används endast en 50%-ig basal vid detta blodsocker (120 = 75%; 140 = 60%). Detta kan justeras, för att ge dig mer kontroll över dina temporära målvärden vid träning.";
+"Set to a number, e.g. 160, which means when temp target is 160 mg/dL and exercise_mode=true, run 50% basal at this level (120 = 75%; 140 = 60%). This can be adjusted, to give you more control over your exercise modes." = "Inställd till ett blodglukosvärde, t.ex. 160 (mg/dl = 8,9 mmol/l), vilket innebär att när det temporära målvärdet är 8,9 mmol/l och 'Exercise Mode' är på, används endast en 50%-ig basal vid detta blodglukosvärde (120 = 75%; 140 = 60%). Detta kan justeras, för att ge dig mer kontroll över dina temporära målvärden vid träning.";
 
 /* Headline "Max COB" */
 "Max COB" = "Max mängd aktiva kolhydrater (COB)";
@@ -1802,7 +1802,7 @@ Enact a temp Basal or a temp target */
 "Min 5m Carbimpact" = "Lägsta absorptionshastighet";
 
 /* "Min 5m Carbimpact" */
-"This is a setting for default carb absorption impact per 5 minutes. The default is an expected 8 mg/dL/5min. This affects how fast COB is decayed in situations when carb absorption is not visible in BG deviations. The default of 8 mg/dL/5min corresponds to a minimum carb absorption rate of 24g/hr at a CSF of 4 mg/dL/g." = "Standardvärde är 8 mg/dl/5min (0,4 mmol/l/5 min). Detta är en inställning för kolhydratsabsorptionseffekt per 5 minuter, som påverkar hur snabbt aktiva kolhydrater klingar av i situationer när kolhydratsabsorption inte syns i BS-avvikelser. Standarden på 0,4 mmol/l/5 min motsvarar en minsta absorptionshastighet på 24g/h vid en CSF ('Carb Sensitivity Factor', hur mycket ditt blodsocker stiger per gram kolhydrat) på 0,2 mmol/l/g.";
+"This is a setting for default carb absorption impact per 5 minutes. The default is an expected 8 mg/dL/5min. This affects how fast COB is decayed in situations when carb absorption is not visible in BG deviations. The default of 8 mg/dL/5min corresponds to a minimum carb absorption rate of 24g/hr at a CSF of 4 mg/dL/g." = "Standardvärde är 8 mg/dl per 5 min (0,4 mmol/l per 5 min). Detta är en inställning för kolhydratsabsorptionseffekt per 5 minuter, som påverkar hur snabbt aktiva kolhydrater klingar av i situationer när kolhydratsabsorption inte syns i blodglukosavvikelser. Standarden på 0,4 mmol/l per 5 min motsvarar en minsta absorptionshastighet på 24 g/h vid en CSF ('Carb Sensitivity Factor', hur mycket ditt blodglukosvärde stiger per gram kolhydrat) på 0,2 mmol/l/g.";
 
 /* Headline "Autotune ISF Adjustment Fraction" */
 "Autotune ISF Adjustment Fraction" = "Autotune - standard ISF - skillnad";
@@ -1826,13 +1826,13 @@ Enact a temp Basal or a temp target */
 "Max SMB Basal Minutes" = "Basalminuter för automatiska bolusar (SMB)";
 
 /* ”Max SMB Basal Minutes" */
-"Defaults to start at 30. This is the maximum minutes of basal that can be delivered as a single SMB with uncovered COB. This gives the ability to make SMB more aggressive if you choose. It is recommended that the value is set to start at 30, in line with the default, and if you choose to increase this value, do so in no more than 15 minute increments, keeping a close eye on the effects of the changes. It is not recommended to set this value higher than 90 mins, as this may affect the ability for the algorithm to safely zero temp. It is also recommended that pushover is used when setting the value to be greater than default, so that alerts are generated for any predicted lows or highs." = "Standardvärde 30. Detta är det maximala antal minuter av din ordinarie basal som kommer att ges som en SMB. Denna inställning ger möjlighet att göra SMB större och behandlingen med SMB mer aggressiv. Det rekommenderas att börja med 30 minuter, och om du väljer att öka detta värde, göra det stegvis i högst 15 minuters steg, samtidigt som du noga följer effekterna av de nya inställningarna. Det rekommenderas inte att ställa in detta värde högre än 90 minuter, eftersom detta påverkar algoritmens förmåga att säkert kunna balansera med temporära basaler på 0 IE/h. Det rekommenderas också att pushover används när värdet sätts till att vara större än standard, så att varningar och notiser kan genereras för alla förväntade blodsockerdalar eller toppar.";
+"Defaults to start at 30. This is the maximum minutes of basal that can be delivered as a single SMB with uncovered COB. This gives the ability to make SMB more aggressive if you choose. It is recommended that the value is set to start at 30, in line with the default, and if you choose to increase this value, do so in no more than 15 minute increments, keeping a close eye on the effects of the changes. It is not recommended to set this value higher than 90 mins, as this may affect the ability for the algorithm to safely zero temp. It is also recommended that pushover is used when setting the value to be greater than default, so that alerts are generated for any predicted lows or highs." = "Standardvärde 30. Detta är det maximala antal minuter av din ordinarie basal som kommer att ges som en SMB. Denna inställning ger möjlighet att göra SMB större och behandlingen med SMB mer aggressiv. Det rekommenderas att börja med 30 minuter, och om du väljer att öka detta värde, göra det stegvis i högst 15 minuters steg, samtidigt som du noga följer effekterna av de nya inställningarna. Det rekommenderas inte att ställa in detta värde högre än 90 minuter, eftersom detta påverkar algoritmens förmåga att säkert kunna balansera med temporära basaler på 0 IE/h. Det rekommenderas också att tjänsten Pushover används när värdet sätts till att vara större än standard, så att varningar och notiser kan genereras för alla förväntade blodglukosdalar och toppar.";
 
 /* Headline "Max UAM SMB Basal Minutes" */
 "Max UAM SMB Basal Minutes" = "Basalminuter för autobolusar vid oannonserade måltider (UAM SMBs)";
 
 /* "Max UAM SMB Basal Minutes" */
-"Defaults to start at 30. This is the maximum minutes of basal that can be delivered by UAM as a single SMB when IOB exceeds COB. This gives the ability to make UAM more or less aggressive if you choose. It is recommended that the value is set to start at 30, in line with the default, and if you choose to increase this value, do so in no more than 15 minute increments, keeping a close eye on the effects of the changes. Reducing the value will cause UAM to dose less insulin for each SMB. It is not recommended to set this value higher than 60 mins, as this may affect the ability for the algorithm to safely zero temp. It is also recommended that pushover is used when setting the value to be greater than default, so that alerts are generated for any predicted lows or highs." = "Standardvärde 30. Detta är det maximala antal minuter av din ordinarie basal som kommer att användas för UAM för att ges som en SMB. Denna inställning ger möjlighet att göra behandlingen med UAM mer aggressiv, om du väljer att öka detta värde. Det rekommenderas att börja med 30 minuter, och om du väljer att öka detta värde, görs det stegvis i högst 15 minuters steg, samtidigt som du noga följer effekterna av nya inställningarna. En reducering av värdet leder till att UAM doserar mindre insulin med varje SMB. Det rekommenderas inte att ställa in detta värde högre än 60 minuter, eftersom detta påverkar algoritmens förmåga att säkert kunna balansera med temporära basaler på 0 IE/h. Det rekommenderas också att pushover används när värdet sätts till att vara större än standard, så att varningar och notiser kan genereras för alla förväntade blodsockerdalar eller toppar.";
+"Defaults to start at 30. This is the maximum minutes of basal that can be delivered by UAM as a single SMB when IOB exceeds COB. This gives the ability to make UAM more or less aggressive if you choose. It is recommended that the value is set to start at 30, in line with the default, and if you choose to increase this value, do so in no more than 15 minute increments, keeping a close eye on the effects of the changes. Reducing the value will cause UAM to dose less insulin for each SMB. It is not recommended to set this value higher than 60 mins, as this may affect the ability for the algorithm to safely zero temp. It is also recommended that pushover is used when setting the value to be greater than default, so that alerts are generated for any predicted lows or highs." = "Standardvärde 30. Detta är det maximala antal minuter av din ordinarie basal som kommer att användas för UAM för att ges som en SMB. Denna inställning ger möjlighet att göra behandlingen med UAM mer aggressiv, om du väljer att öka detta värde. Det rekommenderas att börja med 30 minuter, och om du väljer att öka detta värde, görs det stegvis i högst 15 minuters steg, samtidigt som du noga följer effekterna av nya inställningarna. En reducering av värdet leder till att UAM doserar mindre insulin med varje SMB. Det rekommenderas inte att ställa in detta värde högre än 60 minuter, eftersom detta påverkar algoritmens förmåga att säkert kunna balansera med temporära basaler på 0 IE/h. Det rekommenderas också att tjänsten Pushover används när värdet sätts till att vara större än standard, så att varningar och notiser kan genereras för alla förväntade blodglukosdalar och toppar.";
 
 /* Headline "SMB Interval" */
 "SMB Interval" = "SMB-intervall (minuter)";
@@ -1847,16 +1847,16 @@ Enact a temp Basal or a temp target */
 "Smallest enacted SMB amount. Minimum amount for Omnipod pumps is 0.05 U, whereas for Medtronic pumps it differs for various models, from 0.025 U to 0.10 U. Please check the minimum bolus amount which can be delivered by your pump. The default value is 0.1." = "Minsta mängd för Omnipod-poddar är 0,05 enheter, medan det för Medtronic-pumpar skiljer sig åt för olika modeller, från 0.25 IE till 0,10 IE. Kontrollera den minsta bolusmängd som kan ges av din pump för denna inställning. Standardvärdet är 0,1 enheter.";
 
 /* Headline "Insulin Peak Time" */
-"Insulin Peak Time" = "Tid för insulinets maximala blodsockersänkande effekt, i minuter";
+"Insulin Peak Time" = "Tid för insulinets maximala blodglukossänkande effekt, i minuter";
 
 /* "Insulin Peak Time" */
-"Time of maximum blood glucose lowering effect of insulin, in minutes. Beware: Oref assumes for ultra-rapid (Lyumjev) & rapid-acting (Fiasp) curves minimal (35 & 50 min) and maximal (100 & 120 min) applicable insulinPeakTimes. Using a custom insulinPeakTime outside these bounds will result in issues with iAPS, longer loop calculations and possible red loops." = "Tid i minuter för när insulinet har som störst blodsockersänkande effekt. Observera att inte ange ett lägre värde än 35 min för Lyumjev eller 50 min för Fiasp, eller högre än 100, respektive 120 min. Om du gör så kommer det att leda till problem med iAPS, som röda loopar, långa Loop-beräkningar och överdrivet stora loggfiler.";
+"Time of maximum blood glucose lowering effect of insulin, in minutes. Beware: Oref assumes for ultra-rapid (Lyumjev) & rapid-acting (Fiasp) curves minimal (35 & 50 min) and maximal (100 & 120 min) applicable insulinPeakTimes. Using a custom insulinPeakTime outside these bounds will result in issues with iAPS, longer loop calculations and possible red loops." = "Tid i minuter för när insulinet har som störst blodglukossänkande effekt. Observera att inte ange ett lägre värde än 35 min för Lyumjev eller 50 min för Fiasp, eller högre än 100, respektive 120 min. Om du gör så kommer det att leda till problem med iAPS; som röda loopar, långa loop-beräkningar samt överdrivet stora loggfiler.";
 
 /* Headline "Carbs Req Threshold" */
 "Carbs Req Threshold" = "Tröskelvärde för notis om kolhydrater som krävs";
 
 /* "Carbs Req Threshold" */
-"Grams of carbsReq to trigger a pushover. Defaults to 1 (for 1 gram of carbohydrate). Can be increased if you only want to get Pushover for carbsReq at X threshold." = "Antal kolhydrater för att utlösa en pushover-notis, av det totala antal kolhydrater nödvändiga (carbsReq) för att undvika ett lågt blodsockervärde, som krävs. Standardvärde är 1 (gram kolhydrater). Kan ökas om du bara vill få en Pushover-notis vid en större mängd nödvändiga kolhydrater.";
+"Grams of carbsReq to trigger a pushover. Defaults to 1 (for 1 gram of carbohydrate). Can be increased if you only want to get Pushover for carbsReq at X threshold." = "Antal kolhydrater för att utlösa en Pushover-notis med det totala antal kolhydrater nödvändiga (carbsReq) som krävs för att undvika ett lågt blodglukosvärde. Standardvärde är 1 (gram kolhydrater). Kan ökas om du bara vill få en Pushover-notis vid en större mängd nödvändiga kolhydrater.";
 
 /* Headline "Noisy CGM Target Multiplier" */
 "Noisy CGM Target Multiplier" = "Multipel vid CGM-brus";
@@ -1885,7 +1885,7 @@ Enact a temp Basal or a temp target */
 "Enable Dynamic ISF" = "Aktivera dynamisk insulinkänslighet (ISF)";
 
 /* Enable Dynamic ISF */
-"Calculate a new ISF with every loop cycle. New ISF will be based on current BG, TDD of insulin (past 24 hours or a weighted average) and an Adjustment Factor (default is 1).\n\nDynamic ISF and CR ratios will be limited by your autosens.min/max limits.\n\nDynamic ratio replaces the autosens.ratio: New ISF = Static ISF / Dynamic ratio,\nDynamic ratio = profile.sens * adjustmentFactor * tdd * Math.log(BG/insulinFactor+1) / 1800,\ninsulinFactor = 120 - InsulinPeakTimeInMinutes" = "Beräkna ny insulinkänslighet varje loopcykel. Ny ISF (insulinkänslighet) beräknas på nuvarande blodsocker, TDD (insulin senaste 24 timmarna, eller ett viktad genomsnitt) och AF-konstant (standardvärde är 1).\n\nDynamiska ISF och CR (kolhydratkvot) kvoter begränsas av dina autosens.min/max-inställningar.\n\nDynamiska kvoterna ersätter autosens-kvoten: Ny ISF =inställd ISF / dynamisk kvot,\nDynamisk kvot = profile.sens * adjustmentFactor * tdd * Math.log(BG/insulinFactor+1) / 1800,\ninsulinFactor = 120 - tiden, i minuter, för insulinets maximala blodsockersänkande effekt.";
+"Calculate a new ISF with every loop cycle. New ISF will be based on current BG, TDD of insulin (past 24 hours or a weighted average) and an Adjustment Factor (default is 1).\n\nDynamic ISF and CR ratios will be limited by your autosens.min/max limits.\n\nDynamic ratio replaces the autosens.ratio: New ISF = Static ISF / Dynamic ratio,\nDynamic ratio = profile.sens * adjustmentFactor * tdd * Math.log(BG/insulinFactor+1) / 1800,\ninsulinFactor = 120 - InsulinPeakTimeInMinutes" = "Beräkna ny insulinkänslighet varje loopcykel. Ny ISF (insulinkänslighet) beräknas på nuvarande blodglukos, TDD (insulin senaste 24 timmarna, eller ett viktad genomsnitt) och AF-konstant (standardvärde är 1).\n\nDynamiska ISF- och CR-kvoter (kolhydratkvot) begränsas av dina autosens.min/max-inställningar.\n\nDe dynamiska kvoterna ersätter autosens-kvoten: Ny ISF = inställd ISF / dynamisk kvot,\nDynamisk kvot = profile.sens * adjustmentFactor * tdd * Math.log(BG/insulinFactor+1) / 1800,\ninsulinFactor = 120 - tiden, i minuter, för insulinets maximala blodglukossänkande effekt.";
 
 /* Headline "Enable Dynamic CR" */
 "Enable Dynamic CR" = "Aktivera dynamisk insulinkvot (CR)";
@@ -1911,7 +1911,7 @@ Enact a temp Basal or a temp target */
 "Threshold Setting (mg/dl)" = "Inställning för tröskelvärde (mg/dl)";
 
 /* Threshold Setting */
-"The default threshold in FAX depends on your current minimum BG target, as follows:\n\nIf your minimum BG target = 90 mg/dl -> threshold = 65 mg/dl,\n\nif minimum BG target = 100 mg/dl -> threshold = 70 mg/dl,\n\nminimum BG target = 110 mg/dl -> threshold = 75 mg/dl,\n\nand if minimum BG target = 130 mg/dl  -> threshold = 85 mg/dl.\n\nThis setting allows you to change the default to a higher threshold for looping with dynISF. Valid values are 65 mg/dl<= Threshold Setting <= 120 mg/dl." = "Tröskelvärde för blodsocker beror på ditt nuvarande undre blodsockermålvärde, enligt följande:\n\nOm ditt målvräde = 5 mmol/l -> tröskelvörde = 3,6 mmol/l,\n\nOm ditt målvräde = 5,6 -> tröskelärde = 3,9 mmol/l,\n\nOm ditt målvräde = 6,1 mmol/l -> tröskelvärde = 4,2 mmol/l,\n\nOch om ditt målvräde = 7,2 mmol/l  -> tröskelvärde = 4,7 mmol/l.\n\nDenna inställning tillåter dig att ändra trösklevärdet till en högre inställnig när du loopar med dynamiska kvoter. Giltiga värden är 3,6 - 6,7.";
+"The default threshold in FAX depends on your current minimum BG target, as follows:\n\nIf your minimum BG target = 90 mg/dl -> threshold = 65 mg/dl,\n\nif minimum BG target = 100 mg/dl -> threshold = 70 mg/dl,\n\nminimum BG target = 110 mg/dl -> threshold = 75 mg/dl,\n\nand if minimum BG target = 130 mg/dl  -> threshold = 85 mg/dl.\n\nThis setting allows you to change the default to a higher threshold for looping with dynISF. Valid values are 65 mg/dl<= Threshold Setting <= 120 mg/dl." = "Tröskelvärde för blodglukos beror på ditt nuvarande undre blodglukosmålvärde, enligt följande:\n\nOm ditt målvärde = 5 mmol/l -> tröskelvärde = 3,6 mmol/l,\n\nOm ditt målvärde = 5,6 -> tröskevärde = 3,9 mmol/l,\n\nOm ditt målvärde = 6,1 mmol/l -> tröskelvärde = 4,2 mmol/l,\n\nOm ditt målvärde = 7,2 mmol/l  -> tröskelvärde = 4,7 mmol/l.\n\nDenna inställning låter dig att ändra tröskelvärdet till en högre inställning när du loopar med dynamiska kvoter. Giltiga värden är 3,6–6,7.";
 
 /* Headline "Weighted Average of TDD. Weight of past 24 hours:" */
 "Weighted Average of TDD. Weight of past 24 hours:" = "Viktat Genomsnitt av TDD. Vikt de senaste 24 timmarna:";
@@ -1926,22 +1926,22 @@ Enact a temp Basal or a temp target */
 "Enable adjustment of basal based on the ratio of current TDD / 7 day average TDD" = "Justera även basal enligt följande: ny basal = basal * (TDD / 7-dagars medelvärde av TDD)";
 
 /* Headline "Max Delta-BG Threshold SMB" */
-"Max Delta-BG Threshold SMB" = "Högsta tillåtna blodsockerförändring";
+"Max Delta-BG Threshold SMB" = "Högsta tillåtna blodglukosförändring";
 
 /* Max Delta-BG Threshold SMB */
-"Defaults to 0.2 (20%). Maximum positive percentual change of BG level to use SMB, above that will disable SMB. Hardcoded cap of 40%. For UAM fully-closed-loop 30% is advisable. Observe in log and popup (maxDelta 27 > 20% of BG 100 - disabling SMB!)." = "Standardvärde 0,2 (20%). Maximal blodsockerförändring (ökning) som tillåter användning av SMB (autobolus). Över detta värde kommer SMB tillfälligt att avaktiveras. Högsta tillåtna värde är 0,4 (40%). Om du loopar utan att ange kolhydrater (UAM fully-closed-loop) rekommederas 30%. I loggar kommer detta registreras likt exempel: '(maxDelta 27 > 20% of BG 100 - disabling SMB!'.";
+"Defaults to 0.2 (20%). Maximum positive percentual change of BG level to use SMB, above that will disable SMB. Hardcoded cap of 40%. For UAM fully-closed-loop 30% is advisable. Observe in log and popup (maxDelta 27 > 20% of BG 100 - disabling SMB!)." = "Standardvärde 0,2 (20%). Maximal blodglukosförändring (ökning) som tillåter användning av SMB (autobolus). Över detta värde kommer SMB tillfälligt att avaktiveras. Högsta tillåtna värde är 0,4 (40%). Om du loopar utan att ange kolhydrater (UAM fully-closed-loop) rekommenderas 30%. I loggar kommer detta registreras likt exempel: '(maxDelta 27 > 20% of BG 100 - disabling SMB!').";
 
 /* Headline "... When Blood Glucose Is Over (mg/dl):" */
-"... When Blood Glucose Is Over (mg/dl):" = "... när blodsocker är över (mg/dl):";
+"... When Blood Glucose Is Over (mg/dl):" = "... när blodglukos är över (i mg/dl):";
 
 /* ... When Blood Glucose Is Over (mg/dl): */
-"Set the value enableSMB_high_bg will compare against to enable SMB. If BG > than this value, SMBs should enable." = "Ange blodsockervärdet vid vilket SMB kommer att aktiveras. När blodsocker är högre än detta värde bör SMB aktiveras, även om andra inställningar för SMB är av.";
+"Set the value enableSMB_high_bg will compare against to enable SMB. If BG > than this value, SMBs should enable." = "Ange blodglukosvärdet vid vilket SMB kommer att aktiveras. När blodglukos är högre än detta värde bör SMB aktiveras, även om andra inställningar för SMB är avstängda.";
 
 /* Headline "Enable SMB With High BG" */
-"Enable SMB With High BG" = "Aktivera SMB vid ett högt blodsocker";
+"Enable SMB With High BG" = "Aktivera SMB:er vid högt blodglukosvärde";
 
 /* "Enable SMB With High BG" */
-"Enable SMBs when a high BG is detected, based on the high BG target (adjusted or profile)" = "Aktivera SMB: er vid högt blodsocker, eller enligt inställning nedan";
+"Enable SMBs when a high BG is detected, based on the high BG target (adjusted or profile)" = "Aktivera SMB:er vid högt blodglukos, eller enligt inställning nedan";
 
 /* Headline "Dynamic settings" */
 "Dynamic settings" = "Dynamiska inställningar";
