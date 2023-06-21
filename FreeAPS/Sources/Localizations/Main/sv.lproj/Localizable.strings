@@ -468,7 +468,7 @@ Enact a temp Basal or a temp target */
 "History" = "Historik";
 
 /* CGM option */
-"Upload glucose to Nightscout" = "Ladda upp blodglukos till Nightscout";
+"Upload glucose to Nightscout" = "Ladda upp blodsocker till Nightscout";
 
 /* Type of CGM or glucose source */
 "Type" = "Typ";
@@ -708,7 +708,7 @@ Enact a temp Basal or a temp target */
 "Sensor Footer checksum" = "Kontrollsumma för sensor";
 
 /* */
-"Last Blood Sugar prediction" = "Senaste blodglukosförutsägelse";
+"Last Blood Sugar prediction" = "Senaste blodsockerprognos";
 
 /* */
 "CurrentBG" = "NuvarandeBG";
@@ -801,7 +801,7 @@ Enact a temp Basal or a temp target */
 "No logs available" = "Inga loggar tillgängliga";
 
 /* */
-"Glucose Notification visibility" = "Blodglukosnotiser";
+"Glucose Notification visibility" = "Blodsockernotiser";
 
 /* */
 "Always Notify Glucose" = "Meddela alltid glukos";
@@ -858,13 +858,13 @@ Enact a temp Basal or a temp target */
 "Schedules were saved successfully!" = "Scheman har sparats!";
 
 /* */
-"High Glucose Alarm active" = "Högt blodglukoslarm aktivt";
+"High Glucose Alarm active" = "Högt blodsockerlarm aktivt";
 
 /* */
-"Low Glucose Alarm active" = "Lågt blodglukoslarm aktivt";
+"Low Glucose Alarm active" = "Lågt blodsockerlarm aktivt";
 
 /* */
-"No Glucose Alarm active" = "Inget blodglukoslarm aktivt";
+"No Glucose Alarm active" = "Inget blodsockerlarm aktivt";
 
 /* */
 "snoozing until %@" = "snoozar till %@";
@@ -936,7 +936,7 @@ Enact a temp Basal or a temp target */
 "Carbs required: %d g" = "Kolhydrater som krävs: %d g";
 
 /* */
-"To prevent LOW required %d g of carbs" = "För att förhindra ett lågt blodglukos krävs uppskattningsvis %d g kolhydrater";
+"To prevent LOW required %d g of carbs" = "För att förhindra ett lågt blodsocker krävs uppskattningsvis %d g kolhydrater";
 
 /* */
 "iAPS not active" = "iAPS är inte aktiv";
@@ -1074,7 +1074,7 @@ Enact a temp Basal or a temp target */
 "Loop Cycles" = "Loopar";
 
 /* Debug option view Glucose Data used for statistics */
-"Glucose Data used for statistics" = "Sparade blodglukosvärden för statistik";
+"Glucose Data used for statistics" = "Sparade blodsockervärden för statistik";
 
 /* --------------- HealthKit intergration --------------------*/
 /* */
@@ -1286,7 +1286,7 @@ Enact a temp Basal or a temp target */
 "\n\nTap 'Add' to continue with selected amount." = "\n\nTryck 'Lägg till' för att fylla i bolusmängd.";
 
 /* */
-"Eventual Glucose" = "Blodglukosprognos";
+"Eventual Glucose" = "Blodsockerprognos";
 
 /* */
 "Target Glucose" = "Målvärde";
@@ -1298,7 +1298,7 @@ Enact a temp Basal or a temp target */
 "Insulin Sensitivity" = "Insulinkänslighet";
 
 /* Formula displayed in Bolus info pop-up. Make translation short! */
-"(Eventual Glucose - Target) / ISF" = "(Blodglukosprognos - Målvärde) / ISF";
+"(Eventual Glucose - Target) / ISF" = "(Blodsockerprognos - Målvärde) / ISF";
 
 /* */
 "Formula:" = "Formel:";
@@ -1310,25 +1310,25 @@ Enact a temp Basal or a temp target */
 "Hide" = "Göm";
 
 /* Bolus pop-up / Alert string. Make translations concise! */
-"Eventual Glucose > Target Glucose, but glucose is predicted to drop down to " = "Blodglukosprognos är över målvärde, men ditt blodglukosvärde väntas först sjunka ner till ";
+"Eventual Glucose > Target Glucose, but glucose is predicted to drop down to " = "Blodsockerprognos är över målvärde, men ditt blodsocker väntas först sjunka ner till ";
 
 /* Bolus pop-up / Alert string. Make translations concise! */
 "which is below your Threshold (" = "vilket är lägre än ditt tröskelvärde (";
 
 /* Bolus pop-up / Alert string. Make translations concise! */
-"Eventual Glucose > Target Glucose, but glucose is climbing slower than expected. Expected: " = "Prognos > Målvärde, men ditt blodglukosvärde stiger långsammare än väntat. Förväntat: ";
+"Eventual Glucose > Target Glucose, but glucose is climbing slower than expected. Expected: " = "Prognos > Målvärde, men ditt blodsocker stiger långsammare än väntat. Förväntat: ";
 
 //* Bolus pop-up / Alert string. Make translations concise! */
 ". Climbing: " = ". Stiger: ";
 
 /* Bolus pop-up / Alert string. Make translations concise! */
-"Eventual Glucose > Target Glucose, but glucose is falling faster than expected. Expected: " = "Prognos > målvärde, men blodglukos sjunker snabbare än väntat. Förväntat: ";
+"Eventual Glucose > Target Glucose, but glucose is falling faster than expected. Expected: " = "Prognos > målvärde, men blodsocker sjunker snabbare än väntat. Förväntat: ";
 
 /* Bolus pop-up / Alert string. Make translations concise! */
 ". Falling: " = ". Sjunker: ";
 
 /* Bolus pop-up / Alert string. Make translations concise! */
-"Eventual Glucose > Target Glucose, but glucose is changing faster than expected. Expected: " = "Prognos > målvärde, men blodglukos ändras snabbare än väntat. Förväntat: ";
+"Eventual Glucose > Target Glucose, but glucose is changing faster than expected. Expected: " = "Prognos > målvärde, men blodsocker ändras snabbare än väntat. Förväntat: ";
 
 /* Bolus pop-up / Alert string. Make translations concise! */
 ". Changing: " = ". Ändras: ";
@@ -1631,7 +1631,7 @@ Enact a temp Basal or a temp target */
 /* New Experimental feature */
 "Experimental" = "Experimentell";
 /* Smoothing of CGM readings */
-"Smooth Glucose Value" = "Utjämna blodglukosvärden från sensor";
+"Smooth Glucose Value" = "Utjämna blodsocker från sensor";
 
 /* -----------------------------------------------------------------------------------------------------------
 
@@ -1926,7 +1926,7 @@ Enact a temp Basal or a temp target */
 "Enable adjustment of basal based on the ratio of current TDD / 7 day average TDD" = "Justera även basal enligt följande: ny basal = basal * (TDD / 7-dagars medelvärde av TDD)";
 
 /* Headline "Max Delta-BG Threshold SMB" */
-"Max Delta-BG Threshold SMB" = "Högsta tillåtna blodglukosförändring";
+"Max Delta-BG Threshold SMB" = "Högsta tillåtna blodsockerförändring";
 
 /* Max Delta-BG Threshold SMB */
 "Defaults to 0.2 (20%). Maximum positive percentual change of BG level to use SMB, above that will disable SMB. Hardcoded cap of 40%. For UAM fully-closed-loop 30% is advisable. Observe in log and popup (maxDelta 27 > 20% of BG 100 - disabling SMB!)." = "Standardvärde 0,2 (20%). Maximal blodglukosförändring (ökning) som tillåter användning av SMB (autobolus). Över detta värde kommer SMB tillfälligt att avaktiveras. Högsta tillåtna värde är 0,4 (40%). Om du loopar utan att ange kolhydrater (UAM fully-closed-loop) rekommenderas 30%. I loggar kommer detta registreras likt exempel: '(maxDelta 27 > 20% of BG 100 - disabling SMB!').";
@@ -1938,10 +1938,10 @@ Enact a temp Basal or a temp target */
 "Set the value enableSMB_high_bg will compare against to enable SMB. If BG > than this value, SMBs should enable." = "Ange blodglukosvärdet vid vilket SMB kommer att aktiveras. När blodglukos är högre än detta värde bör SMB aktiveras, även om andra inställningar för SMB är avstängda.";
 
 /* Headline "Enable SMB With High BG" */
-"Enable SMB With High BG" = "Aktivera SMB:er vid högt blodglukosvärde";
+"Enable SMB With High BG" = "Aktivera SMB vid högt blodglukosvärde";
 
 /* "Enable SMB With High BG" */
-"Enable SMBs when a high BG is detected, based on the high BG target (adjusted or profile)" = "Aktivera SMB:er vid högt blodglukos, eller enligt inställning nedan";
+"Enable SMBs when a high BG is detected, based on the high BG target (adjusted or profile)" = "Aktivera SMB: er vid högt blodsocker, eller enligt inställning nedan";
 
 /* Headline "Dynamic settings" */
 "Dynamic settings" = "Dynamiska inställningar";
