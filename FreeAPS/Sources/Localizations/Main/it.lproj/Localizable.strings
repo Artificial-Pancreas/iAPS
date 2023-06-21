@@ -1280,10 +1280,10 @@ Enact a temp Basal or a temp target */
 /* ----------------------- New Bolus Calculator ---------------------------*/
 /* Warning about bolus recommendation. Title */
 
-"Warning!" = "Warning!";
+"Warning!" = "Attenzione!";
 
 /* Alert to confirm bolus amount to add */
-"\n\nTap 'Add' to continue with selected amount." = "\n\nTap 'Add' to continue with selected amount.";
+"\n\nTap 'Add' to continue with selected amount." = "\n\nTocca 'Aggiungi' per continuare con la quantità selezionata.";
 
 /* */
 "Eventual Glucose" = "Eventual Glucose";
@@ -1334,7 +1334,7 @@ Enact a temp Basal or a temp target */
 ". Changing: " = ". Changing: ";
 
 /* Add insulin without bolusing alert */
-" without bolusing" = " without bolusing";
+" without bolusing" = "Aggiungi senza bolo";
 
 /* -------------------------------------------------------------------------------------------
   DASH strings
