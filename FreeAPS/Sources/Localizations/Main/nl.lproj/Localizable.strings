@@ -1533,7 +1533,7 @@ Enact a temp Basal or a temp target */
 "Median" = "Mediaan";
 
 /* CGM readings in statView */
-"Readings today" = "Vandaag gemeten";
+"Readings" = "Readings";
 
 /* CGM readings in statView */
 "Readings / 24h" = "Afgelopen 24/h";
