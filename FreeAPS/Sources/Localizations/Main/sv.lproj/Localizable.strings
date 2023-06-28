@@ -224,7 +224,7 @@
 "Calculated Ratio" = "Beräknad kvot";
 
 /* Carb Ratios header */
-"Carb Ratios" = "Insulinkvoter";
+"Carb Ratios" = "Kolhydratkvoter";
 
 /*  */
 "Ratio" = "Kvot";
@@ -345,7 +345,7 @@ Enact a temp Basal or a temp target */
 "Pump Settings" = "Pumpinställningar";
 
 /* Insulin unit per hour */
-"U/hr" = "IE/h";
+"U/hr" = "E/h";
 
 /* Unit in number of units delivered (keep the space character!) */
 " U" = " E";
@@ -708,7 +708,7 @@ Enact a temp Basal or a temp target */
 "Sensor Footer checksum" = "Kontrollsumma för sensor";
 
 /* */
-"Last Blood Sugar prediction" = "Senaste blodsockerprognos";
+"Last Blood Sugar prediction" = "Senaste blodglukosprognos";
 
 /* */
 "CurrentBG" = "NuvarandeBG";
@@ -1304,7 +1304,7 @@ Enact a temp Basal or a temp target */
 "Formula:" = "Formel:";
 
 /* Bolus pop-up footer */
-"Carbs and previous insulin are included in the glucose prediction, but if the Eventual Glucose is lower than the Target Glucose, a bolus will not be recommended." = "Kolhydrater och tidigare insulin ingår i prognos, men om prognos är lägre än målvärde kommer ingen bolus att föreslås.";
+"Carbs and previous insulin are included in the glucose prediction, but if the Eventual Glucose is lower than the Target Glucose, a bolus will not be recommended." = "Kolhydrater och tidigare insulin är inräknade i prognosen, men om prognosen är lägre än målvärdet kommer ingen bolus att föreslås.";
 
 /* Hide pop-up */
 "Hide" = "Göm";
@@ -1673,7 +1673,7 @@ Enact a temp Basal or a temp target */
 "Advanced Target Adjustments" = "Avancerade målinställningar";
 
 /* ”Advanced Target Adjustments" */
-"This feature was previously enabled by default but will now default to false (will NOT be enabled automatically) in oref0 0.6.0 and beyond. (There is no need for this with 0.6.0). This feature lowers oref0’s target BG automatically when current BG and eventualBG are high. This helps prevent and mitigate high BG, but automatically switches to low-temping to ensure that BG comes down smoothly toward your actual target. If you find this behavior too aggressive, you can disable this feature. If you do so, please let us know so we can better understand what settings work best for everyone." = "Denna funktion var tidigare aktiverad som standard, men kommer nu att vara avstängd (kommer INTE att aktiveras automatiskt) i oref0 0.6.0 och senare. (Det finns inget behov av detta med 0.6.0). Denna funktion sänker oref0: s blodglukosmålvärde automatiskt när nuvarande och förväntad blodsocker är högt. Detta hjälper till att förebygga och mildra ett högt blodsocker, men växlar också automatiskt till en låg temporär basaldos för att säkerställa att ditt blodglukosvärde landar mjukt på ditt faktiska målvärde.";
+"This feature was previously enabled by default but will now default to false (will NOT be enabled automatically) in oref0 0.6.0 and beyond. (There is no need for this with 0.6.0). This feature lowers oref0’s target BG automatically when current BG and eventualBG are high. This helps prevent and mitigate high BG, but automatically switches to low-temping to ensure that BG comes down smoothly toward your actual target. If you find this behavior too aggressive, you can disable this feature. If you do so, please let us know so we can better understand what settings work best for everyone." = "Denna funktion var tidigare aktiverad som standard, men kommer nu att vara avstängd (kommer INTE att aktiveras automatiskt) i oref0 0.6.0 och senare. (Det finns inget behov av detta med 0.6.0). Denna funktion sänker oref0:s blodglukosmålvärde automatiskt när nuvarande och förväntad blodglukos är högt. Detta hjälper till att förebygga och mildra ett högt blodglukos, men växlar också automatiskt till en låg temporär basaldos för att säkerställa att ditt blodglukosvärde landar mjukt på ditt faktiska målvärde.";
 
 /* Headline "Exercise Mode" */
 "Exercise Mode" = "Motionsläge";
@@ -1682,10 +1682,10 @@ Enact a temp Basal or a temp target */
 "Defaults to false. When true, > 105 mg/dL high temp target adjusts sensitivityRatio for exercise_mode. Synonym for high_temptarget_raises_sensitivity" = "Av som standard. Synonymt med 'High Temptarget Raises Sensitivity'. Vid ett temporärt målvärde > 5,8 mmol/l justeras 'sensitivityRatio' när 'Exercise Mode' är på.";
 
 /* Headline "Wide BG Target Range" */
-"Wide BG Target Range" = "Brett blodsockermålintervall";
+"Wide BG Target Range" = "Brett blodglukosmålintervall";
 
 /* "Wide BG Target Range" */
-"Defaults to false, which means by default only the low end of the pump’s BG target range is used as OpenAPS target. This is a safety feature to prevent too-wide targets and less-optimal outcomes. Therefore the higher end of the target range is used only for avoiding bolus wizard overcorrections. Use wide_bg_target_range: true to force neutral temps over a wider range of eventualBGs." = "Avstängd som standard, vilket innebär att endast det nedre intervallet av dina inställda målvärden kommer att användas som målvärde i iAPS. Detta är en säkerhetsfunktion för att förhindra alltför omfattande målintervall med mindre optimala resultat som följd. Den övre delen av målvärdet används endast för att undvika överkorrigeringar av bolusguiden. Använd 'Wide BG Target Range' för att forcera neutrala temporära basaldoser att användas över ett bredare intervall av förväntade blodsockervärden.";
+"Defaults to false, which means by default only the low end of the pump’s BG target range is used as OpenAPS target. This is a safety feature to prevent too-wide targets and less-optimal outcomes. Therefore the higher end of the target range is used only for avoiding bolus wizard overcorrections. Use wide_bg_target_range: true to force neutral temps over a wider range of eventualBGs." = "Avstängd som standard, vilket innebär att endast det nedre intervallet av dina inställda målvärden kommer att användas som målvärde i iAPS. Detta är en säkerhetsfunktion för att förhindra alltför omfattande målintervall med mindre optimala resultat som följd. Den övre delen av målvärdet används endast för att undvika överkorrigeringar av bolusguiden. Använd 'Wide BG Target Range' för att forcera neutrala temporära basaldoser att användas över ett bredare intervall av förväntade blodglukosvärden.";
 
 /* Headline "Skip Neutral Temps" */
 "Skip Neutral Temps" = "Hoppa över neutrala temporära basaler";
@@ -1739,10 +1739,10 @@ Enact a temp Basal or a temp target */
 "Defaults to false. When true, allows supermicrobolus (if otherwise enabled) even with high temp targets (> 100 mg/dl)." = "Av som standard. När läge på, tillåts SMB:ar även vid höga temporära målvärden.";
 
 /* Headline "Use Custom Peak Time” */
-"Use Custom Peak Time" = "Använd anpassad tid, i minuter, för insulinets maximala blodsockersänkande effekt";
+"Use Custom Peak Time" = "Använd anpassad tid, i minuter, för insulinets maximala blodglukossänkande effekt";
 
 /* "Use Custom Peak Time” */
-"Defaults to false. Setting to true allows changing insulinPeakTime" = "Avstängd som standard. Påslagen så tillåts ändring av 'insulinPeakTime', dvs. tiden i minuter när insulinet har som störst blodsockersänkande effekt";
+"Defaults to false. Setting to true allows changing insulinPeakTime" = "Avstängd som standard. Påslagen så tillåts ändring av 'insulinPeakTime', dvs. tiden i minuter när insulinet har som störst blodglukossänkande effekt";
 
 /* Headline "Suspend Zeros IOB” */
 "Suspend Zeros IOB" = "Ersätt med 0 U/h - basaler";
