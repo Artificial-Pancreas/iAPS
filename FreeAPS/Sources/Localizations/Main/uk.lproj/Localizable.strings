@@ -1313,28 +1313,28 @@ Enact a temp Basal or a temp target */
 "Eventual Glucose > Target Glucose, but glucose is predicted to drop down to " = "Кінцева глюкоза вища за цільову, але прогнозується, що рівень глюкози спочатку впаде до";
 
 /* Bolus pop-up / Alert string. Make translations concise! */
-"which is below your Threshold (" = "which is below your Threshold (";
+"which is below your Threshold (" = "це нижче порога припинення (";
 
 /* Bolus pop-up / Alert string. Make translations concise! */
-"Eventual Glucose > Target Glucose, but glucose is climbing slower than expected. Expected: " = "Eventual Glucose > Target Glucose, but glucose is climbing slower than expected. Expected: ";
+"Eventual Glucose > Target Glucose, but glucose is climbing slower than expected. Expected: " = "Можливий рівень глюкози > цільовий рівень глюкози, але рівень глюкози зростає повільніше, ніж очікувалося. Очікується:";
 
 //* Bolus pop-up / Alert string. Make translations concise! */
-". Climbing: " = ". Climbing: ";
+". Climbing: " = ". Підняття:";
 
 /* Bolus pop-up / Alert string. Make translations concise! */
-"Eventual Glucose > Target Glucose, but glucose is falling faster than expected. Expected: " = "Eventual Glucose > Target Glucose, but glucose is falling faster than expected. Expected: ";
+"Eventual Glucose > Target Glucose, but glucose is falling faster than expected. Expected: " = "Можливий рівень глюкози > цільовий рівень глюкози, але рівень глюкози падає швидше, ніж очікувалося. Очікується:";
 
 /* Bolus pop-up / Alert string. Make translations concise! */
-". Falling: " = ". Falling: ";
+". Falling: " = ". Падіння:";
 
 /* Bolus pop-up / Alert string. Make translations concise! */
-"Eventual Glucose > Target Glucose, but glucose is changing faster than expected. Expected: " = "Eventual Glucose > Target Glucose, but glucose is changing faster than expected. Expected: ";
+"Eventual Glucose > Target Glucose, but glucose is changing faster than expected. Expected: " = "Можлива глюкоза > цільова глюкоза, але рівень глюкози змінюється швидше, ніж очікувалося. Очікується:";
 
 /* Bolus pop-up / Alert string. Make translations concise! */
-". Changing: " = ". Changing: ";
+". Changing: " = ". Зміна: ";
 
 /* Add insulin without bolusing alert */
-" without bolusing" = " without bolusing";
+" without bolusing" = " без введення болюса помпою";
 
 /* -------------------------------------------------------------------------------------------
   DASH strings
