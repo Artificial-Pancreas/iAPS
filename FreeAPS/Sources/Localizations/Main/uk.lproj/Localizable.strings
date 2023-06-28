@@ -1298,10 +1298,10 @@ Enact a temp Basal or a temp target */
 "Insulin Sensitivity" = "Чутливість до інсуліну";
 
 /* Formula displayed in Bolus info pop-up. Make translation short! */
-"(Eventual Glucose - Target) / ISF" = "(Eventual Glucose - Target) / ISF";
+"(Eventual Glucose - Target) / ISF" = "(Можливий рівень глюкози – ціль) / ISF";
 
 /* */
-"Formula:" = "Formula:";
+"Formula:" = "Формула:";
 
 /* Bolus pop-up footer */
 "Carbs and previous insulin are included in the glucose prediction, but if the Eventual Glucose is lower than the Target Glucose, a bolus will not be recommended." = "Вуглеводи та попередній інсулін включені в прогноз рівня глюкози, але якщо кінцевий рівень глюкози нижчий за цільовий рівень глюкози, болюс не буде рекомендовано.";
@@ -1310,7 +1310,7 @@ Enact a temp Basal or a temp target */
 "Hide" = "Приховати";
 
 /* Bolus pop-up / Alert string. Make translations concise! */
-"Eventual Glucose > Target Glucose, but glucose is predicted to drop down to " = "Eventual Glucose > Target Glucose, but glucose is predicted to first drop down to ";
+"Eventual Glucose > Target Glucose, but glucose is predicted to drop down to " = "Кінцева глюкоза вища за цільову, але прогнозується, що рівень глюкози спочатку впаде до";
 
 /* Bolus pop-up / Alert string. Make translations concise! */
 "which is below your Threshold (" = "which is below your Threshold (";
