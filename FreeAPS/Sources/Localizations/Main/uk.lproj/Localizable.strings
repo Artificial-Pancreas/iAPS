@@ -1533,7 +1533,7 @@ Enact a temp Basal or a temp target */
 "Median" = "Медіана";
 
 /* CGM readings in statView */
-"Readings today" = "Читання сьогодні";
+"Readings" = "Читання";
 
 /* CGM readings in statView */
 "Readings / 24h" = "Читання / 24 год";
