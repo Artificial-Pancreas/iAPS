@@ -1472,7 +1472,7 @@ Enact a temp Basal or a temp target */
 "Median" = "Median";
 
 /* CGM readings in statView */
-"Readings today" = "Readings today";
+"Readings" = "Readings";
 
 /* CGM readings in statView */
 "Readings / 24h" = "Readings / 24h";

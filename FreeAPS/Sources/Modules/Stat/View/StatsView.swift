@@ -182,7 +182,7 @@ struct StatsView: View {
             let numberOfDays = (current - previous).timeInterval / 8.64E4
 
             VStack(spacing: 5) {
-                Text(numberOfDays < 1 ? "Readings today" : "Readings / 24h").font(.subheadline)
+                Text(numberOfDays < 1 ? "Readings" : "Readings / 24h").font(.subheadline)
                     .foregroundColor(.secondary)
                 Text(bgs.readings.formatted(.number.grouping(.never).rounded().precision(.fractionLength(0))))
             }

@@ -260,7 +260,7 @@ Enact a temp Basal or a temp target */
 /* */
 "Manual Temp Basal" = "Manual Temp Basal";
 
-/* Allow uploads to different services */
+/* Allow uploads tp NS */
 "Allow uploads" = "Allow uploads";
 
 /* API secret in NS */
@@ -1164,6 +1164,7 @@ Enact a temp Basal or a temp target */
 /* */
 "Normal " = "Normal ";
 
+/* */
 "Currently no Override active" = "Currently no Override active";
 
 /* */
@@ -1533,7 +1534,7 @@ Enact a temp Basal or a temp target */
 "Median" = "Median";
 
 /* CGM readings in statView */
-"Readings today" = "Readings today";
+"Readings" = "Readings";
 
 /* CGM readings in statView */
 "Readings / 24h" = "Readings / 24h";
