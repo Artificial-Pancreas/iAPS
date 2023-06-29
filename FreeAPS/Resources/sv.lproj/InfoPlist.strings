@@ -17,4 +17,4 @@
 "NSHealthUpdateUsageDescription" = "Appen Hälsa används för att lagra blodglukosvärden, insulin samt kolhydrater";
 
 /* Privacy - Health Share Usage Description */
-"NSHealthShareUsageDescription" = "Appen Hälsa används för att lagra blodglukosvärden, insulin samt kolhydrater";
+"NSHealthShareUsageDescription" = "Appen Hälsa används för att lagra blodsockervärden, insulin och kolhydrater.";
