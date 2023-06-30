@@ -16,12 +16,14 @@ extension AddCarbs {
         @Published var dish: String = ""
         @Published var selection: Presets?
         @Published var summation: [String] = []
+        @Published var maxCarbs: Decimal = 0
 
         let coredataContext = CoreDataStack.shared.persistentContainer.viewContext
 
         override func subscribe() {
             subscribeSetting(\.useFPUconversion, on: $useFPUconversion) { useFPUconversion = $0 }
             carbsRequired = provider.suggestion?.carbsReq
+            maxCarbs = settings.settings.maxCarbs
         }
 
         func add() {
@@ -29,6 +31,7 @@ extension AddCarbs {
                 showModal(for: nil)
                 return
             }
+            carbs = min(carbs, maxCarbs)
 
             if useFPUconversion {
                 // -------------------------- FPU--------------------------------------
