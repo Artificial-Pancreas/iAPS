@@ -341,6 +341,9 @@ Enact a temp Basal or a temp target */
 /* Max setting */
 "Max Bolus" = "Максимальний Болюс";
 
+/* Max setting */
+"Max Carbs" = "Max Carbs";
+
 /* */
 "Pump Settings" = "Налаштування Помпи";
 
@@ -1164,6 +1167,8 @@ Enact a temp Basal or a temp target */
 /* */
 "Normal " = "Нормальний ";
 
+"Currently no Override active" = "Наразі жодне перевизначення не активне";
+
 /* */
 "Total Insulin Adjustment" = "Повне коригування інсуліну";
 
@@ -1616,7 +1621,7 @@ Enact a temp Basal or a temp target */
 
 /* --------------------------------------------------------  Dexcom G7 --------------------------------------*/
 
-"CGM Configuration" = "Конфігурація CGM";
+"CGM Configuration" = "CGM Configuration";
 
 "Heartbeat" = "Серцебиття";
 
