@@ -341,6 +341,9 @@ Enact a temp Basal or a temp target */
 /* Max setting */
 "Max Bolus" = "Max Bolus";
 
+/* Max setting */
+"Max Carbs" = "Max Carbs";
+
 /* */
 "Pump Settings" = "Pump Settings";
 
@@ -1163,6 +1166,8 @@ Enact a temp Basal or a temp target */
 
 /* */
 "Normal " = "Normal ";
+
+"Currently no Override active" = "Currently no Override active";
 
 /* */
 "Total Insulin Adjustment" = "Total Insulin Adjustment";
