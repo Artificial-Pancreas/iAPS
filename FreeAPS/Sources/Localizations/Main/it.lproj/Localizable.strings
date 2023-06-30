@@ -260,7 +260,7 @@ Enact a temp Basal or a temp target */
 /* */
 "Manual Temp Basal" = "Basale temporanea manuale";
 
-/* Allow uploads tp NS */
+/* Allow uploads to different services */
 "Allow uploads" = "Consenti caricamenti";
 
 /* API secret in NS */
@@ -340,6 +340,9 @@ Enact a temp Basal or a temp target */
 
 /* Max setting */
 "Max Bolus" = "Bolo massimo";
+
+/* Max setting */
+"Max Carbs" = "Max Carbs";
 
 /* */
 "Pump Settings" = "Microinfusore";
@@ -1164,6 +1167,8 @@ Enact a temp Basal or a temp target */
 /* */
 "Normal " = "Normale ";
 
+"Currently no Override active" = "Attualmente nessuna regolazione attiva";
+
 /* */
 "Total Insulin Adjustment" = "Regolazione Insulina Totale";
 
@@ -1616,7 +1621,7 @@ Enact a temp Basal or a temp target */
 
 /* --------------------------------------------------------  Dexcom G7 --------------------------------------*/
 
-"CGM Configuration" = "Configurazione CGM";
+"CGM Configuration" = "CGM Configuration";
 
 "Heartbeat" = "Battito Cardiaco";
 
