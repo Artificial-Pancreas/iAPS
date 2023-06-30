@@ -341,6 +341,9 @@ Enact a temp Basal or a temp target */
 /* Max setting */
 "Max Bolus" = "Max bolus";
 
+/* Max setting */
+"Max Carbs" = "Max Carbs";
+
 /* */
 "Pump Settings" = "Pomp instellingen";
 
@@ -1164,6 +1167,8 @@ Enact a temp Basal or a temp target */
 /* */
 "Normal " = "Normaal ";
 
+"Currently no Override active" = "Op dit moment geen 'Overschrijving' actief";
+
 /* */
 "Total Insulin Adjustment" = "Totale insuline aanpassing";
 
@@ -1534,7 +1539,7 @@ Enact a temp Basal or a temp target */
 "Readings" = "Aantal gelezen";
 
 /* CGM readings in statView */
-"Readings / 24h" = "Readings / 24h";
+"Readings / 24h" = "Afgelopen 24/h";
 
 /* Days of saved readings*/
 "Days" = "Dagen";
@@ -1616,7 +1621,7 @@ Enact a temp Basal or a temp target */
 
 /* --------------------------------------------------------  Dexcom G7 --------------------------------------*/
 
-"CGM Configuration" = "CGM configuratie";
+"CGM Configuration" = "CGM Configuration";
 
 "Heartbeat" = "Hartslag";
 
