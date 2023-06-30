@@ -1533,7 +1533,7 @@ Połączono z Nightscout!";
 "Median" = "Median";
 
 /* CGM readings in statView */
-"Readings today" = "Readings today";
+"Readings" = "Readings";
 
 /* CGM readings in statView */
 "Readings / 24h" = "Readings / 24h";

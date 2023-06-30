@@ -1531,10 +1531,10 @@ Enact a temp Basal or a temp target */
 "Median" = "Mittelwert";
 
 /* CGM readings in statView */
-"Readings today" = "Lesungen heute";
+"Readings" = "Lesungen";
 
 /* CGM readings in statView */
-"Readings / 24h" = "Lesungen letzte 24h";
+"Readings / 24h" = "Lesungen / 24h";
 
 /* Days of saved readings*/
 "Days" = "Tage";

@@ -1278,61 +1278,61 @@ Enact a temp Basal or a temp target */
 /* ----------------------- New Bolus Calculator ---------------------------*/
 /* Warning about bolus recommendation. Title */
 
-"Warning!" = "Warning!";
+"Warning!" = "Attenzione!";
 
 /* Alert to confirm bolus amount to add */
-"\n\nTap 'Add' to continue with selected amount." = "\n\nTap 'Add' to continue with selected amount.";
+"\n\nTap 'Add' to continue with selected amount." = "\n\nTocca 'Aggiungi' per continuare con la quantità selezionata.";
 
 /* */
-"Eventual Glucose" = "Eventual Glucose";
+"Eventual Glucose" = "previsione glicemica";
 
 /* */
-"Target Glucose" = "Target Glucose";
+"Target Glucose" = "Target Glicemia";
 
 /* */
-"Percentage setting" = "Percentage setting";
+"Percentage setting" = "Impostazione percentuale";
 
 /* */
-"Insulin Sensitivity" = "Insulin Sensitivity";
+"Insulin Sensitivity" = "Sensibilità insulinica";
 
 /* Formula displayed in Bolus info pop-up. Make translation short! */
-"(Eventual Glucose - Target) / ISF" = "(Eventual Glucose - Target) / ISF";
+"(Eventual Glucose - Target) / ISF" = "(previsione glicemica - Target) / ISF";
 
 /* */
 "Formula:" = "Formula:";
 
 /* Bolus pop-up footer */
-"Carbs and previous insulin are included in the glucose prediction, but if the Eventual Glucose is lower than the Target Glucose, a bolus will not be recommended." = "Carbs and previous insulin are included in the glucose prediction, but if the Eventual Glucose is lower than the Target Glucose, a bolus will not be recommended.";
+"Carbs and previous insulin are included in the glucose prediction, but if the Eventual Glucose is lower than the Target Glucose, a bolus will not be recommended." = "I carboidrati e l'insulina precedenti sono inclusi nella previsione delle glicemie, ma se l'eventuale previsione glicemica è inferiore al target, non sarà consigliato eseguire il bolo.";
 
 /* Hide pop-up */
-"Hide" = "Hide";
+"Hide" = "Nascondi";
 
 /* Bolus pop-up / Alert string. Make translations concise! */
-"Eventual Glucose > Target Glucose, but glucose is predicted to drop down to " = "Eventual Glucose > Target Glucose, but glucose is predicted to first drop down to ";
+"Eventual Glucose > Target Glucose, but glucose is predicted to drop down to " = "previsione glicemica > target glicemia, ma si prevede che il glucosio scenda prima a ";
 
 /* Bolus pop-up / Alert string. Make translations concise! */
-"which is below your Threshold (" = "which is below your Threshold (";
+"which is below your Threshold (" = "che è al di sotto della tua Soglia (";
 
 /* Bolus pop-up / Alert string. Make translations concise! */
-"Eventual Glucose > Target Glucose, but glucose is climbing slower than expected. Expected: " = "Eventual Glucose > Target Glucose, but glucose is climbing slower than expected. Expected: ";
+"Eventual Glucose > Target Glucose, but glucose is climbing slower than expected. Expected: " = "previsione glicemica > Target glicemia, ma la glicemia sale più lentamente del previsto. ";
 
 //* Bolus pop-up / Alert string. Make translations concise! */
-". Climbing: " = ". Climbing: ";
+". Climbing: " = ". Salita: ";
 
 /* Bolus pop-up / Alert string. Make translations concise! */
-"Eventual Glucose > Target Glucose, but glucose is falling faster than expected. Expected: " = "Eventual Glucose > Target Glucose, but glucose is falling faster than expected. Expected: ";
+"Eventual Glucose > Target Glucose, but glucose is falling faster than expected. Expected: " = "previsione glicemica > Target Glicemia, ma la glicemia sta diminuendo più velocemente del previsto. Previsto:";
 
 /* Bolus pop-up / Alert string. Make translations concise! */
-". Falling: " = ". Falling: ";
+". Falling: " = ". in discesa:";
 
 /* Bolus pop-up / Alert string. Make translations concise! */
-"Eventual Glucose > Target Glucose, but glucose is changing faster than expected. Expected: " = "Eventual Glucose > Target Glucose, but glucose is changing faster than expected. Expected: ";
+"Eventual Glucose > Target Glucose, but glucose is changing faster than expected. Expected: " = "previsione glicemica > Target Glicemia, ma il glicemia sta cambiando più velocemente del previsto. Previsto:";
 
 /* Bolus pop-up / Alert string. Make translations concise! */
-". Changing: " = ". Changing: ";
+". Changing: " = ". Modifica:";
 
 /* Add insulin without bolusing alert */
-" without bolusing" = " without bolusing";
+" without bolusing" = "Aggiungi senza bolo";
 
 /* -------------------------------------------------------------------------------------------
   DASH strings
@@ -1531,7 +1531,7 @@ Enact a temp Basal or a temp target */
 "Median" = "Mediana";
 
 /* CGM readings in statView */
-"Readings today" = "Letture oggi";
+"Readings" = "Letture";
 
 /* CGM readings in statView */
 "Readings / 24h" = "Letture / 24h";

@@ -150,10 +150,10 @@
 "Comms Recovered" = "Comms hersteld";
 
 /* Text for confidence reminders navigation link */
-"Confidence Reminders" = "Bevestigingsherinneringen";
+"Confidence Reminders" = "Meldingen met piepjes vanuit de Pod";
 
 /* Help text for BeepPreferenceSelectionView */
-"Confidence reminders are beeps from the pod which can be used to acknowledge selected commands." = "Bevestigingsherinneringen zijn piepjes van de pod die kunnen worden gebruikt ter bevestiging van de geselecteerde opdrachten.";
+"Confidence reminders are beeps from the pod which can be used to acknowledge selected commands." = "Dit zijn meldingen die met piepjes uit de pod komen en kunnen worden gebruikt ter bevestiging van geselecteerde opdrachten.";
 
 /* The title of the configuration section in settings */
 "Configuration" = "Configuratie";
@@ -334,7 +334,7 @@
 
 /* Text for confidence reminders navigation link
    Title for insulin type selection screen */
-"Insulin Type" = "Insulinetype";
+"Insulin Type" = "Insuline soort";
 
 /* The error message shown when Loop's basal schedule has an unsupported rate */
 "Invalid entry" = "Ongeldige invoer";
@@ -675,10 +675,10 @@
 "The App notifies you in advance of Pod expiration.\n\nScroll to set the number of hours advance notice you would like to have." = "De App kondigt van tevoren aan wanneer de Pod verloopt.\n\nScroll om het aantal uren in te stellen voor de gewenste vooraankondiging.";
 
 /* Description text on LowReservoirReminderSetupView */
-"The App notifies you when the amount of insulin in the Pod reaches this level (50-10 U).\n\nScroll to set the number of units at which you would like to be reminded." = "De App geeft een melding wanneer de hoeveelheid insuline in de Pod dit niveau bereikt (50-10 E).\n\nScroll om het aantal eenheden in te stellen waarbij je herinnerd wilt worden.";
+"The App notifies you when the amount of insulin in the Pod reaches this level (50-10 U).\n\nScroll to set the number of units at which you would like to be reminded." = "iAPS geeft een melding wanneer de hoeveelheid insuline in de Pod dit niveau bereikt (50-10 E).\n\nScroll om het aantal eenheden in te stellen waarbij je herinnerd wilt worden.";
 
 /* Footer text for low reservoir value row */
-"The App notifies you when the amount of insulin in the Pod reaches this level." = "De App geeft een melding wanneer de hoeveelheid insuline in de Pod dit niveau bereikt.";
+"The App notifies you when the amount of insulin in the Pod reaches this level." = "iAPS geeft een melding wanneer de hoeveelheid insuline in de Pod dit niveau bereikt.";
 
 /* Description text for critical alerts */
 "The reminders above will not sound if your device is in Silent or Do Not Disturb mode.\n\nThere are other critical Pod alerts and alarms that will sound even if your device is set to Silent or Do Not Disturb mode." = "Bovenstaande herinneringen zijn niet hoorbaar wanneer je apparaat in de modus Stil of Niet Storen staat.\n\nAndere kritieke Podmeldingen en Podalarmen gaan wel af, zelfs als je apparaat op de modus Stil of Niet Storen staat.";
