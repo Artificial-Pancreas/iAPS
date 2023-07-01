@@ -181,7 +181,8 @@ extension Home {
                         let view = PumpConfig.PumpSettingsView(
                             pumpManager: pumpManager,
                             bluetoothManager: bluetoothProvider,
-                            completionDelegate: self
+                            completionDelegate: self,
+                            setupDelegate: self
                         ).asAny()
                         self.router.mainSecondaryModalView.send(view)
                     } else {
@@ -455,5 +456,22 @@ extension Home.StateModel:
 extension Home.StateModel: CompletionDelegate {
     func completionNotifyingDidComplete(_: CompletionNotifying) {
         setupPump = false
+    }
+}
+
+extension Home.StateModel: PumpManagerOnboardingDelegate {
+    func pumpManagerOnboarding(didCreatePumpManager pumpManager: PumpManagerUI) {
+        provider.apsManager.pumpManager = pumpManager
+        if let insulinType = pumpManager.status.insulinType {
+            settingsManager.updateInsulinCurve(insulinType)
+        }
+    }
+
+    func pumpManagerOnboarding(didOnboardPumpManager _: PumpManagerUI) {
+        // nothing to do
+    }
+
+    func pumpManagerOnboarding(didPauseOnboarding _: PumpManagerUI) {
+        // TODO:
     }
 }
