@@ -1278,61 +1278,61 @@ Enact a temp Basal or a temp target */
 /* ----------------------- New Bolus Calculator ---------------------------*/
 /* Warning about bolus recommendation. Title */
 
-"Warning!" = "Warning!";
+"Warning!" = "Внимание!";
 
 /* Alert to confirm bolus amount to add */
-"\n\nTap 'Add' to continue with selected amount." = "\n\nTap 'Add' to continue with selected amount.";
+"\n\nTap 'Add' to continue with selected amount." = "\n\nНажмите \"Добавить\", чтобы продолжить с выбранным значением.";
 
 /* */
-"Eventual Glucose" = "Eventual Glucose";
+"Eventual Glucose" = "Возможная глюкоза";
 
 /* */
-"Target Glucose" = "Target Glucose";
+"Target Glucose" = "Целевая глюкоза";
 
 /* */
-"Percentage setting" = "Percentage setting";
+"Percentage setting" = "Установка процента";
 
 /* */
-"Insulin Sensitivity" = "Insulin Sensitivity";
+"Insulin Sensitivity" = "Чувствительность к инсулину";
 
 /* Formula displayed in Bolus info pop-up. Make translation short! */
-"(Eventual Glucose - Target) / ISF" = "(Eventual Glucose - Target) / ISF";
+"(Eventual Glucose - Target) / ISF" = "(Возможная - Цель) / ФЧИ";
 
 /* */
-"Formula:" = "Formula:";
+"Formula:" = "Формула:";
 
 /* Bolus pop-up footer */
-"Carbs and previous insulin are included in the glucose prediction, but if the Eventual Glucose is lower than the Target Glucose, a bolus will not be recommended." = "Carbs and previous insulin are included in the glucose prediction, but if the Eventual Glucose is lower than the Target Glucose, a bolus will not be recommended.";
+"Carbs and previous insulin are included in the glucose prediction, but if the Eventual Glucose is lower than the Target Glucose, a bolus will not be recommended." = "Углеводы и предыдущий прием инсулина учитываются при прогнозировании уровня глюкозы, но если конечная концентрация глюкозы ниже целевой, болюс не рекомендуется.";
 
 /* Hide pop-up */
-"Hide" = "Hide";
+"Hide" = "Скрыть";
 
 /* Bolus pop-up / Alert string. Make translations concise! */
-"Eventual Glucose > Target Glucose, but glucose is predicted to drop down to " = "Eventual Glucose > Target Glucose, but glucose is predicted to first drop down to ";
+"Eventual Glucose > Target Glucose, but glucose is predicted to drop down to " = "Конечная глюкоза выше целевой, но прогнозируется, что уровень глюкозы сначала упадёт до ";
 
 /* Bolus pop-up / Alert string. Make translations concise! */
-"which is below your Threshold (" = "which is below your Threshold (";
+"which is below your Threshold (" = "это ниже порога приостановки (";
 
 /* Bolus pop-up / Alert string. Make translations concise! */
-"Eventual Glucose > Target Glucose, but glucose is climbing slower than expected. Expected: " = "Eventual Glucose > Target Glucose, but glucose is climbing slower than expected. Expected: ";
+"Eventual Glucose > Target Glucose, but glucose is climbing slower than expected. Expected: " = "Конечная глюкоза выше целевой, но уровень глюкозы повышается медленнее, чем ожидалось. Ожидалось: ";
 
 //* Bolus pop-up / Alert string. Make translations concise! */
-". Climbing: " = ". Climbing: ";
+". Climbing: " = ". Поднятие: ";
 
 /* Bolus pop-up / Alert string. Make translations concise! */
-"Eventual Glucose > Target Glucose, but glucose is falling faster than expected. Expected: " = "Eventual Glucose > Target Glucose, but glucose is falling faster than expected. Expected: ";
+"Eventual Glucose > Target Glucose, but glucose is falling faster than expected. Expected: " = "Конечная глюкоза выше целевой, но уровень глюкозы падает быстрее, чем ожидалось. Ожидалось: ";
 
 /* Bolus pop-up / Alert string. Make translations concise! */
-". Falling: " = ". Falling: ";
+". Falling: " = ". Падение: ";
 
 /* Bolus pop-up / Alert string. Make translations concise! */
-"Eventual Glucose > Target Glucose, but glucose is changing faster than expected. Expected: " = "Eventual Glucose > Target Glucose, but glucose is changing faster than expected. Expected: ";
+"Eventual Glucose > Target Glucose, but glucose is changing faster than expected. Expected: " = "Конечная глюкоза выше целевой, но уровень глюкозы меняется быстрее, чем ожидалось. Ожидалось: ";
 
 /* Bolus pop-up / Alert string. Make translations concise! */
-". Changing: " = ". Changing: ";
+". Changing: " = ". Изменение: ";
 
 /* Add insulin without bolusing alert */
-" without bolusing" = " without bolusing";
+" without bolusing" = " без введения болюса помпой";
 
 /* -------------------------------------------------------------------------------------------
   DASH strings
@@ -1531,7 +1531,7 @@ Enact a temp Basal or a temp target */
 "Median" = "Медиана";
 
 /* CGM readings in statView */
-"Readings today" = "Чтений сегодня";
+"Readings" = "Чтения";
 
 /* CGM readings in statView */
 "Readings / 24h" = "Чтения / 24 ч";

@@ -70,7 +70,7 @@
 "Configuration" = "Konfiguration";
 
 /* title for g7 config settings to upload readings */
-"Upload Readings" = "Ladda upp blodglukos";
+"Upload Readings" = "Ladda upp blodsocker";
 
 /* Button */
 "Scan for new sensor" = "Skanna efter ny sensor";

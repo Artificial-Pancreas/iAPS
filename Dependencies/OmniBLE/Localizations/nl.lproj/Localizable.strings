@@ -78,7 +78,7 @@
 "Notification Settings" = "Instellingen voor meldingen";
 
 /* */
-"Confidence Reminders" = "Vertrouwensherinneringen";
+"Confidence Reminders" = "Meldingen met piepjes vanuit de Pod";
 
 /* Text for suspend resume button when insulin delivery active */
 "Suspend Insulin Delivery" = "Onderbreken van insuline toediening";
@@ -599,13 +599,13 @@
 "Extended" = "Verlengd";
 
 /* Description for BeepPreference.silent */
-"No confidence reminders are used." = "Er worden geen vertrouwensherinneringen gebruikt.";
+"No confidence reminders are used." = "Er worden geen meldingen met piepjes gebruikt.";
 
 /* Description for BeepPreference.manualCommands */
-"Confidence reminders will sound for commands you initiate, like bolus, cancel bolus, suspend, resume, save notification reminders, etc. When Loop automatically adjusts delivery, no confidence reminders are used." = "Vertrouwen herinneringen zullen klinken voor commando's die u hebt geïnitieerd, zoals bolus, annulering, geschorst, hervatten, opslaan van meldingsherinneringen, etc. Wanneer Loop automatisch de levering wijzigt, worden er geen vertrouwensherinneringen gebruikt.";
+"Confidence reminders will sound for commands you initiate, like bolus, cancel bolus, suspend, resume, save notification reminders, etc. When Loop automatically adjusts delivery, no confidence reminders are used." = "Piepjes uit de Pod zullen klinken voor commando's die u hebt geïnitieerd, zoals bolus, annulering, geschorst, hervatten, opslaan van meldingen etc. Als iAPS automatisch de levering wijzigt, worden er geen piepjes gebruikt.";
 
 /* Description for BeepPreference.extended */
-"Confidence reminders will sound when Loop automatically adjusts delivery as well as for commands you initiate." = "Vertrouwensherinneringen zullen klinken wanneer Loop de levering automatisch aanpast evenals voor commando's die u initieert.";
+"Confidence reminders will sound when Loop automatically adjusts delivery as well as for commands you initiate." = "Piepjes zullen klinken als iAPS de levering automatisch aanpast evenals voor commando's die u initieert.";
 
 /* Label text for temporary basal rate summary */
 "Rate" = "Waarde";
