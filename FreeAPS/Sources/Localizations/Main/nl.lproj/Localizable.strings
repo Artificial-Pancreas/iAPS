@@ -342,7 +342,7 @@ Enact a temp Basal or a temp target */
 "Max Bolus" = "Max bolus";
 
 /* Max setting */
-"Max Carbs" = "Max Carbs";
+"Max Carbs" = "Max koolhydraten";
 
 /* */
 "Pump Settings" = "Pomp instellingen";
@@ -1621,7 +1621,7 @@ Enact a temp Basal or a temp target */
 
 /* --------------------------------------------------------  Dexcom G7 --------------------------------------*/
 
-"CGM Configuration" = "CGM Configuration";
+"CGM Configuration" = "CGM instellingen";
 
 "Heartbeat" = "Hartslag";
 
