@@ -342,7 +342,7 @@ Enact a temp Basal or a temp target */
 "Max Bolus" = "Макс. Болюс";
 
 /* Max setting */
-"Max Carbs" = "Max Carbs";
+"Max Carbs" = "Максимум углеводов";
 
 /* */
 "Pump Settings" = "Настройки помпы";
@@ -1621,7 +1621,7 @@ Enact a temp Basal or a temp target */
 
 /* --------------------------------------------------------  Dexcom G7 --------------------------------------*/
 
-"CGM Configuration" = "CGM Configuration";
+"CGM Configuration" = "Конфигурация CGM";
 
 "Heartbeat" = "Heartbeat";
 
