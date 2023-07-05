@@ -27,7 +27,7 @@ https://loopkit.github.io/loopdocs/gh-actions/gh-overview/
  
 ## Please understand that iAPS is:  
 - highly experimental and evolving rapidly.
-- not CE approved for therapy.
+- not CE or FDA approved for therapy.
 
 # Pumps
 
