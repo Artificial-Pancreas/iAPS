@@ -251,8 +251,11 @@ struct MainView: View {
     var buttons: some View {
         HStack(alignment: .center) {
             NavigationLink(isActive: $state.isCarbsViewActive) {
-                CarbsView()
-                    .environmentObject(state)
+                if state.isNutrientsViewEnabled {
+                    NutrientsView().environmentObject(state)
+                } else {
+                    CarbsView().environmentObject(state)
+                }
             } label: {
                 Image("carbs", bundle: nil)
                     .renderingMode(.template)
