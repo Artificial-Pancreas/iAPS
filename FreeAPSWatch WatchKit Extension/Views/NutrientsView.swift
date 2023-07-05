@@ -74,7 +74,7 @@ struct NutrientsView: View {
                         .fat: fatCount
                     ])
                 } label: {
-                    Text("Add").opacity(isSubmitButtonDisabled ? 0.4 : 1)
+                    Text(NSLocalizedString("Add")).opacity(isSubmitButtonDisabled ? 0.4 : 1)
                 }
                 .tint(.loopYellow)
                 .disabled(isSubmitButtonDisabled)
