@@ -327,9 +327,9 @@ final class BaseHealthKitManager: HealthKitManager, Injectable, CarbsObserver {
 
         let query = HKObserverQuery(sampleType: bgType, predicate: nil) { [weak self] _, _, observerError in
             guard let self = self else { return }
-            debug(.service, "Execute HelathKit observer query for loading increment samples")
+            debug(.service, "Execute HealthKit observer query for loading increment samples")
             guard observerError == nil else {
-                warning(.service, "Error during execution of HelathKit Observer's query", error: observerError!)
+                warning(.service, "Error during execution of HealthKit Observer's query", error: observerError!)
                 return
             }
 
