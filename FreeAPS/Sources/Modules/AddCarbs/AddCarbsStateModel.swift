@@ -35,10 +35,10 @@ extension AddCarbs {
 
             if useFPUconversion {
                 // -------------------------- FPU--------------------------------------
-                let interval = settings.settings.minuteInterval // Interval betwwen carbs
+                let interval = settings.settings.minuteInterval // Interval between carbs
                 let timeCap = settings.settings.timeCap // Max Duration
                 let adjustment = settings.settings.individualAdjustmentFactor
-                let delay = settings.settings.delay // Tme before first future carb entry
+                let delay = settings.settings.delay // Time before first future carb entry
 
                 let kcal = protein * 4 + fat * 9
                 let carbEquivalents = (kcal / 10) * adjustment
@@ -93,7 +93,7 @@ extension AddCarbs {
                 if carbEquivalents > 0 {
                     carbsStorage.storeCarbs(futureCarbArray)
                 }
-            } // ------------------------- END OF TPU ----------------------------------------
+            } // ------------------------- END OF FPU ----------------------------------------
 
             // Store the real carbs
             if carbs > 0 {

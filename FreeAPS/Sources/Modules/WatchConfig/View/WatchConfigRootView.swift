@@ -17,6 +17,7 @@ extension WatchConfig {
                             Text(v.displayName).tag(v)
                         }
                     }
+                    Toggle("Display Fat & Protein", isOn: $state.isNutrientsViewEnabled)
                 }
                 Section(header: Text("Garmin Watch")) {
                     List {

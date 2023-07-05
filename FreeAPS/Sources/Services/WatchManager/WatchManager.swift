@@ -5,9 +5,16 @@ import WatchConnectivity
 
 protocol WatchManager {}
 
+enum Nutrient: Decodable {
+    case carb
+    case protein
+    case fat
+}
+
 final class BaseWatchManager: NSObject, WatchManager, Injectable {
     private let session: WCSession
     private var state = WatchState()
+    private var addCarbsStateModel = AddCarbs.StateModel()
     private let processQueue = DispatchQueue(label: "BaseWatchManager.processQueue")
 
     @Injected() private var broadcaster: Broadcaster!
@@ -104,6 +111,7 @@ final class BaseWatchManager: NSObject, WatchManager, Injectable {
             self.state.bolusAfterCarbs = !self.settingsManager.settings.skipBolusScreenAfterCarbs
 
             self.state.displayOnWatch = self.settingsManager.settings.displayOnWatch
+            self.state.isNutrientsViewEnabled = self.settingsManager.settings.isNutrientsViewEnabled
 
             let eBG = self.evetualBGStraing()
             self.state.eventualBG = eBG.map { "⇢ " + $0 }
@@ -285,6 +293,30 @@ extension BaseWatchManager: WCSessionDelegate {
                     }
                     .store(in: &lifetime)
                 return
+            }
+        }
+
+        if let nutrientsData = message["addNutrients"] as? Data {
+            if let nutrients = try? JSONDecoder().decode([Nutrient: Int].self, from: nutrientsData) {
+                if nutrients.values.contains(where: { $0 > 0 }) {
+                    addCarbsStateModel.carbs = Decimal(nutrients[.carb] ?? 0)
+                    addCarbsStateModel.protein = Decimal(nutrients[.protein] ?? 0)
+                    addCarbsStateModel.fat = Decimal(nutrients[.fat] ?? 0)
+                    addCarbsStateModel.add()
+
+                    if settingsManager.settings.skipBolusScreenAfterCarbs {
+                        apsManager.determineBasalSync()
+                        replyHandler(["confirmation": true])
+                        return
+                    } else {
+                        apsManager.determineBasal()
+                            .sink { _ in
+                                replyHandler(["confirmation": true])
+                            }
+                            .store(in: &lifetime)
+                        return
+                    }
+                }
             }
         }
 
