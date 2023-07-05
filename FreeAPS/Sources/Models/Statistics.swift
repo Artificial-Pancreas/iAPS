@@ -125,6 +125,7 @@ struct TIRs: JSON, Equatable {
     var Hypos: Durations
     var Hypers: Durations
     var Threshold: Threshold
+    var Euglycemic: Durations
 }
 
 struct Ins: JSON, Equatable {
@@ -179,6 +180,7 @@ extension TIRs {
         case Hypos
         case Hypers
         case Threshold
+        case Euglycemic
     }
 }
 
