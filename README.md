@@ -20,7 +20,7 @@ Download and open in Xcode directly using the Code button: "Open with Xcode".
 
 ## To build directly in GitHub, without using Xcode: 
 
-Intructions:  
+Instructions:  
 https://github.com/Artificial-Pancreas/iAPS/blob/main/fastlane/testflight.md   
 Instructions in greater detail, but not iAPS-specific:  
 https://loopkit.github.io/loopdocs/gh-actions/gh-overview/
