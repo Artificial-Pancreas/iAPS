@@ -43,6 +43,7 @@ https://loopkit.github.io/loopdocs/gh-actions/gh-overview/
 
 - Dexcom G5  
 - Dexcom G6   
+- Dexcom ONE   
 - Dexcom G7   
 - Libre 1   
 - Libre 2 (European)   
