@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="22158.8" systemVersion="22F66" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="21754" systemVersion="22F82" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="BGaverages" representedClassName="BGaverages" syncable="YES" codeGenerationType="class">
         <attribute name="average" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
         <attribute name="average_1" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
@@ -18,6 +18,11 @@
         <attribute name="carbs" optional="YES" attributeType="Decimal" defaultValueString="0"/>
         <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="enteredBy" optional="YES" attributeType="String"/>
+    </entity>
+    <entity name="Fat" representedClassName="Fat" syncable="YES" codeGenerationType="class">
+        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="enteredBy" optional="YES" attributeType="String"/>
+        <attribute name="fat" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
     </entity>
     <entity name="HbA1c" representedClassName="HbA1c" syncable="YES" codeGenerationType="class">
         <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
@@ -87,6 +92,11 @@
         <attribute name="carbs" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
         <attribute name="dish" optional="YES" attributeType="String"/>
         <attribute name="fat" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
+        <attribute name="protein" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
+    </entity>
+    <entity name="Protein" representedClassName="Protein" syncable="YES" codeGenerationType="class">
+        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="enteredBy" optional="YES" attributeType="String"/>
         <attribute name="protein" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
     </entity>
     <entity name="Readings" representedClassName="Readings" syncable="YES" codeGenerationType="class">

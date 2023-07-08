@@ -19,13 +19,18 @@ extension PumpManagerUI {
 //        )
 //    }
 
-    func settingsViewController(bluetoothProvider: BluetoothProvider) -> UIViewController & CompletionNotifying {
-        settingsViewController(
+    func settingsViewController(
+        bluetoothProvider: BluetoothProvider,
+        pumpManagerOnboardingDelegate: PumpManagerOnboardingDelegate?
+    ) -> UIViewController & CompletionNotifying {
+        var vc = settingsViewController(
             bluetoothProvider: bluetoothProvider,
             colorPalette: .default,
             allowDebugFeatures: false,
             allowedInsulinTypes: [.apidra, .humalog, .novolog, .fiasp, .lyumjev]
         )
+        vc.pumpManagerOnboardingDelegate = pumpManagerOnboardingDelegate
+        return vc
     }
 
 //    func settingsViewController() -> UIViewController & CompletionNotifying {

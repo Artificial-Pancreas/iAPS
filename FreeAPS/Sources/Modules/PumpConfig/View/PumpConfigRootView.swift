@@ -39,7 +39,8 @@ extension PumpConfig {
                         PumpSettingsView(
                             pumpManager: pumpManager,
                             bluetoothManager: state.provider.apsManager.bluetoothManager!,
-                            completionDelegate: state
+                            completionDelegate: state,
+                            setupDelegate: state
                         )
                     } else {
                         PumpSetupView(
