@@ -300,9 +300,9 @@ extension BaseWatchManager: WCSessionDelegate {
         if let nutrientsData = message["addNutrients"] as? Data {
             if let nutrients = try? JSONDecoder().decode([Nutrient: Int].self, from: nutrientsData) {
                 if nutrients.values.contains(where: { $0 > 0 }) {
-                    var carbs = min(Decimal(nutrients[.carbs] ?? 0), settingsManager.settings.maxCarbs)
-                    var protein = Decimal(nutrients[.protein] ?? 0)
-                    var fat = Decimal(nutrients[.fat] ?? 0)
+                    let carbs = min(Decimal(nutrients[.carbs] ?? 0), settingsManager.settings.maxCarbs)
+                    let protein = Decimal(nutrients[.protein] ?? 0)
+                    let fat = Decimal(nutrients[.fat] ?? 0)
 
                     var useFPUconversion: Bool {
                         protein > 0 || fat > 0
@@ -314,17 +314,19 @@ extension BaseWatchManager: WCSessionDelegate {
                             carbsStorage.storeCarbs(futureCarbArray)
                         }
                     }
-
-                    // Store the real carbs
-                    carbsStorage.storeCarbs([
-                        CarbsEntry(
-                            id: UUID().uuidString,
-                            createdAt: Date(),
-                            carbs: carbs,
-                            enteredBy: CarbsEntry.manual,
-                            isFPU: false, fpuID: nil
-                        )
-                    ])
+                    
+                    if carbs > 0 {
+                        // Store the real carbs
+                        carbsStorage.storeCarbs([
+                            CarbsEntry(
+                                id: UUID().uuidString,
+                                createdAt: Date(),
+                                carbs: carbs,
+                                enteredBy: CarbsEntry.manual,
+                                isFPU: false, fpuID: nil
+                            )
+                        ])
+                    }
 
                     if settingsManager.settings.skipBolusScreenAfterCarbs {
                         apsManager.determineBasalSync()
