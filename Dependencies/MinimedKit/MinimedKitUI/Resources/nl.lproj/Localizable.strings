@@ -123,7 +123,7 @@
 "No, Keep Pump As Is" = "Nee, laat de pomp ongewijzigd";
 
 /* Pump find device instruction */
-"On your pump, go to the Find Device screen and select \"Find Device\".\n\nMain Menu >\nUtilities >\nConnect Devices >\nOther Devices >\nOn >\nFind Device" = "Ga op je pomp, naar het scherm 'Vind Apparaat' en selecteer \"Vind Apparaat\".\n\nHoofdmenu >\nHulpprogramma's >\nVerbind Apparaten >\nAndere Apparaten >\nAan >\nVind Apparaat";
+"On your pump, go to the Find Device screen and select \"Find Device\".\n\nMain Menu >\nUtilities >\nConnect Devices >\nOther Devices >\nOn >\nFind Device" = "Ga op je pomp naar het scherm 'Vind Apparaat' en selecteer \"Vind Apparaat\".\n\nHoofdmenu >\nHulpprogramma's >\nVerbind Apparaten >\nAndere Apparaten >\nAan >\nVind Apparaat";
 
 /* navigation title for pump battery type selection
    Text for medtronic pump preferred data source */
