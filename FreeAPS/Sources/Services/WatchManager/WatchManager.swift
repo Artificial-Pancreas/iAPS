@@ -6,7 +6,7 @@ import WatchConnectivity
 protocol WatchManager {}
 
 enum Nutrient: Decodable {
-    case carb
+    case carbs
     case protein
     case fat
 }
@@ -14,7 +14,6 @@ enum Nutrient: Decodable {
 final class BaseWatchManager: NSObject, WatchManager, Injectable {
     private let session: WCSession
     private var state = WatchState()
-    private var addCarbsStateModel = AddCarbs.StateModel()
     private let processQueue = DispatchQueue(label: "BaseWatchManager.processQueue")
 
     @Injected() private var broadcaster: Broadcaster!
@@ -25,6 +24,8 @@ final class BaseWatchManager: NSObject, WatchManager, Injectable {
     @Injected() private var carbsStorage: CarbsStorage!
     @Injected() private var tempTargetsStorage: TempTargetsStorage!
     @Injected() private var garmin: GarminManager!
+
+    @Published var date = Date()
 
     let coredataContext = CoreDataStack.shared.persistentContainer.viewContext // newBackgroundContext()
 
@@ -297,12 +298,33 @@ extension BaseWatchManager: WCSessionDelegate {
         }
 
         if let nutrientsData = message["addNutrients"] as? Data {
-            if let nutrients = try? JSONDecoder().decode([Nutrient: Int].self, from: nutrientsData) {
+            if let nutrients = try? JSONDecoder().decode([CarbEntry, Protein, Fat].self, from: nutrientsData) {
                 if nutrients.values.contains(where: { $0 > 0 }) {
-                    addCarbsStateModel.carbs = Decimal(nutrients[.carb] ?? 0)
-                    addCarbsStateModel.protein = Decimal(nutrients[.protein] ?? 0)
-                    addCarbsStateModel.fat = Decimal(nutrients[.fat] ?? 0)
-                    addCarbsStateModel.add()
+                    var carbs = min(Decimal(nutrients[.carbs] ?? 0), settingsManager.settings.maxCarbs)
+                    var protein = Decimal(nutrients[.protein] ?? 0)
+                    var fat = Decimal(nutrients[.fat] ?? 0)
+
+                    var useFPUconversion: Bool {
+                        protein > 0 || fat > 0
+                    }
+                    
+                    if useFPUconversion {
+                        let futureCarbArray = calculateFPU(settings: settingsManager, protein: protein, fat: fat)
+                        if !futureCarbArray.isEmpty {
+                            carbsStorage.storeCarbs(futureCarbArray)
+                        }
+                    }
+
+                    // Store the real carbs
+                    carbsStorage.storeCarbs([
+                        CarbsEntry(
+                            id: UUID().uuidString,
+                            createdAt: Date(),
+                            carbs: carbs,
+                            enteredBy: CarbsEntry.manual,
+                            isFPU: false, fpuID: nil
+                        )
+                    ])
 
                     if settingsManager.settings.skipBolusScreenAfterCarbs {
                         apsManager.determineBasalSync()

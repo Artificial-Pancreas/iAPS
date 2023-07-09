@@ -13,7 +13,7 @@ enum AwConfig: String, CaseIterable, Identifiable, Codable {
 }
 
 enum Nutrient: Encodable {
-    case carb
+    case carbs
     case protein
     case fat
 }

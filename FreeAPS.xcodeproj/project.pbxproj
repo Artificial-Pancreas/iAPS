@@ -255,6 +255,7 @@
 		38FEF3FE2738083E00574A46 /* CGMProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38FEF3FD2738083E00574A46 /* CGMProvider.swift */; };
 		38FEF408273B011A00574A46 /* LibreTransmitterSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38FEF407273B011A00574A46 /* LibreTransmitterSource.swift */; };
 		38FEF413273B317A00574A46 /* HKUnit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38FEF412273B317A00574A46 /* HKUnit.swift */; };
+		3F1E05642A5AC18D0068CF96 /* FPUCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F1E05632A5AC18D0068CF96 /* FPUCalculator.swift */; };
 		3FDF90922A51E0AA009B2B77 /* NutrientsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FDF90912A51E0AA009B2B77 /* NutrientsView.swift */; };
 		44190F0BBA464D74B857D1FB /* PreferencesEditorRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A965332F237348B119FB858 /* PreferencesEditorRootView.swift */; };
 		448B6FCB252BD4796E2960C0 /* PumpSettingsEditorDataFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0274EE6439B1C3ED70730D41 /* PumpSettingsEditorDataFlow.swift */; };
@@ -765,6 +766,7 @@
 		39E7C997E56DAF8D28D09014 /* AddCarbsStateModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AddCarbsStateModel.swift; sourceTree = "<group>"; };
 		3BDEA2DC60EDE0A3CA54DC73 /* TargetsEditorProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = TargetsEditorProvider.swift; sourceTree = "<group>"; };
 		3BF768BD6264FF7D71D66767 /* NightscoutConfigProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NightscoutConfigProvider.swift; sourceTree = "<group>"; };
+		3F1E05632A5AC18D0068CF96 /* FPUCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FPUCalculator.swift; sourceTree = "<group>"; };
 		3F60E97100041040446F44E7 /* PumpConfigStateModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PumpConfigStateModel.swift; sourceTree = "<group>"; };
 		3F8A87AA037BD079BA3528BA /* ConfigEditorDataFlow.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ConfigEditorDataFlow.swift; sourceTree = "<group>"; };
 		3FDF90912A51E0AA009B2B77 /* NutrientsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NutrientsView.swift; sourceTree = "<group>"; };
@@ -1634,6 +1636,7 @@
 				FE66D16A291F74F8005D6F77 /* Bundle+Extensions.swift */,
 				FEFFA7A12929FE49007B8193 /* UIDevice+Extensions.swift */,
 				CEA4F62229BE10F70011ADF7 /* SavitzkyGolayFilter.swift */,
+				3F1E05632A5AC18D0068CF96 /* FPUCalculator.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -2544,6 +2547,7 @@
 				38DAB280260CBB7F00F74C1A /* PumpView.swift in Sources */,
 				3811DEB125C9D88300A708ED /* Keychain.swift in Sources */,
 				382C133725F13A1E00715CE1 /* InsulinSensitivities.swift in Sources */,
+				3F1E05642A5AC18D0068CF96 /* FPUCalculator.swift in Sources */,
 				19D466A529AA2BD4004D5F33 /* FPUConfigProvider.swift in Sources */,
 				383948D625CD4D8900E91849 /* FileStorage.swift in Sources */,
 				3811DE4125C9D4A100A708ED /* SettingsRootView.swift in Sources */,

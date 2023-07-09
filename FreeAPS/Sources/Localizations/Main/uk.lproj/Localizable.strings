@@ -89,7 +89,7 @@
 "Bottom target" = "Нижня ціль";
 
 /* Cancel preset name */
-"Cancel" = "Відмінити";
+"Cancel" = "Скасувати";
 
 /*  */
 "Cancel Temp Target" = "Відмінити тимчасову ціль";
@@ -409,6 +409,12 @@ Enact a temp Basal or a temp target */
 
 /* */
 "Display on Watch" = "Відображати на годиннику";
+
+/* */
+"Display Protein & Fat" = "Відображати білки та жири";
+
+/* */
+"Nutrients" = "Нутрієнти";
 
 /* */
 "Garmin Watch" = "Garmin Watch";

@@ -8,7 +8,7 @@ struct Constants {
 struct NutrientsView: View {
     @EnvironmentObject var watchStateModel: WatchStateModel
 
-    @State var carbCount = 0
+    @State var carbsCount = 0
     @State var fatCount = 0
     @State var proteinCount = 0
 
@@ -28,15 +28,15 @@ struct NutrientsView: View {
     var defaultMaxFat: Int { maxCOB * 2 }
 
     var isSubmitButtonDisabled: Bool {
-        carbCount <= 0 && fatCount <= 0 && proteinCount <= 0
+        carbsCount <= 0 && fatCount <= 0 && proteinCount <= 0
     }
 
     var body: some View {
         VStack {
             HStack(spacing: Constants.pickerHSpacing) {
                 GramsPicker(
-                    selection: $carbCount,
-                    label: "Carbs",
+                    selection: $carbsCount,
+                    label: NSLocalizedString("Carbs", comment: ""),
                     labelAlignment: .leading,
                     max: maxCOB,
                     accentColor: .white
@@ -44,7 +44,7 @@ struct NutrientsView: View {
 
                 GramsPicker(
                     selection: $proteinCount,
-                    label: "Protein",
+                    label: NSLocalizedString("Protein", comment: ""),
                     labelAlignment: .center,
                     max: defaultMaxProtein,
                     accentColor: .red
@@ -52,7 +52,7 @@ struct NutrientsView: View {
 
                 GramsPicker(
                     selection: $fatCount,
-                    label: "Fat",
+                    label: NSLocalizedString("Fat", comment: ""),
                     labelAlignment: .trailing,
                     max: defaultMaxFat,
                     accentColor: .orange
@@ -65,16 +65,22 @@ struct NutrientsView: View {
                     watchStateModel.isCarbsViewActive = false
                 } label: {
                     Text("Cancel")
+                        .minimumScaleFactor(0.5)
+                        .lineLimit(1)
                 }
                 Button {
                     WKInterfaceDevice.current().play(.click)
+                    
                     watchStateModel.addNutrients([
-                        .carb: carbCount,
+                        .carbs: carbsCount,
                         .protein: proteinCount,
                         .fat: fatCount
                     ])
                 } label: {
-                    Text(NSLocalizedString("Add")).opacity(isSubmitButtonDisabled ? 0.4 : 1)
+                    Text("Add")
+                        .minimumScaleFactor(0.5)
+                        .lineLimit(1)
+                        .opacity(isSubmitButtonDisabled ? 0.4 : 1)
                 }
                 .tint(.loopYellow)
                 .disabled(isSubmitButtonDisabled)
@@ -87,13 +93,12 @@ struct NutrientsView: View {
         .navigationTitle("Nutrients")
         .onAppear {
             if let unwrappedCarbsRequired = watchStateModel.carbsRequired {
-                carbCount = Int(unwrappedCarbsRequired)
+                carbsCount = Int(unwrappedCarbsRequired)
             }
         }
     }
 
     struct GramsPicker: View {
-        @Environment(\.sizeCategory) var sizeCategory
         @State var step = Constants.defaultPickerStep
         let labelFrameWidth = WKInterfaceDevice.current().screenBounds.width - 8
 
@@ -103,34 +108,6 @@ struct NutrientsView: View {
         let max: Int
         let accentColor: Color
 
-        var fontForSizeCategory: Font {
-            switch sizeCategory {
-            case .extraSmall,
-                 .small:
-                return .system(size: 12)
-            case .medium:
-                return .system(size: 14)
-            case .large:
-                return .system(size: 16)
-            default:
-                return .system(size: 20)
-            }
-        }
-
-        var fontForSizeCategoryForHundreds: Font {
-            switch sizeCategory {
-            case .extraSmall:
-                return .system(size: 8)
-            case .small:
-                return .system(size: 9)
-            case .large,
-                 .medium:
-                return .system(size: 14)
-            default:
-                return .system(size: 16)
-            }
-        }
-
         var body: some View {
             GeometryReader { geometry in
                 Picker(selection: $selection) {
@@ -138,8 +115,10 @@ struct NutrientsView: View {
                         let value = $0 * step
                         Text("\(value) g")
                             .tag(value)
-                            .font(value < 99 ? fontForSizeCategory : fontForSizeCategoryForHundreds)
                             .foregroundColor(accentColor)
+                            .font(.system(size: geometry.size.width / 2.5))
+                            .minimumScaleFactor(0.01)
+                            .lineLimit(1)
                     }
                 } label: {
                     var labelFrameTranslationX: CGFloat {
@@ -149,6 +128,10 @@ struct NutrientsView: View {
                         return 0
                     }
                     Text(label)
+                        .font(.system(size: geometry.size.width / 3.5))
+                        .bold()
+                        .textCase(.uppercase)
+                        .lineLimit(1)
                         .foregroundColor(.black)
                         .padding(.vertical, 2)
                         .padding(.horizontal, 4)
@@ -156,7 +139,6 @@ struct NutrientsView: View {
                             RoundedRectangle(cornerRadius: 6)
                                 .fill(accentColor)
                         )
-                        .textCase(.uppercase)
                         .frame(width: labelFrameWidth, alignment: labelAlignment)
                         .transformEffect(.init(translationX: labelFrameTranslationX, y: 0))
                 }
