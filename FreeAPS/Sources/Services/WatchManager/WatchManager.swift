@@ -298,7 +298,7 @@ extension BaseWatchManager: WCSessionDelegate {
         }
 
         if let nutrientsData = message["addNutrients"] as? Data {
-            if let nutrients = try? JSONDecoder().decode([CarbEntry, Protein, Fat].self, from: nutrientsData) {
+            if let nutrients = try? JSONDecoder().decode([Nutrient: Int].self, from: nutrientsData) {
                 if nutrients.values.contains(where: { $0 > 0 }) {
                     var carbs = min(Decimal(nutrients[.carbs] ?? 0), settingsManager.settings.maxCarbs)
                     var protein = Decimal(nutrients[.protein] ?? 0)
