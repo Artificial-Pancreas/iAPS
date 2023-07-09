@@ -42,7 +42,7 @@
 "Bolusing with temp basal" = "Bolussen met tijdelijk basaal";
 
 /* Pod state when inserting cannula */
-"Cannula inserting" = "Canule ingebracht";
+"Cannula inserting" = "Canule wordt geplaatst";
 
 /* String describing a dose that was certainly scheduled */
 "Certain" = "Zeker";
@@ -63,13 +63,13 @@
 "Communication issue: Unacknowledged command pending." = "Communicatieprobleem: niet-bevestigde opdracht in behandeling";
 
 /* Description for BeepPreference.manualCommands */
-"Confidence reminders will sound for commands you initiate, like bolus, cancel bolus, suspend, resume, save notification reminders, etc. When Loop automatically adjusts delivery, no confidence reminders are used." = "Piepjes uit de Pod zullen klinken voor commando's die u hebt geïnitieerd, zoals bolus, annulering, geschorst, hervatten, opslaan van meldingen etc. Als iAPS automatisch de levering wijzigt, worden er geen piepjes gebruikt.";
+"Confidence reminders will sound for commands you initiate, like bolus, cancel bolus, suspend, resume, save notification reminders, etc. When Loop automatically adjusts delivery, no confidence reminders are used." = "Piepjes uit de Pod zullen klinken voor commando's die je hebt geïnitieerd, zoals bolus, annulering, geschorst, hervatten, opslaan van meldingen etc. Als iAPS automatisch de levering wijzigt, worden er geen piepjes gebruikt.";
 
 /* Description for BeepPreference.extended */
-"Confidence reminders will sound when Loop automatically adjusts delivery as well as for commands you initiate." = "Piepjes zullen klinken als iAPS de levering automatisch aanpast evenals voor commando's die u initieert.";
+"Confidence reminders will sound when Loop automatically adjusts delivery as well as for commands you initiate." = "Piepjes zullen klinken als iAPS de levering automatisch aanpast evenals voor commando's die je initieert.";
 
 /* The title for AlarmCode.other notification */
-"Critical Pod Error" = "Kritieke Podfout";
+"Critical Pod Error" = "Kritieke Pod fout";
 
 /* Recovery suggestion when unexpected address received */
 "Crosstalk possible. Please move to a new location" = "Ruis mogelijk. Verplaats alsjeblieft naar een andere locatie";
@@ -132,13 +132,13 @@
 "Insulin type not configured" = "Insulinetype niet ingesteld";
 
 /* The format string for Internal pod fault (1: The fault code value) */
-"Internal pod fault %1$03d" = "Interne podfout %1$03d";
+"Internal pod fault %1$03d" = "Interne Pod fout %1$03d";
 
 /* The format string describing a bolus that was interrupted. (1: The amount delivered)(2: The amount scheduled)(3: Start time of the dose)(4: duration)(5: scheduled certainty) */
-"InterruptedBolus: %1$@ U (%2$@ U scheduled) %3$@ %4$@ %5$@" = "OnderbrokenBolus: %1$@ E (%2$@ E gepland) %3$@ %4$@ %5$@";
+"InterruptedBolus: %1$@ U (%2$@ U scheduled) %3$@ %4$@ %5$@" = "Onderbroken bolus: %1$@ E (%2$@ E gepland) %3$@ %4$@ %5$@";
 
 /* Error message for when unexpected address is received (1: received address) (2: expected address) */
-"Invalid address 0x%x. Expected 0x%x" = "Ongeldig adres 0x%1$x. Verwachte 0x%2$x";
+"Invalid address 0x%x. Expected 0x%x" = "Ongeldig adres 0x%1$x. Verwachtte 0x%2$x";
 
 /* Description for MessageError invalidAddress */
 "Invalid address: (%1$@)" = "Ongeldig adres: (%1$@)";
@@ -150,7 +150,7 @@
 "Invalid Setting" = "Ongeldige Instelling";
 
 /* Alert content title for lowReservoir pod alert */
-"Low Reservoir" = "Reservoir Bijna Leeg";
+"Low Reservoir" = "Reservoir bijna leeg";
 
 /* Format string for description for low reservoir advisory (1: reminder units) */
 "Low reservoir advisory (%1$gU)" = "Reservoir bijna leeg advies (%1$gE)";
@@ -171,11 +171,11 @@
 "Memory initialized" = "Geheugen geïnitialiseerd";
 
 /* Recovery suggestion for PodCommsError.tooManyPodsFound */
-"Move to a new area away from any other pods and try again." = "Ga naar een andere plek, weg van andere pods, en probeer opnieuw.";
+"Move to a new area away from any other pods and try again." = "Ga naar een andere plek, weg van andere pods en probeer opnieuw.";
 
 /* Alert content body for multiCommand pod alert
    Alert content title for multiCommand pod alert */
-"Multiple Command Alert" = "Meerdere commando's melding";
+"Multiple Command Alert" = "Melding meerdere commando's";
 
 /* Pod alert state when no alerts are active */
 "No alerts" = "Geen waarschuwingen";
@@ -194,13 +194,13 @@
 "No Pod" = "Geen pod";
 
 /* Error message shown when no pod is paired */
-"No pod paired" = "Geen pod gekoppeld";
+"No pod paired" = "Geen Pod gekoppeld";
 
 /* Error message for PodCommsError.noPodsFound */
-"No pods found" = "Geen pods gevonden";
+"No pods found" = "Geen Pods gevonden";
 
 /* Error message shown when no response from pod was received */
-"No response from pod" = "Geen reactie van pod";
+"No response from pod" = "Geen reactie van Pod";
 
 /* Error message shown when no response from pod was received */
 "No RileyLink available" = "Geen RileyLink beschikbaar";
@@ -228,22 +228,22 @@
 "Parsing Error: %1$@ in (%2$@)" = "Parseerfout: %1$@ in (%2$@)";
 
 /* Recovery suggestion on unexpected pod change */
-"Please bring only original pod in range or deactivate original pod" = "Breng alleen de oude pod binnen bereik of deactiveer de originele pod";
+"Please bring only original pod in range or deactivate original pod" = "Breng alleen de oude Pod binnen bereik of deactiveer de originele Pod";
 
 /* Recovery suggestion when no response is received from pod */
-"Please bring your pod closer to the RileyLink and try again" = "Breng de pod dichter bij de RileyLink en probeer opnieuw";
+"Please bring your pod closer to the RileyLink and try again" = "Breng de Pod dichter bij de RileyLink en probeer opnieuw";
 
 /* Alert content body for finishSetupReminder pod alert */
-"Please finish pairing your pod." = "Voltooi het koppelen van je pod.";
+"Please finish pairing your pod." = "Voltooi het koppelen van je Pod.";
 
 /* Recover suggestion shown when no pod is paired */
-"Please pair a new pod" = "Koppel een nieuwe pod";
+"Please pair a new pod" = "Koppel een nieuwe Pod";
 
 /* Recovery suggestion when pairing signal strength is too high */
-"Please reposition the RileyLink further from the pod" = "Plaats de RileyLink verder van de pod";
+"Please reposition the RileyLink further from the pod" = "Plaats de RileyLink verder van de Pod";
 
 /* Recovery suggestion when pairing signal strength is too low */
-"Please reposition the RileyLink relative to the pod" = "Verplaats de RileyLink ten opzichte van de pod";
+"Please reposition the RileyLink relative to the pod" = "Verplaats de RileyLink ten opzichte van de Pod";
 
 /* Error message shown when user cannot pair because pod is already paired */
 "Pod already paired" = "Pod al gekoppeld";
@@ -252,7 +252,7 @@
 "Pod already primed" = "Pod is al voorbereid";
 
 /* Status highlight message for other alarm. */
-"Pod Error" = "Podfout";
+"Pod Error" = "Pod fout";
 
 /* Description for expiration advisory alarm */
 "Pod expiration advisory alarm" = "Pod vervaltijd advies alarm";
@@ -279,22 +279,22 @@
 "Pod is suspended" = "Pod is onderbroken";
 
 /* Status highlight message for occlusion alarm. */
-"Pod Occlusion" = "Podverstopping";
+"Pod Occlusion" = "Pod verstopping";
 
 /* Alert content title for finishSetupReminder pod alert */
-"Pod Pairing Incomplete" = "Koppeling pod onvolledig";
+"Pod Pairing Incomplete" = "Koppeling Pod onvolledig";
 
 /* Error message shown when pod sends ack instead of response */
 "Pod sent ack instead of response" = "Pod heeft een bevestiging gestuurd in plaats van een antwoord";
 
 /* Pod state when prime or cannula insertion has not completed in the time allotted */
-"Pod setup window expired" = "Insteltijd van de pod is verlopen";
+"Pod setup window expired" = "Insteltijd van de Pod is verlopen";
 
 /* Description for pod suspended reminder */
-"Pod suspended reminder" = "Herinnering onderbroken pod";
+"Pod suspended reminder" = "Herinnering onderbroken Pod";
 
 /* Format string for poor pod signal strength */
-"Poor signal strength" = "Zwak signaalsterkte";
+"Poor signal strength" = "Zwakke signaalsterkte";
 
 /* Delivery status when pod is priming
    Pod status when priming */
@@ -359,7 +359,7 @@
 "Suspended" = "Onderbroken";
 
 /* Alert notification body for suspendEnded pod alert user notification */
-"Suspension time is up. Open the app and resume." = "De onderbrekingsperiode is verstreken. Open de app en hervat.";
+"Suspension time is up. Open the app and resume." = "De onderbrekingsperiode is verstreken. Open iAPS en hervat.";
 
 /* Pod tank fill completed */
 "Tank fill completed" = "Opslag vullen compleet";
@@ -380,7 +380,7 @@
 "TempBasal: %1$@ U/hour %2$@ %3$@ %4$@ U %5$@" = "Tijdelijk basaal: %1$@ E/uur %2$@ %3$@ %4$@ E %5$@";
 
 /* Alert content body for suspendEnded pod alert */
-"The insulin suspension period has ended.\n\nYou can resume delivery from the banner on the home screen or from your pump settings screen. You will be reminded again in 15 minutes." = "De insulineonderbrekingsperiode is verstreken.\n\nJe kunt de toediening hervatten op het startscherm of via je pompinstellingenscherm. Over 15 minuten wordt je er opnieuw aan herinnerd.";
+"The insulin suspension period has ended.\n\nYou can resume delivery from the banner on the home screen or from your pump settings screen. You will be reminded again in 15 minutes." = "De insulineonderbrekingsperiode is verstreken.\n\nJe kunt de toediening hervatten op het startscherm of via je pompinstellingenscherm. Over 15 minuten word je er opnieuw aan herinnerd.";
 
 /* Alert content body for timeOffsetChangeDetected pod alert */
 "The time on your pump is different from the current time. You can review the pump time and and sync to current time in settings." = "De tijd op je pomp is anders dan de huidige tijd. Je kunt de tijd op de pomp bekijken en synchroniseren met de huidige tijd in instellingen.";
@@ -404,13 +404,13 @@
 "Unexpected message sequence number" = "Onverwacht volgnummer van bericht";
 
 /* Format string for unexpected pod change */
-"Unexpected pod change" = "Onverwachte podwissel";
+"Unexpected pod change" = "Onverwachte Pod wissel";
 
 /* Error message shown when empty response from pod was received */
-"Unexpected response from pod" = "Onverwachte reactie van pod";
+"Unexpected response from pod" = "Onverwachte reactie van Pod";
 
 /* The format string for Unknown pod fault (1: The fault code value) */
-"Unknown pod fault %1$03d" = "Onbekende podfout %1$03d";
+"Unknown pod fault %1$03d" = "Onbekende Pod fout %1$03d";
 
 /* Format string for description of MessageError unknownValue. (1: value) (2: Type) */
 "Unknown Value (%1$@) for type %2$@" = "Onbekende waarde (%1$@) voor type %2$@";
