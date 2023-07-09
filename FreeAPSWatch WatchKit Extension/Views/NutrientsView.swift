@@ -70,7 +70,6 @@ struct NutrientsView: View {
                 }
                 Button {
                     WKInterfaceDevice.current().play(.click)
-                    
                     watchStateModel.addNutrients([
                         .carbs: carbsCount,
                         .protein: proteinCount,
@@ -145,6 +144,7 @@ struct NutrientsView: View {
                 .pickerStyle(.wheel)
                 .frame(maxWidth: geometry.size.width)
                 .onTapGesture(count: 2, perform: handlePickerDoubleTapGesture)
+                .onAppear(perform: handleOnAppear)
             }
         }
 
@@ -155,13 +155,17 @@ struct NutrientsView: View {
                     .defaultPickerStep
             }
         }
+
+        private func handleOnAppear() {
+            step = selection % 5 == 0 ? Constants.defaultPickerStep : 1
+        }
     }
 }
 
 struct NutrientsView_Previews: PreviewProvider {
     static var previews: some View {
         let watchStateModel = WatchStateModel()
-        watchStateModel.carbsRequired = 110
+        watchStateModel.carbsRequired = 111
 
         return Group {
             NutrientsView()

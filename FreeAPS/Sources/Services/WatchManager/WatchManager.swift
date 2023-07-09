@@ -307,14 +307,14 @@ extension BaseWatchManager: WCSessionDelegate {
                     var useFPUconversion: Bool {
                         protein > 0 || fat > 0
                     }
-                    
+
                     if useFPUconversion {
                         let futureCarbArray = calculateFPU(settings: settingsManager, protein: protein, fat: fat)
                         if !futureCarbArray.isEmpty {
                             carbsStorage.storeCarbs(futureCarbArray)
                         }
                     }
-                    
+
                     if carbs > 0 {
                         // Store the real carbs
                         carbsStorage.storeCarbs([
