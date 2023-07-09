@@ -149,15 +149,19 @@ struct NutrientsView: View {
         }
 
         private func handlePickerDoubleTapGesture() {
-            step = step == Constants.defaultPickerStep ? 1 : Constants.defaultPickerStep
             if step == Constants.defaultPickerStep {
-                selection = Int(Double(selection / Constants.defaultPickerStep).rounded(.down)) * Constants
+                step = 1
+            } else {
+                step = Constants.defaultPickerStep
+                selection = selection.quotientAndRemainder(dividingBy: Constants.defaultPickerStep).quotient * Constants
                     .defaultPickerStep
             }
         }
 
         private func handleOnAppear() {
-            step = selection % 5 == 0 ? Constants.defaultPickerStep : 1
+            if selection % Constants.defaultPickerStep != 0 {
+                step = 1
+            }
         }
     }
 }
