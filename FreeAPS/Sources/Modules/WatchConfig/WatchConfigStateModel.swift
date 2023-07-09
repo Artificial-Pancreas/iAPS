@@ -48,9 +48,7 @@ extension WatchConfig {
                 }
             }
 
-            subscribeSetting(\.isNutrientsViewEnabled, on: $isNutrientsViewEnabled) {
-                self.settingsManager.settings.isNutrientsViewEnabled = $0
-            }
+            subscribeSetting(\.isNutrientsViewEnabled, on: $isNutrientsViewEnabled) { isNutrientsViewEnabled = $0 }
 
             devices = garmin.devices
         }
