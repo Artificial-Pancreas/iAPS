@@ -31,6 +31,7 @@ struct FreeAPSSettings: JSON, Equatable {
     var useAppleHealth: Bool = false
     var smoothGlucose: Bool = false
     var displayOnWatch: AwConfig = .BGTarget
+    var isNutrientsViewEnabled: Bool = false
     var overrideHbA1cUnit: Bool = false
     var high: Decimal = 145
     var low: Decimal = 70
@@ -97,6 +98,10 @@ extension FreeAPSSettings: Decodable {
 
         if let displayOnWatch = try? container.decode(AwConfig.self, forKey: .displayOnWatch) {
             settings.displayOnWatch = displayOnWatch
+        }
+
+        if let isNutrientsViewEnabled = try? container.decode(Bool.self, forKey: .isNutrientsViewEnabled) {
+            settings.isNutrientsViewEnabled = isNutrientsViewEnabled
         }
 
         if let cgm = try? container.decode(CGMType.self, forKey: .cgm) {

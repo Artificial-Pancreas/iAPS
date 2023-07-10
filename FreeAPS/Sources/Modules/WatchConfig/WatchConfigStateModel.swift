@@ -30,6 +30,7 @@ extension WatchConfig {
         @Injected() private var garmin: GarminManager!
         @Published var devices: [IQDevice] = []
         @Published var selectedAwConfig: AwConfig = .HR
+        @Published var isNutrientsViewEnabled = false
 
         private(set) var preferences = Preferences()
 
@@ -46,6 +47,8 @@ extension WatchConfig {
                     self?.settingsManager.settings.displayHR = false
                 }
             }
+
+            subscribeSetting(\.isNutrientsViewEnabled, on: $isNutrientsViewEnabled) { isNutrientsViewEnabled = $0 }
 
             devices = garmin.devices
         }
