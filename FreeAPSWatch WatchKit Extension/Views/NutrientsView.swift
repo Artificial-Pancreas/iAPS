@@ -9,15 +9,15 @@ struct NutrientsView: View {
     @EnvironmentObject var watchStateModel: WatchStateModel
 
     @State var carbsCount = 0
+    @State var isPreciseCarbsPicker = false
     @State var fatCount = 0
     @State var proteinCount = 0
 
-    let defaultMaxCOB = 120
     var maxCOB: Int {
         if let unwrappedMaxCOB = watchStateModel.maxCOB {
             return Int(unwrappedMaxCOB)
         }
-        return defaultMaxCOB
+        return 120
     }
 
     // Safety max Protein & max Fat cap set to double of maxCOB
@@ -39,7 +39,8 @@ struct NutrientsView: View {
                     label: NSLocalizedString("Carbs", comment: ""),
                     labelAlignment: .leading,
                     max: maxCOB,
-                    accentColor: .white
+                    accentColor: .white,
+                    isPrecise: isPreciseCarbsPicker
                 )
 
                 GramsPicker(
@@ -47,7 +48,8 @@ struct NutrientsView: View {
                     label: NSLocalizedString("Protein", comment: ""),
                     labelAlignment: .center,
                     max: defaultMaxProtein,
-                    accentColor: .red
+                    accentColor: .red,
+                    isPrecise: false
                 )
 
                 GramsPicker(
@@ -55,7 +57,8 @@ struct NutrientsView: View {
                     label: NSLocalizedString("Fat", comment: ""),
                     labelAlignment: .trailing,
                     max: defaultMaxFat,
-                    accentColor: .orange
+                    accentColor: .orange,
+                    isPrecise: false
                 )
             }
             .padding(.bottom, 24)
@@ -93,6 +96,9 @@ struct NutrientsView: View {
         .onAppear {
             if let unwrappedCarbsRequired = watchStateModel.carbsRequired {
                 carbsCount = Int(unwrappedCarbsRequired)
+                if carbsCount % 5 != 0 {
+                    isPreciseCarbsPicker = true
+                }
             }
         }
     }
@@ -106,6 +112,7 @@ struct NutrientsView: View {
         let labelAlignment: Alignment
         let max: Int
         let accentColor: Color
+        let isPrecise: Bool
 
         var body: some View {
             GeometryReader { geometry in
@@ -144,7 +151,11 @@ struct NutrientsView: View {
                 .pickerStyle(.wheel)
                 .frame(maxWidth: geometry.size.width)
                 .onTapGesture(count: 2, perform: handlePickerDoubleTapGesture)
-                .onAppear(perform: handleOnAppear)
+                .onChange(of: isPrecise) { isPrecise in
+                    if isPrecise {
+                        step = 1
+                    }
+                }
             }
         }
 
@@ -155,12 +166,6 @@ struct NutrientsView: View {
                 step = Constants.defaultPickerStep
                 selection = selection.quotientAndRemainder(dividingBy: Constants.defaultPickerStep).quotient * Constants
                     .defaultPickerStep
-            }
-        }
-
-        private func handleOnAppear() {
-            if selection % Constants.defaultPickerStep != 0 {
-                step = 1
             }
         }
     }
