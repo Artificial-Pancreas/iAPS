@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 54;
+	objectVersion = 56;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -2336,8 +2336,10 @@
 		388E595025AD948C0019842D /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				CLASSPREFIX = Yaroslava;
 				LastSwiftUpdateCheck = 1310;
 				LastUpgradeCheck = 1240;
+				ORGANIZATIONNAME = "Mykola Dudko";
 				TargetAttributes = {
 					388E595725AD948C0019842D = {
 						CreatedOnToolsVersion = 12.3;
@@ -2355,7 +2357,7 @@
 				};
 			};
 			buildConfigurationList = 388E595325AD948C0019842D /* Build configuration list for PBXProject "FreeAPS" */;
-			compatibilityVersion = "Xcode 9.3";
+			compatibilityVersion = "Xcode 14.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -3051,6 +3053,8 @@
 					"$(PROJECT_DIR)/Dependencies/ios-armv7_arm64",
 				);
 				INFOPLIST_FILE = FreeAPS/Resources/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = iAPS_YD;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.medical";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3093,6 +3097,8 @@
 					"$(PROJECT_DIR)/Dependencies/ios-armv7_arm64",
 				);
 				INFOPLIST_FILE = FreeAPS/Resources/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = iAPS_YD;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.medical";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
