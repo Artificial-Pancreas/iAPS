@@ -1396,7 +1396,7 @@ Enact a temp Basal or a temp target */
 "Expiration Reminder Default" = "Herinnering vervaldatum ingeschakeld";
 
 /* */
-"Expiration Reminder" = "Herinnering over de vervaltijd";
+"Expiration Reminder" = "Let op je Pod vervalt";
 
 /* */
 "Low Reservoir" = "Laag reservoir niveau";
