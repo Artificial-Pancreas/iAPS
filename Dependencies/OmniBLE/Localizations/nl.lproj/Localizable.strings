@@ -9,7 +9,7 @@
 "Multiple Command Alert" = "Waarschuwing voor meerdere commando's";
 
 /* Alert content title for userPodExpiration pod alert */
-"Pod Expiration Reminder" = "Herinnering over de vervaltijd van uw Pod";
+"Pod Expiration Reminder" = "Waarschuwing dat je Pod vervalt";
 
 /* Alert content title for podExpiring pod alert */
 "Pod Expired" = "Pod verlopen";
@@ -703,7 +703,7 @@
 "Next" = "Volgende";
 
 /* */
-"Expiration Reminder" = "Herinnering over de vervaltijd";
+"Expiration Reminder" = "Let op je Pod vervalt";
 
 /* Description text on LowReservoirReminderSetupView */
 "The App notifies you when the amount of insulin in the Pod reaches this level (50-10 U).\n\nScroll to set the number of units at which you would like to be reminded." = "iAPS laat je weten wanneer de hoeveelheid insuline in de Pod dit niveau bereikt (50-10 E).\n\nScroll om het aantal eenheden in te stellen waarop u wilt worden herinnerd.";
