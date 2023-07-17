@@ -237,7 +237,7 @@
 "Error Suspending" = "Fout bij onderbreken";
 
 /* The title of the cell showing the pod expiration reminder date */
-"Expiration Reminder" = "Vervaldatumherinnering";
+"Expiration Reminder" = "Melding vervaldatum";
 
 /* Label text for expiration reminder default row */
 "Expiration Reminder Default" = "Standaard herinnering";
