@@ -1087,7 +1087,7 @@ Enact a temp Basal or a temp target */
 "For write data to Apple Health you must give permissions in Settings > Health > Data Access" = "Um Daten bei Apple Health zu speichern, müssen Sie unter „Einstellungen“ > „Health“ > „Datenzugriff & Geräte“ die entsprechenden Berechtigungen erteilen";
 
 /* */
-"After you create glucose records in the Health app, please open iAPS to help us guaranteed transfer changed data" = "Nachdem Sie Glukosedatensätze in der Health App erstellt oder gelöscht haben, öffnen Sie bitte iAPS, um die Übertragung der geänderten Daten sicher zu gewährleisten";
+"This allows iAPS to read from and write to Apple Heath. You must also give permissions in Settings > Health > Data Access. If you enter a glucose value into Apple Health, open iAPS to confirm it shows up." = "Nachdem Sie Glukosedatensätze in der Health App erstellt oder gelöscht haben, öffnen Sie bitte iAPS, um die Übertragung der geänderten Daten sicher zu gewährleisten";
 
 /* New ALerts ------------------------- */
 /* Info title */
