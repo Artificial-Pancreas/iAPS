@@ -102,7 +102,7 @@
 "Attemping to re-establish communication" = "Спроба відновити зв'язок";
 
 /* Back button text on DeliveryUncertaintyRecoveryView */
-"Back" = "Назад";
+"Back" = "Тому";
 
 /* The title of the cell showing pod basal status */
 "Basal Delivery" = "Подача Базалу";
@@ -327,7 +327,7 @@
 "Insulin delivery stopped. Change Pod now." = "Подачу інсуліну припинено. Замініть Pod зараз.";
 
 /* Message for suspend duration selection action sheet */
-"Insulin delivery will be stopped until you resume manually. When would you like Loop to remind you to resume delivery?" = "Подачу інсуліну буде припинено, доки ви не відновите її вручну. Коли ви хочете, щоб Loop нагадав вам відновити подачу?";
+"Insulin delivery will be stopped until you resume manually. When would you like Loop to remind you to resume delivery?" = "Подачу інсуліну буде припинено, доки ви не відновите її вручну. Коли ви хочете, щоб петля нагадала вам відновити подачу?";
 
 /* Header for insulin remaining on pod settings screen */
 "Insulin Remaining" = "Залишок інсуліну";
@@ -349,7 +349,7 @@
 "Last Status" = "Останній статус";
 
 /* Description text on manual temp basal action sheet */
-"Loop will not automatically adjust your insulin delivery until the temporary basal rate finishes or is canceled." = "Loop не регулюватиме подачу інсуліну автоматично, доки тимчасова база не закінчиться або не буде скасована.";
+"Loop will not automatically adjust your insulin delivery until the temporary basal rate finishes or is canceled." = "Петля не регулюватиме подачу інсуліну автоматично, доки тимчасова база не закінчиться або не буде скасована.";
 
 /* The title of the cell showing the pod lot id */
 "Lot" = "Партія";
