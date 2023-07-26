@@ -18,10 +18,10 @@
 "Low Reservoir" = "Пустий резервуар";
 
 /* Alert content title for suspendInProgress pod alert */
-"Suspend In Progress Reminder" = "Нагадування про призупинення";
+"Suspend In Progress Reminder" = "Нагадування про припинення Pod";
 
 /* Alert content title for suspendEnded pod alert */
-"Resume Insulin" = "Відновити інсулін";
+"Resume Insulin" = "Відновити подачу";
 
 /* Alert content title for finishSetupReminder pod alert */
 "Pod Pairing Incomplete" = "Створення пари не завершено";
@@ -39,13 +39,13 @@
 "Change Pod now. Pod has been active for 72 hours." = "Змінити Pod зараз. Pod був активним протягом 72 годин.";
 
 /* Alert content body for podExpireImminent pod alert */
-"Change Pod now. Insulin delivery will stop in 1 hour." = "Змінити Pod зараз. Ізольована доставка зупиниться протягом 1 години.";
+"Change Pod now. Insulin delivery will stop in 1 hour." = "Замініть Pod зараз. Подача інсуліну припиниться через 1 годину.";
 
 /* Format string for alert content body for lowReservoir pod alert. (1: reminder value) */
-"%1$@ insulin or less remaining in Pod. Change Pod soon." = "%1$@ інсулін або менше залишилися у Pod. Незабаром змініть Pod.";
+"%1$@ insulin or less remaining in Pod. Change Pod soon." = "%1$@ або менше інсуліну залишилося в Podі. Необхідна швидка заміна.";
 
 /* Alert content body for suspendInProgress pod alert */
-"Suspend In Progress Reminder" = "Нагадування про призупинення";
+"Suspend In Progress Reminder" = "Нагадування про припинення Pod";
 
 /* Alert content body for suspendEnded pod alert */
 "The insulin suspension period has ended.\n\nYou can resume delivery from the banner on the home screen or from your pump settings screen. You will be reminded again in 15 minutes." = "Період призупинення інсуліну закінчився.\n\n Ви можете відновити введення з банера на головному екрані або з екрана налаштувань помпи. Вам буде нагадано знову через 15 хвилин.";
@@ -78,7 +78,7 @@
 "Notification Settings" = "Параметри сповіщень";
 
 /* */
-"Confidence Reminders" = "Нагадування про Впевненість";
+"Confidence Reminders" = "Нагадування про верифікацію";
 
 /* Text for suspend resume button when insulin delivery active */
 "Suspend Insulin Delivery" = "Призупинити введення інсуліну";
@@ -102,7 +102,7 @@
 "Pairing." = "Створення пари.";
 
 /* Pairing action button accessibility label while priming */
-"Priming. Please wait." = "У підсумку чекайте, будь ласка.";
+"Priming. Please wait." = "Заправлення. Будь ласка зачекайте.";
 
 /* Pairing action button accessibility label when pairing succeeded */
 "Pod paired successfully. Continue." = "Підключення успішно створено. Продовжити.";
@@ -111,7 +111,7 @@
 "Finish deactivation" = "Завершення деактивації";
 
 /* Settings page link description when next lifecycle action is to replace pod */
-"Replace Pod" = "Замініть POD";
+"Replace Pod" = "Замініть Pod";
 
 /* Unit for singular day in pod life remaining */
 "day" = "день";
@@ -153,10 +153,10 @@
 "Finish deactivation" = "Завершення деактивації";
 
 /* Settings page link description when next lifecycle action is to replace pod */
-"Replace Pod" = "Замініть POD";
+"Replace Pod" = "Замініть Pod";
 
 /* Settings page link description when next lifecycle action is to replace pod */
-"Replace Pod" = "Замініть POD";
+"Replace Pod" = "Замініть Pod";
 
 /* Label for pod life state when pod not fully activated */
 "Unfinished Activation" = "Незавершена активація";
@@ -177,13 +177,13 @@
 "Fault" = "Збій";
 
 /* Label describing pod age view */
-"Pod Age" = "Вік PODу";
+"Pod Age" = "Pod пропрацював";
 
 /* Label describing time remaining view */
 "Remaining" = "Залишок";
 
 /* Label indicating pod replacement necessary */
-"Replace Pod" = "Замініть POD";
+"Replace Pod" = "Замініть Pod";
 
 /* Error message shown when no pod is paired */
 "No pod paired" = "Немає підключеного Pod";
@@ -207,7 +207,7 @@
 "Omnipod DASH" = "Omnipod DASH";
 
 /* Status highlight that delivery is uncertain. */
-"Comms Issue" = "Комунікаційне питання";
+"Comms Issue" = "Проблеми з повідомленням";
 
 /* */
 "Finish Pairing" = "Завершити створення пари";
@@ -234,7 +234,7 @@
 "No Insulin" = "Без інсуліну";
 
 /* Status highlight that insulin delivery was suspended. */
-"Insulin Suspended" = "Інсулін призупинено";
+"Insulin Suspended" = "Подання інсуліну припинено";
 
 /* Status highlight when communications with the pod haven't happened recently. */
 "Signal Loss" = "Втрата сигналу";
@@ -318,7 +318,7 @@
 "Insulin Remaining" = "Залишок інсуліну";
 
 /* Button title to set temporary basal rate */
-"Set Temporary Basal Rate" = "Встановіть тимчасову базальну швидкість";
+"Set Temporary Basal Rate" = "Встановіть Тимчасову Базальну Швидкість";
 
 /* Section header for activity section */
 "Activity" = "Активність";
