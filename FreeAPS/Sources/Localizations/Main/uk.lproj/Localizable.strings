@@ -41,7 +41,7 @@
 "Wait please" = "Зачекайте";
 
 /*  */
-"Agree and continue" = "Прийняти і Продовжити";
+"Agree and continue" = "Прийняти та Продовжити";
 
 /* Headline in enacted pop up (at: at what time) */
 "Enacted at" = "Виконано в";
@@ -65,7 +65,7 @@
 "No suggestion" = "Нема рекомендацій";
 
 /* Replace pod text in Header */
-"Replace pod" = "Замініть под";
+"Replace pod" = "Замініть Pod";
 
 /* Add carbs screen */
 "Add Carbs" = "Додати Вуглеводи";
@@ -74,7 +74,7 @@
 "Add Carbs " = "Додати Вуглеводи ";
 
 /*  */
-"Amount Carbs" = "Кількість Вуглеводи";
+"Amount Carbs" = "Кількість Вуглеводів";
 
 /* Grams unit */
 "grams" = "грами";
@@ -92,7 +92,7 @@
 "Cancel" = "Відмінити";
 
 /*  */
-"Cancel Temp Target" = "Відмінити тимчасову ціль";
+"Cancel Temp Target" = "Відмінити Тимчасову ціль";
 
 /* Custom temp target */
 "Custom" = "Своя";
@@ -110,22 +110,22 @@
 "Duration" = "Тривалість";
 
 /*  */
-"Enact Temp Target" = "Запустити тимчасову ціль";
+"Enact Temp Target" = "Запустити Тимчасову ціль";
 
 /* */
 "Target" = "Ціль";
 
 /* */
-"Basal Insulin and Sensitivity ratio" = "Співвідношення базального інсуліну та чутливості";
+"Basal Insulin and Sensitivity ratio" = "Співвідношення Базального інсуліну та Чутливості";
 
 /* */
-"A lower 'Half Basal Target' setting will reduce the basal and raise the ISF earlier, at a lower target glucose." = "Нижчий параметр «Half Basal Target» зменшить базальний рівень і підвищить ISF раніше, при нижчому цільовому рівні глюкози.";
+"A lower 'Half Basal Target' setting will reduce the basal and raise the ISF earlier, at a lower target glucose." = "Нижче значення \"Половина базального цільового показника\" призведе до зниження базального та підвищення ISF раніше, за більш низького цільового рівня глюкози.";
 
 /* */
-" Your setting: " = "Ваші налаштування";
+" Your setting: " = "Ваші налаштування:";
 
 /* */
-"mg/dl. Autosens.max limits the max endpoint" = "mg/dl. Автоматизація обмежує максимальну кінцеву точку";
+"mg/dl. Autosens.max limits the max endpoint" = "mg/dl. Автоматизація обмежує максимальну кінцеву крапку";
 
 /*  */
 "Enter preset name" = "Введіть ім'я шаблону";
@@ -194,7 +194,7 @@
 "Sensitivity" = "Чутливість";
 
 /*  */
-"Use Autotune" = "Використовувати Autotune";
+"Use Autotune" = "Використовувати Автотюн";
 
 /* Add profile basal */
 "Add" = "Додати";
@@ -236,7 +236,7 @@
 "Calculated Sensitivity" = "Розрахована Чутливість";
 
 /*  */
-"Insulin Sensitivities" = "Чутливості до Інсуліну";
+"Insulin Sensitivities" = "Чутливість до інсуліну";
 
 /* */
 "Sensitivity Ratio" = "Коефіцієнт Чутливості";
@@ -251,14 +251,14 @@
 "Amount" = "Об'єм";
 
 /* */
-"Cancel Temp Basal" = "Відмінити тимчасову базальну швидкість (ТБШ)";
+"Cancel Temp Basal" = "Відмінити Тимчасову Базальну Швидкість (ТБШ)";
 
 /* Enact
 Enact a temp Basal or a temp target */
 "Enact" = "Запустити";
 
 /* */
-"Manual Temp Basal" = "Ручна тимчасова базальна швидкість (ТБШ)";
+"Manual Temp Basal" = "Ручна Тимчасова Базальна Швидкість (ТБШ)";
 
 /* Allow uploads to different services */
 "Allow uploads" = "Дозволити вивантаження";
@@ -279,7 +279,7 @@ Enact a temp Basal or a temp target */
 "Invalid URL" = "Невірний URL";
 
 /*  */
-"Local glucose source" = "Локальне джерело глюкози";
+"Local glucose source" = "ЛОКАЛЬНЕ ДЖЕРЕЛО ГЛЮКОЗИ";
 
 /* Header */
 "Nightscout Config" = "Налаштування Nightscout";
@@ -303,10 +303,10 @@ Enact a temp Basal or a temp target */
 "Preferences" = "Налаштування";
 
 /* Recommended Insulin Fraction in preferences */
-"Recommended Insulin Fraction" = "Рекомендований коефіцієнт інсуліну";
+"Recommended Insulin Fraction" = "Рекомендований Коефіцієнт Інсуліну";
 
 /* Do you want to show bolus screen after added carbs? */
-"Skip Bolus screen after carbs" = "Пропустити Екран болюсу після вводу вуглеводів";
+"Skip Bolus screen after carbs" = "Пропустити екран Болюсу після вводу вуглеводів";
 
 /* Allow remote control from NS */
 "Remote control" = "Віддалене керування";
@@ -321,16 +321,16 @@ Enact a temp Basal or a temp target */
 "Add Simulator" = "Додати Симулятор";
 
 /* Insulin model */
-"Model" = "Модель";
+"Model" = "МОДЕЛЬ";
 
 /*  */
-"Pump config" = "Конфігурація помпи";
+"Pump config" = "Конфігурація Помпи";
 
 /*  */
-"Delivery limits" = "Обмеження подачі";
+"Delivery limits" = "ОБМЕЖЕННЯ ПОДАЧІ";
 
 /*  */
-"Duration of Insulin Action" = "Тривалість Дії Інсуліну";
+"Duration of Insulin Action" = "ТРИВАЛІСТЬ ДІЇ ІНСУЛІНУ";
 
 /* hours of duration of insulin activity */
 "hours" = "годин";
@@ -390,7 +390,7 @@ Enact a temp Basal or a temp target */
 "m" = "хв.";
 
 /*  */
-"Closed loop" = "Замкнена петля";
+"Closed loop" = "Замкнена Петля";
 
 /* */
 "Configuration" = "Налаштування";
@@ -405,16 +405,16 @@ Enact a temp Basal or a temp target */
 "Watch" = "Годинник";
 
 /* */
-"Watch Configuration" = "Конфігурація годинника";
+"Watch Configuration" = "Конфігурація Годинника";
 
 /* */
-"Apple Watch" = "Apple Watch";
+"Apple Watch" = "APPLE WATCH";
 
 /* */
-"Display on Watch" = "Відображати на годиннику";
+"Display on Watch" = "Відображати на Годиннику";
 
 /* */
-"Garmin Watch" = "Garmin Watch";
+"Garmin Watch" = "GARMIN WATCH";
 
 /* */
 "Add devices" = "Додати пристрій";
@@ -444,7 +444,7 @@ Enact a temp Basal or a temp target */
 "Settings" = "Налаштування";
 
 /* Recommendation for a Manual Bolus */
-"Recommended Bolus Percentage" = "Рекомендований відсоток болюсу";
+"Recommended Bolus Percentage" = "Рекомендований Відсоток Болюсу";
 
 /* 2 log files to share */
 "Share logs" = "Поділитися логом";
@@ -501,7 +501,7 @@ Enact a temp Basal or a temp target */
 "Delete insulin?" = "Видалити інсулін?";
 
 /* Treatments list */
-"Treatments" = "Терапія";
+"Treatments" = "Події";
 
 /* " min" in Treatments list */
 " min" = " хв";
@@ -531,7 +531,7 @@ Enact a temp Basal or a temp target */
 "Libre Transmitter" = "Libre Transmitter";
 
 /* */
-"Libre Transmitters" = "Libre трансміттери";
+"Libre Transmitters" = "Libre Transmitters";
 
 /* */
 "Bluetooth Transmitters" = "Bluetooth передавачі";
@@ -540,7 +540,7 @@ Enact a temp Basal or a temp target */
 "Modes" = "Режими";
 
 /* Libre 2 Direct */
-"Libre 2 Direct" = "Libre 2 пряме підключення";
+"Libre 2 Direct" = "Libre 2 Пряме підключення";
 
 /* */
 "Select the third party transmitter you want to connect to" = "Виберіть сторонній передавач для підключення";
@@ -558,7 +558,7 @@ Enact a temp Basal or a temp target */
 "Add calibration" = "Додати калібрування";
 
 /* When adding capillary glucose meater reading */
-"Meter glucose" = "Вимірювач глюкози";
+"Meter glucose" = "Показання глюкометра";
 
 /* */
 "Info" = "Інформація";
@@ -582,10 +582,10 @@ Enact a temp Basal or a temp target */
 "Remove All" = "Вилучити все";
 
 /* */
-"About the Process" = "Про процес";
+"About the Process" = "Про Процес";
 
 /* */
-"Please make sure that your Libre 2 sensor is already activated and finished warming up. If you have other apps connecting to the sensor via bluetooth, these need to be shut down or uninstalled. \n\n You can only have one app communicating with the sensor via bluetooth. Then press the \"pariring and connection\" button below to start the process. Please note that the bluetooth connection might take up to a couple of minutes before it starts working." = "Будь ласка, переконайтеся, що ваш датчик Libre 2 вже активований і закінчився розігрів. Якщо у вас є інші програми, які підключаються до датчика через Bluetooth, їх потрібно вимкнути або видалити. \n\n Ви можете мати лише один додаток, який зв’язується з датчиком через Bluetooth. Потім натисніть кнопку «сполучення та підключення» нижче, щоб почати процес. Зверніть увагу, що з’єднання Bluetooth може зайняти до кількох хвилин, перш ніж воно почне працювати.";
+"Please make sure that your Libre 2 sensor is already activated and finished warming up. If you have other apps connecting to the sensor via bluetooth, these need to be shut down or uninstalled. \n\n You can only have one app communicating with the sensor via bluetooth. Then press the \"pariring and connection\" button below to start the process. Please note that the bluetooth connection might take up to a couple of minutes before it starts working." = "Будь ласка, переконайтеся, що ваш сенсор Libre 2 вже активований і закінчився розігрів. Якщо у вас є інші програми, які підключаються до сенсору через Bluetooth, їх потрібно вимкнути або видалити. \n\n Ви можете мати лише один додаток, який зв’язується з сенсором через Bluetooth. Потім натисніть кнопку «сполучення та підключення» нижче, щоб почати процес. Зверніть увагу, що з’єднання Bluetooth може зайняти до кількох хвилин, перш ніж воно почне працювати.";
 
 /* */
 "Pairinginfo" = "Інформація про створення пари";
@@ -603,7 +603,7 @@ Enact a temp Basal or a temp target */
 "Not paired yet" = "Ще не в парі";
 
 /* */
-"Pair Sensor & connect" = "З'єднайте датчик і підключіть";
+"Pair Sensor & connect" = "З'єднайте Сенсор та підключіть";
 
 /* */
 "Phone NFC required!" = "Потрібно телефон з NFC!";
@@ -648,7 +648,7 @@ Enact a temp Basal or a temp target */
 "Transmitter: %@%%" = "Передавач: %@";
 
 /* No Sensor Detected */
-"No Sensor Detected" = "Не виявлено сенсори";
+"No Sensor Detected" = "Не виявлено сенсор";
 
 /* This might be an intermittent problem, but please check that your transmitter is tightly secured over your sensor */
 "This might be an intermittent problem, but please check that your transmitter is tightly secured over your sensor" = "Це може бути періодична проблема, але, будь ласка, перевірте, чи ваш трансмітер міцно закріплений над вашим сенсором";
@@ -657,19 +657,19 @@ Enact a temp Basal or a temp target */
 "New Sensor Detected" = "Виявлено новий Сенсор";
 
 /* Please wait up to 30 minutes before glucose readings are available! */
-"Please wait up to 30 minutes before glucose readings are available!" = "Будь ласка, зачекайте до 30 хвилин, перш ніж буде доступно читання з глюкозою!";
+"Please wait up to 30 minutes before glucose readings are available!" = "Зачекайте, будь ласка, до 30 хвилин перед тим, як будуть доступні дані про глюкозу!";
 
 /* Invalid Glucose sample detected, try again later */
-"Invalid Glucose sample detected, try again later" = "Виявлено невірний показник рівня глюкози, повторіть спробу пізніше";
+"Invalid Glucose sample detected, try again later" = "Виявлено невалідне значення глюкози, повторіть спробу пізніше";
 
 /* ensor might have temporarily stopped, fallen off or is too cold or too warm */
 "Sensor might have temporarily stopped, fallen off or is too cold or too warm" = "Сенсор може бути тимчасово зупинений, падіння або занадто холодно або тепло.";
 
 /* Invalid Sensor Detected */
-"Invalid Sensor Detected" = "Помилка визначення сенсора";
+"Invalid Sensor Detected" = "Помилка визначення Сенсора";
 
 /* Detected sensor seems not to be a libre 1 sensor! */
-"Detected sensor seems not to be a libre 1 sensor!" = "Виявлений сенсор не є датчиком Libre1!";
+"Detected sensor seems not to be a libre 1 sensor!" = "Виявлений сенсор не є сенсором Libre1!";
 
 /* Detected sensor is invalid: %@ */
 "Detected sensor is invalid: %@" = "Виявлений сенсор недійсний: %@";
@@ -696,7 +696,7 @@ Enact a temp Basal or a temp target */
 "Sensor Ending Soon" = "Термін закінчення сенсору";
 
 /* Current Sensor is Ending soon! Sensor Life left in %@ */
-"Current Sensor is Ending soon! Sensor Life left in %@" = "Незабаром закінчується Сенсор! Термін дії скінчився у %@";
+"Current Sensor is Ending soon! Sensor Life left in %@" = "Сенсор скоро скінчиться! Залишилась %@";
 
 /* */
 "Libre Bluetooth" = "Створити пару через Bluetooth";
@@ -711,7 +711,7 @@ Enact a temp Basal or a temp target */
 "Sensor Footer checksum" = "Контрольна сума Сенсора";
 
 /* */
-"Last Blood Sugar prediction" = "Останнє передбачення цукру крові";
+"Last Blood Sugar prediction" = "Останнє передбачення глюкози";
 
 /* */
 "CurrentBG" = "Поточна глюкоза крові ( BG)";
@@ -807,7 +807,7 @@ Enact a temp Basal or a temp target */
 "Glucose Notification visibility" = "Видимість сповіщення Глюкози";
 
 /* */
-"Always Notify Glucose" = "Завжди сповіщати про Глюкозу";
+"Always Notify Glucose" = "Завжди Сповіщати про Глюкозу";
 
 /* */
 "Notify per reading" = "Сповіщати про читання";
