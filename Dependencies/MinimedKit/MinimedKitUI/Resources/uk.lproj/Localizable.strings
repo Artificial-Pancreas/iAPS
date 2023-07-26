@@ -188,7 +188,7 @@
 "Sync to Current Time" = "Встановити поточний час";
 
 /* Message for pod sync time action sheet */
-"The time on your pump is different from the current time. Do you want to update the time on your pump to the current time?" = "Час на вашому насосі відрізняється від поточного часу. Хочете оновити час на насосі до поточного?";
+"The time on your pump is different from the current time. Do you want to update the time on your pump to the current time?" = "Час на вашій помпіі відрізняється від поточного часу. Хочете оновити час на помпі до поточного?";
 
 /* Title for pod sync time action sheet. */
 "Time Change Detected" = "Виявлено зміну часу";
