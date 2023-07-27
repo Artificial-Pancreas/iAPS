@@ -152,7 +152,7 @@
 "Region" = "Регіон";
 
 /* Title text for button to resume insulin delivery */
-"Resume Delivery" = "Відновити доставку";
+"Resume Delivery" = "Відновити подачу";
 
 /* Title text for button when insulin delivery is in the process of being resumed */
 "Resuming" = "Відновлюється";
