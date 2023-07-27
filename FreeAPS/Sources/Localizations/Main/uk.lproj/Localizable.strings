@@ -1652,55 +1652,55 @@ Enact a temp Basal or a temp target */
 "High Temptarget Raises Sensitivity" = "Підвищена Тимчасова Мета Підвищує Чутливість";
 
 /* ”High Temptarget Raises Sensitivity" */
-"Defaults to false. When set to true, raises sensitivity (lower sensitivity ratio) for temp targets set to >= 111. Synonym for exercise_mode. The higher your temp target above 110 will result in more sensitive (lower) ratios, e.g., temp target of 120 results in sensitivity ratio of 0.75, while 140 results in 0.6 (with default halfBasalTarget of 160)." = "За замовчуванням встановлено значення false. Якщо встановлено значення true, підвищує чутливість (зниження коефіцієнта чутливості) для встановлених цілей  >= 111. Синонім для вправ. Чим вище встановленою ціллю вашого шаблону вище 110, тим більш чутливими будуть (нижчі) співвідношення, наприклад  120 результатів у співвідношенні чутливості 0.75, тоді як 140 результатів в 0.6 (з стандартною половинною основною ціллю 160).";
+"Defaults to false. When set to true, raises sensitivity (lower sensitivity ratio) for temp targets set to >= 111. Synonym for exercise_mode. The higher your temp target above 110 will result in more sensitive (lower) ratios, e.g., temp target of 120 results in sensitivity ratio of 0.75, while 140 results in 0.6 (with default halfBasalTarget of 160)." = "За промовчанням значення false. Якщо параметр true, підвищує ISF (знижує співвідношення чутливості) для тимчасових цілей, встановлених >= 111(6.1). Синонім для exercise_mode. Чим вище ваша тимчасова мета, тим вищий ISF (нижче співвідношення), напр. Мета 120(6.7) призведе до співвідношення чутливості 0,75, а 140(7.8) - 0,6 (за замовчуванням halfBasalTarget - 160(8.9)).";
 
 /* Headline ”Low Temptarget Lowers Sensitivity" */
-"Low Temptarget Lowers Sensitivity" = "Знижена тимчасова мета знижує чутливість";
+"Low Temptarget Lowers Sensitivity" = "Знижена Тимчасова Мета Знижує Чутливість";
 
 /* ”Low Temptarget Lowers Sensitivity" */
-"Defaults to false. When set to true, can lower sensitivity (higher sensitivity ratio) for temptargets <= 99. The lower your temp target below 100 will result in less sensitive (higher) ratios, e.g., temp target of 95 results in sensitivity ratio of 1.09, while 85 results in 1.33 (with default halfBasalTarget of 160)." = "За замовчуванням встановлено значення false. Якщо встановлено значення true, підвищує чутливість (зниження коефіцієнта чутливості) для встановлених цілей  >= 99. Синонім для вправ. Чим вище встановленою ціллю вашого шаблону вище 100, тим більш чутливими будуть (нижчі) співвідношення, наприклад  95 результатів у співвідношенні чутливості 1.09, тоді як 85 результатів в 1.33 (з стандартною половинною основною ціллю 160).";
+"Defaults to false. When set to true, can lower sensitivity (higher sensitivity ratio) for temptargets <= 99. The lower your temp target below 100 will result in less sensitive (higher) ratios, e.g., temp target of 95 results in sensitivity ratio of 1.09, while 85 results in 1.33 (with default halfBasalTarget of 160)." = "За промовчанням значення false. Якщо параметр true, знижує ISF (підвищує співвідношення чутливості) для тимчасових цілей, встановлених у <= 99(5.5). Чим нижче ваша тимчасова мета, тим нижчий ISF (вище співвідношення), напр. Мета 95(5.3) призведе до співвідношення чутливості 1,09 а 85(4.8) - 1,33 (за замовчуванням halfBasalTarget - 160(8.9)).";
 
 /* Headline ”Sensitivity Raises Target" */
-"Sensitivity Raises Target" = "Чутливість підвищує ціль";
+"Sensitivity Raises Target" = "Чутливість Підвищує Ціль";
 
 /* ”Sensitivity Raises Target" */
-"When true, raises BG target when autosens detects sensitivity" = "Коли TRUE, підвищує BG (цільовий діапазон) при підвищеній чутливості";
+"When true, raises BG target when autosens detects sensitivity" = "Якщо увімкнено, підвищує цільовий діапазон при підвищеній чутливості";
 
 /* Headline ”Resistance Lowers Target" */
-"Resistance Lowers Target" = "Резистентність знижує мету";
+"Resistance Lowers Target" = "Резистентність Знижує Мету";
 
 /* ”Resistance Lowers Target" */
-"Defaults to false. When true, will lower BG target when autosens detects resistance" = "За замовчуванням значення false. Коли значення true, знизить BG (цильовий діапазон) при обладнанні зниженої чутливості";
+"Defaults to false. When true, will lower BG target when autosens detects resistance" = "Якщо увімкнено, знижує цільовий діапазон при виявленні зниженої чутливості";
 
 /* Headline ”Advanced Target Adjustments" */
 "Advanced Target Adjustments" = "Розширене коригування цілі";
 
 /* ”Advanced Target Adjustments" */
-"This feature was previously enabled by default but will now default to false (will NOT be enabled automatically) in oref0 0.6.0 and beyond. (There is no need for this with 0.6.0). This feature lowers oref0’s target BG automatically when current BG and eventualBG are high. This helps prevent and mitigate high BG, but automatically switches to low-temping to ensure that BG comes down smoothly toward your actual target. If you find this behavior too aggressive, you can disable this feature. If you do so, please let us know so we can better understand what settings work best for everyone." = "Ця функція раніше булу увімкнена за умовченням, але зараз за умовченням вона не буде включена (НЕ буде включена автоматично) в oref0 0.6.0 и выше. (Це не потрібно починає з 0.6.0), ця функція автоматично зменьшує цільовий діапазон (BG) oref0, коли поточний BG та можливий BG зависокі. Це допомогає запровадити  та полехшити зависокі значення BG, але  автоматично переключається на режим пониження цілі, щоб впевнитися, що  BG повільно спускается до вашої реальної цілі. Якщо ця поведінка доволі агрессивна, ви можете відключити цю функцію. Якщо ви це зробите, Будь Ласка, дайте нам знати, щоб ми могли кращє зрозуміти, які налоштування працюють кращє інших.";
+"This feature was previously enabled by default but will now default to false (will NOT be enabled automatically) in oref0 0.6.0 and beyond. (There is no need for this with 0.6.0). This feature lowers oref0’s target BG automatically when current BG and eventualBG are high. This helps prevent and mitigate high BG, but automatically switches to low-temping to ensure that BG comes down smoothly toward your actual target. If you find this behavior too aggressive, you can disable this feature. If you do so, please let us know so we can better understand what settings work best for everyone." = "Ця функція раніше була включена за замовчуванням, але тепер за умовчанням вона не буде включена (НЕ буде автоматично включена) в oref0 0.6.0 і вище. (Це не потрібно починаючи з 0.6.0), ця функція автоматично зменшує цільовий BG oref0, коли поточний BG та eventualBG висока. Це допомагає запобігти та пом'якшити високі значення BG, але автоматично перемикається на режим зниженої мети, щоб переконатися, що BG плавно спускається до реальної мети. Якщо ця поведінка надто агресивна, ви можете вимкнути цю функцію. Якщо ви це зробите, будь ласка, дайте нам знати, щоб ми могли краще зрозуміти, які налаштування працюють краще за всіх.";
 
 /* Headline "Exercise Mode" */
-"Exercise Mode" = "Режим тренування";
+"Exercise Mode" = "Режим Тренування";
 
 /* "Exercise Mode" */
-"Defaults to false. When true, > 105 mg/dL high temp target adjusts sensitivityRatio for exercise_mode. Synonym for high_temptarget_raises_sensitivity" = "За замовчуванням значення false. Коли true, > 105 mg/dL high temp target регулювання чутливості щодо exercise_mode. Синонім для high_temptarget_raises_sensities_sensitivity";
+"Defaults to false. When true, > 105 mg/dL high temp target adjusts sensitivityRatio for exercise_mode. Synonym for high_temptarget_raises_sensitivity" = "За промовчанням значення false. При значенні true, тимчасова мета > 105(5.8) мг/дл регулює sensitivityRatio для exercise_mode. Синнонім для high_temptarget_raises_sensitivity";
 
 /* Headline "Wide BG Target Range" */
-"Wide BG Target Range" = "Розширений діапазон цілей ГК";
+"Wide BG Target Range" = "Розширений Діапазон Цілей BG";
 
 /* "Wide BG Target Range" */
-"Defaults to false, which means by default only the low end of the pump’s BG target range is used as OpenAPS target. This is a safety feature to prevent too-wide targets and less-optimal outcomes. Therefore the higher end of the target range is used only for avoiding bolus wizard overcorrections. Use wide_bg_target_range: true to force neutral temps over a wider range of eventualBGs." = "За замовчуванням false, це означає лише низький кінець діапазону цілі BG по замовчуванню використовується як мета OpenAPS. Це функція безпеки для запобігання занадто широким цілям та менш оптимальним результатами. Тому найвищий кінець цільового діапазону використовується лише для уникнення виправлень майстра. Користуйтеся wide_bg_target_range: true для примушення нейтральних настроїв над ширшим діапазоном кінцевих BG.";
+"Defaults to false, which means by default only the low end of the pump’s BG target range is used as OpenAPS target. This is a safety feature to prevent too-wide targets and less-optimal outcomes. Therefore the higher end of the target range is used only for avoiding bolus wizard overcorrections. Use wide_bg_target_range: true to force neutral temps over a wider range of eventualBGs." = "За замовчуванням значення false, що означає, що як мета OpenAPS використовується тільки низький нижній BG помпи. Це властивість безпеки для запобігання надто широким цілям і менш оптимальним результатам. Тому верхній діапазон постійної мети використовується тільки для уникнення надмірної корекції в майстрі болюса на помпах Медтронік. Використовуйте wide_bg_target_range: true для примусового увімкнення нейтральної ТБШ, коли eventualBG в межах діапазону.";
 
 /* Headline "Skip Neutral Temps" */
-"Skip Neutral Temps" = "Повернутися на нейтральний базал";
+"Skip Neutral Temps" = "Повернутися на Нейтральний Базал";
 
 /* "Skip Neutral Temps" */
-"Defaults to false, so that iAPS will set temps whenever it can, so it will be easier to see if the system is working, even when you are offline. This means iAPS will set a “neutral” temp (same as your default basal) if no adjustments are needed. This is an old setting for OpenAPS to have the options to minimise sounds and notifications from the 'rig', that may wake you up during the night." = "Використовувати значення за замовчуванням false, так що iAPS буде настроїти шматочки кожного разу, коли він може, так що буде легше перевірити, чи працює система, навіть в автономному режимі. Це означає, що OpenAPS встановить \"нейтральний\" шаблон (такий самий як і ваш базовий за замовчуванням) якщо ніяких змін не потрібен. Це стара настройка для OpenAPS мати опції, щоб мінімізувати звуки та сповіщення формували 'rig', це може розбудити вас вночі. ";
+"Defaults to false, so that iAPS will set temps whenever it can, so it will be easier to see if the system is working, even when you are offline. This means iAPS will set a “neutral” temp (same as your default basal) if no adjustments are needed. This is an old setting for OpenAPS to have the options to minimise sounds and notifications from the 'rig', that may wake you up during the night." = "За замовчуванням значення false, так що OpenAPS буде встановлювати тимчасові цілі, коли це можливо, так буде простіше побачити, чи працює система навіть в автономному режимі. Це налаштування означає, що OpenAPS встановить \"нейтральну\" ТБШ (таку ж, як і вихідна база за замовчуванням), якщо зміни не потрібні. Це старе налаштування OpenAPS для мінімізації звуків та повідомлень на помпі.";
 
 /* Headline "Unsuspend If No Temp” */
-"Unsuspend If No Temp" = "Відновлювати подачу, якщо немає ВБС";
+"Unsuspend If No Temp" = "Відновлювати Подачу, якщо Немає ТБШ";
 
 /* "Unsuspend If No Temp” */
-"Many people occasionally forget to resume / unsuspend their pump after reconnecting it. If you’re one of them, and you are willing to reliably set a zero temp basal whenever suspending and disconnecting your pump, this feature has your back. If enabled, it will automatically resume / unsuspend the pump if you forget to do so before your zero temp expires. As long as the zero temp is still running, it will leave the pump suspended." = "Багато людей іноді забувають відновити подачу на помпі після повторного підключення. Якщо цей параметр включен, то він автоматично відновить / разблокує помпу, якщо ви забули зробити це до того, як термін ВБС сплине. До тої пори, поки ВБС працює, помпа буде призупинена.";
+"Many people occasionally forget to resume / unsuspend their pump after reconnecting it. If you’re one of them, and you are willing to reliably set a zero temp basal whenever suspending and disconnecting your pump, this feature has your back. If enabled, it will automatically resume / unsuspend the pump if you forget to do so before your zero temp expires. As long as the zero temp is still running, it will leave the pump suspended." = "Багато людей іноді забувають поновити подачу на помпі після повторного підключення. Якщо цей параметр увімкнено, він автоматично відновить/розблокує помпу, якщо ви забули зробити це до того, як термін ТБШ закінчиться. Доки ТБШ працює, помпа буде призупинена.";
 
 /* Headline "Enable UAM" */
 "Enable UAM" = "Увімкнути UAM";
