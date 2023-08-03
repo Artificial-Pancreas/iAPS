@@ -90,10 +90,11 @@ extension OverrideProfilesConfig {
                 saveOverride.id = id
                 saveOverride.date = Date()
                 if override_target {
-                    if units == .mmolL {
-                        target = target.asMgdL
-                    }
-                    saveOverride.target = target as NSDecimalNumber
+                    saveOverride.target = (
+                        units == .mmolL
+                            ? target.asMgdL
+                            : target
+                    ) as NSDecimalNumber
                 } else { saveOverride.target = 0 }
 
                 if advancedSettings {
