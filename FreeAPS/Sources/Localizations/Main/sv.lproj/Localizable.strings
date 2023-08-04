@@ -341,6 +341,9 @@ Enact a temp Basal or a temp target */
 /* Max setting */
 "Max Bolus" = "Max bolus";
 
+/* Max setting */
+"Max Carbs" = "Max antal kolhydrater";
+
 /* */
 "Pump Settings" = "Pumpinställningar";
 
@@ -1087,7 +1090,7 @@ Enact a temp Basal or a temp target */
 "For write data to Apple Health you must give permissions in Settings > Health > Data Access" = "För att kunna skriva data till Apple Hälsa måste du först ge din tillåtelse i Inställningar > Hälsa > Datatillgång och enheter";
 
 /* */
-"This allows iAPS to read from and write to Apple Heath. You must also give permissions in Settings > Health > Data Access. If you enter a glucose value into Apple Health, open iAPS to confirm it shows up." = "Efter att du lagt till glukos i appen 'Hälsa', öppna iAPS för att bekräfta att överföring skett på rätt sätt";
+"This allows iAPS to read from and write to Apple Heath. You must also give permissions in Settings > Health > Data Access. If you enter a glucose value into Apple Health, open iAPS to confirm it shows up." = "This allows iAPS to read from and write to Apple Heath. You must also give permissions in Settings > Health > Data Access. If you enter a glucose value into Apple Health, open iAPS to confirm it shows up.";
 
 /* New ALerts ------------------------- */
 /* Info title */
@@ -1163,6 +1166,8 @@ Enact a temp Basal or a temp target */
 
 /* */
 "Normal " = "Normal ";
+
+"Currently no Override active" = "Inget undantag aktivt";
 
 /* */
 "Total Insulin Adjustment" = "Total justering av ditt insulinbehov";
@@ -1616,7 +1621,7 @@ Enact a temp Basal or a temp target */
 
 /* --------------------------------------------------------  Dexcom G7 --------------------------------------*/
 
-"CGM Configuration" = "Inställning av CGM";
+"CGM Configuration" = "CGM-inställning";
 
 "Heartbeat" = "Hjärtslag";
 

@@ -153,7 +153,7 @@
 "Confidence Reminders" = "Meldingen met piepjes vanuit de Pod";
 
 /* Help text for BeepPreferenceSelectionView */
-"Confidence reminders are beeps from the pod which can be used to acknowledge selected commands." = "Dit zijn meldingen die met piepjes uit de pod komen en kunnen worden gebruikt ter bevestiging van geselecteerde opdrachten.";
+"Confidence reminders are beeps from the pod which can be used to acknowledge selected commands." = "Dit zijn meldingen die met piepjes uit de Pod komen en kunnen worden gebruikt ter bevestiging van geselecteerde opdrachten.";
 
 /* The title of the configuration section in settings */
 "Configuration" = "Configuratie";
@@ -237,7 +237,7 @@
 "Error Suspending" = "Fout bij onderbreken";
 
 /* The title of the cell showing the pod expiration reminder date */
-"Expiration Reminder" = "Vervaldatumherinnering";
+"Expiration Reminder" = "Melding vervaldatum";
 
 /* Label text for expiration reminder default row */
 "Expiration Reminder Default" = "Standaard herinnering";
@@ -261,7 +261,7 @@
 "Failed to Suspend Insulin Delivery" = "Insulinetoediening onderbreken mislukt";
 
 /* Alert title for error when updating confidence reminder preference */
-"Failed to update confidence reminder preference." = "Bevestigingsherinneringvoorkeuren bijwerken mislukt.";
+"Failed to update confidence reminder preference." = "Voorkeuren voor bijwerken van herrineringsmeldingen is mislukt.";
 
 /* Alert title for error when updating expiration reminder */
 "Failed to Update Expiration Reminder" = "Vervaldatumherinnering bijwerken mislukt";
@@ -279,7 +279,7 @@
 "Finish deactivation" = "Voltooi deactivering";
 
 /* The title of the command to finish pod setup */
-"Finish pod setup" = "Rond podinstallatie af";
+"Finish pod setup" = "Rond Pod installatie af";
 
 /* Action button title to continue at Setup Complete */
 "Finish Setup" = "Voltooi setup";
@@ -547,7 +547,7 @@
 "Remove Pump" = "Verwijder Pomp";
 
 /* Label text for step two of attach pod instructions */
-"Remove the pod's needle cap and check cannula. Then remove paper backing." = "Verwijder de naalddop van de pod en controleer de canule. Verwijder vervolgens de beschermlaag van de hechtstrip.";
+"Remove the pod's needle cap and check cannula. Then remove paper backing." = "Verwijder de blauwe naalddop van de Pod en controleer de canule. Verwijder vervolgens de beschermlaag van de hechtstrip.";
 
 /* Label indicating pod replacement necessary
    The title of the command to replace pod */
@@ -654,7 +654,7 @@
 "Sync With Pod" = "Synchroniseer met pod";
 
 /* Label text for step one of insert cannula instructions */
-"Tap below to start cannula insertion." = "Tik hieronder om het inbrengen van de canule te starten.";
+"Tap below to start cannula insertion." = "Tik hieronder om het inbrengen van de cannule te starten.";
 
 /* Navigation Title for ManualTempBasalEntryView */
 "Temporary Basal" = "Tijdelijke basaal";
@@ -669,10 +669,10 @@
 "Testing Commands…" = "Commando’s aan het testen...";
 
 /* Footer text for omnipod reminders section */
-"The app configures a reminder on the pod to notify you in advance of Pod expiration. Set the number of hours advance notice you would like to configure when pairing a new Pod." = "De app stelt een herinnering in op de pod om je van tevoren op de hoogte te stellen van het verlopen van de Pod. Stel het aantal uur in van de vooraankondiging die je wenst in te stellen bij het koppelen van een nieuwe Pod.";
+"The app configures a reminder on the pod to notify you in advance of Pod expiration. Set the number of hours advance notice you would like to configure when pairing a new Pod." = "iAPS stelt een herinnering in op de pod om je van tevoren op de hoogte te stellen van het verlopen van de Pod. Stel het aantal uur in van de vooraankondiging die je wenst in te stellen bij het koppelen van een nieuwe Pod.";
 
 /* Description text on ExpirationReminderSetupView */
-"The App notifies you in advance of Pod expiration.\n\nScroll to set the number of hours advance notice you would like to have." = "De App kondigt van tevoren aan wanneer de Pod verloopt.\n\nScroll om het aantal uren in te stellen voor de gewenste vooraankondiging.";
+"The App notifies you in advance of Pod expiration.\n\nScroll to set the number of hours advance notice you would like to have." = "iAPS kondigt van tevoren aan wanneer de Pod verloopt.\n\nScroll om het aantal uren in te stellen voor de gewenste vooraankondiging.";
 
 /* Description text on LowReservoirReminderSetupView */
 "The App notifies you when the amount of insulin in the Pod reaches this level (50-10 U).\n\nScroll to set the number of units at which you would like to be reminded." = "iAPS geeft een melding wanneer de hoeveelheid insuline in de Pod dit niveau bereikt (50-10 E).\n\nScroll om het aantal eenheden in te stellen waarbij je herinnerd wilt worden.";
@@ -693,13 +693,13 @@
 "The window on the top of the Pod should be colored pink when the cannula is properly inserted into the skin." = "Het venster aan de bovenkant van de pod moet roze gekleurd zijn wanneer de canule correct in de huid is ingebracht.";
 
 /* Format string for recovery suggestion during deactivate pod. */
-"There was a problem communicating with the pod. If this problem persists, tap Discard Pod. You can then activate a new Pod." = "Er is een communicatieprobleem opgetreden met de pod. Als dit probleem zich blijft voordoen, tik op Pod Verwijderen. Je kunt dan een nieuwe Pod activeren.";
+"There was a problem communicating with the pod. If this problem persists, tap Discard Pod. You can then activate a new Pod." = "Er is een communicatieprobleem opgetreden met de pod. Als dit probleem zich blijft voordoen, tik op 'Pod verwijderen'. Je kunt dan een nieuwe Pod activeren.";
 
 /* Footer text for scheduled reminder area */
 "This is a reminder that you scheduled when you paired your current Pod." = "Dit is een herinnering die je hebt gepland toen je je huidige Pod koppelde.";
 
 /* Alert format string for missing temp basal configuration. */
-"This Pump has not been configured with a maximum basal rate because it was added before manual temp basal was a feature. Please go to Therapy Settings -> Delivery Limits and set a new Maximum Basal Rate." = "Deze Pomp is niet geconfigureerd met een maximale basaalsnelheid omdat deze toegevoegd is voordat het handmatig instellen van een tijdelijke basaalsnelheid een functie was. Ga naar Therapieinstellingen -> Toedieningslimieten en stel een nieuwe Maximale Basaalsnelheid in.";
+"This Pump has not been configured with a maximum basal rate because it was added before manual temp basal was a feature. Please go to Therapy Settings -> Delivery Limits and set a new Maximum Basal Rate." = "Deze pomp is niet geconfigureerd met een maximale basaalsnelheid omdat deze toegevoegd is voordat het handmatig instellen van een tijdelijke basaalsnelheid een functie was. Ga naar Therapieinstellingen -> Toedieningslimieten en stel een nieuwe Maximale Basaalsnelheid in.";
 
 /* Label for expiration reminder row
    Label for scheduled expiration reminder row
