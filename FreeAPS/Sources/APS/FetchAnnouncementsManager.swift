@@ -32,7 +32,9 @@ final class BaseFetchAnnouncementsManager: FetchAnnouncementsManager, Injectable
                 return self.nightscoutManager.fetchAnnouncements()
             }
             .sink { announcements in
-                guard let last = announcements.filter({ $0.createdAt > self.announcementsStorage.syncDate() }).last
+                guard let last = announcements.filter({ $0.createdAt > self.announcementsStorage.syncDate() })
+                    .sorted(by: { $0.createdAt < $1.createdAt })
+                    .last
                 else { return }
 
                 self.announcementsStorage.storeAnnouncements([last], enacted: false)
