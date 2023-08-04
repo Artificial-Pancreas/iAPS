@@ -884,8 +884,8 @@ final class BaseAPSManager: APSManager, Injectable {
         if settingsManager.settings.uploadStats {
             let hour = Calendar.current.component(.hour, from: now)
             guard hour > 20 else {
-                 return
-             }
+                return
+            }
             coredataContext.performAndWait { [self] in
                 var stats = [StatsData]()
                 let requestStats = StatsData.fetchRequest() as NSFetchRequest<StatsData>

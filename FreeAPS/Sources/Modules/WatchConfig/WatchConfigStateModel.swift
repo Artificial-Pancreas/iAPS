@@ -30,12 +30,14 @@ extension WatchConfig {
         @Injected() private var garmin: GarminManager!
         @Published var devices: [IQDevice] = []
         @Published var selectedAwConfig: AwConfig = .HR
+        @Published var displayFatAndProteinOnWatch = false
 
         private(set) var preferences = Preferences()
 
         override func subscribe() {
             preferences = provider.preferences
 
+            subscribeSetting(\.displayFatAndProteinOnWatch, on: $displayFatAndProteinOnWatch) { displayFatAndProteinOnWatch = $0 }
             subscribeSetting(\.displayOnWatch, on: $selectedAwConfig) { selectedAwConfig = $0 }
             didSet: { [weak self] value in
                 // for compatibility with old displayHR
