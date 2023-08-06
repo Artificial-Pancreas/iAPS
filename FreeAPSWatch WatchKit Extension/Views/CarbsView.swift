@@ -31,8 +31,8 @@ struct CarbsView: View {
                     let newValue = carbAmount - 5
                     carbAmount = max(newValue, 0)
                 } label: {
-                    Image(systemName: "minus.circle")
-                }.buttonStyle(.borderless)
+                    Image(systemName: "minus")
+                }.buttonStyle(.borderless).padding(.leading, 5)
                 Spacer()
                 Text("🥨")
                 Spacer()
@@ -53,8 +53,8 @@ struct CarbsView: View {
                     WKInterfaceDevice.current().play(.click)
                     let newValue = carbAmount + 5
                     carbAmount = min(newValue, Double(state.maxCOB ?? 120))
-                } label: { Image(systemName: "plus.circle") }
-                    .buttonStyle(.borderless)
+                } label: { Image(systemName: "plus") }
+                    .buttonStyle(.borderless).padding(.trailing, 5)
             }
             .onTapGesture {
                 selectCarbs = true
@@ -72,8 +72,8 @@ struct CarbsView: View {
                         let newValue = proteinAmount - 5
                         proteinAmount = max(newValue, 0)
                     } label: {
-                        Image(systemName: "minus.circle")
-                    }.buttonStyle(.borderless)
+                        Image(systemName: "minus")
+                    }.buttonStyle(.borderless).padding(.leading, 5)
                     // .frame(width: geo.size.width / 6)
                     Spacer()
                     Text("🍗")
@@ -95,8 +95,8 @@ struct CarbsView: View {
                         WKInterfaceDevice.current().play(.click)
                         let newValue = proteinAmount + 5
                         proteinAmount = min(newValue, Double(240))
-                    } label: { Image(systemName: "plus.circle") }
-                        .buttonStyle(.borderless)
+                    } label: { Image(systemName: "plus") }
+                        .buttonStyle(.borderless).padding(.trailing, 5)
                 }
                 .onTapGesture {
                     selectProtein = true
@@ -112,7 +112,7 @@ struct CarbsView: View {
                         let newValue = fatAmount - 5
                         fatAmount = max(newValue, 0)
                     } label: {
-                        Image(systemName: "minus.circle")
+                        Image(systemName: "minus").padding(.leading, 5)
                     }.buttonStyle(.borderless)
                     Spacer()
                     Text("🧀")
@@ -134,8 +134,8 @@ struct CarbsView: View {
                         WKInterfaceDevice.current().play(.click)
                         let newValue = fatAmount + 5
                         fatAmount = min(newValue, Double(240))
-                    } label: { Image(systemName: "plus.circle") }
-                        .buttonStyle(.borderless)
+                    } label: { Image(systemName: "plus") }
+                        .buttonStyle(.borderless).padding(.trailing, 5)
                 }
                 .onTapGesture {
                     selectProtein = false
