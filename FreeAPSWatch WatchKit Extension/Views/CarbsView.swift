@@ -10,6 +10,7 @@ struct CarbsView: View {
     @State var selectFat: Bool = false
     @State var selectProtein: Bool = false
     @State var colorOfselection: Color = .darkGray
+    @State var displayPresets: Bool = false
 
     var numberFormatter: NumberFormatter {
         let formatter = NumberFormatter()
@@ -117,7 +118,7 @@ struct CarbsView: View {
                     Text("🧀")
                     Spacer()
                     Text(numberFormatter.string(from: fatAmount as NSNumber)! + " g")
-                        .font(.title2).foregroundStyle(Color(.loopYellow))
+                        .font(.title2).foregroundColor(.loopYellow)
                         .focusable(true)
                         .digitalCrownRotation(
                             $fatAmount,
@@ -144,23 +145,30 @@ struct CarbsView: View {
                 .background(selectFat ? colorOfselection : .black)
             }
 
-            Button {
-                WKInterfaceDevice.current().play(.click)
-                // Get amount from displayed string
-                let amountCarbs = Int(numberFormatter.string(from: carbAmount as NSNumber)!) ?? Int(carbAmount.rounded())
-                let amountFat = Int(numberFormatter.string(from: fatAmount as NSNumber)!) ?? Int(fatAmount.rounded())
-                let amountProtein = Int(numberFormatter.string(from: proteinAmount as NSNumber)!) ??
-                    Int(proteinAmount.rounded())
-                state.addMeal(amountCarbs, fat: amountFat, protein: amountProtein)
-            }
-            label: {
-                HStack {
-                    Text("Add")
+            HStack(spacing: 25) {
+                Button {
+                    displayPresets.toggle()
+                    // To do: display the actual meal presets
                 }
+                label: { Image(systemName: "menucard.fill") }
+                    .buttonStyle(.borderless)
+
+                Button {
+                    WKInterfaceDevice.current().play(.click)
+                    // Get amount from displayed string
+                    let amountCarbs = Int(numberFormatter.string(from: carbAmount as NSNumber)!) ?? Int(carbAmount.rounded())
+                    let amountFat = Int(numberFormatter.string(from: fatAmount as NSNumber)!) ?? Int(fatAmount.rounded())
+                    let amountProtein = Int(numberFormatter.string(from: proteinAmount as NSNumber)!) ??
+                        Int(proteinAmount.rounded())
+                    state.addMeal(amountCarbs, fat: amountFat, protein: amountProtein)
+                }
+                label: { Text("Save") }
+                    .disabled(carbAmount <= 0 && fatAmount <= 0 && proteinAmount <= 0)
+                    .buttonStyle(.borderless)
+                    .font(.callout)
+                    .foregroundColor(carbAmount > 0 || fatAmount > 0 || proteinAmount > 0 ? .blue : .secondary)
             }
-            .disabled(carbAmount <= 0 && fatAmount <= 0 && proteinAmount <= 0)
             .frame(maxHeight: .infinity, alignment: .bottom)
-            .buttonStyle(.borderless)
             .padding(.top)
         }
         .onAppear {
