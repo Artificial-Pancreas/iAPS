@@ -789,11 +789,11 @@ final class BaseAPSManager: APSManager, Injectable {
     {
         let glucose = fetchedGlucose
         // First date
-        let previous = glucose.last?.date ?? Date()
+        let last = glucose.last?.date ?? Date()
         // Last date (recent)
-        let current = glucose.first?.date ?? Date()
+        let first = glucose.first?.date ?? Date()
         // Total time in days
-        let numberOfDays = (current - previous).timeInterval / 8.64E4
+        let numberOfDays = (first - last).timeInterval / 8.64E4
         let denominator = numberOfDays < 1 ? 1 : numberOfDays
         let justGlucoseArray = glucose.compactMap({ each in Int(each.glucose as Int16) })
         let sumReadings = justGlucoseArray.reduce(0, +)
@@ -803,11 +803,9 @@ final class BaseAPSManager: APSManager, Injectable {
         var NGSPa1CStatisticValue = 0.0
         var IFCCa1CStatisticValue = 0.0
 
-        if numberOfDays > 0 {
-            NGSPa1CStatisticValue = (glucoseAverage + 46.7) / 28.7 // NGSP (%)
-            IFCCa1CStatisticValue = 10.929 *
-                (NGSPa1CStatisticValue - 2.152) // IFCC (mmol/mol)  A1C(mmol/mol) = 10.929 * (A1C(%) - 2.15)
-        }
+        NGSPa1CStatisticValue = (glucoseAverage + 46.7) / 28.7 // NGSP (%)
+        IFCCa1CStatisticValue = 10.929 *
+            (NGSPa1CStatisticValue - 2.152) // IFCC (mmol/mol)  A1C(mmol/mol) = 10.929 * (A1C(%) - 2.15)
         var sumOfSquares = 0.0
 
         for array in justGlucoseArray {
@@ -884,8 +882,8 @@ final class BaseAPSManager: APSManager, Injectable {
         if settingsManager.settings.uploadStats {
             let hour = Calendar.current.component(.hour, from: now)
             guard hour > 20 else {
-                 return
-             }
+                return
+            }
             coredataContext.performAndWait { [self] in
                 var stats = [StatsData]()
                 let requestStats = StatsData.fetchRequest() as NSFetchRequest<StatsData>
@@ -957,44 +955,35 @@ final class BaseAPSManager: APSManager, Injectable {
                     iPa = 50
                 }
                 // CGM Readings
-                // var glucose_1 = [Readings]()
-                var glucose_24 = [Readings]()
-                var glucose_7 = [Readings]()
-                var glucose_30 = [Readings]()
-                var glucose = [Readings]()
+                var glucose_24 = [Readings]() // Day
+                var glucose_7 = [Readings]() // Week
+                var glucose_30 = [Readings]() // Month
+                var glucose = [Readings]() // Total
                 let filter = DateFilter()
+                // 24h
+                let requestGFS_24 = Readings.fetchRequest() as NSFetchRequest<Readings>
+                let sortGlucose_24 = NSSortDescriptor(key: "date", ascending: false)
+                requestGFS_24.predicate = NSPredicate(format: "glucose > 0 AND date > %@", filter.day)
+                requestGFS_24.sortDescriptors = [sortGlucose_24]
+                try? glucose_24 = coredataContext.fetch(requestGFS_24)
+                // Week
+                let requestGFS_7 = Readings.fetchRequest() as NSFetchRequest<Readings>
+                let sortGlucose_7 = NSSortDescriptor(key: "date", ascending: false)
+                requestGFS_7.predicate = NSPredicate(format: "glucose > 0 AND date > %@", filter.week)
+                requestGFS_7.sortDescriptors = [sortGlucose_7]
+                try? glucose_7 = coredataContext.fetch(requestGFS_7)
+                // Month
+                let requestGFS_30 = Readings.fetchRequest() as NSFetchRequest<Readings>
+                let sortGlucose_30 = NSSortDescriptor(key: "date", ascending: false)
+                requestGFS_30.predicate = NSPredicate(format: "glucose > 0 AND date > %@", filter.month)
+                requestGFS_30.sortDescriptors = [sortGlucose_30]
+                try? glucose_30 = coredataContext.fetch(requestGFS_30)
                 // Total
                 let requestGFS = Readings.fetchRequest() as NSFetchRequest<Readings>
                 let sortGlucose = NSSortDescriptor(key: "date", ascending: false)
                 requestGFS.predicate = NSPredicate(format: "glucose > 0 AND date > %@", filter.total)
                 requestGFS.sortDescriptors = [sortGlucose]
                 try? glucose = coredataContext.fetch(requestGFS)
-                // Today
-                /*
-                 let requestGFS_1 = Readings.fetchRequest() as NSFetchRequest<Readings>
-                 requestGFS_1.predicate = NSPredicate(format: "glucose > 0 AND date > %@", filter.today)
-                 let sortGlucose_1 = NSSortDescriptor(key: "date", ascending: false)
-                 requestGFS_1.sortDescriptors = [sortGlucose_1]
-                 try? glucose_1 = coredataContext.fetch(requestGFS_1)
-                 */
-                // 24h
-                let requestGFS_24 = Readings.fetchRequest() as NSFetchRequest<Readings>
-                requestGFS_24.predicate = NSPredicate(format: "glucose > 0 AND date > %@", filter.day)
-                let sortGlucose_24 = NSSortDescriptor(key: "date", ascending: false)
-                requestGFS.sortDescriptors = [sortGlucose_24]
-                try? glucose_24 = coredataContext.fetch(requestGFS_24)
-                // Week
-                let requestGFS_7 = Readings.fetchRequest() as NSFetchRequest<Readings>
-                requestGFS_7.predicate = NSPredicate(format: "glucose > 0 AND date > %@", filter.week)
-                let sortGlucose_7 = NSSortDescriptor(key: "date", ascending: false)
-                requestGFS.sortDescriptors = [sortGlucose_7]
-                try? glucose_7 = coredataContext.fetch(requestGFS_7)
-                // Month
-                let requestGFS_30 = Readings.fetchRequest() as NSFetchRequest<Readings>
-                requestGFS_30.predicate = NSPredicate(format: "glucose > 0 AND date > %@", filter.month)
-                let sortGlucose_30 = NSSortDescriptor(key: "date", ascending: false)
-                requestGFS.sortDescriptors = [sortGlucose_30]
-                try? glucose_30 = coredataContext.fetch(requestGFS_30)
 
                 // First date
                 let previous = glucose.last?.date ?? Date()
@@ -1148,6 +1137,8 @@ final class BaseAPSManager: APSManager, Injectable {
                     total_average: roundDecimal(tddTotalAverage, 1)
                 )
 
+                let hbA1cUnit = !overrideHbA1cUnit ? (units == .mmolL ? "mmol/mol" : "%") : (units == .mmolL ? "%" : "mmol/mol")
+
                 let dailystat = Statistics(
                     created_at: Date(),
                     iPhone: UIDevice.current.getDeviceId,
@@ -1168,7 +1159,7 @@ final class BaseAPSManager: APSManager, Injectable {
                     Statistics: Stats(
                         Distribution: TimeInRange,
                         Glucose: avg,
-                        HbA1c: hbs,
+                        HbA1c: hbs, Units: Units(Glucose: units.rawValue, HbA1c: hbA1cUnit),
                         LoopCycles: loopstat,
                         Insulin: insulin,
                         Variance: variance
