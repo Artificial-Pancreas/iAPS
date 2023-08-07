@@ -3,14 +3,20 @@ import SwiftUI
 struct CarbsView: View {
     @EnvironmentObject var state: WatchStateModel
 
+    // Selected nutrient
+    enum Selection: String {
+        case none
+        case carbs
+        case protein
+        case fat
+    }
+
+    @State var selection: Selection = .carbs
     @State var carbAmount = 0.0
     @State var fatAmount = 0.0
     @State var proteinAmount = 0.0
-    @State var selectCarbs: Bool = false
-    @State var selectFat: Bool = false
-    @State var selectProtein: Bool = false
     @State var colorOfselection: Color = .darkGray
-    @State var displayPresets: Bool = false
+    // @State var displayPresets: Bool = false
 
     var numberFormatter: NumberFormatter {
         let formatter = NumberFormatter()
@@ -24,155 +30,169 @@ struct CarbsView: View {
 
     var body: some View {
         VStack(spacing: 5) {
-            // Carbs
-            HStack {
-                Button {
-                    WKInterfaceDevice.current().play(.click)
-                    let newValue = carbAmount - 5
-                    carbAmount = max(newValue, 0)
-                } label: {
-                    Image(systemName: "minus")
-                }.buttonStyle(.borderless).padding(.leading, 5).disabled(!selectCarbs)
-                Spacer()
-                Text("🥨")
-                Spacer()
-                Text(numberFormatter.string(from: carbAmount as NSNumber)! + " g")
-                    .font(.title2)
-                    .focusable(true)
-                    .digitalCrownRotation(
-                        $carbAmount,
-                        from: 0,
-                        through: Double(state.maxCOB ?? 120),
-                        by: 1,
-                        sensitivity: .medium,
-                        isContinuous: false,
-                        isHapticFeedbackEnabled: true
-                    )
-                Spacer()
-                Button {
-                    WKInterfaceDevice.current().play(.click)
-                    let newValue = carbAmount + 5
-                    carbAmount = min(newValue, Double(state.maxCOB ?? 120))
-                } label: { Image(systemName: "plus") }
-                    .buttonStyle(.borderless).padding(.trailing, 5).disabled(!selectCarbs)
-            }
-            .onTapGesture {
-                selectCarbs = true
-                selectProtein = false
-                selectFat = false
-            }
-            .background(selectCarbs && state.displayFatAndProteinOnWatch ? colorOfselection : .black)
-            .padding(.top)
-
+            carbs
             if state.displayFatAndProteinOnWatch {
-                // Protein
-                HStack {
-                    Button {
-                        WKInterfaceDevice.current().play(.click)
-                        let newValue = proteinAmount - 5
-                        proteinAmount = max(newValue, 0)
-                    } label: {
-                        Image(systemName: "minus")
-                    }.buttonStyle(.borderless).padding(.leading, 5).disabled(!selectProtein)
-                    // .frame(width: geo.size.width / 6)
-                    Spacer()
-                    Text("🍗")
-                    Spacer()
-                    Text(numberFormatter.string(from: proteinAmount as NSNumber)! + " g")
-                        .font(.title2).foregroundStyle(.red)
-                        .focusable(true)
-                        .digitalCrownRotation(
-                            $proteinAmount,
-                            from: 0,
-                            through: Double(240),
-                            by: 1,
-                            sensitivity: .medium,
-                            isContinuous: false,
-                            isHapticFeedbackEnabled: true
-                        )
-                    Spacer()
-                    Button {
-                        WKInterfaceDevice.current().play(.click)
-                        let newValue = proteinAmount + 5
-                        proteinAmount = min(newValue, Double(240))
-                    } label: { Image(systemName: "plus") }.buttonStyle(.borderless).padding(.trailing, 5).disabled(!selectProtein)
-                }
-                .onTapGesture {
-                    selectProtein = true
-                    selectCarbs = false
-                    selectFat = false
-                }
-                .background(selectProtein ? colorOfselection : .black)
-
-                // Fat
-                HStack {
-                    Button {
-                        WKInterfaceDevice.current().play(.click)
-                        let newValue = fatAmount - 5
-                        fatAmount = max(newValue, 0)
-                    } label: {
-                        Image(systemName: "minus")
-                    }.buttonStyle(.borderless).padding(.leading, 5).disabled(!selectFat)
-                    Spacer()
-                    Text("🧀")
-                    Spacer()
-                    Text(numberFormatter.string(from: fatAmount as NSNumber)! + " g")
-                        .font(.title2).foregroundColor(.loopYellow)
-                        .focusable(true)
-                        .digitalCrownRotation(
-                            $fatAmount,
-                            from: 0,
-                            through: Double(240),
-                            by: 1,
-                            sensitivity: .medium,
-                            isContinuous: false,
-                            isHapticFeedbackEnabled: true
-                        )
-                    Spacer()
-                    Button {
-                        WKInterfaceDevice.current().play(.click)
-                        let newValue = fatAmount + 5
-                        fatAmount = min(newValue, Double(240))
-                    } label: { Image(systemName: "plus") }
-                        .buttonStyle(.borderless).padding(.trailing, 5).disabled(!selectFat)
-                }
-                .onTapGesture {
-                    selectProtein = false
-                    selectCarbs = false
-                    selectFat = true
-                }
-                .background(selectFat ? colorOfselection : .black)
+                protein
+                fat
             }
+            buttonStack
+        }
+        .onAppear { carbAmount = Double(state.carbsRequired ?? 0) }
+    }
 
-            HStack(spacing: 25) {
-                Button {
-                    displayPresets.toggle()
-                    // To do: display the actual meal presets
-                }
-                label: { Image(systemName: "menucard.fill") }
-                    .buttonStyle(.borderless)
+    var carbs: some View {
+        HStack {
+            Button {
+                WKInterfaceDevice.current().play(.click)
+                let newValue = carbAmount - 5
+                carbAmount = max(newValue, 0)
+            } label: { Image(systemName: "minus") }
+                .buttonStyle(.borderless).padding(.leading, 5)
+                .tint(selection == .carbs ? .blue : .none)
+                .disabled(selection != .carbs)
+            Spacer()
+            Text("🥨")
+            Spacer()
+            Text(numberFormatter.string(from: carbAmount as NSNumber)! + " g")
+                .font(.title2)
+                .focusable(selection == .carbs)
+                .digitalCrownRotation(
+                    $carbAmount,
+                    from: 0,
+                    through: Double(state.maxCOB ?? 120),
+                    by: 1,
+                    sensitivity: .medium,
+                    isContinuous: false,
+                    isHapticFeedbackEnabled: true
+                )
+            Spacer()
+            Button {
+                WKInterfaceDevice.current().play(.click)
+                let newValue = carbAmount + 5
+                carbAmount = min(newValue, Double(state.maxCOB ?? 120))
+            } label: { Image(systemName: "plus") }
+                .buttonStyle(.borderless).padding(.trailing, 5)
+                .tint(selection == .carbs ? .blue : .none)
+                .disabled(selection != .carbs)
+        }
+        .onTapGesture {
+            select(entry: .carbs)
+        }
+        .background(selection == .carbs && state.displayFatAndProteinOnWatch ? colorOfselection : .black)
+        .padding(.top)
+    }
 
-                Button {
-                    WKInterfaceDevice.current().play(.click)
-                    // Get amount from displayed string
-                    let amountCarbs = Int(numberFormatter.string(from: carbAmount as NSNumber)!) ?? Int(carbAmount.rounded())
-                    let amountFat = Int(numberFormatter.string(from: fatAmount as NSNumber)!) ?? Int(fatAmount.rounded())
-                    let amountProtein = Int(numberFormatter.string(from: proteinAmount as NSNumber)!) ??
-                        Int(proteinAmount.rounded())
-                    state.addMeal(amountCarbs, fat: amountFat, protein: amountProtein)
-                }
-                label: { Text("Save") }
-                    .disabled(carbAmount <= 0 && fatAmount <= 0 && proteinAmount <= 0)
-                    .buttonStyle(.borderless)
-                    .font(.callout)
-                    .foregroundColor(carbAmount > 0 || fatAmount > 0 || proteinAmount > 0 ? .blue : .secondary)
+    var protein: some View {
+        HStack {
+            Button {
+                WKInterfaceDevice.current().play(.click)
+                let newValue = proteinAmount - 5
+                proteinAmount = max(newValue, 0)
+            } label: { Image(systemName: "minus") }
+                .buttonStyle(.borderless).padding(.leading, 5)
+                .tint(selection == .protein ? .blue : .none)
+                .disabled(selection != .protein)
+            Spacer()
+            Text("🍗")
+            Spacer()
+            Text(numberFormatter.string(from: proteinAmount as NSNumber)! + " g")
+                .font(.title2).foregroundStyle(.red)
+                .focusable(selection == .protein)
+                .digitalCrownRotation(
+                    $proteinAmount,
+                    from: 0,
+                    through: Double(240),
+                    by: 1,
+                    sensitivity: .medium,
+                    isContinuous: false,
+                    isHapticFeedbackEnabled: true
+                )
+            Spacer()
+            Button {
+                WKInterfaceDevice.current().play(.click)
+                let newValue = proteinAmount + 5
+                proteinAmount = min(newValue, Double(240))
+            } label: { Image(systemName: "plus") }.buttonStyle(.borderless).padding(.trailing, 5)
+                .tint(selection == .protein ? .blue : .none)
+                .disabled(selection != .protein)
+        }
+        .onTapGesture {
+            select(entry: .protein)
+        }
+        .background(selection == .protein ? colorOfselection : .black)
+    }
+
+    var fat: some View {
+        HStack {
+            Button {
+                WKInterfaceDevice.current().play(.click)
+                let newValue = fatAmount - 5
+                fatAmount = max(newValue, 0)
+            } label: { Image(systemName: "minus") }
+                .buttonStyle(.borderless).padding(.leading, 5)
+                .tint(selection == .fat ? .blue : .none)
+                .disabled(selection != .fat)
+            Spacer()
+            Text("🧀")
+            Spacer()
+            Text(numberFormatter.string(from: fatAmount as NSNumber)! + " g")
+                .font(.title2).foregroundColor(.loopYellow)
+                .focusable(selection == .fat)
+                .digitalCrownRotation(
+                    $fatAmount,
+                    from: 0,
+                    through: Double(240),
+                    by: 1,
+                    sensitivity: .medium,
+                    isContinuous: false,
+                    isHapticFeedbackEnabled: true
+                )
+            Spacer()
+            Button {
+                WKInterfaceDevice.current().play(.click)
+                let newValue = fatAmount + 5
+                fatAmount = min(newValue, Double(240))
+            } label: { Image(systemName: "plus") }
+                .buttonStyle(.borderless).padding(.trailing, 5)
+                .tint(selection == .fat ? .blue : .none)
+                .disabled(selection != .fat)
+        }
+        .onTapGesture {
+            select(entry: .fat)
+        }
+        .background(selection == .fat ? colorOfselection : .black)
+    }
+
+    var buttonStack: some View {
+        HStack(spacing: 25) {
+            /* To do: display the actual meal presets
+             Button {
+                 displayPresets.toggle()
+             }
+             label: { Image(systemName: "menucard.fill") }
+                 .buttonStyle(.borderless)
+             */
+            Button {
+                WKInterfaceDevice.current().play(.click)
+                // Get amount from displayed string
+                let amountCarbs = Int(numberFormatter.string(from: carbAmount as NSNumber)!) ?? Int(carbAmount.rounded())
+                let amountFat = Int(numberFormatter.string(from: fatAmount as NSNumber)!) ?? Int(fatAmount.rounded())
+                let amountProtein = Int(numberFormatter.string(from: proteinAmount as NSNumber)!) ??
+                    Int(proteinAmount.rounded())
+                state.addMeal(amountCarbs, fat: amountFat, protein: amountProtein)
             }
-            .frame(maxHeight: .infinity, alignment: .bottom)
-            .padding(.top)
+            label: { Text("Save") }
+                .buttonStyle(.borderless)
+                .font(.callout)
+                .foregroundColor(carbAmount > 0 || fatAmount > 0 || proteinAmount > 0 ? .blue : .secondary)
+                .disabled(carbAmount <= 0 && fatAmount <= 0 && proteinAmount <= 0)
         }
-        .onAppear {
-            carbAmount = Double(state.carbsRequired ?? 0)
-        }
+        .frame(maxHeight: .infinity, alignment: .bottom)
+        .padding(.top)
+    }
+
+    private func select(entry: Selection) {
+        selection = entry
     }
 }
 

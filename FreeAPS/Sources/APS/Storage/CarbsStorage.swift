@@ -100,13 +100,15 @@ final class BaseCarbsStorage: CarbsStorage, Injectable {
                 }
             } // ------------------------- END OF TPU ----------------------------------------
             // Store the actual (normal) carbs
-            uniqEvents = []
-            self.storage.transaction { storage in
-                storage.append(entries, to: file, uniqBy: \.createdAt)
-                uniqEvents = storage.retrieve(file, as: [CarbsEntry].self)?
-                    .filter { $0.createdAt.addingTimeInterval(1.days.timeInterval) > Date() }
-                    .sorted { $0.createdAt > $1.createdAt } ?? []
-                storage.save(Array(uniqEvents), as: file)
+            if entries.last?.carbs ?? 0 > 0 {
+                uniqEvents = []
+                self.storage.transaction { storage in
+                    storage.append(entries, to: file, uniqBy: \.createdAt)
+                    uniqEvents = storage.retrieve(file, as: [CarbsEntry].self)?
+                        .filter { $0.createdAt.addingTimeInterval(1.days.timeInterval) > Date() }
+                        .sorted { $0.createdAt > $1.createdAt } ?? []
+                    storage.save(Array(uniqEvents), as: file)
+                }
             }
 
             // MARK: Save to CoreData. TEST
