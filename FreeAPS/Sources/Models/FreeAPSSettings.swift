@@ -41,6 +41,7 @@ struct FreeAPSSettings: JSON, Equatable {
     var oneDimensionalGraph: Bool = false
     var rulerMarks: Bool = false
     var maxCarbs: Decimal = 1000
+    var displayFatAndProteinOnWatch: Bool = false
 }
 
 extension FreeAPSSettings: Decodable {
@@ -212,6 +213,10 @@ extension FreeAPSSettings: Decodable {
 
         if let maxCarbs = try? container.decode(Decimal.self, forKey: .maxCarbs) {
             settings.maxCarbs = maxCarbs
+        }
+
+        if let displayFatAndProteinOnWatch = try? container.decode(Bool.self, forKey: .displayFatAndProteinOnWatch) {
+            settings.displayFatAndProteinOnWatch = displayFatAndProteinOnWatch
         }
 
         self = settings
