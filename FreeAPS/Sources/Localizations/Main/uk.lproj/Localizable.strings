@@ -417,9 +417,6 @@ Enact a temp Basal or a temp target */
 "Add devices" = "Додати пристрій";
 
 /* */
-"Glucose Target" = "Мета глюкози";
-
-/* */
 "Heart Rate" = "Пульс";
 
 /* */
@@ -451,9 +448,6 @@ Enact a temp Basal or a temp target */
 
 /* Lower target */
 "Low target" = "Низька ціль";
-
-/*  */
-"Target Ranges" = "Цільові Діапазони";
 
 /* When bolusing */
 "Bolusing" = "Подаю болюс";
