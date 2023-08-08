@@ -455,9 +455,6 @@ Enact a temp Basal or a temp target */
 /* Lower target */
 "Low target" = "Low target";
 
-/*  */
-"Target Ranges" = "Target Ranges";
-
 /* When bolusing */
 "Bolusing" = "Bolusing";
 

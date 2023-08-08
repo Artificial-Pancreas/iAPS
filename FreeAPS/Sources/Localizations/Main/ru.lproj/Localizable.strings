@@ -452,9 +452,6 @@ Enact a temp Basal or a temp target */
 /* Lower target */
 "Low target" = "Нижняя цель";
 
-/*  */
-"Target Ranges" = "Целевой диапазон";
-
 /* When bolusing */
 "Bolusing" = "Подается болюс";
 

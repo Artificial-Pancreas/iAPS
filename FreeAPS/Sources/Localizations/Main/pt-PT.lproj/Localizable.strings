@@ -452,9 +452,6 @@ Enact a temp Basal or a temp target */
 /* Lower target */
 "Low target" = "Meta baixa";
 
-/*  */
-"Target Ranges" = "Limites da meta";
-
 /* When bolusing */
 "Bolusing" = "Aplicando bolus";
 

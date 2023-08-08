@@ -41,7 +41,7 @@ extension Settings {
                     Text("Basal Profile").navigationLink(to: .basalProfileEditor, from: self)
                     Text("Insulin Sensitivities").navigationLink(to: .isfEditor, from: self)
                     Text("Carb Ratios").navigationLink(to: .crEditor, from: self)
-                    Text("Target Ranges").navigationLink(to: .targetsEditor, from: self)
+                    Text("Target Glucose").navigationLink(to: .targetsEditor, from: self)
                     Text("Autotune").navigationLink(to: .autotuneConfig, from: self)
                 }
 
