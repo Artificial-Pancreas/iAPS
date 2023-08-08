@@ -78,8 +78,10 @@ final class BaseWatchManager: NSObject, WatchManager, Injectable {
             var insulinRequired = self.suggestion?.insulinReq ?? 0
             var double: Decimal = 2
             if (self.suggestion?.cob ?? 0) > 0 {
-                insulinRequired = self.suggestion?.insulinForManualBolus ?? 0
-                double = 1
+                if self.suggestion?.manualBolusErrorString == 0 {
+                    insulinRequired = self.suggestion?.insulinForManualBolus ?? 0
+                    double = 1
+                }
             }
 
             self.state.bolusRecommended = self.apsManager
