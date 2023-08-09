@@ -1785,7 +1785,7 @@ Enact a temp Basal or a temp target */
 "Max COB" = "Max COB";
 
 /* "Max COB" */
-"This defaults maxCOB to 120 because that’s the most a typical body can absorb over 4 hours. (If someone enters more carbs or stacks more; OpenAPS will just truncate dosing based on 120. Essentially, this just limits AMA as a safety cap against weird COB calculations due to fluky data.)" = "De standaard maximum COB van 120 is omdat een normaal lichaam niet meer dan dit in 4 uur kan absorberen. (Als er meer koolhydraten gestapeld worden; zal OpenAPS de dosering beperken tot de basis van 120 koolhydraten aan boord. In wezen beperkt dit alleen AMA als een veiligheidslimiet tegen afwijkende COB-berekeningen vanwege verkeerde gegevens)";
+"The default of maxCOB is 120. (If someone enters more carbs in one or multiple entries, iAPS will cap COB to maxCOB and keep it at maxCOB until the carbs entered above maxCOB have shown to be absorbed. Essentially, this just limits UAM as a safety cap against weird COB calculations due to fluky data.)" = "De standaard maximum COB van 120 is omdat een normaal lichaam niet meer dan dit in 4 uur kan absorberen. (Als er meer koolhydraten gestapeld worden; zal OpenAPS de dosering beperken tot de basis van 120 koolhydraten aan boord. In wezen beperkt dit alleen AMA als een veiligheidslimiet tegen afwijkende COB-berekeningen vanwege verkeerde gegevens)";
 
 /* Headline "Bolus Snooze DIA Divisor" */
 "Bolus Snooze DIA Divisor" = "Bolus snooze DIA deler";

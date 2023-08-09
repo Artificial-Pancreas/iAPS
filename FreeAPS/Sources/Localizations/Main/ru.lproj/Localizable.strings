@@ -1785,7 +1785,7 @@ Enact a temp Basal or a temp target */
 "Max COB" = "Максимум углеводов в крови";
 
 /* "Max COB" */
-"This defaults maxCOB to 120 because that’s the most a typical body can absorb over 4 hours. (If someone enters more carbs or stacks more; OpenAPS will just truncate dosing based on 120. Essentially, this just limits AMA as a safety cap against weird COB calculations due to fluky data.)" = "Максимальное значение углеводов. По умолчанию maxCOB составляет 120, потому что это максимальное значение, которое типичный организм может поглотить за 4 часа. (Если кто-то вводит больше углеводов OpenAPS просто сокращает дозировку принимая в расчет 120. По сути, это просто предел безопасности защищающий от странных расчетов COB из-за непостоянных данных.)";
+"The default of maxCOB is 120. (If someone enters more carbs in one or multiple entries, iAPS will cap COB to maxCOB and keep it at maxCOB until the carbs entered above maxCOB have shown to be absorbed. Essentially, this just limits UAM as a safety cap against weird COB calculations due to fluky data.)" = "Максимальное значение углеводов. По умолчанию maxCOB составляет 120, потому что это максимальное значение, которое типичный организм может поглотить за 4 часа. (Если кто-то вводит больше углеводов OpenAPS просто сокращает дозировку принимая в расчет 120. По сути, это просто предел безопасности защищающий от странных расчетов COB из-за непостоянных данных.)";
 
 /* Headline "Bolus Snooze DIA Divisor" */
 "Bolus Snooze DIA Divisor" = "Делитель DIA откладывания болюсов";

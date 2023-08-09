@@ -1785,7 +1785,7 @@ Enact a temp Basal or a temp target */
 "Max COB" = "Maks AKRB";
 
 /* "Max COB" */
-"This defaults maxCOB to 120 because that’s the most a typical body can absorb over 4 hours. (If someone enters more carbs or stacks more; OpenAPS will just truncate dosing based on 120. Essentially, this just limits AMA as a safety cap against weird COB calculations due to fluky data.)" = "Bu varsayılan olarak maxAKRB'u 120'ye ayarlar çünkü bu, tipik bir vücudun 4 saatten fazla emebileceği en fazla değerdir. (Birisi daha fazla karbonhidrat yerse; OpenAPS, 120'ye dayalı dozlamayı keser. Esasen, bu, AMA'yı (Gelişmiş Yemek Asistanı), rastgele verilerden kaynaklanan tuhaf AKRB hesaplamalarına karşı bir güvenlik sınırı olarak sınırlar.)";
+"The default of maxCOB is 120. (If someone enters more carbs in one or multiple entries, iAPS will cap COB to maxCOB and keep it at maxCOB until the carbs entered above maxCOB have shown to be absorbed. Essentially, this just limits UAM as a safety cap against weird COB calculations due to fluky data.)" = "Bu varsayılan olarak maxAKRB'u 120'ye ayarlar çünkü bu, tipik bir vücudun 4 saatten fazla emebileceği en fazla değerdir. (Birisi daha fazla karbonhidrat yerse; OpenAPS, 120'ye dayalı dozlamayı keser. Esasen, bu, AMA'yı (Gelişmiş Yemek Asistanı), rastgele verilerden kaynaklanan tuhaf AKRB hesaplamalarına karşı bir güvenlik sınırı olarak sınırlar.)";
 
 /* Headline "Bolus Snooze DIA Divisor" */
 "Bolus Snooze DIA Divisor" = "Erteleme Bolus İES Böleni";

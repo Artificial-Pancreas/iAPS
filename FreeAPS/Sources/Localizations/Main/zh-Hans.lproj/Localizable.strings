@@ -1787,7 +1787,7 @@ Enact a temp Basal or a temp target */
 "Max COB" = "Max COB";
 
 /* "Max COB" */
-"This defaults maxCOB to 120 because that’s the most a typical body can absorb over 4 hours. (If someone enters more carbs or stacks more; OpenAPS will just truncate dosing based on 120. Essentially, this just limits AMA as a safety cap against weird COB calculations due to fluky data.)" = "默认把maxCOB设为120，因为一般来说这是身体在4小时内所能吸收的最多的碳水化合物。（如果有人输入更多的碳水化合物或堆积更多的碳水化合物；OpenAPS将只是根据120来分配剂量。从本质上讲，这只是对AMA的限制，作为一个安全上限，以防止由于数据不稳定而导致的奇怪的COB计算)";
+"The default of maxCOB is 120. (If someone enters more carbs in one or multiple entries, iAPS will cap COB to maxCOB and keep it at maxCOB until the carbs entered above maxCOB have shown to be absorbed. Essentially, this just limits UAM as a safety cap against weird COB calculations due to fluky data.)" = "默认把maxCOB设为120，因为一般来说这是身体在4小时内所能吸收的最多的碳水化合物。（如果有人输入更多的碳水化合物或堆积更多的碳水化合物；OpenAPS将只是根据120来分配剂量。从本质上讲，这只是对AMA的限制，作为一个安全上限，以防止由于数据不稳定而导致的奇怪的COB计算)";
 
 /* Headline "Bolus Snooze DIA Divisor" */
 "Bolus Snooze DIA Divisor" = "Bolus Snooze DIA Divisor";
