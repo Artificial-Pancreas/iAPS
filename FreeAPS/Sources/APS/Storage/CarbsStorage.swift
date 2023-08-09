@@ -187,6 +187,8 @@ final class BaseCarbsStorage: CarbsStorage, Injectable {
                 insulin: nil,
                 notes: nil,
                 carbs: $0.carbs,
+                fat: nil,
+                protein: nil,
                 targetTop: nil,
                 targetBottom: nil
             )

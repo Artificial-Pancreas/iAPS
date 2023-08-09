@@ -117,6 +117,8 @@ final class BaseGlucoseStorage: GlucoseStorage, Injectable {
                         insulin: nil,
                         notes: notes,
                         carbs: nil,
+                        fat: nil,
+                        protein: nil,
                         targetTop: nil,
                         targetBottom: nil
                     )

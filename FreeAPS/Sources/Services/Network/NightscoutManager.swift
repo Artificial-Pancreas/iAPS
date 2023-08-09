@@ -392,6 +392,8 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
                 insulin: nil,
                 notes: nil,
                 carbs: nil,
+                fat: nil,
+                protein: nil,
                 targetTop: nil,
                 targetBottom: nil
             )

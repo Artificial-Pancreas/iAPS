@@ -4,8 +4,8 @@ struct CarbsEntry: JSON, Equatable, Hashable {
     let id: String?
     let createdAt: Date
     let carbs: Decimal
-    let fat: Decimal
-    let protein: Decimal
+    let fat: Decimal?
+    let protein: Decimal?
     let enteredBy: String?
     let isFPU: Bool?
     let fpuID: String?
