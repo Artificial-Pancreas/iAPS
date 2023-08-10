@@ -5,7 +5,6 @@ struct CarbsView: View {
 
     // Selected nutrient
     enum Selection: String {
-        case none
         case carbs
         case protein
         case fat
@@ -63,9 +62,15 @@ struct CarbsView: View {
                     WKInterfaceDevice.current().play(.click)
                     let newValue = carbAmount - 5
                     carbAmount = max(newValue, 0)
-                } label: { Image(systemName: "minus") }
-                    .buttonStyle(.borderless).padding(.leading, 5)
-                    .tint(selection == .carbs ? .blue : .none)
+                }
+                label: {
+                    HStack {
+                        Image(systemName: "minus")
+                        Text("") // Ugly fix to increase active tapping (button) area.
+                    }
+                }
+                .buttonStyle(.borderless).padding(.leading, 5)
+                .tint(selection == .carbs ? .blue : .none)
             }
             Spacer()
             Text("🥨")
@@ -93,6 +98,7 @@ struct CarbsView: View {
                     .tint(selection == .carbs ? .blue : .none)
             }
         }
+        .minimumScaleFactor(0.7)
         .onTapGesture {
             select(entry: .carbs)
         }
@@ -107,9 +113,14 @@ struct CarbsView: View {
                     WKInterfaceDevice.current().play(.click)
                     let newValue = proteinAmount - 5
                     proteinAmount = max(newValue, 0)
-                } label: { Image(systemName: "minus") }
-                    .buttonStyle(.borderless).padding(.leading, 5)
-                    .tint(selection == .protein ? .blue : .none)
+                } label: {
+                    HStack {
+                        Image(systemName: "minus")
+                        Text("") // Ugly fix to increase active tapping (button) area.
+                    }
+                }
+                .buttonStyle(.borderless).padding(.leading, 5)
+                .tint(selection == .protein ? .blue : .none)
             }
             Spacer()
             Text("🍗")
@@ -137,6 +148,7 @@ struct CarbsView: View {
                     .tint(selection == .protein ? .blue : .none)
             }
         }
+        .minimumScaleFactor(0.7)
         .onTapGesture {
             select(entry: .protein)
         }
@@ -150,9 +162,14 @@ struct CarbsView: View {
                     WKInterfaceDevice.current().play(.click)
                     let newValue = fatAmount - 5
                     fatAmount = max(newValue, 0)
-                } label: { Image(systemName: "minus") }
-                    .buttonStyle(.borderless).padding(.leading, 5)
-                    .tint(selection == .fat ? .blue : .none)
+                } label: {
+                    HStack {
+                        Image(systemName: "minus")
+                        Text("") // Ugly fix to increase active tapping (button) area.
+                    }
+                }
+                .buttonStyle(.borderless).padding(.leading, 5)
+                .tint(selection == .fat ? .blue : .none)
             }
             Spacer()
             Text("🧀")
@@ -181,6 +198,7 @@ struct CarbsView: View {
                     .tint(selection == .fat ? .blue : .none)
             }
         }
+        .minimumScaleFactor(0.7)
         .onTapGesture {
             select(entry: .fat)
         }
