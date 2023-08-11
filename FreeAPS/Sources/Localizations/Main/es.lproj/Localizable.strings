@@ -467,8 +467,11 @@ Enact a temp Basal or a temp target */
 /* Header */
 "History" = "Historial";
 
-/* CGM option */
-"Upload glucose to Nightscout" = "Cargar glucosa a Nightscout";
+/* Nightscout option */
+"Upload" = "Upload";
+
+/* Nightscout option */
+"Allow Uploads" = "Allow Uploads";
 
 /* Type of CGM or glucose source */
 "Type" = "Tipo";
@@ -1795,7 +1798,7 @@ Para probar sus diferentes basales durante la noche, puede modificar la configur
 "Max COB" = "Max COB";
 
 /* "Max COB" */
-"The default of maxCOB is 120. (If someone enters more carbs in one or multiple entries, iAPS will cap COB to maxCOB and keep it at maxCOB until the carbs entered above maxCOB have shown to be absorbed. Essentially, this just limits UAM as a safety cap against weird COB calculations due to fluky data.)" = "El valor por defecto de maxCOB es 120, ya que es la cantidad estándar de carbohidratos que un cuerpo normal puede absorber durante 4 horas (si alguien registra más carbohidratos o se acumulan por encima de este valor, OpenAPS limitará la dosificación de insulina basada en dichos 120 gramos activos). Esencialmente, esto limita la AMA como medida de seguridad contra cálculos extraños de COB debido a datos imprecisos";
+"The default of maxCOB is 120. (If someone enters more carbs in one or multiple entries, iAPS will cap COB to maxCOB and keep it at maxCOB until the carbs entered above maxCOB have shown to be absorbed. Essentially, this just limits UAM as a safety cap against weird COB calculations due to fluky data.)" = "The default of maxCOB is 120. (If someone enters more carbs in one or multiple entries, iAPS will cap COB to maxCOB and keep it at maxCOB until the carbs entered above maxCOB have shown to be absorbed. Essentially, this just limits UAM as a safety cap against weird COB calculations due to fluky data.)";
 
 /* Headline "Bolus Snooze DIA Divisor" */
 "Bolus Snooze DIA Divisor" = "Bolus Snooze DIA Divisor";
