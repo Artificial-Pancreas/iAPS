@@ -33,6 +33,7 @@ class WatchStateModel: NSObject, ObservableObject {
     @Published var isTempTargetViewActive = false
     @Published var isBolusViewActive = false
     @Published var displayOnWatch: AwConfig = .BGTarget
+    @Published var displayFatAndProteinOnWatch = false
     @Published var eventualBG = ""
     @Published var isConfirmationViewActive = false {
         didSet {
@@ -53,7 +54,6 @@ class WatchStateModel: NSObject, ObservableObject {
     @Published var lastUpdate: Date = .distantPast
     @Published var timerDate = Date()
     @Published var pendingBolus: Double?
-
     @Published var isf: Decimal?
     @Published var override: String?
 
@@ -69,11 +69,11 @@ class WatchStateModel: NSObject, ObservableObject {
         session.activate()
     }
 
-    func addCarbs(_ carbs: Int) {
+    func addMeal(_ carbs: Int, fat: Int, protein: Int) {
         confirmationSuccess = nil
         isConfirmationViewActive = true
         isCarbsViewActive = false
-        session.sendMessage(["carbs": carbs], replyHandler: { reply in
+        session.sendMessage(["carbs": carbs, "fat": fat, "protein": protein], replyHandler: { reply in
             self.completionHandler(reply)
             if let ok = reply["confirmation"] as? Bool, ok, self.bolusAfterCarbs {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
@@ -173,6 +173,7 @@ class WatchStateModel: NSObject, ObservableObject {
         lastUpdate = Date()
         eventualBG = state.eventualBG ?? ""
         displayOnWatch = state.displayOnWatch ?? .BGTarget
+        displayFatAndProteinOnWatch = state.displayFatAndProteinOnWatch ?? false
         isf = state.isf
         override = state.override
     }

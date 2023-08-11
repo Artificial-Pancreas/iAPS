@@ -5,7 +5,6 @@ extension StatConfig {
         @Published var overrideHbA1cUnit = false
         @Published var low: Decimal = 4 / 0.0555
         @Published var high: Decimal = 10 / 0.0555
-        @Published var uploadStats = false
         @Published var hours: Decimal = 6
         @Published var xGridLines = false
         @Published var yGridLines: Bool = false
@@ -19,7 +18,6 @@ extension StatConfig {
             self.units = units
 
             subscribeSetting(\.overrideHbA1cUnit, on: $overrideHbA1cUnit) { overrideHbA1cUnit = $0 }
-            subscribeSetting(\.uploadStats, on: $uploadStats) { uploadStats = $0 }
             subscribeSetting(\.xGridLines, on: $xGridLines) { xGridLines = $0 }
             subscribeSetting(\.yGridLines, on: $yGridLines) { yGridLines = $0 }
             subscribeSetting(\.rulerMarks, on: $rulerMarks) { rulerMarks = $0 }

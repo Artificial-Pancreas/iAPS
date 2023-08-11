@@ -248,7 +248,7 @@ extension Bolus {
                         "which is below your Threshold (",
                         comment: "Bolus pop-up / Alert string. Make translations concise!"
                     ) + state
-                    .threshold.formatted(.number.grouping(.never).rounded().precision(.fractionLength(fractionDigits))) + ")"
+                    .threshold.formatted() + " " + state.units.rawValue + ")"
             case 3:
                 return NSLocalizedString(
                     "Eventual Glucose > Target Glucose, but glucose is climbing slower than expected. Expected: ",

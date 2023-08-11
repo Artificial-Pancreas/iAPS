@@ -18,6 +18,9 @@ extension WatchConfig {
                         }
                     }
                 }
+
+                Toggle("Display Protein & Fat", isOn: $state.displayFatAndProteinOnWatch)
+
                 Section(header: Text("Garmin Watch")) {
                     List {
                         ForEach(state.devices, id: \.uuid) { device in

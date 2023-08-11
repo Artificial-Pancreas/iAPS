@@ -41,7 +41,7 @@ extension PreferencesEditor {
                     displayName: NSLocalizedString("Max COB", comment: "Max COB"),
                     type: .decimal(keypath: \.maxCOB),
                     infoText: NSLocalizedString(
-                        "This defaults maxCOB to 120 because that’s the most a typical body can absorb over 4 hours. (If someone enters more carbs or stacks more; OpenAPS will just truncate dosing based on 120. Essentially, this just limits AMA as a safety cap against weird COB calculations due to fluky data.)",
+                        "The default of maxCOB is 120. (If someone enters more carbs in one or multiple entries, iAPS will cap COB to maxCOB and keep it at maxCOB until the carbs entered above maxCOB have shown to be absorbed. Essentially, this just limits UAM as a safety cap against weird COB calculations due to fluky data.)",
                         comment: "Max COB"
                     ),
                     settable: self
