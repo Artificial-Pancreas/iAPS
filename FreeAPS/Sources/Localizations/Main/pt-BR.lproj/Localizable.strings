@@ -467,8 +467,11 @@ Enact a temp Basal or a temp target */
 /* Header */
 "History" = "Histórico";
 
-/* CGM option */
-"Upload glucose to Nightscout" = "Upload glicose para o Nightscout";
+/* Nightscout option */
+"Upload" = "Upload";
+
+/* Nightscout option */
+"Allow Uploads" = "Allow Uploads";
 
 /* Type of CGM or glucose source */
 "Type" = "Tipo";
