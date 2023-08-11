@@ -468,10 +468,10 @@ Enact a temp Basal or a temp target */
 "History" = "Historik";
 
 /* Nightscout option */
-"Upload" = "Upload";
+"Upload" = "Ladda upp";
 
 /* Nightscout option */
-"Allow Uploads" = "Allow Uploads";
+"Allow Uploads" = "Tillåt uppladdningar";
 
 /* Type of CGM or glucose source */
 "Type" = "Typ";
