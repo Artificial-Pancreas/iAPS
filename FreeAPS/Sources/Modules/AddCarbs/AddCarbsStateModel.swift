@@ -17,6 +17,7 @@ extension AddCarbs {
         @Published var selection: Presets?
         @Published var summation: [String] = []
         @Published var maxCarbs: Decimal = 0
+        @Published var note: String = ""
 
         let coredataContext = CoreDataStack.shared.persistentContainer.viewContext
 
@@ -40,6 +41,7 @@ extension AddCarbs {
                     carbs: carbs,
                     fat: fat,
                     protein: protein,
+                    note: note,
                     enteredBy: CarbsEntry.manual,
                     isFPU: false, fpuID: nil
                 )]
