@@ -276,7 +276,7 @@ extension BaseWatchManager: WCSessionDelegate {
                     createdAt: Date(),
                     carbs: Decimal(carbs),
                     fat: Decimal(fat),
-                    protein: Decimal(protein),
+                    protein: Decimal(protein), note: nil,
                     enteredBy: CarbsEntry.manual,
                     isFPU: false, fpuID: nil
                 )]
