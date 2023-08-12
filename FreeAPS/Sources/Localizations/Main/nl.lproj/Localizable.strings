@@ -471,7 +471,7 @@ Enact a temp Basal or a temp target */
 "Upload" = "Upload";
 
 /* Nightscout option */
-"Allow Uploads" = "Allow Uploads";
+"Allow Uploads" = "Uploaden toestaan";
 
 /* Type of CGM or glucose source */
 "Type" = "Type";
@@ -1090,7 +1090,7 @@ Enact a temp Basal or a temp target */
 "For write data to Apple Health you must give permissions in Settings > Health > Data Access" = "Als u gegevens wilt opslaan met Apple Gezondheid, moet u de juiste machtigingen verlenen in Instellingen > Gezondheid > Gegevenstoegang en apparaten";
 
 /* */
-"This allows iAPS to read from and write to Apple Heath. You must also give permissions in Settings > Health > Data Access. If you enter a glucose value into Apple Health, open iAPS to confirm it shows up." = "This allows iAPS to read from and write to Apple Heath. You must also give permissions in Settings > Health > Data Access. If you enter a glucose value into Apple Health, open iAPS to confirm it shows up.";
+"This allows iAPS to read from and write to Apple Heath. You must also give permissions in Settings > Health > Data Access. If you enter a glucose value into Apple Health, open iAPS to confirm it shows up." = "Hiermee kan iAPS lezen van en schrijven naar Apple Heath. U moet ook machtigingen geven in Instellingen > Gezondheid > Gegevenstoegang. Als u een glucosewaarde invoert in Apple Health, opent u iAPS om te bevestigen dat deze wordt weergegeven.";
 
 /* New ALerts ------------------------- */
 /* Info title */
@@ -1793,7 +1793,7 @@ Enact a temp Basal or a temp target */
 "Max COB" = "Max COB";
 
 /* "Max COB" */
-"The default of maxCOB is 120. (If someone enters more carbs in one or multiple entries, iAPS will cap COB to maxCOB and keep it at maxCOB until the carbs entered above maxCOB have shown to be absorbed. Essentially, this just limits UAM as a safety cap against weird COB calculations due to fluky data.)" = "The default of maxCOB is 120. (If someone enters more carbs in one or multiple entries, iAPS will cap COB to maxCOB and keep it at maxCOB until the carbs entered above maxCOB have shown to be absorbed. Essentially, this just limits UAM as a safety cap against weird COB calculations due to fluky data.)";
+"The default of maxCOB is 120. (If someone enters more carbs in one or multiple entries, iAPS will cap COB to maxCOB and keep it at maxCOB until the carbs entered above maxCOB have shown to be absorbed. Essentially, this just limits UAM as a safety cap against weird COB calculations due to fluky data.)" = "De standaardwaarde van maxCOB is 120. (Als iemand meer koolhydraten invoert in één of meerdere items, zal iAPS de COB begrenzen tot maxCOB en deze op maxCOB houden totdat is aangetoond dat de koolhydraten die boven maxCOB zijn ingevoerd, worden geabsorbeerd. In wezen beperkt dit alleen UAM als een veiligheidslimiet tegen rare COB-berekeningen als gevolg van onnauwkeurige gegevens)";
 
 /* Headline "Bolus Snooze DIA Divisor" */
 "Bolus Snooze DIA Divisor" = "Bolus snooze DIA deler";
