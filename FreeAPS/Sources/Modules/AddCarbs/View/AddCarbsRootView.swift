@@ -55,7 +55,7 @@ extension AddCarbs {
                         proteinAndFat()
                     }
                     HStack {
-                        Text("Note").foregroundColor(.secondary)
+                        Text("Food Type").foregroundColor(.secondary)
                         TextField("", text: $state.note)
                     }
                     HStack {
