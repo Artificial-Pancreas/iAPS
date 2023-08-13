@@ -965,6 +965,9 @@ Enact a temp Basal or a temp target */
 /* */
 "Carbs" = "Углеводы";
 
+/* Food Type / Meal Note */
+"Note" = "Note";
+
 /* */
 "Temp Basal" = "Врем. базал";
 
