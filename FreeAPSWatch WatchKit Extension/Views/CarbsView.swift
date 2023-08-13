@@ -33,9 +33,9 @@ struct CarbsView: View {
             carbs
             if state.displayFatAndProteinOnWatch {
                 Spacer()
-                protein
-                Spacer()
                 fat
+                Spacer()
+                protein
             }
             buttonStack
         }
