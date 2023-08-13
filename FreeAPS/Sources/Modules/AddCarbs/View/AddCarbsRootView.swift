@@ -10,7 +10,7 @@ extension AddCarbs {
         @State var isPromtPresented = false
         @State var saved = false
         @State private var showAlert = false
-        @State var displayNote = false
+        @FocusState private var isFocused: Bool
 
         @FetchRequest(
             entity: Presets.entity(),
@@ -56,8 +56,12 @@ extension AddCarbs {
                     }
                     HStack {
                         Text("Note").foregroundColor(.secondary)
-                        TextField("", text: $state.note).frame(maxWidth: .infinity, alignment: .trailing)
-                    }
+                        TextField("", text: $state.note).multilineTextAlignment(.trailing)
+                        if state.note != "", isFocused {
+                            Button { isFocused = false } label: { Image(systemName: "keyboard.chevron.compact.down") }
+                                .controlSize(.mini)
+                        }
+                    }.focused($isFocused)
                     HStack {
                         Button {
                             state.useFPUconversion.toggle()
