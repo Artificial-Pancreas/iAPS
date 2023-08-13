@@ -967,6 +967,9 @@ Połączono z Nightscout!";
 /* */
 "Carbs" = "Carbs";
 
+/* Food Type / Meal Note */
+"Note" = "Note";
+
 /* */
 "Temp Basal" = "Temp Basal";
 
