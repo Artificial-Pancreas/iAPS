@@ -120,6 +120,10 @@ extension DataTable {
                 }
 
                 if item.type == .carbs {
+                    if item.note != "" {
+                        Spacer()
+                        Text(item.note ?? "").foregroundColor(.brown)
+                    }
                     Spacer()
                     Image(systemName: "xmark.circle").foregroundColor(.secondary)
                         .contentShape(Rectangle())
