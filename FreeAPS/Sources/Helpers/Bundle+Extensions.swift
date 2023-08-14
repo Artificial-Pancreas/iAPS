@@ -18,4 +18,10 @@ extension Bundle {
         }
         return Date()
     }
+
+    var plist_prefs: PlistPreferences {
+        let url = Bundle.main.url(forResource: "Preferences", withExtension: "plist")!
+        let data = try! Data(contentsOf: url)
+        return try! PropertyListDecoder().decode(PlistPreferences.self, from: data)
+    }
 }

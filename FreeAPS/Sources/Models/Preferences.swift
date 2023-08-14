@@ -23,11 +23,11 @@ struct Preferences: JSON {
     var autotuneISFAdjustmentFraction: Decimal = 1.0
     var remainingCarbsFraction: Decimal = 1.0
     var remainingCarbsCap: Decimal = 90
-    var enableUAM: Bool = false
+    var enableUAM: Bool = Bundle.main.plist_prefs.PS_enableUAM ?? false
     var a52RiskEnable: Bool = false
     var enableSMBWithCOB: Bool = false
     var enableSMBWithTemptarget: Bool = false
-    var enableSMBAlways: Bool = false
+    var enableSMBAlways: Bool = Bundle.main.plist_prefs.PS_enableUAM ?? false
     var enableSMBAfterCarbs: Bool = false
     var allowSMBWithHighTemptarget: Bool = false
     var maxSMBBasalMinutes: Decimal = 30

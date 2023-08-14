@@ -394,6 +394,8 @@
 		FE41E4D429463C660047FD55 /* NightscoutStatistics.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE41E4D329463C660047FD55 /* NightscoutStatistics.swift */; };
 		FE41E4D629463EE20047FD55 /* NightscoutPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE41E4D529463EE20047FD55 /* NightscoutPreferences.swift */; };
 		FE66D16B291F74F8005D6F77 /* Bundle+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE66D16A291F74F8005D6F77 /* Bundle+Extensions.swift */; };
+		FE8DAE682A8A7C4600A5F80F /* PlistPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE8DAE672A8A7C4600A5F80F /* PlistPreferences.swift */; };
+		FE8DAE6C2A8A7CAC00A5F80F /* Preferences.plist in Resources */ = {isa = PBXBuildFile; fileRef = FE8DAE6B2A8A7CAC00A5F80F /* Preferences.plist */; };
 		FEFA5C0F299F810B00765C17 /* Core_Data.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FEFA5C0D299F810B00765C17 /* Core_Data.xcdatamodeld */; };
 		FEFA5C11299F814A00765C17 /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEFA5C10299F814A00765C17 /* CoreDataStack.swift */; };
 		FEFFA7A22929FE49007B8193 /* UIDevice+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEFFA7A12929FE49007B8193 /* UIDevice+Extensions.swift */; };
@@ -891,6 +893,8 @@
 		FE41E4D329463C660047FD55 /* NightscoutStatistics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NightscoutStatistics.swift; sourceTree = "<group>"; };
 		FE41E4D529463EE20047FD55 /* NightscoutPreferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NightscoutPreferences.swift; sourceTree = "<group>"; };
 		FE66D16A291F74F8005D6F77 /* Bundle+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+Extensions.swift"; sourceTree = "<group>"; };
+		FE8DAE672A8A7C4600A5F80F /* PlistPreferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlistPreferences.swift; sourceTree = "<group>"; };
+		FE8DAE6B2A8A7CAC00A5F80F /* Preferences.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Preferences.plist; sourceTree = "<group>"; };
 		FEFA5C0E299F810B00765C17 /* Core_Data.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Core_Data.xcdatamodel; sourceTree = "<group>"; };
 		FEFA5C10299F814A00765C17 /* CoreDataStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
 		FEFFA7A12929FE49007B8193 /* UIDevice+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIDevice+Extensions.swift"; sourceTree = "<group>"; };
@@ -1365,6 +1369,7 @@
 				388E596425AD948E0019842D /* Info.plist */,
 				1927C8E82744606D00347C69 /* InfoPlist.strings */,
 				19DA487F29CD2B8400EEA1E7 /* Assets.xcassets */,
+				FE8DAE6B2A8A7CAC00A5F80F /* Preferences.plist */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -1603,6 +1608,7 @@
 				19D4E4EA29FC6A9F00351451 /* TIRforChart.swift */,
 				19A910352A24D6D700C8951B /* DateFilter.swift */,
 				193F6CDC2A512C8F001240FD /* Loops.swift */,
+				FE8DAE672A8A7C4600A5F80F /* PlistPreferences.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -2254,11 +2260,11 @@
 			buildPhases = (
 				3811DEF525CA169200A708ED /* Swiftformat */,
 				388E595425AD948C0019842D /* Sources */,
+				B99D8B8E295F34DB00420AB8 /* Run Script */,
 				388E595525AD948C0019842D /* Frameworks */,
 				388E595625AD948C0019842D /* Resources */,
 				3821ECD025DC703C00BC42AD /* Embed Frameworks */,
 				38E8753D27554D5900975559 /* Embed Watch Content */,
-				B99D8B8E295F34DB00420AB8 /* Run Script */,
 			);
 			buildRules = (
 			);
@@ -2415,6 +2421,7 @@
 				388E597225AD9CF10019842D /* json in Resources */,
 				38DF178E27733E6800B3528F /* Assets.xcassets in Resources */,
 				19DA48E829CD339B00EEA1E7 /* Assets.xcassets in Resources */,
+				FE8DAE6C2A8A7CAC00A5F80F /* Preferences.plist in Resources */,
 				388E596F25AD96040019842D /* javascript in Resources */,
 				1927C8E62744606D00347C69 /* InfoPlist.strings in Resources */,
 			);
@@ -2484,7 +2491,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "#!/bin/sh\n\ngit_version=$(git log -1 --format=\"%h\")\ngit_branch=$(git symbolic-ref --short -q HEAD)\ngit_tag=$(git describe --tags --exact-match 2>/dev/null)\n\ngit_branch_or_tag=\"${git_branch:-${git_tag}}\"\ngit_branch_or_tag_version=\"${git_branch:-${git_tag}} ${git_version}\"\n\ninfo_plist=\"${BUILT_PRODUCTS_DIR}/${INFOPLIST_PATH}\"\n\n/usr/libexec/PlistBuddy -c \"Set :BuildBranch '${git_branch_or_tag_version}'\" \"${info_plist}\"\n";
+			shellScript = "exec 1>/tmp/iaps_build.out 2>&1\n\ngit_version=$(git log -1 --format=\"%h\")\ngit_branch=$(git symbolic-ref --short -q HEAD)\ngit_tag=$(git describe --tags --exact-match 2>/dev/null)\n\ngit_branch_or_tag=\"${git_branch:-${git_tag}}\"\ngit_branch_or_tag_version=\"${git_branch:-${git_tag}} ${git_version}\"\n\ninfo_plist=\"${SRCROOT}/FreeAPS/Resources/Info.plist\"\n\n/usr/libexec/PlistBuddy -c \"Set :BuildBranch '${git_branch_or_tag_version}'\" \"${info_plist}\"\n\nprefs_plist=\"${SRCROOT}/FreeAPS/Resources/Preferences.plist\"\n\ngrep PS_ ${SRCROOT}/ConfigOverride.xcconfig | while IFS=\\= read -r key value\ndo\n  k=`sed 's/^[[:space:]]*//; s/[[:space:]]*$//;' <<< ${key}`\n  v=`sed 's/^[[:space:]]*//; s/[[:space:]]*$//;' <<< ${value}`\n  \n  echo /usr/libexec/PlistBuddy -c \"Set :${k} '${v}'\" ${prefs_plist}\n  /usr/libexec/PlistBuddy -c \"Set :${k} '${v}'\" ${prefs_plist}\ndone\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -2689,6 +2696,7 @@
 				63E890B4D951EAA91C071D5C /* BasalProfileEditorStateModel.swift in Sources */,
 				CE398D16297C9D1D00DF218F /* dexcomSourceG7.swift in Sources */,
 				38FEF3FA2737E42000574A46 /* BaseStateModel.swift in Sources */,
+				FE8DAE682A8A7C4600A5F80F /* PlistPreferences.swift in Sources */,
 				385CEA8225F23DFD002D6D5B /* NightscoutStatus.swift in Sources */,
 				F90692AA274B7AAE0037068D /* HealthKitManager.swift in Sources */,
 				38887CCE25F5725200944304 /* IOBEntry.swift in Sources */,
