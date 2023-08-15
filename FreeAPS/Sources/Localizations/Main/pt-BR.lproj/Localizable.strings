@@ -341,6 +341,9 @@ Enact a temp Basal or a temp target */
 /* Max setting */
 "Max Bolus" = "Bolus Máximo";
 
+/* Max setting */
+"Max Carbs" = "Max Carbs";
+
 /* */
 "Pump Settings" = "Ajustes Bomba";
 
@@ -464,8 +467,11 @@ Enact a temp Basal or a temp target */
 /* Header */
 "History" = "Histórico";
 
-/* CGM option */
-"Upload glucose to Nightscout" = "Upload glicose para o Nightscout";
+/* Nightscout option */
+"Upload" = "Upload";
+
+/* Nightscout option */
+"Allow Uploads" = "Allow Uploads";
 
 /* Type of CGM or glucose source */
 "Type" = "Tipo";
@@ -959,6 +965,9 @@ Enact a temp Basal or a temp target */
 /* */
 "Carbs" = "Carbs";
 
+/* Food Type / Meal Note */
+"Note" = "Note";
+
 /* */
 "Temp Basal" = "Temp Basal";
 
@@ -1160,6 +1169,8 @@ Enact a temp Basal or a temp target */
 
 /* */
 "Normal " = "Normal ";
+
+"Currently no Override active" = "Currently no Override active";
 
 /* */
 "Total Insulin Adjustment" = "Total Insulin Adjustment";

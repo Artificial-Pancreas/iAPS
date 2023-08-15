@@ -343,6 +343,9 @@ Połączono z Nightscout!";
 /* Max setting */
 "Max Bolus" = "Max Bolus";
 
+/* Max setting */
+"Max Carbs" = "Max Carbs";
+
 /* */
 "Pump Settings" = "Pump Settings";
 
@@ -466,8 +469,11 @@ Połączono z Nightscout!";
 /* Header */
 "History" = "History";
 
-/* CGM option */
-"Upload glucose to Nightscout" = "Upload glucose to Nightscout";
+/* Nightscout option */
+"Upload" = "Upload";
+
+/* Nightscout option */
+"Allow Uploads" = "Allow Uploads";
 
 /* Type of CGM or glucose source */
 "Type" = "Type";
@@ -961,6 +967,9 @@ Połączono z Nightscout!";
 /* */
 "Carbs" = "Carbs";
 
+/* Food Type / Meal Note */
+"Note" = "Note";
+
 /* */
 "Temp Basal" = "Temp Basal";
 
@@ -1162,6 +1171,8 @@ Połączono z Nightscout!";
 
 /* */
 "Normal " = "Normal ";
+
+"Currently no Override active" = "Currently no Override active";
 
 /* */
 "Total Insulin Adjustment" = "Total Insulin Adjustment";
