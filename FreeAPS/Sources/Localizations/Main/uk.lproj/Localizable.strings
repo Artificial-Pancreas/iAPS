@@ -468,10 +468,10 @@ Enact a temp Basal or a temp target */
 "History" = "Історія";
 
 /* Nightscout option */
-"Upload" = "Upload";
+"Upload" = "Вивантажити";
 
 /* Nightscout option */
-"Allow Uploads" = "Allow Uploads";
+"Allow Uploads" = "Дозволити вивантаження";
 
 /* Type of CGM or glucose source */
 "Type" = "Тип";
@@ -964,6 +964,9 @@ Enact a temp Basal or a temp target */
 
 /* */
 "Carbs" = "Вуглеводи";
+
+/* Food Type / Meal Note */
+"Note" = "Примітка";
 
 /* */
 "Temp Basal" = "Тимчасовий  Базал";
@@ -1793,7 +1796,7 @@ Enact a temp Basal or a temp target */
 "Max COB" = "Максимум вуглеводів у крові (СОВ)";
 
 /* "Max COB" */
-"The default of maxCOB is 120. (If someone enters more carbs in one or multiple entries, iAPS will cap COB to maxCOB and keep it at maxCOB until the carbs entered above maxCOB have shown to be absorbed. Essentially, this just limits UAM as a safety cap against weird COB calculations due to fluky data.)" = "The default of maxCOB is 120. (If someone enters more carbs in one or multiple entries, iAPS will cap COB to maxCOB and keep it at maxCOB until the carbs entered above maxCOB have shown to be absorbed. Essentially, this just limits UAM as a safety cap against weird COB calculations due to fluky data.)";
+"The default of maxCOB is 120. (If someone enters more carbs in one or multiple entries, iAPS will cap COB to maxCOB and keep it at maxCOB until the carbs entered above maxCOB have shown to be absorbed. Essentially, this just limits UAM as a safety cap against weird COB calculations due to fluky data.)" = "За замовчуванням maxCOB становить 120. (Якщо хтось введе більше вуглеводів в один або кілька записів, iAPS обмежить COB до maxCOB і збереже його на рівні maxCOB, доки вуглеводи, введені вище maxCOB, не засвоїться. По суті, це просто обмежує UAM як обмеження безпеки від дивних обчислень COB через випадкові дані.)";
 
 /* Headline "Bolus Snooze DIA Divisor" */
 "Bolus Snooze DIA Divisor" = "Дільник DIA відкладання болюсів";
