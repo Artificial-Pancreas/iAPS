@@ -5,6 +5,8 @@ extension NightscoutConfig {
     struct RootView: BaseView {
         let resolver: Resolver
         @StateObject var state = StateModel()
+        @State var importAlert: Alert?
+        @State var isImportAlertPresented = false
 
         private var portFormater: NumberFormatter {
             let formatter = NumberFormatter()
@@ -53,6 +55,22 @@ extension NightscoutConfig {
                     Text("Allow Uploads")
                 }
 
+                Section {
+                    Button("Import settings from Nightscout") {
+                        importAlert = Alert(
+                            title: Text("Import settings?"),
+                            message: Text("\n" + "This will replace your current pump settings" + "\n"),
+                            primaryButton: .destructive(
+                                Text("Import"),
+                                action: { state.importSetttings() }
+                            ),
+                            secondaryButton: .cancel()
+                        )
+                        isImportAlertPresented = true
+                    }.disabled(state.url.isEmpty)
+
+                } header: { Text("Import from Nightscout") }
+
                 Section(header: Text("Local glucose source")) {
                     Toggle("Use local glucose server", isOn: $state.useLocalSource)
                     HStack {
@@ -60,7 +78,6 @@ extension NightscoutConfig {
                         DecimalTextField("", value: $state.localPort, formatter: portFormater)
                     }
                 }
-
                 Section {
                     Button("Backfill glucose") { state.backfillGlucose() }
                         .disabled(state.url.isEmpty || state.connecting || state.backfilling)
@@ -69,6 +86,9 @@ extension NightscoutConfig {
             .onAppear(perform: configureView)
             .navigationBarTitle("Nightscout Config")
             .navigationBarTitleDisplayMode(.automatic)
+            .alert(isPresented: $isImportAlertPresented) {
+                importAlert!
+            }
         }
     }
 }

@@ -84,6 +84,8 @@ extension NightscoutConfig {
                 .store(in: &lifetime)
         }
 
+        func importSetttings() {}
+
         func delete() {
             keychain.removeObject(forKey: Config.urlKey)
             keychain.removeObject(forKey: Config.secretKey)
