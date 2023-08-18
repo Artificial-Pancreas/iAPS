@@ -23,7 +23,7 @@ extension ISFEditor {
 
         var body: some View {
             Form {
-                if let autotune = state.autotune {
+                if let autotune = state.autotune, !state.settingsManager.settings.onlyAutotuneBasals {
                     Section(header: Text("Autotune")) {
                         HStack {
                             Text("Calculated Sensitivity")

@@ -389,6 +389,7 @@ final class OpenAPS {
                 let tempTargets = self.loadFileFromStorage(name: Settings.tempTargets)
                 let model = self.loadFileFromStorage(name: Settings.model)
                 let autotune = useAutotune ? self.loadFileFromStorage(name: Settings.autotune) : .empty
+                let freeaps = self.loadFileFromStorage(name: FreeAPS.settings)
 
                 let pumpProfile = self.makeProfile(
                     preferences: preferences,
@@ -399,7 +400,8 @@ final class OpenAPS {
                     carbRatio: cr,
                     tempTargets: tempTargets,
                     model: model,
-                    autotune: RawJSON.null
+                    autotune: RawJSON.null,
+                    freeaps: freeaps
                 )
 
                 let profile = self.makeProfile(
@@ -411,7 +413,8 @@ final class OpenAPS {
                     carbRatio: cr,
                     tempTargets: tempTargets,
                     model: model,
-                    autotune: autotune.isEmpty ? .null : autotune
+                    autotune: autotune.isEmpty ? .null : autotune,
+                    freeaps: freeaps
                 )
 
                 self.storage.save(pumpProfile, as: Settings.pumpProfile)
@@ -598,7 +601,8 @@ final class OpenAPS {
         carbRatio: JSON,
         tempTargets: JSON,
         model: JSON,
-        autotune: JSON
+        autotune: JSON,
+        freeaps: JSON
     ) -> RawJSON {
         dispatchPrecondition(condition: .onQueue(processQueue))
         return jsWorker.inCommonContext { worker in
@@ -616,7 +620,8 @@ final class OpenAPS {
                     carbRatio,
                     tempTargets,
                     model,
-                    autotune
+                    autotune,
+                    freeaps
                 ]
             )
         }
