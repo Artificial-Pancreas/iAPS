@@ -38,16 +38,33 @@ extension ISFEditor {
                     }
                 }
                 if let newISF = state.autosensISF {
-                    Section(header: Text("Autosens")) {
+                    Section(
+                        header: !state.settingsManager.preferences
+                            .useNewFormula ? Text("Autosens") : Text("Dynamic Sensitivity")
+                    ) {
+                        let dynamicRatio = state.provider.suggestion?.sensitivityRatio ?? 0
+                        let dynamicISF = state.provider.suggestion?.isf ?? 0
                         HStack {
                             Text("Sensitivity Ratio")
                             Spacer()
-                            Text(rateFormatter.string(from: state.autosensRatio as NSNumber) ?? "1")
+                            Text(
+                                rateFormatter
+                                    .string(from: (
+                                        !state.settingsManager.preferences.useNewFormula ? state
+                                            .autosensRatio : dynamicRatio
+                                    ) as NSNumber) ?? "1"
+                            )
                         }
                         HStack {
                             Text("Calculated Sensitivity")
                             Spacer()
-                            Text(rateFormatter.string(from: newISF as NSNumber) ?? "0")
+                            Text(
+                                rateFormatter
+                                    .string(from: (
+                                        !state.settingsManager.preferences
+                                            .useNewFormula ? newISF : dynamicISF
+                                    ) as NSNumber) ?? "0"
+                            )
                             Text(state.units.rawValue + "/U").foregroundColor(.secondary)
                         }
                     }
