@@ -239,7 +239,7 @@
 "Insulin Sensitivities" = "Insulinkänslighet";
 
 /* */
-"Sensitivity Ratio" = "Autosens-kvot";
+"Sensitivity Ratio" = "Kvot (nämnare)";
 
 /*  */
 "Dismiss" = "Avfärda";
@@ -1044,10 +1044,10 @@ Enact a temp Basal or a temp target */
 "Autosense" = "Autosense";
 
 /* Insulin sensitivity config header */
-"Dynamic Sensitivity" = "Dynamic Sensitivity";
+"Dynamic Sensitivity" = "Dynamisk insulinkänslighet";
 
 /* Autotune config */
-"Only Autotune Basal Insulin" = "Only Autotune Basal Insulin";
+"Only Autotune Basal Insulin" = "Autojustera endast basalinställningar";
 
 /* Debug option view Pump History */
 "Pump History" = "Pumphistorik";
