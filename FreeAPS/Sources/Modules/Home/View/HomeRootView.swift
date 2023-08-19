@@ -495,7 +495,7 @@ extension Home {
                                     .background(Capsule().fill(Color.red))
                             }
                         }
-                    }
+                    }.buttonStyle(.borderless)
                     Spacer()
                     Button { state.showModal(for: .addTempTarget) }
                     label: {
@@ -504,7 +504,9 @@ extension Home {
                             .resizable()
                             .frame(width: 24, height: 24)
                             .padding(8)
-                    }.foregroundColor(.loopGreen)
+                    }
+                    .foregroundColor(.loopGreen)
+                    .buttonStyle(.borderless)
                     Spacer()
                     Button { state.showModal(for: .bolus(waitForSuggestion: false)) }
                     label: {
@@ -513,7 +515,9 @@ extension Home {
                             .resizable()
                             .frame(width: 24, height: 24)
                             .padding(8)
-                    }.foregroundColor(.insulin)
+                    }
+                    .foregroundColor(.insulin)
+                    .buttonStyle(.borderless)
                     Spacer()
                     if state.allowManualTemp {
                         Button { state.showModal(for: .manualTempBasal) }
@@ -523,7 +527,9 @@ extension Home {
                                 .resizable()
                                 .frame(width: 24, height: 24)
                                 .padding(8)
-                        }.foregroundColor(.insulin)
+                        }
+                        .foregroundColor(.insulin)
+                        .buttonStyle(.borderless)
                         Spacer()
                     }
                     Button { state.showModal(for: .statistics)
@@ -534,7 +540,9 @@ extension Home {
                             .resizable()
                             .frame(width: 24, height: 24)
                             .padding(8)
-                    }.foregroundColor(.purple)
+                    }
+                    .foregroundColor(.purple)
+                    .buttonStyle(.borderless)
                     Spacer()
                     Button { state.showModal(for: .settings) }
                     label: {
@@ -543,7 +551,9 @@ extension Home {
                             .resizable()
                             .frame(width: 24, height: 24)
                             .padding(8)
-                    }.foregroundColor(.loopGray)
+                    }
+                    .foregroundColor(.loopGray)
+                    .buttonStyle(.borderless)
                 }
                 .padding(.horizontal, 24)
                 .padding(.bottom, geo.safeAreaInsets.bottom)
