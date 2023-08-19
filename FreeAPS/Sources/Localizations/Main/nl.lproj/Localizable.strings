@@ -966,7 +966,7 @@ Enact a temp Basal or a temp target */
 "Carbs" = "Koolhydraten";
 
 /* Food Type / Meal Note */
-"Note" = "Note";
+"Note" = "Opmerking";
 
 /* */
 "Temp Basal" = "Tijdelijk basaal";
