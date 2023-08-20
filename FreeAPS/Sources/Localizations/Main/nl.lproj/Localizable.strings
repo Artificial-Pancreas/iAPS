@@ -966,7 +966,7 @@ Enact a temp Basal or a temp target */
 "Carbs" = "Koolhydraten";
 
 /* Food Type / Meal Note */
-"Note" = "Note";
+"Note" = "Opmerking";
 
 /* */
 "Temp Basal" = "Tijdelijk basaal";
@@ -1042,6 +1042,12 @@ Enact a temp Basal or a temp target */
 
 /* Debug option view Autosense */
 "Autosense" = "Autosense";
+
+/* Insulin sensitivity config header */
+"Dynamic Sensitivity" = "Dynamic Sensitivity";
+
+/* Autotune config */
+"Only Autotune Basal Insulin" = "Only Autotune Basal Insulin";
 
 /* Debug option view Pump History */
 "Pump History" = "Pomp geschiedenis";

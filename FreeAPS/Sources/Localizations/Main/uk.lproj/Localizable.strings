@@ -1043,6 +1043,12 @@ Enact a temp Basal or a temp target */
 /* Debug option view Autosense */
 "Autosense" = "Автосенс";
 
+/* Insulin sensitivity config header */
+"Dynamic Sensitivity" = "Динамічна чутливість";
+
+/* Autotune config */
+"Only Autotune Basal Insulin" = "Тільки Autotune Базал Інсулін";
+
 /* Debug option view Pump History */
 "Pump History" = "Історія Помпи";
 
