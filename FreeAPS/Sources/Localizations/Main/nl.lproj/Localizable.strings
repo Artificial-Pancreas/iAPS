@@ -83,7 +83,7 @@
 "Carbs required" = "Koolhydraten benodigd";
 
 /* */
-"Are you sure?" = "Weet u het zeker?";
+"Are you sure?" = "Weet je het zeker?";
 
 /* Bottom target temp */
 "Bottom target" = "Ondergrens doel";
@@ -1044,10 +1044,10 @@ Enact a temp Basal or a temp target */
 "Autosense" = "Autosense";
 
 /* Insulin sensitivity config header */
-"Dynamic Sensitivity" = "Dynamic Sensitivity";
+"Dynamic Sensitivity" = "Dynamische gevoeligheid";
 
 /* Autotune config */
-"Only Autotune Basal Insulin" = "Only Autotune Basal Insulin";
+"Only Autotune Basal Insulin" = "Alleen Autotune basale insuline";
 
 /* Debug option view Pump History */
 "Pump History" = "Pomp geschiedenis";
@@ -1182,7 +1182,7 @@ Enact a temp Basal or a temp target */
 "Total Insulin Adjustment" = "Totale insuline aanpassing";
 
 /* */
-"Override your Basal, ISF, CR and Target profiles" = "Overschrijven van uw Basaal, ISF, CR en Doel profielen";
+"Override your Basal, ISF, CR and Target profiles" = "Overschrijven van je Basaal, ISF, CR en Doel profielen";
 
 /* */
 "Enable indefinitely" = "Onbeperkt inschakelen";
@@ -1375,7 +1375,7 @@ Enact a temp Basal or a temp target */
 "Save" = "Opslaan";
 
 /* Alert title for error when updating confidence reminder preference */
-"Failed to update confidence reminder preference." = "Kon de voorkeur voor vertrouwensherinnering niet bijwerken.";
+"Failed to update confidence reminder preference." = "Kon de voorkeur voor meldingen niet bijwerken.";
 
 /* */
 "No Error" = "Geen error";
