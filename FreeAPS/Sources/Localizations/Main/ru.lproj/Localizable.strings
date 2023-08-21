@@ -468,10 +468,10 @@ Enact a temp Basal or a temp target */
 "History" = "История";
 
 /* Nightscout option */
-"Upload" = "Upload";
+"Upload" = "Выгрузка";
 
 /* Nightscout option */
-"Allow Uploads" = "Allow Uploads";
+"Allow Uploads" = "Разрешить выгрузку";
 
 /* Type of CGM or glucose source */
 "Type" = "Тип";
@@ -966,7 +966,7 @@ Enact a temp Basal or a temp target */
 "Carbs" = "Углеводы";
 
 /* Food Type / Meal Note */
-"Note" = "Note";
+"Note" = "Заметка";
 
 /* */
 "Temp Basal" = "Врем. базал";
@@ -1044,10 +1044,10 @@ Enact a temp Basal or a temp target */
 "Autosense" = "Автосенс";
 
 /* Insulin sensitivity config header */
-"Dynamic Sensitivity" = "Dynamic Sensitivity";
+"Dynamic Sensitivity" = "Динамическая чувствительность";
 
 /* Autotune config */
-"Only Autotune Basal Insulin" = "Only Autotune Basal Insulin";
+"Only Autotune Basal Insulin" = "Автотюн только Базального инсулина";
 
 /* Debug option view Pump History */
 "Pump History" = "История помпы";
@@ -1802,7 +1802,7 @@ Enact a temp Basal or a temp target */
 "Max COB" = "Максимум углеводов в крови";
 
 /* "Max COB" */
-"The default of maxCOB is 120. (If someone enters more carbs in one or multiple entries, iAPS will cap COB to maxCOB and keep it at maxCOB until the carbs entered above maxCOB have shown to be absorbed. Essentially, this just limits UAM as a safety cap against weird COB calculations due to fluky data.)" = "The default of maxCOB is 120. (If someone enters more carbs in one or multiple entries, iAPS will cap COB to maxCOB and keep it at maxCOB until the carbs entered above maxCOB have shown to be absorbed. Essentially, this just limits UAM as a safety cap against weird COB calculations due to fluky data.)";
+"The default of maxCOB is 120. (If someone enters more carbs in one or multiple entries, iAPS will cap COB to maxCOB and keep it at maxCOB until the carbs entered above maxCOB have shown to be absorbed. Essentially, this just limits UAM as a safety cap against weird COB calculations due to fluky data.)" = "Значение max COB по-умолчанию равно 120. (Если кто-то вводит больше углеводов в одной или нескольких записях, IAPs ограничит количество углеводов до maxCOB и сохранит его на maxCOB до тех пор, пока не будет показано, что углеводы, введенные выше maxCOB, усваиваются. По сути, это просто ограничивает UAM в качестве защитного предела от странных вычислений COB из-за случайных данных.)";
 
 /* Headline "Bolus Snooze DIA Divisor" */
 "Bolus Snooze DIA Divisor" = "Делитель DIA откладывания болюсов";
