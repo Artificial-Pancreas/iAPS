@@ -78,8 +78,10 @@ final class BaseWatchManager: NSObject, WatchManager, Injectable {
             var insulinRequired = self.suggestion?.insulinReq ?? 0
             var double: Decimal = 2
             if (self.suggestion?.cob ?? 0) > 0 {
-                insulinRequired = self.suggestion?.insulinForManualBolus ?? 0
-                double = 1
+                if self.suggestion?.manualBolusErrorString == 0 {
+                    insulinRequired = self.suggestion?.insulinForManualBolus ?? 0
+                    double = 1
+                }
             }
 
             self.state.bolusRecommended = self.apsManager
@@ -102,8 +104,8 @@ final class BaseWatchManager: NSObject, WatchManager, Injectable {
                     )
                 }
             self.state.bolusAfterCarbs = !self.settingsManager.settings.skipBolusScreenAfterCarbs
-
             self.state.displayOnWatch = self.settingsManager.settings.displayOnWatch
+            self.state.displayFatAndProteinOnWatch = self.settingsManager.settings.displayFatAndProteinOnWatch
 
             let eBG = self.evetualBGStraing()
             self.state.eventualBG = eBG.map { "⇢ " + $0 }
@@ -263,16 +265,22 @@ extension BaseWatchManager: WCSessionDelegate {
     func session(_: WCSession, didReceiveMessage message: [String: Any], replyHandler: @escaping ([String: Any]) -> Void) {
         debug(.service, "WCSession got message with reply handler: \(message)")
 
-        if let carbs = message["carbs"] as? Double, carbs > 0 {
-            carbsStorage.storeCarbs([
-                CarbsEntry(
+        if let carbs = message["carbs"] as? Double,
+           let fat = message["fat"] as? Double,
+           let protein = message["protein"] as? Double,
+           carbs > 0 || fat > 0 || protein > 0
+        {
+            carbsStorage.storeCarbs(
+                [CarbsEntry(
                     id: UUID().uuidString,
                     createdAt: Date(),
                     carbs: Decimal(carbs),
+                    fat: Decimal(fat),
+                    protein: Decimal(protein), note: nil,
                     enteredBy: CarbsEntry.manual,
                     isFPU: false, fpuID: nil
-                )
-            ])
+                )]
+            )
 
             if settingsManager.settings.skipBolusScreenAfterCarbs {
                 apsManager.determineBasalSync()

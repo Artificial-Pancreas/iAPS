@@ -5,6 +5,7 @@ extension AutotuneConfig {
     final class StateModel: BaseStateModel<Provider> {
         @Injected() var apsManager: APSManager!
         @Published var useAutotune = false
+        @Published var onlyAutotuneBasals = false
         @Published var autotune: Autotune?
         private(set) var units: GlucoseUnits = .mmolL
         @Published var publishedDate = Date()
@@ -21,6 +22,7 @@ extension AutotuneConfig {
             units = settingsManager.settings.units
             useAutotune = settingsManager.settings.useAutotune
             publishedDate = lastAutotuneDate
+            subscribeSetting(\.onlyAutotuneBasals, on: $onlyAutotuneBasals) { onlyAutotuneBasals = $0 }
 
             $useAutotune
                 .removeDuplicates()

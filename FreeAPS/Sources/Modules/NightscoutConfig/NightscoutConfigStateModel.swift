@@ -1,4 +1,6 @@
+import CGMBLEKit
 import Combine
+import G7SensorKit
 import SwiftDate
 import SwiftUI
 
@@ -8,14 +10,16 @@ extension NightscoutConfig {
         @Injected() private var nightscoutManager: NightscoutManager!
         @Injected() private var glucoseStorage: GlucoseStorage!
         @Injected() private var healthKitManager: HealthKitManager!
+        @Injected() private var cgmManager: FetchGlucoseManager!
 
         @Published var url = ""
         @Published var secret = ""
         @Published var message = ""
         @Published var connecting = false
         @Published var backfilling = false
-        @Published var isUploadEnabled = false
-
+        @Published var isUploadEnabled = false // Allow uploads
+        @Published var uploadStats = false // Upload Statistics
+        @Published var uploadGlucose = true // Upload Glucose
         @Published var useLocalSource = false
         @Published var localPort: Decimal = 0
 
@@ -26,6 +30,18 @@ extension NightscoutConfig {
             subscribeSetting(\.isUploadEnabled, on: $isUploadEnabled) { isUploadEnabled = $0 }
             subscribeSetting(\.useLocalGlucoseSource, on: $useLocalSource) { useLocalSource = $0 }
             subscribeSetting(\.localGlucosePort, on: $localPort.map(Int.init)) { localPort = Decimal($0) }
+            subscribeSetting(\.uploadStats, on: $uploadStats) { uploadStats = $0 }
+            subscribeSetting(\.uploadGlucose, on: $uploadGlucose, initial: { uploadGlucose = $0 }, didSet: { val in
+                if let cgmManagerG5 = self.cgmManager.glucoseSource.cgmManager as? G5CGMManager {
+                    cgmManagerG5.shouldSyncToRemoteService = val
+                }
+                if let cgmManagerG6 = self.cgmManager.glucoseSource.cgmManager as? G6CGMManager {
+                    cgmManagerG6.shouldSyncToRemoteService = val
+                }
+                if let cgmManagerG7 = self.cgmManager.glucoseSource.cgmManager as? G7CGMManager {
+                    cgmManagerG7.uploadReadings = val
+                }
+            })
         }
 
         func connect() {

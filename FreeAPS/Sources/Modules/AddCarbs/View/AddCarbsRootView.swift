@@ -10,6 +10,7 @@ extension AddCarbs {
         @State var isPromtPresented = false
         @State var saved = false
         @State private var showAlert = false
+        @FocusState private var isFocused: Bool
 
         @FetchRequest(
             entity: Presets.entity(),
@@ -53,6 +54,14 @@ extension AddCarbs {
                     if state.useFPUconversion {
                         proteinAndFat()
                     }
+                    HStack {
+                        Text("Note").foregroundColor(.secondary)
+                        TextField("", text: $state.note).multilineTextAlignment(.trailing)
+                        if state.note != "", isFocused {
+                            Button { isFocused = false } label: { Image(systemName: "keyboard.chevron.compact.down") }
+                                .controlSize(.mini)
+                        }
+                    }.focused($isFocused)
                     HStack {
                         Button {
                             state.useFPUconversion.toggle()
@@ -107,12 +116,12 @@ extension AddCarbs {
                     DatePicker("Date", selection: $state.date)
                 }
 
-                Section(footer: Text(state.waitersNotepad().description)) {
+                Section {
                     Button { state.add() }
                     label: { Text("Save and continue").font(.title3) }
                         .disabled(state.carbs <= 0 && state.fat <= 0 && state.protein <= 0)
                         .frame(maxWidth: .infinity, alignment: .center)
-                }
+                } footer: { Text(state.waitersNotepad().description) }
 
                 if !state.useFPUconversion {
                     Section {
@@ -126,7 +135,7 @@ extension AddCarbs {
 
         var presetPopover: some View {
             Form {
-                Section(header: Text("Enter Meal Preset Name")) {
+                Section {
                     TextField("Name Of Dish", text: $dish)
                     Button {
                         saved = true
@@ -148,7 +157,7 @@ extension AddCarbs {
                         saved = false
                         isPromtPresented = false }
                     label: { Text("Cancel") }
-                }
+                } header: { Text("Enter Meal Preset Name") }
             }
         }
 

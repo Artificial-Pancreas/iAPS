@@ -115,6 +115,11 @@ struct Durations: JSON, Equatable {
     var total: Decimal
 }
 
+struct Units: JSON, Equatable {
+    var Glucose: String
+    var HbA1c: String
+}
+
 struct Threshold: JSON, Equatable {
     var low: Decimal
     var high: Decimal
@@ -125,6 +130,7 @@ struct TIRs: JSON, Equatable {
     var Hypos: Durations
     var Hypers: Durations
     var Threshold: Threshold
+    var Euglycemic: Durations
 }
 
 struct Ins: JSON, Equatable {
@@ -144,6 +150,7 @@ struct Stats: JSON, Equatable {
     var Distribution: TIRs
     var Glucose: Averages
     var HbA1c: Durations
+    var Units: Units
     var LoopCycles: LoopCycles
     var Insulin: Ins
     var Variance: Variance
@@ -179,6 +186,7 @@ extension TIRs {
         case Hypos
         case Hypers
         case Threshold
+        case Euglycemic
     }
 }
 
@@ -204,6 +212,7 @@ extension Stats {
         case Distribution
         case Glucose
         case HbA1c
+        case Units
         case LoopCycles
         case Insulin
         case Variance

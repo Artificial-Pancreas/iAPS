@@ -50,7 +50,7 @@
 "Changing time…" = "Tijd aanpassen...";
 
 /* Instructions on selecting battery chemistry type */
-"Choose the type of battery you are using in your pump for better alerting about low battery conditions." = "Kies het type batterij dat in de pomp wordt gebruikt, voor optimalisering van waarschuwing voor laag batterij niveau.";
+"Choose the type of battery you are using in your pump for better alerting about low battery conditions." = "Kies het type batterij dat je gebruikt in je pomp om beter te kunnen waarschuwen voor een te laag batterij niveau.";
 
 /* The title of the configuration section in MinimedPumpManager settings */
 "Configuration" = "Configuratie";
@@ -123,7 +123,7 @@
 "No, Keep Pump As Is" = "Nee, laat de pomp ongewijzigd";
 
 /* Pump find device instruction */
-"On your pump, go to the Find Device screen and select \"Find Device\".\n\nMain Menu >\nUtilities >\nConnect Devices >\nOther Devices >\nOn >\nFind Device" = "Ga op je pomp, naar het scherm 'Vind Apparaat' en selecteer \"Vind Apparaat\".\n\nHoofdmenu >\nHulpprogramma's >\nVerbind Apparaten >\nAndere Apparaten >\nAan >\nVind Apparaat";
+"On your pump, go to the Find Device screen and select \"Find Device\".\n\nMain Menu >\nUtilities >\nConnect Devices >\nOther Devices >\nOn >\nFind Device" = "Ga op je pomp naar het scherm 'Vind Apparaat' en selecteer \"Vind Apparaat\".\n\nHoofdmenu >\nHulpprogramma's >\nVerbind Apparaten >\nAndere Apparaten >\nAan >\nVind Apparaat";
 
 /* navigation title for pump battery type selection
    Text for medtronic pump preferred data source */
