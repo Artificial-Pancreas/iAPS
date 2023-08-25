@@ -50,7 +50,7 @@
 "Changing time…" = "Tijd aanpassen...";
 
 /* Instructions on selecting battery chemistry type */
-"Choose the type of battery you are using in your pump for better alerting about low battery conditions." = "Kies het type batterij dat in de pomp wordt gebruikt, voor optimalisering van waarschuwing voor laag batterij niveau.";
+"Choose the type of battery you are using in your pump for better alerting about low battery conditions." = "Kies het type batterij dat je gebruikt in je pomp om beter te kunnen waarschuwen voor een te laag batterij niveau.";
 
 /* The title of the configuration section in MinimedPumpManager settings */
 "Configuration" = "Configuratie";

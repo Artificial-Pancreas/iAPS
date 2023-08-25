@@ -1044,10 +1044,10 @@ Enact a temp Basal or a temp target */
 "Autosense" = "Autosense";
 
 /* Insulin sensitivity config header */
-"Dynamic Sensitivity" = "Dynamic Sensitivity";
+"Dynamic Sensitivity" = "Dynamische Empfindlichkeit";
 
 /* Autotune config */
-"Only Autotune Basal Insulin" = "Only Autotune Basal Insulin";
+"Only Autotune Basal Insulin" = "Nur Autotune Basalinsulin";
 
 /* Debug option view Pump History */
 "Pump History" = "Insulinpumpen-Speicher";
