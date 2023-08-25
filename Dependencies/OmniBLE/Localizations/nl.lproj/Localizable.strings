@@ -415,7 +415,7 @@
 "Continue" = "Vervolg";
 
 /* Format string for recovery suggestion during deactivate pod. */
-"There was a problem communicating with the pod. If this problem persists, tap Discard Pod. You can then activate a new Pod." = "Er was een probleem met de communicatie met de Pod. Als dit probleem zich blijft voordoen, tik dan op 'weggooien'. Je kunt dan een nieuwe Pod activeren.";
+"There was a problem communicating with the pod. If this problem persists, tap Discard Pod. You can then activate a new Pod." = "Er was een communicatieprobleem met de Pod. Als dit probleem zich blijft voordoen, tik dan op 'weggooien'. Je kunt dan een nieuwe Pod activeren.";
 
 /* Text for discard pod button */
 "Discard Pod" = "Pod verwijderen";
@@ -424,7 +424,7 @@
 "Remove Pod from Body" = "Verwijder Pod uit het lichaam";
 
 /* Alert message body for confirm pod attachment */
-"Your Pod may still be delivering Insulin.\nRemove it from your body, then tap “Continue.“" = "Mogelijk levert je Pod nog steeds insuline op.\nVerwijder deze uit je lichaam en tik op \"Doorgaan\"";
+"Your Pod may still be delivering Insulin.\nRemove it from your body, then tap “Continue.“" = "Mogelijk levert je Pod nog steeds insuline.\nVerwijder deze uit je lichaam en tik op \"Doorgaan\"";
 
 /* Insulin Unit */
 "U" = "E";
@@ -460,7 +460,7 @@
 "Prepare site." = "Bereid de plaats op je lichaam voor op de Pod.";
 
 /* Label text for step two of attach pod instructions */
-"Remove blue Pod needle cap and check cannula. Then remove paper backing." = "Verwijder de blauwe Pod naaldkap en controleer de canule. Verwijder vervolgens de papieren achterkant.";
+"Remove blue Pod needle cap and check cannula. Then remove paper backing." = "Verwijder de blauwe naalddop van de Pod en controleer de canule. Verwijder vervolgens de beschermlaag van de hechtstrip.";
 
 /* Label text for step three of attach pod instructions */
 "Check Pod, apply to site, then confirm pod attachment." = "Pod controleren, breng aan op de plek op je lichaam, dan Pod bevestigen.";
@@ -475,7 +475,7 @@
 "Confirm Pod Attachment" = "Bevestig Pod plaatsing";
 
 /* Alert message body for confirm pod attachment */
-"Please confirm that the Pod is securely attached to your body.\n\nThe cannula can be inserted only once with each Pod. Tap “Confirm” when Pod is attached." = "Controleer of de Pod goed aan je lichaam is bevestigd.\n\nDe canule kan slechts eenmaal per Pod worden ingebracht. Tik op \"Bevestigen\" wanneer de Pod is bevestigd.";
+"Please confirm that the Pod is securely attached to your body.\n\nThe cannula can be inserted only once with each Pod. Tap “Confirm” when Pod is attached." = "Controleer of de Pod goed aan je lichaam is bevestigd.\n\nDe canule kan slechts eenmaal per Pod worden ingebracht. Tik op \"Bevestigen\" wanneer de Pod goed is aangebracht op je lichaam.";
 
 /* Button title for confirm attachment option */
 "Confirm" = "Bevestig";
@@ -556,7 +556,7 @@
 "Omnipod Reminders" = "Omnipod herinneringen";
 
 /* Footer text for omnipod reminders section */
-"The app configures a reminder on the pod to notify you in advance of Pod expiration. Set the number of hours advance notice you would like to configure when pairing a new Pod." = "iAPS configureert een herinnering op de Pod om je vooraf op de hoogte te stellen van het verstrijken van de Pod. Stel het aantal uren vooraf in dat je wilt instellen voor het koppelen van een nieuwe Pod.";
+"The app configures a reminder on the pod to notify you in advance of Pod expiration. Set the number of hours advance notice you would like to configure when pairing a new Pod." = "iAPS configureert een herinnering op de Pod om je vooraf op de hoogte te stellen van het verlopen van de Pod. Stel het aantal uren vooraf in dat je wilt instellen voor het koppelen van een nieuwe Pod.";
 
 /* Footer text for scheduled reminder area */
 "This is a reminder that you scheduled when you paired your current Pod." = "Dit is een herinnering die je hebt gepland toen je je huidige Pod koppelde.";
@@ -637,7 +637,7 @@
 "Missing Config" = "Configuratie ontbreekt";
 
 /* Alert format string for missing temp basal configuration. */
-"This PumpManager has not been configured with a maximum basal rate because it was added before manual temp basal was a feature. Please go to therapy settings -> delivery limits and set a new maximum basal rate." = "Deze Pompmanager is niet geconfigureerd met een maximale basaalstand omdat het is toegevoegd voordat handmatig tijdelijke basaal een functie was. Ga naar therapie instellingen -> afleverlimieten en stel een nieuwe maximale basaalstand in.";
+"This PumpManager has not been configured with a maximum basal rate because it was added before manual temp basal was a feature. Please go to therapy settings -> delivery limits and set a new maximum basal rate." = "Deze pompmanager is niet geconfigureerd met een maximale basaalstand omdat het is toegevoegd voordat handmatig tijdelijke basaal een functie was. Ga naar therapie instellingen -> afleverlimieten en stel een nieuwe maximale basaalstand in.";
 
 /* Label text for expiration reminder default row */
 "Expiration Reminder Default" = "Herinnering vervaldatum ingeschakeld";

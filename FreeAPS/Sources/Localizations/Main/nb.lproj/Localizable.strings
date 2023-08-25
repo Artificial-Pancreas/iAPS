@@ -468,10 +468,10 @@ Enact a temp Basal or a temp target */
 "History" = "Historikk";
 
 /* Nightscout option */
-"Upload" = "Upload";
+"Upload" = "Last opp";
 
 /* Nightscout option */
-"Allow Uploads" = "Allow Uploads";
+"Allow Uploads" = "Tillat opplasting";
 
 /* Type of CGM or glucose source */
 "Type" = "Type";
@@ -966,7 +966,7 @@ Enact a temp Basal or a temp target */
 "Carbs" = "Karbo";
 
 /* Food Type / Meal Note */
-"Note" = "Note";
+"Note" = "Notat";
 
 /* */
 "Temp Basal" = "Midlertidig basal";
@@ -1044,10 +1044,10 @@ Enact a temp Basal or a temp target */
 "Autosense" = "Autosense";
 
 /* Insulin sensitivity config header */
-"Dynamic Sensitivity" = "Dynamic Sensitivity";
+"Dynamic Sensitivity" = "Dynamisk Sensitivitet";
 
 /* Autotune config */
-"Only Autotune Basal Insulin" = "Only Autotune Basal Insulin";
+"Only Autotune Basal Insulin" = "Bare bruk Autotune på basalinsulin";
 
 /* Debug option view Pump History */
 "Pump History" = "Pumpehistorikk";
@@ -1099,7 +1099,7 @@ Enact a temp Basal or a temp target */
 "For write data to Apple Health you must give permissions in Settings > Health > Data Access" = "For å skrive data til Apple Health må du gi rettigheter i Innstillinger > Helse > Datatilgang";
 
 /* */
-"This allows iAPS to read from and write to Apple Heath. You must also give permissions in Settings > Health > Data Access. If you enter a glucose value into Apple Health, open iAPS to confirm it shows up." = "This allows iAPS to read from and write to Apple Heath. You must also give permissions in Settings > Health > Data Access. If you enter a glucose value into Apple Health, open iAPS to confirm it shows up.";
+"This allows iAPS to read from and write to Apple Heath. You must also give permissions in Settings > Health > Data Access. If you enter a glucose value into Apple Health, open iAPS to confirm it shows up." = "Dette tillater at iAPS leser og skriver til Apple Helse. Du må også gi tillatelse under Innstillinger > Helse > Datatilgang. Hvis du legger inn en blodsukkerverdi i Apple Helse, bør du åpne iAPS for å se at verdien dukker opp.";
 
 /* New ALerts ------------------------- */
 /* Info title */
@@ -1802,7 +1802,7 @@ Enact a temp Basal or a temp target */
 "Max COB" = "Maks COB";
 
 /* "Max COB" */
-"The default of maxCOB is 120. (If someone enters more carbs in one or multiple entries, iAPS will cap COB to maxCOB and keep it at maxCOB until the carbs entered above maxCOB have shown to be absorbed. Essentially, this just limits UAM as a safety cap against weird COB calculations due to fluky data.)" = "The default of maxCOB is 120. (If someone enters more carbs in one or multiple entries, iAPS will cap COB to maxCOB and keep it at maxCOB until the carbs entered above maxCOB have shown to be absorbed. Essentially, this just limits UAM as a safety cap against weird COB calculations due to fluky data.)";
+"The default of maxCOB is 120. (If someone enters more carbs in one or multiple entries, iAPS will cap COB to maxCOB and keep it at maxCOB until the carbs entered above maxCOB have shown to be absorbed. Essentially, this just limits UAM as a safety cap against weird COB calculations due to fluky data.)" = "Standardverdi for maxCOB er 120. (Hvis noen legger til flere karbohydrater i en eller flere oppføringer, vil iAPS begrense COB i henhold til maxCOB frem til registreringen over maxCOB er absorbert. I bunn og grunn er dette bare en begrensning for UAM, slik at det ikke blir gjort feilberegninger ved dårlige data.)";
 
 /* Headline "Bolus Snooze DIA Divisor" */
 "Bolus Snooze DIA Divisor" = "Divisor for Bolus Snooze";
