@@ -341,6 +341,9 @@ Enact a temp Basal or a temp target */
 /* Max setting */
 "Max Bolus" = "最大大剂量";
 
+/* Max setting */
+"Max Carbs" = "Max Carbs";
+
 /* */
 "Pump Settings" = "泵设置";
 
@@ -452,9 +455,6 @@ Enact a temp Basal or a temp target */
 /* Lower target */
 "Low target" = "血糖低目标";
 
-/*  */
-"Target Ranges" = "目标范围：";
-
 /* When bolusing */
 "Bolusing" = "注射中";
 
@@ -467,8 +467,11 @@ Enact a temp Basal or a temp target */
 /* Header */
 "History" = "历史";
 
-/* CGM option */
-"Upload glucose to Nightscout" = "将葡萄糖上传到 Nightscout";
+/* Nightscout option */
+"Upload" = "Upload";
+
+/* Nightscout option */
+"Allow Uploads" = "Allow Uploads";
 
 /* Type of CGM or glucose source */
 "Type" = "类型";
@@ -962,6 +965,9 @@ Enact a temp Basal or a temp target */
 /* */
 "Carbs" = "碳水化合物";
 
+/* Food Type / Meal Note */
+"Note" = "Note";
+
 /* */
 "Temp Basal" = "临时基础率";
 
@@ -1037,6 +1043,12 @@ Enact a temp Basal or a temp target */
 /* Debug option view Autosense */
 "Autosense" = "Autosense";
 
+/* Insulin sensitivity config header */
+"Dynamic Sensitivity" = "Dynamic Sensitivity";
+
+/* Autotune config */
+"Only Autotune Basal Insulin" = "Only Autotune Basal Insulin";
+
 /* Debug option view Pump History */
 "Pump History" = "Pump History";
 
@@ -1087,7 +1099,7 @@ Enact a temp Basal or a temp target */
 "For write data to Apple Health you must give permissions in Settings > Health > Data Access" = "若要将数据写入苹果健康，您必须在“设置 > Health > 数据访问权限”中授予权限";
 
 /* */
-"After you create glucose records in the Health app, please open iAPS to help us guaranteed transfer changed data" = "在您在 Health App中创建血糖记录后，请打开 iAPS，以帮助我们保证传输数据已更改";
+"This allows iAPS to read from and write to Apple Heath. You must also give permissions in Settings > Health > Data Access. If you enter a glucose value into Apple Health, open iAPS to confirm it shows up." = "This allows iAPS to read from and write to Apple Heath. You must also give permissions in Settings > Health > Data Access. If you enter a glucose value into Apple Health, open iAPS to confirm it shows up.";
 
 /* New ALerts ------------------------- */
 /* Info title */
@@ -1163,6 +1175,8 @@ Enact a temp Basal or a temp target */
 
 /* */
 "Normal " = "Normal ";
+
+"Currently no Override active" = "Currently no Override active";
 
 /* */
 "Total Insulin Adjustment" = "Total Insulin Adjustment";
@@ -1790,7 +1804,7 @@ Enact a temp Basal or a temp target */
 "Max COB" = "Max COB";
 
 /* "Max COB" */
-"This defaults maxCOB to 120 because that’s the most a typical body can absorb over 4 hours. (If someone enters more carbs or stacks more; OpenAPS will just truncate dosing based on 120. Essentially, this just limits AMA as a safety cap against weird COB calculations due to fluky data.)" = "默认把maxCOB设为120，因为一般来说这是身体在4小时内所能吸收的最多的碳水化合物。（如果有人输入更多的碳水化合物或堆积更多的碳水化合物；OpenAPS将只是根据120来分配剂量。从本质上讲，这只是对AMA的限制，作为一个安全上限，以防止由于数据不稳定而导致的奇怪的COB计算)";
+"The default of maxCOB is 120. (If someone enters more carbs in one or multiple entries, iAPS will cap COB to maxCOB and keep it at maxCOB until the carbs entered above maxCOB have shown to be absorbed. Essentially, this just limits UAM as a safety cap against weird COB calculations due to fluky data.)" = "The default of maxCOB is 120. (If someone enters more carbs in one or multiple entries, iAPS will cap COB to maxCOB and keep it at maxCOB until the carbs entered above maxCOB have shown to be absorbed. Essentially, this just limits UAM as a safety cap against weird COB calculations due to fluky data.)";
 
 /* Headline "Bolus Snooze DIA Divisor" */
 "Bolus Snooze DIA Divisor" = "Bolus Snooze DIA Divisor";

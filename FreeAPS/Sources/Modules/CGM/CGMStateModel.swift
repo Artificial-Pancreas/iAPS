@@ -28,18 +28,6 @@ extension CGM {
             cgmTransmitterDeviceAddress = UserDefaults.standard.cgmTransmitterDeviceAddress
 
             subscribeSetting(\.useCalendar, on: $createCalendarEvents) { createCalendarEvents = $0 }
-            subscribeSetting(\.uploadGlucose, on: $uploadGlucose, initial: { uploadGlucose = $0 }, didSet: { val in
-                if let cgmManagerG5 = self.cgmManager.glucoseSource.cgmManager as? G5CGMManager {
-                    cgmManagerG5.shouldSyncToRemoteService = val
-                }
-                if let cgmManagerG6 = self.cgmManager.glucoseSource.cgmManager as? G6CGMManager {
-                    cgmManagerG6.shouldSyncToRemoteService = val
-                }
-                if let cgmManagerG7 = self.cgmManager.glucoseSource.cgmManager as? G7CGMManager {
-                    cgmManagerG7.uploadReadings = val
-                }
-            })
-
             subscribeSetting(\.smoothGlucose, on: $smoothGlucose, initial: { smoothGlucose = $0 })
 
             $cgm
@@ -91,7 +79,6 @@ extension CGM.StateModel: CompletionDelegate {
         }
         // refresh the upload options
         uploadGlucose = settingsManager.settings.uploadGlucose
-
         cgmManager.updateGlucoseSource()
     }
 }

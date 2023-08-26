@@ -9,7 +9,7 @@
 "Multiple Command Alert" = "Waarschuwing voor meerdere commando's";
 
 /* Alert content title for userPodExpiration pod alert */
-"Pod Expiration Reminder" = "Herinnering over de vervaltijd van uw Pod";
+"Pod Expiration Reminder" = "Waarschuwing dat je Pod vervalt";
 
 /* Alert content title for podExpiring pod alert */
 "Pod Expired" = "Pod verlopen";
@@ -48,7 +48,7 @@
 "Suspend In Progress Reminder" = "Onderbreek in voortgang herinnering";
 
 /* Alert content body for suspendEnded pod alert */
-"The insulin suspension period has ended.\n\nYou can resume delivery from the banner on the home screen or from your pump settings screen. You will be reminded again in 15 minutes." = "De insuline opschortingsperiode is afgelopen.\n\nU kunt de toediening hervatten via de banner op het beginscherm of via de pompinstellingen. U wordt na 15 minuten opnieuw herinnerd.";
+"The insulin suspension period has ended.\n\nYou can resume delivery from the banner on the home screen or from your pump settings screen. You will be reminded again in 15 minutes." = "De insuline opschortingsperiode is afgelopen.\n\nJe kunt de toediening hervatten via de banner op het beginscherm of via de pompinstellingen. Je wordt na 15 minuten opnieuw herinnerd.";
 
 /* Alert content body for finishSetupReminder pod alert */
 "Please finish pairing your pod." = "Voltooi alstublieft de koppeling van je pod.";
@@ -57,7 +57,7 @@
 "The time on your pump is different from the current time. You can review the pump time and and sync to current time in settings." = "De pomptijd verschilt van de huidige tijd. Je kunt de pomptijd bekijken en synchroniseren met de huidige tijd in instellingen.";
 
 /* Alert notification body for suspendEnded pod alert user notification */
-"Suspension time is up. Open the app and resume." = "Opschorting tijd is voorbij. Open de app en hervat.";
+"Suspension time is up. Open the app and resume." = "Opschorting tijd is voorbij. Open iAPS en hervat.";
 
 /* Action button default text for PodAlerts */
 "Ok" = "OK";
@@ -394,10 +394,10 @@
 "Failed to Cancel Manual Basal" = "Annuleren van handmatige basaal mislukt";
 
 /* */
-"Please deactivate the pod. When deactivation is complete, you may remove it and pair a new pod." = "Deactiveer de pod. Wanneer de deactivering voltooid is, kunt u hem verwijderen en een nieuwe pod koppelen.";
+"Please deactivate the pod. When deactivation is complete, you may remove it and pair a new pod." = "Deactiveer de pod. Wanneer de deactivering voltooid is, kun je hem verwijderen en een nieuwe Pod koppelen.";
 
 /* Instructions for deactivate pod when pod not on body */
-"Please deactivate the pod. When deactivation is complete, you may pair a new pod." = "Deactiveer de pod. Wanneer de deactivering voltooid is, kunt u hem verwijderen en een nieuwe pod koppelen.";
+"Please deactivate the pod. When deactivation is complete, you may pair a new pod." = "Deactiveer de Pod. Wanneer de deactivering voltooid is, kun je hem verwijderen en een nieuwe Pod koppelen.";
 
 /* Deactivate pod action button */
 "Deactivate Pod" = "Deactiveer Pod";
@@ -415,7 +415,7 @@
 "Continue" = "Vervolg";
 
 /* Format string for recovery suggestion during deactivate pod. */
-"There was a problem communicating with the pod. If this problem persists, tap Discard Pod. You can then activate a new Pod." = "Er was een probleem met de communicatie met de pod. Als dit probleem zich blijft voordoen, tik dan op 'weggooien'. U kunt dan een nieuwe Pod activeren.";
+"There was a problem communicating with the pod. If this problem persists, tap Discard Pod. You can then activate a new Pod." = "Er was een communicatieprobleem met de Pod. Als dit probleem zich blijft voordoen, tik dan op 'weggooien'. Je kunt dan een nieuwe Pod activeren.";
 
 /* Text for discard pod button */
 "Discard Pod" = "Pod verwijderen";
@@ -424,7 +424,7 @@
 "Remove Pod from Body" = "Verwijder Pod uit het lichaam";
 
 /* Alert message body for confirm pod attachment */
-"Your Pod may still be delivering Insulin.\nRemove it from your body, then tap “Continue.“" = "Mogelijk levert uw Pod nog steeds insuline op.\nVerwijder deze uit uw lichaam en tik op \"Doorgaan\"";
+"Your Pod may still be delivering Insulin.\nRemove it from your body, then tap “Continue.“" = "Mogelijk levert je Pod nog steeds insuline.\nVerwijder deze uit je lichaam en tik op \"Doorgaan\"";
 
 /* Insulin Unit */
 "U" = "E";
@@ -460,10 +460,10 @@
 "Prepare site." = "Bereid de plaats op je lichaam voor op de Pod.";
 
 /* Label text for step two of attach pod instructions */
-"Remove blue Pod needle cap and check cannula. Then remove paper backing." = "Verwijder de blauwe Pod naaldkap en controleer de canule. Verwijder vervolgens de papieren achterkant.";
+"Remove blue Pod needle cap and check cannula. Then remove paper backing." = "Verwijder de blauwe naalddop van de Pod en controleer de canule. Verwijder vervolgens de beschermlaag van de hechtstrip.";
 
 /* Label text for step three of attach pod instructions */
-"Check Pod, apply to site, then confirm pod attachment." = "Pod controleren, breng aan op de plek op je lichaam, dan pod bevestigen.";
+"Check Pod, apply to site, then confirm pod attachment." = "Pod controleren, breng aan op de plek op je lichaam, dan Pod bevestigen.";
 
 /* Action button title for attach pod view */
 "Continue" = "Vervolg";
@@ -475,7 +475,7 @@
 "Confirm Pod Attachment" = "Bevestig Pod plaatsing";
 
 /* Alert message body for confirm pod attachment */
-"Please confirm that the Pod is securely attached to your body.\n\nThe cannula can be inserted only once with each Pod. Tap “Confirm” when Pod is attached." = "Controleer of de Pod goed aan uw lichaam is bevestigd.\n\nDe canule kan slechts eenmaal per Pod worden ingebracht. Tik op \"Bevestigen\" wanneer de Pod is bevestigd.";
+"Please confirm that the Pod is securely attached to your body.\n\nThe cannula can be inserted only once with each Pod. Tap “Confirm” when Pod is attached." = "Controleer of de Pod goed aan je lichaam is bevestigd.\n\nDe canule kan slechts eenmaal per Pod worden ingebracht. Tik op \"Bevestigen\" wanneer de Pod goed is aangebracht op je lichaam.";
 
 /* Button title for confirm attachment option */
 "Confirm" = "Bevestig";
@@ -490,10 +490,10 @@
 "Inserted" = "Ingebracht";
 
 /* Check Cannula */
-"Check Cannula" = "Check cannule";
+"Check Cannula" = "Check canule";
 
 /* */
-"Is the cannula inserted properly?" = "Is de cannule correct ingebracht?";
+"Is the cannula inserted properly?" = "Is de canule correct ingebracht?";
 
 /* Description of proper cannula insertion */
 "The window on the top of the Pod should be colored pink when the cannula is properly inserted into the skin." = "Het venster aan de bovenkant van de Pod moet roze gekleurd zijn wanneer de canule goed in de huid is ingebracht.";
@@ -517,7 +517,7 @@
 "Deactivated" = "Uitgeschakeld";
 
 /* Format string for instructions for setup complete view. (1: app name) */
-"Your Pod is ready for use.\n\n%1$@ will remind you to change your pod before it expires. You can change this to a time convenient for you." = "Uw Pod is klaar voor gebruik.\n\n%1$@ zal u eraan herinneren om uw Pod te vervangen voordat deze verloopt. U kunt dit veranderen in een tijdstip dat u schikt.";
+"Your Pod is ready for use.\n\n%1$@ will remind you to change your pod before it expires. You can change this to a time convenient for you." = "Je Pod is klaar voor gebruik.\n\n%1$@ zal je eraan herinneren om je Pod te vervangen voordat deze verloopt. Je kunt dit veranderen in een tijdstip dat je beter uitkomt.";
 
 /* */
 "Scheduled Reminder" = "Geplande herinnering";
@@ -556,22 +556,22 @@
 "Omnipod Reminders" = "Omnipod herinneringen";
 
 /* Footer text for omnipod reminders section */
-"The app configures a reminder on the pod to notify you in advance of Pod expiration. Set the number of hours advance notice you would like to configure when pairing a new Pod." = "De app configureert een herinnering op de Pod om u vooraf op de hoogte te stellen van het verstrijken van de Pod. Stel het aantal uren vooraf in dat u wilt instellen voor het koppelen van een nieuwe Pod.";
+"The app configures a reminder on the pod to notify you in advance of Pod expiration. Set the number of hours advance notice you would like to configure when pairing a new Pod." = "iAPS configureert een herinnering op de Pod om je vooraf op de hoogte te stellen van het verlopen van de Pod. Stel het aantal uren vooraf in dat je wilt instellen voor het koppelen van een nieuwe Pod.";
 
 /* Footer text for scheduled reminder area */
-"This is a reminder that you scheduled when you paired your current Pod." = "Dit is een herinnering die u hebt gepland toen u uw huidige Pod koppelde.";
+"This is a reminder that you scheduled when you paired your current Pod." = "Dit is een herinnering die je hebt gepland toen je je huidige Pod koppelde.";
 
 /* */
 "Scheduled Reminder" = "Geplande herinnering";
 
 /* Footer text for low reservoir value row */
-"The App notifies you when the amount of insulin in the Pod reaches this level." = "De App meldt u wanneer de hoeveelheid insuline in de Pod dit niveau bereikt.";
+"The App notifies you when the amount of insulin in the Pod reaches this level." = "iAPS meldt u wanneer de hoeveelheid insuline in de Pod dit niveau bereikt.";
 
 /* Description text for critical alerts */
 "Critical Alerts" = "Kritieke waarschuwingen";
 
 /* Description text for critical alerts */
-"The reminders above will not sound if your device is in Silent or Do Not Disturb mode.\n\nThere are other critical Pod alerts and alarms that will sound even if your device is set to Silent or Do Not Disturb mode." = "De bovenstaande meldingen waarschuwen zonder geluid als uw apparaat in de modus Stil of Niet storen staat.\n\nEr zijn andere belangrijke Pod waarschuwingen en -alarmen die wel klinken, zelfs als uw apparaat in de modus Stil of Niet storen staat.";
+"The reminders above will not sound if your device is in Silent or Do Not Disturb mode.\n\nThere are other critical Pod alerts and alarms that will sound even if your device is set to Silent or Do Not Disturb mode." = "De bovenstaande meldingen waarschuwen zonder geluid als je apparaat in de modus Stil of Niet storen staat.\n\nEr zijn andere belangrijke Pod waarschuwingen en -alarmen die wel klinken, zelfs als je apparaat in de modus Stil of Niet storen staat.";
 /* navigation title for notification settings */
 "Notification Settings" = "Instellingen voor meldingen";
 
@@ -637,7 +637,7 @@
 "Missing Config" = "Configuratie ontbreekt";
 
 /* Alert format string for missing temp basal configuration. */
-"This PumpManager has not been configured with a maximum basal rate because it was added before manual temp basal was a feature. Please go to therapy settings -> delivery limits and set a new maximum basal rate." = "Deze Pompmanager is niet geconfigureerd met een maximale basaalstand omdat het is toegevoegd voordat handmatig tijdelijke basaal een functie was. Ga naar therapie instellingen -> afleverlimieten en stel een nieuwe maximale basaalstand in.";
+"This PumpManager has not been configured with a maximum basal rate because it was added before manual temp basal was a feature. Please go to therapy settings -> delivery limits and set a new maximum basal rate." = "Deze pompmanager is niet geconfigureerd met een maximale basaalstand omdat het is toegevoegd voordat handmatig tijdelijke basaal een functie was. Ga naar therapie instellingen -> afleverlimieten en stel een nieuwe maximale basaalstand in.";
 
 /* Label text for expiration reminder default row */
 "Expiration Reminder Default" = "Herinnering vervaldatum ingeschakeld";
@@ -697,16 +697,16 @@
 "Skip Omnipod Onboarding?" = "Omnipod onboarding overslaan?";
 
 /* Description text on ExpirationReminderSetupView */
-"The App notifies you in advance of Pod expiration.\n\nScroll to set the number of hours advance notice you would like to have." = "De app informeert u voordat de Pod vervalt.\n\nScroll om het aantal uren vooraf kennisgeving aan te geven dat u wilt hebben.";
+"The App notifies you in advance of Pod expiration.\n\nScroll to set the number of hours advance notice you would like to have." = "iAPS informeert je voordat de Pod vervalt.\n\nScroll om het aantal uren vooraf kennisgeving aan te geven dat je wilt hebben.";
 
 /* Text of continue button on ExpirationReminderSetupView" */
 "Next" = "Volgende";
 
 /* */
-"Expiration Reminder" = "Herinnering over de vervaltijd";
+"Expiration Reminder" = "Let op je Pod vervalt";
 
 /* Description text on LowReservoirReminderSetupView */
-"The App notifies you when the amount of insulin in the Pod reaches this level (50-10 U).\n\nScroll to set the number of units at which you would like to be reminded." = "De app laat je weten wanneer de hoeveelheid insuline in de Pod dit niveau bereikt (50-10 E).\n\nScroll om het aantal eenheden in te stellen waarop u wilt worden herinnerd.";
+"The App notifies you when the amount of insulin in the Pod reaches this level (50-10 U).\n\nScroll to set the number of units at which you would like to be reminded." = "iAPS laat je weten wanneer de hoeveelheid insuline in de Pod dit niveau bereikt (50-10 E).\n\nScroll om het aantal eenheden in te stellen waarop u wilt worden herinnerd.";
 
 /* Label text for low reservoir value row */
 "Low Reservoir" = "Laag reservoir niveau";
@@ -754,7 +754,7 @@
 "Try again" = "Probeer opnieuw";
 
 /* Recovery suggestion for PodCommsError.tooManyPodsFound */
-"Move to a new area away from any other pods and try again." = "Verplaats naar een nieuw gebied dat uit de buurt is van andere pods en probeer opnieuw.";
+"Move to a new area away from any other pods and try again." = "Verplaats naar een nieuw gebied dat uit de buurt is van andere Pods en probeer opnieuw.";
 
 /* Recovery suggestion for PodCommsError.noPodsFound */
 "Make sure your pod is filled and nearby." = "Zorg ervoor dat je pod is ingevuld en in de buurt is.";

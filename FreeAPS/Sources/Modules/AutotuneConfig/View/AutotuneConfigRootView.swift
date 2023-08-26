@@ -31,6 +31,9 @@ extension AutotuneConfig {
             Form {
                 Section {
                     Toggle("Use Autotune", isOn: $state.useAutotune)
+                    if state.useAutotune {
+                        Toggle("Only Autotune Basal Insulin", isOn: $state.onlyAutotuneBasals)
+                    }
                 }
 
                 Section {
@@ -44,22 +47,24 @@ extension AutotuneConfig {
                 }
 
                 if let autotune = state.autotune {
-                    Section {
-                        HStack {
-                            Text("Carb ratio")
-                            Spacer()
-                            Text(isfFormatter.string(from: autotune.carbRatio as NSNumber) ?? "0")
-                            Text("g/U").foregroundColor(.secondary)
-                        }
-                        HStack {
-                            Text("Sensitivity")
-                            Spacer()
-                            if state.units == .mmolL {
-                                Text(isfFormatter.string(from: autotune.sensitivity.asMmolL as NSNumber) ?? "0")
-                            } else {
-                                Text(isfFormatter.string(from: autotune.sensitivity as NSNumber) ?? "0")
+                    if !state.onlyAutotuneBasals {
+                        Section {
+                            HStack {
+                                Text("Carb ratio")
+                                Spacer()
+                                Text(isfFormatter.string(from: autotune.carbRatio as NSNumber) ?? "0")
+                                Text("g/U").foregroundColor(.secondary)
                             }
-                            Text(state.units.rawValue + "/U").foregroundColor(.secondary)
+                            HStack {
+                                Text("Sensitivity")
+                                Spacer()
+                                if state.units == .mmolL {
+                                    Text(isfFormatter.string(from: autotune.sensitivity.asMmolL as NSNumber) ?? "0")
+                                } else {
+                                    Text(isfFormatter.string(from: autotune.sensitivity as NSNumber) ?? "0")
+                                }
+                                Text(state.units.rawValue + "/U").foregroundColor(.secondary)
+                            }
                         }
                     }
 

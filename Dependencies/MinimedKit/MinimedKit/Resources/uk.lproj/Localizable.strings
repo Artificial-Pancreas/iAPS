@@ -17,7 +17,7 @@
 "Bolus in progress" = "Подання болюса";
 
 /* Suggestions for diagnosing a command refused pump error */
-"Check that the pump is not suspended or priming, or has a percent temp basal type" = "Переконайтеся, що помпа не зупинена або не перебуває в режимі заправки, а так само, що ВБС в помпі встановлено в U/год, а не у відсотках";
+"Check that the pump is not suspended or priming, or has a percent temp basal type" = "Переконайтеся, що помпа не зупинена або не перебуває в режимі заправки, а так само, що ВБШ в помпі встановлено в U/год, а не у відсотках";
 
 /* Pump error code returned when command refused */
 "Command refused" = "Команду відхилено";

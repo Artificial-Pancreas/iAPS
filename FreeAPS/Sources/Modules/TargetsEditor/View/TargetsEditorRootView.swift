@@ -39,7 +39,7 @@ extension TargetsEditor {
                 }
             }
             .onAppear(perform: configureView)
-            .navigationTitle("Target Ranges")
+            .navigationTitle("Target Glucose")
             .navigationBarTitleDisplayMode(.automatic)
             .navigationBarItems(
                 trailing: EditButton()
