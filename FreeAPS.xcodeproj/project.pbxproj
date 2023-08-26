@@ -3216,7 +3216,7 @@
 				INFOPLIST_KEY_NSHealthShareUsageDescription = "Bla bla Share Health";
 				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "Bla bla Update Health";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				INFOPLIST_KEY_WKRunsIndependentlyOfCompanionApp = NO;
+				INFOPLIST_KEY_WKRunsIndependentlyOfCompanionApp = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -3256,7 +3256,7 @@
 				INFOPLIST_KEY_NSHealthShareUsageDescription = "Bla bla Share Health";
 				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "Bla bla Update Health";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				INFOPLIST_KEY_WKRunsIndependentlyOfCompanionApp = NO;
+				INFOPLIST_KEY_WKRunsIndependentlyOfCompanionApp = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
