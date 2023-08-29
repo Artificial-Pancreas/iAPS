@@ -37,7 +37,7 @@
 			<string>com.artificial-pancreas-iaps</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>freeaps-x</string>
+				<string>$(APP_URL_SCHEME)</string>
 			</array>
 		</dict>
 	</array>
