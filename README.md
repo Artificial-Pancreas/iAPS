@@ -20,14 +20,14 @@ Download and open in Xcode directly using the Code button: "Open with Xcode".
 
 ## To build directly in GitHub, without using Xcode: 
 
-Intructions:  
+Instructions:  
 https://github.com/Artificial-Pancreas/iAPS/blob/main/fastlane/testflight.md   
 Instructions in greater detail, but not iAPS-specific:  
 https://loopkit.github.io/loopdocs/gh-actions/gh-overview/
  
 ## Please understand that iAPS is:  
 - highly experimental and evolving rapidly.
-- not CE approved for therapy.
+- not CE or FDA approved for therapy.
 
 # Pumps
 
@@ -43,6 +43,7 @@ https://loopkit.github.io/loopdocs/gh-actions/gh-overview/
 
 - Dexcom G5  
 - Dexcom G6   
+- Dexcom ONE   
 - Dexcom G7   
 - Libre 1   
 - Libre 2 (European)   
@@ -55,7 +56,7 @@ iAPS app runs on iPhone or iPod. An iPhone 8 or newer is required.
 
 # Documentation
 
-[Discord iAPS - Server ](https://discord.gg/pmQjr9RDC)
+[Discord iAPS - Server ](https://discord.gg/2gBpxRT2g)
 
 [iAPS documentation (under development)](https://iaps.readthedocs.io/en/latest/)
 

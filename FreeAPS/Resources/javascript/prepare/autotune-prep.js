@@ -1,6 +1,6 @@
 function generate(pumphistory_data, profile_data, glucose_data, pumpprofile_data, carb_data = {} , categorize_uam_as_basal = false, tune_insulin_curve = false) {
-    if (typeof(profile_data.carb_ratio) === 'undefined' || profile_data.carb_ratio < 2) {
-        if (typeof(pumpprofile_data.carb_ratio) === 'undefined' || pumpprofile_data.carb_ratio < 2) {
+    if (typeof(profile_data.carb_ratio) === 'undefined' || profile_data.carb_ratio < 0.1) {
+        if (typeof(pumpprofile_data.carb_ratio) === 'undefined' || pumpprofile_data.carb_ratio < 0.1) {
             console.log('{ "carbs": 0, "mealCOB": 0, "reason": "carb_ratios ' + profile_data.carb_ratio + ' and ' + pumpprofile_data.carb_ratio + ' out of bounds" }');
             return console.error("Error: carb_ratios " + profile_data.carb_ratio + ' and ' + pumpprofile_data.carb_ratio + " out of bounds");
         } else {

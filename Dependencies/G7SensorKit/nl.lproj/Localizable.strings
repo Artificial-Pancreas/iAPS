@@ -2,7 +2,7 @@
 "Dexcom G7" = "Dexcom G7";
 
 /* Descriptive text on G7StartupView */
-"iAPS can read G7 CGM data, but you must still use the Dexcom G7 App for pairing, calibration, and other sensor management." = "iAPS kan G7 CGM-gegevens lezen, maar u moet nog steeds de Dexcom G7 App gebruiken voor koppeling, kalibratie en ander sensorbeheer.";
+"iAPS can read G7 CGM data, but you must still use the Dexcom G7 App for pairing, calibration, and other sensor management." = "iAPS kan G7 CGM-gegevens lezen, maar je moet nog steeds de Dexcom G7 App gebruiken voor koppeling, kalibratie en ander sensorbeheer.";
 
 /* Button title for starting setup */
 "Continue" = "Vervolg";

@@ -4,6 +4,9 @@ struct CarbsEntry: JSON, Equatable, Hashable {
     let id: String?
     let createdAt: Date
     let carbs: Decimal
+    let fat: Decimal?
+    let protein: Decimal?
+    let note: String?
     let enteredBy: String?
     let isFPU: Bool?
     let fpuID: String?
@@ -25,6 +28,9 @@ extension CarbsEntry {
         case id = "_id"
         case createdAt = "created_at"
         case carbs
+        case fat
+        case protein
+        case note
         case enteredBy
         case isFPU
         case fpuID

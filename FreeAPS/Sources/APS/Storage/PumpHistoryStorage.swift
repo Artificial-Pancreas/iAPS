@@ -230,6 +230,8 @@ final class BasePumpHistoryStorage: PumpHistoryStorage, Injectable {
                     insulin: nil,
                     notes: nil,
                     carbs: nil,
+                    fat: nil,
+                    protein: nil,
                     targetTop: nil,
                     targetBottom: nil
                 ))
@@ -260,6 +262,8 @@ final class BasePumpHistoryStorage: PumpHistoryStorage, Injectable {
                     insulin: event.amount,
                     notes: nil,
                     carbs: nil,
+                    fat: nil,
+                    protein: nil,
                     targetTop: nil,
                     targetBottom: nil
                 )
@@ -277,6 +281,8 @@ final class BasePumpHistoryStorage: PumpHistoryStorage, Injectable {
                     insulin: nil,
                     notes: nil,
                     carbs: Decimal(event.carbInput ?? 0),
+                    fat: nil,
+                    protein: nil,
                     targetTop: nil,
                     targetBottom: nil
                 )
@@ -300,6 +306,8 @@ final class BasePumpHistoryStorage: PumpHistoryStorage, Injectable {
                     insulin: nil,
                     notes: nil,
                     carbs: nil,
+                    fat: nil,
+                    protein: nil,
                     targetTop: nil,
                     targetBottom: nil
                 )
@@ -317,6 +325,8 @@ final class BasePumpHistoryStorage: PumpHistoryStorage, Injectable {
                     insulin: nil,
                     notes: nil,
                     carbs: nil,
+                    fat: nil,
+                    protein: nil,
                     targetTop: nil,
                     targetBottom: nil
                 )
@@ -334,6 +344,8 @@ final class BasePumpHistoryStorage: PumpHistoryStorage, Injectable {
                     insulin: nil,
                     notes: "Alarm \(String(describing: event.note)) \(event.type)",
                     carbs: nil,
+                    fat: nil,
+                    protein: nil,
                     targetTop: nil,
                     targetBottom: nil
                 )

@@ -14,7 +14,7 @@
 "OK" = "Ok";
 
 /* invlid config error description */
-"Peripheral command was invalid" = "Perifere commando was ongeldig";
+"Peripheral command was invalid" = "Apparaat commando was ongeldig";
 
 /* Timeout error description */
 "Peripheral did not respond in time" = "Apparaat reageerde niet op tijd";

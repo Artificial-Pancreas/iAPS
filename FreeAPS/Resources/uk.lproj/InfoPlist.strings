@@ -1,14 +1,14 @@
 /* Privacy - NFC Scan Usage Description */
-"NFCReaderUsageDescription" = "NFC використовується для сканування датчиків Libre.";
+"NFCReaderUsageDescription" = "NFC використовується для сканування сенсорів Libre.";
 
 /* Privacy - Bluetooth Always Usage Description */
-"NSBluetoothAlwaysUsageDescription" = "Bluetooth використовується для обміну з інсуліновими помпами та безперервним монітором глюкози";
+"NSBluetoothAlwaysUsageDescription" = "Bluetooth використовується для обміну з інсуліновими помпами та безперервним моніторингом глюкози";
 
 /* Privacy - Bluetooth Peripheral Usage Description */
-"NSBluetoothPeripheralUsageDescription" = "Bluetooth використовується для обміну з інсуліновими помпами та безперервним монітором глюкози";
+"NSBluetoothPeripheralUsageDescription" = "Bluetooth використовується для обміну з інсуліновими помпами та безперервним моніторингом глюкози";
 
 /* Privacy - Face ID Usage Description */
-"NSFaceIDUsageDescription" = "Авторизуйтесь для доступу до болюсу";
+"NSFaceIDUsageDescription" = "Для авторизованого болюсу";
 
 /* Privacy - Calendars Usage Description */
 "NSCalendarsUsageDescription" = "Для створення нових подій глюкози використовується календар.";

@@ -1,7 +1,7 @@
 //для monitor/meal.json параметры: monitor/pumphistory-24h-zoned.json settings/profile.json monitor/clock-zoned.json monitor/glucose.json settings/basal_profile.json monitor/carbhistory.json
 
 function generate(pumphistory_data, profile_data, clock_data, glucose_data, basalprofile_data, carbhistory = false) {
-    if (typeof(profile_data.carb_ratio) === 'undefined' || profile_data.carb_ratio < 3) {
+    if (typeof(profile_data.carb_ratio) === 'undefined' || profile_data.carb_ratio < 0.1) {
         return {"error":"Error: carb_ratio " + profile_data.carb_ratio + " out of bounds"};
     }
 

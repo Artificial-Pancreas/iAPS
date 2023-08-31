@@ -33,8 +33,7 @@ extension Bolus {
             broadcaster.register(SuggestionObserver.self, observer: self)
             units = settingsManager.settings.units
             percentage = settingsManager.settings.insulinReqPercentage
-            threshold = units == .mmolL ? settingsManager.preferences.threshold_setting.asMmolL : settingsManager.preferences
-                .threshold_setting
+            threshold = provider.suggestion?.threshold ?? 0
 
             if waitForSuggestionInitial {
                 apsManager.determineBasal()

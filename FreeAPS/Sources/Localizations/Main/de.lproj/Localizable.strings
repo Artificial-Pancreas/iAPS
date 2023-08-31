@@ -341,6 +341,9 @@ Enact a temp Basal or a temp target */
 /* Max setting */
 "Max Bolus" = "Maximaler Bolus";
 
+/* Max setting */
+"Max Carbs" = "Max Kohlenhydrate";
+
 /* */
 "Pump Settings" = "Pumpeneinstellungen";
 
@@ -452,9 +455,6 @@ Enact a temp Basal or a temp target */
 /* Lower target */
 "Low target" = "Untere Grenze";
 
-/*  */
-"Target Ranges" = "Zielbereiche";
-
 /* When bolusing */
 "Bolusing" = "Bolusabgabe";
 
@@ -467,8 +467,11 @@ Enact a temp Basal or a temp target */
 /* Header */
 "History" = "Verlauf";
 
-/* CGM option */
-"Upload glucose to Nightscout" = "Upload der BZ-Werte auf Nightscout";
+/* Nightscout option */
+"Upload" = "Upload";
+
+/* Nightscout option */
+"Allow Uploads" = "Erlaube Uploads der Daten";
 
 /* Type of CGM or glucose source */
 "Type" = "Typ";
@@ -962,6 +965,9 @@ Enact a temp Basal or a temp target */
 /* */
 "Carbs" = "Kohlenhydrate";
 
+/* Food Type / Meal Note */
+"Note" = "Notiz";
+
 /* */
 "Temp Basal" = "Temporäre Basalrate";
 
@@ -1037,6 +1043,12 @@ Enact a temp Basal or a temp target */
 /* Debug option view Autosense */
 "Autosense" = "Autosense";
 
+/* Insulin sensitivity config header */
+"Dynamic Sensitivity" = "Dynamische Empfindlichkeit";
+
+/* Autotune config */
+"Only Autotune Basal Insulin" = "Nur Autotune Basalinsulin";
+
 /* Debug option view Pump History */
 "Pump History" = "Insulinpumpen-Speicher";
 
@@ -1087,7 +1099,7 @@ Enact a temp Basal or a temp target */
 "For write data to Apple Health you must give permissions in Settings > Health > Data Access" = "Um Daten bei Apple Health zu speichern, müssen Sie unter „Einstellungen“ > „Health“ > „Datenzugriff & Geräte“ die entsprechenden Berechtigungen erteilen";
 
 /* */
-"After you create glucose records in the Health app, please open iAPS to help us guaranteed transfer changed data" = "Nachdem Sie Glukosedatensätze in der Health App erstellt oder gelöscht haben, öffnen Sie bitte iAPS, um die Übertragung der geänderten Daten sicher zu gewährleisten";
+"This allows iAPS to read from and write to Apple Heath. You must also give permissions in Settings > Health > Data Access. If you enter a glucose value into Apple Health, open iAPS to confirm it shows up." = "Dies erlaubt iAPS, von Apple Heath zu lesen und in Apple Heath zu schreiben. Sie müssen auch unter Einstellungen > Gesundheit > Datenzugriff Berechtigungen erteilen. Wenn Sie einen Glukosewert in Apple Health eingeben, öffnen Sie iAPS, um zu bestätigen, dass er angezeigt wird.";
 
 /* New ALerts ------------------------- */
 /* Info title */
@@ -1163,6 +1175,8 @@ Enact a temp Basal or a temp target */
 
 /* */
 "Normal " = "im Zielbereich ";
+
+"Currently no Override active" = "Derzeit keine Überschreibung aktiv";
 
 /* */
 "Total Insulin Adjustment" = "Gesamte Insulinanpassung";
@@ -1788,7 +1802,7 @@ Enact a temp Basal or a temp target */
 "Max COB" = "Max COB";
 
 /* "Max COB" */
-"This defaults maxCOB to 120 because that’s the most a typical body can absorb over 4 hours. (If someone enters more carbs or stacks more; OpenAPS will just truncate dosing based on 120. Essentially, this just limits AMA as a safety cap against weird COB calculations due to fluky data.)" = "Dies ist standardmäßig maxCOB auf 120 da dies die typische Menge ist, die ein Körper über 4 Stunden absorbieren kann. (Wenn jemand mehr Kohlenhydrate oder Menge eingibt; wird OpenAPS einfach die Dosierung auf Basis von 120 einschränken. Im Grunde beschränkt dies nur AMA als Sicherheitsgrenze gegen seltsame COB-Berechnungen aufgrund von unruhigen Daten.)";
+"The default of maxCOB is 120. (If someone enters more carbs in one or multiple entries, iAPS will cap COB to maxCOB and keep it at maxCOB until the carbs entered above maxCOB have shown to be absorbed. Essentially, this just limits UAM as a safety cap against weird COB calculations due to fluky data.)" = "Der Standardwert für maxCOB ist 120. (Wenn jemand in einem oder mehreren Einträgen mehr Kohlenhydrate eingibt, begrenzt iAPS den COB-Wert auf maxCOB und hält ihn bei maxCOB, bis die über maxCOB eingegebenen Kohlenhydrate nachweislich absorbiert wurden. Im Wesentlichen dient dies nur der Begrenzung von UAM als Sicherheitskappe gegen merkwürdige COB-Berechnungen aufgrund von fehlerhaften Daten)";
 
 /* Headline "Bolus Snooze DIA Divisor" */
 "Bolus Snooze DIA Divisor" = "Bolus DIA Schlummerdivisor";

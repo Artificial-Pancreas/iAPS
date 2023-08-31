@@ -83,7 +83,7 @@
 "Carbs required" = "Koolhydraten benodigd";
 
 /* */
-"Are you sure?" = "Weet u het zeker?";
+"Are you sure?" = "Weet je het zeker?";
 
 /* Bottom target temp */
 "Bottom target" = "Ondergrens doel";
@@ -122,7 +122,7 @@
 "A lower 'Half Basal Target' setting will reduce the basal and raise the ISF earlier, at a lower target glucose." = "Bij een lagere instelling \"Half Basaal Doel\" wordt de basaal verlaagd en de ISF eerder verhoogd, bij een lagere streefglucose.";
 
 /* */
-" Your setting: " = "Uw instelling: ";
+" Your setting: " = "Jouw instelling: ";
 
 /* */
 "mg/dl. Autosens.max limits the max endpoint" = "mg/dl. Autosens.max beperkt het maximum eindpunt";
@@ -341,6 +341,9 @@ Enact a temp Basal or a temp target */
 /* Max setting */
 "Max Bolus" = "Max bolus";
 
+/* Max setting */
+"Max Carbs" = "Max koolhydraten";
+
 /* */
 "Pump Settings" = "Pomp instellingen";
 
@@ -452,9 +455,6 @@ Enact a temp Basal or a temp target */
 /* Lower target */
 "Low target" = "Ondergrens doel";
 
-/*  */
-"Target Ranges" = "Streefdoel";
-
 /* When bolusing */
 "Bolusing" = "Bolussen";
 
@@ -467,8 +467,11 @@ Enact a temp Basal or a temp target */
 /* Header */
 "History" = "Geschiedenis";
 
-/* CGM option */
-"Upload glucose to Nightscout" = "Upload glucose naar Nightscout";
+/* Nightscout option */
+"Upload" = "Upload";
+
+/* Nightscout option */
+"Allow Uploads" = "Uploaden toestaan";
 
 /* Type of CGM or glucose source */
 "Type" = "Type";
@@ -582,7 +585,7 @@ Enact a temp Basal or a temp target */
 "About the Process" = "Over de werkwijze";
 
 /* */
-"Please make sure that your Libre 2 sensor is already activated and finished warming up. If you have other apps connecting to the sensor via bluetooth, these need to be shut down or uninstalled. \n\n You can only have one app communicating with the sensor via bluetooth. Then press the \"pariring and connection\" button below to start the process. Please note that the bluetooth connection might take up to a couple of minutes before it starts working." = "Zorg ervoor dat uw Libre 2-sensor al geactiveerd is en klaar is met opwarmen. Als er andere apps zijn die via bluetooth verbinding maken met de sensor dan moeten deze uitgeschakeld of verwijderd worden. \n\n Je kunt maar één app gebruiken die communiceert met de sensor via bluetooth. Druk vervolgens op de knop \"koppelen en verbinden\" hieronder om het proces te starten. Houd er rekening mee dat de bluetooth-verbinding tot enkele minuten kan duren voordat deze begint te werken.";
+"Please make sure that your Libre 2 sensor is already activated and finished warming up. If you have other apps connecting to the sensor via bluetooth, these need to be shut down or uninstalled. \n\n You can only have one app communicating with the sensor via bluetooth. Then press the \"pariring and connection\" button below to start the process. Please note that the bluetooth connection might take up to a couple of minutes before it starts working." = "Zorg ervoor dat je Libre 2-sensor al geactiveerd is en klaar is met opwarmen. Als er andere apps zijn die via bluetooth verbinding maken met de sensor dan moeten deze uitgeschakeld of verwijderd worden. \n\n Je kunt maar één app gebruiken die communiceert met de sensor via bluetooth. Druk vervolgens op de knop \"koppelen en verbinden\" hieronder om het proces te starten. Houd er rekening mee dat de bluetooth-verbinding tot enkele minuten kan duren voordat deze begint te werken.";
 
 /* */
 "Pairinginfo" = "Koppeling informatie";
@@ -606,7 +609,7 @@ Enact a temp Basal or a temp target */
 "Phone NFC required!" = "iPhone NFC vereist!";
 
 /* */
-"Your phone or app is not enabled for NFC communications, which is needed to pair to libre2 sensors" = "Je iPhone of app is niet ingeschakeld voor NFC communicatie, wat nodig is om te koppelen met Libre2 sensoren";
+"Your phone or app is not enabled for NFC communications, which is needed to pair to libre2 sensors" = "Je iPhone of iAPS is niet ingeschakeld voor NFC communicatie, wat nodig is om te koppelen met Libre2 sensoren";
 
 /* Bluetooth Power Off */
 "Bluetooth Power Off" = "Bluetooth uitschakelen";
@@ -648,7 +651,7 @@ Enact a temp Basal or a temp target */
 "No Sensor Detected" = "Geen sensor gevonden";
 
 /* This might be an intermittent problem, but please check that your transmitter is tightly secured over your sensor */
-"This might be an intermittent problem, but please check that your transmitter is tightly secured over your sensor" = "Dit kan een tijdelijk probleem zijn, maar controleer of uw zender stevig vastzit op uw sensor";
+"This might be an intermittent problem, but please check that your transmitter is tightly secured over your sensor" = "Dit kan een tijdelijk probleem zijn, maar controleer of je zender stevig vastzit op je sensor";
 
 /* New Sensor Detected */
 "New Sensor Detected" = "Nieuwe sensor gevonden";
@@ -684,7 +687,7 @@ Enact a temp Basal or a temp target */
 "Sensor expires soon" = "Sensor verloopt binnenkort";
 
 /* Battery is running low %@, consider charging your %@ device as soon as possible */
-"Battery is running low %@, consider charging your %@ device as soon as possible" = "Batterijniveau is laag %@, laad uw %@ apparaat zo snel mogelijk op";
+"Battery is running low %@, consider charging your %@ device as soon as possible" = "Batterijniveau is laag %@, laad je %@ apparaat zo snel mogelijk op";
 
 /* Extracting calibrationdata from sensor */
 "Extracting calibrationdata from sensor" = "Kalibratiegegevens uit de sensor halen";
@@ -888,7 +891,7 @@ Enact a temp Basal or a temp target */
 "Strength" = "Intensiteit";
 
 /* */
-"Hold the top of your iPhone near the sensor to pair" = "Houd de bovenkant van uw iPhone dicht bij de sensor om te koppelen";
+"Hold the top of your iPhone near the sensor to pair" = "Houd de bovenkant van je iPhone dicht bij de sensor om te koppelen";
 
 /* */
 "Sensor not found" = "Sensor niet gevonden";
@@ -961,6 +964,9 @@ Enact a temp Basal or a temp target */
 
 /* */
 "Carbs" = "Koolhydraten";
+
+/* Food Type / Meal Note */
+"Note" = "Opmerking";
 
 /* */
 "Temp Basal" = "Tijdelijk basaal";
@@ -1037,6 +1043,12 @@ Enact a temp Basal or a temp target */
 /* Debug option view Autosense */
 "Autosense" = "Autosense";
 
+/* Insulin sensitivity config header */
+"Dynamic Sensitivity" = "Dynamische gevoeligheid";
+
+/* Autotune config */
+"Only Autotune Basal Insulin" = "Alleen Autotune basale insuline";
+
 /* Debug option view Pump History */
 "Pump History" = "Pomp geschiedenis";
 
@@ -1087,7 +1099,7 @@ Enact a temp Basal or a temp target */
 "For write data to Apple Health you must give permissions in Settings > Health > Data Access" = "Als u gegevens wilt opslaan met Apple Gezondheid, moet u de juiste machtigingen verlenen in Instellingen > Gezondheid > Gegevenstoegang en apparaten";
 
 /* */
-"After you create glucose records in the Health app, please open iAPS to help us guaranteed transfer changed data" = "Na het maken van glucoserecords in de Gezondheid-app, opent u iAPS om ervoor te zorgen dat de gewijzigde gegevens veilig worden overgedragen";
+"This allows iAPS to read from and write to Apple Heath. You must also give permissions in Settings > Health > Data Access. If you enter a glucose value into Apple Health, open iAPS to confirm it shows up." = "Hiermee kan iAPS lezen van en schrijven naar Apple Heath. U moet ook machtigingen geven in Instellingen > Gezondheid > Gegevenstoegang. Als u een glucosewaarde invoert in Apple Health, opent u iAPS om te bevestigen dat deze wordt weergegeven.";
 
 /* New ALerts ------------------------- */
 /* Info title */
@@ -1135,7 +1147,7 @@ Enact a temp Basal or a temp target */
 "Override With A Factor Of " = "Overschrijvingsfactor ";
 
 /* Description */
-"Allows fat and protein to be converted into future carb equivalents using the Warsaw formula of kilocalories divided by 10.\n\nThis spreads the carb equivilants over a maximum duration setting that can be configured from 5-12 hours.\n\nDelay is time from now until the first future carb entry.\n\nInterval in minutes is how many minutes are between entries. The shorter the interval, the smoother the result. 10, 15, 20, 30, or 60 are reasonable choices.\n\nAdjustment factor is how much effect the fat and protein has on the entries. 1.0 is full effect (original Warsaw Method) and 0.5 is half effect. Note that you may find that your normal carb ratio needs to increase to a larger number if you begin adding fat and protein entries. For this reason, it is best to start with a factor of about 0.5 to ease into it.\n\nDefault settings: Time Cap: 8 h, Interval: 30 min, Factor: 0.5, Delay 60 min" = "Maakt het mogelijk vet en eiwit om te zetten in toekomstige koolhydraten met behulp van de Warschau formule van kilocalorieën gedeeld door 10.\n\nDit spreidt de koolhydraten over een maximale tijdsduur die kan worden ingesteld van 5-12 uur.\n\nVertraging is de tijd tussen nu en de eerste toekomstige koolhydrateninvoer.\n\nInterval in minuten is het aantal minuten tussen de invoer. Hoe korter het interval, hoe gladder het resultaat. Redelijke keuzes zijn 10, 15, 20, 30 of 60.\n\nAanpassingsfactor is het effect van vet en eiwit op de waarden. 1,0 is volledig effect (originele methode van Warschau) en 0,5 is half effect. Merk op dat u misschien zult merken dat uw normale koolhydratenratio moet stijgen tot een groter getal als u vet en eiwit gaat toevoegen. Daarom kunt u het beste beginnen met een factor van ongeveer 0,5 om het u gemakkelijk te maken.\n\nStandaardinstellingen: Tijdslimiet: 8 uur, Interval: 30 min, Factor: 0.5, Vertraging 60 min";
+"Allows fat and protein to be converted into future carb equivalents using the Warsaw formula of kilocalories divided by 10.\n\nThis spreads the carb equivilants over a maximum duration setting that can be configured from 5-12 hours.\n\nDelay is time from now until the first future carb entry.\n\nInterval in minutes is how many minutes are between entries. The shorter the interval, the smoother the result. 10, 15, 20, 30, or 60 are reasonable choices.\n\nAdjustment factor is how much effect the fat and protein has on the entries. 1.0 is full effect (original Warsaw Method) and 0.5 is half effect. Note that you may find that your normal carb ratio needs to increase to a larger number if you begin adding fat and protein entries. For this reason, it is best to start with a factor of about 0.5 to ease into it.\n\nDefault settings: Time Cap: 8 h, Interval: 30 min, Factor: 0.5, Delay 60 min" = "Maakt het mogelijk vet en eiwit om te zetten in toekomstige koolhydraten met behulp van de Warschau formule van kilocalorieën gedeeld door 10.\n\nDit spreidt de koolhydraten over een maximale tijdsduur die kan worden ingesteld van 5-12 uur.\n\nVertraging is de tijd tussen nu en de eerste toekomstige koolhydrateninvoer.\n\nInterval in minuten is het aantal minuten tussen de invoer. Hoe korter het interval, hoe gladder het resultaat. Redelijke keuzes zijn 10, 15, 20, 30 of 60.\n\nAanpassingsfactor is het effect van vet en eiwit op de waarden. 1,0 is volledig effect (originele methode van Warschau) en 0,5 is half effect. Merk op dat je misschien zult merken dat je normale koolhydratenratio moet stijgen tot een groter getal als je vet en eiwit gaat toevoegen. Daarom kun je het beste beginnen met een factor van ongeveer 0,5 om het jezelf gemakkelijk te maken.\n\nStandaardinstellingen: Tijdslimiet: 8 uur, Interval: 30 min, Factor: 0.5, Vertraging 60 min";
 
 /* FPU Settings Title */
 "Fat and Protein" = "Vetten & eiwitten";
@@ -1164,11 +1176,13 @@ Enact a temp Basal or a temp target */
 /* */
 "Normal " = "Normaal ";
 
+"Currently no Override active" = "Op dit moment geen 'Overschrijving' actief";
+
 /* */
 "Total Insulin Adjustment" = "Totale insuline aanpassing";
 
 /* */
-"Override your Basal, ISF, CR and Target profiles" = "Overschrijven van uw Basaal, ISF, CR en Doel profielen";
+"Override your Basal, ISF, CR and Target profiles" = "Overschrijven van je Basaal, ISF, CR en Doel profielen";
 
 /* */
 "Enable indefinitely" = "Onbeperkt inschakelen";
@@ -1222,16 +1236,16 @@ Enact a temp Basal or a temp target */
 "Return to Normal?" = "Terug naar normaal?";
 
 /* */
-"This will change settings back to your normal profile." = "Dit verandert de instellingen terug naar uw normale profiel.";
+"This will change settings back to your normal profile." = "Dit verandert de instellingen terug naar je normale profiel.";
 
 /* Start Profile Alert */
 "Start Profile" = "Start profiel";
 
 /* */
-"Your profile basal insulin will be adjusted with the override percentage and your profile ISF and CR will be inversly adjusted with the percentage." = "Uw basale insuline zal worden aangepast met het overschrijvingspercentage en uw ISF en CR profiel zullen direct worden aangepast aan het percentage.";
+"Your profile basal insulin will be adjusted with the override percentage and your profile ISF and CR will be inversly adjusted with the percentage." = "Je basale insuline zal worden aangepast met het overschrijvingspercentage en uw ISF en CR profiel zullen direct worden aangepast aan het percentage.";
 
 /* */
-"Starting this override will change your Profiles and/or your Target Glucose used for looping during the entire selected duration. Tapping ”Start Profile” will start your new profile or edit your current active profile." = "Door deze overschrijving te starten, verandert u uw profielen en/of uw streefwaarde voor glucose die voor de looping gedurende de hele geselecteerde duur wordt gebruikt. Door op \"Start profiel\" te tikken, start u uw nieuwe profiel of wijzigt u uw huidige actieve profiel.";
+"Starting this override will change your Profiles and/or your Target Glucose used for looping during the entire selected duration. Tapping ”Start Profile” will start your new profile or edit your current active profile." = "Door deze overschrijving te starten, verander je je profielen en/of je streefwaarde voor glucose die voor de looping gedurende de hele geselecteerde duur wordt gebruikt. Door op \"Start profiel\" te tikken, start je je nieuwe profiel of wijzig je huidige actieve profiel.";
 
 /* Change Target glucose in profile settings */
 "Override Profile Target" = "Overschrijven doelprofiel";
@@ -1311,7 +1325,7 @@ Enact a temp Basal or a temp target */
 "Eventual Glucose > Target Glucose, but glucose is predicted to drop down to " = "Voospelde glucose > doelglucose, maar de glucose wordt voorspeld dat de glucose eerst omlaag zal gaan tot ";
 
 /* Bolus pop-up / Alert string. Make translations concise! */
-"which is below your Threshold (" = "die onder uw drempelwaarde ligt (";
+"which is below your Threshold (" = "die onder je drempelwaarde ligt (";
 
 /* Bolus pop-up / Alert string. Make translations concise! */
 "Eventual Glucose > Target Glucose, but glucose is climbing slower than expected. Expected: " = "Voorspelde glucose > doelglucose maar de glucose daalt sneller dan verwacht.. Verwacht: ";
@@ -1361,7 +1375,7 @@ Enact a temp Basal or a temp target */
 "Save" = "Opslaan";
 
 /* Alert title for error when updating confidence reminder preference */
-"Failed to update confidence reminder preference." = "Kon de voorkeur voor vertrouwensherinnering niet bijwerken.";
+"Failed to update confidence reminder preference." = "Kon de voorkeur voor meldingen niet bijwerken.";
 
 /* */
 "No Error" = "Geen error";
@@ -1382,16 +1396,16 @@ Enact a temp Basal or a temp target */
 "No confidence reminders are used." = "Er worden geen meldingen met piepjes gebruikt.";
 
 /* Description for BeepPreference.manualCommands */
-"Confidence reminders will sound for commands you initiate, like bolus, cancel bolus, suspend, resume, save notification reminders, etc. When Loop automatically adjusts delivery, no confidence reminders are used." = "Piepjes uit de Pod zullen klinken voor commando's die u hebt geïnitieerd, zoals bolus, annulering, geschorst, hervatten, opslaan van meldingen etc. Als iAPS automatisch de levering wijzigt, worden er geen piepjes gebruikt.";
+"Confidence reminders will sound for commands you initiate, like bolus, cancel bolus, suspend, resume, save notification reminders, etc. When Loop automatically adjusts delivery, no confidence reminders are used." = "Piepjes uit de Pod zullen klinken voor commando's die je hebt geïnitieerd, zoals bolus, annulering, geschorst, hervatten, opslaan van meldingen etc. Als iAPS automatisch de levering wijzigt, worden er geen piepjes gebruikt.";
 
 /* Description for BeepPreference.extended */
-"Confidence reminders will sound when Loop automatically adjusts delivery as well as for commands you initiate." = "Piepjes zullen klinken als iAPS de levering automatisch aanpast evenals voor commando's die u initieert.";
+"Confidence reminders will sound when Loop automatically adjusts delivery as well as for commands you initiate." = "Piepjes zullen klinken als iAPS de levering automatisch aanpast evenals voor commando's die je initieert.";
 
 /* Label text for expiration reminder default row */
 "Expiration Reminder Default" = "Herinnering vervaldatum ingeschakeld";
 
 /* */
-"Expiration Reminder" = "Herinnering over de vervaltijd";
+"Expiration Reminder" = "Let op je Pod vervalt";
 
 /* */
 "Low Reservoir" = "Laag reservoir niveau";
@@ -1452,7 +1466,7 @@ Enact a temp Basal or a temp target */
 "Insert Cannula" = "Plaats canule";
 
 /* */
-"Check Cannula" = "Check cannule";
+"Check Cannula" = "Check canule";
 
 /* */
 "Setup Complete" = "Setup voltooid";
@@ -1534,7 +1548,7 @@ Enact a temp Basal or a temp target */
 "Readings" = "Aantal gelezen";
 
 /* CGM readings in statView */
-"Readings / 24h" = "Readings / 24h";
+"Readings / 24h" = "Afgelopen 24/h";
 
 /* Days of saved readings*/
 "Days" = "Dagen";
@@ -1616,7 +1630,7 @@ Enact a temp Basal or a temp target */
 
 /* --------------------------------------------------------  Dexcom G7 --------------------------------------*/
 
-"CGM Configuration" = "CGM configuratie";
+"CGM Configuration" = "CGM instellingen";
 
 "Heartbeat" = "Hartslag";
 
@@ -1641,7 +1655,7 @@ Enact a temp Basal or a temp target */
 "Rewind Resets Autosens" = "Terughalen resets autosens";
 
 /* ”Rewind Resets Autosens” */
-"This feature, enabled by default, resets the autosens ratio to neutral when you rewind your pump, on the assumption that this corresponds to a probable site change. Autosens will begin learning sensitivity anew from the time of the rewind, which may take up to 6 hours. If you usually rewind your pump independently of site changes, you may want to consider disabling this feature." = "Deze functie, die standaard is ingeschakeld, zet Autosense de ratio terug op neutraal wanneer je pomp terugdraait, ervan uitgaande dat dit een katheter- en reservoirwissel betekent. Autosens start opnieuw op vanaf het moment van terugkeer en het kan tot 6 uur duren om de gevoeligheid opnieuw te beoordelen. Als u uw pomp normaal gesproken onafhankelijk van de resevoir- en katheterwissel terugdraait, kunt u overwegen om deze functie uit te schakelen.";
+"This feature, enabled by default, resets the autosens ratio to neutral when you rewind your pump, on the assumption that this corresponds to a probable site change. Autosens will begin learning sensitivity anew from the time of the rewind, which may take up to 6 hours. If you usually rewind your pump independently of site changes, you may want to consider disabling this feature." = "Deze functie, die standaard is ingeschakeld, zet Autosense de ratio terug op neutraal wanneer je pomp terugdraait, ervan uitgaande dat dit een katheter- en reservoirwissel betekent. Autosens start opnieuw op vanaf het moment van terugkeer en het kan tot 6 uur duren om de gevoeligheid opnieuw te beoordelen. Als je je pomp normaal gesproken onafhankelijk van de resevoir- en katheterwissel terugdraait, kun je overwegen om deze functie uit te schakelen.";
 
 /* Headline "High Temptarget Raises Sensitivity" */
 "High Temptarget Raises Sensitivity" = "Hoog tijdelijk streefdoel verhoogt gevoeligheid";
@@ -1671,7 +1685,7 @@ Enact a temp Basal or a temp target */
 "Advanced Target Adjustments" = "Geavanceerde doelaanpassingen";
 
 /* ”Advanced Target Adjustments" */
-"This feature was previously enabled by default but will now default to false (will NOT be enabled automatically) in oref0 0.6.0 and beyond. (There is no need for this with 0.6.0). This feature lowers oref0’s target BG automatically when current BG and eventualBG are high. This helps prevent and mitigate high BG, but automatically switches to low-temping to ensure that BG comes down smoothly toward your actual target. If you find this behavior too aggressive, you can disable this feature. If you do so, please let us know so we can better understand what settings work best for everyone." = "Deze functie was in het verleden altijd geactiveerd, maar is nu standaard ingesteld op \"Uit\". Dit is niet langer nodig met oref 0.6.0. Deze functie verlaagt automatisch de bloedglucosedoelstelling van oref0 als de huidige BG of de verwachte BG hoog zijn. Dit helpt hoge BG te voorkomen en te beperken, maar schakelt automatisch over op lage gevoeligheid om ervoor te zorgen dat de BG zich soepel naar uw eigenlijke doel beweegt. Als u dit gedrag te agressief vindt, kunt u deze functie uitschakelen. Als u dat doet, laat het ons dan weten, zodat we beter kunnen begrijpen welke instellingen voor iedereen het beste werken.";
+"This feature was previously enabled by default but will now default to false (will NOT be enabled automatically) in oref0 0.6.0 and beyond. (There is no need for this with 0.6.0). This feature lowers oref0’s target BG automatically when current BG and eventualBG are high. This helps prevent and mitigate high BG, but automatically switches to low-temping to ensure that BG comes down smoothly toward your actual target. If you find this behavior too aggressive, you can disable this feature. If you do so, please let us know so we can better understand what settings work best for everyone." = "Deze functie was in het verleden altijd geactiveerd, maar is nu standaard ingesteld op \"Uit\". Dit is niet langer nodig met oref 0.6.0. Deze functie verlaagt automatisch de bloedglucosedoelstelling van oref0 als de huidige BG of de verwachte BG hoog zijn. Dit helpt hoge BG te voorkomen en te beperken, maar schakelt automatisch over op lage gevoeligheid om ervoor te zorgen dat de BG zich soepel naar je eigenlijke doel beweegt. Als je dit gedrag te agressief vindt, kun je deze functie uitschakelen. Als je dat doet, laat het ons dan weten, zodat we beter kunnen begrijpen welke instellingen voor iedereen het beste werken.";
 
 /* Headline "Exercise Mode" */
 "Exercise Mode" = "Beweging modus";
@@ -1689,7 +1703,7 @@ Enact a temp Basal or a temp target */
 "Skip Neutral Temps" = "Sla neutrale temps over";
 
 /* "Skip Neutral Temps" */
-"Defaults to false, so that iAPS will set temps whenever it can, so it will be easier to see if the system is working, even when you are offline. This means iAPS will set a “neutral” temp (same as your default basal) if no adjustments are needed. This is an old setting for OpenAPS to have the options to minimise sounds and notifications from the 'rig', that may wake you up during the night." = "Standaard ingesteld op uit, zodat iAPS tijdelijke basaal waardes zal instellen wanneer dat maar kan. het zal dus makkelijker zijn om te zien of het systeem werkt, zelfs als je offline bent. Dit betekent dat OpenAPS een \"neutraal\" basaal (hetzelfde als jouw standaard basaal) zal instellen als er geen aanpassingen nodig zijn. Dit is een oude instelling van OpenAPS om de optie te hebben om geluiden en meldingen te beperken waarvan je 's nachts misschien wakker kan worden. ";
+"Defaults to false, so that iAPS will set temps whenever it can, so it will be easier to see if the system is working, even when you are offline. This means iAPS will set a “neutral” temp (same as your default basal) if no adjustments are needed. This is an old setting for OpenAPS to have the options to minimise sounds and notifications from the 'rig', that may wake you up during the night." = "Standaard ingesteld op uit, zodat iAPS tijdelijke basaal waardes zal instellen wanneer dat maar kan. Het zal dus makkelijker zijn om te zien of het systeem werkt, zelfs als je offline bent. Dit betekent dat OpenAPS een \"neutraal\" basaal (hetzelfde als jouw standaard basaal) zal instellen als er geen aanpassingen nodig zijn. Dit is een oude instelling van OpenAPS om de optie te hebben om geluiden en meldingen te beperken waarvan je 's nachts misschien wakker kan worden. ";
 
 /* Headline "Unsuspend If No Temp” */
 "Unsuspend If No Temp" = "Schorsing opheffen als geen tijdelijk doel is ingesteld";
@@ -1788,7 +1802,7 @@ Enact a temp Basal or a temp target */
 "Max COB" = "Max COB";
 
 /* "Max COB" */
-"This defaults maxCOB to 120 because that’s the most a typical body can absorb over 4 hours. (If someone enters more carbs or stacks more; OpenAPS will just truncate dosing based on 120. Essentially, this just limits AMA as a safety cap against weird COB calculations due to fluky data.)" = "De standaard maximum COB van 120 is omdat een normaal lichaam niet meer dan dit in 4 uur kan absorberen. (Als er meer koolhydraten gestapeld worden; zal OpenAPS de dosering beperken tot de basis van 120 koolhydraten aan boord. In wezen beperkt dit alleen AMA als een veiligheidslimiet tegen afwijkende COB-berekeningen vanwege verkeerde gegevens)";
+"The default of maxCOB is 120. (If someone enters more carbs in one or multiple entries, iAPS will cap COB to maxCOB and keep it at maxCOB until the carbs entered above maxCOB have shown to be absorbed. Essentially, this just limits UAM as a safety cap against weird COB calculations due to fluky data.)" = "De standaardwaarde van maxCOB is 120. (Als iemand meer koolhydraten invoert in één of meerdere items, zal iAPS de COB begrenzen tot maxCOB en deze op maxCOB houden totdat is aangetoond dat de koolhydraten die boven maxCOB zijn ingevoerd, worden geabsorbeerd. In wezen beperkt dit alleen UAM als een veiligheidslimiet tegen rare COB-berekeningen als gevolg van onnauwkeurige gegevens)";
 
 /* Headline "Bolus Snooze DIA Divisor" */
 "Bolus Snooze DIA Divisor" = "Bolus snooze DIA deler";

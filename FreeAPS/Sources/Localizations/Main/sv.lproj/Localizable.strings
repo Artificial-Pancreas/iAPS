@@ -239,7 +239,7 @@
 "Insulin Sensitivities" = "Insulinkänslighet";
 
 /* */
-"Sensitivity Ratio" = "Autosens-kvot";
+"Sensitivity Ratio" = "Kvot (nämnare)";
 
 /*  */
 "Dismiss" = "Avfärda";
@@ -340,6 +340,9 @@ Enact a temp Basal or a temp target */
 
 /* Max setting */
 "Max Bolus" = "Max bolus";
+
+/* Max setting */
+"Max Carbs" = "Max antal kolhydrater";
 
 /* */
 "Pump Settings" = "Pumpinställningar";
@@ -452,9 +455,6 @@ Enact a temp Basal or a temp target */
 /* Lower target */
 "Low target" = "Undre målvärde";
 
-/*  */
-"Target Ranges" = "Målområden";
-
 /* When bolusing */
 "Bolusing" = "Ger bolus";
 
@@ -467,8 +467,11 @@ Enact a temp Basal or a temp target */
 /* Header */
 "History" = "Historik";
 
-/* CGM option */
-"Upload glucose to Nightscout" = "Ladda upp blodsocker till Nightscout";
+/* Nightscout option */
+"Upload" = "Ladda upp";
+
+/* Nightscout option */
+"Allow Uploads" = "Tillåt uppladdningar";
 
 /* Type of CGM or glucose source */
 "Type" = "Typ";
@@ -962,6 +965,9 @@ Enact a temp Basal or a temp target */
 /* */
 "Carbs" = "Kolhydrater";
 
+/* Food Type / Meal Note */
+"Note" = "Anteckning";
+
 /* */
 "Temp Basal" = "Temporär basal";
 
@@ -1037,6 +1043,12 @@ Enact a temp Basal or a temp target */
 /* Debug option view Autosense */
 "Autosense" = "Autosense";
 
+/* Insulin sensitivity config header */
+"Dynamic Sensitivity" = "Dynamisk insulinkänslighet";
+
+/* Autotune config */
+"Only Autotune Basal Insulin" = "Autojustera endast basalinställningar";
+
 /* Debug option view Pump History */
 "Pump History" = "Pumphistorik";
 
@@ -1087,7 +1099,7 @@ Enact a temp Basal or a temp target */
 "For write data to Apple Health you must give permissions in Settings > Health > Data Access" = "För att kunna skriva data till Apple Hälsa måste du först ge din tillåtelse i Inställningar > Hälsa > Datatillgång och enheter";
 
 /* */
-"After you create glucose records in the Health app, please open iAPS to help us guaranteed transfer changed data" = "Efter att du lagt till glukos i appen 'Hälsa', öppna iAPS för att bekräfta att överföring skett på rätt sätt";
+"This allows iAPS to read from and write to Apple Heath. You must also give permissions in Settings > Health > Data Access. If you enter a glucose value into Apple Health, open iAPS to confirm it shows up." = "Tillåt iAPS att använda databasen Apple Hälsa. För att se och ändra tillåtelser öppna 'Inställningar/Hälsa/Datatillgång och enheter' på din iPhone.";
 
 /* New ALerts ------------------------- */
 /* Info title */
@@ -1163,6 +1175,8 @@ Enact a temp Basal or a temp target */
 
 /* */
 "Normal " = "Normal ";
+
+"Currently no Override active" = "Inget undantag aktivt";
 
 /* */
 "Total Insulin Adjustment" = "Total justering av ditt insulinbehov";
@@ -1616,7 +1630,7 @@ Enact a temp Basal or a temp target */
 
 /* --------------------------------------------------------  Dexcom G7 --------------------------------------*/
 
-"CGM Configuration" = "Inställning av CGM";
+"CGM Configuration" = "CGM-inställning";
 
 "Heartbeat" = "Hjärtslag";
 
@@ -1788,7 +1802,7 @@ Enact a temp Basal or a temp target */
 "Max COB" = "Max mängd aktiva kolhydrater (COB)";
 
 /* "Max COB" */
-"This defaults maxCOB to 120 because that’s the most a typical body can absorb over 4 hours. (If someone enters more carbs or stacks more; OpenAPS will just truncate dosing based on 120. Essentially, this just limits AMA as a safety cap against weird COB calculations due to fluky data.)" = "Standardvärde 120, eftersom det är vad kroppen typiskt här anses absorbera över 4 timmar. (I händelse att någon matar in mer/överlappar med mer kolhydrater, kommer iAPS att minska dosering baserad på 120. I grund och botten begränsar detta endast AMA med ett tak, för skydd mot felaktiga aktiva kolhydrater-beräkningar på grund av opålitlig data.)";
+"The default of maxCOB is 120. (If someone enters more carbs in one or multiple entries, iAPS will cap COB to maxCOB and keep it at maxCOB until the carbs entered above maxCOB have shown to be absorbed. Essentially, this just limits UAM as a safety cap against weird COB calculations due to fluky data.)" = "The default of maxCOB is 120. (If someone enters more carbs in one or multiple entries, iAPS will cap COB to maxCOB and keep it at maxCOB until the carbs entered above maxCOB have shown to be absorbed. Essentially, this just limits UAM as a safety cap against weird COB calculations due to fluky data.)";
 
 /* Headline "Bolus Snooze DIA Divisor" */
 "Bolus Snooze DIA Divisor" = "Bolus \"snooze\" - nämnare";
