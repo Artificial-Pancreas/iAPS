@@ -11,6 +11,7 @@ extension NightscoutConfig {
         @Injected() private var glucoseStorage: GlucoseStorage!
         @Injected() private var healthKitManager: HealthKitManager!
         @Injected() private var cgmManager: FetchGlucoseManager!
+        @Injected() private var apsManager: APSManager!
 
         @Published var url = ""
         @Published var secret = ""
@@ -66,6 +67,10 @@ extension NightscoutConfig {
                     self.keychain.setValue(self.secret, forKey: Config.secretKey)
                 }
                 .store(in: &lifetime)
+        }
+
+        func pushSettings() {
+            apsManager.statistics(forceRun: true)
         }
 
         func backfillGlucose() {

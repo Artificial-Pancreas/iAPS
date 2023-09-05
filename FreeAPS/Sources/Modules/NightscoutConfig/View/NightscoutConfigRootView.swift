@@ -62,6 +62,9 @@ extension NightscoutConfig {
                 }
 
                 Section {
+                    Button("Push Settings") { state.pushSettings() }
+                        .disabled(state.url.isEmpty || state.connecting || state.backfilling)
+
                     Button("Backfill glucose") { state.backfillGlucose() }
                         .disabled(state.url.isEmpty || state.connecting || state.backfilling)
                 }
