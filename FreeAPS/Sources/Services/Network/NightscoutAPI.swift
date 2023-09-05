@@ -95,6 +95,8 @@ extension NightscoutAPI {
     }
 
     func fetchCarbs(sinceDate: Date? = nil) -> AnyPublisher<[CarbsEntry], Swift.Error> {
+        fetchCarbRatios()
+
         var components = URLComponents()
         components.scheme = url.scheme
         components.host = url.host
@@ -137,14 +139,14 @@ extension NightscoutAPI {
             .eraseToAnyPublisher()
     }
 
-    func fetchProfiles(sinceDate: Date? = nil) -> AnyPublisher<[BasalProfileEntry], Swift.Error> {
+    func fetchCarbRatios() -> AnyPublisher<[CarbRatios], Swift.Error> {
         var components = URLComponents()
         components.scheme = url.scheme
         components.host = url.host
         components.port = url.port
         components.path = Config.profilePath
         components.queryItems = [
-            URLQueryItem(name: "find[carbs][$exists]", value: "true"),
+            URLQueryItem(name: "find[carbratio][$exists]", value: "true"),
             URLQueryItem(
                 name: "find[enteredBy][$ne]",
                 value: CarbsEntry.manual.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)
@@ -154,13 +156,6 @@ extension NightscoutAPI {
                 value: NigtscoutTreatment.local.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)
             )
         ]
-        if let date = sinceDate {
-            let dateItem = URLQueryItem(
-                name: "find[created_at][$gt]",
-                value: Formatter.iso8601withFractionalSeconds.string(from: date)
-            )
-            components.queryItems?.append(dateItem)
-        }
 
         var request = URLRequest(url: components.url!)
         request.allowsConstrainedNetworkAccess = false
@@ -169,12 +164,12 @@ extension NightscoutAPI {
         if let secret = secret {
             request.addValue(secret.sha1(), forHTTPHeaderField: "api-secret")
         }
-
+        
         return service.run(request)
             .retry(Config.retryCount)
-            .decode(type: [BasalProfileEntry].self, decoder: JSONCoding.decoder)
-            .catch { error -> AnyPublisher<[BasalProfileEntry], Swift.Error> in
-                warning(.nightscout, "Carbs fetching error: \(error.localizedDescription)")
+            .decode(type: [CarbRatios].self, decoder: JSONCoding.decoder)
+            .catch { error -> AnyPublisher<[CarbRatios], Swift.Error> in
+                warning(.nightscout, "Ratios fetching error: \(error.localizedDescription)")
                 return Just([]).setFailureType(to: Swift.Error.self).eraseToAnyPublisher()
             }
             .eraseToAnyPublisher()
