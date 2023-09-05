@@ -182,7 +182,7 @@ final class BaseUserNotificationsManager: NSObject, UserNotificationsManager, In
         }
     }
 
-        private func sendGlucoseNotification() {
+    private func sendGlucoseNotification() {
         addAppBadge(glucose: nil)
 
         let glucose = glucoseStorage.recent()
@@ -196,7 +196,6 @@ final class BaseUserNotificationsManager: NSObject, UserNotificationsManager, In
 
         ensureCanSendNotification {
             var titles: [String] = []
-
             var notificationAlarm = false
 
             switch self.glucoseStorage.alarm {
@@ -210,22 +209,15 @@ final class BaseUserNotificationsManager: NSObject, UserNotificationsManager, In
                 notificationAlarm = true
             }
 
-            // if self.snoozeUntilDate > Date() {
-            //    titles.append(NSLocalizedString("(Snoozed)", comment: "(Snoozed)"))
-            //    notificationAlarm = false
-            // }
-
             let delta = glucose.count >= 2 ? glucoseValue - (glucose[glucose.count - 2].glucose ?? 0) : nil
-
             let body = self.glucoseText(glucoseValue: glucoseValue, delta: delta, direction: lastGlucose.direction) + self
                 .infoBody()
-            if self.snoozeUntilDate > Date() {
-                // titles.append(NSLocalizedString("(Snoozed)", comment: "(Snoozed)"))
-                notificationAlarm = false
-            } else
-            {
-                titles.append(body)
 
+            if self.snoozeUntilDate > Date() {
+                titles.append(NSLocalizedString("(Snoozed)", comment: "(Snoozed)"))
+                notificationAlarm = false
+            } else {
+                titles.append(body)
                 let content = UNMutableNotificationContent()
                 content.title = titles.joined(separator: " ")
                 content.body = body
