@@ -5,6 +5,7 @@ extension NightscoutConfig {
     struct RootView: BaseView {
         let resolver: Resolver
         @StateObject var state = StateModel()
+        @State private var showAlert = false
 
         private var portFormater: NumberFormatter {
             let formatter = NumberFormatter()
@@ -62,8 +63,20 @@ extension NightscoutConfig {
                 }
 
                 Section {
-                    Button("Push Settings") { state.pushSettings() }
-                        .disabled(state.url.isEmpty || state.connecting || state.backfilling)
+                    Button("Push Settings") {
+                        state.pushSettings()
+                        showAlert = true
+                    }
+                    .alert(isPresented: $showAlert) {
+                        Alert(
+                            title: Text("Data Uploaded"),
+                            message: Text(
+                                "Your Statistics and Preferences " +
+                                    "have been uploaded to Nightscout."
+                            )
+                        )
+                    }
+                    .disabled(state.url.isEmpty || state.connecting || state.backfilling)
 
                     Button("Backfill glucose") { state.backfillGlucose() }
                         .disabled(state.url.isEmpty || state.connecting || state.backfilling)
