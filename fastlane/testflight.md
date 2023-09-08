@@ -20,7 +20,7 @@ There are more detailed instructions in LoopDocs for doing Browser Builds of Loo
 
 ## Generate App Store Connect API Key
 
-This step is common for all "Browser Builds", and should be done ony once. Please save the API key somewhere safe, so it can be re-used for other builds, or if needing to start from scratch.
+This step is common for all "Browser Builds", and should be done only once. Please save the API key somewhere safe, so it can be re-used for other builds, or if needing to start from scratch.
 
 1. Sign in to the [Apple developer portal page](https://developer.apple.com/account/resources/certificates/list).
 1. Copy the team id from the upper right of the screen. Record this as your `TEAMID`.
@@ -71,18 +71,18 @@ If you have previously built Loop or another app using the "browser build" metho
 ## Create App Group
 
 If you have already built iAPS via Xcode using this Apple ID, you can skip on to [Create iAPS App in App Store Connect](#create-FreeAPS-X-app-in-app-store-connect).
-_Please note that in default builds of iAPS, the app group is actually identical to the one used with Loop, so please enter these details exactly as described below. This is to ease the setup of apps such as Xdrip4iOS. It may require some caution if transfering between FreAPS X and Loop._
+_Please note that in default builds of iAPS, the app group is actually identical to the one used with Loop, so please enter these details exactly as described below. This is to ease the setup of apps such as Xdrip4iOS. It may require some caution if transfering between iAPS and Loop._
 
 1. Go to [Register an App Group](https://developer.apple.com/account/resources/identifiers/applicationGroup/add/) on the apple developer site.
 1. For Description, use "Loop App Group".
-1. For Identifier, enter "group.com.TEAMID.loopkit.LoopGroup", subsituting your team id for `TEAMID`.
+1. For Identifier, enter "group.com.TEAMID.loopkit.LoopGroup", substituting your team id for `TEAMID`.
 1. Click "Continue" and then "Register".
 
 ## Add App Group to Bundle Identifiers
 
-1. Go to [Certificates, Identifiers & Profiles](https://developer.apple.com/account/resources/identifiers/list) on the apple developer site.
+1. Go to [Certificates, Identifiers & Profiles](https://developer.apple.com/account/resources/identifiers/list) on the Apple developer site.
 1. For each of the following identifier names:
-    * FreeeAPS
+    * FreeAPS
     * FreeAPS watchkitapp
     * FreeAPS watchkitapp watchkitextension
 1. Click on the identifier's name.
