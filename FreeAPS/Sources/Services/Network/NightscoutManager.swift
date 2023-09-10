@@ -276,7 +276,9 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
 
     func uploadPreferences() {
         let prefs = NightscoutPreferences(
-            preferences: settingsManager.preferences
+            preferences: settingsManager.preferences,
+            useAutotune: settingsManager.settings.useAutotune,
+            onlyAutotuneBasals: settingsManager.settings.onlyAutotuneBasals
         )
 
         guard let nightscout = nightscoutAPI, isUploadEnabled else {
