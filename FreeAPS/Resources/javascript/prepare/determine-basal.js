@@ -37,12 +37,6 @@ function generate(iob, currenttemp, glucose, profile, autosens = null, meal = nu
     if (basalProfile) {
         basalprofile = basalProfile;
     }
-    /*
-    var tdd_ = {};
-    if (tdd) {
-        tdd_ = tdd;
-    }
-     */
     
     var oref2_variables_ = {};
     if (oref2_variables) {

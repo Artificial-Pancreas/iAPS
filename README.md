@@ -56,7 +56,7 @@ iAPS app runs on iPhone or iPod. An iPhone 8 or newer is required.
 
 # Documentation
 
-[Discord iAPS - Server ](https://discord.gg/3eGsdykA6)
+[Discord iAPS - Server ](https://discord.gg/2gBpxRT2g)
 
 [iAPS documentation (under development)](https://iaps.readthedocs.io/en/latest/)
 

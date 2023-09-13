@@ -28,4 +28,5 @@ protocol ISFEditorProvider: Provider {
     func saveProfile(_ profile: InsulinSensitivities)
     var autosense: Autosens { get }
     var autotune: Autotune? { get }
+    var suggestion: Suggestion? { get }
 }

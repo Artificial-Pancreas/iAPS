@@ -467,8 +467,11 @@ Enact a temp Basal or a temp target */
 /* Header */
 "History" = "History";
 
-/* CGM option */
-"Upload glucose to Nightscout" = "Upload glucose to Nightscout";
+/* Nightscout option */
+"Upload" = "Upload";
+
+/* Nightscout option */
+"Allow Uploads" = "Allow Uploads";
 
 /* Type of CGM or glucose source */
 "Type" = "Type";
@@ -1039,6 +1042,12 @@ Enact a temp Basal or a temp target */
 
 /* Debug option view Autosense */
 "Autosense" = "Autosense";
+
+/* Insulin sensitivity config header */
+"Dynamic Sensitivity" = "Dynamic Sensitivity";
+
+/* Autotune config */
+"Only Autotune Basal Insulin" = "Only Autotune Basal Insulin";
 
 /* Debug option view Pump History */
 "Pump History" = "Pump History";
