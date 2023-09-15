@@ -68,11 +68,27 @@ extension NightscoutConfig {
                         showAlert = true
                     }
                     .alert(isPresented: $showAlert) {
-                        Alert(
-                            title: Text("Data Uploaded"),
+                        var statsMessage = "Statistics: Failed"
+                        if state.isStatisticsUploadOK {
+                            statsMessage = "Statistics: OK"
+                        }
+
+                        var prefsMessage = "Preferences: Failed"
+                        if state.isPreferencesUploadOK {
+                            prefsMessage = "Preferences: OK"
+                        }
+
+                        var profMessage = "Profile: Failed"
+                        if state.isProfileUploadOK {
+                            profMessage = "Profile: OK"
+                        }
+
+                        return Alert(
+                            title: Text("Upload Status"),
                             message: Text(
-                                "Your Statistics and Preferences " +
-                                    "have been uploaded to Nightscout."
+                                profMessage + "\r\n" +
+                                    prefsMessage + "\r\n" +
+                                    statsMessage
                             )
                         )
                     }

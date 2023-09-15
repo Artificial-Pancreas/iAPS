@@ -24,6 +24,10 @@ extension NightscoutConfig {
         @Published var useLocalSource = false
         @Published var localPort: Decimal = 0
 
+        @Published var isStatisticsUploadOK = false
+        @Published var isPreferencesUploadOK = false
+        @Published var isProfileUploadOK = false
+
         override func subscribe() {
             url = keychain.getValue(String.self, forKey: Config.urlKey) ?? ""
             secret = keychain.getValue(String.self, forKey: Config.secretKey) ?? ""
@@ -70,7 +74,24 @@ extension NightscoutConfig {
         }
 
         func pushSettings() {
+            isStatisticsUploadOK = false
+            isPreferencesUploadOK = false
+            isProfileUploadOK = false
+
+            nightscoutManager.uploadProfile()
             apsManager.statistics(forceRun: true)
+
+            if nightscoutManager.isStatisticsUploaded {
+                isStatisticsUploadOK = true
+            }
+
+            if nightscoutManager.isPreferencesUploaded {
+                isPreferencesUploadOK = true
+            }
+
+            if nightscoutManager.isProfileUploaded {
+                isProfileUploadOK = true
+            }
         }
 
         func backfillGlucose() {

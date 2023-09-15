@@ -16,6 +16,11 @@ protocol NightscoutManager: GlucoseSource {
     func uploadPreferences()
     func uploadGlucose()
     func uploadProfile()
+
+    var isStatisticsUploaded: Bool { get }
+    var isPreferencesUploaded: Bool { get }
+    var isProfileUploaded: Bool { get }
+
     var cgmURL: URL? { get }
 }
 
@@ -31,6 +36,10 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
     @Injected() private var broadcaster: Broadcaster!
     @Injected() private var reachabilityManager: ReachabilityManager!
     @Injected() var healthkitManager: HealthKitManager!
+
+    @Published var isStatisticsUploaded: Bool = false
+    @Published var isPreferencesUploaded: Bool = false
+    @Published var isProfileUploaded: Bool = false
 
     private let processQueue = DispatchQueue(label: "BaseNetworkManager.processQueue")
     private var ping: TimeInterval?
@@ -266,12 +275,14 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
                     switch completion {
                     case .finished:
                         debug(.nightscout, "Statistics uploaded")
+                        self.isStatisticsUploaded = true
                     case let .failure(error):
                         debug(.nightscout, error.localizedDescription)
                     }
                 } receiveValue: {}
                 .store(in: &self.lifetime)
         }
+        debug(.nightscout, "self.isStatisticsUploaded set to \(isStatisticsUploaded)")
     }
 
     func uploadPreferences() {
@@ -289,6 +300,7 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
                     switch completion {
                     case .finished:
                         debug(.nightscout, "Preferences uploaded")
+                        self.isPreferencesUploaded = true
                     case let .failure(error):
                         debug(.nightscout, error.localizedDescription)
                     }
@@ -402,12 +414,14 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
     }
 
     func uploadProfile() {
+        debug(.nightscout, "uploadProfile: Started")
         // These should be modified anyways and not the defaults
         guard let sensitivities = storage.retrieve(OpenAPS.Settings.insulinSensitivities, as: InsulinSensitivities.self),
               let basalProfile = storage.retrieve(OpenAPS.Settings.basalProfile, as: [BasalProfileEntry].self),
               let carbRatios = storage.retrieve(OpenAPS.Settings.carbRatios, as: CarbRatios.self),
               let targets = storage.retrieve(OpenAPS.Settings.bgTargets, as: BGTargets.self)
         else {
+            debug(.nightscout, "uploadProfile: Not all settings found to build profile!")
             NSLog("NightscoutManager uploadProfile Not all settings found to build profile!")
             return
         }
@@ -497,9 +511,11 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
         if let uploadedProfile = storage.retrieve(OpenAPS.Nightscout.uploadedProfile, as: NightscoutProfileStore.self),
            (uploadedProfile.store[defaultProfile]?.rawJSON ?? "") == ps.rawJSON
         {
+            debug(.nightscout, "uploadProfile: No Profile change")
             NSLog("NightscoutManager uploadProfile, no profile change")
             return
         }
+        debug(.nightscout, "uploadProfile: Connect to nightscout")
         guard let nightscout = nightscoutAPI, isNetworkReachable, isUploadEnabled else {
             return
         }
@@ -510,6 +526,7 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
                     case .finished:
                         self.storage.save(p, as: OpenAPS.Nightscout.uploadedProfile)
                         debug(.nightscout, "Profile uploaded")
+                        self.isProfileUploaded = true
                     case let .failure(error):
                         debug(.nightscout, error.localizedDescription)
                     }
