@@ -139,22 +139,14 @@ extension NightscoutAPI {
             .eraseToAnyPublisher()
     }
 
-    func fetchCarbRatios() -> AnyPublisher<[CarbRatios], Swift.Error> {
+    func fetchCarbRatios() /*-> AnyPublisher<[CarbRatios], Swift.Error>*/ {
         var components = URLComponents()
         components.scheme = url.scheme
         components.host = url.host
         components.port = url.port
         components.path = Config.profilePath
         components.queryItems = [
-            URLQueryItem(name: "find[carbratio][$exists]", value: "true"),
-            URLQueryItem(
-                name: "find[enteredBy][$ne]",
-                value: CarbsEntry.manual.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)
-            ),
-            URLQueryItem(
-                name: "find[enteredBy][$ne]",
-                value: NigtscoutTreatment.local.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)
-            )
+            URLQueryItem(name: "find[carbratio][$exists]", value: "true")
         ]
 
         var request = URLRequest(url: components.url!)
@@ -164,15 +156,15 @@ extension NightscoutAPI {
         if let secret = secret {
             request.addValue(secret.sha1(), forHTTPHeaderField: "api-secret")
         }
-        
-        return service.run(request)
+
+        let fetch = service.run(request)
             .retry(Config.retryCount)
             .decode(type: [CarbRatios].self, decoder: JSONCoding.decoder)
-            .catch { error -> AnyPublisher<[CarbRatios], Swift.Error> in
-                warning(.nightscout, "Ratios fetching error: \(error.localizedDescription)")
-                return Just([]).setFailureType(to: Swift.Error.self).eraseToAnyPublisher()
-            }
-            .eraseToAnyPublisher()
+            
+            //.map { _ in () }
+            //.eraseToAnyPublisher()
+        
+        
     }
 
     func deleteCarbs(at date: Date) -> AnyPublisher<Void, Swift.Error> {
