@@ -95,8 +95,6 @@ extension NightscoutAPI {
     }
 
     func fetchCarbs(sinceDate: Date? = nil) -> AnyPublisher<[CarbsEntry], Swift.Error> {
-        fetchCarbRatios()
-
         var components = URLComponents()
         components.scheme = url.scheme
         components.host = url.host
@@ -139,14 +137,14 @@ extension NightscoutAPI {
             .eraseToAnyPublisher()
     }
 
-    func fetchCarbRatios() /*-> AnyPublisher<[CarbRatios], Swift.Error>*/ {
+    func fetchProfile(sinceDate _: Date? = nil) -> AnyPublisher<[ScheduledNightscoutProfile], Swift.Error> {
         var components = URLComponents()
         components.scheme = url.scheme
         components.host = url.host
         components.port = url.port
         components.path = Config.profilePath
         components.queryItems = [
-            URLQueryItem(name: "find[carbratio][$exists]", value: "true")
+            URLQueryItem(name: "count=", value: "1")
         ]
 
         var request = URLRequest(url: components.url!)
@@ -157,14 +155,14 @@ extension NightscoutAPI {
             request.addValue(secret.sha1(), forHTTPHeaderField: "api-secret")
         }
 
-        let fetch = service.run(request)
+        return service.run(request)
             .retry(Config.retryCount)
-            .decode(type: [CarbRatios].self, decoder: JSONCoding.decoder)
-            
-            //.map { _ in () }
-            //.eraseToAnyPublisher()
-        
-        
+            .decode(type: [ScheduledNightscoutProfile].self, decoder: JSONCoding.decoder)
+            .catch { error -> AnyPublisher<[ScheduledNightscoutProfile], Swift.Error> in
+                warning(.nightscout, "Carbs fetching error: \(error.localizedDescription)")
+                return Just([]).setFailureType(to: Swift.Error.self).eraseToAnyPublisher()
+            }
+            .eraseToAnyPublisher()
     }
 
     func deleteCarbs(at date: Date) -> AnyPublisher<Void, Swift.Error> {

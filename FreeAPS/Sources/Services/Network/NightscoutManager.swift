@@ -7,7 +7,6 @@ import UIKit
 protocol NightscoutManager: GlucoseSource {
     func fetchGlucose(since date: Date) -> AnyPublisher<[BloodGlucose], Never>
     func fetchCarbs() -> AnyPublisher<[CarbsEntry], Never>
-    func fetchCarbRatios() -> AnyPublisher<[CarbRatios], Never>
     func fetchTempTargets() -> AnyPublisher<[TempTarget], Never>
     func fetchAnnouncements() -> AnyPublisher<[Announcement], Never>
     func deleteCarbs(at date: Date, isFPU: Bool?, fpuID: String?, syncID: String)
@@ -149,17 +148,6 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
 
         let since = carbsStorage.syncDate()
         return nightscout.fetchCarbs(sinceDate: since)
-            .replaceError(with: [])
-            .eraseToAnyPublisher()
-    }
-
-    func fetchCarbRatios() -> AnyPublisher<[CarbRatios], Never> {
-        guard let nightscout = nightscoutAPI, isNetworkReachable else {
-            return Just([]).eraseToAnyPublisher()
-        }
-
-        // let since = carbsStorage.syncDate()
-        return nightscout.fetchCarbRatios()
             .replaceError(with: [])
             .eraseToAnyPublisher()
     }
