@@ -27,6 +27,8 @@ class NightscoutAPI {
     let secret: String?
 
     private let service = NetworkService()
+
+    @Injected() private var storage: FileStorage!
 }
 
 extension NightscoutAPI {
@@ -137,32 +139,75 @@ extension NightscoutAPI {
             .eraseToAnyPublisher()
     }
 
-    func fetchProfile(sinceDate _: Date? = nil) -> AnyPublisher<[ScheduledNightscoutProfile], Swift.Error> {
+    func fetchProfile() {
         var components = URLComponents()
         components.scheme = url.scheme
         components.host = url.host
         components.port = url.port
         components.path = Config.profilePath
+
         components.queryItems = [
-            URLQueryItem(name: "count=", value: "1")
+            URLQueryItem(name: "count", value: "1")
         ]
 
-        var request = URLRequest(url: components.url!)
-        request.allowsConstrainedNetworkAccess = false
-        request.timeoutInterval = Config.timeout
+        // var request = URLRequest(url: components.url!)
+
+        var url = URLRequest(url: components.url!)
+        url.allowsConstrainedNetworkAccess = false
+        url.timeoutInterval = Config.timeout
 
         if let secret = secret {
-            request.addValue(secret.sha1(), forHTTPHeaderField: "api-secret")
+            url.addValue(secret.sha1(), forHTTPHeaderField: "api-secret")
         }
 
-        return service.run(request)
-            .retry(Config.retryCount)
-            .decode(type: [ScheduledNightscoutProfile].self, decoder: JSONCoding.decoder)
-            .catch { error -> AnyPublisher<[ScheduledNightscoutProfile], Swift.Error> in
-                warning(.nightscout, "Carbs fetching error: \(error.localizedDescription)")
-                return Just([]).setFailureType(to: Swift.Error.self).eraseToAnyPublisher()
+        let task = URLSession.shared.dataTask(with: url) {
+            /*
+             data, _, _ in
+
+             if let data = data, let string = String(data: data, encoding: .utf8) {
+                 print(string)
+             }*/
+
+            data, _, error in
+            let decoder = JSONDecoder()
+
+            let data = try? Data(contentsOf: components.url!)
+
+            // let profile = try? decoder.decode(ScheduledNightscoutProfile.self, from: data ?? [])
+
+            if let data = data {
+                do {
+                    let tasks = try decoder.decode([FetchedProfile].self, from: data)
+                    tasks.forEach { i in
+                        print(i)
+                    }
+                } catch {
+                    print(error)
+                }
             }
-            .eraseToAnyPublisher()
+        }
+
+        task.resume()
+
+        debug(.nightscout, "URL: " + components.url!.description)
+
+        /*
+         request.allowsConstrainedNetworkAccess = false
+         request.timeoutInterval = Config.timeout
+
+         if let secret = secret {
+             request.addValue(secret.sha1(), forHTTPHeaderField: "api-secret")
+         }
+
+         return service.run(request)
+             .retry(Config.retryCount)
+             .decode(type: [ScheduledNightscoutProfile].self, decoder: JSONCoding.decoder)
+             .catch { error -> AnyPublisher<[ScheduledNightscoutProfile], Swift.Error> in
+                 warning(.nightscout, "Carbs fetching error: \(error.localizedDescription)")
+                 return Just([]).setFailureType(to: Swift.Error.self).eraseToAnyPublisher()
+             }
+             .eraseToAnyPublisher()
+          */
     }
 
     func deleteCarbs(at date: Date) -> AnyPublisher<Void, Swift.Error> {

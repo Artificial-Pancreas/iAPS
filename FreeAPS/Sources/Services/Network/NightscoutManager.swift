@@ -8,6 +8,7 @@ protocol NightscoutManager: GlucoseSource {
     func fetchGlucose(since date: Date) -> AnyPublisher<[BloodGlucose], Never>
     func fetchCarbs() -> AnyPublisher<[CarbsEntry], Never>
     func fetchTempTargets() -> AnyPublisher<[TempTarget], Never>
+    func fetchProfile()
     func fetchAnnouncements() -> AnyPublisher<[Announcement], Never>
     func deleteCarbs(at date: Date, isFPU: Bool?, fpuID: String?, syncID: String)
     func deleteInsulin(at date: Date)
@@ -515,6 +516,16 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
                     }
                 } receiveValue: {}
                 .store(in: &self.lifetime)
+        }
+    }
+
+    func fetchProfile() {
+        // let uploadedProfile = storage.retrieve(OpenAPS.Nightscout.uploadedProfile, as: NightscoutProfileStore.self)
+        guard let nightscout = nightscoutAPI, isNetworkReachable, isUploadEnabled else {
+            return
+        }
+        processQueue.async {
+            nightscout.fetchProfile()
         }
     }
 
