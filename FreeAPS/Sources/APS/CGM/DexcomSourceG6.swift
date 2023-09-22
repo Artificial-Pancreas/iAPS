@@ -145,25 +145,35 @@ extension DexcomSourceG6: CGMManagerDelegate {
         debug(.deviceManager, "DEXCOM - Process CGM Reading Result launched with \(readingResult)")
         switch readingResult {
         case let .newData(values):
-            let bloodGlucose = values.compactMap { newGlucoseSample -> BloodGlucose? in
-                let quantity = newGlucoseSample.quantity
-                let value = Int(quantity.doubleValue(for: .milligramsPerDeciliter))
-                return BloodGlucose(
-                    _id: newGlucoseSample.syncIdentifier,
-                    sgv: value,
-                    direction: .init(trendType: newGlucoseSample.trend),
-                    date: Decimal(Int(newGlucoseSample.date.timeIntervalSince1970 * 1000)),
-                    dateString: newGlucoseSample.date,
-                    unfiltered: Decimal(value),
-                    filtered: nil,
-                    noise: nil,
-                    glucose: value,
-                    type: "sgv",
-                    transmitterID: self.transmitterID
-                )
+            if let cgmG6Manager = cgmManager as? G6CGMManager,
+               let activationDate = cgmG6Manager.latestReading?.activationDate,
+               let sessionStartDate = cgmG6Manager.latestReading?.sessionStartDate
+            {
+                let bloodGlucose = values.compactMap { newGlucoseSample -> BloodGlucose? in
+                    let quantity = newGlucoseSample.quantity
+                    let value = Int(quantity.doubleValue(for: .milligramsPerDeciliter))
+                    return BloodGlucose(
+                        _id: newGlucoseSample.syncIdentifier,
+                        sgv: value,
+                        direction: .init(trendType: newGlucoseSample.trend),
+                        date: Decimal(Int(newGlucoseSample.date.timeIntervalSince1970 * 1000)),
+                        dateString: newGlucoseSample.date,
+                        unfiltered: Decimal(value),
+                        filtered: nil,
+                        noise: nil,
+                        glucose: value,
+                        type: "sgv",
+                        activationDate: activationDate,
+                        sessionStartDate: sessionStartDate,
+                        transmitterID: self.transmitterID
+                    )
+                }
+                promise?(.success(bloodGlucose))
+                completion()
+            } else {
+                // Handle the case where activationDate or sessionStartDate is nil
+                completion()
             }
-            promise?(.success(bloodGlucose))
-            completion()
         case .unreliableData:
             // loopManager.receivedUnreliableCGMReading()
             promise?(.failure(GlucoseDataError.unreliableData))
