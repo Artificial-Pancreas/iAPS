@@ -14,7 +14,14 @@ env:
   TARGET_BRANCH: ${{ github.ref_name }} # branch on fork to build from (relpace with specific branch name if needed)
 
 jobs:
+  validate:
+    name: Validate
+    uses: ./.github/workflows/validate_secrets.yml
+    secrets: inherit
+    
   build:
+    needs: validate
+    name: Build
     runs-on: macos-13
     steps:
       # Uncomment to manually select Xcode version if needed

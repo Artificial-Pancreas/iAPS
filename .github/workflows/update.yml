@@ -18,7 +18,13 @@ env:
   TARGET_BRANCH: ${{ github.ref_name }} # target branch on fork to be kept in sync, and target branch on upstream to be kept alive (relpace with specific branch name if needed)
 
 jobs:
+  validate:
+    name: Validate
+    uses: ./.github/workflows/validate_secrets.yml
+    secrets: inherit
+
   check_latest_from_upstream:
+    needs: validate
     runs-on: ubuntu-latest
     name: Check upstream
     outputs: 
@@ -68,7 +74,7 @@ jobs:
   # Launch build workflow on fork if new commits are found
   launch_build_workflow:
     if: needs.check_latest_from_upstream.outputs.NEW_COMMITS == 'true'
-    needs: check_latest_from_upstream
+    needs: [validate, check_latest_from_upstream]
     name: Launch build workflow
     uses: ./.github/workflows/build_iAPS.yml
     secrets: inherit
