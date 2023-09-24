@@ -66,13 +66,7 @@ extension DataTable {
                 let boluses = self.provider.pumpHistory()
                     .filter { $0.type == .bolus }
                     .map {
-                        Treatment(
-                            units: units,
-                            type: .bolus,
-                            date: $0.timestamp,
-                            amount: $0.amount,
-                            idPumpEvent: $0.id
-                        )
+                        Treatment(units: units, type: .bolus, date: $0.timestamp, amount: $0.amount, idPumpEvent: $0.id)
                     }
 
                 let tempBasals = self.provider.pumpHistory()
