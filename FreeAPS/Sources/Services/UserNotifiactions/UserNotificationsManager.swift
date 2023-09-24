@@ -232,6 +232,7 @@ final class BaseUserNotificationsManager: NSObject, UserNotificationsManager, In
             }
         }
     }
+
     private func glucoseText(glucoseValue: Int, delta: Int?, direction: BloodGlucose.Direction?) -> String {
         let units = settingsManager.settings.units
         let glucoseText = glucoseFormatter
