@@ -16,6 +16,7 @@ final class BaseCalendarManager: CalendarManager, Injectable {
     @Injected() private var settingsManager: SettingsManager!
     @Injected() private var broadcaster: Broadcaster!
     @Injected() private var glucoseStorage: GlucoseStorage!
+    @Injected() private var storage: FileStorage!
 
     init(resolver: Resolver) {
         injectServices(resolver)
@@ -74,7 +75,11 @@ final class BaseCalendarManager: CalendarManager, Injectable {
                     .string(from: Double(settingsManager.settings.units == .mmolL ? $0.asMmolL : Decimal($0)) as NSNumber)!
             } ?? "--"
 
-        let title = glucoseText + " " + directionText + " " + deltaText
+        let fetchedSuggestion = storage.retrieve(OpenAPS.Enact.enacted, as: Suggestion.self)
+        let iobText = iobFormatter.string(from: (fetchedSuggestion?.iob ?? 0) as NSNumber) ?? ""
+        let cobText = cobFormatter.string(from: (fetchedSuggestion?.cob ?? 0) as NSNumber) ?? ""
+
+        let title = glucoseText + " " + directionText + " " + deltaText + ", IOB: " + iobText + " COB: " + cobText
 
         event.title = title
         event.notes = "iAPS"
@@ -130,6 +135,20 @@ final class BaseCalendarManager: CalendarManager, Injectable {
         formatter.numberStyle = .decimal
         formatter.maximumFractionDigits = 1
         formatter.positivePrefix = "+"
+        return formatter
+    }
+
+    private var iobFormatter: NumberFormatter {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        formatter.maximumFractionDigits = 1
+        return formatter
+    }
+
+    private var cobFormatter: NumberFormatter {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        formatter.maximumFractionDigits = 0
         return formatter
     }
 
