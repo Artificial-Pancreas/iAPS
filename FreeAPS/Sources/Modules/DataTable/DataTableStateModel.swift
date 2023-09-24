@@ -71,8 +71,7 @@ extension DataTable {
                             type: .bolus,
                             date: $0.timestamp,
                             amount: $0.amount,
-                            idPumpEvent: $0.id,
-                            isSMB: $0.isSMB
+                            idPumpEvent: $0.id
                         )
                     }
 

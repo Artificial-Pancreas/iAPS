@@ -68,7 +68,7 @@ enum DataTable {
         let note: String?
         let isSMB: Bool?
 
-        private var numberFormatter: NumberFormatter {
+        private var numberFormater: NumberFormatter {
             let formatter = NumberFormatter()
             formatter.numberStyle = .decimal
             formatter.maximumFractionDigits = 2
@@ -129,17 +129,16 @@ enum DataTable {
 
             switch type {
             case .carbs:
-                return numberFormatter
+                return numberFormater
                     .string(from: amount as NSNumber)! + NSLocalizedString(" g", comment: "gram of carbs")
             case .fpus:
-                return numberFormatter
+                return numberFormater
                     .string(from: amount as NSNumber)! + NSLocalizedString(" g", comment: "gram of carb equilvalents")
             case .bolus:
-                return numberFormatter
-                    .string(from: amount as NSNumber)! + NSLocalizedString(" U", comment: "Insulin unit") +
-                    "\(isSMB ?? false ? " SMB" : "")"
+                return numberFormater
+                    .string(from: amount as NSNumber)! + NSLocalizedString(" U", comment: "Insulin unit")
             case .tempBasal:
-                return numberFormatter
+                return numberFormater
                     .string(from: amount as NSNumber)! + NSLocalizedString(" U/hr", comment: "Unit insulin per hour")
             case .tempTarget:
                 var converted = amount
@@ -148,7 +147,7 @@ enum DataTable {
                 }
 
                 guard var secondAmount = secondAmount else {
-                    return numberFormatter.string(from: converted as NSNumber)! + " \(units.rawValue)"
+                    return numberFormater.string(from: converted as NSNumber)! + " \(units.rawValue)"
                 }
                 if units == .mmolL {
                     secondAmount = secondAmount.asMmolL
@@ -183,7 +182,7 @@ enum DataTable {
             guard let duration = duration, duration > 0 else {
                 return nil
             }
-            return numberFormatter.string(from: duration as NSNumber)! + " min"
+            return numberFormater.string(from: duration as NSNumber)! + " min"
         }
     }
 
