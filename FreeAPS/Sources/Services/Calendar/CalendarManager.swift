@@ -79,7 +79,7 @@ final class BaseCalendarManager: CalendarManager, Injectable {
         let iobText = iobFormatter.string(from: (fetchedSuggestion?.iob ?? 0) as NSNumber) ?? ""
         let cobText = cobFormatter.string(from: (fetchedSuggestion?.cob ?? 0) as NSNumber) ?? ""
 
-        let title = glucoseText + " " + directionText + " " + deltaText + ", IOB: " + iobText + ", COB: " + cobText
+        let title = glucoseText + " " + directionText + " " + deltaText + ", IOB: " + iobText + " COB: " + cobText
 
         event.title = title
         event.notes = "iAPS"
