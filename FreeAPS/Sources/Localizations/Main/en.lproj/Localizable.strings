@@ -1115,6 +1115,9 @@ Enact a temp Basal or a temp target */
 /* Manual temp basal mode */
 "Manual" = "Manual";
 
+/* An Automatic delivered bolus (SMB) */
+"SMB" = "SMB";
+
 /* Status highlight when manual temp basal is running. */
 "Manual Basal" = "Manual Basal";
 

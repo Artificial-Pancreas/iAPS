@@ -5,7 +5,7 @@ struct Announcement: JSON {
     let enteredBy: String
     let notes: String
 
-    static let remote = "freeaps-x-remote"
+    static let remote = "remote"
 
     var action: AnnouncementAction? {
         let components = notes.replacingOccurrences(of: " ", with: "").split(separator: ":")
