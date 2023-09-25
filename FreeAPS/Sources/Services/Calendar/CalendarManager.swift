@@ -63,7 +63,9 @@ final class BaseCalendarManager: CalendarManager, Injectable {
         // create an event now
         let event = EKEvent(eventStore: eventStore)
 
-        let glucoseIcon = "🟢" // TODO: change icon color on BG range
+        var glucoseIcon = "🟢"
+        glucoseIcon = Double(glucoseValue) <= Double(settingsManager.settings.low) ? "🔴" : glucoseIcon
+        glucoseIcon = Double(glucoseValue) >= Double(settingsManager.settings.high) ? "🟠" : glucoseIcon
 
         let glucoseText = glucoseFormatter
             .string(from: Double(
@@ -83,14 +85,14 @@ final class BaseCalendarManager: CalendarManager, Injectable {
 
         var glucoseDisplayText = settingsManager.settings.displayCalendarEmojis ? glucoseIcon + " " : ""
         glucoseDisplayText += glucoseText + " " + directionText + " " + deltaText
-        
+
         var iobDisplayText = ""
         var cobDisplayText = ""
 
         if settingsManager.settings.displayCalendarIOBandCOB {
             if settingsManager.settings.displayCalendarEmojis {
                 iobDisplayText += "💉"
-                cobDisplayText += "🍞"
+                cobDisplayText += "🥨"
             } else {
                 iobDisplayText += "IOB:"
                 cobDisplayText += "COB:"
