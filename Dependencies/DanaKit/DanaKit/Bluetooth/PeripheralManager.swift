@@ -1,7 +1,7 @@
 //
 //  PeripheralManager.swift
 //  xDripG5
-//  OmniBLE
+//  DanaKit
 //
 //  Based on CGMBLEKit/CGMBLEKit/PeripheralManager.swift
 //  Copyright © 2021 LoopKit Authors. All rights reserved.
@@ -14,7 +14,7 @@ import os.log
 class PeripheralManager: NSObject {
 
     // TODO: Make private
-    let log = OSLog(category: "DashPeripheralManager")
+    let log = OSLog(category: "DanaPeripheralManager")
 
     ///
     /// This is mutable, because CBPeripheral instances can seemingly become invalid, and need to be periodically re-fetched from CBCentralManager
@@ -53,7 +53,7 @@ class PeripheralManager: NSObject {
 
     private let sessionQueue: OperationQueue = {
         let queue = OperationQueue()
-        queue.name = "com.OmniBLE.OmnipodDevice.sessionQueue"
+        queue.name = "com.DanaKit.DanaDevice.sessionQueue"
         queue.maxConcurrentOperationCount = 1
 
         return queue
@@ -515,19 +515,19 @@ extension PeripheralManager {
 
 extension CBPeripheral {
     func getCommandCharacteristic() -> CBCharacteristic? {
-        guard let service = services?.itemWithUUID(OmnipodServiceUUID.service.cbUUID) else {
+        guard let service = services?.itemWithUUID(DanaServiceUUID.service.cbUUID) else {
             return nil
         }
 
-        return service.characteristics?.itemWithUUID(OmnipodCharacteristicUUID.command.cbUUID)
+        return service.characteristics?.itemWithUUID(DanaCharacteristicUUID.command.cbUUID)
     }
 
     func getDataCharacteristic() -> CBCharacteristic? {
-        guard let service = services?.itemWithUUID(OmnipodServiceUUID.service.cbUUID) else {
+        guard let service = services?.itemWithUUID(DanaServiceUUID.service.cbUUID) else {
             return nil
         }
 
-        return service.characteristics?.itemWithUUID(OmnipodCharacteristicUUID.data.cbUUID)
+        return service.characteristics?.itemWithUUID(DanaCharacteristicUUID.data.cbUUID)
     }
 }
 
