@@ -519,7 +519,7 @@ Enact a temp Basal or a temp target */
 "Calibrations" = "Kalibreringar";
 
 /* */
-"Create events in calendar" = "Skapa kalenderhändelser";
+"Create Events in Calendar" = "Create Events in Calendar";
 
 /* */
 "Calendar" = "Kalender";
@@ -1113,6 +1113,9 @@ Enact a temp Basal or a temp target */
 
 /* Manual temp basal mode */
 "Manual" = "Manuellt";
+
+/* An Automatic delivered bolus (SMB) */
+"SMB" = "SMB";
 
 /* Status highlight when manual temp basal is running. */
 "Manual Basal" = "Manuell temporär basal";
