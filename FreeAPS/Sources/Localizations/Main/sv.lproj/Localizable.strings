@@ -1112,7 +1112,7 @@ Enact a temp Basal or a temp target */
 "Error" = "Fel";
 
 /* Manual temp basal mode */
-"Manual" = "Manuellt";
+"Manual" = "Manuell";
 
 /* Status highlight when manual temp basal is running. */
 "Manual Basal" = "Manuell temporär basal";

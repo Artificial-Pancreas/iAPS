@@ -137,7 +137,7 @@ enum DataTable {
             case .bolus:
                 return numberFormatter
                     .string(from: amount as NSNumber)! + NSLocalizedString(" U", comment: "Insulin unit") +
-                    "\(isSMB ?? false ? " SMB" : "")"
+                    ((isSMB ?? false) ? " 🤖" : " " + NSLocalizedString("Manual", comment: "Manual Bolus"))
             case .tempBasal:
                 return numberFormatter
                     .string(from: amount as NSNumber)! + NSLocalizedString(" U/hr", comment: "Unit insulin per hour")
