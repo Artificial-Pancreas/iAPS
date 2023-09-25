@@ -113,8 +113,9 @@ extension DataTable {
                 Image(systemName: "circle.fill").foregroundColor(item.color)
                 Text(dateFormatter.string(from: item.date))
                     .moveDisabled(true)
-                Text(item.type.name)
+                Text((item.isSMB ?? false) ? "SMB" : item.type.name)
                 Text(item.amountText).foregroundColor(.secondary)
+
                 if let duration = item.durationText {
                     Text(duration).foregroundColor(.secondary)
                 }

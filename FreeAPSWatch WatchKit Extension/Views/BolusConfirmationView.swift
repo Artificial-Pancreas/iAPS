@@ -40,7 +40,7 @@ struct BolusConfirmationView: View {
                     if isCrownLeftOriented {
                         Spacer().frame(width: elementSize / 2)
                     } else {
-                        Image(systemName: "arrow.down")
+                        Image(systemName: "digitalcrown.arrow.counterclockwise.fill")
                             .resizable()
                             .frame(width: elementSize / 2, height: elementSize / 2)
                             .foregroundColor(.primary)
@@ -51,7 +51,7 @@ struct BolusConfirmationView: View {
             .padding()
             HStack(spacing: 16) {
                 if isCrownLeftOriented {
-                    Image(systemName: "arrow.down")
+                    Image(systemName: "digitalcrown.arrow.counterclockwise.fill")
                         .resizable()
                         .frame(width: elementSize / 2, height: elementSize / 2)
                         .foregroundColor(.primary)

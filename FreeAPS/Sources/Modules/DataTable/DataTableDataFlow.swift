@@ -66,8 +66,9 @@ enum DataTable {
         let isFPU: Bool?
         let fpuID: String?
         let note: String?
+        let isSMB: Bool?
 
-        private var numberFormater: NumberFormatter {
+        private var numberFormatter: NumberFormatter {
             let formatter = NumberFormatter()
             formatter.numberStyle = .decimal
             formatter.maximumFractionDigits = 2
@@ -90,9 +91,10 @@ enum DataTable {
             duration: Decimal? = nil,
             id: String? = nil,
             idPumpEvent: String? = nil,
-            isFPU: Bool? = false,
+            isFPU: Bool? = nil,
             fpuID: String? = nil,
-            note: String? = nil
+            note: String? = nil,
+            isSMB: Bool? = nil
         ) {
             self.units = units
             self.type = type
@@ -105,6 +107,7 @@ enum DataTable {
             self.isFPU = isFPU
             self.fpuID = fpuID
             self.note = note
+            self.isSMB = isSMB
         }
 
         static func == (lhs: Treatment, rhs: Treatment) -> Bool {
@@ -126,14 +129,20 @@ enum DataTable {
 
             switch type {
             case .carbs:
-                return numberFormater.string(from: amount as NSNumber)! + NSLocalizedString(" g", comment: "gram of carbs")
+                return numberFormatter
+                    .string(from: amount as NSNumber)! + NSLocalizedString(" g", comment: "gram of carbs")
             case .fpus:
-                return numberFormater
+                return numberFormatter
                     .string(from: amount as NSNumber)! + NSLocalizedString(" g", comment: "gram of carb equilvalents")
             case .bolus:
-                return numberFormater.string(from: amount as NSNumber)! + NSLocalizedString(" U", comment: "Insulin unit")
+                return numberFormatter
+                    .string(from: amount as NSNumber)! + NSLocalizedString(" U", comment: "Insulin unit") +
+                    (
+                        (isSMB ?? false) ? " " + NSLocalizedString("Auto", comment: "Automatic delivered bolus (SMB)") : " " +
+                            NSLocalizedString("Manual", comment: "Manual Bolus")
+                    )
             case .tempBasal:
-                return numberFormater
+                return numberFormatter
                     .string(from: amount as NSNumber)! + NSLocalizedString(" U/hr", comment: "Unit insulin per hour")
             case .tempTarget:
                 var converted = amount
@@ -142,7 +151,7 @@ enum DataTable {
                 }
 
                 guard var secondAmount = secondAmount else {
-                    return numberFormater.string(from: converted as NSNumber)! + " \(units.rawValue)"
+                    return numberFormatter.string(from: converted as NSNumber)! + " \(units.rawValue)"
                 }
                 if units == .mmolL {
                     secondAmount = secondAmount.asMmolL
@@ -161,7 +170,7 @@ enum DataTable {
             case .carbs:
                 return .loopYellow
             case .fpus:
-                return .red
+                return .loopRed
             case .bolus:
                 return .insulin
             case .tempBasal:
@@ -177,7 +186,7 @@ enum DataTable {
             guard let duration = duration, duration > 0 else {
                 return nil
             }
-            return numberFormater.string(from: duration as NSNumber)! + " min"
+            return numberFormatter.string(from: duration as NSNumber)! + " min"
         }
     }
 

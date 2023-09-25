@@ -215,7 +215,7 @@ struct ChartsView: View {
                 let mapGlucoseNormal = mapGlucose.filter({ $0 > Int16(3.8 / 0.0555) && $0 < Int16(7.9 / 0.0555) })
                 HStack {
                     let value = Double(mapGlucoseHigh.count * 100 / mapGlucose.count)
-                    Text(units == .mmolL ? ">  11  " : ">  200 ").foregroundColor(.secondary)
+                    Text(units == .mmolL ? ">  11  " : ">  198 ").foregroundColor(.secondary)
                     Text(value.formatted()).foregroundColor(.orange)
                     Text("%").foregroundColor(.secondary)
                 }.font(.caption)
@@ -259,7 +259,7 @@ struct ChartsView: View {
                 Spacer()
                 HStack {
                     let value = Double(mapGlucoseAcuteHigh.count * 100 / mapGlucose.count)
-                    Text(units == .mmolL ? "> 11.0" : "> 216").font(.caption).foregroundColor(.secondary)
+                    Text(units == .mmolL ? "> 11.0" : "> 198").font(.caption).foregroundColor(.secondary)
                     Text(value.formatted()).font(.caption).foregroundColor(value == 0 ? .green : .orange)
                     Text("%").font(.caption)
                 }

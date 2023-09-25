@@ -16,6 +16,7 @@ final class BaseCalendarManager: CalendarManager, Injectable {
     @Injected() private var settingsManager: SettingsManager!
     @Injected() private var broadcaster: Broadcaster!
     @Injected() private var glucoseStorage: GlucoseStorage!
+    @Injected() private var storage: FileStorage!
 
     init(resolver: Resolver) {
         injectServices(resolver)
@@ -62,6 +63,10 @@ final class BaseCalendarManager: CalendarManager, Injectable {
         // create an event now
         let event = EKEvent(eventStore: eventStore)
 
+        var glucoseIcon = "🟢"
+        glucoseIcon = Double(glucoseValue) <= Double(settingsManager.settings.low) ? "🔴" : glucoseIcon
+        glucoseIcon = Double(glucoseValue) >= Double(settingsManager.settings.high) ? "🟠" : glucoseIcon
+
         let glucoseText = glucoseFormatter
             .string(from: Double(
                 settingsManager.settings.units == .mmolL ?glucoseValue
@@ -74,9 +79,31 @@ final class BaseCalendarManager: CalendarManager, Injectable {
                     .string(from: Double(settingsManager.settings.units == .mmolL ? $0.asMmolL : Decimal($0)) as NSNumber)!
             } ?? "--"
 
-        let title = glucoseText + " " + directionText + " " + deltaText
+        let fetchedSuggestion = storage.retrieve(OpenAPS.Enact.enacted, as: Suggestion.self)
+        let iobText = iobFormatter.string(from: (fetchedSuggestion?.iob ?? 0) as NSNumber) ?? ""
+        let cobText = cobFormatter.string(from: (fetchedSuggestion?.cob ?? 0) as NSNumber) ?? ""
 
-        event.title = title
+        var glucoseDisplayText = settingsManager.settings.displayCalendarEmojis ? glucoseIcon + " " : ""
+        glucoseDisplayText += glucoseText + " " + directionText + " " + deltaText
+
+        var iobDisplayText = ""
+        var cobDisplayText = ""
+
+        if settingsManager.settings.displayCalendarIOBandCOB {
+            if settingsManager.settings.displayCalendarEmojis {
+                iobDisplayText += "💉"
+                cobDisplayText += "🥨"
+            } else {
+                iobDisplayText += "IOB:"
+                cobDisplayText += "COB:"
+            }
+            iobDisplayText += " " + iobText
+            cobDisplayText += " " + cobText
+
+            event.location = iobDisplayText + " " + cobDisplayText
+        }
+
+        event.title = glucoseDisplayText
         event.notes = "iAPS"
         event.startDate = Date()
         event.endDate = Date(timeIntervalSinceNow: 60 * 10)
@@ -130,6 +157,20 @@ final class BaseCalendarManager: CalendarManager, Injectable {
         formatter.numberStyle = .decimal
         formatter.maximumFractionDigits = 1
         formatter.positivePrefix = "+"
+        return formatter
+    }
+
+    private var iobFormatter: NumberFormatter {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        formatter.maximumFractionDigits = 1
+        return formatter
+    }
+
+    private var cobFormatter: NumberFormatter {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        formatter.maximumFractionDigits = 0
         return formatter
     }
 
