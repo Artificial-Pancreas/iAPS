@@ -1,8 +1,8 @@
 //
 //  BluetoothManager.swift
-//  OmniBLE
+//  DanaKit
 //
-//  Created by Randall Knutson on 10/10/21.
+//  Created by Randall Knutson on 10/10/21. Changed by AD on 09/25/23
 //  Copyright © 2021 LoopKit Authors. All rights reserved.
 //
 
@@ -55,21 +55,21 @@ extension BluetoothManagerError: LocalizedError {
     }
 }
 
-protocol OmniBLEConnectionDelegate: AnyObject {
+protocol DanaKitConnectionDelegate: AnyObject {
 
     /**
      Tells the delegate that a peripheral has been connected to
 
      - parameter manager: The manager for the peripheral that was connected
      */
-    func omnipodPeripheralDidConnect(manager: PeripheralManager)
+    func danaPeripheralDidConnect(manager: PeripheralManager)
     
     /**
      Tells the delegate that a connected peripheral has been restored from session restoration
 
      - parameter manager: The manager for the peripheral that was connected
      */
-    func omnipodPeripheralWasRestored(manager: PeripheralManager)
+    func danaPeripheralWasRestored(manager: PeripheralManager)
 
 
     /**
@@ -77,21 +77,21 @@ protocol OmniBLEConnectionDelegate: AnyObject {
 
      - parameter peripheral: The peripheral that was disconnected
      */
-    func omnipodPeripheralDidDisconnect(peripheral: CBPeripheral, error: Error?)
+    func danaPeripheralDidDisconnect(peripheral: CBPeripheral, error: Error?)
 
     /**
      Tells the delegate that a peripheral failed to connect
 
      - parameter peripheral: The peripheral that failed to connect
      */
-    func omnipodPeripheralDidFailToConnect(peripheral: CBPeripheral, error: Error?)
+    func danaPeripheralDidFailToConnect(peripheral: CBPeripheral, error: Error?)
 
 }
 
 
 class BluetoothManager: NSObject {
 
-    weak var connectionDelegate: OmniBLEConnectionDelegate?
+    weak var connectionDelegate: DanaKitConnectionDelegate?
 
     private let log = OSLog(category: "BluetoothManager")
 
@@ -99,7 +99,7 @@ class BluetoothManager: NSObject {
     private var manager: CBCentralManager! = nil
     
     /// Isolated to `managerQueue`
-    private var devices: [OmniBLE] = []
+    private var devices: [DanaKit] = []
     
     /// Isolated to `managerQueue`
     private var discoveryModeEnabled: Bool = false
@@ -119,21 +119,21 @@ class BluetoothManager: NSObject {
     }
 
     // MARK: - Synchronization
-    private let managerQueue = DispatchQueue(label: "com.OmniBLE.bluetoothManagerQueue", qos: .unspecified)
+    private let managerQueue = DispatchQueue(label: "com.DanaKit.bluetoothManagerQueue", qos: .unspecified)
 
     override init() {
         super.init()
 
         managerQueue.sync {
-            self.manager = CBCentralManager(delegate: self, queue: managerQueue, options: [CBCentralManagerOptionRestoreIdentifierKey: "com.OmniBLE"])
+            self.manager = CBCentralManager(delegate: self, queue: managerQueue, options: [CBCentralManagerOptionRestoreIdentifierKey: "com.DanaKit"])
         }
     }
     
     @discardableResult
-    private func addPeripheral(_ peripheral: CBPeripheral, podAdvertisement: PodAdvertisement?) -> OmniBLE {
+    private func addPeripheral(_ peripheral: CBPeripheral, podAdvertisement: PodAdvertisement?) -> DanaKit {
         dispatchPrecondition(condition: .onQueue(managerQueue))
 
-        var device: OmniBLE! = devices.first(where: { $0.manager.peripheral.identifier == peripheral.identifier })
+        var device: DanaKit! = devices.first(where: { $0.manager.peripheral.identifier == peripheral.identifier })
 
         if let device = device {
             log.default("Matched peripheral %{public}@ to existing device: %{public}@", peripheral, String(describing: device))
@@ -142,7 +142,7 @@ class BluetoothManager: NSObject {
                 device.advertisement = podAdvertisement
             }
         } else {
-            device = OmniBLE(peripheralManager: PeripheralManager(peripheral: peripheral, configuration: .omnipod, centralManager: manager), advertisement: podAdvertisement)
+            device = DanaKit(peripheralManager: PeripheralManager(peripheral: peripheral, configuration: .dana, centralManager: manager), advertisement: podAdvertisement)
             devices.append(device)
             log.info("Created device")
         }
@@ -238,7 +238,7 @@ class BluetoothManager: NSObject {
     
     private func startScanning() {
         log.default("Start scanning")
-        manager.scanForPeripherals(withServices: [OmnipodServiceUUID.advertisement.cbUUID], options: nil)
+        manager.scanForPeripherals(withServices: [DanaServiceUUID.advertisement.cbUUID], options: nil)
     }
 
     private func stopScanning() {
@@ -248,8 +248,8 @@ class BluetoothManager: NSObject {
 
     // MARK: - Accessors
     
-    public func getConnectedDevices() -> [OmniBLE] {
-        var connected: [OmniBLE] = []
+    public func getConnectedDevices() -> [DanaKit] {
+        var connected: [DanaKit] = []
         managerQueue.sync {
             connected = self.devices.filter { $0.manager.peripheral.state == .connected }
         }
@@ -305,7 +305,7 @@ extension BluetoothManager: CBCentralManagerDelegate {
 
     func centralManager(_ central: CBCentralManager, willRestoreState dict: [String : Any]) {
         dispatchPrecondition(condition: .onQueue(managerQueue))
-        log.info("OmniBLE %{public}@: %{public}@", #function, dict)
+        log.info("DanaKit %{public}@: %{public}@", #function, dict)
 
         if let peripherals = dict[CBCentralManagerRestoredStatePeripheralsKey] as? [CBPeripheral] {
             for peripheral in peripherals {
@@ -313,7 +313,7 @@ extension BluetoothManager: CBCentralManagerDelegate {
                 
                 if autoConnectIDs.contains(peripheral.identifier.uuidString) {
                     if peripheral.state == .connected {
-                        connectionDelegate?.omnipodPeripheralWasRestored(manager: device.manager)
+                        connectionDelegate?.danaPeripheralWasRestored(manager: device.manager)
                     }
                 } else if peripheral.state == .connected || peripheral.state == .connecting {
                     // For some reason iOS is maintaining a connection to a device that isn't in our list.
@@ -359,7 +359,7 @@ extension BluetoothManager: CBCentralManagerDelegate {
         // Proxy connection events to peripheral manager
         for device in devices where device.manager.peripheral.identifier == peripheral.identifier {
             device.manager.centralManager(central, didConnect: peripheral)
-            connectionDelegate?.omnipodPeripheralDidConnect(manager: device.manager)
+            connectionDelegate?.danaPeripheralDidConnect(manager: device.manager)
 
             // Get an RSSI reading for logging
             peripheral.readRSSI()
@@ -375,7 +375,7 @@ extension BluetoothManager: CBCentralManagerDelegate {
             device.manager.centralManager(central, didDisconnect: peripheral, error: error)
         }
 
-        connectionDelegate?.omnipodPeripheralDidDisconnect(peripheral: peripheral, error: error)
+        connectionDelegate?.danaPeripheralDidDisconnect(peripheral: peripheral, error: error)
 
         if autoConnectIDs.contains(peripheral.identifier.uuidString) {
             log.debug("Reconnecting disconnected autoconnect peripheral")
@@ -388,7 +388,7 @@ extension BluetoothManager: CBCentralManagerDelegate {
 
         log.error("%{public}@: %{public}@", #function, String(describing: error))
 
-        connectionDelegate?.omnipodPeripheralDidFailToConnect(peripheral: peripheral, error: error)
+        connectionDelegate?.danaPeripheralDidFailToConnect(peripheral: peripheral, error: error)
 
         if autoConnectIDs.contains(peripheral.identifier.uuidString) {
             central.connect(peripheral, options: nil)

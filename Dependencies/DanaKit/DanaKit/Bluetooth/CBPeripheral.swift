@@ -1,7 +1,7 @@
 //
 //  CBPeripheral.swift
 //  xDripG5
-//  OmniBLE
+//  DanaKit
 //
 //  From CGMBLEKit/CGMBLEKit/CBPeripheral.swift
 //  Copyright © 2017 LoopKit Authors. All rights reserved.
