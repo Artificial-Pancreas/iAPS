@@ -526,6 +526,9 @@ Połączono z Nightscout!";
 /* */
 "Calendar" = "Calendar";
 
+/* Automatic delivered treatments */
+"Automatic" = "Automatic";
+
 /* */
 "Other" = "Other";
 
