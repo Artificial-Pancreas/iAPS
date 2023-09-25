@@ -521,7 +521,7 @@ Połączono z Nightscout!";
 "Calibrations" = "Calibrations";
 
 /* */
-"Create events in calendar" = "Create events in calendar";
+"Create Events in Calendar" = "Create Events in Calendar";
 
 /* */
 "Calendar" = "Calendar";
@@ -1115,6 +1115,9 @@ Połączono z Nightscout!";
 
 /* Manual temp basal mode */
 "Manual" = "Manual";
+
+/* An Automatic delivered bolus (SMB) */
+"SMB" = "SMB";
 
 /* Status highlight when manual temp basal is running. */
 "Manual Basal" = "Manual Basal";
