@@ -524,6 +524,9 @@ Enact a temp Basal or a temp target */
 /* */
 "Calendar" = "Calendario";
 
+/* Automatic delivered treatments */
+"Automatic" = "Automatic";
+
 /* */
 "Other" = "Otro";
 
