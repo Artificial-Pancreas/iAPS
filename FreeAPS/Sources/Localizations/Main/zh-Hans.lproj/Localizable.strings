@@ -524,6 +524,9 @@ Enact a temp Basal or a temp target */
 /* */
 "Calendar" = "日历";
 
+/* Automatic delivered treatments */
+"Automatic" = "Automatic";
+
 /* */
 "Other" = "其他";
 
