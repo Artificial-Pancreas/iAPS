@@ -138,7 +138,7 @@ enum DataTable {
                 return numberFormatter
                     .string(from: amount as NSNumber)! + NSLocalizedString(" U", comment: "Insulin unit") +
                     (
-                        (isSMB ?? false) ? " " + NSLocalizedString("Auto", comment: "Automatic delivered bolus (SMB)") : " " +
+                        (isSMB ?? false) ? " " + NSLocalizedString("Automatic", comment: "Automatic delivered treatments") : " " +
                             NSLocalizedString("Manual", comment: "Manual Bolus")
                     )
             case .tempBasal:
