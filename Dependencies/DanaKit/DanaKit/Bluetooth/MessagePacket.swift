@@ -1,163 +1,212 @@
 //
 //  MessagePacket.swift
-//  OmniBLE
+//  DanaKit
 //
 //  Created by Randall Knutson on 8/4/21.
 //  Copyright © 2021 LoopKit Authors. All rights reserved.
 //
 import Foundation
-
-enum MessageType: UInt8 {
-    case CLEAR = 0, ENCRYPTED, SESSION_ESTABLISHMENT, PAIRING
-}
+import CoreBluetooth
 
 struct MessagePacket {
-    private static let MAGIC_PATTERN = "TW" // all messages start with this string
-    private static let HEADER_SIZE = 16
 
-    static func parse(payload: Data) throws -> MessagePacket {
-        guard payload.count >= HEADER_SIZE else {
-            throw PodProtocolError.couldNotParseMessageException("Incorrect header size")
-        }
+    class BLEComm {
+        private let rh: ResourceHelper
+        private let context: Context
+        private let rxBus: RxBus
+        private let sp: SP
+        private let danaMessageHashTable: danaMessageHashTable
+        private let danaPump: DanaPump
+        private let danaPlugin: DanaPlugin
+        private let bleEncryption: BleEncryption
+        private let pumpSync: PumpSync
+        private let dateUtil: DateUtil
 
-        guard (String(data: payload.subdata(in: 0..<2), encoding: .utf8) == MAGIC_PATTERN) else {
-            throw PodProtocolError.couldNotParseMessageException("Magic pattern mismatch")
+        init(
+            rh: ResourceHelper,
+            context: Context,
+            rxBus: RxBus,
+            sp: SP,
+            danaMessageHashTable: DanaMessageHashTable,
+            danaPump: DanaPump,
+            danaPlugin: DanaPlugin,
+            bleEncryption: BleEncryption,
+            pumpSync: PumpSync,
+            dateUtil: DateUtil
+        ) {
+            self.rh = rh
+            self.context = context
+            self.rxBus = rxBus
+            self.sp = sp
+            self.danaMessageHashTable = danaMessageHashTable
+            self.danaPump = danaPump
+            self.danaPlugin = danaPlugin
+            self.bleEncryption = bleEncryption
+            self.pumpSync = pumpSync
+            self.dateUtil = dateUtil
         }
-        let payloadData = payload
+    }
+
+    private static let WRITE_DELAY_MILLIS: Int64 = 50
+    private static let UART_READ_UUID = "0000fff1-0000-1000-8000-00805f9b34fb"
+    private static let UART_WRITE_UUID = "0000fff2-0000-1000-8000-00805f9b34fb"
+    private static let UART_BLE5_UUID = "00002902-0000-1000-8000-00805f9b34fb"
+    
+    private static let PACKET_START_BYTE = 0xA5
+    private static let PACKET_END_BYTE = 0x5A
+    private static let BLE5_PACKET_END_BYTE = 0xEE
+    
+    var scheduledDisconnection: ScheduledFuture<Any>? = nil
+    var processedMessage: DanaPacket? = nil
+    var msendQueue = [Data]()
+    
+    let bluetoothManager = context.getSystemService(Context.BLUETOOTH_SERVICE) as? BluetoothManager
+    let bluetoothAdapter = bluetoothManager?.adapter
+
+    var connectDeviceName: String? = nil
+    var encryption: EncryptionType = .ENCRYPTION_DEFAULT {
+        didSet {
+            bleEncryption.setEnhancedEncryption(newValue)
+        }
+    }
+
+    var isEasyMode: Bool = false
+    var isUnitUD: Bool = false
+    var isConnected = false
+    var isConnecting = false
+    private var encryptedDataRead = false
+    private var encryptedCommandSent = false
+    private var uartRead: BluetoothGattCharacteristic? = nil
+    private var uartWrite: BluetoothGattCharacteristic? = nil
+    
+    if #available(iOS 15.0, *), !CBManager.authorization == .allowedAlways {
+        ToastUtils.errorToast(context, context.localizedString(forKey: "needconnectpermission", value: nil, table: "Localizable"))
+        OSLog.error(LTag.pumpBTCOMM, "missing permission: \(from)")
+        return false
+    }
+
+    OSLog.debug(LTag.pumpBTCOMM, "Initializing BLEComm.")
+
+    if bluetoothAdapter == nil {
+        OSLog.error("Unable to obtain a BluetoothAdapter.")
+        return false
+    }
+
+    if address == nil {
+        OSLog.error("unspecified address.")
+        return false
+    }
+    
+    if let device = bluetoothAdapter?.getRemoteDevice(address) {
+        if device.bondState == .none {
+            if #available(iOS 15.0, *), CBManager.authorization != .allowedAlways {
+                device.createBond()
+                Thread.sleep(forTimeInterval: 10)
+            }
+            return false
+        }
         
-        let f1 = Flag(payloadData[2])
-        let sas = f1.get(3) != 0
-        let tfs = f1.get(4) != 0
-        let version = Int16(((f1.get(0) << 2) | (f1.get(1) << 1) | (f1.get(2) << 0)))
-        let eqos = Int16((f1.get(7) | (f1.get(6) << 1) | (f1.get(5) << 2)))
-
-        let f2 = Flag(payloadData[3])
-        let ack = f2.get(0) != 0
-        let priority = f2.get(1) != 0
-        let lastMessage = f2.get(2) != 0
-        let gateway = f2.get(3) != 0
-        let type: MessageType = MessageType(rawValue: UInt8(f2.get(7) | (f2.get(6) << 1) | (f2.get(5) << 2) | (f2.get(4) << 3))) ?? .CLEAR
-        if (version != 0) {
-            throw PodProtocolError.couldNotParseMessageException("Wrong version")
-        }
-        let sequenceNumber = payloadData[4]
-        let ackNumber = payloadData[5]
-        let size = (UInt16(payloadData[6]) << 3) | (UInt16(payloadData[7]) >> 5)
-        guard payload.count >= (Int(size) + MessagePacket.HEADER_SIZE) else {
-            throw PodProtocolError.couldNotParseMessageException("Wrong payload size")
-        }
-
-        let payloadEnd = Int(16 + size + (type == MessageType.ENCRYPTED ? 8 : 0))
-
-        return MessagePacket(
-            type: type,
-            source: Id(payload.subdata(in: 8..<12)).toUInt32(),
-            destination: Id(payload.subdata(in: 12..<16)).toUInt32(),
-            payload: payload.subdata(in: 16..<payloadEnd),
-            sequenceNumber: sequenceNumber,
-            ack: ack,
-            ackNumber:ackNumber,
-            eqos: eqos,
-            priority: priority,
-            lastMessage: lastMessage,
-            gateway: gateway,
-            sas: sas,
-            tfs: tfs,
-            version: version
-        )
+        isConnected = false
+        encryption = .encryptionDefault
+        encryptedDataRead = false
+        encryptedCommandSent = false
+        isConnecting = true
+        bufferLength = 0
+        OSLog.debug(LTag.pumpBTCOMM, "Trying to create a new connection from: \(from)")
+        connectDeviceName = device.name
+        bluetoothGatt = device.connectGatt(context, false, mGattCallback)
+        setCharacteristicNotification(uartReadBTGattChar, enabled: true)
+        return true
+    } else {
+        OSLog.error("Device not found. Unable to connect from: \(from)")
+        return false
     }
-
-    let type: MessageType
-    var source: Id
-    let destination: Id
-    var payload: Data
-    let sequenceNumber: UInt8
-    let ack: Bool
-    let ackNumber: UInt8
-    let eqos: Int16
-    let priority: Bool
-    let lastMessage: Bool
-    let gateway: Bool
-    let sas: Bool // TODO: understand, seems to always be true
-    let tfs: Bool // TODO: understand, seems to be false
-    let version: Int16
-    init(type: MessageType, source: UInt32, destination: UInt32, payload: Data, sequenceNumber: UInt8, ack: Bool = false, ackNumber: UInt8 = 0, eqos: Int16 = 0, priority: Bool = false, lastMessage: Bool = false, gateway: Bool = false, sas: Bool = true, tfs: Bool = false, version: Int16 = 0) {
-        self.type = type
-        self.source = Id.fromUInt32(source)
-        self.destination = Id.fromUInt32(destination)
-        self.payload = payload
-        self.sequenceNumber = sequenceNumber
-        self.ack = ack
-        self.ackNumber = ackNumber
-        self.eqos = eqos
-        self.priority = priority
-        self.lastMessage = lastMessage
-        self.gateway = gateway
-        self.sas = sas
-        self.tfs = tfs
-        self.version = version
-    }
-
-    func asData(forEncryption: Bool = false) -> Data {
-        var bb = Data(capacity: 16 + payload.count)
-        bb.append(MessagePacket.MAGIC_PATTERN.data(using: .utf8)!)
-
-        let f1 = Flag()
-        f1.set(0, self.version & 4 != 0)
-        f1.set(1, self.version & 2 != 0)
-        f1.set(2, self.version & 1 != 0)
-        f1.set(3, self.sas)
-        f1.set(4, self.tfs)
-        f1.set(5, self.eqos & 4 != 0)
-        f1.set(6, self.eqos & 2 != 0)
-        f1.set(7, self.eqos & 1 != 0)
-
-        let f2 = Flag()
-        f2.set(0, self.ack)
-        f2.set(1, self.priority)
-        f2.set(2, self.lastMessage)
-        f2.set(3, self.gateway)
-        f2.set(4, self.type.rawValue & 8 != 0)
-        f2.set(5, self.type.rawValue & 4 != 0)
-        f2.set(6, self.type.rawValue & 2 != 0)
-        f2.set(7, self.type.rawValue & 1 != 0)
-
-        bb.append(f1.value)
-        bb.append(f2.value)
-        bb.append(self.sequenceNumber)
-        bb.append(self.ackNumber)
-        let size = payload.count - ((type == MessageType.ENCRYPTED && !forEncryption) ? 8 : 0)
-        bb.append(UInt8(size >> 3))
-        bb.append(UInt8((size << 5) & 0xff))
-        bb.append(self.source.address)
-        bb.append(self.destination.address)
-
-        bb.append(self.payload)
-
-        return bb
-    }
-}
-
-private class Flag {
-    var value: UInt8
-    
-    init(_ value: UInt8 = 0) {
-        self.value = value
+        
+    func stopConnecting() {
+        isConnecting = false
     }
     
-    func set(_ idx: UInt8, _ set: Bool) {
-        let mask: UInt8 = 1 << (7 - idx)
-        if (!set) {
+    func disconnect(from: String) {
+        if #available(iOS 15.0, *), CBManager.authorization != .allowedAlways {
+            OSLog.error(LTag.pumpBTCOMM, "missing permission: \(from)")
             return
         }
-        value = value | mask
+            
+        OSLog.debug(LTag.pumpBTCOMM, "disconnect from: \(from)")
+
+        if !encryptedDataRead && encryptedCommandSent && encryption == .encryptionBLE5 {
+            // There was no response from pump after starting encryption.
+            // Assume pairing keys are invalid.
+            let lastClearRequest = sp.getLong(R.string.key_rs_last_clear_key_request, 0)
+                
+            if lastClearRequest != 0 && dateUtil.isOlderThan(lastClearRequest, 5) {
+                ToastUtils.showToastInUiThread(context, R.string.invalidpairing)
+                danaPlugin.changePump()
+                removeBond()
+            } else if lastClearRequest == 0 {
+                OSLog.error("Clearing pairing keys postponed")
+                sp.putLong(R.string.key_rs_last_clear_key_request, dateUtil.now())
+            }
+        }
+    }
+        if !encryptedDataRead && encryptedCommandSent && encryption == .encryptionRSv3 {
+            // There was no response from the pump after starting encryption.
+            // Assume pairing keys are invalid.
+            let lastClearRequest = sp.getLong(R.string.key_rs_last_clear_key_request, 0)
+            
+            if lastClearRequest != 0 && dateUtil.isOlderThan(lastClearRequest, 5) {
+                aapsLogger.error("Clearing pairing keys !!!")
+                sp.remove(rh.gs(R.string.key_dana_v3_randompairingkey) + danaPlugin.mDeviceName)
+                sp.remove(rh.gs(R.string.key_dana_v3_pairingkey) + danaPlugin.mDeviceName)
+                sp.remove(rh.gs(R.string.key_dana_v3_randomsynckey) + danaPlugin.mDeviceName)
+                ToastUtils.showToastInUiThread(context, R.string.invalidpairing)
+                danaPlugin.changePump()
+            } else if lastClearRequest == 0 {
+                OSLog.error("Clearing pairing keys postponed")
+                sp.putLong(R.string.key_rs_last_clear_key_request, dateUtil.now())
+            }
+        }
+    // Cancel previous scheduled disconnection to prevent closing upcoming connection
+    scheduledDisconnection?.cancel(false)
+    scheduledDisconnection = nil
+
+    if bluetoothAdapter == nil || bluetoothGatt == nil {
+        OSLog.error("disconnect not possible: (mBluetoothAdapter == nil) \(bluetoothAdapter == nil)")
+        OSLog.error("disconnect not possible: (mBluetoothGatt == nil) \(bluetoothGatt == nil)")
+        return
     }
 
-    func get(_ idx: UInt8) -> UInt8 {
-        let mask: UInt8 = 1 << (7 - idx)
-        if (value & mask == 0) {
-            return 0
+    setCharacteristicNotification(uartReadBTGattChar, enabled: false)
+    bluetoothGatt?.disconnect()
+    isConnected = false
+    encryptedDataRead = false
+    encryptedCommandSent = false
+    Thread.sleep(forTimeInterval: 2)
+    
+    private func removeBond() {
+        if let address = sp.string(forKey: R.string.key_dana_address) {
+            if let device = bluetoothAdapter?.retrievePeripherals(withIdentifiers: [UUID(uuidString: address)!]).first {
+                // Disconnect the device (if it's connected)
+                if device.state == .connected {
+                    bluetoothGatt?.cancelPeripheralConnection(device)
+                }
+
+                // Unpair the device
+                if #available(iOS 15.0, *) {
+                    if device.isPaired {
+                        do {
+                            try device.unpair()
+                        } catch {
+                            OSLog.error("Removing bond has failed. \(error.localizedDescription)")
+                        }
+                    }
+                } else {
+                    // Handle unpairing for older iOS versions
+                    // Note: Unpairing is restricted on iOS, and you may not have direct control over it.
+                    // Depending on your specific use case, you may not be able to unpair devices programmatically.
+                    OSLog.error("Removing bond is not supported on this iOS version.")
+                }
+            }
         }
-        return 1
     }
 }
