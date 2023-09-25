@@ -256,7 +256,7 @@ final class BasePumpHistoryStorage: PumpHistoryStorage, Injectable {
                     rawRate: nil,
                     absolute: nil,
                     rate: nil,
-                    eventType: .bolus,
+                    eventType: (event.isSMB ?? false) ? .smb : .bolus,
                     createdAt: event.timestamp,
                     enteredBy: NigtscoutTreatment.local,
                     bolus: event,

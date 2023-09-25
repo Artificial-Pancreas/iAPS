@@ -91,7 +91,7 @@ enum DataTable {
             duration: Decimal? = nil,
             id: String? = nil,
             idPumpEvent: String? = nil,
-            isFPU: Bool? = false,
+            isFPU: Bool? = nil,
             fpuID: String? = nil,
             note: String? = nil,
             isSMB: Bool? = nil
@@ -137,7 +137,10 @@ enum DataTable {
             case .bolus:
                 return numberFormatter
                     .string(from: amount as NSNumber)! + NSLocalizedString(" U", comment: "Insulin unit") +
-                    ((isSMB ?? false) ? " 🤖" : " " + NSLocalizedString("Manual", comment: "Manual Bolus"))
+                    (
+                        (isSMB ?? false) ? " " + NSLocalizedString("Auto", comment: "Automatic delivered bolus (SMB)") : " " +
+                            NSLocalizedString("Manual", comment: "Manual Bolus")
+                    )
             case .tempBasal:
                 return numberFormatter
                     .string(from: amount as NSNumber)! + NSLocalizedString(" U/hr", comment: "Unit insulin per hour")
@@ -167,7 +170,7 @@ enum DataTable {
             case .carbs:
                 return .loopYellow
             case .fpus:
-                return .red
+                return .loopRed
             case .bolus:
                 return .insulin
             case .tempBasal:

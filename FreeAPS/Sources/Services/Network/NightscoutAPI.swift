@@ -33,7 +33,7 @@ extension NightscoutAPI {
     func checkConnection() -> AnyPublisher<Void, Swift.Error> {
         struct Check: Codable, Equatable {
             var eventType = "Note"
-            var enteredBy = "freeaps-x"
+            var enteredBy = "iAPS"
             var notes = "iAPS connected"
         }
         let check = Check()
