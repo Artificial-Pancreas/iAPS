@@ -107,9 +107,9 @@
 		A9A5BCF6276C1E6D00B02C86 /* MessagePacketTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9D054CC2764FDB700FAFEFB /* MessagePacketTests.swift */; };
 		A9A5BCF7276C1E7000B02C86 /* KeyExchangeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9D054DB27655F9C00FAFEFB /* KeyExchangeTests.swift */; };
 		C10D6D6C27A2393800F53D58 /* OmniBLETests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C10D6D6B27A2393800F53D58 /* OmniBLETests.swift */; };
-		C10D6D6E27A2395700F53D58 /* OmniBLEPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = C10D6D6D27A2395700F53D58 /* OmniBLEPlugin.swift */; };
+		C10D6D6E27A2395700F53D58 /* DanaKitPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = C10D6D6D27A2395700F53D58 /* DanaKitPlugin.swift */; };
 		C187C191278FCEC9006E3557 /* InsulinTypeConfirmation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C187C190278FCEC9006E3557 /* InsulinTypeConfirmation.swift */; };
-		C187C19A279086A8006E3557 /* OmniBLEPlugin.h in Headers */ = {isa = PBXBuildFile; fileRef = C187C199279086A8006E3557 /* OmniBLEPlugin.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C187C19A279086A8006E3557 /* DanaKitPlugin.h in Headers */ = {isa = PBXBuildFile; fileRef = C187C199279086A8006E3557 /* DanaKitPlugin.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C187C1A3279087A4006E3557 /* OSLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = C187C1A2279087A4006E3557 /* OSLog.swift */; };
 		C1C001BF27A2337B00533D35 /* PeripheralManager+OmniBLE.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1C001BE27A2337B00533D35 /* PeripheralManager+OmniBLE.swift */; };
 		C1C001C127A2349D00533D35 /* OmniBLE.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1C001C027A2349D00533D35 /* OmniBLE.swift */; };
@@ -353,12 +353,12 @@
 		A9D3492F2764F5780037F77C /* EnDecryptTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnDecryptTests.swift; sourceTree = "<group>"; };
 		A9D349312764F5D30037F77C /* PayloadJoinerTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PayloadJoinerTest.swift; sourceTree = "<group>"; };
 		C10D6D6B27A2393800F53D58 /* OmniBLETests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OmniBLETests.swift; sourceTree = "<group>"; };
-		C10D6D6D27A2395700F53D58 /* OmniBLEPlugin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OmniBLEPlugin.swift; sourceTree = "<group>"; };
+		C10D6D6D27A2395700F53D58 /* DanaKitPlugin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DanaKitPlugin.swift; sourceTree = "<group>"; };
 		C121D8D829C7866D00DA0520 /* cs */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = cs; path = cs.lproj/Localizable.strings; sourceTree = "<group>"; };
 		C15A583029C7866600D3A5A1 /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/Localizable.strings; sourceTree = "<group>"; };
 		C187C190278FCEC9006E3557 /* InsulinTypeConfirmation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsulinTypeConfirmation.swift; sourceTree = "<group>"; };
 		C187C197279086A8006E3557 /* DanaKitPlugin.loopplugin */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = DanaKitPlugin.loopplugin; sourceTree = BUILT_PRODUCTS_DIR; };
-		C187C199279086A8006E3557 /* OmniBLEPlugin.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OmniBLEPlugin.h; sourceTree = "<group>"; };
+		C187C199279086A8006E3557 /* DanaKitPlugin.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DanaKitPlugin.h; sourceTree = "<group>"; };
 		C187C1A2279087A4006E3557 /* OSLog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSLog.swift; sourceTree = "<group>"; };
 		C187C1A427908B1C006E3557 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C19E3881298638CE00851444 /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -550,9 +550,9 @@
 				191DB6512A06F17800212AC9 /* Localizations */,
 				A91B2DEB276E1E5E001B0E95 /* README.md */,
 				84752EE926ED1402009FD801 /* Common */,
-				84752E8426ED0FFE009FD801 /* OmniBLE */,
-				84752E8F26ED0FFE009FD801 /* OmniBLETests */,
-				C187C198279086A8006E3557 /* OmniBLEPlugin */,
+				84752E8426ED0FFE009FD801 /* DanaKit */,
+				84752E8F26ED0FFE009FD801 /* DanaKitTests */,
+				C187C198279086A8006E3557 /* DanaKitPlugin */,
 				84752E8326ED0FFE009FD801 /* Products */,
 				84752E9C26ED10A0009FD801 /* Frameworks */,
 			);
@@ -568,7 +568,7 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		84752E8426ED0FFE009FD801 /* OmniBLE */ = {
+		84752E8426ED0FFE009FD801 /* DanaKit */ = {
 			isa = PBXGroup;
 			children = (
 				84752EBE26ED13F5009FD801 /* Bluetooth */,
@@ -579,10 +579,10 @@
 				84752E8626ED0FFE009FD801 /* Info.plist */,
 				4B67E2D3289B4EDB002D92AF /* Localizable.strings */,
 			);
-			path = OmniBLE;
+			path = DanaKit;
 			sourceTree = "<group>";
 		};
-		84752E8F26ED0FFE009FD801 /* OmniBLETests */ = {
+		84752E8F26ED0FFE009FD801 /* DanaKitTests */ = {
 			isa = PBXGroup;
 			children = (
 				D802CCFB27DD97210072E3A1 /* AcknowledgeAlertsTests.swift */,
@@ -602,7 +602,7 @@
 				A9D054D427651D2400FAFEFB /* TestUtilities.swift */,
 				D800CF1827E682E90090EADB /* ZeroBasalScheduleTest.swift */,
 			);
-			path = OmniBLETests;
+			path = DanaKitTests;
 			sourceTree = "<group>";
 		};
 		84752E9C26ED10A0009FD801 /* Frameworks */ = {
@@ -804,15 +804,15 @@
 			path = pair;
 			sourceTree = "<group>";
 		};
-		C187C198279086A8006E3557 /* OmniBLEPlugin */ = {
+		C187C198279086A8006E3557 /* DanaKitPlugin */ = {
 			isa = PBXGroup;
 			children = (
-				C10D6D6D27A2395700F53D58 /* OmniBLEPlugin.swift */,
+				C10D6D6D27A2395700F53D58 /* DanaKitPlugin.swift */,
 				C187C1A427908B1C006E3557 /* Info.plist */,
 				C187C1A127908795006E3557 /* Extensions */,
-				C187C199279086A8006E3557 /* OmniBLEPlugin.h */,
+				C187C199279086A8006E3557 /* DanaKitPlugin.h */,
 			);
-			path = OmniBLEPlugin;
+			path = DanaKitPlugin;
 			sourceTree = "<group>";
 		};
 		C187C1A127908795006E3557 /* Extensions */ = {
@@ -861,7 +861,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C187C19A279086A8006E3557 /* OmniBLEPlugin.h in Headers */,
+				C187C19A279086A8006E3557 /* DanaKitPlugin.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1198,7 +1198,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C187C1A3279087A4006E3557 /* OSLog.swift in Sources */,
-				C10D6D6E27A2395700F53D58 /* OmniBLEPlugin.swift in Sources */,
+				C10D6D6E27A2395700F53D58 /* DanaKitPlugin.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
