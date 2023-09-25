@@ -63,6 +63,8 @@ final class BaseCalendarManager: CalendarManager, Injectable {
         // create an event now
         let event = EKEvent(eventStore: eventStore)
 
+        let glucoseIcon = "🟢" // TODO: change icon color on BG range
+
         let glucoseText = glucoseFormatter
             .string(from: Double(
                 settingsManager.settings.units == .mmolL ?glucoseValue
@@ -79,9 +81,27 @@ final class BaseCalendarManager: CalendarManager, Injectable {
         let iobText = iobFormatter.string(from: (fetchedSuggestion?.iob ?? 0) as NSNumber) ?? ""
         let cobText = cobFormatter.string(from: (fetchedSuggestion?.cob ?? 0) as NSNumber) ?? ""
 
-        let title = glucoseText + " " + directionText + " " + deltaText + "; IOB: " + iobText + " COB: " + cobText
+        var glucoseDisplayText = settingsManager.settings.displayCalendarEmojis ? glucoseIcon + " " : ""
+        glucoseDisplayText += glucoseText + " " + directionText + " " + deltaText
+        
+        var iobDisplayText = ""
+        var cobDisplayText = ""
 
-        event.title = title
+        if settingsManager.settings.displayCalendarIOBandCOB {
+            if settingsManager.settings.displayCalendarEmojis {
+                iobDisplayText += "💉"
+                cobDisplayText += "🍞"
+            } else {
+                iobDisplayText += "IOB:"
+                cobDisplayText += "COB:"
+            }
+            iobDisplayText += " " + iobText
+            cobDisplayText += " " + cobText
+
+            event.location = iobDisplayText + " " + cobDisplayText
+        }
+
+        event.title = glucoseDisplayText
         event.notes = "iAPS"
         event.startDate = Date()
         event.endDate = Date(timeIntervalSinceNow: 60 * 10)

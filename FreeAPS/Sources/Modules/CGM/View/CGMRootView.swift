@@ -61,6 +61,10 @@ extension CGM {
                                     Text($0).tag($0)
                                 }
                             }
+                            Toggle("Display IOB and COB", isOn: $state.displayCalendarIOBandCOB)
+                            if state.displayCalendarIOBandCOB {
+                                Toggle("Display Emojis", isOn: $state.displayCalendarEmojis)
+                            }
                         }
                     }
 
