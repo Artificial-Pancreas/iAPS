@@ -149,23 +149,23 @@ struct MessagePacket {
             }
         }
     }
-        if !encryptedDataRead && encryptedCommandSent && encryption == .encryptionRSv3 {
-            // There was no response from the pump after starting encryption.
-            // Assume pairing keys are invalid.
-            let lastClearRequest = sp.getLong(R.string.key_rs_last_clear_key_request, 0)
+    if !encryptedDataRead && encryptedCommandSent && encryption == .encryptionRSv3 {
+        // There was no response from the pump after starting encryption.
+        // Assume pairing keys are invalid.
+        let lastClearRequest = sp.getLong(R.string.key_rs_last_clear_key_request, 0)
             
-            if lastClearRequest != 0 && dateUtil.isOlderThan(lastClearRequest, 5) {
-                aapsLogger.error("Clearing pairing keys !!!")
-                sp.remove(rh.gs(R.string.key_dana_v3_randompairingkey) + danaPlugin.mDeviceName)
-                sp.remove(rh.gs(R.string.key_dana_v3_pairingkey) + danaPlugin.mDeviceName)
-                sp.remove(rh.gs(R.string.key_dana_v3_randomsynckey) + danaPlugin.mDeviceName)
-                ToastUtils.showToastInUiThread(context, R.string.invalidpairing)
-                danaPlugin.changePump()
-            } else if lastClearRequest == 0 {
-                OSLog.error("Clearing pairing keys postponed")
-                sp.putLong(R.string.key_rs_last_clear_key_request, dateUtil.now())
-            }
+        if lastClearRequest != 0 && dateUtil.isOlderThan(lastClearRequest, 5) {
+            aapsLogger.error("Clearing pairing keys !!!")
+            sp.remove(rh.gs(R.string.key_dana_v3_randompairingkey) + danaPlugin.mDeviceName)
+            sp.remove(rh.gs(R.string.key_dana_v3_pairingkey) + danaPlugin.mDeviceName)
+            sp.remove(rh.gs(R.string.key_dana_v3_randomsynckey) + danaPlugin.mDeviceName)
+            ToastUtils.showToastInUiThread(context, R.string.invalidpairing)
+            danaPlugin.changePump()
+        } else if lastClearRequest == 0 {
+            OSLog.error("Clearing pairing keys postponed")
+            sp.putLong(R.string.key_rs_last_clear_key_request, dateUtil.now())
         }
+    }
     // Cancel previous scheduled disconnection to prevent closing upcoming connection
     scheduledDisconnection?.cancel(false)
     scheduledDisconnection = nil
