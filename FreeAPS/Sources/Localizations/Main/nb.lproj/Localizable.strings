@@ -519,13 +519,13 @@ Enact a temp Basal or a temp target */
 "Calibrations" = "Kalibreringer";
 
 /* */
-"Create Events in Calendar" = "Create Events in Calendar";
+"Create Events in Calendar" = "Opprett hendelser i kalenderen";
 
 /* */
 "Calendar" = "Kalender";
 
 /* Automatic delivered treatments */
-"Automatic" = "Automatic";
+"Automatic" = "Automatisk";
 
 /* */
 "Other" = "Annet";
