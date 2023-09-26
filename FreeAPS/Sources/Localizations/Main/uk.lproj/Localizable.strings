@@ -519,13 +519,13 @@ Enact a temp Basal or a temp target */
 "Calibrations" = "Калібрування";
 
 /* */
-"Create Events in Calendar" = "Create Events in Calendar";
+"Create Events in Calendar" = "Створення подій у календарі";
 
 /* */
 "Calendar" = "Календар";
 
 /* Automatic delivered treatments */
-"Automatic" = "Automatic";
+"Automatic" = "Автоматично";
 
 /* */
 "Other" = "Інше";
