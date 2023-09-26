@@ -962,6 +962,9 @@ Enact a temp Basal or a temp target */
 /* */
 "Bolus failed" = "Bolus is mislukt";
 
+/* "Max Bolus Exceeded label" */
+"Max Bolus exceeded!" = "Max Bolus exceeded!";
+
 /* */
 "Bolus failed or inaccurate. Check pump history before repeating." = "Bolus mislukt of onjuist. Controleer de pompgeschiedenis voordat je herhaalt.";
 
