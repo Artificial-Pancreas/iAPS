@@ -711,6 +711,15 @@ final class BaseAPSManager: APSManager, Injectable {
 
             storage.save(enacted, as: OpenAPS.Enact.enacted)
 
+            // Save to CoreData also. TO DO: Remove the JSON saving after some testing.
+            coredataContext.perform {
+                let saveLastLoop = LastLoop(context: self.coredataContext)
+                saveLastLoop.iob = (enacted.iob ?? 0) as NSDecimalNumber
+                saveLastLoop.cob = (enacted.cob ?? 0) as NSDecimalNumber
+                saveLastLoop.timestamp = (enacted.timestamp ?? .distantPast) as Date
+                try? self.coredataContext.save()
+            }
+
             debug(.apsManager, "Suggestion enacted. Received: \(received)")
             DispatchQueue.main.async {
                 self.broadcaster.notify(EnactedSuggestionObserver.self, on: .main) {
