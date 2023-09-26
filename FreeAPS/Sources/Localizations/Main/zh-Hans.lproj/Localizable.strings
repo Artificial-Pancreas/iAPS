@@ -962,6 +962,9 @@ Enact a temp Basal or a temp target */
 /* */
 "Bolus failed" = "大剂量输注失败";
 
+/* "Max Bolus Exceeded label" */
+"Max Bolus exceeded!" = "Max Bolus exceeded!";
+
 /* */
 "Bolus failed or inaccurate. Check pump history before repeating." = "大剂量失败或者不准确，请在重复操作前检查胰岛素泵历史";
 
