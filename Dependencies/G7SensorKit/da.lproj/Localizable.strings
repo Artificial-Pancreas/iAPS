@@ -41,7 +41,7 @@
 "Grace Period End" = "Grace Period End";
 
 /* Field label */
-"Glucose" = "Glucose";
+"Glucose" = "Glukose";
 
 "Last Reading" = "Last Reading";
 
@@ -67,7 +67,7 @@
 "Last Connect" = "Last Connect";
 
 /* Configuration */
-"Configuration" = "Configuration";
+"Configuration" = "Konfiguration";
 
 /* title for g7 config settings to upload readings */
 "Upload Readings" = "Upload Readings";
