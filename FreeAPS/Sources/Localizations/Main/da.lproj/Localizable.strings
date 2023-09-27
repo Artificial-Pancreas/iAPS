@@ -4,26 +4,26 @@
 */
 /* -------------------------------- */
 /* Bolus screen when adding insulin */
-"Add insulin without actually bolusing" = "Add insulin without actually bolusing";
+"Add insulin without actually bolusing" = "Tilføj insulin uden faktisk bolus";
 
 /* Add insulin from source outside of pump */
-"Add %@ without bolusing" = "Add %@ without bolusing";
+"Add %@ without bolusing" = "Tilføj %@ uden bolus";
 
 "Bolus" = "Bolus";
 
-"Close" = "Close";
+"Close" = "Luk";
 
 /* Continue after added carbs without bolus */
-"Continue without bolus" = "Continue without bolus";
+"Continue without bolus" = "Fortsæt uden bolus";
 
 /* Header */
-"Enact Bolus" = "Enact Bolus";
+"Enact Bolus" = "Udfør Bolus";
 
 /* Button */
-"Enact bolus" = "Enact bolus";
+"Enact bolus" = "Udfør bolus";
 
 /*  */
-"Insulin recommended" = "Insulin recommended";
+"Insulin recommended" = "Anbefalet insulin";
 
 /*  */
 "Insulin required" = "Insulin required";
