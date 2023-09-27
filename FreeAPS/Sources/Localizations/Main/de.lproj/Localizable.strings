@@ -519,7 +519,7 @@ Enact a temp Basal or a temp target */
 "Calibrations" = "Kalibrierungen";
 
 /* */
-"Create Events in Calendar" = "Create Events in Calendar";
+"Create Events in Calendar" = "Ereignisse im Kalender erstellen";
 
 /* */
 "Calendar" = "Kalender";
@@ -963,7 +963,7 @@ Enact a temp Basal or a temp target */
 "Bolus failed" = "Bolus fehlgeschlagen";
 
 /* "Max Bolus Exceeded label" */
-"Max Bolus exceeded!" = "Max Bolus exceeded!";
+"Max Bolus exceeded!" = "Maximaler Bolus überschritten!";
 
 /* */
 "Bolus failed or inaccurate. Check pump history before repeating." = "Bolus ist fehlgeschlagen oder ungenau. Prüfe den Pumpenverlauf vor einer erneuten Abgabe.";
