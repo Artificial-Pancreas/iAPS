@@ -16,6 +16,9 @@
 /* Continue after added carbs without bolus */
 "Continue without bolus" = "Continue without bolus";
 
+/* Alert when adding large amount without bolusing */
+"\nAmount is more than your Max Bolus setting! \nAre you sure you want to add " = "\nAmount is more than your Max Bolus setting! \nAre you sure you want to add ";
+
 /* Header */
 "Enact Bolus" = "Enact Bolus";
 
