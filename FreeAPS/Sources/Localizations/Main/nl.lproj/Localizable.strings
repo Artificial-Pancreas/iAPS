@@ -519,13 +519,13 @@ Enact a temp Basal or a temp target */
 "Calibrations" = "Kalibraties";
 
 /* */
-"Create Events in Calendar" = "Create Events in Calendar";
+"Create Events in Calendar" = "Voeg gebeurtenissen toe aan de kalender";
 
 /* */
 "Calendar" = "Agenda";
 
 /* Automatic delivered treatments */
-"Automatic" = "Automatic";
+"Automatic" = "Automatisch";
 
 /* */
 "Other" = "Anders";
@@ -963,7 +963,7 @@ Enact a temp Basal or a temp target */
 "Bolus failed" = "Bolus is mislukt";
 
 /* "Max Bolus Exceeded label" */
-"Max Bolus exceeded!" = "Max Bolus exceeded!";
+"Max Bolus exceeded!" = "Maximale bolus overschreden!";
 
 /* */
 "Bolus failed or inaccurate. Check pump history before repeating." = "Bolus mislukt of onjuist. Controleer de pompgeschiedenis voordat je herhaalt.";
