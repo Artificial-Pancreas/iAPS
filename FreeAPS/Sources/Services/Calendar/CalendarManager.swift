@@ -1,4 +1,5 @@
 import Combine
+import CoreData
 import EventKit
 import Swinject
 
@@ -23,6 +24,8 @@ final class BaseCalendarManager: CalendarManager, Injectable {
         broadcaster.register(GlucoseObserver.self, observer: self)
         setupGlucose()
     }
+
+    let coredataContext = CoreDataStack.shared.persistentContainer.newBackgroundContext()
 
     func requestAccessIfNeeded() -> AnyPublisher<Bool, Never> {
         Future { promise in
@@ -63,9 +66,30 @@ final class BaseCalendarManager: CalendarManager, Injectable {
         // create an event now
         let event = EKEvent(eventStore: eventStore)
 
+        // Calendar settings
+        let displeyCOBandIOB = settingsManager.settings.displayCalendarIOBandCOB
+        let displayEmojis = settingsManager.settings.displayCalendarEmojis
+
+        // Latest Loop data (from CoreData)
+        var freshLoop: Double = 20
+        var lastLoop = [LastLoop]()
+        if displeyCOBandIOB || displayEmojis {
+            coredataContext.performAndWait {
+                let requestLastLoop = LastLoop.fetchRequest() as NSFetchRequest<LastLoop>
+                let sortLoops = NSSortDescriptor(key: "timestamp", ascending: false)
+                requestLastLoop.sortDescriptors = [sortLoops]
+                requestLastLoop.fetchLimit = 1
+                try? lastLoop = coredataContext.fetch(requestLastLoop)
+            }
+            freshLoop = -1 * (lastLoop.first?.timestamp ?? .distantPast).timeIntervalSinceNow.minutes
+        }
+
         var glucoseIcon = "🟢"
-        glucoseIcon = Double(glucoseValue) <= Double(settingsManager.settings.low) ? "🔴" : glucoseIcon
-        glucoseIcon = Double(glucoseValue) >= Double(settingsManager.settings.high) ? "🟠" : glucoseIcon
+        if displayEmojis {
+            glucoseIcon = Double(glucoseValue) <= Double(settingsManager.settings.low) ? "🔴" : glucoseIcon
+            glucoseIcon = Double(glucoseValue) >= Double(settingsManager.settings.high) ? "🟠" : glucoseIcon
+            glucoseIcon = freshLoop > 15 ? "🚫" : glucoseIcon
+        }
 
         let glucoseText = glucoseFormatter
             .string(from: Double(
@@ -79,18 +103,17 @@ final class BaseCalendarManager: CalendarManager, Injectable {
                     .string(from: Double(settingsManager.settings.units == .mmolL ? $0.asMmolL : Decimal($0)) as NSNumber)!
             } ?? "--"
 
-        let fetchedSuggestion = storage.retrieve(OpenAPS.Enact.enacted, as: Suggestion.self)
-        let iobText = iobFormatter.string(from: (fetchedSuggestion?.iob ?? 0) as NSNumber) ?? ""
-        let cobText = cobFormatter.string(from: (fetchedSuggestion?.cob ?? 0) as NSNumber) ?? ""
+        let iobText = iobFormatter.string(from: (lastLoop.first?.iob ?? 0) as NSNumber) ?? ""
+        let cobText = cobFormatter.string(from: (lastLoop.first?.cob ?? 0) as NSNumber) ?? ""
 
-        var glucoseDisplayText = settingsManager.settings.displayCalendarEmojis ? glucoseIcon + " " : ""
+        var glucoseDisplayText = displayEmojis ? glucoseIcon + " " : ""
         glucoseDisplayText += glucoseText + " " + directionText + " " + deltaText
 
         var iobDisplayText = ""
         var cobDisplayText = ""
 
-        if settingsManager.settings.displayCalendarIOBandCOB {
-            if settingsManager.settings.displayCalendarEmojis {
+        if displeyCOBandIOB {
+            if displayEmojis {
                 iobDisplayText += "💉"
                 cobDisplayText += "🥨"
             } else {
@@ -99,7 +122,6 @@ final class BaseCalendarManager: CalendarManager, Injectable {
             }
             iobDisplayText += " " + iobText
             cobDisplayText += " " + cobText
-
             event.location = iobDisplayText + " " + cobDisplayText
         }
 
