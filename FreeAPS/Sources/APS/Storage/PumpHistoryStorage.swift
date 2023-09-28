@@ -262,7 +262,7 @@ final class BasePumpHistoryStorage: PumpHistoryStorage, Injectable {
                     enteredBy: NigtscoutTreatment.local,
                     bolus: event,
                     insulin: event.amount,
-                    notes: (event.isNonPumpInsulin ?? false) ? "Bolus with non-pump insulin" : nil,
+                    notes: nil,
                     carbs: nil,
                     fat: nil,
                     protein: nil,

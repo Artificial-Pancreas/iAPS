@@ -46,7 +46,7 @@ struct PumpHistoryEvent: JSON, Equatable {
 enum EventType: String, JSON {
     case bolus = "Bolus"
     case smb = "SMB"
-    case nonPumpInsulin = "Bolus with non-pump insulin"
+    case nonPumpInsulin = "Non-pump insulin"
     case mealBolus = "Meal Bolus"
     case correctionBolus = "Correction Bolus"
     case snackBolus = "Snack Bolus"
