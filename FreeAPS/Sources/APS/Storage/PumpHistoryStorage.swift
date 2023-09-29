@@ -44,7 +44,8 @@ final class BasePumpHistoryStorage: PumpHistoryStorage, Injectable {
                         durationMin: nil,
                         rate: nil,
                         temp: nil,
-                        carbInput: nil
+                        carbInput: nil,
+                        isSMB: dose.automatic
                     )]
                 case .tempBasal:
                     guard let dose = event.dose else { return [] }
@@ -255,7 +256,7 @@ final class BasePumpHistoryStorage: PumpHistoryStorage, Injectable {
                     rawRate: nil,
                     absolute: nil,
                     rate: nil,
-                    eventType: .bolus,
+                    eventType: (event.isSMB ?? false) ? .smb : .bolus,
                     createdAt: event.timestamp,
                     enteredBy: NigtscoutTreatment.local,
                     bolus: event,

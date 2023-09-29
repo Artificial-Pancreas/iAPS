@@ -292,10 +292,9 @@ extension OverrideProfilesConfig {
             let durationString = perpetual ? "" : "\(formatter.string(from: duration as NSNumber)!)"
             let scheduledSMBstring = (preset.smbIsOff && preset.smbIsAlwaysOff) ? "Scheduled SMBs" : ""
             let smbString = (preset.smbIsOff && scheduledSMBstring == "") ? "SMBs are off" : ""
-            let targetString = target != 0 ? "\(formatter.string(from: target as NSNumber)!)" : ""
+            let targetString = target != 0 ? "\(glucoseFormatter.string(from: target as NSNumber)!)" : ""
             let maxMinutesSMB = (preset.smbMinutes as Decimal?) != nil ? (preset.smbMinutes ?? 0) as Decimal : 0
             let maxMinutesUAM = (preset.uamMinutes as Decimal?) != nil ? (preset.uamMinutes ?? 0) as Decimal : 0
-
             let isfString = preset.isf ? "ISF" : ""
             let crString = preset.cr ? "CR" : ""
             let dash = crString != "" ? "/" : ""
