@@ -7,7 +7,7 @@ extension AddCarbs {
         let resolver: Resolver
         @StateObject var state = StateModel()
         @State var dish: String = ""
-        @State var isPromtPresented = false
+        @State var isPromptPresented = false
         @State var saved = false
         @State private var showAlert = false
         @FocusState private var isFocused: Bool
@@ -75,7 +75,7 @@ extension AddCarbs {
                             .controlSize(.mini)
                             .buttonStyle(BorderlessButtonStyle())
                         Button {
-                            isPromtPresented = true
+                            isPromptPresented = true
                         }
                         label: { Text("Save as Preset") }
                             .frame(maxWidth: .infinity, alignment: .trailing)
@@ -101,7 +101,7 @@ extension AddCarbs {
                                     )
                             )
                     }
-                    .popover(isPresented: $isPromtPresented) {
+                    .popover(isPresented: $isPromptPresented) {
                         presetPopover
                     }
                 }
@@ -130,6 +130,8 @@ extension AddCarbs {
                 }
             }
             .onAppear(perform: configureView)
+            .navigationTitle(state.useFPUconversion ? "Add Carbs, Fat & Protein" : "Add Carbohydrates")
+            .navigationBarTitleDisplayMode(.automatic)
             .navigationBarItems(leading: Button("Close", action: state.hideModal))
         }
 
@@ -148,14 +150,14 @@ extension AddCarbs {
                             try? moc.save()
                             state.addNewPresetToWaitersNotepad(dish)
                             saved = false
-                            isPromtPresented = false
+                            isPromptPresented = false
                         }
                     }
                     label: { Text("Save") }
                     Button {
                         dish = ""
                         saved = false
-                        isPromtPresented = false }
+                        isPromptPresented = false }
                     label: { Text("Cancel") }
                 } header: { Text("Enter Meal Preset Name") }
             }
