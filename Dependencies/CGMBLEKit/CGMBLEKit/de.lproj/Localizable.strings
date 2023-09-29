@@ -5,7 +5,7 @@
 "Dexcom G6" = "Dexcom G6";
 
 /* Error description for unreliable state */
-"Glucose data is unavailable" = "Blutzuckerdaten sind nicht verfügbar";
+"Glucose data is unavailable" = "Glukosedaten nicht verfügbar";
 
 /* Describes a low battery */
 "Low Battery" = "Niedriger Batteriestatus";
