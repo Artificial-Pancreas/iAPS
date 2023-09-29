@@ -93,7 +93,7 @@
 "No Pod" = "No Pod";
 
 /* Settings page link description when next lifecycle action is to pair new pod */
-"Pair Pod" = "Pair Pod";
+"Pair Pod" = "Par Pod";
 
 /* Pairing action button accessibility label while ready to pair */
 "Pair pod." = "Pair pod.";
@@ -117,13 +117,13 @@
 "day" = "day";
 
 /* Unit for plural days in pod life remaining */
-"days" = "days";
+"days" = "dage";
 
 /* Unit for singular hour in pod life remaining */
 "hour" = "hour";
 
 /* Unit for plural hours in pod life remaining */
-"hours" = "hours";
+"hours" = "timer";
 
 /* Unit for singular minute in pod life remaining */
 "minute" = "minute";
@@ -147,7 +147,7 @@
 "Device Details" = "Device Details";
 
 /* Section header for configuration section */
-"Configuration" = "Configuration";
+"Configuration" = "Konfiguration";
 
 /* Settings page link description when next lifecycle action is to finish deactivation */
 "Finish deactivation" = "Finish deactivation";
@@ -324,7 +324,7 @@
 "Activity" = "Aktivitet";
 
 /* Section header for configuration section */
-"Configuration" = "Configuration";
+"Configuration" = "Konfiguration";
 
 /* Title for previous pod page */
 "Previous Pod" = "Previous Pod";
@@ -427,7 +427,7 @@
 "Your Pod may still be delivering Insulin.\nRemove it from your body, then tap “Continue.“" = "Your Pod may still be delivering Insulin.\nRemove it from your body, then tap “Continue.“";
 
 /* Insulin Unit */
-"U" = "U";
+"U" = "E";
 
 /* The action string on pod status page when pod expired */
 "Change Pod now. Insulin delivery will stop 8 hours after the Pod has expired or when no more insulin remains." = "Change Pod now. Insulin delivery will stop 8 hours after the Pod has expired or when no more insulin remains.";
@@ -442,7 +442,7 @@
 "Paired" = "Paired";
 
 /* Cancel button text in navigation bar on pair pod UI */
-"Cancel" = "Cancel";
+"Cancel" = "Annuller";
 
 /* Alert title for cancel pairing modal */
 "Are you sure you want to cancel Pod setup?" = "Are you sure you want to cancel Pod setup?";
@@ -590,13 +590,13 @@
 "Change Pod now. Insulin delivery will stop in %1$@ or when no more insulin remains." = "Change Pod now. Insulin delivery will stop in %1$@ or when no more insulin remains.";
 
 /* Title string for BeepPreference.silent */
-"Disabled" = "Disabled";
+"Disabled" = "Deaktiveret";
 
 /* Title string for BeepPreference.manualCommands */
 "Enabled" = "Aktiveret";
 
 /* Title string for BeepPreference.extended */
-"Extended" = "Extended";
+"Extended" = "Forlænget";
 
 /* Description for BeepPreference.silent */
 "No confidence reminders are used." = "No confidence reminders are used.";
@@ -622,7 +622,7 @@
 "Set Temporary Basal" = "Set Temporary Basal";
 
 /* Navigation Title for ManualTempBasalEntryView */
-"Temporary Basal" = "Temporary Basal";
+"Temporary Basal" = "Midlertidig Basal";
 
 /* Alert title for a failure to set temporary basal */
 "Temporary Basal Failed" = "Temporary Basal Failed";
@@ -643,7 +643,7 @@
 "Expiration Reminder Default" = "Expiration Reminder Default";
 
 /* Text for previous pod information row */
-"Previous Pod Information" = "Previous Pod Information";
+"Previous Pod Information" = "Forringe Pod Information";
 
 /* Text shown in insulin remaining space when no pod is paired (Please keep the '\n' while translating!) */
 "No\nDelivery" = "No\nDelivery";
@@ -688,7 +688,7 @@
 "You will now begin the process of configuring your reminders, filling your Pod with insulin, pairing to your device and placing it on your body." = "You will now begin the process of configuring your reminders, filling your Pod with insulin, pairing to your device and placing it on your body.";
 
 /* Cancel button title */
-"Cancel" = "Cancel";
+"Cancel" = "Annuller";
 
 /* Text for continue button on PodSetupView */
 "Continue" = "Fortsæt";
@@ -712,7 +712,7 @@
 "Low Reservoir" = "Low Reservoir";
 
 /* */
-"Save" = "Save";
+"Save" = "Gem";
 
 /* hr (short for hour) */
 "hr" = "hr";

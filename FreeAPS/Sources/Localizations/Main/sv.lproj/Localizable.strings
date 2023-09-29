@@ -16,8 +16,8 @@
 /* Continue after added carbs without bolus */
 "Continue without bolus" = "Fortsätt utan bolus";
 
-/* Alert when adding large amount without bolusing. Don't remove the " " */
-"\nAmount is more than your Max Bolus setting! \nAre you sure you want to add " = "\nDetta är mer insulin än din maxdos-inställning! \nÄr du säker på att du vill lägga till ";
+/* Alert when adding large amount without bolusing */
+"\nAmount is more than your Max Bolus setting! \nAre you sure you want to add " = "\nDetta är mer insulin än maxdos-inställning!\nÄr du säker på att du vill lägga till ";
 
 /* Header */
 "Enact Bolus" = "Ge bolus";
@@ -527,6 +527,9 @@ Enact a temp Basal or a temp target */
 /* */
 "Calendar" = "Kalender";
 
+/* Automatic delivered treatments */
+"Automatic" = "Automatisk";
+
 /* */
 "Other" = "Annan";
 
@@ -962,6 +965,9 @@ Enact a temp Basal or a temp target */
 /* */
 "Bolus failed" = "Bolus misslyckades";
 
+/* "Max Bolus Exceeded label" */
+"Max Bolus exceeded!" = "Du kan inte dosera mer än din maxinställning!";
+
 /* */
 "Bolus failed or inaccurate. Check pump history before repeating." = "Misslyckad eller felaktig bolus. Kontrollera pumpens historik innan du försöker igen.";
 
@@ -1119,6 +1125,9 @@ Enact a temp Basal or a temp target */
 
 /* Manual temp basal mode */
 "Manual" = "Manuell";
+
+/* An Automatic delivered bolus (SMB) */
+"SMB" = "SMB";
 
 /* Status highlight when manual temp basal is running. */
 "Manual Basal" = "Manuell temporär basal";

@@ -4,56 +4,59 @@
 */
 /* -------------------------------- */
 /* Bolus screen when adding insulin */
-"Add insulin without actually bolusing" = "Add insulin without actually bolusing";
+"Add insulin without actually bolusing" = "Tilføj insulin uden faktisk bolus";
 
 /* Add insulin from source outside of pump */
-"Add %@ without bolusing" = "Add %@ without bolusing";
+"Add %@ without bolusing" = "Tilføj %@ uden bolus";
 
 "Bolus" = "Bolus";
 
-"Close" = "Close";
+"Close" = "Luk";
 
 /* Continue after added carbs without bolus */
-"Continue without bolus" = "Continue without bolus";
+"Continue without bolus" = "Fortsæt uden bolus";
+
+/* Alert when adding large amount without bolusing */
+"\nAmount is more than your Max Bolus setting! \nAre you sure you want to add " = "\nAmount is more than your Max Bolus setting! \nAre you sure you want to add ";
 
 /* Header */
-"Enact Bolus" = "Enact Bolus";
+"Enact Bolus" = "Udfør Bolus";
 
 /* Button */
-"Enact bolus" = "Enact bolus";
+"Enact bolus" = "Udfør bolus";
 
 /*  */
-"Insulin recommended" = "Insulin recommended";
+"Insulin recommended" = "Anbefalet insulin";
 
 /*  */
-"Insulin required" = "Insulin required";
+"Insulin required" = "Insulinbehov";
 
 /* Bolus screen */
-"Recommendation" = "Recommendation";
+"Recommendation" = "Anbefaling";
 
 /* Button */
-"Clear" = "Clear";
+"Clear" = "Ryd";
 
 /* Button */
-"Done" = "Done";
+"Done" = "OK";
 
 /*  */
-"Wait please" = "Wait please";
+"Wait please" = "Vent venligst";
 
 /*  */
-"Agree and continue" = "Agree and Continue";
+"Agree and continue" = "Godkend og fortsæt";
 
 /* Headline in enacted pop up (at: at what time) */
-"Enacted at" = "Enacted at";
+"Enacted at" = "Udført";
 
 /* Headline in suggested pop up (at: at what time) */
-"Suggested at" = "Suggested at";
+"Suggested at" = "Anbefalet";
 
 /* Headline in enacted pop up (at: at what time) */
-"Error at" = "Error at";
+"Error at" = "Fejl ved";
 
 /* Home title */
-"Home" = "Home";
+"Home" = "Hjem";
 
 /* Looping in progress */
 "looping" = "looping";
@@ -62,61 +65,61 @@
 "min ago" = "min";
 
 /* Status Title */
-"No suggestion" = "No suggestion";
+"No suggestion" = "Ingen forslag";
 
 /* Replace pod text in Header */
-"Replace pod" = "Replace pod";
+"Replace pod" = "Udskift pod";
 
 /* Add carbs screen */
-"Add Carbs" = "Add Carbs";
+"Add Carbs" = "Tilføj Kulhydrater";
 
 /* Add carbs header and button in Watch app. You can skip the last " " space. It's just for differentiation */
-"Add Carbs " = "Add Carbs ";
+"Add Carbs " = "Tilføj Kulhydrater ";
 
 /*  */
-"Amount Carbs" = "Amount Carbs";
+"Amount Carbs" = "Antal Kulhydrater";
 
 /* Grams unit */
-"grams" = "grams";
+"grams" = "gram";
 
 /*  */
-"Carbs required" = "Carbs required";
+"Carbs required" = "Krævede kulhydrater";
 
 /* */
-"Are you sure?" = "Are you sure?";
+"Are you sure?" = "Er du sikker?";
 
 /* Bottom target temp */
-"Bottom target" = "Bottom target";
+"Bottom target" = "Laveste mål";
 
 /* Cancel preset name */
-"Cancel" = "Cancel";
+"Cancel" = "Annuller";
 
 /*  */
-"Cancel Temp Target" = "Cancel Temp Target";
+"Cancel Temp Target" = "Annuller Midlertidigt Mål";
 
 /* Custom temp target */
-"Custom" = "Custom";
+"Custom" = "Brugerdefineret";
 
 /*  */
-"Date" = "Date";
+"Date" = "Dato";
 
 /*  */
-"Delete" = "Delete";
+"Delete" = "Slet";
 
 /* Delete preset temp target */
-"Delete preset \"%@\"" = "Delete preset \"%@\"";
+"Delete preset \"%@\"" = "Slet forudindstilling \\\"%@\\\"";
 
 /* Duration of target temp or temp basal */
-"Duration" = "Duration";
+"Duration" = "Varighed";
 
 /*  */
-"Enact Temp Target" = "Enact Temp Target";
+"Enact Temp Target" = "Udfør Midlertidigt Mål";
 
 /* */
-"Target" = "Target";
+"Target" = "Mål";
 
 /* */
-"Basal Insulin and Sensitivity ratio" = "Basal Insulin and Sensitivity ratio";
+"Basal Insulin and Sensitivity ratio" = "Basal insulin og følsomhedsforhold";
 
 /* */
 "A lower 'Half Basal Target' setting will reduce the basal and raise the ISF earlier, at a lower target glucose." = "A lower 'Half Basal Target' setting will reduce the basal and raise the ISF earlier, at a lower target glucose.";
@@ -140,10 +143,10 @@
 "Presets" = "Presets";
 
 /* Save preset name */
-"Save" = "Save";
+"Save" = "Gem";
 
 /*  */
-"Save as Preset" = "Save as Preset";
+"Save as Preset" = "Gem som forudindstilling";
 
 /* Delete Meal Preset */
 "Delete Preset" = "Delete Preset";
@@ -312,28 +315,28 @@ Enact a temp Basal or a temp target */
 "Remote control" = "Remote control";
 
 /* Add Medtronic pump */
-"Add Medtronic" = "Add Medtronic";
+"Add Medtronic" = "Tilføj Medtronic";
 
 /* Add Omnipod pump */
-"Add Omnipod" = "Add Omnipod";
+"Add Omnipod" = "Tilføj Omnipod";
 
 /* Add Simulator pump */
-"Add Simulator" = "Add Simulator";
+"Add Simulator" = "Tilføj Simulator";
 
 /* Insulin model */
 "Model" = "Model";
 
 /*  */
-"Pump config" = "Pump config";
+"Pump config" = "Pumpe konfiguration";
 
 /*  */
-"Delivery limits" = "Delivery limits";
+"Delivery limits" = "Insulingrænser";
 
 /*  */
 "Duration of Insulin Action" = "Duration of Insulin Action";
 
 /* hours of duration of insulin activity */
-"hours" = "hours";
+"hours" = "timer";
 
 /* Max setting */
 "Max Basal" = "Max Basal";
@@ -342,10 +345,10 @@ Enact a temp Basal or a temp target */
 "Max Bolus" = "Max Bolus";
 
 /* Max setting */
-"Max Carbs" = "Max Carbs";
+"Max Carbs" = "Maks Kulhydrater";
 
 /* */
-"Pump Settings" = "Pump Settings";
+"Pump Settings" = "Pumpe Indstillinger";
 
 /* Insulin unit per hour */
 "U/hr" = "E/t";
@@ -357,16 +360,16 @@ Enact a temp Basal or a temp target */
 "/U" = "/E";
 
 /* Insulin unit */
-"U" = "U";
+"U" = "E";
 
 /* Unit per hour with space */
 " U/hr" = " E/t";
 
 /* Number of units per hour*/
-"%@ U/hr" = "%@ U/hr";
+"%@ U/hr" = "%@ E/t";
 
 /* Number of units insulin delivered */
-"%@ U" = "%@ U";
+"%@ U" = "%@ E";
 
 /*Carb ratio unit */
 "g/U" = "g/E";
@@ -378,55 +381,55 @@ Enact a temp Basal or a temp target */
 "g" = "g";
 
 /* when 0 U/hr */
-"0 U/hr" = "0 U/hr";
+"0 U/hr" = "0 E/t";
 
 /* abbreviation for days */
 "d" = "d";
 
 /* abbreviation for hours */
-"h" = "h";
+"h" = "t";
 
 /* abbreviation for minutes */
-"m" = "m";
+"m" = "n";
 
 /*  */
-"Closed loop" = "Closed loop";
+"Closed loop" = "Lukket Loop";
 
 /* */
-"Configuration" = "Configuration";
+"Configuration" = "Konfiguration";
 
 /* */
-"Devices" = "Devices";
+"Devices" = "Enheder";
 
 /*  */
-"Pump" = "Pump";
+"Pump" = "Pumpe";
 
 /* */
-"Watch" = "Watch";
+"Watch" = "Ur";
 
 /* */
-"Watch Configuration" = "Watch Configuration";
+"Watch Configuration" = "Ur Indstillinger";
 
 /* */
 "Apple Watch" = "Apple Watch";
 
 /* */
-"Display on Watch" = "Display on Watch";
+"Display on Watch" = "Vis på Ur";
 
 /* */
-"Garmin Watch" = "Garmin Watch";
+"Garmin Watch" = "Garmin Ur";
 
 /* */
-"Add devices" = "Add devices";
+"Add devices" = "Tilføj enheder";
 
 /* */
-"Glucose Target" = "Glucose Target";
+"Glucose Target" = "Glukose mål";
 
 /* */
-"Heart Rate" = "Heart Rate";
+"Heart Rate" = "Hjerterytme";
 
 /* */
-"Steps" = "Steps";
+"Steps" = "Skridt";
 
 /* */
 "ISF" = "ISF";
@@ -435,19 +438,19 @@ Enact a temp Basal or a temp target */
 "The app Garmin Connect must be installed to use for iAPS.\n Go to App Store to download it" = "The app Garmin Connect must be installed to use for iAPS.\n Go to App Store to download it";
 
 /* */
-"Garmin is not available" = "Garmin is not available";
+"Garmin is not available" = "Garmin er ikke tilgængelig";
 
 /*  */
-"Services" = "Services";
+"Services" = "Tjenester";
 
 /*  */
-"Settings" = "Settings";
+"Settings" = "Indstillinger";
 
 /* Recommendation for a Manual Bolus */
-"Recommended Bolus Percentage" = "Recommended Bolus Percentage";
+"Recommended Bolus Percentage" = "Anbefalet Bolus Procent";
 
 /* 2 log files to share */
-"Share logs" = "Share logs";
+"Share logs" = "Del logs";
 
 /* Upper target */
 "High target" = "High target";
@@ -459,7 +462,7 @@ Enact a temp Basal or a temp target */
 "Bolusing" = "Bolusing";
 
 /* */
-"Pump suspended" = "Pump suspended";
+"Pump suspended" = "Pumpe suspenderet";
 
 /* */
 "Middleware" = "Middleware";
@@ -523,6 +526,9 @@ Enact a temp Basal or a temp target */
 
 /* */
 "Calendar" = "Calendar";
+
+/* Automatic delivered treatments */
+"Automatic" = "Automatic";
 
 /* */
 "Other" = "Other";
@@ -600,22 +606,22 @@ Enact a temp Basal or a temp target */
 "Unknown" = "Ukendt";
 
 /* */
-"Not paired yet" = "Not paired yet";
+"Not paired yet" = "Endnu ikke parret";
 
 /* */
-"Pair Sensor & connect" = "Pair Sensor & connect";
+"Pair Sensor & connect" = "Par Sensor & Forbind";
 
 /* */
 "Phone NFC required!" = "Phone NFC required!";
 
 /* */
-"Your phone or app is not enabled for NFC communications, which is needed to pair to libre2 sensors" = "Your phone or app is not enabled for NFC communications, which is needed to pair to libre2 sensors";
+"Your phone or app is not enabled for NFC communications, which is needed to pair to libre2 sensors" = "Din telefon eller app er ikke aktiveret til NFC-kommunikation, som er nødvendig for at parre til libre2 sensorer";
 
 /* Bluetooth Power Off */
 "Bluetooth Power Off" = "Bluetooth Power Off";
 
 /* Please turn on Bluetooth */
-"Please turn on Bluetooth" = "Please turn on Bluetooth";
+"Please turn on Bluetooth" = "Slå Bluetooth til";
 
 /* No Libre Transmitter Selected */
 "No Libre Transmitter Selected" = "No Libre Transmitter Selected";
@@ -630,7 +636,7 @@ Enact a temp Basal or a temp target */
 "Libre sensor was incorrectly read, CRCs were not valid" = "Libre sensor was incorrectly read, CRCs were not valid";
 
 /* Glucose */
-"Glucose" = "Glucose";
+"Glucose" = "Glukose";
 
 /* LOWALERT! */
 "LOWALERT!" = "LOWALERT!";
@@ -648,46 +654,46 @@ Enact a temp Basal or a temp target */
 "Transmitter: %@%%" = "Transmitter: %@%%";
 
 /* No Sensor Detected */
-"No Sensor Detected" = "No Sensor Detected";
+"No Sensor Detected" = "Ingen Sensor Fundet";
 
 /* This might be an intermittent problem, but please check that your transmitter is tightly secured over your sensor */
 "This might be an intermittent problem, but please check that your transmitter is tightly secured over your sensor" = "This might be an intermittent problem, but please check that your transmitter is tightly secured over your sensor";
 
 /* New Sensor Detected */
-"New Sensor Detected" = "New Sensor Detected";
+"New Sensor Detected" = "Ny Sensor Fundet";
 
 /* Please wait up to 30 minutes before glucose readings are available! */
-"Please wait up to 30 minutes before glucose readings are available!" = "Please wait up to 30 minutes before glucose readings are available!";
+"Please wait up to 30 minutes before glucose readings are available!" = "Vent op til 30 minutter før der er gluokoseaflæsninger tilgængelige!";
 
 /* Invalid Glucose sample detected, try again later */
-"Invalid Glucose sample detected, try again later" = "Invalid Glucose sample detected, try again later";
+"Invalid Glucose sample detected, try again later" = "Ugyldig glukoseprøve opdaget, prøv igen senere";
 
 /* ensor might have temporarily stopped, fallen off or is too cold or too warm */
-"Sensor might have temporarily stopped, fallen off or is too cold or too warm" = "Sensor might have temporarily stopped, fallen off or is too cold or too warm";
+"Sensor might have temporarily stopped, fallen off or is too cold or too warm" = "Sensoren er muligvis midlertidigt stoppet, faldet af eller er for kold eller for varm";
 
 /* Invalid Sensor Detected */
-"Invalid Sensor Detected" = "Invalid Sensor Detected";
+"Invalid Sensor Detected" = "Ugyldig Sensor Detekteret";
 
 /* Detected sensor seems not to be a libre 1 sensor! */
-"Detected sensor seems not to be a libre 1 sensor!" = "Detected sensor seems not to be a libre 1 sensor!";
+"Detected sensor seems not to be a libre 1 sensor!" = "Detekteret sensor synes ikke at være en libre 1 sensor!";
 
 /* Detected sensor is invalid: %@ */
-"Detected sensor is invalid: %@" = "Detected sensor is invalid: %@";
+"Detected sensor is invalid: %@" = "Detekteret sensor er ugyldig: %@";
 
 /* Low Battery */
-"Low battery" = "Low battery";
+"Low battery" = "Lavt batteri";
 
 /* */
-"Invalid sensor" = "Invalid sensor";
+"Invalid sensor" = "Ugyldig sensor";
 
 /* */
-"Sensor change" = "Sensor change";
+"Sensor change" = "Sensor skifte";
 
 /* */
-"Sensor expires soon" = "Sensor expires soon";
+"Sensor expires soon" = "Sensor udløber snart";
 
 /* Battery is running low %@, consider charging your %@ device as soon as possible */
-"Battery is running low %@, consider charging your %@ device as soon as possible" = "Battery is running low %@, consider charging your %@ device as soon as possible";
+"Battery is running low %@, consider charging your %@ device as soon as possible" = "Lavt batteriniveau %@, lad venligst din %@ enhed snarest muligt";
 
 /* Extracting calibrationdata from sensor */
 "Extracting calibrationdata from sensor" = "Extracting calibrationdata from sensor";
@@ -834,10 +840,10 @@ Enact a temp Basal or a temp target */
 "Unit override" = "Unit override";
 
 /* */
-"Low" = "Low";
+"Low" = "Lav";
 
 /* */
-"High" = "High";
+"High" = "Høj";
 
 /* */
 "glucose" = "glucose";
@@ -958,6 +964,9 @@ Enact a temp Basal or a temp target */
 
 /* */
 "Bolus failed" = "Bolus failed";
+
+/* "Max Bolus Exceeded label" */
+"Max Bolus exceeded!" = "Max Bolus exceeded!";
 
 /* */
 "Bolus failed or inaccurate. Check pump history before repeating." = "Bolus failed or inaccurate. Check pump history before repeating.";
@@ -1114,6 +1123,9 @@ Enact a temp Basal or a temp target */
 /* Manual temp basal mode */
 "Manual" = "Manual";
 
+/* An Automatic delivered bolus (SMB) */
+"SMB" = "SMB";
+
 /* Status highlight when manual temp basal is running. */
 "Manual Basal" = "Manual Basal";
 
@@ -1239,7 +1251,7 @@ Enact a temp Basal or a temp target */
 "This will change settings back to your normal profile." = "This will change settings back to your normal profile.";
 
 /* Start Profile Alert */
-"Start Profile" = "Start Profile";
+"Start Profile" = "Start Profil";
 
 /* */
 "Your profile basal insulin will be adjusted with the override percentage and your profile ISF and CR will be inversly adjusted with the percentage." = "Your profile basal insulin will be adjusted with the override percentage and your profile ISF and CR will be inversly adjusted with the percentage.";
@@ -1257,10 +1269,10 @@ Enact a temp Basal or a temp target */
 " infinite duration." = " infinite duration.";
 
 /* Service Section */
-"App Icons" = "App Icons";
+"App Icons" = "Appikoner";
 
 /* */
-"iAPS Icon" = "iAPS Icon";
+"iAPS Icon" = "iAPS Ikon";
 
 /* Service Section */
 "Statistics and Home View" = "Statistics and Home View";
@@ -1272,7 +1284,7 @@ Enact a temp Basal or a temp target */
 "Meal Presets" = "Meal Presets";
 
 /* */
-"Empty" = "Empty";
+"Empty" = "Tom";
 
 /* */
 "Delete Selected Preset" = "Delete Selected Preset";
@@ -1281,24 +1293,24 @@ Enact a temp Basal or a temp target */
 "Enter Meal Preset Name" = "Enter Meal Preset Name";
 
 /* */
-"Name Of Dish" = "Name Of Dish";
+"Name Of Dish" = "Navn på ret";
 
 /* Save Carbs and continue to bolus recommendation */
-"Save and continue" = "Save and continue";
+"Save and continue" = "Gem og fortsæt";
 
 /* */
-"Save as Preset" = "Save as Preset";
+"Save as Preset" = "Gem som forudindstilling";
 
 /* ----------------------- New Bolus Calculator ---------------------------*/
 /* Warning about bolus recommendation. Title */
 
-"Warning!" = "Warning!";
+"Warning!" = "Advarsel!";
 
 /* Alert to confirm bolus amount to add */
-"\n\nTap 'Add' to continue with selected amount." = "\n\nTap 'Add' to continue with selected amount.";
+"\n\nTap 'Add' to continue with selected amount." = "\n\nTryk 'Tilføj' for at fortsætte med den valgte mængde.";
 
 /* */
-"Eventual Glucose" = "Eventual Glucose";
+"Eventual Glucose" = "Eventuelt Glukoseniveau";
 
 /* */
 "Target Glucose" = "Target Glucose";
@@ -1319,7 +1331,7 @@ Enact a temp Basal or a temp target */
 "Carbs and previous insulin are included in the glucose prediction, but if the Eventual Glucose is lower than the Target Glucose, a bolus will not be recommended." = "Carbs and previous insulin are included in the glucose prediction, but if the Eventual Glucose is lower than the Target Glucose, a bolus will not be recommended.";
 
 /* Hide pop-up */
-"Hide" = "Hide";
+"Hide" = "Skjul";
 
 /* Bolus pop-up / Alert string. Make translations concise! */
 "Eventual Glucose > Target Glucose, but glucose is predicted to drop down to " = "Eventual Glucose > Target Glucose, but glucose is predicted to first drop down to ";
@@ -1358,10 +1370,10 @@ Enact a temp Basal or a temp target */
 /* */
 "Deactivating..." = "Deactivating...";
 
-"Pair Pod" = "Pair Pod";
+"Pair Pod" = "Par Pod";
 
 /* Text for previous pod information row */
-"Previous Pod Information" = "Previous Pod Information";
+"Previous Pod Information" = "Forringe Pod Information";
 
 /* Text for confidence reminders navigation link */
 "Confidence Reminders" = "Confidence Reminders";
@@ -1372,25 +1384,25 @@ Enact a temp Basal or a temp target */
 "Saving..." = "Gemmer...";
 
 /* button title for saving low reservoir reminder */
-"Save" = "Save";
+"Save" = "Gem";
 
 /* Alert title for error when updating confidence reminder preference */
 "Failed to update confidence reminder preference." = "Failed to update confidence reminder preference.";
 
 /* */
-"No Error" = "No Error";
+"No Error" = "Ingen fejl";
 
 /* description label for active time pod details row */
 "Active Time" = "Aktiv Tid";
 
 /* Title string for BeepPreference.silent */
-"Disabled" = "Disabled";
+"Disabled" = "Deaktiveret";
 
 /* Title string for BeepPreference.manualCommands */
 "Enabled" = "Aktiveret";
 
 /* Title string for BeepPreference.extended */
-"Extended" = "Extended";
+"Extended" = "Forlænget";
 
 /* Description for BeepPreference.silent */
 "No confidence reminders are used." = "No confidence reminders are used.";
@@ -1436,7 +1448,7 @@ Enact a temp Basal or a temp target */
 "Set Temporary Basal" = "Set Temporary Basal";
 
 /* Navigation Title for ManualTempBasalEntryView */
-"Temporary Basal" = "Temporary Basal";
+"Temporary Basal" = "Midlertidig Basal";
 
 /* Alert title for a failure to set temporary basal */
 "Temporary Basal Failed" = "Temporary Basal Failed";
@@ -1494,34 +1506,34 @@ Enact a temp Basal or a temp target */
 "Today" = "Today";
 
 /* */
-"Day" = "Day";
+"Day" = "Dag";
 
 /* */
-"Week" = "Week";
+"Week" = "Uge";
 
 /* */
-"Month" = "Month";
+"Month" = "Måned";
 
 /* */
 "Total" = "Total";
 
 /* Headline Statistics */
-"Statistics" = "Statistics";
+"Statistics" = "Statistik";
 
 /* Option in preferences */
-"Allow Upload of Statistics to NS" = "Allow Upload of Statistics to NS";
+"Allow Upload of Statistics to NS" = "Tillad Upload af Statistik til NS";
 
 /* Low Glucose Threshold in Statistics settings */
-"Low" = "Low";
+"Low" = "Lav";
 
 /* High Glucose Threshold in Statistics settings */
-"High" = "High";
+"High" = "Høj";
 
 /* In Range */
 "In Range" = "In Range";
 
 /* Display % */
-"Change HbA1c Unit" = "Change HbA1c Unit";
+"Change HbA1c Unit" = "Skift HbA1c Enhed";
 
 /* */
 "Display Chart X - Grid lines" = "Display Chart X - Grid lines";
@@ -1551,19 +1563,19 @@ Enact a temp Basal or a temp target */
 "Readings / 24h" = "Readings / 24h";
 
 /* Days of saved readings*/
-"Days" = "Days";
+"Days" = "Dage";
 
 /* Normal BG (within TIR) */
 "Normal" = "Normal";
 
 /* Title High BG in statPanel */
-"High (>" = "High (>";
+"High (>" = "Høj (>";
 
 /* Title Low BG in statPanel */
-"Low (<" = "Low (<";
+"Low (<" = "Lav (<";
 
 /* SD */
-"SD" = "SD";
+"SD" = "SA";
 
 /* CV */
 "CV" = "CV";
@@ -1572,22 +1584,22 @@ Enact a temp Basal or a temp target */
 "HbA1c" = "HbA1c";
 
 /* Total number of days of data for HbA1c estimation, part 1/2*/
-"All" = "All";
+"All" = "Alle";
 
 /* Total number of days of data for HbA1c estimation, part 2/2*/
-"days" = "days";
+"days" = "dage";
 
 /* Nr of Loops in statPanel */
-"Loops" = "Loops";
+"Loops" = "Looper";
 
 /* Loop Errors in statPanel */
-"Errors" = "Errors";
+"Errors" = "Fejl";
 
 /* Average loop interval */
 "Interval" = "Interval";
 
 /* Median loop interval */
-"Duration" = "Duration";
+"Duration" = "Varighed";
 
 /* "Display SD */
 "Display SD instead of CV" = "Display SD instead of CV";
@@ -1596,25 +1608,25 @@ Enact a temp Basal or a temp target */
 "Display Standard Deviation (SD) instead of Coefficient of Variation (CV) in statPanel" = "Display Standard Deviation (SD) instead of Coefficient of Variation (CV) in statPanel";
 
 /* How often to update the statistics */
-"Update every number of minutes:" = "Update every number of minutes:";
+"Update every number of minutes:" = "Opdater hvert antal minutter:";
 
 /* Description for update interval for statistics */
 "Default is 20 minutes. How often to update and save the statistics.json and to upload last array, when enabled, to Nightscout." = "Default is 20 minutes. How often to update and save the statistics.json and to upload last array, when enabled, to Nightscout.";
 
 /* Duration displayed in statPanel */
-"Past 24 Hours " = "Past 24 Hours ";
+"Past 24 Hours " = "Sidste 24 Timer ";
 
 /* Duration displayed in statPanel */
-"Past Week " = "Past Week ";
+"Past Week " = "Sidste Uge ";
 
 /* Duration displayed in statPanel */
-"Past Month " = "Past Month ";
+"Past Month " = "Sidste Måned ";
 
 /* Duration displayed in statPanel */
-"Past 90 Days " = "Past 90 Days ";
+"Past 90 Days " = "Sidste 90 Dage ";
 
 /* Duration displayed in statPanel */
-"All Past Days of Data " = "All Past Days of Data ";
+"All Past Days of Data " = "Alle Tidligere Dages Data ";
 
 /* "Display Loop statistics in statPanel */
 "Display Loop Cycle statistics" = "Display Loop Cycle statistics";

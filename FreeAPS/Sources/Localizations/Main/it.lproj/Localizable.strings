@@ -16,6 +16,9 @@
 /* Continue after added carbs without bolus */
 "Continue without bolus" = "Continua senza eseguire un bolo";
 
+/* Alert when adding large amount without bolusing */
+"\nAmount is more than your Max Bolus setting! \nAre you sure you want to add " = "\nAmount is more than your Max Bolus setting! \nAre you sure you want to add ";
+
 /* Header */
 "Enact Bolus" = "Esegui bolo";
 
@@ -519,10 +522,13 @@ Enact a temp Basal or a temp target */
 "Calibrations" = "Calibrazioni";
 
 /* */
-"Create Events in Calendar" = "Crea eventi nel calendario";
+"Create Events in Calendar" = "Create Events in Calendar";
 
 /* */
 "Calendar" = "Calendario";
+
+/* Automatic delivered treatments */
+"Automatic" = "Automatic";
 
 /* */
 "Other" = "Altro";
@@ -959,6 +965,9 @@ Enact a temp Basal or a temp target */
 /* */
 "Bolus failed" = "Bolo fallito";
 
+/* "Max Bolus Exceeded label" */
+"Max Bolus exceeded!" = "Max Bolus exceeded!";
+
 /* */
 "Bolus failed or inaccurate. Check pump history before repeating." = "Bolo fallito o impreciso. Controlla la cronologia del microinfusore prima di ripetere.";
 
@@ -1113,6 +1122,9 @@ Enact a temp Basal or a temp target */
 
 /* Manual temp basal mode */
 "Manual" = "Manuale";
+
+/* An Automatic delivered bolus (SMB) */
+"SMB" = "SMB";
 
 /* Status highlight when manual temp basal is running. */
 "Manual Basal" = "Basale manuale temporanea";

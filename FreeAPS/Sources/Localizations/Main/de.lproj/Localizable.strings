@@ -4,10 +4,10 @@
 */
 /* -------------------------------- */
 /* Bolus screen when adding insulin */
-"Add insulin without actually bolusing" = "Insulin ohne tatsächliche Bolusabgabe erfassen";
+"Add insulin without actually bolusing" = "Insulin ohne Bolusabgabe erfassen";
 
 /* Add insulin from source outside of pump */
-"Add %@ without bolusing" = "Hinzufügen von %@ ohne tatsächliche Bolusabgabe";
+"Add %@ without bolusing" = "Hinzufügen von %@ ohne Bolusabgabe";
 
 "Bolus" = "Bolus";
 
@@ -15,6 +15,9 @@
 
 /* Continue after added carbs without bolus */
 "Continue without bolus" = "Ohne Bolusabgabe fortfahren";
+
+/* Alert when adding large amount without bolusing */
+"\nAmount is more than your Max Bolus setting! \nAre you sure you want to add " = "\nEingegebener Bolus ist größer als Max Bolus Einstellung! Sind Sie sicher, dass er hinzugefügt werden soll ";
 
 /* Header */
 "Enact Bolus" = "Bolus abgeben";
@@ -74,7 +77,7 @@
 "Add Carbs " = "Kohlenhydrate hinzufügen ";
 
 /*  */
-"Amount Carbs" = "Kohlenhydratmenge";
+"Amount Carbs" = "Menge Kohlenhydrate";
 
 /* Grams unit */
 "grams" = "Gramm";
@@ -519,10 +522,13 @@ Enact a temp Basal or a temp target */
 "Calibrations" = "Kalibrierungen";
 
 /* */
-"Create Events in Calendar" = "Kalendereintrag erstellen";
+"Create Events in Calendar" = "Ereignisse im Kalender erstellen";
 
 /* */
 "Calendar" = "Kalender";
+
+/* Automatic delivered treatments */
+"Automatic" = "Automatisch";
 
 /* */
 "Other" = "Sonstiges";
@@ -959,6 +965,9 @@ Enact a temp Basal or a temp target */
 /* */
 "Bolus failed" = "Bolus fehlgeschlagen";
 
+/* "Max Bolus Exceeded label" */
+"Max Bolus exceeded!" = "Maximaler Bolus überschritten!";
+
 /* */
 "Bolus failed or inaccurate. Check pump history before repeating." = "Bolus ist fehlgeschlagen oder ungenau. Prüfe den Pumpenverlauf vor einer erneuten Abgabe.";
 
@@ -1113,6 +1122,9 @@ Enact a temp Basal or a temp target */
 
 /* Manual temp basal mode */
 "Manual" = "manuell";
+
+/* An Automatic delivered bolus (SMB) */
+"SMB" = "SMB";
 
 /* Status highlight when manual temp basal is running. */
 "Manual Basal" = "Manuelle Temporäre Basalrate";
