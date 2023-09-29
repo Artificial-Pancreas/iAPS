@@ -412,7 +412,7 @@ extension Home {
             let colour: Color = colorScheme == .dark ? .black : .white
             // Rectangle().fill(colour).frame(maxHeight: 1)
             ZStack {
-                Rectangle().fill(Color.gray.opacity(0.2)).frame(maxHeight: 40)
+                Rectangle().fill(Color.gray.opacity(0.3)).frame(maxHeight: 40)
                 let cancel = fetchedPercent.first?.enabled ?? false
                 HStack(spacing: cancel ? 25 : 15) {
                     Text(selectedProfile().name).foregroundColor(.secondary)
@@ -475,17 +475,17 @@ extension Home {
 
         @ViewBuilder private func bottomPanel(_ geo: GeometryProxy) -> some View {
             ZStack {
-                Rectangle().fill(Color.gray.opacity(0.2)).frame(height: 50 + geo.safeAreaInsets.bottom)
+                Rectangle().fill(Color.gray.opacity(0.3)).frame(height: 54 + geo.safeAreaInsets.bottom)
 
                 HStack {
                     Button { state.showModal(for: .addCarbs) }
                     label: {
                         ZStack(alignment: Alignment(horizontal: .trailing, vertical: .bottom)) {
-                            Image("carbs")
+                            Image(systemName: "fork.knife.circle")
                                 .renderingMode(.template)
                                 .resizable()
-                                .frame(width: 24, height: 24)
-                                .foregroundColor(.loopYellow)
+                                .frame(width: 30, height: 30)
+                                .foregroundColor(.uam)
                                 .padding(8)
                             if let carbsReq = state.carbsRequired {
                                 Text(numberFormatter.string(from: carbsReq as NSNumber)!)
@@ -495,14 +495,14 @@ extension Home {
                                     .background(Capsule().fill(Color.red))
                             }
                         }
-                    }.buttonStyle(.borderless)
+                    }.buttonStyle(.plain)
                     Spacer()
                     Button { state.showModal(for: .addTempTarget) }
                     label: {
-                        Image("target")
+                        Image(systemName: "target")
                             .renderingMode(.template)
                             .resizable()
-                            .frame(width: 24, height: 24)
+                            .frame(width: 30, height: 30)
                             .padding(8)
                     }
                     .foregroundColor(.loopGreen)
@@ -510,10 +510,10 @@ extension Home {
                     Spacer()
                     Button { state.showModal(for: .bolus(waitForSuggestion: false)) }
                     label: {
-                        Image("bolus")
+                        Image(systemName: "drop.circle")
                             .renderingMode(.template)
                             .resizable()
-                            .frame(width: 24, height: 24)
+                            .frame(width: 30, height: 30)
                             .padding(8)
                     }
                     .foregroundColor(.insulin)
@@ -522,10 +522,10 @@ extension Home {
                     if state.allowManualTemp {
                         Button { state.showModal(for: .manualTempBasal) }
                         label: {
-                            Image("bolus1")
+                            Image(systemName: "plus.circle")
                                 .renderingMode(.template)
                                 .resizable()
-                                .frame(width: 24, height: 24)
+                                .frame(width: 30, height: 30)
                                 .padding(8)
                         }
                         .foregroundColor(.insulin)
@@ -535,10 +535,10 @@ extension Home {
                     Button { state.showModal(for: .statistics)
                     }
                     label: {
-                        Image(systemName: "chart.xyaxis.line")
+                        Image(systemName: "chart.line.uptrend.xyaxis.circle")
                             .renderingMode(.template)
                             .resizable()
-                            .frame(width: 24, height: 24)
+                            .frame(width: 30, height: 30)
                             .padding(8)
                     }
                     .foregroundColor(.purple)
@@ -546,13 +546,13 @@ extension Home {
                     Spacer()
                     Button { state.showModal(for: .settings) }
                     label: {
-                        Image("settings1")
+                        Image(systemName: "gearshape.circle")
                             .renderingMode(.template)
                             .resizable()
-                            .frame(width: 24, height: 24)
+                            .frame(width: 30, height: 30)
                             .padding(8)
                     }
-                    .foregroundColor(.loopGray)
+                    .foregroundColor(.gray)
                     .buttonStyle(.borderless)
                 }
                 .padding(.horizontal, 24)
