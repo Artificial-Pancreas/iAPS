@@ -46,6 +46,7 @@ extension DataTable {
                 Form {
                     switch state.mode {
                     case .treatments: treatmentsList
+                    case .meals: mealsList
                     case .glucose: glucoseList
                     }
                 }
@@ -55,10 +56,20 @@ extension DataTable {
             .navigationBarTitleDisplayMode(.automatic)
             .navigationBarItems(
                 leading: Button("Close", action: state.hideModal),
-                trailing: state.mode == .glucose ? EditButton().asAny() : EmptyView().asAny()
+                trailing: HStack {
+                    if state.mode == .glucose && !newGlucose {
+                        Button(action: { newGlucose = true }) {
+                            Text("Add")
+                            Image(systemName: "plus.circle.fill")
+                                .resizable()
+                                .frame(width: 24, height: 24)
+                            Spacer()
+                        }
+                    }
+                }
             )
             .popup(isPresented: newGlucose, alignment: .top, direction: .bottom) {
-                VStack(spacing: 20) {
+                VStack {
                     HStack {
                         Text("New Glucose")
                         DecimalTextField(" ... ", value: $state.manualGlcuose, formatter: glucoseFormatter)
@@ -93,120 +104,156 @@ extension DataTable {
                 ForEach(state.treatments) { item in
                     treatmentView(item)
                 }
+                .onDelete(perform: deleteTreatment)
+            }
+        }
+
+        private var mealsList: some View {
+            List {
+                ForEach(state.meals) { item in
+                    mealView(item)
+                }
+                .onDelete(perform: deleteMeal)
             }
         }
 
         private var glucoseList: some View {
             List {
-                Button { newGlucose = true }
-                label: { Text("Add") }.frame(maxWidth: .infinity, alignment: .trailing)
-                    .padding(.trailing, 20)
-
                 ForEach(state.glucose) { item in
                     glucoseView(item)
-                }.onDelete(perform: deleteGlucose)
+                }
+                .onDelete(perform: deleteGlucose)
             }
         }
 
-        @ViewBuilder private func treatmentView(_ item: Treatment) -> some View {
+        @ViewBuilder private func treatmentView(_ bolus: Treatment) -> some View {
             HStack {
-                Image(systemName: "circle.fill").foregroundColor(item.color)
-                Text(dateFormatter.string(from: item.date))
-                    .moveDisabled(true)
-                Text((item.isSMB ?? false) ? "SMB" : item.type.name)
-                Text(item.amountText).foregroundColor(.secondary)
+                Text((bolus.isSMB ?? false) ? "SMB" : bolus.type.name)
+                Text(bolus.amountText).foregroundColor(.secondary)
 
-                if let duration = item.durationText {
+                if let duration = bolus.durationText {
                     Text(duration).foregroundColor(.secondary)
                 }
 
-                if item.type == .carbs {
-                    if item.note != "" {
-                        Spacer()
-                        Text(item.note ?? "").foregroundColor(.brown)
-                    }
-                    Spacer()
-                    Image(systemName: "xmark.circle").foregroundColor(.secondary)
-                        .contentShape(Rectangle())
-                        .padding(.vertical)
-                        .onTapGesture {
-                            removeCarbsAlert = Alert(
-                                title: Text("Delete carbs?"),
-                                message: Text(item.amountText),
-                                primaryButton: .destructive(
-                                    Text("Delete"),
-                                    action: { state.deleteCarbs(item) }
-                                ),
-                                secondaryButton: .cancel()
-                            )
-                            isRemoveCarbsAlertPresented = true
-                        }
-                        .alert(isPresented: $isRemoveCarbsAlertPresented) {
-                            removeCarbsAlert!
-                        }
+                Spacer()
+
+                Text(dateFormatter.string(from: bolus.date))
+                    .moveDisabled(true)
+
+                /*
+                 if item.type == .bolus {
+                     Spacer()
+                     Image(systemName: "xmark.circle").foregroundColor(.secondary)
+                         .contentShape(Rectangle())
+                         .padding(.vertical)
+                         .onTapGesture {
+                             removeInsulinAlert = Alert(
+                                 title: Text("Delete insulin?"),
+                                 message: Text(item.amountText),
+                                 primaryButton: .destructive(
+                                     Text("Delete"),
+                                     action: { state.deleteInsulin(item) }
+                                 ),
+                                 secondaryButton: .cancel()
+                             )
+                             isRemoveInsulinAlertPresented = true
+                         }
+                         .alert(isPresented: $isRemoveInsulinAlertPresented) {
+                             removeInsulinAlert!
+                         }
+                 }
+                  */
+            }
+        }
+
+        @ViewBuilder private func mealView(_ meal: Treatment) -> some View {
+            HStack {
+                Text(meal.type.name)
+                Text(meal.amountText).foregroundColor(.secondary)
+
+                if let duration = meal.durationText {
+                    Text(duration).foregroundColor(.secondary)
                 }
 
-                if item.type == .fpus {
-                    Spacer()
-                    Image(systemName: "xmark.circle").foregroundColor(.secondary)
-                        .contentShape(Rectangle())
-                        .padding(.vertical)
-                        .onTapGesture {
-                            removeCarbsAlert = Alert(
-                                title: Text("Delete carb equivalents?"),
-                                message: Text(""), // Temporary fix. New to fix real amount of carb equivalents later
-                                primaryButton: .destructive(
-                                    Text("Delete"),
-                                    action: { state.deleteCarbs(item) }
-                                ),
-                                secondaryButton: .cancel()
-                            )
-                            isRemoveCarbsAlertPresented = true
-                        }
-                        .alert(isPresented: $isRemoveCarbsAlertPresented) {
-                            removeCarbsAlert!
-                        }
-                }
+                Spacer()
 
-                if item.type == .bolus {
-                    Spacer()
-                    Image(systemName: "xmark.circle").foregroundColor(.secondary)
-                        .contentShape(Rectangle())
-                        .padding(.vertical)
-                        .onTapGesture {
-                            removeInsulinAlert = Alert(
-                                title: Text("Delete insulin?"),
-                                message: Text(item.amountText),
-                                primaryButton: .destructive(
-                                    Text("Delete"),
-                                    action: { state.deleteInsulin(item) }
-                                ),
-                                secondaryButton: .cancel()
-                            )
-                            isRemoveInsulinAlertPresented = true
-                        }
-                        .alert(isPresented: $isRemoveInsulinAlertPresented) {
-                            removeInsulinAlert!
-                        }
-                }
+                Text(dateFormatter.string(from: meal.date))
+                    .moveDisabled(true)
+
+                /*
+                 if item.type == .carbs {
+                     if item.note != "" {
+                         Spacer()
+                         Text(item.note ?? "").foregroundColor(.brown)
+                     }
+                     Spacer()
+                     Image(systemName: "xmark.circle").foregroundColor(.secondary)
+                         .contentShape(Rectangle())
+                         .padding(.vertical)
+                         .onTapGesture {
+                             removeCarbsAlert = Alert(
+                                 title: Text("Delete carbs?"),
+                                 message: Text(item.amountText),
+                                 primaryButton: .destructive(
+                                     Text("Delete"),
+                                     action: { state.deleteCarbs(item) }
+                                 ),
+                                 secondaryButton: .cancel()
+                             )
+                             isRemoveCarbsAlertPresented = true
+                         }
+                         .alert(isPresented: $isRemoveCarbsAlertPresented) {
+                             removeCarbsAlert!
+                         }
+                 }
+
+                 if item.type == .fpus {
+                     Spacer()
+                     Image(systemName: "xmark.circle").foregroundColor(.secondary)
+                         .contentShape(Rectangle())
+                         .padding(.vertical)
+                         .onTapGesture {
+                             removeCarbsAlert = Alert(
+                                 title: Text("Delete carb equivalents?"),
+                                 message: Text(""), // Temporary fix. New to fix real amount of carb equivalents later
+                                 primaryButton: .destructive(
+                                     Text("Delete"),
+                                     action: { state.deleteCarbs(item) }
+                                 ),
+                                 secondaryButton: .cancel()
+                             )
+                             isRemoveCarbsAlertPresented = true
+                         }
+                         .alert(isPresented: $isRemoveCarbsAlertPresented) {
+                             removeCarbsAlert!
+                         }
+                 }
+                 */
             }
         }
 
         @ViewBuilder private func glucoseView(_ item: Glucose) -> some View {
-            VStack(alignment: .leading, spacing: 4) {
-                HStack {
-                    Text(dateFormatter.string(from: item.glucose.dateString))
-                    Spacer()
-                    Text(item.glucose.glucose.map {
-                        glucoseFormatter.string(from: Double(
-                            state.units == .mmolL ? $0.asMmolL : Decimal($0)
-                        ) as NSNumber)!
-                    } ?? "--")
-                    Text(state.units.rawValue)
-                    Text(item.glucose.direction?.symbol ?? "--")
-                }
-                Text("ID: " + item.glucose.id).font(.caption2).foregroundColor(.secondary)
+            HStack {
+                Text(item.glucose.glucose.map {
+                    glucoseFormatter.string(from: Double(
+                        state.units == .mmolL ? $0.asMmolL : Decimal($0)
+                    ) as NSNumber)!
+                } ?? "--")
+                Text(state.units.rawValue)
+                Text(item.glucose.direction?.symbol ?? "--")
+
+                Spacer()
+
+                Text(dateFormatter.string(from: item.glucose.dateString))
             }
+        }
+
+        private func deleteTreatment(at offsets: IndexSet) {
+            state.deleteInsulin(at: offsets[offsets.startIndex])
+        }
+
+        private func deleteMeal(at offsets: IndexSet) {
+            state.deleteCarbs(at: offsets[offsets.startIndex])
         }
 
         private func deleteGlucose(at offsets: IndexSet) {

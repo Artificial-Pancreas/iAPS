@@ -6,6 +6,7 @@ enum DataTable {
 
     enum Mode: String, Hashable, Identifiable, CaseIterable {
         case treatments
+        case meals
         case glucose
 
         var id: String { rawValue }
@@ -15,6 +16,8 @@ enum DataTable {
             switch self {
             case .treatments:
                 name = "Treatments"
+            case .meals:
+                name = "Meals"
             case .glucose:
                 name = "Glucose"
             }
@@ -181,7 +184,8 @@ enum DataTable {
             case .fpus:
                 return .loopRed
             case .bolus:
-                return (isNonPump ?? false) ? Color.nonPumpInsulin : (isSMB ?? false) ? Color.smb : Color.insulin
+                // return (isNonPump ?? false) ? Color.nonPumpInsulin : (isSMB ?? false) ? Color.smb : Color.insulin
+                return .insulin
             case .tempBasal:
                 return Color.insulin.opacity(0.4)
             case .resume,

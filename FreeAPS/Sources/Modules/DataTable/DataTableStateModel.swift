@@ -11,6 +11,7 @@ extension DataTable {
 
         @Published var mode: Mode = .treatments
         @Published var treatments: [Treatment] = []
+        @Published var meals: [Treatment] = []
         @Published var glucose: [Glucose] = []
         @Published var manualGlcuose: Decimal = 0
 
@@ -119,7 +120,10 @@ extension DataTable {
                     }
 
                 DispatchQueue.main.async {
-                    self.treatments = [carbs, boluses, tempBasals, tempTargets, suspend, resume, fpus]
+                    self.treatments = [boluses, tempBasals, tempTargets, suspend, resume]
+                        .flatMap { $0 }
+                        .sorted { $0.date > $1.date }
+                    self.meals = [carbs, fpus]
                         .flatMap { $0 }
                         .sorted { $0.date > $1.date }
                 }
@@ -132,17 +136,22 @@ extension DataTable {
             }
         }
 
-        func deleteCarbs(_ treatment: Treatment) {
-            provider.deleteCarbs(treatment)
+        func deleteCarbs(at index: Int) {
+            let carbEntry = meals[index]
+            provider.deleteCarbs(carbEntry)
         }
 
-        func deleteInsulin(_ treatment: Treatment) {
-            unlockmanager.unlock()
-                .sink { _ in } receiveValue: { [weak self] _ in
-                    guard let self = self else { return }
-                    self.provider.deleteInsulin(treatment)
-                }
-                .store(in: &lifetime)
+        func deleteInsulin(at index: Int) {
+            let treatment = treatments[index]
+            provider.deleteInsulin(treatment)
+            /*
+             unlockmanager.unlock()
+                 .sink { _ in } receiveValue: { [weak self] _ in
+                     guard let self = self else { return }
+                     self.provider.deleteInsulin(treatment)
+                 }
+                 .store(in: &lifetime)
+              */
         }
 
         func deleteGlucose(at index: Int) {
