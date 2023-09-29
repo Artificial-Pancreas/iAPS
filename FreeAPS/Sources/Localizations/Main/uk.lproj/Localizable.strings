@@ -17,7 +17,7 @@
 "Continue without bolus" = "Продовжити без болюсу";
 
 /* Alert when adding large amount without bolusing */
-"\nAmount is more than your Max Bolus setting! \nAre you sure you want to add " = "\nAmount is more than your Max Bolus setting! \nAre you sure you want to add ";
+"\nAmount is more than your Max Bolus setting! \nAre you sure you want to add " = "\nКількість перевищує ваш максимальний болюс! \nВи впевнені, що хочете додати";
 
 /* Header */
 "Enact Bolus" = "Подати Болюс";
