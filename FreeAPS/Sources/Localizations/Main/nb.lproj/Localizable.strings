@@ -17,7 +17,7 @@
 "Continue without bolus" = "Fortsett uten å gi bolus";
 
 /* Alert when adding large amount without bolusing */
-"\nAmount is more than your Max Bolus setting! \nAre you sure you want to add " = "\nAmount is more than your Max Bolus setting! \nAre you sure you want to add ";
+"\nAmount is more than your Max Bolus setting! \nAre you sure you want to add " = "\nMengden er høyere enn din Maks bolus-innstilling! \nEr du sikker på at du vil legge til ";
 
 /* Header */
 "Enact Bolus" = "Gi bolus";
