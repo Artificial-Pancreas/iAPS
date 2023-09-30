@@ -12,6 +12,8 @@ extension DataTable {
         @State private var isRemoveInsulinAlertPresented = false
         @State private var removeInsulinAlert: Alert?
         @State private var newGlucose = false
+        @State private var testAlert: Alert?
+        @State private var isTestPresented = false
 
         @Environment(\.colorScheme) var colorScheme
 
@@ -37,19 +39,16 @@ extension DataTable {
             VStack {
                 Picker("Mode", selection: $state.mode) {
                     ForEach(Mode.allCases.indexed(), id: \.1) { index, item in
-                        Text(item.name).tag(index)
+                        Text(item.name)
+                            .tag(index)
                     }
                 }
                 .pickerStyle(SegmentedPickerStyle())
                 .padding(.horizontal)
-
-                Form {
-                    switch state.mode {
-                    case .treatments: treatmentsList
-                    case .meals: mealsList
-                    case .glucose: glucoseList
-                    }
+                .alert(isPresented: $isTestPresented) {
+                    testAlert!
                 }
+                historyContent
             }
             .onAppear(perform: configureView)
             .navigationTitle("History")
@@ -63,13 +62,13 @@ extension DataTable {
                             Image(systemName: "plus.circle.fill")
                                 .resizable()
                                 .frame(width: 24, height: 24)
-                            Spacer()
                         }
+                        Spacer()
                     }
                 }
             )
             .popup(isPresented: newGlucose, alignment: .top, direction: .bottom) {
-                VStack {
+                Form {
                     HStack {
                         Text("New Glucose")
                         DecimalTextField(" ... ", value: $state.manualGlcuose, formatter: glucoseFormatter)
@@ -99,12 +98,28 @@ extension DataTable {
             }
         }
 
+        private var historyContent: some View {
+            Form {
+                switch state.mode {
+                case .treatments: treatmentsList
+                case .meals: mealsList
+                case .glucose: glucoseList
+                }
+            }
+            .onLongPressGesture(minimumDuration: 1.33, perform: combineTreatments)
+            // force press on the list to trigger function ^
+        }
+
         private var treatmentsList: some View {
             List {
                 ForEach(state.treatments) { item in
                     treatmentView(item)
                 }
+
                 .onDelete(perform: deleteTreatment)
+            }
+            .alert(isPresented: $isRemoveInsulinAlertPresented) {
+                removeInsulinAlert!
             }
         }
 
@@ -114,6 +129,9 @@ extension DataTable {
                     mealView(item)
                 }
                 .onDelete(perform: deleteMeal)
+            }
+            .alert(isPresented: $isRemoveCarbsAlertPresented) {
+                removeCarbsAlert!
             }
         }
 
@@ -139,30 +157,6 @@ extension DataTable {
 
                 Text(dateFormatter.string(from: bolus.date))
                     .moveDisabled(true)
-
-                /*
-                 if item.type == .bolus {
-                     Spacer()
-                     Image(systemName: "xmark.circle").foregroundColor(.secondary)
-                         .contentShape(Rectangle())
-                         .padding(.vertical)
-                         .onTapGesture {
-                             removeInsulinAlert = Alert(
-                                 title: Text("Delete insulin?"),
-                                 message: Text(item.amountText),
-                                 primaryButton: .destructive(
-                                     Text("Delete"),
-                                     action: { state.deleteInsulin(item) }
-                                 ),
-                                 secondaryButton: .cancel()
-                             )
-                             isRemoveInsulinAlertPresented = true
-                         }
-                         .alert(isPresented: $isRemoveInsulinAlertPresented) {
-                             removeInsulinAlert!
-                         }
-                 }
-                  */
             }
         }
 
@@ -179,56 +173,6 @@ extension DataTable {
 
                 Text(dateFormatter.string(from: meal.date))
                     .moveDisabled(true)
-
-                /*
-                 if item.type == .carbs {
-                     if item.note != "" {
-                         Spacer()
-                         Text(item.note ?? "").foregroundColor(.brown)
-                     }
-                     Spacer()
-                     Image(systemName: "xmark.circle").foregroundColor(.secondary)
-                         .contentShape(Rectangle())
-                         .padding(.vertical)
-                         .onTapGesture {
-                             removeCarbsAlert = Alert(
-                                 title: Text("Delete carbs?"),
-                                 message: Text(item.amountText),
-                                 primaryButton: .destructive(
-                                     Text("Delete"),
-                                     action: { state.deleteCarbs(item) }
-                                 ),
-                                 secondaryButton: .cancel()
-                             )
-                             isRemoveCarbsAlertPresented = true
-                         }
-                         .alert(isPresented: $isRemoveCarbsAlertPresented) {
-                             removeCarbsAlert!
-                         }
-                 }
-
-                 if item.type == .fpus {
-                     Spacer()
-                     Image(systemName: "xmark.circle").foregroundColor(.secondary)
-                         .contentShape(Rectangle())
-                         .padding(.vertical)
-                         .onTapGesture {
-                             removeCarbsAlert = Alert(
-                                 title: Text("Delete carb equivalents?"),
-                                 message: Text(""), // Temporary fix. New to fix real amount of carb equivalents later
-                                 primaryButton: .destructive(
-                                     Text("Delete"),
-                                     action: { state.deleteCarbs(item) }
-                                 ),
-                                 secondaryButton: .cancel()
-                             )
-                             isRemoveCarbsAlertPresented = true
-                         }
-                         .alert(isPresented: $isRemoveCarbsAlertPresented) {
-                             removeCarbsAlert!
-                         }
-                 }
-                 */
             }
         }
 
@@ -249,15 +193,57 @@ extension DataTable {
         }
 
         private func deleteTreatment(at offsets: IndexSet) {
-            state.deleteInsulin(at: offsets[offsets.startIndex])
+            let treatment = state.treatments[offsets[offsets.startIndex]]
+
+            removeInsulinAlert = Alert(
+                title: Text("Delete insulin?"),
+                message: Text(treatment.amountText),
+                primaryButton: .destructive(
+                    Text("Delete"),
+                    action: { state.deleteInsulin(treatment) }
+                ),
+                secondaryButton: .cancel()
+            )
+
+            isRemoveInsulinAlertPresented = true
         }
 
         private func deleteMeal(at offsets: IndexSet) {
-            state.deleteCarbs(at: offsets[offsets.startIndex])
+            let meal = state.meals[offsets[offsets.startIndex]]
+            var alertTitle = Text("Delete carbs?")
+            var alertMessage = Text(meal.amountText)
+
+            if meal.type == .fpus {
+                alertTitle = Text("Delete carb equivalents?")
+                alertMessage = Text("")
+            }
+
+            removeCarbsAlert = Alert(
+                title: alertTitle,
+                message: alertMessage,
+                primaryButton: .destructive(
+                    Text("Delete"),
+                    action: { state.deleteCarbs(meal) }
+                ),
+                secondaryButton: .cancel()
+            )
+
+            isRemoveCarbsAlertPresented = true
         }
 
         private func deleteGlucose(at offsets: IndexSet) {
             state.deleteGlucose(at: offsets[offsets.startIndex])
+        }
+
+        private func combineTreatments() {
+            print("FORCE PRESS ON LIST TRIGGERS THIS")
+
+            testAlert = Alert(
+                title: Text("Test123")
+            )
+            isTestPresented = true
+
+            // TODO: re-render view and combine treatments and meals into one list.
         }
     }
 }
