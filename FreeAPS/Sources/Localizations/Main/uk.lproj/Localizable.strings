@@ -16,6 +16,9 @@
 /* Continue after added carbs without bolus */
 "Continue without bolus" = "Продовжити без болюсу";
 
+/* Alert when adding large amount without bolusing */
+"\nAmount is more than your Max Bolus setting! \nAre you sure you want to add " = "\nКількість перевищує ваш максимальний болюс! \nВи впевнені, що хочете додати";
+
 /* Header */
 "Enact Bolus" = "Подати Болюс";
 
@@ -519,10 +522,13 @@ Enact a temp Basal or a temp target */
 "Calibrations" = "Калібрування";
 
 /* */
-"Create Events in Calendar" = "Створити подію в календарі";
+"Create Events in Calendar" = "Створення подій у календарі";
 
 /* */
 "Calendar" = "Календар";
+
+/* Automatic delivered treatments */
+"Automatic" = "Автоматично";
 
 /* */
 "Other" = "Інше";
@@ -959,6 +965,9 @@ Enact a temp Basal or a temp target */
 /* */
 "Bolus failed" = "Болюс не вдався";
 
+/* "Max Bolus Exceeded label" */
+"Max Bolus exceeded!" = "Максимальний болюс перевищено!";
+
 /* */
 "Bolus failed or inaccurate. Check pump history before repeating." = "Болюс не пройшов або неточний. Перевір історію помпи, перш ніж повторити.";
 
@@ -1113,6 +1122,9 @@ Enact a temp Basal or a temp target */
 
 /* Manual temp basal mode */
 "Manual" = "Інструкція";
+
+/* An Automatic delivered bolus (SMB) */
+"SMB" = "SMB";
 
 /* Status highlight when manual temp basal is running. */
 "Manual Basal" = "Ручна тимчасова базальна швидкість (ТБШ)";

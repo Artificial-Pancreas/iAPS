@@ -16,6 +16,9 @@
 /* Continue after added carbs without bolus */
 "Continue without bolus" = "不输注胰岛素并继续";
 
+/* Alert when adding large amount without bolusing */
+"\nAmount is more than your Max Bolus setting! \nAre you sure you want to add " = "\nAmount is more than your Max Bolus setting! \nAre you sure you want to add ";
+
 /* Header */
 "Enact Bolus" = "执行大剂量";
 
@@ -519,10 +522,13 @@ Enact a temp Basal or a temp target */
 "Calibrations" = "校准";
 
 /* */
-"Create Events in Calendar" = "在日历中创建事件";
+"Create Events in Calendar" = "Create Events in Calendar";
 
 /* */
 "Calendar" = "日历";
+
+/* Automatic delivered treatments */
+"Automatic" = "Automatic";
 
 /* */
 "Other" = "其他";
@@ -959,6 +965,9 @@ Enact a temp Basal or a temp target */
 /* */
 "Bolus failed" = "大剂量输注失败";
 
+/* "Max Bolus Exceeded label" */
+"Max Bolus exceeded!" = "Max Bolus exceeded!";
+
 /* */
 "Bolus failed or inaccurate. Check pump history before repeating." = "大剂量失败或者不准确，请在重复操作前检查胰岛素泵历史";
 
@@ -1113,6 +1122,9 @@ Enact a temp Basal or a temp target */
 
 /* Manual temp basal mode */
 "Manual" = "Manual";
+
+/* An Automatic delivered bolus (SMB) */
+"SMB" = "SMB";
 
 /* Status highlight when manual temp basal is running. */
 "Manual Basal" = "Manual Basal";

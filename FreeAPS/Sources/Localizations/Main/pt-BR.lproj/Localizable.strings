@@ -16,6 +16,9 @@
 /* Continue after added carbs without bolus */
 "Continue without bolus" = "Continuar sem tomar bolus";
 
+/* Alert when adding large amount without bolusing */
+"\nAmount is more than your Max Bolus setting! \nAre you sure you want to add " = "\nAmount is more than your Max Bolus setting! \nAre you sure you want to add ";
+
 /* Header */
 "Enact Bolus" = "Aplicar Bolus";
 
@@ -519,10 +522,13 @@ Enact a temp Basal or a temp target */
 "Calibrations" = "Calibragens";
 
 /* */
-"Create Events in Calendar" = "Criar eventos no calendário";
+"Create Events in Calendar" = "Create Events in Calendar";
 
 /* */
 "Calendar" = "Calendário";
+
+/* Automatic delivered treatments */
+"Automatic" = "Automatic";
 
 /* */
 "Other" = "Outros";
@@ -959,6 +965,9 @@ Enact a temp Basal or a temp target */
 /* */
 "Bolus failed" = "Bolus failed";
 
+/* "Max Bolus Exceeded label" */
+"Max Bolus exceeded!" = "Max Bolus exceeded!";
+
 /* */
 "Bolus failed or inaccurate. Check pump history before repeating." = "Bolus failed or inaccurate. Check pump history before repeating.";
 
@@ -1113,6 +1122,9 @@ Enact a temp Basal or a temp target */
 
 /* Manual temp basal mode */
 "Manual" = "Manual";
+
+/* An Automatic delivered bolus (SMB) */
+"SMB" = "SMB";
 
 /* Status highlight when manual temp basal is running. */
 "Manual Basal" = "Manual Basal";

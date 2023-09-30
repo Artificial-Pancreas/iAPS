@@ -8,7 +8,7 @@
 "Continue" = "Fortsæt";
 
 /* Button text to cancel G7 setup */
-"Cancel" = "Cancel";
+"Cancel" = "Annuller";
 
 /* Error description for unreliable state */
 "Glucose data is unavailable" = "Glucose data is unavailable";
@@ -41,7 +41,7 @@
 "Grace Period End" = "Grace Period End";
 
 /* Field label */
-"Glucose" = "Glucose";
+"Glucose" = "Glukose";
 
 "Last Reading" = "Last Reading";
 
@@ -67,7 +67,7 @@
 "Last Connect" = "Last Connect";
 
 /* Configuration */
-"Configuration" = "Configuration";
+"Configuration" = "Konfiguration";
 
 /* title for g7 config settings to upload readings */
 "Upload Readings" = "Upload Readings";
