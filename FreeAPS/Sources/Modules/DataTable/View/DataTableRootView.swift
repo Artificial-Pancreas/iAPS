@@ -35,6 +35,14 @@ extension DataTable {
             return formatter
         }
 
+        private var fpuFormatter: NumberFormatter {
+            let formatter = NumberFormatter()
+            formatter.numberStyle = .decimal
+            formatter.maximumFractionDigits = 1
+            formatter.roundingMode = .halfUp
+            return formatter
+        }
+
         var body: some View {
             VStack {
                 Picker("Mode", selection: $state.mode) {
@@ -226,8 +234,18 @@ extension DataTable {
             var alertMessage = Text(meal.amountText)
 
             if meal.type == .fpus {
-                alertTitle = Text("Delete carb equivalents?")
-                alertMessage = Text("")
+                let fpus = state.meals
+                let carbEquivalents = fpuFormatter.string(from: Double(
+                    fpus.filter { fpu in
+                        fpu.fpuID == meal.fpuID
+                    }
+                    .map { fpu in
+                        fpu.amount ?? 0 }
+                    .reduce(0, +)
+                ) as NSNumber)!
+
+                alertTitle = Text("Delete Carb Equivalents?")
+                alertMessage = Text(carbEquivalents + NSLocalizedString(" g", comment: "gram of carbs"))
             }
 
             removeCarbsAlert = Alert(
