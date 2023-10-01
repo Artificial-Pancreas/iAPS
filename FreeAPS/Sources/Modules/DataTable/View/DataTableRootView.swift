@@ -106,8 +106,6 @@ extension DataTable {
                 case .glucose: glucoseList
                 }
             }
-            .onLongPressGesture(minimumDuration: 1.33, perform: combineTreatments)
-            // force press on the list to trigger function ^
         }
 
         private var treatmentsList: some View {
@@ -233,17 +231,6 @@ extension DataTable {
 
         private func deleteGlucose(at offsets: IndexSet) {
             state.deleteGlucose(at: offsets[offsets.startIndex])
-        }
-
-        private func combineTreatments() {
-            print("FORCE PRESS ON LIST TRIGGERS THIS")
-
-            testAlert = Alert(
-                title: Text("Test123")
-            )
-            isTestPresented = true
-
-            // TODO: re-render view and combine treatments and meals into one list.
         }
     }
 }
