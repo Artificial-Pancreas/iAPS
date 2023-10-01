@@ -264,7 +264,7 @@ extension DataTable {
         private func deleteGlucose(at offsets: IndexSet) {
             let glucose = state.glucose[offsets[offsets.startIndex]]
             let glucoseValue = glucoseFormatter.string(from: Double(
-                state.units == .mmolL ? glucose.glucose.value.asMmolL : glucose.glucose.value.asMgdL
+                state.units == .mmolL ? Double(glucose.glucose.value.asMmolL) : glucose.glucose.value
             ) as NSNumber)! + " " + state.units.rawValue
 
             removeGlucoseAlert = Alert(
