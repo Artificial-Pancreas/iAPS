@@ -71,7 +71,7 @@ extension DataTable {
                 Form {
                     HStack {
                         Text("New Glucose")
-                        DecimalTextField(" ... ", value: $state.manualGlcuose, formatter: glucoseFormatter)
+                        DecimalTextField(" ... ", value: $state.manualGlucose, formatter: glucoseFormatter)
                         Text(state.units.rawValue)
                     }.padding(.horizontal, 20)
                     HStack {
@@ -86,7 +86,7 @@ extension DataTable {
                         }
                         label: { Text("Save") }
                             .frame(maxWidth: .infinity, alignment: .trailing)
-                            .disabled(state.manualGlcuose < limitLow || state.manualGlcuose > limitHigh)
+                            .disabled(state.manualGlucose < limitLow || state.manualGlucose > limitHigh)
 
                     }.padding(20)
                 }
