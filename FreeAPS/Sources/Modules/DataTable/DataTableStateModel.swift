@@ -14,6 +14,7 @@ extension DataTable {
         @Published var meals: [Treatment] = []
         @Published var glucose: [Glucose] = []
         @Published var manualGlucose: Decimal = 0
+        @Published var manualGlucoseDate = Date()
 
         var units: GlucoseUnits = .mmolL
 
@@ -149,8 +150,8 @@ extension DataTable {
                 .store(in: &lifetime)
         }
 
-        func deleteGlucose(at index: Int) {
-            let id = glucose[index].id
+        func deleteGlucose(_ glucose: Glucose) {
+            let id = glucose.id
             provider.deleteGlucose(id: id)
 
             let fetchRequest: NSFetchRequest<NSFetchRequestResult>
@@ -174,16 +175,15 @@ extension DataTable {
             // try? coredataContext.save()
         }
 
-        func addManualGlucose() {
+        func addManualGlucose(manualGlucoseDate: Date) {
             let glucose = units == .mmolL ? manualGlucose.asMgdL : manualGlucose
-            let now = Date()
             let id = UUID().uuidString
 
             let saveToJSON = BloodGlucose(
                 _id: id,
                 direction: nil,
-                date: Decimal(now.timeIntervalSince1970) * 1000,
-                dateString: now,
+                date: Decimal(manualGlucoseDate.timeIntervalSince1970) * 1000,
+                dateString: manualGlucoseDate,
                 unfiltered: nil,
                 filtered: nil,
                 noise: nil,

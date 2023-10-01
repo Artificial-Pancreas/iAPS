@@ -12,8 +12,8 @@ extension DataTable {
         @State private var isRemoveInsulinAlertPresented = false
         @State private var removeInsulinAlert: Alert?
         @State private var newGlucose = false
-        @State private var testAlert: Alert?
-        @State private var isTestPresented = false
+        @State private var isRemoveGlucoseAlertPresented = false
+        @State private var removeGlucoseAlert: Alert?
 
         @Environment(\.colorScheme) var colorScheme
 
@@ -45,9 +45,7 @@ extension DataTable {
                 }
                 .pickerStyle(SegmentedPickerStyle())
                 .padding(.horizontal)
-                .alert(isPresented: $isTestPresented) {
-                    testAlert!
-                }
+
                 historyContent
             }
             .onAppear(perform: configureView)
@@ -67,34 +65,47 @@ extension DataTable {
                     }
                 }
             )
-            .popup(isPresented: newGlucose, alignment: .top, direction: .bottom) {
-                Form {
-                    HStack {
-                        Text("New Glucose")
-                        DecimalTextField(" ... ", value: $state.manualGlucose, formatter: glucoseFormatter)
-                        Text(state.units.rawValue)
-                    }.padding(.horizontal, 20)
-                    HStack {
-                        let limitLow: Decimal = state.units == .mmolL ? 2.2 : 40
-                        let limitHigh: Decimal = state.units == .mmolL ? 21 : 380
-                        Button { newGlucose = false }
-                        label: { Text("Cancel") }.frame(maxWidth: .infinity, alignment: .leading)
+            .sheet(isPresented: $newGlucose) {
+                manualGlucoseView
+            }
+        }
 
-                        Button {
-                            state.addManualGlucose()
-                            newGlucose = false
+        var manualGlucoseView: some View {
+            NavigationView {
+                VStack {
+                    Form {
+                        Section {
+                            HStack {
+                                Text("New Glucose")
+                                DecimalTextField(" ... ", value: $state.manualGlucose, formatter: glucoseFormatter)
+                                Text(state.units.rawValue)
+                            }
                         }
-                        label: { Text("Save") }
-                            .frame(maxWidth: .infinity, alignment: .trailing)
-                            .disabled(state.manualGlucose < limitLow || state.manualGlucose > limitHigh)
 
-                    }.padding(20)
+                        Section {
+                            DatePicker("Date", selection: $state.manualGlucoseDate)
+                        }
+
+                        Section {
+                            HStack {
+                                let limitLow: Decimal = state.units == .mmolL ? 2.2 : 40
+                                let limitHigh: Decimal = state.units == .mmolL ? 21 : 380
+
+                                Button {
+                                    state.addManualGlucose(manualGlucoseDate: state.manualGlucoseDate)
+                                    newGlucose = false
+                                }
+                                label: { Text("Save").font(.title3) }
+                                    .frame(maxWidth: .infinity, alignment: .center)
+                                    .disabled(state.manualGlucose < limitLow || state.manualGlucose > limitHigh)
+                            }
+                        }
+                    }
                 }
-                .frame(maxHeight: 140)
-                .background(
-                    RoundedRectangle(cornerRadius: 8, style: .continuous)
-                        .fill(Color(colorScheme == .dark ? UIColor.systemGray2 : UIColor.systemGray6))
-                )
+                .onAppear(perform: configureView)
+                .navigationTitle("Add  Glucose")
+                .navigationBarTitleDisplayMode(.automatic)
+                .navigationBarItems(leading: Button("Close", action: { newGlucose = false }))
             }
         }
 
@@ -139,6 +150,9 @@ extension DataTable {
                     glucoseView(item)
                 }
                 .onDelete(perform: deleteGlucose)
+            }
+            .alert(isPresented: $isRemoveGlucoseAlertPresented) {
+                removeGlucoseAlert!
             }
         }
 
@@ -194,7 +208,7 @@ extension DataTable {
             let treatment = state.treatments[offsets[offsets.startIndex]]
 
             removeInsulinAlert = Alert(
-                title: Text("Delete insulin?"),
+                title: Text("Delete Insulin?"),
                 message: Text(treatment.amountText),
                 primaryButton: .destructive(
                     Text("Delete"),
@@ -230,7 +244,22 @@ extension DataTable {
         }
 
         private func deleteGlucose(at offsets: IndexSet) {
-            state.deleteGlucose(at: offsets[offsets.startIndex])
+            let glucose = state.glucose[offsets[offsets.startIndex]]
+            let glucoseValue = glucoseFormatter.string(from: Double(
+                state.units == .mmolL ? glucose.glucose.value.asMmolL : glucose.glucose.value.asMgdL
+            ) as NSNumber)! + " " + state.units.rawValue
+
+            removeGlucoseAlert = Alert(
+                title: Text("Delete Glucose?"),
+                message: Text(glucoseValue),
+                primaryButton: .destructive(
+                    Text("Delete"),
+                    action: { state.deleteGlucose(glucose) }
+                ),
+                secondaryButton: .cancel()
+            )
+
+            isRemoveGlucoseAlertPresented = true
         }
     }
 }
