@@ -130,7 +130,7 @@ extension AddCarbs {
                 }
             }
             .onAppear(perform: configureView)
-            .navigationTitle(state.useFPUconversion ? "Add Carbs, Fat & Protein" : "Add Carbohydrates")
+            .navigationTitle("Add Meals")
             .navigationBarTitleDisplayMode(.automatic)
             .navigationBarItems(leading: Button("Close", action: state.hideModal))
         }
