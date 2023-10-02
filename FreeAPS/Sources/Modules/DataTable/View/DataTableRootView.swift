@@ -14,8 +14,9 @@ extension DataTable {
         @State private var isRemoveGlucoseAlertPresented = false
         @State private var isInsulinAmountAlertPresented = false
         @State private var removeGlucoseAlert: Alert?
-        @State private var newGlucose = false
-        @State private var nonPumpInsulin = false
+        @State private var showManualGlucose: Bool = false
+        @State private var showNonPumpInsulin: Bool = false
+        @State private var showFutureEntries: Bool = false
 
         @Environment(\.colorScheme) var colorScheme
 
@@ -52,6 +53,19 @@ extension DataTable {
             return formatter
         }
 
+        var futureEntryBtn: some View {
+            Button(action: { showFutureEntries.toggle() }, label: {
+                Text((showFutureEntries ? "Hide" : "Show") + " Future Entries").foregroundColor(Color.white)
+                    .font(.caption)
+                Image(systemName: showFutureEntries ? "calendar.badge.minus" : "calendar.badge.plus")
+                    .resizable()
+                    .frame(width: 18, height: 18)
+                    .foregroundColor(Color.white)
+            })
+                .padding(.trailing, 20)
+                .offset(x: 0, y: -50)
+        }
+
         var body: some View {
             VStack {
                 Picker("Mode", selection: $state.mode) {
@@ -62,7 +76,7 @@ extension DataTable {
                 }
                 .pickerStyle(SegmentedPickerStyle())
                 .padding(.horizontal)
-
+                
                 historyContentView
             }
             .onAppear(perform: configureView)
@@ -71,17 +85,27 @@ extension DataTable {
             .navigationBarItems(
                 leading: Button("Close", action: state.hideModal),
                 trailing: HStack {
-                    if state.mode == .treatments && !nonPumpInsulin {
-                        Button(action: { nonPumpInsulin = true }) {
+                    if state.mode == .treatments && !showNonPumpInsulin {
+                        Button(action: { showNonPumpInsulin = true }) {
                             Text("Non-Pump Insulin")
                             Image(systemName: "plus.circle.fill")
                                 .resizable()
                                 .frame(width: 24, height: 24)
                         }
                     }
-
-                    if state.mode == .glucose && !newGlucose {
-                        Button(action: { newGlucose = true }) {
+                    if state.mode == .meals {
+                        Button(action: { showFutureEntries.toggle() }, label: {
+                            Text((showFutureEntries ? "Hide" : "Show") + " Future Entries")
+                                .foregroundColor(colorScheme == .dark ? Color.white : Color.black)
+                                .font(.caption)
+                            Image(systemName: showFutureEntries ? "calendar.badge.minus" : "calendar.badge.plus")
+                                .resizable()
+                                .frame(width: 18, height: 18)
+                                .foregroundColor(colorScheme == .dark ? Color.white : Color.black)
+                        }).buttonStyle(.bordered)
+                    }
+                    if state.mode == .glucose && !showManualGlucose {
+                        Button(action: { showManualGlucose = true }) {
                             Text("Glucose")
                             Image(systemName: "plus.circle.fill")
                                 .resizable()
@@ -90,10 +114,10 @@ extension DataTable {
                     }
                 }
             )
-            .sheet(isPresented: $newGlucose) {
+            .sheet(isPresented: $showManualGlucose) {
                 addManualGlucoseView
             }
-            .sheet(isPresented: $nonPumpInsulin) {
+            .sheet(isPresented: $showNonPumpInsulin) {
                 addNonPumpInsulinView
             }
         }
@@ -126,7 +150,7 @@ extension DataTable {
 
                                 Button {
                                     state.addManualGlucose()
-                                    newGlucose = false
+                                    showManualGlucose = false
                                 }
                                 label: { Text("Save") }
                                     .frame(maxWidth: .infinity, alignment: .center)
@@ -136,9 +160,9 @@ extension DataTable {
                     }
                 }
                 .onAppear(perform: configureView)
-                .navigationTitle("Add  Glucose")
+                .navigationTitle("Add Glucose")
                 .navigationBarTitleDisplayMode(.automatic)
-                .navigationBarItems(leading: Button("Close", action: { newGlucose = false
+                .navigationBarItems(leading: Button("Close", action: { showManualGlucose = false
                     state.manualGlucose = 0 }))
             }
         }
@@ -173,7 +197,7 @@ extension DataTable {
                             HStack {
                                 Button {
                                     state.addNonPumpInsulin()
-                                    nonPumpInsulin = false
+                                    showNonPumpInsulin = false
                                 }
                                 label: { Text("Log non-pump insulin") }
                                     .foregroundColor(amountWarningCondition ? Color.white : Color.accentColor)
@@ -197,9 +221,10 @@ extension DataTable {
                     }
                 }
                 .onAppear(perform: configureView)
-                .navigationTitle("Add Non-Pump Insulin")
+                .navigationTitle("Non-Pump Insulin")
                 .navigationBarTitleDisplayMode(.automatic)
-                .navigationBarItems(leading: Button("Close", action: { nonPumpInsulin = false; state.nonPumpInsulinAmount = 0 }))
+                .navigationBarItems(leading: Button("Close", action: { showNonPumpInsulin = false
+                    state.nonPumpInsulinAmount = 0 }))
             }
         }
 
@@ -234,10 +259,20 @@ extension DataTable {
         private var mealsList: some View {
             List {
                 if !state.meals.isEmpty {
-                    ForEach(state.meals) { item in
-                        mealView(item)
+                    if !showFutureEntries {
+                        ForEach(state.meals.filter { meal in
+                            meal.date <= Date()
+                        }) { meal in
+
+                            mealView(meal)
+                        }
+                        .onDelete(perform: deleteMeal)
+                    } else {
+                        ForEach(state.meals) { item in
+                            mealView(item)
+                        }
+                        .onDelete(perform: deleteMeal)
                     }
-                    .onDelete(perform: deleteMeal)
                 } else {
                     HStack {
                         Text("No data.")
