@@ -76,7 +76,7 @@ extension DataTable {
                 }
                 .pickerStyle(SegmentedPickerStyle())
                 .padding(.horizontal)
-                
+
                 historyContentView
             }
             .onAppear(perform: configureView)
@@ -95,7 +95,7 @@ extension DataTable {
                     }
                     if state.mode == .meals {
                         Button(action: { showFutureEntries.toggle() }, label: {
-                            Text((showFutureEntries ? "Hide" : "Show") + " Future Entries")
+                            Text(showFutureEntries ? "Hide Future Entries" : "Show Future Entries")
                                 .foregroundColor(colorScheme == .dark ? Color.white : Color.black)
                                 .font(.caption)
                             Image(systemName: showFutureEntries ? "calendar.badge.minus" : "calendar.badge.plus")
