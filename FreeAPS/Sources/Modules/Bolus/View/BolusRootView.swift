@@ -83,6 +83,13 @@ extension Bolus {
                                 state.amount <= 0 || state.amount > state.maxBolus
                             )
                     }
+
+                    if waitForSuggestion {
+                        Section {
+                            Button { state.showModal(for: nil) }
+                            label: { Text("Continue without bolus") }.frame(maxWidth: .infinity, alignment: .center)
+                        }
+                    }
                 }
             }
             .alert(isPresented: $displayError) {
