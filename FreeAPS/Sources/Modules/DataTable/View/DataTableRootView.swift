@@ -11,9 +11,11 @@ extension DataTable {
         @State private var removeCarbsAlert: Alert?
         @State private var isRemoveInsulinAlertPresented = false
         @State private var removeInsulinAlert: Alert?
-        @State private var newGlucose = false
         @State private var isRemoveGlucoseAlertPresented = false
+        @State private var isInsulinAmountAlertPresented = false
         @State private var removeGlucoseAlert: Alert?
+        @State private var newGlucose = false
+        @State private var nonPumpInsulin = false
 
         @Environment(\.colorScheme) var colorScheme
 
@@ -43,6 +45,13 @@ extension DataTable {
             return formatter
         }
 
+        private var insulinFormatter: NumberFormatter {
+            let formatter = NumberFormatter()
+            formatter.numberStyle = .decimal
+            formatter.maximumFractionDigits = 2
+            return formatter
+        }
+
         var body: some View {
             VStack {
                 Picker("Mode", selection: $state.mode) {
@@ -54,7 +63,7 @@ extension DataTable {
                 .pickerStyle(SegmentedPickerStyle())
                 .padding(.horizontal)
 
-                historyContent
+                historyContentView
             }
             .onAppear(perform: configureView)
             .navigationTitle("History")
@@ -62,6 +71,16 @@ extension DataTable {
             .navigationBarItems(
                 leading: Button("Close", action: state.hideModal),
                 trailing: HStack {
+                    if state.mode == .treatments && !nonPumpInsulin {
+                        Button(action: { nonPumpInsulin = true }) {
+                            Text("Add")
+                            Image(systemName: "plus.circle.fill")
+                                .resizable()
+                                .frame(width: 24, height: 24)
+                        }
+                        Spacer()
+                    }
+
                     if state.mode == .glucose && !newGlucose {
                         Button(action: { newGlucose = true }) {
                             Text("Add")
@@ -74,19 +93,27 @@ extension DataTable {
                 }
             )
             .sheet(isPresented: $newGlucose) {
-                manualGlucoseView
+                addManualGlucoseView
+            }
+            .sheet(isPresented: $nonPumpInsulin) {
+                addNonPumpInsulinView
             }
         }
 
-        var manualGlucoseView: some View {
+        var addManualGlucoseView: some View {
             NavigationView {
                 VStack {
                     Form {
                         Section {
                             HStack {
                                 Text("New Glucose")
-                                DecimalTextField(" ... ", value: $state.manualGlucose, formatter: glucoseFormatter)
-                                Text(state.units.rawValue)
+                                DecimalTextField(
+                                    " ... ",
+                                    value: $state.manualGlucose,
+                                    formatter: glucoseFormatter,
+                                    autofocus: true
+                                )
+                                Text(state.units.rawValue).foregroundStyle(.secondary)
                             }
                         }
 
@@ -100,10 +127,10 @@ extension DataTable {
                                 let limitHigh: Decimal = state.units == .mmolL ? 21 : 380
 
                                 Button {
-                                    state.addManualGlucose(manualGlucoseDate: state.manualGlucoseDate)
+                                    state.addManualGlucose()
                                     newGlucose = false
                                 }
-                                label: { Text("Save").font(.title3) }
+                                label: { Text("Save") }
                                     .frame(maxWidth: .infinity, alignment: .center)
                                     .disabled(state.manualGlucose < limitLow || state.manualGlucose > limitHigh)
                             }
@@ -113,11 +140,101 @@ extension DataTable {
                 .onAppear(perform: configureView)
                 .navigationTitle("Add  Glucose")
                 .navigationBarTitleDisplayMode(.automatic)
-                .navigationBarItems(leading: Button("Close", action: { newGlucose = false }))
+                .navigationBarItems(leading: Button("Close", action: { newGlucose = false
+                    state.nonPumpInsulinAmount = 0 }))
             }
         }
 
-        private var historyContent: some View {
+        var addNonPumpInsulinView: some View {
+            NavigationView {
+                VStack {
+                    Form {
+                        Section {
+                            HStack {
+                                Text("Amount")
+                                Spacer()
+                                DecimalTextField(
+                                    "0",
+                                    value: $state.nonPumpInsulinAmount,
+                                    formatter: insulinFormatter,
+                                    autofocus: true,
+                                    cleanInput: true
+                                )
+                                Text("U").foregroundColor(.secondary)
+                            }
+                        }
+
+                        Section {
+                            DatePicker("Date", selection: $state.nonPumpInsulinDate)
+                        }
+
+                        let amountWarningCondition = (state.nonPumpInsulinAmount > state.maxBolus) &&
+                            (state.nonPumpInsulinAmount <= state.maxBolus * 3)
+
+                        Section {
+                            HStack {
+                                Button {
+                                    /*
+                                     if amountWarningCondition
+                                     {
+                                         isInsulinAmountAlertPresented = true
+                                     } else {
+                                         state.addNonPumpInsulin()
+                                         nonPumpInsulin = false
+                                     }
+                                      */
+                                    state.addNonPumpInsulin()
+                                    nonPumpInsulin = false
+                                }
+                                label: { Text("Log non-pump insulin") }
+                                    .foregroundColor(amountWarningCondition ? .warning : .accentColor)
+                                    .frame(maxWidth: .infinity, alignment: .center)
+                                    .disabled(
+                                        state.nonPumpInsulinAmount <= 0 || state.nonPumpInsulinAmount > state
+                                            .maxBolus * 3
+                                    )
+                            }
+                        }
+                        header: {
+                            if amountWarningCondition
+                            {
+                                Text("**⚠️ Warning!** The entered insulin amount is greater than your Max Bolus setting!")
+                            }
+                        }
+                    }
+                    /*
+                     .alert(isPresented: $isInsulinAmountAlertPresented) {
+                         let insulinAmount = insulinFormatter.string(from: state.nonPumpInsulinAmount as NSNumber)!
+                         let alertMessage = NSLocalizedString(
+                             "The entered insulin amount is greater than your Max Bolus setting! Are you sure you want to add ",
+                             comment: "Alert"
+                         ) + insulinAmount +
+                             NSLocalizedString(" U", comment: "Insulin unit") + " of non-pump insulin?"
+
+                         return Alert(
+                             title: Text("Warning"),
+                             message: Text(alertMessage),
+                             primaryButton: .destructive(
+                                 Text("Confirm"),
+                                 action: {
+                                     state.addNonPumpInsulin()
+                                     nonPumpInsulin = false
+                                     isInsulinAmountAlertPresented = false
+                                 }
+                             ),
+                             secondaryButton: .cancel()
+                         )
+                     }
+                      */
+                }
+                .onAppear(perform: configureView)
+                .navigationTitle("Add Non-Pump Insulin")
+                .navigationBarTitleDisplayMode(.automatic)
+                .navigationBarItems(leading: Button("Close", action: { nonPumpInsulin = false }))
+            }
+        }
+
+        private var historyContentView: some View {
             Form {
                 switch state.mode {
                 case .treatments: treatmentsList

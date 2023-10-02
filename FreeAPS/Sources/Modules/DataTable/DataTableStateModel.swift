@@ -6,6 +6,7 @@ extension DataTable {
         @Injected() var broadcaster: Broadcaster!
         @Injected() var unlockmanager: UnlockManager!
         @Injected() private var storage: FileStorage!
+        @Injected() var pumpHistoryStorage: PumpHistoryStorage!
 
         let coredataContext = CoreDataStack.shared.persistentContainer.viewContext
 
@@ -15,6 +16,9 @@ extension DataTable {
         @Published var glucose: [Glucose] = []
         @Published var manualGlucose: Decimal = 0
         @Published var manualGlucoseDate = Date()
+        @Published var maxBolus: Decimal = 0
+        @Published var nonPumpInsulinAmount: Decimal = 0
+        @Published var nonPumpInsulinDate = Date()
 
         var units: GlucoseUnits = .mmolL
 
@@ -27,6 +31,7 @@ extension DataTable {
             broadcaster.register(TempTargetsObserver.self, observer: self)
             broadcaster.register(CarbsObserver.self, observer: self)
             broadcaster.register(GlucoseObserver.self, observer: self)
+            maxBolus = provider.pumpSettings().maxBolus
         }
 
         private func setupTreatments() {
@@ -175,7 +180,7 @@ extension DataTable {
             // try? coredataContext.save()
         }
 
-        func addManualGlucose(manualGlucoseDate: Date) {
+        func addManualGlucose() {
             let glucose = units == .mmolL ? manualGlucose.asMgdL : manualGlucose
             let id = UUID().uuidString
 
@@ -192,6 +197,41 @@ extension DataTable {
             )
             provider.glucoseStorage.storeGlucose([saveToJSON])
             debug(.default, "Manual Glucose saved to glucose.json")
+        }
+
+        func addNonPumpInsulin() {
+            print("ADDED INSULIN")
+
+            guard nonPumpInsulinAmount > 0 else {
+                showModal(for: nil)
+                return
+            }
+
+            nonPumpInsulinAmount = min(nonPumpInsulinAmount, maxBolus * 3) // Allow for 3 * Max Bolus for non-pump insulin
+
+            unlockmanager.unlock()
+                .sink { _ in } receiveValue: { [weak self] _ in
+                    guard let self = self else { return }
+                    pumpHistoryStorage.storeEvents(
+                        [
+                            PumpHistoryEvent(
+                                id: UUID().uuidString,
+                                type: .bolus,
+                                timestamp: nonPumpInsulinDate,
+                                amount: nonPumpInsulinAmount,
+                                duration: nil,
+                                durationMin: nil,
+                                rate: nil,
+                                temp: nil,
+                                carbInput: nil,
+                                isNonPumpInsulin: true
+                            )
+                        ]
+                    )
+
+                    // showModal(for: nil)
+                }
+                .store(in: &lifetime)
         }
     }
 }
