@@ -229,7 +229,8 @@ extension DataTable {
                         ]
                     )
 
-                    // showModal(for: nil)
+                    // Reset amount to 0 for next entry.
+                    self.nonPumpInsulinAmount = 0
                 }
                 .store(in: &lifetime)
         }
