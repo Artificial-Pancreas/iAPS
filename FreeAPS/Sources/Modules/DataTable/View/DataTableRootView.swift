@@ -215,11 +215,16 @@ extension DataTable {
 
         private var treatmentsList: some View {
             List {
-                ForEach(state.treatments) { item in
-                    treatmentView(item)
+                if !state.treatments.isEmpty {
+                    ForEach(state.treatments) { item in
+                        treatmentView(item)
+                    }
+                    .onDelete(perform: deleteTreatment)
+                } else {
+                    HStack {
+                        Text("No data.")
+                    }
                 }
-
-                .onDelete(perform: deleteTreatment)
             }
             .alert(isPresented: $isRemoveInsulinAlertPresented) {
                 removeInsulinAlert!
@@ -228,10 +233,16 @@ extension DataTable {
 
         private var mealsList: some View {
             List {
-                ForEach(state.meals) { item in
-                    mealView(item)
+                if !state.meals.isEmpty {
+                    ForEach(state.meals) { item in
+                        mealView(item)
+                    }
+                    .onDelete(perform: deleteMeal)
+                } else {
+                    HStack {
+                        Text("No data.")
+                    }
                 }
-                .onDelete(perform: deleteMeal)
             }
             .alert(isPresented: $isRemoveCarbsAlertPresented) {
                 removeCarbsAlert!
@@ -240,10 +251,16 @@ extension DataTable {
 
         private var glucoseList: some View {
             List {
-                ForEach(state.glucose) { item in
-                    glucoseView(item)
+                if !state.glucose.isEmpty {
+                    ForEach(state.glucose) { item in
+                        glucoseView(item)
+                    }
+                    .onDelete(perform: deleteGlucose)
+                } else {
+                    HStack {
+                        Text("No data.")
+                    }
                 }
-                .onDelete(perform: deleteGlucose)
             }
             .alert(isPresented: $isRemoveGlucoseAlertPresented) {
                 removeGlucoseAlert!
