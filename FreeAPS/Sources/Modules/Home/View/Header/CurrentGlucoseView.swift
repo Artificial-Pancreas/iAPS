@@ -59,10 +59,10 @@ struct CurrentGlucoseView: View {
                 image
             }
             HStack {
-                let minutes = (recentGlucose?.dateString.timeIntervalSinceNow ?? 0) / 60
-                let text = timaAgoFormatter.string(for: Double(minutes)) ?? ""
+                let minutesAgo = -1 * (recentGlucose?.dateString.timeIntervalSinceNow ?? 0) / 60
+                let text = timaAgoFormatter.string(for: Double(minutesAgo)) ?? ""
                 Text(
-                    text == "0" ? "< 1 " + NSLocalizedString("min", comment: "Short form for minutes") : (
+                    minutesAgo <= 1 ? "< 1 " + NSLocalizedString("min", comment: "Short form for minutes") : (
                         text + " " +
                             NSLocalizedString("min", comment: "Short form for minutes") + " "
                     )
