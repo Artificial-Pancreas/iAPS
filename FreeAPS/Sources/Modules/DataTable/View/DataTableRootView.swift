@@ -73,22 +73,20 @@ extension DataTable {
                 trailing: HStack {
                     if state.mode == .treatments && !nonPumpInsulin {
                         Button(action: { nonPumpInsulin = true }) {
-                            Text("Add")
+                            Text("Non-Pump Insulin")
                             Image(systemName: "plus.circle.fill")
                                 .resizable()
                                 .frame(width: 24, height: 24)
                         }
-                        Spacer()
                     }
 
                     if state.mode == .glucose && !newGlucose {
                         Button(action: { newGlucose = true }) {
-                            Text("Add")
+                            Text("Glucose")
                             Image(systemName: "plus.circle.fill")
                                 .resizable()
                                 .frame(width: 24, height: 24)
                         }
-                        Spacer()
                     }
                 }
             )
@@ -174,20 +172,11 @@ extension DataTable {
                         Section {
                             HStack {
                                 Button {
-                                    /*
-                                     if amountWarningCondition
-                                     {
-                                         isInsulinAmountAlertPresented = true
-                                     } else {
-                                         state.addNonPumpInsulin()
-                                         nonPumpInsulin = false
-                                     }
-                                      */
                                     state.addNonPumpInsulin()
                                     nonPumpInsulin = false
                                 }
                                 label: { Text("Log non-pump insulin") }
-                                    .foregroundColor(amountWarningCondition ? .warning : .accentColor)
+                                    .foregroundColor(amountWarningCondition ? Color.white : Color.accentColor)
                                     .frame(maxWidth: .infinity, alignment: .center)
                                     .disabled(
                                         state.nonPumpInsulinAmount <= 0 || state.nonPumpInsulinAmount > state
@@ -201,31 +190,11 @@ extension DataTable {
                                 Text("**⚠️ Warning!** The entered insulin amount is greater than your Max Bolus setting!")
                             }
                         }
+                        .listRowBackground(
+                            amountWarningCondition ? Color
+                                .red : colorScheme == .dark ? Color(UIColor.secondarySystemBackground) : Color.white
+                        )
                     }
-                    /*
-                     .alert(isPresented: $isInsulinAmountAlertPresented) {
-                         let insulinAmount = insulinFormatter.string(from: state.nonPumpInsulinAmount as NSNumber)!
-                         let alertMessage = NSLocalizedString(
-                             "The entered insulin amount is greater than your Max Bolus setting! Are you sure you want to add ",
-                             comment: "Alert"
-                         ) + insulinAmount +
-                             NSLocalizedString(" U", comment: "Insulin unit") + " of non-pump insulin?"
-
-                         return Alert(
-                             title: Text("Warning"),
-                             message: Text(alertMessage),
-                             primaryButton: .destructive(
-                                 Text("Confirm"),
-                                 action: {
-                                     state.addNonPumpInsulin()
-                                     nonPumpInsulin = false
-                                     isInsulinAmountAlertPresented = false
-                                 }
-                             ),
-                             secondaryButton: .cancel()
-                         )
-                     }
-                      */
                 }
                 .onAppear(perform: configureView)
                 .navigationTitle("Add Non-Pump Insulin")
