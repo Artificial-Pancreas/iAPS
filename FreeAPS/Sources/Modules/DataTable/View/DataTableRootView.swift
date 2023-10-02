@@ -139,7 +139,7 @@ extension DataTable {
                 .navigationTitle("Add  Glucose")
                 .navigationBarTitleDisplayMode(.automatic)
                 .navigationBarItems(leading: Button("Close", action: { newGlucose = false
-                    state.nonPumpInsulinAmount = 0 }))
+                    state.manualGlucose = 0 }))
             }
         }
 
@@ -199,7 +199,7 @@ extension DataTable {
                 .onAppear(perform: configureView)
                 .navigationTitle("Add Non-Pump Insulin")
                 .navigationBarTitleDisplayMode(.automatic)
-                .navigationBarItems(leading: Button("Close", action: { nonPumpInsulin = false }))
+                .navigationBarItems(leading: Button("Close", action: { nonPumpInsulin = false; state.nonPumpInsulinAmount = 0 }))
             }
         }
 

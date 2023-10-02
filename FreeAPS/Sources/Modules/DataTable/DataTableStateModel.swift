@@ -197,6 +197,9 @@ extension DataTable {
             )
             provider.glucoseStorage.storeGlucose([saveToJSON])
             debug(.default, "Manual Glucose saved to glucose.json")
+            
+            // Reset amount to 0 for next entry.
+            manualGlucose = 0
         }
 
         func addNonPumpInsulin() {
@@ -228,9 +231,10 @@ extension DataTable {
                             )
                         ]
                     )
+                    debug(.default, "Non-pump insulin saved to pumphistory.json")
 
                     // Reset amount to 0 for next entry.
-                    self.nonPumpInsulinAmount = 0
+                    nonPumpInsulinAmount = 0
                 }
                 .store(in: &lifetime)
         }
