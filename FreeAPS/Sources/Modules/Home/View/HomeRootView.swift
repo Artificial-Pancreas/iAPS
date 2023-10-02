@@ -95,7 +95,7 @@ extension Home {
             .frame(maxWidth: .infinity)
             .padding(.top, 10 + geo.safeAreaInsets.top)
             .padding(.bottom, 10)
-            .background(Color.gray.opacity(0.2))
+            .background(Color.gray.opacity(0.3))
         }
 
         var cobIobView: some View {
@@ -475,17 +475,17 @@ extension Home {
 
         @ViewBuilder private func bottomPanel(_ geo: GeometryProxy) -> some View {
             ZStack {
-                Rectangle().fill(Color.gray.opacity(0.3)).frame(height: 54 + geo.safeAreaInsets.bottom)
+                Rectangle().fill(Color.gray.opacity(0.3)).frame(height: 50 + geo.safeAreaInsets.bottom)
 
                 HStack {
                     Button { state.showModal(for: .addCarbs) }
                     label: {
                         ZStack(alignment: Alignment(horizontal: .trailing, vertical: .bottom)) {
-                            Image(systemName: "fork.knife.circle")
+                            Image("carbs")
                                 .renderingMode(.template)
                                 .resizable()
-                                .frame(width: 30, height: 30)
-                                .foregroundColor(.uam)
+                                .frame(width: 24, height: 24)
+                                .foregroundColor(.loopYellow)
                                 .padding(8)
                             if let carbsReq = state.carbsRequired {
                                 Text(numberFormatter.string(from: carbsReq as NSNumber)!)
@@ -495,14 +495,14 @@ extension Home {
                                     .background(Capsule().fill(Color.red))
                             }
                         }
-                    }.buttonStyle(.plain)
+                    }.buttonStyle(.borderless)
                     Spacer()
                     Button { state.showModal(for: .addTempTarget) }
                     label: {
-                        Image(systemName: "target")
+                        Image("target")
                             .renderingMode(.template)
                             .resizable()
-                            .frame(width: 30, height: 30)
+                            .frame(width: 24, height: 24)
                             .padding(8)
                     }
                     .foregroundColor(.loopGreen)
@@ -510,10 +510,10 @@ extension Home {
                     Spacer()
                     Button { state.showModal(for: .bolus(waitForSuggestion: false)) }
                     label: {
-                        Image(systemName: "drop.circle")
+                        Image("bolus")
                             .renderingMode(.template)
                             .resizable()
-                            .frame(width: 30, height: 30)
+                            .frame(width: 24, height: 24)
                             .padding(8)
                     }
                     .foregroundColor(.insulin)
@@ -522,10 +522,10 @@ extension Home {
                     if state.allowManualTemp {
                         Button { state.showModal(for: .manualTempBasal) }
                         label: {
-                            Image(systemName: "plus.circle")
+                            Image("bolus1")
                                 .renderingMode(.template)
                                 .resizable()
-                                .frame(width: 30, height: 30)
+                                .frame(width: 24, height: 24)
                                 .padding(8)
                         }
                         .foregroundColor(.insulin)
@@ -535,10 +535,10 @@ extension Home {
                     Button { state.showModal(for: .statistics)
                     }
                     label: {
-                        Image(systemName: "chart.line.uptrend.xyaxis.circle")
+                        Image(systemName: "chart.xyaxis.line")
                             .renderingMode(.template)
                             .resizable()
-                            .frame(width: 30, height: 30)
+                            .frame(width: 24, height: 24)
                             .padding(8)
                     }
                     .foregroundColor(.purple)
@@ -546,13 +546,13 @@ extension Home {
                     Spacer()
                     Button { state.showModal(for: .settings) }
                     label: {
-                        Image(systemName: "gearshape.circle")
+                        Image("settings1")
                             .renderingMode(.template)
                             .resizable()
-                            .frame(width: 30, height: 30)
+                            .frame(width: 24, height: 24)
                             .padding(8)
                     }
-                    .foregroundColor(.gray)
+                    .foregroundColor(.loopGray)
                     .buttonStyle(.borderless)
                 }
                 .padding(.horizontal, 24)
