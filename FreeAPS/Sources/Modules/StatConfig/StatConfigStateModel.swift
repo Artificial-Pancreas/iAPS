@@ -2,13 +2,14 @@ import SwiftUI
 
 extension StatConfig {
     final class StateModel: BaseStateModel<Provider> {
-        @Published var overrideHbA1cUnit = false
+        @Published var combineTreatmentsHistory: Bool = false
+        @Published var overrideHbA1cUnit: Bool = false
         @Published var low: Decimal = 4 / 0.0555
         @Published var high: Decimal = 10 / 0.0555
         @Published var hours: Decimal = 6
-        @Published var xGridLines = false
+        @Published var xGridLines: Bool = false
         @Published var yGridLines: Bool = false
-        @Published var oneDimensionalGraph = false
+        @Published var oneDimensionalGraph: Bool = false
         @Published var rulerMarks: Bool = false
 
         var units: GlucoseUnits = .mmolL
@@ -17,6 +18,7 @@ extension StatConfig {
             let units = settingsManager.settings.units
             self.units = units
 
+            subscribeSetting(\.combineTreatmentsHistory, on: $combineTreatmentsHistory) { combineTreatmentsHistory = $0 }
             subscribeSetting(\.overrideHbA1cUnit, on: $overrideHbA1cUnit) { overrideHbA1cUnit = $0 }
             subscribeSetting(\.xGridLines, on: $xGridLines) { xGridLines = $0 }
             subscribeSetting(\.yGridLines, on: $yGridLines) { yGridLines = $0 }

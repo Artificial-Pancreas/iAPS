@@ -116,6 +116,10 @@ enum DataTable {
             self.isNonPump = isNonPump
         }
 
+        func isInFuture() -> Bool {
+            date <= Date()
+        }
+
         static func == (lhs: Treatment, rhs: Treatment) -> Bool {
             lhs.id == rhs.id
         }

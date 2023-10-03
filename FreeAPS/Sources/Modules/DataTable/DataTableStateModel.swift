@@ -10,9 +10,11 @@ extension DataTable {
 
         let coredataContext = CoreDataStack.shared.persistentContainer.viewContext
 
+        @Published var isCombinedTreatments: Bool = false
         @Published var mode: Mode = .treatments
         @Published var treatments: [Treatment] = []
         @Published var meals: [Treatment] = []
+        @Published var filteredEntries: [Treatment] = []
         @Published var glucose: [Glucose] = []
         @Published var manualGlucose: Decimal = 0
         @Published var manualGlucoseDate = Date()
@@ -35,6 +37,8 @@ extension DataTable {
         }
 
         private func setupTreatments() {
+            isCombinedTreatments = settingsManager.settings.combineTreatmentsHistory
+
             DispatchQueue.global().async {
                 let units = self.settingsManager.settings.units
 
@@ -57,6 +61,21 @@ extension DataTable {
 
                 let fpus = self.provider.fpus()
                     .filter { $0.isFPU ?? false }
+                    .map {
+                        Treatment(
+                            units: units,
+                            type: .fpus,
+                            date: $0.createdAt,
+                            amount: $0.carbs,
+                            id: $0.id,
+                            isFPU: $0.isFPU,
+                            fpuID: $0.fpuID,
+                            note: $0.note
+                        )
+                    }
+
+                let fpusFiltered = self.provider.fpus()
+                    .filter { $0.isFPU ?? false && $0.createdAt <= Date() }
                     .map {
                         Treatment(
                             units: units,
@@ -126,12 +145,26 @@ extension DataTable {
                     }
 
                 DispatchQueue.main.async {
-                    self.treatments = [boluses, tempBasals, tempTargets, suspend, resume]
-                        .flatMap { $0 }
-                        .sorted { $0.date > $1.date }
-                    self.meals = [carbs, fpus]
-                        .flatMap { $0 }
-                        .sorted { $0.date > $1.date }
+                    if self.isCombinedTreatments {
+                        self.treatments = [boluses, tempBasals, tempTargets, suspend, resume, carbs, fpus]
+                            .flatMap { $0 }
+                            .sorted { $0.date > $1.date }
+                        self.filteredEntries = [boluses, tempBasals, tempTargets, suspend, resume, carbs, fpusFiltered]
+                            .flatMap { $0 }
+                            .sorted { $0.date > $1.date }
+                            .filter { $0.date <= Date() }
+                    } else {
+                        self.treatments = [boluses, tempBasals, tempTargets, suspend, resume]
+                            .flatMap { $0 }
+                            .sorted { $0.date > $1.date }
+                        self.meals = [carbs, fpus]
+                            .flatMap { $0 }
+                            .sorted { $0.date > $1.date }
+                        self.filteredEntries = [carbs, fpusFiltered]
+                            .flatMap { $0 }
+                            .sorted { $0.date > $1.date }
+                            .filter { $0.date <= Date() }
+                    }
                 }
             }
         }
@@ -197,7 +230,7 @@ extension DataTable {
             )
             provider.glucoseStorage.storeGlucose([saveToJSON])
             debug(.default, "Manual Glucose saved to glucose.json")
-            
+
             // Reset amount to 0 for next entry.
             manualGlucose = 0
         }

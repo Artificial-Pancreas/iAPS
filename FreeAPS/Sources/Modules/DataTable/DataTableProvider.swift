@@ -8,6 +8,7 @@ extension DataTable {
         @Injected() var carbsStorage: CarbsStorage!
         @Injected() var nightscoutManager: NightscoutManager!
         @Injected() var healthkitManager: HealthKitManager!
+        @Injected() var settingsManager: SettingsManager!
 
         func pumpHistory() -> [PumpHistoryEvent] {
             pumpHistoryStorage.recent()

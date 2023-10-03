@@ -49,5 +49,6 @@
   "enableSMB_high_bg" : false,
   "enableSMB_high_bg_target" : 110,
   "threshold_setting" : 65,
-  "updateInterval" : 20
+  "updateInterval" : 20,
+  "combineTreatmentsHistory" : false
 }

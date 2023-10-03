@@ -7,6 +7,8 @@ extension DataTable {
         let resolver: Resolver
         @StateObject var state = StateModel()
 
+        @State private var isRemoveCombinedTreatmentAlertPresented = false
+        @State private var removeCombinedTreatmentAlert: Alert?
         @State private var isRemoveCarbsAlertPresented = false
         @State private var removeCarbsAlert: Alert?
         @State private var isRemoveInsulinAlertPresented = false
@@ -16,7 +18,8 @@ extension DataTable {
         @State private var removeGlucoseAlert: Alert?
         @State private var showManualGlucose: Bool = false
         @State private var showNonPumpInsulin: Bool = false
-        @State private var showFutureEntries: Bool = false
+        @State private var showFutureEntries: Bool =
+            true // false TODO: fix filtering of future entries OR rework treatment for to show MEALS not carbs + FPU
 
         @Environment(\.colorScheme) var colorScheme
 
@@ -53,25 +56,21 @@ extension DataTable {
             return formatter
         }
 
-        var futureEntryBtn: some View {
-            Button(action: { showFutureEntries.toggle() }, label: {
-                Text((showFutureEntries ? "Hide" : "Show") + " Future Entries").foregroundColor(Color.white)
-                    .font(.caption)
-                Image(systemName: showFutureEntries ? "calendar.badge.minus" : "calendar.badge.plus")
-                    .resizable()
-                    .frame(width: 18, height: 18)
-                    .foregroundColor(Color.white)
-            })
-                .padding(.trailing, 20)
-                .offset(x: 0, y: -50)
-        }
-
         var body: some View {
             VStack {
                 Picker("Mode", selection: $state.mode) {
-                    ForEach(Mode.allCases.indexed(), id: \.1) { index, item in
-                        Text(item.name)
-                            .tag(index)
+                    if state.isCombinedTreatments {
+                        ForEach(Mode.allCases.indexed(), id: \.1) { index, item in
+                            if item != .meals {
+                                Text(item.name)
+                                    .tag(index)
+                            }
+                        }
+                    } else {
+                        ForEach(Mode.allCases.indexed(), id: \.1) { index, item in
+                            Text(item.name)
+                                .tag(index)
+                        }
                     }
                 }
                 .pickerStyle(SegmentedPickerStyle())
@@ -93,17 +92,11 @@ extension DataTable {
                                 .frame(width: 24, height: 24)
                         }
                     }
-                    if state.mode == .meals {
-                        Button(action: { showFutureEntries.toggle() }, label: {
-                            Text(showFutureEntries ? "Hide Future Entries" : "Show Future Entries")
-                                .foregroundColor(colorScheme == .dark ? Color.white : Color.black)
-                                .font(.caption)
-                            Image(systemName: showFutureEntries ? "calendar.badge.minus" : "calendar.badge.plus")
-                                .resizable()
-                                .frame(width: 18, height: 18)
-                                .foregroundColor(colorScheme == .dark ? Color.white : Color.black)
-                        }).buttonStyle(.bordered)
-                    }
+                    /*
+                     if state.mode == .meals, !state.isCombinedTreatments {
+                         filterFutureEntriesButton
+                     }
+                      */
                     if state.mode == .glucose && !showManualGlucose {
                         Button(action: { showManualGlucose = true }) {
                             Text("Glucose")
@@ -228,12 +221,43 @@ extension DataTable {
             }
         }
 
+        private var filterFutureEntriesButton: some View {
+            VStack {
+                Button(action: { showFutureEntries.toggle() }, label: {
+                    HStack {
+                        Text(showFutureEntries ? "Hide Future Entries" : "Show Future Entries")
+                            .foregroundColor(colorScheme == .dark ? Color.white : Color.black)
+                            .font(.caption)
+                        Image(systemName: showFutureEntries ? "calendar.badge.minus" : "calendar.badge.plus")
+                            .resizable()
+                            .frame(width: 18, height: 18)
+                            .foregroundColor(colorScheme == .dark ? Color.white : Color.black)
+                    }.frame(maxWidth: .infinity, alignment: .center)
+                }).buttonStyle(.bordered)
+
+                Spacer()
+            }
+        }
+
         private var historyContentView: some View {
             Form {
-                switch state.mode {
-                case .treatments: treatmentsList
-                case .meals: mealsList
-                case .glucose: glucoseList
+                Section(
+                    //  header: state.isCombinedTreatments && state.mode == .treatments ? filterFutureEntriesButton : nil
+                ) {
+                    // populate the list
+                    if state.isCombinedTreatments {
+                        switch state.mode {
+                        case .treatments: combinedTreatmentsList
+                        case .meals: EmptyView()
+                        case .glucose: glucoseList
+                        }
+                    } else {
+                        switch state.mode {
+                        case .treatments: treatmentsList
+                        case .meals: mealsList
+                        case .glucose: glucoseList
+                        }
+                    }
                 }
             }
         }
@@ -253,6 +277,37 @@ extension DataTable {
             }
             .alert(isPresented: $isRemoveInsulinAlertPresented) {
                 removeInsulinAlert!
+            }
+        }
+
+        private var combinedTreatmentsList: some View {
+            List {
+                ForEach(!showFutureEntries ? state.filteredEntries : state.treatments) { treatment in
+                    combinedTreatmentView(treatment)
+                }
+                .onDelete(perform: deleteTreatmentForCombined)
+                /*
+                 if !showFutureEntries {
+                     // use filteredEntries here -> filtered in StateModel
+
+                     /*
+                     ForEach(state.filteredEntries.filter { treatment in
+                         treatment.date <= Date()
+                     }, id: \.self) { treatment in
+                         combinedTreatmentView(treatment)
+                     }
+                     .onDelete(perform: deleteTreatmentForCombined)
+                     */
+                 } else {
+                     ForEach(state.treatments) { treatment in
+                         combinedTreatmentView(treatment)
+                     }
+                     .onDelete(perform: deleteTreatmentForCombined)
+                 }
+                  */
+            }
+            .alert(isPresented: $isRemoveCombinedTreatmentAlertPresented) {
+                removeCombinedTreatmentAlert!
             }
         }
 
@@ -299,6 +354,23 @@ extension DataTable {
             }
             .alert(isPresented: $isRemoveGlucoseAlertPresented) {
                 removeGlucoseAlert!
+            }
+        }
+
+        @ViewBuilder private func combinedTreatmentView(_ treatment: Treatment) -> some View {
+            HStack {
+                Image(systemName: "circle.fill").foregroundColor(treatment.color)
+                Text((treatment.isSMB ?? false) ? "SMB" : treatment.type.name)
+                Text(treatment.amountText).foregroundColor(.secondary)
+
+                if let duration = treatment.durationText {
+                    Text(duration).foregroundColor(.secondary)
+                }
+
+                Spacer()
+
+                Text(dateFormatter.string(from: treatment.date))
+                    .moveDisabled(true)
             }
         }
 
@@ -397,6 +469,61 @@ extension DataTable {
             )
 
             isRemoveCarbsAlertPresented = true
+        }
+
+        private func deleteTreatmentForCombined(at offsets: IndexSet) {
+            let treatment = state.treatments[offsets[offsets.startIndex]]
+            var alertTitle = ""
+            var alertMessage = ""
+
+            if treatment.type == .carbs || treatment.type == .fpus {
+                if treatment.type == .fpus {
+                    let fpus = state.treatments
+                    let carbEquivalents = fpuFormatter.string(from: Double(
+                        fpus.filter { fpu in
+                            fpu.fpuID == treatment.fpuID
+                        }
+                        .map { fpu in
+                            fpu.amount ?? 0 }
+                        .reduce(0, +)
+                    ) as NSNumber)!
+
+                    alertTitle = "Delete Carb Equivalents?"
+                    alertMessage = carbEquivalents + NSLocalizedString(" g", comment: "gram of carbs")
+                }
+
+                if treatment.type == .carbs {
+                    alertTitle = "Delete Carbs?"
+                    alertMessage = treatment.amountText
+                }
+
+                removeCombinedTreatmentAlert = Alert(
+                    title: Text(alertTitle),
+                    message: Text(alertMessage),
+                    primaryButton: .destructive(
+                        Text("Delete"),
+                        action: { state.deleteCarbs(treatment) }
+                    ),
+                    secondaryButton: .cancel()
+                )
+            } else {
+                // treatment is .bolus
+
+                alertTitle = "Delete Insulin?"
+                alertMessage = treatment.amountText
+
+                removeCombinedTreatmentAlert = Alert(
+                    title: Text(alertTitle),
+                    message: Text(alertMessage),
+                    primaryButton: .destructive(
+                        Text("Delete"),
+                        action: { state.deleteInsulin(treatment) }
+                    ),
+                    secondaryButton: .cancel()
+                )
+            }
+
+            isRemoveCombinedTreatmentAlertPresented = true
         }
 
         private func deleteGlucose(at offsets: IndexSet) {

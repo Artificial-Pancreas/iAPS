@@ -33,6 +33,7 @@ struct FreeAPSSettings: JSON, Equatable {
     var useAppleHealth: Bool = false
     var smoothGlucose: Bool = false
     var displayOnWatch: AwConfig = .BGTarget
+    var combineTreatmentsHistory: Bool = false
     var overrideHbA1cUnit: Bool = false
     var high: Decimal = 145
     var low: Decimal = 70
@@ -216,6 +217,10 @@ extension FreeAPSSettings: Decodable {
 
         if let rulerMarks = try? container.decode(Bool.self, forKey: .rulerMarks) {
             settings.rulerMarks = rulerMarks
+        }
+
+        if let combineTreatmentsHistory = try? container.decode(Bool.self, forKey: .combineTreatmentsHistory) {
+            settings.combineTreatmentsHistory = combineTreatmentsHistory
         }
 
         if let overrideHbA1cUnit = try? container.decode(Bool.self, forKey: .overrideHbA1cUnit) {

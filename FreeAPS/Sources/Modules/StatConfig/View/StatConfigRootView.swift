@@ -27,6 +27,7 @@ extension StatConfig {
         var body: some View {
             Form {
                 Section(header: Text("Settings")) {
+                    Toggle("Combine Treatments in History", isOn: $state.combineTreatmentsHistory)
                     Toggle("Change HbA1c Unit", isOn: $state.overrideHbA1cUnit)
                     Toggle("Display Chart X - Grid lines", isOn: $state.xGridLines)
                     Toggle("Display Chart Y - Grid lines", isOn: $state.yGridLines)
