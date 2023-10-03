@@ -10,7 +10,6 @@ extension DataTable {
 
         let coredataContext = CoreDataStack.shared.persistentContainer.viewContext
 
-        @Published var isCombinedTreatments: Bool = false
         @Published var mode: Mode = .treatments
         @Published var treatments: [Treatment] = []
         @Published var meals: [Treatment] = []
@@ -23,9 +22,11 @@ extension DataTable {
         @Published var nonPumpInsulinDate = Date()
 
         var units: GlucoseUnits = .mmolL
+        var isCombinedTreatments: Bool = false
 
         override func subscribe() {
             units = settingsManager.settings.units
+            isCombinedTreatments = settingsManager.settings.combineTreatmentsHistory
             setupTreatments()
             setupGlucose()
             broadcaster.register(SettingsObserver.self, observer: self)
