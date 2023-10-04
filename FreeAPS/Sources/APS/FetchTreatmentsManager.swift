@@ -20,8 +20,6 @@ final class BaseFetchTreatmentsManager: FetchTreatmentsManager, Injectable {
     }
 
     private func subscribe() {
-        nightscoutManager.fetchProfile()
-
         timer.publisher
             .receive(on: processQueue)
             .flatMap { _ -> AnyPublisher<([CarbsEntry], [TempTarget]), Never> in

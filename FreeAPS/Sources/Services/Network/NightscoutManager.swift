@@ -6,9 +6,9 @@ import UIKit
 
 protocol NightscoutManager: GlucoseSource {
     func fetchGlucose(since date: Date) -> AnyPublisher<[BloodGlucose], Never>
+    func importSettings()
     func fetchCarbs() -> AnyPublisher<[CarbsEntry], Never>
     func fetchTempTargets() -> AnyPublisher<[TempTarget], Never>
-    func fetchProfile()
     func fetchAnnouncements() -> AnyPublisher<[Announcement], Never>
     func deleteCarbs(at date: Date, isFPU: Bool?, fpuID: String?, syncID: String)
     func deleteInsulin(at date: Date)
@@ -519,16 +519,6 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
         }
     }
 
-    func fetchProfile() {
-        // let uploadedProfile = storage.retrieve(OpenAPS.Nightscout.uploadedProfile, as: NightscoutProfileStore.self)
-        guard let nightscout = nightscoutAPI, isNetworkReachable, isUploadEnabled else {
-            return
-        }
-        processQueue.async {
-            nightscout.fetchProfile()
-        }
-    }
-
     func uploadGlucose() {
         uploadGlucose(glucoseStorage.nightscoutGlucoseNotUploaded(), fileToSave: OpenAPS.Nightscout.uploadedGlucose)
         uploadTreatments(glucoseStorage.nightscoutCGMStateNotUploaded(), fileToSave: OpenAPS.Nightscout.uploadedCGMState)
@@ -603,6 +593,15 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
                     }
                 } receiveValue: {}
                 .store(in: &self.lifetime)
+        }
+    }
+
+    func importSettings() {
+        guard let nightscout = nightscoutAPI, isNetworkReachable else {
+            return
+        }
+        processQueue.async {
+            nightscout.importSettings()
         }
     }
 }
