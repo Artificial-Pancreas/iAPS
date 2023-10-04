@@ -17,9 +17,9 @@ protocol NightscoutManager: GlucoseSource {
     func uploadGlucose()
     func uploadProfile()
 
-    var isStatisticsUploaded: Bool { get }
-    var isPreferencesUploaded: Bool { get }
-    var isProfileUploaded: Bool { get }
+    var isStatisticsUploaded: Int { get }
+    var isPreferencesUploaded: Int { get }
+    var isProfileUploaded: Int { get }
 
     var cgmURL: URL? { get }
 }
@@ -37,9 +37,9 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
     @Injected() private var reachabilityManager: ReachabilityManager!
     @Injected() var healthkitManager: HealthKitManager!
 
-    @Published var isStatisticsUploaded: Bool = false
-    @Published var isPreferencesUploaded: Bool = false
-    @Published var isProfileUploaded: Bool = false
+    @Published var isStatisticsUploaded: Int = -1
+    @Published var isPreferencesUploaded: Int = -1
+    @Published var isProfileUploaded: Int = -1
 
     private let processQueue = DispatchQueue(label: "BaseNetworkManager.processQueue")
     private var ping: TimeInterval?
@@ -269,15 +269,17 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
             return
         }
 
+        isStatisticsUploaded = -1
         processQueue.async {
             nightscout.uploadStats(stats)
                 .sink { completion in
                     switch completion {
                     case .finished:
                         debug(.nightscout, "Statistics uploaded")
-                        self.isStatisticsUploaded = true
+                        self.isStatisticsUploaded = 0
                     case let .failure(error):
                         debug(.nightscout, error.localizedDescription)
+                        self.isStatisticsUploaded = 1
                     }
                 } receiveValue: {}
                 .store(in: &self.lifetime)
@@ -294,15 +296,17 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
             return
         }
 
+        isPreferencesUploaded = -1
         processQueue.async {
             nightscout.uploadPrefs(prefs)
                 .sink { completion in
                     switch completion {
                     case .finished:
                         debug(.nightscout, "Preferences uploaded")
-                        self.isPreferencesUploaded = true
+                        self.isPreferencesUploaded = 0
                     case let .failure(error):
                         debug(.nightscout, error.localizedDescription)
+                        self.isPreferencesUploaded = 1
                     }
                 } receiveValue: {}
                 .store(in: &self.lifetime)
@@ -423,6 +427,7 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
         else {
             debug(.nightscout, "uploadProfile: Not all settings found to build profile!")
             NSLog("NightscoutManager uploadProfile Not all settings found to build profile!")
+            isProfileUploaded = 1
             return
         }
 
@@ -519,6 +524,8 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
         guard let nightscout = nightscoutAPI, isNetworkReachable, isUploadEnabled else {
             return
         }
+
+        isProfileUploaded = -1
         processQueue.async {
             nightscout.uploadProfile(p)
                 .sink { completion in
@@ -526,9 +533,10 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
                     case .finished:
                         self.storage.save(p, as: OpenAPS.Nightscout.uploadedProfile)
                         debug(.nightscout, "Profile uploaded")
-                        self.isProfileUploaded = true
+                        self.isProfileUploaded = 0
                     case let .failure(error):
                         debug(.nightscout, error.localizedDescription)
+                        self.isProfileUploaded = 1
                     }
                 } receiveValue: {}
                 .store(in: &self.lifetime)
