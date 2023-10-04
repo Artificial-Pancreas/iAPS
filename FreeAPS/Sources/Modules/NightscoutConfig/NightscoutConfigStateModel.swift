@@ -81,15 +81,22 @@ extension NightscoutConfig {
             nightscoutManager.uploadProfile()
             apsManager.statistics(forceRun: true)
 
-            if nightscoutManager.isStatisticsUploaded {
+            while nightscoutManager.isStatisticsUploaded == -1 ||
+                nightscoutManager.isPreferencesUploaded == -1 ||
+                nightscoutManager.isProfileUploaded == -1
+            {
+                sleep(1)
+            }
+
+            if nightscoutManager.isStatisticsUploaded == 0 {
                 isStatisticsUploadOK = true
             }
 
-            if nightscoutManager.isPreferencesUploaded {
+            if nightscoutManager.isPreferencesUploaded == 0 {
                 isPreferencesUploadOK = true
             }
 
-            if nightscoutManager.isProfileUploaded {
+            if nightscoutManager.isProfileUploaded == 0 {
                 isProfileUploadOK = true
             }
         }
