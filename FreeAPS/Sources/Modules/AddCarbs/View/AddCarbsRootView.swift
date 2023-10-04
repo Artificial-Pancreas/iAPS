@@ -179,28 +179,28 @@ extension AddCarbs {
                     }
                 }
                 HStack {
-                    Button {
+                    Button("Delete Preset") {
                         showAlert.toggle()
-                    } label: { Image(systemName: "trash") }
-                        .disabled(state.selection == nil)
-                        .accentColor(.orange)
-                        .buttonStyle(BorderlessButtonStyle())
-                        .alert(
-                            "Delete preset '\(state.selection?.dish ?? "")'?",
-                            isPresented: $showAlert,
-                            actions: {
-                                Button("No", role: .cancel) {}
-                                Button("Yes", role: .destructive) {
-                                    state.deletePreset()
+                    }
+                    .disabled(state.selection == nil)
+                    .accentColor(.orange)
+                    .buttonStyle(BorderlessButtonStyle())
+                    .alert(
+                        "Delete preset '\(state.selection?.dish ?? "")'?",
+                        isPresented: $showAlert,
+                        actions: {
+                            Button("No", role: .cancel) {}
+                            Button("Yes", role: .destructive) {
+                                state.deletePreset()
 
-                                    state.carbs += ((state.selection?.carbs ?? 0) as NSDecimalNumber) as Decimal
-                                    state.fat += ((state.selection?.fat ?? 0) as NSDecimalNumber) as Decimal
-                                    state.protein += ((state.selection?.protein ?? 0) as NSDecimalNumber) as Decimal
+                                state.carbs += ((state.selection?.carbs ?? 0) as NSDecimalNumber) as Decimal
+                                state.fat += ((state.selection?.fat ?? 0) as NSDecimalNumber) as Decimal
+                                state.protein += ((state.selection?.protein ?? 0) as NSDecimalNumber) as Decimal
 
-                                    state.addPresetToNewMeal()
-                                }
+                                state.addPresetToNewMeal()
                             }
-                        )
+                        }
+                    )
                     Button {
                         if state.carbs != 0,
                            (state.carbs - (((state.selection?.carbs ?? 0) as NSDecimalNumber) as Decimal) as Decimal) >= 0
@@ -223,7 +223,7 @@ extension AddCarbs {
                         state.removePresetFromNewMeal()
                         if state.carbs == 0, state.fat == 0, state.protein == 0 { state.summation = [] }
                     }
-                    label: { Image(systemName: "minus") }
+                    label: { Text("[ -1 ]") }
                         .disabled(
                             state
                                 .selection == nil ||
@@ -233,7 +233,7 @@ extension AddCarbs {
                         )
                         .buttonStyle(BorderlessButtonStyle())
                         .frame(maxWidth: .infinity, alignment: .trailing)
-                        .accentColor(.orange)
+                        .accentColor(.minus)
                     Button {
                         state.carbs += ((state.selection?.carbs ?? 0) as NSDecimalNumber) as Decimal
                         state.fat += ((state.selection?.fat ?? 0) as NSDecimalNumber) as Decimal
@@ -241,11 +241,10 @@ extension AddCarbs {
 
                         state.addPresetToNewMeal()
                     }
-                    label: { Image(systemName: "plus") }
+                    label: { Text("[ +1 ]") }
                         .disabled(state.selection == nil)
                         .buttonStyle(BorderlessButtonStyle())
-                        .accentColor(.green)
-                        .padding(.leading)
+                        .accentColor(.blue)
                 }
             }
         }
