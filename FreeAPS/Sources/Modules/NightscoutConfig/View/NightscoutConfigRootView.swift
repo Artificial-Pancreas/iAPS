@@ -6,6 +6,9 @@ extension NightscoutConfig {
         let resolver: Resolver
         @StateObject var state = StateModel()
 
+        @State var isImportAlertPresented: Bool = false
+        @State var importAlert: Alert?
+
         private var portFormater: NumberFormatter {
             let formatter = NumberFormatter()
             formatter.allowsFloats = false
@@ -53,6 +56,22 @@ extension NightscoutConfig {
                     Text("Allow Uploads")
                 }
 
+                Section {
+                    Button("Import Settings from Nightscout") {
+                        importAlert = Alert(
+                            title: Text("Import Settings?"),
+                            message: Text("This will replace your current pump settings"),
+                            primaryButton: .destructive(
+                                Text("Import"),
+                                action: { state.importSettings() }
+                            ),
+                            secondaryButton: .cancel()
+                        )
+                        isImportAlertPresented.toggle()
+                    }.disabled(state.url.isEmpty)
+
+                } header: { Text("Import from Nightscout") }
+
                 Section(header: Text("Local glucose source")) {
                     Toggle("Use local glucose server", isOn: $state.useLocalSource)
                     HStack {
@@ -69,6 +88,9 @@ extension NightscoutConfig {
             .onAppear(perform: configureView)
             .navigationBarTitle("Nightscout Config")
             .navigationBarTitleDisplayMode(.automatic)
+            .alert(isPresented: $isImportAlertPresented) {
+                importAlert!
+            }
         }
     }
 }
