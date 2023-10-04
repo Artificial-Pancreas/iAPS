@@ -27,6 +27,8 @@ class NightscoutAPI {
     let secret: String?
 
     private let service = NetworkService()
+
+    @Injected() private var storage: FileStorage!
 }
 
 extension NightscoutAPI {
@@ -135,6 +137,33 @@ extension NightscoutAPI {
                 return Just([]).setFailureType(to: Swift.Error.self).eraseToAnyPublisher()
             }
             .eraseToAnyPublisher()
+    }
+
+    func importSettings() {
+        var components = URLComponents()
+        components.scheme = url.scheme
+        components.host = url.host
+        components.port = url.port
+        components.path = Config.profilePath
+        components.queryItems = [
+            URLQueryItem(name: "count", value: "1")
+        ]
+        
+        var url = URLRequest(url: components.url!)
+        url.allowsConstrainedNetworkAccess = false
+        url.timeoutInterval = Config.timeout
+
+        if let secret = secret {
+            url.addValue(secret.sha1(), forHTTPHeaderField: "api-secret")
+        }
+
+        let task = URLSession.shared.dataTask(with: url) {
+            data, _, _ in
+            if let data = data, let string = String(data: data, encoding: .utf8) {
+                print("Fetched Profile: " + string)
+            }
+        }
+        task.resume()
     }
 
     func deleteCarbs(at date: Date) -> AnyPublisher<Void, Swift.Error> {

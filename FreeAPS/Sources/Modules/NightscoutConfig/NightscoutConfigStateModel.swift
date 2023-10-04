@@ -17,6 +17,7 @@ extension NightscoutConfig {
         @Published var message = ""
         @Published var connecting = false
         @Published var backfilling = false
+        @Published var importing = false
         @Published var isUploadEnabled = false // Allow uploads
         @Published var uploadStats = false // Upload Statistics
         @Published var uploadGlucose = true // Upload Glucose
@@ -82,6 +83,11 @@ extension NightscoutConfig {
                     self.glucoseStorage.storeGlucose(glucose)
                 }
                 .store(in: &lifetime)
+        }
+
+        func importSetttings() {
+            importing = true
+            nightscoutManager.importSettings()
         }
 
         func delete() {
