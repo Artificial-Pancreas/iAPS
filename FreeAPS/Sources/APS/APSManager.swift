@@ -711,6 +711,15 @@ final class BaseAPSManager: APSManager, Injectable {
 
             storage.save(enacted, as: OpenAPS.Enact.enacted)
 
+            // Save to CoreData also. TO DO: Remove the JSON saving after some testing.
+            coredataContext.perform {
+                let saveLastLoop = LastLoop(context: self.coredataContext)
+                saveLastLoop.iob = (enacted.iob ?? 0) as NSDecimalNumber
+                saveLastLoop.cob = (enacted.cob ?? 0) as NSDecimalNumber
+                saveLastLoop.timestamp = (enacted.timestamp ?? .distantPast) as Date
+                try? self.coredataContext.save()
+            }
+
             debug(.apsManager, "Suggestion enacted. Received: \(received)")
             DispatchQueue.main.async {
                 self.broadcaster.notify(EnactedSuggestionObserver.self, on: .main) {
@@ -1237,7 +1246,7 @@ private extension PumpManager {
                     debug(.apsManager, "Temp basal failed: \(unitsPerHour) for: \(duration)")
                     promise(.failure(error))
                 } else {
-                    debug(.apsManager, "Temp basal succeded: \(unitsPerHour) for: \(duration)")
+                    debug(.apsManager, "Temp basal succeeded: \(unitsPerHour) for: \(duration)")
                     promise(.success(nil))
                 }
             }
@@ -1256,7 +1265,7 @@ private extension PumpManager {
                     debug(.apsManager, "Bolus failed: \(units)")
                     promise(.failure(error))
                 } else {
-                    debug(.apsManager, "Bolus succeded: \(units)")
+                    debug(.apsManager, "Bolus succeeded: \(units)")
                     promise(.success(nil))
                 }
             }
@@ -1270,7 +1279,7 @@ private extension PumpManager {
             self.cancelBolus { result in
                 switch result {
                 case let .success(dose):
-                    debug(.apsManager, "Cancel Bolus succeded")
+                    debug(.apsManager, "Cancel Bolus succeeded")
                     promise(.success(dose))
                 case let .failure(error):
                     debug(.apsManager, "Cancel Bolus failed")
