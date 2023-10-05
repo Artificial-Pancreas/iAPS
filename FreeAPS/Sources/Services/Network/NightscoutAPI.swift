@@ -29,6 +29,7 @@ class NightscoutAPI {
     private let service = NetworkService()
 
     @Injected() private var storage: FileStorage!
+    @Injected() private var settingsManager: SettingsManager!
 }
 
 extension NightscoutAPI {
@@ -179,17 +180,68 @@ extension NightscoutAPI {
                let data = data
             {
                 do {
-                    let rawFetchedProfile = try jsonDecoder.decode([RawFetchedProfile].self, from: data)
-                    print("Fetched RAW profile:", rawFetchedProfile)
-                    print(
-                        "#############################################\n#############################################\n#############################################"
+                    let fetchedProfileStore = try jsonDecoder.decode([FetchedNightscoutProfileStore].self, from: data)
+
+                    guard let fetchedProfile: ScheduledNightscoutProfile = fetchedProfileStore.first?.store["default"]
+                    else { return }
+
+                    print("Fetched Profile: ", fetchedProfile)
+
+                    let glucoseUnits = fetchedProfile.units == GlucoseUnits.mmolL.rawValue ? GlucoseUnits.mmolL : GlucoseUnits
+                        .mgdL
+
+                    let carbratios = fetchedProfile.carbratio
+                        .map { carbratio -> CarbRatioEntry in
+                            CarbRatioEntry(
+                                start: carbratio.time,
+                                offset: carbratio.timeAsSeconds,
+                                ratio: carbratio.value
+                            ) }
+                    let carbratiosProfile = CarbRatios(units: CarbUnit.grams, schedule: carbratios)
+
+                    let basals = fetchedProfile.basal
+                        .map { basal -> BasalProfileEntry in
+                            BasalProfileEntry(
+                                start: basal.time,
+                                minutes: basal.timeAsSeconds,
+                                rate: basal.value
+                            ) }
+
+                    let sensitivities = fetchedProfile.sens.map { sensitivity -> InsulinSensitivityEntry in
+                        InsulinSensitivityEntry(
+                            sensitivity: sensitivity.value,
+                            offset: sensitivity.timeAsSeconds,
+                            start: sensitivity.time
+                        ) }
+                    let sensitivitiesProfile = InsulinSensitivities(
+                        units: glucoseUnits,
+                        userPrefferedUnits: glucoseUnits,
+                        sensitivities: sensitivities
                     )
 
-                    for entry in rawFetchedProfile {
-                        print(entry)
-                        
-                        // store parsed in basal_profile.json, carb_ratios.json, insulin_sensitivities.json
-                    }
+                    // iAPS does not have target ranges but a simple target glucose; targets will therefore adhere to target_low.value == target_high.value
+                    // => this is the reasoning for only using target_low here
+                    let targets = fetchedProfile.target_low
+                        .map { target -> BGTargetEntry in
+                            BGTargetEntry(
+                                low: target.value,
+                                high: target.value,
+                                start: target.time,
+                                offset: target.timeAsSeconds
+                            ) }
+                    let targetsProfile = BGTargets(
+                        units: glucoseUnits,
+                        userPrefferedUnits: glucoseUnits,
+                        targets: targets
+                    )
+
+                    self.storage.save(carbratiosProfile, as: OpenAPS.Settings.carbRatios)
+                    self.storage.save(basals, as: OpenAPS.Settings.basalProfile)
+                    self.storage.save(sensitivitiesProfile, as: OpenAPS.Settings.insulinSensitivities)
+                    self.storage.save(targetsProfile, as: OpenAPS.Settings.bgTargets)
+
+                    // TODO: refactor all of the above and probably move it to NightscoutManager
+
                 } catch let parsingError {
                     print(parsingError)
                 }
