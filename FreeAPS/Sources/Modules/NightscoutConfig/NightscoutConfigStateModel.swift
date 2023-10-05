@@ -17,12 +17,13 @@ extension NightscoutConfig {
         @Published var message = ""
         @Published var connecting = false
         @Published var backfilling = false
-        @Published var importing = false // Allow Setting Importss
+        @Published var imported = false // Allow Setting Importss
         @Published var isUploadEnabled = false // Allow uploads
         @Published var uploadStats = false // Upload Statistics
         @Published var uploadGlucose = true // Upload Glucose
         @Published var useLocalSource = false
         @Published var localPort: Decimal = 0
+        @Published var fetched: RawFetchedProfile?
 
         override func subscribe() {
             url = keychain.getValue(String.self, forKey: Config.urlKey) ?? ""
@@ -70,9 +71,12 @@ extension NightscoutConfig {
         }
 
         func importSettings() {
-            importing = true
             nightscoutManager.importSettings()
+            imported = true
+            saveSettings()
         }
+
+        func saveSettings() {}
 
         func backfillGlucose() {
             backfilling = true

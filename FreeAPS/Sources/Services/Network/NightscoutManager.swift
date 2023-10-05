@@ -601,9 +601,9 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
         guard let nightscout = nightscoutAPI, isNetworkReachable else {
             return
         }
-        processQueue.async {
-            nightscout.importSettings()
-        }
+        // processQueue.async {
+        nightscout.importSettings()
+        // }
     }
 }
 

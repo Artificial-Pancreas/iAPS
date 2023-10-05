@@ -1,6 +1,7 @@
 import Combine
 import CommonCrypto
 import Foundation
+import JavaScriptCore
 
 class NightscoutAPI {
     init(url: URL, secret: String? = nil) {
@@ -173,23 +174,24 @@ extension NightscoutAPI {
                 return
             }
 
-            let jsonDecoder = JSONDecoder()
+            let jsonDecoder = JSONCoding.decoder
 
             if let mimeType = httpResponse.mimeType, mimeType == "application/json",
                let data = data
             {
                 do {
                     let rawFetchedProfile = try jsonDecoder.decode([RawFetchedProfile].self, from: data)
-                    print("Fetched RAW profile:", rawFetchedProfile)
+
+                    let isf = rawFetchedProfile.map(\.store.default.sens)
+                    let cr = rawFetchedProfile.map(\.store.default.carbratio)
+
+                    // Test
                     print(
-                        "#############################################\n#############################################\n#############################################"
+                        "Fetched Profile ISF: " + isf.description + ",  CR: " + cr.description
                     )
 
-                    for entry in rawFetchedProfile {
-                        print(entry)
-                        
-                        // store parsed in basal_profile.json, carb_ratios.json, insulin_sensitivities.json
-                    }
+                    // To do: store parsed in basal_profile.json, carb_ratios.json, insulin_sensitivities.json
+
                 } catch let parsingError {
                     print(parsingError)
                 }
