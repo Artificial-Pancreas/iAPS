@@ -1,6 +1,7 @@
 import Combine
 import CommonCrypto
 import Foundation
+import JavaScriptCore
 
 class NightscoutAPI {
     init(url: URL, secret: String? = nil) {
@@ -148,7 +149,7 @@ extension NightscoutAPI {
         components.queryItems = [
             URLQueryItem(name: "count", value: "1")
         ]
-        
+
         var url = URLRequest(url: components.url!)
         url.allowsConstrainedNetworkAccess = false
         url.timeoutInterval = Config.timeout
@@ -157,10 +158,43 @@ extension NightscoutAPI {
             url.addValue(secret.sha1(), forHTTPHeaderField: "api-secret")
         }
 
-        let task = URLSession.shared.dataTask(with: url) {
-            data, _, _ in
-            if let data = data, let string = String(data: data, encoding: .utf8) {
-                print("Fetched Profile: " + string)
+        let task = URLSession.shared.dataTask(with: url) { data, response, error in
+            if let error = error {
+                print("Error occured:", error)
+                // handle error
+                // silencio for now
+                return
+            }
+            guard let httpResponse = response as? HTTPURLResponse,
+                  (200 ... 299).contains(httpResponse.statusCode)
+            else {
+                print("Error occured!", error as Any)
+                // handle error
+                // silencio for now
+                return
+            }
+
+            let jsonDecoder = JSONCoding.decoder
+
+            if let mimeType = httpResponse.mimeType, mimeType == "application/json",
+               let data = data
+            {
+                do {
+                    let rawFetchedProfile = try jsonDecoder.decode([RawFetchedProfile].self, from: data)
+
+                    let isf = rawFetchedProfile.map(\.store.default.sens)
+                    let cr = rawFetchedProfile.map(\.store.default.carbratio)
+
+                    // Test
+                    print(
+                        "Fetched Profile ISF: " + isf.description + ",  CR: " + cr.description
+                    )
+
+                    // To do: store parsed in basal_profile.json, carb_ratios.json, insulin_sensitivities.json
+
+                } catch let parsingError {
+                    print(parsingError)
+                }
             }
         }
         task.resume()

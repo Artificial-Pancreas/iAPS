@@ -17,7 +17,7 @@ extension NightscoutConfig {
         @Published var message = ""
         @Published var connecting = false
         @Published var backfilling = false
-        @Published var importing = false
+        @Published var imported = false // Allow Setting Importss
         @Published var isUploadEnabled = false // Allow uploads
         @Published var uploadStats = false // Upload Statistics
         @Published var uploadGlucose = true // Upload Glucose
@@ -69,6 +69,14 @@ extension NightscoutConfig {
                 .store(in: &lifetime)
         }
 
+        func importSettings() {
+            nightscoutManager.importSettings()
+            imported = true
+            saveSettings()
+        }
+
+        func saveSettings() {}
+
         func backfillGlucose() {
             backfilling = true
             nightscoutManager.fetchGlucose(since: Date().addingTimeInterval(-1.days.timeInterval))
@@ -83,11 +91,6 @@ extension NightscoutConfig {
                     self.glucoseStorage.storeGlucose(glucose)
                 }
                 .store(in: &lifetime)
-        }
-
-        func importSetttings() {
-            importing = true
-            nightscoutManager.importSettings()
         }
 
         func delete() {

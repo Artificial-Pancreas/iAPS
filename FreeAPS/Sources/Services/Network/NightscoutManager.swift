@@ -6,7 +6,6 @@ import UIKit
 
 protocol NightscoutManager: GlucoseSource {
     func fetchGlucose(since date: Date) -> AnyPublisher<[BloodGlucose], Never>
-    func importSettings()
     func fetchCarbs() -> AnyPublisher<[CarbsEntry], Never>
     func fetchTempTargets() -> AnyPublisher<[TempTarget], Never>
     func fetchAnnouncements() -> AnyPublisher<[Announcement], Never>
@@ -17,6 +16,7 @@ protocol NightscoutManager: GlucoseSource {
     func uploadStatistics(dailystat: Statistics)
     func uploadPreferences()
     func uploadProfile()
+    func importSettings()
     var cgmURL: URL? { get }
 }
 
@@ -521,6 +521,7 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
 
     func uploadGlucose() {
         uploadGlucose(glucoseStorage.nightscoutGlucoseNotUploaded(), fileToSave: OpenAPS.Nightscout.uploadedGlucose)
+
         uploadTreatments(glucoseStorage.nightscoutCGMStateNotUploaded(), fileToSave: OpenAPS.Nightscout.uploadedCGMState)
     }
 
@@ -600,9 +601,9 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
         guard let nightscout = nightscoutAPI, isNetworkReachable else {
             return
         }
-        processQueue.async {
-            nightscout.importSettings()
-        }
+        // processQueue.async {
+        nightscout.importSettings()
+        // }
     }
 }
 

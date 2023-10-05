@@ -8,6 +8,9 @@ extension NightscoutConfig {
         @State var importAlert: Alert?
         @State var isImportAlertPresented = false
 
+        @State var isImportAlertPresented: Bool = false
+        @State var importAlert: Alert?
+
         private var portFormater: NumberFormatter {
             let formatter = NumberFormatter()
             formatter.allowsFloats = false
