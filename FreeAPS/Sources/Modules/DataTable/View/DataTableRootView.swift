@@ -84,7 +84,7 @@ extension DataTable {
                 trailing: HStack {
                     if state.mode == .treatments && !showNonPumpInsulin {
                         Button(action: { showNonPumpInsulin = true }) {
-                            Text("Non-Pump Insulin")
+                            Text(NSLocalizedString("Non-Pump Insulin", comment: "Non-Pump Insulin button text"))
                             Image(systemName: "plus.circle.fill")
                                 .resizable()
                                 .frame(width: 24, height: 24)
@@ -92,7 +92,7 @@ extension DataTable {
                     }
                     if state.mode == .glucose && !showManualGlucose {
                         Button(action: { showManualGlucose = true }) {
-                            Text("Glucose")
+                            Text(NSLocalizedString("Glucose", comment: "Glucose button text"))
                             Image(systemName: "plus.circle.fill")
                                 .resizable()
                                 .frame(width: 24, height: 24)
@@ -159,7 +159,7 @@ extension DataTable {
                     Form {
                         Section {
                             HStack {
-                                Text("Amount")
+                                Text(NSLocalizedString("Amount", comment: ""))
                                 Spacer()
                                 DecimalTextField(
                                     "0",
@@ -185,19 +185,24 @@ extension DataTable {
                                     state.addNonPumpInsulin()
                                     showNonPumpInsulin = false
                                 }
-                                label: { Text("Log non-pump insulin") }
-                                    .foregroundColor(amountWarningCondition ? Color.white : Color.accentColor)
-                                    .frame(maxWidth: .infinity, alignment: .center)
-                                    .disabled(
-                                        state.nonPumpInsulinAmount <= 0 || state.nonPumpInsulinAmount > state
-                                            .maxBolus * 3
-                                    )
+                                label: {
+                                    Text(NSLocalizedString("Log non-pump insulin", comment: "Log non-pump insulin button text"))
+                                }
+                                .foregroundColor(amountWarningCondition ? Color.white : Color.accentColor)
+                                .frame(maxWidth: .infinity, alignment: .center)
+                                .disabled(
+                                    state.nonPumpInsulinAmount <= 0 || state.nonPumpInsulinAmount > state
+                                        .maxBolus * 3
+                                )
                             }
                         }
                         header: {
                             if amountWarningCondition
                             {
-                                Text("**⚠️ Warning!** The entered insulin amount is greater than your Max Bolus setting!")
+                                Text(NSLocalizedString(
+                                    "**⚠️ Warning!** The entered insulin amount is greater than your Max Bolus setting!",
+                                    comment: "Non-pump insulin maxBolus * 3 alert text"
+                                ))
                             }
                         }
                         .listRowBackground(
@@ -253,7 +258,7 @@ extension DataTable {
                     .onDelete(perform: deleteTreatment)
                 } else {
                     HStack {
-                        Text("No data.")
+                        Text(NSLocalizedString("No data.", comment: "No data text when no entries in history list"))
                     }
                 }
             }
@@ -271,7 +276,7 @@ extension DataTable {
                     .onDelete(perform: deleteMeal)
                 } else {
                     HStack {
-                        Text("No data.")
+                        Text(NSLocalizedString("No data.", comment: "No data text when no entries in history list"))
                     }
                 }
             }
@@ -289,7 +294,7 @@ extension DataTable {
                     .onDelete(perform: deleteGlucose)
                 } else {
                     HStack {
-                        Text("No data.")
+                        Text(NSLocalizedString("No data.", comment: "No data text when no entries in history list"))
                     }
                 }
             }
@@ -367,7 +372,7 @@ extension DataTable {
             let treatment = state.treatments[offsets[offsets.startIndex]]
 
             removeInsulinAlert = Alert(
-                title: Text("Delete Insulin?"),
+                title: Text(NSLocalizedString("Delete Insulin?", comment: "Delete insulin from pump history and Nightscout")),
                 message: Text(treatment.amountText),
                 primaryButton: .destructive(
                     Text("Delete"),
@@ -381,8 +386,8 @@ extension DataTable {
 
         private func deleteMeal(at offsets: IndexSet) {
             let meal = state.meals[offsets[offsets.startIndex]]
-            var alertTitle = Text("Delete Carbs?")
-            var alertMessage = Text(meal.amountText)
+            var alertTitle = NSLocalizedString("Delete Carbs?", comment: "Delete carbs from data table and Nightscout")
+            var alertMessage = meal.amountText
 
             if meal.type == .fpus {
                 let fpus = state.meals
@@ -395,13 +400,13 @@ extension DataTable {
                     .reduce(0, +)
                 ) as NSNumber)!
 
-                alertTitle = Text("Delete Carb Equivalents?")
-                alertMessage = Text(carbEquivalents + NSLocalizedString(" g", comment: "gram of carbs"))
+                alertTitle = NSLocalizedString("Delete Carb Equivalents?", comment: "Delte fpus alert title")
+                alertMessage = carbEquivalents + NSLocalizedString(" g", comment: "gram of carbs")
             }
 
             removeCarbsAlert = Alert(
-                title: alertTitle,
-                message: alertMessage,
+                title: Text(alertTitle),
+                message: Text(alertMessage),
                 primaryButton: .destructive(
                     Text("Delete"),
                     action: { state.deleteCarbs(meal) }
@@ -429,12 +434,12 @@ extension DataTable {
                         .reduce(0, +)
                     ) as NSNumber)!
 
-                    alertTitle = "Delete Carb Equivalents?"
+                    alertTitle = NSLocalizedString("Delete Carb Equivalents?", comment: "Delete fpus alert title")
                     alertMessage = carbEquivalents + NSLocalizedString(" g", comment: "gram of carbs")
                 }
 
                 if treatment.type == .carbs {
-                    alertTitle = "Delete Carbs?"
+                    alertTitle = NSLocalizedString("Delete Carbs?", comment: "Delete carbs from data table and Nightscout")
                     alertMessage = treatment.amountText
                 }
 
@@ -450,7 +455,7 @@ extension DataTable {
             } else {
                 // treatment is .bolus
 
-                alertTitle = "Delete Insulin?"
+                alertTitle = NSLocalizedString("Delete Insulin?", comment: "Delete insulin from pump history and Nightscout")
                 alertMessage = treatment.amountText
 
                 removeCombinedTreatmentAlert = Alert(
@@ -474,7 +479,7 @@ extension DataTable {
             ) as NSNumber)! + " " + state.units.rawValue
 
             removeGlucoseAlert = Alert(
-                title: Text("Delete Glucose?"),
+                title: Text(NSLocalizedString("Delete Glucose?", comment: "Delete Glucose alert title")),
                 message: Text(glucoseValue),
                 primaryButton: .destructive(
                     Text("Delete"),

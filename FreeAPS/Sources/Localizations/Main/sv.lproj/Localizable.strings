@@ -498,10 +498,10 @@ Enact a temp Basal or a temp target */
 "Temp Targets" = "Målvärden";
 
 /* Delete carbs from data table and Nightscout */
-"Delete carbs?" = "Ta bort kolhydrater?";
+"Delete Carbs?" = "Ta bort kolhydrater?";
 
 /* Delete insulin from pump history and Nightscout */
-"Delete insulin?" = "Ta bort insulin?";
+"Delete Insulin?" = "Ta bort insulin?";
 
 /* Treatments list */
 "Treatments" = "Behandlingar";

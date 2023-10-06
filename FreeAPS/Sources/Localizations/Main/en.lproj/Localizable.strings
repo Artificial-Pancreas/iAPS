@@ -498,19 +498,47 @@ Enact a temp Basal or a temp target */
 "Temp Targets" = "Temp Targets";
 
 /* Delete carbs from data table and Nightscout */
-"Delete carbs?" = "Delete carbs?";
+"Delete Carbs?" = "Delete Carbs?";
 
 /* Delete insulin from pump history and Nightscout */
-"Delete insulin?" = "Delete insulin?";
+"Delete Insulin?" = "Delete Insulin?";
+
+/* Delete fpus alert title */
+"Delete Carb Equivalents?" = "Delete Carb Equivalents?";
+
+/* Delete Glucose alert title */
+"Delete Glucose?" = "Delete Glucose?";
 
 /* Treatments list */
 "Treatments" = "Treatments";
+
+/* Meals list */
+"Meals" = "Meals";
+
+/* No data text when no entries in history list */
+"No data." = "No data.";
 
 /* " min" in Treatments list */
 " min" = " min";
 
 /* */
 "Unable to change anything" = "Unable to change anything";
+
+/* Non-pump insulin maxBolus * 3 alert text */
+"**⚠️ Warning!** The entered insulin amount is greater than your Max Bolus setting!" = "**⚠️ Warning!** The entered insulin amount is greater than your Max Bolus setting!";
+
+/* Log non-pump insulin button text */
+"Log non-pump insulin" = "Log non-pump insulin";
+
+/* Non-Pump Insulin button text */
+"Non-Pump Insulin" = "Non-Pump Insulin";
+
+/* Glucose button text */
+"Glucose" = "Glucose";
+
+/* Add glucose dialog title */
+"Add Glucose" = "Add Glucose";
+
 
 
 /* Calendar and Libre transmitter settings ---------------
@@ -1540,6 +1568,9 @@ Enact a temp Basal or a temp target */
 
 /* In Range */
 "In Range" = "In Range";
+
+/* Display treatment history with 2 tabs (treatments+glucose) or 3 tabs (treatments split in insulin and meals + glucose) */
+"Combine Treatments in History" = "Combine Treatments in History";
 
 /* Display % */
 "Change HbA1c Unit" = "Change HbA1c Unit";
