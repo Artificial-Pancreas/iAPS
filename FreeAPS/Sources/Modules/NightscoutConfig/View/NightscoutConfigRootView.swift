@@ -69,8 +69,8 @@ extension NightscoutConfig {
                             ),
                             secondaryButton: .cancel()
                         )
-                        isImportAlertPresented = true
-                    }.disabled(state.url.isEmpty)
+                        isImportAlertPresented.toggle()
+                    }.disabled(state.url.isEmpty || state.connecting)
 
                 } header: { Text("Import from Nightscout") }
 

@@ -1,12 +1,16 @@
 import Foundation
 
-struct FetchedProfile: JSON {
-    let id: String
+struct FetchedNightscoutProfileStore: JSON {
+    let _id: String
     let defaultProfile: String
     let startDate: String
     let mills: Decimal
     let enteredBy: String
-    let store: String
+    let store: [String: ScheduledNightscoutProfile]
+    let created_at: String
+}
+
+struct FetchedNightscoutProfile: JSON {
     let dia: Decimal
     let carbs_hr: Int
     let delay: Decimal
@@ -17,5 +21,4 @@ struct FetchedProfile: JSON {
     let basal: [NightscoutTimevalue]
     let carbratio: [NightscoutTimevalue]
     let units: String
-    let created_at: String
 }
