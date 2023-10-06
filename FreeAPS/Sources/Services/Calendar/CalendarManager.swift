@@ -36,14 +36,14 @@ final class BaseCalendarManager: CalendarManager, Injectable {
                     if #available(iOS 17.0, *) {
                         EKEventStore().requestFullAccessToEvents(completion: { (granted: Bool, error: Error?) -> Void in
                             if let error = error {
-                                warning(.service, "Calendar access not granded", error: error)
+                                warning(.service, "Calendar access not granted", error: error)
                             }
                             promise(.success(granted))
                         })
                     } else {
                         EKEventStore().requestAccess(to: .event) { granted, error in
                             if let error = error {
-                                warning(.service, "Calendar access not granded", error: error)
+                                warning(.service, "Calendar access not granted", error: error)
                             }
                             promise(.success(granted))
                         }
@@ -51,7 +51,7 @@ final class BaseCalendarManager: CalendarManager, Injectable {
                 #else
                     EKEventStore().requestAccess(to: .event) { granted, error in
                         if let error = error {
-                            warning(.service, "Calendar access not granded", error: error)
+                            warning(.service, "Calendar access not granted", error: error)
                         }
                         promise(.success(granted))
                     }
@@ -70,7 +70,6 @@ final class BaseCalendarManager: CalendarManager, Injectable {
             case .writeOnly:
                 #if swift(>=5.9)
                     if #available(iOS 17.0, *) {
-                        print("hello i am called")
                         EKEventStore().requestFullAccessToEvents(completion: { (granted: Bool, error: Error?) -> Void in
                             if let error = error {
                                 print("Calendar access not upgraded")
