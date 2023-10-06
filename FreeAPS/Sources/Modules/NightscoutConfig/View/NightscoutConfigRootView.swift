@@ -8,9 +8,6 @@ extension NightscoutConfig {
         @State var importAlert: Alert?
         @State var isImportAlertPresented = false
 
-        @State var isImportAlertPresented: Bool = false
-        @State var importAlert: Alert?
-
         private var portFormater: NumberFormatter {
             let formatter = NumberFormatter()
             formatter.allowsFloats = false
@@ -65,7 +62,7 @@ extension NightscoutConfig {
                             message: Text("\n" + "This will replace your current pump settings" + "\n"),
                             primaryButton: .destructive(
                                 Text("Import"),
-                                action: { state.importSetttings() }
+                                action: { state.importSettings() }
                             ),
                             secondaryButton: .cancel()
                         )

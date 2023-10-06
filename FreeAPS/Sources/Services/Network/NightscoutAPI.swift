@@ -241,6 +241,18 @@ extension NightscoutAPI {
                     self.storage.save(sensitivitiesProfile, as: OpenAPS.Settings.insulinSensitivities)
                     self.storage.save(targetsProfile, as: OpenAPS.Settings.bgTargets)
 
+                    // Test mapping
+                    print(
+                        "CR: " +
+                            carbratiosProfile.rawJSON.debugDescription +
+                            ", ISF: " +
+                            sensitivitiesProfile.rawJSON.debugDescription +
+                            ", Basals: " +
+                            basals.description +
+                            ", Targets: " +
+                            targetsProfile.rawJSON.debugDescription
+                    )
+
                     // TODO: refactor all of the above and probably move it to NightscoutManager
 
                 } catch let parsingError {
