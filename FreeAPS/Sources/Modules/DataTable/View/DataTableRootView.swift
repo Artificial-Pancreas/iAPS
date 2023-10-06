@@ -18,8 +18,6 @@ extension DataTable {
         @State private var removeGlucoseAlert: Alert?
         @State private var showManualGlucose: Bool = false
         @State private var showNonPumpInsulin: Bool = false
-        @State private var showFutureEntries: Bool =
-            true // false TODO: fix filtering of future entries OR rework treatment for to show MEALS not carbs + FPU
 
         @Environment(\.colorScheme) var colorScheme
 
@@ -92,11 +90,6 @@ extension DataTable {
                                 .frame(width: 24, height: 24)
                         }
                     }
-                    /*
-                     if state.mode == .meals, !state.isCombinedTreatments {
-                         filterFutureEntriesButton
-                     }
-                      */
                     if state.mode == .glucose && !showManualGlucose {
                         Button(action: { showManualGlucose = true }) {
                             Text("Glucose")
@@ -221,44 +214,33 @@ extension DataTable {
             }
         }
 
-        private var filterFutureEntriesButton: some View {
-            VStack {
-                Button(action: { showFutureEntries.toggle() }, label: {
-                    HStack {
-                        Text(showFutureEntries ? "Hide Future Entries" : "Show Future Entries")
-                            .foregroundColor(colorScheme == .dark ? Color.white : Color.black)
-                            .font(.caption)
-                        Image(systemName: showFutureEntries ? "calendar.badge.minus" : "calendar.badge.plus")
-                            .resizable()
-                            .frame(width: 18, height: 18)
-                            .foregroundColor(colorScheme == .dark ? Color.white : Color.black)
-                    }.frame(maxWidth: .infinity, alignment: .center)
-                }).buttonStyle(.bordered)
-
-                Spacer()
+        private var historyContentView: some View {
+            Form {
+                if state.isCombinedTreatments {
+                    switch state.mode {
+                    case .treatments: combinedTreatmentsList
+                    case .meals: EmptyView()
+                    case .glucose: glucoseList
+                    }
+                } else {
+                    switch state.mode {
+                    case .treatments: treatmentsList
+                    case .meals: mealsList
+                    case .glucose: glucoseList
+                    }
+                }
             }
         }
 
-        private var historyContentView: some View {
-            Form {
-                Section(
-                    //  header: state.isCombinedTreatments && state.mode == .treatments ? filterFutureEntriesButton : nil
-                ) {
-                    // populate the list
-                    if state.isCombinedTreatments {
-                        switch state.mode {
-                        case .treatments: combinedTreatmentsList
-                        case .meals: EmptyView()
-                        case .glucose: glucoseList
-                        }
-                    } else {
-                        switch state.mode {
-                        case .treatments: treatmentsList
-                        case .meals: mealsList
-                        case .glucose: glucoseList
-                        }
-                    }
+        private var combinedTreatmentsList: some View {
+            List {
+                ForEach(state.treatments) { treatment in
+                    combinedTreatmentView(treatment)
                 }
+                .onDelete(perform: deleteTreatmentForCombined)
+            }
+            .alert(isPresented: $isRemoveCombinedTreatmentAlertPresented) {
+                removeCombinedTreatmentAlert!
             }
         }
 
@@ -280,54 +262,13 @@ extension DataTable {
             }
         }
 
-        private var combinedTreatmentsList: some View {
-            List {
-                ForEach(!showFutureEntries ? state.filteredEntries : state.treatments) { treatment in
-                    combinedTreatmentView(treatment)
-                }
-                .onDelete(perform: deleteTreatmentForCombined)
-                /*
-                 if !showFutureEntries {
-                     // use filteredEntries here -> filtered in StateModel
-
-                     /*
-                     ForEach(state.filteredEntries.filter { treatment in
-                         treatment.date <= Date()
-                     }, id: \.self) { treatment in
-                         combinedTreatmentView(treatment)
-                     }
-                     .onDelete(perform: deleteTreatmentForCombined)
-                     */
-                 } else {
-                     ForEach(state.treatments) { treatment in
-                         combinedTreatmentView(treatment)
-                     }
-                     .onDelete(perform: deleteTreatmentForCombined)
-                 }
-                  */
-            }
-            .alert(isPresented: $isRemoveCombinedTreatmentAlertPresented) {
-                removeCombinedTreatmentAlert!
-            }
-        }
-
         private var mealsList: some View {
             List {
                 if !state.meals.isEmpty {
-                    if !showFutureEntries {
-                        ForEach(state.meals.filter { meal in
-                            meal.date <= Date()
-                        }) { meal in
-
-                            mealView(meal)
-                        }
-                        .onDelete(perform: deleteMeal)
-                    } else {
-                        ForEach(state.meals) { item in
-                            mealView(item)
-                        }
-                        .onDelete(perform: deleteMeal)
+                    ForEach(state.meals) { item in
+                        mealView(item)
                     }
+                    .onDelete(perform: deleteMeal)
                 } else {
                     HStack {
                         Text("No data.")
@@ -440,7 +381,7 @@ extension DataTable {
 
         private func deleteMeal(at offsets: IndexSet) {
             let meal = state.meals[offsets[offsets.startIndex]]
-            var alertTitle = Text("Delete carbs?")
+            var alertTitle = Text("Delete Carbs?")
             var alertMessage = Text(meal.amountText)
 
             if meal.type == .fpus {

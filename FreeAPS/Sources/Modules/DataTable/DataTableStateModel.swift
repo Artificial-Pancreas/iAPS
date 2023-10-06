@@ -13,7 +13,6 @@ extension DataTable {
         @Published var mode: Mode = .treatments
         @Published var treatments: [Treatment] = []
         @Published var meals: [Treatment] = []
-        @Published var filteredEntries: [Treatment] = []
         @Published var glucose: [Glucose] = []
         @Published var manualGlucose: Decimal = 0
         @Published var manualGlucoseDate = Date()
@@ -62,21 +61,6 @@ extension DataTable {
 
                 let fpus = self.provider.fpus()
                     .filter { $0.isFPU ?? false }
-                    .map {
-                        Treatment(
-                            units: units,
-                            type: .fpus,
-                            date: $0.createdAt,
-                            amount: $0.carbs,
-                            id: $0.id,
-                            isFPU: $0.isFPU,
-                            fpuID: $0.fpuID,
-                            note: $0.note
-                        )
-                    }
-
-                let fpusFiltered = self.provider.fpus()
-                    .filter { $0.isFPU ?? false && $0.createdAt <= Date() }
                     .map {
                         Treatment(
                             units: units,
@@ -150,10 +134,6 @@ extension DataTable {
                         self.treatments = [boluses, tempBasals, tempTargets, suspend, resume, carbs, fpus]
                             .flatMap { $0 }
                             .sorted { $0.date > $1.date }
-                        self.filteredEntries = [boluses, tempBasals, tempTargets, suspend, resume, carbs, fpusFiltered]
-                            .flatMap { $0 }
-                            .sorted { $0.date > $1.date }
-                            .filter { $0.date <= Date() }
                     } else {
                         self.treatments = [boluses, tempBasals, tempTargets, suspend, resume]
                             .flatMap { $0 }
@@ -161,10 +141,6 @@ extension DataTable {
                         self.meals = [carbs, fpus]
                             .flatMap { $0 }
                             .sorted { $0.date > $1.date }
-                        self.filteredEntries = [carbs, fpusFiltered]
-                            .flatMap { $0 }
-                            .sorted { $0.date > $1.date }
-                            .filter { $0.date <= Date() }
                     }
                 }
             }

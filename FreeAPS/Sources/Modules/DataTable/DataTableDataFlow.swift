@@ -188,7 +188,6 @@ enum DataTable {
             case .fpus:
                 return .loopRed
             case .bolus:
-                // return (isNonPump ?? false) ? Color.nonPumpInsulin : (isSMB ?? false) ? Color.smb : Color.insulin
                 return .insulin
             case .tempBasal:
                 return Color.insulin.opacity(0.4)
