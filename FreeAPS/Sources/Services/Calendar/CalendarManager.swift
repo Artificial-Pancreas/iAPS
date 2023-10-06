@@ -65,7 +65,6 @@ final class BaseCalendarManager: CalendarManager, Injectable {
             #if swift(>=5.9)
                 case .fullAccess:
                     promise(.success(true))
-
                 case .writeOnly:
                     if #available(iOS 17.0, *) {
                         EKEventStore().requestFullAccessToEvents(completion: { (granted: Bool, error: Error?) -> Void in
