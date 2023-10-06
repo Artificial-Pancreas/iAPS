@@ -32,17 +32,54 @@ final class BaseCalendarManager: CalendarManager, Injectable {
             let status = EKEventStore.authorizationStatus(for: .event)
             switch status {
             case .notDetermined:
-                EKEventStore().requestAccess(to: .event) { granted, error in
-                    if let error = error {
-                        warning(.service, "Calendar access not granded", error: error)
+                #if swift(>=5.9)
+                    if #available(iOS 17.0, *) {
+                        EKEventStore().requestFullAccessToEvents(completion: { (granted: Bool, error: Error?) -> Void in
+                            if let error = error {
+                                warning(.service, "Calendar access not granted", error: error)
+                            }
+                            promise(.success(granted))
+                        })
+                    } else {
+                        EKEventStore().requestAccess(to: .event) { granted, error in
+                            if let error = error {
+                                warning(.service, "Calendar access not granted", error: error)
+                            }
+                            promise(.success(granted))
+                        }
                     }
-                    promise(.success(granted))
-                }
+                #else
+                    EKEventStore().requestAccess(to: .event) { granted, error in
+                        if let error = error {
+                            warning(.service, "Calendar access not granted", error: error)
+                        }
+                        promise(.success(granted))
+                    }
+                #endif
             case .denied,
                  .restricted:
                 promise(.success(false))
             case .authorized:
                 promise(.success(true))
+
+            #if swift(>=5.9)
+                case .fullAccess:
+                    promise(.success(true))
+            #endif
+
+            case .writeOnly:
+                #if swift(>=5.9)
+                    if #available(iOS 17.0, *) {
+                        EKEventStore().requestFullAccessToEvents(completion: { (granted: Bool, error: Error?) -> Void in
+                            if let error = error {
+                                print("Calendar access not upgraded")
+                                warning(.service, "Calendar access not upgraded", error: error)
+                            }
+                            promise(.success(granted))
+                        })
+                    }
+                #endif
+
             @unknown default:
                 warning(.service, "Unknown calendar access status")
                 promise(.success(false))
