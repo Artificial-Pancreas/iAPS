@@ -24,10 +24,12 @@ extension NightscoutConfig {
         @Published var uploadGlucose = true // Upload Glucose
         @Published var useLocalSource = false
         @Published var localPort: Decimal = 0
+        @Published var units: GlucoseUnits = .mmolL
 
         override func subscribe() {
             url = keychain.getValue(String.self, forKey: Config.urlKey) ?? ""
             secret = keychain.getValue(String.self, forKey: Config.secretKey) ?? ""
+            units = settingsManager.settings.units
 
             subscribeSetting(\.isUploadEnabled, on: $isUploadEnabled) { isUploadEnabled = $0 }
             subscribeSetting(\.useLocalGlucoseSource, on: $useLocalSource) { useLocalSource = $0 }
@@ -129,12 +131,14 @@ extension NightscoutConfig {
                         guard let fetchedProfile: ScheduledNightscoutProfile = fetchedProfileStore.first?.store["default"]
                         else { return }
 
-                        // Test. Remove later after more testing
-                        print("Fetched Profile: ", fetchedProfile)
-                        //
-
-                        let glucoseUnits = fetchedProfile.units == GlucoseUnits.mmolL.rawValue ? GlucoseUnits.mmolL : GlucoseUnits
-                            .mgdL
+                        guard fetchedProfile.units.contains(self.units.rawValue.prefix(4)) else {
+                            debug(
+                                .nightscout,
+                                "Mismatching units Nightcosut/Pump Settings" + fetchedProfile.units + " " + self.units.rawValue +
+                                ". Import settings aborted."
+                            )
+                            return
+                        }
 
                         let carbratios = fetchedProfile.carbratio
                             .map { carbratio -> CarbRatioEntry in
@@ -154,13 +158,13 @@ extension NightscoutConfig {
                                 ) }
                         let sensitivities = fetchedProfile.sens.map { sensitivity -> InsulinSensitivityEntry in
                             InsulinSensitivityEntry(
-                                sensitivity: sensitivity.value,
+                                sensitivity: self.units == .mmolL ? sensitivity.value : sensitivity.value.asMgdL,
                                 offset: sensitivity.timeAsSeconds,
                                 start: sensitivity.time
                             ) }
                         let sensitivitiesProfile = InsulinSensitivities(
-                            units: glucoseUnits,
-                            userPrefferedUnits: glucoseUnits,
+                            units: self.units,
+                            userPrefferedUnits: self.units,
                             sensitivities: sensitivities
                         )
 
@@ -169,14 +173,14 @@ extension NightscoutConfig {
                         let targets = fetchedProfile.target_low
                             .map { target -> BGTargetEntry in
                                 BGTargetEntry(
-                                    low: target.value,
-                                    high: target.value,
+                                    low: self.units == .mmolL ? target.value : target.value.asMgdL,
+                                    high: self.units == .mmolL ? target.value : target.value.asMgdL,
                                     start: target.time,
                                     offset: target.timeAsSeconds
                                 ) }
                         let targetsProfile = BGTargets(
-                            units: glucoseUnits,
-                            userPrefferedUnits: glucoseUnits,
+                            units: self.units,
+                            userPrefferedUnits: self.units,
                             targets: targets
                         )
 
