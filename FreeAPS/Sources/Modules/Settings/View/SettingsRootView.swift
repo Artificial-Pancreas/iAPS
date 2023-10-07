@@ -54,8 +54,6 @@ extension Settings {
                             }
                             Text("NS Uploaded Profile")
                                 .navigationLink(to: .configEditor(file: OpenAPS.Nightscout.uploadedProfile), from: self)
-                            Text("Test fetched and saved carbRatios")
-                                .navigationLink(to: .configEditor(file: OpenAPS.Nightscout.test), from: self)
                         }
                         Group {
                             Text("Preferences")
