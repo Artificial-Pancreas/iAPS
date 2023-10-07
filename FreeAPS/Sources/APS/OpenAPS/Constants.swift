@@ -87,6 +87,7 @@ extension OpenAPS {
         static let uploadedPodAge = "upload/uploaded-pod-age.json"
         static let uploadedProfile = "upload/uploaded-profile.json"
         static let profile = "fetched/profile.json"
+        static let test = "upload/test.json"
     }
 
     enum FreeAPS {

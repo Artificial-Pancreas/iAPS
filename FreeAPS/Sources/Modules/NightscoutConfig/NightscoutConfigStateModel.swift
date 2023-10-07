@@ -3,6 +3,7 @@ import Combine
 import G7SensorKit
 import SwiftDate
 import SwiftUI
+import Swinject
 
 extension NightscoutConfig {
     final class StateModel: BaseStateModel<Provider> {
@@ -11,6 +12,7 @@ extension NightscoutConfig {
         @Injected() private var glucoseStorage: GlucoseStorage!
         @Injected() private var healthKitManager: HealthKitManager!
         @Injected() private var cgmManager: FetchGlucoseManager!
+        @Injected() private var storage: FileStorage!
 
         @Published var url = ""
         @Published var secret = ""
@@ -69,10 +71,128 @@ extension NightscoutConfig {
                 .store(in: &lifetime)
         }
 
+        private var nightscoutAPI: NightscoutAPI? {
+            guard let urlString = keychain.getValue(String.self, forKey: NightscoutConfig.Config.urlKey),
+                  let url = URL(string: urlString),
+                  let secret = keychain.getValue(String.self, forKey: NightscoutConfig.Config.secretKey)
+            else {
+                return nil
+            }
+            return NightscoutAPI(url: url, secret: secret)
+        }
+
         func importSettings() {
-            nightscoutManager.importSettings()
+            guard let nightscout = nightscoutAPI else {
+                return
+            }
+
+            let path = "/api/v1/profile.json"
+            let timeout: TimeInterval = 60
+
+            var components = URLComponents()
+            components.scheme = nightscout.url.scheme
+            components.host = nightscout.url.host
+            components.port = nightscout.url.port
+            components.path = path
+            components.queryItems = [
+                URLQueryItem(name: "count", value: "1")
+            ]
+
+            var url = URLRequest(url: components.url!)
+            url.allowsConstrainedNetworkAccess = false
+            url.timeoutInterval = timeout
+
+            if let secret = nightscout.secret {
+                url.addValue(secret.sha1(), forHTTPHeaderField: "api-secret")
+            }
+
+            let task = URLSession.shared.dataTask(with: url) { data, response, error in
+                if let error = error {
+                    print("Error occured:", error)
+                    // handle error
+                    return
+                }
+                guard let httpResponse = response as? HTTPURLResponse,
+                      (200 ... 299).contains(httpResponse.statusCode)
+                else {
+                    print("Error occured!", error as Any)
+                    // handle error
+                    return
+                }
+
+                let jsonDecoder = JSONCoding.decoder
+
+                if let mimeType = httpResponse.mimeType, mimeType == "application/json",
+                   let data = data
+                {
+                    do {
+                        let fetchedProfileStore = try jsonDecoder.decode([FetchedNightscoutProfileStore].self, from: data)
+                        guard let fetchedProfile: ScheduledNightscoutProfile = fetchedProfileStore.first?.store["default"]
+                        else { return }
+
+                        // Test. Remove later after more testing
+                        print("Fetched Profile: ", fetchedProfile)
+                        //
+
+                        let glucoseUnits = fetchedProfile.units == GlucoseUnits.mmolL.rawValue ? GlucoseUnits.mmolL : GlucoseUnits
+                            .mgdL
+
+                        let carbratios = fetchedProfile.carbratio
+                            .map { carbratio -> CarbRatioEntry in
+                                CarbRatioEntry(
+                                    start: carbratio.time,
+                                    offset: carbratio.timeAsSeconds,
+                                    ratio: carbratio.value
+                                ) }
+                        let carbratiosProfile = CarbRatios(units: CarbUnit.grams, schedule: carbratios)
+
+                        let basals = fetchedProfile.basal
+                            .map { basal -> BasalProfileEntry in
+                                BasalProfileEntry(
+                                    start: basal.time,
+                                    minutes: basal.timeAsSeconds,
+                                    rate: basal.value
+                                ) }
+                        let sensitivities = fetchedProfile.sens.map { sensitivity -> InsulinSensitivityEntry in
+                            InsulinSensitivityEntry(
+                                sensitivity: sensitivity.value,
+                                offset: sensitivity.timeAsSeconds,
+                                start: sensitivity.time
+                            ) }
+                        let sensitivitiesProfile = InsulinSensitivities(
+                            units: glucoseUnits,
+                            userPrefferedUnits: glucoseUnits,
+                            sensitivities: sensitivities
+                        )
+
+                        // iAPS does not have target ranges but a simple target glucose; targets will therefore adhere to target_low.value == target_high.value
+                        // => this is the reasoning for only using target_low here
+                        let targets = fetchedProfile.target_low
+                            .map { target -> BGTargetEntry in
+                                BGTargetEntry(
+                                    low: target.value,
+                                    high: target.value,
+                                    start: target.time,
+                                    offset: target.timeAsSeconds
+                                ) }
+                        let targetsProfile = BGTargets(
+                            units: glucoseUnits,
+                            userPrefferedUnits: glucoseUnits,
+                            targets: targets
+                        )
+
+                        self.storage.save(carbratiosProfile, as: OpenAPS.Settings.carbRatios)
+                        self.storage.save(basals, as: OpenAPS.Settings.basalProfile)
+                        self.storage.save(sensitivitiesProfile, as: OpenAPS.Settings.insulinSensitivities)
+                        self.storage.save(targetsProfile, as: OpenAPS.Settings.bgTargets)
+
+                    } catch let parsingError {
+                        print(parsingError)
+                    }
+                }
+            }
+            task.resume()
             imported = true
-            saveSettings()
         }
 
         func saveSettings() {}

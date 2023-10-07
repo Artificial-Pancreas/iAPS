@@ -16,7 +16,6 @@ protocol NightscoutManager: GlucoseSource {
     func uploadStatistics(dailystat: Statistics)
     func uploadPreferences()
     func uploadProfile()
-    func importSettings()
     var cgmURL: URL? { get }
 }
 
@@ -595,15 +594,6 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
                 } receiveValue: {}
                 .store(in: &self.lifetime)
         }
-    }
-
-    func importSettings() {
-        guard let nightscout = nightscoutAPI, isNetworkReachable else {
-            return
-        }
-        // processQueue.async {
-        nightscout.importSettings()
-        // }
     }
 }
 

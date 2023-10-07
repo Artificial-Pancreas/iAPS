@@ -70,6 +70,18 @@ extension NightscoutConfig {
                     }.disabled(state.url.isEmpty || state.connecting)
 
                 } header: { Text("Import from Nightscout") }
+                    .alert(isPresented: $state.imported) {
+                        Alert(
+                            title: Text("Settings imported"),
+                            message: Text(
+                                "\nNow please verify your new settings:\n\n* Basal settings\n * Carb Ratios\n * Glucose Targets\n * Insulin Sensitivities\n\n in iAPS Settings / Configuration"
+                            ),
+                            primaryButton: .destructive(
+                                Text("OK")
+                            ),
+                            secondaryButton: .cancel()
+                        )
+                    }
 
                 Section(header: Text("Local glucose source")) {
                     Toggle("Use local glucose server", isOn: $state.useLocalSource)

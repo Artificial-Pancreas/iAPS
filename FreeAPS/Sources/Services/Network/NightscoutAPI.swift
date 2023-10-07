@@ -2,6 +2,7 @@ import Combine
 import CommonCrypto
 import Foundation
 import JavaScriptCore
+import Swinject
 
 class NightscoutAPI {
     init(url: URL, secret: String? = nil) {
@@ -29,7 +30,6 @@ class NightscoutAPI {
 
     private let service = NetworkService()
 
-    @Injected() private var storage: FileStorage!
     @Injected() private var settingsManager: SettingsManager!
 }
 
@@ -139,128 +139,6 @@ extension NightscoutAPI {
                 return Just([]).setFailureType(to: Swift.Error.self).eraseToAnyPublisher()
             }
             .eraseToAnyPublisher()
-    }
-
-    func importSettings() {
-        var components = URLComponents()
-        components.scheme = url.scheme
-        components.host = url.host
-        components.port = url.port
-        components.path = Config.profilePath
-        components.queryItems = [
-            URLQueryItem(name: "count", value: "1")
-        ]
-
-        var url = URLRequest(url: components.url!)
-        url.allowsConstrainedNetworkAccess = false
-        url.timeoutInterval = Config.timeout
-
-        if let secret = secret {
-            url.addValue(secret.sha1(), forHTTPHeaderField: "api-secret")
-        }
-
-        let task = URLSession.shared.dataTask(with: url) { data, response, error in
-            if let error = error {
-                print("Error occured:", error)
-                // handle error
-                // silencio for now
-                return
-            }
-            guard let httpResponse = response as? HTTPURLResponse,
-                  (200 ... 299).contains(httpResponse.statusCode)
-            else {
-                print("Error occured!", error as Any)
-                // handle error
-                // silencio for now
-                return
-            }
-
-            let jsonDecoder = JSONCoding.decoder
-
-            if let mimeType = httpResponse.mimeType, mimeType == "application/json",
-               let data = data
-            {
-                do {
-                    let fetchedProfileStore = try jsonDecoder.decode([FetchedNightscoutProfileStore].self, from: data)
-
-                    guard let fetchedProfile: ScheduledNightscoutProfile = fetchedProfileStore.first?.store["default"]
-                    else { return }
-
-                    print("Fetched Profile: ", fetchedProfile)
-
-                    let glucoseUnits = fetchedProfile.units == GlucoseUnits.mmolL.rawValue ? GlucoseUnits.mmolL : GlucoseUnits
-                        .mgdL
-
-                    let carbratios = fetchedProfile.carbratio
-                        .map { carbratio -> CarbRatioEntry in
-                            CarbRatioEntry(
-                                start: carbratio.time,
-                                offset: carbratio.timeAsSeconds,
-                                ratio: carbratio.value
-                            ) }
-                    let carbratiosProfile = CarbRatios(units: CarbUnit.grams, schedule: carbratios)
-
-                    let basals = fetchedProfile.basal
-                        .map { basal -> BasalProfileEntry in
-                            BasalProfileEntry(
-                                start: basal.time,
-                                minutes: basal.timeAsSeconds,
-                                rate: basal.value
-                            ) }
-
-                    let sensitivities = fetchedProfile.sens.map { sensitivity -> InsulinSensitivityEntry in
-                        InsulinSensitivityEntry(
-                            sensitivity: sensitivity.value,
-                            offset: sensitivity.timeAsSeconds,
-                            start: sensitivity.time
-                        ) }
-                    let sensitivitiesProfile = InsulinSensitivities(
-                        units: glucoseUnits,
-                        userPrefferedUnits: glucoseUnits,
-                        sensitivities: sensitivities
-                    )
-
-                    // iAPS does not have target ranges but a simple target glucose; targets will therefore adhere to target_low.value == target_high.value
-                    // => this is the reasoning for only using target_low here
-                    let targets = fetchedProfile.target_low
-                        .map { target -> BGTargetEntry in
-                            BGTargetEntry(
-                                low: target.value,
-                                high: target.value,
-                                start: target.time,
-                                offset: target.timeAsSeconds
-                            ) }
-                    let targetsProfile = BGTargets(
-                        units: glucoseUnits,
-                        userPrefferedUnits: glucoseUnits,
-                        targets: targets
-                    )
-
-                    self.storage.save(carbratiosProfile, as: OpenAPS.Settings.carbRatios)
-                    self.storage.save(basals, as: OpenAPS.Settings.basalProfile)
-                    self.storage.save(sensitivitiesProfile, as: OpenAPS.Settings.insulinSensitivities)
-                    self.storage.save(targetsProfile, as: OpenAPS.Settings.bgTargets)
-
-                    // Test mapping
-                    print(
-                        "CR: " +
-                            carbratiosProfile.rawJSON.debugDescription +
-                            ", ISF: " +
-                            sensitivitiesProfile.rawJSON.debugDescription +
-                            ", Basals: " +
-                            basals.description +
-                            ", Targets: " +
-                            targetsProfile.rawJSON.debugDescription
-                    )
-
-                    // TODO: refactor all of the above and probably move it to NightscoutManager
-
-                } catch let parsingError {
-                    print(parsingError)
-                }
-            }
-        }
-        task.resume()
     }
 
     func deleteCarbs(at date: Date) -> AnyPublisher<Void, Swift.Error> {
