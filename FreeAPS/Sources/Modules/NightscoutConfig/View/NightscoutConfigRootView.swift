@@ -74,7 +74,7 @@ extension NightscoutConfig {
                         Alert(
                             title: Text("Settings imported"),
                             message: Text(
-                                "\nNow please verify your new settings:\n\n* Basal settings\n * Carb Ratios\n * Glucose Targets\n * Insulin Sensitivities\n\n in iAPS Settings / Configuration"
+                                "\nNow please verify your new settings:\n\n* Basal Settings\n * Carb Ratios\n * Glucose Targets\n * Insulin Sensitivities\n\n in iAPS Settings > Configuration"
                             ),
                             primaryButton: .destructive(
                                 Text("OK")
