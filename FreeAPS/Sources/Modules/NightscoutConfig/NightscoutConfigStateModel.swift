@@ -134,8 +134,7 @@ extension NightscoutConfig {
                         guard fetchedProfile.units.contains(self.units.rawValue.prefix(4)) else {
                             debug(
                                 .nightscout,
-                                "Mismatching units Nightcosut/Pump Settings" + fetchedProfile.units + " " + self.units.rawValue +
-                                ". Import settings aborted."
+                                "Mismatching units Nightcosut/Pump Settings. Import settings aborted."
                             )
                             return
                         }
