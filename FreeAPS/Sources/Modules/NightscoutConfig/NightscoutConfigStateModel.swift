@@ -3,7 +3,6 @@ import Combine
 import G7SensorKit
 import SwiftDate
 import SwiftUI
-import Swinject
 
 extension NightscoutConfig {
     final class StateModel: BaseStateModel<Provider> {
