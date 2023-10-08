@@ -156,7 +156,7 @@ extension NightscoutConfig {
                             .map { carbratio -> CarbRatioEntry in
                                 CarbRatioEntry(
                                     start: carbratio.time,
-                                    offset: carbratio.timeAsSeconds,
+                                    offset: (carbratio.timeAsSeconds ?? self.offset(carbratio.time)) / 60,
                                     ratio: carbratio.value
                                 ) }
                         let carbratiosProfile = CarbRatios(units: CarbUnit.grams, schedule: carbratios)
@@ -165,14 +165,14 @@ extension NightscoutConfig {
                             .map { basal -> BasalProfileEntry in
                                 BasalProfileEntry(
                                     start: basal.time,
-                                    minutes: basal.timeAsSeconds / 60,
+                                    minutes: (basal.timeAsSeconds ?? self.offset(basal.time)) / 60,
                                     rate: basal.value
                                 ) }
 
                         let sensitivities = fetchedProfile.sens.map { sensitivity -> InsulinSensitivityEntry in
                             InsulinSensitivityEntry(
                                 sensitivity: self.units == .mmolL ? sensitivity.value : sensitivity.value.asMgdL,
-                                offset: sensitivity.timeAsSeconds,
+                                offset: (sensitivity.timeAsSeconds ?? self.offset(sensitivity.time)) / 60,
                                 start: sensitivity.time
                             ) }
                         let sensitivitiesProfile = InsulinSensitivities(
@@ -187,7 +187,7 @@ extension NightscoutConfig {
                                     low: self.units == .mmolL ? target.value : target.value.asMgdL,
                                     high: self.units == .mmolL ? target.value : target.value.asMgdL,
                                     start: target.time,
-                                    offset: target.timeAsSeconds
+                                    offset: (target.timeAsSeconds ?? self.offset(target.time)) / 60
                                 ) }
                         let targetsProfile = BGTargets(
                             units: self.units,
@@ -211,6 +211,12 @@ extension NightscoutConfig {
             group.notify(queue: .global(qos: .background)) {
                 self.saveError(error)
             }
+        }
+
+        func offset(_ string: String) -> Int {
+            let hours = Int(string.prefix(2)) ?? 0
+            let minutes = Int(string.suffix(2)) ?? 0
+            return hours * 60 + minutes * 60
         }
 
         func saveError(_ string: String) {
