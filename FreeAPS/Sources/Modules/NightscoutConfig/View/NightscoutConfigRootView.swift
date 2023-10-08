@@ -1,3 +1,4 @@
+import CoreData
 import SwiftUI
 import Swinject
 
@@ -8,7 +9,13 @@ extension NightscoutConfig {
         @State var importAlert: Alert?
         @State var isImportAlertPresented = false
         @State var importedHasRun = false
-        @State var error: ImportError?
+
+        @FetchRequest(
+            entity: ImportError.entity(),
+            sortDescriptors: [NSSortDescriptor(key: "date", ascending: false)], predicate: NSPredicate(
+                format: "date > %@", Date().addingTimeInterval(-1.minutes.timeInterval) as NSDate
+            )
+        ) var fetchedErrors: FetchedResults<ImportError>
 
         private var portFormater: NumberFormatter {
             let formatter = NumberFormatter()
@@ -65,7 +72,7 @@ extension NightscoutConfig {
                             primaryButton: .destructive(
                                 Text("Import"),
                                 action: {
-                                    error = ImportError(error: state.importSettings())
+                                    state.importSettings()
                                     importedHasRun = true
                                 }
                             ),
@@ -80,9 +87,9 @@ extension NightscoutConfig {
                         Alert(
                             title: Text("Settings imported"),
                             message: Text(
-                                (error?.error ?? "").count < 3 ?
+                                (fetchedErrors.first?.error ?? "").count < 4 ?
                                     "\nNow please verify your new settings:\n\n* Basal Settings\n * Carb Ratios\n * Glucose Targets\n * Insulin Sensitivities\n\n in iAPS Settings > Configuration" :
-                                    "Import failed:\n" + (error?.error ?? "")
+                                    "\nImport failed:\n\n* " + (fetchedErrors.first?.error ?? "")
                             ),
                             primaryButton: .destructive(
                                 Text("OK")

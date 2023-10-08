@@ -1,5 +1,6 @@
 import CGMBLEKit
 import Combine
+import CoreData
 import G7SensorKit
 import SwiftDate
 import SwiftUI
@@ -13,6 +14,8 @@ extension NightscoutConfig {
         @Injected() private var cgmManager: FetchGlucoseManager!
         @Injected() private var storage: FileStorage!
 
+        let coredataContext = CoreDataStack.shared.persistentContainer.viewContext
+
         @Published var url = ""
         @Published var secret = ""
         @Published var message = ""
@@ -25,6 +28,7 @@ extension NightscoutConfig {
         @Published var useLocalSource = false
         @Published var localPort: Decimal = 0
         @Published var units: GlucoseUnits = .mmolL
+        @Published var errorString: String = ""
 
         override func subscribe() {
             url = keychain.getValue(String.self, forKey: Config.urlKey) ?? ""
@@ -82,16 +86,14 @@ extension NightscoutConfig {
             return NightscoutAPI(url: url, secret: secret)
         }
 
-        func importSettings() -> String {
+        func importSettings() {
             guard let nightscout = nightscoutAPI else {
-                return "Can't access nightscoutAPI"
+                saveError("Can't access nightscoutAPI")
+                return // "Can't access nightscoutAPI"
             }
-
             let group = DispatchGroup()
             group.enter()
-
             var error = ""
-
             let path = "/api/v1/profile.json"
             let timeout: TimeInterval = 60
 
@@ -103,7 +105,6 @@ extension NightscoutConfig {
             components.queryItems = [
                 URLQueryItem(name: "count", value: "1")
             ]
-
             var url = URLRequest(url: components.url!)
             url.allowsConstrainedNetworkAccess = false
             url.timeoutInterval = timeout
@@ -111,23 +112,22 @@ extension NightscoutConfig {
             if let secret = nightscout.secret {
                 url.addValue(secret.sha1(), forHTTPHeaderField: "api-secret")
             }
-
             let task = URLSession.shared.dataTask(with: url) { data, response, error_ in
                 if let error_ = error_ {
-                    print("Error occured:", error_)
+                    print("Error occured: " + error_.localizedDescription)
                     // handle error
+                    self.saveError("Error occured: " + error_.localizedDescription)
                     error = error_.localizedDescription
                     return
                 }
                 guard let httpResponse = response as? HTTPURLResponse,
                       (200 ... 299).contains(httpResponse.statusCode)
                 else {
-                    print("Error occured!", error_ as Any)
+                    print("Error occured! " + error_.debugDescription)
                     // handle error
-                    error = error_.debugDescription
+                    self.saveError(error_.debugDescription)
                     return
                 }
-
                 let jsonDecoder = JSONCoding.decoder
 
                 if let mimeType = httpResponse.mimeType, mimeType == "application/json",
@@ -137,7 +137,7 @@ extension NightscoutConfig {
                         let fetchedProfileStore = try jsonDecoder.decode([FetchedNightscoutProfileStore].self, from: data)
                         guard let fetchedProfile: ScheduledNightscoutProfile = fetchedProfileStore.first?.store["default"]
                         else {
-                            error = "Can't find default Nightscout Profile"
+                            error = "Can't find the default Nightscout Profile."
                             group.leave()
                             return
                         }
@@ -145,9 +145,9 @@ extension NightscoutConfig {
                         guard fetchedProfile.units.contains(self.units.rawValue.prefix(4)) else {
                             debug(
                                 .nightscout,
-                                "Mismatching units Nightcosut/Pump Settings. Import settings aborted."
+                                "Mismatching glucose units in Nightscout and Pump Settings. Import settings aborted."
                             )
-                            error = "Mismatching units Nightcosut/Pump Settings. Import settings aborted."
+                            error = "Mismatching glucose units in Nightscout and Pump Settings. Import settings aborted."
                             group.leave()
                             return
                         }
@@ -206,16 +206,21 @@ extension NightscoutConfig {
                 }
             }
             task.resume()
-
-            group.wait(wallTimeout: .distantFuture)
-
+            group.wait(wallTimeout: .now() + 2000)
             group.notify(queue: .global(qos: .background)) {
-                if error.count > 3 {
-                    self.imported = false
-                } else { self.imported = true }
+                self.saveError(error)
             }
+        }
 
-            return error
+        func saveError(_ string: String) {
+            coredataContext.performAndWait {
+                let saveToCoreData = ImportError(context: self.coredataContext)
+                saveToCoreData.date = Date()
+                saveToCoreData.error = string
+                if coredataContext.hasChanges {
+                    try? coredataContext.save()
+                }
+            }
         }
 
         func saveSettings() {}
