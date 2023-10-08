@@ -68,9 +68,16 @@ extension NightscoutConfig {
                     Button("Import settings from Nightscout") {
                         importAlert = Alert(
                             title: Text("Import settings?"),
-                            message: Text("\n" + "This will replace your current pump settings" + "\n"),
+                            message: Text(
+                                "\n" +
+                                    NSLocalizedString(
+                                        "This will replace some or all of your current pump settings. Are you sure you want to import profile settings from Nightscout?",
+                                        comment: "Profile Import Alert"
+                                    ) +
+                                    "\n"
+                            ),
                             primaryButton: .destructive(
-                                Text("Import"),
+                                Text("Yes, Import"),
                                 action: {
                                     state.importSettings()
                                     importedHasRun = true
@@ -88,8 +95,12 @@ extension NightscoutConfig {
                             title: Text("Settings imported"),
                             message: Text(
                                 (fetchedErrors.first?.error ?? "").count < 4 ?
-                                    "\nNow please verify your new settings:\n\n* Basal Settings\n * Carb Ratios\n * Glucose Targets\n * Insulin Sensitivities\n\n in iAPS Settings > Configuration" :
-                                    "\nImport failed:\n\n* " + (fetchedErrors.first?.error ?? "")
+                                    NSLocalizedString(
+                                        "\nNow please verify all of your new settings thoroughly:\n\n* Basal Settings\n * Carb Ratios\n * Glucose Targets\n * Insulin Sensitivities\n\n in iAPS Settings > Configuration.\n\nBad or invalid profile settings could have disatrous effects.",
+                                        comment: "Imported Profiles Alert"
+                                    ) :
+                                    NSLocalizedString("\nImport failed:\n\n*", comment: "Failed Profile Import Alert") +
+                                    NSLocalizedString(fetchedErrors.first?.error ?? "", comment: "Import Error")
                             ),
                             primaryButton: .destructive(
                                 Text("OK")

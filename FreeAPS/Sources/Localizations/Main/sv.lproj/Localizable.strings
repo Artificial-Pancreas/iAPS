@@ -314,6 +314,36 @@ Enact a temp Basal or a temp target */
 /* Allow remote control from NS */
 "Remote control" = "Fjärrstyrning";
 
+/* Imported Profiles Alert */
+"\nNow please verify all of your new settings thoroughly:\n\n* Basal Settings\n * Carb Ratios\n * Glucose Targets\n * Insulin Sensitivities\n\n in iAPS Settings > Configuration.\n\nBad or invalid profile settings could have disatrous effects." = "\nKontrollera nu alla dina nya pumpinställningar noga:\n\n* Basalinställningar\n * Insulinkvoter\n * Målvärden\n * Insulinkänslighet\n\n i Inställningar > Konfiguration.\n\nDåliga eller ogiltiga pumpinställningar kan gå katastrofala följder.";
+
+/* Failed Profile Import Alert */
+"\nImport failed:\n\n*" = "\nImport misslyckades:\n\n*";
+
+/* Profile Import Alert */
+"This will replace some or all of your current pump settings. Are you sure you want to import profile settings from Nightscout?" = "Detta kommer att ersätta alla eller vissa av dina pumpinställningar. Är du säker att du vill fortsätta med import av inställningar?";
+
+/* */
+"Yes, Import" = "Ja, importera";
+
+/* */
+"Import settings from Nightscout" = "Importera inställningar från Nightscout";
+
+/* */
+"Import settings?" = "Importera inställningar?";
+
+/* */
+"Import from Nightscout" = "Import från Nightscout";
+
+/* */
+"Settings imported" = "Inställningar importerade";
+
+/* Import Error */
+"Mismatching glucose units in Nightscout and Pump Settings. Import settings aborted." = "Du har olika inställningar för blodsockernehet i Nightscout och iAPS. Import därför avbruten.";
+
+/* Import Error */
+"Can't find the default Nightscout Profile." = "Kan inte hitta en profil i Nightcsout";
+
 /* Add Medtronic pump */
 "Add Medtronic" = "Lägg till Medtronic";
 
