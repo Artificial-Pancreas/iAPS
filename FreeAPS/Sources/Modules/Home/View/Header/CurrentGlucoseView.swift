@@ -2,6 +2,7 @@ import SwiftUI
 
 struct CurrentGlucoseView: View {
     @Binding var recentGlucose: BloodGlucose?
+    @Binding var timerDate: Date
     @Binding var delta: Int?
     @Binding var units: GlucoseUnits
     @Binding var alarm: GlucoseAlarm?
