@@ -165,9 +165,10 @@ extension NightscoutConfig {
                             .map { basal -> BasalProfileEntry in
                                 BasalProfileEntry(
                                     start: basal.time,
-                                    minutes: basal.timeAsSeconds,
+                                    minutes: basal.timeAsSeconds / 60,
                                     rate: basal.value
                                 ) }
+
                         let sensitivities = fetchedProfile.sens.map { sensitivity -> InsulinSensitivityEntry in
                             InsulinSensitivityEntry(
                                 sensitivity: self.units == .mmolL ? sensitivity.value : sensitivity.value.asMgdL,
