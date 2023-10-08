@@ -1,5 +1,6 @@
 import CGMBLEKit
 import Combine
+import CoreData
 import G7SensorKit
 import SwiftDate
 import SwiftUI
@@ -11,6 +12,9 @@ extension NightscoutConfig {
         @Injected() private var glucoseStorage: GlucoseStorage!
         @Injected() private var healthKitManager: HealthKitManager!
         @Injected() private var cgmManager: FetchGlucoseManager!
+        @Injected() private var storage: FileStorage!
+
+        let coredataContext = CoreDataStack.shared.persistentContainer.viewContext
 
         @Published var url = ""
         @Published var secret = ""
@@ -22,10 +26,12 @@ extension NightscoutConfig {
         @Published var uploadGlucose = true // Upload Glucose
         @Published var useLocalSource = false
         @Published var localPort: Decimal = 0
+        @Published var units: GlucoseUnits = .mmolL
 
         override func subscribe() {
             url = keychain.getValue(String.self, forKey: Config.urlKey) ?? ""
             secret = keychain.getValue(String.self, forKey: Config.secretKey) ?? ""
+            units = settingsManager.settings.units
 
             subscribeSetting(\.isUploadEnabled, on: $isUploadEnabled) { isUploadEnabled = $0 }
             subscribeSetting(\.useLocalGlucoseSource, on: $useLocalSource) { useLocalSource = $0 }
@@ -66,6 +72,161 @@ extension NightscoutConfig {
                     self.keychain.setValue(self.secret, forKey: Config.secretKey)
                 }
                 .store(in: &lifetime)
+        }
+
+        private var nightscoutAPI: NightscoutAPI? {
+            guard let urlString = keychain.getValue(String.self, forKey: NightscoutConfig.Config.urlKey),
+                  let url = URL(string: urlString),
+                  let secret = keychain.getValue(String.self, forKey: NightscoutConfig.Config.secretKey)
+            else {
+                return nil
+            }
+            return NightscoutAPI(url: url, secret: secret)
+        }
+
+        func importSettings() {
+            guard let nightscout = nightscoutAPI else {
+                saveError("Can't access nightscoutAPI")
+                return
+            }
+            let group = DispatchGroup()
+            group.enter()
+            var error = ""
+            let path = "/api/v1/profile.json"
+            let timeout: TimeInterval = 60
+
+            var components = URLComponents()
+            components.scheme = nightscout.url.scheme
+            components.host = nightscout.url.host
+            components.port = nightscout.url.port
+            components.path = path
+            components.queryItems = [
+                URLQueryItem(name: "count", value: "1")
+            ]
+            var url = URLRequest(url: components.url!)
+            url.allowsConstrainedNetworkAccess = false
+            url.timeoutInterval = timeout
+
+            if let secret = nightscout.secret {
+                url.addValue(secret.sha1(), forHTTPHeaderField: "api-secret")
+            }
+            let task = URLSession.shared.dataTask(with: url) { data, response, error_ in
+                if let error_ = error_ {
+                    print("Error occured: " + error_.localizedDescription)
+                    // handle error
+                    self.saveError("Error occured: " + error_.localizedDescription)
+                    error = error_.localizedDescription
+                    return
+                }
+                guard let httpResponse = response as? HTTPURLResponse,
+                      (200 ... 299).contains(httpResponse.statusCode)
+                else {
+                    print("Error occured! " + error_.debugDescription)
+                    // handle error
+                    self.saveError(error_.debugDescription)
+                    return
+                }
+                let jsonDecoder = JSONCoding.decoder
+
+                if let mimeType = httpResponse.mimeType, mimeType == "application/json",
+                   let data = data
+                {
+                    do {
+                        let fetchedProfileStore = try jsonDecoder.decode([FetchedNightscoutProfileStore].self, from: data)
+                        guard let fetchedProfile: ScheduledNightscoutProfile = fetchedProfileStore.first?.store["default"]
+                        else {
+                            error = "Can't find the default Nightscout Profile."
+                            group.leave()
+                            return
+                        }
+
+                        guard fetchedProfile.units.contains(self.units.rawValue.prefix(4)) else {
+                            debug(
+                                .nightscout,
+                                "Mismatching glucose units in Nightscout and Pump Settings. Import settings aborted."
+                            )
+                            error = "Mismatching glucose units in Nightscout and Pump Settings. Import settings aborted."
+                            group.leave()
+                            return
+                        }
+
+                        let carbratios = fetchedProfile.carbratio
+                            .map { carbratio -> CarbRatioEntry in
+                                CarbRatioEntry(
+                                    start: carbratio.time,
+                                    offset: (carbratio.timeAsSeconds ?? self.offset(carbratio.time)) / 60,
+                                    ratio: carbratio.value
+                                ) }
+                        let carbratiosProfile = CarbRatios(units: CarbUnit.grams, schedule: carbratios)
+
+                        let basals = fetchedProfile.basal
+                            .map { basal -> BasalProfileEntry in
+                                BasalProfileEntry(
+                                    start: basal.time,
+                                    minutes: (basal.timeAsSeconds ?? self.offset(basal.time)) / 60,
+                                    rate: basal.value
+                                ) }
+
+                        let sensitivities = fetchedProfile.sens.map { sensitivity -> InsulinSensitivityEntry in
+                            InsulinSensitivityEntry(
+                                sensitivity: self.units == .mmolL ? sensitivity.value : sensitivity.value.asMgdL,
+                                offset: (sensitivity.timeAsSeconds ?? self.offset(sensitivity.time)) / 60,
+                                start: sensitivity.time
+                            ) }
+                        let sensitivitiesProfile = InsulinSensitivities(
+                            units: self.units,
+                            userPrefferedUnits: self.units,
+                            sensitivities: sensitivities
+                        )
+
+                        let targets = fetchedProfile.target_low
+                            .map { target -> BGTargetEntry in
+                                BGTargetEntry(
+                                    low: self.units == .mmolL ? target.value : target.value.asMgdL,
+                                    high: self.units == .mmolL ? target.value : target.value.asMgdL,
+                                    start: target.time,
+                                    offset: (target.timeAsSeconds ?? self.offset(target.time)) / 60
+                                ) }
+                        let targetsProfile = BGTargets(
+                            units: self.units,
+                            userPrefferedUnits: self.units,
+                            targets: targets
+                        )
+
+                        self.storage.save(carbratiosProfile, as: OpenAPS.Settings.carbRatios)
+                        self.storage.save(basals, as: OpenAPS.Settings.basalProfile)
+                        self.storage.save(sensitivitiesProfile, as: OpenAPS.Settings.insulinSensitivities)
+                        self.storage.save(targetsProfile, as: OpenAPS.Settings.bgTargets)
+
+                        group.leave()
+
+                    } catch let parsingError {
+                        print(parsingError)
+                    }
+                }
+            }
+            task.resume()
+            group.wait(wallTimeout: .now() + 5)
+            group.notify(queue: .global(qos: .background)) {
+                self.saveError(error)
+            }
+        }
+
+        func offset(_ string: String) -> Int {
+            let hours = Int(string.prefix(2)) ?? 0
+            let minutes = Int(string.suffix(2)) ?? 0
+            return hours * 60 + minutes * 60
+        }
+
+        func saveError(_ string: String) {
+            coredataContext.performAndWait {
+                let saveToCoreData = ImportError(context: self.coredataContext)
+                saveToCoreData.date = Date()
+                saveToCoreData.error = string
+                if coredataContext.hasChanges {
+                    try? coredataContext.save()
+                }
+            }
         }
 
         func backfillGlucose() {
