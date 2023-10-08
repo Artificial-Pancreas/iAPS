@@ -82,10 +82,15 @@ extension NightscoutConfig {
             return NightscoutAPI(url: url, secret: secret)
         }
 
-        func importSettings() {
+        func importSettings() -> String {
             guard let nightscout = nightscoutAPI else {
-                return
+                return "Can't access nightscoutAPI"
             }
+
+            let group = DispatchGroup()
+            group.enter()
+
+            var error = ""
 
             let path = "/api/v1/profile.json"
             let timeout: TimeInterval = 60
@@ -107,17 +112,19 @@ extension NightscoutConfig {
                 url.addValue(secret.sha1(), forHTTPHeaderField: "api-secret")
             }
 
-            let task = URLSession.shared.dataTask(with: url) { data, response, error in
-                if let error = error {
-                    print("Error occured:", error)
+            let task = URLSession.shared.dataTask(with: url) { data, response, error_ in
+                if let error_ = error_ {
+                    print("Error occured:", error_)
                     // handle error
+                    error = error_.localizedDescription
                     return
                 }
                 guard let httpResponse = response as? HTTPURLResponse,
                       (200 ... 299).contains(httpResponse.statusCode)
                 else {
-                    print("Error occured!", error as Any)
+                    print("Error occured!", error_ as Any)
                     // handle error
+                    error = error_.debugDescription
                     return
                 }
 
@@ -129,13 +136,19 @@ extension NightscoutConfig {
                     do {
                         let fetchedProfileStore = try jsonDecoder.decode([FetchedNightscoutProfileStore].self, from: data)
                         guard let fetchedProfile: ScheduledNightscoutProfile = fetchedProfileStore.first?.store["default"]
-                        else { return }
+                        else {
+                            error = "Can't find default Nightscout Profile"
+                            group.leave()
+                            return
+                        }
 
                         guard fetchedProfile.units.contains(self.units.rawValue.prefix(4)) else {
                             debug(
                                 .nightscout,
                                 "Mismatching units Nightcosut/Pump Settings. Import settings aborted."
                             )
+                            error = "Mismatching units Nightcosut/Pump Settings. Import settings aborted."
+                            group.leave()
                             return
                         }
 
@@ -167,8 +180,6 @@ extension NightscoutConfig {
                             sensitivities: sensitivities
                         )
 
-                        // iAPS does not have target ranges but a simple target glucose; targets will therefore adhere to target_low.value == target_high.value
-                        // => this is the reasoning for only using target_low here
                         let targets = fetchedProfile.target_low
                             .map { target -> BGTargetEntry in
                                 BGTargetEntry(
@@ -187,6 +198,7 @@ extension NightscoutConfig {
                         self.storage.save(basals, as: OpenAPS.Settings.basalProfile)
                         self.storage.save(sensitivitiesProfile, as: OpenAPS.Settings.insulinSensitivities)
                         self.storage.save(targetsProfile, as: OpenAPS.Settings.bgTargets)
+                        group.leave()
 
                     } catch let parsingError {
                         print(parsingError)
@@ -194,7 +206,16 @@ extension NightscoutConfig {
                 }
             }
             task.resume()
-            imported = true
+
+            group.wait(wallTimeout: .distantFuture)
+
+            group.notify(queue: .global(qos: .background)) {
+                if error.count > 3 {
+                    self.imported = false
+                } else { self.imported = true }
+            }
+
+            return error
         }
 
         func saveSettings() {}
