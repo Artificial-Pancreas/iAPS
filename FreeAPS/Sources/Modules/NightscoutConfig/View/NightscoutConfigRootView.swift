@@ -78,15 +78,9 @@ extension NightscoutConfig {
                             prefsMessage = "Preferences: OK"
                         }
 
-                        var profMessage = "Profile: Failed"
-                        if state.isProfileUploadOK {
-                            profMessage = "Profile: OK"
-                        }
-
                         return Alert(
                             title: Text("Upload Status"),
                             message: Text(
-                                profMessage + "\r\n" +
                                     prefsMessage + "\r\n" +
                                     statsMessage
                             )

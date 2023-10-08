@@ -26,7 +26,6 @@ extension NightscoutConfig {
 
         @Published var isStatisticsUploadOK = false
         @Published var isPreferencesUploadOK = false
-        @Published var isProfileUploadOK = false
 
         override func subscribe() {
             url = keychain.getValue(String.self, forKey: Config.urlKey) ?? ""
@@ -76,14 +75,11 @@ extension NightscoutConfig {
         func pushSettings() {
             isStatisticsUploadOK = false
             isPreferencesUploadOK = false
-            isProfileUploadOK = false
 
-            nightscoutManager.uploadProfile()
             apsManager.statistics(forceRun: true)
 
             while nightscoutManager.isStatisticsUploaded == -1 ||
-                nightscoutManager.isPreferencesUploaded == -1 ||
-                nightscoutManager.isProfileUploaded == -1
+                nightscoutManager.isPreferencesUploaded == -1
             {
                 sleep(1)
             }
@@ -94,10 +90,6 @@ extension NightscoutConfig {
 
             if nightscoutManager.isPreferencesUploaded == 0 {
                 isPreferencesUploadOK = true
-            }
-
-            if nightscoutManager.isProfileUploaded == 0 {
-                isProfileUploadOK = true
             }
         }
 

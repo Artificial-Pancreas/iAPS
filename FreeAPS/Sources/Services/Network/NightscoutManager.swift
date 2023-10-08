@@ -19,7 +19,6 @@ protocol NightscoutManager: GlucoseSource {
 
     var isStatisticsUploaded: Int { get }
     var isPreferencesUploaded: Int { get }
-    var isProfileUploaded: Int { get }
 
     var cgmURL: URL? { get }
 }
@@ -39,7 +38,6 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
 
     @Published var isStatisticsUploaded: Int = -1
     @Published var isPreferencesUploaded: Int = -1
-    @Published var isProfileUploaded: Int = -1
 
     private let processQueue = DispatchQueue(label: "BaseNetworkManager.processQueue")
     private var ping: TimeInterval?
@@ -427,7 +425,6 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
         else {
             debug(.nightscout, "uploadProfile: Not all settings found to build profile!")
             NSLog("NightscoutManager uploadProfile Not all settings found to build profile!")
-            isProfileUploaded = 1
             return
         }
 
@@ -525,7 +522,6 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
             return
         }
 
-        isProfileUploaded = -1
         processQueue.async {
             nightscout.uploadProfile(p)
                 .sink { completion in
@@ -533,10 +529,8 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
                     case .finished:
                         self.storage.save(p, as: OpenAPS.Nightscout.uploadedProfile)
                         debug(.nightscout, "Profile uploaded")
-                        self.isProfileUploaded = 0
                     case let .failure(error):
                         debug(.nightscout, error.localizedDescription)
-                        self.isProfileUploaded = 1
                     }
                 } receiveValue: {}
                 .store(in: &self.lifetime)
