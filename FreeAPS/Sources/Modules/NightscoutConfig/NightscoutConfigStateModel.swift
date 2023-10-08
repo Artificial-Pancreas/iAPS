@@ -21,14 +21,12 @@ extension NightscoutConfig {
         @Published var message = ""
         @Published var connecting = false
         @Published var backfilling = false
-        @Published var imported = false // Allow Setting Importss
         @Published var isUploadEnabled = false // Allow uploads
         @Published var uploadStats = false // Upload Statistics
         @Published var uploadGlucose = true // Upload Glucose
         @Published var useLocalSource = false
         @Published var localPort: Decimal = 0
         @Published var units: GlucoseUnits = .mmolL
-        @Published var errorString: String = ""
 
         override func subscribe() {
             url = keychain.getValue(String.self, forKey: Config.urlKey) ?? ""
@@ -89,7 +87,7 @@ extension NightscoutConfig {
         func importSettings() {
             guard let nightscout = nightscoutAPI else {
                 saveError("Can't access nightscoutAPI")
-                return // "Can't access nightscoutAPI"
+                return
             }
             let group = DispatchGroup()
             group.enter()
@@ -199,6 +197,7 @@ extension NightscoutConfig {
                         self.storage.save(basals, as: OpenAPS.Settings.basalProfile)
                         self.storage.save(sensitivitiesProfile, as: OpenAPS.Settings.insulinSensitivities)
                         self.storage.save(targetsProfile, as: OpenAPS.Settings.bgTargets)
+
                         group.leave()
 
                     } catch let parsingError {
@@ -207,7 +206,7 @@ extension NightscoutConfig {
                 }
             }
             task.resume()
-            group.wait(wallTimeout: .now() + 2000)
+            group.wait(wallTimeout: .now() + 5)
             group.notify(queue: .global(qos: .background)) {
                 self.saveError(error)
             }
@@ -229,8 +228,6 @@ extension NightscoutConfig {
                 }
             }
         }
-
-        func saveSettings() {}
 
         func backfillGlucose() {
             backfilling = true
