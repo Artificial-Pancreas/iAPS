@@ -82,7 +82,7 @@ extension DataTable {
             .navigationBarItems(
                 leading: Button("Close", action: state.hideModal),
                 trailing: HStack {
-                    if state.mode == .treatments && !showNonPumpInsulin {
+                    if state.mode == .treatments {
                         Button(action: { showNonPumpInsulin = true }) {
                             Text(NSLocalizedString("Non-Pump Insulin", comment: "Non-Pump Insulin button text"))
                             Image(systemName: "plus.circle.fill")
@@ -90,7 +90,7 @@ extension DataTable {
                                 .frame(width: 24, height: 24)
                         }
                     }
-                    if state.mode == .glucose && !showManualGlucose {
+                    if state.mode == .glucose {
                         Button(action: { showManualGlucose = true }) {
                             Text(NSLocalizedString("Glucose", comment: "Glucose button text"))
                             Image(systemName: "plus.circle.fill")
@@ -100,10 +100,10 @@ extension DataTable {
                     }
                 }
             )
-            .sheet(isPresented: $showManualGlucose) {
+            .sheet(isPresented: $showManualGlucose, onDismiss: { state.manualGlucose = 0 }) {
                 addManualGlucoseView
             }
-            .sheet(isPresented: $showNonPumpInsulin) {
+            .sheet(isPresented: $showNonPumpInsulin, onDismiss: { state.nonPumpInsulinAmount = 0 }) {
                 addNonPumpInsulinView
             }
         }
