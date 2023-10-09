@@ -17,6 +17,8 @@ protocol NightscoutManager: GlucoseSource {
     func uploadPreferences()
     func uploadProfile()
     var cgmURL: URL? { get }
+
+    var isPreferencesUploaded: Int { get }
 }
 
 final class BaseNightscoutManager: NightscoutManager, Injectable {
@@ -31,6 +33,8 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
     @Injected() private var broadcaster: Broadcaster!
     @Injected() private var reachabilityManager: ReachabilityManager!
     @Injected() var healthkitManager: HealthKitManager!
+
+    @Published var isPreferencesUploaded: Int = -1
 
     private let processQueue = DispatchQueue(label: "BaseNetworkManager.processQueue")
     private var ping: TimeInterval?
@@ -275,6 +279,8 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
     }
 
     func uploadPreferences() {
+        isPreferencesUploaded = -1
+
         let prefs = NightscoutPreferences(
             preferences: settingsManager.preferences
         )
@@ -289,8 +295,10 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
                     switch completion {
                     case .finished:
                         debug(.nightscout, "Preferences uploaded")
+                        self.isPreferencesUploaded = 0
                     case let .failure(error):
                         debug(.nightscout, error.localizedDescription)
+                        self.isPreferencesUploaded = 1
                     }
                 } receiveValue: {}
                 .store(in: &self.lifetime)

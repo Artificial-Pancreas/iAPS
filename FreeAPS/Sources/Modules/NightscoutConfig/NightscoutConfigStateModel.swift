@@ -29,6 +29,7 @@ extension NightscoutConfig {
         @Published var localPort: Decimal = 0
         @Published var units: GlucoseUnits = .mmolL
         @Published var importedHasRun = false
+        @Published var isPreferencesUploadOK = false
 
         override func subscribe() {
             url = keychain.getValue(String.self, forKey: Config.urlKey) ?? ""
@@ -238,6 +239,20 @@ extension NightscoutConfig {
                 if coredataContext.hasChanges {
                     try? coredataContext.save()
                 }
+            }
+        }
+
+        func pushPreferences() {
+            isPreferencesUploadOK = false
+
+            nightscoutManager.uploadPreferences()
+
+            while nightscoutManager.isPreferencesUploaded == -1 {
+                sleep(1)
+            }
+
+            if nightscoutManager.isPreferencesUploaded == 0 {
+                isPreferencesUploadOK = true
             }
         }
 

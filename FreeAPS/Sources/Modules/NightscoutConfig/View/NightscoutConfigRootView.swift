@@ -8,6 +8,7 @@ extension NightscoutConfig {
         @StateObject var state = StateModel()
         @State var importAlert: Alert?
         @State var isImportAlertPresented = false
+        @State var showPreferencesAlert = false
 
         @FetchRequest(
             entity: ImportError.entity(),
@@ -106,6 +107,26 @@ extension NightscoutConfig {
                             secondaryButton: .cancel()
                         )
                     }
+
+                Section {
+                    Button("Upload Preferences") {
+                        state.pushPreferences()
+                        showPreferencesAlert = true
+                    }
+                    .alert(isPresented: $showPreferencesAlert) {
+                        var prefsMessage = "Preferences: Failed"
+                        if state.isPreferencesUploadOK {
+                            prefsMessage = "Preferences: OK"
+                        }
+
+                        return Alert(
+                            title: Text("Upload Status"),
+                            message: Text(prefsMessage)
+                        )
+                    }
+                    .disabled(state.url.isEmpty || state.connecting)
+
+                } header: { Text("Manual Uploads") }
 
                 Section {
                     Toggle("Use local glucose server", isOn: $state.useLocalSource)
