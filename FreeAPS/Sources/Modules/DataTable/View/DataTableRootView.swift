@@ -18,6 +18,7 @@ extension DataTable {
         @State private var removeGlucoseAlert: Alert?
         @State private var showManualGlucose: Bool = false
         @State private var showNonPumpInsulin: Bool = false
+        @State private var isAmountUnconfirmed: Bool = true
 
         @Environment(\.colorScheme) var colorScheme
 
@@ -100,10 +101,10 @@ extension DataTable {
                     }
                 }
             )
-            .sheet(isPresented: $showManualGlucose, onDismiss: { state.manualGlucose = 0 }) {
+            .sheet(isPresented: $showManualGlucose, onDismiss: { if isAmountUnconfirmed { state.manualGlucose = 0 } }) {
                 addManualGlucoseView
             }
-            .sheet(isPresented: $showNonPumpInsulin, onDismiss: { state.nonPumpInsulinAmount = 0 }) {
+            .sheet(isPresented: $showNonPumpInsulin, onDismiss: { if isAmountUnconfirmed { state.nonPumpInsulinAmount = 0 } }) {
                 addNonPumpInsulinView
             }
         }
@@ -136,6 +137,7 @@ extension DataTable {
 
                                 Button {
                                     state.addManualGlucose()
+                                    isAmountUnconfirmed = false
                                     showManualGlucose = false
                                 }
                                 label: { Text("Save") }
@@ -183,6 +185,7 @@ extension DataTable {
                             HStack {
                                 Button {
                                     state.addNonPumpInsulin()
+                                    isAmountUnconfirmed = false
                                     showNonPumpInsulin = false
                                 }
                                 label: {
