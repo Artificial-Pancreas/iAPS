@@ -100,16 +100,16 @@ extension AutotuneConfig {
                         Button {
                             replaceAlert = true
                         }
-                        label: { Text("Save as your Normal Basal Profile") }
+                        label: { Text("Save as your Normal Basal Rates") }
                     } header: {
-                        Text("Replace")
+                        Text("Replace Normal Basal")
                     }
                 }
             }
             .onAppear(perform: configureView)
             .navigationTitle("Autotune")
             .navigationBarTitleDisplayMode(.automatic)
-            .alert(Text("Replace?"), isPresented: $replaceAlert) {
+            .alert(Text("Are you sure?"), isPresented: $replaceAlert) {
                 Button("Yes", action: {
                     state.replace()
                     replaceAlert.toggle()
