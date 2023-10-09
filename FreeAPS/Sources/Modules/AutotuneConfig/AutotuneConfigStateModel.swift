@@ -4,6 +4,7 @@ import SwiftUI
 extension AutotuneConfig {
     final class StateModel: BaseStateModel<Provider> {
         @Injected() var apsManager: APSManager!
+        @Injected() private var storage: FileStorage!
         @Published var useAutotune = false
         @Published var onlyAutotuneBasals = false
         @Published var autotune: Autotune?
@@ -58,6 +59,21 @@ extension AutotuneConfig {
             apsManager.makeProfiles()
                 .cancellable()
                 .store(in: &lifetime)
+        }
+
+        func replace() {
+            if let autotunedBasals = autotune {
+                let basals = autotunedBasals.basalProfile
+                    .map { basal -> BasalProfileEntry in
+                        BasalProfileEntry(
+                            start: String(basal.start.prefix(5)),
+                            minutes: basal.minutes,
+                            rate: basal.rate
+                        )
+                    }
+                storage.save(basals, as: OpenAPS.Settings.basalProfile)
+                debug(.service, "Basals have been replaced with Autotuned Basals by user.")
+            }
         }
     }
 }
