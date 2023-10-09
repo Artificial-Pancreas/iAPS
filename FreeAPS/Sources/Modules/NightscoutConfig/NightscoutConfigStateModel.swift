@@ -13,6 +13,7 @@ extension NightscoutConfig {
         @Injected() private var healthKitManager: HealthKitManager!
         @Injected() private var cgmManager: FetchGlucoseManager!
         @Injected() private var storage: FileStorage!
+        @Injected() var unlockmanager: UnlockManager!
 
         let coredataContext = CoreDataStack.shared.persistentContainer.viewContext
 
@@ -27,6 +28,7 @@ extension NightscoutConfig {
         @Published var useLocalSource = false
         @Published var localPort: Decimal = 0
         @Published var units: GlucoseUnits = .mmolL
+        @Published var importedHasRun = false
 
         override func subscribe() {
             url = keychain.getValue(String.self, forKey: Config.urlKey) ?? ""
@@ -82,6 +84,16 @@ extension NightscoutConfig {
                 return nil
             }
             return NightscoutAPI(url: url, secret: secret)
+        }
+
+        func startImport() {
+            unlockmanager.unlock()
+                .sink { _ in } receiveValue: { [weak self] _ in
+                    guard let self = self else { return }
+                    importSettings()
+                    importedHasRun = true
+                }
+                .store(in: &lifetime)
         }
 
         func importSettings() {

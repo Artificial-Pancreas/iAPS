@@ -8,7 +8,6 @@ extension NightscoutConfig {
         @StateObject var state = StateModel()
         @State var importAlert: Alert?
         @State var isImportAlertPresented = false
-        @State var importedHasRun = false
 
         @FetchRequest(
             entity: ImportError.entity(),
@@ -79,8 +78,7 @@ extension NightscoutConfig {
                             primaryButton: .destructive(
                                 Text("Yes, Import"),
                                 action: {
-                                    state.importSettings()
-                                    importedHasRun = true
+                                    state.startImport()
                                 }
                             ),
                             secondaryButton: .cancel()
@@ -90,7 +88,7 @@ extension NightscoutConfig {
 
                 } header: { Text("Import from Nightscout") }
 
-                    .alert(isPresented: $importedHasRun) {
+                    .alert(isPresented: $state.importedHasRun) {
                         Alert(
                             title: Text("Settings imported"),
                             message: Text(
