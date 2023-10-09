@@ -206,7 +206,7 @@ extension NightscoutConfig {
                         // DIA. Save if changed.
                         let dia = fetchedProfile.dia
                         if dia != self.dia {
-                            let file = PumpSettings(insulinActionCurve: dia, maxBolus: self.maxBolus, maxBasal: self.maxBolus)
+                            let file = PumpSettings(insulinActionCurve: dia, maxBolus: self.maxBolus, maxBasal: self.maxBasal)
                             self.storage.save(file, as: OpenAPS.Settings.settings)
                             debug(.nightscout, "DIA setting updated to " + dia.description + " after a NS import.")
                         }
