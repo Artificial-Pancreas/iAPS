@@ -92,14 +92,13 @@ extension NightscoutConfig {
 
                     .alert(isPresented: $importedHasRun) {
                         Alert(
-                            title: Text("Settings imported"),
+                            title: Text((fetchedErrors.first?.error ?? "").count < 4 ? "Settings imported" : "Import Error"),
                             message: Text(
                                 (fetchedErrors.first?.error ?? "").count < 4 ?
                                     NSLocalizedString(
                                         "\nNow please verify all of your new settings thoroughly:\n\n* Basal Settings\n * Carb Ratios\n * Glucose Targets\n * Insulin Sensitivities\n\n in iAPS Settings > Configuration.\n\nBad or invalid profile settings could have disatrous effects.",
                                         comment: "Imported Profiles Alert"
                                     ) :
-                                    NSLocalizedString("\nImport failed:\n\n*", comment: "Failed Profile Import Alert") +
                                     NSLocalizedString(fetchedErrors.first?.error ?? "", comment: "Import Error")
                             ),
                             primaryButton: .destructive(
