@@ -201,25 +201,34 @@ extension NightscoutConfig {
                             targets: targets
                         )
 
-                        // SAVE TO STORAGE
+                        // IS THERE A PUMP?
                         guard let pump = self.apsManager.pumpManager else {
                             self.storage.save(carbratiosProfile, as: OpenAPS.Settings.carbRatios)
                             self.storage.save(basals, as: OpenAPS.Settings.basalProfile)
                             self.storage.save(sensitivitiesProfile, as: OpenAPS.Settings.insulinSensitivities)
                             self.storage.save(targetsProfile, as: OpenAPS.Settings.bgTargets)
-                            debug(.service, "Setings have been imported and saved by user.")
+                            debug(
+                                .service,
+                                "Settings were imported but the Basals couldn't be saved to pump (No pump). Check your basal settings and tap ´Save on Pump´ to sync the new basal settings"
+                            )
                             return
                         }
                         let syncValues = basals.map {
                             RepeatingScheduleValue(startTime: TimeInterval($0.minutes * 60), value: Double($0.rate))
                         }
+                        // SAVE TO STORAGE
                         // SAVE TO PUMP (LoopKit)
                         pump.syncBasalRateSchedule(items: syncValues) { result in
                             switch result {
                             case .success:
                                 self.storage.save(basals, as: OpenAPS.Settings.basalProfile)
-                                debug(.service, "Basals saved to pump!")
+                                self.storage.save(carbratiosProfile, as: OpenAPS.Settings.carbRatios)
+                                self.storage.save(sensitivitiesProfile, as: OpenAPS.Settings.insulinSensitivities)
+                                self.storage.save(targetsProfile, as: OpenAPS.Settings.bgTargets)
+                                debug(.service, "Settings have been imported and the Basals saved to pump!")
                             case .failure:
+                                error =
+                                    "Settings were imported but the Basals couldn't be saved to pump (communication error). Check your basal settings and tap ´Save on Pump´ to sync the new basal settings"
                                 debug(.service, "Basals couldn't be save to pump")
                             }
                         }
