@@ -2,6 +2,7 @@ import CGMBLEKit
 import Combine
 import CoreData
 import G7SensorKit
+import LoopKit
 import SwiftDate
 import SwiftUI
 
@@ -13,6 +14,7 @@ extension NightscoutConfig {
         @Injected() private var healthKitManager: HealthKitManager!
         @Injected() private var cgmManager: FetchGlucoseManager!
         @Injected() private var storage: FileStorage!
+        @Injected() var apsManager: APSManager!
 
         let coredataContext = CoreDataStack.shared.persistentContainer.viewContext
 
@@ -199,10 +201,29 @@ extension NightscoutConfig {
                             targets: targets
                         )
 
-                        self.storage.save(carbratiosProfile, as: OpenAPS.Settings.carbRatios)
-                        self.storage.save(basals, as: OpenAPS.Settings.basalProfile)
-                        self.storage.save(sensitivitiesProfile, as: OpenAPS.Settings.insulinSensitivities)
-                        self.storage.save(targetsProfile, as: OpenAPS.Settings.bgTargets)
+                        // SAVE TO STORAGE
+                        guard let pump = self.apsManager.pumpManager else {
+                            self.storage.save(carbratiosProfile, as: OpenAPS.Settings.carbRatios)
+                            self.storage.save(basals, as: OpenAPS.Settings.basalProfile)
+                            self.storage.save(sensitivitiesProfile, as: OpenAPS.Settings.insulinSensitivities)
+                            self.storage.save(targetsProfile, as: OpenAPS.Settings.bgTargets)
+                            debug(.service, "Setings have been imported and saved by user.")
+                            return
+                        }
+                        let syncValues = basals.map {
+                            RepeatingScheduleValue(startTime: TimeInterval($0.minutes * 60), value: Double($0.rate))
+                        }
+                        // SAVE TO PUMP (LoopKit)
+                        pump.syncBasalRateSchedule(items: syncValues) { result in
+                            switch result {
+                            case .success:
+                                self.storage.save(basals, as: OpenAPS.Settings.basalProfile)
+                                debug(.service, "Basals saved to pump!")
+                            case .failure:
+                                debug(.service, "Basals couldn't be save to pump")
+                            }
+                        }
+
                         // DIA. Save if changed.
                         let dia = fetchedProfile.dia
                         if dia != self.dia {
@@ -210,9 +231,7 @@ extension NightscoutConfig {
                             self.storage.save(file, as: OpenAPS.Settings.settings)
                             debug(.nightscout, "DIA setting updated to " + dia.description + " after a NS import.")
                         }
-
                         group.leave()
-
                     } catch let parsingError {
                         print(parsingError)
                     }
