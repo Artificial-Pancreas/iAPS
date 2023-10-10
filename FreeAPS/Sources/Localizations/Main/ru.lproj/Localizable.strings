@@ -17,7 +17,7 @@
 "Continue without bolus" = "Продолжить без болюса";
 
 /* Alert when adding large amount without bolusing */
-"\nAmount is more than your Max Bolus setting! \nAre you sure you want to add " = "\nAmount is more than your Max Bolus setting! \nAre you sure you want to add ";
+"\nAmount is more than your Max Bolus setting! \nAre you sure you want to add " = "\nКоличество превышает максимальную дозу болюса! \nВы уверены, что хотите добавить ";
 
 /* Header */
 "Enact Bolus" = "Ввод болюса";
@@ -1093,6 +1093,12 @@ Enact a temp Basal or a temp target */
 
 /* Autotune config */
 "Only Autotune Basal Insulin" = "Автотюн только Базального инсулина";
+
+/* */
+"Save as your Normal Basal Rates" = "Save as your Normal Basal Rates";
+
+/* */
+"Save on Pump" = "Сохранить на помпу";
 
 /* Debug option view Pump History */
 "Pump History" = "История помпы";
