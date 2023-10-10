@@ -102,7 +102,7 @@ extension AutotuneConfig {
                         }
                         label: { Text("Save as your Normal Basal Rates") }
                     } header: {
-                        Text("Replace Normal Basal")
+                        Text("Save on Pump")
                     }
                 }
             }
