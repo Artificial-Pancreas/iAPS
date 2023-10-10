@@ -1094,6 +1094,12 @@ Enact a temp Basal or a temp target */
 /* Autotune config */
 "Only Autotune Basal Insulin" = "Тільки Autotune Базал Інсулін";
 
+/* */
+"Save as your Normal Basal Rates" = "Save as your Normal Basal Rates";
+
+/* */
+"Save on Pump" = "Зберегти на Помпі";
+
 /* Debug option view Pump History */
 "Pump History" = "Історія Помпи";
 
