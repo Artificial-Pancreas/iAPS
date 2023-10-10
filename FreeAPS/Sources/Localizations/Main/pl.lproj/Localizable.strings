@@ -1096,6 +1096,12 @@ Połączono z Nightscout!";
 /* Autotune config */
 "Only Autotune Basal Insulin" = "Only Autotune Basal Insulin";
 
+/* */
+"Save as your Normal Basal Rates" = "Save as your Normal Basal Rates";
+
+/* */
+"Save on Pump" = "Zapisz na pompie";
+
 /* Debug option view Pump History */
 "Pump History" = "Pump History";
 
