@@ -1009,14 +1009,6 @@ final class BaseAPSManager: APSManager, Injectable {
                 requestGFS.predicate = NSPredicate(format: "glucose > 0 AND date > %@", filter.total)
                 requestGFS.sortDescriptors = [sortGlucose]
                 try? glucose = coredataContext.fetch(requestGFS)
-                // Today
-                /*
-                 let requestGFS_1 = Readings.fetchRequest() as NSFetchRequest<Readings>
-                 requestGFS_1.predicate = NSPredicate(format: "glucose > 0 AND date > %@", filter.today)
-                 let sortGlucose_1 = NSSortDescriptor(key: "date", ascending: false)
-                 requestGFS_1.sortDescriptors = [sortGlucose_1]
-                 try? glucose_1 = coredataContext.fetch(requestGFS_1)
-                 */
 
                 // First date
                 let previous = glucose.last?.date ?? Date()
