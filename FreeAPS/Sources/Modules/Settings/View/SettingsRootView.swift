@@ -49,11 +49,9 @@ extension Settings {
                     Toggle("Debug options", isOn: $state.debugOptions)
                     if state.debugOptions {
                         Group {
-                            Text("NS Upload Profile").onTapGesture {
-                                state.uploadProfile()
+                            Text("NS Upload Profile and Settings").onTapGesture {
+                                state.uploadProfileAndSettings()
                             }
-                            Text("NS Uploaded Profile")
-                                .navigationLink(to: .configEditor(file: OpenAPS.Nightscout.uploadedProfile), from: self)
                         }
                         Group {
                             Text("Preferences")
