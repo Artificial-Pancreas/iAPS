@@ -14,7 +14,7 @@ protocol NightscoutManager: GlucoseSource {
     func uploadStatus()
     func uploadGlucose()
     func uploadStatistics(dailystat: Statistics)
-    func uploadPreferences()
+    func uploadPreferences(_ preferences: Preferences)
     func uploadProfile()
     var cgmURL: URL? { get }
 }
@@ -274,7 +274,7 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
         }
     }
 
-    func uploadPreferences() {
+    func uploadPreferences(_ preferences: Preferences) {
         let prefs = NightscoutPreferences(
             preferences: settingsManager.preferences
         )
@@ -289,6 +289,7 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
                     switch completion {
                     case .finished:
                         debug(.nightscout, "Preferences uploaded")
+                        self.storage.save(preferences, as: OpenAPS.Nightscout.uploadedPreferences)
                     case let .failure(error):
                         debug(.nightscout, error.localizedDescription)
                     }
@@ -406,7 +407,8 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
         guard let sensitivities = storage.retrieve(OpenAPS.Settings.insulinSensitivities, as: InsulinSensitivities.self),
               let basalProfile = storage.retrieve(OpenAPS.Settings.basalProfile, as: [BasalProfileEntry].self),
               let carbRatios = storage.retrieve(OpenAPS.Settings.carbRatios, as: CarbRatios.self),
-              let targets = storage.retrieve(OpenAPS.Settings.bgTargets, as: BGTargets.self)
+              let targets = storage.retrieve(OpenAPS.Settings.bgTargets, as: BGTargets.self),
+              let preferences = storage.retrieve(OpenAPS.Settings.preferences, as: Preferences.self)
         else {
             NSLog("NightscoutManager uploadProfile Not all settings found to build profile!")
             return
@@ -494,15 +496,24 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
             store: [defaultProfile: ps]
         )
 
+        guard let nightscout = nightscoutAPI, isNetworkReachable, isUploadEnabled else {
+            return
+        }
+
+        // UPLOAD PREFERNCES WHEN CHANGED
+        if let uploadedPreferences = storage.retrieve(OpenAPS.Nightscout.uploadedPreferences, as: Preferences.self),
+           uploadedPreferences.rawJSON == preferences.rawJSON
+        {
+            NSLog("NightscoutManager Preferences, preferences unchanged")
+        } else { uploadPreferences(preferences) }
+
         if let uploadedProfile = storage.retrieve(OpenAPS.Nightscout.uploadedProfile, as: NightscoutProfileStore.self),
            (uploadedProfile.store[defaultProfile]?.rawJSON ?? "") == ps.rawJSON
         {
             NSLog("NightscoutManager uploadProfile, no profile change")
             return
         }
-        guard let nightscout = nightscoutAPI, isNetworkReachable, isUploadEnabled else {
-            return
-        }
+
         processQueue.async {
             nightscout.uploadProfile(p)
                 .sink { completion in
@@ -520,7 +531,6 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
 
     func uploadGlucose() {
         uploadGlucose(glucoseStorage.nightscoutGlucoseNotUploaded(), fileToSave: OpenAPS.Nightscout.uploadedGlucose)
-
         uploadTreatments(glucoseStorage.nightscoutCGMStateNotUploaded(), fileToSave: OpenAPS.Nightscout.uploadedCGMState)
     }
 
