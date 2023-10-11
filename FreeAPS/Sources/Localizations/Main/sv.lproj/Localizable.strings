@@ -17,7 +17,7 @@
 "Continue without bolus" = "Fortsätt utan bolus";
 
 /* Alert when adding large amount without bolusing */
-"\nAmount is more than your Max Bolus setting! \nAre you sure you want to add " = "\nDetta är mer insulin än maxdos-inställning!\nÄr du säker på att du vill lägga till ";
+"\nAmount is more than your Max Bolus setting! \nAre you sure you want to add " = "\nDetta är mer insulin än din maxdos-inställning!\nÄr du säker på att du vill lägga till ";
 
 /* Header */
 "Enact Bolus" = "Ge bolus";
@@ -321,10 +321,10 @@ Enact a temp Basal or a temp target */
 "This will replace some or all of your current pump settings. Are you sure you want to import profile settings from Nightscout?" = "Detta kommer att ersätta alla eller vissa av dina pumpinställningar. Är du säker att du vill fortsätta med import av inställningar?";
 
 /* Import Error */
-"\nInvalid Nightcsout Basal Settings. \n\nImport aborted. Please check your Nightscout Profile Basal Settings!" = "\nDu har ogiltiga basalinställningar i Nightscouts profilinställningar.\n\nImport avbruten. Du behöver kontrollera dina Nightcoutinställningar.";
+"\nInvalid Nightcsout Basal Settings. \n\nImport aborted. Please check your Nightscout Profile Basal Settings!" = "\nDu har ogiltiga basalinställningar i Nightscouts profilinställningar. \n\nImport avbruten. Du behöver kontrollera dina Nightcoutinställningar.";
 
 /* Import Error */
-"\nSettings were imported but the Basals couldn't be saved to pump (No pump). Check your basal settings and tap ´Save on Pump´ to sync the new basal settings" =  "\nDina inställningar blev importerade men kunde inte sparas till pump (Ingen pump). Kontrollera dina pumpinstälningar och klicka därefter på ´Spara på pump´ för att programmera din pump med de nya basalinställningarna";
+"\nSettings were imported but the Basals couldn't be saved to pump (No pump). Check your basal settings and tap ´Save on Pump´ to sync the new basal settings" = "\nDina inställningar blev importerade men kunde inte sparas till pump (Ingen pump). Kontrollera dina pumpinstälningar och klicka därefter på ´Spara på pump´ för att programmera din pump med de nya basalinställningarna";
 
 /* Import Error Headline */
 "Import Error" = "Fel vd import av inställningar";
@@ -1007,9 +1007,6 @@ Enact a temp Basal or a temp target */
 /* */
 "Bolus failed or inaccurate. Check pump history before repeating." = "Misslyckad eller felaktig bolus. Kontrollera pumpens historik innan du försöker igen.";
 
-/* "Max Bolus Exceeded label" */
-"Max Bolus exceeded!" = "Du kan inte ge mer än din maxinställning!";
-
 /* */
 "Carbs" = "Kolhydrater";
 
@@ -1103,6 +1100,12 @@ Enact a temp Basal or a temp target */
 /* Autotune config */
 "Only Autotune Basal Insulin" = "Autojustera endast basalinställningar";
 
+/* */
+"Save as your Normal Basal Rates" = "Save as your Normal Basal Rates";
+
+/* */
+"Save on Pump" = "Spara på pump";
+
 /* Debug option view Pump History */
 "Pump History" = "Pumphistorik";
 
@@ -1166,7 +1169,7 @@ Enact a temp Basal or a temp target */
 "Error" = "Fel";
 
 /* Manual temp basal mode */
-"Manual" = "Manuell";
+"Manual" = "Manuellt";
 
 /* An Automatic delivered bolus (SMB) */
 "SMB" = "SMB";

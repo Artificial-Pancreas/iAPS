@@ -17,7 +17,7 @@
 "Continue without bolus" = "Продолжить без болюса";
 
 /* Alert when adding large amount without bolusing */
-"\nAmount is more than your Max Bolus setting! \nAre you sure you want to add " = "\nAmount is more than your Max Bolus setting! \nAre you sure you want to add ";
+"\nAmount is more than your Max Bolus setting! \nAre you sure you want to add " = "\nКоличество превышает максимальную дозу болюса! \nВы уверены, что хотите добавить ";
 
 /* Header */
 "Enact Bolus" = "Ввод болюса";
@@ -314,6 +314,42 @@ Enact a temp Basal or a temp target */
 /* Allow remote control from NS */
 "Remote control" = "Удаленное управление";
 
+/* Imported Profiles Alert */
+"\nNow please verify all of your new settings thoroughly:\n\n* Basal Settings\n * Carb Ratios\n * Glucose Targets\n * Insulin Sensitivities\n\n in iAPS Settings > Configuration.\n\nBad or invalid profile settings could have disatrous effects." = "\nПожалуйста, проверьте все ваши новые настройки:\n\n* Настройки базала\n * Углеводные коэффициенты\n * Целевой диапазон\n * Чувствительность к инсулину\n\n в настройках iAPS Настройки > Конфигурация.\n\nНекорректные настройки профиля могут привести к катастрофическим последствиям.";
+
+/* Profile Import Alert */
+"This will replace some or all of your current pump settings. Are you sure you want to import profile settings from Nightscout?" = "Это заменит некоторые или все ваши текущие настройки помпы. Вы уверены, что хотите импортировать настройки профиля из Nightscout?";
+
+/* Import Error */
+"\nInvalid Nightcsout Basal Settings. \n\nImport aborted. Please check your Nightscout Profile Basal Settings!" = "\nНедопустимые настройки базы в Nightcsout. \n\nИмпорт прерван. Пожалуйста, проверьте настройки профиля в Nightscout!";
+
+/* Import Error */
+"\nSettings were imported but the Basals couldn't be saved to pump (No pump). Check your basal settings and tap ´Save on Pump´ to sync the new basal settings" = "\nНастройки были импортированы, но базальный профиль не удалось сохранить в помпе (нет помпы). Проверьте свои настройки базы и нажмите \"Сохранить на помпу\", чтобы синхронизировать новый базальный профиль";
+
+/* Import Error Headline */
+"Import Error" = "Ошибка импорта";
+
+/* */
+"Yes, Import" = "Да, импортировать";
+
+/* */
+"Import settings from Nightscout" = "Импортировать настройки из Nightscout";
+
+/* */
+"Import settings?" = "Импорт настроек?";
+
+/* */
+"Import from Nightscout" = "Импорт из Nightscout";
+
+/* */
+"Settings imported" = "Настройки импортированы";
+
+/* Import Error */
+"\nMismatching glucose units in Nightscout and Pump Settings. Import settings aborted." = "\nНесоответствие единиц измерения глюкозы в настройках Nightscout и помпы. Импорт настроек прерван.";
+
+/* Import Error */
+"Can't find the default Nightscout Profile." = "Не удается найти профиль Nightscout по умолчанию.";
+
 /* Add Medtronic pump */
 "Add Medtronic" = "Добавить Medtronic";
 
@@ -522,13 +558,13 @@ Enact a temp Basal or a temp target */
 "Calibrations" = "Калибровки";
 
 /* */
-"Create Events in Calendar" = "Create Events in Calendar";
+"Create Events in Calendar" = "Создавать события в календаре";
 
 /* */
 "Calendar" = "Календарь";
 
 /* Automatic delivered treatments */
-"Automatic" = "Automatic";
+"Automatic" = "Автоматически";
 
 /* */
 "Other" = "Прочее";
@@ -966,7 +1002,7 @@ Enact a temp Basal or a temp target */
 "Bolus failed" = "Болюс не выполнен";
 
 /* "Max Bolus Exceeded label" */
-"Max Bolus exceeded!" = "Max Bolus exceeded!";
+"Max Bolus exceeded!" = "Максимальный болюс превышен!";
 
 /* */
 "Bolus failed or inaccurate. Check pump history before repeating." = "Болюс не выполнен или неточный. Перед повторением проверьте историю помпы.";
@@ -1057,6 +1093,12 @@ Enact a temp Basal or a temp target */
 
 /* Autotune config */
 "Only Autotune Basal Insulin" = "Автотюн только Базального инсулина";
+
+/* */
+"Save as your Normal Basal Rates" = "Сохранить как Ваш нормальный базальный профиль";
+
+/* */
+"Save on Pump" = "Сохранить на помпу";
 
 /* Debug option view Pump History */
 "Pump History" = "История помпы";

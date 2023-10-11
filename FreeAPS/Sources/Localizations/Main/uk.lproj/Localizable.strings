@@ -314,6 +314,42 @@ Enact a temp Basal or a temp target */
 /* Allow remote control from NS */
 "Remote control" = "Віддалене керування";
 
+/* Imported Profiles Alert */
+"\nNow please verify all of your new settings thoroughly:\n\n* Basal Settings\n * Carb Ratios\n * Glucose Targets\n * Insulin Sensitivities\n\n in iAPS Settings > Configuration.\n\nBad or invalid profile settings could have disatrous effects." = "\nТепер уважно перевірте всі ваші нові налаштування:\n\n* Базальні параметри\n * Вуглеводні співвідношення\n * Цільові показники глюкози\n * Чутливість до інсуліну\n\n у меню «Налаштування iAPS» > «Конфігурація».\n\nПоганий або недійсний профіль налаштування можуть мати згубні наслідки.";
+
+/* Profile Import Alert */
+"This will replace some or all of your current pump settings. Are you sure you want to import profile settings from Nightscout?" = "Це замінить деякі або всі поточні налаштування Помпи. Ви впевнені, що бажаєте імпортувати налаштування профілю з Nightscout?";
+
+/* Import Error */
+"\nInvalid Nightcsout Basal Settings. \n\nImport aborted. Please check your Nightscout Profile Basal Settings!" = "\nНедійсні базальні налаштування Nightcsout. \n\nІмпорт перервано. Будь ласка, перевірте базальні налаштування свого профілю Nightscout!";
+
+/* Import Error */
+"\nSettings were imported but the Basals couldn't be saved to pump (No pump). Check your basal settings and tap ´Save on Pump´ to sync the new basal settings" = "\nНалаштування було імпортовано, але Базал не вдалося зберегти для помпи (немає помпи). Перевірте свої базальні налаштування та натисніть «Зберегти на помпі», щоб синхронізувати нові базальні налаштування";
+
+/* Import Error Headline */
+"Import Error" = "Помилка імпорту";
+
+/* */
+"Yes, Import" = "Так, імпортувати";
+
+/* */
+"Import settings from Nightscout" = "Імпортуйте налаштування з Nightscout";
+
+/* */
+"Import settings?" = "Імпортувати налаштування?";
+
+/* */
+"Import from Nightscout" = "ІМПОРТ З NIGHTSCOUT";
+
+/* */
+"Settings imported" = "Налаштування імпортовано";
+
+/* Import Error */
+"\nMismatching glucose units in Nightscout and Pump Settings. Import settings aborted." = "\nНевідповідність одиниць глюкози в налаштуваннях Nightscout та Помпи. Імпорт налаштувань скасовано.";
+
+/* Import Error */
+"Can't find the default Nightscout Profile." = "Не вдається знайти профіль Nightscout за замовчуванням.";
+
 /* Add Medtronic pump */
 "Add Medtronic" = "Додати Medtronic";
 
@@ -1057,6 +1093,12 @@ Enact a temp Basal or a temp target */
 
 /* Autotune config */
 "Only Autotune Basal Insulin" = "Тільки Autotune Базал Інсулін";
+
+/* */
+"Save as your Normal Basal Rates" = "Зберегти як  Нормальний Базальний Профіль";
+
+/* */
+"Save on Pump" = "Зберегти на Помпі";
 
 /* Debug option view Pump History */
 "Pump History" = "Історія Помпи";
