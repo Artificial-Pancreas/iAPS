@@ -15,6 +15,7 @@ protocol NightscoutManager: GlucoseSource {
     func uploadGlucose()
     func uploadStatistics(dailystat: Statistics)
     func uploadPreferences(_ preferences: Preferences)
+    func uploadFreeAPSSettings()
     func uploadProfile()
     var cgmURL: URL? { get }
 }
@@ -266,6 +267,29 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
                     switch completion {
                     case .finished:
                         debug(.nightscout, "Statistics uploaded")
+                    case let .failure(error):
+                        debug(.nightscout, error.localizedDescription)
+                    }
+                } receiveValue: {}
+                .store(in: &self.lifetime)
+        }
+    }
+
+    func uploadFreeAPSSettings() {
+        let fapsset = NightscoutFreeAPSSettings(
+            freeapssettings: settingsManager.settings
+        )
+
+        guard let nightscout = nightscoutAPI, isUploadEnabled else {
+            return
+        }
+
+        processQueue.async {
+            nightscout.uploadFAPSSet(fapsset)
+                .sink { completion in
+                    switch completion {
+                    case .finished:
+                        debug(.nightscout, "FreeAPS Settings uploaded")
                     case let .failure(error):
                         debug(.nightscout, error.localizedDescription)
                     }

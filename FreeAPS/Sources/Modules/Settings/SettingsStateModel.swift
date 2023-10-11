@@ -46,6 +46,11 @@ extension Settings {
             return items
         }
 
+        func uploadFreeAPSSettings() {
+            NSLog("SettingsState Upload FreeAPS Settings")
+            nightscoutManager.uploadFreeAPSSettings()
+        }
+
         func uploadProfile() {
             NSLog("SettingsState Upload Profile")
             nightscoutManager.uploadProfile()

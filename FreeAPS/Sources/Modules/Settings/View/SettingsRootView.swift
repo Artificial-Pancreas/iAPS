@@ -49,6 +49,9 @@ extension Settings {
                     Toggle("Debug options", isOn: $state.debugOptions)
                     if state.debugOptions {
                         Group {
+                            Text("NS Upload FreeAPS Settings").onTapGesture {
+                                state.uploadFreeAPSSettings()
+                            }
                             Text("NS Upload Profile").onTapGesture {
                                 state.uploadProfile()
                             }
