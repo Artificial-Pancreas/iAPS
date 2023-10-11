@@ -85,6 +85,8 @@ extension OpenAPS {
         static let uploadedCGMState = "upload/uploaded-cgm-state.json"
         static let uploadedPodAge = "upload/uploaded-pod-age.json"
         static let uploadedProfile = "upload/uploaded-profile.json"
+        static let uploadedPreferences = "upload/uploaded-preferences.json"
+        static let uploadedSettings = "upload/uploaded-settings.json"
     }
 
     enum FreeAPS {

@@ -46,13 +46,13 @@ extension Settings {
             return items
         }
 
-        func uploadProfile() {
+        func uploadProfileAndSettings() {
             NSLog("SettingsState Upload Profile")
-            nightscoutManager.uploadProfile()
+            nightscoutManager.uploadProfileAndSettings()
         }
 
         func hideSettingsModal() {
-            nightscoutManager.uploadProfile()
+            nightscoutManager.uploadProfileAndSettings()
             hideModal()
         }
     }
