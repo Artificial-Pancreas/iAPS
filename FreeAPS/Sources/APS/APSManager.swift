@@ -1184,7 +1184,7 @@ final class BaseAPSManager: APSManager, Injectable {
                 )
                 storage.save(dailystat, as: file)
                 nightscout.uploadStatistics(dailystat: dailystat)
-                
+
                 let saveStatsCoreData = StatsData(context: self.coredataContext)
                 saveStatsCoreData.lastrun = Date()
                 try? self.coredataContext.save()
