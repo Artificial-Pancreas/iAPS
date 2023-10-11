@@ -339,7 +339,7 @@ Enact a temp Basal or a temp target */
 "Import settings?" = "Importera inställningar?";
 
 /* */
-"Import from Nightscout" = "Importera från Nightscout";
+"Import from Nightscout" = "Import från Nightscout";
 
 /* */
 "Settings imported" = "Inställningar importerade";
@@ -1091,17 +1091,11 @@ Enact a temp Basal or a temp target */
 /* Insulin sensitivity config header */
 "Dynamic Sensitivity" = "Dynamisk insulinkänslighet";
 
-/* */
-"Save as your Normal Basal Rates" = "Spara som dina vanliga basalinställningar";
-
-/* */
-"Save on Pump" = "Spara till pump";
-
 /* Autotune config */
 "Only Autotune Basal Insulin" = "Autojustera endast basalinställningar";
 
 /* */
-"Save as your Normal Basal Rates" = "Save as your Normal Basal Rates";
+"Save as your Normal Basal Rates" = "Använd som normal profil";
 
 /* */
 "Save on Pump" = "Spara på pump";
