@@ -314,6 +314,42 @@ Enact a temp Basal or a temp target */
 /* Allow remote control from NS */
 "Remote control" = "Fjernstyring";
 
+/* Imported Profiles Alert */
+"\nNow please verify all of your new settings thoroughly:\n\n* Basal Settings\n * Carb Ratios\n * Glucose Targets\n * Insulin Sensitivities\n\n in iAPS Settings > Configuration.\n\nBad or invalid profile settings could have disatrous effects." = "\nGå nøye gjennom alle de nye innstillingene:\n\n* Basalprofil\n * Karbohydratforhold\n * Blodsukkermål\n * Insulinfølsomhet\n\n i iAPS Innstillinger > Oppsett.\n\nFeil eller ugyldige profilinnstillinger kan ha katastrofale følger.";
+
+/* Profile Import Alert */
+"This will replace some or all of your current pump settings. Are you sure you want to import profile settings from Nightscout?" = "Dette vil erstatte alle eller deler av dine nåværende pumpeinnstillinger. Er du sikker på at du vil importere profilinnstillinger fra Nightscout?";
+
+/* Import Error */
+"\nInvalid Nightcsout Basal Settings. \n\nImport aborted. Please check your Nightscout Profile Basal Settings!" = "\nUgyldig Basalprofil fra Nightscout. \n\nImport avbrutt. Sjekk Basalprofil i Nightscout!";
+
+/* Import Error */
+"\nSettings were imported but the Basals couldn't be saved to pump (No pump). Check your basal settings and tap ´Save on Pump´ to sync the new basal settings" = "\nInnstillinger ble importert men Basalprofilen kunne ikke lagres til pumpen (ingen pumpe). Sjekk din Basalprofil og trykk ´Lagre på pumpen´ for å sende den nye basalprofilen til pumpen.";
+
+/* Import Error Headline */
+"Import Error" = "Feil ved import";
+
+/* */
+"Yes, Import" = "Ja, importer";
+
+/* */
+"Import settings from Nightscout" = "Importer innstillinger fra Nightscout";
+
+/* */
+"Import settings?" = "Importere innstillinger?";
+
+/* */
+"Import from Nightscout" = "Import fra Nightscout";
+
+/* */
+"Settings imported" = "Innstillinger importert";
+
+/* Import Error */
+"\nMismatching glucose units in Nightscout and Pump Settings. Import settings aborted." = "\nBlodsukkerenhet i Nightscout samsvarer ikke med blodsukkerenhet i Pumpeinnstillinger. Import av innstillinger er avbrutt.";
+
+/* Import Error */
+"Can't find the default Nightscout Profile." = "Finner ikke standard profil i Nightscout.";
+
 /* Add Medtronic pump */
 "Add Medtronic" = "Legge til Medtronic";
 
@@ -1057,6 +1093,12 @@ Enact a temp Basal or a temp target */
 
 /* Autotune config */
 "Only Autotune Basal Insulin" = "Bare bruk Autotune på basalinsulin";
+
+/* */
+"Save as your Normal Basal Rates" = "Lagre som standard basalprofil";
+
+/* */
+"Save on Pump" = "Lagre på pumpen";
 
 /* Debug option view Pump History */
 "Pump History" = "Pumpehistorikk";
