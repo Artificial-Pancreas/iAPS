@@ -315,7 +315,7 @@ Enact a temp Basal or a temp target */
 "Remote control" = "Fjernstyring";
 
 /* Imported Profiles Alert */
-"\nNow please verify all of your new settings thoroughly:\n\n* Basal Settings\n * Carb Ratios\n * Glucose Targets\n * Insulin Sensitivities\n\n in iAPS Settings > Configuration.\n\nBad or invalid profile settings could have disatrous effects." = "\nGå nøye gjennom alle de nye innstillingene:\n\n* Basalprofil\n * Karbohydratforhold\n * Blodsukkermål\n * Insulinfølsomhet\n\n i iAPS Innstillinger > Oppsett.\n\nFeil eller ugyldige profilinnstillinger kan ha katastrofale følger.";
+"\nNow please verify all of your new settings thoroughly:\n\n* Basal Settings\n * Carb Ratios\n * Glucose Targets\n * Insulin Sensitivities\n * DIA\n\n in iAPS Settings > Configuration.\n\nBad or invalid profile settings could have disatrous effects." = "\nGå nøye gjennom alle de nye innstillingene:\n\n* Basalprofil\n * Karbohydratforhold\n * Blodsukkermål\n * Insulinfølsomhet\n\n i iAPS Innstillinger > Oppsett.\n\nFeil eller ugyldige profilinnstillinger kan ha katastrofale følger.";
 
 /* Profile Import Alert */
 "This will replace some or all of your current pump settings. Are you sure you want to import profile settings from Nightscout?" = "Dette vil erstatte alle eller deler av dine nåværende pumpeinnstillinger. Er du sikker på at du vil importere profilinnstillinger fra Nightscout?";
