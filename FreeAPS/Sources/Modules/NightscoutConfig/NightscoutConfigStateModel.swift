@@ -158,14 +158,24 @@ extension NightscoutConfig {
                             return
                         }
 
+                        var areCRsOK = true
                         let carbratios = fetchedProfile.carbratio
                             .map { carbratio -> CarbRatioEntry in
-                                CarbRatioEntry(
+                                if carbratio.value <= 0 {
+                                    error =
+                                        "\nInvalid Carb Ratio settings in Nightscout.\n\nImport aborted. Please check your Nightscout Profile Carb Ratios Settings!"
+                                    areCRsOK = false
+                                }
+                                return CarbRatioEntry(
                                     start: carbratio.time,
                                     offset: (carbratio.timeAsSeconds ?? self.offset(carbratio.time)) / 60,
                                     ratio: carbratio.value
                                 ) }
                         let carbratiosProfile = CarbRatios(units: CarbUnit.grams, schedule: carbratios)
+                        guard areCRsOK else {
+                            group.leave()
+                            return
+                        }
 
                         var areBasalsOK = true
                         let basals = fetchedProfile.basal
@@ -184,12 +194,21 @@ extension NightscoutConfig {
                             group.leave()
                             return
                         }
+
                         let sensitivities = fetchedProfile.sens.map { sensitivity -> InsulinSensitivityEntry in
                             InsulinSensitivityEntry(
                                 sensitivity: self.units == .mmolL ? sensitivity.value : sensitivity.value.asMgdL,
                                 offset: (sensitivity.timeAsSeconds ?? self.offset(sensitivity.time)) / 60,
                                 start: sensitivity.time
-                            ) }
+                            )
+                        }
+                        if sensitivities.filter({ $0.sensitivity <= 0 }).isNotEmpty {
+                            error =
+                                "\nInvalid Nightcsout Sensitivities Settings. \n\nImport aborted. Please check your Nightscout Profile Sensitivities Settings!"
+                            group.leave()
+                            return
+                        }
+
                         let sensitivitiesProfile = InsulinSensitivities(
                             units: self.units,
                             userPrefferedUnits: self.units,
