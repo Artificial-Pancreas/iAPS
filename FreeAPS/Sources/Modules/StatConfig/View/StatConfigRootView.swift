@@ -27,7 +27,6 @@ extension StatConfig {
         var body: some View {
             Form {
                 Section(header: Text("Settings")) {
-                    Toggle("Combine Treatments in History", isOn: $state.combineTreatmentsHistory)
                     Toggle("Change HbA1c Unit", isOn: $state.overrideHbA1cUnit)
                     Toggle("Display Chart X - Grid lines", isOn: $state.xGridLines)
                     Toggle("Display Chart Y - Grid lines", isOn: $state.yGridLines)
@@ -54,6 +53,17 @@ extension StatConfig {
                         DecimalTextField("0", value: $state.high, formatter: glucoseFormatter)
                         Text(state.units.rawValue).foregroundColor(.secondary)
                     }
+                }
+
+                Section(
+                    header: Text("History View"),
+                    footer: Text(
+                        "By default, the History View shows insulin, meals, and glucose in separate tabs. Toggle on \"Combine Treatments in History\" to display insulin and meals together under a single tab."
+                    )
+                    .font(.caption)
+                    .foregroundColor(Color.secondary)
+                ) {
+                    Toggle("Combine Treatments in History", isOn: $state.combineTreatmentsHistory)
                 }
             }
             .onAppear(perform: configureView)

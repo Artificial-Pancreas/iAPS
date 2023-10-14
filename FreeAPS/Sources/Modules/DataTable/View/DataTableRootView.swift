@@ -67,8 +67,13 @@ extension DataTable {
                         }
                     } else {
                         ForEach(Mode.allCases.indexed(), id: \.1) { index, item in
-                            Text(item.name)
-                                .tag(index)
+                            if item == .treatments {
+                                Text("Insulin")
+                                    .tag(index)
+                            } else {
+                                Text(item.name)
+                                    .tag(index)
+                            }
                         }
                     }
                 }
@@ -81,25 +86,25 @@ extension DataTable {
             .navigationTitle("History")
             .navigationBarTitleDisplayMode(.automatic)
             .navigationBarItems(
-                leading: Button("Close", action: state.hideModal),
-                trailing: HStack {
-                    if state.mode == .treatments {
-                        Button(action: { showNonPumpInsulin = true }) {
-                            Text(NSLocalizedString("Non-Pump Insulin", comment: "Non-Pump Insulin button text"))
-                            Image(systemName: "plus.circle.fill")
-                                .resizable()
-                                .frame(width: 24, height: 24)
-                        }
-                    }
-                    if state.mode == .glucose {
-                        Button(action: { showManualGlucose = true }) {
-                            Text(NSLocalizedString("Glucose", comment: "Glucose button text"))
-                            Image(systemName: "plus.circle.fill")
-                                .resizable()
-                                .frame(width: 24, height: 24)
-                        }
-                    }
-                }
+                leading: Button("Close", action: state.hideModal)
+//                trailing: HStack {
+//                    if state.mode == .treatments {
+//                        Button(action: { showNonPumpInsulin = true }) {
+//                            Text(NSLocalizedString("Non-Pump Insulin", comment: "Non-Pump Insulin button text"))
+//                            Image(systemName: "plus.circle.fill")
+//                                .resizable()
+//                                .frame(width: 24, height: 24)
+//                        }
+//                    }
+//                    if state.mode == .glucose {
+//                        Button(action: { showManualGlucose = true }) {
+//                            Text(NSLocalizedString("Glucose", comment: "Glucose button text"))
+//                            Image(systemName: "plus.circle.fill")
+//                                .resizable()
+//                                .frame(width: 24, height: 24)
+//                        }
+//                    }
+//                }
             )
             .sheet(isPresented: $showManualGlucose, onDismiss: { if isAmountUnconfirmed { state.manualGlucose = 0 } }) {
                 addManualGlucoseView
@@ -240,33 +245,57 @@ extension DataTable {
             }
         }
 
-        private var combinedTreatmentsList: some View {
-            List {
-                ForEach(state.treatments) { treatment in
-                    combinedTreatmentView(treatment)
-                }
-                .onDelete(perform: deleteTreatmentForCombined)
+        private func dialogActionButton(action _: @escaping () -> Void) -> some View {
+            VStack {
+                Spacer()
+                Button(action: { showNonPumpInsulin = true }, label: {
+                    HStack {
+                        Image(systemName: "plus.circle.fill")
+                            .resizable()
+                            .frame(width: 26, height: 26)
+                            .foregroundColor(Color.gray).opacity(0.8)
+                    }.frame(maxWidth: .infinity, alignment: .trailing)
+
+                })
+                Spacer()
             }
-            .alert(isPresented: $isRemoveCombinedTreatmentAlertPresented) {
-                removeCombinedTreatmentAlert!
+        }
+
+        private var combinedTreatmentsList: some View {
+            Section(
+                header: dialogActionButton(action: { showNonPumpInsulin = true })
+            ) {
+                List {
+                    ForEach(state.treatments) { treatment in
+                        combinedTreatmentView(treatment)
+                    }
+                    .onDelete(perform: deleteTreatmentForCombined)
+                }
+                .alert(isPresented: $isRemoveCombinedTreatmentAlertPresented) {
+                    removeCombinedTreatmentAlert!
+                }
             }
         }
 
         private var treatmentsList: some View {
-            List {
-                if !state.treatments.isEmpty {
-                    ForEach(state.treatments) { item in
-                        treatmentView(item)
-                    }
-                    .onDelete(perform: deleteTreatment)
-                } else {
-                    HStack {
-                        Text(NSLocalizedString("No data.", comment: "No data text when no entries in history list"))
+            Section(
+                header: dialogActionButton(action: { showNonPumpInsulin = true })
+            ) {
+                List {
+                    if !state.treatments.isEmpty {
+                        ForEach(state.treatments) { item in
+                            treatmentView(item)
+                        }
+                        .onDelete(perform: deleteTreatment)
+                    } else {
+                        HStack {
+                            Text(NSLocalizedString("No data.", comment: "No data text when no entries in history list"))
+                        }
                     }
                 }
-            }
-            .alert(isPresented: $isRemoveInsulinAlertPresented) {
-                removeInsulinAlert!
+                .alert(isPresented: $isRemoveInsulinAlertPresented) {
+                    removeInsulinAlert!
+                }
             }
         }
 
@@ -289,20 +318,24 @@ extension DataTable {
         }
 
         private var glucoseList: some View {
-            List {
-                if !state.glucose.isEmpty {
-                    ForEach(state.glucose) { item in
-                        glucoseView(item)
-                    }
-                    .onDelete(perform: deleteGlucose)
-                } else {
-                    HStack {
-                        Text(NSLocalizedString("No data.", comment: "No data text when no entries in history list"))
+            Section(
+                header: dialogActionButton(action: { showManualGlucose = true })
+            ) {
+                List {
+                    if !state.glucose.isEmpty {
+                        ForEach(state.glucose) { item in
+                            glucoseView(item)
+                        }
+                        .onDelete(perform: deleteGlucose)
+                    } else {
+                        HStack {
+                            Text(NSLocalizedString("No data.", comment: "No data text when no entries in history list"))
+                        }
                     }
                 }
-            }
-            .alert(isPresented: $isRemoveGlucoseAlertPresented) {
-                removeGlucoseAlert!
+                .alert(isPresented: $isRemoveGlucoseAlertPresented) {
+                    removeGlucoseAlert!
+                }
             }
         }
 
@@ -403,7 +436,7 @@ extension DataTable {
                     .reduce(0, +)
                 ) as NSNumber)!
 
-                alertTitle = NSLocalizedString("Delete Carb Equivalents?", comment: "Delte fpus alert title")
+                alertTitle = NSLocalizedString("Delete Carb Equivalents?", comment: "Delete fpus alert title")
                 alertMessage = carbEquivalents + NSLocalizedString(" g", comment: "gram of carbs")
             }
 
