@@ -245,10 +245,10 @@ extension DataTable {
             }
         }
 
-        private func dialogActionButton(action _: @escaping () -> Void) -> some View {
+        private func dialogActionButton(action: @escaping () -> Void) -> some View {
             VStack {
                 Spacer()
-                Button(action: { showNonPumpInsulin = true }, label: {
+                Button(action: action, label: {
                     HStack {
                         Image(systemName: "plus.circle.fill")
                             .resizable()
