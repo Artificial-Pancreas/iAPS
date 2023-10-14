@@ -1,6 +1,6 @@
 import Foundation
 
 struct NightscoutPreferences: JSON {
-    let report = "preferences"
+    var report = "preferences"
     let preferences: Preferences?
 }

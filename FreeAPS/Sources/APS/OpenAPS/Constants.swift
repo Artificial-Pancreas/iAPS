@@ -54,7 +54,6 @@ extension OpenAPS {
         static let iob = "monitor/iob.json"
         static let cgmState = "monitor/cgm-state.json"
         static let podAge = "monitor/pod-age.json"
-        // static let tdd = "monitor/tdd.json"
         static let oref2_variables = "monitor/oref2_variables.json"
         static let alertHistory = "monitor/alerthistory.json"
         static let statistics = "monitor/statistics.json"
@@ -86,6 +85,8 @@ extension OpenAPS {
         static let uploadedCGMState = "upload/uploaded-cgm-state.json"
         static let uploadedPodAge = "upload/uploaded-pod-age.json"
         static let uploadedProfile = "upload/uploaded-profile.json"
+        static let uploadedPreferences = "upload/uploaded-preferences.json"
+        static let uploadedSettings = "upload/uploaded-settings.json"
     }
 
     enum FreeAPS {
