@@ -54,7 +54,7 @@
 "Last Reading" = "Forrige avlesning";
 
 /* Descriptive text on G7StartupView */
-"Loop can read G7 CGM data, but you must still use the Dexcom G7 App for pairing, calibration, and other sensor management." = "Loop kan lese G7 CGM data, men du må fortsatt bruke Dexcom G7-appen for sammenkobling, kalibrering, og annen sensoradministrasjon.";
+"iAPS can read G7 CGM data, but you must still use the Dexcom G7 App for pairing, calibration, and other sensor management." = "Loop kan lese G7 CGM data, men du må fortsatt bruke Dexcom G7-appen for sammenkobling, kalibrering, og annen sensoradministrasjon.";
 
 /* String displayed instead of a glucose value below the CGM range */
 "LOW" = "LAV";
