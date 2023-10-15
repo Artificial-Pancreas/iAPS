@@ -39,10 +39,10 @@
 "Glucose" = "Glukos";
 
 /* title for g7 settings row showing sensor grace period end time */
-"Grace Period End" = "Slut av livslängd";
+"Grace Period End" = "Reservperiod slutar";
 
 /* G7 Progress bar label when sensor grace period progress showing */
-"Grace period remaining" = "Tid kvar av sensors livslängd";
+"Grace period remaining" = "Tid kvar av reservtid";
 
 /* String displayed instead of a glucose value above the CGM range */
 "HIGH" = "HÖGT";
@@ -81,7 +81,7 @@
 "Sensor\nFailed" = "Sensor\nmisslyckades";
 
 /* G7 Status highlight text for sensor error */
-"Sensor\nIssue" = "Sensor\nProblem";
+"Sensor\nIssue" = "Sensorproblem";
 
 /* G7 Status highlight text for sensor warmup */
 "Sensor\nWarmup" = "Sensor\nUppvärmning";
@@ -96,10 +96,10 @@
 "Sensor expires" = "Sensorn går ut";
 
 /* G7 Progress bar label when sensor failed */
-"Sensor failed" = "Sensorn är felaktig";
+"Sensor failed" = "Sensorn misslyckades";
 
 /* title for g7 settings row showing sensor start time */
-"Sensor Start" = "Start sensor";
+"Sensor Start" = "Starta Sensor";
 
 /* G7 Status highlight text for signal loss */
 "Signal\nLoss" = "Signal-\nförlust";
