@@ -603,7 +603,7 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
                         self.storage.save(glucose, as: fileToSave)
                         debug(.nightscout, "Glucose uploaded")
                     case let .failure(error):
-                        debug(.nightscout, error.localizedDescription)
+                        debug(.nightscout, "Upload of glucose failed: " + error.localizedDescription)
                     }
                 } receiveValue: {}
                 .store(in: &self.lifetime)

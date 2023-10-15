@@ -17,5 +17,12 @@ import Foundation
                 "\(.applicationName) state"
             ]
         )
+        AppShortcut(
+            intent: AddCarbPresentIntent(),
+            phrases: [
+                "Add carbs in \(.applicationName)",
+                "\(.applicationName) allows to add carbs"
+            ]
+        )
     }
 }

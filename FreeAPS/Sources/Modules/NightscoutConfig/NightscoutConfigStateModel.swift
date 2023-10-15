@@ -158,21 +158,33 @@ extension NightscoutConfig {
                             return
                         }
 
+                        var areCRsOK = true
                         let carbratios = fetchedProfile.carbratio
                             .map { carbratio -> CarbRatioEntry in
-                                CarbRatioEntry(
+                                if carbratio.value <= 0 {
+                                    error =
+                                        "\nInvalid Carb Ratio settings in Nightscout.\n\nImport aborted. Please check your Nightscout Profile Carb Ratios Settings!"
+                                    areCRsOK = false
+                                }
+                                return CarbRatioEntry(
                                     start: carbratio.time,
                                     offset: (carbratio.timeAsSeconds ?? self.offset(carbratio.time)) / 60,
                                     ratio: carbratio.value
                                 ) }
                         let carbratiosProfile = CarbRatios(units: CarbUnit.grams, schedule: carbratios)
+                        guard areCRsOK else {
+                            group.leave()
+                            return
+                        }
 
                         var areBasalsOK = true
+                        let pumpName = self.apsManager.pumpName.value
                         let basals = fetchedProfile.basal
                             .map { basal -> BasalProfileEntry in
-                                if basal.value <= 0 || basal.value >= self.maxBasal {
+                                if pumpName != "Omnipod DASH", basal.value <= 0
+                                {
                                     error =
-                                        "\nInvalid Nightcsout Basal Settings. \n\nImport aborted. Please check your Nightscout Profile Basal Settings!"
+                                        "\nInvalid Nightcsout Basal Settings. Some or all of your basal settings are 0 U/h.\n\nImport aborted. Please check your Nightscout Profile Basal Settings before trying to import again. Import has been aborted.)"
                                     areBasalsOK = false
                                 }
                                 return BasalProfileEntry(
@@ -180,16 +192,32 @@ extension NightscoutConfig {
                                     minutes: (basal.timeAsSeconds ?? self.offset(basal.time)) / 60,
                                     rate: basal.value
                                 ) }
+                        // DASH pumps can have 0U/h basal rates but don't import if total basals (24 hours) amount to 0 U.
+                        if pumpName == "Omnipod DASH", basals.map({ each in each.rate }).reduce(0, +) <= 0
+                        {
+                            error =
+                                "\nYour total Basal insulin amount to 0 U or lower in Nightscout Profile settings.\n\n Please check your Nightscout Profile Basal Settings before trying to import again. Import has been aborted.)"
+                            areBasalsOK = false
+                        }
                         guard areBasalsOK else {
                             group.leave()
                             return
                         }
+
                         let sensitivities = fetchedProfile.sens.map { sensitivity -> InsulinSensitivityEntry in
                             InsulinSensitivityEntry(
                                 sensitivity: self.units == .mmolL ? sensitivity.value : sensitivity.value.asMgdL,
                                 offset: (sensitivity.timeAsSeconds ?? self.offset(sensitivity.time)) / 60,
                                 start: sensitivity.time
-                            ) }
+                            )
+                        }
+                        if sensitivities.filter({ $0.sensitivity <= 0 }).isNotEmpty {
+                            error =
+                                "\nInvalid Nightcsout Sensitivities Settings. \n\nImport aborted. Please check your Nightscout Profile Sensitivities Settings!"
+                            group.leave()
+                            return
+                        }
+
                         let sensitivitiesProfile = InsulinSensitivities(
                             units: self.units,
                             userPrefferedUnits: self.units,
@@ -238,7 +266,7 @@ extension NightscoutConfig {
                                 debug(.service, "Settings have been imported and the Basals saved to pump!")
                                 // DIA. Save if changed.
                                 let dia = fetchedProfile.dia
-                                if dia != self.dia {
+                                if dia != self.dia, dia <= 0 {
                                     let file = PumpSettings(
                                         insulinActionCurve: dia,
                                         maxBolus: self.maxBolus,
