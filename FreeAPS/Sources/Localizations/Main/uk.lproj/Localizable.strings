@@ -1939,7 +1939,7 @@ Enact a temp Basal or a temp target */
 // Dynamic ISF + CR Settings:
 /* Headline "Adjust Dynamic ISF constant" */
 
-"Adjust Dynamic ISF constant" = "Налаштувати онстанту Динамічного ISF";
+"Adjust Dynamic ISF constant" = "Налаштувати константу Динамічного ISF";
 
 /* Adjust Dynamic ISF constant */
 "Adjust Dynamic ISF constant" = "Налаштувати константу Динамічного ISF";
@@ -1960,7 +1960,7 @@ Enact a temp Basal or a temp target */
 "Use Dynamic CR. The dynamic ratio will be used for CR as follows:\n\n When ratio > 1:  dynCR = (newRatio - 1) / 2 + 1.\nWhen ratio < 1: dynCR = CR/dynCR.\n\nDon't use toghether with a high Insulin Fraction (> 2)" = "Використовувати Dynamic CR. Dynamic ratio також впливатиме на CR:\n\n Коли ratio > 1: dynCR = (newRatio - 1) / 2 + 1.\nКоли ratio <1: dynCR = CR/dynCR.\n\nНе використовуйте спільно з високим Insulin Fraction (> 2)";
 
 /* Headline "Adjust Dynamic ISF constant" */
-"Adjust Dynamic ISF constant" = "Налаштувати онстанту Динамічного ISF";
+"Adjust Dynamic ISF constant" = "Налаштувати константу Динамічного ISF";
 
 /* Adjust Dynamic ISF constant */
 "Adjust Dynamic ratios by a constant. Default is 0.5. The higher the value, the larger the correction of your ISF will be for a high or a low BG. Maximum correction is determined by the Autosens min/max settings. For Sigmoid function an adjustment factor of 0.4 - 0.5 is recommended to begin with. For the logaritmic formula there is less consensus, but starting with 0.5 - 0.8 is more appropiate for most users" = "Налаштуйте динамічні коефіцієнти за константою. За замовчуванням 0,5. Чим вище значення, тим більшою буде корекція вашого ISF для високого або низького рівня ГК. Максимальна корекція визначається параметрами min/max Автосенс. Для сигмоподібної функції спочатку рекомендується коригуючий коефіцієнт 0,4 - 0,5. Для логарифмічної формули threre є менш узгодженим, але починати з 0,5 - 0,8 є більш прийнятним для більшості користувачів";
