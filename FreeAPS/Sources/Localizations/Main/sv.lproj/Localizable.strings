@@ -209,7 +209,7 @@
 "Rate" = "Värde";
 
 /*  */
-"Save on Pump" = "Spara på pump";
+"Save on Pump" = "Spara till pump";
 
 /*  */
 "Saving..." = "Sparar...";
@@ -1091,20 +1091,14 @@ Enact a temp Basal or a temp target */
 /* Insulin sensitivity config header */
 "Dynamic Sensitivity" = "Dynamisk insulinkänslighet";
 
+/* Autotune config */
+"Only Autotune Basal Insulin" = "Autojustera endast basalinställningar";
+
 /* */
 "Save as your Normal Basal Rates" = "Spara som dina vanliga basalinställningar";
 
 /* */
 "Save on Pump" = "Spara till pump";
-
-/* Autotune config */
-"Only Autotune Basal Insulin" = "Autojustera endast basalinställningar";
-
-/* */
-"Save as your Normal Basal Rates" = "Save as your Normal Basal Rates";
-
-/* */
-"Save on Pump" = "Spara på pump";
 
 /* Debug option view Pump History */
 "Pump History" = "Pumphistorik";
@@ -1862,7 +1856,7 @@ Enact a temp Basal or a temp target */
 "Max COB" = "Max mängd aktiva kolhydrater (COB)";
 
 /* "Max COB" */
-"The default of maxCOB is 120. (If someone enters more carbs in one or multiple entries, iAPS will cap COB to maxCOB and keep it at maxCOB until the carbs entered above maxCOB have shown to be absorbed. Essentially, this just limits UAM as a safety cap against weird COB calculations due to fluky data.)" = "The default of maxCOB is 120. (If someone enters more carbs in one or multiple entries, iAPS will cap COB to maxCOB and keep it at maxCOB until the carbs entered above maxCOB have shown to be absorbed. Essentially, this just limits UAM as a safety cap against weird COB calculations due to fluky data.)";
+"The default of maxCOB is 120. (If someone enters more carbs in one or multiple entries, iAPS will cap COB to maxCOB and keep it at maxCOB until the carbs entered above maxCOB have shown to be absorbed. Essentially, this just limits UAM as a safety cap against weird COB calculations due to fluky data.)" = "Standardvärdet för maximal mängd av aktiva kolhdrater (COB) är 120.";
 
 /* Headline "Bolus Snooze DIA Divisor" */
 "Bolus Snooze DIA Divisor" = "Bolus \"snooze\" - nämnare";
