@@ -5,13 +5,34 @@ extension Bolus {
     struct RootView: BaseView {
         let resolver: Resolver
         let waitForSuggestion: Bool
+        // @Injected() var apsManager: APSManager!  //needed for rounding bolus to pump specifics (line 40)
         @StateObject var state = StateModel()
-
         @State private var isAddInsulinAlertPresented = false
-        @State private var presentInfo = false
-        @State private var displayError = false
+        @State private var showInfo = false
+        @State private var insulinWholeCOB: Decimal = 0
+        @State private var showIobCalc: Decimal = 0
+        @State private var deltaBg: Decimal = 0
+        @State private var bgFactor: Decimal = 0
+        @State private var wholeCOB: Decimal = 0
+        @State private var fifteenMinDelta: Decimal = 0
+        @State private var FactorfifteenMinDelta: Decimal = 0
+        @State private var InsulinfifteenMinDelta: Decimal = 0
+        @State private var wholeCalc: Decimal = 0
+        @State private var roundedWholeCalc: Decimal = 0
+        @State private var bgDependentInsulinCorrection: Decimal = 0
+        @State private var useCorrectionFactor: Bool = false {
+            didSet {
+                insulinCalculated = calculateInsulin()
+            }
+        }
 
-        @Environment(\.colorScheme) var colorScheme
+        @State private var superBolus: Bool = false {
+            didSet {
+                insulinCalculated = calculateInsulin()
+            }
+        }
+
+        @State private var insulinCalculated: Decimal = 0
 
         private var formatter: NumberFormatter {
             let formatter = NumberFormatter()
@@ -20,133 +41,334 @@ extension Bolus {
             return formatter
         }
 
-        private var fractionDigits: Int {
-            if state.units == .mmolL {
-                return 1
-            } else { return 0 }
+        private var numberFormatter: NumberFormatter {
+            let formatter = NumberFormatter()
+            formatter.numberStyle = .decimal
+            formatter.maximumFractionDigits = 2
+            return formatter
         }
+
+        // BEGINNING OF CALCULATIONS FOR THE BOLUS CALCULATOR
+        // ......
+        // ......
+
+        func calculateInsulin() -> Decimal {
+            // more or less insulin because of bg trend in the last 15 minutes
+            fifteenMinDelta = state.DeltaBZ
+            FactorfifteenMinDelta = (state.suggestion?.isf ?? 0) / fifteenMinDelta
+            InsulinfifteenMinDelta = (1 / FactorfifteenMinDelta)
+
+            // determine how much insulin is needed for the current bg
+
+            deltaBg = state.BZ - (state.suggestion?.current_target ?? 0)
+            bgFactor = (state.suggestion?.isf ?? 0) / deltaBg
+            bgDependentInsulinCorrection = (1 / bgFactor)
+
+            // determine whole COB for which we want to dose insulin for and then determine insulin for wholeCOB
+            wholeCOB = (state.suggestion?.cob ?? 0) + state.Carbs
+            insulinWholeCOB = wholeCOB / state.cRatio
+
+            // determine how much the calculator reduces/ increases the bolus because of IOB
+            showIobCalc = (-1) * (state.suggestion?.iob ?? 0)
+
+            // adding all the factors together
+            // add a calc for the case that no InsulinfifteenMinDelta is available
+            if state.DeltaBZ != 0 {
+                wholeCalc = (bgDependentInsulinCorrection + showIobCalc + insulinWholeCOB + InsulinfifteenMinDelta)
+            } else {
+                if state.BZ == 0 {
+                    wholeCalc = (showIobCalc + insulinWholeCOB)
+                } else {
+                    wholeCalc = (bgDependentInsulinCorrection + showIobCalc + insulinWholeCOB)
+                }
+            }
+            let doubleWholeCalc = Double(wholeCalc)
+            roundedWholeCalc = Decimal(round(10 * doubleWholeCalc) / 10)
+
+            // dermine fraction of whole bolus in % using state.overrideFactor......should also be made adjustable by the user
+            let fraction = (state.overrideFactor / 100)
+
+            let normalCalculation = wholeCalc * fraction
+
+            if useCorrectionFactor {
+                // if meal is fatty bolus will be reduced ....could be made adjustable later
+                insulinCalculated = normalCalculation * 0.7
+            } else if superBolus {
+                // adding two hours worth of basal to the bolus.....hard coded just for my case
+                insulinCalculated = normalCalculation + 1.2
+            } else {
+                insulinCalculated = normalCalculation
+            }
+            insulinCalculated = max(insulinCalculated, 0)
+            return insulinCalculated
+        }
+
+        // ......
+        // ......
+        // END OF CALCULATIONS FOR THE BOLUS CALCULATOR
 
         var body: some View {
             Form {
                 Section {
-                    if state.waitForSuggestion {
-                        HStack {
-                            Text("Wait please").foregroundColor(.secondary)
-                            Spacer()
-                            ActivityIndicator(isAnimating: .constant(true), style: .medium) // fix iOS 15 bug
+                    HStack {
+                        Text("Blutzucker")
+
+                        DecimalTextField(
+                            "0",
+                            value: $state.BZ,
+                            formatter: formatter,
+                            autofocus: false,
+                            cleanInput: true
+                        )
+                        .onChange(of: state.BZ) { newValue in
+                            if newValue > 500 {
+                                state.BZ = 500 // ensure that user can not input more than 500 mg/dL
+                            }
+                            insulinCalculated = calculateInsulin()
                         }
-                    } else {
+                        Text(
+                            NSLocalizedString("mg/dL", comment: "mg/dL")
+                        ).foregroundColor(.secondary)
+                    }
+                    .contentShape(Rectangle())
+
+                    HStack {
+                        Text("Kohlenhydrate")
+                        Spacer()
+                        DecimalTextField(
+                            "0",
+                            value: $state.Carbs,
+                            formatter: formatter,
+                            autofocus: false,
+                            cleanInput: true
+                        )
+                        .onChange(of: state.Carbs) { newValue in
+                            if newValue > 200 {
+                                state.Carbs = 200 // ensure that user can not input more than 200g of carbs accidentally
+                            }
+                            insulinCalculated = calculateInsulin()
+                        }
+                        Text(
+                            NSLocalizedString("g", comment: "grams")
+                        ).foregroundColor(.secondary)
+                    }
+
+                    HStack {
+                        Text("Anteil")
+                        Button(action: {
+                            showInfo.toggle()
+                            insulinCalculated = calculateInsulin()
+                        }, label: {
+                            Image(systemName: "info.circle")
+                        })
+                            .buttonStyle(PlainButtonStyle())
+                        Spacer()
+                        DecimalTextField(
+                            "0",
+                            value: $state.overrideFactor,
+                            formatter: formatter,
+                            autofocus: false,
+                            cleanInput: true
+                        )
+                        .onChange(of: state.overrideFactor) { newValue in
+                            if newValue > 100 {
+                                state
+                                    .overrideFactor =
+                                    100 // ensure that user can not input more than 100% of bolus accidentally
+                            }
+                            insulinCalculated = calculateInsulin()
+                        }
+                        Text(
+                            NSLocalizedString("%", comment: "%")
+                        ).foregroundColor(.secondary)
+                    }
+                }
+
+                if showInfo {
+                    Section {
                         HStack {
-                            Text("Insulin recommended")
+                            Text("BG").foregroundColor(.gray)
                             Spacer()
                             Text(
                                 formatter
-                                    .string(from: state.insulinRecommended as NSNumber)! +
-                                    NSLocalizedString(" U", comment: "Insulin unit")
-                            ).foregroundColor((state.error && state.insulinRecommended > 0) ? .red : .secondary)
+                                    .string(from: state.BZ as NSNumber)! + NSLocalizedString(" mg/dL", comment: "mg/dL")
+                            ).foregroundColor(.gray)
+                            Spacer()
+                            Text(
+                                (formatter.string(from: bgDependentInsulinCorrection as NSNumber) ?? "") +
+                                    NSLocalizedString(" IE", comment: "IE")
+                            ).foregroundColor(.gray)
                         }.contentShape(Rectangle())
-                            .onTapGesture {
-                                if state.error, state.insulinRecommended > 0 { displayError = true }
-                                else { state.amount = state.insulinRecommended }
-                            }
                         HStack {
-                            Image(systemName: "info.bubble").symbolRenderingMode(.palette).foregroundStyle(
-                                .primary, .blue
-                            )
-                        }.onTapGesture {
-                            presentInfo.toggle()
+                            Text("Trend").foregroundColor(.gray)
+                            Spacer()
+                            Text(
+                                formatter
+                                    .string(from: state.DeltaBZ as NSNumber)! + NSLocalizedString(" mg/dL", comment: "mg/dL")
+                            ).foregroundColor(.gray)
+                            Spacer()
+                            Text(
+                                (formatter.string(from: InsulinfifteenMinDelta as NSNumber) ?? "") +
+                                    NSLocalizedString(" IE", comment: "IE")
+                            ).foregroundColor(.gray)
+                        }.contentShape(Rectangle())
+                        HStack {
+                            Text("IOB").foregroundColor(.gray)
+                            Spacer()
+                            Text(
+                                (numberFormatter.string(from: (state.suggestion?.iob ?? 0) as NSNumber) ?? "0") +
+                                    NSLocalizedString(" U", comment: "Insulin unit")
+                            ).foregroundColor(.gray)
+                            Spacer()
+                            Text(
+                                (formatter.string(from: showIobCalc as NSNumber) ?? "") +
+                                    NSLocalizedString(" IE", comment: "IE")
+                            ).foregroundColor(.gray)
+                        }.contentShape(Rectangle())
+                        HStack {
+                            Text("COB").foregroundColor(.gray)
+                            Spacer()
+                            Text(
+                                (formatter.string(from: wholeCOB as NSNumber) ?? "") +
+                                    NSLocalizedString(" g", comment: "g carbs")
+                            ).foregroundColor(.gray)
+                            Spacer()
+                            Text(
+                                (formatter.string(from: insulinWholeCOB as NSNumber) ?? "") +
+                                    NSLocalizedString(" IE", comment: "IE")
+                            ).foregroundColor(.gray)
+                        }.contentShape(Rectangle())
+                        HStack {
+                            Text("CR").foregroundColor(.gray)
+                            Spacer()
+                            Text(
+                                formatter
+                                    .string(from: state.cRatio as NSNumber)! + NSLocalizedString(" g/U", comment: "g/U")
+                            ).foregroundColor(.gray)
+                        }.contentShape(Rectangle())
+                        HStack {
+                            Text("ISF").foregroundColor(.gray)
+                            Spacer()
+                            Text(
+                                (numberFormatter.string(from: (state.suggestion?.isf ?? 0) as NSNumber) ?? "0") +
+                                    NSLocalizedString(" mg/dL/U", comment: "mg/dL/U")
+                            ).foregroundColor(.gray)
+                        }.contentShape(Rectangle())
+                        HStack {
+                            Text("Ziel").foregroundColor(.gray)
+                            Spacer()
+                            Text(
+                                (numberFormatter.string(from: (state.suggestion?.current_target ?? 0) as NSNumber) ?? "0") +
+                                    NSLocalizedString(" mg/dL", comment: "mg/dL")
+                            ).foregroundColor(.gray)
+                        }.contentShape(Rectangle())
+                        HStack {
+                            Text("Anteil").foregroundColor(.gray)
+                            Spacer()
+                            Text(
+                                formatter
+                                    .string(from: state.overrideFactor as NSNumber)! +
+                                    NSLocalizedString(" % von ", comment: "Percentage") + String(describing: roundedWholeCalc)
+                            ).foregroundColor(.gray)
+                        }
+                    }
+                    Section {
+                        Toggle(isOn: $useCorrectionFactor) {
+                            Text("Fettig").foregroundColor(.yellow)
+                        }.onChange(of: useCorrectionFactor) { _ in
+                            insulinCalculated = calculateInsulin()
+                        }
+                        Toggle(isOn: $superBolus) {
+                            Text("Super Bolus").foregroundColor(.purple)
+                        }.onChange(of: superBolus) { _ in
+                            insulinCalculated = calculateInsulin()
                         }
                     }
                 }
-                header: { Text("Recommendation") }
+                Section {
+                    HStack {
+                        Text("Empfohlener Bolus")
+                        Spacer()
 
-                if !state.waitForSuggestion {
-                    Section {
+                        Text(
+                            formatter
+                                .string(from: Double(insulinCalculated) as NSNumber)!
+                        )
+                        Text("IE").foregroundColor(.secondary)
+                    }.contentShape(Rectangle())
+                        .onTapGesture {
+                            state.amount = insulinCalculated
+                            if insulinCalculated <= 0 {
+                                insulinCalculated = 0
+                            }
+                        }
+
+                    if !state.waitForSuggestion {
                         HStack {
-                            Text("Amount")
+                            Text("Bolus")
                             Spacer()
                             DecimalTextField(
                                 "0",
                                 value: $state.amount,
                                 formatter: formatter,
-                                autofocus: true,
+                                autofocus: false,
                                 cleanInput: true
                             )
-                            Text(!(state.amount > state.maxBolus) ? "U" : "😵").foregroundColor(.secondary)
+                            Text("IE").foregroundColor(.secondary)
                         }
-                    }
-                    header: { Text("Bolus") }
-                    Section {
-                        Button { state.add() }
-                        label: { Text(!(state.amount > state.maxBolus) ? "Enact bolus" : "Max Bolus exceeded!") }
-                            .disabled(
-                                state.amount <= 0 || state.amount > state.maxBolus
-                            )
-                    }
-                    Section {
-                        if waitForSuggestion {
-                            Button { state.showModal(for: nil) }
-                            label: { Text("Continue without bolus") }
-                        } else {
-                            Button { isAddInsulinAlertPresented = true }
-                            label: { Text("Add insulin without actually bolusing") }
-                                .disabled(state.amount <= 0 || state.amount > state.maxBolus * 3)
-                        }
-                    }
-                    .alert(isPresented: $isAddInsulinAlertPresented) {
-                        let isOverMax = state.amount > state.maxBolus ? true : false
-                        let secondParagrap1 = "Add"
-                        let secondParagraph2 = " U"
-                        let secondParagraph3 = " without bolusing"
-                        let insulinAmount = formatter.string(from: state.amount as NSNumber)!
-
-                        // Actual alert
-                        return Alert(
-                            title: Text(
-                                isOverMax ? "Warning" : "Are you sure?"
-                            ),
-                            message:
-                            Text(
-                                isOverMax ? (
-                                    NSLocalizedString(
-                                        "\nAmount is more than your Max Bolus setting! \nAre you sure you want to add ",
-                                        comment: "Alert"
-                                    ) + insulinAmount +
-                                        NSLocalizedString(secondParagraph2, comment: "Insulin unit") +
-                                        NSLocalizedString(secondParagraph3, comment: "Add insulin without bolusing alert") + "?"
-                                ) :
-                                    NSLocalizedString(secondParagrap1, comment: "Add insulin without bolusing alert") +
-                                    " " +
-                                    insulinAmount +
-                                    NSLocalizedString(secondParagraph2, comment: "Insulin unit") +
-                                    NSLocalizedString(secondParagraph3, comment: "Add insulin without bolusing alert")
-                            ),
-                            primaryButton: .destructive(
-                                Text("Add"),
-                                action: {
-                                    state.addWithoutBolus()
-                                    isAddInsulinAlertPresented = false
+                        HStack {
+                            Spacer()
+                            Button(action: {
+                                if waitForSuggestion {
+                                    state.showModal(for: nil)
+                                } else {
+                                    isAddInsulinAlertPresented = true
                                 }
-                            ),
-                            secondaryButton: .cancel()
-                        )
+                            }, label: {
+                                Image(systemName: "plus.circle.fill")
+                                    .foregroundColor(.blue)
+                                    .font(.system(size: 22))
+                            })
+                                .disabled(state.amount <= 0)
+                                .buttonStyle(PlainButtonStyle())
+                                .padding(.trailing, 10)
+                        }
+                    }
+                }
+
+                Section {
+                    HStack(alignment: .center) {
+                        Spacer()
+                        Button { state.add() }
+                        label: { Text("Enact bolus")
+                            .foregroundColor(.white)
+                            .padding(.horizontal, 100)
+                            .padding(.vertical, 15)
+                            .background(Color.blue)
+
+                            .cornerRadius(15)
+                            .contentShape(Rectangle())
+                        }
+                        .disabled(state.amount <= 0)
+                        Spacer()
                     }
                 }
             }
-            .alert(isPresented: $displayError) {
-                Alert(
-                    title: Text("Warning!"),
-                    message: Text("\n" + alertString() + "\n"),
+
+            .alert(isPresented: $isAddInsulinAlertPresented) {
+                let amount = formatter
+                    .string(from: state.amount as NSNumber)! + NSLocalizedString(" U", comment: "Insulin unit")
+                return Alert(
+                    title: Text("Are you sure?"),
+                    message: Text("Add \(amount) without bolusing"),
                     primaryButton: .destructive(
                         Text("Add"),
-                        action: {
-                            state.amount = state.insulinRecommended
-                            displayError = false
-                        }
+                        action: { state.addWithoutBolus() }
                     ),
                     secondaryButton: .cancel()
                 )
-            }.onAppear {
+            }
+            .onAppear {
                 configureView {
                     state.waitForSuggestionInitial = waitForSuggestion
                     state.waitForSuggestion = waitForSuggestion
@@ -155,165 +377,11 @@ extension Bolus {
             .navigationTitle("Enact Bolus")
             .navigationBarTitleDisplayMode(.automatic)
             .navigationBarItems(leading: Button("Close", action: state.hideModal))
-            .popup(isPresented: presentInfo, alignment: .center, direction: .bottom) {
-                bolusInfo
-            }
-        }
-
-        var bolusInfo: some View {
-            VStack {
-                // Variables
-                VStack(spacing: 3) {
-                    HStack {
-                        Text("Eventual Glucose").foregroundColor(.secondary)
-                        let evg = state.units == .mmolL ? Decimal(state.evBG).asMmolL : Decimal(state.evBG)
-                        Text(evg.formatted(.number.grouping(.never).rounded().precision(.fractionLength(fractionDigits))))
-                        Text(state.units.rawValue).foregroundColor(.secondary)
-                    }
-                    HStack {
-                        Text("Target Glucose").foregroundColor(.secondary)
-                        let target = state.units == .mmolL ? state.target.asMmolL : state.target
-                        Text(target.formatted(.number.grouping(.never).rounded().precision(.fractionLength(fractionDigits))))
-                        Text(state.units.rawValue).foregroundColor(.secondary)
-                    }
-                    HStack {
-                        Text("ISF").foregroundColor(.secondary)
-                        let isf = state.isf
-                        Text(isf.formatted())
-                        Text(state.units.rawValue + NSLocalizedString("/U", comment: "/Insulin unit"))
-                            .foregroundColor(.secondary)
-                    }
-                    HStack {
-                        Text("ISF:")
-                        Text("Insulin Sensitivity")
-                    }.foregroundColor(.secondary).italic()
-                    if state.percentage != 100 {
-                        HStack {
-                            Text("Percentage setting").foregroundColor(.secondary)
-                            let percentage = state.percentage
-                            Text(percentage.formatted())
-                            Text("%").foregroundColor(.secondary)
-                        }
-                    }
-                    HStack {
-                        Text("Formula:")
-                        Text("(Eventual Glucose - Target) / ISF")
-                    }.foregroundColor(.secondary).italic().padding(.top, 5)
-                }
-                .font(.footnote)
-                .padding(.top, 10)
-                Divider()
-                // Formula
-                VStack(spacing: 5) {
-                    let unit = NSLocalizedString(
-                        " U",
-                        comment: "Unit in number of units delivered (keep the space character!)"
-                    )
-                    let color: Color = (state.percentage != 100 && state.insulin > 0) ? .secondary : .blue
-                    let fontWeight: Font.Weight = (state.percentage != 100 && state.insulin > 0) ? .regular : .bold
-                    HStack {
-                        Text(NSLocalizedString("Insulin recommended", comment: "") + ":").font(.callout)
-                        Text(state.insulin.formatted() + unit).font(.callout).foregroundColor(color).fontWeight(fontWeight)
-                    }
-                    if state.percentage != 100, state.insulin > 0 {
-                        Divider()
-                        HStack { Text(state.percentage.formatted() + " % ->").font(.callout).foregroundColor(.secondary)
-                            Text(
-                                state.insulinRecommended.formatted() + unit
-                            ).font(.callout).foregroundColor(.blue).bold()
-                        }
-                    }
-                }
-                // Warning
-                if state.error, state.insulinRecommended > 0 {
-                    VStack(spacing: 5) {
-                        Divider()
-                        Text("Warning!").font(.callout).bold().foregroundColor(.orange)
-                        Text(alertString()).font(.footnote)
-                        Divider()
-                    }.padding(.horizontal, 10)
-                }
-                // Footer
-                if !(state.error && state.insulinRecommended > 0) {
-                    VStack {
-                        Text(
-                            "Carbs and previous insulin are included in the glucose prediction, but if the Eventual Glucose is lower than the Target Glucose, a bolus will not be recommended."
-                        ).font(.caption2).foregroundColor(.secondary)
-                    }.padding(20)
-                }
-                // Hide button
-                VStack {
-                    Button { presentInfo = false }
-                    label: { Text("Hide") }.frame(maxWidth: .infinity, alignment: .center).font(.callout)
-                        .foregroundColor(.blue)
-                }.padding(.bottom, 10)
-            }
-            .background(
-                RoundedRectangle(cornerRadius: 8, style: .continuous)
-                    .fill(Color(colorScheme == .dark ? UIColor.systemGray4 : UIColor.systemGray4))
-                // .fill(Color(.systemGray).gradient)  // A more prominent pop-up, but harder to read
-            )
-        }
-
-        // Localize the Oref0 error/warning strings. The default should never be returned
-        private func alertString() -> String {
-            switch state.errorString {
-            case 1,
-                 2:
-                return NSLocalizedString(
-                    "Eventual Glucose > Target Glucose, but glucose is predicted to first drop down to ",
-                    comment: "Bolus pop-up / Alert string. Make translations concise!"
-                ) + state.minGuardBG
-                    .formatted(.number.grouping(.never).rounded().precision(.fractionLength(fractionDigits))) + " " + state.units
-                    .rawValue + ", " +
-                    NSLocalizedString(
-                        "which is below your Threshold (",
-                        comment: "Bolus pop-up / Alert string. Make translations concise!"
-                    ) + state
-                    .threshold.formatted() + " " + state.units.rawValue + ")"
-            case 3:
-                return NSLocalizedString(
-                    "Eventual Glucose > Target Glucose, but glucose is climbing slower than expected. Expected: ",
-                    comment: "Bolus pop-up / Alert string. Make translations concise!"
-                ) +
-                    state.expectedDelta
-                    .formatted(.number.grouping(.never).rounded().precision(.fractionLength(fractionDigits))) +
-                    NSLocalizedString(". Climbing: ", comment: "Bolus pop-up / Alert string. Make translatons concise!") + state
-                    .minDelta.formatted(.number.grouping(.never).rounded().precision(.fractionLength(fractionDigits)))
-            case 4:
-                return NSLocalizedString(
-                    "Eventual Glucose > Target Glucose, but glucose is falling faster than expected. Expected: ",
-                    comment: "Bolus pop-up / Alert string. Make translations concise!"
-                ) +
-                    state.expectedDelta
-                    .formatted(.number.grouping(.never).rounded().precision(.fractionLength(fractionDigits))) +
-                    NSLocalizedString(". Falling: ", comment: "Bolus pop-up / Alert string. Make translations concise!") + state
-                    .minDelta.formatted(.number.grouping(.never).rounded().precision(.fractionLength(fractionDigits)))
-            case 5:
-                return NSLocalizedString(
-                    "Eventual Glucose > Target Glucose, but glucose is changing faster than expected. Expected: ",
-                    comment: "Bolus pop-up / Alert string. Make translations concise!"
-                ) +
-                    state.expectedDelta
-                    .formatted(.number.grouping(.never).rounded().precision(.fractionLength(fractionDigits))) +
-                    NSLocalizedString(". Changing: ", comment: "Bolus pop-up / Alert string. Make translations concise!") + state
-                    .minDelta.formatted(.number.grouping(.never).rounded().precision(.fractionLength(fractionDigits)))
-            case 6:
-                return NSLocalizedString(
-                    "Eventual Glucose > Target Glucose, but glucose is predicted to first drop down to ",
-                    comment: "Bolus pop-up / Alert string. Make translations concise!"
-                ) + state
-                    .minPredBG
-                    .formatted(.number.grouping(.never).rounded().precision(.fractionLength(fractionDigits))) + " " + state
-                    .units
-                    .rawValue
-            default:
-                return "Ignore Warning..."
-            }
         }
     }
 }
 
+// fix iOS 15 bug
 struct ActivityIndicator: UIViewRepresentable {
     @Binding var isAnimating: Bool
     let style: UIActivityIndicatorView.Style
@@ -326,3 +394,4 @@ struct ActivityIndicator: UIViewRepresentable {
         isAnimating ? uiView.startAnimating() : uiView.stopAnimating()
     }
 }
+
