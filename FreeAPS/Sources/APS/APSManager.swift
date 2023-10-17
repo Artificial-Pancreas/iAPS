@@ -342,8 +342,8 @@ final class BaseAPSManager: APSManager, Injectable {
             return Just(false).eraseToAnyPublisher()
         }
 
-        // Only let glucose be flat when 400 mg/dl or more
-        if (glucoseStorage.recent().last?.glucose ?? 400) < 400 {
+        // Only let glucose be flat when 400 mg/dl
+        if (glucoseStorage.recent().last?.glucose ?? 100) != 400 {
             guard glucoseStorage.isGlucoseNotFlat() else {
                 debug(.apsManager, "Glucose data is too flat")
                 processError(APSError.glucoseError(message: "Glucose data is too flat"))
