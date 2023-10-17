@@ -274,12 +274,15 @@ extension Bolus {
                     }
                     Section {
                         Toggle(isOn: $useCorrectionFactor) {
-                            Text("Fettig").foregroundColor(.yellow)
+                            // Image("pizzaslice")
+                            Text("Fettig")
+                                .foregroundColor(.yellow)
                         }.onChange(of: useCorrectionFactor) { _ in
                             insulinCalculated = calculateInsulin()
                         }
                         Toggle(isOn: $superBolus) {
-                            Text("Super Bolus").foregroundColor(.purple)
+                            Label("Super Bolus", systemImage: "birthday.cake")
+                                .foregroundColor(.purple)
                         }.onChange(of: superBolus) { _ in
                             insulinCalculated = calculateInsulin()
                         }
@@ -327,7 +330,7 @@ extension Bolus {
                             }, label: {
                                 Image(systemName: "plus.circle.fill")
                                     .foregroundColor(.blue)
-                                    .font(.system(size: 22))
+                                    .font(.system(size: 25))
                             })
                                 .disabled(state.amount <= 0)
                                 .buttonStyle(PlainButtonStyle())
@@ -336,23 +339,18 @@ extension Bolus {
                     }
                 }
 
-                Section {
-                    HStack(alignment: .center) {
-                        Spacer()
-                        Button { state.add() }
-                        label: { Text("Enact bolus")
-                            .foregroundColor(.white)
-                            .padding(.horizontal, 100)
-                            .padding(.vertical, 15)
-                            .background(Color.blue)
+                Button(action: {
+                    state.add()
+                }) {
+                    Text("Enact bolus")
+                        .foregroundColor(.white)
+                        .padding()
+                        .frame(maxWidth: .infinity)
 
-                            .cornerRadius(15)
-                            .contentShape(Rectangle())
-                        }
-                        .disabled(state.amount <= 0)
-                        Spacer()
-                    }
+                        .background(Color.blue)
+                        .cornerRadius(10)
                 }
+                .disabled(state.amount <= 0)
             }
 
             .alert(isPresented: $isAddInsulinAlertPresented) {
@@ -394,4 +392,3 @@ struct ActivityIndicator: UIViewRepresentable {
         isAnimating ? uiView.startAnimating() : uiView.stopAnimating()
     }
 }
-

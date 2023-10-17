@@ -140,4 +140,3 @@ extension Bolus.StateModel: SuggestionObserver {
         setupInsulinRequired()
     }
 }
-
