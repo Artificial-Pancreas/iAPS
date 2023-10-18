@@ -300,6 +300,7 @@
 		BA00D96F7B2FF169A06FB530 /* CGMStateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C018D1680307A31C9ED7120 /* CGMStateModel.swift */; };
 		BA90041DC8991147E5C8C3AA /* CalibrationsRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 500371C09F54F89A97D65FDB /* CalibrationsRootView.swift */; };
 		BD2B464E0745FBE7B79913F4 /* NightscoutConfigProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BF768BD6264FF7D71D66767 /* NightscoutConfigProvider.swift */; };
+		BD7DA99F2AE0178600601B20 /* CalculationInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD7DA99E2AE0178600601B20 /* CalculationInfo.swift */; };
 		BF1667ADE69E4B5B111CECAE /* ManualTempBasalProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 680C4420C9A345D46D90D06C /* ManualTempBasalProvider.swift */; };
 		C967DACD3B1E638F8B43BE06 /* ManualTempBasalStateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFCFE0781F9074C2917890E8 /* ManualTempBasalStateModel.swift */; };
 		CA370FC152BC98B3D1832968 /* BasalProfileEditorRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8BCB0C37DEB5EC377B9612 /* BasalProfileEditorRootView.swift */; };
@@ -817,6 +818,7 @@
 		B9B5C0607505A38F256BF99A /* CGMDataFlow.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CGMDataFlow.swift; sourceTree = "<group>"; };
 		BA49538D56989D8DA6FCF538 /* TargetsEditorDataFlow.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = TargetsEditorDataFlow.swift; sourceTree = "<group>"; };
 		BC210C0F3CB6D3C86E5DED4E /* LibreConfigRootView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = LibreConfigRootView.swift; sourceTree = "<group>"; };
+		BD7DA99E2AE0178600601B20 /* CalculationInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalculationInfo.swift; sourceTree = "<group>"; };
 		BF8BCB0C37DEB5EC377B9612 /* BasalProfileEditorRootView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = BasalProfileEditorRootView.swift; sourceTree = "<group>"; };
 		C19984D62EFC0035A9E9644D /* BolusProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = BolusProvider.swift; sourceTree = "<group>"; };
 		C377490C77661D75E8C50649 /* ManualTempBasalRootView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ManualTempBasalRootView.swift; sourceTree = "<group>"; };
@@ -2040,6 +2042,14 @@
 			path = View;
 			sourceTree = "<group>";
 		};
+		BD7DA9A02AE017D800601B20 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				BD7DA99E2AE0178600601B20 /* CalculationInfo.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
 		C11D545CED3ECEB525EDEE23 /* LibreConfig */ = {
 			isa = PBXGroup;
 			children = (
@@ -2054,6 +2064,7 @@
 		C2C98283C436DB934D7E7994 /* Bolus */ = {
 			isa = PBXGroup;
 			children = (
+				BD7DA9A02AE017D800601B20 /* Components */,
 				C8D1A7CA8C10C4403D4BBFA7 /* BolusDataFlow.swift */,
 				C19984D62EFC0035A9E9644D /* BolusProvider.swift */,
 				223EC0494F55A91E3EA69EF4 /* BolusStateModel.swift */,
@@ -2711,6 +2722,7 @@
 				FA630397F76B582C8D8681A7 /* BasalProfileEditorProvider.swift in Sources */,
 				63E890B4D951EAA91C071D5C /* BasalProfileEditorStateModel.swift in Sources */,
 				CE398D16297C9D1D00DF218F /* dexcomSourceG7.swift in Sources */,
+				BD7DA99F2AE0178600601B20 /* CalculationInfo.swift in Sources */,
 				38FEF3FA2737E42000574A46 /* BaseStateModel.swift in Sources */,
 				CC6C406E2ACDD69E009B8058 /* RawFetchedProfile.swift in Sources */,
 				385CEA8225F23DFD002D6D5B /* NightscoutStatus.swift in Sources */,

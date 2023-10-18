@@ -27,6 +27,24 @@ extension Bolus {
         @Published var recentGlucose: BloodGlucose?
         @Published var waitForSuggestion: Bool = false
         var waitForSuggestionInitial: Bool = false
+        // überarbeitete version
+        @Published var InsulinfifteenMinDelta: Decimal = 0
+        @Published var bgDependentInsulinCorrection: Decimal = 0
+        @Published var insulinWholeCOB: Decimal = 0
+        @Published var showIobCalc: Decimal = 0
+        @Published var wholeCalc: Decimal = 0
+        @Published var roundedWholeCalc: Decimal = 0
+        @Published var useCorrectionFactor: Bool = false {
+            didSet {
+                insulinCalculated = calculateInsulin()
+            }
+        }
+
+        @Published var superBolus: Bool = false {
+            didSet {
+                insulinCalculated = calculateInsulin()
+            }
+        }
 
         override func subscribe() {
             setupInsulinRequired()
@@ -79,6 +97,65 @@ extension Bolus {
                 cRatio = 12
             }
         }
+
+        // BEGINNING OF CALCULATIONS FOR THE BOLUS CALCULATOR
+        // ......
+        // ......
+
+        func calculateInsulin() -> Decimal {
+            // more or less insulin because of bg trend in the last 15 minutes
+            var fifteenMinDelta = DeltaBZ
+            var FactorfifteenMinDelta = (suggestion?.isf ?? 0) / fifteenMinDelta
+            InsulinfifteenMinDelta = (1 / FactorfifteenMinDelta)
+
+            // determine how much insulin is needed for the current bg
+
+            var deltaBg = BZ - (suggestion?.current_target ?? 0)
+            var bgFactor = (suggestion?.isf ?? 0) / deltaBg
+            bgDependentInsulinCorrection = (1 / bgFactor)
+
+            // determine whole COB for which we want to dose insulin for and then determine insulin for wholeCOB
+            var wholeCOB = (suggestion?.cob ?? 0) + Carbs
+            insulinWholeCOB = wholeCOB / cRatio
+
+            // determine how much the calculator reduces/ increases the bolus because of IOB
+            showIobCalc = (-1) * (suggestion?.iob ?? 0)
+
+            // adding all the factors together
+            // add a calc for the case that no InsulinfifteenMinDelta is available
+            if DeltaBZ != 0 {
+                wholeCalc = (bgDependentInsulinCorrection + showIobCalc + insulinWholeCOB + InsulinfifteenMinDelta)
+            } else {
+                if BZ == 0 {
+                    wholeCalc = (showIobCalc + insulinWholeCOB)
+                } else {
+                    wholeCalc = (bgDependentInsulinCorrection + showIobCalc + insulinWholeCOB)
+                }
+            }
+            let doubleWholeCalc = Double(wholeCalc)
+            roundedWholeCalc = Decimal(round(10 * doubleWholeCalc) / 10)
+
+            // dermine fraction of whole bolus in % using state.overrideFactor......should also be made adjustable by the user
+            let fraction = (overrideFactor / 100)
+
+            let normalCalculation = wholeCalc * fraction
+
+            if useCorrectionFactor {
+                // if meal is fatty bolus will be reduced ....could be made adjustable later
+                insulinCalculated = normalCalculation * 0.7
+            } else if superBolus {
+                // adding two hours worth of basal to the bolus.....hard coded just for my case
+                insulinCalculated = normalCalculation + 1.2
+            } else {
+                insulinCalculated = normalCalculation
+            }
+            insulinCalculated = max(insulinCalculated, 0)
+            return insulinCalculated
+        }
+
+        // ......
+        // ......
+        // END OF CALCULATIONS FOR THE BOLUS CALCULATOR
 
         func add() {
             guard amount > 0 else {
