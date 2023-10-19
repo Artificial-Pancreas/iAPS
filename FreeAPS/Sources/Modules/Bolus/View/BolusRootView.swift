@@ -5,11 +5,14 @@ extension Bolus {
     struct RootView: BaseView {
         let resolver: Resolver
         let waitForSuggestion: Bool
-        // @Injected() var apsManager: APSManager!  //needed for rounding bolus to pump specifics (line 40)
         @StateObject var state = StateModel()
+
         @State private var isAddInsulinAlertPresented = false
         @State private var showInfo = false
+        @State private var carbsWarning = false
         @State var insulinCalculated: Decimal = 0
+
+        @Injected() var settings: SettingsManager!
 
         private var formatter: NumberFormatter {
             let formatter = NumberFormatter()
@@ -23,6 +26,12 @@ extension Bolus {
             formatter.numberStyle = .decimal
             formatter.maximumFractionDigits = 2
             return formatter
+        }
+
+        private var fractionDigits: Int {
+            if state.units == .mmolL {
+                return 1
+            } else { return 0 }
         }
 
         var body: some View {
@@ -60,51 +69,33 @@ extension Bolus {
                             cleanInput: true
                         )
                         .onChange(of: state.Carbs) { newValue in
-                            if newValue > 200 {
-                                state.Carbs = 200 // ensure that user can not input more than 200g of carbs accidentally
+                            if newValue > 250 {
+                                state.Carbs = 250 // ensure that user can not input more than 200g of carbs accidentally
                             }
                             insulinCalculated = state.calculateInsulin()
                         }
                         Text(
                             NSLocalizedString("g", comment: "grams")
-                        ).foregroundColor(.secondary)
-                    }
-
-                    HStack {
-                        Text("Fraction")
-                        Spacer()
-                        DecimalTextField(
-                            "0",
-                            value: $state.overrideFactor,
-                            formatter: formatter,
-                            autofocus: false,
-                            cleanInput: true
                         )
-                        .onChange(of: state.overrideFactor) { newValue in
-                            // ensure that user can not input more than 100% of bolus accidentally
-                            if newValue > 100 {
-                                state.overrideFactor = 100
-                            }
-                            insulinCalculated = state.calculateInsulin()
+                        .foregroundColor(.secondary)
+                        .alert("Warning! Too much carbs entered!", isPresented: $carbsWarning) {
+                            Button("OK", role: .cancel) {}
                         }
-                        Text(
-                            NSLocalizedString("%", comment: "%")
-                        ).foregroundColor(.secondary)
                     }
-                }
 
-                Button(action: {
-                    withAnimation {
+                    Button(action: {
                         showInfo.toggle()
-                    }
-                    insulinCalculated = state.calculateInsulin()
-                }, label: {
-                    Image(systemName: "info.circle")
-                    Text("Calculations")
-                })
-                    .foregroundStyle(.blue)
-                    .buttonStyle(PlainButtonStyle())
-                    .frame(maxWidth: .infinity, alignment: .leading)
+                        insulinCalculated = state.calculateInsulin()
+                    }, label: {
+                        Image(systemName: "info.circle")
+                        Text("Calculations")
+                    })
+                        .foregroundStyle(.blue)
+                        .font(.footnote)
+                        .buttonStyle(PlainButtonStyle())
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                }
+                header: { Text("Values") }
 
                 Section {
                     HStack {
@@ -148,23 +139,28 @@ extension Bolus {
                             }, label: {
                                 Image(systemName: "plus.circle.fill")
                                     .foregroundColor(.blue)
-                                    .font(.system(size: 25))
+                                    .font(.system(size: 28))
                             })
-                                .disabled(state.amount <= 0)
+                                .disabled(state.amount <= 0 || state.amount > state.maxBolus * 3)
                                 .buttonStyle(PlainButtonStyle())
                                 .padding(.trailing, 10)
                         }
                     }
                 }
+                header: { Text("Bolus") }
 
-                Button(action: {
-                    state.add()
-                }) {
-                    Text("Enact bolus")
-                        .font(.title3)
-                        .frame(maxWidth: .infinity, alignment: .center)
+                Section {
+                    Button(action: {
+                        state.add()
+                    }) {
+                        Text("Enact bolus")
+                            .font(.title3)
+                            .frame(maxWidth: .infinity, alignment: .center)
+                    }
+                    .disabled(
+                        state.amount <= 0 || state.amount > state.maxBolus
+                    )
                 }
-                .disabled(state.amount <= 0)
 
                 .alert(isPresented: $isAddInsulinAlertPresented) {
                     let amount = formatter
@@ -179,141 +175,158 @@ extension Bolus {
                         secondaryButton: .cancel()
                     )
                 }
-                .popover(isPresented: $showInfo, content: {
-                    PopUpView()
-                        .padding()
-                })
                 .onAppear {
                     configureView {
                         state.waitForSuggestionInitial = waitForSuggestion
                         state.waitForSuggestion = waitForSuggestion
-                        insulinCalculated = state.calculateInsulin()
+                        // insulinCalculated = state.calculateInsulin()
                     }
                 }
                 .navigationTitle("Enact Bolus")
                 .navigationBarTitleDisplayMode(.automatic)
                 .navigationBarItems(leading: Button("Close", action: state.hideModal))
             }
-        }
-    }
-
-    struct PopUpView: View {
-        @StateObject var state = StateModel()
-        @Environment(\.dismiss) var dismiss
-
-        private var formatter: NumberFormatter {
-            let formatter = NumberFormatter()
-            formatter.numberStyle = .decimal
-            formatter.maximumFractionDigits = 2
-            return formatter
+            .blur(radius: showInfo ? 3 : 0)
+            .popup(isPresented: showInfo) {
+                bolusInfo
+            }
         }
 
-        private var numberFormatter: NumberFormatter {
-            let formatter = NumberFormatter()
-            formatter.numberStyle = .decimal
-            formatter.maximumFractionDigits = 2
-            return formatter
-        }
-
-        var body: some View {
-            NavigationView {
+        // my bolusInfo variable/popup
+        var bolusInfo: some View {
+            VStack {
                 VStack {
                     VStack {
                         HStack {
-                            Text("Carb Ratio: ")
+                            Text("Calculations")
+                                .font(.title2)
                                 .fontWeight(.semibold)
                             Spacer()
-                            Text(
-                                formatter.string(from: state.cRatio as NSNumber)! + NSLocalizedString(" g/U", comment: "g/U")
-                            )
+                        }
+                        .padding(.vertical, 10)
+                        HStack {
+                            Text("Glucose")
+                                .fontWeight(.semibold)
+                            Spacer()
+                            let glucose = state.currentBG
+                            Text(glucose.formatted(.number.grouping(.never).rounded().precision(.fractionLength(fractionDigits))))
+                            Text(state.units.rawValue)
                         }
                         HStack {
-                            Text("ISF: ")
+                            Text("ISF")
                                 .fontWeight(.semibold)
                             Spacer()
-                            Text(
-                                (numberFormatter.string(from: (state.suggestion?.isf ?? 0) as NSNumber) ?? "0") +
-                                    NSLocalizedString(" mg/dL/U", comment: "mg/dL/U")
-                            )
+                            let isf = state.isf
+                            Text(isf.formatted())
+                            Text(state.units.rawValue + NSLocalizedString("/U", comment: "/Insulin unit"))
                         }
                         HStack {
-                            Text("Target: ")
+                            Text("Target Glucose")
                                 .fontWeight(.semibold)
                             Spacer()
-                            Text(
-                                (numberFormatter.string(from: (state.suggestion?.current_target ?? 0) as NSNumber) ?? "0") +
-                                    NSLocalizedString(" mg/dL", comment: "mg/dL")
-                            )
+                            let target = state.units == .mmolL ? state.target.asMmolL : state.target
+                            Text(target.formatted(.number.grouping(.never).rounded().precision(.fractionLength(fractionDigits))))
+                            Text(state.units.rawValue)
+                        }
+                        HStack {
+                            Text("Fraction")
+                                .fontWeight(.semibold)
+                            Spacer()
+                            let fraction = state.fraction
+                            Text(fraction.formatted())
                         }
                     }
                     .padding()
 
                     VStack {
-                        CalculationInfo(
-                            title: "BG",
-                            value: state.BZ as NSNumber,
-                            unit: " mg/dl",
-                            comment1: "mg/dl",
-                            calculationInfo: state.bgDependentInsulinCorrection as NSNumber,
-                            calcInfoUnit: " IE",
-                            comment2: "IE"
-                        )
-                        CalculationInfo(
-                            title: "Trend",
-                            value: state.DeltaBZ as NSNumber,
-                            unit: " mg/dl",
-                            comment1: "mg/dl",
-                            calculationInfo: state.InsulinfifteenMinDelta as NSNumber,
-                            calcInfoUnit: " IE",
-                            comment2: "IE"
-                        )
-                        CalculationInfo(
-                            title: "IOB",
-                            value: state.BZ as NSNumber,
-                            unit: " IE",
-                            comment1: "IE",
-                            calculationInfo: (state.suggestion?.iob ?? 0) as NSNumber,
-                            calcInfoUnit: " IE",
-                            comment2: "IE"
-                        )
-                        CalculationInfo(
-                            title: "COB",
-                            value: state.wholeCalc as NSNumber,
-                            unit: " g",
-                            comment1: "IE",
-                            calculationInfo: state.insulinWholeCOB as NSNumber,
-                            calcInfoUnit: " IE",
-                            comment2: "IE"
-                        )
-                        Divider()
-                            .fontWeight(.bold)
-                        CalculationInfo(
-                            title: "Result",
-                            value: state.overrideFactor as NSNumber,
-                            unit: " % von " + String(describing: state.roundedWholeCalc) + String(describing: " IE = "),
-                            comment1: "",
-                            calculationInfo: state.insulinCalculated as NSNumber,
-                            calcInfoUnit: " IE",
-                            comment2: "IE"
-                        )
-                        .fontWeight(.bold)
+                        HStack {
+                            Text("IOB")
+                                .fontWeight(.semibold)
+                            Spacer()
+                            let iob = state.iob
+                            Text(iob.formatted() + NSLocalizedString(" U", comment: "Insulin unit"))
+                            Spacer()
+
+                            Image(systemName: "arrow.right")
+                            Spacer()
+
+                            let iobCalc = state.showIobCalc
+                            Text(iobCalc.formatted() + NSLocalizedString(" U", comment: "Insulin unit"))
+                        }
+                        HStack {
+                            Text("Trend")
+                                .fontWeight(.semibold)
+                            Spacer()
+                            let trend = state.DeltaBZ
+                            Text(trend.formatted(.number.grouping(.never).rounded().precision(.fractionLength(fractionDigits))))
+                            Text(state.units.rawValue)
+                            Spacer()
+
+                            Image(systemName: "arrow.right")
+                            Spacer()
+
+                            let trendInsulin = state.InsulinfifteenMinDelta
+                            Text(trendInsulin.formatted() + NSLocalizedString(" U", comment: "Insulin unit"))
+                        }
+                        HStack {
+                            Text("COB")
+                                .fontWeight(.semibold)
+                            Spacer()
+                            let cob = state.cob
+                            Text(cob.formatted() + NSLocalizedString(" g", comment: "grams"))
+                            Spacer()
+
+                            Image(systemName: "arrow.right")
+                            Spacer()
+
+                            let insulinCob = state.insulinWholeCOB
+                            Text(insulinCob.formatted() + NSLocalizedString(" U", comment: "Insulin unit"))
+                        }
                     }
                     .padding()
 
-                    Spacer()
+                    Divider()
+                        .fontWeight(.bold)
+
+                    HStack {
+                        Text("Result")
+                        Spacer()
+                        let fraction = state.fraction
+                        let insulin = state.roundedWholeCalc
+                        let result = state.insulinCalculated
+                        Text(
+                            fraction.formatted() + " x " + insulin.formatted() + NSLocalizedString(" U", comment: "Insulin unit")
+                        )
+                        Text(
+                            " = " + result.formatted() + NSLocalizedString(" U", comment: "Insulin unit")
+                        )
+                    }
+                    .fontWeight(.bold)
+                    .padding()
                 }
-                .navigationTitle("Calculations")
-                .navigationBarTitleDisplayMode(.inline)
-                .navigationBarItems(
-                    leading:
-                    Button(action: {
-                        dismiss()
-                    }, label: {
-                        Text("Close")
-                    })
-                )
+                .padding(.top, 20)
+                Spacer()
+
+                // Hide button
+                VStack {
+                    Button { showInfo = false }
+                    label: {
+                        Text("OK")
+                    }
+                    .frame(maxWidth: .infinity, alignment: .center)
+                    .fontWeight(.semibold)
+                    .foregroundColor(.blue)
+                }
+                .padding(.bottom, 20)
             }
+            .background(
+                RoundedRectangle(cornerRadius: 10, style: .continuous)
+                    .fill(Color(.systemGray).opacity(0.9))
+            )
         }
+
+        // here could follow jons variable/popup
+        // ....
     }
 }
 

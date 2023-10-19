@@ -8,12 +8,15 @@ extension Bolus {
         @Injected() var apsManager: APSManager!
         @Injected() var broadcaster: Broadcaster!
         @Injected() var pumpHistoryStorage: PumpHistoryStorage!
-        @Injected() private var glucoseStorage: GlucoseStorage!
+        @Injected() var glucoseStorage: GlucoseStorage!
         @Injected() var carbsStorage: CarbsStorage!
+        @Injected() var settings: SettingsManager!
+
         @Published var suggestion: Suggestion?
         @Published var amount: Decimal = 0
         @Published var insulinRecommended: Decimal = 0
         @Published var insulinRequired: Decimal = 0
+
         @Published var insulinCalculated: Decimal = 0
         @Published var cRatio: Decimal = 0
         @Published var Isfs: Decimal = 0
@@ -21,12 +24,31 @@ extension Bolus {
         @Published var BZ: Decimal = 0
         @Published var DeltaBZ: Decimal = 0
         @Published var IOB: Decimal = 0
-        @Published var overrideFactor: Decimal = 80
         @Published var COB: Decimal = 0
         @Published var glucose: [BloodGlucose] = []
         @Published var recentGlucose: BloodGlucose?
+        @Published var units: GlucoseUnits = .mmolL
+        @Published var percentage: Decimal = 0
+        @Published var threshold: Decimal = 0
+        @Published var maxBolus: Decimal = 0
+        @Published var errorString: Decimal = 0
+        @Published var evBG: Int = 0
+        @Published var insulin: Decimal = 0
+        @Published var isf: Decimal = 0
+        @Published var iob: Decimal = 0
+        @Published var error: Bool = false
+        @Published var minGuardBG: Decimal = 0
+        @Published var minDelta: Decimal = 0
+        @Published var expectedDelta: Decimal = 0
+        @Published var minPredBG: Decimal = 0
+        @Published var target: Decimal = 0
+        @Published var currentBG: Decimal = 0
+        @Published var cob: Decimal = 0
+
         @Published var waitForSuggestion: Bool = false
+
         var waitForSuggestionInitial: Bool = false
+
         // überarbeitete version
         @Published var InsulinfifteenMinDelta: Decimal = 0
         @Published var bgDependentInsulinCorrection: Decimal = 0
@@ -34,7 +56,7 @@ extension Bolus {
         @Published var showIobCalc: Decimal = 0
         @Published var wholeCalc: Decimal = 0
         @Published var roundedWholeCalc: Decimal = 0
-        @Published var useCorrectionFactor: Bool = false {
+        @Published var mealCorrectionFactor: Bool = false {
             didSet {
                 insulinCalculated = calculateInsulin()
             }
@@ -46,9 +68,16 @@ extension Bolus {
             }
         }
 
+        @Published var fraction: Decimal = 0
+
         override func subscribe() {
             setupInsulinRequired()
             broadcaster.register(SuggestionObserver.self, observer: self)
+            units = settingsManager.settings.units
+            percentage = settingsManager.settings.insulinReqPercentage
+            threshold = provider.suggestion?.threshold ?? 0
+            maxBolus = provider.pumpSettings().maxBolus
+            fraction = settings.settings.overrideFactor
 
             if waitForSuggestionInitial {
                 apsManager.determineBasal()
@@ -104,18 +133,18 @@ extension Bolus {
 
         func calculateInsulin() -> Decimal {
             // more or less insulin because of bg trend in the last 15 minutes
-            var fifteenMinDelta = DeltaBZ
-            var FactorfifteenMinDelta = (suggestion?.isf ?? 0) / fifteenMinDelta
+            let fifteenMinDelta = DeltaBZ
+            let FactorfifteenMinDelta = (suggestion?.isf ?? 0) / fifteenMinDelta
             InsulinfifteenMinDelta = (1 / FactorfifteenMinDelta)
 
             // determine how much insulin is needed for the current bg
 
-            var deltaBg = BZ - (suggestion?.current_target ?? 0)
-            var bgFactor = (suggestion?.isf ?? 0) / deltaBg
+            let deltaBg = BZ - (suggestion?.current_target ?? 0)
+            let bgFactor = (suggestion?.isf ?? 0) / deltaBg
             bgDependentInsulinCorrection = (1 / bgFactor)
 
             // determine whole COB for which we want to dose insulin for and then determine insulin for wholeCOB
-            var wholeCOB = (suggestion?.cob ?? 0) + Carbs
+            let wholeCOB = (suggestion?.cob ?? 0) + Carbs
             insulinWholeCOB = wholeCOB / cRatio
 
             // determine how much the calculator reduces/ increases the bolus because of IOB
@@ -135,12 +164,11 @@ extension Bolus {
             let doubleWholeCalc = Double(wholeCalc)
             roundedWholeCalc = Decimal(round(10 * doubleWholeCalc) / 10)
 
-            // dermine fraction of whole bolus in % using state.overrideFactor......should also be made adjustable by the user
-            let fraction = (overrideFactor / 100)
+            // let fraction = settings.settings.overrideFactor
 
             let normalCalculation = wholeCalc * fraction
 
-            if useCorrectionFactor {
+            if mealCorrectionFactor {
                 // if meal is fatty bolus will be reduced ....could be made adjustable later
                 insulinCalculated = normalCalculation * 0.7
             } else if superBolus {
@@ -179,6 +207,7 @@ extension Bolus {
                 showModal(for: nil)
                 return
             }
+            amount = min(amount, maxBolus * 3)
 
             pumpHistoryStorage.storeEvents(
                 [
@@ -201,6 +230,36 @@ extension Bolus {
         func setupInsulinRequired() {
             DispatchQueue.main.async {
                 self.insulinRequired = self.provider.suggestion?.insulinReq ?? 0
+
+                var conversion: Decimal = 1.0
+                if self.units == .mmolL {
+                    conversion = 0.0555
+                }
+
+                self.evBG = self.provider.suggestion?.eventualBG ?? 0
+                self.insulin = self.provider.suggestion?.insulinForManualBolus ?? 0
+                self.target = self.provider.suggestion?.current_target ?? 0
+                self.isf = self.provider.suggestion?.isf ?? 0
+                self.iob = self.provider.suggestion?.iob ?? 0
+                self.currentBG = self.provider.suggestion?.bg ?? 0
+                self.cob = self.provider.suggestion?.cob ?? 0
+
+                if self.settingsManager.settings.insulinReqPercentage != 100 {
+                    self.insulinRecommended = self.insulin * (self.settingsManager.settings.insulinReqPercentage / 100)
+                } else { self.insulinRecommended = self.insulin }
+
+                self.errorString = self.provider.suggestion?.manualBolusErrorString ?? 0
+                if self.errorString != 0 {
+                    self.error = true
+                    self.minGuardBG = (self.provider.suggestion?.minGuardBG ?? 0) * conversion
+                    self.minDelta = (self.provider.suggestion?.minDelta ?? 0) * conversion
+                    self.expectedDelta = (self.provider.suggestion?.expectedDelta ?? 0) * conversion
+                    self.minPredBG = (self.provider.suggestion?.minPredBG ?? 0) * conversion
+                } else { self.error = false }
+
+                self.insulinRecommended = self.apsManager
+                    .roundBolus(amount: max(self.insulinRecommended, 0))
+
                 self.calculateBolus()
                 self.updateBZ()
                 self.updateCarbs()
