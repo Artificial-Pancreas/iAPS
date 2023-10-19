@@ -100,27 +100,6 @@ extension Bolus {
             }
         }
 
-        func getLastTempRate() {
-            guard let lastTempBasal = tempBasals.last,
-                  let lastRate = lastTempBasal.rate
-            else {
-                tempRate = nil
-                return
-            }
-
-            // is basal still valid?
-            if lastTempBasal.type == .tempBasal, let duration = lastTempBasal.durationMin {
-                let lastDate = lastTempBasal.timestamp
-                if Date().timeIntervalSince(lastDate.addingTimeInterval(duration.minutes.timeInterval)) < 0 {
-                    tempRate = lastRate
-                } else {
-                    tempRate = nil
-                }
-            } else {
-                tempRate = lastRate
-            }
-        }
-
         func updateBZ() {
             let glucose = glucoseStorage.recent()
             guard glucose.count >= 3 else { return }
@@ -290,7 +269,6 @@ extension Bolus {
                 self.calculateBolus()
                 self.updateBZ()
                 self.updateCarbs()
-                self.getLastTempRate()
             }
         }
     }
