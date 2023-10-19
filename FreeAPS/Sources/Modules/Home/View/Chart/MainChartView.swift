@@ -30,10 +30,13 @@ struct MainChartView: View {
         static let bolusSize: CGFloat = 8
         static let bolusScale: CGFloat = 2.5
         static let carbsSize: CGFloat = 10
+        static let fpuSize: CGFloat = 5
         static let carbsScale: CGFloat = 0.3
+        static let fpuScale: CGFloat = 1
     }
 
     @Binding var glucose: [BloodGlucose]
+    @Binding var isManual: [BloodGlucose]
     @Binding var suggestion: Suggestion?
     @Binding var tempBasals: [PumpHistoryEvent]
     @Binding var boluses: [PumpHistoryEvent]
@@ -56,6 +59,8 @@ struct MainChartView: View {
 
     @State var didAppearTrigger = false
     @State private var glucoseDots: [CGRect] = []
+    @State private var manualGlucoseDots: [CGRect] = []
+    @State private var manualGlucoseDotsCenter: [CGRect] = []
     @State private var unSmoothedGlucoseDots: [CGRect] = []
     @State private var predictionDots: [PredictionType: [CGRect]] = [:]
     @State private var bolusDots: [DotInfo] = []
@@ -270,6 +275,8 @@ struct MainChartView: View {
                     bolusView(fullSize: fullSize)
                     if smooth { unSmoothedGlucoseView(fullSize: fullSize) }
                     glucoseView(fullSize: fullSize)
+                    manualGlucoseView(fullSize: fullSize)
+                    manualGlucoseCenterView(fullSize: fullSize)
                     predictionsView(fullSize: fullSize)
                 }
                 timeLabelsView(fullSize: fullSize)
@@ -342,6 +349,46 @@ struct MainChartView: View {
         }
     }
 
+    private func manualGlucoseView(fullSize: CGSize) -> some View {
+        Path { path in
+            for rect in manualGlucoseDots {
+                path.addEllipse(in: rect)
+            }
+        }
+        .fill(Color.gray)
+        .onChange(of: isManual) { _ in
+            update(fullSize: fullSize)
+        }
+        .onChange(of: didAppearTrigger) { _ in
+            update(fullSize: fullSize)
+        }
+        .onReceive(Foundation.NotificationCenter.default.publisher(for: UIApplication.willEnterForegroundNotification)) { _ in
+            update(fullSize: fullSize)
+        }
+    }
+
+    private func manualGlucoseCenterView(fullSize: CGSize) -> some View {
+        Path { path in
+            for rect in manualGlucoseDotsCenter {
+                path.addEllipse(in: rect)
+            }
+        }
+        .fill(Color.red)
+
+        .onChange(of: isManual) { _ in
+            update(fullSize: fullSize)
+        }
+        .onChange(of: didAppearTrigger) { _ in
+            update(fullSize: fullSize)
+        }
+        .onReceive(
+            Foundation.NotificationCenter.default
+                .publisher(for: UIApplication.willEnterForegroundNotification)
+        ) { _ in
+            update(fullSize: fullSize)
+        }
+    }
+
     private func unSmoothedGlucoseView(fullSize: CGSize) -> some View {
         Path { path in
             var lines: [CGPoint] = []
@@ -410,16 +457,9 @@ struct MainChartView: View {
     private func fpuView(fullSize: CGSize) -> some View {
         ZStack {
             fpuPath
-                .fill(Color.red)
+                .fill(.orange.opacity(0.5))
             fpuPath
-                .stroke(Color.primary, lineWidth: 0.5)
-
-            ForEach(fpuDots, id: \.rect.minX) { info -> AnyView in
-                let position = CGPoint(x: info.rect.midX, y: info.rect.minY - 8)
-                return Text(fpuFormatter.string(from: info.value as NSNumber)!).font(.caption2)
-                    .position(position)
-                    .asAny()
-            }
+                .stroke(Color.primary, lineWidth: 0.2)
         }
         .onChange(of: carbs) { _ in
             calculateFPUsDots(fullSize: fullSize)
@@ -488,6 +528,8 @@ extension MainChartView {
         calculatePredictionDots(fullSize: fullSize, type: .zt)
         calculatePredictionDots(fullSize: fullSize, type: .uam)
         calculateGlucoseDots(fullSize: fullSize)
+        calculateManualGlucoseDots(fullSize: fullSize)
+        calculateManualGlucoseDotsCenter(fullSize: fullSize)
         calculateUnSmoothedGlucoseDots(fullSize: fullSize)
         calculateBolusDots(fullSize: fullSize)
         calculateCarbsDots(fullSize: fullSize)
@@ -509,6 +551,38 @@ extension MainChartView {
             DispatchQueue.main.async {
                 glucoseYRange = range
                 glucoseDots = dots
+            }
+        }
+    }
+
+    private func calculateManualGlucoseDots(fullSize: CGSize) {
+        calculationQueue.async {
+            let dots = isManual.concurrentMap { value -> CGRect in
+                let position = glucoseToCoordinate(value, fullSize: fullSize)
+                return CGRect(x: position.x - 2, y: position.y - 2, width: 14, height: 14)
+            }
+
+            let range = self.getGlucoseYRange(fullSize: fullSize)
+
+            DispatchQueue.main.async {
+                glucoseYRange = range
+                manualGlucoseDots = dots
+            }
+        }
+    }
+
+    private func calculateManualGlucoseDotsCenter(fullSize: CGSize) {
+        calculationQueue.async {
+            let dots = isManual.concurrentMap { value -> CGRect in
+                let position = glucoseToCoordinate(value, fullSize: fullSize)
+                return CGRect(x: position.x, y: position.y, width: 10, height: 10)
+            }
+
+            let range = self.getGlucoseYRange(fullSize: fullSize)
+
+            DispatchQueue.main.async {
+                glucoseYRange = range
+                manualGlucoseDotsCenter = dots
             }
         }
     }
@@ -579,7 +653,7 @@ extension MainChartView {
             let fpus = carbs.filter { $0.isFPU ?? false }
             let dots = fpus.map { value -> DotInfo in
                 let center = timeToInterpolatedPoint(value.createdAt.timeIntervalSince1970, fullSize: fullSize)
-                let size = Config.carbsSize + CGFloat(value.carbs) * Config.carbsScale
+                let size = Config.fpuSize + CGFloat(value.carbs) * Config.fpuScale
                 let rect = CGRect(x: center.x - size / 2, y: center.y - size / 2, width: size, height: size)
                 return DotInfo(rect: rect, value: value.carbs)
             }

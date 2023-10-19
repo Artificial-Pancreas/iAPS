@@ -12,6 +12,8 @@ extension DataTable {
         @State private var isRemoveInsulinAlertPresented = false
         @State private var removeInsulinAlert: Alert?
         @State private var newGlucose = false
+        @FocusState private var isFocused: Bool
+        @State private var isBlurred = false
 
         @Environment(\.colorScheme) var colorScheme
 
@@ -51,40 +53,15 @@ extension DataTable {
                 }
             }
             .onAppear(perform: configureView)
-            .navigationTitle("History")
+            .navigationTitle(isBlurred ? "" : "History")
+            .blur(radius: isBlurred ? 3.0 : 0)
             .navigationBarTitleDisplayMode(.automatic)
             .navigationBarItems(
                 leading: Button("Close", action: state.hideModal),
                 trailing: state.mode == .glucose ? EditButton().asAny() : EmptyView().asAny()
             )
-            .popup(isPresented: newGlucose, alignment: .top, direction: .bottom) {
-                VStack(spacing: 20) {
-                    HStack {
-                        Text("New Glucose")
-                        DecimalTextField(" ... ", value: $state.manualGlcuose, formatter: glucoseFormatter)
-                        Text(state.units.rawValue)
-                    }.padding(.horizontal, 20)
-                    HStack {
-                        let limitLow: Decimal = state.units == .mmolL ? 2.2 : 40
-                        let limitHigh: Decimal = state.units == .mmolL ? 21 : 380
-                        Button { newGlucose = false }
-                        label: { Text("Cancel") }.frame(maxWidth: .infinity, alignment: .leading)
-
-                        Button {
-                            state.addManualGlucose()
-                            newGlucose = false
-                        }
-                        label: { Text("Save") }
-                            .frame(maxWidth: .infinity, alignment: .trailing)
-                        // .disabled(state.manualGlcuose < limitLow || state.manualGlcuose > limitHigh)
-
-                    }.padding(20)
-                }
-                .frame(maxHeight: 140)
-                .background(
-                    RoundedRectangle(cornerRadius: 8, style: .continuous)
-                        .fill(Color(colorScheme == .dark ? UIColor.systemGray2 : UIColor.systemGray6))
-                )
+            .popup(isPresented: newGlucose, alignment: .center, direction: .top) {
+                addGlucose
             }
         }
 
@@ -98,14 +75,61 @@ extension DataTable {
 
         private var glucoseList: some View {
             List {
-                Button { newGlucose = true }
+                Button {
+                    newGlucose = true
+                    isFocused = true
+                    isBlurred.toggle()
+                }
                 label: { Text("Add") }.frame(maxWidth: .infinity, alignment: .trailing)
                     .padding(.trailing, 20)
 
                 ForEach(state.glucose) { item in
-                    glucoseView(item)
+                    glucoseView(item, isManual: item.glucose)
                 }.onDelete(perform: deleteGlucose)
             }
+        }
+
+        private var addGlucose: some View {
+            VStack {
+                Form {
+                    Section {
+                        HStack {
+                            Text("Glucose")
+                            DecimalTextField(" ... ", value: $state.manualGlcuose, formatter: glucoseFormatter)
+                                .focused($isFocused)
+                            Text(state.units.rawValue)
+                        }
+                        .padding(.horizontal, 20)
+                        .font(.custom("popup", fixedSize: 18))
+                    }
+                    header: {
+                        Text("Add glucose").foregroundColor(.secondary).font(.custom("popupHeader", fixedSize: 12))
+                    }
+                    HStack {
+                        Button {
+                            newGlucose = false
+                            isBlurred = false
+                        }
+                        label: { Text("Cancel").foregroundColor(.red) }
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                        Spacer()
+                        Button {
+                            state.addManualGlucose()
+                            newGlucose = false
+                            isBlurred = false
+                        }
+                        label: { Text("Save") }
+                            .frame(maxWidth: .infinity, alignment: .trailing)
+                    }
+                    .buttonStyle(BorderlessButtonStyle())
+                    .font(.custom("popupButtons", fixedSize: 16))
+                }
+            }
+            .frame(maxHeight: 200)
+            .background(
+                RoundedRectangle(cornerRadius: 8, style: .continuous)
+                    .fill(Color(.secondarySystemBackground))
+            ).border(.gray)
         }
 
         @ViewBuilder private func treatmentView(_ item: Treatment) -> some View {
@@ -192,10 +216,14 @@ extension DataTable {
             }
         }
 
-        @ViewBuilder private func glucoseView(_ item: Glucose) -> some View {
+        @ViewBuilder private func glucoseView(_ item: Glucose, isManual: BloodGlucose) -> some View {
             VStack(alignment: .leading, spacing: 4) {
                 HStack {
                     Text(dateFormatter.string(from: item.glucose.dateString))
+                    Spacer()
+                    if (isManual.type ?? "") == "Manual" {
+                        Image(systemName: "drop.fill").symbolRenderingMode(.monochrome).foregroundStyle(.red)
+                    }
                     Spacer()
                     Text(item.glucose.glucose.map {
                         glucoseFormatter.string(from: Double(
@@ -205,7 +233,6 @@ extension DataTable {
                     Text(state.units.rawValue)
                     Text(item.glucose.direction?.symbol ?? "--")
                 }
-                Text("ID: " + item.glucose.id).font(.caption2).foregroundColor(.secondary)
             }
         }
 

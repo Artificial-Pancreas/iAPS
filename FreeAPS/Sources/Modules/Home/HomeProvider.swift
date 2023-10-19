@@ -25,7 +25,13 @@ extension Home {
         func filteredGlucose(hours: Int) -> [BloodGlucose] {
             glucoseStorage.recent().filter {
                 $0.dateString.addingTimeInterval(hours.hours.timeInterval) > Date()
-            }
+            }.filter { $0.type != "Manual" }
+        }
+
+        func manualGlucose(hours: Int) -> [BloodGlucose] {
+            glucoseStorage.recent().filter {
+                $0.dateString.addingTimeInterval(hours.hours.timeInterval) > Date()
+            }.filter { $0.type == "Manual" }
         }
 
         func pumpHistory(hours: Int) -> [PumpHistoryEvent] {
