@@ -987,7 +987,7 @@ Enact a temp Basal or a temp target */
 "iAPS not active" = "iAPS не активний";
 
 /* */
-"Last loop was more then %d min ago" = "Останній цикл був більше, ніж %d хв тому";
+"Last loop was more than %d min ago" = "Останній цикл був більше, ніж %d хв тому";
 
 /* Glucose badge */
 "Show glucose on the app badge" = "Показувати глюкозу на значку додатку";

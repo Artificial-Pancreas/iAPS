@@ -987,7 +987,7 @@ Enact a temp Basal or a temp target */
 "iAPS not active" = "iAPS pas actif";
 
 /* */
-"Last loop was more then %d min ago" = "Dernier bouclage depuis plus de %d min";
+"Last loop was more than %d min ago" = "Dernier bouclage depuis plus de %d min";
 
 /* Glucose badge */
 "Show glucose on the app badge" = "Afficher glycémie en tant que badge";
