@@ -73,6 +73,7 @@ extension Bolus {
                                 state.Carbs = 250 // ensure that user can not input more than 200g of carbs accidentally
                             }
                             insulinCalculated = state.calculateInsulin()
+                            carbsWarning.toggle()
                         }
                         Text(
                             NSLocalizedString("g", comment: "grams")
@@ -229,6 +230,14 @@ extension Bolus {
                             Text(state.units.rawValue)
                         }
                         HStack {
+                            Text("Basal")
+                                .fontWeight(.semibold)
+                            Spacer()
+                            let basal = state.basal
+                            Text(basal.formatted())
+                            Text(NSLocalizedString(" U/h", comment: " Units per hour"))
+                        }
+                        HStack {
                             Text("Fraction")
                                 .fontWeight(.semibold)
                             Spacer()
@@ -244,14 +253,20 @@ extension Bolus {
                                 .fontWeight(.semibold)
                             Spacer()
                             let iob = state.iob
-                            Text(iob.formatted() + NSLocalizedString(" U", comment: "Insulin unit"))
+                            // rounding
+                            let iobAsDouble = NSDecimalNumber(decimal: iob).doubleValue
+                            let roundedIob = Decimal(round(100 * iobAsDouble) / 100)
+                            Text(roundedIob.formatted() + NSLocalizedString(" U", comment: "Insulin unit"))
                             Spacer()
 
                             Image(systemName: "arrow.right")
                             Spacer()
 
                             let iobCalc = state.showIobCalc
-                            Text(iobCalc.formatted() + NSLocalizedString(" U", comment: "Insulin unit"))
+                            // rounding
+                            let iobCalcAsDouble = NSDecimalNumber(decimal: iobCalc).doubleValue
+                            let roundedIobCalc = Decimal(round(100 * iobCalcAsDouble) / 100)
+                            Text(roundedIobCalc.formatted() + NSLocalizedString(" U", comment: "Insulin unit"))
                         }
                         HStack {
                             Text("Trend")
@@ -266,7 +281,10 @@ extension Bolus {
                             Spacer()
 
                             let trendInsulin = state.InsulinfifteenMinDelta
-                            Text(trendInsulin.formatted() + NSLocalizedString(" U", comment: "Insulin unit"))
+                            // rounding
+                            let trendInsulinAsDouble = NSDecimalNumber(decimal: trendInsulin).doubleValue
+                            let roundedTrendInsulin = Decimal(round(100 * trendInsulinAsDouble) / 100)
+                            Text(roundedTrendInsulin.formatted() + NSLocalizedString(" U", comment: "Insulin unit"))
                         }
                         HStack {
                             Text("COB")
@@ -280,7 +298,10 @@ extension Bolus {
                             Spacer()
 
                             let insulinCob = state.insulinWholeCOB
-                            Text(insulinCob.formatted() + NSLocalizedString(" U", comment: "Insulin unit"))
+                            // rounding
+                            let insulinCobAsDouble = NSDecimalNumber(decimal: insulinCob).doubleValue
+                            let roundedInsulinCob = Decimal(round(100 * insulinCobAsDouble) / 100)
+                            Text(roundedInsulinCob.formatted() + NSLocalizedString(" U", comment: "Insulin unit"))
                         }
                     }
                     .padding()

@@ -69,6 +69,12 @@ extension Bolus {
         }
 
         @Published var fraction: Decimal = 0
+        @Published var useCalc: Bool = false
+        @Published var basal: Decimal = 0
+
+        // test
+        @Published var tempRate: Decimal?
+        @Published var tempBasals: [PumpHistoryEvent] = []
 
         override func subscribe() {
             setupInsulinRequired()
@@ -78,6 +84,7 @@ extension Bolus {
             threshold = provider.suggestion?.threshold ?? 0
             maxBolus = provider.pumpSettings().maxBolus
             fraction = settings.settings.overrideFactor
+            useCalc = settings.settings.useCalc
 
             if waitForSuggestionInitial {
                 apsManager.determineBasal()
@@ -90,6 +97,27 @@ extension Bolus {
                             self.insulinRecommended = 0
                         }
                     }.store(in: &lifetime)
+            }
+        }
+
+        func getLastTempRate() {
+            guard let lastTempBasal = tempBasals.last,
+                  let lastRate = lastTempBasal.rate
+            else {
+                tempRate = nil
+                return
+            }
+
+            // is basal still valid?
+            if lastTempBasal.type == .tempBasal, let duration = lastTempBasal.durationMin {
+                let lastDate = lastTempBasal.timestamp
+                if Date().timeIntervalSince(lastDate.addingTimeInterval(duration.minutes.timeInterval)) < 0 {
+                    tempRate = lastRate
+                } else {
+                    tempRate = nil
+                }
+            } else {
+                tempRate = lastRate
             }
         }
 
@@ -163,8 +191,6 @@ extension Bolus {
             }
             let doubleWholeCalc = Double(wholeCalc)
             roundedWholeCalc = Decimal(round(10 * doubleWholeCalc) / 10)
-
-            // let fraction = settings.settings.overrideFactor
 
             let normalCalculation = wholeCalc * fraction
 
@@ -241,8 +267,9 @@ extension Bolus {
                 self.target = self.provider.suggestion?.current_target ?? 0
                 self.isf = self.provider.suggestion?.isf ?? 0
                 self.iob = self.provider.suggestion?.iob ?? 0
-                self.currentBG = self.provider.suggestion?.bg ?? 0
+                self.currentBG = (self.provider.suggestion?.bg ?? 0)
                 self.cob = self.provider.suggestion?.cob ?? 0
+                self.basal = self.provider.suggestion?.rate ?? 0
 
                 if self.settingsManager.settings.insulinReqPercentage != 100 {
                     self.insulinRecommended = self.insulin * (self.settingsManager.settings.insulinReqPercentage / 100)
@@ -263,6 +290,7 @@ extension Bolus {
                 self.calculateBolus()
                 self.updateBZ()
                 self.updateCarbs()
+                self.getLastTempRate()
             }
         }
     }

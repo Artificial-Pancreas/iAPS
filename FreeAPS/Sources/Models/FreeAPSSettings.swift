@@ -46,6 +46,7 @@ struct FreeAPSSettings: JSON, Equatable {
     var displayFatAndProteinOnWatch: Bool = false
     var onlyAutotuneBasals: Bool = false
     var overrideFactor: Decimal = 0.8
+    var useCalc: Bool = false
 }
 
 extension FreeAPSSettings: Decodable {
@@ -138,6 +139,10 @@ extension FreeAPSSettings: Decodable {
 
         if let individualAdjustmentFactor = try? container.decode(Decimal.self, forKey: .individualAdjustmentFactor) {
             settings.individualAdjustmentFactor = individualAdjustmentFactor
+        }
+
+        if let useCalc = try? container.decode(Bool.self, forKey: .useCalc) {
+            settings.useCalc = useCalc
         }
 
         if let overrideFactor = try? container.decode(Decimal.self, forKey: .overrideFactor) {

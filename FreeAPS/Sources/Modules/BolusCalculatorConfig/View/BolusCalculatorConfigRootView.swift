@@ -18,12 +18,12 @@ extension BolusCalculatorConfig {
             Form {
                 Section(header: Text("Calculator settings")) {
                     HStack {
+                        Toggle("Use alternative Bolus Calculator", isOn: $state.useCalc)
+                    }
+                    HStack {
                         Text("Override With A Factor Of ")
                         Spacer()
                         DecimalTextField("0.8", value: $state.overrideFactor, formatter: conversionFormatter)
-                    }
-                    HStack {
-                        Toggle("Use alternative Bolus Calculator", isOn: $state.useCalc)
                     }
                 }
 

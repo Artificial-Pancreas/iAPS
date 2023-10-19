@@ -12,6 +12,7 @@ extension BolusCalculatorConfig {
             }, map: {
                 $0
             })
+            subscribeSetting(\.useCalc, on: $useCalc) { useCalc = $0 }
         }
     }
 }
