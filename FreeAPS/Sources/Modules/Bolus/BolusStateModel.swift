@@ -17,14 +17,6 @@ extension Bolus {
         @Published var insulinRecommended: Decimal = 0
         @Published var insulinRequired: Decimal = 0
 
-        @Published var insulinCalculated: Decimal = 0
-        @Published var cRatio: Decimal = 0
-        @Published var Isfs: Decimal = 0
-        @Published var Carbs: Decimal = 0
-        @Published var BZ: Decimal = 0
-        @Published var DeltaBZ: Decimal = 0
-        @Published var IOB: Decimal = 0
-        @Published var COB: Decimal = 0
         @Published var glucose: [BloodGlucose] = []
         @Published var recentGlucose: BloodGlucose?
         @Published var units: GlucoseUnits = .mmolL
@@ -42,7 +34,6 @@ extension Bolus {
         @Published var expectedDelta: Decimal = 0
         @Published var minPredBG: Decimal = 0
         @Published var target: Decimal = 0
-        @Published var currentBG: Decimal = 0
         @Published var cob: Decimal = 0
 
         @Published var waitForSuggestion: Bool = false
@@ -50,12 +41,18 @@ extension Bolus {
         var waitForSuggestionInitial: Bool = false
 
         // new variables
-        @Published var InsulinfifteenMinDelta: Decimal = 0
-        @Published var bgDependentInsulinCorrection: Decimal = 0
-        @Published var insulinWholeCOB: Decimal = 0
-        @Published var showIobCalc: Decimal = 0
+        @Published var currentBG: Decimal = 0
+        @Published var fifteenMinInsulin: Decimal = 0
+        @Published var deltaBG: Decimal = 0
+        @Published var targetDifferenceInsulin: Decimal = 0
+        @Published var wholeCobInsulin: Decimal = 0
+        @Published var iobInsulinReduction: Decimal = 0
         @Published var wholeCalc: Decimal = 0
         @Published var roundedWholeCalc: Decimal = 0
+        @Published var insulinCalculated: Decimal = 0
+        @Published var roundedInsulinCalculated: Decimal = 0
+        @Published var cRatio: Decimal = 0
+        @Published var enteredCarbs: Decimal = 0
         @Published var fraction: Decimal = 0
         @Published var useCalc: Bool = false
         @Published var basal: Decimal = 0
@@ -91,24 +88,7 @@ extension Bolus {
             }
         }
 
-        func updateBZ() {
-            let glucose = glucoseStorage.recent()
-            guard glucose.count >= 3 else { return }
-
-            let lastGlucose = glucose.last!
-            let glucoseValue = lastGlucose.glucose!
-            let thirdLastGlucose = glucose[glucose.count - 3]
-            let delta = Decimal(lastGlucose.glucose!) - Decimal(thirdLastGlucose.glucose!)
-
-            BZ = Decimal(glucoseValue) // Update BZ with the current glucose value
-            DeltaBZ = delta
-        }
-
-        func updateCarbs() {
-            suggestion = provider.suggestion
-        }
-
-        func calculateBolus() {
+        func getCarbRatio() {
             let now = Date()
             let calendar = Calendar.current
             let hour = calendar.component(.hour, from: now)
@@ -125,49 +105,66 @@ extension Bolus {
             }
         }
 
+        func getDeltaBG() {
+            let glucose = glucoseStorage.recent()
+            guard glucose.count >= 3 else { return }
+
+            let lastGlucose = glucose.last!
+
+            let thirdLastGlucose = glucose[glucose.count - 3]
+            let delta = Decimal(lastGlucose.glucose!) - Decimal(thirdLastGlucose.glucose!)
+
+            deltaBG = delta
+        }
+
         // CALCULATIONS FOR THE BOLUS CALCULATOR
         func calculateInsulin() -> Decimal {
+            // insulin needed for the current blood glucose
+            let targetDifference = currentBG - target
+            targetDifferenceInsulin = targetDifference / isf
+
             // more or less insulin because of bg trend in the last 15 minutes
-            let fifteenMinDelta = DeltaBZ
-            let FactorfifteenMinDelta = (suggestion?.isf ?? 0) / fifteenMinDelta
-            InsulinfifteenMinDelta = (1 / FactorfifteenMinDelta)
-
-            // determine how much insulin is needed for the current bg
-
-            let deltaBg = BZ - (suggestion?.current_target ?? 0)
-            let bgFactor = (suggestion?.isf ?? 0) / deltaBg
-            bgDependentInsulinCorrection = (1 / bgFactor)
+            fifteenMinInsulin = deltaBG / isf
 
             // determine whole COB for which we want to dose insulin for and then determine insulin for wholeCOB
-            let wholeCOB = (suggestion?.cob ?? 0) + Carbs
-            insulinWholeCOB = wholeCOB / cRatio
+            let wholeCOB = cob + enteredCarbs
+            wholeCobInsulin = wholeCOB / cRatio
 
             // determine how much the calculator reduces/ increases the bolus because of IOB
-            showIobCalc = (-1) * (suggestion?.iob ?? 0)
+            iobInsulinReduction = (-1) * iob
 
-            // adding all the factors together
-            // add a calc for the case that no InsulinfifteenMinDelta is available
-            if DeltaBZ != 0 {
-                wholeCalc = (bgDependentInsulinCorrection + showIobCalc + insulinWholeCOB + InsulinfifteenMinDelta)
+            // adding everything together
+            // add a calc for the case that no fifteenMinInsulin is available
+            if deltaBG != 0 {
+                wholeCalc = (targetDifferenceInsulin + iobInsulinReduction + wholeCobInsulin + fifteenMinInsulin)
             } else {
-                if BZ == 0 {
-                    wholeCalc = (showIobCalc + insulinWholeCOB)
+                // add (rare) case that no glucose value is available -> maybe display warning?
+                // if no bg is available, ?? sets its value to 0
+                if currentBG == 0 {
+                    wholeCalc = (iobInsulinReduction + wholeCobInsulin)
                 } else {
-                    wholeCalc = (bgDependentInsulinCorrection + showIobCalc + insulinWholeCOB)
+                    wholeCalc = (targetDifferenceInsulin + iobInsulinReduction + wholeCobInsulin)
                 }
             }
-            let doubleWholeCalc = Double(wholeCalc)
-            roundedWholeCalc = Decimal(round(10 * doubleWholeCalc) / 10)
+            // rounding
+            let wholeCalcAsDouble = Double(wholeCalc)
+            roundedWholeCalc = Decimal(round(100 * wholeCalcAsDouble) / 100)
 
-            let normalCalculation = wholeCalc * fraction
+            // apply custom factor at the end of the calculations
+            let result = wholeCalc * fraction
 
-            // if meal is fatty bolus will be reduced
+            // apply custom factor if fatty meal toggle in bolus calc config settings is on and the box for fatty meals is checked (in RootView)
             if useFattyMealCorrectionFactor {
-                insulinCalculated = normalCalculation * fattyMealFactor
+                insulinCalculated = result * fattyMealFactor
             } else {
-                insulinCalculated = normalCalculation
+                insulinCalculated = result
             }
+
+            // display no negative insulinCalculated
             insulinCalculated = max(insulinCalculated, 0)
+            let insulinCalculatedAsDouble = Double(insulinCalculated)
+            roundedInsulinCalculated = Decimal(round(100 * insulinCalculatedAsDouble) / 100)
+
             return insulinCalculated
         }
 
@@ -230,6 +227,7 @@ extension Bolus {
                 self.currentBG = (self.provider.suggestion?.bg ?? 0)
                 self.cob = self.provider.suggestion?.cob ?? 0
                 self.basal = self.provider.suggestion?.rate ?? 0
+                self.suggestion = self.provider.suggestion
 
                 if self.settingsManager.settings.insulinReqPercentage != 100 {
                     self.insulinRecommended = self.insulin * (self.settingsManager.settings.insulinReqPercentage / 100)
@@ -247,9 +245,8 @@ extension Bolus {
                 self.insulinRecommended = self.apsManager
                     .roundBolus(amount: max(self.insulinRecommended, 0))
 
-                self.calculateBolus()
-                self.updateBZ()
-                self.updateCarbs()
+                self.getCarbRatio()
+                self.getDeltaBG()
             }
         }
     }
