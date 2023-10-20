@@ -6,6 +6,7 @@ extension DataTable {
         @Injected() var broadcaster: Broadcaster!
         @Injected() var unlockmanager: UnlockManager!
         @Injected() private var storage: FileStorage!
+        @Injected() var healthKitManager: HealthKitManager!
 
         let coredataContext = CoreDataStack.shared.persistentContainer.viewContext
 
@@ -188,6 +189,10 @@ extension DataTable {
             )
             provider.glucoseStorage.storeGlucose([saveToJSON])
             debug(.default, "Manual Glucose saved to glucose.json")
+            // Save to Health
+            var saveToHealth = [BloodGlucose]()
+            saveToHealth.append(saveToJSON)
+            healthKitManager.saveIfNeeded(bloodGlucose: saveToHealth)
         }
     }
 }
