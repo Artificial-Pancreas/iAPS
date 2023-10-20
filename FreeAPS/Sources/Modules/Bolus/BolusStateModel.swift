@@ -49,32 +49,19 @@ extension Bolus {
 
         var waitForSuggestionInitial: Bool = false
 
-        // überarbeitete version
+        // new variables
         @Published var InsulinfifteenMinDelta: Decimal = 0
         @Published var bgDependentInsulinCorrection: Decimal = 0
         @Published var insulinWholeCOB: Decimal = 0
         @Published var showIobCalc: Decimal = 0
         @Published var wholeCalc: Decimal = 0
         @Published var roundedWholeCalc: Decimal = 0
-        @Published var mealCorrectionFactor: Bool = false {
-            didSet {
-                insulinCalculated = calculateInsulin()
-            }
-        }
-
-        @Published var superBolus: Bool = false {
-            didSet {
-                insulinCalculated = calculateInsulin()
-            }
-        }
-
         @Published var fraction: Decimal = 0
         @Published var useCalc: Bool = false
         @Published var basal: Decimal = 0
-
-        // test
-        @Published var tempRate: Decimal?
-        @Published var tempBasals: [PumpHistoryEvent] = []
+        @Published var fattyMeals: Bool = false
+        @Published var fattyMealFactor: Decimal = 0
+        @Published var useFattyMealCorrectionFactor: Bool = false
 
         override func subscribe() {
             setupInsulinRequired()
@@ -83,8 +70,12 @@ extension Bolus {
             percentage = settingsManager.settings.insulinReqPercentage
             threshold = provider.suggestion?.threshold ?? 0
             maxBolus = provider.pumpSettings().maxBolus
+
+            // added
             fraction = settings.settings.overrideFactor
             useCalc = settings.settings.useCalc
+            fattyMeals = settings.settings.fattyMeals
+            fattyMealFactor = settings.settings.fattyMealFactor
 
             if waitForSuggestionInitial {
                 apsManager.determineBasal()
@@ -134,10 +125,7 @@ extension Bolus {
             }
         }
 
-        // BEGINNING OF CALCULATIONS FOR THE BOLUS CALCULATOR
-        // ......
-        // ......
-
+        // CALCULATIONS FOR THE BOLUS CALCULATOR
         func calculateInsulin() -> Decimal {
             // more or less insulin because of bg trend in the last 15 minutes
             let fifteenMinDelta = DeltaBZ
@@ -173,22 +161,15 @@ extension Bolus {
 
             let normalCalculation = wholeCalc * fraction
 
-            if mealCorrectionFactor {
-                // if meal is fatty bolus will be reduced ....could be made adjustable later
-                insulinCalculated = normalCalculation * 0.7
-            } else if superBolus {
-                // adding two hours worth of basal to the bolus.....hard coded just for my case
-                insulinCalculated = normalCalculation + 1.2
+            // if meal is fatty bolus will be reduced
+            if useFattyMealCorrectionFactor {
+                insulinCalculated = normalCalculation * fattyMealFactor
             } else {
                 insulinCalculated = normalCalculation
             }
             insulinCalculated = max(insulinCalculated, 0)
             return insulinCalculated
         }
-
-        // ......
-        // ......
-        // END OF CALCULATIONS FOR THE BOLUS CALCULATOR
 
         func add() {
             guard amount > 0 else {

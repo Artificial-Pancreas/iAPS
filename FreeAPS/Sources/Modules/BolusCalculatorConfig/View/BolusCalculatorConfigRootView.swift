@@ -26,6 +26,16 @@ extension BolusCalculatorConfig {
                         DecimalTextField("0.8", value: $state.overrideFactor, formatter: conversionFormatter)
                     }
                 }
+                Section(header: Text("Fatty Meals")) {
+                    HStack {
+                        Toggle("Apply factor for fatty meals", isOn: $state.fattyMeals)
+                    }
+                    HStack {
+                        Text("Override With A Factor Of ")
+                        Spacer()
+                        DecimalTextField("0.7", value: $state.fattyMealFactor, formatter: conversionFormatter)
+                    }
+                }
 
                 Section(
                     footer: Text(

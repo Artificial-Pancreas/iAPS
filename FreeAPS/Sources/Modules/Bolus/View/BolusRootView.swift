@@ -9,7 +9,7 @@ extension Bolus {
 
         var body: some View {
             if state.useCalc {
-                // Show alternative bolus calc
+                // Show alternative bolus calc based on toggle in bolus calc settings
                 BolusCalcView1(resolver: resolver, waitForSuggestion: waitForSuggestion, state: state)
             } else {
                 // show iAPS standard bolus calc
@@ -29,6 +29,8 @@ extension Bolus {
         @State private var carbsWarning = false
         @State var insulinCalculated: Decimal = 0
 
+        @Environment(\.colorScheme) var colorScheme
+
         private var formatter: NumberFormatter {
             let formatter = NumberFormatter()
             formatter.numberStyle = .decimal
@@ -46,7 +48,7 @@ extension Bolus {
             Form {
                 Section {
                     HStack {
-                        Text("Blood glucose")
+                        Text("Glucose")
                         DecimalTextField(
                             "0",
                             value: $state.BZ,
@@ -91,18 +93,27 @@ extension Bolus {
                             Button("OK", role: .cancel) {}
                         }
                     }
-
-                    Button(action: {
-                        showInfo.toggle()
-                        insulinCalculated = state.calculateInsulin()
-                    }, label: {
-                        Image(systemName: "info.circle")
-                        Text("Calculations")
-                    })
-                        .foregroundStyle(.blue)
-                        .font(.footnote)
-                        .buttonStyle(PlainButtonStyle())
-                        .frame(maxWidth: .infinity, alignment: .leading)
+                    HStack {
+                        Button(action: {
+                            showInfo.toggle()
+                            insulinCalculated = state.calculateInsulin()
+                        }, label: {
+                            Image(systemName: "info.circle")
+                            Text("Calculations")
+                        })
+                            .foregroundStyle(.blue)
+                            .font(.footnote)
+                            .buttonStyle(PlainButtonStyle())
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                        if state.fattyMeals {
+                            Spacer()
+                            Toggle(isOn: $state.useFattyMealCorrectionFactor) {
+                                Text("Fatty Meal")
+                            }
+                            .toggleStyle(CheckboxToggleStyle())
+                            .font(.footnote)
+                        }
+                    }
                 }
                 header: { Text("Values") }
 
@@ -203,51 +214,60 @@ extension Bolus {
 
         // calculation showed in popup
         var bolusInfoAlternativeCalculator: some View {
-            VStack {
+            let unit = NSLocalizedString(
+                " U",
+                comment: "Unit in number of units delivered (keep the space character!)"
+            )
+
+            return VStack {
                 VStack {
                     VStack {
                         HStack {
                             Text("Calculations")
-                                .font(.title2)
+                                .font(.title3)
                                 .fontWeight(.semibold)
                             Spacer()
                         }
                         .padding(.vertical, 10)
                         HStack {
                             Text("Glucose")
-                                .fontWeight(.semibold)
+                                .foregroundColor(.secondary)
                             Spacer()
                             let glucose = state.currentBG
                             Text(glucose.formatted(.number.grouping(.never).rounded().precision(.fractionLength(fractionDigits))))
                             Text(state.units.rawValue)
+                                .foregroundColor(.secondary)
                         }
                         HStack {
                             Text("ISF")
-                                .fontWeight(.semibold)
+                                .foregroundColor(.secondary)
                             Spacer()
                             let isf = state.isf
                             Text(isf.formatted())
                             Text(state.units.rawValue + NSLocalizedString("/U", comment: "/Insulin unit"))
+                                .foregroundColor(.secondary)
                         }
                         HStack {
                             Text("Target Glucose")
-                                .fontWeight(.semibold)
+                                .foregroundColor(.secondary)
                             Spacer()
                             let target = state.units == .mmolL ? state.target.asMmolL : state.target
                             Text(target.formatted(.number.grouping(.never).rounded().precision(.fractionLength(fractionDigits))))
                             Text(state.units.rawValue)
+                                .foregroundColor(.secondary)
                         }
                         HStack {
                             Text("Basal")
-                                .fontWeight(.semibold)
+                                .foregroundColor(.secondary)
                             Spacer()
                             let basal = state.basal
                             Text(basal.formatted())
                             Text(NSLocalizedString(" U/h", comment: " Units per hour"))
+                                .foregroundColor(.secondary)
                         }
                         HStack {
                             Text("Fraction")
-                                .fontWeight(.semibold)
+                                .foregroundColor(.secondary)
                             Spacer()
                             let fraction = state.fraction
                             Text(fraction.formatted())
@@ -258,13 +278,15 @@ extension Bolus {
                     VStack {
                         HStack {
                             Text("IOB")
-                                .fontWeight(.semibold)
+                                .foregroundColor(.secondary)
                             Spacer()
                             let iob = state.iob
                             // rounding
                             let iobAsDouble = NSDecimalNumber(decimal: iob).doubleValue
                             let roundedIob = Decimal(round(100 * iobAsDouble) / 100)
-                            Text(roundedIob.formatted() + NSLocalizedString(" U", comment: "Insulin unit"))
+                            Text(roundedIob.formatted())
+                            Text(unit)
+                                .foregroundColor(.secondary)
                             Spacer()
 
                             Image(systemName: "arrow.right")
@@ -274,15 +296,16 @@ extension Bolus {
                             // rounding
                             let iobCalcAsDouble = NSDecimalNumber(decimal: iobCalc).doubleValue
                             let roundedIobCalc = Decimal(round(100 * iobCalcAsDouble) / 100)
-                            Text(roundedIobCalc.formatted() + NSLocalizedString(" U", comment: "Insulin unit"))
+                            Text(roundedIobCalc.formatted())
+                            Text(unit).foregroundColor(.secondary)
                         }
                         HStack {
                             Text("Trend")
-                                .fontWeight(.semibold)
+                                .foregroundColor(.secondary)
                             Spacer()
                             let trend = state.DeltaBZ
                             Text(trend.formatted(.number.grouping(.never).rounded().precision(.fractionLength(fractionDigits))))
-                            Text(state.units.rawValue)
+                            Text(state.units.rawValue).foregroundColor(.secondary)
                             Spacer()
 
                             Image(systemName: "arrow.right")
@@ -292,14 +315,20 @@ extension Bolus {
                             // rounding
                             let trendInsulinAsDouble = NSDecimalNumber(decimal: trendInsulin).doubleValue
                             let roundedTrendInsulin = Decimal(round(100 * trendInsulinAsDouble) / 100)
-                            Text(roundedTrendInsulin.formatted() + NSLocalizedString(" U", comment: "Insulin unit"))
+                            Text(roundedTrendInsulin.formatted())
+                            Text(unit)
+                                .foregroundColor(.secondary)
                         }
                         HStack {
                             Text("COB")
-                                .fontWeight(.semibold)
+                                .foregroundColor(.secondary)
                             Spacer()
                             let cob = state.cob
-                            Text(cob.formatted() + NSLocalizedString(" g", comment: "grams"))
+                            Text(cob.formatted())
+
+                            let unitGrams = NSLocalizedString(" g", comment: "grams")
+                            Text(unitGrams).foregroundColor(.secondary)
+
                             Spacer()
 
                             Image(systemName: "arrow.right")
@@ -309,8 +338,22 @@ extension Bolus {
                             // rounding
                             let insulinCobAsDouble = NSDecimalNumber(decimal: insulinCob).doubleValue
                             let roundedInsulinCob = Decimal(round(100 * insulinCobAsDouble) / 100)
-                            Text(roundedInsulinCob.formatted() + NSLocalizedString(" U", comment: "Insulin unit"))
+                            Text(roundedInsulinCob.formatted())
+                            Text(unit)
+                                .foregroundColor(.secondary)
                         }
+                    }
+                    .padding()
+
+                    Divider()
+                        .fontWeight(.bold)
+
+                    HStack {
+                        Text("Recommended Bolus")
+                        Spacer()
+                        Text(formatter.string(from: Double(insulinCalculated) as NSNumber)!)
+                        Text(unit)
+                            .foregroundColor(.secondary)
                     }
                     .padding()
 
@@ -321,20 +364,28 @@ extension Bolus {
                         Text("Result")
                         Spacer()
                         let fraction = state.fraction
+                        Text(fraction.formatted())
+                        Text(" x ")
+                            .foregroundColor(.secondary)
+
                         let insulin = state.roundedWholeCalc
+                        Text(insulin.formatted())
+                        Text(unit)
+                            .foregroundColor(.secondary)
+                        Text(" = ")
+                            .foregroundColor(.secondary)
+
                         let result = state.insulinCalculated
-                        Text(
-                            fraction.formatted() + " x " + insulin.formatted() + NSLocalizedString(" U", comment: "Insulin unit")
-                        )
-                        Text(
-                            " = " + result.formatted() + NSLocalizedString(" U", comment: "Insulin unit")
-                        )
+                        let resultAsDouble = NSDecimalNumber(decimal: result).doubleValue
+                        let roundedResult = Decimal(round(100 * resultAsDouble) / 100)
+                        Text(roundedResult.formatted())
+                        Text(unit)
+                            .foregroundColor(.secondary)
                     }
                     .fontWeight(.bold)
                     .padding()
                 }
                 .padding(.top, 20)
-                Spacer()
 
                 // Hide button
                 VStack {
@@ -350,7 +401,8 @@ extension Bolus {
             }
             .background(
                 RoundedRectangle(cornerRadius: 10, style: .continuous)
-                    .fill(Color(.systemGray).opacity(0.9))
+                    // .fill(Color(.systemGray).opacity(0.9))
+                    .fill(Color(colorScheme == .dark ? UIColor.systemGray4 : UIColor.systemGray4).opacity(0.9))
             )
         }
     }

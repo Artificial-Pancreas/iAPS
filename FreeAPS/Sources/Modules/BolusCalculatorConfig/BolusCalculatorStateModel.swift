@@ -4,6 +4,8 @@ extension BolusCalculatorConfig {
     final class StateModel: BaseStateModel<Provider> {
         @Published var overrideFactor: Decimal = 0
         @Published var useCalc: Bool = false
+        @Published var fattyMeals: Bool = false
+        @Published var fattyMealFactor: Decimal = 0
 
         override func subscribe() {
             subscribeSetting(\.overrideFactor, on: $overrideFactor, initial: {
@@ -13,6 +15,13 @@ extension BolusCalculatorConfig {
                 $0
             })
             subscribeSetting(\.useCalc, on: $useCalc) { useCalc = $0 }
+            subscribeSetting(\.fattyMeals, on: $fattyMeals) { fattyMeals = $0 }
+            subscribeSetting(\.fattyMealFactor, on: $fattyMealFactor, initial: {
+                let value = max(min($0, 1.2), 0.1)
+                fattyMealFactor = value
+            }, map: {
+                $0
+            })
         }
     }
 }
