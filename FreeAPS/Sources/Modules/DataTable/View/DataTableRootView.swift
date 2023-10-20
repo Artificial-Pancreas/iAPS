@@ -12,6 +12,8 @@ extension DataTable {
         @State private var isRemoveInsulinAlertPresented = false
         @State private var removeInsulinAlert: Alert?
         @State private var newGlucose = false
+        @State private var isLayered = false
+        @FocusState private var isFocused: Bool
 
         @Environment(\.colorScheme) var colorScheme
 
@@ -51,40 +53,12 @@ extension DataTable {
                 }
             }
             .onAppear(perform: configureView)
-            .navigationTitle("History")
+            .navigationTitle(isLayered ? "" : "History")
+            .blur(radius: isLayered ? 3.0 : 0)
             .navigationBarTitleDisplayMode(.automatic)
-            .navigationBarItems(
-                leading: Button("Close", action: state.hideModal),
-                trailing: state.mode == .glucose ? EditButton().asAny() : EmptyView().asAny()
-            )
-            .popup(isPresented: newGlucose, alignment: .top, direction: .bottom) {
-                VStack(spacing: 20) {
-                    HStack {
-                        Text("New Glucose")
-                        DecimalTextField(" ... ", value: $state.manualGlcuose, formatter: glucoseFormatter)
-                        Text(state.units.rawValue)
-                    }.padding(.horizontal, 20)
-                    HStack {
-                        let limitLow: Decimal = state.units == .mmolL ? 2.2 : 40
-                        let limitHigh: Decimal = state.units == .mmolL ? 21 : 380
-                        Button { newGlucose = false }
-                        label: { Text("Cancel") }.frame(maxWidth: .infinity, alignment: .leading)
-
-                        Button {
-                            state.addManualGlucose()
-                            newGlucose = false
-                        }
-                        label: { Text("Save") }
-                            .frame(maxWidth: .infinity, alignment: .trailing)
-                        // .disabled(state.manualGlcuose < limitLow || state.manualGlcuose > limitHigh)
-
-                    }.padding(20)
-                }
-                .frame(maxHeight: 140)
-                .background(
-                    RoundedRectangle(cornerRadius: 8, style: .continuous)
-                        .fill(Color(colorScheme == .dark ? UIColor.systemGray2 : UIColor.systemGray6))
-                )
+            .navigationBarItems(leading: Button(isLayered ? "" : "Close", action: state.hideModal))
+            .popup(isPresented: newGlucose, alignment: .center, direction: .top) {
+                addGlucose
             }
         }
 
@@ -98,14 +72,61 @@ extension DataTable {
 
         private var glucoseList: some View {
             List {
-                Button { newGlucose = true }
+                Button {
+                    newGlucose = true
+                    isFocused = true
+                    isLayered.toggle()
+                }
                 label: { Text("Add") }.frame(maxWidth: .infinity, alignment: .trailing)
                     .padding(.trailing, 20)
 
                 ForEach(state.glucose) { item in
-                    glucoseView(item)
+                    glucoseView(item, isManual: item.glucose)
                 }.onDelete(perform: deleteGlucose)
             }
+        }
+
+        private var addGlucose: some View {
+            VStack {
+                Form {
+                    Section {
+                        HStack {
+                            Text("Glucose").font(.custom("popup", fixedSize: 18))
+                            DecimalTextField(" ... ", value: $state.manualGlcuose, formatter: glucoseFormatter)
+                                .focused($isFocused).font(.custom("glucose", fixedSize: 22))
+                            Text(state.units.rawValue).foregroundStyle(.secondary)
+                        }
+                    }
+                    header: {
+                        Text("Blood Glucose Test").foregroundColor(.secondary).font(.custom("popupHeader", fixedSize: 12))
+                            .padding(.top)
+                    }
+                    HStack {
+                        Button {
+                            newGlucose = false
+                            isLayered = false
+                        }
+                        label: { Text("Cancel").foregroundColor(.red) }
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                        Spacer()
+                        Button {
+                            state.addManualGlucose()
+                            newGlucose = false
+                            isLayered = false
+                        }
+                        label: { Text("Save") }
+                            .frame(maxWidth: .infinity, alignment: .trailing)
+                            .disabled(state.manualGlcuose <= 0)
+                    }
+                    .buttonStyle(BorderlessButtonStyle())
+                    .font(.custom("popupButtons", fixedSize: 16))
+                }
+            }
+            .frame(maxHeight: 220)
+            .background(
+                RoundedRectangle(cornerRadius: 8, style: .continuous)
+                    .fill(Color(.tertiarySystemBackground))
+            ).border(.gray).shadow(radius: 40)
         }
 
         @ViewBuilder private func treatmentView(_ item: Treatment) -> some View {
@@ -192,7 +213,7 @@ extension DataTable {
             }
         }
 
-        @ViewBuilder private func glucoseView(_ item: Glucose) -> some View {
+        @ViewBuilder private func glucoseView(_ item: Glucose, isManual: BloodGlucose) -> some View {
             VStack(alignment: .leading, spacing: 4) {
                 HStack {
                     Text(dateFormatter.string(from: item.glucose.dateString))
@@ -203,9 +224,12 @@ extension DataTable {
                         ) as NSNumber)!
                     } ?? "--")
                     Text(state.units.rawValue)
-                    Text(item.glucose.direction?.symbol ?? "--")
+                    if isManual.type == GlucoseType.manual.rawValue {
+                        Image(systemName: "drop.fill").symbolRenderingMode(.monochrome).foregroundStyle(.red)
+                    } else {
+                        Text(item.glucose.direction?.symbol ?? "--")
+                    }
                 }
-                Text("ID: " + item.glucose.id).font(.caption2).foregroundColor(.secondary)
             }
         }
 

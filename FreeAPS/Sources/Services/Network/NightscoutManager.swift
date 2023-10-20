@@ -11,8 +11,10 @@ protocol NightscoutManager: GlucoseSource {
     func fetchAnnouncements() -> AnyPublisher<[Announcement], Never>
     func deleteCarbs(at date: Date, isFPU: Bool?, fpuID: String?, syncID: String)
     func deleteInsulin(at date: Date)
+    func deleteManualGlucose(at: Date)
     func uploadStatus()
     func uploadGlucose()
+    func uploadManualGlucose()
     func uploadStatistics(dailystat: Statistics)
     func uploadPreferences(_ preferences: Preferences)
     func uploadProfileAndSettings()
@@ -68,6 +70,7 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
         broadcaster.register(PumpHistoryObserver.self, observer: self)
         broadcaster.register(CarbsObserver.self, observer: self)
         broadcaster.register(TempTargetsObserver.self, observer: self)
+        broadcaster.register(GlucoseObserver.self, observer: self)
         _ = reachabilityManager.startListening(onQueue: processQueue) { status in
             debug(.nightscout, "Network status: \(status)")
         }
@@ -244,6 +247,22 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
                 case .finished:
                     self.pumpHistoryStorage.deleteInsulin(at: date)
                     debug(.nightscout, "Carbs deleted")
+                case let .failure(error):
+                    debug(.nightscout, error.localizedDescription)
+                }
+            } receiveValue: {}
+            .store(in: &lifetime)
+    }
+
+    func deleteManualGlucose(at date: Date) {
+        guard let nightscout = nightscoutAPI, isUploadEnabled else {
+            return
+        }
+        nightscout.deleteManualGlucose(at: date)
+            .sink { completion in
+                switch completion {
+                case .finished:
+                    debug(.nightscout, "Manual Glucose entry deleted")
                 case let .failure(error):
                     debug(.nightscout, error.localizedDescription)
                 }
@@ -568,6 +587,13 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
         uploadTreatments(glucoseStorage.nightscoutCGMStateNotUploaded(), fileToSave: OpenAPS.Nightscout.uploadedCGMState)
     }
 
+    func uploadManualGlucose() {
+        uploadTreatments(
+            glucoseStorage.nightscoutManualGlucoseNotUploaded(),
+            fileToSave: OpenAPS.Nightscout.uploadedManualGlucose
+        )
+    }
+
     private func uploadPumpHistory() {
         uploadTreatments(pumpHistoryStorage.nightscoutTretmentsNotUploaded(), fileToSave: OpenAPS.Nightscout.uploadedPumphistory)
     }
@@ -656,5 +682,11 @@ extension BaseNightscoutManager: CarbsObserver {
 extension BaseNightscoutManager: TempTargetsObserver {
     func tempTargetsDidUpdate(_: [TempTarget]) {
         uploadTempTargets()
+    }
+}
+
+extension BaseNightscoutManager: GlucoseObserver {
+    func glucoseDidUpdate(_: [BloodGlucose]) {
+        uploadManualGlucose()
     }
 }
