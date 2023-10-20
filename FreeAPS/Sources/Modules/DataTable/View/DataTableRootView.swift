@@ -12,8 +12,8 @@ extension DataTable {
         @State private var isRemoveInsulinAlertPresented = false
         @State private var removeInsulinAlert: Alert?
         @State private var newGlucose = false
+        @State private var isLayered = false
         @FocusState private var isFocused: Bool
-        @State private var isBlurred = false
 
         @Environment(\.colorScheme) var colorScheme
 
@@ -53,13 +53,10 @@ extension DataTable {
                 }
             }
             .onAppear(perform: configureView)
-            .navigationTitle(isBlurred ? "" : "History")
-            .blur(radius: isBlurred ? 3.0 : 0)
+            .navigationTitle(isLayered ? "" : "History")
+            .blur(radius: isLayered ? 3.0 : 0)
             .navigationBarTitleDisplayMode(.automatic)
-            .navigationBarItems(
-                leading: Button("Close", action: state.hideModal),
-                trailing: state.mode == .glucose ? EditButton().asAny() : EmptyView().asAny()
-            )
+            .navigationBarItems(leading: Button(isLayered ? "" : "Close", action: state.hideModal))
             .popup(isPresented: newGlucose, alignment: .center, direction: .top) {
                 addGlucose
             }
@@ -78,7 +75,7 @@ extension DataTable {
                 Button {
                     newGlucose = true
                     isFocused = true
-                    isBlurred.toggle()
+                    isLayered.toggle()
                 }
                 label: { Text("Add") }.frame(maxWidth: .infinity, alignment: .trailing)
                     .padding(.trailing, 20)
@@ -94,21 +91,20 @@ extension DataTable {
                 Form {
                     Section {
                         HStack {
-                            Text("Glucose")
+                            Text("Glucose").font(.custom("popup", fixedSize: 18))
                             DecimalTextField(" ... ", value: $state.manualGlcuose, formatter: glucoseFormatter)
-                                .focused($isFocused)
-                            Text(state.units.rawValue)
+                                .focused($isFocused).font(.custom("glucose", fixedSize: 22))
+                            Text(state.units.rawValue).foregroundStyle(.secondary)
                         }
-                        .padding(.horizontal, 20)
-                        .font(.custom("popup", fixedSize: 18))
                     }
                     header: {
-                        Text("Add glucose").foregroundColor(.secondary).font(.custom("popupHeader", fixedSize: 12))
+                        Text("Blood Glucose Test").foregroundColor(.secondary).font(.custom("popupHeader", fixedSize: 12))
+                            .padding(.top)
                     }
                     HStack {
                         Button {
                             newGlucose = false
-                            isBlurred = false
+                            isLayered = false
                         }
                         label: { Text("Cancel").foregroundColor(.red) }
                             .frame(maxWidth: .infinity, alignment: .leading)
@@ -116,20 +112,21 @@ extension DataTable {
                         Button {
                             state.addManualGlucose()
                             newGlucose = false
-                            isBlurred = false
+                            isLayered = false
                         }
                         label: { Text("Save") }
                             .frame(maxWidth: .infinity, alignment: .trailing)
+                            .disabled(state.manualGlcuose <= 0)
                     }
                     .buttonStyle(BorderlessButtonStyle())
                     .font(.custom("popupButtons", fixedSize: 16))
                 }
             }
-            .frame(maxHeight: 200)
+            .frame(maxHeight: 220)
             .background(
                 RoundedRectangle(cornerRadius: 8, style: .continuous)
-                    .fill(Color(.secondarySystemBackground))
-            ).border(.gray)
+                    .fill(Color(.tertiarySystemBackground))
+            ).border(.gray).shadow(radius: 40)
         }
 
         @ViewBuilder private func treatmentView(_ item: Treatment) -> some View {
@@ -221,17 +218,17 @@ extension DataTable {
                 HStack {
                     Text(dateFormatter.string(from: item.glucose.dateString))
                     Spacer()
-                    if (isManual.type ?? "") == "Manual" {
-                        Image(systemName: "drop.fill").symbolRenderingMode(.monochrome).foregroundStyle(.red)
-                    }
-                    Spacer()
                     Text(item.glucose.glucose.map {
                         glucoseFormatter.string(from: Double(
                             state.units == .mmolL ? $0.asMmolL : Decimal($0)
                         ) as NSNumber)!
                     } ?? "--")
                     Text(state.units.rawValue)
-                    Text(item.glucose.direction?.symbol ?? "--")
+                    if isManual.type == GlucoseType.manual.rawValue {
+                        Image(systemName: "drop.fill").symbolRenderingMode(.monochrome).foregroundStyle(.red)
+                    } else {
+                        Text(item.glucose.direction?.symbol ?? "--")
+                    }
                 }
             }
         }

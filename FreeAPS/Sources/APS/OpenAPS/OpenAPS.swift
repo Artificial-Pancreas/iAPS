@@ -267,7 +267,6 @@ final class OpenAPS {
                     uamMinutes: (overrideArray.first?.uamMinutes ?? uamMinutes) as Decimal
                 )
                 storage.save(averages, as: OpenAPS.Monitor.oref2_variables)
-                print("Test time for oref2_variables: \(-now.timeIntervalSinceNow) seconds")
                 return self.loadFileFromStorage(name: Monitor.oref2_variables)
 
             } else {
