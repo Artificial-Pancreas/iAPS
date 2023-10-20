@@ -350,6 +350,9 @@ Enact a temp Basal or a temp target */
 /* Import Error */
 "Can't find the default Nightscout Profile." = "Не вдається знайти профіль Nightscout за замовчуванням.";
 
+/* Add Blood Glucose Test, header */
+"Blood Glucose Test" = "Blood Glucose Test";
+
 /* Add Medtronic pump */
 "Add Medtronic" = "Додати Medtronic";
 
@@ -987,7 +990,7 @@ Enact a temp Basal or a temp target */
 "iAPS not active" = "iAPS не активний";
 
 /* */
-"Last loop was more then %d min ago" = "Останній цикл був більше, ніж %d хв тому";
+"Last loop was more than %d min ago" = "Останній цикл був більше, ніж %d хв тому";
 
 /* Glucose badge */
 "Show glucose on the app badge" = "Показувати глюкозу на значку додатку";
