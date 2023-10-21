@@ -178,11 +178,13 @@ extension NightscoutConfig {
                         }
 
                         var areBasalsOK = true
+                        let pumpName = self.apsManager.pumpName.value
                         let basals = fetchedProfile.basal
                             .map { basal -> BasalProfileEntry in
-                                if basal.value <= 0 || basal.value >= self.maxBasal {
+                                if pumpName != "Omnipod DASH", basal.value <= 0
+                                {
                                     error =
-                                        "\nInvalid Nightcsout Basal Settings. \n\nImport aborted. Please check your Nightscout Profile Basal Settings!"
+                                        "\nInvalid Nightcsout Basal Settings. Some or all of your basal settings are 0 U/h.\n\nImport aborted. Please check your Nightscout Profile Basal Settings before trying to import again. Import has been aborted.)"
                                     areBasalsOK = false
                                 }
                                 return BasalProfileEntry(
@@ -190,6 +192,13 @@ extension NightscoutConfig {
                                     minutes: (basal.timeAsSeconds ?? self.offset(basal.time)) / 60,
                                     rate: basal.value
                                 ) }
+                        // DASH pumps can have 0U/h basal rates but don't import if total basals (24 hours) amount to 0 U.
+                        if pumpName == "Omnipod DASH", basals.map({ each in each.rate }).reduce(0, +) <= 0
+                        {
+                            error =
+                                "\nYour total Basal insulin amount to 0 U or lower in Nightscout Profile settings.\n\n Please check your Nightscout Profile Basal Settings before trying to import again. Import has been aborted.)"
+                            areBasalsOK = false
+                        }
                         guard areBasalsOK else {
                             group.leave()
                             return

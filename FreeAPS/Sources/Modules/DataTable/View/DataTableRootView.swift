@@ -19,6 +19,7 @@ extension DataTable {
         @State private var showManualGlucose: Bool = false
         @State private var showNonPumpInsulin: Bool = false
         @State private var isAmountUnconfirmed: Bool = true
+        @FocusState private var isFocused: Bool
 
         @Environment(\.colorScheme) var colorScheme
 
@@ -27,10 +28,9 @@ extension DataTable {
             formatter.numberStyle = .decimal
             formatter.maximumFractionDigits = 0
             if state.units == .mmolL {
-                formatter.minimumFractionDigits = 1
                 formatter.maximumFractionDigits = 1
+                formatter.roundingMode = .ceiling
             }
-            formatter.roundingMode = .halfUp
             return formatter
         }
 
@@ -324,7 +324,7 @@ extension DataTable {
                 List {
                     if !state.glucose.isEmpty {
                         ForEach(state.glucose) { item in
-                            glucoseView(item)
+                            glucoseView(item, isManual: item.glucose)
                         }
                         .onDelete(perform: deleteGlucose)
                     } else {
@@ -388,7 +388,7 @@ extension DataTable {
             }
         }
 
-        @ViewBuilder private func glucoseView(_ item: Glucose) -> some View {
+        @ViewBuilder private func glucoseView(_ item: Glucose, isManual: BloodGlucose) -> some View {
             HStack {
                 Text(item.glucose.glucose.map {
                     glucoseFormatter.string(from: Double(
@@ -396,7 +396,11 @@ extension DataTable {
                     ) as NSNumber)!
                 } ?? "--")
                 Text(state.units.rawValue)
-                Text(item.glucose.direction?.symbol ?? "--")
+                if isManual.type == GlucoseType.manual.rawValue {
+                    Image(systemName: "drop.fill").symbolRenderingMode(.monochrome).foregroundStyle(.red)
+                } else {
+                    Text(item.glucose.direction?.symbol ?? "--")
+                }
 
                 Spacer()
 

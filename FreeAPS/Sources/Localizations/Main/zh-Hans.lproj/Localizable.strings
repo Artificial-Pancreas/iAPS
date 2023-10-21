@@ -987,7 +987,7 @@ Enact a temp Basal or a temp target */
 "iAPS not active" = "iAPS 未激活";
 
 /* */
-"Last loop was more then %d min ago" = "上次闭环成功在 %d 分钟前";
+"Last loop was more than %d min ago" = "上次闭环成功在 %d 分钟前";
 
 /* Glucose badge */
 "Show glucose on the app badge" = "在应用图表上显示葡萄糖。";

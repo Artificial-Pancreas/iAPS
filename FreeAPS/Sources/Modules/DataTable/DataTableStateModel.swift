@@ -7,6 +7,7 @@ extension DataTable {
         @Injected() var unlockmanager: UnlockManager!
         @Injected() private var storage: FileStorage!
         @Injected() var pumpHistoryStorage: PumpHistoryStorage!
+        @Injected() var healthKitManager: HealthKitManager!
 
         let coredataContext = CoreDataStack.shared.persistentContainer.viewContext
 
@@ -168,7 +169,6 @@ extension DataTable {
         func deleteGlucose(_ glucose: Glucose) {
             let id = glucose.id
             provider.deleteGlucose(id: id)
-
             let fetchRequest: NSFetchRequest<NSFetchRequestResult>
             fetchRequest = NSFetchRequest(entityName: "Readings")
             fetchRequest.predicate = NSPredicate(format: "id == %@", id)
@@ -184,10 +184,11 @@ extension DataTable {
                         into: [coredataContext]
                     )
                 }
-            } catch {
-                // To do: handle any thrown errors.
+            } catch { /* To do: handle any thrown errors. */ }
+            // Deletes manual glucose from NS
+            if (glucose.glucose.type ?? "") == GlucoseType.manual.rawValue {
+                provider.deleteManualGlucose(date: glucose.glucose.dateString)
             }
-            // try? coredataContext.save()
         }
 
         func addManualGlucose() {
@@ -203,10 +204,16 @@ extension DataTable {
                 filtered: nil,
                 noise: nil,
                 glucose: Int(glucose),
-                type: "Manual"
+                type: GlucoseType.manual.rawValue
             )
             provider.glucoseStorage.storeGlucose([saveToJSON])
             debug(.default, "Manual Glucose saved to glucose.json")
+
+            // Save to Health
+            var saveToHealth = [BloodGlucose]()
+            saveToHealth.append(saveToJSON)
+            healthKitManager.saveIfNeeded(bloodGlucose: saveToHealth)
+            debug(.default, "Manual Glucose saved to Apple Health")
 
             // Reset amount to 0 for next entry.
             manualGlucose = 0

@@ -55,5 +55,9 @@ extension DataTable {
             glucoseStorage.removeGlucose(ids: [id])
             healthkitManager.deleteGlucose(syncID: id)
         }
+
+        func deleteManualGlucose(date: Date?) {
+            nightscoutManager.deleteManualGlucose(at: date ?? .distantPast)
+        }
     }
 }
