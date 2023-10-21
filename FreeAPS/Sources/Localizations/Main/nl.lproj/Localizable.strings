@@ -350,6 +350,9 @@ Enact a temp Basal or a temp target */
 /* Import Error */
 "Can't find the default Nightscout Profile." = "Kan Nightscout profiel niet vinden.";
 
+/* Add Blood Glucose Test, header */
+"Blood Glucose Test" = "Bloedglucose test";
+
 /* Add Medtronic pump */
 "Add Medtronic" = "Medtronic toevoegen";
 
