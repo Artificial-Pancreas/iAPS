@@ -79,6 +79,7 @@ extension Bolus {
                     Section {
                         Button { state.add() }
                         label: { Text(!(state.amount > state.maxBolus) ? "Enact bolus" : "Max Bolus exceeded!") }
+                            .frame(maxWidth: .infinity, alignment: .center)
                             .disabled(
                                 state.amount <= 0 || state.amount > state.maxBolus
                             )
