@@ -31,7 +31,7 @@ protocol HealthKitManager: GlucoseSource {
     func deleteInsulin(syncID: String)
 }
 
-final class BaseHealthKitManager: HealthKitManager, Injectable, CarbsObserver {
+final class BaseHealthKitManager: HealthKitManager, Injectable, CarbsObserver, PumpHistoryObserver {
     private enum Config {
         // unwraped HKObjects
         static var readPermissions: Set<HKSampleType> {
@@ -68,7 +68,7 @@ final class BaseHealthKitManager: HealthKitManager, Injectable, CarbsObserver {
         }
         get {
             guard let data = persistedBGAnchor else { return nil }
-            return try? NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(data) as? HKQueryAnchor
+            return try? NSKeyedUnarchiver.unarchivedObject(ofClass: HKQueryAnchor.self, from: data)
         }
     }
 
@@ -115,6 +115,7 @@ final class BaseHealthKitManager: HealthKitManager, Injectable, CarbsObserver {
         enableBackgroundDelivery()
 
         broadcaster.register(CarbsObserver.self, observer: self)
+        broadcaster.register(PumpHistoryObserver.self, observer: self)
 
         debug(.service, "HealthKitManager did create")
     }
@@ -226,6 +227,21 @@ final class BaseHealthKitManager: HealthKitManager, Injectable, CarbsObserver {
               events.isNotEmpty
         else { return }
 
+        func delete(syncIds: [String]?) {
+            syncIds?.forEach { syncID in
+                let predicate = HKQuery.predicateForObjects(
+                    withMetadataKey: HKMetadataKeySyncIdentifier,
+                    operatorType: .equalTo,
+                    value: syncID
+                )
+
+                self.healthKitStore.deleteObjects(of: sampleType, predicate: predicate) { _, _, error in
+                    guard let error = error else { return }
+                    warning(.service, "Cannot delete sample with syncID: \(syncID)", error: error)
+                }
+            }
+        }
+
         func save(bolus: [InsulinBolus], basal: [InsulinBasal]) {
             let bolusSamples = bolus
                 .map {
@@ -264,6 +280,26 @@ final class BaseHealthKitManager: HealthKitManager, Injectable, CarbsObserver {
             healthKitStore.save(bolusSamples + basalSamples) { _, _ in }
         }
 
+        // delete existing event in HK where the amount is not the last value in the pumphistory
+        loadSamplesFromHealth(sampleType: sampleType, withIDs: events.map(\.id))
+            .receive(on: processQueue)
+            .compactMap { samples -> [String] in
+                let sampleIDs = samples.compactMap(\.syncIdentifier)
+                let bolusToDelete = events
+                    .filter { $0.type == .bolus && sampleIDs.contains($0.id) }
+                    .compactMap { event -> String? in
+                        guard let amount = event.amount else { return nil }
+                        guard let sampleAmount = samples.first(where: { $0.syncIdentifier == event.id }) as? HKQuantitySample
+                        else { return nil }
+                        if Double(amount) != sampleAmount.quantity.doubleValue(for: .internationalUnit()) {
+                            return sampleAmount.syncIdentifier
+                        } else { return nil }
+                    }
+                return bolusToDelete
+            }
+            .sink(receiveValue: delete)
+            .store(in: &lifetime)
+
         loadSamplesFromHealth(sampleType: sampleType, withIDs: events.map(\.id))
             .receive(on: processQueue)
             .compactMap { samples -> ([InsulinBolus], [InsulinBasal]) in
@@ -276,6 +312,7 @@ final class BaseHealthKitManager: HealthKitManager, Injectable, CarbsObserver {
                     }
                 let basalEvents = events
                     .filter { $0.type == .tempBasal && !sampleIDs.contains($0.id) }
+                    .sorted(by: { $0.timestamp < $1.timestamp })
                 let basal = basalEvents.enumerated()
                     .compactMap { item -> InsulinBasal? in
                         let nextElementEventIndex = item.offset + 1
@@ -300,7 +337,7 @@ final class BaseHealthKitManager: HealthKitManager, Injectable, CarbsObserver {
                         }
 
                         let id = String(item.element.id.dropFirst())
-                        guard amountRounded >= 0,
+                        guard amountRounded > 0,
                               id != ""
                         else { return nil }
 
@@ -315,6 +352,10 @@ final class BaseHealthKitManager: HealthKitManager, Injectable, CarbsObserver {
             }
             .sink(receiveValue: save)
             .store(in: &lifetime)
+    }
+
+    func pumpHistoryDidUpdate(_ events: [PumpHistoryEvent]) {
+        saveIfNeeded(pumpEvents: events)
     }
 
     func createBGObserver() {

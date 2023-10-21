@@ -16,6 +16,9 @@
 /* Continue after added carbs without bolus */
 "Continue without bolus" = "Verdergaan zonder bolus";
 
+/* Alert when adding large amount without bolusing */
+"\nAmount is more than your Max Bolus setting! \nAre you sure you want to add " = "\nDeze hoeveelheid is meer dan je instelling van je maximale bolus! \nWeet je zeker dat je deze hoeveelheid wilt toedienen? \nDeze hoeveelheid is meer dan je instelling van je maximale bolus! \nWaarschuw bij toedienen van een hoge hoeveelheid zonder te bolussen ";
+
 /* Header */
 "Enact Bolus" = "Bolus geven";
 
@@ -311,6 +314,42 @@ Enact a temp Basal or a temp target */
 /* Allow remote control from NS */
 "Remote control" = "Afstandsbediening";
 
+/* Imported Profiles Alert */
+"\nNow please verify all of your new settings thoroughly:\n\n* Basal Settings\n * Carb Ratios\n * Glucose Targets\n * Insulin Sensitivities\n * DIA\n\n in iAPS Settings > Configuration.\n\nBad or invalid profile settings could have disatrous effects." = "\nCheck nu al je nieuwe instellingen:\n\n* Basaal instellingen\n * Koolhydraat ratio's\n * Doel glucose waarde\n * Insuline sensitiviteit\n * DIA\n\n in iAPS instellingen > Configuratie.\n\nSlechte of ongeldige profielinstellingen kunnen  desastreuze effecten hebben!";
+
+/* Profile Import Alert */
+"This will replace some or all of your current pump settings. Are you sure you want to import profile settings from Nightscout?" = "Dit zal enkele of al je huidige pomp instellingen vervangen. Weet je zeker dat je de profielinstellingen uit Nightscout wilt importeren?";
+
+/* Import Error */
+"\nInvalid Nightcsout Basal Settings. \n\nImport aborted. Please check your Nightscout Profile Basal Settings!" = "\nOngeldige Nightscout basaal instellingen. \n\nImport afgebroken. Check je Nightscout Profiel basaal instellingen!";
+
+/* Import Error */
+"\nSettings were imported but the Basals couldn't be saved to pump (No pump). Check your basal settings and tap ´Save on Pump´ to sync the new basal settings" = "\ninstellingen zijn geïmporteerd maar de basaalstanden konden niet worden opgeslagen in de pomp (geen pomp). Controleer je basaalstanden en tik op' Opslaan op pomp' om de nieuwe basaalstanden te synchroniseren";
+
+/* Import Error Headline */
+"Import Error" = "Fout bij importeren";
+
+/* */
+"Yes, Import" = "Ja, importeer";
+
+/* */
+"Import settings from Nightscout" = "Importeer instellingen van Nightscout";
+
+/* */
+"Import settings?" = "Importeer instellingen?";
+
+/* */
+"Import from Nightscout" = "Importeer instellingen van Nightscout";
+
+/* */
+"Settings imported" = "Instellingen geïmporteerd";
+
+/* Import Error */
+"\nMismatching glucose units in Nightscout and Pump Settings. Import settings aborted." = "\nMismatch van glucoseeenheden in Nightscout en pomp instellingen. Importeer instellingen is afgebroken.";
+
+/* Import Error */
+"Can't find the default Nightscout Profile." = "Kan Nightscout profiel niet vinden.";
+
 /* Add Medtronic pump */
 "Add Medtronic" = "Medtronic toevoegen";
 
@@ -523,6 +562,9 @@ Enact a temp Basal or a temp target */
 
 /* */
 "Calendar" = "Agenda";
+
+/* Automatic delivered treatments */
+"Automatic" = "Automatisch";
 
 /* */
 "Other" = "Anders";
@@ -945,7 +987,7 @@ Enact a temp Basal or a temp target */
 "iAPS not active" = "iAPS is niet actief!";
 
 /* */
-"Last loop was more then %d min ago" = "Laatste loop was meer dan %d min geleden";
+"Last loop was more than %d min ago" = "Laatste loop was meer dan %d min geleden";
 
 /* Glucose badge */
 "Show glucose on the app badge" = "Toon glucosewaarde op de app icoon";
@@ -958,6 +1000,9 @@ Enact a temp Basal or a temp target */
 
 /* */
 "Bolus failed" = "Bolus is mislukt";
+
+/* "Max Bolus Exceeded label" */
+"Max Bolus exceeded!" = "Maximale bolus overschreden!";
 
 /* */
 "Bolus failed or inaccurate. Check pump history before repeating." = "Bolus mislukt of onjuist. Controleer de pompgeschiedenis voordat je herhaalt.";
@@ -1049,6 +1094,12 @@ Enact a temp Basal or a temp target */
 /* Autotune config */
 "Only Autotune Basal Insulin" = "Alleen Autotune basale insuline";
 
+/* */
+"Save as your Normal Basal Rates" = "Bewaar als je normale basaalstanden";
+
+/* */
+"Save on Pump" = "Opslaan op pomp";
+
 /* Debug option view Pump History */
 "Pump History" = "Pomp geschiedenis";
 
@@ -1113,6 +1164,9 @@ Enact a temp Basal or a temp target */
 
 /* Manual temp basal mode */
 "Manual" = "Handmatig";
+
+/* An Automatic delivered bolus (SMB) */
+"SMB" = "SMB";
 
 /* Status highlight when manual temp basal is running. */
 "Manual Basal" = "Handmatige tijdelijke basaal";

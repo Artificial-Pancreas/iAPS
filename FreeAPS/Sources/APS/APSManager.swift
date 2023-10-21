@@ -72,7 +72,6 @@ final class BaseAPSManager: APSManager, Injectable {
     @Injected() private var nightscout: NightscoutManager!
     @Injected() private var settingsManager: SettingsManager!
     @Injected() private var broadcaster: Broadcaster!
-    @Injected() private var healthKitManager: HealthKitManager!
     @Persisted(key: "lastAutotuneDate") private var lastAutotuneDate = Date()
     @Persisted(key: "lastStartLoopDate") private var lastStartLoopDate: Date = .distantPast
     @Persisted(key: "lastLoopDate") var lastLoopDate: Date = .distantPast {
@@ -268,10 +267,6 @@ final class BaseAPSManager: APSManager, Injectable {
     private func loopCompleted(error: Error? = nil, loopStatRecord: LoopStats) {
         isLooping.send(false)
 
-        // save AH events
-        let events = pumpHistoryStorage.recent()
-        healthKitManager.saveIfNeeded(pumpEvents: events)
-
         if let error = error {
             warning(.apsManager, "Loop failed with error: \(error.localizedDescription)")
             if let backgroundTask = backGroundTaskID {
@@ -347,10 +342,13 @@ final class BaseAPSManager: APSManager, Injectable {
             return Just(false).eraseToAnyPublisher()
         }
 
-        guard glucoseStorage.isGlucoseNotFlat() else {
-            debug(.apsManager, "Glucose data is too flat")
-            processError(APSError.glucoseError(message: "Glucose data is too flat"))
-            return Just(false).eraseToAnyPublisher()
+        // Only let glucose be flat when 400 mg/dl
+        if (glucoseStorage.recent().last?.glucose ?? 100) != 400 {
+            guard glucoseStorage.isGlucoseNotFlat() else {
+                debug(.apsManager, "Glucose data is too flat")
+                processError(APSError.glucoseError(message: "Glucose data is too flat"))
+                return Just(false).eraseToAnyPublisher()
+            }
         }
 
         let now = Date()
@@ -1176,19 +1174,15 @@ final class BaseAPSManager: APSManager, Injectable {
                 )
                 storage.save(dailystat, as: file)
                 nightscout.uploadStatistics(dailystat: dailystat)
-                nightscout.uploadPreferences()
 
                 let saveStatsCoreData = StatsData(context: self.coredataContext)
                 saveStatsCoreData.lastrun = Date()
                 try? self.coredataContext.save()
-                print("Test time of statistics computation: \(-1 * now.timeIntervalSinceNow) s")
             }
         }
     }
 
     private func loopStats(loopStatRecord: LoopStats) {
-        let LoopStatsStartedAt = Date()
-
         coredataContext.perform {
             let nLS = LoopStatRecord(context: self.coredataContext)
 
@@ -1200,8 +1194,6 @@ final class BaseAPSManager: APSManager, Injectable {
 
             try? self.coredataContext.save()
         }
-        print("LoopStatRecords: \(loopStatRecord)")
-        print("Test time of LoopStats computation: \(-1 * LoopStatsStartedAt.timeIntervalSinceNow) s")
     }
 
     private func processError(_ error: Error) {

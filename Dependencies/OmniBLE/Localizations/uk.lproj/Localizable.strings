@@ -15,7 +15,7 @@
 "Pod Expired" = "Термін дії Podʼу минув";
 
 /* Alert content title for lowReservoir pod alert */
-"Low Reservoir" = "Пустий резервуар";
+"Low Reservoir" = "Пустий Резервуар";
 
 /* Alert content title for suspendInProgress pod alert */
 "Suspend In Progress Reminder" = "Нагадування про призупинення Podʼу";
@@ -520,7 +520,7 @@
 "Your Pod is ready for use.\n\n%1$@ will remind you to change your pod before it expires. You can change this to a time convenient for you." = "Ваш Pod готовий до використання.\n\n%1$@ нагадає вам змінити Pod до закінчення терміну його дії. Ви можете змінити це на зручний для вас час.";
 
 /* */
-"Scheduled Reminder" = "Заплановане нагадування";
+"Scheduled Reminder" = "Заплановане Нагадування";
 
 /* Label for expiration reminder row */
 "Time" = "Час";
@@ -532,7 +532,7 @@
 "Setup Complete" = "Налаштування завершено";
 
 /* Value text for no expiration reminder */
-"No Reminder" = "Немає нагадувань";
+"No Reminder" = "Немає Нагадувань";
 
 /* Error message description for PeripheralManagerError.notReady */
 "Peripheral Not Ready" = "Периферійний пристрій не готовий";
@@ -649,7 +649,7 @@
 "No\nDelivery" = "Без\nПодачи";
 
 /* description label for active time pod details row */
-"Active Time" = "Активний час";
+"Active Time" = "Активний Час";
 
 /* description label for total delivery pod details row */
 "Total Delivery" = "Усього подано";

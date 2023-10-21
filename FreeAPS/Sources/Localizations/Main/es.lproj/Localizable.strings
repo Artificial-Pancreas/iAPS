@@ -16,6 +16,9 @@
 /* Continue after added carbs without bolus */
 "Continue without bolus" = "Continuar sin administrar bolo";
 
+/* Alert when adding large amount without bolusing */
+"\nAmount is more than your Max Bolus setting! \nAre you sure you want to add " = "\nAmount is more than your Max Bolus setting! \nAre you sure you want to add ";
+
 /* Header */
 "Enact Bolus" = "Administrar Bolo";
 
@@ -311,6 +314,42 @@ Enact a temp Basal or a temp target */
 /* Allow remote control from NS */
 "Remote control" = "Control a distancia";
 
+/* Imported Profiles Alert */
+"\nNow please verify all of your new settings thoroughly:\n\n* Basal Settings\n * Carb Ratios\n * Glucose Targets\n * Insulin Sensitivities\n * DIA\n\n in iAPS Settings > Configuration.\n\nBad or invalid profile settings could have disatrous effects." = "\nNow please verify all of your new settings thoroughly:\n\n* Basal Settings\n * Carb Ratios\n * Glucose Targets\n * Insulin Sensitivities\n * DIA\n\n in iAPS Settings > Configuration.\n\nBad or invalid profile settings could have disatrous effects.";
+
+/* Profile Import Alert */
+"This will replace some or all of your current pump settings. Are you sure you want to import profile settings from Nightscout?" = "This will replace some or all of your current pump settings. Are you sure you want to import profile settings from Nightscout?";
+
+/* Import Error */
+"\nInvalid Nightcsout Basal Settings. \n\nImport aborted. Please check your Nightscout Profile Basal Settings!" = "\nInvalid Nightcsout Basal Settings. \n\nImport aborted. Please check your Nightscout Profile Basal Settings!";
+
+/* Import Error */
+"\nSettings were imported but the Basals couldn't be saved to pump (No pump). Check your basal settings and tap ´Save on Pump´ to sync the new basal settings" = "\nSettings were imported but the Basals couldn't be saved to pump (No pump). Check your basal settings and tap ´Save on Pump´ to sync the new basal settings";
+
+/* Import Error Headline */
+"Import Error" = "Import Error";
+
+/* */
+"Yes, Import" = "Yes, Import";
+
+/* */
+"Import settings from Nightscout" = "Import settings from Nightscout";
+
+/* */
+"Import settings?" = "Import settings?";
+
+/* */
+"Import from Nightscout" = "Import from Nightscout";
+
+/* */
+"Settings imported" = "Settings imported";
+
+/* Import Error */
+"\nMismatching glucose units in Nightscout and Pump Settings. Import settings aborted." = "\nMismatching glucose units in Nightscout and Pump Settings. Import settings aborted.";
+
+/* Import Error */
+"Can't find the default Nightscout Profile." = "Can't find the default Nightscout Profile.";
+
 /* Add Medtronic pump */
 "Add Medtronic" = "Añadir Medtronic";
 
@@ -519,10 +558,13 @@ Enact a temp Basal or a temp target */
 "Calibrations" = "Calibraciones";
 
 /* */
-"Create Events in Calendar" = "Crear eventos en el calendario";
+"Create Events in Calendar" = "Create Events in Calendar";
 
 /* */
 "Calendar" = "Calendario";
+
+/* Automatic delivered treatments */
+"Automatic" = "Automatic";
 
 /* */
 "Other" = "Otro";
@@ -945,7 +987,7 @@ Enact a temp Basal or a temp target */
 "iAPS not active" = "iAPS not active";
 
 /* */
-"Last loop was more then %d min ago" = "Last loop was more then %d min ago";
+"Last loop was more than %d min ago" = "Last loop was more than %d min ago";
 
 /* Glucose badge */
 "Show glucose on the app badge" = "Show glucose on the app badge";
@@ -958,6 +1000,9 @@ Enact a temp Basal or a temp target */
 
 /* */
 "Bolus failed" = "Bolus failed";
+
+/* "Max Bolus Exceeded label" */
+"Max Bolus exceeded!" = "Max Bolus exceeded!";
 
 /* */
 "Bolus failed or inaccurate. Check pump history before repeating." = "Bolus failed or inaccurate. Check pump history before repeating.";
@@ -1049,6 +1094,12 @@ Enact a temp Basal or a temp target */
 /* Autotune config */
 "Only Autotune Basal Insulin" = "Only Autotune Basal Insulin";
 
+/* */
+"Save as your Normal Basal Rates" = "Save as your Normal Basal Rates";
+
+/* */
+"Save on Pump" = "Guardar en Bomba";
+
 /* Debug option view Pump History */
 "Pump History" = "Pump History";
 
@@ -1113,6 +1164,9 @@ Enact a temp Basal or a temp target */
 
 /* Manual temp basal mode */
 "Manual" = "Manual";
+
+/* An Automatic delivered bolus (SMB) */
+"SMB" = "SMB";
 
 /* Status highlight when manual temp basal is running. */
 "Manual Basal" = "Manual Basal";
