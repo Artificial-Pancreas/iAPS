@@ -10,10 +10,6 @@ extension Color {
 
     static let insulin = Color("Insulin")
 
-    static let smb = Color("SMB")
-
-    static let nonPumpInsulin = Color("NonPumpInsulin")
-
     // The loopAccent color is intended to be use as the app accent color.
     public static let loopAccent = Color("accent")
 
