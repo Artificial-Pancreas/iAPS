@@ -6,6 +6,7 @@ extension DataTable {
         @Injected() var broadcaster: Broadcaster!
         @Injected() var unlockmanager: UnlockManager!
         @Injected() private var storage: FileStorage!
+        @Injected() var healthKitManager: HealthKitManager!
 
         let coredataContext = CoreDataStack.shared.persistentContainer.viewContext
 
@@ -147,7 +148,7 @@ extension DataTable {
         func deleteGlucose(at index: Int) {
             let id = glucose[index].id
             provider.deleteGlucose(id: id)
-
+            // CoreData
             let fetchRequest: NSFetchRequest<NSFetchRequestResult>
             fetchRequest = NSFetchRequest(entityName: "Readings")
             fetchRequest.predicate = NSPredicate(format: "id == %@", id)
@@ -163,10 +164,11 @@ extension DataTable {
                         into: [coredataContext]
                     )
                 }
-            } catch {
-                // To do: handle any thrown errors.
+            } catch { /* To do: handle any thrown errors. */ }
+            // Manual Glucose
+            if (glucose[index].glucose.type ?? "") == GlucoseType.manual.rawValue {
+                provider.deleteManualGlucose(date: glucose[index].glucose.dateString)
             }
-            // try? coredataContext.save()
         }
 
         func addManualGlucose() {
@@ -183,10 +185,14 @@ extension DataTable {
                 filtered: nil,
                 noise: nil,
                 glucose: Int(glucose),
-                type: "Manual"
+                type: GlucoseType.manual.rawValue
             )
             provider.glucoseStorage.storeGlucose([saveToJSON])
             debug(.default, "Manual Glucose saved to glucose.json")
+            // Save to Health
+            var saveToHealth = [BloodGlucose]()
+            saveToHealth.append(saveToJSON)
+            healthKitManager.saveIfNeeded(bloodGlucose: saveToHealth)
         }
     }
 }
