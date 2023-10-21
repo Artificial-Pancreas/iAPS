@@ -53,7 +53,7 @@ extension DataTable {
             }
             .onAppear(perform: configureView)
             .navigationTitle(isLayered ? "" : "History")
-            .blur(radius: isLayered ? 3.0 : 0)
+            .blur(radius: isLayered ? 4.0 : 0)
             .navigationBarTitleDisplayMode(.automatic)
             .navigationBarItems(leading: Button(isLayered ? "" : "Close", action: state.hideModal))
             .popup(isPresented: newGlucose, alignment: .center, direction: .top) {
@@ -121,11 +121,11 @@ extension DataTable {
                     .font(.custom("popupButtons", fixedSize: 16))
                 }
             }
-            .frame(maxHeight: 220)
+            .frame(minHeight: 220, maxHeight: 260).cornerRadius(20)
             .background(
-                RoundedRectangle(cornerRadius: 8, style: .continuous)
+                RoundedRectangle(cornerRadius: 20, style: .continuous)
                     .fill(Color(.tertiarySystemBackground))
-            ).border(.gray).shadow(radius: 40)
+            ).shadow(radius: 40)
         }
 
         @ViewBuilder private func treatmentView(_ item: Treatment) -> some View {
