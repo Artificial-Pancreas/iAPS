@@ -106,10 +106,12 @@ extension DataTable {
 //                    }
 //                }
             )
-            .sheet(isPresented: $showManualGlucose, onDismiss: { if isAmountUnconfirmed { state.manualGlucose = 0 } }) {
+            .sheet(isPresented: $showManualGlucose, onDismiss: { if isAmountUnconfirmed { state.manualGlucose = 0
+                state.manualGlucoseDate = Date() } }) {
                 addManualGlucoseView
             }
-            .sheet(isPresented: $showNonPumpInsulin, onDismiss: { if isAmountUnconfirmed { state.nonPumpInsulinAmount = 0 } }) {
+            .sheet(isPresented: $showNonPumpInsulin, onDismiss: { if isAmountUnconfirmed { state.nonPumpInsulinAmount = 0
+                state.nonPumpInsulinDate = Date() } }) {
                 addNonPumpInsulinView
             }
         }
@@ -132,7 +134,11 @@ extension DataTable {
                         }
 
                         Section {
-                            DatePicker("Date", selection: $state.manualGlucoseDate)
+                            DatePicker(
+                                "Date",
+                                selection: $state.manualGlucoseDate,
+                                in: ...Date()
+                            )
                         }
 
                         Section {
