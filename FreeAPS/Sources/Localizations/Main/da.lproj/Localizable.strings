@@ -1057,7 +1057,7 @@ Enact a temp Basal or a temp target */
 "Using shared app group with external CGM app xDrip4iOS" = "Using shared app group with external CGM app xDrip4iOS";
 
 /* Shared app group GlucoseDirect */
-"Using shared app group with external CGM app GlucoseDirect" = "Using shared app group with external CGM app GlucoseDirect";
+"Using shared app group with external CGM app GlucoseDirect" = "Brug af delt app-gruppe med ekstern CGM app GlucoseDirect";
 
 /* Dexcom G6 app */
 "Dexcom G6 app" = "Dexcom G6 app";
