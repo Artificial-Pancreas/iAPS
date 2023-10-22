@@ -35,7 +35,22 @@ extension Bolus {
                         Text("Glucose")
                         DecimalTextField(
                             "0",
-                            value: $state.currentBG,
+                            value: Binding(
+                                get: {
+                                    if state.units == .mmolL {
+                                        return state.currentBG * 0.0555
+                                    } else {
+                                        return state.currentBG
+                                    }
+                                },
+                                set: { newValue in
+                                    if state.units == .mmolL {
+                                        state.currentBG = newValue * 0.0555
+                                    } else {
+                                        state.currentBG = newValue
+                                    }
+                                }
+                            ),
                             formatter: formatter,
                             autofocus: false,
                             cleanInput: true
@@ -51,7 +66,7 @@ extension Bolus {
                     }
                     .contentShape(Rectangle())
 
-//                    maybe remove this hstack or display entered carbs from carbs entry
+//                   maybe remove this hstack or display entered carbs from carbs entry
                     HStack {
                         Text("Carbs")
                         Spacer()
