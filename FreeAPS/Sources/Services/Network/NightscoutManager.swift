@@ -15,7 +15,7 @@ protocol NightscoutManager: GlucoseSource {
     func uploadGlucose()
     func uploadStatistics(dailystat: Statistics)
     func uploadPreferences(_ preferences: Preferences)
-    func uploadProfileAndSettings()
+    func uploadProfileAndSettings(_: Bool)
     var cgmURL: URL? { get }
 }
 
@@ -426,7 +426,7 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
         }
     }
 
-    func uploadProfileAndSettings() {
+    func uploadProfileAndSettings(_ force: Bool) {
         // These should be modified anyways and not the defaults
         guard let sensitivities = storage.retrieve(OpenAPS.Settings.insulinSensitivities, as: InsulinSensitivities.self),
               let basalProfile = storage.retrieve(OpenAPS.Settings.basalProfile, as: [BasalProfileEntry].self),
@@ -435,7 +435,7 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
               let preferences = storage.retrieve(OpenAPS.Settings.preferences, as: Preferences.self),
               let settings = storage.retrieve(OpenAPS.FreeAPS.settings, as: FreeAPSSettings.self)
         else {
-            NSLog("NightscoutManager uploadProfile Not all settings found to build profile!")
+            debug(.nightscout, "NightscoutManager uploadProfile Not all settings found to build profile!")
             return
         }
 
@@ -529,20 +529,20 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
 
         // UPLOAD PREFERNCES WHEN CHANGED
         if let uploadedPreferences = storage.retrieve(OpenAPS.Nightscout.uploadedPreferences, as: Preferences.self),
-           uploadedPreferences.rawJSON.sorted() == preferences.rawJSON.sorted()
+           uploadedPreferences.rawJSON.sorted() == preferences.rawJSON.sorted(), !force
         {
             NSLog("NightscoutManager Preferences, preferences unchanged")
         } else { uploadPreferences(preferences) }
 
         // UPLOAD FreeAPS Settings WHEN CHANGED
         if let uploadedSettings = storage.retrieve(OpenAPS.Nightscout.uploadedSettings, as: FreeAPSSettings.self),
-           uploadedSettings.rawJSON.sorted() == settings.rawJSON.sorted()
+           uploadedSettings.rawJSON.sorted() == settings.rawJSON.sorted(), !force
         {
             NSLog("NightscoutManager Settings, settings unchanged")
         } else { uploadSettings(settings) }
 
         if let uploadedProfile = storage.retrieve(OpenAPS.Nightscout.uploadedProfile, as: NightscoutProfileStore.self),
-           (uploadedProfile.store["default"]?.rawJSON ?? "").sorted() == ps.rawJSON.sorted()
+           (uploadedProfile.store["default"]?.rawJSON ?? "").sorted() == ps.rawJSON.sorted(), !force
         {
             NSLog("NightscoutManager uploadProfile, no profile change")
             return
