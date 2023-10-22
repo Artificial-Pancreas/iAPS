@@ -45,14 +45,14 @@
 
 "Last Reading" = "Last Reading";
 
-"Time" = "Time";
+"Time" = "Tid";
 
 "Trend" = "Trend";
 
 "Bluetooth" = "Bluetooth";
 
 /* title for g7 settings row showing BLE Name */
-"Name" = "Name";
+"Name" = "Navn";
 
 /* title for g7 settings connection status when scanning */
 "Scanning" = "Scanning";
@@ -76,7 +76,7 @@
 "Scan for new sensor" = "Scan for new sensor";
 
 /* Button label for removing CGM */
-"Delete CGM" = "Delete CGM";
+"Delete CGM" = "Slet CGM";
 
 /* No glucose value representation (3 dashes for mg/dL) */
 "– – –" = "– – –";
