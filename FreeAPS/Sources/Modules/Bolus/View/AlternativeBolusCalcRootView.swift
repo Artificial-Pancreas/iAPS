@@ -51,6 +51,7 @@ extension Bolus {
                     }
                     .contentShape(Rectangle())
 
+//                    maybe remove this hstack or display entered carbs from carbs entry
                     HStack {
                         Text("Carbs")
                         Spacer()
@@ -233,7 +234,7 @@ extension Bolus {
                             Text("Target Glucose")
                                 .foregroundColor(.secondary)
                             Spacer()
-                            let target = state.target
+                            let target = state.units == .mmolL ? state.target.asMmolL : state.target
                             Text(target.formatted(.number.grouping(.never).rounded().precision(.fractionLength(fractionDigits))))
                             Text(state.units.rawValue)
                                 .foregroundColor(.secondary)
@@ -272,7 +273,7 @@ extension Bolus {
                             Text("Glucose")
                                 .foregroundColor(.secondary)
                             Spacer()
-                            let glucose = state.currentBG
+                            let glucose = state.units == .mmolL ? state.currentBG.asMmolL : state.currentBG
                             Text(glucose.formatted(.number.grouping(.never).rounded().precision(.fractionLength(fractionDigits))))
                             Text(state.units.rawValue)
                                 .foregroundColor(.secondary)
@@ -315,7 +316,7 @@ extension Bolus {
                             Text("Trend")
                                 .foregroundColor(.secondary)
                             Spacer()
-                            let trend = state.deltaBG
+                            let trend = state.units == .mmolL ? state.deltaBG.asMmolL : state.deltaBG
                             Text(trend.formatted(.number.grouping(.never).rounded().precision(.fractionLength(fractionDigits))))
                             Text(state.units.rawValue).foregroundColor(.secondary)
                             Spacer()

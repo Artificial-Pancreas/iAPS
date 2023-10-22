@@ -139,12 +139,17 @@ extension Bolus {
 
         // CALCULATIONS FOR THE BOLUS CALCULATOR
         func calculateInsulin() -> Decimal {
+            // for mmol conversion
+            var conversion: Decimal = 1.0
+            if units == .mmolL {
+                conversion = 0.0555
+            }
             // insulin needed for the current blood glucose
-            let targetDifference = currentBG - target
+            let targetDifference = (currentBG - target) * conversion
             targetDifferenceInsulin = targetDifference / isf
 
             // more or less insulin because of bg trend in the last 15 minutes
-            fifteenMinInsulin = deltaBG / isf
+            fifteenMinInsulin = (deltaBG * conversion) / isf
 
             // determine whole COB for which we want to dose insulin for and then determine insulin for wholeCOB
             let wholeCOB = cob + enteredCarbs
