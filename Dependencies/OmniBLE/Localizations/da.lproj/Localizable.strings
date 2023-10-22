@@ -75,7 +75,7 @@
 "Pod Activated" = "Pod Activated";
 
 /* */
-"Notification Settings" = "Notification Settings";
+"Notification Settings" = "Notifikationsindstillinger";
 
 /* */
 "Confidence Reminders" = "Confidence Reminders";
@@ -129,7 +129,7 @@
 "minute" = "minute";
 
 /* Unit for plural minutes in pod life remaining */
-"minutes" = "minutes";
+"minutes" = "minutter";
 
 /* Title of insulin delivery section */
 "Insulin Delivery" = "Insulin Delivery";
@@ -499,10 +499,10 @@
 "The window on the top of the Pod should be colored pink when the cannula is properly inserted into the skin." = "The window on the top of the Pod should be colored pink when the cannula is properly inserted into the skin.";
 
 /* Button label for user to answer cannula was properly inserted  */
-"Yes" = "Yes";
+"Yes" = "Ja";
 
 /* Button label for user to answer cannula was not properly inserted */
-"No" = "No";
+"No" = "Nej";
 
 /* Pod pairing action button text while pairing */
 "Pairing..." = "Pairing...";
@@ -523,7 +523,7 @@
 "Scheduled Reminder" = "Scheduled Reminder";
 
 /* Label for expiration reminder row */
-"Time" = "Time";
+"Time" = "Tid";
 
 /* Action button title to continue at Setup Complete */
 "Finish Setup" = "Finish Setup";
@@ -573,10 +573,10 @@
 /* Description text for critical alerts */
 "The reminders above will not sound if your device is in Silent or Do Not Disturb mode.\n\nThere are other critical Pod alerts and alarms that will sound even if your device is set to Silent or Do Not Disturb mode." = "The reminders above will not sound if your device is in Silent or Do Not Disturb mode.\n\nThere are other critical Pod alerts and alarms that will sound even if you device is set to Silent or Do Not Disturb mode.";
 /* navigation title for notification settings */
-"Notification Settings" = "Notification Settings";
+"Notification Settings" = "Notifikationsindstillinger";
 
 /* Label for scheduled reminder value row */
-"Time" = "Time";
+"Time" = "Tid";
 
 /* Value text for no expiration reminder */
 "No Reminder" = "No Reminder";
