@@ -591,7 +591,7 @@ Enact a temp Basal or a temp target */
 "Select the third party transmitter you want to connect to" = "Select the third party transmitter you want to connect to";
 
 /* State was restored */
-"State was restored" = "State was restored";
+"State was restored" = "Tilstand blev gendannet";
 
 /* The short unit display string for millimoles of glucose per liter */
 "mmol/L" = "mmol/L";
@@ -600,7 +600,7 @@ Enact a temp Basal or a temp target */
 "mg/dL" = "mg/dL";
 
 /* */
-"Add calibration" = "Add calibration";
+"Add calibration" = "Tilføj kalibrering";
 
 /* When adding capillary glucose meater reading */
 "Meter glucose" = "Meter glucose";
@@ -615,19 +615,19 @@ Enact a temp Basal or a temp target */
 "Intercept" = "Intercept";
 
 /* */
-"Chart" = "Chart";
+"Chart" = "Graf";
 
 /* */
-"Remove" = "Remove";
+"Remove" = "Fjern";
 
 /* */
-"Remove Last" = "Remove Last";
+"Remove Last" = "Fjern Sidste";
 
 /* */
-"Remove All" = "Remove All";
+"Remove All" = "Fjern Alle";
 
 /* */
-"About the Process" = "About the Process";
+"About the Process" = "Om Processen";
 
 /* */
 "Please make sure that your Libre 2 sensor is already activated and finished warming up. If you have other apps connecting to the sensor via bluetooth, these need to be shut down or uninstalled. \n\n You can only have one app communicating with the sensor via bluetooth. Then press the \"pariring and connection\" button below to start the process. Please note that the bluetooth connection might take up to a couple of minutes before it starts working." = "Please make sure that your Libre 2 sensor is already activated and finished warming up. If you have other apps connecting to the sensor via bluetooth, these need to be shut down or uninstalled. \n\n You can only have one app communicating with the sensor via bluetooth. Then press the \"pariring and connection\" button below to start the process. Please note that the bluetooth connection might take up to a couple of minutes before it starts working.";
