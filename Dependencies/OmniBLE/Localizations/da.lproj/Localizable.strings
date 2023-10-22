@@ -721,16 +721,16 @@
 "Cancel Manual Basal" = "Annuller Manuel Basal";
 
 /* Text shown in insulin delivery space when insulin suspended */
-"Insulin\nSuspended" = "Insulin\nSuspended";
+"Insulin\nSuspended" = "Insulin \nSuspenderet";
 
 /* Text for suspend resume button when insulin delivery is suspended */
-"Resume Insulin Delivery" = "Resume Insulin Delivery";
+"Resume Insulin Delivery" = "Genoptag Insulintilførsel";
 
 /* Recovery suggestion when no pod is available */
-"Make sure your pod is nearby and try again." = "Make sure your pod is nearby and try again.";
+"Make sure your pod is nearby and try again." = "Sørg for, at din pod er tæt på, og prøv igen.";
 
 /* Error message shown when the pod is not connected */
-"Pod not connected" = "Pod not connected";
+"Pod not connected" = "Pod ikke forbundet";
 
 /* Label for suspended at time */
 "Suspended At" = "Suspenderet";
