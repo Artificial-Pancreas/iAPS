@@ -7,15 +7,25 @@ extension DataTable {
         let resolver: Resolver
         @StateObject var state = StateModel()
 
-        @State private var isRemoveCarbsAlertPresented = false
+        @State private var isRemoveTreatmentAlertPresented: Bool = false
+        @State private var removeTreatmentAlert: Alert?
+        @State private var isRemoveCarbsAlertPresented: Bool = false
         @State private var removeCarbsAlert: Alert?
-        @State private var isRemoveInsulinAlertPresented = false
+        @State private var isRemoveInsulinAlertPresented: Bool = false
         @State private var removeInsulinAlert: Alert?
-        @State private var newGlucose = false
-        @State private var isLayered = false
+        @State private var newGlucose: Bool = false
+        @State private var isLayered: Bool = false
         @FocusState private var isFocused: Bool
 
         @Environment(\.colorScheme) var colorScheme
+
+        private var fpuFormatter: NumberFormatter {
+            let formatter = NumberFormatter()
+            formatter.numberStyle = .decimal
+            formatter.maximumFractionDigits = 1
+            formatter.roundingMode = .halfUp
+            return formatter
+        }
 
         private var glucoseFormatter: NumberFormatter {
             let formatter = NumberFormatter()
@@ -66,6 +76,10 @@ extension DataTable {
                 ForEach(state.treatments) { item in
                     treatmentView(item)
                 }
+                .onDelete(perform: deleteTreatment)
+            }
+            .alert(isPresented: $isRemoveTreatmentAlertPresented) {
+                removeTreatmentAlert!
             }
         }
 
@@ -131,8 +145,6 @@ extension DataTable {
         @ViewBuilder private func treatmentView(_ item: Treatment) -> some View {
             HStack {
                 Image(systemName: "circle.fill").foregroundColor(item.color)
-                Text(dateFormatter.string(from: item.date))
-                    .moveDisabled(true)
                 Text((item.isSMB ?? false) ? "SMB" : item.type.name)
                 Text(item.amountText).foregroundColor(.secondary)
 
@@ -145,78 +157,18 @@ extension DataTable {
                         Spacer()
                         Text(item.note ?? "").foregroundColor(.brown)
                     }
-                    Spacer()
-                    Image(systemName: "xmark.circle").foregroundColor(.secondary)
-                        .contentShape(Rectangle())
-                        .padding(.vertical)
-                        .onTapGesture {
-                            removeCarbsAlert = Alert(
-                                title: Text("Delete carbs?"),
-                                message: Text(item.amountText),
-                                primaryButton: .destructive(
-                                    Text("Delete"),
-                                    action: { state.deleteCarbs(item) }
-                                ),
-                                secondaryButton: .cancel()
-                            )
-                            isRemoveCarbsAlertPresented = true
-                        }
-                        .alert(isPresented: $isRemoveCarbsAlertPresented) {
-                            removeCarbsAlert!
-                        }
                 }
 
-                if item.type == .fpus {
-                    Spacer()
-                    Image(systemName: "xmark.circle").foregroundColor(.secondary)
-                        .contentShape(Rectangle())
-                        .padding(.vertical)
-                        .onTapGesture {
-                            removeCarbsAlert = Alert(
-                                title: Text("Delete carb equivalents?"),
-                                message: Text(""), // Temporary fix. New to fix real amount of carb equivalents later
-                                primaryButton: .destructive(
-                                    Text("Delete"),
-                                    action: { state.deleteCarbs(item) }
-                                ),
-                                secondaryButton: .cancel()
-                            )
-                            isRemoveCarbsAlertPresented = true
-                        }
-                        .alert(isPresented: $isRemoveCarbsAlertPresented) {
-                            removeCarbsAlert!
-                        }
-                }
+                Spacer()
 
-                if item.type == .bolus {
-                    Spacer()
-                    Image(systemName: "xmark.circle").foregroundColor(.secondary)
-                        .contentShape(Rectangle())
-                        .padding(.vertical)
-                        .onTapGesture {
-                            removeInsulinAlert = Alert(
-                                title: Text("Delete insulin?"),
-                                message: Text(item.amountText),
-                                primaryButton: .destructive(
-                                    Text("Delete"),
-                                    action: { state.deleteInsulin(item) }
-                                ),
-                                secondaryButton: .cancel()
-                            )
-                            isRemoveInsulinAlertPresented = true
-                        }
-                        .alert(isPresented: $isRemoveInsulinAlertPresented) {
-                            removeInsulinAlert!
-                        }
-                }
+                Text(dateFormatter.string(from: item.date))
+                    .moveDisabled(true)
             }
         }
 
         @ViewBuilder private func glucoseView(_ item: Glucose, isManual: BloodGlucose) -> some View {
             VStack(alignment: .leading, spacing: 4) {
                 HStack {
-                    Text(dateFormatter.string(from: item.glucose.dateString))
-                    Spacer()
                     Text(item.glucose.glucose.map {
                         glucoseFormatter.string(from: Double(
                             state.units == .mmolL ? $0.asMmolL : Decimal($0)
@@ -228,8 +180,72 @@ extension DataTable {
                     } else {
                         Text(item.glucose.direction?.symbol ?? "--")
                     }
+
+                    Spacer()
+
+                    Text(dateFormatter.string(from: item.glucose.dateString))
                 }
             }
+        }
+
+        private func deleteTreatment(at offsets: IndexSet) {
+            let treatment = state.treatments[offsets[offsets.startIndex]]
+            var alertTitle = ""
+            var alertMessage = ""
+
+            if treatment.type == .carbs || treatment.type == .fpus {
+                if treatment.type == .fpus {
+                    let fpus = state.treatments
+                    let carbEquivalents = fpuFormatter.string(from: Double(
+                        fpus.filter { fpu in
+                            fpu.fpuID == treatment.fpuID
+                        }
+                        .map { fpu in
+                            fpu.amount ?? 0 }
+                        .reduce(0, +)
+                    ) as NSNumber)!
+
+                    alertTitle = NSLocalizedString("Delete Carb Equivalents?", comment: "Delete fpus alert title")
+                    alertMessage = carbEquivalents + NSLocalizedString(" g", comment: "gram of carbs")
+                }
+
+                if treatment.type == .carbs {
+                    alertTitle = NSLocalizedString(
+                        "Delete Carbs?",
+                        comment: "Delete carbs from data table and Nightscout"
+                    )
+                    alertMessage = treatment.amountText
+                }
+
+                removeTreatmentAlert = Alert(
+                    title: Text(alertTitle),
+                    message: Text(alertMessage),
+                    primaryButton: .destructive(
+                        Text("Delete"),
+                        action: { state.deleteCarbs(treatment) }
+                    ),
+                    secondaryButton: .cancel()
+                )
+            } else {
+                // treatment is .bolus
+                alertTitle = NSLocalizedString(
+                    "Delete Insulin?",
+                    comment: "Delete insulin from pump history and Nightscout"
+                )
+                alertMessage = treatment.amountText
+
+                removeTreatmentAlert = Alert(
+                    title: Text(alertTitle),
+                    message: Text(alertMessage),
+                    primaryButton: .destructive(
+                        Text("Delete"),
+                        action: { state.deleteInsulin(treatment) }
+                    ),
+                    secondaryButton: .cancel()
+                )
+            }
+
+            isRemoveTreatmentAlertPresented = true
         }
 
         private func deleteGlucose(at offsets: IndexSet) {
