@@ -1,4 +1,5 @@
 
+import LoopKit
 import SwiftUI
 import Swinject
 
@@ -8,17 +9,15 @@ extension Bolus {
         @Injected() var apsManager: APSManager!
         @Injected() var broadcaster: Broadcaster!
         @Injected() var pumpHistoryStorage: PumpHistoryStorage!
+        // added for bolus calculator
         @Injected() var glucoseStorage: GlucoseStorage!
-        @Injected() var carbsStorage: CarbsStorage!
         @Injected() var settings: SettingsManager!
+        @Injected() var storage: FileStorage!
 
         @Published var suggestion: Suggestion?
         @Published var amount: Decimal = 0
         @Published var insulinRecommended: Decimal = 0
         @Published var insulinRequired: Decimal = 0
-
-        @Published var glucose: [BloodGlucose] = []
-        @Published var recentGlucose: BloodGlucose?
         @Published var units: GlucoseUnits = .mmolL
         @Published var percentage: Decimal = 0
         @Published var threshold: Decimal = 0
@@ -27,20 +26,22 @@ extension Bolus {
         @Published var evBG: Int = 0
         @Published var insulin: Decimal = 0
         @Published var isf: Decimal = 0
-        @Published var iob: Decimal = 0
         @Published var error: Bool = false
         @Published var minGuardBG: Decimal = 0
         @Published var minDelta: Decimal = 0
         @Published var expectedDelta: Decimal = 0
         @Published var minPredBG: Decimal = 0
-        @Published var target: Decimal = 0
-        @Published var cob: Decimal = 0
-
         @Published var waitForSuggestion: Bool = false
 
         var waitForSuggestionInitial: Bool = false
 
-        // new variables
+        // added for bolus calculator
+        @Published var glucose: [BloodGlucose] = []
+        @Published var recentGlucose: BloodGlucose?
+        @Published var target: Decimal = 0
+        @Published var cob: Decimal = 0
+        @Published var iob: Decimal = 0
+
         @Published var currentBG: Decimal = 0
         @Published var fifteenMinInsulin: Decimal = 0
         @Published var deltaBG: Decimal = 0
@@ -51,7 +52,6 @@ extension Bolus {
         @Published var roundedWholeCalc: Decimal = 0
         @Published var insulinCalculated: Decimal = 0
         @Published var roundedInsulinCalculated: Decimal = 0
-        @Published var cRatio: Decimal = 0
         @Published var enteredCarbs: Decimal = 0
         @Published var fraction: Decimal = 0
         @Published var useCalc: Bool = false
@@ -59,6 +59,9 @@ extension Bolus {
         @Published var fattyMeals: Bool = false
         @Published var fattyMealFactor: Decimal = 0
         @Published var useFattyMealCorrectionFactor: Bool = false
+
+        @Published var carbRatio: Decimal = 0
+        @Published var currentTime: String = ""
 
         override func subscribe() {
             setupInsulinRequired()
@@ -74,6 +77,40 @@ extension Bolus {
             fattyMeals = settings.settings.fattyMeals
             fattyMealFactor = settings.settings.fattyMealFactor
 
+            // get carb ratio entry schedule
+            let schedule = provider.getProfile().schedule
+            // get current time in same format as carb ratio entry start date
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "HH:mm:ss"
+            let currentTime = dateFormatter.string(from: Date())
+            // loop through schedule to get current carb ratio
+            for (index, entry) in schedule.enumerated() {
+                if let entryStartTimeDate = dateFormatter.date(from: entry.start) {
+                    var entryEndTimeDate: Date
+
+                    if index < schedule.count - 1 {
+                        let nextEntry = schedule[index + 1]
+                        if let nextEntryStartTimeDate = dateFormatter.date(from: nextEntry.start) {
+                            let timeDifference = nextEntryStartTimeDate.timeIntervalSince(entryStartTimeDate)
+                            entryEndTimeDate = entryStartTimeDate.addingTimeInterval(timeDifference)
+                        } else {
+                            continue
+                        }
+                    } else {
+                        entryEndTimeDate = Date()
+                    }
+                    // if currentTime is between start and end of carb ratio entry -> carbRatio = currentRatio
+                    if let currentTimeDate = dateFormatter.date(from: currentTime) {
+                        if currentTimeDate >= entryStartTimeDate, currentTimeDate <= entryEndTimeDate {
+                            if let currentRatio = entry.ratio as? Decimal {
+                                carbRatio = currentRatio
+                                break
+                            }
+                        }
+                    }
+                }
+            }
+
             if waitForSuggestionInitial {
                 apsManager.determineBasal()
                     .receive(on: DispatchQueue.main)
@@ -85,23 +122,6 @@ extension Bolus {
                             self.insulinRecommended = 0
                         }
                     }.store(in: &lifetime)
-            }
-        }
-
-        func getCarbRatio() {
-            let now = Date()
-            let calendar = Calendar.current
-            let hour = calendar.component(.hour, from: now)
-
-            // defining CarbRatios for me.....
-            if hour >= 0, hour < 5 {
-                cRatio = 12
-            } else if hour >= 5, hour < 8 {
-                cRatio = 7
-            } else if hour >= 8, hour < 10 {
-                cRatio = 10
-            } else {
-                cRatio = 12
             }
         }
 
@@ -128,7 +148,7 @@ extension Bolus {
 
             // determine whole COB for which we want to dose insulin for and then determine insulin for wholeCOB
             let wholeCOB = cob + enteredCarbs
-            wholeCobInsulin = wholeCOB / cRatio
+            wholeCobInsulin = wholeCOB / carbRatio
 
             // determine how much the calculator reduces/ increases the bolus because of IOB
             iobInsulinReduction = (-1) * iob
@@ -227,7 +247,6 @@ extension Bolus {
                 self.currentBG = (self.provider.suggestion?.bg ?? 0)
                 self.cob = self.provider.suggestion?.cob ?? 0
                 self.basal = self.provider.suggestion?.rate ?? 0
-                self.suggestion = self.provider.suggestion
 
                 if self.settingsManager.settings.insulinReqPercentage != 100 {
                     self.insulinRecommended = self.insulin * (self.settingsManager.settings.insulinReqPercentage / 100)
@@ -245,7 +264,6 @@ extension Bolus {
                 self.insulinRecommended = self.apsManager
                     .roundBolus(amount: max(self.insulinRecommended, 0))
 
-                self.getCarbRatio()
                 self.getDeltaBG()
             }
         }
