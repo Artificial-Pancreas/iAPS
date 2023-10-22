@@ -80,9 +80,9 @@ extension Bolus {
                         .onChange(of: state.enteredCarbs) { newValue in
                             if newValue > 250 {
                                 state.enteredCarbs = 250 // ensure that user can not input more than 200g of carbs accidentally
+                                carbsWarning.toggle()
                             }
                             insulinCalculated = state.calculateInsulin()
-                            carbsWarning.toggle()
                         }
                         Text(
                             NSLocalizedString("g", comment: "grams")
