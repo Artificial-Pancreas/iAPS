@@ -350,6 +350,9 @@ Enact a temp Basal or a temp target */
 /* Import Error */
 "Can't find the default Nightscout Profile." = "Kan inte hitta en profil i Nightcsout";
 
+/* Add Blood Glucose Test, header */
+"Blood Glucose Test" = "Blodsockerprov";
+
 /* Add Medtronic pump */
 "Add Medtronic" = "Lägg till Medtronic";
 
@@ -987,7 +990,7 @@ Enact a temp Basal or a temp target */
 "iAPS not active" = "iAPS är inte aktiv";
 
 /* */
-"Last loop was more than %d min ago" = "Senaste loopen var mer än %d min sedan";
+"Last loop was more than %d min ago" = "Senaste loop var för mer än %d min sedan";
 
 /* Glucose badge */
 "Show glucose on the app badge" = "Visa glukosvärde på app-ikon";

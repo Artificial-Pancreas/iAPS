@@ -67,6 +67,32 @@ extension Bolus {
                 }
                 .store(in: &lifetime)
         }
+        
+        func addWithoutBolus() {
+            guard amount > 0 else {
+                showModal(for: nil)
+                return
+            }
+            amount = min(amount, maxBolus * 3) // Allow for 3 * Max Bolus for non-pump insulin
+
+            pumpHistoryStorage.storeEvents(
+                [
+                    PumpHistoryEvent(
+                        id: UUID().uuidString,
+                        type: .bolus,
+                        timestamp: Date(),
+                        amount: amount,
+                        duration: nil,
+                        durationMin: nil,
+                        rate: nil,
+                        temp: nil,
+                        carbInput: nil,
+                        isNonPumpInsulin: true
+                    )
+                ]
+            )
+            showModal(for: nil)
+        }
 
         func setupInsulinRequired() {
             DispatchQueue.main.async {

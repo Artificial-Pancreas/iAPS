@@ -188,7 +188,7 @@ enum DataTable {
             case .fpus:
                 return .orange.opacity(0.5)
             case .bolus:
-                return .insulin
+                return Color.insulin
             case .tempBasal:
                 return Color.insulin.opacity(0.4)
             case .resume,
