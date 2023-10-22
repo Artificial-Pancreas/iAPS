@@ -13,7 +13,8 @@ extension DataTable {
         @Published var mode: Mode = .treatments
         @Published var treatments: [Treatment] = []
         @Published var glucose: [Glucose] = []
-        @Published var manualGlcuose: Decimal = 0
+        @Published var manualGlucose: Decimal = 0
+        @Published var manualGlucoseDate = Date()
 
         var units: GlucoseUnits = .mmolL
 
@@ -146,10 +147,9 @@ extension DataTable {
                 .store(in: &lifetime)
         }
 
-        func deleteGlucose(at index: Int) {
-            let id = glucose[index].id
+        func deleteGlucose(_ glucose: Glucose) {
+            let id = glucose.id
             provider.deleteGlucose(id: id)
-            // CoreData
             let fetchRequest: NSFetchRequest<NSFetchRequestResult>
             fetchRequest = NSFetchRequest(entityName: "Readings")
             fetchRequest.predicate = NSPredicate(format: "id == %@", id)
@@ -166,14 +166,14 @@ extension DataTable {
                     )
                 }
             } catch { /* To do: handle any thrown errors. */ }
-            // Manual Glucose
-            if (glucose[index].glucose.type ?? "") == GlucoseType.manual.rawValue {
-                provider.deleteManualGlucose(date: glucose[index].glucose.dateString)
+            // Deletes manual glucose from NS
+            if (glucose.glucose.type ?? "") == GlucoseType.manual.rawValue {
+                provider.deleteManualGlucose(date: glucose.glucose.dateString)
             }
         }
 
         func addManualGlucose() {
-            let glucose = units == .mmolL ? manualGlcuose.asMgdL : manualGlcuose
+            let glucose = units == .mmolL ? manualGlucose.asMgdL : manualGlucose
             let now = Date()
             let id = UUID().uuidString
 
@@ -194,6 +194,10 @@ extension DataTable {
             var saveToHealth = [BloodGlucose]()
             saveToHealth.append(saveToJSON)
             healthKitManager.saveIfNeeded(bloodGlucose: saveToHealth)
+            debug(.default, "Manual Glucose saved to Apple Health")
+
+            // Reset amount to 0 for next entry.
+            manualGlucose = 0
         }
     }
 }

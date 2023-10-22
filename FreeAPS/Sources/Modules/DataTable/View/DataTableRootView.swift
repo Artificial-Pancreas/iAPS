@@ -11,9 +11,11 @@ extension DataTable {
         @State private var removeCarbsAlert: Alert?
         @State private var isRemoveInsulinAlertPresented = false
         @State private var removeInsulinAlert: Alert?
-        @State private var newGlucose = false
-        @State private var isLayered = false
-        @FocusState private var isFocused: Bool
+        @State private var isRemoveGlucoseAlertPresented = false
+        @State private var isInsulinAmountAlertPresented = false
+        @State private var removeGlucoseAlert: Alert?
+        @State private var showManualGlucose: Bool = false
+        @State private var isAmountUnconfirmed: Bool = true
 
         @Environment(\.colorScheme) var colorScheme
 
@@ -52,12 +54,12 @@ extension DataTable {
                 }
             }
             .onAppear(perform: configureView)
-            .navigationTitle(isLayered ? "" : "History")
-            .blur(radius: isLayered ? 4.0 : 0)
+            .navigationTitle("History")
             .navigationBarTitleDisplayMode(.automatic)
-            .navigationBarItems(leading: Button(isLayered ? "" : "Close", action: state.hideModal))
-            .popup(isPresented: newGlucose, alignment: .center, direction: .top) {
-                addGlucose
+            .navigationBarItems(leading: Button("Close", action: state.hideModal))
+            .sheet(isPresented: $showManualGlucose, onDismiss: { if isAmountUnconfirmed { state.manualGlucose = 0
+                state.manualGlucoseDate = Date() } }) {
+                addGlucoseView
             }
         }
 
@@ -70,62 +72,84 @@ extension DataTable {
         }
 
         private var glucoseList: some View {
-            List {
-                Button {
-                    newGlucose = true
-                    isFocused = true
-                    isLayered.toggle()
-                }
-                label: { Text("Add") }.frame(maxWidth: .infinity, alignment: .trailing)
-                    .padding(.trailing, 20)
+            Section(
+                header: VStack {
+                    Spacer()
+                    Button(action: { showManualGlucose = true }, label: {
+                        HStack {
+                            Text(NSLocalizedString("Glucose", comment: "Glucose button text"))
+                                .foregroundColor(Color.gray)
+                                .font(.body).textCase(.none)
 
-                ForEach(state.glucose) { item in
-                    glucoseView(item, isManual: item.glucose)
-                }.onDelete(perform: deleteGlucose)
+                            Image(systemName: "plus.circle.fill")
+                                .resizable()
+                                .frame(width: 24, height: 24)
+                                .foregroundColor(Color.gray)
+                        }.frame(maxWidth: .infinity, alignment: .trailing)
+
+                    }).buttonStyle(.borderless)
+
+                    Spacer()
+                }
+            ) {
+                List {
+                    if !state.glucose.isEmpty {
+                        ForEach(state.glucose) { item in
+                            glucoseView(item, isManual: item.glucose)
+                        }
+                        .onDelete(perform: deleteGlucose)
+                    } else {
+                        HStack {
+                            Text(NSLocalizedString("No data.", comment: "No data text when no entries in history list"))
+                        }
+                    }
+                }
+            }
+            .alert(isPresented: $isRemoveGlucoseAlertPresented) {
+                removeGlucoseAlert!
             }
         }
 
-        private var addGlucose: some View {
-            VStack {
-                Form {
-                    Section {
-                        HStack {
-                            Text("Glucose").font(.custom("popup", fixedSize: 18))
-                            DecimalTextField(" ... ", value: $state.manualGlcuose, formatter: glucoseFormatter)
-                                .focused($isFocused).font(.custom("glucose", fixedSize: 22))
-                            Text(state.units.rawValue).foregroundStyle(.secondary)
+        var addGlucoseView: some View {
+            NavigationView {
+                VStack {
+                    Form {
+                        Section {
+                            HStack {
+                                Text("New Glucose")
+                                DecimalTextField(
+                                    " ... ",
+                                    value: $state.manualGlucose,
+                                    formatter: glucoseFormatter,
+                                    autofocus: true
+                                )
+                                Text(state.units.rawValue).foregroundStyle(.secondary)
+                            }
+                        }
+
+                        Section {
+                            HStack {
+                                let limitLow: Decimal = state.units == .mmolL ? 2.2 : 40
+                                let limitHigh: Decimal = state.units == .mmolL ? 21 : 380
+
+                                Button {
+                                    state.addManualGlucose()
+                                    isAmountUnconfirmed = false
+                                    showManualGlucose = false
+                                }
+                                label: { Text("Save") }
+                                    .frame(maxWidth: .infinity, alignment: .center)
+                                    .disabled(state.manualGlucose < limitLow || state.manualGlucose > limitHigh)
+                            }
                         }
                     }
-                    header: {
-                        Text("Blood Glucose Test").foregroundColor(.secondary).font(.custom("popupHeader", fixedSize: 12))
-                            .padding(.top)
-                    }
-                    HStack {
-                        Button {
-                            newGlucose = false
-                            isLayered = false
-                        }
-                        label: { Text("Cancel").foregroundColor(.red) }
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                        Spacer()
-                        Button {
-                            state.addManualGlucose()
-                            newGlucose = false
-                            isLayered = false
-                        }
-                        label: { Text("Save") }
-                            .frame(maxWidth: .infinity, alignment: .trailing)
-                            .disabled(state.manualGlcuose <= 0)
-                    }
-                    .buttonStyle(BorderlessButtonStyle())
-                    .font(.custom("popupButtons", fixedSize: 16))
                 }
+                .onAppear(perform: configureView)
+                .navigationTitle("Add Glucose")
+                .navigationBarTitleDisplayMode(.automatic)
+                .navigationBarItems(leading: Button("Close", action: { showManualGlucose = false
+                    state.manualGlucose = 0 }))
             }
-            .frame(minHeight: 220, maxHeight: 260).cornerRadius(20)
-            .background(
-                RoundedRectangle(cornerRadius: 20, style: .continuous)
-                    .fill(Color(.tertiarySystemBackground))
-            ).shadow(radius: 40)
         }
 
         @ViewBuilder private func treatmentView(_ item: Treatment) -> some View {
@@ -233,7 +257,22 @@ extension DataTable {
         }
 
         private func deleteGlucose(at offsets: IndexSet) {
-            state.deleteGlucose(at: offsets[offsets.startIndex])
+            let glucose = state.glucose[offsets[offsets.startIndex]]
+            let glucoseValue = glucoseFormatter.string(from: Double(
+                state.units == .mmolL ? Double(glucose.glucose.value.asMmolL) : glucose.glucose.value
+            ) as NSNumber)! + " " + state.units.rawValue
+
+            removeGlucoseAlert = Alert(
+                title: Text(NSLocalizedString("Delete Glucose?", comment: "Delete Glucose alert title")),
+                message: Text(glucoseValue),
+                primaryButton: .destructive(
+                    Text("Delete"),
+                    action: { state.deleteGlucose(glucose) }
+                ),
+                secondaryButton: .cancel()
+            )
+
+            isRemoveGlucoseAlertPresented = true
         }
     }
 }
