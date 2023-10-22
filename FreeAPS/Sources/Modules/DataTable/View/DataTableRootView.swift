@@ -11,11 +11,20 @@ extension DataTable {
         @State private var removeCarbsAlert: Alert?
         @State private var isRemoveInsulinAlertPresented = false
         @State private var removeInsulinAlert: Alert?
+        @State private var showNonPumpInsulin: Bool = false
+        @State private var isAmountUnconfirmed: Bool = true
         @State private var newGlucose = false
         @State private var isLayered = false
         @FocusState private var isFocused: Bool
 
         @Environment(\.colorScheme) var colorScheme
+
+        private var insulinFormatter: NumberFormatter {
+            let formatter = NumberFormatter()
+            formatter.numberStyle = .decimal
+            formatter.maximumFractionDigits = 2
+            return formatter
+        }
 
         private var glucoseFormatter: NumberFormatter {
             let formatter = NumberFormatter()
@@ -59,12 +68,49 @@ extension DataTable {
             .popup(isPresented: newGlucose, alignment: .center, direction: .top) {
                 addGlucose
             }
+            .sheet(isPresented: $showNonPumpInsulin, onDismiss: { if isAmountUnconfirmed { state.nonPumpInsulinAmount = 0
+                state.nonPumpInsulinDate = Date() } }) {
+                addNonPumpInsulinView
+            }
         }
 
         private var treatmentsList: some View {
-            List {
-                ForEach(state.treatments) { item in
-                    treatmentView(item)
+            Section(
+                header: VStack {
+                    Spacer()
+                    Button(action: { showNonPumpInsulin = true
+                        state.nonPumpInsulinDate = Date() }, label: {
+                        HStack {
+                            Text(
+                                NSLocalizedString("Non-Pump Insulin", comment: "Non-Pump Insulin button text")
+                            )
+                            .foregroundColor(Color.gray)
+                            .font(.body).textCase(.none)
+
+                            Image(systemName: "plus.circle.fill")
+                                .resizable()
+                                .frame(width: 24, height: 24)
+                                .foregroundColor(Color.gray)
+                        }.frame(maxWidth: .infinity, alignment: .trailing)
+
+                    }).buttonStyle(.borderless)
+
+                    Spacer()
+                }
+            ) {
+                List {
+                    if !state.treatments.isEmpty {
+                        ForEach(state.treatments) { item in
+                            treatmentView(item)
+                        }
+                    } else {
+                        HStack {
+                            Text(NSLocalizedString("No data.", comment: "No data text when no entries in history list"))
+                        }
+                    }
+                }
+                .alert(isPresented: $isRemoveInsulinAlertPresented) {
+                    removeInsulinAlert!
                 }
             }
         }
@@ -209,6 +255,76 @@ extension DataTable {
                             removeInsulinAlert!
                         }
                 }
+            }
+        }
+
+        var addNonPumpInsulinView: some View {
+            NavigationView {
+                VStack {
+                    Form {
+                        Section {
+                            HStack {
+                                Text(NSLocalizedString("Amount", comment: ""))
+                                Spacer()
+                                DecimalTextField(
+                                    "0",
+                                    value: $state.nonPumpInsulinAmount,
+                                    formatter: insulinFormatter,
+                                    autofocus: true,
+                                    cleanInput: true
+                                )
+                                Text("U").foregroundColor(.secondary)
+                            }
+                        }
+
+                        Section {
+                            DatePicker("Date", selection: $state.nonPumpInsulinDate, in: ...Date())
+                        }
+
+                        let amountWarningCondition = (state.nonPumpInsulinAmount > state.maxBolus) &&
+                            (state.nonPumpInsulinAmount <= state.maxBolus * 3)
+
+                        Section {
+                            HStack {
+                                Button {
+                                    state.addNonPumpInsulin()
+                                    isAmountUnconfirmed = false
+                                    showNonPumpInsulin = false
+                                }
+                                label: {
+                                    Text(NSLocalizedString(
+                                        "Log non-pump insulin",
+                                        comment: "Log non-pump insulin button text"
+                                    ))
+                                }
+                                .foregroundColor(amountWarningCondition ? Color.white : Color.accentColor)
+                                .frame(maxWidth: .infinity, alignment: .center)
+                                .disabled(
+                                    state.nonPumpInsulinAmount <= 0 || state.nonPumpInsulinAmount > state
+                                        .maxBolus * 3
+                                )
+                            }
+                        }
+                        header: {
+                            if amountWarningCondition
+                            {
+                                Text(NSLocalizedString(
+                                    "⚠️ Warning! The entered insulin amount is greater than your Max Bolus setting!",
+                                    comment: "Non-pump insulin maxBolus * 3 alert text"
+                                ))
+                            }
+                        }
+                        .listRowBackground(
+                            amountWarningCondition ? Color
+                                .red : colorScheme == .dark ? Color(UIColor.secondarySystemBackground) : Color.white
+                        )
+                    }
+                }
+                .onAppear(perform: configureView)
+                .navigationTitle("Non-Pump Insulin")
+                .navigationBarTitleDisplayMode(.inline)
+                .navigationBarItems(leading: Button("Close", action: { showNonPumpInsulin = false
+                    state.nonPumpInsulinAmount = 0 }))
             }
         }
 
