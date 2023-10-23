@@ -130,7 +130,7 @@
 "Preferred Data Source" = "Foretruken data kilde";
 
 /* Text for medtronic pump battery percent remaining */
-"Pump Battery Remaining" = "Pump Battery Remaining";
+"Pump Battery Remaining" = "Resterende Pumpe Batteri";
 
 /* navigation title for pump battery type selection
    Text for medtronic pump battery type */
@@ -203,7 +203,7 @@
 "U/hr" = "E/t";
 
 /* Text to indicate battery percentage is unknown */
-"unknown" = "unknown";
+"unknown" = "ukendt";
 
 /* Text shown in basal rate space when delivery status is unknown */
 "Unknown" = "Ukendt";
