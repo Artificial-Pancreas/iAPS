@@ -127,6 +127,7 @@ extension Settings {
             .navigationTitle("Settings")
             .navigationBarItems(leading: Button("Close", action: state.hideSettingsModal))
             .navigationBarTitleDisplayMode(.automatic)
+            .onDisappear(perform: { state.uploadProfileAndSettings(false) })
         }
     }
 }
