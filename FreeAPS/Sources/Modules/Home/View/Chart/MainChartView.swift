@@ -14,6 +14,12 @@ struct DotInfo {
     let value: Decimal
 }
 
+struct AnnouncementDot {
+    let rect: CGRect
+    let value: Decimal
+    let note: String
+}
+
 typealias GlucoseYRange = (minValue: Int, minY: CGFloat, maxValue: Int, maxY: CGFloat)
 
 struct MainChartView: View {
@@ -33,10 +39,19 @@ struct MainChartView: View {
         static let fpuSize: CGFloat = 5
         static let carbsScale: CGFloat = 0.3
         static let fpuScale: CGFloat = 1
-        static let announcementSize: CGFloat = 10
-        static let announcementScale: CGFloat = 1
+        static let announcementSize: CGFloat = 8
+        static let announcementScale: CGFloat = 2.5
         static let owlSeize: CGFloat = 25
         static let owlOffset: CGFloat = 60
+    }
+
+    private enum Command {
+        static let open = "🟢"
+        static let closed = "🔴"
+        static let suspend = "❌"
+        static let resume = "✅"
+        static let tempbasal = "💧..."
+        static let bolus = "💧"
     }
 
     @Binding var glucose: [BloodGlucose]
@@ -65,7 +80,7 @@ struct MainChartView: View {
     @State var didAppearTrigger = false
     @State private var glucoseDots: [CGRect] = []
     @State private var manualGlucoseDots: [CGRect] = []
-    @State private var announcementDots: [DotInfo] = []
+    @State private var announcementDots: [AnnouncementDot] = []
     @State private var announcementPath = Path()
     @State private var manualGlucoseDotsCenter: [CGRect] = []
     @State private var unSmoothedGlucoseDots: [CGRect] = []
@@ -378,13 +393,24 @@ struct MainChartView: View {
     private func announcementView(fullSize: CGSize) -> some View {
         ZStack {
             ForEach(announcementDots, id: \.rect.minX) { info -> AnyView in
-                let position = CGPoint(x: info.rect.midX + 4, y: info.rect.maxY - Config.owlOffset)
-                return Image("owl").resizable().frame(maxWidth: Config.owlSeize, maxHeight: Config.owlSeize).scaledToFill()
-                    .position(position)
-                    .asAny()
+                let position = CGPoint(x: info.rect.midX + 5, y: info.rect.maxY - Config.owlOffset)
+                let type: String =
+                    info.note.contains("true") ?
+                    Command.open :
+                    info.note.contains("false") ?
+                    Command.closed :
+                    info.note.contains("suspend") ?
+                    Command.suspend :
+                    info.note.contains("resume") ?
+                    Command.resume :
+                    info.note.contains("tempbasal") ?
+                    Command.tempbasal : Command.bolus
+                VStack {
+                    Text(type).font(.caption2).foregroundStyle(Color(.tempBasal))
+                    Image("owl").resizable().frame(maxWidth: Config.owlSeize, maxHeight: Config.owlSeize).scaledToFill()
+                }.position(position).asAny()
             }
         }
-
         .onChange(of: announcement) { _ in
             calculateAnnouncementDots(fullSize: fullSize)
         }
@@ -616,11 +642,12 @@ extension MainChartView {
 
     private func calculateAnnouncementDots(fullSize: CGSize) {
         calculationQueue.async {
-            let dots = announcement.map { value -> DotInfo in
+            let dots = announcement.map { value -> AnnouncementDot in
                 let center = timeToInterpolatedPoint(value.createdAt.timeIntervalSince1970, fullSize: fullSize)
                 let size = Config.announcementSize * Config.announcementScale
                 let rect = CGRect(x: center.x - size / 2, y: center.y - size / 2, width: size, height: size)
-                return DotInfo(rect: rect, value: 10)
+                let note = value.notes
+                return AnnouncementDot(rect: rect, value: 10, note: note)
             }
             let path = Path { path in
                 for dot in dots {
