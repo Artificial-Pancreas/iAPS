@@ -33,6 +33,10 @@ struct MainChartView: View {
         static let fpuSize: CGFloat = 5
         static let carbsScale: CGFloat = 0.3
         static let fpuScale: CGFloat = 1
+        static let announcementSize: CGFloat = 10
+        static let announcementScale: CGFloat = 1
+        static let owlSeize: CGFloat = 25
+        static let owlOffset: CGFloat = 60
     }
 
     @Binding var glucose: [BloodGlucose]
@@ -41,6 +45,7 @@ struct MainChartView: View {
     @Binding var tempBasals: [PumpHistoryEvent]
     @Binding var boluses: [PumpHistoryEvent]
     @Binding var suspensions: [PumpHistoryEvent]
+    @Binding var announcement: [Announcement]
     @Binding var hours: Int
     @Binding var maxBasal: Decimal
     @Binding var autotunedBasalProfile: [BasalProfileEntry]
@@ -60,6 +65,8 @@ struct MainChartView: View {
     @State var didAppearTrigger = false
     @State private var glucoseDots: [CGRect] = []
     @State private var manualGlucoseDots: [CGRect] = []
+    @State private var announcementDots: [DotInfo] = []
+    @State private var announcementPath = Path()
     @State private var manualGlucoseDotsCenter: [CGRect] = []
     @State private var unSmoothedGlucoseDots: [CGRect] = []
     @State private var predictionDots: [PredictionType: [CGRect]] = [:]
@@ -277,6 +284,7 @@ struct MainChartView: View {
                     glucoseView(fullSize: fullSize)
                     manualGlucoseView(fullSize: fullSize)
                     manualGlucoseCenterView(fullSize: fullSize)
+                    announcementView(fullSize: fullSize)
                     predictionsView(fullSize: fullSize)
                 }
                 timeLabelsView(fullSize: fullSize)
@@ -364,6 +372,24 @@ struct MainChartView: View {
         }
         .onReceive(Foundation.NotificationCenter.default.publisher(for: UIApplication.willEnterForegroundNotification)) { _ in
             update(fullSize: fullSize)
+        }
+    }
+
+    private func announcementView(fullSize: CGSize) -> some View {
+        ZStack {
+            ForEach(announcementDots, id: \.rect.minX) { info -> AnyView in
+                let position = CGPoint(x: info.rect.midX + 4, y: info.rect.maxY - Config.owlOffset)
+                return Image("owl").resizable().frame(maxWidth: Config.owlSeize, maxHeight: Config.owlSeize).scaledToFill()
+                    .position(position)
+                    .asAny()
+            }
+        }
+
+        .onChange(of: announcement) { _ in
+            calculateAnnouncementDots(fullSize: fullSize)
+        }
+        .onChange(of: didAppearTrigger) { _ in
+            calculateAnnouncementDots(fullSize: fullSize)
         }
     }
 
@@ -530,6 +556,7 @@ extension MainChartView {
         calculateGlucoseDots(fullSize: fullSize)
         calculateManualGlucoseDots(fullSize: fullSize)
         calculateManualGlucoseDotsCenter(fullSize: fullSize)
+        calculateAnnouncementDots(fullSize: fullSize)
         calculateUnSmoothedGlucoseDots(fullSize: fullSize)
         calculateBolusDots(fullSize: fullSize)
         calculateCarbsDots(fullSize: fullSize)
@@ -583,6 +610,29 @@ extension MainChartView {
             DispatchQueue.main.async {
                 glucoseYRange = range
                 manualGlucoseDotsCenter = dots
+            }
+        }
+    }
+
+    private func calculateAnnouncementDots(fullSize: CGSize) {
+        calculationQueue.async {
+            let dots = announcement.map { value -> DotInfo in
+                let center = timeToInterpolatedPoint(value.createdAt.timeIntervalSince1970, fullSize: fullSize)
+                let size = Config.announcementSize * Config.announcementScale
+                let rect = CGRect(x: center.x - size / 2, y: center.y - size / 2, width: size, height: size)
+                return DotInfo(rect: rect, value: 10)
+            }
+            let path = Path { path in
+                for dot in dots {
+                    path.addEllipse(in: dot.rect)
+                }
+            }
+            let range = self.getGlucoseYRange(fullSize: fullSize)
+
+            DispatchQueue.main.async {
+                glucoseYRange = range
+                announcementDots = dots
+                announcementPath = path
             }
         }
     }
