@@ -13,6 +13,7 @@ extension DataTable {
         @State private var removeInsulinAlert: Alert?
         @State private var showNonPumpInsulin: Bool = false
         @State private var isAmountUnconfirmed: Bool = true
+        @State private var showFutureEntries: Bool = true
         @State private var newGlucose = false
         @State private var isLayered = false
         @FocusState private var isFocused: Bool
@@ -75,43 +76,58 @@ extension DataTable {
         }
 
         private var treatmentsList: some View {
-            Section(
-                header: VStack {
-                    Spacer()
-                    Button(action: { showNonPumpInsulin = true
-                        state.nonPumpInsulinDate = Date() }, label: {
+            List {
+                HStack {
+                    Button(action: { showFutureEntries.toggle() }, label: {
                         HStack {
-                            Text(
-                                NSLocalizedString("Non-Pump Insulin", comment: "Non-Pump Insulin button text")
-                            )
-                            .foregroundColor(Color.gray)
-                            .font(.body).textCase(.none)
+                            Image(systemName: showFutureEntries ? "calendar.badge.minus" : "calendar.badge.plus")
+                                .foregroundColor(Color.accentColor)
+                            Text(showFutureEntries ? "Hide Future" : "Display Future")
+                                .foregroundColor(Color.accentColor)
+                                .font(.caption)
 
-                            Image(systemName: "plus.circle.fill")
-                                .resizable()
-                                .frame(width: 24, height: 24)
-                                .foregroundColor(Color.gray)
-                        }.frame(maxWidth: .infinity, alignment: .trailing)
+                        }.frame(maxWidth: .infinity, alignment: .leading)
 
                     }).buttonStyle(.borderless)
 
                     Spacer()
+
+                    Button(action: { showNonPumpInsulin = true
+                        state.nonPumpInsulinDate = Date() }, label: {
+                        HStack {
+                            Text(
+                                NSLocalizedString("External Insulin", comment: "External Insulin button text")
+                            )
+                            .foregroundColor(Color.accentColor)
+                            .font(.caption)
+
+                            Image(systemName: "plus.circle.fill")
+                                .foregroundColor(Color.accentColor)
+                        }.frame(maxWidth: .infinity, alignment: .trailing)
+
+                    }).buttonStyle(.borderless)
                 }
-            ) {
-                List {
-                    if !state.treatments.isEmpty {
-                        ForEach(state.treatments) { item in
+
+                if !state.treatments.isEmpty {
+                    if showFutureEntries {
+                        ForEach(state.treatments.filter { item in
+                            item.date <= Date()
+                        }) { item in
                             treatmentView(item)
                         }
                     } else {
-                        HStack {
-                            Text(NSLocalizedString("No data.", comment: "No data text when no entries in history list"))
+                        ForEach(state.treatments) { item in
+                            treatmentView(item)
                         }
                     }
+                } else {
+                    HStack {
+                        Text(NSLocalizedString("No data.", comment: "No data text when no entries in history list"))
+                    }
                 }
-                .alert(isPresented: $isRemoveInsulinAlertPresented) {
-                    removeInsulinAlert!
-                }
+            }
+            .alert(isPresented: $isRemoveInsulinAlertPresented) {
+                removeInsulinAlert!
             }
         }
 
@@ -201,7 +217,8 @@ extension DataTable {
                                 message: Text(item.amountText),
                                 primaryButton: .destructive(
                                     Text("Delete"),
-                                    action: { state.deleteCarbs(item) }
+                                    action: {
+                                        state.deleteCarbs(item) }
                                 ),
                                 secondaryButton: .cancel()
                             )
