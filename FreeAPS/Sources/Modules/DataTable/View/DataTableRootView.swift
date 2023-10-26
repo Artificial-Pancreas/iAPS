@@ -82,9 +82,9 @@ extension DataTable {
                         HStack {
                             Image(systemName: showFutureEntries ? "calendar.badge.minus" : "calendar.badge.plus")
                                 .foregroundColor(Color.accentColor)
-                            Text(showFutureEntries ? "Hide Future" : "Display Future")
+                            Text(showFutureEntries ? "Hide Future" : "Show Future")
                                 .foregroundColor(Color.accentColor)
-                                .font(.caption)
+                                .font(.body)
 
                         }.frame(maxWidth: .infinity, alignment: .leading)
 
@@ -99,7 +99,7 @@ extension DataTable {
                                 NSLocalizedString("External Insulin", comment: "External Insulin button text")
                             )
                             .foregroundColor(Color.accentColor)
-                            .font(.caption)
+                            .font(.body)
 
                             Image(systemName: "plus.circle.fill")
                                 .foregroundColor(Color.accentColor)
