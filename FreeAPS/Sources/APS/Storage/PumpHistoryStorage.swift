@@ -45,7 +45,8 @@ final class BasePumpHistoryStorage: PumpHistoryStorage, Injectable {
                         rate: nil,
                         temp: nil,
                         carbInput: nil,
-                        isSMB: dose.automatic
+                        isSMB: dose.automatic,
+                        isNonPumpInsulin: dose.manuallyEntered
                     )]
                 case .tempBasal:
                     guard let dose = event.dose else { return [] }
@@ -210,6 +211,16 @@ final class BasePumpHistoryStorage: PumpHistoryStorage, Injectable {
         }
     }
 
+    func determineBolusEventType(for event: PumpHistoryEvent) -> EventType {
+        if event.isSMB ?? false {
+            return .smb
+        }
+        if event.isNonPumpInsulin ?? false {
+            return .nonPumpInsulin
+        }
+        return event.type
+    }
+
     func nightscoutTretmentsNotUploaded() -> [NigtscoutTreatment] {
         let events = recent()
         guard !events.isEmpty else { return [] }
@@ -250,13 +261,14 @@ final class BasePumpHistoryStorage: PumpHistoryStorage, Injectable {
         let bolusesAndCarbs = events.compactMap { event -> NigtscoutTreatment? in
             switch event.type {
             case .bolus:
+                let eventType = determineBolusEventType(for: event)
                 return NigtscoutTreatment(
                     duration: event.duration,
                     rawDuration: nil,
                     rawRate: nil,
                     absolute: nil,
                     rate: nil,
-                    eventType: (event.isSMB ?? false) ? .smb : .bolus,
+                    eventType: eventType,
                     createdAt: event.timestamp,
                     enteredBy: NigtscoutTreatment.local,
                     bolus: event,

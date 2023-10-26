@@ -1,20 +1,20 @@
 /* Privacy - NFC Scan Usage Description */
-"NFCReaderUsageDescription" = "NFC is used to scan Libre sensors.";
+"NFCReaderUsageDescription" = "NFC bruges til at scanne Libre sensorer.";
 
 /* Privacy - Bluetooth Always Usage Description */
-"NSBluetoothAlwaysUsageDescription" = "Bluetooth is used to communicate with insulin pump and continuous glucose monitor devices";
+"NSBluetoothAlwaysUsageDescription" = "Bluetooth bliver brugt til at kommunikere med din insulin pumpe og dine glukose monitor enheder";
 
 /* Privacy - Bluetooth Peripheral Usage Description */
-"NSBluetoothPeripheralUsageDescription" = "Bluetooth is used to communicate with insulin pump and continuous glucose monitor devices";
+"NSBluetoothPeripheralUsageDescription" = "Bluetooth bliver brugt til at kommunikere med din insulin pumpe og dine glukose monitor enheder";
 
 /* Privacy - Face ID Usage Description */
-"NSFaceIDUsageDescription" = "For authorized acces to bolus";
+"NSFaceIDUsageDescription" = "For autoriseret adgang til bolus";
 
 /* Privacy - Calendars Usage Description */
-"NSCalendarsUsageDescription" = "Calendar is used to create a new glucose events.";
+"NSCalendarsUsageDescription" = "Kalender bruges til at oprette en ny glucose begivenheder.";
 
 /* Privacy - Health Update Usage Description */
-"NSHealthUpdateUsageDescription" = "Health App is used to store blood glucose, insulin and carbohydrates";
+"NSHealthUpdateUsageDescription" = "Health App bruges til at opbevare blodglukose, insulin og kulhydrater";
 
 /* Privacy - Health Share Usage Description */
-"NSHealthShareUsageDescription" = "Health App is used to store blood glucose, insulin and carbohydrates";
+"NSHealthShareUsageDescription" = "Health App bruges til at opbevare blodglukose, insulin og kulhydrater";

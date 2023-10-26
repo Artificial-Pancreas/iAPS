@@ -135,6 +135,15 @@ extension DexcomSourceG7: CGMManagerDelegate {
         debug(.deviceManager, "DEXCOMG7 - Process CGM Reading Result launched")
         switch readingResult {
         case let .newData(values):
+
+            var activationDate: Date = .distantPast
+            var sessionStart: Date = .distantPast
+            if let cgmG7Manager = cgmManager as? G7CGMManager {
+                activationDate = cgmG7Manager.sensorActivatedAt ?? .distantPast
+                sessionStart = cgmG7Manager.sensorFinishesWarmupAt ?? .distantPast
+                print("Activastion date: " + activationDate.description)
+            }
+
             let bloodGlucose = values.compactMap { newGlucoseSample -> BloodGlucose? in
                 let quantity = newGlucoseSample.quantity
                 let value = Int(quantity.doubleValue(for: .milligramsPerDeciliter))
@@ -148,7 +157,9 @@ extension DexcomSourceG7: CGMManagerDelegate {
                     filtered: nil,
                     noise: nil,
                     glucose: value,
-                    type: "sgv"
+                    type: "sgv",
+                    activationDate: activationDate,
+                    sessionStartDate: sessionStart
                 )
             }
 

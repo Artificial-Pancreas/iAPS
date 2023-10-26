@@ -11,11 +11,13 @@ protocol NightscoutManager: GlucoseSource {
     func fetchAnnouncements() -> AnyPublisher<[Announcement], Never>
     func deleteCarbs(at date: Date, isFPU: Bool?, fpuID: String?, syncID: String)
     func deleteInsulin(at date: Date)
+    func deleteManualGlucose(at: Date)
     func uploadStatus()
     func uploadGlucose()
+    func uploadManualGlucose()
     func uploadStatistics(dailystat: Statistics)
     func uploadPreferences(_ preferences: Preferences)
-    func uploadProfileAndSettings()
+    func uploadProfileAndSettings(_: Bool)
     var cgmURL: URL? { get }
 }
 
@@ -68,6 +70,7 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
         broadcaster.register(PumpHistoryObserver.self, observer: self)
         broadcaster.register(CarbsObserver.self, observer: self)
         broadcaster.register(TempTargetsObserver.self, observer: self)
+        broadcaster.register(GlucoseObserver.self, observer: self)
         _ = reachabilityManager.startListening(onQueue: processQueue) { status in
             debug(.nightscout, "Network status: \(status)")
         }
@@ -251,6 +254,22 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
             .store(in: &lifetime)
     }
 
+    func deleteManualGlucose(at date: Date) {
+        guard let nightscout = nightscoutAPI, isUploadEnabled else {
+            return
+        }
+        nightscout.deleteManualGlucose(at: date)
+            .sink { completion in
+                switch completion {
+                case .finished:
+                    debug(.nightscout, "Manual Glucose entry deleted")
+                case let .failure(error):
+                    debug(.nightscout, error.localizedDescription)
+                }
+            } receiveValue: {}
+            .store(in: &lifetime)
+    }
+
     func uploadStatistics(dailystat: Statistics) {
         let stats = NightscoutStatistics(
             dailystats: dailystat
@@ -426,7 +445,7 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
         }
     }
 
-    func uploadProfileAndSettings() {
+    func uploadProfileAndSettings(_ force: Bool) {
         // These should be modified anyways and not the defaults
         guard let sensitivities = storage.retrieve(OpenAPS.Settings.insulinSensitivities, as: InsulinSensitivities.self),
               let basalProfile = storage.retrieve(OpenAPS.Settings.basalProfile, as: [BasalProfileEntry].self),
@@ -435,7 +454,7 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
               let preferences = storage.retrieve(OpenAPS.Settings.preferences, as: Preferences.self),
               let settings = storage.retrieve(OpenAPS.FreeAPS.settings, as: FreeAPSSettings.self)
         else {
-            NSLog("NightscoutManager uploadProfile Not all settings found to build profile!")
+            debug(.nightscout, "NightscoutManager uploadProfile Not all settings found to build profile!")
             return
         }
 
@@ -529,43 +548,50 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
 
         // UPLOAD PREFERNCES WHEN CHANGED
         if let uploadedPreferences = storage.retrieve(OpenAPS.Nightscout.uploadedPreferences, as: Preferences.self),
-           uploadedPreferences.rawJSON.sorted() == preferences.rawJSON.sorted()
+           uploadedPreferences.rawJSON.sorted() == preferences.rawJSON.sorted(), !force
         {
             NSLog("NightscoutManager Preferences, preferences unchanged")
         } else { uploadPreferences(preferences) }
 
         // UPLOAD FreeAPS Settings WHEN CHANGED
         if let uploadedSettings = storage.retrieve(OpenAPS.Nightscout.uploadedSettings, as: FreeAPSSettings.self),
-           uploadedSettings.rawJSON.sorted() == settings.rawJSON.sorted()
+           uploadedSettings.rawJSON.sorted() == settings.rawJSON.sorted(), !force
         {
             NSLog("NightscoutManager Settings, settings unchanged")
         } else { uploadSettings(settings) }
 
+        // UPLOAD Profiles WHEN CHANGED
         if let uploadedProfile = storage.retrieve(OpenAPS.Nightscout.uploadedProfile, as: NightscoutProfileStore.self),
-           (uploadedProfile.store["default"]?.rawJSON ?? "").sorted() == ps.rawJSON.sorted()
+           (uploadedProfile.store["default"]?.rawJSON ?? "").sorted() == ps.rawJSON.sorted(), !force
         {
             NSLog("NightscoutManager uploadProfile, no profile change")
-            return
-        }
-
-        processQueue.async {
-            nightscout.uploadProfile(p)
-                .sink { completion in
-                    switch completion {
-                    case .finished:
-                        self.storage.save(p, as: OpenAPS.Nightscout.uploadedProfile)
-                        debug(.nightscout, "Profile uploaded")
-                    case let .failure(error):
-                        debug(.nightscout, error.localizedDescription)
-                    }
-                } receiveValue: {}
-                .store(in: &self.lifetime)
+        } else {
+            processQueue.async {
+                nightscout.uploadProfile(p)
+                    .sink { completion in
+                        switch completion {
+                        case .finished:
+                            self.storage.save(p, as: OpenAPS.Nightscout.uploadedProfile)
+                            debug(.nightscout, "Profile uploaded")
+                        case let .failure(error):
+                            debug(.nightscout, error.localizedDescription)
+                        }
+                    } receiveValue: {}
+                    .store(in: &self.lifetime)
+            }
         }
     }
 
     func uploadGlucose() {
         uploadGlucose(glucoseStorage.nightscoutGlucoseNotUploaded(), fileToSave: OpenAPS.Nightscout.uploadedGlucose)
         uploadTreatments(glucoseStorage.nightscoutCGMStateNotUploaded(), fileToSave: OpenAPS.Nightscout.uploadedCGMState)
+    }
+
+    func uploadManualGlucose() {
+        uploadTreatments(
+            glucoseStorage.nightscoutManualGlucoseNotUploaded(),
+            fileToSave: OpenAPS.Nightscout.uploadedManualGlucose
+        )
     }
 
     private func uploadPumpHistory() {
@@ -656,5 +682,11 @@ extension BaseNightscoutManager: CarbsObserver {
 extension BaseNightscoutManager: TempTargetsObserver {
     func tempTargetsDidUpdate(_: [TempTarget]) {
         uploadTempTargets()
+    }
+}
+
+extension BaseNightscoutManager: GlucoseObserver {
+    func glucoseDidUpdate(_: [BloodGlucose]) {
+        uploadManualGlucose()
     }
 }

@@ -350,6 +350,9 @@ Enact a temp Basal or a temp target */
 /* Import Error */
 "Can't find the default Nightscout Profile." = "Can't find the default Nightscout Profile.";
 
+/* Add Blood Glucose Test, header */
+"Blood Glucose Test" = "Blood Glucose Test";
+
 /* Add Medtronic pump */
 "Add Medtronic" = "Add Medtronic";
 
@@ -565,6 +568,9 @@ Enact a temp Basal or a temp target */
 
 /* Automatic delivered treatments */
 "Automatic" = "Automatic";
+
+/* Non-pump insulin treatments */
+"Non-Pump" = "Non-Pump";
 
 /* */
 "Other" = "Other";
@@ -987,7 +993,7 @@ Enact a temp Basal or a temp target */
  "iAPS not active" = "iAPS not active";
 
  /* */
- "Last loop was more then %d min ago" = "Last loop was more then %d min ago";
+ "Last loop was more than %d min ago" = "Last loop was more than %d min ago";
 
 /* Glucose badge */
 "Show glucose on the app badge" = "Show glucose on the app badge";
@@ -1168,6 +1174,9 @@ Enact a temp Basal or a temp target */
 
 /* An Automatic delivered bolus (SMB) */
 "SMB" = "SMB";
+
+/* A manually entered dose of non-pump insulin */
+"Non-pump Insulin" = "Non-pump Insulin";
 
 /* Status highlight when manual temp basal is running. */
 "Manual Basal" = "Manual Basal";
