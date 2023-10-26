@@ -71,14 +71,18 @@ extension DataTable {
 
         private var glucoseList: some View {
             List {
-                Button {
-                    newGlucose = true
-                    isFocused = true
-                    isLayered.toggle()
+                HStack {
+                    Text("Time").foregroundStyle(.secondary)
+                    Spacer()
+                    Text(state.units.rawValue).foregroundStyle(.secondary)
+                    Button {
+                        newGlucose = true
+                        isFocused = true
+                        isLayered.toggle()
+                    }
+                    label: { Image(systemName: "plus.circle.fill").foregroundStyle(.secondary) }
+                        .buttonStyle(.borderless)
                 }
-                label: { Text("Add") }.frame(maxWidth: .infinity, alignment: .trailing)
-                    .padding(.trailing, 20)
-
                 ForEach(state.glucose) { item in
                     glucoseView(item, isManual: item.glucose)
                 }.onDelete(perform: deleteGlucose)
@@ -222,7 +226,6 @@ extension DataTable {
                             state.units == .mmolL ? $0.asMmolL : Decimal($0)
                         ) as NSNumber)!
                     } ?? "--")
-                    Text(state.units.rawValue)
                     if isManual.type == GlucoseType.manual.rawValue {
                         Image(systemName: "drop.fill").symbolRenderingMode(.monochrome).foregroundStyle(.red)
                     } else {

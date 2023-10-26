@@ -12,7 +12,7 @@ extension Settings {
             Form {
                 Section(
                     header: Text(
-                        "iAPS v\(state.versionNumber) - \(state.buildNumber) \nBranch: \(state.branch) \(state.copyrightNotice) "
+                        "iAPS v\(state.versionNumber) (\(state.buildNumber))\nBranch: \(state.branch) \(state.copyrightNotice) "
                     ).textCase(nil)
                 ) {
                     Toggle("Closed loop", isOn: $state.closedLoop)
@@ -51,7 +51,7 @@ extension Settings {
                         Group {
                             HStack {
                                 Text("NS Upload Profile and Settings")
-                                Button("Upload") { state.uploadProfileAndSettings() }
+                                Button("Upload") { state.uploadProfileAndSettings(true) }
                                     .frame(maxWidth: .infinity, alignment: .trailing)
                                     .buttonStyle(.borderedProminent)
                             }
@@ -127,6 +127,7 @@ extension Settings {
             .navigationTitle("Settings")
             .navigationBarItems(leading: Button("Close", action: state.hideSettingsModal))
             .navigationBarTitleDisplayMode(.inline)
+            .onDisappear(perform: { state.uploadProfileAndSettings(false) })
         }
     }
 }

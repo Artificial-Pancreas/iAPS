@@ -389,6 +389,7 @@ extension Home {
                     tempBasals: $state.tempBasals,
                     boluses: $state.boluses,
                     suspensions: $state.suspensions,
+                    announcement: $state.announcement,
                     hours: .constant(state.filteredHours),
                     maxBasal: $state.maxBasal,
                     autotunedBasalProfile: $state.autotunedBasalProfile,
