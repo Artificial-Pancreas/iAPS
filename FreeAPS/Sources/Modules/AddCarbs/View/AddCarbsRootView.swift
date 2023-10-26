@@ -131,7 +131,7 @@ extension AddCarbs {
             }
             .onAppear(perform: configureView)
             .navigationTitle("Add Meals")
-            .navigationBarTitleDisplayMode(.automatic)
+            .navigationBarTitleDisplayMode(.inline)
             .navigationBarItems(leading: Button("Close", action: state.hideModal))
         }
 

@@ -144,7 +144,7 @@ extension AddTempTarget {
                 state.hbt = isEnabledArray.first?.hbt ?? 160
             }
             .navigationTitle("Enact Temp Target")
-            .navigationBarTitleDisplayMode(.automatic)
+            .navigationBarTitleDisplayMode(.inline)
             .navigationBarItems(leading: Button("Close", action: state.hideModal))
         }
 
