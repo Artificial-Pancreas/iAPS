@@ -11,9 +11,7 @@ extension DataTable {
         @State private var removeCarbsAlert: Alert?
         @State private var isRemoveInsulinAlertPresented = false
         @State private var removeInsulinAlert: Alert?
-        @State private var isRemoveGlucoseAlertPresented = false
         @State private var isInsulinAmountAlertPresented = false
-        @State private var removeGlucoseAlert: Alert?
         @State private var showManualGlucose: Bool = false
         @State private var isAmountUnconfirmed: Bool = true
 
@@ -72,9 +70,12 @@ extension DataTable {
         }
 
         private var glucoseList: some View {
-            Section(
-                header: VStack {
+            List {
+                HStack {
+                    Text("Time").foregroundStyle(.secondary)
+
                     Spacer()
+
                     Button(action: { showManualGlucose = true }, label: {
                         HStack {
                             Text(NSLocalizedString("Glucose", comment: "Glucose button text"))
@@ -82,31 +83,21 @@ extension DataTable {
                                 .font(.body).textCase(.none)
 
                             Image(systemName: "plus.circle.fill")
-                                .resizable()
-                                .frame(width: 24, height: 24)
                                 .foregroundColor(Color.gray)
                         }.frame(maxWidth: .infinity, alignment: .trailing)
 
                     }).buttonStyle(.borderless)
-
-                    Spacer()
                 }
-            ) {
-                List {
-                    if !state.glucose.isEmpty {
-                        ForEach(state.glucose) { item in
-                            glucoseView(item, isManual: item.glucose)
-                        }
-                        .onDelete(perform: deleteGlucose)
-                    } else {
-                        HStack {
-                            Text(NSLocalizedString("No data.", comment: "No data text when no entries in history list"))
-                        }
+                if !state.glucose.isEmpty {
+                    ForEach(state.glucose) { item in
+                        glucoseView(item, isManual: item.glucose)
+                    }
+                    .onDelete(perform: deleteGlucose)
+                } else {
+                    HStack {
+                        Text(NSLocalizedString("No data.", comment: "No data text when no entries in history list"))
                     }
                 }
-            }
-            .alert(isPresented: $isRemoveGlucoseAlertPresented) {
-                removeGlucoseAlert!
             }
         }
 
@@ -257,22 +248,8 @@ extension DataTable {
         }
 
         private func deleteGlucose(at offsets: IndexSet) {
-            let glucose = state.glucose[offsets[offsets.startIndex]]
-            let glucoseValue = glucoseFormatter.string(from: Double(
-                state.units == .mmolL ? Double(glucose.glucose.value.asMmolL) : glucose.glucose.value
-            ) as NSNumber)! + " " + state.units.rawValue
-
-            removeGlucoseAlert = Alert(
-                title: Text(NSLocalizedString("Delete Glucose?", comment: "Delete Glucose alert title")),
-                message: Text(glucoseValue),
-                primaryButton: .destructive(
-                    Text("Delete"),
-                    action: { state.deleteGlucose(glucose) }
-                ),
-                secondaryButton: .cancel()
-            )
-
-            isRemoveGlucoseAlertPresented = true
+            let glucoseToDelete = state.glucose[offsets[offsets.startIndex]]
+            state.deleteGlucose(glucoseToDelete)
         }
     }
 }
