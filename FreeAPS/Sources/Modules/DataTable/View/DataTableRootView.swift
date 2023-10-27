@@ -54,7 +54,7 @@ extension DataTable {
             .onAppear(perform: configureView)
             .navigationTitle(isLayered ? "" : "History")
             .blur(radius: isLayered ? 4.0 : 0)
-            .navigationBarTitleDisplayMode(.automatic)
+            .navigationBarTitleDisplayMode(.inline)
             .navigationBarItems(leading: Button(isLayered ? "" : "Close", action: state.hideModal))
             .popup(isPresented: newGlucose, alignment: .center, direction: .top) {
                 addGlucose
