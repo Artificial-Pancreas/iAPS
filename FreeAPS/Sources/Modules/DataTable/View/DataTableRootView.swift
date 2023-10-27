@@ -11,9 +11,8 @@ extension DataTable {
         @State private var removeCarbsAlert: Alert?
         @State private var isRemoveInsulinAlertPresented = false
         @State private var removeInsulinAlert: Alert?
-        @State private var newGlucose = false
-        @State private var isLayered = false
-        @FocusState private var isFocused: Bool
+        @State private var showManualGlucose: Bool = false
+        @State private var isAmountUnconfirmed: Bool = true
 
         @Environment(\.colorScheme) var colorScheme
 
@@ -52,12 +51,11 @@ extension DataTable {
                 }
             }
             .onAppear(perform: configureView)
-            .navigationTitle(isLayered ? "" : "History")
-            .blur(radius: isLayered ? 4.0 : 0)
-            .navigationBarTitleDisplayMode(.automatic)
-            .navigationBarItems(leading: Button(isLayered ? "" : "Close", action: state.hideModal))
-            .popup(isPresented: newGlucose, alignment: .center, direction: .top) {
-                addGlucose
+            .navigationTitle("History")
+            .navigationBarTitleDisplayMode(.inline)
+            .navigationBarItems(leading: Button("Close", action: state.hideModal))
+            .sheet(isPresented: $showManualGlucose) {
+                addGlucoseView
             }
         }
 
@@ -75,61 +73,66 @@ extension DataTable {
                     Text("Time").foregroundStyle(.secondary)
                     Spacer()
                     Text(state.units.rawValue).foregroundStyle(.secondary)
-                    Button {
-                        newGlucose = true
-                        isFocused = true
-                        isLayered.toggle()
-                    }
-                    label: { Image(systemName: "plus.circle.fill").foregroundStyle(.secondary) }
-                        .buttonStyle(.borderless)
+                    Button(
+                        action: { showManualGlucose = true
+                            state.manualGlucose = 0 },
+                        label: { Image(systemName: "plus.circle.fill").foregroundStyle(.secondary)
+                        }
+                    ).buttonStyle(.borderless)
                 }
-                ForEach(state.glucose) { item in
-                    glucoseView(item, isManual: item.glucose)
-                }.onDelete(perform: deleteGlucose)
+                if !state.glucose.isEmpty {
+                    ForEach(state.glucose) { item in
+                        glucoseView(item, isManual: item.glucose)
+                    }
+                    .onDelete(perform: deleteGlucose)
+                } else {
+                    HStack {
+                        Text(NSLocalizedString("No data.", comment: "No data text when no entries in history list"))
+                    }
+                }
             }
         }
 
-        private var addGlucose: some View {
-            VStack {
-                Form {
-                    Section {
-                        HStack {
-                            Text("Glucose").font(.custom("popup", fixedSize: 18))
-                            DecimalTextField(" ... ", value: $state.manualGlcuose, formatter: glucoseFormatter)
-                                .focused($isFocused).font(.custom("glucose", fixedSize: 22))
-                            Text(state.units.rawValue).foregroundStyle(.secondary)
+        var addGlucoseView: some View {
+            NavigationView {
+                VStack {
+                    Form {
+                        Section {
+                            HStack {
+                                Text("New Glucose")
+                                DecimalTextField(
+                                    " ... ",
+                                    value: $state.manualGlucose,
+                                    formatter: glucoseFormatter,
+                                    autofocus: true,
+                                    cleanInput: true
+                                )
+                                Text(state.units.rawValue).foregroundStyle(.secondary)
+                            }
+                        }
+
+                        Section {
+                            HStack {
+                                let limitLow: Decimal = state.units == .mmolL ? 0.8 : 40
+                                let limitHigh: Decimal = state.units == .mgdL ? 14 : 720
+
+                                Button {
+                                    state.addManualGlucose()
+                                    isAmountUnconfirmed = false
+                                    showManualGlucose = false
+                                }
+                                label: { Text("Save") }
+                                    .frame(maxWidth: .infinity, alignment: .center)
+                                    .disabled(state.manualGlucose < limitLow || state.manualGlucose > limitHigh)
+                            }
                         }
                     }
-                    header: {
-                        Text("Blood Glucose Test").foregroundColor(.secondary).font(.custom("popupHeader", fixedSize: 12))
-                            .padding(.top)
-                    }
-                    HStack {
-                        Button {
-                            newGlucose = false
-                            isLayered = false
-                        }
-                        label: { Text("Cancel").foregroundColor(.red) }
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                        Spacer()
-                        Button {
-                            state.addManualGlucose()
-                            newGlucose = false
-                            isLayered = false
-                        }
-                        label: { Text("Save") }
-                            .frame(maxWidth: .infinity, alignment: .trailing)
-                            .disabled(state.manualGlcuose <= 0)
-                    }
-                    .buttonStyle(BorderlessButtonStyle())
-                    .font(.custom("popupButtons", fixedSize: 16))
                 }
+                .onAppear(perform: configureView)
+                .navigationTitle("Add Glucose")
+                .navigationBarTitleDisplayMode(.automatic)
+                .navigationBarItems(leading: Button("Close", action: { showManualGlucose = false }))
             }
-            .frame(minHeight: 220, maxHeight: 260).cornerRadius(20)
-            .background(
-                RoundedRectangle(cornerRadius: 20, style: .continuous)
-                    .fill(Color(.tertiarySystemBackground))
-            ).shadow(radius: 40)
         }
 
         @ViewBuilder private func treatmentView(_ item: Treatment) -> some View {
