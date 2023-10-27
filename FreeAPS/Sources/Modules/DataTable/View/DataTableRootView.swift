@@ -79,11 +79,11 @@ extension DataTable {
                     Button(action: { showManualGlucose = true }, label: {
                         HStack {
                             Text(NSLocalizedString("Glucose", comment: "Glucose button text"))
-                                .foregroundColor(Color.gray)
+                                .foregroundColor(Color.accentColor)
                                 .font(.body).textCase(.none)
 
                             Image(systemName: "plus.circle.fill")
-                                .foregroundColor(Color.gray)
+                                .foregroundColor(Color.accentColor)
                         }.frame(maxWidth: .infinity, alignment: .trailing)
 
                     }).buttonStyle(.borderless)
