@@ -1,6 +1,6 @@
 import Foundation
 
-struct Announcement: JSON {
+struct Announcement: JSON, Equatable, Hashable {
     let createdAt: Date
     let enteredBy: String
     let notes: String

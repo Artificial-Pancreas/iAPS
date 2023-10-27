@@ -6,7 +6,7 @@ extension AddTempTarget {
     struct RootView: BaseView {
         let resolver: Resolver
         @StateObject var state = StateModel()
-        @State private var isPromtPresented = false
+        @State private var isPromptPresented = false
         @State private var isRemoveAlertPresented = false
         @State private var removeAlert: Alert?
         @State private var isEditing = false
@@ -99,7 +99,7 @@ extension AddTempTarget {
                             Text("minutes").foregroundColor(.secondary)
                         }
                         DatePicker("Date", selection: $state.date)
-                        Button { isPromtPresented = true }
+                        Button { isPromptPresented = true }
                         label: { Text("Save as preset") }
                     }
                 }
@@ -112,7 +112,7 @@ extension AddTempTarget {
                             Text("minutes").foregroundColor(.secondary)
                         }
                         DatePicker("Date", selection: $state.date)
-                        Button { isPromtPresented = true }
+                        Button { isPromptPresented = true }
                         label: { Text("Save as preset") }
                             .disabled(state.duration == 0)
                     }
@@ -125,16 +125,16 @@ extension AddTempTarget {
                     label: { Text("Cancel Temp Target") }
                 }
             }
-            .popover(isPresented: $isPromtPresented) {
+            .popover(isPresented: $isPromptPresented) {
                 Form {
                     Section(header: Text("Enter preset name")) {
                         TextField("Name", text: $state.newPresetName)
                         Button {
                             state.save()
-                            isPromtPresented = false
+                            isPromptPresented = false
                         }
                         label: { Text("Save") }
-                        Button { isPromtPresented = false }
+                        Button { isPromptPresented = false }
                         label: { Text("Cancel") }
                     }
                 }
@@ -144,7 +144,7 @@ extension AddTempTarget {
                 state.hbt = isEnabledArray.first?.hbt ?? 160
             }
             .navigationTitle("Enact Temp Target")
-            .navigationBarTitleDisplayMode(.automatic)
+            .navigationBarTitleDisplayMode(.inline)
             .navigationBarItems(leading: Button("Close", action: state.hideModal))
         }
 

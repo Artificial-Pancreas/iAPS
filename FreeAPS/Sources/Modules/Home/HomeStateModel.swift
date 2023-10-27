@@ -13,6 +13,7 @@ extension Home {
         private(set) var filteredHours = 24
         @Published var glucose: [BloodGlucose] = []
         @Published var isManual: [BloodGlucose] = []
+        @Published var announcement: [Announcement] = []
         @Published var suggestion: Suggestion?
         @Published var uploadStats = false
         @Published var enactedSuggestion: Suggestion?
@@ -73,6 +74,7 @@ extension Home {
             setupCarbs()
             setupBattery()
             setupReservoir()
+            setupAnnouncements()
 
             suggestion = provider.suggestion
             uploadStats = settingsManager.settings.uploadStats
@@ -308,6 +310,13 @@ extension Home {
             }
         }
 
+        private func setupAnnouncements() {
+            DispatchQueue.main.async { [weak self] in
+                guard let self = self else { return }
+                self.announcement = self.provider.announcement(self.filteredHours)
+            }
+        }
+
         private func setStatusTitle() {
             guard let suggestion = suggestion else {
                 statusTitle = "No suggestion"
@@ -423,6 +432,7 @@ extension Home.StateModel:
         setupBasals()
         setupBoluses()
         setupSuspensions()
+        setupAnnouncements()
     }
 
     func pumpSettingsDidChange(_: PumpSettings) {

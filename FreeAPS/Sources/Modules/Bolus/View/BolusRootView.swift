@@ -38,24 +38,25 @@ extension Bolus {
                     } else {
                         HStack {
                             Text("Insulin recommended")
+                            Image(systemName: "info.bubble")
+                                .symbolRenderingMode(.palette)
+                                .foregroundStyle(.primary, .blue)
+                                .onTapGesture {
+                                    presentInfo.toggle()
+                                }
+
                             Spacer()
+
                             Text(
                                 formatter
                                     .string(from: state.insulinRecommended as NSNumber)! +
                                     NSLocalizedString(" U", comment: "Insulin unit")
                             ).foregroundColor((state.error && state.insulinRecommended > 0) ? .red : .secondary)
+                                .onTapGesture {
+                                    if state.error, state.insulinRecommended > 0 { displayError = true }
+                                    else { state.amount = state.insulinRecommended }
+                                }
                         }.contentShape(Rectangle())
-                            .onTapGesture {
-                                if state.error, state.insulinRecommended > 0 { displayError = true }
-                                else { state.amount = state.insulinRecommended }
-                            }
-                        HStack {
-                            Image(systemName: "info.bubble").symbolRenderingMode(.palette).foregroundStyle(
-                                .primary, .blue
-                            )
-                        }.onTapGesture {
-                            presentInfo.toggle()
-                        }
                     }
                 }
                 header: { Text("Recommendation") }
@@ -79,6 +80,7 @@ extension Bolus {
                     Section {
                         Button { state.add() }
                         label: { Text(!(state.amount > state.maxBolus) ? "Enact bolus" : "Max Bolus exceeded!") }
+                            .frame(maxWidth: .infinity, alignment: .center)
                             .disabled(
                                 state.amount <= 0 || state.amount > state.maxBolus
                             )
@@ -153,7 +155,7 @@ extension Bolus {
                 }
             }
             .navigationTitle("Enact Bolus")
-            .navigationBarTitleDisplayMode(.automatic)
+            .navigationBarTitleDisplayMode(.inline)
             .navigationBarItems(leading: Button("Close", action: state.hideModal))
             .popup(isPresented: presentInfo, alignment: .center, direction: .bottom) {
                 bolusInfo
