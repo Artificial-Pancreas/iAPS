@@ -111,9 +111,6 @@ extension DataTable {
 
                         Section {
                             HStack {
-                                let limitLow: Decimal = state.units == .mmolL ? 2.2 : 40
-                                let limitHigh: Decimal = state.units == .mmolL ? 21 : 380
-
                                 Button {
                                     state.addManualGlucose()
                                     isAmountUnconfirmed = false
@@ -121,7 +118,7 @@ extension DataTable {
                                 }
                                 label: { Text("Save") }
                                     .frame(maxWidth: .infinity, alignment: .center)
-                                    .disabled(state.manualGlucose < limitLow || state.manualGlucose > limitHigh)
+                                    .disabled(state.manualGlucose <= 0)
                             }
                         }
                     }
