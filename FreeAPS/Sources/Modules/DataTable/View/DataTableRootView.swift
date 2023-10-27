@@ -54,8 +54,7 @@ extension DataTable {
             .navigationTitle("History")
             .navigationBarTitleDisplayMode(.inline)
             .navigationBarItems(leading: Button("Close", action: state.hideModal))
-            .sheet(isPresented: $showManualGlucose, onDismiss: { if isAmountUnconfirmed { state.manualGlucose = 0
-                state.manualGlucoseDate = Date() } }) {
+            .sheet(isPresented: $showManualGlucose, onDismiss: { if isAmountUnconfirmed { state.manualGlucose = 0 } }) {
                 addGlucoseView
             }
         }

@@ -14,7 +14,6 @@ extension DataTable {
         @Published var treatments: [Treatment] = []
         @Published var glucose: [Glucose] = []
         @Published var manualGlucose: Decimal = 0
-        @Published var manualGlucoseDate = Date()
 
         var units: GlucoseUnits = .mmolL
 
@@ -193,11 +192,6 @@ extension DataTable {
             // Save to Health
             var saveToHealth = [BloodGlucose]()
             saveToHealth.append(saveToJSON)
-            healthKitManager.saveIfNeeded(bloodGlucose: saveToHealth)
-            debug(.default, "Manual Glucose saved to Apple Health")
-
-            // Reset amount to 0 for next entry.
-            manualGlucose = 0
         }
     }
 }
