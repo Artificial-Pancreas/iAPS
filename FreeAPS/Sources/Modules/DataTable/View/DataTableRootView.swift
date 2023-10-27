@@ -228,7 +228,6 @@ extension DataTable {
                             state.units == .mmolL ? $0.asMmolL : Decimal($0)
                         ) as NSNumber)!
                     } ?? "--")
-
                     if isManual.type == GlucoseType.manual.rawValue {
                         Image(systemName: "drop.fill").symbolRenderingMode(.monochrome).foregroundStyle(.red)
                     } else {
