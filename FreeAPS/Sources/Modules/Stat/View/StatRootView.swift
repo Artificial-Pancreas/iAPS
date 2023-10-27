@@ -148,7 +148,7 @@ extension Stat {
             }
             .onAppear(perform: configureView)
             .navigationBarTitle("Statistics")
-            .navigationBarTitleDisplayMode(.automatic)
+            .navigationBarTitleDisplayMode(.inline)
             .navigationBarItems(leading: Button("Close", action: state.hideModal))
         }
     }
