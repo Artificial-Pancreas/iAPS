@@ -15,6 +15,8 @@ extension DataTable {
         @State private var removeInsulinAlert: Alert?
         @State private var showManualGlucose: Bool = false
         @State private var isAmountUnconfirmed: Bool = true
+        @State private var alertTitle = ""
+        @State private var alertMessage = ""
 
         @Environment(\.colorScheme) var colorScheme
 
@@ -73,11 +75,25 @@ extension DataTable {
             List {
                 ForEach(state.treatments) { item in
                     treatmentView(item)
+                        .alert(
+                            Text(alertTitle),
+                            isPresented: $isRemoveTreatmentAlertPresented
+                        ) {
+                            Button("Cancel", role: .cancel) {}
+                            Button("Delete", role: .destructive) {
+                                if item.type == .carbs || item.type == .fpus {
+                                    state.deleteCarbs(item)
+                                } else {
+                                    state.deleteInsulin(item)
+                                }
+                            }
+                        } message: {
+                            Text("\n" + alertMessage)
+                        }
                 }
-                .onDelete(perform: deleteTreatment)
-            }
-            .alert(isPresented: $isRemoveTreatmentAlertPresented) {
-                removeTreatmentAlert!
+                .onDelete(perform: { indexSet in
+                    deleteTreatment(at: indexSet)
+                })
             }
         }
 
@@ -189,11 +205,7 @@ extension DataTable {
             }
         }
 
-        private func deleteTreatment(at offsets: IndexSet) {
-            let treatment = state.treatments[offsets[offsets.startIndex]]
-            var alertTitle = ""
-            var alertMessage = ""
-
+        private func setAlertContent(_ treatment: Treatment) {
             if treatment.type == .carbs || treatment.type == .fpus {
                 if treatment.type == .fpus {
                     let fpus = state.treatments
@@ -217,16 +229,6 @@ extension DataTable {
                     )
                     alertMessage = treatment.amountText
                 }
-
-                removeTreatmentAlert = Alert(
-                    title: Text(alertTitle),
-                    message: Text("\n" + alertMessage),
-                    primaryButton: .destructive(
-                        Text("Delete"),
-                        action: { state.deleteCarbs(treatment) }
-                    ),
-                    secondaryButton: .cancel()
-                )
             } else {
                 // treatment is .bolus
                 alertTitle = NSLocalizedString(
@@ -234,17 +236,13 @@ extension DataTable {
                     comment: "Delete insulin from pump history and Nightscout"
                 )
                 alertMessage = treatment.amountText
-
-                removeTreatmentAlert = Alert(
-                    title: Text(alertTitle),
-                    message: Text("\n" + alertMessage),
-                    primaryButton: .destructive(
-                        Text("Delete"),
-                        action: { state.deleteInsulin(treatment) }
-                    ),
-                    secondaryButton: .cancel()
-                )
             }
+        }
+
+        private func deleteTreatment(at offsets: IndexSet) {
+            let treatment = state.treatments[offsets[offsets.startIndex]]
+
+            setAlertContent(treatment)
 
             isRemoveTreatmentAlertPresented = true
         }
