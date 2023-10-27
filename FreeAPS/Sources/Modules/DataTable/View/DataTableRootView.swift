@@ -54,7 +54,7 @@ extension DataTable {
             .navigationTitle("History")
             .navigationBarTitleDisplayMode(.inline)
             .navigationBarItems(leading: Button("Close", action: state.hideModal))
-            .sheet(isPresented: $showManualGlucose, onDismiss: { if isAmountUnconfirmed { state.manualGlucose = 0 } }) {
+            .sheet(isPresented: $showManualGlucose) {
                 addGlucoseView
             }
         }
@@ -74,7 +74,8 @@ extension DataTable {
                     Spacer()
                     Text(state.units.rawValue).foregroundStyle(.secondary)
                     Button(
-                        action: { showManualGlucose = true },
+                        action: { showManualGlucose = true
+                            state.manualGlucose = 0 },
                         label: { Image(systemName: "plus.circle.fill").foregroundStyle(.secondary)
                         }
                     ).buttonStyle(.borderless)
@@ -103,7 +104,8 @@ extension DataTable {
                                     " ... ",
                                     value: $state.manualGlucose,
                                     formatter: glucoseFormatter,
-                                    autofocus: true
+                                    autofocus: true,
+                                    cleanInput: true
                                 )
                                 Text(state.units.rawValue).foregroundStyle(.secondary)
                             }
@@ -111,6 +113,9 @@ extension DataTable {
 
                         Section {
                             HStack {
+                                let limitLow: Decimal = state.units == .mmolL ? 1.6 : 40
+                                let limitHigh: Decimal = state.units == .mmolL ? 15 : 720
+
                                 Button {
                                     state.addManualGlucose()
                                     isAmountUnconfirmed = false
@@ -118,7 +123,7 @@ extension DataTable {
                                 }
                                 label: { Text("Save") }
                                     .frame(maxWidth: .infinity, alignment: .center)
-                                    .disabled(state.manualGlucose <= 0)
+                                    .disabled(state.manualGlucose < limitLow || state.manualGlucose > limitHigh)
                             }
                         }
                     }
@@ -126,8 +131,7 @@ extension DataTable {
                 .onAppear(perform: configureView)
                 .navigationTitle("Add Glucose")
                 .navigationBarTitleDisplayMode(.automatic)
-                .navigationBarItems(leading: Button("Close", action: { showManualGlucose = false
-                    state.manualGlucose = 0 }))
+                .navigationBarItems(leading: Button("Close", action: { showManualGlucose = false }))
             }
         }
 
