@@ -201,7 +201,7 @@ extension Bolus {
                     }
                 }
                 .navigationTitle("Enact Bolus")
-                .navigationBarTitleDisplayMode(.automatic)
+                .navigationBarTitleDisplayMode(.inline)
                 .navigationBarItems(leading: Button("Close", action: state.hideModal))
             }
             .blur(radius: showInfo ? 3 : 0)
@@ -273,11 +273,11 @@ extension Bolus {
                         if state.useFattyMealCorrectionFactor {
                             HStack {
                                 Text("Fatty Meal Factor")
-                                    .foregroundColor(.loopYellow)
+                                    .foregroundColor(.orange)
                                 Spacer()
                                 let fraction = state.fattyMealFactor
                                 Text(fraction.formatted())
-                                    .foregroundColor(.loopYellow)
+                                    .foregroundColor(.orange)
                             }
                         }
                     }
@@ -403,7 +403,7 @@ extension Bolus {
                         if state.useFattyMealCorrectionFactor {
                             let fattyMealFactor = state.fattyMealFactor
                             Text(fattyMealFactor.formatted())
-                                .foregroundColor(.loopYellow)
+                                .foregroundColor(.orange)
                             Text(" x ")
                                 .foregroundColor(.secondary)
                         }
