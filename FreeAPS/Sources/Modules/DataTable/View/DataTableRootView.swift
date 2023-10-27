@@ -145,6 +145,8 @@ extension DataTable {
         @ViewBuilder private func treatmentView(_ item: Treatment) -> some View {
             HStack {
                 Image(systemName: "circle.fill").foregroundColor(item.color)
+                Text(dateFormatter.string(from: item.date))
+                    .moveDisabled(true)
                 Text((item.isSMB ?? false) ? "SMB" : item.type.name)
                 Text(item.amountText).foregroundColor(.secondary)
 
@@ -158,32 +160,24 @@ extension DataTable {
                         Text(item.note ?? "").foregroundColor(.brown)
                     }
                 }
-
-                Spacer()
-
-                Text(dateFormatter.string(from: item.date))
-                    .moveDisabled(true)
             }
         }
 
         @ViewBuilder private func glucoseView(_ item: Glucose, isManual: BloodGlucose) -> some View {
             VStack(alignment: .leading, spacing: 4) {
                 HStack {
+                    Text(dateFormatter.string(from: item.glucose.dateString))
+                    Spacer()
                     Text(item.glucose.glucose.map {
                         glucoseFormatter.string(from: Double(
                             state.units == .mmolL ? $0.asMmolL : Decimal($0)
                         ) as NSNumber)!
                     } ?? "--")
-                    Text(state.units.rawValue)
                     if isManual.type == GlucoseType.manual.rawValue {
                         Image(systemName: "drop.fill").symbolRenderingMode(.monochrome).foregroundStyle(.red)
                     } else {
                         Text(item.glucose.direction?.symbol ?? "--")
                     }
-
-                    Spacer()
-
-                    Text(dateFormatter.string(from: item.glucose.dateString))
                 }
             }
         }
@@ -219,7 +213,7 @@ extension DataTable {
 
                 removeTreatmentAlert = Alert(
                     title: Text(alertTitle),
-                    message: Text(alertMessage),
+                    message: Text("\n" + alertMessage),
                     primaryButton: .destructive(
                         Text("Delete"),
                         action: { state.deleteCarbs(treatment) }
@@ -236,7 +230,7 @@ extension DataTable {
 
                 removeTreatmentAlert = Alert(
                     title: Text(alertTitle),
-                    message: Text(alertMessage),
+                    message: Text("\n" + alertMessage),
                     primaryButton: .destructive(
                         Text("Delete"),
                         action: { state.deleteInsulin(treatment) }
