@@ -38,7 +38,9 @@ extension Bolus {
                     } else {
                         HStack {
                             Text("Insulin recommended")
-                            Image(systemName: "info.circle.fill").foregroundStyle(Color.accentColor)
+                            Image(systemName: "info.bubble")
+                                .symbolRenderingMode(.palette)
+                                .foregroundStyle(.primary, .blue)
                                 .onTapGesture {
                                     presentInfo.toggle()
                                 }
