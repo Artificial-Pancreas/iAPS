@@ -11,7 +11,6 @@ extension DataTable {
         @State private var removeCarbsAlert: Alert?
         @State private var isRemoveInsulinAlertPresented = false
         @State private var removeInsulinAlert: Alert?
-        @State private var isInsulinAmountAlertPresented = false
         @State private var showManualGlucose: Bool = false
         @State private var isAmountUnconfirmed: Bool = true
 
@@ -73,20 +72,13 @@ extension DataTable {
             List {
                 HStack {
                     Text("Time").foregroundStyle(.secondary)
-
                     Spacer()
-
-                    Button(action: { showManualGlucose = true }, label: {
-                        HStack {
-                            Text(state.units.rawValue)
-                                .foregroundColor(Color.accentColor)
-                                .font(.body).textCase(.none)
-
-                            Image(systemName: "plus.circle.fill")
-                                .foregroundColor(Color.accentColor)
-                        }.frame(maxWidth: .infinity, alignment: .trailing)
-
-                    }).buttonStyle(.borderless)
+                    Text(state.units.rawValue).foregroundStyle(.secondary)
+                    Button(
+                        action: { showManualGlucose = true },
+                        label: { Image(systemName: "plus.circle.fill").foregroundStyle(.secondary)
+                        }
+                    ).buttonStyle(.borderless)
                 }
                 if !state.glucose.isEmpty {
                     ForEach(state.glucose) { item in
@@ -248,8 +240,7 @@ extension DataTable {
         }
 
         private func deleteGlucose(at offsets: IndexSet) {
-            let glucoseToDelete = state.glucose[offsets[offsets.startIndex]]
-            state.deleteGlucose(glucoseToDelete)
+            state.deleteGlucose(at: offsets[offsets.startIndex])
         }
     }
 }

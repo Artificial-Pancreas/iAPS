@@ -147,8 +147,8 @@ extension DataTable {
                 .store(in: &lifetime)
         }
 
-        func deleteGlucose(_ glucose: Glucose) {
-            let id = glucose.id
+        func deleteGlucose(at index: Int) {
+            let id = glucose[index].id
             provider.deleteGlucose(id: id)
             let fetchRequest: NSFetchRequest<NSFetchRequestResult>
             fetchRequest = NSFetchRequest(entityName: "Readings")
@@ -166,9 +166,9 @@ extension DataTable {
                     )
                 }
             } catch { /* To do: handle any thrown errors. */ }
-            // Deletes manual glucose from NS
-            if (glucose.glucose.type ?? "") == GlucoseType.manual.rawValue {
-                provider.deleteManualGlucose(date: glucose.glucose.dateString)
+            // Deletes Manual Glucose
+            if (glucose[index].glucose.type ?? "") == GlucoseType.manual.rawValue {
+                provider.deleteManualGlucose(date: glucose[index].glucose.dateString)
             }
         }
 
