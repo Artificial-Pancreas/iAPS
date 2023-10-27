@@ -23,12 +23,6 @@ extension PreferencesEditor {
 
             let mainFields = [
                 Field(
-                    displayName: NSLocalizedString("Insulin curve", comment: "Insulin curve"),
-                    type: .insulinCurve(keypath: \.curve),
-                    infoText: "Insulin curve info",
-                    settable: self
-                ),
-                Field(
                     displayName: NSLocalizedString("Max IOB", comment: "Max IOB"),
                     type: .decimal(keypath: \.maxIOB),
                     infoText: NSLocalizedString(
