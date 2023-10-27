@@ -80,8 +80,8 @@ extension DataTable {
                             Image(systemName: showFutureEntries ? "calendar.badge.minus" : "calendar.badge.plus")
                                 .foregroundColor(Color.accentColor)
                             Text(showFutureEntries ? "Hide Future" : "Show Future")
-                                .foregroundColor(Color.accentColor)
-                                .font(.body)
+                                .foregroundColor(Color.secondary)
+                                .font(.caption)
 
                         }.frame(maxWidth: .infinity, alignment: .leading)
 
@@ -95,8 +95,8 @@ extension DataTable {
                             Text(
                                 NSLocalizedString("External Insulin", comment: "External Insulin button text")
                             )
-                            .foregroundColor(Color.accentColor)
-                            .font(.body)
+                            .foregroundColor(Color.secondary)
+                            .font(.caption)
 
                             Image(systemName: "plus.circle.fill")
                                 .foregroundColor(Color.accentColor)

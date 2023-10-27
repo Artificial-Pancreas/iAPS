@@ -18,7 +18,7 @@ extension DataTable {
         @Published var maxBolus: Decimal = 0
         @Published var nonPumpInsulinAmount: Decimal = 0
         @Published var nonPumpInsulinDate = Date()
-      
+
         var units: GlucoseUnits = .mmolL
 
         override func subscribe() {
