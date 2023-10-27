@@ -78,7 +78,7 @@ extension DataTable {
 
                     Button(action: { showManualGlucose = true }, label: {
                         HStack {
-                            Text(NSLocalizedString("Glucose", comment: "Glucose button text"))
+                            Text(state.units.rawValue)
                                 .foregroundColor(Color.accentColor)
                                 .font(.body).textCase(.none)
 
@@ -237,7 +237,7 @@ extension DataTable {
                             state.units == .mmolL ? $0.asMmolL : Decimal($0)
                         ) as NSNumber)!
                     } ?? "--")
-                    Text(state.units.rawValue)
+
                     if isManual.type == GlucoseType.manual.rawValue {
                         Image(systemName: "drop.fill").symbolRenderingMode(.monochrome).foregroundStyle(.red)
                     } else {
