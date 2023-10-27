@@ -560,25 +560,25 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
             NSLog("NightscoutManager Settings, settings unchanged")
         } else { uploadSettings(settings) }
 
+        // UPLOAD Profiles WHEN CHANGED
         if let uploadedProfile = storage.retrieve(OpenAPS.Nightscout.uploadedProfile, as: NightscoutProfileStore.self),
            (uploadedProfile.store["default"]?.rawJSON ?? "").sorted() == ps.rawJSON.sorted(), !force
         {
             NSLog("NightscoutManager uploadProfile, no profile change")
-            return
-        }
-
-        processQueue.async {
-            nightscout.uploadProfile(p)
-                .sink { completion in
-                    switch completion {
-                    case .finished:
-                        self.storage.save(p, as: OpenAPS.Nightscout.uploadedProfile)
-                        debug(.nightscout, "Profile uploaded")
-                    case let .failure(error):
-                        debug(.nightscout, error.localizedDescription)
-                    }
-                } receiveValue: {}
-                .store(in: &self.lifetime)
+        } else {
+            processQueue.async {
+                nightscout.uploadProfile(p)
+                    .sink { completion in
+                        switch completion {
+                        case .finished:
+                            self.storage.save(p, as: OpenAPS.Nightscout.uploadedProfile)
+                            debug(.nightscout, "Profile uploaded")
+                        case let .failure(error):
+                            debug(.nightscout, error.localizedDescription)
+                        }
+                    } receiveValue: {}
+                    .store(in: &self.lifetime)
+            }
         }
     }
 

@@ -6,6 +6,7 @@ protocol AnnouncementsStorage {
     func storeAnnouncements(_ announcements: [Announcement], enacted: Bool)
     func syncDate() -> Date
     func recent() -> Announcement?
+    func validate() -> [Announcement]
 }
 
 final class BaseAnnouncementsStorage: AnnouncementsStorage, Injectable {
@@ -65,5 +66,15 @@ final class BaseAnnouncementsStorage: AnnouncementsStorage, Injectable {
             return nil
         }
         return recent
+    }
+
+    func validate() -> [Announcement] {
+        guard let enactedEvents = storage.retrieve(OpenAPS.FreeAPS.announcementsEnacted, as: [Announcement].self)?.reversed()
+        else {
+            return []
+        }
+        let validate = enactedEvents
+            .filter({ $0.enteredBy == Announcement.remote })
+        return validate
     }
 }
