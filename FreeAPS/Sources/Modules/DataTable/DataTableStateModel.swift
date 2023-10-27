@@ -14,11 +14,11 @@ extension DataTable {
         @Published var mode: Mode = .treatments
         @Published var treatments: [Treatment] = []
         @Published var glucose: [Glucose] = []
-        @Published var manualGlcuose: Decimal = 0
+        @Published var manualGlucose: Decimal = 0
         @Published var maxBolus: Decimal = 0
         @Published var nonPumpInsulinAmount: Decimal = 0
         @Published var nonPumpInsulinDate = Date()
-
+      
         var units: GlucoseUnits = .mmolL
 
         override func subscribe() {
@@ -154,7 +154,6 @@ extension DataTable {
         func deleteGlucose(at index: Int) {
             let id = glucose[index].id
             provider.deleteGlucose(id: id)
-            // CoreData
             let fetchRequest: NSFetchRequest<NSFetchRequestResult>
             fetchRequest = NSFetchRequest(entityName: "Readings")
             fetchRequest.predicate = NSPredicate(format: "id == %@", id)
@@ -171,14 +170,14 @@ extension DataTable {
                     )
                 }
             } catch { /* To do: handle any thrown errors. */ }
-            // Manual Glucose
+            // Deletes Manual Glucose
             if (glucose[index].glucose.type ?? "") == GlucoseType.manual.rawValue {
                 provider.deleteManualGlucose(date: glucose[index].glucose.dateString)
             }
         }
 
         func addManualGlucose() {
-            let glucose = units == .mmolL ? manualGlcuose.asMgdL : manualGlcuose
+            let glucose = units == .mmolL ? manualGlucose.asMgdL : manualGlucose
             let now = Date()
             let id = UUID().uuidString
 
@@ -198,7 +197,6 @@ extension DataTable {
             // Save to Health
             var saveToHealth = [BloodGlucose]()
             saveToHealth.append(saveToJSON)
-            healthKitManager.saveIfNeeded(bloodGlucose: saveToHealth)
         }
 
         func addNonPumpInsulin() {
