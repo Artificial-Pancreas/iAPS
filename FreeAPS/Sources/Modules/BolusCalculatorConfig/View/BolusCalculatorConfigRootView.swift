@@ -39,7 +39,7 @@ extension BolusCalculatorConfig {
 
                 Section(
                     footer: Text(
-                        "This is another approach to the bolus calculator integrated in iAPS. If the toggle is on you use this bolus calculator and not the original iAPS calculator. You can exclude parts of the calculation as you like. At the end of the calculation a (default) factor of 0.8 is applied as it is supposed to be when using smbs. Of course this value is adjustable. Feel free to test!"
+                        "This is another approach to the bolus calculator integrated in iAPS. If the toggle is on you use this bolus calculator and not the original iAPS calculator. At the end of the calculation a custom factor is applied as it is supposed to be when using smbs (default 0.8).\n\nYou can also add the option in your bolus calculator to apply another (!) customizable factor at the end of the calculation which could be useful for fatty meals, e.g Pizza (default 0.7)."
                     )
                 )
                     {}

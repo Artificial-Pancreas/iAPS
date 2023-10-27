@@ -173,7 +173,6 @@ extension Bolus {
                         state.add()
                     }) {
                         Text("Enact bolus")
-                            .font(.title3)
                             .frame(maxWidth: .infinity, alignment: .center)
                     }
                     .disabled(
