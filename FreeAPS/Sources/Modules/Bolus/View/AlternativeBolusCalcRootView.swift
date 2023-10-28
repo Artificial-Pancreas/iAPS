@@ -8,7 +8,6 @@ extension Bolus {
         let waitForSuggestion: Bool
         @ObservedObject var state: StateModel
 
-        @State private var isAddInsulinAlertPresented = false
         @State private var showInfo = false
         @State private var carbsWarning = false
         @State var insulinCalculated: Decimal = 0
@@ -160,20 +159,6 @@ extension Bolus {
                     }
                     .disabled(
                         state.amount <= 0 || state.amount > state.maxBolus
-                    )
-                }
-
-                .alert(isPresented: $isAddInsulinAlertPresented) {
-                    let amount = formatter
-                        .string(from: state.amount as NSNumber)! + NSLocalizedString(" U", comment: "Insulin unit")
-                    return Alert(
-                        title: Text("Are you sure?"),
-                        message: Text("Add \(amount) without bolusing"),
-                        primaryButton: .destructive(
-                            Text("Add"),
-                            action: { state.addWithoutBolus() }
-                        ),
-                        secondaryButton: .cancel()
                     )
                 }
                 .onAppear {
