@@ -117,12 +117,9 @@ extension DataTable {
                     }
                 } else {
                     HStack {
-                        Text(NSLocalizedString("No data.", comment: "No data text when no entries in history list"))
+                        Text("No data.")
                     }
                 }
-            }
-            .alert(isPresented: $isRemoveInsulinAlertPresented) {
-                removeInsulinAlert!
             }
         }
 
@@ -146,7 +143,7 @@ extension DataTable {
                     .onDelete(perform: deleteGlucose)
                 } else {
                     HStack {
-                        Text(NSLocalizedString("No data.", comment: "No data text when no entries in history list"))
+                        Text("No data.")
                     }
                 }
             }
@@ -285,7 +282,7 @@ extension DataTable {
                     Form {
                         Section {
                             HStack {
-                                Text(NSLocalizedString("Amount", comment: ""))
+                                Text("Amount")
                                 Spacer()
                                 DecimalTextField(
                                     "0",
@@ -313,10 +310,7 @@ extension DataTable {
                                     showNonPumpInsulin = false
                                 }
                                 label: {
-                                    Text(NSLocalizedString(
-                                        "Log non-pump insulin",
-                                        comment: "Log non-pump insulin button text"
-                                    ))
+                                    Text("Log non-pump insulin")
                                 }
                                 .foregroundColor(amountWarningCondition ? Color.white : Color.accentColor)
                                 .frame(maxWidth: .infinity, alignment: .center)
@@ -329,10 +323,7 @@ extension DataTable {
                         header: {
                             if amountWarningCondition
                             {
-                                Text(NSLocalizedString(
-                                    "⚠️ Warning! The entered insulin amount is greater than your Max Bolus setting!",
-                                    comment: "Non-pump insulin maxBolus * 3 alert text"
-                                ))
+                                Text("⚠️ Warning! The entered insulin amount is greater than your Max Bolus setting!")
                             }
                         }
                         .listRowBackground(
