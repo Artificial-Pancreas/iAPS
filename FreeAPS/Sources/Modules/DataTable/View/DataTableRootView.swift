@@ -77,7 +77,7 @@ extension DataTable {
                 HStack {
                     Button(action: { showFutureEntries.toggle() }, label: {
                         HStack {
-                            Image(systemName: "book.pages")
+                            Image(systemName: showFutureEntries ? "calendar.badge.minus" : "calendar.badge.plus")
                                 .foregroundColor(Color.accentColor)
                             Text(showFutureEntries ? "Hide Future" : "Show Future")
                                 .foregroundColor(Color.secondary)
