@@ -12,7 +12,7 @@ extension DataTable {
         @State private var isRemoveInsulinAlertPresented = false
         @State private var removeInsulinAlert: Alert?
         @State private var showNonPumpInsulin: Bool = false
-        @State private var showFutureEntries: Bool = true
+        @State private var showFutureEntries: Bool = false // default to hide future entries
         @State private var showManualGlucose: Bool = false
         @State private var isAmountUnconfirmed: Bool = true
 
@@ -104,7 +104,7 @@ extension DataTable {
                 }
 
                 if !state.treatments.isEmpty {
-                    if showFutureEntries {
+                    if !showFutureEntries {
                         ForEach(state.treatments.filter { item in
                             item.date <= Date()
                         }) { item in
