@@ -147,23 +147,6 @@ extension Bolus {
                             )
                             Text("IE").foregroundColor(.secondary)
                         }
-                        HStack {
-                            Spacer()
-                            Button(action: {
-                                if waitForSuggestion {
-                                    state.showModal(for: nil)
-                                } else {
-                                    isAddInsulinAlertPresented = true
-                                }
-                            }, label: {
-                                Image(systemName: "plus.circle.fill")
-                                    .foregroundColor(.blue)
-                                    .font(.system(size: 28))
-                            })
-                                .disabled(state.amount <= 0 || state.amount > state.maxBolus * 3)
-                                .buttonStyle(PlainButtonStyle())
-                                .padding(.trailing, 10)
-                        }
                     }
                 }
                 header: { Text("Bolus") }
