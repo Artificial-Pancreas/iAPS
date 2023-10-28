@@ -77,7 +77,7 @@ extension DataTable {
                 HStack {
                     Button(action: { showFutureEntries.toggle() }, label: {
                         HStack {
-                            Image(systemName: showFutureEntries ? "calendar.badge.minus" : "calendar.badge.plus")
+                            Image(systemName: "book.pages")
                                 .foregroundColor(Color.accentColor)
                             Text(showFutureEntries ? "Hide Future" : "Show Future")
                                 .foregroundColor(Color.secondary)
@@ -92,13 +92,11 @@ extension DataTable {
                     Button(action: { showNonPumpInsulin = true
                         state.nonPumpInsulinDate = Date() }, label: {
                         HStack {
-                            Text(
-                                NSLocalizedString("External Insulin", comment: "External Insulin button text")
-                            )
-                            .foregroundColor(Color.secondary)
-                            .font(.caption)
+                            Text("Add")
+                                .foregroundColor(Color.secondary)
+                                .font(.caption)
 
-                            Image(systemName: "plus.circle.fill")
+                            Image(systemName: "syringe")
                                 .foregroundColor(Color.accentColor)
                         }.frame(maxWidth: .infinity, alignment: .trailing)
 
