@@ -117,7 +117,7 @@ extension DataTable {
                     .onDelete(perform: deleteGlucose)
                 } else {
                     HStack {
-                        Text(NSLocalizedString("No data.", comment: "No data text when no entries in history list"))
+                        Text("No data.")
                     }
                 }
             }
@@ -218,23 +218,17 @@ extension DataTable {
                         .reduce(0, +)
                     ) as NSNumber)!
 
-                    alertTitle = NSLocalizedString("Delete Carb Equivalents?", comment: "Delete fpus alert title")
+                    alertTitle = "Delete Carb Equivalents?"
                     alertMessage = carbEquivalents + NSLocalizedString(" g", comment: "gram of carbs")
                 }
 
                 if treatment.type == .carbs {
-                    alertTitle = NSLocalizedString(
-                        "Delete Carbs?",
-                        comment: "Delete carbs from data table and Nightscout"
-                    )
+                    alertTitle = "Delete Carbs?"
                     alertMessage = treatment.amountText
                 }
             } else {
                 // treatment is .bolus
-                alertTitle = NSLocalizedString(
-                    "Delete Insulin?",
-                    comment: "Delete insulin from pump history and Nightscout"
-                )
+                alertTitle = "Delete Insulin?"
                 alertMessage = treatment.amountText
             }
         }
