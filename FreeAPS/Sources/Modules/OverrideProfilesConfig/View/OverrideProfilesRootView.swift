@@ -159,9 +159,8 @@ extension OverrideProfilesConfig {
                         }
                         HStack {
                             Text("SMB Minutes")
-                            let minutes = state.settingsManager.preferences.maxSMBBasalMinutes
                             DecimalTextField(
-                                minutes.formatted(),
+                                "0",
                                 value: $state.smbMinutes,
                                 formatter: formatter,
                                 cleanInput: false
@@ -170,9 +169,8 @@ extension OverrideProfilesConfig {
                         }
                         HStack {
                             Text("UAM SMB Minutes")
-                            let uam_minutes = state.settingsManager.preferences.maxUAMSMBBasalMinutes
                             DecimalTextField(
-                                uam_minutes.formatted(),
+                                "0",
                                 value: $state.uamMinutes,
                                 formatter: formatter,
                                 cleanInput: false
@@ -217,10 +215,7 @@ extension OverrideProfilesConfig {
                                     comment: ""
                                 )
                         }
-                        .disabled(
-                            (state.percentage == 100 && !state.override_target && !state.smbIsOff) ||
-                                (!state._indefinite && state.duration == 0) || (state.override_target && state.target == 0)
-                        )
+                        .disabled(unChanged())
                         .buttonStyle(BorderlessButtonStyle())
                         .font(.callout)
                         .controlSize(.mini)
@@ -248,12 +243,8 @@ extension OverrideProfilesConfig {
                             .frame(maxWidth: .infinity, alignment: .trailing)
                             .buttonStyle(BorderlessButtonStyle())
                             .controlSize(.mini)
-                            .disabled(
-                                (state.percentage == 100 && !state.override_target && !state.smbIsOff) ||
-                                    (!state._indefinite && state.duration == 0) || (state.override_target && state.target == 0)
-                            )
+                            .disabled(unChanged())
                     }
-
                     .sheet(isPresented: $isSheetPresented) {
                         presetPopover
                     }
@@ -334,6 +325,17 @@ extension OverrideProfilesConfig {
                     }
                 }
             }
+        }
+
+        private func unChanged() -> Bool {
+            let isChanged = (state.percentage == 100 && !state.override_target && !state.smbIsOff && !state.advancedSettings) ||
+                (!state._indefinite && state.duration == 0) || (state.override_target && state.target == 0) ||
+                (
+                    state.percentage == 100 && !state.override_target && !state.smbIsOff && state.isf && state.cr && state
+                        .smbMinutes == state.defaultSmbMinutes && state.uamMinutes == state.defaultUamMinutes
+                )
+
+            return isChanged
         }
 
         private func removeProfile(at offsets: IndexSet) {

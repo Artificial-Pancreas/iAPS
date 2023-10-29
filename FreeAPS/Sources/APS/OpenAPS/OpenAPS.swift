@@ -120,7 +120,6 @@ final class OpenAPS {
 
     func oref2() -> RawJSON {
         coredataContext.performAndWait {
-            let now = Date()
             let preferences = storage.retrieve(OpenAPS.Settings.preferences, as: Preferences.self)
             var hbt_ = preferences?.halfBasalExerciseTarget ?? 160
             let wp = preferences?.weightPercentage ?? 1
