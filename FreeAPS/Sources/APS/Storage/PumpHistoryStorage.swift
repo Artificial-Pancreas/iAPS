@@ -46,7 +46,7 @@ final class BasePumpHistoryStorage: PumpHistoryStorage, Injectable {
                         temp: nil,
                         carbInput: nil,
                         isSMB: dose.automatic,
-                        isNonPumpInsulin: dose.manuallyEntered
+                        isExternal: dose.manuallyEntered
                     )]
                 case .tempBasal:
                     guard let dose = event.dose else { return [] }
@@ -215,8 +215,8 @@ final class BasePumpHistoryStorage: PumpHistoryStorage, Injectable {
         if event.isSMB ?? false {
             return .smb
         }
-        if event.isNonPumpInsulin ?? false {
-            return .nonPumpInsulin
+        if event.isExternal ?? false {
+            return .isExternal
         }
         return event.type
     }
