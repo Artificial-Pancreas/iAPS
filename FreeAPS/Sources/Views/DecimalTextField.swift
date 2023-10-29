@@ -30,31 +30,6 @@ struct DecimalTextField: UIViewRepresentable {
         textfield.text = cleanInput ? "" : formatter.string(for: value) ?? placeholder
         textfield.textAlignment = .right
 
-        let toolBar = UIToolbar(frame: CGRect(
-            x: 0,
-            y: 0,
-            width: textfield.frame.size.width,
-            height: 44
-        ))
-        let clearButton = UIBarButtonItem(
-            title: NSLocalizedString("Clear", comment: "Clear button"),
-            style: .plain,
-            target: self,
-            action: #selector(textfield.clearButtonTapped(button:))
-        )
-        let doneButton = UIBarButtonItem(
-            title: NSLocalizedString("Done", comment: "Done button"),
-            style: .done,
-            target: self,
-            action: #selector(textfield.doneButtonTapped(button:))
-        )
-        let space = UIBarButtonItem(
-            barButtonSystemItem: UIBarButtonItem.SystemItem.flexibleSpace,
-            target: nil,
-            action: nil
-        )
-        toolBar.setItems([clearButton, space, doneButton], animated: true)
-        textfield.inputAccessoryView = toolBar
         if autofocus {
             DispatchQueue.main.async {
                 textfield.becomeFirstResponder()
