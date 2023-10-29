@@ -299,8 +299,7 @@ extension DataTable {
                             DatePicker("Date", selection: $state.nonPumpInsulinDate, in: ...Date())
                         }
 
-                        let amountWarningCondition = (state.nonPumpInsulinAmount > state.maxBolus) &&
-                            (state.nonPumpInsulinAmount <= state.maxBolus * 3)
+                        let amountWarningCondition = (state.nonPumpInsulinAmount > state.maxBolus)
 
                         Section {
                             HStack {
@@ -315,8 +314,7 @@ extension DataTable {
                                 .foregroundColor(amountWarningCondition ? Color.white : Color.accentColor)
                                 .frame(maxWidth: .infinity, alignment: .center)
                                 .disabled(
-                                    state.nonPumpInsulinAmount <= 0 || state.nonPumpInsulinAmount > state
-                                        .maxBolus * 3
+                                    state.nonPumpInsulinAmount <= 0 || state.nonPumpInsulinAmount > state.maxBolus * 3
                                 )
                             }
                         }
