@@ -52,7 +52,6 @@ extension Bolus {
         @Published var roundedWholeCalc: Decimal = 0
         @Published var insulinCalculated: Decimal = 0
         @Published var roundedInsulinCalculated: Decimal = 0
-        @Published var enteredCarbs: Decimal = 0
         @Published var fraction: Decimal = 0
         @Published var useCalc: Bool = false
         @Published var basal: Decimal = 0
@@ -152,8 +151,7 @@ extension Bolus {
             fifteenMinInsulin = (deltaBG * conversion) / isf
 
             // determine whole COB for which we want to dose insulin for and then determine insulin for wholeCOB
-            let wholeCOB = cob + enteredCarbs
-            wholeCobInsulin = wholeCOB / carbRatio
+            wholeCobInsulin = cob / carbRatio
 
             // determine how much the calculator reduces/ increases the bolus because of IOB
             iobInsulinReduction = (-1) * iob

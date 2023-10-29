@@ -9,7 +9,6 @@ extension Bolus {
         @ObservedObject var state: StateModel
 
         @State private var showInfo = false
-        @State private var carbsWarning = false
         @State var insulinCalculated: Decimal = 0
 
         @Environment(\.colorScheme) var colorScheme
@@ -64,33 +63,6 @@ extension Bolus {
                             .foregroundColor(.secondary)
                     }
                     .contentShape(Rectangle())
-
-//                   maybe remove this hstack or display entered carbs from carbs entry
-                    HStack {
-                        Text("Carbs")
-                        Spacer()
-                        DecimalTextField(
-                            "0",
-                            value: $state.enteredCarbs,
-                            formatter: formatter,
-                            autofocus: false,
-                            cleanInput: true
-                        )
-                        .onChange(of: state.enteredCarbs) { newValue in
-                            if newValue > 250 {
-                                state.enteredCarbs = 250 // ensure that user can not input more than 200g of carbs accidentally
-                                carbsWarning.toggle()
-                            }
-                            insulinCalculated = state.calculateInsulin()
-                        }
-                        Text(
-                            NSLocalizedString("g", comment: "grams")
-                        )
-                        .foregroundColor(.secondary)
-                        .alert("Warning! Too much carbs entered!", isPresented: $carbsWarning) {
-                            Button("OK", role: .cancel) {}
-                        }
-                    }
                     HStack {
                         Button(action: {
                             showInfo.toggle()
