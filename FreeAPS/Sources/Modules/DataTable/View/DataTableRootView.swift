@@ -115,7 +115,7 @@ extension DataTable {
                         }) { item in
                             treatmentView(item)
                                 .alert(
-                                    Text(alertTitle),
+                                    Text(NSLocalizedString(alertTitle, comment: "Alert title for treatment deletion")),
                                     isPresented: $isRemoveTreatmentAlertPresented
                                 ) {
                                     Button("Cancel", role: .cancel) {}
@@ -127,7 +127,7 @@ extension DataTable {
                                         }
                                     }
                                 } message: {
-                                    Text("\n" + alertMessage)
+                                    Text("\n" + NSLocalizedString(alertMessage, comment: "Alert title for message deletion"))
                                 }
                         }.onDelete(perform: { indexSet in
                             deleteTreatment(at: indexSet)
@@ -231,7 +231,11 @@ extension DataTable {
 
         @ViewBuilder private func treatmentView(_ item: Treatment) -> some View {
             HStack {
-                Image(systemName: "circle.fill").foregroundColor(item.color)
+                if item.type == .carbs || item.type == .bolus {
+                    Image(systemName: "circle.fill").foregroundColor(item.color).padding(.vertical)
+                } else {
+                    Image(systemName: "circle.fill").foregroundColor(item.color)
+                }
                 Text((item.isSMB ?? false) ? "SMB" : item.type.name)
                 Text(item.amountText).foregroundColor(.secondary)
 
