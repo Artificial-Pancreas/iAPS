@@ -95,16 +95,7 @@ extension DataTable {
                             Image(systemName: showFutureEntries ? "calendar.badge.minus" : "calendar.badge.plus")
                         }.frame(maxWidth: .infinity, alignment: .trailing)
                     }).buttonStyle(.borderless)
-                }.listRowBackground(
-                    Rectangle()
-                        .cornerRadius(20)
-                        .background(Color.clear)
-                        .foregroundColor(
-                            colorScheme == .dark ? Color(.systemBackground) :
-                                Color(.secondarySystemBackground)
-                        )
-                ).listRowSeparator(.hidden, edges: .bottom)
-
+                }
                 if !state.treatments.isEmpty {
                     if !showFutureEntries {
                         ForEach(state.treatments.filter { item in
@@ -137,15 +128,7 @@ extension DataTable {
                     Text(state.units.rawValue).foregroundStyle(.secondary)
                     Spacer()
                     Text("Time").foregroundStyle(.secondary)
-                }.listRowBackground(
-                    Rectangle()
-                        .background(Color.clear)
-                        .foregroundColor(
-                            colorScheme == .dark ? Color(.systemBackground) :
-                                Color(.secondarySystemBackground)
-                        )
-                ).listRowSeparator(.hidden, edges: .bottom)
-
+                }
                 if !state.glucose.isEmpty {
                     ForEach(state.glucose) { item in
                         glucoseView(item, isManual: item.glucose)
