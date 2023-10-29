@@ -11,7 +11,7 @@ extension DataTable {
         @State private var removeCarbsAlert: Alert?
         @State private var isRemoveInsulinAlertPresented = false
         @State private var removeInsulinAlert: Alert?
-        @State private var showNonPumpInsulin: Bool = false
+        @State private var showExternalInsulin: Bool = false
         @State private var showFutureEntries: Bool = false // default to hide future entries
         @State private var showManualGlucose: Bool = false
         @State private var isAmountUnconfirmed: Bool = true
@@ -66,17 +66,17 @@ extension DataTable {
             .sheet(isPresented: $showManualGlucose) {
                 addGlucoseView
             }
-            .sheet(isPresented: $showNonPumpInsulin, onDismiss: { if isAmountUnconfirmed { state.nonPumpInsulinAmount = 0
-                state.nonPumpInsulinDate = Date() } }) {
-                addNonPumpInsulinView
+            .sheet(isPresented: $showExternalInsulin, onDismiss: { if isAmountUnconfirmed { state.externalInsulinAmount = 0
+                state.externalInsulinDate = Date() } }) {
+                addExternalInsulinView
             }
         }
 
         private var treatmentsList: some View {
             List {
                 HStack {
-                    Button(action: { showNonPumpInsulin = true
-                        state.nonPumpInsulinDate = Date() }, label: {
+                    Button(action: { showExternalInsulin = true
+                        state.externalInsulinDate = Date() }, label: {
                         HStack {
                             Image(systemName: "syringe")
                             Text("Add")
@@ -269,7 +269,7 @@ extension DataTable {
             }
         }
 
-        var addNonPumpInsulinView: some View {
+        var addExternalInsulinView: some View {
             NavigationView {
                 VStack {
                     Form {
@@ -279,7 +279,7 @@ extension DataTable {
                                 Spacer()
                                 DecimalTextField(
                                     "0",
-                                    value: $state.nonPumpInsulinAmount,
+                                    value: $state.externalInsulinAmount,
                                     formatter: insulinFormatter,
                                     autofocus: true,
                                     cleanInput: true
@@ -289,25 +289,25 @@ extension DataTable {
                         }
 
                         Section {
-                            DatePicker("Date", selection: $state.nonPumpInsulinDate, in: ...Date())
+                            DatePicker("Date", selection: $state.externalInsulinDate, in: ...Date())
                         }
 
-                        let amountWarningCondition = (state.nonPumpInsulinAmount > state.maxBolus)
+                        let amountWarningCondition = (state.externalInsulinAmount > state.maxBolus)
 
                         Section {
                             HStack {
                                 Button {
-                                    state.addNonPumpInsulin()
+                                    state.addExternalInsulin()
                                     isAmountUnconfirmed = false
-                                    showNonPumpInsulin = false
+                                    showExternalInsulin = false
                                 }
                                 label: {
-                                    Text("Log non-pump insulin")
+                                    Text("Log external insulin")
                                 }
                                 .foregroundColor(amountWarningCondition ? Color.white : Color.accentColor)
                                 .frame(maxWidth: .infinity, alignment: .center)
                                 .disabled(
-                                    state.nonPumpInsulinAmount <= 0 || state.nonPumpInsulinAmount > state.maxBolus * 3
+                                    state.externalInsulinAmount <= 0 || state.externalInsulinAmount > state.maxBolus * 3
                                 )
                             }
                         }
@@ -324,10 +324,10 @@ extension DataTable {
                     }
                 }
                 .onAppear(perform: configureView)
-                .navigationTitle("Non-Pump Insulin")
+                .navigationTitle("External Insulin")
                 .navigationBarTitleDisplayMode(.inline)
-                .navigationBarItems(leading: Button("Close", action: { showNonPumpInsulin = false
-                    state.nonPumpInsulinAmount = 0 }))
+                .navigationBarItems(leading: Button("Close", action: { showExternalInsulin = false
+                    state.externalInsulinAmount = 0 }))
             }
         }
 
