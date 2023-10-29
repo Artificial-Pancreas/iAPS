@@ -73,8 +73,6 @@ extension Bolus {
             fattyMeals = settings.settings.fattyMeals
             fattyMealFactor = settings.settings.fattyMealFactor
 
-            // get carb ratio entry schedule
-
             if waitForSuggestionInitial {
                 apsManager.determineBasal()
                     .receive(on: DispatchQueue.main)
@@ -171,32 +169,6 @@ extension Bolus {
                     self.showModal(for: nil)
                 }
                 .store(in: &lifetime)
-        }
-
-        func addWithoutBolus() {
-            guard amount > 0 else {
-                showModal(for: nil)
-                return
-            }
-            amount = min(amount, maxBolus * 3)
-
-            pumpHistoryStorage.storeEvents(
-                [
-                    PumpHistoryEvent(
-                        id: UUID().uuidString,
-                        type: .bolus,
-                        timestamp: Date(),
-                        amount: amount,
-                        duration: nil,
-                        durationMin: nil,
-                        rate: nil,
-                        temp: nil,
-                        carbInput: nil,
-                        isExternal: true
-                    )
-                ]
-            )
-            showModal(for: nil)
         }
 
         func setupInsulinRequired() {

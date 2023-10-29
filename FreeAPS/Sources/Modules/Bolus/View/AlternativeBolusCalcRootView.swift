@@ -137,15 +137,11 @@ extension Bolus {
                                         get: { state.amount },
                                         set: { enteredAmount in
                                             if enteredAmount > state.maxBolus {
-                                                withAnimation {
-                                                    state.amount = state.maxBolus
-                                                    exceededMaxBolus = true
-                                                }
+                                                state.amount = state.maxBolus
+                                                exceededMaxBolus = true
                                             } else {
-                                                withAnimation {
-                                                    state.amount = enteredAmount
-                                                    exceededMaxBolus = false
-                                                }
+                                                state.amount = enteredAmount
+                                                exceededMaxBolus = false
                                             }
                                         }
                                     ),
@@ -161,16 +157,21 @@ extension Bolus {
                 header: { Text("Bolus") }
 
                 Section {
-                    Button(action: {
-                        state.add()
-                    }) {
-                        Text(exceededMaxBolus ? "Max Bolus exceeded!" : "Enact bolus")
-                            .frame(maxWidth: .infinity, alignment: .center)
+                    if state.amount == 0 {
+                        Button { state.showModal(for: nil) }
+                        label: { Text("Continue without bolus") }.frame(maxWidth: .infinity, alignment: .center)
+                    } else {
+                        Button(action: {
+                            state.add()
+                        }) {
+                            Text(exceededMaxBolus ? "Max Bolus exceeded!" : "Enact bolus")
+                                .frame(maxWidth: .infinity, alignment: .center)
+                        }
+                        .foregroundColor(exceededMaxBolus ? .loopRed : .accentColor)
+                        .disabled(
+                            state.amount <= 0 || state.amount > state.maxBolus
+                        )
                     }
-                    .foregroundColor(exceededMaxBolus ? .loopRed : .accentColor)
-                    .disabled(
-                        state.amount <= 0 || state.amount > state.maxBolus
-                    )
                 }
                 .onAppear {
                     configureView {
@@ -422,7 +423,10 @@ extension Bolus {
 
                 // Hide button
                 VStack {
-                    Button { showInfo = false }
+                    Button {
+                        showInfo = false
+                        exceededMaxBolus = false
+                    }
                     label: {
                         Text("OK")
                     }
