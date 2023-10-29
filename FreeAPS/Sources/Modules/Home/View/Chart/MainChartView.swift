@@ -46,8 +46,8 @@ struct MainChartView: View {
     }
 
     private enum Command {
-        static let open = "🟢"
-        static let closed = "🔴"
+        static let open = "🔴"
+        static let closed = "🟢"
         static let suspend = "❌"
         static let resume = "✅"
         static let tempbasal = "basal"
