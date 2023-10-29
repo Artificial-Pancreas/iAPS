@@ -110,9 +110,7 @@ extension DataTable {
                 }
                 if !state.treatments.isEmpty {
                     if !showFutureEntries {
-                        ForEach(state.treatments.filter { item in
-                            item.date <= Date()
-                        }) { item in
+                        ForEach(state.treatments.filter({ $0.date <= Date() })) { item in
                             treatmentView(item)
                                 .alert(
                                     Text(NSLocalizedString(alertTitle, comment: "Alert title for treatment deletion")),
@@ -120,18 +118,20 @@ extension DataTable {
                                 ) {
                                     Button("Cancel", role: .cancel) {}
                                     Button("Delete", role: .destructive) {
-                                        if item.type == .carbs || item.type == .fpus {
-                                            state.deleteCarbs(item)
-                                        } else {
-                                            state.deleteInsulin(item)
+                                        if let originalIndex = state.treatments.firstIndex(of: item) {
+                                            let treatmentToDelete = state.treatments[originalIndex]
+
+                                            if treatmentToDelete.type == .carbs || treatmentToDelete.type == .fpus {
+                                                state.deleteCarbs(treatmentToDelete)
+                                            } else {
+                                                state.deleteInsulin(treatmentToDelete)
+                                            }
                                         }
                                     }
                                 } message: {
                                     Text("\n" + NSLocalizedString(alertMessage, comment: "Alert title for message deletion"))
                                 }
-                        }.onDelete(perform: { indexSet in
-                            deleteTreatment(at: indexSet)
-                        })
+                        }.onDelete(perform: deleteTreatment)
                     } else {
                         ForEach(state.treatments) { item in
                             treatmentView(item)
