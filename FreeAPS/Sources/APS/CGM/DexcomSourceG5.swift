@@ -148,7 +148,7 @@ extension DexcomSourceG5: CGMManagerDelegate {
                 let quantity = newGlucoseSample.quantity
                 let value = Int(quantity.doubleValue(for: .milligramsPerDeciliter))
                 return BloodGlucose(
-                    _id: newGlucoseSample.syncIdentifier,
+                    _id: UUID().uuidString,
                     sgv: value,
                     direction: .init(trendType: newGlucoseSample.trend),
                     date: Decimal(Int(newGlucoseSample.date.timeIntervalSince1970 * 1000)),

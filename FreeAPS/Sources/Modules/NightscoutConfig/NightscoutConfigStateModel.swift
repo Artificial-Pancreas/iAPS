@@ -266,7 +266,9 @@ extension NightscoutConfig {
                                 debug(.service, "Settings have been imported and the Basals saved to pump!")
                                 // DIA. Save if changed.
                                 let dia = fetchedProfile.dia
-                                if dia != self.dia, dia <= 0 {
+                                print("dia: " + dia.description)
+                                print("pump dia: " + self.dia.description)
+                                if dia != self.dia, dia >= 0 {
                                     let file = PumpSettings(
                                         insulinActionCurve: dia,
                                         maxBolus: self.maxBolus,
