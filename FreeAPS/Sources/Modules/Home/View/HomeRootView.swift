@@ -511,7 +511,10 @@ extension Home {
                     .foregroundColor(.loopGreen)
                     .buttonStyle(.borderless)
                     Spacer()
-                    Button { state.showModal(for: .bolus(waitForSuggestion: false)) }
+                    Button {
+                        state.showModal(for: .bolus(waitForSuggestion: true))
+                        state.apsManager.determineBasalSync()
+                    }
                     label: {
                         Image("bolus")
                             .renderingMode(.template)

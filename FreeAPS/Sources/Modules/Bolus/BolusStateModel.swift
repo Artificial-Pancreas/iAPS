@@ -192,7 +192,7 @@ extension Bolus {
                         rate: nil,
                         temp: nil,
                         carbInput: nil,
-                        isNonPumpInsulin: true
+                        isExternal: true
                     )
                 ]
             )
@@ -235,10 +235,6 @@ extension Bolus {
                     .roundBolus(amount: max(self.insulinRecommended, 0))
 
                 self.getDeltaBG()
-
-                if self.useCalc {
-                    self.apsManager.determineBasalSync()
-                }
             }
         }
     }

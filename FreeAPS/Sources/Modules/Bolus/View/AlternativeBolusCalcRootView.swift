@@ -9,8 +9,9 @@ extension Bolus {
         @ObservedObject var state: StateModel
 
         @State private var showInfo = false
+        @State private var exceededMaxBolus = false
+        @State private var enteredAmount: Decimal = 0
         @State var insulinCalculated: Decimal = 0
-        @State var exceededMaxBolus = false
 
         @Environment(\.colorScheme) var colorScheme
 
@@ -101,47 +102,59 @@ extension Bolus {
                 header: { Text("Values") }
 
                 Section {
-                    HStack {
-                        Text("Recommended Bolus")
-                        Spacer()
-
-                        Text(
-                            formatter
-                                .string(from: Double(insulinCalculated) as NSNumber)!
-                        )
-                        let unit = NSLocalizedString(
-                            " U",
-                            comment: "Unit in number of units delivered (keep the space character!)"
-                        )
-                        Text(unit).foregroundColor(.secondary)
-                    }.contentShape(Rectangle())
-                        .onTapGesture {
-                            state.amount = insulinCalculated
-                        }
-
-                    if !state.waitForSuggestion {
+                    if state.waitForSuggestion {
                         HStack {
-                            Text("Bolus")
+                            Text("Wait please").foregroundColor(.secondary)
                             Spacer()
-                            DecimalTextField(
-                                "0",
-                                value: Binding(
-                                    get: { state.amount },
-                                    set: { enteredAmount in
-                                        if enteredAmount > state.maxBolus {
-                                            state.amount = state.maxBolus
-                                            exceededMaxBolus = true
-                                        } else {
-                                            state.amount = enteredAmount
-                                            exceededMaxBolus = false
-                                        }
-                                    }
-                                ),
-                                formatter: formatter,
-                                autofocus: false,
-                                cleanInput: true
+                            ActivityIndicator(isAnimating: .constant(true), style: .medium) // fix iOS 15 bug
+                        }
+                    } else {
+                        HStack {
+                            Text("Recommended Bolus")
+                            Spacer()
+
+                            Text(
+                                formatter
+                                    .string(from: Double(insulinCalculated) as NSNumber)!
                             )
-                            Text(exceededMaxBolus ? "😵" : " U").foregroundColor(.secondary)
+                            let unit = NSLocalizedString(
+                                " U",
+                                comment: "Unit in number of units delivered (keep the space character!)"
+                            )
+                            Text(unit).foregroundColor(.secondary)
+                        }.contentShape(Rectangle())
+                            .onTapGesture {
+                                state.amount = insulinCalculated
+                            }
+
+                        if !state.waitForSuggestion {
+                            HStack {
+                                Text("Bolus")
+                                Spacer()
+                                DecimalTextField(
+                                    "0",
+                                    value: Binding(
+                                        get: { state.amount },
+                                        set: { enteredAmount in
+                                            if enteredAmount > state.maxBolus {
+                                                withAnimation {
+                                                    state.amount = state.maxBolus
+                                                    exceededMaxBolus = true
+                                                }
+                                            } else {
+                                                withAnimation {
+                                                    state.amount = enteredAmount
+                                                    exceededMaxBolus = false
+                                                }
+                                            }
+                                        }
+                                    ),
+                                    formatter: formatter,
+                                    autofocus: false,
+                                    cleanInput: true
+                                )
+                                Text(exceededMaxBolus ? "😵" : " U").foregroundColor(.secondary)
+                            }
                         }
                     }
                 }
@@ -154,8 +167,9 @@ extension Bolus {
                         Text(exceededMaxBolus ? "Max Bolus exceeded!" : "Enact bolus")
                             .frame(maxWidth: .infinity, alignment: .center)
                     }
+                    .foregroundColor(exceededMaxBolus ? .loopRed : .accentColor)
                     .disabled(
-                        state.amount <= 0 || exceededMaxBolus
+                        state.amount <= 0 || state.amount > state.maxBolus
                     )
                 }
                 .onAppear {
