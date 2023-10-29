@@ -16,8 +16,8 @@ extension DataTable {
         @Published var glucose: [Glucose] = []
         @Published var manualGlucose: Decimal = 0
         @Published var maxBolus: Decimal = 0
-        @Published var nonPumpInsulinAmount: Decimal = 0
-        @Published var nonPumpInsulinDate = Date()
+        @Published var externalInsulinAmount: Decimal = 0
+        @Published var externalInsulinDate = Date()
 
         var units: GlucoseUnits = .mmolL
 
@@ -79,7 +79,7 @@ extension DataTable {
                             amount: $0.amount,
                             idPumpEvent: $0.id,
                             isSMB: $0.isSMB,
-                            isNonPump: $0.isNonPumpInsulin
+                            isExternal: $0.isExternal
                         )
                     }
 
@@ -199,13 +199,13 @@ extension DataTable {
             saveToHealth.append(saveToJSON)
         }
 
-        func addNonPumpInsulin() {
-            guard nonPumpInsulinAmount > 0 else {
+        func addExternalInsulin() {
+            guard externalInsulinAmount > 0 else {
                 showModal(for: nil)
                 return
             }
 
-            nonPumpInsulinAmount = min(nonPumpInsulinAmount, maxBolus * 3) // Allow for 3 * Max Bolus for non-pump insulin
+            externalInsulinAmount = min(externalInsulinAmount, maxBolus * 3) // Allow for 3 * Max Bolus for external insulin
             unlockmanager.unlock()
                 .sink { _ in } receiveValue: { [weak self] _ in
                     guard let self = self else { return }
@@ -214,21 +214,21 @@ extension DataTable {
                             PumpHistoryEvent(
                                 id: UUID().uuidString,
                                 type: .bolus,
-                                timestamp: nonPumpInsulinDate,
-                                amount: nonPumpInsulinAmount,
+                                timestamp: externalInsulinDate,
+                                amount: externalInsulinAmount,
                                 duration: nil,
                                 durationMin: nil,
                                 rate: nil,
                                 temp: nil,
                                 carbInput: nil,
-                                isNonPumpInsulin: true
+                                isExternal: true
                             )
                         ]
                     )
-                    debug(.default, "Non-pump insulin saved to pumphistory.json")
+                    debug(.default, "External insulin saved to pumphistory.json")
 
                     // Reset amount to 0 for next entry.
-                    nonPumpInsulinAmount = 0
+                    externalInsulinAmount = 0
                 }
                 .store(in: &lifetime)
         }

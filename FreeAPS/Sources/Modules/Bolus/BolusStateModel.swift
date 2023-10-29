@@ -192,7 +192,7 @@ extension Bolus {
                         rate: nil,
                         temp: nil,
                         carbInput: nil,
-                        isNonPumpInsulin: true
+                        isExternal: true
                     )
                 ]
             )
