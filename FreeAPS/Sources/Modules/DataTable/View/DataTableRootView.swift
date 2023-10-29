@@ -75,33 +75,35 @@ extension DataTable {
         private var treatmentsList: some View {
             List {
                 HStack {
-                    Button(action: { showFutureEntries.toggle() }, label: {
+                    Button(action: { showNonPumpInsulin = true
+                        state.nonPumpInsulinDate = Date() }, label: {
                         HStack {
-                            Image(systemName: showFutureEntries ? "calendar.badge.minus" : "calendar.badge.plus")
-                                .foregroundColor(Color.accentColor)
-                            Text(showFutureEntries ? "Hide Future" : "Show Future")
+                            Image(systemName: "syringe")
+                            Text("Add")
                                 .foregroundColor(Color.secondary)
                                 .font(.caption)
-
                         }.frame(maxWidth: .infinity, alignment: .leading)
-
                     }).buttonStyle(.borderless)
 
                     Spacer()
 
-                    Button(action: { showNonPumpInsulin = true
-                        state.nonPumpInsulinDate = Date() }, label: {
+                    Button(action: { showFutureEntries.toggle() }, label: {
                         HStack {
-                            Text("Add")
+                            Text(showFutureEntries ? "Hide Future" : "Show Future")
                                 .foregroundColor(Color.secondary)
                                 .font(.caption)
-
-                            Image(systemName: "syringe")
-                                .foregroundColor(Color.accentColor)
+                            Image(systemName: showFutureEntries ? "calendar.badge.minus" : "calendar.badge.plus")
                         }.frame(maxWidth: .infinity, alignment: .trailing)
-
                     }).buttonStyle(.borderless)
-                }
+                }.listRowBackground(
+                    Rectangle()
+                        .cornerRadius(20)
+                        .background(Color.clear)
+                        .foregroundColor(
+                            colorScheme == .dark ? Color(.systemBackground) :
+                                Color(.secondarySystemBackground)
+                        )
+                ).listRowSeparator(.hidden, edges: .bottom)
 
                 if !state.treatments.isEmpty {
                     if !showFutureEntries {
@@ -126,16 +128,24 @@ extension DataTable {
         private var glucoseList: some View {
             List {
                 HStack {
-                    Text("Time").foregroundStyle(.secondary)
-                    Spacer()
-                    Text(state.units.rawValue).foregroundStyle(.secondary)
                     Button(
                         action: { showManualGlucose = true
                             state.manualGlucose = 0 },
                         label: { Image(systemName: "plus.circle.fill").foregroundStyle(.secondary)
                         }
                     ).buttonStyle(.borderless)
-                }
+                    Text(state.units.rawValue).foregroundStyle(.secondary)
+                    Spacer()
+                    Text("Time").foregroundStyle(.secondary)
+                }.listRowBackground(
+                    Rectangle()
+                        .background(Color.clear)
+                        .foregroundColor(
+                            colorScheme == .dark ? Color(.systemBackground) :
+                                Color(.secondarySystemBackground)
+                        )
+                ).listRowSeparator(.hidden, edges: .bottom)
+
                 if !state.glucose.isEmpty {
                     ForEach(state.glucose) { item in
                         glucoseView(item, isManual: item.glucose)
@@ -171,7 +181,6 @@ extension DataTable {
                             HStack {
                                 let limitLow: Decimal = state.units == .mmolL ? 0.8 : 40
                                 let limitHigh: Decimal = state.units == .mgdL ? 14 : 720
-
                                 Button {
                                     state.addManualGlucose()
                                     isAmountUnconfirmed = false
@@ -194,8 +203,6 @@ extension DataTable {
         @ViewBuilder private func treatmentView(_ item: Treatment) -> some View {
             HStack {
                 Image(systemName: "circle.fill").foregroundColor(item.color)
-                Text(dateFormatter.string(from: item.date))
-                    .moveDisabled(true)
                 Text((item.isSMB ?? false) ? "SMB" : item.type.name)
                 Text(item.amountText).foregroundColor(.secondary)
 
@@ -273,6 +280,9 @@ extension DataTable {
                             removeInsulinAlert!
                         }
                 }
+                Spacer()
+                Text(dateFormatter.string(from: item.date))
+                    .moveDisabled(true)
             }
         }
 
@@ -341,8 +351,6 @@ extension DataTable {
         @ViewBuilder private func glucoseView(_ item: Glucose, isManual: BloodGlucose) -> some View {
             VStack(alignment: .leading, spacing: 4) {
                 HStack {
-                    Text(dateFormatter.string(from: item.glucose.dateString))
-                    Spacer()
                     Text(item.glucose.glucose.map {
                         glucoseFormatter.string(from: Double(
                             state.units == .mmolL ? $0.asMmolL : Decimal($0)
@@ -353,6 +361,9 @@ extension DataTable {
                     } else {
                         Text(item.glucose.direction?.symbol ?? "--")
                     }
+                    Spacer()
+
+                    Text(dateFormatter.string(from: item.glucose.dateString))
                 }
             }
         }
