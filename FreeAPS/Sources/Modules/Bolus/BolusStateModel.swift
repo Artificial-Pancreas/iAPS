@@ -235,10 +235,6 @@ extension Bolus {
                     .roundBolus(amount: max(self.insulinRecommended, 0))
 
                 self.getDeltaBG()
-
-                if self.useCalc {
-                    self.apsManager.determineBasalSync()
-                }
             }
         }
     }
