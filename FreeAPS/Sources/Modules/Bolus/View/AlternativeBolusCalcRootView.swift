@@ -99,7 +99,11 @@ extension Bolus {
                             formatter
                                 .string(from: Double(insulinCalculated) as NSNumber)!
                         )
-                        Text("IE").foregroundColor(.secondary)
+                        let unit = NSLocalizedString(
+                            " U",
+                            comment: "Unit in number of units delivered (keep the space character!)"
+                        )
+                        Text(unit).foregroundColor(.secondary)
                     }.contentShape(Rectangle())
                         .onTapGesture {
                             state.amount = insulinCalculated
@@ -116,7 +120,7 @@ extension Bolus {
                                 autofocus: false,
                                 cleanInput: true
                             )
-                            Text("IE").foregroundColor(.secondary)
+                            Text(!(state.amount > state.maxBolus) ? "U" : "😵").foregroundColor(.secondary)
                         }
                     }
                 }
@@ -126,7 +130,7 @@ extension Bolus {
                     Button(action: {
                         state.add()
                     }) {
-                        Text("Enact bolus")
+                        Text(!(state.amount > state.maxBolus) ? "Enact bolus" : "Max Bolus exceeded!")
                             .frame(maxWidth: .infinity, alignment: .center)
                     }
                     .disabled(
