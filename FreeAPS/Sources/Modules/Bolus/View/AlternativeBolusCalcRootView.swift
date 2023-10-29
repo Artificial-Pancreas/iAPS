@@ -10,6 +10,7 @@ extension Bolus {
 
         @State private var showInfo = false
         @State var insulinCalculated: Decimal = 0
+        @State var exceededMaxBolus = false
 
         @Environment(\.colorScheme) var colorScheme
 
@@ -17,6 +18,15 @@ extension Bolus {
             let formatter = NumberFormatter()
             formatter.numberStyle = .decimal
             formatter.maximumFractionDigits = 2
+            return formatter
+        }
+
+        private var gluoseFormatter: NumberFormatter {
+            let formatter = NumberFormatter()
+            formatter.numberStyle = .decimal
+            if state.units == .mmolL {
+                formatter.maximumFractionDigits = 1
+            } else { formatter.maximumFractionDigits = 0 }
             return formatter
         }
 
@@ -36,20 +46,20 @@ extension Bolus {
                             value: Binding(
                                 get: {
                                     if state.units == .mmolL {
-                                        return state.currentBG * 0.0555
+                                        return state.currentBG.asMmolL
                                     } else {
                                         return state.currentBG
                                     }
                                 },
                                 set: { newValue in
                                     if state.units == .mmolL {
-                                        state.currentBG = newValue * 0.0555
+                                        state.currentBG = newValue.asMmolL
                                     } else {
                                         state.currentBG = newValue
                                     }
                                 }
                             ),
-                            formatter: formatter,
+                            formatter: gluoseFormatter,
                             autofocus: false,
                             cleanInput: true
                         )
@@ -115,12 +125,23 @@ extension Bolus {
                             Spacer()
                             DecimalTextField(
                                 "0",
-                                value: $state.amount,
+                                value: Binding(
+                                    get: { state.amount },
+                                    set: { enteredAmount in
+                                        if enteredAmount > state.maxBolus {
+                                            state.amount = state.maxBolus
+                                            exceededMaxBolus = true
+                                        } else {
+                                            state.amount = enteredAmount
+                                            exceededMaxBolus = false
+                                        }
+                                    }
+                                ),
                                 formatter: formatter,
                                 autofocus: false,
                                 cleanInput: true
                             )
-                            Text(!(state.amount > state.maxBolus) ? "U" : "😵").foregroundColor(.secondary)
+                            Text(exceededMaxBolus ? "😵" : " U").foregroundColor(.secondary)
                         }
                     }
                 }
@@ -130,11 +151,11 @@ extension Bolus {
                     Button(action: {
                         state.add()
                     }) {
-                        Text(!(state.amount > state.maxBolus) ? "Enact bolus" : "Max Bolus exceeded!")
+                        Text(exceededMaxBolus ? "Max Bolus exceeded!" : "Enact bolus")
                             .frame(maxWidth: .infinity, alignment: .center)
                     }
                     .disabled(
-                        state.amount <= 0 || state.amount > state.maxBolus
+                        state.amount <= 0 || exceededMaxBolus
                     )
                 }
                 .onAppear {
@@ -370,6 +391,17 @@ extension Bolus {
                             .foregroundColor(.secondary)
                     }
                     .padding()
+
+                    if exceededMaxBolus {
+                        HStack {
+                            let maxBolus = state.maxBolus
+                            let maxBolusFormatted = maxBolus.formatted()
+                            Text("Your entered amount was limited by your max Bolus setting of \(maxBolusFormatted)\(unit)!")
+                        }
+                        .padding()
+                        .fontWeight(.semibold)
+                        .foregroundStyle(Color.loopRed)
+                    }
                 }
                 .padding(.top, 10)
                 .padding(.bottom, 15)
