@@ -144,10 +144,16 @@ extension DataTable {
                                 ) {
                                     Button("Cancel", role: .cancel) {}
                                     Button("Delete", role: .destructive) {
-                                        if item.type == .carbs || item.type == .fpus {
-                                            state.deleteCarbs(item)
+                                        // gracefully unwrap value here. value cannot ever really be nil because it is an existing(!) table entry.
+                                        guard let treatmentToDelete = alertTreatmentToDelete else {
+                                            // couldn't delete
+                                            return
+                                        }
+
+                                        if treatmentToDelete.type == .carbs || treatmentToDelete.type == .fpus {
+                                            state.deleteCarbs(treatmentToDelete)
                                         } else {
-                                            state.deleteInsulin(item)
+                                            state.deleteInsulin(treatmentToDelete)
                                         }
                                     }
                                 } message: {
