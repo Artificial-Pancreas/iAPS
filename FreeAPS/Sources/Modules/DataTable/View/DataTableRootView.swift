@@ -19,6 +19,7 @@ extension DataTable {
         @State private var isAmountUnconfirmed: Bool = true
         @State private var alertTitle = ""
         @State private var alertMessage = ""
+        @State private var alertTreatmentToDelete: Treatment?
 
         @Environment(\.colorScheme) var colorScheme
 
@@ -118,14 +119,16 @@ extension DataTable {
                                 ) {
                                     Button("Cancel", role: .cancel) {}
                                     Button("Delete", role: .destructive) {
-                                        if let originalIndex = state.treatments.firstIndex(of: item) {
-                                            let treatmentToDelete = state.treatments[originalIndex]
+                                        // gracefully unwrap value here. value cannot ever really be nil because it is an existing(!) table entry.
+                                        guard let treatmentToDelete = alertTreatmentToDelete else {
+                                            // couldn't delete
+                                            return
+                                        }
 
-                                            if treatmentToDelete.type == .carbs || treatmentToDelete.type == .fpus {
-                                                state.deleteCarbs(treatmentToDelete)
-                                            } else {
-                                                state.deleteInsulin(treatmentToDelete)
-                                            }
+                                        if treatmentToDelete.type == .carbs || treatmentToDelete.type == .fpus {
+                                            state.deleteCarbs(treatmentToDelete)
+                                        } else {
+                                            state.deleteInsulin(treatmentToDelete)
                                         }
                                     }
                                 } message: {
@@ -370,6 +373,7 @@ extension DataTable {
                 let treatment = showFutureEntries ? state.treatments[indexToDelete] : state.treatments
                     .filter { $0.date <= Date() }[indexToDelete]
 
+                alertTreatmentToDelete = treatment
                 setAlertContent(treatment)
 
                 isRemoveTreatmentAlertPresented = true
