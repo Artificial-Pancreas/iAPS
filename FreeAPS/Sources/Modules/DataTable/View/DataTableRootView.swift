@@ -113,6 +113,10 @@ extension DataTable {
                     if !showFutureEntries {
                         ForEach(state.treatments.filter({ $0.date <= Date() })) { item in
                             treatmentView(item)
+                                .deleteDisabled(
+                                    item.type == .tempBasal || item.type == .tempTarget || item
+                                        .type == .suspend || item.type == .resume
+                                )
                                 .alert(
                                     Text(NSLocalizedString(alertTitle, comment: "Alert title for treatment deletion")),
                                     isPresented: $isRemoveTreatmentAlertPresented
@@ -138,6 +142,10 @@ extension DataTable {
                     } else {
                         ForEach(state.treatments) { item in
                             treatmentView(item)
+                                .deleteDisabled(
+                                    item.type == .tempBasal || item.type == .tempTarget || item
+                                        .type == .suspend || item.type == .resume
+                                )
                                 .alert(
                                     Text(alertTitle),
                                     isPresented: $isRemoveTreatmentAlertPresented
