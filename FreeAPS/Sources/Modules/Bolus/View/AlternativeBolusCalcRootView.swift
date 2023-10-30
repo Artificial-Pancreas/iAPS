@@ -133,23 +133,19 @@ extension Bolus {
                                 Spacer()
                                 DecimalTextField(
                                     "0",
-                                    value: Binding(
-                                        get: { state.amount },
-                                        set: { enteredAmount in
-                                            if enteredAmount > state.maxBolus {
-                                                state.amount = state.maxBolus
-                                                exceededMaxBolus = true
-                                            } else {
-                                                state.amount = enteredAmount
-                                                exceededMaxBolus = false
-                                            }
-                                        }
-                                    ),
+                                    value: $state.amount,
                                     formatter: formatter,
                                     autofocus: false,
                                     cleanInput: true
                                 )
                                 Text(exceededMaxBolus ? "😵" : " U").foregroundColor(.secondary)
+                            }
+                            .onChange(of: state.amount) { newValue in
+                                if newValue > state.maxBolus {
+                                    exceededMaxBolus = true
+                                } else {
+                                    exceededMaxBolus = false
+                                }
                             }
                         }
                     }
@@ -425,7 +421,6 @@ extension Bolus {
                 VStack {
                     Button {
                         showInfo = false
-                        exceededMaxBolus = false
                     }
                     label: {
                         Text("OK")
