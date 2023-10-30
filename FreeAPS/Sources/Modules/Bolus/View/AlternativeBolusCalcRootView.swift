@@ -10,7 +10,6 @@ extension Bolus {
 
         @State private var showInfo = false
         @State private var exceededMaxBolus = false
-        @State private var enteredAmount: Decimal = 0
         @State var insulinCalculated: Decimal = 0
 
         @Environment(\.colorScheme) var colorScheme
