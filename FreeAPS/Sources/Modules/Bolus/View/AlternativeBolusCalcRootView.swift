@@ -9,6 +9,7 @@ extension Bolus {
         @ObservedObject var state: StateModel
 
         @State private var showInfo = false
+        @State private var exceededMaxBolus = false
         @State var insulinCalculated: Decimal = 0
 
         @Environment(\.colorScheme) var colorScheme
@@ -136,7 +137,14 @@ extension Bolus {
                                     autofocus: false,
                                     cleanInput: true
                                 )
-                                Text(!(state.amount > state.maxBolus) ? "U" : "😵").foregroundColor(.secondary)
+                                Text(exceededMaxBolus ? "😵" : " U").foregroundColor(.secondary)
+                            }
+                            .onChange(of: state.amount) { newValue in
+                                if newValue > state.maxBolus {
+                                    exceededMaxBolus = true
+                                } else {
+                                    exceededMaxBolus = false
+                                }
                             }
                         }
                     }
@@ -144,15 +152,21 @@ extension Bolus {
                 header: { Text("Bolus") }
 
                 Section {
-                    Button(action: {
-                        state.add()
-                    }) {
-                        Text(!(state.amount > state.maxBolus) ? "Enact bolus" : "Max Bolus exceeded!")
-                            .frame(maxWidth: .infinity, alignment: .center)
+                    if state.amount == 0 {
+                        Button { state.showModal(for: nil) }
+                        label: { Text("Continue without bolus") }.frame(maxWidth: .infinity, alignment: .center)
+                    } else {
+                        Button(action: {
+                            state.add()
+                        }) {
+                            Text(exceededMaxBolus ? "Max Bolus exceeded!" : "Enact bolus")
+                                .frame(maxWidth: .infinity, alignment: .center)
+                        }
+                        .foregroundColor(exceededMaxBolus ? .loopRed : .accentColor)
+                        .disabled(
+                            state.amount <= 0 || state.amount > state.maxBolus
+                        )
                     }
-                    .disabled(
-                        state.amount <= 0 || state.amount > state.maxBolus
-                    )
                 }
                 .onAppear {
                     configureView {
@@ -387,13 +401,26 @@ extension Bolus {
                             .foregroundColor(.secondary)
                     }
                     .padding()
+
+                    if exceededMaxBolus {
+                        HStack {
+                            let maxBolus = state.maxBolus
+                            let maxBolusFormatted = maxBolus.formatted()
+                            Text("Your entered amount was limited by your max Bolus setting of \(maxBolusFormatted)\(unit)!")
+                        }
+                        .padding()
+                        .fontWeight(.semibold)
+                        .foregroundStyle(Color.loopRed)
+                    }
                 }
                 .padding(.top, 10)
                 .padding(.bottom, 15)
 
                 // Hide button
                 VStack {
-                    Button { showInfo = false }
+                    Button {
+                        showInfo = false
+                    }
                     label: {
                         Text("OK")
                     }
