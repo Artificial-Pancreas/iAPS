@@ -513,7 +513,6 @@ extension Home {
                     Spacer()
                     Button {
                         state.showModal(for: .bolus(waitForSuggestion: true))
-                        state.apsManager.determineBasalSync()
                     }
                     label: {
                         Image("bolus")
