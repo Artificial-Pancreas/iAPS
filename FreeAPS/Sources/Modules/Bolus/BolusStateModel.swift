@@ -12,6 +12,7 @@ extension Bolus {
         // added for bolus calculator
         @Injected() var glucoseStorage: GlucoseStorage!
         @Injected() var settings: SettingsManager!
+        @Injected() var nsManager: NightscoutManager!
 
         @Published var suggestion: Suggestion?
         @Published var amount: Decimal = 0
@@ -208,6 +209,15 @@ extension Bolus {
 
                 self.getDeltaBG()
             }
+        }
+
+        func backToCarbsView(_ meal: [CarbsEntry], _ complexEntry: Bool) {
+            debug(.apsManager, "Start deleting carbs")
+            nsManager.deleteCarbs(
+                at: meal.first?.id ?? "", isFPU: nil, fpuID: nil, syncID: meal.first?.id ?? "",
+                complex: complexEntry
+            )
+            showModal(for: .addCarbs(editMode: true, meal: meal))
         }
     }
 }

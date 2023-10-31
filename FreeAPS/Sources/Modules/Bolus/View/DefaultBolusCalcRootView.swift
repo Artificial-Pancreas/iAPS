@@ -5,6 +5,7 @@ extension Bolus {
     struct DefaultBolusCalcRootView: BaseView {
         let resolver: Resolver
         let waitForSuggestion: Bool
+        let meal: [CarbsEntry]?
         @StateObject var state = StateModel()
 
         @State private var isAddInsulinAlertPresented = false

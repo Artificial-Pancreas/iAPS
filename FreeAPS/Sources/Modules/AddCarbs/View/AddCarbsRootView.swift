@@ -5,6 +5,8 @@ import Swinject
 extension AddCarbs {
     struct RootView: BaseView {
         let resolver: Resolver
+        let editMode: Bool
+        let meal: [CarbsEntry]?
         @StateObject var state = StateModel()
         @State var dish: String = ""
         @State var isPromptPresented = false
@@ -129,7 +131,11 @@ extension AddCarbs {
                     }
                 }
             }
-            .onAppear(perform: configureView)
+            .onAppear {
+                configureView {
+                    state.loadEntries(editMode, meal)
+                }
+            }
             .navigationTitle("Add Meals")
             .navigationBarTitleDisplayMode(.inline)
             .navigationBarItems(leading: Button("Close", action: state.hideModal))

@@ -12,7 +12,7 @@ protocol CarbsStorage {
     func syncDate() -> Date
     func recent() -> [CarbsEntry]
     func nightscoutTretmentsNotUploaded() -> [NigtscoutTreatment]
-    func deleteCarbs(at date: Date)
+    func deleteCarbs(at date: String, complex: Bool?)
 }
 
 final class BaseCarbsStorage: CarbsStorage, Injectable {
@@ -71,7 +71,7 @@ final class BaseCarbsStorage: CarbsStorage, Injectable {
                 // New date for each carb equivalent
                 var useDate = entries.last?.createdAt ?? Date()
                 // Group and Identify all FPUs together
-                let fpuID = UUID().uuidString
+                let fpuID = (entries.last?.id ?? "") + ".fpu"
                 // Create an array of all future carb equivalents.
                 var futureCarbArray = [CarbsEntry]()
                 while carbEquivalents > 0, numberOfEquivalents > 0 {
@@ -81,7 +81,7 @@ final class BaseCarbsStorage: CarbsStorage, Injectable {
                     } else { useDate = useDate.addingTimeInterval(interval.minutes.timeInterval) }
 
                     let eachCarbEntry = CarbsEntry(
-                        id: UUID().uuidString, createdAt: useDate, carbs: equivalent, fat: 0, protein: 0, note: nil,
+                        id: fpuID, createdAt: useDate, carbs: equivalent, fat: 0, protein: 0, note: nil,
                         enteredBy: CarbsEntry.manual, isFPU: true,
                         fpuID: fpuID
                     )
@@ -143,11 +143,12 @@ final class BaseCarbsStorage: CarbsStorage, Injectable {
         storage.retrieve(OpenAPS.Monitor.carbHistory, as: [CarbsEntry].self)?.reversed() ?? []
     }
 
-    func deleteCarbs(at date: Date) {
+    func deleteCarbs(at id: String, complex: Bool?) {
         processQueue.sync {
             var allValues = storage.retrieve(OpenAPS.Monitor.carbHistory, as: [CarbsEntry].self) ?? []
 
-            guard let entryIndex = allValues.firstIndex(where: { $0.createdAt == date }) else {
+            guard let entryIndex = allValues.firstIndex(where: { $0.id == id }) else {
+                debug(.default, "Didn't find anything to delete. Date to search for: " + id.description)
                 return
             }
 
@@ -165,6 +166,17 @@ final class BaseCarbsStorage: CarbsStorage, Injectable {
                 broadcaster.notify(CarbsObserver.self, on: processQueue) {
                     $0.carbsDidUpdate(allValues)
                 }
+            }
+            if let deleteComplexEntriesAlso = complex {
+                guard let fpuIndex = allValues.firstIndex(where: { $0.id == (id + ".fpu") }) else {
+                    debug(
+                        .default,
+                        "Didn't find any complex fat and protein entries to delete. Date to search for: " + id.description
+                    )
+                    return
+                }
+                allValues.removeAll(where: { $0.id == (id + ".fpu") })
+                storage.save(allValues, as: OpenAPS.Monitor.carbHistory)
             }
         }
     }
