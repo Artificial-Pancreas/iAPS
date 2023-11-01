@@ -212,9 +212,13 @@ extension DataTable {
                 Button("Delete", role: .destructive) {
                     alertTreatmentToDelete = item
 
-                    if item.type == .carbs || item.type == .fpus {
-                        alertTitle = item.type == .fpus ? "Delete Carb Equivalents?" : "Delete Carbs?"
-                        alertMessage = item.type == .fpus ? "" : item.amountText
+                    if item.type == .carbs {
+                        alertTitle = "Delete Carbs?"
+                        alertMessage = item.amountText
+                        isRemoveTreatmentAlertPresented = true
+                    } else if item.type == .fpus {
+                        alertTitle = "Delete Carb Equivalents?"
+                        alertMessage = "All FPUs of the meal entry will be deleted"
                         isRemoveTreatmentAlertPresented = true
                     } else {
                         // item is insulin treatment; item.type == .bolus
