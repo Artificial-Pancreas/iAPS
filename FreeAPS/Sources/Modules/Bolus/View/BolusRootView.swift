@@ -5,15 +5,16 @@ extension Bolus {
     struct RootView: BaseView {
         let resolver: Resolver
         let waitForSuggestion: Bool
+        let fetch: Bool
         @StateObject var state = StateModel()
 
         var body: some View {
             if state.useCalc {
                 // show alternative bolus calc based on toggle in bolus calc settings
-                AlternativeBolusCalcRootView(resolver: resolver, waitForSuggestion: waitForSuggestion, state: state)
+                AlternativeBolusCalcRootView(resolver: resolver, waitForSuggestion: waitForSuggestion, fetch: fetch, state: state)
             } else {
                 // show iAPS standard bolus calc
-                DefaultBolusCalcRootView(resolver: resolver, waitForSuggestion: waitForSuggestion, state: state)
+                DefaultBolusCalcRootView(resolver: resolver, waitForSuggestion: waitForSuggestion, fetch: fetch, state: state)
             }
         }
     }

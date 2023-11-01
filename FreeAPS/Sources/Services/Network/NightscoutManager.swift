@@ -9,7 +9,7 @@ protocol NightscoutManager: GlucoseSource {
     func fetchCarbs() -> AnyPublisher<[CarbsEntry], Never>
     func fetchTempTargets() -> AnyPublisher<[TempTarget], Never>
     func fetchAnnouncements() -> AnyPublisher<[Announcement], Never>
-    func deleteCarbs(at date: Date, isFPU: Bool?, fpuID: String?, syncID: String)
+    func deleteCarbs(at uniqueID: String, isFPU: Bool?, fpuID: String?, syncID: String, complex: Bool?)
     func deleteInsulin(at date: Date)
     func deleteManualGlucose(at: Date)
     func uploadStatus()
@@ -177,31 +177,31 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
             .eraseToAnyPublisher()
     }
 
-    func deleteCarbs(at date: Date, isFPU: Bool?, fpuID: String?, syncID: String) {
+    func deleteCarbs(at uniqueID: String, isFPU: Bool?, fpuID: String?, syncID: String, complex: Bool?) {
         // remove in AH
         healthkitManager.deleteCarbs(syncID: syncID, isFPU: isFPU, fpuID: fpuID)
 
         guard let nightscout = nightscoutAPI, isUploadEnabled else {
-            carbsStorage.deleteCarbs(at: date)
+            carbsStorage.deleteCarbs(at: uniqueID, complex: complex)
             return
         }
 
         if let isFPU = isFPU, isFPU {
             guard let fpuID = fpuID else { return }
             let allValues = storage.retrieve(OpenAPS.Monitor.carbHistory, as: [CarbsEntry].self) ?? []
-            let dates = allValues.filter { $0.fpuID == fpuID }.map(\.createdAt).removeDublicates()
+            let dates = allValues.filter { $0.fpuID == fpuID }.map(\.id).removeDublicates()
 
             let publishers = dates
-                .map { d -> AnyPublisher<Void, Swift.Error> in
+                .map { _ -> AnyPublisher<Void, Swift.Error> in
                     nightscout.deleteCarbs(
-                        at: d
+                        at: uniqueID
                     )
                 }
 
             Publishers.MergeMany(publishers)
                 .collect()
                 .sink { completion in
-                    self.carbsStorage.deleteCarbs(at: date)
+                    self.carbsStorage.deleteCarbs(at: uniqueID, complex: complex)
                     switch completion {
                     case .finished:
                         debug(.nightscout, "Carbs deleted")
@@ -217,9 +217,9 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
                 .store(in: &lifetime)
 
         } else {
-            nightscout.deleteCarbs(at: date)
+            nightscout.deleteCarbs(at: uniqueID)
                 .sink { completion in
-                    self.carbsStorage.deleteCarbs(at: date)
+                    self.carbsStorage.deleteCarbs(at: uniqueID, complex: complex)
                     switch completion {
                     case .finished:
                         debug(.nightscout, "Carbs deleted")

@@ -12,7 +12,7 @@ protocol CarbsStorage {
     func syncDate() -> Date
     func recent() -> [CarbsEntry]
     func nightscoutTretmentsNotUploaded() -> [NigtscoutTreatment]
-    func deleteCarbs(at date: Date)
+    func deleteCarbs(at uniqueID: String, complex: Bool?)
 }
 
 final class BaseCarbsStorage: CarbsStorage, Injectable {
@@ -71,7 +71,7 @@ final class BaseCarbsStorage: CarbsStorage, Injectable {
                 // New date for each carb equivalent
                 var useDate = entries.last?.createdAt ?? Date()
                 // Group and Identify all FPUs together
-                let fpuID = UUID().uuidString
+                let fpuID = (entries.last?.id ?? "") + ".fpu"
                 // Create an array of all future carb equivalents.
                 var futureCarbArray = [CarbsEntry]()
                 while carbEquivalents > 0, numberOfEquivalents > 0 {
@@ -81,7 +81,7 @@ final class BaseCarbsStorage: CarbsStorage, Injectable {
                     } else { useDate = useDate.addingTimeInterval(interval.minutes.timeInterval) }
 
                     let eachCarbEntry = CarbsEntry(
-                        id: UUID().uuidString, createdAt: useDate, carbs: equivalent, fat: 0, protein: 0, note: nil,
+                        id: fpuID, createdAt: useDate, carbs: equivalent, fat: 0, protein: 0, note: nil,
                         enteredBy: CarbsEntry.manual, isFPU: true,
                         fpuID: fpuID
                     )
@@ -101,7 +101,7 @@ final class BaseCarbsStorage: CarbsStorage, Injectable {
             } // ------------------------- END OF TPU ----------------------------------------
             // Store the actual (normal) carbs
             if entries.last?.carbs ?? 0 > 0 {
-                uniqEvents = []
+                // uniqEvents = []
                 self.storage.transaction { storage in
                     storage.append(entries, to: file, uniqBy: \.createdAt)
                     uniqEvents = storage.retrieve(file, as: [CarbsEntry].self)?
@@ -143,11 +143,12 @@ final class BaseCarbsStorage: CarbsStorage, Injectable {
         storage.retrieve(OpenAPS.Monitor.carbHistory, as: [CarbsEntry].self)?.reversed() ?? []
     }
 
-    func deleteCarbs(at date: Date) {
+    func deleteCarbs(at uniqueID: String, complex: Bool?) {
         processQueue.sync {
             var allValues = storage.retrieve(OpenAPS.Monitor.carbHistory, as: [CarbsEntry].self) ?? []
 
-            guard let entryIndex = allValues.firstIndex(where: { $0.createdAt == date }) else {
+            guard let entryIndex = allValues.firstIndex(where: { $0.id == uniqueID }) else {
+                debug(.default, "Didn't find anything to delete. Date to search for: " + uniqueID.description)
                 return
             }
 
@@ -165,6 +166,18 @@ final class BaseCarbsStorage: CarbsStorage, Injectable {
                 broadcaster.notify(CarbsObserver.self, on: processQueue) {
                     $0.carbsDidUpdate(allValues)
                 }
+            }
+            // When deleting both carbs and fat and protein (complex meal entry)
+            if let deleteComplexEntriesAlso = complex, deleteComplexEntriesAlso {
+                guard let fpuIndex = allValues.firstIndex(where: { $0.id == (uniqueID + ".fpu") }) else {
+                    debug(
+                        .default,
+                        "Didn't find any complex fat and protein entries to delete. Date to search for: " + uniqueID.description
+                    )
+                    return
+                }
+                allValues.removeAll(where: { $0.id == (uniqueID + ".fpu") })
+                storage.save(allValues, as: OpenAPS.Monitor.carbHistory)
             }
         }
     }
@@ -190,7 +203,8 @@ final class BaseCarbsStorage: CarbsStorage, Injectable {
                 protein: nil,
                 foodType: $0.note,
                 targetTop: nil,
-                targetBottom: nil
+                targetBottom: nil,
+                id: $0.id
             )
         }
         return Array(Set(treatments).subtracting(Set(uploaded)))
