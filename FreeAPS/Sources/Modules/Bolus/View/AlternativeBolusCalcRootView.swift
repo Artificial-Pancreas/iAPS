@@ -209,7 +209,6 @@ extension Bolus {
                         HStack {
                             Text("Calculations")
                                 .font(.title3)
-                                .fontWeight(.semibold)
                             Spacer()
                         }
                         .padding(.vertical, 10)
@@ -251,66 +250,71 @@ extension Bolus {
                                         Text("g").foregroundColor(.secondary)
                                     }
                                 }
-                            }
-                            Divider().fontWeight(.bold).padding(10)
+                            }.padding()
                         }
 
-                        HStack {
-                            Text("Carb Ratio")
-                                .foregroundColor(.secondary)
-                            Spacer()
+                        Divider().fontWeight(.bold)
 
-                            Text(state.carbRatio.formatted())
-                            Text(NSLocalizedString(" g/U", comment: " grams per Unit"))
-                                .foregroundColor(.secondary)
-                        }
-                        HStack {
-                            Text("ISF")
-                                .foregroundColor(.secondary)
-                            Spacer()
-                            let isf = state.isf
-                            Text(isf.formatted())
-                            Text(state.units.rawValue + NSLocalizedString("/U", comment: "/Insulin unit"))
-                                .foregroundColor(.secondary)
-                        }
-                        HStack {
-                            Text("Target Glucose")
-                                .foregroundColor(.secondary)
-                            Spacer()
-                            let target = state.units == .mmolL ? state.target.asMmolL : state.target
-                            Text(target.formatted(.number.grouping(.never).rounded().precision(.fractionLength(fractionDigits))))
-                            Text(state.units.rawValue)
-                                .foregroundColor(.secondary)
-                        }
-                        HStack {
-                            Text("Basal")
-                                .foregroundColor(.secondary)
-                            Spacer()
-                            let basal = state.basal
-                            Text(basal.formatted())
-                            Text(NSLocalizedString(" U/h", comment: " Units per hour"))
-                                .foregroundColor(.secondary)
-                        }
-                        HStack {
-                            Text("Fraction")
-                                .foregroundColor(.secondary)
-                            Spacer()
-                            let fraction = state.fraction
-                            Text(fraction.formatted())
-                        }
-                        if state.useFattyMealCorrectionFactor {
+                        VStack {
                             HStack {
-                                Text("Fatty Meal Factor")
-                                    .foregroundColor(.orange)
+                                Text("Carb Ratio")
+                                    .foregroundColor(.secondary)
                                 Spacer()
-                                let fraction = state.fattyMealFactor
+                                Text(state.carbRatio.formatted())
+                                Text(NSLocalizedString(" g/U", comment: " grams per Unit"))
+                                    .foregroundColor(.secondary)
+                            }
+                            HStack {
+                                Text("ISF")
+                                    .foregroundColor(.secondary)
+                                Spacer()
+                                let isf = state.isf
+                                Text(isf.formatted())
+                                Text(state.units.rawValue + NSLocalizedString("/U", comment: "/Insulin unit"))
+                                    .foregroundColor(.secondary)
+                            }
+                            HStack {
+                                Text("Target Glucose")
+                                    .foregroundColor(.secondary)
+                                Spacer()
+                                let target = state.units == .mmolL ? state.target.asMmolL : state.target
+                                Text(
+                                    target
+                                        .formatted(.number.grouping(.never).rounded().precision(.fractionLength(fractionDigits)))
+                                )
+                                Text(state.units.rawValue)
+                                    .foregroundColor(.secondary)
+                            }
+                            HStack {
+                                Text("Basal")
+                                    .foregroundColor(.secondary)
+                                Spacer()
+                                let basal = state.basal
+                                Text(basal.formatted())
+                                Text(NSLocalizedString(" U/h", comment: " Units per hour"))
+                                    .foregroundColor(.secondary)
+                            }
+                            HStack {
+                                Text("Fraction")
+                                    .foregroundColor(.secondary)
+                                Spacer()
+                                let fraction = state.fraction
                                 Text(fraction.formatted())
-                                    .foregroundColor(.orange)
+                            }
+                            if state.useFattyMealCorrectionFactor {
+                                HStack {
+                                    Text("Fatty Meal Factor")
+                                        .foregroundColor(.orange)
+                                    Spacer()
+                                    let fraction = state.fattyMealFactor
+                                    Text(fraction.formatted())
+                                        .foregroundColor(.orange)
+                                }
                             }
                         }
-                        Divider().fontWeight(.bold).foregroundColor(.white)
-                    }
-                    .padding()
+                    }.padding()
+
+                    Divider().fontWeight(.bold)
 
                     VStack(spacing: 2) {
                         HStack {
@@ -403,7 +407,7 @@ extension Bolus {
                     .padding()
 
                     Divider()
-                        .fontWeight(.bold).foregroundColor(.white)
+                        .fontWeight(.bold)
 
                     HStack {
                         Text("Full Bolus")
@@ -413,11 +417,9 @@ extension Bolus {
                         Text(insulin.formatted()).foregroundStyle(state.roundedWholeCalc < 0 ? Color.loopRed : Color.primary)
                         Text(unit)
                             .foregroundColor(.secondary)
-                    }
-                    .padding()
+                    }.padding()
 
-                    Divider()
-                        .fontWeight(.bold)
+                    Divider().fontWeight(.bold)
 
                     HStack {
                         Text("Result")
@@ -456,6 +458,8 @@ extension Bolus {
                             .foregroundColor(.secondary)
                     }
                     .padding()
+
+                    Divider()
 
                     if exceededMaxBolus {
                         HStack {
