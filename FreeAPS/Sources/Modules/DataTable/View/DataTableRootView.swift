@@ -11,6 +11,13 @@ extension DataTable {
         @State private var removeCarbsAlert: Alert?
         @State private var isRemoveInsulinAlertPresented = false
         @State private var removeInsulinAlert: Alert?
+
+        @State private var isRemoveTreatmentAlertPresented: Bool = false
+        @State private var removeTreatmentAlert: Alert?
+        @State private var alertTreatmentToDelete: Treatment?
+        @State private var alertTitle: String = ""
+        @State private var alertMessage: String = ""
+
         @State private var showExternalInsulin: Bool = false
         @State private var showFutureEntries: Bool = false // default to hide future entries
         @State private var showManualGlucose: Bool = false
@@ -185,87 +192,58 @@ extension DataTable {
 
         @ViewBuilder private func treatmentView(_ item: Treatment) -> some View {
             HStack {
-                Image(systemName: "circle.fill").foregroundColor(item.color)
+                if item.type == .bolus || item.type == .carbs {
+                    Image(systemName: "circle.fill").foregroundColor(item.color).padding(.vertical)
+                } else {
+                    Image(systemName: "circle.fill").foregroundColor(item.color)
+                }
                 Text((item.isSMB ?? false) ? "SMB" : item.type.name)
                 Text(item.amountText).foregroundColor(.secondary)
 
                 if let duration = item.durationText {
                     Text(duration).foregroundColor(.secondary)
                 }
-
-                if item.type == .carbs {
-                    if item.note != "" {
-                        Spacer()
-                        Text(item.note ?? "").foregroundColor(.brown)
-                    }
-                    Spacer()
-                    Image(systemName: "xmark.circle").foregroundColor(.secondary)
-                        .contentShape(Rectangle())
-                        .padding(.vertical)
-                        .onTapGesture {
-                            removeCarbsAlert = Alert(
-                                title: Text("Delete carbs?"),
-                                message: Text(item.amountText),
-                                primaryButton: .destructive(
-                                    Text("Delete"),
-                                    action: {
-                                        state.deleteCarbs(item) }
-                                ),
-                                secondaryButton: .cancel()
-                            )
-                            isRemoveCarbsAlertPresented = true
-                        }
-                        .alert(isPresented: $isRemoveCarbsAlertPresented) {
-                            removeCarbsAlert!
-                        }
-                }
-
-                if item.type == .fpus {
-                    Spacer()
-                    Image(systemName: "xmark.circle").foregroundColor(.secondary)
-                        .contentShape(Rectangle())
-                        .padding(.vertical)
-                        .onTapGesture {
-                            removeCarbsAlert = Alert(
-                                title: Text("Delete carb equivalents?"),
-                                message: Text(""), // Temporary fix. New to fix real amount of carb equivalents later
-                                primaryButton: .destructive(
-                                    Text("Delete"),
-                                    action: { state.deleteCarbs(item) }
-                                ),
-                                secondaryButton: .cancel()
-                            )
-                            isRemoveCarbsAlertPresented = true
-                        }
-                        .alert(isPresented: $isRemoveCarbsAlertPresented) {
-                            removeCarbsAlert!
-                        }
-                }
-
-                if item.type == .bolus {
-                    Spacer()
-                    Image(systemName: "xmark.circle").foregroundColor(.secondary)
-                        .contentShape(Rectangle())
-                        .padding(.vertical)
-                        .onTapGesture {
-                            removeInsulinAlert = Alert(
-                                title: Text("Delete insulin?"),
-                                message: Text(item.amountText),
-                                primaryButton: .destructive(
-                                    Text("Delete"),
-                                    action: { state.deleteInsulin(item) }
-                                ),
-                                secondaryButton: .cancel()
-                            )
-                            isRemoveInsulinAlertPresented = true
-                        }
-                        .alert(isPresented: $isRemoveInsulinAlertPresented) {
-                            removeInsulinAlert!
-                        }
-                }
                 Spacer()
                 Text(dateFormatter.string(from: item.date))
                     .moveDisabled(true)
+            }
+            .disabled(item.type == .tempBasal || item.type == .tempTarget || item.type == .resume || item.type == .suspend)
+            .swipeActions(allowsFullSwipe: true) {
+                Button("Delete", role: .destructive) {
+                    alertTreatmentToDelete = item
+
+                    if item.type == .carbs || item.type == .fpus {
+                        alertTitle = item.type == .fpus ? "Delete Carb Equivalents?" : "Delete Carbs?"
+                        alertMessage = item.type == .fpus ? "" : item.amountText
+                        isRemoveTreatmentAlertPresented = true
+                    } else {
+                        // item is insulin treatment; item.type == .bolus
+                        alertTitle = "Delete Insulin?"
+                        alertMessage = item.amountText
+                        isRemoveTreatmentAlertPresented = true
+                    }
+                }
+            }
+            .alert(
+                Text(alertTitle),
+                isPresented: $isRemoveTreatmentAlertPresented
+            ) {
+                Button("Cancel", role: .cancel) {}
+                Button("Delete", role: .destructive) {
+                    // gracefully unwrap value here. value cannot ever really be nil because it is an existing(!) table entry.
+                    guard let treatmentToDelete = alertTreatmentToDelete else {
+                        // couldn't delete
+                        return
+                    }
+
+                    if treatmentToDelete.type == .carbs || treatmentToDelete.type == .fpus {
+                        state.deleteCarbs(treatmentToDelete)
+                    } else {
+                        state.deleteInsulin(treatmentToDelete)
+                    }
+                }
+            } message: {
+                Text("\n" + alertMessage)
             }
         }
 
