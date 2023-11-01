@@ -481,7 +481,7 @@ extension Home {
                 Rectangle().fill(Color.gray.opacity(0.3)).frame(height: 50 + geo.safeAreaInsets.bottom)
 
                 HStack {
-                    Button { state.showModal(for: .addCarbs(editMode: false, meal: nil)) }
+                    Button { state.showModal(for: .addCarbs(editMode: false)) }
                     label: {
                         ZStack(alignment: Alignment(horizontal: .trailing, vertical: .bottom)) {
                             Image("carbs")
@@ -514,7 +514,7 @@ extension Home {
                     Button {
                         state.showModal(for: .bolus(
                             waitForSuggestion: true,
-                            meal: nil
+                            fetch: false
                         ))
                     }
                     label: {

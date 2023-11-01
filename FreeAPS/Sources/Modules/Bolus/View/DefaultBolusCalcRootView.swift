@@ -5,7 +5,7 @@ extension Bolus {
     struct DefaultBolusCalcRootView: BaseView {
         let resolver: Resolver
         let waitForSuggestion: Bool
-        let meal: [CarbsEntry]?
+        let fetch: Bool
         @StateObject var state = StateModel()
 
         @State private var isAddInsulinAlertPresented = false
@@ -212,7 +212,6 @@ extension Bolus {
             .background(
                 RoundedRectangle(cornerRadius: 8, style: .continuous)
                     .fill(Color(colorScheme == .dark ? UIColor.systemGray4 : UIColor.systemGray4))
-                // .fill(Color(.systemGray).gradient)  // A more prominent pop-up, but harder to read
             )
         }
 

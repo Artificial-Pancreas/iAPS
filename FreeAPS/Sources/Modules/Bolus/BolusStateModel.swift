@@ -37,7 +37,6 @@ extension Bolus {
         var waitForSuggestionInitial: Bool = false
 
         // added for bolus calculator
-        @Published var glucose: [BloodGlucose] = []
         @Published var recentGlucose: BloodGlucose?
         @Published var target: Decimal = 0
         @Published var cob: Decimal = 0
@@ -59,7 +58,13 @@ extension Bolus {
         @Published var fattyMeals: Bool = false
         @Published var fattyMealFactor: Decimal = 0
         @Published var useFattyMealCorrectionFactor: Bool = false
-        @Published var currentTime: String = ""
+        @Published var eventualBG: Int = 0
+
+        @Published var meal: [CarbsEntry]?
+        @Published var carbs: Decimal = 0
+        @Published var fat: Decimal = 0
+        @Published var protein: Decimal = 0
+        @Published var note: String = ""
 
         override func subscribe() {
             setupInsulinRequired()
@@ -91,17 +96,14 @@ extension Bolus {
         func getDeltaBG() {
             let glucose = glucoseStorage.recent()
             guard glucose.count >= 3 else { return }
-
             let lastGlucose = glucose.last!
-
             let thirdLastGlucose = glucose[glucose.count - 3]
             let delta = Decimal(lastGlucose.glucose!) - Decimal(thirdLastGlucose.glucose!)
-
             deltaBG = delta
         }
 
         // CALCULATIONS FOR THE BOLUS CALCULATOR
-        func calculateInsulin() -> Decimal {
+        func calculateInsulin() {
             // for mmol conversion
             var conversion: Decimal = 1.0
             if units == .mmolL {
@@ -152,7 +154,7 @@ extension Bolus {
             let insulinCalculatedAsDouble = Double(insulinCalculated)
             roundedInsulinCalculated = Decimal(round(100 * insulinCalculatedAsDouble) / 100)
 
-            return insulinCalculated
+            insulinRecommended = min(insulinCalculated, maxBolus)
         }
 
         func add() {
@@ -206,18 +208,17 @@ extension Bolus {
 
                 self.insulinRecommended = self.apsManager
                     .roundBolus(amount: max(self.insulinRecommended, 0))
-
                 self.getDeltaBG()
             }
         }
 
-        func backToCarbsView(_ meal: [CarbsEntry], _ complexEntry: Bool) {
+        func backToCarbsView(complexEntry: Bool, _ id: String) {
             debug(.apsManager, "Start deleting carbs")
             nsManager.deleteCarbs(
-                at: meal.first?.id ?? "", isFPU: nil, fpuID: nil, syncID: meal.first?.id ?? "",
+                at: id, isFPU: nil, fpuID: nil, syncID: id,
                 complex: complexEntry
             )
-            showModal(for: .addCarbs(editMode: true, meal: meal))
+            showModal(for: .addCarbs(editMode: true))
         }
     }
 }

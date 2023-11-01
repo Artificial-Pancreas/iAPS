@@ -35,7 +35,6 @@ extension AddCarbs {
                 return
             }
             carbs = min(carbs, maxCarbs)
-
             id_ = UUID().uuidString
 
             let carbsToStore = [CarbsEntry(
@@ -48,24 +47,15 @@ extension AddCarbs {
                 enteredBy: CarbsEntry.manual,
                 isFPU: false, fpuID: nil
             )]
-
-            carbsStorage.storeCarbs(
-                carbsToStore
-            )
-
-            /*
-             let entries = Meals(
-                 carbs: carbs, protein: protein, fat: fat, note: note, summary: waitersNotepad(), id: id_, date: date,
-                 enteredBy: CarbsEntry.manual, isFPU: false, fpuID: nil
-             )
-              */
+            carbsStorage.storeCarbs(carbsToStore)
 
             if settingsManager.settings.skipBolusScreenAfterCarbs {
                 apsManager.determineBasalSync()
                 showModal(for: nil)
-            } else {
-                showModal(for: .bolus(waitForSuggestion: true, meal: carbsToStore))
-            }
+            } else if carbs > 0 {
+                saveToCoreData(carbsToStore)
+                showModal(for: .bolus(waitForSuggestion: true, fetch: true))
+            } else { hideModal() }
         }
 
         func deletePreset() {
@@ -174,15 +164,36 @@ extension AddCarbs {
             return waitersNotepadString
         }
 
-        func loadEntries(_ editMode: Bool, _ meal: [CarbsEntry]?) {
+        func loadEntries(_ editMode: Bool) {
             if editMode {
-                if let entries = meal {
-                    carbs = entries.first?.carbs ?? 0
-                    fat = entries.first?.fat ?? 0
-                    protein = entries.first?.protein ?? 0
-                    note = entries.first?.note ?? ""
-                    id_ = entries.first?.id ?? ""
+                coredataContext.perform {
+                    var mealToEdit = [Meals]()
+                    let requestMeal = Meals.fetchRequest() as NSFetchRequest<Meals>
+                    let sortMeal = NSSortDescriptor(key: "createdAt", ascending: false)
+                    requestMeal.sortDescriptors = [sortMeal]
+                    requestMeal.fetchLimit = 1
+                    try? mealToEdit = self.coredataContext.fetch(requestMeal)
+
+                    self.carbs = Decimal(mealToEdit.first?.carbs ?? 0)
+                    self.fat = Decimal(mealToEdit.first?.fat ?? 0)
+                    self.protein = Decimal(mealToEdit.first?.protein ?? 0)
+                    self.note = mealToEdit.first?.note ?? ""
+                    self.id_ = mealToEdit.first?.id ?? ""
                 }
+            }
+        }
+
+        func saveToCoreData(_ stored: [CarbsEntry]) {
+            let save = Meals(context: coredataContext)
+            save.id = stored.first?.id ?? ""
+            save.createdAt = stored.first?.createdAt ?? .distantPast
+            save.id = stored.first?.id ?? ""
+            save.carbs = Double(stored.first?.carbs ?? 0)
+            save.fat = Double(stored.first?.fat ?? 0)
+            save.protein = Double(stored.first?.protein ?? 0)
+            save.note = stored.first?.note ?? ""
+            if coredataContext.hasChanges {
+                try? coredataContext.save()
             }
         }
     }

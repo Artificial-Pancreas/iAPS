@@ -6,7 +6,6 @@ extension AddCarbs {
     struct RootView: BaseView {
         let resolver: Resolver
         let editMode: Bool
-        let meal: [CarbsEntry]?
         @StateObject var state = StateModel()
         @State var dish: String = ""
         @State var isPromptPresented = false
@@ -120,7 +119,7 @@ extension AddCarbs {
 
                 Section {
                     Button { state.add() }
-                    label: { Text("Save and continue") }
+                    label: { Text(state.carbs > 0 ? "Save and continue" : "Save") }
                         .disabled(state.carbs <= 0 && state.fat <= 0 && state.protein <= 0)
                         .frame(maxWidth: .infinity, alignment: .center)
                 } footer: { Text(state.waitersNotepad().description) }
@@ -133,7 +132,7 @@ extension AddCarbs {
             }
             .onAppear {
                 configureView {
-                    state.loadEntries(editMode, meal)
+                    state.loadEntries(editMode)
                 }
             }
             .navigationTitle("Add Meals")
