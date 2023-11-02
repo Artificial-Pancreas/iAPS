@@ -108,7 +108,7 @@ extension Bolus {
                         let id_ = meal.first?.id ?? ""
                         state.backToCarbsView(complexEntry: fetch, id_)
                     }
-                    label: { Text("Edit Meal / Add Meal") }.frame(maxWidth: .infinity, alignment: .center)
+                    label: { Text(fetch ? "Delete and Edit" : "Add Meal") }.frame(maxWidth: .infinity, alignment: .center)
                 }
 
                 Section {
