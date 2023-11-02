@@ -148,9 +148,10 @@ extension NightscoutAPI {
         components.port = url.port
         components.path = Config.treatmentsPath
         components.queryItems = [
-            URLQueryItem(name: "find[carbs][$exists]", value: "true"),
+            // Removed below because it prevented all futire entries to be deleted. Don't know why?
+            /* URLQueryItem(name: "find[carbs][$exists]", value: "true"), */
             URLQueryItem(
-                name: "find[id][$eq]",
+                name: "find[collectionID][$eq]",
                 value: uniqueID
             )
         ]
@@ -322,7 +323,7 @@ extension NightscoutAPI {
         if let secret = secret {
             request.addValue(secret.sha1(), forHTTPHeaderField: "api-secret")
         }
-        request.httpBody = try! JSONCoding.encoder.encode(treatments)
+        request.httpBody = try? JSONCoding.encoder.encode(treatments)
         request.httpMethod = "POST"
 
         return service.run(request)

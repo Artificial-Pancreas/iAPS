@@ -36,7 +36,7 @@ extension DataTable {
                 at: treatement.id,
                 isFPU: treatement.isFPU,
                 fpuID: treatement.fpuID,
-                syncID: treatement.id, complex: nil
+                syncID: treatement.id
             )
         }
 
