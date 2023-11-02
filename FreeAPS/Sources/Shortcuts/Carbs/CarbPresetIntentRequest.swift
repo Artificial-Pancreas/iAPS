@@ -11,7 +11,7 @@ import Foundation
 
         carbsStorage.storeCarbs(
             [CarbsEntry(
-                id: UUID().uuidString,
+                collectionID: UUID().uuidString,
                 createdAt: dateAdded,
                 carbs: carbs,
                 fat: Decimal(quantityFat),
