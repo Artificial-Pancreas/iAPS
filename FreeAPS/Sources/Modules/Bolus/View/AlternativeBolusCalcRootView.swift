@@ -14,8 +14,8 @@ extension Bolus {
 
         private enum Config {
             static let dividerHeight: CGFloat = 2
+            static let overlayColour: Color = .white // Currently commented out
             static let spacing: CGFloat = 3
-            static let overlayColour: Color = .white // Currently not used
         }
 
         @Environment(\.colorScheme) var colorScheme
@@ -272,7 +272,8 @@ extension Bolus {
                             }.padding()
                         }
 
-                        if fetch { Divider().frame(height: Config.dividerHeight) }
+                        if fetch { Divider().frame(height: Config.dividerHeight) // .overlay(Config.overlayColour)
+                        }
 
                         VStack {
                             HStack {
@@ -333,7 +334,7 @@ extension Bolus {
                         }.padding()
                     }
 
-                    Divider().frame(height: Config.dividerHeight)
+                    Divider().frame(height: Config.dividerHeight) // .overlay(Config.overlayColour)
 
                     VStack(spacing: Config.spacing) {
                         HStack {
@@ -424,7 +425,7 @@ extension Bolus {
                         }
                     }.padding()
 
-                    Divider().frame(height: Config.dividerHeight)
+                    Divider().frame(height: Config.dividerHeight) // .overlay(Config.overlayColour)
 
                     VStack {
                         HStack {
@@ -479,7 +480,7 @@ extension Bolus {
                         }
                     }.padding()
 
-                    Divider().frame(height: Config.dividerHeight)
+                    Divider().frame(height: Config.dividerHeight) // .overlay(Config.overlayColour)
 
                     if exceededMaxBolus {
                         HStack {
