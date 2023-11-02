@@ -11,6 +11,13 @@ extension Bolus {
         @StateObject var state: StateModel
         @State private var showInfo = false
         @State private var exceededMaxBolus = false
+
+        private enum Config {
+            static let dividerHeight: CGFloat = 2
+            static let spacing: CGFloat = 3
+            static let overlayColour: Color = .white // Currently not used
+        }
+
         @Environment(\.colorScheme) var colorScheme
 
         @FetchRequest(
@@ -22,6 +29,13 @@ extension Bolus {
             let formatter = NumberFormatter()
             formatter.numberStyle = .decimal
             formatter.maximumFractionDigits = 2
+            return formatter
+        }
+
+        private var mealFormatter: NumberFormatter {
+            let formatter = NumberFormatter()
+            formatter.numberStyle = .decimal
+            formatter.maximumFractionDigits = 1
             return formatter
         }
 
@@ -101,7 +115,6 @@ extension Bolus {
                     HStack {
                         Button(action: {
                             showInfo.toggle()
-                            state.calculateInsulin()
                         }, label: {
                             Image(systemName: "info.circle")
                             Text("Calculations")
@@ -118,23 +131,31 @@ extension Bolus {
                             .toggleStyle(CheckboxToggleStyle())
                             .font(.footnote)
                             .onChange(of: state.useFattyMealCorrectionFactor) { _ in
-                                state.calculateInsulin()
+                                state.insulinCalculated = state.calculateInsulin()
                             }
                         }
                     }
 
-                    HStack {
-                        Text("Recommended Bolus")
-                        Spacer()
-                        Text(
-                            formatter
-                                .string(from: Double(state.insulinRecommended) as NSNumber)!
-                        )
-                        Text(
-                            NSLocalizedString(" U", comment: "Unit in number of units delivered (keep the space character!)")
-                        ).foregroundColor(.secondary)
-                    }.contentShape(Rectangle())
-                        .onTapGesture { state.amount = state.insulinRecommended }
+                    if state.waitForSuggestion {
+                        HStack {
+                            Text("Wait please").foregroundColor(.secondary)
+                            Spacer()
+                            ActivityIndicator(isAnimating: .constant(true), style: .medium) // fix iOS 15 bug
+                        }
+                    } else {
+                        HStack {
+                            Text("Recommended Bolus")
+                            Spacer()
+                            Text(
+                                formatter
+                                    .string(from: Double(state.insulinCalculated) as NSNumber) ?? ""
+                            )
+                            Text(
+                                NSLocalizedString(" U", comment: "Unit in number of units delivered (keep the space character!)")
+                            ).foregroundColor(.secondary)
+                        }.contentShape(Rectangle())
+                            .onTapGesture { state.amount = state.insulinCalculated }
+                    }
 
                     if !state.waitForSuggestion {
                         HStack {
@@ -183,7 +204,7 @@ extension Bolus {
                 configureView {
                     state.waitForSuggestionInitial = waitForSuggestion
                     state.waitForSuggestion = waitForSuggestion
-                    state.calculateInsulin()
+                    state.insulinCalculated = state.calculateInsulin()
                 }
             }
 
@@ -200,18 +221,16 @@ extension Bolus {
             ((meal.first?.fat ?? 0) > 0) || ((meal.first?.protein ?? 0) > 0)
         }
 
-        // calculation showed in popup
+        // Pop-up
         var bolusInfoAlternativeCalculator: some View {
             VStack {
                 let unit = NSLocalizedString(" U", comment: "Unit in number of units delivered (keep the space character!)")
                 VStack {
-                    VStack(spacing: 2) {
+                    VStack(spacing: Config.spacing) {
                         HStack {
                             Text("Calculations")
-                                .font(.title3)
-                            Spacer()
-                        }
-                        .padding(.vertical, 10)
+                                .font(.title3).frame(maxWidth: .infinity, alignment: .center)
+                        }.padding(10)
 
                         if fetch {
                             VStack {
@@ -228,7 +247,7 @@ extension Bolus {
                                         Text("Carbs")
                                             .foregroundColor(.secondary)
                                         Spacer()
-                                        Text(carbs.formatted())
+                                        Text(mealFormatter.string(from: carbs as NSNumber) ?? "")
                                         Text("g").foregroundColor(.secondary)
                                     }
                                 }
@@ -237,7 +256,7 @@ extension Bolus {
                                         Text("Protein")
                                             .foregroundColor(.secondary)
                                         Spacer()
-                                        Text(protein.formatted())
+                                        Text(mealFormatter.string(from: protein as NSNumber) ?? "")
                                         Text("g").foregroundColor(.secondary)
                                     }
                                 }
@@ -246,14 +265,14 @@ extension Bolus {
                                         Text("Fat")
                                             .foregroundColor(.secondary)
                                         Spacer()
-                                        Text(fat.formatted()).foregroundColor(.orange)
+                                        Text(mealFormatter.string(from: fat as NSNumber) ?? "")
                                         Text("g").foregroundColor(.secondary)
                                     }
                                 }
                             }.padding()
                         }
 
-                        Divider().fontWeight(.bold)
+                        if fetch { Divider().frame(height: Config.dividerHeight) }
 
                         VStack {
                             HStack {
@@ -311,12 +330,12 @@ extension Bolus {
                                         .foregroundColor(.orange)
                                 }
                             }
-                        }
-                    }.padding()
+                        }.padding()
+                    }
 
-                    Divider().fontWeight(.bold)
+                    Divider().frame(height: Config.dividerHeight)
 
-                    VStack(spacing: 2) {
+                    VStack(spacing: Config.spacing) {
                         HStack {
                             Text("Glucose")
                                 .foregroundColor(.secondary)
@@ -403,63 +422,64 @@ extension Bolus {
                             Text(unit)
                                 .foregroundColor(.secondary)
                         }
-                    }
-                    .padding()
-
-                    Divider()
-                        .fontWeight(.bold)
-
-                    HStack {
-                        Text("Full Bolus")
-                            .foregroundColor(.secondary)
-                        Spacer()
-                        let insulin = state.roundedWholeCalc
-                        Text(insulin.formatted()).foregroundStyle(state.roundedWholeCalc < 0 ? Color.loopRed : Color.primary)
-                        Text(unit)
-                            .foregroundColor(.secondary)
                     }.padding()
 
-                    Divider().fontWeight(.bold)
+                    Divider().frame(height: Config.dividerHeight)
 
-                    HStack {
-                        Text("Result")
-                            .fontWeight(.bold)
-                        Spacer()
-                        let fraction = state.fraction
-                        Text(fraction.formatted())
-                        Text(" x ")
-                            .foregroundColor(.secondary)
-
-                        // if fatty meal is chosen
-                        if state.useFattyMealCorrectionFactor {
-                            let fattyMealFactor = state.fattyMealFactor
-                            Text(fattyMealFactor.formatted())
-                                .foregroundColor(.orange)
-                            Text(" x ")
+                    VStack {
+                        HStack {
+                            Text("Full Bolus")
+                                .foregroundColor(.secondary)
+                            Spacer()
+                            let insulin = state.roundedWholeCalc
+                            Text(insulin.formatted()).foregroundStyle(state.roundedWholeCalc < 0 ? Color.loopRed : Color.primary)
+                            Text(unit)
                                 .foregroundColor(.secondary)
                         }
+                    }.padding(.horizontal)
 
-                        let insulin = state.roundedWholeCalc
-                        Text(insulin.formatted()).foregroundStyle(state.roundedWholeCalc < 0 ? Color.loopRed : Color.primary)
-                        Text(unit)
-                            .foregroundColor(.secondary)
-                        Text(" = ")
-                            .foregroundColor(.secondary)
+                    Divider().frame(height: Config.dividerHeight)
 
-                        let result = state.insulinCalculated
-                        // rounding
-                        let resultAsDouble = NSDecimalNumber(decimal: result).doubleValue
-                        let roundedResult = Decimal(round(100 * resultAsDouble) / 100)
-                        Text(roundedResult.formatted())
-                            .fontWeight(.bold)
-                            .font(.system(size: 16))
-                            .foregroundColor(.blue)
-                        Text(unit)
-                            .foregroundColor(.secondary)
-                    }
-                    .padding()
+                    VStack {
+                        HStack {
+                            Text("Result")
+                                .fontWeight(.bold)
+                            Spacer()
+                            let fraction = state.fraction
+                            Text(fraction.formatted())
+                            Text(" x ")
+                                .foregroundColor(.secondary)
 
-                    Divider()
+                            // if fatty meal is chosen
+                            if state.useFattyMealCorrectionFactor {
+                                let fattyMealFactor = state.fattyMealFactor
+                                Text(fattyMealFactor.formatted())
+                                    .foregroundColor(.orange)
+                                Text(" x ")
+                                    .foregroundColor(.secondary)
+                            }
+
+                            let insulin = state.roundedWholeCalc
+                            Text(insulin.formatted()).foregroundStyle(state.roundedWholeCalc < 0 ? Color.loopRed : Color.primary)
+                            Text(unit)
+                                .foregroundColor(.secondary)
+                            Text(" = ")
+                                .foregroundColor(.secondary)
+
+                            let result = state.insulinCalculated
+                            // rounding
+                            let resultAsDouble = NSDecimalNumber(decimal: result).doubleValue
+                            let roundedResult = Decimal(round(100 * resultAsDouble) / 100)
+                            Text(roundedResult.formatted())
+                                .fontWeight(.bold)
+                                .font(.system(size: 16))
+                                .foregroundColor(.blue)
+                            Text(unit)
+                                .foregroundColor(.secondary)
+                        }
+                    }.padding()
+
+                    Divider().frame(height: Config.dividerHeight)
 
                     if exceededMaxBolus {
                         HStack {
