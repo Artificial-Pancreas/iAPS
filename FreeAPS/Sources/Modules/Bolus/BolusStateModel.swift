@@ -153,10 +153,10 @@ extension Bolus {
             insulinCalculated = max(insulinCalculated, 0)
             let insulinCalculatedAsDouble = Double(insulinCalculated)
             roundedInsulinCalculated = Decimal(round(100 * insulinCalculatedAsDouble) / 100)
-
             insulinCalculated = min(insulinCalculated, maxBolus)
 
-            return insulinCalculated
+            return apsManager
+                .roundBolus(amount: max(insulinCalculated, 0))
         }
 
         func add() {
