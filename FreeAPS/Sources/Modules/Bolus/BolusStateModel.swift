@@ -219,21 +219,25 @@ extension Bolus {
         }
 
         func backToCarbsView(complexEntry: Bool, _ id: String) {
-            if complexEntry {
-                DispatchQueue.safeMainSync {
-                    nsManager.deleteCarbs(
-                        at: id, isFPU: nil, fpuID: nil, syncID: id
-                    )
-                    nsManager.deleteCarbs(
-                        at: id + ".fpu", isFPU: nil, fpuID: nil, syncID: id
-                    )
-                }
+            delete(deleteTwice: complexEntry, id: id)
+            showModal(for: .addCarbs(editMode: complexEntry))
+        }
+
+        func delete(deleteTwice: Bool, id: String) {
+            if deleteTwice {
+                // DispatchQueue.safeMainSync {
+                nsManager.deleteCarbs(
+                    at: id, isFPU: nil, fpuID: nil, syncID: id
+                )
+                nsManager.deleteCarbs(
+                    at: id + ".fpu", isFPU: nil, fpuID: nil, syncID: id
+                )
+                // }
             } else {
                 nsManager.deleteCarbs(
                     at: id, isFPU: nil, fpuID: nil, syncID: id
                 )
             }
-            showModal(for: .addCarbs(editMode: complexEntry))
         }
     }
 }

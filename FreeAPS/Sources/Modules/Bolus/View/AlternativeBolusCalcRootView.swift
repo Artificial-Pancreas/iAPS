@@ -11,6 +11,7 @@ extension Bolus {
         @StateObject var state: StateModel
         @State private var showInfo = false
         @State private var exceededMaxBolus = false
+        @State private var keepForNextWiew: Bool = false
 
         private enum Config {
             static let dividerHeight: CGFloat = 2
@@ -106,9 +107,10 @@ extension Bolus {
                 Section {
                     Button {
                         let id_ = meal.first?.id ?? ""
+                        keepForNextWiew = true
                         state.backToCarbsView(complexEntry: fetch, id_)
                     }
-                    label: { Text(fetch ? "Delete and Go Back" : "Add Meal") }.frame(maxWidth: .infinity, alignment: .center)
+                    label: { Text(fetch ? "Edit Meal" : "Add Meal") }.frame(maxWidth: .infinity, alignment: .center)
                 }
 
                 Section {
@@ -182,10 +184,16 @@ extension Bolus {
 
                 Section {
                     if state.amount == 0, waitForSuggestion {
-                        Button { state.showModal(for: nil) }
+                        Button {
+                            keepForNextWiew = true
+                            state.showModal(for: nil)
+                        }
                         label: { Text("Continue without bolus") }.frame(maxWidth: .infinity, alignment: .center)
                     } else {
-                        Button { state.add() }
+                        Button {
+                            keepForNextWiew = true
+                            state.add()
+                        }
                         label: { Text(exceededMaxBolus ? "Max Bolus exceeded!" : "Enact bolus") }
                             .frame(maxWidth: .infinity, alignment: .center)
                             .foregroundColor(exceededMaxBolus ? .loopRed : .accentColor)
@@ -198,8 +206,10 @@ extension Bolus {
             .blur(radius: showInfo ? 3 : 0)
             .navigationTitle("Enact Bolus")
             .navigationBarTitleDisplayMode(.inline)
-            .navigationBarItems(leading: Button("Close", action: state.hideModal))
-
+            .navigationBarItems(
+                leading: Button { state.hideModal() }
+                label: { Text("Close") }
+            )
             .onAppear {
                 configureView {
                     state.waitForSuggestionInitial = waitForSuggestion
@@ -207,7 +217,13 @@ extension Bolus {
                     state.insulinCalculated = state.calculateInsulin()
                 }
             }
-
+            .onDisappear {
+                if fetch, hasFatOrProtein, !keepForNextWiew {
+                    state.delete(deleteTwice: true, id: meal.first?.id ?? "")
+                } else if fetch, !keepForNextWiew {
+                    state.delete(deleteTwice: false, id: meal.first?.id ?? "")
+                }
+            }
             .popup(isPresented: showInfo) {
                 bolusInfoAlternativeCalculator
             }
