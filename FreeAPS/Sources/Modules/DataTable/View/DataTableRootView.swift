@@ -6,17 +6,11 @@ extension DataTable {
     struct RootView: BaseView {
         let resolver: Resolver
         @StateObject var state = StateModel()
-
-        @State private var isRemoveCarbsAlertPresented = false
-        @State private var removeCarbsAlert: Alert?
-        @State private var isRemoveInsulinAlertPresented = false
-        @State private var removeInsulinAlert: Alert?
-
         @State private var isRemoveTreatmentAlertPresented: Bool = false
         @State private var removeTreatmentAlert: Alert?
-        @State private var alertTreatmentToDelete: Treatment?
         @State private var alertTitle: String = ""
         @State private var alertMessage: String = ""
+        @State private var alertTreatmentToDelete: Treatment?
 
         @State private var showExternalInsulin: Bool = false
         @State private var showFutureEntries: Bool = false // default to hide future entries
@@ -208,8 +202,8 @@ extension DataTable {
                     .moveDisabled(true)
             }
             .disabled(item.type == .tempBasal || item.type == .tempTarget || item.type == .resume || item.type == .suspend)
-            .swipeActions(allowsFullSwipe: true) {
-                Button("Delete", role: .destructive) {
+            .swipeActions {
+                Button("Delete", role: .none) {
                     alertTreatmentToDelete = item
 
                     if item.type == .carbs {
@@ -226,7 +220,7 @@ extension DataTable {
                         alertMessage = item.amountText
                         isRemoveTreatmentAlertPresented = true
                     }
-                }
+                }.tint(.red)
             }
             .alert(
                 Text(alertTitle),
@@ -234,9 +228,11 @@ extension DataTable {
             ) {
                 Button("Cancel", role: .cancel) {}
                 Button("Delete", role: .destructive) {
-                    // gracefully unwrap value here. value cannot ever really be nil because it is an existing(!) table entry.
+                    // gracefully unwrap value here.
+                    // value cannot ever really be nil because it is an existing(!) table entry
+                    // but just to be sure.
                     guard let treatmentToDelete = alertTreatmentToDelete else {
-                        // couldn't delete
+                        print("Cannot gracefully unwrap alertTreatmentToDelete!")
                         return
                     }
 
