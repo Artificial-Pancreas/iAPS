@@ -119,7 +119,7 @@ extension AddCarbs {
 
                 Section {
                     Button { state.add() }
-                    label: { Text(state.carbs > 0 ? "Save and continue" : "Save") }
+                    label: { Text(state.carbs > 0 ? "Continue" : "Save") }
                         .disabled(state.carbs <= 0 && state.fat <= 0 && state.protein <= 0)
                         .frame(maxWidth: .infinity, alignment: .center)
                 } footer: { Text(state.waitersNotepad().description) }
