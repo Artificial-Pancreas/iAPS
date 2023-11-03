@@ -20,6 +20,7 @@ extension AddCarbs {
         @Published var note: String = ""
         @Published var id_: String = ""
         @Published var summary: String = ""
+        @Published var skipBolus: Bool = false
 
         let coredataContext = CoreDataStack.shared.persistentContainer.viewContext
 
@@ -27,6 +28,7 @@ extension AddCarbs {
             subscribeSetting(\.useFPUconversion, on: $useFPUconversion) { useFPUconversion = $0 }
             carbsRequired = provider.suggestion?.carbsReq
             maxCarbs = settings.settings.maxCarbs
+            skipBolus = settingsManager.settings.skipBolusScreenAfterCarbs
         }
 
         func add() {
@@ -49,7 +51,7 @@ extension AddCarbs {
             )]
             carbsStorage.storeCarbs(carbsToStore)
 
-            if settingsManager.settings.skipBolusScreenAfterCarbs {
+            if skipBolus {
                 apsManager.determineBasalSync()
                 showModal(for: nil)
             } else if carbs > 0 {

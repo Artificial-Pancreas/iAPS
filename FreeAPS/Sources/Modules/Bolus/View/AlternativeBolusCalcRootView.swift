@@ -159,12 +159,14 @@ extension Bolus {
                             )
                     }
                 }
-                Section {
-                    Button {
-                        keepForNextWiew = true
-                        state.showModal(for: nil)
+                if state.amount <= 0 {
+                    Section {
+                        Button {
+                            keepForNextWiew = true
+                            state.showModal(for: nil)
+                        }
+                        label: { Text("Continue without bolus") }.frame(maxWidth: .infinity, alignment: .center)
                     }
-                    label: { Text("Continue without bolus") }.frame(maxWidth: .infinity, alignment: .center)
                 }
             }
             .blur(radius: showInfo ? 3 : 0)
