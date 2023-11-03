@@ -8,9 +8,11 @@ extension PreferencesEditor {
         @Published var insulinReqPercentage: Decimal = 70
         @Published var skipBolusScreenAfterCarbs = false
         @Published var sections: [FieldSection] = []
+        @Published var useAlternativeBolusCalc: Bool = false
 
         override func subscribe() {
             preferences = provider.preferences
+            useAlternativeBolusCalc = settingsManager.settings.useCalc
             subscribeSetting(\.allowAnnouncements, on: $allowAnnouncements) { allowAnnouncements = $0 }
             subscribeSetting(\.insulinReqPercentage, on: $insulinReqPercentage) { insulinReqPercentage = $0 }
             subscribeSetting(\.skipBolusScreenAfterCarbs, on: $skipBolusScreenAfterCarbs) { skipBolusScreenAfterCarbs = $0 }
@@ -22,12 +24,6 @@ extension PreferencesEditor {
             }
 
             let mainFields = [
-                Field(
-                    displayName: NSLocalizedString("Insulin curve", comment: "Insulin curve"),
-                    type: .insulinCurve(keypath: \.curve),
-                    infoText: "Insulin curve info",
-                    settable: self
-                ),
                 Field(
                     displayName: NSLocalizedString("Max IOB", comment: "Max IOB"),
                     type: .decimal(keypath: \.maxIOB),

@@ -1,3 +1,5 @@
+
+import LoopKit
 import SwiftUI
 import Swinject
 
@@ -7,27 +9,62 @@ extension Bolus {
         @Injected() var apsManager: APSManager!
         @Injected() var broadcaster: Broadcaster!
         @Injected() var pumpHistoryStorage: PumpHistoryStorage!
+        // added for bolus calculator
+        @Injected() var glucoseStorage: GlucoseStorage!
+        @Injected() var settings: SettingsManager!
+        @Injected() var nsManager: NightscoutManager!
 
+        @Published var suggestion: Suggestion?
         @Published var amount: Decimal = 0
         @Published var insulinRecommended: Decimal = 0
         @Published var insulinRequired: Decimal = 0
-        @Published var waitForSuggestion: Bool = false
-        @Published var error: Bool = false
+        @Published var units: GlucoseUnits = .mmolL
+        @Published var percentage: Decimal = 0
+        @Published var threshold: Decimal = 0
+        @Published var maxBolus: Decimal = 0
         @Published var errorString: Decimal = 0
         @Published var evBG: Int = 0
         @Published var insulin: Decimal = 0
-        @Published var target: Decimal = 0
         @Published var isf: Decimal = 0
-        @Published var percentage: Decimal = 0
-        @Published var threshold: Decimal = 0
+        @Published var error: Bool = false
         @Published var minGuardBG: Decimal = 0
         @Published var minDelta: Decimal = 0
         @Published var expectedDelta: Decimal = 0
         @Published var minPredBG: Decimal = 0
-        @Published var units: GlucoseUnits = .mmolL
-        @Published var maxBolus: Decimal = 0
+        @Published var waitForSuggestion: Bool = false
+        @Published var carbRatio: Decimal = 0
 
         var waitForSuggestionInitial: Bool = false
+
+        // added for bolus calculator
+        @Published var recentGlucose: BloodGlucose?
+        @Published var target: Decimal = 0
+        @Published var cob: Decimal = 0
+        @Published var iob: Decimal = 0
+
+        @Published var currentBG: Decimal = 0
+        @Published var fifteenMinInsulin: Decimal = 0
+        @Published var deltaBG: Decimal = 0
+        @Published var targetDifferenceInsulin: Decimal = 0
+        @Published var wholeCobInsulin: Decimal = 0
+        @Published var iobInsulinReduction: Decimal = 0
+        @Published var wholeCalc: Decimal = 0
+        @Published var roundedWholeCalc: Decimal = 0
+        @Published var insulinCalculated: Decimal = 0
+        @Published var roundedInsulinCalculated: Decimal = 0
+        @Published var fraction: Decimal = 0
+        @Published var useCalc: Bool = false
+        @Published var basal: Decimal = 0
+        @Published var fattyMeals: Bool = false
+        @Published var fattyMealFactor: Decimal = 0
+        @Published var useFattyMealCorrectionFactor: Bool = false
+        @Published var eventualBG: Int = 0
+
+        @Published var meal: [CarbsEntry]?
+        @Published var carbs: Decimal = 0
+        @Published var fat: Decimal = 0
+        @Published var protein: Decimal = 0
+        @Published var note: String = ""
 
         override func subscribe() {
             setupInsulinRequired()
@@ -36,6 +73,11 @@ extension Bolus {
             percentage = settingsManager.settings.insulinReqPercentage
             threshold = provider.suggestion?.threshold ?? 0
             maxBolus = provider.pumpSettings().maxBolus
+            // added
+            fraction = settings.settings.overrideFactor
+            useCalc = settings.settings.useCalc
+            fattyMeals = settings.settings.fattyMeals
+            fattyMealFactor = settings.settings.fattyMealFactor
 
             if waitForSuggestionInitial {
                 apsManager.determineBasal()
@@ -51,13 +93,79 @@ extension Bolus {
             }
         }
 
+        func getDeltaBG() {
+            let glucose = glucoseStorage.recent()
+            guard glucose.count >= 3 else { return }
+            let lastGlucose = glucose.last!
+            let thirdLastGlucose = glucose[glucose.count - 3]
+            let delta = Decimal(lastGlucose.glucose!) - Decimal(thirdLastGlucose.glucose!)
+            deltaBG = delta
+        }
+
+        // CALCULATIONS FOR THE BOLUS CALCULATOR
+        func calculateInsulin() -> Decimal {
+            // for mmol conversion
+            var conversion: Decimal = 1.0
+            if units == .mmolL {
+                conversion = 0.0555
+            }
+            // insulin needed for the current blood glucose
+            let targetDifference = (currentBG - target) * conversion
+            targetDifferenceInsulin = targetDifference / isf
+
+            // more or less insulin because of bg trend in the last 15 minutes
+            fifteenMinInsulin = (deltaBG * conversion) / isf
+
+            // determine whole COB for which we want to dose insulin for and then determine insulin for wholeCOB
+            wholeCobInsulin = cob / carbRatio
+
+            // determine how much the calculator reduces/ increases the bolus because of IOB
+            iobInsulinReduction = (-1) * iob
+
+            // adding everything together
+            // add a calc for the case that no fifteenMinInsulin is available
+            if deltaBG != 0 {
+                wholeCalc = (targetDifferenceInsulin + iobInsulinReduction + wholeCobInsulin + fifteenMinInsulin)
+            } else {
+                // add (rare) case that no glucose value is available -> maybe display warning?
+                // if no bg is available, ?? sets its value to 0
+                if currentBG == 0 {
+                    wholeCalc = (iobInsulinReduction + wholeCobInsulin)
+                } else {
+                    wholeCalc = (targetDifferenceInsulin + iobInsulinReduction + wholeCobInsulin)
+                }
+            }
+            // rounding
+            let wholeCalcAsDouble = Double(wholeCalc)
+            roundedWholeCalc = Decimal(round(100 * wholeCalcAsDouble) / 100)
+
+            // apply custom factor at the end of the calculations
+            let result = wholeCalc * fraction
+
+            // apply custom factor if fatty meal toggle in bolus calc config settings is on and the box for fatty meals is checked (in RootView)
+            if useFattyMealCorrectionFactor {
+                insulinCalculated = result * fattyMealFactor
+            } else {
+                insulinCalculated = result
+            }
+
+            // display no negative insulinCalculated
+            insulinCalculated = max(insulinCalculated, 0)
+            let insulinCalculatedAsDouble = Double(insulinCalculated)
+            roundedInsulinCalculated = Decimal(round(100 * insulinCalculatedAsDouble) / 100)
+            insulinCalculated = min(insulinCalculated, maxBolus)
+
+            return apsManager
+                .roundBolus(amount: max(insulinCalculated, 0))
+        }
+
         func add() {
             guard amount > 0 else {
                 showModal(for: nil)
                 return
             }
 
-            let maxAmount = Double(min(amount, maxBolus))
+            let maxAmount = Double(min(amount, provider.pumpSettings().maxBolus))
 
             unlockmanager.unlock()
                 .sink { _ in } receiveValue: { [weak self] _ in
@@ -68,36 +176,9 @@ extension Bolus {
                 .store(in: &lifetime)
         }
 
-        func addWithoutBolus() {
-            guard amount > 0 else {
-                showModal(for: nil)
-                return
-            }
-            amount = min(amount, maxBolus * 3) // Allow for 3 * Max Bolus for non-pump insulin
-
-            pumpHistoryStorage.storeEvents(
-                [
-                    PumpHistoryEvent(
-                        id: UUID().uuidString,
-                        type: .bolus,
-                        timestamp: Date(),
-                        amount: amount,
-                        duration: nil,
-                        durationMin: nil,
-                        rate: nil,
-                        temp: nil,
-                        carbInput: nil
-                    )
-                ]
-            )
-            showModal(for: nil)
-        }
-
         func setupInsulinRequired() {
             DispatchQueue.main.async {
                 self.insulinRequired = self.provider.suggestion?.insulinReq ?? 0
-
-                // Manual Bolus recommendation (normally) yields a higher amount than the insulin reqiured amount computed for SMBs (auto boluses). A manual bolus threfore now (test) uses the Eventual BG for glucose prediction, whereas the insulinReg for SMBs uses the minPredBG for glucose prediction (typically lower than Eventual BG).
 
                 var conversion: Decimal = 1.0
                 if self.units == .mmolL {
@@ -108,6 +189,11 @@ extension Bolus {
                 self.insulin = self.provider.suggestion?.insulinForManualBolus ?? 0
                 self.target = self.provider.suggestion?.current_target ?? 0
                 self.isf = self.provider.suggestion?.isf ?? 0
+                self.iob = self.provider.suggestion?.iob ?? 0
+                self.currentBG = (self.provider.suggestion?.bg ?? 0)
+                self.cob = self.provider.suggestion?.cob ?? 0
+                self.basal = self.provider.suggestion?.rate ?? 0
+                self.carbRatio = self.provider.suggestion?.carbRatio ?? 0
 
                 if self.settingsManager.settings.insulinReqPercentage != 100 {
                     self.insulinRecommended = self.insulin * (self.settingsManager.settings.insulinReqPercentage / 100)
@@ -124,6 +210,33 @@ extension Bolus {
 
                 self.insulinRecommended = self.apsManager
                     .roundBolus(amount: max(self.insulinRecommended, 0))
+
+                if self.useCalc {
+                    self.getDeltaBG()
+                    self.insulinCalculated = self.calculateInsulin()
+                }
+            }
+        }
+
+        func backToCarbsView(complexEntry: Bool, _ id: String) {
+            delete(deleteTwice: complexEntry, id: id)
+            showModal(for: .addCarbs(editMode: complexEntry))
+        }
+
+        func delete(deleteTwice: Bool, id: String) {
+            if deleteTwice {
+                // DispatchQueue.safeMainSync {
+                nsManager.deleteCarbs(
+                    at: id, isFPU: nil, fpuID: nil, syncID: id
+                )
+                nsManager.deleteCarbs(
+                    at: id + ".fpu", isFPU: nil, fpuID: nil, syncID: id
+                )
+                // }
+            } else {
+                nsManager.deleteCarbs(
+                    at: id, isFPU: nil, fpuID: nil, syncID: id
+                )
             }
         }
     }

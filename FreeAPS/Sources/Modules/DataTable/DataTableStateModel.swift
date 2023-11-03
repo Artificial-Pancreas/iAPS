@@ -6,6 +6,7 @@ extension DataTable {
         @Injected() var broadcaster: Broadcaster!
         @Injected() var unlockmanager: UnlockManager!
         @Injected() private var storage: FileStorage!
+        @Injected() var pumpHistoryStorage: PumpHistoryStorage!
         @Injected() var healthKitManager: HealthKitManager!
 
         let coredataContext = CoreDataStack.shared.persistentContainer.viewContext
@@ -13,12 +14,16 @@ extension DataTable {
         @Published var mode: Mode = .treatments
         @Published var treatments: [Treatment] = []
         @Published var glucose: [Glucose] = []
-        @Published var manualGlcuose: Decimal = 0
+        @Published var manualGlucose: Decimal = 0
+        @Published var maxBolus: Decimal = 0
+        @Published var externalInsulinAmount: Decimal = 0
+        @Published var externalInsulinDate = Date()
 
         var units: GlucoseUnits = .mmolL
 
         override func subscribe() {
             units = settingsManager.settings.units
+            maxBolus = provider.pumpSettings().maxBolus
             setupTreatments()
             setupGlucose()
             broadcaster.register(SettingsObserver.self, observer: self)
@@ -35,7 +40,7 @@ extension DataTable {
                 let carbs = self.provider.carbs()
                     .filter { !($0.isFPU ?? false) }
                     .map {
-                        if let id = $0.id {
+                        if let id = $0.collectionID {
                             return Treatment(
                                 units: units,
                                 type: .carbs,
@@ -57,7 +62,7 @@ extension DataTable {
                             type: .fpus,
                             date: $0.createdAt,
                             amount: $0.carbs,
-                            id: $0.id,
+                            id: $0.collectionID,
                             isFPU: $0.isFPU,
                             fpuID: $0.fpuID,
                             note: $0.note
@@ -73,7 +78,8 @@ extension DataTable {
                             date: $0.timestamp,
                             amount: $0.amount,
                             idPumpEvent: $0.id,
-                            isSMB: $0.isSMB
+                            isSMB: $0.isSMB,
+                            isExternal: $0.isExternal
                         )
                     }
 
@@ -148,7 +154,6 @@ extension DataTable {
         func deleteGlucose(at index: Int) {
             let id = glucose[index].id
             provider.deleteGlucose(id: id)
-            // CoreData
             let fetchRequest: NSFetchRequest<NSFetchRequestResult>
             fetchRequest = NSFetchRequest(entityName: "Readings")
             fetchRequest.predicate = NSPredicate(format: "id == %@", id)
@@ -165,14 +170,14 @@ extension DataTable {
                     )
                 }
             } catch { /* To do: handle any thrown errors. */ }
-            // Manual Glucose
+            // Deletes Manual Glucose
             if (glucose[index].glucose.type ?? "") == GlucoseType.manual.rawValue {
                 provider.deleteManualGlucose(date: glucose[index].glucose.dateString)
             }
         }
 
         func addManualGlucose() {
-            let glucose = units == .mmolL ? manualGlcuose.asMgdL : manualGlcuose
+            let glucose = units == .mmolL ? manualGlucose.asMgdL : manualGlucose
             let now = Date()
             let id = UUID().uuidString
 
@@ -192,7 +197,40 @@ extension DataTable {
             // Save to Health
             var saveToHealth = [BloodGlucose]()
             saveToHealth.append(saveToJSON)
-            healthKitManager.saveIfNeeded(bloodGlucose: saveToHealth)
+        }
+
+        func addExternalInsulin() {
+            guard externalInsulinAmount > 0 else {
+                showModal(for: nil)
+                return
+            }
+
+            externalInsulinAmount = min(externalInsulinAmount, maxBolus * 3) // Allow for 3 * Max Bolus for external insulin
+            unlockmanager.unlock()
+                .sink { _ in } receiveValue: { [weak self] _ in
+                    guard let self = self else { return }
+                    pumpHistoryStorage.storeEvents(
+                        [
+                            PumpHistoryEvent(
+                                id: UUID().uuidString,
+                                type: .bolus,
+                                timestamp: externalInsulinDate,
+                                amount: externalInsulinAmount,
+                                duration: nil,
+                                durationMin: nil,
+                                rate: nil,
+                                temp: nil,
+                                carbInput: nil,
+                                isExternal: true
+                            )
+                        ]
+                    )
+                    debug(.default, "External insulin saved to pumphistory.json")
+
+                    // Reset amount to 0 for next entry.
+                    externalInsulinAmount = 0
+                }
+                .store(in: &lifetime)
         }
     }
 }

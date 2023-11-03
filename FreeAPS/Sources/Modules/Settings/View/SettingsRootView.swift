@@ -12,7 +12,7 @@ extension Settings {
             Form {
                 Section(
                     header: Text(
-                        "iAPS v\(state.versionNumber) - \(state.buildNumber) \nBranch: \(state.branch) \(state.copyrightNotice) "
+                        "iAPS v\(state.versionNumber) (\(state.buildNumber))\nBranch: \(state.branch) \(state.copyrightNotice) "
                     ).textCase(nil)
                 ) {
                     Toggle("Closed loop", isOn: $state.closedLoop)
@@ -43,6 +43,7 @@ extension Settings {
                     Text("Carb Ratios").navigationLink(to: .crEditor, from: self)
                     Text("Target Glucose").navigationLink(to: .targetsEditor, from: self)
                     Text("Autotune").navigationLink(to: .autotuneConfig, from: self)
+                    Text("Bolus Calculator").navigationLink(to: .bolusCalculatorConfig, from: self)
                 }
 
                 Section(header: Text("Developer")) {
@@ -51,7 +52,7 @@ extension Settings {
                         Group {
                             HStack {
                                 Text("NS Upload Profile and Settings")
-                                Button("Upload") { state.uploadProfileAndSettings() }
+                                Button("Upload") { state.uploadProfileAndSettings(true) }
                                     .frame(maxWidth: .infinity, alignment: .trailing)
                                     .buttonStyle(.borderedProminent)
                             }
@@ -126,7 +127,8 @@ extension Settings {
             .onAppear(perform: configureView)
             .navigationTitle("Settings")
             .navigationBarItems(leading: Button("Close", action: state.hideSettingsModal))
-            .navigationBarTitleDisplayMode(.automatic)
+            .navigationBarTitleDisplayMode(.inline)
+            .onDisappear(perform: { state.uploadProfileAndSettings(false) })
         }
     }
 }

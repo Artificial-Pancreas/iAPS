@@ -67,6 +67,7 @@ enum DataTable {
         let fpuID: String?
         let note: String?
         let isSMB: Bool?
+        let isExternal: Bool?
 
         private var numberFormatter: NumberFormatter {
             let formatter = NumberFormatter()
@@ -94,7 +95,8 @@ enum DataTable {
             isFPU: Bool? = nil,
             fpuID: String? = nil,
             note: String? = nil,
-            isSMB: Bool? = nil
+            isSMB: Bool? = nil,
+            isExternal: Bool? = nil
         ) {
             self.units = units
             self.type = type
@@ -108,6 +110,7 @@ enum DataTable {
             self.fpuID = fpuID
             self.note = note
             self.isSMB = isSMB
+            self.isExternal = isExternal
         }
 
         static func == (lhs: Treatment, rhs: Treatment) -> Bool {
@@ -135,12 +138,16 @@ enum DataTable {
                 return numberFormatter
                     .string(from: amount as NSNumber)! + NSLocalizedString(" g", comment: "gram of carb equilvalents")
             case .bolus:
+                var bolusText = " "
+                if isSMB ?? false {}
+                else if isExternal ?? false {
+                    bolusText += NSLocalizedString("External", comment: "External Insulin")
+                } else {
+                    bolusText += NSLocalizedString("Manual", comment: "Manual Bolus")
+                }
+
                 return numberFormatter
-                    .string(from: amount as NSNumber)! + NSLocalizedString(" U", comment: "Insulin unit") +
-                    (
-                        (isSMB ?? false) ? " " + NSLocalizedString("Automatic", comment: "Automatic delivered treatments") : " " +
-                            NSLocalizedString("Manual", comment: "Manual Bolus")
-                    )
+                    .string(from: amount as NSNumber)! + NSLocalizedString(" U", comment: "Insulin unit") + bolusText
             case .tempBasal:
                 return numberFormatter
                     .string(from: amount as NSNumber)! + NSLocalizedString(" U/hr", comment: "Unit insulin per hour")
@@ -172,9 +179,9 @@ enum DataTable {
             case .fpus:
                 return .orange.opacity(0.5)
             case .bolus:
-                return .insulin
+                return Color.insulin
             case .tempBasal:
-                return Color.insulin.opacity(0.5)
+                return Color.insulin.opacity(0.4)
             case .resume,
                  .suspend,
                  .tempTarget:

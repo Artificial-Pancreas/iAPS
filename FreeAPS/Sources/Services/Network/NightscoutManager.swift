@@ -9,7 +9,7 @@ protocol NightscoutManager: GlucoseSource {
     func fetchCarbs() -> AnyPublisher<[CarbsEntry], Never>
     func fetchTempTargets() -> AnyPublisher<[TempTarget], Never>
     func fetchAnnouncements() -> AnyPublisher<[Announcement], Never>
-    func deleteCarbs(at date: Date, isFPU: Bool?, fpuID: String?, syncID: String)
+    func deleteCarbs(at uniqueID: String, isFPU: Bool?, fpuID: String?, syncID: String)
     func deleteInsulin(at date: Date)
     func deleteManualGlucose(at: Date)
     func uploadStatus()
@@ -17,7 +17,7 @@ protocol NightscoutManager: GlucoseSource {
     func uploadManualGlucose()
     func uploadStatistics(dailystat: Statistics)
     func uploadPreferences(_ preferences: Preferences)
-    func uploadProfileAndSettings()
+    func uploadProfileAndSettings(_: Bool)
     var cgmURL: URL? { get }
 }
 
@@ -177,62 +177,32 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
             .eraseToAnyPublisher()
     }
 
-    func deleteCarbs(at date: Date, isFPU: Bool?, fpuID: String?, syncID: String) {
+    func deleteCarbs(at uniqueID: String, isFPU: Bool?, fpuID: String?, syncID: String) {
         // remove in AH
         healthkitManager.deleteCarbs(syncID: syncID, isFPU: isFPU, fpuID: fpuID)
 
         guard let nightscout = nightscoutAPI, isUploadEnabled else {
-            carbsStorage.deleteCarbs(at: date)
+            carbsStorage.deleteCarbs(at: uniqueID)
             return
         }
 
-        if let isFPU = isFPU, isFPU {
-            guard let fpuID = fpuID else { return }
-            let allValues = storage.retrieve(OpenAPS.Monitor.carbHistory, as: [CarbsEntry].self) ?? []
-            let dates = allValues.filter { $0.fpuID == fpuID }.map(\.createdAt).removeDublicates()
-
-            let publishers = dates
-                .map { d -> AnyPublisher<Void, Swift.Error> in
-                    nightscout.deleteCarbs(
-                        at: d
+        nightscout.deleteCarbs(at: uniqueID)
+            .collect()
+            .sink { completion in
+                self.carbsStorage.deleteCarbs(at: uniqueID)
+                switch completion {
+                case .finished:
+                    debug(.nightscout, "Carbs deleted")
+                case let .failure(error):
+                    info(
+                        .nightscout,
+                        "Deletion of carbs in NightScout not done \n \(error.localizedDescription)",
+                        type: MessageType.warning
                     )
                 }
-
-            Publishers.MergeMany(publishers)
-                .collect()
-                .sink { completion in
-                    self.carbsStorage.deleteCarbs(at: date)
-                    switch completion {
-                    case .finished:
-                        debug(.nightscout, "Carbs deleted")
-
-                    case let .failure(error):
-                        info(
-                            .nightscout,
-                            "Deletion of carbs in NightScout not done \n \(error.localizedDescription)",
-                            type: MessageType.warning
-                        )
-                    }
-                } receiveValue: { _ in }
-                .store(in: &lifetime)
-
-        } else {
-            nightscout.deleteCarbs(at: date)
-                .sink { completion in
-                    self.carbsStorage.deleteCarbs(at: date)
-                    switch completion {
-                    case .finished:
-                        debug(.nightscout, "Carbs deleted")
-                    case let .failure(error):
-                        info(
-                            .nightscout,
-                            "Deletion of carbs in NightScout not done \n \(error.localizedDescription)",
-                            type: MessageType.warning
-                        )
-                    }
-                } receiveValue: {}
-                .store(in: &lifetime)
-        }
+            } receiveValue: { _ in }
+            .store(in: &lifetime)
+        // }
     }
 
     func deleteInsulin(at date: Date) {
@@ -445,7 +415,7 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
         }
     }
 
-    func uploadProfileAndSettings() {
+    func uploadProfileAndSettings(_ force: Bool) {
         // These should be modified anyways and not the defaults
         guard let sensitivities = storage.retrieve(OpenAPS.Settings.insulinSensitivities, as: InsulinSensitivities.self),
               let basalProfile = storage.retrieve(OpenAPS.Settings.basalProfile, as: [BasalProfileEntry].self),
@@ -454,7 +424,7 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
               let preferences = storage.retrieve(OpenAPS.Settings.preferences, as: Preferences.self),
               let settings = storage.retrieve(OpenAPS.FreeAPS.settings, as: FreeAPSSettings.self)
         else {
-            NSLog("NightscoutManager uploadProfile Not all settings found to build profile!")
+            debug(.nightscout, "NightscoutManager uploadProfile Not all settings found to build profile!")
             return
         }
 
@@ -548,37 +518,37 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
 
         // UPLOAD PREFERNCES WHEN CHANGED
         if let uploadedPreferences = storage.retrieve(OpenAPS.Nightscout.uploadedPreferences, as: Preferences.self),
-           uploadedPreferences.rawJSON.sorted() == preferences.rawJSON.sorted()
+           uploadedPreferences.rawJSON.sorted() == preferences.rawJSON.sorted(), !force
         {
             NSLog("NightscoutManager Preferences, preferences unchanged")
         } else { uploadPreferences(preferences) }
 
         // UPLOAD FreeAPS Settings WHEN CHANGED
         if let uploadedSettings = storage.retrieve(OpenAPS.Nightscout.uploadedSettings, as: FreeAPSSettings.self),
-           uploadedSettings.rawJSON.sorted() == settings.rawJSON.sorted()
+           uploadedSettings.rawJSON.sorted() == settings.rawJSON.sorted(), !force
         {
             NSLog("NightscoutManager Settings, settings unchanged")
         } else { uploadSettings(settings) }
 
+        // UPLOAD Profiles WHEN CHANGED
         if let uploadedProfile = storage.retrieve(OpenAPS.Nightscout.uploadedProfile, as: NightscoutProfileStore.self),
-           (uploadedProfile.store["default"]?.rawJSON ?? "").sorted() == ps.rawJSON.sorted()
+           (uploadedProfile.store["default"]?.rawJSON ?? "").sorted() == ps.rawJSON.sorted(), !force
         {
             NSLog("NightscoutManager uploadProfile, no profile change")
-            return
-        }
-
-        processQueue.async {
-            nightscout.uploadProfile(p)
-                .sink { completion in
-                    switch completion {
-                    case .finished:
-                        self.storage.save(p, as: OpenAPS.Nightscout.uploadedProfile)
-                        debug(.nightscout, "Profile uploaded")
-                    case let .failure(error):
-                        debug(.nightscout, error.localizedDescription)
-                    }
-                } receiveValue: {}
-                .store(in: &self.lifetime)
+        } else {
+            processQueue.async {
+                nightscout.uploadProfile(p)
+                    .sink { completion in
+                        switch completion {
+                        case .finished:
+                            self.storage.save(p, as: OpenAPS.Nightscout.uploadedProfile)
+                            debug(.nightscout, "Profile uploaded")
+                        case let .failure(error):
+                            debug(.nightscout, error.localizedDescription)
+                        }
+                    } receiveValue: {}
+                    .store(in: &self.lifetime)
+            }
         }
     }
 
@@ -610,9 +580,12 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
         guard !glucose.isEmpty, let nightscout = nightscoutAPI, isUploadEnabled, isUploadGlucoseEnabled else {
             return
         }
+        // check if unique code
+        // var uuid = UUID(uuidString: yourString) This will return nil if yourString is not a valid UUID
+        let glucoseWithoutCorrectID = glucose.filter { UUID(uuidString: $0._id) != nil }
 
         processQueue.async {
-            glucose.chunks(ofCount: 100)
+            glucoseWithoutCorrectID.chunks(ofCount: 100)
                 .map { chunk -> AnyPublisher<Void, Error> in
                     nightscout.uploadGlucose(Array(chunk))
                 }

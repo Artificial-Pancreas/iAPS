@@ -5,9 +5,10 @@ import Swinject
 extension AddCarbs {
     struct RootView: BaseView {
         let resolver: Resolver
+        let editMode: Bool
         @StateObject var state = StateModel()
         @State var dish: String = ""
-        @State var isPromtPresented = false
+        @State var isPromptPresented = false
         @State var saved = false
         @State private var showAlert = false
         @FocusState private var isFocused: Bool
@@ -75,7 +76,7 @@ extension AddCarbs {
                             .controlSize(.mini)
                             .buttonStyle(BorderlessButtonStyle())
                         Button {
-                            isPromtPresented = true
+                            isPromptPresented = true
                         }
                         label: { Text("Save as Preset") }
                             .frame(maxWidth: .infinity, alignment: .trailing)
@@ -101,7 +102,7 @@ extension AddCarbs {
                                     )
                             )
                     }
-                    .popover(isPresented: $isPromtPresented) {
+                    .popover(isPresented: $isPromptPresented) {
                         presetPopover
                     }
                 }
@@ -118,7 +119,7 @@ extension AddCarbs {
 
                 Section {
                     Button { state.add() }
-                    label: { Text("Save and continue").font(.title3) }
+                    label: { Text(state.carbs > 0 ? "Continue" : "Save") }
                         .disabled(state.carbs <= 0 && state.fat <= 0 && state.protein <= 0)
                         .frame(maxWidth: .infinity, alignment: .center)
                 } footer: { Text(state.waitersNotepad().description) }
@@ -129,7 +130,13 @@ extension AddCarbs {
                     }
                 }
             }
-            .onAppear(perform: configureView)
+            .onAppear {
+                configureView {
+                    state.loadEntries(editMode)
+                }
+            }
+            .navigationTitle("Add Meals")
+            .navigationBarTitleDisplayMode(.inline)
             .navigationBarItems(leading: Button("Close", action: state.hideModal))
         }
 
@@ -148,14 +155,14 @@ extension AddCarbs {
                             try? moc.save()
                             state.addNewPresetToWaitersNotepad(dish)
                             saved = false
-                            isPromtPresented = false
+                            isPromptPresented = false
                         }
                     }
                     label: { Text("Save") }
                     Button {
                         dish = ""
                         saved = false
-                        isPromtPresented = false }
+                        isPromptPresented = false }
                     label: { Text("Cancel") }
                 } header: { Text("Enter Meal Preset Name") }
             }
