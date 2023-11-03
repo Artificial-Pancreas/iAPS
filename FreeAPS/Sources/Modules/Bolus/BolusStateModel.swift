@@ -1,5 +1,4 @@
 
-import Foundation
 import LoopKit
 import SwiftUI
 import Swinject
