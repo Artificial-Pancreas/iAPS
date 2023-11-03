@@ -215,9 +215,9 @@ extension Bolus {
                 }
             }
             .onDisappear {
-                if fetch, hasFatOrProtein, !keepForNextWiew {
+                if fetch, hasFatOrProtein, !keepForNextWiew, state.useCalc {
                     state.delete(deleteTwice: true, id: meal.first?.id ?? "")
-                } else if fetch, !keepForNextWiew {
+                } else if fetch, !keepForNextWiew, state.useCalc {
                     state.delete(deleteTwice: false, id: meal.first?.id ?? "")
                 }
             }
