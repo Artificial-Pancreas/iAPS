@@ -1,4 +1,3 @@
-import Charts
 import CoreData
 import SwiftUI
 import Swinject
