@@ -115,11 +115,7 @@ extension Bolus {
                                     else { state.amount = state.insulinRecommended }
                                 }
                         }.contentShape(Rectangle())
-                    }
-                }
-                header: { Text("Recommendation") }
-                if !state.waitForSuggestion {
-                    Section {
+
                         HStack {
                             Text("Amount")
                             Spacer()
@@ -133,19 +129,23 @@ extension Bolus {
                             Text(!(state.amount > state.maxBolus) ? "U" : "😵").foregroundColor(.secondary)
                         }
                     }
-                    header: { Text("Bolus") }
-                    Section {
-                        Button {
-                            keepForNextWiew = true
-                            state.add()
-                        }
-                        label: { Text(!(state.amount > state.maxBolus) ? "Enact bolus" : "Max Bolus exceeded!") }
-                            .frame(maxWidth: .infinity, alignment: .center)
-                            .disabled(
-                                state.amount <= 0 || state.amount > state.maxBolus
-                            )
-                    }
+                }
+                header: { Text("Bolus Summary") }
 
+                if !state.waitForSuggestion {
+                    if state.amount > 0 {
+                        Section {
+                            Button {
+                                keepForNextWiew = true
+                                state.add()
+                            }
+                            label: { Text(!(state.amount > state.maxBolus) ? "Enact bolus" : "Max Bolus exceeded!") }
+                                .frame(maxWidth: .infinity, alignment: .center)
+                                .disabled(
+                                    state.amount <= 0 || state.amount > state.maxBolus
+                                )
+                        }
+                    }
                     if waitForSuggestion {
                         Section {
                             Button {
