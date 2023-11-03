@@ -107,8 +107,12 @@ extension Bolus {
                 Section {
                     Button {
                         let id_ = meal.first?.id ?? ""
-                        keepForNextWiew = true
-                        state.backToCarbsView(complexEntry: fetch, id_)
+                        if fetch {
+                            keepForNextWiew = true
+                            state.backToCarbsView(complexEntry: fetch, id_)
+                        } else {
+                            state.showModal(for: .addCarbs(editMode: false))
+                        }
                     }
                     label: { Text(fetch ? "Edit Meal" : "Add Meal") }.frame(maxWidth: .infinity, alignment: .center)
                 }
