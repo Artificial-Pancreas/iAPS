@@ -146,7 +146,7 @@ extension Bolus {
                                 )
                         }
                     }
-                    if waitForSuggestion {
+                    if state.amount <= 0 {
                         Section {
                             Button {
                                 keepForNextWiew = true
