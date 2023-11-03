@@ -11,8 +11,14 @@ extension Bolus {
         @State private var isAddInsulinAlertPresented = false
         @State private var presentInfo = false
         @State private var displayError = false
+        @State private var keepForNextWiew: Bool = false
 
         @Environment(\.colorScheme) var colorScheme
+
+        @FetchRequest(
+            entity: Meals.entity(),
+            sortDescriptors: [NSSortDescriptor(key: "createdAt", ascending: false)]
+        ) var meal: FetchedResults<Meals>
 
         private var formatter: NumberFormatter {
             let formatter = NumberFormatter()
@@ -29,6 +35,57 @@ extension Bolus {
 
         var body: some View {
             Form {
+                if fetch {
+                    Section {
+                        VStack {
+                            if let carbs = meal.first?.carbs, carbs > 0 {
+                                HStack {
+                                    Text("Carbs")
+                                    Spacer()
+                                    Text(carbs.formatted())
+                                    Text("g")
+                                }.foregroundColor(.secondary)
+                            }
+                            if let fat = meal.first?.fat, fat > 0 {
+                                HStack {
+                                    Text("Fat")
+                                    Spacer()
+                                    Text(fat.formatted())
+                                    Text("g")
+                                }.foregroundColor(.secondary)
+                            }
+                            if let protein = meal.first?.protein, protein > 0 {
+                                HStack {
+                                    Text("Protein")
+                                    Spacer()
+                                    Text(protein.formatted())
+                                    Text("g")
+                                }.foregroundColor(.secondary)
+                            }
+                            if let note = meal.first?.note, note != "" {
+                                HStack {
+                                    Text("Note")
+                                    Spacer()
+                                    Text(note)
+                                }.foregroundColor(.secondary)
+                            }
+                        }
+                    } header: { Text("Meal Summary") }
+                }
+
+                Section {
+                    Button {
+                        let id_ = meal.first?.id ?? ""
+                        if fetch {
+                            keepForNextWiew = true
+                            state.backToCarbsView(complexEntry: fetch, id_)
+                        } else {
+                            state.showModal(for: .addCarbs(editMode: false))
+                        }
+                    }
+                    label: { Text(fetch ? "Edit Meal" : "Add Meal") }.frame(maxWidth: .infinity, alignment: .center)
+                } header: { Text(!fetch ? "Meal Summary" : "") }
+
                 Section {
                     if state.waitForSuggestion {
                         HStack {
@@ -78,7 +135,10 @@ extension Bolus {
                     }
                     header: { Text("Bolus") }
                     Section {
-                        Button { state.add() }
+                        Button {
+                            keepForNextWiew = true
+                            state.add()
+                        }
                         label: { Text(!(state.amount > state.maxBolus) ? "Enact bolus" : "Max Bolus exceeded!") }
                             .frame(maxWidth: .infinity, alignment: .center)
                             .disabled(
@@ -88,7 +148,10 @@ extension Bolus {
 
                     if waitForSuggestion {
                         Section {
-                            Button { state.showModal(for: nil) }
+                            Button {
+                                keepForNextWiew = true
+                                state.showModal(for: nil)
+                            }
                             label: { Text("Continue without bolus") }.frame(maxWidth: .infinity, alignment: .center)
                         }
                     }
@@ -113,12 +176,29 @@ extension Bolus {
                     state.waitForSuggestion = waitForSuggestion
                 }
             }
+
+            .onDisappear {
+                if fetch, hasFatOrProtein, !keepForNextWiew, !state.useCalc {
+                    state.delete(deleteTwice: true, id: meal.first?.id ?? "")
+                } else if fetch, !keepForNextWiew, !state.useCalc {
+                    state.delete(deleteTwice: false, id: meal.first?.id ?? "")
+                }
+            }
+
             .navigationTitle("Enact Bolus")
             .navigationBarTitleDisplayMode(.inline)
             .navigationBarItems(leading: Button("Close", action: state.hideModal))
             .popup(isPresented: presentInfo, alignment: .center, direction: .bottom) {
                 bolusInfo
             }
+        }
+
+        var changed: Bool {
+            ((meal.first?.carbs ?? 0) > 0) || ((meal.first?.fat ?? 0) > 0) || ((meal.first?.protein ?? 0) > 0)
+        }
+
+        var hasFatOrProtein: Bool {
+            ((meal.first?.fat ?? 0) > 0) || ((meal.first?.protein ?? 0) > 0)
         }
 
         var bolusInfo: some View {
