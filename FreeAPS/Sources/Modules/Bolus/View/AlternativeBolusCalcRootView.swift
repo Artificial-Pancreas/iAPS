@@ -57,15 +57,8 @@ extension Bolus {
 
         var body: some View {
             Form {
-                if state.waitForSuggestion {
-                    HStack {
-                        Text("Wait please").foregroundColor(.secondary)
-                        Spacer()
-                        ActivityIndicator(isAnimating: .constant(true), style: .medium) // fix iOS 15 bug
-                    }
-                }
-                Section {
-                    if fetch {
+                if fetch {
+                    Section {
                         VStack {
                             if let carbs = meal.first?.carbs, carbs > 0 {
                                 HStack {
@@ -99,10 +92,9 @@ extension Bolus {
                                 }.foregroundColor(.secondary)
                             }
                         }
-                    } else {
-                        Text("No Meal")
-                    }
-                } header: { Text("Meal Summary") }
+
+                    } header: { Text("Meal Summary") }
+                }
 
                 Section {
                     Button {
@@ -115,7 +107,7 @@ extension Bolus {
                         }
                     }
                     label: { Text(fetch ? "Edit Meal" : "Add Meal") }.frame(maxWidth: .infinity, alignment: .center)
-                }
+                } header: { Text(!fetch ? "Meal Summary" : "") }
 
                 Section {
                     HStack {
@@ -186,14 +178,8 @@ extension Bolus {
                     }
                 } header: { Text("Bolus Summary") }
 
-                Section {
-                    if state.amount == 0, waitForSuggestion {
-                        Button {
-                            keepForNextWiew = true
-                            state.showModal(for: nil)
-                        }
-                        label: { Text("Continue without bolus") }.frame(maxWidth: .infinity, alignment: .center)
-                    } else {
+                if state.amount > 0 {
+                    Section {
                         Button {
                             keepForNextWiew = true
                             state.add()
@@ -205,6 +191,13 @@ extension Bolus {
                                 state.amount <= 0 || state.amount > state.maxBolus
                             )
                     }
+                }
+                Section {
+                    Button {
+                        keepForNextWiew = true
+                        state.showModal(for: nil)
+                    }
+                    label: { Text("Continue without bolus") }.frame(maxWidth: .infinity, alignment: .center)
                 }
             }
             .blur(radius: showInfo ? 3 : 0)
