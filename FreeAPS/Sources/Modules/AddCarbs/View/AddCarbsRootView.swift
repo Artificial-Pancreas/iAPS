@@ -80,7 +80,7 @@ extension AddCarbs {
                 } footer: { Text(state.waitersNotepad().description) }
 
                 Section {
-                    DatePicker("Change Date", selection: $state.date)
+                    DatePicker("Date", selection: $state.date)
                 }
             }
             .onAppear {
@@ -121,6 +121,10 @@ extension AddCarbs {
             }
         }
 
+        var notEmpty: Bool {
+            state.carbs > 0 || state.protein > 0 || state.fat > 0
+        }
+
         var mealPresets: some View {
             Section {
                 HStack {
@@ -130,7 +134,7 @@ extension AddCarbs {
                     label: { Text("Save as Preset") }
                         .buttonStyle(BorderlessButtonStyle())
                         .disabled(
-                            (state.carbs <= 0 && state.fat <= 0 && state.protein <= 0) ||
+                            !notEmpty ||
                                 (
                                     (((state.selection?.carbs ?? 0) as NSDecimalNumber) as Decimal) == state
                                         .carbs && (((state.selection?.fat ?? 0) as NSDecimalNumber) as Decimal) == state
