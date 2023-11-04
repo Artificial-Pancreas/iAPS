@@ -72,7 +72,7 @@ extension BaseLibreTransmitterSource: LibreTransmitterManagerDelegate {
         case let .success(newGlucose):
             let glucose = newGlucose.map { value -> BloodGlucose in
                 BloodGlucose(
-                    _id: value.syncId,
+                    _id: UUID().uuidString,
                     sgv: Int(value.glucose),
                     direction: manager.glucoseDisplay?.trendType
                         .map { .init(trendType: $0) },
