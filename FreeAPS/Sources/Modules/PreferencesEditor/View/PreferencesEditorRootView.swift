@@ -29,13 +29,6 @@ extension PreferencesEditor {
                     }
 
                     Toggle("Remote control", isOn: $state.allowAnnouncements)
-
-                    if !state.useAlternativeBolusCalc {
-                        HStack {
-                            Text("Recommended Bolus Percentage")
-                            DecimalTextField("", value: $state.insulinReqPercentage, formatter: formatter)
-                        }
-                    }
                 }
 
                 ForEach(state.sections.indexed(), id: \.1.id) { sectionIndex, section in
