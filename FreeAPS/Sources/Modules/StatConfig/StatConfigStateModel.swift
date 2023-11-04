@@ -12,7 +12,6 @@ extension StatConfig {
         @Published var rulerMarks: Bool = false
         @Published var skipBolusScreenAfterCarbs: Bool = false
         @Published var useFPUconversion: Bool = true
-
         var units: GlucoseUnits = .mmolL
 
         override func subscribe() {

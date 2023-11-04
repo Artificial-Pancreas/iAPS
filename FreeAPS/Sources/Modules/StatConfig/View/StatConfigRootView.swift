@@ -52,7 +52,7 @@ extension StatConfig {
                         DecimalTextField("0", value: $state.high, formatter: glucoseFormatter)
                         Text(state.units.rawValue).foregroundColor(.secondary)
                     }
-                    Toggle("Change HbA1c Unit", isOn: $state.overrideHbA1cUnit)
+                    Toggle("Override HbA1c Unit", isOn: $state.overrideHbA1cUnit)
 
                 } header: { Text("Statistics settings ") }
 

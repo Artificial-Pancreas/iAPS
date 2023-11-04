@@ -9,10 +9,12 @@ extension PreferencesEditor {
         @Published var skipBolusScreenAfterCarbs = false
         @Published var sections: [FieldSection] = []
         @Published var useAlternativeBolusCalc: Bool = false
+        @Published var units: GlucoseUnits = .mmolL
 
         override func subscribe() {
             preferences = provider.preferences
             useAlternativeBolusCalc = settingsManager.settings.useCalc
+            units = settingsManager.settings.units
             subscribeSetting(\.allowAnnouncements, on: $allowAnnouncements) { allowAnnouncements = $0 }
             subscribeSetting(\.insulinReqPercentage, on: $insulinReqPercentage) { insulinReqPercentage = $0 }
 
