@@ -5,17 +5,16 @@ extension PreferencesEditor {
     final class StateModel: BaseStateModel<Provider>, PreferencesSettable { private(set) var preferences = Preferences()
         @Published var unitsIndex = 1
         @Published var allowAnnouncements = false
-        @Published var insulinReqPercentage: Decimal = 70
         @Published var skipBolusScreenAfterCarbs = false
         @Published var sections: [FieldSection] = []
         @Published var useAlternativeBolusCalc: Bool = false
+        @Published var units: GlucoseUnits = .mmolL
 
         override func subscribe() {
             preferences = provider.preferences
             useAlternativeBolusCalc = settingsManager.settings.useCalc
+            units = settingsManager.settings.units
             subscribeSetting(\.allowAnnouncements, on: $allowAnnouncements) { allowAnnouncements = $0 }
-            subscribeSetting(\.insulinReqPercentage, on: $insulinReqPercentage) { insulinReqPercentage = $0 }
-            subscribeSetting(\.skipBolusScreenAfterCarbs, on: $skipBolusScreenAfterCarbs) { skipBolusScreenAfterCarbs = $0 }
 
             subscribeSetting(\.units, on: $unitsIndex.map { $0 == 0 ? GlucoseUnits.mgdL : .mmolL }) {
                 unitsIndex = $0 == .mgdL ? 0 : 1
