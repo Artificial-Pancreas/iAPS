@@ -36,8 +36,6 @@ extension PreferencesEditor {
                             DecimalTextField("", value: $state.insulinReqPercentage, formatter: formatter)
                         }
                     }
-
-                    Toggle("Skip Bolus screen after carbs", isOn: $state.skipBolusScreenAfterCarbs)
                 }
 
                 ForEach(state.sections.indexed(), id: \.1.id) { sectionIndex, section in
