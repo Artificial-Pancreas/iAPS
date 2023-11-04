@@ -55,6 +55,39 @@
 /* Headline in enacted pop up (at: at what time) */
 "Error at" = "Error at";
 
+/* Bolus View Meal Summary Header */
+"Meal Summary" = "Meal Summary";
+
+/* Bolus View Meal Edit Meal Button */
+"Edit Meal" = "Edit Meal";
+
+/* Bolus View Meal Add Meal Button */
+"Add Meal" = "Add Meal";
+
+/* Bolus View Bolus Summary Header */
+"Bolus Summary" = "Bolus Summary";
+
+/* For the  Bolus View pop-up */
+"Calculations" = "Calculations";
+
+/* For the  Bolus View pop-up */
+"Fatty Meal" = "Fatty Meal";
+
+/* For the  Bolus View pop-up */
+"Full Bolus" = "Full Bolus";
+
+/* For the  Bolus View pop-up */
+"Fraction" = "Fraction";
+
+/* For the  Bolus View pop-up */
+"Fatty Meal Factor" = "Fatty Meal Factor";
+
+/* For the  Bolus View pop-up */
+"Result" = "Result";
+
+/* For the  Bolus View pop-up */
+"Your entered amount was limited by your max Bolus setting of %d%@" = "Your entered amount was limited by your max Bolus setting of %d%@";
+
 /* Home title */
 "Home" = "Page d'accueil";
 
@@ -568,6 +601,9 @@ Enact a temp Basal or a temp target */
 
 /* Automatic delivered treatments */
 "Automatic" = "Automatic";
+
+/* External insulin treatments */
+"External" = "External";
 
 /* */
 "Other" = "Autre";
@@ -1170,6 +1206,9 @@ Enact a temp Basal or a temp target */
 
 /* An Automatic delivered bolus (SMB) */
 "SMB" = "SMB";
+
+/* A manually entered dose of external insulin */
+"External Insulin" = "External Insulin";
 
 /* Status highlight when manual temp basal is running. */
 "Manual Basal" = "Manual Basal";
