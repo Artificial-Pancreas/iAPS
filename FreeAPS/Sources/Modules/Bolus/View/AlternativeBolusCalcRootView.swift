@@ -11,6 +11,7 @@ extension Bolus {
         @State private var showInfo = false
         @State private var exceededMaxBolus = false
         @State private var keepForNextWiew: Bool = false
+        @State private var displayError = false
 
         private enum Config {
             static let dividerHeight: CGFloat = 2
@@ -89,23 +90,83 @@ extension Bolus {
 
                     if state.waitForSuggestion {
                         HStack {
+                            Image(systemName: "timer").foregroundColor(.secondary)
                             Text("Wait please").foregroundColor(.secondary)
                             Spacer()
-                            ActivityIndicator(isAnimating: .constant(true), style: .medium) // fix iOS 15 bug
+                            Image(systemName: "timer").foregroundColor(.secondary)
+                            Text("Beräknar...").foregroundColor(.secondary)
                         }
-                    } else {
+                    }
+                    if state.error && state.insulinCalculated > 0 {
                         HStack {
-                            Text("Recommended Bolus")
+                            Image(systemName: "exclamationmark.triangle.fill")
+                                .foregroundColor(.orange)
+                                .onTapGesture {
+                                    showInfo.toggle()
+                                }
+                            Text("Wait before Bolusing")
+                                .foregroundColor(.orange)
+                                .onTapGesture {
+                                    showInfo.toggle()
+                                }
                             Spacer()
                             Text(
                                 formatter
-                                    .string(from: Double(state.insulinCalculated) as NSNumber) ?? ""
-                            )
+                                    .string(from: state.insulinCalculated as NSNumber)! +
+                                    NSLocalizedString(" U", comment: "Insulin unit")
+                            ).foregroundColor(.orange)
+                                .contentShape(Rectangle())
+                                .onTapGesture {
+                                    displayError = true
+                                }
+                        }
+                    } else if state.insulinCalculated <= 0 {
+                        HStack {
+                            Image(systemName: "x.circle.fill")
+                                .foregroundColor(.loopRed)
+                                .onTapGesture {
+                                    showInfo.toggle()
+                                }
+                            Text("No Bolus recommended")
+                                .foregroundColor(.loopRed)
+                                .onTapGesture {
+                                    showInfo.toggle()
+                                }
+                            Spacer()
                             Text(
-                                NSLocalizedString(" U", comment: "Unit in number of units delivered (keep the space character!)")
-                            ).foregroundColor(.secondary)
-                        }.contentShape(Rectangle())
-                            .onTapGesture { state.amount = state.insulinCalculated }
+                                formatter
+                                    .string(from: state.insulinCalculated as NSNumber)! +
+                                    NSLocalizedString(" U", comment: "Insulin unit")
+                            ).foregroundColor(.loopRed)
+                                .contentShape(Rectangle())
+                                .onTapGesture {
+                                    showInfo.toggle()
+                                    state.insulinCalculated = state.calculateInsulin()
+                                }
+                        }
+                    } else {
+                        HStack {
+                            Image(systemName: "checkmark.circle.fill")
+                                .foregroundColor(.green)
+                                .onTapGesture {
+                                    showInfo.toggle()
+                                }
+                            Text("Suggested Bolus")
+                                .foregroundColor(.green)
+                                .onTapGesture {
+                                    showInfo.toggle()
+                                }
+                            Spacer()
+                            Text(
+                                formatter
+                                    .string(from: state.insulinCalculated as NSNumber)! +
+                                    NSLocalizedString(" U", comment: "Insulin unit")
+                            ).foregroundColor(.green)
+                                .contentShape(Rectangle())
+                                .onTapGesture {
+                                    state.amount = state.insulinCalculated
+                                }
+                        }
                     }
 
                     if !state.waitForSuggestion {
@@ -129,7 +190,8 @@ extension Bolus {
                             }
                         }
                     }
-                } header: { Text("Bolus") }
+                }
+                header: { Text("Bolus") }
 
                 if state.amount > 0 {
                     Section {
@@ -154,6 +216,20 @@ extension Bolus {
                         label: { Text("Continue without bolus") }.frame(maxWidth: .infinity, alignment: .center)
                     }
                 }
+            }
+            .alert(isPresented: $displayError) {
+                Alert(
+                    title: Text("Warning!"),
+                    message: Text("\n" + alertString() + "\n"),
+                    primaryButton: .destructive(
+                        Text("Add"),
+                        action: {
+                            state.amount = state.insulinCalculated
+                            displayError = false
+                        }
+                    ),
+                    secondaryButton: .cancel()
+                )
             }
             .blur(radius: showInfo ? 3 : 0)
             .navigationTitle("Enact Bolus")
@@ -492,6 +568,68 @@ extension Bolus {
                     Text(" U")
                         .foregroundColor(.secondary)
                 }
+            }
+        }
+
+        private func alertString() -> String {
+            switch state.errorString {
+            case 1,
+                 2:
+                return NSLocalizedString(
+                    "Eventual Glucose > Target Glucose, but glucose is predicted to first drop down to ",
+                    comment: "Bolus pop-up / Alert string. Make translations concise!"
+                ) + state.minGuardBG
+                    .formatted(.number.grouping(.never).rounded().precision(.fractionLength(fractionDigits))) + " " +
+                    state.units
+                    .rawValue + ", " +
+                    NSLocalizedString(
+                        "which is below your Threshold (",
+                        comment: "Bolus pop-up / Alert string. Make translations concise!"
+                    ) + state
+                    .threshold
+                    .formatted(.number.grouping(.never).rounded().precision(.fractionLength(fractionDigits))) + ")"
+            case 3:
+                return NSLocalizedString(
+                    "Eventual Glucose > Target Glucose, but glucose is climbing slower than expected. Expected: ",
+                    comment: "Bolus pop-up / Alert string. Make translations concise!"
+                ) +
+                    state.expectedDelta
+                    .formatted(.number.grouping(.never).rounded().precision(.fractionLength(fractionDigits))) +
+                    NSLocalizedString(". Climbing: ", comment: "Bolus pop-up / Alert string. Make translatons concise!") +
+                    state
+                    .minDelta.formatted(.number.grouping(.never).rounded().precision(.fractionLength(fractionDigits)))
+            case 4:
+                return NSLocalizedString(
+                    "Eventual Glucose > Target Glucose, but glucose is falling faster than expected. Expected: ",
+                    comment: "Bolus pop-up / Alert string. Make translations concise!"
+                ) +
+                    state.expectedDelta
+                    .formatted(.number.grouping(.never).rounded().precision(.fractionLength(fractionDigits))) +
+                    NSLocalizedString(". Falling: ", comment: "Bolus pop-up / Alert string. Make translations concise!") +
+                    state
+                    .minDelta.formatted(.number.grouping(.never).rounded().precision(.fractionLength(fractionDigits)))
+            case 5:
+                return NSLocalizedString(
+                    "Eventual Glucose > Target Glucose, but glucose is changing faster than expected. Expected: ",
+                    comment: "Bolus pop-up / Alert string. Make translations concise!"
+                ) +
+                    state.expectedDelta
+                    .formatted(.number.grouping(.never).rounded().precision(.fractionLength(fractionDigits))) +
+                    NSLocalizedString(". Changing: ", comment: "Bolus pop-up / Alert string. Make translations concise!") +
+                    state
+                    .minDelta.formatted(.number.grouping(.never).rounded().precision(.fractionLength(fractionDigits)))
+            case 6:
+                return NSLocalizedString(
+                    "Eventual Glucose > Target Glucose, but glucose is predicted to first drop down to ",
+                    comment: "Bolus pop-up / Alert string. Make translations concise!"
+                ) + state
+                    .minPredBG
+                    .formatted(.number.grouping(.never).rounded().precision(.fractionLength(fractionDigits))) + " " +
+                    state
+                    .units
+                    .rawValue
+            default:
+                return "Ignore Warning..."
             }
         }
     }
