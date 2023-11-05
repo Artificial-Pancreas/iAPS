@@ -55,6 +55,39 @@
 /* Headline in enacted pop up (at: at what time) */
 "Error at" = "Fel vid";
 
+/* Bolus View Meal Summary Header */
+"Meal Summary" = "Måltidssammanfattning";
+
+/* Bolus View Meal Edit Meal Button */
+"Edit Meal" = "Ändra måltid";
+
+/* Bolus View Meal Add Meal Button */
+"Add Meal" = "Lägg till Måltid";
+
+/* Bolus View Bolus Summary Header */
+"Bolus Summary" = "Sammanfattnig av bolus";
+
+/* For the  Bolus View pop-up */
+"Calculations" = "Beräkningar";
+
+/* For the  Bolus View pop-up */
+"Fatty Meal" = "Fet mat";
+
+/* For the  Bolus View pop-up */
+"Full Bolus" = "Total mängd";
+
+/* For the  Bolus View pop-up */
+"Fraction" = "Faktor";
+
+/* For the  Bolus View pop-up */
+"Fatty Meal Factor" = "Fettrik måltidsfaktor";
+
+/* For the  Bolus View pop-up */
+"Result" = "Resultat";
+
+/* For the  Bolus View pop-up */
+"Your entered amount was limited by your max Bolus setting of %d%@" = "Du har angivit en insulinmängd som är över din maxinställning på %d%@";
+
 /* Home title */
 "Home" = "Hem";
 
@@ -568,6 +601,9 @@ Enact a temp Basal or a temp target */
 
 /* Automatic delivered treatments */
 "Automatic" = "Automatisk";
+
+/* External insulin treatments */
+"External" = "Externt";
 
 /* */
 "Other" = "Annan";
@@ -1170,6 +1206,9 @@ Enact a temp Basal or a temp target */
 
 /* An Automatic delivered bolus (SMB) */
 "SMB" = "SMB";
+
+/* A manually entered dose of external insulin */
+"External Insulin" = "Externt insulin";
 
 /* Status highlight when manual temp basal is running. */
 "Manual Basal" = "Manuell temporär basal";

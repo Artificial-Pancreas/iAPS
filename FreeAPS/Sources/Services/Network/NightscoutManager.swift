@@ -9,7 +9,7 @@ protocol NightscoutManager: GlucoseSource {
     func fetchCarbs() -> AnyPublisher<[CarbsEntry], Never>
     func fetchTempTargets() -> AnyPublisher<[TempTarget], Never>
     func fetchAnnouncements() -> AnyPublisher<[Announcement], Never>
-    func deleteCarbs(at date: Date, isFPU: Bool?, fpuID: String?, syncID: String)
+    func deleteCarbs(at uniqueID: String, isFPU: Bool?, fpuID: String?, syncID: String)
     func deleteInsulin(at date: Date)
     func deleteManualGlucose(at: Date)
     func uploadStatus()
@@ -177,62 +177,32 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
             .eraseToAnyPublisher()
     }
 
-    func deleteCarbs(at date: Date, isFPU: Bool?, fpuID: String?, syncID: String) {
+    func deleteCarbs(at uniqueID: String, isFPU: Bool?, fpuID: String?, syncID: String) {
         // remove in AH
         healthkitManager.deleteCarbs(syncID: syncID, isFPU: isFPU, fpuID: fpuID)
 
         guard let nightscout = nightscoutAPI, isUploadEnabled else {
-            carbsStorage.deleteCarbs(at: date)
+            carbsStorage.deleteCarbs(at: uniqueID)
             return
         }
 
-        if let isFPU = isFPU, isFPU {
-            guard let fpuID = fpuID else { return }
-            let allValues = storage.retrieve(OpenAPS.Monitor.carbHistory, as: [CarbsEntry].self) ?? []
-            let dates = allValues.filter { $0.fpuID == fpuID }.map(\.createdAt).removeDublicates()
-
-            let publishers = dates
-                .map { d -> AnyPublisher<Void, Swift.Error> in
-                    nightscout.deleteCarbs(
-                        at: d
+        nightscout.deleteCarbs(at: uniqueID)
+            .collect()
+            .sink { completion in
+                self.carbsStorage.deleteCarbs(at: uniqueID)
+                switch completion {
+                case .finished:
+                    debug(.nightscout, "Carbs deleted")
+                case let .failure(error):
+                    info(
+                        .nightscout,
+                        "Deletion of carbs in NightScout not done \n \(error.localizedDescription)",
+                        type: MessageType.warning
                     )
                 }
-
-            Publishers.MergeMany(publishers)
-                .collect()
-                .sink { completion in
-                    self.carbsStorage.deleteCarbs(at: date)
-                    switch completion {
-                    case .finished:
-                        debug(.nightscout, "Carbs deleted")
-
-                    case let .failure(error):
-                        info(
-                            .nightscout,
-                            "Deletion of carbs in NightScout not done \n \(error.localizedDescription)",
-                            type: MessageType.warning
-                        )
-                    }
-                } receiveValue: { _ in }
-                .store(in: &lifetime)
-
-        } else {
-            nightscout.deleteCarbs(at: date)
-                .sink { completion in
-                    self.carbsStorage.deleteCarbs(at: date)
-                    switch completion {
-                    case .finished:
-                        debug(.nightscout, "Carbs deleted")
-                    case let .failure(error):
-                        info(
-                            .nightscout,
-                            "Deletion of carbs in NightScout not done \n \(error.localizedDescription)",
-                            type: MessageType.warning
-                        )
-                    }
-                } receiveValue: {}
-                .store(in: &lifetime)
-        }
+            } receiveValue: { _ in }
+            .store(in: &lifetime)
+        // }
     }
 
     func deleteInsulin(at date: Date) {

@@ -55,6 +55,39 @@
 /* Headline in enacted pop up (at: at what time) */
 "Error at" = "Помилка в";
 
+/* Bolus View Meal Summary Header */
+"Meal Summary" = "Резюме харчування";
+
+/* Bolus View Meal Edit Meal Button */
+"Edit Meal" = "Редагувати їжу";
+
+/* Bolus View Meal Add Meal Button */
+"Add Meal" = "Додати прийом їжі";
+
+/* Bolus View Bolus Summary Header */
+"Bolus Summary" = "Підсумок болюсу";
+
+/* For the  Bolus View pop-up */
+"Calculations" = "Розрахунки";
+
+/* For the  Bolus View pop-up */
+"Fatty Meal" = "Жирна їжа";
+
+/* For the  Bolus View pop-up */
+"Full Bolus" = "Повний болюс";
+
+/* For the  Bolus View pop-up */
+"Fraction" = "Частка";
+
+/* For the  Bolus View pop-up */
+"Fatty Meal Factor" = "Фактор жирної їжі";
+
+/* For the  Bolus View pop-up */
+"Result" = "Результат";
+
+/* For the  Bolus View pop-up */
+"Your entered amount was limited by your max Bolus setting of %d%@" = "Введена вами сума була обмежена налаштуванням максимального болюсу %d%@";
+
 /* Home title */
 "Home" = "Головна";
 
@@ -351,7 +384,7 @@ Enact a temp Basal or a temp target */
 "Can't find the default Nightscout Profile." = "Не вдається знайти профіль Nightscout за замовчуванням.";
 
 /* Add Blood Glucose Test, header */
-"Blood Glucose Test" = "Blood Glucose Test";
+"Blood Glucose Test" = "Тест на глюкозу у крові";
 
 /* Add Medtronic pump */
 "Add Medtronic" = "Додати Medtronic";
@@ -568,6 +601,9 @@ Enact a temp Basal or a temp target */
 
 /* Automatic delivered treatments */
 "Automatic" = "Автоматично";
+
+/* External insulin treatments */
+"External" = "Зовнішній";
 
 /* */
 "Other" = "Інше";
@@ -1170,6 +1206,9 @@ Enact a temp Basal or a temp target */
 
 /* An Automatic delivered bolus (SMB) */
 "SMB" = "SMB";
+
+/* A manually entered dose of external insulin */
+"External Insulin" = "Зовнішній інсулін";
 
 /* Status highlight when manual temp basal is running. */
 "Manual Basal" = "Ручна тимчасова базальна швидкість (ТБШ)";

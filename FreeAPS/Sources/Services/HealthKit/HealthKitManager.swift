@@ -186,7 +186,7 @@ final class BaseHealthKitManager: HealthKitManager, Injectable, CarbsObserver, P
         else { return }
 
         let carbsWithId = carbs.filter { c in
-            guard c.id != nil else { return false }
+            guard c.collectionID != nil else { return false }
             return true
         }
 
@@ -194,7 +194,7 @@ final class BaseHealthKitManager: HealthKitManager, Injectable, CarbsObserver, P
             let sampleIDs = samples.compactMap(\.syncIdentifier)
             let sampleDates = samples.map(\.startDate)
             let samplesToSave = carbsWithId
-                .filter { !sampleIDs.contains($0.id!) } // id existing in AH
+                .filter { !sampleIDs.contains($0.collectionID!) } // id existing in AH
                 .filter { !sampleDates.contains($0.createdAt) } // not id but exaclty the same datetime
                 .map {
                     HKQuantitySample(
@@ -203,8 +203,8 @@ final class BaseHealthKitManager: HealthKitManager, Injectable, CarbsObserver, P
                         start: $0.createdAt,
                         end: $0.createdAt,
                         metadata: [
-                            HKMetadataKeyExternalUUID: $0.id ?? "_id",
-                            HKMetadataKeySyncIdentifier: $0.id ?? "_id",
+                            HKMetadataKeyExternalUUID: $0.collectionID ?? "_id",
+                            HKMetadataKeySyncIdentifier: $0.collectionID ?? "_id",
                             HKMetadataKeySyncVersion: 1,
                             Config.freeAPSMetaKey: true
                         ]

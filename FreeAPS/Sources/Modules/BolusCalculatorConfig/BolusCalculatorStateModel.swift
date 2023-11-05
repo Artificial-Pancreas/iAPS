@@ -6,7 +6,7 @@ extension BolusCalculatorConfig {
         @Published var useCalc: Bool = false
         @Published var fattyMeals: Bool = false
         @Published var fattyMealFactor: Decimal = 0
-
+        @Published var insulinReqPercentage: Decimal = 70
         override func subscribe() {
             subscribeSetting(\.overrideFactor, on: $overrideFactor, initial: {
                 let value = max(min($0, 1.2), 0.1)
@@ -22,6 +22,7 @@ extension BolusCalculatorConfig {
             }, map: {
                 $0
             })
+            subscribeSetting(\.insulinReqPercentage, on: $insulinReqPercentage) { insulinReqPercentage = $0 }
         }
     }
 }
