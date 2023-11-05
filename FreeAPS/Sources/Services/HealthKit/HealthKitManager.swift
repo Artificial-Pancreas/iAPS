@@ -186,7 +186,7 @@ final class BaseHealthKitManager: HealthKitManager, Injectable, CarbsObserver, P
         else { return }
 
         let carbsWithId = carbs.filter { c in
-            guard c.id != nil else { return false }
+            guard c.collectionID != nil else { return false }
             return true
         }
 
@@ -203,8 +203,8 @@ final class BaseHealthKitManager: HealthKitManager, Injectable, CarbsObserver, P
                         start: $0.createdAt,
                         end: $0.createdAt,
                         metadata: [
-                            HKMetadataKeyExternalUUID: $0.id ?? "_id",
-                            HKMetadataKeySyncIdentifier: $0.id ?? "_id",
+                            HKMetadataKeyExternalUUID: $0.collectionID ?? "_id",
+                            HKMetadataKeySyncIdentifier: $0.collectionID ?? "_id",
                             HKMetadataKeySyncVersion: 1,
                             Config.freeAPSMetaKey: true
                         ]

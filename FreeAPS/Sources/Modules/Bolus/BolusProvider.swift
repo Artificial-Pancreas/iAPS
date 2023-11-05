@@ -1,5 +1,9 @@
+import CoreData
+
 extension Bolus {
     final class Provider: BaseProvider, BolusProvider {
+        let coredataContext = CoreDataStack.shared.persistentContainer.viewContext
+
         var suggestion: Suggestion? {
             storage.retrieve(OpenAPS.Enact.suggested, as: Suggestion.self)
         }
@@ -8,6 +12,21 @@ extension Bolus {
             storage.retrieve(OpenAPS.Settings.settings, as: PumpSettings.self)
                 ?? PumpSettings(from: OpenAPS.defaults(for: OpenAPS.Settings.settings))
                 ?? PumpSettings(insulinActionCurve: 6, maxBolus: 10, maxBasal: 2)
+        }
+
+        func fetchGlucose() -> [Readings] {
+            var fetchGlucose = [Readings]()
+            coredataContext.performAndWait {
+                let requestReadings = Readings.fetchRequest() as NSFetchRequest<Readings>
+                let sort = NSSortDescriptor(key: "date", ascending: true)
+                requestReadings.sortDescriptors = [sort]
+                requestReadings.predicate = NSPredicate(
+                    format: "glucose > 0 AND date > %@",
+                    Date().addingTimeInterval(-1.hours.timeInterval) as NSDate
+                )
+                try? fetchGlucose = self.coredataContext.fetch(requestReadings)
+            }
+            return fetchGlucose
         }
     }
 }

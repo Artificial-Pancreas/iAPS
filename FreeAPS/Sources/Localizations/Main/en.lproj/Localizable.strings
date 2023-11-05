@@ -88,6 +88,9 @@
 /* For the  Bolus View pop-up */
 "Your entered amount was limited by your max Bolus setting of %d%@" = "Your entered amount was limited by your max Bolus setting of %d%@";
 
+/* Bolus View Continue Button */
+"Continue" = "Continue";
+
 /* Home title */
 "Home" = "Home";
 

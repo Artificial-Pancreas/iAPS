@@ -12,7 +12,7 @@ extension AddCarbs {
         @Published var protein: Decimal = 0
         @Published var fat: Decimal = 0
         @Published var carbsRequired: Decimal?
-        @Published var useFPUconversion: Bool = true
+        @Published var useFPUconversion: Bool = false
         @Published var dish: String = ""
         @Published var selection: Presets?
         @Published var summation: [String] = []
@@ -20,13 +20,15 @@ extension AddCarbs {
         @Published var note: String = ""
         @Published var id_: String = ""
         @Published var summary: String = ""
+        @Published var skipBolus: Bool = false
 
         let coredataContext = CoreDataStack.shared.persistentContainer.viewContext
 
         override func subscribe() {
-            subscribeSetting(\.useFPUconversion, on: $useFPUconversion) { useFPUconversion = $0 }
             carbsRequired = provider.suggestion?.carbsReq
             maxCarbs = settings.settings.maxCarbs
+            skipBolus = settingsManager.settings.skipBolusScreenAfterCarbs
+            useFPUconversion = settingsManager.settings.useFPUconversion
         }
 
         func add() {
@@ -49,7 +51,7 @@ extension AddCarbs {
             )]
             carbsStorage.storeCarbs(carbsToStore)
 
-            if settingsManager.settings.skipBolusScreenAfterCarbs {
+            if skipBolus {
                 apsManager.determineBasalSync()
                 showModal(for: nil)
             } else if carbs > 0 {

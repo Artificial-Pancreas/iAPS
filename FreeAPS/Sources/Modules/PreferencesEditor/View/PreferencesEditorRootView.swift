@@ -27,17 +27,6 @@ extension PreferencesEditor {
                         Text("mg/dL").tag(0)
                         Text("mmol/L").tag(1)
                     }
-
-                    Toggle("Remote control", isOn: $state.allowAnnouncements)
-
-                    if !state.useAlternativeBolusCalc {
-                        HStack {
-                            Text("Recommended Bolus Percentage")
-                            DecimalTextField("", value: $state.insulinReqPercentage, formatter: formatter)
-                        }
-                    }
-
-                    Toggle("Skip Bolus screen after carbs", isOn: $state.skipBolusScreenAfterCarbs)
                 }
 
                 ForEach(state.sections.indexed(), id: \.1.id) { sectionIndex, section in

@@ -15,7 +15,7 @@
 "Pod Expired" = "Pod udløbet";
 
 /* Alert content title for lowReservoir pod alert */
-"Low Reservoir" = "Lavt reservoir";
+"Low Reservoir" = "Lavt Reservoir";
 
 /* Alert content title for suspendInProgress pod alert */
 "Suspend In Progress Reminder" = "Påmindelse om igangværende suspension";
@@ -532,7 +532,7 @@
 "Setup Complete" = "Opsætning fuldført";
 
 /* Value text for no expiration reminder */
-"No Reminder" = "Ingen påmindelse";
+"No Reminder" = "Ingen Påmindelse";
 
 /* Error message description for PeripheralManagerError.notReady */
 "Peripheral Not Ready" = "Perifer Enhed Ikke Klar";
