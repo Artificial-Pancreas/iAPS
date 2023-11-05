@@ -63,16 +63,12 @@ extension Bolus {
                 }
 
                 Section {
-                    Button {
-                        let id_ = meal.first?.id ?? ""
-                        if fetch {
-                            keepForNextWiew = true
-                            state.backToCarbsView(complexEntry: fetch, id_)
-                        } else {
-                            state.showModal(for: .addCarbs(editMode: false))
+                    if !fetch {
+                        Button {
+                            carbssView()
                         }
+                        label: { Text("Add Meal") }.frame(maxWidth: .infinity, alignment: .center)
                     }
-                    label: { Text(fetch ? "Edit Meal" : "Add Meal") }.frame(maxWidth: .infinity, alignment: .center)
                 } header: { Text(!fetch ? "Meal Summary" : "") }
 
                 Section {
@@ -172,7 +168,16 @@ extension Bolus {
             .navigationTitle("Enact Bolus")
             .navigationBarTitleDisplayMode(.inline)
             .navigationBarItems(
-                leading: Button { state.hideModal() }
+                leading: Button {
+                    if fetch {
+                        carbssView()
+                    } else {
+                        state.hideModal()
+                    }
+                }
+                label: { Text("Back") },
+
+                trailing: Button { state.hideModal() }
                 label: { Text("Close") }
             )
             .onAppear {
@@ -263,6 +268,16 @@ extension Bolus {
 
         var hasFatOrProtein: Bool {
             ((meal.first?.fat ?? 0) > 0) || ((meal.first?.protein ?? 0) > 0)
+        }
+
+        func carbssView() {
+            let id_ = meal.first?.id ?? ""
+            if fetch {
+                keepForNextWiew = true
+                state.backToCarbsView(complexEntry: fetch, id_)
+            } else {
+                state.showModal(for: .addCarbs(editMode: false))
+            }
         }
 
         var mealEntries: some View {
