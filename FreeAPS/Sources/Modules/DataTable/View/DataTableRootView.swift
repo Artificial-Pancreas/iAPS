@@ -6,11 +6,11 @@ extension DataTable {
     struct RootView: BaseView {
         let resolver: Resolver
         @StateObject var state = StateModel()
-        @State private var isRemoveTreatmentAlertPresented: Bool = false
-        @State private var removeTreatmentAlert: Alert?
+        @State private var isRemoveHistoryItemAlertPresented: Bool = false
         @State private var alertTitle: String = ""
         @State private var alertMessage: String = ""
         @State private var alertTreatmentToDelete: Treatment?
+        @State private var alertGlucoseToDelete: Glucose?
 
         @State private var showExternalInsulin: Bool = false
         @State private var showFutureEntries: Bool = false // default to hide future entries
@@ -134,7 +134,6 @@ extension DataTable {
                     ForEach(state.glucose) { item in
                         glucoseView(item, isManual: item.glucose)
                     }
-                    .onDelete(perform: deleteGlucose)
                 } else {
                     HStack {
                         Text("No data.")
@@ -201,30 +200,34 @@ extension DataTable {
                 Text(dateFormatter.string(from: item.date))
                     .moveDisabled(true)
             }
-            .disabled(item.type == .tempBasal || item.type == .tempTarget || item.type == .resume || item.type == .suspend)
             .swipeActions {
-                Button("Delete", role: .none) {
-                    alertTreatmentToDelete = item
+                Button(
+                    "Delete",
+                    systemImage: "trash.fill",
+                    role: .none,
+                    action: {
+                        alertTreatmentToDelete = item
 
-                    if item.type == .carbs {
-                        alertTitle = "Delete Carbs?"
-                        alertMessage = item.amountText
-                        isRemoveTreatmentAlertPresented = true
-                    } else if item.type == .fpus {
-                        alertTitle = "Delete Carb Equivalents?"
-                        alertMessage = "All FPUs of the meal entry will be deleted"
-                        isRemoveTreatmentAlertPresented = true
-                    } else {
-                        // item is insulin treatment; item.type == .bolus
-                        alertTitle = "Delete Insulin?"
-                        alertMessage = item.amountText
-                        isRemoveTreatmentAlertPresented = true
+                        if item.type == .carbs {
+                            alertTitle = "Delete Carbs?"
+                            alertMessage = dateFormatter.string(from: item.date) + ", " + item.amountText
+                        } else if item.type == .fpus {
+                            alertTitle = "Delete Carb Equivalents?"
+                            alertMessage = "All FPUs of the meal will be deleted."
+                        } else {
+                            // item is insulin treatment; item.type == .bolus
+                            alertTitle = "Delete Insulin?"
+                            alertMessage = dateFormatter.string(from: item.date) + ", " + item.amountText
+                        }
+
+                        isRemoveHistoryItemAlertPresented = true
                     }
-                }.tint(.red)
+                ).tint(.red)
             }
+            .disabled(item.type == .tempBasal || item.type == .tempTarget || item.type == .resume || item.type == .suspend)
             .alert(
                 Text(alertTitle),
-                isPresented: $isRemoveTreatmentAlertPresented
+                isPresented: $isRemoveHistoryItemAlertPresented
             ) {
                 Button("Cancel", role: .cancel) {}
                 Button("Delete", role: .destructive) {
@@ -310,27 +313,59 @@ extension DataTable {
         }
 
         @ViewBuilder private func glucoseView(_ item: Glucose, isManual: BloodGlucose) -> some View {
-            VStack(alignment: .leading, spacing: 4) {
-                HStack {
-                    Text(item.glucose.glucose.map {
-                        glucoseFormatter.string(from: Double(
-                            state.units == .mmolL ? $0.asMmolL : Decimal($0)
-                        ) as NSNumber)!
-                    } ?? "--")
-                    if isManual.type == GlucoseType.manual.rawValue {
-                        Image(systemName: "drop.fill").symbolRenderingMode(.monochrome).foregroundStyle(.red)
-                    } else {
-                        Text(item.glucose.direction?.symbol ?? "--")
-                    }
-                    Spacer()
-
-                    Text(dateFormatter.string(from: item.glucose.dateString))
+            HStack {
+                Text(item.glucose.glucose.map {
+                    glucoseFormatter.string(from: Double(
+                        state.units == .mmolL ? $0.asMmolL : Decimal($0)
+                    ) as NSNumber)!
+                } ?? "--")
+                if isManual.type == GlucoseType.manual.rawValue {
+                    Image(systemName: "drop.fill").symbolRenderingMode(.monochrome).foregroundStyle(.red)
+                } else {
+                    Text(item.glucose.direction?.symbol ?? "--")
                 }
-            }
-        }
+                Spacer()
 
-        private func deleteGlucose(at offsets: IndexSet) {
-            state.deleteGlucose(at: offsets[offsets.startIndex])
+                Text(dateFormatter.string(from: item.glucose.dateString))
+            }
+            .swipeActions {
+                Button(
+                    "Delete",
+                    systemImage: "trash.fill",
+                    role: .none,
+                    action: {
+                        alertGlucoseToDelete = item
+
+                        let valueText = glucoseFormatter.string(from: Double(
+                            state.units == .mmolL ? Double(item.glucose.value.asMmolL) : item.glucose.value
+                        ) as NSNumber)! + " " + state.units.rawValue
+
+                        alertTitle = "Delete Glucose?"
+                        alertMessage = dateFormatter.string(from: item.glucose.dateString) + ", " + valueText
+
+                        isRemoveHistoryItemAlertPresented = true
+                    }
+                ).tint(.red)
+            }
+            .alert(
+                Text(alertTitle),
+                isPresented: $isRemoveHistoryItemAlertPresented
+            ) {
+                Button("Cancel", role: .cancel) {}
+                Button("Delete", role: .destructive) {
+                    // gracefully unwrap value here.
+                    // value cannot ever really be nil because it is an existing(!) table entry
+                    // but just to be sure.
+                    guard let glucoseToDelete = alertGlucoseToDelete else {
+                        print("Cannot gracefully unwrap alertTreatmentToDelete!")
+                        return
+                    }
+
+                    state.deleteGlucose(glucoseToDelete)
+                }
+            } message: {
+                Text("\n" + alertMessage)
+            }
         }
     }
 }
