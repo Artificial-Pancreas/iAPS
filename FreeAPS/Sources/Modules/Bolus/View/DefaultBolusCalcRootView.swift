@@ -155,11 +155,9 @@ extension Bolus {
                 leading: Button {
                     if fetch {
                         carbssView()
-                    } else {
-                        state.hideModal()
                     }
                 }
-                label: { Text("Back") },
+                label: { Text(fetch ? "Back" : "") },
 
                 trailing: Button { state.hideModal() }
                 label: { Text("Close") }
