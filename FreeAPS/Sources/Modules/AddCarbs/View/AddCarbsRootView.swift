@@ -64,7 +64,7 @@ extension AddCarbs {
                             let test = state.waitersNotepad().components(separatedBy: ", ").removeDublicates()
                             HStack(spacing: 0) {
                                 ForEach(test, id: \.self) {
-                                    Text($0).foregroundStyle(Color.random(randomOpacity: true)).font(.footnote)
+                                    Text($0).foregroundStyle(Color.randomGreen()).font(.footnote)
                                     Text($0 == test[test.count - 1] ? "" : ", ")
                                 }
                             }.frame(maxWidth: .infinity, alignment: .trailing)
@@ -318,11 +318,11 @@ extension AddCarbs {
 }
 
 public extension Color {
-    static func random(randomOpacity: Bool = false) -> Color {
+    static func randomGreen(randomOpacity: Bool = false) -> Color {
         Color(
             red: .random(in: 0 ... 1),
-            green: .random(in: 0.3 ... 1),
-            blue: .random(in: 0 ... 1),
+            green: .random(in: 0.4 ... 0.7),
+            blue: .random(in: 0.2 ... 1),
             opacity: randomOpacity ? .random(in: 0.8 ... 1) : 1
         )
     }
