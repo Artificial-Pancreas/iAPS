@@ -170,12 +170,12 @@ extension AddCarbs {
 
         func loadEntries(_ editMode: Bool) {
             if editMode {
-                coredataContext.perform {
+                coredataContext.performAndWait {
                     var mealToEdit = [Meals]()
                     let requestMeal = Meals.fetchRequest() as NSFetchRequest<Meals>
                     let sortMeal = NSSortDescriptor(key: "createdAt", ascending: false)
                     requestMeal.sortDescriptors = [sortMeal]
-                    requestMeal.fetchLimit = 1
+                    requestMeal.fetchLimit = 3
                     try? mealToEdit = self.coredataContext.fetch(requestMeal)
 
                     self.carbs = Decimal(mealToEdit.first?.carbs ?? 0)
@@ -188,15 +188,17 @@ extension AddCarbs {
         }
 
         func saveToCoreData(_ stored: [CarbsEntry]) {
-            let save = Meals(context: coredataContext)
-            save.createdAt = stored.first?.createdAt ?? .distantPast
-            save.id = stored.first?.collectionID ?? ""
-            save.carbs = Double(stored.first?.carbs ?? 0)
-            save.fat = Double(stored.first?.fat ?? 0)
-            save.protein = Double(stored.first?.protein ?? 0)
-            save.note = stored.first?.note ?? ""
-            if coredataContext.hasChanges {
-                try? coredataContext.save()
+            coredataContext.performAndWait {
+                let save = Meals(context: coredataContext)
+                if let entry = stored.first {
+                    save.createdAt = entry.createdAt
+                    save.id = entry.collectionID ?? ""
+                    save.carbs = Double(entry.carbs)
+                    save.fat = Double(entry.fat ?? 0)
+                    save.protein = Double(entry.protein ?? 0)
+                    save.note = entry.note
+                    try? coredataContext.save()
+                }
             }
         }
     }
