@@ -29,7 +29,7 @@ extension AddCarbs {
 
         var body: some View {
             Form {
-                if let carbsReq = state.carbsRequired {
+                if let carbsReq = state.carbsRequired, state.carbs < carbsReq {
                     Section {
                         HStack {
                             Text("Carbs required")
@@ -55,6 +55,16 @@ extension AddCarbs {
                     if state.useFPUconversion {
                         proteinAndFat()
                     }
+
+                    // Summary when using presets with or without other entries
+                    if state.waitersNotepad() != "" {
+                        HStack {
+                            Image(systemName: "menucard")
+                            Text(state.waitersNotepad()).font(.caption2).foregroundStyle(.secondary)
+                                .frame(maxWidth: .infinity, alignment: .trailing)
+                        }
+                    }
+
                     // Time
                     HStack {
                         let now = Date.now
@@ -67,13 +77,13 @@ extension AddCarbs {
                             selection: $state.date,
                             in: ...now,
                             displayedComponents: [.hourAndMinute]
-                        )
-                        .labelsHidden()
+                        ).controlSize(.mini)
+                            .labelsHidden()
                         Button {
                             if state.date.addingTimeInterval(5.minutes.timeInterval) < now {
                                 state.date = state.date.addingTimeInterval(10.minutes.timeInterval) } }
                         label: { Image(systemName: "plus.circle") }.tint(.blue).buttonStyle(.borderless)
-                    }
+                    }.listRowSpacing(0)
 
                     // Optional meal note
                     HStack {
@@ -88,14 +98,6 @@ extension AddCarbs {
                     .popover(isPresented: $isPromptPresented) {
                         presetPopover
                     }
-
-                    // Summary, when combining preset(s) and meal entries
-                    if state.waitersNotepad() != "" {
-                        HStack {
-                            Image(systemName: "menucard").foregroundStyle(.secondary)
-                            Text(state.waitersNotepad()).font(.caption2).foregroundStyle(.secondary)
-                        }
-                    }
                 }
 
                 Section {
@@ -108,21 +110,17 @@ extension AddCarbs {
 
                 Section {
                     mealPresets
-                } header: {
-                    HStack {
-                        Image(systemName: "menucard")
-                        Text("Presets")
-                    }
                 }
-            }.listRowSpacing(0)
-                .onAppear {
-                    configureView {
-                        state.loadEntries(editMode)
-                    }
+            }
+            .listRowSpacing(0)
+            .onAppear {
+                configureView {
+                    state.loadEntries(editMode)
                 }
-                .navigationTitle("Add Meal")
-                .navigationBarTitleDisplayMode(.inline)
-                .navigationBarItems(leading: Button("Close", action: state.hideModal))
+            }
+            .navigationTitle("Add Meal")
+            .navigationBarTitleDisplayMode(.inline)
+            .navigationBarItems(leading: Button("Close", action: state.hideModal))
         }
 
         private var presetPopover: some View {
@@ -214,7 +212,10 @@ extension AddCarbs {
                         minusButton
                     }
                     Picker("Preset", selection: $state.selection) {
-                        Text("Preset").tag(nil as Presets?)
+                        HStack {
+                            Image(systemName: "menucard")
+                            Text(" Presets")
+                        }.tag(nil as Presets?)
                         ForEach(carbPresets, id: \.self) { (preset: Presets) in
                             Text(preset.dish ?? "").tag(preset as Presets?)
                         }
