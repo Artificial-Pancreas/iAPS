@@ -175,7 +175,7 @@ extension AddCarbs {
                     let requestMeal = Meals.fetchRequest() as NSFetchRequest<Meals>
                     let sortMeal = NSSortDescriptor(key: "createdAt", ascending: false)
                     requestMeal.sortDescriptors = [sortMeal]
-                    requestMeal.fetchLimit = 3
+                    requestMeal.fetchLimit = 1
                     try? mealToEdit = self.coredataContext.fetch(requestMeal)
 
                     self.carbs = Decimal(mealToEdit.first?.carbs ?? 0)
@@ -191,7 +191,7 @@ extension AddCarbs {
             coredataContext.performAndWait {
                 let save = Meals(context: coredataContext)
                 if let entry = stored.first {
-                    save.createdAt = entry.createdAt
+                    save.createdAt = Date.now
                     save.id = entry.collectionID ?? ""
                     save.carbs = Double(entry.carbs)
                     save.fat = Double(entry.fat ?? 0)
