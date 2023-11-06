@@ -10,6 +10,7 @@ extension AddCarbs {
         @State var dish: String = ""
         @State var isPromptPresented = false
         @State var saved = false
+        @State var pushed = false
         @State private var showAlert = false
         @FocusState private var isFocused: Bool
 
@@ -56,12 +57,17 @@ extension AddCarbs {
                         proteinAndFat()
                     }
 
-                    // Summary when using presets with or without other entries
+                    // Summary when combining presets
                     if state.waitersNotepad() != "" {
                         HStack {
-                            Image(systemName: "menucard")
-                            Text(state.waitersNotepad()).font(.caption2).foregroundStyle(.secondary)
-                                .frame(maxWidth: .infinity, alignment: .trailing)
+                            Text("Serving")
+                            let test = state.waitersNotepad().components(separatedBy: ", ").removeDublicates()
+                            HStack(spacing: 0) {
+                                ForEach(test, id: \.self) {
+                                    Text($0).foregroundStyle(Color.random(randomOpacity: true)).font(.footnote)
+                                    Text($0 == test[test.count - 1] ? "" : ", ")
+                                }
+                            }.frame(maxWidth: .infinity, alignment: .trailing)
                         }
                     }
 
@@ -70,20 +76,28 @@ extension AddCarbs {
                         let now = Date.now
                         Text("Time")
                         Spacer()
-                        Button { state.date = state.date.addingTimeInterval(-10.minutes.timeInterval) }
-                        label: { Image(systemName: "minus.circle") }.tint(.blue).buttonStyle(.borderless)
-                        DatePicker(
-                            "Time",
-                            selection: $state.date,
-                            in: ...now,
-                            displayedComponents: [.hourAndMinute]
-                        ).controlSize(.mini)
-                            .labelsHidden()
-                        Button {
-                            if state.date.addingTimeInterval(5.minutes.timeInterval) < now {
-                                state.date = state.date.addingTimeInterval(10.minutes.timeInterval) } }
-                        label: { Image(systemName: "plus.circle") }.tint(.blue).buttonStyle(.borderless)
-                    }.listRowSpacing(0)
+                        if !pushed {
+                            Button {
+                                pushed = true
+                            } label: { Text("Now") }.buttonStyle(.borderless).foregroundColor(.secondary).padding(.trailing, 5)
+                        } else {
+                            Button { state.date = state.date.addingTimeInterval(-10.minutes.timeInterval) }
+                            label: { Image(systemName: "minus.circle") }.tint(.blue).buttonStyle(.borderless)
+                            DatePicker(
+                                "Time",
+                                selection: $state.date,
+                                in: ...now,
+                                displayedComponents: [.hourAndMinute]
+                            ).controlSize(.mini)
+                                .labelsHidden()
+                            Button {
+                                if state.date.addingTimeInterval(5.minutes.timeInterval) < now {
+                                    state.date = state.date.addingTimeInterval(10.minutes.timeInterval)
+                                }
+                            }
+                            label: { Image(systemName: "plus.circle") }.tint(.blue).buttonStyle(.borderless)
+                        }
+                    }
 
                     // Optional meal note
                     HStack {
@@ -112,7 +126,6 @@ extension AddCarbs {
                     mealPresets
                 }
             }
-            .listRowSpacing(0)
             .onAppear {
                 configureView {
                     state.loadEntries(editMode)
@@ -212,10 +225,7 @@ extension AddCarbs {
                         minusButton
                     }
                     Picker("Preset", selection: $state.selection) {
-                        HStack {
-                            Image(systemName: "menucard")
-                            Text(" Presets")
-                        }.tag(nil as Presets?)
+                        Text("Saved Dishes").tag(nil as Presets?)
                         ForEach(carbPresets, id: \.self) { (preset: Presets) in
                             Text(preset.dish ?? "").tag(preset as Presets?)
                         }
@@ -304,5 +314,16 @@ extension AddCarbs {
                 Text("grams").foregroundColor(.secondary)
             }
         }
+    }
+}
+
+public extension Color {
+    static func random(randomOpacity: Bool = false) -> Color {
+        Color(
+            red: .random(in: 0 ... 1),
+            green: .random(in: 0.3 ... 1),
+            blue: .random(in: 0 ... 1),
+            opacity: randomOpacity ? .random(in: 0.8 ... 1) : 1
+        )
     }
 }
