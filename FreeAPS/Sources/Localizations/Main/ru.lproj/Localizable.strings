@@ -80,13 +80,13 @@
 "Fraction" = "Fraction";
 
 /* For the  Bolus View pop-up */
-"Fatty Meal Factor" = "Fatty Meal Factor";
+"Fatty Meal Factor" = "Фактор жирной пищи";
 
 /* For the  Bolus View pop-up */
-"Result" = "Result";
+"Result" = "Итого";
 
 /* For the  Bolus View pop-up */
-"Your entered amount was limited by your max Bolus setting of %d%@" = "Your entered amount was limited by your max Bolus setting of %d%@";
+"Your entered amount was limited by your max Bolus setting of %d%@" = "Доза была ограничена Вашей настройкой максимального болюса в размере %d%@";
 
 /* Home title */
 "Home" = "Главная";
@@ -603,7 +603,7 @@ Enact a temp Basal or a temp target */
 "Automatic" = "Автоматически";
 
 /* External insulin treatments */
-"External" = "External";
+"External" = "Внешний";
 
 /* */
 "Other" = "Прочее";
@@ -1208,7 +1208,7 @@ Enact a temp Basal or a temp target */
 "SMB" = "SMB";
 
 /* A manually entered dose of external insulin */
-"External Insulin" = "External Insulin";
+"External Insulin" = "Внешний инсулин";
 
 /* Status highlight when manual temp basal is running. */
 "Manual Basal" = "Ручная ВБС";
