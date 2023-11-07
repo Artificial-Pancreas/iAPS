@@ -60,7 +60,7 @@ extension AddCarbs {
                     // Summary when combining presets
                     if state.waitersNotepad() != "" {
                         HStack {
-                            Text("Serving")
+                            Text("Total")
                             let test = state.waitersNotepad().components(separatedBy: ", ").removeDublicates()
                             HStack(spacing: 0) {
                                 ForEach(test, id: \.self) {
