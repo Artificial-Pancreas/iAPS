@@ -1029,7 +1029,7 @@ Enact a temp Basal or a temp target */
 "Last loop was more than %d min ago" = "L'ultimo ciclo è stato più di %d min fa";
 
 /* Glucose badge */
-"Show glucose on the app badge" = "Mostra il glicemie sul badge dell'app";
+"Show glucose on the app badge" = "Mostra le glicemie sul badge dell'app";
 
 /* */
 "Backfill glucose" = "Riempi glicemia";
@@ -1556,7 +1556,7 @@ Enact a temp Basal or a temp target */
 "Total Delivery" = "Totale Consegnata";
 
 /* */
-"Add Omnipod Dash" = "Agg Omnipod Dash";
+"Add Omnipod Dash" = "Aggiungi Omnipod Dash";
 
 /* */
 "Insert Cannula" = "Inserisci cannula";
