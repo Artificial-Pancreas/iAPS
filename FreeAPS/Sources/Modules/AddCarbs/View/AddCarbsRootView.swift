@@ -225,7 +225,7 @@ extension AddCarbs {
                         minusButton
                     }
                     Picker("Preset", selection: $state.selection) {
-                        Text("Saved Dishes").tag(nil as Presets?)
+                        Text("Saved Food").tag(nil as Presets?)
                         ForEach(carbPresets, id: \.self) { (preset: Presets) in
                             Text(preset.dish ?? "").tag(preset as Presets?)
                         }
