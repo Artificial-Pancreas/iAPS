@@ -1,5 +1,3 @@
-
-import CoreData
 import LoopKit
 import SwiftUI
 import Swinject
@@ -13,8 +11,6 @@ extension Bolus {
         // added for bolus calculator
         @Injected() var settings: SettingsManager!
         @Injected() var nsManager: NightscoutManager!
-
-        let coredataContext = CoreDataStack.shared.persistentContainer.viewContext
 
         @Published var suggestion: Suggestion?
         @Published var amount: Decimal = 0
