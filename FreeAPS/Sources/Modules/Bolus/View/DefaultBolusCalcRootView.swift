@@ -103,9 +103,9 @@ extension Bolus {
                             }
                             label: { Text(!(state.amount > state.maxBolus) ? "Enact bolus" : "Max Bolus exceeded!") }
                                 .frame(maxWidth: .infinity, alignment: .center)
-                                .disabled(
-                                    state.amount <= 0 || state.amount > state.maxBolus
-                                )
+                                .disabled(disabled)
+                                .listRowBackground(!disabled ? Color(.systemBlue) : Color(.systemGray4))
+                                .tint(.white)
                         }
                     }
                 }
@@ -161,6 +161,10 @@ extension Bolus {
             .popup(isPresented: presentInfo, alignment: .center, direction: .bottom) {
                 bolusInfo
             }
+        }
+
+        var disabled: Bool {
+            state.amount <= 0 || state.amount > state.maxBolus
         }
 
         var predictionChart: some View {

@@ -147,10 +147,9 @@ extension Bolus {
                         }
                         label: { Text(exceededMaxBolus ? "Max Bolus exceeded!" : "Enact bolus") }
                             .frame(maxWidth: .infinity, alignment: .center)
-                            .foregroundColor(exceededMaxBolus ? .loopRed : .accentColor)
-                            .disabled(
-                                state.amount <= 0 || state.amount > state.maxBolus
-                            )
+                            .disabled(disabled)
+                            .listRowBackground(!disabled ? Color(.systemBlue) : Color(.systemGray4))
+                            .tint(.white)
                     }
                 }
                 if state.amount <= 0 {
@@ -263,6 +262,10 @@ extension Bolus {
                 RoundedRectangle(cornerRadius: 10, style: .continuous)
                     .fill(Color(colorScheme == .dark ? UIColor.systemGray4 : UIColor.systemGray4).opacity(0.9))
             )
+        }
+
+        private var disabled: Bool {
+            state.amount <= 0 || state.amount > state.maxBolus
         }
 
         var changed: Bool {
