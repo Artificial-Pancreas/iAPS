@@ -1,3 +1,4 @@
+import Charts
 import CoreData
 import SwiftUI
 import Swinject
@@ -36,6 +37,12 @@ extension Bolus {
 
         var body: some View {
             Form {
+                Section {
+                    predictionChart
+                } header: {
+                    Text("Predictions")
+                }
+
                 if fetch {
                     Section {
                         mealEntries
@@ -153,6 +160,14 @@ extension Bolus {
             )
             .popup(isPresented: presentInfo, alignment: .center, direction: .bottom) {
                 bolusInfo
+            }
+        }
+
+        var predictionChart: some View {
+            ZStack {
+                PredictionView(
+                    predictions: $state.predictions, units: $state.units
+                )
             }
         }
 
