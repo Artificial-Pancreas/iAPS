@@ -13,6 +13,7 @@ extension Bolus {
         @Injected() var nsManager: NightscoutManager!
 
         @Published var suggestion: Suggestion?
+        @Published var predictions: Predictions?
         @Published var amount: Decimal = 0
         @Published var insulinRecommended: Decimal = 0
         @Published var insulinRequired: Decimal = 0
@@ -88,6 +89,12 @@ extension Bolus {
                             self.insulinRecommended = 0
                         }
                     }.store(in: &lifetime)
+            }
+            if let notNilSugguestion = provider.suggestion {
+                suggestion = notNilSugguestion
+                if let notNilPredictions = suggestion?.predictions {
+                    predictions = notNilPredictions
+                }
             }
         }
 
