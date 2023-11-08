@@ -6,6 +6,8 @@ import Swinject
 struct PredictionView: View {
     @Binding var predictions: Predictions?
     @Binding var units: GlucoseUnits
+    @Binding var eventualBG: Int
+    @Binding var target: Decimal
 
     var body: some View {
         chart()
@@ -21,6 +23,8 @@ struct PredictionView: View {
         var now = Date.now
         var startIndex = 0
         let conversion = units == .mmolL ? 0.0555 : 1
+        let eventualRounded: String = (Double(eventualBG) * conversion)
+            .formatted(.number.grouping(.never).rounded().precision(.fractionLength(units == .mmolL ? 1 : 0)))
         // Organize the data needed for prediction chart.
         var data = [ChartData]()
         repeat {
@@ -39,39 +43,39 @@ struct PredictionView: View {
             startIndex += 1
         } while startIndex < count
         // Chart
-        return Chart(data) { item in
+        return Chart(data) {
             // Remove 0 (empty) values
-            if item.iob != 0 {
+            if $0.iob != 0 {
                 LineMark(
-                    x: .value("Time", item.date),
-                    y: .value("IOB", item.iob),
+                    x: .value("Time", $0.date),
+                    y: .value("IOB", $0.iob),
                     series: .value("IOB", "A")
                 )
                 .foregroundStyle(Color(.insulin))
                 .lineStyle(StrokeStyle(lineWidth: 2))
             }
-            if item.uam != 0 {
+            if $0.uam != 0 {
                 LineMark(
-                    x: .value("Time", item.date),
-                    y: .value("UAM", item.uam),
+                    x: .value("Time", $0.date),
+                    y: .value("UAM", $0.uam),
                     series: .value("UAM", "B")
                 )
                 .foregroundStyle(Color(.UAM))
                 .lineStyle(StrokeStyle(lineWidth: 2))
             }
-            if item.cob != 0 {
+            if $0.cob != 0 {
                 LineMark(
-                    x: .value("Time", item.date),
-                    y: .value("COB", item.cob),
+                    x: .value("Time", $0.date),
+                    y: .value("COB", $0.cob),
                     series: .value("COB", "C")
                 )
                 .foregroundStyle(Color(.loopYellow))
                 .lineStyle(StrokeStyle(lineWidth: 2))
             }
-            if item.zt != 0 {
+            if $0.zt != 0 {
                 LineMark(
-                    x: .value("Time", item.date),
-                    y: .value("ZT", item.zt),
+                    x: .value("Time", $0.date),
+                    y: .value("ZT", $0.zt),
                     series: .value("ZT", "D")
                 )
                 .foregroundStyle(Color(.ZT))
@@ -85,6 +89,6 @@ struct PredictionView: View {
             "COB": Color(.loopYellow),
             "ZT": Color(.ZT)
         ])
-        .chartYAxisLabel("Glucose (" + units.rawValue + ")")
+        .chartYAxisLabel("Eventual Glucose: " + eventualRounded + " " + units.rawValue, alignment: .center)
     }
 }

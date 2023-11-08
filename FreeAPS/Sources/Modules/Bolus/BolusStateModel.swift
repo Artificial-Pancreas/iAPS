@@ -57,7 +57,6 @@ extension Bolus {
         @Published var fattyMeals: Bool = false
         @Published var fattyMealFactor: Decimal = 0
         @Published var useFattyMealCorrectionFactor: Bool = false
-        @Published var eventualBG: Int = 0
 
         @Published var meal: [CarbsEntry]?
         @Published var carbs: Decimal = 0
