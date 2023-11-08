@@ -63,9 +63,7 @@ extension Bolus {
                     } else {
                         predictionChart
                     }
-                } header: {
-                    Text("Predictions")
-                }
+                } header: { Text("Predictions") }
 
                 Section {}
                 if fetch {

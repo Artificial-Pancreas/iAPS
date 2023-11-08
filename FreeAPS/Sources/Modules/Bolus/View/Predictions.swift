@@ -9,6 +9,11 @@ struct PredictionView: View {
     @Binding var eventualBG: Int
     @Binding var target: Decimal
 
+    private enum Config {
+        static let height: CGFloat = 160
+        static let lineWidth: CGFloat = 2
+    }
+
     var body: some View {
         VStack {
             chart()
@@ -63,7 +68,7 @@ struct PredictionView: View {
                     series: .value("IOB", "A")
                 )
                 .foregroundStyle(Color(.insulin))
-                .lineStyle(StrokeStyle(lineWidth: 2))
+                .lineStyle(StrokeStyle(lineWidth: Config.lineWidth))
             }
             if $0.uam != 0 {
                 LineMark(
@@ -72,7 +77,7 @@ struct PredictionView: View {
                     series: .value("UAM", "B")
                 )
                 .foregroundStyle(Color(.UAM))
-                .lineStyle(StrokeStyle(lineWidth: 2))
+                .lineStyle(StrokeStyle(lineWidth: Config.lineWidth))
             }
             if $0.cob != 0 {
                 LineMark(
@@ -81,7 +86,7 @@ struct PredictionView: View {
                     series: .value("COB", "C")
                 )
                 .foregroundStyle(Color(.loopYellow))
-                .lineStyle(StrokeStyle(lineWidth: 2))
+                .lineStyle(StrokeStyle(lineWidth: Config.lineWidth))
             }
             if $0.zt != 0 {
                 LineMark(
@@ -90,10 +95,10 @@ struct PredictionView: View {
                     series: .value("ZT", "D")
                 )
                 .foregroundStyle(Color(.ZT))
-                .lineStyle(StrokeStyle(lineWidth: 2))
+                .lineStyle(StrokeStyle(lineWidth: Config.lineWidth))
             }
         }
-        .frame(minHeight: 150)
+        .frame(minHeight: Config.height)
         .chartForegroundStyleScale([
             "IOB": Color(.insulin),
             "UAM": Color(.UAM),
