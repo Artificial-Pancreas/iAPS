@@ -10,7 +10,20 @@ struct PredictionView: View {
     @Binding var target: Decimal
 
     var body: some View {
-        chart()
+        VStack {
+            chart()
+            HStack {
+                let conversion = units == .mmolL ? 0.0555 : 1
+                Text("Eventual Glucose")
+                Spacer()
+                Text(
+                    (Double(eventualBG) * conversion)
+                        .formatted(.number.grouping(.never).rounded().precision(.fractionLength(units == .mmolL ? 1 : 0)))
+                )
+                Text(units.rawValue).foregroundStyle(.secondary)
+                Divider()
+            }.font(.callout)
+        }
     }
 
     func chart() -> some View {
@@ -23,8 +36,6 @@ struct PredictionView: View {
         var now = Date.now
         var startIndex = 0
         let conversion = units == .mmolL ? 0.0555 : 1
-        let eventualRounded: String = (Double(eventualBG) * conversion)
-            .formatted(.number.grouping(.never).rounded().precision(.fractionLength(units == .mmolL ? 1 : 0)))
         // Organize the data needed for prediction chart.
         var data = [ChartData]()
         repeat {
@@ -89,6 +100,11 @@ struct PredictionView: View {
             "COB": Color(.loopYellow),
             "ZT": Color(.ZT)
         ])
-        .chartYAxisLabel("Eventual Glucose: " + eventualRounded + " " + units.rawValue, alignment: .center)
+        .chartYAxisLabel("Glucose, " + units.rawValue, alignment: .center)
+        .chartXAxis {
+            AxisMarks(values: .stride(by: .hour)) { _ in
+                AxisValueLabel(format: .dateTime.hour())
+            }
+        }
     }
 }

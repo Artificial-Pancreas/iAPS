@@ -58,7 +58,11 @@ extension Bolus {
         var body: some View {
             Form {
                 Section {
-                    predictionChart
+                    if state.waitForSuggestion {
+                        Text("Please wait")
+                    } else {
+                        predictionChart
+                    }
                 } header: {
                     Text("Predictions")
                 }
