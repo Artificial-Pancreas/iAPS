@@ -1,3 +1,4 @@
+import Charts
 import CoreData
 import SwiftUI
 import Swinject
@@ -56,24 +57,20 @@ extension Bolus {
 
         var body: some View {
             Form {
+                Section {
+                    if state.waitForSuggestion {
+                        Text("Please wait")
+                    } else {
+                        predictionChart
+                    }
+                } header: { Text("Predictions") }
+
+                Section {}
                 if fetch {
                     Section {
                         mealEntries
                     } header: { Text("Meal Summary") }
                 }
-
-                Section {
-                    Button {
-                        let id_ = meal.first?.id ?? ""
-                        if fetch {
-                            keepForNextWiew = true
-                            state.backToCarbsView(complexEntry: fetch, id_)
-                        } else {
-                            state.showModal(for: .addCarbs(editMode: false))
-                        }
-                    }
-                    label: { Text(fetch ? "Edit Meal" : "Add Meal") }.frame(maxWidth: .infinity, alignment: .center)
-                } header: { Text(!fetch ? "Meal Summary" : "") }
 
                 Section {
                     HStack {
@@ -142,7 +139,7 @@ extension Bolus {
                             }
                         }
                     }
-                } header: { Text("Bolus Summary") }
+                } header: { Text("Bolus") }
 
                 if state.amount > 0 {
                     Section {
@@ -152,10 +149,9 @@ extension Bolus {
                         }
                         label: { Text(exceededMaxBolus ? "Max Bolus exceeded!" : "Enact bolus") }
                             .frame(maxWidth: .infinity, alignment: .center)
-                            .foregroundColor(exceededMaxBolus ? .loopRed : .accentColor)
-                            .disabled(
-                                state.amount <= 0 || state.amount > state.maxBolus
-                            )
+                            .disabled(disabled)
+                            .listRowBackground(!disabled ? Color(.systemBlue) : Color(.systemGray4))
+                            .tint(.white)
                     }
                 }
                 if state.amount <= 0 {
@@ -172,7 +168,12 @@ extension Bolus {
             .navigationTitle("Enact Bolus")
             .navigationBarTitleDisplayMode(.inline)
             .navigationBarItems(
-                leading: Button { state.hideModal() }
+                leading: Button {
+                    carbssView()
+                }
+                label: { Text(fetch ? "Back" : "Meal") },
+
+                trailing: Button { state.hideModal() }
                 label: { Text("Close") }
             )
             .onAppear {
@@ -191,6 +192,14 @@ extension Bolus {
             }
             .popup(isPresented: showInfo) {
                 bolusInfoAlternativeCalculator
+            }
+        }
+
+        var predictionChart: some View {
+            ZStack {
+                PredictionView(
+                    predictions: $state.predictions, units: $state.units, eventualBG: $state.evBG, target: $state.target
+                )
             }
         }
 
@@ -257,12 +266,26 @@ extension Bolus {
             )
         }
 
+        private var disabled: Bool {
+            state.amount <= 0 || state.amount > state.maxBolus
+        }
+
         var changed: Bool {
             ((meal.first?.carbs ?? 0) > 0) || ((meal.first?.fat ?? 0) > 0) || ((meal.first?.protein ?? 0) > 0)
         }
 
         var hasFatOrProtein: Bool {
             ((meal.first?.fat ?? 0) > 0) || ((meal.first?.protein ?? 0) > 0)
+        }
+
+        func carbssView() {
+            let id_ = meal.first?.id ?? ""
+            if fetch {
+                keepForNextWiew = true
+                state.backToCarbsView(complexEntry: fetch, id_)
+            } else {
+                state.showModal(for: .addCarbs(editMode: false))
+            }
         }
 
         var mealEntries: some View {
