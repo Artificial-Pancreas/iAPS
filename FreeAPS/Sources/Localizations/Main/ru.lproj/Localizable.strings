@@ -88,6 +88,9 @@
 /* For the  Bolus View pop-up */
 "Your entered amount was limited by your max Bolus setting of %d%@" = "Доза была ограничена Вашей настройкой максимального болюса в размере %d%@";
 
+/* Bolus View Continue Button */
+"Continue" = "Продолжить";
+
 /* Home title */
 "Home" = "Главная";
 
@@ -117,6 +120,9 @@
 
 /*  */
 "Carbs required" = "Требуются углеводы";
+
+/* Saved Food Presets */
+"Saved Food" = "Saved Food";
 
 /* */
 "Are you sure?" = "Вы уверены?";
@@ -1395,6 +1401,15 @@ Enact a temp Basal or a temp target */
 
 /* */
 "Eventual Glucose" = "Возможная глюкоза";
+
+/* */
+"Please wait" = "Please wait";
+
+"Glucose, %$" = "Glucose, %$";
+
+
+
+
 
 /* */
 "Target Glucose" = "Целевая глюкоза";
