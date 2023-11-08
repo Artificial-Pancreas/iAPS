@@ -105,6 +105,6 @@ struct PredictionView: View {
             "COB": Color(.loopYellow),
             "ZT": Color(.ZT)
         ])
-        .chartYAxisLabel("Glucose, " + units.rawValue, alignment: .center)
+        .chartYAxisLabel(NSLocalizedString("Glucose, ", comment: "") + units.rawValue, alignment: .center)
     }
 }
