@@ -101,10 +101,5 @@ struct PredictionView: View {
             "ZT": Color(.ZT)
         ])
         .chartYAxisLabel("Glucose, " + units.rawValue, alignment: .center)
-        .chartXAxis {
-            AxisMarks(values: .stride(by: .hour)) { _ in
-                AxisValueLabel(format: .dateTime.hour())
-            }
-        }
     }
 }
