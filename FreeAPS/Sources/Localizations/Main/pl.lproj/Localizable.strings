@@ -1407,11 +1407,7 @@ Połączono z Nightscout!";
 /* */
 "Please wait" = "Please wait";
 
-"Glucose, %$" = "Glucose, %$";
-
-
-
-
+"Glucose, %@" = "Glucose, %%";
 
 /* */
 "Target Glucose" = "Target Glucose";
