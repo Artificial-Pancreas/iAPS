@@ -218,6 +218,11 @@ extension DataTable {
                             // item is insulin treatment; item.type == .bolus
                             alertTitle = "Delete Insulin?"
                             alertMessage = dateFormatter.string(from: item.date) + ", " + item.amountText
+
+                            if item.isSMB ?? false {
+                                // Add text snippet, so that alert message is more descriptive for SMBs
+                                alertMessage += "SMB"
+                            }
                         }
 
                         isRemoveHistoryItemAlertPresented = true
