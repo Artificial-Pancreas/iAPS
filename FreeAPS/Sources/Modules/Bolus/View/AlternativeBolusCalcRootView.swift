@@ -284,7 +284,7 @@ extension Bolus {
                 keepForNextWiew = true
                 state.backToCarbsView(complexEntry: fetch, id_)
             } else {
-                state.showModal(for: .addCarbs(editMode: false))
+                state.showModal(for: .addCarbs(editMode: false, override: true))
             }
         }
 

@@ -153,7 +153,7 @@ extension Bolus {
             .navigationBarTitleDisplayMode(.inline)
             .navigationBarItems(
                 leading: Button {
-                    carbssView()
+                    !fetch ? carbsView(override: true) : carbsView(override: false)
                 }
                 label: { Text(fetch ? "Back" : "Meal") },
 
@@ -185,13 +185,13 @@ extension Bolus {
             ((meal.first?.fat ?? 0) > 0) || ((meal.first?.protein ?? 0) > 0)
         }
 
-        func carbssView() {
+        func carbsView(override: Bool) {
             let id_ = meal.first?.id ?? ""
             if fetch {
                 keepForNextWiew = true
                 state.backToCarbsView(complexEntry: fetch, id_)
-            } else {
-                state.showModal(for: .addCarbs(editMode: false))
+            } else if override {
+                state.showModal(for: .addCarbs(editMode: false, override: true))
             }
         }
 
