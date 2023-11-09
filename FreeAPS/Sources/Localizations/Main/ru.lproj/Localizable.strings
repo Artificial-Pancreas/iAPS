@@ -122,7 +122,7 @@
 "Carbs required" = "Требуются углеводы";
 
 /* Saved Food Presets */
-"Saved Food" = "Saved Food";
+"Saved Food" = "Сохранённая еда";
 
 /* */
 "Are you sure?" = "Вы уверены?";
@@ -1403,10 +1403,10 @@ Enact a temp Basal or a temp target */
 "Eventual Glucose" = "Возможная глюкоза";
 
 /* */
-"Please wait" = "Please wait";
+"Please wait" = "Подождите";
 
 /* */
-"Glucose, " = "Glucose, ";
+"Glucose, " = "Глюкоза, ";
 
 /* */
 "Target Glucose" = "Целевая глюкоза";
