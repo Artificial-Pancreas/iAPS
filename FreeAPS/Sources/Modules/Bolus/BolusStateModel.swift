@@ -222,9 +222,9 @@ extension Bolus {
             }
         }
 
-        func backToCarbsView(complexEntry: Bool, _ id: String) {
+        func backToCarbsView(complexEntry: Bool, _ id: String, override: Bool) {
             delete(deleteTwice: complexEntry, id: id)
-            showModal(for: .addCarbs(editMode: complexEntry))
+            showModal(for: .addCarbs(editMode: complexEntry, override: override))
         }
 
         func delete(deleteTwice: Bool, id: String) {
