@@ -1,3 +1,5 @@
+import Charts
+import CoreData
 import SwiftUI
 import Swinject
 
@@ -35,6 +37,14 @@ extension Bolus {
 
         var body: some View {
             Form {
+                Section {
+                    if state.waitForSuggestion {
+                        Text("Please wait")
+                    } else {
+                        predictionChart
+                    }
+                } header: { Text("Predictions") }
+
                 if fetch {
                     Section {
                         mealEntries
@@ -70,37 +80,37 @@ extension Bolus {
                                     else { state.amount = state.insulinRecommended }
                                 }
                         }.contentShape(Rectangle())
-
-                        HStack {
-                            Text("Amount")
-                            Spacer()
-                            DecimalTextField(
-                                "0",
-                                value: $state.amount,
-                                formatter: formatter,
-                                autofocus: true,
-                                cleanInput: true
-                            )
-                            Text(!(state.amount > state.maxBolus) ? "U" : "😵").foregroundColor(.secondary)
-                        }
                     }
+
+                    HStack {
+                        Text("Amount")
+                        Spacer()
+                        DecimalTextField(
+                            "0",
+                            value: $state.amount,
+                            formatter: formatter,
+                            autofocus: true,
+                            cleanInput: true
+                        )
+                        Text(!(state.amount > state.maxBolus) ? "U" : "😵").foregroundColor(.secondary)
+                    }
+
                 } header: { Text("Bolus") }
 
-                if !state.waitForSuggestion {
-                    if state.amount > 0 {
-                        Section {
-                            Button {
-                                keepForNextWiew = true
-                                state.add()
-                            }
-                            label: { Text(!(state.amount > state.maxBolus) ? "Enact bolus" : "Max Bolus exceeded!") }
-                                .frame(maxWidth: .infinity, alignment: .center)
-                                .disabled(
-                                    state.amount <= 0 || state.amount > state.maxBolus
-                                )
+                if state.amount > 0 {
+                    Section {
+                        Button {
+                            keepForNextWiew = true
+                            state.add()
                         }
+                        label: { Text(!(state.amount > state.maxBolus) ? "Enact bolus" : "Max Bolus exceeded!") }
+                            .frame(maxWidth: .infinity, alignment: .center)
+                            .disabled(disabled)
+                            .listRowBackground(!disabled ? Color(.systemBlue) : Color(.systemGray4))
+                            .tint(.white)
                     }
                 }
+
                 if state.amount <= 0 {
                     Section {
                         Button {
@@ -143,7 +153,7 @@ extension Bolus {
             .navigationBarTitleDisplayMode(.inline)
             .navigationBarItems(
                 leading: Button {
-                    carbssView()
+                    carbsView()
                 }
                 label: { Text(fetch ? "Back" : "Meal") },
 
@@ -155,6 +165,18 @@ extension Bolus {
             }
         }
 
+        var disabled: Bool {
+            state.amount <= 0 || state.amount > state.maxBolus
+        }
+
+        var predictionChart: some View {
+            ZStack {
+                PredictionView(
+                    predictions: $state.predictions, units: $state.units, eventualBG: $state.evBG, target: $state.target
+                )
+            }
+        }
+
         var changed: Bool {
             ((meal.first?.carbs ?? 0) > 0) || ((meal.first?.fat ?? 0) > 0) || ((meal.first?.protein ?? 0) > 0)
         }
@@ -163,13 +185,13 @@ extension Bolus {
             ((meal.first?.fat ?? 0) > 0) || ((meal.first?.protein ?? 0) > 0)
         }
 
-        func carbssView() {
+        func carbsView() {
             let id_ = meal.first?.id ?? ""
             if fetch {
                 keepForNextWiew = true
-                state.backToCarbsView(complexEntry: fetch, id_)
+                state.backToCarbsView(complexEntry: fetch, id_, override: false)
             } else {
-                state.showModal(for: .addCarbs(editMode: false))
+                state.backToCarbsView(complexEntry: false, id_, override: true)
             }
         }
 
