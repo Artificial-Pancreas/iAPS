@@ -122,7 +122,7 @@
 "Carbs required" = "Koolhydraten benodigd";
 
 /* Saved Food Presets */
-"Saved Food" = "Saved Food";
+"Saved Food" = "Bewaarde maaltijd";
 
 /* */
 "Are you sure?" = "Weet je het zeker?";
@@ -1403,10 +1403,10 @@ Enact a temp Basal or a temp target */
 "Eventual Glucose" = "Voorspelde glucose";
 
 /* */
-"Please wait" = "Please wait";
+"Please wait" = "Even geduld";
 
 /* */
-"Glucose, " = "Glucose, ";
+"Glucose, " = "Glucosewaarde, ";
 
 /* */
 "Target Glucose" = "Doel glucose";
