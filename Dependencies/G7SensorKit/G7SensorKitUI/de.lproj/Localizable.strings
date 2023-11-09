@@ -1,5 +1,5 @@
 /* No glucose value representation (3 dashes for mg/dL) */
-"– – –" = "– – –";
+"– – –" = "";
 
 /* Format string for glucose trend per minute. (1: glucose value and unit) */
 "%@/min" = "%@/min";
@@ -54,7 +54,7 @@
 "Last Reading" = "Letzte Messung";
 
 /* Descriptive text on G7StartupView */
-"iAPS can read G7 CGM data, but you must still use the Dexcom G7 App for pairing, calibration, and other sensor management." = "iAPS kann CGM Daten vom G7 direkt lesen. Zum Verbinden, Kalibrieren und weiteres Sensor Management braucht man die G7 App.";
+"iAPS can read G7 CGM data, but you must still use the Dexcom G7 App for pairing, calibration, and other sensor management." = "iAPS kann CGM Daten direkt vom G7 lesen. Zum Verbinden, Kalibrieren und erweitertem Sensor Management benötigt man die G7 App.";
 
 /* String displayed instead of a glucose value below the CGM range */
 "LOW" = "NIEDRIG";
@@ -99,7 +99,7 @@
 "Sensor failed" = "Sensorfehler";
 
 /* title for g7 settings row showing sensor start time */
-"Sensor Start" = "Start sensor";
+"Sensor Start" = "Starte den Sensor";
 
 /* G7 Status highlight text for signal loss */
 "Signal\nLoss" = "Signal\nVerlust";
