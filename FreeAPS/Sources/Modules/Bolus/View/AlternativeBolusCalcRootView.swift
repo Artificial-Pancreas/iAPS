@@ -118,27 +118,26 @@ extension Bolus {
                             .onTapGesture { state.amount = state.insulinCalculated }
                     }
 
-                    if !state.waitForSuggestion {
-                        HStack {
-                            Text("Bolus")
-                            Spacer()
-                            DecimalTextField(
-                                "0",
-                                value: $state.amount,
-                                formatter: formatter,
-                                autofocus: false,
-                                cleanInput: true
-                            )
-                            Text(exceededMaxBolus ? "😵" : " U").foregroundColor(.secondary)
-                        }
-                        .onChange(of: state.amount) { newValue in
-                            if newValue > state.maxBolus {
-                                exceededMaxBolus = true
-                            } else {
-                                exceededMaxBolus = false
-                            }
+                    HStack {
+                        Text("Bolus")
+                        Spacer()
+                        DecimalTextField(
+                            "0",
+                            value: $state.amount,
+                            formatter: formatter,
+                            autofocus: false,
+                            cleanInput: true
+                        )
+                        Text(exceededMaxBolus ? "😵" : " U").foregroundColor(.secondary)
+                    }
+                    .onChange(of: state.amount) { newValue in
+                        if newValue > state.maxBolus {
+                            exceededMaxBolus = true
+                        } else {
+                            exceededMaxBolus = false
                         }
                     }
+
                 } header: { Text("Bolus") }
 
                 if state.amount > 0 {
@@ -169,7 +168,7 @@ extension Bolus {
             .navigationBarTitleDisplayMode(.inline)
             .navigationBarItems(
                 leading: Button {
-                    carbssView()
+                    carbsView()
                 }
                 label: { Text(fetch ? "Back" : "Meal") },
 
@@ -278,13 +277,13 @@ extension Bolus {
             ((meal.first?.fat ?? 0) > 0) || ((meal.first?.protein ?? 0) > 0)
         }
 
-        func carbssView() {
+        func carbsView() {
             let id_ = meal.first?.id ?? ""
             if fetch {
                 keepForNextWiew = true
-                state.backToCarbsView(complexEntry: fetch, id_)
+                state.backToCarbsView(complexEntry: fetch, id_, override: false)
             } else {
-                state.showModal(for: .addCarbs(editMode: false, override: true))
+                state.backToCarbsView(complexEntry: false, id_, override: true)
             }
         }
 

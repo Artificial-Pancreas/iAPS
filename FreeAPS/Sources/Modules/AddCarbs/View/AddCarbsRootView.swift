@@ -116,8 +116,8 @@ extension AddCarbs {
                 }
 
                 Section {
-                    Button { state.add(override) }
-                    label: { Text((state.skipBolus && !override) ? "Save" : "Continue") }
+                    Button { state.add(override, fetch: editMode) }
+                    label: { Text((state.skipBolus && !override && !editMode) ? "Save" : "Continue") }
                         .disabled(empty)
                         .frame(maxWidth: .infinity, alignment: .center)
                 }.listRowBackground(!empty ? Color(.systemBlue) : Color(.systemGray4))
