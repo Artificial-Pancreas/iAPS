@@ -57,7 +57,8 @@ final class BaseWatchManager: NSObject, WatchManager, Injectable {
 
     private func configureState() {
         processQueue.async {
-            let glucoseValues = self.glucoseText()
+            let glucose = self.glucoseStorage.recent()
+            let glucoseValues = self.glucoseText(glucose)
             self.state.glucose = glucoseValues.glucose
             self.state.trend = glucoseValues.trend
             self.state.delta = glucoseValues.delta
@@ -91,7 +92,7 @@ final class BaseWatchManager: NSObject, WatchManager, Injectable {
                         0
                     ))
             } else {
-                let recommended = self.newBolusCalc(delta: self.glucoseStorage.recent(), suggestion: self.suggestion)
+                let recommended = self.newBolusCalc(delta: glucose, suggestion: self.suggestion)
                 self.state.bolusRecommended = self.apsManager
                     .roundBolus(amount: max(recommended, 0))
             }
@@ -156,9 +157,7 @@ final class BaseWatchManager: NSObject, WatchManager, Injectable {
         }
     }
 
-    private func glucoseText() -> (glucose: String, trend: String, delta: String) {
-        let glucose = glucoseStorage.recent()
-
+    private func glucoseText(_ glucose: [BloodGlucose]) -> (glucose: String, trend: String, delta: String) {
         guard let lastGlucose = glucose.last, let glucoseValue = lastGlucose.glucose else { return ("--", "--", "--") }
 
         let delta = glucose.count >= 2 ? glucoseValue - (glucose[glucose.count - 2].glucose ?? 0) : nil
