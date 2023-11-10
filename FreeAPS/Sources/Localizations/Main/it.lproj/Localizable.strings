@@ -122,7 +122,7 @@
 "Carbs required" = "Carboidrati necessari";
 
 /* Saved Food Presets */
-"Saved Food" = "Saved Food";
+"Saved Food" = "Cibo Salvato";
 
 /* */
 "Are you sure?" = "Sei sicuro?";
@@ -1035,7 +1035,7 @@ Enact a temp Basal or a temp target */
 "Last loop was more than %d min ago" = "L'ultimo ciclo è stato più di %d min fa";
 
 /* Glucose badge */
-"Show glucose on the app badge" = "Mostra le glicemie sul badge dell'app";
+"Show glucose on the app badge" = "Mostra le glicemie sull'icona dell'app";
 
 /* */
 "Backfill glucose" = "Riempi glicemia";
@@ -1403,10 +1403,10 @@ Enact a temp Basal or a temp target */
 "Eventual Glucose" = "previsione glicemica";
 
 /* */
-"Please wait" = "Please wait";
+"Please wait" = "Attendere prego";
 
 /* */
-"Glucose, " = "Glucose, ";
+"Glucose, " = "Glicemie, ";
 
 /* */
 "Target Glucose" = "Target Glicemia";
