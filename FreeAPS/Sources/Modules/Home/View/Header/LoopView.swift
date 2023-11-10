@@ -14,6 +14,7 @@ struct LoopView: View {
     @Binding var isLooping: Bool
     @Binding var lastLoopDate: Date
     @Binding var manualTempBasal: Bool
+    @Binding var timeZone: TimeZone?
 
     private var dateFormatter: DateFormatter {
         let formatter = DateFormatter()
@@ -29,6 +30,12 @@ struct LoopView: View {
                     .strokeBorder(color, lineWidth: 5)
                     .frame(width: rect.width, height: rect.height, alignment: .bottom)
                     .mask(mask(in: rect).fill(style: FillStyle(eoFill: true)))
+                if let timeZone = timeZone, timeZone != TimeZone.current {
+                    Image(systemName: "clock.fill")
+                        .resizable()
+                        .frame(width: rect.width * 0.45, height: rect.height * 0.45)
+                        .foregroundColor(Color.warning)
+                }
                 if isLooping {
                     ProgressView()
                 }
