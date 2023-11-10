@@ -84,8 +84,17 @@ final class BaseWatchManager: NSObject, WatchManager, Injectable {
                 }
             }
 
-            self.state.bolusRecommended = self.apsManager
-                .roundBolus(amount: max(insulinRequired * (self.settingsManager.settings.insulinReqPercentage / 100) * double, 0))
+            if !self.settingsManager.settings.useCalc {
+                self.state.bolusRecommended = self.apsManager
+                    .roundBolus(amount: max(
+                        insulinRequired * (self.settingsManager.settings.insulinReqPercentage / 100) * double,
+                        0
+                    ))
+            } else {
+                let recommended = self.newBolusCalc(delta: self.glucoseStorage.recent(), suggestion: self.suggestion)
+                self.state.bolusRecommended = self.apsManager
+                    .roundBolus(amount: max(recommended, 0))
+            }
 
             self.state.iob = self.suggestion?.iob
             self.state.cob = self.suggestion?.cob
@@ -198,6 +207,62 @@ final class BaseWatchManager: NSObject, WatchManager, Injectable {
         return eventualFormatter.string(
             from: (units == .mmolL ? eventualBG.asMmolL : Decimal(eventualBG)) as NSNumber
         )!
+    }
+
+    private func newBolusCalc(delta: [BloodGlucose], suggestion _: Suggestion?) -> Decimal {
+        var conversion: Decimal = 1
+        // Settings
+        if settingsManager.settings.units == .mmolL {
+            conversion = 0.0555
+        }
+        let isf = suggestion?.isf ?? 0
+        let target = suggestion?.current_target ?? 0
+        let carbratio = suggestion?.carbRatio ?? 0
+        let bg = suggestion?.bg ?? 0
+        let cob = suggestion?.cob ?? 0
+        let iob = suggestion?.iob ?? 0
+        let useFattyMealCorrectionFactor = settingsManager.settings.fattyMeals
+        let fattyMealFactor = settingsManager.settings.fattyMealFactor
+        let maxBolus = settingsManager.pumpSettings.maxBolus
+        var insulinCalculated: Decimal = 0
+        // insulin needed for the current blood glucose
+        let targetDifference = (bg - target) * conversion
+        let targetDifferenceInsulin = targetDifference / isf
+        // more or less insulin because of bg trend in the last 15 minutes
+        var bgDelta: Int = 0
+        if delta.count >= 3 {
+            bgDelta = (delta.last?.glucose ?? 0) - (delta[delta.count - 3].glucose ?? 0)
+        }
+        let fifteenMinInsulin = (Decimal(bgDelta) * conversion) / isf
+        // determine whole COB for which we want to dose insulin for and then determine insulin for wholeCOB
+        let wholeCobInsulin = cob / carbratio
+        // determine how much the calculator reduces/ increases the bolus because of IOB
+        let iobInsulinReduction = (-1) * iob
+        // adding everything together
+        // add a calc for the case that no fifteenMinInsulin is available
+        var wholeCalc: Decimal = 0
+        if bgDelta != 0 {
+            wholeCalc = (targetDifferenceInsulin + iobInsulinReduction + wholeCobInsulin + fifteenMinInsulin)
+        } else {
+            // add (rare) case that no glucose value is available -> maybe display warning?
+            // if no bg is available, ?? sets its value to 0
+            if bg == 0 {
+                wholeCalc = (iobInsulinReduction + wholeCobInsulin)
+            } else {
+                wholeCalc = (targetDifferenceInsulin + iobInsulinReduction + wholeCobInsulin)
+            }
+        }
+        // apply custom factor at the end of the calculations
+        let result = wholeCalc * settingsManager.settings.overrideFactor
+        // apply custom factor if fatty meal toggle in bolus calc config settings is on and the box for fatty meals is checked (in RootView)
+        if useFattyMealCorrectionFactor {
+            insulinCalculated = result * fattyMealFactor
+        } else {
+            insulinCalculated = result
+        }
+        // Not 0 or over maxBolus
+        insulinCalculated = max(min(insulinCalculated, maxBolus), 0)
+        return insulinCalculated
     }
 
     private var glucoseFormatter: NumberFormatter {
