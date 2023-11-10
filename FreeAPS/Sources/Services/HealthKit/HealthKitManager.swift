@@ -592,7 +592,7 @@ final class BaseHealthKitManager: HealthKitManager, Injectable, CarbsObserver, P
 
             processQueue.async {
                 let recentCarbs: [CarbsEntry] = self.carbsStorage.recent()
-                let ids = recentCarbs.filter { $0.fpuID == fpuID }.compactMap(\.id)
+                let ids = recentCarbs.filter { $0.fpuID == fpuID }.compactMap(\.collectionID)
                 let predicate = HKQuery.predicateForObjects(
                     withMetadataKey: HKMetadataKeySyncIdentifier,
                     allowedValues: ids
