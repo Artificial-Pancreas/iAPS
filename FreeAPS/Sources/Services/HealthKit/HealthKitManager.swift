@@ -46,7 +46,7 @@ final class BaseHealthKitManager: HealthKitManager, Injectable, CarbsObserver, P
         static let healthInsulinObject = HKObjectType.quantityType(forIdentifier: .insulinDelivery)
 
         // Meta-data key of FreeASPX data in HealthStore
-        static let freeAPSMetaKey = "fromiAPS"
+        static let freeAPSMetaKey = "fromFreeAPSX"
     }
 
     @Injected() private var glucoseStorage: GlucoseStorage!
@@ -488,8 +488,7 @@ final class BaseHealthKitManager: HealthKitManager, Injectable, CarbsObserver, P
                     filtered: nil,
                     noise: nil,
                     glucose: sample.glucose,
-                    type: "sgv",
-                    device: "iAPS"
+                    type: "sgv"
                 )
             }
             .filter { $0.dateString >= Date().addingTimeInterval(-1.days.timeInterval) }
