@@ -72,6 +72,14 @@ extension OverrideProfilesConfig {
                 }
                 Section {
                     VStack {
+                        Spacer()
+                        Text("\(state.percentage.formatted(.number)) %")
+                            .foregroundColor(
+                                state
+                                    .percentage >= 130 ? .red :
+                                    (isEditing ? .orange : .blue)
+                            )
+                            .font(.largeTitle)
                         Slider(
                             value: $state.percentage,
                             in: 10 ... 200,
@@ -80,13 +88,6 @@ extension OverrideProfilesConfig {
                                 isEditing = editing
                             }
                         ).accentColor(state.percentage >= 130 ? .red : .blue)
-                        Text("\(state.percentage.formatted(.number)) %")
-                            .foregroundColor(
-                                state
-                                    .percentage >= 130 ? .red :
-                                    (isEditing ? .orange : .blue)
-                            )
-                            .font(.largeTitle)
                         Spacer()
                         Toggle(isOn: $state._indefinite) {
                             Text("Enable indefinitely")
