@@ -101,9 +101,9 @@ struct PredictionView: View {
         .frame(minHeight: Config.height)
         .chartForegroundStyleScale([
             "IOB": Color(.insulin),
-            "UAM": Color(.UAM),
+            "UAM": .uam,
             "COB": Color(.loopYellow),
-            "ZT": Color(.ZT)
+            "ZT": .zt
         ])
         .chartYAxisLabel(NSLocalizedString("Glucose, ", comment: "") + units.rawValue, alignment: .center)
     }
