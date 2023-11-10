@@ -23,6 +23,7 @@ struct LoopView: View {
     }
 
     private let rect = CGRect(x: 0, y: 0, width: 28, height: 28)
+
     var body: some View {
         VStack(alignment: .center) {
             ZStack {
@@ -30,7 +31,7 @@ struct LoopView: View {
                     .strokeBorder(color, lineWidth: 5)
                     .frame(width: rect.width, height: rect.height, alignment: .bottom)
                     .mask(mask(in: rect).fill(style: FillStyle(eoFill: true)))
-                if let timeZone = timeZone, timeZone != TimeZone.current {
+                if let timeZone = timeZone, timeZone.secondsFromGMT() == TimeZone.current.secondsFromGMT() {
                     Image(systemName: "clock.fill")
                         .resizable()
                         .frame(width: rect.width * 0.45, height: rect.height * 0.45)
