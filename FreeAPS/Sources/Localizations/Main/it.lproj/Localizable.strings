@@ -1392,7 +1392,7 @@ Enact a temp Basal or a temp target */
 "Save as Preset" = "Salva come Predefinito";
 
 /* */
-"Predictions" = "Predictions";
+"Predictions" = "Previsione";
 
 /* ----------------------- New Bolus Calculator ---------------------------*/
 /* Warning about bolus recommendation. Title */
