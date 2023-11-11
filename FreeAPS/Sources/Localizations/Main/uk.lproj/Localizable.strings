@@ -1394,6 +1394,9 @@ Enact a temp Basal or a temp target */
 /* */
 "Predictions" = "Прогнози";
 
+/* Watch Config Option */
+"Display Protein & Fat" = "Display Protein & Fat";
+
 /* ----------------------- New Bolus Calculator ---------------------------*/
 /* Warning about bolus recommendation. Title */
 
