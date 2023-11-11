@@ -68,6 +68,7 @@
 		10389A3F26FF7841002115E9 /* CRC16.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10389A2026FF7841002115E9 /* CRC16.swift */; };
 		10389A4126FF7841002115E9 /* MessageTransport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10389A2226FF7841002115E9 /* MessageTransport.swift */; };
 		191DB66D2A06F17800212AC9 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 191DB6522A06F17800212AC9 /* Localizable.strings */; };
+		196A6F232AFFFD1700E3C089 /* SilencePodPreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196A6F222AFFFD1200E3C089 /* SilencePodPreference.swift */; };
 		84752E9326ED0FFE009FD801 /* OmniBLE.h in Headers */ = {isa = PBXBuildFile; fileRef = 84752E8526ED0FFE009FD801 /* OmniBLE.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		84752ED626ED13F5009FD801 /* Id.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84752EBF26ED13F5009FD801 /* Id.swift */; };
 		84752ED726ED13F5009FD801 /* X25519KeyGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84752EC126ED13F5009FD801 /* X25519KeyGenerator.swift */; };
@@ -168,7 +169,6 @@
 		D802CD0A27DD98C10072E3A1 /* TempBasalTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D802CD0527DD98C10072E3A1 /* TempBasalTests.swift */; };
 		D802CD1027DD99AB0072E3A1 /* CRC16Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D802CD0F27DD99AB0072E3A1 /* CRC16Tests.swift */; };
 		D802CD1227DD9AE10072E3A1 /* BasalScheduleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D802CD1127DD9AE10072E3A1 /* BasalScheduleTests.swift */; };
-		D845A1332AF89DB500EA0853 /* SilencePodPreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = D845A1322AF89DB500EA0853 /* SilencePodPreference.swift */; };
 		D845A1372AF89F5500EA0853 /* ActivityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D845A1362AF89F5500EA0853 /* ActivityView.swift */; };
 		D845A1392AF89F6300EA0853 /* FirstAppear.swift in Sources */ = {isa = PBXBuildFile; fileRef = D845A1382AF89F6300EA0853 /* FirstAppear.swift */; };
 		D845A13B2AF89F7100EA0853 /* PlayTestBeepsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D845A13A2AF89F7100EA0853 /* PlayTestBeepsView.swift */; };
@@ -302,6 +302,7 @@
 		191DB66A2A06F17800212AC9 /* pt-PT */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-PT"; path = "pt-PT.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		191DB66B2A06F17800212AC9 /* ro */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ro; path = ro.lproj/Localizable.strings; sourceTree = "<group>"; };
 		191DB66C2A06F17800212AC9 /* ca */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ca; path = ca.lproj/Localizable.strings; sourceTree = "<group>"; };
+		196A6F222AFFFD1200E3C089 /* SilencePodPreference.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SilencePodPreference.swift; sourceTree = "<group>"; };
 		4B23AA6328D909E2009B453B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		4B23AA6428D909E7009B453B /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		4B23AA6528D909E9009B453B /* da */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = da; path = da.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -428,7 +429,6 @@
 		D802CD0527DD98C10072E3A1 /* TempBasalTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TempBasalTests.swift; sourceTree = "<group>"; };
 		D802CD0F27DD99AB0072E3A1 /* CRC16Tests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CRC16Tests.swift; sourceTree = "<group>"; };
 		D802CD1127DD9AE10072E3A1 /* BasalScheduleTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BasalScheduleTests.swift; sourceTree = "<group>"; };
-		D845A1322AF89DB500EA0853 /* SilencePodPreference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SilencePodPreference.swift; path = "/Users/Joe_1/Documents/iaps/iaps-11-05-19-dev/Dependencies/OmniBLE/OmniBLE/OmnipodCommon/SilencePodPreference.swift"; sourceTree = "<absolute>"; };
 		D845A1362AF89F5500EA0853 /* ActivityView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityView.swift; sourceTree = "<group>"; };
 		D845A1382AF89F6300EA0853 /* FirstAppear.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirstAppear.swift; sourceTree = "<group>"; };
 		D845A13A2AF89F7100EA0853 /* PlayTestBeepsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayTestBeepsView.swift; sourceTree = "<group>"; };
@@ -493,7 +493,7 @@
 				1016325627185EE4007A3BC2 /* PodProgressStatus.swift */,
 				C1F67ED927979E400017487F /* PumpManagerAlert.swift */,
 				C1F67EE127985F580017487F /* ReservoirLevel.swift */,
-				D845A1322AF89DB500EA0853 /* SilencePodPreference.swift */,
+				196A6F222AFFFD1200E3C089 /* SilencePodPreference.swift */,
 				1016325827185EE4007A3BC2 /* UnfinalizedDose.swift */,
 			);
 			path = OmnipodCommon;
@@ -1147,8 +1147,8 @@
 				1016325C27185EE5007A3BC2 /* BasalDeliveryTable.swift in Sources */,
 				84752EE326ED13F5009FD801 /* BLEPacket.swift in Sources */,
 				D845A1402AF89F8400EA0853 /* ReadPulseLogView.swift in Sources */,
-				D845A1332AF89DB500EA0853 /* SilencePodPreference.swift in Sources */,
 				102111472709462300784F13 /* PodState.swift in Sources */,
+				196A6F232AFFFD1700E3C089 /* SilencePodPreference.swift in Sources */,
 				1021114B2709462300784F13 /* BasalSchedule+LoopKit.swift in Sources */,
 				84752EE626ED13F5009FD801 /* LTKExchanger.swift in Sources */,
 				10389A2A26FF7841002115E9 /* MessageBlock.swift in Sources */,
