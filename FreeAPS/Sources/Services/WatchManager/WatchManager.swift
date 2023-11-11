@@ -1,4 +1,3 @@
-import CoreData
 import Foundation
 import Swinject
 import WatchConnectivity
@@ -12,14 +11,13 @@ final class BaseWatchManager: NSObject, WatchManager, Injectable {
 
     @Injected() private var broadcaster: Broadcaster!
     @Injected() private var settingsManager: SettingsManager!
-    @Injected() private var glucoseStorage: GlucoseStorage!
     @Injected() private var apsManager: APSManager!
     @Injected() private var storage: FileStorage!
     @Injected() private var carbsStorage: CarbsStorage!
     @Injected() private var tempTargetsStorage: TempTargetsStorage!
     @Injected() private var garmin: GarminManager!
 
-    let coredataContext = CoreDataStack.shared.persistentContainer.viewContext // newBackgroundContext()
+    let coreDataStorage = CoreDataStorage()
 
     private var lifetime = Lifetime()
 
@@ -57,13 +55,13 @@ final class BaseWatchManager: NSObject, WatchManager, Injectable {
 
     private func configureState() {
         processQueue.async {
-            let glucose = self.glucoseStorage.recent()
-            let glucoseValues = self.glucoseText(glucose)
+            let readings = self.coreDataStorage.fetchGlucose(interval: DateFilter().twoHours)
+            let glucoseValues = self.glucoseText(readings)
             self.state.glucose = glucoseValues.glucose
             self.state.trend = glucoseValues.trend
             self.state.delta = glucoseValues.delta
-            self.state.trendRaw = self.glucoseStorage.recent().last?.direction?.rawValue
-            self.state.glucoseDate = self.glucoseStorage.recent().last?.dateString
+            self.state.trendRaw = readings.first?.direction ?? "↔︎"
+            self.state.glucoseDate = readings.first?.date ?? .distantPast
             self.state.glucoseDateInterval = self.state.glucoseDate.map { UInt64($0.timeIntervalSince1970) }
             self.state.lastLoopDate = self.enactedSuggestion?.recieved == true ? self.enactedSuggestion?.deliverAt : self
                 .apsManager.lastLoopDate
@@ -77,22 +75,23 @@ final class BaseWatchManager: NSObject, WatchManager, Injectable {
             self.state.carbsRequired = self.suggestion?.carbsReq
 
             var insulinRequired = self.suggestion?.insulinReq ?? 0
+
             var double: Decimal = 2
-            if (self.suggestion?.cob ?? 0) > 0 {
-                if self.suggestion?.manualBolusErrorString == 0 {
-                    insulinRequired = self.suggestion?.insulinForManualBolus ?? 0
-                    double = 1
-                }
+            if self.suggestion?.manualBolusErrorString == 0 {
+                insulinRequired = self.suggestion?.insulinForManualBolus ?? 0
+                double = 1
             }
 
-            if !self.settingsManager.settings.useCalc {
+            self.state.useNewCalc = self.settingsManager.settings.useCalc
+
+            if !(self.state.useNewCalc ?? false) {
                 self.state.bolusRecommended = self.apsManager
                     .roundBolus(amount: max(
                         insulinRequired * (self.settingsManager.settings.insulinReqPercentage / 100) * double,
                         0
                     ))
             } else {
-                let recommended = self.newBolusCalc(delta: glucose, suggestion: self.suggestion)
+                let recommended = self.newBolusCalc(delta: readings, suggestion: self.suggestion)
                 self.state.bolusRecommended = self.apsManager
                     .roundBolus(amount: max(recommended, 0))
             }
@@ -123,12 +122,7 @@ final class BaseWatchManager: NSObject, WatchManager, Injectable {
 
             self.state.isf = self.suggestion?.isf
 
-            var overrideArray = [Override]()
-            let requestOverrides = Override.fetchRequest() as NSFetchRequest<Override>
-            let sortOverride = NSSortDescriptor(key: "date", ascending: false)
-            requestOverrides.sortDescriptors = [sortOverride]
-            requestOverrides.fetchLimit = 1
-            try? overrideArray = self.coredataContext.fetch(requestOverrides)
+            let overrideArray = self.coreDataStorage.fetchLatestOverride()
 
             if overrideArray.first?.enabled ?? false {
                 let percentString = "\((overrideArray.first?.percentage ?? 100).formatted(.number)) %"
@@ -157,24 +151,25 @@ final class BaseWatchManager: NSObject, WatchManager, Injectable {
         }
     }
 
-    private func glucoseText(_ glucose: [BloodGlucose]) -> (glucose: String, trend: String, delta: String) {
-        guard let lastGlucose = glucose.last, let glucoseValue = lastGlucose.glucose else { return ("--", "--", "--") }
+    private func glucoseText(_ glucose: [Readings]) -> (glucose: String, trend: String, delta: String) {
+        let glucoseValue = glucose.first?.glucose ?? 0
 
-        let delta = glucose.count >= 2 ? glucoseValue - (glucose[glucose.count - 2].glucose ?? 0) : nil
+        guard !glucose.isEmpty else { return ("--", "--", "--") }
+
+        let delta = glucose.count >= 2 ? glucoseValue - glucose[1].glucose : nil
 
         let units = settingsManager.settings.units
         let glucoseText = glucoseFormatter
             .string(from: Double(
-                units == .mmolL ? glucoseValue
-                    .asMmolL : Decimal(glucoseValue)
+                units == .mmolL ? Decimal(glucoseValue).asMmolL : Decimal(glucoseValue)
             ) as NSNumber)!
-        let directionText = lastGlucose.direction?.symbol ?? "↔︎"
+
+        let directionText = glucose.first?.direction ?? "↔︎"
         let deltaText = delta
             .map {
                 self.deltaFormatter
                     .string(from: Double(
-                        units == .mmolL ? $0
-                            .asMmolL : Decimal($0)
+                        units == .mmolL ? Decimal($0).asMmolL : Decimal($0)
                     ) as NSNumber)!
             } ?? "--"
 
@@ -208,29 +203,29 @@ final class BaseWatchManager: NSObject, WatchManager, Injectable {
         )!
     }
 
-    private func newBolusCalc(delta: [BloodGlucose], suggestion _: Suggestion?) -> Decimal {
+    private func newBolusCalc(delta: [Readings], suggestion _: Suggestion?) -> Decimal {
         var conversion: Decimal = 1
         // Settings
         if settingsManager.settings.units == .mmolL {
             conversion = 0.0555
         }
-        let isf = suggestion?.isf ?? 0
+        let isf = state.isf ?? 0
         let target = suggestion?.current_target ?? 0
         let carbratio = suggestion?.carbRatio ?? 0
-        let bg = suggestion?.bg ?? 0
-        let cob = suggestion?.cob ?? 0
-        let iob = suggestion?.iob ?? 0
+        let bg = delta.first?.glucose ?? 0
+        let cob = state.cob ?? 0
+        let iob = state.iob ?? 0
         let useFattyMealCorrectionFactor = settingsManager.settings.fattyMeals
         let fattyMealFactor = settingsManager.settings.fattyMealFactor
         let maxBolus = settingsManager.pumpSettings.maxBolus
         var insulinCalculated: Decimal = 0
         // insulin needed for the current blood glucose
-        let targetDifference = (bg - target) * conversion
+        let targetDifference = (Decimal(bg) - target) * conversion
         let targetDifferenceInsulin = targetDifference / isf
         // more or less insulin because of bg trend in the last 15 minutes
         var bgDelta: Int = 0
         if delta.count >= 3 {
-            bgDelta = (delta.last?.glucose ?? 0) - (delta[delta.count - 3].glucose ?? 0)
+            bgDelta = Int((delta.first?.glucose ?? 0) - delta[2].glucose)
         }
         let fifteenMinInsulin = (Decimal(bgDelta) * conversion) / isf
         // determine whole COB for which we want to dose insulin for and then determine insulin for wholeCOB
