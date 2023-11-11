@@ -120,8 +120,8 @@ class DeactivatePodViewModel: ObservableObject, Identifiable {
 
     init(podDeactivator: PodDeactivater, podAttachedToBody: Bool, fault: DetailedStatus?) {
 
-        var text: String
-        if let faultEventCode = fault?.faultEventCode, let pdmRef = fault?.pdmRef {
+        var text: String = ""
+        if let faultEventCode = fault?.faultEventCode {
             let notificationString = faultEventCode.notificationTitle
             switch faultEventCode.faultType {
             case .exceededMaximumPodLife80Hrs, .reservoirEmpty, .occluded:
@@ -131,10 +131,10 @@ class DeactivatePodViewModel: ObservableObject, Identifiable {
             default:
                 // Display the fault code in decimal and hex, the fault description and the pdmRef string for other errors.
                 text = String(format: "⚠️ %1$@ (0x%2$02X)\n%3$@\n", notificationString, faultEventCode.rawValue, faultEventCode.faultDescription)
-                text += LocalizedString("Ref: ", comment: "PDM Ref string line") + pdmRef + "\n\n"
+                if let pdmRef = fault?.pdmRef {
+                    text += LocalizedString("Ref: ", comment: "PDM Ref string line") + pdmRef + "\n\n"
+                }
             }
-        } else {
-            text = ""
         }
 
         if podAttachedToBody {

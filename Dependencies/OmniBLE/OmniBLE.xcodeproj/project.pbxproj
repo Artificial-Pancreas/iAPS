@@ -722,11 +722,11 @@
 		8475311D26ED8246009FD801 /* PumpManagerUI */ = {
 			isa = PBXGroup;
 			children = (
-				C1F67EBB27975F060017487F /* ViewModels */,
 				C1F67EDF2797B1EF0017487F /* OmniBLEHUDProvider.swift */,
 				1029AE4A27094DDC00B7F5B6 /* OmniBLEPumpManager+UI.swift */,
 				1029AE4E27094E1900B7F5B6 /* OmniBLEUI.xcassets */,
 				8475312626ED838A009FD801 /* ViewControllers */,
+				C1F67EBB27975F060017487F /* ViewModels */,
 				8475311E26ED838A009FD801 /* Views */,
 			);
 			path = PumpManagerUI;
