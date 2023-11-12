@@ -806,3 +806,17 @@
 /* navigation title for Silnce Pod" */
 "Silence Pod" = "Silence Pod";
 
+/* title for pod details page */
+"Pod Details" = "Pod Details";
+
+/* Text for previous pod details row" */
+"Previous Pod Details" = "Previous Pod Details";
+
+/* Text for pump manager details navigation link */
+"Pump Manager Details" = "Pump Manager Details";
+
+/* button title when retrieving pump manager details */
+"Retrieving Pump Manager Details..." = "Retrieving Pump Manager Details...";
+    
+/* button title to refresh pump manager details */
+"Refresh Pump Manager Details" = "Refresh Pump Manager Details";
