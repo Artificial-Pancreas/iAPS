@@ -433,7 +433,7 @@
 "Change Pod now. Insulin delivery will stop 8 hours after the Pod has expired or when no more insulin remains." = "Bytt pod nå. Insulintilførsel stopper 8 timer etter at den er utgått eller når det ikke er mer insulin igjen.";
 
 /* Label text for step 1 of pair pod instructions */
-"Fill a new pod with U-100 Insulin (leave blue Pod needle cap on)." = "Fyll en ny pod med U-100 insulin (la blått beskyttelsesdeksel være på).";
+"Remove the Pod's blue needle cap and check cannula. Then remove paper backing." = "Fyll en ny pod med U-100 insulin (la blått beskyttelsesdeksel være på).";
 
 /* Label text for step 2 of pair pod instructions */
 "Listen for 2 beeps." = "Lytt etter 2 pip.";

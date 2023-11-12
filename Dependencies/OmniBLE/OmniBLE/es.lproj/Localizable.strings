@@ -344,7 +344,7 @@
 "Fault event occurred" = "Se ha producido un fallo";
 
 /* Label text for step 1 of pair pod instructions */
-"Fill a new pod with U-100 Insulin (leave blue Pod needle cap on)." = "Llene un nuevo Pod con insulina U-100 (deje puesta la tapa azul de la aguja del Pod).";
+"Remove the Pod's blue needle cap and check cannula. Then remove paper backing." = "Llene un nuevo Pod con insulina U-100 (deje puesta la tapa azul de la aguja del Pod).";
 
 /* Settings page link description when next lifecycle action is to finish deactivation */
 "Finish deactivation" = "Finalizar la desactivación";

@@ -344,7 +344,7 @@
 "Fault event occurred" = "Произошло событие неисправности";
 
 /* Label text for step 1 of pair pod instructions */
-"Fill a new pod with U-100 Insulin (leave blue Pod needle cap on)." = "Заправьте новый под инсулином (не менее 100 единиц, голубая крышка канюли должна быть на месте). Дождитесь 2 звуковых сигналов.";
+"Remove the Pod's blue needle cap and check cannula. Then remove paper backing." = "Заправьте новый под инсулином (не менее 100 единиц, голубая крышка канюли должна быть на месте). Дождитесь 2 звуковых сигналов.";
 
 /* Settings page link description when next lifecycle action is to finish deactivation */
 "Finish deactivation" = "Завершение деактивации";
