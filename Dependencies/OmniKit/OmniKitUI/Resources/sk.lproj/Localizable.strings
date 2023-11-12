@@ -153,7 +153,7 @@
 "Confidence Reminders" = "Confidence Reminders";
 
 /* Help text for BeepPreferenceSelectionView */
-"Confidence reminders are beeps from the pod which can be used to acknowledge selected commands." = "Potvrdzovacie pripomienky sú pípnutia z podu, ktoré možno použiť pre potvrdenie vybraných príkazov.";
+"Confidence reminders are beeps from the Pod which can be used to acknowledge selected commands when the Pod is not silenced." = "Potvrdzovacie pripomienky sú pípnutia z podu, ktoré možno použiť pre potvrdenie vybraných príkazov.";
 
 /* The title of the configuration section in settings */
 "Configuration" = "Konfigurácia";
@@ -547,7 +547,7 @@
 "Remove Pump" = "Remove Pump";
 
 /* Label text for step two of attach pod instructions */
-"Remove the pod's needle cap and check cannula. Then remove paper backing." = "Odstráňte kryt z ihly a skontrolujte kanylu. Potom odstráňte papierovú podložku.";
+"Remove the Pod's clear needle cap and check cannula. Then remove paper backing." = "Odstráňte kryt z ihly a skontrolujte kanylu. Potom odstráňte papierovú podložku.";
 
 /* Label indicating pod replacement necessary
    The title of the command to replace pod */

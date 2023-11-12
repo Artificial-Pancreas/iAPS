@@ -153,7 +153,7 @@
 "Confidence Reminders" = "Rappels de confiance";
 
 /* Help text for BeepPreferenceSelectionView */
-"Confidence reminders are beeps from the pod which can be used to acknowledge selected commands." = "Les rappels de confiance sont des bips émis par le Pod qui peuvent être utilisés pour confirmer l'exécution des commandes sélectionnées.";
+"Confidence reminders are beeps from the Pod which can be used to acknowledge selected commands when the Pod is not silenced." = "Les rappels de confiance sont des bips émis par le Pod qui peuvent être utilisés pour confirmer l'exécution des commandes sélectionnées.";
 
 /* The title of the configuration section in settings */
 "Configuration" = "Configuration";
@@ -547,7 +547,7 @@
 "Remove Pump" = "Retirer la pompe";
 
 /* Label text for step two of attach pod instructions */
-"Remove the pod's needle cap and check cannula. Then remove paper backing." = "Retirez le capuchon d'aiguille du pod et vérifiez la canule. Retirez ensuite le film en papier de l'autocollant.";
+"Remove the Pod's clear needle cap and check cannula. Then remove paper backing." = "Retirez le capuchon d'aiguille du pod et vérifiez la canule. Retirez ensuite le film en papier de l'autocollant.";
 
 /* Label indicating pod replacement necessary
    The title of the command to replace pod */

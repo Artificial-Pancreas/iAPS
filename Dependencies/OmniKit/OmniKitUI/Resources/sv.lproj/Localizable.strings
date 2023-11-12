@@ -153,7 +153,7 @@
 "Confidence Reminders" = "Bekräftelseljud";
 
 /* Help text for BeepPreferenceSelectionView */
-"Confidence reminders are beeps from the pod which can be used to acknowledge selected commands." = "Bekräftelseljud är pip från podden som kan användas som bekräftelser på utförda kommandon";
+"Confidence reminders are beeps from the Pod which can be used to acknowledge selected commands when the Pod is not silenced." = "Bekräftelseljud är pip från podden som kan användas som bekräftelser på utförda kommandon";
 
 /* The title of the configuration section in settings */
 "Configuration" = "Konfiguration";
@@ -547,7 +547,7 @@
 "Remove Pump" = "Ta bort podd";
 
 /* Label text for step two of attach pod instructions */
-"Remove the pod's needle cap and check cannula. Then remove paper backing." = "Ta bort kanylskyddet och kontrollera att kanylen inte redan sticker ut. Ta sedan bort skyddspappret.";
+"Remove the Pod's clear needle cap and check cannula. Then remove paper backing." = "Ta bort kanylskyddet och kontrollera att kanylen inte redan sticker ut. Ta sedan bort skyddspappret.";
 
 /* Label indicating pod replacement necessary
    The title of the command to replace pod */
