@@ -1480,7 +1480,7 @@ Enact a temp Basal or a temp target */
 /* Text for confidence reminders navigation link */
 "Confidence Reminders" = "Нагадування про Впевненість";
 
-"Confidence reminders are beeps from the pod which can be used to acknowledge selected commands." = "Нагадування про довіру — це звукові сигнали Pod, які можна використовувати для підтвердження вибраних команд.";
+"Confidence reminders are beeps from the Pod which can be used to acknowledge selected commands when the Pod is not silenced." = "Confidence reminders are beeps from the Pod which can be used to acknowledge selected commands when the Pod is not silenced.";
 
 /* button title for saving low reservoir reminder while saving */
 "Saving..." = "Збереження...";
@@ -1510,10 +1510,10 @@ Enact a temp Basal or a temp target */
 "No confidence reminders are used." = "Нагадування про довіру не використовуються.";
 
 /* Description for BeepPreference.manualCommands */
-"Confidence reminders will sound for commands you initiate, like bolus, cancel bolus, suspend, resume, save notification reminders, etc. When Loop automatically adjusts delivery, no confidence reminders are used." = "Довірені звукові сигнали спрацюють для операцій, які Ви ініціюєте - Болюс, Скасування Болюса, Припинення подачі, Відновлення подачі, Збереження нагадувань тощо. Коли петля автоматично змінює подачу інсуліну – звукові сигнали не використовуються.";
+"Confidence reminders will sound for commands you initiate, like bolus, cancel bolus, suspend, resume, save notification reminders, etc. When the app automatically adjusts delivery, no confidence reminders are used." = "Confidence reminders will sound for commands you initiate, like bolus, cancel bolus, suspend, resume, save notification reminders, etc. When the app automatically adjusts delivery, no confidence reminders are used.";
 
 /* Description for BeepPreference.extended */
-"Confidence reminders will sound when Loop automatically adjusts delivery as well as for commands you initiate." = "Довірені звукові сигнали спрацюють навіть тоді, коли петля автоматично змінить подачу інсуліну, а також команд, які Ви ініціюєте.";
+"Confidence reminders will sound when the app automatically adjusts delivery as well as for commands you initiate." = "Confidence reminders will sound when the app automatically adjusts delivery as well as for commands you initiate.";
 
 /* Label text for expiration reminder default row */
 "Expiration Reminder Default" = "Нагадування про закінчення терміну";
