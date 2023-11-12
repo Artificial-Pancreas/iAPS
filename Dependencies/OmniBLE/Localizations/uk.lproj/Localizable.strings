@@ -433,7 +433,7 @@
 "Change Pod now. Insulin delivery will stop 8 hours after the Pod has expired or when no more insulin remains." = "Замініть Pod. Подача інсуліну буде зупинена через 8 годин після закінчення терміну дії Pod'a або коли резервуар буде порожній.";
 
 /* Label text for step 1 of pair pod instructions */
-"Remove the Pod's blue needle cap and check cannula. Then remove paper backing." = "Заповніть новий Pod інсуліном U-100 (залиште синю захисну кришку Pod'а).";
+"Fill a new pod with U-100 Insulin (leave blue Pod needle cap on)." = "Заповніть новий Pod інсуліном U-100 (залиште синю захисну кришку Pod'а).";
 
 /* Label text for step 2 of pair pod instructions */
 "Listen for 2 beeps." = "Прослухайте 2 звукові сигнали.";

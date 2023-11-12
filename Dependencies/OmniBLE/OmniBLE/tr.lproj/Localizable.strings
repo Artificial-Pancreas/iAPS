@@ -344,7 +344,7 @@
 "Fault event occurred" = "Hata meydana geldi";
 
 /* Label text for step 1 of pair pod instructions */
-"Remove the Pod's blue needle cap and check cannula. Then remove paper backing." = "Yeni bir podu U-100 İnsülin ile doldurun (podun mavi iğne kapağını çıkarmayın).";
+"Fill a new pod with U-100 Insulin (leave blue Pod needle cap on)." = "Yeni bir podu U-100 İnsülin ile doldurun (podun mavi iğne kapağını çıkarmayın).";
 
 /* Settings page link description when next lifecycle action is to finish deactivation */
 "Finish deactivation" = "Devre Dışı Bırakmayı Bitir";

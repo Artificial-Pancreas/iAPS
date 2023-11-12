@@ -344,7 +344,7 @@
 "Fault event occurred" = "Fejlhændelse indtraf";
 
 /* Label text for step 1 of pair pod instructions */
-"Remove the Pod's blue needle cap and check cannula. Then remove paper backing." = "Fyld en ny pod med E-100 insulin (lad den blå hætte på podnålen sidde på).";
+"Fill a new pod with U-100 Insulin (leave blue Pod needle cap on)." = "Fyld en ny pod med E-100 insulin (lad den blå hætte på podnålen sidde på).";
 
 /* Settings page link description when next lifecycle action is to finish deactivation */
 "Finish deactivation" = "Afslut deaktivering";
