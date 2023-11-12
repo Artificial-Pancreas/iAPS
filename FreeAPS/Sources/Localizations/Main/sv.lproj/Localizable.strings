@@ -1289,6 +1289,12 @@ Enact a temp Basal or a temp target */
 /* */
 "Save as Preset" = "Spara som förval";
 
+/* */
+"Predictions" = "Prognoser";
+
+/* Watch Config Option */
+"Display Protein & Fat" = "Visa fett och protein";
+
 /* ----------------------- New Bolus Calculator ---------------------------*/
 /* Warning about bolus recommendation. Title */
 
