@@ -1393,6 +1393,12 @@ Połączono z Nightscout!";
 /* */
 "Save as Preset" = "Save as Preset";
 
+/* */
+"Predictions" = "Predictions";
+
+/* Watch Config Option */
+"Display Protein & Fat" = "Display Protein & Fat";
+
 /* ----------------------- New Bolus Calculator ---------------------------*/
 /* Warning about bolus recommendation. Title */
 
