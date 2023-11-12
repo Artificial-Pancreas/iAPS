@@ -637,7 +637,7 @@
 "Missing Config" = "Manglende Konfiguration";
 
 /* Alert format string for missing temp basal configuration. */
-"This PumpManager has not been configured with a maximum basal rate because it was added before manual temp basal was a feature. Please go to therapy settings -> delivery limits and set a new maximum basal rate." = "This PumpManager has not been configured with a maximum basal rate because it was added before manual temp basal was a feature. Please go to therapy settings -> delivery limits and set a new maximum basal rate.";
+"This PumpManager has not been configured with a maximum basal rate because it was added before manual temp basal was a feature. Please go to therapy settings -> delivery limits and set a new maximum basal rate." = "Denne PumpManager er ikke blevet konfigureret med maximal basal rate fordi det var tilføjet før manuel temp basal var en feature. Gå til Terapi Indstillinger -> Leveringsgrænser og set en ny maximal basal rate.";
 
 /* Label text for expiration reminder default row */
 "Expiration Reminder Default" = "Standard for udløbspåmindelse";
