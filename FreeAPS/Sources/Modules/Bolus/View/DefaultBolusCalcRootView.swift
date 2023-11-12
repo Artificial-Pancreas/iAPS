@@ -155,8 +155,12 @@ extension Bolus {
                 leading: Button {
                     carbsView()
                 }
-                label: { Text(fetch ? "Back" : "Meal") },
-
+                label: {
+                    HStack {
+                        Image(systemName: "chevron.backward")
+                        Text("Meal")
+                    }
+                },
                 trailing: Button { state.hideModal() }
                 label: { Text("Close") }
             )
