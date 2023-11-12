@@ -153,7 +153,7 @@
 "Confidence Reminders" = "Emniyet Hatırlatıcıları";
 
 /* Help text for BeepPreferenceSelectionView */
-"Confidence reminders are beeps from the pod which can be used to acknowledge selected commands." = "Emniyet hatırlatıcıları, poddan gelen ve seçilen komutları onaylamak için kullanılabilen bip sesleridir.";
+"Confidence reminders are beeps from the Pod which can be used to acknowledge selected commands when the Pod is not silenced." = "Emniyet hatırlatıcıları, poddan gelen ve seçilen komutları onaylamak için kullanılabilen bip sesleridir.";
 
 /* The title of the configuration section in settings */
 "Configuration" = "Konfigürasyon";
@@ -547,7 +547,7 @@
 "Remove Pump" = "Pompayı Çıkar";
 
 /* Label text for step two of attach pod instructions */
-"Remove the pod's needle cap and check cannula. Then remove paper backing." = "Pod'un iğne kapağını çıkarın ve kanülü kontrol edin. Ardından yapışkan kağıt desteğini çıkarın.";
+"Remove the Pod's clear needle cap and check cannula. Then remove paper backing." = "Pod'un iğne kapağını çıkarın ve kanülü kontrol edin. Ardından yapışkan kağıt desteğini çıkarın.";
 
 /* Label indicating pod replacement necessary
    The title of the command to replace pod */

@@ -602,10 +602,10 @@
 "No confidence reminders are used." = "Keine Erinnerungseinstellungen in Verwendung.";
 
 /* Description for BeepPreference.manualCommands */
-"Confidence reminders will sound for commands you initiate, like bolus, cancel bolus, suspend, resume, save notification reminders, etc. When Loop automatically adjusts delivery, no confidence reminders are used." = "Erinnerungssignale ertönen gemäß deiner Einstellungen, wie Bolusabgabe, Bolus abbrechen, Unterbrechung, Wiederaufnahme, Speicherung von Benachrichtigungen usw. Wenn Loop automatisch Insulin abgibt, ertönen keine Erinnerungssignale.";
+"Confidence reminders will sound for commands you initiate, like bolus, cancel bolus, suspend, resume, save notification reminders, etc. When the app automatically adjusts delivery, no confidence reminders are used." = "Erinnerungssignale ertönen gemäß deiner Einstellungen, wie Bolusabgabe, Bolus abbrechen, Unterbrechung, Wiederaufnahme, Speicherung von Benachrichtigungen usw. Wenn Loop automatisch Insulin abgibt, ertönen keine Erinnerungssignale.";
 
 /* Description for BeepPreference.extended */
-"Confidence reminders will sound when Loop automatically adjusts delivery as well as for commands you initiate." = "Erinnerungssignale ertönen, wenn Loop die Abgabe automatisch anpasst sowie bei Befehlen, die von dir ausgelöst werden.";
+"Confidence reminders will sound when the app automatically adjusts delivery as well as for commands you initiate." = "Erinnerungssignale ertönen, wenn Loop die Abgabe automatisch anpasst sowie bei Befehlen, die von dir ausgelöst werden.";
 
 /* Label text for temporary basal rate summary */
 "Rate" = "BR";
