@@ -37,13 +37,15 @@ extension Bolus {
 
         var body: some View {
             Form {
-                Section {
-                    if state.waitForSuggestion {
-                        Text("Please wait")
-                    } else {
-                        predictionChart
-                    }
-                } header: { Text("Predictions") }
+                if state.displayPredictions {
+                    Section {
+                        if state.waitForSuggestion {
+                            Text("Please wait")
+                        } else {
+                            predictionChart
+                        }
+                    } header: { Text("Predictions") }
+                }
 
                 if fetch {
                     Section {
