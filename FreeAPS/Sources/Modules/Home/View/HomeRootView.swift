@@ -153,7 +153,8 @@ extension Home {
                 battery: $state.battery,
                 name: $state.pumpName,
                 expiresAtDate: $state.pumpExpiresAtDate,
-                timerDate: $state.timerDate
+                timerDate: $state.timerDate,
+                timeZone: $state.timeZone
             )
             .onTapGesture {
                 if state.pumpDisplayState != nil {
@@ -170,8 +171,7 @@ extension Home {
                 timerDate: $state.timerDate,
                 isLooping: $state.isLooping,
                 lastLoopDate: $state.lastLoopDate,
-                manualTempBasal: $state.manualTempBasal,
-                timeZone: $state.timeZone
+                manualTempBasal: $state.manualTempBasal
             ).onTapGesture {
                 isStatusPopupPresented = true
             }.onLongPressGesture {
