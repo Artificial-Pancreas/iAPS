@@ -778,7 +778,7 @@
 /* navigation title for Silnce Pod" */
 
 "Silence Pod mode suppresses all Pod alert and confirmation reminder beeping.
-Silence Pod" = "Tysta podded";
+Silence Pod" = "Tysta podden";
 
 /* title for pod details page */
 "Pod Details" = "Poddetaljer";
