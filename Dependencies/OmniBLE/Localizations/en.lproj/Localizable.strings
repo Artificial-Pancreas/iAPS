@@ -820,3 +820,6 @@
     
 /* button title to refresh pump manager details */
 "Refresh Pump Manager Details" = "Refresh Pump Manager Details";
+
+/* Section header for diagnostic section */
+"Diagnostics" = "Diagnostics";
