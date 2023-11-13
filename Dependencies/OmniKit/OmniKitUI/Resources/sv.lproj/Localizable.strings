@@ -796,3 +796,9 @@ Silence Pod" = "Tysta podden";
 
 /* Alert title for error when updating silence pod preference */
 "Failed to update silence pod preference." = "Misslyckades att uppdatera inställning för tystad podd.";
+
+/* Section header for diagnostic section */
+"Diagnostics" = "Diagnostik";
+
+/* Text for read pod status navigation link */
+"Read Pod Status" = "Read Pod Status";
