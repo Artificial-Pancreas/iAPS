@@ -1480,7 +1480,7 @@ Enact a temp Basal or a temp target */
 /* Text for confidence reminders navigation link */
 "Confidence Reminders" = "Нагадування про Впевненість";
 
-"Confidence reminders are beeps from the Pod which can be used to acknowledge selected commands when the Pod is not silenced." = "Confidence reminders are beeps from the Pod which can be used to acknowledge selected commands when the Pod is not silenced.";
+"Confidence reminders are beeps from the Pod which can be used to acknowledge selected commands when the Pod is not silenced." = "Сигнали підтвердження — це звукові сигнали Podʼа, які можна використовувати для підтвердження вибраних команд.";
 
 /* button title for saving low reservoir reminder while saving */
 "Saving..." = "Збереження...";
@@ -1510,10 +1510,10 @@ Enact a temp Basal or a temp target */
 "No confidence reminders are used." = "Нагадування про довіру не використовуються.";
 
 /* Description for BeepPreference.manualCommands */
-"Confidence reminders will sound for commands you initiate, like bolus, cancel bolus, suspend, resume, save notification reminders, etc. When the app automatically adjusts delivery, no confidence reminders are used." = "Confidence reminders will sound for commands you initiate, like bolus, cancel bolus, suspend, resume, save notification reminders, etc. When the app automatically adjusts delivery, no confidence reminders are used.";
+"Confidence reminders will sound for commands you initiate, like bolus, cancel bolus, suspend, resume, save notification reminders, etc. When the app automatically adjusts delivery, no confidence reminders are used." = "Нагадування про достовірність лунатимуть для команд, які ви ініціюєте, як-от болюс, скасування болюсу, призупинення, відновлення, збереження сповіщень тощо. Коли Loop автоматично регулює доставку, нагадування про довіру не використовуються.";
 
 /* Description for BeepPreference.extended */
-"Confidence reminders will sound when the app automatically adjusts delivery as well as for commands you initiate." = "Confidence reminders will sound when the app automatically adjusts delivery as well as for commands you initiate.";
+"Confidence reminders will sound when the app automatically adjusts delivery as well as for commands you initiate." = "Нагадування про довіру лунатимуть, коли Loop автоматично регулює доставку, а також для команд, які ви ініціюєте.";
 
 /* Label text for expiration reminder default row */
 "Expiration Reminder Default" = "Нагадування про закінчення терміну";
