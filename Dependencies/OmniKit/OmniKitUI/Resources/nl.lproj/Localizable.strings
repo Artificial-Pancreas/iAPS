@@ -796,3 +796,9 @@ Silence Pod" = "Silence Pod";
 
 /* Alert title for error when updating silence pod preference */
 "Failed to update silence pod preference." = "Failed to update silence pod preference.";
+
+/* Section header for diagnostic section */
+"Diagnostics" = "Diagnostics";
+
+/* Text for read pod status navigation link */
+"Read Pod Status" = "Read Pod Status";
