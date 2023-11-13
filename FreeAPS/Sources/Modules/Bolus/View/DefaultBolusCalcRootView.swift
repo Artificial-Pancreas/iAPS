@@ -37,13 +37,15 @@ extension Bolus {
 
         var body: some View {
             Form {
-                Section {
-                    if state.waitForSuggestion {
-                        Text("Please wait")
-                    } else {
-                        predictionChart
-                    }
-                } header: { Text("Predictions") }
+                if state.displayPredictions {
+                    Section {
+                        if state.waitForSuggestion {
+                            Text("Please wait")
+                        } else {
+                            predictionChart
+                        }
+                    } header: { Text("Predictions") }
+                }
 
                 if fetch {
                     Section {
@@ -155,8 +157,12 @@ extension Bolus {
                 leading: Button {
                     carbsView()
                 }
-                label: { Text(fetch ? "Back" : "Meal") },
-
+                label: {
+                    HStack {
+                        Image(systemName: "chevron.backward")
+                        Text("Meal")
+                    }
+                },
                 trailing: Button { state.hideModal() }
                 label: { Text("Close") }
             )

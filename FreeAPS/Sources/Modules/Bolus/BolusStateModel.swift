@@ -57,6 +57,7 @@ extension Bolus {
         @Published var fattyMeals: Bool = false
         @Published var fattyMealFactor: Decimal = 0
         @Published var useFattyMealCorrectionFactor: Bool = false
+        @Published var displayPredictions: Bool = true
 
         @Published var meal: [CarbsEntry]?
         @Published var carbs: Decimal = 0
@@ -76,6 +77,7 @@ extension Bolus {
             useCalc = settings.settings.useCalc
             fattyMeals = settings.settings.fattyMeals
             fattyMealFactor = settings.settings.fattyMealFactor
+            displayPredictions = settings.settings.displayPredictions
 
             if waitForSuggestionInitial {
                 apsManager.determineBasal()
@@ -100,15 +102,14 @@ extension Bolus {
         func getDeltaBG() {
             let glucose = provider.fetchGlucose()
             guard glucose.count >= 3 else { return }
-            let lastGlucose = glucose.last?.glucose ?? 0
-            let thirdLastGlucose = glucose[glucose.count - 3]
+            let lastGlucose = glucose.first?.glucose ?? 0
+            let thirdLastGlucose = glucose[2]
             let delta = Decimal(lastGlucose) - Decimal(thirdLastGlucose.glucose)
             deltaBG = delta
         }
 
         // CALCULATIONS FOR THE BOLUS CALCULATOR
         func calculateInsulin() -> Decimal {
-            // for mmol conversion
             var conversion: Decimal = 1.0
             if units == .mmolL {
                 conversion = 0.0555
