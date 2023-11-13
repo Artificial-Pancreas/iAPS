@@ -814,3 +814,9 @@
 "Retrieving Pump Manager Details..." = "Retrieving Pump Manager Details...";
 /* button title to refresh pump manager details */
 "Refresh Pump Manager Details" = "Refresh Pump Manager Details";
+
+/* Section header for diagnostic section */
+"Diagnostics" = "Diagnostics";
+
+/* Text for read pod status navigation link */
+"Read Pod Status" = "Read Pod Status";
