@@ -37,15 +37,13 @@ extension Bolus {
 
         var body: some View {
             Form {
-                if state.displayPredictions {
-                    Section {
-                        if state.waitForSuggestion {
-                            Text("Please wait")
-                        } else {
-                            predictionChart
-                        }
-                    } header: { Text("Predictions") }
-                }
+                Section {
+                    if state.waitForSuggestion {
+                        Text("Please wait")
+                    } else {
+                        predictionChart
+                    }
+                } header: { Text("Predictions") }
 
                 if fetch {
                     Section {
@@ -178,7 +176,8 @@ extension Bolus {
         var predictionChart: some View {
             ZStack {
                 PredictionView(
-                    predictions: $state.predictions, units: $state.units, eventualBG: $state.evBG, target: $state.target
+                    predictions: $state.predictions, units: $state.units, eventualBG: $state.evBG, target: $state.target,
+                    displayPredictions: $state.displayPredictions
                 )
             }
         }
