@@ -313,14 +313,19 @@ extension Home {
                     Text("Max IOB: 0").font(.callout).foregroundColor(.orange).padding(.trailing, 20)
                 }
 
-                if let progress = state.bolusProgress {
-                    Text("Bolusing")
-                        .font(.system(size: 12, weight: .bold)).foregroundColor(.insulin)
-                    ProgressView(value: Double(progress))
-                        .progressViewStyle(BolusProgressViewStyle())
-                        .padding(.trailing, 8)
-                        .onTapGesture {
-                            state.cancelBolus()
+                Button(action: {
+                        state.cancelBolus()
+                    }) {
+                        HStack {
+                            Text("Bolusing")
+                                .font(.system(size: 12, weight: .bold))
+                                .foregroundColor(.insulin)
+                            ProgressView(value: Double(progress))
+                                .progressViewStyle(BolusProgressViewStyle())
+                                .padding(.trailing, 8)
+                        }
+                    }
+                    .contentShape(Rectangle())
                         }
                 }
             }
