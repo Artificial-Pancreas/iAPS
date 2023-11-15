@@ -313,7 +313,7 @@ extension Home {
                     Text("Max IOB: 0").font(.callout).foregroundColor(.orange).padding(.trailing, 20)
                 }
 
-                Button(action: {
+                                    Button(action: {
                         state.cancelBolus()
                     }) {
                         HStack {
@@ -326,7 +326,7 @@ extension Home {
                         }
                     }
                     .contentShape(Rectangle())
-                        }
+                    .onTapGesture {}
                 }
             }
             .frame(maxWidth: .infinity, maxHeight: 30)
