@@ -39,16 +39,16 @@ extension Home {
 
         // MARK: FOR PICKER TO SCALE X AXIS GRAPH
 
-        enum Scale: String, CaseIterable, Identifiable {
-            case one
-            case three
-            case six
-            case twelve
-            case twentyfour
+        enum Scale: Int, CaseIterable, Identifiable {
+            case one = 1
+            case three = 3
+            case six = 6
+            case twelve = 12
+            case twentyfour = 24
             var id: Self { self }
         }
 
-        @State private var scale: Scale = .three
+        @State private var scale: Scale = .six
 //        @State var screenHours: Int
 
         private var numberFormatter: NumberFormatter {
@@ -427,26 +427,18 @@ extension Home {
 
         // MARK: PICKER IN SEGEMENTED STYLE TO CHOOSE THE X AXIS SCALE OF THE GRAPH
 
-        // _geo _: GeometryProxy
-
         @ViewBuilder private func pickerPanel(_: GeometryProxy) -> some View {
-            ZStack {
-                Rectangle().fill(Color.gray.opacity(0.3)).frame(maxHeight: 40)
-                HStack {
-                    Picker("Scale", selection: $scale) {
-                        ForEach(Scale.allCases) { scale in
-                            Text(NSLocalizedString(scale.rawValue, comment: "")).tag(Optional(scale))
-                        }
+            HStack {
+                Picker("Scale", selection: $scale) {
+                    ForEach(Scale.allCases) { scale in
+                        Text("\(scale.rawValue)h").tag(Optional(scale))
                     }
-                    .pickerStyle(.segmented).background(.cyan.opacity(0.2))
                 }
-//                Picker("Scale", selection: $scale) {
-//                    ForEach(Scale.allCases) { scale in
-//                        Text(NSLocalizedString(scale.rawValue, comment: "")).tag(Optional(scale))
-//                    }
-//                }
-//                .pickerStyle(.segmented).background(.cyan.opacity(0.2))
+                .pickerStyle(.segmented)
+                .background(.cyan.opacity(0.2))
             }
+            .padding(.horizontal, 4)
+            .padding(.vertical, 2)
         }
 
         private func calculateScreenHours(scale: Scale) -> Int {
