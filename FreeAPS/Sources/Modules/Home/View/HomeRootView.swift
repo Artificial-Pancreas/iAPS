@@ -434,11 +434,9 @@ extension Home {
                     }
                 }
                 .pickerStyle(.segmented)
-                .background(.cyan.opacity(0.1))
+                .background(Color.clear)
             }
-//            .padding(.horizontal, 4)
-//            .padding(.vertical, 2)
-            .padding()
+            .padding(.vertical, 1)
         }
 
         @ViewBuilder private func profiles(_: GeometryProxy) -> some View {
