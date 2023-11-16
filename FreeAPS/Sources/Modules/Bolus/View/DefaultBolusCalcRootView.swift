@@ -155,8 +155,12 @@ extension Bolus {
                 leading: Button {
                     carbsView()
                 }
-                label: { Text(fetch ? "Back" : "Meal") },
-
+                label: {
+                    HStack {
+                        Image(systemName: "chevron.backward")
+                        Text("Meal")
+                    }
+                },
                 trailing: Button { state.hideModal() }
                 label: { Text("Close") }
             )
@@ -172,7 +176,8 @@ extension Bolus {
         var predictionChart: some View {
             ZStack {
                 PredictionView(
-                    predictions: $state.predictions, units: $state.units, eventualBG: $state.evBG, target: $state.target
+                    predictions: $state.predictions, units: $state.units, eventualBG: $state.evBG, target: $state.target,
+                    displayPredictions: $state.displayPredictions
                 )
             }
         }
