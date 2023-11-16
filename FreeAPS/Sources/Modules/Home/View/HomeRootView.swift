@@ -422,6 +422,7 @@ extension Home {
                 }
                 .pickerStyle(.segmented)
                 .background(Color.clear)
+                .disabled(state.bolusProgress != nil)
             }
             .padding(.vertical, 1)
         }
