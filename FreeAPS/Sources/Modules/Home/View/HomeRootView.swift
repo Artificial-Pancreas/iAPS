@@ -314,14 +314,18 @@ extension Home {
                 }
 
                 if let progress = state.bolusProgress {
-                    Text("Bolusing")
-                        .font(.system(size: 12, weight: .bold)).foregroundColor(.insulin)
-                    ProgressView(value: Double(progress))
-                        .progressViewStyle(BolusProgressViewStyle())
-                        .padding(.trailing, 8)
-                        .onTapGesture {
-                            state.cancelBolus()
+                    Button(action: {
+                        state.cancelBolus()
+                    }) {
+                        HStack {
+                            Text("Bolusing")
+                                .font(.system(size: 12, weight: .bold))
+                                .foregroundColor(.insulin)
+                            ProgressView(value: Double(progress))
+                                .progressViewStyle(BolusProgressViewStyle())
+                                .padding(.trailing, 8)
                         }
+                    }
                 }
             }
             .frame(maxWidth: .infinity, maxHeight: 30)
