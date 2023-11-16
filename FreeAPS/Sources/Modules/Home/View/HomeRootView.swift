@@ -310,7 +310,10 @@ extension Home {
                 }
 
                 if state.closedLoop, state.settingsManager.preferences.maxIOB == 0 {
-                    Text("Max IOB: 0").font(.callout).foregroundColor(.orange).padding(.trailing, 20)
+                    (Text(Image(systemName: "exclamationmark.triangle")) + Text(" Max IOB: 0"))
+                        .font(.callout)
+                        .foregroundColor(.red)
+                        .padding(.trailing, 8)
                 }
 
                 if let progress = state.bolusProgress {
