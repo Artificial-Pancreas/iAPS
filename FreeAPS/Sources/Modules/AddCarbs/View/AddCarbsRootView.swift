@@ -74,6 +74,7 @@ extension AddCarbs {
 
                     // Time
                     HStack {
+                        let now = Date.now
                         Text("Time")
                         Spacer()
                         if !pushed {
@@ -86,11 +87,14 @@ extension AddCarbs {
                             DatePicker(
                                 "Time",
                                 selection: $state.date,
+                                in: ...now,
                                 displayedComponents: [.hourAndMinute]
                             ).controlSize(.mini)
                                 .labelsHidden()
                             Button {
-                                state.date = state.date.addingTimeInterval(10.minutes.timeInterval)
+                                if state.date.addingTimeInterval(5.minutes.timeInterval) < now {
+                                    state.date = state.date.addingTimeInterval(10.minutes.timeInterval)
+                                }
                             }
                             label: { Image(systemName: "plus.circle") }.tint(.blue).buttonStyle(.borderless)
                         }
