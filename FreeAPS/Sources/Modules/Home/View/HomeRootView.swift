@@ -36,6 +36,19 @@ extension Home {
             entity: TempTargetsSlider.entity(),
             sortDescriptors: [NSSortDescriptor(key: "date", ascending: false)]
         ) var enactedSliderTT: FetchedResults<TempTargetsSlider>
+        
+        
+        //MARK: FOR PICKER TO SCALE X AXIS GRAPH
+        enum Scale: String, CaseIterable, Identifiable {
+            case one
+            case three
+            case six
+            case twelve
+            case twentyfour
+            var id: Self { self }
+        }
+        
+        @State private var 
 
         private var numberFormatter: NumberFormatter {
             let formatter = NumberFormatter()
@@ -474,6 +487,13 @@ extension Home {
                 }
             }
             return (name: profileString, isOn: display)
+        }
+
+        // MARK: PICKER IN SEGEMENTED STYLE TO CHOOSE THE X AXIS SCALE OF THE GRAPH
+        @ViewBuilder private func pickerPanel(_geo: GeometryProxy) -> some View {
+            Picker("Scale", selection: $scale) {
+                
+            }
         }
 
         @ViewBuilder private func bottomPanel(_ geo: GeometryProxy) -> some View {
