@@ -9,7 +9,7 @@ protocol NightscoutManager: GlucoseSource {
     func fetchCarbs() -> AnyPublisher<[CarbsEntry], Never>
     func fetchTempTargets() -> AnyPublisher<[TempTarget], Never>
     func fetchAnnouncements() -> AnyPublisher<[Announcement], Never>
-    func deleteCarbs(at id: String, fpuID: String)
+    func deleteCarbs(at id: String, fpuID: String, complex: Bool)
     func deleteInsulin(at date: Date)
     func deleteManualGlucose(at: Date)
     func uploadStatus()
@@ -177,18 +177,18 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
             .eraseToAnyPublisher()
     }
 
-    func deleteCarbs(at id: String, fpuID: String) {
+    func deleteCarbs(at id: String, fpuID: String, complex: Bool) {
         // remove in AH
         healthkitManager.deleteCarbs(syncID: id, fpuID: fpuID)
 
         guard let nightscout = nightscoutAPI, isUploadEnabled else {
-            carbsStorage.deleteCarbs(at: id, fpuID: fpuID)
+            carbsStorage.deleteCarbs(at: id, fpuID: fpuID, complex: complex)
             return
         }
         nightscout.deleteCarbs(at: id)
             .collect()
             .sink { completion in
-                self.carbsStorage.deleteCarbs(at: id, fpuID: fpuID)
+                self.carbsStorage.deleteCarbs(at: id, fpuID: fpuID, complex: complex)
                 switch completion {
                 case .finished:
                     debug(.nightscout, "Carbs deleted")

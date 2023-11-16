@@ -234,19 +234,9 @@ extension Bolus {
             }
 
             if deleteTwice {
-                // DispatchQueue.safeMainSync {
-                /*
-                 nsManager.deleteCarbs(
-                     at: meal.first?.id ?? "", fpuID: nil
-                 )*/
-                nsManager.deleteCarbs(
-                    at: meals.id ?? "", fpuID: meals.fpuID ?? ""
-                )
-                // }
+                nsManager.deleteCarbs(at: meals.id ?? "", fpuID: meals.fpuID ?? "", complex: true)
             } else {
-                nsManager.deleteCarbs(
-                    at: meals.id ?? "", fpuID: ""
-                )
+                nsManager.deleteCarbs(at: meals.id ?? "", fpuID: "", complex: false)
             }
         }
     }

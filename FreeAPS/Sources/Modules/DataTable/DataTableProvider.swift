@@ -33,8 +33,9 @@ extension DataTable {
 
         func deleteCarbs(_ treatement: Treatment) {
             nightscoutManager.deleteCarbs(
-                at: treatement.id,
-                fpuID: treatement.fpuID ?? ""
+                at: (treatement.isFPU ?? false) ? "" : treatement.id,
+                fpuID: (treatement.isFPU ?? false) ? (treatement.fpuID ?? "") : "",
+                complex: false
             )
         }
 

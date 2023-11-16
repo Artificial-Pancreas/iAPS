@@ -47,7 +47,7 @@ extension AddCarbs {
                 protein: protein,
                 note: note,
                 enteredBy: CarbsEntry.manual,
-                isFPU: false, fpuID: (carbs > 0 || fat > 0) ? UUID().uuidString : nil
+                isFPU: false, fpuID: ""
             )]
             carbsStorage.storeCarbs(carbsToStore)
 
