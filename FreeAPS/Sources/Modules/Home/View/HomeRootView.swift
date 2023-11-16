@@ -404,7 +404,8 @@ extension Home {
                     screenHours: $state.screenHours,
                     displayXgridLines: $state.displayXgridLines,
                     displayYgridLines: $state.displayYgridLines,
-                    thresholdLines: $state.thresholdLines
+                    thresholdLines: $state.thresholdLines,
+                    state: state
                 )
             }
             .padding(.bottom)

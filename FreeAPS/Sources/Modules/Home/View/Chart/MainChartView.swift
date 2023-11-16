@@ -99,6 +99,8 @@ struct MainChartView: View {
     @State private var offset: CGFloat = 0
     @State private var cachedMaxBasalRate: Decimal?
 
+    @State var state: Home.StateModel
+
     private let calculationQueue = DispatchQueue(label: "MainChartView.calculationQueue")
 
     private var dateFormatter: DateFormatter {
@@ -193,6 +195,9 @@ struct MainChartView: View {
                             scroll.scrollTo(Config.endID, anchor: .trailing)
                         }
                         .onChange(of: tempBasals) { _ in
+                            scroll.scrollTo(Config.endID, anchor: .trailing)
+                        }
+                        .onChange(of: state.scale) { _ in
                             scroll.scrollTo(Config.endID, anchor: .trailing)
                         }
                         .onAppear {
