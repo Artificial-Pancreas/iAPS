@@ -39,17 +39,16 @@ extension Home {
 
         // MARK: FOR PICKER TO SCALE X AXIS GRAPH
 
-        enum Scale: Int, CaseIterable, Identifiable {
-            case one = 1
-            case three = 3
-            case six = 6
-            case twelve = 12
-            case twentyfour = 24
-            var id: Self { self }
-        }
+//        enum Scale: Int, CaseIterable, Identifiable {
+//            case one = 1
+//            case three = 3
+//            case six = 6
+//            case twelve = 12
+//            case twentyfour = 24
+//            var id: Self { self }
+//        }
 
-        @State private var scale: Scale = .six
-//        @State var screenHours: Int
+//        @State private var scale: Scale = .six
 
         private var numberFormatter: NumberFormatter {
             let formatter = NumberFormatter()
@@ -415,7 +414,7 @@ extension Home {
                     smooth: $state.smooth,
                     highGlucose: $state.highGlucose,
                     lowGlucose: $state.lowGlucose,
-                    screenHours: Binding.constant(calculateScreenHours(scale: scale)),
+                    screenHours: $state.screenHours,
                     displayXgridLines: $state.displayXgridLines,
                     displayYgridLines: $state.displayYgridLines,
                     thresholdLines: $state.thresholdLines
@@ -429,8 +428,8 @@ extension Home {
 
         @ViewBuilder private func pickerPanel(_: GeometryProxy) -> some View {
             HStack {
-                Picker("Scale", selection: $scale) {
-                    ForEach(Scale.allCases) { scale in
+                Picker("Scale", selection: $state.scale) {
+                    ForEach(Home.StateModel.Scale.allCases) { scale in
                         Text("\(scale.rawValue)h").tag(Optional(scale))
                     }
                 }
@@ -441,20 +440,20 @@ extension Home {
             .padding(.vertical, 2)
         }
 
-        private func calculateScreenHours(scale: Scale) -> Int {
-            switch scale {
-            case .one:
-                return 1
-            case .three:
-                return 3
-            case .six:
-                return 6
-            case .twelve:
-                return 12
-            case .twentyfour:
-                return 24
-            }
-        }
+//        private func calculateScreenHours(scale: Scale) -> Int {
+//            switch scale {
+//            case .one:
+//                return 1
+//            case .three:
+//                return 3
+//            case .six:
+//                return 6
+//            case .twelve:
+//                return 12
+//            case .twentyfour:
+//                return 24
+//            }
+//        }
 
         @ViewBuilder private func profiles(_: GeometryProxy) -> some View {
             let colour: Color = colorScheme == .dark ? .black : .white
