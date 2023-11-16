@@ -36,9 +36,9 @@ extension Home {
             entity: TempTargetsSlider.entity(),
             sortDescriptors: [NSSortDescriptor(key: "date", ascending: false)]
         ) var enactedSliderTT: FetchedResults<TempTargetsSlider>
-        
-        
-        //MARK: FOR PICKER TO SCALE X AXIS GRAPH
+
+        // MARK: FOR PICKER TO SCALE X AXIS GRAPH
+
         enum Scale: String, CaseIterable, Identifiable {
             case one
             case three
@@ -47,8 +47,9 @@ extension Home {
             case twentyfour
             var id: Self { self }
         }
-        
-        @State private var 
+
+        @State private var scale: Scale = .three
+//        @State var screenHours: Int
 
         private var numberFormatter: NumberFormatter {
             let formatter = NumberFormatter()
@@ -414,7 +415,7 @@ extension Home {
                     smooth: $state.smooth,
                     highGlucose: $state.highGlucose,
                     lowGlucose: $state.lowGlucose,
-                    screenHours: $state.screenHours,
+                    screenHours: Binding.constant(calculateScreenHours(scale: scale)),
                     displayXgridLines: $state.displayXgridLines,
                     displayYgridLines: $state.displayYgridLines,
                     thresholdLines: $state.thresholdLines
@@ -422,6 +423,45 @@ extension Home {
             }
             .padding(.bottom)
             .modal(for: .dataTable, from: self)
+        }
+
+        // MARK: PICKER IN SEGEMENTED STYLE TO CHOOSE THE X AXIS SCALE OF THE GRAPH
+
+        // _geo _: GeometryProxy
+
+        @ViewBuilder private func pickerPanel(_: GeometryProxy) -> some View {
+            ZStack {
+                Rectangle().fill(Color.gray.opacity(0.3)).frame(maxHeight: 40)
+                HStack {
+                    Picker("Scale", selection: $scale) {
+                        ForEach(Scale.allCases) { scale in
+                            Text(NSLocalizedString(scale.rawValue, comment: "")).tag(Optional(scale))
+                        }
+                    }
+                    .pickerStyle(.segmented).background(.cyan.opacity(0.2))
+                }
+//                Picker("Scale", selection: $scale) {
+//                    ForEach(Scale.allCases) { scale in
+//                        Text(NSLocalizedString(scale.rawValue, comment: "")).tag(Optional(scale))
+//                    }
+//                }
+//                .pickerStyle(.segmented).background(.cyan.opacity(0.2))
+            }
+        }
+
+        private func calculateScreenHours(scale: Scale) -> Int {
+            switch scale {
+            case .one:
+                return 1
+            case .three:
+                return 3
+            case .six:
+                return 6
+            case .twelve:
+                return 12
+            case .twentyfour:
+                return 24
+            }
         }
 
         @ViewBuilder private func profiles(_: GeometryProxy) -> some View {
@@ -487,13 +527,6 @@ extension Home {
                 }
             }
             return (name: profileString, isOn: display)
-        }
-
-        // MARK: PICKER IN SEGEMENTED STYLE TO CHOOSE THE X AXIS SCALE OF THE GRAPH
-        @ViewBuilder private func pickerPanel(_geo: GeometryProxy) -> some View {
-            Picker("Scale", selection: $scale) {
-                
-            }
         }
 
         @ViewBuilder private func bottomPanel(_ geo: GeometryProxy) -> some View {
@@ -595,6 +628,7 @@ extension Home {
                     infoPanel
                     mainChart
                     legendPanel
+                    pickerPanel(geo)
                     profiles(geo)
                     bottomPanel(geo)
                 }
