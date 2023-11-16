@@ -37,19 +37,6 @@ extension Home {
             sortDescriptors: [NSSortDescriptor(key: "date", ascending: false)]
         ) var enactedSliderTT: FetchedResults<TempTargetsSlider>
 
-        // MARK: FOR PICKER TO SCALE X AXIS GRAPH
-
-//        enum Scale: Int, CaseIterable, Identifiable {
-//            case one = 1
-//            case three = 3
-//            case six = 6
-//            case twelve = 12
-//            case twentyfour = 24
-//            var id: Self { self }
-//        }
-
-//        @State private var scale: Scale = .six
-
         private var numberFormatter: NumberFormatter {
             let formatter = NumberFormatter()
             formatter.numberStyle = .decimal
