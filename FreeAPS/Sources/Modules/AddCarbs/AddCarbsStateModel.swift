@@ -41,13 +41,13 @@ extension AddCarbs {
 
             let carbsToStore = [CarbsEntry(
                 collectionID: id_,
-                createdAt: date,
+                createdAt: Date.now,
                 carbs: carbs,
                 fat: fat,
                 protein: protein,
                 note: note,
                 enteredBy: CarbsEntry.manual,
-                isFPU: false, fpuID: nil
+                isFPU: false, fpuID: (carbs > 0 || fat > 0) ? UUID().uuidString : nil
             )]
             carbsStorage.storeCarbs(carbsToStore)
 
@@ -193,6 +193,7 @@ extension AddCarbs {
                 if let entry = stored.first {
                     save.createdAt = Date.now
                     save.id = entry.collectionID ?? ""
+                    save.fpuID = entry.fpuID ?? ""
                     save.carbs = Double(entry.carbs)
                     save.fat = Double(entry.fat ?? 0)
                     save.protein = Double(entry.protein ?? 0)

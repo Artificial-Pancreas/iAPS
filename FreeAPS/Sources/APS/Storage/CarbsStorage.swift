@@ -12,7 +12,7 @@ protocol CarbsStorage {
     func syncDate() -> Date
     func recent() -> [CarbsEntry]
     func nightscoutTretmentsNotUploaded() -> [NigtscoutTreatment]
-    func deleteCarbs(at uniqueID: String)
+    func deleteCarbs(at uniqueID: String, fpuID: String)
 }
 
 final class BaseCarbsStorage: CarbsStorage, Injectable {
@@ -71,7 +71,7 @@ final class BaseCarbsStorage: CarbsStorage, Injectable {
                 // New date for each carb equivalent
                 var useDate = entries.last?.createdAt ?? Date()
                 // Group and Identify all FPUs together
-                let fpuID = (entries.last?.collectionID ?? "") + ".fpu"
+                let fpuID = entries.last?.fpuID ?? ""
                 // Create an array of all future carb equivalents.
                 var futureCarbArray = [CarbsEntry]()
                 while carbEquivalents > 0, numberOfEquivalents > 0 {
@@ -81,7 +81,7 @@ final class BaseCarbsStorage: CarbsStorage, Injectable {
                     } else { useDate = useDate.addingTimeInterval(interval.minutes.timeInterval) }
 
                     let eachCarbEntry = CarbsEntry(
-                        collectionID: fpuID, createdAt: useDate, carbs: equivalent, fat: 0, protein: 0, note: nil,
+                        collectionID: UUID().uuidString, createdAt: useDate, carbs: equivalent, fat: 0, protein: 0, note: nil,
                         enteredBy: CarbsEntry.manual, isFPU: true,
                         fpuID: fpuID
                     )
@@ -143,9 +143,21 @@ final class BaseCarbsStorage: CarbsStorage, Injectable {
         storage.retrieve(OpenAPS.Monitor.carbHistory, as: [CarbsEntry].self)?.reversed() ?? []
     }
 
-    func deleteCarbs(at uniqueID: String) {
+    func deleteCarbs(at uniqueID: String, fpuID: String) {
         processQueue.sync {
             var allValues = storage.retrieve(OpenAPS.Monitor.carbHistory, as: [CarbsEntry].self) ?? []
+
+            if fpuID != "" {
+                if allValues.firstIndex(where: { $0.fpuID == fpuID }) == nil {
+                    debug(.default, "Didn't find any carb equivalents to delete. ID to search for: " + fpuID.description)
+                } else {
+                    allValues.removeAll(where: { $0.fpuID == fpuID })
+                    storage.save(allValues, as: OpenAPS.Monitor.carbHistory)
+                    broadcaster.notify(CarbsObserver.self, on: processQueue) {
+                        $0.carbsDidUpdate(allValues)
+                    }
+                }
+            }
 
             if allValues.firstIndex(where: { $0.collectionID == uniqueID }) == nil {
                 debug(.default, "Didn't find any carb entries to delete. ID to search for: " + uniqueID.description)

@@ -223,24 +223,29 @@ extension Bolus {
             }
         }
 
-        func backToCarbsView(complexEntry: Bool, _ id: String, override: Bool) {
-            delete(deleteTwice: complexEntry, id: id)
+        func backToCarbsView(complexEntry: Bool, _ meal: FetchedResults<Meals>, override: Bool) {
+            delete(deleteTwice: complexEntry, meal: meal)
             showModal(for: .addCarbs(editMode: complexEntry, override: override))
         }
 
-        func delete(deleteTwice: Bool, id: String) {
+        func delete(deleteTwice: Bool, meal: FetchedResults<Meals>) {
+            guard let meals = meal.first else {
+                return
+            }
+
             if deleteTwice {
                 // DispatchQueue.safeMainSync {
+                /*
+                 nsManager.deleteCarbs(
+                     at: meal.first?.id ?? "", fpuID: nil
+                 )*/
                 nsManager.deleteCarbs(
-                    at: id, isFPU: nil, fpuID: nil, syncID: id
-                )
-                nsManager.deleteCarbs(
-                    at: id + ".fpu", isFPU: nil, fpuID: nil, syncID: id
+                    at: meals.id ?? "", fpuID: meals.fpuID ?? ""
                 )
                 // }
             } else {
                 nsManager.deleteCarbs(
-                    at: id, isFPU: nil, fpuID: nil, syncID: id
+                    at: meals.id ?? "", fpuID: ""
                 )
             }
         }

@@ -9,7 +9,7 @@ protocol NightscoutManager: GlucoseSource {
     func fetchCarbs() -> AnyPublisher<[CarbsEntry], Never>
     func fetchTempTargets() -> AnyPublisher<[TempTarget], Never>
     func fetchAnnouncements() -> AnyPublisher<[Announcement], Never>
-    func deleteCarbs(at uniqueID: String, isFPU: Bool?, fpuID: String?, syncID: String)
+    func deleteCarbs(at id: String, fpuID: String)
     func deleteInsulin(at date: Date)
     func deleteManualGlucose(at: Date)
     func uploadStatus()
@@ -177,19 +177,18 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
             .eraseToAnyPublisher()
     }
 
-    func deleteCarbs(at uniqueID: String, isFPU: Bool?, fpuID: String?, syncID: String) {
+    func deleteCarbs(at id: String, fpuID: String) {
         // remove in AH
-        healthkitManager.deleteCarbs(syncID: syncID, isFPU: isFPU, fpuID: fpuID)
+        healthkitManager.deleteCarbs(syncID: id, fpuID: fpuID)
 
         guard let nightscout = nightscoutAPI, isUploadEnabled else {
-            carbsStorage.deleteCarbs(at: uniqueID)
+            carbsStorage.deleteCarbs(at: id, fpuID: fpuID)
             return
         }
-
-        nightscout.deleteCarbs(at: uniqueID)
+        nightscout.deleteCarbs(at: id)
             .collect()
             .sink { completion in
-                self.carbsStorage.deleteCarbs(at: uniqueID)
+                self.carbsStorage.deleteCarbs(at: id, fpuID: fpuID)
                 switch completion {
                 case .finished:
                     debug(.nightscout, "Carbs deleted")
@@ -202,7 +201,24 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
                 }
             } receiveValue: { _ in }
             .store(in: &lifetime)
-        // }
+
+        if fpuID != "" {
+            nightscout.deleteCarbs(at: fpuID)
+                .collect()
+                .sink { completion in
+                    switch completion {
+                    case .finished:
+                        debug(.nightscout, "Carb equivalents deleted from NS")
+                    case let .failure(error):
+                        info(
+                            .nightscout,
+                            "Deletion of carb equivalents in NightScout not done \n \(error.localizedDescription)",
+                            type: MessageType.warning
+                        )
+                    }
+                } receiveValue: { _ in }
+                .store(in: &lifetime)
+        }
     }
 
     func deleteInsulin(at date: Date) {
