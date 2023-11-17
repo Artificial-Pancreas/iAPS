@@ -21,7 +21,7 @@ struct LoopView: View {
         return formatter
     }
 
-    private let rect = CGRect(x: 0, y: 0, width: 28, height: 28)
+    private let rect = CGRect(x: 0, y: 0, width: 35, height: 35)
     var body: some View {
         VStack(alignment: .center) {
             ZStack {

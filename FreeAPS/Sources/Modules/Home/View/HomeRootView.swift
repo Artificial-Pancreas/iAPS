@@ -101,24 +101,25 @@ extension Home {
             let colour: Color = colorScheme == .dark ? .gray.opacity(0.1) : .white
             RoundedRectangle(cornerRadius: 15)
                 .fill(colour)
+                .shadow(radius: 3)
 //                .frame(height: UIScreen.main.bounds.height / 6)
                 .overlay(
                     HStack(alignment: .bottom) {
                         Spacer()
                         cobIobView
                         Spacer()
-                        glucoseView
+//                        glucoseView
+//                        Spacer()
+                        loopView
                         Spacer()
                         pumpView
-                        Spacer()
-                        loopView
                         Spacer()
                     }
 //                    .frame(maxWidth: .infinity)
 //                    .padding(.top, 10 + geo.safeAreaInsets.top)
 //                    .padding(.bottom, 10)
                 )
-                .frame(height: UIScreen.main.bounds.height / 7)
+                .frame(height: UIScreen.main.bounds.height / 10)
                 .padding([.leading, .trailing], 10)
         }
 
@@ -532,6 +533,7 @@ extension Home {
                     .fill(colourRectangle)
                     .frame(height: 50 + geo.safeAreaInsets.bottom)
                     .cornerRadius(15)
+                    .shadow(radius: 3)
                     .padding([.leading, .trailing], 10)
 
                 HStack {
@@ -647,6 +649,9 @@ extension Home {
                     header(geo)
                         .padding(.top, 60)
 
+                    glucoseView
+                        .padding(.vertical)
+
                     infoPanel
                         .padding(.vertical, 3)
 
@@ -658,15 +663,15 @@ extension Home {
                         .frame(height: UIScreen.main.bounds.height / 2)
 
                     pickerPanel(geo)
-                        .padding(.top, 15)
+                        .padding(.top, 5)
                     legendPanel
-                        .padding(.top, 15)
+                        .padding(.top, 5)
 
 //                    profiles(geo)
 //                        .padding(.top, 2)
 
                     bottomPanel(geo)
-                        .padding(.top, 40)
+                        .padding(.top, 2)
                 }
                 .edgesIgnoringSafeArea(.vertical)
             }
