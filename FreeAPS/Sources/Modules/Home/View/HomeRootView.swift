@@ -80,22 +80,46 @@ extension Home {
             return scene
         }
 
-        @ViewBuilder func header(_ geo: GeometryProxy) -> some View {
-            HStack(alignment: .bottom) {
-                Spacer()
-                cobIobView
-                Spacer()
-                glucoseView
-                Spacer()
-                pumpView
-                Spacer()
-                loopView
-                Spacer()
-            }
-            .frame(maxWidth: .infinity)
-            .padding(.top, 10 + geo.safeAreaInsets.top)
-            .padding(.bottom, 10)
-            .background(Color.gray.opacity(0.3))
+//        @ViewBuilder func header(_ geo: GeometryProxy) -> some View {
+//            HStack(alignment: .bottom) {
+//                Spacer()
+//                cobIobView
+//                Spacer()
+//                glucoseView
+//                Spacer()
+//                pumpView
+//                Spacer()
+//                loopView
+//                Spacer()
+//            }
+//            .frame(maxWidth: .infinity)
+//            .padding(.top, 10 + geo.safeAreaInsets.top)
+//            .padding(.bottom, 10)
+//            .background(Color.gray.opacity(0.3))
+//        }
+        @ViewBuilder func header(_: GeometryProxy) -> some View {
+            let colour: Color = colorScheme == .dark ? .gray.opacity(0.1) : .white
+            RoundedRectangle(cornerRadius: 15)
+                .fill(colour)
+//                .frame(height: UIScreen.main.bounds.height / 6)
+                .overlay(
+                    HStack(alignment: .bottom) {
+                        Spacer()
+                        cobIobView
+                        Spacer()
+                        glucoseView
+                        Spacer()
+                        pumpView
+                        Spacer()
+                        loopView
+                        Spacer()
+                    }
+//                    .frame(maxWidth: .infinity)
+//                    .padding(.top, 10 + geo.safeAreaInsets.top)
+//                    .padding(.bottom, 10)
+                )
+                .frame(height: UIScreen.main.bounds.height / 7)
+                .padding([.leading, .trailing], 10)
         }
 
         var cobIobView: some View {
@@ -423,6 +447,7 @@ extension Home {
                 }
                 .pickerStyle(.segmented)
                 .background(Color.clear)
+                .frame(width: UIScreen.main.bounds.width / 1.5, height: 40, alignment: .center)
                 .disabled(state.bolusProgress != nil)
             }
             .padding(.vertical, 1)
@@ -430,9 +455,15 @@ extension Home {
 
         @ViewBuilder private func profiles(_: GeometryProxy) -> some View {
             let colour: Color = colorScheme == .dark ? .black : .white
-            // Rectangle().fill(colour).frame(maxHeight: 1)
+            let colourRectangle: Color = colorScheme == .dark ? .gray.opacity(0.1) : .white
+
             ZStack {
-                Rectangle().fill(Color.gray.opacity(0.3)).frame(maxHeight: 40)
+                Rectangle()
+//                    .fill(Color.gray.opacity(0.3))
+                    .fill(colourRectangle)
+                    .frame(maxHeight: 40)
+                    .cornerRadius(15)
+                    .padding([.leading, .trailing], 10)
                 let cancel = fetchedPercent.first?.enabled ?? false
                 HStack(spacing: cancel ? 25 : 15) {
                     Text(selectedProfile().name).foregroundColor(.secondary)
@@ -494,8 +525,14 @@ extension Home {
         }
 
         @ViewBuilder private func bottomPanel(_ geo: GeometryProxy) -> some View {
+            let colourRectangle: Color = colorScheme == .dark ? .gray.opacity(0.1) : .white
+
             ZStack {
-                Rectangle().fill(Color.gray.opacity(0.3)).frame(height: 50 + geo.safeAreaInsets.bottom)
+                Rectangle()
+                    .fill(colourRectangle)
+                    .frame(height: 50 + geo.safeAreaInsets.bottom)
+                    .cornerRadius(15)
+                    .padding([.leading, .trailing], 10)
 
                 HStack {
                     Button { state.showModal(for: .addCarbs(editMode: false, override: false)) }
@@ -516,17 +553,6 @@ extension Home {
                             }
                         }
                     }.buttonStyle(.borderless)
-                    Spacer()
-                    Button { state.showModal(for: .addTempTarget) }
-                    label: {
-                        Image("target")
-                            .renderingMode(.template)
-                            .resizable()
-                            .frame(width: 24, height: 24)
-                            .padding(8)
-                    }
-                    .foregroundColor(.loopGreen)
-                    .buttonStyle(.borderless)
                     Spacer()
                     Button {
                         state.showModal(for: .bolus(
@@ -557,6 +583,32 @@ extension Home {
                         .buttonStyle(.borderless)
                         Spacer()
                     }
+                    Button { state.showModal(for: .addTempTarget) }
+                    label: {
+                        Image("target")
+                            .renderingMode(.template)
+                            .resizable()
+                            .frame(width: 24, height: 24)
+                            .padding(8)
+                    }
+                    .foregroundColor(.loopGreen)
+                    .buttonStyle(.borderless)
+                    Spacer()
+                    
+                    //MARK: CANCEL OF PROFILE HAS TO BE IMPLEMENTED
+                    //MAYBE WITH A SMALL INDICATOR AT THE SYMBOL
+                    Button {
+                        state.showModal(for: .overrideProfilesConfig)
+                    } label: {
+                        Image(systemName: "person.fill")
+                            .renderingMode(.template)
+                            .resizable()
+                            .frame(width: 24, height: 24)
+                            .padding(8)
+                    }
+                    .foregroundColor(.purple)
+                    .buttonStyle(.borderless)
+                    Spacer()
                     Button { state.showModal(for: .statistics)
                     }
                     label: {
@@ -581,25 +633,44 @@ extension Home {
                     .buttonStyle(.borderless)
                 }
                 .padding(.horizontal, 24)
-                .padding(.bottom, geo.safeAreaInsets.bottom)
+//                .padding(.bottom, geo.safeAreaInsets.bottom)
             }
         }
 
         var body: some View {
+            let colourBackground: Color = colorScheme == .dark ? .black.opacity(0.5) : .gray.opacity(0.3)
+            let colourChart: Color = colorScheme == .dark ? .gray.opacity(0.1) : .white
+
             GeometryReader { geo in
                 VStack(spacing: 0) {
                     header(geo)
+                        .padding(.top, 60)
+
                     infoPanel
+
+                    RoundedRectangle(cornerRadius: 15)
+                        .fill(colourChart)
+                        .shadow(radius: 3)
+                        .overlay(mainChart)
+                        .padding([.leading, .trailing], 10)
+                        .frame(height: UIScreen.main.bounds.height / 2)
+
                     pickerPanel(geo)
-                    mainChart
+
                     legendPanel
-                    profiles(geo)
+                        .padding(.top, 10)
+
+//                    profiles(geo)
+//                        .padding(.top, 2)
+
                     bottomPanel(geo)
+                        .padding(.top, 40)
                 }
                 .edgesIgnoringSafeArea(.vertical)
             }
             .onAppear(perform: configureView)
             .navigationTitle("Home")
+            .background(colourBackground)
             .navigationBarHidden(true)
             .ignoresSafeArea(.keyboard)
             .popup(isPresented: isStatusPopupPresented, alignment: .top, direction: .top) {

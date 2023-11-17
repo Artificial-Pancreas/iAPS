@@ -343,25 +343,6 @@ struct MainChartView: View {
             )
         }
     }
-    // MARK: TO DO: CHANGE TIME LABELS TO ONLY DISPLAY EVERY SECOND LABEL WHEN SCREENHOURS IS TOO BIG
-
-//    private func timeLabelsView(fullSize: CGSize) -> some View {
-//        let format = screenHours > 6 ? date24Formatter : dateFormatter
-//        return ZStack {
-//            // X time labels
-//            ForEach(0 ..< hours + hours) { hour in
-//                Text(format.string(from: firstHourDate().addingTimeInterval(hour.hours.timeInterval)))
-//                    .font(.caption)
-//                    .position(
-//                        x: firstHourPosition(viewWidth: fullSize.width) +
-//                            oneSecondStep(viewWidth: fullSize.width) *
-//                            CGFloat(hour) * CGFloat(1.hours.timeInterval),
-//                        y: 10.0
-//                    )
-//                    .foregroundColor(.secondary)
-//            }
-//        }.frame(maxHeight: 20)
-//    }
 
     private func timeLabelsView(fullSize: CGSize) -> some View {
         let format = screenHours > 6 ? date24Formatter : dateFormatter
