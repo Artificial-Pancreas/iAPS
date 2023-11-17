@@ -594,9 +594,10 @@ extension Home {
                     .foregroundColor(.loopGreen)
                     .buttonStyle(.borderless)
                     Spacer()
-                    
-                    //MARK: CANCEL OF PROFILE HAS TO BE IMPLEMENTED
-                    //MAYBE WITH A SMALL INDICATOR AT THE SYMBOL
+
+                    // MARK: CANCEL OF PROFILE HAS TO BE IMPLEMENTED
+
+                    // MAYBE WITH A SMALL INDICATOR AT THE SYMBOL
                     Button {
                         state.showModal(for: .overrideProfilesConfig)
                     } label: {
@@ -638,7 +639,7 @@ extension Home {
         }
 
         var body: some View {
-            let colourBackground: Color = colorScheme == .dark ? .black.opacity(0.5) : .gray.opacity(0.3)
+            let colourBackground: Color = colorScheme == .dark ? .black.opacity(0.5) : .gray.opacity(0.1)
             let colourChart: Color = colorScheme == .dark ? .gray.opacity(0.1) : .white
 
             GeometryReader { geo in
@@ -647,6 +648,7 @@ extension Home {
                         .padding(.top, 60)
 
                     infoPanel
+                        .padding(.vertical, 3)
 
                     RoundedRectangle(cornerRadius: 15)
                         .fill(colourChart)
@@ -656,9 +658,9 @@ extension Home {
                         .frame(height: UIScreen.main.bounds.height / 2)
 
                     pickerPanel(geo)
-
+                        .padding(.top, 15)
                     legendPanel
-                        .padding(.top, 10)
+                        .padding(.top, 15)
 
 //                    profiles(geo)
 //                        .padding(.top, 2)
