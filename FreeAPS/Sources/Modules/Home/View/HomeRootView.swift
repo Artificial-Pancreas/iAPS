@@ -119,7 +119,7 @@ extension Home {
 //                    .padding(.top, 10 + geo.safeAreaInsets.top)
 //                    .padding(.bottom, 10)
                 )
-                .frame(height: UIScreen.main.bounds.height / 10)
+                .frame(height: UIScreen.main.bounds.height / 12)
                 .padding([.leading, .trailing], 10)
         }
 
@@ -525,13 +525,13 @@ extension Home {
             return (name: profileString, isOn: display)
         }
 
-        @ViewBuilder private func bottomPanel(_ geo: GeometryProxy) -> some View {
+        @ViewBuilder private func bottomPanel(_: GeometryProxy) -> some View {
             let colourRectangle: Color = colorScheme == .dark ? .gray.opacity(0.1) : .white
 
             ZStack {
                 Rectangle()
                     .fill(colourRectangle)
-                    .frame(height: 50 + geo.safeAreaInsets.bottom)
+                    .frame(height: UIScreen.main.bounds.height / 12)
                     .cornerRadius(15)
                     .shadow(radius: 3)
                     .padding([.leading, .trailing], 10)
@@ -647,13 +647,12 @@ extension Home {
             GeometryReader { geo in
                 VStack(spacing: 0) {
                     header(geo)
-                        .padding(.top, 60)
+                        .padding(.top, 55)
 
                     glucoseView
                         .padding(.vertical)
 
                     infoPanel
-                        .padding(.vertical, 3)
 
                     RoundedRectangle(cornerRadius: 15)
                         .fill(colourChart)

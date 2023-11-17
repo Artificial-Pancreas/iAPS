@@ -54,7 +54,7 @@ struct CurrentGlucoseView: View {
                                 .string(from: Double(units == .mmolL ? $0.asMmolL : Decimal($0)) as NSNumber)! }
                         ?? "--"
                 )
-                .font(.system(size: 60, weight: .bold))
+                .font(.system(size: 45, weight: .bold))
                 .foregroundColor(alarm == nil ? colorOfGlucose : .loopRed)
 
                 image
