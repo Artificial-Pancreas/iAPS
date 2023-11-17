@@ -196,7 +196,6 @@ final class BaseUserNotificationsManager: NSObject, UserNotificationsManager, In
 
         ensureCanSendNotification {
             var titles: [String] = []
-
             var notificationAlarm = false
 
             switch self.glucoseStorage.alarm {
@@ -210,32 +209,29 @@ final class BaseUserNotificationsManager: NSObject, UserNotificationsManager, In
                 notificationAlarm = true
             }
 
-            if self.snoozeUntilDate > Date() {
-                titles.append(NSLocalizedString("(Snoozed)", comment: "(Snoozed)"))
-                notificationAlarm = false
-            }
-
             let delta = glucose.count >= 2 ? glucoseValue - (glucose[glucose.count - 2].glucose ?? 0) : nil
-
             let body = self.glucoseText(glucoseValue: glucoseValue, delta: delta, direction: lastGlucose.direction) + self
                 .infoBody()
 
-            titles.append(body)
+            if self.snoozeUntilDate > Date() {
+                titles.append(NSLocalizedString("(Snoozed)", comment: "(Snoozed)"))
+                notificationAlarm = false
+            } else {
+                titles.append(body)
+                let content = UNMutableNotificationContent()
+                content.title = titles.joined(separator: " ")
+                content.body = body
 
-            let content = UNMutableNotificationContent()
-            content.title = titles.joined(separator: " ")
-            content.body = body
+                if notificationAlarm {
+                    self.playSoundIfNeeded()
+                    content.sound = .default
+                    content.userInfo[NotificationAction.key] = NotificationAction.snooze.rawValue
+                }
 
-            if notificationAlarm {
-                self.playSoundIfNeeded()
-                content.sound = .default
-                content.userInfo[NotificationAction.key] = NotificationAction.snooze.rawValue
+                self.addRequest(identifier: .glucocoseNotification, content: content, deleteOld: true)
             }
-
-            self.addRequest(identifier: .glucocoseNotification, content: content, deleteOld: true)
         }
     }
-
     private func glucoseText(glucoseValue: Int, delta: Int?, direction: BloodGlucose.Direction?) -> String {
         let units = settingsManager.settings.units
         let glucoseText = glucoseFormatter
