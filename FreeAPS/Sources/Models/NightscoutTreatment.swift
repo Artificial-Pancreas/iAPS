@@ -22,6 +22,7 @@ struct NigtscoutTreatment: JSON, Hashable, Equatable {
     var glucose: String?
     var units: String?
     var collectionID: String?
+    var fpuID: String?
 
     static let local = "iAPS"
 
@@ -59,5 +60,6 @@ extension NigtscoutTreatment {
         case glucose
         case units
         case collectionID
+        case fpuID
     }
 }

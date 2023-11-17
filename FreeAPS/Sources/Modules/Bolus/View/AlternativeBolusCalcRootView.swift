@@ -283,7 +283,6 @@ extension Bolus {
         }
 
         func carbsView() {
-            let id_ = meal.first?.id ?? ""
             if fetch {
                 keepForNextWiew = true
                 state.backToCarbsView(complexEntry: fetch, meal, override: false)

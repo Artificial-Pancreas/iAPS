@@ -47,6 +47,7 @@ extension DataTable {
                                 date: $0.createdAt,
                                 amount: $0.carbs,
                                 id: id,
+                                collectionID: $0.fpuID,
                                 note: $0.note
                             )
                         } else {
@@ -63,6 +64,7 @@ extension DataTable {
                             date: $0.createdAt,
                             amount: $0.carbs,
                             id: $0.collectionID,
+                            collectionID: $0.fpuID,
                             isFPU: $0.isFPU,
                             fpuID: $0.fpuID,
                             note: $0.note

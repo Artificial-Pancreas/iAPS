@@ -233,10 +233,20 @@ extension Bolus {
                 return
             }
 
+            let mealArray = DataTable.Treatment(
+                units: units,
+                type: .carbs,
+                date: meals.createdAt ?? Date(),
+                id: "",
+                collectionID: meals.id,
+                isFPU: meals.fpuID == "" ? false : true,
+                fpuID: meals.fpuID
+            )
+
             if deleteTwice {
-                nsManager.deleteCarbs(at: meals.id ?? "", fpuID: meals.fpuID ?? "", complex: true)
+                nsManager.deleteCarbs(mealArray, complexMeal: true)
             } else {
-                nsManager.deleteCarbs(at: meals.id ?? "", fpuID: "", complex: false)
+                nsManager.deleteCarbs(mealArray, complexMeal: false)
             }
         }
     }

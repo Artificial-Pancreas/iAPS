@@ -195,7 +195,8 @@ final class BaseCarbsStorage: CarbsStorage, Injectable {
                 foodType: $0.note,
                 targetTop: nil,
                 targetBottom: nil,
-                collectionID: $0.collectionID
+                collectionID: $0.collectionID,
+                fpuID: $0.fpuID
             )
         }
         return Array(Set(treatments).subtracting(Set(uploaded)))
