@@ -54,10 +54,10 @@ struct CurrentGlucoseView: View {
                                 .string(from: Double(units == .mmolL ? $0.asMmolL : Decimal($0)) as NSNumber)! }
                         ?? "--"
                 )
-                .font(.system(size: 45, weight: .bold))
+                .font(.system(size: 40, weight: .bold))
                 .foregroundColor(alarm == nil ? colorOfGlucose : .loopRed)
 
-                image
+//                image
             }
             HStack {
                 let minutesAgo = -1 * (recentGlucose?.dateString.timeIntervalSinceNow ?? 0) / 60
@@ -79,6 +79,9 @@ struct CurrentGlucoseView: View {
                 .font(.caption2).foregroundColor(.secondary)
             }.frame(alignment: .top)
         }
+        .overlay(
+            TrendShape(color: colorOfGlucose)
+        )
     }
 
     var image: Image {
@@ -124,5 +127,52 @@ struct CurrentGlucoseView: View {
         default:
             return .loopYellow
         }
+    }
+}
+
+struct Triangle: Shape {
+    func path(in rect: CGRect) -> Path {
+        var path = Path()
+
+        path.move(to: CGPoint(x: rect.midX, y: rect.minY))
+        path.addLine(to: CGPoint(x: rect.maxX, y: rect.maxY))
+        path.addLine(to: CGPoint(x: rect.minX, y: rect.maxY))
+        path.closeSubpath()
+
+        return path
+    }
+}
+
+struct TrendShape: View {
+    let color: Color
+
+    var body: some View {
+        HStack(alignment: .center, spacing: -4) {
+            CircleShape(color: color)
+            TriangleShape(color: color)
+        }
+    }
+}
+
+struct CircleShape: View {
+    let color: Color
+
+    var body: some View {
+        Circle()
+            .stroke(color, lineWidth: 10)
+            .frame(width: 100, height: 100)
+            .offset(x: 13)
+    }
+}
+
+struct TriangleShape: View {
+    let color: Color
+
+    var body: some View {
+        Triangle()
+            .fill(color)
+            .frame(width: 30, height: 30)
+            .rotationEffect(.degrees(90))
+            .offset(x: 13)
     }
 }

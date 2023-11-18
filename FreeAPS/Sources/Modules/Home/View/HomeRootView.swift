@@ -650,7 +650,7 @@ extension Home {
                         .padding(.top, 55)
 
                     glucoseView
-                        .padding(.vertical)
+                        .padding(.vertical, 35)
 
                     infoPanel
 
