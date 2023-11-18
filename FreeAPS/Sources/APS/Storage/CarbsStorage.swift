@@ -81,7 +81,7 @@ final class BaseCarbsStorage: CarbsStorage, Injectable {
                     } else { useDate = useDate.addingTimeInterval(interval.minutes.timeInterval) }
 
                     let eachCarbEntry = CarbsEntry(
-                        collectionID: UUID().uuidString, createdAt: useDate, carbs: equivalent, fat: 0, protein: 0, note: nil,
+                        id: UUID().uuidString, createdAt: useDate, carbs: equivalent, fat: 0, protein: 0, note: nil,
                         enteredBy: CarbsEntry.manual, isFPU: true,
                         fpuID: fpuID
                     )
@@ -103,7 +103,7 @@ final class BaseCarbsStorage: CarbsStorage, Injectable {
             if let entry = entries.last, entry.carbs > 0 {
                 // uniqEvents = []
                 let onlyCarbs = CarbsEntry(
-                    collectionID: entry.collectionID ?? "",
+                    id: entry.id ?? "",
                     createdAt: entry.createdAt,
                     carbs: entry.carbs,
                     fat: nil,
@@ -172,10 +172,10 @@ final class BaseCarbsStorage: CarbsStorage, Injectable {
             }
 
             if fpuID == "" || complex {
-                if allValues.firstIndex(where: { $0.collectionID == uniqueID }) == nil {
+                if allValues.firstIndex(where: { $0.id == uniqueID }) == nil {
                     debug(.default, "Didn't find any carb entries to delete. ID to search for: " + uniqueID.description)
                 } else {
-                    allValues.removeAll(where: { $0.collectionID == uniqueID })
+                    allValues.removeAll(where: { $0.id == uniqueID })
                     storage.save(allValues, as: OpenAPS.Monitor.carbHistory)
                     broadcaster.notify(CarbsObserver.self, on: processQueue) {
                         $0.carbsDidUpdate(allValues)
@@ -207,7 +207,7 @@ final class BaseCarbsStorage: CarbsStorage, Injectable {
                 foodType: $0.note,
                 targetTop: nil,
                 targetBottom: nil,
-                collectionID: $0.collectionID,
+                id: $0.id,
                 fpuID: $0.fpuID
             )
         }

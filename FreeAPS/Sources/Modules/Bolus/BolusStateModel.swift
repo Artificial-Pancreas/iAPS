@@ -237,14 +237,13 @@ extension Bolus {
                 units: units,
                 type: .carbs,
                 date: meals.createdAt ?? Date(),
-                id: "",
-                collectionID: meals.id ?? "",
+                id: meals.id ?? "",
                 isFPU: deleteTwice ? true : false,
                 fpuID: deleteTwice ? (meals.fpuID ?? "") : ""
             )
 
             print(
-                "meals 2: ID: " + (mealArray.collectionID ?? "").description + " FPU ID: " + (mealArray.fpuID ?? "")
+                "meals 2: ID: " + (mealArray.id ?? "").description + " FPU ID: " + (mealArray.fpuID ?? "")
                     .description
             )
 

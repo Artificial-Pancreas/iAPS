@@ -183,12 +183,12 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
             return
         }
 
-        print("meals 3: ID: " + (treatement.collectionID ?? "").description + " FPU ID: " + (treatement.fpuID ?? "").description)
+        print("meals 3: ID: " + (treatement.id ?? "").description + " FPU ID: " + (treatement.fpuID ?? "").description)
 
         var arg1 = ""
         var arg2 = ""
         if complexMeal {
-            arg1 = treatement.collectionID ?? ""
+            arg1 = treatement.id ?? ""
             arg2 = treatement.fpuID ?? ""
         } else if treatement.isFPU ?? false {
             arg1 = ""
@@ -203,7 +203,7 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
             nightscout.deleteCarbs(treatement)
                 .collect()
                 .sink { completion in
-                    self.carbsStorage.deleteCarbs(at: treatement.collectionID ?? "", fpuID: treatement.fpuID ?? "", complex: true)
+                    self.carbsStorage.deleteCarbs(at: treatement.id ?? "", fpuID: treatement.fpuID ?? "", complex: true)
                     switch completion {
                     case .finished:
                         debug(.nightscout, "Carbs deleted")

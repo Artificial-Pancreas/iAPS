@@ -40,14 +40,14 @@ extension DataTable {
                 let carbs = self.provider.carbs()
                     .filter { !($0.isFPU ?? false) }
                     .map {
-                        if let id = $0.collectionID {
+                        if let id = $0.id {
                             return Treatment(
                                 units: units,
                                 type: .carbs,
                                 date: $0.createdAt,
                                 amount: $0.carbs,
                                 id: id,
-                                collectionID: $0.fpuID,
+                                fpuID: $0.fpuID,
                                 note: $0.note
                             )
                         } else {
@@ -63,8 +63,7 @@ extension DataTable {
                             type: .fpus,
                             date: $0.createdAt,
                             amount: $0.carbs,
-                            id: $0.collectionID,
-                            collectionID: $0.fpuID,
+                            id: $0.id,
                             isFPU: $0.isFPU,
                             fpuID: $0.fpuID,
                             note: $0.note

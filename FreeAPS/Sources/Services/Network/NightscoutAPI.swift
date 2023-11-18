@@ -148,11 +148,11 @@ extension NightscoutAPI {
         components.port = url.port
         components.path = Config.treatmentsPath
 
-        var arguments = "find[collectionID][$eq]"
+        var arguments = "find[_id][$eq]"
         if treatement.isFPU ?? false {
             arguments = "find[fpuID][$eq]"
         }
-        var value = !(treatement.isFPU ?? false) ? treatement.id : (treatement.fpuID ?? "")
+        let value = !(treatement.isFPU ?? false) ? treatement.id : (treatement.fpuID ?? "")
 
         components.queryItems = [
             // Removed below because it prevented all futire entries to be deleted. Don't know why?
