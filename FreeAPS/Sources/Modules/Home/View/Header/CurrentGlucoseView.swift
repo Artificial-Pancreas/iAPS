@@ -9,6 +9,8 @@ struct CurrentGlucoseView: View {
     @Binding var lowGlucose: Decimal
     @Binding var highGlucose: Decimal
 
+    @State private var rotationDegrees: Double = 0.0
+
     private var glucoseFormatter: NumberFormatter {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
@@ -45,72 +47,100 @@ struct CurrentGlucoseView: View {
     }
 
     var body: some View {
-        VStack(alignment: .center) {
-            HStack {
-                Text(
-                    (recentGlucose?.glucose ?? 100) == 400 ? "HIGH" : recentGlucose?.glucose
-                        .map {
-                            glucoseFormatter
-                                .string(from: Double(units == .mmolL ? $0.asMmolL : Decimal($0)) as NSNumber)! }
-                        ?? "--"
-                )
-                .font(.system(size: 40, weight: .bold))
-                .foregroundColor(alarm == nil ? colorOfGlucose : .loopRed)
-
-//                image
-            }
-            HStack {
-                let minutesAgo = -1 * (recentGlucose?.dateString.timeIntervalSinceNow ?? 0) / 60
-                let text = timaAgoFormatter.string(for: Double(minutesAgo)) ?? ""
-                Text(
-                    minutesAgo <= 1 ? "< 1 " + NSLocalizedString("min", comment: "Short form for minutes") : (
-                        text + " " +
-                            NSLocalizedString("min", comment: "Short form for minutes") + " "
-                    )
-                )
-                .font(.caption2).foregroundColor(.secondary)
-
-                Text(
-                    delta
-                        .map {
-                            deltaFormatter.string(from: Double(units == .mmolL ? $0.asMmolL : Decimal($0)) as NSNumber)!
-                        } ?? "--"
-                )
-                .font(.caption2).foregroundColor(.secondary)
-            }.frame(alignment: .top)
-        }
-        .overlay(
+        ZStack {
             TrendShape(color: colorOfGlucose)
-        )
+                .rotationEffect(.degrees(rotationDegrees))
+
+            VStack(alignment: .center) {
+                HStack {
+                    Text(
+                        (recentGlucose?.glucose ?? 100) == 400 ? "HIGH" : recentGlucose?.glucose
+                            .map {
+                                glucoseFormatter
+                                    .string(from: Double(units == .mmolL ? $0.asMmolL : Decimal($0)) as NSNumber)! }
+                            ?? "--"
+                    )
+                    .font(.system(size: 40, weight: .bold))
+                    .foregroundColor(alarm == nil ? colorOfGlucose : .loopRed)
+
+                    //                image
+                }
+                HStack {
+                    let minutesAgo = -1 * (recentGlucose?.dateString.timeIntervalSinceNow ?? 0) / 60
+                    let text = timaAgoFormatter.string(for: Double(minutesAgo)) ?? ""
+                    Text(
+                        minutesAgo <= 1 ? "< 1 " + NSLocalizedString("min", comment: "Short form for minutes") : (
+                            text + " " +
+                                NSLocalizedString("min", comment: "Short form for minutes") + " "
+                        )
+                    )
+                    .font(.caption2).foregroundColor(.secondary)
+
+                    Text(
+                        delta
+                            .map {
+                                deltaFormatter.string(from: Double(units == .mmolL ? $0.asMmolL : Decimal($0)) as NSNumber)!
+                            } ?? "--"
+                    )
+                    .font(.caption2).foregroundColor(.secondary)
+                }.frame(alignment: .top)
+            }
+        }
+        .onChange(of: recentGlucose?.direction) { newDirection in
+            withAnimation {
+                switch newDirection {
+                case .doubleUp,
+                     .singleUp,
+                     .tripleUp:
+                    rotationDegrees = 0
+                case .fortyFiveUp:
+                    rotationDegrees = 22.5
+                case .flat:
+                    rotationDegrees = 45
+                case .fortyFiveDown:
+                    rotationDegrees = 67.5
+                case .doubleDown,
+                     .singleDown,
+                     .tripleDown:
+                    rotationDegrees = 90
+                case .none,
+                     .notComputable,
+                     .rateOutOfRange:
+                    rotationDegrees = 45
+                @unknown default:
+                    rotationDegrees = 45
+                }
+            }
+        }
     }
 
-    var image: Image {
-        guard let direction = recentGlucose?.direction else {
-            return Image(systemName: "arrow.left.and.right")
-        }
-
-        switch direction {
-        case .doubleUp,
-             .singleUp,
-             .tripleUp:
-            return Image(systemName: "arrow.up")
-        case .fortyFiveUp:
-            return Image(systemName: "arrow.up.right")
-        case .flat:
-            return Image(systemName: "arrow.forward")
-        case .fortyFiveDown:
-            return Image(systemName: "arrow.down.forward")
-        case .doubleDown,
-             .singleDown,
-             .tripleDown:
-            return Image(systemName: "arrow.down")
-
-        case .none,
-             .notComputable,
-             .rateOutOfRange:
-            return Image(systemName: "arrow.left.and.right")
-        }
-    }
+//    var image: Image {
+//        guard let direction = recentGlucose?.direction else {
+//            return Image(systemName: "arrow.left.and.right")
+//        }
+//
+//        switch direction {
+//        case .doubleUp,
+//             .singleUp,
+//             .tripleUp:
+//            return Image(systemName: "arrow.up")
+//        case .fortyFiveUp:
+//            return Image(systemName: "arrow.up.right")
+//        case .flat:
+//            return Image(systemName: "arrow.forward")
+//        case .fortyFiveDown:
+//            return Image(systemName: "arrow.down.forward")
+//        case .doubleDown,
+//             .singleDown,
+//             .tripleDown:
+//            return Image(systemName: "arrow.down")
+//
+//        case .none,
+//             .notComputable,
+//             .rateOutOfRange:
+//            return Image(systemName: "arrow.left.and.right")
+//        }
+//    }
 
     var colorOfGlucose: Color {
         let whichGlucose = recentGlucose?.glucose ?? 0
@@ -155,12 +185,17 @@ struct TrendShape: View {
 }
 
 struct CircleShape: View {
+    @Environment(\.colorScheme) var colorScheme
+
     let color: Color
 
     var body: some View {
+        let colorBackground: Color = colorScheme == .dark ? .gray.opacity(0.1) : .white
+
         Circle()
             .stroke(color, lineWidth: 10)
-            .frame(width: 100, height: 100)
+            .background(Circle().fill(colorBackground))
+            .frame(width: 110, height: 110)
             .offset(x: 13)
     }
 }

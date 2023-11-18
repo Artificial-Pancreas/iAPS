@@ -119,7 +119,7 @@ extension Home {
 //                    .padding(.top, 10 + geo.safeAreaInsets.top)
 //                    .padding(.bottom, 10)
                 )
-                .frame(height: UIScreen.main.bounds.height / 12)
+                .frame(height: UIScreen.main.bounds.height / 13)
                 .padding([.leading, .trailing], 10)
         }
 
@@ -531,7 +531,7 @@ extension Home {
             ZStack {
                 Rectangle()
                     .fill(colourRectangle)
-                    .frame(height: UIScreen.main.bounds.height / 12)
+                    .frame(height: UIScreen.main.bounds.height / 13)
                     .cornerRadius(15)
                     .shadow(radius: 3)
                     .padding([.leading, .trailing], 10)
@@ -650,7 +650,7 @@ extension Home {
                         .padding(.top, 55)
 
                     glucoseView
-                        .padding(.vertical, 35)
+                        .padding(.vertical, 15)
 
                     infoPanel
 
@@ -659,7 +659,7 @@ extension Home {
                         .shadow(radius: 3)
                         .overlay(mainChart)
                         .padding([.leading, .trailing], 10)
-                        .frame(height: UIScreen.main.bounds.height / 2)
+                        .frame(height: UIScreen.main.bounds.height / 2.2) // with 2 chart was still too big
 
                     pickerPanel(geo)
                         .padding(.top, 5)
@@ -670,7 +670,7 @@ extension Home {
 //                        .padding(.top, 2)
 
                     bottomPanel(geo)
-                        .padding(.top, 2)
+                        .padding(.top, 20)
                 }
                 .edgesIgnoringSafeArea(.vertical)
             }
