@@ -178,19 +178,32 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
     }
 
     func deleteCarbs(_ treatement: DataTable.Treatment, complexMeal: Bool) {
-        // remove in AH
-        healthkitManager.deleteCarbs(syncID: treatement.id, fpuID: treatement.fpuID ?? "")
-
         guard let nightscout = nightscoutAPI, isUploadEnabled else {
             carbsStorage.deleteCarbs(at: treatement.id, fpuID: treatement.fpuID ?? "", complex: complexMeal)
             return
         }
 
+        print("meals 3: ID: " + (treatement.collectionID ?? "").description + " FPU ID: " + (treatement.fpuID ?? "").description)
+
+        var arg1 = ""
+        var arg2 = ""
+        if complexMeal {
+            arg1 = treatement.collectionID ?? ""
+            arg2 = treatement.fpuID ?? ""
+        } else if treatement.isFPU ?? false {
+            arg1 = ""
+            arg2 = treatement.fpuID ?? ""
+        } else {
+            arg1 = treatement.id
+            arg2 = ""
+        }
+        healthkitManager.deleteCarbs(syncID: arg1, fpuID: arg2)
+
         if complexMeal {
             nightscout.deleteCarbs(treatement)
                 .collect()
                 .sink { completion in
-                    self.carbsStorage.deleteCarbs(at: treatement.id, fpuID: treatement.fpuID ?? "", complex: complexMeal)
+                    self.carbsStorage.deleteCarbs(at: treatement.collectionID ?? "", fpuID: treatement.fpuID ?? "", complex: true)
                     switch completion {
                     case .finished:
                         debug(.nightscout, "Carbs deleted")

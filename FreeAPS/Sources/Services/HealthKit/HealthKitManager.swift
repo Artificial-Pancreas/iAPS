@@ -574,30 +574,34 @@ final class BaseHealthKitManager: HealthKitManager, Injectable, CarbsObserver, P
               checkAvailabilitySave(objectTypeToHealthStore: sampleType)
         else { return }
 
-        processQueue.async {
-            if fpuID != "" {
+        print("meals 4: ID: " + syncID + " FPU ID: " + fpuID)
+
+        if syncID != "" {
+            let predicate = HKQuery.predicateForObjects(
+                withMetadataKey: HKMetadataKeyExternalUUID,
+                operatorType: .equalTo,
+                value: syncID
+            )
+
+            healthKitStore.deleteObjects(of: sampleType, predicate: predicate) { _, _, error in
+                guard let error = error else { return }
+                warning(.service, "Cannot delete sample with syncID: \(syncID)", error: error)
+            }
+        }
+
+        if fpuID != "" {
+            processQueue.async {
                 let recentCarbs: [CarbsEntry] = self.carbsStorage.recent()
                 let ids = recentCarbs.filter { $0.fpuID == fpuID }.compactMap(\.collectionID)
                 let predicate = HKQuery.predicateForObjects(
-                    withMetadataKey: HKMetadataKeySyncIdentifier,
+                    withMetadataKey: HKMetadataKeyExternalUUID,
                     allowedValues: ids
                 )
-
                 print("found IDs: " + ids.description)
-
                 self.healthKitStore.deleteObjects(of: sampleType, predicate: predicate) { _, _, error in
                     guard let error = error else { return }
                     warning(.service, "Cannot delete sample with fpuID: \(fpuID)", error: error)
                 }
-            }
-            let predicate = HKQuery.predicateForObjects(
-                withMetadataKey: HKMetadataKeySyncIdentifier,
-                operatorType: .equalTo,
-                value: syncID
-            )
-            self.healthKitStore.deleteObjects(of: sampleType, predicate: predicate) { _, _, error in
-                guard let error = error else { return }
-                warning(.service, "Cannot delete sample with syncID: \(syncID)", error: error)
             }
         }
     }

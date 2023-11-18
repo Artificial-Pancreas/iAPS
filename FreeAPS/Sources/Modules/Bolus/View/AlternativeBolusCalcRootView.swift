@@ -285,7 +285,7 @@ extension Bolus {
         func carbsView() {
             if fetch {
                 keepForNextWiew = true
-                state.backToCarbsView(complexEntry: fetch, meal, override: false)
+                state.backToCarbsView(complexEntry: true, meal, override: false)
             } else {
                 state.backToCarbsView(complexEntry: false, meal, override: true)
             }

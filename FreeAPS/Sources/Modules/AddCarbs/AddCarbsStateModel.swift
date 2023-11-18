@@ -47,7 +47,7 @@ extension AddCarbs {
                 protein: protein,
                 note: note,
                 enteredBy: CarbsEntry.manual,
-                isFPU: false, fpuID: ""
+                isFPU: false, fpuID: UUID().uuidString
             )]
             carbsStorage.storeCarbs(carbsToStore)
 
@@ -200,6 +200,7 @@ extension AddCarbs {
                     save.note = entry.note
                     try? coredataContext.save()
                 }
+                print("meals 1: ID: " + (save.id ?? "").description + " FPU ID: " + (save.fpuID ?? "").description)
             }
         }
     }

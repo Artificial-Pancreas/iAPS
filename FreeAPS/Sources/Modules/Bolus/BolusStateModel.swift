@@ -238,9 +238,14 @@ extension Bolus {
                 type: .carbs,
                 date: meals.createdAt ?? Date(),
                 id: "",
-                collectionID: meals.id,
-                isFPU: meals.fpuID == "" ? false : true,
-                fpuID: meals.fpuID
+                collectionID: meals.id ?? "",
+                isFPU: deleteTwice ? true : false,
+                fpuID: deleteTwice ? (meals.fpuID ?? "") : ""
+            )
+
+            print(
+                "meals 2: ID: " + (mealArray.collectionID ?? "").description + " FPU ID: " + (mealArray.fpuID ?? "")
+                    .description
             )
 
             if deleteTwice {
