@@ -44,11 +44,11 @@ struct PumpView: View {
                     if let timeZone = timeZone, timeZone.secondsFromGMT() != TimeZone.current.secondsFromGMT() {
                         Image(systemName: "clock.badge.exclamationmark.fill")
                             .resizable()
-                            /* .frame(width: rect.width * 0.45, height: rect.height * 0.45) */
                             .aspectRatio(contentMode: .fit)
-                            .frame(maxHeight: 10)
-                            .symbolRenderingMode(.multicolor)
-                            .foregroundStyle(Color.warning, Color.red)
+                            .frame(maxHeight: 13)
+                            .symbolRenderingMode(.palette)
+                            .foregroundStyle(.red, Color(.warning))
+                            .padding(.bottom, 10)
                     }
                 }.frame(alignment: .top)
             }
