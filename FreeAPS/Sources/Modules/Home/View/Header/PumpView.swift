@@ -6,6 +6,7 @@ struct PumpView: View {
     @Binding var name: String
     @Binding var expiresAtDate: Date?
     @Binding var timerDate: Date
+    @Binding var timeZone: TimeZone?
 
     private var reservoirFormatter: NumberFormatter {
         let formatter = NumberFormatter()
@@ -38,6 +39,16 @@ struct PumpView: View {
                                 .string(from: reservoir as NSNumber)! + NSLocalizedString(" U", comment: "Insulin unit")
                         )
                         .font(.footnote).fontWeight(.bold)
+                    }
+
+                    if let timeZone = timeZone, timeZone.secondsFromGMT() != TimeZone.current.secondsFromGMT() {
+                        Image(systemName: "clock.badge.exclamationmark.fill")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(maxHeight: 13)
+                            .symbolRenderingMode(.palette)
+                            .foregroundStyle(.red, Color(.warning))
+                            .padding(.bottom, 10)
                     }
                 }.frame(alignment: .top)
             }
