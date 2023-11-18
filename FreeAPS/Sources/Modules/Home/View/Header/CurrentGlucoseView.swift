@@ -164,9 +164,11 @@ struct Triangle: Shape {
     func path(in rect: CGRect) -> Path {
         var path = Path()
 
+        let cornerRadius: CGFloat = 8
+
         path.move(to: CGPoint(x: rect.midX, y: rect.minY))
-        path.addLine(to: CGPoint(x: rect.maxX, y: rect.maxY))
-        path.addLine(to: CGPoint(x: rect.minX, y: rect.maxY))
+        path.addLine(to: CGPoint(x: rect.maxX, y: rect.maxY - cornerRadius))
+        path.addQuadCurve(to: CGPoint(x: rect.minX, y: rect.maxY - cornerRadius), control: CGPoint(x: rect.midX, y: rect.maxY))
         path.closeSubpath()
 
         return path
@@ -177,7 +179,7 @@ struct TrendShape: View {
     let color: Color
 
     var body: some View {
-        HStack(alignment: .center, spacing: -4) {
+        HStack(alignment: .center, spacing: -5) {
             CircleShape(color: color)
             TriangleShape(color: color)
         }

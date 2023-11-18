@@ -454,50 +454,50 @@ extension Home {
             .padding(.vertical, 1)
         }
 
-        @ViewBuilder private func profiles(_: GeometryProxy) -> some View {
-            let colour: Color = colorScheme == .dark ? .black : .white
-            let colourRectangle: Color = colorScheme == .dark ? .gray.opacity(0.1) : .white
-
-            ZStack {
-                Rectangle()
-//                    .fill(Color.gray.opacity(0.3))
-                    .fill(colourRectangle)
-                    .frame(maxHeight: 40)
-                    .cornerRadius(15)
-                    .padding([.leading, .trailing], 10)
-                let cancel = fetchedPercent.first?.enabled ?? false
-                HStack(spacing: cancel ? 25 : 15) {
-                    Text(selectedProfile().name).foregroundColor(.secondary)
-                    if cancel, selectedProfile().isOn {
-                        Button { showCancelAlert.toggle() }
-                        label: {
-                            Image(systemName: "xmark")
-                                .foregroundStyle(.secondary)
-                        }
-                    }
-                    Button { state.showModal(for: .overrideProfilesConfig) }
-                    label: {
-                        Image(systemName: "person.3.sequence.fill")
-                            .symbolRenderingMode(.palette)
-                            .foregroundStyle(
-                                !(fetchedPercent.first?.enabled ?? false) ? .green : .cyan,
-                                !(fetchedPercent.first?.enabled ?? false) ? .cyan : .green,
-                                .purple
-                            )
-                    }
-                }
-            }
-            .alert(
-                "Return to Normal?", isPresented: $showCancelAlert,
-                actions: {
-                    Button("No", role: .cancel) {}
-                    Button("Yes", role: .destructive) {
-                        state.cancelProfile()
-                    }
-                }, message: { Text("This will change settings back to your normal profile.") }
-            )
-            Rectangle().fill(colour).frame(maxHeight: 1)
-        }
+//        @ViewBuilder private func profiles(_: GeometryProxy) -> some View {
+//            let colour: Color = colorScheme == .dark ? .black : .white
+//            let colourRectangle: Color = colorScheme == .dark ? .gray.opacity(0.1) : .white
+//
+//            ZStack {
+//                Rectangle()
+        ////                    .fill(Color.gray.opacity(0.3))
+//                    .fill(colourRectangle)
+//                    .frame(maxHeight: 40)
+//                    .cornerRadius(15)
+//                    .padding([.leading, .trailing], 10)
+//                let cancel = fetchedPercent.first?.enabled ?? false
+//                HStack(spacing: cancel ? 25 : 15) {
+//                    Text(selectedProfile().name).foregroundColor(.secondary)
+//                    if cancel, selectedProfile().isOn {
+//                        Button { showCancelAlert.toggle() }
+//                        label: {
+//                            Image(systemName: "xmark")
+//                                .foregroundStyle(.secondary)
+//                        }
+//                    }
+//                    Button { state.showModal(for: .overrideProfilesConfig) }
+//                    label: {
+//                        Image(systemName: "person.3.sequence.fill")
+//                            .symbolRenderingMode(.palette)
+//                            .foregroundStyle(
+//                                !(fetchedPercent.first?.enabled ?? false) ? .green : .cyan,
+//                                !(fetchedPercent.first?.enabled ?? false) ? .cyan : .green,
+//                                .purple
+//                            )
+//                    }
+//                }
+//            }
+//            .alert(
+//                "Return to Normal?", isPresented: $showCancelAlert,
+//                actions: {
+//                    Button("No", role: .cancel) {}
+//                    Button("Yes", role: .destructive) {
+//                        state.cancelProfile()
+//                    }
+//                }, message: { Text("This will change settings back to your normal profile.") }
+//            )
+//            Rectangle().fill(colour).frame(maxHeight: 1)
+//        }
 
         private func selectedProfile() -> (name: String, isOn: Bool) {
             var profileString = ""
