@@ -95,7 +95,7 @@ extension Home {
             .frame(maxWidth: .infinity)
             .padding(.top, 10 + geo.safeAreaInsets.top)
             .padding(.bottom, 10)
-            .background(Color.gray.opacity(0.2))
+            .background(Color.gray.opacity(0.3))
         }
 
         var cobIobView: some View {
@@ -122,6 +122,7 @@ extension Home {
         var glucoseView: some View {
             CurrentGlucoseView(
                 recentGlucose: $state.recentGlucose,
+                timerDate: $state.timerDate,
                 delta: $state.glucoseDelta,
                 units: $state.units,
                 alarm: $state.alarm,
@@ -152,7 +153,8 @@ extension Home {
                 battery: $state.battery,
                 name: $state.pumpName,
                 expiresAtDate: $state.pumpExpiresAtDate,
-                timerDate: $state.timerDate
+                timerDate: $state.timerDate,
+                timeZone: $state.timeZone
             )
             .onTapGesture {
                 if state.pumpDisplayState != nil {
@@ -313,14 +315,16 @@ extension Home {
                 }
 
                 if let progress = state.bolusProgress {
-                    Text("Bolusing")
-                        .font(.system(size: 12, weight: .bold)).foregroundColor(.insulin)
-                    ProgressView(value: Double(progress))
-                        .progressViewStyle(BolusProgressViewStyle())
-                        .padding(.trailing, 8)
-                        .onTapGesture {
-                            state.cancelBolus()
-                        }
+                    HStack {
+                        Text("Bolusing")
+                            .font(.system(size: 12, weight: .bold)).foregroundColor(.insulin)
+                        ProgressView(value: Double(progress))
+                            .progressViewStyle(BolusProgressViewStyle())
+                            .padding(.trailing, 8)
+                    }
+                    .onTapGesture {
+                        state.cancelBolus()
+                    }
                 }
             }
             .frame(maxWidth: .infinity, maxHeight: 30)
@@ -383,10 +387,12 @@ extension Home {
 
                 MainChartView(
                     glucose: $state.glucose,
+                    isManual: $state.isManual,
                     suggestion: $state.suggestion,
                     tempBasals: $state.tempBasals,
                     boluses: $state.boluses,
                     suspensions: $state.suspensions,
+                    announcement: $state.announcement,
                     hours: .constant(state.filteredHours),
                     maxBasal: $state.maxBasal,
                     autotunedBasalProfile: $state.autotunedBasalProfile,
@@ -412,7 +418,7 @@ extension Home {
             let colour: Color = colorScheme == .dark ? .black : .white
             // Rectangle().fill(colour).frame(maxHeight: 1)
             ZStack {
-                Rectangle().fill(Color.gray.opacity(0.2)).frame(maxHeight: 40)
+                Rectangle().fill(Color.gray.opacity(0.3)).frame(maxHeight: 40)
                 let cancel = fetchedPercent.first?.enabled ?? false
                 HStack(spacing: cancel ? 25 : 15) {
                     Text(selectedProfile().name).foregroundColor(.secondary)
@@ -475,10 +481,10 @@ extension Home {
 
         @ViewBuilder private func bottomPanel(_ geo: GeometryProxy) -> some View {
             ZStack {
-                Rectangle().fill(Color.gray.opacity(0.2)).frame(height: 50 + geo.safeAreaInsets.bottom)
+                Rectangle().fill(Color.gray.opacity(0.3)).frame(height: 50 + geo.safeAreaInsets.bottom)
 
                 HStack {
-                    Button { state.showModal(for: .addCarbs) }
+                    Button { state.showModal(for: .addCarbs(editMode: false, override: false)) }
                     label: {
                         ZStack(alignment: Alignment(horizontal: .trailing, vertical: .bottom)) {
                             Image("carbs")
@@ -508,7 +514,12 @@ extension Home {
                     .foregroundColor(.loopGreen)
                     .buttonStyle(.borderless)
                     Spacer()
-                    Button { state.showModal(for: .bolus(waitForSuggestion: false)) }
+                    Button {
+                        state.showModal(for: .bolus(
+                            waitForSuggestion: true,
+                            fetch: false
+                        ))
+                    }
                     label: {
                         Image("bolus")
                             .renderingMode(.template)
@@ -617,6 +628,9 @@ extension Home {
                         .padding(.bottom, 4)
                         .padding(.top, 8)
                     Text(errorMessage).font(.caption).foregroundColor(.loopRed)
+                } else if let suggestion = state.suggestion, (suggestion.bg ?? 100) == 400 {
+                    Text("Invalid CGM reading (HIGH).").font(.callout).bold().foregroundColor(.loopRed).padding(.top, 8)
+                    Text("SMBs and High Temps Disabled.").font(.caption).foregroundColor(.white).padding(.bottom, 4)
                 }
             }
         }

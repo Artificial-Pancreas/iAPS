@@ -24,13 +24,15 @@ extension OverrideProfilesConfig {
         @Published var end: Decimal = 23
         @Published var smbMinutes: Decimal = 0
         @Published var uamMinutes: Decimal = 0
+        @Published var defaultSmbMinutes: Decimal = 0
+        @Published var defaultUamMinutes: Decimal = 0
 
         var units: GlucoseUnits = .mmolL
 
         override func subscribe() {
             units = settingsManager.settings.units
-            smbMinutes = settingsManager.preferences.maxSMBBasalMinutes
-            uamMinutes = settingsManager.preferences.maxUAMSMBBasalMinutes
+            defaultSmbMinutes = settingsManager.preferences.maxSMBBasalMinutes
+            defaultUamMinutes = settingsManager.preferences.maxUAMSMBBasalMinutes
             presets = [OverridePresets(context: coredataContext)]
         }
 
@@ -151,8 +153,8 @@ extension OverrideProfilesConfig {
                         saveOverride.end = profile.end
                     } else { saveOverride.smbIsAlwaysOff = false }
 
-                    saveOverride.smbMinutes = smbMinutes as NSDecimalNumber
-                    saveOverride.uamMinutes = uamMinutes as NSDecimalNumber
+                    saveOverride.smbMinutes = (profile.smbMinutes ?? 0) as NSDecimalNumber
+                    saveOverride.uamMinutes = (profile.uamMinutes ?? 0) as NSDecimalNumber
                 }
                 try? self.coredataContext.save()
             }
@@ -221,6 +223,8 @@ extension OverrideProfilesConfig {
                     override_target = false
                     smbIsOff = false
                     advancedSettings = false
+                    smbMinutes = defaultSmbMinutes
+                    uamMinutes = defaultUamMinutes
                 }
             }
         }
@@ -240,6 +244,8 @@ extension OverrideProfilesConfig {
                 profiles.date = Date()
                 try? self.coredataContext.save()
             }
+            smbMinutes = defaultSmbMinutes
+            uamMinutes = defaultUamMinutes
         }
     }
 }

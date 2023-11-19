@@ -26,37 +26,43 @@ extension StatConfig {
 
         var body: some View {
             Form {
-                Section(header: Text("Settings")) {
-                    Toggle("Change HbA1c Unit", isOn: $state.overrideHbA1cUnit)
+                Section {
                     Toggle("Display Chart X - Grid lines", isOn: $state.xGridLines)
                     Toggle("Display Chart Y - Grid lines", isOn: $state.yGridLines)
                     Toggle("Display Chart Threshold lines for Low and High", isOn: $state.rulerMarks)
                     Toggle("Standing / Laying TIR Chart", isOn: $state.oneDimensionalGraph)
-
                     HStack {
                         Text("Hours X-Axis (6 default)")
                         Spacer()
                         DecimalTextField("6", value: $state.hours, formatter: carbsFormatter)
                         Text("hours").foregroundColor(.secondary)
                     }
+                } header: { Text("Home Chart settings ") }
 
+                Section {
                     HStack {
                         Text("Low")
                         Spacer()
                         DecimalTextField("0", value: $state.low, formatter: glucoseFormatter)
                         Text(state.units.rawValue).foregroundColor(.secondary)
                     }
-
                     HStack {
                         Text("High")
                         Spacer()
                         DecimalTextField("0", value: $state.high, formatter: glucoseFormatter)
                         Text(state.units.rawValue).foregroundColor(.secondary)
                     }
-                }
+                    Toggle("Override HbA1c Unit", isOn: $state.overrideHbA1cUnit)
+
+                } header: { Text("Statistics settings ") }
+
+                Section {
+                    Toggle("Skip Bolus screen after carbs", isOn: $state.skipBolusScreenAfterCarbs)
+                    Toggle("Display and allow Fat and Protein entries", isOn: $state.useFPUconversion)
+                } header: { Text("Add Meal View settings ") }
             }
             .onAppear(perform: configureView)
-            .navigationBarTitle("Statistics")
+            .navigationBarTitle("UI/UX")
             .navigationBarTitleDisplayMode(.automatic)
         }
     }

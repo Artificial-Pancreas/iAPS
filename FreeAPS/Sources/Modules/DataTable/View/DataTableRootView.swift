@@ -11,19 +11,28 @@ extension DataTable {
         @State private var removeCarbsAlert: Alert?
         @State private var isRemoveInsulinAlertPresented = false
         @State private var removeInsulinAlert: Alert?
-        @State private var newGlucose = false
+        @State private var showExternalInsulin: Bool = false
+        @State private var showFutureEntries: Bool = false // default to hide future entries
+        @State private var showManualGlucose: Bool = false
+        @State private var isAmountUnconfirmed: Bool = true
 
         @Environment(\.colorScheme) var colorScheme
+
+        private var insulinFormatter: NumberFormatter {
+            let formatter = NumberFormatter()
+            formatter.numberStyle = .decimal
+            formatter.maximumFractionDigits = 2
+            return formatter
+        }
 
         private var glucoseFormatter: NumberFormatter {
             let formatter = NumberFormatter()
             formatter.numberStyle = .decimal
             formatter.maximumFractionDigits = 0
             if state.units == .mmolL {
-                formatter.minimumFractionDigits = 1
                 formatter.maximumFractionDigits = 1
+                formatter.roundingMode = .ceiling
             }
-            formatter.roundingMode = .halfUp
             return formatter
         }
 
@@ -52,69 +61,134 @@ extension DataTable {
             }
             .onAppear(perform: configureView)
             .navigationTitle("History")
-            .navigationBarTitleDisplayMode(.automatic)
-            .navigationBarItems(
-                leading: Button("Close", action: state.hideModal),
-                trailing: state.mode == .glucose ? EditButton().asAny() : EmptyView().asAny()
-            )
-            .popup(isPresented: newGlucose, alignment: .top, direction: .bottom) {
-                VStack(spacing: 20) {
-                    HStack {
-                        Text("New Glucose")
-                        DecimalTextField(" ... ", value: $state.manualGlcuose, formatter: glucoseFormatter)
-                        Text(state.units.rawValue)
-                    }.padding(.horizontal, 20)
-                    HStack {
-                        let limitLow: Decimal = state.units == .mmolL ? 2.2 : 40
-                        let limitHigh: Decimal = state.units == .mmolL ? 21 : 380
-                        Button { newGlucose = false }
-                        label: { Text("Cancel") }.frame(maxWidth: .infinity, alignment: .leading)
-
-                        Button {
-                            state.addManualGlucose()
-                            newGlucose = false
-                        }
-                        label: { Text("Save") }
-                            .frame(maxWidth: .infinity, alignment: .trailing)
-                            .disabled(state.manualGlcuose < limitLow || state.manualGlcuose > limitHigh)
-
-                    }.padding(20)
-                }
-                .frame(maxHeight: 140)
-                .background(
-                    RoundedRectangle(cornerRadius: 8, style: .continuous)
-                        .fill(Color(colorScheme == .dark ? UIColor.systemGray2 : UIColor.systemGray6))
-                )
+            .navigationBarTitleDisplayMode(.inline)
+            .navigationBarItems(trailing: Button("Close", action: state.hideModal))
+            .sheet(isPresented: $showManualGlucose) {
+                addGlucoseView
+            }
+            .sheet(isPresented: $showExternalInsulin, onDismiss: { if isAmountUnconfirmed { state.externalInsulinAmount = 0
+                state.externalInsulinDate = Date() } }) {
+                addExternalInsulinView
             }
         }
 
         private var treatmentsList: some View {
             List {
-                ForEach(state.treatments) { item in
-                    treatmentView(item)
+                HStack {
+                    Button(action: { showExternalInsulin = true
+                        state.externalInsulinDate = Date() }, label: {
+                        HStack {
+                            Image(systemName: "syringe")
+                            Text("Add")
+                                .foregroundColor(Color.secondary)
+                                .font(.caption)
+                        }.frame(maxWidth: .infinity, alignment: .leading)
+                    }).buttonStyle(.borderless)
+
+                    Spacer()
+
+                    Button(action: { showFutureEntries.toggle() }, label: {
+                        HStack {
+                            Text(showFutureEntries ? "Hide Future" : "Show Future")
+                                .foregroundColor(Color.secondary)
+                                .font(.caption)
+                            Image(systemName: showFutureEntries ? "calendar.badge.minus" : "calendar.badge.plus")
+                        }.frame(maxWidth: .infinity, alignment: .trailing)
+                    }).buttonStyle(.borderless)
+                }
+                if !state.treatments.isEmpty {
+                    if !showFutureEntries {
+                        ForEach(state.treatments.filter { item in
+                            item.date <= Date()
+                        }) { item in
+                            treatmentView(item)
+                        }
+                    } else {
+                        ForEach(state.treatments) { item in
+                            treatmentView(item)
+                        }
+                    }
+                } else {
+                    HStack {
+                        Text("No data.")
+                    }
                 }
             }
         }
 
         private var glucoseList: some View {
             List {
-                Button { newGlucose = true }
-                label: { Text("Add") }.frame(maxWidth: .infinity, alignment: .trailing)
-                    .padding(.trailing, 20)
+                HStack {
+                    Button(
+                        action: { showManualGlucose = true
+                            state.manualGlucose = 0 },
+                        label: { Image(systemName: "plus.circle.fill").foregroundStyle(.secondary)
+                        }
+                    ).buttonStyle(.borderless)
+                    Text(state.units.rawValue).foregroundStyle(.secondary)
+                    Spacer()
+                    Text("Time").foregroundStyle(.secondary)
+                }
+                if !state.glucose.isEmpty {
+                    ForEach(state.glucose) { item in
+                        glucoseView(item, isManual: item.glucose)
+                    }
+                    .onDelete(perform: deleteGlucose)
+                } else {
+                    HStack {
+                        Text("No data.")
+                    }
+                }
+            }
+        }
 
-                ForEach(state.glucose) { item in
-                    glucoseView(item)
-                }.onDelete(perform: deleteGlucose)
+        var addGlucoseView: some View {
+            NavigationView {
+                VStack {
+                    Form {
+                        Section {
+                            HStack {
+                                Text("New Glucose")
+                                DecimalTextField(
+                                    " ... ",
+                                    value: $state.manualGlucose,
+                                    formatter: glucoseFormatter,
+                                    autofocus: true,
+                                    cleanInput: true
+                                )
+                                Text(state.units.rawValue).foregroundStyle(.secondary)
+                            }
+                        }
+
+                        Section {
+                            HStack {
+                                let limitLow: Decimal = state.units == .mmolL ? 0.8 : 14
+                                let limitHigh: Decimal = state.units == .mmolL ? 40 : 720
+                                Button {
+                                    state.addManualGlucose()
+                                    isAmountUnconfirmed = false
+                                    showManualGlucose = false
+                                }
+                                label: { Text("Save") }
+                                    .frame(maxWidth: .infinity, alignment: .center)
+                                    .disabled(state.manualGlucose < limitLow || state.manualGlucose > limitHigh)
+                            }
+                        }
+                    }
+                }
+                .onAppear(perform: configureView)
+                .navigationTitle("Add Glucose")
+                .navigationBarTitleDisplayMode(.automatic)
+                .navigationBarItems(trailing: Button("Close", action: { showManualGlucose = false }))
             }
         }
 
         @ViewBuilder private func treatmentView(_ item: Treatment) -> some View {
             HStack {
                 Image(systemName: "circle.fill").foregroundColor(item.color)
-                Text(dateFormatter.string(from: item.date))
-                    .moveDisabled(true)
-                Text(item.type.name)
+                Text((item.isSMB ?? false) ? "SMB" : item.type.name)
                 Text(item.amountText).foregroundColor(.secondary)
+
                 if let duration = item.durationText {
                     Text(duration).foregroundColor(.secondary)
                 }
@@ -134,7 +208,8 @@ extension DataTable {
                                 message: Text(item.amountText),
                                 primaryButton: .destructive(
                                     Text("Delete"),
-                                    action: { state.deleteCarbs(item) }
+                                    action: {
+                                        state.deleteCarbs(item) }
                                 ),
                                 secondaryButton: .cancel()
                             )
@@ -188,23 +263,91 @@ extension DataTable {
                             removeInsulinAlert!
                         }
                 }
+                Spacer()
+                Text(dateFormatter.string(from: item.date))
+                    .moveDisabled(true)
             }
         }
 
-        @ViewBuilder private func glucoseView(_ item: Glucose) -> some View {
+        var addExternalInsulinView: some View {
+            NavigationView {
+                VStack {
+                    Form {
+                        Section {
+                            HStack {
+                                Text("Amount")
+                                Spacer()
+                                DecimalTextField(
+                                    "0",
+                                    value: $state.externalInsulinAmount,
+                                    formatter: insulinFormatter,
+                                    autofocus: true,
+                                    cleanInput: true
+                                )
+                                Text("U").foregroundColor(.secondary)
+                            }
+                        }
+
+                        Section {
+                            DatePicker("Date", selection: $state.externalInsulinDate, in: ...Date())
+                        }
+
+                        let amountWarningCondition = (state.externalInsulinAmount > state.maxBolus)
+
+                        Section {
+                            HStack {
+                                Button {
+                                    state.addExternalInsulin()
+                                    isAmountUnconfirmed = false
+                                    showExternalInsulin = false
+                                }
+                                label: {
+                                    Text("Log external insulin")
+                                }
+                                .foregroundColor(amountWarningCondition ? Color.white : Color.accentColor)
+                                .frame(maxWidth: .infinity, alignment: .center)
+                                .disabled(
+                                    state.externalInsulinAmount <= 0 || state.externalInsulinAmount > state.maxBolus * 3
+                                )
+                            }
+                        }
+                        header: {
+                            if amountWarningCondition
+                            {
+                                Text("⚠️ Warning! The entered insulin amount is greater than your Max Bolus setting!")
+                            }
+                        }
+                        .listRowBackground(
+                            amountWarningCondition ? Color
+                                .red : colorScheme == .dark ? Color(UIColor.secondarySystemBackground) : Color.white
+                        )
+                    }
+                }
+                .onAppear(perform: configureView)
+                .navigationTitle("External Insulin")
+                .navigationBarTitleDisplayMode(.inline)
+                .navigationBarItems(trailing: Button("Close", action: { showExternalInsulin = false
+                    state.externalInsulinAmount = 0 }))
+            }
+        }
+
+        @ViewBuilder private func glucoseView(_ item: Glucose, isManual: BloodGlucose) -> some View {
             VStack(alignment: .leading, spacing: 4) {
                 HStack {
-                    Text(dateFormatter.string(from: item.glucose.dateString))
-                    Spacer()
                     Text(item.glucose.glucose.map {
                         glucoseFormatter.string(from: Double(
                             state.units == .mmolL ? $0.asMmolL : Decimal($0)
                         ) as NSNumber)!
                     } ?? "--")
-                    Text(state.units.rawValue)
-                    Text(item.glucose.direction?.symbol ?? "--")
+                    if isManual.type == GlucoseType.manual.rawValue {
+                        Image(systemName: "drop.fill").symbolRenderingMode(.monochrome).foregroundStyle(.red)
+                    } else {
+                        Text(item.glucose.direction?.symbol ?? "--")
+                    }
+                    Spacer()
+
+                    Text(dateFormatter.string(from: item.glucose.dateString))
                 }
-                Text("ID: " + item.glucose.id).font(.caption2).foregroundColor(.secondary)
             }
         }
 

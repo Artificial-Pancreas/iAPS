@@ -16,6 +16,9 @@
 /* Continue after added carbs without bolus */
 "Continue without bolus" = "Fortsätt utan bolus";
 
+/* Alert when adding large amount without bolusing */
+"\nAmount is more than your Max Bolus setting! \nAre you sure you want to add " = "\nDetta är mer insulin än din maxdos-inställning!\nÄr du säker på att du vill lägga till ";
+
 /* Header */
 "Enact Bolus" = "Ge bolus";
 
@@ -52,6 +55,42 @@
 /* Headline in enacted pop up (at: at what time) */
 "Error at" = "Fel vid";
 
+/* Bolus View Meal Summary Header */
+"Meal Summary" = "Måltidssammanfattning";
+
+/* Bolus View Meal Edit Meal Button */
+"Edit Meal" = "Ändra måltid";
+
+/* Bolus View Meal Add Meal Button */
+"Add Meal" = "Lägg till Måltid";
+
+/* Bolus View Bolus Summary Header */
+"Bolus Summary" = "Sammanfattnig av bolus";
+
+/* For the  Bolus View pop-up */
+"Calculations" = "Beräkningar";
+
+/* For the  Bolus View pop-up */
+"Fatty Meal" = "Fet mat";
+
+/* For the  Bolus View pop-up */
+"Full Bolus" = "Total mängd";
+
+/* For the  Bolus View pop-up */
+"Fraction" = "Faktor";
+
+/* For the  Bolus View pop-up */
+"Fatty Meal Factor" = "Fettrik måltidsfaktor";
+
+/* For the  Bolus View pop-up */
+"Result" = "Resultat";
+
+/* For the  Bolus View pop-up */
+"Your entered amount was limited by your max Bolus setting of %d%@" = "Du har angivit en insulinmängd som är över din maxinställning på %d%@";
+
+/* Bolus View Continue Button */
+"Continue" = "Fortsätt";
+
 /* Home title */
 "Home" = "Hem";
 
@@ -81,6 +120,9 @@
 
 /*  */
 "Carbs required" = "Kolhydrater krävs";
+
+/* Saved Food Presets */
+"Saved Food" = "Sparad mat";
 
 /* */
 "Are you sure?" = "Är du säker?";
@@ -206,7 +248,7 @@
 "Rate" = "Värde";
 
 /*  */
-"Save on Pump" = "Spara på pump";
+"Save on Pump" = "Spara till pump";
 
 /*  */
 "Saving..." = "Sparar...";
@@ -310,6 +352,45 @@ Enact a temp Basal or a temp target */
 
 /* Allow remote control from NS */
 "Remote control" = "Fjärrstyrning";
+
+/* Imported Profiles Alert */
+"\nNow please verify all of your new settings thoroughly:\n\n* Basal Settings\n * Carb Ratios\n * Glucose Targets\n * Insulin Sensitivities\n * DIA\n\n in iAPS Settings > Configuration.\n\nBad or invalid profile settings could have disatrous effects." = "\nKontrollera nu alla dina nya pumpinställningar noga:\n\n* Basalinställningar\n * Insulinkvoter\n * Målvärden\n * Insulinkänslighet\n\n i Inställningar > Konfiguration.\n\nDåliga eller ogiltiga pumpinställningar kan gå katastrofala följder.";
+
+/* Profile Import Alert */
+"This will replace some or all of your current pump settings. Are you sure you want to import profile settings from Nightscout?" = "Detta kommer att ersätta alla eller vissa av dina pumpinställningar. Är du säker att du vill fortsätta med import av inställningar?";
+
+/* Import Error */
+"\nInvalid Nightcsout Basal Settings. \n\nImport aborted. Please check your Nightscout Profile Basal Settings!" = "\nDu har ogiltiga basalinställningar i Nightscouts profilinställningar. \n\nImport avbruten. Du behöver kontrollera dina Nightcoutinställningar.";
+
+/* Import Error */
+"\nSettings were imported but the Basals couldn't be saved to pump (No pump). Check your basal settings and tap ´Save on Pump´ to sync the new basal settings" = "\nDina inställningar blev importerade men kunde inte sparas till pump (Ingen pump). Kontrollera dina pumpinstälningar och klicka därefter på ´Spara på pump´ för att programmera din pump med de nya basalinställningarna";
+
+/* Import Error Headline */
+"Import Error" = "Fel vd import av inställningar";
+
+/* */
+"Yes, Import" = "Ja, importera";
+
+/* */
+"Import settings from Nightscout" = "Importera inställningar från Nightscout";
+
+/* */
+"Import settings?" = "Importera inställningar?";
+
+/* */
+"Import from Nightscout" = "Importera från Nightscout";
+
+/* */
+"Settings imported" = "Inställningar importerade";
+
+/* Import Error */
+"\nMismatching glucose units in Nightscout and Pump Settings. Import settings aborted." = "\nDu har olika inställningar för blodsockernehet i Nightscout och iAPS. Import därför avbruten.";
+
+/* Import Error */
+"Can't find the default Nightscout Profile." = "Kan inte hitta en profil i Nightcsout";
+
+/* Add Blood Glucose Test, header */
+"Blood Glucose Test" = "Blodsockerprov";
 
 /* Add Medtronic pump */
 "Add Medtronic" = "Lägg till Medtronic";
@@ -519,10 +600,16 @@ Enact a temp Basal or a temp target */
 "Calibrations" = "Kalibreringar";
 
 /* */
-"Create events in calendar" = "Skapa kalenderhändelser";
+"Create Events in Calendar" = "Skapa kalenderhändelser";
 
 /* */
 "Calendar" = "Kalender";
+
+/* Automatic delivered treatments */
+"Automatic" = "Automatisk";
+
+/* External insulin treatments */
+"External" = "Externt";
 
 /* */
 "Other" = "Annan";
@@ -945,7 +1032,7 @@ Enact a temp Basal or a temp target */
 "iAPS not active" = "iAPS är inte aktiv";
 
 /* */
-"Last loop was more then %d min ago" = "Senaste loopen var mer än %d min sedan";
+"Last loop was more than %d min ago" = "Senaste loop var för mer än %d min sedan";
 
 /* Glucose badge */
 "Show glucose on the app badge" = "Visa glukosvärde på app-ikon";
@@ -958,6 +1045,9 @@ Enact a temp Basal or a temp target */
 
 /* */
 "Bolus failed" = "Bolus misslyckades";
+
+/* "Max Bolus Exceeded label" */
+"Max Bolus exceeded!" = "Du kan inte dosera mer än din maxinställning!";
 
 /* */
 "Bolus failed or inaccurate. Check pump history before repeating." = "Misslyckad eller felaktig bolus. Kontrollera pumpens historik innan du försöker igen.";
@@ -1049,6 +1139,12 @@ Enact a temp Basal or a temp target */
 /* Autotune config */
 "Only Autotune Basal Insulin" = "Autojustera endast basalinställningar";
 
+/* */
+"Save as your Normal Basal Rates" = "Spara som dina vanliga basalinställningar";
+
+/* */
+"Save on Pump" = "Spara till pump";
+
 /* Debug option view Pump History */
 "Pump History" = "Pumphistorik";
 
@@ -1113,6 +1209,12 @@ Enact a temp Basal or a temp target */
 
 /* Manual temp basal mode */
 "Manual" = "Manuellt";
+
+/* An Automatic delivered bolus (SMB) */
+"SMB" = "SMB";
+
+/* A manually entered dose of external insulin */
+"External Insulin" = "Externt insulin";
 
 /* Status highlight when manual temp basal is running. */
 "Manual Basal" = "Manuell temporär basal";
@@ -1289,6 +1391,12 @@ Enact a temp Basal or a temp target */
 /* */
 "Save as Preset" = "Spara som förval";
 
+/* */
+"Predictions" = "Prognoser";
+
+/* Watch Config Option */
+"Display Protein & Fat" = "Visa fett och protein";
+
 /* ----------------------- New Bolus Calculator ---------------------------*/
 /* Warning about bolus recommendation. Title */
 
@@ -1299,6 +1407,12 @@ Enact a temp Basal or a temp target */
 
 /* */
 "Eventual Glucose" = "Blodsockerprognos";
+
+/* */
+"Please wait" = "Vänta...";
+
+/* */
+"Glucose, " = "Blodsocker, ";
 
 /* */
 "Target Glucose" = "Målvärde";
@@ -1366,7 +1480,7 @@ Enact a temp Basal or a temp target */
 /* Text for confidence reminders navigation link */
 "Confidence Reminders" = "Bekräftelseljud";
 
-"Confidence reminders are beeps from the pod which can be used to acknowledge selected commands." = "Bekräftelseljud är pip från podden som kan användas som bekräftelser på utförda kommandon";
+"Confidence reminders are beeps from the Pod which can be used to acknowledge selected commands when the Pod is not silenced." = "Bekräftelseljud är pip från podden (när den inte är tystad) som kan användas som bekräftelser på utförda kommandon";
 
 /* button title for saving low reservoir reminder while saving */
 "Saving..." = "Sparar...";
@@ -1396,10 +1510,10 @@ Enact a temp Basal or a temp target */
 "No confidence reminders are used." = "Inga ljud på.";
 
 /* Description for BeepPreference.manualCommands */
-"Confidence reminders will sound for commands you initiate, like bolus, cancel bolus, suspend, resume, save notification reminders, etc. When Loop automatically adjusts delivery, no confidence reminders are used." = "Bekräftelseljud kommer att pipa för för ala pumpkommandon du ger, som bolus, avbryt bolus, pausa pump, återuppta insulintillförsel, spara påminnelser etc. När iAPS automatiskt justerar insulintillförsel kommer inga pip att ljuda.";
+"Confidence reminders will sound for commands you initiate, like bolus, cancel bolus, suspend, resume, save notification reminders, etc. When the app automatically adjusts delivery, no confidence reminders are used." = "Bekräftelseljud kommer att pipa för för ala pumpkommandon du ger, som bolus, avbryt bolus, pausa pump, återuppta insulintillförsel, spara påminnelser etc. När iAPS automatiskt justerar insulintillförsel kommer inga pip att ljuda.";
 
 /* Description for BeepPreference.extended */
-"Confidence reminders will sound when Loop automatically adjusts delivery as well as for commands you initiate." = "Bekräftelsepip kommer att ljuda även vid automatiska pumpkommandon såväl som vid manuella.";
+"Confidence reminders will sound when the app automatically adjusts delivery as well as for commands you initiate." = "Bekräftelsepip kommer att ljuda även vid automatiska pumpkommandon såväl som vid manuella.";
 
 /* Label text for expiration reminder default row */
 "Expiration Reminder Default" = "Standard påminnelsetid";
@@ -1802,7 +1916,7 @@ Enact a temp Basal or a temp target */
 "Max COB" = "Max mängd aktiva kolhydrater (COB)";
 
 /* "Max COB" */
-"The default of maxCOB is 120. (If someone enters more carbs in one or multiple entries, iAPS will cap COB to maxCOB and keep it at maxCOB until the carbs entered above maxCOB have shown to be absorbed. Essentially, this just limits UAM as a safety cap against weird COB calculations due to fluky data.)" = "The default of maxCOB is 120. (If someone enters more carbs in one or multiple entries, iAPS will cap COB to maxCOB and keep it at maxCOB until the carbs entered above maxCOB have shown to be absorbed. Essentially, this just limits UAM as a safety cap against weird COB calculations due to fluky data.)";
+"The default of maxCOB is 120. (If someone enters more carbs in one or multiple entries, iAPS will cap COB to maxCOB and keep it at maxCOB until the carbs entered above maxCOB have shown to be absorbed. Essentially, this just limits UAM as a safety cap against weird COB calculations due to fluky data.)" = "Standardvärdet för maximal mängd av aktiva kolhdrater (COB) är 120.";
 
 /* Headline "Bolus Snooze DIA Divisor" */
 "Bolus Snooze DIA Divisor" = "Bolus \"snooze\" - nämnare";
