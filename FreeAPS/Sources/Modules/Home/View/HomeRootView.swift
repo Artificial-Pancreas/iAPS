@@ -449,7 +449,7 @@ extension Home {
                             .foregroundColor(
                                 scale == state.scale ? (colorScheme == .dark ? Color.white : Color.black) : Color.secondary
                             )
-                            .padding(.vertical, 6).padding(.horizontal, scale == state.scale ? 12 : 6)
+                            .padding(.vertical, 6).padding(.horizontal, scale == state.scale ? 15 : 10)
                             .background(
                                 scale == state
                                     .scale ?
