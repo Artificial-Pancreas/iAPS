@@ -40,13 +40,14 @@ extension DataTable {
                 let carbs = self.provider.carbs()
                     .filter { !($0.isFPU ?? false) }
                     .map {
-                        if let id = $0.collectionID {
+                        if let id = $0.id {
                             return Treatment(
                                 units: units,
                                 type: .carbs,
                                 date: $0.createdAt,
                                 amount: $0.carbs,
                                 id: id,
+                                fpuID: $0.fpuID,
                                 note: $0.note
                             )
                         } else {
@@ -62,7 +63,7 @@ extension DataTable {
                             type: .fpus,
                             date: $0.createdAt,
                             amount: $0.carbs,
-                            id: $0.collectionID,
+                            id: $0.id,
                             isFPU: $0.isFPU,
                             fpuID: $0.fpuID,
                             note: $0.note
@@ -151,9 +152,10 @@ extension DataTable {
                 .store(in: &lifetime)
         }
 
-        func deleteGlucose(at index: Int) {
-            let id = glucose[index].id
+        func deleteGlucose(_ glucose: Glucose) {
+            let id = glucose.id
             provider.deleteGlucose(id: id)
+
             let fetchRequest: NSFetchRequest<NSFetchRequestResult>
             fetchRequest = NSFetchRequest(entityName: "Readings")
             fetchRequest.predicate = NSPredicate(format: "id == %@", id)
@@ -170,9 +172,10 @@ extension DataTable {
                     )
                 }
             } catch { /* To do: handle any thrown errors. */ }
+
             // Deletes Manual Glucose
-            if (glucose[index].glucose.type ?? "") == GlucoseType.manual.rawValue {
-                provider.deleteManualGlucose(date: glucose[index].glucose.dateString)
+            if (glucose.glucose.type ?? "") == GlucoseType.manual.rawValue {
+                provider.deleteManualGlucose(date: glucose.glucose.dateString)
             }
         }
 
