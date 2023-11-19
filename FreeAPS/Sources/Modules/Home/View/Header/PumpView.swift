@@ -7,6 +7,7 @@ struct PumpView: View {
     @Binding var expiresAtDate: Date?
     @Binding var timerDate: Date
     @Binding var boluses: [PumpHistoryEvent]
+    @Binding var screenHours: Int16
 
     @State var state: Home.StateModel
 
@@ -110,10 +111,11 @@ struct PumpView: View {
     func calculateTINS() -> String {
         let date = Date()
         let calendar = Calendar.current
-        let offset = state.scale
+        let offset = screenHours
 
         var offsetComponents = DateComponents()
-        offsetComponents.hour = -offset.rawValue
+//        offsetComponents.hour = -offset.rawValue
+        offsetComponents.hour = -Int(offset)
 
         let startTime = calendar.date(byAdding: offsetComponents, to: date)!
         print("******************")

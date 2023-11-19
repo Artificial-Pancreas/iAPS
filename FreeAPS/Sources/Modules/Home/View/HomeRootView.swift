@@ -190,6 +190,7 @@ extension Home {
                 expiresAtDate: $state.pumpExpiresAtDate,
                 timerDate: $state.timerDate,
                 boluses: $state.boluses,
+                screenHours: $state.hours,
                 state: state
             )
             .onTapGesture {
