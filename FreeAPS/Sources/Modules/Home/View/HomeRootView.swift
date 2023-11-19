@@ -655,22 +655,23 @@ extension Home {
 
                     Spacer()
 
+                    Spacer()
+
                     header(geo)
-                        .padding([.leading, .trailing], 10)
                         .padding(.top, 15)
+                        .padding(.horizontal, 10)
 
                     Spacer()
 
                     infoPanel
-                        .padding([.leading, .trailing], 10)
-                        .padding(.bottom, 10)
+                        .padding(.horizontal, 10)
 
                     RoundedRectangle(cornerRadius: 15)
                         .fill(colourChart)
                         .overlay(mainChart)
                         .clipShape(RoundedRectangle(cornerRadius: 15))
                         .shadow(radius: 3)
-                        .padding([.leading, .trailing], 10)
+                        .padding(10)
                         .frame(maxHeight: UIScreen.main.bounds.height / 2.2)
 
                     Spacer()
@@ -679,12 +680,10 @@ extension Home {
                         .padding(.top, 13)
 
                     legendPanel
-                        .padding(.top, 10)
 
                     Spacer()
 
                     bottomPanel(geo)
-                        .padding(.top, 3)
                 }
                 .background(colorBackground)
                 .edgesIgnoringSafeArea(.all)
