@@ -273,7 +273,7 @@ struct MainChartView: View {
         .scaleEffect(x: 1, y: -1)
         .frame(width: fullGlucoseWidth(viewWidth: fullSize.width) + additionalWidth(viewWidth: fullSize.width))
         .frame(maxHeight: Config.basalHeight)
-        .background(colorScheme == .dark ? Color.black.opacity(0.8) : Color.clear)
+        .background(Color.clear)
         .onChange(of: tempBasals) { _ in
             calculateBasalPoints(fullSize: fullSize)
         }
@@ -342,6 +342,7 @@ struct MainChartView: View {
             )
         }
     }
+
     // MARK: TO DO: CHANGE TIME LABELS TO ONLY DISPLAY EVERY SECOND LABEL WHEN SCREENHOURS IS TOO BIG
 
 //    private func timeLabelsView(fullSize: CGSize) -> some View {
