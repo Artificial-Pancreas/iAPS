@@ -444,18 +444,18 @@ extension Home {
                             Color
                             .clear
                     )
-                    .shadow(
-                        color: colorScheme == .dark ? Color(
-                            red: 0.02745098039,
-                            green: 0.1098039216,
-                            blue: 0.1411764706
-                        ) : Color
-                            .black.opacity(0.33),
-                        radius: 3
-                    )
                     .cornerRadius(20)
                 }
             }
+            .shadow(
+                color: colorScheme == .dark ? Color(
+                    red: 0.02745098039,
+                    green: 0.1098039216,
+                    blue: 0.1411764706
+                ) : Color
+                    .black.opacity(0.33),
+                radius: 3
+            )
             .font(buttonFont)
         }
 
