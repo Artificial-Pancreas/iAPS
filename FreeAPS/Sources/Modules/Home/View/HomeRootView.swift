@@ -579,6 +579,17 @@ extension Home {
                         }
                     }.buttonStyle(.borderless)
                     Spacer()
+                    Button { state.showModal(for: .addTempTarget) }
+                    label: {
+                        Image("target")
+                            .renderingMode(.template)
+                            .resizable()
+                            .frame(width: 24, height: 24)
+                            .padding(8)
+                    }
+                    .foregroundColor(colorIcon)
+                    .buttonStyle(.borderless)
+                    Spacer()
                     Button {
                         state.showModal(for: .bolus(
                             waitForSuggestion: true,
@@ -608,17 +619,6 @@ extension Home {
                         .buttonStyle(.borderless)
                         Spacer()
                     }
-                    Button { state.showModal(for: .addTempTarget) }
-                    label: {
-                        Image("target")
-                            .renderingMode(.template)
-                            .resizable()
-                            .frame(width: 24, height: 24)
-                            .padding(8)
-                    }
-                    .foregroundColor(colorIcon)
-                    .buttonStyle(.borderless)
-                    Spacer()
 
                     // MARK: CANCEL OF PROFILE HAS TO BE IMPLEMENTED
 
