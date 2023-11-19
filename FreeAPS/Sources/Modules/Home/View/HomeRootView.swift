@@ -23,7 +23,7 @@ extension Home {
         @State var timeButtons: [Buttons] = [
             Buttons(label: "2 hours", number: "2", active: false, hours: 2),
             Buttons(label: "4 hours", number: "4", active: false, hours: 4),
-            Buttons(label: "6 hours", number: "6", active: false, hours: 6),
+            Buttons(label: "6 hours", number: "6", active: true, hours: 6),
             Buttons(label: "12 hours", number: "12", active: false, hours: 12),
             Buttons(label: "24 hours", number: "24", active: false, hours: 24)
         ]
@@ -425,19 +425,11 @@ extension Home {
                         state.hours = button.hours
                     }
                     .foregroundStyle(button.active ? .primary : .secondary)
-                    .frame(maxHeight: 20).padding(.horizontal)
+                    .frame(maxHeight: 30).padding(.horizontal, 8)
                     .background(button.active ? Color(.systemGray5) : .clear, in: .capsule(style: .circular))
                 }
-                Image(systemName: "ellipsis.circle.fill")
-                    .foregroundStyle(.secondary)
-                    .padding(.leading)
-                    .onTapGesture {
-                        state.showModal(for: .statisticsConfig)
-                    }
             }
             .font(buttonFont)
-            .padding(.top, 20)
-            .padding(.bottom, 40)
         }
 
         var mainChart: some View {
@@ -701,8 +693,11 @@ extension Home {
                         .padding(.horizontal, 10)
                         .frame(maxHeight: UIScreen.main.bounds.height / 2.2)
 
-//                    pickerPanel(geo)
+                    Spacer()
+
                     timeInterval
+
+                    Spacer()
 
                     legendPanel
 
