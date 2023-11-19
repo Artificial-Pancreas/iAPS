@@ -166,6 +166,7 @@ extension Home {
                 name: $state.pumpName,
                 expiresAtDate: $state.pumpExpiresAtDate,
                 timerDate: $state.timerDate,
+                boluses: $state.boluses,
                 state: state
             )
             .onTapGesture {

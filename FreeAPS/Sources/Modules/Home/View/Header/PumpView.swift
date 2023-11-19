@@ -6,8 +6,11 @@ struct PumpView: View {
     @Binding var name: String
     @Binding var expiresAtDate: Date?
     @Binding var timerDate: Date
+    @Binding var boluses: [PumpHistoryEvent]
 
     @State var state: Home.StateModel
+
+    @State var totalBolus: Decimal = 0
 
     private var reservoirFormatter: NumberFormatter {
         let formatter = NumberFormatter()
@@ -80,6 +83,8 @@ struct PumpView: View {
                         .foregroundColor(batteryColor)
                     Text("\(Int(battery.percent ?? 100)) %").font(.callout)
                         .fontWeight(.bold)
+                    Text(calculateTINS())
+                        .font(.callout).fontWeight(.bold)
                 }
             }
 
@@ -97,6 +102,56 @@ struct PumpView: View {
             }
         }
     }
+
+    func calculateTINS() -> String {
+        let date = Date()
+        let calendar = Calendar.current
+        let startTime = calendar.startOfDay(for: date)
+        let endTime = calendar.date(bySettingHour: 23, minute: 59, second: 59, of: date)
+
+        let bolusesForCurrentDay = boluses.filter { $0.timestamp >= startTime && $0.type == .bolus }
+
+        let totalBolus = bolusesForCurrentDay.map { $0.amount ?? 0 }.reduce(0, +)
+        let roundedTotalBolus = Decimal(round(100 * Double(totalBolus)) / 100)
+
+        return "\(roundedTotalBolus) U"
+    }
+
+//    func calculateTINS() -> String {
+//        let date = Date()
+//        let calendar = Calendar.current
+//        let startTime = calendar.startOfDay(for: date)
+//        let endTime = calendar.date(bySettingHour: 23, minute: 59, second: 59, of: date)
+//
+//        let bolusesForCurrentDay = boluses.filter { $0.timestamp >= startTime && $0.type == .bolus}
+//        print("****************Boluses for current day: \(bolusesForCurrentDay)")
+//
+//        let totalBolus = bolusesForCurrentDay.map { $0.value as? Decimal ?? 0 }.reduce(0, +)
+//        print("****************Total Bolus: \(totalBolus)")
+//
+//        return "\(totalBolus) U"
+//    }
+
+//    func calculateTINS() {
+//            DispatchQueue.main.async { [weak self] in
+//                guard let self = self else { return }
+//
+//                // start of day
+//                let startOfDay = Calendar.current.startOfDay(for: Date())
+//
+//                // filtering for day
+    ////                let bolusesForCurrentDay = self.provider.pumpHistory()
+    ////                    .filter { $0.type == .bolus && $0.timestamp >= startOfDay }
+//
+//                // adding all together
+    ////                let totalBolus = bolusesForCurrentDay.map { $0.amount ?? 0 }.reduce(0, +)
+//
+//                let totalBolus = boluses.map {}
+//
+//                self.totalBolus = totalBolus
+//            }
+//        }
+//
 
     private func remainingTimeString(time: TimeInterval) -> String {
         guard time > 0 else {
