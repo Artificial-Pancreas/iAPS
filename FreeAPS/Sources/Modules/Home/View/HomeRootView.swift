@@ -396,7 +396,6 @@ extension Home {
 
                     Group {
                         Circle().fill(Color.loopYellow).frame(width: 8, height: 8)
-                            .padding(.leading, 8)
                         Text("COB")
                             .font(.system(size: 12, weight: .bold)).foregroundColor(.loopYellow)
                     }
