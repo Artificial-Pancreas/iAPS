@@ -108,13 +108,13 @@ struct PumpView: View {
 
     // DEFINETELY SOMETHING FOR OUR TIMEZONE EXPERT.....
 
-    func calculateTINS() -> String {
+    private func calculateTINS() -> String {
         let date = Date()
         let calendar = Calendar.current
         let offset = screenHours
 
         var offsetComponents = DateComponents()
-//        offsetComponents.hour = -offset.rawValue
+        //        offsetComponents.hour = -offset.rawValue
         offsetComponents.hour = -Int(offset)
 
         let startTime = calendar.date(byAdding: offsetComponents, to: date)!
