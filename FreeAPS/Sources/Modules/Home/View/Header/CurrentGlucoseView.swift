@@ -12,10 +12,8 @@ struct CurrentGlucoseView: View {
     @State private var rotationDegrees: Double = 0.0
     @State var gradientColor = LinearGradient(
         gradient: Gradient(colors: [
-            Color(red: 0.298, green: 0.071, blue: 0.4),
-            Color(red: 0.435, green: 0.114, blue: 0.573),
-            Color(red: 0.741, green: 0.204, blue: 0.914),
-            Color(red: 0.831, green: 0.263, blue: 1)
+            Color(red: 0.263, green: 0.733, blue: 0.914),
+            Color(red: 0.729, green: 0.337, blue: 1)
         ]),
         startPoint: .leading,
         endPoint: .trailing
@@ -60,7 +58,7 @@ struct CurrentGlucoseView: View {
 
     var body: some View {
         let colourGlucoseText: Color = colorScheme == .dark ? .white : .black
-        let triangleColor = Color(red: 0.831, green: 0.263, blue: 1)
+        let triangleColor = Color(red: 0.729, green: 0.337, blue: 1)
 
         ZStack {
             TrendShape(gradient: gradientColor, color: triangleColor)
@@ -108,10 +106,8 @@ struct CurrentGlucoseView: View {
                     rotationDegrees = -90
                     gradientColor = LinearGradient(
                         gradient: Gradient(colors: [
-                            Color(red: 0.298, green: 0.071, blue: 0.4),
-                            Color(red: 0.435, green: 0.114, blue: 0.573),
-                            Color(red: 0.741, green: 0.204, blue: 0.914),
-                            Color(red: 0.831, green: 0.263, blue: 1)
+                            Color(red: 0.263, green: 0.733, blue: 0.914),
+                            Color(red: 0.729, green: 0.337, blue: 1)
                         ]),
                         startPoint: .bottom,
                         endPoint: .top
@@ -121,10 +117,8 @@ struct CurrentGlucoseView: View {
                     rotationDegrees = -45
                     gradientColor = LinearGradient(
                         gradient: Gradient(colors: [
-                            Color(red: 0.298, green: 0.071, blue: 0.4),
-                            Color(red: 0.435, green: 0.114, blue: 0.573),
-                            Color(red: 0.741, green: 0.204, blue: 0.914),
-                            Color(red: 0.831, green: 0.263, blue: 1)
+                            Color(red: 0.263, green: 0.733, blue: 0.914),
+                            Color(red: 0.729, green: 0.337, blue: 1)
                         ]),
                         startPoint: .bottomLeading,
                         endPoint: .topTrailing
@@ -134,10 +128,8 @@ struct CurrentGlucoseView: View {
                     rotationDegrees = 0
                     gradientColor = LinearGradient(
                         gradient: Gradient(colors: [
-                            Color(red: 0.298, green: 0.071, blue: 0.4),
-                            Color(red: 0.435, green: 0.114, blue: 0.573),
-                            Color(red: 0.741, green: 0.204, blue: 0.914),
-                            Color(red: 0.831, green: 0.263, blue: 1)
+                            Color(red: 0.263, green: 0.733, blue: 0.914),
+                            Color(red: 0.729, green: 0.337, blue: 1)
                         ]),
                         startPoint: .leading,
                         endPoint: .trailing
@@ -147,10 +139,8 @@ struct CurrentGlucoseView: View {
                     rotationDegrees = 45
                     gradientColor = LinearGradient(
                         gradient: Gradient(colors: [
-                            Color(red: 0.298, green: 0.071, blue: 0.4),
-                            Color(red: 0.435, green: 0.114, blue: 0.573),
-                            Color(red: 0.741, green: 0.204, blue: 0.914),
-                            Color(red: 0.831, green: 0.263, blue: 1)
+                            Color(red: 0.263, green: 0.733, blue: 0.914),
+                            Color(red: 0.729, green: 0.337, blue: 1)
                         ]),
                         startPoint: .topLeading,
                         endPoint: .bottomTrailing
@@ -162,10 +152,8 @@ struct CurrentGlucoseView: View {
                     rotationDegrees = 90
                     gradientColor = LinearGradient(
                         gradient: Gradient(colors: [
-                            Color(red: 0.298, green: 0.071, blue: 0.4),
-                            Color(red: 0.435, green: 0.114, blue: 0.573),
-                            Color(red: 0.741, green: 0.204, blue: 0.914),
-                            Color(red: 0.831, green: 0.263, blue: 1)
+                            Color(red: 0.263, green: 0.733, blue: 0.914),
+                            Color(red: 0.729, green: 0.337, blue: 1)
                         ]),
                         startPoint: .top,
                         endPoint: .bottom
@@ -177,10 +165,8 @@ struct CurrentGlucoseView: View {
                     rotationDegrees = 0
                     gradientColor = LinearGradient(
                         gradient: Gradient(colors: [
-                            Color(red: 0.298, green: 0.071, blue: 0.4),
-                            Color(red: 0.435, green: 0.114, blue: 0.573),
-                            Color(red: 0.741, green: 0.204, blue: 0.914),
-                            Color(red: 0.831, green: 0.263, blue: 1)
+                            Color(red: 0.263, green: 0.733, blue: 0.914),
+                            Color(red: 0.729, green: 0.337, blue: 1)
                         ]),
                         startPoint: .leading,
                         endPoint: .trailing
@@ -190,10 +176,8 @@ struct CurrentGlucoseView: View {
                     rotationDegrees = 0
                     gradientColor = LinearGradient(
                         gradient: Gradient(colors: [
-                            Color(red: 0.298, green: 0.071, blue: 0.4),
-                            Color(red: 0.435, green: 0.114, blue: 0.573),
-                            Color(red: 0.741, green: 0.204, blue: 0.914),
-                            Color(red: 0.831, green: 0.263, blue: 1)
+                            Color(red: 0.263, green: 0.733, blue: 0.914),
+                            Color(red: 0.729, green: 0.337, blue: 1)
                         ]),
                         startPoint: .leading,
                         endPoint: .trailing
