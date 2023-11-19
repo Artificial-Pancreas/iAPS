@@ -102,12 +102,20 @@ struct PumpView: View {
             }
         }
     }
+    
+    //MARK: WORKS....
 
     func calculateTINS() -> String {
         let date = Date()
         let calendar = Calendar.current
-        let startTime = calendar.startOfDay(for: date)
-        let endTime = calendar.date(bySettingHour: 23, minute: 59, second: 59, of: date)
+        let offset = state.scale
+        
+        var offsetComponents = DateComponents()
+        offsetComponents.hour = -offset.rawValue
+
+        let startTime = calendar.date(byAdding: offsetComponents, to: date)!
+        print("******************")
+        print("die voll krasse start time ist: \(startTime)")
 
         let bolusesForCurrentDay = boluses.filter { $0.timestamp >= startTime && $0.type == .bolus }
 
@@ -117,41 +125,29 @@ struct PumpView: View {
         return "\(roundedTotalBolus) U"
     }
 
+//    MARK: THIS CRAP DOES NOT WORK
+    
+    
 //    func calculateTINS() -> String {
 //        let date = Date()
 //        let calendar = Calendar.current
-//        let startTime = calendar.startOfDay(for: date)
-//        let endTime = calendar.date(bySettingHour: 23, minute: 59, second: 59, of: date)
+//        let offset = state.scale
 //
-//        let bolusesForCurrentDay = boluses.filter { $0.timestamp >= startTime && $0.type == .bolus}
-//        print("****************Boluses for current day: \(bolusesForCurrentDay)")
+//    //        let hour = calendar.component(.hour, from: date)
+//    //
+//    //        let minutes = calendar.component(.minute, from: date)
 //
-//        let totalBolus = bolusesForCurrentDay.map { $0.value as? Decimal ?? 0 }.reduce(0, +)
-//        print("****************Total Bolus: \(totalBolus)")
+//        let startTime = calendar.startOfDay(for: date).addingTimeInterval(-Double(offset.rawValue))
+//        print("******************")
+//        print(startTime)
 //
-//        return "\(totalBolus) U"
+//        let bolusesForCurrentDay = boluses.filter { $0.timestamp >= startTime && $0.type == .bolus }
+//
+//        let totalBolus = bolusesForCurrentDay.map { $0.amount ?? 0 }.reduce(0, +)
+//        let roundedTotalBolus = Decimal(round(100 * Double(totalBolus)) / 100)
+//
+//        return "\(roundedTotalBolus) U"
 //    }
-
-//    func calculateTINS() {
-//            DispatchQueue.main.async { [weak self] in
-//                guard let self = self else { return }
-//
-//                // start of day
-//                let startOfDay = Calendar.current.startOfDay(for: Date())
-//
-//                // filtering for day
-    ////                let bolusesForCurrentDay = self.provider.pumpHistory()
-    ////                    .filter { $0.type == .bolus && $0.timestamp >= startOfDay }
-//
-//                // adding all together
-    ////                let totalBolus = bolusesForCurrentDay.map { $0.amount ?? 0 }.reduce(0, +)
-//
-//                let totalBolus = boluses.map {}
-//
-//                self.totalBolus = totalBolus
-//            }
-//        }
-//
 
     private func remainingTimeString(time: TimeInterval) -> String {
         guard time > 0 else {
