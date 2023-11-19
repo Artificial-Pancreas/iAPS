@@ -10,7 +10,14 @@ struct CurrentGlucoseView: View {
     @Binding var highGlucose: Decimal
 
     @State private var rotationDegrees: Double = 0.0
-    @State private var angularGradient: AngularGradient = defaultGradient()
+    @State private var angularGradient = AngularGradient(colors: [
+        Color(red: 0.729, green: 0.337, blue: 1),
+        Color(red: 0.263, green: 0.733, blue: 0.914),
+        Color(red: 0.263, green: 0.733, blue: 0.914),
+        Color(red: 0.263, green: 0.733, blue: 0.914),
+        Color(red: 0.263, green: 0.733, blue: 0.914),
+        Color(red: 0.729, green: 0.337, blue: 1)
+    ], center: .center, startAngle: .degrees(-45), endAngle: .degrees(135))
 
     @Environment(\.colorScheme) var colorScheme
 
@@ -97,60 +104,38 @@ struct CurrentGlucoseView: View {
                      .singleUp,
                      .tripleUp:
                     rotationDegrees = -90
-                    setupAngularGradient(startAngle: -135, endAngle: 45)
+                    angularGradient
 
                 case .fortyFiveUp:
                     rotationDegrees = -45
-                    setupAngularGradient(startAngle: 0, endAngle: 90)
+                    angularGradient
 
                 case .flat:
                     rotationDegrees = 0
-                    setupAngularGradient(startAngle: -45, endAngle: 135)
+                    angularGradient
 
                 case .fortyFiveDown:
                     rotationDegrees = 45
-                    setupAngularGradient(startAngle: 0, endAngle: 180)
+                    angularGradient
 
                 case .doubleDown,
                      .singleDown,
                      .tripleDown:
                     rotationDegrees = 90
-                    setupAngularGradient(startAngle: 45, endAngle: 225)
+                    angularGradient
 
                 case .none,
                      .notComputable,
                      .rateOutOfRange:
                     rotationDegrees = 0
-                    setupAngularGradient(startAngle: -45, endAngle: 135)
+                    angularGradient
 
                 @unknown default:
                     rotationDegrees = 0
-                    setupAngularGradient(startAngle: -45, endAngle: 135)
+                    angularGradient
                 }
             }
         }
-    }
-
-    private func setupAngularGradient(startAngle: Double, endAngle: Double) {
-        angularGradient = AngularGradient(colors: [
-            Color(red: 0.729, green: 0.337, blue: 1),
-            Color(red: 0.263, green: 0.733, blue: 0.914),
-            Color(red: 0.263, green: 0.733, blue: 0.914),
-            Color(red: 0.263, green: 0.733, blue: 0.914),
-            Color(red: 0.263, green: 0.733, blue: 0.914),
-            Color(red: 0.729, green: 0.337, blue: 1)
-        ], center: .center, startAngle: .degrees(startAngle), endAngle: .degrees(endAngle))
-    }
-
-    private static func defaultGradient(startAngle: Double = -45, endAngle: Double = 135) -> AngularGradient {
-        AngularGradient(colors: [
-            Color(red: 0.729, green: 0.337, blue: 1),
-            Color(red: 0.263, green: 0.733, blue: 0.914),
-            Color(red: 0.263, green: 0.733, blue: 0.914),
-            Color(red: 0.263, green: 0.733, blue: 0.914),
-            Color(red: 0.263, green: 0.733, blue: 0.914),
-            Color(red: 0.729, green: 0.337, blue: 1)
-        ], center: .center, startAngle: .degrees(startAngle), endAngle: .degrees(endAngle))
     }
 
     var colourGlucoseText: Color {
