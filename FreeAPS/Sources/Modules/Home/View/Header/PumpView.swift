@@ -102,15 +102,16 @@ struct PumpView: View {
             }
         }
     }
-    
-    //MARK: WORKS....BUT MAYBE TIMEZONE PROBLEMS COULD OCCUR
-    //DEFINETELY SOMETHING FOR OUR TIMEZONE EXPERT.....
+
+    // MARK: WORKS....BUT MAYBE TIMEZONE PROBLEMS COULD OCCUR
+
+    // DEFINETELY SOMETHING FOR OUR TIMEZONE EXPERT.....
 
     func calculateTINS() -> String {
         let date = Date()
         let calendar = Calendar.current
         let offset = state.scale
-        
+
         var offsetComponents = DateComponents()
         offsetComponents.hour = -offset.rawValue
 
