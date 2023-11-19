@@ -1652,6 +1652,21 @@ Enact a temp Basal or a temp target */
 /* */
 "Hours X-Axis (6 default)" = "Antal timmar att visa för X-axel (6 standard)";
 
+/* */
+"2 hours" = "2 timmar";
+
+/* */
+"4 hours" = "4 timmar";
+
+/* */
+"6 hours" = "6 timmar";
+
+/* */
+"12 hours" = "12 timmar";
+
+/* */
+"24 hours" = "24 timmar";
+
 /* Average BG = */
 "Average" = "Medelvärde";
 

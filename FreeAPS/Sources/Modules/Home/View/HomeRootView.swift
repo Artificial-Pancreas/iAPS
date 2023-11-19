@@ -12,22 +12,23 @@ extension Home {
         @State var isStatusPopupPresented = false
         @State var showCancelAlert = false
 
-        let buttonFont: Font = .footnote
-
         private struct Buttons: Identifiable {
             let label: String
             let number: String
             var active: Bool
+            let hours: Int
             var id: String { label }
         }
 
         @State private var timeButtons: [Buttons] = [
-            Buttons(label: "2 hours", number: "2", active: false),
-            Buttons(label: "4 hours", number: "4", active: false),
-            Buttons(label: "6 hours", number: "6", active: true),
-            Buttons(label: "12 hours", number: "12", active: false),
-            Buttons(label: "24 hours", number: "24", active: false)
+            Buttons(label: "2 hours", number: "2", active: false, hours: 2),
+            Buttons(label: "4 hours", number: "4", active: false, hours: 4),
+            Buttons(label: "6 hours", number: "6", active: true, hours: 6),
+            Buttons(label: "12 hours", number: "12", active: false, hours: 12),
+            Buttons(label: "24 hours", number: "24", active: false, hours: 24)
         ]
+
+        let buttonFont: Font = .footnote
 
         @Environment(\.managedObjectContext) var moc
         @Environment(\.colorScheme) var colorScheme
@@ -350,19 +351,20 @@ extension Home {
         var timeInterval: some View {
             HStack(alignment: .center) {
                 ForEach(timeButtons) { button in
-                    Text(button.active ? button.label : button.number).onTapGesture {
+                    Text(button.active ? NSLocalizedString(button.label, comment: "") : button.number).onTapGesture {
                         let index = timeButtons.firstIndex(where: { $0.label == button.label }) ?? 0
                         timeButtons[index].active = true
                         disableButtons(index)
+                        state.hours = button.hours
                     }
                     .foregroundStyle(button.active ? .primary : .secondary)
                     .frame(maxHeight: 20).padding(.horizontal)
-                    .background(button.active ? Color(.systemGray4) : .clear, in: .capsule(style: .circular))
+                    .background(button.active ? Color(.systemGray5) : .clear, in: .capsule(style: .circular))
                 }
             }
             .font(buttonFont)
             .frame(maxWidth: .infinity)
-            .padding(.top, 10)
+            .padding(.top, 20)
             .padding(.bottom, 20)
         }
 
@@ -450,7 +452,7 @@ extension Home {
                     smooth: $state.smooth,
                     highGlucose: $state.highGlucose,
                     lowGlucose: $state.lowGlucose,
-                    screenHours: $state.screenHours,
+                    screenHours: $state.hours,
                     displayXgridLines: $state.displayXgridLines,
                     displayYgridLines: $state.displayYgridLines,
                     thresholdLines: $state.thresholdLines
