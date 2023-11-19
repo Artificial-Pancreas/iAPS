@@ -41,7 +41,7 @@ extension AddCarbs {
 
             let carbsToStore = [CarbsEntry(
                 id: id_,
-                createdAt: Date.now,
+                createdAt: date,
                 carbs: carbs,
                 fat: fat,
                 protein: protein,
@@ -191,7 +191,7 @@ extension AddCarbs {
             coredataContext.performAndWait {
                 let save = Meals(context: coredataContext)
                 if let entry = stored.first {
-                    save.createdAt = Date.now
+                    save.createdAt = entry.createdAt
                     save.id = entry.id ?? ""
                     save.fpuID = entry.fpuID ?? ""
                     save.carbs = Double(entry.carbs)
