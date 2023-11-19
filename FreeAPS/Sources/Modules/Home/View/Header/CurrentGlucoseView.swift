@@ -17,7 +17,7 @@ struct CurrentGlucoseView: View {
         Color(red: 0.263, green: 0.733, blue: 0.914),
         Color(red: 0.263, green: 0.733, blue: 0.914),
         Color(red: 0.729, green: 0.337, blue: 1)
-    ], center: .center, startAngle: .degrees(-45), endAngle: .degrees(135))
+    ], center: .center, startAngle: .degrees(-55), endAngle: .degrees(145))
 
     @Environment(\.colorScheme) var colorScheme
 
