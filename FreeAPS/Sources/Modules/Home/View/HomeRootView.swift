@@ -28,7 +28,7 @@ extension Home {
             Buttons(label: "24 hours", number: "24", active: false, hours: 24)
         ]
 
-        let buttonFont = Font.custom("TimeButtonFont", size: 16)
+        let buttonFont = Font.custom("TimeButtonFont", size: 14)
 
         @Environment(\.managedObjectContext) var moc
         @Environment(\.colorScheme) var colorScheme
