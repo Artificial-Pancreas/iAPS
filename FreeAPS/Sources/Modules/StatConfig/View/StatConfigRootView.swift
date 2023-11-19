@@ -58,6 +58,7 @@ extension StatConfig {
             .onAppear(perform: configureView)
             .navigationBarTitle("UI/UX")
             .navigationBarTitleDisplayMode(.automatic)
+            .navigationBarItems(trailing: Button("Close", action: state.hideModal))
         }
     }
 }

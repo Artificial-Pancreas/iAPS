@@ -28,7 +28,7 @@ extension Home {
             Buttons(label: "24 hours", number: "24", active: false, hours: 24)
         ]
 
-        let buttonFont: Font = .footnote
+        let buttonFont = Font.custom("TimeButtonFont", size: 16)
 
         @Environment(\.managedObjectContext) var moc
         @Environment(\.colorScheme) var colorScheme
@@ -369,36 +369,16 @@ extension Home {
                     .frame(maxHeight: 20).padding(.horizontal)
                     .background(button.active ? Color(.systemGray5) : .clear, in: .capsule(style: .circular))
                 }
+                Image(systemName: "ellipsis.circle.fill")
+                    .foregroundStyle(.secondary)
+                    .padding(.leading)
+                    .onTapGesture {
+                        state.showModal(for: .statisticsConfig)
+                    }
             }
             .font(buttonFont)
-            .frame(maxWidth: .infinity)
             .padding(.top, 20)
-            .padding(.bottom, 20)
-        }
-
-        func highlightButtons(_ int: Int?, onAppear: Bool) {
-            var index = 0
-            if let integer = int, !onAppear {
-                repeat {
-                    if index == integer {
-                        timeButtons[index].active = true
-                    } else {
-                        timeButtons[index].active = false
-                    }
-                    index += 1
-                } while index < timeButtons.count
-            } else if onAppear {
-                let i = timeButtons.firstIndex(where: { $0.hours == (fetchedSettings.first?.hours ?? 6) }) ?? 2
-                index = 0
-                repeat {
-                    if index == i {
-                        timeButtons[index].active = true
-                    } else {
-                        timeButtons[index].active = false
-                    }
-                    index += 1
-                } while index < timeButtons.count
-            }
+            .padding(.bottom, 40)
         }
 
         var legendPanel: some View {
@@ -548,6 +528,31 @@ extension Home {
                 }
             }
             return (name: profileString, isOn: display)
+        }
+
+        func highlightButtons(_ int: Int?, onAppear: Bool) {
+            var index = 0
+            if let integer = int, !onAppear {
+                repeat {
+                    if index == integer {
+                        timeButtons[index].active = true
+                    } else {
+                        timeButtons[index].active = false
+                    }
+                    index += 1
+                } while index < timeButtons.count
+            } else if onAppear {
+                let i = timeButtons.firstIndex(where: { $0.hours == (fetchedSettings.first?.hours ?? 6) }) ?? 2
+                index = 0
+                repeat {
+                    if index == i {
+                        timeButtons[index].active = true
+                    } else {
+                        timeButtons[index].active = false
+                    }
+                    index += 1
+                } while index < timeButtons.count
+            }
         }
 
         @ViewBuilder private func bottomPanel(_ geo: GeometryProxy) -> some View {
