@@ -31,4 +31,15 @@ final class CoreDataStorage {
         }
         return overrideArray
     }
+
+    func fetchSettings() -> [UXSettings] {
+        var settingsArray = [UXSettings]()
+        coredataContext.performAndWait {
+            let requestSetttings = UXSettings.fetchRequest() as NSFetchRequest<UXSettings>
+            let sortSettings = NSSortDescriptor(key: "date", ascending: false)
+            requestSetttings.sortDescriptors = [sortSettings]
+            try? settingsArray = self.coredataContext.fetch(requestSetttings)
+        }
+        return settingsArray
+    }
 }

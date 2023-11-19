@@ -60,7 +60,7 @@ extension Home {
         @Published var displayYgridLines: Bool = false
         @Published var thresholdLines: Bool = false
         @Published var timeZone: TimeZone?
-        @Published var hours: Int = 6
+        @Published var hours: Int16 = 6
 
         let coredataContext = CoreDataStack.shared.persistentContainer.viewContext
 
@@ -194,13 +194,6 @@ extension Home {
                     }
                 }
                 .store(in: &lifetime)
-
-            subscribeSetting(\.hours, on: $hours, initial: {
-                let value = max(min($0, 24), 2)
-                hours = value
-            }, map: {
-                $0
-            })
         }
 
         func addCarbs() {
@@ -220,6 +213,15 @@ extension Home {
                 let profiles = Override(context: self.coredataContext)
                 profiles.enabled = false
                 profiles.date = Date()
+                try? self.coredataContext.save()
+            }
+        }
+
+        func saveSettings() {
+            coredataContext.perform {
+                let settings = UXSettings(context: self.coredataContext)
+                settings.hours = self.hours
+                settings.date = Date.now
                 try? self.coredataContext.save()
             }
         }
