@@ -187,6 +187,7 @@ struct MainChartView: View {
                         basalView(fullSize: fullSize).drawingGroup()
                         Text(calculateTINS())
                             .font(.callout).fontWeight(.bold)
+                            .offset(x: 0, y: 0)
                     }
 
                     mainView(fullSize: fullSize).id(Config.endID)

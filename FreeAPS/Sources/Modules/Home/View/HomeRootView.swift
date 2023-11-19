@@ -433,9 +433,28 @@ extension Home {
                         try? moc.save()
                         state.hours = button.hours
                     }
-                    .foregroundStyle(button.active ? .primary : .secondary)
+                    .foregroundStyle(button.active ? (colorScheme == .dark ? Color.white : Color.black).opacity(0.9) : .secondary)
                     .frame(maxHeight: 30).padding(.horizontal, 8)
-                    .background(button.active ? Color(.systemGray5) : .clear, in: .capsule(style: .circular))
+                    .background(
+                        button.active ?
+                            // RGB(30, 60, 95)
+                            (
+                                colorScheme == .dark ? Color(red: 0.1176470588, green: 0.2352941176, blue: 0.3725490196) :
+                                    Color.white
+                            ) :
+                            Color
+                            .clear
+                    )
+                    .shadow(
+                        color: colorScheme == .dark ? Color(
+                            red: 0.02745098039,
+                            green: 0.1098039216,
+                            blue: 0.1411764706
+                        ) : Color
+                            .black.opacity(0.33),
+                        radius: 3
+                    )
+                    .cornerRadius(20)
                 }
             }
             .font(buttonFont)
