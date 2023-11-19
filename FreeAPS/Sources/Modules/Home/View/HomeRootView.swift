@@ -697,13 +697,14 @@ extension Home {
                         .overlay(mainChart)
                         .clipShape(RoundedRectangle(cornerRadius: 15))
                         .shadow(radius: 3)
-                        .padding(10)
+                        .padding(.horizontal, 10)
                         .frame(maxHeight: UIScreen.main.bounds.height / 2.2)
 
                     Spacer()
 
                     pickerPanel(geo)
-                        .padding(.top, 13)
+
+                    Spacer()
 
                     legendPanel
 
